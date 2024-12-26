@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-register-service-workers-in-rails-7-with-importmap"
 ---
 
-Alright, let's unpack this service worker integration with importmap in Rails 7. I've seen this come up in a few different projects, and it's definitely a case where the default setup can feel a little… incomplete. It’s not that Rails 7 isn't equipped for it; it just requires a few specific steps to get those service workers playing nicely with importmap. The issue, as I've observed, is typically with the way assets are managed and how we ensure the service worker script is loaded correctly.
+, let's unpack this service worker integration with importmap in Rails 7. I've seen this come up in a few different projects, and it's definitely a case where the default setup can feel a little… incomplete. It’s not that Rails 7 isn't equipped for it; it just requires a few specific steps to get those service workers playing nicely with importmap. The issue, as I've observed, is typically with the way assets are managed and how we ensure the service worker script is loaded correctly.
 
 When I first encountered this, it was in a progressive web app project for a small e-commerce client back in 2022. We needed offline capability for product browsing, and naturally, service workers were the route. Initially, the service worker was failing to register and throw obscure errors. This was largely because we hadn't paid enough attention to the nuances of how importmap handles relative paths, and how that affects service worker registration. So, let’s get into the details.
 
@@ -14,13 +14,13 @@ The first key area is getting your service worker code to be accessible through 
 // app/javascript/service_worker.js
 console.log("Service worker script loaded");
 
-self.addEventListener('install', (event) => {
-  console.log('Service worker installed');
+self.addEventListener("install", (event) => {
+  console.log("Service worker installed");
   event.waitUntil(self.skipWaiting());
 });
 
-self.addEventListener('activate', (event) => {
-  console.log('Service worker activated');
+self.addEventListener("activate", (event) => {
+  console.log("Service worker activated");
   event.waitUntil(self.clients.claim());
 });
 ```
@@ -39,16 +39,17 @@ Now that the script is mapped, the challenge shifts to registering it within you
 
 ```javascript
 // app/javascript/application.js
-import * as serviceWorker from "service_worker"
+import * as serviceWorker from "service_worker";
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/assets/service_worker.js', { scope: '/' })
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/assets/service_worker.js", { scope: "/" })
       .then((registration) => {
-        console.log('Service worker registered successfully:', registration);
+        console.log("Service worker registered successfully:", registration);
       })
       .catch((error) => {
-        console.error('Service worker registration failed:', error);
+        console.error("Service worker registration failed:", error);
       });
   });
 }
@@ -58,64 +59,61 @@ Notice a key change in the registration URL: Instead of using relative paths lik
 
 The 'if' block check `if ('serviceWorker' in navigator)` confirms that service workers are supported by the browser, before trying to register it. This prevents errors in browsers that lack the API. The load event listener also ensures that the service worker tries to register only after all resources on the page are loaded. This is a small, but important detail that can prevent errors.
 
-It’s important to emphasize, that you *must* use the assets path when registering the service worker. This is where importmap makes a crucial shift: we aren't registering a file at our root `/service_worker.js`, but we are registering the compiled javascript bundle within the `/assets` folder. This is one of the primary causes of failed registrations.
+It’s important to emphasize, that you _must_ use the assets path when registering the service worker. This is where importmap makes a crucial shift: we aren't registering a file at our root `/service_worker.js`, but we are registering the compiled javascript bundle within the `/assets` folder. This is one of the primary causes of failed registrations.
 
 Let's look at a more advanced example involving caching. Imagine we wanted to cache static assets. Here's how you might modify the `service_worker.js` file:
 
 ```javascript
 // app/javascript/service_worker.js
-const CACHE_NAME = 'my-site-cache-v1';
+const CACHE_NAME = "my-site-cache-v1";
 const urlsToCache = [
-  '/',
-  '/assets/application.js',
+  "/",
+  "/assets/application.js",
   //add the full paths to any static assets
-  '/assets/path_to_your_css.css',
-  '/assets/path_to_your_image.png',
+  "/assets/path_to_your_css.css",
+  "/assets/path_to_your_image.png",
   //add any api endpoints used
-   '/api/your_api_endpoint'
+  "/api/your_api_endpoint",
 ];
 
-self.addEventListener('install', (event) => {
-  console.log('Service worker installed');
+self.addEventListener("install", (event) => {
+  console.log("Service worker installed");
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => {
-          console.log('Cache opened');
-        return cache.addAll(urlsToCache);
-      })
+    caches.open(CACHE_NAME).then((cache) => {
+      console.log("Cache opened");
+      return cache.addAll(urlsToCache);
+    })
   );
   self.skipWaiting();
 });
 
-self.addEventListener('activate', (event) => {
-    console.log('Service worker activated');
-    const cacheWhitelist = [CACHE_NAME];
-    event.waitUntil(
-      caches.keys().then((cacheNames) => {
-        return Promise.all(
-          cacheNames.map((cacheName) => {
-              if (cacheWhitelist.indexOf(cacheName) === -1){
-                  return caches.delete(cacheName);
-              }
-          })
-        );
-      })
+self.addEventListener("activate", (event) => {
+  console.log("Service worker activated");
+  const cacheWhitelist = [CACHE_NAME];
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cacheName) => {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
+        })
       );
-    self.clients.claim();
-
+    })
+  );
+  self.clients.claim();
 });
 
-self.addEventListener('fetch', (event) => {
+self.addEventListener("fetch", (event) => {
   event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Cache hit - return response
-        if (response) {
-          return response;
-        }
-        // No cache, return fetch response
-        return fetch(event.request);
-      })
+    caches.match(event.request).then((response) => {
+      // Cache hit - return response
+      if (response) {
+        return response;
+      }
+      // No cache, return fetch response
+      return fetch(event.request);
+    })
   );
 });
 ```
@@ -126,54 +124,52 @@ A final example, demonstrating how you might handle offline pages, might include
 
 ```javascript
 // app/javascript/service_worker.js
-const CACHE_NAME = 'my-site-cache-v1';
-const OFFLINE_PAGE = '/offline'; // the route for your offline page
+const CACHE_NAME = "my-site-cache-v1";
+const OFFLINE_PAGE = "/offline"; // the route for your offline page
 
-self.addEventListener('install', (event) => {
-  console.log('Service worker installed');
+self.addEventListener("install", (event) => {
+  console.log("Service worker installed");
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-        console.log('Cache Opened');
-        return cache.addAll([OFFLINE_PAGE]);
+      console.log("Cache Opened");
+      return cache.addAll([OFFLINE_PAGE]);
     })
   );
-    self.skipWaiting();
+  self.skipWaiting();
 });
 
-self.addEventListener('activate', (event) => {
-    console.log('Service worker activated');
-    const cacheWhitelist = [CACHE_NAME];
-    event.waitUntil(
-        caches.keys().then((cacheNames) => {
-          return Promise.all(
-              cacheNames.map((cacheName) => {
-                if(cacheWhitelist.indexOf(cacheName) === -1){
-                  return caches.delete(cacheName);
-                }
-              })
-          )
-        })
-    );
-    self.clients.claim();
-});
-
-
-self.addEventListener('fetch', (event) => {
-    event.respondWith(
-      caches.match(event.request).then((response) => {
-          if(response){
-              return response;
+self.addEventListener("activate", (event) => {
+  console.log("Service worker activated");
+  const cacheWhitelist = [CACHE_NAME];
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cacheName) => {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
           }
-          return fetch(event.request).catch((err) => {
-            console.error('Fetch error:', err);
-            if (event.request.mode === 'navigate'){
-              return caches.match(OFFLINE_PAGE);
-            }
-          });
-      })
-    )
+        })
+      );
+    })
+  );
+  self.clients.claim();
 });
 
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      if (response) {
+        return response;
+      }
+      return fetch(event.request).catch((err) => {
+        console.error("Fetch error:", err);
+        if (event.request.mode === "navigate") {
+          return caches.match(OFFLINE_PAGE);
+        }
+      });
+    })
+  );
+});
 ```
 
 In this setup, we cache the content at the `/offline` route and serve that cached page when the user loses connection. Note that the page must already exist in the app and be present in the `urlsToCache` and in the app already, for this approach to work correctly.

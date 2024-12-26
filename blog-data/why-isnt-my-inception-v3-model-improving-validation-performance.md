@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-isnt-my-inception-v3-model-improving-validation-performance"
 ---
 
-Okay, let's unpack this. I’ve seen this scenario play out more times than I’d like to recall, and it’s usually a multi-faceted issue. The fact that your Inception-V3 model isn't showing improvement on the validation set suggests a breakdown somewhere in the training pipeline rather than an inherent flaw in the architecture itself. I'm going to avoid platitudes and focus on the specifics you'd likely be encountering. Let's break down common culprits.
+, let's unpack this. I’ve seen this scenario play out more times than I’d like to recall, and it’s usually a multi-faceted issue. The fact that your Inception-V3 model isn't showing improvement on the validation set suggests a breakdown somewhere in the training pipeline rather than an inherent flaw in the architecture itself. I'm going to avoid platitudes and focus on the specifics you'd likely be encountering. Let's break down common culprits.
 
 Firstly, and this is where most people trip up, is the issue of data leakage and inadequate data preprocessing. If your training and validation datasets aren't truly independent, your model is essentially memorizing the training set, and its perceived validation performance is a facade. I recall a project a few years back where we were classifying medical images. We mistakenly included a single patient's images in both the training and validation sets, leading to suspiciously high validation accuracy that completely collapsed when we tested it on genuinely unseen data. It's a classic example, but serves as a stern reminder.
 
-Here’s the technical angle on this: make absolutely certain your train/validation split is done *before* any kind of preprocessing such as data augmentation. You should be augmenting training data separately from the validation data. This seems obvious, but its neglect is surprisingly widespread. Furthermore, look critically at your data labeling. Are there ambiguities, inconsistencies, or potentially incorrect labels? Inconsistencies in labels can confuse a model during training, ultimately hindering the learning of meaningful patterns that generalize to your validation set.
+Here’s the technical angle on this: make absolutely certain your train/validation split is done _before_ any kind of preprocessing such as data augmentation. You should be augmenting training data separately from the validation data. This seems obvious, but its neglect is surprisingly widespread. Furthermore, look critically at your data labeling. Are there ambiguities, inconsistencies, or potentially incorrect labels? Inconsistencies in labels can confuse a model during training, ultimately hindering the learning of meaningful patterns that generalize to your validation set.
 
 Now, let's move onto hyperparameters and training procedures. Inception-V3, though powerful, still requires careful tuning. A learning rate that is too high can cause your model to oscillate around the optimal solution, while a learning rate that is too low can result in agonizingly slow convergence, or the model getting stuck in a local minima. The choice of optimizer, such as Adam, SGD, or RMSprop, can also play a crucial role. I've found that Adam is often a good starting point, but its performance can vary substantially depending on your particular dataset and task. Moreover, are you using a suitable batch size? Too small a batch size might cause the stochastic gradient descent to be noisy, while a batch size that's too large can lead to training stagnation, especially when combined with a small dataset. Finally, regularization techniques, such as dropout and weight decay, are often crucial in preventing overfitting and facilitating generalization to the validation set. If these aren't set appropriately, it's quite possible your model is overfitting on your training set but performing poorly on new, unseen validation data.
 
@@ -24,7 +24,7 @@ def load_and_preprocess_data(data_path, test_size=0.2):
     # Replace with your actual data loading and preprocessing logic. This is a placeholder
     images = np.random.rand(1000, 224, 224, 3) # Replace with your data loading logic
     labels = np.random.randint(0, 10, 1000) # Replace with your label loading logic
-    
+
     X_train, X_val, y_train, y_val = train_test_split(images, labels, test_size=test_size, random_state=42)
     return X_train, X_val, y_train, y_val
 
@@ -107,7 +107,7 @@ from tensorflow.keras import layers
 
 def create_model_with_finetuning(num_classes):
     base_model = tf.keras.applications.InceptionV3(include_top=False, weights='imagenet', input_shape=(224, 224, 3))
-    
+
     # First freeze all the weights so the pre-trained weights are not changed
     base_model.trainable = False
 

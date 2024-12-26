@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-trigger-an-airflow-dag-depending-on-dagrunconf"
 ---
 
-Okay, let's delve into triggering airflow dags conditionally based on the `dag_run.conf`. This is a fairly common requirement, and I've certainly tackled it multiple times in my career. The beauty, and sometimes the challenge, lies in achieving this dynamically. It's not just about passing parameters; it's about making airflow understand those parameters *before* the dag actually starts running to decide *if* it should run.
+, let's delve into triggering airflow dags conditionally based on the `dag_run.conf`. This is a fairly common requirement, and I've certainly tackled it multiple times in my career. The beauty, and sometimes the challenge, lies in achieving this dynamically. It's not just about passing parameters; it's about making airflow understand those parameters _before_ the dag actually starts running to decide _if_ it should run.
 
 The core principle here hinges on leveraging airflow's capabilities for external triggers. We typically don't directly modify the dag file for conditional execution at runtime, which is a bad practice. Instead, we set up our dag to evaluate conditions at the beginning, typically within the `start_date` context of the dag or within a very early operator, and gracefully exit if those conditions aren't met.
 
@@ -40,18 +40,18 @@ with DAG(
     catchup=False,
     tags=['example'],
 ) as dag:
-    
+
     check_start_condition = PythonOperator(
         task_id='check_start_condition',
         python_callable=check_config_condition
     )
-    
+
     # dummy task to illustrate the DAG
     dummy_task = PythonOperator(
         task_id='dummy_task',
         python_callable=lambda : print("doing something useful!")
     )
-    
+
     check_start_condition >> dummy_task
 ```
 
@@ -88,13 +88,13 @@ with DAG(
     catchup=False,
     tags=['example'],
 ) as dag:
-    
+
     check_config = PythonOperator(
         task_id='check_config',
         python_callable=check_config_condition,
         do_xcom_push=True
     )
-    
+
     exit_task = DummyOperator(
        task_id='exit_task',
        trigger_rule=TriggerRule.NONE_FAILED_MIN_ONE_SUCCESS
@@ -104,7 +104,7 @@ with DAG(
         task_id="data_processing_task",
         python_callable=lambda: print("Data processing starting")
     )
-    
+
     check_config >> [exit_task, data_processing_task]
 ```
 
@@ -126,12 +126,12 @@ def file_ready_check(**kwargs):
     # Replace this with your custom check - Example
     conf = kwargs.get('dag_run').conf or {}
     target_file = conf.get('target_file')
-    
+
     if target_file:
         return True # return true or logic of your choice
     else:
         return False
-    
+
 with DAG(
     dag_id="external_sensor_dag",
     start_date=datetime(2023, 1, 1),
@@ -139,7 +139,7 @@ with DAG(
     catchup=False,
     tags=['example'],
 ) as dag:
-    
+
     wait_for_file = TimeDeltaSensor(
         task_id='wait_for_file',
         delta=timedelta(minutes=5),
@@ -148,7 +148,7 @@ with DAG(
         timeout=timedelta(hours=1),
         python_callable=file_ready_check,
     )
-    
+
     data_processing = PythonOperator(
         task_id="data_processing",
         python_callable=lambda: print("Data processing started")
@@ -163,16 +163,16 @@ In this scenario, the `TimeDeltaSensor`, with a custom function `file_ready_chec
 
 When working with conditional DAG triggers, it's essential to keep these points in mind:
 
-*   **Error Handling:** Always handle cases where the `dag_run.conf` might be missing or invalid. Default values are essential.
-*   **Logging:** Ensure you log why a dag is skipping execution. It simplifies debugging.
-*   **Idempotency:** Design your DAGs so that if they run multiple times with the same `dag_run.conf`, they don't cause any unintended side effects.
-*   **Monitoring:** Use airflow's monitoring tools to observe DAG runs and any issues with conditional execution.
+- **Error Handling:** Always handle cases where the `dag_run.conf` might be missing or invalid. Default values are essential.
+- **Logging:** Ensure you log why a dag is skipping execution. It simplifies debugging.
+- **Idempotency:** Design your DAGs so that if they run multiple times with the same `dag_run.conf`, they don't cause any unintended side effects.
+- **Monitoring:** Use airflow's monitoring tools to observe DAG runs and any issues with conditional execution.
 
 For deeper insights, I recommend reviewing these resources:
 
-*   **The official Apache Airflow documentation:** Specifically the sections on DAG runs, triggers, sensors, and XComs.
-*   **"Data Pipelines with Apache Airflow" by Bas P. Harenslak and Julian Rutger de Ruiter:** Excellent for understanding airflow's concepts in depth.
-*   **"Designing Data-Intensive Applications" by Martin Kleppmann:** While not airflow specific, provides a framework to reason about the complexities of data pipelines and distributed systems.
-* **The source code for apache airflow:** It's really helpful to look at the internals of how these things work.
+- **The official Apache Airflow documentation:** Specifically the sections on DAG runs, triggers, sensors, and XComs.
+- **"Data Pipelines with Apache Airflow" by Bas P. Harenslak and Julian Rutger de Ruiter:** Excellent for understanding airflow's concepts in depth.
+- **"Designing Data-Intensive Applications" by Martin Kleppmann:** While not airflow specific, provides a framework to reason about the complexities of data pipelines and distributed systems.
+- **The source code for apache airflow:** It's really helpful to look at the internals of how these things work.
 
 In closing, triggering airflow dags conditionally based on `dag_run.conf` is a powerful capability. By combining careful planning with the provided techniques, you can build robust, dynamic, and efficient data pipelines. The examples should provide you with a good starting point. If you have other questions or more specific scenarios, I’m always happy to help.

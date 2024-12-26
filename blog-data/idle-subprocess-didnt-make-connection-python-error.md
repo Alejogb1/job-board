@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "idle-subprocess-didnt-make-connection-python-error"
 ---
 
-Okay so you're banging your head against the wall with this "idle subprocess didn't make connection" thing in Python yeah I've been there trust me it’s like trying to debug a circuit board blindfolded after too much coffee it's a real pain
+you're banging your head against the wall with this "idle subprocess didn't make connection" thing in Python yeah I've been there trust me it’s like trying to debug a circuit board blindfolded after too much coffee it's a real pain
 
 First things first let’s break this down real simple this error generally happens when you’re using Python’s `subprocess` module to kick off another process and for some reason that process just hangs there refusing to communicate back with your main Python script It’s not about the subprocess being broken so to speak it’s more about the communication channel between the two being choked or simply not existing
 
@@ -40,6 +40,7 @@ if __name__ == "__main__":
     else:
          print(f"stderr: {stderr}")
 ```
+
 Here we’re making sure the `stdout` `stderr` and `stdin` pipes are all connected to the parent process this will let the child talk back and also allow you to send input to the child process Now the key part here is the communicate part where you wait for the subprocess to finish and get its output if not the parent will just hang there waiting for output that will never come
 
 Next let’s see how we can set some timeouts it’s not very elegant but sometimes you have to be realistic a subprocess may never finish due to an infinite loop or something else if you just wait forever your program will be stuck forever
@@ -116,6 +117,7 @@ if __name__ == "__main__":
     else:
          print(f"stderr: {stderr}")
 ```
+
 So in this final example you read line by line and you write line by line you don’t store everything in memory only the line that you just read this allows to not be killed due to running out of memory It’s like drinking water from a river with a straw you don’t take all the river at once
 
 Oh and one more thing I once spent a full day debugging an error that ended up being because the subprocess was trying to open a file in a location it didn’t have permission to access sometimes the problem is in the subprocess itself not in your communication with it so if it can’t find a dependency or fails a permission check it will not even start and that gives you that error be vigilant

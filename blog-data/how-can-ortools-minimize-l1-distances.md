@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-ortools-minimize-l1-distances"
 ---
 
-Alright, let's tackle minimizing L1 distances using ortools. It's a problem I’ve frequently encountered, particularly when dealing with resource allocation and route optimization tasks in the past. I remember one particularly thorny situation where we had to optimize delivery routes while considering a penalty proportional to the *city block* distance, not the euclidean distance. That's when L1 optimization became crucial, and ortools proved invaluable.
+, let's tackle minimizing L1 distances using ortools. It's a problem I’ve frequently encountered, particularly when dealing with resource allocation and route optimization tasks in the past. I remember one particularly thorny situation where we had to optimize delivery routes while considering a penalty proportional to the _city block_ distance, not the euclidean distance. That's when L1 optimization became crucial, and ortools proved invaluable.
 
 Minimizing L1 distances, also known as Manhattan or taxicab distances, differs fundamentally from minimizing squared euclidean distances. Unlike squared euclidean distance which, due to its differentiability, works well with gradient-based optimization techniques, L1 distances are not differentiable at zero. This characteristic poses a challenge for many standard optimization algorithms. However, ortools, with its diverse suite of solvers, provides several avenues to effectively handle L1 minimization problems.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-time-series-data-be-resampled-interpolated-or-reshaped-for-use-in-1d-cnn-or-1d-lstm-models"
 ---
 
-Alright, let's tackle this. From my experience, handling time-series data for deep learning, particularly for 1D convolutional or LSTM networks, often requires a good amount of preprocessing. It's not uncommon to encounter datasets with inconsistent sampling rates or shapes that don't quite fit the input expectations of these models. So, let me walk you through some techniques I've found effective, focusing on resampling, interpolation, and reshaping.
+, let's tackle this. From my experience, handling time-series data for deep learning, particularly for 1D convolutional or LSTM networks, often requires a good amount of preprocessing. It's not uncommon to encounter datasets with inconsistent sampling rates or shapes that don't quite fit the input expectations of these models. So, let me walk you through some techniques I've found effective, focusing on resampling, interpolation, and reshaping.
 
 First off, understand that the goal is to prepare your time-series data so it becomes both compatible with the neural network architecture and beneficial for learning. A common issue is that your signal may not be sampled at a rate that's optimal or even consistent across different instances of the same phenomenon. Resampling addresses this directly. It's essentially converting your data from one sampling rate to another. We've got a couple of main approaches here: upsampling, which increases the sampling rate, effectively adding more data points, and downsampling, which does the opposite.
 
@@ -116,6 +116,7 @@ print(f"Number of windows: {windows.shape[0]}, Window Length: {windows.shape[1]}
 print(f"Shape of resulting tensor: {windows.shape}")
 
 ```
+
 For further reading on the theory behind signal processing, I'd recommend starting with "Digital Signal Processing" by Proakis and Manolakis, which is a solid foundational text. For more advanced techniques and implementations using python, I’d recommend anything by the likes of Alan V. Oppenheim and Steven W. Smith. Their work is extensive, covering a broad spectrum of signal analysis. Be sure to cross-reference these texts with more modern texts that delve into deep learning, to bridge the gap between fundamental theory and modern AI models.
 
 In summary, resampling, interpolation, and reshaping are not independent steps but should be chosen and combined thoughtfully to prepare your data for 1D CNNs or LSTMs. The exact methods will depend heavily on the specifics of your data and the goals of your model, but focusing on these core principles should provide a decent foundation for handling time series effectively.

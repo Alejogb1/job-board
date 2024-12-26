@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "which-apache-airflow-docker-extras-are-included"
 ---
 
-Okay, let's break down the Apache Airflow Docker extras. It's not uncommon to see confusion around this, and honestly, in my early days building data pipelines, I stumbled over this myself, leading to some frustrating deployment issues. Essentially, these "extras" are curated collections of python packages installed alongside Airflow when you use specific docker images from the official apache/airflow repository (or its derivatives). They aren't arbitrary; they're designed to streamline workflows for common use cases and minimize the ‘dependency hell’ that can arise when you're integrating various systems.
+, let's break down the Apache Airflow Docker extras. It's not uncommon to see confusion around this, and honestly, in my early days building data pipelines, I stumbled over this myself, leading to some frustrating deployment issues. Essentially, these "extras" are curated collections of python packages installed alongside Airflow when you use specific docker images from the official apache/airflow repository (or its derivatives). They aren't arbitrary; they're designed to streamline workflows for common use cases and minimize the ‘dependency hell’ that can arise when you're integrating various systems.
 
 Instead of everything being a monolithic, bloated install, Airflow uses a neat extras mechanism, allowing you to tailor the docker image to what you specifically need. Think of it as a way to specify the "plumbing" your data workflows will use without being burdened by packages you won't touch.
 
@@ -44,6 +44,7 @@ RUN if [ -n "$AIRFLOW_EXTRAS" ]; then \
       pip install "apache-airflow[${AIRFLOW_EXTRAS}]"; \
   fi
 ```
+
 Here we introduce two build-args to make our build process more flexible allowing us to specify the base airflow version and the docker extras we wish to include during build. To use this we would run `docker build --build-arg AIRFLOW_EXTRAS="amazon,cncf.kubernetes" .`
 
 **Example 2: Using the `http` extra**
@@ -69,7 +70,9 @@ USER airflow
 
 RUN pip install apache-airflow[http]
 ```
+
 Or, using the same argument driven approach as above
+
 ```dockerfile
 ARG AIRFLOW_VERSION=2.8.1
 FROM apache/airflow:${AIRFLOW_VERSION}
@@ -82,7 +85,8 @@ RUN if [ -n "$AIRFLOW_EXTRAS" ]; then \
       pip install "apache-airflow[${AIRFLOW_EXTRAS}]"; \
   fi
 ```
-This snippet leverages the built-in mechanism for declaring extras, ensuring a cleaner and more standard approach.  You can see the structure here `apache-airflow[http]` means install Airflow with the `http` extra. This is the recommended way, it avoids having to manage multiple versions of the providers.
+
+This snippet leverages the built-in mechanism for declaring extras, ensuring a cleaner and more standard approach. You can see the structure here `apache-airflow[http]` means install Airflow with the `http` extra. This is the recommended way, it avoids having to manage multiple versions of the providers.
 
 **Example 3: Data Transformation with Spark**
 
@@ -95,6 +99,7 @@ USER airflow
 
 RUN pip install apache-airflow-providers-apache-spark
 ```
+
 Using the `pip install` approach can get you started quickly, but you’ll quickly find it inflexible as the number of needed extras begins to scale. You’ll also find yourself re-installing common extras such as sql, mysql, postgres, etc.. a lot, and having to manually maintain consistent versioning. It is much better to adopt a single line approach using the extras mechanism:
 
 ```dockerfile
@@ -104,6 +109,7 @@ USER airflow
 
 RUN pip install apache-airflow[apache.spark]
 ```
+
 Again, this installs the package needed to provide spark functionality for our workflows, but you’ll generally do this using a build argument to allow for easy configuration.
 
 ```dockerfile
@@ -118,6 +124,7 @@ RUN if [ -n "$AIRFLOW_EXTRAS" ]; then \
       pip install "apache-airflow[${AIRFLOW_EXTRAS}]"; \
   fi
 ```
+
 This is now a common theme. Build-args allow us to easily and consistently specify dependencies to our docker image without having to remember the specific package names, or how to install them.
 
 **A practical note about managing your setup**

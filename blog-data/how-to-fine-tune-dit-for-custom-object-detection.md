@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-fine-tune-dit-for-custom-object-detection"
 ---
 
-Alright, let's tackle fine-tuning DiT, or Diffusion Transformer, for custom object detection. I’ve been through this process a few times now, and it can be quite involved, but the rewards in terms of accuracy and adaptability are well worth the effort. It’s not just a matter of plugging in your data and hoping for the best; we need a structured approach.
+, let's tackle fine-tuning DiT, or Diffusion Transformer, for custom object detection. I’ve been through this process a few times now, and it can be quite involved, but the rewards in terms of accuracy and adaptability are well worth the effort. It’s not just a matter of plugging in your data and hoping for the best; we need a structured approach.
 
 First off, understand that DiT, while powerful, isn’t designed for object detection straight out of the box. It’s primarily a generative model trained to produce images conditioned on various inputs. Therefore, we're not directly adapting its image generation capabilities; instead, we are leveraging its powerful visual representations for downstream object detection tasks. Fine-tuning, in this context, entails transferring knowledge from the pre-trained DiT model to our object detection pipeline. This typically involves a modification of the architecture after the transformer itself, incorporating a head suitable for bounding box prediction and classification.
 
@@ -84,6 +84,7 @@ def freeze_layers(model, num_layers_to_freeze):
 # num_layers_to_freeze = 8
 # model.dit_model = freeze_layers(model.dit_model, num_layers_to_freeze)
 ```
+
 This code demonstrates a way to freeze the layers of the `transformer` portion of the `dit_model` before training starts. You will need to adjust the `named_parameters()` filter and layer numbering to match the specific architecture of your DiT variant. The logic will vary depending on if your base DiT model uses layer blocks with specific naming conventions or if it includes other parts you might want to freeze.
 
 Finally, regarding loss function, you'll need a loss that works with both the bounding box regression and the classification problem. A popular approach combines cross-entropy loss for classification and a form of regression loss (like L1 or Smooth L1) for bounding box locations. It is important to normalize these losses appropriately and pay attention to the class imbalance in your dataset which may require the implementation of focal loss instead of vanilla cross-entropy. This next snippet shows a loss function that might work:

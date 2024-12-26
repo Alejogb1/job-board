@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-the-number-of-training-instances-affect-classification-accuracy-on-test-data"
 ---
 
-Alright, let’s unpack this. I've seen this play out numerous times, especially back when I was knee-deep in building predictive models for supply chain optimization—a world where even a fraction of a percentage point in accuracy could translate to significant real-world savings. The impact of training data volume on a classifier’s generalization capabilities, or its performance on unseen test data, isn't a linear one; it’s a nuanced relationship with several critical factors at play.
+, let’s unpack this. I've seen this play out numerous times, especially back when I was knee-deep in building predictive models for supply chain optimization—a world where even a fraction of a percentage point in accuracy could translate to significant real-world savings. The impact of training data volume on a classifier’s generalization capabilities, or its performance on unseen test data, isn't a linear one; it’s a nuanced relationship with several critical factors at play.
 
 Initially, when you have very few training instances, you’re essentially asking your model to learn from a whisper. It’s prone to overfitting, latching onto the idiosyncrasies of the limited data rather than the underlying patterns. Imagine trying to understand the rules of chess by observing only a handful of moves from a single game. The model ends up capturing noise and not the true signal. In such scenarios, classification accuracy on a separate test set is typically abysmal and highly unstable—meaning it will fluctuate wildly depending on the specific split of training and test data. The generalization error is high due to high variance.
 
@@ -99,9 +99,10 @@ accuracy = accuracy_score(y_test, y_pred)
 print(f"Accuracy with 700 training samples: {accuracy:.3f}")
 
 ```
+
 Now, by further increasing the dataset size, you likely will see minimal changes in accuracy compared to the previous snippet. If you tried increasing this to even larger dataset sizes, the trend would still plateau at some level.
 
-For deeper dives into these topics, I would recommend several excellent resources. For a theoretical grounding in statistical learning, Christopher Bishop’s *Pattern Recognition and Machine Learning* is invaluable. It lays out the mathematical foundations and offers clear explanations of concepts like bias-variance trade-off. Also, *The Elements of Statistical Learning* by Hastie, Tibshirani, and Friedman provides a comprehensive treatment of many machine learning models, including the ones we’ve used here. In addition, papers on learning curves would offer a more in-depth view of data sufficiency for various machine learning tasks; the study of ‘learning curves’ is important to understand when more data provides limited value.
+For deeper dives into these topics, I would recommend several excellent resources. For a theoretical grounding in statistical learning, Christopher Bishop’s _Pattern Recognition and Machine Learning_ is invaluable. It lays out the mathematical foundations and offers clear explanations of concepts like bias-variance trade-off. Also, _The Elements of Statistical Learning_ by Hastie, Tibshirani, and Friedman provides a comprehensive treatment of many machine learning models, including the ones we’ve used here. In addition, papers on learning curves would offer a more in-depth view of data sufficiency for various machine learning tasks; the study of ‘learning curves’ is important to understand when more data provides limited value.
 
 In practical terms, I have found that the optimal number of training instances is very problem-dependent. It involves empirically evaluating your models’ performance with different training data volumes and choosing a ‘sweet spot’ where improvements become marginal. Sometimes, focusing on data augmentation techniques, better feature engineering, or model selection ends up being more beneficial than simply adding more data.
 

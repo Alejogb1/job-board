@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-resolve-a-scalar-constraint-issue-in-pyomo"
 ---
 
-Alright, let's tackle this scalar constraint issue in pyomo. I've seen this come up more than a few times over the years, and it usually boils down to a misunderstanding of how pyomo handles indexed vs. scalar components within an optimization model. Let me unpack that a bit, based on how I've approached these situations in the past, and offer some concrete solutions.
+, let's tackle this scalar constraint issue in pyomo. I've seen this come up more than a few times over the years, and it usually boils down to a misunderstanding of how pyomo handles indexed vs. scalar components within an optimization model. Let me unpack that a bit, based on how I've approached these situations in the past, and offer some concrete solutions.
 
-Essentially, the "scalar constraint issue" manifests when pyomo expects an indexed constraint (meaning it operates over a set) but you’ve inadvertently defined a scalar one. Or, conversely, when you treat a constraint that *should* be scalar as an indexed one. This leads to errors like "unindexed component cannot be accessed using an index" or similar complaints during model creation or solution. The crux of the problem is the discrepancy in dimensionality.
+Essentially, the "scalar constraint issue" manifests when pyomo expects an indexed constraint (meaning it operates over a set) but you’ve inadvertently defined a scalar one. Or, conversely, when you treat a constraint that _should_ be scalar as an indexed one. This leads to errors like "unindexed component cannot be accessed using an index" or similar complaints during model creation or solution. The crux of the problem is the discrepancy in dimensionality.
 
-Pyomo distinguishes between *scalar* components, which are single, distinct objects, and *indexed* components, which are collections of objects defined over one or more sets. Constraints, in particular, can be either scalar or indexed, and the choice depends entirely on how you intend to use them in your model. A scalar constraint applies a single condition, while an indexed one applies a similar condition to each element in the underlying set.
+Pyomo distinguishes between _scalar_ components, which are single, distinct objects, and _indexed_ components, which are collections of objects defined over one or more sets. Constraints, in particular, can be either scalar or indexed, and the choice depends entirely on how you intend to use them in your model. A scalar constraint applies a single condition, while an indexed one applies a similar condition to each element in the underlying set.
 
 I remember an old project where we were optimizing a supply chain network. We had a constraint that dictated the total inventory held at a central warehouse couldn’t exceed a specific limit. This was a single, global constraint, and we initially tried defining it as an indexed constraint over a set representing time periods. That generated issues, of course, because the inventory limit wasn't per time period; it was across all time periods combined.
 
@@ -89,7 +89,7 @@ if results.solver.termination_condition == TerminationCondition.optimal:
 
 ```
 
-Here, `model.capacity_constraints` is an *indexed* constraint defined over the `model.FACTORIES` set. The rule, `capacity_constraint_rule`, generates a separate constraint for each element in the `FACTORIES` set. The key here is explicitly indexing the constraint using the associated set. If, for instance, you tried to define it as a scalar using a single `expr` instead of the function, you’d get an error because the constraint now needs to be aware of which factory its associated with.
+Here, `model.capacity_constraints` is an _indexed_ constraint defined over the `model.FACTORIES` set. The rule, `capacity_constraint_rule`, generates a separate constraint for each element in the `FACTORIES` set. The key here is explicitly indexing the constraint using the associated set. If, for instance, you tried to define it as a scalar using a single `expr` instead of the function, you’d get an error because the constraint now needs to be aware of which factory its associated with.
 
 **Example 3: Combining Scalar and Indexed Constraints**
 

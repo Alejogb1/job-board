@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "why-is-gpt3-fine-tuning-not-learning"
 ---
 
-Alright, let's tackle this. I’ve seen this particular headache crop up more than a few times in my career, and it’s rarely a simple case of ‘it’s broken.’ The question of why a large language model like gpt-3 seems to resist fine-tuning is nuanced, and often the devil is in the details, buried deep in data preparation, hyperparameter selection, or even just misinterpreting the feedback signals. It’s almost never a matter of the model “not learning” at all; rather, it's a failure of the process to effectively guide that learning to a desired outcome.
+, let's tackle this. I’ve seen this particular headache crop up more than a few times in my career, and it’s rarely a simple case of ‘it’s broken.’ The question of why a large language model like gpt-3 seems to resist fine-tuning is nuanced, and often the devil is in the details, buried deep in data preparation, hyperparameter selection, or even just misinterpreting the feedback signals. It’s almost never a matter of the model “not learning” at all; rather, it's a failure of the process to effectively guide that learning to a desired outcome.
 
-The first thing I typically check when encountering this is the quality and suitability of the fine-tuning dataset. In one project I worked on a few years back, we were trying to fine-tune a gpt-2 model to generate highly specific technical documentation based on a pile of existing legacy documentation. At first, it seemed like no matter what we did, the model outputted nonsensical jargon that barely resembled the existing docs. We assumed the model architecture was faulty but were soon humbled when we re-evaluated our data. What we found was that our training dataset had significant inconsistencies in style, format, and even factual information. Think of it as trying to teach a student from a textbook filled with typos, contradictory information, and multiple levels of writing styles. The model was learning *something,* just not what we wanted it to, namely, it was learning the noise rather than the underlying consistent principles we had hoped for.
+The first thing I typically check when encountering this is the quality and suitability of the fine-tuning dataset. In one project I worked on a few years back, we were trying to fine-tune a gpt-2 model to generate highly specific technical documentation based on a pile of existing legacy documentation. At first, it seemed like no matter what we did, the model outputted nonsensical jargon that barely resembled the existing docs. We assumed the model architecture was faulty but were soon humbled when we re-evaluated our data. What we found was that our training dataset had significant inconsistencies in style, format, and even factual information. Think of it as trying to teach a student from a textbook filled with typos, contradictory information, and multiple levels of writing styles. The model was learning _something,_ just not what we wanted it to, namely, it was learning the noise rather than the underlying consistent principles we had hoped for.
 
 The problem stems from the fact that large language models are pattern-recognition powerhouses. If your dataset contains inconsistent patterns, these models will happily learn and reproduce those inconsistencies, rather than converging on the desired behavior. To mitigate this, I now advocate for meticulous dataset cleaning and preparation. This includes:
 
-*   **Standardization:** Ensuring consistent formatting and style across the entire dataset.
-*   **Data Cleaning:** Removing errors, inconsistencies, and redundant information.
-*   **Data Augmentation:** If necessary, creating additional data points that enforce the desired patterns without introducing noise.
+- **Standardization:** Ensuring consistent formatting and style across the entire dataset.
+- **Data Cleaning:** Removing errors, inconsistencies, and redundant information.
+- **Data Augmentation:** If necessary, creating additional data points that enforce the desired patterns without introducing noise.
 
 Let’s look at a simplified Python example, using a hypothetical scenario involving sentiment analysis:
 
@@ -53,10 +53,10 @@ This code snippet illustrates the fundamental data preprocessing steps that can 
 
 Next, let’s consider hyperparameter tuning. Fine-tuning relies on adjusting parameters during the training process. If these parameters are not appropriately set, the model might not converge on an effective solution, despite having excellent data. The most frequently adjusted parameters usually include:
 
-*   **Learning Rate:** Controls how much the model's weights are updated in each training step. Too high, and the model might miss the optimal configuration; too low, and training could be excruciatingly slow or fall into a local minima.
-*   **Batch Size:** This defines the amount of data processed together during a training step. Using a large batch size will reduce noise but at a computational expense, while a small one increases noise but can escape local minima better.
-*   **Number of Epochs:** Determines how many times the model will cycle through your dataset. Too few, and the model will not learn enough; too many, and it will overfit.
-*   **Weight Decay:** This adds a penalty to the model’s loss function for using unnecessarily complex weights, helping to reduce overfitting.
+- **Learning Rate:** Controls how much the model's weights are updated in each training step. Too high, and the model might miss the optimal configuration; too low, and training could be excruciatingly slow or fall into a local minima.
+- **Batch Size:** This defines the amount of data processed together during a training step. Using a large batch size will reduce noise but at a computational expense, while a small one increases noise but can escape local minima better.
+- **Number of Epochs:** Determines how many times the model will cycle through your dataset. Too few, and the model will not learn enough; too many, and it will overfit.
+- **Weight Decay:** This adds a penalty to the model’s loss function for using unnecessarily complex weights, helping to reduce overfitting.
 
 To illustrate the impact of hyperparameter selection, consider this simple PyTorch snippet:
 

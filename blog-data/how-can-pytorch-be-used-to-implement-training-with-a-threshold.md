@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-pytorch-be-used-to-implement-training-with-a-threshold"
 ---
 
-Alright, let's delve into training with a threshold in PyTorch. I've certainly encountered this scenario a fair bit over the years, often stemming from the need to enforce specific constraints or behaviors during model training. It's not always a straightforward process, and the methods one chooses can have significant impacts on convergence and performance.
+, let's delve into training with a threshold in PyTorch. I've certainly encountered this scenario a fair bit over the years, often stemming from the need to enforce specific constraints or behaviors during model training. It's not always a straightforward process, and the methods one chooses can have significant impacts on convergence and performance.
 
-The core concept here is that during training, instead of simply aiming to minimize a loss function across all data points, we selectively apply that loss based on whether the output of the model exceeds or falls below a specific threshold. This kind of approach is quite useful when dealing with imbalanced datasets, or when you want the model to focus on certain regions of the output space. Let me illustrate with a hypothetical but very common scenario I faced while building a fraud detection system a few years back. We found that the model was excellent at predicting the 'no fraud' cases but consistently struggled with the genuinely fraudulent ones. We needed to make the model *pay more attention* to these problematic cases, and thresholding the loss was a key part of that solution.
+The core concept here is that during training, instead of simply aiming to minimize a loss function across all data points, we selectively apply that loss based on whether the output of the model exceeds or falls below a specific threshold. This kind of approach is quite useful when dealing with imbalanced datasets, or when you want the model to focus on certain regions of the output space. Let me illustrate with a hypothetical but very common scenario I faced while building a fraud detection system a few years back. We found that the model was excellent at predicting the 'no fraud' cases but consistently struggled with the genuinely fraudulent ones. We needed to make the model _pay more attention_ to these problematic cases, and thresholding the loss was a key part of that solution.
 
 Now, let's talk about implementation details in PyTorch. There isn't a single, built-in function that handles this directly, so we must craft it ourselves using PyTorch’s tensor operations. The basic strategy revolves around conditionally calculating the loss based on the model's output and a predefined threshold. We can achieve this using `torch.where()`, a function that provides a powerful mechanism for selectively performing tensor operations.
 
@@ -61,7 +61,7 @@ for epoch in range(50):
 
 In this first example, you can see that the `threshold_loss` function is defined to take the model output, the true targets, and a threshold as input. If an output is greater than or equal to the threshold, the loss associated with that output is multiplied by `weight_above`, otherwise by `weight_below`. This enforces the specific training behavior we want.
 
-Another scenario could be where we are dealing with regression tasks, or a situation where you want the model to push its predictions *away* from a specific threshold. In such a situation, we can apply a penalty if the predictions are closer to the threshold and reduce the penalty as we go away from it. Consider this second example, where we use mean squared error for our loss, and we want to encourage the model to predict values either above or significantly below a given threshold:
+Another scenario could be where we are dealing with regression tasks, or a situation where you want the model to push its predictions _away_ from a specific threshold. In such a situation, we can apply a penalty if the predictions are closer to the threshold and reduce the penalty as we go away from it. Consider this second example, where we use mean squared error for our loss, and we want to encourage the model to predict values either above or significantly below a given threshold:
 
 ```python
 import torch
@@ -153,7 +153,7 @@ for epoch in range(50):
 
 ```
 
-In this example, when calculating the loss with respect to targets, we are multiplying it by a factor of penalty_factor, only when the loss exceeds a given loss\_threshold. This way, the model is only penalized when the prediction is particularly far from the target, in terms of the MSE error. This type of loss function can be useful when the majority of cases have low loss values, and you want to put more weight and emphasis on the larger errors.
+In this example, when calculating the loss with respect to targets, we are multiplying it by a factor of penalty_factor, only when the loss exceeds a given loss_threshold. This way, the model is only penalized when the prediction is particularly far from the target, in terms of the MSE error. This type of loss function can be useful when the majority of cases have low loss values, and you want to put more weight and emphasis on the larger errors.
 
 A few resources I'd recommend for deeper study here include: "Deep Learning" by Goodfellow, Bengio, and Courville, which provides a comprehensive theoretical understanding of loss functions and optimization. Also, "Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron offers practical insights and examples of handling various training scenarios. Finally, for more focused material on PyTorch, the official PyTorch documentation is absolutely invaluable.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-exclude-files-from-jetbrains-change-lists"
 ---
 
-Okay, let's get into it. This is a topic I've navigated more than a few times, especially back when I was managing development on a large monolithic application. The issue of keeping certain files out of change lists in JetBrains IDEs, particularly when dealing with auto-generated files, local configuration, or anything you simply don't want committed, is surprisingly common. It's not always intuitive, and a little finesse is required.
+, let's get into it. This is a topic I've navigated more than a few times, especially back when I was managing development on a large monolithic application. The issue of keeping certain files out of change lists in JetBrains IDEs, particularly when dealing with auto-generated files, local configuration, or anything you simply don't want committed, is surprisingly common. It's not always intuitive, and a little finesse is required.
 
 Fundamentally, JetBrains IDEs, like IntelliJ IDEA or PyCharm, use version control integration to track changes. These integrations work by noticing modifications to files within your project’s scope. The challenge arises when you need to tell the IDE, “ignore these particular modifications, don’t add them to my changeset.” There's a good reason for this granularity. Committing files that should be ignored – think build artifacts or personal configurations – clutters the repository, potentially introduces conflicts and is, generally, considered poor practice.
 
@@ -28,9 +28,9 @@ build/
 
 In this example, I've told Git (and subsequently, the JetBrains IDE integration) to ignore the entire `node_modules` directory, any `.env` file, any files ending with `.env`, `dist` and `build` folders, and log files. Anything explicitly listed here will not appear in your change lists when using the “Changes” view or during commit operations.
 
-However, this only addresses *untracked* files. What happens if you accidentally added a file to git already, and then you want to start ignoring it? Git will still track changes, since the file is already in your history. This is where an entry in `.gitignore` is necessary but not sufficient. To address this, we need a way to remove it from tracking while preserving the ignored status. We can use `git rm --cached file/path` followed by a commit to exclude it without deleting the file locally. After this commit, and with the file in the `.gitignore`, the IDE will automatically recognize it as an ignored file.
+However, this only addresses _untracked_ files. What happens if you accidentally added a file to git already, and then you want to start ignoring it? Git will still track changes, since the file is already in your history. This is where an entry in `.gitignore` is necessary but not sufficient. To address this, we need a way to remove it from tracking while preserving the ignored status. We can use `git rm --cached file/path` followed by a commit to exclude it without deleting the file locally. After this commit, and with the file in the `.gitignore`, the IDE will automatically recognize it as an ignored file.
 
-My usual practice is to define ignore patterns in `.gitignore` at the project's root level, and that does the bulk of the work. However, sometimes you want to ignore *within* the project structure. Let's say I have a directory called `temp`, where I store local experimentations that I do not wish to track. I'd simply add `temp/` to the `.gitignore` at the root.
+My usual practice is to define ignore patterns in `.gitignore` at the project's root level, and that does the bulk of the work. However, sometimes you want to ignore _within_ the project structure. Let's say I have a directory called `temp`, where I store local experimentations that I do not wish to track. I'd simply add `temp/` to the `.gitignore` at the root.
 
 ```
 temp/
@@ -38,7 +38,7 @@ temp/
 
 And there it is. Now, no changes inside `temp` will bother me with unnecessary change highlights or in the changelists in the IDE. I’ve handled many projects with this approach successfully.
 
-Now, sometimes, these simple ignores do not suffice. You might need more sophisticated patterns. Let's suppose you only want to ignore `.log` files *within* a particular subdirectory. A modified `.gitignore` file will make this possible:
+Now, sometimes, these simple ignores do not suffice. You might need more sophisticated patterns. Let's suppose you only want to ignore `.log` files _within_ a particular subdirectory. A modified `.gitignore` file will make this possible:
 
 ```
 # ignore .log files anywhere
@@ -48,9 +48,9 @@ Now, sometimes, these simple ignores do not suffice. You might need more sophist
 !my-special-log/*.log
 ```
 
-This example initially ignores all `*.log` files anywhere, then explicitly *unignores* them within the `my-special-log` folder. It showcases the importance of order of rules and use of negation (`!`).
+This example initially ignores all `*.log` files anywhere, then explicitly _unignores_ them within the `my-special-log` folder. It showcases the importance of order of rules and use of negation (`!`).
 
-Furthermore, for situations where you’re working with configuration files that have a shared structure but contain local settings, you might encounter a scenario where you need to specifically exclude a certain *pattern* of files. Consider having many files in the structure `config/local-{variant_name}.properties` where the local variant names are specific to the developers. A more generic ignore rule within `.gitignore` might be something like this:
+Furthermore, for situations where you’re working with configuration files that have a shared structure but contain local settings, you might encounter a scenario where you need to specifically exclude a certain _pattern_ of files. Consider having many files in the structure `config/local-{variant_name}.properties` where the local variant names are specific to the developers. A more generic ignore rule within `.gitignore` might be something like this:
 
 ```
 config/local-*.properties

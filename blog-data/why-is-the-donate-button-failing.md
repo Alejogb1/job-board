@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-donate-button-failing"
 ---
 
-Okay, let's unpack this. A failing donate button isn't just a minor inconvenience; it's a critical issue that directly impacts an organization's ability to function, and believe me, I've seen this happen more times than I care to remember. When I was leading the development team at a non-profit a few years back, we experienced a similar situation, and it wasn't pretty. The problem with "the donate button is failing" is that it’s a symptom, not the root cause. To really address it, we need to dissect all the potential points of failure along the chain, from the user's initial click to the successful processing of the transaction.
+, let's unpack this. A failing donate button isn't just a minor inconvenience; it's a critical issue that directly impacts an organization's ability to function, and believe me, I've seen this happen more times than I care to remember. When I was leading the development team at a non-profit a few years back, we experienced a similar situation, and it wasn't pretty. The problem with "the donate button is failing" is that it’s a symptom, not the root cause. To really address it, we need to dissect all the potential points of failure along the chain, from the user's initial click to the successful processing of the transaction.
 
 First, let's consider client-side issues. These are often overlooked in the initial diagnosis, but they are crucial. The button itself might be failing to register clicks properly. This can occur due to poorly constructed html, javascript errors, or conflicts with other javascript libraries on the page. For instance, I once spent a considerable amount of time debugging a similar issue where an overly zealous javascript optimization script was inadvertently preventing the event handler attached to the button from firing, leading to a frustrating experience for users, as they were clicking seemingly nothing. It's worth noting that the button could be visually present but hidden behind another element, a common CSS error.
 
@@ -22,20 +22,23 @@ This Javascript snippet demonstrates a common problem: an error during event bin
 
 ```javascript
 // Incorrect way (common mistake):
-document.querySelector('#donateButton').addEvenListener('click', function(event) {
-  // This function is never called because of the typo
-  processDonation(event);
-});
-
+document
+  .querySelector("#donateButton")
+  .addEvenListener("click", function (event) {
+    // This function is never called because of the typo
+    processDonation(event);
+  });
 
 // Correct way:
-document.querySelector('#donateButton').addEventListener('click', function(event) {
-  processDonation(event);
-});
+document
+  .querySelector("#donateButton")
+  .addEventListener("click", function (event) {
+    processDonation(event);
+  });
 
 function processDonation(event) {
-   event.preventDefault(); // Prevent form from submitting (if using a form).
-  console.log('Donate button clicked!');
+  event.preventDefault(); // Prevent form from submitting (if using a form).
+  console.log("Donate button clicked!");
   // Perform asynchronous calls to the payment gateway
   // and update the UI
 }
@@ -49,46 +52,41 @@ Let's consider a simple server-side node.js implementation that simulates proces
 
 ```javascript
 // Server-side node.js code snippet:
-const express = require('express');
+const express = require("express");
 const app = express();
 
 app.use(express.json());
 
-
 // Incorrect way:
-app.post('/donate', (req, res) => {
-
-    // Simulate a 500 error on server processing.
-    res.status(500).json({
-      message:"There was a problem processing the donation.",
-      success:false
-      });
-
+app.post("/donate", (req, res) => {
+  // Simulate a 500 error on server processing.
+  res.status(500).json({
+    message: "There was a problem processing the donation.",
+    success: false,
+  });
 });
 
 // Correct Way:
-app.post('/donate', (req, res) => {
+app.post("/donate", (req, res) => {
   const { amount, paymentToken } = req.body;
-    if(!amount || !paymentToken){
-        return res.status(400).json({
-            message:"Amount and token required",
-            success:false
-        });
-    }
-    // Simulate successful database and payment gateway integration
+  if (!amount || !paymentToken) {
+    return res.status(400).json({
+      message: "Amount and token required",
+      success: false,
+    });
+  }
+  // Simulate successful database and payment gateway integration
   // In a real app you would validate the paymentToken with the provider
-      // and save the transaction in the database.
+  // and save the transaction in the database.
   setTimeout(() => {
-    console.log('donation processed:', amount);
-     res.status(200).json({ message: 'Donation processed successfully!', success: true });
+    console.log("donation processed:", amount);
+    res
+      .status(200)
+      .json({ message: "Donation processed successfully!", success: true });
   }, 1000);
-
 });
 
-
-
-app.listen(3000, () => console.log('Server listening on port 3000'));
-
+app.listen(3000, () => console.log("Server listening on port 3000"));
 ```
 
 Here, in the incorrect example, the API endpoint always returns a 500 error, causing the donation to fail from the user perspective even though they clicked the button. The correct example illustrates how proper handling of the donation request would involve checking for input parameters, then processing the request, and finally responding with the appropriate information. This is a simplified example, a real-world implementation would require a more robust solution including security checks. In the past I've always found it beneficial to implement a proper logging mechanism in the server to record the details of each donation request.
@@ -100,41 +98,38 @@ This is a conceptual example, as integrating with a real payment gateway require
 ```javascript
 // Conceptual Javascript example
 
-function submitDonation(amount, paymentToken){
-  fetch('https://api.paymentgateway.com/process', {
-    method: 'POST',
+function submitDonation(amount, paymentToken) {
+  fetch("https://api.paymentgateway.com/process", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       amount,
-      paymentToken
+      paymentToken,
     }),
   })
-  .then(response => {
-        if (!response.ok){
-           //Incorrect payment gateway response, notify user of an error
-           throw new Error(`Error: ${response.status}`);
-        }
+    .then((response) => {
+      if (!response.ok) {
+        //Incorrect payment gateway response, notify user of an error
+        throw new Error(`Error: ${response.status}`);
+      }
 
-        return response.json();
-    }
-    )
-   .then(data => {
-        if(data.success){
-             console.log("Payment succeeded", data);
-            // Handle success
-        } else {
-              console.log("Payment failed", data);
-             // Handle failure
-        }
-
-
-   })
-  .catch(error => {
-      console.error('Error processing payment:', error)
+      return response.json();
+    })
+    .then((data) => {
+      if (data.success) {
+        console.log("Payment succeeded", data);
+        // Handle success
+      } else {
+        console.log("Payment failed", data);
+        // Handle failure
+      }
+    })
+    .catch((error) => {
+      console.error("Error processing payment:", error);
       // Handle API call error
-  });
+    });
 }
 ```
 

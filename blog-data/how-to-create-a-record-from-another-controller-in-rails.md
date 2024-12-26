@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "how-to-create-a-record-from-another-controller-in-rails"
 ---
 
-alright, so you're trying to create a record in one rails controller from another, eh? i've been there, more times than i’d like to remember. it's one of those things that seems simple on the surface but can quickly turn into a tangled mess if you’re not careful. i remember back in the day, when i was first learning rails, i tried doing this and ended up with a controller that was basically a swiss army knife – it was doing everything and nothing well. let’s avoid that, shall we?
+, so you're trying to create a record in one rails controller from another, eh? i've been there, more times than i’d like to remember. it's one of those things that seems simple on the surface but can quickly turn into a tangled mess if you’re not careful. i remember back in the day, when i was first learning rails, i tried doing this and ended up with a controller that was basically a swiss army knife – it was doing everything and nothing well. let’s avoid that, shall we?
 
 the core issue here is decoupling. controllers ideally should be focused on handling requests and responses, not directly interacting with the database through active record models unless it’s part of their own crud operation. so, directly creating a record from another controller is generally not the recommended approach because we want to keep our logic nicely separated and our models doing what they should.
 
 let’s think about this. one way is to pass the data from the initiating controller to the other controller, and the second controller can then create the record. however that adds complexity that makes things hard to maintain if you need the operation in many places.
 
-a cleaner and more maintainable way to handle this is by using service objects or, as i often prefer, model callbacks. both methods keep the core functionality where it belongs: in the models, thus reducing the complexity of the controllers. 
+a cleaner and more maintainable way to handle this is by using service objects or, as i often prefer, model callbacks. both methods keep the core functionality where it belongs: in the models, thus reducing the complexity of the controllers.
 
 let's start with a classic example. let's say you have a `posts_controller` and a `comments_controller`. you want a comment to be created after a post is created. here’s a way to accomplish this using a model callback.
 

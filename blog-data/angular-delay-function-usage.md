@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "angular-delay-function-usage"
 ---
 
-Okay so angular delay function usage right Been there done that Probably more times than I care to admit Lets dive in
+angular delay function usage right Been there done that Probably more times than I care to admit Lets dive in
 
 The angular delay function which I assume you mean like a mechanism to introduce a pause before an action in your angular app is not something directly built in with a `delay` function like you might see in some other languages like javascript's `setTimeout` or `Promise.then` which by the way can still be used in angular but they are generally not the right choice here in my experience
 
@@ -17,12 +17,12 @@ My first encounter with this I think was probably about 7 years ago I was buildi
 You can introduce delay after an event before an action happens for instance in your template something like this
 
 ```typescript
-import { Component } from '@angular/core';
-import { Subject } from 'rxjs';
-import { delay, tap } from 'rxjs/operators';
+import { Component } from "@angular/core";
+import { Subject } from "rxjs";
+import { delay, tap } from "rxjs/operators";
 
 @Component({
-  selector: 'app-delay-example',
+  selector: "app-delay-example",
   template: `
     <button (click)="buttonClicked.next()">Click Me</button>
     <p *ngIf="message">{{ message }}</p>
@@ -30,17 +30,17 @@ import { delay, tap } from 'rxjs/operators';
 })
 export class DelayExampleComponent {
   buttonClicked = new Subject<void>();
-  message = '';
+  message = "";
 
   constructor() {
     this.buttonClicked
       .pipe(
         tap(() => {
-           this.message = 'processing...';
-         }),
+          this.message = "processing...";
+        }),
         delay(2000),
         tap(() => {
-          this.message = 'Button Clicked After Delay';
+          this.message = "Button Clicked After Delay";
         })
       )
       .subscribe();
@@ -53,13 +53,13 @@ Here the `buttonClicked` is a Subject its an observable that can manually emit v
 Another use case where `delay` becomes super useful is when you are working with user input for example a search input where you dont want to send search requests with each keystroke you want to wait until the user stops typing for a bit before sending the request. This also reduces api calls and keeps your application performant. This is a debouncing strategy I think I worked on a search input with typeahead in another app and it was extremely slow due to this
 
 ```typescript
-import { Component } from '@angular/core';
-import { Subject } from 'rxjs';
-import { delay, switchMap, debounceTime } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { Component } from "@angular/core";
+import { Subject } from "rxjs";
+import { delay, switchMap, debounceTime } from "rxjs/operators";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
-  selector: 'app-search-example',
+  selector: "app-search-example",
   template: `
     <input type="text" (input)="searchTextChanged.next($event.target.value)" />
     <ul>
@@ -74,41 +74,43 @@ export class SearchExampleComponent {
   constructor(private http: HttpClient) {
     this.searchTextChanged
       .pipe(
-         debounceTime(500),
-        switchMap(searchTerm => {
-           if(searchTerm){
-            return this.http.get<string[]>(`https://api.example.com/search?q=${searchTerm}`);
-           }
-           return [];
+        debounceTime(500),
+        switchMap((searchTerm) => {
+          if (searchTerm) {
+            return this.http.get<string[]>(
+              `https://api.example.com/search?q=${searchTerm}`
+            );
+          }
+          return [];
         })
       )
-      .subscribe(results => {
-         this.searchResults = results || [];
+      .subscribe((results) => {
+        this.searchResults = results || [];
       });
   }
 }
 ```
+
 In this case the `debounceTime` operator waits for 500 milliseconds after the user stops typing before it emits the most recent value from the input field Then the `switchMap` operator is used to cancel the previous request if a new search value is entered and then it makes a new request using the HttpClient of Angular
 As a side note using switchMap is safer for http requests as it cancels previous request if a new one starts so it is an important thing to keep in mind if you have multiple requests coming from the same source
 
 Finally another situation I dealt with was in dealing with animations For instance you need to wait a bit before an animation plays out after some event occurred you can use `delay` to make sure that animations look smoother and more natural I remember a time when I wanted a modal dialog to appear and fade in properly the delay before the transition helped a ton or else it was just a modal popping up right away
 
 ```typescript
-import { Component, HostBinding } from '@angular/core';
-import { Subject } from 'rxjs';
-import { delay, tap } from 'rxjs/operators';
+import { Component, HostBinding } from "@angular/core";
+import { Subject } from "rxjs";
+import { delay, tap } from "rxjs/operators";
 
 @Component({
-  selector: 'app-animation-example',
+  selector: "app-animation-example",
   template: `
     <button (click)="showModal.next()">Show Modal</button>
-     <div class="modal" [class.visible]="modalVisible">
-      <div class="modal-content">
-          Modal Content
-      </div>
+    <div class="modal" [class.visible]="modalVisible">
+      <div class="modal-content">Modal Content</div>
     </div>
   `,
-  styleUrls: [`
+  styleUrls: [
+    `
     .modal{
       position: fixed;
       top: 0;
@@ -124,8 +126,8 @@ import { delay, tap } from 'rxjs/operators';
       display: block;
       opacity: 1;
     }
-  `
-  ]
+  `,
+  ],
 })
 export class AnimationExampleComponent {
   showModal = new Subject<void>();
@@ -134,16 +136,17 @@ export class AnimationExampleComponent {
   constructor() {
     this.showModal
       .pipe(
-         tap(() => this.modalVisible = true),
+        tap(() => (this.modalVisible = true)),
         delay(100),
         tap(() => {
-          console.log("Modal is now visible")
+          console.log("Modal is now visible");
         })
       )
       .subscribe();
   }
 }
 ```
+
 In this example when the button is clicked the `tap` operator changes `modalVisible` to true which shows the modal. Then after a 100ms delay the other tap is called simply to showcase the delay. The css makes the opacity 1 which starts the animation after the delay
 
 The key thing to remember about using RxJS `delay` operator with observables is that you are not freezing the execution of your application you are only delaying the emission of values through the observable stream which fits perfectly well within Angulars change detection cycle

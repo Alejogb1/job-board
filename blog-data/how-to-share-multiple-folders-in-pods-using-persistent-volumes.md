@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-share-multiple-folders-in-pods-using-persistent-volumes"
 ---
 
-Okay, let's unpack this. Sharing multiple folders across pods using persistent volumes, while seemingly straightforward, often throws up some interesting challenges in practice. I've had to navigate this more than once, particularly back when I was building a microservices architecture that relied heavily on shared data stores for caching and configuration. We ran into some fairly common roadblocks, which, thankfully, led us to refine our approach. Essentially, the issue boils down to correctly structuring your persistent volume claims (pvcs) and understanding how pods interact with them within kubernetes.
+, let's unpack this. Sharing multiple folders across pods using persistent volumes, while seemingly straightforward, often throws up some interesting challenges in practice. I've had to navigate this more than once, particularly back when I was building a microservices architecture that relied heavily on shared data stores for caching and configuration. We ran into some fairly common roadblocks, which, thankfully, led us to refine our approach. Essentially, the issue boils down to correctly structuring your persistent volume claims (pvcs) and understanding how pods interact with them within kubernetes.
 
 The core problem is that a single persistent volume (pv), and consequently a single pvc, is designed to be mounted as a single directory within a pod. This isn't particularly helpful when you need different pods to access distinct subdirectories within that shared storage space. The naive approach, of course, is to simply mount the whole volume to each pod. This, while functional, often leads to chaos, permission conflicts, and ultimately, a hard-to-maintain system. It's better to think about dividing the persistent storage into logical units, each accessible by the pods that require it.
 
@@ -25,7 +25,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: standard  # Or the name of your appropriate storage class
+  storageClassName: standard # Or the name of your appropriate storage class
 
 ---
 apiVersion: v1
@@ -34,17 +34,16 @@ metadata:
   name: web-app-pod
 spec:
   containers:
-  - name: web-app
-    image: nginx
-    volumeMounts:
-    - name: shared-data
-      mountPath: /app/config
-      subPath: config  # Mounting only the config subfolder
+    - name: web-app
+      image: nginx
+      volumeMounts:
+        - name: shared-data
+          mountPath: /app/config
+          subPath: config # Mounting only the config subfolder
   volumes:
-  - name: shared-data
-    persistentVolumeClaim:
-      claimName: shared-data-pvc
-
+    - name: shared-data
+      persistentVolumeClaim:
+        claimName: shared-data-pvc
 ```
 
 In this example, the `web-app-pod` mounts the `shared-data-pvc` and then, importantly, uses the `subPath: config` to access only the `/config` directory, which we assume exists in the root of our shared persistent volume. Note the `readwritemany` access mode which is crucial for allowing multiple pods to read and potentially write to the same volume simultaneously; however, if you are using it, be aware of the potential issues regarding data integrity that might come up.
@@ -58,16 +57,16 @@ metadata:
   name: cache-service-pod
 spec:
   containers:
-  - name: cache-service
-    image: redis:latest
-    volumeMounts:
-    - name: shared-data
-      mountPath: /data
-      subPath: cache  # mounting only the cache subfolder
+    - name: cache-service
+      image: redis:latest
+      volumeMounts:
+        - name: shared-data
+          mountPath: /data
+          subPath: cache # mounting only the cache subfolder
   volumes:
-  - name: shared-data
-    persistentVolumeClaim:
-      claimName: shared-data-pvc
+    - name: shared-data
+      persistentVolumeClaim:
+        claimName: shared-data-pvc
 ```
 
 This snippet shows the `cache-service-pod` mounting the same `shared-data-pvc` but using `subPath: cache`, so it has only access to the cache directory. This gives better control and reduces the risk of overwriting or accessing something that the pod isn’t supposed to.
@@ -81,17 +80,17 @@ metadata:
   name: log-aggregator-pod
 spec:
   containers:
-  - name: log-aggregator
-    image: fluentd:latest
-    volumeMounts:
-    - name: shared-data
-      mountPath: /var/log
-      readOnly: true # this pod should only read the logs
-      subPath: logs # Mount only the logs directory
+    - name: log-aggregator
+      image: fluentd:latest
+      volumeMounts:
+        - name: shared-data
+          mountPath: /var/log
+          readOnly: true # this pod should only read the logs
+          subPath: logs # Mount only the logs directory
   volumes:
-  - name: shared-data
-    persistentVolumeClaim:
-      claimName: shared-data-pvc
+    - name: shared-data
+      persistentVolumeClaim:
+        claimName: shared-data-pvc
 ```
 
 In this final example, the `log-aggregator-pod` mounts the same `shared-data-pvc` but with a `subPath: logs`. Note here the use of `readonly: true`. This is an excellent practice to improve security and restrict access when possible. The log aggregation pod only needs to read from the folder, and we can ensure it can't accidentally or maliciously modify the data.

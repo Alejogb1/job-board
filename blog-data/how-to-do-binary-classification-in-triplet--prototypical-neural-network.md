@@ -4,15 +4,16 @@ date: "2024-12-15"
 id: "how-to-do-binary-classification-in-triplet--prototypical-neural-network"
 ---
 
-alright, so you're asking about binary classification using triplet or prototypical networks. it's a pretty common situation, and i've definitely banged my head against it a few times. these architectures weren't exactly designed for straightforward binary problems like traditional classifiers, and that's probably why you're a bit lost on it. let me break it down, based on my experiences of solving this in the past and how i typically approach it now.
+, so you're asking about binary classification using triplet or prototypical networks. it's a pretty common situation, and i've definitely banged my head against it a few times. these architectures weren't exactly designed for straightforward binary problems like traditional classifiers, and that's probably why you're a bit lost on it. let me break it down, based on my experiences of solving this in the past and how i typically approach it now.
 
-first off, remember that triplet and prototypical networks are primarily designed for *similarity learning*. they're all about embedding your data into a space where similar samples are close together and dissimilar samples are far apart. that’s fundamentally different from making a simple class prediction, which is what binary classification is about. instead, you need to twist the output space to generate a score.
+first off, remember that triplet and prototypical networks are primarily designed for _similarity learning_. they're all about embedding your data into a space where similar samples are close together and dissimilar samples are far apart. that’s fundamentally different from making a simple class prediction, which is what binary classification is about. instead, you need to twist the output space to generate a score.
 
 for example, i once worked on a project to classify satellite images of forest areas as either healthy or damaged. using a vanilla classifier with a labeled dataset didn’t give enough precision, so the team and i switched to training using a triplet network. we quickly learned that simply using the cosine similarity in embedding space did not cut it. that's because it lacked a clear threshold definition and had no notion of how to define a sample belonging to the "healthy" or "damaged" class.
 
-*triplet networks*: the core of a triplet network is learning embeddings such that an "anchor" sample is closer to a "positive" sample (from the same class) than a "negative" sample (from a different class). this is great for learning a good embedding but not directly classifying a new sample. to perform binary classification, after the embeddings are learned, you typically need to define a comparison point and a distance-based threshold.
+_triplet networks_: the core of a triplet network is learning embeddings such that an "anchor" sample is closer to a "positive" sample (from the same class) than a "negative" sample (from a different class). this is great for learning a good embedding but not directly classifying a new sample. to perform binary classification, after the embeddings are learned, you typically need to define a comparison point and a distance-based threshold.
 
 here's the general approach i found effective in the past:
+
 1. **embedding training**: train your triplet network as usual using triplet loss.
 2. **class representatives**: compute a representative embedding for each class (e.g., the mean embedding of samples of that class in the training set). you can store these or calculate them on the fly each time. we just calculate it once after training.
 3. **classification**: for a new input sample, get its embedding and compute the distance from each of the class representatives. then assign it to the class of the nearest representative. it can also help to threshold the distances.
@@ -77,7 +78,7 @@ def classify(model, data, class_representatives, threshold=0.5):
   return min_class if distance_to_min_class < threshold else None
 ```
 
-*prototypical networks*: these work by learning an embedding space and then computing class prototypes by averaging the embeddings of the class samples. classification is then done by finding the prototype closest to the embedding of a new input, so in a sense, it is also a distance-based classifier. so the implementation has some parallels with the triplet networks.
+_prototypical networks_: these work by learning an embedding space and then computing class prototypes by averaging the embeddings of the class samples. classification is then done by finding the prototype closest to the embedding of a new input, so in a sense, it is also a distance-based classifier. so the implementation has some parallels with the triplet networks.
 
 my experience with prototypical networks includes a project where we were classifying product images into categories. at some point we had to quickly expand the number of categories. prototypical networks handled it pretty smoothly, as it's trivial to add a new class just by using its embeddings to define the class prototype.
 
@@ -157,14 +158,14 @@ def classify_prototypical(model, data, prototypes, threshold=0.5):
 
 **key points and considerations:**
 
-*   **thresholding**: the distance comparison isn't enough in real-world scenarios. a threshold is often required to classify samples as belonging to a class confidently and avoid noise. setting the distance threshold can be tricky, so a good strategy is to use a validation set to find a threshold that optimizes your metrics, like precision/recall.
-*   **data selection**: for triplet training, the triplets (anchor, positive, negative) are super important. you need to pick them in a way that’s hard but not impossible, i.e., "semi-hard". if you just use random negatives, your network can often learn trivial solutions, and you get a non-converging model. for prototypical, batch composition is key. you want a good mix of samples from each class in every batch to guide the network. otherwise, the network will end up predicting the same class all the time.
-*   **embedding dimensionality**: choose this based on your data and computational limits. don't choose a very small dimension or the model will be underperforming. don't make it too large, or your training process might take too much time or will have an overfitting problem. as a general rule of thumb, it's better to start small and increase it gradually until the performance saturates.
-*   **distance metric**: i’ve used euclidean and cosine distance for the distances between embeddings, but experiment with others. this will also depend on how you choose to normalize your embeddings in the architecture itself.
-*   **normalization**: you can consider normalizing the embeddings in order to avoid small distances and get more stable behavior of your network.
-*   **regularization**: as it is a distance-based model, a weight decay parameter can be useful to avoid overfitting.
-*   **transfer learning**: instead of training from scratch, use a pre-trained model for the embedding part to speed up convergence and reduce the data requirements. if you have a decent dataset, train from scratch.
-*   **online vs offline computation of prototypes**: you can calculate the class representatives online instead of offline. for example, if you have a sliding window of data, the class representative is updated each time a new window is observed.
+- **thresholding**: the distance comparison isn't enough in real-world scenarios. a threshold is often required to classify samples as belonging to a class confidently and avoid noise. setting the distance threshold can be tricky, so a good strategy is to use a validation set to find a threshold that optimizes your metrics, like precision/recall.
+- **data selection**: for triplet training, the triplets (anchor, positive, negative) are super important. you need to pick them in a way that’s hard but not impossible, i.e., "semi-hard". if you just use random negatives, your network can often learn trivial solutions, and you get a non-converging model. for prototypical, batch composition is key. you want a good mix of samples from each class in every batch to guide the network. otherwise, the network will end up predicting the same class all the time.
+- **embedding dimensionality**: choose this based on your data and computational limits. don't choose a very small dimension or the model will be underperforming. don't make it too large, or your training process might take too much time or will have an overfitting problem. as a general rule of thumb, it's better to start small and increase it gradually until the performance saturates.
+- **distance metric**: i’ve used euclidean and cosine distance for the distances between embeddings, but experiment with others. this will also depend on how you choose to normalize your embeddings in the architecture itself.
+- **normalization**: you can consider normalizing the embeddings in order to avoid small distances and get more stable behavior of your network.
+- **regularization**: as it is a distance-based model, a weight decay parameter can be useful to avoid overfitting.
+- **transfer learning**: instead of training from scratch, use a pre-trained model for the embedding part to speed up convergence and reduce the data requirements. if you have a decent dataset, train from scratch.
+- **online vs offline computation of prototypes**: you can calculate the class representatives online instead of offline. for example, if you have a sliding window of data, the class representative is updated each time a new window is observed.
 
 **resources**:
 

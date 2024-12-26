@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-commands-be-chained-using-ecs-exec"
 ---
 
-Okay, let's talk about command chaining with `ecs-exec`. It's a topic that, admittedly, has tripped up many a developer, including myself back in the early days when we were migrating our monolithic application to ECS. I remember a particularly frustrating debugging session where we needed to trace a series of commands in a container without logging in repeatedly; that was the crucible that forged my understanding of how best to leverage command chaining.
+, let's talk about command chaining with `ecs-exec`. It's a topic that, admittedly, has tripped up many a developer, including myself back in the early days when we were migrating our monolithic application to ECS. I remember a particularly frustrating debugging session where we needed to trace a series of commands in a container without logging in repeatedly; that was the crucible that forged my understanding of how best to leverage command chaining.
 
 Now, `ecs-exec` itself, as you may know, doesn't inherently possess a direct 'chaining' mechanism in the sense of traditional shell pipelines. You won't be seeing the usual `command1 | command2` syntax. Instead, achieving a sequence of operations requires a more nuanced approach, leveraging shell scripting capabilities within the command execution context that `ecs-exec` provides. What we're fundamentally doing is constructing a mini-script within the single command parameter provided to `ecs-exec`. This single string passed is then interpreted by the container's default shell, usually `sh` or `bash`.
 
-The key is understanding that the shell *inside the container* is the interpreter, not your local shell. That's a common point of confusion. We're not chaining commands on your terminal; we're instructing the container's shell to execute a series of commands sequentially.
+The key is understanding that the shell _inside the container_ is the interpreter, not your local shell. That's a common point of confusion. We're not chaining commands on your terminal; we're instructing the container's shell to execute a series of commands sequentially.
 
 Let's consider a typical scenario, one that I’ve faced a few times, where you need to first check the existence of a file, then, based on that outcome, either print the file content or output a default message.
 
@@ -56,7 +56,7 @@ aws ecs execute-command \
 
 Here the `&&` operator allows you to run each command consecutively as a conditional sequence. The next command only runs if the previous one was successful. This offers an implicit error handling mechanism for each step which often comes handy.
 
-It's important to acknowledge the limitations. These inline scripts, while powerful, quickly become unwieldy for more intricate logic. For complex scenarios or reusable commands, crafting proper shell scripts *inside the container’s image* and calling those from `ecs-exec` is generally the preferred approach. This maintains readability, versioning, and reduces the verbosity of `ecs-exec` commands. The scripts inside the container can also be maintained and updated separately from the execution parameters.
+It's important to acknowledge the limitations. These inline scripts, while powerful, quickly become unwieldy for more intricate logic. For complex scenarios or reusable commands, crafting proper shell scripts _inside the container’s image_ and calling those from `ecs-exec` is generally the preferred approach. This maintains readability, versioning, and reduces the verbosity of `ecs-exec` commands. The scripts inside the container can also be maintained and updated separately from the execution parameters.
 
 Furthermore, security is paramount here. Remember, you're directly executing shell commands inside your containers. Make absolutely certain to sanitize inputs and avoid injecting unsanitized user data into these command strings to prevent any form of shell injection vulnerabilities, which may lead to remote code execution within the container. The principle of least privilege applies here as well - ensure the container's runtime has access only to what it requires.
 

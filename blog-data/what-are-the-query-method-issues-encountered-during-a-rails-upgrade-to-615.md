@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-query-method-issues-encountered-during-a-rails-upgrade-to-615"
 ---
 
-Alright, let's tackle this one. Upgrading to Rails 6.1.5 definitely introduces a few interesting wrinkles, particularly around query methods. It’s not always smooth sailing, and I’ve personally navigated some of these choppy waters on several projects. I remember one particularly painful incident with a legacy application – that one taught me some valuable lessons about the nuances involved. Let's delve into it.
+, let's tackle this one. Upgrading to Rails 6.1.5 definitely introduces a few interesting wrinkles, particularly around query methods. It’s not always smooth sailing, and I’ve personally navigated some of these choppy waters on several projects. I remember one particularly painful incident with a legacy application – that one taught me some valuable lessons about the nuances involved. Let's delve into it.
 
 First off, one of the primary challenges revolves around changes to how Rails handles certain types of queries, specifically those that might have relied on implicit conversions or behaviors that were more lenient in prior versions. Rails 6.1.5, aligning with more stringent database interactions, tightens up a few areas. Think of it as enforcing stricter type-checking and data handling during your database operations.
 
@@ -61,9 +61,11 @@ inactive_users = User.where("last_login_at < ? or last_login_at IS NULL", 7.days
 ```
 
 Or, perhaps more readable, using multiple queries and `or` conjunction:
+
 ```ruby
  inactive_users = User.where('last_login_at < ?', 7.days.ago).or(User.where(last_login_at: nil))
 ```
+
 This makes your logic transparent and ensures no edge cases slip through during the upgrade process.
 
 Finally, be aware of changes to query ordering, particularly with associations and aggregations. I’ve encountered situations where upgrading Rails resulted in a change of the default order returned from database queries, which caused regressions in UI and data processing. It’s essential to explicitly define the order you want in your queries.
@@ -75,6 +77,7 @@ Consider a scenario where you have a `Post` model and each post has many `Commen
 latest_post_with_comments = Post.order(created_at: :desc).first
 latest_post_with_comments.comments
 ```
+
 This query above pulls the latest post but its comments might be in any order depending on the database's handling of the relationship, and could vary post upgrade. To fix this, it is important to specify explicit ordering within the comments association:
 
 ```ruby
@@ -82,6 +85,7 @@ This query above pulls the latest post but its comments might be in any order de
 latest_post_with_comments = Post.order(created_at: :desc).first
 latest_post_with_comments.comments.order(created_at: :desc)
 ```
+
 or even better, define the order within the `Post` model directly:
 
 ```ruby

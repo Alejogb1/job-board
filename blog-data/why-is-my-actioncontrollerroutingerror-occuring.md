@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-my-actioncontrollerroutingerror-occuring"
 ---
 
-Okay, let's tackle this `ActionController::RoutingError` – a classic head-scratcher that I've certainly seen enough times in my career to warrant a thorough discussion. It's less about a single error and more about a constellation of potential misconfigurations, often stemming from a disconnect between the routes you've defined and the requests your application is receiving. Think of it like this: the Rails router acts as a traffic controller, directing incoming web requests to the appropriate controller action. When that controller can't find a matching route, it raises this error.
+, let's tackle this `ActionController::RoutingError` – a classic head-scratcher that I've certainly seen enough times in my career to warrant a thorough discussion. It's less about a single error and more about a constellation of potential misconfigurations, often stemming from a disconnect between the routes you've defined and the requests your application is receiving. Think of it like this: the Rails router acts as a traffic controller, directing incoming web requests to the appropriate controller action. When that controller can't find a matching route, it raises this error.
 
 In my past experience, debugging this has ranged from trivially simple to surprisingly complex. I remember one specific project, a large e-commerce application, where a seemingly innocuous change in a front-end form resulted in a cascade of routing errors that took half a day to fully resolve. The lesson there, and one I’ve carried forward, is to always approach this systematically. So, let's break down the common culprits.
 
@@ -35,7 +35,7 @@ get 'products/:id', to: 'products#show'    # More general route
 # because it matches that route before hitting the more specific edit route.
 ```
 
-In this case, the route for viewing products is defined *after* the route for editing a product, but since the show route’s pattern is also satisfied by a request to edit (e.g. `/products/123/edit`), the routing is incorrectly directed to `ProductsController#show`. The fix involves reordering those routes. Always make sure the more specific routes appear first.
+In this case, the route for viewing products is defined _after_ the route for editing a product, but since the show route’s pattern is also satisfied by a request to edit (e.g. `/products/123/edit`), the routing is incorrectly directed to `ProductsController#show`. The fix involves reordering those routes. Always make sure the more specific routes appear first.
 
 The order in which routes are declared matters critically. This is something that many newcomers to Rails encounter. You would think it's simple, and for the most part it is, but it's one of those subtle things that trip you up. So always check the order when debugging.
 

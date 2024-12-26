@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-an-azureml-pipeline-to-directly-pass-the-input-dataset-to-a-command-step"
 ---
 
-Okay, let's tackle this. I've spent quite a bit of time working with Azure Machine Learning pipelines, and passing datasets directly into command steps – without going through intermediate steps that create materialised files—is definitely a common challenge. There are multiple ways to achieve this, some more elegant than others, and it depends quite heavily on the specific requirements of your workflow.
+, let's tackle this. I've spent quite a bit of time working with Azure Machine Learning pipelines, and passing datasets directly into command steps – without going through intermediate steps that create materialised files—is definitely a common challenge. There are multiple ways to achieve this, some more elegant than others, and it depends quite heavily on the specific requirements of your workflow.
 
 Firstly, let's clarify what we’re trying to do. We want to take a registered Azureml dataset and have that data available directly as input to a script that is executed within a command step in an Azureml pipeline. The critical point here is "directly." We want to avoid unnecessary writes of the dataset to persistent storage (like a datastore) before the command step runs. That write operation can introduce significant delays, especially for large datasets. It's also less efficient if the next step expects the data in memory.
 
@@ -171,10 +171,10 @@ This is almost the same as the first example, with the key distinction being tha
 
 **Important Considerations and Resources**
 
-*   **Data Format:** Ensure that your `train.py` script is compatible with the format of your dataset.
-*   **Data Size:** For very large datasets, consider using data parallelism with Azure ML's distributed training capabilities. You may need to modify your `train.py` script for distributed reads of a dataset.
-*   **Environment:** Carefully manage your environment to make sure that the necessary libraries are present in the docker environment.
-*   **Data Versioning:** Keep your data versioned. Azure ML registered datasets are versioned. This ensures traceability and reproducibility in your pipeline.
+- **Data Format:** Ensure that your `train.py` script is compatible with the format of your dataset.
+- **Data Size:** For very large datasets, consider using data parallelism with Azure ML's distributed training capabilities. You may need to modify your `train.py` script for distributed reads of a dataset.
+- **Environment:** Carefully manage your environment to make sure that the necessary libraries are present in the docker environment.
+- **Data Versioning:** Keep your data versioned. Azure ML registered datasets are versioned. This ensures traceability and reproducibility in your pipeline.
 
 For detailed information, I recommend reviewing the official Microsoft Azure Machine Learning documentation. Specifically, look at the documentation on:
 

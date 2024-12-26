@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-is-the-mathematics-behind-a-quantized-tflite-model"
 ---
 
-alright, so you're asking about the math behind quantized tflite models, right? it's a pretty interesting area, and i've spent more time than i care to remember elbow deep in this stuff. i've debugged my share of models that went sideways due to quantization weirdness. let me break it down from my perspective, someone who's actually been there, seen the wonky outputs, and had to fix it.
+, so you're asking about the math behind quantized tflite models, right? it's a pretty interesting area, and i've spent more time than i care to remember elbow deep in this stuff. i've debugged my share of models that went sideways due to quantization weirdness. let me break it down from my perspective, someone who's actually been there, seen the wonky outputs, and had to fix it.
 
 basically, quantization is about representing numbers with less precision than you would with the standard 32-bit floating-point numbers (float32). these float32 values, they're great for training, but they're computationally expensive when you're running things on resource-constrained devices like phones or embedded systems. so, we downgrade to lower-bit integers to get the performance gains.
 
@@ -12,25 +12,25 @@ the core idea is to map the floating-point range to a smaller integer range. the
 
 it's not a magic shrinking process, it relies on a few key mathematical operations to make this translation work. fundamentally, it's about finding a linear transformation that takes a floating-point number and maps it to a whole number representation.
 
-first, you figure out the *scale* and *zero point*. the scale, is the multiplier needed to convert the quantized value back to an approximation of the original float value. the zero-point is like the offset that aligns the zero value in the float domain with the zero of the integer representation. this part is crucial.
+first, you figure out the _scale_ and _zero point_. the scale, is the multiplier needed to convert the quantized value back to an approximation of the original float value. the zero-point is like the offset that aligns the zero value in the float domain with the zero of the integer representation. this part is crucial.
 
 to make it clearer, suppose we have a range of floating-point numbers `[min_float, max_float]` that we want to map to int8 values ranging from `-128 to 127`.
 
 the formulas go something like this:
 
-*   `scale = (max_float - min_float) / (max_int - min_int)`
+- `scale = (max_float - min_float) / (max_int - min_int)`
 
-*   `zero_point = round(min_int - min_float / scale)`
+- `zero_point = round(min_int - min_float / scale)`
 
 here, `max_int` would be `127` and `min_int` would be `-128` for int8.
 
 the quantization process then goes like:
 
-*   `quantized_value = round(float_value / scale + zero_point)`
+- `quantized_value = round(float_value / scale + zero_point)`
 
 and to get back to approximate floating-point:
 
-*   `float_approx = (quantized_value - zero_point) * scale`
+- `float_approx = (quantized_value - zero_point) * scale`
 
 so now you are starting to see the basic formula. note that the approximation is usually not perfect and loss of information occurs because of quantization and truncation from floats to ints. these formulas do have minor variants with subtle differences in the way rounding is performed, but the underlying idea remains the same.
 
@@ -72,9 +72,9 @@ this piece of code should give you a basic idea. you will see the `dequantized` 
 
 tflite often uses per-tensor and per-axis quantization. per-tensor means a single scale and zero-point are used for an entire tensor. per-axis quantization, particularly in convolution layers, is more nuanced where different channels can have its own scale and zero-point. it's a bit more math, but you're just applying the linear quantization idea separately to the channels of the weights or activations. this improves the accuracy of quantized model. i spent a lot of time tracking down errors due to wrong quantization in a CNN for image recognition once; it was just a matter of misplacing per-tensor and per-axis quantization. that one was a headache.
 
-the mathematics also includes the specifics of how these integer operations are optimized for different architectures. for instance, special vector instructions like *simd* (single instruction, multiple data) are used on processors to multiply and add int8 numbers very efficiently. this is where all the performance gains appear. when a tflite model is executing, the underlying engine does the heavy lifting of using the quantized representations effectively.
+the mathematics also includes the specifics of how these integer operations are optimized for different architectures. for instance, special vector instructions like _simd_ (single instruction, multiple data) are used on processors to multiply and add int8 numbers very efficiently. this is where all the performance gains appear. when a tflite model is executing, the underlying engine does the heavy lifting of using the quantized representations effectively.
 
-also, it's worth looking into details related to *fused operations* which is another performance optimization technique where a series of operations, like convolution and batch normalization, are computed within a single step as a single operation. this process typically requires recalculating scales and zero-points carefully. if these operations are not well fused you get inaccurate models and slower computations as well. these optimizations aren't always simple, and it can lead to strange issues if you are not careful. i remember once my fused operation calculations were off by a factor of 2. the model outputs looked like they were generated in another universe.
+also, it's worth looking into details related to _fused operations_ which is another performance optimization technique where a series of operations, like convolution and batch normalization, are computed within a single step as a single operation. this process typically requires recalculating scales and zero-points carefully. if these operations are not well fused you get inaccurate models and slower computations as well. these optimizations aren't always simple, and it can lead to strange issues if you are not careful. i remember once my fused operation calculations were off by a factor of 2. the model outputs looked like they were generated in another universe.
 
 let's add an example about per-channel quantization.
 
@@ -106,9 +106,9 @@ def quantize_per_channel(float_tensor, min_float_vals, max_float_vals, min_int, 
              quantized_tensor[:, i, ...] = quantized_channel
         elif axis == 2:
             quantized_tensor[:, :, i, ...] = quantized_channel
-        
+
     return quantized_tensor
-    
+
 
 def dequantize_per_channel(quantized_tensor, min_float_vals, max_float_vals, min_int, max_int, axis):
     num_channels = quantized_tensor.shape[axis]
@@ -122,7 +122,7 @@ def dequantize_per_channel(quantized_tensor, min_float_vals, max_float_vals, min
              current_channel = quantized_tensor[:, :, i, ...]
         else:
             raise ValueError("unsupported axis")
-        
+
         min_float = min_float_vals[i]
         max_float = max_float_vals[i]
         scale = (max_float - min_float) / (max_int - min_int)
@@ -135,9 +135,9 @@ def dequantize_per_channel(quantized_tensor, min_float_vals, max_float_vals, min
              dequantized_tensor[:, i, ...] = dequantized_channel
         elif axis == 2:
             dequantized_tensor[:, :, i, ...] = dequantized_channel
-        
+
     return dequantized_tensor
-    
+
 # example usage with 3D tensor (e.g. weights for conv layer)
 min_int_val = -128
 max_int_val = 127
@@ -162,9 +162,9 @@ print(f"dequantized tensor:\n{dequantized_tensor}")
 
 again, check the code for usage, it should give you a practical idea. you'll see, in this example, that the quantization and dequantization occur "per channel".
 
-one last thing: sometimes, a technique called *symmetric quantization* is used where the zero-point is forced to zero, with both positive and negative values, so the range is always symmetrical around 0. then the scale is just calculated based on the maximum value in the tensor. this simplification is often used in areas where you can get away with some accuracy loss to further optimize for speed and resources.
+one last thing: sometimes, a technique called _symmetric quantization_ is used where the zero-point is forced to zero, with both positive and negative values, so the range is always symmetrical around 0. then the scale is just calculated based on the maximum value in the tensor. this simplification is often used in areas where you can get away with some accuracy loss to further optimize for speed and resources.
 
-and, just for fun, why did the quantized model cross the road? to get to the other side, *faster*! (i know, i know, i'll see myself out).
+and, just for fun, why did the quantized model cross the road? to get to the other side, _faster_! (i know, i know, i'll see myself out).
 
 if you really want to go deeper into the math, i highly recommend looking at papers by benoit jacob and skoglund (2018) on quantization, and the tflite official documentation itself, that includes a lot of details on the mathematical aspects. they include the nitty-gritty details that i've skipped here. also the books "deep learning with python" by francois chollet and "hands-on machine learning with scikit-learn, keras & tensorflow" by aurélien géron contain some very important details on quantization and optimizations.
 

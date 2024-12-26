@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-clear-apache-airflow-dag-cache-during-a-backfill"
 ---
 
-Okay, let’s tackle this. It's a scenario I’ve encountered more times than I care to remember, especially when dealing with complex, frequently updated data pipelines. Backfills, by their very nature, often highlight the pitfalls of stale DAG (Directed Acyclic Graph) definitions cached within Airflow’s components. Essentially, when you trigger a backfill, Airflow doesn't always automatically pick up the latest version of your DAG file. Instead, it might be operating on a previously parsed and cached version, leading to unexpected behavior. This cached state can manifest as tasks executing with older parameters or even missing newly added tasks entirely. So, how do we circumvent this? It’s about understanding where these caches reside and how to invalidate them reliably.
+, let’s tackle this. It's a scenario I’ve encountered more times than I care to remember, especially when dealing with complex, frequently updated data pipelines. Backfills, by their very nature, often highlight the pitfalls of stale DAG (Directed Acyclic Graph) definitions cached within Airflow’s components. Essentially, when you trigger a backfill, Airflow doesn't always automatically pick up the latest version of your DAG file. Instead, it might be operating on a previously parsed and cached version, leading to unexpected behavior. This cached state can manifest as tasks executing with older parameters or even missing newly added tasks entirely. So, how do we circumvent this? It’s about understanding where these caches reside and how to invalidate them reliably.
 
 The core issue boils down to the fact that Airflow, for performance reasons, aggressively caches DAGs. This caching occurs at multiple levels, primarily within the scheduler and webserver processes. These caches store the parsed representation of your DAG files, including tasks, dependencies, and configurations. When a backfill is initiated, the scheduler often consults these cached DAGs instead of re-parsing the file from disk, potentially ignoring any recent updates.
 
@@ -26,9 +26,9 @@ airflow dags trigger <your_dag_id> -s <start_date> -e <end_date>
 
 Let’s break this down:
 
-*   `airflow dags unpause <your_dag_id>`: This ensures the DAG is active and ready to be scheduled if it is inactive, this might be needed or not based on your dag's previous state. This is especially important if you have just uploaded a new version and it wasn’t already active.
-*   `airflow clear -a -d <your_dag_id>`: The core part for cache invalidation, this clears all task instances associated with the DAG, forcing the scheduler to re-evaluate all tasks, including any changes made since the last parse. `-a` flag indicates that we want to clear all task instances and `-d` clears the DAG runs associated to it as well.
-*   `airflow dags trigger <your_dag_id> -s <start_date> -e <end_date>`: The actual backfill initiation after clearing the cache. You need to provide the start and end dates that the backfill is meant to cover.
+- `airflow dags unpause <your_dag_id>`: This ensures the DAG is active and ready to be scheduled if it is inactive, this might be needed or not based on your dag's previous state. This is especially important if you have just uploaded a new version and it wasn’t already active.
+- `airflow clear -a -d <your_dag_id>`: The core part for cache invalidation, this clears all task instances associated with the DAG, forcing the scheduler to re-evaluate all tasks, including any changes made since the last parse. `-a` flag indicates that we want to clear all task instances and `-d` clears the DAG runs associated to it as well.
+- `airflow dags trigger <your_dag_id> -s <start_date> -e <end_date>`: The actual backfill initiation after clearing the cache. You need to provide the start and end dates that the backfill is meant to cover.
 
 This method is useful when you've made substantial alterations to a DAG and need to ensure they're applied correctly during a backfill. It’s quick but requires direct access to the Airflow CLI. It directly impacts the scheduler by forcing a re-parse, which is crucial during such scenario.
 

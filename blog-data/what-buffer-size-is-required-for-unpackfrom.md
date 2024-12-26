@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "what-buffer-size-is-required-for-unpackfrom"
 ---
 
-Okay, let's tackle this. The question of buffer size with `unpack_from` in Python's `struct` module is one that I've encountered more times than I care to count, especially back when I was working on embedded systems communication protocols. It's a seemingly simple question, but the devil is, as they say, in the details.
+, let's tackle this. The question of buffer size with `unpack_from` in Python's `struct` module is one that I've encountered more times than I care to count, especially back when I was working on embedded systems communication protocols. It's a seemingly simple question, but the devil is, as they say, in the details.
 
-The short answer, before we delve deeper, is that the buffer size required by `unpack_from` must be *at least* as large as the size of the packed data format you're attempting to unpack, *plus* any offset you specify. It's crucial not to underestimate this, or you'll run into `struct.error` exceptions, which can be quite frustrating to debug.
+The short answer, before we delve deeper, is that the buffer size required by `unpack_from` must be _at least_ as large as the size of the packed data format you're attempting to unpack, _plus_ any offset you specify. It's crucial not to underestimate this, or you'll run into `struct.error` exceptions, which can be quite frustrating to debug.
 
 The `unpack_from` method is specifically designed to work with buffer-like objects. These could be bytes, bytearrays, memoryviews, or even objects that implement the buffer protocol. It's the ability to unpack data from a specific location within these buffers that makes `unpack_from` so powerful, and equally prone to errors if the buffer is too small.
 
@@ -56,7 +56,7 @@ except struct.error as e:
 
 In this example three, we use an offset of two. The `unpack_from` will begin reading the required bytes from the buffer starting at the index specified by the offset. The buffer still contains enough bytes at the offset to fulfill the requirements of our format string. However, in example four, we have a buffer that only contains enough bytes after the offset that would fulfill the needs of the format string if no offset was specified. The result is a `struct.error`, and it informs us of the byte requirement given the offset.
 
-The error message actually spells out the exact problem: the buffer, after considering the offset, did not contain enough bytes. The total size needed is the size of the packed data *plus* the offset, so it's the size of the format string (9 bytes in our examples), plus any specified offset. So, in the final example, we needed at least 11 bytes (offset 2 + 9 bytes from the format string), but only 7 were present in the buffer after the offset.
+The error message actually spells out the exact problem: the buffer, after considering the offset, did not contain enough bytes. The total size needed is the size of the packed data _plus_ the offset, so it's the size of the format string (9 bytes in our examples), plus any specified offset. So, in the final example, we needed at least 11 bytes (offset 2 + 9 bytes from the format string), but only 7 were present in the buffer after the offset.
 
 Therefore, to get to the heart of it, you determine the minimum buffer size needed for `unpack_from` by doing the following: calculate the size of the packed data using `struct.calcsize(format_string)`. Then, add the offset.
 

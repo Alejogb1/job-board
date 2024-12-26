@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-split-a-string-in-sparql"
 ---
 
-Okay so you're asking about splitting strings in SPARQL right? Been there done that a few times it's not exactly a walk in the park if you're coming from say a Javascript or Python background where string handling is super straightforward SPARQL is more about data retrieval than complex string manipulation but we can still get it done
+you're asking about splitting strings in SPARQL right? Been there done that a few times it's not exactly a walk in the park if you're coming from say a Javascript or Python background where string handling is super straightforward SPARQL is more about data retrieval than complex string manipulation but we can still get it done
 
 First off SPARQL natively doesn't have a `split` function like you'd find in other languages No one thought this would be a problem when they designed SPARQL I guess so we're kind of left to hack our way around it using the functions that it does provide Which yeah means more complexity not really the best experience if you ask me But it is what it is we work with what we have right?
 
@@ -123,22 +123,22 @@ Just to make things clear the only thing I changed here was the separator from c
 
 **Important Considerations and Optimizations**
 
-Okay a few things to keep in mind with this method
+a few things to keep in mind with this method
 
-*   **Performance:** These recursive queries can get slow especially with very long strings or many splits It might become a problem but it is usually fine for smaller datasets in those cases you might want to optimize the way you store or get data from the database itself to avoid that
-*   **Error Handling:** You'll want to add some error handling to deal with unexpected input such as strings without delimiters Or maybe if the separator is not exactly what you expect You could do that with simple filters checking if the regex matches at all or similar checks
-*   **Character Escape:** If your separator includes special regex characters like `.` or `*` or `+` you'll need to escape them properly within your regex expressions. I once spent a few hours because of this and it was just a simple character that needed to be escaped I am sure that you will not forget that for some time
-*   **Regex flavor:** SPARQL uses a regular expression standard that is sometimes more limited than other languages so be sure that the syntax that you are using works correctly If it does not that is most likely the reason why
-*   **Edge cases:** Consider what should happen if a string has leading trailing or multiple delimiters This is one of the things where people mess up a lot when starting with this kind of solution
+- **Performance:** These recursive queries can get slow especially with very long strings or many splits It might become a problem but it is usually fine for smaller datasets in those cases you might want to optimize the way you store or get data from the database itself to avoid that
+- **Error Handling:** You'll want to add some error handling to deal with unexpected input such as strings without delimiters Or maybe if the separator is not exactly what you expect You could do that with simple filters checking if the regex matches at all or similar checks
+- **Character Escape:** If your separator includes special regex characters like `.` or `*` or `+` you'll need to escape them properly within your regex expressions. I once spent a few hours because of this and it was just a simple character that needed to be escaped I am sure that you will not forget that for some time
+- **Regex flavor:** SPARQL uses a regular expression standard that is sometimes more limited than other languages so be sure that the syntax that you are using works correctly If it does not that is most likely the reason why
+- **Edge cases:** Consider what should happen if a string has leading trailing or multiple delimiters This is one of the things where people mess up a lot when starting with this kind of solution
 
 **Further Learning**
 
 While there isn't a specific book just on SPARQL string manipulation you can deepen your knowledge by exploring these resources:
 
-*   **"Semantic Web Programming"** by John Hebeler Matthew Fisher Ryan Blace and Andrew Perez: This book goes over a lot of general topics in the area of semantic web if you are interested in more than just SPARQL it will be worth the time
-*   **W3C SPARQL 1.1 Specification:** Yes it's dry and boring but it's the ultimate source of truth on SPARQL features If there is something that you want to know for sure go to this resource you might find it useful (or not)
-*   **Various online SPARQL tutorials:** There are some pretty good tutorials available on the internet and you can usually just google "SPARQL tutorial" and learn more about this subject
-*   **The online documentation of the triple store that you use:** if you are working with a specific database like Virtuoso or Jena they might have specific functions or implementations that could help you with your problem it will be important to learn the specific quirks of your specific triple store that you are using
+- **"Semantic Web Programming"** by John Hebeler Matthew Fisher Ryan Blace and Andrew Perez: This book goes over a lot of general topics in the area of semantic web if you are interested in more than just SPARQL it will be worth the time
+- **W3C SPARQL 1.1 Specification:** Yes it's dry and boring but it's the ultimate source of truth on SPARQL features If there is something that you want to know for sure go to this resource you might find it useful (or not)
+- **Various online SPARQL tutorials:** There are some pretty good tutorials available on the internet and you can usually just google "SPARQL tutorial" and learn more about this subject
+- **The online documentation of the triple store that you use:** if you are working with a specific database like Virtuoso or Jena they might have specific functions or implementations that could help you with your problem it will be important to learn the specific quirks of your specific triple store that you are using
 
 So yeah splitting strings in SPARQL is kinda a pain it's like trying to assemble furniture with just a screwdriver and a hammer You can get the job done but it's not the most elegant or efficient process You can do it though I mean I did it and I am sure you can do it too Just be prepared to deal with some regex and recursion. The good thing is that after this no string manipulation in any language will be scary for you It's like a trial by fire and after that all other string manipulation techniques look like child's play. Or like they would say in my hometown "after suffering this you are ready for anything".
 

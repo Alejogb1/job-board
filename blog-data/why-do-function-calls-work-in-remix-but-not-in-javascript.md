@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-do-function-calls-work-in-remix-but-not-in-javascript"
 ---
 
-Okay, let's tackle this one. It's a question that brings up some crucial differences in how environments handle code execution, something I've definitely had to navigate a few times over the years, particularly when initially moving from purely front-end JavaScript to incorporating more specialized environments like those found in smart contract development.
+, let's tackle this one. It's a question that brings up some crucial differences in how environments handle code execution, something I've definitely had to navigate a few times over the years, particularly when initially moving from purely front-end JavaScript to incorporating more specialized environments like those found in smart contract development.
 
-Essentially, the core of the issue isn't about function calls *not* working in JavaScript. They certainly do. It's more about the context and execution environment specific to Remix, a web-based integrated development environment (IDE) primarily used for developing smart contracts written in Solidity (and sometimes Vyper). When you see a function 'call' working in Remix that doesn't seemingly translate directly to JavaScript, it's often because Remix is leveraging its internal tooling to interact with the compiled contract on an emulated or actual blockchain, not directly executing JavaScript within a browser context.
+Essentially, the core of the issue isn't about function calls _not_ working in JavaScript. They certainly do. It's more about the context and execution environment specific to Remix, a web-based integrated development environment (IDE) primarily used for developing smart contracts written in Solidity (and sometimes Vyper). When you see a function 'call' working in Remix that doesn't seemingly translate directly to JavaScript, it's often because Remix is leveraging its internal tooling to interact with the compiled contract on an emulated or actual blockchain, not directly executing JavaScript within a browser context.
 
 Think of it this way: JavaScript (as run in a browser or node.js environment) operates on a fairly standard model of in-memory execution and variable manipulation. We invoke functions, they execute, and they return values, all happening within the confines of that runtime. Remix, on the other hand, when interacting with smart contracts, isn’t just running JavaScript code; it’s building transactions that get sent to a blockchain and interacting with the data stored on that chain based on the state of the contract.
 
@@ -38,15 +38,15 @@ You cannot write a JavaScript equivalent function that can directly interact wit
 // Assume web3 and contract instance are already set up
 
 async function fetchStoredData() {
-    const contract = new web3.eth.Contract(contractAbi, contractAddress); // assuming contractAbi and contractAddress exist
-    const data = await contract.methods.getStoredData().call();
-    console.log("Stored Data:", data);
+  const contract = new web3.eth.Contract(contractAbi, contractAddress); // assuming contractAbi and contractAddress exist
+  const data = await contract.methods.getStoredData().call();
+  console.log("Stored Data:", data);
 }
 
 fetchStoredData();
 ```
 
-The `.call()` in this JavaScript snippet is not the same as the button click in remix. It's using the web3.js library to communicate with the blockchain via JSON-RPC request. It's a more verbose process because, to interact with the contract, we need to send a request to the blockchain node using JSON-RPC, which gets handled by web3. This, again, highlights the contrast. JavaScript is issuing instructions to *a library* that speaks to the blockchain, not directly executing the function locally.
+The `.call()` in this JavaScript snippet is not the same as the button click in remix. It's using the web3.js library to communicate with the blockchain via JSON-RPC request. It's a more verbose process because, to interact with the contract, we need to send a request to the blockchain node using JSON-RPC, which gets handled by web3. This, again, highlights the contrast. JavaScript is issuing instructions to _a library_ that speaks to the blockchain, not directly executing the function locally.
 
 **Example 2: A state-modifying function**
 
@@ -70,11 +70,13 @@ The JavaScript equivalent would be more involved:
 
 ```javascript
 async function updateStoredData(newData) {
-    const contract = new web3.eth.Contract(contractAbi, contractAddress);
-    const tx = await contract.methods.setStoredData(newData).send({from: accountAddress}); // assuming accountAddress exists
+  const contract = new web3.eth.Contract(contractAbi, contractAddress);
+  const tx = await contract.methods
+    .setStoredData(newData)
+    .send({ from: accountAddress }); // assuming accountAddress exists
 
-    console.log("Transaction Hash: ", tx.transactionHash); //transaction hash
-    //the state will change only after the transaction has been mined
+  console.log("Transaction Hash: ", tx.transactionHash); //transaction hash
+  //the state will change only after the transaction has been mined
 }
 
 updateStoredData(42);
@@ -102,13 +104,12 @@ Remix allows for easy interaction with this return data by displaying it directl
 
 ```javascript
 async function fetchNumbers() {
-    const contract = new web3.eth.Contract(contractAbi, contractAddress);
-    const returnedNumbers = await contract.methods.getNumbers().call();
+  const contract = new web3.eth.Contract(contractAbi, contractAddress);
+  const returnedNumbers = await contract.methods.getNumbers().call();
 
-    console.log("Numbers:", returnedNumbers); //will log an array [ '1', '2', '3' ]
+  console.log("Numbers:", returnedNumbers); //will log an array [ '1', '2', '3' ]
 }
-fetchNumbers()
-
+fetchNumbers();
 ```
 
 The `web3.js` library handles the process of converting blockchain specific data formats to corresponding javascript data types, as the values returned from an ethereum node are not natively javascript objects. This highlights, again, how the Remix interaction is a higher level abstraction than raw javascript with library usage.

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-is-the-local-gradient-calculated-during-backpropagation"
 ---
 
-Okay, let's tackle this one. I've spent a good chunk of my career in the trenches with neural networks, and the question of how local gradients are calculated during backpropagation is fundamental. It’s not just about memorizing formulas; it’s about understanding the mechanics of how a network learns. I remember one particularly tricky project involving a custom convolutional neural network for image segmentation where a seemingly insignificant error in my gradient calculations led to weeks of debugging. It really underscored the importance of having a solid grasp of these underlying principles.
+, let's tackle this one. I've spent a good chunk of my career in the trenches with neural networks, and the question of how local gradients are calculated during backpropagation is fundamental. It’s not just about memorizing formulas; it’s about understanding the mechanics of how a network learns. I remember one particularly tricky project involving a custom convolutional neural network for image segmentation where a seemingly insignificant error in my gradient calculations led to weeks of debugging. It really underscored the importance of having a solid grasp of these underlying principles.
 
-At its core, backpropagation is an elegant application of the chain rule of calculus. When we talk about the local gradient, we're referring to the derivative of the loss function with respect to the outputs of a specific layer, *given the gradient of the layer further up the network*. The 'local' part is key because it represents the immediate change in the loss for a small change in that layer's output, while the overall gradient propagates back, layer by layer. Think of it as a domino effect; the gradient from a later layer influences the gradient calculation for the previous one, but the local gradient is the specific 'push' each domino receives from the one after it.
+At its core, backpropagation is an elegant application of the chain rule of calculus. When we talk about the local gradient, we're referring to the derivative of the loss function with respect to the outputs of a specific layer, _given the gradient of the layer further up the network_. The 'local' part is key because it represents the immediate change in the loss for a small change in that layer's output, while the overall gradient propagates back, layer by layer. Think of it as a domino effect; the gradient from a later layer influences the gradient calculation for the previous one, but the local gradient is the specific 'push' each domino receives from the one after it.
 
 Let’s break this down in a more concrete way. We’ll look at a very common example: a fully connected layer using a standard activation function, say sigmoid or relu.
 
@@ -16,11 +16,12 @@ Let’s consider a simplified neural network layer represented by:
 `a' = activation_function(z)`
 
 Where:
-*   `w` is the weight matrix of that layer.
-*   `a` is the output of the previous layer (the input to this current layer).
-*   `b` is the bias vector.
-*   `z` is the weighted sum and bias application.
-*   `a'` is the activation function applied to the weighted sum.
+
+- `w` is the weight matrix of that layer.
+- `a` is the output of the previous layer (the input to this current layer).
+- `b` is the bias vector.
+- `z` is the weighted sum and bias application.
+- `a'` is the activation function applied to the weighted sum.
 
 During forward propagation, we calculate `z` and subsequently `a'`. During backpropagation, we're effectively going backwards: calculating derivatives with respect to `a'`, `w`, and `b`. Let's imagine we've computed the derivative of the loss function with respect to `a'`, which I'll represent as `dLoss/da'`. To make it practical, let's call `dLoss/da'` the incoming gradient (from the layer further in the network towards the loss). The goal now is to calculate the local gradients to adjust the layer's weights and bias.
 
@@ -157,4 +158,4 @@ if __name__ == '__main__':
 
 These snippets demonstrate the core concept - compute the derivative of activation function, chain it with the incoming gradient and you have the core local gradient. The gradient with respect to the parameters then are calculated using that value and the input of the layer. Additionally, notice how the `d_prev` term passes the gradient backwards to the next layer.
 
-For deeper exploration, I highly recommend starting with *Deep Learning* by Ian Goodfellow, Yoshua Bengio, and Aaron Courville. It's a comprehensive resource. Also, the original paper on backpropagation by Rumelhart, Hinton, and Williams, “Learning representations by back-propagating errors”, (Nature, vol. 323, no. 6088, pp. 533-536, 1986) provides a theoretical grounding. For a more focused mathematical treatment, *Pattern Recognition and Machine Learning* by Christopher Bishop is excellent. Lastly, looking at the source code of popular deep learning frameworks, such as TensorFlow or PyTorch, can provide further insight into how backpropagation is implemented in practice. These resources should give you all the foundational knowledge you need for understanding backpropagation and how the local gradients are calculated. I can't stress enough that this is a building block and a crucial concept to master when working with neural networks.
+For deeper exploration, I highly recommend starting with _Deep Learning_ by Ian Goodfellow, Yoshua Bengio, and Aaron Courville. It's a comprehensive resource. Also, the original paper on backpropagation by Rumelhart, Hinton, and Williams, “Learning representations by back-propagating errors”, (Nature, vol. 323, no. 6088, pp. 533-536, 1986) provides a theoretical grounding. For a more focused mathematical treatment, _Pattern Recognition and Machine Learning_ by Christopher Bishop is excellent. Lastly, looking at the source code of popular deep learning frameworks, such as TensorFlow or PyTorch, can provide further insight into how backpropagation is implemented in practice. These resources should give you all the foundational knowledge you need for understanding backpropagation and how the local gradients are calculated. I can't stress enough that this is a building block and a crucial concept to master when working with neural networks.

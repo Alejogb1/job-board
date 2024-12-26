@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "how-does-jules-streamline-bug-fixes-and-github-workflow-integration-for-developers"
 ---
 
-Okay so Jules right sounds like a cool project or maybe a person doing some serious devops magic Let's break down how this hypothetical Jules might be streamlining bug fixes and GitHub flow that whole process can be a real headache sometimes right
+Jules right sounds like a cool project or maybe a person doing some serious devops magic Let's break down how this hypothetical Jules might be streamlining bug fixes and GitHub flow that whole process can be a real headache sometimes right
 
 First off when we talk about streamlining bug fixes we're really talking about a bunch of things getting them identified quickly triaged efficiently and then patched and deployed without too much chaos The key is minimizing the time between finding a bug and having it gone that's where Jules likely shines
 
@@ -71,23 +71,22 @@ Code snippet 2 could be an example of linters in actions lets imagine a javascri
 // on every code change, specifically for the creation of a PR
 
 module.exports = {
-  "env": {
-    "browser": true,
-    "es2021": true
+  env: {
+    browser: true,
+    es2021: true,
   },
-  "extends": "eslint:recommended",
-  "parserOptions": {
-    "ecmaVersion": "latest",
-    "sourceType": "module"
+  extends: "eslint:recommended",
+  parserOptions: {
+    ecmaVersion: "latest",
+    sourceType: "module",
   },
-  "rules": {
+  rules: {
     "no-unused-vars": "warn", //warns if variables are declared but not used
-    "no-console": "warn",    // Warns when console.log statement are used in the code.
-    "semi": ["error", "always"],  // enforces semi colon at the end of statement
-    "indent": ["error", 2] // Enforces an indentation of 2 spaces.
-  }
-}
-
+    "no-console": "warn", // Warns when console.log statement are used in the code.
+    semi: ["error", "always"], // enforces semi colon at the end of statement
+    indent: ["error", 2], // Enforces an indentation of 2 spaces.
+  },
+};
 ```
 
 This config file ensures that all javascript code follows consistent style and avoids common errors making it easier to review and faster to onboard new team members as well as keep the code consistent.

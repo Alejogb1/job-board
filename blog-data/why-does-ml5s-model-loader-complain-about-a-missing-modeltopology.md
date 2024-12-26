@@ -4,13 +4,13 @@ date: "2024-12-16"
 id: "why-does-ml5s-model-loader-complain-about-a-missing-modeltopology"
 ---
 
-Alright, let's tackle this. I recall battling this particular issue a few years back when I was experimenting with a custom pose estimation model trained using TensorFlow, and later wanted to load it using ml5.js. The error, a rather persistent one, stating that `modelTopology` is missing, is actually a symptom of a mismatch in expected model formats. Let me break down why this happens and how to handle it.
+, let's tackle this. I recall battling this particular issue a few years back when I was experimenting with a custom pose estimation model trained using TensorFlow, and later wanted to load it using ml5.js. The error, a rather persistent one, stating that `modelTopology` is missing, is actually a symptom of a mismatch in expected model formats. Let me break down why this happens and how to handle it.
 
 The root cause isn’t some mysterious internal ml5.js bug, but rather, it stems from the way TensorFlow (or similar frameworks) structure model artifacts and the expectation ml5.js has about those structures. Essentially, ml5.js, specifically when loading a TensorFlow.js model, anticipates a specific organization of files within the model directory. It expects, at a minimum, a `model.json` file (which contains the model topology) along with weight files (`.bin` or similar format). The critical piece here is the `model.json` – if it's absent or malformed, you’ll see this error.
 
 Typically, this error occurs in a few common scenarios:
 
-1. **Incomplete Model Export:** When you save a TensorFlow model (or a model from another framework), it’s crucial that the saving process captures both the model's architectural definition *and* its learned weights. If the export process only saves the weights or saves them in a format that doesn't include the topology, the resulting model directory won’t have a `model.json` that ml5.js can interpret.
+1. **Incomplete Model Export:** When you save a TensorFlow model (or a model from another framework), it’s crucial that the saving process captures both the model's architectural definition _and_ its learned weights. If the export process only saves the weights or saves them in a format that doesn't include the topology, the resulting model directory won’t have a `model.json` that ml5.js can interpret.
 2. **Incorrect File Structure:** Often, the issue isn't that `model.json` is completely missing, but that it’s not where ml5.js expects it to be. ml5.js expects to find this file at the top level of the directory provided when loading. If you nest the `model.json` and weight files within subdirectories of the provided model path, it won't work.
 3. **TensorFlow Hub or Conversion Issues:** When using models from TensorFlow Hub or converting models from other frameworks to TensorFlow.js compatible formats, the conversion process might not correctly generate the required `model.json`, or might place it in a different location. This can easily happen if you’re using an automated conversion pipeline that doesn’t fully adhere to TensorFlow.js model structure requirements.
 
@@ -51,7 +51,7 @@ This Python code uses `tfjs.converters.save_keras_model` (assuming you are using
 
 **Scenario 2: Correcting the file structure for ml5.js.**
 
-Let’s say you have a `model.json`, but it's buried in a subdirectory. I've faced this more times than I'd like to admit. The solution is simply to rearrange the files or use a server that can mimic the required file structure.  If for instance, you have a folder that looks like this
+Let’s say you have a `model.json`, but it's buried in a subdirectory. I've faced this more times than I'd like to admit. The solution is simply to rearrange the files or use a server that can mimic the required file structure. If for instance, you have a folder that looks like this
 
 `my_model/
     subfolder/
@@ -70,13 +70,12 @@ No code is required, it's just manual file system manipulation. After that, you 
 let classifier;
 
 async function loadModel() {
-    const modelPath = 'my_model/';
-    classifier = await ml5.imageClassifier(modelPath);
-    console.log("Model Loaded");
+  const modelPath = "my_model/";
+  classifier = await ml5.imageClassifier(modelPath);
+  console.log("Model Loaded");
 }
 
 loadModel();
-
 ```
 
 **Scenario 3: Handling models from TensorFlow Hub or external sources.**
@@ -91,7 +90,7 @@ tensorflowjs_converter \
     /path/to/output/ml5js/model
 ```
 
-This command will convert a Tensorflow SavedModel to a format suitable for use with ml5js.  The specific flags may vary slightly based on your precise input model format. Review the `tensorflowjs` documentation for specifics.
+This command will convert a Tensorflow SavedModel to a format suitable for use with ml5js. The specific flags may vary slightly based on your precise input model format. Review the `tensorflowjs` documentation for specifics.
 
 **Recommendation for Further Learning:**
 

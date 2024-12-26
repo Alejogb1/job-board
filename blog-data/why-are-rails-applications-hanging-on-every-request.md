@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-rails-applications-hanging-on-every-request"
 ---
 
-Okay, let’s tackle this. I've seen this particular type of deadlock more times than I’d care to recount, often under the seemingly innocent guise of 'everything was working fine yesterday.' The scenario of a Rails application hanging on every request, manifesting as an eerie silence where responsiveness should be, is frequently rooted in concurrency issues, resource exhaustion, or misconfigured components. It's almost never a single smoking gun, but rather a confluence of factors that, when aligned poorly, bring your application to its knees.
+, let’s tackle this. I've seen this particular type of deadlock more times than I’d care to recount, often under the seemingly innocent guise of 'everything was working fine yesterday.' The scenario of a Rails application hanging on every request, manifesting as an eerie silence where responsiveness should be, is frequently rooted in concurrency issues, resource exhaustion, or misconfigured components. It's almost never a single smoking gun, but rather a confluence of factors that, when aligned poorly, bring your application to its knees.
 
 From experience, I recall a rather large e-commerce platform where we had this exact problem. It was a frantic, all-hands-on-deck situation, with customer service getting hammered, and development teams scrambling. The culprit, in that instance, turned out to be a combination of poorly configured database connection pooling and an unchecked background job queue that had spiraled into a resource-hogging vortex. It taught me a lot about anticipating and planning for scale.
 
@@ -124,10 +124,10 @@ This provides important information about queue status. When troubleshooting a h
 
 To deepen your understanding, consider diving into the following resources:
 
-*   **"Designing Data-Intensive Applications" by Martin Kleppmann:** This book provides a detailed overview of many aspects of distributed systems, including concepts vital to understanding concurrency and bottlenecks.
-*   **"Database Internals: A Deep Dive into How Distributed Data Systems Work" by Alex Petrov:** Essential for understanding how databases work and how to properly manage and tune them to meet performance demands.
-*   **Ruby documentation for threading and concurrency primitives:** The core Ruby documentation on `Thread`, `Mutex`, and other threading features provides an important foundational understanding.
-*   **Rails Guides:** The official Rails documentation on database connections and performance is crucial for understanding framework-specific best practices.
-*   **Monitoring tool documentation (e.g., Prometheus, Datadog):** Learning to use monitoring tools effectively is crucial for diagnosing issues like these. The official documentation of your monitoring stack is key.
+- **"Designing Data-Intensive Applications" by Martin Kleppmann:** This book provides a detailed overview of many aspects of distributed systems, including concepts vital to understanding concurrency and bottlenecks.
+- **"Database Internals: A Deep Dive into How Distributed Data Systems Work" by Alex Petrov:** Essential for understanding how databases work and how to properly manage and tune them to meet performance demands.
+- **Ruby documentation for threading and concurrency primitives:** The core Ruby documentation on `Thread`, `Mutex`, and other threading features provides an important foundational understanding.
+- **Rails Guides:** The official Rails documentation on database connections and performance is crucial for understanding framework-specific best practices.
+- **Monitoring tool documentation (e.g., Prometheus, Datadog):** Learning to use monitoring tools effectively is crucial for diagnosing issues like these. The official documentation of your monitoring stack is key.
 
 In summary, a Rails application hanging on all requests is rarely a single issue. It's often an indication of resource contention, concurrency problems, or misconfigured settings. By methodically examining thread pool utilization, database connection pool status, potential deadlocks, and background job queues, and by utilizing proper monitoring, you can identify and address the underlying problems and restore the responsiveness of your application. My experience has taught me that thorough monitoring is the most reliable way to catch these problems early, long before they turn into a major outage.

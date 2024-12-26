@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-zeitwerk-collapsing-namespaces-to-the-root-level"
 ---
 
-Alright, let’s tackle this namespace collapse issue with Zeitwerk; it’s a puzzle I've certainly encountered in past projects, and it's not as straightforward as it initially seems. From my experience, the root cause isn't some inherent flaw in Zeitwerk itself but rather a particular interaction between how it infers namespaces and how your application's file structure is organized, particularly if you're not following its expected conventions strictly. The 'collapsing' effect where everything appears at the root level is actually a consequence of Zeitwerk not being able to identify the proper intended namespace from the directory structure and filename combination.
+, let’s tackle this namespace collapse issue with Zeitwerk; it’s a puzzle I've certainly encountered in past projects, and it's not as straightforward as it initially seems. From my experience, the root cause isn't some inherent flaw in Zeitwerk itself but rather a particular interaction between how it infers namespaces and how your application's file structure is organized, particularly if you're not following its expected conventions strictly. The 'collapsing' effect where everything appears at the root level is actually a consequence of Zeitwerk not being able to identify the proper intended namespace from the directory structure and filename combination.
 
 Zeitwerk operates on the principle of convention-over-configuration, which means it's designed to automatically determine the namespace based on file paths and class names. If the directory structure doesn't line up with the desired namespaces, or if there's a naming conflict, you’ll see that 'collapse'. For instance, it's very common for new Ruby on Rails developers or those migrating older projects to stumble upon this behavior. I recall one such situation a few years ago, working on a legacy project where models were initially nested deeper than the standard app/models structure. Zeitwerk, by default, will interpret files within, let's say, `app/models/legacy/users.rb` as belonging to the `Users` constant under the root namespace, unless explicitly told otherwise, instead of `Legacy::Users`. So instead of `Legacy::Users`, you might find a conflict with `::Users` if you've got a file directly in app/models like `app/models/users.rb`.
 
@@ -108,6 +108,7 @@ end
 ```
 
 And if `app/clients.rb` is intended to be root level we should rename it appropriately:
+
 ```ruby
 # app/clients.rb
 class AppClient
@@ -119,6 +120,7 @@ class AppClient
   end
 end
 ```
+
 Now you can correctly access your Api Client via `Api::Client` and your root level client via `AppClient`.
 
 **Example 3: Explicit Namespace Declarations**
@@ -137,6 +139,7 @@ end
 ```
 
 And in your Zeitwerk configuration (for example, in `config/application.rb` or an initializer):
+
 ```ruby
 # config/application.rb
 module MyApplication
@@ -151,6 +154,7 @@ module MyApplication
   end
 end
 ```
+
 With this configuration, you are telling Zeitwerk to treat the folder `workers` as a module called `Workers` in the `app/lib` folder.
 
 This example illustrates how to tweak Zeitwerk’s inflector to accommodate specific directory structures and override the default behavior where it would likely put `BackgroundJobs` into the root namespace.

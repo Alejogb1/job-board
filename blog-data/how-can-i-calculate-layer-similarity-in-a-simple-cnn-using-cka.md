@@ -4,21 +4,21 @@ date: "2024-12-23"
 id: "how-can-i-calculate-layer-similarity-in-a-simple-cnn-using-cka"
 ---
 
-Alright, let's tackle layer similarity in a convolutional neural network using centered kernel alignment (CKA). This is a question I've encountered more times than I can count, often in the context of understanding feature representations across different stages of a network. It's not just about having a theoretical understanding; it's about seeing how different layers learn and what insights those similarities (or dissimilarities) might provide. I've personally used this in projects ranging from optimizing network architectures to debugging training issues that were otherwise quite elusive.
+, let's tackle layer similarity in a convolutional neural network using centered kernel alignment (CKA). This is a question I've encountered more times than I can count, often in the context of understanding feature representations across different stages of a network. It's not just about having a theoretical understanding; it's about seeing how different layers learn and what insights those similarities (or dissimilarities) might provide. I've personally used this in projects ranging from optimizing network architectures to debugging training issues that were otherwise quite elusive.
 
 The core idea behind CKA is to compare two sets of data representations, effectively measuring the similarity of their underlying structures, without being sensitive to rotations, scaling, or other linear transformations. In this case, our "data representations" are the activations of different layers in the convolutional neural network when presented with an input batch.
 
 Here's a breakdown of how to calculate CKA, along with python examples illustrating the process:
 
-First, remember we're aiming to quantify the similarity between activations from two different layers. We are not comparing weights directly. CKA works by first computing a kernel matrix for each layer's activations. The kernel matrix measures the similarity between all pairs of data points *within* the activation space of that layer. Then, we compare these kernel matrices themselves.
+First, remember we're aiming to quantify the similarity between activations from two different layers. We are not comparing weights directly. CKA works by first computing a kernel matrix for each layer's activations. The kernel matrix measures the similarity between all pairs of data points _within_ the activation space of that layer. Then, we compare these kernel matrices themselves.
 
 Here’s a high-level overview of the steps:
 
 1.  **Forward Pass:** Pass a batch of data through the network and obtain the activations of the layers you want to compare. We'll denote these as ‘x’ and ‘y’ for layers x and y respectively. This means taking intermediate outputs of the network before any pooling, activation functions or other changes to the tensor after specific convolutional layer.
 
-2.  **Kernel Matrix Computation:** Compute a kernel matrix for each layer’s activations. A common and effective kernel to use here is the linear kernel (basically a dot product) which makes the code simpler and faster to execute for large activation tensors. If *xi* and *xj* are two activation vectors (flattened as necessary) from the same layer then the entry *Kij* of kernel matrix K is *xi^T xj*. Similarly, if *yi* and *yj* are two activation vectors (flattened as necessary) from the second layer, the matrix *L* has entries *Lij = yi^T yj*.
+2.  **Kernel Matrix Computation:** Compute a kernel matrix for each layer’s activations. A common and effective kernel to use here is the linear kernel (basically a dot product) which makes the code simpler and faster to execute for large activation tensors. If _xi_ and _xj_ are two activation vectors (flattened as necessary) from the same layer then the entry _Kij_ of kernel matrix K is _xi^T xj_. Similarly, if _yi_ and _yj_ are two activation vectors (flattened as necessary) from the second layer, the matrix _L_ has entries _Lij = yi^T yj_.
 
-3.  **Centering the Kernel Matrix:** Before performing the CKA computation, we need to center the kernel matrices (K and L). Centering involves subtracting the mean of each row and each column from each element in the matrix, and adding the overall mean back to every element. This removes any bias in similarity measurements. A formula for doing this for matrix K is *Kcentered = K - 1n * K - K * 1n + 1n * K * 1n*. *1n* is a matrix of all ones of size nxn, where n is the number of data points.
+3.  **Centering the Kernel Matrix:** Before performing the CKA computation, we need to center the kernel matrices (K and L). Centering involves subtracting the mean of each row and each column from each element in the matrix, and adding the overall mean back to every element. This removes any bias in similarity measurements. A formula for doing this for matrix K is _Kcentered = K - 1n _ K - K _ 1n + 1n _ K _ 1n_. _1n_ is a matrix of all ones of size nxn, where n is the number of data points.
 
 4.  **CKA Calculation:** The CKA score between two centered kernel matrices, K and L, is then computed as: `CKA(K, L) = trace(K L^T) / sqrt(trace(K K^T) * trace(L L^T))`. The trace is the sum of diagonal elements. This CKA value will always be between 0 and 1, with 1 indicating identical similarity structure and 0 indicating maximum dissimilarity.
 
@@ -71,7 +71,7 @@ if __name__ == '__main__':
     print(f"The computed CKA value between the layers: {cka_value}")
 ```
 
-This first example demonstrates the core logic. However, sometimes we need to perform this across more than just two layers. Let's say you want to compare *all* pairwise layer activations within the network. I had a situation once where visualizing the heatmap of pairwise CKA values revealed a crucial bottleneck in information flow, allowing me to quickly diagnose and rectify the issue.
+This first example demonstrates the core logic. However, sometimes we need to perform this across more than just two layers. Let's say you want to compare _all_ pairwise layer activations within the network. I had a situation once where visualizing the heatmap of pairwise CKA values revealed a crucial bottleneck in information flow, allowing me to quickly diagnose and rectify the issue.
 
 Here’s the second code example that demonstrates how to calculate pairwise CKA between multiple layers:
 
@@ -248,6 +248,7 @@ if __name__ == '__main__':
   print("Computed CKA matrix using subset: \n",cka_matrix_subset)
 
 ```
-As for resources, I would recommend checking out the original CKA paper, "Similarity of Neural Network Representations Revisited" by Kornblith et al. (available on arXiv). This will provide you with a deeper dive into the theoretical underpinnings.  For practical implementations, the "Interpretable Machine Learning" book by Christoph Molnar, though not directly about CKA, covers representation similarity concepts well and links them to interpretability practices.
+
+As for resources, I would recommend checking out the original CKA paper, "Similarity of Neural Network Representations Revisited" by Kornblith et al. (available on arXiv). This will provide you with a deeper dive into the theoretical underpinnings. For practical implementations, the "Interpretable Machine Learning" book by Christoph Molnar, though not directly about CKA, covers representation similarity concepts well and links them to interpretability practices.
 
 Hopefully this helps clarify the process, and gives you a good starting point for using CKA in your own projects. It’s a powerful tool for understanding the inner workings of your neural networks.

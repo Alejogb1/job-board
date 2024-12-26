@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "modelchange-angular-event-explanation"
 ---
 
-Alright so you're asking about model change events in Angular I get it I've been there man it's like diving into a pool that's sometimes crystal clear and other times a murky swamp depends on what you're touching
+so you're asking about model change events in Angular I get it I've been there man it's like diving into a pool that's sometimes crystal clear and other times a murky swamp depends on what you're touching
 
 So basically when we talk about model changes in Angular we're usually referring to how Angular keeps track of alterations to your data the data that drives your UI think of it like the brain of your application and the UI is just its visible projection you mess with the brain the UI needs to know right? That's the job of change detection
 
-Angular uses a mechanism to detect when data bound to the template changes It's not some magic pixie dust it's actually a pretty clever system This system works its magic with something called zones This zone wraps your Angular app and allows it to detect any asynchronous operations like HTTP requests setTimeouts or event listeners like clicks and inputs when these actions happen Angular knows that something *might* have changed and triggers a check
+Angular uses a mechanism to detect when data bound to the template changes It's not some magic pixie dust it's actually a pretty clever system This system works its magic with something called zones This zone wraps your Angular app and allows it to detect any asynchronous operations like HTTP requests setTimeouts or event listeners like clicks and inputs when these actions happen Angular knows that something _might_ have changed and triggers a check
 
 Now the real question is what triggers this check for model changes specifically well there are a few usual suspects
 
@@ -27,50 +27,51 @@ This happened to me once when I was building a tool that managed user profiles T
 **Example 1 Mutating Array no detection:**
 
 ```typescript
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
-  selector: 'app-my-component',
+  selector: "app-my-component",
   template: `
     <ul>
-      <li *ngFor="let item of items">{{item.name}}</li>
+      <li *ngFor="let item of items">{{ item.name }}</li>
     </ul>
     <button (click)="addItem()">Add Item</button>
     <button (click)="modifyItem()">Modify First Item</button>
-
   `,
 })
 export class MyComponent {
-  items = [{name: 'Item 1'},{name: 'Item 2'}];
+  items = [{ name: "Item 1" }, { name: "Item 2" }];
 
   addItem() {
-    this.items.push({name: 'Item 3'});
+    this.items.push({ name: "Item 3" });
   }
   modifyItem() {
-    this.items[0].name = 'modified item'; // MUTATION Angular will NOT notice this change
+    this.items[0].name = "modified item"; // MUTATION Angular will NOT notice this change
   }
 }
 ```
+
 The `addItem` function will trigger change detection and update the list but the `modifyItem` will do nothing to the UI
 
 **Example 2 Object Mutation no detection:**
+
 ```typescript
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
-  selector: 'app-my-component',
+  selector: "app-my-component",
   template: `
     <div>
-    {{ myObject.name }}
+      {{ myObject.name }}
     </div>
     <button (click)="modifyObject()">Modify Object</button>
   `,
 })
 export class MyComponent {
-  myObject = { name: 'Initial Name' };
+  myObject = { name: "Initial Name" };
 
   modifyObject() {
-    this.myObject.name = 'New Name'; // Mutation, NO change detection here
+    this.myObject.name = "New Name"; // Mutation, NO change detection here
   }
 }
 ```
@@ -78,30 +79,32 @@ export class MyComponent {
 **Example 3 Creating new references Detection:**
 
 ```typescript
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
-  selector: 'app-my-component',
+  selector: "app-my-component",
   template: `
     <ul>
-      <li *ngFor="let item of items">{{item.name}}</li>
+      <li *ngFor="let item of items">{{ item.name }}</li>
     </ul>
     <button (click)="addItem()">Add Item</button>
     <button (click)="modifyItem()">Modify First Item</button>
-
   `,
 })
 export class MyComponent {
-  items = [{name: 'Item 1'},{name: 'Item 2'}];
+  items = [{ name: "Item 1" }, { name: "Item 2" }];
 
   addItem() {
-    this.items = [...this.items, {name: 'Item 3'}] // New reference, triggers change detection
+    this.items = [...this.items, { name: "Item 3" }]; // New reference, triggers change detection
   }
   modifyItem() {
-    this.items = this.items.map((item, index) => index === 0 ? {...item, name: 'modified item'} : item ); // New reference, triggers change detection
+    this.items = this.items.map((item, index) =>
+      index === 0 ? { ...item, name: "modified item" } : item
+    ); // New reference, triggers change detection
   }
 }
 ```
+
 Notice that the difference between `Example 1` and `Example 3` is that instead of mutating the array directly we are creating a copy using spread syntax and updating the array which Angular will correctly notice
 
 **Solution:**
@@ -118,9 +121,10 @@ So what to do? Here are the main points to keep in mind
 **Change Detection Strategy:** Consider `ChangeDetectionStrategy.OnPush` for optimizing component updates if you have an in-depth understanding of Angular change detection and it's not needed in every case scenario
 
 **Deep Dive Resources:** For more in-depth understanding on change detection in Angular you can check resources like:
-*  "Angular Development with TypeScript" by Yakov Fain and Anton Moiseev which explains change detection in great detail
-* "Understanding Angular Change Detection" by Max Koretskyi is another must read for understanding Angular change detection
-* Look into "Angular Advanced Series" which covers this topic in detail
+
+- "Angular Development with TypeScript" by Yakov Fain and Anton Moiseev which explains change detection in great detail
+- "Understanding Angular Change Detection" by Max Koretskyi is another must read for understanding Angular change detection
+- Look into "Angular Advanced Series" which covers this topic in detail
 
 The Angular change detection mechanism is complicated and it's normal to be confused at the beginning even I was lost sometimes and that is why I write these responses on stackoverflow you always learn something new even when you have experience
 

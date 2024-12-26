@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-isnt-my-custom-constraintlayout-preview-working"
 ---
 
-Okay, let's tackle this. It's a frustration I've encountered more times than I care to recall, particularly in the early days of ConstraintLayout. You’ve built what seems like a perfectly reasonable layout using a custom `ConstraintLayout`, and yet the preview is showing…nothing, or something completely unexpected. I've been there; spent hours staring at XML, convinced I was losing my mind, only to discover a seemingly minor detail was the culprit. The issue is rarely a single, universally applicable cause, but rather a confluence of factors, often centered around how you’ve wired up your custom view within the ConstraintLayout ecosystem.
+, let's tackle this. It's a frustration I've encountered more times than I care to recall, particularly in the early days of ConstraintLayout. You’ve built what seems like a perfectly reasonable layout using a custom `ConstraintLayout`, and yet the preview is showing…nothing, or something completely unexpected. I've been there; spent hours staring at XML, convinced I was losing my mind, only to discover a seemingly minor detail was the culprit. The issue is rarely a single, universally applicable cause, but rather a confluence of factors, often centered around how you’ve wired up your custom view within the ConstraintLayout ecosystem.
 
 Firstly, let’s talk about the core mechanism. `ConstraintLayout` relies heavily on its internal solver to resolve the positioning and sizing of its children based on the constraints you define. This solver needs accurate information about the views it's handling. When you introduce a custom view, the framework is essentially unaware of how this view should participate in the constraint calculations unless you provide explicit guidance. This guidance typically comes in the form of how you've overridden your custom view's `onMeasure` method and how you've defined attributes for use within the `ConstraintLayout`. If any of this is lacking, or incorrect, the preview (and sometimes runtime behavior) will predictably fall apart.
 
@@ -62,13 +62,15 @@ public class CircularProgressBar extends View {
     }
 }
 ```
+
 Here, we are ensuring the view handles `MeasureSpec` properly, returning the `desiredSize` if the spec allows it or ensuring a valid dimension if not. This allows the `ConstraintLayout` to understand the view's size. Without this, the view wouldn't know how to size itself.
 
 **Snippet 2: Using Custom Attributes Correctly**
 
 Here, we show how to declare and use custom attributes.
 
-*attrs.xml*
+_attrs.xml_
+
 ```xml
 <resources>
    <declare-styleable name="CircularProgressBar">
@@ -77,7 +79,8 @@ Here, we show how to declare and use custom attributes.
 </resources>
 ```
 
-*CircularProgressBar.java*
+_CircularProgressBar.java_
+
 ```java
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -203,6 +206,7 @@ public class CircularProgressBar extends View {
 }
 
 ```
+
 Notice that the drawing of the arc in `onDraw` does not change the dimensions of the view, instead it just draws a fraction of the circle and will not affect layout. We would use `invalidate()` which will cause a redraw after a change. Avoid things like view resizing or additional layout calculations after `onMeasure` and `onLayout` as this would make the constraint system confused and result in display issues.
 
 In summary, debugging these issues often comes down to a systematic approach. Double check the handling of measurement spec, custom attributes and ensure that there are no unexpected calculations that alter view dimensions after the initial layout phase within your custom views. For further reading, I recommend you consult the official Android documentation on creating custom views, specifically paying attention to `onMeasure` and `onDraw` lifecycles. Also, "Android Programming: The Big Nerd Ranch Guide" offers a good, practical explanation of custom view development and can help you internalize these important concepts. "Effective Java" by Joshua Bloch provides general tips on proper object lifecycle that can be indirectly beneficial. Remember, building good custom views is an iterative process, so persistence and methodical troubleshooting are key.

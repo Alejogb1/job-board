@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "symbol-at-the-end-of-define-statement"
 ---
 
-Okay so you're asking about that weird symbol at the end of a `define` statement right specifically in the context of some programming language or tool well I've been there man I've spent hours staring at seemingly innocuous symbols wondering if I'd accidentally stumbled into some ancient ritualistic coding practice let me tell you
+you're asking about that weird symbol at the end of a `define` statement right specifically in the context of some programming language or tool well I've been there man I've spent hours staring at seemingly innocuous symbols wondering if I'd accidentally stumbled into some ancient ritualistic coding practice let me tell you
 
 From what I'm gathering you're probably dealing with a preprocessor directive of some sort something like C C++ or maybe even some assembler variant where you're seeing a `#define` that's been used to define a constant or a macro and then there's this extra character like a semicolon or maybe something else I've seen it all trust me
 
-Okay so lets break this down specifically what that trailing symbol means because there's a few possible culprits each with its own nuanced use and purpose from my own personal experience I've banged my head against my desk more times than I can count over this kind of thing back in the day I was working on this embedded system project for a ridiculously power sensitive application where every bit mattered Every extra instruction was basically sucking the life out of our battery and for a week or two I was chasing my tail because of a similar issue where there was just one rogue trailing semicolon at the end of some macro definition it just totally broke my brain
+lets break this down specifically what that trailing symbol means because there's a few possible culprits each with its own nuanced use and purpose from my own personal experience I've banged my head against my desk more times than I can count over this kind of thing back in the day I was working on this embedded system project for a ridiculously power sensitive application where every bit mattered Every extra instruction was basically sucking the life out of our battery and for a week or two I was chasing my tail because of a similar issue where there was just one rogue trailing semicolon at the end of some macro definition it just totally broke my brain
 
 So lets look at some specifics in this problem
 
@@ -89,10 +89,10 @@ If this is the case then you really have to read the documentation in order to b
 
 **Resources for further understanding**
 
-*   **"The C Programming Language" by Brian Kernighan and Dennis Ritchie:** This classic book provides in depth understanding of C programming and the use of the preprocessor in it specifically. The book covers the very basics and explains in details how to do text substitution with the preprocessor (sometimes with not the greatest results like I experienced before with my semicolon issue).
-*   **"Modern C++ Design" by Andrei Alexandrescu:** This book contains a more advanced approach to C++ including the preprocessor. If you want to use modern techniques to get the most out of the preprocessor this might be helpful.
-*   **Compiler documentation:** The documentation for your specific compiler (e.g GCC Clang MSVC) is always your best resource to understand how the preprocessor works and what kind of specific symbols and extensions it might have.
-*   **Specific assembler documentation:** if this is an assembler related problem then refer to the assembler language documentation. They are all very different so you have to check your toolchain specifically.
+- **"The C Programming Language" by Brian Kernighan and Dennis Ritchie:** This classic book provides in depth understanding of C programming and the use of the preprocessor in it specifically. The book covers the very basics and explains in details how to do text substitution with the preprocessor (sometimes with not the greatest results like I experienced before with my semicolon issue).
+- **"Modern C++ Design" by Andrei Alexandrescu:** This book contains a more advanced approach to C++ including the preprocessor. If you want to use modern techniques to get the most out of the preprocessor this might be helpful.
+- **Compiler documentation:** The documentation for your specific compiler (e.g GCC Clang MSVC) is always your best resource to understand how the preprocessor works and what kind of specific symbols and extensions it might have.
+- **Specific assembler documentation:** if this is an assembler related problem then refer to the assembler language documentation. They are all very different so you have to check your toolchain specifically.
 
 Now here's my little joke I've noticed that debugging macros often feels like trying to decipher ancient hieroglyphics except instead of finding a lost treasure you find the reason why your code is crashing so have fun
 

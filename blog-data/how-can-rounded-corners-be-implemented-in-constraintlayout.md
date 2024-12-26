@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-rounded-corners-be-implemented-in-constraintlayout"
 ---
 
-Alright, let's talk about rounded corners within ConstraintLayout. It’s a topic I’ve certainly navigated a fair bit over the years, especially during that particularly challenging project involving a completely custom UI for a mobile e-reader app – one of those where the client insisted on design elements that pushed the boundaries of typical Android views. That’s where I really had to deep dive into the nuances of achieving polished visual aesthetics while maintaining ConstraintLayout's flexibility.
+, let's talk about rounded corners within ConstraintLayout. It’s a topic I’ve certainly navigated a fair bit over the years, especially during that particularly challenging project involving a completely custom UI for a mobile e-reader app – one of those where the client insisted on design elements that pushed the boundaries of typical Android views. That’s where I really had to deep dive into the nuances of achieving polished visual aesthetics while maintaining ConstraintLayout's flexibility.
 
 Implementing rounded corners in a straightforward manner using ConstraintLayout isn't directly supported; you won’t find a "cornerRadius" attribute within its properties. Instead, you have a few viable methods at your disposal, each with its own set of trade-offs in terms of performance, complexity, and control. We're generally aiming for a masked shape that gives the illusion of a rounded cornered view, while the underlying view remains rectangular.
 

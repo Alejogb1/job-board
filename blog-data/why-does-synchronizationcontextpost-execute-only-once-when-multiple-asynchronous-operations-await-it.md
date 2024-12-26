@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-synchronizationcontextpost-execute-only-once-when-multiple-asynchronous-operations-await-it"
 ---
 
-Okay, let's talk about `SynchronizationContext.Post()` and its behavior with multiple awaiting asynchronous operations. This is a corner of .net I've spent a fair amount of time navigating, especially back when I was building a heavily async UI framework for a niche scientific application. It wasn't always as straightforward as the documentation implied, and the single execution in certain multi-async scenarios tripped us up more than once. The core issue boils down to the way `async`/`await` interacts with the capture and restoration of the execution context.
+, let's talk about `SynchronizationContext.Post()` and its behavior with multiple awaiting asynchronous operations. This is a corner of .net I've spent a fair amount of time navigating, especially back when I was building a heavily async UI framework for a niche scientific application. It wasn't always as straightforward as the documentation implied, and the single execution in certain multi-async scenarios tripped us up more than once. The core issue boils down to the way `async`/`await` interacts with the capture and restoration of the execution context.
 
 Firstly, let's define the relevant players. `SynchronizationContext` is essentially a mechanism that provides a context for executing code on a specific thread, most often a UI thread. It's particularly relevant when dealing with asynchronous operations that might complete on a different thread and need to update the UI. `SynchronizationContext.Post(Action, Object)` is a method that marshals the provided action to be executed on the thread associated with that context. You'd expect that every call to it would result in that action eventually being executed. That is typically true, except for when awaiting multiple async actions.
 
@@ -18,7 +18,7 @@ Here's how it unfolds:
 2.  Each captures the _same_ `SynchronizationContext` instance, say, the ui thread.
 3.  `postAction` pushes an action to this `SynchronizationContext` via `Post()`.
 4.  When the first asynchronous operation, `task1`, is signalled that it has completed (regardless of if it was pushed to the context in the first place), the state machine resumes, and it checks to see if the previously captured context matches the current execution context. If it does (and in a single-threaded ui context it often does), it simply continues with execution on that current thread. If it does not (or it's been some time), the context will handle execution on the correct thread, and the action will then proceed. Crucially, if another operation is also `await`ing, it's _also_ enqueued on the same context (this may not be apparent until we see code below).
-5.  When the second and third operations, `task2` and `task3`, finish, their state machines will attempt to marshal their continuations using the *same* captured context they had before.
+5.  When the second and third operations, `task2` and `task3`, finish, their state machines will attempt to marshal their continuations using the _same_ captured context they had before.
 6.  Since the `postAction` was already queued and executed by the first continuation, the subsequent ones will essentially find that their target context is already doing the work, and they skip redundant postings, and continue on that context.
 
 This is where many encounter the "only once" issue. The `Post()` call is indeed happening multiple times from different continuations initially, but after the first one is handled, subsequent ones may see they are now executing within that same context, and no extra post is needed. The continuation does not require another execution on the same thread, unless it's been some time and the context has expired (in which case the context's `Send` method will be called again)
@@ -90,7 +90,7 @@ public class ExampleOne
 
 In the above, you'll see only a single increment of the counter. Each `PostAction` call results in `uiContext.Post` being called. While three distinct `PostAction` calls occur initially, the subsequent calls are handled by the single context's internal queue, where only one execution will modify the shared state.
 
-To demonstrate the initial *multiple* calls, we can modify the example. In this scenario, we simply do the `Post` immediately on the current thread rather than in a new thread to ensure it completes first:
+To demonstrate the initial _multiple_ calls, we can modify the example. In this scenario, we simply do the `Post` immediately on the current thread rather than in a new thread to ensure it completes first:
 
 ```csharp
 using System;
@@ -218,12 +218,12 @@ public class ExampleThree
 }
 ```
 
-In the above example, we do *not* perform the post operation directly on a captured synchronization context, rather we increment using an atomic operation within a task that has no context. This ensures each call results in a change to the counter.
+In the above example, we do _not_ perform the post operation directly on a captured synchronization context, rather we increment using an atomic operation within a task that has no context. This ensures each call results in a change to the counter.
 
 For deeper insights, I recommend referring to the following resources:
 
-*   **"Concurrent Programming on Windows" by Joe Duffy:** A classic for understanding the complexities of concurrency in Windows, including thread management and synchronization. While not specific to `SynchronizationContext`, it provides critical foundational knowledge.
-*   **"Programming .NET 4.0" by Jesse Liberty:** While a bit dated, it contains an excellent discussion of the `SynchronizationContext` and how it ties into the .net threading model.
-*   **CLR via C# by Jeffrey Richter:** An indispensable resource for understanding the underlying mechanisms of .net, including the async and await mechanics and the related state machine implementation.
+- **"Concurrent Programming on Windows" by Joe Duffy:** A classic for understanding the complexities of concurrency in Windows, including thread management and synchronization. While not specific to `SynchronizationContext`, it provides critical foundational knowledge.
+- **"Programming .NET 4.0" by Jesse Liberty:** While a bit dated, it contains an excellent discussion of the `SynchronizationContext` and how it ties into the .net threading model.
+- **CLR via C# by Jeffrey Richter:** An indispensable resource for understanding the underlying mechanisms of .net, including the async and await mechanics and the related state machine implementation.
 
 Understanding these subtleties with `SynchronizationContext` and `async`/`await` is critical for writing correct and maintainable asynchronous code, especially in UI-heavy applications.

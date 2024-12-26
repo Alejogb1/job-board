@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-my-vertex-ai-instance-running-out-of-disk-space"
 ---
 
-Alright, let's tackle this disk space issue you're experiencing with your Vertex AI instance. I’ve seen this happen more often than one might expect, especially in environments where data volumes fluctuate or when complex pipelines are involved. My initial instinct tells me it's probably not a single cause, but rather a combination of factors that, when left unmanaged, can quickly consume available storage. I recall a particularly challenging project a few years back—we were processing genomic sequencing data on a custom Vertex AI setup. We were constantly battling similar disk space warnings until we implemented a more rigorous monitoring and cleanup strategy. Let’s break down why this happens and what you can do about it.
+, let's tackle this disk space issue you're experiencing with your Vertex AI instance. I’ve seen this happen more often than one might expect, especially in environments where data volumes fluctuate or when complex pipelines are involved. My initial instinct tells me it's probably not a single cause, but rather a combination of factors that, when left unmanaged, can quickly consume available storage. I recall a particularly challenging project a few years back—we were processing genomic sequencing data on a custom Vertex AI setup. We were constantly battling similar disk space warnings until we implemented a more rigorous monitoring and cleanup strategy. Let’s break down why this happens and what you can do about it.
 
 The primary culprit usually boils down to the accumulation of various temporary files and cached data. Vertex AI instances, while powerful, are essentially virtual machines, and they operate using local disks. Here's a breakdown of the common sources:
 
@@ -58,6 +58,7 @@ if __name__ == "__main__":
 **Code Snippet 2: Cleaning Docker Images and Layers**
 
 This bash script will execute common docker commands to remove unused docker images and prune dangling layers. This can drastically reduce disk usage if there has been a lot of image activity.
+
 ```bash
 #!/bin/bash
 
@@ -76,6 +77,7 @@ echo "All docker cleanup operations completed."
 **Code Snippet 3: Compressing and Rotating Logs**
 
 This script demonstrates a basic log rotation process, using `gzip` for compression and removing old archived logs. The script locates files within the `/var/log` directory and archives and compresses files older than the given threshold (in days). The threshold is defined by the `cutoff_days` variable. It also removes files that are older than twice the `cutoff_days` value.
+
 ```python
 import os
 import time
@@ -112,11 +114,11 @@ if __name__ == "__main__":
 
 These code examples are starting points, but they illustrate key strategies. Beyond these, you should:
 
-*   **Monitor Disk Usage:** Regularly track your instance’s disk usage. Cloud monitoring tools can be configured to send alerts when disk space approaches critical levels. Use the operating system tools, such as `df -h` (disk free) to get insight on the storage use.
-*   **Optimize Data Handling:** Explore options like using compressed file formats (e.g., parquet, zstd), reducing the granularity of saved data, or processing data in streams without fully loading it into memory or disk.
-*   **Control Logging:** Configure log rotation and compression. Ensure you are logging at the appropriate verbosity level and consider centralized logging solutions to offload disk burden.
-*   **Review your pipelines:** Look at every step of the data flow from loading to saving and see if there is room to optimize the way data is being stored on disk.
-*   **Leverage Cloud Storage:** If possible, stream your data to and from GCS instead of loading it to the instance's local disk. This is crucial when working with data that can be processed in chunks or streams.
+- **Monitor Disk Usage:** Regularly track your instance’s disk usage. Cloud monitoring tools can be configured to send alerts when disk space approaches critical levels. Use the operating system tools, such as `df -h` (disk free) to get insight on the storage use.
+- **Optimize Data Handling:** Explore options like using compressed file formats (e.g., parquet, zstd), reducing the granularity of saved data, or processing data in streams without fully loading it into memory or disk.
+- **Control Logging:** Configure log rotation and compression. Ensure you are logging at the appropriate verbosity level and consider centralized logging solutions to offload disk burden.
+- **Review your pipelines:** Look at every step of the data flow from loading to saving and see if there is room to optimize the way data is being stored on disk.
+- **Leverage Cloud Storage:** If possible, stream your data to and from GCS instead of loading it to the instance's local disk. This is crucial when working with data that can be processed in chunks or streams.
 
 For further reading, I highly recommend looking into the following resources:
 

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-hidden-markov-models-be-used-for-sequential-data-analysis"
 ---
 
-Alright, let's tackle Hidden Markov Models (hmm) and their role in sequential data analysis. I've spent a considerable amount of time working with these, particularly in signal processing and time series forecasting, so hopefully, I can offer some practical insight beyond the theoretical.
+, let's tackle Hidden Markov Models (hmm) and their role in sequential data analysis. I've spent a considerable amount of time working with these, particularly in signal processing and time series forecasting, so hopefully, I can offer some practical insight beyond the theoretical.
 
-Often, when we’re dealing with sequential data – whether it’s sensor readings, financial transactions, or even speech patterns – the underlying process that generated that data isn't directly observable. We see the output, but not the hidden states that influenced it. That’s where hmms shine. They allow us to model these situations by assuming there’s a sequence of *hidden* states, and each state produces an *observable* output according to specific probabilities.
+Often, when we’re dealing with sequential data – whether it’s sensor readings, financial transactions, or even speech patterns – the underlying process that generated that data isn't directly observable. We see the output, but not the hidden states that influenced it. That’s where hmms shine. They allow us to model these situations by assuming there’s a sequence of _hidden_ states, and each state produces an _observable_ output according to specific probabilities.
 
 Essentially, an hmm is defined by two core probability distributions: transition probabilities, which govern the movement between hidden states, and emission probabilities, which describe how likely each observable output is for a given hidden state. We also have initial probabilities, dictating the likelihood of starting in each state. Once these parameters are defined or learned, we can use the model for various tasks like state sequence prediction, data classification, and likelihood calculations.
 
@@ -43,7 +43,7 @@ print("Generated observation sequence:", X)
 print("True hidden state sequence:", Z)
 ```
 
-In this code, we’ve defined a `MultinomialHMM` model, specified the number of hidden states (`n_components`), and manually set the initial, transition, and emission probabilities. We then sampled a sequence of 100 observations (`X`) and their corresponding hidden states (`Z`). In a real-world scenario, you wouldn’t have the true hidden state sequence; the goal would be to *infer* it from the observable data, using algorithms like Viterbi.
+In this code, we’ve defined a `MultinomialHMM` model, specified the number of hidden states (`n_components`), and manually set the initial, transition, and emission probabilities. We then sampled a sequence of 100 observations (`X`) and their corresponding hidden states (`Z`). In a real-world scenario, you wouldn’t have the true hidden state sequence; the goal would be to _infer_ it from the observable data, using algorithms like Viterbi.
 
 **Example 2: Decoding the Hidden State Sequence (Viterbi Algorithm)**
 
@@ -76,11 +76,11 @@ print("Observed Sequence:", X)
 print("Inferred hidden state sequence (Viterbi):", decoded_states)
 ```
 
-Here, we take the observation sequence ‘X’ generated in the previous step (as if it were an unknown dataset). We use `model.decode()` with the "viterbi" algorithm to derive the most probable hidden state sequence, `decoded_states`, given the parameters of our hmm. You will often find that the inferred sequence will not be *exactly* the same as the true sequence ‘Z’ from Example 1, which reflects the stochastic nature of the model. This is where careful parameter tuning using methods like Expectation-Maximization comes into play.
+Here, we take the observation sequence ‘X’ generated in the previous step (as if it were an unknown dataset). We use `model.decode()` with the "viterbi" algorithm to derive the most probable hidden state sequence, `decoded_states`, given the parameters of our hmm. You will often find that the inferred sequence will not be _exactly_ the same as the true sequence ‘Z’ from Example 1, which reflects the stochastic nature of the model. This is where careful parameter tuning using methods like Expectation-Maximization comes into play.
 
 **Example 3: Training an HMM (Baum-Welch Algorithm)**
 
-In practical applications, we rarely know the hmm parameters in advance. Instead, we usually have a sequence of observations and want to *learn* the hmm parameters (transition, emission, and start probabilities) that best fit the data. This is typically done using the Expectation-Maximization (EM) algorithm, also known as the Baum-Welch algorithm in the context of hmms.
+In practical applications, we rarely know the hmm parameters in advance. Instead, we usually have a sequence of observations and want to _learn_ the hmm parameters (transition, emission, and start probabilities) that best fit the data. This is typically done using the Expectation-Maximization (EM) algorithm, also known as the Baum-Welch algorithm in the context of hmms.
 
 ```python
 import numpy as np
@@ -118,10 +118,10 @@ logprob_trained, decoded_states_trained = train_model.decode(X_train, algorithm=
 print("Decoded states after training:", decoded_states_trained)
 ```
 
-In this last example, we first generated another synthetic dataset using a defined hmm. Then, we created a *new* `MultinomialHMM` model, this time without pre-defined probabilities, and used `train_model.fit(X_train)` to learn the hmm parameters directly from the data. The printed parameters will reflect the estimated values that best fit the training data. You can compare the learned values with original manually set probabilities to verify that the learning process works. Finally, we can decode the states sequence using the newly trained model.
+In this last example, we first generated another synthetic dataset using a defined hmm. Then, we created a _new_ `MultinomialHMM` model, this time without pre-defined probabilities, and used `train_model.fit(X_train)` to learn the hmm parameters directly from the data. The printed parameters will reflect the estimated values that best fit the training data. You can compare the learned values with original manually set probabilities to verify that the learning process works. Finally, we can decode the states sequence using the newly trained model.
 
 These examples demonstrate the fundamental steps in using hmms for sequential data analysis: data generation, state sequence decoding, and parameter learning.
 
-For a deeper dive, I’d recommend exploring *“Pattern Recognition and Machine Learning”* by Christopher M. Bishop; it offers an excellent treatment of graphical models, including hmms. You can also look at *“Speech and Language Processing”* by Daniel Jurafsky and James H. Martin for a more practical application-oriented view, specifically on how hmm is used in speech recognition. For those interested in more advanced statistical underpinnings, *“Statistical Inference”* by George Casella and Roger L. Berger is a rigorous choice. These books offer a solid theoretical foundation combined with practical applications and would help you delve deeper into the concepts and mathematics.
+For a deeper dive, I’d recommend exploring _“Pattern Recognition and Machine Learning”_ by Christopher M. Bishop; it offers an excellent treatment of graphical models, including hmms. You can also look at _“Speech and Language Processing”_ by Daniel Jurafsky and James H. Martin for a more practical application-oriented view, specifically on how hmm is used in speech recognition. For those interested in more advanced statistical underpinnings, _“Statistical Inference”_ by George Casella and Roger L. Berger is a rigorous choice. These books offer a solid theoretical foundation combined with practical applications and would help you delve deeper into the concepts and mathematics.
 
 I hope this explanation, and the provided code, has provided a solid and practical understanding of how to use Hidden Markov Models for sequential data analysis. Remember that parameter initialization, data preprocessing, and model selection are all critical factors that can impact the performance of hmms in real-world applications.

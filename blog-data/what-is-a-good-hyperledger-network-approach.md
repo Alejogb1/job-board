@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-is-a-good-hyperledger-network-approach"
 ---
 
-alright, so you're asking about a good hyperledger network approach. it's a broad topic, and there isn't one single "good" way, it really depends on your specific use case, but let's break down how i've approached this in the past, what i’ve seen work well, and some gotchas to look out for.
+, so you're asking about a good hyperledger network approach. it's a broad topic, and there isn't one single "good" way, it really depends on your specific use case, but let's break down how i've approached this in the past, what i’ve seen work well, and some gotchas to look out for.
 
 i've spent the last decade or so knee-deep in distributed ledger tech, starting way back when everyone was still trying to figure out exactly what the heck 'blockchain' really meant. hyperledger fabric, specifically, has been a big part of that journey, and i’ve learned a few things the hard way. i've built networks for everything from supply chain tracking to digital identity management, and each time it’s a different beast.
 
@@ -12,20 +12,20 @@ first off, thinking about network topology is crucial. a flat network where all 
 
 what i usually do, and recommend, is a tiered approach. i split the network into a few different types of peers:
 
-*   **orderers:** these guys are the gatekeepers, they're responsible for ordering transactions into blocks. i usually deploy them in a cluster using raft consensus. it's more resilient than solo ordering, and it’s relatively straightforward to set up. you could go with kafka, but raft is generally more straightforward for most cases.
-*   **endorsing peers:** these are the peers that simulate and endorse transactions based on the chaincode (smart contract) logic. this is where most of the actual business logic lives. you should have at least two endorsing peers per organization for redundancy.
-*   **committing peers:** these are peers that commit the validated blocks from the orderers. these can be the same as the endorsing peers but sometimes you might want to separate them if you have a huge volume.
-*   **anchoring peers:** these peers handle cross-organization discovery and gossip, these are important for multi-organization network setups and they serve as the entry point of your org in your network setup, they gossip with the anchoring peers from the other orgs to share information about the network.
+- **orderers:** these guys are the gatekeepers, they're responsible for ordering transactions into blocks. i usually deploy them in a cluster using raft consensus. it's more resilient than solo ordering, and it’s relatively straightforward to set up. you could go with kafka, but raft is generally more straightforward for most cases.
+- **endorsing peers:** these are the peers that simulate and endorse transactions based on the chaincode (smart contract) logic. this is where most of the actual business logic lives. you should have at least two endorsing peers per organization for redundancy.
+- **committing peers:** these are peers that commit the validated blocks from the orderers. these can be the same as the endorsing peers but sometimes you might want to separate them if you have a huge volume.
+- **anchoring peers:** these peers handle cross-organization discovery and gossip, these are important for multi-organization network setups and they serve as the entry point of your org in your network setup, they gossip with the anchoring peers from the other orgs to share information about the network.
 
 here's a high-level picture of how that typically looks, without diagrams, but written out:
 
-*   client applications send transaction proposals to endorsing peers.
-*   endorsing peers execute the chaincode and send back endorsement responses.
-*   the client collects enough endorsements based on the endorsement policy.
-*   the client sends a transaction to the orderer service.
-*   the orderer creates a block of transactions.
-*   the orderer broadcasts the block to all committing peers.
-*   committing peers validate and commit the block to their ledgers.
+- client applications send transaction proposals to endorsing peers.
+- endorsing peers execute the chaincode and send back endorsement responses.
+- the client collects enough endorsements based on the endorsement policy.
+- the client sends a transaction to the orderer service.
+- the orderer creates a block of transactions.
+- the orderer broadcasts the block to all committing peers.
+- committing peers validate and commit the block to their ledgers.
 
 one key lesson i learned the painful way, is not to skimp on the resources of your peers. especially the orderers. undersized orderers become a performance choke point quite quickly. memory, cpu and i/o is your friend here. it's not "one size fits all", but monitoring during load testing is key to know your limits, i typically use prometheus for monitoring.
 
@@ -48,7 +48,7 @@ peer:
   #  executeTimeout: 300s
   #  installTimeout: 300s
   # for committing peers, avoid this configuration block.
-  
+
   events:
     address: 0.0.0.0:7053
     buffersize: 100
@@ -106,7 +106,7 @@ func (t *SimpleChaincode) getValue(stub shim.ChaincodeStubInterface, args []stri
     if valueBytes == nil{
         return shim.Error(fmt.Sprintf("value not found for key %s",key))
     }
-    
+
     return shim.Success(valueBytes)
 }
 
@@ -126,10 +126,10 @@ security is another area to be mindful of. remember that hyperledger fabric by d
 here's a very simple example on how you can specify the location of the key material:
 
 ```yaml
-  client:
-    #...
-    cryptoconfig:
-      path: /opt/msp/
+client:
+  #...
+  cryptoconfig:
+    path: /opt/msp/
 ```
 
 inside `/opt/msp/` you should have the following structure `keystore` for the private key of the current peer, and `signcerts` for the certificate of this same peer. this is used by the client to interact with the network.

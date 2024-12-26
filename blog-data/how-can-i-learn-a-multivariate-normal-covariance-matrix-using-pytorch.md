@@ -4,19 +4,19 @@ date: "2024-12-16"
 id: "how-can-i-learn-a-multivariate-normal-covariance-matrix-using-pytorch"
 ---
 
-Okay, let's tackle this. I remember back in my days working on a financial modeling project, we needed to simulate portfolio returns based on a multivariate normal distribution. Getting the covariance matrix right was critical, and torch, thankfully, provided the tools to make it relatively straightforward. It’s not as simple as a single function call, but understanding the process is key, and it's not as difficult as some might initially assume.
+, let's tackle this. I remember back in my days working on a financial modeling project, we needed to simulate portfolio returns based on a multivariate normal distribution. Getting the covariance matrix right was critical, and torch, thankfully, provided the tools to make it relatively straightforward. It’s not as simple as a single function call, but understanding the process is key, and it's not as difficult as some might initially assume.
 
-The fundamental idea is that you're not directly fitting a multivariate normal distribution’s parameters in the way you might fit a regression model. Instead, you're calculating the *sample* covariance matrix from your data. The multivariate normal distribution is then *parameterized* by this calculated covariance, alongside the sample mean.
+The fundamental idea is that you're not directly fitting a multivariate normal distribution’s parameters in the way you might fit a regression model. Instead, you're calculating the _sample_ covariance matrix from your data. The multivariate normal distribution is then _parameterized_ by this calculated covariance, alongside the sample mean.
 
-Let’s break down the process and then I'll show you a couple of code snippets. The covariance matrix describes how much each variable in your dataset varies with respect to all others. If you have *n* variables, your covariance matrix will be *n x n*, and it will be symmetrical. The diagonal represents the variance of each variable individually, while the off-diagonal elements are the covariances between variable pairs.
+Let’s break down the process and then I'll show you a couple of code snippets. The covariance matrix describes how much each variable in your dataset varies with respect to all others. If you have _n_ variables, your covariance matrix will be _n x n_, and it will be symmetrical. The diagonal represents the variance of each variable individually, while the off-diagonal elements are the covariances between variable pairs.
 
-First, you'll need your data as a PyTorch tensor. For this illustration, let’s imagine you have a data tensor with *m* observations and *n* features. Each row is an observation, and each column is a feature.
+First, you'll need your data as a PyTorch tensor. For this illustration, let’s imagine you have a data tensor with _m_ observations and _n_ features. Each row is an observation, and each column is a feature.
 
 The core process unfolds as follows:
 
-1.  **Calculate the sample mean:** Compute the mean value for each feature column across all samples. This will give you a 1 * x *n* tensor (or a 1d vector of length n) representing the mean of each feature.
+1.  **Calculate the sample mean:** Compute the mean value for each feature column across all samples. This will give you a 1 * x *n\* tensor (or a 1d vector of length n) representing the mean of each feature.
 2.  **Center the data:** Subtract the sample mean of each column from all the samples for that column. This is often referred to as demeaning your data. Centering simplifies the calculation of the covariance and is essential.
-3.  **Compute the covariance:** Next, we perform some matrix algebra to calculate the covariance matrix. The precise calculation involves the transpose of the centered data tensor, a multiplication with the centered data matrix itself and then normalization by the number of samples minus one. The number of samples minus one is used to produce an *unbiased* sample covariance matrix estimator, often referred to as Bessel's correction.
+3.  **Compute the covariance:** Next, we perform some matrix algebra to calculate the covariance matrix. The precise calculation involves the transpose of the centered data tensor, a multiplication with the centered data matrix itself and then normalization by the number of samples minus one. The number of samples minus one is used to produce an _unbiased_ sample covariance matrix estimator, often referred to as Bessel's correction.
 
 Now, let's look at some code to illustrate this.
 
@@ -112,7 +112,7 @@ weighted_covariance_mat = calculate_weighted_covariance(data, weights)
 print("Weighted Covariance Matrix:\n", weighted_covariance_mat)
 ```
 
-Here, you see that we're explicitly looping over the data samples. It is not efficient for very large datasets, but it clearly demonstrates the weighted covariance matrix calculation process, in a clear way that helps you visualize the sample-by-sample calculation.  We are creating the centered vectors for each sample and adding their contributions to the weighted covariance using an outer product. Also note that the denominator of our estimator here is the total weights minus 1, which provides an unbiased estimate. This might be necessary in the real world if you have specific needs for your analysis.
+Here, you see that we're explicitly looping over the data samples. It is not efficient for very large datasets, but it clearly demonstrates the weighted covariance matrix calculation process, in a clear way that helps you visualize the sample-by-sample calculation. We are creating the centered vectors for each sample and adding their contributions to the weighted covariance using an outer product. Also note that the denominator of our estimator here is the total weights minus 1, which provides an unbiased estimate. This might be necessary in the real world if you have specific needs for your analysis.
 
 **Resource Recommendation**
 

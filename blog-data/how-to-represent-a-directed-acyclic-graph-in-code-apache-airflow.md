@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-represent-a-directed-acyclic-graph-in-code-apache-airflow"
 ---
 
-alright, let's talk about representing directed acyclic graphs, or dags, in code, particularly in the context of something like apache airflow. i've been around the block a few times with this kind of thing, and i've seen it done both gracefully and… not so gracefully. so, here's the lowdown on how i approach it.
+, let's talk about representing directed acyclic graphs, or dags, in code, particularly in the context of something like apache airflow. i've been around the block a few times with this kind of thing, and i've seen it done both gracefully and… not so gracefully. so, here's the lowdown on how i approach it.
 
 first off, when we say "dag," we're talking about a set of nodes (or tasks, in airflow terms) and directional edges between them. think of it like a recipe where some steps must happen before others. in code, the core challenge is capturing these dependencies: which task needs to finish before another can begin?
 
@@ -129,6 +129,7 @@ dag_representation_cycle = {
 #this will print "true"
 print(is_acyclic(dag_representation_cycle.keys()))
 ```
+
 this snippet of code simulates the basic data structure you may need to represent a graph and also adds a method to identify if a graph is cyclic which is key to identify problematic cases.
 
 for those who want to dive deeper into the theoretical foundations of graph algorithms, i would recommend checking out "introduction to algorithms" by thomas h. cormen et al. it’s a bible in the field and covers a broad range of topics but if you need the theory, it’s a great place to go. if you’re after something focused purely on graph structures and algorithms, “graph algorithms” by shimon even is another great source. these are dense books, but they provide a very strong grasp of the underlying math and algorithms behind these techniques.

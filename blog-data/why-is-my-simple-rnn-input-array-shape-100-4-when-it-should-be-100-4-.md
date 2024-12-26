@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-is-my-simple-rnn-input-array-shape-100-4-when-it-should-be-100-4-"
 ---
 
-Okay, let's untangle this recurrent neural network input shape discrepancy. It's a common point of confusion, and I recall facing similar situations early in my deep learning journey. It's not that your RNN *needs* the third dimension, per se, but rather that it expects the input to be organized in a way that signifies temporal or sequential information. Let's break down why your array is (100, 4) and why the expectation is (100, 4, ?).
+, let's untangle this recurrent neural network input shape discrepancy. It's a common point of confusion, and I recall facing similar situations early in my deep learning journey. It's not that your RNN _needs_ the third dimension, per se, but rather that it expects the input to be organized in a way that signifies temporal or sequential information. Let's break down why your array is (100, 4) and why the expectation is (100, 4, ?).
 
-The array (100, 4) suggests you have 100 samples or observations, and each sample has 4 features. This, in itself, isn't incorrect for many types of machine learning tasks. However, the crux of the matter with an RNN – especially a vanilla, sequence-based one – lies in the treatment of *sequences*. Think of an RNN as processing data across time. Therefore, the input needs an additional dimension to represent *time steps within each sample*. This is where the question mark in the (100, 4, ?) comes into play. This '?' represents the length of each sequence that your RNN will process, also referred to as the time-step dimension.
+The array (100, 4) suggests you have 100 samples or observations, and each sample has 4 features. This, in itself, isn't incorrect for many types of machine learning tasks. However, the crux of the matter with an RNN – especially a vanilla, sequence-based one – lies in the treatment of _sequences_. Think of an RNN as processing data across time. Therefore, the input needs an additional dimension to represent _time steps within each sample_. This is where the question mark in the (100, 4, ?) comes into play. This '?' represents the length of each sequence that your RNN will process, also referred to as the time-step dimension.
 
-To illustrate, let’s imagine a past project where I was working on predicting stock prices. We were using several features, such as opening price, closing price, high, and low, which can be represented by your 4 features. Now, consider we were inputting these prices on a *daily* basis. Here's how this plays out with different sequence lengths.
+To illustrate, let’s imagine a past project where I was working on predicting stock prices. We were using several features, such as opening price, closing price, high, and low, which can be represented by your 4 features. Now, consider we were inputting these prices on a _daily_ basis. Here's how this plays out with different sequence lengths.
 
 **Scenario 1: Single Day Input (No Sequence)**
 
@@ -57,6 +57,7 @@ for i in range(num_sequences):
 print(f"Reshaped shape for a sequence of 5 timesteps: {data_3d_seq_5.shape}")
 
 ```
+
 Here, we construct a training array with sequence length 5, where each sequence shifts one day at a time.
 
 **Code Snippet 3: Using a Sequence Length of 10, with gaps.**
@@ -84,4 +85,4 @@ Here we demonstrate how we create 10-day sequences, but move 2 days forward each
 
 For further understanding, I’d recommend exploring "Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville, which offers a comprehensive dive into recurrent networks. Another excellent resource would be "Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron, which provides more practical examples and implementation details using Keras, a popular deep learning library. Also, for a more mathematical focus, I often refer back to "Pattern Recognition and Machine Learning" by Christopher Bishop, although this can be quite heavy for beginners.
 
-Finally, remember that the correct input shape for your RNN is not something you should force without understanding the *temporal structure* in your data. This third dimension serves to capture the concept of time or sequence within each data instance, and it is not mandatory if your data does not have this time-based dependency. Once you grasp the significance of this temporal aspect, you'll find yourself much more comfortable working with RNNs. This is a common area for people to stumble when starting out, but it is well worth understanding as it is a cornerstone concept in RNNs.
+Finally, remember that the correct input shape for your RNN is not something you should force without understanding the _temporal structure_ in your data. This third dimension serves to capture the concept of time or sequence within each data instance, and it is not mandatory if your data does not have this time-based dependency. Once you grasp the significance of this temporal aspect, you'll find yourself much more comfortable working with RNNs. This is a common area for people to stumble when starting out, but it is well worth understanding as it is a cornerstone concept in RNNs.

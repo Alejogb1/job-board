@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-prevent-fastai-fastbook-from-requesting-access-to-google-drive-when-running-in-google-colab"
 ---
 
-alright, so you're having that annoying fastai fastbook google drive prompt pop up in colab, got it. yeah, i've been there, that dance with google's authorization flow. it’s something that can get old real quick, especially when you're just trying to iterate on a model or follow along with the fastbook. i’ve spent more hours than i care to remember messing around with permissions and mount points, so i've had a couple of go-to solutions that usually do the trick.
+, so you're having that annoying fastai fastbook google drive prompt pop up in colab, got it. yeah, i've been there, that dance with google's authorization flow. it’s something that can get old real quick, especially when you're just trying to iterate on a model or follow along with the fastbook. i’ve spent more hours than i care to remember messing around with permissions and mount points, so i've had a couple of go-to solutions that usually do the trick.
 
 the core issue here is that fastbook, by default, tries to cache datasets and other files in your google drive. it makes sense for persistent storage between sessions, but it's not ideal if you want to avoid the authorization step every single time. it’s a convenience thing for the book authors but ends up as an inconvenience for people in colab, it kind of seems backwards to me. i think in the first few times i went through it i kept clicking allow and it felt like a chore.
 

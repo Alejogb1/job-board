@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-scanner-continue-scanning-after-canceling-the-scan-in-transferready-ntwain"
 ---
 
-Alright, let's unpack this issue with TransferReady NTWAIN and the persistent scanning behavior. It's a situation I've bumped into more than once in my time, particularly during the early days of migrating from older TWAIN implementations. You’re experiencing a scenario where, despite explicitly calling a cancel operation, the scanner seems to stubbornly continue its scanning process. This isn't due to some hidden magic; it usually boils down to a nuanced interplay of asynchronous operations and how the TWAIN driver itself manages its workflow, particularly in the context of TransferReady. Let’s dive into the specifics.
+, let's unpack this issue with TransferReady NTWAIN and the persistent scanning behavior. It's a situation I've bumped into more than once in my time, particularly during the early days of migrating from older TWAIN implementations. You’re experiencing a scenario where, despite explicitly calling a cancel operation, the scanner seems to stubbornly continue its scanning process. This isn't due to some hidden magic; it usually boils down to a nuanced interplay of asynchronous operations and how the TWAIN driver itself manages its workflow, particularly in the context of TransferReady. Let’s dive into the specifics.
 
 The core of the problem often lies in the asynchronous nature of TWAIN, especially concerning data transfers. When you initiate a scan, the scanner hardware isn't instantly transferring data in a single synchronous operation. Instead, it’s typically divided into multiple stages: acquiring an image, buffering, processing, and finally, transferring it to your application. TransferReady comes into play as a signal indicating that the scanner has prepared a portion of data ready for your application to receive. Crucially, the cancellation command doesn't immediately halt the scanner's internal processes. It’s more like a request; the scanner, following its internal routines, might have already committed to acquiring and buffering more data before receiving and acting upon that cancel request.
 
@@ -39,7 +39,7 @@ TWAIN.TwainSession.Cancel();
 Console.WriteLine("Scan cancelled, supposedly...");
 ```
 
-This code illustrates a common pitfall. We set a global flag, *continueScanning*, intending to stop the process with a `cancel`. However, the *DataTransfer* event handler continues processing queued data, resulting in the "scan" appearing to continue despite the cancel request. Here is a better version using proper interruption:
+This code illustrates a common pitfall. We set a global flag, _continueScanning_, intending to stop the process with a `cancel`. However, the _DataTransfer_ event handler continues processing queued data, resulting in the "scan" appearing to continue despite the cancel request. Here is a better version using proper interruption:
 
 ```csharp
 // Correct cancellation attempt
@@ -69,9 +69,9 @@ TWAIN.TwainSession.Cancel();
 Console.WriteLine("Scan cancellation initiated...");
 ```
 
-In this enhanced version, the *DataTransfer* handler now checks the `continueScanning` flag at the *very beginning* of the event handler itself. If set to *false*, the handler returns without processing any new data. This ensures that no more images are processed after the cancellation flag is set and the `Cancel` command is invoked. This doesn't halt the scanner entirely, that’s up to the device driver, but stops the application from grabbing more data.
+In this enhanced version, the _DataTransfer_ handler now checks the `continueScanning` flag at the _very beginning_ of the event handler itself. If set to _false_, the handler returns without processing any new data. This ensures that no more images are processed after the cancellation flag is set and the `Cancel` command is invoked. This doesn't halt the scanner entirely, that’s up to the device driver, but stops the application from grabbing more data.
 
-Finally, here's another common scenario you might run into, dealing with an explicit data retrieval loop based on *TransferReady*:
+Finally, here's another common scenario you might run into, dealing with an explicit data retrieval loop based on _TransferReady_:
 
 ```csharp
 // Cancellation with a direct transfer loop
@@ -101,7 +101,8 @@ while (shouldContinue) {
 
 Console.WriteLine("Scan cancellation (attempt) completed...");
 ```
-Here, the cancellation doesn’t stop the data transfer loop. The loop itself needs to respect the flag set before issuing the cancel command, much like the improved event handler example. The check for `DataTransferReady` needs to respect *shouldContinue*, otherwise, data may continue to be received and processed. The problem is not in the scanner it is in the applications' processing loop itself. A corrected version would be:
+
+Here, the cancellation doesn’t stop the data transfer loop. The loop itself needs to respect the flag set before issuing the cancel command, much like the improved event handler example. The check for `DataTransferReady` needs to respect _shouldContinue_, otherwise, data may continue to be received and processed. The problem is not in the scanner it is in the applications' processing loop itself. A corrected version would be:
 
 ```csharp
 // Cancellation with a corrected direct transfer loop

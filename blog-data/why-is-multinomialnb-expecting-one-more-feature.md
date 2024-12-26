@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-multinomialnb-expecting-one-more-feature"
 ---
 
-Alright, let's unpack this curious situation with MultinomialNB seemingly demanding an extra feature. I've bumped into this specific gotcha a few times over the years, and it often stems from a misunderstanding of how Multinomial Naive Bayes handles input data, especially in the context of text classification. It's not so much that it's *expecting* an extra feature in the sense of an explicit requirement, but rather that it's interpreting the shape of your input incorrectly, often due to a subtle issue with how your features are prepared.
+, let's unpack this curious situation with MultinomialNB seemingly demanding an extra feature. I've bumped into this specific gotcha a few times over the years, and it often stems from a misunderstanding of how Multinomial Naive Bayes handles input data, especially in the context of text classification. It's not so much that it's _expecting_ an extra feature in the sense of an explicit requirement, but rather that it's interpreting the shape of your input incorrectly, often due to a subtle issue with how your features are prepared.
 
 The core problem typically arises when your feature matrix, which is the input to MultinomialNB, is not presented in the shape it anticipates. This often involves a misunderstanding of how the scikit-learn library and specifically, the `fit()` method of MultinomialNB expects the structure of the input matrix when it is a single document and when it is more than one document. In essence, we're dealing with a dimensionality mismatch, not necessarily an extra feature. Let’s see how it happens.
 
@@ -29,7 +29,7 @@ except ValueError as e:
     print(f"Error: {e}")
 ```
 
-This throws a `ValueError`. The traceback clearly indicates that MultinomialNB expects a matrix, not a 1-dimensional array. The issue isn't that the model is expecting *another* feature; it's that it's interpreting the shape as a collection of single-feature instances, not a single instance with multiple features. It's expecting `fit(X, y)` where X is of shape `(n_samples, n_features)`, even if `n_samples = 1`.
+This throws a `ValueError`. The traceback clearly indicates that MultinomialNB expects a matrix, not a 1-dimensional array. The issue isn't that the model is expecting _another_ feature; it's that it's interpreting the shape as a collection of single-feature instances, not a single instance with multiple features. It's expecting `fit(X, y)` where X is of shape `(n_samples, n_features)`, even if `n_samples = 1`.
 
 **Example 2: The Correctly Shaped Single Document**
 
@@ -66,10 +66,11 @@ model.fit(multi_vector, labels)
 print("Fit successful for multiple docs")
 
 ```
+
 Here, `multi_vector` has shape `(3, 5)`. The model understands there are three documents each with 5 features and can successfully train. The key is the 2D array structure.
 
 In my past experience, these errors have mostly cropped up in scenarios where the feature creation and model training processes are loosely coupled, or perhaps when a new engineer unfamiliar with the scikit-learn api adds a function that doesn't maintain the 2D shape of the input. Sometimes the issue isn’t in the feature extraction itself, but rather when you are working with a single sample for debugging, or when you are trying to train the model in small batches without taking care of the expected dimensionality. Careful attention to this detail can save hours of debugging.
 
-For deeper understanding on this, I recommend examining scikit-learn's documentation directly, particularly the section on input validation for estimators. Also, chapter 4 of *Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow* by Aurélien Géron is excellent for understanding scikit-learn's general API and how estimators are designed. Finally, for background on Naive Bayes theory, the original papers by Thomas Bayes (1763), or a more modern explanation of the algorithms in *Introduction to Information Retrieval* by Christopher D. Manning, Prabhakar Raghavan, and Hinrich Schütze are excellent resources. They delve deeper into the statistical underpinnings, which can be beneficial when analyzing model behavior.
+For deeper understanding on this, I recommend examining scikit-learn's documentation directly, particularly the section on input validation for estimators. Also, chapter 4 of _Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow_ by Aurélien Géron is excellent for understanding scikit-learn's general API and how estimators are designed. Finally, for background on Naive Bayes theory, the original papers by Thomas Bayes (1763), or a more modern explanation of the algorithms in _Introduction to Information Retrieval_ by Christopher D. Manning, Prabhakar Raghavan, and Hinrich Schütze are excellent resources. They delve deeper into the statistical underpinnings, which can be beneficial when analyzing model behavior.
 
 So, the next time you see this error, remember it's not that MultinomialNB is greedy for another feature, but it's likely that your input is not in the shape of a 2D matrix. Pay close attention to the dimensionality of your feature matrix, especially when dealing with single instances or small batches, and you'll keep these annoying mismatches at bay.

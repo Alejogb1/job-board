@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-pip-be-used-when-a-virtual-environment-is-activated"
 ---
 
-Alright, let's tackle this one. It's a question I’ve seen pop up more times than I care to count, and it often boils down to a fundamental misunderstanding of how virtual environments operate and how pip interacts with them. Let's break it down, shall we? It's not that `pip` *can't* be used when a virtual environment is activated; it's that `pip` *shouldn't* be used outside an active virtual environment if you aim to keep your projects clean and reproducible.
+, let's tackle this one. It's a question I’ve seen pop up more times than I care to count, and it often boils down to a fundamental misunderstanding of how virtual environments operate and how pip interacts with them. Let's break it down, shall we? It's not that `pip` _can't_ be used when a virtual environment is activated; it's that `pip` _shouldn't_ be used outside an active virtual environment if you aim to keep your projects clean and reproducible.
 
 The core issue stems from the way python manages packages and dependencies. If you install a package using `pip` globally, it'll be placed within the system-wide python installation, typically in a location like `/usr/lib/python3.x/site-packages` on linux-based systems or similar locations on other OSes. This global location can become a chaotic jumble of packages from various projects, leading to potential conflicts and unpredictable behavior when different projects require different versions of the same package. I’ve seen that mess firsthand countless times in my career.
 
@@ -12,7 +12,7 @@ Virtual environments, created usually with `venv` (python's built-in module) or 
 
 Now, let’s talk about why you should always use `pip` within the virtual environment. Activating a virtual environment essentially manipulates your shell’s environment variables, specifically the `PATH` and some other python-related variables. This modification changes which python executable is called when you type ‘python’ in the terminal. Instead of calling the system-wide python, it points to the python executable within your virtual environment. Similarly, when you use `pip`, the associated `pip` executable within the virtual environment is called, which then installs the packages in the virtual environment's site-packages directory.
 
-If you were to use the *system* `pip` command while a virtual environment is activated, you might expect it to install packages in your virtual environment, but it doesn’t. The system `pip` ignores the virtual environment settings and installs the packages in the *global* python location. This defeats the purpose of having a virtual environment. It can even cause unforeseen issues because the virtual environment’s python interpreter will still look for packages in its own isolated site-packages directory first, which could lead to missing dependencies or even version mismatches.
+If you were to use the _system_ `pip` command while a virtual environment is activated, you might expect it to install packages in your virtual environment, but it doesn’t. The system `pip` ignores the virtual environment settings and installs the packages in the _global_ python location. This defeats the purpose of having a virtual environment. It can even cause unforeseen issues because the virtual environment’s python interpreter will still look for packages in its own isolated site-packages directory first, which could lead to missing dependencies or even version mismatches.
 
 Let's illustrate with examples. Assume you have a virtual environment named ‘myenv’ that you created with `python3 -m venv myenv`.
 
@@ -29,7 +29,7 @@ source myenv/bin/activate
 # myenv\Scripts\activate
 ```
 
-Now, consider this scenario without activation, but still using the 'pip' that should belong to the *system* python:
+Now, consider this scenario without activation, but still using the 'pip' that should belong to the _system_ python:
 
 ```bash
 # (assuming 'myenv' is not active)
@@ -41,7 +41,7 @@ pip install requests
 # installed. This is the core issue to avoid.
 ```
 
-And now, properly, using pip *within* the active environment:
+And now, properly, using pip _within_ the active environment:
 
 ```bash
 # First, make sure the virtual environment is active as per example 1
@@ -67,7 +67,7 @@ which pip
 #Should output something like /usr/bin/pip
 ```
 
-As you can see, when the environment is activated, the *local* `pip` is invoked which installs in the environment. When not active the *system* `pip` is invoked and install globally.
+As you can see, when the environment is activated, the _local_ `pip` is invoked which installs in the environment. When not active the _system_ `pip` is invoked and install globally.
 
 For further insight, I'd recommend delving into “Python Packaging User Guide” available at packaging.python.org. The guide provides an in-depth look at the principles behind virtual environments and packaging in Python, which greatly enhances the understanding why `pip` should only be used within the active environment. Specifically, pay attention to the “venv” sections. Another excellent resource is Brett Cannon's “PEP 582 – Python Local Packages Directory”, even if not yet implemented, its rationale illuminates the issues associated with global package management, making it relevant to understand why venv is a solution.
 

@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "how-to-avoid-data-leakage-from-train-to-test-in-a-tensorflow-dataset-or-splitting-an-tensorflow-dataset-into-train-and-test-without-data-leakage"
 ---
 
-alright, let's talk about avoiding data leakage when splitting tensorflow datasets, because, trust me, i've been there, done that, and got the t-shirt (and the debugging nightmares to go with it). this is one of those things that seems simple on the surface, but can really mess things up if you're not careful. so, speaking from experience, here’s how i've tackled this problem.
+, let's talk about avoiding data leakage when splitting tensorflow datasets, because, trust me, i've been there, done that, and got the t-shirt (and the debugging nightmares to go with it). this is one of those things that seems simple on the surface, but can really mess things up if you're not careful. so, speaking from experience, here’s how i've tackled this problem.
 
-first things first, data leakage is basically when information from your test set somehow contaminates your training set. this leads to overly optimistic performance metrics that don’t generalize to new, unseen data. the classic example is when you preprocess your data *before* splitting, which is something i’ve definitely done. i once spent a week trying to debug a model that seemed to perform magically on the test set only to find out i was inadvertently scaling everything together. lets just say the coffee consumption was high.
+first things first, data leakage is basically when information from your test set somehow contaminates your training set. this leads to overly optimistic performance metrics that don’t generalize to new, unseen data. the classic example is when you preprocess your data _before_ splitting, which is something i’ve definitely done. i once spent a week trying to debug a model that seemed to perform magically on the test set only to find out i was inadvertently scaling everything together. lets just say the coffee consumption was high.
 
-so, how do we actually prevent that using tensorflow? the core idea is to perform any data-dependent operation (like scaling, imputation, or even some forms of encoding) *after* the train-test split, and *only* on the training data. the test data should always be processed using the statistics learned from the training data. this ensures that the test set remains a truly independent evaluation of the model’s ability to generalize.
+so, how do we actually prevent that using tensorflow? the core idea is to perform any data-dependent operation (like scaling, imputation, or even some forms of encoding) _after_ the train-test split, and _only_ on the training data. the test data should always be processed using the statistics learned from the training data. this ensures that the test set remains a truly independent evaluation of the model’s ability to generalize.
 
 now, let's look at some common approaches. the simplest way to split a tensorflow dataset is using the `take` and `skip` methods, which works well if your data is already in a single, shuffled dataset.
 
@@ -114,10 +114,11 @@ this might seem a bit verbose but it saves headaches down the road. i’ve seen 
 another thing to watch out for is data shuffling. make sure to shuffle your data well before splitting, if needed. otherwise, you could end up with training and test sets that are not representative of the overall data distribution. it makes a big difference in practice. if your dataset is huge, and it can’t be held in memory you may use things like bucketing with dataframes and tf datasets, but that’s another topic altogether.
 
 in summary, avoid data leakage by always doing the following:
+
 1. split your data first
 2. preprocess each split dataset separately
 3. never apply transformations using parameters from both splits at the same time.
-this seems simple but is sometimes overlooked.
+   this seems simple but is sometimes overlooked.
 
 for further reading, i strongly recommend checking out papers on data preprocessing in machine learning, and specific parts of books on best practices in machine learning with tensorflow, for example “hands-on machine learning with scikit-learn, keras & tensorflow” by aurélien géron. it has a very good coverage of this topic. also, the tensorflow documentation itself is a great resource, just be sure to always search the latest version. these are where i usually go when i’m dealing with these kinds of problems.
 

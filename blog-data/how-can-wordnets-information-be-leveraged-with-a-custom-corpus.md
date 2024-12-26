@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-wordnets-information-be-leveraged-with-a-custom-corpus"
 ---
 
-Okay, let's delve into how to effectively combine WordNet's wealth of semantic information with a custom corpus. This isn't some purely theoretical exercise; I've actually tackled this problem a few times over the years, often facing the same hurdles you're likely encountering. What we're aiming for is to use WordNet, a lexical database grouping words into sets of synonyms called synsets, to augment and enhance the analysis capabilities of your own tailored corpus. This could range from improving document retrieval to boosting the accuracy of sentiment analysis or topic modeling, depending on your particular task.
+, let's delve into how to effectively combine WordNet's wealth of semantic information with a custom corpus. This isn't some purely theoretical exercise; I've actually tackled this problem a few times over the years, often facing the same hurdles you're likely encountering. What we're aiming for is to use WordNet, a lexical database grouping words into sets of synonyms called synsets, to augment and enhance the analysis capabilities of your own tailored corpus. This could range from improving document retrieval to boosting the accuracy of sentiment analysis or topic modeling, depending on your particular task.
 
 The core idea is that WordNet provides a structured representation of word meanings and relationships—synonyms, hypernyms, hyponyms, etc.—that might be missing in your corpus. Especially when dealing with specialized or limited datasets, your corpus might not capture the full breadth of lexical variations. WordNet bridges that gap. We will look at three primary approaches: word sense disambiguation, feature enrichment, and query expansion. Each of these requires a slightly different implementation, but the goal is the same: to enhance the information we can extract.
 
@@ -105,6 +105,7 @@ expanded_query = expand_query(query, limit=2)
 print(f"Original query: {query}")
 print(f"Expanded query: {expanded_query}")
 ```
+
 This simple function demonstrates the concept of adding a limited number of synonyms to the original query, expanding the scope of the search. Of course, the results need filtering and ranking depending on context, but it provides a basic starting point.
 
 Now, regarding resources, I recommend looking into the book "Speech and Language Processing" by Daniel Jurafsky and James H. Martin for a comprehensive overview of natural language processing techniques, including WordNet usage. Specifically, the chapters on word sense disambiguation and information retrieval are invaluable. Another essential read is “An Introduction to Information Retrieval” by Christopher D. Manning, Prabhakar Raghavan, and Hinrich Schütze, which covers many of the approaches discussed here, including query expansion and relevance ranking. In particular, look at the work by Rada Mihalcea and Dan Moldovan, especially their papers on unsupervised WSD; they've contributed significantly to the techniques I mentioned. The NLTK book, freely available online, is indispensable for understanding how to programmatically access WordNet, specifically the chapter on WordNet.

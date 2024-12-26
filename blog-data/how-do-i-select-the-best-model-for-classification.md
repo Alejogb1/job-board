@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-do-i-select-the-best-model-for-classification"
 ---
 
-alright, let's talk about picking the best classification model, it's a common question and one i've certainly battled with myself more times than i care to remember. i've seen folks jump straight to the fanciest neural network, and i've also seen people stick with something simpler when it's a way better fit. it's about knowing your data and understanding the tradeoffs.
+, let's talk about picking the best classification model, it's a common question and one i've certainly battled with myself more times than i care to remember. i've seen folks jump straight to the fanciest neural network, and i've also seen people stick with something simpler when it's a way better fit. it's about knowing your data and understanding the tradeoffs.
 
 the short answer? there isn't a single “best” model. it's totally dependent on what your data looks like and what you are hoping to achieve. let me elaborate based on my own experiences working through these issues.
 

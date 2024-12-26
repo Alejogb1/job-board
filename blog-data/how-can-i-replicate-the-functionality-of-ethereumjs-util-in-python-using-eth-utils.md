@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-replicate-the-functionality-of-ethereumjs-util-in-python-using-eth-utils"
 ---
 
-Alright, let's tackle this. It's a question I've seen crop up more times than I care to count, and it often arises when people are transitioning between javascript-centric ethereum development and python environments. You're looking to essentially mirror the common utility functions found in `ethereumjs-util`, but using python’s `eth-utils`. It's certainly achievable, and here’s how I've approached it in past projects.
+, let's tackle this. It's a question I've seen crop up more times than I care to count, and it often arises when people are transitioning between javascript-centric ethereum development and python environments. You're looking to essentially mirror the common utility functions found in `ethereumjs-util`, but using python’s `eth-utils`. It's certainly achievable, and here’s how I've approached it in past projects.
 
-First, let’s establish what `ethereumjs-util` provides. It's a javascript library chock-full of functions for handling byte arrays, hashing, encoding, address manipulation, and various cryptographic operations specific to the ethereum ecosystem. `eth-utils`, on the other hand, is the python counterpart, providing similar core functionality but with a pythonic flavor. The key isn’t finding exact copy-paste replacements for every function, but rather understanding the *purpose* behind each function and replicating that in the python context.
+First, let’s establish what `ethereumjs-util` provides. It's a javascript library chock-full of functions for handling byte arrays, hashing, encoding, address manipulation, and various cryptographic operations specific to the ethereum ecosystem. `eth-utils`, on the other hand, is the python counterpart, providing similar core functionality but with a pythonic flavor. The key isn’t finding exact copy-paste replacements for every function, but rather understanding the _purpose_ behind each function and replicating that in the python context.
 
 Where many stumble is when trying to map functions by name, failing to appreciate the underlying data transformations. In several projects, I found myself building a compatibility layer – a mini-library that bridged these two worlds, providing analogous functions for common tasks. We need to look not only at the inputs and outputs, but also the expected behavior and data types. Let’s delve into some specific examples.
 
@@ -87,7 +87,7 @@ print(f"Amount from wei:{eth_amount}")
 
 ```
 
-Here, `to_bytes`, `to_hex`, and `from_wei` provide the necessary tools. `to_bytes` can take various inputs, including strings, integers and hex strings, `to_hex` does the reverse and `from_wei` takes a integer as wei and outputs it in another unit, such as eth, gwei etc.  In many situations, these will cover common use cases you might find in javascript code bases.
+Here, `to_bytes`, `to_hex`, and `from_wei` provide the necessary tools. `to_bytes` can take various inputs, including strings, integers and hex strings, `to_hex` does the reverse and `from_wei` takes a integer as wei and outputs it in another unit, such as eth, gwei etc. In many situations, these will cover common use cases you might find in javascript code bases.
 
 **Example 3: Address Manipulation**
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-are-nested-railsruby-modules-with-same-name-causing-problems"
 ---
 
-Okay, let's tackle this one. I remember a particularly frustrating debugging session a few years back involving a rather sprawling Rails application. We had multiple teams contributing, and, perhaps unsurprisingly, a naming collision surfaced that caused some real head-scratching. Specifically, we encountered issues with nested modules sharing the same name, and believe me, it's a pitfall that's easier to fall into than you might initially think.
+, let's tackle this one. I remember a particularly frustrating debugging session a few years back involving a rather sprawling Rails application. We had multiple teams contributing, and, perhaps unsurprisingly, a naming collision surfaced that caused some real head-scratching. Specifically, we encountered issues with nested modules sharing the same name, and believe me, it's a pitfall that's easier to fall into than you might initially think.
 
 The root of the problem, as you've probably already suspected, lies within Ruby's namespace resolution. When you define a module, you’re essentially creating a named scope for constants – classes, other modules, and so on. Nesting modules creates a hierarchical structure. Now, things get tricky when you have nested modules with the same name, because Ruby starts its search for constants from the innermost scope and works its way outwards. If it finds a match at an inner level, it stops searching, irrespective of whether there’s another one at a higher level that was actually intended.
 
@@ -47,7 +47,7 @@ module Services
 end
 ```
 
-Now, suppose somewhere in our code (let’s say `app/controllers/invoices_controller.rb`), we try to instantiate the *billing* version of `InvoiceGenerator`. Naively, you might expect to write something like:
+Now, suppose somewhere in our code (let’s say `app/controllers/invoices_controller.rb`), we try to instantiate the _billing_ version of `InvoiceGenerator`. Naively, you might expect to write something like:
 
 ```ruby
 require 'services/billing/invoice_generator'
@@ -69,7 +69,7 @@ class InvoicesController < ApplicationController
 end
 ```
 
-However, because the constant lookup starts within the current `InvoicesController` namespace, if you have loaded `services/reporting/invoice_generator.rb` *before* `services/billing/invoice_generator.rb` using `require`, you might inadvertently get the `Reporting` version when you meant to use the `Billing` one. This is because, after the second `require`, `Services` will point to the `Reporting` version rather than the `Billing` one, and the constant resolution process will pick that `InvoiceGenerator` because it's the most accessible after `require`.
+However, because the constant lookup starts within the current `InvoicesController` namespace, if you have loaded `services/reporting/invoice_generator.rb` _before_ `services/billing/invoice_generator.rb` using `require`, you might inadvertently get the `Reporting` version when you meant to use the `Billing` one. This is because, after the second `require`, `Services` will point to the `Reporting` version rather than the `Billing` one, and the constant resolution process will pick that `InvoiceGenerator` because it's the most accessible after `require`.
 
 Let's illustrate this with some working code snippets to make it even clearer. I'll use a simplified version outside of the context of a Rails app but the principle is exactly the same:
 
@@ -200,8 +200,8 @@ In this example, we completely avoid nested modules with the same name, thus rem
 
 To delve deeper into this, I recommend looking into:
 
-*   **"The Ruby Programming Language" by David Flanagan and Yukihiro Matsumoto:** This book provides an extensive understanding of Ruby's object model, including constant lookup rules and how namespaces work.
-*   **"Metaprogramming Ruby" by Paolo Perrotta:** This explores Ruby's metaclass system and how it influences inheritance and constant lookup behavior. It's advanced but provides profound insight into the inner workings.
-*   **The official Ruby documentation on modules and namespaces:** Specifically, review sections regarding scoping, constant resolution, and module inclusion for a comprehensive understanding.
+- **"The Ruby Programming Language" by David Flanagan and Yukihiro Matsumoto:** This book provides an extensive understanding of Ruby's object model, including constant lookup rules and how namespaces work.
+- **"Metaprogramming Ruby" by Paolo Perrotta:** This explores Ruby's metaclass system and how it influences inheritance and constant lookup behavior. It's advanced but provides profound insight into the inner workings.
+- **The official Ruby documentation on modules and namespaces:** Specifically, review sections regarding scoping, constant resolution, and module inclusion for a comprehensive understanding.
 
 The key takeaway is to be very mindful of how you structure your modules and to choose descriptive names to avoid conflicts. While explicit references as in example 2 work, a cleaner and more maintainable approach often entails rethinking the module hierarchy and adopting more distinctive nomenclature. Nested modules sharing the same name are rarely, if ever, truly necessary and usually indicate a design smell that can lead to hard-to-diagnose issues. From my experience, a bit of up-front planning regarding module naming and structure pays significant dividends down the road.

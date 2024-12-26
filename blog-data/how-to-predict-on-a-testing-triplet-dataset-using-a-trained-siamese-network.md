@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-to-predict-on-a-testing-triplet-dataset-using-a-trained-siamese-network"
 ---
 
-Okay, let's tackle this. Funny enough, I remember a project back in my days at a research lab where we were classifying gene pairs based on interaction probabilities using a Siamese network. We had to deal with a similar testing triplet challenge, so this is a topic I've got some practical experience with. The core issue here isn't about training the network itself, but rather how to structure your inference process when your testing data is presented as triplets, and your network learns similarity, not direct classification.
+, let's tackle this. Funny enough, I remember a project back in my days at a research lab where we were classifying gene pairs based on interaction probabilities using a Siamese network. We had to deal with a similar testing triplet challenge, so this is a topic I've got some practical experience with. The core issue here isn't about training the network itself, but rather how to structure your inference process when your testing data is presented as triplets, and your network learns similarity, not direct classification.
 
 A Siamese network, in essence, learns an embedding space. The training process focuses on learning a function where similar inputs are mapped close together in this space, and dissimilar ones are mapped far apart. You typically train using pairs, and a loss function like contrastive loss or triplet loss forces these relationships. But the critical thing to grasp is that the output of the network itself isn’t a class label; it’s a representation within that learned embedding. So, when testing with triplets—let's call them (anchor, positive, negative)—you're not just classifying each instance; you're checking if the embedding of the anchor is closer to the embedding of the positive than the negative.
 
-The typical structure of a triplet test set is that the anchor instance is assumed to be 'similar' to the positive instance, and 'different' to the negative instance. So, you're not predicting what a single input *is* but rather evaluating whether the relationships are consistent with what the network has learned. Here's how I've generally seen this implemented, broken down into steps and illustrated with some pseudo-code.
+The typical structure of a triplet test set is that the anchor instance is assumed to be 'similar' to the positive instance, and 'different' to the negative instance. So, you're not predicting what a single input _is_ but rather evaluating whether the relationships are consistent with what the network has learned. Here's how I've generally seen this implemented, broken down into steps and illustrated with some pseudo-code.
 
 First, you'd pass each component of your triplet – the anchor, positive, and negative – through your trained Siamese network. This yields three embedding vectors, let’s call them `embedding_anchor`, `embedding_positive`, and `embedding_negative`. These aren’t raw outputs but the result of the network’s final layers, often after some form of dimensionality reduction.
 
@@ -116,7 +116,7 @@ def predict_triplet_with_threshold(anchor_data, positive_data, negative_data, th
 
     distance_ap = euclidean_distance(embedding_anchor, embedding_positive)
     distance_an = euclidean_distance(embedding_anchor, embedding_negative)
-    
+
     distance_diff = distance_an - distance_ap
 
     return distance_diff > threshold

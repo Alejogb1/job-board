@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-efficiently-extract-photos-from-a-zip-file-in-c-without-using-ziparchive"
 ---
 
-Alright, let's tackle this. It's a situation I've encountered more than once, often when dealing with legacy systems or specific constraints that prevent the use of the `System.IO.Compression.ZipArchive` class. While that class provides a convenient and robust solution, sometimes we have to delve into the raw structure of zip files ourselves. So, yes, extracting images efficiently from a zip file in C# without relying on the convenience of `ZipArchive` is definitely achievable, though it does involve a lower level of interaction with the file format.
+, let's tackle this. It's a situation I've encountered more than once, often when dealing with legacy systems or specific constraints that prevent the use of the `System.IO.Compression.ZipArchive` class. While that class provides a convenient and robust solution, sometimes we have to delve into the raw structure of zip files ourselves. So, yes, extracting images efficiently from a zip file in C# without relying on the convenience of `ZipArchive` is definitely achievable, though it does involve a lower level of interaction with the file format.
 
 The key is understanding the basic structure of a zip archive. Fundamentally, it consists of a series of local file headers, each followed by its corresponding compressed data, and then a central directory at the end that provides a table of contents. This central directory is critical for efficiently locating the files within the archive without having to parse through the whole thing sequentially.
 
@@ -74,7 +74,7 @@ public class ZipExtractor
                 ushort fileNameLength = BitConverter.ToUInt16(centralDirEntry, 28);
                 ushort extraFieldLength = BitConverter.ToUInt16(centralDirEntry, 30);
                 ushort fileCommentLength = BitConverter.ToUInt16(centralDirEntry, 32);
-                
+
                 byte[] fileNameBytes = new byte[fileNameLength];
                 fileStream.Read(fileNameBytes, 0, fileNameLength);
                  fileStream.Seek(extraFieldLength + fileCommentLength, SeekOrigin.Current);
@@ -84,7 +84,7 @@ public class ZipExtractor
                 if (fileName.ToLower().EndsWith(".jpg"))
                 {
                      uint localFileHeaderOffset = BitConverter.ToUInt32(centralDirEntry, 42);
-                    
+
                     fileStream.Seek(localFileHeaderOffset, SeekOrigin.Begin);
 
                     byte[] localFileHeader = new byte[30];
@@ -98,7 +98,7 @@ public class ZipExtractor
 
                     ushort localFileHeaderFileNameLength = BitConverter.ToUInt16(localFileHeader, 26);
                     ushort localFileHeaderExtraFieldLength = BitConverter.ToUInt16(localFileHeader, 28);
-                    
+
                     fileStream.Seek(localFileHeaderFileNameLength + localFileHeaderExtraFieldLength, SeekOrigin.Current);
                     uint compressedSize = BitConverter.ToUInt32(localFileHeader, 18);
                     ushort compressionMethod = BitConverter.ToUInt16(localFileHeader, 8);
@@ -136,9 +136,9 @@ public class ZipExtractor
 
 This snippet shows the foundational logic. Here’s a couple things to keep in mind:
 
-*   **Error handling** is minimal here, you'd absolutely add more robust checks. For instance, make sure you have the right magic numbers at various points when parsing the zip file, such as the start of local file header, or that you're handling invalid compression methods gracefully.
-*   This code currently only looks for JPEG files. You'd need to expand this condition (the `if (fileName.ToLower().EndsWith(".jpg"))`) and add more filename checks and/or file signature (magic bytes) inspection to identify other image formats you want to support.
-*   **Efficiency:** While this bypasses `ZipArchive`, there's room for further optimization. For example, we could use buffered reading/writing and optimize memory allocations.
+- **Error handling** is minimal here, you'd absolutely add more robust checks. For instance, make sure you have the right magic numbers at various points when parsing the zip file, such as the start of local file header, or that you're handling invalid compression methods gracefully.
+- This code currently only looks for JPEG files. You'd need to expand this condition (the `if (fileName.ToLower().EndsWith(".jpg"))`) and add more filename checks and/or file signature (magic bytes) inspection to identify other image formats you want to support.
+- **Efficiency:** While this bypasses `ZipArchive`, there's room for further optimization. For example, we could use buffered reading/writing and optimize memory allocations.
 
 Here's another example showing how you might enhance the extraction process with a more comprehensive file extension check:
 
@@ -196,7 +196,7 @@ public class ZipExtractorEnhanced
                  ushort fileNameLength = BitConverter.ToUInt16(centralDirEntry, 28);
                 ushort extraFieldLength = BitConverter.ToUInt16(centralDirEntry, 30);
                 ushort fileCommentLength = BitConverter.ToUInt16(centralDirEntry, 32);
-                
+
                  byte[] fileNameBytes = new byte[fileNameLength];
                 fileStream.Read(fileNameBytes, 0, fileNameLength);
                  fileStream.Seek(extraFieldLength + fileCommentLength, SeekOrigin.Current);
@@ -315,7 +315,7 @@ public class ZipExtractorAdvanced
                 ushort fileNameLength = BitConverter.ToUInt16(centralDirEntry, 28);
                  ushort extraFieldLength = BitConverter.ToUInt16(centralDirEntry, 30);
                  ushort fileCommentLength = BitConverter.ToUInt16(centralDirEntry, 32);
-                
+
                  byte[] fileNameBytes = new byte[fileNameLength];
                 fileStream.Read(fileNameBytes, 0, fileNameLength);
                 fileStream.Seek(extraFieldLength + fileCommentLength, SeekOrigin.Current);

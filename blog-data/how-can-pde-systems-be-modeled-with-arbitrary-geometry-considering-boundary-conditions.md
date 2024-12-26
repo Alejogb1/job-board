@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-pde-systems-be-modeled-with-arbitrary-geometry-considering-boundary-conditions"
 ---
 
-Okay, let's delve into modeling partial differential equation (PDE) systems with arbitrary geometry, especially when boundary conditions are in the mix. This is a challenge I’ve tackled numerous times in my career, and I've found there's a nuanced approach that really nails it. The key isn't to view the geometry as a hurdle, but as an integral part of the problem itself. When I first encountered this, it was while simulating fluid flow through a complex microfluidic device – a real spaghetti-like arrangement of channels – and standard grid-based methods just weren’t cutting it. The computational effort exploded as we tried to refine the grid around intricate curves.
+, let's delve into modeling partial differential equation (PDE) systems with arbitrary geometry, especially when boundary conditions are in the mix. This is a challenge I’ve tackled numerous times in my career, and I've found there's a nuanced approach that really nails it. The key isn't to view the geometry as a hurdle, but as an integral part of the problem itself. When I first encountered this, it was while simulating fluid flow through a complex microfluidic device – a real spaghetti-like arrangement of channels – and standard grid-based methods just weren’t cutting it. The computational effort exploded as we tried to refine the grid around intricate curves.
 
 What we needed was a method that could adapt to the geometry, rather than force the geometry to conform to the method. That’s where finite element methods (FEM) truly shine. Unlike finite difference methods which rely on structured grids, FEM uses an unstructured mesh, essentially breaking the domain into smaller, simpler elements like triangles or tetrahedra. This allows us to accurately represent the arbitrary geometry and even refine the mesh in areas with higher gradients or more complex boundary conditions.
 
@@ -105,6 +105,7 @@ solve(a == L, uh, bc)
 plot(uh)
 plt.show()
 ```
+
 This example involves a circular domain and introduces both Dirichlet and Neumann boundary conditions using `SubDomain`, adding a level of sophistication.
 
 **Example 3: 2D Reaction-Diffusion equation with explicit time stepping on arbitrary geometry**
@@ -152,6 +153,6 @@ plt.show()
 
 This example shows a time-dependent reaction diffusion, and it assumes the existance of a mesh stored in `arbitrary_domain.xml`. This file can be created using `Gmsh` or other meshing tools. I've found that using XML mesh import greatly increases flexibility when working with arbitrary geometries.
 
-For deeper understanding, consider exploring books like *The Finite Element Method: Its Basis and Fundamentals* by O.C. Zienkiewicz and R.L. Taylor, which covers the theory extensively. Also, “Numerical Solution of Partial Differential Equations by the Finite Element Method” by Claes Johnson offers an excellent practical approach. Research papers focusing on mesh adaptivity and parallel computing in FEM (search for keywords like "h-adaptivity," "p-adaptivity," and "domain decomposition") would be invaluable as well, as this allows scaling the problem when dealing with larger and more complex simulations. Finally, the FEniCS documentation itself is well-written and explains many of the core concepts.
+For deeper understanding, consider exploring books like _The Finite Element Method: Its Basis and Fundamentals_ by O.C. Zienkiewicz and R.L. Taylor, which covers the theory extensively. Also, “Numerical Solution of Partial Differential Equations by the Finite Element Method” by Claes Johnson offers an excellent practical approach. Research papers focusing on mesh adaptivity and parallel computing in FEM (search for keywords like "h-adaptivity," "p-adaptivity," and "domain decomposition") would be invaluable as well, as this allows scaling the problem when dealing with larger and more complex simulations. Finally, the FEniCS documentation itself is well-written and explains many of the core concepts.
 
 Modeling PDEs with arbitrary geometries and boundary conditions is definitely not trivial, but with the finite element method and a solid understanding of underlying theory, it becomes a very powerful tool. I can say from experience, it's a skill worth mastering if you deal with physical modeling and simulations.

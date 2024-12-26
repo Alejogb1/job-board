@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-the-repeated-unexpected-token-exceptions-in-rails-6"
 ---
 
-Alright, let's tackle this. I've seen the "unexpected token" errors in Rails 6 enough times to feel your pain, and it usually boils down to a few common culprits, often hiding in plain sight. It’s rarely a singular, mystical bug; instead, it's more about nuanced interplay between how Rails, webpacker, and potentially your specific codebase are configured. Let me break it down from my experiences and what I've come to understand.
+, let's tackle this. I've seen the "unexpected token" errors in Rails 6 enough times to feel your pain, and it usually boils down to a few common culprits, often hiding in plain sight. It’s rarely a singular, mystical bug; instead, it's more about nuanced interplay between how Rails, webpacker, and potentially your specific codebase are configured. Let me break it down from my experiences and what I've come to understand.
 
 First off, let’s acknowledge that ‘unexpected token’ isn’t particularly specific. This error usually means that the JavaScript parser, most commonly part of webpacker's pipeline in Rails 6, encountered something it wasn't expecting in the code it was trying to interpret. This could range from a syntax error in your javascript to problems in how webpacker is processing or transpiling it. Based on my experience, the most frequent instigators usually fall into the following areas:
 
@@ -30,7 +30,7 @@ default: &default
 
   # Add additional paths here
   resolved_paths:
-     - app/javascript
+    - app/javascript
 
 development:
   <<: *default
@@ -69,8 +69,8 @@ production:
   <<: *default
   compile: true
   cache: true
-
 ```
+
 After that change, I would typically clear the webpacker cache with `rails webpacker:clobber` and rebuild to ensure everything picks up the changes correctly.
 
 **Snippet 2: Babel Transpilation Configuration**
@@ -82,23 +82,23 @@ function getNestedValue(obj) {
   return obj?.nested?.value;
 }
 ```
+
 If your babel config isn't set up for optional chaining, webpacker will throw a syntax error. In my experience, this has been often seen when the `.babelrc` or `babel.config.js` file (which may be in the rails app root, or within a specific directory within `node_modules`) is missing the relevant plugins. It might look something like this if the config is in the root folder:
 
 ```javascript
 module.exports = {
   presets: [
     [
-      '@babel/preset-env',
-        {
-            targets: {
-              node: 'current'
-            }
-        }
+      "@babel/preset-env",
+      {
+        targets: {
+          node: "current",
+        },
+      },
     ],
-    '@babel/preset-react'
+    "@babel/preset-react",
   ],
-    plugins: [
-     ]
+  plugins: [],
 };
 ```
 
@@ -108,43 +108,44 @@ A proper configuration to support the optional chaining would be:
 module.exports = {
   presets: [
     [
-      '@babel/preset-env',
-        {
-           targets: {
-            node: 'current'
-        }
-        }
+      "@babel/preset-env",
+      {
+        targets: {
+          node: "current",
+        },
+      },
     ],
-    '@babel/preset-react'
+    "@babel/preset-react",
   ],
   plugins: [
     "@babel/plugin-proposal-optional-chaining",
-    "@babel/plugin-proposal-nullish-coalescing-operator"
-  ]
+    "@babel/plugin-proposal-nullish-coalescing-operator",
+  ],
 };
 ```
+
 It's also essential to ensure you have `@babel/plugin-proposal-optional-chaining` and `@babel/plugin-proposal-nullish-coalescing-operator` installed via npm or yarn.
 
 **Snippet 3: Dependency Version Conflicts**
 
-Let's say you have a specific component library, and during an upgrade, the new version changes the structure of a module, causing issues. In this scenario, it is difficult to show the actual code changes themselves, since the issue is within an external library. However, assume a dependency like `my-component-library`, and that your application is working as expected until you upgrade the library to v2.1.0 from v2.0.0.  Your application is using some function `myImportantFunction` within the library. In version 2.0.0 the library had the function like this (a simplified version):
+Let's say you have a specific component library, and during an upgrade, the new version changes the structure of a module, causing issues. In this scenario, it is difficult to show the actual code changes themselves, since the issue is within an external library. However, assume a dependency like `my-component-library`, and that your application is working as expected until you upgrade the library to v2.1.0 from v2.0.0. Your application is using some function `myImportantFunction` within the library. In version 2.0.0 the library had the function like this (a simplified version):
 
 ```javascript
-  // my-component-library v2.0.0
-  export function myImportantFunction() {
-   return "Hello from my library version 2.0.0";
-   }
+// my-component-library v2.0.0
+export function myImportantFunction() {
+  return "Hello from my library version 2.0.0";
+}
 ```
 
 But in v2.1.0, the library has changed it to this:
 
 ```javascript
- // my-component-library v2.1.0
-  export const myImportantFunction = () => {
-   return "Hello from my library version 2.1.0";
-  };
-
+// my-component-library v2.1.0
+export const myImportantFunction = () => {
+  return "Hello from my library version 2.1.0";
+};
 ```
+
 This subtle change from a function to a const with an arrow function could cause an "unexpected token" error if the consuming code uses webpack to interpret the function with the older interpretation.
 
 When errors like this happen, I start by inspecting my `package.json` and comparing versions to identify problematic updates. After identifying the problematic dependency, I will try downgrading that package or updating other related packages that may be introducing conflicts. Also, it's sometimes helpful to look into the release notes of updated packages.

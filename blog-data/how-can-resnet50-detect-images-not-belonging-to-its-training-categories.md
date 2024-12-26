@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-resnet50-detect-images-not-belonging-to-its-training-categories"
 ---
 
-Okay, let's tackle this. It's a fairly common question, and I've seen it crop up in various contexts – think back to a project where we were attempting anomaly detection in industrial machine vision; the challenge was precisely this. A ResNet50 trained on a curated dataset of specific components needed to flag anything *not* part of that known set. So, it isn’t about magically making ResNet50 ‘see’ what it hasn’t seen, but rather about leveraging what it *has* learned to identify discrepancies.
+, let's tackle this. It's a fairly common question, and I've seen it crop up in various contexts – think back to a project where we were attempting anomaly detection in industrial machine vision; the challenge was precisely this. A ResNet50 trained on a curated dataset of specific components needed to flag anything _not_ part of that known set. So, it isn’t about magically making ResNet50 ‘see’ what it hasn’t seen, but rather about leveraging what it _has_ learned to identify discrepancies.
 
-The core problem here stems from the fact that ResNet50, like most classifiers, is trained to minimize its loss *within* the categories it’s been exposed to. It learns to map images to specific output probabilities representing these categories. It doesn’t inherently possess a concept of "other," or "unknown." When you feed it something outside the training distribution, it's still going to try to shoehorn that input into one of the known categories. This often results in highly confident, yet incorrect, predictions.
+The core problem here stems from the fact that ResNet50, like most classifiers, is trained to minimize its loss _within_ the categories it’s been exposed to. It learns to map images to specific output probabilities representing these categories. It doesn’t inherently possess a concept of "other," or "unknown." When you feed it something outside the training distribution, it's still going to try to shoehorn that input into one of the known categories. This often results in highly confident, yet incorrect, predictions.
 
-To address this, we need to move beyond simple classification and incorporate techniques that allow the network to express uncertainty or, more accurately, *disagreement* with the provided input. The fundamental concept revolves around the idea that inputs far from the training distribution will exhibit feature activation patterns within the network that diverge significantly from those seen during training. We can exploit this.
+To address this, we need to move beyond simple classification and incorporate techniques that allow the network to express uncertainty or, more accurately, _disagreement_ with the provided input. The fundamental concept revolves around the idea that inputs far from the training distribution will exhibit feature activation patterns within the network that diverge significantly from those seen during training. We can exploit this.
 
-One common and effective method I’ve often found useful involves monitoring the softmax probability outputs and utilizing a threshold. The idea here isn't novel; it's about recognizing when the predicted probabilities are not particularly strong for *any* of the training classes, suggesting the input is likely outside the training data distribution. A low 'maximum' softmax probability could indicate this 'out of distribution' (OOD) input. The crucial part lies in establishing an appropriate threshold, which ideally you derive via validation.
+One common and effective method I’ve often found useful involves monitoring the softmax probability outputs and utilizing a threshold. The idea here isn't novel; it's about recognizing when the predicted probabilities are not particularly strong for _any_ of the training classes, suggesting the input is likely outside the training data distribution. A low 'maximum' softmax probability could indicate this 'out of distribution' (OOD) input. The crucial part lies in establishing an appropriate threshold, which ideally you derive via validation.
 
 Here's a snippet that illustrates this in python using tensorflow, assuming you have a pre-trained ResNet50 model:
 
@@ -82,7 +82,7 @@ def fit_gaussian_to_features(features_list):
 
     Args:
       features_list: A list of numpy arrays, each representing features from a training example.
-    
+
     Returns:
       tuple: A tuple containing: mean feature vector, covariance matrix of the features
   """
@@ -90,7 +90,7 @@ def fit_gaussian_to_features(features_list):
   cov = EmpiricalCovariance().fit(all_features)
   mean_features = np.mean(all_features,axis=0)
   return mean_features, cov.covariance_
-  
+
 
 def detect_ood_gaussian(mean_features, covariance, features, mahalanobis_threshold):
   """
@@ -122,6 +122,7 @@ def detect_ood_gaussian(mean_features, covariance, features, mahalanobis_thresho
 #features_test = extract_layer_features(model, processed_image, layer_name)
 # is_ood = detect_ood_gaussian(mean_features_train, covariance_train, features_test, threshold_mahalanobis)
 ```
+
 The code above first extracts features from an intermediate layer. We then fit a gaussian to the training set features. We can then derive a mahalanobis distance for a test image and compare to a threshold to determine if it's an out of distribution.
 
 Finally, an even more sophisticated method (and often the most effective) is using generative models for OOD detection. These models are trained on the training data to reconstruct the input. Test images that deviate substantially from what the generative model expects (reconstruction error is high) can be deemed out-of-distribution. Variational Autoencoders (VAEs) are particularly useful for this task. I've seen a variant of this approach using adversarial autoencoders in some research, which yielded very impressive performance compared to simple feature based approaches.
@@ -146,7 +147,7 @@ class VariationalAutoencoder(tf.keras.Model):
           tf.keras.layers.Dense(intermediate_dim, activation='relu'),
           tf.keras.layers.Dense(2 * latent_dim)
         ])
-    
+
     self.decoder = tf.keras.Sequential([
           tf.keras.layers.InputLayer(input_shape=(latent_dim,)),
           tf.keras.layers.Dense(intermediate_dim,activation='relu'),
@@ -169,11 +170,11 @@ class VariationalAutoencoder(tf.keras.Model):
   def encode(self, x):
       mean, logvar = tf.split(self.encoder(x), num_or_size_splits=2, axis=1)
       return mean, logvar
-    
+
   def reparameterize(self, mean, logvar):
       eps = tf.random.normal(shape=mean.shape)
       return eps * tf.exp(logvar * .5) + mean
-  
+
   def decode(self, z, apply_sigmoid=False):
       logits = self.decoder(z)
       if apply_sigmoid:

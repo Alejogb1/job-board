@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-copy-an-entire-drive-folder-including-sub-folders-contents-to-gcs"
 ---
 
-alright, so you want to copy a local directory, with all its subdirectories and files, up to google cloud storage (gcs)? been there, done that, got the t-shirt – or rather, spent way too many late nights debugging bash scripts and python code. it's a common task, but the devil's in the details. let's walk through a few options, and i'll share some gotchas i've encountered along the way.
+, so you want to copy a local directory, with all its subdirectories and files, up to google cloud storage (gcs)? been there, done that, got the t-shirt – or rather, spent way too many late nights debugging bash scripts and python code. it's a common task, but the devil's in the details. let's walk through a few options, and i'll share some gotchas i've encountered along the way.
 
 first off, the most straightforward method, and probably what most people reach for initially, is the `gsutil` command-line tool. it's part of the google cloud sdk and it's really powerful for this sort of thing. if you haven't got it installed you should, it will save you a lot of headaches down the line. it handles a lot of the complexities for you, like creating the necessary directories in gcs and handling large files efficiently. a simple way of doing that will be with a command like this:
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "casting-packed-array-to-unpacked-array-for-arrays-that-are-used-as-parameters"
 ---
 
-Okay so you want to cast a packed array to an unpacked array when those arrays are function parameters right I've been down that rabbit hole more times than I'd like to admit Let me share some scars and hopefully save you some headaches
+you want to cast a packed array to an unpacked array when those arrays are function parameters right I've been down that rabbit hole more times than I'd like to admit Let me share some scars and hopefully save you some headaches
 
 First off the packed vs unpacked thing in hardware description languages like SystemVerilog can be a real pain especially when it comes to interfaces and function calls You see when you define an array as packed it means all the bits are stored contiguously in memory as one large chunk Think of it like a single long register Unpacked on the other hand is treated more like a collection of individual registers or memory locations Each element exists in its own little space
 
@@ -28,7 +28,7 @@ endfunction
 
 ```
 
-In this example I create an unpacked array *unpacked_array* inside the function that's the same size as needed then loop through and copy over each 8 bit chunk from the *packed_array* You can adjust the loop and indexing to match the width and depth of the arrays in your problem. I also added the *unpacked_array_in* so you can modify that one on the function as part of the parameters. Remember that this is done inside the function scope
+In this example I create an unpacked array _unpacked_array_ inside the function that's the same size as needed then loop through and copy over each 8 bit chunk from the _packed_array_ You can adjust the loop and indexing to match the width and depth of the arrays in your problem. I also added the _unpacked_array_in_ so you can modify that one on the function as part of the parameters. Remember that this is done inside the function scope
 
 This works but is inefficient Especially when you have multiple functions and the copying overhead is killing performance and takes more code. Now you might think why not just use a direct cast like this:
 
@@ -43,9 +43,9 @@ function void my_other_function(input bit [31:0] packed_array input bit [7:0] un
 endfunction
 ```
 
-This example tries a casting that doesn't really works the casting operator *'()* performs a conversion that might not always translate from a packed format to an unpacked format. This could cause a mismatch and wrong data. Also this cast does not respect the width of each chunk it's rather a memory interpretation cast that can create unwanted effects
+This example tries a casting that doesn't really works the casting operator _'()_ performs a conversion that might not always translate from a packed format to an unpacked format. This could cause a mismatch and wrong data. Also this cast does not respect the width of each chunk it's rather a memory interpretation cast that can create unwanted effects
 
-The real magic here is using a properly structured *typedef* This approach takes more setup but pays off in the long run You create a user defined type that has both the packed and unpacked versions of your array Then the function just uses the user defined type as an argument
+The real magic here is using a properly structured _typedef_ This approach takes more setup but pays off in the long run You create a user defined type that has both the packed and unpacked versions of your array Then the function just uses the user defined type as an argument
 
 ```systemverilog
 typedef struct packed {
@@ -66,9 +66,9 @@ function void my_last_function(input packed_type data_in, output unpacked_type d
 endfunction
 ```
 
-This might look a bit more complicated but it is worth it The *typedef* makes code a lot more readable and also safer The key here is to think about the data and how its accessed in your design. I personally prefer this last approach because it gives you more control and readability
+This might look a bit more complicated but it is worth it The _typedef_ makes code a lot more readable and also safer The key here is to think about the data and how its accessed in your design. I personally prefer this last approach because it gives you more control and readability
 
-Now you have this *packed\_type* and *unpacked\_type* So when you have a function that needs an unpacked version of your data you declare a struct with it When you need the packed version you just pass the struct I know it might seem like a detour but trust me it reduces errors and makes your code much much easier to work with down the road
+Now you have this _packed_type_ and _unpacked_type_ So when you have a function that needs an unpacked version of your data you declare a struct with it When you need the packed version you just pass the struct I know it might seem like a detour but trust me it reduces errors and makes your code much much easier to work with down the road
 
 There is this older paper called "SystemVerilog for verification" by Chris Spear. Its a bit old but the fundamentals of typedefs are explained there Also there is another book called "Verification Methodology Manual for SystemVerilog" from Janick Bergeron that it is very good to better understand the different uses of user defined types and how parameters should be created. It also covers in detail all the verification approaches in systemverilog so is a good all around book for the language. It's a worth read if you are serious about hardware design and verification
 

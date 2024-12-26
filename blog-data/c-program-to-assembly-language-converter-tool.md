@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "c-program-to-assembly-language-converter-tool"
 ---
 
-Okay so you're asking about a C program to assembly converter tool right Been there done that tons of times actually. This is one of those things that sounds way simpler than it is at first glance. Like oh a simple translation program how hard can it be? Famous last words I tell you.
+you're asking about a C program to assembly converter tool right Been there done that tons of times actually. This is one of those things that sounds way simpler than it is at first glance. Like oh a simple translation program how hard can it be? Famous last words I tell you.
 
-Look I've been messing with compilers and low-level stuff since back when dinosaurs roamed the earth. Alright maybe not dinosaurs but close enough. In the late 90s for a college project I actually did something similar. It wasn't exactly a full C to assembly tool since we had limited time so it was more like a toy version handling a subset of C. Trust me when I say the rabbit hole goes deep.
+Look I've been messing with compilers and low-level stuff since back when dinosaurs roamed the earth. maybe not dinosaurs but close enough. In the late 90s for a college project I actually did something similar. It wasn't exactly a full C to assembly tool since we had limited time so it was more like a toy version handling a subset of C. Trust me when I say the rabbit hole goes deep.
 
 See the core issue is the gap between the high-level abstraction of C and the low-level nitty-gritty details of assembly language. C lets you think in terms of variables loops functions. Assembly is all about registers memory locations flags and individual machine instructions. You gotta bridge that.
 
@@ -30,7 +30,9 @@ Now in real life creating a full-fledged C to assembly converter is a massive un
 // C code snippet
 int x = 10;
 ```
+
 Here's the corresponding assembly
+
 ```assembly
 ; x86 assembly
 mov eax, 10    ; Move the value 10 into register eax
@@ -51,6 +53,7 @@ int c = a + b;
 ```
 
 Here's the x86 assembly
+
 ```assembly
 ; x86 assembly
 mov eax, 5         ; Move the value 5 into register eax (a)
@@ -60,6 +63,7 @@ mov [b_memory_location], ebx ; store value of b in memory
 add eax, ebx     ; Add ebx to eax eax now contains the sum of a and b
 mov [c_memory_location], eax ; store value of c (sum of a and b) in the memory location of variable c
 ```
+
 Again this shows how we are using registers and storing in memory. We are assuming `a_memory_location` `b_memory_location` and `c_memory_location` are allocated in the memory somehow.
 
 **Example 3: A Basic If Statement**
@@ -71,7 +75,9 @@ if (x > 5) {
   x = x - 1;
 }
 ```
+
 Here's the corresponding assembly
+
 ```assembly
 ; x86 assembly
 mov eax, 10 ; load the initial value of x into eax
@@ -84,12 +90,13 @@ mov [x_memory_location], eax
 else_label: ; label for the else statement which is not needed here
 ; no else block
 ```
+
 Here we have a conditional jump based on the comparison. We are using the `jle` jump if less or equal command to jump to the `else_label` if our condition is false. The `else_label` is only there because it makes sense in case we had an else block. Here it just sits there doing nothing.
 
 As you can see even these simple examples involve moving data between registers memory and making decisions based on comparisons. The complete compiler is incredibly more difficult.
 
 Now a proper C to assembly compiler would require way more logic to handle complex data structures control flow function calls pointers and other features. It's really a whole lot of intricate details.
 
-If you want to dig deeper I'd highly recommend getting into Compiler Design books they will provide the formal basics required to build something like that. Also reading Intel's Software Developer's manuals are great for understanding the x86 assembly architecture. And hey don't forget about Knuth's *The Art of Computer Programming* those are the bibles of computing.
+If you want to dig deeper I'd highly recommend getting into Compiler Design books they will provide the formal basics required to build something like that. Also reading Intel's Software Developer's manuals are great for understanding the x86 assembly architecture. And hey don't forget about Knuth's _The Art of Computer Programming_ those are the bibles of computing.
 
 Now I know this is like giving you a map to a vast ocean and asking you to sail around the world but seriously its great fun. I wish you the best of luck with your coding and make sure to write your own stackoverflow questions when you get stuck. (But not this one again please haha).

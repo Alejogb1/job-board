@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "difference-between-and-in-conditional-block-in-systemverilog"
 ---
 
-Okay so you want to know the difference between `and` and `&&` in a SystemVerilog conditional block right Been there done that got the t-shirt and the sleepless nights debugging it let me tell you
+you want to know the difference between `and` and `&&` in a SystemVerilog conditional block right Been there done that got the t-shirt and the sleepless nights debugging it let me tell you
 
 It's a common gotcha for anyone moving from say C or even verilog to SystemVerilog I remember when I first started with SV I used `and` like it was going out of style thinking it was the same as `&&` Yeah rookie mistake I paid for that dearly in simulation time let me tell you I was working on this complex ethernet switch at the time thousands of lines of code everywhere and the bug I was chasing was all because of `and` instead of `&&` The simulation was going to end any time soon if i didnt found this bug So first lets break down what they actually do under the hood which will help you understand why this can be a major issue
 
@@ -107,10 +107,10 @@ I really remember that debugging session vividly It took hours combing through w
 
 So yeah to sum it up
 
-*   `and` is bitwise it operates on each bit independently it is mainly for bit operations or similar math or assignments
-*   `&&` is logical it treats entire operands as boolean values it is for conditions
-*   Always use `&&` in your if while and other conditional blocks unless you really really really want a bitwise operation to somehow give a boolean result in conditional which it usually is not needed and a bad practice
-*   My experience tells me that most of the time you need `&&` when doing conditions and if you are using `and` you might be in trouble
+- `and` is bitwise it operates on each bit independently it is mainly for bit operations or similar math or assignments
+- `&&` is logical it treats entire operands as boolean values it is for conditions
+- Always use `&&` in your if while and other conditional blocks unless you really really really want a bitwise operation to somehow give a boolean result in conditional which it usually is not needed and a bad practice
+- My experience tells me that most of the time you need `&&` when doing conditions and if you are using `and` you might be in trouble
 
 If you want to really dig deeper into SystemVerilog I'd recommend checking out Sutherland's book on SystemVerilog for Design it gives you a really solid understanding of all the ins and outs of the language and also a good material is the IEEE 1800-2017 SystemVerilog standard itself which can be dense but is the definitive source. It's not going to be a beach read but it will save you so much debugging later down the line. Plus you will not be using the `and` operator wrong
 

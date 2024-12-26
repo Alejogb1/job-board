@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-wont-wikibase-docker-start-on-azure-container-instance"
 ---
 
-Alright, let's tackle this. Starting containers, especially complex ones like wikibase-docker on a service like Azure Container Instances (ACI), can sometimes feel like navigating a maze. I’ve personally spent more hours than I care to admit debugging deployment issues, so I’m familiar with the pain. Based on my experiences, particularly a challenging project I did about two years ago where we were migrating a large knowledge graph system to the cloud, I can offer some insights into why wikibase-docker might be failing to start on ACI. The core of the problem usually boils down to a few key areas: resource limitations, networking configurations, and incorrect image configuration or environment setup. Let's break those down.
+, let's tackle this. Starting containers, especially complex ones like wikibase-docker on a service like Azure Container Instances (ACI), can sometimes feel like navigating a maze. I’ve personally spent more hours than I care to admit debugging deployment issues, so I’m familiar with the pain. Based on my experiences, particularly a challenging project I did about two years ago where we were migrating a large knowledge graph system to the cloud, I can offer some insights into why wikibase-docker might be failing to start on ACI. The core of the problem usually boils down to a few key areas: resource limitations, networking configurations, and incorrect image configuration or environment setup. Let's break those down.
 
 First, resource constraints are a prime suspect. ACI isn't like a full-fledged virtual machine; it's a container-as-a-service offering, and as such, resources are allocated more granularly. Wikibase, even in its dockerized form, can be a bit resource-intensive, especially if you're loading a significant amount of data. From my past experiences, I've seen instances where the default ACI allocation wasn't sufficient, causing the containers to crash silently or fail to start entirely due to out-of-memory errors. We were running into a similar issue during our knowledge graph migration, where the initial resource allocation was just too small, causing the database container to keep failing initialization.
 
@@ -43,23 +43,23 @@ This example illustrates how to specify resource allocation in an ACI deployment
               "image": "your-custom-wikibase-db-image:latest",
               "resources": {
                 "requests": {
-                  "cpu": 1.5,  // Allocated 1.5 vCPUs
+                  "cpu": 1.5, // Allocated 1.5 vCPUs
                   "memoryInGB": 4 // Allocated 4 GB of RAM
                 }
               }
             }
           },
           {
-              "name": "wikibase-main",
-              "properties": {
-                  "image": "your-custom-wikibase-image:latest",
-                "resources": {
-                  "requests": {
-                    "cpu": 2, // Allocated 2 vCPUs
-                    "memoryInGB": 6 // Allocated 6 GB of RAM
-                  }
+            "name": "wikibase-main",
+            "properties": {
+              "image": "your-custom-wikibase-image:latest",
+              "resources": {
+                "requests": {
+                  "cpu": 2, // Allocated 2 vCPUs
+                  "memoryInGB": 6 // Allocated 6 GB of RAM
                 }
               }
+            }
           }
         ],
         "restartPolicy": "Never"
@@ -67,8 +67,8 @@ This example illustrates how to specify resource allocation in an ACI deployment
     }
   ]
 }
-
 ```
+
 In this example, we're explicitly setting the resource requests for each container. Note how the `wikibase-main` container has been provided with more compute resources than the `wikibase-db` container. This can be adjusted as required. The `cpu` value represents the number of virtual CPUs, while `memoryInGB` represents the amount of RAM allocated. This ensures each container receives the necessary compute power and memory to start up without hitting resource limits.
 
 **Code Example 2: Network Configuration using a Docker Compose File**
@@ -102,6 +102,7 @@ networks:
   wikibase-net:
     driver: bridge
 ```
+
 Here, we've defined a custom network named `wikibase-net`. Both the `wikibase-db` and `wikibase-main` containers are connected to this network. Critically, the `DATABASE_HOST` environment variable in the `wikibase-main` container is set to `wikibase-db`, allowing the main application to resolve the database service directly via container name within the bridge network.
 
 **Code Example 3: Environment Variable Management**
@@ -122,24 +123,24 @@ This example illustrates how environment variables are crucial for correct conta
         "osType": "Linux",
         "containers": [
           {
-              "name": "wikibase-main",
-              "properties": {
-                  "image": "your-custom-wikibase-image:latest",
-                "environmentVariables": [
-                    {
-                        "name": "DATABASE_HOST",
-                        "value": "wikibase-db"
-                    },
-                    {
-                        "name": "DATABASE_USER",
-                        "value": "wikibase_user"
-                    },
-                    {
-                        "name": "DATABASE_PASSWORD",
-                        "value": "wikibase_password"
-                    }
-                ]
-              }
+            "name": "wikibase-main",
+            "properties": {
+              "image": "your-custom-wikibase-image:latest",
+              "environmentVariables": [
+                {
+                  "name": "DATABASE_HOST",
+                  "value": "wikibase-db"
+                },
+                {
+                  "name": "DATABASE_USER",
+                  "value": "wikibase_user"
+                },
+                {
+                  "name": "DATABASE_PASSWORD",
+                  "value": "wikibase_password"
+                }
+              ]
+            }
           }
         ],
         "restartPolicy": "Never"
@@ -148,6 +149,7 @@ This example illustrates how environment variables are crucial for correct conta
   ]
 }
 ```
+
 In this configuration, the `environmentVariables` array explicitly provides the necessary credentials and database hostname. If any of these variables are missing or incorrect, the application won’t be able to connect to the database container and initialization will fail. The correct set of variables must be provided in the ACI deployment configuration for the containers to initialize correctly.
 
 For further reference, I would recommend checking out resources like the official Docker documentation which details best practices around image building and containerization. For ACI specific details, the Azure documentation is essential. More specifically, consider resources such as the 'Docker Deep Dive' by Nigel Poulton for a strong foundation on container technology, and 'Kubernetes in Action' by Marko Luksa if you plan to move beyond ACI to more sophisticated orchestration. These resources provide a deep understanding of the concepts that underpin container deployments and their intricacies.

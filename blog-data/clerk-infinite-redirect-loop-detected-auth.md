@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "clerk-infinite-redirect-loop-detected-auth"
 ---
 
-Okay so you're getting that dreaded "clerk infinite redirect loop detected auth?" error right Been there done that got the t-shirt and a few angry support tickets I swear this particular error is like a rite of passage for anyone messing with authentication flows especially when you’re juggling different frameworks and libraries
+you're getting that dreaded "clerk infinite redirect loop detected auth?" error right Been there done that got the t-shirt and a few angry support tickets I swear this particular error is like a rite of passage for anyone messing with authentication flows especially when you’re juggling different frameworks and libraries
 
 It sounds like you're deep in the weeds of authentication issues and I feel your pain The core problem here almost always boils down to a misconfiguration in your authentication setup or a subtle bug in your redirection logic It's that classic dance where the system tries to authenticate the user sends them to login which then because of something stupid they send them back to authentication and around and around we go like a squirrel chasing its tail Its an infinite redirect and its not a pretty sight
 
@@ -30,13 +30,11 @@ Let’s get to some code I can’t diagnose you well without it but here is some
 // Do not do this
 
 Clerk.configure({
-    signInUrl: '/sign-in',
-    afterSignInUrl: '/sign-in', // Whoops!
-    afterSignOutUrl: '/',
-    apiUrl: "https://api.clerk.dev"
-  });
-
-
+  signInUrl: "/sign-in",
+  afterSignInUrl: "/sign-in", // Whoops!
+  afterSignOutUrl: "/",
+  apiUrl: "https://api.clerk.dev",
+});
 ```
 
 **Example 2: Problematic Middleware/Guard Logic**
@@ -47,15 +45,15 @@ Clerk.configure({
 
 function ensureAuthenticated(req, res, next) {
   if (!req.session.userId) {
-    return res.redirect('/sign-in'); // This is the problem
+    return res.redirect("/sign-in"); // This is the problem
   }
   next();
 }
 
-app.use('/sign-in', ensureAuthenticated); // Don't do this it will break everything
+app.use("/sign-in", ensureAuthenticated); // Don't do this it will break everything
 
-app.get('/home', ensureAuthenticated, (req, res) => {
-  res.send('Welcome home!')
+app.get("/home", ensureAuthenticated, (req, res) => {
+  res.send("Welcome home!");
 });
 ```
 
@@ -63,13 +61,12 @@ app.get('/home', ensureAuthenticated, (req, res) => {
 
 ```javascript
 // Node.js example this is a simplification you should use a proper session manager
-function handleSignIn(req, res){
-//.... some auth stuff
-req.session.userId=user.id // oops we did not save the session variable
-//.... some other auth stuff
- res.redirect('/home') // Redirects but next time the user access a guarded page he will be kicked out again
+function handleSignIn(req, res) {
+  //.... some auth stuff
+  req.session.userId = user.id; // oops we did not save the session variable
+  //.... some other auth stuff
+  res.redirect("/home"); // Redirects but next time the user access a guarded page he will be kicked out again
 }
-
 ```
 
 Now I will be honest with you you might not see it right away the issue can be really tricky to spot especially if you have a complex authentication flow or you are using multiple layers of abstraction I once had an issue with nested if statements in my auth middleware (don't ask me why I did that) it was like that movie Inception but with redirects it was redirects all the way down

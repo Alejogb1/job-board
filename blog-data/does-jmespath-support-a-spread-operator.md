@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "does-jmespath-support-a-spread-operator"
 ---
 
-Okay, let’s tackle this JMESPath question. It's a common point of confusion, and I've personally had to navigate it multiple times in past projects. I wouldn’t call it a straightforward ‘yes’ or ‘no’, and it definitely requires a nuanced understanding of what JMESPath offers and where it falls short. The short answer is: no, JMESPath doesn’t have a spread operator in the way, say, javascript or python does. But, and this is crucial, it offers different mechanisms to achieve similar outcomes, often in a more specific and declarative way.
+, let’s tackle this JMESPath question. It's a common point of confusion, and I've personally had to navigate it multiple times in past projects. I wouldn’t call it a straightforward ‘yes’ or ‘no’, and it definitely requires a nuanced understanding of what JMESPath offers and where it falls short. The short answer is: no, JMESPath doesn’t have a spread operator in the way, say, javascript or python does. But, and this is crucial, it offers different mechanisms to achieve similar outcomes, often in a more specific and declarative way.
 
 I remember working on a data aggregation tool for a distributed system. We were pulling a massive amount of json data, and the need for flattening and restructuring nested arrays was paramount. We initially hoped a spread operator would come to our rescue, but quickly learned that it was not included in the JMESPath spec. Instead, we had to become proficient with alternative techniques, primarily utilizing multi-select lists, flatten projections, and even a touch of piping for more complex operations.
 
@@ -18,16 +18,16 @@ Let's break this down with some practical examples. Imagine we have the followin
     {
       "order_id": 101,
       "items": [
-        {"name": "laptop", "price": 1200},
-        {"name": "mouse", "price": 25}
-       ]
+        { "name": "laptop", "price": 1200 },
+        { "name": "mouse", "price": 25 }
+      ]
     },
     {
       "order_id": 102,
       "items": [
-        {"name": "keyboard", "price": 100},
-        {"name": "monitor", "price": 300}
-       ]
+        { "name": "keyboard", "price": 100 },
+        { "name": "monitor", "price": 300 }
+      ]
     }
   ]
 }
@@ -43,14 +43,14 @@ The following JMESPath expression achieves this flattening effect:
 orders[*].items[*]
 ```
 
-This expression means, and I’ll unpack it: Select all elements from `orders` represented by `*`. For each of the selected `order` element, select all the elements from `items` again represented by `*`.  This gives us a two-dimensional array. JMESPath’s default behaviour flattens the result into a single array. In essence, we have extracted all items and “spread” them into a single list. It returns something akin to this:
+This expression means, and I’ll unpack it: Select all elements from `orders` represented by `*`. For each of the selected `order` element, select all the elements from `items` again represented by `*`. This gives us a two-dimensional array. JMESPath’s default behaviour flattens the result into a single array. In essence, we have extracted all items and “spread” them into a single list. It returns something akin to this:
 
 ```json
 [
-  {"name": "laptop", "price": 1200},
-  {"name": "mouse", "price": 25},
-  {"name": "keyboard", "price": 100},
-  {"name": "monitor", "price": 300}
+  { "name": "laptop", "price": 1200 },
+  { "name": "mouse", "price": 25 },
+  { "name": "keyboard", "price": 100 },
+  { "name": "monitor", "price": 300 }
 ]
 ```
 
@@ -111,16 +111,16 @@ Consider this updated JSON:
     {
       "order_id": 101,
       "items": [
-        {"name": "laptop", "price": 1200, "quantity": 1},
-        {"name": "mouse", "price": 25, "quantity": 2}
+        { "name": "laptop", "price": 1200, "quantity": 1 },
+        { "name": "mouse", "price": 25, "quantity": 2 }
       ]
     },
     {
       "order_id": 102,
       "items": [
-        {"name": "keyboard", "price": 100, "quantity": 3},
-        {"name": "monitor", "price": 300, "quantity": 1}
-       ]
+        { "name": "keyboard", "price": 100, "quantity": 3 },
+        { "name": "monitor", "price": 300, "quantity": 1 }
+      ]
     }
   ]
 }
@@ -132,11 +132,12 @@ The following, more involved expression uses a pipe `|` operator to perform a se
 orders[*].items[*].{total: price * quantity} | sum(@.total)
 ```
 
-Let's break this down. First, we select and flatten all items using the `orders[*].items[*].{total: price * quantity}` component. This creates a new object for each item with the `total` property. Then, the pipe operator, `|`, passes the array of generated objects to the right hand side expression, `sum(@.total)`.  This expression then adds all the `total` values up. The final output will be a single value representing the total revenue:
+Let's break this down. First, we select and flatten all items using the `orders[*].items[*].{total: price * quantity}` component. This creates a new object for each item with the `total` property. Then, the pipe operator, `|`, passes the array of generated objects to the right hand side expression, `sum(@.total)`. This expression then adds all the `total` values up. The final output will be a single value representing the total revenue:
 
 ```
 1950
 ```
+
 So, while this isn’t a ‘spread’ operation, we've used JMESPath’s declarative nature to iteratively transform the data and perform aggregation, achieving our objective. The `|` operator allows functional composition of queries, which is extremely useful, especially when the data transformation required is more complex.
 
 In conclusion, while JMESPath does not possess a specific ‘spread operator’, the use of projections, multi-select lists, and the pipe operator, in combination, provide powerful mechanisms to achieve similar goals of transforming and restructuring your data. Instead of focusing on a feature that is simply absent, embracing the flexibility of its projection mechanism and list manipulation functionalities will prove far more effective. For a deeper understanding of JMESPath, I would recommend reviewing the official JMESPath specification document as well as a thorough read of "Data Wrangling with Python" by Jacqueline Nolis and Katharine Jarmul, which, while focused on python, provides strong foundational concepts for data transformation and how different query languages can approach these issues. Furthermore, understanding functional programming paradigms, such as map, reduce and filter, is incredibly useful for building complex JMESPath queries and for understanding why certain approaches are taken over others. Remember, in data manipulation, a deep understanding of the tool at hand is always more valuable than searching for missing features.

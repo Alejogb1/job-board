@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "255-256-historically-database-field-magnitudes"
 ---
 
-Alright so you're asking about the historical evolution of database field sizes particularly the shift from 255 to 256 and why that happened I've been neck deep in databases for what feels like a geological era so let me break it down in my usual no-nonsense style
+so you're asking about the historical evolution of database field sizes particularly the shift from 255 to 256 and why that happened I've been neck deep in databases for what feels like a geological era so let me break it down in my usual no-nonsense style
 
-Okay so back in the day early database systems were seriously resource-constrained storage was a premium CPU cycles were like gold dust every byte counted and developers had to think very carefully about how to use the resources given to them At that time the value 255 for variable length fields especially strings or text fields was pretty much the norm this is because it fit perfectly into a single 8-bit byte if you want to think about it in simple way 8 bits give you 2^8 different possible values which is exactly 256 but because they are often used as length or number of something they start counting from zero hence the number goes up to 255 That’s why you’d see things like `VARCHAR(255)` quite often even the first versions of MySQL used that a lot
+back in the day early database systems were seriously resource-constrained storage was a premium CPU cycles were like gold dust every byte counted and developers had to think very carefully about how to use the resources given to them At that time the value 255 for variable length fields especially strings or text fields was pretty much the norm this is because it fit perfectly into a single 8-bit byte if you want to think about it in simple way 8 bits give you 2^8 different possible values which is exactly 256 but because they are often used as length or number of something they start counting from zero hence the number goes up to 255 That’s why you’d see things like `VARCHAR(255)` quite often even the first versions of MySQL used that a lot
 
 The limitation was that the length of the variable-length string field had to be stored somewhere usually at the beginning of the field before the actual character data so that the database software knew where the string ended and the next field began that length needed to be stored using the smallest amount of storage space possible And the smallest amount of space that can store a number from 0 to 255 is a single 8-bit byte
 
@@ -81,14 +81,14 @@ Now about resources to read this is something that is not really discussed in de
 
 **Books**:
 
-*   **Database System Concepts** by Abraham Silberschatz Henry F Korth and S Sudarshan This is pretty much the bible for database systems covering a broad spectrum of topics including storage and indexing. It does not focus on this exact problem but has detailed info about it that can help you deduce how this evolved
-*   **High Performance MySQL** by Baron Schwartz Peter Zaitsev and Vadim Tkachenko is great for getting hands-on knowledge on how MySQL works and it will give you a good insight of practical storage techniques
-*   **Architecture of a Database System** by Joseph M. Hellerstein and Michael Stonebraker: while not directly covering the historical aspect this paper explains concepts used in modern databases that can give you insights in storage handling techniques
+- **Database System Concepts** by Abraham Silberschatz Henry F Korth and S Sudarshan This is pretty much the bible for database systems covering a broad spectrum of topics including storage and indexing. It does not focus on this exact problem but has detailed info about it that can help you deduce how this evolved
+- **High Performance MySQL** by Baron Schwartz Peter Zaitsev and Vadim Tkachenko is great for getting hands-on knowledge on how MySQL works and it will give you a good insight of practical storage techniques
+- **Architecture of a Database System** by Joseph M. Hellerstein and Michael Stonebraker: while not directly covering the historical aspect this paper explains concepts used in modern databases that can give you insights in storage handling techniques
 
 **Papers**:
 
-*   Look for papers on database storage engines specifically the ones on variable length data structures and memory management techniques this will allow you to find more about this historical aspect of the topic as well
-*   Research papers and articles on early relational database systems like System R and Ingres are also very useful you may find information there even if not directly addressing the problem
+- Look for papers on database storage engines specifically the ones on variable length data structures and memory management techniques this will allow you to find more about this historical aspect of the topic as well
+- Research papers and articles on early relational database systems like System R and Ingres are also very useful you may find information there even if not directly addressing the problem
 
 In short the shift from 255 to 256 in database field sizes isn't about the number it’s about moving past the limitations of fixed-size length fields and accommodating larger more flexible data types it's a classic example of how historical constraints shape software design and how the constant push for more efficient resources allocation has led to more modern and flexible systems If you really understand this you can understand almost anything about databases
 

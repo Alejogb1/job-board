@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-airflow-dag-fields-be-configured-differently"
 ---
 
-Okay, let's talk about configurable dag fields in airflow. It's something I've spent a fair bit of time on, particularly during a project at 'DataSphere Corp.' where we moved our entire batch processing pipeline to a more dynamic setup. We quickly realized that hardcoding everything within the dag definitions was a recipe for disaster; it lacked flexibility and made even small changes a major headache.
+, let's talk about configurable dag fields in airflow. It's something I've spent a fair bit of time on, particularly during a project at 'DataSphere Corp.' where we moved our entire batch processing pipeline to a more dynamic setup. We quickly realized that hardcoding everything within the dag definitions was a recipe for disaster; it lacked flexibility and made even small changes a major headache.
 
 The problem, as many encounter, stems from that initial design philosophy of treating dags as monolithic units. You define your tasks, their dependencies, and often the configuration details directly within the python code. This works fine when the process is relatively static, but the moment you have to deal with differing execution environments, dynamically generated tables, or variable input data locations, you're in for a world of hurt. The fix, however, isn’t as drastic as completely rewriting your dags, it's more about adopting a slightly different mindset and employing some specific techniques.
 
-The key here is *parameterization*. We want to move away from hardcoded values and inject configuration at runtime. Airflow gives us several ways to do this, each with its own pros and cons. The core approaches revolve around leveraging these:
+The key here is _parameterization_. We want to move away from hardcoded values and inject configuration at runtime. Airflow gives us several ways to do this, each with its own pros and cons. The core approaches revolve around leveraging these:
 
 1. **environment variables:** these are global and can be accessed by any dag. they're great for deployment-specific settings such as database connection strings or service endpoints.
 2. **dag parameters (also called dag run configuration):** these are specific to each dag run. they allow users to pass in specific configurations for each time they execute a dag.
@@ -40,7 +40,7 @@ with DAG(
     )
 ```
 
-In this snippet, the bash operator gets the value of an environment variable, `MY_CUSTOM_ENV_VAR`. If not found, it defaults to 'default_value'. you can set `MY_CUSTOM_ENV_VAR` outside the dag (e.g. within your dockerfile or using your cloud provider's environment settings), and the task will pick it up at runtime. This allows you to use the same dag definition across multiple environments without modification of the dag itself. This approach is particularly useful for managing credentials or resource locations that differ significantly. *Note that it's generally recommended to use a dedicated secrets management tool rather than directly exposing sensitive credentials as environment variables*. Consider reading "Secrets Management in DevOps" by Scott McCarty for a deeper dive on this topic.
+In this snippet, the bash operator gets the value of an environment variable, `MY_CUSTOM_ENV_VAR`. If not found, it defaults to 'default_value'. you can set `MY_CUSTOM_ENV_VAR` outside the dag (e.g. within your dockerfile or using your cloud provider's environment settings), and the task will pick it up at runtime. This allows you to use the same dag definition across multiple environments without modification of the dag itself. This approach is particularly useful for managing credentials or resource locations that differ significantly. _Note that it's generally recommended to use a dedicated secrets management tool rather than directly exposing sensitive credentials as environment variables_. Consider reading "Secrets Management in DevOps" by Scott McCarty for a deeper dive on this topic.
 
 **2. Dag Parameters (Dag Run Configuration)**
 

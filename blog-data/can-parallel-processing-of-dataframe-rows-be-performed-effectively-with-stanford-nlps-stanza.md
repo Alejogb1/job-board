@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "can-parallel-processing-of-dataframe-rows-be-performed-effectively-with-stanford-nlps-stanza"
 ---
 
-Okay, let's tackle this. I've spent more than my fair share of late nights elbow-deep in both pandas DataFrames and NLP pipelines, and this intersection, specifically using Stanza, is where things get interesting. The short answer is: it's possible, and under certain circumstances, quite effective, but with crucial considerations. Let's dive into how and why.
+, let's tackle this. I've spent more than my fair share of late nights elbow-deep in both pandas DataFrames and NLP pipelines, and this intersection, specifically using Stanza, is where things get interesting. The short answer is: it's possible, and under certain circumstances, quite effective, but with crucial considerations. Let's dive into how and why.
 
-My experience with a large-scale sentiment analysis project a few years back, involving several million customer reviews extracted into a DataFrame, highlighted the performance bottlenecks that can arise. We were initially using a basic loop, iterating over rows, and it was *painfully* slow. The serial processing just couldn't keep pace. That's when we began exploring parallel processing with Stanza. The key here, and what I've learned repeatedly, is not just throwing cores at the problem, but doing it intelligently, understanding *where* the gains are to be had.
+My experience with a large-scale sentiment analysis project a few years back, involving several million customer reviews extracted into a DataFrame, highlighted the performance bottlenecks that can arise. We were initially using a basic loop, iterating over rows, and it was _painfully_ slow. The serial processing just couldn't keep pace. That's when we began exploring parallel processing with Stanza. The key here, and what I've learned repeatedly, is not just throwing cores at the problem, but doing it intelligently, understanding _where_ the gains are to be had.
 
 The challenge lies in the nature of NLP tasks themselves. While parsing and annotation with Stanza can be heavily parallelized, the initial creation of the Stanza `Pipeline` object is generally not thread-safe and can incur overhead when recreated frequently. Therefore, the approach we need to take involves utilizing process-based parallelism where each process has its own copy of the `Pipeline` object. This allows us to bypass the thread-safety limitations and exploit multiple cores efficiently.
 
@@ -163,18 +163,18 @@ if __name__ == '__main__':
 
 **Important Considerations**
 
-*   **Initialization Overhead:** Avoid recreating the Stanza pipeline inside the processing function if possible. Pass it in.
-*   **Data Serialization:** Ensure the data passed to the worker processes is serializable (pickleable). DataFrame rows are generally fine, but pay attention to any custom objects.
-*   **Memory Usage:** Each worker process will copy the DataFrame chunk. Ensure you have sufficient memory, especially if processing large DataFrames.
-*   **Choosing The Number Of Processes:** It's not always optimal to have the number of processes equal to the number of CPU cores. Experiment to find what works best for your specific machine and dataset. Often, starting with the number of physical cores (not logical cores, such as with hyperthreading) is a good starting point.
-*   **Task Complexity:** If the NLP tasks themselves are very short in execution time, the overhead of starting and managing the worker processes might outweigh the benefits. Measure the performance with and without parallelization.
-*   **Debugging:** Debugging parallel processes can be trickier. Use logging effectively. The examples here are very minimal, but in more complex real-world scenarios, error handling will be essential.
+- **Initialization Overhead:** Avoid recreating the Stanza pipeline inside the processing function if possible. Pass it in.
+- **Data Serialization:** Ensure the data passed to the worker processes is serializable (pickleable). DataFrame rows are generally fine, but pay attention to any custom objects.
+- **Memory Usage:** Each worker process will copy the DataFrame chunk. Ensure you have sufficient memory, especially if processing large DataFrames.
+- **Choosing The Number Of Processes:** It's not always optimal to have the number of processes equal to the number of CPU cores. Experiment to find what works best for your specific machine and dataset. Often, starting with the number of physical cores (not logical cores, such as with hyperthreading) is a good starting point.
+- **Task Complexity:** If the NLP tasks themselves are very short in execution time, the overhead of starting and managing the worker processes might outweigh the benefits. Measure the performance with and without parallelization.
+- **Debugging:** Debugging parallel processes can be trickier. Use logging effectively. The examples here are very minimal, but in more complex real-world scenarios, error handling will be essential.
 
 **Recommended Resources:**
 
-*   **"Programming in Python 3" by Mark Summerfield:** This is a good general resource but the section on multiprocessing is particularly helpful for understanding its mechanics and when it might fail.
-*   **"High Performance Python" by Michaël Droettboom:** This book goes into more detail about parallel processing and gives specific advice on common gotchas you’ll come up against in these types of tasks.
-*   **The official Dask documentation:** for the final example, the documentation of Dask is the best resource to understand how it can be used with pandas and when it’s the right choice for a task.
-*   **Stanford NLP's Stanza documentation:** This is important because different versions of the library can have different behavior, so it is good to read the current one to get the best performance out of it.
+- **"Programming in Python 3" by Mark Summerfield:** This is a good general resource but the section on multiprocessing is particularly helpful for understanding its mechanics and when it might fail.
+- **"High Performance Python" by Michaël Droettboom:** This book goes into more detail about parallel processing and gives specific advice on common gotchas you’ll come up against in these types of tasks.
+- **The official Dask documentation:** for the final example, the documentation of Dask is the best resource to understand how it can be used with pandas and when it’s the right choice for a task.
+- **Stanford NLP's Stanza documentation:** This is important because different versions of the library can have different behavior, so it is good to read the current one to get the best performance out of it.
 
 In conclusion, parallel processing with Stanza on DataFrame rows is definitely feasible and can provide substantial performance improvements. However, it requires a deliberate and structured approach, bearing in mind the intricacies of both pandas and multiprocessing. It's about finding the right balance between parallelism and overhead, and that comes with experience and careful measurement.

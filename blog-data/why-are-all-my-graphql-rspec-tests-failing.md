@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-are-all-my-graphql-rspec-tests-failing"
 ---
 
-Alright, let's tackle this. Test failures, especially across the board like you're describing, can feel incredibly frustrating, but they often stem from systematic issues. I've certainly been in the same boat, particularly when dealing with intricate graphql schemas. It's rarely just one thing, usually a confluence of factors. Let’s dissect some common causes, focusing specifically on why your *rspec* tests are reporting blanket failures. I'll steer clear of hand-waving and get down to specifics, referencing a few real situations I've navigated over the years.
+, let's tackle this. Test failures, especially across the board like you're describing, can feel incredibly frustrating, but they often stem from systematic issues. I've certainly been in the same boat, particularly when dealing with intricate graphql schemas. It's rarely just one thing, usually a confluence of factors. Let’s dissect some common causes, focusing specifically on why your _rspec_ tests are reporting blanket failures. I'll steer clear of hand-waving and get down to specifics, referencing a few real situations I've navigated over the years.
 
-First, and perhaps most frequently, is schema drift. Think of it as the foundational mismatch between what your rspec tests *expect* the graphql schema to look like, and the reality of what's actually deployed or available during your testing environment. I remember a project, a complex e-commerce platform, where we had multiple development branches and a somewhat aggressive merge schedule. Schema changes were occurring faster than the test suite could keep up with them. The result? Absolutely nothing passed.
+First, and perhaps most frequently, is schema drift. Think of it as the foundational mismatch between what your rspec tests _expect_ the graphql schema to look like, and the reality of what's actually deployed or available during your testing environment. I remember a project, a complex e-commerce platform, where we had multiple development branches and a somewhat aggressive merge schedule. Schema changes were occurring faster than the test suite could keep up with them. The result? Absolutely nothing passed.
 
-This can manifest in various ways: fields being renamed or removed, type changes, or even subtle shifts in resolver logic. Your *rspec* tests are likely relying on specific queries and mutations against a particular structure. If that structure changes, even a tiny bit, your assertions will fail. The resolution here often isn't complicated, it’s simply rigorous schema synchronization between your code and test environment. If you're using a schema definition language (SDL), generating your test suite from the latest schema is often a key first step. Consider using tools that can automatically validate that your schema is consistent across environments.
+This can manifest in various ways: fields being renamed or removed, type changes, or even subtle shifts in resolver logic. Your _rspec_ tests are likely relying on specific queries and mutations against a particular structure. If that structure changes, even a tiny bit, your assertions will fail. The resolution here often isn't complicated, it’s simply rigorous schema synchronization between your code and test environment. If you're using a schema definition language (SDL), generating your test suite from the latest schema is often a key first step. Consider using tools that can automatically validate that your schema is consistent across environments.
 
 Let's look at a practical example. Say your tests are based around a `User` type:
 
@@ -40,7 +40,7 @@ RSpec.describe 'User Queries' do
 end
 ```
 
-Now imagine the schema is *later* changed without updating the tests, perhaps to include a `username` field and remove `email`:
+Now imagine the schema is _later_ changed without updating the tests, perhaps to include a `username` field and remove `email`:
 
 ```ruby
 # Modified GraphQL schema definition:

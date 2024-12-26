@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "vhdl-loop-usage-example"
 ---
 
-Okay so you wanna talk about VHDL loops right Been there done that a few times let me tell ya VHDL loops can be a bit finicky if you don't know what you're doing It's not like coding a regular software loop they are very much hardware based think hardware descriptions and not general purpose code and well it took me a while to figure that out the first time
+you wanna talk about VHDL loops right Been there done that a few times let me tell ya VHDL loops can be a bit finicky if you don't know what you're doing It's not like coding a regular software loop they are very much hardware based think hardware descriptions and not general purpose code and well it took me a while to figure that out the first time
 
 Let’s get this straight loops in VHDL aren’t like your typical while or for loops you might see in Python or C you're not exactly iterating in the same way as those loops You’re describing hardware that repeats a certain structure or operation when synthesized you're specifying repetitive hardware structures think of it as a template for repeating blocks not like a procedural instruction set
 
@@ -57,6 +57,7 @@ begin
     output_done <= done;
 end Behavioral;
 ```
+
 Here the loop executes until count is no longer less than 10. This is not like an always true condition because it is inside a clock block and the `done` signal will prevent the `while` loop of being active forever. Note that using `while` loops for complex conditions can lead to more complex and potentially difficult to analyze logic so be cautious when using it and try to avoid it if possible
 
 Lastly we have the `loop` with `exit` This is useful when you need to exit the loop based on a condition inside the loop body It’s like a while loop but with the exit condition in the middle instead of beginning its another flavor of the previous while loop example but this one is slightly different and with a condition inside the body
@@ -94,4 +95,4 @@ A common mistake is not considering how loops affect timing you see a loop can g
 
 For resources I’d highly recommend these books: “Digital Design Principles and Practices” by John F Wakerly and also “VHDL: Analysis and Modeling of Digital Systems” by Zainalabedin Navabi These books dig deep into the hardware aspect of digital design and how it translates to VHDL they helped me a lot back in the day I also recommend reading “FPGA Prototyping by VHDL Examples” by Pong P. Chu it is also a good book that shows you in practical terms a lot of how to use and how not to use VHDL and how the synthesized logic becomes hardware.
 
-So yeah loops in VHDL are powerful but use them carefully and with a clear idea of what you want to achieve they aren't like ordinary coding constructs they represent replicated hardware and you must think about the hardware consequences always. Oh and try not to overthink it sometimes the solution is right in front of your nose but I don't want to be that guy to tell you what to do... it is just a suggestion okay?
+So yeah loops in VHDL are powerful but use them carefully and with a clear idea of what you want to achieve they aren't like ordinary coding constructs they represent replicated hardware and you must think about the hardware consequences always. Oh and try not to overthink it sometimes the solution is right in front of your nose but I don't want to be that guy to tell you what to do... it is just a suggestion ?

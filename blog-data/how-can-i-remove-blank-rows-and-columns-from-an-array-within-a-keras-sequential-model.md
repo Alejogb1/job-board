@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-remove-blank-rows-and-columns-from-an-array-within-a-keras-sequential-model"
 ---
 
-Okay, let’s tackle this. I've actually encountered this precise issue a few times, most notably when processing irregularly formatted image segmentation data, where some images had blank regions resulting in sparse array rows/columns. It’s surprisingly common and can definitely mess with your model's training. The key here is understanding that Keras models don't intrinsically handle variable array dimensions very well; they expect consistency in input shape. We need to pre-process the data *before* it goes into the model. Let me break down how I've typically approached this, focusing on python, using NumPy, of course, and specifically within a context of Keras data pipelines.
+, let’s tackle this. I've actually encountered this precise issue a few times, most notably when processing irregularly formatted image segmentation data, where some images had blank regions resulting in sparse array rows/columns. It’s surprisingly common and can definitely mess with your model's training. The key here is understanding that Keras models don't intrinsically handle variable array dimensions very well; they expect consistency in input shape. We need to pre-process the data _before_ it goes into the model. Let me break down how I've typically approached this, focusing on python, using NumPy, of course, and specifically within a context of Keras data pipelines.
 
 First off, we need a robust way to identify those blank rows and columns. "Blank" in this context usually means rows or columns containing only zeros, or some predetermined "null" value, which could be `np.nan` depending on your initial data structure, which I would advise you to avoid. We're aiming for deterministic behavior here, so we'll deal with only zero-filled rows/columns for simplicity. We’ll need to leverage NumPy’s capabilities for efficiently checking these conditions.
 
@@ -83,7 +83,7 @@ print("Cleaned Array:\n", cleaned_array)
 #  [0 0 9]]
 ```
 
-In this function, `remove_blank_rows_cols`, we dynamically construct lists of row and column indices to *keep*, effectively excluding the ones identified as blank earlier. It then returns a new array via NumPy’s slicing, ensuring the original input array isn't modified. This function keeps the removal process modular and easy to integrate into larger pipelines.
+In this function, `remove_blank_rows_cols`, we dynamically construct lists of row and column indices to _keep_, effectively excluding the ones identified as blank earlier. It then returns a new array via NumPy’s slicing, ensuring the original input array isn't modified. This function keeps the removal process modular and easy to integrate into larger pipelines.
 
 Now, let's wrap it all into something suitable for Keras. Remember that Keras works best when the shape is fixed once it is passed the input layer of your sequential model. To circumvent this, you can pre-process these arrays before they go into your model. For this, I would recommend using a generator. If your data allows for it, you should use fixed dimensions, padding your array to make them consistent, if possible. This is typically more efficient, though.
 
@@ -110,7 +110,7 @@ class DataGenerator(tf.keras.utils.Sequence):
             blank_rows, blank_cols = find_blank_rows_cols(arr)
             processed_arr = remove_blank_rows_cols(arr, blank_rows, blank_cols)
             processed_batch.append(processed_arr)
-        
+
         #Padding or resizing is necessary for batched input to Keras
         #If you are using a model which can handle variable input, this is not required
         max_row = max(arr.shape[0] for arr in processed_batch)
@@ -136,11 +136,11 @@ first_batch, targets = data_generator[0]
 print("First batch shape:", first_batch.shape) # (2, 3, 3)
 ```
 
-This `DataGenerator` class allows you to process your input data on-the-fly within your keras pipeline. Notice that the `__getitem__` method takes a batch of samples, processes them using our previous functions, and returns this processed batch along with a dummy label. The key takeaway here is that you're applying `find_blank_rows_cols` and `remove_blank_rows_cols` *per sample* within your data processing loop. You'll need to adjust the logic here to match your particular label/target structure. Keep in mind that padding is crucial for batching the data before it goes into Keras, unless your model can deal with variable-size inputs, which usually are not the case.
+This `DataGenerator` class allows you to process your input data on-the-fly within your keras pipeline. Notice that the `__getitem__` method takes a batch of samples, processes them using our previous functions, and returns this processed batch along with a dummy label. The key takeaway here is that you're applying `find_blank_rows_cols` and `remove_blank_rows_cols` _per sample_ within your data processing loop. You'll need to adjust the logic here to match your particular label/target structure. Keep in mind that padding is crucial for batching the data before it goes into Keras, unless your model can deal with variable-size inputs, which usually are not the case.
 
 A few additional notes that I have found critical through my experience:
 
-1. **Preprocessing Overhead:**  Be mindful of the overhead involved in applying these steps on each batch of data. If you are working with very large datasets, you might consider implementing these functions in C/C++ or using a library such as Numba, for significant speedups.
+1. **Preprocessing Overhead:** Be mindful of the overhead involved in applying these steps on each batch of data. If you are working with very large datasets, you might consider implementing these functions in C/C++ or using a library such as Numba, for significant speedups.
 
 2. **Choice of 'Blank':** My demonstration assumes zeros represent “blank”. Ensure your definition of "blank" is reflected accurately in the `find_blank_rows_cols` function.
 
@@ -150,8 +150,8 @@ A few additional notes that I have found critical through my experience:
 
 For further reading and deeper dives, I strongly recommend the following resources:
 
-*   **"Python for Data Analysis" by Wes McKinney:** A fundamental resource for mastering NumPy and Pandas, which are essential for any serious data manipulation tasks in Python. This will significantly solidify your data processing skills.
-*   **"Deep Learning with Python" by François Chollet:**  The author of Keras, this book offers an excellent understanding of Keras and deep learning best practices. It will significantly benefit understanding both Keras and deep learning concepts.
-*   **NumPy documentation:** Keep the official NumPy documentation handy. It provides detailed explanations of its functions. This is the go-to resource for any specific questions related to NumPy usage.
+- **"Python for Data Analysis" by Wes McKinney:** A fundamental resource for mastering NumPy and Pandas, which are essential for any serious data manipulation tasks in Python. This will significantly solidify your data processing skills.
+- **"Deep Learning with Python" by François Chollet:** The author of Keras, this book offers an excellent understanding of Keras and deep learning best practices. It will significantly benefit understanding both Keras and deep learning concepts.
+- **NumPy documentation:** Keep the official NumPy documentation handy. It provides detailed explanations of its functions. This is the go-to resource for any specific questions related to NumPy usage.
 
 Remember that efficient data handling and preprocessing are fundamental to training effective neural networks. These techniques have served me well, and I hope they prove useful to you too.

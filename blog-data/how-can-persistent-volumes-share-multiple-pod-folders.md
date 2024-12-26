@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-persistent-volumes-share-multiple-pod-folders"
 ---
 
-Alright, let's tackle this. I remember wrestling with this exact scenario a few years back while scaling a microservices architecture that relied heavily on shared file storage for configuration and data exchange. The initial solution we implemented, which involved individual persistent volume claims for each pod, quickly became a nightmare for maintenance and resource management. Clearly, there's a better way. Sharing persistent volumes across multiple pod folders requires a nuanced approach, specifically through proper volume configuration and the understanding of underlying storage mechanisms. The goal is to grant multiple pods access to different locations *within* a single persistent volume, which avoids the overhead and complexity of provisioning multiple volumes.
+, let's tackle this. I remember wrestling with this exact scenario a few years back while scaling a microservices architecture that relied heavily on shared file storage for configuration and data exchange. The initial solution we implemented, which involved individual persistent volume claims for each pod, quickly became a nightmare for maintenance and resource management. Clearly, there's a better way. Sharing persistent volumes across multiple pod folders requires a nuanced approach, specifically through proper volume configuration and the understanding of underlying storage mechanisms. The goal is to grant multiple pods access to different locations _within_ a single persistent volume, which avoids the overhead and complexity of provisioning multiple volumes.
 
 Essentially, the problem boils down to needing a shared resource (the persistent volume) with multiple access points (the pod-specific folders). Kubernetes alone doesn't directly offer this out of the box. We have to leverage the capabilities of the persistent volume’s underlying storage mechanism. I have found this can be best achieved through the use of a shared filesystem such as Network File System (nfs), which allows multiple pods to mount the same volume, but at different subdirectories via subPath. This eliminates the race condition and resource constraints which can happen if each pod accesses the root of the mount path.
 
@@ -45,7 +45,7 @@ spec:
       storage: 10Gi
   selector:
     matchLabels:
-        name: shared-volume # This selector ties the pvc to the pv with name: shared-volume. It's important for the claim to find the correct volume
+      name: shared-volume # This selector ties the pvc to the pv with name: shared-volume. It's important for the claim to find the correct volume
 ```
 
 Here, `ReadWriteMany` is critical. This access mode indicates that the persistent volume can be mounted as read-write by many nodes simultaneously. This ensures our approach functions as intended. The `nfs` specific details points to our configured nfs share.
@@ -66,7 +66,12 @@ spec:
   containers:
     - name: app-a-container
       image: busybox
-      command: ["sh", "-c", "while true; do echo $(date) >> /shared-data/app_a/log.txt; sleep 10; done"]
+      command:
+        [
+          "sh",
+          "-c",
+          "while true; do echo $(date) >> /shared-data/app_a/log.txt; sleep 10; done",
+        ]
       volumeMounts:
         - name: shared-volume
           mountPath: /shared-data
@@ -87,7 +92,12 @@ spec:
   containers:
     - name: app-b-container
       image: busybox
-      command: ["sh", "-c", "while true; do echo $(date) >> /shared-data/app_b/log.txt; sleep 10; done"]
+      command:
+        [
+          "sh",
+          "-c",
+          "while true; do echo $(date) >> /shared-data/app_b/log.txt; sleep 10; done",
+        ]
       volumeMounts:
         - name: shared-volume
           mountPath: /shared-data
@@ -121,18 +131,23 @@ spec:
         app: dynamic-app
     spec:
       containers:
-      - name: dynamic-container
-        image: busybox
-        command: ["sh", "-c", "while true; do echo $(date) >> /shared-data/log.txt; sleep 10; done"]
-        volumeMounts:
-        - name: shared-volume
-          mountPath: /shared-data
-          subPathExpr: $(POD_NAME) #This generates dynamic path based on the POD_NAME environment variable
+        - name: dynamic-container
+          image: busybox
+          command:
+            [
+              "sh",
+              "-c",
+              "while true; do echo $(date) >> /shared-data/log.txt; sleep 10; done",
+            ]
+          volumeMounts:
+            - name: shared-volume
+              mountPath: /shared-data
+              subPathExpr: $(POD_NAME) #This generates dynamic path based on the POD_NAME environment variable
       env:
-      - name: POD_NAME
-        valueFrom:
-          fieldRef:
-            fieldPath: metadata.name
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
       volumes:
         - name: shared-volume
           persistentVolumeClaim:

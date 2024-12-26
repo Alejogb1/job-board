@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ora-01732-data-manipulation-operation-not-legal-on-this-view-oracle-error"
 ---
 
-Alright so you're hitting the classic ORA-01732 error a "data manipulation operation not legal on this view" error in Oracle right I've seen this one more times than I'd like to admit it's a real head scratcher when it first hits you but it becomes almost second nature after a while you're trying to do an insert update or delete on a view and Oracle's telling you no bueno
+so you're hitting the classic ORA-01732 error a "data manipulation operation not legal on this view" error in Oracle right I've seen this one more times than I'd like to admit it's a real head scratcher when it first hits you but it becomes almost second nature after a while you're trying to do an insert update or delete on a view and Oracle's telling you no bueno
 
 I've been there man trust me I remember this one project back in the day we were building this internal reporting tool and we had this super complex view it pulled data from like five different tables joined on all sorts of conditions it was a beast of a query you know the kind that makes your database server sweat a little we were all proud of it we even named it the "Data Titan" yeah yeah I know cheesy but we were young
 

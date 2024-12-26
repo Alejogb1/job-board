@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-cant-i-connect-to-the-discord-voice-api-from-a-digitalocean-droplet"
 ---
 
-Alright, let's talk about that Discord voice api connectivity issue you’re encountering on your DigitalOcean droplet. This is a problem I’ve definitely seen a fair few times, and frankly, it's almost always a combination of a few very common gotchas rather than some deep, underlying platform issue. It’s frustrating, i know, but we can usually narrow it down fairly quickly.
+, let's talk about that Discord voice api connectivity issue you’re encountering on your DigitalOcean droplet. This is a problem I’ve definitely seen a fair few times, and frankly, it's almost always a combination of a few very common gotchas rather than some deep, underlying platform issue. It’s frustrating, i know, but we can usually narrow it down fairly quickly.
 
 Having spent years troubleshooting these types of networking problems, especially with voice and real-time protocols, I can tell you that the issue rarely stems from a fundamental incompatibility between DigitalOcean and the Discord API itself. More likely, it's about how your droplet's networking is configured, or even how your application is handling the connection process, or which firewall rules might be in play. I remember one particularly tricky case where we spent nearly two days before discovering a subtle mismatch in the local port ranges that was throwing everything off—so, trust me, these things can be nuanced.
 

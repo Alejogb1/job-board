@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-setup-actioncable-with-importmaps-in-rails-6"
 ---
 
-Alright, let’s tackle this. Setting up ActionCable with importmaps in Rails 6 is definitely a transition from the traditional asset pipeline approach, but it’s a worthwhile move for managing your javascript dependencies more explicitly. I’ve walked this path on a couple of projects now, so let's lay out the specifics.
+, let’s tackle this. Setting up ActionCable with importmaps in Rails 6 is definitely a transition from the traditional asset pipeline approach, but it’s a worthwhile move for managing your javascript dependencies more explicitly. I’ve walked this path on a couple of projects now, so let's lay out the specifics.
 
 The key difference here is that instead of relying on Webpacker to manage your javascript, you're directly importing modules using importmaps, and ActionCable needs to fit into this ecosystem. It's not difficult, but it requires a slightly different mindset. Let's break it down.
 
@@ -32,9 +32,9 @@ The above configures two entries. The `@rails/actioncable` points to the specifi
 **Example 2: A Minimal Javascript Implementation (`app/javascript/channels/consumer.js`)**
 
 ```javascript
-import { createConsumer } from "@rails/actioncable"
+import { createConsumer } from "@rails/actioncable";
 
-const consumer = createConsumer()
+const consumer = createConsumer();
 
 export default consumer;
 ```
@@ -44,23 +44,23 @@ This is an extremely basic setup and is a standard pattern I've found effective.
 **Example 3: Subscribing to a Channel (`app/javascript/channels/chat_channel.js`)**
 
 ```javascript
-import consumer from "./consumer"
+import consumer from "./consumer";
 
 consumer.subscriptions.create("ChatChannel", {
-    connected() {
-      console.log("Connected to ChatChannel");
-    },
+  connected() {
+    console.log("Connected to ChatChannel");
+  },
 
-    disconnected() {
-      console.log("Disconnected from ChatChannel");
-    },
+  disconnected() {
+    console.log("Disconnected from ChatChannel");
+  },
 
-    received(data) {
-        console.log("Message received: ", data);
-        // Here you'd handle the incoming data. For example
-        // create a new element in the dom and append it.
-        // document.body.insertAdjacentHTML('beforeend',`<p> ${data.message}</p>`)
-    }
+  received(data) {
+    console.log("Message received: ", data);
+    // Here you'd handle the incoming data. For example
+    // create a new element in the dom and append it.
+    // document.body.insertAdjacentHTML('beforeend',`<p> ${data.message}</p>`)
+  },
 });
 ```
 
@@ -68,11 +68,11 @@ This snippet demonstrates a standard subscription to a `ChatChannel`. The `conne
 
 Now, some things to keep in mind that I learned the hard way through debugging hours:
 
-*   **File Paths and Naming:** Be meticulous about where your javascript files are located and how you’re referring to them in import statements. Mismatched filepaths are the bane of my existence sometimes.
-*   **Importmap Updates:** Whenever you change your `importmap.rb` configuration, make sure you run `bin/importmap json` or restart your rails server. The server needs to know how to serve these javascript files.
-*   **Debugging Websocket Connections:** Use browser developer tools (network tab, websocket filter) to observe the websocket handshake and the messages being sent and received. It’s immensely valuable for pinpointing issues.
-*   **Asynchronous Behavior:** Remember ActionCable operates asynchronously. Be mindful of how you handle incoming messages. Proper state management or DOM updates need to be carefully considered to avoid race conditions or UI inconsistencies.
-*   **Channel Identifiers:** I've seen errors result from simple misspellings in the channel identifier. Always double-check that your server-side channel name matches what you have in javascript.
+- **File Paths and Naming:** Be meticulous about where your javascript files are located and how you’re referring to them in import statements. Mismatched filepaths are the bane of my existence sometimes.
+- **Importmap Updates:** Whenever you change your `importmap.rb` configuration, make sure you run `bin/importmap json` or restart your rails server. The server needs to know how to serve these javascript files.
+- **Debugging Websocket Connections:** Use browser developer tools (network tab, websocket filter) to observe the websocket handshake and the messages being sent and received. It’s immensely valuable for pinpointing issues.
+- **Asynchronous Behavior:** Remember ActionCable operates asynchronously. Be mindful of how you handle incoming messages. Proper state management or DOM updates need to be carefully considered to avoid race conditions or UI inconsistencies.
+- **Channel Identifiers:** I've seen errors result from simple misspellings in the channel identifier. Always double-check that your server-side channel name matches what you have in javascript.
 
 For a deep dive into javascript modules, specifically ESM, I’d recommend reading “Exploring ES6” by Axel Rauschmayer, and for more information on managing javascript dependencies in Rails 7, "Agile Web Development with Rails 7" by David Heinemeier Hansson, Sam Ruby and others provides a comprehensive look.
 

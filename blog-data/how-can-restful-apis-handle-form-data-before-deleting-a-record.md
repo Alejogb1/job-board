@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-restful-apis-handle-form-data-before-deleting-a-record"
 ---
 
-Alright, let's talk about handling form data prior to record deletion in rest apis. It’s a situation that has come up numerous times throughout my career, often more complex than it initially appears. The core challenge lies in ensuring data integrity and providing the client with meaningful feedback about the deletion process, especially when that process isn’t a simple, atomic operation. It’s never just about firing off a delete request.
+, let's talk about handling form data prior to record deletion in rest apis. It’s a situation that has come up numerous times throughout my career, often more complex than it initially appears. The core challenge lies in ensuring data integrity and providing the client with meaningful feedback about the deletion process, especially when that process isn’t a simple, atomic operation. It’s never just about firing off a delete request.
 
-The crux of the issue isn’t *just* about the deletion itself, but the context surrounding it. Quite frequently, forms aren’t just a way of *creating* data; they also represent a set of conditions that *inform* deletion logic. Think about it: before deleting an article from a blog, a user might want to change the category of the article, transfer ownership, or update associated tags. Simply issuing a delete request based solely on the article's ID can lead to orphaned data or inconsistencies if these related actions aren't handled properly.
+The crux of the issue isn’t _just_ about the deletion itself, but the context surrounding it. Quite frequently, forms aren’t just a way of _creating_ data; they also represent a set of conditions that _inform_ deletion logic. Think about it: before deleting an article from a blog, a user might want to change the category of the article, transfer ownership, or update associated tags. Simply issuing a delete request based solely on the article's ID can lead to orphaned data or inconsistencies if these related actions aren't handled properly.
 
 From personal experience, I recall a content management system I worked on where deleting a page was not merely removing a record from the ‘pages’ table. That page also had references in tables for images, associated content blocks, user permissions, and even SEO settings. Ignoring these relationships while deleting a page could cause serious problems, such as broken links, orphaned images, or access control vulnerabilities.
 
-My approach has always been to treat the deletion process not as a single api endpoint, but as a workflow that *starts* with the client-provided data (often form data) and *ends* with the actual deletion. Before actually issuing a `delete` command, we need to use that information to perform any necessary housekeeping tasks.
+My approach has always been to treat the deletion process not as a single api endpoint, but as a workflow that _starts_ with the client-provided data (often form data) and _ends_ with the actual deletion. Before actually issuing a `delete` command, we need to use that information to perform any necessary housekeeping tasks.
 
 One way to handle this is by implementing a two-stage process using a `patch` or `put` request before the final `delete`. This enables modifying data based on user intentions before final record deletion. This pre-delete modification step can be very powerful. The flow would be as such:
 
@@ -97,7 +97,7 @@ if __name__ == '__main__':
     app.run(debug=True)
 ```
 
-In this example, we are specifically looking for a 'new\_owner' field. We also perform a basic check to ensure the new owner is a valid user.
+In this example, we are specifically looking for a 'new_owner' field. We also perform a basic check to ensure the new owner is a valid user.
 
 **Example 3: Complex Deletion Scenario with related images**
 

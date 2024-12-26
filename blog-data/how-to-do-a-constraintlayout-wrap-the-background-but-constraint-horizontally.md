@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-a-constraintlayout-wrap-the-background-but-constraint-horizontally"
 ---
 
-alright, let's talk about `constraintlayout` and how to get that background behaving how you want it. i’ve been there, scratching my head at layout quirks, so i totally get the struggle. the thing with `constraintlayout` is it gives you so much control, but sometimes that control is… well, a bit too much, especially when you're trying to make things just *work* and it can get pretty cumbersome.
+, let's talk about `constraintlayout` and how to get that background behaving how you want it. i’ve been there, scratching my head at layout quirks, so i totally get the struggle. the thing with `constraintlayout` is it gives you so much control, but sometimes that control is… well, a bit too much, especially when you're trying to make things just _work_ and it can get pretty cumbersome.
 
 the core problem seems to be that you need a background that stretches to the width of the view, but not necessarily to the height. you want that background to "wrap" its content vertically and simultaneously constrain horizontally. so, a wrap content kind of height, while being stretched on the x-axis. not unusual, actually. this comes up more often than people might think. i remember one time, back in the android 4.4 days, we were building an app for a client who needed a very specific kind of button with a shaded background and i ran into this very same issue. took me hours with all the nested layouts to finally get that right, but with `constraintlayout` it's generally much cleaner.
 

@@ -4,13 +4,14 @@ date: "2024-12-13"
 id: "where-to-place-the-systemverilog-interfaces-and-how-to-name-the-interfaces-and"
 ---
 
-Alright so you're asking about where to put your SystemVerilog interfaces and how to name them right I get it This is a classic problem that everyone bumps into eventually when dealing with larger more complex designs Believe me I've been there I remember back in the day when I was working on this crazy high-speed memory controller I had interfaces scattered everywhere like a digital garbage dump It was a nightmare to debug and even worse to maintain So I learned my lesson the hard way and now I'm here to share some experience
+so you're asking about where to put your SystemVerilog interfaces and how to name them right I get it This is a classic problem that everyone bumps into eventually when dealing with larger more complex designs Believe me I've been there I remember back in the day when I was working on this crazy high-speed memory controller I had interfaces scattered everywhere like a digital garbage dump It was a nightmare to debug and even worse to maintain So I learned my lesson the hard way and now I'm here to share some experience
 
 First let's talk about placement because that's often the biggest headache A lot of people just dump their interfaces into whatever file they happen to be working on at the time its a mess and its the definition of spaghetti code it should be avoided I've seen entire projects with a single file holding like a hundred interfaces Seriously it was like the wild west of digital design
 
 The best practice I've found is to create a dedicated directory specifically for interfaces It's kind of like creating a separate drawer for your socks instead of just throwing them everywhere This keeps things organized and easily accessible When I do that I also like to separate my files so a single file contains a single interface this might add more files but makes them far easier to use This allows to quickly locate the interfaces you need without having to sift through mountains of code. I do this at every level of my designs.
 
-I'm sure you are thinking something like "ok cool folder great help" here is the meat of it the folder should be something like *interfaces* of *intf* it is your choice in the project, but stick to it once you have chosen, then it's good practice to separate different type of interfaces in subfolders. For example, you may want to separate *bus_interfaces* from *peripheral_interfaces* or *axi_interfaces*. Having this structure helps you to avoid conflicts in the future and makes your system more resilient to changes in the long run. Here is an example of this structure:
+I'm sure you are thinking something like "ok cool folder great help" here is the meat of it the folder should be something like _interfaces_ of _intf_ it is your choice in the project, but stick to it once you have chosen, then it's good practice to separate different type of interfaces in subfolders. For example, you may want to separate _bus_interfaces_ from _peripheral_interfaces_ or _axi_interfaces_. Having this structure helps you to avoid conflicts in the future and makes your system more resilient to changes in the long run. Here is an example of this structure:
+
 ```
 project/
 ├── ...
@@ -29,15 +30,17 @@ project/
 │   └── ...
 └── ...
 ```
+
 Within this `interfaces/` folder I usually create subfolders that represent logical groupings of interfaces For example if you're working with a system that uses an AXI bus you might have an `axi_interfaces` directory containing `axi_master_if.sv` `axi_slave_if.sv` and other related interfaces This structure keeps related interfaces together so they are easier to find and use
 
 Now let’s talk naming I know it seems trivial but inconsistent naming conventions can make your life miserable. I've seen interfaces named like `if1` `if2` `my_interface` and it makes it very difficult to use later on when you need to debug or make changes. It's like trying to find your keys in a dark room and they are not even named correctly.
 
 My preference is to use a descriptive name that clearly indicates the purpose of the interface. You should also follow some sort of naming standard like you would when you name a variable or a function, in systemverilog a common convention is to use `_if` as a suffix to easily distinguish between an interface and other code. For example `axi_master_if` `spi_slave_if` `ddr4_memory_if` are good names to use. When it's possible I like to prefix with the type of the interface but that is not strictly necessary. This makes your code self-documenting and makes it easier for others (or yourself in the future) to understand how your design works.
 
-Also avoid any kind of acronyms that may not be clear to other users or that are not well know. While you might know what *TX_IF* means your colleagues might think it refers to some sort of "Texas interface" you never know... try to be verbose
+Also avoid any kind of acronyms that may not be clear to other users or that are not well know. While you might know what _TX_IF_ means your colleagues might think it refers to some sort of "Texas interface" you never know... try to be verbose
 
 Regarding interfaces in systemverilog i like to add comments for most of the signals in the interface, since you can have hundreds of signals it makes it way easier to understand what the interface is intended for and makes it a lot easier to use by others. An example is bellow:
+
 ```systemverilog
 interface axi_master_if #(parameter int DATA_WIDTH = 64, parameter int ADDR_WIDTH = 32) (
   input  logic       aclk,  //Clock for the AXI bus
@@ -98,6 +101,7 @@ interface fifo_if #(parameter int DATA_WIDTH = 8, parameter int DEPTH = 16) (
 );
 endinterface
 ```
+
 In this example the `DATA_WIDTH` and `DEPTH` are parameters that can be set when you instantiate the interface. This way you can reuse this same interface for different FIFO sizes. A lot of people also create separate interfaces to deal with sizes differences this makes no sense and creates a lot of code duplication. Remember that code duplication is the root of all evil in software and hardware development.
 
 Now here's a little joke I heard: Why did the interface go to therapy? Because it had too many connections! ... Ok I'm done with the humor lets get back to business.

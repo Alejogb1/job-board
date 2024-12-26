@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-i-set-a-multisearch-property-path-in-weka"
 ---
 
-Alright, let's dive into the intricacies of configuring property paths within WEKA's `MultiSearch` component. This is something I've spent quite a bit of time on, particularly back when I was optimizing ensemble methods for a rather complex time-series forecasting project. The challenge usually isn't the *idea* of a multi-search, but nailing down the precise syntax for those nested property paths. It can certainly feel a bit cryptic at first.
+, let's dive into the intricacies of configuring property paths within WEKA's `MultiSearch` component. This is something I've spent quite a bit of time on, particularly back when I was optimizing ensemble methods for a rather complex time-series forecasting project. The challenge usually isn't the _idea_ of a multi-search, but nailing down the precise syntax for those nested property paths. It can certainly feel a bit cryptic at first.
 
-The crucial thing to understand is that `MultiSearch`, as its name suggests, isn’t searching *data*; instead, it’s searching through the parameter space of other WEKA objects – typically classifiers or filters. These objects can have their own internal properties, and navigating through those nested structures requires a very specific path syntax. Think of it like traversing a file system where each component is a folder and each property is a file within those folders. You need the full path to the target property, not just the file name.
+The crucial thing to understand is that `MultiSearch`, as its name suggests, isn’t searching _data_; instead, it’s searching through the parameter space of other WEKA objects – typically classifiers or filters. These objects can have their own internal properties, and navigating through those nested structures requires a very specific path syntax. Think of it like traversing a file system where each component is a folder and each property is a file within those folders. You need the full path to the target property, not just the file name.
 
 Essentially, the path structure looks like this: `[object identifier].[property name]` if the target property belongs to the object being directly explored by the `MultiSearch`. However, if that object, in turn, has its own internal objects with their own properties, we nest the identifiers, which might lead to something like `[object identifier].[nested object identifier].[property name]`. It's a bit like a chain of references, and each step needs to be precise.
 
@@ -67,7 +67,7 @@ In this example, we are directly setting the properties of the `J48` classifier,
 
 **Example 2: Targeting nested filters**
 
-Now, let’s consider a more complex example: tuning properties of a filter that is used *inside* a classifier. Say, we are using a `weka.classifiers.meta.FilteredClassifier`, which first applies a filter before classifying. We want to tune the parameter of that embedded filter. This is where the nested paths come into play.
+Now, let’s consider a more complex example: tuning properties of a filter that is used _inside_ a classifier. Say, we are using a `weka.classifiers.meta.FilteredClassifier`, which first applies a filter before classifying. We want to tune the parameter of that embedded filter. This is where the nested paths come into play.
 
 ```java
 import weka.classifiers.Evaluation;
@@ -132,7 +132,7 @@ Here, the property path is `filter.scale`. The "filter" is not a direct property
 
 **Example 3: Complex nested path with multiple internal objects**
 
-Let's look at something truly complex - imagine a scenario where your classifier *itself* uses internal meta-learners, that have yet another layer of objects within them. In this conceptual example, the exact components may not exist in the standard WEKA, but the principle remains the same:
+Let's look at something truly complex - imagine a scenario where your classifier _itself_ uses internal meta-learners, that have yet another layer of objects within them. In this conceptual example, the exact components may not exist in the standard WEKA, but the principle remains the same:
 
 ```java
 import weka.classifiers.Evaluation;
@@ -195,8 +195,9 @@ public class MultiSearchExample3 {
 }
 
 ```
-In this case, we have a FilteredClassifier containing a MultiScheme classifier, which further internally contains J48.  So, if you want to tune the parameters of the internal J48, the correct property path is going to be `classifier.baseLearner.C` and `classifier.baseLearner.M` - reflecting the nesting. Also, we have kept the `filter.scale` parameter too. This illustrates that you can tune all the parameters nested arbitrarily deeply within.
 
-To truly grasp the inner workings, consulting the source code of the specific WEKA classifiers and filters involved is essential. Resources like the WEKA documentation and associated academic papers, particularly those focusing on WEKA internals, are invaluable. I also recommend, specifically, *Data Mining: Practical Machine Learning Tools and Techniques* by Ian H. Witten, Eibe Frank, Mark A. Hall, and Christopher J. Pal, as a good grounding in the underlying concepts.
+In this case, we have a FilteredClassifier containing a MultiScheme classifier, which further internally contains J48. So, if you want to tune the parameters of the internal J48, the correct property path is going to be `classifier.baseLearner.C` and `classifier.baseLearner.M` - reflecting the nesting. Also, we have kept the `filter.scale` parameter too. This illustrates that you can tune all the parameters nested arbitrarily deeply within.
+
+To truly grasp the inner workings, consulting the source code of the specific WEKA classifiers and filters involved is essential. Resources like the WEKA documentation and associated academic papers, particularly those focusing on WEKA internals, are invaluable. I also recommend, specifically, _Data Mining: Practical Machine Learning Tools and Techniques_ by Ian H. Witten, Eibe Frank, Mark A. Hall, and Christopher J. Pal, as a good grounding in the underlying concepts.
 
 This might seem a bit abstract at first, but with practice, and careful examination of the relevant object hierarchies, those cryptic property paths become significantly less daunting. Remember, the keys here are the object identifiers and the precise property names. Trace the object structure, and you'll find your way.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-djangowagtail-admin-page-links-redirecting-to-invalid-addresses"
 ---
 
-Okay, let's get into this. I've seen this particular headache quite a few times over the years, and it's usually not a single smoking gun, but a constellation of potential culprits. The situation where your Django/Wagtail admin page links are directing to invalid addresses is frustrating, but very solvable with a systematic approach. Let's break down some of the most common reasons this happens and how to address them.
+, let's get into this. I've seen this particular headache quite a few times over the years, and it's usually not a single smoking gun, but a constellation of potential culprits. The situation where your Django/Wagtail admin page links are directing to invalid addresses is frustrating, but very solvable with a systematic approach. Let's break down some of the most common reasons this happens and how to address them.
 
 Firstly, one frequent cause involves misconfigured url patterns, either in your Django project's root `urls.py` file or within individual apps. In a project I worked on circa 2016, we had a particularly gnarly instance of this. The admin urls, which are designed to live under the `/admin/` path, were being inadvertently clobbered by a catch-all rule meant for a different part of the application. This resulted in the admin pages redirecting to, effectively, page not found addresses. Essentially, the routing wasn't letting the intended admin handlers receive the request, and we kept getting bounced to the wrong place.
 
@@ -69,7 +69,7 @@ class LanguageRedirectMiddleware:
         path = request.path
         if path.startswith('/admin'):
            return self.get_response(request)
-        
+
         if not path.startswith(('/en/', '/fr/')): # Assume only EN and FR supported
            translation.activate('en')
            return HttpResponseRedirect(f'/en{path}')
@@ -78,10 +78,10 @@ class LanguageRedirectMiddleware:
 
 ```
 
-This middleware intends to prepend the appropriate language code to the URL. However, while it correctly *attempts* to exempt admin URLs from modification, a typo such as missing a trailing `/` in the condition would still cause re-writing of `/admin` to `/en/admin` , which, because of a lack of a route for `/en/admin`, results in a broken page load. The fix is in ensuring that all code blocks are correct by applying good testing practices. The middleware must also correctly handle requests that do not start with `/` to prevent further errors.
+This middleware intends to prepend the appropriate language code to the URL. However, while it correctly _attempts_ to exempt admin URLs from modification, a typo such as missing a trailing `/` in the condition would still cause re-writing of `/admin` to `/en/admin` , which, because of a lack of a route for `/en/admin`, results in a broken page load. The fix is in ensuring that all code blocks are correct by applying good testing practices. The middleware must also correctly handle requests that do not start with `/` to prevent further errors.
 
 These examples highlight some common issues, but the resolution often involves a combination of things. Debugging this kind of problem is an iterative process. I usually start by carefully reviewing the project's `urls.py`, starting from the root `urls.py` file, then move to the relevant app's `urls.py` files or look for Wagtail specific definitions. Following that, I inspect middleware. Tools like Django's debug toolbar, when set to `DEBUG = True` is invaluable, and logging all the urls matched by the urlpatterns helps immensely. I also highly recommend the use of Django's `reverse()` function when creating URLs in templates to prevent hardcoded URLs.
 
-For further study, I'd recommend exploring the following resources. Firstly, *"Two Scoops of Django"* by Daniel Roy Greenfeld and Audrey Roy Greenfeld is a practical, excellent resource and includes advice on URL patterns and request handling. For a deeper understanding of URL patterns, *"Regular Expressions Cookbook"* by Jan Goyvaerts and Steven Levithan is a very worthwhile read, and can help when dealing with complex regex. Finally, the official Django documentation, specifically the section on URL dispatch, is essential, and I always find myself consulting it, even after years of working with Django. And of course, the Wagtail documentation on routing and serving pages is essential if Wagtail is a component of the application.
+For further study, I'd recommend exploring the following resources. Firstly, _"Two Scoops of Django"_ by Daniel Roy Greenfeld and Audrey Roy Greenfeld is a practical, excellent resource and includes advice on URL patterns and request handling. For a deeper understanding of URL patterns, _"Regular Expressions Cookbook"_ by Jan Goyvaerts and Steven Levithan is a very worthwhile read, and can help when dealing with complex regex. Finally, the official Django documentation, specifically the section on URL dispatch, is essential, and I always find myself consulting it, even after years of working with Django. And of course, the Wagtail documentation on routing and serving pages is essential if Wagtail is a component of the application.
 
 In summary, when dealing with redirecting Django/Wagtail admin page links, remember to methodically examine your url configurations, watch out for middleware interference, and double-check any custom logic that might be redirecting your requests. With careful tracing and methodical debugging, the issue can almost always be tracked down and resolved.

@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "632-sum-extra-credit-zybooks-help"
 ---
 
-Alright so you're hitting the 6.3.2 sum extra credit on zybooks that one's a bit of a classic right I've been there trust me I've stared at that problem way too long back in my uni days it's one of those that seems simple enough on the surface but then you dig a little deeper and suddenly you're debugging till 3 AM you know the drill
+so you're hitting the 6.3.2 sum extra credit on zybooks that one's a bit of a classic right I've been there trust me I've stared at that problem way too long back in my uni days it's one of those that seems simple enough on the surface but then you dig a little deeper and suddenly you're debugging till 3 AM you know the drill
 
-Okay so let's talk about what we're really dealing with this "extra credit" part they added is basically asking you to do a summation with an added constraint usually the normal sum is fine you iterate through the collection or array whatever they're throwing at you and add them up nothing fancy but this extra credit part wants to sum only certain elements based on some condition usually it involves some kind of filtering or selection logic before adding up
+let's talk about what we're really dealing with this "extra credit" part they added is basically asking you to do a summation with an added constraint usually the normal sum is fine you iterate through the collection or array whatever they're throwing at you and add them up nothing fancy but this extra credit part wants to sum only certain elements based on some condition usually it involves some kind of filtering or selection logic before adding up
 
 I remember when I first saw this I tried this brute force approach it was like the most obvious thing to do I grabbed every single value and then ran a conditional check on it inside the loop. I thought "easy peasy" it wasn't. Here is that abomination
 
@@ -19,6 +19,7 @@ def calculate_sum_bad(data):
     return total
 
 ```
+
 This would probably work if your datasets are tiny but this was for an algorithms class where speed actually matters And let me tell you that solution was slow like molasses in winter even for the tests provided and then I went and saw the professor at office hours.
 
 It taught me one thing: don't overcomplicate what the problem is asking from you. The problem asks for a summation of a selection the better approach is usually to filter that selection first then sum up. I moved on to filter function and then apply sum. This is much more readable and much better performance-wise for larger sets of data
@@ -29,6 +30,7 @@ def calculate_sum_better(data):
     return sum(filtered_data)
 
 ```
+
 This was better for sure but it still felt kinda "off" like I wasn't using all tools available to me then I found out about something called list comprehensions. It's like a superpower in Python for data manipulation a single line can do what would take a few lines with a regular for loop plus it also has the benefit of speed as the interpreter does things more efficiently
 
 ```python

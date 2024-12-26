@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-experimental-attribute-missing-from-keras-optimizers"
 ---
 
-Alright, let’s address this question about the absence of an ‘experimental’ attribute in Keras optimizers. It's a point that’s come up a few times in my own work, and I understand the curiosity it sparks. After all, we often see such labels in other parts of the TensorFlow ecosystem, indicating features under active development or with a higher chance of API changes.
+, let’s address this question about the absence of an ‘experimental’ attribute in Keras optimizers. It's a point that’s come up a few times in my own work, and I understand the curiosity it sparks. After all, we often see such labels in other parts of the TensorFlow ecosystem, indicating features under active development or with a higher chance of API changes.
 
 To really understand why this specific attribute isn't present in Keras optimizers, we need to consider how Keras and TensorFlow (and, now, JAX and PyTorch) are designed for experimentation, and where that experimentation lives in the framework. It's not so much about a lack of experimental features in optimizers themselves, but rather the way that Keras manages their inclusion and evolution. This is a subtle but crucial distinction.
 
@@ -119,6 +119,6 @@ model.fit(x_train, y_train, epochs=2)
 
 Here, the usage is streamlined through the Keras `model.compile` interface. Notice the lack of an `experimental` flag. The maturity is implicit through the integration process into `tf.keras.optimizers`. You would rely on the thorough review the algorithm went through prior to its inclusion.
 
-For understanding more about optimizer algorithms, I'd suggest looking at books like "Deep Learning" by Goodfellow, Bengio, and Courville, or "Optimization for Machine Learning" by Sra, Nowozin, and Wright. For a deeper dive into the optimization landscape, reading original papers from researchers like Kingma and Ba on Adam or Sutskever et al. on Momentum techniques will be very helpful. Also keep an eye on journals like *JMLR* or *NeurIPS* where new techniques are often published.
+For understanding more about optimizer algorithms, I'd suggest looking at books like "Deep Learning" by Goodfellow, Bengio, and Courville, or "Optimization for Machine Learning" by Sra, Nowozin, and Wright. For a deeper dive into the optimization landscape, reading original papers from researchers like Kingma and Ba on Adam or Sutskever et al. on Momentum techniques will be very helpful. Also keep an eye on journals like _JMLR_ or _NeurIPS_ where new techniques are often published.
 
 In summary, the absence of an ‘experimental’ attribute isn’t because Keras shies away from innovative methods, but rather because of a considered process. New optimizers are generally introduced into a mature, stable API once they’ve demonstrated reliability and robustness through earlier stages in research and development. The framework prioritizes a smooth user experience and assumes its available optimizers are ready to use. You won't find an 'experimental' tag here, because this space favors a steady, well-tested methodology over rapid and potentially volatile development cycles. The development occurs outside of the Keras library itself.

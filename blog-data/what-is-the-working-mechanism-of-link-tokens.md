@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-is-the-working-mechanism-of-link-tokens"
 ---
 
-alright, let’s talk link tokens. i've seen a few questions floating around about these, and honestly, they can be a bit of a head-scratcher if you're not knee-deep in the tech. it took me a few late nights and way too much coffee to really get my head around them, so i'm happy to share what i've learned.
+, let’s talk link tokens. i've seen a few questions floating around about these, and honestly, they can be a bit of a head-scratcher if you're not knee-deep in the tech. it took me a few late nights and way too much coffee to really get my head around them, so i'm happy to share what i've learned.
 
 basically, link tokens are a security mechanism. think of them as temporary passwords or access keys that allow a user to perform a specific action, like confirming an email, resetting a password, or even sharing access to a resource. unlike permanent credentials, they are designed to be short-lived and used only once. this is critical because it reduces the window of opportunity for malicious actors to exploit them. if a token gets intercepted somehow, it's usually useless by the time they try to use it.
 
@@ -59,6 +59,7 @@ else:
   print("token is invalid or expired.")
 
 ```
+
 this is a toy example. in practice, you’d use libraries that handle signing and validation more robustly, using for example jwts. this example does not use signature verification and is unsafe, but you get the basic idea.
 
 here’s a more complete example using the `jwt` (json web token) library, which will allow you to sign the token:
@@ -97,6 +98,7 @@ if decoded_payload:
 else:
   print("token is invalid or expired.")
 ```
+
 this code uses a secret key to sign the jwt, making it much safer than our first example. make sure the `SECRET_KEY` is stored securely and don’t hard code it. always use environment variables.
 
 and, if you are dealing with really sensitive data, you might consider using jwe (json web encryption) along with jwt, and use a different key for signing and encryption, which adds another layer of security and protection against man-in-the-middle attacks.

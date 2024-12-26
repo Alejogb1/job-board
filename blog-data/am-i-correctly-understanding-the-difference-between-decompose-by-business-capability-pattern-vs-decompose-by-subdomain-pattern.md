@@ -4,34 +4,34 @@ date: "2024-12-23"
 id: "am-i-correctly-understanding-the-difference-between-decompose-by-business-capability-pattern-vs-decompose-by-subdomain-pattern"
 ---
 
-Alright, let’s tackle this. It’s a common point of confusion, and honestly, I've seen teams trip over this distinction more than once. I recall a particular project about five years ago, a rather large e-commerce platform overhaul. We were transitioning from a monolithic architecture, and initially, the team grappled significantly with this very question: should we decompose by business capability, or by subdomain? We tried both approaches, and the lessons learned were, shall we say, instructive. Let’s break down what I learned, and clarify the differences, using practical examples and insights.
+, let’s tackle this. It’s a common point of confusion, and honestly, I've seen teams trip over this distinction more than once. I recall a particular project about five years ago, a rather large e-commerce platform overhaul. We were transitioning from a monolithic architecture, and initially, the team grappled significantly with this very question: should we decompose by business capability, or by subdomain? We tried both approaches, and the lessons learned were, shall we say, instructive. Let’s break down what I learned, and clarify the differences, using practical examples and insights.
 
 The core idea behind both ‘decompose by business capability’ and ‘decompose by subdomain’ is to break down a large, complex system into smaller, more manageable units. This reduces complexity, improves maintainability, and allows teams to specialize more effectively. However, the criteria used for this decomposition—the ‘what’ we use to divide the system—is different. This difference is crucial and determines how the team is structured and ultimately, how the overall system evolves.
 
 **Decompose by Business Capability:**
 
-When decomposing by business capability, you're focusing on *what the business does*. Each capability represents a core activity, a self-contained unit of business logic that provides specific value to the customer or the business. Think of it as a verb, a ‘doing’ or an action that the business performs. Examples would include ‘order fulfillment,’ ‘customer management,’ ‘payment processing,’ or ‘product catalog management’. The key characteristics are:
+When decomposing by business capability, you're focusing on _what the business does_. Each capability represents a core activity, a self-contained unit of business logic that provides specific value to the customer or the business. Think of it as a verb, a ‘doing’ or an action that the business performs. Examples would include ‘order fulfillment,’ ‘customer management,’ ‘payment processing,’ or ‘product catalog management’. The key characteristics are:
 
-*   **Business-centric:** The boundaries of each component are defined by business functions, not by technical considerations.
-*   **End-to-end process:** A business capability often encapsulates a complete process from beginning to end. For example, 'order fulfillment' would include order intake, payment authorization, shipping, and tracking.
-*   **Cross-domain:** A single business capability can often span multiple technical subdomains. It’s common to find elements from ‘database,’ ‘messaging,’ and ‘ui’ within a business capability component.
-*   **Team structure:** Usually, a team is structured around one or more business capabilities, reflecting the business’s org structure and promoting end-to-end ownership.
+- **Business-centric:** The boundaries of each component are defined by business functions, not by technical considerations.
+- **End-to-end process:** A business capability often encapsulates a complete process from beginning to end. For example, 'order fulfillment' would include order intake, payment authorization, shipping, and tracking.
+- **Cross-domain:** A single business capability can often span multiple technical subdomains. It’s common to find elements from ‘database,’ ‘messaging,’ and ‘ui’ within a business capability component.
+- **Team structure:** Usually, a team is structured around one or more business capabilities, reflecting the business’s org structure and promoting end-to-end ownership.
 
 **Decompose by Subdomain:**
 
-Decomposition by subdomain, in contrast, focuses on *what the system *is* composed of. You're breaking down the system into distinct areas of the overall business domain. These areas often represent types of data or specific parts of the business. Think of it as a noun, or a ‘thing’ the business has. Examples include ‘product data,’ ‘customer accounts,’ ‘inventory levels,’ or ‘shipping locations.’ The defining factors are:
+Decomposition by subdomain, in contrast, focuses on *what the system *is\* composed of. You're breaking down the system into distinct areas of the overall business domain. These areas often represent types of data or specific parts of the business. Think of it as a noun, or a ‘thing’ the business has. Examples include ‘product data,’ ‘customer accounts,’ ‘inventory levels,’ or ‘shipping locations.’ The defining factors are:
 
-*   **Domain-centric:** The decomposition is based on the business domain itself, dividing it into natural, cohesive areas.
-*   **Specialization:** Subdomains often allow for the development of specialist teams with deep expertise in specific business areas.
-*   **Technical alignment:** Subdomains often tend to naturally align with underlying data models and technological choices. For example, the 'inventory subdomain' may rely more on inventory management systems and optimized databases.
-*   **Potential for overlap:** Since subdomains are not tied to complete processes, a single workflow may require multiple subdomains to work together, potentially needing integration patterns.
+- **Domain-centric:** The decomposition is based on the business domain itself, dividing it into natural, cohesive areas.
+- **Specialization:** Subdomains often allow for the development of specialist teams with deep expertise in specific business areas.
+- **Technical alignment:** Subdomains often tend to naturally align with underlying data models and technological choices. For example, the 'inventory subdomain' may rely more on inventory management systems and optimized databases.
+- **Potential for overlap:** Since subdomains are not tied to complete processes, a single workflow may require multiple subdomains to work together, potentially needing integration patterns.
 
 **The Key Difference in Practice:**
 
 Imagine a simple e-commerce system:
 
-*   **Business Capability Example:** You might have a service called 'Manage Orders.' It would encapsulate the entire order process, interacting with the inventory subdomain, the payment subdomain, and the customer subdomain. It’s a complete business process.
-*   **Subdomain Example:** You would have separate services for ‘Product Catalog,’ ‘Customer Management,’ ‘Payment,’ and ‘Inventory.’ Each service focuses on managing data related to that specific subdomain. A process like placing an order would involve interactions between these various subdomains.
+- **Business Capability Example:** You might have a service called 'Manage Orders.' It would encapsulate the entire order process, interacting with the inventory subdomain, the payment subdomain, and the customer subdomain. It’s a complete business process.
+- **Subdomain Example:** You would have separate services for ‘Product Catalog,’ ‘Customer Management,’ ‘Payment,’ and ‘Inventory.’ Each service focuses on managing data related to that specific subdomain. A process like placing an order would involve interactions between these various subdomains.
 
 Here are three working code snippets to help illustrate this:
 
@@ -181,23 +181,24 @@ order_processor = OrderProcessor(inventory_service, payment_service, customer_se
 order_processor.process_order("user123", ["product1", "product2"])
 
 ```
+
 This hybrid approach utilizes a higher-level `OrderProcessor` to orchestrate the flow, but the actual data management resides within the subdomain services.
 
 **Choosing The Correct Pattern:**
 
 Which approach is better depends entirely on your context.
 
-*   **Business Capability** is beneficial when you need end-to-end ownership, want to align with your organization, and need clear responsibility boundaries. This aligns well with domain-driven design and microservices patterns where each service owns a particular business responsibility. However, it can potentially lead to tight coupling with business processes.
-*   **Subdomain** provides better technical independence, allowing specialization and potentially reducing duplication. However, it can create integration complexity, and it may blur ownership boundaries without a proper orchestration layer.
+- **Business Capability** is beneficial when you need end-to-end ownership, want to align with your organization, and need clear responsibility boundaries. This aligns well with domain-driven design and microservices patterns where each service owns a particular business responsibility. However, it can potentially lead to tight coupling with business processes.
+- **Subdomain** provides better technical independence, allowing specialization and potentially reducing duplication. However, it can create integration complexity, and it may blur ownership boundaries without a proper orchestration layer.
 
-In practice, it is common to see teams utilize a *hybrid* approach, combining aspects of both patterns to fit their specific needs. A business capability may, internally, be composed of different subdomains working together. There is rarely a hard-and-fast ‘correct’ answer.
+In practice, it is common to see teams utilize a _hybrid_ approach, combining aspects of both patterns to fit their specific needs. A business capability may, internally, be composed of different subdomains working together. There is rarely a hard-and-fast ‘correct’ answer.
 
 **For Further Reading:**
 
 For a deeper dive into these concepts, I recommend the following resources:
 
-*   **"Domain-Driven Design: Tackling Complexity in the Heart of Software" by Eric Evans:** This book lays the foundational concepts for domain modeling and how it influences software architecture. It explains the idea of bounded contexts which map well to subdomains.
-*   **"Building Microservices: Designing Fine-Grained Systems" by Sam Newman:** This is a practical guide to designing and implementing microservices, offering a great look at practical considerations in applying these patterns.
-*   **"Patterns of Enterprise Application Architecture" by Martin Fowler:** While broader in scope, this book provides invaluable context to many architectural concepts, including the different options for component decomposition.
+- **"Domain-Driven Design: Tackling Complexity in the Heart of Software" by Eric Evans:** This book lays the foundational concepts for domain modeling and how it influences software architecture. It explains the idea of bounded contexts which map well to subdomains.
+- **"Building Microservices: Designing Fine-Grained Systems" by Sam Newman:** This is a practical guide to designing and implementing microservices, offering a great look at practical considerations in applying these patterns.
+- **"Patterns of Enterprise Application Architecture" by Martin Fowler:** While broader in scope, this book provides invaluable context to many architectural concepts, including the different options for component decomposition.
 
 So, were you understanding the difference? I hope this detailed explanation based on my past experiences helps clarify things. It’s not uncommon to need to iterate on these choices during a project, and the most important thing is to make sure you're consciously making that decision based on your specific needs and constraints.

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "what-does-rbmup-result-mean"
 ---
 
-Okay, let's delve into `rbm.up`. I've certainly spent my share of late nights staring at those outputs, so I can offer some practical perspective. When you see `rbm.up` in the context of Restricted Boltzmann Machines (RBMs), it's signaling the result of a particular computation step - specifically, the upward pass of information, or the calculation of the probabilities of visible units given the hidden units. It’s not an outcome in the traditional sense of an algorithm succeeding or failing, but rather a specific stage in the generative and learning process within an RBM.
+, let's delve into `rbm.up`. I've certainly spent my share of late nights staring at those outputs, so I can offer some practical perspective. When you see `rbm.up` in the context of Restricted Boltzmann Machines (RBMs), it's signaling the result of a particular computation step - specifically, the upward pass of information, or the calculation of the probabilities of visible units given the hidden units. It’s not an outcome in the traditional sense of an algorithm succeeding or failing, but rather a specific stage in the generative and learning process within an RBM.
 
 To really grasp it, remember that RBMs are generative stochastic neural networks. They consist of two layers: visible units (which represent the data) and hidden units (which learn complex underlying features). The model's aim is to learn a probability distribution over the visible layer given the hidden layer and vice versa. That ‘and vice versa’ is where `rbm.up` (and consequently `rbm.down`) comes into play.
 
-The `up` pass essentially means we are propagating information from the *hidden layer* up to the *visible layer*. We use our current estimates of the hidden units to compute probabilities or values for each visible unit. Think of it as how the learned representation in the hidden space attempts to reconstruct the original data distribution, though it’s more nuanced than simple reconstruction. The precise mathematical operations depend on the type of RBM, for example, binary or Gaussian, but the central concept remains consistent: it’s a conditional probability distribution.
+The `up` pass essentially means we are propagating information from the _hidden layer_ up to the _visible layer_. We use our current estimates of the hidden units to compute probabilities or values for each visible unit. Think of it as how the learned representation in the hidden space attempts to reconstruct the original data distribution, though it’s more nuanced than simple reconstruction. The precise mathematical operations depend on the type of RBM, for example, binary or Gaussian, but the central concept remains consistent: it’s a conditional probability distribution.
 
 Let me illustrate with a few code snippets, simplified for clarity and based on experiences during a particularly challenging project involving unsupervised feature learning for time-series data back in '17. We were dealing with complex, multi-dimensional sensor readings, and RBMs were part of our feature extraction pipeline.
 
@@ -48,7 +48,7 @@ visible_probs = rbm_up(h, w, b_v)
 print("Visible Unit Probabilities:", visible_probs)
 ```
 
-Here, the output `visible_probs` isn’t the final ‘answer’ to some problem; it’s the result of our current model's attempt to represent the probabilities of the visible units being active given the state of our hidden units *h*. The `sigmoid` function ensures the probabilities are between 0 and 1. This is a crucial building block during training.
+Here, the output `visible_probs` isn’t the final ‘answer’ to some problem; it’s the result of our current model's attempt to represent the probabilities of the visible units being active given the state of our hidden units _h_. The `sigmoid` function ensures the probabilities are between 0 and 1. This is a crucial building block during training.
 
 **Snippet 2: Sampling the Visible Units (Binary RBM)**
 
@@ -72,7 +72,7 @@ sampled_visible = sample_visible(visible_probs)
 print("Sampled Visible Units:", sampled_visible)
 ```
 
-This demonstrates how the `visible_probs` from the `rbm_up` calculation are used in practice, using them to *sample* an actual visible layer state. This is a key step in the Contrastive Divergence (CD) training process. Again, it’s an intermediate state that guides the parameter updates.
+This demonstrates how the `visible_probs` from the `rbm_up` calculation are used in practice, using them to _sample_ an actual visible layer state. This is a key step in the Contrastive Divergence (CD) training process. Again, it’s an intermediate state that guides the parameter updates.
 
 **Snippet 3: Gaussian Visible Units (Conceptual)**
 

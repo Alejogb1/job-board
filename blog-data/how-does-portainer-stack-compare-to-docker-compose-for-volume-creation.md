@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-does-portainer-stack-compare-to-docker-compose-for-volume-creation"
 ---
 
-Alright, let's tackle this one. It’s a question I’ve seen come up countless times, and frankly, it highlights a crucial understanding of how we manage data in containerized environments. Having spent the better part of a decade knee-deep in deployments, I’ve had my fair share of both `docker-compose` and systems managed by Portainer. The volume creation aspect is definitely a place where their differences become apparent.
+, let's tackle this one. It’s a question I’ve seen come up countless times, and frankly, it highlights a crucial understanding of how we manage data in containerized environments. Having spent the better part of a decade knee-deep in deployments, I’ve had my fair share of both `docker-compose` and systems managed by Portainer. The volume creation aspect is definitely a place where their differences become apparent.
 
 `docker-compose`, at its core, is a declarative tool for defining and running multi-container applications. Think of it as a recipe card. You explicitly state which containers you need, how they interact, and yes, how their data should be managed. In the volume department, `docker-compose` shines when it's coupled with the directness and control of specifying volumes within a `docker-compose.yml` file. You dictate the name, the source, and the target, with very little abstraction getting in your way. I recall a particularly frustrating project a while back, deploying a complex data pipeline, where meticulously mapped and managed volumes were essential for data persistence and seamless operation. Any deviation from that `docker-compose.yml` setup would have resulted in data loss or worse.
 
 Portainer, on the other hand, is a container management ui. It offers a graphical interface for managing docker environments, and this includes volumes. Its volume creation process is less declarative and more focused on ease of management. You create a volume through the UI, give it a name, and it's there. This can be convenient, especially when you need to quickly create a volume for testing or for ad-hoc containers. However, its inherent abstraction can also mask some critical underlying details, and that's where experience really plays a factor. I’ve seen a junior colleague get tripped up by assuming Portainer was handling volume relationships and configurations in the same granular way that `docker-compose` did, which resulted in a rather messy deployment and a significant debugging session.
 
-The fundamental difference lies in their purpose and level of control. `docker-compose` is for *describing* your infrastructure and ensuring repeatable builds, whereas Portainer provides a visual *management* layer over a running docker engine. One is declarative, the other is imperative. This distinction dramatically impacts how volumes are handled.
+The fundamental difference lies in their purpose and level of control. `docker-compose` is for _describing_ your infrastructure and ensuring repeatable builds, whereas Portainer provides a visual _management_ layer over a running docker engine. One is declarative, the other is imperative. This distinction dramatically impacts how volumes are handled.
 
 Now, let’s look at some code examples to clarify these points.
 
@@ -40,7 +40,7 @@ Here, we are stating quite clearly: "I need a volume named `db_data` attached to
 
 This example describes, without actual code, what happens when you use Portainer to achieve something similar. Through the Portainer UI, you’d navigate to the “Volumes” section and click “Add Volume”. You’d give it a name, something like “portainer_db_data”. Once created, you could then create your database container and, during its configuration, specify that it should use the "portainer_db_data" volume, mounting it at the appropriate database data directory. It is, however, a multi-step manual process, which, while simpler visually, requires individual actions that could become error-prone on a large project.
 
-Notice how with Portainer, the relationship between the volume and the container is more explicit in the user actions and not encoded in a single file for reproducibility. You’re telling Portainer *how* to create the volume and attach it rather than describing the desired *state*.
+Notice how with Portainer, the relationship between the volume and the container is more explicit in the user actions and not encoded in a single file for reproducibility. You’re telling Portainer _how_ to create the volume and attach it rather than describing the desired _state_.
 
 **Example 3: Differences in configuration updates.**
 

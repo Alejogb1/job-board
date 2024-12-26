@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-vibration-signals-be-classified"
 ---
 
-Alright, let’s tackle the interesting world of vibration signal classification. I've spent quite a bit of time on this, notably back when I was working with predictive maintenance systems for heavy machinery. We were dealing with a ton of raw vibration data and needed to reliably identify the source of issues, like imbalances or bearing faults. It wasn't just about spotting deviations; it was about correctly *classifying* them. So, let's break down how it’s done.
+, let’s tackle the interesting world of vibration signal classification. I've spent quite a bit of time on this, notably back when I was working with predictive maintenance systems for heavy machinery. We were dealing with a ton of raw vibration data and needed to reliably identify the source of issues, like imbalances or bearing faults. It wasn't just about spotting deviations; it was about correctly _classifying_ them. So, let's break down how it’s done.
 
 Vibration signal classification primarily relies on transforming time-domain data into a more usable format and applying machine learning algorithms for pattern recognition. The initial, raw vibration data that you’d collect using accelerometers or other sensors is basically a record of amplitude fluctuations over time. It's rarely helpful in its raw form. It often appears noisy and lacks immediately interpretable features. Therefore, pre-processing and feature extraction are critical steps.
 
@@ -12,22 +12,22 @@ We typically start with signal conditioning, which might involve filtering to re
 
 In the time domain, we look at statistical parameters of the vibration signal. This includes:
 
-*   **Root mean square (rms):** This gives you an idea of the overall energy level of the vibration. It’s calculated as the square root of the mean of the squared signal values.
-*   **Peak values and peak-to-peak values:** These capture the extreme points of the signal and are useful for identifying sudden impacts or shocks.
-*   **Crest factor:** This is the ratio of the peak value to the rms value. It’s useful for identifying impulsiveness. High crest factors often indicate impacts.
-*   **Skewness and kurtosis:** These describe the shape of the signal's distribution. Skewness indicates asymmetry, while kurtosis measures the “tailedness” or peakedness of the distribution. They can help detect deviations from Gaussian noise.
+- **Root mean square (rms):** This gives you an idea of the overall energy level of the vibration. It’s calculated as the square root of the mean of the squared signal values.
+- **Peak values and peak-to-peak values:** These capture the extreme points of the signal and are useful for identifying sudden impacts or shocks.
+- **Crest factor:** This is the ratio of the peak value to the rms value. It’s useful for identifying impulsiveness. High crest factors often indicate impacts.
+- **Skewness and kurtosis:** These describe the shape of the signal's distribution. Skewness indicates asymmetry, while kurtosis measures the “tailedness” or peakedness of the distribution. They can help detect deviations from Gaussian noise.
 
 In the frequency domain, we analyze the signal's frequency content. This involves transforming the time-domain signal into the frequency domain, primarily using the Fast Fourier Transform (FFT). After the FFT, we look at:
 
-*   **Dominant frequencies:** These are the frequencies with the highest amplitude in the spectrum. They often correspond to the fundamental frequencies of rotating components or resonance frequencies of structures.
-*   **Harmonic content:** The presence of harmonics (multiples of a fundamental frequency) can indicate issues such as misalignment or gear meshing problems.
-*   **Band energy:** This is the energy within a specific frequency band. Monitoring band energy changes can be helpful for detecting specific component faults, e.g., bearing fault frequencies.
+- **Dominant frequencies:** These are the frequencies with the highest amplitude in the spectrum. They often correspond to the fundamental frequencies of rotating components or resonance frequencies of structures.
+- **Harmonic content:** The presence of harmonics (multiples of a fundamental frequency) can indicate issues such as misalignment or gear meshing problems.
+- **Band energy:** This is the energy within a specific frequency band. Monitoring band energy changes can be helpful for detecting specific component faults, e.g., bearing fault frequencies.
 
 Once you've extracted these features (whether in the time or frequency domain, or both), they become the inputs for your machine learning classifier. Several types of algorithms work well for vibration classification. Some that I've had good results with are:
 
-*   **Support vector machines (svm):** Effective for separating classes by finding optimal hyperplanes in the feature space. These tend to perform well with a moderate number of samples.
-*   **K-nearest neighbors (knn):** A simple, non-parametric algorithm that classifies a data point based on the majority class among its 'k' nearest neighbors in the feature space. This is useful for exploratory analysis, although computational expense increases with sample size.
-*   **Artificial neural networks (ann), particularly convolutional neural networks (cnn):** These are capable of learning complex patterns directly from the feature vectors, and are particularly well suited for time series data, although they typically require large datasets to perform effectively.
+- **Support vector machines (svm):** Effective for separating classes by finding optimal hyperplanes in the feature space. These tend to perform well with a moderate number of samples.
+- **K-nearest neighbors (knn):** A simple, non-parametric algorithm that classifies a data point based on the majority class among its 'k' nearest neighbors in the feature space. This is useful for exploratory analysis, although computational expense increases with sample size.
+- **Artificial neural networks (ann), particularly convolutional neural networks (cnn):** These are capable of learning complex patterns directly from the feature vectors, and are particularly well suited for time series data, although they typically require large datasets to perform effectively.
 
 Now, let’s look at some code examples. These will be in Python, as it’s a common language in this space, leveraging libraries like `numpy`, `scipy`, and `scikit-learn`.
 

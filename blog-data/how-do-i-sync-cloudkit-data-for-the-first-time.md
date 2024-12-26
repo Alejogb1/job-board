@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-do-i-sync-cloudkit-data-for-the-first-time"
 ---
 
-Okay, let’s tackle this. The initial synchronization of CloudKit data can often feel more nuanced than the subsequent updates, primarily because you're dealing with the establishment of a consistent state between the client and the cloud. Over my years working with iOS applications and backend systems, I’ve certainly navigated this process, and I recall a rather intense project a few years back involving a large medical database where getting the initial sync *perfectly* right was paramount to the entire application's functionality. Let me walk you through the process, focusing on the practical considerations and common pitfalls you might encounter, and I'll also show you some code examples.
+, let’s tackle this. The initial synchronization of CloudKit data can often feel more nuanced than the subsequent updates, primarily because you're dealing with the establishment of a consistent state between the client and the cloud. Over my years working with iOS applications and backend systems, I’ve certainly navigated this process, and I recall a rather intense project a few years back involving a large medical database where getting the initial sync _perfectly_ right was paramount to the entire application's functionality. Let me walk you through the process, focusing on the practical considerations and common pitfalls you might encounter, and I'll also show you some code examples.
 
 The crux of the first synchronization involves fetching existing records, handling new record creation, and, quite critically, managing any potential conflicts. It’s rarely a simple one-time pull; instead, it's an orchestrated dance of queries, record manipulation, and persistent storage management.
 
 First, it’s imperative you understand the CloudKit data model your application uses. Are you primarily using private or public databases? How are your record types structured? What are the key fields and indices you'll be querying against? For simplicity, let’s assume we’re working with a user's private database, and our records are structured around a ‘Task’ record type with fields like ‘title,’ ‘dueDate,’ and ‘isCompleted.’
 
-The first step usually involves a targeted query, specifically designed to retrieve all records of a given type that haven't yet been synchronized. However, in the case of the very first synchronization, this essentially means retrieving *all* existing records. You accomplish this using `NSPredicate(value: true)` and a suitable `CKQuery` object. Remember that while this predicate fetches all records, CloudKit may limit the initial batch size for performance reasons. This is why cursor management is vital.
+The first step usually involves a targeted query, specifically designed to retrieve all records of a given type that haven't yet been synchronized. However, in the case of the very first synchronization, this essentially means retrieving _all_ existing records. You accomplish this using `NSPredicate(value: true)` and a suitable `CKQuery` object. Remember that while this predicate fetches all records, CloudKit may limit the initial batch size for performance reasons. This is why cursor management is vital.
 
 Here's a snippet of Swift code illustrating the initial query:
 
@@ -88,7 +88,7 @@ func createOrUpdateTask(from ckRecord: CKRecord, in context: NSManagedObjectCont
             task.dueDate = ckRecord.value(forKey: "dueDate") as? Date
             task.isCompleted = ckRecord.value(forKey: "isCompleted") as? Bool ?? false
            //Update more fields as needed.
-            
+
         } else {
             task = Task(context: context)
             task.recordIDString = ckRecord.recordID.recordName
@@ -105,6 +105,7 @@ func createOrUpdateTask(from ckRecord: CKRecord, in context: NSManagedObjectCont
 }
 
 ```
+
 This function either updates an existing `Task` entity, identified by its `recordID`, or creates a new one, populating it from the `CKRecord`. The important aspect is to handle both scenarios: create new records from CloudKit and update any existing records.
 
 Now, a crucial aspect I've alluded to, but we haven't explicitly shown, is handling conflicts. It's entirely possible that while your application was offline, modifications were made both locally and in the cloud. When you fetch a record, CloudKit's metadata (specifically, the modification date) lets you understand if there’s been a change on the server that supersedes any local changes you might have made. In the early sync phase, you're likely establishing local copies, so you might not have any conflicts, but it's wise to have a strategy. I always recommend deferring to the server’s record if you find a conflict during a subsequent sync.
@@ -120,7 +121,7 @@ func uploadLocalTask(task: Task, completion: @escaping (Error?) -> Void) {
     }
     let recordID = CKRecord.ID(recordName: recordIdString)
     let ckRecord = CKRecord(recordType: "Task", recordID: recordID)
-    
+
     //Set properties from task
     ckRecord.setValue(task.title, forKey: "title")
     ckRecord.setValue(task.dueDate, forKey: "dueDate")

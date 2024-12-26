@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-we-collect-overdue-billings"
 ---
 
-Okay, let's talk overdue billings. It’s a problem I've faced multiple times, often finding myself in the weeds after a project launch. The key, I’ve learned, isn't about chasing payments after they're already late; it's about structuring systems that minimize late payments in the first place and, when they do happen, handle them effectively and systematically. Let's dive into some strategies and code examples that have proven valuable in my experience.
+, let's talk overdue billings. It’s a problem I've faced multiple times, often finding myself in the weeds after a project launch. The key, I’ve learned, isn't about chasing payments after they're already late; it's about structuring systems that minimize late payments in the first place and, when they do happen, handle them effectively and systematically. Let's dive into some strategies and code examples that have proven valuable in my experience.
 
 The initial approach always starts with prevention. Clear, concise billing processes are paramount. This includes automated invoicing systems that trigger at predefined intervals, offering multiple payment options, and sending reminder notifications before the actual due date. I've seen situations where simply clarifying payment terms upfront in the contract, and then reinforcing them via automated notifications, significantly reduces the likelihood of late payments. Lack of clarity breeds ambiguity, which directly translates to payment delays.
 
@@ -76,6 +76,7 @@ sender_email = "your_email@example.com" #replace this with your email
 sender_password = "your_password" #replace this with your password
 check_overdue_invoices(invoice_data, sender_email, sender_password)
 ```
+
 This python script leverages the `datetime` and `smtplib` modules. It reads invoice data, calculates the overdue time, and sends email reminders if the payment is overdue, scaling in severity depending on the number of days overdue. Note that for production environments, it is crucial to utilize a robust email service and manage credentials securely (consider using environment variables instead of hardcoding). Also, proper error handling and logging are necessary to monitor the process.
 
 Beyond automated reminders, it's crucial to track overdue payments and identify patterns. For this, I often build or use a database system that stores invoice information, due dates, payments made, and flags for overdue status. This data-driven approach helps me understand which clients frequently have issues and allows for proactive intervention. A simple database structure might look something like this, focusing on the most relevant fields for this scenario:
@@ -109,6 +110,7 @@ VALUES
 ('INV002', 2, '2024-05-15', 2000),
 ('INV003', 3, '2024-04-01', 500);
 ```
+
 This SQL snippet creates a simple database schema with `invoices` and `clients` tables. The `invoices` table tracks invoice details and the `clients` table keeps client information. In a real application, additional columns would be included, such as invoice creation date, the product or service involved, etc. However, this example is streamlined for demonstration purposes. Using SQL, you can easily perform queries to identify overdue bills, track payment history, and gain valuable insights into trends. For example, a query to show all invoices that are overdue would be:
 
 ```sql
@@ -117,23 +119,24 @@ FROM invoices inv
 INNER JOIN clients cli ON inv.client_id = cli.client_id
 WHERE inv.status = 'pending' and inv.due_date < CURRENT_DATE;
 ```
+
 This SQL query will return a list of invoices that are overdue, including details on the client and the due date. This allows for tracking down who owes you money and can be used in conjunction with the python email code shown earlier.
 
 Finally, I’ve found that offering flexible payment arrangements, within reason, can significantly improve recovery rates. Sometimes a client is genuinely struggling, and offering a payment plan or a slight adjustment to the invoice can be a more practical approach than immediately resorting to collections. This doesn't mean accepting every request, but having a defined process for evaluating requests for payment adjustments can be beneficial. For instance, it could be automated via an API that allows clients to request extensions, which are then reviewed before approval. Let's illustrate this with a basic json data response example
 
 ```json
 {
-    "invoiceId": "INV003",
-    "paymentPlanRequested": true,
-    "reason": "Temporary cash flow issues due to unexpected expenditures.",
-    "requestedNewDueDate": "2024-06-15",
-    "status": "pending",
-    "approval": null
+  "invoiceId": "INV003",
+  "paymentPlanRequested": true,
+  "reason": "Temporary cash flow issues due to unexpected expenditures.",
+  "requestedNewDueDate": "2024-06-15",
+  "status": "pending",
+  "approval": null
 }
 ```
 
 This json structure represents the request a client might make for a payment plan. We can use this information to decide if we want to create a custom payment schedule for the client.
 
-To further your understanding of these topics, I’d highly recommend looking into *Database Design for Mere Mortals* by Michael J. Hernandez and John L. Viescas for a detailed perspective on database design. *Understanding Email Infrastructure: A Practical Guide to Setting Up and Managing Email Servers* by Chris Ballew can be quite helpful for understanding the intricacies of email systems. Finally, *The Elements of Style* by William Strunk Jr. and E.B. White is an excellent resource for ensuring clear and concise communication, which is vital in this process. These resources can provide a more thorough understanding of the concepts and techniques mentioned here.
+To further your understanding of these topics, I’d highly recommend looking into _Database Design for Mere Mortals_ by Michael J. Hernandez and John L. Viescas for a detailed perspective on database design. _Understanding Email Infrastructure: A Practical Guide to Setting Up and Managing Email Servers_ by Chris Ballew can be quite helpful for understanding the intricacies of email systems. Finally, _The Elements of Style_ by William Strunk Jr. and E.B. White is an excellent resource for ensuring clear and concise communication, which is vital in this process. These resources can provide a more thorough understanding of the concepts and techniques mentioned here.
 
 In summary, recovering overdue billings involves a proactive and structured approach. It isn’t just about chasing late payments, but about setting up the right systems to prevent them in the first place and having a reliable, scalable process to manage them when they do arise.

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-create-a-bigquery-connection-from-airflow-ui"
 ---
 
-Okay, let’s tackle connecting to BigQuery from the Airflow ui. I’ve wrangled this particular beast a few times, and while the process is conceptually straightforward, a few practical considerations tend to crop up, so let's get into the details.
+, let’s tackle connecting to BigQuery from the Airflow ui. I’ve wrangled this particular beast a few times, and while the process is conceptually straightforward, a few practical considerations tend to crop up, so let's get into the details.
 
 It's not merely about clicking a button; it's about establishing a robust, secure, and manageable connection that Airflow can reliably leverage for data orchestration. Typically, when I approach this, I'm mindful of a few key aspects: authentication, connection configuration, and best practices for security. Let’s break down how I’ve handled this in past projects, specifically from the perspective of initiating everything from the Airflow ui itself.
 
@@ -12,16 +12,16 @@ First, authentication. In my experience, the most prevalent method, and usually 
 
 To configure this in Airflow’s UI, navigate to the "Admin" section and select "Connections." Then, hit the “Create” button. From the connection type dropdown, select “Google Cloud Platform.” You’ll now face several fields requiring your attention. Here's a breakdown of the important ones:
 
-* **Conn Id:** This is the logical name by which your connection will be referenced in your DAG definitions. I'd typically stick with something descriptive, like `bigquery_default`, or if connecting to a specific project, `bigquery_project_x`, for better organization.
-* **Conn Type:** As I mentioned, select "Google Cloud Platform." This selection will present a set of specific fields relevant to Google’s infrastructure.
-* **Project Id:** Enter the google cloud project id associated with the BigQuery resources. This is the key that identifies the project within the gcp ecosystem.
-* **Keyfile path:** This is the path within the Airflow environment where the json service account key file is stored. It is *critical* that this file be accessible to the airflow worker processes. This path can be relative to the Airflow DAGs folder, or an absolute path accessible within the container.
-* **Keyfile JSON:** *Do not* paste the json content directly here. Use the file path above instead. This ensures better security by avoiding storing sensitive credentials directly within the database records.
-* **Scopes:** This is where you specify the permissions Airflow requires. Usually, you'll need `https://www.googleapis.com/auth/bigquery` for typical BigQuery operations, as well as `https://www.googleapis.com/auth/cloud-platform` if you plan on doing other gcp related operations within your DAG.
+- **Conn Id:** This is the logical name by which your connection will be referenced in your DAG definitions. I'd typically stick with something descriptive, like `bigquery_default`, or if connecting to a specific project, `bigquery_project_x`, for better organization.
+- **Conn Type:** As I mentioned, select "Google Cloud Platform." This selection will present a set of specific fields relevant to Google’s infrastructure.
+- **Project Id:** Enter the google cloud project id associated with the BigQuery resources. This is the key that identifies the project within the gcp ecosystem.
+- **Keyfile path:** This is the path within the Airflow environment where the json service account key file is stored. It is _critical_ that this file be accessible to the airflow worker processes. This path can be relative to the Airflow DAGs folder, or an absolute path accessible within the container.
+- **Keyfile JSON:** _Do not_ paste the json content directly here. Use the file path above instead. This ensures better security by avoiding storing sensitive credentials directly within the database records.
+- **Scopes:** This is where you specify the permissions Airflow requires. Usually, you'll need `https://www.googleapis.com/auth/bigquery` for typical BigQuery operations, as well as `https://www.googleapis.com/auth/cloud-platform` if you plan on doing other gcp related operations within your DAG.
 
 Once you have all those parameters set, clicking “Test” is highly recommended. This will trigger a validation process ensuring Airflow can establish a connection using the supplied credentials. It’s a good sanity check to confirm everything is configured properly before you move forward. If you're dealing with network restrictions, or are behind some kind of proxy, you'll need to add additional settings within airflow.cfg. For example, a `proxy_host` setting.
 
-Okay, let’s dive into some practical examples.
+, let’s dive into some practical examples.
 
 **Example 1: Simple Query Execution**
 
@@ -46,7 +46,7 @@ with DAG(
     )
 ```
 
-In this scenario, the `BigQueryExecuteQueryOperator` is used. Notice how the `gcp_conn_id` parameter refers back to the connection we defined in the Airflow ui – `bigquery_default`. The sql parameter holds your query. *Ensure that `your-project`, `your_dataset`, and `your_table` are updated to match your actual project details*. This is about as straightforward as it gets for a simple query.
+In this scenario, the `BigQueryExecuteQueryOperator` is used. Notice how the `gcp_conn_id` parameter refers back to the connection we defined in the Airflow ui – `bigquery_default`. The sql parameter holds your query. _Ensure that `your-project`, `your_dataset`, and `your_table` are updated to match your actual project details_. This is about as straightforward as it gets for a simple query.
 
 **Example 2: Loading Data From GCS into BigQuery**
 
@@ -118,6 +118,7 @@ with DAG(
         gcp_conn_id='bigquery_default'
     )
 ```
+
 Here, the query leverages Jinja templating. `{{ ds }}` becomes the execution date, which provides a dynamic approach to query data within specific ranges. This technique is incredibly useful when processing data incrementally. This templating functionality is an important feature of airflow, and not just limited to Bigquery.
 
 For further in-depth exploration, I'd recommend reviewing the official Apache Airflow documentation. Specifically, look into the provider documentation for google, and particularly the `airflow.providers.google.cloud.operators.bigquery` and `airflow.providers.google.cloud.transfers.gcs_to_bigquery` documentation. The google cloud documentation on bigquery best practices will also offer useful insights on how to effectively manage your data in the service. While these resources don't cover all the edge cases you might encounter, understanding them will provide a strong foundation for any data orchestration task between Airflow and BigQuery. Also consider examining the source code of these operators on GitHub for even greater granularity if needed.

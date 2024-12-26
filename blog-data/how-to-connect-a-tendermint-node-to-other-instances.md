@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-connect-a-tendermint-node-to-other-instances"
 ---
 
-alright, so you're looking to get your tendermint nodes talking to each other. i've been down that rabbit hole a few times, and it can be a bit tricky, especially when you’re first getting started. let's break down how to get those tendermint instances playing nice.
+, so you're looking to get your tendermint nodes talking to each other. i've been down that rabbit hole a few times, and it can be a bit tricky, especially when you’re first getting started. let's break down how to get those tendermint instances playing nice.
 
 first off, tendermint relies on a gossip protocol for peer discovery. this means nodes essentially broadcast their presence and learn about other nodes on the network. it’s not a centralized thing. think of it like a bunch of people shouting in a room, each hearing the others. to make this work, each node needs a few key pieces of information: the ip address and the listening port, and the node id.
 
@@ -79,6 +79,7 @@ the node key file looks like this:
   "address": "node_id_here"
 }
 ```
+
 take the `address` field. this is the node id you need for the `persistent_peers` configuration. copy the `address` value for each node and add to the persistent_peers configuration. these are really long hexadecimal strings. make absolutely sure you have the correct `node_id` for each node. there's no magic in this, just careful copy and paste and double check. i've spent more than my share of time debugging connection issues only to find out i copied the wrong node id. it's the sort of error that makes you question all of your life choices.
 
 another setting to watch is `laddr` in the `[p2p]` section of your `config.toml`. it specifies which address and port the node listens on for incoming connections. `tcp://0.0.0.0:26656` means that the node will accept connections on port 26656 from any network interface. you might want to restrict that based on your network configuration. for a local network, `tcp://<ip_address>:26656` is normally enough to ensure the node will accept connections only from that specific address. when running inside a docker container you will need to use the internal ip of the container not `0.0.0.0`, so something like `tcp://172.17.0.2:26656`.

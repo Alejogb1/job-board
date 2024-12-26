@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-selectively-detect-specific-labels-with-yolov5s-detectpy"
 ---
 
-Okay, let’s tackle this. I’ve spent a considerable amount of time working with YOLO models, and selectively detecting labels is a common need, especially when you're dealing with diverse datasets. It's not immediately obvious in the standard `detect.py` script, so let me walk you through how to achieve this effectively.
+, let’s tackle this. I’ve spent a considerable amount of time working with YOLO models, and selectively detecting labels is a common need, especially when you're dealing with diverse datasets. It's not immediately obvious in the standard `detect.py` script, so let me walk you through how to achieve this effectively.
 
-The core challenge arises because `detect.py` by default processes all classes trained in your model. It doesn't inherently offer a flag to filter output based on class labels. We need to leverage the underlying mechanics of the prediction and detection process to implement this filtering. Fundamentally, we're aiming to modify how detections are handled *after* the model makes its predictions. This is crucial to understand; we're not retraining the model or altering the prediction phase itself, but just filtering the output.
+The core challenge arises because `detect.py` by default processes all classes trained in your model. It doesn't inherently offer a flag to filter output based on class labels. We need to leverage the underlying mechanics of the prediction and detection process to implement this filtering. Fundamentally, we're aiming to modify how detections are handled _after_ the model makes its predictions. This is crucial to understand; we're not retraining the model or altering the prediction phase itself, but just filtering the output.
 
 My initial foray into this was on a project a few years back involving aerial imagery. The model, trained to identify various types of vehicles, often produced a large number of detections, and I needed to focus solely on cars for a specific analysis. That's where I started exploring these selective filtering methods, and I've refined them over time.
 
@@ -16,7 +16,7 @@ I've found three common and useful techniques:
 
 **1. Filtering During Post-Processing:**
 
-   This approach involves iterating through the `non_max_suppression` output and keeping only the detections for our desired labels. The key advantage here is that it's flexible and allows for multiple label filtering without modifying core YOLOv5 functions. Let me present an example code snippet for demonstration:
+This approach involves iterating through the `non_max_suppression` output and keeping only the detections for our desired labels. The key advantage here is that it's flexible and allows for multiple label filtering without modifying core YOLOv5 functions. Let me present an example code snippet for demonstration:
 
 ```python
 import torch
@@ -30,7 +30,7 @@ def filter_detections_by_label(detections, desired_labels):
        return torch.tensor([torch.tensor(d[0]).to(detections.device).float() + torch.tensor([0,0,0,0]).float().to(detections.device), torch.tensor([d[1]]).to(detections.device).float(), torch.tensor([d[2]]).to(detections.device).int()], device=detections.device)
     else:
        return torch.empty((0, 6), device=detections.device)
-  
+
 
 # Assume 'pred' is the output of your YOLOv5 model's forward pass
 def run_detection(model, img, desired_labels=[0, 1]):
@@ -51,12 +51,12 @@ def run_detection(model, img, desired_labels=[0, 1]):
 # # 'output' now only contains detections from the specified classes.
 ```
 
-   In this example, `filter_detections_by_label` is where the filtering occurs. It iterates through detections, only keeping those whose class index is in `desired_labels`. The logic of creating the tensor is necessary due to the way the detections are structured after NMS (a single tensor of detections). The function takes in `detections` from the NMS process and `desired_labels`. It creates a new tensor from the filtered detections and outputs it.
-   This approach avoids any changes to the core YOLOv5 library code.
-    
+In this example, `filter_detections_by_label` is where the filtering occurs. It iterates through detections, only keeping those whose class index is in `desired_labels`. The logic of creating the tensor is necessary due to the way the detections are structured after NMS (a single tensor of detections). The function takes in `detections` from the NMS process and `desired_labels`. It creates a new tensor from the filtered detections and outputs it.
+This approach avoids any changes to the core YOLOv5 library code.
+
 **2. Modifying the `non_max_suppression` Function (More Involved):**
 
-   Another method involves modifying the non-max suppression function directly. This is more intrusive but can be more efficient if you are doing frequent label-specific detection. You'd need to inject code *before* the NMS step.
+Another method involves modifying the non-max suppression function directly. This is more intrusive but can be more efficient if you are doing frequent label-specific detection. You'd need to inject code _before_ the NMS step.
 
 ```python
 import torch
@@ -81,8 +81,8 @@ def selective_non_max_suppression(
         if not filtered_prediction:
           return  torch.empty((0, 6), device=prediction.device)
         prediction = torch.cat(filtered_prediction, dim=0)
-    
-    
+
+
     # Call the original NMS function with the filtered prediction
     return non_max_suppression(
         prediction,
@@ -92,7 +92,7 @@ def selective_non_max_suppression(
         agnostic_nms=agnostic_nms,
         max_det=max_det,
     )
-    
+
 
 # Modify the main function to use the custom version
 def run_detection_nms(model, img, desired_labels=[0,1]):
@@ -104,9 +104,9 @@ def run_detection_nms(model, img, desired_labels=[0,1]):
 # Load your model and image
 # output = run_detection_nms(model, img, desired_labels)
 ```
-    
+
     This modified NMS function includes an `if desired_classes` clause that checks the classes before applying the nms filtering. If `desired_classes` is set, then it filters the predictions using the included labels.
-    
+
     **3. Pre-Filtering of Predictions (Least Efficient)**
 
     The least efficient of the methods, but included for completeness, would be filtering the raw predictions directly. In general, it is best to filter after NMS is applied. This pre-filtering would apply before any NMS filtering. It’s generally not advised due to performance implications, but here's how you'd approach it:
@@ -135,6 +135,7 @@ def run_detection_prefilter(model, img, desired_labels=[0,1]):
 # Load your model and image
 # output = run_detection_prefilter(model, img, desired_labels)
 ```
+
     This method creates a function `filter_raw_predictions` that filters the raw predictions based on the desired labels prior to NMS. While this might seem intuitive, it isn't as efficient as filtering the results after NMS. This approach adds an additional step before the usual pipeline and should be avoided in favor of the first two examples.
 
 **Resource Recommendations:**

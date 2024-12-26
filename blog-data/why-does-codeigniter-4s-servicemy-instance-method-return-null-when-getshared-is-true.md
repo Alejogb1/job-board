@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-does-codeigniter-4s-servicemy-instance-method-return-null-when-getshared-is-true"
 ---
 
-Okay, let's unpack this intriguing behavior with CodeIgniter 4's service layer. It's a situation I've stumbled into myself more than once while refactoring older projects, and it usually boils down to how shared instances and dependency injection interact. The crux of the issue is that while `$getShared` in `Services::my-instance-method()` intends to return a singleton, a null value under specific circumstances means there’s a mismatch between what's defined as a service and how it's being instantiated and accessed. Let me explain what is going on with some code examples I have encountered.
+, let's unpack this intriguing behavior with CodeIgniter 4's service layer. It's a situation I've stumbled into myself more than once while refactoring older projects, and it usually boils down to how shared instances and dependency injection interact. The crux of the issue is that while `$getShared` in `Services::my-instance-method()` intends to return a singleton, a null value under specific circumstances means there’s a mismatch between what's defined as a service and how it's being instantiated and accessed. Let me explain what is going on with some code examples I have encountered.
 
-When using `Services::my-instance-method()`, you’d expect the `$getShared` boolean to control whether a new instance or an existing singleton is returned, but several subtle scenarios can lead to unexpected `NULL` values. The immediate culprit, as I often see in junior developers’ code, is incorrect service registration. I've seen services registered without the actual factory closure that should create the object, or worse, without defining the service name at all. A service must be defined with its name and the factory function that actually constructs an object, usually within the *app/Config/Services.php* file. If this step is skipped or incomplete, CodeIgniter's service locator won't be able to return the shared instance correctly.
+When using `Services::my-instance-method()`, you’d expect the `$getShared` boolean to control whether a new instance or an existing singleton is returned, but several subtle scenarios can lead to unexpected `NULL` values. The immediate culprit, as I often see in junior developers’ code, is incorrect service registration. I've seen services registered without the actual factory closure that should create the object, or worse, without defining the service name at all. A service must be defined with its name and the factory function that actually constructs an object, usually within the _app/Config/Services.php_ file. If this step is skipped or incomplete, CodeIgniter's service locator won't be able to return the shared instance correctly.
 
 Let's look at a simple example. Imagine I want a utility class to handle file operations, which I might name 'fileHandler'. I will show a typical implementation:
 
@@ -27,7 +27,9 @@ class Services extends BaseService
   }
 }
 ```
+
 And the `FileHandler` itself:
+
 ```php
 <?php namespace App\Libraries;
 
@@ -39,7 +41,9 @@ class FileHandler
     }
 }
 ```
-This *seems* correct, and it would often return a shared instance as expected. However, it is often easy to make a mistake. The critical piece that I see is missing is the service registry. There needs to be an additional piece of code to make this work. If we did not define the service in `/app/Config/Services.php` like so:
+
+This _seems_ correct, and it would often return a shared instance as expected. However, it is often easy to make a mistake. The critical piece that I see is missing is the service registry. There needs to be an additional piece of code to make this work. If we did not define the service in `/app/Config/Services.php` like so:
+
 ```php
 <?php
 
@@ -61,6 +65,7 @@ class Services extends BaseServices
 	}
 }
 ```
+
 Then, when we access the service using `$fileHandler = Services::fileHandler();`, we'll always obtain `null` because the internal service registry does not know how to create an object for this service.
 
 The factory function is not just any callable, it has to actually create the object. The service, 'fileHandler' in this instance, needs an associated function that returns the actual object. If the factory function is missing, `getSharedInstance` will look for a singleton, won't find it, attempt to make a new one, and also fail, then returning `null`. This is a prime example that has tripped me up in the past.
@@ -100,13 +105,16 @@ class Services extends BaseServices
     }
 }
 ```
+
 Then, to use it:
+
 ```php
 $logger = Services::logger();
 if ($logger === null) {
     echo 'The logger is null';
 }
 ```
+
 The critical missing piece here, again, is the factory closure. The call `self::getSharedInstance('logger');` will fail because the framework does not know how to create the logger object. I’ve seen many instances where the dev forgot to add this code:
 
 ```php
@@ -155,7 +163,9 @@ class ConfigDependentService
     }
 }
 ```
+
 And the service definition:
+
 ```php
 <?php
 namespace Config;

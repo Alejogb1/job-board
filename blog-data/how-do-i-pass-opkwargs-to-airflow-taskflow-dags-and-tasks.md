@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-do-i-pass-opkwargs-to-airflow-taskflow-dags-and-tasks"
 ---
 
-Alright, let’s tackle this one. I've seen this trip up a lot of people, and honestly, it’s not always as straightforward as the documentation might initially suggest. Dealing with `op_kwargs` within Airflow’s TaskFlow API can sometimes feel a bit different than with classic DAGs, but the core concepts are similar. Fundamentally, we're trying to pass custom keyword arguments down into the executing operator within a task.
+, let’s tackle this one. I've seen this trip up a lot of people, and honestly, it’s not always as straightforward as the documentation might initially suggest. Dealing with `op_kwargs` within Airflow’s TaskFlow API can sometimes feel a bit different than with classic DAGs, but the core concepts are similar. Fundamentally, we're trying to pass custom keyword arguments down into the executing operator within a task.
 
 From my experience migrating a legacy system to a more modern TaskFlow approach, I recall encountering situations where dynamic parameters were crucial. Imagine needing to specify different configurations for a database connection based on the environment (dev, staging, production) without having to hardcode each one. That's where `op_kwargs` becomes indispensable within a TaskFlow context.
 
-The important point to understand is that TaskFlow, specifically when using decorators like `@task`, generates a callable task function. This task function is the entry point to your defined task, and the `op_kwargs` are actually passed to the *underlying operator* used *within* that task. This might seem subtle but is important. Let's consider this in code.
+The important point to understand is that TaskFlow, specifically when using decorators like `@task`, generates a callable task function. This task function is the entry point to your defined task, and the `op_kwargs` are actually passed to the _underlying operator_ used _within_ that task. This might seem subtle but is important. Let's consider this in code.
 
 **Example 1: Passing Static `op_kwargs`**
 
@@ -100,11 +100,11 @@ In this example, the entire `config` dictionary is passed as `op_kwargs`. The `@
 
 **Key takeaways and best practices**
 
-*   **`op_kwargs` for operators:** Remember, the primary purpose of `op_kwargs` is to pass parameters into operators within tasks (such as the `PythonOperator` in the examples above). When using the `@task` decorator, these arguments are passed into the decorated function, allowing you to use them within your task. The `@task` decorator generates an operator under the hood, so `op_kwargs` still applies, but it's just used as function arguments.
-*   **Dynamic generation:** Don't be afraid to dynamically generate these values. That's where Airflow really shines, allowing for data-driven workflows. Use previous task return values or environment variables to construct parameters as needed.
-*   **Configuration objects:** Utilize dictionaries for better organization, particularly when passing multiple arguments. This improves readability and allows easy adjustments in parameter values.
-*   **Type consistency:**  Ensure that data types of the passed parameters match what the underlying operator or function expects. Type mismatches can lead to unexpected errors.
-* **Avoid direct operator creation (generally):** While you *can* create and use operators directly inside TaskFlow code, I’d typically avoid it if possible, leaning heavily on `@task` decorated functions. This keeps the code cleaner and easier to maintain. Direct operator instantiation is generally necessary for custom operators.
+- **`op_kwargs` for operators:** Remember, the primary purpose of `op_kwargs` is to pass parameters into operators within tasks (such as the `PythonOperator` in the examples above). When using the `@task` decorator, these arguments are passed into the decorated function, allowing you to use them within your task. The `@task` decorator generates an operator under the hood, so `op_kwargs` still applies, but it's just used as function arguments.
+- **Dynamic generation:** Don't be afraid to dynamically generate these values. That's where Airflow really shines, allowing for data-driven workflows. Use previous task return values or environment variables to construct parameters as needed.
+- **Configuration objects:** Utilize dictionaries for better organization, particularly when passing multiple arguments. This improves readability and allows easy adjustments in parameter values.
+- **Type consistency:** Ensure that data types of the passed parameters match what the underlying operator or function expects. Type mismatches can lead to unexpected errors.
+- **Avoid direct operator creation (generally):** While you _can_ create and use operators directly inside TaskFlow code, I’d typically avoid it if possible, leaning heavily on `@task` decorated functions. This keeps the code cleaner and easier to maintain. Direct operator instantiation is generally necessary for custom operators.
 
 **Further Learning:**
 

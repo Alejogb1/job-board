@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-improve-the-understandability-of-predictions-from-a-python-keras-cnn-model"
 ---
 
-Alright, let's tackle this. I remember vividly a project a few years back, where we were building a CNN for a medical imaging classification task. The model’s performance was, frankly, excellent in terms of raw accuracy. But when it came time to explain *why* it was classifying a particular image as cancerous or benign, we were essentially looking at a black box. That’s a common situation with deep learning, and improving the understandability of predictions is vital for trust and real-world deployment. So, how do you break through the opacity of a Keras CNN? Here’s how I approach it, focusing on techniques that have consistently proven useful.
+, let's tackle this. I remember vividly a project a few years back, where we were building a CNN for a medical imaging classification task. The model’s performance was, frankly, excellent in terms of raw accuracy. But when it came time to explain _why_ it was classifying a particular image as cancerous or benign, we were essentially looking at a black box. That’s a common situation with deep learning, and improving the understandability of predictions is vital for trust and real-world deployment. So, how do you break through the opacity of a Keras CNN? Here’s how I approach it, focusing on techniques that have consistently proven useful.
 
-First, understand that 'understandability' isn't a monolithic goal. We need to differentiate between techniques for *visualizing* what the network focuses on and methods that allow us to *interpret* the network’s decision-making process. They are distinct and complementary.
+First, understand that 'understandability' isn't a monolithic goal. We need to differentiate between techniques for _visualizing_ what the network focuses on and methods that allow us to _interpret_ the network’s decision-making process. They are distinct and complementary.
 
-For visualization, we often start with *activation maps*. This process involves extracting the feature maps from intermediate layers of the CNN after passing an input image. These maps show which parts of the input activated specific filters and, consequently, reveal where the network 'looks' for important features. In Keras, this is relatively straightforward. I frequently do this:
+For visualization, we often start with _activation maps_. This process involves extracting the feature maps from intermediate layers of the CNN after passing an input image. These maps show which parts of the input activated specific filters and, consequently, reveal where the network 'looks' for important features. In Keras, this is relatively straightforward. I frequently do this:
 
 ```python
 import tensorflow as tf
@@ -50,7 +50,7 @@ def visualize_activation_maps(model, input_image, layer_name):
 
 Here, the crucial bit is the `keras.Model` construction which specifically targets the output of a chosen intermediate layer. This lets you inspect, for instance, what features a convolutional layer is detecting. I recommend exploring several layers, starting from the initial ones and moving deeper. Initial layers often pick up low-level features like edges, whereas deeper layers recognize more complex patterns. Don't just look at individual activation maps, examine how they correlate with the original input.
 
-Next, we move to Gradient-based methods, which build upon the idea of backpropagation. One popular technique I often use is *Gradient-weighted Class Activation Mapping (Grad-CAM)*. Grad-CAM uses the gradients of the target class with respect to the final convolutional layer's feature maps to determine regions that are influential for the prediction. This provides a heatmap overlaid on the input image indicating where the model is looking to make a decision. Implementation requires accessing gradients, which Keras does allow. Here’s an example showcasing a barebones Grad-CAM:
+Next, we move to Gradient-based methods, which build upon the idea of backpropagation. One popular technique I often use is _Gradient-weighted Class Activation Mapping (Grad-CAM)_. Grad-CAM uses the gradients of the target class with respect to the final convolutional layer's feature maps to determine regions that are influential for the prediction. This provides a heatmap overlaid on the input image indicating where the model is looking to make a decision. Implementation requires accessing gradients, which Keras does allow. Here’s an example showcasing a barebones Grad-CAM:
 
 ```python
 import tensorflow as tf
@@ -101,9 +101,10 @@ def compute_gradcam(model, input_image, layer_name, class_index):
 # Example usage (assuming you have model, image, layer, and class):
 # compute_gradcam(my_model, test_image, 'last_conv_layer_name', class_to_explain)
 ```
+
 Grad-CAM is not perfect. The resolution of the heatmap is often limited to the resolution of the last convolutional feature map, leading to some blurriness. However, it offers a good understanding of what regions the network is utilizing for its classification. Be judicious in the selection of the `layer_name`; generally, you would select the last convolutional layer before the fully connected layer.
 
-Finally, it's not all about visualization. *Perturbation analysis* is another powerful tool. This approach systematically alters the input image, such as by occluding parts of it, and observes how these perturbations affect the model's predictions. This helps you identify what areas are most salient for a given prediction. Here's an example of a basic occlusion sensitivity analysis:
+Finally, it's not all about visualization. _Perturbation analysis_ is another powerful tool. This approach systematically alters the input image, such as by occluding parts of it, and observes how these perturbations affect the model's predictions. This helps you identify what areas are most salient for a given prediction. Here's an example of a basic occlusion sensitivity analysis:
 
 ```python
 import tensorflow as tf

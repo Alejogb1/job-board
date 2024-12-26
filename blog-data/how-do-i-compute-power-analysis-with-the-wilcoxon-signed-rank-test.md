@@ -4,13 +4,13 @@ date: "2024-12-16"
 id: "how-do-i-compute-power-analysis-with-the-wilcoxon-signed-rank-test"
 ---
 
-Alright, let's tackle this. Power analysis, especially with non-parametric tests like the Wilcoxon signed-rank, can seem a bit labyrinthine at first, but it's absolutely crucial for robust research design. I've certainly seen projects go sideways because this step was skipped or mishandled. I recall one particular project involving sensor data from wearable devices; a perfectly valid hypothesis, but the study was drastically underpowered and resulted in a lot of wasted effort. So, let's break down how to approach this for the Wilcoxon test, keeping in mind it isn’t quite as straightforward as with t-tests.
+, let's tackle this. Power analysis, especially with non-parametric tests like the Wilcoxon signed-rank, can seem a bit labyrinthine at first, but it's absolutely crucial for robust research design. I've certainly seen projects go sideways because this step was skipped or mishandled. I recall one particular project involving sensor data from wearable devices; a perfectly valid hypothesis, but the study was drastically underpowered and resulted in a lot of wasted effort. So, let's break down how to approach this for the Wilcoxon test, keeping in mind it isn’t quite as straightforward as with t-tests.
 
-The core idea behind power analysis is to determine the sample size needed to detect a statistically significant effect with a specified probability (the power), given a particular effect size, alpha level, and the characteristics of your test. With the Wilcoxon signed-rank test, we’re dealing with ranks, not means and standard deviations, so the calculations become a bit less direct. A vital first consideration here is that the Wilcoxon test does not directly lend itself to classic power calculations that use effect sizes in terms of mean differences. Instead, we will deal with *pseudo-effect sizes* that capture the degree of shift between two distributions.
+The core idea behind power analysis is to determine the sample size needed to detect a statistically significant effect with a specified probability (the power), given a particular effect size, alpha level, and the characteristics of your test. With the Wilcoxon signed-rank test, we’re dealing with ranks, not means and standard deviations, so the calculations become a bit less direct. A vital first consideration here is that the Wilcoxon test does not directly lend itself to classic power calculations that use effect sizes in terms of mean differences. Instead, we will deal with _pseudo-effect sizes_ that capture the degree of shift between two distributions.
 
 The first thing to acknowledge is that closed-form solutions for power analysis of the Wilcoxon test are rare. This is where simulation studies become your best friend. I have utilized them many times in the past and will again here. The basic idea is to simulate data according to the null and alternative hypotheses, then run the Wilcoxon test and see how frequently the alternative hypothesis is correctly recognized at a given sample size and effect size. The main challenge lies in how you define the effect size, since the Wilcoxon test is fundamentally about rank differences rather than raw differences.
 
-We can use a probability shift parameter, sometimes denoted as *p*, to characterize the effect size. In the null hypothesis, we assume that differences between paired observations are symmetrically distributed around zero, resulting in *p* = 0.5. The probability shift *p* then represents the probability that the median of differences is greater than 0 when the null hypothesis of no difference is false. A value of *p* greater than 0.5 indicates the alternative hypothesis is true, and its magnitude represents the strength of this effect. For example, *p* = 0.7 indicates that the probability of a positive difference is much larger than the probability of a negative difference.
+We can use a probability shift parameter, sometimes denoted as _p_, to characterize the effect size. In the null hypothesis, we assume that differences between paired observations are symmetrically distributed around zero, resulting in _p_ = 0.5. The probability shift _p_ then represents the probability that the median of differences is greater than 0 when the null hypothesis of no difference is false. A value of _p_ greater than 0.5 indicates the alternative hypothesis is true, and its magnitude represents the strength of this effect. For example, _p_ = 0.7 indicates that the probability of a positive difference is much larger than the probability of a negative difference.
 
 Here's how a typical simulation setup might look using Python. We'll use scipy and numpy to generate random samples and carry out the statistical tests.
 
@@ -113,7 +113,7 @@ plt.title('Power curve for wilcoxon test at shift = 0.5')
 plt.show()
 ```
 
-Here, we simulate paired data from two normal distributions, one with a mean of zero and another with a shifted mean. This simulates an effect and can then be used to generate a power curve. Remember to change the `alternative` parameter to 'less' in our function because we simulate a shift to the *second* group.
+Here, we simulate paired data from two normal distributions, one with a mean of zero and another with a shifted mean. This simulates an effect and can then be used to generate a power curve. Remember to change the `alternative` parameter to 'less' in our function because we simulate a shift to the _second_ group.
 
 A third approach could be to use a simplified method based on approximating the distribution of the Wilcoxon statistic under the alternative. This approximation is best explained in Lehmann's “Nonparametrics: Statistical Methods Based on Ranks”. In this approach, we first estimate the median of the differences and then use it to approximate the distribution of ranks, allowing us to compute the power. The following example is illustrative, but for very accurate calculations, one needs to dive deeper into the distribution theory:
 
@@ -136,7 +136,7 @@ def approx_wilcoxon_power(n, median_diff, alpha=0.05, two_sided=True):
 
     # Standard deviation of the Wilcoxon statistic under null
     sigma = np.sqrt(n*(n+1)*(2*n+1)/6)
-    
+
     # Median of the Wilcoxon statistic under the alternative hypothesis
     mean_diff = n * (n + 1) * (median_diff > 0) /2
 
@@ -158,6 +158,7 @@ for n in sample_sizes:
     powers.append(power_est)
     print(f"Sample size: {n}, Approx. Power: {power_est}")
 ```
+
 Here, we have a closed form expression to approximate the power based on median difference, without direct simulation. The function is a useful approximation for quick power calculations. Again, be aware of the assumptions of this function when used.
 
 These examples should give you a solid base to begin. Key resources for understanding the underpinnings include “Nonparametric Statistical Inference” by Gibbons and Chakraborti, which provides comprehensive coverage of non-parametric methods. Lehmann’s “Nonparametrics” is another extremely authoritative resource. They detail the underlying theory that can inform the parameters you need for your simulations or approximation.

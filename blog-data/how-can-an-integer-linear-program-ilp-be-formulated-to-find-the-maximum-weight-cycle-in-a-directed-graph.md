@@ -4,31 +4,31 @@ date: "2024-12-23"
 id: "how-can-an-integer-linear-program-ilp-be-formulated-to-find-the-maximum-weight-cycle-in-a-directed-graph"
 ---
 
-Alright, let’s tackle this. I've seen this problem pop up a few times, most notably when I was working on network optimization for a distributed system a few years back. We needed to find the most 'valuable' path that looped back on itself, where 'value' was represented by link weights. It’s not a trivial problem, and a solid formulation using integer linear programming (ILP) is crucial for finding an optimal solution, especially when heuristics don't cut it.
+, let’s tackle this. I've seen this problem pop up a few times, most notably when I was working on network optimization for a distributed system a few years back. We needed to find the most 'valuable' path that looped back on itself, where 'value' was represented by link weights. It’s not a trivial problem, and a solid formulation using integer linear programming (ILP) is crucial for finding an optimal solution, especially when heuristics don't cut it.
 
 The core challenge with formulating a maximum-weight cycle problem as an ILP lies in capturing the 'cycle' property itself. We can’t just look for any random path; we need a closed loop. Let's break down how we can express this mathematically and then translate it into an ILP.
 
-First, let's represent our directed graph *g* as *g = (v, e)*, where *v* is the set of vertices (nodes) and *e* is the set of directed edges (arcs). Each edge *e<sub>ij</sub>* from vertex *i* to vertex *j* has an associated weight *w<sub>ij</sub>*. Our decision variable, fundamental to any ILP formulation, will be *x<sub>ij</sub>*, which is a binary variable indicating whether an edge *e<sub>ij</sub>* is part of the cycle ( *x<sub>ij</sub>* = 1) or not (*x<sub>ij</sub>* = 0).
+First, let's represent our directed graph _g_ as _g = (v, e)_, where _v_ is the set of vertices (nodes) and _e_ is the set of directed edges (arcs). Each edge _e<sub>ij</sub>_ from vertex _i_ to vertex _j_ has an associated weight _w<sub>ij</sub>_. Our decision variable, fundamental to any ILP formulation, will be _x<sub>ij</sub>_, which is a binary variable indicating whether an edge _e<sub>ij</sub>_ is part of the cycle ( _x<sub>ij</sub>_ = 1) or not (_x<sub>ij</sub>_ = 0).
 
 Our objective function is straightforward: we want to maximize the total weight of the edges in the cycle. This can be expressed as:
 
-Maximize:  ∑<sub>(i,j)∈e</sub> *w<sub>ij</sub>* *x<sub>ij</sub>*
+Maximize: ∑<sub>(i,j)∈e</sub> _w<sub>ij</sub>_ _x<sub>ij</sub>_
 
 Now, for the constraints, things get a bit more interesting. We need to enforce that we have a valid cycle. Here are the critical constraints:
 
-1.  **Flow Conservation:** For every vertex *i*, if there's an incoming edge that's part of the cycle, there must also be an outgoing edge from that vertex that's part of the cycle. Mathematically, this means:
+1.  **Flow Conservation:** For every vertex _i_, if there's an incoming edge that's part of the cycle, there must also be an outgoing edge from that vertex that's part of the cycle. Mathematically, this means:
 
-    ∑<sub>j|(j,i)∈e</sub> *x<sub>ji</sub>* = ∑<sub>k|(i,k)∈e</sub> *x<sub>ik</sub>*   for all vertices *i* ∈ *v*
+    ∑<sub>j|(j,i)∈e</sub> _x<sub>ji</sub>_ = ∑<sub>k|(i,k)∈e</sub> _x<sub>ik</sub>_ for all vertices _i_ ∈ _v_
 
     This ensures that if an edge enters a vertex, another one must leave, maintaining the connectivity of the cycle. This is the fundamental condition for a valid cycle; you can think of it as conservation of flow; if you come in, you need to go out.
 
-2.  **Cycle Presence:** To avoid the trivial solution of all x<sub>ij</sub> being 0, we should ensure at least one edge is selected. It's also good to ensure a *non-trivial cycle* is present (in cases where single-node loops exist) by choosing to enforce that, for example, at least *k* edges should be selected. In general, however, simply enforcing that at least one edge is included is sufficient to create a valid solution if one exists.
+2.  **Cycle Presence:** To avoid the trivial solution of all x<sub>ij</sub> being 0, we should ensure at least one edge is selected. It's also good to ensure a _non-trivial cycle_ is present (in cases where single-node loops exist) by choosing to enforce that, for example, at least _k_ edges should be selected. In general, however, simply enforcing that at least one edge is included is sufficient to create a valid solution if one exists.
 
-    ∑<sub>(i,j)∈e</sub> *x<sub>ij</sub>* ≥ 1
+    ∑<sub>(i,j)∈e</sub> _x<sub>ij</sub>_ ≥ 1
 
-3.  **Binary Constraint:** We need to enforce that *x<sub>ij</sub>* are binary (0 or 1) integer variables, which directly reflects whether the edge is included in the cycle or not:
+3.  **Binary Constraint:** We need to enforce that _x<sub>ij</sub>_ are binary (0 or 1) integer variables, which directly reflects whether the edge is included in the cycle or not:
 
-    *x<sub>ij</sub>* ∈ {0, 1}   for all edges (i, j) ∈ *e*
+    _x<sub>ij</sub>_ ∈ {0, 1} for all edges (i, j) ∈ _e_
 
 Now, let's translate this into some working Python code using a library such as `PuLP` to demonstrate this setup.
 
@@ -116,8 +116,8 @@ This approach is reasonably efficient for moderately sized graphs. However, as t
 
 For those wanting to explore this topic further, I recommend:
 
-*   **"Integer Programming" by Laurence A. Wolsey:** This is a definitive text that covers both the theory and practice of integer programming. It's a dense but comprehensive resource.
-*   **"Combinatorial Optimization: Algorithms and Complexity" by Christos H. Papadimitriou and Kenneth Steiglitz:** While not exclusively focused on ILP, it provides a solid foundation in combinatorial optimization problems, which is essential for understanding the theoretical underpinnings of our problem.
-*   **"Linear Programming" by Vasek Chvatal:** Though primarily focusing on linear programming, it covers topics that are pertinent to ILP, offering strong basics, especially in the simplex algorithm and duality.
+- **"Integer Programming" by Laurence A. Wolsey:** This is a definitive text that covers both the theory and practice of integer programming. It's a dense but comprehensive resource.
+- **"Combinatorial Optimization: Algorithms and Complexity" by Christos H. Papadimitriou and Kenneth Steiglitz:** While not exclusively focused on ILP, it provides a solid foundation in combinatorial optimization problems, which is essential for understanding the theoretical underpinnings of our problem.
+- **"Linear Programming" by Vasek Chvatal:** Though primarily focusing on linear programming, it covers topics that are pertinent to ILP, offering strong basics, especially in the simplex algorithm and duality.
 
 While specific books on network optimization might offer direct insights on finding cycles in graphs, an understanding of the fundamental aspects of ILP is pivotal in approaching these types of problems. In my experience, a strong theoretical basis coupled with a practical implementation approach has proven to be a successful method for solving complex problems efficiently.

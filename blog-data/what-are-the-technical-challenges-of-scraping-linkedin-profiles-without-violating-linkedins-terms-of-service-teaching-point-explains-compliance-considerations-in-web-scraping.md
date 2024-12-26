@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-are-the-technical-challenges-of-scraping-linkedin-profiles-without-violating-linkedins-terms-of-service-teaching-point-explains-compliance-considerations-in-web-scraping"
 ---
 
-Alright let's dive into the LinkedIn scraping situation it's like trying to sneak into a really well-guarded party right we all know LinkedIn’s got tons of useful data for all sorts of things but they also have these rules which are kinda like the bouncers at the door and you really don't want to get thrown out so the technical side of it is a bunch of things all playing together
+let's dive into the LinkedIn scraping situation it's like trying to sneak into a really well-guarded party right we all know LinkedIn’s got tons of useful data for all sorts of things but they also have these rules which are kinda like the bouncers at the door and you really don't want to get thrown out so the technical side of it is a bunch of things all playing together
 
 First off LinkedIn is really good at detecting bots they've got these sophisticated algorithms that look for patterns in your requests so if you're blasting their servers with a bunch of requests in a short time it's a dead giveaway that you're not a real person browsing the site just like you wouldn't repeatedly slam a door to check it works they can spot an automated system super quick so a huge challenge is mimicking human-like behavior you have to slow things down add random pauses between requests like a real user would which makes the process slower and more tedious no more just whacking it with requests its about finesse
 
@@ -44,18 +44,21 @@ This snippet is a super basic example but it highlights what you have to do you 
 Here's a JavaScript example using `puppeteer` to mimic a browser to handle dynamic content:
 
 ```javascript
-const puppeteer = require('puppeteer');
+const puppeteer = require("puppeteer");
 
 (async () => {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    await page.goto('https://www.linkedin.com/in/some-profile-url');
-    await page.waitForSelector('.text-heading-xlarge');
-    const name = await page.$eval('.text-heading-xlarge', el => el.textContent.trim());
-    console.log(`Profile Name: ${name}`);
-    await browser.close();
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto("https://www.linkedin.com/in/some-profile-url");
+  await page.waitForSelector(".text-heading-xlarge");
+  const name = await page.$eval(".text-heading-xlarge", (el) =>
+    el.textContent.trim()
+  );
+  console.log(`Profile Name: ${name}`);
+  await browser.close();
 })();
 ```
+
 This snippet shows that you can use headless browser to handle those pesky dynamically loaded parts of pages which helps make scraping modern websites way easier but it comes with overhead
 
 And here's a basic example in Python of handling a `requests.exceptions.ConnectionError`
@@ -89,6 +92,7 @@ if page_data:
 else:
     print("failed to get data after retries")
 ```
+
 This snippet demonstrates the importance of handling errors in a robust way particularly for things like networking issues
 
 So to understand the nuances of web scraping more deeply I would point you to resources like "Web Scraping with Python" by Ryan Mitchell which offers really good practical advice on building robust scrapers while the “Automate the Boring Stuff with Python” book by Al Sweigart also covers some basic web scraping techniques and explains things in a simple manner and then for more rigorous discussion there is the scholarly paper on "Web Scraping for Research: An Overview of Methods and Best Practices" which covers methods and how to make your scraping responsible and ethical

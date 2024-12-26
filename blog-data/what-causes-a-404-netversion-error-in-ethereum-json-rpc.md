@@ -4,21 +4,21 @@ date: "2024-12-23"
 id: "what-causes-a-404-netversion-error-in-ethereum-json-rpc"
 ---
 
-Alright, let’s delve into this. Encountering a 404 net_version error in an ethereum json rpc call can be a bit perplexing, especially when you're expecting everything to just…work. I've spent my fair share of time debugging these, and they're rarely as straightforward as they seem. The "404" part might lead you to believe it's a typical 'not found' issue like a broken web link, but in the context of an ethereum node, it’s more nuanced. At its core, the error means the rpc endpoint you’re trying to reach either doesn't exist, or, and this is crucial, it's not enabled within the specific ethereum node’s configuration.
+, let’s delve into this. Encountering a 404 net_version error in an ethereum json rpc call can be a bit perplexing, especially when you're expecting everything to just…work. I've spent my fair share of time debugging these, and they're rarely as straightforward as they seem. The "404" part might lead you to believe it's a typical 'not found' issue like a broken web link, but in the context of an ethereum node, it’s more nuanced. At its core, the error means the rpc endpoint you’re trying to reach either doesn't exist, or, and this is crucial, it's not enabled within the specific ethereum node’s configuration.
 
-Let's break this down. The `net_version` rpc call is designed to return the network ID of the ethereum node you're connecting to. For example, the mainnet has a network id of 1, the ropsten testnet has 3, and goerli has 5. If you query an endpoint that either doesn't implement this call, or, as often happens, has it disabled, you'll get that infuriating 404. It isn't about the data *itself* not existing, but rather the specific rpc method not being accessible on the target node.
+Let's break this down. The `net_version` rpc call is designed to return the network ID of the ethereum node you're connecting to. For example, the mainnet has a network id of 1, the ropsten testnet has 3, and goerli has 5. If you query an endpoint that either doesn't implement this call, or, as often happens, has it disabled, you'll get that infuriating 404. It isn't about the data _itself_ not existing, but rather the specific rpc method not being accessible on the target node.
 
 Now, consider a few likely scenarios I’ve faced in the past. Firstly, it could be a configuration oversight. Back in my early days with geth, I remember deploying a local development node. I'd set it up with minimal flags, focusing mainly on the core functionality. However, by default, several rpc methods are not exposed over the http or websocket interface. You have to explicitly enable them. If `net_version` isn't explicitly whitelisted, you will face this error, plain and simple. This is a security measure; you wouldn't want every rpc method exposed to the entire internet, would you?
 
 Another situation involves using older or outdated node software. Some older client implementations might have inconsistencies in their rpc implementations. This doesn't often happen with the major clients like geth or parity/openethereum, but if you are dealing with lesser known clients or running very old versions, this is a distinct possibility. I've had a particularly memorable incident with a custom private blockchain where the rpc spec was not entirely aligned with established standards.
 
-The third likely culprit, and this is often the trickiest to debug, is a misconfiguration at the network level. Sometimes it appears as though everything should be working locally, but the node is actually blocked or has a firewall rule that prevents external access to this specific endpoint. It is not enough for your node to be working correctly; the client attempting to connect to it also needs to be able to successfully connect *and* have access to the exposed interface.
+The third likely culprit, and this is often the trickiest to debug, is a misconfiguration at the network level. Sometimes it appears as though everything should be working locally, but the node is actually blocked or has a firewall rule that prevents external access to this specific endpoint. It is not enough for your node to be working correctly; the client attempting to connect to it also needs to be able to successfully connect _and_ have access to the exposed interface.
 
-Okay, let’s make this concrete. Here are three code examples to show these points in action, keeping it simple so we can focus on the rpc call itself.
+, let’s make this concrete. Here are three code examples to show these points in action, keeping it simple so we can focus on the rpc call itself.
 
 **Example 1: Correct JSON RPC Call (Assuming the endpoint is properly configured)**
 
-This first example shows what a correct call *would* look like, and how the response should appear, assuming the target node has the method enabled. This is using python with the `requests` library.
+This first example shows what a correct call _would_ look like, and how the response should appear, assuming the target node has the method enabled. This is using python with the `requests` library.
 
 ```python
 import requests
@@ -50,9 +50,9 @@ A successful response would look something like:
 
 ```json
 {
-    "jsonrpc": "2.0",
-    "id": 1,
-    "result": "1"
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": "1"
 }
 ```
 

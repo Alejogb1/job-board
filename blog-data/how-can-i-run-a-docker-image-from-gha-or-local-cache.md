@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-run-a-docker-image-from-gha-or-local-cache"
 ---
 
-Alright, let's tackle this one. I've been through this dance with docker images and GitHub Actions (GHA) countless times, and optimizing the process is critical, especially when dealing with large projects. The issue of pulling images repeatedly, even when they haven’t changed, can slow down your pipelines dramatically. So, let’s break down how to leverage caching, both locally and within GHA, to minimize those redundant pulls.
+, let's tackle this one. I've been through this dance with docker images and GitHub Actions (GHA) countless times, and optimizing the process is critical, especially when dealing with large projects. The issue of pulling images repeatedly, even when they haven’t changed, can slow down your pipelines dramatically. So, let’s break down how to leverage caching, both locally and within GHA, to minimize those redundant pulls.
 
 The core concept here revolves around understanding how docker’s layer architecture works and how both your local docker daemon and GHA runners handle caching. Docker images aren’t monolithic entities; they are composed of layered filesystems. Each instruction in your dockerfile typically generates a new layer. This layering allows docker to only download the layers that have changed since the last build. Similarly, GHA runners can cache these layers to avoid pulling the same unchanged image multiple times in a workflow.
 
@@ -21,7 +21,7 @@ RUN pip3 install -r /app/requirements.txt
 CMD ["python3", "/app/main.py"]
 ```
 
-In this scenario, if you change any file in your `/app` folder, the copy instruction changes, and then every instruction *after* the copy becomes invalidated – meaning the `apt-get`, the `pip3 install`, and everything else will have to run again from scratch!
+In this scenario, if you change any file in your `/app` folder, the copy instruction changes, and then every instruction _after_ the copy becomes invalidated – meaning the `apt-get`, the `pip3 install`, and everything else will have to run again from scratch!
 
 The key to preventing this is to place the least-changing instructions first, and put the most frequently-changing code last. A better approach would be:
 
@@ -77,7 +77,6 @@ jobs:
           tags: your-dockerhub-username/your-image-name:${{ github.sha }}
           cache-from: type=gha,scope=${{ github.workflow }}
           cache-to: type=gha,scope=${{ github.workflow }}
-
 ```
 
 In this workflow, the `docker/build-push-action` does the heavy lifting. Note the `cache-from` and `cache-to` attributes. By specifying `type=gha`, you are telling buildkit to use GHA's built-in caching backend and therefore, it stores built layers and image manifests associated with the specific workflow. This ensures that successive workflow runs on the same branch will skip rebuilding unchanged layers of your docker image. The scope, `${{ github.workflow }}`, creates a cache entry that is specific to the particular workflow definition, meaning that other workflows won't interfere with each other's cache. Also, by using the git sha as a tag, we have a unique identifier for each build which is helpful for version control.
@@ -103,8 +102,8 @@ jobs:
         uses: docker/setup-buildx-action@v3
         with:
           driver-opts: |
-              image=moby/buildkit:master
-              network=host #optional, if needed
+            image=moby/buildkit:master
+            network=host #optional, if needed
 
       - name: Login to Docker Hub (Optional)
         uses: docker/login-action@v2

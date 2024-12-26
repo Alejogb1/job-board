@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-knn-be-optimized-through-grid-search"
 ---
 
-Okay, let's tackle this one. I’ve spent a good chunk of my career dealing with the practicalities of machine learning models, and knn optimization via grid search is certainly a topic that's crossed my desk more than a few times. It's not just about getting the model to work; it's about ensuring it performs optimally, and grid search, while straightforward, can benefit from careful planning.
+, let's tackle this one. I’ve spent a good chunk of my career dealing with the practicalities of machine learning models, and knn optimization via grid search is certainly a topic that's crossed my desk more than a few times. It's not just about getting the model to work; it's about ensuring it performs optimally, and grid search, while straightforward, can benefit from careful planning.
 
 First off, let’s establish what we’re working with. K-nearest neighbors (knn) is a non-parametric algorithm, meaning it doesn’t make assumptions about the underlying data distribution. That’s fantastic for datasets where those assumptions might be invalid. However, its performance critically depends on the choice of a few key hyperparameters: primarily, the number of neighbors (k) and the distance metric used to define “nearness.” Grid search is a brute-force method, yes, but it's incredibly effective for systematically exploring the hyperparameter space. This, by the way, is one area where i’ve had many a late night, especially when dealing with very high dimensional datasets.
 
@@ -42,7 +42,7 @@ for k in k_values:
 print(f"Best k: {best_k}, Accuracy: {best_accuracy}")
 ```
 
-The first code snippet shows the most basic approach to grid searching. It trains and evaluates the model on a single train-test split. However, as I mentioned before, this is not robust, and your final model's efficacy can swing dramatically based on how your initial data is randomly divided. We would never consider this in any real-world application. It’s purely for demonstrating the core idea of iterating through possible *k* values.
+The first code snippet shows the most basic approach to grid searching. It trains and evaluates the model on a single train-test split. However, as I mentioned before, this is not robust, and your final model's efficacy can swing dramatically based on how your initial data is randomly divided. We would never consider this in any real-world application. It’s purely for demonstrating the core idea of iterating through possible _k_ values.
 
 Now, let's elevate this with cross-validation, which is crucial for obtaining a reliable estimate of model performance.
 
@@ -67,9 +67,9 @@ grid.fit(x_train, y_train)
 print(f"Best parameters: {grid.best_params_}, Best score: {grid.best_score_}")
 ```
 
-In this example, `gridSearchCV` handles all the looping and cross-validation, which is a significant improvement. The output tells us not only the best *k* value but now also the best weighting method and best distance metric by exploring the complete search space. This is more aligned with a practical approach. When i'm dealing with an actual dataset, i usually start here. However, with large datasets, grid search can take a lot of time.
+In this example, `gridSearchCV` handles all the looping and cross-validation, which is a significant improvement. The output tells us not only the best _k_ value but now also the best weighting method and best distance metric by exploring the complete search space. This is more aligned with a practical approach. When i'm dealing with an actual dataset, i usually start here. However, with large datasets, grid search can take a lot of time.
 
-So, what can we do to speed up this process? Well, we can use techniques like *randomized search*, where instead of trying all possible combinations of parameters, we sample randomly from the search space. This tends to be much faster. For knn, this may not be as advantageous as it is with other algorithms that have more hyperparameters to tune but, we can still do it.
+So, what can we do to speed up this process? Well, we can use techniques like _randomized search_, where instead of trying all possible combinations of parameters, we sample randomly from the search space. This tends to be much faster. For knn, this may not be as advantageous as it is with other algorithms that have more hyperparameters to tune but, we can still do it.
 
 ```python
 # Example 3: Randomized Search with Cross-Validation (can be faster for large search spaces)

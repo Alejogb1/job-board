@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-generate-extended-text-in-openai-without-a-stop-sequence"
 ---
 
-Okay, so, let's talk about generating longer text with OpenAI models when you *don’t* want a stop sequence to prematurely halt the output. I've been down this road more than a few times, particularly when crafting automated documentation generators and complex data narratives. The need to produce substantial chunks of text, without being abruptly cut off, while also maintaining coherence and quality, is a recurring challenge.
+, so, let's talk about generating longer text with OpenAI models when you _don’t_ want a stop sequence to prematurely halt the output. I've been down this road more than a few times, particularly when crafting automated documentation generators and complex data narratives. The need to produce substantial chunks of text, without being abruptly cut off, while also maintaining coherence and quality, is a recurring challenge.
 
 The core issue stems from how language models like those in OpenAI's suite are trained. They predict the next token in a sequence, based on the preceding context and training data. When provided with a stop sequence, the model recognizes this as an intended termination point. Without it, the model will naturally try to maintain the text's “flow,” but there's no inherent mechanism, short of length constraints, to tell it to just…stop on its own. This often results in the model hallucinating further text, possibly going off-topic, repeating itself, or exhibiting other less desirable behaviors.
 
@@ -14,7 +14,7 @@ Firstly, let's discuss prompt crafting. The more context and instruction embedde
 
 "Compose a detailed historical overview of computing technology, specifically covering the period from the early 20th century to the development of microprocessors. The text should be approximately 300 to 400 words and focus on key milestones such as the invention of the transistor and the integrated circuit. It should follow a logical progression and provide enough context to be understandable by a non-technical audience but still maintain some technical detail. Conclude with a summary of the impact these advancements had on the world."
 
-This explicit instruction sets the stage, conveying not only *what* to write, but *how* and *to what extent*. Providing the length parameters gives the model something to strive towards internally. Note that you aren't preventing it from overrunning; instead, you're strongly guiding its output.
+This explicit instruction sets the stage, conveying not only _what_ to write, but _how_ and _to what extent_. Providing the length parameters gives the model something to strive towards internally. Note that you aren't preventing it from overrunning; instead, you're strongly guiding its output.
 
 Secondly, sampling parameters play a crucial role. The `max_tokens` parameter in the OpenAI API is your primary tool here, setting an upper limit on token count. However, merely setting a large value doesn't guarantee your text will fill it effectively. It might still cut off if the model does not see a natural stopping point. You will usually want to pair the `max_tokens` parameter with appropriate temperature and top_p values.
 

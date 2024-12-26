@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-identify-ecr-repositories-without-lifecycle-policies"
 ---
 
-Alright, let's tackle this. Identifying ecr repositories that are lacking lifecycle policies is something I've had to deal with more times than I'd like to recall. It's a common oversight, especially as teams scale and deployments become more complex, and it often leads to bloated storage costs and unnecessary management overhead. I remember one project in particular, a large-scale microservices initiative, where we inadvertently amassed a huge number of untagged images; it was a cleanup nightmare that could have been easily avoided with proper lifecycle management from the start.
+, let's tackle this. Identifying ecr repositories that are lacking lifecycle policies is something I've had to deal with more times than I'd like to recall. It's a common oversight, especially as teams scale and deployments become more complex, and it often leads to bloated storage costs and unnecessary management overhead. I remember one project in particular, a large-scale microservices initiative, where we inadvertently amassed a huge number of untagged images; it was a cleanup nightmare that could have been easily avoided with proper lifecycle management from the start.
 
 From a technical standpoint, there isn’t a single direct command to flag repositories without a policy. Instead, we need to systematically interrogate each repository to determine its policy status. The core approach involves two key steps: first, enumerate all of the ecr repositories within the specified region and then, for each repository, check if a lifecycle policy is attached. If one isn’t, we know that repository is lacking the necessary governance.
 
@@ -94,10 +94,10 @@ aws ecr describe-repositories --query 'repositories[?lifecyclePolicyStatus==`NOT
 Here's the breakdown:
 
 1.  **`aws ecr describe-repositories`**: This command retrieves the list of repositories within your configured aws region.
-2.  **`--query 'repositories[?lifecyclePolicyStatus==`NOT_SET`].repositoryUri'`**: This uses the `query` option to filter the output.  It uses a JMESPath expression:
-    *   `repositories`:  Specifies that we are operating on the `repositories` section of the output.
-    *   `[?lifecyclePolicyStatus==`NOT_SET`]` : Filters the results to include only those repositories where the lifecycle policy status is “NOT_SET”.  Note the need for backticks around the string value.
-    *   `.repositoryUri` : selects just the repository uri from the matching elements.
+2.  **`--query 'repositories[?lifecyclePolicyStatus==`NOT_SET`].repositoryUri'`**: This uses the `query` option to filter the output. It uses a JMESPath expression:
+    - `repositories`: Specifies that we are operating on the `repositories` section of the output.
+    - `[?lifecyclePolicyStatus==`NOT_SET`]` : Filters the results to include only those repositories where the lifecycle policy status is “NOT_SET”. Note the need for backticks around the string value.
+    - `.repositoryUri` : selects just the repository uri from the matching elements.
 3.  **`--output text`**: Forces the output to be simple text, rather than the full json output.
 
 This concise command provides an instant view of the repositories that need your attention, making it suitable for quick checks.
@@ -106,9 +106,9 @@ This concise command provides an instant view of the repositories that need your
 
 For deeper understanding and practical knowledge, I recommend several key resources:
 
-*   **The AWS Documentation for ECR:** The official documentation is always the best place to start. Familiarize yourself with the `describe-repositories` and `get-lifecycle-policy` commands, as well as the documentation about the lifecycle policies themselves.
-*   **"Effective DevOps" by Jennifer Davis and Ryn Daniels:** While not specific to ECR, this book provides a strong understanding of operational excellence practices that would highlight the importance of lifecycle management.
-*   **"Cloud Native Patterns" by Cornelia Davis:** This book delves into cloud native architectural patterns, where automation and policy-driven operations are foundational concepts, which naturally connect to ecr management.
-*   **"The Pragmatic Programmer" by Andrew Hunt and David Thomas:** This classic book emphasizes the importance of automation and well-defined processes in software development, which is critical for avoiding these types of oversights.
+- **The AWS Documentation for ECR:** The official documentation is always the best place to start. Familiarize yourself with the `describe-repositories` and `get-lifecycle-policy` commands, as well as the documentation about the lifecycle policies themselves.
+- **"Effective DevOps" by Jennifer Davis and Ryn Daniels:** While not specific to ECR, this book provides a strong understanding of operational excellence practices that would highlight the importance of lifecycle management.
+- **"Cloud Native Patterns" by Cornelia Davis:** This book delves into cloud native architectural patterns, where automation and policy-driven operations are foundational concepts, which naturally connect to ecr management.
+- **"The Pragmatic Programmer" by Andrew Hunt and David Thomas:** This classic book emphasizes the importance of automation and well-defined processes in software development, which is critical for avoiding these types of oversights.
 
 Implementing automated checks, whether through scripts or integrating into your ci/cd pipelines, is essential. It's far easier to address these issues proactively than to spend time cleaning up after the fact. Remember, consistent enforcement of lifecycle policies isn’t just about cost savings but also about maintaining a clean and organized system. I hope that this detailed overview provides a solid foundation for how you can approach this issue and make your ECR management simpler and more automated.

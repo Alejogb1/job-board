@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "in-ddd-how-should-validation-related-to-entities-in-the-aggregate-root-be-handled"
 ---
 
-Alright, let's tackle this. I remember a particularly frustrating project a few years back, building an inventory management system for a large retailer. We were neck-deep in DDD and, naturally, the question of entity validation within aggregate roots cropped up – it's a classic. And it's crucial to get it right, or your domain logic quickly becomes a tangled mess.
+, let's tackle this. I remember a particularly frustrating project a few years back, building an inventory management system for a large retailer. We were neck-deep in DDD and, naturally, the question of entity validation within aggregate roots cropped up – it's a classic. And it's crucial to get it right, or your domain logic quickly becomes a tangled mess.
 
-The essence of DDD, as I see it after years of implementation, isn't just about drawing boxes and arrows; it's about creating a ubiquitous language and encapsulating business rules within the appropriate boundaries. Aggregate roots, acting as transactional consistency boundaries, are particularly sensitive. Therefore, how you handle validation within them is pivotal. The core principle here is to ensure validity *before* any state changes are persisted. Validation isn't an afterthought; it's a fundamental part of the aggregate's behavior.
+The essence of DDD, as I see it after years of implementation, isn't just about drawing boxes and arrows; it's about creating a ubiquitous language and encapsulating business rules within the appropriate boundaries. Aggregate roots, acting as transactional consistency boundaries, are particularly sensitive. Therefore, how you handle validation within them is pivotal. The core principle here is to ensure validity _before_ any state changes are persisted. Validation isn't an afterthought; it's a fundamental part of the aggregate's behavior.
 
-Firstly, and most importantly, *domain logic belongs within the domain*. This means validation isn’t some external service’s responsibility; it’s an intrinsic capability of your entities and aggregate roots themselves. In my experience, externalizing validation often leads to leaky abstractions and inconsistencies, where the aggregate root’s state is vulnerable to invalid manipulations from outside. We ended up with a debugging nightmare in that inventory project, exactly because we tried, for a brief period, to put validation outside of the entities.
+Firstly, and most importantly, _domain logic belongs within the domain_. This means validation isn’t some external service’s responsibility; it’s an intrinsic capability of your entities and aggregate roots themselves. In my experience, externalizing validation often leads to leaky abstractions and inconsistencies, where the aggregate root’s state is vulnerable to invalid manipulations from outside. We ended up with a debugging nightmare in that inventory project, exactly because we tried, for a brief period, to put validation outside of the entities.
 
 Let’s look at different ways of handling validation, moving from basic to more sophisticated techniques. Let's start with basic in-method validation.
 
@@ -157,6 +157,7 @@ public class EmailAddress
     }
 }
 ```
+
 Here, the `EmailAddress` constructor ensures that only valid emails are created. Whenever the email needs to be updated, a new instance of `EmailAddress` is created which again enforces the validation. This is particularly useful for maintaining consistency throughout the system. A `User` object will always hold an `EmailAddress` that conforms to the expected rules. This approach not only encapsulates validation but also makes it part of the type system, improving type safety.
 
 Now, a few considerations. You'll want to make sure you aren’t throwing too many general exceptions, try to create your own custom exception classes related to specific business rule violations. This allows you to have better error handling and possibly provide better feedback to the client or user.

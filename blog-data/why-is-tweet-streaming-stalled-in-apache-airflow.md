@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-is-tweet-streaming-stalled-in-apache-airflow"
 ---
 
-Alright, let's unpack this tweet streaming issue in Apache Airflow. I've certainly seen my share of stalled pipelines, and the reasons are usually multi-layered rather than a single catastrophic failure. In my experience, the kind of sluggishness you're describing when dealing with high-velocity data like tweets often boils down to a bottleneck somewhere in the system, specifically in how Airflow is interacting with the data stream. The issue isn't always, or even primarily, Airflow itself, though its configuration plays a huge role. It's rarely just about one thing, making it essential to methodically diagnose the issue.
+, let's unpack this tweet streaming issue in Apache Airflow. I've certainly seen my share of stalled pipelines, and the reasons are usually multi-layered rather than a single catastrophic failure. In my experience, the kind of sluggishness you're describing when dealing with high-velocity data like tweets often boils down to a bottleneck somewhere in the system, specifically in how Airflow is interacting with the data stream. The issue isn't always, or even primarily, Airflow itself, though its configuration plays a huge role. It's rarely just about one thing, making it essential to methodically diagnose the issue.
 
-First, consider that Airflow is essentially an orchestrator. It's excellent at scheduling and executing tasks, but it's not designed to be a high-throughput, real-time data processor. Therefore, when handling continuous data streams, especially those as dynamic as Twitter's, the challenge lies in managing data intake, processing, and output efficiently *within the context* of an Airflow dag. This means looking beyond Airflow's immediate settings and examining the underlying components involved.
+First, consider that Airflow is essentially an orchestrator. It's excellent at scheduling and executing tasks, but it's not designed to be a high-throughput, real-time data processor. Therefore, when handling continuous data streams, especially those as dynamic as Twitter's, the challenge lies in managing data intake, processing, and output efficiently _within the context_ of an Airflow dag. This means looking beyond Airflow's immediate settings and examining the underlying components involved.
 
 The first major culprit is often how the data is being pulled from the streaming source – in this case, the Twitter API – and queued for processing by subsequent tasks. If the data ingestion part of your DAG isn't keeping pace with the rate of incoming tweets, the queue gets backed up. Then, your processing tasks end up waiting on data, causing what appears to be a stall. This usually surfaces in the form of slow task execution or queued tasks that never even start. I’ve observed this happening when naive implementations use a basic `for` loop within an Airflow task to read from the API without any sophisticated throttling or rate limiting.
 
@@ -43,7 +43,7 @@ def bad_tweet_streaming_dag():
 bad_tweet_streaming_dag()
 ```
 
-This example, while illustrative, highlights the issue: the `fetch_tweets` task is attempting to retrieve a large batch of tweets all at once, then iterating through them in a serial fashion, *and* includes an arbitrary `time.sleep` step to mock processing. This kind of single-threaded, synchronous approach within a single Airflow task will severely impact performance and often lead to bottlenecks, regardless of how powerful the worker is. Twitter's API, like many others, has strict rate limits, so not only is this inefficient, it's likely to fail too.
+This example, while illustrative, highlights the issue: the `fetch_tweets` task is attempting to retrieve a large batch of tweets all at once, then iterating through them in a serial fashion, _and_ includes an arbitrary `time.sleep` step to mock processing. This kind of single-threaded, synchronous approach within a single Airflow task will severely impact performance and often lead to bottlenecks, regardless of how powerful the worker is. Twitter's API, like many others, has strict rate limits, so not only is this inefficient, it's likely to fail too.
 
 Second, the actual processing of the tweets once they're retrieved can also be a major bottleneck. If, for example, you’re performing heavy transformations or complex data analysis within a single task, you’re forcing the Airflow worker to handle everything at once, which can quickly overwhelm it. This is particularly true if you haven’t properly utilized Airflow’s ability to execute tasks in parallel.
 
@@ -98,7 +98,7 @@ import tweepy
 import time
 
 def subdag_tweet_fetcher(parent_dag_id, subdag_id, tweets_per_batch=10):
-   
+
     subdag_id = f'{parent_dag_id}.{subdag_id}'
     @dag(dag_id=subdag_id, start_date=days_ago(1), schedule_interval=None, catchup=False)
     def fetcher_dag():
@@ -119,7 +119,7 @@ def subdag_tweet_fetcher(parent_dag_id, subdag_id, tweets_per_batch=10):
             except Exception as e:
                 print(f"Error in batch {batch_num}: {e}")
                 return None
-            
+
 
         @task
         def process_tweets(tweets):

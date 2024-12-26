@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-an-onnx-lstm-model-with-batchsize--1-produce-a-non-zero-status-code-during-scatterelements-execution"
 ---
 
-Okay, let's unpack this. I've seen this particular scenario play out more than once, and it's usually not immediately obvious what's causing the non-zero status code with `ScatterElements` when you're dealing with an ONNX LSTM and a batch size greater than one. It's rarely the underlying mathematics of the LSTM itself, but more often an issue stemming from the way ONNX's graph representation and specific operator implementations interact with batched input. In short, it's often a subtle mismatch between what you *think* the graph should do, and how the runtime *actually* executes it.
+, let's unpack this. I've seen this particular scenario play out more than once, and it's usually not immediately obvious what's causing the non-zero status code with `ScatterElements` when you're dealing with an ONNX LSTM and a batch size greater than one. It's rarely the underlying mathematics of the LSTM itself, but more often an issue stemming from the way ONNX's graph representation and specific operator implementations interact with batched input. In short, it's often a subtle mismatch between what you _think_ the graph should do, and how the runtime _actually_ executes it.
 
 The root cause frequently lies in how `ScatterElements` handles indices and updates, specifically within the context of sequence processing inherent to LSTMs. You have to remember, an LSTM processes sequences, and with batching, you’re processing multiple sequences simultaneously. `ScatterElements`’s role here is generally to selectively update parts of the hidden state or output tensor, potentially based on the sequence lengths in a batched input. When the model is exported to ONNX, that logic gets compiled into graph nodes. It's not inherently broken, but subtle problems can arise depending on how the index tensor for `ScatterElements` is generated, and whether it correctly reflects the dimensionality and shape conventions the ONNX runtime is expecting.
 
@@ -31,8 +31,8 @@ def incorrect_scatter_logic(hidden_states, seq_lengths, batch_size):
         index_to_scatter = seq_len -1 #Last hidden state
         if index_to_scatter < 0:
             index_to_scatter = 0
-        
-        output[batch_index] = hidden_states[batch_index][index_to_scatter] #This line is ok as numpy. 
+
+        output[batch_index] = hidden_states[batch_index][index_to_scatter] #This line is ok as numpy.
         #in onnx, indexing would be (batch_index, index_to_scatter), and since it expects a flat index, it fails
         # We need to create a proper flat index array based on the batch and index_to_scatter,
         # or directly scatter over a 3D index
@@ -50,7 +50,7 @@ import numpy as np
 def correct_scatter_logic(hidden_states, seq_lengths, batch_size):
     output_dim = hidden_states.shape[2]
     max_seq_len = hidden_states.shape[1]
-    
+
     output = np.zeros((batch_size, output_dim))
     indices = np.zeros((batch_size,), dtype=np.int64) # flat indices
 
@@ -62,12 +62,12 @@ def correct_scatter_logic(hidden_states, seq_lengths, batch_size):
       indices[batch_index] = batch_index * max_seq_len + index_to_scatter #flattened index
 
     #Then, the hidden states would have to be reshaped before scattering.
-    
+
     reshaped_hidden_states = hidden_states.reshape((-1, output_dim))
-    
+
     updated_values = np.take(reshaped_hidden_states,indices, axis=0) #or another gather operation before scattering
 
-    
+
     output = updated_values #final states. If we had a target tensor, output would have to be scattered on it based on the same indices.
     return output
 ```
@@ -87,7 +87,7 @@ def flawed_index_generation(hidden_states, seq_lengths, batch_size, max_seq_len)
 
     for batch_index in range(batch_size):
         seq_len = seq_lengths[batch_index]
-        #Incorrect index computation;  might result in index out of bounds 
+        #Incorrect index computation;  might result in index out of bounds
         index_to_scatter = seq_len #Instead of seq_len -1 (out of bounds if seq_len = max_seq_len)
         if index_to_scatter < 0:
           index_to_scatter = 0

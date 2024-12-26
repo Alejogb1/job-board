@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-reinforcement-learning-control-a-cart-pole-using-only-screen-pixel-input"
 ---
 
-Alright, let's delve into this. I've actually tackled cart-pole balancing from pixel input in a past project involving a simulated robotic arm, and it's definitely a problem with several layers of complexity. We're moving away from clean, state-based representations and into the realm of raw sensory input, which requires a very different approach.
+, let's delve into this. I've actually tackled cart-pole balancing from pixel input in a past project involving a simulated robotic arm, and it's definitely a problem with several layers of complexity. We're moving away from clean, state-based representations and into the realm of raw sensory input, which requires a very different approach.
 
 Essentially, the crux of the issue lies in bridging the gap between pixel data—which is essentially a matrix of color values—and the actions we want to take on the cart, namely, pushing it left or right. We can't feed pixels directly into a standard reinforcement learning algorithm like Q-learning or policy gradients. We need an intermediary stage, a representation that the RL algorithm can actually work with.
 
@@ -145,6 +145,7 @@ for episode in range(500): # arbitrary number of episodes
           update_target_network(dqn, dqn_target)
   print(f"Episode: {episode}, Reward: {episode_reward}, Epsilon: {epsilon}")
 ```
+
 This pseudo-code provides a basic outline of how the CNN and DQN can be combined for training, using a buffer, experience replay, and target network updates. Note that this is a simplified version and may require fine tuning and improvements such as adding noise to actions or using double DQN for better performance and stability, but its a reasonable starting point.
 
 For deeper dives into this subject, I would strongly recommend looking into "Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville; it provides a solid foundational understanding of deep learning architectures. For specifically reinforcement learning, "Reinforcement Learning: An Introduction" by Richard S. Sutton and Andrew G. Barto is the definitive text. Also, research papers on topics such as the "Playing Atari with Deep Reinforcement Learning" by Volodymyr Mnih et al. and its extensions, is critical for understanding how these networks are trained using pixel inputs.

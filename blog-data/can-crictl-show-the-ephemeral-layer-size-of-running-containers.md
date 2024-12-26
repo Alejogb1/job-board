@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-crictl-show-the-ephemeral-layer-size-of-running-containers"
 ---
 
-Okay, let's tackle this. The question of displaying the ephemeral layer size of running containers using `crictl` is a nuanced one, and it’s something I've encountered directly in several production environments. The short answer is: `crictl` itself doesn’t provide a direct command to show the ephemeral layer size for running containers. However, that doesn't mean the information isn't accessible; it just requires some understanding of the underlying container runtime and a bit of resourceful maneuvering.
+, let's tackle this. The question of displaying the ephemeral layer size of running containers using `crictl` is a nuanced one, and it’s something I've encountered directly in several production environments. The short answer is: `crictl` itself doesn’t provide a direct command to show the ephemeral layer size for running containers. However, that doesn't mean the information isn't accessible; it just requires some understanding of the underlying container runtime and a bit of resourceful maneuvering.
 
 My past experiences with containerized applications, particularly those handling large datasets, made monitoring storage usage critical. Early on, we ran into issues where ephemeral layers would unexpectedly grow, impacting performance and sometimes causing containers to crash. Understanding and visualizing ephemeral layer sizes became crucial for diagnosing these types of problems.
 
@@ -23,12 +23,14 @@ The `ctr` command-line tool is a more direct interface to containerd. To get the
 ```bash
 crictl ps
 ```
+
 This gives you an output including something along the lines of:
 
 ```
 CONTAINER           IMAGE                                   CREATED         STATE     NAME                      ATTEMPT
 e23a12b3c4d56  k8s.gcr.io/pause:3.2          ...       Running   k8s://pod-name/container-name         0
 ```
+
 Then grab the container id, in this case it's `e23a12b3c4d56` and use it in the next commands. First, let's determine the location of the container's mount point.
 
 ```bash
@@ -120,6 +122,7 @@ Compile and run this Go program, passing the container id as an argument:
 ```bash
 go run main.go e23a12b3c4d56
 ```
+
 This snippet connects to containerd, loads the container metadata, retrieves the snapshot key, and then the actual mount point path of the container's writable layer using the overlayfs snapshotter. Although the go code does not directly provide the size, the mount point can be used for executing a system command such as `du` to obtain the size programmatically as shown in example 1.
 
 **Example 3: Monitoring using Prometheus Node Exporter (with customization)**

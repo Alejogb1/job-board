@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "when-are-pancakeswap-trade-fees-deducted-and-why-arent-they-reflected-in-liquidity-pools"
 ---
 
-Okay, let's tackle this one. I remember back in '21, working on a DeFi project, we had a similar head-scratcher around transaction fees and liquidity pool mechanics on a fork of Uniswap v2. PancakeSwap, fundamentally, operates on a similar Automated Market Maker (AMM) model, so the principles remain consistent, although specifics differ. The issue of when fees are deducted and why they’re not directly mirrored in the pool balance is a common source of confusion, and it's important to get it clear.
+, let's tackle this one. I remember back in '21, working on a DeFi project, we had a similar head-scratcher around transaction fees and liquidity pool mechanics on a fork of Uniswap v2. PancakeSwap, fundamentally, operates on a similar Automated Market Maker (AMM) model, so the principles remain consistent, although specifics differ. The issue of when fees are deducted and why they’re not directly mirrored in the pool balance is a common source of confusion, and it's important to get it clear.
 
-The core concept to understand is that trade fees on PancakeSwap (and similar AMMs) are not a direct subtraction from the tokens exchanged. Instead, they are essentially a *redistribution* mechanism. The fees are charged at the point of the trade execution, and this happens transparently *before* the swap is completed. Therefore, what you *receive* is already adjusted for the fee.
+The core concept to understand is that trade fees on PancakeSwap (and similar AMMs) are not a direct subtraction from the tokens exchanged. Instead, they are essentially a _redistribution_ mechanism. The fees are charged at the point of the trade execution, and this happens transparently _before_ the swap is completed. Therefore, what you _receive_ is already adjusted for the fee.
 
-Consider this: you're trading token 'A' for token 'B'. You initiate a swap with the intention of exchanging *x* amount of token 'A'. At the backend, the protocol calculates the expected amount of token 'B' *before* the fee is applied. Let's say the calculation shows you should get *y* tokens of 'B'. If the swap fee is 0.25% (a common figure, but it can vary on PancakeSwap), you will receive not *y*, but *y* *minus* 0.25% of *y* which I will denote as *y'*. That *y'* is the actual amount that is transferred to you. The full amount of 'A' that you send is added to the pool, while the fee calculated is what is *not* distributed back to the receiver of 'B', not an actual deduction from the pool balance.
+Consider this: you're trading token 'A' for token 'B'. You initiate a swap with the intention of exchanging _x_ amount of token 'A'. At the backend, the protocol calculates the expected amount of token 'B' _before_ the fee is applied. Let's say the calculation shows you should get _y_ tokens of 'B'. If the swap fee is 0.25% (a common figure, but it can vary on PancakeSwap), you will receive not _y_, but _y_ _minus_ 0.25% of _y_ which I will denote as _y'_. That _y'_ is the actual amount that is transferred to you. The full amount of 'A' that you send is added to the pool, while the fee calculated is what is _not_ distributed back to the receiver of 'B', not an actual deduction from the pool balance.
 
-Now, the question of why these fees are not reflected in the liquidity pool's balance is crucial. The short answer is, they are not *directly* added to the primary token balances within the pool. Instead, they are sent to the liquidity providers (LPs) as *yield*. Remember, the core functionality of an AMM is to maintain a constant product of the pool balances—that *x* * y = k* (where *k* is a constant). If the transaction fees were directly added, this constant relationship would be broken, and the price of the asset in the pool would not represent the actual trading activity. To illustrate with an extremely simplified scenario, this also means the pool might have an increasing amount of tokens and might be vulnerable to manipulation.
+Now, the question of why these fees are not reflected in the liquidity pool's balance is crucial. The short answer is, they are not _directly_ added to the primary token balances within the pool. Instead, they are sent to the liquidity providers (LPs) as _yield_. Remember, the core functionality of an AMM is to maintain a constant product of the pool balances—that _x_ _ y = k_ (where _k_ is a constant). If the transaction fees were directly added, this constant relationship would be broken, and the price of the asset in the pool would not represent the actual trading activity. To illustrate with an extremely simplified scenario, this also means the pool might have an increasing amount of tokens and might be vulnerable to manipulation.
 
 The fees are accumulated in the smart contract (usually a separate contract, or an internal accounting method within the core contract), and the protocol then uses these fees to reward LPs in several ways:
 
@@ -33,12 +33,12 @@ def execute_trade(token_in_amount, pool_token_in, pool_token_out, fee_rate):
 
     # Calculate the fee
     fee = token_out_amount_before_fee * fee_rate
-    
+
     # Calculate the token_out amount *after* fees
     token_out_amount = token_out_amount_before_fee - fee
 
     return token_out_amount
-    
+
 # Sample Usage
 pool_token_A = 1000 # initial tokens of 'A'
 pool_token_B = 500 # initial tokens of 'B'
@@ -49,7 +49,7 @@ print(f"Tokens of B received: {token_B_received}") #Output is close to expected 
 
 ```
 
-This shows the fee is deducted before the output is sent to the trader, but it doesn’t touch the pool balance *directly*. The full amount of token A sent is added to the pool.
+This shows the fee is deducted before the output is sent to the trader, but it doesn’t touch the pool balance _directly_. The full amount of token A sent is added to the pool.
 
 **Example 2: Fee Accumulation and LP reward (Conceptual):**
 
@@ -69,8 +69,8 @@ class LiquidityPool:
       # In actual implementations this reward would be distributed
       # and would also include more complex logic, this is just a conceptual example
       return user_reward
-        
-    
+
+
 # Sample Usage
 pool = LiquidityPool(1000,500)
 pool.add_fees(10) # Adding simulated fees
@@ -79,6 +79,7 @@ user_lp_tokens = 20
 reward = pool.distribute_rewards(lp_tokens, user_lp_tokens)
 print(f"Reward received: {reward}") #Output is 2 since the user owned 20/100 of the lp tokens
 ```
+
 This demonstrates how fees accumulate (again simplified), and how liquidity providers can earn based on their contribution to the pool.
 
 **Example 3: Conceptual Fee Accounting**
@@ -100,6 +101,7 @@ sent_amount = accountant.process_trade(amount_to_trade, fee_rate)
 print(f"Sent amount: {sent_amount}") #Output is 99.75
 print(f"Fees accumulated: {accountant.fees}") #Output is 0.25
 ```
+
 This is to show that the fees are not lost, simply that they are routed for other purposes, like LP rewards. The trade amount received is deducted by the fees amount, while the accumulated fees are kept separate.
 
 For those wanting a deep dive into the theoretical underpinnings, I'd recommend looking into the work of Guillermo Angeris et al., particularly their papers on “An analysis of Uniswap markets,” which provides a very rigorous treatment of AMM design. Also, “Algorithmic Trading and Deep Learning” by Robert Kissel touches on how these mechanisms play out in practice. Also, you can get a better understanding of specific AMM designs and their implementations by checking the documentation of various DeFi projects, like the official PancakeSwap documentation itself.

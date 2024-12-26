@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "difference-between-and-or-in-system-verilog"
 ---
 
-Okay so you're asking about `and` versus `or` in SystemVerilog right I've seen this question pop up more times than I can count it's one of those foundational bits that trips up newcomers and even some experienced folks every now and again so let's break it down for you with a healthy dose of my personal pain points along the way
+you're asking about `and` versus `or` in SystemVerilog right I've seen this question pop up more times than I can count it's one of those foundational bits that trips up newcomers and even some experienced folks every now and again so let's break it down for you with a healthy dose of my personal pain points along the way
 
 First things first we're not talking about English here think logic gates the building blocks of hardware that's where SystemVerilog lives at least when dealing with these operators we're talking about bitwise and logical operations these two operators have both of them but its easy to mix it up at the start
 
@@ -18,6 +18,7 @@ For example if I have two 4-bit numbers like
 logic [3:0] a = 4'b1011;
 logic [3:0] b = 4'b0110;
 ```
+
 Then `a & b` would equal `4'b0010` lets do a table here for clarity
 |a|b|a&b|
 |---|---|---|
@@ -28,13 +29,14 @@ Then `a & b` would equal `4'b0010` lets do a table here for clarity
 
 The crucial thing here is each bit is processed in isolation it doesn't care about the overall number's value just the individual bits if you try something like `a & 1` it will result in a new vector that has 1 on all bits that were 1 on a that was a gotcha i had once when converting a code from VHDL.
 
-Now the logical `&&` is different it deals with the whole darn thing in terms of true or false not individual bits  think of it as a single pass that combines conditions or single bit values. In SystemVerilog any non-zero value is considered true and 0 is considered false it returns only 1-bit true or false
+Now the logical `&&` is different it deals with the whole darn thing in terms of true or false not individual bits think of it as a single pass that combines conditions or single bit values. In SystemVerilog any non-zero value is considered true and 0 is considered false it returns only 1-bit true or false
 For example if
 
 ```systemverilog
 logic a = 1;
 logic b = 0;
 ```
+
 then `a && b` would be `0` the logical AND is true only if all operands are true if any operand is false then the whole thing is false.
 
 The table is easier here
@@ -49,13 +51,15 @@ In my early days building my first rudimentary processor I mistakenly used the b
 
 **Bitwise OR (|) vs Logical OR (||)**
 
-Same deal as the AND operators but with OR now `|` is your bitwise OR if either bit is 1 the result is 1 otherwise 0  again it's a bit-by-bit comparison each bit is processed independently
+Same deal as the AND operators but with OR now `|` is your bitwise OR if either bit is 1 the result is 1 otherwise 0 again it's a bit-by-bit comparison each bit is processed independently
 
 Using the same examples as above
+
 ```systemverilog
 logic [3:0] a = 4'b1011;
 logic [3:0] b = 4'b0110;
 ```
+
 Then `a | b` would be `4'b1111`.
 |a|b|a\|b|
 |---|---|---|
@@ -64,13 +68,15 @@ Then `a | b` would be `4'b1111`.
 |1|1|1|
 |1|0|1|
 
-Now the logical `||` the whole thing becomes true if at least one operand is true  false only if all operands are false
+Now the logical `||` the whole thing becomes true if at least one operand is true false only if all operands are false
 
 Using the example
+
 ```systemverilog
 logic a = 1;
 logic b = 0;
 ```
+
 then `a || b` would be `1`
 
 Table
@@ -86,6 +92,7 @@ I still remember the time when I was working on a serial communication protocol 
 **Example 1 Using Bitwise operators:**
 
 Imagine you are working with register values
+
 ```systemverilog
 module bitwise_example;
   reg [7:0] register_a;
@@ -111,6 +118,7 @@ endmodule
 **Example 2 Using Logical operators:**
 
 Let's say you are checking for status flags
+
 ```systemverilog
 module logical_example;
   reg flag_a;
@@ -166,16 +174,16 @@ endmodule
 
 The crucial points:
 
-*   **Bitwise (`&`, `|`):**  Operate on individual bits of operands useful for masking register setting bits or combining bit fields.
-*   **Logical (`&&`, `||`):** Evaluate entire operands as true or false for conditional checks or flag handling.
+- **Bitwise (`&`, `|`):** Operate on individual bits of operands useful for masking register setting bits or combining bit fields.
+- **Logical (`&&`, `||`):** Evaluate entire operands as true or false for conditional checks or flag handling.
 
 Mixing them up as I have painfully learned can lead to really weird behavior that's hard to debug so always be careful. It is like trying to use a screwdriver to hammer a nail its close but it will not work as intended.
 And remember the compiler will do the best it can sometimes it will be right sometimes it will give a weird results that is why it is important to always think about your code.
 
 **Recommended Resources**
 
-*   **"SystemVerilog for Design Second Edition" by Stuart Sutherland:** This book is an absolute goldmine it covers SystemVerilog in great detail and is very beginner friendly it is perfect for newcomers.
-*   **"Digital Design Principles and Practices" by John Wakerly:** This book is more hardware oriented but is a great read for someone that wants to understand a bit more how the hardware works. It is good to know about logic circuits.
-*   **IEEE Std 1800-2017 (or later version) SystemVerilog standard:** It's a dense read and not for the faint-hearted but it's the definitive document for SystemVerilog. It can give a deep explanation when you need it.
+- **"SystemVerilog for Design Second Edition" by Stuart Sutherland:** This book is an absolute goldmine it covers SystemVerilog in great detail and is very beginner friendly it is perfect for newcomers.
+- **"Digital Design Principles and Practices" by John Wakerly:** This book is more hardware oriented but is a great read for someone that wants to understand a bit more how the hardware works. It is good to know about logic circuits.
+- **IEEE Std 1800-2017 (or later version) SystemVerilog standard:** It's a dense read and not for the faint-hearted but it's the definitive document for SystemVerilog. It can give a deep explanation when you need it.
 
 Hope that clears things up a bit. Happy coding and remember to always think about what you're doing or else you will spend a lot of your time debugging that code I know that very well.

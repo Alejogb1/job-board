@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "how-to-use-the-fastaifastcore-patch-decorator-vs-simple-monkey-patching"
 ---
 
-alright, so you're asking about the difference between using `fastcore`'s `@patch` decorator and just doing a good old monkey patch in python, eh? i’ve been there, trust me. i’ve got a few scars from the early days of messing with dynamically changing behavior in python classes. this isn't exactly a new problem but `fastcore` provides a pretty slick way to manage it.
+, so you're asking about the difference between using `fastcore`'s `@patch` decorator and just doing a good old monkey patch in python, eh? i’ve been there, trust me. i’ve got a few scars from the early days of messing with dynamically changing behavior in python classes. this isn't exactly a new problem but `fastcore` provides a pretty slick way to manage it.
 
-basically, monkey patching, in its raw form, is just directly modifying an object’s or class's behavior at runtime. you're reaching into the guts of a module or class and tweaking things. it’s powerful, yes, but also, as my old mentor used to say, "with great power comes the potential to cause great headaches." that’s because if not done with care, monkey patching can quickly make your code really difficult to trace and reason about. things get modified from the outside, and it's not always immediately apparent *where* that change is happening. this leads to weird bugs. oh, the weird bugs.
+basically, monkey patching, in its raw form, is just directly modifying an object’s or class's behavior at runtime. you're reaching into the guts of a module or class and tweaking things. it’s powerful, yes, but also, as my old mentor used to say, "with great power comes the potential to cause great headaches." that’s because if not done with care, monkey patching can quickly make your code really difficult to trace and reason about. things get modified from the outside, and it's not always immediately apparent _where_ that change is happening. this leads to weird bugs. oh, the weird bugs.
 
 on the other hand, the `@patch` decorator from `fastcore` is a structured approach to the same thing. it’s still monkey patching underneath the hood but wrapped in a nice, predictable package. instead of just swapping out a method in some random place, `@patch` lets you add a method to a class as if it were declared inside the class itself. it feels cleaner, more integrated, and it's easier to see what's going on.
 
-let's look at some concrete examples. a few years back, i was working on a complex image processing pipeline (this was before all the fancy ai stuff hit the scene, yes, i’m *that* old school) and i needed to add a specific grayscale conversion method to a class in some older library i was using. without `fastcore`, we were doing this (and believe me, it wasn't pretty)
+let's look at some concrete examples. a few years back, i was working on a complex image processing pipeline (this was before all the fancy ai stuff hit the scene, yes, i’m _that_ old school) and i needed to add a specific grayscale conversion method to a class in some older library i was using. without `fastcore`, we were doing this (and believe me, it wasn't pretty)
 
 ```python
 import numpy as np
@@ -114,7 +114,7 @@ in short, using `fastcore`'s `@patch` is more about writing maintainable, readab
 
 for resources to go deeper, i would recommend looking into:
 
-*   "fluent python" by luciano ramalho, there's a pretty awesome explanation on monkey patching and dynamic attributes in python in one of its chapters. it is a bit more advanced so, be ready.
-*   the official `fastcore` documentation: it's concise and well-written. just read the part about `@patch` it should cover all that's needed.
+- "fluent python" by luciano ramalho, there's a pretty awesome explanation on monkey patching and dynamic attributes in python in one of its chapters. it is a bit more advanced so, be ready.
+- the official `fastcore` documentation: it's concise and well-written. just read the part about `@patch` it should cover all that's needed.
 
 i hope that makes it a bit clearer. feel free to ask if anything is not that clear.

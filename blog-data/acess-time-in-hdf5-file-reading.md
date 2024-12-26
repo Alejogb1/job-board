@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "acess-time-in-hdf5-file-reading"
 ---
 
-Okay so you're asking about access time when reading HDF5 files right Been there done that so many times it's not even funny Let me tell you I've spent countless nights debugging this exact issue I can almost taste the frustration you're probably feeling
+you're asking about access time when reading HDF5 files right Been there done that so many times it's not even funny Let me tell you I've spent countless nights debugging this exact issue I can almost taste the frustration you're probably feeling
 
 First things first HDF5 is complex and access time can be impacted by so many things It's not just a simple file read it's about how you're structuring your data how you're accessing it the library version you're using and even your system's hardware configuration
 
@@ -103,7 +103,7 @@ with h5py.File(file_name, 'r') as hf:
 
 Again looping over a large number of hdf5 datasets incurs more overhead instead of reading them in batch.
 
-Another critical point is the chunk size when you create the dataset  If you're planning on reading entire slices or big blocks of data then pick a chunk size that suits that kind of access pattern and not the opposite If you have many small chunks you have many small reads in your data access slowing down the process In my case I usually try different chunk sizes for testing
+Another critical point is the chunk size when you create the dataset If you're planning on reading entire slices or big blocks of data then pick a chunk size that suits that kind of access pattern and not the opposite If you have many small chunks you have many small reads in your data access slowing down the process In my case I usually try different chunk sizes for testing
 
 Now for a last example using a more advanced way to approach chunk access and to see how to create the dataset with chunk sizes:
 
@@ -153,7 +153,7 @@ I know this is a lot but it's a complex topic.
 So instead of sending you links here is the suggested reading to better understand all of this stuff:
 
 1. "High Performance Computing" by Charles Severance a very good overview for all things high performance and optimization including data management.
-2.  "Using HDF5: A Scalable Data Storage Format" by David Koontz for diving deep into the details of HDF5 itself
+2. "Using HDF5: A Scalable Data Storage Format" by David Koontz for diving deep into the details of HDF5 itself
 
 Remember optimizing HDF5 access is often about understanding your data access patterns and then choosing the correct data access method for your scenario
 

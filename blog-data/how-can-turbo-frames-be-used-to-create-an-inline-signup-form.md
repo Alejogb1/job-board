@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-turbo-frames-be-used-to-create-an-inline-signup-form"
 ---
 
-Alright, let's talk about inline signup forms with Turbo Frames. It’s a pattern I've implemented quite a few times, and like most things, it’s got nuances worth exploring. The core idea is to provide a smooth, uninterrupted user experience when a user decides to sign up—no full page reload, just a seamless transition from the existing context. I remember one project particularly, a social networking prototype, where getting this just *right* dramatically improved conversion. Users were much more likely to sign up when the process felt lightweight and directly integrated into their browsing flow.
+, let's talk about inline signup forms with Turbo Frames. It’s a pattern I've implemented quite a few times, and like most things, it’s got nuances worth exploring. The core idea is to provide a smooth, uninterrupted user experience when a user decides to sign up—no full page reload, just a seamless transition from the existing context. I remember one project particularly, a social networking prototype, where getting this just _right_ dramatically improved conversion. Users were much more likely to sign up when the process felt lightweight and directly integrated into their browsing flow.
 
 The magic happens because Turbo Frames essentially create isolated islands of interactivity within a page. When a frame's content is updated, only the frame's part of the document is re-rendered. This means that we can have a button, say, on a blog post, that triggers the loading of a signup form within that button's immediate surroundings without affecting the rest of the page. It feels instantaneous, even though there's a server round-trip happening behind the scenes.
 
@@ -18,9 +18,9 @@ The first code example shows the basic HTML structure on the page:
 
 ```html
 <div id="article-container">
-    <p>Some compelling content about our awesome service...</p>
-    <button data-turbo-frame="signup-frame">Sign up to learn more</button>
-    <turbo-frame id="signup-frame"></turbo-frame>
+  <p>Some compelling content about our awesome service...</p>
+  <button data-turbo-frame="signup-frame">Sign up to learn more</button>
+  <turbo-frame id="signup-frame"></turbo-frame>
 </div>
 ```
 
@@ -54,7 +54,7 @@ class UsersController < ApplicationController
 end
 ```
 
-The `new` action renders a partial named `_form.html.erb`. This partial *only* contains the form, without any layout. The `create` action attempts to save the user. If successful, we might redirect or update the page. If there are errors, we re-render the form partial with the user object containing validation errors, setting a 422 status to ensure Turbo knows to re-render the frame.  Here's how that partial might look:
+The `new` action renders a partial named `_form.html.erb`. This partial _only_ contains the form, without any layout. The `create` action attempts to save the user. If successful, we might redirect or update the page. If there are errors, we re-render the form partial with the user object containing validation errors, setting a 422 status to ensure Turbo knows to re-render the frame. Here's how that partial might look:
 
 ```erb
 <%# app/views/users/_form.html.erb %>
@@ -94,26 +94,26 @@ Now let's explore a slightly more complex scenario: displaying a "loading" state
 Here's how to handle that in javascript:
 
 ```javascript
-document.addEventListener('turbo:before-frame-render', (event) => {
-    const frame = event.detail.target;
-    frame.innerHTML = '<div class="loading">Loading...</div>';
+document.addEventListener("turbo:before-frame-render", (event) => {
+  const frame = event.detail.target;
+  frame.innerHTML = '<div class="loading">Loading...</div>';
 });
 
-document.addEventListener('turbo:frame-render', (event) => {
+document.addEventListener("turbo:frame-render", (event) => {
   const frame = event.detail.target;
   // You can remove the loading class or do any other clean up here if needed
 });
 
-document.addEventListener('turbo:submit-start', (event) => {
-  const frame = event.target.closest('turbo-frame');
+document.addEventListener("turbo:submit-start", (event) => {
+  const frame = event.target.closest("turbo-frame");
 
-  if (frame){
+  if (frame) {
     frame.innerHTML = '<div class="loading">Submitting...</div>';
   }
 });
-
 ```
-Here we attach listeners to turbo events. `turbo:before-frame-render` fires immediately before the frame will be rendered. At that time we reset the inner html with a loading message. The `turbo:frame-render` fires immediately after the rendering is complete, and is an ideal location to perform any clean-up actions.  Finally, we listen for the submission event and change the content to a submission loading message. This provides immediate feedback to the user while the server is processing the request.
+
+Here we attach listeners to turbo events. `turbo:before-frame-render` fires immediately before the frame will be rendered. At that time we reset the inner html with a loading message. The `turbo:frame-render` fires immediately after the rendering is complete, and is an ideal location to perform any clean-up actions. Finally, we listen for the submission event and change the content to a submission loading message. This provides immediate feedback to the user while the server is processing the request.
 
 The key here, and this is something that you'll find repeated in various implementations, is to ensure that both form display (the initial load) and form submissions are handled correctly. The form must have the `turbo_frame` attribute and the controller actions must render only partials without full layout. Error handling should also be thought through; the form partial will often be rendered again with error messages and that needs to work flawlessly as a frame update.
 

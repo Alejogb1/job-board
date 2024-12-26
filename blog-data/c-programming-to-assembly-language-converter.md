@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "c-programming-to-assembly-language-converter"
 ---
 
-Okay so you need a C to assembly converter right been there done that got the t-shirt and probably a few compiler errors tattooed on my soul Let's break it down like it's a poorly written makefile because honestly some days it feels that way
+you need a C to assembly converter right been there done that got the t-shirt and probably a few compiler errors tattooed on my soul Let's break it down like it's a poorly written makefile because honestly some days it feels that way
 
 First off there isn't like a magical one size fits all "C to assembly" button you push and bam you're done It's a process a whole ecosystem really You're not converting directly it's more like you're stepping through transformations Each step has its own rules and quirks
 
@@ -38,7 +38,7 @@ _add:
     ret ; Return
 ```
 
-Okay hold your horses It’s x86-64 I know what you are going to ask This isn't some generic assembly It is specifically for x86-64 architecture It uses registers like `rbp`, `rsp`, `eax`, etc If you're targetting another architecture like ARM or RISC-V the assembly will be different its like different dialects of the same language but instead of words these are instructions but still the basic concept remains
+hold your horses It’s x86-64 I know what you are going to ask This isn't some generic assembly It is specifically for x86-64 architecture It uses registers like `rbp`, `rsp`, `eax`, etc If you're targetting another architecture like ARM or RISC-V the assembly will be different its like different dialects of the same language but instead of words these are instructions but still the basic concept remains
 
 Now that's not something you'd want to write by hand and even the process is complicated but conceptually its not too hard to understand Each line in assembly is a basic operation like moving data adding two numbers storing something in memory This is exactly what the processor hardware actually executes
 
@@ -48,7 +48,7 @@ After this you might have to link it with other compiled code or other library t
 
 Then you get to loading its when the program is loaded into memory and the processor starts executing from the very first instruction that's the whole life of a C program from code to execution
 
-So you want another code snippet? Alright lets spice things up with some loops
+So you want another code snippet? lets spice things up with some loops
 
 **C code with loop example**
 
@@ -133,8 +133,8 @@ Notice how the assembly deals with memory addresses and the registers are used t
 
 If you really want to dive deeper than that I recommend looking at the following resources these are not links but good books or papers on the topic
 
-*   **"Computer Organization and Design" by Patterson and Hennessy:** This book gives you an understanding of the hardware level on which the assembly code runs and the internal organization of a computer system in great detail
-*   **"Modern Compiler Implementation in C" by Andrew W Appel:** This dives deep into the internal workings of a compiler starting from the lexical and syntax analysis to code optimization and generation
+- **"Computer Organization and Design" by Patterson and Hennessy:** This book gives you an understanding of the hardware level on which the assembly code runs and the internal organization of a computer system in great detail
+- **"Modern Compiler Implementation in C" by Andrew W Appel:** This dives deep into the internal workings of a compiler starting from the lexical and syntax analysis to code optimization and generation
 
 These are not introductory texts they dive into the deep details of compiler and computer architecture Also looking at the assembly output of your C code and cross referencing that with the processor documentation is a great hands-on exercise You'll start understanding how loops function how function calls are handled how memory is used at the most granular level
 

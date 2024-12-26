@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-cause-of-the-valueerror-unknown-metric-function-cosine"
 ---
 
-Okay, let's tackle this. I've seen this "ValueError: Unknown metric function: cosine" pop up more times than I care to recall, particularly during my tenure working on various machine learning projects involving embeddings. It usually manifests itself when you're using a library like TensorFlow or Keras, or even something more specific for semantic similarity like SentenceTransformers, and it points directly to a configuration issue related to how distance or similarity metrics are being handled within the model architecture or evaluation pipeline.
+, let's tackle this. I've seen this "ValueError: Unknown metric function: cosine" pop up more times than I care to recall, particularly during my tenure working on various machine learning projects involving embeddings. It usually manifests itself when you're using a library like TensorFlow or Keras, or even something more specific for semantic similarity like SentenceTransformers, and it points directly to a configuration issue related to how distance or similarity metrics are being handled within the model architecture or evaluation pipeline.
 
 The core problem isn't inherently complex; it’s typically about the mismatch between what the system expects as a valid metric function and the string identifier you’ve provided or the function you've actually defined. The error, `ValueError: Unknown metric function: cosine`, is a signal that the framework doesn't have built-in handling for a metric identified as simply 'cosine'. It's expecting a specific object (often a function or a class instance), not just a string literal. This mismatch can arise from several sources, and let’s go through the most common ones based on my experience.
 
@@ -102,6 +102,7 @@ for i in range(5):
     loss, metric = train_step(model, optimizer, x_train, y_train, loss_fn, metric_fn)
     print(f'Epoch {i+1}, loss: {loss}, metric: {metric}')
 ```
+
 The above function, when called in the loop, doesn’t compute a numeric cosine similarity as the user would expect. It is merely returning a string. This will often manifest in type mismatches and subsequent errors when it tries to use it during training. The solution is to actually compute a numeric value with the following function:
 
 ```python

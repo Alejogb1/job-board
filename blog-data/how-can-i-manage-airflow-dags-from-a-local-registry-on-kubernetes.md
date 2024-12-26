@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-manage-airflow-dags-from-a-local-registry-on-kubernetes"
 ---
 
-Alright, let's tackle this. Managing airflow dags from a local registry on kubernetes is something I've personally grappled with on several occasions, especially when dealing with sensitive information or custom workflows that weren't suited for shared repositories. It’s a solid approach that brings quite a few advantages, including better control over dag deployments and isolation, but it requires careful orchestration.
+, let's tackle this. Managing airflow dags from a local registry on kubernetes is something I've personally grappled with on several occasions, especially when dealing with sensitive information or custom workflows that weren't suited for shared repositories. It’s a solid approach that brings quite a few advantages, including better control over dag deployments and isolation, but it requires careful orchestration.
 
 The core idea is to decouple the dag definitions from the airflow worker nodes themselves, and instead, package them into custom images and make those images available through a local container registry accessible from your Kubernetes cluster. This approach allows you to treat DAGs as deployable artifacts. It enhances versioning, simplifies rollbacks, and can vastly improve the consistency of your airflow environment, especially in large teams where different developers might work on different DAGs.
 
@@ -67,14 +67,14 @@ spec:
   template:
     spec:
       containers:
-      - name: airflow-scheduler
-        image: your-local-registry/airflow-dags:v1.2.3
-        imagePullPolicy: Always
-        env:
-        - name: AIRFLOW__CORE__DAGS_FOLDER
-          value: /opt/airflow/dags
-        - name: AIRFLOW__CORE__LOAD_EXAMPLES
-          value: "False"
+        - name: airflow-scheduler
+          image: your-local-registry/airflow-dags:v1.2.3
+          imagePullPolicy: Always
+          env:
+            - name: AIRFLOW__CORE__DAGS_FOLDER
+              value: /opt/airflow/dags
+            - name: AIRFLOW__CORE__LOAD_EXAMPLES
+              value: "False"
 ```
 
 Here's a simplified kubernetes deployment snippet focusing on the scheduler. The crucial part is the `image:` directive, pointing to your local registry’s image which we built before (`your-local-registry/airflow-dags:v1.2.3`), with a specific version tag. The `imagePullPolicy: Always` ensures that if a new tag is available in the registry, kubernetes will always download it on deployment of a new pod. I would recommend you to use unique version tags for each image, based on the date/time of the build, the git commit hash, etc. to enable rollbacks. The `AIRFLOW__CORE__DAGS_FOLDER` variable ensures Airflow knows where to find the DAG files inside the container. The `AIRFLOW__CORE__LOAD_EXAMPLES` disables the loading of example dags provided by default with Airflow, and might not be what you want depending on your setup. Similar configuration adjustments need to be done for the webserver and worker containers.
@@ -129,8 +129,8 @@ This example shows a very simple DAG file, where you can also import functions f
 
 For deeper insights, I’d recommend checking out these resources:
 
-*   **"Programming Apache Airflow" by J.A. Finkelstein:** A comprehensive book that goes into great depth on Airflow, its architecture, and best practices. It will provide a very solid grounding in Airflow's mechanisms.
-*  **The official Docker documentation:** Understanding best practices for creating optimized docker images is key for a containerized DAG management approach. Focus on multi-stage builds and layer caching.
-*   **The official Kubernetes documentation:** Get familiar with Kubernetes deployments, statefulsets, and pod configurations to be able to efficiently configure your airflow deployments.
+- **"Programming Apache Airflow" by J.A. Finkelstein:** A comprehensive book that goes into great depth on Airflow, its architecture, and best practices. It will provide a very solid grounding in Airflow's mechanisms.
+- **The official Docker documentation:** Understanding best practices for creating optimized docker images is key for a containerized DAG management approach. Focus on multi-stage builds and layer caching.
+- **The official Kubernetes documentation:** Get familiar with Kubernetes deployments, statefulsets, and pod configurations to be able to efficiently configure your airflow deployments.
 
 In conclusion, managing Airflow DAGs from a local registry on Kubernetes offers greater control, better versioning, and enhances consistency in production environments. It certainly adds a layer of complexity initially, but the benefits in long-term scalability and manageability are considerable. Through careful planning and by following the practices laid out above, you'll find this to be a solid approach for any serious Airflow setup.

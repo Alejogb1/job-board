@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-pass-a-select-box-value-to-an-api-call-in-nextjs-using-getinitialprops"
 ---
 
-Alright, let's tackle this. I've definitely been down this road more times than I care to count, especially back when `getInitialProps` was the workhorse for data fetching in Next.js. So, the scenario is this: you have a select dropdown, a user picks an option, and you need to use that selected value to make an API request to populate your page with dynamic data. It’s a very common use case. We'll focus on how to achieve this specifically with `getInitialProps`, keeping in mind that while it's considered a legacy approach now, understanding it is crucial for dealing with older Next.js projects and even understanding the evolution of data fetching.
+, let's tackle this. I've definitely been down this road more times than I care to count, especially back when `getInitialProps` was the workhorse for data fetching in Next.js. So, the scenario is this: you have a select dropdown, a user picks an option, and you need to use that selected value to make an API request to populate your page with dynamic data. It’s a very common use case. We'll focus on how to achieve this specifically with `getInitialProps`, keeping in mind that while it's considered a legacy approach now, understanding it is crucial for dealing with older Next.js projects and even understanding the evolution of data fetching.
 
 Essentially, `getInitialProps` runs server-side on initial page load and then also client-side when navigating between pages within the application. Crucially for your problem, it gives us access to the incoming context, which includes query parameters derived from your URL. Our goal here is to capture the select box value, serialize it (usually within the URL), and then make use of this value within `getInitialProps`. Let me walk you through a typical strategy, based on how I've handled this in the past, along with three concrete examples.
 
@@ -18,8 +18,8 @@ Imagine you are building a rudimentary e-commerce site. The primary view is a pr
 
 ```javascript
 // pages/products.js
-import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useState } from "react";
+import { useRouter } from "next/router";
 
 function Products({ products, selectedCategory }) {
   const [category, setCategory] = useState(selectedCategory);
@@ -41,7 +41,7 @@ function Products({ products, selectedCategory }) {
 
       {products && products.length > 0 ? (
         <ul>
-          {products.map(product => (
+          {products.map((product) => (
             <li key={product.id}>{product.name}</li>
           ))}
         </ul>
@@ -52,22 +52,21 @@ function Products({ products, selectedCategory }) {
   );
 }
 
-
 Products.getInitialProps = async ({ query }) => {
-  const selectedCategory = query.category || 'electronics'; //default to electronics
+  const selectedCategory = query.category || "electronics"; //default to electronics
   try {
-      const res = await fetch(`https://api.example.com/products?category=${selectedCategory}`);
-      const products = await res.json();
-      return { products, selectedCategory };
+    const res = await fetch(
+      `https://api.example.com/products?category=${selectedCategory}`
+    );
+    const products = await res.json();
+    return { products, selectedCategory };
   } catch (error) {
-      console.error("Error fetching products:", error);
-      return { products: [], selectedCategory };
+    console.error("Error fetching products:", error);
+    return { products: [], selectedCategory };
   }
 };
 
-
 export default Products;
-
 ```
 
 In this example, `handleCategoryChange` updates the local state and, more importantly, programmatically navigates to `/products?category=selectedvalue`. Then `getInitialProps` on the server, receives that value through the `query` object. It fetches the correct data based on the selected category and passes it down as props. Notice the default assignment in case the parameter is not present on initial load.
@@ -78,53 +77,54 @@ Let's say you need to handle multiple filters, not just category, but perhaps pr
 
 ```javascript
 // pages/search.js
-import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useState } from "react";
+import { useRouter } from "next/router";
 
 function SearchResults({ results, filters }) {
-  const [category, setCategory] = useState(filters.category || 'all');
-  const [priceRange, setPriceRange] = useState(filters.priceRange || 'any');
+  const [category, setCategory] = useState(filters.category || "all");
+  const [priceRange, setPriceRange] = useState(filters.priceRange || "any");
   const router = useRouter();
 
-
   const handleFilterChange = (event) => {
-      const {name, value} = event.target;
-      if (name === "category") {
-          setCategory(value);
-      } else {
-          setPriceRange(value)
-      }
+    const { name, value } = event.target;
+    if (name === "category") {
+      setCategory(value);
+    } else {
+      setPriceRange(value);
+    }
 
     const newQuery = {
-        ...router.query,
-        category: name === "category" ? value : category,
-        priceRange: name === "priceRange" ? value: priceRange
+      ...router.query,
+      category: name === "category" ? value : category,
+      priceRange: name === "priceRange" ? value : priceRange,
     };
 
     router.push({
-        pathname: '/search',
-        query: newQuery,
+      pathname: "/search",
+      query: newQuery,
     });
-
-};
-
+  };
 
   return (
     <div>
-        <select name="category" value={category} onChange={handleFilterChange}>
-            <option value="all">All</option>
-            <option value="tech">Tech</option>
-            <option value="home">Home</option>
-        </select>
-        <select name="priceRange" value={priceRange} onChange={handleFilterChange}>
-            <option value="any">Any</option>
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-        </select>
+      <select name="category" value={category} onChange={handleFilterChange}>
+        <option value="all">All</option>
+        <option value="tech">Tech</option>
+        <option value="home">Home</option>
+      </select>
+      <select
+        name="priceRange"
+        value={priceRange}
+        onChange={handleFilterChange}
+      >
+        <option value="any">Any</option>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+      </select>
 
       {results && results.length > 0 ? (
         <ul>
-          {results.map(result => (
+          {results.map((result) => (
             <li key={result.id}>{result.title}</li>
           ))}
         </ul>
@@ -135,13 +135,14 @@ function SearchResults({ results, filters }) {
   );
 }
 
-
 SearchResults.getInitialProps = async ({ query }) => {
-  const category = query.category || 'all';
-  const priceRange = query.priceRange || 'any';
+  const category = query.category || "all";
+  const priceRange = query.priceRange || "any";
 
   try {
-      const res = await fetch(`https://api.example.com/search?category=${category}&priceRange=${priceRange}`);
+    const res = await fetch(
+      `https://api.example.com/search?category=${category}&priceRange=${priceRange}`
+    );
     const results = await res.json();
     return { results, filters: { category, priceRange } };
   } catch (error) {
@@ -161,9 +162,8 @@ Lastly, it’s essential to handle situations where either an API call fails or 
 
 ```javascript
 // pages/articles.js
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-
+import { useState } from "react";
+import { useRouter } from "next/router";
 
 function Articles({ articles, error, selectedTag }) {
   const [tag, setTag] = useState(selectedTag);
@@ -175,11 +175,9 @@ function Articles({ articles, error, selectedTag }) {
     router.push(`/articles?tag=${newTag}`);
   };
 
-
   if (error) {
-      return <p>An error occurred: {error}</p>;
+    return <p>An error occurred: {error}</p>;
   }
-
 
   return (
     <div>
@@ -188,30 +186,29 @@ function Articles({ articles, error, selectedTag }) {
         <option value="science">Science</option>
         <option value="art">Art</option>
       </select>
-        {articles && articles.length > 0 ? (
-           <ul>
-             {articles.map(article => (
-                 <li key={article.id}>{article.title}</li>
-             ))}
-          </ul>
-         ) : (
-           <p>No articles found for this tag.</p>
-        )}
+      {articles && articles.length > 0 ? (
+        <ul>
+          {articles.map((article) => (
+            <li key={article.id}>{article.title}</li>
+          ))}
+        </ul>
+      ) : (
+        <p>No articles found for this tag.</p>
+      )}
     </div>
   );
 }
 
-
-
 Articles.getInitialProps = async ({ query }) => {
-    const selectedTag = query.tag || 'technology';
+  const selectedTag = query.tag || "technology";
   try {
-        const res = await fetch(`https://api.example.com/articles?tag=${selectedTag}`);
+    const res = await fetch(
+      `https://api.example.com/articles?tag=${selectedTag}`
+    );
 
-      if (!res.ok) {
-        throw new Error(`API call failed with status: ${res.status}`);
-      }
-
+    if (!res.ok) {
+      throw new Error(`API call failed with status: ${res.status}`);
+    }
 
     const articles = await res.json();
     return { articles, selectedTag, error: null };
@@ -230,8 +227,8 @@ In this version, we add a basic check for the HTTP status code in `getInitialPro
 
 For more comprehensive understanding of data fetching strategies in React and specifically Next.js, I would recommend these resources:
 
-*   **“Server-Side Rendering with React” by Marc L. Klemp.** This is a classic deep dive into SSR concepts in React, essential for comprehending how `getInitialProps` and similar server-side mechanisms function.
-*   **The official Next.js Documentation** (especially older versions if you are working on a legacy codebase.) The Next.js documentation is the gold standard for up-to-date information and detailed guides on data fetching strategies. Check both `getInitialProps` documentation and more modern approaches as well. It provides excellent explanations and practical examples.
-*   **"Full Stack Web Development with React" by Robin Wieruch.** This book is a good overview of React with more emphasis on the practical aspects. The data fetching strategies are very well laid out for the server rendered environment.
+- **“Server-Side Rendering with React” by Marc L. Klemp.** This is a classic deep dive into SSR concepts in React, essential for comprehending how `getInitialProps` and similar server-side mechanisms function.
+- **The official Next.js Documentation** (especially older versions if you are working on a legacy codebase.) The Next.js documentation is the gold standard for up-to-date information and detailed guides on data fetching strategies. Check both `getInitialProps` documentation and more modern approaches as well. It provides excellent explanations and practical examples.
+- **"Full Stack Web Development with React" by Robin Wieruch.** This book is a good overview of React with more emphasis on the practical aspects. The data fetching strategies are very well laid out for the server rendered environment.
 
 In conclusion, while `getInitialProps` might not be the recommended approach for new Next.js projects, understanding how it works is invaluable for working with legacy codebases and grasping the evolution of data fetching. The key lies in effectively serializing your select box value into the URL as a query parameter, and then utilizing this parameter within `getInitialProps` to tailor your API requests. These three examples should provide a solid foundation to start with, and with some additional research, and these resources you'll be very well equipped to handle most similar challenges.

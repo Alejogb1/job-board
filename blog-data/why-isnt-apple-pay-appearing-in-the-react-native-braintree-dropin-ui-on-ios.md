@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-apple-pay-appearing-in-the-react-native-braintree-dropin-ui-on-ios"
 ---
 
-Alright, let's tackle this. It's a situation I've definitely encountered more than once, and troubleshooting payment integrations can feel like navigating a maze, especially with the mix of platforms and SDKs. The fact that Apple Pay isn't showing up in your `react-native-braintree-dropin` UI on iOS is usually a symptom of a few common underlying issues. It's rarely a single glaring error, but rather a confluence of configuration and setup details needing precise alignment.
+, let's tackle this. It's a situation I've definitely encountered more than once, and troubleshooting payment integrations can feel like navigating a maze, especially with the mix of platforms and SDKs. The fact that Apple Pay isn't showing up in your `react-native-braintree-dropin` UI on iOS is usually a symptom of a few common underlying issues. It's rarely a single glaring error, but rather a confluence of configuration and setup details needing precise alignment.
 
 First, forget assuming the Braintree SDK itself is at fault. It’s generally well-tested; the problem is nearly always related to how the integration is implemented within the React Native environment and iOS project. When I first encountered this back in my days working on a mobile marketplace app, it wasn't the Braintree code that was the culprit, but rather a series of cascading errors due to how Apple Pay had been configured at the platform level, which caused the drop-in UI to refuse to enable the feature.
 
@@ -24,18 +24,18 @@ Let's look at some practical examples to see how these points manifest in code. 
 
 ```javascript
 // Example 1: Basic payment request setup
-import { BraintreeDropIn } from 'react-native-braintree-dropin';
+import { BraintreeDropIn } from "react-native-braintree-dropin";
 
 async function showPaymentUI() {
   try {
     const paymentOptions = {
-      amount: '10.00',
-      currencyCode: 'USD',
+      amount: "10.00",
+      currencyCode: "USD",
       applePay: {
         displayName: "Your App Name",
         merchantIdentifier: "merchant.com.yourcompany.yourapp", // Ensure this matches your XCode capabilities merchant ID.
       },
-      collectDeviceData: true
+      collectDeviceData: true,
     };
 
     const result = await BraintreeDropIn.show(paymentOptions);
@@ -44,11 +44,10 @@ async function showPaymentUI() {
       // Process the payment
       console.log("Payment method nonce:", result.paymentMethodNonce);
     } else if (result.userCancelled) {
-        console.log("User cancelled payment.");
-    } else{
-       console.log("Error in payment flow.");
+      console.log("User cancelled payment.");
+    } else {
+      console.log("Error in payment flow.");
     }
-
   } catch (error) {
     console.error("Error displaying drop-in UI:", error);
   }
@@ -57,9 +56,10 @@ async function showPaymentUI() {
 // Call this function when you want to initiate payment
 showPaymentUI();
 ```
+
 In this snippet, you'll see the `merchantIdentifier` is clearly specified. This identifier must be consistent across your Xcode project and Braintree configurations. The display name, also within the `applePay` object, is important for showing the appropriate text on the payment sheet.
 
-Next, let’s look at how the Apple Pay capabilities are specifically configured in Xcode. Although we cannot show that visually here, we can describe the relevant area and settings that need to be correct, in detail. In Xcode, navigate to your project file, then select your main target. You will see `Signing & Capabilities` as a tab. This area manages capabilities like Apple Pay. Under `Capability`, add the `Apple Pay` entry. Once added, under the new `Apple Pay` entry, make sure to add your Merchant ID by clicking the `+` button. If these steps are not correctly configured the system won't know that Apple Pay is an option. The merchant identifier string used here *must* match the string used in the `applePay` object of the previous code sample.
+Next, let’s look at how the Apple Pay capabilities are specifically configured in Xcode. Although we cannot show that visually here, we can describe the relevant area and settings that need to be correct, in detail. In Xcode, navigate to your project file, then select your main target. You will see `Signing & Capabilities` as a tab. This area manages capabilities like Apple Pay. Under `Capability`, add the `Apple Pay` entry. Once added, under the new `Apple Pay` entry, make sure to add your Merchant ID by clicking the `+` button. If these steps are not correctly configured the system won't know that Apple Pay is an option. The merchant identifier string used here _must_ match the string used in the `applePay` object of the previous code sample.
 
 Finally, this last example demonstrates how to handle the case of missing or malformed payment request details which can cause unexpected behavior. It includes a more comprehensive check before initiating the payment flow and uses multiple supported networks:
 
@@ -88,26 +88,25 @@ async function showPaymentUI() {
 
   try {
     const paymentOptions = {
-        amount: amount,
-        currencyCode: currencyCode,
-        applePay: {
-            displayName: "Your App Name",
-            merchantIdentifier: merchantIdentifier,
-            supportedNetworks: ["visa", "mastercard", "amex"],
-        },
+      amount: amount,
+      currencyCode: currencyCode,
+      applePay: {
+        displayName: "Your App Name",
+        merchantIdentifier: merchantIdentifier,
+        supportedNetworks: ["visa", "mastercard", "amex"],
+      },
       collectDeviceData: true,
     };
 
     const result = await BraintreeDropIn.show(paymentOptions);
 
     if (result && result.paymentMethodNonce) {
-        console.log("Payment method nonce:", result.paymentMethodNonce);
-    } else if(result && result.userCancelled){
-        console.log("User cancelled payment.");
+      console.log("Payment method nonce:", result.paymentMethodNonce);
+    } else if (result && result.userCancelled) {
+      console.log("User cancelled payment.");
     } else {
-        console.log("Payment failed unexpectedly.");
+      console.log("Payment failed unexpectedly.");
     }
-
   } catch (error) {
     console.error("Error during drop-in:", error);
   }

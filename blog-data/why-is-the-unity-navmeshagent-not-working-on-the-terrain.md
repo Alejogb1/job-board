@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-is-the-unity-navmeshagent-not-working-on-the-terrain"
 ---
 
-Okay, let's tackle this. It's a question I’ve seen pop up more times than I care to count, and honestly, debugging navmesh issues with Unity terrain can sometimes feel like a puzzle box with no instruction manual. The surface level problem, 'why isn't my NavMeshAgent working on my terrain,' usually points to a few common culprits. I've personally spent hours chasing down these gremlins in projects ranging from simple prototypes to slightly-more-complex simulations, so I've got a decent feel for what often goes wrong.
+, let's tackle this. It's a question I’ve seen pop up more times than I care to count, and honestly, debugging navmesh issues with Unity terrain can sometimes feel like a puzzle box with no instruction manual. The surface level problem, 'why isn't my NavMeshAgent working on my terrain,' usually points to a few common culprits. I've personally spent hours chasing down these gremlins in projects ranging from simple prototypes to slightly-more-complex simulations, so I've got a decent feel for what often goes wrong.
 
-First, it's important to understand that the NavMeshAgent doesn't directly interact with the raw terrain data. It operates on a *navmesh*, a representation of the traversable space generated based on specified parameters. This means there's an intermediary step where the terrain geometry gets processed and baked into this navmesh. The issue often lies in that step or how the agent interprets the result.
+First, it's important to understand that the NavMeshAgent doesn't directly interact with the raw terrain data. It operates on a _navmesh_, a representation of the traversable space generated based on specified parameters. This means there's an intermediary step where the terrain geometry gets processed and baked into this navmesh. The issue often lies in that step or how the agent interprets the result.
 
 One of the most frequent errors involves the **navmesh not being properly generated to include the desired terrain area**. This could be because of several reasons. The bake settings themselves are a common offender. The 'voxel size' within the navigation baking options is particularly sensitive. If it's too large, the navmesh might miss small ledges, hills, or valleys, failing to register the terrain as walkable. Likewise, setting the 'max slope' to a value too low will cause parts of the terrain that are walkable, yet sloped beyond the threshold, to be excluded from the generated navmesh.
 
@@ -104,6 +104,7 @@ public class NavMeshAgentAdjustments : MonoBehaviour
     }
 }
 ```
+
 This script allows us to modify the base offset, radius, height and stopping distance of the NavMeshAgent. Experimenting with these parameters is essential if your agent is not behaving as expected.
 
 A less frequent, but still important consideration involves **dynamic terrain changes**. If you are modifying the terrain at runtime, you might need to actively rebake portions of the navmesh that are affected. The default navmesh system does not automatically update to reflect changes. This can be incredibly tricky to debug if it's not something you initially consider.
@@ -189,8 +190,9 @@ public class TerrainModifier : MonoBehaviour
     }
 }
 ```
-This script allows you to raise portions of the terrain based on mouse click positions and dynamically rebakes the navmesh using a `NavMeshSurface`. This approach, while efficient for small areas, may not be optimal for large, frequently changing terrains, where more sophisticated techniques such as A* navigation should be considered (see "Artificial Intelligence: A Modern Approach" by Stuart Russell and Peter Norvig for more advanced techniques).
 
-For further, more detailed insights, I recommend exploring the Unity documentation on navigation, the `UnityEngine.AI` namespace, and particularly the documentation related to `NavMeshBuilder` and the `NavMeshSurface` component. Also, studying papers focused on mesh processing algorithms (like those often found in the *ACM Transactions on Graphics* journal) can provide a deeper understanding of how navmeshes are generated and optimized. Additionally, the book "Real-Time Collision Detection" by Christer Ericson provides comprehensive coverage on collision detection algorithms which often are closely related to navmesh calculations.
+This script allows you to raise portions of the terrain based on mouse click positions and dynamically rebakes the navmesh using a `NavMeshSurface`. This approach, while efficient for small areas, may not be optimal for large, frequently changing terrains, where more sophisticated techniques such as A\* navigation should be considered (see "Artificial Intelligence: A Modern Approach" by Stuart Russell and Peter Norvig for more advanced techniques).
+
+For further, more detailed insights, I recommend exploring the Unity documentation on navigation, the `UnityEngine.AI` namespace, and particularly the documentation related to `NavMeshBuilder` and the `NavMeshSurface` component. Also, studying papers focused on mesh processing algorithms (like those often found in the _ACM Transactions on Graphics_ journal) can provide a deeper understanding of how navmeshes are generated and optimized. Additionally, the book "Real-Time Collision Detection" by Christer Ericson provides comprehensive coverage on collision detection algorithms which often are closely related to navmesh calculations.
 
 Troubleshooting these issues tends to involve a methodical approach: check the layer configurations, verify the baking parameters, inspect your agent's settings, and ensure that dynamic changes are handled appropriately. Navigating terrain issues effectively often comes down to an understanding of the entire pipeline, from the raw terrain to the agent movement. I hope this detailed explanation, stemming from a few of my past headaches, saves you some time and gets you up and running quickly.

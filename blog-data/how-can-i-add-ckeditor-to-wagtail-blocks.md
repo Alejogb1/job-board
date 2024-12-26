@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-ckeditor-to-wagtail-blocks"
 ---
 
-Alright, let’s tackle this. Implementing CKEditor within Wagtail blocks is a common scenario, and it often feels like a puzzle at first. I’ve certainly been there, spending hours tweaking configurations and digging through documentation. It’s not always as straightforward as dropping in a single line of code, but the process, once understood, is quite manageable. The crux of the issue revolves around seamlessly integrating a rich text editor into Wagtail’s block structure, which involves understanding the interplay between Wagtail’s `StreamField` and its blocks, and how CKEditor fits into that ecosystem.
+, let’s tackle this. Implementing CKEditor within Wagtail blocks is a common scenario, and it often feels like a puzzle at first. I’ve certainly been there, spending hours tweaking configurations and digging through documentation. It’s not always as straightforward as dropping in a single line of code, but the process, once understood, is quite manageable. The crux of the issue revolves around seamlessly integrating a rich text editor into Wagtail’s block structure, which involves understanding the interplay between Wagtail’s `StreamField` and its blocks, and how CKEditor fits into that ecosystem.
 
 First, it’s essential to recognize that Wagtail offers several built-in block types, but CKEditor isn’t one of them out-of-the-box. This means we'll be leveraging Wagtail's flexibility to create a custom block that uses CKEditor. We accomplish this by utilizing Wagtail’s ability to incorporate custom forms and widgets. Specifically, we will use a `TextBlock` with a custom form widget that swaps the default textarea for a CKEditor instance.
 
@@ -37,7 +37,7 @@ class CustomCKEditorBlock(blocks.TextBlock):
 
 ```
 
-*   **Explanation**: This code creates a new custom block inheriting from `TextBlock`. The crucial part is `forms.CharField(widget=CKEditorWidget())` within the `render_form` method. This overwrites the standard `TextArea` widget with the CKEditor widget provided by `django-ckeditor`. This snippet will render your editor block inside the wagtail backend, it also includes a class that I use later in the response for styling.
+- **Explanation**: This code creates a new custom block inheriting from `TextBlock`. The crucial part is `forms.CharField(widget=CKEditorWidget())` within the `render_form` method. This overwrites the standard `TextArea` widget with the CKEditor widget provided by `django-ckeditor`. This snippet will render your editor block inside the wagtail backend, it also includes a class that I use later in the response for styling.
 
 3.  **Configure CKEditor:** `django-ckeditor` provides a number of settings that you can adjust to customize the toolbar. This is crucial, since you will want a specific set of tools to be shown to the end-user. Instead of defining these settings in `settings.py`, or a separate file, I tend to like creating a settings variable within the block itself. This allows for better modularity and different toolbar options for different blocks. Here's a modified block that contains these settings:
 
@@ -71,7 +71,7 @@ class CustomCKEditorBlock(blocks.TextBlock):
         template = 'blocks/custom_ckeditor_block.html'
 ```
 
-* **Explanation**: Inside this version of the `CustomCKEditorBlock`, we have added `ckeditor_config`, which is a dictionary holding settings for CKEditor. Within that dictionary, you can customize elements such as the toolbar or the editor's height. The new code has made sure to include the `config=self.ckeditor_config` in the `CKEditorWidget` initializer.
+- **Explanation**: Inside this version of the `CustomCKEditorBlock`, we have added `ckeditor_config`, which is a dictionary holding settings for CKEditor. Within that dictionary, you can customize elements such as the toolbar or the editor's height. The new code has made sure to include the `config=self.ckeditor_config` in the `CKEditorWidget` initializer.
 
 4. **Styling the block:** Depending on your site design, you might find it useful to style the wrapper of the block to have a different width or padding for example. Because I included a class name within the block, we can add custom styling in our CSS:
 
@@ -87,7 +87,7 @@ class CustomCKEditorBlock(blocks.TextBlock):
 }
 ```
 
-*   **Explanation**: The `custom-ckeditor-block` class wraps your CKEditor block and can be used to make changes to the look and feel. For example, I have here removed any visual border from the CKEditor widget itself. This is useful, since CKEditor includes it's own visual borders.
+- **Explanation**: The `custom-ckeditor-block` class wraps your CKEditor block and can be used to make changes to the look and feel. For example, I have here removed any visual border from the CKEditor widget itself. This is useful, since CKEditor includes it's own visual borders.
 
 5.  **Using the block:** Once you've set up your custom block, you can use it within your `StreamField` just like any other block. For example, if you had a `content` field defined as `StreamField` on your page model, you could add it like this in `models.py`:
 
@@ -110,14 +110,14 @@ class MyPage(Page):
    ]
 ```
 
-*   **Explanation:** This code creates a content field in a wagtail page that contains the `CustomCKEditorBlock`. As a result, you can use this newly created block when creating content for your site.
+- **Explanation:** This code creates a content field in a wagtail page that contains the `CustomCKEditorBlock`. As a result, you can use this newly created block when creating content for your site.
 
 **Important Considerations**
 
-*   **Security:** Carefully configure your CKEditor toolbar to only allow necessary formatting. Avoid including functionality that could introduce security risks, such as direct HTML editing unless absolutely necessary and fully sanitized.
-*   **Performance:** While CKEditor is a powerful tool, loading multiple instances of it on the same page might impact performance. Optimize your configurations and potentially explore lazy loading if you anticipate many such blocks on a single page.
-*   **Documentation:** Explore the official `django-ckeditor` documentation for an exhaustive list of options. Also, refer to the `wagtail` documentation on `StreamFields` and custom blocks.  For foundational knowledge on implementing custom Django form widgets, the book "Two Scoops of Django" by Daniel Roy Greenfeld and Audrey Roy Greenfeld provides valuable insights.
-*   **HTML Sanitization**: Ensure you understand how Wagtail handles sanitization of incoming HTML to prevent cross-site scripting attacks. It leverages bleach under the hood and is worth digging into.
+- **Security:** Carefully configure your CKEditor toolbar to only allow necessary formatting. Avoid including functionality that could introduce security risks, such as direct HTML editing unless absolutely necessary and fully sanitized.
+- **Performance:** While CKEditor is a powerful tool, loading multiple instances of it on the same page might impact performance. Optimize your configurations and potentially explore lazy loading if you anticipate many such blocks on a single page.
+- **Documentation:** Explore the official `django-ckeditor` documentation for an exhaustive list of options. Also, refer to the `wagtail` documentation on `StreamFields` and custom blocks. For foundational knowledge on implementing custom Django form widgets, the book "Two Scoops of Django" by Daniel Roy Greenfeld and Audrey Roy Greenfeld provides valuable insights.
+- **HTML Sanitization**: Ensure you understand how Wagtail handles sanitization of incoming HTML to prevent cross-site scripting attacks. It leverages bleach under the hood and is worth digging into.
 
 In conclusion, incorporating CKEditor within Wagtail blocks requires creating a custom block using `django-ckeditor`. This involves a few key steps: installing the package, defining a custom block with a CKEditor widget, configuring your desired toolbar, and properly using it within a `StreamField`. This setup provides greater flexibility and control compared to the standard rich text block that wagtail provides, allowing for tailored rich text input. Remember, that the devil is in the details of your configuration. This is not necessarily a plug-and-play type of situation.
 

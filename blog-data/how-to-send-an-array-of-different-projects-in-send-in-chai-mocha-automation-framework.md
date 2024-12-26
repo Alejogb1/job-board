@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-send-an-array-of-different-projects-in-send-in-chai-mocha-automation-framework"
 ---
 
-alright, so you're looking to send an array of project data in your chai mocha tests, right? i've been down this road more times than i care to remember. it's one of those things that sounds simple enough but can quickly turn into a debugging marathon if you're not careful. i remember back in the day, before node had half the tools it does now, i was dealing with a test suite that needed to hit a bunch of different endpoints with varying payloads. that's when i really started to appreciate the power of iterating through data sets.
+, so you're looking to send an array of project data in your chai mocha tests, right? i've been down this road more times than i care to remember. it's one of those things that sounds simple enough but can quickly turn into a debugging marathon if you're not careful. i remember back in the day, before node had half the tools it does now, i was dealing with a test suite that needed to hit a bunch of different endpoints with varying payloads. that's when i really started to appreciate the power of iterating through data sets.
 
 first off, let's be clear about what we're talking about. you've got an array, and each element in that array represents a project. each of these "project" elements, i'm guessing, is an object. these objects need to be sent in a request. think of the api endpoint as a conveyor belt, and we’re feeding it individual “project” boxes.
 
@@ -13,34 +13,34 @@ the basic idea is pretty straightforward: use a loop (like `forEach` or `map` if
 let's start with a simple `forEach` loop. this is the most basic approach, and it works fine for most cases. we assume your test setup is already done and you're using something like `supertest` or `axios` to send your requests. it's also assumed that your `describe` and `it` blocks are correctly set up for your test cases.
 
 ```javascript
-const chai = require('chai');
+const chai = require("chai");
 const expect = chai.expect;
-const request = require('supertest'); // or axios or whatever you use
+const request = require("supertest"); // or axios or whatever you use
 // const app = require('./your-app'); // Replace with your app instance
 
 const projects = [
-    {
-        id: 1,
-        name: "project alpha",
-        description: "this is project alpha"
-    },
-    {
-        id: 2,
-        name: "project beta",
-        description: "this is project beta"
-    },
-    {
-        id: 3,
-        name: "project gamma",
-        description: "this is project gamma"
-    }
+  {
+    id: 1,
+    name: "project alpha",
+    description: "this is project alpha",
+  },
+  {
+    id: 2,
+    name: "project beta",
+    description: "this is project beta",
+  },
+  {
+    id: 3,
+    name: "project gamma",
+    description: "this is project gamma",
+  },
 ];
 
-describe('projects endpoint tests', () => {
-  projects.forEach(project => {
+describe("projects endpoint tests", () => {
+  projects.forEach((project) => {
     it(`should create project with id ${project.id}`, async () => {
       const response = await request(app) // you should replace 'app' with your app variable
-        .post('/projects')
+        .post("/projects")
         .send(project);
 
       expect(response.status).to.equal(201); // or whatever status you expect
@@ -54,85 +54,85 @@ describe('projects endpoint tests', () => {
 now, if you need to do some async operations before or after each request, `async`/`await` can work very well but sometimes it is better to use the promise style. the `map` function can be a real workhorse when dealing with async. this is particularly handy when you want to run multiple requests in parallel or collect the results of each request. i used to run tests that heavily relied on external services that were slow and getting responses concurrently cut the testing time to half.
 
 ```javascript
-const chai = require('chai');
+const chai = require("chai");
 const expect = chai.expect;
-const request = require('supertest'); // or axios
+const request = require("supertest"); // or axios
 // const app = require('./your-app');
 
 const projects = [
-    {
-        id: 1,
-        name: "project alpha",
-        description: "this is project alpha"
-    },
-    {
-        id: 2,
-        name: "project beta",
-        description: "this is project beta"
-    },
-    {
-        id: 3,
-        name: "project gamma",
-        description: "this is project gamma"
-    }
+  {
+    id: 1,
+    name: "project alpha",
+    description: "this is project alpha",
+  },
+  {
+    id: 2,
+    name: "project beta",
+    description: "this is project beta",
+  },
+  {
+    id: 3,
+    name: "project gamma",
+    description: "this is project gamma",
+  },
 ];
 
-
-describe('projects endpoint tests', () => {
-  projects.map(project =>
+describe("projects endpoint tests", () => {
+  projects.map((project) =>
     it(`should create project with id ${project.id}`, () => {
       return request(app) // you should replace 'app' with your app variable
-        .post('/projects')
+        .post("/projects")
         .send(project)
-        .then(response => {
-            expect(response.status).to.equal(201); // or whatever you expect
-            expect(response.body.id).to.equal(project.id);
-            // add more assertions based on the response here
+        .then((response) => {
+          expect(response.status).to.equal(201); // or whatever you expect
+          expect(response.body.id).to.equal(project.id);
+          // add more assertions based on the response here
         });
-      })
-    );
+    })
+  );
 });
 ```
 
 also, if the responses of each request needs to be chained the `reduce` function is the goto choice, it can be used to sequence requests, but you need to be cautious about this because a request can take longer and you can end with tests taking a long time. its the last resort if the other methods fail.
 
 ```javascript
-const chai = require('chai');
+const chai = require("chai");
 const expect = chai.expect;
-const request = require('supertest'); // or axios
+const request = require("supertest"); // or axios
 // const app = require('./your-app');
 
 const projects = [
-    {
-        id: 1,
-        name: "project alpha",
-        description: "this is project alpha"
-    },
-    {
-        id: 2,
-        name: "project beta",
-        description: "this is project beta"
-    },
-    {
-        id: 3,
-        name: "project gamma",
-        description: "this is project gamma"
-    }
+  {
+    id: 1,
+    name: "project alpha",
+    description: "this is project alpha",
+  },
+  {
+    id: 2,
+    name: "project beta",
+    description: "this is project beta",
+  },
+  {
+    id: 3,
+    name: "project gamma",
+    description: "this is project gamma",
+  },
 ];
 
-
-describe('projects endpoint tests', () => {
-  projects.reduce((chain, project) =>
-    chain.then(() =>
-      request(app) // you should replace 'app' with your app variable
-        .post('/projects')
-        .send(project)
-        .then(response => {
-          expect(response.status).to.equal(201); // or whatever you expect
-          expect(response.body.id).to.equal(project.id);
+describe("projects endpoint tests", () => {
+  projects.reduce(
+    (chain, project) =>
+      chain.then(() =>
+        request(app) // you should replace 'app' with your app variable
+          .post("/projects")
+          .send(project)
+          .then((response) => {
+            expect(response.status).to.equal(201); // or whatever you expect
+            expect(response.body.id).to.equal(project.id);
             // add more assertions based on the response here
-        })
-    ), Promise.resolve()
+          })
+      ),
+    Promise.resolve()
   );
 });
 ```

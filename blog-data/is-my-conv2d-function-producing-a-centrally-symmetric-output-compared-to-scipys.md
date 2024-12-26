@@ -4,21 +4,21 @@ date: "2024-12-23"
 id: "is-my-conv2d-function-producing-a-centrally-symmetric-output-compared-to-scipys"
 ---
 
-Okay, let's tackle this. It's something I’ve definitely bumped into before, specifically back when I was optimizing some custom CNN layers for a research project. The issue of unexpected symmetry in convolution outputs can stem from several subtle differences in implementation details. It’s not always immediately apparent, so let’s break it down systematically.
+, let's tackle this. It's something I’ve definitely bumped into before, specifically back when I was optimizing some custom CNN layers for a research project. The issue of unexpected symmetry in convolution outputs can stem from several subtle differences in implementation details. It’s not always immediately apparent, so let’s break it down systematically.
 
 Your core question, as I understand it, is whether your custom 2D convolution implementation is generating a result that exhibits central symmetry when compared to the output from `scipy.signal.convolve2d`, and specifically, if this is unintended or not. This usually points to how padding, stride, and kernel application are handled, particularly with regards to boundary conditions. SciPy's convolution function is meticulously implemented and therefore serves as a dependable benchmark.
 
-The key to understanding a possible discrepancy lies within how both implementations treat the edges of the input matrix. If you apply padding, and particularly if your padding is *not* symmetric, or if you're using a non-standard kernel origin, you can get output that appears skewed or, as you're observing, symmetrically biased, depending on the specifics of the operations. In SciPy's `convolve2d`, the default mode is 'full', which implies output sizes larger than the input, incorporating the impact of the kernel extending beyond the original input. The default behavior includes implicit zero padding, although this can be altered. Your own implementation may, or may not, behave equivalently.
+The key to understanding a possible discrepancy lies within how both implementations treat the edges of the input matrix. If you apply padding, and particularly if your padding is _not_ symmetric, or if you're using a non-standard kernel origin, you can get output that appears skewed or, as you're observing, symmetrically biased, depending on the specifics of the operations. In SciPy's `convolve2d`, the default mode is 'full', which implies output sizes larger than the input, incorporating the impact of the kernel extending beyond the original input. The default behavior includes implicit zero padding, although this can be altered. Your own implementation may, or may not, behave equivalently.
 
 Here's a breakdown of key points to check in your code:
 
-1. **Padding strategy:** Is your padding symmetric? Are you adding zeros, or using some form of replication, reflection, or circular padding? The 'full' mode of SciPy expands the output dimensions. Ensure your custom function does the equivalent. If you are using, say, only left-side padding, and SciPy uses balanced padding (e.g. 'same' mode, which calculates padding to return an output the same size as input for stride 1), your result *will* be different.
+1. **Padding strategy:** Is your padding symmetric? Are you adding zeros, or using some form of replication, reflection, or circular padding? The 'full' mode of SciPy expands the output dimensions. Ensure your custom function does the equivalent. If you are using, say, only left-side padding, and SciPy uses balanced padding (e.g. 'same' mode, which calculates padding to return an output the same size as input for stride 1), your result _will_ be different.
 
 2. **Kernel Origin/Anchor:** This is less obvious. SciPy, like most convolution operations, assumes that the center of the kernel is the 'anchor'. If your implementation doesn't maintain the center as the anchor or if you are flipping the kernel, you would get some strange, yet deterministic, results, often symmetric, relative to what you'd expect.
 
 3. **Stride and Dilation:** Ensure both your implementation and your reference (SciPy) are using the same stride and dilation values (if any). In the absence of any specified stride in scipy, the default is 1.
 
-4. **Data Type Precision:** Although not a direct cause for symmetry, precision difference can create differences. SciPy uses double-precision floating point by default. Your implementation might be using single-precision. Although this is unlikely to cause symmetry, it might cause *different* results, which could *appear* symmetric with respect to the reference due to how rounding errors propagate.
+4. **Data Type Precision:** Although not a direct cause for symmetry, precision difference can create differences. SciPy uses double-precision floating point by default. Your implementation might be using single-precision. Although this is unlikely to cause symmetry, it might cause _different_ results, which could _appear_ symmetric with respect to the reference due to how rounding errors propagate.
 
 Let's examine a few code snippets to help elucidate these points. I'll use Python for demonstration, as it's a language common to many of us.
 
@@ -105,6 +105,7 @@ Here, the core mistake is indexing the kernel in reverse `kernel[kernel_rows-1 -
 **Example 3: Correct Implementation**
 
 This is a correct, but more explicit version of the same padding and convolution strategy used by `scipy.signal.convolve2d(...,mode='full')`:
+
 ```python
 import numpy as np
 from scipy.signal import convolve2d
@@ -142,8 +143,8 @@ This example highlights the need to have a good grasp of how the kernel is appli
 
 For deeper understanding, I would strongly recommend the following resources:
 
-*   **"Digital Image Processing" by Rafael C. Gonzalez and Richard E. Woods:** This is a foundational text in image processing and covers convolution in detail, including the impact of different padding and boundary conditions.
-*   **"Computer Vision: Algorithms and Applications" by Richard Szeliski:** This offers a more comprehensive view of computer vision techniques and includes a solid overview of convolution in different contexts, focusing on practical application and implementation strategies.
-*   **The documentation for `scipy.signal`:** The official documentation for SciPy provides extremely specific and accurate information on how its convolution functions operate. When in doubt, that's always a great place to look.
+- **"Digital Image Processing" by Rafael C. Gonzalez and Richard E. Woods:** This is a foundational text in image processing and covers convolution in detail, including the impact of different padding and boundary conditions.
+- **"Computer Vision: Algorithms and Applications" by Richard Szeliski:** This offers a more comprehensive view of computer vision techniques and includes a solid overview of convolution in different contexts, focusing on practical application and implementation strategies.
+- **The documentation for `scipy.signal`:** The official documentation for SciPy provides extremely specific and accurate information on how its convolution functions operate. When in doubt, that's always a great place to look.
 
 In conclusion, when dealing with such issues, pay close attention to the subtleties in how padding is applied, the kernel's origin and application, and the resulting output size calculation. You need to ensure that the custom and reference implementations operate on identical or logically equivalent principles, particularly with regard to boundary handling. It's often the details that make all the difference.

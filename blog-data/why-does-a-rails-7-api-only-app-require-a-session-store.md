@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-a-rails-7-api-only-app-require-a-session-store"
 ---
 
-Okay, let's talk about session stores in Rails API-only applications. It's a topic that often trips up developers new to building solely API-focused services with Rails, and I recall facing this exact confusion when I transitioned a large monolithic application into a series of microservices a few years back. The initial instinct, understandably, is: if I'm only returning json, why on earth would I need a session store? It feels counterintuitive.
+, let's talk about session stores in Rails API-only applications. It's a topic that often trips up developers new to building solely API-focused services with Rails, and I recall facing this exact confusion when I transitioned a large monolithic application into a series of microservices a few years back. The initial instinct, understandably, is: if I'm only returning json, why on earth would I need a session store? It feels counterintuitive.
 
 The core reason, fundamentally, is that even in the absence of traditional server-rendered views, Rails’ underlying framework still relies on a middleware stack that inherently manages session handling. It's part of the framework's DNA, stemming from its heritage as a web application framework. It's not really about storing user login data, in the classical sense, for your single page application or mobile client, but more about how Rails is structured, and how its request lifecycle works. The middleware that deals with sessions is always invoked when a request arrives, regardless of the type of response you send back - be it html or json. If a session store isn't configured properly, you'll encounter issues, potentially including errors or unexpected behaviour in your application.
 
@@ -65,7 +65,7 @@ else
 end
 ```
 
-As seen above, there is configuration for production and development environments respectively. In development, the default cookie based session storage is okay, however in production you would need to configure the domain, security flags, expiration, and any other attributes specific to your use case.
+As seen above, there is configuration for production and development environments respectively. In development, the default cookie based session storage is , however in production you would need to configure the domain, security flags, expiration, and any other attributes specific to your use case.
 
 The crucial point here isn't whether your application directly uses session data. It's that Rails' session middleware will always be active. Thus, you've got to set up an actual store (even if it’s just an in-memory one for development or testing) to prevent it from causing runtime issues. It’s not about the specific use of the session to store user details, it’s the very existence and execution of the session middleware that necessitates the configuration.
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-debug-a-node-app-in-intellij-with-an-aws-profile"
 ---
 
-well, alright then, let's talk about debugging node apps in intellij while juggling aws profiles. i've been down this road more times than i care to remember, and it can definitely feel like you're chasing a ghost at times. it's one of those things that seems straightforward on paper, but the devil is in the details of configuration, environment variables, and aws sdk quirks. so, i will just give you my personal experience and a way i made it work, and you may find it useful.
+well, then, let's talk about debugging node apps in intellij while juggling aws profiles. i've been down this road more times than i care to remember, and it can definitely feel like you're chasing a ghost at times. it's one of those things that seems straightforward on paper, but the devil is in the details of configuration, environment variables, and aws sdk quirks. so, i will just give you my personal experience and a way i made it work, and you may find it useful.
 
 first off, the core problem usually boils down to this: your intellij debugger needs to be pointed at the correct process, and that process needs to have the correct aws credentials to interact with aws services. pretty simple stated, not so simple in practice. when you're running locally, typically, you would be relying on your default aws profile, but when debugging a specific app running within a process spawned by intellij, things get a little bit complicated. you have to make sure the correct aws profile is loaded by the app that is being debugged.
 
@@ -20,13 +20,14 @@ this part seems obvious, but double-checking is a good habit to get into. make s
 
 **2. create an intellij run configuration for your node app.**
 
-in intellij, go to *run* > *edit configurations*. add a new *node.js* configuration. configure the `javascript file` path to your main entry point of the app, the `working directory` should be where your `package.json` is located, and any required parameters in the `application parameters` input. at this point you would test it by clicking run, it should start your application. if it does not work, fix the problems you find before trying to debug.
+in intellij, go to _run_ > _edit configurations_. add a new _node.js_ configuration. configure the `javascript file` path to your main entry point of the app, the `working directory` should be where your `package.json` is located, and any required parameters in the `application parameters` input. at this point you would test it by clicking run, it should start your application. if it does not work, fix the problems you find before trying to debug.
 
 **3. set the aws profile as an environment variable in your intellij run configuration.**
 
-here's where the magic happens. under the *environment variables* section of your intellij run configuration, add a new variable:
-  *   name: `aws_profile`
-  *   value: the name of your aws profile, e.g., `my-dev-profile`.
+here's where the magic happens. under the _environment variables_ section of your intellij run configuration, add a new variable:
+
+- name: `aws_profile`
+- value: the name of your aws profile, e.g., `my-dev-profile`.
 
 this environment variable will make sure that your node application knows which profile to use from your `~/.aws/credentials` file. this avoids the common problem of the aws sdk trying to fallback to default profiles or not finding any credentials at all.
 
@@ -62,7 +63,7 @@ here’s a simple example of how you might configure your `package.json` to enab
     "start": "node app.js",
     "start:debug": "node --inspect=9229 --nolazy app.js"
   },
-    "dependencies": {
+  "dependencies": {
     "aws-sdk": "^2.1561.0"
   }
 }
@@ -71,7 +72,7 @@ here’s a simple example of how you might configure your `package.json` to enab
 and here’s a basic `app.js` file which uses the `aws sdk`. please make sure you install the aws-sdk dependency with: `npm i aws-sdk`:
 
 ```javascript
-const AWS = require('aws-sdk');
+const AWS = require("aws-sdk");
 
 const s3 = new AWS.S3();
 
@@ -105,17 +106,17 @@ this configuration will start your node app and the debugger will attach to the 
 
 if you are still having problems you could try the following:
 
-*   **check your aws credentials path**: the aws sdk looks for the `.aws` directory in your home directory (`~/.aws`). if the directory is not there, or the `credentials` file is not there, it cannot read your credentials, so double check that the directory and file are in the right place.
-*   **double check the aws profile name**: ensure the profile you set in your intellij run configuration environment variable matches exactly the name in your aws configuration file. small typos can give you a headache.
-*   **use `console.log`**: if all else fails, sprinkle `console.log` statements in your node app to verify the value of your environment variables, and to check that your code is actually getting called and the aws sdk is actually trying to make calls. print the output of the  `process.env.aws_profile` to see which profile the application is trying to use.
-*   **check that your debug port is not being used by another application**: the default debug port in node is 9229, if it is being used by another application, you should use a different port. you can change the port in the `scripts` section of your `package.json`. and set the corresponding port in the intellij run configurations.
-*   **ensure your aws sdk is up to date**: sometimes older versions of the aws sdk have issues with finding the aws profile using environment variables. you could try updating your aws sdk using `npm i aws-sdk@latest`.
+- **check your aws credentials path**: the aws sdk looks for the `.aws` directory in your home directory (`~/.aws`). if the directory is not there, or the `credentials` file is not there, it cannot read your credentials, so double check that the directory and file are in the right place.
+- **double check the aws profile name**: ensure the profile you set in your intellij run configuration environment variable matches exactly the name in your aws configuration file. small typos can give you a headache.
+- **use `console.log`**: if all else fails, sprinkle `console.log` statements in your node app to verify the value of your environment variables, and to check that your code is actually getting called and the aws sdk is actually trying to make calls. print the output of the `process.env.aws_profile` to see which profile the application is trying to use.
+- **check that your debug port is not being used by another application**: the default debug port in node is 9229, if it is being used by another application, you should use a different port. you can change the port in the `scripts` section of your `package.json`. and set the corresponding port in the intellij run configurations.
+- **ensure your aws sdk is up to date**: sometimes older versions of the aws sdk have issues with finding the aws profile using environment variables. you could try updating your aws sdk using `npm i aws-sdk@latest`.
 
 **resources:**
 
 rather than just linking to websites, i’d recommend a couple of books that have been very valuable for me in understanding these underlying mechanisms:
 
-*   “programming aws sdk for javascript” by jesse wolgamott: this book goes in-depth on the aws sdk and how it handles authentication and configuration. a highly recommended read.
-*   “node.js design patterns” by mario casciaro and luciano mammino: understanding how node apps work under the hood will help you debug much faster. especially if you are using asyn/await, promises or workers.
+- “programming aws sdk for javascript” by jesse wolgamott: this book goes in-depth on the aws sdk and how it handles authentication and configuration. a highly recommended read.
+- “node.js design patterns” by mario casciaro and luciano mammino: understanding how node apps work under the hood will help you debug much faster. especially if you are using asyn/await, promises or workers.
 
 debugging can be a painful process, but with the proper setup and understanding of how the pieces fit together, you'll become much more efficient at it. i've spent many hours in front of my screen cursing at error messages, so take it from me, always remember to verify all the assumptions, and to log everything that you can. good luck, and let me know if there's anything else i can help with. hopefully, this will help you from not smashing your keyboard.

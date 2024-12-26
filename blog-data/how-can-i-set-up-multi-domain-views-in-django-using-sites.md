@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-set-up-multi-domain-views-in-django-using-sites"
 ---
 
-Alright, let's tackle multi-domain setups in Django, leveraging the `django.contrib.sites` framework. This isn't an uncommon challenge, and I've definitely been down this path a few times, most notably when migrating a monolithic app into separate front-end experiences for distinct client segments. It can be a little tricky if you're not used to thinking about your application from a site-aware perspective, but the payoff is significant in terms of flexibility and maintainability.
+, let's tackle multi-domain setups in Django, leveraging the `django.contrib.sites` framework. This isn't an uncommon challenge, and I've definitely been down this path a few times, most notably when migrating a monolithic app into separate front-end experiences for distinct client segments. It can be a little tricky if you're not used to thinking about your application from a site-aware perspective, but the payoff is significant in terms of flexibility and maintainability.
 
 The core concept behind using the `Sites` framework is that it allows you to associate parts of your application's logic—specifically, views, models, and settings—with individual domains. Each domain is represented as a `Site` object within your database. Now, this isn't simply about domain names; it's more about separating logical units of your application by domain, which allows a single Django instance to serve multiple, effectively independent, web applications.
 
@@ -89,11 +89,13 @@ MIDDLEWARE = [
      ...,
 ]
 ```
+
 Here we’re defining a site settings middleware that makes specific settings available via request.site_settings. This demonstrates how to load settings dynamically by site. You then use `request.site_settings['MY_API_KEY']` etc within your code.
 
 **Example 3: Dynamic URL Resolution**
 
 Let’s say your application needs different landing pages based on the domain and a user is referred via a token:
+
 ```python
 #urls.py
 
@@ -104,6 +106,7 @@ urlpatterns = [
     path('landing/<str:token>/', views.landing_page, name='landing_page'),
 ]
 ```
+
 ```python
 # views.py
 from django.shortcuts import render, redirect

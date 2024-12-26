@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-make-a-background-transparent-using-a-mask-in-a-java-canvas-and-paint-android---is-it-possible-to-declare-an-alpha-mask"
 ---
 
-alright, so you're looking at making a background transparent using a mask on an android canvas, and wondering about alpha masks specifically. i've been there, wrestled with this beast a few times myself. it's definitely doable, and yes, you can declare an alpha mask, but it's not *quite* as straightforward as just setting a transparency value on a single paint object.
+, so you're looking at making a background transparent using a mask on an android canvas, and wondering about alpha masks specifically. i've been there, wrestled with this beast a few times myself. it's definitely doable, and yes, you can declare an alpha mask, but it's not _quite_ as straightforward as just setting a transparency value on a single paint object.
 
 first off, let's talk about what's actually happening. a canvas in android is essentially a surface on which you draw. think of it like a digital piece of paper. when you draw something, you're essentially layering paint onto that paper. what we want to achieve is selectively make parts of that paper (the canvas) transparent based on a mask.
 

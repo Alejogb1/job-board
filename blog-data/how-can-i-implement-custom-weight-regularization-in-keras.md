@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-implement-custom-weight-regularization-in-keras"
 ---
 
-Alright, let's talk about custom weight regularization in Keras. I remember back in 2017, working on a particularly tricky convolutional network for some image classification tasks. I kept hitting these plateaus, the model overfitting like crazy, and standard l1 or l2 just weren't cutting it. That's where I really started to delve deep into crafting custom regularization strategies. It’s more involved than flipping a switch, but the control it offers can be a game-changer, especially when standard methods aren't providing the needed constraints.
+, let's talk about custom weight regularization in Keras. I remember back in 2017, working on a particularly tricky convolutional network for some image classification tasks. I kept hitting these plateaus, the model overfitting like crazy, and standard l1 or l2 just weren't cutting it. That's where I really started to delve deep into crafting custom regularization strategies. It’s more involved than flipping a switch, but the control it offers can be a game-changer, especially when standard methods aren't providing the needed constraints.
 
 So, the core idea is this: Keras, at its heart, is built on a modular, flexible design. You're not restricted to the built-in regularizers. The key is understanding that regularization, in essence, is a process of adding a term to the loss function that penalizes certain characteristics of the model's weights. We're going to leverage Keras' ability to accept custom loss terms to implement our regularization.
 
@@ -147,7 +147,7 @@ class InputDependentActivityRegularizedDense(layers.Layer):
         output = tf.matmul(inputs, self.w) + self.b
         if self.activation:
             output = self.activation(output)
-        
+
         output_reg = tf.reduce_sum(tf.abs(output) ** 2)
         self.add_loss(0.001 * output_reg)
         return output

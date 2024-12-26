@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "db-implementation-how-to-start"
 ---
 
-Okay so you want to dive into database implementation right Been there done that a few times trust me it's a wild ride but a super rewarding one if you're into that sort of thing.
+you want to dive into database implementation right Been there done that a few times trust me it's a wild ride but a super rewarding one if you're into that sort of thing.
 
 First off forget everything you think you know about using databases seriously forget it because you are going to be neck deep in how they work which is a whole different ball game. It's like the difference between driving a car and building the engine.
 
@@ -98,6 +98,7 @@ class SimpleTransactionDatabase:
       self.transaction_buffer={}
 
 ```
+
 This is very simple but it shows the fundamentals. This simple transaction database keeps track of all changes made during a transaction. And it only applies these changes in the `commit_transaction` phase. If anything happens during the transaction you can simply rollback the changes with the `rollback_transaction` method. No actual disk access is happening here this is all in memory but the concept remains. You can see how this needs to be modified to deal with disk storage. You would need to manage some kind of log file where you log the transaction before committing it. But that is a topic for another deep dive.
 
 Now here is the funny bit I almost forgot about. Databases are like teenage relationships they are complex hard to understand sometimes you are happy sometimes frustrated and eventually one is not compatible with the other and you need to move on. So I hope this was the only joke.

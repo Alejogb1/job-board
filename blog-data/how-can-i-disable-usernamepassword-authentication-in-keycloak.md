@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-disable-usernamepassword-authentication-in-keycloak"
 ---
 
-Alright, let's tackle this. Disabling username/password authentication in Keycloak isn't a single toggle; it requires a careful understanding of the authentication flows and how Keycloak handles identity brokering. In my experience, I've seen this requested primarily in two contexts: either migrating to a solely federated authentication model or simplifying a development/testing environment. Neither is trivial, and both require a solid plan to prevent inadvertently locking out users, especially in production scenarios.
+, let's tackle this. Disabling username/password authentication in Keycloak isn't a single toggle; it requires a careful understanding of the authentication flows and how Keycloak handles identity brokering. In my experience, I've seen this requested primarily in two contexts: either migrating to a solely federated authentication model or simplifying a development/testing environment. Neither is trivial, and both require a solid plan to prevent inadvertently locking out users, especially in production scenarios.
 
 My journey with this started during a rather complex migration project for a financial services application. We were moving away from local database user management to Azure AD for all authentications. The initial attempt at simply disabling the username/password login form directly resulted in a frustrating lockout situation, underscoring the importance of understanding the underlying authentication mechanisms. Therefore, let’s walk through how to accomplish this while maintaining a functional system.
 
@@ -14,7 +14,7 @@ Let’s break down the common strategies.
 
 **Strategy 1: Modifying the Browser Flow (Less Recommended for Full Disable)**
 
-This is the path of least resistance but not the most robust for a complete disabling. Within the Keycloak administration console, navigate to *Authentication* -> *Flows*. Select *browser flow*. You will see a sequence of actions. You might find the *Username Password Form* under the 'Browser Forms' provider. While you could *remove* this, it's a brittle approach because other flows might rely on it. More importantly, if no other authentication option is present, users simply will not be able to log in. A much more sound approach here would be to configure alternative authentication paths like an Identity Provider and configure the flows such that the username password step is skipped when a user logs in through an IdP.
+This is the path of least resistance but not the most robust for a complete disabling. Within the Keycloak administration console, navigate to _Authentication_ -> _Flows_. Select _browser flow_. You will see a sequence of actions. You might find the _Username Password Form_ under the 'Browser Forms' provider. While you could _remove_ this, it's a brittle approach because other flows might rely on it. More importantly, if no other authentication option is present, users simply will not be able to log in. A much more sound approach here would be to configure alternative authentication paths like an Identity Provider and configure the flows such that the username password step is skipped when a user logs in through an IdP.
 
 **Example Code Snippet (Keycloak Admin CLI - `kcadm`) to retrieve an existing browser flow and make changes (illustrative and not complete removal of username/password):**
 
@@ -33,17 +33,18 @@ kcadm update flow-execution -r myrealm ${username_password_execution_id} -o disa
 # Verify the updated execution
 kcadm get flow-executions -r myrealm ${browser_flow_id}  --query "providerId=auth-username-password-form"
 ```
-*Note:  This cli example requires `jq` to parse the JSON outputs and you might need to use different realm names or ids in the command. Disabling the execution is not a full removal and it can be easily reverted. This highlights why simply modifying a built-in flow is often insufficient.*
+
+_Note: This cli example requires `jq` to parse the JSON outputs and you might need to use different realm names or ids in the command. Disabling the execution is not a full removal and it can be easily reverted. This highlights why simply modifying a built-in flow is often insufficient._
 
 **Strategy 2: Utilizing Alternative Flows and Identity Providers (Preferred Approach)**
 
-The more reliable strategy is to configure an *Identity Provider* (IdP) and modify flows to bypass the username/password form if the user authenticates through the IdP. This approach provides a clear path and ensures that you are not entirely dependent on username/password authentication. Keycloak provides pre-built support for numerous IdPs like Google, GitHub, Azure AD, etc. You can configure one or more IdPs and then configure your *Browser* flow to utilize it.
+The more reliable strategy is to configure an _Identity Provider_ (IdP) and modify flows to bypass the username/password form if the user authenticates through the IdP. This approach provides a clear path and ensures that you are not entirely dependent on username/password authentication. Keycloak provides pre-built support for numerous IdPs like Google, GitHub, Azure AD, etc. You can configure one or more IdPs and then configure your _Browser_ flow to utilize it.
 
 Here’s the process:
 
-1.  **Configure an IdP:** In the Keycloak Admin console, navigate to *Identity Providers*. Add the provider that you need, for example, *OpenID Connect v1.0*. Keycloak will ask you for details about your IdP configuration - Client ID, Client Secret, endpoints, etc. Ensure you obtain these details from your IdP.
-2.  **Adjust Browser Flow:** Edit your *browser flow* and add the *Identity Provider Redirector* as the *first* authenticator. Configure it so that it is set to trigger for an unspecified provider. Alternatively, you can create a separate flow (e.g., ‘IdP Browser Flow’) and set it as the default browser flow for your realm.
-3.  **Set Default Authentication:** In your realm settings, under the *Authentication* tab, set this new browser flow (if you created one) as the *Browser Flow* or make sure that your browser flow has a conditional step that is met when the user attempts to log in.
+1.  **Configure an IdP:** In the Keycloak Admin console, navigate to _Identity Providers_. Add the provider that you need, for example, _OpenID Connect v1.0_. Keycloak will ask you for details about your IdP configuration - Client ID, Client Secret, endpoints, etc. Ensure you obtain these details from your IdP.
+2.  **Adjust Browser Flow:** Edit your _browser flow_ and add the _Identity Provider Redirector_ as the _first_ authenticator. Configure it so that it is set to trigger for an unspecified provider. Alternatively, you can create a separate flow (e.g., ‘IdP Browser Flow’) and set it as the default browser flow for your realm.
+3.  **Set Default Authentication:** In your realm settings, under the _Authentication_ tab, set this new browser flow (if you created one) as the _Browser Flow_ or make sure that your browser flow has a conditional step that is met when the user attempts to log in.
 
 **Example Code Snippet (Keycloak Admin CLI - Illustrative, assumes Identity Provider "MyAzureAD" is already configured):**
 
@@ -65,9 +66,9 @@ This setup ensures that users are redirected to the configured IdP upon initiati
 
 For complete disabling of username/password, particularly useful in pure federated environments or specific test instances, create a dedicated authentication flow. This will give you a clear separation, making sure there's no accidental overlap with other authentication methods.
 
-1.  **Create New Flow:** Under *Authentication* -> *Flows*, create a new flow, e.g., 'Federated Flow'.
-2.  **Add IdP Redirector:** Make the *Identity Provider Redirector* the only authenticator in this flow. Configure it to handle all IdPs, or a specific one.
-3.  **Set as Default:** Under *Authentication*, set the *Browser Flow* for the realm (or the client if you need client-specific auth) to this new flow. Ensure that no other clients use the default browser flow that might have password-based authentication enabled.
+1.  **Create New Flow:** Under _Authentication_ -> _Flows_, create a new flow, e.g., 'Federated Flow'.
+2.  **Add IdP Redirector:** Make the _Identity Provider Redirector_ the only authenticator in this flow. Configure it to handle all IdPs, or a specific one.
+3.  **Set as Default:** Under _Authentication_, set the _Browser Flow_ for the realm (or the client if you need client-specific auth) to this new flow. Ensure that no other clients use the default browser flow that might have password-based authentication enabled.
 
 **Example Code Snippet (Keycloak Admin CLI - Illustrative, creates new flow and sets for the realm):**
 
@@ -92,14 +93,14 @@ By configuring this new flow as default, all authentication attempts will redire
 
 **Important Notes**
 
-*   Always test changes thoroughly in a non-production environment.
-*   Have a backup plan to regain access if you inadvertently misconfigure settings.
-*   Use an alternative admin authentication method if you need to make changes.
+- Always test changes thoroughly in a non-production environment.
+- Have a backup plan to regain access if you inadvertently misconfigure settings.
+- Use an alternative admin authentication method if you need to make changes.
 
 **Recommended Resources:**
 
-*   **The official Keycloak documentation:** It is the definitive guide for all aspects of the system. Specifically, the sections on authentication flows and identity brokering.
-*   **“Keycloak: Identity Management for Modern Applications” by Pedro Igor Silva:** A great starting point that provides a practical overview of Keycloak's core concepts.
-*   **RFC 6749 (OAuth 2.0):** Essential for understanding the fundamental flows involved in identity brokering and authentication.
+- **The official Keycloak documentation:** It is the definitive guide for all aspects of the system. Specifically, the sections on authentication flows and identity brokering.
+- **“Keycloak: Identity Management for Modern Applications” by Pedro Igor Silva:** A great starting point that provides a practical overview of Keycloak's core concepts.
+- **RFC 6749 (OAuth 2.0):** Essential for understanding the fundamental flows involved in identity brokering and authentication.
 
 In conclusion, disabling username/password authentication in Keycloak requires more than just a simple checkbox. It requires a careful understanding of the authentication flows, an informed configuration of your IdPs, and a planned rollout. By taking a structured approach, using new flows, and thorough testing, you can successfully disable this authentication mechanism and migrate to a more modern approach. Remember that direct modifications to core flows can be risky and a dedicated flow strategy offers both safety and clarity in the long run.

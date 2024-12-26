@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-upload-documents-to-a-user-model-with-expiry-dates-using-active-storage"
 ---
 
-alright, let's talk about uploading documents to a user model with expiry dates using active storage. i've been down this road a few times, and it always seems a bit trickier than it first appears. it's one of those things that looks straightforward on the surface, but the devil, as they say, is in the details.
+, let's talk about uploading documents to a user model with expiry dates using active storage. i've been down this road a few times, and it always seems a bit trickier than it first appears. it's one of those things that looks straightforward on the surface, but the devil, as they say, is in the details.
 
 so, first off, you're dealing with a few different things here: active storage, which handles the file uploads, and then the expiry logic, which we'll need to implement ourselves. active storage is great for handling the actual storage of the files on different backends (like aws s3, google cloud storage, or even just locally) but it doesn't have any built-in functionality for setting expiration dates or automatically cleaning up expired documents. that's what we'll be tackling.
 
@@ -49,12 +49,12 @@ end
 
 in this snippet:
 
-*   `has_one_attached :document` sets up the active storage attachment.
-*   `document_expires_in` is a virtual attribute which holds the duration for document validity, it does not save to the db.
-*   `document_expires_at` will be the timestamp when the document expires, this one saves to the db.
-*   `before_save :set_document_expires_at, if: :document_expires_in_changed?` makes sure that the expiration timestamp is calculated only if the expiry duration is changed.
-*   `document_expired?` checks if the document is expired.
-*   `document_with_expiry_upload` is our custom method which is more like a helper method that receives the file to upload and how long will it be valid, it will save the duration and then do the necessary steps.
+- `has_one_attached :document` sets up the active storage attachment.
+- `document_expires_in` is a virtual attribute which holds the duration for document validity, it does not save to the db.
+- `document_expires_at` will be the timestamp when the document expires, this one saves to the db.
+- `before_save :set_document_expires_at, if: :document_expires_in_changed?` makes sure that the expiration timestamp is calculated only if the expiry duration is changed.
+- `document_expired?` checks if the document is expired.
+- `document_with_expiry_upload` is our custom method which is more like a helper method that receives the file to upload and how long will it be valid, it will save the duration and then do the necessary steps.
 
 **the controller**
 
@@ -85,8 +85,8 @@ end
 
 key aspects here:
 
-*   we are checking for the presence of document and expiry duration params before using our custom method.
-*   if the document is present we calculate the expiry time in days to an integer and send it together with the document to our custom method.
+- we are checking for the presence of document and expiry duration params before using our custom method.
+- if the document is present we calculate the expiry time in days to an integer and send it together with the document to our custom method.
 
 **the cleanup job**
 
@@ -109,9 +109,9 @@ end
 
 this job:
 
-*   finds each user, the `find_each` method is preferred here due to performance reasons over `User.all`.
-*   checks if the user has a document attached and is expired.
-*   if so, it purges the attachment from active storage and removes the expiry timestamp too, so it doesn't try to delete it again.
+- finds each user, the `find_each` method is preferred here due to performance reasons over `User.all`.
+- checks if the user has a document attached and is expired.
+- if so, it purges the attachment from active storage and removes the expiry timestamp too, so it doesn't try to delete it again.
 
 **scheduling the job**
 
@@ -127,10 +127,10 @@ this code would schedule the job to run every day at 4 am.
 
 **things to consider**
 
-*   **error handling:** you'll probably want to add some error handling in your background job, just in case something fails. catching exceptions would be better to know if a process failed.
-*   **file sizes:** active storage handles file sizes pretty well, but you might want to put some limitations to your uploads.
-*   **storage backend:** choosing the proper storage backend is crucial to avoid problems, using local storage is generally not a good idea for production environments.
-*   **testing:** make sure to test everything thoroughly specially the cleanup job. a failing job can lead to problems.
+- **error handling:** you'll probably want to add some error handling in your background job, just in case something fails. catching exceptions would be better to know if a process failed.
+- **file sizes:** active storage handles file sizes pretty well, but you might want to put some limitations to your uploads.
+- **storage backend:** choosing the proper storage backend is crucial to avoid problems, using local storage is generally not a good idea for production environments.
+- **testing:** make sure to test everything thoroughly specially the cleanup job. a failing job can lead to problems.
 
 **other options (but not so great)**
 
@@ -140,10 +140,10 @@ there are other ways to handle this. for example, you could try to delete the do
 
 to further your understanding of this you can check this out:
 
-*   the official rails guide on active storage: i know it's not a book but if you didn't go over this you should definitely do it, it provides good coverage about the basics of active storage and the different features it provides.
-*   the 'working with active storage in rails' talk from 'gorails'. it provides some examples and explanations that you might find useful.
-*   the 'designing data-intensive applications' book by martin kleppmann: it's not about rails or active storage, but it's a good read about the general problems about data storage, and how to design applications to handle data storage problems better, it gives you a wider view of the problems we have to solve.
-*   the book 'patterns of enterprise application architecture' by martin fowler: you may find that some patterns of this book are useful, this is a classic and may help to design applications better.
+- the official rails guide on active storage: i know it's not a book but if you didn't go over this you should definitely do it, it provides good coverage about the basics of active storage and the different features it provides.
+- the 'working with active storage in rails' talk from 'gorails'. it provides some examples and explanations that you might find useful.
+- the 'designing data-intensive applications' book by martin kleppmann: it's not about rails or active storage, but it's a good read about the general problems about data storage, and how to design applications to handle data storage problems better, it gives you a wider view of the problems we have to solve.
+- the book 'patterns of enterprise application architecture' by martin fowler: you may find that some patterns of this book are useful, this is a classic and may help to design applications better.
 
 oh, and one more thing. a sql query walks into a bar, joins two tables, and orders a drink. but when the bartender asks why it's there, it simply replies: "i don't know, i was just following instructions!"
 

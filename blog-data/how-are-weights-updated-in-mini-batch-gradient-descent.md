@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-are-weights-updated-in-mini-batch-gradient-descent"
 ---
 
-Okay, let’s tackle the mechanics of weight updates in mini-batch gradient descent. It's a fundamental concept in training neural networks, and I’ve seen it implemented in countless projects, ranging from simple image classifiers to complex natural language processing models. I’ve spent enough time debugging these mechanisms to know the nuances, and I'll try to break it down in a way that's both technically accurate and easily understandable.
+, let’s tackle the mechanics of weight updates in mini-batch gradient descent. It's a fundamental concept in training neural networks, and I’ve seen it implemented in countless projects, ranging from simple image classifiers to complex natural language processing models. I’ve spent enough time debugging these mechanisms to know the nuances, and I'll try to break it down in a way that's both technically accurate and easily understandable.
 
-Instead of jumping straight into the equations, let's first establish why mini-batch gradient descent is preferred over its counterparts. The core idea is efficiency. Full-batch gradient descent, where you compute the gradient using the *entire* training dataset, can be extremely slow, especially with very large datasets. On the other hand, stochastic gradient descent (sgd), where you update weights after seeing each individual data point, can be noisy and unstable. Mini-batch gradient descent strikes a balance, offering a more stable update than sgd while being faster than full-batch gradient descent.
+Instead of jumping straight into the equations, let's first establish why mini-batch gradient descent is preferred over its counterparts. The core idea is efficiency. Full-batch gradient descent, where you compute the gradient using the _entire_ training dataset, can be extremely slow, especially with very large datasets. On the other hand, stochastic gradient descent (sgd), where you update weights after seeing each individual data point, can be noisy and unstable. Mini-batch gradient descent strikes a balance, offering a more stable update than sgd while being faster than full-batch gradient descent.
 
 The general process revolves around three crucial steps: forward propagation, loss calculation, and backward propagation. Let's delve into the specifics of the weight update, which is the heart of the backward propagation step.
 
@@ -14,7 +14,7 @@ First, during forward propagation, your input data (a mini-batch) is fed through
 
 Next, we initiate backward propagation. The magic begins here. The gradient of the loss function, with respect to each weight in the network, is calculated. This is done using the chain rule of calculus, working backwards from the output layer to the input layer. The gradient tells us how each weight should be modified to reduce the loss. Mini-batching means we’re computing this gradient over a subset of the data, rather than the entire dataset or a single example.
 
-Finally comes the weight update itself. This is where we adjust the network’s weights using the gradients we just calculated. Each weight, *w*, is updated using this equation:
+Finally comes the weight update itself. This is where we adjust the network’s weights using the gradients we just calculated. Each weight, _w_, is updated using this equation:
 
 `w = w - learning_rate * gradient_of_loss_with_respect_to_w`
 

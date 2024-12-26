@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "can-tensorflow-lite-model-maker-generate-training-charts"
 ---
 
-Okay, let’s tackle this. I remember a project a few years back, working on a mobile app for plant recognition. We were using TensorFlow Lite for on-device inference, and getting the model training just *so* was crucial for performance. One of the hurdles we faced was understanding the training dynamics without constantly printing to the console; the classic “blind spot” scenario. While TensorFlow Lite Model Maker is excellent at streamlining the model creation and conversion process, the direct generation of training charts, as you might expect from, say, a dedicated training dashboard in TensorFlow proper, isn’t a feature it directly offers in the way people commonly think. It's not a graphical UI spitting out curves. However, it doesn't mean all is lost, we can definitely get visual insight into what's happening during training using other methods, and it's worth knowing the landscape.
+, let’s tackle this. I remember a project a few years back, working on a mobile app for plant recognition. We were using TensorFlow Lite for on-device inference, and getting the model training just _so_ was crucial for performance. One of the hurdles we faced was understanding the training dynamics without constantly printing to the console; the classic “blind spot” scenario. While TensorFlow Lite Model Maker is excellent at streamlining the model creation and conversion process, the direct generation of training charts, as you might expect from, say, a dedicated training dashboard in TensorFlow proper, isn’t a feature it directly offers in the way people commonly think. It's not a graphical UI spitting out curves. However, it doesn't mean all is lost, we can definitely get visual insight into what's happening during training using other methods, and it's worth knowing the landscape.
 
-Let's unpack that. Model Maker is designed to simplify the process of creating and converting TensorFlow models specifically for deployment on resource-constrained devices. It focuses on the *outcome*: a quantized and optimized *tflite* file ready for use. It abstracts away many of the complexities of the training pipeline using high-level APIs. This means we, the users, don’t have a fine-grained control over every training detail. However, the training metrics are still accessible, but we need to extract them programmatically. The Model Maker API does provide access to metrics from within the training loop that can then be leveraged to generate the visualizations you are seeking. This requires a bit of intermediate coding, but it's all very manageable. The trick is capturing these values during the training process, and then using a plotting library like `matplotlib` or `seaborn` to visualize them.
+Let's unpack that. Model Maker is designed to simplify the process of creating and converting TensorFlow models specifically for deployment on resource-constrained devices. It focuses on the _outcome_: a quantized and optimized _tflite_ file ready for use. It abstracts away many of the complexities of the training pipeline using high-level APIs. This means we, the users, don’t have a fine-grained control over every training detail. However, the training metrics are still accessible, but we need to extract them programmatically. The Model Maker API does provide access to metrics from within the training loop that can then be leveraged to generate the visualizations you are seeking. This requires a bit of intermediate coding, but it's all very manageable. The trick is capturing these values during the training process, and then using a plotting library like `matplotlib` or `seaborn` to visualize them.
 
 Here’s a practical example using a common image classification scenario. Let’s assume you are using Model Maker to train an image classifier. The training API typically yields history information after calling `model.fit()`. Here’s a code snippet:
 
@@ -80,7 +80,7 @@ def train_and_plot_seaborn(model, train_data):
   metrics = history.history
   metrics['epoch'] = range(1, len(metrics['loss']) + 1) # adding epoch for the x axis
   metrics_df = pd.DataFrame(metrics)
-  
+
   # Melt the DataFrame for easier plotting with seaborn
   metrics_df_melted = metrics_df.melt(id_vars=['epoch'], var_name='metric', value_name='value')
 
@@ -125,9 +125,9 @@ def train_and_plot_callback(model, train_data):
     metrics_callback = MetricsCallback()
     model.fit(train_data, epochs=10, callbacks=[metrics_callback])
     metrics_data = metrics_callback.get_metrics_data()
-    
+
     metrics = {'epoch': [],'loss':[], 'accuracy':[], 'val_loss':[], 'val_accuracy':[]}
-    
+
     for index, item in enumerate(metrics_data):
       metrics['epoch'].append(index + 1)
       metrics['loss'].append(item['loss'])
@@ -173,8 +173,9 @@ def train_and_plot_callback(model, train_data):
 
 trained_model = train_and_plot_callback(model, train_data)
 ```
+
 This version implements a custom callback class `MetricsCallback` that captures training metrics at the end of each epoch, stores the captured metrics, and has a get method to return all the metrics which can then be used to plot the graphs as in the previous example. This approach is beneficial for longer training processes or when you need the metrics at different stages of the training process, not just the final result. The ability to tap into the Keras callback functionality is incredibly powerful when used with model maker since it allows for intermediate processing of the metrics as desired.
 
-To further your understanding of these topics, I would highly recommend these resources. First, for a comprehensive grasp of the underlying TensorFlow, the *TensorFlow 2.0 Tutorial* by Martin Görner is an excellent resource. It explains the fundamentals and the practical applications of the platform. Second, delving into the Keras documentation, specifically the sections on model training and callbacks, can greatly help understanding how `fit` works and how to extract training metrics as demonstrated above. For data visualization techniques, I recommend *Python Data Science Handbook* by Jake VanderPlas. It covers `matplotlib` and `seaborn` in detail and provides a solid foundation for creating meaningful data visualizations. Also, the `pandas` library documentation is great for better understanding how to manage data for plotting.
+To further your understanding of these topics, I would highly recommend these resources. First, for a comprehensive grasp of the underlying TensorFlow, the _TensorFlow 2.0 Tutorial_ by Martin Görner is an excellent resource. It explains the fundamentals and the practical applications of the platform. Second, delving into the Keras documentation, specifically the sections on model training and callbacks, can greatly help understanding how `fit` works and how to extract training metrics as demonstrated above. For data visualization techniques, I recommend _Python Data Science Handbook_ by Jake VanderPlas. It covers `matplotlib` and `seaborn` in detail and provides a solid foundation for creating meaningful data visualizations. Also, the `pandas` library documentation is great for better understanding how to manage data for plotting.
 
-In summary, while TensorFlow Lite Model Maker doesn’t directly generate charts itself, you absolutely *can* achieve the same effect with a bit of code. Extracting training history, using `matplotlib`, `seaborn`, or other libraries and potentially even using callbacks, offers the flexibility and insight you need to understand your model training dynamics. It's about understanding the output of the API and then building the tooling needed to get the visual understanding you seek.
+In summary, while TensorFlow Lite Model Maker doesn’t directly generate charts itself, you absolutely _can_ achieve the same effect with a bit of code. Extracting training history, using `matplotlib`, `seaborn`, or other libraries and potentially even using callbacks, offers the flexibility and insight you need to understand your model training dynamics. It's about understanding the output of the API and then building the tooling needed to get the visual understanding you seek.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-rails-active-links-be-styled-within-turbo-frames"
 ---
 
-Okay, let's tackle this. It’s a topic I've spent quite a bit of time on, particularly after that rather perplexing incident with a client's navigation system. We were using Turbo frames extensively, and the active link styling just wasn't behaving as expected; it was a classic case of the dynamic nature of Turbo interfering with our carefully laid-out css. Let’s dive into how we can effectively manage active link styling within Turbo frames.
+, let's tackle this. It’s a topic I've spent quite a bit of time on, particularly after that rather perplexing incident with a client's navigation system. We were using Turbo frames extensively, and the active link styling just wasn't behaving as expected; it was a classic case of the dynamic nature of Turbo interfering with our carefully laid-out css. Let’s dive into how we can effectively manage active link styling within Turbo frames.
 
 The challenge primarily stems from the way Turbo handles page transitions. When a link within a Turbo frame is clicked, only the content inside that frame is updated, rather than a full page reload. This selective update means that conventional css selectors relying on page-level information—such as those targeting an ‘active’ class on a navigation element based on the current url—may not trigger or update correctly after the frame is replaced. Your typical `current_page?` helper in Rails might work fine for the initial load, but falls short once the frame content is updated through Turbo.
 
@@ -19,27 +19,28 @@ One effective strategy involves leveraging javascript to detect the active link 
 Here's a working snippet demonstrating this approach. We'll use the `turbo:frame-load` event, which is fired after a Turbo frame finishes loading:
 
 ```javascript
-document.addEventListener('turbo:frame-load', function(event) {
+document.addEventListener("turbo:frame-load", function (event) {
   const frame = event.detail.target;
   const currentPath = window.location.pathname;
-  const links = frame.querySelectorAll('a[href]');
+  const links = frame.querySelectorAll("a[href]");
 
-  links.forEach(link => {
-    if (link.getAttribute('href') === currentPath) {
-      link.classList.add('active');
+  links.forEach((link) => {
+    if (link.getAttribute("href") === currentPath) {
+      link.classList.add("active");
     } else {
-      link.classList.remove('active');
+      link.classList.remove("active");
     }
   });
 });
 ```
 
 Here’s a breakdown of what happens:
--   We attach an event listener to `turbo:frame-load`.
--   We obtain the frame that has been updated through the `event.detail.target` property.
--   We derive the `currentPath` from the browser's location.
--   We collect all the `a` tags with `href` attributes within the updated frame using `querySelectorAll`.
--   We iterate through each of these links and check if their `href` attribute matches the `currentPath`. If it does, we add the ‘active’ class; otherwise, we remove it.
+
+- We attach an event listener to `turbo:frame-load`.
+- We obtain the frame that has been updated through the `event.detail.target` property.
+- We derive the `currentPath` from the browser's location.
+- We collect all the `a` tags with `href` attributes within the updated frame using `querySelectorAll`.
+- We iterate through each of these links and check if their `href` attribute matches the `currentPath`. If it does, we add the ‘active’ class; otherwise, we remove it.
 
 **Solution 2: Server-Side Conditional Rendering with `turbo-stream`**
 
@@ -80,7 +81,7 @@ def my_controller_action
 
 In this scenario, we're updating the entire navigation partial every time a frame update occurs. This is server-driven, avoiding reliance on client-side javascript. While it’s a bit heavier than the javascript approach, it can be quite effective for keeping the navigation consistent and is easier to reason about sometimes.
 
-**Solution 3:  Hybrid Approach with Data Attributes and Javascript**
+**Solution 3: Hybrid Approach with Data Attributes and Javascript**
 
 A good middle ground is leveraging data attributes and minimal javascript. We'll add data attributes to the navigation links and toggle classes based on that attribute and the frame's content location.
 
@@ -88,28 +89,29 @@ Here’s what the initial html might look like:
 
 ```html
 <nav>
-  <a href="/dashboard" data-path="/dashboard" >Dashboard</a>
+  <a href="/dashboard" data-path="/dashboard">Dashboard</a>
   <a href="/reports" data-path="/reports">Reports</a>
   <a href="/settings" data-path="/settings">Settings</a>
 </nav>
 ```
+
 And here’s the javascript:
 
 ```javascript
-document.addEventListener('turbo:frame-load', function(event) {
-    const frame = event.detail.target;
-    const currentPath = frame.querySelector('[data-current-path]').dataset.currentPath; // Ensure frame has the data attribute
+document.addEventListener("turbo:frame-load", function (event) {
+  const frame = event.detail.target;
+  const currentPath = frame.querySelector("[data-current-path]").dataset
+    .currentPath; // Ensure frame has the data attribute
 
-   const links = frame.querySelectorAll('nav a');
+  const links = frame.querySelectorAll("nav a");
 
-    links.forEach(link => {
-        if(link.dataset.path === currentPath){
-            link.classList.add('active');
-        } else {
-            link.classList.remove('active');
-        }
-
-    });
+  links.forEach((link) => {
+    if (link.dataset.path === currentPath) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
+    }
+  });
 });
 ```
 

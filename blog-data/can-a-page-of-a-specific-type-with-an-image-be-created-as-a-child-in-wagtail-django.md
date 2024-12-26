@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-a-page-of-a-specific-type-with-an-image-be-created-as-a-child-in-wagtail-django"
 ---
 
-Alright, let's talk about crafting child pages with images in Wagtail. This is a topic I've certainly spent some quality time with over the years, having tackled similar content modeling challenges across various projects. It's a common requirement—building structured content where images are integral, and having that content sit nested within your Wagtail site. The short answer is, unequivocally, yes, you can definitely create a child page of a specific type with an image in Wagtail. But, as with most things in development, the "how" has nuances.
+, let's talk about crafting child pages with images in Wagtail. This is a topic I've certainly spent some quality time with over the years, having tackled similar content modeling challenges across various projects. It's a common requirement—building structured content where images are integral, and having that content sit nested within your Wagtail site. The short answer is, unequivocally, yes, you can definitely create a child page of a specific type with an image in Wagtail. But, as with most things in development, the "how" has nuances.
 
 My past experience with a heavily content-driven news platform comes to mind. We had numerous categories of articles (let's say ‘features’, ‘reviews’, and ‘interviews’), and each article required a hero image. Moreover, we needed to allow for this nesting functionality so users could easily organize articles. This led to a deeper exploration of Wagtail's model inheritance and image handling, and I think my experience there directly relates to your question.
 
@@ -39,11 +39,12 @@ class FeaturePage(Page):
         FieldPanel('body'),
         ImageChooserPanel('hero_image'),
     ]
-    
+
     #We are making this an abstract class to allow child pages
     class Meta:
         abstract = True
 ```
+
 Notice the use of `models.ForeignKey` to establish the link to a Wagtail image. The `ImageChooserPanel` allows a convenient interface in the Wagtail admin for image selection. Also, I have included an abstract meta class to allow child classes to inherit from this class. If you intend for users to create pages directly from this class, remove the abstract class and meta declaration.
 
 **Example 2: Creating a Child Page Model**
@@ -67,6 +68,7 @@ class FeatureArticlePage(FeaturePage):
     # parent_page_types = ['home.Homepage']
     # template = 'feature/feature_article_page.html'
 ```
+
 In this case, `FeatureArticlePage` now inherits the `body` field and `hero_image` functionality directly from `FeaturePage`. You also see that I have included properties, which should be included in your application. The `content_panels` array appends additional custom fields to the existing one. This approach promotes code reusability and ensures consistency.
 
 This structure allows you to, in Wagtail admin, navigate to the parent page type (`FeaturePage` in our example) and create a child page of type `FeatureArticlePage`. Wagtail will correctly handle the inheritance and display the relevant form for this child page type.
@@ -74,20 +76,19 @@ This structure allows you to, in Wagtail admin, navigate to the parent page type
 **Example 3: Template Rendering Considerations**
 
 Finally, let’s quickly cover how you’d access and display the data in your templates. If, in your `FeatureArticlePage` model, you had specified a template called `feature/feature_article_page.html`, you could write something like this:
+
 ```html
-{% extends "base.html" %}
-
-{% load wagtailimages_tags %}
-
-{% block content %}
-  <h1>{{ page.title }}</h1>
-  <p>Author: {{ page.author }}</p>
-  {% if page.hero_image %}
-      {% image page.hero_image original as hero_img %}
-      <img src="{{ hero_img.url }}" alt="{{ hero_img.alt }}" width="{{ hero_img.width }}" height="{{ hero_img.height }}" />
-  {% endif %}
-  {{ page.body|richtext }}
-{% endblock %}
+{% extends "base.html" %} {% load wagtailimages_tags %} {% block content %}
+<h1>{{ page.title }}</h1>
+<p>Author: {{ page.author }}</p>
+{% if page.hero_image %} {% image page.hero_image original as hero_img %}
+<img
+  src="{{ hero_img.url }}"
+  alt="{{ hero_img.alt }}"
+  width="{{ hero_img.width }}"
+  height="{{ hero_img.height }}"
+/>
+{% endif %} {{ page.body|richtext }} {% endblock %}
 ```
 
 Important here is the use of `{% load wagtailimages_tags %}` to use the `image` tag that pulls from Wagtail's image handling. Also note, the `{{ page.body|richtext }}` filter, which renders the rich text field’s content with all formatting included.

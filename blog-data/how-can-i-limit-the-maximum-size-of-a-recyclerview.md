@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-limit-the-maximum-size-of-a-recyclerview"
 ---
 
-Alright, let's tackle this. I've actually run into this exact scenario multiple times, particularly when dealing with dynamically generated lists that could potentially overwhelm the UI if left unchecked. The core problem, as you've posed, is limiting the maximum size of a `recyclerview`. It's less about restricting the *data source* and more about ensuring the recyclerview doesn’t render an endless scroll of elements, which can become a performance nightmare very quickly. I've seen apps grind to a halt because they tried to render thousands of items simultaneously.
+, let's tackle this. I've actually run into this exact scenario multiple times, particularly when dealing with dynamically generated lists that could potentially overwhelm the UI if left unchecked. The core problem, as you've posed, is limiting the maximum size of a `recyclerview`. It's less about restricting the _data source_ and more about ensuring the recyclerview doesn’t render an endless scroll of elements, which can become a performance nightmare very quickly. I've seen apps grind to a halt because they tried to render thousands of items simultaneously.
 
-When we talk about limiting the 'size' of a `recyclerview`, we typically mean limiting the number of *visible items*, not necessarily the *data source* that's feeding it. The recyclerview itself is designed to be efficient; it recycles views as they scroll off-screen. However, rendering a vast number of them initially can still create lag and slow down user interactions. We can mitigate this in several ways, mostly by controlling the initial data we feed the adapter or by imposing constraints on the adapter itself.
+When we talk about limiting the 'size' of a `recyclerview`, we typically mean limiting the number of _visible items_, not necessarily the _data source_ that's feeding it. The recyclerview itself is designed to be efficient; it recycles views as they scroll off-screen. However, rendering a vast number of them initially can still create lag and slow down user interactions. We can mitigate this in several ways, mostly by controlling the initial data we feed the adapter or by imposing constraints on the adapter itself.
 
 Now, before we dive into the code, let's establish a few key principles I’ve found useful from years of similar problems. First, it's almost always a good idea to paginate your data. Instead of trying to load everything at once, fetch it in chunks, updating the `recyclerview` as needed. This technique alone can address a large portion of potential performance issues. Second, remember that the `recyclerview` is a sophisticated view, and its capabilities are deeply coupled with the adapter we use. Therefore, the solution often resides within our adapter implementation.
 
@@ -82,7 +82,7 @@ class MyLimitingAdapter(private var items: MutableList<String>, private val maxI
       if(clampedSize > oldSize) {
           notifyItemRangeInserted(oldSize, clampedSize- oldSize)
       }
-        
+
     }
 
 
@@ -96,7 +96,7 @@ Here, `getItemCount` uses `minOf` to ensure it never returns a value greater tha
 
 **3. Utilizing a Specific LayoutManager (For fixed row/column scenarios)**
 
-While not a direct limit on the *number* of items, using a `GridLayoutManager` or `LinearLayoutManager` with a fixed number of spans or rows/columns can indirectly control the display area and thus limit the maximum visible area occupied by the `recyclerview`. This technique combined with a maximum height constraint on the recyclerview view itself can create a fixed view with a vertical scroll if there is more data available than what fits the defined area.
+While not a direct limit on the _number_ of items, using a `GridLayoutManager` or `LinearLayoutManager` with a fixed number of spans or rows/columns can indirectly control the display area and thus limit the maximum visible area occupied by the `recyclerview`. This technique combined with a maximum height constraint on the recyclerview view itself can create a fixed view with a vertical scroll if there is more data available than what fits the defined area.
 
 ```kotlin
 import androidx.recyclerview.widget.GridLayoutManager

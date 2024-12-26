@@ -4,18 +4,18 @@ date: "2024-12-23"
 id: "how-can-csv-data-be-imported-and-correctly-split"
 ---
 
-Alright, let’s tackle this. Been there, done that, probably more times than I care to remember. The issue of importing and splitting csv data correctly, while seemingly straightforward, can often turn into a surprisingly intricate problem. Over the years, I've seen my fair share of garbled imports and unexpected data misalignments, so I’ve developed some robust practices that I’d like to share.
+, let’s tackle this. Been there, done that, probably more times than I care to remember. The issue of importing and splitting csv data correctly, while seemingly straightforward, can often turn into a surprisingly intricate problem. Over the years, I've seen my fair share of garbled imports and unexpected data misalignments, so I’ve developed some robust practices that I’d like to share.
 
 First off, we need to understand that "correctly" is subjective, and heavily dependent on the nuances of the source data. A poorly formatted CSV, despite its apparent simplicity, can introduce all sorts of headaches. Delimiter inconsistencies, the presence of quoted fields containing embedded delimiters, varying end-of-line conventions, and encoding issues are just some of the potential pitfalls. I recall one project in particular, involving a large dataset from an antiquated legacy system, that seemed deliberately designed to thwart any attempt at orderly import. It was a real trial by fire, but it did teach me the critical importance of methodical data handling.
 
-Let's talk about the core principles. The first step is always to *thoroughly inspect* the raw CSV file. This isn't just a glance with a text editor; it means opening the file in a suitable application (like VS Code with a decent CSV plugin), or using command-line utilities (like `head` and `less` on linux), to understand the exact format. Look for the following:
+Let's talk about the core principles. The first step is always to _thoroughly inspect_ the raw CSV file. This isn't just a glance with a text editor; it means opening the file in a suitable application (like VS Code with a decent CSV plugin), or using command-line utilities (like `head` and `less` on linux), to understand the exact format. Look for the following:
 
-*   **Delimiter:** Is it a comma (`,`), a semi-colon (`;`), a tab (`\t`), or something else?
-*   **Quoting:** Are fields enclosed in quotes, and if so, what character is used (single quotes `'`, double quotes `"`)?
-*   **Encoding:** Is it UTF-8, ASCII, or a different encoding? This is critical for handling non-latin characters correctly.
-*   **Headers:** Does the first row contain column headers?
-*   **End of Line characters:** Are lines terminated by `\r`, `\n` or `\r\n` ?
-*   **Edge Cases:** Are there empty fields? Fields with leading or trailing spaces? Quoted fields containing quotes?
+- **Delimiter:** Is it a comma (`,`), a semi-colon (`;`), a tab (`\t`), or something else?
+- **Quoting:** Are fields enclosed in quotes, and if so, what character is used (single quotes `'`, double quotes `"`)?
+- **Encoding:** Is it UTF-8, ASCII, or a different encoding? This is critical for handling non-latin characters correctly.
+- **Headers:** Does the first row contain column headers?
+- **End of Line characters:** Are lines terminated by `\r`, `\n` or `\r\n` ?
+- **Edge Cases:** Are there empty fields? Fields with leading or trailing spaces? Quoted fields containing quotes?
 
 Once you have a solid understanding of the data structure, we can move on to the actual importing and splitting process. I often rely on established libraries in scripting languages to streamline this process. Manually parsing CSV data is, in my opinion, asking for trouble, unless your objective is to practice character-by-character string manipulation.
 
@@ -66,44 +66,53 @@ This example demonstrates using the `csv.reader` class to handle the parsing log
 Node.js doesn’t have a built-in CSV parsing module as robust as Python, which led me to discover and appreciate `csv-parse`.
 
 ```javascript
-const { parse } = require('csv-parse');
-const fs = require('fs');
+const { parse } = require("csv-parse");
+const fs = require("fs");
 
 async function importAndSplitCsv(filePath, options = {}) {
-  const { delimiter = ',', quote = '"', encoding = 'utf-8', hasHeader = true } = options;
+  const {
+    delimiter = ",",
+    quote = '"',
+    encoding = "utf-8",
+    hasHeader = true,
+  } = options;
 
   try {
-      const csvData = fs.readFileSync(filePath, { encoding: encoding });
-      const records = await new Promise((resolve, reject) => {
-          parse(csvData, {
-              delimiter: delimiter,
-              quote: quote,
-              columns: hasHeader,
-              skip_empty_lines: true,
-          }, (err, records) => {
-              if (err) {
-                  reject(err);
-              }
-              resolve(records);
-          });
-      });
-      return records;
+    const csvData = fs.readFileSync(filePath, { encoding: encoding });
+    const records = await new Promise((resolve, reject) => {
+      parse(
+        csvData,
+        {
+          delimiter: delimiter,
+          quote: quote,
+          columns: hasHeader,
+          skip_empty_lines: true,
+        },
+        (err, records) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(records);
+        }
+      );
+    });
+    return records;
   } catch (err) {
-      console.error(`Error processing CSV file: ${err.message}`);
-      return null;
+    console.error(`Error processing CSV file: ${err.message}`);
+    return null;
   }
 }
 
-async function main(){
-    const file = 'data.csv';
-    // Assuming data.csv exists, containing:
-    // name,age,"address"
-    // "John Doe",30,"123 Main St, Apt 4"
-    // "Jane Smith",25,"456 Oak Ave"
-    const records = await importAndSplitCsv(file);
-    if (records){
-        console.log(records);
-    }
+async function main() {
+  const file = "data.csv";
+  // Assuming data.csv exists, containing:
+  // name,age,"address"
+  // "John Doe",30,"123 Main St, Apt 4"
+  // "Jane Smith",25,"456 Oak Ave"
+  const records = await importAndSplitCsv(file);
+  if (records) {
+    console.log(records);
+  }
 }
 main();
 ```
@@ -184,9 +193,9 @@ This Java snippet uses the `opencsv` library and demonstrates a more structured 
 
 For a deeper dive into this subject, I highly recommend exploring the following:
 
-*   **"Understanding and Working with CSV Files" by Rob van der Woude:** While not a formal textbook, his website offers in-depth knowledge of CSV nuances.
-*   **The official documentation for the `csv` module in Python, `csv-parse` in JavaScript and `opencsv` library in Java:** Understanding the specific options and capabilities of your chosen library is critical.
-*   **"Data Wrangling with Python" by Jacqueline Nolis and Katharine Jarmul:** This book, while not focused solely on CSV, offers comprehensive guidance on handling data cleaning and transformation.
-*   **ISO/IEC 18031:2005:** If you’re working in regulated industries, this is the standard regarding CSV files.
+- **"Understanding and Working with CSV Files" by Rob van der Woude:** While not a formal textbook, his website offers in-depth knowledge of CSV nuances.
+- **The official documentation for the `csv` module in Python, `csv-parse` in JavaScript and `opencsv` library in Java:** Understanding the specific options and capabilities of your chosen library is critical.
+- **"Data Wrangling with Python" by Jacqueline Nolis and Katharine Jarmul:** This book, while not focused solely on CSV, offers comprehensive guidance on handling data cleaning and transformation.
+- **ISO/IEC 18031:2005:** If you’re working in regulated industries, this is the standard regarding CSV files.
 
 In closing, importing and splitting CSV files effectively is a skill that develops with practice. Knowing the tools available, thoroughly inspecting your source data, and writing robust, error-handling code will definitely keep you out of trouble. Remember, every CSV is a little different, so being flexible and able to debug issues effectively is just as important as knowing the theory.

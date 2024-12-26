@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-fix-a-truffle-installation-error-on-windows"
 ---
 
-Alright, let's talk about wrestling with Truffle on Windows. I've spent more hours than I care to count staring at error messages thrown by that particular beast, so I've a fairly solid understanding of the common pitfalls and how to navigate them. Instead of a generic 'restart your computer' approach, let's delve into the specifics and work through a structured troubleshooting method.
+, let's talk about wrestling with Truffle on Windows. I've spent more hours than I care to count staring at error messages thrown by that particular beast, so I've a fairly solid understanding of the common pitfalls and how to navigate them. Instead of a generic 'restart your computer' approach, let's delve into the specifics and work through a structured troubleshooting method.
 
 The first key thing to understand about Truffle, especially on Windows, is that it's not a standalone entity. It’s critically dependent on its underlying environment— node.js, npm (or yarn), and a correctly configured python installation (often for its dependency on `solc`). So, when things go sideways, it’s not always Truffle’s fault, more a case of its foundations not being stable. My experience, going back to when I was helping a junior dev onboard on a blockchain project, taught me that a systematic approach is absolutely crucial. We saw several unique error variations, but the root cause often came down to a few culprits.
 
@@ -18,7 +18,7 @@ Now, let’s delve into actual code examples and the common errors they reflect.
 
 **Example 1: Global truffle installation failure:**
 
-If you encounter errors during a global Truffle installation (`npm install -g truffle`) such as `EACCES` (permission denied on linux, which sometimes translates to windows) or missing dependencies, that often suggests that you lack the correct administrator rights. On windows, you might encounter this even if you *believe* you're using an admin-enabled terminal.
+If you encounter errors during a global Truffle installation (`npm install -g truffle`) such as `EACCES` (permission denied on linux, which sometimes translates to windows) or missing dependencies, that often suggests that you lack the correct administrator rights. On windows, you might encounter this even if you _believe_ you're using an admin-enabled terminal.
 
 ```powershell
 # command line snippet showing failed truffle install
@@ -69,6 +69,7 @@ truffle init
 #     at Object.<anonymous> (C:\Users\user\my-project\node_modules\truffle\cli.js:3:21)
 
 ```
+
 This example indicates the module 'truffle-config' is either missing or not correctly linked. This typically occurs after updating dependencies or npm/yarn upgrades within your project. A reliable solution here is to first delete your `node_modules` directory and your `package-lock.json` (or `yarn.lock`) file, and then run `npm install` (or `yarn install`). This forces npm or yarn to re-install all the dependencies based on the `package.json` which typically resolves most of those kinds of dependency errors. In specific cases you may also want to reinstall Truffle locally in the project, although that is less common.
 
 **Example 3: `solc` compilation error:**
@@ -93,6 +94,7 @@ truffle compile
 ```
 
 This means there was an error in your Solidity source code or the compiler itself. The most common fix here is specifying a valid solidity version in your truffle-config.js file. You can install specific solidity versions using `npm install solc@<version>`. Then, in your truffle-config.js, specify:
+
 ```javascript
 module.exports = {
   // ...
@@ -102,12 +104,12 @@ module.exports = {
       settings: {
         optimizer: {
           enabled: true,
-          runs: 200
+          runs: 200,
         },
-        evmVersion: "london"
-      }
-    }
-  }
+        evmVersion: "london",
+      },
+    },
+  },
   // ...
 };
 ```

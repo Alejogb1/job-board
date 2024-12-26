@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "should-cqrs-queries-return-existence-checks-alongside-data"
 ---
 
-Alright, let's talk about CQRS and specifically whether queries should bundle existence checks with their data payloads. I’ve seen this debated more times than I can count, and having personally dealt with the fallout of both approaches on various projects, I feel I have a fairly pragmatic perspective. It’s not a cut-and-dried yes or no, it truly depends on the context of your application and its performance constraints.
+, let's talk about CQRS and specifically whether queries should bundle existence checks with their data payloads. I’ve seen this debated more times than I can count, and having personally dealt with the fallout of both approaches on various projects, I feel I have a fairly pragmatic perspective. It’s not a cut-and-dried yes or no, it truly depends on the context of your application and its performance constraints.
 
 The core tenet of Command Query Responsibility Segregation (CQRS) is, of course, separating operations that modify data (commands) from those that read it (queries). This separation is designed to offer significant flexibility and optimization opportunities, particularly in complex systems. When we then look at queries, we're typically focused on retrieving data for presentation, analytics, or other consumption. Throwing an existence check, like a `boolean` or similar indicator, into that payload might seem convenient at first glance. “Did we find it? Oh yes, here’s the data.” But this is a shortcut that can introduce subtle complexities and even performance bottlenecks, particularly when scaling.
 

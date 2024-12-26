@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-the-request-not-processed-the-first-time"
 ---
 
-alright, so, you're seeing a situation where a request isn't going through on its initial attempt, and that can be a real head-scratcher. i've definitely been there, staring at logs late at night, trying to figure out what the heck is going on. let me break down some common culprits based on my own past experiences and what i've seen other folks run into.
+, so, you're seeing a situation where a request isn't going through on its initial attempt, and that can be a real head-scratcher. i've definitely been there, staring at logs late at night, trying to figure out what the heck is going on. let me break down some common culprits based on my own past experiences and what i've seen other folks run into.
 
 first off, let’s talk about initialization. this is probably the most frequent troublemaker. when an application or service boots up, it usually needs to set up some crucial components: database connections, configurations loaded from files, or perhaps connections to external services. if a request hits before this initialization is fully complete, the service might not be ready to handle it properly. think of it like trying to make a cup of coffee before the coffee maker has even warmed up – not gonna happen.
 
@@ -12,7 +12,7 @@ i once had this issue with an old python backend i inherited where the database 
 
 another common culprit is caching. sounds weird since you'd think the opposite, but bear with me. sometimes systems use a local cache to speed up responses by storing frequently-used data. if the cache hasn't been populated yet when a new request comes in, you might see the first request fail or experience some other weird behavior. it might need a fresh pull from a persistent store. the next call usually hits that cache, and all is well. it's like having a cook who preps their ingredients during service - the initial requests hit while he's still chopping.
 
-i had a similar case with a node.js app that cached responses in redis. we noticed that the very first request after deployment would consistently fail, returning a 500. turns out the app’s code was checking for the presence of data in the cache *before* attempting to fetch it from the primary data source. so first request, no cache, no primary pull attempt, boom, error. it's worth double-checking your caching logic with extra care. here's an example of what the broken logic looked like initially:
+i had a similar case with a node.js app that cached responses in redis. we noticed that the very first request after deployment would consistently fail, returning a 500. turns out the app’s code was checking for the presence of data in the cache _before_ attempting to fetch it from the primary data source. so first request, no cache, no primary pull attempt, boom, error. it's worth double-checking your caching logic with extra care. here's an example of what the broken logic looked like initially:
 
 ```javascript
 async function getData(key) {
@@ -32,12 +32,12 @@ and the fix was really simple:
 
 ```javascript
 async function getData(key) {
-    let cachedData = await redisClient.get(key);
-    if (!cachedData) {
-        cachedData = await fetchDataFromDb(key);
-        await redisClient.set(key, cachedData);
-    }
-    return cachedData;
+  let cachedData = await redisClient.get(key);
+  if (!cachedData) {
+    cachedData = await fetchDataFromDb(key);
+    await redisClient.set(key, cachedData);
+  }
+  return cachedData;
 }
 ```
 

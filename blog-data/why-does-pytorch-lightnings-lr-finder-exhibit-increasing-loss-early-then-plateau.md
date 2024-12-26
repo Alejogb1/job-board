@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-pytorch-lightnings-lr-finder-exhibit-increasing-loss-early-then-plateau"
 ---
 
-Alright, let's talk about that quirky behavior of PyTorch Lightning's learning rate (lr) finder. I’ve spent quite a bit of time debugging these kinds of nuances during model training over the years, and it's a common point of confusion. When you see the loss initially increasing, then plateauing in an LR finder plot, it's not actually a failure; it's quite informative, provided we understand the underlying mechanics.
+, let's talk about that quirky behavior of PyTorch Lightning's learning rate (lr) finder. I’ve spent quite a bit of time debugging these kinds of nuances during model training over the years, and it's a common point of confusion. When you see the loss initially increasing, then plateauing in an LR finder plot, it's not actually a failure; it's quite informative, provided we understand the underlying mechanics.
 
 The primary reason behind this pattern stems from how the learning rate finder is designed. Essentially, it's a mini training session performed to observe how the model's loss responds to a range of increasing learning rates. It doesn’t optimize the weights for each learning rate. Instead, it’s more of an exploratory pass, using the model's current parameters (which are likely randomly initialized).
 
@@ -197,9 +197,10 @@ plt.legend()
 plt.show()
 
 ```
-Here we focus more on finding a good learning rate, and we use the minimum loss point and then divide it by a factor of ten. This is often the point where we get the maximum learning rate that's still suitable for training. Notice that the suggested learning rate lies *before* the plateau begins.
 
-In practice, the “correct” learning rate isn’t always precisely where the loss hits its absolute minimum in the LR plot. It’s often advisable to select a learning rate a little bit *before* the point where the loss starts to increase or plateau. The goal is to be in a region where the model can learn efficiently without overshooting. This is because the loss often continues to decrease slowly and the best learning rate is usually at the very beginning of the "decrease phase" in the plot.
+Here we focus more on finding a good learning rate, and we use the minimum loss point and then divide it by a factor of ten. This is often the point where we get the maximum learning rate that's still suitable for training. Notice that the suggested learning rate lies _before_ the plateau begins.
+
+In practice, the “correct” learning rate isn’t always precisely where the loss hits its absolute minimum in the LR plot. It’s often advisable to select a learning rate a little bit _before_ the point where the loss starts to increase or plateau. The goal is to be in a region where the model can learn efficiently without overshooting. This is because the loss often continues to decrease slowly and the best learning rate is usually at the very beginning of the "decrease phase" in the plot.
 
 For deeper insights, I’d highly recommend reading "Cyclical Learning Rates for Training Neural Networks" by Leslie N. Smith. It offers a comprehensive explanation of how LR finders work and the theory behind using cyclical learning rates. Also, check out "Deep Learning with PyTorch" by Eli Stevens et al. It offers an overview of the PyTorch LR finder and it's implementation. The PyTorch official documentation is also an amazing resource.
 

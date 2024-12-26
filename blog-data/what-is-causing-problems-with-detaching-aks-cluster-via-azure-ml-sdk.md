@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "what-is-causing-problems-with-detaching-aks-cluster-via-azure-ml-sdk"
 ---
 
-Okay, let's dissect this AKS detach issue with Azure Machine Learning SDK. I've seen this pattern pop up in a few past projects, and it usually boils down to a few key areas, none of which are particularly straightforward, unfortunately. It's rarely just one thing, more often a combination of configuration mismatches, permissions snafus, and subtle inconsistencies in how the Azure ML workspace interacts with the AKS cluster itself.
+, let's dissect this AKS detach issue with Azure Machine Learning SDK. I've seen this pattern pop up in a few past projects, and it usually boils down to a few key areas, none of which are particularly straightforward, unfortunately. It's rarely just one thing, more often a combination of configuration mismatches, permissions snafus, and subtle inconsistencies in how the Azure ML workspace interacts with the AKS cluster itself.
 
-First, before diving into specifics, let's frame the process. Detaching an AKS cluster from an Azure ML workspace *should* be a relatively clean operation, severing the logical link that allows Azure ML to orchestrate jobs on that specific Kubernetes environment. However, because Azure ML relies on a complex set of managed identities, control plane communications, and resource registrations, any hiccup in these areas can block the detach process and potentially leave resources in an inconsistent state. It’s not a simple toggle switch, there are layered dependencies that need to be resolved.
+First, before diving into specifics, let's frame the process. Detaching an AKS cluster from an Azure ML workspace _should_ be a relatively clean operation, severing the logical link that allows Azure ML to orchestrate jobs on that specific Kubernetes environment. However, because Azure ML relies on a complex set of managed identities, control plane communications, and resource registrations, any hiccup in these areas can block the detach process and potentially leave resources in an inconsistent state. It’s not a simple toggle switch, there are layered dependencies that need to be resolved.
 
 My experience, particularly with a large-scale experiment tracking platform I worked on a few years ago, showed that one common culprit is orphaned resources. This manifests when, during previous operations—training runs, deployments, or even just cluster creation—resources weren’t correctly cleaned up, resulting in lingering dependencies. The SDK relies on a series of resource providers, and a failure to correctly decommission the resources used in the past leaves them in place, sometimes preventing the proper detach process from completing. Think of it like trying to dismantle a complex machine with a few critical bolts still stubbornly fastened. It just doesn’t give.
 
@@ -18,7 +18,7 @@ Now, let’s look at some illustrative code examples to solidify these points.
 
 **Example 1: The Orphaned Resource Scenario**
 
-This example simulates how you might check for and manually address orphaned resources, a strategy I frequently use when things go sideways. While the SDK itself *should* handle cleanup, I've found it's often wise to verify manually.
+This example simulates how you might check for and manually address orphaned resources, a strategy I frequently use when things go sideways. While the SDK itself _should_ handle cleanup, I've found it's often wise to verify manually.
 
 ```python
 from azure.identity import DefaultAzureCredential
@@ -53,11 +53,12 @@ for resource in resources:
         print(f"Potential orphan resource found: {resource.name}, Type: {resource.type}.  Check the AKS network to determine if this is still required.")
 ```
 
-This Python snippet, using the Azure Resource Management SDK, lists resources within the resource group where the AKS cluster is located. A key thing to understand here is that it’s often necessary to *manually* review these resources to identify those that are no longer in use by AKS but were, perhaps, previously created by the AzureML SDK and not properly cleaned up. This manual step is key to identifying orphaned resources.
+This Python snippet, using the Azure Resource Management SDK, lists resources within the resource group where the AKS cluster is located. A key thing to understand here is that it’s often necessary to _manually_ review these resources to identify those that are no longer in use by AKS but were, perhaps, previously created by the AzureML SDK and not properly cleaned up. This manual step is key to identifying orphaned resources.
 
 **Example 2: Managed Identity Permission Issues**
 
 Here, I’m demonstrating a check on the managed identity assigned to the workspace. When detaching an AKS cluster, it's critical that the managed identity has the correct permissions, and I often check to see if permissions are being revoked correctly.
+
 ```python
 from azure.identity import DefaultAzureCredential
 from azure.mgmt.authorization import AuthorizationManagementClient
@@ -92,6 +93,7 @@ if workspace_identity and workspace_identity.type == "SystemAssigned":
 else:
    print("No system assigned identity found for the workspace")
 ```
+
 This script retrieves the workspace's system-assigned managed identity, then checks for role assignments on the AKS cluster resource scope to see what permissions have been assigned. In a well functioning scenario, during the detach, these permissions should be revoked. This script allows me to check if they are still there.
 
 **Example 3: Network Configuration Considerations**

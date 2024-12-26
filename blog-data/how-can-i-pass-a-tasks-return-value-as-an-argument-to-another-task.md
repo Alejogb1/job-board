@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-pass-a-tasks-return-value-as-an-argument-to-another-task"
 ---
 
-Okay, let's tackle this. Passing the return value of one task as an argument to another is a fundamental pattern in concurrent programming, especially when dealing with asynchronous operations. I’ve seen this pattern implemented numerous times in my career, often in situations where we needed to build intricate data pipelines or coordinate complex workflows. Thinking back, one specific project involved a large-scale image processing application where we had to chain several asynchronous tasks. The initial task would fetch an image, the next one would apply a filter, and a final task would save it to storage. Each step relied on the output of the previous one. While there are different ways to accomplish this, the core principle revolves around managing asynchronous execution and data flow efficiently.
+, let's tackle this. Passing the return value of one task as an argument to another is a fundamental pattern in concurrent programming, especially when dealing with asynchronous operations. I’ve seen this pattern implemented numerous times in my career, often in situations where we needed to build intricate data pipelines or coordinate complex workflows. Thinking back, one specific project involved a large-scale image processing application where we had to chain several asynchronous tasks. The initial task would fetch an image, the next one would apply a filter, and a final task would save it to storage. Each step relied on the output of the previous one. While there are different ways to accomplish this, the core principle revolves around managing asynchronous execution and data flow efficiently.
 
 The key lies in understanding how to capture and propagate the result of a task once it’s completed. Essentially, what we're doing is creating a dependency graph between tasks. One task has to wait for another to finish and then utilize its output. Let’s dive into how we can achieve this using a few common paradigms.
 
@@ -52,26 +52,25 @@ Here’s a simplified example using a hypothetical `async_operation` function:
 ```javascript
 function asyncOperation(param, callback) {
   setTimeout(() => {
-     const result = param * 2;
-      callback(result);
+    const result = param * 2;
+    callback(result);
   }, 1000); // Simulate an async operation
 }
 
-function processResult(data, callback){
-    setTimeout(() => {
-        const result = data + 5;
-        callback(result);
-    }, 1000);
+function processResult(data, callback) {
+  setTimeout(() => {
+    const result = data + 5;
+    callback(result);
+  }, 1000);
 }
 
-function saveResult(processedData){
-    console.log("Final Data : " + processedData);
+function saveResult(processedData) {
+  console.log("Final Data : " + processedData);
 }
 
-
-asyncOperation(5, function(resultFromAsyncOperation) {
-  processResult(resultFromAsyncOperation, function(resultFromProcess) {
-    saveResult(resultFromProcess)
+asyncOperation(5, function (resultFromAsyncOperation) {
+  processResult(resultFromAsyncOperation, function (resultFromProcess) {
+    saveResult(resultFromProcess);
   });
 });
 ```
@@ -124,9 +123,9 @@ In this case, the producer pushes a value onto the queue. The processor consumes
 
 For a solid understanding of these concepts, I suggest the following readings:
 
-*   **“Concurrency in Go: Tools and Techniques for Developers”** by Katherine Cox-Buday. While it focuses on Go, the fundamental principles of concurrency and channels are very well described and provide a clear understanding of concurrent systems.
-*   **"Modern Operating Systems"** by Andrew S. Tanenbaum. This text will provide solid understanding of operating systems concepts such as threads, processes, synchronization, and other elements that help you to understand the basis for async programming and threading models.
-*   **"Asynchronous JavaScript"** by Trevor Burnham. This is a great resource for learning the ins and outs of asynchronous programming with javascript, including a deep dive into promises, async/await, and other relevant concepts.
+- **“Concurrency in Go: Tools and Techniques for Developers”** by Katherine Cox-Buday. While it focuses on Go, the fundamental principles of concurrency and channels are very well described and provide a clear understanding of concurrent systems.
+- **"Modern Operating Systems"** by Andrew S. Tanenbaum. This text will provide solid understanding of operating systems concepts such as threads, processes, synchronization, and other elements that help you to understand the basis for async programming and threading models.
+- **"Asynchronous JavaScript"** by Trevor Burnham. This is a great resource for learning the ins and outs of asynchronous programming with javascript, including a deep dive into promises, async/await, and other relevant concepts.
 
 These three books provide both theoretical foundations and practical examples, covering a broad range of topics related to task execution and data flow in concurrent systems.
 

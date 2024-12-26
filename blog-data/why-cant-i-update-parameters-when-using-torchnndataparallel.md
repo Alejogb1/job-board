@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-cant-i-update-parameters-when-using-torchnndataparallel"
 ---
 
-Alright, let's tackle this parameter update issue when using `torch.nn.DataParallel`. I remember facing this exact problem during a large-scale image classification project a few years back – it can be a real head-scratcher if you're not intimately familiar with how `DataParallel` actually operates under the hood. It's not about some hidden bug, but rather a fundamental aspect of how `DataParallel` distributes your model and manages gradient updates.
+, let's tackle this parameter update issue when using `torch.nn.DataParallel`. I remember facing this exact problem during a large-scale image classification project a few years back – it can be a real head-scratcher if you're not intimately familiar with how `DataParallel` actually operates under the hood. It's not about some hidden bug, but rather a fundamental aspect of how `DataParallel` distributes your model and manages gradient updates.
 
-The core issue stems from the way `DataParallel` handles model replication and gradient accumulation across multiple gpus. When you wrap your model with `torch.nn.DataParallel`, you're essentially creating a *master copy* of the model on your primary gpu (gpu:0), and then *replicas* of this model are distributed to the other gpus you've specified. During the forward pass, input data is scattered across these gpus, processed independently, and the results are gathered back to the master gpu. However, the important part to understand here is this: each replica computes its own gradients, *independently*. These gradients are then gathered on the master gpu.
+The core issue stems from the way `DataParallel` handles model replication and gradient accumulation across multiple gpus. When you wrap your model with `torch.nn.DataParallel`, you're essentially creating a _master copy_ of the model on your primary gpu (gpu:0), and then _replicas_ of this model are distributed to the other gpus you've specified. During the forward pass, input data is scattered across these gpus, processed independently, and the results are gathered back to the master gpu. However, the important part to understand here is this: each replica computes its own gradients, _independently_. These gradients are then gathered on the master gpu.
 
-Now, here’s where the problem comes in. The `optimizer.step()` function, responsible for applying gradient updates to the model’s parameters, is executed only *on the master gpu*, typically after the gradients have been averaged. The issue isn't that gradients aren't computed; it's that the model parameters on the *replica* gpus are *never* directly updated by the optimizer. Consequently, the next forward pass on those replica gpus starts with potentially stale parameter values. This divergence between the parameters on different gpus means the model's state isn't kept synchronized and training goes south quickly.
+Now, here’s where the problem comes in. The `optimizer.step()` function, responsible for applying gradient updates to the model’s parameters, is executed only _on the master gpu_, typically after the gradients have been averaged. The issue isn't that gradients aren't computed; it's that the model parameters on the _replica_ gpus are _never_ directly updated by the optimizer. Consequently, the next forward pass on those replica gpus starts with potentially stale parameter values. This divergence between the parameters on different gpus means the model's state isn't kept synchronized and training goes south quickly.
 
 It's not a bug; it's designed that way to ensure each replica operates on a self-contained section of the input data, but the implications are critical.
 
@@ -45,7 +45,7 @@ def run_example(rank, world_size):
 
     optimizer = optim.SGD(ddp_model.parameters(), lr=0.01)
     criterion = nn.MSELoss()
-    
+
     input_data = torch.randn(32, 10).cuda(rank)
     target = torch.randn(32, 2).cuda(rank)
 
@@ -55,7 +55,7 @@ def run_example(rank, world_size):
         loss = criterion(output, target)
         loss.backward()
         optimizer.step()
-    
+
     cleanup_distributed()
 
 

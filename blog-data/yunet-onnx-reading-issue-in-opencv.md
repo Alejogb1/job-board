@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "yunet-onnx-reading-issue-in-opencv"
 ---
 
-Okay so you're having a problem with YUNet ONNX models and OpenCV right? Seen this rodeo before. I've wrestled with similar situations more times than I'd like to admit and it's always something slightly obscure. Let's unpack this and see what's going on.
+you're having a problem with YUNet ONNX models and OpenCV right? Seen this rodeo before. I've wrestled with similar situations more times than I'd like to admit and it's always something slightly obscure. Let's unpack this and see what's going on.
 
 First off YUNet is a face detection model right? Based on my past experiences it’s often implemented using ONNX for portability and OpenCV is usually the go to for any kind of computer vision tasks so that makes perfect sense that you’re trying to put these two things together. I'm gonna assume you've already downloaded a proper ONNX model and have OpenCV installed correctly. If not thats step one obviously go download the model if you have not and `pip install opencv-python` or whatever your package manager uses.
 
@@ -117,6 +117,7 @@ while True:
 cap.release()
 cv2.destroyAllWindows()
 ```
+
 In this last example I've added an optional parameter to `preprocess_image` to control the data type of the blob just in case you need to change it. It will most likely not be the issue in your case but it could be.
 
 My advice is simple: check your model versions verify your OpenCV build if necessary and carefully inspect the input data requirements. Reading the documentation of OpenCV's dnn module and the documentation of the model and it’s requirements is key for issues like these. I would also recommend reading the original research paper for YUNet they are usually a good resource as well. This is the paper "YOLOFace: A Real-Time Face Detector" which is on arXiv. Check that you are not using some unofficial implementation.

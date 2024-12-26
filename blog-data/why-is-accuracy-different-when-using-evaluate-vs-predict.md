@@ -4,19 +4,19 @@ date: "2024-12-16"
 id: "why-is-accuracy-different-when-using-evaluate-vs-predict"
 ---
 
-Okay, let's unpack the nuanced difference between accuracy when employing `evaluate()` versus `predict()` in the context of machine learning models – a topic I've seen trip up many newcomers and even some seasoned practitioners over the years. Believe me, I've spent more late nights debugging this than I care to remember. Specifically, I recall a project a few years back where our initial model seemed fantastic based on evaluation metrics, but fell apart when we put it into production, a situation primarily due to this very distinction.
+, let's unpack the nuanced difference between accuracy when employing `evaluate()` versus `predict()` in the context of machine learning models – a topic I've seen trip up many newcomers and even some seasoned practitioners over the years. Believe me, I've spent more late nights debugging this than I care to remember. Specifically, I recall a project a few years back where our initial model seemed fantastic based on evaluation metrics, but fell apart when we put it into production, a situation primarily due to this very distinction.
 
-The fundamental reason why accuracy often differs between `evaluate()` and `predict()` lies in the context of their usage and the data they operate on. `evaluate()`, typically used in the model training or validation phase, calculates metrics like accuracy (or precision, recall, f1-score, etc.) on labeled data – meaning, data where we *know* the correct output. Conversely, `predict()` is employed on unlabeled data, the kind you’d see in a real-world application where the 'ground truth' is unknown. While this may seem obvious, the implications are substantial. Let’s explore why that matters, technically.
+The fundamental reason why accuracy often differs between `evaluate()` and `predict()` lies in the context of their usage and the data they operate on. `evaluate()`, typically used in the model training or validation phase, calculates metrics like accuracy (or precision, recall, f1-score, etc.) on labeled data – meaning, data where we _know_ the correct output. Conversely, `predict()` is employed on unlabeled data, the kind you’d see in a real-world application where the 'ground truth' is unknown. While this may seem obvious, the implications are substantial. Let’s explore why that matters, technically.
 
-When you call `evaluate()`, you are generally feeding in your testing or validation dataset. This dataset includes *both* the input features and the corresponding target variables (or labels). The model internally performs a prediction using the input features, compares its prediction against the actual labels, and uses this information to compute an evaluation metric like accuracy. Think of it as a carefully orchestrated test where the answers are readily available to the examiner.
+When you call `evaluate()`, you are generally feeding in your testing or validation dataset. This dataset includes _both_ the input features and the corresponding target variables (or labels). The model internally performs a prediction using the input features, compares its prediction against the actual labels, and uses this information to compute an evaluation metric like accuracy. Think of it as a carefully orchestrated test where the answers are readily available to the examiner.
 
 The calculation is straightforward:
 
 `Accuracy = (Number of Correct Predictions) / (Total Number of Predictions)`
 
-However, when you use `predict()`, you're usually dealing with new, unseen data without labels. The model's purpose at this point is to *infer* the target variable. You are no longer comparing the predictions to the ground truth when you call `predict()`. Instead, it’s purely the model's output. Therefore, you can't calculate accuracy with `predict()` directly, at least not without a separate dataset of corresponding labeled examples. So what you have after the predict function is simply predictions of your target variable given the input feature without any accuracy comparison.
+However, when you use `predict()`, you're usually dealing with new, unseen data without labels. The model's purpose at this point is to _infer_ the target variable. You are no longer comparing the predictions to the ground truth when you call `predict()`. Instead, it’s purely the model's output. Therefore, you can't calculate accuracy with `predict()` directly, at least not without a separate dataset of corresponding labeled examples. So what you have after the predict function is simply predictions of your target variable given the input feature without any accuracy comparison.
 
-Here’s a critical point: the perceived difference in accuracy between the two functions isn't a reflection of the model behaving differently during prediction. Rather, it highlights a *misunderstanding* about what each function is measuring and when to measure.
+Here’s a critical point: the perceived difference in accuracy between the two functions isn't a reflection of the model behaving differently during prediction. Rather, it highlights a _misunderstanding_ about what each function is measuring and when to measure.
 
 Let's get into some concrete examples using Python and TensorFlow, where this distinction becomes clearer.
 
@@ -47,11 +47,11 @@ predictions = model.predict(x_test)
 print(f"Predictions from predict() function: {predictions[:5]}") # Show just the first 5 predicted probabilities
 ```
 
-In this snippet, `evaluate()` is provided both the input features (`x_test`) and their corresponding labels (`y_test`), allowing the accuracy to be computed. In contrast, the `predict()` call on `x_test` gives us probabilities for each class, but without the ground truth, there is no direct way to calculate an accuracy metric. If you were to *incorrectly* attempt to calculate accuracy on the output of a `predict()` call, you are making a mistake by assuming that you have ground truth to compare to, when that’s not the case.
+In this snippet, `evaluate()` is provided both the input features (`x_test`) and their corresponding labels (`y_test`), allowing the accuracy to be computed. In contrast, the `predict()` call on `x_test` gives us probabilities for each class, but without the ground truth, there is no direct way to calculate an accuracy metric. If you were to _incorrectly_ attempt to calculate accuracy on the output of a `predict()` call, you are making a mistake by assuming that you have ground truth to compare to, when that’s not the case.
 
 **Example 2: Impact of Data Distribution Shifts**
 
-Another aspect I’ve noticed in practical projects is that even with *seemingly* similar data, subtle differences between training, evaluation, and real-world data can cause discrepancies between the evaluation accuracy and the accuracy perceived after deployment, where you are making predictions.
+Another aspect I’ve noticed in practical projects is that even with _seemingly_ similar data, subtle differences between training, evaluation, and real-world data can cause discrepancies between the evaluation accuracy and the accuracy perceived after deployment, where you are making predictions.
 
 ```python
 import tensorflow as tf
@@ -86,11 +86,11 @@ predictions = model.predict(x_predict)
 print(f"Sample Predictions (first 5) for Prediction set:{predictions[:5]}")
 ```
 
-Here, the distribution of `x_train` and `x_test` are different, and the distribution of `x_predict` is different again. The accuracy is only calculated on the test set data which has the labels. The prediction set gives you probabilities, but not accuracy. In a real world use case, this would be your out-of-sample data for production. If there's a distribution shift, as shown here, the evaluation accuracy may not accurately reflect the model's performance once deployed, where you might see different (likely lower) accuracy when real-world labels become available down the line and can be compared to the predictions. This difference isn't due to `predict()` *itself*, but because real-world data may have very different characteristics than your training set, a concept often called *distribution drift*.
+Here, the distribution of `x_train` and `x_test` are different, and the distribution of `x_predict` is different again. The accuracy is only calculated on the test set data which has the labels. The prediction set gives you probabilities, but not accuracy. In a real world use case, this would be your out-of-sample data for production. If there's a distribution shift, as shown here, the evaluation accuracy may not accurately reflect the model's performance once deployed, where you might see different (likely lower) accuracy when real-world labels become available down the line and can be compared to the predictions. This difference isn't due to `predict()` _itself_, but because real-world data may have very different characteristics than your training set, a concept often called _distribution drift_.
 
 **Example 3: Proper Use of Validation Sets and Monitoring**
 
-Often, the key issue is improper validation setups. In my experience, the *best* way to anticipate a model’s actual performance is by having a well-defined validation set, representative of what you expect in real-world scenarios.
+Often, the key issue is improper validation setups. In my experience, the _best_ way to anticipate a model’s actual performance is by having a well-defined validation set, representative of what you expect in real-world scenarios.
 
 ```python
 import tensorflow as tf

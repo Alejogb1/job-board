@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "any-way-to-run-a-block-right-after-chewy-updateindex"
 ---
 
-alright, so you're after a way to trigger some code directly after chewy's `update_index` method finishes its job, i get it. i've been there, staring at the screen, wondering how to chain things efficiently after a data indexing process. it's a pretty common need, actually. you want that clean, atomic sequence of operations, data in the index, and then some other process fired immediately.
+, so you're after a way to trigger some code directly after chewy's `update_index` method finishes its job, i get it. i've been there, staring at the screen, wondering how to chain things efficiently after a data indexing process. it's a pretty common need, actually. you want that clean, atomic sequence of operations, data in the index, and then some other process fired immediately.
 
 from my own experience, and i'm talking like, back when elasticsearch was still kinda the new kid on the block for me, i messed this up countless times. i was working on a social media analytics tool (don’t ask, it was a mess) and we needed to update user profile counts in our relational database the moment their activity got indexed. our first naive attempt was just running the updates straight after the chewy `update_index` call. spoiler: that was terrible. race conditions, updates being overwritten, the works. we had phantom users that were both popular and not popular simultaneously and that was not ideal for user engagement.
 
@@ -23,7 +23,7 @@ the most direct, though sometimes not the most elegant, method is to simply add 
 
 as i mentioned, there are pitfalls with that. what happens if the indexing itself fails? your post-index code will probably fire anyway, which can lead to inconsistencies. plus, imagine if the index is being updated in multiple places. having the post-index logic repeated everywhere just does not scale. that’s the reason why i always try to avoid this.
 
-a slightly better approach, at least in terms of organisation, is to extend your model with a callback on `after_commit`. but, there's a *big* caveat here: `after_commit` fires *after* the database transaction is successful, and this isn’t the same thing as having the data indexed. your data may be in the db, but elasticsearch may not know about it yet. this creates a new kind of race condition. this approach may give you the *feeling* that you solved the issue but you didn't. i've seen it a lot and it's so hard to debug this later on.
+a slightly better approach, at least in terms of organisation, is to extend your model with a callback on `after_commit`. but, there's a _big_ caveat here: `after_commit` fires _after_ the database transaction is successful, and this isn’t the same thing as having the data indexed. your data may be in the db, but elasticsearch may not know about it yet. this creates a new kind of race condition. this approach may give you the _feeling_ that you solved the issue but you didn't. i've seen it a lot and it's so hard to debug this later on.
 
 ```ruby
   class MyModel < ApplicationRecord

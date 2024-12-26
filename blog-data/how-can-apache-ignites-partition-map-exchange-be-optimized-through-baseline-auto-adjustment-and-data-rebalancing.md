@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-apache-ignites-partition-map-exchange-be-optimized-through-baseline-auto-adjustment-and-data-rebalancing"
 ---
 
-Alright, let's talk about Apache Ignite and its partition map exchange—a subject I've had more than a few late nights dealing with. The question zeroes in on optimization, specifically through baseline auto-adjustment and data rebalancing, which are critical for maintaining performance and availability in a distributed system. It's not a trivial matter; get it wrong, and you'll be chasing performance degradation like a hound after a rabbit.
+, let's talk about Apache Ignite and its partition map exchange—a subject I've had more than a few late nights dealing with. The question zeroes in on optimization, specifically through baseline auto-adjustment and data rebalancing, which are critical for maintaining performance and availability in a distributed system. It's not a trivial matter; get it wrong, and you'll be chasing performance degradation like a hound after a rabbit.
 
 The core of the issue revolves around how Ignite manages data distribution across the cluster. When a node joins or leaves, the partition map changes. A ‘partition map exchange’ is the process by which all nodes agree on the new map, effectively reassigning partitions and thus, data ownership. Inefficient exchanges can lead to periods of instability, increased latency, and even data unavailability. Optimizing this process, therefore, means ensuring exchanges are fast and efficient, minimizing disruption.
 
@@ -118,7 +118,7 @@ def start_ignite_node(config_file):
     if not ignite_path:
       print ("Please set your IGNITE_HOME environment variable correctly")
       return
-    
+
     command = [
         os.path.join(ignite_path, "bin", "ignite.sh"),  # or "ignite.bat" on Windows
         config_file

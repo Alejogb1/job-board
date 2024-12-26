@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-integrate-okta-with-a-rails-api-devise-and-vuejs-application"
 ---
 
-Alright, let's tackle this. Integrating Okta with a Rails API backend, a Devise authentication layer, and a Vue.js frontend is a multi-layered challenge, but entirely achievable with a clear strategy. I've navigated similar setups numerous times, each with its own nuances, and the crucial aspect lies in understanding the interaction between each component. Back when I was working on a large scale e-commerce platform, we had to make a similar transition from homegrown authentication to Okta, and that experience solidified much of my understanding here. It wasn't always smooth sailing, but the outcome was a much more scalable and secure system.
+, let's tackle this. Integrating Okta with a Rails API backend, a Devise authentication layer, and a Vue.js frontend is a multi-layered challenge, but entirely achievable with a clear strategy. I've navigated similar setups numerous times, each with its own nuances, and the crucial aspect lies in understanding the interaction between each component. Back when I was working on a large scale e-commerce platform, we had to make a similar transition from homegrown authentication to Okta, and that experience solidified much of my understanding here. It wasn't always smooth sailing, but the outcome was a much more scalable and secure system.
 
 Fundamentally, the process involves establishing Okta as the identity provider, letting it handle authentication, and then utilizing tokens issued by Okta to authorize requests within your Rails API. The Vue.js frontend will be responsible for initiating the authentication flow with Okta and securely storing/passing those tokens along for subsequent requests. Let's break down each piece and see how they fit together.
 
@@ -90,13 +90,13 @@ Next, let’s look at the Vue.js application. We need to use Okta’s JavaScript
 
 ```javascript
 // src/services/auth.js
-import { OktaAuth } from '@okta/okta-auth-js';
+import { OktaAuth } from "@okta/okta-auth-js";
 
 const oktaAuth = new OktaAuth({
-  issuer: 'https://your-okta-domain.okta.com/oauth2/your-authorization-server', // Adjust accordingly
-  clientId: 'your-client-id', // Adjust accordingly
-  redirectUri: window.location.origin + '/callback',
-  scopes: ['openid', 'profile', 'email']
+  issuer: "https://your-okta-domain.okta.com/oauth2/your-authorization-server", // Adjust accordingly
+  clientId: "your-client-id", // Adjust accordingly
+  redirectUri: window.location.origin + "/callback",
+  scopes: ["openid", "profile", "email"],
 });
 
 export const login = async () => {
@@ -109,36 +109,42 @@ export const handleCallback = async () => {
 
 export const getAccessToken = async () => {
   const authState = await oktaAuth.authStateManager.get();
-    return authState.accessToken?.accessToken;
+  return authState.accessToken?.accessToken;
 };
 
 export const isAuthenticated = async () => {
-    return oktaAuth.authStateManager.isAuthenticated();
-}
+  return oktaAuth.authStateManager.isAuthenticated();
+};
 
 export const logout = async () => {
-    oktaAuth.signOut();
+  oktaAuth.signOut();
 };
 
 // In a Vue component example
-import { login, handleCallback, getAccessToken, isAuthenticated, logout } from '../services/auth.js';
+import {
+  login,
+  handleCallback,
+  getAccessToken,
+  isAuthenticated,
+  logout,
+} from "../services/auth.js";
 
 // Component lifecycle hook, route handler, etc.
 async function authHandler() {
-    // Check if we are in a callback
-    if(window.location.href.includes("callback")){
-      await handleCallback()
-      this.$router.push('/');
-    }
+  // Check if we are in a callback
+  if (window.location.href.includes("callback")) {
+    await handleCallback();
+    this.$router.push("/");
+  }
 }
 
 async function authenticateRequest() {
   const accessToken = await getAccessToken();
-  if (accessToken){
+  if (accessToken) {
     // Send an authenticated request
-    const response = await fetch('/api/my_resource', {
-       headers: { 'Authorization': `Bearer ${accessToken}` }
-     })
+    const response = await fetch("/api/my_resource", {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
   }
 }
 ```

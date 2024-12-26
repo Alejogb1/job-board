@@ -4,9 +4,9 @@ date: "2024-12-12"
 id: "qu-mtodos-pueden-utilizar-las-plataformas-educativas-para-garantizar-la-privacidad-de-los-datos-de-los-estudiantes"
 ---
 
-Okay so tackling student data privacy on ed platforms is a big deal. It's not just about slapping a privacy policy up there and calling it a day. We need real mechanisms to make sure this stuff is handled properly. Here’s a breakdown of what works and why with a bit of code thrown in.
+tackling student data privacy on ed platforms is a big deal. It's not just about slapping a privacy policy up there and calling it a day. We need real mechanisms to make sure this stuff is handled properly. Here’s a breakdown of what works and why with a bit of code thrown in.
 
-First off think about data minimization. It’s like the first principle. Don't grab everything you *could* grab grab only what you absolutely *need*. If you're building a quiz platform do you really need the students' location data? Probably not. So design your system to only collect the quiz answers and maybe some basic info to create accounts like names and emails. Avoid like the plague any data point that's not directly tied to functionality. This is core to privacy by design.
+First off think about data minimization. It’s like the first principle. Don't grab everything you _could_ grab grab only what you absolutely _need_. If you're building a quiz platform do you really need the students' location data? Probably not. So design your system to only collect the quiz answers and maybe some basic info to create accounts like names and emails. Avoid like the plague any data point that's not directly tied to functionality. This is core to privacy by design.
 
 Then there's strong encryption. It's not optional. All data at rest and in transit has to be encrypted. At rest means data sitting in databases or on servers. Use AES-256 or a comparable encryption standard. Don't roll your own encryption it’s a disaster waiting to happen. Transit is data being sent across networks. Use TLS encryption that's the standard for https. Here’s an example of using encryption with a python library with cryptography:
 
@@ -64,35 +64,39 @@ Also be aware of compliance frameworks. The actual framework to follow will depe
 For server-side handling of data for example in an express app with node js we can illustrate with this example of sanitized data using a library like validator
 
 ```javascript
-const express = require('express');
-const { body, validationResult } = require('express-validator');
-const validator = require('validator');
+const express = require("express");
+const { body, validationResult } = require("express-validator");
+const validator = require("validator");
 
 const app = express();
 app.use(express.json());
 
-app.post('/register', [
-  body('email').isEmail().normalizeEmail(),
-  body('name').trim().escape(), // Sanitize the name
-  body('password').isLength({ min: 5 })
-], (req, res) => {
+app.post(
+  "/register",
+  [
+    body("email").isEmail().normalizeEmail(),
+    body("name").trim().escape(), // Sanitize the name
+    body("password").isLength({ min: 5 }),
+  ],
+  (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() });
     }
 
     const { email, name, password } = req.body;
 
     // Process the data here safely
-    console.log("Cleaned Email:",email)
-    console.log("Cleaned name:",name)
+    console.log("Cleaned Email:", email);
+    console.log("Cleaned name:", name);
     // ... rest of the logic
 
-    res.status(200).json({message: "User registered successfully"});
-});
+    res.status(200).json({ message: "User registered successfully" });
+  }
+);
 
 app.listen(3000, () => {
-    console.log('Server started on port 3000');
+  console.log("Server started on port 3000");
 });
 ```
 

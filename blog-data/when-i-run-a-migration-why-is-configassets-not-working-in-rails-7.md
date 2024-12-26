@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "when-i-run-a-migration-why-is-configassets-not-working-in-rails-7"
 ---
 
-alright, so you're hitting a classic rails 7 assets pipeline gotcha, i've definitely been there, felt that pain. it's not that the config.assets isn't *working* per se, it’s more about how rails 7 handles asset compilation and how it interacts with your `config/initializers/assets.rb` file. let's get into it.
+, so you're hitting a classic rails 7 assets pipeline gotcha, i've definitely been there, felt that pain. it's not that the config.assets isn't _working_ per se, it’s more about how rails 7 handles asset compilation and how it interacts with your `config/initializers/assets.rb` file. let's get into it.
 
 the shift in rails 7 is significant in that it leans very heavily into the esbuild/importmaps/tailwindcss model, especially for new apps. the old sprockets-based asset pipeline which is where `config.assets` was heavily utilized is still there, but it's definitely not the primary focus anymore. previously, sprockets would compile all your assets (css, js, images, etc.) into a single directory (`public/assets`) and rails could then serve them from there. your `config.assets` directives were crucial for that.
 

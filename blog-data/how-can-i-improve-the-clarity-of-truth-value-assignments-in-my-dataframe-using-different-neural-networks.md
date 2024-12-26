@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-i-improve-the-clarity-of-truth-value-assignments-in-my-dataframe-using-different-neural-networks"
 ---
 
-Alright, let's tackle this. I've spent a good chunk of my career dealing with dataframes where truth values, or rather the lack of clarity around them, became a real bottleneck. It’s not uncommon to encounter situations where you have features that *should* indicate true/false, but are represented in ways that are, shall we say, less than straightforward. This is where neural networks can offer a substantial upgrade over traditional methods.
+, let's tackle this. I've spent a good chunk of my career dealing with dataframes where truth values, or rather the lack of clarity around them, became a real bottleneck. It’s not uncommon to encounter situations where you have features that _should_ indicate true/false, but are represented in ways that are, shall we say, less than straightforward. This is where neural networks can offer a substantial upgrade over traditional methods.
 
 The core issue often stems from two areas: the data itself not being cleanly separated into clear truth value clusters, and then our modeling approach failing to properly capture that latent separation. Think of it this way: instead of nice, clearly defined 0 and 1, you might have a range of values, or even categories, that are imperfect proxies for 'true' and 'false'. That's where a neural network's capacity to learn non-linear relationships shines, and a little bit of smart application can give surprisingly good results.
 
 Now, when it comes to using neural networks for this purpose, it’s important to avoid treating this like a standard classification problem at face value. Sometimes a binary classification will do fine, but depending on your situation you might want to think a little broader. Let's consider a few scenarios and approaches.
 
-Firstly, let’s talk about a situation where the truth value is embedded within numerical ranges. I remember once working on a project with sensor data, and we had a series of readings which *should* have indicated whether a machine component was operating correctly or not. Instead of clear boolean states, we had ranges – values below a certain threshold supposedly indicated ‘false’ (malfunctioning), and values above indicated ‘true’ (working). However, there was considerable overlap in the ranges and no crisp boundary, so a simple threshold was not cutting it.
+Firstly, let’s talk about a situation where the truth value is embedded within numerical ranges. I remember once working on a project with sensor data, and we had a series of readings which _should_ have indicated whether a machine component was operating correctly or not. Instead of clear boolean states, we had ranges – values below a certain threshold supposedly indicated ‘false’ (malfunctioning), and values above indicated ‘true’ (working). However, there was considerable overlap in the ranges and no crisp boundary, so a simple threshold was not cutting it.
 
 Here's how I approached it using a simple feed-forward network (specifically utilizing a tool such as PyTorch or TensorFlow/Keras in Python):
 

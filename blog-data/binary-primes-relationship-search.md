@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "binary-primes-relationship-search"
 ---
 
-Okay so binary primes relationship search right Yeah I've been down that rabbit hole before more times than I care to admit It's one of those things that sounds deceptively simple on paper like just figure out if binary representations of prime numbers have some sort of hidden relationship right But man the devil's in the details let me tell you
+binary primes relationship search right Yeah I've been down that rabbit hole before more times than I care to admit It's one of those things that sounds deceptively simple on paper like just figure out if binary representations of prime numbers have some sort of hidden relationship right But man the devil's in the details let me tell you
 
 First off let's level set because "relationship" is a pretty broad term We're talking about patterns right Not just any pattern a correlation a predictable connection between the binary strings of prime numbers I've spent countless late nights fueled by cold coffee and questionable pizza trying to crack this specific nut
 
@@ -91,9 +91,10 @@ int main() {
     return 0;
 }
 ```
+
 I started thinking about other ways to examine the relationship maybe focusing on the differences of consecutive primes and its effects on the binary representations instead of just the binary representations themselves This led me to try a moving average window approach to see if differences in prime numbers themselves showed a pattern and if that pattern was also somewhat reflected in the differences of their binary forms Now this is something I can get behind and it seems more promising but still no clear pattern emerged It's like they are hiding under the cover of noise
 
-I even explored more advanced techniques autocorrelation Fourier transforms on the binary string representation hoping to find hidden frequencies or periodic patterns nothing conclusive In a moment of frustration I remember thinking if primes were a sitcom what would they be called *'The Unpredictables'* yeah not my best moment in coding humor trust me there's another level of unfunny in my coding history
+I even explored more advanced techniques autocorrelation Fourier transforms on the binary string representation hoping to find hidden frequencies or periodic patterns nothing conclusive In a moment of frustration I remember thinking if primes were a sitcom what would they be called _'The Unpredictables'_ yeah not my best moment in coding humor trust me there's another level of unfunny in my coding history
 
 Here's the thing The seemingly random nature of primes in the decimal system might also be present in their binary form It’s a feature not a bug as they say I tried focusing on specific properties of the binary strings like the number of 1s and 0s the frequency of specific subsequences the number of transitions from 0 to 1 or 1 to 0 It’s pretty complex when you start delving into it
 

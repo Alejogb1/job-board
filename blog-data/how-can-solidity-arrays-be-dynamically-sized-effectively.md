@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-solidity-arrays-be-dynamically-sized-effectively"
 ---
 
-Okay, let's tackle this. I recall a particularly challenging project a few years back involving a decentralized auction system, where the number of bidders could fluctuate wildly. We needed a robust way to handle potentially huge collections of bids without running into gas limit issues or creating a system vulnerable to denial-of-service. That experience really hammered home the importance of understanding dynamic array management in solidity, beyond just the basic implementations.
+, let's tackle this. I recall a particularly challenging project a few years back involving a decentralized auction system, where the number of bidders could fluctuate wildly. We needed a robust way to handle potentially huge collections of bids without running into gas limit issues or creating a system vulnerable to denial-of-service. That experience really hammered home the importance of understanding dynamic array management in solidity, beyond just the basic implementations.
 
-So, how do we size solidity arrays dynamically and *effectively*? It’s not as straightforward as in other programming languages. Solidity arrays come in two main flavors: fixed-size and dynamic-size. Fixed-size arrays are declared with a specific size at compile time (e.g., `uint[10]`), and their size is immutable. Dynamic arrays, on the other hand, can grow or shrink during contract execution (e.g., `uint[]`). While seemingly simple, the gas costs and limitations surrounding dynamic arrays need careful consideration.
+So, how do we size solidity arrays dynamically and _effectively_? It’s not as straightforward as in other programming languages. Solidity arrays come in two main flavors: fixed-size and dynamic-size. Fixed-size arrays are declared with a specific size at compile time (e.g., `uint[10]`), and their size is immutable. Dynamic arrays, on the other hand, can grow or shrink during contract execution (e.g., `uint[]`). While seemingly simple, the gas costs and limitations surrounding dynamic arrays need careful consideration.
 
 The core issue stems from how solidity manages storage. When you declare a dynamic array, the underlying storage location is not a contiguous block of memory ready to be expanded arbitrarily. Instead, each element is typically stored at specific storage slots, which are determined based on a hash-based mapping system. This becomes crucial when you start adding or removing elements, as it can lead to higher gas consumption if not handled optimally.
 
@@ -110,11 +110,11 @@ contract MappingBasedArray {
 
 **Important Considerations**
 
-*   **Gas Costs:**  Each operation on a dynamic array in solidity incurs gas costs. Adding elements using `push()` is generally more expensive as the array size increases due to storage allocation. Removing elements with `delete` doesn’t shrink array's storage, hence it is not gas effective in most cases where shrinking the array is required.
-*   **Storage Limitations:** While solidity can handle large arrays, storage is expensive and limited in the EVM. It's best to avoid storing extremely large datasets directly on-chain whenever possible. Consider using off-chain data storage or IPFS for large media files.
-*   **Array Manipulation Complexity:** Some common array operations, such as inserting at an arbitrary position or compacting, are not directly supported. Implementing them using `push()` or manual looping can be expensive and inefficient.
-*   **Design Alternatives:** Often, using mappings or combining mappings with arrays can be more efficient depending on your specific use case. You need to carefully analyze your needs. For instance, if you only need to track whether an address is present or not in a list, a mapping may be more efficient than a dynamic array.
-*   **EVM Limitations**:  The EVM doesn't offer many high-performance routines to do data manipulation. For complex operations, the best approach may involve carefully designed algorithms with minimal iterations and storage writes.
+- **Gas Costs:** Each operation on a dynamic array in solidity incurs gas costs. Adding elements using `push()` is generally more expensive as the array size increases due to storage allocation. Removing elements with `delete` doesn’t shrink array's storage, hence it is not gas effective in most cases where shrinking the array is required.
+- **Storage Limitations:** While solidity can handle large arrays, storage is expensive and limited in the EVM. It's best to avoid storing extremely large datasets directly on-chain whenever possible. Consider using off-chain data storage or IPFS for large media files.
+- **Array Manipulation Complexity:** Some common array operations, such as inserting at an arbitrary position or compacting, are not directly supported. Implementing them using `push()` or manual looping can be expensive and inefficient.
+- **Design Alternatives:** Often, using mappings or combining mappings with arrays can be more efficient depending on your specific use case. You need to carefully analyze your needs. For instance, if you only need to track whether an address is present or not in a list, a mapping may be more efficient than a dynamic array.
+- **EVM Limitations**: The EVM doesn't offer many high-performance routines to do data manipulation. For complex operations, the best approach may involve carefully designed algorithms with minimal iterations and storage writes.
 
 **Further Reading**
 

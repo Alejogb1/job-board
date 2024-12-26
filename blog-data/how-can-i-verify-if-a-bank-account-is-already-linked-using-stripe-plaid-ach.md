@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-verify-if-a-bank-account-is-already-linked-using-stripe-plaid-ach"
 ---
 
-Alright, let's tackle this. The question of verifying if a bank account is already linked when using Stripe, Plaid, and ACH payments is one I’ve had to address numerous times, and it's definitely a common pain point. It's not always a straightforward "yes" or "no" situation, and we need to consider a few angles to make this check reliable and robust.
+, let's tackle this. The question of verifying if a bank account is already linked when using Stripe, Plaid, and ACH payments is one I’ve had to address numerous times, and it's definitely a common pain point. It's not always a straightforward "yes" or "no" situation, and we need to consider a few angles to make this check reliable and robust.
 
 From my experience building payment platforms, I've learned that simply relying on a single check point can lead to failures and a poor user experience. Therefore, the process requires combining checks at multiple levels. Let's get into the technical nitty-gritty.
 
-Firstly, *Plaid* itself doesn't offer an explicit function that definitively confirms "is this bank already linked." Instead, it provides the plumbing to connect to financial institutions and facilitate data retrieval. The "link" itself is primarily a concept we create within our application’s context, usually tied to a user identifier and the associated `item_id` returned by Plaid. This `item_id` is key to identifying a specific connection to a financial institution.
+Firstly, _Plaid_ itself doesn't offer an explicit function that definitively confirms "is this bank already linked." Instead, it provides the plumbing to connect to financial institutions and facilitate data retrieval. The "link" itself is primarily a concept we create within our application’s context, usually tied to a user identifier and the associated `item_id` returned by Plaid. This `item_id` is key to identifying a specific connection to a financial institution.
 
 Secondly, Stripe, while handling payment processing, doesn't inherently know if you’ve already linked a specific bank account via Plaid, except through what information you pass to it. Therefore, we as developers are responsible for maintaining this association, often in our application's database or a similar datastore. This means we need to architect a solution where we leverage both Plaid and our local data to achieve accurate verification.
 
@@ -64,7 +64,7 @@ if __name__ == '__main__':
     new_user = User(username="test_user")
     session.add(new_user)
     session.commit()
-    
+
     # Linking a bank account for the user
     linked_bank = BankAccount(user_id=new_user.id, plaid_item_id="item_abc123", stripe_payment_method_id="pm_xyz789", stripe_customer_id="cus_123abc")
     session.add(linked_bank)
@@ -87,13 +87,13 @@ In this snippet, we’re using an ORM to simulate a database interaction. `check
 
 When a user attempts to link their account, if we have a pre-existing `item_id` in our database, it is important to avoid creating a duplicate. Usually this happens during the initial flow, where we obtain a `public_token`. It's possible a user might try to link the same account multiple times, which could lead to multiple Plaid `item_ids` and duplicate payment methods, thus leading to inconsistencies in your payment system.
 
-Therefore, prior to exchanging the `public_token` for an `access_token` with Plaid, we should check if we already have an `item_id` associated with our user. If we do, this means that at some point in the past, an account was linked. However, this does *not* necessarily mean that the access token is still valid. The `access_token` itself might have expired or been invalidated by the user through their banking application.
+Therefore, prior to exchanging the `public_token` for an `access_token` with Plaid, we should check if we already have an `item_id` associated with our user. If we do, this means that at some point in the past, an account was linked. However, this does _not_ necessarily mean that the access token is still valid. The `access_token` itself might have expired or been invalidated by the user through their banking application.
 
 This leads us to:
 
 **3. Plaid `item` Status Check**
 
-If you *do* find an existing `item_id`, it’s essential to verify its status with Plaid. This involves using the Plaid client library to call the `/item/get` endpoint. This will check if the Plaid item and underlying account are in good standing. If not, we can trigger the Plaid link flow again, using the old `item_id` for user convenience. This is more effective than assuming that an old `item_id` is still valid.
+If you _do_ find an existing `item_id`, it’s essential to verify its status with Plaid. This involves using the Plaid client library to call the `/item/get` endpoint. This will check if the Plaid item and underlying account are in good standing. If not, we can trigger the Plaid link flow again, using the old `item_id` for user convenience. This is more effective than assuming that an old `item_id` is still valid.
 
 ```python
 import plaid
@@ -175,8 +175,8 @@ In essence, combining these checks in a sequential manner allows for an accurate
 
 **Resource Recommendations:**
 
-*   **Plaid's Documentation:** The official Plaid documentation (available on their website) is a must-read for understanding the various API endpoints and their nuances. Pay particular attention to the sections on "Item Management" and the `/item/get` endpoint.
-*   **Stripe's Documentation:** Similarly, Stripe's documentation (accessible on their site) provides comprehensive details regarding its API and `PaymentMethod` objects. Understanding their various statuses will help you build more resilient integrations.
-*   **"Designing Data-Intensive Applications" by Martin Kleppmann:** While not specific to Plaid or Stripe, this book is invaluable for learning about data consistency and handling issues in distributed systems, which directly relates to properly managing bank account linkages.
+- **Plaid's Documentation:** The official Plaid documentation (available on their website) is a must-read for understanding the various API endpoints and their nuances. Pay particular attention to the sections on "Item Management" and the `/item/get` endpoint.
+- **Stripe's Documentation:** Similarly, Stripe's documentation (accessible on their site) provides comprehensive details regarding its API and `PaymentMethod` objects. Understanding their various statuses will help you build more resilient integrations.
+- **"Designing Data-Intensive Applications" by Martin Kleppmann:** While not specific to Plaid or Stripe, this book is invaluable for learning about data consistency and handling issues in distributed systems, which directly relates to properly managing bank account linkages.
 
 In closing, this is a problem that requires a multi-faceted solution, involving careful data management, combined with Plaid and Stripe API usage. Relying on a single point of failure is not ideal, and a robust system must perform each of these checks every time you interact with the associated bank account. Remember, it’s not just about linking; it's about ensuring the link remains valid over time.

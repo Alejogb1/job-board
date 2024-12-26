@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "why-is-airflow-onsuccesscallback-not-providing-proper-task-info"
 ---
 
-Okay, let’s tackle this. I've seen this specific issue pop up a fair bit over the years, and it usually boils down to a couple of key areas in how Airflow handles callbacks, particularly `on_success_callback`. It's definitely not always obvious on the surface why you aren't getting the expected task information, so let's break it down.
+, let’s tackle this. I've seen this specific issue pop up a fair bit over the years, and it usually boils down to a couple of key areas in how Airflow handles callbacks, particularly `on_success_callback`. It's definitely not always obvious on the surface why you aren't getting the expected task information, so let's break it down.
 
-First off, the core problem usually stems from the fact that `on_success_callback` (and similarly, `on_failure_callback`, or `on_retry_callback`) isn’t a magic portal directly to the completed task. Instead, it’s triggered *after* the task’s execution completes successfully, and it receives a specific context from the Airflow scheduler – the ‘context dictionary’. This context, while containing important information, doesn't always include *everything* you might need directly at that point, or in the format, you'd initially expect.
+First off, the core problem usually stems from the fact that `on_success_callback` (and similarly, `on_failure_callback`, or `on_retry_callback`) isn’t a magic portal directly to the completed task. Instead, it’s triggered _after_ the task’s execution completes successfully, and it receives a specific context from the Airflow scheduler – the ‘context dictionary’. This context, while containing important information, doesn't always include _everything_ you might need directly at that point, or in the format, you'd initially expect.
 
 Specifically, what I’ve found happening in the field is that people expect the context variable passed to the callback function to contain, for instance, all the log details directly, or specific xcom values. It doesn’t necessarily work that way. The context contains references and metadata, not the raw results themselves. The task instance data is there, but not pre-processed.
 
@@ -14,7 +14,7 @@ Let's get into the typical issues and how to deal with them, illustrated with so
 
 **Issue 1: Incorrect Accessing of Task Instance Information**
 
-Often, the primary reason for not seeing proper task info is due to incorrect extraction from the context dictionary. The context gives you a reference to the *task instance* object. From this, you can get more information, but it's a multi-step process, and you need to know *what* you are looking for and *where* to look. The context directly contains an entry named `ti`, which represents the task instance object.
+Often, the primary reason for not seeing proper task info is due to incorrect extraction from the context dictionary. The context gives you a reference to the _task instance_ object. From this, you can get more information, but it's a multi-step process, and you need to know _what_ you are looking for and _where_ to look. The context directly contains an entry named `ti`, which represents the task instance object.
 
 For example, a common pitfall is assuming `context['ti']['log_url']` will directly give you the log URL. Instead, you need to get the task instance and access its log URL method.
 
@@ -164,12 +164,12 @@ Here, we correctly use `xcom_pull` on the task instance object (`task_instance`)
 
 **Issue 3: Callback Execution Order and Context Inconsistencies**
 
-Finally, remember that the callback happens *after* the main task execution. This can be important if you have complex interactions between tasks. The context within the callback reflects the state *at the end* of that task, not mid-execution. It is very important to understand that the task’s execution and the callback happen at different times, and that can influence the context.
+Finally, remember that the callback happens _after_ the main task execution. This can be important if you have complex interactions between tasks. The context within the callback reflects the state _at the end_ of that task, not mid-execution. It is very important to understand that the task’s execution and the callback happen at different times, and that can influence the context.
 
 Furthermore, if you use decorators to define tasks (such as `@task`), the context will be passed correctly, but understanding that callbacks are also tasks, is crucial to understanding how and when the code in the callback will execute.
 
 **Key Resources:**
 
-For further understanding and a deeper dive, I highly recommend referring to the official Airflow documentation, particularly the sections dealing with Task Instances, XComs, and callbacks. In addition, *Programming Apache Airflow* by Bas P. Harenslak and Julian Rutger is an excellent resource with practical information. The *Airflow's Task Instance* class documentation is especially helpful. You will find detailed information about the structure of the `ti` object, and how to interact with its methods.
+For further understanding and a deeper dive, I highly recommend referring to the official Airflow documentation, particularly the sections dealing with Task Instances, XComs, and callbacks. In addition, _Programming Apache Airflow_ by Bas P. Harenslak and Julian Rutger is an excellent resource with practical information. The _Airflow's Task Instance_ class documentation is especially helpful. You will find detailed information about the structure of the `ti` object, and how to interact with its methods.
 
-In summary, when debugging issues with `on_success_callback` and task information, focus on properly understanding the structure of the context dictionary. Ensure you use methods like `ti.log_url` to get the right log info, and `ti.xcom_pull` to retrieve xcom values. Most importantly, remember that the context reflects the state of the task *after* it has completed successfully. By keeping these points in mind, you will be able to effectively use the `on_success_callback`, and more specifically the information within, in your workflow.
+In summary, when debugging issues with `on_success_callback` and task information, focus on properly understanding the structure of the context dictionary. Ensure you use methods like `ti.log_url` to get the right log info, and `ti.xcom_pull` to retrieve xcom values. Most importantly, remember that the context reflects the state of the task _after_ it has completed successfully. By keeping these points in mind, you will be able to effectively use the `on_success_callback`, and more specifically the information within, in your workflow.

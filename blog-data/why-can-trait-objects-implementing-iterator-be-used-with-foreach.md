@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-can-trait-objects-implementing-iterator-be-used-with-foreach"
 ---
 
-Alright, let's unpack this. It's not immediately obvious why a trait object for `Iterator` works so seamlessly with `for_each()`, and I remember hitting a similar snag myself a few years back while working on a data processing pipeline in rust. The key, like many things in rust, lies in the combination of generics, trait bounds, and how rust handles trait object dispatch.
+, let's unpack this. It's not immediately obvious why a trait object for `Iterator` works so seamlessly with `for_each()`, and I remember hitting a similar snag myself a few years back while working on a data processing pipeline in rust. The key, like many things in rust, lies in the combination of generics, trait bounds, and how rust handles trait object dispatch.
 
 The initial challenge usually stems from the fact that `Iterator` is a trait, not a concrete type. A trait object, such as `Box<dyn Iterator<Item = i32>>`, essentially represents any type that implements the `Iterator` trait, at runtime. Now, `for_each()` itself is defined on the `Iterator` trait. This might lead you to wonder: how can a function defined on a trait directly act on a dynamically dispatched trait object? The answer is, fundamentally, through the magic of generics.
 
@@ -20,7 +20,7 @@ trait Iterator {
 }
 ```
 
-See that `Self`? That’s not referring to just any `Iterator`. It’s referring to the *specific type* that implements `Iterator`, the one for which `for_each` is being called. This is crucial. When we call `.for_each()` on an instance that isn’t a trait object directly, the compiler knows precisely what `Self` is. It is a concrete type. The compiler, therefore, generates a specialized version of the `for_each` method tailored for the specific underlying iterator implementation. That's why the code *just works*.
+See that `Self`? That’s not referring to just any `Iterator`. It’s referring to the _specific type_ that implements `Iterator`, the one for which `for_each` is being called. This is crucial. When we call `.for_each()` on an instance that isn’t a trait object directly, the compiler knows precisely what `Self` is. It is a concrete type. The compiler, therefore, generates a specialized version of the `for_each` method tailored for the specific underlying iterator implementation. That's why the code _just works_.
 
 Now, let’s examine how the trait object case plays out. When we work with a `Box<dyn Iterator<Item = i32>>`, we're essentially holding a pointer to an erased concrete type that still adheres to the `Iterator` trait. The magic is in rust's implicit handling of method calls on trait objects. When you call `.for_each()` on a trait object, the compiler doesn't generate a specialized version like with a concrete type. Instead, the compiler does something really clever; it performs what's known as 'dynamic dispatch'.
 
@@ -113,7 +113,8 @@ fn main() {
      process_iterator(boxed_iterator2);
 }
 ```
-In this case, `process_iterator` accepts a trait object.  The compiler generates code for `process_iterator` that performs dynamic dispatch via the vtable of the trait object. Within `for_each`, the appropriate implementation is resolved at runtime via vtable lookup.  Note that we are now passing in two different instances of `Counter` to `process_iterator`.
+
+In this case, `process_iterator` accepts a trait object. The compiler generates code for `process_iterator` that performs dynamic dispatch via the vtable of the trait object. Within `for_each`, the appropriate implementation is resolved at runtime via vtable lookup. Note that we are now passing in two different instances of `Counter` to `process_iterator`.
 
 **Example 3: Another Concrete Type with the Trait Object**
 
@@ -171,8 +172,9 @@ fn main() {
     process_generic(nums_from_vec, |x| println!("Value from generic: {}", x));
 }
 ```
+
 In this final example, we have two separate iterator implementations, and show the use of both `for_each` methods, on trait objects and generics. This demonstrates how the vtable is used to call `for_each` on different types through the `Box<dyn Iterator>` object. The second version shows the generic approach that also works.
 
 In summary, the seamless integration of `for_each()` with `Iterator` trait objects comes from the combination of generics, trait bounds, and dynamic dispatch through vtables. When calling `for_each()` on a concrete type, the compiler generates a static version. When calling `for_each()` on a trait object, a dynamic dispatch occurs through the vtable associated with the object. The generic type parameter `F` further enables `for_each` to accept any function or closure that matches the signature for the given `Iterator` implementation's Item type.
 
-For a deeper dive into these concepts, I recommend looking at the rust book, specifically chapters dealing with traits and trait objects.  Also, “Programming Rust” by Jim Blandy, Jason Orendorff, and Leonora F.S. Tindall is an excellent resource for understanding the nuances of rust's type system. Further, reading academic papers on virtual method dispatch mechanisms can also provide more insight into the implementation details of vtables. These resources should provide the theoretical background you're seeking.
+For a deeper dive into these concepts, I recommend looking at the rust book, specifically chapters dealing with traits and trait objects. Also, “Programming Rust” by Jim Blandy, Jason Orendorff, and Leonora F.S. Tindall is an excellent resource for understanding the nuances of rust's type system. Further, reading academic papers on virtual method dispatch mechanisms can also provide more insight into the implementation details of vtables. These resources should provide the theoretical background you're seeking.

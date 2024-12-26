@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-use-the-tflite-library-with-mediapipe-in-ios"
 ---
 
-Alright, let's talk about integrating tflite models within a mediapipe ios pipeline—it’s a common requirement and, truthfully, something I've spent quite a bit of time optimizing over several projects. The challenge often lies not in the theoretical possibility, but in the practical implementation, specifically in getting the data flowing smoothly and efficiently between the frameworks.
+, let's talk about integrating tflite models within a mediapipe ios pipeline—it’s a common requirement and, truthfully, something I've spent quite a bit of time optimizing over several projects. The challenge often lies not in the theoretical possibility, but in the practical implementation, specifically in getting the data flowing smoothly and efficiently between the frameworks.
 
 I recall vividly one project involving real-time object detection on a mobile device where we had to squeeze every last millisecond of performance. We started with a pure mediapipe graph but quickly found that the tflite model we intended to use directly, for custom inference, was better managed independently rather than attempting to shoehorn it directly into a mediapipe calculator. The key, we discovered, was to leverage mediapipe's ability to send and receive structured data, using the graph to manage the video feed and pre-processing, then handing off the processed image data to our tflite engine, and finally bringing the output back into the mediapipe stream for further processing and visualization.
 
@@ -127,7 +127,7 @@ node {
 }
 ```
 
-Replace `"camera_frames"` with the actual output stream name from your camera or video input node and `"tflite_results"` with the desired name for the output data stream. This establishes the pipeline flow by linking the image frames to your new calculator.  The TFLite results will now be available in the `tflite_results` stream. To use these results, you would add additional calculators following your TFLite inference calculator.
+Replace `"camera_frames"` with the actual output stream name from your camera or video input node and `"tflite_results"` with the desired name for the output data stream. This establishes the pipeline flow by linking the image frames to your new calculator. The TFLite results will now be available in the `tflite_results` stream. To use these results, you would add additional calculators following your TFLite inference calculator.
 
 Finally, let's assume you'd want to visualize the detection results (though visualization details are outside the scope of the question). You'd most likely require additional calculators to extract bounding boxes and labels from the tflite output, converting that to visual data that you could display. This usually requires an additional calculator that uses, for example, the `tflite_results` stream as an input. Let's assume your TFLite model provides bounding box coordinates and class labels, this next calculator could take this raw floating-point output and structure them into a `Detection` protobuf object:
 

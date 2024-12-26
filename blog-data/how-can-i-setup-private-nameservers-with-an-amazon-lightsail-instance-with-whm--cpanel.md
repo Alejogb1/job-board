@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "how-can-i-setup-private-nameservers-with-an-amazon-lightsail-instance-with-whm--cpanel"
 ---
 
-alright, let's talk about setting up private nameservers on a lightsail instance running whm/cpanel. i've been down this road a few times, and it's definitely something that needs careful steps, and it's not always intuitive, especially with all the moving parts involved.
+, let's talk about setting up private nameservers on a lightsail instance running whm/cpanel. i've been down this road a few times, and it's definitely something that needs careful steps, and it's not always intuitive, especially with all the moving parts involved.
 
-so, the core idea here is that you want your own domain’s nameservers (like ns1.yourdomain.com and ns2.yourdomain.com) to resolve *directly* to your lightsail server's ip, instead of relying on your registrar’s dns service, or something like cloudflare. basically you become your own dns authority for your domain and anything using your nameservers. this gives you a lot more control, but it also means more setup and potential headaches if not done well. i remember my first time trying this, back when i was mostly using bare metal servers, and had to learn a *lot* about bind. the process is a bit similar even if we are using lightsail.
+so, the core idea here is that you want your own domain’s nameservers (like ns1.yourdomain.com and ns2.yourdomain.com) to resolve _directly_ to your lightsail server's ip, instead of relying on your registrar’s dns service, or something like cloudflare. basically you become your own dns authority for your domain and anything using your nameservers. this gives you a lot more control, but it also means more setup and potential headaches if not done well. i remember my first time trying this, back when i was mostly using bare metal servers, and had to learn a _lot_ about bind. the process is a bit similar even if we are using lightsail.
 
 first, let's deal with the obvious: your lightsail instance needs a static ip. you cannot be changing ips or else you will have to update your dns records in every instance, and that would be a bad practice. you will have to associate your instance with a static ip in lightsail console. once you've done that, grab that static ip because you will need it in the next steps. keep it handy.
 
@@ -14,10 +14,10 @@ now, regarding whm/cpanel, thankfully, it handles the core dns server bit, that'
 
 you're going to need to create "glue records" at your registrar. these aren't dns records like a or cname you're probably used to. instead, these records associate your nameserver hostnames (like `ns1.yourdomain.com`) with the static ip of your lightsail instance. let me show you a small example. let’s assume your domain is `yourdomain.com` and your static ip is `192.0.2.100` and `192.0.2.101`. you should create two glue records:
 
-*   `ns1.yourdomain.com` pointing to `192.0.2.100`
-*   `ns2.yourdomain.com` pointing to `192.0.2.101`
+- `ns1.yourdomain.com` pointing to `192.0.2.100`
+- `ns2.yourdomain.com` pointing to `192.0.2.101`
 
-the exact interface for doing this varies wildly depending on your registrar, but most will have a spot to manage glue records or sometimes they are called “child nameservers” or “hostnames”. note you need to do this for *each* nameserver. without it, your nameservers will not resolve to anything, and well, no one will find your website. it's like having a phone number but no telephone exchange, it just won't work. i've spent hours troubleshooting issues before because i forgot about these. never again. and now, we are ready to configure the cpanel side of things.
+the exact interface for doing this varies wildly depending on your registrar, but most will have a spot to manage glue records or sometimes they are called “child nameservers” or “hostnames”. note you need to do this for _each_ nameserver. without it, your nameservers will not resolve to anything, and well, no one will find your website. it's like having a phone number but no telephone exchange, it just won't work. i've spent hours troubleshooting issues before because i forgot about these. never again. and now, we are ready to configure the cpanel side of things.
 
 on the whm side of things:
 
@@ -28,10 +28,11 @@ on the whm side of things:
 
     `ns1  a  192.0.2.100`
     `ns2  a  192.0.2.101`
+
 5.  if you have a second ip address on your light sail instance add the second `ns2` to that ip address. if not add it to the same address.
 6.  save the dns zone.
 
-once this is done, go to "basic cpanel & whm setup" in whm, and configure "nameservers" section to use your newly created nameservers `ns1.yourdomain.com` and `ns2.yourdomain.com`. this is important, without it, cpanel won’t *tell* bind to start serving dns for your domain using these nameservers.
+once this is done, go to "basic cpanel & whm setup" in whm, and configure "nameservers" section to use your newly created nameservers `ns1.yourdomain.com` and `ns2.yourdomain.com`. this is important, without it, cpanel won’t _tell_ bind to start serving dns for your domain using these nameservers.
 
 now, this might sound straight forward but here is the thing, dns propagation is not instant and this is important. it may take several hours (or even up to 48 hours) for the changes to propagate globally. you can use online dns propagation checkers, like `whatsmydns.net`, to see if your new nameservers are resolving correctly from different locations around the globe. patience is key here. i once panicked because my site was inaccessible immediately after changing nameservers, but it was just propagation lag. learned my lesson there.
 
@@ -115,6 +116,6 @@ one thing that might be a good thing to consider, and not related to this proble
 
 for further details i recommend taking a look at rfc1035, rfc1034, which describe the dns protocol itself and how it works. and also the dns and bind book by paul albitz, which is considered an authority on the subject of dns and bind servers, it is very useful if you are planning to get deep into dns.
 
-and finally, if you see your website suddenly start working in one country, but not another, dont panic, probably you are still having some propagation issues. go grab a cup of coffee, wait a bit longer and it should be fine. i mean, you wouldn’t ask a snail to be a race car, *would you?*
+and finally, if you see your website suddenly start working in one country, but not another, dont panic, probably you are still having some propagation issues. go grab a cup of coffee, wait a bit longer and it should be fine. i mean, you wouldn’t ask a snail to be a race car, _would you?_
 
 in short, setting up private nameservers with lightsail and cpanel is all about glue records and consistent configuration. make sure to give time for propagation, or your site may experience some weird downtime issues. good luck, you will make it.

@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "which-bpmn-gateway-do-i-have-to-use"
 ---
 
-Okay so you're asking about BPMN gateways a classic headache if you haven't spent enough time wrestling with process flows Trust me I've been there done that got the t-shirt and probably a few scars too Let's break this down without the fancy business jargon just straight up technical talk
+you're asking about BPMN gateways a classic headache if you haven't spent enough time wrestling with process flows Trust me I've been there done that got the t-shirt and probably a few scars too Let's break this down without the fancy business jargon just straight up technical talk
 
-First off it's not about picking *a* gateway it's about picking *the right* gateway for the specific branching logic you need BPMN doesn't just throw a bunch of gates at you and say "go nuts" each one has a distinct purpose and misunderstanding that purpose is like trying to debug code without knowing the language You'll just be flailing around
+First off it's not about picking _a_ gateway it's about picking _the right_ gateway for the specific branching logic you need BPMN doesn't just throw a bunch of gates at you and say "go nuts" each one has a distinct purpose and misunderstanding that purpose is like trying to debug code without knowing the language You'll just be flailing around
 
 Let's start with the basics the exclusive gateway This guy is your workhorse the "if else" statement of BPMN Only one path out of this gateway can be active at any given time It's controlled by a condition expression Think about it like this you've got a process where if a customer is from California then you send them one email if they aren't you send them a different one That's classic exclusive gateway territory
 
@@ -44,7 +44,7 @@ Notice there are no conditions The process just fires off both paths together Yo
 
 And a parallel gateway is probably the gateway that has caused me the most headaches since you forget to close the thread with a joining parallel gateway and the process hangs forever never finishes This also leads to all sorts of memory problems and resource wastage and sometimes it is really hard to debug
 
-Then there's the inclusive gateway This guy's like a more flexible version of the exclusive gateway it's an "or" not an "exclusive or" Multiple paths *can* be activated depending on the conditions This is where things get a bit more complex It's not always immediately obvious what the behavior is You should try to avoid using these as much as possible they create a lot of confusion and hard to follow diagrams
+Then there's the inclusive gateway This guy's like a more flexible version of the exclusive gateway it's an "or" not an "exclusive or" Multiple paths _can_ be activated depending on the conditions This is where things get a bit more complex It's not always immediately obvious what the behavior is You should try to avoid using these as much as possible they create a lot of confusion and hard to follow diagrams
 
 Here's a quick example to make it easier:
 
@@ -62,7 +62,7 @@ Here's a quick example to make it easier:
 </bpmn:sequenceFlow>
 ```
 
-Now in this scenario if `customer.allowSms` and `customer.allowPush` are both true then *both* `Activity_SendSms` and `Activity_SendPush` will be activated If only one of them is true then only that path will be activated If none is true then neither will be activated
+Now in this scenario if `customer.allowSms` and `customer.allowPush` are both true then _both_ `Activity_SendSms` and `Activity_SendPush` will be activated If only one of them is true then only that path will be activated If none is true then neither will be activated
 
 These are the big three but you also have the event based gateway which is often used for handling timeouts and external triggers which is more complex
 

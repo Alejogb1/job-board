@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-automatically-close-a-dialog-box-after-verification"
 ---
 
-Alright, let's delve into automatically closing dialog boxes post-verification; it’s a common requirement in user interface development, and I've tackled this particular problem across various frameworks and languages over the years. There’s really no one-size-fits-all solution, as the specific approach hinges on the tech stack you’re using, but the underlying principles are consistent.
+, let's delve into automatically closing dialog boxes post-verification; it’s a common requirement in user interface development, and I've tackled this particular problem across various frameworks and languages over the years. There’s really no one-size-fits-all solution, as the specific approach hinges on the tech stack you’re using, but the underlying principles are consistent.
 
 The essence of the solution boils down to three key steps: capturing the user’s interaction, performing the validation, and triggering the dialog closure if validation succeeds. This might seem obvious, but subtle nuances can make or break a smooth user experience. In my past experience, I recall a particularly frustrating case involving a custom component library built in javascript; the asynchronous nature of some of the verification steps introduced race conditions that led to dialogs closing too soon, or never closing at all. This taught me the importance of meticulously handling state updates and asynchronous operations.
 
@@ -20,63 +20,67 @@ Here are some code examples illustrating this pattern using different contexts.
 
 ```javascript
 class CustomDialog {
-    constructor(elementId) {
-        this.element = document.getElementById(elementId);
-        this.isOpen = false;
-    }
+  constructor(elementId) {
+    this.element = document.getElementById(elementId);
+    this.isOpen = false;
+  }
 
-    open() {
-        this.element.style.display = 'block';
-        this.isOpen = true;
-    }
+  open() {
+    this.element.style.display = "block";
+    this.isOpen = true;
+  }
 
-    close() {
-        this.element.style.display = 'none';
-        this.isOpen = false;
-    }
+  close() {
+    this.element.style.display = "none";
+    this.isOpen = false;
+  }
 }
 
 async function validateData(data) {
   // Simulate an asynchronous verification process
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
-        if (data.length > 5) {
-            resolve(true);
-        } else {
-            resolve(false);
-        }
+      if (data.length > 5) {
+        resolve(true);
+      } else {
+        resolve(false);
+      }
     }, 500);
-    });
+  });
 }
 
+const myDialog = new CustomDialog("myDialog");
+const submitButton = document.getElementById("submitBtn");
+const inputField = document.getElementById("dataInput");
 
-const myDialog = new CustomDialog('myDialog');
-const submitButton = document.getElementById('submitBtn');
-const inputField = document.getElementById('dataInput');
-
-submitButton.addEventListener('click', async function(event) {
-    event.preventDefault(); // Prevent form submission
-    const data = inputField.value;
-    const isValid = await validateData(data);
-    if (isValid) {
-      myDialog.close();
-    } else {
-      alert('Invalid data. Please input a value longer than five characters.');
-    }
+submitButton.addEventListener("click", async function (event) {
+  event.preventDefault(); // Prevent form submission
+  const data = inputField.value;
+  const isValid = await validateData(data);
+  if (isValid) {
+    myDialog.close();
+  } else {
+    alert("Invalid data. Please input a value longer than five characters.");
+  }
 });
 
-document.getElementById('openDialog').addEventListener('click', function() {
+document.getElementById("openDialog").addEventListener("click", function () {
   myDialog.open();
 });
 ```
+
 _HTML Markup for Example 1:_
+
 ```html
 <button id="openDialog">Open Dialog</button>
 
-<div id="myDialog" style="display:none; border: 1px solid black; padding: 20px; margin-top: 10px;">
-    <p>This is a dialog box</p>
-    <input type="text" id="dataInput" placeholder="Enter data">
-    <button id="submitBtn">Submit</button>
+<div
+  id="myDialog"
+  style="display:none; border: 1px solid black; padding: 20px; margin-top: 10px;"
+>
+  <p>This is a dialog box</p>
+  <input type="text" id="dataInput" placeholder="Enter data" />
+  <button id="submitBtn">Submit</button>
 </div>
 ```
 
@@ -85,7 +89,7 @@ This first example constructs a basic dialog element and then utilizes async/awa
 **Example 2: React Component with a Modal**
 
 ```jsx
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 function Modal({ isOpen, onClose, children }) {
   if (!isOpen) return null;
@@ -101,9 +105,9 @@ function Modal({ isOpen, onClose, children }) {
 }
 
 function validateDataReact(data) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
-      if (data.includes('@')) {
+      if (data.includes("@")) {
         resolve(true);
       } else {
         resolve(false);
@@ -112,10 +116,9 @@ function validateDataReact(data) {
   });
 }
 
-
 function MyForm() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState('');
+  const [formData, setFormData] = useState("");
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
@@ -125,7 +128,7 @@ function MyForm() {
     if (isValid) {
       handleCloseModal();
     } else {
-      alert('Invalid email address. Please include an @ symbol');
+      alert("Invalid email address. Please include an @ symbol");
     }
   };
 
@@ -137,7 +140,7 @@ function MyForm() {
         <input
           type="text"
           value={formData}
-          onChange={e => setFormData(e.target.value)}
+          onChange={(e) => setFormData(e.target.value)}
         />
         <button onClick={handleSubmit}>Submit</button>
       </Modal>
@@ -203,12 +206,12 @@ These examples, though simplified, highlight core principles that remain consist
 
 For further exploration, I’d recommend reviewing the following:
 
-*   **“Designing Interfaces” by Jennifer Tidwell:** Although it’s not specifically a code-focused book, it provides important insights into user interface design, particularly around modal interactions. It helps build an understanding of when and how dialogs should be used effectively.
+- **“Designing Interfaces” by Jennifer Tidwell:** Although it’s not specifically a code-focused book, it provides important insights into user interface design, particularly around modal interactions. It helps build an understanding of when and how dialogs should be used effectively.
 
-*   **“JavaScript and JQuery: Interactive Front-End Web Development” by Jon Duckett:** While focusing on JavaScript and jQuery, this resource covers the fundamentals of DOM manipulation and event handling, crucial for implementing dialog interactions within a web context.
+- **“JavaScript and JQuery: Interactive Front-End Web Development” by Jon Duckett:** While focusing on JavaScript and jQuery, this resource covers the fundamentals of DOM manipulation and event handling, crucial for implementing dialog interactions within a web context.
 
-*   **React Documentation (reactjs.org):** The official React documentation offers comprehensive insights into managing state, asynchronous operations with hooks, and building component-based applications – essential knowledge for the second example given.
+- **React Documentation (reactjs.org):** The official React documentation offers comprehensive insights into managing state, asynchronous operations with hooks, and building component-based applications – essential knowledge for the second example given.
 
-*   **Python Tkinter documentation (docs.python.org/3/library/tkinter.html):** While not as detailed as some other frameworks, it provides the necessary information on Tkinter for a more rudimentary desktop UI development.
+- **Python Tkinter documentation (docs.python.org/3/library/tkinter.html):** While not as detailed as some other frameworks, it provides the necessary information on Tkinter for a more rudimentary desktop UI development.
 
 Understanding the fundamental principles discussed, combined with a solid grasp of the framework’s specific APIs and best practices, is the key to reliably automating dialog closures after verification. Don’t underestimate the power of a well-structured validation process, including error handling.

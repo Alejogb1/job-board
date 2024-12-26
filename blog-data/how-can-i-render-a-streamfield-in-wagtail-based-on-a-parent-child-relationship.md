@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-render-a-streamfield-in-wagtail-based-on-a-parent-child-relationship"
 ---
 
-Okay, let's tackle this. I've certainly dealt with this kind of scenario before, particularly during a project for a large educational institution where content needed to be highly modular yet retain a structured hierarchical aspect. Handling StreamFields within Wagtail, especially when dealing with parent-child relationships, can indeed present some specific rendering challenges. It's not a simple matter of just iterating; we need to think about the context in which these blocks appear.
+, let's tackle this. I've certainly dealt with this kind of scenario before, particularly during a project for a large educational institution where content needed to be highly modular yet retain a structured hierarchical aspect. Handling StreamFields within Wagtail, especially when dealing with parent-child relationships, can indeed present some specific rendering challenges. It's not a simple matter of just iterating; we need to think about the context in which these blocks appear.
 
 Essentially, when you're discussing parent-child StreamField relationships, you’re most likely implying that within a parent StreamField block, you have other blocks, and some of these nested blocks might themselves contain further StreamFields. We need a rendering solution that acknowledges this hierarchical nesting without becoming excessively verbose or difficult to maintain. I tend to approach this by using a recursive approach in our template logic, coupled with some careful block definitions.
 
-Let’s consider a concrete example. Imagine you have a ‘Section’ block (the parent) containing content and optionally, a ‘Subsection’ block (the child). And within the ‘Subsection’, you might have a list of various types of content blocks including, potentially, *another* StreamField. This is where proper block definition and template logic becomes crucial.
+Let’s consider a concrete example. Imagine you have a ‘Section’ block (the parent) containing content and optionally, a ‘Subsection’ block (the child). And within the ‘Subsection’, you might have a list of various types of content blocks including, potentially, _another_ StreamField. This is where proper block definition and template logic becomes crucial.
 
 First, let's establish what our Python block definitions might look like:
 
@@ -30,7 +30,7 @@ class SectionBlock(StructBlock):
   subsections = ListBlock(SubsectionBlock())
 ```
 
-In this definition, `ContentBlock` is our basic set of content blocks, which is reused by both `SectionBlock` and `SubsectionBlock`. `SubsectionBlock` and `SectionBlock` each contain a title and their own streamfield. Importantly, the SectionBlock can *also* contain an array of `SubsectionBlock` instances, which, as you can see, also include their own streamfield. Now the challenge is to render it cleanly in the templates.
+In this definition, `ContentBlock` is our basic set of content blocks, which is reused by both `SectionBlock` and `SubsectionBlock`. `SubsectionBlock` and `SectionBlock` each contain a title and their own streamfield. Importantly, the SectionBlock can _also_ contain an array of `SubsectionBlock` instances, which, as you can see, also include their own streamfield. Now the challenge is to render it cleanly in the templates.
 
 The crucial idea is to use a template tag or custom template logic to handle the recursion. Let's first look at our template logic, which I usually bake into custom template tags to keep templates clean:
 
@@ -54,7 +54,7 @@ def render_streamfield(streamfield, parent_context=None):
         # Add parent context if it exists
         if parent_context:
             context.update(parent_context)
-        
+
         if block_type == 'text':
            output += format_html('<p>{}</p>', block_value)
         elif block_type == 'subsection': # Special case for nested Streamfield
@@ -80,7 +80,7 @@ Now, let’s consider how you might use this in your actual template:
         {% if block.block_type == "section" %}
             <h2>{{ block.value.title }}</h2>
             {% render_streamfield block.value.content %}
-            
+
             {% for subsection in block.value.subsections %}
                 <h3>{{ subsection.title }}</h3>
                  {% render_streamfield subsection.content %}
@@ -92,7 +92,7 @@ Now, let’s consider how you might use this in your actual template:
 </div>
 ```
 
-Here, the page’s `body` field is a StreamField itself. In the template, I'm first checking if this block is a "section". If so, I render it's title, then render its primary streamfield, then iterate over its "subsections".  Crucially note that I’m using the `render_streamfield` template tag recursively. The template tag handles the rendering of all the `ContentBlock` items recursively for all of the streamfields at different nesting levels. This recursive approach allows you to handle arbitrary levels of nesting effectively and without repeating too much template code. It is also straightforward to extend with new blocks.
+Here, the page’s `body` field is a StreamField itself. In the template, I'm first checking if this block is a "section". If so, I render it's title, then render its primary streamfield, then iterate over its "subsections". Crucially note that I’m using the `render_streamfield` template tag recursively. The template tag handles the rendering of all the `ContentBlock` items recursively for all of the streamfields at different nesting levels. This recursive approach allows you to handle arbitrary levels of nesting effectively and without repeating too much template code. It is also straightforward to extend with new blocks.
 
 It's very important to note that this approach isn't limited to just two levels of nesting; it can handle as many nested `StreamFields` as you need, as it calls itself.
 

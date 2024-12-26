@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-determine-if-a-string-contains-a-digit-between-two-other-digits"
 ---
 
-Okay, let's unpack this. It's a common scenario that I’ve encountered numerous times, usually in data validation or parsing contexts. The crux of the issue is determining if within a given string, a single digit exists, but specifically when that digit is flanked by other digits. It’s not about finding any digit, but a digit nestled between others. My go-to approach typically involves a combination of regular expressions and iterative techniques, depending on the complexity and scale of the task. I will steer clear of excessively complex regular expressions that often hinder maintainability, preferring clarity and efficiency.
+, let's unpack this. It's a common scenario that I’ve encountered numerous times, usually in data validation or parsing contexts. The crux of the issue is determining if within a given string, a single digit exists, but specifically when that digit is flanked by other digits. It’s not about finding any digit, but a digit nestled between others. My go-to approach typically involves a combination of regular expressions and iterative techniques, depending on the complexity and scale of the task. I will steer clear of excessively complex regular expressions that often hinder maintainability, preferring clarity and efficiency.
 
 Let's talk about some approaches I've used in the past. I recall a project a few years back where we were parsing log files. The logs had a structure where transaction IDs were sometimes corrupted, and instead of the expected format like ‘TXN-123-456’, we’d sometimes get ‘TXN123456’ or ‘TXN123a456’. To identify these anomalies, I had to create a system that could specifically pinpoint digit characters sandwiched between other digits to confirm the corrupted format. That experience cemented my preference for a robust and straightforward method.
 
@@ -33,26 +33,28 @@ In contrast, let's consider a javascript version that performs similar operation
 
 ```javascript
 function hasDigitBetweenDigits(str) {
-  if (typeof str !== 'string' || str.length < 3) {
+  if (typeof str !== "string" || str.length < 3) {
     return false;
   }
 
   return Array.from(str).some((char, index, arr) => {
-      if (index > 0 && index < arr.length - 1) {
-        return Number.isInteger(parseInt(char)) &&
-            Number.isInteger(parseInt(arr[index - 1])) &&
-             Number.isInteger(parseInt(arr[index + 1]))
-      }
+    if (index > 0 && index < arr.length - 1) {
+      return (
+        Number.isInteger(parseInt(char)) &&
+        Number.isInteger(parseInt(arr[index - 1])) &&
+        Number.isInteger(parseInt(arr[index + 1]))
+      );
+    }
     return false;
   });
 }
 
 // Example usage
-console.log(hasDigitBetweenDigits("abc123def"));  // Output: true
-console.log(hasDigitBetweenDigits("ab1c2de"));    // Output: false
-console.log(hasDigitBetweenDigits("123"));       // Output: true
-console.log(hasDigitBetweenDigits("1a2"));      // Output: false
-console.log(hasDigitBetweenDigits("a1"));       // Output: false
+console.log(hasDigitBetweenDigits("abc123def")); // Output: true
+console.log(hasDigitBetweenDigits("ab1c2de")); // Output: false
+console.log(hasDigitBetweenDigits("123")); // Output: true
+console.log(hasDigitBetweenDigits("1a2")); // Output: false
+console.log(hasDigitBetweenDigits("a1")); // Output: false
 ```
 
 This javascript function transforms the string into an array, and then iterates using a `some` operator which immediately returns true if at least one element meets the criteria. It handles the edge cases before the iteration and focuses on integer-checks within the array. This demonstrates a more concise approach, which may suit some styles more than others.

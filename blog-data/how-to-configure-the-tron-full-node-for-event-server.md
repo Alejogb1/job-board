@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-configure-the-tron-full-node-for-event-server"
 ---
 
-Okay, let's tackle this one. Setting up a Tron full node to reliably feed events to an event server can be a bit nuanced. I’ve had to navigate this a few times, most notably during a project where we were building a real-time dashboard for dApp analytics – that's where the rubber really met the road. It's not as straightforward as simply pointing an event stream, and getting it stable and production-ready often requires a deeper dive into the Tron node's configuration.
+, let's tackle this one. Setting up a Tron full node to reliably feed events to an event server can be a bit nuanced. I’ve had to navigate this a few times, most notably during a project where we were building a real-time dashboard for dApp analytics – that's where the rubber really met the road. It's not as straightforward as simply pointing an event stream, and getting it stable and production-ready often requires a deeper dive into the Tron node's configuration.
 
 First things first, understand that a Tron full node, by default, doesn't aggressively push out event data in the way a dedicated event server might expect. The node primarily focuses on consensus and block propagation. So, you’ll need to configure it to specifically cater to your needs, and the key lies in several core aspects of its configuration file – usually named `config.conf` or something similar depending on how you've installed it.
 
@@ -70,6 +70,7 @@ if __name__ == '__main__':
         print("No transactions found")
 
 ```
+
 This code snippet illustrates how to connect to the gRPC service and retrieve transaction data within a given block range. Critically, it iterates through the transaction logs and extracts event data. Note that you must replace placeholder strings like `"your_contract_address"` with relevant values. The `TransactionInfoList` message allows us to efficiently retrieve these blocks, and we can then iterate through the response to find contract logs.
 
 Now, if you have a specific contract you're interested in, you will likely be more interested in retrieving events from a smart contract directly. You could also use event filtering parameters. Here’s a modified example, still conceptual, showcasing a way of filtering for contract events based on an address and topic:

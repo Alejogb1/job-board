@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-clipboard-gem-function-on-macos-but-not-on-ubuntu"
 ---
 
-Okay, let's unpack this clipboard discrepancy. I've bumped into this specific headache more times than I care to remember, particularly when juggling development environments across different operating systems. It’s not unusual for things that work seamlessly in one place to simply fail in another, especially when dealing with system-level interactions like clipboard access.
+, let's unpack this clipboard discrepancy. I've bumped into this specific headache more times than I care to remember, particularly when juggling development environments across different operating systems. It’s not unusual for things that work seamlessly in one place to simply fail in another, especially when dealing with system-level interactions like clipboard access.
 
 The core issue with the `clipboard` gem's behavior between macOS and Ubuntu stems from fundamental differences in how each operating system handles clipboard operations and interacts with its underlying graphical infrastructure. macOS has a relatively unified and well-defined method for accessing the pasteboard (its name for the clipboard). It leverages the `NSPasteboard` class within its Cocoa framework, providing a consistent interface that Ruby gems, like `clipboard`, can reliably interface with. This means that the code within the gem, which often relies on bindings to system-level libraries, often has a direct route to the correct functionality on macOS.
 

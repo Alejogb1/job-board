@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "how-do-i-trigger-airflow-dags-based-on-dagrunconf-content"
 ---
 
-Alright, let's dive into triggering Airflow DAGs using `dag_run.conf`. I’ve been working with Airflow for quite a while, and this is a scenario that comes up more frequently than you might think. The beauty of Airflow lies in its ability to be both rigorously scheduled and flexibly triggered based on external events or data, and manipulating `dag_run.conf` is a key part of that flexibility.
+, let's dive into triggering Airflow DAGs using `dag_run.conf`. I’ve been working with Airflow for quite a while, and this is a scenario that comes up more frequently than you might think. The beauty of Airflow lies in its ability to be both rigorously scheduled and flexibly triggered based on external events or data, and manipulating `dag_run.conf` is a key part of that flexibility.
 
 The short answer is: you leverage the Airflow API or CLI, providing the required `conf` parameters when creating a new `dag_run`. However, the "how" is far more nuanced, and I've seen teams stumble over some of the finer details. Let's break it down into a practical approach, along with some real-world examples and code snippets.
 
-First, it's crucial to understand that `dag_run.conf` isn't a magic configuration that automatically triggers DAGs based on some internal polling mechanism. Instead, *you* initiate a `dag_run`, and the `conf` dictionary provides the context that the specific DAG instance uses during its execution. This context can be anything you need the DAG to know at runtime, such as file paths, API keys, or specific processing parameters. This is not to be confused with DAG-level configuration which is often passed in as Environment Variables or within the dag.py file itself.
+First, it's crucial to understand that `dag_run.conf` isn't a magic configuration that automatically triggers DAGs based on some internal polling mechanism. Instead, _you_ initiate a `dag_run`, and the `conf` dictionary provides the context that the specific DAG instance uses during its execution. This context can be anything you need the DAG to know at runtime, such as file paths, API keys, or specific processing parameters. This is not to be confused with DAG-level configuration which is often passed in as Environment Variables or within the dag.py file itself.
 
 Let's assume, for a moment, I had a data pipeline years ago that processed incoming CSV files. Each file required specific settings depending on its source, and we used the `dag_run.conf` to parameterize the data processing step. This isn't uncommon. We had to trigger each processing task by passing in unique `conf` values with each new file. The DAG itself remained constant; only the `conf` changed.
 

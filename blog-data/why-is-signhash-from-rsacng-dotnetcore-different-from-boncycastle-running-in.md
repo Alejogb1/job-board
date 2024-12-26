@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "why-is-signhash-from-rsacng-dotnetcore-different-from-boncycastle-running-in"
 ---
 
-Alright let's dive into this signhash discrepancy between RSACng and Bouncy Castle on .NET Core it's a classic head-scratcher that I’ve personally wrestled with more times than I’d like to admit
+let's dive into this signhash discrepancy between RSACng and Bouncy Castle on .NET Core it's a classic head-scratcher that I’ve personally wrestled with more times than I’d like to admit
 
 So you’re seeing different output right Specifically when generating a signature with `RSACng` in .NET Core and then trying to verify it using Bouncy Castle it’s failing or vice-versa This isn’t a bug per se but more a difference in how the two libraries handle the underlying mechanics of RSA signing particularly with regards to padding and encoding of the data prior to the actual signing operation
 
@@ -131,8 +131,8 @@ To resolve this issue in your situation you need to do a few things:
 
 For further reading you can consult the following resources instead of links:
 
-*   **Applied Cryptography** by Bruce Schneier is a great book to start understanding the mechanics of crypto algorithms
-*   **Handbook of Applied Cryptography** by Alfred Menezes et al gives a very detailed approach and it's a must-read for anyone working with crypto implementations
-*   **RFC 8017** which is the standard document that specifies PKCS #1 which is an important reading for both padding and encryption mechanisms
+- **Applied Cryptography** by Bruce Schneier is a great book to start understanding the mechanics of crypto algorithms
+- **Handbook of Applied Cryptography** by Alfred Menezes et al gives a very detailed approach and it's a must-read for anyone working with crypto implementations
+- **RFC 8017** which is the standard document that specifies PKCS #1 which is an important reading for both padding and encryption mechanisms
 
 I hope this helps clear things up it's a common issue and understanding these nuances is essential when working with different cryptographic libraries Good luck with your debugging and may the crypto gods be on your side because I’ve seen how cruel they can be

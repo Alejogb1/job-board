@@ -4,17 +4,17 @@ date: "2024-12-16"
 id: "can-reinforcement-learning-be-done-with-supervised-data"
 ---
 
-Okay, let’s unpack this. Reinforcement learning (rl) with supervised data – it’s a question that circles back to the core differences in these two learning paradigms, and whether we can, essentially, bridge the gap. It’s not a straightforward “yes” or “no” scenario, but more about how you frame the problem. I’ve personally encountered variations of this challenge a few times during my work on robotics control systems and, more recently, in developing recommendation engines with limited user interaction data. I've seen it both succeed and fail spectacularly.
+, let’s unpack this. Reinforcement learning (rl) with supervised data – it’s a question that circles back to the core differences in these two learning paradigms, and whether we can, essentially, bridge the gap. It’s not a straightforward “yes” or “no” scenario, but more about how you frame the problem. I’ve personally encountered variations of this challenge a few times during my work on robotics control systems and, more recently, in developing recommendation engines with limited user interaction data. I've seen it both succeed and fail spectacularly.
 
-The essence of reinforcement learning lies in its trial-and-error methodology, learning from *interactions* with an environment. It's about maximizing cumulative reward, with the system figuring out the best actions on its own, guided by this delayed feedback. Supervised learning, conversely, thrives on labeled data. You have a clear input and a desired output, and the model learns to map one to the other. The question, therefore, pivots on the extent to which we can transform supervised data to resemble the *experience* required for rl.
+The essence of reinforcement learning lies in its trial-and-error methodology, learning from _interactions_ with an environment. It's about maximizing cumulative reward, with the system figuring out the best actions on its own, guided by this delayed feedback. Supervised learning, conversely, thrives on labeled data. You have a clear input and a desired output, and the model learns to map one to the other. The question, therefore, pivots on the extent to which we can transform supervised data to resemble the _experience_ required for rl.
 
-Directly plugging supervised data into a standard rl algorithm is typically not effective. Standard supervised learning assumes a static dataset with clear ground truth labels, whereas rl requires sequential decisions, exploration of action spaces, and delayed rewards. However, we *can* leverage supervised data, often very effectively, to improve the *initial* learning stages and guide the learning process in ways that traditional rl alone might struggle with. The goal is to use the data to either warm-start an rl agent or shape the reward function, rather than directly substitute supervised learning for rl itself.
+Directly plugging supervised data into a standard rl algorithm is typically not effective. Standard supervised learning assumes a static dataset with clear ground truth labels, whereas rl requires sequential decisions, exploration of action spaces, and delayed rewards. However, we _can_ leverage supervised data, often very effectively, to improve the _initial_ learning stages and guide the learning process in ways that traditional rl alone might struggle with. The goal is to use the data to either warm-start an rl agent or shape the reward function, rather than directly substitute supervised learning for rl itself.
 
 Let's illustrate with some practical approaches, supported by code examples. For these, I'll use python and a bit of pseudocode to keep them readable, focusing on illustrating the concepts:
 
 **Approach 1: Imitation Learning (Behavioral Cloning)**
 
-The most straightforward method is *imitation learning*, often achieved through *behavioral cloning*. Here, we use the supervised data to train a policy that tries to mimic the actions of an expert (assuming that expert's actions form the dataset). This method doesn't use a reward function in the conventional rl sense during the imitation phase, but it learns an initial policy based on observed behaviors. Once that policy is trained, we can then either use it directly or fine-tune it with rl methods to improve performance and adapt to new situations.
+The most straightforward method is _imitation learning_, often achieved through _behavioral cloning_. Here, we use the supervised data to train a policy that tries to mimic the actions of an expert (assuming that expert's actions form the dataset). This method doesn't use a reward function in the conventional rl sense during the imitation phase, but it learns an initial policy based on observed behaviors. Once that policy is trained, we can then either use it directly or fine-tune it with rl methods to improve performance and adapt to new situations.
 
 ```python
 import numpy as np
@@ -49,11 +49,12 @@ def initial_policy(state):
 #e.g., agent.policy = initial_policy
 
 ```
+
 In this example, we employ logistic regression as our classifier (you could easily substitute with another suitable classifier, such as a multi-layer perceptron) . The data (states and actions) represents what an expert would do in each situation. This approach provides a decent starting point; the policy is an informed policy that can then be further optimized using rl techniques. It sidesteps initial random exploration which can often be quite inefficient.
 
 **Approach 2: Reward Shaping**
 
-Another approach involves using supervised data to *shape the reward function* in the rl setting. Here, instead of cloning the expert's actions directly, we guide the agent by providing additional reward signals based on how closely its actions align with the desired behaviors from the supervised data. Essentially, we’re augmenting the environment’s native reward signals.
+Another approach involves using supervised data to _shape the reward function_ in the rl setting. Here, instead of cloning the expert's actions directly, we guide the agent by providing additional reward signals based on how closely its actions align with the desired behaviors from the supervised data. Essentially, we’re augmenting the environment’s native reward signals.
 
 ```python
 #assume the supervised data is (state, desired_action) tuples
@@ -89,11 +90,12 @@ action = 1 # lets say our agent chooses this action
 reward = shaped_reward(current_state, action, desired_action_supervised)
 
 ```
-This method leverages the information within the supervised data but in a different way than imitation. We are telling the rl agent what would be *a good thing to do*. This can be more robust, particularly if the expert data is noisy, as it provides the rl agent with a broader target to learn around.
+
+This method leverages the information within the supervised data but in a different way than imitation. We are telling the rl agent what would be _a good thing to do_. This can be more robust, particularly if the expert data is noisy, as it provides the rl agent with a broader target to learn around.
 
 **Approach 3: Pre-Training with Supervised Data**
 
-This method uses the supervised data to pre-train the rl agent’s *value function* or the *policy network* itself. This is quite common in more complex scenarios. The supervised data helps the neural network to learn relevant features and representations before undergoing reinforcement learning. This pre-training allows the agent to start learning with a head start instead of starting with random initialized weights.
+This method uses the supervised data to pre-train the rl agent’s _value function_ or the _policy network_ itself. This is quite common in more complex scenarios. The supervised data helps the neural network to learn relevant features and representations before undergoing reinforcement learning. This pre-training allows the agent to start learning with a head start instead of starting with random initialized weights.
 
 ```python
 import tensorflow as tf
@@ -129,4 +131,4 @@ Here we are pre-training our neural network to predict actions with labeled stat
 
 These methods highlight that leveraging supervised data for rl is less about a direct swap and more about a strategic integration. The key is not to abandon the core principles of rl—trial and error, interaction, delayed rewards—but to intelligently use supervised data to guide and accelerate the process.
 
-If you’re looking to delve deeper, I recommend focusing on research papers around *imitation learning* (especially those by Professor Andrew Ng and his research group at Stanford), and the seminal work in *policy gradient methods* like the REINFORCE algorithm, for which you can find a lot of good material from Richard Sutton's work. The book “Reinforcement Learning: An Introduction” by Sutton and Barto is also a must-read for anyone working in this space. This will allow you to expand on these ideas and see how various approaches are applied and tested in practical scenarios.
+If you’re looking to delve deeper, I recommend focusing on research papers around _imitation learning_ (especially those by Professor Andrew Ng and his research group at Stanford), and the seminal work in _policy gradient methods_ like the REINFORCE algorithm, for which you can find a lot of good material from Richard Sutton's work. The book “Reinforcement Learning: An Introduction” by Sutton and Barto is also a must-read for anyone working in this space. This will allow you to expand on these ideas and see how various approaches are applied and tested in practical scenarios.

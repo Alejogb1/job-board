@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-is-filter-implemented"
 ---
 
-Okay so you're asking how `filter` is implemented right I've been around the block with this one honestly probably written my own `filter` implementation more times than I care to admit it's a fundamental operation in so many areas.
+you're asking how `filter` is implemented right I've been around the block with this one honestly probably written my own `filter` implementation more times than I care to admit it's a fundamental operation in so many areas.
 
 First off let's talk conceptually `filter` in essence is a higher-order function meaning it takes another function as an argument that function being the predicate the condition for keeping or removing elements it goes through a collection usually an array or list or something similar and it applies that predicate to each element if the predicate returns `true` or some truthy value the element is kept otherwise its thrown away or skipped it returns a new collection containing only the elements that passed the test its a core pattern for data manipulation.
 
@@ -31,7 +31,7 @@ const evenNumbers = filterManually(numbers, (number) => number % 2 === 0);
 console.log(evenNumbers); // Output: [2, 4, 6]
 ```
 
-Okay so that's pretty straightforward it initializes an empty array then loops through the input array checks each element using the predicate and if the result is truthy it appends it to the new array pretty basic but it works its O(n) time complexity where n is the number of elements in the array.
+that's pretty straightforward it initializes an empty array then loops through the input array checks each element using the predicate and if the result is truthy it appends it to the new array pretty basic but it works its O(n) time complexity where n is the number of elements in the array.
 
 Now let’s look at a more functional approach using higher order functions again this one might be a bit more like what you find in modern js if you are not trying to use basic oldschool approaches like the one above. This example uses the array.reduce function which is very useful in functional programming it’s just a different way to iterate through a collection.
 
@@ -45,8 +45,11 @@ function filterReduce(array, predicate) {
   }, []);
 }
 // Example
-const mixedValues = [1, 'hello', 2, true, 3, null, 4];
-const numbersOnly = filterReduce(mixedValues, (value) => typeof value === 'number');
+const mixedValues = [1, "hello", 2, true, 3, null, 4];
+const numbersOnly = filterReduce(
+  mixedValues,
+  (value) => typeof value === "number"
+);
 console.log(numbersOnly); // Output: [1, 2, 3, 4]
 ```
 
@@ -64,17 +67,20 @@ function* filterIterator(array, predicate) {
 }
 //Example
 const largeNumberList = Array.from({ length: 100000 }, (_, i) => i + 1);
-const evenLargeNumbers = filterIterator(largeNumberList, (number) => number % 2 === 0);
+const evenLargeNumbers = filterIterator(
+  largeNumberList,
+  (number) => number % 2 === 0
+);
 
 for (const evenNum of evenLargeNumbers) {
-    //Process the filtered numbers
-    if (evenNum> 1000)
-    console.log(evenNum);
-    // Break to simulate lazy evaluation
-    if (evenNum > 2000) break;
+  //Process the filtered numbers
+  if (evenNum > 1000) console.log(evenNum);
+  // Break to simulate lazy evaluation
+  if (evenNum > 2000) break;
 }
 //Output: Will produce the first numbers from 1002 and up
 ```
+
 The iterator example uses generator functions that yield the filtered values instead of creating an entire filtered collection in memory at once. It's a more lazy approach which is handy when your dataset is huge. It will generate only the filtered values needed not all of them at once. If you stop iterating you will not generate everything that a normal `filter` would generate. You can think of it like a water pump that only pumps the water when needed not always like a normal sink.
 
 Each of these implementations achieves the core filtering behavior but vary in terms of the actual method and memory use. The performance trade-offs are something you usually need to think about when working with large data sets and for very performance critical applications.
@@ -89,4 +95,4 @@ Oh and you wanted a joke right?
 
 Why did the programmer quit his job? Because he didn't get arrays!
 
-Alright so I think that basically covers the common implementation techniques of `filter` if you have any other questions about this let me know otherwise i wish you the best for your programming endeavors and hopefully this explanation helped a bit and you found it useful.
+so I think that basically covers the common implementation techniques of `filter` if you have any other questions about this let me know otherwise i wish you the best for your programming endeavors and hopefully this explanation helped a bit and you found it useful.

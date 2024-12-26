@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-add-an-instance-variable-to-a-rails-dropdown-selection"
 ---
 
-Alright, let's tackle this. I've seen this particular challenge pop up more often than one might think, especially when you're trying to build dynamic and interactive forms in Rails. It's not uncommon to need to associate additional data with each option in a dropdown that isn't explicitly displayed but is still critical for your application's logic. Typically, you'd use a `select` tag in Rails, which primarily focuses on the display value and the corresponding value to be submitted. But what about, say, an id, a type, or other metadata? That's where things get interesting. I recall, several years back, building an asset management system where each dropdown item representing a physical asset also needed to carry its specific location ID. Simply using `form.select` wasn’t cutting it; I needed to embed more data within the dropdown options.
+, let's tackle this. I've seen this particular challenge pop up more often than one might think, especially when you're trying to build dynamic and interactive forms in Rails. It's not uncommon to need to associate additional data with each option in a dropdown that isn't explicitly displayed but is still critical for your application's logic. Typically, you'd use a `select` tag in Rails, which primarily focuses on the display value and the corresponding value to be submitted. But what about, say, an id, a type, or other metadata? That's where things get interesting. I recall, several years back, building an asset management system where each dropdown item representing a physical asset also needed to carry its specific location ID. Simply using `form.select` wasn’t cutting it; I needed to embed more data within the dropdown options.
 
 The core issue here is that the standard Rails `select` helper doesn't natively support adding arbitrary instance variables to each option element. The `value` attribute, of course, gets passed along with the form submission, but that’s usually a primary key, string or other basic identifier. You can't expect to stuff complex objects or multiple fields directly into it. What we need, then, is a strategy to embed that extra data within the HTML, typically using the `data` attribute of an HTML element, and then handle it appropriately with JavaScript, typically using the unobtrusive javascript conventions of Rails.
 
@@ -27,19 +27,18 @@ Imagine you have a dropdown for selecting categories, and alongside the category
 
 ```javascript
 // In your JavaScript file (e.g., assets/javascripts/application.js or a specific js file)
-$(document).on('change', '.category-select', function() {
-  const selectedOption = $(this).find('option:selected');
-  const parentId = selectedOption.data('parentId');
+$(document).on("change", ".category-select", function () {
+  const selectedOption = $(this).find("option:selected");
+  const parentId = selectedOption.data("parentId");
 
   // Now you can use parentId for further actions, such as:
   console.log("Selected category's parent ID:", parentId);
   // Example:
   // if (parentId === 1) {
-    // $('#some-related-field').show();
-    //} else {
-    // $('#some-related-field').hide();
+  // $('#some-related-field').show();
+  //} else {
+  // $('#some-related-field').hide();
   // }
-
 });
 ```
 
@@ -64,11 +63,11 @@ Let’s take this a step further. Suppose you need to carry several attributes, 
 
 ```javascript
 // In your JavaScript file
-$(document).on('change', '.asset-select', function() {
-  const selectedOption = $(this).find('option:selected');
-  const assetType = selectedOption.data('assetType');
-  const statusCode = selectedOption.data('statusCode');
-  const locationId = selectedOption.data('locationId');
+$(document).on("change", ".asset-select", function () {
+  const selectedOption = $(this).find("option:selected");
+  const assetType = selectedOption.data("assetType");
+  const statusCode = selectedOption.data("statusCode");
+  const locationId = selectedOption.data("locationId");
 
   console.log("Asset Type:", assetType);
   console.log("Status Code:", statusCode);

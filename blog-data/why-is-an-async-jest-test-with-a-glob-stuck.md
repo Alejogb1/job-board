@@ -4,24 +4,24 @@ date: "2024-12-15"
 id: "why-is-an-async-jest-test-with-a-glob-stuck"
 ---
 
-alright, so you're hitting that fun wall where your jest async test, using a glob pattern, decides to take an extended coffee break and never quite finish. i've been there, staring at the terminal, wondering if i’d accidentally summoned a time-dilation field in my test suite. it's a classic symptom of a few things, and it usually boils down to misunderstandings about how async operations, globbing, and jest all interact, especially when filesystems are involved, and i recall i was stuck with this issue back in the old days of node version 10, it feels like another lifetime.
+, so you're hitting that fun wall where your jest async test, using a glob pattern, decides to take an extended coffee break and never quite finish. i've been there, staring at the terminal, wondering if i’d accidentally summoned a time-dilation field in my test suite. it's a classic symptom of a few things, and it usually boils down to misunderstandings about how async operations, globbing, and jest all interact, especially when filesystems are involved, and i recall i was stuck with this issue back in the old days of node version 10, it feels like another lifetime.
 
-first off, let’s clarify what might be going on. when you use a glob pattern – think something like `'./src/**/*.test.js'` – you're telling node's file system api to find all files matching that pattern. this operation itself is *synchronous*. the glob library returns a list of matching paths. it doesn't know if those files contain tests, or even if the files are completely loaded, its job is just to find files matching your string.
+first off, let’s clarify what might be going on. when you use a glob pattern – think something like `'./src/**/*.test.js'` – you're telling node's file system api to find all files matching that pattern. this operation itself is _synchronous_. the glob library returns a list of matching paths. it doesn't know if those files contain tests, or even if the files are completely loaded, its job is just to find files matching your string.
 
 now, once jest starts running, it loads each of these files. if any of the tests within these files are asynchronous (which, given your question, i'm guessing they are), jest needs a way to know when each of those async tasks is complete so it can say whether that test passed or failed. this is usually where the problem occurs in your case if the test gets stuck.
 
-if you're using async/await inside your tests, that's fine, jest understands that, but, what about the async operations *inside* the files you are globbing over. or if they are just promises that you're not resolving? jest won’t magically understand if your loaded test file is actually doing something async which never ends. for example consider a file that you have, and you are globbing over and loading:
+if you're using async/await inside your tests, that's fine, jest understands that, but, what about the async operations _inside_ the files you are globbing over. or if they are just promises that you're not resolving? jest won’t magically understand if your loaded test file is actually doing something async which never ends. for example consider a file that you have, and you are globbing over and loading:
 
 ```javascript
 // my-async-test.js
 const asyncTask = async () => {
   // this will never resolve unless you await or return it somewhere
   new Promise(() => {
-      // some infinite operation here
-  })
-}
+    // some infinite operation here
+  });
+};
 
-test('should hang', () => {
+test("should hang", () => {
   asyncTask();
   expect(1).toBe(1); // this line passes but jest will still hang if you loaded this file
 });
@@ -42,16 +42,15 @@ a fix can be explicitly making sure that you have awaited the async operation in
 const asyncTaskThatResolves = async () => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve('done!');
+      resolve("done!");
     }, 100);
   });
-}
+};
 
-test('should finish', async () => {
+test("should finish", async () => {
   const result = await asyncTaskThatResolves();
-  expect(result).toBe('done!'); // this is fine, test will pass and complete
+  expect(result).toBe("done!"); // this is fine, test will pass and complete
 });
-
 ```
 
 in this case, the test will pass, and because we awaited `asyncTaskThatResolves()` it will correctly complete. the key here is making sure you have awaited and are returning the promise from your async functions.
@@ -60,13 +59,14 @@ a common way of making a test 'stuck' without realizing it is to have functions 
 
 ```javascript
 // bad-async-test.js
-test('should not finish', () => {
+test("should not finish", () => {
   const id = setImmediate(() => {
     // do something that will run but never finish
   });
   // there is no clearImmediate or awaiting on this, so jest never finishes
 });
 ```
+
 in this case, the `setImmediate` function will never complete the test, thus the test will keep running and jest will appear stuck and time out. the solution would be to use `clearImmediate` or if its a `setInterval` or `setTimeout` use `clearInterval`, `clearTimeout` respectively.
 
 another thing i've noticed is that sometimes the issue is with the file system itself. if you have a huge number of files, the initial file system traversal that the globbing library does can take a while. even though the glob library is synchronous, it can be slow if you have thousands of files. therefore it can give a false positive on tests being stuck, if the globbing took some time to resolve and your tests have a short timeout time in jest. you would need to increase timeout to see if this is actually the issue. though it's not really a "stuck" test, but a very long processing time due to the glob pattern resolving many files. i always keep my tests in a smaller test folder structure to prevent this and i would recommend that too. i remember when i had my test files in the same folder as the source code, i thought that was fine, it was not and took me ages to realize this was also a source of performance problems, especially in CI/CD pipelines that had to pull and process a large tree of tests.

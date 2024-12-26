@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-adjust-loss-weights-during-keras-tuner-training"
 ---
 
-Okay, let’s tackle this. Adjusting loss weights during Keras Tuner training, while not a directly built-in feature as you might find in core Keras training loops, is absolutely achievable, and it often proves crucial when dealing with imbalanced datasets or multi-objective optimization scenarios. I’ve run into this a fair few times during my years building models, particularly when tackling problems where simply minimizing a generic loss wasn’t producing the desired results. The key here is to understand that Keras Tuner’s search procedure focuses on hyperparameter optimization, but we can definitely influence the training process within each trial’s model build. The trick involves leveraging custom training loops or callback mechanisms and injecting your loss weighting logic there.
+, let’s tackle this. Adjusting loss weights during Keras Tuner training, while not a directly built-in feature as you might find in core Keras training loops, is absolutely achievable, and it often proves crucial when dealing with imbalanced datasets or multi-objective optimization scenarios. I’ve run into this a fair few times during my years building models, particularly when tackling problems where simply minimizing a generic loss wasn’t producing the desired results. The key here is to understand that Keras Tuner’s search procedure focuses on hyperparameter optimization, but we can definitely influence the training process within each trial’s model build. The trick involves leveraging custom training loops or callback mechanisms and injecting your loss weighting logic there.
 
 Before diving into specifics, it's important to recognize that the usual `loss_weights` parameter in Keras `Model.compile()` might not work directly with Keras Tuner in the way we want when using the default tuner implementation. Keras Tuner generally expects a single loss value as feedback for the hyperparameter optimization process; therefore, we need a way to dynamically manipulate the individual losses without affecting that core search mechanism.
 
@@ -174,6 +174,7 @@ tuner = RandomSearch(
 
 tuner.search(x, y, epochs=3, batch_size=32)
 ```
+
 In this second approach, our callback dynamically modifies a ficticious loss function's weighting. While this implementation might not directly reflect the real implementation of all loss functions, the logic will hold for when you write your own custom loss functions and then pass them to `model.compile`. This is helpful for cases where you need to incorporate some kind of dynamically changing weight.
 
 **Example 3: Custom Loss Function With Weighting**
@@ -249,9 +250,10 @@ In this example we demonstrate the usage of a custom loss function. This is a cl
 
 **Recommendations:**
 For deeper understanding, consider these resources:
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This provides an excellent theoretical foundation for deep learning.
-*   **The Keras documentation:** It provides very detailed usage of all aspects of the Keras API, and it is fundamental to know it well.
-*   **TensorFlow documentation:** Similarly, it covers details regarding tf.function and other features of the TensorFlow library.
-*   **Research papers on multi-objective optimization**: Understanding techniques like Pareto optimization can help frame loss weighting.
+
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This provides an excellent theoretical foundation for deep learning.
+- **The Keras documentation:** It provides very detailed usage of all aspects of the Keras API, and it is fundamental to know it well.
+- **TensorFlow documentation:** Similarly, it covers details regarding tf.function and other features of the TensorFlow library.
+- **Research papers on multi-objective optimization**: Understanding techniques like Pareto optimization can help frame loss weighting.
 
 In summary, while Keras Tuner doesn't directly expose loss weight adjustment as a hyperparameter, these techniques (custom training loops, callbacks, and custom loss functions) are effective ways to integrate custom loss weighting strategies into your model training process within the Keras Tuner framework. The approach you choose will ultimately depend on your specific problem and the degree of control you need over your training process. Remember, experimentation and rigorous validation are crucial to finding the ideal setup for your task.

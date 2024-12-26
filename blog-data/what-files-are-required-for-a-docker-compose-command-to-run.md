@@ -4,21 +4,21 @@ date: "2024-12-23"
 id: "what-files-are-required-for-a-docker-compose-command-to-run"
 ---
 
-Okay, let's talk about docker compose and what files it needs to actually, well, *compose* your applications. The short answer is, obviously, a `docker-compose.yml` (or sometimes `docker-compose.yaml`) file, but the story doesn't end there. I've seen my fair share of setups that go beyond the basics, and it's essential to grasp the full picture, especially when things get more complicated.
+, let's talk about docker compose and what files it needs to actually, well, _compose_ your applications. The short answer is, obviously, a `docker-compose.yml` (or sometimes `docker-compose.yaml`) file, but the story doesn't end there. I've seen my fair share of setups that go beyond the basics, and it's essential to grasp the full picture, especially when things get more complicated.
 
-So, let's break it down. At the very least, a Docker Compose command needs access to a correctly formatted yaml configuration file that defines the services, networks, and volumes it’s supposed to create and manage. This file acts as the blueprint for your multi-container application. The format is pretty standardized, following the docker compose file specifications, but it's the details *within* that file, and their interactions with other files, where the real complexity can lie.
+So, let's break it down. At the very least, a Docker Compose command needs access to a correctly formatted yaml configuration file that defines the services, networks, and volumes it’s supposed to create and manage. This file acts as the blueprint for your multi-container application. The format is pretty standardized, following the docker compose file specifications, but it's the details _within_ that file, and their interactions with other files, where the real complexity can lie.
 
 I recall this one particularly intricate project I worked on years ago, involving a microservices architecture. We started with a single `docker-compose.yml`, but as we introduced more services and had to accommodate different development and production environments, we realized a more sophisticated setup was vital. We ended up using multiple compose files, which is something I'll elaborate on shortly.
 
 The basic `docker-compose.yml` usually contains these primary sections: `version`, `services`, `networks`, and `volumes`. The `version` specifies which compose file format version the document uses. The `services` section is where you define your individual containers – their images, ports, environment variables, dependencies, and build configurations. The `networks` section allows you to create custom networks where your containers can communicate, and `volumes` help manage persistent data storage.
 
-Now, let's talk about the interplay between compose files and other files. When a service defined in your `docker-compose.yml` uses a `build` directive, it's expecting a `Dockerfile` to be present in the specified directory. This `Dockerfile` contains the instructions to build the docker image for that service. It's the recipe for creating the container image based on layers of commands. Crucially, when a `build` context is defined, that entire context is sent to the docker daemon for the build process, *not just* the `Dockerfile`. This includes any additional files that are specified in a `.dockerignore` file to prevent sensitive files from being sent or large build contexts from slowing down the build process.
+Now, let's talk about the interplay between compose files and other files. When a service defined in your `docker-compose.yml` uses a `build` directive, it's expecting a `Dockerfile` to be present in the specified directory. This `Dockerfile` contains the instructions to build the docker image for that service. It's the recipe for creating the container image based on layers of commands. Crucially, when a `build` context is defined, that entire context is sent to the docker daemon for the build process, _not just_ the `Dockerfile`. This includes any additional files that are specified in a `.dockerignore` file to prevent sensitive files from being sent or large build contexts from slowing down the build process.
 
 Here's a basic example, illustrating a simple service with a `Dockerfile`:
 
 ```yaml
 # docker-compose.yml
-version: '3.8'
+version: "3.8"
 services:
   my_app:
     build: ./app
@@ -45,18 +45,17 @@ Here’s an example of overriding a port with a secondary compose file:
 
 ```yaml
 # docker-compose.yml
-version: '3.8'
+version: "3.8"
 services:
   my_app:
     build: ./app
     ports:
       - "8080:8080"
-
 ```
 
 ```yaml
 # docker-compose.prod.yml
-version: '3.8'
+version: "3.8"
 services:
   my_app:
     ports:

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-optimization-with-a-constraint-on-a-different-vector-to-the-objective-function"
 ---
 
-alright, so you’re tackling optimization with a constraint that's not directly on the variables you're trying to minimize or maximize, yeah? i’ve been there, it's a common pain point, and frankly, it's one of those situations where the devil is in the details of how you set it up. let's walk through this as i’ve had my share of late nights staring at similar problems.
+, so you’re tackling optimization with a constraint that's not directly on the variables you're trying to minimize or maximize, yeah? i’ve been there, it's a common pain point, and frankly, it's one of those situations where the devil is in the details of how you set it up. let's walk through this as i’ve had my share of late nights staring at similar problems.
 
 first, let’s break this down into what’s really going on here. you have a cost function (or objective function), that depends on one set of variables, let's call them `x`. this could be anything, like model weights in a neural network, parameters for a simulation, or literally anything you're tweaking to reach a 'best' value.
 
@@ -14,7 +14,7 @@ i had this thing pop up during a project i did back in my phd days. it was about
 
 so how do we address this from a more general standpoint?
 
-the core of the solution is finding a way to *relate* your `x` and `y` variables. that relationship can be anything from a direct algebraic equation to a complex numerical simulation. but, if there is a relationship between them, we can think of `y` as a function of `x`, this can be expressed as `y = f(x)`. once you have this, you can rewrite the constraints in terms of just `x`.
+the core of the solution is finding a way to _relate_ your `x` and `y` variables. that relationship can be anything from a direct algebraic equation to a complex numerical simulation. but, if there is a relationship between them, we can think of `y` as a function of `x`, this can be expressed as `y = f(x)`. once you have this, you can rewrite the constraints in terms of just `x`.
 
 for example, suppose your objective function is something simple like a sum of squares:
 
@@ -51,7 +51,7 @@ def optimization_problem(x0, constraint_limit):
    #call scipy minimizer, set an initial guess and the constraint
     result = minimize(objective_function, x0, method='SLSQP', constraints=cons)
     return result
-    
+
 
 if __name__ == '__main__':
     initial_guess = np.array([0.5, 0.5])
@@ -93,7 +93,7 @@ def optimization_problem(x0, constraint_limit):
    #call scipy minimizer, set an initial guess and the constraint
     result = minimize(objective_function, x0, method='SLSQP', constraints=cons)
     return result
-    
+
 
 if __name__ == '__main__':
     initial_guess = np.array([0.5, 0.5])
@@ -102,6 +102,7 @@ if __name__ == '__main__':
     print(results)
 
 ```
+
 in the code above we replaced the simple `constraint_function` with `cfd_simulation`, and now the optimization goes through the `cfd_simulation`, a computationally demanding operation that provides the `y` used to evaluate the constraint. if your simulations are expensive, it is a good idea to make sure that your constraint function does not compute it every time it is called but keeps a cached version or implements a fast approximator for the cfd simulation.
 
 another challenge is that sometimes, `f(x)` can be discontinuous or non-differentiable. this is not a problem in general, depending on what optimizer are you using. for instance, the `slsqp` method, as shown in the examples, will work as it does not need the gradients. but others might fail to converge or give strange solutions. in such cases, you might need to explore derivative-free methods, like evolutionary algorithms, which are more robust in these situations. a book i found very useful here is “numerical optimization” by jorge nocedal, this should be a bible to you if you are dealing with complex non-linear optimization problems.

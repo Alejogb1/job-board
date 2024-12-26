@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-i-put-data-from-a-form-automaticly-into-an-json"
 ---
 
-alright, i see you're trying to get form data into json, a common task when dealing with web stuff. i've been there, trust me. i've spent countless nights hunched over my keyboard, fueled by lukewarm coffee, trying to make this exact thing work smoothly.
+, i see you're trying to get form data into json, a common task when dealing with web stuff. i've been there, trust me. i've spent countless nights hunched over my keyboard, fueled by lukewarm coffee, trying to make this exact thing work smoothly.
 
 let's break it down. fundamentally, you've got user inputs collected by a form, and you want to structure that information into a json format, which is essentially a string-based dictionary. this usually means taking the form field values and mapping them to the keys you want in your json object. it's a lot like translating between two different data formats.
 
@@ -18,18 +18,20 @@ here is the scenario: you have a simple form:
 
 ```html
 <form id="myForm">
-  <label for="name">name:</label><br>
-  <input type="text" id="name" name="name"><br>
-  <label for="email">email:</label><br>
-  <input type="email" id="email" name="email"><br>
-  <label for="age">age:</label><br>
-  <input type="number" id="age" name="age"><br><br>
+  <label for="name">name:</label><br />
+  <input type="text" id="name" name="name" /><br />
+  <label for="email">email:</label><br />
+  <input type="email" id="email" name="email" /><br />
+  <label for="age">age:</label><br />
+  <input type="number" id="age" name="age" /><br /><br />
   <button type="submit">submit</button>
 </form>
 ```
+
 here is how you can process the data to produce json:
+
 ```javascript
-document.getElementById('myForm').addEventListener('submit', function(event) {
+document.getElementById("myForm").addEventListener("submit", function (event) {
   event.preventDefault(); // prevent form from default submission
 
   const formData = new FormData(event.target);
@@ -44,7 +46,6 @@ document.getElementById('myForm').addEventListener('submit', function(event) {
 
   // you can send jsonString to the server using fetch or xhr,
   // but this part is beyond what you asked for, but good to know
-
 });
 ```
 
@@ -80,14 +81,14 @@ this flask app has a route `/submit` that handles post requests. it grabs form d
 node.js is the other major backend environment i use often. here's how to do it using express, another super useful library i often rely on:
 
 ```javascript
-const express = require('express');
-const bodyParser = require('body-parser');
+const express = require("express");
+const bodyParser = require("body-parser");
 const app = express();
 const port = 3000;
 
 app.use(bodyParser.urlencoded({ extended: true })); //parse form data
 
-app.post('/submit', (req, res) => {
+app.post("/submit", (req, res) => {
   const form_data = req.body;
   res.json(form_data);
 });

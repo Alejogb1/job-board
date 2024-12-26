@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-apply-a-udf-on-a-column-in-a-pyspark-dataframe"
 ---
 
-Alright, let's dive into this. Over the years, I’ve certainly encountered my share of user-defined function (UDF) applications within PySpark, and I've seen first-hand both the elegance and the potential pitfalls they present. Applying a UDF to a column in a PySpark DataFrame is a common task, but it requires a bit of finesse to ensure it's done efficiently. The goal, after all, is to leverage Spark's distributed processing capabilities and not undermine them with poorly constructed UDFs.
+, let's dive into this. Over the years, I’ve certainly encountered my share of user-defined function (UDF) applications within PySpark, and I've seen first-hand both the elegance and the potential pitfalls they present. Applying a UDF to a column in a PySpark DataFrame is a common task, but it requires a bit of finesse to ensure it's done efficiently. The goal, after all, is to leverage Spark's distributed processing capabilities and not undermine them with poorly constructed UDFs.
 
 Essentially, you’re looking to transform data within a column based on a custom logic you’ve defined. Spark doesn’t natively know how to process that custom logic, hence the need for the UDF. The trick lies in understanding how to bridge the gap between your Python function and Spark's execution environment. Let's break down the process with examples.
 
@@ -45,6 +45,7 @@ df.show()
 ```
 
 This would output the following DataFrame content:
+
 ```
 +-------+------+
 |   name|prefix|
@@ -68,6 +69,7 @@ df_with_prefix.show()
 This snippet shows how we apply the `add_prefix_udf` on the "name" column and the "prefix" column and create a new "prefixed_name" column. The `col()` function allows us to reference the specific columns in the DataFrame.
 
 Running this code will result in:
+
 ```
 +-------+------+-------------+
 |   name|prefix|prefixed_name|
@@ -104,6 +106,7 @@ df_json.show(truncate=False)
 ```
 
 The output would be:
+
 ```
 +---------------------+
 |json_data            |
@@ -115,11 +118,14 @@ The output would be:
 ```
 
 Applying the JSON parsing UDF:
+
 ```python
 df_parsed_json = df_json.withColumn("parsed_data", parse_json_udf(col("json_data")))
 df_parsed_json.show(truncate=False)
 ```
+
 Resulting in:
+
 ```
 +---------------------+-----------------------+
 |json_data            |parsed_data            |
@@ -146,7 +152,9 @@ data = [(1,2,3), (4,5,2), (None, 6, 1), (7, None, 4)]
 df_numbers = spark.createDataFrame(data, ["value1", "value2", "factor"])
 df_numbers.show()
 ```
+
 Resulting in:
+
 ```
 +------+------+------+
 |value1|value2|factor|
@@ -164,7 +172,9 @@ And applying the udf:
 df_sums = df_numbers.withColumn("calculated_sum", calculate_sum_udf(col("value1"), col("value2"), col("factor")))
 df_sums.show()
 ```
+
 Resulting in:
+
 ```
 +------+------+------+--------------+
 |value1|value2|factor|calculated_sum|
@@ -175,6 +185,7 @@ Resulting in:
 |     7|  null|     4|          null|
 +------+------+------+--------------+
 ```
+
 These snippets highlight some important aspects of using UDFs. Always be explicit with data types, robust in error handling, and mindful of the performance implications.
 
 For further, in-depth understanding, I recommend reviewing "Learning Spark, 2nd Edition" by Jules Damji, Brooke Wenig, Tathagata Das, Denny Lee, and specifically chapter 5 regarding UDFs. Also, look into the Apache Spark documentation itself (specifically the `pyspark.sql.functions` module), which is always the definitive source.

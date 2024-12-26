@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "verilog-ternary-operator-usage-examples"
 ---
 
-Alright so you're asking about Verilog's ternary operator right Been there done that got the silicon burn scars to prove it This thing's a real workhorse if you know how to tame it Otherwise it can leave you scratching your head at 3 AM debugging a seemingly simple logic block Trust me I've been there
+so you're asking about Verilog's ternary operator right Been there done that got the silicon burn scars to prove it This thing's a real workhorse if you know how to tame it Otherwise it can leave you scratching your head at 3 AM debugging a seemingly simple logic block Trust me I've been there
 
 Let's break it down the ternary operator in Verilog is basically a compact way to write an if-else statement it's syntax is this condition ? true_expression : false_expression It evaluates the condition if it's true it returns the true expression otherwise the false expression Pretty straightforward right?
 
@@ -48,7 +48,7 @@ module mux_2to1_if_else (
 endmodule
 ```
 
-As you can see the ternary operator version is more concise but the if-else version is also more explicit It depends on the context what is better to use The key thing to notice that the signal out in the first snippet does not use always @(*) begin because the assignment is done directly by the ternary operator This avoids potential inferring a latch which can lead to very hard-to-debug problems
+As you can see the ternary operator version is more concise but the if-else version is also more explicit It depends on the context what is better to use The key thing to notice that the signal out in the first snippet does not use always @(\*) begin because the assignment is done directly by the ternary operator This avoids potential inferring a latch which can lead to very hard-to-debug problems
 
 Now lets move a bit more complex imagine you are working on an ALU and need to select between different operations based on a function code you will use a case statement but for simple cases the ternary operator could be your friend
 
@@ -87,7 +87,7 @@ module tristate_buffer (
 endmodule
 ```
 
-Here the ternary operator allows you to select between data\_in and high impedance state when enable is low the output becomes high-Z when is high it forwards the data This is a standard trick for bus sharing
+Here the ternary operator allows you to select between data_in and high impedance state when enable is low the output becomes high-Z when is high it forwards the data This is a standard trick for bus sharing
 
 One thing I really hate to see is juniors using ternary operators without understanding the underlying hardware I've seen way too many cases where the synthesis tool generated a complex mux tree when the simple if-else construct would have been more efficient They do it because they heard that ternary operators are faster which is not always the case it depends on the type of hardware and the synthesis tool
 

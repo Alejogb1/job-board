@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "is-using-mainactor-in-a-task-that-calls-a-mainactor-async-function-safe-and-efficient"
 ---
 
-Alright, let’s untangle this. The interplay of `@MainActor` and asynchronous functions can certainly lead to some head-scratching if you're not careful. It's a common point of confusion, especially when you're aiming for thread safety and responsiveness in your swift applications. I’ve had my fair share of late nights debugging issues that stemmed from precisely this. So, is it safe and efficient to call a `@MainActor` async function within a task that's already operating in the `@MainActor` context? The short answer is yes, but with caveats that warrant thorough examination.
+, let’s untangle this. The interplay of `@MainActor` and asynchronous functions can certainly lead to some head-scratching if you're not careful. It's a common point of confusion, especially when you're aiming for thread safety and responsiveness in your swift applications. I’ve had my fair share of late nights debugging issues that stemmed from precisely this. So, is it safe and efficient to call a `@MainActor` async function within a task that's already operating in the `@MainActor` context? The short answer is yes, but with caveats that warrant thorough examination.
 
-First, let's clarify what `@MainActor` really does. It essentially ensures that code blocks or functions marked with this attribute are always executed on the main thread. This thread is crucial for user interface updates. Any UI modification must happen on this thread, otherwise you'll trigger the dreaded "updating UI from a background thread" warnings and possibly crashes. Now, when you have a `@MainActor async` function, it means the *entire execution* of that function, including any await points, will inherently occur on the main thread.
+First, let's clarify what `@MainActor` really does. It essentially ensures that code blocks or functions marked with this attribute are always executed on the main thread. This thread is crucial for user interface updates. Any UI modification must happen on this thread, otherwise you'll trigger the dreaded "updating UI from a background thread" warnings and possibly crashes. Now, when you have a `@MainActor async` function, it means the _entire execution_ of that function, including any await points, will inherently occur on the main thread.
 
 Now, consider a scenario where you launch a task within a view or view model. If that enclosing task is also declared with `@MainActor`, it implies that any asynchronous operations within it—including the call to your `@MainActor async` function—will, by definition, execute on the main thread. This appears redundant, and in some respects, it is, but there’s a level of implied safety here which is key. The compiler enforces it, preventing accidental cross-thread manipulations. It's less about efficiency and more about predictability and correctness.
 
@@ -64,7 +64,7 @@ struct UserProfileView: View {
 
 In this first snippet, `UserProfileViewModel` is `@MainActor`, `fetchUserProfileImage` is implicitly a `@MainActor` function due to its containing class declaration, and `loadProfileImage` is explicitly marked as `@MainActor`. When the button is pressed a task is spawned in the view, the task is not directly decorated with `@MainActor` however because the `fetchUserProfileImage` function and its callee, `loadProfileImage`, are both `@MainActor` functions, they both execute on the main thread. The safety is implicit, and the efficiency is not significantly impacted beyond the execution of an async method with an `await`.
 
-Now, let's consider a situation where we might want to do some work *off* the main thread before updating UI. This requires careful planning:
+Now, let's consider a situation where we might want to do some work _off_ the main thread before updating UI. This requires careful planning:
 
 ```swift
 import Foundation
@@ -126,7 +126,7 @@ struct UserProfileView: View {
 }
 ```
 
-Here, the `ImageProcessor` is no longer an actor, and the `processImage` function runs parts of its work off the main thread. We use `withUnsafeContinuation` to bridge the gap between the main actor and background work on the global dispatch queue. Critically, the UI update on  `self.profileImage` *remains* on the main thread because it's being modified from within `UserProfileViewModel` context which is marked with `@MainActor`. It would be unsafe to try and do this from the background thread we spawned in this example.
+Here, the `ImageProcessor` is no longer an actor, and the `processImage` function runs parts of its work off the main thread. We use `withUnsafeContinuation` to bridge the gap between the main actor and background work on the global dispatch queue. Critically, the UI update on `self.profileImage` _remains_ on the main thread because it's being modified from within `UserProfileViewModel` context which is marked with `@MainActor`. It would be unsafe to try and do this from the background thread we spawned in this example.
 
 Let's see a variation that emphasizes an efficient design:
 

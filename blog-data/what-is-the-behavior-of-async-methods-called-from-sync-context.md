@@ -4,13 +4,13 @@ date: "2024-12-16"
 id: "what-is-the-behavior-of-async-methods-called-from-sync-context"
 ---
 
-Alright, let's dive into this. I’ve seen this particular issue pop up more times than I care to count, especially during those late-night debugging sessions. Calling async methods from a synchronous context in many programming environments can lead to a few predictable, and sometimes not-so-predictable, outcomes. The core of the problem stems from the fundamentally different ways asynchronous and synchronous code manage execution.
+, let's dive into this. I’ve seen this particular issue pop up more times than I care to count, especially during those late-night debugging sessions. Calling async methods from a synchronous context in many programming environments can lead to a few predictable, and sometimes not-so-predictable, outcomes. The core of the problem stems from the fundamentally different ways asynchronous and synchronous code manage execution.
 
 Essentially, when you call an `async` method from a synchronous one, the synchronous code doesn't inherently know how to handle the potentially asynchronous operation the `async` method is performing. `async` methods, by their very nature, aim to avoid blocking the main thread; they often involve waiting on external resources, user input, or other events. When you try to execute them synchronously, you're essentially forcing the sync context to deal with this. The outcome of this confrontation varies based on the specific language and runtime environment. In some systems, it manifests as a deadlock, while in others, you might encounter unexpected exceptions or inefficient use of resources.
 
 The challenge arises because the synchronous caller expects a return value immediately. The `async` method, however, often doesn't have an immediate value to return; instead, it returns a "promise" (or a future, or a task, depending on your system) representing the eventual result. Synchronous code generally isn’t designed to interpret or handle those promise constructs. It wants a concrete value, not a placeholder for a value to come later. This mismatch in expectation creates the problem.
 
-Let's break down the possible scenarios and then look at some code examples. One common outcome is blocking. The synchronous code, unaware of how to "await" the asynchronous operation (because it *cannot* in its sync context), gets stuck waiting for the result of that operation to resolve. If the asynchronous method relies on the event loop or another mechanism that's designed to run under the expectation that it's not being called from a blocking context, this can cause a complete stop. A single instance of this situation can even, in some cases, cause the whole application to hang.
+Let's break down the possible scenarios and then look at some code examples. One common outcome is blocking. The synchronous code, unaware of how to "await" the asynchronous operation (because it _cannot_ in its sync context), gets stuck waiting for the result of that operation to resolve. If the asynchronous method relies on the event loop or another mechanism that's designed to run under the expectation that it's not being called from a blocking context, this can cause a complete stop. A single instance of this situation can even, in some cases, cause the whole application to hang.
 
 Another scenario involves incorrect usage of threading or parallelization. Some runtime environments, in an effort to avoid deadlock, might attempt to run the async operation on a separate thread or utilize other mechanisms to handle it outside the sync context. However, without explicit management of these threads and their lifetime, you may encounter inconsistent results, race conditions, and inefficient use of resources. Furthermore, certain operating environments or language runtimes may not even allow for this type of automatic delegation to another thread or process. In essence, you might find yourself unexpectedly introducing threading complexity into a codebase that was not intended to deal with it.
 
@@ -42,7 +42,7 @@ if __name__ == "__main__":
     sync_function()
 ```
 
-In this scenario, the output isn't going to show what one might expect. Instead of "Sync function received: Result after 2 seconds," it will display "Sync function received: <coroutine object async_task at 0x...>" or similar. You are directly getting the coroutine object, *not* the result. You never waited, or "awaited", for it. To fix this correctly, we can use `asyncio.run` to properly execute the asynchronous operation:
+In this scenario, the output isn't going to show what one might expect. Instead of "Sync function received: Result after 2 seconds," it will display "Sync function received: <coroutine object async_task at 0x...>" or similar. You are directly getting the coroutine object, _not_ the result. You never waited, or "awaited", for it. To fix this correctly, we can use `asyncio.run` to properly execute the asynchronous operation:
 
 ```python
 import asyncio
@@ -74,7 +74,7 @@ JavaScript with Node.js and its asynchronous nature shows a similar issue.
 ```javascript
 async function asyncTask(duration) {
   console.log(`Async task starting, waiting for ${duration} seconds...`);
-  await new Promise(resolve => setTimeout(resolve, duration * 1000));
+  await new Promise((resolve) => setTimeout(resolve, duration * 1000));
   console.log("Async task finished.");
   return `Result after ${duration} seconds`;
 }
@@ -95,7 +95,7 @@ In the above example, the result of `asyncTask(2)` when printed will yield a pro
 ```javascript
 async function asyncTask(duration) {
   console.log(`Async task starting, waiting for ${duration} seconds...`);
-  await new Promise(resolve => setTimeout(resolve, duration * 1000));
+  await new Promise((resolve) => setTimeout(resolve, duration * 1000));
   console.log("Async task finished.");
   return `Result after ${duration} seconds`;
 }
@@ -107,7 +107,6 @@ async function syncFunctionCorrect() {
   console.log("Sync function finishing.");
   return "Sync function completed";
 }
-
 
 syncFunctionCorrect();
 ```

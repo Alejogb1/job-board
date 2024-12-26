@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-does-rails-csv-export-function-return-no-route-matches"
 ---
 
-Alright, let's tackle this “no route matches” issue when attempting to export CSV data from a Rails application. It's a frustrating error, and I've personally spent more than one evening chasing my tail around it, often due to some subtle configuration oversight. I'll share some of the common culprits and how to resolve them, based on my experience.
+, let's tackle this “no route matches” issue when attempting to export CSV data from a Rails application. It's a frustrating error, and I've personally spent more than one evening chasing my tail around it, often due to some subtle configuration oversight. I'll share some of the common culprits and how to resolve them, based on my experience.
 
-The core of the problem, typically, isn’t the *CSV generation* code itself, but how the request is being routed within the Rails application. The "no route matches" error specifically indicates that Rails' routing system cannot find a predefined rule that matches the incoming request, and the most common mistake is that we’re expecting our request to match an existing route it was never set up to handle. The fundamental misunderstanding lies in expecting the `format: :csv` parameter to *magically* transform an existing HTML-focused route.
+The core of the problem, typically, isn’t the _CSV generation_ code itself, but how the request is being routed within the Rails application. The "no route matches" error specifically indicates that Rails' routing system cannot find a predefined rule that matches the incoming request, and the most common mistake is that we’re expecting our request to match an existing route it was never set up to handle. The fundamental misunderstanding lies in expecting the `format: :csv` parameter to _magically_ transform an existing HTML-focused route.
 
-Let's unpack this with a little more detail. Rails routes are primarily concerned with three aspects of a request: the *HTTP method*, the *URL pattern*, and, crucially for us in this situation, the *format*. When you add something like `format: :csv` to a URL generation helper or when you manually craft a request with a `Content-Type` header indicating CSV, you are, in essence, telling Rails to look for a route that *specifically* responds to that format. If such a route doesn’t exist, that's when the dreaded "no route matches" error arises.
+Let's unpack this with a little more detail. Rails routes are primarily concerned with three aspects of a request: the _HTTP method_, the _URL pattern_, and, crucially for us in this situation, the _format_. When you add something like `format: :csv` to a URL generation helper or when you manually craft a request with a `Content-Type` header indicating CSV, you are, in essence, telling Rails to look for a route that _specifically_ responds to that format. If such a route doesn’t exist, that's when the dreaded "no route matches" error arises.
 
 The critical point here is that adding the `format: :csv` to a request doesn’t implicitly change the existing route to generate a csv response. Instead, we must specifically tell the route to allow csv responses using the appropriate syntax.
 
@@ -29,7 +29,7 @@ get '/reports/:id', to: 'reports#show', as: :report, defaults: { format: 'html' 
 get '/reports/:id', to: 'reports#show', as: :report, format: 'csv'
 ```
 
-Note how this solution introduces *two* routes that share the same URL pattern but differentiate based on format. This is important to get correct. The first sets a default format of html and second route is used exclusively for csv request.
+Note how this solution introduces _two_ routes that share the same URL pattern but differentiate based on format. This is important to get correct. The first sets a default format of html and second route is used exclusively for csv request.
 
 Let's see that in action with an example of a `reports_controller.rb`:
 

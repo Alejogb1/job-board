@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-actioncontrollerunknownformat-when-using-turbostream-in-rails-7"
 ---
 
-Alright, let's dive into this. The `ActionController::UnknownFormat` exception when dealing with turbo streams in Rails 7 is a relatively common hiccup, and it usually boils down to how your controller is handling request formats. I’ve certainly encountered it a few times in my projects over the years, often when integrating with JavaScript frameworks or modifying existing applications to leverage turbo.
+, let's dive into this. The `ActionController::UnknownFormat` exception when dealing with turbo streams in Rails 7 is a relatively common hiccup, and it usually boils down to how your controller is handling request formats. I’ve certainly encountered it a few times in my projects over the years, often when integrating with JavaScript frameworks or modifying existing applications to leverage turbo.
 
 Fundamentally, Rails controllers are designed to respond to different request formats, such as `html`, `json`, or `xml`. When a browser makes a standard request, it typically sends an `Accept` header indicating what type of content it can handle, often defaulting to `text/html`. Turbo streams, however, introduce a new format, `text/vnd.turbo-stream.html`, which is how the server pushes updates to the client. The `UnknownFormat` error arises when your controller doesn’t know how to respond to this specific format. Essentially, you’re missing a `respond_to` block that includes the `turbo_stream` format, or your routing is misconfigured.
 
@@ -84,6 +84,7 @@ class Api::UsersController < ApplicationController
    end
 end
 ```
+
 If you try to submit a form via Turbo to update a user, you'll be met with the `UnknownFormat` exception. The code above is designed to render JSON, it isn’t prepared to render turbo streams.
 
 To resolve this, you should add the `turbo_stream` format to the `respond_to` block, like so:

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-i-implement-the-sized-trait-in-rust"
 ---
 
-Alright, let’s unpack the implementation of the `sized` trait in rust. It’s a fundamental concept, and while it might appear straightforward at first glance, understanding its nuances can significantly improve your rust programming skills, especially when dealing with generics and memory management. I've bumped into this particular issue numerous times, often during the early days of building complex data processing pipelines where I needed tight control over memory layouts.
+, let’s unpack the implementation of the `sized` trait in rust. It’s a fundamental concept, and while it might appear straightforward at first glance, understanding its nuances can significantly improve your rust programming skills, especially when dealing with generics and memory management. I've bumped into this particular issue numerous times, often during the early days of building complex data processing pipelines where I needed tight control over memory layouts.
 
-First, let’s tackle the definition. In rust, the `sized` trait isn't something you explicitly *implement* yourself. Instead, it's a *marker trait* automatically applied by the compiler to types whose size is known at compile time. This knowledge is crucial for rust's memory model, which dictates how data is allocated and manipulated in memory. If a type doesn’t implement `sized`, you’ll run into problems with generics and other situations where the compiler needs to know the type’s size.
+First, let’s tackle the definition. In rust, the `sized` trait isn't something you explicitly _implement_ yourself. Instead, it's a _marker trait_ automatically applied by the compiler to types whose size is known at compile time. This knowledge is crucial for rust's memory model, which dictates how data is allocated and manipulated in memory. If a type doesn’t implement `sized`, you’ll run into problems with generics and other situations where the compiler needs to know the type’s size.
 
 Types that are `sized` include primitive types like `i32`, `f64`, structs, enums, and arrays where the size is fixed during compilation. The size of a `String`, however, isn't known at compile-time, because the internal data buffer of a String is allocated on the heap, thus the `String` type itself doesn't implement `sized`. Instead, it's a pointer to memory that's sized (the heap allocation). We use trait bounds to work with non-`sized` types, as we will discuss later.
 
@@ -35,7 +35,7 @@ fn main() {
 
 This code snippet illustrates how we use `?Sized` in our type definition `Container` and function definition `process_data` to handle potentially unsized data by borrowing the data by reference. Now, the `Container` can store references to anything, including those whose size is not known at compile time. Notice the lifetime parameter `'a` needed to ensure that data references do not outlive the source data.
 
-Let's consider another scenario where we're writing a trait for objects that can serialize themselves to bytes. If we want to allow *any* type to be serializable, we have to relax the implicit `Sized` requirement, which means that we must work with references:
+Let's consider another scenario where we're writing a trait for objects that can serialize themselves to bytes. If we want to allow _any_ type to be serializable, we have to relax the implicit `Sized` requirement, which means that we must work with references:
 
 ```rust
 trait Serializable {
@@ -101,4 +101,4 @@ In the example, the `PeripheralCommand` struct is marked with `#[repr(C)]`, whic
 
 To dive deeper into this area of rust, I would recommend looking at the official Rust documentation, specifically the chapters on generics, traits, and ownership. Furthermore, “Programming Rust” by Jim Blandy, Jason Orendorff, and Leonora Tindall offers a comprehensive explanation of these core concepts. It's also beneficial to explore the official rust blog and technical papers on memory safety and ownership. Understanding how rust manages memory and enforces safety checks is fundamental to truly grasping the underlying mechanisms that make the `Sized` trait so crucial.
 
-In summary, while you don't directly *implement* `Sized`, understanding how rust implicitly applies it, and how `?Sized` relaxes this constraint, is critical to building robust and versatile rust code, particularly when working with generics and data structures. As I’ve shown, from the simple case of generics to building low-level interfaces, the subtle workings of `Sized` are at the heart of many everyday coding scenarios in Rust.
+In summary, while you don't directly _implement_ `Sized`, understanding how rust implicitly applies it, and how `?Sized` relaxes this constraint, is critical to building robust and versatile rust code, particularly when working with generics and data structures. As I’ve shown, from the simple case of generics to building low-level interfaces, the subtle workings of `Sized` are at the heart of many everyday coding scenarios in Rust.

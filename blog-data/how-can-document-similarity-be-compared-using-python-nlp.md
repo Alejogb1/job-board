@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-document-similarity-be-compared-using-python-nlp"
 ---
 
-Alright, let's talk about document similarity. I’ve spent a good chunk of my career dealing with this problem, specifically in the context of large unstructured text datasets. It’s far more nuanced than simply counting matching words, and the methods you choose drastically affect your results. It's a challenge where a deep understanding of vectorization, distance metrics, and text preprocessing is key.
+, let's talk about document similarity. I’ve spent a good chunk of my career dealing with this problem, specifically in the context of large unstructured text datasets. It’s far more nuanced than simply counting matching words, and the methods you choose drastically affect your results. It's a challenge where a deep understanding of vectorization, distance metrics, and text preprocessing is key.
 
 When we discuss document similarity, what we're really aiming to do is quantify how alike two or more pieces of text are in terms of their content or meaning. Python, fortunately, provides a rich ecosystem of natural language processing (nlp) libraries that make this possible. This isn't a one-size-fits-all scenario; the ‘best’ approach depends heavily on the type of text, the desired level of granularity, and the computational resources available.
 
@@ -57,6 +57,7 @@ similarity_matrix = cosine_similarity(tfidf_matrix)
 print("Cosine Similarity Matrix:")
 print(similarity_matrix)
 ```
+
 This example shows basic tf-idf vectorization after simple preprocessing and then computes the cosine similarity matrix between the documents.
 
 **Example 2: Using Sentence-Transformers for Semantic Similarity**
@@ -83,6 +84,7 @@ print(similarity_matrix)
 Here, we use a pre-trained sentence embedding model from `sentence-transformers`, which provides a semantically richer representation and hence potentially better similarity results in many cases.
 
 **Example 3: Comparing TF-IDF with different parameters:**
+
 ```python
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -108,6 +110,7 @@ similarity_matrix_ngrams = cosine_similarity(tfidf_matrix_ngrams)
 print("\nCosine Similarity Matrix with N-gram range (2,2):")
 print(similarity_matrix_ngrams)
 ```
+
 This example shows that tf-idf can be modified through its parameters, for example, the `ngram_range`, which specifies whether to consider phrases along with single words. Experimenting with different parameters is crucial for achieving optimal results.
 
 These examples provide an idea of how this all comes together. For a deeper dive, I’d recommend checking out ‘Speech and Language Processing’ by Daniel Jurafsky and James H. Martin for a comprehensive overview of NLP techniques. ‘Natural Language Processing with Python’ by Steven Bird, Ewan Klein, and Edward Loper is a very practical guide. Also, exploring papers on word embedding models like 'Efficient Estimation of Word Representations in Vector Space' (Mikolov et al., 2013) and 'GloVe: Global Vectors for Word Representation' (Pennington et al., 2014) provides essential theoretical underpinnings.

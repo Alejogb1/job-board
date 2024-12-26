@@ -4,28 +4,27 @@ date: "2024-12-15"
 id: "why-is-fetch-resjson-working-with-await-and-async-but-not-working-with-promises"
 ---
 
-alright, so you're hitting that classic javascript gotcha with `fetch`, `async/await`, and promises, right? i've been there, trust me. it's a rite of passage for anyone working with asynchronous javascript. let me break down what's going on, from my own experience and with some code examples.
+, so you're hitting that classic javascript gotcha with `fetch`, `async/await`, and promises, right? i've been there, trust me. it's a rite of passage for anyone working with asynchronous javascript. let me break down what's going on, from my own experience and with some code examples.
 
-first off, the core of the issue isn't that `res.json()` *doesn't* work with promises. it does. it absolutely returns a promise. the problem arises because the `fetch` api, when used with `.then()` chaining, requires that you handle each promise resolution correctly. it's about the specific timing of when you're trying to access the json data.
+first off, the core of the issue isn't that `res.json()` _doesn't_ work with promises. it does. it absolutely returns a promise. the problem arises because the `fetch` api, when used with `.then()` chaining, requires that you handle each promise resolution correctly. it's about the specific timing of when you're trying to access the json data.
 
 let's look at a scenario that probably mirrors what you're experiencing. say you're trying to grab some json data from an api.
 
 here's a common incorrect way of doing it with promises that i used to commit in my early days:
 
 ```javascript
-fetch('https://api.example.com/data')
-  .then(res => {
+fetch("https://api.example.com/data")
+  .then((res) => {
     console.log(res); // this will be the response object
     return res.json();
   })
-  .then(data => {
+  .then((data) => {
     console.log(data); // you might think this would work, but...
     // try to do something with data here, it might fail
   });
-
 ```
 
-what's happening? in this code, `fetch` returns a promise that resolves with a `response` object. we log that response, and it's all good. then, we use `res.json()`, which itself *returns another promise* that will resolve with the actual javascript object parsed from json. but if you try to treat the `data` as your data inside of the second `.then` without waiting for the promise to be resolved, well it will be undefined and will trigger an error. this can create subtle problems that can be difficult to trace.
+what's happening? in this code, `fetch` returns a promise that resolves with a `response` object. we log that response, and it's all good. then, we use `res.json()`, which itself _returns another promise_ that will resolve with the actual javascript object parsed from json. but if you try to treat the `data` as your data inside of the second `.then` without waiting for the promise to be resolved, well it will be undefined and will trigger an error. this can create subtle problems that can be difficult to trace.
 
 the issue isn't with `res.json()` itself, it's that you're trying to immediately use the result of a promise before it's resolved. you're thinking about the data object as it was something instantly fetched but this process is asynchronous, the `data` object will only be filled when the asynchronous operation is completed.
 
@@ -33,15 +32,14 @@ now, compare this to how you typically use `async/await`:
 
 ```javascript
 async function fetchData() {
-    const res = await fetch('https://api.example.com/data');
-    console.log(res); // this is the response object
-    const data = await res.json();
-    console.log(data); // this works as expected
-    // you can work with data here
+  const res = await fetch("https://api.example.com/data");
+  console.log(res); // this is the response object
+  const data = await res.json();
+  console.log(data); // this works as expected
+  // you can work with data here
 }
 
 fetchData();
-
 ```
 
 the `await` keyword is key here. when you `await` `fetch()`, javascript pauses execution of the function until the promise it returns is resolved. only when `fetch()`'s promise is resolved, then its resolved value assigned to the res variable. the same applies to `res.json()`. javascript will pause execution of the function and will not assign the value to the data variable until the promise of `res.json()` has been resolved with the parsed data. this is synchronous in nature from the javascript engine point of view but underneath this the `res.json()` is an asynchronous operation.
@@ -55,35 +53,35 @@ think of it like waiting in a line. with promises, you’re constantly getting u
 here's another example that highlights the difference using promises that includes error handling that is something you also should be paying attention:
 
 ```javascript
-fetch('https://api.example.com/data')
-    .then(res => {
-        if(!res.ok){
-            throw new Error(`http error: ${res.status}`);
-        }
-        return res.json();
-    })
-    .then(data => {
-        console.log(data);
-    })
-    .catch(error => {
-        console.error('there was a problem with the fetch', error);
-    });
+fetch("https://api.example.com/data")
+  .then((res) => {
+    if (!res.ok) {
+      throw new Error(`http error: ${res.status}`);
+    }
+    return res.json();
+  })
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((error) => {
+    console.error("there was a problem with the fetch", error);
+  });
 ```
 
 and now the same example using `async/await` syntax:
 
 ```javascript
 async function fetchData() {
-    try{
-        const res = await fetch('https://api.example.com/data');
-        if(!res.ok){
-            throw new Error(`http error: ${res.status}`);
-        }
-        const data = await res.json();
-        console.log(data);
-    } catch(error){
-        console.error('there was a problem with the fetch', error);
+  try {
+    const res = await fetch("https://api.example.com/data");
+    if (!res.ok) {
+      throw new Error(`http error: ${res.status}`);
     }
+    const data = await res.json();
+    console.log(data);
+  } catch (error) {
+    console.error("there was a problem with the fetch", error);
+  }
 }
 
 fetchData();
@@ -95,4 +93,4 @@ if you want to go deeper, i'd highly recommend reading up on javascript promises
 
 the key takeaway is that both methods are using promises under the hood, but the way they handle these asynchronous operations are different. promises are more manual, requiring that you understand the `.then()` chaining and error handling process, while `async/await` simplifies it into a more synchronous looking flow. both of them work, it's just that `async/await` is much more modern and less error prone.
 
-and as a final thought here's a joke for you: why was the javascript developer always so calm? because they knew how to handle all their *promises*!
+and as a final thought here's a joke for you: why was the javascript developer always so calm? because they knew how to handle all their _promises_!

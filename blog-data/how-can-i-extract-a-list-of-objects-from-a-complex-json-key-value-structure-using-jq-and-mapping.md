@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-a-list-of-objects-from-a-complex-json-key-value-structure-using-jq-and-mapping"
 ---
 
-Alright, let's tackle this. I've certainly been in the trenches with complex json structures, trying to pull specific data out without resorting to some monstrous custom parser. Using `jq` alongside mapping is absolutely the way to go, it's efficient and concise once you grasp the nuances. I recall a particularly challenging data import project a few years back where the incoming json was, well, let's just say it lacked any sort of consistent schema. We needed to grab specific object arrays nested deep within, and `jq` became my go-to weapon.
+, let's tackle this. I've certainly been in the trenches with complex json structures, trying to pull specific data out without resorting to some monstrous custom parser. Using `jq` alongside mapping is absolutely the way to go, it's efficient and concise once you grasp the nuances. I recall a particularly challenging data import project a few years back where the incoming json was, well, let's just say it lacked any sort of consistent schema. We needed to grab specific object arrays nested deep within, and `jq` became my go-to weapon.
 
 The core problem we’re discussing hinges on extracting lists (arrays in json parlance) of objects from within a larger, potentially deeply nested, json structure. Mapping, in the context of `jq`, is primarily about applying a filter or transformation to each element of an array, and we can leverage this powerfully along with path navigation to achieve our goal. The trick is often to figure out the precise path to your target array of objects, and then apply the correct filter to either extract specific fields or keep the entire object.
 
@@ -22,7 +22,11 @@ First, let's imagine a scenario where you have a json structure representing a l
       ],
       "nonfiction": [
         { "title": "Sapiens", "author": "Yuval Noah Harari", "year": 2011 },
-        { "title": "Thinking, Fast and Slow", "author": "Daniel Kahneman", "year": 2011 }
+        {
+          "title": "Thinking, Fast and Slow",
+          "author": "Daniel Kahneman",
+          "year": 2011
+        }
       ]
     }
   }
@@ -80,21 +84,19 @@ Now, let's ramp up the complexity a bit. Imagine a scenario where the structure 
   "departments": {
     "engineering": {
       "items": [
-          { "itemName": "Widget", "quantity": 100 },
-          { "itemName": "Gear", "quantity": 50 }
-       ]
-     },
-    "marketing": {
-     "products": [
-          { "itemName": "Brochure", "count": 500},
-          {"productName" : "pens", "qty": 1000}
+        { "itemName": "Widget", "quantity": 100 },
+        { "itemName": "Gear", "quantity": 50 }
       ]
     },
-     "hr": {
-         "employees":[
-            {"name": "john doe", "empId": 123}
-          ]
-      }
+    "marketing": {
+      "products": [
+        { "itemName": "Brochure", "count": 500 },
+        { "productName": "pens", "qty": 1000 }
+      ]
+    },
+    "hr": {
+      "employees": [{ "name": "john doe", "empId": 123 }]
+    }
   }
 }
 ```
@@ -104,15 +106,17 @@ Here, the key we are interested in is `itemName`, however not all departments ha
 ```jq
 .departments | .[] | (.items // .products) | .[] | select(has("itemName"))
 ```
+
 Let's unpack this filter:
 
-*   `.departments` selects the departments object.
-*   `.[]` iterates through the values of departments, which is each individual department object.
-*   `(.items // .products)` uses the alternative operator `//`. It first checks if the property `items` exist and uses it if it does, if not, it checks `products`. This allows us to handle various ways items are stored.
-*   Again, `.[]` iterates through the list of items, be it `items` or `products`, it flattens it, exposing individual item objects.
-*   Finally, `select(has("itemName"))` selects only those elements (objects) that contain the key `"itemName"`.
+- `.departments` selects the departments object.
+- `.[]` iterates through the values of departments, which is each individual department object.
+- `(.items // .products)` uses the alternative operator `//`. It first checks if the property `items` exist and uses it if it does, if not, it checks `products`. This allows us to handle various ways items are stored.
+- Again, `.[]` iterates through the list of items, be it `items` or `products`, it flattens it, exposing individual item objects.
+- Finally, `select(has("itemName"))` selects only those elements (objects) that contain the key `"itemName"`.
 
 The output from that filter becomes:
+
 ```json
 [
   {

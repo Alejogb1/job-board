@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "why-am-i-getting-an-erro-when-runing-byebug-821-mac-m1"
 ---
 
-alright, so you're hitting a snag with byebug 8.2.1 on your mac m1, right? yeah, i've been there, got the t-shirt, probably several. this particular issue is surprisingly common with the transition to apple silicon and it often has to do with the underlying architecture and the way some ruby gems, especially native extensions, are compiled.
+, so you're hitting a snag with byebug 8.2.1 on your mac m1, right? yeah, i've been there, got the t-shirt, probably several. this particular issue is surprisingly common with the transition to apple silicon and it often has to do with the underlying architecture and the way some ruby gems, especially native extensions, are compiled.
 
-let's break this down. the mac m1 uses arm64 architecture, which is different from the x86_64 architecture most of us were used to. ruby gems like byebug often include native extensions written in c. these extensions have to be compiled for the specific architecture they'll be running on. if the version of byebug you're using wasn't compiled for arm64, or if the build process didn't correctly pick up the arm64 toolchain, you're going to run into problems. errors, sometimes cryptic ones, are part of the fun, isn't it? 
+let's break this down. the mac m1 uses arm64 architecture, which is different from the x86_64 architecture most of us were used to. ruby gems like byebug often include native extensions written in c. these extensions have to be compiled for the specific architecture they'll be running on. if the version of byebug you're using wasn't compiled for arm64, or if the build process didn't correctly pick up the arm64 toolchain, you're going to run into problems. errors, sometimes cryptic ones, are part of the fun, isn't it?
 
 i remember a similar situation back in the early days of osx transitioning to intel processors. i was trying to get a custom gem running that interfaced with some low-level hardware. i spent a good week battling compiler flags and linker issues. it turned out the gem was just not rebuilt correctly and no matter what i tried, it was only going to work on powerpc at the time. that was a lesson hard-learned on compatibility.
 
@@ -31,6 +31,7 @@ sometimes, even if byebug is installed, the native extensions might not have bee
 ```bash
 bundle install --force --verbose
 ```
+
 the `--force` option tells bundler to re-install all gems, even if they're already present. the `--verbose` option will give you a lot more output, allowing you to diagnose any errors during the compilation process.
 
 **4. specific to byebug version and build issues**
@@ -78,9 +79,9 @@ running it with `ruby debug_example.rb` will start the built-in debugger. use th
 
 if you really want to dive deep into the inner workings of ruby gems and native extensions, i'd recommend checking out:
 
-* **"extending ruby"**: this book by paolo perrotta is an old one but a really great reference for understanding ruby native extensions, how they work under the hood, and how to compile them.
-* **"understanding ruby internals"**: this book from charles nutter is also pretty deep on the internals of the interpreter and how the gems work with it. very useful if you want to know more about the vm.
+- **"extending ruby"**: this book by paolo perrotta is an old one but a really great reference for understanding ruby native extensions, how they work under the hood, and how to compile them.
+- **"understanding ruby internals"**: this book from charles nutter is also pretty deep on the internals of the interpreter and how the gems work with it. very useful if you want to know more about the vm.
 
 remember the process here isn't necessarily about immediate magic fixes, but rather about systematic diagnosis. check your environment, verify your setup, test some things and it will eventually work. debugging can be a slow process but rewarding at the end. i hope this helps. keep in mind that software is like a toddler, they break in the most illogical ways, and if nothing else works remember that you are not alone and everyone has experienced these pains before, and maybe ask for help in a forum if all these steps fail.
 
-*ps: why don’t programmers like nature? it has too many bugs!*
+_ps: why don’t programmers like nature? it has too many bugs!_

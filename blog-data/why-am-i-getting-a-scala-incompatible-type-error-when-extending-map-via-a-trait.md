@@ -10,9 +10,9 @@ The heart of the matter lies in the fact that `scala.collection.Map` is defined 
 
 When you try to extend `Map` with a trait, you're essentially creating a new type that mixes in that behavior. However, since `Map` is invariant in its type parameters, the compiler doesn't automatically assume that your extended type is a valid substitution for `Map`. Furthermore, traits themselves, unlike classes, do not have constructors that can fully resolve the concrete instantiation of the type parameters, which is necessary to maintain the invariant nature of the Map's type definition. This causes the dreaded "incompatible types" error.
 
-Think of it this way: scala's compiler treats `Map[A, B]` like a sealed container specific to `A` and `B`. Even if your trait *might* work with a different pair, the compiler cannot infer that safely. A simple solution of creating your own `MyMap` class which does implement `Map` will allow scala to understand the correct generic type parameters and how it interacts with the methods. Let's look at a practical example.
+Think of it this way: scala's compiler treats `Map[A, B]` like a sealed container specific to `A` and `B`. Even if your trait _might_ work with a different pair, the compiler cannot infer that safely. A simple solution of creating your own `MyMap` class which does implement `Map` will allow scala to understand the correct generic type parameters and how it interacts with the methods. Let's look at a practical example.
 
-Imagine I had to create a custom map to hold configuration properties in one of my past projects. I thought, "Okay, I need some extra utility functions, let me just extend `Map` with a trait". I started with something like this:
+Imagine I had to create a custom map to hold configuration properties in one of my past projects. I thought, ", I need some extra utility functions, let me just extend `Map` with a trait". I started with something like this:
 
 ```scala
 trait ConfigMapOps[K, V] extends Map[K, V] {
@@ -44,7 +44,7 @@ object MyMapTest {
 }
 ```
 
-This seems like it should work. We have defined the `getOrElseThrow` function, and we also create our custom map. However, this code, as defined, still doesn't work. There's a reason for this, and a key one: implementing the `Map` trait directly requires implementing *all* its methods, including those that change the collection's contents. This is necessary to abide by the invariant nature of Map, but its not useful in most use cases. It also forces the developer to re-implement immutable functionality that is already provided.
+This seems like it should work. We have defined the `getOrElseThrow` function, and we also create our custom map. However, this code, as defined, still doesn't work. There's a reason for this, and a key one: implementing the `Map` trait directly requires implementing _all_ its methods, including those that change the collection's contents. This is necessary to abide by the invariant nature of Map, but its not useful in most use cases. It also forces the developer to re-implement immutable functionality that is already provided.
 
 Let's take a step back and utilize scala's `Map` class instead. This can be done by utilizing type aliases:
 

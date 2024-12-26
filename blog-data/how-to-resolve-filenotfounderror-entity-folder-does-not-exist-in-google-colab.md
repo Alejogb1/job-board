@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resolve-filenotfounderror-entity-folder-does-not-exist-in-google-colab"
 ---
 
-Okay, let's unpack this. It's an error I've seen often enough, usually when someone’s starting to work with a more structured Colab project involving local data handling or version control. The "FileNotFoundError: Entity folder does not exist!" in Google Colab typically surfaces when your code attempts to access a directory or file it can't locate within the current runtime environment. This error, while straightforward, often hides behind a few common misconceptions and configuration issues that deserve careful examination.
+, let's unpack this. It's an error I've seen often enough, usually when someone’s starting to work with a more structured Colab project involving local data handling or version control. The "FileNotFoundError: Entity folder does not exist!" in Google Colab typically surfaces when your code attempts to access a directory or file it can't locate within the current runtime environment. This error, while straightforward, often hides behind a few common misconceptions and configuration issues that deserve careful examination.
 
 From my experience, I've encountered this in scenarios ranging from importing datasets to managing custom module structures. It's less about the complexity of the code and more about understanding Colab’s file system and how your project is structured within it. Specifically, the error indicates that the path you've specified—which is typically to a directory or folder containing certain files, such as data or model definitions—doesn't exist in the Colab instance’s virtual environment. Colab doesn’t always mirror your local file structure, which is the primary source of this confusion.
 
@@ -22,7 +22,7 @@ Now, let’s explore some solutions with actual code.
 
 **Scenario 1: Incorrect Path**
 
-Let's say your code was expecting a folder `my_data` directly in the root. If you were running this locally, the path *might* be correct but within the Colab environment it won’t work.
+Let's say your code was expecting a folder `my_data` directly in the root. If you were running this locally, the path _might_ be correct but within the Colab environment it won’t work.
 
 ```python
 import os
@@ -48,7 +48,7 @@ except FileNotFoundError as e:
     print(f"Error: {e}")
 ```
 
-In this example, the *incorrect approach* directly references `"my_data/data.csv"`. This will lead to a `FileNotFoundError` if `my_data` isn’t in the `/content/` folder. The *corrected approach* is to add the `/content/` prefix making it explicit where the data should be located, in Colab's `/content/` directory. Additionally, I included `os.makedirs` to create a dummy directory for this example, demonstrating a solution for the missing folder problem.
+In this example, the _incorrect approach_ directly references `"my_data/data.csv"`. This will lead to a `FileNotFoundError` if `my_data` isn’t in the `/content/` folder. The _corrected approach_ is to add the `/content/` prefix making it explicit where the data should be located, in Colab's `/content/` directory. Additionally, I included `os.makedirs` to create a dummy directory for this example, demonstrating a solution for the missing folder problem.
 
 **Scenario 2: Missing Directory**
 

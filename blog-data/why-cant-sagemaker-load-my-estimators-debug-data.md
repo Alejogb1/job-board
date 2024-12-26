@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-cant-sagemaker-load-my-estimators-debug-data"
 ---
 
-Okay, let's tackle this. It's a situation I've encountered a few times, usually right when you think everything is set to run smoothly. Debugging data not loading in SageMaker is frustrating, and it often comes down to a few common culprits rather than some singular, catastrophic failure. Let’s break it down systematically, based on what I've seen and resolved over the years.
+, let's tackle this. It's a situation I've encountered a few times, usually right when you think everything is set to run smoothly. Debugging data not loading in SageMaker is frustrating, and it often comes down to a few common culprits rather than some singular, catastrophic failure. Let’s break it down systematically, based on what I've seen and resolved over the years.
 
 The core issue, more often than not, isn’t some fundamental flaw in SageMaker itself, but rather a mismatch in how the debug configuration is specified or how the underlying training process is interacting with the debug hook. I’ll focus on the most prevalent scenarios. First, let's look at the configuration. Typically, we use the `DebuggerHookConfig` within our SageMaker estimator. The path where debugging data is saved needs to be correct and properly accessible by both the training job and the subsequent analysis job, which in many cases is your notebook instance or local machine. Incorrect configuration here can lead to SageMaker unable to locate or retrieve debug data.
 
@@ -89,7 +89,7 @@ estimator.fit({'training': 's3://your-bucket/training-data'})
 
 This granular control allowed the debugger to capture what I needed. The `include_regexes` are very powerful and allows you to filter the debugging output from the training process. Always check the specific documentation for your deep learning framework to ensure these match your tensor names correctly.
 
-Another scenario, and one I see quite frequently, involves incorrect permissions or issues related to network configurations, especially when your data is stored in a different AWS account or a secure private S3 bucket. If the IAM role used by the SageMaker training job doesn't have the necessary permissions to write to the specified S3 path or the notebook instance doesn't have the correct permissions to read, you simply won't get your data. Similarly, if the training job runs within a VPC and the S3 bucket isn't accessible through the VPC endpoint, the debugging output won’t materialize in S3. To illustrate this, consider an example using a training script that *should* be working, but fails silently due to incorrect IAM permissions.
+Another scenario, and one I see quite frequently, involves incorrect permissions or issues related to network configurations, especially when your data is stored in a different AWS account or a secure private S3 bucket. If the IAM role used by the SageMaker training job doesn't have the necessary permissions to write to the specified S3 path or the notebook instance doesn't have the correct permissions to read, you simply won't get your data. Similarly, if the training job runs within a VPC and the S3 bucket isn't accessible through the VPC endpoint, the debugging output won’t materialize in S3. To illustrate this, consider an example using a training script that _should_ be working, but fails silently due to incorrect IAM permissions.
 
 Imagine a second instance, different from the first example. This time, the debugging config is technically correct, but it still doesn’t work:
 

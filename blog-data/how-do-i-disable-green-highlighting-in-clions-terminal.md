@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-i-disable-green-highlighting-in-clions-terminal"
 ---
 
-Okay, let's talk about that persistent green highlighting in CLion's terminal. It’s a common annoyance, I’ve certainly bumped into it more times than I care to recall, especially when dealing with build output or verbose logging. I remember one particularly frustrating project where the build process involved a mountain of detailed text – every successful compilation step would trigger a swath of green, making it incredibly difficult to pinpoint actual warnings or errors. It’s certainly not an optimal user experience, and thankfully, there are a few ways to tackle it.
+, let's talk about that persistent green highlighting in CLion's terminal. It’s a common annoyance, I’ve certainly bumped into it more times than I care to recall, especially when dealing with build output or verbose logging. I remember one particularly frustrating project where the build process involved a mountain of detailed text – every successful compilation step would trigger a swath of green, making it incredibly difficult to pinpoint actual warnings or errors. It’s certainly not an optimal user experience, and thankfully, there are a few ways to tackle it.
 
-First, it's crucial to understand *why* this highlighting occurs. CLion, like many IDEs with integrated terminals, attempts to interpret the output from the terminal. It does this primarily by parsing ANSI escape codes embedded within the text stream. These escape codes are sequences of characters that are interpreted by the terminal emulator to control text formatting, including colors, styles (bold, italic, underline), and cursor movement. The green highlighting is a direct consequence of this interpretation, typically triggered by a specific ANSI code denoting a ‘success’ status or a positive indicator. While this is helpful in some contexts, it becomes visually overwhelming if your build or logging tools liberally use them.
+First, it's crucial to understand _why_ this highlighting occurs. CLion, like many IDEs with integrated terminals, attempts to interpret the output from the terminal. It does this primarily by parsing ANSI escape codes embedded within the text stream. These escape codes are sequences of characters that are interpreted by the terminal emulator to control text formatting, including colors, styles (bold, italic, underline), and cursor movement. The green highlighting is a direct consequence of this interpretation, typically triggered by a specific ANSI code denoting a ‘success’ status or a positive indicator. While this is helpful in some contexts, it becomes visually overwhelming if your build or logging tools liberally use them.
 
 The simplest and most effective approach to eliminate this behavior is to configure CLion to ignore or strip these ANSI codes entirely. CLion does not expose an explicit toggle to disable all ANSI formatting in its terminal directly in the settings. Instead, the most effective approach involves a combination of influencing the tool that's spitting the output and possibly intermediary steps.
 
@@ -22,7 +22,7 @@ For example, let's imagine that your CLion build command looked something like t
 cmake --build .
 ```
 
-You could modify it to include the `--no-warn-unused-cli` flag in *Edit Configurations* within CLion. To do this, navigate to *Run > Edit Configurations*. Select the relevant CMake build configuration and locate the CMake options text field. Here, you can add the following:
+You could modify it to include the `--no-warn-unused-cli` flag in _Edit Configurations_ within CLion. To do this, navigate to _Run > Edit Configurations_. Select the relevant CMake build configuration and locate the CMake options text field. Here, you can add the following:
 
 ```
 cmake --build . --no-warn-unused-cli -DCMAKE_COLOR_MAKEFILE=OFF
@@ -76,6 +76,7 @@ This is a more generic approach that can sometimes be effective, but has to be s
 Let’s imagine that some executable 'my_tool' is generating coloured output. In the CLion's environment we could modify the `Run` configuration, to add an environmental variable with the desired configuration. Navigate to Run -> Edit configurations and find the `Environment variables` option, where we can add the variable and value pair `GREP_OPTIONS` and `--color=never`.
 
 Here's a pseudocode that shows the idea:
+
 ```pseudocode
 configuration.environmentVariables['GREP_OPTIONS'] = '--color=never';
 //CLion will set GREP_OPTIONS before executing your program.

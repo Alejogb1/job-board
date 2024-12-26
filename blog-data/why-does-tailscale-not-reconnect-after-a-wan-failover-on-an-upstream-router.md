@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-tailscale-not-reconnect-after-a-wan-failover-on-an-upstream-router"
 ---
 
-Okay, let's tackle this. I've certainly seen this exact scenario play out more than once in complex network deployments, and it's never quite as straightforward as we'd hope. When a wan failover occurs on an upstream router while using tailscale, the lack of immediate reconnection often boils down to a combination of factors centered around how tailscale establishes and maintains its connections, and how routers handle network address translation (nat) and route propagation. It's less about tailscale itself being "broken," and more about the interplay between its assumptions and the underlying network changes.
+, let's tackle this. I've certainly seen this exact scenario play out more than once in complex network deployments, and it's never quite as straightforward as we'd hope. When a wan failover occurs on an upstream router while using tailscale, the lack of immediate reconnection often boils down to a combination of factors centered around how tailscale establishes and maintains its connections, and how routers handle network address translation (nat) and route propagation. It's less about tailscale itself being "broken," and more about the interplay between its assumptions and the underlying network changes.
 
 To begin, we need to understand how tailscale initially establishes a connection. It uses a method called nat traversal, which attempts to establish peer-to-peer connections directly between devices whenever possible. This minimizes reliance on tailscale servers and reduces latency, which is generally good for performance. However, this also means that the established connection is often tied to the specific public ip address of the network the device is on. If the wan ip address changes on the router during a failover, it can invalidate the previously established connection in a few ways.
 
@@ -52,14 +52,14 @@ if __name__ == "__main__":
     # Assume these are values resolved before the failover
     old_public_ip = "203.0.113.10" # old router public ip
     remote_port = 12345   # pre-established port mapping
-    
+
     sock = establish_connection(old_public_ip, remote_port)
     if sock:
        send_keepalive(sock)
        time.sleep(5) # Simulate some time passed between checks
        send_keepalive(sock) # keep-alive will likely fail now if there is a wan failover.
        sock.close()
-       
+
     # Then after the failover the ip address is changed on the router. The code has not been able to update itself with the new values
     new_public_ip = "198.51.100.20" # new router public ip, which the previous connection is not aware of.
     sock2 = establish_connection(new_public_ip, remote_port)
@@ -107,7 +107,7 @@ class Firewall:
       if key in self.connections:
         self.connections[key]["status"] = "closed"
         print(f"Connection closed {key}")
-    
+
     def clear_all_connections(self):
         self.connections = {}
         print("All connections have been cleared")
@@ -127,7 +127,7 @@ if __name__ == "__main__":
     fw.clear_all_connections() # Simulate Router failover.
 
     fw.is_connection_active(src_ip, src_port, dst_ip, dst_port) # connection will now be inactive, and tailscale will need to establish a new one.
-    
+
     new_dst_ip = "198.51.100.20" # new public ip, and a new connection will need to be established.
 
     fw.create_connection(src_ip, src_port, new_dst_ip, dst_port)
@@ -166,7 +166,7 @@ if __name__ == "__main__":
 
     device_b_ip = dns.resolve("device_b.tailscale")
     print(f"Resolved ip for device_b: {device_b_ip}")
-    
+
     time.sleep(2)
 
     new_records = {"device_b.tailscale" : "198.51.100.20"} # the ip of device b after the router failover
@@ -182,8 +182,9 @@ This demonstrates how a disruption in dns will prevent tailscale from quickly re
 To mitigate these issues, a few strategies can be effective. First, reducing the reliance on the local router’s dns by having each tailscale device have a static ip from the tailscale ip range rather than from the local ip range can help. Secondly, configuring shorter connection keep-alive times, within reasonable limits, can prompt tailscale to detect changes faster, although this can increase network overhead. Finally, ensure that the tailscale client is configured to use the fastest and most reliable dns servers possible.
 
 For further learning, the following resources are helpful:
-*   “TCP/IP Illustrated, Vol 1: The Protocols” by W. Richard Stevens: It provides a detailed explanation of tcp/ip communication, and includes discussion about nat, which is critical for the understanding of this issue.
-*   “Internetworking with TCP/IP Vol 1 Principles, Protocols, and Architecture” by Douglas Comer: Focuses on the core principles and protocols of the internet. This includes details of how routing works and it is a solid background for understanding network failovers.
-*    “Linux Firewalls: Attack Detection and Response” by Michael Rash: Explains how stateful firewalls operate and their connection tracking mechanisms, which are critical for understanding why connections fail after a failover.
+
+- “TCP/IP Illustrated, Vol 1: The Protocols” by W. Richard Stevens: It provides a detailed explanation of tcp/ip communication, and includes discussion about nat, which is critical for the understanding of this issue.
+- “Internetworking with TCP/IP Vol 1 Principles, Protocols, and Architecture” by Douglas Comer: Focuses on the core principles and protocols of the internet. This includes details of how routing works and it is a solid background for understanding network failovers.
+- “Linux Firewalls: Attack Detection and Response” by Michael Rash: Explains how stateful firewalls operate and their connection tracking mechanisms, which are critical for understanding why connections fail after a failover.
 
 While tailscale is good at handling many network disruptions, changes at the router level, especially those involving nat and ip address changes, can present unique challenges. Understanding the interplay between these systems, as illustrated in these code snippets, is key to diagnosing and mitigating such issues.

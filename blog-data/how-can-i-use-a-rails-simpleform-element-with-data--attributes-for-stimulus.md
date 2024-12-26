@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-a-rails-simpleform-element-with-data--attributes-for-stimulus"
 ---
 
-Okay, let's tackle this one. I've certainly spent my fair share of time bridging the gap between server-rendered forms and client-side javascript magic, and `simple_form` with `data-` attributes for Stimulus is a common requirement. It's a setup that, when done properly, provides a seamless user experience. Let me walk you through the process, drawing from some past project experience.
+, let's tackle this one. I've certainly spent my fair share of time bridging the gap between server-rendered forms and client-side javascript magic, and `simple_form` with `data-` attributes for Stimulus is a common requirement. It's a setup that, when done properly, provides a seamless user experience. Let me walk you through the process, drawing from some past project experience.
 
 The core challenge is that `simple_form` handles the generation of your form elements on the server-side, while Stimulus, as you know, operates entirely within the browser. We need to ensure the HTML structure created by `simple_form` includes the `data-` attributes that Stimulus controllers rely on. This boils down to effectively combining `simple_form`'s DSL with Ruby's dynamic capabilities.
 
@@ -40,18 +40,18 @@ Here's the corresponding Stimulus controller:
 
 ```javascript
 // app/javascript/controllers/toggle_field_controller.js
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-    static targets = [ "options" ]
+  static targets = ["options"];
 
-    toggleOptions() {
-        if (this.element.checked) {
-            this.optionsTarget.style.display = "block";
-        } else {
-            this.optionsTarget.style.display = "none";
-        }
+  toggleOptions() {
+    if (this.element.checked) {
+      this.optionsTarget.style.display = "block";
+    } else {
+      this.optionsTarget.style.display = "none";
     }
+  }
 }
 ```
 
@@ -83,28 +83,27 @@ Here's the javascript portion:
 
 ```javascript
 // app/javascript/controllers/task_manager_controller.js
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = [ "list", "item", "itemInput", "removeButton" ]
+  static targets = ["list", "item", "itemInput", "removeButton"];
 
   addItem() {
-      const newItem = this.itemTarget.cloneNode(true);
-      this.listTarget.appendChild(newItem);
-      this.resetInput(newItem);
+    const newItem = this.itemTarget.cloneNode(true);
+    this.listTarget.appendChild(newItem);
+    this.resetInput(newItem);
   }
 
   removeItem(event) {
-      event.target.closest('.task-item').remove();
+    event.target.closest(".task-item").remove();
   }
 
-  focusItem(event){
-    console.log(`focused: ${event.target.value}`)
+  focusItem(event) {
+    console.log(`focused: ${event.target.value}`);
   }
   resetInput(item) {
-    item.querySelector("input").value = ""
+    item.querySelector("input").value = "";
   }
-
 }
 ```
 
@@ -112,6 +111,6 @@ In this more complex controller, we’re now using `static targets` to define el
 
 These examples showcase how to use the data attribute paradigm within `simple_form` with Stimulus. It’s essential to understand that these are all interconnected. The key is the consistent use of `data-` attributes across the html elements and then proper utilization in the javascript controllers.
 
-For further exploration, I would highly recommend reading *Rails 7 Cookbook* by Stefan Wintermeyer. It provides a comprehensive view of Rails 7 features, including how they interact with frontend technologies. Specifically, the chapter on integrating JavaScript frameworks is particularly relevant to this topic. You'll also find great detail on stimulus and turbo within this book. Another valuable resource is the official Stimulus documentation on the hotwired.dev site which has a great section on targets and actions. Finally, if you want a deep dive into HTML standards, I suggest checking out the WHATWG living standard document; understanding the formal specifications will enhance your understanding of attributes and their intended use.
+For further exploration, I would highly recommend reading _Rails 7 Cookbook_ by Stefan Wintermeyer. It provides a comprehensive view of Rails 7 features, including how they interact with frontend technologies. Specifically, the chapter on integrating JavaScript frameworks is particularly relevant to this topic. You'll also find great detail on stimulus and turbo within this book. Another valuable resource is the official Stimulus documentation on the hotwired.dev site which has a great section on targets and actions. Finally, if you want a deep dive into HTML standards, I suggest checking out the WHATWG living standard document; understanding the formal specifications will enhance your understanding of attributes and their intended use.
 
 The core concept is that these `data-` attributes act as your bridge between Rails and your client-side interactivity. By thoughtfully integrating them into `simple_form`, we unlock the power of Stimulus, delivering dynamic and engaging user experiences.

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "elasticsearch-get-all-distinct-values-field"
 ---
 
-Okay so you're asking about how to get all the distinct values of a field in Elasticsearch got it been there done that several times lets dive in I remember back in my early days working on a massive data ingestion project for a social media platform oh man the things we tried the sheer amount of data being pumped in was insane anyway one of the first things we realized was how crucial it was to be able to quickly and efficiently get unique values for various fields it was like trying to find a specific grain of sand on a beach but way way more complex
+you're asking about how to get all the distinct values of a field in Elasticsearch got it been there done that several times lets dive in I remember back in my early days working on a massive data ingestion project for a social media platform oh man the things we tried the sheer amount of data being pumped in was insane anyway one of the first things we realized was how crucial it was to be able to quickly and efficiently get unique values for various fields it was like trying to find a specific grain of sand on a beach but way way more complex
 
 So lets get this out of the way right now elasticsearch isnt a relational database you cant just fire off a `SELECT DISTINCT` query you need to think a little differently its more like a sophisticated document store where everything is essentially json at the core its all about how you index your data and how you query it later we're gonna talk aggregations its your best friend here
 
@@ -25,11 +25,11 @@ The basic way to do this in ES is using the `terms` aggregation this aggregation
 }
 ```
 
-This is the simple version replace `"your_field_name"` with your actual field name and thats it the size is 0 cause we dont want to see any document hit just the aggregate results.  The response will give you the buckets for each term in that field and the counts associated with them if you don't need the counts you can ignore them but you get them for free with this request type of request. Easy enough right
+This is the simple version replace `"your_field_name"` with your actual field name and thats it the size is 0 cause we dont want to see any document hit just the aggregate results. The response will give you the buckets for each term in that field and the counts associated with them if you don't need the counts you can ignore them but you get them for free with this request type of request. Easy enough right
 
 **What about Size Limits**
 
-Okay so maybe you have a field with a ton of distinct values like tags for example or usernames maybe even ip addresses if you dont set the size limit it defaults to 10 and you'll miss unique values from the tail end this is a common gotcha that I have seen even myself fallen for numerous times so we need to set the size parameter explicitly in terms to be sure that it lists ALL unique values in a field.
+maybe you have a field with a ton of distinct values like tags for example or usernames maybe even ip addresses if you dont set the size limit it defaults to 10 and you'll miss unique values from the tail end this is a common gotcha that I have seen even myself fallen for numerous times so we need to set the size parameter explicitly in terms to be sure that it lists ALL unique values in a field.
 
 ```json
 {
@@ -68,10 +68,10 @@ This is super useful it gives a fast approximate count of the unique values for 
 
 **Best Practices**
 
-*   **Field Data Type**: Make sure that your field type is set correctly in ES. Using keyword fields is important for terms aggregation its faster and more appropriate for distinct searches if you have the field as a text type you might need to use a subfield called `.keyword` or map the field again as a keyword which you should generally avoid.
-*   **Size Limits**: Watch out for size limits especially with the `terms` aggregation if you have lots of unique values it is crucial that you account for the `size` parameter or you will not get all the unique values.
-*   **Performance**: For really large data sets you need to optimize your search and aggregation its a complex system that needs to be well tuned but thats another story for another day.
-*   **Data Modeling**: Before you even get to the search/aggregation phase make sure that you have modeled your data correctly. The right data model can save you hours of query writing and optimization.
+- **Field Data Type**: Make sure that your field type is set correctly in ES. Using keyword fields is important for terms aggregation its faster and more appropriate for distinct searches if you have the field as a text type you might need to use a subfield called `.keyword` or map the field again as a keyword which you should generally avoid.
+- **Size Limits**: Watch out for size limits especially with the `terms` aggregation if you have lots of unique values it is crucial that you account for the `size` parameter or you will not get all the unique values.
+- **Performance**: For really large data sets you need to optimize your search and aggregation its a complex system that needs to be well tuned but thats another story for another day.
+- **Data Modeling**: Before you even get to the search/aggregation phase make sure that you have modeled your data correctly. The right data model can save you hours of query writing and optimization.
 
 **Going Further**
 

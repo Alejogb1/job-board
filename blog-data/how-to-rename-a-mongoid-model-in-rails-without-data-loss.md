@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-rename-a-mongoid-model-in-rails-without-data-loss"
 ---
 
-Alright, let's tackle this one. It’s a scenario I’ve bumped into a few times over the years, usually after the initial design phases of a project where we've had to adjust model names to better reflect the business logic. Renaming a Mongoid model in a Rails application without losing data requires careful planning and execution. It's not as straightforward as a simple rename, since Mongoid, like other odm/orm tools, uses the class name as part of its internal representation. Therefore, simply changing the class name leads to a disconnect between the model definition and the data stored in MongoDB. I'm going to walk you through the steps based on my previous experience, outlining a safe procedure to get this done.
+, let's tackle this one. It’s a scenario I’ve bumped into a few times over the years, usually after the initial design phases of a project where we've had to adjust model names to better reflect the business logic. Renaming a Mongoid model in a Rails application without losing data requires careful planning and execution. It's not as straightforward as a simple rename, since Mongoid, like other odm/orm tools, uses the class name as part of its internal representation. Therefore, simply changing the class name leads to a disconnect between the model definition and the data stored in MongoDB. I'm going to walk you through the steps based on my previous experience, outlining a safe procedure to get this done.
 
 The core issue is that Mongoid typically stores the collection name in MongoDB based on the class name by convention – pluralizing it and converting it to lowercase, unless explicitly specified otherwise. Renaming the model in Rails without any associated database changes would cause your application to look for the data in a newly named collection that doesn't exist, and, equally problematic, it would not recognize the existing collection as the one that belongs to the new model name.
 
@@ -26,11 +26,11 @@ class NewModel
 end
 ```
 
-It’s crucial that this `NewModel` has the *exact same fields* as the original model (`OldModel`), in terms of names and data types. The `include Mongoid::Timestamps` and any custom indices must be included. We’re building a shell that matches the old model, but under a new class name. Don't worry about the data location yet, we are getting there.
+It’s crucial that this `NewModel` has the _exact same fields_ as the original model (`OldModel`), in terms of names and data types. The `include Mongoid::Timestamps` and any custom indices must be included. We’re building a shell that matches the old model, but under a new class name. Don't worry about the data location yet, we are getting there.
 
 **2. Ensure Correct Collection Mapping:**
 
-Now, the crucial step. We need to instruct `NewModel` to use the *same collection* as the original `OldModel`. We achieve this by explicitly setting the `collection_name` for `NewModel` in the model definition:
+Now, the crucial step. We need to instruct `NewModel` to use the _same collection_ as the original `OldModel`. We achieve this by explicitly setting the `collection_name` for `NewModel` in the model definition:
 
 ```ruby
 # app/models/new_model.rb
@@ -67,7 +67,7 @@ Don't make changes all at once. Consider using feature flags to gradually switch
 
 **5. Removing `OldModel` (Carefully):**
 
-Once you are absolutely certain that `NewModel` is the only one being used, and all references to `OldModel` are gone, and all tests pass, then you can *finally* remove `app/models/old_model.rb`. It’s good practice to remove it entirely from the source code instead of commenting it out. After this removal, you need to update the `NewModel` class by removing the `store_in collection: :old_models` line. This sets it back to the Mongoid default of a collection name based on its class name, thereby renaming the collection effectively in the next step.
+Once you are absolutely certain that `NewModel` is the only one being used, and all references to `OldModel` are gone, and all tests pass, then you can _finally_ remove `app/models/old_model.rb`. It’s good practice to remove it entirely from the source code instead of commenting it out. After this removal, you need to update the `NewModel` class by removing the `store_in collection: :old_models` line. This sets it back to the Mongoid default of a collection name based on its class name, thereby renaming the collection effectively in the next step.
 
 ```ruby
 # app/models/new_model.rb (final version)
@@ -110,8 +110,8 @@ This process isn’t fast. It’s designed to be safe and predictable. Patience 
 
 **Recommended Resources:**
 
-*   **"MongoDB: The Definitive Guide" by Kristina Chodorow:** This is an excellent general reference book that delves into the core functionalities of MongoDB, providing a solid foundation for understanding the underlying processes that Mongoid leverages.
-*   **"Seven Databases in Seven Weeks" by Eric Redmond and Jim Wilson:** A great resource that compares different database systems, including MongoDB, and can improve your intuition about how they work.
-*   **MongoDB Documentation:** The official MongoDB documentation is your primary resource for any specific questions or edge cases. It's constantly updated and always the best source for definitive answers.
+- **"MongoDB: The Definitive Guide" by Kristina Chodorow:** This is an excellent general reference book that delves into the core functionalities of MongoDB, providing a solid foundation for understanding the underlying processes that Mongoid leverages.
+- **"Seven Databases in Seven Weeks" by Eric Redmond and Jim Wilson:** A great resource that compares different database systems, including MongoDB, and can improve your intuition about how they work.
+- **MongoDB Documentation:** The official MongoDB documentation is your primary resource for any specific questions or edge cases. It's constantly updated and always the best source for definitive answers.
 
 This methodology has served me well in various projects, and while each circumstance is unique, I have always found that a methodical, step-by-step approach with feature flags and strong testing, pays dividends. I hope this helps you in your own endeavors.

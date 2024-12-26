@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-to-filter-a-pandas-dataframe-for-rows-containing-specific-words-excluding-rows-with-words-not-on-the-list"
 ---
 
-Alright, let’s tackle this. It's a challenge I remember facing often, especially back when I was working on large text datasets for sentiment analysis – getting granular control over data based on the presence (and absence) of specific terms is absolutely crucial. So, we're talking about filtering a Pandas DataFrame, focusing on rows that *contain* certain words from a predefined list, and specifically excluding rows that have words not on that same list. This is more nuanced than just a simple ‘contains’ search, and a straight loop would be too inefficient for anything but the smallest data sets.
+, let’s tackle this. It's a challenge I remember facing often, especially back when I was working on large text datasets for sentiment analysis – getting granular control over data based on the presence (and absence) of specific terms is absolutely crucial. So, we're talking about filtering a Pandas DataFrame, focusing on rows that _contain_ certain words from a predefined list, and specifically excluding rows that have words not on that same list. This is more nuanced than just a simple ‘contains’ search, and a straight loop would be too inefficient for anything but the smallest data sets.
 
 The key here is understanding that we need to combine regular expressions for flexible string matching with Pandas' powerful boolean indexing. The direct approach, using `.str.contains()` repeatedly, while workable, can quickly become unwieldy and less performant as the number of words or the data size increases. I’ve definitely seen projects slow to a crawl because of poorly optimized string filtering, so let’s skip that and focus on clean, efficient methods.
 
 Essentially, we will construct a regular expression pattern that dynamically accounts for the inclusion and exclusion criteria, then use that pattern to generate a boolean mask. This mask, in turn, will be used to slice our DataFrame and produce the filtered result.
 
-First, let's define a general approach. I'll use a hypothetical scenario where I have a DataFrame with a 'text' column, and I want to filter for rows containing words from `included_words` but only *if* those rows do not also contain any words from `excluded_words`.
+First, let's define a general approach. I'll use a hypothetical scenario where I have a DataFrame with a 'text' column, and I want to filter for rows containing words from `included_words` but only _if_ those rows do not also contain any words from `excluded_words`.
 
 Here’s the first code example, breaking down how to structure this:
 
@@ -61,7 +61,7 @@ if __name__ == '__main__':
 
 ```
 
-In this code, we construct the `included_pattern` and `excluded_pattern` using regular expression word boundaries (`\b`). The `\b` ensures that we are matching whole words, avoiding partial matches like "applesauce" when looking for "apple". We then create boolean masks based on whether the `text_column` contains at least one word from the `included_words` and *does not contain* any words from the `excluded_words` lists. Finally, we combine them with a logical `AND` to obtain the final `combined_mask`, which filters our DataFrame.
+In this code, we construct the `included_pattern` and `excluded_pattern` using regular expression word boundaries (`\b`). The `\b` ensures that we are matching whole words, avoiding partial matches like "applesauce" when looking for "apple". We then create boolean masks based on whether the `text_column` contains at least one word from the `included_words` and _does not contain_ any words from the `excluded_words` lists. Finally, we combine them with a logical `AND` to obtain the final `combined_mask`, which filters our DataFrame.
 
 Now, it’s worth expanding on why regular expressions are vital for this task. If you try string comparisons without them, the process is quite inflexible and error-prone. You might inadvertently match sub-strings and it becomes impossible to handle complex criteria without manual iteration which, as I said, is not practical for anything but toy examples. Regular expressions give us the power of precise text matching with boundary conditions, case-insensitivity, and conditional searches.
 
@@ -108,9 +108,10 @@ if __name__ == '__main__':
     print(filtered_df)
 
 ```
+
 Notice the `case=False` in the `str.contains` method. This is how you enforce case-insensitive searches. This snippet makes sure that “Apples” is treated the same as “apple,” adding flexibility.
 
-Now, let’s consider a slightly more complex scenario. Say you want to filter for rows containing *any* of the included words, but *only* if *none* of the excluded words are present.
+Now, let’s consider a slightly more complex scenario. Say you want to filter for rows containing _any_ of the included words, but _only_ if _none_ of the excluded words are present.
 
 ```python
 import pandas as pd

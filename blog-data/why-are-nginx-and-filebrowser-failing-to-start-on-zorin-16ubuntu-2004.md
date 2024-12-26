@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-nginx-and-filebrowser-failing-to-start-on-zorin-16ubuntu-2004"
 ---
 
-Alright, let’s tackle this. It sounds like you’re experiencing a frustrating scenario, and I’ve definitely been in similar situations myself. I recall debugging a deployment pipeline a few years back where NGINX and another web service, though not FileBrowser specifically, were exhibiting precisely this startup failure on a fresh Ubuntu server. It took some concerted effort to pinpoint the issue, but it’s rarely ever just one single problem. Let’s unpack what might be causing NGINX and FileBrowser to misbehave on your Zorin 16, which, for our purposes, is essentially Ubuntu 20.04 underneath.
+, let’s tackle this. It sounds like you’re experiencing a frustrating scenario, and I’ve definitely been in similar situations myself. I recall debugging a deployment pipeline a few years back where NGINX and another web service, though not FileBrowser specifically, were exhibiting precisely this startup failure on a fresh Ubuntu server. It took some concerted effort to pinpoint the issue, but it’s rarely ever just one single problem. Let’s unpack what might be causing NGINX and FileBrowser to misbehave on your Zorin 16, which, for our purposes, is essentially Ubuntu 20.04 underneath.
 
 The root causes often fall into several common categories: port conflicts, configuration errors, permission issues, or missing dependencies. Let's examine these one by one, focusing on the typical culprits.
 
@@ -45,7 +45,7 @@ Now lets look at a example of how to configure filebrowser and nginx using `dock
 First we start with the `docker-compose.yml` file:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   filebrowser:
     image: filebrowser/filebrowser:latest
@@ -68,8 +68,8 @@ services:
     depends_on:
       - filebrowser
     restart: unless-stopped
-
 ```
+
 This configuration sets up the filebrowser container and also the nginx proxy. Filebrowser uses port 8080 internally, however, through nginx, it will be accessible through port 80 or 443. The volume mapping allows data to be persistent. The environment variable `FB_BASEURL=/files` specifies that the file browser will be accessed through /files in the url.
 
 Here is an example nginx configuration file. Lets call it `nginx.conf`.
@@ -86,7 +86,7 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
     }
-    
+
 }
 ```
 
@@ -110,9 +110,9 @@ Finally, and critically important, always check the logs. NGINX logs are located
 
 To get a more detailed understanding of these topics, I recommend the following resources:
 
-*   **"High Performance Web Sites" by Steve Souders:** Though not solely focused on NGINX, this book offers invaluable insights into web server performance and optimization, often directly relevant when configuring a robust NGINX setup.
-*   **"Nginx HTTP Server" by the NGINX Team:** This book should be considered a primary resource if you want to dive deep into all NGINX’s inner workings, it’s the official documentation put in book format.
-*   **The official NGINX documentation:** The official documentation found at nginx.org is a goldmine of information. It's continuously updated and often contains the latest information on all features and configurations.
-* **Docker official documentation:** For help on using docker to deploy these services, the documentation at docker.com is very useful.
+- **"High Performance Web Sites" by Steve Souders:** Though not solely focused on NGINX, this book offers invaluable insights into web server performance and optimization, often directly relevant when configuring a robust NGINX setup.
+- **"Nginx HTTP Server" by the NGINX Team:** This book should be considered a primary resource if you want to dive deep into all NGINX’s inner workings, it’s the official documentation put in book format.
+- **The official NGINX documentation:** The official documentation found at nginx.org is a goldmine of information. It's continuously updated and often contains the latest information on all features and configurations.
+- **Docker official documentation:** For help on using docker to deploy these services, the documentation at docker.com is very useful.
 
 In summary, the failure to start NGINX and FileBrowser simultaneously on Ubuntu 20.04/Zorin 16 usually stems from some combination of port conflicts, configuration issues, permissions problems, or missing dependencies. Through careful diagnosis using command line utilities, log examination, and methodical debugging, you should be able to get your services up and running. I hope that helps you sort out the issues you’re experiencing. Good luck!

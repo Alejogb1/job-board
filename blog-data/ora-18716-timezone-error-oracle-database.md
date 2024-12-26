@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ora-18716-timezone-error-oracle-database"
 ---
 
-Okay so you're hitting that classic ORA-18716 timezone error in Oracle Database right Been there done that got the t-shirt I swear this error is like a right of passage for anyone who's messed with Oracle's date and time functions
+you're hitting that classic ORA-18716 timezone error in Oracle Database right Been there done that got the t-shirt I swear this error is like a right of passage for anyone who's messed with Oracle's date and time functions
 
 Let me give you a rundown of what usually causes this headache and how I've personally wrestled it into submission over the years It's not pretty but it works
 
@@ -16,9 +16,9 @@ We traced it back to the way we were handling the dates in our application and h
 
 The main thing to grok is the difference between `DATE` `TIMESTAMP` `TIMESTAMP WITH TIME ZONE`.
 
-*   `DATE` stores the date and time without any timezone information its just an abstract point in time as far as the db is concerned. Its like saying I met someone at 10 AM without saying where it was.
-*   `TIMESTAMP` also stores date and time with more precision than DATE but still no timezone information this one is like saying I met someone at 10:00:00.123 AM again no timezone info.
-*   `TIMESTAMP WITH TIME ZONE` stores the date time *and* the timezone info in the database. This is like saying I met someone at 10 AM EST it gives a frame of reference for that moment.
+- `DATE` stores the date and time without any timezone information its just an abstract point in time as far as the db is concerned. Its like saying I met someone at 10 AM without saying where it was.
+- `TIMESTAMP` also stores date and time with more precision than DATE but still no timezone information this one is like saying I met someone at 10:00:00.123 AM again no timezone info.
+- `TIMESTAMP WITH TIME ZONE` stores the date time _and_ the timezone info in the database. This is like saying I met someone at 10 AM EST it gives a frame of reference for that moment.
 
 Most of the time if you're getting this error you're either trying to save a value that has timezone info into a `DATE` or `TIMESTAMP` column which don't have space for this timezone or you are doing a time zone conversion where there is no clear mapping for the timezone. It’s like trying to fit a square peg in a round hole it just won’t work.
 

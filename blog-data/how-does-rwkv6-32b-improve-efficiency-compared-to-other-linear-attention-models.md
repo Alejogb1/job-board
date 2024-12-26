@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "how-does-rwkv6-32b-improve-efficiency-compared-to-other-linear-attention-models"
 ---
 
-Okay so lets dive into RWKV6-32B and why it’s kind of a big deal in the realm of efficiency especially when we pit it against other linear attention models think of it like this we've got this whole attention game happening in deep learning right? Standard transformers which are like the rockstars of NLP use this thing called dot-product attention and it's great because it allows a model to understand relationships between words or tokens in a sequence but it's got a scaling problem as the sequence gets longer the computation and the memory requirements just explode quadratically That's where linear attention tries to step in it aims to approximate the attention mechanism in a way that keeps the cost linear in the sequence length which sounds awesome in theory
+lets dive into RWKV6-32B and why it’s kind of a big deal in the realm of efficiency especially when we pit it against other linear attention models think of it like this we've got this whole attention game happening in deep learning right? Standard transformers which are like the rockstars of NLP use this thing called dot-product attention and it's great because it allows a model to understand relationships between words or tokens in a sequence but it's got a scaling problem as the sequence gets longer the computation and the memory requirements just explode quadratically That's where linear attention tries to step in it aims to approximate the attention mechanism in a way that keeps the cost linear in the sequence length which sounds awesome in theory
 
 So RWKV is a unique beast unlike your typical transformer which relies entirely on attention RWKV uses a different approach its essentially a recurrent network with a kind of built-in attention-like mechanism that lets it handle long sequences without becoming a computational monster It's called time-mixing and its key to its efficiency gains basically instead of computing attention weights for every single token at every layer RWKV handles each token sequentially and it does it really clever a state vector is modified at each time step based on current input and the previous state the time-mixing matrix determines how information from the past and present interacts and this matrix changes over time based on some learned parameters
 
@@ -19,6 +19,7 @@ Now remember it's not like RWKV is just a drop-in replacement for everything eac
 Let’s look at some code snippets for a better sense of it though please note these are simplified examples to demonstrate the core concepts and you would need additional framework specific setup to actually run these effectively
 
 First how would you think about the core time-mixing operation in a very abstract sense
+
 ```python
 import torch
 
@@ -26,8 +27,8 @@ def time_mixing(x_t, state_t_minus_1, u, w, k, v, r):
     # x_t is current token embeddings
     # state_t_minus_1 is the previous state
     # u, w, k, v, r are learnable parameters
-    
-    mix_x = torch.sigmoid(w * x_t + r * state_t_minus_1) 
+
+    mix_x = torch.sigmoid(w * x_t + r * state_t_minus_1)
     state_t = u * mix_x + v * state_t_minus_1
     return state_t
 
@@ -51,7 +52,7 @@ def rwkv_naive_forward(tokens, state_init, parameters):
     # tokens are input tokens
     # state_init is the initial state
     # parameters all the model specific weights
-    
+
     states = [state_init]
     outputs = []
 
@@ -72,6 +73,7 @@ output_sequence, states_sequence = rwkv_naive_forward(tokens_dummy, state_init_d
 for seq_out in output_sequence:
   print(seq_out.shape) #output the shape of the hidden states
 ```
+
 Third how would you think about the whole process as an actual layer where you would have to do it in batch as you would when actually training the network
 
 ```python
@@ -116,6 +118,7 @@ output_sequence, next_state = layer(input_data,initial_state)
 print(output_sequence.shape) # Output torch.Size([4, 20, 128])
 print(next_state.shape) # Output torch.Size([4, 128])
 ```
+
 These are high level code snippets for the concept of time mixing and showing the recurrence involved in RWKV if you need to implement something you should consult official code repositories for more accurate implementations
 
 For diving deeper into the theory I'd highly suggest reading the original RWKV paper its usually a good place to begin its the best way to understand the mathematical foundations of the model and its design choices Also there are various technical blog posts and articles on efficient attention mechanisms and recurrence that can provide a broader context if you want to compare it with different models

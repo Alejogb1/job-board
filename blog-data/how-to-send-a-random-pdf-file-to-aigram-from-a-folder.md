@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-send-a-random-pdf-file-to-aigram-from-a-folder"
 ---
 
-alright, let's tackle this. so, you're aiming to pick a pdf at random from a directory and then ship it off to telegram using aigram, cool. i've bumped into similar things myself, a few times over the years.
+, let's tackle this. so, you're aiming to pick a pdf at random from a directory and then ship it off to telegram using aigram, cool. i've bumped into similar things myself, a few times over the years.
 
 first off, grabbing a random file. it's actually simpler than it might look. python’s `random` and `os` modules are our friends here. i remember, back when i was first messing with automating some report generation, i needed to do this exact thing – choose one of the output pdfs for archiving. i started by thinking i needed some complex weighted random selection, which, looking back, is just ridiculous for the task at hand.
 
@@ -62,6 +62,7 @@ async def send_random_pdf(message: types.message):
 if __name__ == '__main__':
   executor.start_polling(dp, skip_updates=true)
 ```
+
 here, when the bot receives a `/sendpdf` command, it calls our `get_random_pdf` function, and if there is a valid random pdf file path it sends the pdf as a telegram document.
 
 the key here is `inputfile.from_read`. this reads the file into memory in binary mode and then creates a `inputfile` object that is recognized by aiogram. in my first telegram bot projects i remember i was not using this `inputfile.from_read` method and i was saving files on disk for telegram to find it. it worked but it was totally unnecessary and slower specially for bigger files. the `filename` is just to add the original name to the document. this was needed for a project where i was dealing with medical reports with a standardized nomenclature, and we had to keep the original name of the file for easier traceability.

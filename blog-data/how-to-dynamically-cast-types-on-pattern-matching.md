@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "how-to-dynamically-cast-types-on-pattern-matching"
 ---
 
-Okay, let's talk about dynamically casting types during pattern matching; a topic I've bumped into more than a few times, and one that can feel a little less straightforward at first glance. It's often when dealing with diverse data structures, or particularly when interacting with external systems where the type of data isn’t always guaranteed upfront.
+, let's talk about dynamically casting types during pattern matching; a topic I've bumped into more than a few times, and one that can feel a little less straightforward at first glance. It's often when dealing with diverse data structures, or particularly when interacting with external systems where the type of data isn’t always guaranteed upfront.
 
 The core challenge lies in the fact that pattern matching, in many languages, is fundamentally static. You declare a pattern against a specific type, and the compiler (or interpreter) performs checks at some point to determine if that pattern is applicable. But what happens when the actual type of the incoming data is only known at runtime? That's where dynamic casting within a pattern-matching context becomes necessary. I remember specifically working on an event processing pipeline a few years ago – we were ingesting messages from various sources, each potentially structured differently. The lack of compile-time type guarantees made this a real sticking point until we nailed down a solid dynamic approach.
 
-The mechanism typically involves checking the actual runtime type of a variable, often through methods like `is` or equivalent type-checking operators, and combining it with pattern matching to execute specific code blocks conditionally. This adds a layer of runtime type checking to the usually static pattern match. This doesn’t change that the compiler is primarily looking for structural matches, but we can use these type checks at runtime to decide *which* structural match applies. This combination of static matching and dynamic runtime type checking is the key to solving this problem.
+The mechanism typically involves checking the actual runtime type of a variable, often through methods like `is` or equivalent type-checking operators, and combining it with pattern matching to execute specific code blocks conditionally. This adds a layer of runtime type checking to the usually static pattern match. This doesn’t change that the compiler is primarily looking for structural matches, but we can use these type checks at runtime to decide _which_ structural match applies. This combination of static matching and dynamic runtime type checking is the key to solving this problem.
 
 Here’s the thing: you can’t fundamentally rewrite the rules of static pattern matching. Instead, you're enhancing it through logical conditional execution. You're adding a preliminary check on the type before moving onto the pattern specifics. Think of it as a gatekeeper before the actual pattern match.
 
@@ -81,7 +81,7 @@ function process_object(obj):
       print("Not a dictionary")
 ```
 
-This snippet shows a pattern matching with a combination of type checking and the presence of specific attributes within a `dict`. This combination allows you to handle different data shapes without resorting to complicated code blocks. Although still structural, the *type* being considered here is a specific characteristic (a dictionary *with* certain keys), rather than just a base type, so it provides a nice combination of approaches.
+This snippet shows a pattern matching with a combination of type checking and the presence of specific attributes within a `dict`. This combination allows you to handle different data shapes without resorting to complicated code blocks. Although still structural, the _type_ being considered here is a specific characteristic (a dictionary _with_ certain keys), rather than just a base type, so it provides a nice combination of approaches.
 
 **Important Considerations**
 

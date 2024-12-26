@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-send-variable-amounts-of-ether-to-a-smart-contract-from-a-react-frontend"
 ---
 
-Alright, let's talk about sending varying amounts of ether to a smart contract from a react frontend. It's a common task, but there are subtleties that can catch you out if you're not careful. I remember back when we were building that decentralized marketplace; we ran into a few interesting edge cases regarding this exact issue. Let’s break it down, focusing on practical implementation.
+, let's talk about sending varying amounts of ether to a smart contract from a react frontend. It's a common task, but there are subtleties that can catch you out if you're not careful. I remember back when we were building that decentralized marketplace; we ran into a few interesting edge cases regarding this exact issue. Let’s break it down, focusing on practical implementation.
 
 Fundamentally, the process involves a few key steps: first, you'll need to establish a connection to the blockchain, usually via a provider like metamask. Second, you interact with your smart contract using its abi and address. Finally, you invoke a function that accepts a payable argument, handling the transaction process correctly. The crucial part for your question is specifying the `value` that you send alongside the contract interaction.
 
@@ -13,22 +13,21 @@ To begin, assume that you've already configured your react application with a pr
 Here's the first code snippet that demonstrates a basic, controlled input to send ether:
 
 ```javascript
-import React, { useState } from 'react';
-import { ethers } from 'ethers';
+import React, { useState } from "react";
+import { ethers } from "ethers";
 
 const SendEtherComponent = ({ contract }) => {
-  const [etherAmount, setEtherAmount] = useState('');
-  const [txStatus, setTxStatus] = useState('');
+  const [etherAmount, setEtherAmount] = useState("");
+  const [txStatus, setTxStatus] = useState("");
 
   const handleSendEther = async () => {
     try {
-      setTxStatus('Initiating Transaction...');
+      setTxStatus("Initiating Transaction...");
       const weiAmount = ethers.parseEther(etherAmount);
       const tx = await contract.functionThatAcceptsEther({ value: weiAmount });
-      setTxStatus('Transaction Pending...');
+      setTxStatus("Transaction Pending...");
       await tx.wait(); // Wait for transaction confirmation
-      setTxStatus('Transaction Successful!');
-
+      setTxStatus("Transaction Successful!");
     } catch (error) {
       console.error("Transaction failed:", error);
       setTxStatus(`Transaction Failed: ${error.message}`);
@@ -59,12 +58,12 @@ A key element to grasp is that smart contracts functions that accept ether are m
 Now, let's look at another scenario where you might need to send a dynamic amount of ether based on something other than direct user input. Imagine a situation where the user is purchasing an NFT at a fluctuating price:
 
 ```javascript
-import React, { useState, useEffect } from 'react';
-import { ethers } from 'ethers';
+import React, { useState, useEffect } from "react";
+import { ethers } from "ethers";
 
 const DynamicPriceNFT = ({ contract }) => {
   const [nftPrice, setNftPrice] = useState(null);
-  const [txStatus, setTxStatus] = useState('');
+  const [txStatus, setTxStatus] = useState("");
 
   useEffect(() => {
     const fetchNftPrice = async () => {
@@ -99,11 +98,13 @@ const DynamicPriceNFT = ({ contract }) => {
     }
   };
 
-
   return (
     <div>
       <p>Current NFT Price: {nftPrice} ETH</p>
-      <button onClick={handlePurchase} disabled={!nftPrice || nftPrice === "Error Fetching Price"}>
+      <button
+        onClick={handlePurchase}
+        disabled={!nftPrice || nftPrice === "Error Fetching Price"}
+      >
         Purchase NFT
       </button>
       <p>{txStatus}</p>
@@ -114,44 +115,44 @@ const DynamicPriceNFT = ({ contract }) => {
 export default DynamicPriceNFT;
 ```
 
-Here, we fetch the NFT price dynamically from the smart contract using an `useEffect` hook. The price is formatted to a readable string using `ethers.formatEther` for display, and then parsed back to wei when initiating the purchase transaction within the `handlePurchase` method. Notice how we disable the button if there's no valid price available. This is another very important consideration: do *not* allow users to submit transactions without correct data. Always validate and verify.
+Here, we fetch the NFT price dynamically from the smart contract using an `useEffect` hook. The price is formatted to a readable string using `ethers.formatEther` for display, and then parsed back to wei when initiating the purchase transaction within the `handlePurchase` method. Notice how we disable the button if there's no valid price available. This is another very important consideration: do _not_ allow users to submit transactions without correct data. Always validate and verify.
 
 Let's dive into a final scenario, where a user wants to deposit ether into a smart contract that has no pre-defined function to accept deposits, but accepts funds during another function. This might happen if you're contributing to a pool or escrow:
 
 ```javascript
-import React, { useState } from 'react';
-import { ethers } from 'ethers';
+import React, { useState } from "react";
+import { ethers } from "ethers";
 
 const ContributeToPool = ({ contract }) => {
-  const [contributionAmount, setContributionAmount] = useState('');
-  const [txStatus, setTxStatus] = useState('');
+  const [contributionAmount, setContributionAmount] = useState("");
+  const [txStatus, setTxStatus] = useState("");
 
   const handleContribute = async () => {
-     try {
-      setTxStatus('Initiating Contribution...');
+    try {
+      setTxStatus("Initiating Contribution...");
       const weiAmount = ethers.parseEther(contributionAmount);
       const tx = await contract.contributeToPool({ value: weiAmount });
-      setTxStatus('Contribution Pending...');
+      setTxStatus("Contribution Pending...");
       await tx.wait();
-      setTxStatus('Contribution Successful!');
+      setTxStatus("Contribution Successful!");
     } catch (error) {
       console.error("Contribution failed:", error);
       setTxStatus(`Contribution Failed: ${error.message}`);
     }
   };
 
-    return (
-      <div>
-         <input
-          type="number"
-           value={contributionAmount}
-           onChange={(e) => setContributionAmount(e.target.value)}
-            placeholder="Enter Contribution Amount"
-        />
-        <button onClick={handleContribute}>Contribute</button>
-        <p>{txStatus}</p>
-     </div>
-    );
+  return (
+    <div>
+      <input
+        type="number"
+        value={contributionAmount}
+        onChange={(e) => setContributionAmount(e.target.value)}
+        placeholder="Enter Contribution Amount"
+      />
+      <button onClick={handleContribute}>Contribute</button>
+      <p>{txStatus}</p>
+    </div>
+  );
 };
 
 export default ContributeToPool;

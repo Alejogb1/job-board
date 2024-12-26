@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-the-devise-login-error-message-displayed-in-my-rails-70-application"
 ---
 
-Okay, let's tackle this. It's a classic issue, actually, and I've seen it more than a few times over the years. You've got a Rails 7.0 app using Devise, and for some reason, the login error messages aren't showing up. It's frustrating, because Devise *should* handle this out of the box, but sometimes the defaults aren't quite what you expect. From what I've observed, there are a few common culprits, and we can dive into them with a bit of code analysis.
+, let's tackle this. It's a classic issue, actually, and I've seen it more than a few times over the years. You've got a Rails 7.0 app using Devise, and for some reason, the login error messages aren't showing up. It's frustrating, because Devise _should_ handle this out of the box, but sometimes the defaults aren't quite what you expect. From what I've observed, there are a few common culprits, and we can dive into them with a bit of code analysis.
 
 The usual suspect is usually related to how you're handling form rendering and error display within your views. Devise controllers handle authentication and set errors in flash messages, specifically `flash[:alert]`. The view, however, needs to actively check for and then display that message, and it's very easy for that part to go amiss, especially after you've customized the view.
 
@@ -44,6 +44,7 @@ Here’s a typical example of how to handle flash messages:
   </body>
 </html>
 ```
+
 In this snippet, the `if flash[:alert]` conditional checks for the presence of a flash message in the `alert` key, and if found, it displays that message wrapped within a `div` of class `alert alert-danger` which can be customized according to your styling preferences. This rendering logic ensures that flash messages passed by Devise are displayed. Without a block like this, the messages silently disappear. I've worked on quite a few projects where that particular block had been overlooked.
 
 **2. Incorrect Form Rendering or Customization**
@@ -90,11 +91,11 @@ Lastly, although less frequent, interactions with other javascript libraries or 
 Here is a rather illustrative example showing how a rogue piece of javascript can affect the message display. Suppose you have some javascript that, after loading the page, cleans certain divs.
 
 ```javascript
-document.addEventListener('DOMContentLoaded', function() {
-  const elements = document.querySelectorAll('div.container > div');
-  elements.forEach(function(element) {
-      element.remove();
-    });
+document.addEventListener("DOMContentLoaded", function () {
+  const elements = document.querySelectorAll("div.container > div");
+  elements.forEach(function (element) {
+    element.remove();
+  });
 });
 ```
 
@@ -114,10 +115,10 @@ When confronted with this problem, the approach I recommend, and what I've used 
 
 For more in-depth information on authentication, I'd suggest these resources:
 
-*   **"Crafting Rails 4 Applications" by José Valim:** While it's based on an older version of Rails, the concepts it teaches regarding authentication and authorization are foundational.
+- **"Crafting Rails 4 Applications" by José Valim:** While it's based on an older version of Rails, the concepts it teaches regarding authentication and authorization are foundational.
 
-*   **The Official Devise Gem Documentation:** Devise's official documentation is comprehensive and well-maintained. It is a great reference guide, and I often consult it for details that I might overlook.
+- **The Official Devise Gem Documentation:** Devise's official documentation is comprehensive and well-maintained. It is a great reference guide, and I often consult it for details that I might overlook.
 
-*   **"Rails Security" by Adam Baldwin:** This is a fantastic resource for security best practices in Rails, including authentication and authorization. Although not specific to Devise, it gives you a broader picture of the security of your application.
+- **"Rails Security" by Adam Baldwin:** This is a fantastic resource for security best practices in Rails, including authentication and authorization. Although not specific to Devise, it gives you a broader picture of the security of your application.
 
 By following these steps and referencing the recommended materials, you should be able to pinpoint and resolve why your Devise login error messages aren't displaying. Remember to always verify each component in the chain, from the controller setting the flash messages to the view properly rendering them. Sometimes the problem is something minor, but with the right steps, it is solvable.

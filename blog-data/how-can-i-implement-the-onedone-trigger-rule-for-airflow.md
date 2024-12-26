@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-implement-the-onedone-trigger-rule-for-airflow"
 ---
 
-Alright, let's talk about `one_done` in Airflow. I remember a particular project involving a complex ETL pipeline, where we had a bunch of downstream tasks that absolutely *had* to wait for at least one of several upstream tasks to succeed before they could even begin. We explored several options, and that's when I really got to grips with the nuances of `one_done`. Forget about the more common `all_done` approach; sometimes, you just need that initial signal of forward progress.
+, let's talk about `one_done` in Airflow. I remember a particular project involving a complex ETL pipeline, where we had a bunch of downstream tasks that absolutely _had_ to wait for at least one of several upstream tasks to succeed before they could even begin. We explored several options, and that's when I really got to grips with the nuances of `one_done`. Forget about the more common `all_done` approach; sometimes, you just need that initial signal of forward progress.
 
-The `one_done` trigger rule isn't explicitly a built-in rule that you can simply use as a parameter like `trigger_rule='all_done'`. Instead, you’ll be leveraging other features of Airflow, primarily involving the `TriggerRule.NONE_FAILED` rule and task dependencies that are carefully constructed. The key is to recognize that this is a *logical* pattern implemented via a combination of Airflow features rather than a direct feature of the library. It takes a bit of set up, but it’s a powerful tool to keep your pipelines lean and responsive.
+The `one_done` trigger rule isn't explicitly a built-in rule that you can simply use as a parameter like `trigger_rule='all_done'`. Instead, you’ll be leveraging other features of Airflow, primarily involving the `TriggerRule.NONE_FAILED` rule and task dependencies that are carefully constructed. The key is to recognize that this is a _logical_ pattern implemented via a combination of Airflow features rather than a direct feature of the library. It takes a bit of set up, but it’s a powerful tool to keep your pipelines lean and responsive.
 
-The basic idea is to have a "trigger" task, which is itself dependent on all of your upstream tasks. But crucially, this task is configured with `trigger_rule='none_failed'`. This means it will run as long as *none* of its upstream tasks have failed. And yes, even if some of the upstream tasks are skipped, the trigger task will fire, as they haven't "failed." Downstream of that trigger task, your actual dependent tasks can be initiated. They will run only when the trigger task completes.
+The basic idea is to have a "trigger" task, which is itself dependent on all of your upstream tasks. But crucially, this task is configured with `trigger_rule='none_failed'`. This means it will run as long as _none_ of its upstream tasks have failed. And yes, even if some of the upstream tasks are skipped, the trigger task will fire, as they haven't "failed." Downstream of that trigger task, your actual dependent tasks can be initiated. They will run only when the trigger task completes.
 
 Here's a basic illustrative example using Airflow's Python operator, and keep in mind, this structure translates similarly to other operators:
 
@@ -44,9 +44,9 @@ with DAG(
     [task_a, task_b, task_c] >> trigger_task >> task_d
 ```
 
-In this snippet, `task_d` will run only once `trigger_task` completes, and `trigger_task` will complete once *any* of task_a, task_b, or task_c completes. Essentially, we are constructing the "one_done" behavior through logical dependencies and `TriggerRule.NONE_FAILED`. If, for example, `task_a` succeeds, the `trigger_task` will run regardless of the state of `task_b` or `task_c`, and then `task_d` will execute.
+In this snippet, `task_d` will run only once `trigger_task` completes, and `trigger_task` will complete once _any_ of task_a, task_b, or task_c completes. Essentially, we are constructing the "one_done" behavior through logical dependencies and `TriggerRule.NONE_FAILED`. If, for example, `task_a` succeeds, the `trigger_task` will run regardless of the state of `task_b` or `task_c`, and then `task_d` will execute.
 
-Let's consider a slightly more complex case that reflects a common real-world issue: handling different data sources. Let's say you're pulling data from three different APIs, and you don’t necessarily need *all* three to succeed to process the available data. Here's the updated code:
+Let's consider a slightly more complex case that reflects a common real-world issue: handling different data sources. Let's say you're pulling data from three different APIs, and you don’t necessarily need _all_ three to succeed to process the available data. Here's the updated code:
 
 ```python
 from airflow import DAG
@@ -94,7 +94,7 @@ with DAG(
 
 In this example, the `trigger_task` (which runs `task_process_data`) will execute as long as none of the API calls fail. The downstream `process_data` will then kick off to process any available data. Even if only one of the three APIs was successful, `process_data` will still run, achieving the `one_done` logic. The slight change is to simulate failures, since we will get the `one_done` effect even if one succeeds. We also had `task_process_data` be a part of both `trigger_task` and `process_data`.
 
-Lastly, consider a more advanced example where you need to execute a cleanup task only if something *does* go wrong in the upstream tasks and no data processing will happen:
+Lastly, consider a more advanced example where you need to execute a cleanup task only if something _does_ go wrong in the upstream tasks and no data processing will happen:
 
 ```python
 from airflow import DAG
@@ -148,7 +148,7 @@ with DAG(
     [api_call_1, api_call_2, api_call_3] >> cleanup_task
 ```
 
-In this snippet, the cleanup task is triggered if *all* upstream tasks (`api_call_1`, `api_call_2`, and `api_call_3`) fail. Otherwise the `trigger_task` will run as before with `NONE_FAILED`. The cleanup task will be triggered after the `trigger_task` has run, and the `trigger_task` runs if at least one of the API tasks complete.
+In this snippet, the cleanup task is triggered if _all_ upstream tasks (`api_call_1`, `api_call_2`, and `api_call_3`) fail. Otherwise the `trigger_task` will run as before with `NONE_FAILED`. The cleanup task will be triggered after the `trigger_task` has run, and the `trigger_task` runs if at least one of the API tasks complete.
 
 For a deeper dive into task dependencies and trigger rules, the official Apache Airflow documentation, specifically the sections on "DAG Definition" and "Operators," is a great resource. You should also explore the concept of XComs if you plan to have data or metadata pass between these tasks. Furthermore, “Data Pipelines Pocket Reference” by James Densmore is an excellent resource that delves into concepts of dependency management and workflow orchestration using Airflow in a concise manner. Also consider checking out “Programming Apache Airflow” by Jarek Potiuk and Bartlomiej Balewski for detailed information on various aspects of Airflow, including a good explanation of trigger rules.
 

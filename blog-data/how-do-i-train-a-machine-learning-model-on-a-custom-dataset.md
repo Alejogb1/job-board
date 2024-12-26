@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-train-a-machine-learning-model-on-a-custom-dataset"
 ---
 
-Alright, let's talk custom datasets and machine learning models; it's a space I've navigated quite a bit. The generic tutorials are often just a starting point, and the real world, as you're likely experiencing, presents a whole other set of challenges. I've spent a good chunk of my career in scenarios where "off-the-shelf" just doesn't cut it, and you're left to roll up your sleeves and craft a tailored solution. So, I’ll share a few practical observations and methods that I've personally found effective.
+, let's talk custom datasets and machine learning models; it's a space I've navigated quite a bit. The generic tutorials are often just a starting point, and the real world, as you're likely experiencing, presents a whole other set of challenges. I've spent a good chunk of my career in scenarios where "off-the-shelf" just doesn't cut it, and you're left to roll up your sleeves and craft a tailored solution. So, I’ll share a few practical observations and methods that I've personally found effective.
 
 Firstly, the term 'custom dataset' is broad. For clarity, we're generally discussing datasets that aren’t readily available in public repositories. These could be from internal company records, sensor data, or labeled images curated for a very niche task. The process, while fundamentally the same as using a standard dataset, demands a heightened level of vigilance and customization.
 
@@ -121,7 +121,7 @@ texts = [
     "I'm not satisfied at all.",
     "The service was excellent.",
     "Terrible experience.",
-    "It is okay, I suppose."
+    "It is , I suppose."
 ] * 20
 labels = [1, 0, 1, 0, 0.5] * 20  # 1 for positive, 0 for negative, 0.5 for neutral
 

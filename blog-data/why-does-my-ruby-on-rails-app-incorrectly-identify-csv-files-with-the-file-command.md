@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-does-my-ruby-on-rails-app-incorrectly-identify-csv-files-with-the-file-command"
 ---
 
-Alright, let's talk about why your Rails app might be having a little trouble discerning the true nature of your CSV files when using the `file` command. I've seen this scenario unfold several times across different projects, and it’s usually less about Ruby itself and more about the operating system's file type detection mechanisms and how they interact with the nuances of CSV formatting.
+, let's talk about why your Rails app might be having a little trouble discerning the true nature of your CSV files when using the `file` command. I've seen this scenario unfold several times across different projects, and it’s usually less about Ruby itself and more about the operating system's file type detection mechanisms and how they interact with the nuances of CSV formatting.
 
-The core issue typically stems from the `file` command’s reliance on "magic numbers" and heuristics. Rather than exhaustively parsing the *entire* file, `file` employs a database of file signatures, essentially predefined byte patterns, that it attempts to match against the beginning of a file. For many common file formats, like jpegs, pngs, or even text files with specific headers, this works exceptionally well. However, CSV files are...well, they’re not that straightforward. They lack a rigid, universally standardized structure at the binary level.
+The core issue typically stems from the `file` command’s reliance on "magic numbers" and heuristics. Rather than exhaustively parsing the _entire_ file, `file` employs a database of file signatures, essentially predefined byte patterns, that it attempts to match against the beginning of a file. For many common file formats, like jpegs, pngs, or even text files with specific headers, this works exceptionally well. However, CSV files are...well, they’re not that straightforward. They lack a rigid, universally standardized structure at the binary level.
 
 CSV files, at their heart, are plain text files. They contain data organized into rows and columns, separated by delimiters (often commas but could be semicolons, tabs, or anything really), and that's where the problem starts. The `file` command might easily categorize a CSV as "text," "ascii text," or even sometimes something entirely unexpected because, lacking specific byte markers at the beginning of the file, it resorts to educated guesses based on the first few bytes it reads. What the `file` command interprets as common text may just happen to also appear in other file types, thus leading to an incorrect identification.
 
@@ -33,7 +33,7 @@ puts "Is #{file_path} likely a CSV? : #{is_likely_csv_by_extension?(file_path)}"
 
 This basic method checks if the file has a '.csv' extension, a simplistic but frequently effective first check. Of course, a user could rename any file to have a .csv extension, so you should not fully depend on this and always validate the content itself.
 
-However, as we know, relying *solely* on extension can be insufficient. A malicious user or a badly configured export might provide a text file with a `.csv` extension. Let's add content inspection to the mix. This snippet checks the first few lines of the file, attempting to infer CSV-like formatting.
+However, as we know, relying _solely_ on extension can be insufficient. A malicious user or a badly configured export might provide a text file with a `.csv` extension. Let's add content inspection to the mix. This snippet checks the first few lines of the file, attempting to infer CSV-like formatting.
 
 ```ruby
 require 'csv'
@@ -70,7 +70,7 @@ puts "Is #{file_path_non_csv} likely a CSV (by content)? : #{is_likely_csv_by_co
 
 This code reads the first five lines and checks whether each line contains at least one of the common CSV delimiters (, ; or tabs). It also gracefully handles potential issues like missing files, empty files or other errors, and it guards against CSV malformations by using Ruby's own built-in CSV parser and catching the specific error thrown.
 
-Finally, for a more robust solution, particularly when dealing with varying input types, I recommend leveraging a library such as `mimemagic`. This gem, unlike the `file` command, employs an extensive database of file signatures *and* performs more sophisticated content sniffing. It takes into account various file characteristics and uses more refined heuristics that go beyond just basic header parsing.
+Finally, for a more robust solution, particularly when dealing with varying input types, I recommend leveraging a library such as `mimemagic`. This gem, unlike the `file` command, employs an extensive database of file signatures _and_ performs more sophisticated content sniffing. It takes into account various file characteristics and uses more refined heuristics that go beyond just basic header parsing.
 
 ```ruby
 require 'mimemagic'

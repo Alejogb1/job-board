@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-a-random-forest-algorithm-predict-the-next-time-step"
 ---
 
-Okay, let's tackle this. Predicting future time steps using random forests is a task I've certainly encountered a few times, particularly in early projects involving predictive maintenance. It's a problem that initially feels like forcing a square peg into a round hole because random forests aren’t inherently designed for time-series forecasting. They're more classification and regression beasts, working best when data points are independent. However, with the correct feature engineering and a specific kind of setup, they can be quite effective, though they are not the optimal choice. So, here’s how we approach using them for this type of prediction, drawing on what I’ve learned from past iterations of building such systems.
+, let's tackle this. Predicting future time steps using random forests is a task I've certainly encountered a few times, particularly in early projects involving predictive maintenance. It's a problem that initially feels like forcing a square peg into a round hole because random forests aren’t inherently designed for time-series forecasting. They're more classification and regression beasts, working best when data points are independent. However, with the correct feature engineering and a specific kind of setup, they can be quite effective, though they are not the optimal choice. So, here’s how we approach using them for this type of prediction, drawing on what I’ve learned from past iterations of building such systems.
 
-The key is transforming our time-series data into a format that a random forest can actually use. We do this by essentially creating a supervised learning problem, where the target variable is the future time step we're trying to predict. We build feature vectors by extracting relevant information from previous time steps. In essence, we’re not directly feeding the time series into the forest, we're feeding in *lagged values* and other engineered features that reflect patterns in the time series. It's crucial to understand this shift in how we're framing the problem. We're no longer predicting “what happens next in a sequence”, but rather “predicting the next value based on a set of previous observed values”.
+The key is transforming our time-series data into a format that a random forest can actually use. We do this by essentially creating a supervised learning problem, where the target variable is the future time step we're trying to predict. We build feature vectors by extracting relevant information from previous time steps. In essence, we’re not directly feeding the time series into the forest, we're feeding in _lagged values_ and other engineered features that reflect patterns in the time series. It's crucial to understand this shift in how we're framing the problem. We're no longer predicting “what happens next in a sequence”, but rather “predicting the next value based on a set of previous observed values”.
 
 Think of it like this: rather than trying to guess the next number in a sequence like 1, 3, 5, 7, we are creating a dataset where one example would be: features (1, 3, 5), target variable (7). Then we teach the forest to find this mapping. This also highlights one major limitation, if the underlying process is not autoregressive (where current value depends on previous values), it simply won't work.
 
@@ -58,6 +58,7 @@ last_window = X[-1].reshape(1,-1) #last observation to forecast next step
 next_prediction = rf_model.predict(last_window)[0]
 print(f"Predicted next time step: {next_prediction:.2f}")
 ```
+
 This snippet generates lagged features for a given time series data and then uses a random forest regressor to predict the next value.
 
 Now, consider this scenario: you want to include not just simple lags, but also moving averages to smooth out the data, potentially capturing some longer-term trends. Here’s how you could adapt the feature engineering part of the code:
@@ -98,9 +99,10 @@ last_window = X[-1].reshape(1,-1)
 next_prediction = rf_model.predict(last_window)[0]
 print(f"Predicted next time step: {next_prediction:.2f}")
 ```
+
 Here, the code now constructs a feature that calculates the moving average, which adds extra context to the random forest model.
 
-Finally, let's consider a situation where we want to use a difference of lags, i.e. the difference between the current and lagged value. This helps in capturing changes in the signal, or in other words, its *derivative*. This can often be more useful than the raw signal depending on the properties of your data:
+Finally, let's consider a situation where we want to use a difference of lags, i.e. the difference between the current and lagged value. This helps in capturing changes in the signal, or in other words, its _derivative_. This can often be more useful than the raw signal depending on the properties of your data:
 
 ```python
 import numpy as np

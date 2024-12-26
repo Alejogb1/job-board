@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-prevent-a-qmainwindow-from-moving"
 ---
 
-Alright, let's tackle this. Preventing a `QMainWindow` from moving is a surprisingly common requirement, especially when you're crafting highly specialized user interfaces. I've personally bumped into this several times over the years, usually when working on embedded systems or kiosk applications where a fixed position and size are absolutely crucial. It’s not always immediately obvious how to achieve this with Qt, and the documentation, while comprehensive, sometimes lacks the kind of direct practical examples that are most helpful.
+, let's tackle this. Preventing a `QMainWindow` from moving is a surprisingly common requirement, especially when you're crafting highly specialized user interfaces. I've personally bumped into this several times over the years, usually when working on embedded systems or kiosk applications where a fixed position and size are absolutely crucial. It’s not always immediately obvious how to achieve this with Qt, and the documentation, while comprehensive, sometimes lacks the kind of direct practical examples that are most helpful.
 
 So, you want that `QMainWindow` glued to its initial spot, eh? There are a few ways to accomplish this, and the best approach depends somewhat on the nuances of your particular needs. We're essentially dealing with window management behaviors at the operating system level, and Qt provides us with a layer of abstraction to interact with these. The core principle revolves around controlling the window flags.
 
@@ -80,7 +80,7 @@ if __name__ == '__main__':
 
 In the above code, we implement `mousePressEvent`, `mouseMoveEvent`, and `mouseReleaseEvent`. This enables us to track when the user has clicked the title bar, and we save the position of the mouse. Then, in `mouseMoveEvent` we calculate the difference in mouse position from the last time the mouse was moved. We then move the window to the location that it was previously, thereby making it appear that we cannot move it. Note that, as before, this does not prevent the user from using other means to move the window. We use a class variable, `_is_dragging`, to track if the user had clicked and held the title bar. Finally, upon releasing the mouse, we set the `_is_dragging` to `False`.
 
-Finally, there's the scenario where you want to be even *more* restrictive, perhaps preventing *all* user initiated movement. This means disabling not only the user interaction with the title bar, but also preventing system shortcuts. This usually involves disabling all movement window events using `eventFilter`. This approach is the most thorough in that it actually intercepts events instead of trying to overwrite window flags. In this case, we will use an `eventFilter` and essentially tell Qt to ignore move events.
+Finally, there's the scenario where you want to be even _more_ restrictive, perhaps preventing _all_ user initiated movement. This means disabling not only the user interaction with the title bar, but also preventing system shortcuts. This usually involves disabling all movement window events using `eventFilter`. This approach is the most thorough in that it actually intercepts events instead of trying to overwrite window flags. In this case, we will use an `eventFilter` and essentially tell Qt to ignore move events.
 
 ```python
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget

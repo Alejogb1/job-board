@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-neural-network-accuracy-be-predicted-from-training-data"
 ---
 
-Alright, let's unpack this. Prediction of neural network accuracy *solely* from training data—that's a nuanced challenge and one I've tangled with more than a few times in the past, specifically during a project involving complex image recognition where labelled data was scarce and expensive to acquire. It's not a magic bullet, and there's no single metric that guarantees future performance, but we can certainly build a more informed expectation based on careful analysis.
+, let's unpack this. Prediction of neural network accuracy _solely_ from training data—that's a nuanced challenge and one I've tangled with more than a few times in the past, specifically during a project involving complex image recognition where labelled data was scarce and expensive to acquire. It's not a magic bullet, and there's no single metric that guarantees future performance, but we can certainly build a more informed expectation based on careful analysis.
 
 The short answer is that there isn't a single, deterministic function to perfectly predict test accuracy just by observing the training set. However, a blend of data quality assessment, complexity analysis, and empirical relationships we observe during the training process can provide useful insights. Fundamentally, what we're dealing with are proxies for model generalization. If a model performs poorly during training, that's a red flag for future test performance; conversely, exceptional training performance doesn't always guarantee a similarly excellent test score.
 
@@ -12,10 +12,10 @@ Let's break down some critical elements. Firstly, data quality is paramount. Hig
 
 Specifically, there are several aspects to consider:
 
-*   **Class Imbalance:** The distribution of classes within the training set matters a great deal. Skewed distributions can lead to models that are biased towards the majority class, struggling to accurately identify minority classes.
-*   **Noise:** Label inaccuracies or inconsistent feature representations introduce noise into the training process. This noise can hamper learning and prevent the model from extracting reliable patterns.
-*   **Data Diversity and Representativeness:** A training dataset that lacks sufficient variety or doesn't reflect the distribution of data in the real world will lead to poor generalization. This is something I’ve personally encountered often; real-world data is rarely as pristine as ideal training datasets.
-*   **Data Size:** The sheer amount of training data also plays a crucial role. Insufficient training data will naturally limit the model’s capacity to learn the underlying patterns effectively.
+- **Class Imbalance:** The distribution of classes within the training set matters a great deal. Skewed distributions can lead to models that are biased towards the majority class, struggling to accurately identify minority classes.
+- **Noise:** Label inaccuracies or inconsistent feature representations introduce noise into the training process. This noise can hamper learning and prevent the model from extracting reliable patterns.
+- **Data Diversity and Representativeness:** A training dataset that lacks sufficient variety or doesn't reflect the distribution of data in the real world will lead to poor generalization. This is something I’ve personally encountered often; real-world data is rarely as pristine as ideal training datasets.
+- **Data Size:** The sheer amount of training data also plays a crucial role. Insufficient training data will naturally limit the model’s capacity to learn the underlying patterns effectively.
 
 Secondly, let's consider complexity and model capacity. The complexity of your neural network, measured by the number of parameters and architecture choices, should match the complexity of your dataset. An overly complex network on a simple dataset can lead to overfitting, meaning the model learns the training data 'too well,' including its idiosyncrasies and noise and thus fails to generalize to unseen data. Conversely, an under-parameterized model will struggle to learn even basic patterns in a complex dataset and will underfit leading to poor training and test scores.
 

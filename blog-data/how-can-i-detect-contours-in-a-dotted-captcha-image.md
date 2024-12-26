@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-detect-contours-in-a-dotted-captcha-image"
 ---
 
-Alright, let's tackle this. I've actually spent a fair bit of time, back in the days of more rudimentary computer vision, trying to break similar systems—though mine were internal authentication mechanisms, not public CAPTCHAs. What you're describing, contour detection in dotted images, presents a particular challenge because the connectedness we typically rely on in image processing is intentionally disrupted. The dots effectively shatter the outlines we want to identify. So, you can’t just throw standard edge detection at it and expect clean results. It requires a more strategic approach.
+, let's tackle this. I've actually spent a fair bit of time, back in the days of more rudimentary computer vision, trying to break similar systems—though mine were internal authentication mechanisms, not public CAPTCHAs. What you're describing, contour detection in dotted images, presents a particular challenge because the connectedness we typically rely on in image processing is intentionally disrupted. The dots effectively shatter the outlines we want to identify. So, you can’t just throw standard edge detection at it and expect clean results. It requires a more strategic approach.
 
 The first thing we need to understand is that we're dealing with a sparse, noisy representation of what are, hopefully, recognizable shapes. We can't directly find continuous lines because they aren't there. We need to infer the contours by identifying clustered dots and then creating plausible boundaries around those clusters. My old approach, and what I'd recommend here, involves a combination of techniques, moving away from single-step solutions to a more nuanced, multi-stage process.
 
@@ -41,6 +41,7 @@ def detect_blobs(image, blob_threshold=100):
 
     return np.array(blob_centers)
 ```
+
 This first snippet outlines the preprocessing and initial point extraction using a combination of gaussian blur and basic blob detection, the `cv2.findContours` method and then finds the center point of each contour. These blobs are an important intermediate step and are used in the next snippet for grouping into clusters.
 
 ```python
@@ -57,6 +58,7 @@ def cluster_points(points, eps=20, min_samples=5):
         clusters.append(cluster_points)
   return clusters
 ```
+
 This is the core logic to group the detected dot centers into meaningful clusters. DBSCAN is utilized here, and this step is highly sensitive to the parameter tuning and might require experimentation to achieve reasonable accuracy.
 
 ```python
@@ -106,6 +108,6 @@ def generate_contours(clusters, image_shape, alpha=1.0):
 
 This third snippet is responsible for the final contour generation using alpha shapes. It calculates the Delaunay triangulation and uses it to define which edges can be part of the contour. After this function is used on all the clusters, you get a final list of images with the detected contours.
 
-To improve upon this simple implementation, I'd recommend further exploration. The classic book, "Computer Vision: Algorithms and Applications" by Richard Szeliski, provides an excellent foundation for many techniques mentioned here, particularly in areas like image filtering and feature detection. For a deeper dive into clustering, you can refer to "Data Clustering: Algorithms and Applications" by Charu C. Aggarwal, which provides a comprehensive look at various clustering algorithms, including DBSCAN. And finally, for detailed insights into alpha shapes and related concepts, the original paper by Edelsbrunner, Kirkpatrick, and Seidel, "On the Shape of a Set of Points in the Plane," published in *IEEE Transactions on Information Theory* (1983), is a valuable read.
+To improve upon this simple implementation, I'd recommend further exploration. The classic book, "Computer Vision: Algorithms and Applications" by Richard Szeliski, provides an excellent foundation for many techniques mentioned here, particularly in areas like image filtering and feature detection. For a deeper dive into clustering, you can refer to "Data Clustering: Algorithms and Applications" by Charu C. Aggarwal, which provides a comprehensive look at various clustering algorithms, including DBSCAN. And finally, for detailed insights into alpha shapes and related concepts, the original paper by Edelsbrunner, Kirkpatrick, and Seidel, "On the Shape of a Set of Points in the Plane," published in _IEEE Transactions on Information Theory_ (1983), is a valuable read.
 
 This is just a starting point. Real-world scenarios always demand a degree of refinement and experimentation. You might need to tweak the parameters, explore other noise reduction or clustering algorithms, or adapt your approach depending on the specific characteristics of your target CAPTCHAs. It's a process, not a single solution.

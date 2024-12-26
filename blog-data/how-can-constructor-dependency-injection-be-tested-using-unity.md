@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-constructor-dependency-injection-be-tested-using-unity"
 ---
 
-Okay, let's tackle this. I've spent quite a bit of time in the trenches working with Unity, and testing dependency injection, particularly constructor injection, always requires a bit of finesse. I remember one particularly frustrating project where untestable components were causing cascade failures throughout our CI pipeline – a real headache. So, let me walk you through how I typically approach testing constructor dependency injection within Unity, along with some practical code examples and recommendations.
+, let's tackle this. I've spent quite a bit of time in the trenches working with Unity, and testing dependency injection, particularly constructor injection, always requires a bit of finesse. I remember one particularly frustrating project where untestable components were causing cascade failures throughout our CI pipeline – a real headache. So, let me walk you through how I typically approach testing constructor dependency injection within Unity, along with some practical code examples and recommendations.
 
 The fundamental issue here is that constructor injection forces a dependency onto a class when it's created. This is great for decoupling, but less convenient for direct unit testing, since we can't just new-up an object without also satisfying all of its dependency requirements. The goal is to isolate the class under test, focusing solely on its logic and avoiding testing the behavior of its dependencies. This is where mocking and, to some degree, stubbing becomes essential.
 
@@ -121,6 +121,7 @@ public class GameControllerTests
 In this case, I'm simulating the interaction. I set initial data, define how it should change within `GameController`, and verify that the save function receives the correctly modified data. This gives me confidence that `GameController` not only loads the data but modifies it correctly before saving.
 
 One more snippet to showcase further the ability to check the parameters used with our mocked service:
+
 ```csharp
 using NSubstitute;
 using NUnit.Framework;
@@ -149,6 +150,6 @@ This last example shows how you can check that the correct instance of `PlayerDa
 
 This approach covers the main aspects of testing constructor dependency injection, however here's a few extra considerations. For complex dependencies, you might need a mix of mocks and stubs. A stub is a more simplified mock that returns pre-defined values and does not verify interaction, this can be helpful where your test only requires return value without tracking the interaction. Consider also using a testing library that suits your needs. Some developers find Moq to be a good alternative to NSubstitute. You could even develop hand-rolled mocks for particularly simple scenarios, but I usually find this not to be worth the time or effort. Lastly, be sure to explore concepts like the "Arrange-Act-Assert" pattern, which is a great strategy for structuring tests effectively.
 
-For further study on dependency injection and testing, I highly recommend looking into *Working Effectively with Legacy Code* by Michael Feathers, which is invaluable for understanding how to test objects that weren't designed with testing in mind, and *Refactoring: Improving the Design of Existing Code* by Martin Fowler. Additionally, the resources and documentation provided for mocking frameworks like NSubstitute or Moq are always beneficial. Reading about design principles like SOLID (especially the 'D' for dependency inversion) will definitely deepen your understanding.
+For further study on dependency injection and testing, I highly recommend looking into _Working Effectively with Legacy Code_ by Michael Feathers, which is invaluable for understanding how to test objects that weren't designed with testing in mind, and _Refactoring: Improving the Design of Existing Code_ by Martin Fowler. Additionally, the resources and documentation provided for mocking frameworks like NSubstitute or Moq are always beneficial. Reading about design principles like SOLID (especially the 'D' for dependency inversion) will definitely deepen your understanding.
 
 Testing constructor injection in Unity can seem initially tricky, but by embracing the power of mocking and focusing on isolating your class's logic, you can achieve highly testable and maintainable code. This also sets the foundation for more complex systems that rely on robust component interaction testing. Good luck in your journey and please feel free to share if you face any more challenges; I'm always keen to learn from others' experiences as well.

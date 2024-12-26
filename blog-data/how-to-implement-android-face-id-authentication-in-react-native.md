@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-implement-android-face-id-authentication-in-react-native"
 ---
 
-Alright, let’s talk about implementing face id authentication in a react-native application on android. It's a nuanced process, certainly not a 'one-size-fits-all' solution, and one I've tackled a few times over the years. My experience dates back to when the android biometric api was initially introduced, which made things, shall we say, *interesting* from a developer’s standpoint. Let's break it down, focusing on the android side because that’s where the heavier lifting happens in this context.
+, let’s talk about implementing face id authentication in a react-native application on android. It's a nuanced process, certainly not a 'one-size-fits-all' solution, and one I've tackled a few times over the years. My experience dates back to when the android biometric api was initially introduced, which made things, shall we say, _interesting_ from a developer’s standpoint. Let's break it down, focusing on the android side because that’s where the heavier lifting happens in this context.
 
 The core of implementing face id (or more accurately, biometric authentication, as android doesn’t strictly delineate facial recognition from fingerprint or other methods) in react-native involves bridging the javascript realm with the native android biometric prompt api. You won't find a single straightforward react-native library to accomplish this without native code interaction, and that's where things get a bit more detailed.
 
@@ -99,52 +99,51 @@ Next, we'll create the bridge file for the native module. This goes in the `andr
 Now, let’s see how this would be used in javascript within a react-native app.
 
 ```javascript
-import { NativeModules } from 'react-native';
+import { NativeModules } from "react-native";
 
 const { BiometricModule } = NativeModules;
 
 const authenticateWithBiometrics = async (title) => {
-    try {
-        const result = await BiometricModule.authenticate(title);
-        switch (result) {
-            case "authentication_success":
-                console.log('Authentication success');
-                return true;
-            case "authentication_failed":
-                console.log("Authentication failed");
-                return false;
-            case "biometric_not_available":
-                console.log("Biometric hardware not available");
-                return false;
-            case "biometric_not_enrolled":
-                console.log("Biometrics not enrolled");
-                return false;
-            default:
-                if (result.startsWith("authentication_error")) {
-                    const errorCode = result.split("_")[2];
-                    console.log(`Authentication Error code ${errorCode}`)
-                     return false;
-                 }
-                console.log("unknown error");
-                return false;
+  try {
+    const result = await BiometricModule.authenticate(title);
+    switch (result) {
+      case "authentication_success":
+        console.log("Authentication success");
+        return true;
+      case "authentication_failed":
+        console.log("Authentication failed");
+        return false;
+      case "biometric_not_available":
+        console.log("Biometric hardware not available");
+        return false;
+      case "biometric_not_enrolled":
+        console.log("Biometrics not enrolled");
+        return false;
+      default:
+        if (result.startsWith("authentication_error")) {
+          const errorCode = result.split("_")[2];
+          console.log(`Authentication Error code ${errorCode}`);
+          return false;
         }
-
-    } catch (error) {
-        console.error("Error authenticating:", error);
+        console.log("unknown error");
         return false;
     }
+  } catch (error) {
+    console.error("Error authenticating:", error);
+    return false;
+  }
 };
 
-
 //Example usage
-async function handleBiometricAuth(){
-    const isAuthenticated = await authenticateWithBiometrics("Authenticate with Face ID");
-    if(isAuthenticated){
-        //do something after successful authentication
-    } else {
-       //handle authentication error
-
-    }
+async function handleBiometricAuth() {
+  const isAuthenticated = await authenticateWithBiometrics(
+    "Authenticate with Face ID"
+  );
+  if (isAuthenticated) {
+    //do something after successful authentication
+  } else {
+    //handle authentication error
+  }
 }
 ```
 
@@ -153,39 +152,40 @@ Here, we import the native module, then call the `authenticate` method we define
 Lastly, let's illustrate how you can integrate this into a React component to actually trigger it.
 
 ```jsx
-import React from 'react';
-import { Button, View, Text } from 'react-native';
-import { authenticateWithBiometrics } from './biometric';
+import React from "react";
+import { Button, View, Text } from "react-native";
+import { authenticateWithBiometrics } from "./biometric";
 
 const AuthScreen = () => {
-    const handleBiometricAuthentication = async () => {
-      const authSuccess = await authenticateWithBiometrics('Please authenticate to access content');
-
-      if (authSuccess) {
-        // Navigate to main app screen or perform authenticated action.
-        console.log('Authentication Successful, navigating')
-      } else {
-        // Handle authentication failure (e.g., display error message).
-         console.log('Authentication Failed, retry')
-      }
-    };
-
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-             <Text style={{ marginBottom: 20, fontSize: 18 }}>
-              Click the button below to authenticate with Biometrics
-            </Text>
-            <Button title="Authenticate" onPress={handleBiometricAuthentication} />
-        </View>
+  const handleBiometricAuthentication = async () => {
+    const authSuccess = await authenticateWithBiometrics(
+      "Please authenticate to access content"
     );
+
+    if (authSuccess) {
+      // Navigate to main app screen or perform authenticated action.
+      console.log("Authentication Successful, navigating");
+    } else {
+      // Handle authentication failure (e.g., display error message).
+      console.log("Authentication Failed, retry");
+    }
+  };
+
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Text style={{ marginBottom: 20, fontSize: 18 }}>
+        Click the button below to authenticate with Biometrics
+      </Text>
+      <Button title="Authenticate" onPress={handleBiometricAuthentication} />
+    </View>
+  );
 };
 
 export default AuthScreen;
-
 ```
 
 This very straightforward example demonstrates a basic component that houses a button. When pressed, it triggers the `handleBiometricAuthentication` function which invokes the biometric authentication flow. This approach ensures a smooth integration of the native functionality into the user interface.
 
-For further study on this topic, I’d recommend starting with the official android documentation on the `androidx.biometric` library. It’s well-written and provides the most accurate details. Additionally, reading *Android Programming: The Big Nerd Ranch Guide* can be beneficial in understanding more of the fundamentals of native android development and architecture. For react-native, familiarize yourself with the documentation on creating native modules, it’s foundational knowledge for this type of task. Understanding android’s security model, particularly around data handling for biometrics, is crucial, and resources like the android security documentation can help clarify those aspects. Avoid third party libraries with complex underlying implementations, if possible. It's much better to have full control, security and transparency on such a sensitive process.
+For further study on this topic, I’d recommend starting with the official android documentation on the `androidx.biometric` library. It’s well-written and provides the most accurate details. Additionally, reading _Android Programming: The Big Nerd Ranch Guide_ can be beneficial in understanding more of the fundamentals of native android development and architecture. For react-native, familiarize yourself with the documentation on creating native modules, it’s foundational knowledge for this type of task. Understanding android’s security model, particularly around data handling for biometrics, is crucial, and resources like the android security documentation can help clarify those aspects. Avoid third party libraries with complex underlying implementations, if possible. It's much better to have full control, security and transparency on such a sensitive process.
 
 Implementation details can shift based on the precise versions of the `androidx` library and your particular target sdk version. Always ensure your dependencies are current and your code aligns with the latest apis. This example provides a baseline and is not meant to be production ready without appropriate testing, security considerations and robust handling of edge cases. It took a couple of tries on my first project, but these types of experiences are the best learning opportunities, in my opinion.

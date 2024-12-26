@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "parallelforeach-tbb-threading-library"
 ---
 
-Okay so you're asking about `parallel_for_each` from the Intel Threading Building Blocks TBB library yeah I've been there done that got the t-shirt and probably a few compiler warnings too let's unpack this
+you're asking about `parallel_for_each` from the Intel Threading Building Blocks TBB library yeah I've been there done that got the t-shirt and probably a few compiler warnings too let's unpack this
 
 First off `parallel_for_each` it's a beast it's like the workhorse of TBB when you need to apply the same operation to a collection of items in parallel It's all about efficiency avoiding those nasty bottlenecks and making full use of your multi-core processor instead of the usual single-thread slow poke approach I've spent years wrestling with these things and seen the good bad and the ugly believe me
 
@@ -113,6 +113,7 @@ int main() {
     return 0;
 }
 ```
+
 Here you can see the inclusion of a `mutex` which is to avoid race conditions when multiple threads try to change the value of `value` of different objects at the same time if you're using an object that contains shared data always always protect it with mutexes or some other concurrency control mechanisms it will save you headaches down the road believe me I've seen a lot of headaches caused by race conditions
 
 Now there are some things to keep in mind when using `parallel_for_each` or similar tools. The first is overhead sometimes parallelization can have a slight overhead it can take time to setup the threads and distribute tasks especially for very small tasks the overhead can outweigh the benefits of parallelization you need to find the right balance. Second data dependencies if one element needs the result of another element you need to be very careful and you can't just blindly parallelize everything It can create problems if you write to an item and some other item is trying to read from the first one it can become a mess of race conditions. Also debugging parallel code is generally harder than debugging sequential code so get familiar with the debugging tools because things can get complicated when you have many threads running at the same time

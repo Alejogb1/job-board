@@ -4,11 +4,11 @@ date: "2024-12-12"
 id: "qu-estrategias-pueden-utilizarse-para-evaluar-la-efectividad-de-las-herramientas-educativas-interactivas"
 ---
 
-Alright so evaluating interactive educational tools that’s a big one right it's not just about whether kids or adults whatever age group click buttons and things light up we need actual data to see if the tool is doing its job that’s actually improving learning outcomes
+so evaluating interactive educational tools that’s a big one right it's not just about whether kids or adults whatever age group click buttons and things light up we need actual data to see if the tool is doing its job that’s actually improving learning outcomes
 
 First off we’re talking about defining what ‘effective’ even means in this context its not universal it can change with the goals of the tool like is it for memorizing facts practicing skills or developing critical thinking each demands a different kind of evaluation if the objective is memorization you'd lean towards recall tests or quizzes seeing if users can spit out the info but if its more complex problem solving assessments get trickier we're talking about performance based tasks where you see how they apply the knowledge not just if they remember it
 
-One big technique is formative assessment this happens *during* the learning process not just at the end think of it like little health checks for the tool itself are users stuck are they bored are there parts they completely skip over we can track things like the time spent on each module or feature the number of clicks errors made or even patterns in how users move through the content we need to look for the hotspots for confusion and places where they are succeeding this all feeds back into refining the tool that continuous improvement loop is crucial for maximizing effectiveness
+One big technique is formative assessment this happens _during_ the learning process not just at the end think of it like little health checks for the tool itself are users stuck are they bored are there parts they completely skip over we can track things like the time spent on each module or feature the number of clicks errors made or even patterns in how users move through the content we need to look for the hotspots for confusion and places where they are succeeding this all feeds back into refining the tool that continuous improvement loop is crucial for maximizing effectiveness
 
 Another tool we got is user testing we need to see the tool in the wild so to say we dont just sit in a lab its about letting real users use the tool in as close to real-world conditions as possible this can involve usability tests where users are asked to perform certain tasks while we watch and record we can look at task completion rates time to completion navigation issues and general frustration levels we use screen recording tools and think-aloud protocols they talk through their thinking process and we gather lots of qualitative data. This isnt just about finding bugs its more about how users actually interact with the design.
 
@@ -23,42 +23,40 @@ Another key approach is pre and post testing these are those traditional tests r
 Here's a code snippet to illustrate a possible way to gather user interaction data in javascript on a web-based tool.
 
 ```javascript
-document.querySelectorAll('.interactive-element').forEach(element => {
-    element.addEventListener('click', function(event){
-        const timestamp = new Date().getTime();
-        const elementId = event.target.id;
-        const elementType = event.target.tagName;
+document.querySelectorAll(".interactive-element").forEach((element) => {
+  element.addEventListener("click", function (event) {
+    const timestamp = new Date().getTime();
+    const elementId = event.target.id;
+    const elementType = event.target.tagName;
 
-        // Send this data to your backend for analysis
-        sendAnalyticsData({
-           timestamp: timestamp,
-           elementId: elementId,
-           elementType: elementType,
-           userId: getUserId(), // assuming user id function exists
-           eventType: 'click'
-        });
-
+    // Send this data to your backend for analysis
+    sendAnalyticsData({
+      timestamp: timestamp,
+      elementId: elementId,
+      elementType: elementType,
+      userId: getUserId(), // assuming user id function exists
+      eventType: "click",
     });
+  });
 });
 
 function sendAnalyticsData(data) {
-  fetch('/api/analytics', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-       },
-       body: JSON.stringify(data),
-    })
-    .then(response => {
-      if(!response.ok) {
-         console.error('analytics data send failed', response)
+  fetch("/api/analytics", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        console.error("analytics data send failed", response);
       }
     })
-     .catch(error => {
-       console.error('network error sending analytics', error);
+    .catch((error) => {
+      console.error("network error sending analytics", error);
     });
 }
-
 ```
 
 Here is an example in python using pandas to analyze collected user data from a csv file:

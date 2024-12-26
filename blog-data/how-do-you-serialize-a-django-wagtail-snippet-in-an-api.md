@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-you-serialize-a-django-wagtail-snippet-in-an-api"
 ---
 
-Alright, let’s tackle this one. Serializing Django Wagtail Snippets for an API endpoint is a problem I've definitely encountered a few times over the years, particularly in projects where we wanted to expose content managed in Wagtail to other applications. It’s not quite as straightforward as serializing a regular Django model, primarily because Wagtail snippets don't automatically inherit from Django’s standard models, and they might have more complex relationships or fields. We need a little finesse.
+, let’s tackle this one. Serializing Django Wagtail Snippets for an API endpoint is a problem I've definitely encountered a few times over the years, particularly in projects where we wanted to expose content managed in Wagtail to other applications. It’s not quite as straightforward as serializing a regular Django model, primarily because Wagtail snippets don't automatically inherit from Django’s standard models, and they might have more complex relationships or fields. We need a little finesse.
 
 The core challenge lies in the fact that Wagtail snippets, being essentially custom models, require explicit serialization logic to transform them into a structured format, often json, suitable for API consumption. Standard Django Rest Framework (DRF) serializers, which might work out of the box for a typical Django model, won't automatically handle the complexities of a Wagtail snippet, especially if we have related fields, streamfields, or image/document fields. We need to build that translation layer ourselves.
 
@@ -90,7 +90,7 @@ class TeamMemberDetail(APIView):
         return Response(serializer.data)
 ```
 
-Here, we’re implementing a basic list and detail API view to expose our team members.  The `many=True` argument in the list view is crucial; when serializing a queryset, we need to inform the serializer that it will be processing a list of instances, rather than a single instance.
+Here, we’re implementing a basic list and detail API view to expose our team members. The `many=True` argument in the list view is crucial; when serializing a queryset, we need to inform the serializer that it will be processing a list of instances, rather than a single instance.
 
 Now, let's move to a more complex scenario. Let's say we have a snippet named `CompanyInfo`, which includes a `StreamField` to describe company highlights.
 

@@ -4,19 +4,19 @@ date: "2024-12-23"
 id: "how-can-cnns-handle-images-of-varying-sizes"
 ---
 
-Alright, let’s tackle this. I've seen this come up more often than you’d expect, especially back when I was optimizing models for embedded systems where memory constraints were a serious concern. Handling variable image sizes in convolutional neural networks (cnns) isn't a trivial problem, but there are several established techniques that are both effective and relatively straightforward to implement. It’s more about understanding the architecture and applying the correct layers strategically rather than resorting to some deep magic.
+, let’s tackle this. I've seen this come up more often than you’d expect, especially back when I was optimizing models for embedded systems where memory constraints were a serious concern. Handling variable image sizes in convolutional neural networks (cnns) isn't a trivial problem, but there are several established techniques that are both effective and relatively straightforward to implement. It’s more about understanding the architecture and applying the correct layers strategically rather than resorting to some deep magic.
 
 The core issue stems from the fact that standard cnn architectures, particularly those with fully connected layers towards the end, inherently assume a fixed input size. The dimensions of the activation maps after convolutional and pooling operations directly influence the number of parameters in those subsequent fully connected layers. If you change the input size, you change the dimensions of these feature maps, and thus the entire connection structure will break.
 
-So, what's the workaround? There are primarily three ways I've found to be consistently effective: *image resizing or padding*, *fully convolutional networks (fcns)*, and *spatial pyramid pooling (spp)*. Each one addresses the problem in a different, but useful way.
+So, what's the workaround? There are primarily three ways I've found to be consistently effective: _image resizing or padding_, _fully convolutional networks (fcns)_, and _spatial pyramid pooling (spp)_. Each one addresses the problem in a different, but useful way.
 
 **1. Image Resizing and Padding:**
 
 This approach is the most rudimentary but often the quickest and easiest to implement. Basically, we force all input images to conform to a predefined size. This involves either resizing the image (scaling it up or down) or padding it with some value, often zeros, to achieve the desired dimensions.
 
-*   **Resizing:** The primary advantage is simplicity. Libraries like opencv or pillow make resizing images trivial. However, this can introduce distortions or loss of information, especially if the aspect ratios of the original images are drastically different from the target size. For instance, squashing a very wide image into a square format might blur or compress crucial features.
+- **Resizing:** The primary advantage is simplicity. Libraries like opencv or pillow make resizing images trivial. However, this can introduce distortions or loss of information, especially if the aspect ratios of the original images are drastically different from the target size. For instance, squashing a very wide image into a square format might blur or compress crucial features.
 
-*   **Padding:** Padding is less destructive and can be preferred when preserving aspect ratios is important. You can pad with zeros (zero-padding), the border pixels, or even some calculated mean value. This ensures that your input images have the correct dimensions without altering the original visual information drastically. It might, however, introduce artificial features around the periphery if not done carefully, but it's generally preferable to distortion.
+- **Padding:** Padding is less destructive and can be preferred when preserving aspect ratios is important. You can pad with zeros (zero-padding), the border pixels, or even some calculated mean value. This ensures that your input images have the correct dimensions without altering the original visual information drastically. It might, however, introduce artificial features around the periphery if not done carefully, but it's generally preferable to distortion.
 
 Here’s a python snippet using opencv to illustrate resizing and padding:
 
@@ -164,8 +164,8 @@ The key here is that after the convolutional layers, the spp block ensures the i
 
 For a more in-depth understanding, I'd recommend checking out:
 
-*   **"Long et al., Fully Convolutional Networks for Semantic Segmentation"** (CVPR 2015): This paper offers the foundational ideas of fully convolutional networks.
-*   **"He et al., Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition"** (ECCV 2014): This is the go-to paper for understanding spatial pyramid pooling.
-*   **"Deep Learning" by Goodfellow et al.:** This book provides an excellent overview of all deep learning concepts including convolutions and pooling, suitable for a detailed review and understanding.
+- **"Long et al., Fully Convolutional Networks for Semantic Segmentation"** (CVPR 2015): This paper offers the foundational ideas of fully convolutional networks.
+- **"He et al., Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition"** (ECCV 2014): This is the go-to paper for understanding spatial pyramid pooling.
+- **"Deep Learning" by Goodfellow et al.:** This book provides an excellent overview of all deep learning concepts including convolutions and pooling, suitable for a detailed review and understanding.
 
 In practice, the best choice depends on the specifics of your problem. Image resizing and padding are good quick wins; FCNs are fantastic for dense pixel-wise prediction, and spp is effective when you need fixed-length vector representations. I've found these three approaches to be reliable and highly adaptable in a variety of image processing tasks. Choose the one that fits best and start experimenting; you'll likely get a deeper understanding of their strengths and tradeoffs by just getting your hands dirty with some real data.

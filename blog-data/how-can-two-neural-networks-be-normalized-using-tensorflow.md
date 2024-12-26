@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-can-two-neural-networks-be-normalized-using-tensorflow"
 ---
 
-Alright, let's tackle neural network normalization, specifically when dealing with *two* distinct models in TensorFlow. This is a problem I've encountered a few times over the years, usually when trying to fine-tune a pre-trained model alongside training a new, custom one, or when dealing with scenarios involving parallel processing within a single model architecture. The key here isn't just about standardizing data entering the network; it's more nuanced than that.
+, let's tackle neural network normalization, specifically when dealing with _two_ distinct models in TensorFlow. This is a problem I've encountered a few times over the years, usually when trying to fine-tune a pre-trained model alongside training a new, custom one, or when dealing with scenarios involving parallel processing within a single model architecture. The key here isn't just about standardizing data entering the network; it's more nuanced than that.
 
-The fundamental goal of normalization, regardless of whether it's for one or multiple networks, is to stabilize training. If the activations within the layers swing wildly, gradients become unstable, making convergence difficult, if not impossible. Therefore, when we're talking about *two* networks, we need to think about how their outputs, and perhaps even internal layer activations, relate to each other, which is different from what you’d typically encounter when training a single network.
+The fundamental goal of normalization, regardless of whether it's for one or multiple networks, is to stabilize training. If the activations within the layers swing wildly, gradients become unstable, making convergence difficult, if not impossible. Therefore, when we're talking about _two_ networks, we need to think about how their outputs, and perhaps even internal layer activations, relate to each other, which is different from what you’d typically encounter when training a single network.
 
-First, let's clarify what we *aren’t* talking about. We’re not referring to basic data normalization before feeding it into the network; that’s an essential preprocessing step, but it’s not the crux of this problem. Nor are we focusing solely on layer normalization techniques within *each* network individually; while this is critical, we need an approach that addresses the interrelationship between the two.
+First, let's clarify what we _aren’t_ talking about. We’re not referring to basic data normalization before feeding it into the network; that’s an essential preprocessing step, but it’s not the crux of this problem. Nor are we focusing solely on layer normalization techniques within _each_ network individually; while this is critical, we need an approach that addresses the interrelationship between the two.
 
 Here’s what my experience has taught me works, and why.
 
-One critical strategy involves aligning the *output scales* of the two networks. If one network's outputs consistently operate in a significantly different numerical range than the other’s, it's extremely difficult to combine or compare their results, especially if one of the networks is supposed to be influencing or acting as a guide for the other. We can address this by incorporating some form of normalization on the output of one, or both, of the networks. This helps ensure that changes in one network’s outputs are on the same order of magnitude as the other’s, preventing one network from drowning out the other’s contribution.
+One critical strategy involves aligning the _output scales_ of the two networks. If one network's outputs consistently operate in a significantly different numerical range than the other’s, it's extremely difficult to combine or compare their results, especially if one of the networks is supposed to be influencing or acting as a guide for the other. We can address this by incorporating some form of normalization on the output of one, or both, of the networks. This helps ensure that changes in one network’s outputs are on the same order of magnitude as the other’s, preventing one network from drowning out the other’s contribution.
 
 Let's explore how this can be done in practice with TensorFlow, and I'll walk through a couple of variations.
 
@@ -77,7 +77,8 @@ for epoch in range(epochs):
     loss = train_step(data_x, data_y)
     print(f"Epoch {epoch+1}, Loss: {loss.numpy()}")
 ```
-This snippet normalizes the outputs of each network to a range of zero to one per batch via the `RangeNormalizer`. It illustrates that the normalization takes place at the *output* of each network. Notice we are using a custom training loop, which I prefer because it's clearer to see what’s going on, and allows for modifications in a more transparent manner.
+
+This snippet normalizes the outputs of each network to a range of zero to one per batch via the `RangeNormalizer`. It illustrates that the normalization takes place at the _output_ of each network. Notice we are using a custom training loop, which I prefer because it's clearer to see what’s going on, and allows for modifications in a more transparent manner.
 
 **Example 2: Output Standardization**
 
@@ -221,7 +222,8 @@ for epoch in range(epochs):
     loss = train_step(data_x, data_y)
     print(f"Epoch {epoch+1}, Loss: {loss.numpy()}")
 ```
-In this version, the `SharedStandardizer` calculates the mean and variance *across* the outputs of both networks, and applies those to normalize the respective outputs. This technique is particularly useful when both network are intended to produce related outputs.
+
+In this version, the `SharedStandardizer` calculates the mean and variance _across_ the outputs of both networks, and applies those to normalize the respective outputs. This technique is particularly useful when both network are intended to produce related outputs.
 
 These are just a few ways you can normalize two neural networks using TensorFlow. Remember, the approach that you will need will heavily depend on the use case. When facing these challenges, it's beneficial to consult "Deep Learning" by Goodfellow, Bengio, and Courville; it contains a wealth of information regarding normalization techniques and their theoretical underpinnings. The paper "Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift" by Ioffe and Szegedy is also a worthwhile read. When dealing with normalization in more specific contexts, such as GANs, it’s a good idea to review papers that address those specific challenges.
 

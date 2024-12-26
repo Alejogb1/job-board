@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "coldfusion-cfdocument-title-in-url"
 ---
 
-Okay so you're asking about getting the cfdocument title in the URL right Been there done that got the t-shirt Let me tell you this is a classic problem that pops up more often than you'd think especially with legacy ColdFusion apps that haven't really been touched in ages. It's not super straightforward and CF's kind of quirky behavior with cfdocument doesn't always help.
+you're asking about getting the cfdocument title in the URL right Been there done that got the t-shirt Let me tell you this is a classic problem that pops up more often than you'd think especially with legacy ColdFusion apps that haven't really been touched in ages. It's not super straightforward and CF's kind of quirky behavior with cfdocument doesn't always help.
 
 I've been dealing with ColdFusion since CF 5 you remember the days of that old server config UI. I remember clearly when I had this problem in an old e-commerce system I was working on back in 2010. A project for an online book store they wanted to generate dynamic PDFs of order confirmations each one with the order ID in the filename and the PDF title. It was a real struggle then because we had to figure out how to get that title dynamically without resorting to some crazy file system hack.
 
@@ -47,7 +47,7 @@ Now what about the dynamic part? You need to use the title you set in the cfdocu
 <cfcontent type="application/pdf" variable="#pdfBytes#" />
 ```
 
-In this example I added an variable called `myPDF` which stores the binary PDF generated from `cfdocument`. This is needed to dynamically build the header for the name using `cfcontent` and `cfheader`. The code first creates the PDF using `cfdocument` with your title and then reads its output to the `myPDF` variable. Then the `myTitle` is used again to create the filename after removing spaces replacing them with "_". The `cfheader` and `cfcontent` output the created file to the client but before it outputs the client side is given the desired filename with `Content-Disposition` header.
+In this example I added an variable called `myPDF` which stores the binary PDF generated from `cfdocument`. This is needed to dynamically build the header for the name using `cfcontent` and `cfheader`. The code first creates the PDF using `cfdocument` with your title and then reads its output to the `myPDF` variable. Then the `myTitle` is used again to create the filename after removing spaces replacing them with "\_". The `cfheader` and `cfcontent` output the created file to the client but before it outputs the client side is given the desired filename with `Content-Disposition` header.
 
 This approach uses `cfcontent` and custom headers which gives you total control over how the file is served to the browser. This method is what you are looking for.
 
@@ -70,7 +70,7 @@ Now that I covered the basic approach lets go to something a little more advance
 </cfoutput>
 ```
 
-This is using the `savepath` and generating a url that serves the downloaded file this is a very common use case and it's why I always prefer to use `cfdocument` with `savepath` instead of directly streaming. Also it has the same functionality where the spaces are being converted to "_".
+This is using the `savepath` and generating a url that serves the downloaded file this is a very common use case and it's why I always prefer to use `cfdocument` with `savepath` instead of directly streaming. Also it has the same functionality where the spaces are being converted to "\_".
 
 Regarding `cfdocument` and this whole subject I recommend you read Adobe's official documentation on ColdFusion. This is your primary source for everything. It’s not the most exciting read but it’s thorough and covers the nitty-gritty details. Another fantastic resource is the CFML in Action book that goes way beyond the basics. It gives real-world examples and is a great resource to understand what's really going on behind the scenes. Also always check out the ColdFusion documentation on the Adobe website for any new updates.
 

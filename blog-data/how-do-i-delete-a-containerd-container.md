@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-delete-a-containerd-container"
 ---
 
-Okay, let's tackle this. It's a problem I've certainly encountered more than a few times, and I’ve definitely seen newcomers trip over the nuances. Deleting a containerd container, while conceptually straightforward, has a few subtleties that are good to understand, particularly when things don't go according to plan. I'm going to assume you’ve already got containerd installed and functioning correctly. The core of deleting a container involves using the `ctr` command-line tool, which comes bundled with containerd, as that is the most direct interface.
+, let's tackle this. It's a problem I've certainly encountered more than a few times, and I’ve definitely seen newcomers trip over the nuances. Deleting a containerd container, while conceptually straightforward, has a few subtleties that are good to understand, particularly when things don't go according to plan. I'm going to assume you’ve already got containerd installed and functioning correctly. The core of deleting a container involves using the `ctr` command-line tool, which comes bundled with containerd, as that is the most direct interface.
 
 Before we dive into the commands, it's crucial to appreciate that containerd manages containers at a lower level than, say, docker. This means there isn’t a singular “container” entity like you might perceive in higher-level container runtimes. Instead, it deals more directly with tasks, processes, and their associated resources (namespaces, images, snapshots, etc.). This architectural difference is essential to keep in mind when trying to delete a container. You're effectively cleaning up these various elements.
 
@@ -17,7 +17,7 @@ Here's the process, broken down, with code snippets and an explanation:
 First, you need to know the container's id or name. If you don’t, you can use `ctr container list` to see a list of running and stopped containers. Here's an example of the output you might see:
 
 ```
-CONTAINER                                   IMAGE                                  RUNTIME    STATUS      CREATED                  
+CONTAINER                                   IMAGE                                  RUNTIME    STATUS      CREATED
 827c241d-b96f-498f-80c7-749f16ab0045        docker.io/library/nginx:latest      io.containerd.runc.v2  running     2024-07-20 14:00:00 +0000 UTC
 d99a3b2f-7c2e-4a0b-b6d7-5d4e8c9f0123        docker.io/library/alpine:latest    io.containerd.runc.v2  stopped     2024-07-20 14:05:00 +0000 UTC
 ```
@@ -89,7 +89,7 @@ This script accepts a container id as an argument, checks if the container is ru
 
 **A Few Words on Snapshots and Image Management**
 
-It’s important to note that deleting a container does *not* delete the underlying image. If you wish to remove the image as well, you’ll need to use `ctr image rm <image_reference>`. Additionally, when a container is created, containerd utilizes a snapshot mechanism for storing the container’s filesystem layers. After deleting the container, the snapshot will typically be removed automatically. However, if you encounter issues with disk space, you might need to examine the snapshots with `ctr snapshot list` and potentially manually remove any lingering ones with `ctr snapshot rm <snapshot_id>`.
+It’s important to note that deleting a container does _not_ delete the underlying image. If you wish to remove the image as well, you’ll need to use `ctr image rm <image_reference>`. Additionally, when a container is created, containerd utilizes a snapshot mechanism for storing the container’s filesystem layers. After deleting the container, the snapshot will typically be removed automatically. However, if you encounter issues with disk space, you might need to examine the snapshots with `ctr snapshot list` and potentially manually remove any lingering ones with `ctr snapshot rm <snapshot_id>`.
 
 From my experience, directly managing snapshots is very rarely needed but understanding that these layers exist is critical for fully managing your container system.
 

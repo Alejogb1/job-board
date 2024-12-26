@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-is-the-number-of-updates-in-a-stable-baselines3-sb3-ppo-implementation"
 ---
 
-alright, so you're asking about the number of updates in a stable baselines3 ppo implementation. it's a good question, and one that often trips people up when they're starting with reinforcement learning (rl). i remember when i first started, the difference between an update, a rollout, and an epoch was all a bit of a jumble. i think i even accidentally trained a model for way too long and ran out of gpu credits on a google cloud instance once (that was a fun bill to explain).
+, so you're asking about the number of updates in a stable baselines3 ppo implementation. it's a good question, and one that often trips people up when they're starting with reinforcement learning (rl). i remember when i first started, the difference between an update, a rollout, and an epoch was all a bit of a jumble. i think i even accidentally trained a model for way too long and ran out of gpu credits on a google cloud instance once (that was a fun bill to explain).
 
 let's break it down. in sb3's ppo, “updates” refer to how frequently the policy network and the value network are updated based on the collected experience. it’s not just a single step, and it's definitely not the same as an environment step.
 
@@ -20,9 +20,9 @@ so, the number of updates isn’t directly specified as a parameter like `n_step
 
 let’s look at how these parameters relate:
 
-*   `n_steps`: this determines the size of the rollout buffer, which is the amount of experience gathered before updating the agent.
-*   `batch_size`: this is the size of the mini-batches used when updating the networks during optimization. the rollout data is divided into mini-batches.
-*   `n_epochs`: this determines how many times the optimizer loops through the mini-batches of data from the buffer to update the networks in a single update phase.
+- `n_steps`: this determines the size of the rollout buffer, which is the amount of experience gathered before updating the agent.
+- `batch_size`: this is the size of the mini-batches used when updating the networks during optimization. the rollout data is divided into mini-batches.
+- `n_epochs`: this determines how many times the optimizer loops through the mini-batches of data from the buffer to update the networks in a single update phase.
 
 the number of updates is then influenced by how many times you iterate through that rollout buffer in mini-batches during training.
 

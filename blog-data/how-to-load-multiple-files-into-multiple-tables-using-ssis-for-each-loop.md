@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-load-multiple-files-into-multiple-tables-using-ssis-for-each-loop"
 ---
 
-alright, so you're looking at a classic etl challenge, loading data from multiple files into corresponding tables using ssis's for each loop container. i've been down this road more times than i care to remember. trust me, it’s a very common scenario. the devil, as usual, is in the details, but let's get to it.
+, so you're looking at a classic etl challenge, loading data from multiple files into corresponding tables using ssis's for each loop container. i've been down this road more times than i care to remember. trust me, it’s a very common scenario. the devil, as usual, is in the details, but let's get to it.
 
 first off, the for each loop is your friend here. it’s the workhorse that lets you iterate through a collection – in this case, a folder of files. the trick is setting it up correctly so each file lands in the correct table. here's how i generally approach it, having made a few mistakes along the way (mostly involving messy file paths, i assure you).
 
@@ -16,10 +16,10 @@ ok, so here’s a typical setup, broken down:
 
 **1. the for each loop container configuration**
 
-*   **collection:** you'll choose the 'for each file enumerator'. specify the folder path where your files are located. be sure to use a variable for this. never hardcode paths. remember my hard path experience? don't be me.
-*   **files:** set the file mask to something like `*.csv`, `*.txt`, or whatever your file extensions are, or maybe if you want to get fancy, you can do `myfile_*.csv`.
-*   **retrieve file name:** select 'name and extension', or just 'name' depending on if you need the extension. this part stores the full file name into an ssis variable.
-*   **variable mappings:** create a string variable, say `@[user::currentfilefullpath]`, and map the output of the enumerator to it. this will store the full path to the current file in the loop. you also need a variable to store the file name without the path. say, `@[user::currentfilename]`, and that can be derived from `@[user::currentfilefullpath]` inside a script component, as you see below in point 2.
+- **collection:** you'll choose the 'for each file enumerator'. specify the folder path where your files are located. be sure to use a variable for this. never hardcode paths. remember my hard path experience? don't be me.
+- **files:** set the file mask to something like `*.csv`, `*.txt`, or whatever your file extensions are, or maybe if you want to get fancy, you can do `myfile_*.csv`.
+- **retrieve file name:** select 'name and extension', or just 'name' depending on if you need the extension. this part stores the full file name into an ssis variable.
+- **variable mappings:** create a string variable, say `@[user::currentfilefullpath]`, and map the output of the enumerator to it. this will store the full path to the current file in the loop. you also need a variable to store the file name without the path. say, `@[user::currentfilename]`, and that can be derived from `@[user::currentfilefullpath]` inside a script component, as you see below in point 2.
 
 **2. deriving the table name:**
 
@@ -53,9 +53,9 @@ this script extracts the filename, and then removes everything from the last dot
 
 **3. the data flow task**
 
-*   **flat file source:** here's the usual step. you need to configure a flat file source connection manager, but be careful! you *must* use an expression to dynamically define the connection string property, set to `@[user::currentfilefullpath]`. this way, each loop iteration will process a different file.
-*   **oledb destination:** you need to setup a database connection to your database, but again, don't hardcode the table name. you need to set the `tablename` property using an expression and pointing it to the `@[user::currenttablename]` variable.
-*   **column mappings:** this is probably the easiest part. just make sure your columns match up correctly, and data types as well.
+- **flat file source:** here's the usual step. you need to configure a flat file source connection manager, but be careful! you _must_ use an expression to dynamically define the connection string property, set to `@[user::currentfilefullpath]`. this way, each loop iteration will process a different file.
+- **oledb destination:** you need to setup a database connection to your database, but again, don't hardcode the table name. you need to set the `tablename` property using an expression and pointing it to the `@[user::currenttablename]` variable.
+- **column mappings:** this is probably the easiest part. just make sure your columns match up correctly, and data types as well.
 
 **4. error handling**
 
@@ -86,11 +86,11 @@ you'd then use a `sql server destination` component to insert into this table.
 
 **some extra tips, the experience talks:**
 
-*   **file encoding:** be aware of file encoding! different systems use different character sets. if your files are not consistent, you could see some issues. i've spent hours figuring this out. there's a character encoding option in flat file connection manager; use it carefully.
-*   **header row:** sometimes files have a header row and sometimes they don't. again, the flat file manager allows you to skip the header row, or you can deal with it using the conditional split component.
-*   **performance:** if you're dealing with many files, you should look at increasing the `maxconcurrentexecutables` property on the `for each loop` to allow parallelism and increase the performance of your process, but do this carefully as this can overload your source system. keep in mind that there will be some overhead of this and it might affect your process overall. do some benchmarks if you are doing some serious data movement.
-*   **transaction control:** i sometimes encapsulate the for each loop in a sequence container with its `transaction option` set to `required` or `supported` to handle exceptions at a higher level. it might be overkill if the process is simple.
-*   **configuration:** you can externalize database connection strings, folder paths, and even your naming rules into configuration files or environment variables. this avoids having to republish packages anytime something changes. this also makes your packages less fragile to changes in the environments. a really important skill to learn.
+- **file encoding:** be aware of file encoding! different systems use different character sets. if your files are not consistent, you could see some issues. i've spent hours figuring this out. there's a character encoding option in flat file connection manager; use it carefully.
+- **header row:** sometimes files have a header row and sometimes they don't. again, the flat file manager allows you to skip the header row, or you can deal with it using the conditional split component.
+- **performance:** if you're dealing with many files, you should look at increasing the `maxconcurrentexecutables` property on the `for each loop` to allow parallelism and increase the performance of your process, but do this carefully as this can overload your source system. keep in mind that there will be some overhead of this and it might affect your process overall. do some benchmarks if you are doing some serious data movement.
+- **transaction control:** i sometimes encapsulate the for each loop in a sequence container with its `transaction option` set to `required` or `supported` to handle exceptions at a higher level. it might be overkill if the process is simple.
+- **configuration:** you can externalize database connection strings, folder paths, and even your naming rules into configuration files or environment variables. this avoids having to republish packages anytime something changes. this also makes your packages less fragile to changes in the environments. a really important skill to learn.
 
 so, to recap, you need a `for each loop` to iterate through your files. use variables for file paths and table names. you can use a `script task` to derive the table name, or an expression. the data flow task will load the data using those variables. don’t forget error handling.
 

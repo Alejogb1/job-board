@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-use-separate-recaptcha-keys-for-dev-and-production"
 ---
 
-Alright, let's talk about reCaptcha keys across development and production environments. This isn't just academic; I've been down this road more times than I care to recall, and it’s a common pitfall that can lead to some surprisingly frustrating situations if not managed properly. Setting up distinct reCaptcha keys isn't solely about keeping things tidy—it’s about ensuring accurate testing and safeguarding your production environment against test-related traffic and potential key leakage.
+, let's talk about reCaptcha keys across development and production environments. This isn't just academic; I've been down this road more times than I care to recall, and it’s a common pitfall that can lead to some surprisingly frustrating situations if not managed properly. Setting up distinct reCaptcha keys isn't solely about keeping things tidy—it’s about ensuring accurate testing and safeguarding your production environment against test-related traffic and potential key leakage.
 
 From my experience, especially during the early days of building large-scale applications, I learned the hard way that using the same keys across all environments is a recipe for headaches. Debugging user validation flows when they're interwoven with test submissions is a pain, and exposing production keys in development builds is, well, a security risk we definitely want to avoid. The core idea here is that each environment should be a self-contained unit with its own set of configurations.
 
@@ -27,12 +27,14 @@ The following code examples will demonstrate how this can be achieved, using bot
 function loadRecaptcha() {
   const siteKey = process.env.REACT_APP_RECAPTCHA_SITE_KEY;
   if (!siteKey) {
-    console.error('reCaptcha Site Key not provided. Please configure environment variables.');
+    console.error(
+      "reCaptcha Site Key not provided. Please configure environment variables."
+    );
     return;
   }
 
   // Dynamically create and append a script tag to load the reCaptcha API.
-  const script = document.createElement('script');
+  const script = document.createElement("script");
   script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
   script.async = true;
   script.defer = true;
@@ -40,21 +42,26 @@ function loadRecaptcha() {
 }
 
 function executeRecaptcha(action) {
-    return new Promise((resolve, reject) => {
-        if(typeof grecaptcha === 'undefined') {
-            console.error('reCaptcha API not loaded yet. Ensure you have a network connection');
-            reject('reCaptcha API not loaded yet.');
-        }
+  return new Promise((resolve, reject) => {
+    if (typeof grecaptcha === "undefined") {
+      console.error(
+        "reCaptcha API not loaded yet. Ensure you have a network connection"
+      );
+      reject("reCaptcha API not loaded yet.");
+    }
 
-        grecaptcha.ready(() => {
-          grecaptcha.execute(process.env.REACT_APP_RECAPTCHA_SITE_KEY, { action: action }).then(token => {
-              resolve(token);
-          }).catch(err => {
-            console.error('Error obtaining reCaptcha token', err);
-            reject('Error obtaining reCaptcha token');
-          })
+    grecaptcha.ready(() => {
+      grecaptcha
+        .execute(process.env.REACT_APP_RECAPTCHA_SITE_KEY, { action: action })
+        .then((token) => {
+          resolve(token);
+        })
+        .catch((err) => {
+          console.error("Error obtaining reCaptcha token", err);
+          reject("Error obtaining reCaptcha token");
         });
     });
+  });
 }
 
 // Call loadRecaptcha on initial application mount.

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "pos-tagging-using-brown-tag-set-in-nltk"
 ---
 
-Okay so you're asking about part-of-speech tagging using the Brown tagset in NLTK yeah I've been there done that got the t-shirt probably had more than a few late nights debugging taggers back in the day trust me it's a common road to walk down for any natural language processing enthusiast
+you're asking about part-of-speech tagging using the Brown tagset in NLTK yeah I've been there done that got the t-shirt probably had more than a few late nights debugging taggers back in the day trust me it's a common road to walk down for any natural language processing enthusiast
 
 Let's break this down real simple and see what we're talking about
 
@@ -42,7 +42,8 @@ def train_brown_tagger():
 
 brown_tagger = train_brown_tagger()
 ```
-Okay so this first snippet trains the unigram tagger which is the baseline for many POS tagging tasks. I've seen some folk try to start with RNNs or transformers for this problem but they overcomplicate it unigram taggers are a good start they are fast and work well most of the time anyway So we import the necessary modules train a basic model and evaluate it and then return the tagger itself You can also try other taggers. There are a bunch available in NLTK its like a candy store you have the `averaged_perceptron_tagger` which is generally better so I included a download for it and the `UnigramTagger` like the one we used above for some reason people like the UnigramTagger as it is easy to understand
+
+this first snippet trains the unigram tagger which is the baseline for many POS tagging tasks. I've seen some folk try to start with RNNs or transformers for this problem but they overcomplicate it unigram taggers are a good start they are fast and work well most of the time anyway So we import the necessary modules train a basic model and evaluate it and then return the tagger itself You can also try other taggers. There are a bunch available in NLTK its like a candy store you have the `averaged_perceptron_tagger` which is generally better so I included a download for it and the `UnigramTagger` like the one we used above for some reason people like the UnigramTagger as it is easy to understand
 
 Next up let's see how to use the tagger to actually tag some text. This is the fun part where the magic happens
 
@@ -60,6 +61,7 @@ tagged_text = tag_text(sample_text, brown_tagger)
 print(tagged_text)
 
 ```
+
 Simple right so we define a function called `tag_text` that takes some text and the tagger we created before we then tokenize the text into words using `nltk.word_tokenize`. I know some purists are gonna tell you to use your own tokenizers but just lets use this for simplicity sake its faster you just have to have all of your nltk downloads ready and then use the tagger to tag those tokens
 
 This is where you would use the code like this for your application. But just as an aside the real world is super messy here. Sometimes a word can have more than one meaning so sometimes you will encounter the word “bank” as a noun as in `river bank` or as a verb `to bank`. Now with this tagger the tagger will use the most common use of that word in the training dataset so it is not always the most accurate for the specific case you need. I mean for that to be more accurate you would need context from the sentence

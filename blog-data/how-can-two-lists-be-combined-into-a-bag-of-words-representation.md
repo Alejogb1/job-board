@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-two-lists-be-combined-into-a-bag-of-words-representation"
 ---
 
-Alright, let's talk about combining lists into a bag-of-words representation. It's a task I’ve encountered more times than I can count, especially in the early days of experimenting with natural language processing tasks. I recall a particular project involving analyzing customer reviews where this exact operation was crucial to making any progress. We had lists of keywords extracted from various feedback channels and needed a unified view to feed into our machine learning models.
+, let's talk about combining lists into a bag-of-words representation. It's a task I’ve encountered more times than I can count, especially in the early days of experimenting with natural language processing tasks. I recall a particular project involving analyzing customer reviews where this exact operation was crucial to making any progress. We had lists of keywords extracted from various feedback channels and needed a unified view to feed into our machine learning models.
 
 Fundamentally, a bag-of-words (bow) representation is a way of converting text (in this case, represented by our lists) into numerical data that machine learning algorithms can understand. It's called a "bag" because the order of words isn't important; what matters is the frequency of each unique term across all the lists being combined.
 
@@ -33,7 +33,7 @@ print("Bag of words list B:", bow_b)
 
 ```
 
-This first example function, `create_bow_basic`, does the fundamental steps with a direct approach. It concatenates the input lists, converts it to a set to ensure unique items, then converts it back to list to define the vocabulary. Then using list comprehension it counts each words occurrence to generate a bag of word representation for each list based on the overall vocabulary. However, there are more efficient ways to tackle this, especially if you're dealing with large datasets. Counting using list.count() inside list comprehensions is a O(n*m) approach that doesn't scale great.
+This first example function, `create_bow_basic`, does the fundamental steps with a direct approach. It concatenates the input lists, converts it to a set to ensure unique items, then converts it back to list to define the vocabulary. Then using list comprehension it counts each words occurrence to generate a bag of word representation for each list based on the overall vocabulary. However, there are more efficient ways to tackle this, especially if you're dealing with large datasets. Counting using list.count() inside list comprehensions is a O(n\*m) approach that doesn't scale great.
 
 A slightly more sophisticated method involves using the `Counter` class from the python `collections` module. This is generally a good approach as `Counter` is specifically optimized for this type of task.
 

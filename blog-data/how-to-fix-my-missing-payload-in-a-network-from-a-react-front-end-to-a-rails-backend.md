@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-fix-my-missing-payload-in-a-network-from-a-react-front-end-to-a-rails-backend"
 ---
 
-alright, so you're hitting that classic react frontend to rails backend, missing payload blues, right? i've been there, more times than i care to count, and it's always a head-scratcher until you trace the wires, so to speak.
+, so you're hitting that classic react frontend to rails backend, missing payload blues, right? i've been there, more times than i care to count, and it's always a head-scratcher until you trace the wires, so to speak.
 
 let me tell you a story. back in my early days, i was building this e-commerce platform (don’t laugh, everyone starts somewhere). i had this form, a simple product creation form, react on the front, rails handling the api on the back. seemed straightforward enough. i filled out the form, hit submit, and… crickets. the rails server was getting the request, but the params were empty. a big void. felt like i was yelling into a well. this happened multiple times, across different projects, different frameworks, always the same feeling of a ghost in the machine.
 
@@ -24,22 +24,22 @@ const [productData, setProductData] = useState({
 const handleSubmit = async (event) => {
   event.preventDefault();
   try {
-     const response = await fetch('/api/products', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(productData),
-      });
-      if (response.ok) {
-       const data = await response.json();
-       console.log('product created:', data)
-     } else {
-        console.error('failed to create product', response.status)
-      }
-  } catch (error) {
-       console.error('error on fetch:', error);
+    const response = await fetch("/api/products", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(productData),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      console.log("product created:", data);
+    } else {
+      console.error("failed to create product", response.status);
     }
+  } catch (error) {
+    console.error("error on fetch:", error);
+  }
 };
 
 // ... your input fields, handled with onChange to update productData.
@@ -73,7 +73,7 @@ class ProductsController < ApplicationController
 end
 ```
 
-notice the `:product` in `params.require(:product)`? this implies that your json on react should have that root key. if you just post  `{name: "...", price: ..., description: ...}`, and the server expects `{"product": {name: "...", price: ..., description: ...}}` , you won't get anything.  it's like the server is asking for a nicely wrapped gift, and you're just handing over the unwrapped items. be sure to have them match.
+notice the `:product` in `params.require(:product)`? this implies that your json on react should have that root key. if you just post `{name: "...", price: ..., description: ...}`, and the server expects `{"product": {name: "...", price: ..., description: ...}}` , you won't get anything. it's like the server is asking for a nicely wrapped gift, and you're just handing over the unwrapped items. be sure to have them match.
 
 finally, check your http method. are you using post for creation? patch or put for updates? it seems like basic stuff, but sometimes in the rush you can send a `get` request when you were expecting a `post` request. i have seen this happen in many of the projects i worked on. i have even done it myself several times. always a "face-palm" moment for me.
 
@@ -91,25 +91,25 @@ const [productData, setProductData] = useState({
 });
 
 const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      console.log("data to send:", productData) // check your data on the console
-       const response = await fetch('/api/products', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(productData),
-        });
-        if (response.ok) {
-          const data = await response.json();
-          console.log('product created:', data)
-       } else {
-         console.error('failed to create product', response.status)
-      }
-    } catch (error) {
-         console.error('error on fetch:', error);
-      }
+  event.preventDefault();
+  try {
+    console.log("data to send:", productData); // check your data on the console
+    const response = await fetch("/api/products", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(productData),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      console.log("product created:", data);
+    } else {
+      console.error("failed to create product", response.status);
+    }
+  } catch (error) {
+    console.error("error on fetch:", error);
+  }
 };
 
 // ... your input fields, handled with onChange to update productData.
@@ -119,8 +119,8 @@ in the real world, this issue can often be more complex. think about authenticat
 
 here are some recommendations to deepen your knowledge on these areas:
 
-*   **"understanding http"** by philip shea. it covers all the basics and the more advanced concepts of http, that is essential to mastering web apis.
-*   **"eloquent javascript"** by marijn haverbeke. it is a great book to solidify your javascript skills. you should be really comfortable with asynchronous operations, promises and all those details that you need to perform good data fetching from a server.
-*   rails documentation. i know it sounds obvious, but rereading the rails docs, usually i have discovered new things that i missed before or have forgotten.
+- **"understanding http"** by philip shea. it covers all the basics and the more advanced concepts of http, that is essential to mastering web apis.
+- **"eloquent javascript"** by marijn haverbeke. it is a great book to solidify your javascript skills. you should be really comfortable with asynchronous operations, promises and all those details that you need to perform good data fetching from a server.
+- rails documentation. i know it sounds obvious, but rereading the rails docs, usually i have discovered new things that i missed before or have forgotten.
 
 remember debugging is a process, it's not a race. take your time, trace your data, check your headers, and you'll find the missing payload. oh, and be sure to restart the server after you make changes on the server side. that has cost me some time in the past! hopefully that will help. good luck!

@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "how-do-you-embed-an-ipython-console-with-execlines"
 ---
 
-alright, let's talk about embedding an ipython console, specifically with the `exec_lines` parameter. it's a bit of a niche use case, but incredibly handy when you need a truly interactive environment with some pre-loaded context. i've been down this rabbit hole more times than i care to remember, and it's usually for the kind of debugging where you need to poke around at variables within a specific scope.
+, let's talk about embedding an ipython console, specifically with the `exec_lines` parameter. it's a bit of a niche use case, but incredibly handy when you need a truly interactive environment with some pre-loaded context. i've been down this rabbit hole more times than i care to remember, and it's usually for the kind of debugging where you need to poke around at variables within a specific scope.
 
-so, the core of it lies in the `embed` function from `IPython.terminal.embed`. this isn't your standard python interpreter; it's the full ipython experience, just dropped right into your program. what makes it powerful is the ability to execute lines *before* the interactive prompt appears using `exec_lines`.
+so, the core of it lies in the `embed` function from `IPython.terminal.embed`. this isn't your standard python interpreter; it's the full ipython experience, just dropped right into your program. what makes it powerful is the ability to execute lines _before_ the interactive prompt appears using `exec_lines`.
 
 think of it like this: you have a python script running, and at some point, you want to jump into a fully interactive ipython session. however, you need certain variables defined or modules imported to make that interactive session useful. that's where `exec_lines` comes in.
 
@@ -25,23 +25,23 @@ def process_data(data_path):
     data = pd.read_csv(data_path)
     # some data transformation functions here...
     transformed_data = data * 2
-    
+
     embed(header="entering ipython console. inspect 'transformed_data'",
           exec_lines=[
               'print("welcome to the console")',
               'print(f"data type: {type(transformed_data)}")',
              'print("first 5 lines")' ,
              'print(transformed_data.head())'
-             
+
            ])
-           
+
     return transformed_data
 
 if __name__ == "__main__":
     # create dummy data for example
     df = pd.DataFrame({'col1': [1, 2, 3, 4], 'col2': [5, 6, 7, 8]})
     df.to_csv("dummy_data.csv", index=False)
-    
+
     result = process_data("dummy_data.csv")
     print("final result is computed")
 ```
@@ -68,16 +68,16 @@ def apply_transform(data, config):
 def process_data_with_config(data_path):
     config = load_config()
     data = pd.read_csv(data_path)
-    
+
     transformed_data = apply_transform(data, config)
-    
+
     embed(header="inspect data and config vars",
           exec_lines=[
                 "from math import log",
               f'print("config: {config}")',
               'print(f"data type: {type(transformed_data)}")',
               'print(transformed_data.head())'
-              
+
             ])
     return transformed_data
 
@@ -85,7 +85,7 @@ if __name__ == "__main__":
      # create dummy data for example
     df = pd.DataFrame({'col1': [1, 2, 3, 4], 'col2': [5, 6, 7, 8]})
     df.to_csv("dummy_data.csv", index=False)
-    
+
     result = process_data_with_config("dummy_data.csv")
     print("final result is computed")
 ```
@@ -96,7 +96,7 @@ and, of course, `embed` isn’t just for dataframe debugging. i’ve used it for
 
 one time, i used it while experimenting with a complex recursive algorithm for some crazy image processing thing, it ended up blowing the stack, and i almost ran out of memory on my machine. good times! at the very least i managed to find the bug and fix it.
 
-one very important note, if you try to use the debugger *after* entering the embedded shell, it will give you a recursion error due to ipython. so, you will need to enter the ipython shell with `embed` *before* you enter the debugger, if that is your usual workflow.
+one very important note, if you try to use the debugger _after_ entering the embedded shell, it will give you a recursion error due to ipython. so, you will need to enter the ipython shell with `embed` _before_ you enter the debugger, if that is your usual workflow.
 
 in terms of resources, i’d recommend reading the ipython documentation for `IPython.terminal.embed`, it's quite well detailed. there are also a few good blog posts on using ipython for debugging, but honestly, the official docs are your best bet. i also suggest the book "python cookbook" by david beazley and brian k. jones which covers more advanced python programming patterns (and ipython) and i think that could be a good resource for you if you want to delve deeper. there is a good amount of information scattered in the official documentation about ipython and interactive programming.
 
@@ -109,14 +109,14 @@ import pandas as pd
 
 def process_data_and_define_function(data_path):
     data = pd.read_csv(data_path)
-        
+
     embed(header="define your on-the-fly function and use the available data!",
           exec_lines=[
               'print("you have access to the variable \'data\'")',
               'print("define a function named \'custom_function\'")',
               'print("e.g. def custom_function(x): return x * 2")',
               'print("and then try custom_function(data)")',
-           
+
               ])
     return data
 

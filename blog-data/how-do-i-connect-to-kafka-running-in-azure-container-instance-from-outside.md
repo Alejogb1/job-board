@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-connect-to-kafka-running-in-azure-container-instance-from-outside"
 ---
 
-Alright, let's talk about connecting to Kafka running in Azure Container Instances (ACI) from external networks. This isn't exactly a plug-and-play scenario, and I've definitely seen my share of head-scratching moments tackling this in past projects. Remember that time at *SynapseTech*? We had a similar setup, but our initial approach was... let's just say, less than optimal. We were battling network config issues for days. The short version is, you're dealing with the inherent isolation of ACI and need a strategic approach to bridge that gap.
+, let's talk about connecting to Kafka running in Azure Container Instances (ACI) from external networks. This isn't exactly a plug-and-play scenario, and I've definitely seen my share of head-scratching moments tackling this in past projects. Remember that time at _SynapseTech_? We had a similar setup, but our initial approach was... let's just say, less than optimal. We were battling network config issues for days. The short version is, you're dealing with the inherent isolation of ACI and need a strategic approach to bridge that gap.
 
 The core problem boils down to ACI's network isolation. By default, an ACI instance is not directly accessible from outside its virtual network. To establish external connectivity to Kafka, we need to expose the Kafka brokers, and that typically means routing network traffic through another Azure service designed to handle this kind of external exposure. There are a few valid paths, each with its trade-offs, but the main ones I've consistently found success with involve using an Azure Load Balancer or an Azure Application Gateway. I'll lean into the Load Balancer approach initially because it’s generally simpler and more cost-effective for straightforward TCP-based communication.
 
@@ -78,7 +78,7 @@ listeners=PLAINTEXT://0.0.0.0:9092
 advertised.listeners=PLAINTEXT://<Your ACI private IP address>:9092
 ```
 
-It's critical that `advertised.listeners` uses either the public IP of the load balancer or an FQDN that resolves to the public IP, and it’s something that we learned by almost running into a wall on that *SynapseTech* project. The internal address will not work as the client cannot resolve it, and this will prevent the client from connecting and consuming.
+It's critical that `advertised.listeners` uses either the public IP of the load balancer or an FQDN that resolves to the public IP, and it’s something that we learned by almost running into a wall on that _SynapseTech_ project. The internal address will not work as the client cannot resolve it, and this will prevent the client from connecting and consuming.
 
 Here's another code snippet, this time showing a slightly different approach by employing the Azure application gateway which is more robust and provides more powerful capabilities:
 
@@ -142,6 +142,7 @@ az network application-gateway rule create \
     --backend-address-pool "backendPool" \
     --backend-http-settings "appGatewayHttpSettings"
 ```
+
 While this looks similar, the application gateway approach is more involved, especially as it requires you to configure HTTP settings, as it was built to handle http workloads. In this case, we are bypassing the HTTP layer and using plain TCP so we don’t introduce additional complexity. But Application Gateway provides additional features and options, such as TLS termination, web application firewall (WAF), and so on. For many production cases these are requirements, which is why this was included here.
 
 Finally, another approach that can be used involves setting up an SSH tunnel which acts as a secure proxy. This method however, involves another setup in an instance, to handle the tunneling, so this is not ideal for production and more suitable for local testing purposes only. In this example, I am setting the ssh connection from the outside to a dedicated virtual machine (bastion) in Azure which is in the same vnet as the ACI instance, and from there tunnelling the traffic to the container instance.
@@ -152,6 +153,7 @@ ACI_IP="<Your ACI private IP address>"
 # Replace <username> with the username for your bastion instance
 ssh -i <your-ssh-private-key> -L 9092:$ACI_IP:9092 <username>@<bastion-public-ip>
 ```
+
 This command sets up an ssh tunnel to the bastion machine and forwards traffic from your local port 9092 to the container port 9092. You'll need to replace the place holders to match your environment. This method is quite useful for debugging and initial testing.
 
 For more in-depth knowledge, I'd suggest going through the official Azure documentation for Load Balancer and Application Gateway. Also, the "Kafka: The Definitive Guide" by Neha Narkhede, Gwen Shapira, and Todd Palino is indispensable for understanding Kafka's internal workings. Specifically pay attention to the listener configurations section, as it's frequently a pain point for those starting out with Kafka. "Understanding Networking in Azure" (available on Microsoft Learn) is also a good foundational resource to strengthen your understanding of the underlying concepts.

@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-am-i-getting-argument-must-be-a-string-a-bytes-like-object-or-a-number-not-tuple-error"
 ---
 
-Okay, let's unpack this. That "argument must be a string, a bytes-like object or a number, not tuple" error is a fairly common stumbling block, especially when you're working with string formatting, data serialization, or even logging in Python. I remember encountering it quite frequently early in my career when developing a data pipeline that relied heavily on structured logs and dynamically generated file paths. It’s not always immediately obvious where the tuple sneaked in, but it's usually a straightforward fix once you understand the core issue.
+, let's unpack this. That "argument must be a string, a bytes-like object or a number, not tuple" error is a fairly common stumbling block, especially when you're working with string formatting, data serialization, or even logging in Python. I remember encountering it quite frequently early in my career when developing a data pipeline that relied heavily on structured logs and dynamically generated file paths. It’s not always immediately obvious where the tuple sneaked in, but it's usually a straightforward fix once you understand the core issue.
 
 Essentially, Python is complaining because it’s expecting a single, atomic value—something it can represent directly—but you’re handing it a tuple, which is a compound data structure. This often happens when you unintentionally pass a tuple as an argument to a function or method that expects a string, byte sequence, or number. It’s a type mismatch, pure and simple. The error message is, in fact, quite literal.
 
 Let's delve a bit deeper. Python employs stringent type checking in many contexts. String formatting, for instance, usually expects a direct replacement for placeholders, like the `%s` in older-style formatting or `{}` in `.format()` or f-strings. If you inadvertently pass a tuple as the value that should populate these placeholders, Python raises that familiar error. Similarly, functions like `print()` or methods for writing to files expect to handle strings, numbers, or byte representations directly, not containers like tuples or lists.
 
-The tuple generally creeps in when you're dealing with multiple values that you *think* you’re handling separately, but due to how your code is constructed, they end up bundled together. A typical scenario is when you're inadvertently creating tuples when you mean to have a sequence of distinct arguments. Consider a function that expects multiple strings or numbers: if you inadvertently wrap those strings or numbers in parentheses, you get a tuple.
+The tuple generally creeps in when you're dealing with multiple values that you _think_ you’re handling separately, but due to how your code is constructed, they end up bundled together. A typical scenario is when you're inadvertently creating tuples when you mean to have a sequence of distinct arguments. Consider a function that expects multiple strings or numbers: if you inadvertently wrap those strings or numbers in parentheses, you get a tuple.
 
 Let’s illustrate this with some examples. Here’s a basic case using the older `%` style string formatting that would trigger this error:
 
@@ -42,6 +42,7 @@ def create_file_path(base_dir, file_name, extension):
   print(file_path_template.format(base_dir, file_name, extension))
 
 ```
+
 Here, I'm trying to construct a file path. The incorrect use of `.format()` shows how you might accidentally try to pass in a single tuple instead of individual arguments. Again the fix is simple. Pass the arguments as separate arguments and the format string will be created.
 
 Finally, f-strings, which are typically more explicit, can still lead to this error if you’re not careful. Consider this case with a logging mechanism that expects individual parameters, not a tuple, or an attempt to write multiple items from a tuple without unpacking them.

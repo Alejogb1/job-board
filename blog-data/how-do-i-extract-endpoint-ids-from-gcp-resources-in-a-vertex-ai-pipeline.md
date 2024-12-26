@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-extract-endpoint-ids-from-gcp-resources-in-a-vertex-ai-pipeline"
 ---
 
-Alright, let’s tackle this. Finding those specific endpoint ids within a Vertex AI pipeline can indeed present a bit of a challenge if you’re not familiar with the nuances of how pipeline components interact with metadata and resource management. I recall a project a while back, involving large-scale distributed training, where accurately extracting endpoint ids was crucial for dynamically configuring post-training evaluation processes. We learned a few lessons the hard way, so let's delve into it, shall we?
+, let’s tackle this. Finding those specific endpoint ids within a Vertex AI pipeline can indeed present a bit of a challenge if you’re not familiar with the nuances of how pipeline components interact with metadata and resource management. I recall a project a while back, involving large-scale distributed training, where accurately extracting endpoint ids was crucial for dynamically configuring post-training evaluation processes. We learned a few lessons the hard way, so let's delve into it, shall we?
 
 The fundamental issue here stems from the fact that a Vertex AI pipeline execution is, at its core, a series of orchestrated tasks. Each task, or component, can create and interact with various gcp resources, including Vertex AI endpoints. These endpoints, however, are not explicitly passed around as simple strings, but rather exist as managed resources within the GCP environment. To get at their ids, you'll need to leverage metadata tracking and the Vertex AI SDK.
 
@@ -136,22 +136,23 @@ def endpoint_object_extraction_pipeline(project: str, location:str, endpoint_dis
    extract_id_task = extract_id_from_endpoint_object(endpoint=create_endpoint_task.output)
 
 ```
+
 In this scenario, the `create_and_return_endpoint` component explicitly returns a `aiplatform.Endpoint` object which is available as the output of the pipeline step. When passed to the `extract_id_from_endpoint_object` the Vertex AI SDK can convert it to the full resource name and the id can be extracted.
 
 **Important Considerations and Best Practices**
 
-*   **Resource Names vs. IDs**: As demonstrated, the Vertex AI SDK often works with full resource names (`projects/123/locations/us-central1/endpoints/456`). While the ID is a part of it, it’s usually safer to handle the complete resource name, especially in complex systems, to ensure uniqueness and prevent unintentional operations on unintended resources.
+- **Resource Names vs. IDs**: As demonstrated, the Vertex AI SDK often works with full resource names (`projects/123/locations/us-central1/endpoints/456`). While the ID is a part of it, it’s usually safer to handle the complete resource name, especially in complex systems, to ensure uniqueness and prevent unintentional operations on unintended resources.
 
-*   **Error Handling**: Always incorporate proper error handling in your pipeline components. Resource access can sometimes fail. Use try-except blocks to gracefully handle cases where endpoints are not found or if the SDK encounters errors.
+- **Error Handling**: Always incorporate proper error handling in your pipeline components. Resource access can sometimes fail. Use try-except blocks to gracefully handle cases where endpoints are not found or if the SDK encounters errors.
 
-*  **Component Reusability:** Designing pipeline components that can take in a resource name rather than assuming a resource is going to be created within the component ensures that components are more reusable across your pipelines.
+- **Component Reusability:** Designing pipeline components that can take in a resource name rather than assuming a resource is going to be created within the component ensures that components are more reusable across your pipelines.
 
-*   **Authentication**: Make sure your pipeline service account has the necessary permissions to interact with Vertex AI resources. Insufficient permissions can lead to failed resource lookups.
+- **Authentication**: Make sure your pipeline service account has the necessary permissions to interact with Vertex AI resources. Insufficient permissions can lead to failed resource lookups.
 
 For deeper technical understanding, I recommend delving into these resources:
 
-*   **The Official Google Cloud AI Platform Documentation:** This is the best starting point, it provides comprehensive details about the sdk and resource management. Pay particular attention to the sections covering endpoints, pipelines, and the SDK.
-*   **"Designing Data-Intensive Applications" by Martin Kleppmann:** While not specific to Vertex AI, this book provides invaluable background on distributed systems principles and metadata management, which is pertinent to understanding how Vertex AI resources function.
-*   **"Building Machine Learning Pipelines" by Hannes Hapke and Catherine Nelson:** This book covers the engineering aspects of building ml pipelines, with specific sections on infrastructure management, that can be useful in the understanding and building out these pipelines.
+- **The Official Google Cloud AI Platform Documentation:** This is the best starting point, it provides comprehensive details about the sdk and resource management. Pay particular attention to the sections covering endpoints, pipelines, and the SDK.
+- **"Designing Data-Intensive Applications" by Martin Kleppmann:** While not specific to Vertex AI, this book provides invaluable background on distributed systems principles and metadata management, which is pertinent to understanding how Vertex AI resources function.
+- **"Building Machine Learning Pipelines" by Hannes Hapke and Catherine Nelson:** This book covers the engineering aspects of building ml pipelines, with specific sections on infrastructure management, that can be useful in the understanding and building out these pipelines.
 
 In my experience, the key is to treat Vertex AI resources as objects with properties you can access, not just as strings. By using the sdk's ability to use the full resource name to create a resource object, you ensure that all the properties can be leveraged. Understanding this allows you to seamlessly extract endpoint ids within your pipelines and build robust and efficient ML workflows. Remember, the full resource name is your friend, and leveraging the `aiplatform.Endpoint` object is the key to success.

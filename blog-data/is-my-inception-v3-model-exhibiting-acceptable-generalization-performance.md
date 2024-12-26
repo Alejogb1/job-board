@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-my-inception-v3-model-exhibiting-acceptable-generalization-performance"
 ---
 
-Okay, let's unpack this. Generalization performance of an Inception V3 model, or indeed any machine learning model, isn't a simple yes/no answer; it’s more nuanced than that. It requires a careful examination of various metrics and, frankly, a solid understanding of the data it’s trained and tested on. I’ve seen this issue crop up more times than I care to remember, often requiring a deep dive into both the model architecture and the dataset. I'll share some of my experiences and provide some actionable guidance.
+, let's unpack this. Generalization performance of an Inception V3 model, or indeed any machine learning model, isn't a simple yes/no answer; it’s more nuanced than that. It requires a careful examination of various metrics and, frankly, a solid understanding of the data it’s trained and tested on. I’ve seen this issue crop up more times than I care to remember, often requiring a deep dive into both the model architecture and the dataset. I'll share some of my experiences and provide some actionable guidance.
 
 The question itself, “is my Inception v3 model exhibiting acceptable generalization performance?”, suggests an inherent concern about overfitting or underfitting, the two classic pitfalls. Let's talk through what that means in practical terms.
 
@@ -114,6 +114,6 @@ processed_image = preprocess_input(image)
 # To ensure you're getting the right input for your model
 ```
 
-To really delve deeper into generalization and proper training practices, I suggest consulting the work of Ian Goodfellow, Yoshua Bengio, and Aaron Courville in *Deep Learning*, or papers like “Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift” by Sergey Ioffe and Christian Szegedy, if your dataset is prone to covariance shifts. Also, remember to check the work of Andrew Ng, particularly his online courses which cover the practicalities of machine learning in detail.
+To really delve deeper into generalization and proper training practices, I suggest consulting the work of Ian Goodfellow, Yoshua Bengio, and Aaron Courville in _Deep Learning_, or papers like “Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift” by Sergey Ioffe and Christian Szegedy, if your dataset is prone to covariance shifts. Also, remember to check the work of Andrew Ng, particularly his online courses which cover the practicalities of machine learning in detail.
 
 In summary, to determine if your Inception V3 model is generalizing appropriately, don't just rely on accuracy. Explore various metrics, validate your data and pre-processing steps thoroughly, and potentially experiment with techniques like transfer learning and fine-tuning if your dataset is limited or if you're observing overfitting. If the metrics tell you one story while you expected another, remember that often there is a disconnect somewhere in your assumptions. Good luck with your model!

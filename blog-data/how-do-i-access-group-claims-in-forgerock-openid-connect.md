@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-access-group-claims-in-forgerock-openid-connect"
 ---
 
-Alright, let's talk about accessing group claims in ForgeRock OpenID Connect. This is something I’ve certainly grappled with on more than one occasion, particularly when working on federated identity solutions that needed granular access control based on user groups. It's not always straightforward, and subtle configuration issues can lead to a lot of head-scratching, which is why understanding the nuts and bolts is so essential. The key takeaway is that we're not usually dealing with a single, globally accessible attribute, but rather a claim within a JSON Web Token (JWT) that represents a user’s group memberships.
+, let's talk about accessing group claims in ForgeRock OpenID Connect. This is something I’ve certainly grappled with on more than one occasion, particularly when working on federated identity solutions that needed granular access control based on user groups. It's not always straightforward, and subtle configuration issues can lead to a lot of head-scratching, which is why understanding the nuts and bolts is so essential. The key takeaway is that we're not usually dealing with a single, globally accessible attribute, but rather a claim within a JSON Web Token (JWT) that represents a user’s group memberships.
 
 First, let’s clarify what we mean by "group claims." In an OIDC flow, after a user authenticates with ForgeRock, the authorization server issues an ID token (and often an access token). These tokens are essentially JWTs, which are JSON objects signed cryptographically. Within the payload of these tokens, you can include various claims about the user. The “groups” claim, typically an array of string identifiers representing group memberships, is what we're interested in for this discussion. The exact name and format of this claim are configurable, but a typical convention is `groups`, `roles`, or sometimes an application-specific variation such as `app_groups`.
 
@@ -70,11 +70,13 @@ In this example, we load a json web key (JWK), which would typically be retrieve
 Here's a similar example using Node.js with the `jsonwebtoken` library.
 
 ```javascript
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 function decodeJWTAndGetGroups(token, jwk) {
   try {
-    const decodedToken = jwt.verify(token, jwk.keys[0].n, { algorithms: ['RS256'] });
+    const decodedToken = jwt.verify(token, jwk.keys[0].n, {
+      algorithms: ["RS256"],
+    });
     if (decodedToken.groups) {
       return decodedToken.groups;
     } else {
@@ -90,18 +92,17 @@ function decodeJWTAndGetGroups(token, jwk) {
 const token = "your_jwt_token";
 
 const jwk = {
-  "keys": [
+  keys: [
     {
-      "kid": "your_kid",
-      "kty": "RSA",
-      "n": "your_modulus",
-      "e": "your_exponent",
-      "alg": "RS256",
-      "use": "sig"
-    }
-  ]
+      kid: "your_kid",
+      kty: "RSA",
+      n: "your_modulus",
+      e: "your_exponent",
+      alg: "RS256",
+      use: "sig",
+    },
+  ],
 };
-
 
 const groups = decodeJWTAndGetGroups(token, jwk);
 

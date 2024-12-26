@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "r-coeftest-package-usage-tutorial"
 ---
 
-Okay so you're looking at `coeftest` from the `lmtest` package in R yeah I get it It's a pretty fundamental tool when you start digging into regression analysis and hypothesis testing beyond the usual t-tests I've been there man plenty of times I practically lived and breathed linear models for a good chunk of my early data science days I recall one project where I had to build these ridiculously complex models for predicting user churn for a subscription service that I worked for back when I still had hair We were throwing everything but the kitchen sink into those models and trying to understand the individual impact of each predictor so of course we used `coeftest` a lot that was like 2014 stuff maybe 2015 time flies
+you're looking at `coeftest` from the `lmtest` package in R yeah I get it It's a pretty fundamental tool when you start digging into regression analysis and hypothesis testing beyond the usual t-tests I've been there man plenty of times I practically lived and breathed linear models for a good chunk of my early data science days I recall one project where I had to build these ridiculously complex models for predicting user churn for a subscription service that I worked for back when I still had hair We were throwing everything but the kitchen sink into those models and trying to understand the individual impact of each predictor so of course we used `coeftest` a lot that was like 2014 stuff maybe 2015 time flies
 
 So let's break this down practically `coeftest` isn't about running a regression directly it's for taking an already fitted linear model object often one coming from `lm` or sometimes from `glm` and then testing some hypotheses about the coefficients basically it’s about figuring out which of your variables is actually statistically significant or if some specific linear combination of them is I used to think I was some statistical whiz kid until I encountered the real world and the mess that is real data I was quickly humbled
 
@@ -56,7 +56,7 @@ value <- 1
 coeftest(model,linhypo = hypothesis,rhs = value)
 ```
 
-That code tests the hypothesis that 2\*beta\_x1 + beta\_x2 = 1 using an F-test. `C` is a matrix where each row specifies a linear hypothesis about the coefficients. and rhs is a value or an array of values that represent the null hypothesis we are testing. This is useful to test complex relationships among parameters say if you want to test if 2 parameters are equal. It may not seem useful at first but when you start modelling complex systems you will realize that it's a great feature to have.
+That code tests the hypothesis that 2\*beta_x1 + beta_x2 = 1 using an F-test. `C` is a matrix where each row specifies a linear hypothesis about the coefficients. and rhs is a value or an array of values that represent the null hypothesis we are testing. This is useful to test complex relationships among parameters say if you want to test if 2 parameters are equal. It may not seem useful at first but when you start modelling complex systems you will realize that it's a great feature to have.
 
 I have seen people getting lost in what each of these C matrix rows represent so you have to pay attention to the order of parameters in the model object and understand well what each coefficient represents if not you are going to have a bad time debugging. You can have many rows in `C` that will jointly test for different linear hypotheses which may sound complex but is rather useful when dealing with complex models.
 

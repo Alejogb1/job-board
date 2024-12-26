@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-applicationjs-failing-to-compile-on-heroku-after-upgrading-to-rails-7-using-esbuild"
 ---
 
-Alright, let's dissect this Application.js compilation hiccup on Heroku after a Rails 7 upgrade to esbuild. I've been there, done that, got the debugging t-shirt. This situation, while common, often stems from a convergence of factors that aren't immediately obvious. Back in the day, migrating a substantial e-commerce platform to Rails 5 gave me a similar run for my money with the then-new webpacker. So, I understand the frustration. The move to esbuild in Rails 7, while promising for performance, introduces a different landscape of potential errors.
+, let's dissect this Application.js compilation hiccup on Heroku after a Rails 7 upgrade to esbuild. I've been there, done that, got the debugging t-shirt. This situation, while common, often stems from a convergence of factors that aren't immediately obvious. Back in the day, migrating a substantial e-commerce platform to Rails 5 gave me a similar run for my money with the then-new webpacker. So, I understand the frustration. The move to esbuild in Rails 7, while promising for performance, introduces a different landscape of potential errors.
 
 At its core, the problem typically isn’t with Rails itself, but with how esbuild and its dependencies are resolving modules, handling assets, and interacting with Heroku's environment. Let’s break down the common culprits.
 
@@ -31,7 +31,7 @@ And your `application.js` has an import that assumes implicit pathing.
 
 ```javascript
 // app/javascript/application.js (problematic)
-import MyComponent from 'components/my_component';
+import MyComponent from "components/my_component";
 
 console.log("Application Loaded.");
 ```
@@ -40,7 +40,7 @@ Here, esbuild may fail to resolve `components/my_component` because it's not an 
 
 ```javascript
 // app/javascript/application.js (fixed)
-import MyComponent from './components/my_component';
+import MyComponent from "./components/my_component";
 
 console.log("Application Loaded.");
 ```
@@ -54,9 +54,8 @@ Suppose your `package.json` is missing a core dependency or has the wrong versio
 {
   "dependencies": {
     // missing 'react'
-   }
+  }
 }
-
 ```
 
 The fix here is to add your dependency, while making sure that the version aligns with any of your installed package. This situation can sometimes result from having different package versions in development than those configured on Heroku.
@@ -66,7 +65,7 @@ The fix here is to add your dependency, while making sure that the version align
 {
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom":"^18.2.0"
+    "react-dom": "^18.2.0"
   }
 }
 ```
@@ -77,15 +76,15 @@ Let's say you're using an image or stylesheet referenced incorrectly in a compon
 
 ```javascript
 // app/javascript/components/my_component.js (problematic)
-import React from 'react';
+import React from "react";
 
 const MyComponent = () => {
-    return (
-        <div>
-            <img src='/assets/my_image.png' alt='My Image' />
-        </div>
-    )
-}
+  return (
+    <div>
+      <img src="/assets/my_image.png" alt="My Image" />
+    </div>
+  );
+};
 
 export default MyComponent;
 ```
@@ -94,16 +93,16 @@ With esbuild, the asset pipeline is no longer directly integrated in the same wa
 
 ```javascript
 // app/javascript/components/my_component.js (fixed - example using import)
-import React from 'react';
-import myImage from '../../assets/images/my_image.png';
+import React from "react";
+import myImage from "../../assets/images/my_image.png";
 
 const MyComponent = () => {
-    return (
-        <div>
-            <img src={myImage} alt='My Image' />
-        </div>
-    )
-}
+  return (
+    <div>
+      <img src={myImage} alt="My Image" />
+    </div>
+  );
+};
 
 export default MyComponent;
 ```
@@ -112,15 +111,15 @@ And for an alternate fix where we don't need to import:
 
 ```javascript
 // app/javascript/components/my_component.js (fixed)
-import React from 'react';
+import React from "react";
 
 const MyComponent = () => {
-    return (
-        <div>
-            <img src='/assets/images/my_image.png' alt='My Image' />
-        </div>
-    )
-}
+  return (
+    <div>
+      <img src="/assets/images/my_image.png" alt="My Image" />
+    </div>
+  );
+};
 
 export default MyComponent;
 ```
@@ -129,19 +128,18 @@ However, you must make sure to explicitly copy any images you wish to reference 
 
 ```javascript
 // esbuild.config.js
-const path = require('path');
+const path = require("path");
 
 module.exports = {
-    entryPoints: ["application.js"],
-    bundle: true,
-    outdir: path.join(process.cwd(), "app/assets/builds"),
-    loader: {
-        '.png': 'file',
-        '.jpg': 'file',
-        '.jpeg': 'file',
-        '.svg': 'file'
-     }
-    
+  entryPoints: ["application.js"],
+  bundle: true,
+  outdir: path.join(process.cwd(), "app/assets/builds"),
+  loader: {
+    ".png": "file",
+    ".jpg": "file",
+    ".jpeg": "file",
+    ".svg": "file",
+  },
 };
 ```
 
@@ -149,12 +147,12 @@ In my experience, meticulously checking these aspects – pathing, dependencies 
 
 For deeper dives on these topics, I recommend looking at:
 
-*   **"Webpack: The Definitive Guide" by Suraj Sharma**. While this focuses on Webpack (which was used in older Rails versions), many of the underlying concepts about module resolution and asset handling are transferable to understanding how esbuild works.
+- **"Webpack: The Definitive Guide" by Suraj Sharma**. While this focuses on Webpack (which was used in older Rails versions), many of the underlying concepts about module resolution and asset handling are transferable to understanding how esbuild works.
 
-*   **The official documentation for `esbuild`**. It’s surprisingly clear, detailed, and essential for understanding its configuration options. Pay close attention to the `loader` and `entryPoints` settings.
+- **The official documentation for `esbuild`**. It’s surprisingly clear, detailed, and essential for understanding its configuration options. Pay close attention to the `loader` and `entryPoints` settings.
 
-*   **The official Rails documentation on using Javascript with esbuild**. This contains the Rails specific context for how the framework intends `esbuild` to be used with assets.
+- **The official Rails documentation on using Javascript with esbuild**. This contains the Rails specific context for how the framework intends `esbuild` to be used with assets.
 
-*   **"Pragmatic Programmer" by Andrew Hunt and David Thomas.** Though this is not specifically a Javascript book, it helps you cultivate the discipline to diagnose problems with a systematical approach.
+- **"Pragmatic Programmer" by Andrew Hunt and David Thomas.** Though this is not specifically a Javascript book, it helps you cultivate the discipline to diagnose problems with a systematical approach.
 
 Debugging these issues requires a methodical approach. First, meticulously review your `Gemfile.lock`, `package.json` and the structure of your `app/javascript` directory. Then, look at Heroku's build logs. And finally, simplify your setup if required. Sometimes, a small, isolated test case that can reproduce the problem can help you identify the culprit much faster. Remember, the key is to be precise and explicit in how you define your module paths, dependencies, and configurations. It’s a painstaking process, but it’s often the only path to solving these kinds of production problems.

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "localparam-verilog-parameters-example"
 ---
 
-Alright so localparam in Verilog right I've been there wrestled with that beast more times than I care to admit
+so localparam in Verilog right I've been there wrestled with that beast more times than I care to admit
 
 Yeah its a common headache for beginners and sometimes for seasoned pros too when you're knee-deep in a complex design and forgetting your basic syntax localparams are those nifty little constants you define within a module or a package they're like the silent workhorses of parameterized hardware design allowing you to configure things without the hassle of re-writing massive chunks of code each time
 
@@ -63,7 +63,8 @@ assign data_out = data_reg;
 
 endmodule
 ```
-See here ADDR\_WIDTH and DATA\_WIDTH are localparams and FULL\_ADDR is a local param that uses the other localparams you can only define parameters that way within the localparam definition not as a variable so you need to be careful here it is something you cant change from outside the module and this is a good thing as you should not change it there. The FULL\_ADDR calculation is done at compile time so you don't get a runtime performance hit.
+
+See here ADDR_WIDTH and DATA_WIDTH are localparams and FULL_ADDR is a local param that uses the other localparams you can only define parameters that way within the localparam definition not as a variable so you need to be careful here it is something you cant change from outside the module and this is a good thing as you should not change it there. The FULL_ADDR calculation is done at compile time so you don't get a runtime performance hit.
 
 Let's make it a tad more complex adding another module that we are going to generate
 
@@ -125,11 +126,13 @@ module sub_module #(parameter SUB_WIDTH = 4) (
 
 endmodule
 ```
+
 Here `DATA_WIDTH` `SUB_WIDTH` `NUM_SUB_MODULES` are all localparams we are using local params to determine the amount of sub modules we are instantiating and the widths of the signals inside those submodules. The `genvar i` is another parameter but that is not what we are talking about here. If this were a top-level parameter you would not be able to change the amount of sub modules instantiated. I once spent half of my day debugging this exact thing. Turns out parameters are for top level instantiation adjustments not local adjustments within modules.
 
 Key takeaways are that `localparam` are constants within a module or a package they are not meant to be changed by higher levels of design hierarchy and are meant to be used for internal calculations that should not be changed by users or other modules and help in making code more maintainable by assigning specific names to constants and it is also important to note that this is all calculated during compile time. And parameters are meant to adjust the module behavior from top level.
 
 Another thing I remember I did was to set the value of a local parameter based on another parameter I am not sure if this is a good idea or not but its fun and can be handy.
+
 ```verilog
 module parameterized_localparam #(parameter BASE_VALUE = 10) (
   input  [31:0]  data_in,
@@ -155,6 +158,7 @@ module parameterized_localparam #(parameter BASE_VALUE = 10) (
 
 endmodule
 ```
+
 here `OFFSET_VALUE` and `RESULT_VALUE` are derived from the `BASE_VALUE` parameter this example is pretty dumb but you get the idea it can be really useful in other real world cases.
 
 Regarding resources for Verilog specifically look for books like "Digital Design and Computer Architecture" by David Money Harris and Sarah L Harris it goes a good length on hardware descriptions with verilog and "SystemVerilog for Verification" by Chris Spear. There are also many online tutorials but i found that for this level of hardware design books and well structured papers are better. Also don't forget to always be looking at the standard documents there is something in there that always help even the most advanced engineers. It is the standard for a reason I guess. One day a senior engineer joked with me that the only thing he ever reads is the standard documents and he is being completely serious. I thought that was funny.

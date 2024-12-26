@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-create-a-google-bigquery-connection-from-the-airflow-ui-dockerized"
 ---
 
-Alright, let's unpack this. I’ve been down this particular rabbit hole before, specifically around five years back when we were migrating a large batch processing system to a cloud-native architecture. Setting up a robust connection between a dockerized Airflow instance and Google BigQuery is a crucial step, and it's more nuanced than it might first appear. It’s not just about the code—it’s also about properly configuring permissions and networking within your containerized environment.
+, let's unpack this. I’ve been down this particular rabbit hole before, specifically around five years back when we were migrating a large batch processing system to a cloud-native architecture. Setting up a robust connection between a dockerized Airflow instance and Google BigQuery is a crucial step, and it's more nuanced than it might first appear. It’s not just about the code—it’s also about properly configuring permissions and networking within your containerized environment.
 
 The core issue revolves around ensuring that Airflow, running within its docker container, can authenticate with Google Cloud Platform (GCP) and BigQuery. This authentication typically hinges on service account keys, and the secure and reliable management of those keys is absolutely paramount. Let's walk through the necessary steps and some potential pitfalls based on my experience.
 
@@ -19,6 +19,7 @@ Here’s a breakdown of how I'd do it, starting with the environment variable se
 ```bash
 base64 <service_account_key.json > service_account_key.b64
 ```
+
 Then, copy the content of `service_account_key.b64` to a safe location where it can be referenced.
 
 2. **Set an Environment Variable in your Docker Setup:** This variable will carry the encoded service account key. When launching the airflow docker container, use a `--env` or a similar mechanism provided by your container orchestration tool:
@@ -28,6 +29,7 @@ docker run -d \
     -e AIRFLOW_GCP_KEY_BASE64="<your_base64_encoded_key_contents>" \
     ...  <your_airflow_image>
 ```
+
 Replace `<your_base64_encoded_key_contents>` with the actual encoded content of the key you copied in step 1.
 
 3. **Configure the Airflow Connection:** Within the Airflow UI, navigate to `Admin` -> `Connections`. Create a new connection. Set `Connection Type` to `Google Cloud`. There, you will see the option to configure the authentication using a json file. We are not using that, instead, specify `Credentials JSON` as an empty string, and add the project_id under `extra` like this `{"project_id":"your-gcp-project-id"}`.
@@ -75,7 +77,7 @@ with DAG(
 
 In this example, `get_bigquery_hook` decodes the base64 string, loads the JSON key, and instantiates the `BigQueryHook`. The `execute_bq_query` function demonstrates the basic usage of this hook to run a query. It’s important to note that `gcp_conn_id` has to match with the name of the connection you created in Airflow.
 
-Another alternative is to use the Google application default credentials. This is usually achieved via an instance metadata server but can be implemented via the environment as well.  This is particularly relevant when using managed environments like Google Kubernetes Engine, where you can assign service accounts to your pods. This does require you to configure your container with the necessary service account beforehand, outside the scope of the Airflow UI.
+Another alternative is to use the Google application default credentials. This is usually achieved via an instance metadata server but can be implemented via the environment as well. This is particularly relevant when using managed environments like Google Kubernetes Engine, where you can assign service accounts to your pods. This does require you to configure your container with the necessary service account beforehand, outside the scope of the Airflow UI.
 
 Here’s an example of using Application Default Credentials via `GOOGLE_APPLICATION_CREDENTIALS`:
 
@@ -146,6 +148,7 @@ with DAG(
         python_callable=execute_bq_query_file
     )
 ```
+
 Here the `key_path` argument is provided to the `BigQueryHook` that points to where the file is mounted in your container's file system.
 
 For a deep dive on Google Cloud authentication, I highly recommend the official Google Cloud documentation. Specifically, review the “Authenticating as a Service Account” section which can be found in “Cloud Authentication: Overview” on the Google Cloud documentation website. For Airflow specifics, the “Apache Airflow Providers Package Google” documentation, especially around the BigQueryHook, is a great resource.

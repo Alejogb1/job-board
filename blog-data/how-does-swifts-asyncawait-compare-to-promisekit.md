@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-swifts-asyncawait-compare-to-promisekit"
 ---
 
-Alright, let's unpack this. It’s a comparison I’ve actually navigated quite a few times, particularly during a project involving a large-scale data migration pipeline a few years back. We initially leaned heavily on PromiseKit, then gradually transitioned to Swift’s `async`/`await` as the language evolved. My experience with both systems gives me some practical perspective on their differences, and ultimately, their place in modern iOS and macOS development.
+, let's unpack this. It’s a comparison I’ve actually navigated quite a few times, particularly during a project involving a large-scale data migration pipeline a few years back. We initially leaned heavily on PromiseKit, then gradually transitioned to Swift’s `async`/`await` as the language evolved. My experience with both systems gives me some practical perspective on their differences, and ultimately, their place in modern iOS and macOS development.
 
 Fundamentally, both PromiseKit and `async`/`await` aim to address the same core challenge: managing asynchronous operations. This was a real headache before structured concurrency tools emerged. Callbacks, the old approach, frequently led to nested code pyramids – the infamous "callback hell" – that were difficult to understand, debug, and maintain. PromiseKit offered an elegant solution to that, introducing a cleaner, more linear way to reason about asynchronous flows. You chain asynchronous operations using `then`, `catch`, and similar methods, effectively transforming complex, deeply nested callback structures into something more readable.
 
@@ -112,13 +112,14 @@ Another significant difference is cancellation. PromiseKit has explicit methods 
 To make it concrete, let's consider how cancellation might look in both scenarios. We'll build on the previous examples by introducing a cancellable network request simulator.
 
 **Example 3: PromiseKit with cancellation**
+
 ```swift
 import PromiseKit
 import Foundation
 
 class CancellableRequest {
     var isCancelled = false
-    
+
     func fetchCancellableData() -> Promise<String> {
       return Promise { seal in
            DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
@@ -129,7 +130,7 @@ class CancellableRequest {
             }
 
          }
-        
+
       }
 
     }
@@ -166,7 +167,7 @@ import Foundation
 
 func fetchCancellableDataAsync() async throws -> String {
    return try await withCheckedThrowingContinuation { continuation in
-        
+
         let task =  DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
              if !Task.isCancelled {
                 continuation.resume(returning: "Data received")
@@ -207,7 +208,7 @@ In the async/await version, there’s no need for explicit `isCancelled` flags o
 
 For more in-depth knowledge, I'd recommend looking at the following resources:
 
-*   **“Concurrency Programming with Swift” by Apple:** This is Apple's official guide to understanding Swift’s structured concurrency model, including `async`/`await`. It's the definitive resource for understanding how it works at the language level.
-*   **"Effective Concurrency in Swift" by Sundell:** This resource goes into a lot of detail on best practices for using Swift concurrency and provides great insight into handling edge cases and optimizing concurrent code.
+- **“Concurrency Programming with Swift” by Apple:** This is Apple's official guide to understanding Swift’s structured concurrency model, including `async`/`await`. It's the definitive resource for understanding how it works at the language level.
+- **"Effective Concurrency in Swift" by Sundell:** This resource goes into a lot of detail on best practices for using Swift concurrency and provides great insight into handling edge cases and optimizing concurrent code.
 
 In conclusion, while PromiseKit was a valuable tool that significantly improved asynchronous programming practices in Swift, `async`/`await` is a significant advancement. It’s more integrated, more readable, and typically more efficient. Although it took time, migrating to `async`/`await` resulted in a better codebase that was easier to maintain, and I find myself rarely reaching for promise-based solutions these days, unless specifically working with legacy codebases.

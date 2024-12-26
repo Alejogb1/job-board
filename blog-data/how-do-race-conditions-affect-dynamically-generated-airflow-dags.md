@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-do-race-conditions-affect-dynamically-generated-airflow-dags"
 ---
 
-Okay, let's tackle this. I’ve seen this particular problem rear its head more than once, particularly when dealing with complex workflows in distributed environments. Dynamically generated Airflow dags, while incredibly powerful for handling variable workloads and data structures, unfortunately bring with them the potential for some rather nasty race conditions. It’s something that warrants a very careful and considered approach.
+, let's tackle this. I’ve seen this particular problem rear its head more than once, particularly when dealing with complex workflows in distributed environments. Dynamically generated Airflow dags, while incredibly powerful for handling variable workloads and data structures, unfortunately bring with them the potential for some rather nasty race conditions. It’s something that warrants a very careful and considered approach.
 
 The core issue lies in the fact that a dynamically generated dag isn’t a static entity residing neatly in the dags folder. Instead, it's often constructed programmatically, usually based on some external input or condition, which means the dag definition isn’t fixed. This process of dag generation, typically happening during airflow’s dag parsing phase, creates a window for race conditions to occur.
 
 Consider this situation: imagine you have a process that generates a dag based on data stored in a database. This process might, for example, pull a list of tables to process and then dynamically construct an airflow dag with tasks for each table. The race condition emerges when multiple processes or dag schedulers attempt to generate or update the dag at the same time. This often happens when you have multiple airflow schedulers for high availability or when the database storing your configuration has concurrent writes.
 
-What could go wrong? Well, imagine two airflow schedulers both pick up the task of updating the dag from the database at almost the same moment. Scheduler ‘A’ might load the dag based on version 1 of the configuration data, and then after some processing, store that new dag definition. Scheduler ‘B’ then, nearly simultaneously, loads its version of the configuration, possibly based on a slightly updated version of the configuration (version 2) and also stores *its* dag definition. Because this dag generation and storage process isn’t typically atomic or serialized, the result of ‘B’ might then overwrite ‘A’, losing any changes to the dag. You now have an inconsistency between the intended dag definition (what version 2 should have produced) and the actual dag stored in airflow.
+What could go wrong? Well, imagine two airflow schedulers both pick up the task of updating the dag from the database at almost the same moment. Scheduler ‘A’ might load the dag based on version 1 of the configuration data, and then after some processing, store that new dag definition. Scheduler ‘B’ then, nearly simultaneously, loads its version of the configuration, possibly based on a slightly updated version of the configuration (version 2) and also stores _its_ dag definition. Because this dag generation and storage process isn’t typically atomic or serialized, the result of ‘B’ might then overwrite ‘A’, losing any changes to the dag. You now have an inconsistency between the intended dag definition (what version 2 should have produced) and the actual dag stored in airflow.
 
 This leads to some very difficult-to-diagnose issues in your workflows. Tasks might get skipped, data dependencies might get out of sync, or the entire dag could just fail to execute correctly.
 
@@ -197,6 +197,7 @@ if __name__ == '__main__':
 
     print(f"Final dag_config_version: {dag_config_version}")
 ```
+
 Here, the `atomic_increment` function encapsulates the read and update of the version number, guaranteeing that these happen sequentially. Note the use of the thread lock to ensure we are not modifying the shared variable from multiple threads at the same time.
 
 These examples are simplified for clarity, of course, but they highlight the core mechanics of the problem and potential solutions.

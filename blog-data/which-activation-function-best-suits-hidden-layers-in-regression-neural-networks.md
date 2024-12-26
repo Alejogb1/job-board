@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "which-activation-function-best-suits-hidden-layers-in-regression-neural-networks"
 ---
 
-Okay, let's tackle this. Thinking back to a project involving predicting energy consumption for a large industrial facility several years ago, I distinctly remember the struggles we faced with choosing the "right" activation functions for our hidden layers. It wasn’t just about raw performance; stability and convergence played massive roles, too. So, diving into which activation function *best* suits hidden layers in regression neural networks, it’s less about a single perfect answer and more about a nuanced understanding of trade-offs.
+, let's tackle this. Thinking back to a project involving predicting energy consumption for a large industrial facility several years ago, I distinctly remember the struggles we faced with choosing the "right" activation functions for our hidden layers. It wasn’t just about raw performance; stability and convergence played massive roles, too. So, diving into which activation function _best_ suits hidden layers in regression neural networks, it’s less about a single perfect answer and more about a nuanced understanding of trade-offs.
 
 When you’re dealing with regression, you’re generally aiming to predict a continuous output – a numerical value, rather than a class or category. This immediately shifts our perspective from activation functions often used in classification, like sigmoid or softmax. These functions tend to squash outputs into specific ranges, and that's counterproductive when we need a full, unrestricted range. Hidden layers, the layers between your input and output, are primarily responsible for learning complex non-linear relationships in your data. Thus, selecting activation functions that facilitate this is key.
 
@@ -59,7 +59,7 @@ print(f"Tanh output for {x}: {output}")
 
 ```
 
-It is crucial to understand that the choice isn’t just about which activation function *generally* performs best. It’s deeply intertwined with your data, the specific network architecture, and your training strategy. No matter the activation function, we also need proper weight initialization, batch normalization, and a robust optimization algorithm such as Adam or RMSProp to get good results.
+It is crucial to understand that the choice isn’t just about which activation function _generally_ performs best. It’s deeply intertwined with your data, the specific network architecture, and your training strategy. No matter the activation function, we also need proper weight initialization, batch normalization, and a robust optimization algorithm such as Adam or RMSProp to get good results.
 
 My usual workflow, gleaned from years of experience, involves starting with ReLU (or a variant, particularly Leaky ReLU), then experimenting with PReLU if I am dealing with a complex network. Tanh can be useful on particular problems that might require the output to be in a mean-centered space. I almost never use sigmoid or softmax for hidden layers in regression due to the limited output range. It is also worthwhile to track the activation function usage, by inspecting histograms of neuron activations, if you notice dead neurons (all outputs tending to zero) or neurons with a lot of saturated (near 1 or -1) outputs. This can help you to adjust your learning rate, batch size, or choice of activation function.
 

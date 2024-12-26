@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-a-single-register-request-contain-multiple-to-headers"
 ---
 
-Alright, let's tackle this one. I recall a particularly tricky SIP implementation I worked on years ago where this very issue cropped up. We were dealing with a complex system incorporating multiple user profiles under a single device, and the question of handling multiple 'to' headers in a register request became quite relevant. The short answer is yes, a single SIP register request *can* indeed contain multiple 'to' headers, though it's a practice that needs careful handling and doesn't conform to the standard intended use of the 'to' field. Let me explain.
+, let's tackle this one. I recall a particularly tricky SIP implementation I worked on years ago where this very issue cropped up. We were dealing with a complex system incorporating multiple user profiles under a single device, and the question of handling multiple 'to' headers in a register request became quite relevant. The short answer is yes, a single SIP register request _can_ indeed contain multiple 'to' headers, though it's a practice that needs careful handling and doesn't conform to the standard intended use of the 'to' field. Let me explain.
 
 The SIP standard (RFC 3261 and subsequent related RFCs) specifies that the 'to' header field is meant to indicate the logical recipient of the request. In the context of a register request, this would typically be the address-of-record (AOR) that is to be registered. So, intuitively, you would expect a single 'to' header containing this single AOR. However, the SIP syntax rules actually allow for multiple 'to' headers. This allowance is not generally intended for multiple registration endpoints within a single register request but is often leveraged for backward compatibility or in specific corner cases that I'll elaborate on.
 
@@ -49,6 +49,7 @@ Contact: <sip:user1@192.168.1.100:5060>
 Expires: 3600
 Content-Length: 0
 ```
+
 Here, the registrar will have to resolve which `To` header it intends to use for registration. Is it the first, the last, or a combination? The registrar's behavior would have to be explicitly defined and documented within your system. Generally, the safest approach is to avoid using duplicate 'to' headers entirely.
 
 **Scenario 3: Use of Multiple To Headers during Backward Compatibility (the most probable case)**
@@ -79,9 +80,9 @@ Instead of relying on these kinds of multiple headers, consider using batch regi
 
 As for resources, I would recommend deeply exploring:
 
-*   **RFC 3261:** This is the foundational document for SIP. Understanding the core definitions is critical.
-*   **"SIP Demystified" by Gonzalo Salgueiro and Alan Johnston:** This is an excellent book for a comprehensive look at SIP, including how headers are processed.
-*   **"The Session Initiation Protocol (SIP): Internet Signaling for Next-Generation Communications" by Alan B. Johnston:** This book provides a deep dive into SIP and is also a good resource.
-*   **RFC 3263:** This document provides details about locating SIP servers, and is critical to understand how requests such as REGISTER are routed.
+- **RFC 3261:** This is the foundational document for SIP. Understanding the core definitions is critical.
+- **"SIP Demystified" by Gonzalo Salgueiro and Alan Johnston:** This is an excellent book for a comprehensive look at SIP, including how headers are processed.
+- **"The Session Initiation Protocol (SIP): Internet Signaling for Next-Generation Communications" by Alan B. Johnston:** This book provides a deep dive into SIP and is also a good resource.
+- **RFC 3263:** This document provides details about locating SIP servers, and is critical to understand how requests such as REGISTER are routed.
 
-In conclusion, while the syntax allows it, sending multiple 'to' headers in a register request is generally ill-advised due to the potential for unpredictable outcomes. Adhering to the standard usage—a single 'to' header specifying the address-of-record—is crucial for creating robust and interoperable SIP implementations. Remember, standards are not just specifications of what is permissible, but also of what *should* be done for consistency and interoperability.
+In conclusion, while the syntax allows it, sending multiple 'to' headers in a register request is generally ill-advised due to the potential for unpredictable outcomes. Adhering to the standard usage—a single 'to' header specifying the address-of-record—is crucial for creating robust and interoperable SIP implementations. Remember, standards are not just specifications of what is permissible, but also of what _should_ be done for consistency and interoperability.

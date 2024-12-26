@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "dbc-button-alignment-problem"
 ---
 
-Okay so dbc button alignment right I've been down that rabbit hole myself more times than I care to admit Let's break it down because dbc can be a bit finicky especially when it comes to aligning those darn buttons
+dbc button alignment right I've been down that rabbit hole myself more times than I care to admit Let's break it down because dbc can be a bit finicky especially when it comes to aligning those darn buttons
 
 First off when you say "alignment problem" I'm guessing you're dealing with a few common culprits either buttons are stacked weirdly when you want them horizontal or they're off-center within their container or maybe they're just refusing to play nice with other components Yeah I've seen it all
 
-See here's my thing I've been working with web UIs and component libraries since before React was cool I remember the days of hand coding every single UI element a long long time ago like when CSS frameworks were just ideas sketched on napkins okay not really but it feels like it sometimes So trust me I've wrestled with CSS layout more than the average bear and let me tell you it never gets easier you just get better at troubleshooting it
+See here's my thing I've been working with web UIs and component libraries since before React was cool I remember the days of hand coding every single UI element a long long time ago like when CSS frameworks were just ideas sketched on napkins not really but it feels like it sometimes So trust me I've wrestled with CSS layout more than the average bear and let me tell you it never gets easier you just get better at troubleshooting it
 
-Okay so let's get concrete When dealing with dbc buttons specifically I've found that the problem usually boils down to one of these
+let's get concrete When dealing with dbc buttons specifically I've found that the problem usually boils down to one of these
 
 **1 The Container's Layout**
 
@@ -22,11 +22,10 @@ Here's a code snippet showing a simple scenario using flexbox
 
 ```html
 <div style="display: flex; justify-content: space-around;">
-  <button class="dbc-button" >Button 1</button>
-  <button class="dbc-button" >Button 2</button>
-  <button class="dbc-button" >Button 3</button>
+  <button class="dbc-button">Button 1</button>
+  <button class="dbc-button">Button 2</button>
+  <button class="dbc-button">Button 3</button>
 </div>
-
 ```
 
 **2 The Button's Own Styling**
@@ -39,9 +38,9 @@ Let's see another example say we want the buttons to be aligned on the left here
 
 ```html
 <div style="display: flex; justify-content: flex-start;">
-  <button class="dbc-button" >Button A</button>
-  <button class="dbc-button" >Button B</button>
-  <button class="dbc-button" >Button C</button>
+  <button class="dbc-button">Button A</button>
+  <button class="dbc-button">Button B</button>
+  <button class="dbc-button">Button C</button>
 </div>
 ```
 
@@ -68,7 +67,7 @@ container = html.Div(buttons_row)
 
 **General Tips**
 
-Okay so some general wisdom here first of all use the browser developer tools inspect element is your friend you can fiddle with CSS properties in real time and see their effects instantly This is essential for troubleshooting any CSS issues you may have You can inspect the box model margins paddings borders and all that good stuff
+some general wisdom here first of all use the browser developer tools inspect element is your friend you can fiddle with CSS properties in real time and see their effects instantly This is essential for troubleshooting any CSS issues you may have You can inspect the box model margins paddings borders and all that good stuff
 
 Also sometimes you need to add some explicit height and width to your elements I know that's a cardinal sin but it's true It can help constrain the element and control the layout as expected this is mostly needed when there are elements that are taking space they shouldn't be taking
 
@@ -78,9 +77,9 @@ Another thing make sure the default browser styles are not causing some issues I
 
 Instead of just throwing random links at you I'll give some resources that have been useful for me
 
-*   **"Eloquent JavaScript"** by Marijn Haverbeke It’s a great book for brushing up on the fundamentals of HTML CSS and Javascript which are essential knowledge when working with dbc layouts
-*   **"CSS: The Definitive Guide"** by Eric A Meyer This is an in depth guide to all things CSS I know it’s kind of dry but sometimes you need to go to the source to figure it out
-*   **The official documentation of dbc itself** This is an obvious one but a lot of devs skip it in general that's the first place to look for all the specifics around dbc
+- **"Eloquent JavaScript"** by Marijn Haverbeke It’s a great book for brushing up on the fundamentals of HTML CSS and Javascript which are essential knowledge when working with dbc layouts
+- **"CSS: The Definitive Guide"** by Eric A Meyer This is an in depth guide to all things CSS I know it’s kind of dry but sometimes you need to go to the source to figure it out
+- **The official documentation of dbc itself** This is an obvious one but a lot of devs skip it in general that's the first place to look for all the specifics around dbc
 
 And now a random joke since they asked for it A programmer walks into a bar orders a beer and a shot and then says to the waiter "I'll need two straws because I can't wait to see the stack overflow" hahaha ok back to work
 

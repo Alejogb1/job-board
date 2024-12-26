@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "what-is-the-functional-difference-between-reschedule-and-poke-modes-for-airflow-externaltasksensor"
 ---
 
-Okay, let's break down the functional distinctions between “reschedule” and “poke” modes within Airflow's `ExternalTaskSensor`, something I’ve seen tripped up developers more than once, and I’ve had to troubleshoot myself in production scenarios. It’s not always immediately clear from the documentation, and the subtle differences in behavior can lead to unexpected outcomes if not properly understood.
+, let's break down the functional distinctions between “reschedule” and “poke” modes within Airflow's `ExternalTaskSensor`, something I’ve seen tripped up developers more than once, and I’ve had to troubleshoot myself in production scenarios. It’s not always immediately clear from the documentation, and the subtle differences in behavior can lead to unexpected outcomes if not properly understood.
 
-The core purpose of an `ExternalTaskSensor` is to monitor the execution status of a task in a *different* dag, and to conditionally proceed based on that state. Think of it as a dependency mechanism that stretches beyond the confines of a single DAG. It's a powerful feature for coordinating complex, multi-dag workflows. The question comes down to *how* the sensor checks for that dependent task's status. This is where 'reschedule' and 'poke' come into play.
+The core purpose of an `ExternalTaskSensor` is to monitor the execution status of a task in a _different_ dag, and to conditionally proceed based on that state. Think of it as a dependency mechanism that stretches beyond the confines of a single DAG. It's a powerful feature for coordinating complex, multi-dag workflows. The question comes down to _how_ the sensor checks for that dependent task's status. This is where 'reschedule' and 'poke' come into play.
 
 **"Poke" Mode: The Active Poller**
 
@@ -42,7 +42,7 @@ In this code snippet, the `sensor_task` will, every 30 seconds, check if the tas
 
 **"Reschedule" Mode: The Deferral Mechanism**
 
-In contrast, 'reschedule' mode operates using a deferral mechanism. When the `ExternalTaskSensor` in this mode executes, it also first checks the target task’s status. However, if the target task hasn't succeeded, instead of waiting, the sensor *releases* its worker slot back to the pool and is rescheduled at a predefined future point, as defined in your scheduler configuration.
+In contrast, 'reschedule' mode operates using a deferral mechanism. When the `ExternalTaskSensor` in this mode executes, it also first checks the target task’s status. However, if the target task hasn't succeeded, instead of waiting, the sensor _releases_ its worker slot back to the pool and is rescheduled at a predefined future point, as defined in your scheduler configuration.
 
 This mode is more efficient from a database perspective and can lead to more immediate reactions to the external task succeeding, since the sensor isn't periodically polling. There is less continuous database interaction compared to 'poke', and the scheduler itself is managing the re-activation of the sensor. However, it does consume a bit more scheduler resources since each reschedule action has to be handled by the scheduler.
 
@@ -75,14 +75,14 @@ Here, we've set `mode='reschedule'`, which means the sensor will defer its execu
 
 Let’s make a table to explicitly highlight the crucial differences:
 
-| Feature          | "Poke" Mode                                   | "Reschedule" Mode                              |
-|-------------------|-----------------------------------------------|-----------------------------------------------|
-| **Mechanism**      | Active polling of task state               | Deferral and reschedule by scheduler              |
-| **Worker Resource**| Short, repeated worker usage                  | Worker freed until rescheduled                  |
-| **Database Load**  | Higher, due to constant polling              | Lower, less frequent queries                  |
-| **Responsiveness**| Can be delayed by `poke_interval`              | Potentially faster due to deferral              |
-| **Configurable Interval**| yes (through `poke_interval`)             | No (controlled by the scheduler configuration)|
-| **Ideal Scenarios** | When short polling intervals are acceptable, and deferrals may lead to high scheduling load.| When immediate reactions are beneficial, and deferring resources is preferred.|
+| Feature                   | "Poke" Mode                                                                                  | "Reschedule" Mode                                                              |
+| ------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| **Mechanism**             | Active polling of task state                                                                 | Deferral and reschedule by scheduler                                           |
+| **Worker Resource**       | Short, repeated worker usage                                                                 | Worker freed until rescheduled                                                 |
+| **Database Load**         | Higher, due to constant polling                                                              | Lower, less frequent queries                                                   |
+| **Responsiveness**        | Can be delayed by `poke_interval`                                                            | Potentially faster due to deferral                                             |
+| **Configurable Interval** | yes (through `poke_interval`)                                                                | No (controlled by the scheduler configuration)                                 |
+| **Ideal Scenarios**       | When short polling intervals are acceptable, and deferrals may lead to high scheduling load. | When immediate reactions are beneficial, and deferring resources is preferred. |
 
 **Practical Considerations: A Case From My Experience**
 
@@ -96,9 +96,9 @@ The key is to understand the specific context and resource constraints of your p
 
 For a deeper understanding, I highly recommend reviewing the following:
 
-*   **The official Apache Airflow documentation:** Specifically the sections dedicated to `ExternalTaskSensor`, deferrable operators, and scheduler internals.
-*   **"Data Pipelines with Apache Airflow" by Bas P. Harenslak and Julian Rutger Van Der Mee:** This provides a comprehensive guide to Airflow and contains helpful discussions on sensor implementations.
-*   **Apache Airflow Improvement Proposals (AIPs):** These are excellent sources to understand design decisions and trade-offs made within the platform and can clarify the rationale behind these features. Look for AIPs related to deferrable operators and sensor mechanisms.
-*   **"Designing Data-Intensive Applications" by Martin Kleppmann:** Although not solely focused on Airflow, this book provides solid foundations on data consistency and distributed systems principles, which are relevant for comprehending the architectural context of these sensor behaviors.
+- **The official Apache Airflow documentation:** Specifically the sections dedicated to `ExternalTaskSensor`, deferrable operators, and scheduler internals.
+- **"Data Pipelines with Apache Airflow" by Bas P. Harenslak and Julian Rutger Van Der Mee:** This provides a comprehensive guide to Airflow and contains helpful discussions on sensor implementations.
+- **Apache Airflow Improvement Proposals (AIPs):** These are excellent sources to understand design decisions and trade-offs made within the platform and can clarify the rationale behind these features. Look for AIPs related to deferrable operators and sensor mechanisms.
+- **"Designing Data-Intensive Applications" by Martin Kleppmann:** Although not solely focused on Airflow, this book provides solid foundations on data consistency and distributed systems principles, which are relevant for comprehending the architectural context of these sensor behaviors.
 
 Choosing between 'reschedule' and 'poke' is not just about preference; it's about understanding the nuances of each mode and selecting the most appropriate approach for your specific use case. In the long run, making an informed decision can save you considerable debugging time and prevent unforeseen performance bottlenecks.

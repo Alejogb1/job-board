@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-is-wpf-listview-not-binding-to-the-viewmodel-property"
 ---
 
-Okay, let's talk about why your WPF ListView isn't playing nice with your ViewModel property. It’s a situation I've seen, and frankly, debugged more times than I care to count, especially back when I was knee-deep in desktop application development for that manufacturing control system. The core problem, nine times out of ten, isn't that the binding *isn't* working; it’s that it's not working *as you expect*. WPF's data binding system, while powerful, can be a bit finicky if not approached with the right understanding. Let’s get into the nitty-gritty.
+, let's talk about why your WPF ListView isn't playing nice with your ViewModel property. It’s a situation I've seen, and frankly, debugged more times than I care to count, especially back when I was knee-deep in desktop application development for that manufacturing control system. The core problem, nine times out of ten, isn't that the binding _isn't_ working; it’s that it's not working _as you expect_. WPF's data binding system, while powerful, can be a bit finicky if not approached with the right understanding. Let’s get into the nitty-gritty.
 
-Fundamentally, the issue stems from a few common culprits. First, the *path* in your binding expression needs to correctly identify the property within the ViewModel. Second, the property itself needs to be exposed correctly from the ViewModel, and more critically, it must notify the UI when it changes. Finally, there's the subtle, but vital, area of *threading*; WPF's UI thread and how your ViewModel updates data can cause headaches.
+Fundamentally, the issue stems from a few common culprits. First, the _path_ in your binding expression needs to correctly identify the property within the ViewModel. Second, the property itself needs to be exposed correctly from the ViewModel, and more critically, it must notify the UI when it changes. Finally, there's the subtle, but vital, area of _threading_; WPF's UI thread and how your ViewModel updates data can cause headaches.
 
 Let’s start with path issues. If your xaml looks something like this:
 
@@ -22,7 +22,7 @@ Now, let's assume the property name is correct. Next hurdle: change notification
 public List<string> MyItems { get; set; }
 ```
 
-even if it's populated, your ListView will only be updated *once* when the window initially renders. Subsequent changes to the *list itself* won't propagate to the UI. This is because WPF has no idea that the content of the list has changed, only that the initial binding worked. The same principle applies if you replace the list entirely; the UI will not be informed unless the entire property `MyItems` changes to point to a new list.
+even if it's populated, your ListView will only be updated _once_ when the window initially renders. Subsequent changes to the _list itself_ won't propagate to the UI. This is because WPF has no idea that the content of the list has changed, only that the initial binding worked. The same principle applies if you replace the list entirely; the UI will not be informed unless the entire property `MyItems` changes to point to a new list.
 
 To fix this, your ViewModel needs to implement `INotifyPropertyChanged` and raise the `PropertyChanged` event when `MyItems` (or any bound property) is modified. This signals to WPF that something needs updating. Here’s a more useful ViewModel example:
 
@@ -58,7 +58,7 @@ public class MyViewModel : INotifyPropertyChanged
 }
 ```
 
-In this code, we’ve added the property change notification mechanism. When you set `MyItems`, the `OnPropertyChanged` method is invoked, raising the event which informs WPF the bound view should update. This works *if you are completely replacing the list itself*. If your intent is to manipulate the list by adding/removing items rather than replacing it, using `List<T>` with this approach can become messy.
+In this code, we’ve added the property change notification mechanism. When you set `MyItems`, the `OnPropertyChanged` method is invoked, raising the event which informs WPF the bound view should update. This works _if you are completely replacing the list itself_. If your intent is to manipulate the list by adding/removing items rather than replacing it, using `List<T>` with this approach can become messy.
 
 For this reason, you'll often see the more suitable `ObservableCollection<T>` used. It implements `INotifyCollectionChanged`, an interface specifically designed for collections that signal when their contents change – addition, removal, replacement, or reset of the entire collection. Consider the following adaptation, which will allow for granular updates:
 

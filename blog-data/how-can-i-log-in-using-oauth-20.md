@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-log-in-using-oauth-20"
 ---
 
-Alright, let's talk oauth 2.0. I’ve navigated these authorization flows more times than i care to count, and believe me, it's rarely a straightforward path. Logging in using oauth 2.0, at its core, is about securely delegating access to user resources without sharing actual credentials. Instead of storing usernames and passwords directly, you're essentially asking a trusted authorization server (like Google, Facebook, or your own) to vouch for the user. Let's dive into how it works, and I’ll try to keep it as concrete as possible.
+, let's talk oauth 2.0. I’ve navigated these authorization flows more times than i care to count, and believe me, it's rarely a straightforward path. Logging in using oauth 2.0, at its core, is about securely delegating access to user resources without sharing actual credentials. Instead of storing usernames and passwords directly, you're essentially asking a trusted authorization server (like Google, Facebook, or your own) to vouch for the user. Let's dive into how it works, and I’ll try to keep it as concrete as possible.
 
 My experience with this stems largely from building distributed systems, where services often needed access to protected user data across different platforms. It became clear early on that directly sharing database credentials was a recipe for disaster. OAuth 2.0 emerged as the go-to solution for this problem. There are several flow variants, but we'll focus on the authorization code grant, the most common and secure for web applications.
 
@@ -44,6 +44,7 @@ auth_url, generated_state = build_authorization_url(client_id, redirect_uri, sco
 print(f"Generated authorization URL: {auth_url}")
 # Store generated_state securely (e.g., session), we'll verify this later.
 ```
+
 This script generates the initial authorization url, where the user gets sent to authorize your application. The `state` parameter, generated using `secrets.token_urlsafe`, is paramount for security.
 
 Next, let's examine the code that handles the callback and exchanges the authorization code for an access token. This would run on your application's backend:
@@ -86,6 +87,7 @@ except requests.exceptions.RequestException as e:
     print(f"Error during token exchange: {e}")
 
 ```
+
 This piece of code demonstrates how to securely exchange the authorization code for an actual access token. The `client_secret` must be kept confidential, never exposed in client-side code. I’ve added the state check to demonstrate how to protect against Cross-Site Request Forgery (CSRF) attacks.
 
 Finally, consider using the received access token to fetch user information:

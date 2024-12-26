@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-a-secure-api-available-for-retrieving-account-balances-from-multiple-financial-institutions"
 ---
 
-Okay, let's talk about secure APIs for retrieving account balances across multiple financial institutions – it's a topic I’ve dealt with extensively in the past, particularly during my tenure building a personal finance aggregator. The short answer is: yes, secure APIs exist and are increasingly common, but the landscape is complex, and there's no single, universally standardized approach. Instead, what you’ll find is a blend of techniques and protocols working together.
+, let's talk about secure APIs for retrieving account balances across multiple financial institutions – it's a topic I’ve dealt with extensively in the past, particularly during my tenure building a personal finance aggregator. The short answer is: yes, secure APIs exist and are increasingly common, but the landscape is complex, and there's no single, universally standardized approach. Instead, what you’ll find is a blend of techniques and protocols working together.
 
 The core challenge revolves around securely handling user credentials and financial data. Imagine the risk if a single, compromised access point granted access to balances across various banks. It's a significant security surface. Therefore, multiple layers of security are crucial.
 
@@ -107,7 +107,7 @@ In summary, while a single, standardized "secure API" for all financial institut
 
 If you're diving into this area, I strongly suggest exploring the following resources:
 
-1. **OAuth 2.0 specification:** *RFC 6749*. This is crucial for understanding the fundamental authorization flow.
+1. **OAuth 2.0 specification:** _RFC 6749_. This is crucial for understanding the fundamental authorization flow.
 2. **"Building Microservices" by Sam Newman:** Understanding architectural patterns is crucial, particularly if you're planning on handling a larger scope of API integrations.
 3. **ISO 20022 standard:** While complex, this is the direction financial messaging is headed, and familiarity will prove valuable in the long run. There are many resources on various implementation of the standard.
 4. **Open Banking Implementation:** Investigate the open banking movement and its application to data sharing, specifically the PSD2 directive if you operate in the European context.

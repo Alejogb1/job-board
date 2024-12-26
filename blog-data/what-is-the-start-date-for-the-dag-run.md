@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "what-is-the-start-date-for-the-dag-run"
 ---
 
-Okay, let's get into it. The question of determining the start date for a dag run isn't as straightforward as simply looking at a timestamp; it's nuanced and depends heavily on the specific orchestration tool in use and its underlying configuration. I’ve personally spent countless hours debugging scheduling issues in airflow, and even with seemingly simple setups, the intricacies can be quite revealing. It’s never *just* the time, is it?
+, let's get into it. The question of determining the start date for a dag run isn't as straightforward as simply looking at a timestamp; it's nuanced and depends heavily on the specific orchestration tool in use and its underlying configuration. I’ve personally spent countless hours debugging scheduling issues in airflow, and even with seemingly simple setups, the intricacies can be quite revealing. It’s never _just_ the time, is it?
 
-The core problem lies in distinguishing between the *logical* execution date, which represents the theoretical start time of a dag according to its schedule, and the *actual* execution start time, which is when the underlying system begins processing the tasks within the dag. These are often different, and misunderstanding this difference is where many issues originate.
+The core problem lies in distinguishing between the _logical_ execution date, which represents the theoretical start time of a dag according to its schedule, and the _actual_ execution start time, which is when the underlying system begins processing the tasks within the dag. These are often different, and misunderstanding this difference is where many issues originate.
 
-Let's first clarify the concept of logical date/time. In most workflow systems, especially those handling time-based schedules, a logical date is associated with the *period* of execution, not necessarily when the processing begins. Think of it like a batch job running daily at midnight; the logical date for that run isn't the time when the compute actually kicks off, but rather the date the data processed *pertains* to. For example, a daily dag meant to process data for June 15th might have a logical start date of June 15th 00:00:00 even if it physically executes on June 16th 03:00:00 due to resource constraints or scheduler delays. The dag is processing june 15th data - so its logical start date is june 15th.
+Let's first clarify the concept of logical date/time. In most workflow systems, especially those handling time-based schedules, a logical date is associated with the _period_ of execution, not necessarily when the processing begins. Think of it like a batch job running daily at midnight; the logical date for that run isn't the time when the compute actually kicks off, but rather the date the data processed _pertains_ to. For example, a daily dag meant to process data for June 15th might have a logical start date of June 15th 00:00:00 even if it physically executes on June 16th 03:00:00 due to resource constraints or scheduler delays. The dag is processing june 15th data - so its logical start date is june 15th.
 
 Now, let’s tackle how this manifests in a practical setting. I'll illustrate with snippets from hypothetical workflow systems, similar in concept to what one might encounter in airflow or azkaban.
 
@@ -65,7 +65,7 @@ print(f"The first logical run will be at: {first_run_relative}")
 
 ```
 
-Here, `start_date` is calculated dynamically using `datetime.datetime.now()` and subtraction of a `timedelta` and formatted into an iso string. The `get_relative_first_dag_run_date` function extracts the start date, which in this case is three days before the script execution time. It is crucial to understand that these `start_dates` influence the calculation of the *logical* execution times. if we ran this script at '2024-05-20T10:00:00', then the output would be "The first logical run will be at: 2024-05-17T10:00:00".
+Here, `start_date` is calculated dynamically using `datetime.datetime.now()` and subtraction of a `timedelta` and formatted into an iso string. The `get_relative_first_dag_run_date` function extracts the start date, which in this case is three days before the script execution time. It is crucial to understand that these `start_dates` influence the calculation of the _logical_ execution times. if we ran this script at '2024-05-20T10:00:00', then the output would be "The first logical run will be at: 2024-05-17T10:00:00".
 
 **Example 3: No Explicit Start Date**
 

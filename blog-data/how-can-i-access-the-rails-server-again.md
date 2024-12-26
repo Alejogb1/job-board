@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-access-the-rails-server-again"
 ---
 
-Okay, so you've lost touch with your rails server, that familiar feeling of “where did it go?” I've been there, more times than I’d like to remember, usually after a late-night coding session. This isn’t some arcane art; it’s usually down to a few common culprits. Let's break down how to get back to that comforting `localhost:3000` (or whatever port you're using).
+, so you've lost touch with your rails server, that familiar feeling of “where did it go?” I've been there, more times than I’d like to remember, usually after a late-night coding session. This isn’t some arcane art; it’s usually down to a few common culprits. Let's break down how to get back to that comforting `localhost:3000` (or whatever port you're using).
 
 First, we’ll check the basics. It's tempting to jump straight into debugging intricate configurations, but let's start with the simplest scenarios. Did the server even start correctly? Sometimes, amidst a flurry of changes, errors during server startup might be overlooked.
 
@@ -12,9 +12,9 @@ First, we’ll check the basics. It's tempting to jump straight into debugging i
 
 The most frequent hiccup is an error at the startup phase, preventing the server from binding to the designated port. This can stem from a variety of issues, but common ones include:
 
-*   **Port Conflicts:** Another process is already using the port you’re trying to bind to. This is especially likely on machines with multiple server-type applications running concurrently.
-*   **Missing Gems:** A critical dependency might be missing from your `Gemfile`, preventing the rails application from initializing.
-*   **Configuration Issues:** Errors in your `config/database.yml` or other configuration files can cause the application to fail at startup.
+- **Port Conflicts:** Another process is already using the port you’re trying to bind to. This is especially likely on machines with multiple server-type applications running concurrently.
+- **Missing Gems:** A critical dependency might be missing from your `Gemfile`, preventing the rails application from initializing.
+- **Configuration Issues:** Errors in your `config/database.yml` or other configuration files can cause the application to fail at startup.
 
 To diagnose this, immediately after trying `rails s` or `rails server`, meticulously inspect the output in your terminal. Rails will usually provide verbose feedback detailing any problems. Look for error messages, warnings, or stack traces. These are your goldmines.
 
@@ -44,9 +44,10 @@ Here's how you might start your server explicitly telling it to bind to your loc
 ```bash
 rails s -b 0.0.0.0
 ```
+
 The `-b 0.0.0.0` option tells rails to listen on all available network interfaces. Be aware that doing so will expose your development server to your local network. It's vital you don't use this method in production unless you've properly configured a firewall and understand the associated security implications.
 
-If your server *is* binding to the appropriate interface but is still inaccessible, it's worth checking your local firewall. For example, on macOS, the system firewall or other security applications might be blocking connections to your server’s port. Temporarily disabling your firewall can help determine if that's the source of your problem. If that's the culprit, ensure to create a firewall rule that permits access to port 3000 or whatever port your server uses.
+If your server _is_ binding to the appropriate interface but is still inaccessible, it's worth checking your local firewall. For example, on macOS, the system firewall or other security applications might be blocking connections to your server’s port. Temporarily disabling your firewall can help determine if that's the source of your problem. If that's the culprit, ensure to create a firewall rule that permits access to port 3000 or whatever port your server uses.
 
 **Scenario 3: The Silent Server – Incorrect Server State**
 

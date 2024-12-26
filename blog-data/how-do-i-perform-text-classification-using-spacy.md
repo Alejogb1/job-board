@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-perform-text-classification-using-spacy"
 ---
 
-Alright, let’s tackle text classification with spaCy. It's a common task, and I've personally spent a good chunk of time implementing various solutions over the years. I'll walk you through the practical aspects, not just the theoretical, as that’s where things tend to get interesting, especially when you’re working with real-world data. I will offer some code snippets along the way and also mention places where you can further your understanding.
+, let’s tackle text classification with spaCy. It's a common task, and I've personally spent a good chunk of time implementing various solutions over the years. I'll walk you through the practical aspects, not just the theoretical, as that’s where things tend to get interesting, especially when you’re working with real-world data. I will offer some code snippets along the way and also mention places where you can further your understanding.
 
 At its core, text classification is about assigning predefined categories or labels to a given text. SpaCy itself doesn't offer out-of-the-box classification algorithms, like a scikit-learn classifier. Instead, spaCy excels at the crucial preliminary steps: efficiently processing the raw text into a format suitable for machine learning algorithms. Think of it as the pre-processing powerhouse. You leverage spaCy’s tokenization, part-of-speech tagging, and named entity recognition to engineer features, which then get fed into a separate classifier. I've always found this separation of concerns to be beneficial when debugging and optimizing pipelines.
 
@@ -165,18 +165,19 @@ accuracy = accuracy_score(y_test, y_pred)
 print(f"Accuracy: {accuracy:.2f}")
 
 # New Text Test
-new_text = "This is an okay film."
+new_text = "This is an  film."
 prediction = classifier.predict(new_text)
 print(f"Prediction for '{new_text}': {prediction}")
 ```
+
 This snippet illustrates how to create a custom spaCy component, wrapping the model training and prediction process within spaCy’s pipeline. This is more integrated way to handle it and makes it usable within the existing spaCy framework. Here, I've created a custom `TextClassifier` that includes the same preprocessing steps, TF-IDF vectorization, and logistic regression. It adds flexibility, especially if you are aiming for a more end-to-end spaCy-centric workflow.
 
 **Further Resources:**
 
 To dive deeper into this topic, I highly recommend the following resources:
 
-*   **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** A definitive textbook on natural language processing which goes into much greater depth about different machine learning algorithms and approaches, particularly in the chapter on text classification.
-*   **"Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper:** A very good resource for foundational NLP concepts using Python and NLTK. Although it doesn't focus on spaCy, the conceptual basis will help you develop a solid foundation.
-*   **The official spaCy documentation:** This is essential. Start with the tutorials and examples on their website. The quality of the documentation is exceptional. Pay special attention to their guides on custom pipelines, components, and models.
+- **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** A definitive textbook on natural language processing which goes into much greater depth about different machine learning algorithms and approaches, particularly in the chapter on text classification.
+- **"Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper:** A very good resource for foundational NLP concepts using Python and NLTK. Although it doesn't focus on spaCy, the conceptual basis will help you develop a solid foundation.
+- **The official spaCy documentation:** This is essential. Start with the tutorials and examples on their website. The quality of the documentation is exceptional. Pay special attention to their guides on custom pipelines, components, and models.
 
 In conclusion, text classification with spaCy involves careful text processing, feature engineering, and using machine learning models. The approach I’ve shown demonstrates the practical integration of spaCy with scikit-learn and custom spaCy components. Remember to evaluate your model properly by splitting data sets into train, validation and test set, especially before putting it into production. Good luck!

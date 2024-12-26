@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-pandas-dataframe-be-copied-to-vertica-using-airflow"
 ---
 
-Alright, let’s talk about efficiently moving pandas dataframes into Vertica using Apache Airflow. This is a challenge I've tackled a few times in my career, and the nuances can be quite… well, impactful. The core issue isn't simply about copying; it’s about handling the data transformation, network latency, and ensuring that the whole pipeline is resilient. I'm going to break this down into a few key aspects and demonstrate some practical approaches, drawing from real-world scenarios I’ve encountered.
+, let’s talk about efficiently moving pandas dataframes into Vertica using Apache Airflow. This is a challenge I've tackled a few times in my career, and the nuances can be quite… well, impactful. The core issue isn't simply about copying; it’s about handling the data transformation, network latency, and ensuring that the whole pipeline is resilient. I'm going to break this down into a few key aspects and demonstrate some practical approaches, drawing from real-world scenarios I’ve encountered.
 
 First off, let's appreciate that pandas DataFrames are in-memory structures. Vertica, conversely, is a columnar database designed for large datasets, often residing on different network segments. Naively transferring the entire dataframe directly in one go can quickly become a bottleneck. We need a strategy to minimize data serialization/deserialization costs and make the best use of both Pandas and Vertica's strengths.
 
@@ -12,13 +12,13 @@ The most crucial part of this workflow lies in how we interact with both pandas 
 
 1.  **Dataframe Preparation:** This phase isn't about just having a dataframe; it's about preparing the dataframe for database ingestion. This often includes type coercion (making sure columns match database types), handling null values (if not allowed in Vertica, replacing with suitable defaults, or removing rows, as appropriate), and optionally, data cleaning and transformation based on the target table’s requirements.
 
-2. **Chunking the DataFrame:** Rather than loading the entire dataframe into Vertica at once, I’ve always favored chunking. This breaks the data into smaller, more manageable pieces, mitigating memory issues and potentially offering better parallelism, depending on the Vertica setup.
+2.  **Chunking the DataFrame:** Rather than loading the entire dataframe into Vertica at once, I’ve always favored chunking. This breaks the data into smaller, more manageable pieces, mitigating memory issues and potentially offering better parallelism, depending on the Vertica setup.
 
-3. **Database Connection:** Setting up a reliable connection to Vertica using the correct driver (I’ve used both the `vertica-python` and the `sqlalchemy` connectors with equal success) and providing the correct authentication credentials.
+3.  **Database Connection:** Setting up a reliable connection to Vertica using the correct driver (I’ve used both the `vertica-python` and the `sqlalchemy` connectors with equal success) and providing the correct authentication credentials.
 
-4. **Data Ingestion (Per Chunk):** Iterating through the DataFrame chunks and loading them into Vertica either via direct INSERT statements or by writing data to a temporary file on a shared volume (if INSERT performance is not ideal for larger chunks), and then using Vertica's `COPY` command from there.
+4.  **Data Ingestion (Per Chunk):** Iterating through the DataFrame chunks and loading them into Vertica either via direct INSERT statements or by writing data to a temporary file on a shared volume (if INSERT performance is not ideal for larger chunks), and then using Vertica's `COPY` command from there.
 
-5. **Error Handling and Logging:** Implementing robust error handling at each stage, logging all important steps, and gracefully handling failed tasks by retrying or alerting appropriately.
+5.  **Error Handling and Logging:** Implementing robust error handling at each stage, logging all important steps, and gracefully handling failed tasks by retrying or alerting appropriately.
 
 Let's look at some code examples to clarify:
 
@@ -151,6 +151,7 @@ def load_dataframe_to_vertica_copy(
            engine.dispose()
     return None
 ```
+
 In the second example, data chunks are written to temporary CSV files on disk and then loaded into Vertica via the `COPY` command. This can significantly boost load speed, particularly with larger tables. Notice the use of `subprocess.run` to clear the temporary file after the copy operation. Using a delimiter other than the default comma, especially for data containing commas can help avoid import problems.
 
 Lastly, let’s look at a scenario where you might use direct inserts but also leverage an airflow xcom for more dynamic table naming:

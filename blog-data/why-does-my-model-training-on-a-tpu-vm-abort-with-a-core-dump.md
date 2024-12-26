@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-my-model-training-on-a-tpu-vm-abort-with-a-core-dump"
 ---
 
-Alright, let's tackle this. Core dumps during TPU training can be notoriously tricky, but having seen my fair share of them over the years (including a particularly frustrating project involving a complex, multi-modal model that kept crashing mid-training—good times, those), I've developed a reasonable understanding of the common culprits and debugging strategies. So, let's break down why a TPU VM might decide to abruptly terminate and generate a core dump during model training.
+, let's tackle this. Core dumps during TPU training can be notoriously tricky, but having seen my fair share of them over the years (including a particularly frustrating project involving a complex, multi-modal model that kept crashing mid-training—good times, those), I've developed a reasonable understanding of the common culprits and debugging strategies. So, let's break down why a TPU VM might decide to abruptly terminate and generate a core dump during model training.
 
 At its core, a core dump, or core file, is a snapshot of a process's memory at the moment it crashes. In the context of TPU VMs, this typically means that the training process encountered a critical error, leading to an unrecoverable state and subsequent termination by the operating system. These dumps are immensely valuable because they essentially give us a post-mortem view into the process's state, pinpointing where things went south.
 
@@ -14,8 +14,8 @@ There are several primary reasons why you'd encounter a core dump while training
 
 One of the most prevalent causes, and what I've spent most time debugging, are memory-related problems. Given that training complex models on TPUs involves massive tensors, incorrect memory handling can swiftly lead to crashes. It's crucial to distinguish between a true out-of-memory (OOM) error and a segmentation fault, although they might often manifest as a core dump.
 
-*   **OOM (Out of Memory):** This happens when your model or intermediate tensors consume more memory than what's available on the TPU or in the VM's RAM. You could be loading in batches that are just too large, or your model's layers and parameter counts may exceed the available resources. TPU memory isn't infinite, and it's especially crucial with the large model sizes we see today.
-*   **Segmentation Faults (SegFaults):** These typically arise when the program tries to access memory it shouldn't. This could be an attempt to write to read-only memory or access a memory address that's outside the allocated range. In the TPU context, segfaults often stem from issues with tensor manipulations, custom ops, incorrect indexing, or problems within the deep learning framework's code itself.
+- **OOM (Out of Memory):** This happens when your model or intermediate tensors consume more memory than what's available on the TPU or in the VM's RAM. You could be loading in batches that are just too large, or your model's layers and parameter counts may exceed the available resources. TPU memory isn't infinite, and it's especially crucial with the large model sizes we see today.
+- **Segmentation Faults (SegFaults):** These typically arise when the program tries to access memory it shouldn't. This could be an attempt to write to read-only memory or access a memory address that's outside the allocated range. In the TPU context, segfaults often stem from issues with tensor manipulations, custom ops, incorrect indexing, or problems within the deep learning framework's code itself.
 
 **2. Framework-Specific Errors or Bugs:**
 
@@ -33,15 +33,15 @@ Though infrequent with Google’s cloud infrastructure, there's a remote possibi
 
 Given that core dumps are essentially a process’s memory snapshot, debugging often requires a combination of strategies. Here are a few things that have helped me get out of these jams:
 
-*   **Analyze the Core Dump:** The first order of business is inspecting the core dump file itself (usually named `core`). There are tools like `gdb` (GNU Debugger) that can load and examine the process's state just before it crashed. Knowing which line of code the process was executing when it crashed provides invaluable clues. The stack trace is your friend here. I vividly remember spending a week staring at stack traces related to a particularly tricky issue where an incorrectly transposed tensor was causing a segfault in a TPU optimized function. It was not obvious and required careful analysis of how data was flowing through the system.
+- **Analyze the Core Dump:** The first order of business is inspecting the core dump file itself (usually named `core`). There are tools like `gdb` (GNU Debugger) that can load and examine the process's state just before it crashed. Knowing which line of code the process was executing when it crashed provides invaluable clues. The stack trace is your friend here. I vividly remember spending a week staring at stack traces related to a particularly tricky issue where an incorrectly transposed tensor was causing a segfault in a TPU optimized function. It was not obvious and required careful analysis of how data was flowing through the system.
 
-*   **Enable Debugging Tools:** TensorFlow and PyTorch often have their own debugging flags and settings that provide additional insights. Enable these flags, like XLA debugging, to generate more verbose logs that might indicate memory allocation problems or issues with the TPU execution. This can often reveal issues within your code that wouldn't be apparent otherwise. I often use this in conjunction with lower batch sizes when first testing on TPUs, to uncover potential problems early.
+- **Enable Debugging Tools:** TensorFlow and PyTorch often have their own debugging flags and settings that provide additional insights. Enable these flags, like XLA debugging, to generate more verbose logs that might indicate memory allocation problems or issues with the TPU execution. This can often reveal issues within your code that wouldn't be apparent otherwise. I often use this in conjunction with lower batch sizes when first testing on TPUs, to uncover potential problems early.
 
-*   **Reduce Batch Size and Model Size:** Try progressively reducing the batch size and model complexity. If the issue goes away by significantly reducing resources, you’re probably dealing with a memory issue. As I’ve done many times before, start with a minimal model and batch size, incrementally increasing these while monitoring your resource usage.
+- **Reduce Batch Size and Model Size:** Try progressively reducing the batch size and model complexity. If the issue goes away by significantly reducing resources, you’re probably dealing with a memory issue. As I’ve done many times before, start with a minimal model and batch size, incrementally increasing these while monitoring your resource usage.
 
-*   **Validate Input Data:** Malformed input data can also lead to unexpected behavior. Ensure that your input data is correctly formatted and that no invalid data points are creeping in. A simple sanity check on your data loading pipeline could also reveal underlying bugs. In one case, a rogue NaN value in the training dataset led to a chain reaction that resulted in a core dump; catching that early in the data pipeline saved many hours.
+- **Validate Input Data:** Malformed input data can also lead to unexpected behavior. Ensure that your input data is correctly formatted and that no invalid data points are creeping in. A simple sanity check on your data loading pipeline could also reveal underlying bugs. In one case, a rogue NaN value in the training dataset led to a chain reaction that resulted in a core dump; catching that early in the data pipeline saved many hours.
 
-*   **Check Framework and Library Versions:** Make sure you're using compatible versions of TensorFlow/PyTorch and other libraries relevant for TPU use. A mismatch or incompatibility between the components can cause unforeseen problems.
+- **Check Framework and Library Versions:** Make sure you're using compatible versions of TensorFlow/PyTorch and other libraries relevant for TPU use. A mismatch or incompatibility between the components can cause unforeseen problems.
 
 **Code Examples (Illustrative):**
 
@@ -134,7 +134,7 @@ This code snippet simulates a data loading error where we introduce a nan. This 
 
 For a more thorough understanding, I'd suggest these resources:
 
-*   **"Programming in Lua" by Roberto Ierusalimschy:** Specifically, the chapters on C API and Memory Management. While focused on Lua, it provides a good background on memory management practices when interacting with underlying C libraries, which is useful when debugging C++ custom ops for TPUs.
-*   **"Computer Organization and Design: The Hardware/Software Interface" by David A. Patterson and John L. Hennessy:** This provides a very solid grounding in computer architecture, which can provide essential understanding of the kind of issues you encounter with core dumps, as these problems are often related to issues close to the hardware interface.
+- **"Programming in Lua" by Roberto Ierusalimschy:** Specifically, the chapters on C API and Memory Management. While focused on Lua, it provides a good background on memory management practices when interacting with underlying C libraries, which is useful when debugging C++ custom ops for TPUs.
+- **"Computer Organization and Design: The Hardware/Software Interface" by David A. Patterson and John L. Hennessy:** This provides a very solid grounding in computer architecture, which can provide essential understanding of the kind of issues you encounter with core dumps, as these problems are often related to issues close to the hardware interface.
 
 Debugging core dumps is an involved process, but with a systematic approach, you can usually pinpoint the issue and get your model training back on track. Remember to always analyze the core dump, enable debugging tools, and validate all aspects of your code and data. I hope this explanation and these strategies are helpful in your own debugging endeavors. Good luck!

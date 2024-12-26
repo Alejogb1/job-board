@@ -12,17 +12,17 @@ The critical thing to understand is that the mapping from time steps to output s
 
 **Scenario 1: Many-to-One Output**
 
-In this setup, you input a sequence of time steps, but ultimately produce *one single output*. This is common in sequence classification tasks, like sentiment analysis. You feed in the whole sentence, and get a single output, often a probability distribution over sentiment classes. Here, the rnn's hidden state is updated at every time step, but the output is only generated *at the final* time step. All of the intermediate steps are processed, but only the last hidden state contributes to the final output.
+In this setup, you input a sequence of time steps, but ultimately produce _one single output_. This is common in sequence classification tasks, like sentiment analysis. You feed in the whole sentence, and get a single output, often a probability distribution over sentiment classes. Here, the rnn's hidden state is updated at every time step, but the output is only generated _at the final_ time step. All of the intermediate steps are processed, but only the last hidden state contributes to the final output.
 
 **Scenario 2: Many-to-Many Output (same length)**
 
-This is the case where you have an output at *every* time step, and the output sequence is the same length as the input sequence. This architecture is perfect for problems like part-of-speech tagging, where every word in a sentence gets its own tag, or for time-series forecasting if you are forecasting one-step at each time-step. Here the rnn calculates an output based on *every* hidden state.
+This is the case where you have an output at _every_ time step, and the output sequence is the same length as the input sequence. This architecture is perfect for problems like part-of-speech tagging, where every word in a sentence gets its own tag, or for time-series forecasting if you are forecasting one-step at each time-step. Here the rnn calculates an output based on _every_ hidden state.
 
 **Scenario 3: Many-to-Many Output (different lengths)**
 
 This is the more complex scenario, where you have a variable length output sequence that may or may not be the same as your input. This is a typical setup in tasks like machine translation. This is commonly implemented using an encoder-decoder model. The encoder is an rnn that summarizes the input into a single context vector, and the decoder is another rnn that generates the output sequence step-by-step, often using techniques like attention mechanism.
 
-Okay, let’s put some code to these concepts, using python and `pytorch` as an illustration:
+, let’s put some code to these concepts, using python and `pytorch` as an illustration:
 
 ```python
 # Example 1: Many-to-One (Sequence Classification)
@@ -153,6 +153,6 @@ print(f"Output shape: {output.shape}") # Output shape: torch.Size([4, 25, 5])
 
 Here we see a more complicated structure. The input sequence length is not directly reflected in the output. We specify `max_length` during decoding. This length, the batch size and the `output_size` determine the final output shape `torch.Size([4, 25, 5])`.
 
-These examples should clearly illustrate the relationship. To delve deeper into the underlying theory, I highly recommend "Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville. It has a comprehensive discussion of recurrent networks, and also, I found "Speech and Language Processing" by Daniel Jurafsky and James H. Martin to be invaluable when I was working with recurrent architectures. Finally, the original papers on lstm’s and gru’s are foundational reading: Hochreiter, S., & Schmidhuber, J. (1997). Long short-term memory. *Neural computation, 9*(8), 1735-1780;* and Cho, K., van Merriënboer, B., Gulcehre, C., Bahdanau, D., Bougares, F., Schwenk, H., & Bengio, Y. (2014). Learning phrase representations using rnn encoder-decoder for statistical machine translation. *arXiv preprint arXiv:1406.1078*
+These examples should clearly illustrate the relationship. To delve deeper into the underlying theory, I highly recommend "Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville. It has a comprehensive discussion of recurrent networks, and also, I found "Speech and Language Processing" by Daniel Jurafsky and James H. Martin to be invaluable when I was working with recurrent architectures. Finally, the original papers on lstm’s and gru’s are foundational reading: Hochreiter, S., & Schmidhuber, J. (1997). Long short-term memory. _Neural computation, 9_(8), 1735-1780;* and Cho, K., van Merriënboer, B., Gulcehre, C., Bahdanau, D., Bougares, F., Schwenk, H., & Bengio, Y. (2014). Learning phrase representations using rnn encoder-decoder for statistical machine translation. *arXiv preprint arXiv:1406.1078\*
 
 The takeaway is that you must carefully consider your specific use case and architecture choice to ensure the time step to output shape mappings are correct. In the real-world you will often need to manipulate the outputs of your rnn using fully-connected layers to mold the final output shape, based on your needs. The examples shown demonstrate some basic mappings. Understanding this foundational mapping, and choosing an approach that suits your problem is critical for building effective recurrent neural networks.

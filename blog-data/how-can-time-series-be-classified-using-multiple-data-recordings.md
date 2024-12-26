@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-can-time-series-be-classified-using-multiple-data-recordings"
 ---
 
-Alright, let’s dive into multi-variate time series classification. I’ve tackled this beast more than a few times, often in contexts where a single data stream just didn’t tell the whole story. Think about, for example, trying to classify the behavior of a complex machine based on readings from multiple sensors: temperature, vibration, power consumption, and perhaps even pressure. One sensor on its own could be misleading, but combined, they form a richer, more complete picture.
+, let’s dive into multi-variate time series classification. I’ve tackled this beast more than a few times, often in contexts where a single data stream just didn’t tell the whole story. Think about, for example, trying to classify the behavior of a complex machine based on readings from multiple sensors: temperature, vibration, power consumption, and perhaps even pressure. One sensor on its own could be misleading, but combined, they form a richer, more complete picture.
 
-The fundamental challenge here is that each time series, by itself, represents a sequence of values ordered over time. Now, when you’re dealing with multiple of these, the problem space expands dramatically. You have to consider the temporal relationships within *each* individual time series, and the cross-correlations and interactions *between* the different time series at various points in time. Simple methods, like just flattening the data into a long vector, usually don’t cut it because they throw away crucial temporal and inter-series information.
+The fundamental challenge here is that each time series, by itself, represents a sequence of values ordered over time. Now, when you’re dealing with multiple of these, the problem space expands dramatically. You have to consider the temporal relationships within _each_ individual time series, and the cross-correlations and interactions _between_ the different time series at various points in time. Simple methods, like just flattening the data into a long vector, usually don’t cut it because they throw away crucial temporal and inter-series information.
 
 So, let's look at a few techniques I've found particularly useful, along with some practical implementations in Python. I'm going to focus on methods that respect the temporal structure, since that's the key.
 
 **1. Feature-Based Classification with Time Series Features:**
 
-Instead of treating the raw data points as individual features, we can extract meaningful features from the time series. These could include things like mean, standard deviation, trend, auto-correlation, or frequency domain features (using Fourier transform). Once we’ve done this for each time series in each sample, we end up with a feature vector that *captures the core characteristics* of that set of time series, and we can feed this into a traditional classifier such as a support vector machine (SVM) or a random forest.
+Instead of treating the raw data points as individual features, we can extract meaningful features from the time series. These could include things like mean, standard deviation, trend, auto-correlation, or frequency domain features (using Fourier transform). Once we’ve done this for each time series in each sample, we end up with a feature vector that _captures the core characteristics_ of that set of time series, and we can feed this into a traditional classifier such as a support vector machine (SVM) or a random forest.
 
 This approach has always been a go-to of mine because of its simplicity. It's relatively straightforward to implement and understand. The critical part is choosing the right features. Domain knowledge plays a huge role here. For example, if I’m working with vibration data, features like spectral entropy and peak frequency are crucial.
 
@@ -67,7 +67,7 @@ This example is basic, but it highlights the general approach. You can extend `e
 
 **2. Time Series Classification with Dynamic Time Warping (DTW):**
 
-DTW is especially good when you're dealing with time series that might be misaligned or have variable speeds. It calculates the optimal alignment between two time series, allowing for stretching or compressing one with respect to the other. In a classification context, DTW can be used as a distance measure within a *k*-nearest neighbors (KNN) algorithm. The distance to other series is used to classify a given set. It's conceptually different from feature extraction, as DTW operates directly on the raw time series, finding similar time series patterns even when they are phase-shifted.
+DTW is especially good when you're dealing with time series that might be misaligned or have variable speeds. It calculates the optimal alignment between two time series, allowing for stretching or compressing one with respect to the other. In a classification context, DTW can be used as a distance measure within a _k_-nearest neighbors (KNN) algorithm. The distance to other series is used to classify a given set. It's conceptually different from feature extraction, as DTW operates directly on the raw time series, finding similar time series patterns even when they are phase-shifted.
 
 I once used this for classifying human gait patterns recorded from multiple accelerometers, which varied in pace between different individuals. DTW’s capability to handle temporal distortions was critical to its success in accurately distinguishing different forms of gait abnormalities.
 
@@ -169,6 +169,6 @@ This code gives an example of a simple LSTM network working on multivariate time
 
 **Closing Thoughts**
 
-These are three methods that have served me well across different scenarios. For a more theoretical understanding of time series analysis and classification, I would recommend starting with *Time Series Analysis* by James D. Hamilton, it provides a rigorous mathematical framework. For a more practical view with a focus on machine learning methods, *Hands-On Time Series Analysis with Python* by B. M. Fayssal is extremely helpful. And finally, if you wish to go deep into the world of sequence models, then *Deep Learning with Python* by Francois Chollet is invaluable.
+These are three methods that have served me well across different scenarios. For a more theoretical understanding of time series analysis and classification, I would recommend starting with _Time Series Analysis_ by James D. Hamilton, it provides a rigorous mathematical framework. For a more practical view with a focus on machine learning methods, _Hands-On Time Series Analysis with Python_ by B. M. Fayssal is extremely helpful. And finally, if you wish to go deep into the world of sequence models, then _Deep Learning with Python_ by Francois Chollet is invaluable.
 
 The right approach, as always, comes down to the specifics of the problem: the size of your dataset, the nature of your time series, and the level of accuracy you require. Always keep experimenting and iterate to find the best approach for your data.

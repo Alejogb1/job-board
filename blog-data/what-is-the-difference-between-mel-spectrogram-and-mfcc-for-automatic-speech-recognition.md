@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-difference-between-mel-spectrogram-and-mfcc-for-automatic-speech-recognition"
 ---
 
-Alright, let’s tackle this one. I’ve spent more hours than I care to remember tweaking audio features for various speech applications, so this is a topic I've certainly got a handle on. The distinction between mel-spectrograms and MFCCs (Mel-Frequency Cepstral Coefficients), while seemingly subtle, is actually crucial for effective automatic speech recognition (asr). It often boils down to what kind of information you need to retain and how much computational efficiency you're aiming for. I’ll try to break it down into digestible parts, and also share some practical examples from my past projects.
+, let’s tackle this one. I’ve spent more hours than I care to remember tweaking audio features for various speech applications, so this is a topic I've certainly got a handle on. The distinction between mel-spectrograms and MFCCs (Mel-Frequency Cepstral Coefficients), while seemingly subtle, is actually crucial for effective automatic speech recognition (asr). It often boils down to what kind of information you need to retain and how much computational efficiency you're aiming for. I’ll try to break it down into digestible parts, and also share some practical examples from my past projects.
 
 Essentially, both mel-spectrograms and MFCCs start with a spectrogram, which itself is derived from the raw audio signal through a short-time fourier transform (stft). A spectrogram visualizes the frequency content of the audio over time, and this forms the fundamental basis for both approaches. Now, where they diverge is in how they further process that frequency information.
 
@@ -33,6 +33,7 @@ mel_spec = librosa.feature.melspectrogram(y=y, sr=sr, n_fft=n_fft, hop_length=ho
 log_mel_spec = librosa.power_to_db(mel_spec) # Convert power spectrogram to decibels
 print("Shape of Mel-Spectrogram:", log_mel_spec.shape)
 ```
+
 This first snippet shows you how to create a mel-spectrogram. We load the audio, define parameters for the stft, and use librosa's built in function to perform all of the computations we discussed before. The `n_mels=128` determines the number of mel bands used, while the `power_to_db` function converts power values to decibels. You'll see the output here shows you the (frequency bins x frames), with the number of frequency bins being determined by `n_mels`.
 
 ```python
@@ -40,6 +41,7 @@ This first snippet shows you how to create a mel-spectrogram. We load the audio,
 mfccs = librosa.feature.mfcc(S=log_mel_spec, n_mfcc=20)
 print("Shape of MFCCs:", mfccs.shape)
 ```
+
 Here, we create MFCCs using the mel-spectrogram created in the previous example as input. We specify the number of MFCCs that we want to keep, in this case 20. The output demonstrates the compact (MFCCs x frames) nature of these features.
 
 ```python

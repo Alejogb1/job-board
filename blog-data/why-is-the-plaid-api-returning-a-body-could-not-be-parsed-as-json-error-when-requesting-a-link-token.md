@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-plaid-api-returning-a-body-could-not-be-parsed-as-json-error-when-requesting-a-link-token"
 ---
 
-Alright, let's tackle this. I’ve definitely seen this “body could not be parsed as json” error with the Plaid API, more times than I’d care to recall, frankly. It usually pops up when you’re attempting to create a link token, and it can be incredibly frustrating, especially if you're new to the API or you're under a time constraint. This error, in its essence, points to a mismatch between the data you're sending to Plaid and what Plaid’s server expects. Let’s break down the typical culprits, based on my experiences debugging this over the years, and then I’ll offer some concrete examples.
+, let's tackle this. I’ve definitely seen this “body could not be parsed as json” error with the Plaid API, more times than I’d care to recall, frankly. It usually pops up when you’re attempting to create a link token, and it can be incredibly frustrating, especially if you're new to the API or you're under a time constraint. This error, in its essence, points to a mismatch between the data you're sending to Plaid and what Plaid’s server expects. Let’s break down the typical culprits, based on my experiences debugging this over the years, and then I’ll offer some concrete examples.
 
 The core issue is that the Plaid API, like most modern APIs, expects a specific data format – specifically, a properly formatted JSON payload – in the body of your http request. This error message is essentially saying, “I got something that's not valid JSON when I tried to interpret your request." Now, there are a handful of common reasons for this to occur.
 
@@ -49,7 +49,7 @@ except plaid.ApiException as e:
   print(f"Error creating link token: {e}")
 ```
 
-If you are getting the parsing error using this type of code, it might mean that the `client_id` and/or `secret` are incorrect. The error returned by `plaid.ApiException` will *not* return a parsing error in this case, but might be a cause of an improperly configured instance. I have seen a case where the `client_user_id` was an empty string, and that caused a similar response. Ensure you have unique user ids, and that they are not null, empty, or otherwise invalid.
+If you are getting the parsing error using this type of code, it might mean that the `client_id` and/or `secret` are incorrect. The error returned by `plaid.ApiException` will _not_ return a parsing error in this case, but might be a cause of an improperly configured instance. I have seen a case where the `client_user_id` was an empty string, and that caused a similar response. Ensure you have unique user ids, and that they are not null, empty, or otherwise invalid.
 
 **Example 2: Directly Sending an HTTP Request with `curl`**
 
@@ -80,35 +80,41 @@ In the `curl` example, note that the `-H` flags are specifying the necessary hea
 Here’s how you’d construct the request in a node environment using axios:
 
 ```javascript
-const axios = require('axios');
+const axios = require("axios");
 
-const client_id = 'your_plaid_client_id';
-const secret = 'your_plaid_secret';
+const client_id = "your_plaid_client_id";
+const secret = "your_plaid_secret";
 
-axios.post('https://sandbox.plaid.com/link/token/create', {
-    user: {
-        client_user_id: 'some-unique-id'
+axios
+  .post(
+    "https://sandbox.plaid.com/link/token/create",
+    {
+      user: {
+        client_user_id: "some-unique-id",
+      },
+      client_name: "Your App Name",
+      products: ["auth", "transactions"],
+      country_codes: ["US"],
+      language: "en",
     },
-    client_name: 'Your App Name',
-    products: ['auth', 'transactions'],
-    country_codes: ['US'],
-    language: 'en',
-  }, {
-    headers: {
-        'Content-Type': 'application/json',
-        'PLAID-CLIENT-ID': client_id,
-        'PLAID-SECRET': secret,
-        'Plaid-Version': '2020-09-14'
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "PLAID-CLIENT-ID": client_id,
+        "PLAID-SECRET": secret,
+        "Plaid-Version": "2020-09-14",
+      },
     }
-})
-.then(response => {
-  const linkToken = response.data.link_token;
-  console.log("Link Token:", linkToken);
-})
-.catch(error => {
-  console.error("Error creating link token:", error);
-});
+  )
+  .then((response) => {
+    const linkToken = response.data.link_token;
+    console.log("Link Token:", linkToken);
+  })
+  .catch((error) => {
+    console.error("Error creating link token:", error);
+  });
 ```
+
 In this example, the `axios.post()` call includes the data as the first argument, and the second argument contains the headers configuration. Here, if the content-type header is not set to ‘application/json’, it will produce the parse error. You’ll also see, for example, that if any of the request parameters such as `user`, `client_name`, `products`, or `country_codes` are undefined or do not have the correct type (like a string, or an array of strings), this may also cause the issue.
 
 For further study and to gain more depth of understanding, I'd recommend the Plaid API documentation itself, found directly on their website, as they frequently update it. Also, the book "RESTful Web Services" by Leonard Richardson and Sam Ruby offers a great theoretical framework for understanding HTTP and JSON, and how to interact with APIs correctly. For a deeper dive into JSON parsing and web technologies, "High Performance Browser Networking" by Ilya Grigorik is an excellent resource.

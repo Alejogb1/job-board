@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-run-a-window-batch-file-in-apache-airflow-dag"
 ---
 
-alright, so you're looking to trigger a windows batch file from within an apache airflow dag. i get it, been there, done that, bought the t-shirt… several, actually. it's one of those things that seems straightforward at first glance but then you hit a wall when you realize airflow is primarily designed for *nix environments.
+, so you're looking to trigger a windows batch file from within an apache airflow dag. i get it, been there, done that, bought the t-shirt… several, actually. it's one of those things that seems straightforward at first glance but then you hit a wall when you realize airflow is primarily designed for \*nix environments.
 
 i've had my fair share of frustrations with this, particularly early in my career when i was working on a project where we had a bizarre mix of legacy windows systems and newer linux-based servers. the need to run a batch file in a data pipeline was an odd requirement, almost a weird outlier but, it was non-negotiable. back then, airflow wasn't as mature as it is today and resources were sparse (pre-stackoverflow day).
 
@@ -37,10 +37,10 @@ with DAG(
 
 in this example:
 
-*   `windows_server_ip` is the ip address or hostname of the windows server where the batch file resides.
-*   `username` and `password` are credentials of a user account on the windows server that has permissions to execute the batch file.
-*   `c:\\path\\to\\your\\batchfile.bat` is the full path to your batch file on the windows server.
-*   `arg1 arg2` are any arguments you might need to pass to your batch file, space separated, which are then passed to the file.
+- `windows_server_ip` is the ip address or hostname of the windows server where the batch file resides.
+- `username` and `password` are credentials of a user account on the windows server that has permissions to execute the batch file.
+- `c:\\path\\to\\your\\batchfile.bat` is the full path to your batch file on the windows server.
+- `arg1 arg2` are any arguments you might need to pass to your batch file, space separated, which are then passed to the file.
 
 it's critical to remember that the `winrs` tool must be installed and configured correctly on both the airflow worker machine and the target windows server, or the whole process will fail silently and you'll spend hours wondering why. if i could go back, i'd make sure i had this part down pat before attempting any automation.
 
@@ -82,7 +82,7 @@ in this second example, the batch file output is redirected into a file called `
 
 keep in mind, dealing with windows paths in bash commands can be a headache. backslashes need to be escaped or you can use forward slashes, since windows itself understands forward slashes just fine. also, proper quoting is crucial to avoid unexpected command behavior.
 
-now, if you are working with very sensitive data like passwords, it is a really, *really* bad idea to put the credentials directly into the dag file. i mean, seriously, it's a horrible idea. i learned that the hard way once, during a security audit where my code was not only scrutinised to the extreme, but also publicly ridiculed, not my best day at the office.
+now, if you are working with very sensitive data like passwords, it is a really, _really_ bad idea to put the credentials directly into the dag file. i mean, seriously, it's a horrible idea. i learned that the hard way once, during a security audit where my code was not only scrutinised to the extreme, but also publicly ridiculed, not my best day at the office.
 
 instead, you should use airflow's secrets backend to handle these kinds of sensitive parameters. you can store the username and password in a secret manager (like hashicorp vault or aws secrets manager) and then use jinja templating in the bash operator to access them at runtime.
 

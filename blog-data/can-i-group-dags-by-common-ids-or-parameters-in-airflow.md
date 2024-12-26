@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-i-group-dags-by-common-ids-or-parameters-in-airflow"
 ---
 
-Okay, let's tackle this. I've been around the block with Airflow, seen quite a few production deployments, and grouping DAGs is a problem that often crops up, especially as your infrastructure grows. It's a crucial organizational challenge, honestly, and doing it *well* makes a big difference in maintainability and ease of management. The short answer is: yes, you can absolutely group DAGs by common identifiers or parameters, although Airflow doesn’t offer a native, built-in grouping mechanism *per se* like, say, tagging. What we achieve is grouping through patterns in the dag definition, or external parameterization and filtering. Let me explain.
+, let's tackle this. I've been around the block with Airflow, seen quite a few production deployments, and grouping DAGs is a problem that often crops up, especially as your infrastructure grows. It's a crucial organizational challenge, honestly, and doing it _well_ makes a big difference in maintainability and ease of management. The short answer is: yes, you can absolutely group DAGs by common identifiers or parameters, although Airflow doesn’t offer a native, built-in grouping mechanism _per se_ like, say, tagging. What we achieve is grouping through patterns in the dag definition, or external parameterization and filtering. Let me explain.
 
 First, a common scenario. I once had a client who processed data for several different geographical regions, each having a fairly similar processing flow, but different input and output locations. Imagine hundreds of dags, all with similar logic but differing by a single 'region' parameter. This was obviously a maintenance nightmare. It’s situations like these that make a good grouping strategy vital.
 
@@ -53,9 +53,9 @@ For example, let's say you have a `regions.json` file with data:
 ```json
 {
   "regions": [
-    {"id": "us", "input_path": "/data/us", "output_path": "/output/us"},
-    {"id": "eu", "input_path": "/data/eu", "output_path": "/output/eu"},
-    {"id": "asia", "input_path": "/data/asia", "output_path": "/output/asia"}
+    { "id": "us", "input_path": "/data/us", "output_path": "/output/us" },
+    { "id": "eu", "input_path": "/data/eu", "output_path": "/output/eu" },
+    { "id": "asia", "input_path": "/data/asia", "output_path": "/output/asia" }
   ]
 }
 ```
@@ -93,7 +93,7 @@ Here, we iterate through the `regions.json`, create a DAG instance for each usin
 
 **3. Using TaskGroups and SubDAGs:**
 
-While not strictly "grouping DAGs", TaskGroups or SubDAGs are a way to group related tasks within a single DAG, which provides visual structuring in the Airflow UI. I've found that using them in conjunction with the above methods often produces the clearest result. For instance, if our processing steps are in sequence per region, we can embed a `TaskGroup` for each region within a broader DAG. While this groups tasks *within* a dag, not dags themselves, it adds structure, in addition to the dag id grouping mentioned above. It can be a viable option, especially if the various processes are very dependent and have to be contained in a single execution environment.
+While not strictly "grouping DAGs", TaskGroups or SubDAGs are a way to group related tasks within a single DAG, which provides visual structuring in the Airflow UI. I've found that using them in conjunction with the above methods often produces the clearest result. For instance, if our processing steps are in sequence per region, we can embed a `TaskGroup` for each region within a broader DAG. While this groups tasks _within_ a dag, not dags themselves, it adds structure, in addition to the dag id grouping mentioned above. It can be a viable option, especially if the various processes are very dependent and have to be contained in a single execution environment.
 
 Consider this code, using the example from our first method, but now incorporating task groups:
 

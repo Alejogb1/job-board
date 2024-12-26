@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-i-access-a-site-id-from-a-laravel-session"
 ---
 
-Alright, let's talk about accessing site ids from a laravel session. I've tackled this scenario more times than i care to count, usually when dealing with multi-tenancy setups or when an application needs to operate in the context of a specific 'site' or 'environment'. There's more to it than a simple session fetch; proper handling is critical to avoid data leaks and security vulnerabilities.
+, let's talk about accessing site ids from a laravel session. I've tackled this scenario more times than i care to count, usually when dealing with multi-tenancy setups or when an application needs to operate in the context of a specific 'site' or 'environment'. There's more to it than a simple session fetch; proper handling is critical to avoid data leaks and security vulnerabilities.
 
-First, it's crucial to understand *why* we store a site id in the session in the first place. Often it stems from a need to differentiate users accessing different instances or versions of the application. Imagine, for example, you are managing a saas product with unique client configurations, or even slightly different themes. The session becomes a convenient place to store the identifier which determines the user's active environment after they are authenticated. This goes beyond simple user authentication; we're talking about contextualizing each request for the application.
+First, it's crucial to understand _why_ we store a site id in the session in the first place. Often it stems from a need to differentiate users accessing different instances or versions of the application. Imagine, for example, you are managing a saas product with unique client configurations, or even slightly different themes. The session becomes a convenient place to store the identifier which determines the user's active environment after they are authenticated. This goes beyond simple user authentication; we're talking about contextualizing each request for the application.
 
 I've seen, more than once, code bases where developers attempt to embed this id in the url itself (e.g., `example.com/site1/dashboard`). While technically doable, this approach is not very secure and exposes internal structure. Using sessions adds an extra layer of security and simplifies parameter handling further downstream.
 
@@ -53,7 +53,7 @@ class DashboardController extends Controller
 }
 ```
 
-In this example, we utilize `Session::get('site_id')` to retrieve the value from the session. A `null` check is *critical* because if the 'site_id' key isn't present in the session, it will return `null`. I cannot stress this point enough. Neglecting this check can result in unexpected errors and application instability.
+In this example, we utilize `Session::get('site_id')` to retrieve the value from the session. A `null` check is _critical_ because if the 'site_id' key isn't present in the session, it will return `null`. I cannot stress this point enough. Neglecting this check can result in unexpected errors and application instability.
 
 **Approach 2: Using a Middleware for Automatic Access**
 
@@ -131,7 +131,7 @@ Route::middleware(['web', 'ensure.site.id'])->group(function () {
 
 ```
 
-In this setup, the `EnsureSiteId` middleware executes *before* our controller logic, ensuring that `site_id` always available or a user is redirected. The middleware also injects the `siteId` into the request via the `attributes` collection; this makes access more efficient than multiple session calls, improving performance and readability.
+In this setup, the `EnsureSiteId` middleware executes _before_ our controller logic, ensuring that `site_id` always available or a user is redirected. The middleware also injects the `siteId` into the request via the `attributes` collection; this makes access more efficient than multiple session calls, improving performance and readability.
 
 **Approach 3: Utilizing a Service Class**
 

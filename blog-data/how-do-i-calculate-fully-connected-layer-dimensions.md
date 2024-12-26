@@ -4,16 +4,16 @@ date: "2024-12-23"
 id: "how-do-i-calculate-fully-connected-layer-dimensions"
 ---
 
-Alright, let's talk fully connected layer dimensions. It's a topic that often trips people up, especially when they're just starting out with neural networks. I remember one project back in '16, involved image classification with a network that kept throwing errors. Turns out, the problem wasn't with the core architecture itself, but with the dimensions I was passing into the fully connected layers. So, I've definitely been there.
+, let's talk fully connected layer dimensions. It's a topic that often trips people up, especially when they're just starting out with neural networks. I remember one project back in '16, involved image classification with a network that kept throwing errors. Turns out, the problem wasn't with the core architecture itself, but with the dimensions I was passing into the fully connected layers. So, I've definitely been there.
 
 The core issue boils down to understanding how information flows through the network, and the role of matrix multiplications in that flow. A fully connected (or dense) layer essentially transforms its input by multiplying it with a weight matrix and then typically adding a bias vector. The output then becomes the input to the next layer or, if it's the last layer, the final prediction. To calculate dimensions, we need to know the input size, the desired output size, and that's what dictates the shape of the weight matrix. Let’s break it down.
 
 Let's assume we have a generic layer where:
 
-*   **Input:** Represents the data coming into the layer. This can be a vector or a flattened feature map (a multi-dimensional array reshaped into a single vector).
-*   **Weights:** This is the learnable parameter matrix that performs the transformation.
-*   **Bias:** This is an optional learnable vector that adds a constant to each element of the output.
-*   **Output:** The result of the linear transformation (matrix multiplication and bias addition).
+- **Input:** Represents the data coming into the layer. This can be a vector or a flattened feature map (a multi-dimensional array reshaped into a single vector).
+- **Weights:** This is the learnable parameter matrix that performs the transformation.
+- **Bias:** This is an optional learnable vector that adds a constant to each element of the output.
+- **Output:** The result of the linear transformation (matrix multiplication and bias addition).
 
 The fundamental formula governing a fully connected layer is:
 
@@ -29,7 +29,7 @@ Where `*` denotes matrix multiplication. Note that `bias` is usually added throu
 
 4.  **Bias Vector Dimension:** The bias vector’s size should equal the `output_size`. It’s added to each vector row in the outcome of the matrix multiplication.
 
-Here's the crux: The output of the layer will have the shape `(output_size)`. The weight matrix *must* have the right dimensions such that the matrix multiplication is valid. If our input has the shape `(input_size)` and our weight matrix has dimensions `(input_size, output_size)` then the matrix multiplication will yield the outcome with shape `(output_size)`, and the bias vector added to it will therefore not raise any dimensionality errors.
+Here's the crux: The output of the layer will have the shape `(output_size)`. The weight matrix _must_ have the right dimensions such that the matrix multiplication is valid. If our input has the shape `(input_size)` and our weight matrix has dimensions `(input_size, output_size)` then the matrix multiplication will yield the outcome with shape `(output_size)`, and the bias vector added to it will therefore not raise any dimensionality errors.
 
 Let's look at some code examples to clarify this. I'll use Python with Numpy, which is a common choice when working with numerical computations in machine learning.
 
@@ -127,4 +127,4 @@ Here, we’ve demonstrated two consecutive fully connected layers. The output sh
 
 When you’re building a neural network, these principles are vital for proper architecture construction. It's not magic, it's simply careful application of linear algebra principles.
 
-If you are looking to dive deeper into the theoretical foundations of neural networks, I'd recommend "Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville. It's a comprehensive resource that covers the mathematics behind these operations. Also, for a more hands-on approach, consider exploring the documentation for libraries like TensorFlow or PyTorch—they’re invaluable for understanding practical implementation details. Specifically, the PyTorch documentation’s section on linear layers is excellent for a practical understanding. Remember, it's not just about the code working; understanding *why* it works is what will make you a more effective practitioner.
+If you are looking to dive deeper into the theoretical foundations of neural networks, I'd recommend "Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville. It's a comprehensive resource that covers the mathematics behind these operations. Also, for a more hands-on approach, consider exploring the documentation for libraries like TensorFlow or PyTorch—they’re invaluable for understanding practical implementation details. Specifically, the PyTorch documentation’s section on linear layers is excellent for a practical understanding. Remember, it's not just about the code working; understanding _why_ it works is what will make you a more effective practitioner.

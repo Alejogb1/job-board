@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-many-to-many-relationships-be-validated-in-django"
 ---
 
-Okay, let's tackle this. I've certainly danced this particular tango with Django's many-to-many relationships more times than I care to count, and let me tell you, validation isn't always as straightforward as we might wish. The default behaviors are generally sufficient for basic cases, but when you start needing nuanced control or complex business logic applied *before* committing changes, you've got to roll up your sleeves a bit. Let me share what I've found useful over the years, with some real-world examples to illustrate the common pitfalls and how to dodge them effectively.
+, let's tackle this. I've certainly danced this particular tango with Django's many-to-many relationships more times than I care to count, and let me tell you, validation isn't always as straightforward as we might wish. The default behaviors are generally sufficient for basic cases, but when you start needing nuanced control or complex business logic applied _before_ committing changes, you've got to roll up your sleeves a bit. Let me share what I've found useful over the years, with some real-world examples to illustrate the common pitfalls and how to dodge them effectively.
 
-The first thing to understand is that Django’s default `ManyToManyField` doesn't inherently provide validation capabilities for the *relationship itself*—it's validating the *individual model instances* before linking them. So, we're not checking if a relationship *makes sense* in the bigger picture, but rather, if each instance we're associating is individually valid. For instance, if you're working on a system to manage books and authors, Django, out of the box, checks that each author is a valid author record before letting you add them to a book's `authors` field. It *won't* necessarily flag if you're adding 1000 authors to a book, which might be nonsensical for your particular system. That's where things get interesting.
+The first thing to understand is that Django’s default `ManyToManyField` doesn't inherently provide validation capabilities for the _relationship itself_—it's validating the _individual model instances_ before linking them. So, we're not checking if a relationship _makes sense_ in the bigger picture, but rather, if each instance we're associating is individually valid. For instance, if you're working on a system to manage books and authors, Django, out of the box, checks that each author is a valid author record before letting you add them to a book's `authors` field. It _won't_ necessarily flag if you're adding 1000 authors to a book, which might be nonsensical for your particular system. That's where things get interesting.
 
-Let’s delve into specific techniques and demonstrate using concrete code. One common scenario where I encountered this was in a project managing conference presentations. We had a `Presentation` model and a `Speaker` model, with a many-to-many relationship. We needed to enforce a constraint that a single speaker couldn't present at the same time *in the same room* (multiple speakers were allowed on the same presentation, just not the same *speaker* presenting in *different presentations simultaneously in the same room*). Here’s the initial model setup:
+Let’s delve into specific techniques and demonstrate using concrete code. One common scenario where I encountered this was in a project managing conference presentations. We had a `Presentation` model and a `Speaker` model, with a many-to-many relationship. We needed to enforce a constraint that a single speaker couldn't present at the same time _in the same room_ (multiple speakers were allowed on the same presentation, just not the same _speaker_ presenting in _different presentations simultaneously in the same room_). Here’s the initial model setup:
 
 ```python
 from django.db import models
@@ -75,7 +75,7 @@ class Speaker(models.Model):
     # ... other speaker fields
 ```
 
-This `clean()` method checks if a start time is before an end time and if there are overlapping presentations involving the same speakers, within the same room. If there is an overlap, it raises a `ValidationError` preventing the save. Notice how this validation is happening on the *model instance itself* and not the many-to-many manager.
+This `clean()` method checks if a start time is before an end time and if there are overlapping presentations involving the same speakers, within the same room. If there is an overlap, it raises a `ValidationError` preventing the save. Notice how this validation is happening on the _model instance itself_ and not the many-to-many manager.
 
 Another situation I frequently encountered involved controlling the number of allowed associations. Imagine a system managing project assignments. You may want to enforce that a given user cannot be assigned to more than 3 active projects at a time. Here's an example to illustrate:
 
@@ -101,7 +101,7 @@ class User(models.Model):
 
 Here, the `clean()` method on the `User` model checks the count of associated active projects. If it exceeds three, it raises a validation error. This happens on the `User` instance as a whole rather than on each association. Crucially, this check executes before the database write.
 
-Finally, consider the case where you might want to validate the specific *type* of related object. Let’s say in our presentation system, we have different types of speakers: “Keynote” and “Regular” and we only allow one keynote speaker per presentation. This kind of validation would need to occur before you can save a given presentation:
+Finally, consider the case where you might want to validate the specific _type_ of related object. Let’s say in our presentation system, we have different types of speakers: “Keynote” and “Regular” and we only allow one keynote speaker per presentation. This kind of validation would need to occur before you can save a given presentation:
 
 ```python
 from django.core.exceptions import ValidationError

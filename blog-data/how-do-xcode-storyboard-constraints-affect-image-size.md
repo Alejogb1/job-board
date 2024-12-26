@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-xcode-storyboard-constraints-affect-image-size"
 ---
 
-Okay, let's unpack how Xcode Storyboard constraints influence image sizes. I’ve spent a good chunk of my career deep in the weeds of iOS development, and I've seen firsthand how seemingly simple things like image sizing can become a real headache if constraints aren’t properly configured. This isn't just a theoretical exercise; I've personally debugged layout issues on tight deadlines where a misplaced constraint caused an entire view hierarchy to collapse in on itself.
+, let's unpack how Xcode Storyboard constraints influence image sizes. I’ve spent a good chunk of my career deep in the weeds of iOS development, and I've seen firsthand how seemingly simple things like image sizing can become a real headache if constraints aren’t properly configured. This isn't just a theoretical exercise; I've personally debugged layout issues on tight deadlines where a misplaced constraint caused an entire view hierarchy to collapse in on itself.
 
 The core principle here is that constraints, at their heart, are the rules that the Auto Layout engine in iOS uses to determine the size and position of each view, including `UIImageView`s. When you add an image to a `UIImageView` within a Storyboard, the image size isn't simply dictated by the image file itself. Instead, its rendering dimensions are determined by the constraints you apply to the `UIImageView`. Let's break it down.
 
@@ -14,10 +14,10 @@ Secondly, when we add constraints related to width and height, the situation cha
 
 A critical aspect to note is the `contentMode` property of the `UIImageView`. This property defines how the image itself is fitted within the bounds of the `UIImageView`’s frame as determined by its constraints. Common values are:
 
-*   `scaleAspectFit`: Scales the image to fit within the view's bounds while preserving the image's aspect ratio. This ensures the entire image is visible but may leave some padding around the edges.
-*   `scaleAspectFill`: Scales the image to fill the view's bounds while preserving the image's aspect ratio. This may clip portions of the image.
-*   `scaleToFill`: Stretches or squashes the image to fit the bounds of the `UIImageView` without preserving the aspect ratio. This usually results in image distortion if the aspect ratios differ.
-*   `center`: Centers the image within the `UIImageView`, displaying it at its original size, potentially clipping it if it's larger than the view’s frame.
+- `scaleAspectFit`: Scales the image to fit within the view's bounds while preserving the image's aspect ratio. This ensures the entire image is visible but may leave some padding around the edges.
+- `scaleAspectFill`: Scales the image to fill the view's bounds while preserving the image's aspect ratio. This may clip portions of the image.
+- `scaleToFill`: Stretches or squashes the image to fit the bounds of the `UIImageView` without preserving the aspect ratio. This usually results in image distortion if the aspect ratios differ.
+- `center`: Centers the image within the `UIImageView`, displaying it at its original size, potentially clipping it if it's larger than the view’s frame.
 
 Here’s a practical illustration with working code examples:
 

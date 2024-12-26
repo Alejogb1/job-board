@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "it-seems-that-scikit-learn-has-not-been-built-correctly-error"
 ---
 
-Alright so you're hitting a wall with scikit-learn right Got it Been there done that more times than I care to admit The "not built correctly" error is usually a sign something went wrong during the installation or compile phase it's a real pain I know
+so you're hitting a wall with scikit-learn right Got it Been there done that more times than I care to admit The "not built correctly" error is usually a sign something went wrong during the installation or compile phase it's a real pain I know
 
 First things first let's break down the most common reasons you might see this problem From my experience it's almost always one of these issues so let's cover them one by one and let's see what can help you with this
 
@@ -77,7 +77,7 @@ pip install scikit-learn
 
 **Problem 3: Weird Binary Issues**
 
-Okay this one is a bit more rare but I have run into it before Sometimes when scikit-learn gets compiled for your particular machine something can go wrong with the C/C++ extensions that scikit-learn relies on This is like getting your car engine back with a couple of parts that have the wrong shape and it simply will not work
+this one is a bit more rare but I have run into it before Sometimes when scikit-learn gets compiled for your particular machine something can go wrong with the C/C++ extensions that scikit-learn relies on This is like getting your car engine back with a couple of parts that have the wrong shape and it simply will not work
 
 **How to fix it**
 
@@ -95,10 +95,10 @@ Conda handles the binaries and compiles packages often better than pip so you mi
 
 So if none of those worked here are a few extra ideas to help you dig deeper into the error
 
-* **Check the full error message:** The error you see on the console usually has more details than just "not built correctly" Look at the full traceback because that can give you a lot of details on what specific error the library is finding
-* **Search for the error:** Copy and paste the full error message into Google or Stack Overflow someone has probably faced the same problem before
-* **Check your Python version:** Make sure your Python is compatible with the scikit-learn version that you are using
-* **Check if your system has installed all compilers:** Sometimes your system needs C++ compilers for it to compile the binaries for some specific packages Make sure you have the proper compilers if you are planning to build the library from source
+- **Check the full error message:** The error you see on the console usually has more details than just "not built correctly" Look at the full traceback because that can give you a lot of details on what specific error the library is finding
+- **Search for the error:** Copy and paste the full error message into Google or Stack Overflow someone has probably faced the same problem before
+- **Check your Python version:** Make sure your Python is compatible with the scikit-learn version that you are using
+- **Check if your system has installed all compilers:** Sometimes your system needs C++ compilers for it to compile the binaries for some specific packages Make sure you have the proper compilers if you are planning to build the library from source
 
 **Code Examples**
 
@@ -165,9 +165,9 @@ plt.show()
 
 I am not a big fan of linking Stackoverflow questions to solve those kind of problems because the answer given in that scenario might not apply to yours but here are some very useful resources
 
-*   **The scikit-learn documentation:** It's a great source of information and often has the fix to your problems it's the first place you want to check before anything else If not the API reference then the examples or user guides
-*   **"Python Machine Learning" by Sebastian Raschka:** It's a classic book that covers scikit-learn in great detail and this should help you not only with this specific problem you are dealing now but also with many more in the future
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book is another very good resource to learn more about not only scikit-learn but other libraries that are often used with scikit-learn.
+- **The scikit-learn documentation:** It's a great source of information and often has the fix to your problems it's the first place you want to check before anything else If not the API reference then the examples or user guides
+- **"Python Machine Learning" by Sebastian Raschka:** It's a classic book that covers scikit-learn in great detail and this should help you not only with this specific problem you are dealing now but also with many more in the future
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book is another very good resource to learn more about not only scikit-learn but other libraries that are often used with scikit-learn.
 
 **The punchline (if you're still with me)**
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-cant-i-connect-to-an-airflow-webserver"
 ---
 
-alright, so you're having trouble getting your airflow webserver up and running. been there, done that, got the t-shirt, and probably a few more error logs than i'd care to remember. it's one of those things that seems like it should just *work*, but then the universe throws a curveball, usually in the form of some networking gremlin or a misconfigured setting. let's see if we can trace down what's going on.
+, so you're having trouble getting your airflow webserver up and running. been there, done that, got the t-shirt, and probably a few more error logs than i'd care to remember. it's one of those things that seems like it should just _work_, but then the universe throws a curveball, usually in the form of some networking gremlin or a misconfigured setting. let's see if we can trace down what's going on.
 
 first off, when you say "can't connect," what exactly are you seeing? is it a browser timeout? a connection refused error? are you seeing anything in the airflow webserver logs? these things are critical diagnostic points. if you just launched it and are trying to hit it via your browser, and it's a fresh deployment, and you have nothing running on port 8080, usually where the server runs out of the box, a timeout is something i've seen a few times. here is how i handle that.
 

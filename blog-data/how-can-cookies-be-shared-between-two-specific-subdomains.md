@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-cookies-be-shared-between-two-specific-subdomains"
 ---
 
-Okay, let's tackle this. Subdomain cookie sharing is a topic that, while seemingly straightforward, has nuances that can trip up even experienced developers. I’ve definitely been down that rabbit hole myself a few times, specifically when migrating a complex e-commerce platform a few years back. We had a main domain, `example.com`, and various subdomains like `shop.example.com`, `blog.example.com`, and `api.example.com`. Maintaining user sessions across these was a key requirement, and a naive approach would have led to a very frustrating user experience.
+, let's tackle this. Subdomain cookie sharing is a topic that, while seemingly straightforward, has nuances that can trip up even experienced developers. I’ve definitely been down that rabbit hole myself a few times, specifically when migrating a complex e-commerce platform a few years back. We had a main domain, `example.com`, and various subdomains like `shop.example.com`, `blog.example.com`, and `api.example.com`. Maintaining user sessions across these was a key requirement, and a naive approach would have led to a very frustrating user experience.
 
 The crux of the issue lies in how browsers handle cookie domains. By default, a cookie set by `shop.example.com` is only visible to requests made to `shop.example.com` and not, say, to `blog.example.com`. This is due to the inherent security model of the web, preventing potential cross-site scripting (xss) vulnerabilities. The same-origin policy limits how scripts from one origin (protocol, domain, and port) can interact with resources from a different origin. Cookies fall under this domain restriction, so we need to explicitly configure them to be shared.
 
@@ -37,22 +37,26 @@ In this snippet, when the `/setcookie` endpoint is hit, we create a response and
 Here's how this might look in a Node.js application with Express:
 
 ```javascript
-const express = require('express');
-const cookieParser = require('cookie-parser');
+const express = require("express");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 const port = 3000;
 
 app.use(cookieParser());
 
-app.get('/setcookie', (req, res) => {
-    res.cookie('user_id', '12345', { domain: '.example.com', httpOnly: true, sameSite: 'Lax'}); // note the leading dot
-    res.send('Cookie set!');
+app.get("/setcookie", (req, res) => {
+  res.cookie("user_id", "12345", {
+    domain: ".example.com",
+    httpOnly: true,
+    sameSite: "Lax",
+  }); // note the leading dot
+  res.send("Cookie set!");
 });
 
-app.get('/getcookie', (req, res) => {
+app.get("/getcookie", (req, res) => {
   const userId = req.cookies.user_id;
-  res.send(`User ID: ${userId ? userId : 'Not found'}`);
+  res.send(`User ID: ${userId ? userId : "Not found"}`);
 });
 
 app.listen(port, () => {
@@ -69,30 +73,30 @@ Finally, while server-side cookie setting is prevalent, it's worth illustrating 
 
 function setCookie(name, value, domain) {
   const expires = new Date();
-  expires.setTime(expires.getTime() + (1 * 24 * 60 * 60 * 1000)); // Expires in 1 day
+  expires.setTime(expires.getTime() + 1 * 24 * 60 * 60 * 1000); // Expires in 1 day
   document.cookie = `${name}=${value};expires=${expires.toUTCString()};domain=${domain};path=/;samesite=lax`;
 }
 
 function getCookie(name) {
-    const nameEQ = name + "=";
-    const ca = document.cookie.split(';');
-    for(let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) === ' ') {
-            c = c.substring(1, c.length);
-        }
-        if (c.indexOf(nameEQ) === 0) {
-            return c.substring(nameEQ.length, c.length);
-        }
+  const nameEQ = name + "=";
+  const ca = document.cookie.split(";");
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === " ") {
+      c = c.substring(1, c.length);
     }
-    return null;
+    if (c.indexOf(nameEQ) === 0) {
+      return c.substring(nameEQ.length, c.length);
+    }
+  }
+  return null;
 }
 
 // setting
-setCookie('user_id', '12345', '.example.com'); // note the leading dot
+setCookie("user_id", "12345", ".example.com"); // note the leading dot
 
 //reading
-const userId = getCookie('user_id')
+const userId = getCookie("user_id");
 console.log("User ID: " + (userId ? userId : "Not found"));
 ```
 

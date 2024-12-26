@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-bundle-install-fail-after-installing-puma"
 ---
 
-Alright, let's talk about why `bundle install` might throw a fit after you've introduced Puma into the mix. It's a situation I’ve encountered more than a few times, often leading to some interesting troubleshooting sessions. While Puma itself isn't inherently problematic, the way its dependencies and environment interact with the rest of your application's ecosystem can sometimes lead to conflicts. There's rarely a single cause, but a few patterns tend to repeat, and those are what we'll dissect.
+, let's talk about why `bundle install` might throw a fit after you've introduced Puma into the mix. It's a situation I’ve encountered more than a few times, often leading to some interesting troubleshooting sessions. While Puma itself isn't inherently problematic, the way its dependencies and environment interact with the rest of your application's ecosystem can sometimes lead to conflicts. There's rarely a single cause, but a few patterns tend to repeat, and those are what we'll dissect.
 
 The core problem generally stems from discrepancies in dependency versions or conflicting build requirements that arise specifically when Puma's build process kicks in. It often isn't Puma itself, but rather the ecosystem surrounding it, most notably native extensions and their interaction with your system. Let’s delve into those common culprits and how to resolve them.
 
@@ -28,6 +28,7 @@ gem 'rails', '~> 6.0'
 gem 'nokogiri', '1.10.0'
 # Some other gems here
 ```
+
 ```ruby
 # Gemfile after Puma introduction
 source 'https://rubygems.org'
@@ -37,6 +38,7 @@ gem 'puma', '~> 5.0'
 gem 'nokogiri', '1.10.0' # This might now be too old for Puma and its dependencies
 # Other gems
 ```
+
 When running `bundle install`, you might see an error message indicating something along the lines of:
 
 ```
@@ -47,6 +49,7 @@ Bundler could not find compatible versions for gem "nokogiri":
 
     nokogiri (= 1.10.0)
 ```
+
 The solution in this case involves either allowing Bundler to update to a suitable version of nokogiri by removing the specific version pin (`gem 'nokogiri'`) or explicitly specifying a compatible version using, for instance, `gem 'nokogiri', '~> 1.11.0'`. You need to know your application is actually compatible with the newer version of `nokogiri`.
 
 **Example 2: Missing Native Libraries**
@@ -63,17 +66,20 @@ gem 'eventmachine'
 ```
 
 Running `bundle install` might result in the following compiler-related error:
+
 ```
 An error occurred while installing eventmachine (1.2.7), and Bundler cannot continue.
 Make sure that `gem install eventmachine -v '1.2.7'` succeeds before bundling.
 
   Gem::Ext::BuildError: ERROR: Failed to build gem native extension.
 ```
+
 This typically means that the `eventmachine` gem's compilation process is failing because of missing system level dependencies which are required to compile the native extension. The solution here is operating-system dependent. On Debian/Ubuntu based systems you might need: `sudo apt-get install libssl-dev build-essential`, or similar, depending on the platform and the missing dependencies indicated in the build error. Post installation, re-run `bundle install` to resolve this. This was a common issue I encountered during cross platform deploys.
 
 **Example 3: Platform mismatches**
 
 This issue arises because of a mismatch between the environment where bundler is being run and the `platform` section within the Gemfile.
+
 ```ruby
 # Gemfile
 source 'https://rubygems.org'
@@ -82,6 +88,7 @@ gem 'rails', '~> 6.0'
 gem 'puma'
 gem 'bcrypt', :platforms => :x86_64-linux
 ```
+
 If the environment is being run on a non `x86_64-linux` system such as `arm64-darwin`, you will get the following error.
 
 ```
@@ -99,6 +106,7 @@ Bundler could not find compatible versions for gem "bcrypt":
     You have requested: bcrypt (= 3.1.19) platform :arm64-darwin
 
 ```
+
 The solution here is to either remove the platform specification from the gem, allowing bundler to figure out which gem to install based on the platform the command is run in, or specify an alternative platform for your environment, such as `gem 'bcrypt', :platforms => [:x86_64-linux, :arm64-darwin]`
 
 In each of these scenarios, the core problem wasn't Puma itself, but the ripple effects it caused across the dependency graph. The key is to carefully examine the error messages, identify the specific gems or native components involved, and then address the underlying issues, often with platform specific steps.

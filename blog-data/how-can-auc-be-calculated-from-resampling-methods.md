@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-can-auc-be-calculated-from-resampling-methods"
 ---
 
-Alright, let's talk about calculating area under the curve (auc) from resampling methods. I’ve actually encountered this problem a fair bit over the years, often when working with imbalanced datasets or trying to get robust performance estimates for models. It’s a critical part of ensuring your model isn't just memorizing noise.
+, let's talk about calculating area under the curve (auc) from resampling methods. I’ve actually encountered this problem a fair bit over the years, often when working with imbalanced datasets or trying to get robust performance estimates for models. It’s a critical part of ensuring your model isn't just memorizing noise.
 
 The fundamental idea here is that standard auc calculations, especially those derived directly from a single training and test set split, can be quite brittle, particularly with smaller datasets or when you're dealing with significant class imbalance. Resampling, in this context, refers to techniques like k-fold cross-validation, bootstrapping, or repeated train-test splits. They essentially allow us to simulate multiple 'trials' of our model's performance by changing the composition of the training and testing data. The auc is then computed on each of these trials and then aggregated. Let me break it down, emphasizing practical concerns and techniques.
 
-The core challenge is that each resampled dataset will generate its own set of predictions, and thus a distinct receiver operating characteristic (roc) curve. Therefore, we don’t have just one auc; we have many, one for each resample. The question then isn’t just “how *do* we compute auc on the resamples,” but “how do we combine these multiple auc values into a meaningful single performance metric?”
+The core challenge is that each resampled dataset will generate its own set of predictions, and thus a distinct receiver operating characteristic (roc) curve. Therefore, we don’t have just one auc; we have many, one for each resample. The question then isn’t just “how _do_ we compute auc on the resamples,” but “how do we combine these multiple auc values into a meaningful single performance metric?”
 
 Typically, the first thing you'll do is compute the roc curve for each of your resamples, whether using k-fold cross-validation or a bootstrap technique. Each fold or bootstrap sample becomes its own independent evaluation. We then compute the auc from this roc curve on each fold.
 
-So, after running our chosen resampling technique (say, ten-fold cross-validation), we end up with ten auc values. Now, here’s where things get interesting: we typically report the *average* auc as the final evaluation metric, along with the standard deviation or confidence intervals to demonstrate the variability in model performance. This is crucial because a single auc on a fixed split can be misleading.
+So, after running our chosen resampling technique (say, ten-fold cross-validation), we end up with ten auc values. Now, here’s where things get interesting: we typically report the _average_ auc as the final evaluation metric, along with the standard deviation or confidence intervals to demonstrate the variability in model performance. This is crucial because a single auc on a fixed split can be misleading.
 
 Let me illustrate this with code examples, assuming we are working with scikit-learn in python:
 
@@ -55,7 +55,7 @@ print(f"Mean AUC: {mean_auc:.4f}")
 print(f"Std Dev AUC: {std_auc:.4f}")
 ```
 
-This example directly calculates the auc on each cross-validation fold. This shows how to deal with *one* type of resampling. Let's look at bootstrapping.
+This example directly calculates the auc on each cross-validation fold. This shows how to deal with _one_ type of resampling. Let's look at bootstrapping.
 
 ```python
 import numpy as np
@@ -104,7 +104,7 @@ print(f"Mean AUC: {mean_auc:.4f}")
 print(f"Std Dev AUC: {std_auc:.4f}")
 ```
 
-Here we generate many bootstrapped data sets, train a model on each, and get an auc per training run. Again, we get multiple aucs and we aggregate. You might ask, "Why not just *one* single, large, boostrapped sample and compute the auc of *that*?". The answer is that this wouldn't be reflecting the variability in performance; this is about generating many different splits and seeing how much those splits affect the resulting model's performance. We need to capture that uncertainty to report a robust value.
+Here we generate many bootstrapped data sets, train a model on each, and get an auc per training run. Again, we get multiple aucs and we aggregate. You might ask, "Why not just _one_ single, large, boostrapped sample and compute the auc of _that_?". The answer is that this wouldn't be reflecting the variability in performance; this is about generating many different splits and seeing how much those splits affect the resulting model's performance. We need to capture that uncertainty to report a robust value.
 
 Now, let's consider a more detailed case: repeated random train-test splits. This technique involves splitting your data into training and test sets multiple times, each time randomly, without replacement.
 
@@ -146,9 +146,9 @@ print(f"Std Dev AUC: {std_auc:.4f}")
 
 These examples demonstrate how to get robust estimates of the area under the roc curve using multiple common resampling techniques.
 
-However, it is crucial to note that this is still an average of the auc values. It doesn’t, for example, provide the actual *distribution* of the roc curve, but *merely* a collection of auc values. This approach assumes we can summarize performance using an average and standard deviation, which isn’t always true. The interpretation of the aggregated AUC becomes an aggregate of the model’s generalization performance *across* different data subsets.
+However, it is crucial to note that this is still an average of the auc values. It doesn’t, for example, provide the actual _distribution_ of the roc curve, but _merely_ a collection of auc values. This approach assumes we can summarize performance using an average and standard deviation, which isn’t always true. The interpretation of the aggregated AUC becomes an aggregate of the model’s generalization performance _across_ different data subsets.
 
-If you want a deeper dive into cross-validation techniques, I'd recommend "The Elements of Statistical Learning" by Hastie, Tibshirani, and Friedman. It's a classic and covers resampling and model selection in significant detail. For more on bootstrapping, the book "An Introduction to the Bootstrap" by Efron and Tibshirani provides a comprehensive treatment. And, to be clear, in real-world analysis it is common to see a report that shows mean auc *and* the distribution. This last point is very important when we start using these models to make important decisions.
+If you want a deeper dive into cross-validation techniques, I'd recommend "The Elements of Statistical Learning" by Hastie, Tibshirani, and Friedman. It's a classic and covers resampling and model selection in significant detail. For more on bootstrapping, the book "An Introduction to the Bootstrap" by Efron and Tibshirani provides a comprehensive treatment. And, to be clear, in real-world analysis it is common to see a report that shows mean auc _and_ the distribution. This last point is very important when we start using these models to make important decisions.
 
 In practice, you may also want to consider using stratified versions of these resampling methods to ensure balanced representation of classes across folds (for cross-validation) or samples (for bootstrapping), especially when you have imbalanced datasets, as I’ve seen on a few projects before.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-java-be-used-to-create-gdg-bases"
 ---
 
-Alright, let's talk about building GDG (Generalized Decision Graph) bases using Java. This isn't a task I've tackled recently, but back in my days working on complex rule engines for financial compliance, I had to deal with similar structures. While we weren't calling them 'GDG bases' at the time, the core problem – representing and efficiently processing complex decision logic – remains the same. So, I'll share what I learned through that experience and how it maps onto your question.
+, let's talk about building GDG (Generalized Decision Graph) bases using Java. This isn't a task I've tackled recently, but back in my days working on complex rule engines for financial compliance, I had to deal with similar structures. While we weren't calling them 'GDG bases' at the time, the core problem – representing and efficiently processing complex decision logic – remains the same. So, I'll share what I learned through that experience and how it maps onto your question.
 
 The core challenge in representing a GDG in software is managing the potentially exponential growth in branching complexity. You're essentially dealing with a directed acyclic graph (DAG), where each node represents a decision, and edges represent possible outcomes. Java, with its robust object-oriented capabilities and performance characteristics, is a suitable candidate for this. We're not reinventing the wheel here; we're leveraging standard programming principles to build something functional and scalable.
 
@@ -87,6 +87,7 @@ class DecisionGraphBuilder<T> {
 }
 
 ```
+
 This `DecisionGraphBuilder` simplifies the construction process, allowing you to build a complex graph by defining nodes and their relationships. To utilize it, you would create instances of your `DecisionPredicate` interface that contain your desired decision logic.
 
 The other approach is a table-based representation. Instead of relying on linked nodes, you would store the entire GDG structure in a tabular format, which allows you to easily serialize it and quickly query its states. Imagine a database table, where each row represents a state within the GDG, and columns represent the decision to be made at the state, output of that decision, and the next state to transition to. This works well for scenarios where the logic is very structured or generated from external source. The benefit of this is ease of analysis and storage as tables can be easily written to files or databases. This would be less flexible when your rules change, but when you have a lot of fixed rules, this is a viable alternative to the node-based implementation.
@@ -141,6 +142,7 @@ class GDGTable<T>{
 }
 
 ```
+
 This approach simplifies storing rules by using the table representation. It also simplifies the evaluation. It simply processes row by row until it hits a null state.
 
 In the context of your question, selecting the appropriate implementation depends on the specifics of your application. For highly dynamic GDGs where the structure and rules change frequently, the node-based approach is more adaptable. For GDGs that are more static, and where a simplified storage solution is needed, a tabular approach would be fine.

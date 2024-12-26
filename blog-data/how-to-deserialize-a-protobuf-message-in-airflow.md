@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-deserialize-a-protobuf-message-in-airflow"
 ---
 
-Okay, let's talk about deserializing protobuf messages in airflow—a topic I've tackled more times than I care to remember, often late on a friday. It's a common requirement when your data pipelines involve systems communicating via protobuf, and getting it wrong can lead to some rather frustrating debugging sessions. The core issue revolves around transforming the raw byte stream that represents your protobuf message back into a usable, structured data object in your airflow tasks.
+, let's talk about deserializing protobuf messages in airflow—a topic I've tackled more times than I care to remember, often late on a friday. It's a common requirement when your data pipelines involve systems communicating via protobuf, and getting it wrong can lead to some rather frustrating debugging sessions. The core issue revolves around transforming the raw byte stream that represents your protobuf message back into a usable, structured data object in your airflow tasks.
 
 First, let's establish the landscape. You're pulling data, probably from a message queue like kafka or a data store, that's serialized using protobuf. Airflow tasks are usually python-based, so the deserialization process will happen within a python operator. The critical part is to have the protobuf definition (.proto file) and its generated python modules available in your airflow environment. These generated python files are the key to unlocking the protobuf message’s structure.
 
@@ -42,16 +42,16 @@ def deserialize_log_message(serialized_message_b64):
 
         log_entry = LogEntry()
         log_entry.ParseFromString(serialized_message)
-        
+
         #Now you can access the fields:
         timestamp = log_entry.timestamp
         level = log_entry.level
         message = log_entry.message
 
         print(f"timestamp: {timestamp}, level: {level}, message: {message}")
-        
+
         return {"timestamp": timestamp, "level": level, "message": message}
-    
+
     except Exception as e:
        print(f"Error deserializing message: {e}")
        raise
@@ -109,9 +109,9 @@ def deserialize_log_stream(topic_name, kafka_brokers, group_id):
         except Exception as e:
             print(f"Error deserializing message: {e}. Message Skipped")
             # Optionally log the failing message if needed for debugging
-        
+
     consumer.close() # always close!
-    
+
     return deserialized_messages
 
 # usage
@@ -136,15 +136,15 @@ import io # to simulate a stream
 def deserialize_large_message(data_chunks):
     """Demonstrates a conceptual streaming-like deserialization of a large protobuf message."""
     # In a real-world scenario, replace this with your actual stream reader.
-    
-    all_bytes = b"".join(data_chunks) # again, the source of data_chunks can be different 
-    
+
+    all_bytes = b"".join(data_chunks) # again, the source of data_chunks can be different
+
     stream = io.BytesIO(all_bytes) # create an in memory stream
-    large_message = LargeData() 
-    
+    large_message = LargeData()
+
     #the following code is a naive way to do this
     # you need to implement the real logic based on how your data is chunked/streamed
-    
+
     try:
       large_message.ParseFromString(stream.read())
 
@@ -158,7 +158,7 @@ def deserialize_large_message(data_chunks):
 
 
 # simulated data chunks
-# data_chunks = [b'this is a chunk', b'and another chunk of data'] 
+# data_chunks = [b'this is a chunk', b'and another chunk of data']
 # large_deserialized_message = deserialize_large_message(data_chunks=data_chunks)
 
 ```
@@ -167,8 +167,8 @@ In this example, `data_chunks` simulate a stream of chunks. A more sophisticated
 
 From my own past experiences, getting this right often involves careful consideration of your specific message formats, the source of your data, and appropriate error handling strategies. For deeper learning, I’d recommend:
 
-*   **"Protocol Buffers: Getting Started" by Google:** the official documentation will guide you through all nuances and best practices
-*   **"gRPC: Up and Running" by Kelsey Hightower:** good for understanding the broader ecosystem using protocol buffers.
-*   **"Designing Data-Intensive Applications" by Martin Kleppmann:** provides a broader look at data serialization and its impact on application design.
+- **"Protocol Buffers: Getting Started" by Google:** the official documentation will guide you through all nuances and best practices
+- **"gRPC: Up and Running" by Kelsey Hightower:** good for understanding the broader ecosystem using protocol buffers.
+- **"Designing Data-Intensive Applications" by Martin Kleppmann:** provides a broader look at data serialization and its impact on application design.
 
 Remember, debugging protobuf deserialization issues often boils down to carefully inspecting the structure defined in your `.proto` file and ensuring that the received data is consistent with this structure. Good luck, and happy coding.

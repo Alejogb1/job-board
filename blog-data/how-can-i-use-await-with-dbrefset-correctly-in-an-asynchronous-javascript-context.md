@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-use-await-with-dbrefset-correctly-in-an-asynchronous-javascript-context"
 ---
 
-Alright, let's tackle this. I've spent a good chunk of time navigating the ins and outs of asynchronous database operations, especially when dealing with something like Firebase’s realtime database and its `set` method. The core issue, as I understand it, is properly managing the asynchronous nature of `dbRef.set` using `await` in JavaScript. It's not a terribly complex concept, but it's one that can lead to some head-scratching moments if not approached correctly.
+, let's tackle this. I've spent a good chunk of time navigating the ins and outs of asynchronous database operations, especially when dealing with something like Firebase’s realtime database and its `set` method. The core issue, as I understand it, is properly managing the asynchronous nature of `dbRef.set` using `await` in JavaScript. It's not a terribly complex concept, but it's one that can lead to some head-scratching moments if not approached correctly.
 
-The `dbRef.set` operation, like many database interactions, doesn't complete instantaneously. Instead, it returns a *promise*. Promises, in JavaScript, represent the eventual result of an asynchronous operation. This is where `async` and `await` come into play. Essentially, `async` declares a function as asynchronous and allows us to use `await` inside it to pause execution until the promise resolves (or rejects). This helps to achieve more linear and readable code than nested `.then` callbacks. I've seen a lot of codebases bogged down by that.
+The `dbRef.set` operation, like many database interactions, doesn't complete instantaneously. Instead, it returns a _promise_. Promises, in JavaScript, represent the eventual result of an asynchronous operation. This is where `async` and `await` come into play. Essentially, `async` declares a function as asynchronous and allows us to use `await` inside it to pause execution until the promise resolves (or rejects). This helps to achieve more linear and readable code than nested `.then` callbacks. I've seen a lot of codebases bogged down by that.
 
 So, the incorrect approach is trying to use the result of `dbRef.set` directly as though it were a synchronous function call. It’s a common mistake, and in my experience, it often stems from a misunderstanding of how promises and the event loop work. We can't just proceed as if the operation has finished immediately.
 
@@ -25,21 +25,24 @@ async function updateUserData(userId, userData) {
 
   try {
     await set(userRef, userData);
-    console.log('User data updated successfully.');
+    console.log("User data updated successfully.");
   } catch (error) {
-    console.error('Error updating user data:', error);
+    console.error("Error updating user data:", error);
     throw error; // Re-throw to handle outside the function
   }
 }
 
 // Example usage:
 async function main() {
-    try {
-        await updateUserData('user123', { name: 'John Doe', email: 'john.doe@example.com' });
-        console.log("Main function: update complete.");
-    } catch (error) {
-        console.error("Main function: Error occurred:", error);
-    }
+  try {
+    await updateUserData("user123", {
+      name: "John Doe",
+      email: "john.doe@example.com",
+    });
+    console.log("Main function: update complete.");
+  } catch (error) {
+    console.error("Main function: Error occurred:", error);
+  }
 }
 
 main();
@@ -51,39 +54,36 @@ Now, let's consider a slightly more complex case, imagine you need to update mul
 
 ```javascript
 async function updateMultipleRefs(dataUpdates) {
-    const db = getDatabase();
+  const db = getDatabase();
 
   try {
     for (const { path, data } of dataUpdates) {
       const refToUpdate = ref(db, path);
-        await set(refToUpdate, data);
-        console.log(`Updated ${path}`);
-      }
-    console.log('All updates completed successfully.');
-
+      await set(refToUpdate, data);
+      console.log(`Updated ${path}`);
+    }
+    console.log("All updates completed successfully.");
   } catch (error) {
-    console.error('Error during multiple updates:', error);
-      throw error; // rethrow to parent
+    console.error("Error during multiple updates:", error);
+    throw error; // rethrow to parent
   }
 }
 
 // Example usage
-async function init(){
-    const updates = [
-        { path: 'items/item1', data: {name:'Thing 1', quantity:10 } },
-        { path: 'items/item2', data: {name: 'Thing 2', quantity: 5} }
-    ];
-    try {
-        await updateMultipleRefs(updates);
-        console.log("Main: Multi updates success.");
-    }
-    catch (err) {
-        console.error("Main: Error:",err)
-    }
-
+async function init() {
+  const updates = [
+    { path: "items/item1", data: { name: "Thing 1", quantity: 10 } },
+    { path: "items/item2", data: { name: "Thing 2", quantity: 5 } },
+  ];
+  try {
+    await updateMultipleRefs(updates);
+    console.log("Main: Multi updates success.");
+  } catch (err) {
+    console.error("Main: Error:", err);
+  }
 }
 
-init()
+init();
 ```
 
 This second example showcases iterating through multiple database references, each updated sequentially. Crucially, the `await` within the loop ensures each `set` operation completes before moving on to the next. This is absolutely essential if you have some kind of cascading update or dependent writes. Failing to do this will lead to inconsistent states in the database, or errors due to some operations trying to access or modify data that hasn't been written yet.
@@ -92,31 +92,29 @@ Finally, consider a scenario where you might be dealing with a more complicated 
 
 ```javascript
 async function incrementCounter(counterPath) {
-    const db = getDatabase();
-    const counterRef = ref(db, counterPath);
+  const db = getDatabase();
+  const counterRef = ref(db, counterPath);
 
-    try {
-        const snapshot = await get(counterRef);
-        let currentValue = snapshot.exists() ? snapshot.val() : 0;
-        const newValue = currentValue + 1;
-         await set(counterRef, newValue);
-        console.log(`Counter at ${counterPath} updated to ${newValue}.`);
-    } catch (error) {
-        console.error(`Error incrementing counter at ${counterPath}:`, error);
-        throw error;
-    }
+  try {
+    const snapshot = await get(counterRef);
+    let currentValue = snapshot.exists() ? snapshot.val() : 0;
+    const newValue = currentValue + 1;
+    await set(counterRef, newValue);
+    console.log(`Counter at ${counterPath} updated to ${newValue}.`);
+  } catch (error) {
+    console.error(`Error incrementing counter at ${counterPath}:`, error);
+    throw error;
+  }
 }
 
-
 // Example usage
-async function runCounter(){
+async function runCounter() {
   try {
-       await incrementCounter('counters/mainCounter');
-       console.log("Main: increment counter success.")
+    await incrementCounter("counters/mainCounter");
+    console.log("Main: increment counter success.");
+  } catch (error) {
+    console.error("Main: Increment error:", error);
   }
-    catch (error){
-      console.error("Main: Increment error:", error);
-    }
 }
 
 runCounter();

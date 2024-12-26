@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-my-bidirectional-rnn-raise-a-nonetype-object-has-no-attribute-inboundnodes-error"
 ---
 
-Alright, let's address this "NoneType object has no attribute '_inbound_nodes'" error you're encountering with your bidirectional RNN. It's a surprisingly common pitfall, and I've personally spent more than a few late nights chasing down similar issues, often in the heat of trying to deploy a complex model. I remember particularly struggling with it during a time series forecasting project where we were experimenting with a stacked bidirectional LSTM architecture. The culprit, more often than not, isn't some fundamental flaw in the idea of bidirectional RNNs but rather a subtle misconfiguration or incorrect usage in the way you're assembling your model components.
+, let's address this "NoneType object has no attribute '\_inbound_nodes'" error you're encountering with your bidirectional RNN. It's a surprisingly common pitfall, and I've personally spent more than a few late nights chasing down similar issues, often in the heat of trying to deploy a complex model. I remember particularly struggling with it during a time series forecasting project where we were experimenting with a stacked bidirectional LSTM architecture. The culprit, more often than not, isn't some fundamental flaw in the idea of bidirectional RNNs but rather a subtle misconfiguration or incorrect usage in the way you're assembling your model components.
 
 The error message itself is a key clue. The fact that a `NoneType` object is raising an `_inbound_nodes` attribute error suggests that somewhere in your model definition, a layer (or a related object that behaves like one) hasn’t been properly connected to the computational graph. Typically, this occurs when a layer's output is expected by another layer, but instead of receiving the output tensor, it's getting a `None` object. Let's break down the typical causes and then look at how to avoid them.
 
@@ -77,6 +77,7 @@ def build_problematic_custom_model():
     model = Model(inputs=[input_a, input_b], outputs=merged_output)
     return model
 ```
+
 In the example above, the lstm layer is used twice, and because tensorflow's layers are objects, they can't be shared this way. We overwrite the output of the lstm layer and the dense layer when it is used on input_b. This causes incorrect tensors to be passed through the model's graph, which can result in the `NoneType` error when you try to operate on it or call methods that expect an output from the layer.
 
 So, what are the key takeaways? Firstly, double-check that you’re using the `Bidirectional` layer correctly, especially if using functional API or custom layers. Make sure you're not trying to use the same layer object on multiple input paths incorrectly. Ensure that the layers are connected in a clear sequence, so that each operation's output is passed correctly to the next operation. This is crucial for frameworks like Keras, where the functional API relies on these connections to build the computational graph.

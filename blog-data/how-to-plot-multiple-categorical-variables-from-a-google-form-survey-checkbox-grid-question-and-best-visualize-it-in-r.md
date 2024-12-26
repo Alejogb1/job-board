@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-plot-multiple-categorical-variables-from-a-google-form-survey-checkbox-grid-question-and-best-visualize-it-in-r"
 ---
 
-alright, so you've got a google forms survey with a checkbox grid, and now you're staring at a pile of data wondering how to make sense of it all in r. been there, done that. i remember back in my early days of data exploration, i had a similar challenge with a feedback survey about some internal software we were developing. the responses were, let's say, enthusiastically multi-faceted. trying to extract insights from that matrix of checkboxes felt like trying to decode a secret language written in tic-tac-toe. anyway, it's doable, and here's how i usually approach this.
+, so you've got a google forms survey with a checkbox grid, and now you're staring at a pile of data wondering how to make sense of it all in r. been there, done that. i remember back in my early days of data exploration, i had a similar challenge with a feedback survey about some internal software we were developing. the responses were, let's say, enthusiastically multi-faceted. trying to extract insights from that matrix of checkboxes felt like trying to decode a secret language written in tic-tac-toe. anyway, it's doable, and here's how i usually approach this.
 
 the first hurdle is getting that google sheets data properly into r. assuming you've already exported the results and have it as a csv, the typical approach will work:
 

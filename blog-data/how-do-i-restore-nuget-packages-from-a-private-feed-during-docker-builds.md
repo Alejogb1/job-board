@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-restore-nuget-packages-from-a-private-feed-during-docker-builds"
 ---
 
-Okay, let’s tackle this. It’s something I’ve had to refine over several projects, and it always requires a bit more thought than simply pointing docker to the public feed. We're talking about integrating private nuget feeds, usually within a secure environment, into your docker build processes. This isn’t just about slapping a `-restore` command into a dockerfile; there are security considerations and subtle configurations that need careful attention. I remember a project years back where we had a near-catastrophe because of improperly configured credentials for a private feed within the docker environment – a good lesson learned the hard way.
+, let’s tackle this. It’s something I’ve had to refine over several projects, and it always requires a bit more thought than simply pointing docker to the public feed. We're talking about integrating private nuget feeds, usually within a secure environment, into your docker build processes. This isn’t just about slapping a `-restore` command into a dockerfile; there are security considerations and subtle configurations that need careful attention. I remember a project years back where we had a near-catastrophe because of improperly configured credentials for a private feed within the docker environment – a good lesson learned the hard way.
 
 First off, the core issue arises because, during docker builds, your environment is typically isolated from your local setup. Dockerfiles don't inherently have access to your private nuget credentials stored locally or in your development environment. Therefore, we need to explicitly pass these credentials and configure the nuget client within the docker build context. There are several ways to accomplish this, each with its own pros and cons, but let’s break down what I consider the most reliable methods.
 
@@ -97,6 +97,7 @@ WORKDIR /app
 COPY --from=publish-stage /publish .
 ENTRYPOINT ["dotnet", "YourApplication.dll"]
 ```
+
 As with the first example, build using the docker build command and appropriate credentials: `docker build --build-arg NUGET_API_KEY=<your_actual_api_key> .`
 
 In this setup, our nuget config with credentials only exists within `restore-stage` and is not copied over to the subsequent build, publish, or runtime stages. This significantly improves the security posture of your final image.
@@ -116,6 +117,7 @@ RUN dotnet restore
 # Stage 2: Build Stage (no secrets)
 ... and so on ...
 ```
+
 To use this approach, you'd first create a docker secret called `nuget.config`, then, during your build, use the `--secret` argument to mount it (using docker swarm):
 
 `docker build --secret id=nuget.config,src=path/to/your/nuget.config .`
@@ -123,7 +125,7 @@ To use this approach, you'd first create a docker secret called `nuget.config`, 
 or using a docker compose file, for example:
 
 ```yaml
-version: '3.9'
+version: "3.9"
 services:
   my-app-build:
     build:

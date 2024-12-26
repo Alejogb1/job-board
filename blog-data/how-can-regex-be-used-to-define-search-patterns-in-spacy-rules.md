@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-regex-be-used-to-define-search-patterns-in-spacy-rules"
 ---
 
-Alright, let’s talk regex in spaCy rules, something I've tangled with quite a bit over the years, particularly when dealing with complex data extraction projects. It's a powerful combination, but it does require a nuanced understanding to get it working effectively. The core idea is that spaCy's rule-based matching system, while primarily focused on linguistic annotations, can be augmented with regular expressions to handle pattern matching on text itself. This allows for greater flexibility in identifying entities and structures not easily captured by standard spaCy token attributes.
+, let’s talk regex in spaCy rules, something I've tangled with quite a bit over the years, particularly when dealing with complex data extraction projects. It's a powerful combination, but it does require a nuanced understanding to get it working effectively. The core idea is that spaCy's rule-based matching system, while primarily focused on linguistic annotations, can be augmented with regular expressions to handle pattern matching on text itself. This allows for greater flexibility in identifying entities and structures not easily captured by standard spaCy token attributes.
 
 My first major encounter with this was in a project involving parsing legal documents. We needed to extract specific clause numbers, which followed a rather inconsistent format. Relying purely on spaCy's part-of-speech tagging and dependency parsing was hitting a wall. That’s where regex inside spaCy's `Matcher` came to the rescue. It wasn’t immediately obvious how to integrate them smoothly, but after some experimentation, I found a reliable approach that consistently delivered the desired results.
 
@@ -71,13 +71,13 @@ for match_id, start, end in matches:
 
 Here, the regex `^(Clause|Article|Section)\s+[1-9]\d*[a-z]?(\([a-z]\))?$` breaks down as follows:
 
-*   `^`: Beginning of the token string.
-*   `(Clause|Article|Section)`: Matches "Clause", "Article", or "Section" literally.
-*   `\s+`: Matches one or more whitespace characters.
-*   `[1-9]\d*`: Matches one digit from 1 to 9 followed by zero or more digits.
-*   `[a-z]?`: Matches an optional lowercase letter (e.g., "a" in "2a").
-*   `(\([a-z]\))?`: Matches an optional parenthesized lowercase letter (e.g., "(b)" in "3(b)"). The `?` makes this whole group optional.
-*   `$`: End of the token string.
+- `^`: Beginning of the token string.
+- `(Clause|Article|Section)`: Matches "Clause", "Article", or "Section" literally.
+- `\s+`: Matches one or more whitespace characters.
+- `[1-9]\d*`: Matches one digit from 1 to 9 followed by zero or more digits.
+- `[a-z]?`: Matches an optional lowercase letter (e.g., "a" in "2a").
+- `(\([a-z]\))?`: Matches an optional parenthesized lowercase letter (e.g., "(b)" in "3(b)"). The `?` makes this whole group optional.
+- `$`: End of the token string.
 
 This provides a fairly robust way of extracting different types of section identifiers. You could, of course, refine this even further if you had very particular formatting needs.
 
@@ -106,6 +106,7 @@ for match_id, start, end in matches:
     span = doc[start:end]
     print(f"Match ID: {string_id}, Span: {span.text}")
 ```
+
 In this final example the regex matches one of four possibilities for the product name, followed by whitespace, and then at least one digit (preventing something like 'ProductA ' from matching). While simple, this illustrates how you can use regex to make the `Matcher` more flexible, by allowing for case variations or other subtle formatting differences that may be missed by standard token-based matching.
 
 Now, a few points to keep in mind.
@@ -116,4 +117,4 @@ Secondly, the regex matching operates on the token text itself. This means you n
 
 Thirdly, while regex is a powerful tool, try to use it only where absolutely necessary. SpaCy's rule-based matching combined with attributes like POS tags and lemmas is often sufficient for many scenarios, and it’s generally more efficient and less brittle than regex-only approaches.
 
-For those looking to delve deeper into this topic, I would highly recommend starting with *Mastering Regular Expressions* by Jeffrey Friedl. It’s a comprehensive guide to regex syntax and usage across various languages and will give you a solid foundation. On the spaCy side, the official spaCy documentation is essential, especially the sections on rule-based matching and the `Matcher` class. Additionally, the spaCy Github repository contains numerous example notebooks and issues threads that provide real-world applications and tips. Also, look for the chapter on rule-based matching in the book *Natural Language Processing with Python*, by Steven Bird, Ewan Klein, and Edward Loper. These resources collectively provide a broad, deep, and practical understanding of how to effectively leverage regex within the spaCy framework.
+For those looking to delve deeper into this topic, I would highly recommend starting with _Mastering Regular Expressions_ by Jeffrey Friedl. It’s a comprehensive guide to regex syntax and usage across various languages and will give you a solid foundation. On the spaCy side, the official spaCy documentation is essential, especially the sections on rule-based matching and the `Matcher` class. Additionally, the spaCy Github repository contains numerous example notebooks and issues threads that provide real-world applications and tips. Also, look for the chapter on rule-based matching in the book _Natural Language Processing with Python_, by Steven Bird, Ewan Klein, and Edward Loper. These resources collectively provide a broad, deep, and practical understanding of how to effectively leverage regex within the spaCy framework.

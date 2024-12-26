@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-lstm-layers-be-used-as-encoders-in-pytorch"
 ---
 
-Alright, let's talk about using lstm layers as encoders. I've spent a fair bit of time mucking around with recurrent neural networks, and specifically lstms, in various projects over the years, from natural language processing tasks to time-series analysis, and have definitely explored this particular pattern a number of times. It’s actually a quite versatile approach once you grasp the nuances.
+, let's talk about using lstm layers as encoders. I've spent a fair bit of time mucking around with recurrent neural networks, and specifically lstms, in various projects over the years, from natural language processing tasks to time-series analysis, and have definitely explored this particular pattern a number of times. It’s actually a quite versatile approach once you grasp the nuances.
 
 The core idea behind using an lstm as an encoder is to take a sequential input – a sentence, a time series of sensor readings, or anything similar – and transform it into a fixed-length vector representation that captures the essence of that sequence. This vector is then used by the downstream model, often another neural network, for tasks like classification, regression, or generating new sequences (think sequence-to-sequence models). The final hidden state, or sometimes both the final hidden and cell states, produced by the lstm layer effectively summarizes the input sequence.
 

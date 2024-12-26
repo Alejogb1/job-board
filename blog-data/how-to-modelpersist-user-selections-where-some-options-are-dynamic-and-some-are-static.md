@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-modelpersist-user-selections-where-some-options-are-dynamic-and-some-are-static"
 ---
 
-alright, so you're looking at how to handle user preferences when some of those choices are always there and others pop up or vanish based on something else, i get it. i’ve been down that road more times than i care to remember. it’s a pretty common problem, especially when you're building anything beyond a simple form.
+, so you're looking at how to handle user preferences when some of those choices are always there and others pop up or vanish based on something else, i get it. i’ve been down that road more times than i care to remember. it’s a pretty common problem, especially when you're building anything beyond a simple form.
 
 let's break it down. what we have is basically a mix of predictable, hard-coded options and dynamically generated ones. think of it like this: you have a settings page where everyone gets the "theme" choice which is always there, but then you also have "notification preferences" which might change if the user has certain features enabled or not.
 
@@ -16,11 +16,11 @@ so, what did i learn, and how can we apply that to your situation? the key is to
 
 i've found three main approaches that work well, with trade-offs of course:
 
-*   **the json blob approach:** basically, you have a column in your users table (or whatever table stores user data) that is a json column. this column holds a json object that represents all the user settings, both static and dynamic.
+- **the json blob approach:** basically, you have a column in your users table (or whatever table stores user data) that is a json column. this column holds a json object that represents all the user settings, both static and dynamic.
 
-    this can be nice if you don’t have lots of different choices, think up to 20-30 tops. it’s simple, quick to implement, and allows the dynamic part to be flexible.
+  this can be nice if you don’t have lots of different choices, think up to 20-30 tops. it’s simple, quick to implement, and allows the dynamic part to be flexible.
 
-    here’s how it would look like in say, python, using sqlite (remember to have sqlite installed for this to work):
+  here’s how it would look like in say, python, using sqlite (remember to have sqlite installed for this to work):
 
 ```python
     import sqlite3
@@ -80,14 +80,15 @@ i've found three main approaches that work well, with trade-offs of course:
     conn.close()
 
 ```
+
     *  **pros**: easy to implement and query. no schema changes required if we add more dynamic options.
     *   **cons**: can lead to bloated json blobs over time. you can’t easily query based on nested keys in sql without special functions. makes simple sql operations become more complex, might also cause data consistency issues if you're not extremely careful.
 
-*   **a key/value table:** this is the normalized approach. you have a table that links user ids to setting keys and values.
+- **a key/value table:** this is the normalized approach. you have a table that links user ids to setting keys and values.
 
-    this gives you much better control over querying and indexing, especially if you have many users and lots of options. but its more work upfront. think of it as storing the json example we had before not as a json blob, but like this `{user_id: 1, key: theme, value: dark}, {user_id: 1, key: notifications.email, value: true}..`
+  this gives you much better control over querying and indexing, especially if you have many users and lots of options. but its more work upfront. think of it as storing the json example we had before not as a json blob, but like this `{user_id: 1, key: theme, value: dark}, {user_id: 1, key: notifications.email, value: true}..`
 
-    here’s a quick example in python:
+  here’s a quick example in python:
 
 ```python
     import sqlite3
@@ -146,9 +147,10 @@ i've found three main approaches that work well, with trade-offs of course:
     *   **pros**: normalized data, easy querying. great for large datasets with many dynamic options. you also have better control over indexing and data types.
     *   **cons**: more setup work upfront. a bit more complex query logic than the json blob. but usually its worth the added complexity as the system grows.
 
-*   **hybrid approach:** in this case, you could have a mix of both approaches. for truly static things like 'user role' or user creation date, these live in the users' table. while for all the dynamic settings, you use either the json blob or key/value tables. this approach can be great for very complex settings, or when you need to mix fixed with dynamic data and dont mind some tradeoffs for having both types at the same time, which might add a bit of complexity but provides a nice balance.
+- **hybrid approach:** in this case, you could have a mix of both approaches. for truly static things like 'user role' or user creation date, these live in the users' table. while for all the dynamic settings, you use either the json blob or key/value tables. this approach can be great for very complex settings, or when you need to mix fixed with dynamic data and dont mind some tradeoffs for having both types at the same time, which might add a bit of complexity but provides a nice balance.
 
-    example of this using the key/value table approach to store dynamic data but having a basic user table at the same time, this example shows how to work with both approaches at the same time.
+  example of this using the key/value table approach to store dynamic data but having a basic user table at the same time, this example shows how to work with both approaches at the same time.
+
 ```python
     import sqlite3
 
@@ -226,6 +228,7 @@ i've found three main approaches that work well, with trade-offs of course:
     conn.close()
 
 ```
+
     *   **pros**: the best of both worlds, flexibility where you need it and structure where it makes sense.
     *   **cons**: added complexity due to having more tables. it requires you to make careful design decisions when deciding what to store where.
 

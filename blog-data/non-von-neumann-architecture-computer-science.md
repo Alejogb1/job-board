@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "non-von-neumann-architecture-computer-science"
 ---
 
-Okay so non-von neumann architecture right Been there done that wrestled with that beast more times than I care to remember Let's unpack this thing because it’s not as straightforward as some textbooks make it out to be I'm not gonna give you a history lesson you can google that but I will share some scars from my own encounters with this stuff
+non-von neumann architecture right Been there done that wrestled with that beast more times than I care to remember Let's unpack this thing because it’s not as straightforward as some textbooks make it out to be I'm not gonna give you a history lesson you can google that but I will share some scars from my own encounters with this stuff
 
 First off when we talk about non-von neumann we're talking about stepping away from the classic sequential execution model you know the fetch-decode-execute cycle that's been the backbone of computing for decades Now that's not inherently bad it's been incredibly useful but it has limitations especially when we're dealing with the kind of massively parallel stuff we need today think AI or large scale simulations And the limitations are not just "speed" but also the whole power efficiency and memory access bottleneck issues we can encounter
 
@@ -73,11 +73,13 @@ thread1.join()
 queue_2.put(None)
 thread2.join()
 ```
+
 This was a simplified version that was basically trying to showcase the basics of moving data around using queues and threads. It’s far from being a complete implementation of a dataflow architecture but it helped me in the early stages of understanding the main concepts of it.
 
 Another architecture I've looked at is the reconfigurable architectures like FPGAs Field Programmable Gate Arrays It’s an entirely different beast than CPUs these are essentially hardware circuits that you can program to do specific tasks They're not great for general purpose stuff but when you have highly specific and repetitive operations they can be incredibly efficient
 
 I ended up trying to re-implement a portion of the same image processing pipeline that I was working with the multithreaded approach. I used an high level synthesis tool to build the hardware part and after a while the result was impressive. The same image transformation was taking roughly 20 times less time to complete than the traditional approach. The code to do something similar looks something like the following in SystemVerilog
+
 ```systemverilog
 module adder(
     input  logic [31:0] a,
@@ -113,6 +115,7 @@ module pipeline(
   );
 endmodule
 ```
+
 This is of course a simple example with a simple addition and multiplication operation but this serves as an example of how you can describe hardware operations to perform specific tasks using hardware description languages such as SystemVerilog. Now we're not talking about general purpose CPUs but actual configurable hardware that performs those tasks. You define the modules like they are small operations such as adders and multipliers and then you wire those modules into the main pipeline module and then a synthesys tool will generate actual low-level hardware logic out of it. It is a very powerful tool if used with the right purposes.
 
 Now there is also an area called neuromorphic computing which is very interesting This is where the hardware attempts to mimic the structure and function of the brain specifically using concepts like neural networks with spiking neurons. They are not meant to compete with current CPUs in speed or accuracy but they are designed to process things like sensory information in a more efficient way than the standard CPUs do for the same task.
@@ -161,6 +164,7 @@ plt.legend()
 plt.grid(True)
 plt.show()
 ```
+
 This is a very simple example and in order to create a real use case would require a network of interconnected neurons and much more complex implementation but it’s a good starting point to explain the basic concepts.
 
 This is a huge field and there are many different approaches to non-von neumann architectures from quantum computing to memristors and even optical computing Each has their own pros and cons and all are under research and development with different goals in mind. I would say that if you are trying to get deeper into it I would recommend starting by looking into "Parallel Computer Architecture A Hardware/Software Approach" by David E. Culler, Jaswinder Pal Singh, and Anoop Gupta and "Structure and Interpretation of Computer Programs" by Harold Abelson and Gerald Jay Sussman . Those will provide you a base knowledge of the computer architecture that's going to be very useful going forward.

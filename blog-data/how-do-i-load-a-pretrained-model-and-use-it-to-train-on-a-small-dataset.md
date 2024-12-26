@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-load-a-pretrained-model-and-use-it-to-train-on-a-small-dataset"
 ---
 
-Alright, let's tackle this. Having spent a good chunk of my career navigating the nuances of machine learning pipelines, this is a scenario I've encountered more times than I can count. Loading a pretrained model and adapting it to a smaller, specialized dataset is a crucial technique, particularly when computational resources or data availability are constraints. It’s a balancing act: leveraging existing knowledge while fine-tuning to capture specifics of your new data. Here's how I approach it, focusing on common pitfalls and practical strategies.
+, let's tackle this. Having spent a good chunk of my career navigating the nuances of machine learning pipelines, this is a scenario I've encountered more times than I can count. Loading a pretrained model and adapting it to a smaller, specialized dataset is a crucial technique, particularly when computational resources or data availability are constraints. It’s a balancing act: leveraging existing knowledge while fine-tuning to capture specifics of your new data. Here's how I approach it, focusing on common pitfalls and practical strategies.
 
 The fundamental idea is transfer learning. Instead of training a model from scratch, which requires vast amounts of data and computational power, you’re using a model that has already learned a wealth of features from a large, generalized dataset. This usually comes in the form of pre-trained weights. The process generally involves a few key steps: selecting a suitable pretrained model, adapting the architecture if necessary, loading the pretrained weights, and then fine-tuning it on your smaller dataset.
 
@@ -150,11 +150,12 @@ for epoch in range(epochs):
     metric.reset_state()
     val_metric.reset_state()
 ```
+
 This code uses the `transformers` library to load BERT, and you can see how I preprocess the input text data by tokenizing them. The key is setting the right `num_labels` argument when loading `TFBertForSequenceClassification`. Fine-tuning the whole BERT model, including its transformer layers is typically performed for such scenarios. This example further showcases how we manage text data and incorporate a more complex transformer based pre-trained model.
 
 Let’s look at a final example, which considers a case that goes beyond vanilla training. Let's suppose that in a past project I needed to transfer learning for a model that needs a modified output layer, rather than simply swapping out a fully connected layer like in Example 1. For this example, consider using a pre-trained encoder-decoder model like a transformer model for a sequence-to-sequence translation, and adapting it for code generation, something I have had to do in the past.
 
-**Example 3:  Encoder-Decoder Model Adaptation**
+**Example 3: Encoder-Decoder Model Adaptation**
 
 ```python
 import tensorflow as tf

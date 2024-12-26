@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-filter-graph-api-results-by-receiveddatetime-using-the-c-graph-client"
 ---
 
-Alright, let's dive into filtering Graph API results by `ReceivedDateTime` using the C# Graph client. It’s something I've dealt with extensively, especially when building custom email processing tools for a previous employer – that’s where the need for precise filtering really hits home. The Graph API, while powerful, has nuances when dealing with date and time, and getting your filters spot on is critical.
+, let's dive into filtering Graph API results by `ReceivedDateTime` using the C# Graph client. It’s something I've dealt with extensively, especially when building custom email processing tools for a previous employer – that’s where the need for precise filtering really hits home. The Graph API, while powerful, has nuances when dealing with date and time, and getting your filters spot on is critical.
 
 First off, the key here is understanding how the Graph API interprets date and time values, and specifically, the syntax you need to use in your OData filter query. It's not as simple as just plugging in a DateTime object directly. The Graph API requires date and time to be represented as ISO 8601 formatted strings. That means you're looking at something like `2023-10-27T10:00:00Z`, where `Z` signifies UTC timezone.
 
@@ -60,7 +60,7 @@ public class GraphEmailExample
 }
 ```
 
-Here, we're building a filter string that looks like, for instance, `receivedDateTime ge 2023-10-26T12:00:00Z`. The `ge` operator stands for "greater than or equal to".  The crucial part is `filterTime.UtcDateTime.ToString("o")` which ensures the proper ISO 8601 format. The `o` format specifier guarantees the UTC time is represented with the `Z` suffix and includes the necessary precision which the graph api expects.
+Here, we're building a filter string that looks like, for instance, `receivedDateTime ge 2023-10-26T12:00:00Z`. The `ge` operator stands for "greater than or equal to". The crucial part is `filterTime.UtcDateTime.ToString("o")` which ensures the proper ISO 8601 format. The `o` format specifier guarantees the UTC time is represented with the `Z` suffix and includes the necessary precision which the graph api expects.
 
 **Example 2: Filtering for emails received within a specific date range:**
 
@@ -118,7 +118,7 @@ Here, we use the `ge` (greater than or equal to) and `le` (less than or equal to
 
 **Example 3: Filtering for emails received before a specific date and time:**
 
-Finally, just to show the flexibility, you might need to find emails that were received *before* a specific point. Here's how you'd do that:
+Finally, just to show the flexibility, you might need to find emails that were received _before_ a specific point. Here's how you'd do that:
 
 ```csharp
 using Microsoft.Graph;
@@ -166,6 +166,6 @@ public class GraphEmailBeforeExample
 
 This example uses the `lt` operator for "less than". It's important to note that the OData filter expressions are case-sensitive, so make sure to use the correct casing for properties like `receivedDateTime`.
 
-In terms of further resources, I'd recommend diving into the *OData specification* itself. Understanding how OData filters work is fundamental when dealing with the Graph API. Look for the official documentation on OData filters, specifically focusing on the `datetime` type and the filter operators. Specifically, the ISO 8601 standard is essential for all of this. The *Microsoft Graph API documentation* is also your primary source for specifics on the filterable properties and syntax. The Graph API documentation has lots of examples and specific properties you can filter on, and it's good to consult the latest version of that resource for the most up-to-date practices. You will also benefit from reading the *Microsoft .Net Documentation* specifically on `DateTimeOffset` and string formatting. Understanding `DateTimeOffset` objects is crucial when dealing with timezones in a server side application. Lastly, the *Microsoft Authentication Library (MSAL) documentation* will also be useful to you for authentication, which you will need for your code to work correctly. This documentation explains the authentication flows required by the graph API and is essential for proper implementation.
+In terms of further resources, I'd recommend diving into the _OData specification_ itself. Understanding how OData filters work is fundamental when dealing with the Graph API. Look for the official documentation on OData filters, specifically focusing on the `datetime` type and the filter operators. Specifically, the ISO 8601 standard is essential for all of this. The _Microsoft Graph API documentation_ is also your primary source for specifics on the filterable properties and syntax. The Graph API documentation has lots of examples and specific properties you can filter on, and it's good to consult the latest version of that resource for the most up-to-date practices. You will also benefit from reading the _Microsoft .Net Documentation_ specifically on `DateTimeOffset` and string formatting. Understanding `DateTimeOffset` objects is crucial when dealing with timezones in a server side application. Lastly, the _Microsoft Authentication Library (MSAL) documentation_ will also be useful to you for authentication, which you will need for your code to work correctly. This documentation explains the authentication flows required by the graph API and is essential for proper implementation.
 
 In summary, when using the C# Graph client to filter by `receivedDateTime`, always ensure that you format your date and time values as ISO 8601 strings, specifically using the `"o"` format specifier when calling `ToString()` on your `DateTimeOffset` objects. Build your filter strings meticulously using the appropriate comparison operators (`ge`, `le`, `lt`, etc.) and logical operators (`and`, `or`) as needed. Finally, always check the official Microsoft Graph and OData documentation for the most up-to-date information. These techniques should enable you to build effective filters on date and time with the graph API.

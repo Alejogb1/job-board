@@ -4,17 +4,17 @@ date: "2024-12-16"
 id: "how-do-i-store-a-number-securely-using-chainlink-vrf"
 ---
 
-Okay, let’s talk about securing numbers with Chainlink VRF. This isn’t as straightforward as it might initially appear, and I’ve seen a few projects stumble over this particular aspect. The core issue is that VRF, or Verifiable Random Function, isn't designed to store values; it’s designed to generate cryptographically secure, unpredictable random numbers. Using it improperly as storage creates a security gap. Over the years, I’ve worked on several projects where a similar misunderstanding led to vulnerabilities, and I learned some valuable lessons. The most important being: don’t treat a random number generator as a storage mechanism.
+, let’s talk about securing numbers with Chainlink VRF. This isn’t as straightforward as it might initially appear, and I’ve seen a few projects stumble over this particular aspect. The core issue is that VRF, or Verifiable Random Function, isn't designed to store values; it’s designed to generate cryptographically secure, unpredictable random numbers. Using it improperly as storage creates a security gap. Over the years, I’ve worked on several projects where a similar misunderstanding led to vulnerabilities, and I learned some valuable lessons. The most important being: don’t treat a random number generator as a storage mechanism.
 
 Here's a breakdown of why that’s problematic and how to address the challenge effectively.
 
-First, let’s clarify what Chainlink VRF actually does. It provides a publicly verifiable source of randomness. When your smart contract requests a random number, Chainlink’s network uses a cryptographic protocol that produces both the random number and proof that this number was generated in a genuinely unpredictable way. This is crucial for applications that rely on fairness, such as blockchain games, lotteries, or any system where a predictable outcome is unacceptable. The output you receive is indeed a number, often a large unsigned integer, but its purpose is not to be *stored and used later*. Treating it as such risks exposing that number and compromising its unpredictability.
+First, let’s clarify what Chainlink VRF actually does. It provides a publicly verifiable source of randomness. When your smart contract requests a random number, Chainlink’s network uses a cryptographic protocol that produces both the random number and proof that this number was generated in a genuinely unpredictable way. This is crucial for applications that rely on fairness, such as blockchain games, lotteries, or any system where a predictable outcome is unacceptable. The output you receive is indeed a number, often a large unsigned integer, but its purpose is not to be _stored and used later_. Treating it as such risks exposing that number and compromising its unpredictability.
 
 The central problem is that this output number from VRF, while random, is not secret once it has been returned. Because the verification process has to be public (for everyone to be able to verify the proof), the generated random number becomes publicly available on the blockchain once your contract calls back and receives the fulfillment. You’re essentially shouting it from the rooftops. If this is the value you're trying to store securely, you have a big problem. Malicious actors can see it, understand how it was generated (from the publicly viewable proof), and potentially exploit it in future interactions.
 
 The common mistake is to use that random number as, say, the key to select a prize or a particular outcome from a fixed list or array, essentially hardcoding the business logic into using the number as a storage element. While this seems convenient, it opens the door for manipulation. Anyone who can read the blockchain can potentially predict and influence the system.
 
-So, how do we properly approach this problem? Instead of storing the VRF output *directly*, we should use it to derive a secret state in a way that does not directly reveal the raw number. Here are a few approaches I’ve used in past projects with success.
+So, how do we properly approach this problem? Instead of storing the VRF output _directly_, we should use it to derive a secret state in a way that does not directly reveal the raw number. Here are a few approaches I’ve used in past projects with success.
 
 **Approach 1: Utilizing the VRF Output as a Seed for Deterministic State Generation**
 
@@ -73,7 +73,7 @@ In this example, the `lastRandomNumber` variable is merely there to show the out
 
 **Approach 2: Combining the VRF Output with Other Secret Data for Masking**
 
-This involves using VRF to add a layer of unpredictable noise to your actual secret number. If your “secret” is known in any other way, it would completely undermine the purpose of the random number. The goal is to create a value from which the original secret cannot be easily extracted without knowing *both* the original secret *and* the random number used to mask it.
+This involves using VRF to add a layer of unpredictable noise to your actual secret number. If your “secret” is known in any other way, it would completely undermine the purpose of the random number. The goal is to create a value from which the original secret cannot be easily extracted without knowing _both_ the original secret _and_ the random number used to mask it.
 
 Here’s a simplified code example, using a simple XOR, although more sophisticated masking schemes should be considered for production:
 

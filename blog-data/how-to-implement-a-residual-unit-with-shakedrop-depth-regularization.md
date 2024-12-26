@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-implement-a-residual-unit-with-shakedrop-depth-regularization"
 ---
 
-alright, so you’re asking about implementing a residual unit with shake-drop regularization. this is a pretty interesting topic, and it touches on a couple of cool ideas from deep learning. i’ve tinkered with this kind of stuff quite a bit, so let me share my experience.
+, so you’re asking about implementing a residual unit with shake-drop regularization. this is a pretty interesting topic, and it touches on a couple of cool ideas from deep learning. i’ve tinkered with this kind of stuff quite a bit, so let me share my experience.
 
 basically, what we're talking about here is combining the power of residual connections with a regularization technique called shake-drop. if you're already familiar with resnets, you'll know they use residual connections to allow very deep networks to learn more effectively. and shake-drop, it’s a way of randomly dropping connections and scaling the output during the training, which reduces overfitting and improves robustness. it’s a bit more nuanced than simple dropout, because it involves a forward and backward pass modification.
 
@@ -35,7 +35,7 @@ class BasicResUnit(nn.Module):
                 nn.Conv2d(in_channels, out_channels, kernel_size=1, stride=stride, bias=False),
                 nn.BatchNorm2d(out_channels)
             )
-            
+
     def forward(self, x):
         residual = x
         out = self.relu(self.bn1(self.conv1(x)))

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-serialize-a-list-of-non-model-objects"
 ---
 
-Alright, let’s talk serialization of non-model object lists. This is something I’ve certainly tackled more than once across various projects, and it often pops up in situations where you're dealing with data transformations, caching, or inter-service communication. The challenge lies in that these objects aren't necessarily tied to a database structure or an ORM, so conventional serialization mechanisms might not directly apply. Let's get into some technical approaches.
+, let’s talk serialization of non-model object lists. This is something I’ve certainly tackled more than once across various projects, and it often pops up in situations where you're dealing with data transformations, caching, or inter-service communication. The challenge lies in that these objects aren't necessarily tied to a database structure or an ORM, so conventional serialization mechanisms might not directly apply. Let's get into some technical approaches.
 
 First off, when we speak of "non-model objects," we're generally referring to instances of custom classes or data structures that aren’t directly mapped to, say, database tables. These objects often carry transient or derived data. Standard database-backed models usually come with built-in methods or frameworks for serialization to formats like json or xml, but here, we need to be a little more hands-on.
 
@@ -41,6 +41,7 @@ serialized_data = [dp.to_dict() for dp in data_points]
 print(json.dumps(serialized_data, indent=4))
 
 ```
+
 In this code snippet, the `to_dict()` method prepares a dictionary representation of each `ProcessedDataPoint` instance. We then use list comprehension to apply this to all data points, before using the `json.dumps` method for serialization. Observe how we've also considered transforming the datetime object to an iso format for proper serialization and deserialization.
 
 A second approach, when you deal with many different types of objects, is to develop a dedicated serialization function or class that understands the different object types you need to serialize. This reduces code duplication and provides a more centralized and maintainable system. This is useful especially when the classes themselves may not be under your control (external libraries or legacy systems).
@@ -79,6 +80,7 @@ objects = [
 serialized_objects = [serialize_object(obj) for obj in objects]
 print(json.dumps(serialized_objects, indent=4))
 ```
+
 Here, the `serialize_object` function acts as a dispatcher, checking the type of each object and generating its appropriate serialized form. This makes it easier to manage the serialization logic for diverse objects. We’ve also included type information for object reconstruction.
 
 Finally, sometimes you might find yourself in a scenario where performance becomes important, particularly if you're serializing large lists. In this case, libraries like `pickle` in python offer a compact and fast serialization method; however, they are not human-readable, and you must be wary of security implications if you are deserializing from untrusted sources. `pickle` is not ideal for cross-language compatibility but it's excellent for local storage or inter-process communication when performance is key.

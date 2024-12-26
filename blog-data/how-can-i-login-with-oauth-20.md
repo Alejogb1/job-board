@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "how-can-i-login-with-oauth-20"
 ---
 
-Okay, let's tackle this. It's been a while since my team and I first grappled with the intricacies of OAuth 2.0 in a large-scale application, but the fundamentals remain as crucial as ever. Logging in using OAuth 2.0, while seemingly straightforward from a user perspective, involves a series of carefully choreographed steps to ensure security and proper authorization. Fundamentally, you're not just logging *in*; you're granting a third-party application permission to access resources on your behalf, hosted by a separate service. Let me walk you through the process, based on what I’ve learned through trial and (sometimes painful) error.
+, let's tackle this. It's been a while since my team and I first grappled with the intricacies of OAuth 2.0 in a large-scale application, but the fundamentals remain as crucial as ever. Logging in using OAuth 2.0, while seemingly straightforward from a user perspective, involves a series of carefully choreographed steps to ensure security and proper authorization. Fundamentally, you're not just logging _in_; you're granting a third-party application permission to access resources on your behalf, hosted by a separate service. Let me walk you through the process, based on what I’ve learned through trial and (sometimes painful) error.
 
 The core idea behind OAuth 2.0 is to delegate access without sharing your credentials directly with the application. It works by using tokens, not your username and password. Think of it like handing someone a temporary key rather than giving them a permanent copy of your house key. This way, you can control what resources a third party can access, and you can revoke access at any time.
 
-There are multiple ‘flows’ within the OAuth 2.0 specification, each suited for different use cases. The most common are the *Authorization Code Grant* (best for server-side web apps) and the *Implicit Grant* (now generally discouraged, but still encountered), and the *Client Credentials Grant* (used for machine-to-machine communication). For the purpose of illustrating login, I will primarily focus on the Authorization Code Grant, as it's the most secure and adaptable approach for most web applications.
+There are multiple ‘flows’ within the OAuth 2.0 specification, each suited for different use cases. The most common are the _Authorization Code Grant_ (best for server-side web apps) and the _Implicit Grant_ (now generally discouraged, but still encountered), and the _Client Credentials Grant_ (used for machine-to-machine communication). For the purpose of illustrating login, I will primarily focus on the Authorization Code Grant, as it's the most secure and adaptable approach for most web applications.
 
 The process typically unfolds as follows:
 
@@ -18,7 +18,7 @@ The process typically unfolds as follows:
 
 3.  **Authorization Code:** Upon successful authentication and consent, the authorization server redirects the user back to your application’s specified redirect URI, appending an authorization code as a query parameter.
 
-4.  **Token Request:** Your application’s server-side component then makes a *server-to-server* request back to the authorization server, providing the authorization code and your client secret. This exchange happens behind the scenes, hidden from the user's browser, to keep your client secret safe.
+4.  **Token Request:** Your application’s server-side component then makes a _server-to-server_ request back to the authorization server, providing the authorization code and your client secret. This exchange happens behind the scenes, hidden from the user's browser, to keep your client secret safe.
 
 5.  **Access Token:** If all is well, the authorization server responds with an access token, typically as a JSON payload. You'll also usually get a refresh token that you can use to obtain a new access token when the current one expires.
 

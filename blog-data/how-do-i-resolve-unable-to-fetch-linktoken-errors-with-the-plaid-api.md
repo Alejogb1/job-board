@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-i-resolve-unable-to-fetch-linktoken-errors-with-the-plaid-api"
 ---
 
-Okay, let's unpack this "unable to fetch link_token" error you're hitting with the Plaid api. It's a common stumble, and one i've personally spent some time debugging over the years—especially back when we were integrating Plaid for a high-throughput financial dashboard at my previous gig. The error usually points to a problem during the initial handshake needed to establish a connection between your application and Plaid’s servers. It's essentially a failure to obtain the necessary token which lets you initiate the Plaid Link UI.
+, let's unpack this "unable to fetch link_token" error you're hitting with the Plaid api. It's a common stumble, and one i've personally spent some time debugging over the years—especially back when we were integrating Plaid for a high-throughput financial dashboard at my previous gig. The error usually points to a problem during the initial handshake needed to establish a connection between your application and Plaid’s servers. It's essentially a failure to obtain the necessary token which lets you initiate the Plaid Link UI.
 
-At the heart of it, the `link_token` is a short-lived, client-side credential that Plaid provides to launch its Link flow. This flow is what allows users to securely authenticate with their financial institutions. The "unable to fetch" message usually means something's gone awry *before* the actual linking process begins. Let's delve into the common culprits and how to tackle them.
+At the heart of it, the `link_token` is a short-lived, client-side credential that Plaid provides to launch its Link flow. This flow is what allows users to securely authenticate with their financial institutions. The "unable to fetch" message usually means something's gone awry _before_ the actual linking process begins. Let's delve into the common culprits and how to tackle them.
 
 First, and most frequently, we're talking about server-side misconfigurations. Plaid's `link_token` endpoint expects a specific json structure in your request payload. In my experience, even a seemingly minor discrepancy in the structure or required fields can lead to a failure to generate the token and thus trigger this exact error. A common mishap would be missing required parameters, using incorrect data types, or supplying invalid values for parameters such as `user` details, `client_name`, `products` that are incorrectly specified and mismatched against the Plaid dashboard settings or your application's requirements.
 
@@ -61,52 +61,55 @@ Moving on, let’s consider the case where the server side is actually configure
 Here’s an example using javascript, highlighting a typical pattern when using the `@plaid/react-plaid-link` package. You'll likely use some async request to your back-end in a larger real-world app, but here's a simple fetch for demonstration purposes:
 
 ```javascript
-import React, { useState, useCallback } from 'react';
-import { usePlaidLink } from 'react-plaid-link';
-
+import React, { useState, useCallback } from "react";
+import { usePlaidLink } from "react-plaid-link";
 
 function PlaidLinkComponent() {
   const [linkToken, setLinkToken] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false);
 
-    const fetchLinkToken = useCallback(async () => {
-      try{
-        const response = await fetch('/api/create_link_token', {method: 'POST'})
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-         const data = await response.json();
-         setLinkToken(data.link_token);
-         setIsLoaded(true)
-      } catch (error){
-        console.error("Failed to retrieve link token:", error)
+  const fetchLinkToken = useCallback(async () => {
+    try {
+      const response = await fetch("/api/create_link_token", {
+        method: "POST",
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
+      const data = await response.json();
+      setLinkToken(data.link_token);
+      setIsLoaded(true);
+    } catch (error) {
+      console.error("Failed to retrieve link token:", error);
+    }
+  }, []);
 
-    }, [])
+  const onSuccess = useCallback((public_token, metadata) => {
+    console.log("Public token:", public_token);
+    console.log("Metadata", metadata);
+    // Handle success on the server
+    // Send public_token and metadata to the backend
+  }, []);
 
+  const config = {
+    token: linkToken, // the fetched token is here, only load after it is defined.
+    onSuccess,
+  };
 
-    const onSuccess = useCallback((public_token, metadata) => {
-      console.log('Public token:', public_token);
-      console.log('Metadata', metadata)
-       // Handle success on the server
-       // Send public_token and metadata to the backend
-      }, []);
+  const { open, ready, error } = usePlaidLink(config);
 
-
-    const config = {
-          token: linkToken, // the fetched token is here, only load after it is defined.
-          onSuccess,
-        };
-
-    const { open, ready, error } = usePlaidLink(config);
-
-    return (
-        <div>
-           {!isLoaded ? <button onClick={fetchLinkToken}>Get Link Token</button> :
-           <button onClick={open} disabled={!ready}>Open Plaid Link</button>}
-            {error && <p>Error: {error.message}</p>}
-        </div>
-    );
+  return (
+    <div>
+      {!isLoaded ? (
+        <button onClick={fetchLinkToken}>Get Link Token</button>
+      ) : (
+        <button onClick={open} disabled={!ready}>
+          Open Plaid Link
+        </button>
+      )}
+      {error && <p>Error: {error.message}</p>}
+    </div>
+  );
 }
 
 export default PlaidLinkComponent;
@@ -119,16 +122,16 @@ Finally, it’s also valuable to consider the Plaid SDK itself. Ensure you’re 
 Let's add a final example, this time using Node.js as your backend, since this is a common setup:
 
 ```javascript
-const plaid = require('plaid');
-const express = require('express');
-const bodyParser = require('body-parser');
+const plaid = require("plaid");
+const express = require("express");
+const bodyParser = require("body-parser");
 
 const app = express();
 app.use(bodyParser.json());
 
 // Plaid configuration (Replace with your credentials)
-const PLAID_CLIENT_ID = 'your_plaid_client_id';
-const PLAID_SECRET = 'your_plaid_secret';
+const PLAID_CLIENT_ID = "your_plaid_client_id";
+const PLAID_SECRET = "your_plaid_secret";
 const PLAID_ENV = plaid.environments.sandbox; // or "development" or "production"
 
 const client = new plaid.Client({
@@ -137,26 +140,24 @@ const client = new plaid.Client({
   env: PLAID_ENV,
 });
 
-app.post('/api/create_link_token', async (req, res) => {
-  const user_id = 'user-1234'; // This would be based on your user authentication logic
-    try {
-      const linkTokenResponse = await client.linkTokenCreate({
-          user: {
-            client_user_id: user_id,
-          },
-          client_name: 'My Application Name',
-          products: ['auth', 'transactions'],
-          country_codes: ['US'],
-          language: 'en',
-      });
-        res.json({link_token: linkTokenResponse.link_token});
-
-    } catch(error){
-        console.error("Error creating link token:", error);
-        res.status(500).json({ error: 'Failed to create link token.' })
-    }
+app.post("/api/create_link_token", async (req, res) => {
+  const user_id = "user-1234"; // This would be based on your user authentication logic
+  try {
+    const linkTokenResponse = await client.linkTokenCreate({
+      user: {
+        client_user_id: user_id,
+      },
+      client_name: "My Application Name",
+      products: ["auth", "transactions"],
+      country_codes: ["US"],
+      language: "en",
+    });
+    res.json({ link_token: linkTokenResponse.link_token });
+  } catch (error) {
+    console.error("Error creating link token:", error);
+    res.status(500).json({ error: "Failed to create link token." });
+  }
 });
-
 
 const PORT = 3001;
 app.listen(PORT, () => {

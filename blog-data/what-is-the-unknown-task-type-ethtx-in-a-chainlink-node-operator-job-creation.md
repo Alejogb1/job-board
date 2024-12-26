@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-unknown-task-type-ethtx-in-a-chainlink-node-operator-job-creation"
 ---
 
-Alright, let's dissect this "ETHTX" task type you've stumbled upon in Chainlink node operator job configurations. It’s not something you'll see documented directly in the highest-level Chainlink resources, and I’ve definitely seen developers scratch their heads over it, sometimes for good reason. I recall one particularly intense week on a project last year where we were optimizing our oracle network’s performance and suddenly encountered a very similar challenge – unraveling some low-level task types.
+, let's dissect this "ETHTX" task type you've stumbled upon in Chainlink node operator job configurations. It’s not something you'll see documented directly in the highest-level Chainlink resources, and I’ve definitely seen developers scratch their heads over it, sometimes for good reason. I recall one particularly intense week on a project last year where we were optimizing our oracle network’s performance and suddenly encountered a very similar challenge – unraveling some low-level task types.
 
 At its core, the "ETHTX" task type within a Chainlink job definition is essentially about generating and submitting Ethereum transactions. It's a fundamental building block, though often hidden behind the more abstract interfaces like `RunLog` or `Bridge`. While those tasks manage higher-level logic and external communication, `ETHTX` puts us directly in control of transaction construction. Think of it as accessing a lower level API. In my experience, it's used when other, more pre-built Chainlink tasks don’t quite fit the requirements of a specialized interaction with the Ethereum blockchain. It's particularly handy for scenarios that need very fine-grained control over the transaction details.
 
@@ -12,7 +12,7 @@ Now, why would a job need to generate Ethereum transactions directly? Several re
 
 Here’s a breakdown of how it generally works. The job definition will include key parameters within the `ETHTX` task, notably the `to` address (the destination contract or address), the `data` (the encoded function call, if any, including function selector and arguments), and the `value` (the amount of ETH to send). Additionally, it might specify details like the gas limit, nonce, and the from address - although Chainlink generally handles the `from` and nonce automatically unless you specifically need to configure those parameters.
 
-What’s most critical to understand is that the `ETHTX` task does *not* automatically fetch data from an external source. It only executes the transaction that you’ve meticulously defined within your job specifications. This is important - if you need to extract data and *then* form a transaction, you’ll usually combine `ETHTX` with other Chainlink tasks such as `httpGet`, `jsonparse`, or a custom adapter.
+What’s most critical to understand is that the `ETHTX` task does _not_ automatically fetch data from an external source. It only executes the transaction that you’ve meticulously defined within your job specifications. This is important - if you need to extract data and _then_ form a transaction, you’ll usually combine `ETHTX` with other Chainlink tasks such as `httpGet`, `jsonparse`, or a custom adapter.
 
 Let's move onto some illustrative code snippets to highlight this. These examples use the Chainlink job DSL format:
 
@@ -57,62 +57,62 @@ This next example illustrates a scenario where you need to interact with a smart
     }
   ],
   "tasks": [
-      {
-        "type": "jsonparse",
-        "params": {
-          "path": ["value"]
+    {
+      "type": "jsonparse",
+      "params": {
+        "path": ["value"]
+      }
+    },
+    {
+      "type": "ethabiencode",
+      "params": {
+        "abi": "function incrementCounter(uint256 value)",
+        "data": {
+          "value": "$(jsonparse)"
         }
-      },
-      {
-          "type": "ethabiencode",
-          "params": {
-            "abi": "function incrementCounter(uint256 value)",
-            "data": {
-                "value": "$(jsonparse)"
-            }
-          }
-       },
+      }
+    },
     {
       "type": "ethtx",
       "params": {
         "to": "0x1234567890abcdef1234567890abcdef12345678",
-          "data": "$(ethabiencode)"
+        "data": "$(ethabiencode)"
       }
     }
   ]
 }
 ```
 
-Here, we now introduce two more tasks.  The `runlog` task triggers the job when a log event occurs on the contract at address `0xfeedfeedfeedfeedfeedfeedfeedfeedfeedfeed`. It extracts the data from a `json` object that is present in the log event, which is specified via the `path` parameter of the `jsonparse` task. Then, we utilize the `ethabiencode` task to create a properly encoded function call to `incrementCounter` on our contract using that extracted data and the specified function signature. The final `ethtx` task submits this encoded function call to the specified smart contract.
+Here, we now introduce two more tasks. The `runlog` task triggers the job when a log event occurs on the contract at address `0xfeedfeedfeedfeedfeedfeedfeedfeedfeedfeed`. It extracts the data from a `json` object that is present in the log event, which is specified via the `path` parameter of the `jsonparse` task. Then, we utilize the `ethabiencode` task to create a properly encoded function call to `incrementCounter` on our contract using that extracted data and the specified function signature. The final `ethtx` task submits this encoded function call to the specified smart contract.
 
-**Example 3:  Adding Custom Gas Limit**
+**Example 3: Adding Custom Gas Limit**
 
 Often, you will need to adjust gas limits, especially if dealing with complex smart contract function calls.
 
 ```json
 {
   "initiators": [
-      {
+    {
       "type": "cron",
       "schedule": "0 0 0 * * *"
     }
   ],
   "tasks": [
-      {
-        "type": "ethabiencode",
-        "params": {
-            "abi": "function setMaxVal(uint256 value)",
-             "data": {
-                "value": 500
-             }
+    {
+      "type": "ethabiencode",
+      "params": {
+        "abi": "function setMaxVal(uint256 value)",
+        "data": {
+          "value": 500
         }
-      },
+      }
+    },
     {
       "type": "ethtx",
       "params": {
         "to": "0x9876543210fedcba9876543210fedcba98765432",
-          "data": "$(ethabiencode)",
-          "gasLimit": 500000
+        "data": "$(ethabiencode)",
+        "gasLimit": 500000
       }
     }
   ]

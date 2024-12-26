@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "string-agg-aggregation-result-exceeded-the-limit-of-8000-bytes-error"
 ---
 
-Alright so you're hitting the "string agg aggregation result exceeded the limit of 8000 bytes" error right Classic Happens to the best of us Seriously I've seen it more times than I've had hot coffee and that's saying something
+so you're hitting the "string agg aggregation result exceeded the limit of 8000 bytes" error right Classic Happens to the best of us Seriously I've seen it more times than I've had hot coffee and that's saying something
 
 I get it you're probably trying to concatenate a bunch of strings into one big ol' string using string_agg or a similar aggregate function in your SQL database and bam it throws this error It's like you're trying to cram way too much data into a tiny suitcase and the database is just going "Nope Not gonna happen"
 
-Okay so this isn't exactly a database problem per se its more about how databases are structured and what they allow to prevent resource hogging Believe it or not this 8000-byte limit isn't some arbitrary number some database admin pulled out of thin air It's often a safeguard to stop queries from going wild and eating up memory like a kid in a candy shop
+this isn't exactly a database problem per se its more about how databases are structured and what they allow to prevent resource hogging Believe it or not this 8000-byte limit isn't some arbitrary number some database admin pulled out of thin air It's often a safeguard to stop queries from going wild and eating up memory like a kid in a candy shop
 
 When you use `string_agg` or similar functions the database needs to store this increasingly larger string in memory as it aggregates The 8000-byte limit is often a default buffer size to stop this from going completely out of hand Imagine what would happen if a poorly crafted query decided to aggregate the content of all the tables into one single string the database server would instantly become unresponsive
 
@@ -30,7 +30,7 @@ Simple enough right Yeah I thought so too But lo and behold I started getting th
 
 So first thing you need to do is accept this problem and its limits and understand you have a data problem not a database problem
 
-Alright enough rambling let's look at some solutions I've picked up over the years
+enough rambling let's look at some solutions I've picked up over the years
 
 **1 Reduce the data**
 
@@ -52,7 +52,7 @@ GROUP BY
 
 Here I just added a `WHERE` clause in a subquery to fetch only comments from the past 30 days This alone might fix your problem
 
-**2  Use substrings**
+**2 Use substrings**
 
 If cutting down records isn't possible then you can work on the strings themselves If you absolutely need to keep all the data one option is to truncate each string to a fixed length before aggregation This isn't ideal if you need the whole text but can work for summaries or short snippets
 
@@ -69,7 +69,7 @@ GROUP BY
 
 Notice the `LEFT(comment_text, 200)` function which will take the first 200 characters of each comment this might be sufficient for your needs I'm not making the rules here I'm just a simple programmer trying to get the job done.
 
-**3  Split the data and then aggregate**
+**3 Split the data and then aggregate**
 
 This one is a bit more complex but often the most reliable for large datasets and unlimited string lengths The idea is to break down your data into chunks before aggregation this is most useful when aggregating values over columns rather than rows.
 

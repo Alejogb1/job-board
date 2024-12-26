@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "in-azureml-does-startlogging-start-asynchronous-execution-or-synchronous-execution"
 ---
 
-Alright, let's unpack this. I remember battling this very question a few years back when migrating a sizable model training pipeline to AzureML. The 'synchronous vs. asynchronous' nature of `start_logging` – and its impact on your overall workflow – is indeed a crucial aspect to grasp, and it's not immediately obvious from the surface-level documentation.
+, let's unpack this. I remember battling this very question a few years back when migrating a sizable model training pipeline to AzureML. The 'synchronous vs. asynchronous' nature of `start_logging` – and its impact on your overall workflow – is indeed a crucial aspect to grasp, and it's not immediately obvious from the surface-level documentation.
 
-To be precise, in the context of AzureML's `run` object and the logging mechanism, `start_logging` itself does **not** initiate asynchronous or synchronous execution of your *training code*. It primarily serves as a signal to AzureML that you're starting to log metrics and other metadata related to a specific run. The actual execution – be it synchronous or asynchronous – depends on how you've configured your training script submission via the `Experiment.submit()` or `ScriptRunConfig` methods.
+To be precise, in the context of AzureML's `run` object and the logging mechanism, `start_logging` itself does **not** initiate asynchronous or synchronous execution of your _training code_. It primarily serves as a signal to AzureML that you're starting to log metrics and other metadata related to a specific run. The actual execution – be it synchronous or asynchronous – depends on how you've configured your training script submission via the `Experiment.submit()` or `ScriptRunConfig` methods.
 
 Think of it like a recording device: `start_logging` activates the recording function. What you record depends entirely on what is happening concurrently, which can be synchronous or asynchronous. The 'record' button being pressed doesn’t influence whether the singer sings now or later; it just prepares to document what is happening.
 
-In my experience, the confusion often arises because logging actions are tied to the *run object*, which *can* be associated with asynchronous job submissions. So, while `start_logging` is not itself an async operation, it often *appears* that way because of the asynchronous nature of most AzureML training jobs. Let’s break down the mechanics and see what's really happening.
+In my experience, the confusion often arises because logging actions are tied to the _run object_, which _can_ be associated with asynchronous job submissions. So, while `start_logging` is not itself an async operation, it often _appears_ that way because of the asynchronous nature of most AzureML training jobs. Let’s break down the mechanics and see what's really happening.
 
 The `start_logging()` function itself typically does two key things. Firstly, it creates the log file within the run’s logging directories. Secondly, it associates that log file and related metadata with the current run. It's a thin wrapper around underlying logging APIs that handle the data transportation and persistence to the Azure backend. The execution of your training code, from which these metrics are derived, happens outside the scope of `start_logging`.
 
@@ -83,7 +83,7 @@ run.wait_for_completion(show_output=True)
 
 ```
 
-The `training_script.py` is exactly the same as in Example 1. In this case, `experiment.submit()` initiates the training process on the specified compute target. The call returns immediately. The actual training happens *asynchronously* on the remote target. `start_logging` in the training script still initiates the logging mechanism, but the script now executes independently and potentially concurrently with the client that launched the job.
+The `training_script.py` is exactly the same as in Example 1. In this case, `experiment.submit()` initiates the training process on the specified compute target. The call returns immediately. The actual training happens _asynchronously_ on the remote target. `start_logging` in the training script still initiates the logging mechanism, but the script now executes independently and potentially concurrently with the client that launched the job.
 
 **Example 3: Asynchronous with a background thread in a local notebook**
 
@@ -124,7 +124,7 @@ if __name__ == "__main__":
 
 Here, we created a new thread to do training simulation. `start_logging` in the context of the main thread is set up, but the training itself is done concurrently in the separate thread. In practical terms, the local notebook still is executed synchronously (top down), but now we are demonstrating concurrent execution, similar to the AzureML example.
 
-In summary, `start_logging` is not a driver of asynchronous execution. It activates the *logging* process. The asynchronous or synchronous nature of the training workload depends entirely on where and how that workload is launched – be it locally, via remote compute, or by leveraging threads. The logging mechanism then captures data during that execution.
+In summary, `start_logging` is not a driver of asynchronous execution. It activates the _logging_ process. The asynchronous or synchronous nature of the training workload depends entirely on where and how that workload is launched – be it locally, via remote compute, or by leveraging threads. The logging mechanism then captures data during that execution.
 
 For a deeper dive, I strongly recommend reviewing these resources:
 

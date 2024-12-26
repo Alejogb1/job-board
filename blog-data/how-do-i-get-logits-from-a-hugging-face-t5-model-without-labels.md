@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-do-i-get-logits-from-a-hugging-face-t5-model-without-labels"
 ---
 
-Alright, let's tackle this. The need to extract logits from a Hugging Face T5 model *without* providing labels isn't uncommon, and I've definitely encountered it in a few projects, most notably during some research work involving contrastive learning methods a while back. The standard way to use these models tends to focus on producing outputs given labels, masking, or some other guidance. However, sometimes, we just want the raw, unadulterated logits for downstream processing – perhaps for custom loss functions, or to feed into another model.
+, let's tackle this. The need to extract logits from a Hugging Face T5 model _without_ providing labels isn't uncommon, and I've definitely encountered it in a few projects, most notably during some research work involving contrastive learning methods a while back. The standard way to use these models tends to focus on producing outputs given labels, masking, or some other guidance. However, sometimes, we just want the raw, unadulterated logits for downstream processing – perhaps for custom loss functions, or to feed into another model.
 
-It's crucial to understand that logits are, essentially, the pre-softmax activation values. They represent the model’s internal, unnormalized scores for each possible token in its vocabulary *before* they get transformed into probabilities via the softmax function. Think of them as the model’s ‘raw opinion’ about which tokens are most likely to occur next, or which token corresponds to the answer it believes is right. When we skip the label input, the model doesn't compute the loss or evaluate the predicted tokens against expected tokens, and instead it just outputs the tensor of logits corresponding to each token in the vocab for each token in the output sequence.
+It's crucial to understand that logits are, essentially, the pre-softmax activation values. They represent the model’s internal, unnormalized scores for each possible token in its vocabulary _before_ they get transformed into probabilities via the softmax function. Think of them as the model’s ‘raw opinion’ about which tokens are most likely to occur next, or which token corresponds to the answer it believes is right. When we skip the label input, the model doesn't compute the loss or evaluate the predicted tokens against expected tokens, and instead it just outputs the tensor of logits corresponding to each token in the vocab for each token in the output sequence.
 
 The trick lies in bypassing the typical training or fine-tuning workflow. Instead, we leverage the model's forward pass directly, providing only the input sequence and indicating that we don't have targets. We're going to specifically interact with the model's output, which is an object encapsulating a range of data about the prediction process including logits.
 
@@ -49,6 +49,7 @@ print("First 10 logits of the first token:", logits[0, 0, :10])
 ```
 
 In this snippet:
+
 1.  We load the T5 tokenizer and T5 model directly from the Hugging Face model hub.
 2.  We encode an example string using the tokenizer, ensuring we receive a tensor compatible with the model.
 3.  We perform the forward pass by providing the encoded input directly to `model()`. Notice, crucially, that we are not providing any labels. The model automatically proceeds to generate logits.
@@ -153,20 +154,21 @@ print("Shape of modified logits:", modified_logits.shape)
 
 # Continue processing or use for downstream tasks.
 ```
+
 Here, we introduce a custom module that takes the logits as input. This module, `CustomLogitsProcessing`, demonstrates that you now have full control over these logit values before further processing steps. This shows that the logits can be modified for other uses.
 
 **Key Considerations**
 
-*   **Model Type:** When dealing with sequence-to-sequence models like T5, especially when you want to generate text, you'll often use `T5ForConditionalGeneration` instead of the base `T5Model` class. This class is explicitly designed for generation tasks and has added functionality to handle outputs better.
-*   **Device Handling:** Ensure your inputs and the model are on the same device (CPU or GPU) to avoid runtime errors. The `.to(device)` call is critical for this.
-*   **Evaluation Mode:**  It's good practice to put the model in `.eval()` mode when you are only performing inference (i.e., not training or fine-tuning). This deactivates layers like dropout that are only used during training, speeding things up a bit.
-*   **No Backpropagation:** As we're not providing any labels, no gradient computations will take place.
+- **Model Type:** When dealing with sequence-to-sequence models like T5, especially when you want to generate text, you'll often use `T5ForConditionalGeneration` instead of the base `T5Model` class. This class is explicitly designed for generation tasks and has added functionality to handle outputs better.
+- **Device Handling:** Ensure your inputs and the model are on the same device (CPU or GPU) to avoid runtime errors. The `.to(device)` call is critical for this.
+- **Evaluation Mode:** It's good practice to put the model in `.eval()` mode when you are only performing inference (i.e., not training or fine-tuning). This deactivates layers like dropout that are only used during training, speeding things up a bit.
+- **No Backpropagation:** As we're not providing any labels, no gradient computations will take place.
 
 **Further Reading**
 
 For a deeper understanding of the underlying mechanics, I recommend reviewing the following:
 
-1.  **The Transformer Paper:** *Attention is All You Need* (Vaswani et al., 2017) is the foundational paper for the transformer architecture. It explains the details of the transformer architecture and the mechanics of attention mechanism used by T5.
+1.  **The Transformer Paper:** _Attention is All You Need_ (Vaswani et al., 2017) is the foundational paper for the transformer architecture. It explains the details of the transformer architecture and the mechanics of attention mechanism used by T5.
 2.  **Hugging Face Transformers Documentation:** This resource provides a detailed API reference on working with T5 and other models. You will find extensive material on the model's forward pass and its various components.
 3.  **Dive into Deep Learning** (Aston Zhang, Zachary C. Lipton, Mu Li, Alexander J. Smola): This book gives a great foundational approach to many aspects of deep learning that directly correlate to these models. It contains well-explained concepts that are a good introduction to working with them.
 

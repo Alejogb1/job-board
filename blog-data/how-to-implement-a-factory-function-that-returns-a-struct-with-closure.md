@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-implement-a-factory-function-that-returns-a-struct-with-closure"
 ---
 
-alright, let's break down this factory function returning a struct with closures thing. it's a pattern i've bumped into a bunch over the years, especially when trying to encapsulate state or behavior in a clean way. i'm gonna try to keep this practical and down-to-earth, like we're pair programming.
+, let's break down this factory function returning a struct with closures thing. it's a pattern i've bumped into a bunch over the years, especially when trying to encapsulate state or behavior in a clean way. i'm gonna try to keep this practical and down-to-earth, like we're pair programming.
 
 so, the core idea is that instead of directly creating a struct, we use a function (the "factory") to do that. this factory function can then set up the struct with specific initial values or, more importantly, with functions that close over some private state. this state isn't directly accessible from outside the struct, which gives you that data-hiding aspect, which is great for keeping your code modular.
 
@@ -49,6 +49,7 @@ func main() {
 	fmt.Println(myCounter.getValue()) // prints 12
 }
 ```
+
 in this example the `newcounter` function is our factory. it takes an `initialvalue`, initializes a `count` variable local to the function, and returns a struct containing two closure functions. the closures can access and modify that count variable, but code outside of the struct cannot access it directly. this is the crux of what makes the pattern so versatile.
 
 one of the benefits of this factory function is that you can inject dependencies easily, this is not shown in the above example because it is a simple counter but is a huge advantage for this pattern. imagine that you have a database connection that you need to pass to the created struct methods. in that case, the factory would take the database connection as input.
@@ -97,11 +98,13 @@ func main() {
 	fmt.Println("user name: ", name)
 }
 ```
+
 this is another useful practical example. in this example, the factory receives the database connection and each method of the struct has access to this injected database connection.
 
 i've used this pattern in the past with complex objects like dealing with finite state machines, different types of protocol parsers, and even for implementing undo/redo mechanisms. in every one of these cases, the factory was useful because it allowed me to create isolated objects, each with its own enclosed state and behavior. this approach improved the organization and testability of my code a lot. a good implementation of a finite state machine can be found in "game programming patterns" by robert nystrom. also, you can look at patterns that use this strategy on other books and articles such as "design patterns: elements of reusable object-oriented software" by the gang of four.
 
 now let’s consider a slightly more elaborate example. in this example, we will use a closure for caching operations:
+
 ```go
 package main
 
@@ -144,6 +147,7 @@ func main() {
 }
 
 ```
+
 in this scenario, the `newcachedoperation` is our factory. it takes a function `expensiveoperation` as a dependency, creates a cache, and creates the `execute` function which is a closure with access to both the cache and the dependency `expensiveoperation`. each call to `execute` checks if the input is already in the cache, and if so, returns the cached result. otherwise, it executes the passed expensive operation. so basically is a lazy operation and it's useful in cases in which you need to execute a computationally expensive operation that has the same output always and you want to cache the result.
 
 a lot of the patterns discussed can be found in books. if you want to deepen your knowledge in this particular pattern i would recommend to check books that discuss object oriented programming or functional programming, since factory functions are widely used by both paradigms. but in any case, those books that i already mentioned will be really useful for your studies.

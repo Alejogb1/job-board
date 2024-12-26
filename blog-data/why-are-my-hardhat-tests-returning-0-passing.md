@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-my-hardhat-tests-returning-0-passing"
 ---
 
-Alright, let's tackle this "0 passing tests" issue with Hardhat. It's a frustrating situation, I've been there myself – staring at that output thinking, "where did I go wrong?". This isn't a bug that magically appears; it's usually a combination of subtle misconfigurations or assumptions about how Hardhat expects your testing environment to be set up. From my experience, especially dealing with complex multi-contract projects, pinpointing the exact cause often requires a systematic approach. It's rarely a singular error, and more commonly an aggregation of details not quite lining up.
+, let's tackle this "0 passing tests" issue with Hardhat. It's a frustrating situation, I've been there myself – staring at that output thinking, "where did I go wrong?". This isn't a bug that magically appears; it's usually a combination of subtle misconfigurations or assumptions about how Hardhat expects your testing environment to be set up. From my experience, especially dealing with complex multi-contract projects, pinpointing the exact cause often requires a systematic approach. It's rarely a singular error, and more commonly an aggregation of details not quite lining up.
 
 Firstly, consider the fundamental structure. Hardhat, unlike some other testing frameworks, doesn't automatically assume where your tests are, or how you’re defining them. It operates on conventions, but also requires explicit configuration. If you've got your test files sitting in, say, a random 'my_tests' directory, but your `hardhat.config.js` is still expecting them in the default 'test' folder, the framework is simply not going to find anything to execute. It’s analogous to telling someone to look for their keys in the kitchen when they're actually on the bedside table. It's just not the location Hardhat knows to check.
 
@@ -43,8 +43,8 @@ Because `hardhat` defaults to the `/test` directory, it won't see the tests nest
 module.exports = {
   solidity: "0.8.19",
   mocha: {
-    testFiles: ["tests/**/*.js"]
-  }
+    testFiles: ["tests/**/*.js"],
+  },
 };
 ```
 
@@ -55,7 +55,7 @@ Here, `testFiles: ["tests/**/*.js"]` tells mocha (and by extension, Hardhat) to 
 This is where a subtle import error can cause zero tests to pass. Let's assume your `my_integration_tests.js` looks something like this:
 
 ```javascript
-const { expect } = require('chai');
+const { expect } = require("chai");
 
 describe("MyContract", function () {
   it("Should test a property of my contract", async function () {
@@ -64,7 +64,7 @@ describe("MyContract", function () {
     await myContract.deployed();
 
     // Wrong assertion method:
-    assert.equal(await myContract.getValue(), 10); 
+    assert.equal(await myContract.getValue(), 10);
   });
 });
 ```
@@ -72,7 +72,7 @@ describe("MyContract", function () {
 The problem here is that `assert` is from Node.js built-in module and not the `chai` library that is used by Hardhat. `assert.equal` is not compatible with how chai works with hardhat. Hardhat doesn't understand what this means, and as a result, it treats it as a non-test file resulting in zero passing tests. To fix this, replace `assert.equal` with `expect`:
 
 ```javascript
-const { expect } = require('chai');
+const { expect } = require("chai");
 
 describe("MyContract", function () {
   it("Should test a property of my contract", async function () {
@@ -81,10 +81,11 @@ describe("MyContract", function () {
     await myContract.deployed();
 
     // Correct assertion:
-    expect(await myContract.getValue()).to.equal(10); 
+    expect(await myContract.getValue()).to.equal(10);
   });
 });
 ```
+
 This `expect` usage is what mocha and Hardhat are built to work with and will interpret it as a valid test case.
 
 **Example 3: Deployment Artifact Issues**
@@ -105,11 +106,11 @@ project/
 If we have a deployment setup for our contract, but the required dependency isn't getting picked up by the testing enviroment, you'll see the tests not finding the right artifact. Let's say the test looks like this:
 
 ```javascript
-const { expect } = require('chai');
+const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
 describe("MyContract", function () {
-    it("Should use deployed contracts", async function () {
+  it("Should use deployed contracts", async function () {
     const LibraryContract = await ethers.getContractFactory("LibraryContract");
     const libraryContract = await LibraryContract.deploy();
     await libraryContract.deployed();
@@ -118,11 +119,11 @@ describe("MyContract", function () {
     const myContract = await MyContract.deploy();
     await myContract.deployed();
 
-        expect(await myContract.someFunctionThatUsesLibrary()).to.equal(true);
-    });
+    expect(await myContract.someFunctionThatUsesLibrary()).to.equal(true);
+  });
 });
-
 ```
+
 If the path to `LibraryContract` is not properly configured, it might not be deployed. To ensure dependencies work properly, you can modify `hardhat.config.js`:
 
 ```javascript
@@ -132,8 +133,8 @@ module.exports = {
     sources: "./contracts",
     tests: "./test",
     cache: "./cache",
-    artifacts: "./artifacts"
-  }
+    artifacts: "./artifacts",
+  },
 };
 ```
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-users-register-subdomains-on-any-domain-in-a-wordpress-multisite-installation"
 ---
 
-Alright, let's tackle this subdomain registration scenario. It's a problem I've seen pop up more than a few times over the years, especially when dealing with large-scale WordPress Multisite deployments. In my experience, managing these can quickly become unwieldy if you don't nail down the subdomain registration process early on. The default WordPress setup isn't designed to allow just *any* user to conjure up subdomains; there's good reason for that, mainly security and resource control. But, if your use-case requires such a feature, there are, thankfully, well-defined paths we can take.
+, let's tackle this subdomain registration scenario. It's a problem I've seen pop up more than a few times over the years, especially when dealing with large-scale WordPress Multisite deployments. In my experience, managing these can quickly become unwieldy if you don't nail down the subdomain registration process early on. The default WordPress setup isn't designed to allow just _any_ user to conjure up subdomains; there's good reason for that, mainly security and resource control. But, if your use-case requires such a feature, there are, thankfully, well-defined paths we can take.
 
 The core limitation here stems from WordPress Multisite's built-in role management and the way it handles site creation. By default, only a super administrator (or network administrator in WordPress parlance) can add new sites, including those with subdomains. We need to bypass this restriction, but in a controlled and predictable way. I'll break this down into a few achievable strategies, each leveraging different facets of WordPress's capabilities, and give you some code examples that might be useful.
 
@@ -55,7 +55,7 @@ add_action('admin_init','add_custom_capabilities');
 ?>
 ```
 
-This first snippet shows a basic check for capabilities and for subdomain validity, along with duplicate prevention. Now, this is a good starting point, but it lacks a user-facing interface to actually *initiate* the subdomain creation. We need a form, essentially. For that, we can leverage the WordPress shortcode API and a bit of html to get the job done.
+This first snippet shows a basic check for capabilities and for subdomain validity, along with duplicate prevention. Now, this is a good starting point, but it lacks a user-facing interface to actually _initiate_ the subdomain creation. We need a form, essentially. For that, we can leverage the WordPress shortcode API and a bit of html to get the job done.
 
 ```php
 <?php
@@ -68,7 +68,7 @@ function render_subdomain_registration_form() {
     if (!current_user_can('create_subdomains')) {
         return '<p>You do not have the required permissions to register a new subdomain.</p>';
     }
-   
+
     ob_start();
     ?>
     <form method="post" action="" id="subdomain-form">
@@ -85,7 +85,7 @@ add_action('init', 'handle_subdomain_registration');
 function handle_subdomain_registration() {
     if(isset($_POST['submit_subdomain']) && isset($_POST['subdomain_name'])){
         $new_subdomain_name = sanitize_title($_POST['subdomain_name']);
-        
+
         // Get current site domain
         $current_site_domain = parse_url(get_site_url(), PHP_URL_HOST);
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-prevent-elasticsearch-updates-using-painless-scripts"
 ---
 
-Okay, let's talk about preventing Elasticsearch updates using painless scripts. I've seen this need crop up in quite a few projects over the years, and it's often about enforcing data integrity rules or implementing sophisticated access controls directly at the indexing level. It’s not always about straightforward read-write permissions; sometimes it’s about ensuring changes happen only under very specific circumstances, determined by the document itself. It's a bit more nuanced than just locking down access generally.
+, let's talk about preventing Elasticsearch updates using painless scripts. I've seen this need crop up in quite a few projects over the years, and it's often about enforcing data integrity rules or implementing sophisticated access controls directly at the indexing level. It’s not always about straightforward read-write permissions; sometimes it’s about ensuring changes happen only under very specific circumstances, determined by the document itself. It's a bit more nuanced than just locking down access generally.
 
 The core mechanism we'll be exploiting here is the power of painless within Elasticsearch’s `_update` API. While we typically think of painless for modifying document contents, it also provides a powerful way to examine the existing document and the proposed changes before they are committed. This examination lets us conditionally cancel the update, in effect preventing it.
 
@@ -57,7 +57,7 @@ if (ctx._source.owner_id != params.user_id) {
 }
 ```
 
-In this script, `params.user_id` is passed to the script during execution via the params section of the _update API request, allowing us to incorporate external input into our logic. If `owner_id` in the source document isn't the same as the `user_id` passed in the update request, we prevent the update by setting `ctx.op` to `noop`. It’s crucial to pass the relevant parameters along with the update request for this to work correctly.
+In this script, `params.user_id` is passed to the script during execution via the params section of the \_update API request, allowing us to incorporate external input into our logic. If `owner_id` in the source document isn't the same as the `user_id` passed in the update request, we prevent the update by setting `ctx.op` to `noop`. It’s crucial to pass the relevant parameters along with the update request for this to work correctly.
 
 Here's how that looks in an update request:
 
@@ -118,19 +118,19 @@ These examples demonstrate the core technique. The versatility lies in the expre
 
 **Things to Keep in Mind**
 
-*   **Testing:** Always thoroughly test your painless scripts. A poorly designed script might cause unexpected problems and silently block updates when they should have been allowed.
+- **Testing:** Always thoroughly test your painless scripts. A poorly designed script might cause unexpected problems and silently block updates when they should have been allowed.
 
-*   **Performance:** While painless is generally efficient, excessively complex scripts may have an impact on performance. It's essential to write scripts that are as performant as possible.
+- **Performance:** While painless is generally efficient, excessively complex scripts may have an impact on performance. It's essential to write scripts that are as performant as possible.
 
-*   **Security:** Pay close attention to how you are using external parameters in your scripts; improper parameter usage or the execution of untrusted scripts can open security vulnerabilities.
+- **Security:** Pay close attention to how you are using external parameters in your scripts; improper parameter usage or the execution of untrusted scripts can open security vulnerabilities.
 
-*   **Error Handling:** In all of these cases, no error is thrown when the update is prevented. The update operation will return with a `200 OK` status code. Depending on the use case, it might make sense to log the prevention events elsewhere.
+- **Error Handling:** In all of these cases, no error is thrown when the update is prevented. The update operation will return with a `200 OK` status code. Depending on the use case, it might make sense to log the prevention events elsewhere.
 
 **Resources**
 
 For a deeper dive, I recommend the following:
 
-*   The official Elasticsearch documentation, especially the section on Painless scripting. It’s essential to have the latest details on how `ctx` works, and the nuances of how to use params.
-*   The book “Elasticsearch: The Definitive Guide” by Clinton Gormley and Zachary Tong is a classic resource, and its update on scripting is thorough.
+- The official Elasticsearch documentation, especially the section on Painless scripting. It’s essential to have the latest details on how `ctx` works, and the nuances of how to use params.
+- The book “Elasticsearch: The Definitive Guide” by Clinton Gormley and Zachary Tong is a classic resource, and its update on scripting is thorough.
 
 In conclusion, using painless scripts to conditionally prevent Elasticsearch updates is a practical and effective way to enforce complex data constraints directly within the indexing process. With careful planning and testing, this method can significantly enhance the reliability of your data layer. It provides a high level of control and granularity and is ideal for cases where simple permissions aren’t sufficient to ensure data integrity. Remember, every change to the data layer needs proper scrutiny before deployment, and prevention of unintended modifications is a crucial aspect of a robust system.

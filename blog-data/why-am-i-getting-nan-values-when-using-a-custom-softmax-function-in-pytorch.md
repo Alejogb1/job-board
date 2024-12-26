@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-nan-values-when-using-a-custom-softmax-function-in-pytorch"
 ---
 
-Alright, let’s tackle this `NaN` issue you’re encountering with your custom softmax implementation in PyTorch. It’s a common frustration, and believe me, I’ve seen it pop up more than a few times in my years, usually right before a deadline, it seems. Typically, when you see `NaN` values after applying a softmax, it boils down to one of a few underlying mathematical issues, usually related to numerical instability during exponentiation or division. I remember a particularly nasty case a few years back while working on a real-time anomaly detection system. I had to debug the entire tensor flow from data ingestion to the final probability outputs, and the culprit was, surprisingly, a miscalculated input value during the softmax operation. So, let’s break down why these `NaN`s are making their unwelcome appearance and how we can fix them.
+, let’s tackle this `NaN` issue you’re encountering with your custom softmax implementation in PyTorch. It’s a common frustration, and believe me, I’ve seen it pop up more than a few times in my years, usually right before a deadline, it seems. Typically, when you see `NaN` values after applying a softmax, it boils down to one of a few underlying mathematical issues, usually related to numerical instability during exponentiation or division. I remember a particularly nasty case a few years back while working on a real-time anomaly detection system. I had to debug the entire tensor flow from data ingestion to the final probability outputs, and the culprit was, surprisingly, a miscalculated input value during the softmax operation. So, let’s break down why these `NaN`s are making their unwelcome appearance and how we can fix them.
 
 The crux of the problem lies within the softmax calculation itself:
 
@@ -12,7 +12,7 @@ The crux of the problem lies within the softmax calculation itself:
 
 That innocuous looking equation hides some potentially problematic computations. The `exp()` function grows very rapidly as its input increases. If elements in your input tensor, let's call it `x`, are even moderately large positive numbers, say, values exceeding 20, `exp(x)` can become massive. This can overflow, leading to infinite values, which, when involved in division or further calculations, often collapse into `NaN`s. On the flip side, if input values are large negative numbers, `exp(x)` will approach zero, potentially leading to underflow. While underflow, numerically, is typically handled as 0, it is often combined with other operations leading to problems as well, especially when combined with division as in the softmax function.
 
-To mitigate these issues, the primary strategy involves incorporating what’s called the *log-sum-exp trick*, sometimes also called the *softmax trick*. Instead of directly computing `exp(x)` and dividing, we shift all input values by subtracting the maximum value of the input tensor. This operation does not change the fundamental behavior of softmax due to properties of exponential equations (mathematical proof is easily accessible online or in resources such as Bishop's 'Pattern Recognition and Machine Learning' for those interested in the mathematical details), but it greatly stabilizes the computation. Specifically, we modify our formula to:
+To mitigate these issues, the primary strategy involves incorporating what’s called the _log-sum-exp trick_, sometimes also called the _softmax trick_. Instead of directly computing `exp(x)` and dividing, we shift all input values by subtracting the maximum value of the input tensor. This operation does not change the fundamental behavior of softmax due to properties of exponential equations (mathematical proof is easily accessible online or in resources such as Bishop's 'Pattern Recognition and Machine Learning' for those interested in the mathematical details), but it greatly stabilizes the computation. Specifically, we modify our formula to:
 
 `softmax(x)_i = exp(x_i - max(x)) / sum(exp(x_j - max(x)))` for all `j`
 
@@ -110,10 +110,10 @@ The core issue behind `NaN`s with custom softmax implementations is numerical in
 
 To dive deeper into the topic of numerical stability and related challenges, I’d strongly recommend delving into resources such as:
 
-*   **"Numerical Recipes: The Art of Scientific Computing"** by William H. Press et al. This is a great all-around text for understanding various computational methods and their potential pitfalls.
+- **"Numerical Recipes: The Art of Scientific Computing"** by William H. Press et al. This is a great all-around text for understanding various computational methods and their potential pitfalls.
 
-*   **“Deep Learning”** by Ian Goodfellow, Yoshua Bengio, and Aaron Courville: This text goes into depth about the theoretical and practical considerations of neural networks. The section on numerical computation touches upon the `NaN` issue and other related problems.
+- **“Deep Learning”** by Ian Goodfellow, Yoshua Bengio, and Aaron Courville: This text goes into depth about the theoretical and practical considerations of neural networks. The section on numerical computation touches upon the `NaN` issue and other related problems.
 
-*   **“Pattern Recognition and Machine Learning”** by Christopher M. Bishop: Provides a deeper understanding of the mathematical properties of algorithms and can be a great resource for understanding why those numerical tricks such as log-sum-exp actually work mathematically.
+- **“Pattern Recognition and Machine Learning”** by Christopher M. Bishop: Provides a deeper understanding of the mathematical properties of algorithms and can be a great resource for understanding why those numerical tricks such as log-sum-exp actually work mathematically.
 
 These resources offer a solid theoretical foundation alongside practical guidance. Understanding the underlying math of these issues is as vital as understanding the code itself. It’ll help you write cleaner, robust, and more maintainable machine learning code. I hope this detailed breakdown helps you get rid of those annoying `NaN`s. Let me know if there’s anything else I can help with.

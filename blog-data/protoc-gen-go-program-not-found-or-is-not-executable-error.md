@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "protoc-gen-go-program-not-found-or-is-not-executable-error"
 ---
 
-Okay so you're hitting that classic "protoc-gen-go not found" error right I feel your pain I've stared at that screen more times than I care to admit This isn't some obscure problem its practically a right of passage for anyone wrestling with protobufs and Go
+you're hitting that classic "protoc-gen-go not found" error right I feel your pain I've stared at that screen more times than I care to admit This isn't some obscure problem its practically a right of passage for anyone wrestling with protobufs and Go
 
-Alright lets break this down from the ground up and I'm gonna sprinkle in some of my past battles with this monster so you know you're not alone First off you need to understand whats actually happening here `protoc-gen-go` isn't some magical incantation it's a plugin a specific program that the `protoc` compiler which is the main protocol buffer compiler calls to actually generate Go code from your `.proto` files Without it `protoc` is like a car without an engine it can't go anywhere
+lets break this down from the ground up and I'm gonna sprinkle in some of my past battles with this monster so you know you're not alone First off you need to understand whats actually happening here `protoc-gen-go` isn't some magical incantation it's a plugin a specific program that the `protoc` compiler which is the main protocol buffer compiler calls to actually generate Go code from your `.proto` files Without it `protoc` is like a car without an engine it can't go anywhere
 
 I remember once back when I was a junior dev I spent a whole afternoon debugging a CI/CD pipeline only to realize I had completely overlooked this step I was so focused on the gRPC side I didn't even think about how the code gets generated in the first place facepalm moment for sure
 
@@ -17,6 +17,7 @@ The first most likely cause is that you simply havent installed the plugin yet. 
 ```bash
 go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 ```
+
 That line should install the latest stable version of `protoc-gen-go` if you've installed Go before you should already know that this usually installs the binaries to `$GOPATH/bin` or `$GOBIN` depending how you configured your Go installation. Now if this alone solves your issue congratulations its time for a beer you earned it.
 
 But wait. This is where it starts getting tricky. The `protoc` compiler needs to know where to find that plugin you just installed. It does this by searching the directories listed in your `$PATH` environment variable. Now here is a little life pro-tip if you're working with more than one different tool and more than one project it's useful to start creating specific env files so you don't get confused with variables that should only be specific to an environment. This leads us to the next step to add the installation directory to the PATH if its not there.
@@ -40,6 +41,7 @@ Now here comes the other gotcha. Sometimes even if `protoc-gen-go` is in your `$
 ```bash
 chmod +x /home/<user>/go/bin/protoc-gen-go
 ```
+
 And again replace the path `/home/<user>/go/bin/protoc-gen-go` with the path you got from the `which` command. It basically grants execution permission to the file and solves that.
 
 Back in my early days I actually managed to download the source code of `protoc-gen-go` manually and compile it. I did everything manually but I actually did not install it in the correct path and because I was a noob I actually did not realize that I needed to add it to the `$PATH` that was a rough day.

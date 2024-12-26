@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-truffle-console-using-ganache-instead-of-development-mode"
 ---
 
-Okay, let's untangle this issue. It’s a common head-scratcher, and I've certainly been in similar spots over the years, particularly back when I was knee-deep in contract development for a supply chain project. The problem you're facing, where the Truffle console unexpectedly connects to Ganache instead of utilizing the development environment, usually boils down to configuration priorities and how Truffle interprets those. It’s not a straightforward “one switch” issue, so we'll need to dissect the different components at play.
+, let's untangle this issue. It’s a common head-scratcher, and I've certainly been in similar spots over the years, particularly back when I was knee-deep in contract development for a supply chain project. The problem you're facing, where the Truffle console unexpectedly connects to Ganache instead of utilizing the development environment, usually boils down to configuration priorities and how Truffle interprets those. It’s not a straightforward “one switch” issue, so we'll need to dissect the different components at play.
 
 The core of the problem lies in how Truffle decides which network configuration to use when you invoke `truffle console` or `truffle migrate`. The default behavior when no specific network is indicated is generally to look for a 'development' network defined in your `truffle-config.js` (or `truffle-config.mjs` if you're using es modules). However, if no ‘development’ network is specified or if it’s somehow ambiguous, truffle might fallback on a default like attempting a connection to a default Ganache setup running locally, and that's likely what you're observing.
 
@@ -18,19 +18,19 @@ module.exports = {
     development: {
       host: "127.0.0.1",
       port: 7545,
-      network_id: "*" // Match any network id
+      network_id: "*", // Match any network id
     },
     ganache: {
       host: "127.0.0.1",
       port: 7545,
       network_id: "5777",
-    }
+    },
   },
   compilers: {
     solc: {
-        version: "0.8.19"
-    }
-  }
+      version: "0.8.19",
+    },
+  },
 };
 ```
 
@@ -45,15 +45,15 @@ module.exports = {
       host: "127.0.0.1",
       port: 8545,
       network_id: "5777",
-      gas: 6721975,       // Optional: Gas limit for transactions
-      gasPrice: 20000000000,    // Optional: Gas price in Wei
+      gas: 6721975, // Optional: Gas limit for transactions
+      gasPrice: 20000000000, // Optional: Gas price in Wei
     },
   },
   compilers: {
     solc: {
-        version: "0.8.19"
-    }
-  }
+      version: "0.8.19",
+    },
+  },
 };
 ```
 
@@ -75,20 +75,20 @@ module.exports = {
       network_id: "5777",
     },
     another_network: {
-        host: "127.0.0.1",
-        port: 7545,
-        network_id: "1337"
-    }
+      host: "127.0.0.1",
+      port: 7545,
+      network_id: "1337",
+    },
   },
   compilers: {
     solc: {
-        version: "0.8.19"
-    }
-  }
+      version: "0.8.19",
+    },
+  },
 };
 ```
 
-In this scenario, if you execute `TRUFFLE_NETWORK=another_network truffle console` from the command line, Truffle will use the ‘another\_network’ configuration, even if you intend to use the ‘development’ configuration. Remember to `unset TRUFFLE_NETWORK` (or equivalent for your shell) before working with Truffle commands if it is not related to your current workflow.
+In this scenario, if you execute `TRUFFLE_NETWORK=another_network truffle console` from the command line, Truffle will use the ‘another_network’ configuration, even if you intend to use the ‘development’ configuration. Remember to `unset TRUFFLE_NETWORK` (or equivalent for your shell) before working with Truffle commands if it is not related to your current workflow.
 
 To be clear, running the console command `truffle console` with no additional options should consistently select the development configuration as long as no environment variables are interfering and there's no ambiguity in the configuration file.
 

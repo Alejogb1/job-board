@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-view-debug-logs-about-document-convergence-during-gensim-lda-model-training"
 ---
 
-Okay, let's tackle this. I recall a rather complex project involving topic modeling on a corpus of legal documents some years back, where precisely this issue of understanding LDA convergence via debug logs became critical. The sheer size of the dataset made iterative debugging less than ideal, and relying solely on perplexity scores felt like flying blind. What we needed was granular insight into how the algorithm was behaving during each training epoch, and that, of course, meant looking into the logs.
+, let's tackle this. I recall a rather complex project involving topic modeling on a corpus of legal documents some years back, where precisely this issue of understanding LDA convergence via debug logs became critical. The sheer size of the dataset made iterative debugging less than ideal, and relying solely on perplexity scores felt like flying blind. What we needed was granular insight into how the algorithm was behaving during each training epoch, and that, of course, meant looking into the logs.
 
 Gensim, bless its heart, does provide mechanisms to expose this kind of information, but they are not always immediately obvious. Primarily, what you're after is enabling and interpreting the debug logging from the core `lda_worker` processes. These are responsible for the actual heavy lifting of calculating variational parameters and updating model parameters, and their output is where you'll find your convergence insights.
 
@@ -37,6 +37,7 @@ lda_model = LdaModel(corpus, num_topics=2, id2word=dictionary, passes=5, chunksi
 # For example, logging.basicConfig(filename='lda_debug.log', level=logging.DEBUG, format='%(asctime)s : %(levelname)s : %(message)s')
 
 ```
+
 In this example, `logging.basicConfig` sets up a basic log configuration that prints logs to the console. Setting `level=logging.DEBUG` ensures you capture all debug messages from gensim. When running this, you should see lots of output detailing document-level updates during the training process. The format parameter dictates the layout of each log message, which includes timestamps, log level and the message itself. You can modify this format string to suit your needs. You could also direct the output to a log file using `logging.FileHandler`.
 
 **2. Understanding the Log Output:**
@@ -53,17 +54,17 @@ YYYY-MM-DD HH:MM:SS,sss : DEBUG : topic 0 entropy = val, topic 1 entropy = val
 
 The key phrases to pay attention to are:
 
-*   **`log prob`**: The log likelihood of the data given the model. Monitoring this is crucial for diagnosing the overall model fitting process, this will typically increase with each pass during training until convergence.
-*   **`diff`**: the difference in log likelihood from the previous iteration of document batch in training. This value should get smaller over time if training is converging, so you could monitor its decreasing trend.
-*   **`updating batch of documents`**: Indicates the start of processing for a batch of documents. The number of documents processed depends on the chunksize.
-*   **`updating topic`**: Indicates updates of the topic distributions. You will be able to track updates of each topic, with phi referring to word topic distributions. Gamma is the document topic distributions.
-*   **`entropy`**: the entropy of topic distributions, this value is also an indicator of the model fitting process for topic distributions and should converge to stable values.
+- **`log prob`**: The log likelihood of the data given the model. Monitoring this is crucial for diagnosing the overall model fitting process, this will typically increase with each pass during training until convergence.
+- **`diff`**: the difference in log likelihood from the previous iteration of document batch in training. This value should get smaller over time if training is converging, so you could monitor its decreasing trend.
+- **`updating batch of documents`**: Indicates the start of processing for a batch of documents. The number of documents processed depends on the chunksize.
+- **`updating topic`**: Indicates updates of the topic distributions. You will be able to track updates of each topic, with phi referring to word topic distributions. Gamma is the document topic distributions.
+- **`entropy`**: the entropy of topic distributions, this value is also an indicator of the model fitting process for topic distributions and should converge to stable values.
 
 These log messages give you a very fine-grained view of the update process. You can see how the document topic distributions (gamma) and word topic distributions (phi) are being modified during each batch of documents.
 
 **3. Custom Logging Handlers:**
 
-While directing logs to console or file is useful, for a large model training, you might want more custom handling. For example, you could extract and graph the log-likelihood values to get a visual representation of convergence.  You can extend the default logging handler to customize how the messages are handled. This provides the most control on the logged output and allows you to develop complex analysis. Here's an example demonstrating how to capture and process the `log prob` values:
+While directing logs to console or file is useful, for a large model training, you might want more custom handling. For example, you could extract and graph the log-likelihood values to get a visual representation of convergence. You can extend the default logging handler to customize how the messages are handled. This provides the most control on the logged output and allows you to develop complex analysis. Here's an example demonstrating how to capture and process the `log prob` values:
 
 ```python
 import logging
@@ -105,7 +106,7 @@ plt.show()
 
 ```
 
-In this example, I create a custom `LogProbHandler` that inherits from the default `logging.Handler`. This class scans the log messages and extracts log probability values whenever it sees the log message format, stores it in `self.log_probs`.  After model training, the extracted `log_probs` are used to generate a plot. This method is highly flexible. You can also store other useful information such as topic distribution for further analysis.
+In this example, I create a custom `LogProbHandler` that inherits from the default `logging.Handler`. This class scans the log messages and extracts log probability values whenever it sees the log message format, stores it in `self.log_probs`. After model training, the extracted `log_probs` are used to generate a plot. This method is highly flexible. You can also store other useful information such as topic distribution for further analysis.
 
 **Further Reading:**
 

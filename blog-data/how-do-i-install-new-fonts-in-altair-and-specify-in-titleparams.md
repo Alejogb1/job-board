@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "how-do-i-install-new-fonts-in-altair-and-specify-in-titleparams"
 ---
 
-Alright, let's tackle this. Setting up custom fonts in Altair and using them, especially within `TitleParams`, can seem a bit quirky at first, but it's quite manageable once you understand the mechanics. In my past projects, particularly when generating complex data visualizations for client presentations, I’ve often found the default fonts lacking, and a custom look was paramount to maintaining branding consistency. So, while Altair directly leverages the browser's font rendering, we do have ways to inject the fonts we need and control their application.
+, let's tackle this. Setting up custom fonts in Altair and using them, especially within `TitleParams`, can seem a bit quirky at first, but it's quite manageable once you understand the mechanics. In my past projects, particularly when generating complex data visualizations for client presentations, I’ve often found the default fonts lacking, and a custom look was paramount to maintaining branding consistency. So, while Altair directly leverages the browser's font rendering, we do have ways to inject the fonts we need and control their application.
 
 The first crucial step is understanding that Altair, being a declarative visualization library, relies heavily on the browser's font stack. It doesn’t ship with its own font manager; instead, it utilizes the fonts available within the user's system, plus those that might be dynamically loaded by the page. This means that to reliably use a custom font across your charts, you need to make it accessible to the browser first. We essentially need to instruct the browser on where to find these fonts and how to use them.
 
-Let’s break down the common approach, and I'll sprinkle in some specific points that often cause hiccups. The generally accepted method involves using CSS to define the font and making sure this CSS is loaded *before* the Altair chart is rendered in the browser.
+Let’s break down the common approach, and I'll sprinkle in some specific points that often cause hiccups. The generally accepted method involves using CSS to define the font and making sure this CSS is loaded _before_ the Altair chart is rendered in the browser.
 
 Here's the strategy I've found works most consistently:
 
@@ -126,14 +126,16 @@ multiple_font_chart
 This more advanced example incorporates a slightly more robust approach for handling multiple fonts, which is often required when styling complex charts. The first function now takes a dictionary, this makes it more scalable to add multiple fonts. This snippet illustrates that with minimal modification of our technique, it is easy to control multiple fonts simultaneously in different areas of the chart.
 
 These examples should provide a solid starting point. When troubleshooting font issues, remember these key things:
-* **Font Paths:** Ensure the paths to your font files are correct and that the files are accessible to the web browser, which can vary based on where you are rendering the charts (e.g., in a notebook or a standalone HTML file).
-* **Correct CSS:** Verify that your `@font-face` rules are correctly formatted and contain the proper font file paths and mime-types. You must specify font format correctly such as format('truetype').
-* **Browser Caching:** Sometimes, browsers cache the CSS. Try clearing your browser cache or using incognito mode to verify changes if you feel you've modified the correct parts.
-* **Font Embedding:** Be mindful of font licensing when you are directly including custom fonts in your application or web pages. Ensure that your chosen font license allows for this kind of embedding.
+
+- **Font Paths:** Ensure the paths to your font files are correct and that the files are accessible to the web browser, which can vary based on where you are rendering the charts (e.g., in a notebook or a standalone HTML file).
+- **Correct CSS:** Verify that your `@font-face` rules are correctly formatted and contain the proper font file paths and mime-types. You must specify font format correctly such as format('truetype').
+- **Browser Caching:** Sometimes, browsers cache the CSS. Try clearing your browser cache or using incognito mode to verify changes if you feel you've modified the correct parts.
+- **Font Embedding:** Be mindful of font licensing when you are directly including custom fonts in your application or web pages. Ensure that your chosen font license allows for this kind of embedding.
 
 As for resources, I recommend these as references for more detail on the topic:
-* **“CSS: The Definitive Guide” by Eric A. Meyer**: This book is a comprehensive look into CSS and delves deeply into the specifics of `@font-face` and font rendering.
-* **MDN Web Docs on `@font-face`:** The Mozilla Developer Network has fantastic, in-depth documentation on web development topics, including `@font-face`. Their documentation is a reliable source for accurate and up-to-date details.
-* **The Altair documentation itself:** There are also examples in the Altair documentation that provide more context on using fonts, specifically in the 'Customization' sections.
+
+- **“CSS: The Definitive Guide” by Eric A. Meyer**: This book is a comprehensive look into CSS and delves deeply into the specifics of `@font-face` and font rendering.
+- **MDN Web Docs on `@font-face`:** The Mozilla Developer Network has fantastic, in-depth documentation on web development topics, including `@font-face`. Their documentation is a reliable source for accurate and up-to-date details.
+- **The Altair documentation itself:** There are also examples in the Altair documentation that provide more context on using fonts, specifically in the 'Customization' sections.
 
 By understanding how Altair relies on the browser's rendering and by employing the right CSS strategies, managing and utilizing custom fonts in your charts, even within `TitleParams`, becomes a much more streamlined and predictable process.

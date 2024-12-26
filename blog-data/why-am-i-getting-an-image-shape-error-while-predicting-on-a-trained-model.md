@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-am-i-getting-an-image-shape-error-while-predicting-on-a-trained-model"
 ---
 
-Okay, let's tackle this image shape error you're encountering during prediction. I’ve seen this specific issue pop up a fair bit over the years, and it usually boils down to a few core discrepancies between the training data shape and the input shape you're providing to your model during inference. It's rarely a bug in the model itself but more often a mismatch in data processing stages. I remember spending a late night debugging a similar problem with a convolutional network I was building for medical image analysis – turned out the preprocessing step was silently altering image sizes. So, let’s break this down into the primary causes and how to address them.
+, let's tackle this image shape error you're encountering during prediction. I’ve seen this specific issue pop up a fair bit over the years, and it usually boils down to a few core discrepancies between the training data shape and the input shape you're providing to your model during inference. It's rarely a bug in the model itself but more often a mismatch in data processing stages. I remember spending a late night debugging a similar problem with a convolutional network I was building for medical image analysis – turned out the preprocessing step was silently altering image sizes. So, let’s break this down into the primary causes and how to address them.
 
 First, and most commonly, the culprit is a discrepancy in the dimensions expected by the model's input layer versus the dimensions of the image you’re passing for prediction. Think of it like trying to fit a square peg in a round hole – the model was trained expecting a very specific “shape” of data, and anything different will cause a failure. The shape usually includes three main components, although the order might vary slightly based on the framework: the height, width, and the number of color channels (e.g., RGB, grayscale). Neural networks, particularly convolutional neural networks (CNNs), are highly sensitive to these dimensions. During training, the network’s weights are adjusted assuming a specific shape is consistently present. When you introduce images of a different size, it throws off all those learned relationships and results in an error.
 
 Another common source of this error, especially when you're not dealing with single image inputs, involves batch size discrepancies. Often, models are trained with mini-batches of images rather than single images. In these cases, the input layer also expects an additional dimension representing the batch size, usually at the very beginning of the shape tuple. If your training batch size was, say, 32, the model will be prepared to receive that as a leading dimension; if you try to feed it a single image, it won't know what to do with it.
 
-Thirdly, and slightly less frequent but still possible, are inconsistencies in how images are preprocessed. Did the training data undergo a resizing, cropping, or other transformations? These steps must be replicated *exactly* during prediction. For example, if your training images were resized to 224x224 pixels, your prediction images must also be resized to the same. Variations in these steps—even something subtle, like the type of interpolation used during resizing—can produce shapes the trained network doesn't recognize or respond to correctly.
+Thirdly, and slightly less frequent but still possible, are inconsistencies in how images are preprocessed. Did the training data undergo a resizing, cropping, or other transformations? These steps must be replicated _exactly_ during prediction. For example, if your training images were resized to 224x224 pixels, your prediction images must also be resized to the same. Variations in these steps—even something subtle, like the type of interpolation used during resizing—can produce shapes the trained network doesn't recognize or respond to correctly.
 
 Let's illustrate with some code snippets, using python and a common machine learning library, tensorflow (with keras API):
 
@@ -81,6 +81,7 @@ except ValueError as e:
 prediction = model.predict(single_image)
 print("Prediction made sucessfully with a batch size compatible image")
 ```
+
 Here, the code highlights how a model trained with a batch dimension still expects it even when it's just one image you're feeding. Adding a batch dimension fixes the issue.
 
 **Example 3: Preprocessing Discrepancies:**

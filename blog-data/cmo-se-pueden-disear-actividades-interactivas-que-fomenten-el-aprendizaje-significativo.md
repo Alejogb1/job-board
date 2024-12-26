@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "cmo-se-pueden-disear-actividades-interactivas-que-fomenten-el-aprendizaje-significativo"
 ---
 
-okay so thinking about interactive activities that actually make learning stick like not just surface level memorization but deep understanding that's a pretty common challenge right? i mean anyone can throw together some multiple choice questions but meaningful learning needs more than that let's break down some approaches that seem to actually work based on my experience and reading and a bit of trial and error
+thinking about interactive activities that actually make learning stick like not just surface level memorization but deep understanding that's a pretty common challenge right? i mean anyone can throw together some multiple choice questions but meaningful learning needs more than that let's break down some approaches that seem to actually work based on my experience and reading and a bit of trial and error
 
 first off forget the idea of passively receiving information it’s a dead end for real learning we need to get users actively involved and actively doing something this means pushing past the typical read-this-and-answer-these-questions model
 
@@ -38,6 +38,7 @@ while True:
     else:
         print("invalid input")
 ```
+
 this isn't a flashy graphic interface but it forces learners to actively use if statements loops user inputs function definitions all that stuff in a practical way when they encounter errors they're forced to troubleshoot and understand the "why" not just the "what" of the code this act of debugging is powerful for learning
 
 another crucial aspect is giving learners choices and agency in the learning process its not a matter of a single correct path but allowing them to explore different approaches and solutions this encourages deeper thought and problem-solving skills instead of just following a pre-set script consider offering a variety of mini-projects or challenges each addressing the same concepts but at different angles and letting the users pick which one interests them most
@@ -48,22 +49,25 @@ think interactive simulations or coding environments that show you the output of
 
 ```javascript
 function updateCircle() {
-    const radius = document.getElementById('radiusInput').value;
-    const circle = document.getElementById('myCircle');
-    circle.setAttribute('r', radius);
-  }
+  const radius = document.getElementById("radiusInput").value;
+  const circle = document.getElementById("myCircle");
+  circle.setAttribute("r", radius);
+}
 
-  document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('radiusInput').addEventListener('input', updateCircle);
-  });
+document.addEventListener("DOMContentLoaded", function () {
+  document
+    .getElementById("radiusInput")
+    .addEventListener("input", updateCircle);
+});
 ```
 
 ```html
-  <input type="number" id="radiusInput" value="50" min="10" max="100" />
-  <svg width="200" height="200">
-    <circle id="myCircle" cx="100" cy="100" r="50" fill="blue" />
-  </svg>
+<input type="number" id="radiusInput" value="50" min="10" max="100" />
+<svg width="200" height="200">
+  <circle id="myCircle" cx="100" cy="100" r="50" fill="blue" />
+</svg>
 ```
+
 the radius input in the html file dynamically changes the radius of the blue circle without requiring a full page refresh the feedback is instant and visual this helps build strong mental models
 
 and lets not forget collaborative learning learning with others exposes you to different viewpoints it often highlights areas where your understanding is weak and seeing someone else's take on a problem often helps refine your own perspective in the same sense that reading well written code allows you to adopt new coding paradigms
@@ -75,6 +79,7 @@ also the "game-ification" stuff can be useful but has to be applied with caution
 for example instead of giving simple math drills incorporate a puzzle challenge where you need to use math to progress through it or for teaching debugging skills instead of error messages that just indicate the line and type have the learners navigate through a kind of simulated code city to find the problematic area
 
 take the following example of python code that simulate a more engaging approach to learn about variables and if statement using some game mechanics:
+
 ```python
 def start_adventure():
     health = 100
@@ -113,6 +118,7 @@ def start_adventure():
           print("you died!")
 start_adventure()
 ```
+
 this code creates a text based adventure with different choices and consequences involving concepts like variables if statements conditional executions and so forth learning is not just about passively absorbing info but engaging in a simulation where they see that the concepts they learn are actually used to make things happen
 
 now lets talk resources some relevant books are "make it stick" by peter brown and its coauthors which talks about learning techniques backed by cognitive science there is also "designing for how people learn" by julie dirksen which gives you practical advice on designing effective learning experiences then if we dive deep into cognitive psychology and memory "thinking fast and slow" by daniel kahneman also offers invaluable insight into how people learn and make decisions i also encourage reading some papers about constructivism learning theories and social learning theories too that will help you understand why these interactive activities are so effective

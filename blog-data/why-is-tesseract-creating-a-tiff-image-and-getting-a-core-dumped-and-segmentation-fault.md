@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-tesseract-creating-a-tiff-image-and-getting-a-core-dumped-and-segmentation-fault"
 ---
 
-alright, let's break down this tesseract core dump situation. i've been there, seen the segfaults, and felt the pain. it's usually something simple, but the debugging can get messy. so, you're feeding an image into tesseract, it tries to do its ocr magic, and boom, it crashes. creating a tiff image as output, and a core dump and a segmentation fault means something internal went haywire. here is what i have encountered over my years and how to approach it.
+, let's break down this tesseract core dump situation. i've been there, seen the segfaults, and felt the pain. it's usually something simple, but the debugging can get messy. so, you're feeding an image into tesseract, it tries to do its ocr magic, and boom, it crashes. creating a tiff image as output, and a core dump and a segmentation fault means something internal went haywire. here is what i have encountered over my years and how to approach it.
 
 first off, let's talk about the tiff part. tesseract doesn't natively create a tiff unless you specifically tell it to, usually, it outputs text, or hocr, or some other format. it sounds like you’re using some sort of post-processing, or your system's defaults are configured differently than mine. the core dump and segfault are big red flags, meaning it’s not a minor hiccup, it’s a critical failure. let's narrow the likely suspects.
 
@@ -75,10 +75,10 @@ in the above case we are using the language english (eng) and forcing the tesser
 
 so, to summarize:
 
-*   check your input image integrity, make sure it is a valid tiff file and is not corrupted.
-*   check your tesseract version, see if there is an updated version or if you have any conflicting library versions.
-*   check the environment variables and especially `tessdata`.
-*   make sure you have enough memory, big images can cause issues.
-*   try different tesseract configurations like the oem modes.
+- check your input image integrity, make sure it is a valid tiff file and is not corrupted.
+- check your tesseract version, see if there is an updated version or if you have any conflicting library versions.
+- check the environment variables and especially `tessdata`.
+- make sure you have enough memory, big images can cause issues.
+- try different tesseract configurations like the oem modes.
 
 troubleshooting tesseract can feel like a labyrinth at times, but if you narrow down each cause methodically you’ll eventually find the culprit. if you are still hitting a wall, describe the process you did in detail including the parameters and the output of the debugging, it might help to isolate the issue.

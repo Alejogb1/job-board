@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "how-to-store-a-future-without-boxing"
 ---
 
-Okay, let's tackle this. I've spent a fair amount of time navigating the complexities of asynchronous operations, and the question of "how to store a future without boxing" is one that resonates deeply. It’s a critical concern, particularly when optimizing performance in systems dealing with concurrency. We often hear about the overhead that boxing introduces, and it's not just theoretical— I've seen it degrade response times in high-throughput services firsthand. So, let’s unpack this, focusing on practical strategies I've applied over the years.
+, let's tackle this. I've spent a fair amount of time navigating the complexities of asynchronous operations, and the question of "how to store a future without boxing" is one that resonates deeply. It’s a critical concern, particularly when optimizing performance in systems dealing with concurrency. We often hear about the overhead that boxing introduces, and it's not just theoretical— I've seen it degrade response times in high-throughput services firsthand. So, let’s unpack this, focusing on practical strategies I've applied over the years.
 
-The fundamental challenge arises from the need to store the *result* of an asynchronous operation – a future – somewhere. Traditionally, you might think of placing it in a data structure, or passing it around, and the most straightforward way is to box it—that is, allocating memory on the heap and storing a pointer to that memory. Boxing introduces indirection, which incurs a performance cost. If you’re dealing with many futures, particularly small ones, this overhead can become noticeable. And, depending on your language and runtime environment, that heap allocation and deallocation can add pressure on the garbage collector or memory management system, impacting overall throughput and latency.
+The fundamental challenge arises from the need to store the _result_ of an asynchronous operation – a future – somewhere. Traditionally, you might think of placing it in a data structure, or passing it around, and the most straightforward way is to box it—that is, allocating memory on the heap and storing a pointer to that memory. Boxing introduces indirection, which incurs a performance cost. If you’re dealing with many futures, particularly small ones, this overhead can become noticeable. And, depending on your language and runtime environment, that heap allocation and deallocation can add pressure on the garbage collector or memory management system, impacting overall throughput and latency.
 
-Let's talk about avoiding this. The core idea is to work directly with the underlying type of the future, but this is only achievable under certain circumstances, typically when you know the *concrete type* of that future at compile time. The general concept revolves around using techniques that allow for direct storage rather than relying on a type-erased, heap-allocated container such as box.
+Let's talk about avoiding this. The core idea is to work directly with the underlying type of the future, but this is only achievable under certain circumstances, typically when you know the _concrete type_ of that future at compile time. The general concept revolves around using techniques that allow for direct storage rather than relying on a type-erased, heap-allocated container such as box.
 
 Firstly, `Pin<T>` and its relatives like `Pin<&mut T>`. This is a fundamental approach in Rust's asynchronous ecosystem. If you are working in a language that has a similar concept, the ideas are transferable even if the syntax is different. The gist is that once a future starts executing, it shouldn't be moved. It can invalidate internal pointers if it gets moved within memory while running. `Pin` acts as a safeguard, preventing it from being moved and thus ensuring stability. To understand this better, the Rust documentation is a great start, specifically related to `std::pin` and `std::future`. The principle translates across languages, though implementation might vary. Consider the following example in Rust that showcases how to implement a future without boxing that executes on a threadpool.
 
@@ -126,39 +126,36 @@ int main() {
     std::cout << "Future finished executing. Result: " << result2 << "\n";
 }
 ```
+
 Here, we use templates in C++ to store the specific type of future (e.g., `std::future<int>` or `std::future<std::string>`) rather than using a generic pointer. This provides type safety and avoids the boxing overhead.
 
 Thirdly, if you're operating in an environment like Javascript/Typescript, `async/await` offers a form of control flow without explicit future objects. While technically there are promises being generated under the hood, these are often managed by the javascript runtime and optimized internally. The programmer rarely needs to consider how to store these, as control flow is handled by compiler transformation. We can demonstrate this using a similar example as above using asynchronous functions and promises to perform thread-like operations in the javascript event loop.
 
 ```javascript
 function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 async function performCalculation() {
-    console.log("Calculating...");
-    await delay(2000);
-    return 42;
+  console.log("Calculating...");
+  await delay(2000);
+  return 42;
 }
-
 
 async function performStringCalculation() {
-    console.log("Calculating string...");
-    return "Hello, world!";
+  console.log("Calculating string...");
+  return "Hello, world!";
 }
 
-
 async function main() {
-    const result = await performCalculation();
-    console.log("Future finished executing. Result:", result);
+  const result = await performCalculation();
+  console.log("Future finished executing. Result:", result);
 
-
-    const result2 = await performStringCalculation();
-    console.log("Future finished executing. Result:", result2);
+  const result2 = await performStringCalculation();
+  console.log("Future finished executing. Result:", result2);
 }
 
 main();
-
 ```
 
 This example shows that you can create an asynchronous program without worrying about the storage or boxing of a future. The `async` keyword on the functions implies that promises are used behind the scenes, which are managed by the runtime itself.

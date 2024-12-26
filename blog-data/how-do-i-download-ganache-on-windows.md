@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-download-ganache-on-windows"
 ---
 
-Alright, let's talk about getting Ganache up and running on Windows. It's a common initial step for anyone developing on the Ethereum blockchain, and while the process is generally straightforward, there are a few nuances to be aware of. I’ve walked plenty of junior developers through this process over the years, and I've even debugged some quite… *interesting* installation issues myself. This isn't about just blindly clicking 'next' a bunch of times; it's about understanding what's happening beneath the surface.
+, let's talk about getting Ganache up and running on Windows. It's a common initial step for anyone developing on the Ethereum blockchain, and while the process is generally straightforward, there are a few nuances to be aware of. I’ve walked plenty of junior developers through this process over the years, and I've even debugged some quite… _interesting_ installation issues myself. This isn't about just blindly clicking 'next' a bunch of times; it's about understanding what's happening beneath the surface.
 
 First things first, Ganache itself. Think of it as a personal, simulated Ethereum blockchain. It allows you to deploy smart contracts, test transactions, and basically fiddle around with the Ethereum ecosystem without spending real ether or interacting with the public network. This is crucial for development because it provides a sandboxed environment where mistakes are cheap and readily correctable. It saves you both headaches and actual money, believe me.
 
@@ -56,12 +56,12 @@ module.exports = {
       port: 8545,
       network_id: "*",
     },
-   custom_network: {
+    custom_network: {
       host: "127.0.0.1",
       port: 7545,
       network_id: 1337,
       gas: 6721975,
-      gasPrice: 20000000000
+      gasPrice: 20000000000,
     },
   },
 };

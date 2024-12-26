@@ -4,15 +4,15 @@ date: "2024-12-13"
 id: "class-invariants-in-python"
 ---
 
-Okay so class invariants in Python right yeah I've been down this road before plenty of times it's one of those things that seems simple at first but then you start building more complex systems and it bites you in the rear more often than you'd like. Let me tell you my story.
+class invariants in Python right yeah I've been down this road before plenty of times it's one of those things that seems simple at first but then you start building more complex systems and it bites you in the rear more often than you'd like. Let me tell you my story.
 
-So back in the day I was working on this data processing system a big one you know taking in tons of data reshaping it running it through a bunch of algorithms. We're talking terabytes a day. We had this class representing data points called `DataPoint` real straightforward stuff.  It had attributes like `timestamp` `value` and `sensor_id`. Now initially things were fine but then we started seeing weird anomalies in the output garbage data things that didn't make any sense.  Turns out we had bugs where sometimes `timestamp` would be in the future or `value` would be negative when it absolutely shouldn't be.  These were classic invariant violations.
+So back in the day I was working on this data processing system a big one you know taking in tons of data reshaping it running it through a bunch of algorithms. We're talking terabytes a day. We had this class representing data points called `DataPoint` real straightforward stuff. It had attributes like `timestamp` `value` and `sensor_id`. Now initially things were fine but then we started seeing weird anomalies in the output garbage data things that didn't make any sense. Turns out we had bugs where sometimes `timestamp` would be in the future or `value` would be negative when it absolutely shouldn't be. These were classic invariant violations.
 
 I remember the sheer panic of debugging those production issues trying to trace where these values came from. We had no proper checks no invariant enforcement and the result was a chaotic mess and a few late nights fueled by copious amounts of caffeine. Lesson learned hard way.
 
-So what's the core problem with Python? Well Python doesn't have built-in language level support for class invariants like some languages do. You won't find an `invariant` keyword or anything of that sort.  It relies more on programmer discipline and explicit checks. Now that isn’t always a bad thing it's just requires care.  Here's what I mean by programmer discipline.
+So what's the core problem with Python? Well Python doesn't have built-in language level support for class invariants like some languages do. You won't find an `invariant` keyword or anything of that sort. It relies more on programmer discipline and explicit checks. Now that isn’t always a bad thing it's just requires care. Here's what I mean by programmer discipline.
 
-You see I realized you needed to think about your class as something with rules that should always hold true. An invariant is a condition that must be true for all valid instances of that class at all times before and after method calls.  Like the `DataPoint` class I mentioned, for a valid data point `timestamp` must be a valid timestamp `value` should be within a specific valid range it can't be any random thing. So we had to explicitly check them in our classes.
+You see I realized you needed to think about your class as something with rules that should always hold true. An invariant is a condition that must be true for all valid instances of that class at all times before and after method calls. Like the `DataPoint` class I mentioned, for a valid data point `timestamp` must be a valid timestamp `value` should be within a specific valid range it can't be any random thing. So we had to explicitly check them in our classes.
 
 Here's a typical approach with a bit of a simple `DataPoint` example. We should have been doing this from the start:
 
@@ -56,7 +56,7 @@ This was one of the first things I did when that data disaster happened. The `_e
         self._ensure_invariants()
 ```
 
-This snippet demonstrates a `value` property with a setter and you see `_ensure_invariants` at the end of the setter. This ensures that whenever a value attribute changes we are always in a valid state. Now this was a good start.  We then had a bunch of other classes as well that represented different concepts of the system and we did the same thing all over the place.  You get the idea.  The key is to place invariant checks in the right places namely on object creation in the init function and any method where the state could be changed.
+This snippet demonstrates a `value` property with a setter and you see `_ensure_invariants` at the end of the setter. This ensures that whenever a value attribute changes we are always in a valid state. Now this was a good start. We then had a bunch of other classes as well that represented different concepts of the system and we did the same thing all over the place. You get the idea. The key is to place invariant checks in the right places namely on object creation in the init function and any method where the state could be changed.
 
 Now you might think this is a bit tedious having to write these `if` statements all over the place I know I did. And yeah it is a bit repetitive so we moved it a step forward. We had a function to validate type check on values to make sure we were consistent and reusable throughout the codebase. Something like this:
 

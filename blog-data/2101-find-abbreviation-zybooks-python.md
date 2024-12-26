@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "2101-find-abbreviation-zybooks-python"
 ---
 
-Okay so someone's wrestling with abbreviations in Zybooks Python right I've been there trust me it's a classic case of "I have this string and I want to make it shorter but not like *that* shorter"
+someone's wrestling with abbreviations in Zybooks Python right I've been there trust me it's a classic case of "I have this string and I want to make it shorter but not like _that_ shorter"
 
 Right so looking at the question "2101 find abbreviation zybooks python" screams that we’re dealing with Zybooks exercises most likely that whole auto-graded shebang where they're expecting a specific output format and if you're not spot on it's gonna mark you down brutal I've spent far too much time staring at those test cases cursing the precise formatting requirements but it's a necessary evil for learning the nitty gritty details I guess
 
-Alright let's break down what this usually entails we're generally dealing with some form of string input and wanting to generate an abbreviation typically either taking first letters of words or something similar and not something as easy as just string slicing because if it was that easy we would not be here right
+let's break down what this usually entails we're generally dealing with some form of string input and wanting to generate an abbreviation typically either taking first letters of words or something similar and not something as easy as just string slicing because if it was that easy we would not be here right
 
 My past experiences with this usually revolved around parsing strings that had various structures sometimes names with middle initials and sometimes multi-word phrases you know the usual "John D Smith" or "International Business Machines Corporation" and the need to distill them down to something like "JDS" or "IBM" without getting tripped up by extra spaces or edge cases.
 
@@ -54,7 +54,7 @@ Here I added an argument `prefixes_to_ignore` so we can pass a list of words we 
 
 You know you are in trouble when you see something like this "International Business Machines Corp." and then the question wants "IBMC" but what about "International Business Machines Corporation Limited" well now you have to choose whether to use "IBMC" or "IBMCL" and these kind of decisions would change the algorithm.
 
-Another tricky one I've faced was when there were multiple spaces between words or multiple punctuations like "  Hello ,  world  ! ". You have to clean all this noise before processing and that's where using regular expressions could help you. Now some purists here on stackoverflow will argue that "you don't need regex for that" and they would be partly right but using regular expressions sometimes makes your code more readable and easier to maintain when the requirements are not so straightforward.
+Another tricky one I've faced was when there were multiple spaces between words or multiple punctuations like " Hello , world ! ". You have to clean all this noise before processing and that's where using regular expressions could help you. Now some purists here on stackoverflow will argue that "you don't need regex for that" and they would be partly right but using regular expressions sometimes makes your code more readable and easier to maintain when the requirements are not so straightforward.
 
 So for that type of situation I would have something like this.
 

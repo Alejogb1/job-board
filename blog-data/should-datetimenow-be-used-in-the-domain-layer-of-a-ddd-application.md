@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "should-datetimenow-be-used-in-the-domain-layer-of-a-ddd-application"
 ---
 
-Alright, let's unpack this. The question of using `DateTime.Now` within the domain layer of a domain-driven design (DDD) application is one I've encountered more times than I care to count, and it’s usually a sign of potential future headaches. I recall one project, a large e-commerce platform, where we initially allowed timestamps to be generated wherever it seemed convenient. That led to a tangled mess of unpredictable behavior and made testing a nightmare. This experience underscored the importance of principled separation of concerns, and, specifically, why `DateTime.Now` within the domain is usually a bad idea.
+, let's unpack this. The question of using `DateTime.Now` within the domain layer of a domain-driven design (DDD) application is one I've encountered more times than I care to count, and it’s usually a sign of potential future headaches. I recall one project, a large e-commerce platform, where we initially allowed timestamps to be generated wherever it seemed convenient. That led to a tangled mess of unpredictable behavior and made testing a nightmare. This experience underscored the importance of principled separation of concerns, and, specifically, why `DateTime.Now` within the domain is usually a bad idea.
 
 The core issue boils down to testability, determinism, and the very essence of what the domain layer should represent. The domain layer, ideally, should be a pure representation of the business logic. It shouldn't be entangled with concerns about the current time, which is an infrastructure concern. When you sprinkle `DateTime.Now` throughout your domain entities or services, you’re implicitly introducing an external dependency that's notoriously difficult to control in testing environments. This directly impacts the predictability of your system. Each test execution that interacts with a system dependent on `DateTime.Now` could produce different outcomes simply due to the time elapsed between calls.
 
-Moreover, the domain layer should focus on *what* actions are performed, not *when*. Consider an `Order` entity in our e-commerce system. Should the domain entity itself be responsible for determining the exact moment it was created? Not really. That’s the kind of detail that should be handled by an application or infrastructure service. It's about separating the core rules of order creation (e.g., checking stock levels, applying discounts) from how the order's creation time is obtained and stored.
+Moreover, the domain layer should focus on _what_ actions are performed, not _when_. Consider an `Order` entity in our e-commerce system. Should the domain entity itself be responsible for determining the exact moment it was created? Not really. That’s the kind of detail that should be handled by an application or infrastructure service. It's about separating the core rules of order creation (e.g., checking stock levels, applying discounts) from how the order's creation time is obtained and stored.
 
 Let's look at some concrete examples to make this clearer. Imagine an initial implementation, demonstrating the tempting but ultimately flawed approach:
 
@@ -71,9 +71,11 @@ public class SystemDateTimeProvider : IDateTimeProvider
 }
 
 ```
+
 Here, the `Order` class now depends on an `IDateTimeProvider` interface rather than directly on `DateTime.Now`. We have a default implementation `SystemDateTimeProvider` which provides actual system time, but for testing, you can inject a different implementation that returns a controllable time value, thus avoiding the variability issue.
 
 Now, let’s look at how to integrate this in an application service:
+
 ```csharp
 public class OrderService
 {

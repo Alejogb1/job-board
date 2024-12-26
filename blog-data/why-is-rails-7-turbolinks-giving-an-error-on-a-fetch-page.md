@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-rails-7-turbolinks-giving-an-error-on-a-fetch-page"
 ---
 
-alright, so, rails 7 and turbolinks giving fetch headaches, right? i've been there, more times than i care to remember. it's a classic case of the 'javascript not playing nice with turbolinks' dance. let's break this down, from the trenches, so to speak.
+, so, rails 7 and turbolinks giving fetch headaches, right? i've been there, more times than i care to remember. it's a classic case of the 'javascript not playing nice with turbolinks' dance. let's break this down, from the trenches, so to speak.
 
 the core issue here, and i bet a shiny nickel on this, is that turbolinks doesn’t behave like a traditional page reload. it intercepts link clicks and form submissions, swapping out the `<body>` content via ajax. this is great for speed, but it wreaks havoc when your javascript expects a full page lifecycle. specifically, when you're doing `fetch` requests, especially on what turbolinks considers a “page” transition within the same view, things can get… well, not predictable. it's basically a conflict between turbolinks' partial page reload logic and the assumption of a complete page refresh when you initiate fetch requests.
 
@@ -15,15 +15,15 @@ the first culprit is probably the javascript event listeners. when turbolinks na
 here's a simplified example of the kind of setup that commonly fails:
 
 ```javascript
-document.addEventListener('DOMContentLoaded', function() {
-  const button = document.querySelector('#my-button');
-  if(button){
-    button.addEventListener('click', function() {
-        fetch('/my_data', { method: 'GET' })
-          .then(response => response.json())
-          .then(data => {
-            document.querySelector('#my-data-container').innerHTML = data.content;
-          });
+document.addEventListener("DOMContentLoaded", function () {
+  const button = document.querySelector("#my-button");
+  if (button) {
+    button.addEventListener("click", function () {
+      fetch("/my_data", { method: "GET" })
+        .then((response) => response.json())
+        .then((data) => {
+          document.querySelector("#my-data-container").innerHTML = data.content;
+        });
     });
   }
 });
@@ -36,15 +36,15 @@ the solution? well, there isn't one single cure, and it depends on your specific
 here's how that same code would look like with the fix:
 
 ```javascript
-document.addEventListener('turbolinks:load', function() {
-  const button = document.querySelector('#my-button');
-  if(button){
-    button.addEventListener('click', function() {
-        fetch('/my_data', { method: 'GET' })
-          .then(response => response.json())
-          .then(data => {
-            document.querySelector('#my-data-container').innerHTML = data.content;
-          });
+document.addEventListener("turbolinks:load", function () {
+  const button = document.querySelector("#my-button");
+  if (button) {
+    button.addEventListener("click", function () {
+      fetch("/my_data", { method: "GET" })
+        .then((response) => response.json())
+        .then((data) => {
+          document.querySelector("#my-data-container").innerHTML = data.content;
+        });
     });
   }
 });
@@ -59,23 +59,24 @@ imagine i was trying to update a table with results of two different queries. on
 here’s a way to mitigate these problems, use a flag to prevent updates if the dom changes mid-request. this is particularly helpful for asynchronous operations.
 
 ```javascript
-document.addEventListener('turbolinks:load', function() {
-    const button = document.querySelector('#my-button');
-  if(button){
-    button.addEventListener('click', function() {
-        let pageUpdated = false;
-        document.addEventListener('turbolinks:before-render', () => {
-              pageUpdated = true;
-        });
+document.addEventListener("turbolinks:load", function () {
+  const button = document.querySelector("#my-button");
+  if (button) {
+    button.addEventListener("click", function () {
+      let pageUpdated = false;
+      document.addEventListener("turbolinks:before-render", () => {
+        pageUpdated = true;
+      });
 
-        fetch('/my_data', { method: 'GET' })
-          .then(response => response.json())
-          .then(data => {
-             if(!pageUpdated){
-               document.querySelector('#my-data-container').innerHTML = data.content;
-            }
-          });
+      fetch("/my_data", { method: "GET" })
+        .then((response) => response.json())
+        .then((data) => {
+          if (!pageUpdated) {
+            document.querySelector("#my-data-container").innerHTML =
+              data.content;
+          }
         });
+    });
   }
 });
 ```
@@ -88,6 +89,6 @@ in essence, debugging these issues often requires a careful analysis of your jav
 
 it reminds me of when i was asked to debug an app with weird random failures, and i found out that there was a rogue server process that, on top of being outdated, was only printing funny ascii-art when it failed. i was half mad, half laughing when i found it. i’ve always said that sometimes, coding feels like trying to teach a cat how to use a computer.
 
-regarding resources, instead of links, i would recommend delving into *stimulus.js* as an alternative to manually binding events. also, check out the book *rails 7 javascript with import maps* by noel rappin, it delves into modern javascript setups in rails. *turbo 8 cookbook* by andrew cumming is also a must read. even if you are using turbolinks, it will give you insights into its workings as turbo and turbolinks share much of their underlying mechanisms. lastly, the source code of turbolinks is very well written and not that complex if you wish to really dive into the details of how it works.
+regarding resources, instead of links, i would recommend delving into _stimulus.js_ as an alternative to manually binding events. also, check out the book _rails 7 javascript with import maps_ by noel rappin, it delves into modern javascript setups in rails. _turbo 8 cookbook_ by andrew cumming is also a must read. even if you are using turbolinks, it will give you insights into its workings as turbo and turbolinks share much of their underlying mechanisms. lastly, the source code of turbolinks is very well written and not that complex if you wish to really dive into the details of how it works.
 
 that's about all i got for you. it's a finicky problem, but if you pay attention to turbolinks events, keep your code clean, and don't make assumptions about element availability, you’ll conquer it. good luck with that!

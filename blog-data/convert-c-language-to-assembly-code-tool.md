@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "convert-c-language-to-assembly-code-tool"
 ---
 
-Okay so you wanna go from C to assembly right been there done that got the t-shirt and probably a few compiler errors to boot Trust me it's a rabbit hole but a rewarding one if you're into that kind of thing I've spent more late nights than I care to remember debugging assembly that I thought was supposed to be high-level C it can get messy real quick.
+you wanna go from C to assembly right been there done that got the t-shirt and probably a few compiler errors to boot Trust me it's a rabbit hole but a rewarding one if you're into that kind of thing I've spent more late nights than I care to remember debugging assembly that I thought was supposed to be high-level C it can get messy real quick.
 
 So straight to the point you need a tool a compiler to be precise to convert your C code into assembly language no magic wand here or at least not the mystical kind more like a well-oiled machine kinda magic. The go-to choice for this kinda operation is GCC the GNU Compiler Collection It's like the Swiss Army knife of compilation. I've been using GCC since college yeah that long ago and trust me it hasn't let me down yet well mostly.
 
@@ -48,6 +48,7 @@ Same deal here use the GCC command to get the assembly
 ```bash
 gcc -S array_sum.c -o array_sum.s
 ```
+
 The generated assembly isn't as easy to read as plain C because it includes stack allocation and other stuff but this is what happens with a real program not toy examples. If you're not familiar with x86_64 assembly it'll look like gibberish at first. You will have a bunch of push pop move and arithmetic instructions. You'll notice that the looping logic in the C code is implemented with `jmp` instructions and comparisons. It's a direct translation with different instructions obviously.
 
 Now I understand that sometimes you might need to see the raw byte codes or machine language in that case GCC might not be the best tool you'll want to use a disassembler.
@@ -63,6 +64,7 @@ This gives you an object file `array_sum.o`. And Now use `objdump` to disassembl
 ```bash
 objdump -d array_sum.o
 ```
+
 This will output a lot of info including the raw bytes associated to the code this is the machine code your CPU executes. This tool will show you the actual opcodes along with their operands. This is useful when you are digging really deep in machine instructions or machine code.
 
 Now you might be wondering "why would I need to look at this gibberish anyway" Well friend in my experience I had to do this a lot when dealing with embedded systems or when debugging performance bottlenecks or even figuring out the behavior of some legacy software where the source code was either unavailable or too messy to understand So it's a very valuable skill.

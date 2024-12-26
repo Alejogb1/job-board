@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-input-size-is-expected-vs-received-by-"
 ---
 
-Alright, let's talk about input sizes, an area where I’ve certainly had my share of late-night debugging sessions. The disparity between what's expected and what’s actually received during software interactions is a classic source of headaches, often leading to unexpected behavior, crashes, or data corruption. When we refer to input sizes, we’re essentially talking about the quantity of data that a function, method, or system component is designed to handle, compared to the quantity of data it actually encounters at runtime. The 'expected' size is based on design specifications and assumptions, while the 'received' size reflects the reality of operational use. It's not always about a hard number of bytes or elements either; it can be a characteristic of the input structure, like dimensionality, length of strings, or depth of a data tree.
+, let's talk about input sizes, an area where I’ve certainly had my share of late-night debugging sessions. The disparity between what's expected and what’s actually received during software interactions is a classic source of headaches, often leading to unexpected behavior, crashes, or data corruption. When we refer to input sizes, we’re essentially talking about the quantity of data that a function, method, or system component is designed to handle, compared to the quantity of data it actually encounters at runtime. The 'expected' size is based on design specifications and assumptions, while the 'received' size reflects the reality of operational use. It's not always about a hard number of bytes or elements either; it can be a characteristic of the input structure, like dimensionality, length of strings, or depth of a data tree.
 
 I remember an incident back when I was working on a system processing sensor data streams. We'd designed a filtering module that assumed a maximum packet size of 1024 bytes. In testing, this assumption held true. However, once deployed, we started seeing sporadic failures. After extensive logging and analysis, it turned out that, occasionally, the sensor was glitching and sending out packets well beyond that limit – sometimes 2048, or even more. The buffer we’d allocated was simply overflowing, causing the application to crash unexpectedly. This taught me a vital lesson: always consider boundary conditions, especially when dealing with external systems. Assumptions, no matter how seemingly logical, must be validated in real-world scenarios.
 
@@ -28,7 +28,7 @@ def process_data(input_data):
       buffer[:] = input_data[:MAX_SIZE]
     else:
       buffer[:received_size] = input_data
-    
+
     # Simulate processing
     print(f"Processed: {len(buffer)} bytes")
     return buffer

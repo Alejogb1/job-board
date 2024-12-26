@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-azure-container-instance-forwarding-requests-to-the-container"
 ---
 
-Alright, let’s tackle this. It’s not uncommon to see container instances in azure refuse to forward requests as expected, and while it can initially seem baffling, the root causes usually boil down to a few typical culprits. From my own experiences deploying and troubleshooting various containerized applications on azure, I've often found these issues stemming from networking configuration, misconfigured ports, or the container application itself failing to listen properly. Let’s break it down with a practical, hands-on lens.
+, let’s tackle this. It’s not uncommon to see container instances in azure refuse to forward requests as expected, and while it can initially seem baffling, the root causes usually boil down to a few typical culprits. From my own experiences deploying and troubleshooting various containerized applications on azure, I've often found these issues stemming from networking configuration, misconfigured ports, or the container application itself failing to listen properly. Let’s break it down with a practical, hands-on lens.
 
 First, let's look at networking. When you create an Azure Container Instance (aci), it often ends up deployed within a virtual network (vnet), or at least it should for production scenarios. Without proper network configuration, the instance may not be publicly accessible, or, conversely, not accessible within the vnet itself by other services. If you've opted for a public ip address, then that should be the route of entry, but if you haven't associated the instance with a network configuration group correctly, then routing requests may simply fail. The first place I tend to examine is the associated network security group (nsg). It’s essentially the firewall for your aci within the vnet. If you haven't explicitly allowed inbound traffic on the desired port, requests will be dropped before they even reach the container. Similarly, make sure that subnets are correctly configured and that the virtual network itself has a valid dns server configuration if needed for internal services, though aci relies heavily on azure’s dns service. In a past project involving a distributed message processing system, we had a situation where the aci instances were not responding to internal queue messages, and it turned out the internal network configuration was simply not allowing proper routing between the aci subnet and the other subnets.
 
@@ -16,21 +16,21 @@ location: "eastus"
 name: "my-container-instance"
 properties:
   containers:
-  - name: "my-app"
-    properties:
-      image: "my-docker-registry/my-app-image:latest"
-      ports:
-      - port: 8080
-      resources:
-        requests:
-          cpu: 1.0
-          memoryInGb: 1.5
+    - name: "my-app"
+      properties:
+        image: "my-docker-registry/my-app-image:latest"
+        ports:
+          - port: 8080
+        resources:
+          requests:
+            cpu: 1.0
+            memoryInGb: 1.5
   osType: "Linux"
   ipAddress:
     type: "Public"
     ports:
-    - protocol: "TCP"
-      port: 80
+      - protocol: "TCP"
+        port: 80
   restartPolicy: "OnFailure"
   sku: "Standard"
 tags: {}
@@ -73,22 +73,22 @@ location: "eastus"
 name: "my-container-instance"
 properties:
   containers:
-  - name: "my-netcat-app"
-    properties:
-      image: "alpine/socat"
-      ports:
-      - port: 8080
-      command: ["tcp-listen:8080,reuseaddr,fork"]
-      resources:
-        requests:
-          cpu: 0.5
-          memoryInGb: 0.5
+    - name: "my-netcat-app"
+      properties:
+        image: "alpine/socat"
+        ports:
+          - port: 8080
+        command: ["tcp-listen:8080,reuseaddr,fork"]
+        resources:
+          requests:
+            cpu: 0.5
+            memoryInGb: 0.5
   osType: "Linux"
   ipAddress:
     type: "Public"
     ports:
-    - protocol: "TCP"
-      port: 80
+      - protocol: "TCP"
+        port: 80
   restartPolicy: "OnFailure"
   sku: "Standard"
 tags: {}

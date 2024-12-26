@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-a-negative-dimension-size-being-calculated-in-the-conv2d3-layer"
 ---
 
-Alright, let's unpack this negative dimension issue in your `conv2d_3` layer. I’ve seen this happen a few times in my work, particularly when dealing with custom neural network architectures or when working with legacy codebases that weren't as clearly documented as we might like. You’re getting a negative dimension size, which is, fundamentally, a mathematical impossibility for spatial dimensions, and that means something went off the rails before the layer calculation. We need to investigate what went wrong upstream.
+, let's unpack this negative dimension issue in your `conv2d_3` layer. I’ve seen this happen a few times in my work, particularly when dealing with custom neural network architectures or when working with legacy codebases that weren't as clearly documented as we might like. You’re getting a negative dimension size, which is, fundamentally, a mathematical impossibility for spatial dimensions, and that means something went off the rails before the layer calculation. We need to investigate what went wrong upstream.
 
 The core issue here is that a convolutional layer's output dimension calculation is a function of its input dimensions, kernel size, stride, padding, and dilation, and if these parameters are configured such that they lead to a non-positive integer during computation, that’s where things break down. It typically means that during the calculation of the output dimension, the input size is essentially "too small" for the operation specified.
 
@@ -78,6 +78,7 @@ except Exception as e:
 #  effective_kernel_size = (3 - 1) * 3 + 1 = 7
 # output_size = floor((8 - 7 + 0)/1) + 1 = 2
 ```
+
 Again, not a direct negative output, but you can see how, especially if the input dimensions were smaller, that this could easily lead to a negative dimension after the convolution operation.
 
 **How To Debug**
@@ -88,22 +89,22 @@ So, how should you approach this? Here’s my typical process:
 
 2.  **Double-Check Formula:** Manually calculate the output dimension of `conv2d_3` using the formula I provided above, using the input sizes you've printed. Make sure you're accounting for dilation rates. Compare this against the actual calculated sizes. If it’s negative, then the parameters of the layers before or at the problematic `conv2d_3` are wrong.
 
-3. **Inspect Padding:** Very carefully examine how padding is being applied, or if you have a custom padding calculation, ensure it's done right.
+3.  **Inspect Padding:** Very carefully examine how padding is being applied, or if you have a custom padding calculation, ensure it's done right.
 
 4.  **Check the Model Architecture:** Sometimes, this issue can come from something as basic as how a model is assembled. It could be an unintended downsampling (via stride) without adjusting for padding that creates this issue further downstream.
 
-5. **Visualize**: When dealing with images and image processing, creating visualizations for each stage can be hugely beneficial. It would allow you to visually see where the dimensions are being eliminated or become extremely small, thus creating the issue you are encountering.
+5.  **Visualize**: When dealing with images and image processing, creating visualizations for each stage can be hugely beneficial. It would allow you to visually see where the dimensions are being eliminated or become extremely small, thus creating the issue you are encountering.
 
 **Resources**
 
 For those interested in going deeper, I'd highly recommend these resources:
 
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** A foundational text that covers convolutional networks thoroughly, with detailed explanations of how to compute output dimensions. It includes useful exercises.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** A foundational text that covers convolutional networks thoroughly, with detailed explanations of how to compute output dimensions. It includes useful exercises.
 
-*   **"Programming PyTorch for Deep Learning" by Ian Pointer:** If you’re working with PyTorch, this book provides very hands-on explanations of layer operations and debugging techniques. Even if you're not using Pytorch, it's a great resource to understand the underlying concepts.
+- **"Programming PyTorch for Deep Learning" by Ian Pointer:** If you’re working with PyTorch, this book provides very hands-on explanations of layer operations and debugging techniques. Even if you're not using Pytorch, it's a great resource to understand the underlying concepts.
 
-*   **The TensorFlow documentation:** While you likely have referred to it, taking another, focused look at the guides related to convolution operations can be beneficial. Pay close attention to the details for the `padding` argument.
+- **The TensorFlow documentation:** While you likely have referred to it, taking another, focused look at the guides related to convolution operations can be beneficial. Pay close attention to the details for the `padding` argument.
 
-*   **"Efficient Processing of Deep Neural Networks" by Vivienne Sze, Yu-Hsin Chen, Tien-Ju Yang, and Joel S. Emer:** This paper provides insight into the hardware aspects of deep neural networks. While not directly related to debugging, it helps contextualize why these calculations are so important for performance.
+- **"Efficient Processing of Deep Neural Networks" by Vivienne Sze, Yu-Hsin Chen, Tien-Ju Yang, and Joel S. Emer:** This paper provides insight into the hardware aspects of deep neural networks. While not directly related to debugging, it helps contextualize why these calculations are so important for performance.
 
 In summary, a negative dimension in a convolutional layer is almost always the result of miscalculated output sizes. Carefully examine your layer configurations, calculate the output dimensions based on the layer definitions, and be particularly mindful of kernel sizes, stride, and padding. By applying a systematic approach, you’ll be able to identify the source of the problem. Good luck in your debugging.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-build-a-cicd-pipeline-for-ruby-projects-with-multiple-gems-or-microservices"
 ---
 
-Okay, let's tackle this. Building a robust ci/cd pipeline for ruby projects, particularly when you're dealing with multiple gems or microservices, is a challenge I've faced firsthand in a few different iterations over the years. It’s less about finding the *one* perfect solution and more about assembling the correct building blocks for your specific scenario. Here's how I approach it, combining practical experience with some best practices.
+, let's tackle this. Building a robust ci/cd pipeline for ruby projects, particularly when you're dealing with multiple gems or microservices, is a challenge I've faced firsthand in a few different iterations over the years. It’s less about finding the _one_ perfect solution and more about assembling the correct building blocks for your specific scenario. Here's how I approach it, combining practical experience with some best practices.
 
 First, forget the notion of treating all pipelines identically. A single monolithic pipeline trying to handle multiple microservices is, in my experience, a recipe for inefficiency and eventual pain. Instead, think about breaking down your workflow into component parts, each with its dedicated pipeline. The key is managing the interdependencies gracefully.
 
@@ -51,7 +51,7 @@ publish:
     - gem push *.gem # assuming you have credentials configured for the gem server
 ```
 
-In this example, we've got three stages: test, build, and publish. The *test* stage runs the rspec test suite. The *build* stage creates a gem package, and the *publish* stage pushes the gem to a gem repository upon successful builds on the 'main' branch. The artifact step is critical to pass along build outputs, preventing recomputation.
+In this example, we've got three stages: test, build, and publish. The _test_ stage runs the rspec test suite. The _build_ stage creates a gem package, and the _publish_ stage pushes the gem to a gem repository upon successful builds on the 'main' branch. The artifact step is critical to pass along build outputs, preventing recomputation.
 
 Next, let’s look at a slightly more complex example that illustrates a microservice pipeline:
 
@@ -104,7 +104,7 @@ deploy:
    - curl -X POST -H "Content-Type: application/json" -d "{\"image_tag\": \"$CI_COMMIT_SHA\"}" "$DEPLOYMENT_ENDPOINT"
 ```
 
-Here, after the *test* and *build* stages, we introduce a *dockerize* stage. It builds a docker image using a dockerfile (which we assume exists in your repository), tagging it with the current commit sha and pushes it to a docker registry. The deploy stage then invokes a remote deploy endpoint via a http request. This is a fairly simplified deployment approach and would typically involve other tools like kubernetes, but serves to showcase the main idea. Environment variables are used extensively for the deployment and access to the image. `docker:dind` is employed for docker-in-docker capability.
+Here, after the _test_ and _build_ stages, we introduce a _dockerize_ stage. It builds a docker image using a dockerfile (which we assume exists in your repository), tagging it with the current commit sha and pushes it to a docker registry. The deploy stage then invokes a remote deploy endpoint via a http request. This is a fairly simplified deployment approach and would typically involve other tools like kubernetes, but serves to showcase the main idea. Environment variables are used extensively for the deployment and access to the image. `docker:dind` is employed for docker-in-docker capability.
 
 Finally, let's add an example of a pipeline that utilizes another gem within the same organization:
 
@@ -162,7 +162,7 @@ deploy:
 
 In this case we utilize a specific version of an internal gem that was previously built and pushed to your registry. It is specified in the before script to be installed prior to running any other tests or build commands. This allows teams to share functionality among their microservices without a strong coupling among codebases.
 
-A critical aspect, which the examples hint at but don't exhaustively cover, is *dependency management*. When microservices depend on each other, or gems are used across projects, you absolutely must establish a robust versioning strategy and ensure that your deployments are only pulling the correct versions of each dependency. For that, I strongly recommend reading up on Semantic Versioning (SemVer) as a starting point for how to properly version these gems and internal dependencies. Beyond that, reading through "Continuous Delivery" by Jez Humble and David Farley, would be immensely beneficial. Finally, "The Phoenix Project" by Gene Kim, Kevin Behr, and George Spafford, despite not being strictly a technical book, will provide you with perspective on how a healthy culture is paramount to a successful CI/CD implementation.
+A critical aspect, which the examples hint at but don't exhaustively cover, is _dependency management_. When microservices depend on each other, or gems are used across projects, you absolutely must establish a robust versioning strategy and ensure that your deployments are only pulling the correct versions of each dependency. For that, I strongly recommend reading up on Semantic Versioning (SemVer) as a starting point for how to properly version these gems and internal dependencies. Beyond that, reading through "Continuous Delivery" by Jez Humble and David Farley, would be immensely beneficial. Finally, "The Phoenix Project" by Gene Kim, Kevin Behr, and George Spafford, despite not being strictly a technical book, will provide you with perspective on how a healthy culture is paramount to a successful CI/CD implementation.
 
 Furthermore, don’t underestimate the value of monitoring and logging in your pipeline. Once code is deployed, it's crucial to track performance and identify any issues, which are going to happen. Tools like prometheus and grafana are a solid starting point for metrics collection, while splunk or the elk stack offer superb logging capabilities. Also, make it a habit to regularly review your ci/cd configuration and tweak it for optimal efficiency.
 

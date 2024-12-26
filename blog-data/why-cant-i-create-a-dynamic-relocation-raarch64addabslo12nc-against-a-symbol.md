@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-cant-i-create-a-dynamic-relocation-raarch64addabslo12nc-against-a-symbol"
 ---
 
-Okay, let's delve into this. It's a situation I've personally bumped into a few times, specifically when we were optimizing some bootloaders a while back. The issue with creating a dynamic relocation of type `r_aarch64_add_abs_lo12_nc` against a symbol isn't some arbitrary quirk; it's deeply rooted in how relocations and addressing modes work on aarch64, and specifically in the limitations of this particular relocation type.
+, let's delve into this. It's a situation I've personally bumped into a few times, specifically when we were optimizing some bootloaders a while back. The issue with creating a dynamic relocation of type `r_aarch64_add_abs_lo12_nc` against a symbol isn't some arbitrary quirk; it's deeply rooted in how relocations and addressing modes work on aarch64, and specifically in the limitations of this particular relocation type.
 
-The `r_aarch64_add_abs_lo12_nc` relocation, as its name somewhat implies, operates on the lower 12 bits of an absolute address. It's designed for situations where the instruction itself already contains some address information, and this relocation is meant to *add* a small offset—a 12-bit value—to it. Crucially, it's *not* designed to resolve a full address directly from a symbol. This is where the core problem lies. Symbols, in the context of linking and relocation, represent addresses that are often not known until the final linking stage. They could be located anywhere in memory.
+The `r_aarch64_add_abs_lo12_nc` relocation, as its name somewhat implies, operates on the lower 12 bits of an absolute address. It's designed for situations where the instruction itself already contains some address information, and this relocation is meant to _add_ a small offset—a 12-bit value—to it. Crucially, it's _not_ designed to resolve a full address directly from a symbol. This is where the core problem lies. Symbols, in the context of linking and relocation, represent addresses that are often not known until the final linking stage. They could be located anywhere in memory.
 
 Let me break it down a bit more with why `r_aarch64_add_abs_lo12_nc` is unsuitable: The 'nc' part at the end signifies 'no carry,' meaning that it doesn’t handle any carry from adding the low 12-bit offset into the instruction's pre-existing address. If the result of the addition overflows the lower 12 bits, the upper bits are simply discarded, resulting in incorrect addressing.
 
@@ -22,7 +22,7 @@ If we have a symbol `my_data` located at some address completely separate to whe
 
 Instead, what is needed is a relocation that allows for calculation of a full address, and not just modify the low 12 bits.
 
-Now, let’s look at what *will* work, with examples.
+Now, let’s look at what _will_ work, with examples.
 
 **Example 1: Using ADRP and ADD**
 
@@ -65,10 +65,11 @@ For scenarios where position independent code (PIC) is necessary, the global off
     ldr w1, [x0]
 
 ```
-Here `my_data@GOT` will use `R_AARCH64_GOT_PAGE_PCREL` to calculate an offset from the address of the instruction to a location in the GOT which in turn has the address of my_data. The key point here is that while the GOT entry itself might use a form of a 12-bit offset for its own internal resolution within the GOT page, the *initial instruction* is not directly applying `R_AARCH64_ADD_ABS_LO12_NC` to the symbol. The relocation type `R_AARCH64_GOT_PAGE_PCREL` in conjunction with the addressing through the GOT table avoids this issue entirely.
+
+Here `my_data@GOT` will use `R_AARCH64_GOT_PAGE_PCREL` to calculate an offset from the address of the instruction to a location in the GOT which in turn has the address of my_data. The key point here is that while the GOT entry itself might use a form of a 12-bit offset for its own internal resolution within the GOT page, the _initial instruction_ is not directly applying `R_AARCH64_ADD_ABS_LO12_NC` to the symbol. The relocation type `R_AARCH64_GOT_PAGE_PCREL` in conjunction with the addressing through the GOT table avoids this issue entirely.
 
 The key take away is: if the address is not a local offset, then `R_AARCH64_ADD_ABS_LO12_NC` is not the appropriate relocation type.
 
-It’s important to check the aarch64 ABI documentation for specific details of how these relocations work. You can typically find good information in the *Procedure Call Standard for the Arm 64-bit Architecture* document published by Arm. Also, exploring the GNU Binutils documentation for `as` and `ld` will provide a much deeper understanding of how symbols, relocations, and code generation interact. It will detail the specific nuances and details. Similarly, a strong understanding of ELF object file formats, especially the relocation section, can also be highly beneficial. These are not simple reads, and require time and attention, but are core to working at this level of detail.
+It’s important to check the aarch64 ABI documentation for specific details of how these relocations work. You can typically find good information in the _Procedure Call Standard for the Arm 64-bit Architecture_ document published by Arm. Also, exploring the GNU Binutils documentation for `as` and `ld` will provide a much deeper understanding of how symbols, relocations, and code generation interact. It will detail the specific nuances and details. Similarly, a strong understanding of ELF object file formats, especially the relocation section, can also be highly beneficial. These are not simple reads, and require time and attention, but are core to working at this level of detail.
 
 In short, the problem you're experiencing arises from trying to fit a square peg (a full symbol address) into a round hole (a 12-bit offset relocation). You need to use the specific addressing mechanisms—`adrp` and `add`, pc relative addressing, GOT access—that are designed to handle full symbol address resolution on aarch64 and use the correct relocation types designed for each addressing mode.

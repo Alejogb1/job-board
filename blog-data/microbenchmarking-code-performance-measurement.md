@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "microbenchmarking-code-performance-measurement"
 ---
 
-Alright let's talk microbenchmarking I've been down this rabbit hole more times than I care to admit and it's always a wild ride honestly
+let's talk microbenchmarking I've been down this rabbit hole more times than I care to admit and it's always a wild ride honestly
 
 The question of microbenchmarking code performance measurement is deceptively simple It's not just about slapping a timer around some code and calling it a day oh no It's about understanding the nuances of your machine your compiler your language and the way your code interacts with them all
 
@@ -87,24 +87,22 @@ Now for one in javascript
 
 ```javascript
 function functionToBenchmark() {
-    let sum = 0;
-    for(let i = 0; i < 1000000; i++){
-        sum += i;
-    }
+  let sum = 0;
+  for (let i = 0; i < 1000000; i++) {
+    sum += i;
+  }
 }
 
-
-function benchmark(func){
+function benchmark(func) {
   const start_time = performance.now();
   func();
   const end_time = performance.now();
   return (end_time - start_time) / 1000;
 }
 
-
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   console.log("Time taken:", benchmark(functionToBenchmark), "seconds");
-} else if (typeof process !== 'undefined') {
+} else if (typeof process !== "undefined") {
   console.log("Time taken:", benchmark(functionToBenchmark), "seconds");
 }
 ```

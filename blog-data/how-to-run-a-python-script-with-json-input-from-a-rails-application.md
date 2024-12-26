@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-run-a-python-script-with-json-input-from-a-rails-application"
 ---
 
-alright, so you're looking to get a python script to play nice with json data sent over from a rails app. i’ve been there, done that, got the t-shirt, and the server logs that screamed at 3am. it’s a pretty common scenario, and there are a few ways to tackle it, each with its own quirks. let’s break it down.
+, so you're looking to get a python script to play nice with json data sent over from a rails app. i’ve been there, done that, got the t-shirt, and the server logs that screamed at 3am. it’s a pretty common scenario, and there are a few ways to tackle it, each with its own quirks. let’s break it down.
 
 first off, the core issue is how to get that json data out of your rails app and into the waiting hands of your python script. you could go down a few paths, but i’ve found that keeping things simple is usually the best approach to avoid unnecessary headaches down the line. when i first started, i had this crazy idea to use websockets, only to discover it was overkill for what i needed. i spent a good week just trying to get a simple json structure sent over, just to feel very embarrassed when i re-evaluated my approach. lets skip that.
 
@@ -30,6 +30,7 @@ class MyController < ApplicationController
   end
 end
 ```
+
 ```ruby
 # config/routes.rb
 Rails.application.routes.draw do
@@ -72,7 +73,7 @@ if __name__ == "__main__":
 
 here, we are using the `requests.get(url)` to make the http call. we also have added `response.raise_for_status()` which automatically throws an error if the http request returns anything other than 200. we are processing the returned json with the `response.json()` method and then processing it as needed in the python code.
 
-*important:* make sure you have the `your_rails_app_url` replaced with your actual url, and the rails application has to be running for the request to work.
+_important:_ make sure you have the `your_rails_app_url` replaced with your actual url, and the rails application has to be running for the request to work.
 
 **using arguments instead of hardcoded url**
 
@@ -118,12 +119,12 @@ this makes it much easier to move your code and test it against different instan
 
 **a few words of experience and common gotchas**
 
-*   *error handling:* notice the `try...except` blocks. i cannot stress enough how important this is. network issues, server errors, bad json – all these can throw curveballs. my early scripts were notorious for crashing at the slightest hiccup. you need to handle these exceptions gracefully, or your script will not be reliable.
-*   *authentication and authorization:* sometimes the rails endpoint might be protected, and you would need to pass in some sort of authentication credentials. i will not go into the specifics of how to do that, but there is a lot of literature about auth in http requests if you ever need it.
-*   *input sanitization:* while i’m not going into the topic of sanitization, be very aware of the fact that you are using data provided by a service. make sure your python script validates and filters the data it receives. i’ve had a funny incident once where a colleague sent me json that looked like an html page. after a good laugh and some minor tweaks on the server side everything worked well.
-*   *environment variables*: you should probably avoid hardcoding your rails url. using environment variables makes your application configurable and more secure. i can't give you the specifics, but this can be easily achieved with environment variables.
-*   *logging:* while printing to the console is very useful during development, in production, you'll want to implement proper logging to a file or a service. this will help you track down issues more easily.
-*   *data serialization:* the json module in python is not the only way to exchange data between programs, you can also use message brokers like rabbitmq or redis, this is more advanced and probably not the solution you are looking for, but it is good to know.
+- _error handling:_ notice the `try...except` blocks. i cannot stress enough how important this is. network issues, server errors, bad json – all these can throw curveballs. my early scripts were notorious for crashing at the slightest hiccup. you need to handle these exceptions gracefully, or your script will not be reliable.
+- _authentication and authorization:_ sometimes the rails endpoint might be protected, and you would need to pass in some sort of authentication credentials. i will not go into the specifics of how to do that, but there is a lot of literature about auth in http requests if you ever need it.
+- _input sanitization:_ while i’m not going into the topic of sanitization, be very aware of the fact that you are using data provided by a service. make sure your python script validates and filters the data it receives. i’ve had a funny incident once where a colleague sent me json that looked like an html page. after a good laugh and some minor tweaks on the server side everything worked well.
+- _environment variables_: you should probably avoid hardcoding your rails url. using environment variables makes your application configurable and more secure. i can't give you the specifics, but this can be easily achieved with environment variables.
+- _logging:_ while printing to the console is very useful during development, in production, you'll want to implement proper logging to a file or a service. this will help you track down issues more easily.
+- _data serialization:_ the json module in python is not the only way to exchange data between programs, you can also use message brokers like rabbitmq or redis, this is more advanced and probably not the solution you are looking for, but it is good to know.
 
 **resources i recommend**
 

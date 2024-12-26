@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-pdfs-be-displayed-in-a-ruby-on-rails-application"
 ---
 
-Okay, let's tackle this. I've encountered the challenge of displaying PDFs in Rails apps more times than I care to count, and each time it presents slightly different nuances. There are several approaches, each with its own trade-offs, and selecting the right one often depends on specific requirements. Let me share some methods I’ve found useful, along with code examples and resources that helped me along the way.
+, let's tackle this. I've encountered the challenge of displaying PDFs in Rails apps more times than I care to count, and each time it presents slightly different nuances. There are several approaches, each with its own trade-offs, and selecting the right one often depends on specific requirements. Let me share some methods I’ve found useful, along with code examples and resources that helped me along the way.
 
 Essentially, you’ve got three primary routes: embedding the PDF directly in the page using an `<iframe>` or `<embed>` tag, using a viewer like pdf.js, or linking to the PDF for download or display via the browser's built-in PDF viewer. The optimal choice often hinges on whether you need user interaction within the PDF, if rendering performance is critical, or if you’re dealing with sensitive data that requires controlled access.
 
@@ -28,7 +28,7 @@ These HTML tags let you directly include a PDF within your HTML document. The si
 <% end %>
 ```
 
-Here, `rails_blob_url` is a helper from Active Storage (assuming you're using it, and if not, you definitely should explore it for file management within rails).  `disposition: :inline` is crucial.  This tells the browser to attempt to display the PDF within the iframe rather than download it. If a user's browser doesn’t support inline display, they'll get the "Your browser does not support iframes" message. The `width` and `height` attributes control the size of the iframe.
+Here, `rails_blob_url` is a helper from Active Storage (assuming you're using it, and if not, you definitely should explore it for file management within rails). `disposition: :inline` is crucial. This tells the browser to attempt to display the PDF within the iframe rather than download it. If a user's browser doesn’t support inline display, they'll get the "Your browser does not support iframes" message. The `width` and `height` attributes control the size of the iframe.
 
 Using `<embed>` is similar:
 
@@ -54,27 +54,27 @@ To use pdf.js, we usually host the library and then create a javascript file tha
 
 ```javascript
 // app/assets/javascripts/pdf_viewer.js
-document.addEventListener('DOMContentLoaded', function () {
-  const pdfUrl = document.getElementById('pdf-container').dataset.pdfUrl;
+document.addEventListener("DOMContentLoaded", function () {
+  const pdfUrl = document.getElementById("pdf-container").dataset.pdfUrl;
   const loadingTask = pdfjsLib.getDocument(pdfUrl);
 
-    loadingTask.promise.then(function(pdf) {
-        pdf.getPage(1).then(function(page) {
-            const scale = 1.5;
-            const viewport = page.getViewport({ scale: scale });
+  loadingTask.promise.then(function (pdf) {
+    pdf.getPage(1).then(function (page) {
+      const scale = 1.5;
+      const viewport = page.getViewport({ scale: scale });
 
-            const canvas = document.getElementById('pdf-canvas');
-            const context = canvas.getContext('2d');
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
+      const canvas = document.getElementById("pdf-canvas");
+      const context = canvas.getContext("2d");
+      canvas.height = viewport.height;
+      canvas.width = viewport.width;
 
-            const renderContext = {
-                canvasContext: context,
-                viewport: viewport
-            };
-            page.render(renderContext);
-        });
+      const renderContext = {
+        canvasContext: context,
+        viewport: viewport,
+      };
+      page.render(renderContext);
     });
+  });
 });
 ```
 
@@ -115,6 +115,6 @@ This code creates a standard hyperlink. The `target="_blank"` attribute opens th
 
 Each of these approaches has its own applications. In that legal app, we eventually used a slightly enhanced version of the PDF.js approach, enabling annotation features as well as a highly controlled user experience with our custom design. For other projects that don’t require interactive PDF viewing, the simpler embedding or linking methods have been more than adequate.
 
-For more comprehensive knowledge, I highly suggest referring to *'High Performance Browser Networking'* by Ilya Grigorik. Although not specifically about PDFs, this book covers browser behavior and rendering principles that are crucial for understanding how these methods actually work under the hood. Additionally, *'HTTP: The Definitive Guide'* by David Gourley and Brian Totty provides invaluable insights into the mechanisms and nuances of how web browsers and servers interact, which also helps in understanding the implications of various PDF-related techniques.
+For more comprehensive knowledge, I highly suggest referring to _'High Performance Browser Networking'_ by Ilya Grigorik. Although not specifically about PDFs, this book covers browser behavior and rendering principles that are crucial for understanding how these methods actually work under the hood. Additionally, _'HTTP: The Definitive Guide'_ by David Gourley and Brian Totty provides invaluable insights into the mechanisms and nuances of how web browsers and servers interact, which also helps in understanding the implications of various PDF-related techniques.
 
 Remember, the optimal method for displaying PDFs in a Rails application depends significantly on your specific use case and needs. Choose the approach that best balances user experience, complexity, and resource utilization.

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-does-aws-lightsail-function-with-php-8"
 ---
 
-Okay, let's unpack that. I've spent a fair bit of time working with both AWS Lightsail and various iterations of PHP, and PHP 8 definitely introduces some nuances worth discussing. It's not just about dropping a PHP 8 codebase onto a Lightsail instance and expecting it to magically work; there are considerations around configuration, performance, and specific features that require a careful approach. Let me walk you through my experience and the things I've learned along the way.
+, let's unpack that. I've spent a fair bit of time working with both AWS Lightsail and various iterations of PHP, and PHP 8 definitely introduces some nuances worth discussing. It's not just about dropping a PHP 8 codebase onto a Lightsail instance and expecting it to magically work; there are considerations around configuration, performance, and specific features that require a careful approach. Let me walk you through my experience and the things I've learned along the way.
 
-Essentially, AWS Lightsail provides pre-configured virtual private servers (vps), which simplifies the process of launching and managing applications. You get a straightforward environment without the complexity of the full aws ec2 infrastructure. When it comes to PHP 8, the core challenge isn’t necessarily *if* it will run—it will, given a compatible environment—but rather *how well* it will run and how to leverage its features optimally. I remember one particular project where we migrated a legacy PHP 7 application to PHP 8 running on a Lightsail instance, and the performance gains, particularly with the JIT compiler in PHP 8, were substantial, provided everything was configured correctly.
+Essentially, AWS Lightsail provides pre-configured virtual private servers (vps), which simplifies the process of launching and managing applications. You get a straightforward environment without the complexity of the full aws ec2 infrastructure. When it comes to PHP 8, the core challenge isn’t necessarily _if_ it will run—it will, given a compatible environment—but rather _how well_ it will run and how to leverage its features optimally. I remember one particular project where we migrated a legacy PHP 7 application to PHP 8 running on a Lightsail instance, and the performance gains, particularly with the JIT compiler in PHP 8, were substantial, provided everything was configured correctly.
 
 The first crucial aspect is ensuring that your Lightsail instance has the necessary dependencies to support PHP 8. Lightsail offers various ‘blueprints,’ and while some may include a basic PHP install, they often default to older versions. My go-to approach is to start with a base ubuntu instance (or similar) and install php 8 manually, giving me granular control over the process. This ensures I have the latest versions of all modules and the correct configurations. This also mitigates some unexpected incompatibilities that can crop up when relying on pre-configured images.
 
@@ -36,6 +36,7 @@ pm.max_children = 20
 pm.process_idle_timeout = 10s;
 pm.max_requests = 500
 ```
+
 In this case, I've modified pm to `ondemand`, which spawns child processes as needed, potentially saving memory resources. Additionally, I've set limits on the number of children, the timeout, and the maximum requests a child can handle before restarting. These numbers should be adjusted based on your application’s resource demands.
 
 The third key point involves configuring your web server to work correctly with PHP-FPM. In the context of Lightsail, we can often encounter setups using either nginx or apache. For example, using nginx, you would typically need a configuration within the `server {}` block that forwards php requests to the fpm socket.
@@ -48,6 +49,7 @@ location ~ \.php$ {
     fastcgi_pass unix:/run/php/php8.2-fpm.sock;
 }
 ```
+
 This block looks for files ending in `.php` and passes the request to the specified fastcgi_pass, using the php8.2-fpm socket we set up earlier. The `include snippets/fastcgi-php.conf;` portion adds additional standard configuration for php.
 
 With PHP 8, it's worth remembering that performance improvements are not automatic. While the JIT compiler is a significant feature, it's not always beneficial for all workloads, and enabling it without careful testing might be detrimental in some scenarios. You must gauge your application needs via profiling. Generally speaking though, it’s a net positive.

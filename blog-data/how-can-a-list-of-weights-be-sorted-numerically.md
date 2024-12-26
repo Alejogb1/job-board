@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-list-of-weights-be-sorted-numerically"
 ---
 
-Okay, let’s tackle this one. Sorting a list of weights numerically might seem straightforward on the surface, but, as I've seen countless times over the years, the devil is often in the details. It's not just about calling `.sort()` and being done with it; we need to understand the nuances, the edge cases, and the performance implications. I've personally debugged systems where seemingly innocuous sorting issues caused data inconsistencies and even performance bottlenecks that crippled entire workflows, so trust me, getting this right matters.
+, let’s tackle this one. Sorting a list of weights numerically might seem straightforward on the surface, but, as I've seen countless times over the years, the devil is often in the details. It's not just about calling `.sort()` and being done with it; we need to understand the nuances, the edge cases, and the performance implications. I've personally debugged systems where seemingly innocuous sorting issues caused data inconsistencies and even performance bottlenecks that crippled entire workflows, so trust me, getting this right matters.
 
 The core of the problem involves comparing the elements in the list to determine their relative order. Generally, when you're dealing with simple numerical types like integers or floating-point numbers, many built-in sorting algorithms function perfectly well. However, the context of 'weights' can sometimes complicate things. Are these raw numeric values? Are they strings that need parsing? Do we need to handle units or special characters?
 
@@ -91,10 +91,10 @@ Here, the `parse_weight_with_default` function includes checks for null values a
 
 While the above examples illustrate common scenarios, there are numerous other factors to consider when sorting weight data, such as:
 
-* **Locale:** Unit symbols and number formats can vary across locales, which needs to be accounted for when working with international datasets.
-* **Performance:** For exceptionally large datasets, custom sorting algorithms or utilizing libraries like NumPy might be beneficial for performance optimization.
-* **Data integrity:** Implementing validation at the source and auditing the data to catch inconsistencies can avoid issues down the line.
+- **Locale:** Unit symbols and number formats can vary across locales, which needs to be accounted for when working with international datasets.
+- **Performance:** For exceptionally large datasets, custom sorting algorithms or utilizing libraries like NumPy might be beneficial for performance optimization.
+- **Data integrity:** Implementing validation at the source and auditing the data to catch inconsistencies can avoid issues down the line.
 
-For deeper dives into algorithms and data structures, I highly recommend *Introduction to Algorithms* by Thomas H. Cormen et al., which provides a solid theoretical foundation. For practical software development involving sorting and data manipulation, the Python documentation itself is an excellent resource, especially the parts relating to `sorted()` and list methods. You should also investigate the `collections` module for helpful data structure operations. The *Fluent Python* book by Luciano Ramalho covers such topics in great depth with many practical examples.
+For deeper dives into algorithms and data structures, I highly recommend _Introduction to Algorithms_ by Thomas H. Cormen et al., which provides a solid theoretical foundation. For practical software development involving sorting and data manipulation, the Python documentation itself is an excellent resource, especially the parts relating to `sorted()` and list methods. You should also investigate the `collections` module for helpful data structure operations. The _Fluent Python_ book by Luciano Ramalho covers such topics in great depth with many practical examples.
 
 Sorting a list of weights numerically seems like a trivial task, but as these examples show, careful consideration of the data’s format, error handling, and real-world edge cases is essential to ensure correct, robust, and efficient sorting behavior. You must not treat this as an afterthought but rather as an essential part of the design of any system dealing with such data. I’ve seen it cause far too many issues to take it lightly.

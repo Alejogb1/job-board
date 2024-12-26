@@ -4,17 +4,17 @@ date: "2024-12-23"
 id: "what-is-the-correct-approach-for-designing-an-airflow-dag"
 ---
 
-Okay, let’s tackle this one. I’ve seen my share of airflow disasters over the years, from poorly structured dags that bring down entire platforms to unmaintainable spaghetti code. The correct approach to designing an airflow dag isn't just about getting it to *work*, it’s about building something that’s reliable, scalable, and, crucially, *understandable* by future developers (including your future self). It’s a subject that, in my experience, often requires a few hard-learned lessons. We aren't just arranging tasks; we're crafting data pipelines that should operate reliably in complex environments.
+, let’s tackle this one. I’ve seen my share of airflow disasters over the years, from poorly structured dags that bring down entire platforms to unmaintainable spaghetti code. The correct approach to designing an airflow dag isn't just about getting it to _work_, it’s about building something that’s reliable, scalable, and, crucially, _understandable_ by future developers (including your future self). It’s a subject that, in my experience, often requires a few hard-learned lessons. We aren't just arranging tasks; we're crafting data pipelines that should operate reliably in complex environments.
 
-The core problem stems from the fact that airflow, at its heart, is a workflow *orchestration* tool, not a data processing engine. It directs the flow of tasks, but doesn’t inherently know what those tasks do. A good dag design separates the 'what' (the task logic) from the 'how' (the task execution orchestration). I've found that when these concerns get tangled up, maintenance becomes a nightmare.
+The core problem stems from the fact that airflow, at its heart, is a workflow _orchestration_ tool, not a data processing engine. It directs the flow of tasks, but doesn’t inherently know what those tasks do. A good dag design separates the 'what' (the task logic) from the 'how' (the task execution orchestration). I've found that when these concerns get tangled up, maintenance becomes a nightmare.
 
-First and foremost, a well-designed dag should be declarative. Instead of writing procedural code that directly executes task logic *within* the dag definition, you should be defining the relationships and dependencies between pre-existing units of work, which often live in separate scripts or packages. Think of the dag as a blueprint, and the actual scripts as the construction crew. This separation makes unit testing easier since each component can be tested in isolation. In practice, I've often seen dags that are hundreds of lines long because the task logic is embedded inside them. This approach is not only difficult to maintain and debug, it makes the dag itself a bottleneck.
+First and foremost, a well-designed dag should be declarative. Instead of writing procedural code that directly executes task logic _within_ the dag definition, you should be defining the relationships and dependencies between pre-existing units of work, which often live in separate scripts or packages. Think of the dag as a blueprint, and the actual scripts as the construction crew. This separation makes unit testing easier since each component can be tested in isolation. In practice, I've often seen dags that are hundreds of lines long because the task logic is embedded inside them. This approach is not only difficult to maintain and debug, it makes the dag itself a bottleneck.
 
-Let’s begin with the foundational principle of task modularity. Each task in a dag should perform a single, well-defined operation. Avoid tasks that do multiple things. This not only promotes reuse but also allows you to identify issues more efficiently. For instance, in one project I worked on, the dag had a single python operator responsible for both data extraction from a database *and* transformation. When the database schema changed, debugging the issue became a convoluted process since I didn’t know whether the extract or transform section was breaking. Decomposing into distinct tasks, one for extract, another for transform, would have simplified the diagnosis considerably.
+Let’s begin with the foundational principle of task modularity. Each task in a dag should perform a single, well-defined operation. Avoid tasks that do multiple things. This not only promotes reuse but also allows you to identify issues more efficiently. For instance, in one project I worked on, the dag had a single python operator responsible for both data extraction from a database _and_ transformation. When the database schema changed, debugging the issue became a convoluted process since I didn’t know whether the extract or transform section was breaking. Decomposing into distinct tasks, one for extract, another for transform, would have simplified the diagnosis considerably.
 
 Secondly, leverage variables and connections to keep your dags configurable and adaptable. Never, ever hardcode sensitive information like database credentials or api keys into the dag’s code. Store these using airflow’s own connection and variable management system. A few years ago, I had a situation where all the dags had database connections hardcoded, making it a herculean effort to migrate the data to a new server. Airflow connections offer a central place to manage these parameters, allowing changes to propagate to all affected dags without manual editing of code.
 
-Now, let's explore some practical examples in code, starting with a basic python operator. Here’s the *bad* way – the one I’ve seen all too often:
+Now, let's explore some practical examples in code, starting with a basic python operator. Here’s the _bad_ way – the one I’ve seen all too often:
 
 ```python
 from airflow import DAG
@@ -42,7 +42,7 @@ with DAG(
 
 In this snippet, the `my_task_logic` function is embedded within the dag itself. It may be a placeholder now, but imagine that growing to hundreds of lines – maintenance becomes a nightmare.
 
-Now, let's see a *good* example using a separate python script:
+Now, let's see a _good_ example using a separate python script:
 
 ```python
 # in a file named my_task_script.py (or in a dedicated package)

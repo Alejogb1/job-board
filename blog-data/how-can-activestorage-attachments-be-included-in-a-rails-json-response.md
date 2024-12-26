@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-activestorage-attachments-be-included-in-a-rails-json-response"
 ---
 
-Okay, let's tackle this one. I've been down this road a few times, wrestling (oops, almost slipped there!) with ActiveStorage and API responses. It’s a common scenario, where you have files uploaded through ActiveStorage and need to expose their URLs in your JSON payloads. The standard Rails serialization often doesn't include the storage details, so we need to implement this explicitly.
+, let's tackle this one. I've been down this road a few times, wrestling (oops, almost slipped there!) with ActiveStorage and API responses. It’s a common scenario, where you have files uploaded through ActiveStorage and need to expose their URLs in your JSON payloads. The standard Rails serialization often doesn't include the storage details, so we need to implement this explicitly.
 
 The core challenge is that ActiveStorage doesn't automatically include file URLs in your models' attributes, and rightly so. It's designed to manage storage and retrieval, but not necessarily API representation. So, when we use the standard `.to_json` or similar serialization mechanisms, we only get the model's basic attributes, not the URLs for the attached files. To add them, we need to modify how our models are serialized or use serializers. I've always found explicit serialization more predictable and maintainable in the long run.
 
@@ -56,9 +56,9 @@ def show
 end
 ```
 
-*   **Pros:** Very simple and direct, easy to understand. No additional dependencies.
-*   **Cons:** Makes models more complex, especially with multiple attachments, not easily reusable and if the attachment method changes then you need to change it in multiple places.
-* **When to Use:** When dealing with few attachments, and there is no need to separate the json serialization logic from the model, or when the project is very small.
+- **Pros:** Very simple and direct, easy to understand. No additional dependencies.
+- **Cons:** Makes models more complex, especially with multiple attachments, not easily reusable and if the attachment method changes then you need to change it in multiple places.
+- **When to Use:** When dealing with few attachments, and there is no need to separate the json serialization logic from the model, or when the project is very small.
 
 **Approach 2: Using a Serializer (Jbuilder or ActiveModel::Serializers)**
 
@@ -84,9 +84,9 @@ end
 
 We are letting Rails implicitly render `posts/show.json.jbuilder`
 
-*   **Pros:** Decouples serialization logic from the model, which is cleaner and easier to maintain. Highly flexible with customization and conditional rendering of specific attributes, and does not polute the model.
-*   **Cons:** Requires an extra file/layer in the application structure (a Jbuilder view in this case), more verbose than model method
-*  **When to Use:** When a degree of flexibility and maintainability is desired, especially for applications with multiple endpoints that require different JSON outputs.
+- **Pros:** Decouples serialization logic from the model, which is cleaner and easier to maintain. Highly flexible with customization and conditional rendering of specific attributes, and does not polute the model.
+- **Cons:** Requires an extra file/layer in the application structure (a Jbuilder view in this case), more verbose than model method
+- **When to Use:** When a degree of flexibility and maintainability is desired, especially for applications with multiple endpoints that require different JSON outputs.
 
 **Approach 3: Custom Serializer Class (ActiveModel::Serializers, if needed)**
 
@@ -121,9 +121,9 @@ def show
 end
 ```
 
-*   **Pros:** Best for complex API structures and relationships, promotes reusability, clean abstraction, and separation of concerns, and allows complex logic to be encapsulated in the serializer, offering more customization and control.
-*   **Cons:** Adds a dependency, more setup overhead, can be more complex to implement if not needed
-*   **When to Use:** For complex APIs that involve multiple relationships and need more advanced serialization management, especially if there is a requirement to include embedded records or meta information in the JSON response.
+- **Pros:** Best for complex API structures and relationships, promotes reusability, clean abstraction, and separation of concerns, and allows complex logic to be encapsulated in the serializer, offering more customization and control.
+- **Cons:** Adds a dependency, more setup overhead, can be more complex to implement if not needed
+- **When to Use:** For complex APIs that involve multiple relationships and need more advanced serialization management, especially if there is a requirement to include embedded records or meta information in the JSON response.
 
 **Recommendations and Further Learning**
 
@@ -131,8 +131,8 @@ Based on my experience, starting with Jbuilder for simple cases is a good balanc
 
 To deepen your knowledge, I would recommend the following resources:
 
-*   **"Crafting Rails 4 Applications" by José Valim:** This book, despite targeting Rails 4, still provides a very valuable foundation for understanding the underlying principles of Rails architecture. Specifically, chapters on service objects and decoupling logic are relevant to the approaches mentioned.
-*   **The Rails guides (official documentation)** for `ActiveStorage`, `ActiveModel::Serializers`, and `Jbuilder`. These provide the most up-to-date information about the frameworks. These are available at the official Rails website and should be your primary source of reference.
-*  **API Design Patterns by JJ Geewax:** While not Rails specific, this book outlines common patterns for designing robust and maintainable APIs, essential for understanding how to build APIs that scale. This will help understand how ActiveStorage serialization fits in a bigger design approach.
+- **"Crafting Rails 4 Applications" by José Valim:** This book, despite targeting Rails 4, still provides a very valuable foundation for understanding the underlying principles of Rails architecture. Specifically, chapters on service objects and decoupling logic are relevant to the approaches mentioned.
+- **The Rails guides (official documentation)** for `ActiveStorage`, `ActiveModel::Serializers`, and `Jbuilder`. These provide the most up-to-date information about the frameworks. These are available at the official Rails website and should be your primary source of reference.
+- **API Design Patterns by JJ Geewax:** While not Rails specific, this book outlines common patterns for designing robust and maintainable APIs, essential for understanding how to build APIs that scale. This will help understand how ActiveStorage serialization fits in a bigger design approach.
 
 Remember, each situation is unique. The choice between these methods depends on the complexity of your API and your preferences, but the general approach—explicitly handling the generation of the URLs—is essential. I've personally found that investing the time into proper serialization practices always pays off in the long term.

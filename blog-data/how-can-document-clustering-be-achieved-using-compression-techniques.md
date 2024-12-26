@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-document-clustering-be-achieved-using-compression-techniques"
 ---
 
-Alright, let's dive into this. Document clustering, a core task in information retrieval and data mining, is inherently about finding groupings of similar documents. Typically, we rely on vector space models and similarity metrics like cosine similarity. But what if we leveraged compression? That's an interesting angle, and one I tackled during a large-scale content management project a few years back. We were ingesting millions of documents daily, and traditional methods became too computationally expensive.
+, let's dive into this. Document clustering, a core task in information retrieval and data mining, is inherently about finding groupings of similar documents. Typically, we rely on vector space models and similarity metrics like cosine similarity. But what if we leveraged compression? That's an interesting angle, and one I tackled during a large-scale content management project a few years back. We were ingesting millions of documents daily, and traditional methods became too computationally expensive.
 
 The fundamental idea is that semantically similar documents, because they share common words and phrases, will compress to similar sizes or have similar compressed representations. This isn't magic; it’s exploiting the redundancies inherent in language. We're indirectly capturing semantic relationships through the compression process itself.
 
@@ -72,6 +72,7 @@ similarity_xz = ncd(doc_x, doc_z)
 print(f"NCD between doc_x and doc_y: {similarity_xy}")
 print(f"NCD between doc_x and doc_z: {similarity_xz}")
 ```
+
 Again, lower values of NCD imply higher similarity.
 
 Finally, there’s another, somewhat more complex and computationally intensive approach where you treat the compressed data as a vector directly. This involves using a compressor that reveals its internal state or allows manipulation of the intermediate steps in the compression algorithm itself. These aren't usually general-purpose compression libraries. The idea is to treat the intermediate data in the compressor as a form of a "latent vector". This allows us to apply traditional vector-based techniques directly.

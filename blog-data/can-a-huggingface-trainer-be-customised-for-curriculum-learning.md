@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "can-a-huggingface-trainer-be-customised-for-curriculum-learning"
 ---
 
-alright, so you're asking about customizing a huggingface `trainer` for curriculum learning, right? yeah, i've been down that rabbit hole before, and it’s a pretty common ask when you start getting into more sophisticated training setups. basically, the standard huggingface `trainer` is great for out-of-the-box training, but when you want to control the learning process more finely, especially with something like curriculum learning, you'll find yourself needing to tweak things.
+, so you're asking about customizing a huggingface `trainer` for curriculum learning, right? yeah, i've been down that rabbit hole before, and it’s a pretty common ask when you start getting into more sophisticated training setups. basically, the standard huggingface `trainer` is great for out-of-the-box training, but when you want to control the learning process more finely, especially with something like curriculum learning, you'll find yourself needing to tweak things.
 
 let's start with the basics: curriculum learning, in a nutshell, means training a model on easier examples first and gradually introducing more difficult ones. it’s based on the idea that humans learn that way, and it can, in many situations, help models converge better, or even reach a better final performance, mainly when you're dealing with noisy or complex data. the huggingface `trainer`, by itself, doesn’t offer a direct option for this, you need to add some scaffolding yourself.
 
@@ -46,7 +46,7 @@ class MyDataset(Dataset):
         self.confidences = confidences
         self.indices = np.arange(len(texts))
         self.current_indices = self.indices
-        
+
 
     def update_dataset(self, threshold):
       self.current_indices = [index for index, conf in zip(self.indices, self.confidences) if conf >= threshold]
@@ -78,7 +78,7 @@ class MyTrainer(Trainer):
     def compute_loss(self, model, inputs, return_outputs=False):
         dummy_loss = torch.tensor(1.0)
         return (dummy_loss, None) if return_outputs else dummy_loss
-        
+
     def create_optimizer(self):
       return torch.optim.Adam(self.model.parameters(), lr=1e-5)
 
@@ -142,7 +142,7 @@ class MyDataset(Dataset):
         self.indices = np.arange(len(texts))
         self.current_indices = self.indices
         self.losses = np.zeros(len(texts))
-        
+
 
     def update_losses(self, losses):
         self.losses = losses
@@ -174,7 +174,7 @@ class MyTrainer(Trainer):
         return DataLoader(my_dataset, batch_size=2)
 
     def compute_loss(self, model, inputs, return_outputs=False):
-        
+
         dummy_loss = torch.tensor(1.0)
         return (dummy_loss, None) if return_outputs else dummy_loss
 
@@ -183,7 +183,7 @@ class MyTrainer(Trainer):
 
 
     def evaluate(self, eval_dataset = None, **kwargs):
-      
+
       dataloader = DataLoader(my_dataset, batch_size=2)
       losses = []
       with torch.no_grad():
@@ -194,10 +194,10 @@ class MyTrainer(Trainer):
            loss_fct = CrossEntropyLoss()
            loss = loss_fct(outputs, labels)
            losses.append(loss)
-         
+
       losses = torch.stack(losses).cpu().numpy()
       my_dataset.update_losses(losses)
-      
+
 
 class DummyModel(torch.nn.Module):
     def __init__(self):
@@ -225,9 +225,9 @@ trainer.train()
 
 here the `MyDataset` class keeps track of the loss of each example. in the `evaluate` method of the trainer we calculate the cross-entropy loss of each example of the training set and store it in the `MyDataset`. then, the callback, similarly to the previous example, will filter examples according to a threshold value. in this version, examples with a high loss are considered hard examples. at the start, the callback will filter out the hard examples, only keeping easier ones, those with a low loss, then will introduce the harder examples gradually. please note that, yet again, i am using a dummy model, and dummy data. and this is a simple version of this technique, you may want to tweak this to fit your specific use case.
 
-another common method is to use a separate model to predict the difficulty of each example. this is especially useful when you have external information about the data, or when a task is too complex for simple heuristic methods. i mean, this reminds me of the time i was training a translation model, and the data had different writing styles, technical, casual, formal and all, it was a complete mess. i used a separate classifier model to predict the style and then used it to create a curriculum that started with clearly defined styles and then progressed into the more difficult mixed-style data. that worked wonders. 
+another common method is to use a separate model to predict the difficulty of each example. this is especially useful when you have external information about the data, or when a task is too complex for simple heuristic methods. i mean, this reminds me of the time i was training a translation model, and the data had different writing styles, technical, casual, formal and all, it was a complete mess. i used a separate classifier model to predict the style and then used it to create a curriculum that started with clearly defined styles and then progressed into the more difficult mixed-style data. that worked wonders.
 
-the key takeaway here is that you can get very creative about what metric to use for your curriculum and how you will add it to your training loop. also, there are many variations of this concept, like self-paced learning, where the model itself learns to select samples based on how well it's doing. 
+the key takeaway here is that you can get very creative about what metric to use for your curriculum and how you will add it to your training loop. also, there are many variations of this concept, like self-paced learning, where the model itself learns to select samples based on how well it's doing.
 
 one thing to consider though, is that debugging this type of setup can get a little tricky sometimes. i found that it is very helpful to log all the relevant variables, like the thresholds or the loss at different epochs, to see if the curriculum is behaving as expected, it is much easier to spot what's going wrong if you see the numbers rather than just looking at the curves. one time i spent 3 days debugging what i thought was some sort of convergence problem, only to realise that the data was not being re-sampled as i intended. i think i needed a break after that one. it is easier to laugh now...
 

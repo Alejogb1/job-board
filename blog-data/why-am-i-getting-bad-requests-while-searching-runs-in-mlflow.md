@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-bad-requests-while-searching-runs-in-mlflow"
 ---
 
-Okay, let's tackle this. I've certainly seen my share of mlflow run search headaches, and bad requests are often more nuanced than a simple syntax error. It's rarely just a case of ‘oops, typo’; it usually involves a combination of factors interacting in ways that aren't immediately obvious. When encountering bad requests, my initial approach is to systematically break down the potential causes, which almost always boils down to the interaction between the client-side query and the server-side interpretation, often influenced by the underlying data structure.
+, let's tackle this. I've certainly seen my share of mlflow run search headaches, and bad requests are often more nuanced than a simple syntax error. It's rarely just a case of ‘oops, typo’; it usually involves a combination of factors interacting in ways that aren't immediately obvious. When encountering bad requests, my initial approach is to systematically break down the potential causes, which almost always boils down to the interaction between the client-side query and the server-side interpretation, often influenced by the underlying data structure.
 
 In my experience, there are three main areas to investigate when dealing with these persistent "bad request" errors: incorrect query syntax, issues with the underlying data within mlflow itself (sometimes resulting from previous logging patterns), or the subtle misconfigurations within your mlflow setup. Let’s explore each of these with practical examples and suggested solutions.
 
@@ -31,6 +31,7 @@ try:
 except Exception as e:
     print(f"Error: {e}")
 ```
+
 This illustrates the point; you have to use the right syntax for specifying logical combinations of criteria. While subtle, the difference between the invalid query and valid query can make all the difference.
 
 Beyond basic boolean logic, another frequent issue arises when filtering by string-based parameters or tags. You might assume that a direct equality check would work but it can often lead to bad requests due to how these parameters are indexed by the tracking store. Here's a typical case: you are logging hyperparameters as parameters within mlflow and want to filter based on a certain hyperparameter name and value, but your filter looks like this:
@@ -45,7 +46,8 @@ try:
 except Exception as e:
     print(f"Error: {e}")
 ```
-While this *might* work under specific circumstances, the equality check as indicated by the “=” sign might throw an error depending on the tracking store or how the parameter was logged. The correct method is to use the like operator.
+
+While this _might_ work under specific circumstances, the equality check as indicated by the “=” sign might throw an error depending on the tracking store or how the parameter was logged. The correct method is to use the like operator.
 
 ```python
 import mlflow

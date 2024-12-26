@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-ml-models-be-deployed-using-streamlit"
 ---
 
-Okay, let's explore deploying machine learning models using Streamlit. I recall a particularly challenging project a few years back, where we had a complex image classification model trained on a massive dataset. We needed a way to make it accessible to non-technical stakeholders for evaluation and testing purposes, and that's where Streamlit really shined. It wasn't about building a complex web application; it was about rapid prototyping and demonstrating value, and Streamlit’s ease of use was a game changer.
+, let's explore deploying machine learning models using Streamlit. I recall a particularly challenging project a few years back, where we had a complex image classification model trained on a massive dataset. We needed a way to make it accessible to non-technical stakeholders for evaluation and testing purposes, and that's where Streamlit really shined. It wasn't about building a complex web application; it was about rapid prototyping and demonstrating value, and Streamlit’s ease of use was a game changer.
 
 The beauty of Streamlit lies in its ability to translate Python code directly into interactive web applications without requiring extensive front-end development knowledge. It lets you focus on the data science and machine learning parts of the equation, not the intricacies of html, css, or javascript. From my experience, when you're in the rapid prototyping or iteration phase, this is absolutely crucial.
 

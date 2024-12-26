@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-repeatedly-try-a-webdriverwait-until-an-element-is-found"
 ---
 
-Okay, let's tackle this. It's a common scenario when dealing with asynchronous web applications: you need to wait, repeatedly, for an element to become available. I've seen this trip up many a developer, and the solution, while conceptually straightforward, often requires some careful implementation to avoid infinite loops or brittle tests. My early days involved a particularly challenging project where dynamic content rendering was practically the norm; we relied heavily on precisely controlled waits to keep our automated tests stable. That experience cemented my understanding of the subtleties involved.
+, let's tackle this. It's a common scenario when dealing with asynchronous web applications: you need to wait, repeatedly, for an element to become available. I've seen this trip up many a developer, and the solution, while conceptually straightforward, often requires some careful implementation to avoid infinite loops or brittle tests. My early days involved a particularly challenging project where dynamic content rendering was practically the norm; we relied heavily on precisely controlled waits to keep our automated tests stable. That experience cemented my understanding of the subtleties involved.
 
 The core of the problem is that web pages, especially those using modern frameworks like React or Angular, often load elements dynamically using JavaScript. This means the element you're looking for isn't necessarily present in the initial page source. Instead, it might appear only after some period of time, triggered by a server response, user interaction, or some other event. We can't just blindly search for it once and give up if it's not there, leading to unreliable tests and frustration. The standard `WebDriverWait` class in Selenium provides a powerful mechanism for handling this, but using it correctly, particularly when dealing with elements that might not appear consistently and reliably, requires more than a basic understanding. The naive approach of waiting once and failing, simply doesn't scale.
 
@@ -122,6 +122,7 @@ if __name__ == '__main__':
     driver.quit()
 
 ```
+
 This second example uses a custom `lambda` function within `WebDriverWait` to check if the length of the element list located using `find_elements` becomes greater than zero. This pattern is particularly useful when the expected condition is not directly available in `expected_conditions`, like checking for list size. Here, I have used `.find_elements` instead of `.find_element`, as I am waiting for the list to be non-empty. Also, I return the actual list of `WebElements` if found, rather than a `Boolean` value.
 
 Finally, let's look at a case where the element might be present, but not necessarily visible or interactable initially, maybe it is initially hidden and then becomes visible after animation or transitions.

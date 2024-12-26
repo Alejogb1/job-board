@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-data-be-pre-processed-in-python"
 ---
 
-Alright, let's tackle data pre-processing in Python. I've spent a good chunk of my career elbow-deep in datasets that would make your head spin, and preprocessing was always step zero – before any model training or serious analysis. It's not glamorous, but it's absolutely critical for any project aiming for accurate, reliable results. The garbage-in-garbage-out principle is particularly harsh here. So, let me walk you through some of the techniques I’ve found to be most impactful, illustrated with real-world examples.
+, let's tackle data pre-processing in Python. I've spent a good chunk of my career elbow-deep in datasets that would make your head spin, and preprocessing was always step zero – before any model training or serious analysis. It's not glamorous, but it's absolutely critical for any project aiming for accurate, reliable results. The garbage-in-garbage-out principle is particularly harsh here. So, let me walk you through some of the techniques I’ve found to be most impactful, illustrated with real-world examples.
 
 Data pre-processing, in essence, involves transforming raw data into a format suitable for further analysis or modeling. This usually encompasses a wide array of tasks, including handling missing values, dealing with outliers, encoding categorical variables, scaling numerical features, and more. The specific techniques you choose heavily depend on the data itself and what you plan to do with it later. No single method applies to all cases.
 
-My experience shows that identifying missing data and deciding how to handle them is often one of the first hurdles you face. Ignoring them usually leads to problems down the line; many algorithms cannot handle missing values without explicitly being instructed on how to manage them. One time, I was working on a predictive model for equipment failures, and a substantial portion of the sensor data was intermittently absent due to connection issues. This required a detailed assessment of *why* the data was missing – was it random, or systematic? In our situation, it was non-random and associated with particular sensor locations, which was crucial context.
+My experience shows that identifying missing data and deciding how to handle them is often one of the first hurdles you face. Ignoring them usually leads to problems down the line; many algorithms cannot handle missing values without explicitly being instructed on how to manage them. One time, I was working on a predictive model for equipment failures, and a substantial portion of the sensor data was intermittently absent due to connection issues. This required a detailed assessment of _why_ the data was missing – was it random, or systematic? In our situation, it was non-random and associated with particular sensor locations, which was crucial context.
 
 There are a few common strategies to manage these. Simply deleting rows or columns with missing data might seem straightforward but can severely reduce your dataset size or lead to the loss of valuable information if the missingness is correlated with your target variable. An alternative is imputation, which involves replacing missing values with estimated values. This can be done with simple techniques like replacing them with the mean or median value of the column. However, more advanced strategies are also available. One particularly valuable approach is using k-nearest neighbors to impute missing values, especially if you have complex relationships within your data. Let me illustrate this with some Python code using `scikit-learn`:
 
@@ -32,6 +32,7 @@ print(df)
 print("\nImputed Data:")
 print(df_imputed)
 ```
+
 This snippet utilizes the `KNNImputer` class, which uses the k nearest neighbors for imputation. You specify the number of neighbors to consider, and the missing values are estimated based on the weighted average of those nearest neighbors in the feature space. The underlying assumption is that points close together in feature space are more likely to have similar target values. It’s generally more robust than simply imputing with the mean or median.
 
 Beyond missing data, handling outliers is another essential step. Outliers are extreme values that deviate significantly from the rest of the data. They can skew your analysis and adversely affect the performance of your models. When I was working on a model to predict energy consumption, a small percentage of the readings were exceptionally high, likely due to sensor errors. You wouldn't want your entire model to be influenced by such incorrect data.
@@ -96,6 +97,7 @@ df['numerical'] = scaler.fit_transform(df[['numerical']])
 print("Preprocessed Data:")
 print(df)
 ```
+
 This snippet first performs one-hot encoding on the 'category' column, transforming it into multiple binary columns, and then standardizes the ‘numerical’ feature. I tend to favor `StandardScaler` because it handles outliers more effectively than min-max scaling.
 
 To delve deeper into the theoretical aspects, I’d recommend having a look at “The Elements of Statistical Learning” by Hastie, Tibshirani, and Friedman for a strong foundation on statistical learning methods, which indirectly help with data preprocessing techniques. “Python Data Science Handbook” by Jake VanderPlas is an excellent resource for the practical Python implementations of these techniques. Finally, for a more theoretical approach to handling missing data, you could consult "Statistical Analysis with Missing Data" by Little and Rubin.

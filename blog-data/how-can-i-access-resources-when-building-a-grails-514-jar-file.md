@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-access-resources-when-building-a-grails-514-jar-file"
 ---
 
-Okay, let's tackle this. I remember a particularly thorny case a few years back, working on a migration project where accessing external resources packaged within a Grails .jar felt like navigating a maze. It wasn't as straightforward as one might initially expect, and it highlighted the importance of understanding the underlying classloading mechanisms and how Grails handles resources at runtime.
+, let's tackle this. I remember a particularly thorny case a few years back, working on a migration project where accessing external resources packaged within a Grails .jar felt like navigating a maze. It wasn't as straightforward as one might initially expect, and it highlighted the importance of understanding the underlying classloading mechanisms and how Grails handles resources at runtime.
 
 The core issue revolves around the way a .jar file is structured and how the JVM's classloader interacts with it. When you build a Grails application into a .jar, all your compiled classes, static resources (like configuration files, property files, or images), and the dependencies of your project get bundled together. However, the resources aren't necessarily available using standard filesystem paths that you might use in a development environment. Instead, they're treated as entries within the jar’s archive and require accessing them as resource streams.
 
@@ -73,11 +73,11 @@ public class ResourceAccessor {
 
 Explanation:
 
-*   `getClass().getClassLoader()` gets the class loader responsible for loading the current class and its resources.
-*   `getResourceAsStream("application.properties")` attempts to open a stream to a resource with the given name. The path should be relative to the classpath’s root as seen by the classloader. The classpath root is equivalent to the root of the JAR.
-*   We then load the properties from the `InputStream` into a `Properties` object.
-*   Important: I always close the stream to avoid resource leaks, wrapping the close operation in a try-catch to gracefully handle exceptions during resource cleanup.
-*   The `loadConfigGroovy` method demonstrates loading a `Config.groovy` file using a similar pattern using Groovy's `ConfigSlurper`.
+- `getClass().getClassLoader()` gets the class loader responsible for loading the current class and its resources.
+- `getResourceAsStream("application.properties")` attempts to open a stream to a resource with the given name. The path should be relative to the classpath’s root as seen by the classloader. The classpath root is equivalent to the root of the JAR.
+- We then load the properties from the `InputStream` into a `Properties` object.
+- Important: I always close the stream to avoid resource leaks, wrapping the close operation in a try-catch to gracefully handle exceptions during resource cleanup.
+- The `loadConfigGroovy` method demonstrates loading a `Config.groovy` file using a similar pattern using Groovy's `ConfigSlurper`.
 
 **Scenario 2: Accessing Static Assets (e.g., Images)**
 
@@ -122,10 +122,10 @@ public class ImageAccessor {
 
 Explanation:
 
-*   We obtain the `InputStream` for the image file using `getClass().getClassLoader().getResourceAsStream()`. Again, the path is relative to the jar root.
-*   We read all the bytes from the `InputStream` into a `ByteArrayOutputStream`.
-*   Then, we encode the byte array using Base64, which is often useful for including images in web pages or reports.
-*   Again, appropriate error handling and stream closure are essential.
+- We obtain the `InputStream` for the image file using `getClass().getClassLoader().getResourceAsStream()`. Again, the path is relative to the jar root.
+- We read all the bytes from the `InputStream` into a `ByteArrayOutputStream`.
+- Then, we encode the byte array using Base64, which is often useful for including images in web pages or reports.
+- Again, appropriate error handling and stream closure are essential.
 
 **Scenario 3: Accessing External Property Files**
 
@@ -162,8 +162,8 @@ public class ExternalConfigAccessor {
 
 Explanation:
 
-*   Again, it is the same pattern as the other examples. We are now loading a different file, namely `external-config.properties`. Notice that the path `config/external-config.properties` reflects the folder structure within `src/main/resources`.
-*   The core pattern of retrieving the `InputStream` and loading from it is consistent.
+- Again, it is the same pattern as the other examples. We are now loading a different file, namely `external-config.properties`. Notice that the path `config/external-config.properties` reflects the folder structure within `src/main/resources`.
+- The core pattern of retrieving the `InputStream` and loading from it is consistent.
 
 **Key Takeaways and Recommendations**
 

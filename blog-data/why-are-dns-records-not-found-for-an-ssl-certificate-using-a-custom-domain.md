@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-are-dns-records-not-found-for-an-ssl-certificate-using-a-custom-domain"
 ---
 
-Okay, let's tackle this one. I've seen this particular headache pop up more times than I care to count, usually when someone's trying to get a custom domain humming with https, and it can be a real head-scratcher if you're not intimately familiar with the intricacies involved. The issue of a DNS record seemingly going missing when associated with an ssl certificate and a custom domain often boils down to a few key points, usually related to misconfiguration or a misunderstanding of how these pieces actually interact.
+, let's tackle this one. I've seen this particular headache pop up more times than I care to count, usually when someone's trying to get a custom domain humming with https, and it can be a real head-scratcher if you're not intimately familiar with the intricacies involved. The issue of a DNS record seemingly going missing when associated with an ssl certificate and a custom domain often boils down to a few key points, usually related to misconfiguration or a misunderstanding of how these pieces actually interact.
 
 First, let's dispel a common misconception: dns records and ssl certificates are not directly bound to each other in the way some might initially assume. A dns record, specifically an a or cname record, maps a domain name to an ip address or another domain name, respectively. An ssl certificate, on the other hand, is a digital document that verifies the identity of a website and enables encrypted communication over https. When we talk about "not finding dns records for an ssl certificate," what we usually mean is that the configuration is such that either the certificate authority (ca) can't verify control over the domain or a client can't reach the server at the domain using https because of dns issues.
 
 Now, the core of this problem stems from the fact that a ca, before issuing an ssl certificate, must verify that the entity requesting the certificate actually controls the domain name. The most common methods are domain validation (dv), which is usually through dns or http challenges. In the dns validation method, the ca will give a specific dns record that you must add to your domain’s configuration. The ca will query for this record and, upon finding it and verifying that it is correct, will issue the certificate. If this record is absent, not precisely matching, or not properly propagated, the ca can't verify ownership, and you're stuck.
 
-Let's illustrate this with a scenario. A few years back, I worked on migrating a legacy application to a cloud platform. We were setting up custom domains and trying to use let's encrypt for ssl certificates. It seemed pretty straightforward: update the dns, request the certificate. But the process kept failing. Turns out, the platform's dns manager, while functional, had a slight propagation delay that we hadn't accounted for. The let's encrypt servers were trying to find the txt record we added for validation *before* the record had actually propagated across the global dns system. This led to verification failures and a lot of frustrating troubleshooting until we realized what was happening. We started using a dns lookup tool to verify the propagation instead of just assuming it would appear instantly.
+Let's illustrate this with a scenario. A few years back, I worked on migrating a legacy application to a cloud platform. We were setting up custom domains and trying to use let's encrypt for ssl certificates. It seemed pretty straightforward: update the dns, request the certificate. But the process kept failing. Turns out, the platform's dns manager, while functional, had a slight propagation delay that we hadn't accounted for. The let's encrypt servers were trying to find the txt record we added for validation _before_ the record had actually propagated across the global dns system. This led to verification failures and a lot of frustrating troubleshooting until we realized what was happening. We started using a dns lookup tool to verify the propagation instead of just assuming it would appear instantly.
 
 Here’s a code example of how a dns record might look and be tested using python:
 
@@ -94,7 +94,7 @@ def resolve_dns_chain(domain):
         print(f"\nNameservers for {domain}:")
         for ns in nameservers:
              print(ns.to_text())
-        
+
         cnames = resolver.resolve(domain, 'CNAME')
         print(f"\nCNAME for {domain}:")
         for cname in cnames:

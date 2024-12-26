@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-sort-nested-arrays-of-coordinates-in-ruby"
 ---
 
-Alright, let’s tackle this. I remember facing a similar challenge back in the days when I was building a geospatial mapping tool. We had a ton of data coming in from different sources, and it was crucial to have those coordinate sets organized predictably. The issue wasn’t just about sorting by a single axis, but often by a combination of lat/long, or perhaps even by some custom defined metric based on their relative positions. So, how to effectively sort nested arrays of coordinates in ruby? Let’s delve into it.
+, let’s tackle this. I remember facing a similar challenge back in the days when I was building a geospatial mapping tool. We had a ton of data coming in from different sources, and it was crucial to have those coordinate sets organized predictably. The issue wasn’t just about sorting by a single axis, but often by a combination of lat/long, or perhaps even by some custom defined metric based on their relative positions. So, how to effectively sort nested arrays of coordinates in ruby? Let’s delve into it.
 
 The core problem is that you're not dealing with a simple list of numbers, but an array of arrays, where each inner array represents a coordinate (typically [latitude, longitude] or [x, y, z]). Standard ruby array sorting methods will not work out-of-the-box. You need a way to specify how to compare these inner arrays. Essentially, you need a comparison logic that goes beyond simple numerical comparison.
 

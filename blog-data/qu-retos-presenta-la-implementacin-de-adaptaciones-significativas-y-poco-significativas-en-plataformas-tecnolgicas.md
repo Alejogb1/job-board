@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "qu-retos-presenta-la-implementacin-de-adaptaciones-significativas-y-poco-significativas-en-plataformas-tecnolgicas"
 ---
 
-Okay so you're asking about the challenges with implementing significant and insignificant adaptations on tech platforms right like the nitty-gritty stuff. Let's break it down.
+you're asking about the challenges with implementing significant and insignificant adaptations on tech platforms right like the nitty-gritty stuff. Let's break it down.
 
 First off the whole significant vs insignificant adaptation thing is kind of a spectrum not a hard line. What seems minor to one person or system can be a huge deal for another. A lot of it depends on the scale the complexity of the platform and the user base it serves.
 
@@ -42,6 +42,7 @@ def fetch_user_nosql(user_id):
   client.close()
   return user
 ```
+
 Notice the differences in the access patterns database connections and query syntax. Migrating a substantial application using this would be quite a significant endeavor.
 
 **Insignificant adaptations** on the other hand are smaller changes often more localized and less impactful. We're talking about UI tweaks minor bug fixes adding a small feature that doesn't change the core logic or optimizing performance for a specific use case. These changes are generally easier to implement less risky and have a lower resource footprint.
@@ -56,16 +57,17 @@ Here is a code example of a seemingly insignificant adaptation fixing a minor UI
 
 ```javascript
 // OLD JAVASCRIPT CODE EXAMPLE WITH A BUG
-function displayUsername(username){
-  document.getElementById('welcome-message').textContent = 'Welcome' + username;
+function displayUsername(username) {
+  document.getElementById("welcome-message").textContent = "Welcome" + username;
 }
 
 // NEW JAVASCRIPT CODE EXAMPLE with bug fixed
-function displayUsername(username){
-  document.getElementById('welcome-message').textContent = 'Welcome ' + username;
+function displayUsername(username) {
+  document.getElementById("welcome-message").textContent =
+    "Welcome " + username;
 }
-
 ```
+
 You see the missing space can make or break a UI functionality. While fixing this was insignificant in effort it has a significant impact on the display.
 
 And finally **user impact** even tiny changes can be annoying for users if not communicated well or introduced without a proper testing phase. For example a slight change in button placement or a new icon can throw users off and lead to frustration.

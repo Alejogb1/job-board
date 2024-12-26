@@ -4,19 +4,19 @@ date: "2024-12-23"
 id: "how-do-i-maskpad-the-labels-of-a-cnn-in-keras"
 ---
 
-Alright, let's tackle this. I've seen this problem crop up more than a few times, particularly when dealing with variable-length sequences or situations where you want to ensure that your batch processing behaves consistently. Masking and padding labels in a convolutional neural network (cnn) using keras might seem a little counterintuitive at first because cnn's inherently focus on spatial relationships within the data itself (the input feature maps, images, etc.). However, when we're working with structured data, especially in sequence or timeseries contexts where you've transformed your raw data into something CNN-compatible, masking labels becomes quite important, and, as I've found from past projects, is a crucial step in avoiding unwanted behavior during training.
+, let's tackle this. I've seen this problem crop up more than a few times, particularly when dealing with variable-length sequences or situations where you want to ensure that your batch processing behaves consistently. Masking and padding labels in a convolutional neural network (cnn) using keras might seem a little counterintuitive at first because cnn's inherently focus on spatial relationships within the data itself (the input feature maps, images, etc.). However, when we're working with structured data, especially in sequence or timeseries contexts where you've transformed your raw data into something CNN-compatible, masking labels becomes quite important, and, as I've found from past projects, is a crucial step in avoiding unwanted behavior during training.
 
-The core issue revolves around the fact that when you pad sequences, usually with zeros, to get them to a uniform length for batch processing, the padding values in the *inputs* do not tell keras to ignore those positions in the corresponding *labels*. The network will still attempt to learn from these padding positions in the labels, which is not only meaningless but could easily degrade your model's performance. The solution lies in effectively instructing keras to disregard the label information wherever the input has padding.
+The core issue revolves around the fact that when you pad sequences, usually with zeros, to get them to a uniform length for batch processing, the padding values in the _inputs_ do not tell keras to ignore those positions in the corresponding _labels_. The network will still attempt to learn from these padding positions in the labels, which is not only meaningless but could easily degrade your model's performance. The solution lies in effectively instructing keras to disregard the label information wherever the input has padding.
 
 To illustrate this, imagine I was working on a project a while back that involved predicting protein secondary structure. We had a dataset where each protein sequence varied in length, represented as one-hot encoded amino acids (our input), and the corresponding secondary structure labels were one-hot encoded as well. I recall facing this exact padding/masking dilemma. We used a one-dimensional cnn to capture the local context of the amino acids and predict the labels accordingly.
 
-The approach can be broken down into a few key parts: *padding the sequences uniformly*, *creating mask tensors that represent which labels are valid*, and *modifying the loss function or the model's behavior to account for the mask*. Let's unpack these with some examples.
+The approach can be broken down into a few key parts: _padding the sequences uniformly_, _creating mask tensors that represent which labels are valid_, and _modifying the loss function or the model's behavior to account for the mask_. Let's unpack these with some examples.
 
 **Padding and Masking Basics**
 
 Before we dive into specific code, it's vital to understand the building blocks. The `tf.keras.preprocessing.sequence.pad_sequences` function is your workhorse for padding. It takes a list of sequences (e.g., protein sequences, sentences encoded as numbers, etc.) and pads them so they all have the same length. You need to choose a consistent padding value (usually 0) and the padding position ('pre' to pad at the beginning, 'post' to pad at the end).
 
-Masks, on the other hand, are boolean tensors that indicate which sequence elements are actual data and which ones are padding. A `True` value means a position contains actual data, and `False` represents padding. Keras doesn't automatically create a mask for *labels*, so you need to create this yourself by tracking where you did the padding and then use these masks during your loss calculations.
+Masks, on the other hand, are boolean tensors that indicate which sequence elements are actual data and which ones are padding. A `True` value means a position contains actual data, and `False` represents padding. Keras doesn't automatically create a mask for _labels_, so you need to create this yourself by tracking where you did the padding and then use these masks during your loss calculations.
 
 **Example 1: Manual Mask Generation**
 
@@ -111,7 +111,7 @@ This example shows how to create a custom masked loss function by multiplying th
 
 **Example 3: Utilizing tf.keras.layers.Masking Layer for input and modifying the loss function for label masks.**
 
-Let's modify the second example to use a Keras masking layer for the inputs if you had used `value=0` for padding sequences. Here I'm demonstrating an alternative approach where the model *itself* is aware of masking (for the inputs) through keras.layers.Masking, then I'm applying the mask in the loss calculation for the *labels*:
+Let's modify the second example to use a Keras masking layer for the inputs if you had used `value=0` for padding sequences. Here I'm demonstrating an alternative approach where the model _itself_ is aware of masking (for the inputs) through keras.layers.Masking, then I'm applying the mask in the loss calculation for the _labels_:
 
 ```python
 import tensorflow as tf

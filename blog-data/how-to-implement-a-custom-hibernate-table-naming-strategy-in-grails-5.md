@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-implement-a-custom-hibernate-table-naming-strategy-in-grails-5"
 ---
 
-Alright, let's tackle this one. I remember back in the early days of a project where we inherited a somewhat… *unique* database schema. The existing naming conventions were, shall we say, less than ideal, and forced our hand into implementing a custom Hibernate table naming strategy. It wasn't particularly difficult, but it definitely required diving into the nuances of both Grails and Hibernate configurations. Here’s a breakdown of how I've approached it, and how you can effectively implement your own in Grails 5.
+, let's tackle this one. I remember back in the early days of a project where we inherited a somewhat… _unique_ database schema. The existing naming conventions were, shall we say, less than ideal, and forced our hand into implementing a custom Hibernate table naming strategy. It wasn't particularly difficult, but it definitely required diving into the nuances of both Grails and Hibernate configurations. Here’s a breakdown of how I've approached it, and how you can effectively implement your own in Grails 5.
 
 First, let’s frame the problem. Hibernate, by default, uses a somewhat predictable algorithm to generate table names from your domain class names. This is usually fine, but sometimes you have legacy systems, specific organizational standards, or just plain eccentric requirements that demand something different. Grails, sitting atop Hibernate, provides mechanisms to tap into these customizations. The key lies in creating a custom `NamingStrategy` implementation. This class dictates how table and column names are generated.
 
@@ -144,7 +144,7 @@ hibernate:
 
 In this example, I’ve also injected the `ApplicationContext` to retrieve domain class information, which could be useful in more complex scenarios.
 
-Now, a few important notes. First, remember that this strategy is applied to *all* entities within your application. It’s a global setting. Second, pay close attention to performance; simple string manipulations are generally okay, but avoid computationally intensive operations in these methods as they are executed very frequently. Third, ensure your chosen strategy remains consistent across your entire codebase to avoid confusion. When changing these strategies, it would be beneficial to run schema generation to reflect these changes in the database.
+Now, a few important notes. First, remember that this strategy is applied to _all_ entities within your application. It’s a global setting. Second, pay close attention to performance; simple string manipulations are generally , but avoid computationally intensive operations in these methods as they are executed very frequently. Third, ensure your chosen strategy remains consistent across your entire codebase to avoid confusion. When changing these strategies, it would be beneficial to run schema generation to reflect these changes in the database.
 
 For additional reading, I strongly recommend the official Hibernate documentation, specifically the section on "Naming Strategies." The book "Java Persistence with Hibernate" by Christian Bauer and Gavin King provides a very thorough understanding of the underlying concepts. Furthermore, the Spring Boot documentation on configuration properties and autoconfiguration will illuminate how these settings interact within the Grails ecosystem. Don't solely rely on online tutorials; the primary documentation is often your most reliable guide.
 

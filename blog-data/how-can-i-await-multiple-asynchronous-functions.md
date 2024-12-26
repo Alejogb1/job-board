@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-await-multiple-asynchronous-functions"
 ---
 
-Alright, let's tackle this. Asynchronous operations, especially when you're dealing with multiple of them, can feel a bit like herding cats if you’re not careful. I’ve seen many projects stumble over this particular hurdle, and over time, I’ve developed a few preferred methods for managing them effectively. The key lies in understanding the core concepts of asynchronous programming within your chosen environment, be it javascript, python, or any language that embraces async/await.
+, let's tackle this. Asynchronous operations, especially when you're dealing with multiple of them, can feel a bit like herding cats if you’re not careful. I’ve seen many projects stumble over this particular hurdle, and over time, I’ve developed a few preferred methods for managing them effectively. The key lies in understanding the core concepts of asynchronous programming within your chosen environment, be it javascript, python, or any language that embraces async/await.
 
-The basic problem is this: you have several independent tasks that don't need to execute sequentially, and you want to wait for *all* of them to complete before proceeding with the next stage of your program. You could naively await each one sequentially, of course, but that’s going to bottleneck your entire application, reducing the efficiency benefits of asynchrony. Instead, you need a way to start them concurrently and then, crucially, be notified when all have wrapped up.
+The basic problem is this: you have several independent tasks that don't need to execute sequentially, and you want to wait for _all_ of them to complete before proceeding with the next stage of your program. You could naively await each one sequentially, of course, but that’s going to bottleneck your entire application, reducing the efficiency benefits of asynchrony. Instead, you need a way to start them concurrently and then, crucially, be notified when all have wrapped up.
 
 Let's dive into a few strategies that have worked well in my past projects, along with some illustrative code examples.
 
@@ -18,26 +18,25 @@ Here’s an example I recall from a project where we were fetching data from mul
 
 ```javascript
 async function fetchData(url) {
-    const response = await fetch(url);
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return await response.json();
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return await response.json();
 }
 
 async function processData() {
   const urls = [
     "https://api.example.com/data1",
     "https://api.example.com/data2",
-    "https://api.example.com/data3"
+    "https://api.example.com/data3",
   ];
 
   try {
-    const results = await Promise.all(urls.map(url => fetchData(url)));
+    const results = await Promise.all(urls.map((url) => fetchData(url)));
     console.log("All data fetched successfully:", results);
     // Now process all the results since all promises are resolved.
-    results.forEach(data => console.log("Processing:", data));
-
+    results.forEach((data) => console.log("Processing:", data));
   } catch (error) {
     console.error("Error during data fetching:", error);
   }
@@ -46,7 +45,7 @@ async function processData() {
 processData();
 ```
 
-In this snippet, `Promise.all` ensures that all three fetch requests happen concurrently, and only once *all* are complete (or one errors), does it proceed. Note the use of a try-catch block for error handling, which is essential when dealing with multiple potentially failing asynchronous operations.
+In this snippet, `Promise.all` ensures that all three fetch requests happen concurrently, and only once _all_ are complete (or one errors), does it proceed. Note the use of a try-catch block for error handling, which is essential when dealing with multiple potentially failing asynchronous operations.
 
 This method is efficient and usually the go-to choice when you need all results to continue the next computation step.
 
@@ -86,7 +85,7 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-Just like with `Promise.all`, `asyncio.gather` allows us to dispatch multiple asynchronous operations and await the completion of *all* of them concurrently. The `*` operator is used to unpack the list of awaitables so `gather` can accept them as individual arguments.
+Just like with `Promise.all`, `asyncio.gather` allows us to dispatch multiple asynchronous operations and await the completion of _all_ of them concurrently. The `*` operator is used to unpack the list of awaitables so `gather` can accept them as individual arguments.
 
 Notice the use of `aiohttp` and `ClientSession`, standard practices for asynchronous HTTP requests within Python environments.
 
@@ -98,35 +97,34 @@ I used this method in a project where partial results were better than no result
 
 ```javascript
 async function fetchDataCustom(url, results) {
-  try{
+  try {
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`HTTP error for ${url}: ${response.status}`);
     }
     const data = await response.json();
-    results[url] = { success: true, data: data};
-  } catch(error){
-      results[url] = { success: false, error: error.message}
+    results[url] = { success: true, data: data };
+  } catch (error) {
+    results[url] = { success: false, error: error.message };
   }
 }
 
-async function processDataCustom(){
+async function processDataCustom() {
   const urls = [
-      "https://api.example.com/data1",
-      "https://api.example.com/data_fail",
-      "https://api.example.com/data3"
+    "https://api.example.com/data1",
+    "https://api.example.com/data_fail",
+    "https://api.example.com/data3",
   ];
   const results = {};
-  const promises = urls.map(url => fetchDataCustom(url, results));
+  const promises = urls.map((url) => fetchDataCustom(url, results));
   await Promise.all(promises);
 
   console.log("Results:", results);
 
-  for(const url in results){
-    if(results[url].success){
-        console.log("Successful fetch for", url, "data:", results[url].data)
-    }
-    else {
+  for (const url in results) {
+    if (results[url].success) {
+      console.log("Successful fetch for", url, "data:", results[url].data);
+    } else {
       console.error("Failed fetch for", url, "error:", results[url].error);
     }
   }
@@ -139,9 +137,9 @@ In this scenario, we aren’t immediately rejecting on the first error. We inste
 
 **Resources for further learning:**
 
-* **"Effective Modern C++" by Scott Meyers:** While not directly focused on async programming, understanding modern C++ principles helps clarify the underlying concepts when dealing with concurrent operations.
-* **"Concurrency in Go" by Katherine Cox-Buday:** A detailed look into concurrent programming patterns, particularly valuable for understanding how different languages approach parallelism.
-* **"Asyncio Documentation" (Python):** The official asyncio library documentation is the best resource to understand advanced features and best practices.
-* **MDN Web Docs on Promises and async/await:** For Javascript developers, this remains an invaluable resource for up-to-date and comprehensive documentation on these features.
+- **"Effective Modern C++" by Scott Meyers:** While not directly focused on async programming, understanding modern C++ principles helps clarify the underlying concepts when dealing with concurrent operations.
+- **"Concurrency in Go" by Katherine Cox-Buday:** A detailed look into concurrent programming patterns, particularly valuable for understanding how different languages approach parallelism.
+- **"Asyncio Documentation" (Python):** The official asyncio library documentation is the best resource to understand advanced features and best practices.
+- **MDN Web Docs on Promises and async/await:** For Javascript developers, this remains an invaluable resource for up-to-date and comprehensive documentation on these features.
 
 In summary, awaiting multiple asynchronous functions isn't a single path problem. The 'best' approach will depend on your specific requirements – whether you need to stop at the first error, gather all results, or handle results individually while gracefully tolerating failures. The key is to understand your specific needs and then select the appropriate approach using either standard tools like `Promise.all` or `asyncio.gather`, or build your own custom aggregator as needed. It's all about ensuring you can control your workflow and get the job done with maximum efficiency and robustness.

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "unnecessary-stubbings-detected-test-class-problem"
 ---
 
-Okay so unnecessary stubbings detected in your test class yeah I've been there man trust me This is a common issue especially when you start getting a bit more complex with your tests and you use mocking frameworks it’s like a right of passage.
+unnecessary stubbings detected in your test class yeah I've been there man trust me This is a common issue especially when you start getting a bit more complex with your tests and you use mocking frameworks it’s like a right of passage.
 
 Let's break it down from my experience I remember this one project a few years back some big monolithic Java application a real beast you know We had tons of integration tests and unit tests for every single micro-service and the test suites started to get really really slow like you could brew a pot of coffee before they even finished that bad so we started looking at ways to speed things up that's when we really started to deep dive into mocking and well unnecessary stubbing hell started
 
@@ -45,7 +45,7 @@ from unittest.mock import patch, MagicMock
 from your_module import MyService, ExternalService # replace with your module name
 
 class TestMyService(unittest.TestCase):
-   
+
     @patch("your_module.ExternalService") # replace with your module name
     def test_process_data_with_unnecessary_stub(self, mock_external_service):
         # Unnecessary stub
@@ -56,11 +56,11 @@ class TestMyService(unittest.TestCase):
         service = MyService(mock_external_service)
         result = service.process_data("testkey")
         self.assertEqual(result, "processed real mocked data")
-    
+
 
     @patch("your_module.ExternalService")  # replace with your module name
     def test_another_process_data_with_unnecessary_stub(self, mock_external_service):
-          
+
         mock_external_service.return_value.get_data.return_value = "mocked data"
         service = MyService(mock_external_service)
         result = service.another_process_data("testkey", False)
@@ -75,10 +75,10 @@ from unittest.mock import patch, MagicMock
 from your_module import MyService, ExternalService # replace with your module name
 
 class TestMyService(unittest.TestCase):
-   
+
     @patch("your_module.ExternalService") # replace with your module name
     def test_process_data(self, mock_external_service):
-        
+
         mock_external_service.return_value.get_data.return_value = "real mocked data"
 
         service = MyService(mock_external_service)
@@ -158,7 +158,7 @@ public class MyServiceTest {
         when(externalService.getData("testkey")).thenReturn("mocked data");
         // Needed stub
         when(externalService.getData("testkey")).thenReturn("real mocked data");
-        
+
         String result = myService.processData("testkey");
         assertEquals("processed real mocked data", result);
     }
@@ -242,6 +242,7 @@ public class MyServiceTest {
     }
 }
 ```
+
 Again the first test has unnecessary stubbings and so does the second one. The fixed test cases have only stubs when needed. Notice that in the second test the mock is not even called so you can simply remove it or if you inject the mock via constructor then you just let the mock not have any behaviour and since the method is never called all good.
 
 As for resources I'd recommend looking into Martin Fowler's book "Refactoring" it has a chapter on test code smells which is very helpful for keeping your test clean and the xUnit Patterns book by Gerard Meszaros is amazing to get some perspective on how to structure your tests. Also check the documentation of your mocking framework the Mockito documentation is very well explained and you’ll find it useful in terms of getting better with mocking strategies and testing patterns. And remember to always check your logs the mocking frameworks usually tell you about unnecessary stubbings so pay attention. I wish they could simply remove the mocks by themselves that would be lovely but I guess we're not there yet. Sometimes I feel like my mocks are talking to me “hey I am here for no reason give me purpose” that would be really funny.

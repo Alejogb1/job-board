@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-does-a-vs-code-devcontainer-uses-an-old-version-of-a-repository-when-cloning"
 ---
 
-alright, so, dealing with devcontainers and outdated repos, yeah, i've been there, multiple times actually. it's super frustrating when you expect the latest and greatest and instead, get code that feels like it's from a bygone era.
+, so, dealing with devcontainers and outdated repos, yeah, i've been there, multiple times actually. it's super frustrating when you expect the latest and greatest and instead, get code that feels like it's from a bygone era.
 
 here's the breakdown, based on my past struggles and a bit of accumulated wisdom. the issue usually isn't with vscode itself, but rather how the devcontainer build process interacts with git, and your configurations. let's dive into the likely culprits.
 
@@ -30,7 +30,7 @@ in summary, if the repo is not there to start with it is most likely a git probl
 
 let's look at a few code snippets to illustrate these points:
 
-*example 1: dockerfile with no cache busting.*
+_example 1: dockerfile with no cache busting._
 
 this `dockerfile` does not explicitly bust the cache or guarantee the latest version of the repository in a `postCreateCommand`.
 
@@ -50,7 +50,8 @@ RUN git clone <your-repo-url> .
 # install stuff
 RUN apt-get update && apt-get install -y ...
 ```
-*example 2: dockerfile with a cache busting mechanism*.
+
+_example 2: dockerfile with a cache busting mechanism_.
 
 this `dockerfile` uses the `--no-cache` option, which forces docker to download everything from scratch. this can be a good solution if the changes are in the repository. but you will always pay the cost of re-downloading from scratch every time you build which takes time.
 
@@ -70,7 +71,8 @@ RUN --mount=type=cache,target=/var/cache/apt git clone <your-repo-url> .
 RUN apt-get update && apt-get install -y ...
 
 ```
-*example 3: devcontainer.json with a more robust git initialization.*
+
+_example 3: devcontainer.json with a more robust git initialization._
 
 this `devcontainer.json` uses a `postCreateCommand` to ensure it fetches the latest code, this means the container has been created, the docker image is cached, and then, during initialization of the container, it fetches all the repo and checkouts the desired branch.
 
@@ -93,7 +95,7 @@ so, what do we do about this? first and foremost, understand your configuration!
 1.  **be mindful of the docker cache:** consider adding `--no-cache` if you are consistently having this issue but keep in mind that it has a performance impact, or use docker's buildkit cache mounts if you use buildkit, by using the `--mount=type=cache,target=/var/cache/apt` option, which allows you to use the cache between layers, but you have to ensure that the git command is being performed at the same layer.
 2.  **be explicit with git:** in your initialization scripts or `postCreateCommand`, use `git fetch --all` and `git reset --hard origin/<your-branch>` to force an update to the specific branch, like shown in `example 3`. use the specific commit of the repository if you want to have repeatable deployments and avoid problems with unexpected updates.
 3.  **review your `.dockerignore`:** make sure it's not ignoring relevant files, like your `.git` folder (although this should rarely be a problem).
-4. **use explicit versions on dependencies:** make sure you use exact versions of your dependencies, libraries and so on, to reduce the chances of unexpected issues.
+4.  **use explicit versions on dependencies:** make sure you use exact versions of your dependencies, libraries and so on, to reduce the chances of unexpected issues.
 5.  **always build the image:** avoid using the cached image always, always use the `--build` option for example `docker compose up --build`, instead of `docker compose up`.
 
 also if your docker cache is constantly failing you, you can try removing all the docker images and rebuilding it from scratch.
@@ -114,8 +116,8 @@ these commands will remove everything, all images, volumes, networks, so be care
 
 if you want to go deeper, you should totally check out the docker documentation itself, it is the best source of truth, especially the sections regarding cache and how it behaves under the hood, it is very insightful, i learned it all from there. additionally, there are a couple of resources that helped me along the way:
 
-*   **"docker deep dive" by nigel poulton:** this book provides a deep dive into docker, its architecture, and best practices. very useful to understand what happens inside.
-*   **the official git documentation:** understanding git commands, branching, and fetching strategies will definitely solve most of your problems, the official documentation is very clear and well-written.
-*  **the vscode remote development documentation:** vscode documentation goes into detail on how devcontainers behave and how it uses the different docker configurations, along with debugging it.
+- **"docker deep dive" by nigel poulton:** this book provides a deep dive into docker, its architecture, and best practices. very useful to understand what happens inside.
+- **the official git documentation:** understanding git commands, branching, and fetching strategies will definitely solve most of your problems, the official documentation is very clear and well-written.
+- **the vscode remote development documentation:** vscode documentation goes into detail on how devcontainers behave and how it uses the different docker configurations, along with debugging it.
 
 i hope this detailed breakdown helps. dealing with docker and devcontainers can sometimes feel like a never ending quest, but by understanding the underlying mechanisms and being meticulous with your configurations, you can tame the cache monster and avoid those older repo issues! i remember once, i was so confused i almost ended up using a virtual machine. (just kidding)

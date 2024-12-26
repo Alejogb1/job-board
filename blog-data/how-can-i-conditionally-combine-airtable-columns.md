@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-conditionally-combine-airtable-columns"
 ---
 
-Alright, let's tackle conditionally combining Airtable columns. It's a common challenge, and I've certainly bumped into it more than a few times during various projects. I remember back at 'Synergize Corp,' we had a CRM built on Airtable and needed a way to combine contact names and company names only when a company was associated with a contact record. It involved handling null values and choosing between several options for output – that’s when things got interesting. It's about being precise and understanding Airtable's formula language limitations and strengths, so let me walk you through a few methods that I've found reliable, based on my own practical experience.
+, let's tackle conditionally combining Airtable columns. It's a common challenge, and I've certainly bumped into it more than a few times during various projects. I remember back at 'Synergize Corp,' we had a CRM built on Airtable and needed a way to combine contact names and company names only when a company was associated with a contact record. It involved handling null values and choosing between several options for output – that’s when things got interesting. It's about being precise and understanding Airtable's formula language limitations and strengths, so let me walk you through a few methods that I've found reliable, based on my own practical experience.
 
 The core issue is that Airtable formulas don’t have the full control flow of traditional programming languages. You're dealing with expressions, which means you can't write “if-else” blocks directly like in Javascript or Python. Instead, you’re relying on functions like `IF()`, `SWITCH()`, and concatenation, sometimes combined with functions that help with null handling.
 
@@ -22,7 +22,7 @@ IF(
 
 This formula uses the truthiness of the ‘Company’ column. If ‘Company’ is not blank (or null), which Airtable considers “truthy,” the formula concatenates the first and last names, adds " - ", then the company name. If 'Company' is blank, it only concatenates the first and last names. Notice the explicit spacing to ensure the output is readable.
 
-Now, let’s explore a slightly more complex situation. What if you need to combine multiple fields based on *different* conditions? Suppose you have 'Project Name', 'Project Lead', 'Project Status', and 'Completion Date.' You want to build a status summary where 'Completion Date' only shows up for completed projects (where the 'Project Status' is ‘Completed’).
+Now, let’s explore a slightly more complex situation. What if you need to combine multiple fields based on _different_ conditions? Suppose you have 'Project Name', 'Project Lead', 'Project Status', and 'Completion Date.' You want to build a status summary where 'Completion Date' only shows up for completed projects (where the 'Project Status' is ‘Completed’).
 
 Here’s a more intricate `IF()` implementation:
 

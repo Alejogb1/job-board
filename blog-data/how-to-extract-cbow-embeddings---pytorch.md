@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-extract-cbow-embeddings---pytorch"
 ---
 
-alright, so you're looking to get your hands dirty with cbow embeddings using pytorch. i've been down this road a few times, and it can be a bit tricky initially, but it becomes pretty straightforward once you get the hang of it. i remember my first attempt; i was chasing down some phantom gradients for a day until i realised i was passing the wrong dimensions into the embedding layer. classic mistake. 
+, so you're looking to get your hands dirty with cbow embeddings using pytorch. i've been down this road a few times, and it can be a bit tricky initially, but it becomes pretty straightforward once you get the hang of it. i remember my first attempt; i was chasing down some phantom gradients for a day until i realised i was passing the wrong dimensions into the embedding layer. classic mistake.
 
 basically, the continuous bag-of-words (cbow) model tries to predict a target word based on the context words that surround it. in the pytorch world, we represent words as numerical vectors and then we use neural network layers to learn these relationships. we need three main pieces: your dataset, the model, and the training loop.
 
@@ -44,7 +44,7 @@ print("word to index:", word_to_index)
 print("index to word:", index_to_word)
 ```
 
-this snippet shows how you might start with your text data, tokenize it, and create mappings between words and integers (indices). this step is crucial because neural networks operate on numbers. in a typical scenario, you’d use a proper tokenizer and have a more sophisticated vocabulary building process, potentially dealing with out-of-vocabulary words with `<unk>` tokens. look at some text processing documentation on nltk, spacy, or huggingface's tokenizers if you want more information. 
+this snippet shows how you might start with your text data, tokenize it, and create mappings between words and integers (indices). this step is crucial because neural networks operate on numbers. in a typical scenario, you’d use a proper tokenizer and have a more sophisticated vocabulary building process, potentially dealing with out-of-vocabulary words with `<unk>` tokens. look at some text processing documentation on nltk, spacy, or huggingface's tokenizers if you want more information.
 
 now, let's build the actual cbow model in pytorch:
 
@@ -65,7 +65,7 @@ class CBOWModel(nn.Module):
 
 here, the `cbowmodel` class defines the architecture of our model. it has an `nn.embedding` layer, which maps word indices to embeddings, and an `nn.linear` layer, which projects the average embedding to the size of the vocabulary.
 
-the `forward` method performs the core cbow operation, taking the context indices, averaging the embeddings, and passing it through a linear layer.  notice the summation in `embeds_sum`, we sum the embeddings of the words in the context. this is a very common implementation of cbow. there are some alternatives to this, but that goes to a different level of implementation that is not part of what we are covering.
+the `forward` method performs the core cbow operation, taking the context indices, averaging the embeddings, and passing it through a linear layer. notice the summation in `embeds_sum`, we sum the embeddings of the words in the context. this is a very common implementation of cbow. there are some alternatives to this, but that goes to a different level of implementation that is not part of what we are covering.
 
 before continuing, some extra details are important. note that we are not using a non-linear transformation in the process, which is the classic approach to a more complex cbow model. that has to do with adding an additional hidden layer to allow for more complex feature representations. but in our simple version, we are doing it without the non-linear component. it's perfectly fine to skip this step for a basic implementation. you are just limiting the capacity of your model by not having it, but there is no functional problem for this simplified example.
 

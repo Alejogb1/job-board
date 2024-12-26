@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-does-airflow-decide-when-to-re-import-a-dag-file"
 ---
 
-Alright, let's tackle this one. It's a core aspect of Airflow that I've debugged more times than I care to remember, especially back in the early days of our data platform build. Understanding *how* Airflow decides to re-import a DAG file, and consequently refresh its definition, is key to avoiding a lot of head-scratching. Let me break it down, focusing on the practical bits and explaining how it works, instead of just regurgitating the documentation.
+, let's tackle this one. It's a core aspect of Airflow that I've debugged more times than I care to remember, especially back in the early days of our data platform build. Understanding _how_ Airflow decides to re-import a DAG file, and consequently refresh its definition, is key to avoiding a lot of head-scratching. Let me break it down, focusing on the practical bits and explaining how it works, instead of just regurgitating the documentation.
 
 Fundamentally, Airflow's DAG parsing process is a bit more nuanced than simply "every time something changes." It's designed to balance responsiveness to modifications with the need to avoid overwhelming the scheduler and webserver. It’s not like a live-reload tool that monitors file changes constantly. Instead, it employs a system that primarily relies on timestamps, specifically the file modification time.
 

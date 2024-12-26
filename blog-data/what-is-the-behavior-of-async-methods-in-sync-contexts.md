@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-is-the-behavior-of-async-methods-in-sync-contexts"
 ---
 
-Alright, let's tackle this. I've seen this trip up quite a few developers over the years, and it's definitely a core concept worth understanding thoroughly. The interaction between asynchronous methods and synchronous contexts can indeed lead to some unexpected behaviors, and knowing how to handle it is paramount for building robust applications.
+, let's tackle this. I've seen this trip up quite a few developers over the years, and it's definitely a core concept worth understanding thoroughly. The interaction between asynchronous methods and synchronous contexts can indeed lead to some unexpected behaviors, and knowing how to handle it is paramount for building robust applications.
 
 Essentially, the problem lies in the fundamental nature of asynchronous operations. When you mark a method with `async`, you're signaling to the compiler that this method might need to pause its execution and wait for an operation to complete without blocking the calling thread. This pausing is achieved through the use of `await`. However, synchronous contexts, by definition, operate in a blocking, sequential manner. They aren't designed to handle these pauses gracefully, which is where the complications arise.
 
@@ -59,7 +59,7 @@ public class Program
 
 ```
 
-In this example, the `ProcessData` method in `SyncContextCaller` attempts to call the `FetchDataAsync` method and immediately retrieve the result using `GetAwaiter().GetResult()`. This *synchronously* blocks the calling thread until the async operation has completed. While it might seem to "work" in some simple scenarios, it's generally considered bad practice because it defeats the purpose of the async code, and more importantly in complex scenarios it will cause deadlocks if the async operation tries to resume on the same thread. The result will be a program that seems unresponsive or hangs indefinitely.
+In this example, the `ProcessData` method in `SyncContextCaller` attempts to call the `FetchDataAsync` method and immediately retrieve the result using `GetAwaiter().GetResult()`. This _synchronously_ blocks the calling thread until the async operation has completed. While it might seem to "work" in some simple scenarios, it's generally considered bad practice because it defeats the purpose of the async code, and more importantly in complex scenarios it will cause deadlocks if the async operation tries to resume on the same thread. The result will be a program that seems unresponsive or hangs indefinitely.
 
 **Example 2: Illustrating the need for Task.Run()**
 
@@ -167,6 +167,6 @@ In the refactored code, both the `ProcessDataAsync` and the `Main` methods are m
 
 4.  **Understand the `SynchronizationContext`:** In UI applications, the `SynchronizationContext` determines how asynchronous operations are resumed. Misuse can lead to deadlocks and hangs, especially when blocking in an async context. See Stephen Cleary’s "Concurrency in C# Cookbook" for an in-depth understanding of `SynchronizationContext`, along with best practices for asynchronous programming. Additionally, the classic "Programming Microsoft .NET Framework" by Jeffrey Richter is a must-read for any C# developer delving into asynchronous and multithreaded programming, it will give a solid understanding of the underlying .NET principles.
 
-5. **Be Consistent:** A project with mixed async and sync patterns becomes increasingly more difficult to understand and debug. If your codebase has a significant number of async methods, then aim to convert as much of your stack as feasible to async to avoid the potential pitfalls that I explained above.
+5.  **Be Consistent:** A project with mixed async and sync patterns becomes increasingly more difficult to understand and debug. If your codebase has a significant number of async methods, then aim to convert as much of your stack as feasible to async to avoid the potential pitfalls that I explained above.
 
 In closing, while it's tempting to treat async methods as though they behave the same in synchronous contexts, the reality is that they require careful handling. Understanding these nuances, and consistently applying best practices, is the key to creating reliable and performant asynchronous applications.

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-is-the-rails-server-not-running"
 ---
 
-Okay, let’s tackle this. I’ve seen this particular headache manifest in more ways than I care to remember over the years – and it’s seldom just a single thing. "Rails server not running" – that's a broad symptom, a flashing red light on a rather complex machine. It’s rarely as straightforward as a flipped switch, so let's dive into some of the more common culprits and how to diagnose them. My experience, largely from debugging countless deployments for startups and larger firms, suggests we should approach this methodically.
+, let’s tackle this. I’ve seen this particular headache manifest in more ways than I care to remember over the years – and it’s seldom just a single thing. "Rails server not running" – that's a broad symptom, a flashing red light on a rather complex machine. It’s rarely as straightforward as a flipped switch, so let's dive into some of the more common culprits and how to diagnose them. My experience, largely from debugging countless deployments for startups and larger firms, suggests we should approach this methodically.
 
 The first place I tend to look is always the port. Is something already using the port that rails is trying to bind to? I've been burned countless times by that, especially after running multiple instances for different projects or forgetting about a rogue process. Rails default port is 3000, of course, though you might have customized this. I recall once, a junior dev had a background process using the port we needed for our staging server. It was a simple fix once we identified the collision, but tracking it down required a bit of command-line sleuthing.
 
-To check this on a *nix system, you'd use something like:
+To check this on a \*nix system, you'd use something like:
 
 ```bash
 lsof -i :3000
@@ -80,4 +80,4 @@ In summary, when facing the "Rails server not running" issue, start by methodica
 3.  **Database Connection:** Is your database running, configured properly, and accessible?
 4.  **Rails Server Logs:** Are there any error messages indicating a specific problem?
 
-For further study, I strongly recommend diving into the official Rails Guides – they're incredibly detailed and usually have the answer to most common problems. Books like *Agile Web Development with Rails 7* by Sam Ruby et al. also provide an excellent foundation in rails architecture and help with debugging issues. Finally, digging through source code can sometimes be insightful. If a gem is misbehaving, looking at its source might reveal why, and allow you to work around the issue while a fix is being developed or find better alternative gems. Lastly, consider adopting robust logging and error tracking tools early in the project. This will vastly improve the speed at which you can diagnose and resolve such problems.
+For further study, I strongly recommend diving into the official Rails Guides – they're incredibly detailed and usually have the answer to most common problems. Books like _Agile Web Development with Rails 7_ by Sam Ruby et al. also provide an excellent foundation in rails architecture and help with debugging issues. Finally, digging through source code can sometimes be insightful. If a gem is misbehaving, looking at its source might reveal why, and allow you to work around the issue while a fix is being developed or find better alternative gems. Lastly, consider adopting robust logging and error tracking tools early in the project. This will vastly improve the speed at which you can diagnose and resolve such problems.

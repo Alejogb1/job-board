@@ -6,25 +6,25 @@ id: "what-are-the-compatible-matrix-dimensions-for-a-5x46656-matrix-multiplicati
 
 Let's tackle this matrix multiplication dimension compatibility problem; it's something I've seen trip up even experienced folks. My background includes a fair share of optimization work with high-dimensional data, so I've dealt with these issues firsthand, often under very tight deadlines.
 
-Alright, so the core of the problem here revolves around a fundamental rule in linear algebra: for two matrices, A and B, to be compatible for multiplication (forming AB), the number of *columns* in matrix A must be equal to the number of *rows* in matrix B. Let’s dive into your specifics. You’ve presented a 5x46656 matrix intended to be multiplied by a 50176x3 matrix.
+, so the core of the problem here revolves around a fundamental rule in linear algebra: for two matrices, A and B, to be compatible for multiplication (forming AB), the number of _columns_ in matrix A must be equal to the number of _rows_ in matrix B. Let’s dive into your specifics. You’ve presented a 5x46656 matrix intended to be multiplied by a 50176x3 matrix.
 
 The matrix dimensions are:
 
-*   Matrix A: 5 x 46656 (5 rows and 46656 columns)
-*   Matrix B: 50176 x 3 (50176 rows and 3 columns)
+- Matrix A: 5 x 46656 (5 rows and 46656 columns)
+- Matrix B: 50176 x 3 (50176 rows and 3 columns)
 
 Applying the compatibility rule, we need to check if the number of columns in Matrix A (46656) equals the number of rows in Matrix B (50176). In this instance, 46656 ≠ 50176. Therefore, these two matrices are **not compatible** for direct multiplication in the order you've described, A multiplied by B. This is a common error that occurs, usually from misinterpreting or misaligning the order of operations.
 
 Now, what would happen if we flipped the order? That is, B multiplied by A? In this case, the conditions are as follows:
 
-*   Matrix B: 50176 x 3 (50176 rows and 3 columns)
-*   Matrix A: 5 x 46656 (5 rows and 46656 columns)
+- Matrix B: 50176 x 3 (50176 rows and 3 columns)
+- Matrix A: 5 x 46656 (5 rows and 46656 columns)
 
 Here we need the number of columns in matrix B (which is 3) to be the same as the number of rows in matrix A (which is 5). 3 does not equal 5, so this multiplication isn't compatible either. So both orders of multiplication are invalid.
 
 Let’s solidify this with some practical scenarios using Python and NumPy, which is the go-to library for numerical computation. I will show three snippets demonstrating incorrect and, finally, correct scenarios.
 
-**Scenario 1: Attempting the original (incorrect) multiplication (A*B)**
+**Scenario 1: Attempting the original (incorrect) multiplication (A\*B)**
 
 ```python
 import numpy as np
@@ -42,7 +42,7 @@ except ValueError as e:
 
 Executing this code will output a `ValueError`, telling you about the incompatible shapes. This error is your system's way of saying you tried multiplying matrices that cannot be multiplied according to linear algebra rules.
 
-**Scenario 2: Attempting the reversed (incorrect) multiplication (B*A)**
+**Scenario 2: Attempting the reversed (incorrect) multiplication (B\*A)**
 
 ```python
 import numpy as np

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-do-i-configure-stanford-corenlp-options-in-scala"
 ---
 
-alright, so you’re looking to tweak stanford corenlp’s options when using it within scala. been there, done that, got the t-shirt, which by the way is stained with coffee from those late nights trying to get it to work perfectly. believe me, the default settings, while useful, don't always cut it for every task. let me share some hard-won wisdom from my past projects.
+, so you’re looking to tweak stanford corenlp’s options when using it within scala. been there, done that, got the t-shirt, which by the way is stained with coffee from those late nights trying to get it to work perfectly. believe me, the default settings, while useful, don't always cut it for every task. let me share some hard-won wisdom from my past projects.
 
 first, forget about any magical incantations. it’s all about understanding the underlying java api which stanford corenlp exposes, and then translating that into scala idiom. corenlp is essentially a collection of java classes, and scala allows us to interact with them quite seamlessly. the magic is that you are using the java version inside scala, and that will affect how you configure the options.
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-improve-the-quality-of-images-generated-from-pix2pix"
 ---
 
-alright, let's talk pix2pix image quality. i've spent more nights than i care to recall staring at grainy, distorted outputs from these models, so i get the frustration. it's not always a straightforward fix, but there are a few paths we can explore to get those images looking sharper. think of it like tuning a very sensitive radio, small adjustments can make a big difference.
+, let's talk pix2pix image quality. i've spent more nights than i care to recall staring at grainy, distorted outputs from these models, so i get the frustration. it's not always a straightforward fix, but there are a few paths we can explore to get those images looking sharper. think of it like tuning a very sensitive radio, small adjustments can make a big difference.
 
 first things first, the training data. this is the foundation of everything. if you're feeding your model low-resolution or noisy images, that's exactly what you're going to get out. garbage in, garbage out as they say. i remember back when i first started messing with gans, i used a dataset i scraped off the web; turns out half of it was compressed to heck. the generator was never going to produce anything decent.
 
@@ -112,6 +112,7 @@ class vggperceptualloss(nn.module):
 # loss = 0.5 * loss_vgg(generator_output, target_image) + 0.5* (loss_adv + loss_l1)
 
 ```
+
 also, hyperparameter tuning is key. the learning rate, batch size, and the strength of the different loss components need to be carefully adjusted. try using a learning rate scheduler that decreases the learning rate during the training to achieve more stable convergence. use a tensorboard type of thing to keep track of your metrics and the generated images, it'll save a lot of time. i've spent literal days debugging a training loop just because of a silly learning rate. never again.
 
 one more thing that’s very important that is often overlooked: data augmentation. adding random flips, rotations, and zooms during training can improve the model’s ability to generalize. that said, don’t overdo it. i’ve added random color augmentations once, and the model hallucinated all sort of funky color casts. so, use carefully.

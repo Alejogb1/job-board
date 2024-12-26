@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "how-to-compare-data-from-two-different-samples-social-science-data"
 ---
 
-alright, so you've got two datasets, presumably from social science research, and you need to figure out if there are meaningful differences between them. this is a bread-and-butter problem in statistical analysis, and thankfully, there are quite a few tools at our disposal. i've been down this road a few times, mostly during my grad school days working on experimental psychology studies, and later when i was contributing to a project trying to model online community behavior. i can share some of what i’ve learned, sticking to practical approaches with minimal fluff.
+, so you've got two datasets, presumably from social science research, and you need to figure out if there are meaningful differences between them. this is a bread-and-butter problem in statistical analysis, and thankfully, there are quite a few tools at our disposal. i've been down this road a few times, mostly during my grad school days working on experimental psychology studies, and later when i was contributing to a project trying to model online community behavior. i can share some of what i’ve learned, sticking to practical approaches with minimal fluff.
 
 first thing first, the method you choose really depends on the type of data you have. are we talking about numerical values like age or income? or categorical data, like survey responses (“strongly agree,” “disagree,” etc.)? we also need to think about the structure of the data; are your samples paired (like comparing pre-test and post-test scores of the same individuals) or independent (two separate groups)? lets start with numerical data and independent samples.
 
 for independent numerical samples, a classic approach is the t-test. the t-test checks if the means (averages) of your two groups are statistically different. we are, of course, going to check the data for some assumptions first. before using a t-test you want to make sure your data is roughly normally distributed and that your samples have similar variances. there are statistical tests for that but i usually go for a simple histogram. if the histograms look roughly bell-shaped and the spread is not vastly different you are ok to proceed. i remember using a simple boxplot to test for equality of variance which helps too.
 
- here is some simple python code that shows how you would do this. i like scipy, its always there when i need it, plus numpy is a dependency so its win-win:
+here is some simple python code that shows how you would do this. i like scipy, its always there when i need it, plus numpy is a dependency so its win-win:
 
 ```python
 import numpy as np
@@ -41,7 +41,7 @@ else:
 
 in that example, we generate some dummy data with numpy, do a quick visual inspection and then we calculate a t-statistic and a p-value. the p-value is the probability of getting results as extreme as those observed, assuming that there is no difference between the means. if the p-value is below a chosen significance level (typically 0.05, the alpha) then we can conclude that there is evidence to suggest the groups are different in the average.
 
-now, what if the numerical data does not follow a normal distribution, and you’ve ruled out data transformation? then you might want to consider a non-parametric test like the mann-whitney u test.  it's an alternative to the t-test that doesn't rely on data normality. basically, it ranks all data points and then sees if ranks are distributed differently between groups, that is, it does not test the mean but the distribution, which is neat. it is a good test for when the shape of the distribution is far from a bell curve.
+now, what if the numerical data does not follow a normal distribution, and you’ve ruled out data transformation? then you might want to consider a non-parametric test like the mann-whitney u test. it's an alternative to the t-test that doesn't rely on data normality. basically, it ranks all data points and then sees if ranks are distributed differently between groups, that is, it does not test the mean but the distribution, which is neat. it is a good test for when the shape of the distribution is far from a bell curve.
 
 ```python
 import numpy as np

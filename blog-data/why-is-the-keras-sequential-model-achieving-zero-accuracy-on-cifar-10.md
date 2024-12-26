@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-keras-sequential-model-achieving-zero-accuracy-on-cifar-10"
 ---
 
-Okay, let's tackle this. I've seen this particular issue with Keras' Sequential model and CIFAR-10 more times than I care to recall. It's usually not a single catastrophic error, but rather a confluence of subtle misconfigurations. It's infuriating, I know, but let's break it down step-by-step.
+, let's tackle this. I've seen this particular issue with Keras' Sequential model and CIFAR-10 more times than I care to recall. It's usually not a single catastrophic error, but rather a confluence of subtle misconfigurations. It's infuriating, I know, but let's break it down step-by-step.
 
 From my experience, the most common reason a Keras Sequential model hits zero accuracy on CIFAR-10, especially in the initial stages of experimentation, stems from issues related to data preprocessing, network architecture suitability, and insufficient training procedures. It's rarely a bug in the Keras library itself, but rather how we're configuring and utilizing it. Let's delve deeper into those categories.
 
@@ -62,9 +62,11 @@ model = Sequential([
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 model.summary()
 ```
+
 This model uses convolution, pooling, and dropout layers to extract and learn meaningful features from the input. The model starts with 32 filters and increases to 64 in the next set of convolutional layers. We use a dropout rate of 25% after each set of convolutions and before fully connected layers. The output layer uses a softmax activation to perform multiclass classification. If a model is far less complex than this, chances are that it might also struggle.
 
 Finally, the training procedure itself is a frequent culprit. Insufficient epochs, a bad learning rate, or an unsuitable optimizer can prevent the model from converging. Starting with a slightly higher learning rate and adjusting it with decay or using an adaptive optimizer such as Adam or RMSprop can significantly impact performance. When I see this issue, usually the model is under-trained or trained using a basic optimizer that can't navigate the loss landscape effectively for such a complex dataset. Here is a small example showing training the previous model:
+
 ```python
 batch_size = 64 # commonly a power of 2
 epochs = 20 # adjust this based on your need

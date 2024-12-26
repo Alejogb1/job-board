@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-missing-argument-for-the-blockchainaddblock-function"
 ---
 
-Okay, let's tackle this. It’s a question that takes me back a few years, actually, to a project where we were building a private blockchain for supply chain tracking. We ran into this very scenario, a `Blockchain.addBlock()` function mysteriously failing, all because of a missing argument. The problem is not always immediately obvious, and it stems from the core understanding of how blocks are constructed and linked in a blockchain structure.
+, let's tackle this. It’s a question that takes me back a few years, actually, to a project where we were building a private blockchain for supply chain tracking. We ran into this very scenario, a `Blockchain.addBlock()` function mysteriously failing, all because of a missing argument. The problem is not always immediately obvious, and it stems from the core understanding of how blocks are constructed and linked in a blockchain structure.
 
 The fundamental problem when you encounter an `addBlock()` function failure, especially when the error is related to missing arguments, usually boils down to the fact that every new block must reference the preceding block in the chain. This referencing is crucial for the integrity and immutability of the blockchain. If we’re talking about a simplified blockchain model, typically, a block structure includes at least the following: the block's data, a timestamp, the block’s hash, and a hash of the previous block. The 'missing argument' almost always is the previous block's hash.
 
@@ -162,6 +162,7 @@ my_blockchain.add_block("First transaction")
 my_blockchain.add_block("Second transaction")
 my_blockchain.display_chain()
 ```
+
 In this final example, the code attempts to get the hash of the genesis block instead of the previous block. The code avoids assigning `None` to the `previous_hash` parameter, but it does not correctly add to the chain structure by pulling the wrong block to reference. In a real system, this would cause the cryptographic integrity of the blockchain to fail when nodes attempt to validate it.
 
 When debugging this, it’s crucial to inspect the `addBlock` function and verify that it's:
@@ -171,4 +172,4 @@ When debugging this, it’s crucial to inspect the `addBlock` function and verif
 3.  Passing this hash as the `previous_hash` argument to the new `Block` constructor.
 
 For those who wish to go deeper on the theoretical foundations, I would recommend two excellent resources: "Mastering Bitcoin" by Andreas Antonopoulos, for a broad yet thorough understanding of the underlying technology, and “Bitcoin and Cryptocurrency Technologies” by Arvind Narayanan, Joseph Bonneau, Edward Felten, Andrew Miller, and Steven Goldfeder, for a more academic and detailed look at the cryptographic and distributed aspects of blockchain. Both of these resources do an excellent job at explaining why referencing the previous block's hash correctly is absolutely necessary for the chain's immutability and security.
-In short, the 'missing argument' is typically the *previous block's hash*, without which the blockchain's linking mechanism breaks down. Remember this the next time you are implementing or debugging such a function, and you'll have a much clearer understanding of the issue.
+In short, the 'missing argument' is typically the _previous block's hash_, without which the blockchain's linking mechanism breaks down. Remember this the next time you are implementing or debugging such a function, and you'll have a much clearer understanding of the issue.

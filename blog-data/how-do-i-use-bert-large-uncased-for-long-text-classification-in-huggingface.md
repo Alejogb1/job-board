@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-bert-large-uncased-for-long-text-classification-in-huggingface"
 ---
 
-Okay, let's dive into this. I've tackled the long text classification problem with bert-large-uncased a few times now, and it certainly presents a unique set of challenges. The core issue stems from the model's fixed input sequence length, usually capped at 512 tokens. Standard texts often far exceed that, especially in the contexts where bert-large can really shine, like legal documents or lengthy articles. The naive approach of simply truncating the input is almost always detrimental, discarding potentially valuable information. Instead, we need strategies that maintain contextual understanding while respecting the model's input limitations.
+, let's dive into this. I've tackled the long text classification problem with bert-large-uncased a few times now, and it certainly presents a unique set of challenges. The core issue stems from the model's fixed input sequence length, usually capped at 512 tokens. Standard texts often far exceed that, especially in the contexts where bert-large can really shine, like legal documents or lengthy articles. The naive approach of simply truncating the input is almost always detrimental, discarding potentially valuable information. Instead, we need strategies that maintain contextual understanding while respecting the model's input limitations.
 
 My go-to strategies revolve around either segmenting the text into smaller, manageable chunks or using attention mechanisms that operate at a longer scope. I'll focus primarily on chunking as it's the most commonly adopted and, in my experience, generally more reliable for general applications. I've personally seen this approach scale reasonably well across different projects, with the key being to tune the chunking and aggregation strategies carefully based on the specific data. Think of this not as a one-size-fits-all, but rather a flexible framework.
 
@@ -21,7 +21,7 @@ def classify_long_text_simple(text, tokenizer, model, max_length=512, stride=128
     inputs = tokenizer(text, return_tensors='pt', truncation=False, padding=False)
     input_ids = inputs['input_ids']
     attention_mask = inputs['attention_mask']
-    
+
     chunks = []
     for i in range(0, input_ids.size(1), max_length - stride):
         chunk_ids = input_ids[:, i: i + max_length]
@@ -31,14 +31,14 @@ def classify_long_text_simple(text, tokenizer, model, max_length=512, stride=128
           padding_size = max_length - chunk_ids.size(1)
           chunk_ids = torch.cat([chunk_ids, torch.zeros((1, padding_size), dtype=torch.long)], dim=1)
           chunk_mask = torch.cat([chunk_mask, torch.zeros((1, padding_size), dtype=torch.long)], dim=1)
-        
+
         chunks.append((chunk_ids, chunk_mask))
 
     chunk_outputs = []
     for chunk_ids, chunk_mask in chunks:
         outputs = model(input_ids=chunk_ids, attention_mask=chunk_mask)
         chunk_outputs.append(outputs.logits)
-    
+
     # Simple averaging of the outputs
     final_output = torch.mean(torch.cat(chunk_outputs), dim=0)
     return final_output
@@ -66,12 +66,12 @@ def classify_long_text_token_average(text, tokenizer, bert_model, classification
     inputs = tokenizer(text, return_tensors='pt', truncation=False, padding=False)
     input_ids = inputs['input_ids']
     attention_mask = inputs['attention_mask']
-    
+
     chunks = []
     for i in range(0, input_ids.size(1), max_length - stride):
         chunk_ids = input_ids[:, i: i + max_length]
         chunk_mask = attention_mask[:, i: i + max_length]
-        
+
         if chunk_ids.size(1) < max_length:
            padding_size = max_length - chunk_ids.size(1)
            chunk_ids = torch.cat([chunk_ids, torch.zeros((1, padding_size), dtype=torch.long)], dim=1)
@@ -86,10 +86,10 @@ def classify_long_text_token_average(text, tokenizer, bert_model, classification
         # For simplicity just averaging across tokens
         chunk_embedding = torch.mean(token_embeddings, dim=1)
         all_token_embeddings.append(chunk_embedding)
-    
+
     # Aggregate the chunk embeddings by averaging
     aggregated_embedding = torch.mean(torch.cat(all_token_embeddings, dim=0), dim=0, keepdim=True)
-    
+
     # Pass the aggregated representation to classification head
     logits = classification_head(aggregated_embedding)
 
@@ -106,6 +106,7 @@ predicted_class = torch.argmax(final_logits).item()
 
 print(f"Predicted class: {predicted_class}")
 ```
+
 Finally, a more advanced method is to introduce a transformer-based pooling layer after the initial bert encoder. This layer can be configured to learn how best to combine the outputs from the individual chunks. This approach has given me the best results in situations where the relationships between the chunks are important. The following snippet gives an illustration:
 
 ```python
@@ -127,7 +128,7 @@ def classify_long_text_transformer_pool(text, tokenizer, bert_model, pooling_lay
     inputs = tokenizer(text, return_tensors='pt', truncation=False, padding=False)
     input_ids = inputs['input_ids']
     attention_mask = inputs['attention_mask']
-    
+
     chunks = []
     for i in range(0, input_ids.size(1), max_length - stride):
         chunk_ids = input_ids[:, i: i + max_length]
@@ -145,13 +146,13 @@ def classify_long_text_transformer_pool(text, tokenizer, bert_model, pooling_lay
         outputs = bert_model(input_ids=chunk_ids, attention_mask=chunk_mask, output_hidden_states=True)
         chunk_embedding = torch.mean(outputs.hidden_states[-1], dim=1)  # Mean pooling across tokens in the chunk
         all_chunk_embeddings.append(chunk_embedding)
-    
+
     # Stack embeddings for the transformer pooling
     aggregated_embeddings = torch.stack(all_chunk_embeddings, dim=1)
-    
+
     # Transformer pooling
     pooled_embedding = pooling_layer(aggregated_embeddings)
-    
+
     # Pass to classification head
     logits = classification_head(pooled_embedding)
     return logits

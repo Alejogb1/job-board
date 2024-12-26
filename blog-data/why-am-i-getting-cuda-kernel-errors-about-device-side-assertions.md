@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-cuda-kernel-errors-about-device-side-assertions"
 ---
 
-Alright, let's tackle this. Device-side assertions in CUDA kernels, particularly when they manifest as errors, can indeed be frustrating. I've definitely spent my fair share of late nights debugging these, and they almost always point to some subtle issue lurking within the parallel execution environment. It's rarely a problem with cuda itself but more often with the way we've structured our parallel computations or memory access patterns.
+, let's tackle this. Device-side assertions in CUDA kernels, particularly when they manifest as errors, can indeed be frustrating. I've definitely spent my fair share of late nights debugging these, and they almost always point to some subtle issue lurking within the parallel execution environment. It's rarely a problem with cuda itself but more often with the way we've structured our parallel computations or memory access patterns.
 
 In my experience, these errors essentially mean that the checks you've embedded within your kernel code, using `assert()` or equivalent mechanisms, have failed during execution on the GPU device. These assertions are invaluable for catching boundary conditions, detecting out-of-bounds memory access attempts, or identifying other potential errors that are difficult to debug in a massively parallel setting. They act as a crucial safeguard. When one of these triggers, the kernel execution is usually halted, and you get that dreaded error message which, while often cryptic, gives you some clue about the location of the failed check.
 
@@ -30,7 +30,7 @@ __global__ void incorrect_indexing_kernel(float* output, int size) {
         if(tid < 10)
         output[tid] = shared_data[tid];
     }
-    
+
 }
 
 int main() {
@@ -65,7 +65,7 @@ __global__ void uninitialized_data_kernel(float* output, int size) {
      if (tid == 1){
          shared_data[1] = 2.0f;
      }
-    
+
     __syncthreads(); // crucial for shared memory access
 
     if(tid < size){
@@ -104,7 +104,7 @@ This example will show how a conditional assertion might fail.
 
 __global__ void conditional_assert_kernel(float* output, int size) {
     int tid = threadIdx.x;
-    
+
      if (tid < size){
          float value =  (float)tid;
          // Intentional check that might fail.

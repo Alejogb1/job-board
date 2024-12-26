@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-k-means-be-implemented-without-using-scikit-learn"
 ---
 
-Okay, let's tackle this. I’ve certainly found myself in situations where relying on external libraries, especially for something as fundamental as k-means clustering, just wasn't practical. I recall a project a few years back involving embedded systems and very limited resources where pulling in something as large as scikit-learn was entirely out of the question. We needed a highly optimized, custom solution, and that meant implementing k-means from scratch, or rather, using a library as small as possible. We specifically chose k-means++, which, as you know, significantly improves the initial centroid selection, moving past the sometimes poor results of basic random initialization. So, let's delve into how to do that without the comfortable crutch of scikit-learn.
+, let's tackle this. I’ve certainly found myself in situations where relying on external libraries, especially for something as fundamental as k-means clustering, just wasn't practical. I recall a project a few years back involving embedded systems and very limited resources where pulling in something as large as scikit-learn was entirely out of the question. We needed a highly optimized, custom solution, and that meant implementing k-means from scratch, or rather, using a library as small as possible. We specifically chose k-means++, which, as you know, significantly improves the initial centroid selection, moving past the sometimes poor results of basic random initialization. So, let's delve into how to do that without the comfortable crutch of scikit-learn.
 
-The core idea behind k-means++ is fairly straightforward, but getting the implementation precisely correct takes a bit of attention to detail. It enhances the standard k-means algorithm by intelligently seeding the initial centroids, thereby mitigating the issue of poor clustering caused by unfavorable starting points. The standard k-means method randomly chooses *k* initial centroids from the dataset, which might result in some initial centroids being clustered together while leaving other areas of the data space unrepresented. K-means++, in contrast, uses a probabilistic method to ensure that these initial centroids are more spread out, potentially leading to faster convergence and more accurate results.
+The core idea behind k-means++ is fairly straightforward, but getting the implementation precisely correct takes a bit of attention to detail. It enhances the standard k-means algorithm by intelligently seeding the initial centroids, thereby mitigating the issue of poor clustering caused by unfavorable starting points. The standard k-means method randomly chooses _k_ initial centroids from the dataset, which might result in some initial centroids being clustered together while leaving other areas of the data space unrepresented. K-means++, in contrast, uses a probabilistic method to ensure that these initial centroids are more spread out, potentially leading to faster convergence and more accurate results.
 
 Here’s a breakdown of the core algorithm, starting with the initialization phase:
 
@@ -14,7 +14,7 @@ Here’s a breakdown of the core algorithm, starting with the initialization pha
 
 2.  **Subsequent Centroid Selection:** Calculate the squared distance of each data point to its nearest centroid. Then, choose the next centroid randomly, with the probability of a point being chosen being proportional to its squared distance to its nearest centroid. This is where the “++” magic happens. Points further away from the currently selected centroids are more likely to be picked as the next centroids.
 
-3.  **Repeat:** Continue this distance calculation and probabilistic selection process until you have *k* initial centroids.
+3.  **Repeat:** Continue this distance calculation and probabilistic selection process until you have _k_ initial centroids.
 
 Once you have your initial centroids, the rest of the algorithm functions as normal k-means:
 
@@ -145,6 +145,7 @@ def kmeans_algorithm(data, k, max_iterations = 100):
     return centroids, assignments
 
 ```
+
 This function now orchestrates everything, using our defined distance function and k-means++ initialization, and iteratively assigns points to the closest centroids and recomputes centroid positions. It returns the final centroids and point assignments.
 
 For further, more rigorous study on the theoretical underpinnings of k-means and k-means++, I’d suggest looking into research papers like "A comparative study of efficient initialization methods for the k-means clustering algorithm" by Fahim et al. as well as delving into chapters in well known texts on machine learning and data mining such as "The Elements of Statistical Learning" by Hastie, Tibshirani, and Friedman, which offers a mathematically rigorous treatment of clustering methodologies. I also highly recommend "Pattern Recognition and Machine Learning" by Christopher Bishop which goes into detail on the mathematics behind many clustering algorithms. These resources should provide you with a sound theoretical understanding of the algorithms and the trade-offs of their various implementations.

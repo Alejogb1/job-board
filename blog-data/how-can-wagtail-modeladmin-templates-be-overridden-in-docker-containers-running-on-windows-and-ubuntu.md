@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-wagtail-modeladmin-templates-be-overridden-in-docker-containers-running-on-windows-and-ubuntu"
 ---
 
-Alright, let’s delve into this. From experience, I can tell you that overriding Wagtail’s ModelAdmin templates within a dockerized setup, especially when juggling different host operating systems like Windows and Ubuntu, isn’t always straightforward. It usually stems from the way file paths are handled between the container and the host machine, which can become particularly fussy with volume mounting. I've personally spent a few frustrating evenings debugging this very issue, and it primarily boils down to understanding the interplay of how Docker, Wagtail, and your file system view interact.
+, let’s delve into this. From experience, I can tell you that overriding Wagtail’s ModelAdmin templates within a dockerized setup, especially when juggling different host operating systems like Windows and Ubuntu, isn’t always straightforward. It usually stems from the way file paths are handled between the container and the host machine, which can become particularly fussy with volume mounting. I've personally spent a few frustrating evenings debugging this very issue, and it primarily boils down to understanding the interplay of how Docker, Wagtail, and your file system view interact.
 
 The core challenge isn’t inherently within Wagtail's template mechanism itself, but rather about ensuring the Docker container has access to the custom templates and that Wagtail knows where to find them. When running a Docker container, especially with bind mounts (that’s what we typically use for development), paths inside the container might look slightly different from those on the host machine. This disparity can cause Wagtail to fail in finding the overridden templates. To navigate this, let's examine how we typically organize our project and how that interacts with Docker.
 
@@ -138,23 +138,22 @@ class MyModelAdmin(ModelAdmin):
 
 modeladmin_register(MyModelAdmin)
 ```
+
 This snippet defines a minimal ModelAdmin for a model named `MyModel`. The critical part is that, without further settings, Wagtail will look for templates in the conventional `templates/wagtailadmin/mymodel` directory.
 
 **Snippet 2: A simplified `create.html` override template**
 
 ```html
 <!-- my_app/templates/wagtailadmin/mymodel/create.html -->
-{% extends "wagtailadmin/pages/create.html" %}
-
-{% block content %}
-  <h1>Custom Create View</h1>
-  {{ block.super }}
-{% endblock content %}
+{% extends "wagtailadmin/pages/create.html" %} {% block content %}
+<h1>Custom Create View</h1>
+{{ block.super }} {% endblock content %}
 ```
 
 This simple override template provides a quick check to see if your overrides are working. If you see ‘Custom Create View’ above the Wagtail create form, then the override is working.
 
 **Snippet 3: Example of a `docker-compose.yml` configuration**
+
 ```yaml
 version: "3.9"
 services:
@@ -184,6 +183,7 @@ services:
 volumes:
   pgdata:
 ```
+
 This docker-compose yaml configuration mounts the current directory's `my_app` folder into the `/app/my_app` folder within the container, thus ensuring template files are accessible.
 
 **Troubleshooting Points:**

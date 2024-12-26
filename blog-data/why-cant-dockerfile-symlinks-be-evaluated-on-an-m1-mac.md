@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-cant-dockerfile-symlinks-be-evaluated-on-an-m1-mac"
 ---
 
-Alright, let's talk about Dockerfile symlinks on M1 Macs. I've personally spent more than a few late nights debugging similar issues, and it's a nuanced problem that boils down to a combination of factors, not just some isolated quirk. It’s less about the M1 itself, and more about how the Docker daemon interacts with different underlying architectures and file system behaviors.
+, let's talk about Dockerfile symlinks on M1 Macs. I've personally spent more than a few late nights debugging similar issues, and it's a nuanced problem that boils down to a combination of factors, not just some isolated quirk. It’s less about the M1 itself, and more about how the Docker daemon interacts with different underlying architectures and file system behaviors.
 
 The core issue stems from how Docker builds images. When you use the `COPY` or `ADD` instructions within a Dockerfile, the daemon doesn't simply copy files verbatim. It creates a snapshot of the source context, and that snapshot is what gets layered into the image. Now, when it encounters a symbolic link (symlink), it needs to decide what to do with it. On Intel-based machines, or x86_64 architecture, the Docker daemon usually follows the symlink and copies the target of the link, not the link itself. This works fine if the target is within the build context.
 
@@ -38,13 +38,13 @@ CMD ["cat", "/app/app/my_file.txt"]
 
 ```
 
-When you build this (`docker build -t example1 .`), it will *typically* work on an M1, *assuming the target exists at build time and within the build context*. The symlink `symlink_to_app` gets copied, and when you list contents of the `/app` directory within the container, you'll see it (as a link). The subsequent `cat` command would resolve through the symlink. This works because the *target* of the symbolic link is within the same build context, and the filesystem semantics within the Docker image are relatively straightforward in this case.
+When you build this (`docker build -t example1 .`), it will _typically_ work on an M1, _assuming the target exists at build time and within the build context_. The symlink `symlink_to_app` gets copied, and when you list contents of the `/app` directory within the container, you'll see it (as a link). The subsequent `cat` command would resolve through the symlink. This works because the _target_ of the symbolic link is within the same build context, and the filesystem semantics within the Docker image are relatively straightforward in this case.
 
 **Example 2: Symlink Pointing Outside the Build Context (Will Fail or Be Ignored)**
 
 Now, let's look at a case that typically fails:
 
-Let's say you have a symlink that points to a directory that exists on your host system, *but isn't part of your Docker build context*. Let's assume you have the structure as follows:
+Let's say you have a symlink that points to a directory that exists on your host system, _but isn't part of your Docker build context_. Let's assume you have the structure as follows:
 
 ```
 ├── data_dir
@@ -54,6 +54,7 @@ Let's say you have a symlink that points to a directory that exists on your host
 ```
 
 The `Dockerfile` is as follows:
+
 ```dockerfile
 FROM ubuntu:latest
 
@@ -63,6 +64,7 @@ RUN ls -al /app
 
 CMD ["cat", "/app/my_symlink"]
 ```
+
 When you build (`docker build -t example2 .`) and run this, you’ll likely find that the `COPY . /app` either ignores the symlink, or the `cat` command will error out because the target is outside the image's file system scope. Docker doesn't follow symlinks that point outside the build context for security and isolation purposes. It’s trying to encapsulate the application and all its dependencies into a discrete package, and following arbitrary paths outside the build context would violate that.
 
 **Example 3: The Solution: Copying Files Directly**

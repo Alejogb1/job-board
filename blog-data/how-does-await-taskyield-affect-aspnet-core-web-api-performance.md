@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-does-await-taskyield-affect-aspnet-core-web-api-performance"
 ---
 
-Okay, let’s unpack how `await Task.Yield` interacts with performance in ASP.NET Core Web API applications. It's not as straightforward as one might initially assume, and I’ve definitely seen it misused, leading to some rather counterintuitive behavior over the years. Thinking back to a particularly challenging project a few years ago, we had a heavily loaded API endpoint that was sporadically experiencing latency spikes. The first place we looked was the database access layer, naturally, but it turned out the bottleneck was actually closer to home: improper use of `await Task.Yield`.
+, let’s unpack how `await Task.Yield` interacts with performance in ASP.NET Core Web API applications. It's not as straightforward as one might initially assume, and I’ve definitely seen it misused, leading to some rather counterintuitive behavior over the years. Thinking back to a particularly challenging project a few years ago, we had a heavily loaded API endpoint that was sporadically experiencing latency spikes. The first place we looked was the database access layer, naturally, but it turned out the bottleneck was actually closer to home: improper use of `await Task.Yield`.
 
 The key thing to understand is that `await Task.Yield()` forces a context switch, returning control to the caller. This might sound beneficial initially—it’s a way to release the current thread and allow other work to progress—but in an ASP.NET Core context, the implications can be detrimental if not handled with care. Let's delve into the mechanism.
 
-Normally, when you `await` an operation, the task scheduler will handle the continuation of that asynchronous work on the *same* context if possible. Think of it as staying on the same execution "lane." However, `await Task.Yield()` explicitly forces the continuation to be scheduled on the thread pool. It’s like switching to a different lane – even if the original lane was perfectly free. This may not seem inherently harmful, but context switching has associated costs. These include saving and restoring the execution context (registers, stack, etc.) and scheduler overhead. In a high-throughput web server environment like ASP.NET Core, these tiny overheads can accumulate quickly, leading to overall decreased responsiveness.
+Normally, when you `await` an operation, the task scheduler will handle the continuation of that asynchronous work on the _same_ context if possible. Think of it as staying on the same execution "lane." However, `await Task.Yield()` explicitly forces the continuation to be scheduled on the thread pool. It’s like switching to a different lane – even if the original lane was perfectly free. This may not seem inherently harmful, but context switching has associated costs. These include saving and restoring the execution context (registers, stack, etc.) and scheduler overhead. In a high-throughput web server environment like ASP.NET Core, these tiny overheads can accumulate quickly, leading to overall decreased responsiveness.
 
 To make this clear, let's break it down into scenarios where `await Task.Yield` becomes problematic in a web api.
 
@@ -78,7 +78,7 @@ public class ExampleController : ControllerBase
 
 Here, the `GetGood` action doesn’t use `await Task.Yield` unnecessarily. The code is much cleaner, and the performance will be significantly better, particularly under load. The asynchronous execution is still preserved through the use of `await` on the `GetDataAsync` method. We've retained the async functionality without the overhead.
 
-Finally, let’s consider a scenario where `await Task.Yield` *might* have a use case, although this is still rare in ASP.NET core request processing and should be considered an optimization only after careful profiling:
+Finally, let’s consider a scenario where `await Task.Yield` _might_ have a use case, although this is still rare in ASP.NET core request processing and should be considered an optimization only after careful profiling:
 
 ```csharp
 using Microsoft.AspNetCore.Mvc;
@@ -108,7 +108,7 @@ public class ExampleController : ControllerBase
 }
 ```
 
-The `GetLongRunning` action here *tentatively* introduces `await Task.Yield` if `CalculateLongRunningTaskAsync` represents heavy computational work that shouldn’t block a request thread. However, even in this case, it is often best to consider moving such tasks to background queues or using dedicated compute resources. The point here is, `Task.Yield` isn’t a cure-all, and its use should only be after careful consideration. The best approach in most situations is to allow the natural continuation on the same context without forcing a switch using `Task.Yield`. This is what I learned after digging through performance profiles of our problematic endpoint during that past project.
+The `GetLongRunning` action here _tentatively_ introduces `await Task.Yield` if `CalculateLongRunningTaskAsync` represents heavy computational work that shouldn’t block a request thread. However, even in this case, it is often best to consider moving such tasks to background queues or using dedicated compute resources. The point here is, `Task.Yield` isn’t a cure-all, and its use should only be after careful consideration. The best approach in most situations is to allow the natural continuation on the same context without forcing a switch using `Task.Yield`. This is what I learned after digging through performance profiles of our problematic endpoint during that past project.
 
 For further learning on this topic, I would recommend diving deep into Stephen Cleary's work on asynchronous programming. Specifically his blog and book, "Concurrency in C# Cookbook," offers invaluable insight. Also, the documentation on Task Parallel Library (TPL) in the Microsoft documentation is crucial for understanding how thread pooling and task scheduling operates under the hood.
 

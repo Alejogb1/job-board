@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-change-the-default-project-path-in-jetbrains-ides"
 ---
 
-Alright, let's talk project paths in JetBrains IDEs. I’ve certainly encountered this a few times over the years, usually when dealing with complex multi-module projects or enforcing consistent directory structures across teams. It's less about “changing” the default project path globally for all new projects and more about specifying the location *when* you create a new project, and then managing configurations for existing ones.
+, let's talk project paths in JetBrains IDEs. I’ve certainly encountered this a few times over the years, usually when dealing with complex multi-module projects or enforcing consistent directory structures across teams. It's less about “changing” the default project path globally for all new projects and more about specifying the location _when_ you create a new project, and then managing configurations for existing ones.
 
 First, it’s essential to distinguish between the ‘project’ directory and the IDE’s settings directory. The project directory is where all your source code, resources, and build artifacts live. It’s what you’ll commit to version control and where your day-to-day development happens. The IDE settings directory, on the other hand, stores preferences, keyboard shortcuts, plugin configurations, and so forth. It’s located outside of your project structure, and we won't be altering that here.
 
@@ -94,6 +94,7 @@ These changes aren’t just about the project directory as seen in the IDE; they
 Finally, for non-Maven projects like python or javascript, the concept is the same, but you interact with specific settings for those build tools. As an example, here’s how you would configure the source directories in a typical Django project in a `settings.py` file.
 
 **Code Snippet 3: Python Django `settings.py` example**
+
 ```python
 import os
 
@@ -140,6 +141,6 @@ In this Python snippet, `BASE_DIR` points to the root of your project, and we’
 
 So, while there isn’t a global setting to change all project paths at once in JetBrains IDEs, you manage the paths in two ways: At project creation through the new project dialog, and later using your project's configuration files. This often involves build tools’ configurations (like in `pom.xml` for Maven) or settings specific to your framework (like in `settings.py` for django).
 
-If you want to go deeper on the nuances of build system configurations, specifically for maven, I would recommend starting with "Maven: The Complete Reference" by Sonatype.  For a more general understanding of project layouts in software engineering, "Code Complete" by Steve McConnell has great chapters dedicated to this, while "Clean Code" by Robert C. Martin is beneficial for structuring well organized code that is easy to maintain.  Finally, the Django documentation itself is quite detailed on how to manage configurations like `MEDIA_ROOT` and `STATIC_ROOT`.
+If you want to go deeper on the nuances of build system configurations, specifically for maven, I would recommend starting with "Maven: The Complete Reference" by Sonatype. For a more general understanding of project layouts in software engineering, "Code Complete" by Steve McConnell has great chapters dedicated to this, while "Clean Code" by Robert C. Martin is beneficial for structuring well organized code that is easy to maintain. Finally, the Django documentation itself is quite detailed on how to manage configurations like `MEDIA_ROOT` and `STATIC_ROOT`.
 
 Understanding this distinction, the difference between project paths and IDE settings, and knowing how to modify build configurations, will give you control over your projects’ structure within your JetBrains IDEs. Hopefully, these examples and explanations clarify how to effectively organize your projects in JetBrains IDEs.

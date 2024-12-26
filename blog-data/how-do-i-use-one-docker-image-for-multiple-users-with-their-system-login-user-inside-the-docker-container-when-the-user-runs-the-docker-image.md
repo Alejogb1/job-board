@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-one-docker-image-for-multiple-users-with-their-system-login-user-inside-the-docker-container-when-the-user-runs-the-docker-image"
 ---
 
-Alright, let's tackle this. Managing user identities within docker containers, especially when attempting to mirror host system users, is a recurring challenge. I've encountered this a few times, notably during a project where we were deploying individual development environments, each needing the specific user context of the developer using the container. It's not as straightforward as one might initially hope, but there are robust approaches we can leverage. The primary hurdle is that docker, by default, runs processes within a container under a single user, typically root, which creates a mismatch with the desired user-specific context.
+, let's tackle this. Managing user identities within docker containers, especially when attempting to mirror host system users, is a recurring challenge. I've encountered this a few times, notably during a project where we were deploying individual development environments, each needing the specific user context of the developer using the container. It's not as straightforward as one might initially hope, but there are robust approaches we can leverage. The primary hurdle is that docker, by default, runs processes within a container under a single user, typically root, which creates a mismatch with the desired user-specific context.
 
 The core issue stems from how docker's user namespaces function and interact with the host system. Each docker container typically operates within its own user namespace, isolated from the host's user namespace. This means that user IDs (UIDs) and group IDs (GIDs) inside the container are generally different from those on the host. Therefore, running processes as the host's `$USER` inside the container requires some careful orchestration. It's more than just passing environment variables; it requires actual UID/GID mapping or other methods that we'll examine here.
 
@@ -28,11 +28,12 @@ So, what are some viable approaches that actually achieve what we need? There ar
    In the dockerfile, you generally don't need any special user creation. The image should just provide the tools and application you intend to use.
 
    **Dockerfile (example):**
-    ```dockerfile
-    FROM ubuntu:latest
-    RUN apt-get update && apt-get install -y --no-install-recommends bash
-    CMD ["/bin/bash"]
-    ```
+
+   ```dockerfile
+   FROM ubuntu:latest
+   RUN apt-get update && apt-get install -y --no-install-recommends bash
+   CMD ["/bin/bash"]
+   ```
 
    This approach relies on mapping the current host user's UID/GID to the container’s user. It's effective and doesn't require modifications within the image itself, making it flexible and easy to deploy. However, it needs manual adjustment whenever there's a change on the host side, making it ideal in development scenarios, but you must consider the implications in production environment. There are also potential issues if the UID/GID on the host clashes with a user inside the container which brings us to the second method.
 
@@ -43,6 +44,7 @@ So, what are some viable approaches that actually achieve what we need? There ar
    Here's how you would craft this:
 
    **Dockerfile (example):**
+
    ```dockerfile
    FROM ubuntu:latest
 
@@ -58,7 +60,9 @@ So, what are some viable approaches that actually achieve what we need? There ar
 
    CMD ["/bin/bash"]
    ```
-    And to run:
+
+   And to run:
+
    ```bash
    docker run -it --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) my_image
    ```
@@ -70,31 +74,35 @@ So, what are some viable approaches that actually achieve what we need? There ar
    For scenarios where you need more granular control or dynamic switching, you can use tools like `gosu`. These are lightweight tools designed to execute commands under a specified user. The beauty here is that it doesn't rely on `sudo` which can complicate or bloat the image. These tools provide a safe way to temporarily drop privileges, which is particularly useful in complex entrypoints.
 
    **Dockerfile (example):**
-    ```dockerfile
-    FROM ubuntu:latest
 
-    RUN apt-get update && apt-get install -y --no-install-recommends wget
+   ```dockerfile
+   FROM ubuntu:latest
 
-    RUN wget -q -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/1.16/gosu-amd64" && \
-        chmod +x /usr/local/bin/gosu
+   RUN apt-get update && apt-get install -y --no-install-recommends wget
 
-    COPY entrypoint.sh /entrypoint.sh
-    RUN chmod +x /entrypoint.sh
+   RUN wget -q -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/1.16/gosu-amd64" && \
+       chmod +x /usr/local/bin/gosu
 
-    ENTRYPOINT ["/entrypoint.sh"]
+   COPY entrypoint.sh /entrypoint.sh
+   RUN chmod +x /entrypoint.sh
 
-    ```
-    And the `entrypoint.sh`:
+   ENTRYPOINT ["/entrypoint.sh"]
 
-    ```bash
-    #!/bin/bash
-    set -e
-    HOST_UID=$(id -u)
-    HOST_GID=$(id -g)
+   ```
 
-    gosu $HOST_UID:$HOST_GID "$@"
-    ```
-    Running the image:
+   And the `entrypoint.sh`:
+
+   ```bash
+   #!/bin/bash
+   set -e
+   HOST_UID=$(id -u)
+   HOST_GID=$(id -g)
+
+   gosu $HOST_UID:$HOST_GID "$@"
+   ```
+
+   Running the image:
+
    ```bash
    docker run -it my_image /bin/bash
    ```

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-gensim-to-cluster-words-from-my-dataframe-using-word-vectors"
 ---
 
-Alright, let's talk about using gensim for word clustering based on word vectors derived from a dataframe. It's a fairly common scenario I've encountered, especially when dealing with unstructured text data for things like topic analysis or feature engineering. I recall a project a few years back where we were analyzing customer feedback. The goal was to group similar complaints together automatically. Word clustering was essential for that, and gensim proved to be a reliable tool, albeit with its nuances.
+, let's talk about using gensim for word clustering based on word vectors derived from a dataframe. It's a fairly common scenario I've encountered, especially when dealing with unstructured text data for things like topic analysis or feature engineering. I recall a project a few years back where we were analyzing customer feedback. The goal was to group similar complaints together automatically. Word clustering was essential for that, and gensim proved to be a reliable tool, albeit with its nuances.
 
 The key to this process lies in understanding that you’re not directly clustering raw words, but rather, you’re clustering their vectorized representations. These vectors capture semantic relationships between words, meaning that words used in similar contexts tend to have vectors that are closer to each other in vector space. Gensim provides various models to generate those vectors, primarily Word2Vec, FastText, and Doc2Vec. For word clustering, Word2Vec is often a solid starting point.
 
@@ -220,8 +220,8 @@ Here, we showcase the usage of Agglomerative clustering for word clustering and 
 
 For further exploration, I recommend looking into:
 
-*   **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** This is a comprehensive textbook covering various aspects of natural language processing, including word embeddings and clustering. It’s an excellent resource for understanding the theoretical underpinnings.
-*   **"Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper:** This book provides a hands-on introduction to NLP using NLTK, which is useful for preprocessing steps.
-*   **Gensim's documentation:** The official documentation is essential for understanding specific parameters and options available within gensim.
+- **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** This is a comprehensive textbook covering various aspects of natural language processing, including word embeddings and clustering. It’s an excellent resource for understanding the theoretical underpinnings.
+- **"Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper:** This book provides a hands-on introduction to NLP using NLTK, which is useful for preprocessing steps.
+- **Gensim's documentation:** The official documentation is essential for understanding specific parameters and options available within gensim.
 
 Remember that the specific parameters used for the vectorization and clustering should be tuned based on your specific dataset. There’s no single “best” configuration, and often it requires some experimentation to get ideal results. In my experience, iterative improvement, often based on a thorough understanding of the underlying text, yields the most useful clusters.

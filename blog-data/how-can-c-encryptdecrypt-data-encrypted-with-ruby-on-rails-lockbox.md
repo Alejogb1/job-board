@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-c-encryptdecrypt-data-encrypted-with-ruby-on-rails-lockbox"
 ---
 
-Alright, let's talk about cross-platform encryption, specifically tackling the challenge of decrypting data in C# that was encrypted using Ruby on Rails' Lockbox gem. This isn't a theoretical exercise; I've faced this precise interoperability headache more than once across project boundaries and legacy systems. It's a common pitfall when integrating services developed with disparate tech stacks, and getting it wrong leads to data corruption, security vulnerabilities, and lots of late-night debugging sessions.
+, let's talk about cross-platform encryption, specifically tackling the challenge of decrypting data in C# that was encrypted using Ruby on Rails' Lockbox gem. This isn't a theoretical exercise; I've faced this precise interoperability headache more than once across project boundaries and legacy systems. It's a common pitfall when integrating services developed with disparate tech stacks, and getting it wrong leads to data corruption, security vulnerabilities, and lots of late-night debugging sessions.
 
 The core issue here revolves around differing encryption implementations, even if the underlying algorithms are conceptually the same. Lockbox in Ruby on Rails leverages `libsodium` for its heavy lifting, providing an abstraction layer that handles key derivation, nonce management, and authenticated encryption. We need to match that implementation precisely within the C# environment to successfully decrypt the data. Trying to do this without a clear understanding of the underlying processes is asking for trouble.
 

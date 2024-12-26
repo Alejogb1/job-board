@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-is-the-neural-network-formula-derived-using-matrix-operations"
 ---
 
-Alright, let’s tackle this. I’ve spent a fair bit of time in the trenches with neural networks, and one question that always seems to come up, and understandably so, is the nuts and bolts of how those calculations actually happen, especially when they're expressed with matrix algebra. It often feels a bit magical if you haven’t seen it broken down step-by-step. So let's demystify the core neural network formula using matrix operations.
+, let’s tackle this. I’ve spent a fair bit of time in the trenches with neural networks, and one question that always seems to come up, and understandably so, is the nuts and bolts of how those calculations actually happen, especially when they're expressed with matrix algebra. It often feels a bit magical if you haven’t seen it broken down step-by-step. So let's demystify the core neural network formula using matrix operations.
 
 Frankly, the elegance of using matrix multiplication for neural networks isn't just about conciseness; it's about performance and leveraging optimized libraries. The fundamental operations inside a neural net involve repeated linear transformations followed by non-linear activation functions, and matrices become our perfect tool for managing these transformations across multiple input neurons.
 
-Let's start at a single layer level. Imagine you have a layer with *n* input neurons and *m* output neurons (we'll also say they represent the neurons in a hidden layer for this case). The input data for this layer, let’s call it 'a,' is going to be a vector of dimensions (1 x *n*) if we're dealing with a single training example, or (*b* x *n*) if dealing with a batch of *b* examples. The weights connecting this input layer to the output neurons are stored in a matrix *W* of dimensions (*n* x *m*). Each row in W is associated with a single input neuron, and each column corresponds to an output neuron.
+Let's start at a single layer level. Imagine you have a layer with _n_ input neurons and _m_ output neurons (we'll also say they represent the neurons in a hidden layer for this case). The input data for this layer, let’s call it 'a,' is going to be a vector of dimensions (1 x _n_) if we're dealing with a single training example, or (_b_ x _n_) if dealing with a batch of _b_ examples. The weights connecting this input layer to the output neurons are stored in a matrix _W_ of dimensions (_n_ x _m_). Each row in W is associated with a single input neuron, and each column corresponds to an output neuron.
 
 The core linear transformation is this:
 
@@ -16,15 +16,15 @@ The core linear transformation is this:
 z = a * W + b
 ```
 
-Here, ‘z’ represents the weighted sum of the inputs. Notice, ‘a’ is our input, *W* is the weight matrix, and ‘b’ is a bias vector. The dimensions have to align properly for the matrix multiplication to be valid. If ‘a’ is a row vector, then the multiplication produces a row vector of dimension (1 x *m*). The bias ‘b’ here is also a row vector with the same dimensions (1 x *m*), and each bias is added to its corresponding output neuron. This results in ‘z’ also being a (1 x *m*) vector. This operation is performed for each of *b* training samples within the batch. Thus, ‘a’ is actually a (*b* x *n*) matrix, and ‘z’ will then become a (*b* x *m*) matrix.
+Here, ‘z’ represents the weighted sum of the inputs. Notice, ‘a’ is our input, _W_ is the weight matrix, and ‘b’ is a bias vector. The dimensions have to align properly for the matrix multiplication to be valid. If ‘a’ is a row vector, then the multiplication produces a row vector of dimension (1 x _m_). The bias ‘b’ here is also a row vector with the same dimensions (1 x _m_), and each bias is added to its corresponding output neuron. This results in ‘z’ also being a (1 x _m_) vector. This operation is performed for each of _b_ training samples within the batch. Thus, ‘a’ is actually a (_b_ x _n_) matrix, and ‘z’ will then become a (_b_ x _m_) matrix.
 
-After this transformation, we'll apply an activation function, often denoted by *σ*, element-wise to ‘z’.
+After this transformation, we'll apply an activation function, often denoted by _σ_, element-wise to ‘z’.
 
 ```
 a' = σ(z)
 ```
 
-This *a'* serves as the input for the next layer, or it becomes the network's output for the final layer. This is the foundational formula.
+This _a'_ serves as the input for the next layer, or it becomes the network's output for the final layer. This is the foundational formula.
 
 Now, let’s look at how backpropagation affects these matrix operations. Backpropagation relies on calculating gradients – how the cost function changes with respect to weights and biases. For weights, it involves a matrix product between the transpose of the input activation from the previous layer and the error signal for the current layer, which itself, is a matrix. To calculate the gradient of the cost function with respect to W, we do something like:
 
@@ -32,7 +32,7 @@ Now, let’s look at how backpropagation affects these matrix operations. Backpr
 dW = a_previous.transpose() * dZ
 ```
 
-Here, `dZ` represents the derivative of the cost function with respect to the output ‘z’ from our layer and ‘a_previous’ represents input activations from the previous layer. When dealing with a mini-batch of examples (or training samples), a_previous is a matrix and *dZ* is a matrix. In this context, this operation is an outer product summed across all the training examples. Similarly, for biases:
+Here, `dZ` represents the derivative of the cost function with respect to the output ‘z’ from our layer and ‘a_previous’ represents input activations from the previous layer. When dealing with a mini-batch of examples (or training samples), a_previous is a matrix and _dZ_ is a matrix. In this context, this operation is an outer product summed across all the training examples. Similarly, for biases:
 
 ```
 db = np.sum(dZ, axis=0, keepdims=True)
@@ -137,6 +137,6 @@ print("Gradient of weights (dW):\n", dW)
 
 These snippets, while simplified, demonstrate the core mechanics of how matrix operations are employed in neural networks. These operations are incredibly efficient, and modern machine learning libraries heavily rely on optimized implementations of them, allowing for the scaling of neural networks.
 
-For further reading and a more in-depth mathematical understanding, I strongly suggest checking out *Deep Learning* by Ian Goodfellow, Yoshua Bengio, and Aaron Courville. It’s an extremely comprehensive text that covers all the mathematical details thoroughly. Also, delve into *Pattern Recognition and Machine Learning* by Christopher Bishop. It provides a great foundation for understanding the probabilistic aspects and derivations behind many machine learning techniques, including neural networks. Finally, exploring the original papers on backpropagation itself is highly recommended; the original publications are quite enlightening on the practical and algorithmic thinking that went into developing the core techniques. These papers are typically cited in most academic literature related to deep learning.
+For further reading and a more in-depth mathematical understanding, I strongly suggest checking out _Deep Learning_ by Ian Goodfellow, Yoshua Bengio, and Aaron Courville. It’s an extremely comprehensive text that covers all the mathematical details thoroughly. Also, delve into _Pattern Recognition and Machine Learning_ by Christopher Bishop. It provides a great foundation for understanding the probabilistic aspects and derivations behind many machine learning techniques, including neural networks. Finally, exploring the original papers on backpropagation itself is highly recommended; the original publications are quite enlightening on the practical and algorithmic thinking that went into developing the core techniques. These papers are typically cited in most academic literature related to deep learning.
 
 In summary, the matrix representation of neural network computations is not just a convenient notation; it's a foundational aspect that makes these models computationally feasible and efficient. When working with large and complex networks, understanding the matrix algebra under the hood is not just a theoretical exercise but is key to debugging, optimizing, and ultimately mastering the craft.

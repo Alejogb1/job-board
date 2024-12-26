@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-profile-a-predict-call-with-tensorboard-on-a-cloud-tpu-node"
 ---
 
-Okay, let's unpack this. Profiling a predict call on a Cloud TPU using TensorBoard isn't always as straightforward as profiling on a CPU or GPU, but it's definitely manageable once you understand the nuances. I've had my share of late nights debugging TPU performance bottlenecks, so I can give you a solid, practical rundown based on my experience.
+, let's unpack this. Profiling a predict call on a Cloud TPU using TensorBoard isn't always as straightforward as profiling on a CPU or GPU, but it's definitely manageable once you understand the nuances. I've had my share of late nights debugging TPU performance bottlenecks, so I can give you a solid, practical rundown based on my experience.
 
 Essentially, the challenge lies in capturing the distributed computation and I/O activity across the multiple TPU cores and feeding it into TensorBoard for visualization. We're not just profiling a single process; we’re often looking at distributed training or inference across multiple hosts. The key is to leverage the TPU Profiler, a specialized tool designed for this purpose, in conjunction with TensorBoard.
 
@@ -41,6 +41,7 @@ if __name__ == "__main__":
   main()
 
 ```
+
 This example, while very simplified, gives you a crucial starting point. We've wrapped the `model(input_tensor)` call within a `trace.Trace` context. The `predict_call` string you see here is the trace event name. When the profiler is enabled, it records the duration of that block of code under this name. This is an important start, but it's insufficient on a TPU node since TPU profiling is usually done using the `tf.distribute.cluster_resolver.TPUClusterResolver` and requires explicit initialization for it to capture data. You must have your TPU cluster already defined and ready. Here's how we handle that, adding a slightly more advanced context:
 
 ```python

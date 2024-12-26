@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-the-contains-method-with-an-array-of-structs-in-swiftui"
 ---
 
-Alright, let’s tackle this. I've encountered this specific challenge quite a few times in my work, particularly when dealing with complex data models in SwiftUI projects. It’s a common stumbling block for many, so you're not alone. The issue essentially boils down to the fact that the `.contains()` method, when used directly with an array of structs, relies on *equality*. Now, structs by default don't inherently know how to compare themselves for equality, unless they adhere to the `Equatable` protocol. This isn't a SwiftUI-specific quirk; it's how Swift works in general. Let me break down how to handle this situation and avoid potential pitfalls.
+, let’s tackle this. I've encountered this specific challenge quite a few times in my work, particularly when dealing with complex data models in SwiftUI projects. It’s a common stumbling block for many, so you're not alone. The issue essentially boils down to the fact that the `.contains()` method, when used directly with an array of structs, relies on _equality_. Now, structs by default don't inherently know how to compare themselves for equality, unless they adhere to the `Equatable` protocol. This isn't a SwiftUI-specific quirk; it's how Swift works in general. Let me break down how to handle this situation and avoid potential pitfalls.
 
 First, let’s establish the foundational issue: a straightforward `.contains()` check on an array of structs won’t function as you might expect. Assume we have a struct like this, and for illustrative purposes, let's say this was in a past project where I was implementing a task management system:
 
@@ -16,9 +16,9 @@ struct Task {
 }
 ```
 
-Now, if you create an array of `Task` instances and try to use `.contains()` on it, supplying a *different* `Task` instance, even one with seemingly matching property values, it won't work. The default behaviour is to compare object *identities* not their content. The code will effectively always return `false`. This tripped me up a fair bit until I understood what was really happening beneath the surface. This happened during a sprint where we had a complex caching mechanism that relied heavily on matching already existing objects with incoming ones.
+Now, if you create an array of `Task` instances and try to use `.contains()` on it, supplying a _different_ `Task` instance, even one with seemingly matching property values, it won't work. The default behaviour is to compare object _identities_ not their content. The code will effectively always return `false`. This tripped me up a fair bit until I understood what was really happening beneath the surface. This happened during a sprint where we had a complex caching mechanism that relied heavily on matching already existing objects with incoming ones.
 
-To rectify this, we must make our `Task` struct conform to the `Equatable` protocol. This involves defining how two `Task` instances should be considered equal. Typically, you’d compare the fields that *uniquely* identify your struct. In our `Task` case, the `id` is a good candidate:
+To rectify this, we must make our `Task` struct conform to the `Equatable` protocol. This involves defining how two `Task` instances should be considered equal. Typically, you’d compare the fields that _uniquely_ identify your struct. In our `Task` case, the `id` is a good candidate:
 
 ```swift
 struct Task: Equatable {

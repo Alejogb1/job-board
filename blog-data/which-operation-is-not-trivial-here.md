@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "which-operation-is-not-trivial-here"
 ---
 
-Alright, let's dissect this. When presented with the seemingly simple question, "which operation is not trivial here?", the real answer, as seasoned engineers often find, is heavily contextual. It's never as straightforward as it appears at first glance. My own experiences, particularly during my time working on a high-throughput data ingestion pipeline, have solidified this notion. In that context, we weren't just dealing with individual function calls; we were orchestrating sequences of operations at scale, where what seemed trivial on a small dataset turned into a significant performance bottleneck at higher volumes.
+, let's dissect this. When presented with the seemingly simple question, "which operation is not trivial here?", the real answer, as seasoned engineers often find, is heavily contextual. It's never as straightforward as it appears at first glance. My own experiences, particularly during my time working on a high-throughput data ingestion pipeline, have solidified this notion. In that context, we weren't just dealing with individual function calls; we were orchestrating sequences of operations at scale, where what seemed trivial on a small dataset turned into a significant performance bottleneck at higher volumes.
 
 So, to be more specific, the "not trivial" aspect frequently revolves around these core themes: computational complexity, resource contention, or concurrency concerns. Often, a single operation that appears innocuous in isolation can become incredibly complex when scaled, particularly when concurrency is introduced. I’ll walk you through scenarios where we've seen this happen and offer some solutions.
 
@@ -61,7 +61,7 @@ for thread in threads:
 print(f"Final shared value: {shared_value}") # Not reliably 110
 ```
 
-In this example, the final value of ‘shared_value’ is not reliably going to be 110, it will often be lower due to race conditions. Here, the operation that's 'not trivial' isn't the increment itself, it’s the *concurrency* around it. This can be solved using various synchronization primitives, such as locks or semaphores. This highlights that the context and the environment of the operations are absolutely critical, not just the operations themselves.
+In this example, the final value of ‘shared_value’ is not reliably going to be 110, it will often be lower due to race conditions. Here, the operation that's 'not trivial' isn't the increment itself, it’s the _concurrency_ around it. This can be solved using various synchronization primitives, such as locks or semaphores. This highlights that the context and the environment of the operations are absolutely critical, not just the operations themselves.
 
 **Scenario 3: Complex conditional data transformations**
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-nginx-proxy-manager-connect-to-docker-containers"
 ---
 
-Alright, let's delve into this. It's a situation I've seen pop up more than a few times, and it's rarely a straightforward issue, unfortunately. The surface-level symptom—nginx proxy manager unable to communicate with your docker containers—is often a result of a few potential underlying problems. I remember wrestling with this a couple of years back; I had a development environment where newly created containers would simply disappear from proxy manager's radar, and it took a bit of careful diagnostics to nail down the root causes.
+, let's delve into this. It's a situation I've seen pop up more than a few times, and it's rarely a straightforward issue, unfortunately. The surface-level symptom—nginx proxy manager unable to communicate with your docker containers—is often a result of a few potential underlying problems. I remember wrestling with this a couple of years back; I had a development environment where newly created containers would simply disappear from proxy manager's radar, and it took a bit of careful diagnostics to nail down the root causes.
 
 Firstly, and probably the most common culprit, is network configuration. Docker containers don't automatically expose their services to the outside world, nor even to other containers by default. They typically operate within their own isolated networks, or at least on Docker's default bridge network. This isolation is a fundamental security feature, but it also means you have to explicitly configure communication paths.
 

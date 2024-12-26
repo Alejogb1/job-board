@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "verilog-functions-usage-modules"
 ---
 
-Okay so verilog functions and modules right seen this one a few times definitely know the drill lets break it down and talk about how I've seen it play out in real life
+verilog functions and modules right seen this one a few times definitely know the drill lets break it down and talk about how I've seen it play out in real life
 
-First off functions and modules are both crucial but they are *very* different beasts It’s easy to get them confused especially when you’re just starting out I remember way back when I was designing my first FPGA based audio processor I was hitting my head against a wall because I was trying to use a function for something that clearly needed to be a module lessons were learned that day let me tell you
+First off functions and modules are both crucial but they are _very_ different beasts It’s easy to get them confused especially when you’re just starting out I remember way back when I was designing my first FPGA based audio processor I was hitting my head against a wall because I was trying to use a function for something that clearly needed to be a module lessons were learned that day let me tell you
 
 **Verilog Functions**
 
-Think of verilog functions as the workhorses for repetitive tasks they are designed to perform operations that are combinatorial meaning that their output is solely a function of their inputs there is no memory or state involved they compute values pure and simple The key part is that a function *must* return a value they are not for making hardware that keeps states
+Think of verilog functions as the workhorses for repetitive tasks they are designed to perform operations that are combinatorial meaning that their output is solely a function of their inputs there is no memory or state involved they compute values pure and simple The key part is that a function _must_ return a value they are not for making hardware that keeps states
 
 Here’s a simple example of a function that calculates the sum of two 8-bit numbers
 
@@ -24,10 +24,10 @@ Easy enough right This function takes two 8-bit inputs `a` and `b` adds them tog
 
 Important things to know about functions
 
-*   **Combinatorial Logic:** They can only contain combinatorial logic that is no `always` blocks
-*   **Return Value:** They must have a return value declared in the function definition
-*   **Called Inside `always` Blocks:** You typically call functions within `always` blocks or other functions but not on their own
-*   **Local Scope:** Variables declared inside a function are local to that function only this is good practice and avoids problems with accidental overlapping variables names
+- **Combinatorial Logic:** They can only contain combinatorial logic that is no `always` blocks
+- **Return Value:** They must have a return value declared in the function definition
+- **Called Inside `always` Blocks:** You typically call functions within `always` blocks or other functions but not on their own
+- **Local Scope:** Variables declared inside a function are local to that function only this is good practice and avoids problems with accidental overlapping variables names
 
 **Verilog Modules**
 
@@ -57,17 +57,17 @@ This module is much more powerful than a function it includes an `always` block 
 
 Key takeaways for modules
 
-*   **Hierarchical Design:** Modules can instantiate other modules allowing for complex design hierarchies
-*   **Can contain state elements:** Modules can contain registers and other stateful elements using `always` blocks
-*   **Concurrency:** Modules operate concurrently the logic inside them runs in parallel
-*   **No return value:** Modules do not return values they manipulate signals and values inside of them or its outputs
+- **Hierarchical Design:** Modules can instantiate other modules allowing for complex design hierarchies
+- **Can contain state elements:** Modules can contain registers and other stateful elements using `always` blocks
+- **Concurrency:** Modules operate concurrently the logic inside them runs in parallel
+- **No return value:** Modules do not return values they manipulate signals and values inside of them or its outputs
 
 **Usage Differences**
 
 The core difference lies in their intended purpose functions are for combinatorial operations modules are for hardware blocks with state and concurrency
 
-*   **Functions for computation:** If you need to perform calculations data manipulations or other purely combinatorial tasks you use functions It makes the code shorter and readable You should reuse your functions to prevent redundancy
-*   **Modules for hardware:** For everything else you use modules registers flip flops memories counters all of those are modules they are hardware blocks you need to do things with
+- **Functions for computation:** If you need to perform calculations data manipulations or other purely combinatorial tasks you use functions It makes the code shorter and readable You should reuse your functions to prevent redundancy
+- **Modules for hardware:** For everything else you use modules registers flip flops memories counters all of those are modules they are hardware blocks you need to do things with
 
 For example let's say you want to calculate a CRC-32 checksum on data you might write a function for the core CRC-32 calculation logic this CRC function would process the data but not store anything then you would use a module to manage the input data feed that data into the CRC calculation function and store the result This way you get a module with state that uses a function to make its work
 

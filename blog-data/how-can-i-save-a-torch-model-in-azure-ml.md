@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-save-a-torch-model-in-azure-ml"
 ---
 
-Alright, let's tackle the persistence of torch models within the Azure machine learning environment. I’ve certainly faced this myself, more times than I care to remember, and it always comes down to ensuring we handle serialization and deserialization correctly within the context of the Azure ML ecosystem. It’s more than just dumping the weights; it’s about preserving the entire model structure and its associated artifacts in a way that Azure can reliably reload.
+, let's tackle the persistence of torch models within the Azure machine learning environment. I’ve certainly faced this myself, more times than I care to remember, and it always comes down to ensuring we handle serialization and deserialization correctly within the context of the Azure ML ecosystem. It’s more than just dumping the weights; it’s about preserving the entire model structure and its associated artifacts in a way that Azure can reliably reload.
 
 First, it's crucial to understand that when we talk about "saving a model" in a machine learning context, particularly with deep learning frameworks like PyTorch, we aren’t just saving a collection of numerical values. We're saving a complex data structure comprising the model's architecture, its learned parameters (weights and biases), and often other associated information, such as optimization settings or custom layers. This requires a careful approach, especially when integrating with a platform like Azure ML, which has its own storage mechanisms and deployment procedures.
 
@@ -159,9 +159,9 @@ This snippet demonstrates how to leverage the Azure ML SDK to register your trai
 
 For a more thorough understanding, I'd recommend diving into the official PyTorch documentation on saving and loading models. Specifically, focus on:
 
-*   The `torch.save` and `torch.load` functions and their nuances.
-*   Understanding the difference between saving the entire model versus the `state_dict`.
-*   The PyTorch versioning implications with `state_dict` loading.
+- The `torch.save` and `torch.load` functions and their nuances.
+- Understanding the difference between saving the entire model versus the `state_dict`.
+- The PyTorch versioning implications with `state_dict` loading.
 
 Additionally, the Azure Machine Learning documentation provides comprehensive guides and examples on model management, covering model registration, versioning, and deployment. These docs are an absolute must-have for understanding the integration points.
 

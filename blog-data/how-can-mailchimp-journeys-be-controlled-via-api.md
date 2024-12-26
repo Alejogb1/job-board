@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-mailchimp-journeys-be-controlled-via-api"
 ---
 
-Okay, let's talk about Mailchimp journeys and how to actually exert some control over them programmatically via their API. It's something I've dealt with extensively across several projects, and while the Mailchimp UI offers a fair amount of visual control, the API is where real automation and precision come into play. I recall one particularly thorny integration involving a complex user onboarding sequence that needed to respond dynamically to in-app actions – that's when I truly appreciated the depth available through their API endpoints, and, at times, also its limitations.
+, let's talk about Mailchimp journeys and how to actually exert some control over them programmatically via their API. It's something I've dealt with extensively across several projects, and while the Mailchimp UI offers a fair amount of visual control, the API is where real automation and precision come into play. I recall one particularly thorny integration involving a complex user onboarding sequence that needed to respond dynamically to in-app actions – that's when I truly appreciated the depth available through their API endpoints, and, at times, also its limitations.
 
-The core of interacting with Mailchimp journeys via API boils down to understanding a few key concepts and utilizing the correct endpoints. Mailchimp doesn’t explicitly call them 'journeys' in the API itself; instead, they're primarily managed through *automations* and *campaigns*. A journey, in Mailchimp’s vernacular, is a series of automated actions, generally emails, triggered by specific events or conditions.
+The core of interacting with Mailchimp journeys via API boils down to understanding a few key concepts and utilizing the correct endpoints. Mailchimp doesn’t explicitly call them 'journeys' in the API itself; instead, they're primarily managed through _automations_ and _campaigns_. A journey, in Mailchimp’s vernacular, is a series of automated actions, generally emails, triggered by specific events or conditions.
 
-You don't directly manipulate a visually defined journey as a single entity. Instead, you interface with individual components: the *trigger*, the *emails*, and sometimes *conditional logic* or *paths* within that automation. Mailchimp's API allows you to create, update, and retrieve these building blocks. However, editing the actual flow of the "visual" journey using the API is restricted. Direct manipulation is done via the Mailchimp interface. That’s a crucial understanding before proceeding.
+You don't directly manipulate a visually defined journey as a single entity. Instead, you interface with individual components: the _trigger_, the _emails_, and sometimes _conditional logic_ or _paths_ within that automation. Mailchimp's API allows you to create, update, and retrieve these building blocks. However, editing the actual flow of the "visual" journey using the API is restricted. Direct manipulation is done via the Mailchimp interface. That’s a crucial understanding before proceeding.
 
 Controlling a journey usually means interacting with these aspects:
 
@@ -16,7 +16,7 @@ Controlling a journey usually means interacting with these aspects:
 
 2.  **Updating User Data That Impacts a Journey:** Many journeys utilize dynamic content based on subscriber data. Through `PATCH /lists/{list_id}/members/{subscriber_hash}`, you can modify member attributes. These attribute updates can influence the specific emails a subscriber receives or the paths they take within a journey based on the conditional logic you’ve set up in Mailchimp. For example, you could update a user's `last_product_viewed` field, which could trigger a different branch of the journey.
 
-3. **Pausing or Cancelling a Journey For a Subscriber:** This is a less frequent, but essential operation. You can't pause an entire journey for everyone, but you can remove specific subscribers from an automation, effectively stopping them from receiving more emails. This involves utilizing `DELETE /lists/{list_id}/members/{subscriber_hash}/automations/{automation_id}`.
+3.  **Pausing or Cancelling a Journey For a Subscriber:** This is a less frequent, but essential operation. You can't pause an entire journey for everyone, but you can remove specific subscribers from an automation, effectively stopping them from receiving more emails. This involves utilizing `DELETE /lists/{list_id}/members/{subscriber_hash}/automations/{automation_id}`.
 
 Let's illustrate with some examples.
 

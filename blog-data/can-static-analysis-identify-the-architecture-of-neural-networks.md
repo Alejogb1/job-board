@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-static-analysis-identify-the-architecture-of-neural-networks"
 ---
 
-Okay, let's talk about this. I’ve actually spent a fair bit of time trying to extract architecture details from neural network code without running it, and it's a problem with some fascinating nuances. The simple answer is: it depends, but generally, yes, static analysis *can* identify key aspects of a neural network’s architecture, although it's not always trivial and has its limitations.
+, let's talk about this. I’ve actually spent a fair bit of time trying to extract architecture details from neural network code without running it, and it's a problem with some fascinating nuances. The simple answer is: it depends, but generally, yes, static analysis _can_ identify key aspects of a neural network’s architecture, although it's not always trivial and has its limitations.
 
 When we say ‘architecture’, we're usually referring to things like the number and type of layers (convolutional, recurrent, fully connected, etc.), the number of neurons or filters in each layer, the activation functions used, and sometimes, even things like dropout rates or specific connections between layers, if they’re complex. Purely based on examining code – the static analysis part – we're essentially reverse engineering these details from the code itself, without executing it.
 
@@ -12,13 +12,14 @@ The ability to do this accurately hinges significantly on the coding style and t
 
 The fundamental approach revolves around parsing the source code – either directly if it’s Python or some other scripting language – or parsing the intermediate representation (IR) if it’s compiled. We look for patterns in the way layers are instantiated and connected. This often involves graph traversal and data flow analysis within the codebase itself. We're effectively trying to reconstruct the neural network definition based on how it’s programmed, which means understanding the API calls related to building networks within the frameworks being used.
 
-I recall a project a few years ago where we were tasked with creating a security scanner for machine learning models. One component was to statically analyze a directory containing Python training scripts. We weren’t interested in the data, we needed to know the shape and makeup of the neural network. We found that while basic sequential models were fairly easy to parse using custom AST traversals, more complicated model architectures that employed subclassing and function calls to create layers introduced substantial complexity. The code wasn’t *bad,* it was simply that the architectural definitions weren’t laid out explicitly in linear form, making analysis challenging.
+I recall a project a few years ago where we were tasked with creating a security scanner for machine learning models. One component was to statically analyze a directory containing Python training scripts. We weren’t interested in the data, we needed to know the shape and makeup of the neural network. We found that while basic sequential models were fairly easy to parse using custom AST traversals, more complicated model architectures that employed subclassing and function calls to create layers introduced substantial complexity. The code wasn’t _bad,_ it was simply that the architectural definitions weren’t laid out explicitly in linear form, making analysis challenging.
 
 Here are three practical scenarios that highlight these points, with accompanying code examples in Python:
 
 **Example 1: Simple Sequential Model (Easy)**
 
 Here is the code:
+
 ```python
 import tensorflow as tf
 from tensorflow.keras import layers
@@ -40,6 +41,7 @@ In this case, the static analysis is straightforward. The analysis would identif
 **Example 2: Model with Subclassing (More Complex)**
 
 Consider this code:
+
 ```python
 import tensorflow as tf
 from tensorflow.keras import layers
@@ -69,6 +71,7 @@ This version uses class-based model creation, a common pattern in TensorFlow. Th
 **Example 3: Model with Hidden Layer Construction (Harder)**
 
 Here’s the trickiest example:
+
 ```python
 import tensorflow as tf
 from tensorflow.keras import layers
@@ -93,6 +96,6 @@ In this code, a separate function `build_hidden_layer` encapsulates the creation
 
 So, what are the limitations? Well, dynamic behavior is completely opaque to static analysis. If the layer architecture depends on runtime variables, or if layers are created inside conditional loops based on user-provided data, the analyzer cannot possibly determine the full architecture. Furthermore, obfuscated code, or models that heavily leverage dynamically created tensors in framework-specific ways, can thwart static analysis.
 
-For a deep dive, I would highly recommend studying the principles behind static program analysis, with a focus on abstract interpretation. Nielson, Nielson, and Hankin's *Principles of Program Analysis* is a great starting point. For techniques specific to TensorFlow and similar frameworks, look into the publications from researchers working on compilers for machine learning accelerators (e.g., look for papers on TensorFlow XLA or MLIR). You’ll find that these researchers have to solve related problems to optimize models, such as reasoning about the graph structure. Additionally, textbooks such as "Deep Learning with Python" by François Chollet provide detailed information about common model-building patterns that can guide building static analysis tools.
+For a deep dive, I would highly recommend studying the principles behind static program analysis, with a focus on abstract interpretation. Nielson, Nielson, and Hankin's _Principles of Program Analysis_ is a great starting point. For techniques specific to TensorFlow and similar frameworks, look into the publications from researchers working on compilers for machine learning accelerators (e.g., look for papers on TensorFlow XLA or MLIR). You’ll find that these researchers have to solve related problems to optimize models, such as reasoning about the graph structure. Additionally, textbooks such as "Deep Learning with Python" by François Chollet provide detailed information about common model-building patterns that can guide building static analysis tools.
 
 In summary, while static analysis can reveal considerable information about neural network architectures, it is far from perfect. It provides a valuable tool, especially for security and audit purposes, but it needs to be applied thoughtfully with an awareness of its inherent limitations. The level of success is directly proportional to the explicitness of the codebase and inversely proportional to the level of abstraction utilized in the framework itself.

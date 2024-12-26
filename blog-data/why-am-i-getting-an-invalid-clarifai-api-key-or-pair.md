@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "why-am-i-getting-an-invalid-clarifai-api-key-or-pair"
 ---
 
-alright, let's troubleshoot this clarifai api key issue. it's a classic problem, i've seen this pop up more times than i care to count. trust me, api key errors, they’re often not as scary as they first appear. most of the time, it’s some tiny detail we've overlooked. so, let’s get into it, i'll break down the usual suspects, based on my own past experiences with these sorts of things.
+, let's troubleshoot this clarifai api key issue. it's a classic problem, i've seen this pop up more times than i care to count. trust me, api key errors, they’re often not as scary as they first appear. most of the time, it’s some tiny detail we've overlooked. so, let’s get into it, i'll break down the usual suspects, based on my own past experiences with these sorts of things.
 
-first off, the obvious, but absolutely vital. are you absolutely positive you've copied the api key correctly? i mean, *exactly* right? these keys are long strings of seemingly random characters, and even a single character out of place can throw a wrench into the whole operation. it’s incredibly easy to accidentally miss a letter or number, or get a lowercase and uppercase mixed up when copying. i once spent a solid two hours tracking down this issue. it was like finding a single black pixel in a white image; turns out, i’d accidentally copied the key with a trailing space character at the end. that space, that little tiny space caused all of this. we can assume similar cases happen, it's usually something silly like that.
+first off, the obvious, but absolutely vital. are you absolutely positive you've copied the api key correctly? i mean, _exactly_ right? these keys are long strings of seemingly random characters, and even a single character out of place can throw a wrench into the whole operation. it’s incredibly easy to accidentally miss a letter or number, or get a lowercase and uppercase mixed up when copying. i once spent a solid two hours tracking down this issue. it was like finding a single black pixel in a white image; turns out, i’d accidentally copied the key with a trailing space character at the end. that space, that little tiny space caused all of this. we can assume similar cases happen, it's usually something silly like that.
 
 so before we go further, double, triple, heck quadruple-check the key, copy and paste it again if you have to. make sure there are no leading or trailing spaces, or any other invisible characters. i usually paste my key into a plain text editor, like notepad, just to make sure there's nothing extra hiding in there. and another point, did you maybe confuse the key with the secret? i know that can happen sometimes.
 
-next, let's talk about environment variables. are you storing your api key in an environment variable? this is the recommended practice for security reasons, we really do not want to expose the keys directly in our code. if you're doing it, excellent! if not, it’s worth looking into. if you're using environment variables, verify that the variable name matches the one your code expects, and the variable contains the *correct* api key, there is no typos in the variable name and its value. i had a particularly painful time with this myself, i had this variable called `clarifiai_api_key` and my code was looking for `clarifai_api_key` (i know, two "i" in the first name). a single character error cost me more time than i am comfortable to talk about.
+next, let's talk about environment variables. are you storing your api key in an environment variable? this is the recommended practice for security reasons, we really do not want to expose the keys directly in our code. if you're doing it, excellent! if not, it’s worth looking into. if you're using environment variables, verify that the variable name matches the one your code expects, and the variable contains the _correct_ api key, there is no typos in the variable name and its value. i had a particularly painful time with this myself, i had this variable called `clarifiai_api_key` and my code was looking for `clarifai_api_key` (i know, two "i" in the first name). a single character error cost me more time than i am comfortable to talk about.
 
 here’s an example of how you might access the key from an environment variable, using python:
 
@@ -46,35 +46,32 @@ else:
 or, if you use javascript:
 
 ```javascript
-require('dotenv').config(); // if you're using a .env file for environment variables
+require("dotenv").config(); // if you're using a .env file for environment variables
 
 const { ClarifaiStub, grpc } = require("clarifai-nodejs-grpc");
 
 const apiKey = process.env.CLARIFAI_API_KEY;
 
-
 if (!apiKey) {
-    console.error("Error: Environment variable 'CLARIFAI_API_KEY' not found.");
+  console.error("Error: Environment variable 'CLARIFAI_API_KEY' not found.");
 } else {
-    const stub = ClarifaiStub.grpc();
-    const metadata = new grpc.Metadata();
-    metadata.set("authorization", "key " + apiKey);
+  const stub = ClarifaiStub.grpc();
+  const metadata = new grpc.Metadata();
+  metadata.set("authorization", "key " + apiKey);
 
+  const request = {
+    model_id: "general-image-recognition",
+    version_id: "latest",
+  };
 
-   const request = {
-        model_id: "general-image-recognition",
-        version_id: "latest"
-      }
-
-    stub.GetModel(request, metadata, (err, response) => {
-        if (err) {
-          console.log("Error: Api key is invalid", err);
-        }
-        if (response) {
-            console.log(response);
-        }
-    });
-
+  stub.GetModel(request, metadata, (err, response) => {
+    if (err) {
+      console.log("Error: Api key is invalid", err);
+    }
+    if (response) {
+      console.log(response);
+    }
+  });
 }
 ```
 

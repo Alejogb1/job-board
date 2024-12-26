@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "generate-random-polynom-for-random-input"
 ---
 
-Okay so you're asking about generating random polynomials given random inputs right Been there done that countless times Let me break this down for you in a way that hopefully clicks based on my painful past experiences with this very issue Trust me this ain't rocket science but it does have a few gotchas if you're not careful
+you're asking about generating random polynomials given random inputs right Been there done that countless times Let me break this down for you in a way that hopefully clicks based on my painful past experiences with this very issue Trust me this ain't rocket science but it does have a few gotchas if you're not careful
 
 First things first let's talk about what we mean by a polynomial A polynomial is basically a sum of terms each term being a coefficient multiplied by a variable raised to a non negative integer power like `ax^n` and so on `a` is the coefficient `x` is the variable and `n` is the power Now if you want a random polynomial you gotta randomize these two things coefficients and powers For the random input part well that's just plugging in a random value for x at the end to evaluate the polynomial so that part is easy
 
@@ -49,7 +49,7 @@ def create_polynomial(degree, min_coeff, max_coeff):
 ```
 
 **Step 4 Evaluate the Polynomial**
-Alright so now you have your polynomial with all the coefficients and degrees and you need to evaluate it at some random point. I like to have another function for that. It should take the polynomial and the input x and return the polynomial evaluated at x. If we use the dictionary that we generated before that's easy just iterate over the keys that are also the powers and just multiply each coefficient with x to that power and add them up to a total value.
+so now you have your polynomial with all the coefficients and degrees and you need to evaluate it at some random point. I like to have another function for that. It should take the polynomial and the input x and return the polynomial evaluated at x. If we use the dictionary that we generated before that's easy just iterate over the keys that are also the powers and just multiply each coefficient with x to that power and add them up to a total value.
 
 ```python
 def evaluate_polynomial(polynomial, x):
@@ -58,14 +58,16 @@ def evaluate_polynomial(polynomial, x):
         result += coefficient * (x ** power)
     return result
 ```
+
 And there you have it! Full code for generating random polynomials that you can use and modify to your heart's content based on your actual needs.
 
 Now here is a funny thing I've noticed. Sometimes when people get the output they get confused because they don't see any `x` in there. They think something is wrong. Well it isn't wrong because the x is no longer an abstract variable it's been substituted with a number and the result is another number. Which is what we should expect from evaluating a polynomial with a specific value for `x`. I once spent almost 3 hours debugging for something similar with some colleagues because one of them was confused about this. The things we do when we don't sleep enough
 
 **A few more thoughts and advice**
-* **Numerical Stability**: If you are going to use these polynomials for numerical calculations be mindful that for large coefficients and large powers you could run into floating point issues So its good to use libraries like numpy or scipy if you have those kind of requirements.
-* **Curve fitting**: For some use cases you might need a polynomial that is fitted to some data points. This means that you should not only create random ones but also be able to adjust the coefficients based on some known data points. If that's the case then I suggest you look into curve fitting techniques like polynomial regression which will help you achieve this.
-* **Resource Recommendation**: If you want to really dive deep into the theory of polynomials and numerical methods I'd recommend “Numerical Recipes” by Press et al. It's a classic that covers many of these topics with practical examples or "Introduction to Numerical Analysis" by Atkinson this one will help you get a deeper understanding of how these polynomials behave when doing calculations.
+
+- **Numerical Stability**: If you are going to use these polynomials for numerical calculations be mindful that for large coefficients and large powers you could run into floating point issues So its good to use libraries like numpy or scipy if you have those kind of requirements.
+- **Curve fitting**: For some use cases you might need a polynomial that is fitted to some data points. This means that you should not only create random ones but also be able to adjust the coefficients based on some known data points. If that's the case then I suggest you look into curve fitting techniques like polynomial regression which will help you achieve this.
+- **Resource Recommendation**: If you want to really dive deep into the theory of polynomials and numerical methods I'd recommend “Numerical Recipes” by Press et al. It's a classic that covers many of these topics with practical examples or "Introduction to Numerical Analysis" by Atkinson this one will help you get a deeper understanding of how these polynomials behave when doing calculations.
 
 Anyways I think that's all the useful info I can think of right now. Feel free to ask more questions if you get stuck or need to deep dive into one specific topic I am sure we can solve any issue you have if we put our heads together
 

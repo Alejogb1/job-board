@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-to-resolve-horizontal-overlapping-in-swift-tableviewcells"
 ---
 
-Alright, let's tackle this. I've certainly had my share of battles with layout constraints and their particular brand of chaotic fun, especially when it comes to `UITableViewCells`. Horizontal overlapping, specifically, is a common culprit when custom cells become just a bit too ambitious. Here’s my approach, drawn from a few past encounters that ultimately resulted in a stable and predictable user interface.
+, let's tackle this. I've certainly had my share of battles with layout constraints and their particular brand of chaotic fun, especially when it comes to `UITableViewCells`. Horizontal overlapping, specifically, is a common culprit when custom cells become just a bit too ambitious. Here’s my approach, drawn from a few past encounters that ultimately resulted in a stable and predictable user interface.
 
-The core issue with horizontal overlap within table view cells generally stems from a clash between the intrinsic content size of elements within the cell and the constraints you’ve set up. When the available horizontal space is less than what the combined elements *want* to occupy, you get that dreaded overlap. It’s a visual bug that screams 'constraint ambiguity' or a simple lack of specificity in your layout.
+The core issue with horizontal overlap within table view cells generally stems from a clash between the intrinsic content size of elements within the cell and the constraints you’ve set up. When the available horizontal space is less than what the combined elements _want_ to occupy, you get that dreaded overlap. It’s a visual bug that screams 'constraint ambiguity' or a simple lack of specificity in your layout.
 
 My preferred strategy centers around a few key concepts: leveraging stack views, meticulously applying content hugging and compression resistance priorities, and sometimes, just sometimes, opting for a custom layout manager when the defaults don't quite cut it. Let's break each of those down.
 
@@ -52,7 +52,7 @@ class MyTableViewCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupView(){
        let horizontalStackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel, amountLabel])
         horizontalStackView.axis = .horizontal
@@ -74,13 +74,13 @@ class MyTableViewCell: UITableViewCell {
 }
 ```
 
-Here, the horizontal stack view handles the horizontal positioning of the labels. Importantly, I’ve set the `distribution` to `.fill`, which ensures that views expand to fill the available space. If I wanted, for example, for the *amountLabel* to always take up as little space as possible, while the title and subtitle fill the rest of the space as needed, I would set the `distribution` to `.fillProportionally` and adjust the content hugging of the *amountLabel*, which brings me to the next point.
+Here, the horizontal stack view handles the horizontal positioning of the labels. Importantly, I’ve set the `distribution` to `.fill`, which ensures that views expand to fill the available space. If I wanted, for example, for the _amountLabel_ to always take up as little space as possible, while the title and subtitle fill the rest of the space as needed, I would set the `distribution` to `.fillProportionally` and adjust the content hugging of the _amountLabel_, which brings me to the next point.
 
 The second crucial part involves **content hugging and compression resistance**. These are two related concepts that dictate how a view behaves when there’s not enough or too much space.
 
 Content hugging priority determines how much a view “wants” to be its intrinsic content size. The higher the priority, the less likely it is to grow beyond its natural size. Conversely, compression resistance priority determines how much a view “resists” shrinking below its natural size. The higher the priority, the less likely it is to be compressed.
 
-Going back to the previous example, if I wanted the *amountLabel* to always hug its content, I would modify that label declaration:
+Going back to the previous example, if I wanted the _amountLabel_ to always hug its content, I would modify that label declaration:
 
 ```swift
     let amountLabel: UILabel = {
@@ -129,7 +129,7 @@ class UserInfoCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupView(){
 
         let horizontalStackView = UIStackView(arrangedSubviews: [nameLabel, descriptionLabel])

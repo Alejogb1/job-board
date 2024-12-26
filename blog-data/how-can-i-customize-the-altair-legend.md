@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-customize-the-altair-legend"
 ---
 
-Alright, let's talk about customizing Altair legends. It’s something I've spent quite a bit of time on, especially back when I was working on that dashboard visualization project for the climate data initiative – dealing with numerous, sometimes overlapping, data series meant I had to get creative with the legends to maintain readability. The standard defaults, while functional, often fell short, and I found myself needing more control over their appearance. So, let's break down how we can achieve that, covering some common customization needs.
+, let's talk about customizing Altair legends. It’s something I've spent quite a bit of time on, especially back when I was working on that dashboard visualization project for the climate data initiative – dealing with numerous, sometimes overlapping, data series meant I had to get creative with the legends to maintain readability. The standard defaults, while functional, often fell short, and I found myself needing more control over their appearance. So, let's break down how we can achieve that, covering some common customization needs.
 
-The primary mechanism for adjusting the Altair legend relies on properties nested within the `encoding` definitions of your chart, specifically under the `legend` keyword. Remember, Altair’s grammar is declarative; you describe *what* you want, not *how* to do it step-by-step. This makes its customization a bit different compared to, say, matplotlib.
+The primary mechanism for adjusting the Altair legend relies on properties nested within the `encoding` definitions of your chart, specifically under the `legend` keyword. Remember, Altair’s grammar is declarative; you describe _what_ you want, not _how_ to do it step-by-step. This makes its customization a bit different compared to, say, matplotlib.
 
 Firstly, basic customization includes controlling the legend's position. You might need to place it outside the plot area to avoid obstruction, or even position it above the plot for more optimal space utilization. This is accomplished by targeting the `legend` property inside the `encoding` of the specific channel for which you want to modify the legend. In Altair, visual channels include things like `color`, `shape`, `size`, etc. Consider the following scenario:
 

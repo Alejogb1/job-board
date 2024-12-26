@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-eslint---fix-break-code-with-no-duplicate-imports"
 ---
 
-Alright, let's unpack this. I remember a particularly frustrating project a few years back, where a seemingly innocuous eslint configuration change triggered a cascade of code breakages. It involved exactly this: `eslint --fix` and the `no-duplicate-imports` rule going rogue. Let's get into why that happens, from a practical angle.
+, let's unpack this. I remember a particularly frustrating project a few years back, where a seemingly innocuous eslint configuration change triggered a cascade of code breakages. It involved exactly this: `eslint --fix` and the `no-duplicate-imports` rule going rogue. Let's get into why that happens, from a practical angle.
 
 The `no-duplicate-imports` rule, at its core, aims to enforce a clean and maintainable import structure. It's designed to catch instances where the same module is imported multiple times within a single file, which can lead to confusion and potentially unnecessary resource consumption. When eslint encounters such duplication, and if `--fix` is enabled, it attempts to merge these imports. This merge operation is where the trouble often begins.
 
@@ -19,8 +19,8 @@ Often, developers mix default and named imports from the same module, either int
 ```javascript
 // initial_code_1.js
 
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React from "react";
+import { useState, useEffect } from "react";
 
 function MyComponent() {
   // ... component logic using React, useState, and useEffect
@@ -32,10 +32,10 @@ function MyComponent() {
 ```javascript
 //eslint_fixed_code_1.js
 
-import React, { useState, useEffect } from 'react'; // **PROBLEM!**
+import React, { useState, useEffect } from "react"; // **PROBLEM!**
 
 function MyComponent() {
-   // ... component logic using React, useState, and useEffect
+  // ... component logic using React, useState, and useEffect
 }
 ```
 
@@ -47,11 +47,11 @@ Another frequent issue I've observed arises from the practice of aliasing import
 
 ```javascript
 // initial_code_2.js
-import { add as addFunction } from './utils';
-import { add } from './utils';
+import { add as addFunction } from "./utils";
+import { add } from "./utils";
 
-function calculateSum(a,b) {
-    return addFunction(a,b) + add(a,b);
+function calculateSum(a, b) {
+  return addFunction(a, b) + add(a, b);
 }
 ```
 
@@ -60,9 +60,9 @@ This situation, while potentially questionable practice, might not break code. T
 ```javascript
 //eslint_fixed_code_2.js
 
-import { add as addFunction, add } from './utils';  //**PROBLEM!**
-function calculateSum(a,b) {
-    return addFunction(a,b) + add(a,b);
+import { add as addFunction, add } from "./utils"; //**PROBLEM!**
+function calculateSum(a, b) {
+  return addFunction(a, b) + add(a, b);
 }
 ```
 
@@ -78,14 +78,14 @@ Finally, consider a scenario where a module exports things from another module, 
 export const value = 10;
 
 // module_b.js
-export * from './library_a';
+export * from "./library_a";
 
 // my_component.js
-import { value } from './library_a';
-import { value as reExportedValue } from './module_b';
+import { value } from "./library_a";
+import { value as reExportedValue } from "./module_b";
 
-function useValues(){
-    console.log(value, reExportedValue);
+function useValues() {
+  console.log(value, reExportedValue);
 }
 ```
 
@@ -94,9 +94,9 @@ function useValues(){
 ```javascript
 // eslint_fixed_code_3.js
 
-import { value , value as reExportedValue } from './library_a'; //**PROBLEM!**
-function useValues(){
-    console.log(value, reExportedValue);
+import { value, value as reExportedValue } from "./library_a"; //**PROBLEM!**
+function useValues() {
+  console.log(value, reExportedValue);
 }
 ```
 
@@ -104,6 +104,6 @@ Now you have the same situation as before, and `eslint --fix` has broken the int
 
 So, why does `eslint --fix` break code with `no-duplicate-imports`? It's because while the rule is well-intentioned, the automated fixing mechanism is overly simplistic. It lacks the contextual awareness to handle the complexities of import syntax, module aliasing, and re-export patterns. The tool assumes that any import of the same name or from the same module can simply be merged, overlooking the subtle distinctions that make code work.
 
-The lesson I learned – painfully – was to *never* blindly apply autofixes, particularly on import rules. It's always a better strategy to understand the code and the underlying import patterns first, then apply fixes manually. If eslint finds errors of duplicate import, investigate the reasons for duplication first, and then decide the appropriate course of action. Do not leave this to autofix to decide for you, because that decision is often wrong. This isn't a bug in eslint; it's a limitation of automated code correction without understanding intent.
+The lesson I learned – painfully – was to _never_ blindly apply autofixes, particularly on import rules. It's always a better strategy to understand the code and the underlying import patterns first, then apply fixes manually. If eslint finds errors of duplicate import, investigate the reasons for duplication first, and then decide the appropriate course of action. Do not leave this to autofix to decide for you, because that decision is often wrong. This isn't a bug in eslint; it's a limitation of automated code correction without understanding intent.
 
 For further reading, I’d recommend diving into the "ECMAScript specification" for a deep dive on import syntax. Specifically, Section 15.2.3.6, “Import Declarations," provides the definitive guide. Also, explore “Effective JavaScript: 68 Specific Ways to Harness the Power of JavaScript” by David Herman to understand the nuances and best practices of structuring javascript. Understanding these finer details is crucial to avoid the common pitfalls caused by blindly applying `eslint --fix` rules, particularly with module import statements. The documentation from eslint itself regarding `no-duplicate-imports` rule should also be studied carefully.

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "c-unsubscribe-event-lambda-event-handler"
 ---
 
-Okay so you're asking about unsubscribing from C# events specifically when the event handler is a lambda well I've been there man countless times it's a common pitfall so let's dive in I'm gonna talk from personal experience you know things I learned the hard way
+you're asking about unsubscribing from C# events specifically when the event handler is a lambda well I've been there man countless times it's a common pitfall so let's dive in I'm gonna talk from personal experience you know things I learned the hard way
 
 See the problem is lambda expressions when used as event handlers create anonymous delegates these delegates don't have a direct name you can use for unsubscribing like a normal method you'd hook up with += and unhook with -= That direct name is crucial for that -= operation It's a core part of how C# event system works
 
@@ -42,6 +42,7 @@ publisher.MyEvent -= (sender EventArgs e) =>
     Console.WriteLine("Event received via lambda");
 };
 ```
+
 C# won't let you just use an equivalent lambda expression it's not about the lambda looking the same the compiler generates a new anonymous delegate each time even if the code is identical It's like trying to remove a sticker by a duplicate sticker but the real sticker is the one underneath
 
 This is a gotcha and people fall for it all the time So how do we get around it? Well the simplest way and what I usually do now is to stash the lambda in a variable a delegate variable I should be specific. Instead of adding the anonymous delegate we create an actual variable of the right type and assign the lambda to it
@@ -78,7 +79,7 @@ The other alternative which I would only use in cases that your handler logic is
 public class Subscriber : IDisposable
 {
     private Publisher _publisher;
-    
+
     public Subscriber(Publisher publisher)
     {
         _publisher = publisher;
@@ -87,7 +88,7 @@ public class Subscriber : IDisposable
             Console.WriteLine("Event received via lambda using IDisposable");
         };
     }
-    
+
     public void Dispose()
     {
         _publisher.MyEvent -= (sender EventArgs e) =>
@@ -99,6 +100,7 @@ public class Subscriber : IDisposable
     }
 }
 ```
+
 Now you'll notice here I am using the same lambada expression here as when subscribing this is ok this will work due to how Dispose is called usually it's not good practice to create the lambda expression like this inside the `Dispose` method but because of the time the Dispose method is called it will ensure that the correct handler will be removed this should only be used in simple use cases where you can guarantee the object that is subscribing is indeed being disposed when no longer needed It's another way to handle the lambda but more specific scenarios
 
 So there you have it basically you should avoid anonymous lambda expressions as event handlers if you plan on unsubscribing from them without a reference to the event handler delegate. Delegate variables are your best friend and IDisposable interface could be useful on very specific cases if you can manage that and there is no performance penalty

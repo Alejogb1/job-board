@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-can-i-trigger-an-airflow-task-using-sftpsensor-to-check-for-a-specific-file-extension-on-a-server"
 ---
 
-Alright, let's talk about triggering Airflow tasks based on file extensions using an SFTPSensor. I’ve encountered this particular challenge more than a few times over the years, and it's usually a common pain point in data pipelines dealing with external systems. It's not just about ‘seeing’ a file; it's about waiting for the *correct* file before proceeding.
+, let's talk about triggering Airflow tasks based on file extensions using an SFTPSensor. I’ve encountered this particular challenge more than a few times over the years, and it's usually a common pain point in data pipelines dealing with external systems. It's not just about ‘seeing’ a file; it's about waiting for the _correct_ file before proceeding.
 
-The core problem is that SFTPSensor only checks for the *presence* of a file or directory, not its content, name, or specific extension. So, you can’t directly configure it to trigger only on, say, `.csv` files. That said, there’s an elegant workaround using a combination of the SFTPSensor and some custom logic, and I'm going to walk you through that. Essentially, we’ll leverage the sensor’s core functionality to detect a file change and then augment that with our criteria check.
+The core problem is that SFTPSensor only checks for the _presence_ of a file or directory, not its content, name, or specific extension. So, you can’t directly configure it to trigger only on, say, `.csv` files. That said, there’s an elegant workaround using a combination of the SFTPSensor and some custom logic, and I'm going to walk you through that. Essentially, we’ll leverage the sensor’s core functionality to detect a file change and then augment that with our criteria check.
 
 Let’s break down how this unfolds into a structured approach.
 
 First, we'll use the `SFTPSensor` to monitor a directory, just as you normally would. We’ll be less concerned about the exact file initially, but rather any file change. The key is to understand that the sensor polls the directory according to its polling interval, and, if a file is detected or has been modified (depending on configuration), it will proceed past the sensor task in your DAG. We don't yet care about the extension here - it is simply an initial “something has changed” step.
 
-Next, *after* the `SFTPSensor` has completed, we'll utilize a PythonOperator to perform more detailed file inspection, specifically targeting the file extension. This operator will retrieve a list of file(s) from the remote directory, filter for our desired file type and then, importantly, set an XCOM variable which can be consumed by subsequent tasks to process the file(s) or, if the filter fails, cause the dag to stop or fail gracefully.
+Next, _after_ the `SFTPSensor` has completed, we'll utilize a PythonOperator to perform more detailed file inspection, specifically targeting the file extension. This operator will retrieve a list of file(s) from the remote directory, filter for our desired file type and then, importantly, set an XCOM variable which can be consumed by subsequent tasks to process the file(s) or, if the filter fails, cause the dag to stop or fail gracefully.
 
 Here's a breakdown with three Python code examples:
 
@@ -186,5 +186,5 @@ with DAG(
 
 In this final snippet, we have added a new task, `process_files_task` which pulls the XCOM variable `qualified_files` from the previous task, and then iterates through that list of files performing specific processing logic on each file.
 
-Now, regarding further reading, you'll want to dive deeper into Paramiko's documentation. Paramiko handles SSH and SFTP connections securely, and that will give you a really solid foundation. Look at sections pertaining to `SFTPClient`. Secondly, I strongly suggest looking into the Airflow documentation on providers, specifically how to configure and manage sftp connections as well as how the SFTPSensor works. Finally, a good resource, although not specific to Airflow, would be the *Python Cookbook* by David Beazley and Brian K. Jones. It is an invaluable companion for any Python development tasks like file operations and system interactions we’ve touched on here.
+Now, regarding further reading, you'll want to dive deeper into Paramiko's documentation. Paramiko handles SSH and SFTP connections securely, and that will give you a really solid foundation. Look at sections pertaining to `SFTPClient`. Secondly, I strongly suggest looking into the Airflow documentation on providers, specifically how to configure and manage sftp connections as well as how the SFTPSensor works. Finally, a good resource, although not specific to Airflow, would be the _Python Cookbook_ by David Beazley and Brian K. Jones. It is an invaluable companion for any Python development tasks like file operations and system interactions we’ve touched on here.
 I hope this breakdown is both thorough and helpful. Let me know if you have any more questions – always happy to share what I've learned.

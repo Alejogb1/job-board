@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-i-restore-nuget-packages-from-a-private-feed-during-docker-container-builds"
 ---
 
-Okay, let's tackle this. It’s a problem I’ve certainly encountered more than once, particularly during those early cloud-native migrations. Handling NuGet packages in Docker builds, especially from private feeds, requires a solid understanding of both Dockerfile mechanics and NuGet configuration. I’ve seen it go sideways in several ways, mostly revolving around authentication and caching. Here’s how I approach it, drawing from a few hard-earned lessons.
+, let's tackle this. It’s a problem I’ve certainly encountered more than once, particularly during those early cloud-native migrations. Handling NuGet packages in Docker builds, especially from private feeds, requires a solid understanding of both Dockerfile mechanics and NuGet configuration. I’ve seen it go sideways in several ways, mostly revolving around authentication and caching. Here’s how I approach it, drawing from a few hard-earned lessons.
 
-First off, consider the fundamental issue: by default, Docker build processes are isolated and, crucially, lack the context of your development environment’s configured NuGet sources. They don't inherently *know* about your internal package feeds, nor do they possess any credentials to access them. This is deliberate, for security reasons. So, we have to explicitly tell the container build process where to look for packages and how to authenticate if necessary.
+First off, consider the fundamental issue: by default, Docker build processes are isolated and, crucially, lack the context of your development environment’s configured NuGet sources. They don't inherently _know_ about your internal package feeds, nor do they possess any credentials to access them. This is deliberate, for security reasons. So, we have to explicitly tell the container build process where to look for packages and how to authenticate if necessary.
 
 The approach hinges on two main aspects: configuring NuGet within the Docker build context and, often, handling authentication via environment variables or some other secure mechanism, especially if it's a protected feed. We can achieve this fairly systematically.
 
@@ -50,10 +50,10 @@ ENTRYPOINT ["dotnet", "YourApp.dll"]
 
 Here’s what’s happening, step by step:
 
-1.  **`FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build`**:  We start with a build image containing the .net SDK, as we're publishing an application.
+1.  **`FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build`**: We start with a build image containing the .net SDK, as we're publishing an application.
 2.  **`WORKDIR /app`**: We establish a working directory within the container.
-3.  **`COPY nuget.config ./`**:  We copy the NuGet configuration file from the build context into the container's `/app` directory.
-4.  **`COPY *.csproj ./`**:  Copy over the project files.
+3.  **`COPY nuget.config ./`**: We copy the NuGet configuration file from the build context into the container's `/app` directory.
+4.  **`COPY *.csproj ./`**: Copy over the project files.
 5.  **`RUN dotnet restore --configfile nuget.config`**: This critical line invokes `dotnet restore`, explicitly instructing the restore operation to use the provided `nuget.config`. The `--configfile` option is paramount here. This will pull down dependencies from your private feed, provided the credentials are set.
 6.  **`COPY . ./`**: Copy the rest of your code into the container.
 7.  **`RUN dotnet publish -c Release -o /out`**: Finally we publish the code to a separate folder.
@@ -106,9 +106,9 @@ Lastly, it is useful to examine the output of your builds. When encountering iss
 
 To dive deeper into these areas, I highly recommend the following:
 
-*   **"Pro NuGet" by Kurt Dillard**: Provides a comprehensive look at NuGet configurations. It's slightly older but still very relevant for understanding the intricacies of NuGet.
-*   **The Docker documentation**: Crucial for understanding build contexts and the mechanics of Dockerfiles. Pay particular attention to sections on build optimization and working with secrets.
-*   **Official Microsoft documentation on .NET CLI tools and package management**: Details on how to use `dotnet restore`, and the `nuget.config` format.
-*   **Documentation for your specific private package feed provider**: This often has specific requirements, particularly around authentication methods.
+- **"Pro NuGet" by Kurt Dillard**: Provides a comprehensive look at NuGet configurations. It's slightly older but still very relevant for understanding the intricacies of NuGet.
+- **The Docker documentation**: Crucial for understanding build contexts and the mechanics of Dockerfiles. Pay particular attention to sections on build optimization and working with secrets.
+- **Official Microsoft documentation on .NET CLI tools and package management**: Details on how to use `dotnet restore`, and the `nuget.config` format.
+- **Documentation for your specific private package feed provider**: This often has specific requirements, particularly around authentication methods.
 
 Working with private NuGet feeds in Docker builds might seem challenging initially, but, as I’ve demonstrated, with the correct configuration and authentication practices, the process is quite manageable and can be integrated into a robust development and deployment workflow. It’s all about understanding the context each layer operates in, and how to bridge the gap by providing the necessary information.

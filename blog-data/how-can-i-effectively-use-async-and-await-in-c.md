@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-can-i-effectively-use-async-and-await-in-c"
 ---
 
-Alright, let's talk about `async` and `await` in C#. I’ve certainly spent my fair share of late nights debugging code that wasn’t leveraging these features correctly, so I've got some practical experience to draw from. It’s not just about slapping the keywords onto your methods; understanding the underlying mechanisms and best practices is crucial for writing efficient and maintainable asynchronous code.
+, let's talk about `async` and `await` in C#. I’ve certainly spent my fair share of late nights debugging code that wasn’t leveraging these features correctly, so I've got some practical experience to draw from. It’s not just about slapping the keywords onto your methods; understanding the underlying mechanisms and best practices is crucial for writing efficient and maintainable asynchronous code.
 
 The core of asynchronous programming, at least in the C# context with `async` and `await`, revolves around allowing a thread to perform other work while waiting for an operation to complete. Instead of blocking a thread, which would render your application unresponsive, asynchronous operations essentially yield control back to the calling thread, which can then process other requests. The `async` keyword marks a method as asynchronous, while `await` pauses the execution of that method until the awaited task completes, at which point execution resumes. Critically, this doesn’t block the thread running the `async` method.
 
-It's important to get out of the mindset that `async` makes operations run in parallel, because it doesn’t in itself guarantee that. It primarily deals with thread management and non-blocking operations. I’ve often seen developers assume that wrapping something in `async` magically speeds it up, which isn’t quite how it works. What it *does* is allow your UI thread or similar to remain responsive while the task is running elsewhere, for example, using a thread from the threadpool or through IO completion ports.
+It's important to get out of the mindset that `async` makes operations run in parallel, because it doesn’t in itself guarantee that. It primarily deals with thread management and non-blocking operations. I’ve often seen developers assume that wrapping something in `async` magically speeds it up, which isn’t quite how it works. What it _does_ is allow your UI thread or similar to remain responsive while the task is running elsewhere, for example, using a thread from the threadpool or through IO completion ports.
 
 Let's consider a practical scenario: imagine you're building a data processing pipeline. You need to fetch data from multiple sources, perform some processing on each set, and then aggregate the results. Doing this synchronously, one request at a time, would be incredibly slow. This is where `async` and `await` really shine.
 
-Here's a basic example, first demonstrating how *not* to do it. Imagine a simple method `FetchDataAsync` simulating retrieving data and then a `ProcessDataAsync` to process that data:
+Here's a basic example, first demonstrating how _not_ to do it. Imagine a simple method `FetchDataAsync` simulating retrieving data and then a `ProcessDataAsync` to process that data:
 
 ```csharp
 public async Task<string> FetchDataAsync(string source)
@@ -46,9 +46,9 @@ public async Task BadSynchronousMethod()
 
 ```
 
-In this 'BadSynchronousMethod', we're sequentially fetching and processing data from two different sources. Though we use `async` and `await`, the fetches and processing are done one after the other.  The total execution time would be roughly the sum of each operation sequentially due to the `await`, leading to a slow process, and if this was being called from a GUI thread, the GUI would be unresponsive during this period.
+In this 'BadSynchronousMethod', we're sequentially fetching and processing data from two different sources. Though we use `async` and `await`, the fetches and processing are done one after the other. The total execution time would be roughly the sum of each operation sequentially due to the `await`, leading to a slow process, and if this was being called from a GUI thread, the GUI would be unresponsive during this period.
 
-Now, let’s improve this using proper asynchronous techniques.  We can leverage `Task.WhenAll` to parallelize these independent operations:
+Now, let’s improve this using proper asynchronous techniques. We can leverage `Task.WhenAll` to parallelize these independent operations:
 
 ```csharp
 public async Task GoodAsynchronousMethod()
@@ -104,6 +104,6 @@ While seemingly simple, there are important nuances. Proper error handling withi
 
 One of the most important things to remember is avoiding `async void` except for event handlers. These can’t be easily awaited and may lead to unexpected issues. Instead use `async Task` for `async` methods that do not return a value, and `async Task<T>` when they need to return a value of type T.
 
-For a deeper dive, I’d recommend starting with Stephen Cleary’s *Concurrency in C# Cookbook*. It's a very practical guide to asynchronous and concurrent programming. Also, reading *Programming C# 10* by Ian Griffiths will provide a very thorough grounding in the concepts, as will the documentation for `System.Threading.Tasks` on the microsoft learn website. These are good sources to build a robust understanding of asynchronous operations in C#. These resources will help you go beyond the basic syntax and understand the underlying principles, which is crucial for handling complex asynchronous scenarios. They also cover topics like thread pools, cancellation tokens, and progress reporting, which are essential in building reliable and performant applications.
+For a deeper dive, I’d recommend starting with Stephen Cleary’s _Concurrency in C# Cookbook_. It's a very practical guide to asynchronous and concurrent programming. Also, reading _Programming C# 10_ by Ian Griffiths will provide a very thorough grounding in the concepts, as will the documentation for `System.Threading.Tasks` on the microsoft learn website. These are good sources to build a robust understanding of asynchronous operations in C#. These resources will help you go beyond the basic syntax and understand the underlying principles, which is crucial for handling complex asynchronous scenarios. They also cover topics like thread pools, cancellation tokens, and progress reporting, which are essential in building reliable and performant applications.
 
 Ultimately, mastering `async` and `await` is about understanding how to best utilize asynchronous operations to improve responsiveness and performance without introducing unnecessary complexity. It’s a powerful tool in your C# arsenal, and with practice and attention to detail, you’ll find yourself building much more efficient and maintainable applications.

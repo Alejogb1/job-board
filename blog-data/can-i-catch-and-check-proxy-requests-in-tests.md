@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "can-i-catch-and-check-proxy-requests-in-tests"
 ---
 
-Okay, let's tackle this. It's a situation I've encountered more than once, especially when dealing with complex system integrations where parts of your application rely on external services accessed via proxies. The short answer is a resounding *yes*, you can absolutely catch and check proxy requests in tests, and frankly, you *should*. It's critical for verifying the correct behavior of your software and ensuring its resilience. Let me explain how I've approached this in the past, and break down a few strategies with code examples.
+, let's tackle this. It's a situation I've encountered more than once, especially when dealing with complex system integrations where parts of your application rely on external services accessed via proxies. The short answer is a resounding _yes_, you can absolutely catch and check proxy requests in tests, and frankly, you _should_. It's critical for verifying the correct behavior of your software and ensuring its resilience. Let me explain how I've approached this in the past, and break down a few strategies with code examples.
 
-From experience, the challenge isn’t just *catching* the request, it’s also verifying that the request is formatted correctly, has the proper headers, and is being sent to the correct endpoint behind the proxy. If those details are not tested effectively, you're building a fragile system.
+From experience, the challenge isn’t just _catching_ the request, it’s also verifying that the request is formatted correctly, has the proper headers, and is being sent to the correct endpoint behind the proxy. If those details are not tested effectively, you're building a fragile system.
 
 One of the most common scenarios I've run into involves testing a system where microservices communicate through an API gateway or a service mesh acting as the proxy. In those situations, isolating the service I was testing from the actual downstream service was vital. For that, mock servers became my primary tool, particularly ones capable of simulating proxy behavior.
 
@@ -36,7 +36,7 @@ class MockProxyHandler(BaseHTTPRequestHandler):
       self.end_headers()
       response_data = {"message": "Request captured and verified for GET"}
       self.wfile.write(json.dumps(response_data).encode('utf-8'))
-        
+
 
 
 def start_mock_server(port):
@@ -99,56 +99,64 @@ In this python example, we're not just catching the request; we’re dissecting 
 Another scenario I frequently encountered was using a mock client, specifically with a library like `requests-mock` or its equivalent in your respective language. This method allows you to intercept and control how requests are made using your application’s existing HTTP client. Here's a javascript example using node with Jest and `axios` along with the `axios-mock-adapter`:
 
 ```javascript
-const axios = require('axios');
-const MockAdapter = require('axios-mock-adapter');
+const axios = require("axios");
+const MockAdapter = require("axios-mock-adapter");
 
-
-describe('Proxy request testing with mock adapter', () => {
+describe("Proxy request testing with mock adapter", () => {
   let mock;
 
   beforeEach(() => {
-     mock = new MockAdapter(axios);
+    mock = new MockAdapter(axios);
   });
 
   afterEach(() => {
-      mock.restore();
+    mock.restore();
   });
 
-
-  it('should intercept and verify POST request through proxy', async () => {
-
+  it("should intercept and verify POST request through proxy", async () => {
     const dataToSend = { key1: "value1", key2: "value2" };
 
-    mock.onPost('http://proxy-host:8080/').reply(200, { message: "Request captured and verified", received_data: dataToSend });
+    mock
+      .onPost("http://proxy-host:8080/")
+      .reply(200, {
+        message: "Request captured and verified",
+        received_data: dataToSend,
+      });
 
-    const response = await axios.post('http://fake-external-service/resource', dataToSend, {
-      proxy: {
-        host: 'proxy-host',
-        port: 8080,
-      },
-    });
+    const response = await axios.post(
+      "http://fake-external-service/resource",
+      dataToSend,
+      {
+        proxy: {
+          host: "proxy-host",
+          port: 8080,
+        },
+      }
+    );
 
     expect(response.status).toEqual(200);
     expect(response.data.message).toEqual("Request captured and verified");
     expect(response.data.received_data).toEqual(dataToSend);
   });
 
+  it("should intercept and verify GET request through proxy", async () => {
+    mock
+      .onGet("http://proxy-host:8080/")
+      .reply(200, { message: "Request captured and verified for GET" });
 
-    it('should intercept and verify GET request through proxy', async () => {
-        mock.onGet('http://proxy-host:8080/').reply(200, { message: "Request captured and verified for GET" });
-
-        const response = await axios.get('http://fake-external-service/resource',  {
-            proxy: {
-                host: 'proxy-host',
-                port: 8080,
-            },
-        });
-
-        expect(response.status).toEqual(200);
-        expect(response.data.message).toEqual("Request captured and verified for GET");
+    const response = await axios.get("http://fake-external-service/resource", {
+      proxy: {
+        host: "proxy-host",
+        port: 8080,
+      },
     });
-});
 
+    expect(response.status).toEqual(200);
+    expect(response.data.message).toEqual(
+      "Request captured and verified for GET"
+    );
+  });
+});
 ```
 
 Here, instead of a mock server, `axios-mock-adapter` is used to directly mock outgoing requests made by `axios`. This avoids the overhead of running an actual mock server and is often more convenient for unit tests. Notice how we intercept the request destined for the proxy’s URL and provide a controlled response, ensuring the correct data was sent.

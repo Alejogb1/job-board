@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-ping-my-heroku-free-subdomain-from-the-terminal-even-though-i-can-access-it-in-a-browser"
 ---
 
-Okay, let's tackle this. It’s a situation I've certainly encountered before, especially back when I was setting up various demo applications on Heroku, and it often boils down to a crucial misunderstanding about how web applications and network protocols function, particularly DNS and http(s). I remember one particularly frustrating day trying to troubleshoot a basic api endpoint. I could get a perfect response in the browser, but `curl` and `ping` from my terminal were just dead ends. It was a head scratcher until I really drilled into what was happening under the hood.
+, let's tackle this. It’s a situation I've certainly encountered before, especially back when I was setting up various demo applications on Heroku, and it often boils down to a crucial misunderstanding about how web applications and network protocols function, particularly DNS and http(s). I remember one particularly frustrating day trying to troubleshoot a basic api endpoint. I could get a perfect response in the browser, but `curl` and `ping` from my terminal were just dead ends. It was a head scratcher until I really drilled into what was happening under the hood.
 
 The core issue is that a ping, which relies on the internet control message protocol (icmp), and a standard web browser request, using http or https, are fundamentally different network operations. When you type a url into your browser – let’s say `your-app.herokuapp.com` – the browser initiates a series of steps that ultimately result in a request for web content. It starts by asking a dns server for the ip address corresponding to `your-app.herokuapp.com`. Once it has the ip address, it opens a tcp connection, establishes an http(s) session, and requests the content via the appropriate protocol.
 
@@ -18,7 +18,7 @@ Let's illustrate with some basic examples.
 
 **Example 1: The Browser’s HTTP Request (Conceptual)**
 
-While we can’t *see* the direct network traffic using a simple text snippet, this pseudo-code represents what the browser does conceptually:
+While we can’t _see_ the direct network traffic using a simple text snippet, this pseudo-code represents what the browser does conceptually:
 
 ```python
 # Python pseudo-code
@@ -102,7 +102,7 @@ This snippet illustrates that the ping command sends an icmp echo request to a h
 
 **Example 3: Telnet to Test TCP Port (Sometimes Useful)**
 
-While you can’t ping, you *can* verify if a port on a given host is open by using telnet, although it’s not a method that allows you to see web content. Telnet can connect to the tcp port and confirm that communication on that port is possible. Here is a simplified version:
+While you can’t ping, you _can_ verify if a port on a given host is open by using telnet, although it’s not a method that allows you to see web content. Telnet can connect to the tcp port and confirm that communication on that port is possible. Here is a simplified version:
 
 ```python
 import socket
@@ -128,6 +128,6 @@ def check_port(hostname, port):
 
 This demonstrates that tcp communication is possible, though not icmp, which further confirms the root cause.
 
-So, in conclusion, your inability to ping your heroku app is *not* a sign of a problem with your app, but a deliberate design choice. Web servers are configured not to respond to icmp requests, instead relying on tcp-based protocols like http and https. If you want to confirm server reachability from the command line, tools like `curl` are your go-to as they engage on ports that will return meaningful server responses, rather than relying on icmp packets.
+So, in conclusion, your inability to ping your heroku app is _not_ a sign of a problem with your app, but a deliberate design choice. Web servers are configured not to respond to icmp requests, instead relying on tcp-based protocols like http and https. If you want to confirm server reachability from the command line, tools like `curl` are your go-to as they engage on ports that will return meaningful server responses, rather than relying on icmp packets.
 
 For further study, I strongly recommend delving into the classics. “Computer Networks” by Andrew S. Tanenbaum provides a comprehensive understanding of networking fundamentals, covering protocols like tcp/ip and icmp in great detail. Also, the ‘tcp/ip illustrated’ series by W. Richard Stevens is a phenomenal, deeply technical resource that breaks down exactly what happens during network communications. Knowing these fundamental concepts well is essential for anyone dealing with web development and network troubleshooting.

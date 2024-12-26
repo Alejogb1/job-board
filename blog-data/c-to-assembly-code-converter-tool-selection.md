@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "c-to-assembly-code-converter-tool-selection"
 ---
 
-Okay so you're looking at c to assembly code converter tools right Been there done that probably a dozen times at least Let me tell you finding the right one can feel like debugging a multi-threaded program in the dark with only a blinking led for help
+you're looking at c to assembly code converter tools right Been there done that probably a dozen times at least Let me tell you finding the right one can feel like debugging a multi-threaded program in the dark with only a blinking led for help
 
 First off why do you even need this right like most people just blindly trust the compiler to do its thing But no not us We wanna see whats under the hood We wanna see those raw machine instructions and that's totally fine I get it I've spent too many nights staring at disassembled code trying to squeeze every last bit of performance from some embedded system
 
@@ -27,11 +27,13 @@ It also lets you target any specific architecture that gcc can deal with So if y
 ```bash
 gcc -S my_program.c -o my_program.s -march=armv7-a
 ```
+
 In the above example the target is set to architecture `armv7-a` This is great because you can target different architectures and see the difference in the assembly code generated You can also change the optimization level using `-O` flag
 
 ```bash
 gcc -S my_program.c -o my_program.s -O3
 ```
+
 This command uses optimization level 3 `-O3` The compiler will attempt more aggressive optimizations here which can sometimes make the generated code harder to understand but more efficient
 
 Now the generated assembly will depend on the architecture so if you want to compare different architectures or need a specific one use these flags to select it correctly.
@@ -51,6 +53,7 @@ This command compiles your `my_program.c` into an object file and then you can d
 ```bash
 objdump -d my_program.o
 ```
+
 The `-d` flag is for disassemble and what you get is an output of the code disassembly and also data sections in case your code has global variables. This tool has more features but just using it this way for disassembly is the best way to learn its basics
 
 So what to take from all this I guess I've given you a few good ways to convert c to assembly and also shared some of my past experience with these issues I guess the best advice I can give you is to be patient and always check the documentation and experiment a lot. These kinds of things are something that you get a better understanding of over time.

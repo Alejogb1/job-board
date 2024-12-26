@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-input-and-output-labels-be-captured-for-a-neural-network-model"
 ---
 
-Okay, let's talk about capturing input and output labels for neural network models. This is something I've dealt with quite extensively over the years, especially when debugging complex architectures or needing to analyze model performance more granularly. It's not always as straightforward as it might initially seem, and a robust solution is crucial for reproducible research and effective model management.
+, let's talk about capturing input and output labels for neural network models. This is something I've dealt with quite extensively over the years, especially when debugging complex architectures or needing to analyze model performance more granularly. It's not always as straightforward as it might initially seem, and a robust solution is crucial for reproducible research and effective model management.
 
-The challenge essentially boils down to associating the specific data you feed into a network with the predicted outputs *and* their associated true labels, particularly when handling batches and preprocessing pipelines. This becomes particularly relevant when models aren't perfect—which, let's face it, is nearly always the case in real-world scenarios—and you need to understand *why* specific predictions are off.
+The challenge essentially boils down to associating the specific data you feed into a network with the predicted outputs _and_ their associated true labels, particularly when handling batches and preprocessing pipelines. This becomes particularly relevant when models aren't perfect—which, let's face it, is nearly always the case in real-world scenarios—and you need to understand _why_ specific predictions are off.
 
 My experience has often involved systems with complicated data loading procedures. I recall a project a few years back where we were training a sequence-to-sequence model for machine translation. The data pipeline was complex, involving multiple transformations like tokenization, subword splitting, and padding, which made it quite a hassle to track back the raw input and expected outputs. That's where a well-designed system for capturing input and output labels became indispensable.
 
@@ -139,6 +139,7 @@ for epoch in range(1):
         print(f"Predicted Probs (first 1):\n{predicted_probs[0]}")
         print(f"True Label (first 1):\n{labels[0]}")
 ```
+
 Here, the crucial aspect is that even with transformed data, you can capture both the transformed input (`images`), the model's predicted probabilities and the true label. By capturing the transformed images you are capturing the 'input' as it is seen by the neural network, not just the original image itself, which is often crucial for debugging.
 
 Lastly, in production scenarios, it is often advantageous to use logging tools for data capture. I’ve used MLflow quite a bit in past projects to track metrics and capture intermediate data. The logging framework can act as a single source of truth. Here’s an example using MLflow to capture input and outputs:
@@ -190,9 +191,11 @@ with mlflow.start_run() as run:
             mlflow.log_text(str(predicted_probs[:2]), f"Epoch_{epoch}_Batch_{batch_idx}_predicted_probs.txt")
             mlflow.log_text(str(batch_labels[:2].detach().numpy()), f"Epoch_{epoch}_Batch_{batch_idx}_true_labels.txt")
 ```
-Here, instead of direct print statements, we use MLflow to log the metrics, inputs, output probabilities and true labels. This allows for a cleaner training loop and provides an organized way to review the logged data afterwards.  You'd need to install MLflow for this example to work. The `detach().numpy()` method is used to convert tensors to numpy arrays before saving or logging, since mlflow logging methods generally expect numpy arrays.
+
+Here, instead of direct print statements, we use MLflow to log the metrics, inputs, output probabilities and true labels. This allows for a cleaner training loop and provides an organized way to review the logged data afterwards. You'd need to install MLflow for this example to work. The `detach().numpy()` method is used to convert tensors to numpy arrays before saving or logging, since mlflow logging methods generally expect numpy arrays.
 
 In terms of helpful resources, I would strongly suggest looking into the following:
+
 1. **"Deep Learning with Python" by François Chollet:** This book offers great insight into how neural networks work and how to effectively use Keras (and by extension, provides ideas that translate into other frameworks). Look at the sections about training and data processing to see how to build effective pipelines.
 
 2. **"Programming PyTorch for Deep Learning" by Ian Pointer:** If you're using PyTorch, this is an invaluable resource. It dedicates good amount of time to building robust dataloaders and debugging model performance, which directly relates to the problem you are working through.

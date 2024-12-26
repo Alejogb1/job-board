@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-the-error-errore0432-unresolved-import-spcoretosubstratewasmfnreturnvalue"
 ---
 
-Alright, let's dissect this `error[E0432]: unresolved import 'sp_core::to_substrate_wasm_fn_return_value'`. It's an error I've bumped into a few times over the years, especially during the early phases of substrate development and when dealing with custom runtime logic. It usually pops up when the compiler can't find the `to_substrate_wasm_fn_return_value` function, which is crucial for properly converting results from the runtime environment into a format that the wasm virtual machine can understand.
+, let's dissect this `error[E0432]: unresolved import 'sp_core::to_substrate_wasm_fn_return_value'`. It's an error I've bumped into a few times over the years, especially during the early phases of substrate development and when dealing with custom runtime logic. It usually pops up when the compiler can't find the `to_substrate_wasm_fn_return_value` function, which is crucial for properly converting results from the runtime environment into a format that the wasm virtual machine can understand.
 
 This error isn't generally caused by some deep-seated flaw in your Rust code itself, but rather a discrepancy between what your runtime is expecting and how it's being compiled. Think of it as a mismatch in the translation process between your code and the substrate framework’s wasm environment.
 
@@ -169,8 +169,8 @@ Here, `to_substrate_wasm_fn_return_value` encapsulates the `CustomStruct` after 
 
 For deeper understanding, I'd strongly suggest reviewing the following:
 
-*   **Substrate's official documentation:** This is the definitive resource, especially the sections on runtime development, wasm compilation, and the `sp-core` crate documentation.
-*   **The Rust documentation for Cargo:** This will help you understand dependency management, feature flags, and how to use Cargo effectively.
-*   **The `substrate-api-sidecar` repository:** This offers practical examples of a substrate node and is a valuable resource for real-world substrate applications.
+- **Substrate's official documentation:** This is the definitive resource, especially the sections on runtime development, wasm compilation, and the `sp-core` crate documentation.
+- **The Rust documentation for Cargo:** This will help you understand dependency management, feature flags, and how to use Cargo effectively.
+- **The `substrate-api-sidecar` repository:** This offers practical examples of a substrate node and is a valuable resource for real-world substrate applications.
 
 In conclusion, the `error[E0432]` error regarding `sp_core::to_substrate_wasm_fn_return_value` is usually a result of configuration or dependency mismatches, and correct feature flags and version control are crucial. By paying close attention to the wasm interface, you can resolve most cases of this error.

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "whats-the-difference-between-decomposing-by-business-capability-and-subdomain"
 ---
 
-Alright, let's tackle this. I've seen this distinction cause more than a few late nights on projects, particularly when teams are transitioning towards more modular architectures. It's a subtle but crucial difference, and honestly, it can make or break how effectively you can adapt to changing requirements. The crux of the issue lies in how you're defining the boundaries of your system's responsibilities and, ultimately, how that reflects the organizational structure and goals.
+, let's tackle this. I've seen this distinction cause more than a few late nights on projects, particularly when teams are transitioning towards more modular architectures. It's a subtle but crucial difference, and honestly, it can make or break how effectively you can adapt to changing requirements. The crux of the issue lies in how you're defining the boundaries of your system's responsibilities and, ultimately, how that reflects the organizational structure and goals.
 
 To illustrate, think back to my stint at a mid-sized e-commerce platform. We initially had a monolith that did everything, including inventory management, order processing, and user authentication. We soon realized we were suffocating under our own weight—small changes in one area often had unpredictable ripple effects elsewhere. That’s when we started exploring decomposition, and that’s where this whole business capability versus subdomain debate came into sharp focus.
 
-Decomposition by business capability focuses on what the business *does*, not necessarily how it does it internally. Think of them as broad, high-level functions that the business needs to perform to operate. These are usually aligned with the core activities that contribute directly to the business's value proposition. In our e-commerce context, business capabilities could include things like "managing the product catalog," "processing customer orders," "handling payments," or "providing customer support." Each of these represents a complete functional area that delivers business value. The important thing here is that it's business-driven and technology-agnostic to a large extent. The internal implementation might change over time, but the capability remains consistent as long as that business function is still required.
+Decomposition by business capability focuses on what the business _does_, not necessarily how it does it internally. Think of them as broad, high-level functions that the business needs to perform to operate. These are usually aligned with the core activities that contribute directly to the business's value proposition. In our e-commerce context, business capabilities could include things like "managing the product catalog," "processing customer orders," "handling payments," or "providing customer support." Each of these represents a complete functional area that delivers business value. The important thing here is that it's business-driven and technology-agnostic to a large extent. The internal implementation might change over time, but the capability remains consistent as long as that business function is still required.
 
 On the other hand, decomposition by subdomain delves into the details of how those capabilities are supported at a more granular level. A subdomain is a focused area within the business that has a specific set of requirements and challenges. Subdomains often have different technical needs or specialized expertise associated with them. They are more technical in nature and might vary drastically in size and complexity. For example, under the “managing the product catalog” capability, you might find subdomains like "product data management," "image processing," "pricing engine," and "search indexing." These are distinct areas of specialization that require different development approaches and skill sets.
 
@@ -18,11 +18,11 @@ Let's move into some examples that I've found helpful when trying to clarify thi
 
 **Example 1: Inventory Management**
 
-*   **Business Capability:** *Manage Inventory*. The overall capability of tracking and controlling stock levels across all distribution channels.
-*   **Subdomains:**
-    *   *Warehouse Management:* Manages stock levels, locations within warehouses, and optimizes storage.
-    *   *Real-time Inventory Tracking:* Handles data feeds from various sources, and updates inventory levels.
-    *   *Forecasting & Replenishment:* Utilizes statistical models to predict future demand and trigger replenishment processes.
+- **Business Capability:** _Manage Inventory_. The overall capability of tracking and controlling stock levels across all distribution channels.
+- **Subdomains:**
+  - _Warehouse Management:_ Manages stock levels, locations within warehouses, and optimizes storage.
+  - _Real-time Inventory Tracking:_ Handles data feeds from various sources, and updates inventory levels.
+  - _Forecasting & Replenishment:_ Utilizes statistical models to predict future demand and trigger replenishment processes.
 
 Here's a simplified code snippet showing a potential structure where inventory tracking might be handled. This is obviously just illustrative:
 
@@ -64,11 +64,11 @@ In this example `InventoryTracker` and `WarehouseManager` can be considered part
 
 **Example 2: Order Processing**
 
-*   **Business Capability:** *Process Orders*. The full flow from order placement to completion.
-*   **Subdomains:**
-    *   *Order Capture & Validation:* Takes in new orders, validates data, and ensures a valid request.
-    *   *Payment Processing:* Handles the financial transactions related to the order.
-    *   *Order Fulfillment:* Manages picking, packing, and shipping the ordered goods.
+- **Business Capability:** _Process Orders_. The full flow from order placement to completion.
+- **Subdomains:**
+  - _Order Capture & Validation:_ Takes in new orders, validates data, and ensures a valid request.
+  - _Payment Processing:_ Handles the financial transactions related to the order.
+  - _Order Fulfillment:_ Manages picking, packing, and shipping the ordered goods.
 
 Here, a code snippet focusing on payment processing might look like this:
 
@@ -107,11 +107,11 @@ This demonstrates part of the `Payment Processing` subdomain, with the `PaymentP
 
 **Example 3: Customer Support**
 
-*   **Business Capability:** *Provide Customer Support*. The ability to assist customers with their queries and issues.
-*   **Subdomains:**
-    *   *Ticket Management:* Handles incoming customer requests.
-    *   *Knowledge Base:* Provides self-service documentation and articles.
-    *   *Live Chat Support:* Manages real-time interactions with customers.
+- **Business Capability:** _Provide Customer Support_. The ability to assist customers with their queries and issues.
+- **Subdomains:**
+  - _Ticket Management:_ Handles incoming customer requests.
+  - _Knowledge Base:_ Provides self-service documentation and articles.
+  - _Live Chat Support:_ Manages real-time interactions with customers.
 
 A simplified example of live chat support could be:
 

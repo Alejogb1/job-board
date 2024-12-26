@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cannot-preview-in-this-file-active-scheme-does-not-build-this-file-swiftui-o"
 ---
 
-Okay I've been there dude trust me This is a classic SwiftUI headache you're not alone Let's break it down because the error message "cannot preview in this file active scheme does not build this file" is annoyingly vague but generally boils down to a few suspects
+I've been there dude trust me This is a classic SwiftUI headache you're not alone Let's break it down because the error message "cannot preview in this file active scheme does not build this file" is annoyingly vague but generally boils down to a few suspects
 
 First off the "active scheme" bit is crucial It means Xcode is not configured to build the target that contains the SwiftUI view you're trying to preview You might have multiple targets in your project maybe for iOS macOS watchOS and your active scheme is pointing to one that doesnt contain your specific SwiftUI file You need to verify your scheme is targeting the correct build target the one your SwiftUI view belongs to
 
@@ -27,6 +27,7 @@ struct MyPreviewView: View {
     MyPreviewView()
 }
 ```
+
 See nothing magical Just a basic import and the proper preview macro
 
 Now let's say your view is nested inside a module I've seen this issue countless times It is an interesting one This usually means you need to explicitly import that module in the file you are trying to preview Because SwiftUI needs to find your view to preview it I remember once I was working on a package and the preview was not working for a couple of days And of course it was that I forgot that module import I just was not importing the module where the view is at
@@ -46,6 +47,7 @@ struct MyPreviewView: View {
 }
 
 ```
+
 The import of MyModule here is very important otherwise SwiftUI won't find it and the preview will throw the same error I spent a week in total on my own projects on that kind of issue the funny thing is I made myself look like a boomer to my team because I forgot a basic concept of importing packages this is a good laugh I still tell that story
 
 Next up build configurations can also mess up previews Check that your debug build configuration is properly setup and that the files you need are included I know this is like saying 'Is your computer plugged in' but you'd be surprised how often I've seen this causing issues I once had a client who messed with their build configurations and suddenly previews stopped working We spent a whole day trying to figure out why just to find that they removed some files from the debug build configuration not the release one just the debug one I told them never touch these things again
@@ -63,19 +65,20 @@ struct MyPreviewView_Previews: PreviewProvider {
 }
 #endif
 ```
-Here I am using the _Previews suffix and PreviewProvider conformance this technique will work on older versions of Xcode Also make sure that the #Preview macro or the Previews implementation is outside the main body of your struct
+
+Here I am using the \_Previews suffix and PreviewProvider conformance this technique will work on older versions of Xcode Also make sure that the #Preview macro or the Previews implementation is outside the main body of your struct
 
 Lastly there might be some caches that are interfering in some situations I experienced issues where the derived data was corrupted clearing the derived data helped fix that issue you can do this via Xcode under Product menu select Clean Build Folder and then select the Derived Data option or manually delete the contents of the derived data folder
 
 A quick checklist before you go crazy:
 
-*   **Active Scheme:** Double check your active scheme is building the right target that contains the SwiftUI view you are previewing
-*   **Target Membership:** Make sure your file is a member of the correct target check the side panel in Xcode when you click the file
-*   **Import Statements:** Verify the correct import statements are there especially if its in a module
-*   **Build Configurations:** Your debug build configuration is correctly setup and includes all of the needed files for debug
-*  **Swift and Xcode versions:** Make sure they match your project requirements
-*   **#Preview Macro:** Confirm its correctly used outside the body of the struct
-*   **Derived Data:** Clear out derived data if nothing else works
+- **Active Scheme:** Double check your active scheme is building the right target that contains the SwiftUI view you are previewing
+- **Target Membership:** Make sure your file is a member of the correct target check the side panel in Xcode when you click the file
+- **Import Statements:** Verify the correct import statements are there especially if its in a module
+- **Build Configurations:** Your debug build configuration is correctly setup and includes all of the needed files for debug
+- **Swift and Xcode versions:** Make sure they match your project requirements
+- **#Preview Macro:** Confirm its correctly used outside the body of the struct
+- **Derived Data:** Clear out derived data if nothing else works
 
 To expand on these concepts I'd recommend checking the official SwiftUI documentation from Apple Its a great resource It has all the details on how previews and modules and targets work For a deeper dive you could check out "Thinking in SwiftUI" by Chris Eidhof its a great read
 

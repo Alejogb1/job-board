@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-receiving-a-403-forbidden-error-when-using-ngrok-with-action-mailbox"
 ---
 
-Alright, let's unpack this 403 Forbidden error you're experiencing with ngrok and Action Mailbox. I've seen this particular flavor of headache more than a few times over the years, and it typically stems from how webhooks and security interact, especially in development environments. It’s not an issue that’s immediately apparent, but understanding the underlying mechanisms makes it quite solvable.
+, let's unpack this 403 Forbidden error you're experiencing with ngrok and Action Mailbox. I've seen this particular flavor of headache more than a few times over the years, and it typically stems from how webhooks and security interact, especially in development environments. It’s not an issue that’s immediately apparent, but understanding the underlying mechanisms makes it quite solvable.
 
 Firstly, a 403 Forbidden error, in the context of HTTP, signifies that the server understands the request, but refuses to authorize it. It's a server-side response, and in this case, it means your Rails application, specifically its Action Mailbox endpoint, is rejecting the requests coming from ngrok. The key thing here isn't that ngrok itself is causing the problem, but rather, it’s exposing a configuration quirk, or more accurately, a missing security check within your app.
 
@@ -110,14 +110,15 @@ class ApplicationMailbox < ActionMailbox::Base
 end
 
 ```
+
 In this case we have created a dummy `before_process` method to check a header. If this header is not present, it could lead to a 403. Ensure that your mail delivery service is setting the correct headers. If necessary, you can use ngrok's built-in request inspection tool to examine the headers.
 
 It's crucial to understand that these code snippets are examples and the exact implementation will vary based on your application's specific setup. However, the core concept remains the same: you need to either disable or bypass checks that are causing the app to reject requests due to unknown origin or missing information.
 
 For further reading, I would recommend:
 
-*   **"The Rails 7 Way"** by Obie Fernandez. It is a comprehensive guide to the Rails framework. The sections pertaining to security and requests are particularly insightful.
-*   **“HTTP: The Definitive Guide”** by David Gourley and Brian Totty. Although not specific to Rails, this is a must for understanding the nature of HTTP and its various responses, status codes, headers, and other core concepts.
-*   The official **Rails Guides** pertaining to Action Mailbox. These guides are very comprehensive. The specific sections on security and routing are highly recommended.
+- **"The Rails 7 Way"** by Obie Fernandez. It is a comprehensive guide to the Rails framework. The sections pertaining to security and requests are particularly insightful.
+- **“HTTP: The Definitive Guide”** by David Gourley and Brian Totty. Although not specific to Rails, this is a must for understanding the nature of HTTP and its various responses, status codes, headers, and other core concepts.
+- The official **Rails Guides** pertaining to Action Mailbox. These guides are very comprehensive. The specific sections on security and routing are highly recommended.
 
 In my experience, these 403 errors can sometimes be a bit elusive, but systematically checking the points mentioned will often point you to the problem. Remember that development is about experimentation, so do not be afraid to explore different combinations and approaches.

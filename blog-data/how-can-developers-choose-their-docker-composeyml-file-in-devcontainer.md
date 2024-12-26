@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-can-developers-choose-their-docker-composeyml-file-in-devcontainer"
 ---
 
-Alright, let's talk about selecting docker-compose files within a devcontainer context. It’s a scenario I've faced numerous times, especially when dealing with projects that have distinct environment requirements for different features or stages of development. The challenge often comes down to maintaining flexibility without introducing unnecessary complexity to the development workflow.
+, let's talk about selecting docker-compose files within a devcontainer context. It’s a scenario I've faced numerous times, especially when dealing with projects that have distinct environment requirements for different features or stages of development. The challenge often comes down to maintaining flexibility without introducing unnecessary complexity to the development workflow.
 
-Essentially, the core issue stems from the fact that while `devcontainer.json` dictates how your development container is built and configured, it doesn't directly offer a mechanism to dynamically switch between multiple `docker-compose.yml` files. In many ways, this is a good thing, as the `devcontainer.json` file is focused on *the devcontainer* and not necessarily the entire development *environment*. The `docker-compose.yml` file sits at a different layer conceptually.
+Essentially, the core issue stems from the fact that while `devcontainer.json` dictates how your development container is built and configured, it doesn't directly offer a mechanism to dynamically switch between multiple `docker-compose.yml` files. In many ways, this is a good thing, as the `devcontainer.json` file is focused on _the devcontainer_ and not necessarily the entire development _environment_. The `docker-compose.yml` file sits at a different layer conceptually.
 
 My experience with this initially involved a large monorepo with several microservices, each needing its own slightly customized environment. Initially, we tried to cram everything into one massive `docker-compose.yml` file, using environment variables and conditional configurations. This quickly became unmanageable and difficult to debug. I quickly realized there had to be a better way.
 
@@ -22,24 +22,23 @@ Here's how it would look in your `devcontainer.json`:
 
 ```json
 {
-    "name": "My Dev Environment",
-    "build": {
-        "dockerfile": "Dockerfile"
-    },
-    "postCreateCommand": "my_compose_selector.sh",
-     "remoteEnv": {
-        "COMPOSE_FILE": "${localWorkspaceFolder}/docker-compose.dev.yml"
-    },
-      "customizations": {
-        "vscode": {
-          "settings": {
-            "terminal.integrated.env.linux": {
-              "COMPOSE_FILE": "${localWorkspaceFolder}/docker-compose.dev.yml"
-            }
-          }
+  "name": "My Dev Environment",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "postCreateCommand": "my_compose_selector.sh",
+  "remoteEnv": {
+    "COMPOSE_FILE": "${localWorkspaceFolder}/docker-compose.dev.yml"
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.env.linux": {
+          "COMPOSE_FILE": "${localWorkspaceFolder}/docker-compose.dev.yml"
         }
       }
-
+    }
+  }
 }
 ```
 
@@ -95,12 +94,12 @@ Suppose you are working with multiple projects, each in its own subfolder. You w
 
 **Important Considerations:**
 
-*   **Startup Order:** Ensure that services defined in your `docker-compose.yml` files that are dependencies for your applications start up correctly *before* the application's code is available within the container.
-*   **Cleanup:** You may want to add a `postStopCommand` in your `devcontainer.json` to shut down the services using a similar mechanism to ensure resources aren't leaked after the devcontainer stops.
-*   **Readability:** The environment variable names must be chosen carefully for clarity. Avoid acronyms or unclear names.
-*   **Security:** Do not expose sensitive information in environment variables. Use secure means for loading them from secrets stores or encrypted files.
-*   **Performance:**  Minimize the number of times compose services need to be restarted or rebuilt, which will help your development turnaround time.
-*   **Versioning**:  Using an environment variable, it may be possible to load a specific compose file based on a project branch. It may be advantageous to do this for consistency, although its often easier to modify the file itself.
+- **Startup Order:** Ensure that services defined in your `docker-compose.yml` files that are dependencies for your applications start up correctly _before_ the application's code is available within the container.
+- **Cleanup:** You may want to add a `postStopCommand` in your `devcontainer.json` to shut down the services using a similar mechanism to ensure resources aren't leaked after the devcontainer stops.
+- **Readability:** The environment variable names must be chosen carefully for clarity. Avoid acronyms or unclear names.
+- **Security:** Do not expose sensitive information in environment variables. Use secure means for loading them from secrets stores or encrypted files.
+- **Performance:** Minimize the number of times compose services need to be restarted or rebuilt, which will help your development turnaround time.
+- **Versioning**: Using an environment variable, it may be possible to load a specific compose file based on a project branch. It may be advantageous to do this for consistency, although its often easier to modify the file itself.
 
 **Recommended Reading:**
 

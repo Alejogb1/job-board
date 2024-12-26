@@ -6,9 +6,9 @@ id: "how-can-compound-sentiment-scores-be-sorted-in-text-analysis"
 
 Let's tackle this. It’s a question that, frankly, I've spent a fair amount of time addressing, particularly when building some early iterations of customer feedback analysis tools. The challenge isn't just about computing the sentiment scores; it’s about making sense of them afterwards, especially when you’re dealing with composite values like compound scores. So, to sort them effectively, you first have to understand what that compound score actually represents.
 
-Typically, a compound sentiment score, often produced by libraries like vader or nltk's sentiment analyzers, is a normalized score ranging from -1 to 1. It's designed to give an overall indication of the text's sentiment. A score close to 1 signifies a highly positive sentiment, -1 a highly negative one, and 0 a neutral one. The nuances come from its being a *compound* score – meaning it attempts to aggregate the sentiments of individual words within the text.
+Typically, a compound sentiment score, often produced by libraries like vader or nltk's sentiment analyzers, is a normalized score ranging from -1 to 1. It's designed to give an overall indication of the text's sentiment. A score close to 1 signifies a highly positive sentiment, -1 a highly negative one, and 0 a neutral one. The nuances come from its being a _compound_ score – meaning it attempts to aggregate the sentiments of individual words within the text.
 
-The issue with directly sorting is not in the technicality of *how* to sort, but rather in the *why*. Simply using `sorted()` or `sort()` on a list of compound scores is straightforward; you'll get an ordered list, typically ascending. However, that might not be what you need. What if you're analyzing customer reviews where a score of 0.2 is good enough, or conversely, negative scores below -0.5 are considered critically important to be acted upon? Context matters.
+The issue with directly sorting is not in the technicality of _how_ to sort, but rather in the _why_. Simply using `sorted()` or `sort()` on a list of compound scores is straightforward; you'll get an ordered list, typically ascending. However, that might not be what you need. What if you're analyzing customer reviews where a score of 0.2 is good enough, or conversely, negative scores below -0.5 are considered critically important to be acted upon? Context matters.
 
 What I’ve discovered from practical experience, working with datasets ranging from social media feeds to large corpora of internal documents, is that the sorting needs to often be guided by the specific needs of analysis. This may mean a simple numerical sort isn’t enough; you might want to prioritize scores based on a custom logic that incorporates your application domain.
 
@@ -27,7 +27,7 @@ analyzer = SentimentIntensityAnalyzer()
 
 texts = [
     "This is absolutely terrible.",
-    "The service was okay.",
+    "The service was .",
     "I had a wonderful time!",
     "It was a decent experience.",
     "The worst meal I've ever had."
@@ -59,7 +59,7 @@ analyzer = SentimentIntensityAnalyzer()
 
 texts = [
     "This is absolutely terrible.",
-    "The service was okay.",
+    "The service was .",
     "I had a wonderful time!",
     "It was a decent experience.",
     "The worst meal I've ever had.",
@@ -106,7 +106,7 @@ analyzer = SentimentIntensityAnalyzer()
 critical_words = ["failure", "awful", "broken"]
 texts = [
     "This is an awful failure.",
-    "The service was okay.",
+    "The service was .",
     "I had a wonderful time!",
     "It was a decent experience.",
     "The worst meal I've ever had."
@@ -132,8 +132,8 @@ for score, text in sorted_texts_lexicon:
 
 This example uses a fictitious lexicon `critical_words` and prioritizes texts that contain those words. This is sorted such that texts containing more critical words are ranked higher, and then secondary sorting is done based on the compound score, placing the most positive score last. This demonstrates a more complex, context-aware sort that can handle specific domain needs.
 
-To summarize, the sorting of compound sentiment scores should not be treated as a basic numerical exercise. The right approach depends on the *specific needs of the analysis* and the context of the data. The simple `sorted()` function will work, but it’s rarely the optimal solution when working with real-world data.
+To summarize, the sorting of compound sentiment scores should not be treated as a basic numerical exercise. The right approach depends on the _specific needs of the analysis_ and the context of the data. The simple `sorted()` function will work, but it’s rarely the optimal solution when working with real-world data.
 
-For further study, I'd recommend starting with *Speech and Language Processing* by Daniel Jurafsky and James H. Martin for a robust theoretical understanding of NLP, especially the sentiment analysis chapters. For a practical understanding, the nltk documentation is invaluable; exploring various options for sentiment analysis would help you explore the library's capabilities. Also, delving into more advanced sentiment analysis resources such as *Sentiment Analysis and Opinion Mining* by Bing Liu can deepen your knowledge and understanding of the topic. Furthermore, resources related to information retrieval and ranking systems are very helpful in this context, since the sorting of the compound score is quite often related to their importance ranking. And as a last recommendation, consider the research papers related to VADER, or other lexicon-based scoring systems, if you want to get a better understanding of what the compound scores themselves entail.
+For further study, I'd recommend starting with _Speech and Language Processing_ by Daniel Jurafsky and James H. Martin for a robust theoretical understanding of NLP, especially the sentiment analysis chapters. For a practical understanding, the nltk documentation is invaluable; exploring various options for sentiment analysis would help you explore the library's capabilities. Also, delving into more advanced sentiment analysis resources such as _Sentiment Analysis and Opinion Mining_ by Bing Liu can deepen your knowledge and understanding of the topic. Furthermore, resources related to information retrieval and ranking systems are very helpful in this context, since the sorting of the compound score is quite often related to their importance ranking. And as a last recommendation, consider the research papers related to VADER, or other lexicon-based scoring systems, if you want to get a better understanding of what the compound scores themselves entail.
 
-This approach – understanding the *why* behind the sorting – will be far more effective than just applying generic sorting methods and it's the approach I always use when encountering this type of problem.
+This approach – understanding the _why_ behind the sorting – will be far more effective than just applying generic sorting methods and it's the approach I always use when encountering this type of problem.

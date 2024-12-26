@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-ml-model-pre--and-post-processing-be-integrated-into-onnx"
 ---
 
-Alright, let's tackle this. The integration of machine learning model pre- and post-processing into ONNX is a topic I've spent a good chunk of time navigating, especially back when I was working on edge deployments for a computer vision project. We had a complex pipeline involving not just the core inference model, but also a suite of operations on the input and output data. Managing that efficiently across diverse hardware platforms required a deep dive into ONNX and its capabilities.
+, let's tackle this. The integration of machine learning model pre- and post-processing into ONNX is a topic I've spent a good chunk of time navigating, especially back when I was working on edge deployments for a computer vision project. We had a complex pipeline involving not just the core inference model, but also a suite of operations on the input and output data. Managing that efficiently across diverse hardware platforms required a deep dive into ONNX and its capabilities.
 
 The core idea behind embedding pre and post-processing directly within the ONNX graph is primarily about improving deployment efficiency and portability. Traditionally, you might handle pre-processing (like normalization, resizing, or encoding) in your application code, and the same goes for post-processing (like non-maximum suppression for object detection or argmax operations). However, this creates a fragile ecosystem where different applications might interpret the same input and output formats slightly differently. Moving these operations into the ONNX graph standardizes the entire inference pipeline, ensuring consistency regardless of the deployment environment.
 
@@ -107,20 +107,20 @@ def create_crop_graph():
     # Prepare constants for slice operation
     starts_node = helper.make_node('Constant', [], ['starts'], value=helper.make_tensor('starts', TensorProto.INT64, [4], [0, 0, 0, 0]))
     axes_node = helper.make_node('Constant', [], ['axes'], value=helper.make_tensor('axes', TensorProto.INT64, [4], [0, 1, 2, 3]))
-    
+
     # Dynamic length calculation for slice
     length_0 = helper.make_node('Gather', ['bbox_input', helper.make_node('Constant', [], ['axis_0'], value=helper.make_tensor('axis_0', TensorProto.INT64, [], [0])).output[0]],['start_y_0'])
     length_1 = helper.make_node('Gather', ['bbox_input', helper.make_node('Constant', [], ['axis_1'], value=helper.make_tensor('axis_1', TensorProto.INT64, [], [1])).output[0]], ['start_x_1'])
     length_2 = helper.make_node('Gather', ['bbox_input', helper.make_node('Constant', [], ['axis_2'], value=helper.make_tensor('axis_2', TensorProto.INT64, [], [2])).output[0]], ['height_2'])
     length_3 = helper.make_node('Gather', ['bbox_input', helper.make_node('Constant', [], ['axis_3'], value=helper.make_tensor('axis_3', TensorProto.INT64, [], [3])).output[0]], ['width_3'])
-    
+
     ends_0 = helper.make_node('Add', ['start_y_0', helper.make_node('Constant', [], ['height_offset'], value=helper.make_tensor('height_offset', TensorProto.INT64, [], [64])).output[0]], ['end_y_0'])
     ends_1 = helper.make_node('Add', ['start_x_1', helper.make_node('Constant', [], ['width_offset'], value=helper.make_tensor('width_offset', TensorProto.INT64, [], [64])).output[0]], ['end_x_1'])
 
     ends_node = helper.make_node('Concat', [starts_node.output[0], ends_0, ends_1, helper.make_node('Constant', [], ['end_ch_dim'], value=helper.make_tensor('end_ch_dim', TensorProto.INT64, [], [1])).output[0]], ['ends'], axis=0)
 
     slice_node = helper.make_node('Slice', ['image_input', 'starts', 'ends', 'axes'], ['cropped_image'])
-    
+
     # Create graph
     graph = helper.make_graph(
         [starts_node, axes_node, length_0, length_1, length_2, length_3, ends_0, ends_1, ends_node, slice_node],

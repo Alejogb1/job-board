@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-my-docker-volume-lost-file-rights-in-a-container"
 ---
 
-alright, so you're banging your head against the wall with docker volume permissions, yeah? i've been there, trust me. it's one of those things that makes you feel like you're going crazy, especially when it was working just fine, then poof, suddenly things are screwed up.
+, so you're banging your head against the wall with docker volume permissions, yeah? i've been there, trust me. it's one of those things that makes you feel like you're going crazy, especially when it was working just fine, then poof, suddenly things are screwed up.
 
 first off, let's get the basics straight. docker volumes, at their heart, are designed for persistence. that means data that should live beyond a container's lifespan. you mount a directory from your host machine (or a named volume) into a container, and docker handles the plumbing. the catch? docker uses the host filesystem's permissions system. it doesn’t automagically translate host permissions to inside the container.
 
@@ -71,6 +71,7 @@ finally, there's the more elaborate solution that involves setting `chown` to ch
 chown -R 1000:1000 /container/path
 exec "$@"
 ```
+
 and your `dockerfile` would look something like this:
 
 ```dockerfile

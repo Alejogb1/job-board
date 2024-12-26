@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-pytorch-runtime-errors-related-to-inplace-operations"
 ---
 
-Alright, let's tackle this one. I've seen more than my fair share of those cryptic PyTorch errors involving inplace operations. They can be a real pain, especially when you're knee-deep in training a complex model. It’s not uncommon for a seemingly innocuous change to trigger a cascade of these, and the error messages aren’t always as helpful as we’d like. Essentially, these errors bubble up from PyTorch's automatic differentiation (autograd) engine's attempt to correctly track the flow of computation for gradient calculation.
+, let's tackle this one. I've seen more than my fair share of those cryptic PyTorch errors involving inplace operations. They can be a real pain, especially when you're knee-deep in training a complex model. It’s not uncommon for a seemingly innocuous change to trigger a cascade of these, and the error messages aren’t always as helpful as we’d like. Essentially, these errors bubble up from PyTorch's automatic differentiation (autograd) engine's attempt to correctly track the flow of computation for gradient calculation.
 
 The crux of the issue revolves around how autograd builds a computation graph. When you perform an operation, autograd records it so that it can later compute gradients via backpropagation. Inplace operations, by their very nature, modify tensors directly, without creating a new tensor to hold the result. This can lead to problems if the original tensor was required elsewhere in the computation graph, particularly when its original values are needed for gradient computation. PyTorch throws an error precisely to prevent you from inadvertently corrupting the backpropagation process.
 
@@ -22,7 +22,7 @@ z = y.sum()
 z.backward() # Will cause an error
 ```
 
-In this snippet, `y.add_(1)` modifies the tensor `y` directly. Now, `z.backward()` attempts to traverse the graph. During backpropagation, autograd needs the original value of `y` *before* the inplace addition. Because the value was modified directly, the original tensor's state isn't available for computation of the gradient. Running this would result in an error indicating that a tensor was modified inplace that was needed for the backwards pass. The error message may look something like: "RuntimeError: one of the variables needed for gradient computation has been modified by an inplace operation".
+In this snippet, `y.add_(1)` modifies the tensor `y` directly. Now, `z.backward()` attempts to traverse the graph. During backpropagation, autograd needs the original value of `y` _before_ the inplace addition. Because the value was modified directly, the original tensor's state isn't available for computation of the gradient. Running this would result in an error indicating that a tensor was modified inplace that was needed for the backwards pass. The error message may look something like: "RuntimeError: one of the variables needed for gradient computation has been modified by an inplace operation".
 
 It's important to note that not all inplace operations will result in errors. It depends entirely on how the tensors are being used within your computational graph. For instance, if a tensor is only used in a feedforward pass and not needed for the backward pass, its inplace modifications might go unnoticed by autograd. This inconsistency can make these errors frustratingly difficult to debug because they often only manifest themselves under specific circumstances, making it seem like the problem is appearing randomly.
 

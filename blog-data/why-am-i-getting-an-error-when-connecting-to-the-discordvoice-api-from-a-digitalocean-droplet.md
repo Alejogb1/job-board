@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-an-error-when-connecting-to-the-discordvoice-api-from-a-digitalocean-droplet"
 ---
 
-Okay, let's tackle this. It's not uncommon to run into roadblocks when setting up discord voice bots on cloud platforms, and digitalocean droplets definitely have their quirks. I've certainly spent my share of late nights troubleshooting similar issues, back when I was managing a fairly complex community bot. The error you're seeing with `@discord/voice` on a digitalocean droplet can usually be pinned down to a few common culprits. Let's go through the usual suspects, along with some specific solutions.
+, let's tackle this. It's not uncommon to run into roadblocks when setting up discord voice bots on cloud platforms, and digitalocean droplets definitely have their quirks. I've certainly spent my share of late nights troubleshooting similar issues, back when I was managing a fairly complex community bot. The error you're seeing with `@discord/voice` on a digitalocean droplet can usually be pinned down to a few common culprits. Let's go through the usual suspects, along with some specific solutions.
 
 First, understand that establishing a reliable audio connection requires more than just your application code. It involves network configurations, library dependencies, and specific system setups – all of which can introduce potential failure points, particularly in a virtualized server environment. The issue is almost never the discord library itself but rather how your environment is interacting with it.
 
@@ -21,18 +21,19 @@ To demonstrate what I mean about environment setup and how you can isolate these
 This isn’t part of your bot, but rather a debugging tool I often use. Here’s how we test if UDP can connect:
 
 ```javascript
-const dgram = require('dgram');
+const dgram = require("dgram");
 
-const socket = dgram.createSocket('udp4');
-const message = Buffer.from('test udp message');
+const socket = dgram.createSocket("udp4");
+const message = Buffer.from("test udp message");
 
-socket.send(message, 0, message.length, 53, '8.8.8.8', (err) => { //8.8.8.8 = google dns for testing
-    if (err) {
-        console.error('Error sending UDP packet:', err);
-    } else {
-        console.log('UDP packet sent successfully');
-    }
-    socket.close();
+socket.send(message, 0, message.length, 53, "8.8.8.8", (err) => {
+  //8.8.8.8 = google dns for testing
+  if (err) {
+    console.error("Error sending UDP packet:", err);
+  } else {
+    console.log("UDP packet sent successfully");
+  }
+  socket.close();
 });
 ```
 
@@ -43,42 +44,49 @@ This simple script attempts to send a UDP packet to a public DNS server (Google�
 Here's how I typically test the core of my `@discordjs/voice` connections:
 
 ```javascript
-const { joinVoiceChannel, createAudioPlayer, createAudioResource, StreamType, entersState, AudioPlayerStatus } = require('@discordjs/voice');
-const { Client, GatewayIntentBits } = require('discord.js');
-const { token, voiceChannelId, guildId } = require('./config.json');  // Assuming you have this file with your secrets
+const {
+  joinVoiceChannel,
+  createAudioPlayer,
+  createAudioResource,
+  StreamType,
+  entersState,
+  AudioPlayerStatus,
+} = require("@discordjs/voice");
+const { Client, GatewayIntentBits } = require("discord.js");
+const { token, voiceChannelId, guildId } = require("./config.json"); // Assuming you have this file with your secrets
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates] });
+const client = new Client({
+  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates],
+});
 
-client.on('ready', async () => {
+client.on("ready", async () => {
   console.log(`Logged in as ${client.user.tag}!`);
   const voiceChannel = client.channels.cache.get(voiceChannelId);
 
   if (!voiceChannel) {
-    console.error('Voice channel not found!');
+    console.error("Voice channel not found!");
     return;
   }
-    try{
-        const connection = joinVoiceChannel({
-            channelId: voiceChannel.id,
-            guildId: voiceChannel.guild.id,
-            adapterCreator: voiceChannel.guild.voiceAdapterCreator,
-        });
+  try {
+    const connection = joinVoiceChannel({
+      channelId: voiceChannel.id,
+      guildId: voiceChannel.guild.id,
+      adapterCreator: voiceChannel.guild.voiceAdapterCreator,
+    });
 
-        const player = createAudioPlayer();
-        const resource = createAudioResource('test.mp3', {
-          inputType: StreamType.Arbitrary,
-        });
+    const player = createAudioPlayer();
+    const resource = createAudioResource("test.mp3", {
+      inputType: StreamType.Arbitrary,
+    });
 
-        connection.subscribe(player);
-        player.play(resource);
+    connection.subscribe(player);
+    player.play(resource);
 
-        await entersState(player, AudioPlayerStatus.Playing, 5000);
-        console.log("Successfully playing audio.");
-
-    }catch(error){
-        console.error("Error connecting or playing audio:", error);
-    }
-
+    await entersState(player, AudioPlayerStatus.Playing, 5000);
+    console.log("Successfully playing audio.");
+  } catch (error) {
+    console.error("Error connecting or playing audio:", error);
+  }
 });
 client.login(token);
 ```
@@ -90,54 +98,66 @@ This example isolates the connection and playback process. If this code fails sp
 Sometimes the errors are vague, so let's see how to improve error logging with some more granular control:
 
 ```javascript
-const { joinVoiceChannel, createAudioPlayer, createAudioResource, StreamType, entersState, AudioPlayerStatus } = require('@discordjs/voice');
-const { Client, GatewayIntentBits } = require('discord.js');
-const { token, voiceChannelId, guildId } = require('./config.json');
+const {
+  joinVoiceChannel,
+  createAudioPlayer,
+  createAudioResource,
+  StreamType,
+  entersState,
+  AudioPlayerStatus,
+} = require("@discordjs/voice");
+const { Client, GatewayIntentBits } = require("discord.js");
+const { token, voiceChannelId, guildId } = require("./config.json");
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates] });
+const client = new Client({
+  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates],
+});
 
-client.on('ready', async () => {
-    console.log(`Logged in as ${client.user.tag}!`);
-    const voiceChannel = client.channels.cache.get(voiceChannelId);
+client.on("ready", async () => {
+  console.log(`Logged in as ${client.user.tag}!`);
+  const voiceChannel = client.channels.cache.get(voiceChannelId);
 
-    if (!voiceChannel) {
-      console.error('Voice channel not found!');
-      return;
-    }
+  if (!voiceChannel) {
+    console.error("Voice channel not found!");
+    return;
+  }
 
-    try {
-        const connection = joinVoiceChannel({
-            channelId: voiceChannel.id,
-            guildId: voiceChannel.guild.id,
-            adapterCreator: voiceChannel.guild.voiceAdapterCreator,
-        });
+  try {
+    const connection = joinVoiceChannel({
+      channelId: voiceChannel.id,
+      guildId: voiceChannel.guild.id,
+      adapterCreator: voiceChannel.guild.voiceAdapterCreator,
+    });
 
-        connection.on('stateChange', (oldState, newState) => {
-            console.log(`Connection transitioned from ${oldState.status} to ${newState.status}`);
-            if (newState.status === 'disconnected' && newState.reason) {
-                console.error('Connection disconnected:', newState.reason);
-            }
-        });
+    connection.on("stateChange", (oldState, newState) => {
+      console.log(
+        `Connection transitioned from ${oldState.status} to ${newState.status}`
+      );
+      if (newState.status === "disconnected" && newState.reason) {
+        console.error("Connection disconnected:", newState.reason);
+      }
+    });
 
-        const player = createAudioPlayer();
-        const resource = createAudioResource('test.mp3', {
-          inputType: StreamType.Arbitrary,
-        });
+    const player = createAudioPlayer();
+    const resource = createAudioResource("test.mp3", {
+      inputType: StreamType.Arbitrary,
+    });
 
-        connection.subscribe(player);
-        player.play(resource);
+    connection.subscribe(player);
+    player.play(resource);
 
-        await entersState(player, AudioPlayerStatus.Playing, 5000);
-        console.log("Successfully playing audio.");
-    } catch(error){
-      console.error("Error during voice operation:", error);
-    }
+    await entersState(player, AudioPlayerStatus.Playing, 5000);
+    console.log("Successfully playing audio.");
+  } catch (error) {
+    console.error("Error during voice operation:", error);
+  }
 });
 
 client.login(token);
 ```
+
 Here, we’ve added logging for connection state changes which provides more context on what's occurring before errors are thrown. The `connection.on('stateChange'...)` block is incredibly useful for isolating connection problems and understanding if your bot is even able to negotiate the initial connection before erroring during audio playback.
 
-Lastly, regarding resources, I would recommend diving into *“Understanding UDP Protocol”* by Christian Huitema for the foundational knowledge about the underlying protocol itself, and *“TCP/IP Illustrated, Vol. 1: The Protocols”* by W. Richard Stevens which provides an excellent explanation of networking fundamentals. Further, the discord.js library documentation itself should be reviewed to understand requirements for voice channel connections, and I recommend looking at the github issue tracker on the @discordjs/voice library to see if other users have reported similar problems and what their fixes were. I also use the Digitalocean documentation quite often to remind myself of their default setup specifics.
+Lastly, regarding resources, I would recommend diving into _“Understanding UDP Protocol”_ by Christian Huitema for the foundational knowledge about the underlying protocol itself, and _“TCP/IP Illustrated, Vol. 1: The Protocols”_ by W. Richard Stevens which provides an excellent explanation of networking fundamentals. Further, the discord.js library documentation itself should be reviewed to understand requirements for voice channel connections, and I recommend looking at the github issue tracker on the @discordjs/voice library to see if other users have reported similar problems and what their fixes were. I also use the Digitalocean documentation quite often to remind myself of their default setup specifics.
 
 By carefully inspecting the environment, firewall configurations, and your code implementation, I’m confident you can diagnose and resolve this issue. It's almost always a process of elimination.

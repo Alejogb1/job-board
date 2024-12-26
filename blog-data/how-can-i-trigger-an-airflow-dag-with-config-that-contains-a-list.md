@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-trigger-an-airflow-dag-with-config-that-contains-a-list"
 ---
 
-Okay, let's tackle this one. I've seen this come up more than a few times over the years, especially with the increasing complexity of data pipelines. Configuring Airflow dags using dynamic lists is definitely something you’ll run into when dealing with environments that scale or have varying input requirements. It's not as straightforward as passing a single value, but with a few techniques, it’s quite manageable. The issue is really about how to efficiently pass and interpret that list as part of your dag's configuration parameters.
+, let's tackle this one. I've seen this come up more than a few times over the years, especially with the increasing complexity of data pipelines. Configuring Airflow dags using dynamic lists is definitely something you’ll run into when dealing with environments that scale or have varying input requirements. It's not as straightforward as passing a single value, but with a few techniques, it’s quite manageable. The issue is really about how to efficiently pass and interpret that list as part of your dag's configuration parameters.
 
 Initially, back when I was working on a large-scale ETL system for a financial institution, we faced a very similar challenge. Our processing pipelines needed to adjust their behavior based on a variable set of trading instruments, sometimes daily, other times intraday. That meant passing lists of instrument IDs to Airflow.
 
@@ -50,7 +50,9 @@ with DAG(
         python_callable=process_list
     )
 ```
+
 To trigger it, you would use the Airflow CLI or the API, something like this:
+
 ```bash
 airflow dags trigger example_dag_with_list_1 -c '{"instruments": "[\"AAPL\", \"GOOG\", \"MSFT\"]"}'
 ```
@@ -95,10 +97,13 @@ with DAG(
         python_callable=process_instruments_csv
     )
 ```
+
 Here’s how you’d trigger it using the CLI:
+
 ```bash
 airflow dags trigger example_dag_with_list_2 -c '{"instruments": "AAPL,GOOG,MSFT"}'
 ```
+
 This method means you need to split the input string inside the task. Notice that I added `.strip()` to each element in the resulting list because spaces before or after the commas will make the list elements less predictable. You have to be particularly careful with the format when constructing the configuration from the CLI, as this method is less forgiving when extra spaces exist.
 
 **Method 3: Using Jinja Templating with Airflow Variables**
@@ -149,11 +154,11 @@ This approach keeps the configuration outside of the immediate dag execution. Th
 
 Regardless of which method you choose, always remember these points:
 
-*   **Error Handling:** Implement robust error handling, particularly around json parsing and data conversion. Invalid input should never crash your tasks.
+- **Error Handling:** Implement robust error handling, particularly around json parsing and data conversion. Invalid input should never crash your tasks.
 
-*   **Data Validation:** Always validate the input list before passing it further down the pipeline. Check for the expected type and content to avoid downstream errors.
+- **Data Validation:** Always validate the input list before passing it further down the pipeline. Check for the expected type and content to avoid downstream errors.
 
-*   **Security:** Be careful when storing sensitive information directly as Airflow variables. Consider using Airflow secrets backend instead.
+- **Security:** Be careful when storing sensitive information directly as Airflow variables. Consider using Airflow secrets backend instead.
 
 For further reading and understanding, I would highly recommend:
 

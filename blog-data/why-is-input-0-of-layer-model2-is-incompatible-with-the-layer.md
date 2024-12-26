@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-input-0-of-layer-model2-is-incompatible-with-the-layer"
 ---
 
-alright, i see the question. "input 0 of layer 'model_2' is incompatible with the layer". this usually pops up when you're building or tweaking neural networks, especially in frameworks like tensorflow or keras, but i've seen variations of it in other deep learning setups. it’s a classic case of shape mismatch, basically your network expects something and gets something else.
+, i see the question. "input 0 of layer 'model_2' is incompatible with the layer". this usually pops up when you're building or tweaking neural networks, especially in frameworks like tensorflow or keras, but i've seen variations of it in other deep learning setups. it’s a classic case of shape mismatch, basically your network expects something and gets something else.
 
 let's break down the common causes and how i've handled them in the past, because this isn't my first rodeo with incompatible layers. i've been tinkering with these things since the early days of caffe and theano, so i've seen my share of cryptic errors.
 
@@ -12,11 +12,11 @@ first off, the error message itself is pretty explicit. it's telling you that th
 
 most frequently, i've found this boils down to a few common situations:
 
-* **incorrect input data shape:** this is the most typical one. imagine you have a convolutional layer that expects a 4d tensor of shape (batch_size, height, width, channels), but instead you're giving it a 3d tensor (batch_size, height, width) or a completely different shape. the network expects one thing (like a square hole) and you are trying to force a different object into it (like a triangle).
-* **mismatched input types:** less common but still a pain. this happens when the model was designed to take an input of a specific datatype like `float32` but you're passing `int64` or something else. these don't always get caught by the usual shape checks, and you will see the error anyway.
-* **feeding the wrong output:** you might be passing output from the wrong layer in a model. imagine trying to take the output of a classification layer to be the input of the pixel generator layer that would be incompatible by design.
-* **issues with custom layers:** if you wrote any custom layers, the input tensor shape is not correctly formatted. or your layer is not implemented as intended. the data passed to a custom layer has some issues.
-* **misunderstanding data loading and preprocessing:** sometimes, you think your data is shaped correctly after reading it, but there might be some issues in the preprocessing step that change the shape. this happens when you do batching or augmentation in a way you don’t intend.
+- **incorrect input data shape:** this is the most typical one. imagine you have a convolutional layer that expects a 4d tensor of shape (batch_size, height, width, channels), but instead you're giving it a 3d tensor (batch_size, height, width) or a completely different shape. the network expects one thing (like a square hole) and you are trying to force a different object into it (like a triangle).
+- **mismatched input types:** less common but still a pain. this happens when the model was designed to take an input of a specific datatype like `float32` but you're passing `int64` or something else. these don't always get caught by the usual shape checks, and you will see the error anyway.
+- **feeding the wrong output:** you might be passing output from the wrong layer in a model. imagine trying to take the output of a classification layer to be the input of the pixel generator layer that would be incompatible by design.
+- **issues with custom layers:** if you wrote any custom layers, the input tensor shape is not correctly formatted. or your layer is not implemented as intended. the data passed to a custom layer has some issues.
+- **misunderstanding data loading and preprocessing:** sometimes, you think your data is shaped correctly after reading it, but there might be some issues in the preprocessing step that change the shape. this happens when you do batching or augmentation in a way you don’t intend.
 
 so, what should you do? first, thoroughly inspect the shape of your input data just before it enters ‘model_2’ . use `input_tensor.shape` function or `tf.shape(input_tensor)` to see the shape of the tensor. do the same with the shape expected by the layer using a `model_2.input_shape` or equivalent command. usually this information is easily obtained by inspecting the model architecture.
 
@@ -50,7 +50,7 @@ print(f'input_tensor shape {input_tensor.shape}')
 print(f'model_2 input shape {model_2.input_shape}')
 ```
 
-in this case, `model_2` is designed to receive an input of shape `(batch_size, 28, 28, 1)` (notice the 1 channel), and `input_tensor`'s shape is `(1, 28, 28, 3)`.  the channel dimension is different (3 instead of 1).  this incompatibility results in the error.
+in this case, `model_2` is designed to receive an input of shape `(batch_size, 28, 28, 1)` (notice the 1 channel), and `input_tensor`'s shape is `(1, 28, 28, 3)`. the channel dimension is different (3 instead of 1). this incompatibility results in the error.
 
 to fix it, either change your image preprocessing to make sure that your images are converted to a single channel (grayscale) or modify the `model_2` layer. here’s how you would correct it:
 
@@ -116,6 +116,7 @@ print(f'input_tensor shape {input_tensor.shape}')
 print(f'custom layer input shape {custom_layer.input_shape}') # will output None because build method is not called
 
 ```
+
 here, the custom layer expects the input to have a specific shape based on `build` but `call` gets the input before the `build` method is called, which makes the layer not be initialized. this creates another case of error. to fix this, instantiate your model using a call or use `build` in the custom layer. here is a corrected code:
 
 ```python

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-load-page-specific-custom-javascript-functions-in-a-rails-7-app"
 ---
 
-Okay, let's talk about loading page-specific javascript functions in a rails 7 application. I've tackled this quite a bit over the years, particularly as applications grow and you find yourself needing a more granular approach than just global scripts. What starts simple quickly becomes a maintenance headache if you don't implement a reasonable strategy. When I first started working with rails back in the early days, it felt like a constant battle to avoid script bloat and unintended side effects.
+, let's talk about loading page-specific javascript functions in a rails 7 application. I've tackled this quite a bit over the years, particularly as applications grow and you find yourself needing a more granular approach than just global scripts. What starts simple quickly becomes a maintenance headache if you don't implement a reasonable strategy. When I first started working with rails back in the early days, it felt like a constant battle to avoid script bloat and unintended side effects.
 
 One approach, and arguably the most straightforward, involves leveraging the rails asset pipeline combined with some simple naming conventions. The general idea is to create separate javascript files, each tailored to a specific view or controller action, and then selectively include those files only when needed. This is where the magic of `content_for` and `javascript_include_tag` comes in, and where i’ve seen quite a few folks initially go astray.
 
@@ -12,16 +12,15 @@ For this approach, let’s say you have a `products#show` view that requires uni
 
 ```javascript
 // app/javascript/products/show.js
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("Product show page scripts loaded!");
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("Product show page scripts loaded!");
 
-    const productDetails = document.querySelector('.product-details');
-    if(productDetails) {
-        const productId = productDetails.getAttribute('data-product-id');
-        console.log(`Product ID: ${productId}`);
-       //additional functionality relevant to product show page can go here
-    }
-
+  const productDetails = document.querySelector(".product-details");
+  if (productDetails) {
+    const productId = productDetails.getAttribute("data-product-id");
+    console.log(`Product ID: ${productId}`);
+    //additional functionality relevant to product show page can go here
+  }
 });
 ```
 
@@ -68,30 +67,31 @@ Create a controller named `modal_controller.js` in your `app/javascript/controll
 
 ```javascript
 // app/javascript/controllers/modal_controller.js
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["modal", "content"]
-  static values = { productId: Number }
+  static targets = ["modal", "content"];
+  static values = { productId: Number };
 
   connect() {
-      console.log(`Modal controller connected for product ${this.productIdValue}`);
+    console.log(
+      `Modal controller connected for product ${this.productIdValue}`
+    );
     // Additional controller init logic here
   }
 
   open(event) {
-      event.preventDefault()
-      fetch(`/products/${this.productIdValue}/details.json`)
-          .then(response => response.json())
-          .then(data => {
-              this.contentTarget.innerHTML = `<p><strong>Name:</strong> ${data.name}</p><p><strong>Description:</strong> ${data.description}</p>`
-              this.modalTarget.classList.remove('hidden');
-          });
+    event.preventDefault();
+    fetch(`/products/${this.productIdValue}/details.json`)
+      .then((response) => response.json())
+      .then((data) => {
+        this.contentTarget.innerHTML = `<p><strong>Name:</strong> ${data.name}</p><p><strong>Description:</strong> ${data.description}</p>`;
+        this.modalTarget.classList.remove("hidden");
+      });
   }
 
-
   close() {
-    this.modalTarget.classList.add('hidden');
+    this.modalTarget.classList.add("hidden");
   }
 }
 ```

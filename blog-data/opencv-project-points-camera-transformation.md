@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "opencv-project-points-camera-transformation"
 ---
 
-Alright so camera transformations with OpenCV yeah I’ve been down that rabbit hole more times than I care to admit. It's like one of those things that sounds simple on paper but then reality hits you with all its coordinate systems and matrices and suddenly you're debugging for hours.
+so camera transformations with OpenCV yeah I’ve been down that rabbit hole more times than I care to admit. It's like one of those things that sounds simple on paper but then reality hits you with all its coordinate systems and matrices and suddenly you're debugging for hours.
 
 So you wanna get points from one camera view to another right? Project them from one perspective to another that’s the gist of it. I’ve seen it a bunch especially in multi-camera setups or robotics projects where you've gotta figure out where something is in the real world based on different views of it.
 
@@ -14,7 +14,7 @@ First off what we should be aware of is that we almost always work with homogene
 
 Let's say you’ve got points detected by camera one and you want to know their 3D location relative to camera two or simply the new 2D projection of them as camera two would see them. This involves several steps which almost always lead to some kind of headache. We typically go from 2D pixel points in the first camera through its intrinsic parameters to a 3D representation then apply the relative rotation and translation from camera 1 to camera 2 and then project back to the camera 2 pixel view with its intrinsic matrix.
 
-I’ve had my fair share of pain trying to nail down these transforms especially when camera calibration isn't super solid.  One time I was working on a VR system and my head tracking was drifting all over the place turns out my intrinsic parameters were off just a tiny bit but that was enough to break everything. Debugging those subtle errors really builds character you know. Anyway let's dig into the actual code because that’s usually what people really care about here.
+I’ve had my fair share of pain trying to nail down these transforms especially when camera calibration isn't super solid. One time I was working on a VR system and my head tracking was drifting all over the place turns out my intrinsic parameters were off just a tiny bit but that was enough to break everything. Debugging those subtle errors really builds character you know. Anyway let's dig into the actual code because that’s usually what people really care about here.
 
 Here’s a snippet of Python code using OpenCV and Numpy to give you a feel of how it looks like. Assume we have all the needed rotation translation and intrinsic matrices.
 
@@ -50,7 +50,7 @@ def transform_points(points2d_cam1, K1, K2, R, t):
     points_homo_cam2 = np.dot(K2, points_3d_cam2.T).T
 
     points2d_cam2_projected = points_homo_cam2[:, :2] / points_homo_cam2[:, 2:]
-    
+
     return points2d_cam2_projected
 if __name__ == '__main__':
     # Dummy data for demonstration
@@ -81,23 +81,23 @@ using namespace std;
 
 vector<Point2f> transformPoints(const vector<Point2f>& points2d_cam1, const Mat& K1, const Mat& K2, const Mat& R, const Mat& t) {
     vector<Point2f> points2d_cam2;
-    
+
     Mat points_homo_cam1;
     convertPointsToHomogeneous(points2d_cam1, points_homo_cam1);
-    
+
     Mat points_3d_cam1;
     solve(K1, points_homo_cam1.t(), points_3d_cam1, DECOMP_LU);
-    
+
     Mat points_3d_cam1_homo;
     vconcat(points_3d_cam1.t(), Mat::ones(1, points_3d_cam1.cols, CV_32F), points_3d_cam1_homo);
 
     Mat Rt;
     hconcat(R, t, Rt);
-    
+
     Mat points_3d_cam2_homo = Rt * points_3d_cam1_homo;
-    
+
     Mat points_3d_cam2 = points_3d_cam2_homo(Rect(0, 0, points_3d_cam2_homo.cols, 3));
-    
+
     Mat points_homo_cam2 = K2 * points_3d_cam2;
 
     for(int i = 0; i < points_homo_cam2.cols; ++i) {

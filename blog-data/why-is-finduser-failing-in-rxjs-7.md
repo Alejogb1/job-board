@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-finduser-failing-in-rxjs-7"
 ---
 
-Okay, let's tackle this. The `findUser()` failing in RxJS 7 scenario… that rings a bell. I recall wrestling with a similar issue back in my days working on the 'Global Unified Identity Service' project – quite a beast, it was. We had a component responsible for fetching user data from a backend, filtering based on some search criteria, and then using that user object further down the pipeline. It involved a complex asynchronous flow, relying heavily on RxJS, naturally. I vividly remember the frustration when the straightforward `find()` method wasn't performing as expected. Let me dissect this.
+, let's tackle this. The `findUser()` failing in RxJS 7 scenario… that rings a bell. I recall wrestling with a similar issue back in my days working on the 'Global Unified Identity Service' project – quite a beast, it was. We had a component responsible for fetching user data from a backend, filtering based on some search criteria, and then using that user object further down the pipeline. It involved a complex asynchronous flow, relying heavily on RxJS, naturally. I vividly remember the frustration when the straightforward `find()` method wasn't performing as expected. Let me dissect this.
 
 The common pitfall we're likely encountering here revolves around how `find()` – and, for that matter, array methods in general – interact with RxJS observables. Unlike simple array processing, observables are streams of data that may or may not emit values synchronously. The `find()` array method expects an array, but an observable provides an asynchronous stream. Applying an array-based `find` directly to an observable stream will fail, and sometimes in rather confusing ways. That's where the RxJS `find` operator comes into play, and there's a critical difference that's important to grasp.
 
@@ -17,7 +17,7 @@ Let's break down three scenarios to illustrate potential failure points and how 
 This is probably what is going wrong when I hear that the `findUser()` is failing, so lets assume this pattern. Let's simulate fetching a list of users via an observable and then attempt to use the Javascript array find method.
 
 ```typescript
-import { of, from } from 'rxjs';
+import { of, from } from "rxjs";
 
 interface User {
   id: number;
@@ -25,18 +25,18 @@ interface User {
 }
 
 const mockUsers = [
-  { id: 1, name: 'Alice' },
-  { id: 2, name: 'Bob' },
-  { id: 3, name: 'Charlie' },
+  { id: 1, name: "Alice" },
+  { id: 2, name: "Bob" },
+  { id: 3, name: "Charlie" },
 ];
 
 const fetchUsersObservable = from(mockUsers);
 
 function incorrectFindUser(userId: number) {
-    return fetchUsersObservable.subscribe(users => {
-        const user = users.find(user => user.id === userId);
-        console.log('User using incorrect method:', user); // Output: undefined (this is most likely the error)
-    });
+  return fetchUsersObservable.subscribe((users) => {
+    const user = users.find((user) => user.id === userId);
+    console.log("User using incorrect method:", user); // Output: undefined (this is most likely the error)
+  });
 }
 
 incorrectFindUser(2);
@@ -49,7 +49,7 @@ The above code directly uses the javascript array `find` method. It produces `un
 This is the correct method to perform a `find` method over a stream. We are using an observable to represent a stream of users. We can use the RxJS `find` operator here to resolve the issue.
 
 ```typescript
-import { of, from, find, tap } from 'rxjs';
+import { of, from, find, tap } from "rxjs";
 
 interface User {
   id: number;
@@ -57,21 +57,22 @@ interface User {
 }
 
 const mockUsers = [
-  { id: 1, name: 'Alice' },
-  { id: 2, name: 'Bob' },
-  { id: 3, name: 'Charlie' },
+  { id: 1, name: "Alice" },
+  { id: 2, name: "Bob" },
+  { id: 3, name: "Charlie" },
 ];
 
 const fetchUsersObservable = from(mockUsers);
 
-
 function correctFindUser(userId: number) {
-   return fetchUsersObservable.pipe(
-        find(user => user.id === userId),
-        tap(user => console.log("User using correct method:", user)),
-        // we can add `defaultIfEmpty` to handle cases where user is not found
-        //defaultIfEmpty(null)
-    ).subscribe();
+  return fetchUsersObservable
+    .pipe(
+      find((user) => user.id === userId),
+      tap((user) => console.log("User using correct method:", user))
+      // we can add `defaultIfEmpty` to handle cases where user is not found
+      //defaultIfEmpty(null)
+    )
+    .subscribe();
 }
 
 correctFindUser(2); // Output: User: {id: 2, name: 'Bob'}
@@ -84,7 +85,7 @@ Here, the RxJS `find` operator is used correctly. The observable `fetchUsersObse
 Often data isn't readily available. It is usually retrieved from an API or another asynchronous source. Let's simulate fetching user data using an asynchronous method, and then finding a user.
 
 ```typescript
-import { of, from, find, from , switchMap, delay, tap } from 'rxjs';
+import { of, from, find, from, switchMap, delay, tap } from "rxjs";
 
 interface User {
   id: number;
@@ -92,12 +93,12 @@ interface User {
 }
 
 function fetchUsersAsync(): Promise<User[]> {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       const mockUsers = [
-        { id: 1, name: 'Alice' },
-        { id: 2, name: 'Bob' },
-        { id: 3, name: 'Charlie' },
+        { id: 1, name: "Alice" },
+        { id: 2, name: "Bob" },
+        { id: 3, name: "Charlie" },
       ];
       resolve(mockUsers);
     }, 1000); // Simulate API delay
@@ -105,12 +106,14 @@ function fetchUsersAsync(): Promise<User[]> {
 }
 
 function findUserAsync(userId: number) {
-    return from(fetchUsersAsync()).pipe(
-        switchMap(users => from(users)),
-        find(user => user.id === userId),
-        tap(user => console.log('User (Async):', user)),
-        // same as above, `defaultIfEmpty(null)` if needed
-    ).subscribe()
+  return from(fetchUsersAsync())
+    .pipe(
+      switchMap((users) => from(users)),
+      find((user) => user.id === userId),
+      tap((user) => console.log("User (Async):", user))
+      // same as above, `defaultIfEmpty(null)` if needed
+    )
+    .subscribe();
 }
 
 findUserAsync(3); //Output: User (Async): {id: 3, name: 'Charlie'} after 1 second delay
@@ -120,8 +123,8 @@ This demonstrates how to correctly handle asynchronous sources with the RxJS `fi
 
 **Key Takeaways and Resources**
 
-The primary mistake people make is that `find` is an array method, it is not an observable method. RxJS is for streams of data, and hence we use a `find` *operator* not a javascript array `find` method.
+The primary mistake people make is that `find` is an array method, it is not an observable method. RxJS is for streams of data, and hence we use a `find` _operator_ not a javascript array `find` method.
 
-To truly understand how to correctly use RxJS operators and avoid common pitfalls like this, I recommend delving into some resources. The official RxJS documentation is a must. It contains exhaustive explanations and examples. Specifically, pay attention to sections detailing 'operators' – you'll find `find` and its siblings there. There's also *'Reactive Programming with RxJS: Untangling Asynchronous Programming'* by Ben Lesh – an excellent resource that gives a deep understanding of RxJS concepts. For a more theoretical foundation, you could consider diving into concepts of functional reactive programming, often the core ideas behind libraries such as RxJS, you can find good starting points in "Functional Programming in Scala" by Martin Odersky. The book goes through the core concepts and ideas, so you can more efficiently map these ideas to any library, such as RxJS. Also I would suggest looking into the differences between cold and hot observables.
+To truly understand how to correctly use RxJS operators and avoid common pitfalls like this, I recommend delving into some resources. The official RxJS documentation is a must. It contains exhaustive explanations and examples. Specifically, pay attention to sections detailing 'operators' – you'll find `find` and its siblings there. There's also _'Reactive Programming with RxJS: Untangling Asynchronous Programming'_ by Ben Lesh – an excellent resource that gives a deep understanding of RxJS concepts. For a more theoretical foundation, you could consider diving into concepts of functional reactive programming, often the core ideas behind libraries such as RxJS, you can find good starting points in "Functional Programming in Scala" by Martin Odersky. The book goes through the core concepts and ideas, so you can more efficiently map these ideas to any library, such as RxJS. Also I would suggest looking into the differences between cold and hot observables.
 
 In conclusion, if your `findUser()` is failing in RxJS 7, double-check that you're using the RxJS `find` operator, and not inadvertently trying to use a javascript array `find` method on an observable stream. Ensure that your stream of data is set up correctly and handle any asynchronous operations with switchMap, and never use javascript array find method when processing the values emitted from an observable. It's the asynchronous nature of observables which can cause the confusion, and always pay attention to that. By using the correct operators and understanding how data flows in RxJS, you will avoid these types of issues. I hope this clarified the core issues around RxJS `find` operator usage.

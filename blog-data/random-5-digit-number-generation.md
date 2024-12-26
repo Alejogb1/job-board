@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "random-5-digit-number-generation"
 ---
 
-Okay I've been wrestling with random number generation for what feels like a lifetime honestly it's one of those deceptively simple things that gets complicated fast I’ve seen my share of janky implementations over the years from undergraduate projects to real-world production code where bugs lurk like gremlins waiting to strike
+I've been wrestling with random number generation for what feels like a lifetime honestly it's one of those deceptively simple things that gets complicated fast I’ve seen my share of janky implementations over the years from undergraduate projects to real-world production code where bugs lurk like gremlins waiting to strike
 
 So let’s talk about 5-digit random numbers specifically yeah that’s what you asked for straightforward enough right Well not quite The first thing everyone thinks of is just slapping something together like `rand() % 90000 + 10000` in C or whatever similar in your language of choice And I'm guilty of doing exactly that on a particularly sleep-deprived all-nighter trying to debug a segmentation fault related to some memory buffer over flow related to my university assignment where random numbers were required but I completely glossed over the quality of them. I remember waking up the next day thinking this is not gonna work.
 
@@ -60,21 +60,21 @@ public class RandomNumberGenerator {
     public static void main(String[] args) {
         SecureRandom secureRandom = new SecureRandom();
         Random random = new Random();
-        
+
         for(int i=0; i<5; i++){
            int randomNumber = 10000 + secureRandom.nextInt(90000);
            System.out.println(randomNumber);
 
-            
+
             int randomNumberFromRandom = 10000 + random.nextInt(90000);
             System.out.println(randomNumberFromRandom);
         }
-       
+
     }
 }
 ```
 
-This Java example introduces `SecureRandom` which is a cryptographically strong random number generator. In this case I've also included `Random` which is the default Java PRNG. As you can see when using the `SecureRandom` in some cases this can take a bit more time to generate that's because it's doing some more complex math under the hood. It uses a different algorithm to generate the numbers and it's more suitable for situations where you need to avoid any predictability. I had a colleague who was working with lottery numbers in his spare time ( don't ask ) who insisted we use this approach. He kept saying *I'm not losing on the lottery with the garbage random numbers I learned in school*. It was kinda funny to be honest. Anyways, it depends on what you're trying to do. Do not use this for video game character generation it will be slow.
+This Java example introduces `SecureRandom` which is a cryptographically strong random number generator. In this case I've also included `Random` which is the default Java PRNG. As you can see when using the `SecureRandom` in some cases this can take a bit more time to generate that's because it's doing some more complex math under the hood. It uses a different algorithm to generate the numbers and it's more suitable for situations where you need to avoid any predictability. I had a colleague who was working with lottery numbers in his spare time ( don't ask ) who insisted we use this approach. He kept saying _I'm not losing on the lottery with the garbage random numbers I learned in school_. It was kinda funny to be honest. Anyways, it depends on what you're trying to do. Do not use this for video game character generation it will be slow.
 
 So the key here is understanding that not all random number generators are created equal. If you just need something to throw together in a quick prototype or some dummy data then using `rand()` or `random()` will be fine, but if you need something more robust and reliable especially for any kind of security related stuff or even a decent statistical analysis use the more powerful approaches like the examples above.
 

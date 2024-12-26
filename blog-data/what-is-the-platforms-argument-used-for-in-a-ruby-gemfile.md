@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-platforms-argument-used-for-in-a-ruby-gemfile"
 ---
 
-Okay, let's talk about `platforms` in a Ruby `Gemfile`. I’ve seen it trip up newcomers and even seasoned developers a few times, especially when dealing with cross-platform deployments. It's a seemingly simple directive, but it packs a lot of power in terms of dependency management and ensuring gem compatibility across different operating systems and architectures.
+, let's talk about `platforms` in a Ruby `Gemfile`. I’ve seen it trip up newcomers and even seasoned developers a few times, especially when dealing with cross-platform deployments. It's a seemingly simple directive, but it packs a lot of power in terms of dependency management and ensuring gem compatibility across different operating systems and architectures.
 
 It might seem trivial at first glance, but the `platforms` argument isn't there just to add complexity. It's about specificity. Imagine working on a project a few years back; we had a complex image processing pipeline that was initially developed on macOS. When we started deploying to our production linux servers, we ran into all kinds of gem compatibility issues. Certain native extensions within specific gems wouldn't compile or function correctly on linux. That’s where using `platforms` became essential. We were forced to rethink how we were managing dependencies based on our target environments.
 

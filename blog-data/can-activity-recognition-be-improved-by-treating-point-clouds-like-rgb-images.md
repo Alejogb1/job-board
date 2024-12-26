@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-activity-recognition-be-improved-by-treating-point-clouds-like-rgb-images"
 ---
 
-Alright, let's talk about activity recognition using point clouds and whether treating them like RGB images yields benefits. I've actually tackled this particular challenge a few times in the past, specifically in projects involving human-robot interaction and industrial automation, and it's definitely not a cut-and-dried "yes" or "no" situation. The core issue stems from the fundamental differences in data representation. An RGB image encodes intensity values at discrete pixel locations, forming a 2D grid. A point cloud, on the other hand, represents a set of 3D points in space, each typically containing x, y, and z coordinates, and sometimes additional information like color or normal vectors.
+, let's talk about activity recognition using point clouds and whether treating them like RGB images yields benefits. I've actually tackled this particular challenge a few times in the past, specifically in projects involving human-robot interaction and industrial automation, and it's definitely not a cut-and-dried "yes" or "no" situation. The core issue stems from the fundamental differences in data representation. An RGB image encodes intensity values at discrete pixel locations, forming a 2D grid. A point cloud, on the other hand, represents a set of 3D points in space, each typically containing x, y, and z coordinates, and sometimes additional information like color or normal vectors.
 
 The appeal of treating a point cloud like an image, especially for someone with a background heavily invested in image processing, is understandable. We have a wealth of mature techniques for image analysis—convolutional neural networks (CNNs) being a prime example—and it's tempting to see if we can directly leverage those for point cloud data. The most common approach involves projecting the 3D point cloud onto a 2D plane, effectively creating a depth image or range map. Then, standard CNN architectures can be applied. However, the nuances of how this is done and what information is preserved or lost are critical factors.
 
@@ -77,13 +77,13 @@ def perspective_projection(point_cloud, image_size, camera_positions):
 
     for cx, cy, cz in camera_positions:
         depth_image = np.zeros((height, width), dtype=np.float32)
-        
+
         for x, y, z in point_cloud:
             # simple perspective transform
             delta_x = x - cx
             delta_y = y - cy
             delta_z = z - cz
-            
+
             if delta_z > 0:  # points in front of camera
                  screen_x = int(width/2 + delta_x*width/delta_z)
                  screen_y = int(height/2 + delta_y*height/delta_z)
@@ -93,7 +93,7 @@ def perspective_projection(point_cloud, image_size, camera_positions):
                          depth_image[screen_y, screen_x] = delta_z
 
         depth_images.append(depth_image)
-        
+
     return depth_images
 
 # Example usage
@@ -157,7 +157,7 @@ This shows how multi-channel "images" can be generated from point cloud data, en
 
 The key takeaway is that while converting point clouds to image-like representations can enable the use of existing image processing pipelines, it’s not a magic bullet. The performance heavily depends on several factors: the chosen projection method, the inherent nature of the activity we’re trying to recognize, and careful pre-processing and feature extraction.
 
-Rather than a straight conversion, I've seen better results using these image representations as *inputs* to the first few layers of a network, often alongside other point cloud-specific layers (e.g., PointNet or its variants) which better model the original spatial structure of the 3d data. This hybrid approach allows the network to learn which features to prioritize.
+Rather than a straight conversion, I've seen better results using these image representations as _inputs_ to the first few layers of a network, often alongside other point cloud-specific layers (e.g., PointNet or its variants) which better model the original spatial structure of the 3d data. This hybrid approach allows the network to learn which features to prioritize.
 
 For further study, I’d recommend looking into the following resources:
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "branch-pricing-branch-io-api-usage"
 ---
 
-Okay so you're asking about branch pricing and using the Branch IO API right Been there done that got the t-shirt or actually more like the stackoverflow badge ha
+you're asking about branch pricing and using the Branch IO API right Been there done that got the t-shirt or actually more like the stackoverflow badge ha
 
 Lets dive in I've wrestled with Branch IO's stuff for a good while now and the pricing model can be a bit of a… puzzle at first glance I remember back in like 2018 I was working on this mobile app for a local bookstore you know typical small business stuff We were using Branch for deep linking mostly trying to get users from social media ads right into specific book pages in our app It worked great initially but man the billing was a head scratcher for a while
 
@@ -27,33 +27,32 @@ Let's say you're using the Branch SDK you've already done the basic setup you kn
 ```javascript
 // Assuming you have the branch SDK initialized
 
-const branch = require('branch-sdk');
+const branch = require("branch-sdk");
 
 const linkProperties = {
-  channel: 'facebook',
-  feature: 'share',
-  campaign: 'summer_sale_2024',
-  tags: ['book_promotion', 'sale']
+  channel: "facebook",
+  feature: "share",
+  campaign: "summer_sale_2024",
+  tags: ["book_promotion", "sale"],
 };
 
-
 const dataProperties = {
-  "$desktop_url": "https://mybookstore.com/book/123",
-    "$ios_url": "mybookstore://book/123",
-    "$android_url": "mybookstore://book/123",
-  book_id: '123',
-  book_title: 'The Hitchhiker\'s Guide to the Galaxy'
+  $desktop_url: "https://mybookstore.com/book/123",
+  $ios_url: "mybookstore://book/123",
+  $android_url: "mybookstore://book/123",
+  book_id: "123",
+  book_title: "The Hitchhiker's Guide to the Galaxy",
 };
 branch.link({
   data: dataProperties,
   onSuccess: (url) => {
-    console.log('Branch link created:', url);
+    console.log("Branch link created:", url);
     //Now this url can be used for facebook adds or anything else
   },
   onError: (err) => {
-    console.error('Error creating branch link:', err);
-  }
-})
+    console.error("Error creating branch link:", err);
+  },
+});
 ```
 
 This is the very basic stuff you know creating a link programmatically This example shows how we can create a shareable link and then how to use it We are providing extra data which we will use to access the correct page in the app
@@ -65,24 +64,20 @@ This is the very basic stuff you know creating a link programmatically This exam
 
 branch.initSession((err, data) => {
   if (err) {
-    console.error('Error init Branch session:', err);
+    console.error("Error init Branch session:", err);
     return;
   }
 
-
-  if (data && data['+clicked_branch_link']) {
+  if (data && data["+clicked_branch_link"]) {
     const bookId = data.book_id;
-    console.log('User came from a branch link the book id is', bookId);
-   // Here we could trigger an action to load the book page
+    console.log("User came from a branch link the book id is", bookId);
+    // Here we could trigger an action to load the book page
     // Example:
     //  if(bookId){ loadBookPage(bookId); }
-
   } else {
-      //User didn't come from branch link
-        console.log('User opened the app directly');
+    //User didn't come from branch link
+    console.log("User opened the app directly");
   }
-
-
 });
 ```
 
@@ -91,15 +86,15 @@ Here we are listening for the deep link data after the user opens the applicatio
 **Example 3: Using Link Identity**
 
 ```javascript
-const branch = require('branch-sdk');
+const branch = require("branch-sdk");
 
 branch.setIdentity("user123", (err, data) => {
-    if(err){
-        console.error('Error setting identity',err);
-    }
-    console.log('identity saved', data);
-// At this point we can track the activity of this user, like the pages they view
-})
+  if (err) {
+    console.error("Error setting identity", err);
+  }
+  console.log("identity saved", data);
+  // At this point we can track the activity of this user, like the pages they view
+});
 ```
 
 Here we set a user identification this is useful if you want to understand the behaviour of a specific user and its also useful for attribution This will allow Branch to track the same user activity throughout different sessions
@@ -126,6 +121,6 @@ Also "Understanding Deep Linking: A Technical Overview" a report published by th
 
 And for Branch specific stuff well Branch themselves have a pretty good documentation But i would say that "Branch Documentation" is a good start it is a bit long but it is a must read if you are going to implement branch
 
-And last if you really want to be a pro in deep linking then read the following paper its a research paper that I found super interesting "The Evolution of URL Schemes for Mobile Deep Linking" by  Ehsan Hashemi and David J. DeWitt it is a deep dive into all things URL schemes and deep linking a bit technical but a really good read for a real expert.
+And last if you really want to be a pro in deep linking then read the following paper its a research paper that I found super interesting "The Evolution of URL Schemes for Mobile Deep Linking" by Ehsan Hashemi and David J. DeWitt it is a deep dive into all things URL schemes and deep linking a bit technical but a really good read for a real expert.
 
 So yeah that's basically all I have to say now that was a long text eh? hope it was useful If you need more help just ask I'm always willing to share my experience and help fellow developers I have been in this game long enough and now I just want to help

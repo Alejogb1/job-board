@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-remove-rows-with-the-minimum-value-in-a-dataframe"
 ---
 
-Alright, let's tackle this. I've bumped into this scenario a fair few times, especially when dealing with datasets that have a lot of redundant or outlying information. It’s a common preprocessing step, and there are a couple of robust approaches that typically work well. The key is to understand the nuances of the data and choose the method that best suits your performance requirements and data characteristics.
+, let's tackle this. I've bumped into this scenario a fair few times, especially when dealing with datasets that have a lot of redundant or outlying information. It’s a common preprocessing step, and there are a couple of robust approaches that typically work well. The key is to understand the nuances of the data and choose the method that best suits your performance requirements and data characteristics.
 
-The core challenge here is that we’re not simply filtering based on a static condition, but rather based on the *minimum value within a column*, and then removing the *entire row(s)* that contain that minimum. This means a straightforward filter won't cut it. You need to first identify the minimum and then use that information to select the rows you *want* to keep.
+The core challenge here is that we’re not simply filtering based on a static condition, but rather based on the _minimum value within a column_, and then removing the _entire row(s)_ that contain that minimum. This means a straightforward filter won't cut it. You need to first identify the minimum and then use that information to select the rows you _want_ to keep.
 
 Let's illustrate with a few different approaches using python’s pandas, because that's what most people use for data manipulation tasks like this, and it's generally very efficient.
 
@@ -31,9 +31,9 @@ filtered_df = remove_min_rows_method1(df, 'value')
 print("\nFiltered DataFrame (method 1):\n", filtered_df)
 ```
 
-In this snippet, `idxmin()` gives us the *index* of the first occurrence of the minimum value. Then `df.drop(min_index)` does the removal based on the index. This is performant, particularly on larger DataFrames, because we avoid iterating over the entire DataFrame multiple times. The `idxmin()` function leverages internal optimized implementations within pandas. However, a potential gotcha here is that it only drops the first row it finds with the minimum value. If multiple rows share the same minimum, it will leave the rest.
+In this snippet, `idxmin()` gives us the _index_ of the first occurrence of the minimum value. Then `df.drop(min_index)` does the removal based on the index. This is performant, particularly on larger DataFrames, because we avoid iterating over the entire DataFrame multiple times. The `idxmin()` function leverages internal optimized implementations within pandas. However, a potential gotcha here is that it only drops the first row it finds with the minimum value. If multiple rows share the same minimum, it will leave the rest.
 
-Second, if we want to remove *all* rows with minimum value, we can utilize a more explicit boolean mask:
+Second, if we want to remove _all_ rows with minimum value, we can utilize a more explicit boolean mask:
 
 ```python
 def remove_min_rows_method2(df, column_name):
@@ -50,7 +50,7 @@ filtered_df = remove_min_rows_method2(df, 'value')
 print("\nFiltered DataFrame (method 2):\n", filtered_df)
 ```
 
-This approach first determines the minimum value with `.min()` and then creates a boolean mask where `True` indicates rows where the value is *not* equal to the minimum. Then this mask is used to select only these rows that are not the minimum. This approach is very readable and handles multiple instances of the minimum.
+This approach first determines the minimum value with `.min()` and then creates a boolean mask where `True` indicates rows where the value is _not_ equal to the minimum. Then this mask is used to select only these rows that are not the minimum. This approach is very readable and handles multiple instances of the minimum.
 
 Third, if you needed to be very careful about edge cases or if the data requires some pre-processing or more complex handling, you can also employ a slightly more functional approach using `apply` and a lambda function in combination with filtering, but be mindful, this approach is often slower on larger datasets than the other two examples:
 

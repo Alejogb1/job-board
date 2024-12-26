@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-tensorflow-h5-model-be-used-in-tensorflowjs-within-a-web-browser"
 ---
 
-Alright, let's unpack this. I’ve spent a good chunk of my career navigating the complexities of model deployment, and moving a TensorFlow h5 model into a web browser, leveraging tensorflow.js, is a pattern I've seen and implemented countless times. It’s not always as straightforward as the tutorials might make it seem, and there are a few critical nuances to consider.
+, let's unpack this. I’ve spent a good chunk of my career navigating the complexities of model deployment, and moving a TensorFlow h5 model into a web browser, leveraging tensorflow.js, is a pattern I've seen and implemented countless times. It’s not always as straightforward as the tutorials might make it seem, and there are a few critical nuances to consider.
 
 The fundamental challenge revolves around the difference in execution environments. A standard TensorFlow h5 model, often trained on servers with powerful GPUs or TPUs, is built for Python's TensorFlow backend. TensorFlow.js, on the other hand, runs directly within the browser’s JavaScript engine, typically on the client's CPU (though WebGL acceleration is often possible and highly recommended). This means we can't simply "drop in" the h5 model. We need to convert it into a format that TensorFlow.js understands. This process involves model conversion to JSON format and associated binary files with the model weights.
 
@@ -29,39 +29,37 @@ Let’s move to the frontend code part. This next code snippet shows the JavaScr
 ```javascript
 async function loadModel() {
   try {
-    const model = await tf.loadGraphModel('/model_web/model.json');
-    console.log('Model loaded successfully!', model);
+    const model = await tf.loadGraphModel("/model_web/model.json");
+    console.log("Model loaded successfully!", model);
     // Now you can use the model to make predictions
     return model;
-
   } catch (error) {
-    console.error('Error loading model:', error);
+    console.error("Error loading model:", error);
     return null;
   }
 }
 
 async function makePrediction(model, inputTensor) {
-    if (!model) {
-        console.error("Model not loaded. Cannot make prediction.");
-        return;
-    }
-    const prediction = model.predict(inputTensor);
-    // prediction is now a Tensor,
-    // you can process it using tensorflow.js operations
-    prediction.print()
-    // clean the result if it's not necessary.
-    prediction.dispose()
+  if (!model) {
+    console.error("Model not loaded. Cannot make prediction.");
+    return;
+  }
+  const prediction = model.predict(inputTensor);
+  // prediction is now a Tensor,
+  // you can process it using tensorflow.js operations
+  prediction.print();
+  // clean the result if it's not necessary.
+  prediction.dispose();
 }
 
 async function runInference() {
-    const model = await loadModel()
-    // Example: Creating a simple input tensor
-    const inputData = tf.tensor([1, 2, 3, 4], [1, 4], 'float32');
-    // make the prediction
-    await makePrediction(model, inputData)
-    // clean the input
-    inputData.dispose();
-
+  const model = await loadModel();
+  // Example: Creating a simple input tensor
+  const inputData = tf.tensor([1, 2, 3, 4], [1, 4], "float32");
+  // make the prediction
+  await makePrediction(model, inputData);
+  // clean the input
+  inputData.dispose();
 }
 
 runInference();

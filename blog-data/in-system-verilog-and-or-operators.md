@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "in-system-verilog-and-or-operators"
 ---
 
-Okay so you're asking about `and` and `or` operators in SystemVerilog yeah I've wrestled with those little critters more than I care to admit let me tell you
+you're asking about `and` and `or` operators in SystemVerilog yeah I've wrestled with those little critters more than I care to admit let me tell you
 
 First things first you need to understand there are actually two kinds of these logical operators in SystemVerilog the bitwise versions and the logical versions they seem the same but they act on different things and produce different results it's a common gotcha so pay close attention
 
-Okay so let's dive right in with bitwise operators which are denoted by a single `&` for bitwise and and a single `|` for bitwise or I’m old enough to have coded a flip flop using only NAND gates by hand let me tell you those were the days and the experience is invaluable trust me these guys operate bit by bit on the operands they require each operand to be a multi-bit value and the operation happens on each corresponding bit position of both operands
+let's dive right in with bitwise operators which are denoted by a single `&` for bitwise and and a single `|` for bitwise or I’m old enough to have coded a flip flop using only NAND gates by hand let me tell you those were the days and the experience is invaluable trust me these guys operate bit by bit on the operands they require each operand to be a multi-bit value and the operation happens on each corresponding bit position of both operands
 
 Like if you have something like this
 
@@ -26,7 +26,7 @@ See how the bits match up? it's bit 0 of `a` with bit 0 of `b` bit 1 of `a` with
 
 Now this is critical don’t try to use these on single-bit values like boolean flags unless that's what you actually want as you’ll get unexpected outcomes a few years back i was debugging this complicated state machine with multiple complex flags and my flags behaved weirdly it took me two days of deep diving and I found out that I had mixed logical and bitwise operators in the control logic that is a no no and that's when I understood the difference fully
 
-Okay so what happens if operands have different bit widths well system verilog takes the smaller width and expands it by padding on the left with zeros this is called zero extension so if you mix for example
+what happens if operands have different bit widths well system verilog takes the smaller width and expands it by padding on the left with zeros this is called zero extension so if you mix for example
 
 ```systemverilog
 logic [7:0] long_data = 8'hAA; // 10101010
@@ -36,7 +36,7 @@ logic [7:0] result_or_diff_size;
 assign result_or_diff_size = long_data | short_data; // result_or_diff_size is 8'hAF;  // 10101111
 ```
 
-The short_data `4'b0101` becomes `8'b00000101`  then you get the bitwise `or` operation then the result is `8'hAF` which is `10101111` in binary
+The short_data `4'b0101` becomes `8'b00000101` then you get the bitwise `or` operation then the result is `8'hAF` which is `10101111` in binary
 
 Now let's switch to the logical operators these are `&&` for logical and and `||` for logical or these treat their operands as boolean values where zero means false and anything that is non-zero means true they return a single bit result `1` for true `0` for false
 

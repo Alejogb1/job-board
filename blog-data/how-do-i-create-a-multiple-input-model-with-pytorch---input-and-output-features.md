@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-create-a-multiple-input-model-with-pytorch---input-and-output-features"
 ---
 
-Okay, so tackling multiple input models in PyTorch, that's a topic I've certainly spent a fair amount of time on over the years. It's a common scenario when dealing with complex datasets, and while PyTorch provides the foundational building blocks, the implementation can vary significantly depending on the nature of your data. I remember back when I was working on a multi-modal sentiment analysis project, needing to fuse text, audio, and visual features – that's where a solid grasp of this concept really came into play. Let's break down how I typically approach this, focusing on practical considerations rather than just theoretical constructs.
+, so tackling multiple input models in PyTorch, that's a topic I've certainly spent a fair amount of time on over the years. It's a common scenario when dealing with complex datasets, and while PyTorch provides the foundational building blocks, the implementation can vary significantly depending on the nature of your data. I remember back when I was working on a multi-modal sentiment analysis project, needing to fuse text, audio, and visual features – that's where a solid grasp of this concept really came into play. Let's break down how I typically approach this, focusing on practical considerations rather than just theoretical constructs.
 
 Fundamentally, the challenge with multiple inputs lies in how you process and combine these disparate data sources before feeding them into the core of your model. PyTorch, being a flexible library, doesn't impose a rigid structure, meaning we have the freedom – and the responsibility – to craft the architecture that best fits the problem. Think of it less as a one-size-fits-all solution, and more as assembling components to form a specific pipeline. There are a few common patterns, and I find it helpful to think of these in stages: independent processing, fusion, and then the main processing block.
 
@@ -54,7 +54,7 @@ print(output.shape)
 
 Here, each input is processed independently by a linear layer. The resulting vectors are concatenated along the second dimension (`dim=1`). This is crucial; specifying the wrong dimension will lead to incorrect matrix operations and model breakage.
 
-**Example 2:  Handling Text and Numerical Inputs with Separate Pipelines and Dense Fusion**
+**Example 2: Handling Text and Numerical Inputs with Separate Pipelines and Dense Fusion**
 
 This example demonstrates how to process vastly different data sources, like text and numerical inputs. Assume we have text data (encoded as word embeddings) and associated numerical data like ratings.
 
@@ -98,7 +98,7 @@ output = model(text_input, numerical_input)
 print(output.shape)
 ```
 
-Here, an embedding layer converts word indices to vectors, then an LSTM processes them to capture sequence context. The numerical input is processed by a linear layer.  Critically, note how we handle the LSTM output: `hidden` has the shape [num_layers * num_directions, batch, hidden_size]. In our case, we are only using one layer and one direction, so we extract only the final hidden state. I squeeze it to remove the sequence dimension and make it suitable for concatenation with the numerical feature output. Subsequently, the concatenated vectors undergo a further transformation via a linear layer to "fuse" the representations before the final output layer.
+Here, an embedding layer converts word indices to vectors, then an LSTM processes them to capture sequence context. The numerical input is processed by a linear layer. Critically, note how we handle the LSTM output: `hidden` has the shape [num_layers * num_directions, batch, hidden_size]. In our case, we are only using one layer and one direction, so we extract only the final hidden state. I squeeze it to remove the sequence dimension and make it suitable for concatenation with the numerical feature output. Subsequently, the concatenated vectors undergo a further transformation via a linear layer to "fuse" the representations before the final output layer.
 
 **Example 3: Handling Image and Numerical Inputs Using Convolutional and Fully Connected Layers.**
 

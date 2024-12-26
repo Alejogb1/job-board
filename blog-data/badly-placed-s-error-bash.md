@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "badly-placed-s-error-bash"
 ---
 
-Okay so you're running into the dreaded badly placed 's error in bash right Been there done that Got the t-shirt or rather the stack overflow badge for it This error is like that persistent mosquito that always comes back to annoy you even after you think you've swatted it away it's infuriating
+you're running into the dreaded badly placed 's error in bash right Been there done that Got the t-shirt or rather the stack overflow badge for it This error is like that persistent mosquito that always comes back to annoy you even after you think you've swatted it away it's infuriating
 
 Let's break this down because trust me I've spent enough late nights debugging this to make a small fortune in energy drinks You're probably seeing this because bash is getting confused about how you're using single quotes ' I mean 's' in a command that has an unclosed quote a quote that is escaped incorrectly or a quote that is interfering with other quotes. Bash is very literal in this respect which is why it can be a pain sometimes
 
@@ -19,6 +19,7 @@ The script involved a lot of string manipulation and command execution and guess
 ```bash
   command='echo This is what it's like'
 ```
+
 I got this lovely badly placed 's error in bash and it was like a personal insult at 3 am and I looked at my monitor with a mix of horror and sadness after 3 hours searching the script. My brain was at its capacity but I had to keep going I wasn't giving up. My debugging skills where in their peak and I had to do this the right way or they would not pay my bill and well everyone knows what means
 
 So let's look at why this happens. The single quote in bash is a special character It tells bash to take the enclosed string exactly as it is no variable substitution no command execution just literal characters and this is how bash does that. I've tried to understand the logic of it but I still can't understand the why of some of these design decisions.
@@ -78,9 +79,9 @@ For example, single quotes are strict they mean literal strings exactly as is Do
 
 If you're serious about mastering bash I recommend some resources I think you should go to these instead of searching for some random tutorials on the internet:
 
-*   **"Classic Shell Scripting"** by Arnold Robbins and Nelson H.F Beebe This is a very thorough book on shell scripting and covers quoting in depth and it has helped me a lot to understand how quoting works.
-*   The official bash documentation: You can get it from the `man bash` command on your terminal or the official website which contains all the detailed information on bash's syntax and features the official documentation is the bible for bash.
-*   **Advanced Bash-Scripting Guide by Mendel Cooper** This is another fantastic free online resource. It goes way beyond the basics and has tons of practical examples and good advice on shell scripting I have learnt so much from this document and it's a gold mine of bash knowledge.
+- **"Classic Shell Scripting"** by Arnold Robbins and Nelson H.F Beebe This is a very thorough book on shell scripting and covers quoting in depth and it has helped me a lot to understand how quoting works.
+- The official bash documentation: You can get it from the `man bash` command on your terminal or the official website which contains all the detailed information on bash's syntax and features the official documentation is the bible for bash.
+- **Advanced Bash-Scripting Guide by Mendel Cooper** This is another fantastic free online resource. It goes way beyond the basics and has tons of practical examples and good advice on shell scripting I have learnt so much from this document and it's a gold mine of bash knowledge.
 
 You might think I am over-exaggerating but trust me you will run into this issue again and again If you script enough bash you'll understand what I am talking about I've lost count of how many times I've debugged these types of issues and each time I learn something new or remember something I forgot.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-perform-multiprocessing-within-a-deployed-azure-aci-for-inference"
 ---
 
-Alright, let's talk about multiprocessing within an Azure Container Instance (ACI) for inference, something I’ve spent a considerable amount of time optimizing over the years. It's a common bottleneck, especially when dealing with compute-intensive models. I recall a specific project where we were processing high-resolution satellite imagery, and the initial ACI implementation, without multiprocessing, was just...painfully slow. That experience hammered home the importance of parallelization and how to approach it correctly within the ACI environment.
+, let's talk about multiprocessing within an Azure Container Instance (ACI) for inference, something I’ve spent a considerable amount of time optimizing over the years. It's a common bottleneck, especially when dealing with compute-intensive models. I recall a specific project where we were processing high-resolution satellite imagery, and the initial ACI implementation, without multiprocessing, was just...painfully slow. That experience hammered home the importance of parallelization and how to approach it correctly within the ACI environment.
 
 The primary challenge with ACI and multiprocessing stems from the fact that an ACI instance essentially gives you a single container with a specified set of resources (cpu, memory). If you simply use a standard python `multiprocessing` approach without any further considerations, your sub-processes might all end up competing for the same core, diminishing or nullifying the intended parallelism. The goal, then, is to ensure that these processes are effectively spread across the available cores of the underlying infrastructure within your ACI. This calls for careful management of resource allocation and process binding.
 
@@ -23,7 +23,7 @@ def worker_function(process_id):
     # Pin process to a specific CPU core
     cpu_affinity = [process_id % os.cpu_count()]
     os.sched_setaffinity(0, cpu_affinity)
-    
+
     print(f"Process {process_id} running on core {cpu_affinity[0]}")
 
     # Simulate some work
@@ -73,19 +73,19 @@ def inference_worker(process_id, data_chunk):
 if __name__ == '__main__':
     num_processes = os.cpu_count()
     large_dataset = [np.random.rand(1000) for _ in range(1000)] # Large sample dataset
-    
+
     chunk_size = len(large_dataset) // num_processes
     data_chunks = [large_dataset[i*chunk_size:(i+1)*chunk_size] for i in range(num_processes)]
-    
+
     pool = multiprocessing.Pool(processes=num_processes)
-    
+
     results = pool.starmap(inference_worker, [(i, chunk) for i, chunk in enumerate(data_chunks)])
-    
+
     pool.close()
     pool.join()
 
     print("All inference processed, aggregated results.")
-    
+
     # Process combined 'results'
 ```
 
@@ -116,7 +116,7 @@ async def main():
         'https://jsonplaceholder.typicode.com/todos/2',
         'https://jsonplaceholder.typicode.com/todos/3'
     ]
-    
+
     tasks = [fetch_data(url, i) for i, url in enumerate(urls)]
     results = await asyncio.gather(*tasks)
 

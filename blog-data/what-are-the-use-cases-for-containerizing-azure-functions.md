@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-use-cases-for-containerizing-azure-functions"
 ---
 
-Okay, let's tackle this. I’ve certainly been down the rabbit hole of serverless deployments and, specifically, working out where containers fit into the azure functions ecosystem. It’s not always a clear cut answer, and I've seen projects where it was the perfect fit, and others where it was arguably an over-engineered solution. Let's break down the practical scenarios where containerizing azure functions makes a lot of sense, focusing on the "why" and "how" rather than just stating the possibilities.
+, let's tackle this. I’ve certainly been down the rabbit hole of serverless deployments and, specifically, working out where containers fit into the azure functions ecosystem. It’s not always a clear cut answer, and I've seen projects where it was the perfect fit, and others where it was arguably an over-engineered solution. Let's break down the practical scenarios where containerizing azure functions makes a lot of sense, focusing on the "why" and "how" rather than just stating the possibilities.
 
 Fundamentally, azure functions excel in scenarios where you need event-driven, stateless compute without managing underlying infrastructure. However, the default consumption plan does come with limitations, especially around dependency management, resource control, and cold starts. This is where containerization becomes a very appealing option.
 
@@ -86,13 +86,10 @@ And an excerpt from the deployment configuration illustrating how the environmen
         "name": "DATABASE_SERVER",
         "value": "mydbserver.example.com"
       }
-
     ]
-
   },
   "kind": "functionapp,linux,container"
 }
-
 ```
 
 Furthermore, version control and consistent deployments become significantly easier with containerization. The docker image itself acts as an immutable artifact. Rather than deploying directly from source control, as with traditional functions, you deploy a specific image version. This means rollbacks are much easier, there’s less risk of deployment drift, and you can implement much more granular control over what code ends up in production. We moved to using git tags to map to specific docker image tags for deployments. This provided a full audit trail and complete repeatability, improving overall reliability.

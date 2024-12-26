@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "what-causes-warning-messages-when-starting-a-ruby-on-rails-7-server-or-console"
 ---
 
-Alright, let's tackle this. I've seen my share of warning messages pop up when firing up a rails server or console, especially after a major version bump like the shift to Rails 7. They can be a bit cryptic at first, but they usually boil down to a few core issues. Let's break down the most common culprits, drawing on some experiences I've had along the way, and look at how we can deal with them effectively.
+, let's tackle this. I've seen my share of warning messages pop up when firing up a rails server or console, especially after a major version bump like the shift to Rails 7. They can be a bit cryptic at first, but they usually boil down to a few core issues. Let's break down the most common culprits, drawing on some experiences I've had along the way, and look at how we can deal with them effectively.
 
 One of the most frequent sources of these warnings, especially early in a project's lifecycle or when upgrading, stems from deprecation notices. Rails, like any active software project, is constantly evolving, and sometimes that means phasing out older methods or behaviors in favor of more modern alternatives. These changes are often preceded by deprecation warnings, letting you know that your code is relying on something that might be removed in a future release.
 
 For instance, I remember working on a project that had been in maintenance mode for a while. After we updated to Rails 7, the server would spit out deprecation warnings related to how we were querying the database. Specifically, we were using some older syntax that was still functional but no longer the recommended approach. The warning looked something along the lines of:
 
-`DEPRECATION WARNING: Using `where(id: [1, 2, 3])` is deprecated and will be removed in Rails 8. Use `where(id: 1..3)` or `where(id: { in: [1, 2, 3] })` instead. (called from ...)`
+`DEPRECATION WARNING: Using `where(id: [1, 2, 3])`is deprecated and will be removed in Rails 8. Use`where(id: 1..3)`or`where(id: { in: [1, 2, 3] })` instead. (called from ...)`
 
 Here, the fix was fairly straightforward. We replaced the literal array in the `where` clause with either a range or an explicit `{ in: }` hash. This kind of warning is your friend; it's telling you where your code needs attention before something breaks down the line.
 
@@ -50,6 +50,7 @@ Rails.application.configure do
    config.active_record.migration_error = :page_load
 end
 ```
+
 In Rails 7, while that might technically still work, it's not the typical way of setting these values. Rails 7 prefers loading database configuration from the `config/database.yml` file or similar environment variables, and configurations have moved. If you have older explicit configurations, they may trigger a warning.
 
 Here’s an example of the Rails 7 way, using environment variables and a `database.yml` :

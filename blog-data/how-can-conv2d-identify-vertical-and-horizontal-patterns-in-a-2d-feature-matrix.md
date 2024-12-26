@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-conv2d-identify-vertical-and-horizontal-patterns-in-a-2d-feature-matrix"
 ---
 
-Alright, let's tackle this. I've spent quite a bit of time working with convolutional neural networks (CNNs), and this question about how `Conv2D` operations identify patterns, especially vertical and horizontal ones, is fundamental to understanding how they work. It's more than just applying filters, it's about how the math of convolution interacts with the structure of the feature maps.
+, let's tackle this. I've spent quite a bit of time working with convolutional neural networks (CNNs), and this question about how `Conv2D` operations identify patterns, especially vertical and horizontal ones, is fundamental to understanding how they work. It's more than just applying filters, it's about how the math of convolution interacts with the structure of the feature maps.
 
 The key to understanding this lies in the concept of learnable kernels, or filters, within the `Conv2D` layer. These kernels are small matrices of weights which, during the training process, are adjusted based on the patterns present in the training data. Think of these kernels as tiny pattern detectors. They're designed to activate strongly when a specific pattern is present within the portion of the input they're looking at.
 
@@ -12,7 +12,7 @@ Let's imagine we're dealing with grayscale images represented as a 2D matrix whe
 
 Now, for the horizontal and vertical pattern recognition, the specific weights within the kernel are what really matter. If you train a kernel that has, for example, alternating positive and negative weights arranged vertically (e.g. a column of [+1, -1, +1]), it will respond most strongly to vertical edges, where pixel intensities change rapidly in the vertical direction. Conversely, a kernel with alternating positive and negative weights horizontally (e.g. a row of [+1, -1, +1]) will respond strongly to horizontal edges.
 
-The core principle here isn't that the kernels *predefine* all possible edges. Instead, it's that during backpropagation the weights *learn* these patterns. For example, a random set of weights will initially cause the filter to respond inconsistently. However, through iterative adjustments based on the gradient of the loss function, the filter will naturally become better at detecting the types of features that contribute to minimizing the loss, which often corresponds to finding these edges or other patterns.
+The core principle here isn't that the kernels _predefine_ all possible edges. Instead, it's that during backpropagation the weights _learn_ these patterns. For example, a random set of weights will initially cause the filter to respond inconsistently. However, through iterative adjustments based on the gradient of the loss function, the filter will naturally become better at detecting the types of features that contribute to minimizing the loss, which often corresponds to finding these edges or other patterns.
 
 Let’s look at some illustrative examples with code in Python using TensorFlow/Keras.
 
@@ -112,10 +112,10 @@ This final example shows that even with randomly initialized filters, each filte
 
 For deeper understanding, I’d suggest exploring the following:
 
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book offers a comprehensive treatment of the mathematical foundations of deep learning, including convolutional networks, and helps solidify an understanding of backpropagation, gradient descent and overall network dynamics.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book offers a comprehensive treatment of the mathematical foundations of deep learning, including convolutional networks, and helps solidify an understanding of backpropagation, gradient descent and overall network dynamics.
 
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This provides more practical insights, particularly into using TensorFlow and Keras, and is beneficial for hands-on exercises which help in understanding the concepts through practical use cases.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This provides more practical insights, particularly into using TensorFlow and Keras, and is beneficial for hands-on exercises which help in understanding the concepts through practical use cases.
 
-*   **The original paper on LeNet (Gradient-Based Learning Applied to Document Recognition):** This paper, while older, gives a look at the foundational CNN architectures which are the basis of modern networks and their evolution over time.
+- **The original paper on LeNet (Gradient-Based Learning Applied to Document Recognition):** This paper, while older, gives a look at the foundational CNN architectures which are the basis of modern networks and their evolution over time.
 
-In short, `Conv2D` doesn't *inherently* know about horizontal or vertical patterns from the start. It learns to recognize these patterns through the weights of its kernels during the training process, and that learning is driven by backpropagation on the loss function. The provided code snippets simply give a sense of how particular filter weight arrangements can be used as feature detectors once these weights are learned. The process is ultimately more about data-driven learning and far less about manually defining edge detection rules.
+In short, `Conv2D` doesn't _inherently_ know about horizontal or vertical patterns from the start. It learns to recognize these patterns through the weights of its kernels during the training process, and that learning is driven by backpropagation on the loss function. The provided code snippets simply give a sense of how particular filter weight arrangements can be used as feature detectors once these weights are learned. The process is ultimately more about data-driven learning and far less about manually defining edge detection rules.

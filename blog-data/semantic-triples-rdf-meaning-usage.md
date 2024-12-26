@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "semantic-triples-rdf-meaning-usage"
 ---
 
-Okay so you're asking about semantic triples and RDF right I've been down this rabbit hole more times than I care to admit. It’s like a rite of passage for anyone dealing with data that needs a little structure a little *meaning* not just rows and columns or json blobs. Let’s break it down from someone who's wrestled with it for years.
+you're asking about semantic triples and RDF right I've been down this rabbit hole more times than I care to admit. It’s like a rite of passage for anyone dealing with data that needs a little structure a little _meaning_ not just rows and columns or json blobs. Let’s break it down from someone who's wrestled with it for years.
 
-First semantic triples what are they actually? Think of it as the most basic way to represent a fact it’s a statement made up of three parts a subject a predicate and an object. Subject is like the thing you're talking *about* the predicate is like the relationship you’re describing and the object is like what that subject is related *to*.
+First semantic triples what are they actually? Think of it as the most basic way to represent a fact it’s a statement made up of three parts a subject a predicate and an object. Subject is like the thing you're talking _about_ the predicate is like the relationship you’re describing and the object is like what that subject is related _to_.
 
-It's like a really fundamental piece of language or grammar except for machines and data not for humans. Example let's say I have a fact I have a laptop it's easy subject *me* predicate *has* object *laptop* I'm not using RDF yet but you get the gist. So with these simple things you can represent anything and they are very fundamental
+It's like a really fundamental piece of language or grammar except for machines and data not for humans. Example let's say I have a fact I have a laptop it's easy subject _me_ predicate _has_ object _laptop_ I'm not using RDF yet but you get the gist. So with these simple things you can represent anything and they are very fundamental
 
 Then comes Resource Description Framework RDF. RDF is like the language or the standard or the way to actually write the triples in a computer-readable way. It's designed to be machine-understandable not human-friendly per se but we humans deal with it all the time. RDF gives us the syntax the structure the vocabulary for expressing these triples in a consistent way. You can think of it as an implementation of semantic triples.
 

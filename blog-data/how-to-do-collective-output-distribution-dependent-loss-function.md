@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-collective-output-distribution-dependent-loss-function"
 ---
 
-alright, so you're asking about how to implement a collective output distribution dependent loss function. this is something i've definitely bumped into a few times, and it can get tricky quickly if you're not careful with the details. it’s a real pain when your individual outputs aren't just about themselves but also depend on the overall distribution of the results.
+, so you're asking about how to implement a collective output distribution dependent loss function. this is something i've definitely bumped into a few times, and it can get tricky quickly if you're not careful with the details. it’s a real pain when your individual outputs aren't just about themselves but also depend on the overall distribution of the results.
 
 the core problem here is that you want to define a loss function that doesn't just look at each prediction in isolation. instead, it needs to consider how the predicted outputs collectively behave, and use that to calculate error. we’re talking about situations where the relationship between the outputs is crucial, not just each output's individual accuracy, which makes it more difficult to deal with.
 
@@ -128,9 +128,9 @@ in `variance_loss`, the loss is simply the variance of the outputs. the optimize
 
 now, for some practical considerations.
 
-*   **computational cost**: these losses can be more computationally intensive than simple individual output losses because you need to compute aggregate statistics. consider the efficiency of your implementation, especially when you have lots of outputs. remember, we're not just processing each output separately; we're doing calculations on all of them together.
-*   **stability**: training can be less stable. when your loss is based on the global distribution, it can lead to more complex and sometimes chaotic gradient landscapes. keep an eye on convergence and experiment with different learning rates. you might need a bit more patience here.
-*   **gradient computation**: make sure you calculate the gradients correctly, especially when implementing these statistics in a framework such as pytorch, tensorflow or any framework you are using. double-check the calculations, since small mistakes can have a huge impact on results.
+- **computational cost**: these losses can be more computationally intensive than simple individual output losses because you need to compute aggregate statistics. consider the efficiency of your implementation, especially when you have lots of outputs. remember, we're not just processing each output separately; we're doing calculations on all of them together.
+- **stability**: training can be less stable. when your loss is based on the global distribution, it can lead to more complex and sometimes chaotic gradient landscapes. keep an eye on convergence and experiment with different learning rates. you might need a bit more patience here.
+- **gradient computation**: make sure you calculate the gradients correctly, especially when implementing these statistics in a framework such as pytorch, tensorflow or any framework you are using. double-check the calculations, since small mistakes can have a huge impact on results.
 
 as for references, i'd recommend checking some papers on density estimation, as well as statistical learning books. for example, "the elements of statistical learning" by hastie, tibshirani, and friedman is an excellent resource to understand these statistical concepts better. and of course, research papers on optimal transport and distribution matching can be extremely useful as well, they use very similar concepts. understanding the math behind these statistics can take you a long way.
 

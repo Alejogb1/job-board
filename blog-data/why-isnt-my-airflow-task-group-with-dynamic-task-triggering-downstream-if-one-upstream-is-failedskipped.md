@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-isnt-my-airflow-task-group-with-dynamic-task-triggering-downstream-if-one-upstream-is-failedskipped"
 ---
 
-Alright, let's tackle this. It's a scenario I've bumped into a few times in the trenches, particularly when dealing with complex pipelines and dynamic dependencies within Airflow. The frustration of a task group not triggering downstream when one of its upstream tasks fails or is skipped, especially when you expect dynamic behavior, is entirely understandable. It often comes down to how Airflow's dependency management and task group logic interact, specifically with regards to the `trigger_rule` setting, and how it might be unintentionally affecting your downstream operations. I'll explain based on a few projects where I've seen these issues surface, detailing how we resolved them.
+, let's tackle this. It's a scenario I've bumped into a few times in the trenches, particularly when dealing with complex pipelines and dynamic dependencies within Airflow. The frustration of a task group not triggering downstream when one of its upstream tasks fails or is skipped, especially when you expect dynamic behavior, is entirely understandable. It often comes down to how Airflow's dependency management and task group logic interact, specifically with regards to the `trigger_rule` setting, and how it might be unintentionally affecting your downstream operations. I'll explain based on a few projects where I've seen these issues surface, detailing how we resolved them.
 
-First, it's crucial to understand Airflow's dependency and triggering mechanisms. By default, a task will only execute if all of its upstream tasks have successfully completed (`'all_success'`). However, task groups introduce a layer of abstraction, and their behavior isn’t *exactly* identical to a single task when it comes to these dependencies. A key misunderstanding often centers around how the `trigger_rule` setting interacts within a task group’s scope. You might think a task group should trigger downstream if *at least* one of its internal tasks is successful. But that's not typically the default behavior, and it needs explicit configuration. Task groups evaluate based on the individual tasks within their boundary, unless told otherwise.
+First, it's crucial to understand Airflow's dependency and triggering mechanisms. By default, a task will only execute if all of its upstream tasks have successfully completed (`'all_success'`). However, task groups introduce a layer of abstraction, and their behavior isn’t _exactly_ identical to a single task when it comes to these dependencies. A key misunderstanding often centers around how the `trigger_rule` setting interacts within a task group’s scope. You might think a task group should trigger downstream if _at least_ one of its internal tasks is successful. But that's not typically the default behavior, and it needs explicit configuration. Task groups evaluate based on the individual tasks within their boundary, unless told otherwise.
 
-In one particular instance, I was working on an ETL pipeline for financial data. We had a task group, `load_data`, that contained tasks to load data from multiple sources. It was dynamically generated, so the number of load tasks depended on the source configuration. One day, a few of those sources became temporarily unavailable, causing the corresponding tasks to fail. This resulted in the entire `load_data` group, which was set up as a 'normal' dependency for the downstream tasks, to not trigger and thus the entire processing pipeline stopped. I remember spending a chunk of time inspecting the logs, thinking something was fundamentally wrong with Airflow. The issue wasn't with Airflow; it was our dependency setup in combination with dynamically generated tasks. We were relying on the default `'all_success'` trigger rule of the tasks inside the task group. Since not *all* tasks succeeded, the task group was considered failed by Airflow.
+In one particular instance, I was working on an ETL pipeline for financial data. We had a task group, `load_data`, that contained tasks to load data from multiple sources. It was dynamically generated, so the number of load tasks depended on the source configuration. One day, a few of those sources became temporarily unavailable, causing the corresponding tasks to fail. This resulted in the entire `load_data` group, which was set up as a 'normal' dependency for the downstream tasks, to not trigger and thus the entire processing pipeline stopped. I remember spending a chunk of time inspecting the logs, thinking something was fundamentally wrong with Airflow. The issue wasn't with Airflow; it was our dependency setup in combination with dynamically generated tasks. We were relying on the default `'all_success'` trigger rule of the tasks inside the task group. Since not _all_ tasks succeeded, the task group was considered failed by Airflow.
 
-The crucial piece here is that each task inside your task group should have a `trigger_rule` set, especially if you're expecting dynamic behavior. Likewise, the task consuming the entire task group must have its own `trigger_rule` adjusted in order to run, even when a task has failed/skipped upstream. If the trigger rule of the *downstream* task that is depending on the task group is the default `all_success`, then it will only trigger if all tasks inside the task group succeed. That is the main problem we need to solve here.
+The crucial piece here is that each task inside your task group should have a `trigger_rule` set, especially if you're expecting dynamic behavior. Likewise, the task consuming the entire task group must have its own `trigger_rule` adjusted in order to run, even when a task has failed/skipped upstream. If the trigger rule of the _downstream_ task that is depending on the task group is the default `all_success`, then it will only trigger if all tasks inside the task group succeed. That is the main problem we need to solve here.
 
 Let’s examine this with some illustrative code examples. Assume a basic dynamic workflow where a task group contains dynamically created tasks:
 
@@ -43,7 +43,7 @@ with DAG(
           python_callable=dummy_task(task_id=f'dynamic_task_{i}', fail = (i == 1)), # one task will fail
           trigger_rule=TriggerRule.ALL_DONE
         )
-    
+
 
   process_data = PythonOperator(
      task_id="process_data",
@@ -87,7 +87,7 @@ with DAG(
           python_callable=dummy_task(task_id=f'dynamic_task_{i}', fail = (i == 1)), # one task will fail
           trigger_rule=TriggerRule.ALL_DONE
         )
-    
+
 
   process_data = PythonOperator(
      task_id="process_data",
@@ -98,9 +98,9 @@ with DAG(
   dynamic_tasks >> process_data
 ```
 
-In this second example, even though one of the tasks within the task group `dynamic_tasks` fails, the `process_data` task *does* execute because the `trigger_rule` is set to `TriggerRule.ALL_DONE`. This is the most common and simplest resolution for this issue.
+In this second example, even though one of the tasks within the task group `dynamic_tasks` fails, the `process_data` task _does_ execute because the `trigger_rule` is set to `TriggerRule.ALL_DONE`. This is the most common and simplest resolution for this issue.
 
-However, what if you *only* wanted to execute the downstream process if *at least* one task inside the task group succeeds? You can't simply apply `TriggerRule.ONE_SUCCESS` to the `process_data` task because it is not directly dependent on the individual tasks, but rather on the task group. There are two ways that I am familiar with to handle this use case. The first is to use `BranchPythonOperator` in combination with the task group; and the second is to use the `on_success_callback` to implement the logic. Both solutions will allow downstream tasks to run, despite upstream failures.
+However, what if you _only_ wanted to execute the downstream process if _at least_ one task inside the task group succeeds? You can't simply apply `TriggerRule.ONE_SUCCESS` to the `process_data` task because it is not directly dependent on the individual tasks, but rather on the task group. There are two ways that I am familiar with to handle this use case. The first is to use `BranchPythonOperator` in combination with the task group; and the second is to use the `on_success_callback` to implement the logic. Both solutions will allow downstream tasks to run, despite upstream failures.
 
 Here’s an approach using `BranchPythonOperator` to determine based on the task group status if downstream process should run:
 
@@ -123,7 +123,7 @@ def check_task_group_success(ti):
     task_group_id = "dynamic_tasks"
     task_group_states = ti.get_flat_relative_ids(task_ids=[task_group_id])
     task_group_xcom_data = ti.xcom_pull(task_ids=task_group_states, dag_id = ti.dag_id)
-    
+
     for xcom_data in task_group_xcom_data:
         if xcom_data and xcom_data['state'] == State.SUCCESS:
             return 'process_data' # we return task_id that should be executed

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-validate-against-a-blank-value-using-comparison"
 ---
 
-Alright, let’s tackle this. It’s a common issue, and the seeming simplicity often masks some of the subtle challenges involved when validating against what we consider a ‘blank’ value. I've certainly seen my share of codebases tripping over this, sometimes in production, which isn't fun. The core issue stems from how different programming languages and data types handle the concept of 'empty' or 'blank'. It’s never just as simple as checking for an empty string, and that’s where comparison can become unexpectedly tricky.
+, let’s tackle this. It’s a common issue, and the seeming simplicity often masks some of the subtle challenges involved when validating against what we consider a ‘blank’ value. I've certainly seen my share of codebases tripping over this, sometimes in production, which isn't fun. The core issue stems from how different programming languages and data types handle the concept of 'empty' or 'blank'. It’s never just as simple as checking for an empty string, and that’s where comparison can become unexpectedly tricky.
 
 The straightforward approach, obviously, is using comparison operators, but we need to understand what exactly we're comparing against. Is it a `null` value, an empty string (`""`), a whitespace-only string (`"   "`), or some other type entirely, like an empty list or object? These all present different validation needs. Over years of working with everything from embedded systems to large-scale web applications, I’ve come to appreciate the need for specificity and rigor in these checks, especially when user-provided data is involved.
 
@@ -40,30 +40,30 @@ Now, let's move into JavaScript/TypeScript land where this is also a common chal
 ```javascript
 function isBlankString(inputStr) {
   if (inputStr === null || inputStr === undefined) {
-      return true;
+    return true;
   }
-  if (typeof inputStr !== 'string') {
+  if (typeof inputStr !== "string") {
     return false; //not a string, doesn't meet the definition
   }
   if (inputStr === "") {
-      return true;
+    return true;
   }
   if (inputStr.trim() === "") {
-      return true;
+    return true;
   }
   return false;
 }
 
 // Example usage:
-console.log(isBlankString(null));      // Output: true
+console.log(isBlankString(null)); // Output: true
 console.log(isBlankString(undefined)); // Output: true
-console.log(isBlankString(""));        // Output: true
-console.log(isBlankString("   "));     // Output: true
-console.log(isBlankString("test"));     // Output: false
-console.log(isBlankString(123));      // Output: false
+console.log(isBlankString("")); // Output: true
+console.log(isBlankString("   ")); // Output: true
+console.log(isBlankString("test")); // Output: false
+console.log(isBlankString(123)); // Output: false
 ```
 
-In this JavaScript example, I've explicitly checked for both `null` and `undefined`, which are important when dealing with potentially missing values in javascript objects or API responses.  The rest of the logic is essentially the same as Python: we check for the empty string and then use `trim()` to handle whitespace. The `typeof` check here is crucial as javascript is a dynamically typed language and any number of types may get passed into this function.
+In this JavaScript example, I've explicitly checked for both `null` and `undefined`, which are important when dealing with potentially missing values in javascript objects or API responses. The rest of the logic is essentially the same as Python: we check for the empty string and then use `trim()` to handle whitespace. The `typeof` check here is crucial as javascript is a dynamically typed language and any number of types may get passed into this function.
 
 Finally, let’s imagine a scenario where you're not dealing with strings, but potentially collections like lists or arrays. Handling empty collections is just as important, and the approach, although somewhat similar, uses different properties of data structures. Here’s an example using Python lists, where ‘blank’ might be interpreted as ‘empty’:
 

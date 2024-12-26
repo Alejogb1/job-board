@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-directly-pass-inputs-to-a-command-step-in-azureml"
 ---
 
-Alright, let's talk about directly feeding inputs into command steps within Azure Machine Learning (AzureML). It’s a surprisingly common need, and I've seen my share of headaches when it's not implemented correctly, particularly during those late-night debugging sessions. I recall, back when I was architecting a new model deployment pipeline for a fraud detection system, we needed to pass specific configurations dynamically into our training script. We couldn't rely on pre-set environment variables or hard-coded values. This demanded a flexible method to parameterize our command steps.
+, let's talk about directly feeding inputs into command steps within Azure Machine Learning (AzureML). It’s a surprisingly common need, and I've seen my share of headaches when it's not implemented correctly, particularly during those late-night debugging sessions. I recall, back when I was architecting a new model deployment pipeline for a fraud detection system, we needed to pass specific configurations dynamically into our training script. We couldn't rely on pre-set environment variables or hard-coded values. This demanded a flexible method to parameterize our command steps.
 
 The key concept here is to understand how AzureML manages input and output data within its computational graph. Think of a command step not just as a shell invocation, but as a computational node that can consume and produce data artifacts. The 'command' itself, that shell command you write, operates within a containerized environment. It does not natively reach out to your local computer or even your Azure Storage. All inputs must be explicitly declared and fed to this environment.
 

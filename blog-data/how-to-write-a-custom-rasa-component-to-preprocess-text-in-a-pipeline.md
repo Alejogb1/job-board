@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-write-a-custom-rasa-component-to-preprocess-text-in-a-pipeline"
 ---
 
-Okay, let's tackle this. Preprocessing text in a Rasa pipeline using a custom component is something I've spent a decent amount of time with over the years, particularly when dealing with niche linguistic quirks or very domain-specific terminology. It's often the case that the standard components aren't quite enough and a tailored approach is necessary. Here's how I usually go about crafting such a component, and a few things I’ve learned along the way.
+, let's tackle this. Preprocessing text in a Rasa pipeline using a custom component is something I've spent a decent amount of time with over the years, particularly when dealing with niche linguistic quirks or very domain-specific terminology. It's often the case that the standard components aren't quite enough and a tailored approach is necessary. Here's how I usually go about crafting such a component, and a few things I’ve learned along the way.
 
 The core idea is to create a class that adheres to the `Component` interface defined by Rasa. This interface provides the necessary methods for integrating your code seamlessly into the existing pipeline. Importantly, the component needs to handle the `train`, `process`, and, depending on your use case, the `persist` and `load` methods. Let’s focus on training and processing first, as these are usually the most crucial.
 
@@ -48,6 +48,7 @@ class CustomPreprocessor(GraphComponent):
         # Placeholder for actual preprocessing logic
         return text.lower()
 ```
+
 This very basic snippet provides the template: It uses Rasa’s new `GraphComponent` API. I’ve added a `create` class method which is used to instantiate your component based on the configuration. The crucial part, of course, is the `process` method. It iterates through the messages and calls a helper method `_preprocess_text` in this example. The example preprocessing logic converts text to lowercase, however, it’s a placeholder; you'll need to add your specific text manipulation logic here. This initial setup doesn’t involve any model training, indicated by the `@DefaultRecipe.register` call and the `is_trainable=False` setting, making it ideal for operations like text normalization or sanitization.
 
 Now, let's consider a more complex example involving regular expressions to remove the identifiers that I mentioned previously:
@@ -142,6 +143,7 @@ class AcronymExpander(GraphComponent):
 ```
 
 In this example, the `AcronymExpander` class is initialized with a dictionary that maps acronyms to their expanded forms. During processing, the `_expand_acronyms` function simply looks up each word in the dictionary. If it's present, the expanded form replaces it; otherwise, the word remains as is. This approach can improve model understanding and could be configured as follows:
+
 ```yaml
 pipeline:
   - name: AcronymExpander

@@ -8,7 +8,7 @@ Let's tackle this challenge of automating media information extraction using pym
 
 First, let's talk about the inherent challenge: looping through many files while ensuring each `MediaInfo` instance is properly created, used, and then disposed of to avoid any unexpected memory usage or resource leaks. We cannot simply create one instance and reuse it, as the data is inherently tied to a given file. We'll also want to consider error handling. Media files can be corrupt, malformed, or missing entirely. Ignoring these can lead to inaccurate or incomplete results and a much less reliable process. And finally, for practical use, exporting to a readable format, such as a structured format like json or csv, is preferable to just printing to the console.
 
-Okay, so let’s begin with the basic approach, moving through a more efficient and practical one, and then discussing a few caveats.
+, so let’s begin with the basic approach, moving through a more efficient and practical one, and then discussing a few caveats.
 
 **Example 1: Basic Iteration and JSON Output**
 
@@ -39,13 +39,13 @@ if __name__ == "__main__":
     example_files = ['video1.mp4', 'audio1.wav', 'video2.mkv', 'invalid_file.txt']  # Create dummy files
     for f in example_files:
       open(f,'a').close() #create empty dummy files
-    
+
     extract_media_info_basic(example_files, 'media_info_output.json')
 
     for f in example_files:
       os.remove(f)  #cleanup dummy files
-    
-    
+
+
     print("Media info extraction complete. Check 'media_info_output.json'")
 
 ```
@@ -77,7 +77,7 @@ def process_file(file_path):
 def extract_media_info_parallel(file_list, output_file):
     with Pool(cpu_count()) as pool: # creates pool with processes equals to the number of cores.
         results = pool.map(process_file, file_list)
-    
+
     results = [data for data in results if data is not None ] # remove none results
     with open(output_file, 'w') as f:
         json.dump(results, f, indent=4)
@@ -92,12 +92,12 @@ if __name__ == "__main__":
 
     for f in example_files:
       os.remove(f)  #cleanup dummy files
-      
+
     print("Parallel media info extraction complete. Check 'media_info_output_parallel.json'")
 
 ```
 
-Here, `multiprocessing.Pool` creates a pool of worker processes, and the `pool.map()` method distributes the file processing across them. The `cpu_count()` ensures that we utilize the machine's full capabilities. Each file is processed concurrently using `process_file`, which now only returns the json-formatted string or None in case of an issue. The non None results are then filtered into a single output file.  This approach is substantially faster for many files.
+Here, `multiprocessing.Pool` creates a pool of worker processes, and the `pool.map()` method distributes the file processing across them. The `cpu_count()` ensures that we utilize the machine's full capabilities. Each file is processed concurrently using `process_file`, which now only returns the json-formatted string or None in case of an issue. The non None results are then filtered into a single output file. This approach is substantially faster for many files.
 
 **Example 3: CSV output with Customized Columns**
 
@@ -141,12 +141,12 @@ if __name__ == "__main__":
     example_files = ['video1.mp4', 'audio1.wav', 'video2.mkv', 'invalid_file.txt'] # Create dummy files
     for f in example_files:
       open(f,'a').close() #create empty dummy files
-   
+
     extract_media_info_csv(example_files, 'media_info_output.csv')
-    
+
     for f in example_files:
       os.remove(f)  #cleanup dummy files
-    
+
     print("Media info extraction complete. Check 'media_info_output.csv'")
 ```
 

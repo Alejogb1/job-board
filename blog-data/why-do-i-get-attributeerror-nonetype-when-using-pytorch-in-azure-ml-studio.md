@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-i-get-attributeerror-nonetype-when-using-pytorch-in-azure-ml-studio"
 ---
 
-Alright, let's unpack this. The infamous `AttributeError: 'NoneType' object has no attribute` – it’s a rite of passage for many working with python, and when it surfaces in the context of pytorch within azure ml studio, it often points to a specific class of issues. I’ve seen this particular error rear its head countless times in my years, usually during some late-night debugging sessions. Typically, this error means you’re attempting to access a member of an object that isn’t actually instantiated— it's `none`. In the pytorch and azure ml studio landscape, this often stems from problems related to data loading, model definition, or how these components are marshalled through the azure ml pipelines.
+, let's unpack this. The infamous `AttributeError: 'NoneType' object has no attribute` – it’s a rite of passage for many working with python, and when it surfaces in the context of pytorch within azure ml studio, it often points to a specific class of issues. I’ve seen this particular error rear its head countless times in my years, usually during some late-night debugging sessions. Typically, this error means you’re attempting to access a member of an object that isn’t actually instantiated— it's `none`. In the pytorch and azure ml studio landscape, this often stems from problems related to data loading, model definition, or how these components are marshalled through the azure ml pipelines.
 
 Let's break down some common scenarios and how to address them, based on experiences that are, shall we say, 'inspired by' real-world incidents.
 
@@ -102,6 +102,7 @@ except TypeError as e:
 except Exception as e:
    print(f"An error occurred during model initialization: {e}")
 ```
+
 Notice that we are deliberately throwing a type error in the last try block. In a real-world scenario, `model_config` could come from an external parameter or a json file read in azure ml. If that file is not present or a key isn't found, model_config will be 'none' and the subsequent try block will result in a `typeerror`, which would be very similar to a `none` type attribute error later in the execution. The issue usually boils down to the fact that the parameters are not correctly passed when initializing the neural network (or are passed but have incorrect types)
 
 Another case where I've seen `none` creep in frequently is in training loop function calls within a pipeline, especially when utilizing the azure ml sdk. Here is a snippet to illustrate that:
@@ -152,6 +153,7 @@ except Exception as e:
 
 
 ```
+
 In a normal execution, this code runs fine. The last `try` block demonstrates an incorrect training call. If we are passing a `none` value as our data loader, for example, that would mean the loop `for i, (images, labels) in enumerate(train_dataloader):` will cause a `AttributeError`. This often happens in complex pipelines where the outputs of one step are being fed into another and the steps are not properly wired together. When one part of the pipeline doesn’t produce the expected output, it might not be obvious to spot it immediately.
 
 To avoid this, meticulously trace the flow of data and variables, particularly when dealing with azure ml’s step-based nature. Make sure each output is being passed correctly. Also, remember to add print statements liberally during your debug phases. While seemingly simple, they can save you a lot of time.

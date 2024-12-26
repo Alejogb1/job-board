@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-disable-weights--biases-from-saving-the-best-model-checkpoint"
 ---
 
-Alright, let's unpack this. It's a nuanced request because, as anyone who's worked with Weights & Biases (wandb) extensively knows, its checkpointing behavior is designed to be helpful and somewhat "automatic." The good news is, you definitely have control, just not in a "one-click" sort of way. I've encountered this exact scenario in several projects, specifically when deploying models that had their own, more precise checkpointing logic baked in, or when I wanted to minimize storage usage for the wandb project. Let me illustrate the approach with a few practical examples and some reasoning behind why this works.
+, let's unpack this. It's a nuanced request because, as anyone who's worked with Weights & Biases (wandb) extensively knows, its checkpointing behavior is designed to be helpful and somewhat "automatic." The good news is, you definitely have control, just not in a "one-click" sort of way. I've encountered this exact scenario in several projects, specifically when deploying models that had their own, more precise checkpointing logic baked in, or when I wanted to minimize storage usage for the wandb project. Let me illustrate the approach with a few practical examples and some reasoning behind why this works.
 
 The core challenge is that wandb’s `wandb.log` function, when used in conjunction with training loops, and especially its `wandb.watch` feature, often implicitly saves models that perform the best according to a given metric. This happens because it is coupled with the `wandb.Artifact` mechanism which, while great for reproducibility, can cause friction if you have existing save conventions.
 
@@ -53,16 +53,17 @@ for epoch in range(10):
         best_val_loss = val_loss
         torch.save(model.state_dict(), save_path)
         print(f"Saving new best model at epoch {epoch}")
-    
+
     print(f"Epoch: {epoch} - Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}")
 
 # Finish wandb run
 wandb.finish()
 
 ```
+
 In this first example, we are manually saving our models based on our evaluation of best loss, and `wandb` only gets the metrics, no associated models are saved via wandb's system. This gives you full control over how you save your models and when, bypassing wandb's default behavior. Notice `wandb.watch()` was not called here, because we don't want it to automatically save. We have not provided any model information with `wandb.log`, so no automatic checkpointing will occur.
 
-Moving further, a more complex, common scenario involves creating an artifact when a model has completed training. Artifacts are great for versioning and reproducibility, but they may require slight changes in our control of model saving. Here's an example showing how to explicitly save the model as an artifact when *we* decide to, and avoid implicit saving of the best model:
+Moving further, a more complex, common scenario involves creating an artifact when a model has completed training. Artifacts are great for versioning and reproducibility, but they may require slight changes in our control of model saving. Here's an example showing how to explicitly save the model as an artifact when _we_ decide to, and avoid implicit saving of the best model:
 
 ```python
 import wandb

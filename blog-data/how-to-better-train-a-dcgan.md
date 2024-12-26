@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-better-train-a-dcgan"
 ---
 
-alright, so you're hitting the wall with dcgans, right? i've been there, trust me. it’s like trying to teach a toddler to paint like van gogh – frustrating and sometimes just plain messy. i've spent a good chunk of my career wrestling with these generative models, and they can be real divas. let's talk about how to coax them into producing something decent.
+, so you're hitting the wall with dcgans, right? i've been there, trust me. it’s like trying to teach a toddler to paint like van gogh – frustrating and sometimes just plain messy. i've spent a good chunk of my career wrestling with these generative models, and they can be real divas. let's talk about how to coax them into producing something decent.
 
 first off, the vanilla dcgan, as cool as it is conceptually, often falls flat on its face in practice. it's not uncommon to end up with mode collapse, where the generator spits out only a handful of very similar, low-quality images, or gradients that just vanish into thin air. i had this project years ago where i was tasked with generating realistic textures, and my first dcgan attempt looked more like something a toddler drew with mud than actual seamless textures. it was a humbling experience.
 
@@ -144,6 +144,7 @@ for epoch in range(num_epochs):
         if i % 100 == 0:
             print(f"epoch {epoch}/{num_epochs} batch {i} discriminator loss {disc_loss} generator loss {gen_loss}")
 ```
+
 this code is a simple example of how to train a dcgan with separate optimizers for the discriminator and generator, as well as separate discriminator and generator loss function updates. this approach is very useful for trying different ratios. the disc_update_ratio variable is the hyperparameter that should be adjusted to improve training.
 
 it’s not always about the magic bullet, it’s about careful design, experimenting with different configurations and fine-tuning parameters. if you are having difficulties it’s important to keep the architecture as simple as possible, and iterate in small steps. dcgans can be a headache, sometimes you just can't get them to work no matter what you do. it’s like trying to get a cat to do what you want; there’s always some level of randomness involved. i was once explaining to my grandma how i was trying to teach a computer to produce something that could look like an image, she looked at me and said “so you are teaching the computer to paint, how cute”, i think she thought i was an artist. she never really understood what i did, but i think she was proud of me anyway.

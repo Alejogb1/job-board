@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-does-a-deep-cnn-recognize-objects-at-a-location-not-seen-in-training-images"
 ---
 
-alright, let's talk about how convolutional neural networks, specifically deep ones, handle recognizing objects in places they've never seen during training. it's a pretty core question when we're trying to build robust vision systems.
+, let's talk about how convolutional neural networks, specifically deep ones, handle recognizing objects in places they've never seen during training. it's a pretty core question when we're trying to build robust vision systems.
 
 i've spent a good chunk of my career on this, and i remember this specific issue causing me headaches back when i was working on a robotics project for warehouse automation. we trained a model on images of shelves with products in specific locations, but when we changed the shelf layout or introduced new items at different spots, the network would just freak out, sometimes identifying a can of beans as a chair. it was… frustrating. so, i had to deep dive (pun intended) into how these models actually learn and generalize.
 
@@ -105,9 +105,9 @@ for example, during my robotics project, we moved from training just on photos t
 
 to deepen your understanding, i would recommend looking into the following resources:
 
-*   **"deep learning" by ian goodfellow et al.**: this is considered *the* bible of deep learning. it covers all the fundamentals in great detail, and has whole sections about convolutional neural networks. it's a must-read if you're serious about this stuff.
-*   **"hands-on machine learning with scikit-learn, keras & tensorflow" by aurelien geron**: this is a more practical approach, going over real implementations, and includes details on implementing cnn’s and working with computer vision. it is a great way to start.
-*   research papers on convolutional neural networks, for example: papers discussing the original architectures like alexnet, vgg, and resnet. also papers on attention mechanisms and spatial transformers. check the conference proceedings of cvpr, iccv, and eccv, and search by keywords. that's where the real state-of-the-art usually gets published.
+- **"deep learning" by ian goodfellow et al.**: this is considered _the_ bible of deep learning. it covers all the fundamentals in great detail, and has whole sections about convolutional neural networks. it's a must-read if you're serious about this stuff.
+- **"hands-on machine learning with scikit-learn, keras & tensorflow" by aurelien geron**: this is a more practical approach, going over real implementations, and includes details on implementing cnn’s and working with computer vision. it is a great way to start.
+- research papers on convolutional neural networks, for example: papers discussing the original architectures like alexnet, vgg, and resnet. also papers on attention mechanisms and spatial transformers. check the conference proceedings of cvpr, iccv, and eccv, and search by keywords. that's where the real state-of-the-art usually gets published.
 
 finally, here’s a third example on how to build a basic convolutional neural network with a simple dataset using keras:
 

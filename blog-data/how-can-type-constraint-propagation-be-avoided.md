@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-type-constraint-propagation-be-avoided"
 ---
 
-Okay, let's tackle this. I've actually spent a good chunk of my career dealing with scenarios where type constraint propagation went a bit haywire, leading to some rather interesting debugging sessions. It's one of those things that can seem innocuous at first but can quickly cascade into a significant performance bottleneck or, worse, a correctness issue. So, preventing unnecessary constraint propagation is not just about optimization; it’s often about making sure your code behaves as expected.
+, let's tackle this. I've actually spent a good chunk of my career dealing with scenarios where type constraint propagation went a bit haywire, leading to some rather interesting debugging sessions. It's one of those things that can seem innocuous at first but can quickly cascade into a significant performance bottleneck or, worse, a correctness issue. So, preventing unnecessary constraint propagation is not just about optimization; it’s often about making sure your code behaves as expected.
 
 Type constraint propagation, as the name implies, is the mechanism by which type checkers infer or deduce the type of expressions based on the context and the existing type information. It's a fundamental aspect of static typing systems – it allows languages like typescript, java, and c++ to catch type errors at compile time rather than at runtime. While crucial for type safety, indiscriminate propagation can lead to two main problems: over-constrained types and performance issues. Over-constrained types arise when the type system infers a type that is too specific, thus limiting future operations that should actually be valid. Performance becomes a concern when the constraint solver spends excessive computational resources exploring potential type combinations, particularly in complex generic code or with deeply nested structures.
 
@@ -76,7 +76,7 @@ In the `DataProcessor.process` method, the type constraint is limited to `DataPr
 
 **3. Limiting the Scope of Generics**
 
-Sometimes, generics are overused, leading to type propagation problems when they aren't strictly necessary. I've found cases where using a more specific type upfront can reduce complexity. If a generic function doesn't *really* need to work on a wide range of types, restricting its input can improve efficiency. I’ve encountered situations in systems for data processing, where excessive generic programming was causing the type checker to struggle to resolve constraints on complex datasets, resulting in longer build times.
+Sometimes, generics are overused, leading to type propagation problems when they aren't strictly necessary. I've found cases where using a more specific type upfront can reduce complexity. If a generic function doesn't _really_ need to work on a wide range of types, restricting its input can improve efficiency. I’ve encountered situations in systems for data processing, where excessive generic programming was causing the type checker to struggle to resolve constraints on complex datasets, resulting in longer build times.
 
 Consider the scenario where you have a function to process a list, and initially, it was designed to be as generic as possible:
 
@@ -93,11 +93,10 @@ process_list(string_list);
 let number_list: number[] = [1, 2, 3];
 process_list(number_list);
 
-
 // revised to be more specific when it can.
 function process_string_list(list: string[]): void {
-   // Same logic, but now specific to strings
-   // ...
+  // Same logic, but now specific to strings
+  // ...
 }
 
 // revised usage, reducing propagation by being specific when possible.

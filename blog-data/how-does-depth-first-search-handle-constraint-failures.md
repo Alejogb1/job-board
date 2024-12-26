@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-depth-first-search-handle-constraint-failures"
 ---
 
-Okay, let's tackle this. The interplay between depth-first search (dfs) and constraint failures isn't always immediately obvious, yet it's a core concept in many problem-solving algorithms, particularly in areas like constraint satisfaction problems (csps) and logic programming. I've spent a fair amount of time debugging complex systems where this interaction is central, so I can hopefully provide a practical perspective.
+, let's tackle this. The interplay between depth-first search (dfs) and constraint failures isn't always immediately obvious, yet it's a core concept in many problem-solving algorithms, particularly in areas like constraint satisfaction problems (csps) and logic programming. I've spent a fair amount of time debugging complex systems where this interaction is central, so I can hopefully provide a practical perspective.
 
 Essentially, when a depth-first search encounters a constraint violation, it triggers a backtracking mechanism. Unlike a breadth-first search, which explores all possibilities at a given level before moving deeper, dfs plunges headfirst down a path until it hits a dead end – either it finds a solution or a constraint is violated. This 'dead end' is exactly where the backtracking comes into play.
 
@@ -48,6 +48,7 @@ initial_assignment = {}
 solution = dfs(variables, initial_assignment, domain, constraints, 0)
 print (f"solution: {solution}")
 ```
+
 In this example, the `is_safe` function simulates our resource or dependency check in our past project. If assigning a particular value to a variable violates the constraints, the function returns `False`. The `dfs` function iterates through possible values, and if a valid value exists, it recursively calls itself to explore the next variable. Crucially, if the recursive call returns `None`, indicating failure, the assignment to that variable is removed (backtracking).
 
 Let’s expand on this. Imagine a slightly more complex scenario, where we need to find a path through a directed graph while obeying certain conditions, such as avoiding previously visited nodes, or passing via certain other nodes. The code snippet below is a dfs to try and find a solution to such a graph-based problem.
@@ -159,8 +160,9 @@ if solve_sudoku(sudoku_grid):
 else:
     print("No solution")
 ```
+
 Here, `is_valid_move` checks for constraint violations according to Sudoku rules. If placing a number in a specific cell violates the rules, the recursion backtracks by setting the cell back to 0 before trying another number.
 
-In terms of further study, for a good theoretical grounding, I'd recommend “Artificial Intelligence: A Modern Approach” by Stuart Russell and Peter Norvig. For a deeper dive into constraint satisfaction, “Principles and Practice of Constraint Programming” by Krzysztof Apt is an excellent resource. Additionally, various papers on backtracking search techniques published in the journal *Artificial Intelligence* are valuable for those who want to delve deeper into the mathematical underpinnings.
+In terms of further study, for a good theoretical grounding, I'd recommend “Artificial Intelligence: A Modern Approach” by Stuart Russell and Peter Norvig. For a deeper dive into constraint satisfaction, “Principles and Practice of Constraint Programming” by Krzysztof Apt is an excellent resource. Additionally, various papers on backtracking search techniques published in the journal _Artificial Intelligence_ are valuable for those who want to delve deeper into the mathematical underpinnings.
 
 The beauty of dfs with backtracking lies in its efficiency for certain types of problems, particularly when the search space can be structured such that dead ends are encountered early and effectively. It's not a universal hammer, but it’s an essential technique for those dealing with combinatorial problems. It took me several frustrating debugging sessions to really appreciate the nuances of the method. Hopefully this explanation and those snippets can give you a practical foothold.

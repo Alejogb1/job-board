@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "can-i-train-a-model-with-untrained-feature-extraction-layers-in-pytorch"
 ---
 
-Okay, let's tackle this one. I remember encountering this exact scenario back when I was optimizing a multi-modal system for medical image analysis. We had pre-trained models for some modalities, but others were brand new data streams with no readily available pre-trained weights. The question becomes: can we train the whole system end-to-end, including these untrained feature extractors, without causing catastrophic failures in the learning process? The short answer is yes, absolutely, and it's a common technique with both advantages and some critical caveats we need to address.
+, let's tackle this one. I remember encountering this exact scenario back when I was optimizing a multi-modal system for medical image analysis. We had pre-trained models for some modalities, but others were brand new data streams with no readily available pre-trained weights. The question becomes: can we train the whole system end-to-end, including these untrained feature extractors, without causing catastrophic failures in the learning process? The short answer is yes, absolutely, and it's a common technique with both advantages and some critical caveats we need to address.
 
 When you think about it, the deep learning process, particularly with convolutional neural networks (CNNs), involves feature extraction followed by a classification or regression stage. Pre-trained feature extractors benefit from learning generic, reusable representations from large datasets. However, when dealing with new, unique data, forcing the model to use pre-trained representations can be suboptimal, sometimes even detrimental. You might be better off with a clean slate, especially if the input data's distribution differs greatly from that of the dataset used to pre-train your earlier layers.
 
-The core issue isn’t whether it's *possible* to train untrained feature extraction layers in PyTorch, because it's inherently designed to do that. The real concern is about controlling the learning process so that these randomly initialized layers don’t initially generate noisy, high-magnitude gradients. These gradients could, in turn, throw the rest of your network into disarray. The initial training phase needs careful handling to allow the untrained layers to find useful representations without disrupting more established, pre-trained parts of your network. We typically achieve this through carefully adjusted learning rates and potentially using techniques like gradient clipping.
+The core issue isn’t whether it's _possible_ to train untrained feature extraction layers in PyTorch, because it's inherently designed to do that. The real concern is about controlling the learning process so that these randomly initialized layers don’t initially generate noisy, high-magnitude gradients. These gradients could, in turn, throw the rest of your network into disarray. The initial training phase needs careful handling to allow the untrained layers to find useful representations without disrupting more established, pre-trained parts of your network. We typically achieve this through carefully adjusted learning rates and potentially using techniques like gradient clipping.
 
 Let me walk you through a few code examples that showcase this.
 
@@ -31,7 +31,7 @@ class SimpleModel(nn.Module):
         # Pre-trained or custom classification
         self.flatten = nn.Flatten()
         self.fc = nn.Linear(16 * 16 * 16, num_classes)  # Assuming 64x64 input
-        
+
 
     def forward(self, x):
       x = self.pool(self.relu(self.conv_layer(x)))
@@ -81,7 +81,7 @@ class DeepModel(nn.Module):
         self.un_conv1 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3, padding=1)
         self.un_relu1 = nn.ReLU()
         self.un_pool1 = nn.MaxPool2d(kernel_size=2, stride=2)
-       
+
         self.un_conv2 = nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, padding=1)
         self.un_relu2 = nn.ReLU()
         self.un_pool2 = nn.MaxPool2d(kernel_size=2, stride=2)

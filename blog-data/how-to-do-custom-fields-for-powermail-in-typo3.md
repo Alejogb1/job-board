@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-custom-fields-for-powermail-in-typo3"
 ---
 
-alright, so custom fields in powermail, yeah, been there, done that, got the t-shirt – probably a few actually. it’s one of those things that seems simple on the surface but can get a little intricate pretty fast. i’ve definitely spent my share of late nights battling with typoscript and fluid templates to get things just perfect. it’s not exactly rocket science, but it requires some precision.
+, so custom fields in powermail, yeah, been there, done that, got the t-shirt – probably a few actually. it’s one of those things that seems simple on the surface but can get a little intricate pretty fast. i’ve definitely spent my share of late nights battling with typoscript and fluid templates to get things just perfect. it’s not exactly rocket science, but it requires some precision.
 
 the thing with powermail is, its strength is also its challenge: it’s extremely flexible. this means you’re not just stuck with the standard text input boxes or dropdowns. you can pretty much make it do anything. you want a custom date picker? a fancy image upload? multiple selections with checkboxes? it’s all doable. but here’s where it gets interesting, we need to roll our sleeves up.
 
@@ -46,17 +46,32 @@ powermail's fluid templates are where the html form actually resides. the templa
 we are going to modify the `Form.html` template, find the section in the file that renders a normal field ` <f:render partial="Form/Field" arguments="{field:field}" />`. now you have to add your custom condition to that field, check if the field's `marker` is equal to the `value` that we set in typoscript before, if it is, render your custom field, if not, just render the normal field. here’s how that might look:
 
 ```html
-<f:if condition="{field.marker} == '{settings.misc.customFieldMarker.my_custom_field}'">
-   <div class="powermail_fieldwrap powermail_fieldwrap_{field.type} {f:if(condition: field.mandatory, then: 'mandatory')}"  id="powermail_fieldwrap_{field.uid}">
-      <label for="powermail_field_{field.uid}" class="powermail_label">{field.title} <f:if condition="{field.mandatory}">*</f:if></label>
-      <div class="powermail_field">
-         <input type="text" name="tx_powermail_pi1[field][{field.uid}]" id="powermail_field_{field.uid}" value="{field.value}" placeholder="{field.placeholder}" />
-      </div>
-      <f:if condition="{field.error}"><div class="powermail_field_error">{field.error}</div></f:if>
-   </div>
-<f:else>
-  <f:render partial="Form/Field" arguments="{field:field}" />
-</f:else>
+<f:if
+  condition="{field.marker} == '{settings.misc.customFieldMarker.my_custom_field}'"
+>
+  <div
+    class="powermail_fieldwrap powermail_fieldwrap_{field.type} {f:if(condition: field.mandatory, then: 'mandatory')}"
+    id="powermail_fieldwrap_{field.uid}"
+  >
+    <label for="powermail_field_{field.uid}" class="powermail_label"
+      >{field.title} <f:if condition="{field.mandatory}">*</f:if></label
+    >
+    <div class="powermail_field">
+      <input
+        type="text"
+        name="tx_powermail_pi1[field][{field.uid}]"
+        id="powermail_field_{field.uid}"
+        value="{field.value}"
+        placeholder="{field.placeholder}"
+      />
+    </div>
+    <f:if condition="{field.error}"
+      ><div class="powermail_field_error">{field.error}</div></f:if
+    >
+  </div>
+  <f:else>
+    <f:render partial="Form/Field" arguments="{field:field}" /> </f:else
+></f:if>
 ```
 
 let’s unpack that a little. the `<f:if condition="{field.marker} == '{settings.misc.customFieldMarker.my_custom_field}'">` is the key here. we are checking if the `marker` property of the current field is the same as the `value` we defined in typoscript. if that is true, then we are going to render our custom html, in this case, a simple text input. if not, it goes to the normal field rendering. you can add any html here, not just an input text. you can add your react components, or your custom js code.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-it-possible-to-run-a-windows-container-with-gui-support-like-xorg-with-linux-container"
 ---
 
-Alright, let's tackle this one. From the get-go, the idea of running a windows container with fully fledged graphical user interface support like xorg in a linux container might sound like threading a needle, given the inherent architectural differences. But, having grappled with this particular challenge in a previous project involving specialized data visualization tools running on a windows-based server farm, I can confidently say it’s not only possible, but achievable with a solid understanding of the underlying mechanisms.
+, let's tackle this one. From the get-go, the idea of running a windows container with fully fledged graphical user interface support like xorg in a linux container might sound like threading a needle, given the inherent architectural differences. But, having grappled with this particular challenge in a previous project involving specialized data visualization tools running on a windows-based server farm, I can confidently say it’s not only possible, but achievable with a solid understanding of the underlying mechanisms.
 
 The crucial difference is that windows containers, by their design, are more tightly coupled with the host operating system than their linux counterparts. You're not typically dealing with a complete, independent kernel virtualization. Instead, windows containers leverage shared resources from the host windows kernel, which impacts how graphical interfaces are managed. Unlike linux containers where xorg (or wayland more recently) operates as a separate service interacting with the host kernel, achieving graphical output with windows containers requires a different approach.
 
@@ -39,6 +39,7 @@ RUN wmic useraccount where name='containeruser' set passwordexpires=false
 # Set Container entrypoint
 ENTRYPOINT ["powershell.exe", "-Command", "Start-Service TermService; ping -t 127.0.0.1"]
 ```
+
 In this dockerfile, we start with a servercore base image, install the necessary rds components to support rdp, configure the firewall to allow connections on port 3389, create a user, and finally set the entrypoint to keep the terminal service alive. Note the password for the user is extremely weak and should never be used in a production environment; instead, use more secure methods to handle credentials. You'd then build and run this container as usual using the docker cli. You would use an rdp client to connect with host's ip on port 3389 and log in with the credentials specified earlier.
 
 **Example 2: Forwarding a specific application's GUI using Xpra**
@@ -81,6 +82,7 @@ while ($true) {
     Start-Sleep -Seconds 10
 }
 ```
+
 Here, we install xpra via chocolatey, copy the application, create a startup script that launches the application using xpra server on port 14500. To connect from the host, you would then use the xpra command `xpra attach tcp://<host_ip>:14500`. Of course, make sure xpra is installed on the host system as well.
 
 **Example 3: Using VNC**
@@ -121,9 +123,9 @@ It's important to note that performance can sometimes be an issue. RDP, xpra, an
 
 For more in-depth information, I strongly recommend checking the following authoritative resources:
 
-*   **Microsoft's Official Documentation on Windows Containers:** The most reliable source for understanding the nuances of windows containers, including networking and resource management. This should be your first point of reference for any windows container based setup.
-*   **"Windows Container Development Fundamentals" by Elton Stoneman:** This book provides comprehensive coverage of windows containers, from the basics to more advanced topics. A fantastic resource to deepen your understanding of how containers work under the hood on Windows.
-*   **"Docker in Action" by Jeff Nickoloff:** Although not solely focused on Windows, this book does include chapters covering windows containers, alongside many excellent general docker practices that will improve your workflow.
-*   **Relevant documentation from rdp, xpra, and vnc projects:** Always consult the official documentation for any third-party tools or protocols, as they are always up to date with the latest methods and best practices.
+- **Microsoft's Official Documentation on Windows Containers:** The most reliable source for understanding the nuances of windows containers, including networking and resource management. This should be your first point of reference for any windows container based setup.
+- **"Windows Container Development Fundamentals" by Elton Stoneman:** This book provides comprehensive coverage of windows containers, from the basics to more advanced topics. A fantastic resource to deepen your understanding of how containers work under the hood on Windows.
+- **"Docker in Action" by Jeff Nickoloff:** Although not solely focused on Windows, this book does include chapters covering windows containers, alongside many excellent general docker practices that will improve your workflow.
+- **Relevant documentation from rdp, xpra, and vnc projects:** Always consult the official documentation for any third-party tools or protocols, as they are always up to date with the latest methods and best practices.
 
 In summary, while running a windows container with a full xorg style display server isn't the typical method, using techniques like RDP, Xpra, or VNC allows you to effectively leverage GUI applications within the windows container environment. It’s all about understanding the architecture and using the appropriate methods to forward the graphical output effectively and securely. Having personally gone through this process multiple times, I can vouch that a thoughtful and deliberate implementation is essential for success.

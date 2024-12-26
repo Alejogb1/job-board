@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-copy-files-between-two-date-partitioned-gcs-buckets"
 ---
 
-Okay, let’s tackle this. I’ve certainly seen my share of data wrangling scenarios involving google cloud storage (gcs), and copying between date-partitioned buckets is a common one, often with its own set of quirks. The key isn't just blindly copying, but doing so efficiently and reliably, especially when dealing with large datasets. I’ll break down my approach, including some code examples and things I’ve learned the hard way.
+, let’s tackle this. I’ve certainly seen my share of data wrangling scenarios involving google cloud storage (gcs), and copying between date-partitioned buckets is a common one, often with its own set of quirks. The key isn't just blindly copying, but doing so efficiently and reliably, especially when dealing with large datasets. I’ll break down my approach, including some code examples and things I’ve learned the hard way.
 
 Firstly, understanding the nature of date partitioning in gcs is paramount. Typically, you'll see directory structures like `gs://my-bucket/year=2023/month=10/day=26/`. The advantage is that it makes querying and processing data much faster, but it does present a unique challenge for copying. Simply using wildcards can sometimes be inefficient or lead to unintended consequences if the partitions are highly imbalanced, or if you have metadata mixed in at different levels.
 
@@ -197,6 +197,7 @@ if __name__ == '__main__':
                 current_date += datetime.timedelta(days=1)
 
 ```
+
 This snippet illustrates a function that can be triggered by a pub/sub message. Each message contains the source and destination bucket names and a date object. The publisher code shows how to generate these messages and send them to the pub/sub topic, which in turn triggers the cloud functions to copy the data partitions in parallel. This setup allows a considerable performance improvement.
 
 For further exploration on gcs and its best practices, I would recommend reviewing google cloud's official documentation, particularly their guides on data transfer options. Additionally, “Designing Data-Intensive Applications” by Martin Kleppmann provides a good understanding of general data management principles. For specific google cloud sdk tips and tricks, the documentation for the `google-cloud-storage` library on pypi is indispensable. These resources have formed the base of my own experience and will provide a comprehensive view of the technology.

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "does-fine-tuning-a-bert-model-repeatedly-with-different-datasets-improve-its-accuracy"
 ---
 
-Okay, let's tackle this. From my experience, repeatedly fine-tuning a BERT model on different datasets doesn’t *automatically* guarantee improved accuracy. It's more nuanced than that, and I've learned this the hard way, through a few projects where I hoped for a linear improvement but encountered more of a rollercoaster. The key factors involve understanding the nature of your datasets, the kind of transfer learning you're implementing, and avoiding catastrophic forgetting.
+, let's tackle this. From my experience, repeatedly fine-tuning a BERT model on different datasets doesn’t _automatically_ guarantee improved accuracy. It's more nuanced than that, and I've learned this the hard way, through a few projects where I hoped for a linear improvement but encountered more of a rollercoaster. The key factors involve understanding the nature of your datasets, the kind of transfer learning you're implementing, and avoiding catastrophic forgetting.
 
 Firstly, let’s consider what we mean by ‘accuracy’. Is it a global measure over some massive, all-encompassing dataset, or are we targeting specific tasks defined by our different training sets? BERT, pre-trained on huge quantities of text, has a general linguistic understanding. Fine-tuning then specializes that understanding for a downstream task. Imagine it as training a highly skilled carpenter, and then giving them specialized training in making kitchen cabinets. If you then try to further fine-tune them on building bridges, their kitchen cabinet skill might suffer, and they might not excel at bridge building either, if not done with careful consideration.
 
-Now, if your various datasets are closely related, like sentiment analysis of product reviews across different product categories, then successive fine-tuning *could* be beneficial. In this scenario, each new dataset might add a marginal improvement in generalization, enhancing the model’s ability to understand nuanced sentiment across variations. However, there's no guarantee and it requires careful monitoring, as there’s always the risk of over-fitting.
+Now, if your various datasets are closely related, like sentiment analysis of product reviews across different product categories, then successive fine-tuning _could_ be beneficial. In this scenario, each new dataset might add a marginal improvement in generalization, enhancing the model’s ability to understand nuanced sentiment across variations. However, there's no guarantee and it requires careful monitoring, as there’s always the risk of over-fitting.
 
 Conversely, if your datasets are drastically different, like fine-tuning on movie reviews followed by medical journal articles, then the benefits become less predictable and more susceptible to performance regressions. In fact, a process like that often causes the model to overwrite prior learned representations, a phenomenon called "catastrophic forgetting" or "negative transfer." The model might become better at understanding medical text while losing some of its capability with general sentiment analysis.
 
@@ -120,9 +120,10 @@ trainer.train()
 
 # Evaluate performance on both sentiment classification AND medical abstract classification
 ```
+
 Here, we fine-tune the model first on movie reviews, and then medical abstracts. It is likely the model, after being trained on medical abstracts, might perform poorly on movie reviews. This shows an example of catastrophic forgetting.
 
-To mitigate catastrophic forgetting, one approach involves using techniques like *multitask learning* or *continual learning* strategies. These techniques aim to leverage all data at once or carefully introduce new data without forgetting previous tasks. We won't dive into implementations here for brevity. However, I can present a simple way to use an 'adapter' layer which provides a way to preserve prior learned representations, while adapting to a new dataset with much fewer learnable parameters.
+To mitigate catastrophic forgetting, one approach involves using techniques like _multitask learning_ or _continual learning_ strategies. These techniques aim to leverage all data at once or carefully introduce new data without forgetting previous tasks. We won't dive into implementations here for brevity. However, I can present a simple way to use an 'adapter' layer which provides a way to preserve prior learned representations, while adapting to a new dataset with much fewer learnable parameters.
 
 ```python
 # Example 3: Fine-tuning with Adapter layers
@@ -186,6 +187,7 @@ trainer.train()
 model.set_active_adapters("d_task") # to activate the d_task adapter
 #Evaluate on set d, then set to e for evaluating on set e
 ```
-In this last example, instead of directly fine-tuning BERT weights, we introduce *adapter* layers, which are lightweight modules added to the original model. We train separate adapters for dataset d and e respectively. This reduces the risk of the model forgetting how to perform well on dataset d, when training on dataset e.
 
-In summary, repeated fine-tuning is not a guaranteed path to better accuracy. Carefully consider the relationship between datasets, be aware of catastrophic forgetting, and explore techniques like adapters, multi-task learning, or careful curriculum learning to achieve the desired improvement. For further study, I highly recommend delving into research papers on *continual learning* and *transfer learning with transformers* as a starting point. Also, the book *Natural Language Processing with Transformers* by Tunstall et al. (O'Reilly, 2022) is an excellent resource. Additionally, the original *BERT* paper by Devlin et al. (2018) is crucial for understanding the underlying architecture. Understanding the principles and limitations helps ensure more robust and reliable applications of these powerful models.
+In this last example, instead of directly fine-tuning BERT weights, we introduce _adapter_ layers, which are lightweight modules added to the original model. We train separate adapters for dataset d and e respectively. This reduces the risk of the model forgetting how to perform well on dataset d, when training on dataset e.
+
+In summary, repeated fine-tuning is not a guaranteed path to better accuracy. Carefully consider the relationship between datasets, be aware of catastrophic forgetting, and explore techniques like adapters, multi-task learning, or careful curriculum learning to achieve the desired improvement. For further study, I highly recommend delving into research papers on _continual learning_ and _transfer learning with transformers_ as a starting point. Also, the book _Natural Language Processing with Transformers_ by Tunstall et al. (O'Reilly, 2022) is an excellent resource. Additionally, the original _BERT_ paper by Devlin et al. (2018) is crucial for understanding the underlying architecture. Understanding the principles and limitations helps ensure more robust and reliable applications of these powerful models.

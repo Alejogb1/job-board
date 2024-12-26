@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-display-the-result-of-an-asynchronous-function-in-a-react-component"
 ---
 
-Alright, let's tackle this. Displaying the results of asynchronous operations in React components is a bread-and-butter challenge for any front-end developer, and there are several established patterns to manage it effectively. I remember a particularly hairy incident a few years back involving a complex data visualization dashboard—the asynchronous data fetching was a bottleneck and initial implementation was, let's just say, less than optimal. We ended up refactoring the whole thing using a combination of techniques, and it made a huge difference.
+, let's tackle this. Displaying the results of asynchronous operations in React components is a bread-and-butter challenge for any front-end developer, and there are several established patterns to manage it effectively. I remember a particularly hairy incident a few years back involving a complex data visualization dashboard—the asynchronous data fetching was a bottleneck and initial implementation was, let's just say, less than optimal. We ended up refactoring the whole thing using a combination of techniques, and it made a huge difference.
 
 The fundamental issue is that React renders components synchronously, meaning they generate their user interface output based on their current state and props. Asynchronous operations, by their nature, complete at some indeterminate point in the future. This means you can’t directly display the result of a `fetch` call or any other promise-based operation without managing the intermediate states: the loading phase, the successful data arrival, or potential errors. We must introduce a mechanism that triggers updates to React’s virtual DOM once the async operation completes.
 
@@ -19,7 +19,7 @@ Let me walk you through three examples, each building slightly upon the previous
 This example demonstrates a simple component that fetches data from a hypothetical API and displays it.
 
 ```javascript
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 function DataDisplay() {
   const [data, setData] = useState(null);
@@ -29,7 +29,7 @@ function DataDisplay() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://api.example.com/data'); // Replace with your actual API endpoint
+        const response = await fetch("https://api.example.com/data"); // Replace with your actual API endpoint
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -57,7 +57,7 @@ function DataDisplay() {
     return (
       <div>
         <h2>Data:</h2>
-          <pre>{JSON.stringify(data, null, 2)}</pre>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
       </div>
     );
   }
@@ -72,58 +72,63 @@ In this example: `useState` initializes three states: `data`, `loading`, and `er
 
 **Example 2: Debouncing and Cancelling Async Operations**
 
-This second example shows a more advanced case. Let’s say you have a search box and want to fetch suggestions as the user types. In this case, you'd often want to *debounce* the API calls to avoid making too many requests. Additionally, if the user quickly changes their query you should *cancel* any outstanding request. This is a classic scenario where React's `useEffect` with its cleanup functionality shines.
+This second example shows a more advanced case. Let’s say you have a search box and want to fetch suggestions as the user types. In this case, you'd often want to _debounce_ the API calls to avoid making too many requests. Additionally, if the user quickly changes their query you should _cancel_ any outstanding request. This is a classic scenario where React's `useEffect` with its cleanup functionality shines.
 
 ```javascript
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-function SearchSuggest({query}) {
-    const [suggestions, setSuggestions] = useState([]);
-    const [loading, setLoading] = useState(false);
+function SearchSuggest({ query }) {
+  const [suggestions, setSuggestions] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        let abortController = new AbortController();
-        let timeoutId;
+  useEffect(() => {
+    let abortController = new AbortController();
+    let timeoutId;
 
-        if(query) {
-            setLoading(true);
-            timeoutId = setTimeout(async () => {
-                try {
-                  const response = await fetch(`https://api.example.com/suggestions?query=${query}`, {signal: abortController.signal}); // Replace with your actual API endpoint
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                  const result = await response.json();
-                  setSuggestions(result);
-                } catch (err) {
-                  if (err.name !== 'AbortError') {
-                   console.error("Error during search", err);
-                  }
-                } finally {
-                   setLoading(false);
-                }
-           }, 300); //Debounce delay of 300ms
-        } else {
-            setSuggestions([]);
+    if (query) {
+      setLoading(true);
+      timeoutId = setTimeout(async () => {
+        try {
+          const response = await fetch(
+            `https://api.example.com/suggestions?query=${query}`,
+            { signal: abortController.signal }
+          ); // Replace with your actual API endpoint
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const result = await response.json();
+          setSuggestions(result);
+        } catch (err) {
+          if (err.name !== "AbortError") {
+            console.error("Error during search", err);
+          }
+        } finally {
+          setLoading(false);
         }
+      }, 300); //Debounce delay of 300ms
+    } else {
+      setSuggestions([]);
+    }
 
-        return () => { // Cleanup function
-           clearTimeout(timeoutId);
-           abortController.abort();
-        };
+    return () => {
+      // Cleanup function
+      clearTimeout(timeoutId);
+      abortController.abort();
+    };
+  }, [query]);
 
-    }, [query]);
-
-    return (
-        <div>
-            {loading && <p>Loading...</p>}
-            {suggestions.length > 0 && (
-                <ul>
-                    {suggestions.map(suggestion => <li key={suggestion.id}>{suggestion.text}</li>)}
-                </ul>
-             )}
-        </div>
-    )
+  return (
+    <div>
+      {loading && <p>Loading...</p>}
+      {suggestions.length > 0 && (
+        <ul>
+          {suggestions.map((suggestion) => (
+            <li key={suggestion.id}>{suggestion.text}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 }
 
 export default SearchSuggest;
@@ -136,7 +141,7 @@ Here, the `useEffect` hook depends on `query`. When `query` changes: any pending
 For more complex applications, it's good to abstract the asynchronous logic into reusable custom hooks, promoting modularity and maintainability. Here’s an example using the previous data fetching use case.
 
 ```javascript
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 function useFetch(url) {
   const [data, setData] = useState(null);
@@ -166,17 +171,19 @@ function useFetch(url) {
 }
 
 function UserProfile({ userId }) {
-    const {data, loading, error} = useFetch(`https://api.example.com/users/${userId}`);
+  const { data, loading, error } = useFetch(
+    `https://api.example.com/users/${userId}`
+  );
 
-    if (loading) return <div>Loading user profile...</div>;
-    if (error) return <div>Error fetching user profile: {error}</div>;
+  if (loading) return <div>Loading user profile...</div>;
+  if (error) return <div>Error fetching user profile: {error}</div>;
 
-    return (
-      <div>
-        <h2>User Profile</h2>
-        {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
-      </div>
-    );
+  return (
+    <div>
+      <h2>User Profile</h2>
+      {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
+    </div>
+  );
 }
 
 export default UserProfile;

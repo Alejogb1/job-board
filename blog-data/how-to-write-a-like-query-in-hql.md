@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-write-a-like-query-in-hql"
 ---
 
-Alright so you're hitting that HQL like query wall right Been there man been burned by it too Let me tell you I've wrestled with Hibernate and its quirks more times than I care to admit specifically this very like query thing back in my Java EE days oh god the pain
+so you're hitting that HQL like query wall right Been there man been burned by it too Let me tell you I've wrestled with Hibernate and its quirks more times than I care to admit specifically this very like query thing back in my Java EE days oh god the pain
 
 Let's get this straight first HQL ain't SQL It's a query language that speaks in object terms not table rows So thinking SQL-like `%` wildcards directly in HQL is gonna give you headaches and potentially some very very long debugging sessions I've spent hours staring at logs for that kind of mistake so i know what i'm saying Trust me on this one I learned the hard way
 
@@ -23,6 +23,7 @@ But then came the problem of case insensitivity remember the good old days where
 ```hql
 FROM User user WHERE lower(user.name) like lower('john%')
 ```
+
 Now we can search for "john" "John" "JOHN" and so on all at once this was a good day for me indeed I felt like i had won an olympic gold medal for this it was an incredible feeling
 
 Now for the real tricky stuff what if the pattern you want to match includes the wildcard character itself? I mean what if the user wants to search for name with a literal `%` sign in it? Back in my retail software days i had to deal with a data set that had percentage of discounts in its description. I learned to not assume anything and that users are unpredictable. At first I thought this was easy peasy like just adding a literal wildcard to the search well it was not! Hibernate would interpret the `%` as a wildcard character and it would not work I remember i spent a whole weekend debugging just to figure it out
@@ -32,6 +33,7 @@ So the HQL solution for this is to use an escape character. You need to tell HQL
 ```hql
 FROM Product product WHERE product.description like '%10\%%' ESCAPE '\'
 ```
+
 This is when I realized that sometimes software engineering feels like fighting a hydra each head you cut another one grows This specific case was so annoying to debug because the queries were working as expected and the only thing wrong with it was that the literal `%` was not escaping.
 
 Now let me give you some food for thought as well just because you can use `like` all the time it doesn't mean that you should If you have full text search requirements you should be considering a full-text search engine like Lucene or Elasticsearch that can integrate well with Hibernate as well. I remember the day that we migrated our book store application to Elasticsearch it was a totally different experience performance wise the searches became instantaneous and the full-text search capabilities were so so powerful so please don't think about like queries as a golden hammer for every search requirement

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-dynamic-airflow-dags-start-immediately-after-creation"
 ---
 
-Alright, let's talk about launching those Airflow DAGs the moment they’re born, shall we? It’s a surprisingly common need, and I've definitely seen it trip up folks new to the platform. Been there myself, actually. I remember an early project where we had a continuous stream of data sources being dynamically configured, and waiting for the next scheduler cycle was just not an option. It created bottlenecks that brought the pipeline to its knees. We needed those dag definitions to immediately jump into action. So, here’s the breakdown of how we accomplished that, and how you can, too.
+, let's talk about launching those Airflow DAGs the moment they’re born, shall we? It’s a surprisingly common need, and I've definitely seen it trip up folks new to the platform. Been there myself, actually. I remember an early project where we had a continuous stream of data sources being dynamically configured, and waiting for the next scheduler cycle was just not an option. It created bottlenecks that brought the pipeline to its knees. We needed those dag definitions to immediately jump into action. So, here’s the breakdown of how we accomplished that, and how you can, too.
 
 The core issue is that, by default, Airflow’s scheduler parses DAG files at a set interval defined by the `scheduler_loop_delay` config setting. This interval, usually something like 300 seconds, can feel like an eternity when you’re dealing with rapidly evolving configurations. The key is to bypass the regular schedule and trigger your dags immediately after definition. The good news is, it’s quite achievable with a few strategies. I've used all three of these in production scenarios, and they each have specific advantages.
 
@@ -55,7 +55,7 @@ trigger_dag_via_api(dag_id)
 
 Make sure to replace `http://your-airflow-host:8080` with your Airflow instance’s url, and of course set up proper authentication. In this scenario, after your new dag (which you can write to disk and then upload or directly submit through REST Api), you'd run the `trigger_dag_via_api` function.
 
-The next technique is to leverage the `schedule=None` property within your DAG definition. Coupled with the `catchup=False` flag, this tells Airflow that the DAG should *not* run on a schedule and should *not* retroactively execute tasks if it was disabled or paused. Now, this alone won't make the DAG *immediately* start, but it sets the stage. You'll still need to either trigger it through the REST API or with the Airflow CLI. This method is incredibly helpful for ensuring that a DAG runs *only when you want it to*, rather than relying on a timer.
+The next technique is to leverage the `schedule=None` property within your DAG definition. Coupled with the `catchup=False` flag, this tells Airflow that the DAG should _not_ run on a schedule and should _not_ retroactively execute tasks if it was disabled or paused. Now, this alone won't make the DAG _immediately_ start, but it sets the stage. You'll still need to either trigger it through the REST API or with the Airflow CLI. This method is incredibly helpful for ensuring that a DAG runs _only when you want it to_, rather than relying on a timer.
 
 Here’s a simplified example demonstrating this:
 

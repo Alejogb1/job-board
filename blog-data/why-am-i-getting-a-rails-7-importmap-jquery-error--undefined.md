@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-rails-7-importmap-jquery-error--undefined"
 ---
 
-Okay, let's unpack this. "Rails 7 importmap jquery error $ undefined"—I’ve seen this beast rear its head more times than I’d care to count, particularly in the transition to importmap. It’s frustrating, I get it. Before diving into the specifics, let's establish something crucial: with Rails 7, importmap fundamentally changes how we handle javascript dependencies, moving away from node_modules and webpacker. This shift, while advantageous for speed and simplicity, introduces potential wrinkles, especially with older libraries like jQuery that weren't designed with modules in mind.
+, let's unpack this. "Rails 7 importmap jquery error $ undefined"—I’ve seen this beast rear its head more times than I’d care to count, particularly in the transition to importmap. It’s frustrating, I get it. Before diving into the specifics, let's establish something crucial: with Rails 7, importmap fundamentally changes how we handle javascript dependencies, moving away from node_modules and webpacker. This shift, while advantageous for speed and simplicity, introduces potential wrinkles, especially with older libraries like jQuery that weren't designed with modules in mind.
 
 From experience, this " `$` undefined " error almost always points back to jQuery not being properly available in the global scope where your javascript code expects to find it. The problem isn't that jQuery isn't present; it's that your application's javascript code, specifically code trying to use jQuery's `$` alias, isn't able to find it. Importmap loads modules asynchronously, which can be the cause of race conditions when relying on global scope injection that some code assumes is immediately available.
 
-When you encounter this error, your first inclination might be to assume jQuery isn’t included in your `importmap.rb`, but that's rarely the case; you’ve probably got the correct lines there, likely something resembling `pin "jquery", to: "https://ga.jspm.io/npm:jquery@3.7.1/dist/jquery.js"` or similar. The issue lies within *how* and *when* jquery is available to your specific javascript files. Let’s break down the typical causes and, more importantly, how to solve them.
+When you encounter this error, your first inclination might be to assume jQuery isn’t included in your `importmap.rb`, but that's rarely the case; you’ve probably got the correct lines there, likely something resembling `pin "jquery", to: "https://ga.jspm.io/npm:jquery@3.7.1/dist/jquery.js"` or similar. The issue lies within _how_ and _when_ jquery is available to your specific javascript files. Let’s break down the typical causes and, more importantly, how to solve them.
 
-Firstly, consider *synchronous vs. asynchronous loading*. By default, `importmap` doesn't guarantee that all files pinned to the import map will be available *at the exact same moment*. This is unlike webpacker, where dependencies were all bundled and could be expected to be immediately available. jQuery needs to be initialized *before* any of your code trying to use it attempts to access the `$` alias.
+Firstly, consider _synchronous vs. asynchronous loading_. By default, `importmap` doesn't guarantee that all files pinned to the import map will be available _at the exact same moment_. This is unlike webpacker, where dependencies were all bundled and could be expected to be immediately available. jQuery needs to be initialized _before_ any of your code trying to use it attempts to access the `$` alias.
 
-Secondly, *the nature of jQuery itself*. jQuery was conceived in an era where global scope was king. It essentially pollutes this global space with its `$` and `jQuery` variables. Modern module systems discourage this behavior, preferring explicit imports and exports. This means, even with it available, it doesn't naturally integrate with `importmap` the same way a modern es6 module would.
+Secondly, _the nature of jQuery itself_. jQuery was conceived in an era where global scope was king. It essentially pollutes this global space with its `$` and `jQuery` variables. Modern module systems discourage this behavior, preferring explicit imports and exports. This means, even with it available, it doesn't naturally integrate with `importmap` the same way a modern es6 module would.
 
 Let's illustrate this with some code snippets. Imagine this simple scenario:
 
@@ -23,14 +23,14 @@ Let's illustrate this with some code snippets. Imagine this simple scenario:
 
 import "./my_custom_javascript_component";
 
-
 // app/javascript/my_custom_javascript_component.js
 
-$(document).ready(function(){
-    console.log("jquery loaded?");
-    $("h1").css("color","red");
+$(document).ready(function () {
+  console.log("jquery loaded?");
+  $("h1").css("color", "red");
 });
 ```
+
 And the importmap.rb file might look like this:
 
 ```ruby
@@ -40,11 +40,11 @@ pin "jquery", to: "https://ga.jspm.io/npm:jquery@3.7.1/dist/jquery.js"
 pin "@rails/request.js", to: "@rails/request-js/src/index.js"
 ```
 
-In this scenario, it's highly probable that `my_custom_javascript_component.js` will attempt to use `$` *before* the jQuery module has fully loaded and populated the global scope, resulting in the dreaded " `$` is undefined ". The order of your import statements in `application.js` doesn't dictate the loading sequence.
+In this scenario, it's highly probable that `my_custom_javascript_component.js` will attempt to use `$` _before_ the jQuery module has fully loaded and populated the global scope, resulting in the dreaded " `$` is undefined ". The order of your import statements in `application.js` doesn't dictate the loading sequence.
 
 **Example 2: Using a Manual Initialization Strategy**
 
-To address this, we can manually initialize jQuery *before* any code depends on it. This can be accomplished by loading a utility file containing jQuery into the global scope, then loading the rest of our javascript code.
+To address this, we can manually initialize jQuery _before_ any code depends on it. This can be accomplished by loading a utility file containing jQuery into the global scope, then loading the rest of our javascript code.
 
 ```javascript
 // app/javascript/init_jquery.js
@@ -71,18 +71,17 @@ The most robust solution, and the one I've found to be most reliable, involves w
 import jquery from "jquery";
 window.$ = window.jQuery = jquery;
 
-
 // app/javascript/application.js
 import "./init_jquery"; // Import *before* anything else
 
-document.addEventListener('DOMContentLoaded', function(){
-   import('./my_custom_javascript_component'); //load after the DOM is ready
+document.addEventListener("DOMContentLoaded", function () {
+  import("./my_custom_javascript_component"); //load after the DOM is ready
 });
 ```
 
 The `my_custom_javascript_component.js` will not change from example one.
 
-This approach ensures that `my_custom_javascript_component.js` only gets loaded *after* the dom is loaded and jQuery has successfully loaded. This significantly reduces race conditions. Note how we used a dynamic import here, to lazy load the component.
+This approach ensures that `my_custom_javascript_component.js` only gets loaded _after_ the dom is loaded and jQuery has successfully loaded. This significantly reduces race conditions. Note how we used a dynamic import here, to lazy load the component.
 
 This approach leverages the fact that JavaScript event listeners are executed in the order they are registered. By attaching the `DOMContentLoaded` event listener in `application.js` ( which is loaded first because of the `preload:true`), we can confidently load the rest of the javascript components after the dom is ready.
 

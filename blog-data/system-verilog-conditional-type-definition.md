@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "system-verilog-conditional-type-definition"
 ---
 
-Alright so conditional type definition in SystemVerilog you're asking about that right Yeah I've been there wrestled with that beast myself more times than I care to remember It's not exactly a walk in the park but it's definitely doable once you get the hang of it lets break it down in a straightforward way
+so conditional type definition in SystemVerilog you're asking about that right Yeah I've been there wrestled with that beast myself more times than I care to remember It's not exactly a walk in the park but it's definitely doable once you get the hang of it lets break it down in a straightforward way
 
 First off when you say conditional type definition you're not really doing like a if else statement that changes the fundamental type itself at compile time like in c++ templates thats not what systemverilog is designed for Instead what we're talking about is using `typedef` to give names to types and then controlling which type name is used based on some condition often through parameters.
 
@@ -82,7 +82,7 @@ Here you see how with an enum and ternary operator the correct type can be selec
 
 The use of localparams is extremely important because parameters are essentially constants and not variables and can't be used in conditions where the condition would need to be evaluated at runtime In these examples because I am using constant parameters they are all evaluated at compile time
 
-Now you might be wondering "Why not just use `if else` or `case` statements directly to choose a data width inside a module?". Well you *could* but it quickly becomes a mess if you have a lot of different places where the type needs to change. With `typedef` you define your type once based on parameters and then use that `typedef` everywhere else in the module or interface. It makes the code easier to read and maintain.
+Now you might be wondering "Why not just use `if else` or `case` statements directly to choose a data width inside a module?". Well you _could_ but it quickly becomes a mess if you have a lot of different places where the type needs to change. With `typedef` you define your type once based on parameters and then use that `typedef` everywhere else in the module or interface. It makes the code easier to read and maintain.
 
 Lets say for some reason you need to use a struct that has different members depending on the type another example can be this
 
@@ -122,7 +122,7 @@ endmodule
 
 Here in the example a struct definition is selected based on a parameter. The way to access a conditional field in the struct is done using a conditional statement outside the definition of the struct type itself. There aren't a way to have members in the struct itself conditionalized with ternary operators. But with this approach we can select different structures based on parameters.
 
-Now a common mistake I've seen people make is trying to use these conditional types *everywhere*. Remember that the conditional type selection has to be resolvable at compile time. You can't use run-time values or signals to decide what the type is going to be. The parameters or localparams need to be constant when evaluating the condition for the typedef. I've seen people try that and they get a lot of confusing errors. Dont do that unless you really know what you are doing you are going to pull your hair off.
+Now a common mistake I've seen people make is trying to use these conditional types _everywhere_. Remember that the conditional type selection has to be resolvable at compile time. You can't use run-time values or signals to decide what the type is going to be. The parameters or localparams need to be constant when evaluating the condition for the typedef. I've seen people try that and they get a lot of confusing errors. Dont do that unless you really know what you are doing you are going to pull your hair off.
 
 About resources well I really found the SystemVerilog standard ieee 1800 a very valuable asset there's really no substitute for that one and you can get it from ieee website. I would recommend reading the part that talks about parameterized types and type definition with `typedef` there a lot of corner cases there. Also a good book is "SystemVerilog for Verification" by Chris Spear I think it will give you a good perspective on these features and what they were designed for its a great book for anyone doing verification also. And one more great book I would recommend is "Writing Testbenches Using SystemVerilog" by Janick Bergeron its a great book if you want to take a deep dive in advanced testbench techniques and how the systemverilog features are used.
 

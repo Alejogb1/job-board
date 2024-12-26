@@ -4,13 +4,13 @@ date: "2024-12-16"
 id: "why-does-codesign-fail-in-github-actions-but-not-locally"
 ---
 
-Okay, let's unpack this. I’ve certainly been down this road more than once, the frustratingly familiar scenario where code works flawlessly on my local machine but throws a tantrum in GitHub Actions. It’s a common headache, and the root causes often revolve around subtle differences in the execution environments. My experience with a complex microservice architecture a few years back, deploying through GitHub Actions, hammered this point home. We were seeing consistent failures in the CI/CD pipeline that were completely absent locally. It took some careful investigation to pinpoint the environmental variances, specifically around dependency resolution, environment variables, and file system access. Let me delve into these key factors, and offer some practical solutions.
+, let's unpack this. I’ve certainly been down this road more than once, the frustratingly familiar scenario where code works flawlessly on my local machine but throws a tantrum in GitHub Actions. It’s a common headache, and the root causes often revolve around subtle differences in the execution environments. My experience with a complex microservice architecture a few years back, deploying through GitHub Actions, hammered this point home. We were seeing consistent failures in the CI/CD pipeline that were completely absent locally. It took some careful investigation to pinpoint the environmental variances, specifically around dependency resolution, environment variables, and file system access. Let me delve into these key factors, and offer some practical solutions.
 
 The fundamental issue stems from the fact that your local development environment and the GitHub Actions runner environment are almost certainly not identical. You control every aspect of your local machine, from the operating system version to specific installed packages. GitHub Actions, in contrast, runs in a controlled, often containerized, environment. This environment, while consistent across jobs within the same runner type, is by design abstracted from the specific setup of your local dev machine. This abstraction, while a boon for repeatability, can introduce unexpected differences that cause codesign issues to surface.
 
 **Dependency Resolution and Versioning**
 
-The first common culprit is inconsistent dependency management. Locally, you might be relying on specific versions of libraries or tools installed globally or in a managed environment like a virtual environment. GitHub Actions, especially with its ephemeral runners, often needs explicit instructions on which dependencies to install, and crucially, *which version*. The lack of a precise declaration can lead to mismatches. For instance, you might be using a specific patched version of a library locally while GitHub Actions defaults to the latest, or an older version, leading to unexpected code behavior or outright build failures. This mismatch often manifests as codesigning failures when the required tools or SDK versions are different.
+The first common culprit is inconsistent dependency management. Locally, you might be relying on specific versions of libraries or tools installed globally or in a managed environment like a virtual environment. GitHub Actions, especially with its ephemeral runners, often needs explicit instructions on which dependencies to install, and crucially, _which version_. The lack of a precise declaration can lead to mismatches. For instance, you might be using a specific patched version of a library locally while GitHub Actions defaults to the latest, or an older version, leading to unexpected code behavior or outright build failures. This mismatch often manifests as codesigning failures when the required tools or SDK versions are different.
 
 Here’s an example to illustrate:
 
@@ -26,7 +26,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10' # Explicitly set Python version
+          python-version: "3.10" # Explicitly set Python version
       - name: Install Dependencies
         run: |
           pip install -r requirements.txt # Relying on requirements.txt
@@ -59,16 +59,16 @@ jobs:
   codesign:
     runs-on: ubuntu-latest
     env:
-      SIGNING_TOOL_PATH: '/usr/local/bin/signing_tool' # Direct environment variable
+      SIGNING_TOOL_PATH: "/usr/local/bin/signing_tool" # Direct environment variable
     steps:
       - uses: actions/checkout@v3
       - name: Codesign
         env:
           SIGNING_CERT_PATH: ${{ secrets.SIGNING_CERT_PATH }} # Secret environment variable
         run: |
-           echo "Signing cert path is: $SIGNING_CERT_PATH"
-           # Some codesign command using the env variables
-           # Example: $SIGNING_TOOL_PATH --cert $SIGNING_CERT_PATH --config signing_config.json my_executable
+          echo "Signing cert path is: $SIGNING_CERT_PATH"
+          # Some codesign command using the env variables
+          # Example: $SIGNING_TOOL_PATH --cert $SIGNING_CERT_PATH --config signing_config.json my_executable
 ```
 
 The `env` section demonstrates how to declare both directly accessible environment variables like `SIGNING_TOOL_PATH` and secret variables like `SIGNING_CERT_PATH`. Notice the use of `${{ secrets.SIGNING_CERT_PATH }}` syntax – this is how GitHub Actions accesses secrets that are configured within the repository settings. The critical part is to make certain that variables which are used for codesigning or any build processes are carefully considered. Missing environment variables are a primary reason for failures in CI/CD pipelines.
@@ -95,8 +95,8 @@ jobs:
           chmod 600 ./signing/signing_key.pem  # Make sure it has correct permissions
       - name: Codesign
         run: |
-           # Example signing command that accesses the file
-           # Example: Some-signing-tool --key ./signing/signing_key.pem --config signing_config.json my_executable
+          # Example signing command that accesses the file
+          # Example: Some-signing-tool --key ./signing/signing_key.pem --config signing_config.json my_executable
 ```
 
 In this snippet, the secret content of a signing key is fetched, decoded from base64, and written to a file with the correct permissions. This makes the signing key accessible to the signing tool. This mechanism is vital when your signing process needs to utilize keyfiles or certificates that must be passed to specific steps.

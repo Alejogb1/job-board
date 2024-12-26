@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "dbt-run-target-parameter-definition"
 ---
 
-Okay so dbt run target parameter yeah I've wrestled with that beast more times than I care to admit Let's break it down simple and techy like we do around here
+dbt run target parameter yeah I've wrestled with that beast more times than I care to admit Let's break it down simple and techy like we do around here
 
 So you're asking about the `--target` parameter when you're firing off `dbt run` or any other dbt command right It's fundamental but it can be a real pain if you don't grasp its function so let's clear the confusion
 
@@ -12,7 +12,7 @@ Essentially `--target` tells dbt which profile to use When you set up dbt you co
 
 Now without `--target` dbt defaults to a target named `dev` If you haven't changed the default target name during your setup that is what is used This can lead to a world of pain if you try to run a production dbt job on a development environment profile which I have done trust me that resulted in some data loss that made my heart skip a beat I am being very very serious it was like a scene from a bad hacker movie where I am frantically trying to revert the production data I even had to involve several database engineers and a very angry project manager because I didn't pay attention to the freaking target
 
-So `--target` is like saying "hey dbt use *this* connection profile not the default one" You need to specify the correct target to run your models in the right place that's it it's really not rocket science but forgetting to set it right is something that we all experienced at some point in our careers right
+So `--target` is like saying "hey dbt use _this_ connection profile not the default one" You need to specify the correct target to run your models in the right place that's it it's really not rocket science but forgetting to set it right is something that we all experienced at some point in our careers right
 
 Here's the thing the structure of the profile configuration matters too that is like the building blocks of your setup and where the connection details live In `profiles.yml` you define named targets and their associated connection details like username password database schema and so on A simple example can be seen below:
 
@@ -50,7 +50,6 @@ prod:
       keyfile: /path/to/your/prod/keyfile.json
       retries: 2
   target: default
-
 ```
 
 This is a basic `profiles.yml` for a bigquery setup. Each target (`dev`, `staging`, `prod`) has its own output configuration with the relevant credentials project id and dataset.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-cypress-error-that-the-chainer-colored-was-not-found-could-not-build-assertion"
 ---
 
-Okay, let's tackle this. I’ve seen this “chainer colored was not found” error in Cypress pop up more times than I care to remember, and it usually boils down to a few common underlying issues. It's one of those cryptic messages that can initially leave you scratching your head, but understanding the mechanics behind Cypress assertions helps a lot. The core problem isn't actually about the color of the assertion; it’s about Cypress's assertion engine not finding the method you're trying to use within the chain of commands. Let's break it down.
+, let's tackle this. I’ve seen this “chainer colored was not found” error in Cypress pop up more times than I care to remember, and it usually boils down to a few common underlying issues. It's one of those cryptic messages that can initially leave you scratching your head, but understanding the mechanics behind Cypress assertions helps a lot. The core problem isn't actually about the color of the assertion; it’s about Cypress's assertion engine not finding the method you're trying to use within the chain of commands. Let's break it down.
 
 The error "The chainer colored was not found. Could not build assertion" basically means that you're trying to use a custom or non-existent chainer in your assertion chain, and Cypress doesn't recognize it. Cypress uses a chainable interface for its commands and assertions. When you write `cy.get('selector').should('be.visible').and('have.text', 'some text')`, for example, `should`, `and`, and `have` are all chainers that modify how the assertion behaves. If you introduce a chainer that Cypress doesn’t recognize, it can't construct the assertion, hence the error.
 
@@ -21,16 +21,16 @@ Let me provide some code snippets that highlight these scenarios:
 ```javascript
 // Incorrect chainer name 'has.text' instead of 'have.text'
 
-it('should demonstrate incorrect chainer', () => {
-   cy.visit('/some-page');
-   cy.get('#elementId').should('has.text', 'Expected Text'); // This will throw the "chainer not found" error
+it("should demonstrate incorrect chainer", () => {
+  cy.visit("/some-page");
+  cy.get("#elementId").should("has.text", "Expected Text"); // This will throw the "chainer not found" error
 });
 
 //Correct version
 
-it('should demonstrate correct chainer', () => {
-   cy.visit('/some-page');
-   cy.get('#elementId').should('have.text', 'Expected Text'); // This works perfectly
+it("should demonstrate correct chainer", () => {
+  cy.visit("/some-page");
+  cy.get("#elementId").should("have.text", "Expected Text"); // This works perfectly
 });
 ```
 
@@ -43,25 +43,26 @@ This next example requires a setup in `cypress/support/e2e.js`:
 ```javascript
 // cypress/support/e2e.js
 
-chai.Assertion.addMethod('myCustomAssertion', function(expectedValue) {
-    const actualValue = this._obj;
+chai.Assertion.addMethod("myCustomAssertion", function (expectedValue) {
+  const actualValue = this._obj;
 
-    this.assert(
-        actualValue === expectedValue,
-        `expected ${actualValue} to be equal to ${expectedValue}`,
-        `expected ${actualValue} not to be equal to ${expectedValue}`
-    );
+  this.assert(
+    actualValue === expectedValue,
+    `expected ${actualValue} to be equal to ${expectedValue}`,
+    `expected ${actualValue} not to be equal to ${expectedValue}`
+  );
 });
 ```
 
 Now in your Cypress test:
+
 ```javascript
 // cypress/e2e/my-test.cy.js
 
-it('should demonstrate custom matcher issues', () => {
-    cy.wrap(5).should('myCustomAssertion', 5); //Correct use
+it("should demonstrate custom matcher issues", () => {
+  cy.wrap(5).should("myCustomAssertion", 5); //Correct use
 
-    cy.wrap(5).should('myCustomAssertionFail', 5); // Incorrect name, this will cause error
+  cy.wrap(5).should("myCustomAssertionFail", 5); // Incorrect name, this will cause error
 });
 ```
 
@@ -70,11 +71,13 @@ Here, I've defined a custom matcher called `myCustomAssertion`. The first use ca
 **Example 3: Misunderstanding Assertion Syntax**
 
 ```javascript
-it('should demonstrate assertion syntax issues', () => {
-    cy.visit('/some-page');
-    cy.get('input').should('have.attr', 'placeholder').should('contains', 'Search'); // This will throw the "chainer not found" error
+it("should demonstrate assertion syntax issues", () => {
+  cy.visit("/some-page");
+  cy.get("input")
+    .should("have.attr", "placeholder")
+    .should("contains", "Search"); // This will throw the "chainer not found" error
 
-    cy.get('input').should('have.attr', 'placeholder', 'Search'); // Correct way to achieve the assertion
+  cy.get("input").should("have.attr", "placeholder", "Search"); // Correct way to achieve the assertion
 });
 ```
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-i-get-a-400-error-in-my-dockerized-image-processing-model"
 ---
 
-Okay, let’s unpack this 400 error with your dockerized image processing model. It's a common pain point, and, having seen this cycle countless times over the years, I can confidently say it’s rarely a single, isolated issue. In my experience, it usually boils down to a cluster of misconfigurations or unexpected behaviors somewhere between your application code, the containerization process, and how it all interacts with the server. Let's break down the potential culprits and discuss how to address them.
+, let’s unpack this 400 error with your dockerized image processing model. It's a common pain point, and, having seen this cycle countless times over the years, I can confidently say it’s rarely a single, isolated issue. In my experience, it usually boils down to a cluster of misconfigurations or unexpected behaviors somewhere between your application code, the containerization process, and how it all interacts with the server. Let's break down the potential culprits and discuss how to address them.
 
 First off, a 400 Bad Request error from an HTTP perspective indicates the server cannot or will not process the request due to something perceived as a client error. It essentially means the server received the request, understood it at a very fundamental level (unlike, say, a 500 error), but found something amiss with the request itself. Now, in a dockerized context, that 'something amiss' can be nuanced and often requires a little bit of detective work.
 
@@ -93,7 +93,8 @@ Thirdly, the docker container itself may be causing subtle issues. Are you expos
 
 Imagine your server is running inside a docker container on port 5000, but you expose a different port in docker or you misconfigure the server port inside the container.
 
-*DockerFile Example (simplified)*
+_DockerFile Example (simplified)_
+
 ```Dockerfile
 FROM python:3.9-slim
 
@@ -105,7 +106,7 @@ EXPOSE 5000  # Correctly expose the port
 CMD ["python", "app.py"]
 ```
 
-*app.py Example*
+_app.py Example_
 
 ```python
 from flask import Flask
@@ -119,7 +120,7 @@ if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000) # Ensure app listens on exposed port
 ```
 
-*Docker run command example (incorrect and correct)*
+_Docker run command example (incorrect and correct)_
 
 ```bash
 # Incorrect: Port is mapped incorrectly
@@ -133,6 +134,6 @@ In the example above, the server runs on port 5000 inside the container. If the 
 
 Finally, I'd suggest looking into your request payload size. It's not common to encounter this for regular image processing but in scenarios with very large image inputs, there can be an issue with the request size exceeding the server's imposed limits, either directly or in an intermediary system, like a reverse proxy or API gateway.
 
-For further study into HTTP error codes, I’d recommend reading the relevant sections in *HTTP: The Definitive Guide* by David Gourley and Brian Totty. It covers request handling and error responses exhaustively. To delve deeper into docker networking, I suggest taking a look at the official docker documentation and specifically the networking sections. And, finally, for a good overview of web application debugging techniques, look to *Effective Debugging* by Diomidis Spinellis. It provides invaluable approaches to diagnose these issues.
+For further study into HTTP error codes, I’d recommend reading the relevant sections in _HTTP: The Definitive Guide_ by David Gourley and Brian Totty. It covers request handling and error responses exhaustively. To delve deeper into docker networking, I suggest taking a look at the official docker documentation and specifically the networking sections. And, finally, for a good overview of web application debugging techniques, look to _Effective Debugging_ by Diomidis Spinellis. It provides invaluable approaches to diagnose these issues.
 
 By thoroughly inspecting your request headers, payload structure, container configuration and, considering request payload size you’ll likely find the root cause. It's usually a combination of seemingly minor details that accumulate to trigger that pesky 400 error. Careful, methodical debugging is key. Good luck, and happy coding!

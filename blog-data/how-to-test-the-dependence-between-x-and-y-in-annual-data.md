@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-to-test-the-dependence-between-x-and-y-in-annual-data"
 ---
 
-Alright, let's tackle this. I’ve actually been in the trenches with this sort of problem a few times, particularly when dealing with financial models and forecasting. Testing the dependence between variables in annual data might seem straightforward at first glance, but the specifics of annual aggregates introduce some unique challenges. We aren't working with the granularity of, say, daily data, which allows for finer correlation checks. The annual aggregation can sometimes mask underlying shorter-term dynamics and lead to spurious correlations if not handled correctly.
+, let's tackle this. I’ve actually been in the trenches with this sort of problem a few times, particularly when dealing with financial models and forecasting. Testing the dependence between variables in annual data might seem straightforward at first glance, but the specifics of annual aggregates introduce some unique challenges. We aren't working with the granularity of, say, daily data, which allows for finer correlation checks. The annual aggregation can sometimes mask underlying shorter-term dynamics and lead to spurious correlations if not handled correctly.
 
-The core issue we're addressing here is whether changes in variable *X* are associated with changes in variable *Y* across annual observations. This isn't as simple as just running a basic correlation function. The kind of test we need largely depends on the assumptions we're willing to make about the data and the nature of the relationship we’re looking to uncover. Before diving into specific tests, remember that "dependence" isn't always causation. We're assessing statistical association, which may or may not imply a direct causal link.
+The core issue we're addressing here is whether changes in variable _X_ are associated with changes in variable _Y_ across annual observations. This isn't as simple as just running a basic correlation function. The kind of test we need largely depends on the assumptions we're willing to make about the data and the nature of the relationship we’re looking to uncover. Before diving into specific tests, remember that "dependence" isn't always causation. We're assessing statistical association, which may or may not imply a direct causal link.
 
 I recall a particular project involving agricultural yields and annual rainfall patterns. We initially just ran a Pearson correlation and got a seemingly strong positive result. However, after a deeper examination, it turned out that both variables were influenced by a third, unobserved factor – overall climate change trends – which skewed the results. So it’s important to be aware of such potential confounding factors.
 
@@ -47,7 +47,7 @@ While useful as an initial check, don’t rely solely on it, particularly if the
 
 **2. Spearman Rank Correlation**
 
-The Spearman rank correlation coefficient (ρ), a non-parametric counterpart to Pearson's *r*, measures the strength and direction of a monotonic relationship between two variables. This means it doesn't assume a linear relationship, only that the variables increase or decrease together (or inversely). Instead of using the actual data values, it uses their ranks. This makes it more robust to outliers and deviations from normality.
+The Spearman rank correlation coefficient (ρ), a non-parametric counterpart to Pearson's _r_, measures the strength and direction of a monotonic relationship between two variables. This means it doesn't assume a linear relationship, only that the variables increase or decrease together (or inversely). Instead of using the actual data values, it uses their ranks. This makes it more robust to outliers and deviations from normality.
 
 Here is a python implementation with `scipy`:
 
@@ -76,7 +76,7 @@ Spearman’s rho is often a more practical choice when dealing with real-world d
 
 **3. Time Series Regression With Appropriate Adjustments**
 
-Since we’re talking about *annual* data, which by nature are time series, we need to acknowledge this and potentially use regression-based methods explicitly designed for time series data. Here, we might consider a simple linear regression model with adjustments for any serial correlation that might be present in the error terms. The ordinary least squares (ols) regression assumes that the errors are uncorrelated, which is often not the case with time series data. To address this, we can test for and address autocorrelation, using for example, an auto regressive component (AR) in our model using the `statsmodels` library in python.
+Since we’re talking about _annual_ data, which by nature are time series, we need to acknowledge this and potentially use regression-based methods explicitly designed for time series data. Here, we might consider a simple linear regression model with adjustments for any serial correlation that might be present in the error terms. The ordinary least squares (ols) regression assumes that the errors are uncorrelated, which is often not the case with time series data. To address this, we can test for and address autocorrelation, using for example, an auto regressive component (AR) in our model using the `statsmodels` library in python.
 
 ```python
 import statsmodels.api as sm
@@ -104,7 +104,7 @@ def time_series_regression(x, y):
        return ar_model.params[1], ar_model.pvalues[1], durbin_watson # Return ar1 coef, pvalue, durbinwatson
     else:
         return results.params[1], results.pvalues[1], durbin_watson # Return beta coef, pvalue, durbinwatson
-    
+
 
 # Example Usage
 x_data = [10, 12, 15, 18, 20, 22, 25, 28, 30, 32]

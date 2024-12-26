@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "revert-unchanged-files-perforce-command"
 ---
 
-Okay so you're asking about reverting unchanged files in Perforce right I've been there man I've wrestled with Perforce more times than I care to remember it's like a rite of passage for anyone working with version control at scale let me tell you
+you're asking about reverting unchanged files in Perforce right I've been there man I've wrestled with Perforce more times than I care to remember it's like a rite of passage for anyone working with version control at scale let me tell you
 
 So the core issue here is that Perforce sometimes gets a little overzealous It might mark files as opened for edit even though you haven't actually changed them This happens for various reasons maybe a tool touched the file maybe your IDE auto-saved something or maybe just Perforce being Perforce And then when you try to submit your changelist you get this annoying "file(s) not changed on disk" error which can be a total drag especially when you have a lot of files in your workspace
 
@@ -12,7 +12,7 @@ Reverting those individually is like using a toothpick to move a mountain a tedi
 
 The typical way to revert in perforce is p4 revert filename which works fine for the changed ones but not for these pesky ones This is where the real fun begins and its why I ended up spending a few hours one friday afternoon trying to solve this mess
 
-I remember one particularly bad case back in my early days at *Fictional Company Name* we were building this giant module and the build system kept triggering Perforce edits on dozens of configuration files every single build It was a mess my workspace was littered with these ghosts that Perforce stubbornly refused to let go of I was young and foolish back then I tried manually reverting each one that was a long afternoon of clicking through the GUI like a monkey
+I remember one particularly bad case back in my early days at _Fictional Company Name_ we were building this giant module and the build system kept triggering Perforce edits on dozens of configuration files every single build It was a mess my workspace was littered with these ghosts that Perforce stubbornly refused to let go of I was young and foolish back then I tried manually reverting each one that was a long afternoon of clicking through the GUI like a monkey
 
 The key to solving this is understanding that Perforce keeps track of file digests essentially hashes of the file content and what it has in the depot version of it If these digests are identical it means that the file content is the same and there is no actual changes This lets us revert just the ones that have not changed
 
@@ -59,7 +59,7 @@ done
 In this example I am using bash regex to filter out any files within a specific directory so the command is still reverting the files that haven't changed but it skips those that are in the `path/to/your/directory` directory you will have to change this to a path you need of course.
 This helps when you have generated code or generated assets that you might want to keep as opened even if it reports as not changed
 
-These approaches work perfectly and they have served me for a long long time I had to implement something similar when we decided to start using perforce as the main tool for our team at that *Fictional Company Name* after that the builds were smoother and my coworkers thanked me for saving hours of their time it was truly a good day
+These approaches work perfectly and they have served me for a long long time I had to implement something similar when we decided to start using perforce as the main tool for our team at that _Fictional Company Name_ after that the builds were smoother and my coworkers thanked me for saving hours of their time it was truly a good day
 
 As a side note it would be fantastic if Perforce had a built in option to just revert unchanged files with one command but hey what are we supposed to do right just write more complex scripts this is the programmer way
 

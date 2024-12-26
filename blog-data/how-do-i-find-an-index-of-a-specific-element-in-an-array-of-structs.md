@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-find-an-index-of-a-specific-element-in-an-array-of-structs"
 ---
 
-Okay, let’s tackle this. I’ve certainly stumbled through this kind of indexing challenge a few times myself. It's far more common than one might initially think, especially when you’re working with complex data structures retrieved from various sources. So, you're dealing with an array of structs and need to locate the index of a specific struct based on one of its member values. Fair enough. It sounds straightforward, but the devil, as they say, is often in the details of how you perform the search efficiently and correctly.
+, let’s tackle this. I’ve certainly stumbled through this kind of indexing challenge a few times myself. It's far more common than one might initially think, especially when you’re working with complex data structures retrieved from various sources. So, you're dealing with an array of structs and need to locate the index of a specific struct based on one of its member values. Fair enough. It sounds straightforward, but the devil, as they say, is often in the details of how you perform the search efficiently and correctly.
 
 The fundamental problem here is that unlike an array of simple datatypes, such as integers or strings, where you can directly compare elements, you need a way to define what constitutes a "match" for your struct. This is usually achieved by comparing a specific field within the struct against a target value. Here are several approaches that I’ve found useful, along with code examples and considerations for each:
 
@@ -182,9 +182,9 @@ In the third snippet, I've taken a different approach. Instead of searching dire
 
 When selecting the appropriate technique, consider the following:
 
-*   **Dataset size**: For small arrays, a simple linear search or `std::find_if` is often sufficient. For larger datasets or frequent lookups, using an `unordered_map` (or a similar structure) can dramatically improve performance.
-*   **Frequency of lookups**: If you're doing this only a few times during a program's execution, you may not need to introduce the complexity of an `unordered_map`. However, if it's a core operation in your program, the upfront cost of generating such a data structure might be worthwhile.
-*   **Mutability**: How often do the structs within your array change? If changes happen frequently, you'll need to update any auxiliary lookup structures you maintain, which may complicate your implementation.
+- **Dataset size**: For small arrays, a simple linear search or `std::find_if` is often sufficient. For larger datasets or frequent lookups, using an `unordered_map` (or a similar structure) can dramatically improve performance.
+- **Frequency of lookups**: If you're doing this only a few times during a program's execution, you may not need to introduce the complexity of an `unordered_map`. However, if it's a core operation in your program, the upfront cost of generating such a data structure might be worthwhile.
+- **Mutability**: How often do the structs within your array change? If changes happen frequently, you'll need to update any auxiliary lookup structures you maintain, which may complicate your implementation.
 
 For further study, I recommend reviewing "Effective Modern C++" by Scott Meyers for detailed information on the use of lambda expressions and the standard library. "Introduction to Algorithms" by Cormen et al. is excellent for understanding algorithmic complexity and choosing the proper data structure for specific use cases. Additionally, examining the standard library documentation for `std::find_if`, `std::unordered_map`, and the various iterator operations can provide an in-depth understanding of these fundamental tools.
 

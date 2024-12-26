@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-is-carrierwaves-s3-upload-in-rails-7-so-slow-only-on-localhost"
 ---
 
-Alright, let’s tackle this. I’ve definitely seen this one pop up a few times over the years, often catching developers off guard. It’s the frustrating scenario where your Carrierwave-powered S3 uploads in a Rails 7 application are lightning fast in production but grind to a halt on your localhost. The problem isn’t inherently with Carrierwave itself, or necessarily even with your code directly. Instead, it usually boils down to a confluence of factors involving how your development environment simulates cloud storage interactions.
+, let’s tackle this. I’ve definitely seen this one pop up a few times over the years, often catching developers off guard. It’s the frustrating scenario where your Carrierwave-powered S3 uploads in a Rails 7 application are lightning fast in production but grind to a halt on your localhost. The problem isn’t inherently with Carrierwave itself, or necessarily even with your code directly. Instead, it usually boils down to a confluence of factors involving how your development environment simulates cloud storage interactions.
 
-The primary culprit, in my experience, is the way your local setup handles S3 requests. When you’re developing locally, you’re generally not *actually* talking to Amazon S3. You’re typically relying on a service like `fog-aws`, `shrine`, or `mini_magick` (if you’re processing images), or some other mocking solution, to intercept those S3 calls and simulate responses. These mocks are great for isolating your application during development and avoiding unnecessary AWS costs, but they're often the source of slowdowns when dealing with significant data payloads.
+The primary culprit, in my experience, is the way your local setup handles S3 requests. When you’re developing locally, you’re generally not _actually_ talking to Amazon S3. You’re typically relying on a service like `fog-aws`, `shrine`, or `mini_magick` (if you’re processing images), or some other mocking solution, to intercept those S3 calls and simulate responses. These mocks are great for isolating your application during development and avoiding unnecessary AWS costs, but they're often the source of slowdowns when dealing with significant data payloads.
 
 Consider what has to happen: your upload process on localhost is likely being intercepted, the file (image, document, etc.) is being read from the temp folder, likely processed through some transformation layer (image resizing, for example), then ‘stored’ in memory or on your local disk in a simulated S3 bucket. That storage emulation itself can introduce latency, and the repeated read/write operations add up, especially when the mock is poorly optimized or if the file is particularly large. This is distinctly different from a streamlined pipeline to AWS S3, which is optimized for rapid handling of binary blobs over the network using HTTP/2, and advanced mechanisms for handling large uploads.
 
-One issue I encountered a couple years back was a case where the developer had inadvertently configured their S3 credentials (used by Fog) to use the AWS "us-east-1" region when the AWS CLI on their localhost was defaulting to "us-west-2". This caused Fog to try resolving endpoints against the wrong region and would silently error, but it slowed down every request to a crawl while it tried and retried. It wasn't a *Carrierwave* issue exactly, but the result was slow uploads on localhost. We could pinpoint it by enabling detailed logging from the fog gem and then comparing the request URIs to the AWS region configured.
+One issue I encountered a couple years back was a case where the developer had inadvertently configured their S3 credentials (used by Fog) to use the AWS "us-east-1" region when the AWS CLI on their localhost was defaulting to "us-west-2". This caused Fog to try resolving endpoints against the wrong region and would silently error, but it slowed down every request to a crawl while it tried and retried. It wasn't a _Carrierwave_ issue exactly, but the result was slow uploads on localhost. We could pinpoint it by enabling detailed logging from the fog gem and then comparing the request URIs to the AWS region configured.
 
 Another frequent problem, especially with large files, is an overreliance on synchronous processing in the upload pipeline. On your development machine, you might be running a single Puma or WEBrick process, effectively funneling all S3 interactions through this single thread. In contrast, a typical production setup uses multiple processes and worker threads to handle concurrent requests. Locally, that single thread can get bogged down by multiple slow synchronous operations while waiting for file manipulation. If you're resizing images using MiniMagick and doing it within your main thread, that’s guaranteed to slow down your uploads in your local server.
 
@@ -63,7 +63,7 @@ This code shows what happens with a single file. It's only simulating one operat
 
 **Example 2: Synchronous Image Processing**
 
-Let's consider a common scenario where we're resizing images directly in our uploader class. This will block the application thread. Note that `mini_magick` should *not* be used in the main thread, especially for production usage. This example shows how its use can slow down localhost uploads.
+Let's consider a common scenario where we're resizing images directly in our uploader class. This will block the application thread. Note that `mini_magick` should _not_ be used in the main thread, especially for production usage. This example shows how its use can slow down localhost uploads.
 
 ```ruby
 # app/uploaders/image_uploader.rb (example)
@@ -118,10 +118,10 @@ Here, the `process_version!` is delegated to an ActiveJob. This means the upload
 
 The key takeaways from this are to:
 
-*   **Review your S3 mocking strategy:** Ensure your mocking solution is as lightweight as possible, and if you use a file system solution, see if using ramdisk can help. Sometimes simpler file upload mocks can perform better than complex s3 mocks in development.
-*   **Defer heavy processing to background jobs:** Image processing, file transformations, and other time-consuming operations should be handled in the background to keep your main request/response cycle fast.
-*   **Profile your application:** Use tools like the Rails Profiler or `rack-mini-profiler` to identify performance bottlenecks and address them accordingly.
-*   **Verify your environment settings**: Ensure that the S3 credentials and region specified in your Rails application configuration are actually correct when using the fog gem.
+- **Review your S3 mocking strategy:** Ensure your mocking solution is as lightweight as possible, and if you use a file system solution, see if using ramdisk can help. Sometimes simpler file upload mocks can perform better than complex s3 mocks in development.
+- **Defer heavy processing to background jobs:** Image processing, file transformations, and other time-consuming operations should be handled in the background to keep your main request/response cycle fast.
+- **Profile your application:** Use tools like the Rails Profiler or `rack-mini-profiler` to identify performance bottlenecks and address them accordingly.
+- **Verify your environment settings**: Ensure that the S3 credentials and region specified in your Rails application configuration are actually correct when using the fog gem.
 
 For a more in-depth understanding of background processing in Rails, I highly recommend the official Rails guides on Active Job. For Carrierwave, the official gem documentation is thorough and useful. Also, reading up on network performance on the S3 storage layer itself can lead to a deeper understanding of what you are mocking in your application. A good resource for this would be "High Performance Browser Networking" by Ilya Grigorik. These three resources, the official guides, gem documentation and networking books, have been the most helpful to me in the past.
 

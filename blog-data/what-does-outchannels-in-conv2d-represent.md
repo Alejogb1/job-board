@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "what-does-outchannels-in-conv2d-represent"
 ---
 
-alright, so, out_channels in `conv2d`, yeah, i've spent a good chunk of my life staring at those things. it's not always the most immediately intuitive parameter, but once it clicks, it really does click. let’s get into it.
+, so, out_channels in `conv2d`, yeah, i've spent a good chunk of my life staring at those things. it's not always the most immediately intuitive parameter, but once it clicks, it really does click. let’s get into it.
 
-basically, `out_channels` specifies how many *feature maps* the convolutional layer is going to produce. think of a feature map as a kind of filtered version of the input. you're not just getting a manipulated input, but several different kinds of outputs, each looking for something specific in the input.
+basically, `out_channels` specifies how many _feature maps_ the convolutional layer is going to produce. think of a feature map as a kind of filtered version of the input. you're not just getting a manipulated input, but several different kinds of outputs, each looking for something specific in the input.
 
 imagine you’ve got an image as input to a conv2d layer, say a grayscale image. the input is not 3 dimensional (no rgb values), it's just 1 channel deep. now, the `in_channels` of the conv2d would be 1. each filter in the convolution operation is then like a little magnifying glass, going over the input image, looking for particular patterns. the `out_channels` determines how many of these magnifying glasses you’re using - each one produces its own feature map, which essentially is an output image, and then these are stacked together into a tensor. so if out_channels is 32 then your output will be a 3d tensor of size (batch size, 32, height, width) that will be the input to the next layer.
 
@@ -21,6 +21,7 @@ when i was starting out, i had a project where i tried building a face recogniti
 to clear things up let me show you some code snippets.
 
 let's say you have a grayscale input image of 28x28 pixels.
+
 ```python
 import torch
 import torch.nn as nn
@@ -74,6 +75,7 @@ output = conv_layer(random_input)
 print(output.shape)  # torch.Size([1, 16, 16, 16])
 
 ```
+
 now the output dimensions are 16x16 because of stride=2.
 
 and one more example to illustrate the fact that you can use even more channels:
@@ -110,6 +112,6 @@ also, i’ve found that looking at well-established architectures such as resnet
 
 as for good resources, i would recommend looking at the classic "deep learning" book by goodfellow, bengio, and courville, it gives a solid theoretical background on convolutional neural networks and what is happening inside a layer. another good resource is the stanford cs231n course, that one has lots of hands-on exercises and code examples. it’s also available online. there’s also a ton of good research papers, for example the first papers that introduce convolutional layers such as the ones related to lenet or alexnet, those can be beneficial too.
 
-one thing is that sometimes, when things are not working, you get so used to reading research papers and technical documentation, that you forget that just googling "what is conv2d out channels" often gives you an easy way to check if you really understand what you are using. sometimes you over complicate things, and the simplest explanation is usually the correct one. and sometimes you need to ask a rubber ducky, or someone else, to make you realize that. this happened to me many times i cannot even count. but i’m not too proud to *duck* that mistake, haha.
+one thing is that sometimes, when things are not working, you get so used to reading research papers and technical documentation, that you forget that just googling "what is conv2d out channels" often gives you an easy way to check if you really understand what you are using. sometimes you over complicate things, and the simplest explanation is usually the correct one. and sometimes you need to ask a rubber ducky, or someone else, to make you realize that. this happened to me many times i cannot even count. but i’m not too proud to _duck_ that mistake, haha.
 
 anyway, i hope this makes it clearer. it's not rocket science, but it does take a bit of understanding to get it. it's one of the building blocks of cnn's so if you understand it you can build good things. happy coding.

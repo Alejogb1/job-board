@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "with-github-actions-why-is-a-git-folder-gone-when-the-job-is-running-as-a-container"
 ---
 
-alright, let's tackle this git folder disappearance act within github actions containers. i've bumped into this particular situation more than once, and it always comes down to a fundamental understanding of how containers and git repos interact in the actions runner environment.
+, let's tackle this git folder disappearance act within github actions containers. i've bumped into this particular situation more than once, and it always comes down to a fundamental understanding of how containers and git repos interact in the actions runner environment.
 
 it seems like the user is expecting the `.git` folder, with all its history, to be readily available inside a container launched by github actions, but finds that it’s missing. that’s a common point of confusion, and it stems from the way actions executes your workflows in a containerized setting.
 
@@ -29,7 +29,7 @@ example:
     fetch-depth: 0
 ```
 
-this snippet, placed as a step in your github actions workflow before any actions that need access to the .git folder, will ensure that the entire repository is available within your container. notice the `fetch-depth: 0`. if you don’t set this option, by default it fetches a *shallow* clone of the repository, meaning it will only grab the most recent commit and not the full history.
+this snippet, placed as a step in your github actions workflow before any actions that need access to the .git folder, will ensure that the entire repository is available within your container. notice the `fetch-depth: 0`. if you don’t set this option, by default it fetches a _shallow_ clone of the repository, meaning it will only grab the most recent commit and not the full history.
 
 now, if you are still having issues, it could be another more nuanced situation. let’s say you’re using a custom docker image with your actions workflow. you need to verify how this custom image is defined. sometimes the dockerfile for these custom images is set to create a new volume in the container rather than mounting your git repository’s working directory. thus the .git history will not be there.
 

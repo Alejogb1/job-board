@@ -4,13 +4,13 @@ date: "2024-12-16"
 id: "how-to-store-face-encodings-securely-in-a-database-or-file"
 ---
 
-Okay, let's tackle this. I've actually spent quite a bit of time refining secure storage for facial encodings in various projects over the years, and it's definitely a multifaceted problem that goes deeper than many initially realize. We’re not just stashing some arbitrary data; we’re dealing with biometric information, and that demands a very particular type of care. In one past system, for instance, we were building an identity verification platform that needed to maintain absolutely ironclad security over user facial data—and, spoiler alert, getting that secure storage architecture right was critical. Here’s how I generally approach it, and a few things I’ve learned.
+, let's tackle this. I've actually spent quite a bit of time refining secure storage for facial encodings in various projects over the years, and it's definitely a multifaceted problem that goes deeper than many initially realize. We’re not just stashing some arbitrary data; we’re dealing with biometric information, and that demands a very particular type of care. In one past system, for instance, we were building an identity verification platform that needed to maintain absolutely ironclad security over user facial data—and, spoiler alert, getting that secure storage architecture right was critical. Here’s how I generally approach it, and a few things I’ve learned.
 
 The core issue here is that face encodings, while not images themselves, are mathematical representations derived from those images. They can, potentially, be reverse-engineered or used to perform illegitimate re-identifications if exposed, which is a severe privacy violation. So, it's not enough to just stick them in a database as plaintext or even basic hashed values; we need stronger security.
 
-My go-to strategy involves two main components: encryption and access control. The encryption aspect needs to be robust and applied *before* the data ever touches the storage medium. Think of it as putting the encoding in a secure vault before placing it into a room that might be more accessible.
+My go-to strategy involves two main components: encryption and access control. The encryption aspect needs to be robust and applied _before_ the data ever touches the storage medium. Think of it as putting the encoding in a secure vault before placing it into a room that might be more accessible.
 
-I always favor symmetric encryption for this, specifically AES-256 with a strong, randomly generated key. Symmetric encryption is substantially faster than asymmetric encryption, which becomes crucial when you're dealing with potentially millions of encodings. That key, however, must be managed *separately* and with equally stringent controls. You wouldn't leave the key to the vault hanging on the vault door, right? The key should never be stored in the same location as the encodings themselves. This separation is paramount. Key management might involve a dedicated hardware security module (HSM) or, if you’re leveraging cloud environments, their respective key management service. I’ve personally leaned towards HSMs in environments where the security demands are highest.
+I always favor symmetric encryption for this, specifically AES-256 with a strong, randomly generated key. Symmetric encryption is substantially faster than asymmetric encryption, which becomes crucial when you're dealing with potentially millions of encodings. That key, however, must be managed _separately_ and with equally stringent controls. You wouldn't leave the key to the vault hanging on the vault door, right? The key should never be stored in the same location as the encodings themselves. This separation is paramount. Key management might involve a dedicated hardware security module (HSM) or, if you’re leveraging cloud environments, their respective key management service. I’ve personally leaned towards HSMs in environments where the security demands are highest.
 
 Here’s a Python snippet illustrating how you might encrypt a face encoding (assuming you have it as a numpy array and a key stored securely somewhere else):
 
@@ -53,7 +53,7 @@ print(f"Encrypted Data: {encrypted_data.hex()}")
 
 ```
 
-This function takes your encoding and an encryption key, generates a random IV (Initialization Vector), pads the encoding data, encrypts it using AES-256 in CBC mode, and returns both the IV and the ciphertext.  The IV is necessary for decryption, so it needs to be stored alongside the encrypted data, but not encrypted itself. Never reuse an IV with the same key.
+This function takes your encoding and an encryption key, generates a random IV (Initialization Vector), pads the encoding data, encrypts it using AES-256 in CBC mode, and returns both the IV and the ciphertext. The IV is necessary for decryption, so it needs to be stored alongside the encrypted data, but not encrypted itself. Never reuse an IV with the same key.
 
 On the decryption side, the process is reversed:
 
@@ -97,7 +97,7 @@ CREATE TABLE face_encodings (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
--- An example INSERT operation. You would never insert directly. 
+-- An example INSERT operation. You would never insert directly.
 -- Normally, a secure application or a stored procedure would do this with the output of a function similar to `encrypt_encoding`
 
 -- INSERT INTO face_encodings (user_id, iv, encrypted_encoding) VALUES (1, <iv from hex string>, <encrypted_data from hex string>);
@@ -106,6 +106,6 @@ CREATE TABLE face_encodings (
 
 Remember, this is a basic schema and in production you should enforce proper permissions and consider additional columns such as the encryption key version or metadata for auditing and provenance.
 
-For further reading, I would point you towards: *Cryptography Engineering* by Niels Ferguson, Bruce Schneier, and Tadayoshi Kohno for a comprehensive understanding of cryptographic principles, including key management. For a general understanding of database security, look into database-specific security manuals from your preferred vendors. Finally, the NIST Special Publications on cryptography (specifically SP 800-57) are also good resources.
+For further reading, I would point you towards: _Cryptography Engineering_ by Niels Ferguson, Bruce Schneier, and Tadayoshi Kohno for a comprehensive understanding of cryptographic principles, including key management. For a general understanding of database security, look into database-specific security manuals from your preferred vendors. Finally, the NIST Special Publications on cryptography (specifically SP 800-57) are also good resources.
 
 Storing facial encodings securely is a meticulous process and demands a layered approach. Encryption is essential, proper key management is paramount, and robust access control provides the last line of defense. There’s no silver bullet, but a good implementation can help protect what is extremely sensitive information.

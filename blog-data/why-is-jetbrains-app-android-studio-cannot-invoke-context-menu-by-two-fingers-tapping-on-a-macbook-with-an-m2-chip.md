@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-jetbrains-app-android-studio-cannot-invoke-context-menu-by-two-fingers-tapping-on-a-macbook-with-an-m2-chip"
 ---
 
-alright, let's tackle this.
+, let's tackle this.
 
 so, you're hitting an issue with android studio on your macbook m2, specifically the context menu not popping up with a two-finger tap. that's… annoying, i get it. i've spent way too many hours debugging similar kinds of input weirdness myself, so let's unpack this.
 
@@ -12,7 +12,7 @@ from my experience, it's rarely a "one size fits all" explanation, but there are
 
 first off, let's start with the basics and rule out some simple things. is the two-finger tap working in other applications on your mac? like, say, in the finder or in a browser? if it's not working anywhere, then the issue is likely with your mac's touchpad settings. you can go to system settings > trackpad and double check if two-finger tap is enabled for secondary click. it may sound like a dumb thing to ask, but i can't even count the times i've missed the most trivial step and ended up losing half a day with something stupid, and then after that facepalming myself.
 
-if two-finger tap *is* working everywhere else except android studio, then we're probably dealing with something specific to how android studio is handling input. since android studio is built on the intellij platform, which is java-based, there are some quirks you may run into.
+if two-finger tap _is_ working everywhere else except android studio, then we're probably dealing with something specific to how android studio is handling input. since android studio is built on the intellij platform, which is java-based, there are some quirks you may run into.
 
 now, let's go a bit more in deep. there’s this java system property called `awt.multiClickInterval` which is supposed to control the time interval for multiple click events. in some rare situations, this might cause issues with interpreting the two-finger tap as a multiple click instead of a right click or context menu event. this is a long shot, but i saw something related to this in an old bug report about swing apps. you can try to adjust it with the following code. (note that you can execute it in the "edit custom vm options" menu of your android studio installation):
 
@@ -34,7 +34,7 @@ public class MultiClickInterval {
 
         // Attempt to change the value, you may need to use the jvm property to set it.
         // this just prints the current value, if you use a jvm option like -Dawt.multiClickInterval=100 then it will change it.
-        
+
         // props.setProperty("awt.multiClickInterval", "100");
         // System.out.println("Changed awt.multiClickInterval to 100");
 
@@ -61,9 +61,9 @@ import java.util.*;
 public class MouseInfo {
 
     public static void main(String[] args) {
-        
+
         Properties systemProperties = System.getProperties();
-        
+
         System.out.println("System Properties related to mice/input:");
         systemProperties.forEach((key, value) -> {
              if (key.toString().toLowerCase().contains("mouse")
@@ -145,8 +145,8 @@ public class TouchpadTest extends JFrame {
                  logEvent("Mouse Released: " + e.getButton() + ",  " + e.getClickCount()+ " " + e.getModifiers() + " " + e.getX() + " " + e.getY());
             }
         });
-        
-        
+
+
          addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -154,7 +154,7 @@ public class TouchpadTest extends JFrame {
             }
         });
 
-        
+
         setVisible(true);
     }
     private void logEvent(String event) {

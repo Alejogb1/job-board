@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "angle-between-two-vectors-unity-definition"
 ---
 
-Okay so you're asking about the angle between two vectors and how unity or unit vectors play into that I gotcha Been there wrestled with this exact problem more times than I care to admit especially back in my early days building 3D engines from scratch man that was a mess let me tell you
+you're asking about the angle between two vectors and how unity or unit vectors play into that I gotcha Been there wrestled with this exact problem more times than I care to admit especially back in my early days building 3D engines from scratch man that was a mess let me tell you
 
 So first things first let's break down what a unit vector is A unit vector is basically a vector that has a magnitude of one it points in a certain direction but its length is always 1 We achieve this by taking a regular vector and dividing it by its own magnitude Think of it as normalizing the vector to its core direction and losing the scaling information
 
@@ -39,7 +39,7 @@ class Vector:
       return self.x * other.x + self.y * other.y + self.z * other.z
 ```
 
-Okay that’s the basic vector stuff. Now let's write the core method for getting the angle between vectors:
+that’s the basic vector stuff. Now let's write the core method for getting the angle between vectors:
 
 ```python
 def angle_between(vector1, vector2):
@@ -68,11 +68,12 @@ angle = angle_between(v1,v3)
 print(f"The angle between v1 and v3 is: {angle} degrees") # this will print around 45 degrees
 
 ```
+
 Running that will output the angle between the unit vectors of the specified vectors notice the use of unit vector for calculating the angle using the dot product The code uses the cosine angle to compute the angle between two vectors
 
 The reason I made the vector unit before the dot product is for the reasons I described earlier avoiding the multiplication of magnitudes. This way it is computationally cheaper than using the traditional equation of dot product
 
-Now you might be thinking what if I skip the unit vector part and use `a.b / (||a|| * ||b||)` directly right?  Yes that also works but it's extra calculations that you don't need specially if this is performance bottleneck in your code If you're doing this operation a lot for millions of vectors or in a shader then skipping the norm calculations really helps Also unit vectors have other uses it's common in graphics and physics engines to see unit vectors everywhere
+Now you might be thinking what if I skip the unit vector part and use `a.b / (||a|| * ||b||)` directly right? Yes that also works but it's extra calculations that you don't need specially if this is performance bottleneck in your code If you're doing this operation a lot for millions of vectors or in a shader then skipping the norm calculations really helps Also unit vectors have other uses it's common in graphics and physics engines to see unit vectors everywhere
 
 Also if one of your vectors is a zero vector or very close to zero you will get an error due to dividing by zero. I have encountered this very issue back in my early days of game development where I had a spaceship that did not accelerate and was always at position 0 0 0 and when I did the vector calculations I would get NaNs everywhere so I had to add checks to make sure no zero vectors were used in calculations which added unneeded complexity to the code. This is why I recommend making sure the vector magnitude is never zero or very close to zero. In case of zero magnitude return a 0 0 0 unit vector as you can see in the code above.
 

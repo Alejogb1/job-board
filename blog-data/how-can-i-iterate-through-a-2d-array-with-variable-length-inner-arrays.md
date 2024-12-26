@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-iterate-through-a-2d-array-with-variable-length-inner-arrays"
 ---
 
-Okay, let's tackle this. I've certainly encountered this challenge more times than i'd care to remember, especially when dealing with datasets from various external sources or processing irregularly structured data. Iterating through a 2D array where the inner arrays have different lengths isn't as straightforward as a regular square matrix; however, with a few common approaches, it becomes very manageable. The key lies in not assuming all rows are equal in size.
+, let's tackle this. I've certainly encountered this challenge more times than i'd care to remember, especially when dealing with datasets from various external sources or processing irregularly structured data. Iterating through a 2D array where the inner arrays have different lengths isn't as straightforward as a regular square matrix; however, with a few common approaches, it becomes very manageable. The key lies in not assuming all rows are equal in size.
 
 My experience with this often stems from handling data coming in from, say, custom simulation environments. Think of it: you might simulate particles interacting in a space, and each simulation step outputs an array of particle positions, but the number of particles might change step by step. That's where you'd quickly run into needing to iterate across such structures. The naive nested loop method, where you assume equal row lengths, will invariably fall short and lead to out-of-bounds errors.
 
@@ -17,16 +17,16 @@ The most direct way is to use standard 'for' loops, explicitly getting the lengt
 ```javascript
 function iterateVariableLengthArray(arr2d) {
   if (!arr2d || !Array.isArray(arr2d)) {
-    console.error("invalid input, not a 2D array")
+    console.error("invalid input, not a 2D array");
     return;
   }
 
   for (let i = 0; i < arr2d.length; i++) {
     const innerArray = arr2d[i];
-      if (!Array.isArray(innerArray)) {
-        console.error(`Invalid inner array at index ${i}: not an array`);
-          continue; // Skip to the next outer array element
-        }
+    if (!Array.isArray(innerArray)) {
+      console.error(`Invalid inner array at index ${i}: not an array`);
+      continue; // Skip to the next outer array element
+    }
     for (let j = 0; j < innerArray.length; j++) {
       console.log(`Element at [${i}][${j}]:`, innerArray[j]);
     }
@@ -34,15 +34,11 @@ function iterateVariableLengthArray(arr2d) {
 }
 
 // Example usage
-const irregularArray = [
-  [1, 2, 3],
-  [4, 5],
-  [6, 7, 8, 9],
-  [10]
-];
+const irregularArray = [[1, 2, 3], [4, 5], [6, 7, 8, 9], [10]];
 
 iterateVariableLengthArray(irregularArray);
 ```
+
 This example first verifies that the input is indeed an array of arrays. Within the outer loop, it checks if each inner element is an array; this is defensive programming and important when working with potentially erratic data. It then utilizes `innerArray.length` to control the inner loop’s range, ensuring there are no access violations. The code will effectively iterate through the structure, regardless of each inner array’s size. This methodology applies broadly across languages, with the syntax of the looping construct adjusted as required.
 
 **Example 2: Using 'forEach' (where applicable)**
@@ -59,20 +55,19 @@ function iterateVariableLengthArrayForEach(arr2d) {
   arr2d.forEach((innerArray, i) => {
     if (!Array.isArray(innerArray)) {
       console.error(`Invalid inner array at index ${i}: not an array`);
-        return; // Skip to next outer element
-      }
+      return; // Skip to next outer element
+    }
     innerArray.forEach((element, j) => {
       console.log(`Element at [${i}][${j}]:`, element);
     });
   });
 }
 
-
 const irregularArray2 = [
   [100, 200],
   [300],
   [400, 500, 600],
-  [] // An empty inner array is valid too
+  [], // An empty inner array is valid too
 ];
 
 iterateVariableLengthArrayForEach(irregularArray2);
@@ -86,28 +81,24 @@ In functional programming paradigms, we often avoid mutable state and explicit l
 
 ```javascript
 function iterateAndTransformVariableLengthArray(arr2d) {
-    if (!arr2d || !Array.isArray(arr2d)) {
-      console.error("Invalid input, not a 2D array");
-        return [];
-    }
+  if (!arr2d || !Array.isArray(arr2d)) {
+    console.error("Invalid input, not a 2D array");
+    return [];
+  }
   return arr2d.flatMap((innerArray, i) => {
-        if (!Array.isArray(innerArray)) {
-        console.error(`Invalid inner array at index ${i}: not an array`);
-            return [];
-      }
+    if (!Array.isArray(innerArray)) {
+      console.error(`Invalid inner array at index ${i}: not an array`);
+      return [];
+    }
     return innerArray.map((element, j) => ({
-        value: element,
-        rowIndex: i,
-        colIndex: j
-      }));
+      value: element,
+      rowIndex: i,
+      colIndex: j,
+    }));
   });
 }
 
-const irregularArray3 = [
-  ["a", "b"],
-  ["c", "d", "e"],
-  ["f"]
-];
+const irregularArray3 = [["a", "b"], ["c", "d", "e"], ["f"]];
 
 const processedData = iterateAndTransformVariableLengthArray(irregularArray3);
 console.log(processedData);

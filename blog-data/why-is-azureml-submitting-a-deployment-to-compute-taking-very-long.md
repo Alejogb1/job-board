@@ -14,15 +14,16 @@ one huge place i've seen delays consistently is in the image building phase. whe
 
 to see if this is your issue check your azureml logs. go to the deployments page of azureml and look for the 'logs' option related to the specific deployment. examine the outputs of the build process. if you see lots of time spent on ‘installing packages’ or pulling base images, it’s a good indicator that the image build is the bottleneck.
 
-sometimes, it’s not the image *building* but the *pushing*. after building the image, azureml has to push that image to the associated azure container registry (acr). if your acr is distant, has poor network connection or the image is very big this might take some time. i recall an incident in a previous company where we had a huge model and acr was geographically distant so we ended up having deployments lasting more than 20 minutes. we fixed this by changing our registry location and keeping things nearby.
+sometimes, it’s not the image _building_ but the _pushing_. after building the image, azureml has to push that image to the associated azure container registry (acr). if your acr is distant, has poor network connection or the image is very big this might take some time. i recall an incident in a previous company where we had a huge model and acr was geographically distant so we ended up having deployments lasting more than 20 minutes. we fixed this by changing our registry location and keeping things nearby.
 
-another culprit is the compute target itself. is your compute cluster or instance running okay? are there enough resources allocated? imagine you’re a delivery guy but your van is very small, you can only move so much at a time. check the compute target usage in azureml studio, also check virtual machine instance level metrics in your azure portal if you suspect resource constraint issues. low cpu, low memory, and heavy disk io, will slow down the deployment. it can be a combination of not enough resources and also azure itself being slow at scaling up. i also remember that time i spent trying to debug an issue with a colleague, i spent like an hour until i finally said, hey what if we check the actual instance metrics? and guess what, we had no memory there, a rookie error that taught us a lot.
+another culprit is the compute target itself. is your compute cluster or instance running ? are there enough resources allocated? imagine you’re a delivery guy but your van is very small, you can only move so much at a time. check the compute target usage in azureml studio, also check virtual machine instance level metrics in your azure portal if you suspect resource constraint issues. low cpu, low memory, and heavy disk io, will slow down the deployment. it can be a combination of not enough resources and also azure itself being slow at scaling up. i also remember that time i spent trying to debug an issue with a colleague, i spent like an hour until i finally said, hey what if we check the actual instance metrics? and guess what, we had no memory there, a rookie error that taught us a lot.
 
 if your deployment is failing in the initialization of the container, it’s most probably a problem with your scoring script (the code that loads the model and processes inputs). any exceptions happening there can cause the container to enter a crash-loop, and azureml keeps trying to start it. examine the container logs once the deployment status changes to "failed". if you see "error" messages there, they can be indicators about the underlying problem in the scoring script.
 
 here’s some code snippets to illustrate ways i've handled similar situations:
 
 first, when dealing with slow deployments caused by building huge images, try to streamline your dockerfile or conda/pip configuration files. here's an example of how to handle your requirements.txt with pinned packages so you do not install new versions of packages each time (this way you cache a lot of dependencies).
+
 ```python
 # requirements.txt
 scikit-learn==1.2.0
@@ -30,7 +31,9 @@ pandas==1.5.0
 numpy==1.23.0
 requests==2.28.0
 ```
+
 next, i’ve often seen issues where the scoring script takes an ungodly long time to load a model, especially large ones. so i added model caching in the scoring script, only load once, a good way to improve response times and deployment times.
+
 ```python
 import joblib
 import os
@@ -48,7 +51,9 @@ def run(raw_data):
     return prediction
 
 ```
+
 and lastly, when dealing with compute resource constraints, i always try to optimize how the model is loaded, and when possible to use an accelerator like gpu to speed up inferencing and reduce memory consumption.
+
 ```python
 import torch
 import os

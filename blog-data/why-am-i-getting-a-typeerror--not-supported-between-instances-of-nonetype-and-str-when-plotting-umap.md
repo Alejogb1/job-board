@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-a-typeerror--not-supported-between-instances-of-nonetype-and-str-when-plotting-umap"
 ---
 
-alright, so you're hitting that classic `typeerror: '<' not supported between instances of 'nonetype' and 'str'` when trying to plot UMAP, right? yeah, that's a familiar pain. i've banged my head against that wall more times than i'd like to recall. this usually means some data you're feeding into UMAP's plotting function is not what it's expecting, specifically it’s encountering `none` values when it's expecting strings (or numbers that can be compared). let's unpack this.
+, so you're hitting that classic `typeerror: '<' not supported between instances of 'nonetype' and 'str'` when trying to plot UMAP, right? yeah, that's a familiar pain. i've banged my head against that wall more times than i'd like to recall. this usually means some data you're feeding into UMAP's plotting function is not what it's expecting, specifically it’s encountering `none` values when it's expecting strings (or numbers that can be compared). let's unpack this.
 
 typically, umap itself is working fine. the error is almost always in the way you're structuring your data, or how you're passing it into the plotting step. umap, under the hood, doesn’t directly plot anything, it's the plotting library you are using after umap has produced its embeddings that can throw up this error, like matplotlib or seaborn. most of these plotting functions expect categorical labels as strings or numerical values that can be used to differentiate or color the plotted points and they need to be in the same length as the produced umap embeddings. if you have a mixed list of, for instance, names and missing information, expressed as `none` values, it's a recipe for this particular `typeerror`.
 
@@ -28,19 +28,19 @@ let’s check common places where this could happen.
     import matplotlib.pyplot as plt
 
     # assume df is your pandas dataframe and 'category_column' is your column with labels
-    
+
     def preprocess_labels(df, category_column):
-        
+
         # fill nan values
         df[category_column].fillna('unknown', inplace=True)
         # convert to string just to be sure, if you have mixed types
         df[category_column] = df[category_column].astype(str)
         return df
-    
+
     # the main steps of the umap procedure
     reducer = umap.umap()
     embeddings = reducer.fit_transform(df.drop(category_column, axis = 1))
-    
+
     # apply the preprocess function
     df = preprocess_labels(df, category_column)
 
@@ -50,7 +50,7 @@ let’s check common places where this could happen.
     plt.show()
     ```
 
-2.  **mismatched lengths:** this happens when the length of your label list does not match the number of points in your umap embedding. you might have performed some preprocessing on your data *before* umap, and somehow have lost a few points in the label list. the resulting embedding and label list don’t have the same size, and when the plotting function tries to match up the labels it will run into problems.
+2.  **mismatched lengths:** this happens when the length of your label list does not match the number of points in your umap embedding. you might have performed some preprocessing on your data _before_ umap, and somehow have lost a few points in the label list. the resulting embedding and label list don’t have the same size, and when the plotting function tries to match up the labels it will run into problems.
 
     this situation is trickier, but can be solved by either double checking your data pipeline, or performing all data preparation steps in a dataframe to avoid mismatches or by only plotting what is available.
     let me show you how this can be done using pandas:
@@ -69,18 +69,18 @@ let’s check common places where this could happen.
             embeddings = embeddings[:min_size]
             labels = labels[:min_size]
         return embeddings, labels
-    
+
     # let's assume that the labels and the embeddings are in a numpy format
-    
+
     # the main steps of the umap procedure
     reducer = umap.umap()
     embeddings = reducer.fit_transform(df.drop(category_column, axis = 1).values) # transform the dataframe to numpy
-    
+
     labels = df[category_column].values # transform the labels column to a numpy array
-    
+
     # apply function
     embeddings, labels = check_size_mismatches(embeddings, labels)
-    
+
     # now plot everything
     plt.scatter(embeddings[:, 0], embeddings[:, 1], c=labels)
     plt.gca().set_aspect('equal', adjustable='box')
@@ -97,36 +97,36 @@ let’s check common places where this could happen.
     def fix_plotting_arguments(df, embeddings, category_column):
         categories = df[category_column].astype('category')
         numeric_categories = categories.cat.codes
-        
+
         # now you are passing the numeric code for the category
         plt.scatter(embeddings[:, 0], embeddings[:, 1], c=numeric_categories)
         plt.gca().set_aspect('equal', adjustable='box')
         plt.show()
-    
+
     # the main steps of the umap procedure
     reducer = umap.umap()
     embeddings = reducer.fit_transform(df.drop(category_column, axis = 1))
-    
+
     #apply function to fix the plotting arguments
     fix_plotting_arguments(df, embeddings, category_column)
     ```
 
 **debugging tips**
 
-*   **print statements:** add `print(type(your_label), your_label)` statements just before the plotting line. this can help you see exactly what kind of data it's getting, and where those `nonetype`s are lurking. i’ve done this so many times!
-*   **check sizes:** always verify that `len(embeddings)` is equal to `len(labels)`. use `print` for this too!.
-*   **isolate:** if your pipeline is complex, try isolating the umap step and the plotting step and feed it some simple dummy data, you might find the problem way faster.
-*   **read the documentation:** yeah, i know it's boring, but the documentation of your specific library is your friend. plotting libraries have many parameters for you to discover.
+- **print statements:** add `print(type(your_label), your_label)` statements just before the plotting line. this can help you see exactly what kind of data it's getting, and where those `nonetype`s are lurking. i’ve done this so many times!
+- **check sizes:** always verify that `len(embeddings)` is equal to `len(labels)`. use `print` for this too!.
+- **isolate:** if your pipeline is complex, try isolating the umap step and the plotting step and feed it some simple dummy data, you might find the problem way faster.
+- **read the documentation:** yeah, i know it's boring, but the documentation of your specific library is your friend. plotting libraries have many parameters for you to discover.
 
 **further resources**
 
 i strongly recommend reading up on some general data handling resources:
 
-*   **"data cleaning and transformation with pandas"** by michael f. gallagher, it provides a practical guide on data preparation techniques.
+- **"data cleaning and transformation with pandas"** by michael f. gallagher, it provides a practical guide on data preparation techniques.
 
-*   **"python data science handbook"** by jake vanderplas it covers the fundamentals of pandas and plotting libraries, like matplotlib, essential for data visualization and plotting.
+- **"python data science handbook"** by jake vanderplas it covers the fundamentals of pandas and plotting libraries, like matplotlib, essential for data visualization and plotting.
 
-*   **the official `pandas` documentation**, it’s a bit dry, but is the definitive resource for anything related to data manipulation in pandas.
+- **the official `pandas` documentation**, it’s a bit dry, but is the definitive resource for anything related to data manipulation in pandas.
 
 avoiding this error is more about data cleaning and preparation than about umap itself. once you get the hang of pre-processing your data correctly, these problems will appear less frequently. also, consider that maybe you should not use any categorical information and maybe try other plotting options that use density visualization instead. this might be a workaround if you are in a rush.
 

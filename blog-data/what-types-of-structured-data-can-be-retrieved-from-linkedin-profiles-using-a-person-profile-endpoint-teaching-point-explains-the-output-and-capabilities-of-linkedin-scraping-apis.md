@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-types-of-structured-data-can-be-retrieved-from-linkedin-profiles-using-a-person-profile-endpoint-teaching-point-explains-the-output-and-capabilities-of-linkedin-scraping-apis"
 ---
 
-okay so youre asking about linkedin profile scraping using their person profile endpoint right what kind of structured data can you actually pull out thats a good question lets dive in and see whats available
+youre asking about linkedin profile scraping using their person profile endpoint right what kind of structured data can you actually pull out thats a good question lets dive in and see whats available
 
 first off you need to understand these endpoints they dont just hand over raw html like a browser does they give you clean structured data usually in json which makes parsing and using it a whole lot easier its about specific fields or properties think of it like database fields or a json object structure
 
@@ -41,6 +41,7 @@ if basic_info:
   print(basic_info)
 
 ```
+
 this snippet above is a very simple example you will need to find your specific linkedin profile api documentation and use real endpoints and authentication methods for it to be functional its for illustration. it extracts the most basic profile info name headline and location.
 
 **experience**
@@ -154,6 +155,7 @@ skills_data = get_linkedin_skills(example_url, api_key)
 if skills_data:
     print(skills_data)
 ```
+
 this final snippet is another simplification to show how the skills section might be returned with skill name and endorsement count
 
 for reliable information on linkedin's apis and its ever changing landscape i would recommend official resources such as linkedin's developer documentation their api reference guides they are your main source for the most up to date information especially on the available endpoints data structures and authentication methods.

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-is-screenrecording-a-headless-browser-using-xvfb-with-ffmpeg-or-jmf-jarjava-showing-distorted-video-in-container"
 ---
 
-Okay, let's tackle this. It's a familiar frustration, the distorted headless screen recording. I've spent many a late night chasing down similar artifacts myself, particularly back when I was working on automated UI testing pipelines that required video evidence. What might appear straightforward – capturing the output of a virtual display using `xvfb` and then encoding it with `ffmpeg` (or, in your case, the less common but still valid, `jmf` jar in java) – often devolves into a battle against subtle configuration mismatches and unforeseen interactions between these tools. The core issue, more often than not, lies in how the various pieces negotiate resolution, pixel format, and frame rate.
+, let's tackle this. It's a familiar frustration, the distorted headless screen recording. I've spent many a late night chasing down similar artifacts myself, particularly back when I was working on automated UI testing pipelines that required video evidence. What might appear straightforward – capturing the output of a virtual display using `xvfb` and then encoding it with `ffmpeg` (or, in your case, the less common but still valid, `jmf` jar in java) – often devolves into a battle against subtle configuration mismatches and unforeseen interactions between these tools. The core issue, more often than not, lies in how the various pieces negotiate resolution, pixel format, and frame rate.
 
 Let's break down the common culprits and then look at some practical solutions with code.
 
-First, `xvfb` (X Virtual Framebuffer) provides a virtual display server. It's the foundation for running GUI applications without a physical screen attached. When setting it up, the resolution and color depth are *crucial*. Mismatches here, where your browser renders at one resolution but `xvfb` is configured differently, are a primary cause of distortion. The rendering pipeline might be scaling inappropriately or misinterpreting pixel data. Furthermore, the pixel format used by the browser can differ from what `ffmpeg` or `jmf` expects, leading to color anomalies and visual noise.
+First, `xvfb` (X Virtual Framebuffer) provides a virtual display server. It's the foundation for running GUI applications without a physical screen attached. When setting it up, the resolution and color depth are _crucial_. Mismatches here, where your browser renders at one resolution but `xvfb` is configured differently, are a primary cause of distortion. The rendering pipeline might be scaling inappropriately or misinterpreting pixel data. Furthermore, the pixel format used by the browser can differ from what `ffmpeg` or `jmf` expects, leading to color anomalies and visual noise.
 
 Next, frame rate is critical. If the rate at which your browser renders frames doesn’t align with how `ffmpeg` or `jmf` captures them, you'll get juddering, skipped frames, or the perception of a “slow-motion” recording. It is not always as simple as setting a specific framerate. The encoding tools are processing frames at a given rate and, if the browser or `xvfb` are not providing new frames at or above that rate, the tools will either repeat or extrapolate the data, which causes visual issues.
 
@@ -47,6 +47,7 @@ Now let's move to an `ffmpeg` example. Again, assuming the browser is already ru
 # ffmpeg recording example with a bitrate of 10Mb/s and 30 frames per second
 ffmpeg -f x11grab -video_size 1920x1080 -i :99 -r 30 -c:v libx264 -pix_fmt yuv420p -preset veryfast -crf 23 output.mp4
 ```
+
 The flag `-r 30` ensures the video is recorded at 30fps. `-c:v libx264` uses the common h.264 codec and `-pix_fmt yuv420p` sets a widely compatible pixel format to avoid pixel format issues. The `-preset veryfast` and `-crf 23` parameters are for better encoding performance with acceptable visual quality, which you may want to tune for different results. It's important that the `-video_size` matches exactly what was setup with `xvfb`. This is a common place where things can go wrong.
 
 **Example 3: Troubleshooting with Pixel Format**

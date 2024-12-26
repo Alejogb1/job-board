@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "what-error-occurs-when-deploying-a-tensorflow-keras-model-to-aks-using-mlflow"
 ---
 
-Alright, let's talk about deploying TensorFlow Keras models with MLflow to Azure Kubernetes Service (AKS), and the particular pitfalls you can stumble into. I've seen this scenario play out more than a few times, and the errors, while often frustrating, usually boil down to a few common issues.
+, let's talk about deploying TensorFlow Keras models with MLflow to Azure Kubernetes Service (AKS), and the particular pitfalls you can stumble into. I've seen this scenario play out more than a few times, and the errors, while often frustrating, usually boil down to a few common issues.
 
-It's not uncommon to think the model training and MLflow logging stages have gone perfectly, only to be met with a puzzling failure during deployment on AKS. The error itself often doesn't point directly to the root cause; instead, you might see a vague message like "container failed to start" or "application crashed," which is about as helpful as a chocolate teapot. The core problem usually manifests from a mismatch between what you *expect* the deployment environment to look like, and what it *actually* is.
+It's not uncommon to think the model training and MLflow logging stages have gone perfectly, only to be met with a puzzling failure during deployment on AKS. The error itself often doesn't point directly to the root cause; instead, you might see a vague message like "container failed to start" or "application crashed," which is about as helpful as a chocolate teapot. The core problem usually manifests from a mismatch between what you _expect_ the deployment environment to look like, and what it _actually_ is.
 
 The error I'm referring to arises predominantly from dependency management and version incompatibilities when moving from your development environment to the containerized AKS environment orchestrated by MLflow. During training, you likely had a specific Python environment configured with particular versions of TensorFlow, Keras, and other related libraries. MLflow does its best to capture this information using its environment logging capabilities (e.g. conda.yaml or requirements.txt), but this isn't always a perfect translation when the container image is built.
 
-Here’s where it often gets messy. Let's say locally you're running TensorFlow 2.10.0, Keras is integrated directly, and your MLflow logs accurately capture this. When your image is built within the AKS environment, either through a custom Dockerfile that MLflow provides or a pre-built one, there's the potential for version conflicts. The container's base image may have a different TensorFlow version, it might not include Keras explicitly if you didn’t define it, or it might have conflicting dependencies of other libraries. This is a far more common problem than you may think, especially across different cloud environments. It’s incredibly important to ensure *all* the libraries are installed correctly and version matched. This includes libraries used for preprocessing, postprocessing and inference, not just the core Keras and Tensorflow libraries used to train the model.
+Here’s where it often gets messy. Let's say locally you're running TensorFlow 2.10.0, Keras is integrated directly, and your MLflow logs accurately capture this. When your image is built within the AKS environment, either through a custom Dockerfile that MLflow provides or a pre-built one, there's the potential for version conflicts. The container's base image may have a different TensorFlow version, it might not include Keras explicitly if you didn’t define it, or it might have conflicting dependencies of other libraries. This is a far more common problem than you may think, especially across different cloud environments. It’s incredibly important to ensure _all_ the libraries are installed correctly and version matched. This includes libraries used for preprocessing, postprocessing and inference, not just the core Keras and Tensorflow libraries used to train the model.
 
 The MLflow deployment process typically uses a Docker image. If the base image doesn't have the necessary dependencies or if the environment recreated during build doesn't precisely match the training environment, your model will likely fail when the container starts in AKS. You might see python exceptions during import, or runtime errors associated with missing or incompatible libraries when the model attempts inference.
 
@@ -69,7 +69,7 @@ Here, the dockerfile explicitly uses python 3.9 and ensures that libraries are i
 
 **Example 3: The Solution - Using MLflow's Built-In Environment Re-Creation:**
 
-MLflow *can* automatically recreate the training environment with the tracked dependencies if configured correctly, usually through creating a conda.yaml file or providing a `requirements.txt`. Here's how that works:
+MLflow _can_ automatically recreate the training environment with the tracked dependencies if configured correctly, usually through creating a conda.yaml file or providing a `requirements.txt`. Here's how that works:
 
 ```python
 # Example Showing Correct Usage of MLflow Logging
@@ -100,13 +100,13 @@ with mlflow.start_run():
     # during deployment using this run_id, mlflow should be able to re-create the environment.
 ```
 
-By ensuring MLflow captures and logs all necessary dependencies during training (as shown above), the deployment process should theoretically be able to recreate the *exact* environment during container build, reducing, if not eliminating, version conflict issues. However, to be truly sure, I recommend also controlling the dockerfile’s python version in the manner shown in example 2.
+By ensuring MLflow captures and logs all necessary dependencies during training (as shown above), the deployment process should theoretically be able to recreate the _exact_ environment during container build, reducing, if not eliminating, version conflict issues. However, to be truly sure, I recommend also controlling the dockerfile’s python version in the manner shown in example 2.
 
 For further investigation and a deeper understanding of containerization and dependency management, I recommend looking into these resources:
 
-*   **"Docker Deep Dive" by Nigel Poulton:** This book provides an excellent in-depth understanding of Docker, containerization, and related concepts. It will help to understand the inner working of container deployment on AKS.
-*   **"Software Engineering at Google" by Titus Winters, Tom Manshreck, and Hyrum Wright:** While broader in scope, this book contains detailed sections on dependency management and release engineering, which are vital for avoiding this type of problem at scale.
-*   **The official TensorFlow documentation** : Specifically the sections related to deployment, as well as sections explaining versions compatibility, are critical to read before creating a deployment.
-*  **The official MLflow documentation**: This contains information about using docker images, building custom images, how to create reproducible environments, how to log and retrieve artifacts and more.
+- **"Docker Deep Dive" by Nigel Poulton:** This book provides an excellent in-depth understanding of Docker, containerization, and related concepts. It will help to understand the inner working of container deployment on AKS.
+- **"Software Engineering at Google" by Titus Winters, Tom Manshreck, and Hyrum Wright:** While broader in scope, this book contains detailed sections on dependency management and release engineering, which are vital for avoiding this type of problem at scale.
+- **The official TensorFlow documentation** : Specifically the sections related to deployment, as well as sections explaining versions compatibility, are critical to read before creating a deployment.
+- **The official MLflow documentation**: This contains information about using docker images, building custom images, how to create reproducible environments, how to log and retrieve artifacts and more.
 
 In my experience, meticulous attention to dependency versioning is key to successful model deployment. The errors you encounter in these situations might be a bit perplexing, but by systematically managing your dependencies and controlling your container build process, you can avoid these pitfalls and achieve smooth and reliable deployments on AKS. Remember that containerization and machine learning is not just about the model itself, but it also requires a good understanding of the underlying infrastructure to make sure it works as expected, so it is important to take your time to understand these underlying concepts.

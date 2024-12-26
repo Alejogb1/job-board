@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-do-i-learn-a-multivariate-normal-covariance-matrix-in-pytorch"
 ---
 
-Okay, let’s tackle this. It’s a common enough need when you’re dealing with probabilistic models or, say, trying to get a handle on the underlying structure of your data. I’ve certainly bumped into this problem more than a few times, especially during my time working on anomaly detection systems. Estimating a multivariate normal covariance matrix in PyTorch is definitely achievable, and it’s something I’ve had to implement from the ground up for custom loss functions and such.
+, let’s tackle this. It’s a common enough need when you’re dealing with probabilistic models or, say, trying to get a handle on the underlying structure of your data. I’ve certainly bumped into this problem more than a few times, especially during my time working on anomaly detection systems. Estimating a multivariate normal covariance matrix in PyTorch is definitely achievable, and it’s something I’ve had to implement from the ground up for custom loss functions and such.
 
 First things first, let's clarify what we're trying to achieve. A covariance matrix, in the context of a multivariate normal distribution, essentially describes how the different dimensions of your data vary together. The diagonal elements represent the variance of each individual dimension, and the off-diagonal elements represent the covariances between pairs of dimensions. Learning this matrix in PyTorch usually means estimating it from data samples. Unlike simpler models, you are not learning weights directly as you might with neural networks but rather, inferring these statistical properties from your dataset.
 
-The key idea is to use the sample covariance matrix as an estimator. Given a dataset of *n* observations, each of which has *d* dimensions, the sample covariance matrix *Σ* can be calculated using the following formula:
+The key idea is to use the sample covariance matrix as an estimator. Given a dataset of _n_ observations, each of which has _d_ dimensions, the sample covariance matrix _Σ_ can be calculated using the following formula:
 
-*Σ* = (1/(n-1)) * (X - *μ*)<sup>T</sup> (X - *μ*),
+_Σ_ = (1/(n-1)) * (X - *μ*)<sup>T</sup> (X - *μ\*),
 
-where *X* is the data matrix (n x d), *μ* is the mean vector of the data (computed along the sample dimension, yielding a 1xd vector), and the <sup>T</sup> denotes the transpose. It's important to note that we divide by (n-1) for an unbiased sample estimate, instead of 'n'.
+where _X_ is the data matrix (n x d), _μ_ is the mean vector of the data (computed along the sample dimension, yielding a 1xd vector), and the <sup>T</sup> denotes the transpose. It's important to note that we divide by (n-1) for an unbiased sample estimate, instead of 'n'.
 
 Now, let's see how to do this in PyTorch. I'll present a few options, each with slightly different levels of control and performance tradeoffs, based on what I've found practical in my past. I generally prefer avoiding relying on excessive external libraries and tend to prefer writing this directly.
 
@@ -113,7 +113,7 @@ def estimate_covariance_matrix_batched(data_loader, num_batches=None):
     for i, batch in enumerate(data_loader):
       if num_batches is not None and i >= num_batches:
         break
-      
+
       data = batch
       if d is None:
         d = data.size(1)
@@ -132,7 +132,7 @@ def estimate_covariance_matrix_batched(data_loader, num_batches=None):
         centered_data_sum_squared = batch_centered_sum_squared
       else:
         centered_data_sum_squared += batch_centered_sum_squared
-    
+
     mu = mean_sum / n
     covariance = (1 / (n - 1)) * centered_data_sum_squared
     return covariance

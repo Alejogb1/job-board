@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-identify-the-current-activeadmin-action-within-a-sidebar"
 ---
 
-Alright, let's unpack this. Identifying the current ActiveAdmin action within a sidebar is a common challenge, and one I've tackled more than a few times in my projects, particularly back when I was heavily involved in building internal administration tools for e-commerce platforms. I remember one project in particular, where we needed to dynamically display specific user guides based on the action they were taking within the admin panel. This required a solid grasp of how ActiveAdmin handles context.
+, let's unpack this. Identifying the current ActiveAdmin action within a sidebar is a common challenge, and one I've tackled more than a few times in my projects, particularly back when I was heavily involved in building internal administration tools for e-commerce platforms. I remember one project in particular, where we needed to dynamically display specific user guides based on the action they were taking within the admin panel. This required a solid grasp of how ActiveAdmin handles context.
 
 The key to understanding this lies within ActiveAdmin's routing and how it exposes the controller context. Within the sidebar partial, you're essentially working within the view layer, so direct access to controller variables isn’t always straightforward. However, ActiveAdmin cleverly provides access to the controller itself via the `controller` method within your view. This gives us the necessary tools to access the current action being executed.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-arent-dynamically-loaded-vue-3-components-hooks-being-called"
 ---
 
-Alright, let's get into this. The issue of dynamically loaded Vue 3 components not executing their lifecycle hooks is a classic head-scratcher, and frankly, I’ve seen it trip up even experienced developers. It’s one of those things that seems straightforward on the surface but reveals some nuances when you delve deeper. I encountered a similar situation while working on a large e-commerce platform a while back. We were implementing a highly modularized admin panel using dynamic component loading, and suddenly certain components simply refused to initialize correctly. Specifically, their `onMounted` and `onUpdated` hooks weren't firing as expected. After a considerable amount of debugging, the culprit, in our case, turned out to be a combination of misunderstanding Vue's reactivity system and how it interacts with dynamic imports.
+, let's get into this. The issue of dynamically loaded Vue 3 components not executing their lifecycle hooks is a classic head-scratcher, and frankly, I’ve seen it trip up even experienced developers. It’s one of those things that seems straightforward on the surface but reveals some nuances when you delve deeper. I encountered a similar situation while working on a large e-commerce platform a while back. We were implementing a highly modularized admin panel using dynamic component loading, and suddenly certain components simply refused to initialize correctly. Specifically, their `onMounted` and `onUpdated` hooks weren't firing as expected. After a considerable amount of debugging, the culprit, in our case, turned out to be a combination of misunderstanding Vue's reactivity system and how it interacts with dynamic imports.
 
 The core problem lies not in the component itself, but in how Vue handles asynchronous component loading. When you use dynamic imports (e.g., `import('./MyComponent.vue')`), Vue doesn’t instantly have the component definition available. It gets it later, when the import resolves. Consequently, Vue needs a mechanism to signal when a dynamically loaded component is actually ready to be rendered and for its lifecycle hooks to be invoked. If we are not using `<suspense>` we do not get direct control over when the component is considered loaded.
 
@@ -33,26 +33,27 @@ In this first example, I’ll illustrate how to dynamically load a component usi
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from "vue";
 
 export default {
   setup() {
     const dynamicComponent = ref(null);
 
-      onMounted(async () => {
-        try {
-          const module = await import('./MyDynamicComponent.vue');
-          dynamicComponent.value = module.default;
-        } catch (error) {
-          console.error('Failed to load component:', error);
-        }
-      });
+    onMounted(async () => {
+      try {
+        const module = await import("./MyDynamicComponent.vue");
+        dynamicComponent.value = module.default;
+      } catch (error) {
+        console.error("Failed to load component:", error);
+      }
+    });
 
     return { dynamicComponent };
-  }
+  },
 };
 </script>
 ```
+
 In this example, we make use of `onMounted` as it's the most suitable to use alongside asynchronous code execution. We're using `await` to ensure that our component is available before we assign the `module.default` to our reactive `dynamicComponent` ref. Note the use of `<suspense>`. This is incredibly useful when dealing with async operations as it enables us to define a fallback while we wait for the operation to complete and allows us to handle the loading state much easier.
 
 **Example 2: Handling Asynchronous Data Loading**
@@ -68,7 +69,7 @@ In the second scenario, we'll create a dynamically loaded component that fetches
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from "vue";
 
 export default {
   setup() {
@@ -76,18 +77,19 @@ export default {
 
     onMounted(async () => {
       try {
-          const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
-          const jsonData = await response.json();
-          data.value = jsonData;
-          console.log('data fetch successful');
-      }
-       catch (error) {
-          console.error('Data fetch failed:', error);
+        const response = await fetch(
+          "https://jsonplaceholder.typicode.com/todos/1"
+        );
+        const jsonData = await response.json();
+        data.value = jsonData;
+        console.log("data fetch successful");
+      } catch (error) {
+        console.error("Data fetch failed:", error);
       }
     });
 
     return { data };
-  }
+  },
 };
 </script>
 ```
@@ -102,47 +104,44 @@ Finally, let's look at how incorrect `key` usage might manifest. In the followin
 <template>
   <button @click="toggleComponent">Toggle Component</button>
   <suspense>
-      <template #default>
-        <component :is="dynamicComponent" :key="componentKey"/>
-      </template>
-      <template #fallback>
-         <div>Loading...</div>
-      </template>
+    <template #default>
+      <component :is="dynamicComponent" :key="componentKey" />
+    </template>
+    <template #fallback>
+      <div>Loading...</div>
+    </template>
   </suspense>
-
 </template>
 
 <script>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from "vue";
 
 export default {
-    setup() {
-        const dynamicComponent = ref(null);
-        const componentKey = ref(0);
+  setup() {
+    const dynamicComponent = ref(null);
+    const componentKey = ref(0);
 
-        const toggleComponent = async () => {
-           componentKey.value++;
-           dynamicComponent.value = null;
-            try {
-                const module = await import('./MyDynamicComponent.vue');
-                dynamicComponent.value = module.default;
-             } catch (error) {
-                 console.error('Failed to load component:', error)
-             }
+    const toggleComponent = async () => {
+      componentKey.value++;
+      dynamicComponent.value = null;
+      try {
+        const module = await import("./MyDynamicComponent.vue");
+        dynamicComponent.value = module.default;
+      } catch (error) {
+        console.error("Failed to load component:", error);
+      }
+    };
 
-      };
+    onMounted(() => {
+      console.log("Parent Component Mounted");
+    });
 
-        onMounted(() => {
-        console.log("Parent Component Mounted");
-        });
-
-        onBeforeUnmount(() => {
-         console.log("Parent Component Unmounted");
-        })
-
+    onBeforeUnmount(() => {
+      console.log("Parent Component Unmounted");
+    });
 
     return { dynamicComponent, toggleComponent, componentKey };
-  }
+  },
 };
 </script>
 ```

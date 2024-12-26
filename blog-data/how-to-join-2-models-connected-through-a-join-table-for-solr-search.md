@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-join-2-models-connected-through-a-join-table-for-solr-search"
 ---
 
-alright, so you're looking at joining data from two different models, linked by a join table, and trying to get that indexed into solr. i've been there, man. more times than i care to remember. it's a fairly common issue when you move beyond the most basic solr setups, especially when you're dealing with relational data.
+, so you're looking at joining data from two different models, linked by a join table, and trying to get that indexed into solr. i've been there, man. more times than i care to remember. it's a fairly common issue when you move beyond the most basic solr setups, especially when you're dealing with relational data.
 
 let's break this down into the components. the core of the problem is about efficiently combining data from multiple sources into a single solr document that can be searched effectively. that usually implies flattening the related data, otherwise, you'll have a terrible time querying it. what complicates matters is that the association is handled through a join table, instead of a direct relationship.
 

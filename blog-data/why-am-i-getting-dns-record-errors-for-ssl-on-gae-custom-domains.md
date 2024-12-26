@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-dns-record-errors-for-ssl-on-gae-custom-domains"
 ---
 
-Okay, let's tackle this. It’s a situation I've bumped into a few times over the years, and it can be frustrating. When you’re seeing dns record errors related to ssl on custom domains with google app engine (gae), it usually boils down to a handful of common culprits—or, more often, a combination of them. It's rarely just one thing. I remember wrestling with a similar setup a while back for a client’s e-commerce platform, and the debugging was… thorough.
+, let's tackle this. It’s a situation I've bumped into a few times over the years, and it can be frustrating. When you’re seeing dns record errors related to ssl on custom domains with google app engine (gae), it usually boils down to a handful of common culprits—or, more often, a combination of them. It's rarely just one thing. I remember wrestling with a similar setup a while back for a client’s e-commerce platform, and the debugging was… thorough.
 
 The core issue stems from the fact that ssl certificates require domain validation. To prove that you genuinely control the domain you're requesting an ssl certificate for, certificate authorities (cas) need to see specific dns records in place. For gae custom domains, the process involves google’s certificate management system (gcm), which needs to find these verification records. The lack of proper records, incorrect configuration, or propagation delays can all manifest as ssl errors.
 
@@ -12,12 +12,12 @@ Let's break down the usual suspects and then I'll provide some code examples to 
 
 **1. missing or incorrect cname records for domain verification:**
 
-google app engine usually generates specific cname records that must be present at your domain's dns provider. These records are critical because they redirect traffic for domain verification to google’s servers. Failure to add these records, or having them incorrectly configured, will prevent google from issuing an ssl certificate. There are generally *two* crucial cnames at play:
+google app engine usually generates specific cname records that must be present at your domain's dns provider. These records are critical because they redirect traffic for domain verification to google’s servers. Failure to add these records, or having them incorrectly configured, will prevent google from issuing an ssl certificate. There are generally _two_ crucial cnames at play:
 
-   * one for your naked domain (e.g., `example.com`) that points to `ghs.googlehosted.com.`
-   * another for your `www` subdomain (e.g., `www.example.com`) often also pointing to `ghs.googlehosted.com.`
+- one for your naked domain (e.g., `example.com`) that points to `ghs.googlehosted.com.`
+- another for your `www` subdomain (e.g., `www.example.com`) often also pointing to `ghs.googlehosted.com.`
 
-   If you've configured these records at your dns registrar, you might still encounter problems if there’s a typo, the records point to the wrong location or if they aren't fully propagated across the dns network. This propagation often takes time, sometimes up to 48 hours, depending on your dns provider.
+If you've configured these records at your dns registrar, you might still encounter problems if there’s a typo, the records point to the wrong location or if they aren't fully propagated across the dns network. This propagation often takes time, sometimes up to 48 hours, depending on your dns provider.
 
 **2. incorrect or conflicting a records:**
 
@@ -57,17 +57,17 @@ the `+short` flag simplifies the output, making it easier to read. On windows, `
 nslookup -query=cname www.example.com
 ```
 
-look for the *canonical name:* entry; it should display `ghs.googlehosted.com.`.
+look for the _canonical name:_ entry; it should display `ghs.googlehosted.com.`.
 
 **example 2: checking for a records on the naked domain**
 
-while a records are *not* the recommended way for app engine, let’s see how to check if any are present.
+while a records are _not_ the recommended way for app engine, let’s see how to check if any are present.
 
 ```bash
 dig a example.com +short
 ```
 
-if this command returns ip addresses, it *might* indicate a conflict. You generally want cname records pointing to `ghs.googlehosted.com.` for your gae configuration. Similarly, nslookup will reveal these records on windows.
+if this command returns ip addresses, it _might_ indicate a conflict. You generally want cname records pointing to `ghs.googlehosted.com.` for your gae configuration. Similarly, nslookup will reveal these records on windows.
 
 ```bash
 nslookup -query=a example.com
@@ -83,6 +83,6 @@ dig caa example.com +short
 
 if this command returns any records, verify that they allow google as a certificate authority. if there are caa records and the ssl certificate isn’t getting issued, they are highly suspect. If the output doesn't explicitly permit google to issue certificates, this could be blocking the ssl certificate creation, as well.
 
-For deep-dives into dns, I highly recommend “dns and bind” by cricket liu. It’s the authoritative guide to understanding dns at a very fundamental level. For certificate management concepts, the *handbook of applied cryptography* by menezes, van oorschot, and vanstone provides a thorough mathematical overview of how certificates function. Finally, for a practical, application-oriented perspective on web security, you can't go wrong with the *web application hacker's handbook* by stefan viehböck et al. These resources should equip you with a solid understanding of the underlying principles at play and assist in diagnosing and resolving such issues effectively.
+For deep-dives into dns, I highly recommend “dns and bind” by cricket liu. It’s the authoritative guide to understanding dns at a very fundamental level. For certificate management concepts, the _handbook of applied cryptography_ by menezes, van oorschot, and vanstone provides a thorough mathematical overview of how certificates function. Finally, for a practical, application-oriented perspective on web security, you can't go wrong with the _web application hacker's handbook_ by stefan viehböck et al. These resources should equip you with a solid understanding of the underlying principles at play and assist in diagnosing and resolving such issues effectively.
 
 In summary, these errors often have a multi-faceted origin. Careful verification of dns records, understanding propagation times, and awareness of caa restrictions, along with examining gae’s configuration closely, are the critical components of debugging ssl issuance problems. I've found that a systematic approach—checking each aspect in turn—is the best way to get things running smoothly. Sometimes, the seemingly simple tasks are the most complex to nail down. But hopefully this gives you a strong footing to tackle the problem head-on.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-mock-or-override-environment-variables-in-an-asynchronous-context"
 ---
 
-Alright, let's talk about mocking environment variables, particularly when asynchronous operations are in the mix. It's a challenge many of us have encountered, and I remember a project a few years back where it became absolutely critical. We were building an integration service that relied heavily on configuration stored in environment variables, and our integration tests, which needed to simulate various scenarios, were becoming brittle and incredibly difficult to manage. We had to find a way to inject different variable sets without altering the actual environment.
+, let's talk about mocking environment variables, particularly when asynchronous operations are in the mix. It's a challenge many of us have encountered, and I remember a project a few years back where it became absolutely critical. We were building an integration service that relied heavily on configuration stored in environment variables, and our integration tests, which needed to simulate various scenarios, were becoming brittle and incredibly difficult to manage. We had to find a way to inject different variable sets without altering the actual environment.
 
 The core issue, as you likely know, is that environment variables are global. When asynchronous processes, such as those involved with network I/O or concurrent execution, come into play, the timing becomes crucial. Standard mechanisms for setting environment variables, particularly in shell environments or direct `os.environ` modifications, may introduce race conditions or unexpected behavior in our test suite. For example, one test could modify the environment, and another, running concurrently, could pick up that modified state at the wrong time, leading to non-deterministic results. This simply won't do. So, how do we ensure consistent and predictable behavior in such scenarios?
 
@@ -126,7 +126,7 @@ if __name__ == '__main__':
     unittest.main()
 ```
 
-Here, `asyncSetUp` sets the mocked variables *before* each test, and `asyncTearDown` cleans them up *after* each test. This pattern is extremely helpful when multiple tests require the same environment configuration.
+Here, `asyncSetUp` sets the mocked variables _before_ each test, and `asyncTearDown` cleans them up _after_ each test. This pattern is extremely helpful when multiple tests require the same environment configuration.
 
 When you pick an approach, consider the scope of your testing. If you only need to do it in a few scenarios, the context manager is good. If you're testing a lot, a decorator might be more convenient, and for grouped testing the class approach may be better.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-bulk-records-in-rails-423"
 ---
 
-Alright, let’s talk bulk record creation in Rails 4.2.3. It’s not as straightforward as a single `create` call, and I've definitely been in the weeds with this specific version myself, trying to optimize some large data migrations back in '16. The default ActiveRecord approach, where you’re iterating through a collection and using `Model.create` within a loop, is, frankly, an anti-pattern for anything beyond a handful of records. It's going to generate *n* insert statements, each with the overhead of a transaction and potentially a lot of unnecessary database round trips. The performance hit compounds dramatically with volume.
+, let’s talk bulk record creation in Rails 4.2.3. It’s not as straightforward as a single `create` call, and I've definitely been in the weeds with this specific version myself, trying to optimize some large data migrations back in '16. The default ActiveRecord approach, where you’re iterating through a collection and using `Model.create` within a loop, is, frankly, an anti-pattern for anything beyond a handful of records. It's going to generate _n_ insert statements, each with the overhead of a transaction and potentially a lot of unnecessary database round trips. The performance hit compounds dramatically with volume.
 
 The key to efficient bulk creation lies in batching database interactions. We aim to minimize the number of queries by constructing a single multi-record insert statement. This isn't directly supported with a simple method call in older versions like 4.2.3. Instead, we need to leverage more low-level methods or utilize libraries that abstract this complexity for us, without depending on later additions in Rails.
 
@@ -67,6 +67,7 @@ products_to_create = [
 
 bulk_create_products_import(products_to_create)
 ```
+
 In this case, the gem handles the heavy lifting. `Product.import` takes an array of hashes, each representing a record and creates the batch insert statement. The `validate: false` option bypasses the validations for increased performance, assuming that data validation has already been handled elsewhere.
 
 **Technique 3: Using Transactions and Smaller Batches with `insert_all` (also `activerecord-import`)**
@@ -98,13 +99,13 @@ Here, we're slicing the large product list into smaller chunks using `each_slice
 
 **Important Considerations:**
 
-*   **Data Validation:** As shown, `validate: false` is used in the examples, which means you must handle data sanitization/validation elsewhere. Always ensure your data is clean before performing bulk inserts, especially in production scenarios. Otherwise, you can set it to `true` if validations are necessary, but note that it will reduce performance.
+- **Data Validation:** As shown, `validate: false` is used in the examples, which means you must handle data sanitization/validation elsewhere. Always ensure your data is clean before performing bulk inserts, especially in production scenarios. Otherwise, you can set it to `true` if validations are necessary, but note that it will reduce performance.
 
-*   **Callbacks:** ActiveRecord callbacks (like `before_create` or `after_create`) are *not* triggered with raw SQL queries or with `insert_all` using `activerecord-import`. This might not be a concern in some cases, but be sure to implement any necessary logic that callbacks would have handled.
+- **Callbacks:** ActiveRecord callbacks (like `before_create` or `after_create`) are _not_ triggered with raw SQL queries or with `insert_all` using `activerecord-import`. This might not be a concern in some cases, but be sure to implement any necessary logic that callbacks would have handled.
 
-*   **Database Constraints:** Be mindful of any database constraints, like unique indexes or foreign key relationships. Violation of these could lead to the insert statement failing. The transaction wrapper can be helpful here, as in example three, as the whole transaction is rolled back if any violation occurs.
+- **Database Constraints:** Be mindful of any database constraints, like unique indexes or foreign key relationships. Violation of these could lead to the insert statement failing. The transaction wrapper can be helpful here, as in example three, as the whole transaction is rolled back if any violation occurs.
 
-*   **Error Handling:** Always include comprehensive error handling for bulk insert processes. You'd want to identify the failed records, handle retries gracefully, and log any errors effectively. The `activerecord-import` gem provides methods to get access to failed records in an import.
+- **Error Handling:** Always include comprehensive error handling for bulk insert processes. You'd want to identify the failed records, handle retries gracefully, and log any errors effectively. The `activerecord-import` gem provides methods to get access to failed records in an import.
 
 **Recommendations for further learning:**
 

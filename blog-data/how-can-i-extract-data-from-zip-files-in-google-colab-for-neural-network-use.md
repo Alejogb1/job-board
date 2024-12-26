@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-data-from-zip-files-in-google-colab-for-neural-network-use"
 ---
 
-Alright, let's tackle this. I recall a particularly tricky project a few years back where we had to pre-process a massive dataset of satellite imagery, all meticulously archived in numerous zip files. Dealing with those archives directly within Google Colab’s environment presented some interesting challenges. We needed a method that was both efficient and robust, given the limited resources and the iterative nature of model development. The key was understanding the nuances of file access and decompression within the colab environment, and then translating that into clean data pipelines.
+, let's tackle this. I recall a particularly tricky project a few years back where we had to pre-process a massive dataset of satellite imagery, all meticulously archived in numerous zip files. Dealing with those archives directly within Google Colab’s environment presented some interesting challenges. We needed a method that was both efficient and robust, given the limited resources and the iterative nature of model development. The key was understanding the nuances of file access and decompression within the colab environment, and then translating that into clean data pipelines.
 
 Firstly, we need to recognize that a direct interaction with the zip archive as a single object within Colab’s file system is generally inefficient. Think of it this way, attempting to load data directly from a zipped archive is akin to trying to read a book without opening it. You might get the table of contents, but the actual text is inaccessible. Instead, we will focus on unpacking data sequentially and feeding it into our model.
 
@@ -43,7 +43,7 @@ os.makedirs(extraction_path, exist_ok=True) # Make the extraction path if it doe
 extract_zip_contents(zip_path, extraction_path)
 ```
 
-This code snippet will extract *all* files in the archive to the specified directory. While convenient, this approach has two significant drawbacks: First, it requires sufficient storage space on the colab runtime to accommodate the unzipped data (colab runtimes are not unlimited in disk space). Second, it can be significantly slow when dealing with very large archives.
+This code snippet will extract _all_ files in the archive to the specified directory. While convenient, this approach has two significant drawbacks: First, it requires sufficient storage space on the colab runtime to accommodate the unzipped data (colab runtimes are not unlimited in disk space). Second, it can be significantly slow when dealing with very large archives.
 
 For neural network applications, we rarely require access to all data files at once. Instead, we often need to fetch data in batches. This can be particularly advantageous if the training data, once unzipped, exceeds the available RAM on the Colab runtime. To address this, I found it more practical to implement a function that streams individual files on-demand for data loading.
 
@@ -96,7 +96,7 @@ else:
     print('No files found in zip archive')
 ```
 
-In this example, `get_files_in_zip` allows us to see all the available files within the archive without having to fully extract everything. Then, the `load_data_from_zip` function allows us to access the data for just *one* file which will save us a substantial amount of processing time and memory resources. You can easily integrate this into a custom `torch.utils.data.Dataset` or tensorflow `tf.data.Dataset` class, loading files on a batch by batch basis.
+In this example, `get_files_in_zip` allows us to see all the available files within the archive without having to fully extract everything. Then, the `load_data_from_zip` function allows us to access the data for just _one_ file which will save us a substantial amount of processing time and memory resources. You can easily integrate this into a custom `torch.utils.data.Dataset` or tensorflow `tf.data.Dataset` class, loading files on a batch by batch basis.
 
 To expand on the real-world application, think about a dataset of medical images – each study or patient’s images might be compressed into zip files. The `get_files_in_zip` function would allow us to build a custom dataset class which could list all available scans. Then, when the dataset is iterated through, the `load_data_from_zip` method would only fetch the specific scans needed for training. This lazy loading mechanism avoids loading everything into RAM all at once.
 

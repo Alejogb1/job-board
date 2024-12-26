@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ambiguous-clock-in-event-control"
 ---
 
-Alright so this "ambiguous clock in event control" thing yeah I've been there done that bought the t-shirt and probably wrote a poorly documented library about it back in the day Let's break this down in my own way I'm assuming we're talking about scenarios where you have multiple things happening in your system that are time based and it's not entirely clear when those things *actually* happened or how they relate to each other timing wise.
+so this "ambiguous clock in event control" thing yeah I've been there done that bought the t-shirt and probably wrote a poorly documented library about it back in the day Let's break this down in my own way I'm assuming we're talking about scenarios where you have multiple things happening in your system that are time based and it's not entirely clear when those things _actually_ happened or how they relate to each other timing wise.
 
 This happens all the time when you're dealing with anything remotely real-time or distributed I remember once working on a distributed logging system it was a mess to debug the system would often say an event happened at x time on one server but at x + 2 seconds on a different one It was like time decided to go on a holiday without telling us. The data was basically useless for understanding the timeline and order of events. You can spend hours staring at logs and still not figure out what happened first it is a common issue.
 
@@ -38,6 +38,7 @@ if __name__ == "__main__":
         print("Failed to retrieve NTP time.")
 
 ```
+
 This example is straightforward it queries `pool.ntp.org` and prints both NTP time and your local system time. You’ll see the difference. This is a pretty basic but useful first step.
 This is useful for most of the problems but sometimes NTP isn't sufficient you need something more accurate. If you need higher precision we start looking into things like GPS clocks or more specialized hardware timing solutions These are less common in the general software development space but you need them for high precision control systems.
 
@@ -71,6 +72,7 @@ if __name__ == "__main__":
     print(f"Event Type: {event.event_type}")
     print(f"Payload: {event.payload}")
 ```
+
 This code generates a unique id for the event records the timestamp using `time.time()` and includes a type and a data payload. You should be more specific with timestamps by using NTP or better. I’m showing you a simplified example for clarity.
 
 Now once you have your timestamped events in your distributed system you are going to need to combine all this data. Here's the issue though it's not just a matter of sorting by timestamps because with clock drift the sort order might be misleading It would be cool to say that the event with the earliest timestamp happened first but the problem is that an event with an earlier timestamp may actually have happened later. This is called causal order and you can use different techniques to maintain causal order.
@@ -87,7 +89,7 @@ class LamportClock:
         """Increment the clock."""
         self.time += 1
         return self.time
-    
+
     def merge(self, received_time):
          """Merges the local clock with a received clock value"""
          self.time = max(self.time, received_time) + 1
@@ -106,7 +108,7 @@ if __name__ == '__main__':
 
    event_1 = create_event_with_lamport(clock_a,"event_a",{"data":"hello"})
    print(f"event 1: {event_1}")
-   
+
    event_2 = create_event_with_lamport(clock_a,"event_b",{"data":"world"})
    print(f"event 2: {event_2}")
 

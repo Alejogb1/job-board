@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-only-about-04-accuracy-with-pytorch-for-iris"
 ---
 
-Alright, let's tackle this. It's not uncommon to hit a wall with seemingly simple datasets like iris, and a 0.4 accuracy certainly raises a flag. I’ve been down this path before, troubleshooting why a model wasn't performing as expected, and the iris dataset, despite its apparent simplicity, can highlight some fundamental issues if not handled correctly. Here’s what's likely going on and how we can address it.
+, let's tackle this. It's not uncommon to hit a wall with seemingly simple datasets like iris, and a 0.4 accuracy certainly raises a flag. I’ve been down this path before, troubleshooting why a model wasn't performing as expected, and the iris dataset, despite its apparent simplicity, can highlight some fundamental issues if not handled correctly. Here’s what's likely going on and how we can address it.
 
 First, the iris dataset, while straightforward, isn’t entirely without nuances. It has three classes and only four features, meaning there's not a ton of room to work with, and the classes aren't perfectly separable. A model that is not properly configured can very easily latch onto a suboptimal solution. What you're observing likely points to a combination of issues. These issues, in my experience, frequently fall into the following categories: incorrect data preprocessing, inadequate model architecture, inappropriate training configuration, and finally, a lack of proper evaluation. Let's break each one down, keeping in mind I am working under the assumption that you've already implemented a basic pytorch model.
 
@@ -129,8 +129,9 @@ Finally, it's critical to properly evaluate the trained model on a separate data
 **Recommendations:**
 
 To get a better grasp of these concepts, I would recommend reviewing the following resources:
-*   “Deep Learning” by Ian Goodfellow, Yoshua Bengio, and Aaron Courville: A comprehensive textbook covering the theoretical foundations of deep learning.
-*   “Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow” by Aurélien Géron: A practical guide that provides both theoretical explanations and hands-on examples, and this book also covers the important preprocessing aspect which we discussed.
-*   PyTorch official documentation and tutorials: These are vital for hands-on practice and will keep you current with the latest developments in the PyTorch library.
+
+- “Deep Learning” by Ian Goodfellow, Yoshua Bengio, and Aaron Courville: A comprehensive textbook covering the theoretical foundations of deep learning.
+- “Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow” by Aurélien Géron: A practical guide that provides both theoretical explanations and hands-on examples, and this book also covers the important preprocessing aspect which we discussed.
+- PyTorch official documentation and tutorials: These are vital for hands-on practice and will keep you current with the latest developments in the PyTorch library.
 
 In summary, your 0.4 accuracy is most likely a result of not properly scaling or processing the data, a model with not enough capacity to learn the data, or incorrect hyperparameter tuning, in combination or separately. Make sure to correctly standardize your input data, use a simple neural network model like the one I presented, use a reasonable loss function and optimizer, perform training for an adequate number of epochs, and finally, always evaluate your model on a test dataset to gauge its generalization ability. Address these issues, and I’m confident you'll see a significant improvement in your iris dataset accuracy.

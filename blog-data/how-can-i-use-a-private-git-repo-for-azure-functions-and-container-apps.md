@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-a-private-git-repo-for-azure-functions-and-container-apps"
 ---
 
-Alright, let’s talk about managing private git repositories with Azure Functions and Container Apps. This is something I’ve dealt with quite a bit in past projects, and it’s definitely a common hurdle when moving beyond basic deployments. It’s more than just plopping code; it's about security, workflow, and maintaining control over your source.
+, let’s talk about managing private git repositories with Azure Functions and Container Apps. This is something I’ve dealt with quite a bit in past projects, and it’s definitely a common hurdle when moving beyond basic deployments. It’s more than just plopping code; it's about security, workflow, and maintaining control over your source.
 
 Often, when you begin with cloud deployments, the natural inclination might be to just directly integrate with public git repositories, especially for learning or small prototypes. However, once you start handling sensitive code or work within team environments, a move to private git is non-negotiable. I distinctly recall a scenario where we inadvertently exposed a crucial internal api’s base url through a public repo – a painful, but ultimately instructive, lesson.
 
@@ -38,7 +38,7 @@ else:
     print("Code cloned from private git successfully")
 ```
 
-Important considerations: always use environment variables, never hardcode your PAT in code, just like the example above. Store the token in a secure configuration such as Azure Key Vault and retrieve it as an environment variable, this prevents accidentally checking sensitive data into code. Also ensure the PAT has the *least privilege* required to perform the clone. This avoids the potential for abuse if compromised.
+Important considerations: always use environment variables, never hardcode your PAT in code, just like the example above. Store the token in a secure configuration such as Azure Key Vault and retrieve it as an environment variable, this prevents accidentally checking sensitive data into code. Also ensure the PAT has the _least privilege_ required to perform the clone. This avoids the potential for abuse if compromised.
 
 While PATs work, they have lifecycle management complexities. They can expire, and someone needs to remember to rotate them. This is where **managed identities** for Azure resources shines. Managed identities provide an automatically managed identity in Azure Active Directory, and your Azure Function or Container App can use this to authenticate to other azure resources, including accessing a private git repo.
 
@@ -84,7 +84,7 @@ else:
 
 ```
 
-In this example, you’re not dealing with explicit tokens, the *DefaultAzureCredential* automatically handles authentication by obtaining a token for your managed identity. The function itself needs the ‘reader’ role on the repository. This is managed entirely within Azure’s IAM. From a management standpoint, this is easier as the identity and access is centrally controlled and token rotations are done for you, so there is no need to do it yourself. It is crucial to understand the minimal permissions your managed identity needs.
+In this example, you’re not dealing with explicit tokens, the _DefaultAzureCredential_ automatically handles authentication by obtaining a token for your managed identity. The function itself needs the ‘reader’ role on the repository. This is managed entirely within Azure’s IAM. From a management standpoint, this is easier as the identity and access is centrally controlled and token rotations are done for you, so there is no need to do it yourself. It is crucial to understand the minimal permissions your managed identity needs.
 
 Finally, when it comes to container apps, the approach differs slightly. While you could potentially use a PAT or a managed identity, **deployment keys** offer a more fine-grained and secure approach. Deployment keys, in essence, are ssh keys that provide read-only access to your repository. They don't require user accounts. You create an ssh key pair, add the public key as a deployment key to your git repository, and then configure your container app deployment to use the private key. Here is a conceptual docker file entry command example using a deployment key:
 

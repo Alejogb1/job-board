@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-perlin-noise-be-mapped-onto-a-grid"
 ---
 
-Alright, let’s delve into this. Mapping Perlin noise onto a grid isn't as straightforward as simply generating values. It requires a nuanced understanding of how Perlin noise operates and how that translates to discrete grid locations. I recall a particularly challenging project involving procedural terrain generation for a real-time simulation a few years back; this is where the rubber really met the road regarding this exact problem. We weren't just displaying noise; we needed deterministic, repeatable results on a specific grid, and that required a careful, considered approach.
+, let’s delve into this. Mapping Perlin noise onto a grid isn't as straightforward as simply generating values. It requires a nuanced understanding of how Perlin noise operates and how that translates to discrete grid locations. I recall a particularly challenging project involving procedural terrain generation for a real-time simulation a few years back; this is where the rubber really met the road regarding this exact problem. We weren't just displaying noise; we needed deterministic, repeatable results on a specific grid, and that required a careful, considered approach.
 
 At its core, Perlin noise generates smooth, continuous functions using gradient vectors at integer lattice points. When we speak of 'mapping it onto a grid,' what we generally mean is accessing these continuous values at the precise locations corresponding to our grid indices. The fundamental challenge lies in the fact that Perlin noise is inherently continuous, while our grid is inherently discrete. This transition is where careful implementation becomes critical.
 
@@ -63,9 +63,11 @@ def perlin_2d(x, y, seed):
   return lerp(fy, v1, v2)
 
 ```
+
 **Example 1: Direct Grid Sampling:**
 
 This approach directly samples the Perlin noise at each grid coordinate. While straightforward, this method is prone to aliasing if the grid resolution is too high compared to the noise frequency.
+
 ```python
 def map_perlin_direct(grid_width, grid_height, seed, scale = 1.0):
     noise_grid = np.zeros((grid_height, grid_width))
@@ -81,11 +83,13 @@ grid = map_perlin_direct(grid_size, grid_size, seed, scale = 10)
 print(grid)
 
 ```
+
 In the `map_perlin_direct` example, for each grid location `(x, y)`, we calculate a floating-point sample point by dividing `x` and `y` by a `scale` value. This `scale` effectively controls the 'zoom level' of the noise. A smaller scale will show a more zoomed-in view of the noise (higher frequency) than a larger one. This method is fast, but can introduce visual artifacts if you are scaling the values too far (large scale).
 
 **Example 2: Frequency Control via Octaves:**
 
 To overcome the limitations of a single noise layer, we can employ octaves. Each octave represents a noise layer with a progressively higher frequency (smaller scale) and lower amplitude. This technique adds a rich layering effect and can produce more natural looking results. This is also used when the base scale needs to be a much larger value, giving a better result that doesn't look pixelated.
+
 ```python
 def map_perlin_octaves(grid_width, grid_height, seed, base_scale = 10.0, octaves = 4):
     noise_grid = np.zeros((grid_height, grid_width))
@@ -116,6 +120,7 @@ In `map_perlin_octaves`, we iterate through a series of octaves, each contributi
 **Example 3: Bi-cubic Interpolation for smoother results**
 
 The sampling in the previous examples are based on nearest neighbors, if you look at that grid, it'll be slightly blocky. Instead of nearest neighbor, for a smoother mapping with fewer aliasing issues and a more consistent overall visual quality, bicubic interpolation can be used, leveraging the existing continuous noise and ensuring we don't lose this between grid samples. This will increase the smoothness of the grid but will increase computational overhead. Note that this example will only show a single sampling with bicubic interpolation; you will want to loop through your grid and do this for each point.
+
 ```python
 def bicubic_interpolation(x, y, noise_grid, scale=10):
     x_scaled = x/scale
@@ -169,4 +174,4 @@ The `bicubic_interpolation` function samples values around our current grid loca
 
 For a deeper theoretical understanding of Perlin noise, I'd highly recommend Ken Perlin's original paper, "Improving Noise," which can be found online in various locations, often hosted by academic institutions. Additionally, the “Texturing and Modeling: A Procedural Approach,” by David S. Ebert, et al., offers comprehensive coverage of procedural techniques, including in-depth discussions on noise functions and grid-based techniques. It’s a solid resource that really ties together theory and practice. I’d also suggest taking a close look at some of the open source noise libraries, such as FastNoise or libnoise, to see how others implement these ideas in practice.
 
-Ultimately, mapping Perlin noise onto a grid is an act of thoughtful sampling and interpretation. There isn't necessarily one *correct* method. The best technique is entirely dependent on the specific needs of your application, the trade-offs you're willing to make between computation and visual fidelity, and a solid understanding of the noise function itself. Through carefully considered scaling, frequency control via octaves, and advanced interpolation when needed, the results can be really quite impressive and are extremely useful for generating realistic and performant simulations.
+Ultimately, mapping Perlin noise onto a grid is an act of thoughtful sampling and interpretation. There isn't necessarily one _correct_ method. The best technique is entirely dependent on the specific needs of your application, the trade-offs you're willing to make between computation and visual fidelity, and a solid understanding of the noise function itself. Through carefully considered scaling, frequency control via octaves, and advanced interpolation when needed, the results can be really quite impressive and are extremely useful for generating realistic and performant simulations.

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-do-i-get-auto-formatting-to-work-within-aws-cloud9-ide-for-a-rails-application"
 ---
 
-alright, so you're having trouble getting auto-formatting to play nice with your rails app in cloud9, i've been there, spent countless hours tweaking configurations, feels like forever ago. it's one of those things that should be straightforward, but sometimes it just isn't, especially when you're deep into a project and have a complex setup. i remember back in the day working on this huge rails project, we had like, what, 20 developers? each with their own style. it was chaos, pure, unadulterated formatting chaos. we ended up manually fixing things in code review. what a drag! lets avoid that.
+, so you're having trouble getting auto-formatting to play nice with your rails app in cloud9, i've been there, spent countless hours tweaking configurations, feels like forever ago. it's one of those things that should be straightforward, but sometimes it just isn't, especially when you're deep into a project and have a complex setup. i remember back in the day working on this huge rails project, we had like, what, 20 developers? each with their own style. it was chaos, pure, unadulterated formatting chaos. we ended up manually fixing things in code review. what a drag! lets avoid that.
 
 let's break it down. from what i've seen, cloud9 is pretty good with some things but getting your auto-formatting just so requires a bit of a poke. first thing, are you talking about formatting on save or something more real-time? either way, it's all about configuration, that's where we need to look.
 
@@ -25,13 +25,13 @@ now, you need to configure `rubocop` for your project, if you don't have a `.rub
 AllCops:
   TargetRubyVersion: 2.7 # put your ruby version here, this is an example
   Exclude:
-    - 'db/**/*'
-    - 'bin/**/*'
-    - 'config/**/*'
-    - 'test/**/*'
-    - 'vendor/**/*'
-    - 'spec/**/*'
-    - 'node_modules/**/*' # just in case
+    - "db/**/*"
+    - "bin/**/*"
+    - "config/**/*"
+    - "test/**/*"
+    - "vendor/**/*"
+    - "spec/**/*"
+    - "node_modules/**/*" # just in case
   DisplayCopNames: true
   StyleGuide:
     EnforcedStyle: always
@@ -39,7 +39,7 @@ AllCops:
 Layout/LineLength:
   Max: 120 # i like this number, you might prefer 80
   Exclude:
-    - 'config/environments/*.rb' # some configs are ok longer
+    - "config/environments/*.rb" # some configs are ok longer
 
 Style/Documentation:
   Enabled: false # unless you love documentation, i dont ;)
@@ -68,118 +68,151 @@ to implement this, create a javascript file, for example `cloud9_formatter.js`, 
 
 ```javascript
 // ~/.c9/plugins/cloud9_formatter.js
-define(function(require, exports, module) {
-    main.consumes = ["Plugin", "menus", "command_manager", "preferences", "settings"];
-    main.provides = ["cloud9_formatter"];
-    return main;
+define(function (require, exports, module) {
+  main.consumes = [
+    "Plugin",
+    "menus",
+    "command_manager",
+    "preferences",
+    "settings",
+  ];
+  main.provides = ["cloud9_formatter"];
+  return main;
 
-    function main(options, imports, register) {
-        var Plugin = imports.Plugin;
-        var menus = imports.menus;
-        var commandManager = imports.command_manager;
-        var prefs = imports.preferences;
-        var settings = imports.settings;
-        var plugin = new Plugin("c9.ide.cloud9_formatter", main.consumes);
+  function main(options, imports, register) {
+    var Plugin = imports.Plugin;
+    var menus = imports.menus;
+    var commandManager = imports.command_manager;
+    var prefs = imports.preferences;
+    var settings = imports.settings;
+    var plugin = new Plugin("c9.ide.cloud9_formatter", main.consumes);
 
-        var loaded = false;
-        var isMac = /Mac/.test(navigator.userAgent);
-        var formatterCommand = "rubocop -a %FILE";
+    var loaded = false;
+    var isMac = /Mac/.test(navigator.userAgent);
+    var formatterCommand = "rubocop -a %FILE";
 
-        var saveFormatter = function(e) {
-            var filePath = e.document.path;
-            if (filePath.endsWith(".rb")) { // only format .rb files, you can extend this if needed
-                commandManager.execCommand("run", {
-                    command: formatterCommand.replace("%FILE", filePath),
-                    showOutput: false // change this to true if you want to see the output
-                });
-            }
-        };
+    var saveFormatter = function (e) {
+      var filePath = e.document.path;
+      if (filePath.endsWith(".rb")) {
+        // only format .rb files, you can extend this if needed
+        commandManager.execCommand("run", {
+          command: formatterCommand.replace("%FILE", filePath),
+          showOutput: false, // change this to true if you want to see the output
+        });
+      }
+    };
 
-        var onFileSave = function(e) {
-            if (!loaded) return;
-            saveFormatter(e);
-        };
+    var onFileSave = function (e) {
+      if (!loaded) return;
+      saveFormatter(e);
+    };
 
-        plugin.on("load", function() {
-            loaded = true;
-             commandManager.addCommand({
-                name: "format_file",
-                hint: "Format current file",
-                exec: function(){
-                   var currentFile = require("c9/ide.editor/document").getDocument().path;
-                   commandManager.execCommand("run", {
-                       command: formatterCommand.replace("%FILE", currentFile),
-                       showOutput: true
-                   });
-                }
-            }, plugin);
-
-             menus.addItemByPath("Edit/Format File", new ui.item({
-                command: "format_file",
-                caption: "Format File"
-            }), 1000, plugin);
-            
-            settings.on("read", function() {
-                settings.set("user/cloud9_formatter/@formatterCommand", formatterCommand);
-                settings.set("user/cloud9_formatter/@macKey", isMac ? "command-alt-f" : "ctrl-alt-f");
+    plugin.on("load", function () {
+      loaded = true;
+      commandManager.addCommand(
+        {
+          name: "format_file",
+          hint: "Format current file",
+          exec: function () {
+            var currentFile = require("c9/ide.editor/document").getDocument()
+              .path;
+            commandManager.execCommand("run", {
+              command: formatterCommand.replace("%FILE", currentFile),
+              showOutput: true,
             });
-            
-            settings.on("write", function(){
-                formatterCommand = settings.get("user/cloud9_formatter/@formatterCommand");
-                commandManager.bindKey(settings.get("user/cloud9_formatter/@macKey"), "format_file");
-            });
+          },
+        },
+        plugin
+      );
 
-            prefs.add({
-               "Cloud 9 Formatter" : {
-                  type: "heading",
-                  position: 200
-              },
-              "Cloud 9 Formatter/Format Command" : {
-                 type: "textbox",
-                 position: 100,
-                 width: 400,
-                 value: formatterCommand,
-                 onchange: function(){
-                   settings.set("user/cloud9_formatter/@formatterCommand", this.value);
-                 }
-              },
-               "Cloud 9 Formatter/Mac Key Bind" : {
-                 type: "textbox",
-                 position: 101,
-                 width: 400,
-                 value: isMac ? "command-alt-f" : "ctrl-alt-f",
-                 onchange: function(){
-                   settings.set("user/cloud9_formatter/@macKey", this.value);
-                 }
-              }
+      menus.addItemByPath(
+        "Edit/Format File",
+        new ui.item({
+          command: "format_file",
+          caption: "Format File",
+        }),
+        1000,
+        plugin
+      );
 
-            }, plugin)
-        });
+      settings.on("read", function () {
+        settings.set(
+          "user/cloud9_formatter/@formatterCommand",
+          formatterCommand
+        );
+        settings.set(
+          "user/cloud9_formatter/@macKey",
+          isMac ? "command-alt-f" : "ctrl-alt-f"
+        );
+      });
 
-        plugin.on("documentActivate", function(e){
-            e.document.on("save", onFileSave, plugin);
-        });
+      settings.on("write", function () {
+        formatterCommand = settings.get(
+          "user/cloud9_formatter/@formatterCommand"
+        );
+        commandManager.bindKey(
+          settings.get("user/cloud9_formatter/@macKey"),
+          "format_file"
+        );
+      });
 
-         plugin.on("documentUnload", function(e){
-            if(e.document){
-                e.document.off("save", onFileSave);
-            }
-        });
+      prefs.add(
+        {
+          "Cloud 9 Formatter": {
+            type: "heading",
+            position: 200,
+          },
+          "Cloud 9 Formatter/Format Command": {
+            type: "textbox",
+            position: 100,
+            width: 400,
+            value: formatterCommand,
+            onchange: function () {
+              settings.set(
+                "user/cloud9_formatter/@formatterCommand",
+                this.value
+              );
+            },
+          },
+          "Cloud 9 Formatter/Mac Key Bind": {
+            type: "textbox",
+            position: 101,
+            width: 400,
+            value: isMac ? "command-alt-f" : "ctrl-alt-f",
+            onchange: function () {
+              settings.set("user/cloud9_formatter/@macKey", this.value);
+            },
+          },
+        },
+        plugin
+      );
+    });
 
+    plugin.on("documentActivate", function (e) {
+      e.document.on("save", onFileSave, plugin);
+    });
 
-        plugin.on("unload", function() {
-            loaded = false;
-            commandManager.unbindKey(settings.get("user/cloud9_formatter/@macKey"), "format_file");
-             menus.removeByCommand("format_file");
-            commandManager.removeCommand("format_file");
-        });
+    plugin.on("documentUnload", function (e) {
+      if (e.document) {
+        e.document.off("save", onFileSave);
+      }
+    });
 
+    plugin.on("unload", function () {
+      loaded = false;
+      commandManager.unbindKey(
+        settings.get("user/cloud9_formatter/@macKey"),
+        "format_file"
+      );
+      menus.removeByCommand("format_file");
+      commandManager.removeCommand("format_file");
+    });
 
-        plugin.load(null, register);
-
-    }
+    plugin.load(null, register);
+  }
 });
 ```
+
 this code does a couple of things: it defines a `saveFormatter` function which executes the `rubocop` command on your current file, whenever that file is saved, it checks if it ends in `.rb`, this is what triggers the auto-formatting. we added this function to the document `on save` event.
 
 we also added a command called `format_file` which allows you to trigger the formatting manually using a command, and it also adds this command to the `edit` menu.
@@ -192,7 +225,7 @@ note: in the preferences, do not use `ctrl + alt + f` use `ctrl-alt-f` that is i
 
 so, there you have it, a basic but functional auto-formatter for your ruby code in cloud9. now, you may wonder why it was so complicated? well, because it's not that simple to add new features into a code editor, not even the "simple ones".
 
-there is a way to make this fancier, for example by adding a loading animation while the formatter is running, but honestly for what i use and how often i use it, i don't see a benefit for doing that. you could also extend this with a watcher to show the problems `rubocop` is fixing but, again, not my cup of tea. maybe for you it would be cool to see that stuff. if you want to go deeper on how to create ide plugins you should take a look at *“Creating IDE Plugins” by Peter Friese* is a good start and if you want to go deeper with ace there is the official documentation which is good enough, but it's spread across multiple places. you can find some good books for javascript as well.
+there is a way to make this fancier, for example by adding a loading animation while the formatter is running, but honestly for what i use and how often i use it, i don't see a benefit for doing that. you could also extend this with a watcher to show the problems `rubocop` is fixing but, again, not my cup of tea. maybe for you it would be cool to see that stuff. if you want to go deeper on how to create ide plugins you should take a look at _“Creating IDE Plugins” by Peter Friese_ is a good start and if you want to go deeper with ace there is the official documentation which is good enough, but it's spread across multiple places. you can find some good books for javascript as well.
 
 one last thing, remember, formatting is a tool, not a religion. don't get too hung up on every last little detail. i've seen developers spend more time arguing about tabs vs spaces than actually writing code, it's like, come on!
 

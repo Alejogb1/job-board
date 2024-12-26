@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-generate-10000-random-numbers-from-chainlink-vrf-v2"
 ---
 
-Okay, let's tackle this. Generating 10,000 random numbers using Chainlink VRF V2 is a task that requires a good understanding of how VRF works and its limitations, especially regarding on-chain computations. From my experience, having implemented a lottery system using VRF a few years back, I recall facing a similar challenge, albeit with slightly smaller sets. The core issue is that generating such a large quantity of random numbers directly in a single transaction is impractical due to gas limits and computational costs on the ethereum network. We need to approach it strategically.
+, let's tackle this. Generating 10,000 random numbers using Chainlink VRF V2 is a task that requires a good understanding of how VRF works and its limitations, especially regarding on-chain computations. From my experience, having implemented a lottery system using VRF a few years back, I recall facing a similar challenge, albeit with slightly smaller sets. The core issue is that generating such a large quantity of random numbers directly in a single transaction is impractical due to gas limits and computational costs on the ethereum network. We need to approach it strategically.
 
 The main constraint we have here is the gas limit for a single ethereum transaction. On-chain generation of 10,000 numbers, each requiring a cryptographic calculation, would not only be incredibly expensive but would almost certainly exceed block gas limits. Thus, the immediate approach is not to create them all within a single call, but to use a strategy of either multiple requests or some form of off-chain pre-generation that's verifiable on-chain.
 
@@ -149,51 +149,57 @@ This contract has an off-chain script use the seed from `fulfillRandomWords`, ge
 Here is an off-chain script example for how this might work in javascript (using ethers.js):
 
 ```javascript
-
 const { ethers } = require("ethers");
-const {keccak256} = require("ethers/lib/utils");
+const { keccak256 } = require("ethers/lib/utils");
 
 async function generateAndVerifyRandomNumbers(seed, count) {
-
-    let randomNumbers = [];
-    let nextValue = seed;
-    for(let i = 0; i< count; i++){
-      nextValue = ethers.BigNumber.from(keccak256(ethers.utils.defaultAbiCoder.encode(["uint256"], [nextValue]))).toString()
-      randomNumbers.push(nextValue);
-    }
-    console.log("Generated Numbers", randomNumbers);
-    return randomNumbers;
+  let randomNumbers = [];
+  let nextValue = seed;
+  for (let i = 0; i < count; i++) {
+    nextValue = ethers.BigNumber.from(
+      keccak256(ethers.utils.defaultAbiCoder.encode(["uint256"], [nextValue]))
+    ).toString();
+    randomNumbers.push(nextValue);
+  }
+  console.log("Generated Numbers", randomNumbers);
+  return randomNumbers;
 }
 
 async function verifyOnChain(contract, seed, generatedNumbers) {
-    try {
-      const tx = await contract.verifyRandomNumbers(ethers.BigNumber.from(seed), generatedNumbers);
-      const receipt = await tx.wait();
+  try {
+    const tx = await contract.verifyRandomNumbers(
+      ethers.BigNumber.from(seed),
+      generatedNumbers
+    );
+    const receipt = await tx.wait();
 
-      console.log("Verification Transaction Mined: ", receipt.transactionHash);
-      return true;
-    } catch (error) {
-      console.error("Error during on-chain verification: ", error)
-      return false;
-    }
+    console.log("Verification Transaction Mined: ", receipt.transactionHash);
+    return true;
+  } catch (error) {
+    console.error("Error during on-chain verification: ", error);
+    return false;
+  }
 }
 
-async function main(){
- const provider = new ethers.providers.JsonRpcProvider("YOUR_RPC_ENDPOINT");
- const privateKey = "YOUR_PRIVATE_KEY";
- const wallet = new ethers.Wallet(privateKey, provider);
+async function main() {
+  const provider = new ethers.providers.JsonRpcProvider("YOUR_RPC_ENDPOINT");
+  const privateKey = "YOUR_PRIVATE_KEY";
+  const wallet = new ethers.Wallet(privateKey, provider);
 
- const contractAddress = "YOUR_CONTRACT_ADDRESS";
- const abi = [
-  // Contract ABI Here
+  const contractAddress = "YOUR_CONTRACT_ADDRESS";
+  const abi = [
+    // Contract ABI Here
     "function verifyRandomNumbers(uint256 seed, uint256[] memory randomNumbers) public returns (bool)",
   ];
 
- const contract = new ethers.Contract(contractAddress, abi, wallet);
- const initialSeed =  "YOUR_INITIAL_SEED_FROM_CONTRACT"
+  const contract = new ethers.Contract(contractAddress, abi, wallet);
+  const initialSeed = "YOUR_INITIAL_SEED_FROM_CONTRACT";
 
- const randomNumbers = await generateAndVerifyRandomNumbers(initialSeed, 10000);
- await verifyOnChain(contract, initialSeed, randomNumbers);
+  const randomNumbers = await generateAndVerifyRandomNumbers(
+    initialSeed,
+    10000
+  );
+  await verifyOnChain(contract, initialSeed, randomNumbers);
 }
 
 main();

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "difference-between-parameter-and-localparam"
 ---
 
-Alright let's dive into this parameter vs localparam thing I've seen this trip up a ton of folks especially when they're just getting into hardware description languages like Verilog or SystemVerilog. I've been there trust me had my fair share of head-scratching moments back in the day.
+let's dive into this parameter vs localparam thing I've seen this trip up a ton of folks especially when they're just getting into hardware description languages like Verilog or SystemVerilog. I've been there trust me had my fair share of head-scratching moments back in the day.
 
 So straight up parameters and localparams they're both ways to define constants in your code but they've got some key differences in their scope and how you can modify them. Think of it like this parameter is like a configurable setting on a product it's meant to be tweaked before you actually build something. A localparam on the other hand is like an internal constant that is baked in it’s not really meant to be changed by anyone using your module.
 
@@ -26,6 +26,7 @@ output [WIDTH-1:0] sum
   assign sum = a + b;
 endmodule
 ```
+
 In this example `WIDTH` is a parameter with a default value of 8. If I create an instance of this `generic_adder` module without specifying a value for `WIDTH` it'll default to 8. But here's the magic:
 
 ```verilog
@@ -67,7 +68,8 @@ localparam SHIFT_TWO = 2;
   end
 endmodule
 ```
-In this `decoder_logic` module the constants like `BIT_MASK_ONE`, `SHIFT_ONE`  `BIT_MASK_TWO` and `SHIFT_TWO` are localparams. They're only valid inside this module and you can’t change their values from the outside. They help you keep your expressions concise and readable without having to retype `8'h0F` or the value of shifts every time. It's mostly for internal organization and making your code easier to maintain.
+
+In this `decoder_logic` module the constants like `BIT_MASK_ONE`, `SHIFT_ONE` `BIT_MASK_TWO` and `SHIFT_TWO` are localparams. They're only valid inside this module and you can’t change their values from the outside. They help you keep your expressions concise and readable without having to retype `8'h0F` or the value of shifts every time. It's mostly for internal organization and making your code easier to maintain.
 
 One time I messed up and declared something as a `parameter` that should have been a `localparam`. I spent way too long trying to figure out why my designs were behaving all weirdly until I realized some other developer was accidentally overriding one of my parameters that I intended to be a fixed value.
 
@@ -77,16 +79,17 @@ To summarize if you want a constant value that you intend to be configurable on 
 
 Here is a bit more advice on when to use them.
 
-*   Use `parameter` when:
-    *   You want to create reusable modules with adaptable sizes or behaviors.
-    *   You want to customize a module's functionality when you instantiate it in another module.
-    *   You want to make it easy to experiment with various configurations of your module.
-    *   You want to define constants that might need to change between instances or builds of your project.
+- Use `parameter` when:
 
-*   Use `localparam` when:
-    *   You need a constant value that's specific to the module you're working on.
-    *   You want to create more readable code by assigning names to constants instead of scattering magic numbers.
-    *   You want to organize internal logic of a module without exposing internal implementation details that other module might accidentally change.
+  - You want to create reusable modules with adaptable sizes or behaviors.
+  - You want to customize a module's functionality when you instantiate it in another module.
+  - You want to make it easy to experiment with various configurations of your module.
+  - You want to define constants that might need to change between instances or builds of your project.
+
+- Use `localparam` when:
+  - You need a constant value that's specific to the module you're working on.
+  - You want to create more readable code by assigning names to constants instead of scattering magic numbers.
+  - You want to organize internal logic of a module without exposing internal implementation details that other module might accidentally change.
 
 **Some other nuances**
 

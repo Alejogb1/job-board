@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "what-is-meant-by-this-systemverilog-typedef-enum-statement"
 ---
 
-Alright so you're asking about `typedef enum` in SystemVerilog I've been there man trust me Spent way too many nights staring at compile errors because of these little guys Let's break it down
+so you're asking about `typedef enum` in SystemVerilog I've been there man trust me Spent way too many nights staring at compile errors because of these little guys Let's break it down
 
-Okay first off `typedef` is just a way of making a new name for an existing data type Think of it as giving your friend a nickname its still them but now you can call them by the new name its for convenience right and to make the code easier to understand not much more to it.
+first off `typedef` is just a way of making a new name for an existing data type Think of it as giving your friend a nickname its still them but now you can call them by the new name its for convenience right and to make the code easier to understand not much more to it.
 
 Now `enum` that's where the real magic happens `enum` is short for enumeration It's a way to create a list of named integer constants Think like a list of predefined words like color red green blue each of these words would be represented by a underlying integer number. These numbers usually are 0 1 2 if you dont specify them otherwise if you do specify the value it just increases accordingly.
 
@@ -102,17 +102,17 @@ Here we have `ITEM_FIRST` will be `10` then the next `ITEM_SECOND` is `11` then 
 
 When you use `typedef enum` instead of just manually setting all those constant values you get a few advantages:
 
-*   **Readability:** Your code becomes way more self documenting. Instead of just seeing magic numbers you see things like `STATE_READ` and its easy to understand what the code does.
-*   **Maintainability:** If you need to change the value of a particular state or some other number you change it in just one place no need to go through the entire code and manually find and replace values.
-*   **Type safety:** You can't accidentally assign a random integer to a variable of enum type the compiler will complain at compile time which saves debugging time. This is different from just using parameters as they are more of an alias type feature rather than an actual data type like enums are.
-*   **Debugging**: Debuggers also can show named values in debug environment instead of random numbers. Its like saying "hey this variable contains the `CMD_RESET` state now". It is very helpful to debug complex hardware logic and see the flow of different states and actions without having to know the underlying integer value.
+- **Readability:** Your code becomes way more self documenting. Instead of just seeing magic numbers you see things like `STATE_READ` and its easy to understand what the code does.
+- **Maintainability:** If you need to change the value of a particular state or some other number you change it in just one place no need to go through the entire code and manually find and replace values.
+- **Type safety:** You can't accidentally assign a random integer to a variable of enum type the compiler will complain at compile time which saves debugging time. This is different from just using parameters as they are more of an alias type feature rather than an actual data type like enums are.
+- **Debugging**: Debuggers also can show named values in debug environment instead of random numbers. Its like saying "hey this variable contains the `CMD_RESET` state now". It is very helpful to debug complex hardware logic and see the flow of different states and actions without having to know the underlying integer value.
 
 This is why this feature is really useful in hardware design. Its used all the time in various applications. If I didn't know it that one day I'd still be debugging that silly state machine bug probably for weeks or months. It's a foundational concept to building more complicated code and it’s why you see it used everywhere.
 
 If you want to dive deeper into it I would suggest these resources:
 
-*   **SystemVerilog for Verification: A Guide to Learning the Testbench Language** by Chris Spear is a very good book and has a good section on enums. You can find it online or at any university library near you. It is very helpful for all verification related topics.
-*   **IEEE 1800-2017 SystemVerilog Standard:** This is the source of truth for all things SystemVerilog. You can find the standard online. If you are interested in the standard itself. It’s dry but it covers every detail. Good for checking specific rules and details not for learning from it first.
+- **SystemVerilog for Verification: A Guide to Learning the Testbench Language** by Chris Spear is a very good book and has a good section on enums. You can find it online or at any university library near you. It is very helpful for all verification related topics.
+- **IEEE 1800-2017 SystemVerilog Standard:** This is the source of truth for all things SystemVerilog. You can find the standard online. If you are interested in the standard itself. It’s dry but it covers every detail. Good for checking specific rules and details not for learning from it first.
 
 So yeah `typedef enum` it's a powerful tool once you get the hang of it It’s all about making your code cleaner more maintainable and less of a debugging nightmare.
 And if you think you are having problems with typedef enum just remember one time I got a weird compiler error only to find out later I had typed `enmu` instead of `enum` that took me so long to find what was the mistake. So yeah double check your spelling and your code will compile.

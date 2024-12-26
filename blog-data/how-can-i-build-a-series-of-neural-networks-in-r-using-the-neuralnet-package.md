@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-build-a-series-of-neural-networks-in-r-using-the-neuralnet-package"
 ---
 
-Alright, let's tackle this. Building a series of neural networks in `R` using the `neuralnet` package is something I've dealt with quite a bit, particularly back in my days working on that time-series forecasting project for the energy sector. It involved sequentially modeling electricity consumption patterns, each network trained on slightly different time windows to enhance predictive power across multiple segments. It wasn’t just about cranking out models, though; it was about understanding the process, limitations, and best practices.
+, let's tackle this. Building a series of neural networks in `R` using the `neuralnet` package is something I've dealt with quite a bit, particularly back in my days working on that time-series forecasting project for the energy sector. It involved sequentially modeling electricity consumption patterns, each network trained on slightly different time windows to enhance predictive power across multiple segments. It wasn’t just about cranking out models, though; it was about understanding the process, limitations, and best practices.
 
 The `neuralnet` package provides a fairly straightforward interface for single network creation, but when you're stringing multiple networks together – whether for ensemble learning, hierarchical modelling, or simply segmenting your data – you need a bit more control and systematic approach. Here’s how I typically handle it, broken down into logical steps with some code examples.
 
@@ -105,15 +105,15 @@ This code snippet demonstrates a straightforward way to generate predictions for
 
 **Key Considerations for Working with Multiple Networks**
 
-*   **Data Sharing and Dependencies**: Think carefully about whether the networks are independent, sequential, or interdependent. In the electricity project, networks were trained on overlapping time windows, so we carefully managed time offsets and handled edge cases to prevent data leakage, an often-overlooked aspect that can lead to artificially good-looking results.
+- **Data Sharing and Dependencies**: Think carefully about whether the networks are independent, sequential, or interdependent. In the electricity project, networks were trained on overlapping time windows, so we carefully managed time offsets and handled edge cases to prevent data leakage, an often-overlooked aspect that can lead to artificially good-looking results.
 
-*   **Parameter Tuning:** The `neuralnet` package allows you to set parameters like `stepmax` (maximum number of steps for optimization), `threshold` (tolerance for stopping condition), and various learning parameters via the `algorithm` argument. I would suggest, at the very least, using cross validation to choose appropriate hyperparameters for each network, as these often are not transferable among networks trained on different problems.
+- **Parameter Tuning:** The `neuralnet` package allows you to set parameters like `stepmax` (maximum number of steps for optimization), `threshold` (tolerance for stopping condition), and various learning parameters via the `algorithm` argument. I would suggest, at the very least, using cross validation to choose appropriate hyperparameters for each network, as these often are not transferable among networks trained on different problems.
 
-*   **Model Persistence and Versioning:** In practical setups, models need to be saved and versioned. I typically use `saveRDS` to serialize models and maintain a system for model tracking. Something like `dvc` is great for more advanced, collaborative work, as it allows to keep track of model artifacts in a more rigorous manner.
+- **Model Persistence and Versioning:** In practical setups, models need to be saved and versioned. I typically use `saveRDS` to serialize models and maintain a system for model tracking. Something like `dvc` is great for more advanced, collaborative work, as it allows to keep track of model artifacts in a more rigorous manner.
 
-*   **Computation**: Training multiple neural networks can be demanding. Consider using parallel computation via the `foreach` package or similar tools. Also, be mindful of the fact that `neuralnet` does not run on GPUs, so, in case the networks become very large, you might want to consider using other libraries.
+- **Computation**: Training multiple neural networks can be demanding. Consider using parallel computation via the `foreach` package or similar tools. Also, be mindful of the fact that `neuralnet` does not run on GPUs, so, in case the networks become very large, you might want to consider using other libraries.
 
-*   **Ensemble Techniques:** If the ultimate goal is prediction, instead of simply applying a sequence of networks, think about techniques like bagging or boosting with neural networks. This would allow to use multiple models to make a final improved prediction.
+- **Ensemble Techniques:** If the ultimate goal is prediction, instead of simply applying a sequence of networks, think about techniques like bagging or boosting with neural networks. This would allow to use multiple models to make a final improved prediction.
 
 **In Conclusion**
 

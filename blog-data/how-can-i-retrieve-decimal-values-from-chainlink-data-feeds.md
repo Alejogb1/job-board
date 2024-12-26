@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-retrieve-decimal-values-from-chainlink-data-feeds"
 ---
 
-Okay, let's dive into this. Retrieving decimal values from Chainlink data feeds isn’t always as straightforward as pulling a simple integer. The issue stems from how Chainlink often delivers price data, which, while fundamentally numeric, is typically represented with a defined level of precision using an integer format. This approach conserves gas costs by avoiding floating-point operations directly in the solidity code, which are notoriously expensive on the ethereum virtual machine (evm). Over my years working with decentralized applications, I've encountered this many times, particularly when building complex derivatives platforms, and learned a few tricks of the trade.
+, let's dive into this. Retrieving decimal values from Chainlink data feeds isn’t always as straightforward as pulling a simple integer. The issue stems from how Chainlink often delivers price data, which, while fundamentally numeric, is typically represented with a defined level of precision using an integer format. This approach conserves gas costs by avoiding floating-point operations directly in the solidity code, which are notoriously expensive on the ethereum virtual machine (evm). Over my years working with decentralized applications, I've encountered this many times, particularly when building complex derivatives platforms, and learned a few tricks of the trade.
 
-The core challenge is interpreting these integer representations to yield their actual decimal values. Chainlink data feeds commonly express values by multiplying the intended decimal value by a large power of ten. The specific power used is determined by the *decimals* field available within the feed itself. You’re not just grabbing a number; you’re grabbing an *integer representation* of a number. Understanding this is paramount to extracting accurate decimal values.
+The core challenge is interpreting these integer representations to yield their actual decimal values. Chainlink data feeds commonly express values by multiplying the intended decimal value by a large power of ten. The specific power used is determined by the _decimals_ field available within the feed itself. You’re not just grabbing a number; you’re grabbing an _integer representation_ of a number. Understanding this is paramount to extracting accurate decimal values.
 
-To achieve this, you need to fetch two pieces of information: the *latestAnswer* (the integer representation of the value) and the *decimals* (the exponent of ten used for scaling) from the chainlink data feed contract. Once you have these, calculating the actual decimal value becomes a relatively simple division by the appropriate power of ten. It's also essential to ensure that you implement checks for valid responses, verifying data is both recent and hasn’t deviated significantly from expectations, which Chainlink also provides methods for. Failing this, you risk using stale or corrupted data.
+To achieve this, you need to fetch two pieces of information: the _latestAnswer_ (the integer representation of the value) and the _decimals_ (the exponent of ten used for scaling) from the chainlink data feed contract. Once you have these, calculating the actual decimal value becomes a relatively simple division by the appropriate power of ten. It's also essential to ensure that you implement checks for valid responses, verifying data is both recent and hasn’t deviated significantly from expectations, which Chainlink also provides methods for. Failing this, you risk using stale or corrupted data.
 
 Now, let's explore how to achieve this using solidity. I've found it useful to create a dedicated library function for this process; It encapsulates the logic and makes its reuse very straightforward.
 
@@ -31,7 +31,7 @@ library ChainlinkDecimal {
             /* uint256 updatedAt */,
             /* uint80 answeredInRound */
         ) = priceFeed.latestRoundData();
-        
+
         decimals = priceFeed.decimals();
 
         decimalPrice = answer;

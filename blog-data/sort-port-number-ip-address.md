@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "sort-port-number-ip-address"
 ---
 
-Okay I get it You're asking how to sort a list of network addresses based on port number and then IP address That's a pretty common task especially when dealing with network monitoring or log analysis I've wrestled with this beast more times than I care to admit let me tell you about my own suffering
+I get it You're asking how to sort a list of network addresses based on port number and then IP address That's a pretty common task especially when dealing with network monitoring or log analysis I've wrestled with this beast more times than I care to admit let me tell you about my own suffering
 
-Okay so first let's talk about the data format I’m assuming we have some kind of list or array each entry containing both the IP and the port typically formatted as strings like "1921681100080" or "10101500022" Notice I’m using the simplest representation possible for the sake of clarity in code examples we might have a more complex data structure but for sorting purposes string representation is fine
+first let's talk about the data format I’m assuming we have some kind of list or array each entry containing both the IP and the port typically formatted as strings like "1921681100080" or "10101500022" Notice I’m using the simplest representation possible for the sake of clarity in code examples we might have a more complex data structure but for sorting purposes string representation is fine
 
 Back in my early days building network monitoring tools one of my first projects needed this exact functionality I had thousands of these address strings coming in from different sources I needed to sort them to identify services that use specific ports and correlate them to IP addresses It wasn’t pretty initial code was super inefficient but I learned from that experience you always learn from errors
 
@@ -40,57 +40,69 @@ def sort_ip_port(address_list):
            return 0
 
     return sorted(address_list, key=lambda x: (int(x.rsplit(':', 1)[1]), list(map(int,x.rsplit(':',1)[0].split('.')))))
-     
+
 addresses = ["192.168.1.10:80", "10.0.0.5:22", "192.168.1.5:8080", "10.0.0.1:22", "192.168.1.10:22", "192.168.1.10:8080", "10.0.0.2:22"]
 sorted_addresses = sort_ip_port(addresses)
 print(sorted_addresses)
 #Output: ['10.0.0.1:22', '10.0.0.2:22', '10.0.0.5:22', '192.168.1.10:22', '192.168.1.10:80', '192.168.1.5:8080', '192.168.1.10:8080']
 
 ```
+
 In this code, we use a lambda function for direct comparison within the sorted call This extracts the port converts to integer and constructs the tuple used for sorting It’s cleaner I found when I did more network stuff for an older project but I remember I had to do this again from scratch because for some reason in the last company I worked at for a short time I had to write all from scratch which was a waste of resources But I did learn another way of doing this as I will show next in JS
 
 **JavaScript Example**
+
 ```javascript
 function sortIPAndPort(addresses) {
-    return addresses.sort((a, b) => {
-      const [ipA, portA] = a.split(":");
-      const [ipB, portB] = b.split(":");
+  return addresses.sort((a, b) => {
+    const [ipA, portA] = a.split(":");
+    const [ipB, portB] = b.split(":");
 
-      const portIntA = parseInt(portA, 10);
-      const portIntB = parseInt(portB, 10);
+    const portIntA = parseInt(portA, 10);
+    const portIntB = parseInt(portB, 10);
 
-      if (portIntA < portIntB) {
+    if (portIntA < portIntB) {
+      return -1;
+    }
+    if (portIntA > portIntB) {
+      return 1;
+    }
+
+    const ipPartsA = ipA.split(".").map(Number);
+    const ipPartsB = ipB.split(".").map(Number);
+
+    for (let i = 0; i < 4; i++) {
+      if (ipPartsA[i] < ipPartsB[i]) {
         return -1;
       }
-      if (portIntA > portIntB) {
+      if (ipPartsA[i] > ipPartsB[i]) {
         return 1;
       }
-
-      const ipPartsA = ipA.split(".").map(Number);
-      const ipPartsB = ipB.split(".").map(Number);
-
-      for (let i = 0; i < 4; i++) {
-        if (ipPartsA[i] < ipPartsB[i]) {
-            return -1;
-        }
-        if (ipPartsA[i] > ipPartsB[i]) {
-          return 1;
-        }
-      }
-        return 0;
-    });
+    }
+    return 0;
+  });
 }
 
-const addresses = ["192.168.1.10:80", "10.0.0.5:22", "192.168.1.5:8080", "10.0.0.1:22", "192.168.1.10:22", "192.168.1.10:8080", "10.0.0.2:22"];
+const addresses = [
+  "192.168.1.10:80",
+  "10.0.0.5:22",
+  "192.168.1.5:8080",
+  "10.0.0.1:22",
+  "192.168.1.10:22",
+  "192.168.1.10:8080",
+  "10.0.0.2:22",
+];
 const sortedAddresses = sortIPAndPort(addresses);
 console.log(sortedAddresses);
 //Output: ['10.0.0.1:22', '10.0.0.2:22', '10.0.0.5:22', '192.168.1.10:22', '192.168.1.10:80', '192.168.1.5:8080', '192.168.1.10:8080']
 ```
+
 This JavaScript example is a direct translation of the Python example and shows that the logic and concept is portable between languages Both examples do the same thing first compares the ports then if the ports are equal compares the IP address
 
 And as a bonus here's a C++ example since sometimes you need that raw performance particularly when you are dealing with systems software
 
 **C++ Example**
+
 ```cpp
 #include <iostream>
 #include <vector>
@@ -151,6 +163,7 @@ int main() {
 //192.168.1.10:8080
 
 ```
+
 This C++ example, again does the same using a custom comparator function to sort the vector
 
 Now let's talk resources you mentioned no links so let's do that properly if you're serious about this network stuff there are some good books and papers you should check out

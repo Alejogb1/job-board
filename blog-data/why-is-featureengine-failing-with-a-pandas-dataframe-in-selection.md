@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-featureengine-failing-with-a-pandas-dataframe-in-selection"
 ---
 
-Okay, let's delve into why you might be encountering issues with `feature_engine` when selecting columns within a pandas dataframe. I've personally run into similar snags more than a few times, so I understand the frustration. Often, it's not a straightforward bug but rather a confluence of factors related to how `feature_engine` expects input data, and the way pandas dataframes behave, especially when dealing with nuanced selection mechanisms.
+, let's delve into why you might be encountering issues with `feature_engine` when selecting columns within a pandas dataframe. I've personally run into similar snags more than a few times, so I understand the frustration. Often, it's not a straightforward bug but rather a confluence of factors related to how `feature_engine` expects input data, and the way pandas dataframes behave, especially when dealing with nuanced selection mechanisms.
 
 First, it’s crucial to understand that `feature_engine`'s transformers aren’t directly vectorized operations on the whole dataframe, like some pandas methods. Instead, they're generally designed to operate on specific columns at a time, or in some cases, groups of specified columns. When selection seems to fail, it often boils down to a mismatch between what the transformer expects and what you're providing as input.
 
@@ -35,7 +35,7 @@ df_transformed = imputer.transform(df_original)
 print(df_transformed)
 ```
 
-This code would, in most basic examples, work fine. But let’s say, for reasons I won't get into now, the dataframe I eventually pass to `transform` doesn't *exactly* match the structure of `df_original` passed to fit, or more specifically, has column names changed, even very subtly, due to an earlier part of the pipeline. For instance, if a separate function modifies `df_original` and passes it to `transform` with columns that become `price_t_minus_1`, `price_t_minus_2` instead,  `feature_engine` will raise an error during the `transform` stage, as the imputer would search for the original column names 'price_t-1' and 'price_t-2', which no longer exist.
+This code would, in most basic examples, work fine. But let’s say, for reasons I won't get into now, the dataframe I eventually pass to `transform` doesn't _exactly_ match the structure of `df_original` passed to fit, or more specifically, has column names changed, even very subtly, due to an earlier part of the pipeline. For instance, if a separate function modifies `df_original` and passes it to `transform` with columns that become `price_t_minus_1`, `price_t_minus_2` instead, `feature_engine` will raise an error during the `transform` stage, as the imputer would search for the original column names 'price_t-1' and 'price_t-2', which no longer exist.
 
 ```python
 import pandas as pd
@@ -72,7 +72,7 @@ except Exception as e:
 
 You see the problem here; it's a subtle name change, but it is enough for `feature_engine` to fail. The issue isn't necessarily in the imputer's logic but in the strict validation of column names between the fit and transform phases. `feature_engine` expects that the columns specified as `variables` during `fit` are precisely present in the dataframe given to `transform`, in order to execute operations on the intended columns.
 
-Another situation where selection fails is when dealing with column selection via indexes versus column names or a mix of both in the variables parameter. While pandas is flexible with integer indexing, `feature_engine` generally operates on column *names* directly. Using a mixture or only integer positions might cause a transformer to select the wrong set of columns, or error, particularly if they are not used consistently. This becomes especially pertinent when you perform operations that change the order of your dataframe's columns. Let me demonstrate this situation, keeping the financial prediction dataset in mind, but now imagine that in your particular use-case you’re not passing the columns to the imputer, but rather indices of the columns you wish to impute
+Another situation where selection fails is when dealing with column selection via indexes versus column names or a mix of both in the variables parameter. While pandas is flexible with integer indexing, `feature_engine` generally operates on column _names_ directly. Using a mixture or only integer positions might cause a transformer to select the wrong set of columns, or error, particularly if they are not used consistently. This becomes especially pertinent when you perform operations that change the order of your dataframe's columns. Let me demonstrate this situation, keeping the financial prediction dataset in mind, but now imagine that in your particular use-case you’re not passing the columns to the imputer, but rather indices of the columns you wish to impute
 
 ```python
 import pandas as pd

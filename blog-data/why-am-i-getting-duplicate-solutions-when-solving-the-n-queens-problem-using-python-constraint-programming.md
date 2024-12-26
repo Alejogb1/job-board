@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-am-i-getting-duplicate-solutions-when-solving-the-n-queens-problem-using-python-constraint-programming"
 ---
 
-Okay, let's tackle this. Duplicate solutions with the n-queens problem using constraint programming in Python – it’s a classic stumbling block, and I’ve certainly spent my share of time debugging this exact issue back when I was knee-deep in my master's thesis work, simulating various resource allocation problems that also leveraged similar constraint-based techniques. It's a situation that often boils down to a subtle characteristic of how constraint solvers explore the solution space.
+, let's tackle this. Duplicate solutions with the n-queens problem using constraint programming in Python – it’s a classic stumbling block, and I’ve certainly spent my share of time debugging this exact issue back when I was knee-deep in my master's thesis work, simulating various resource allocation problems that also leveraged similar constraint-based techniques. It's a situation that often boils down to a subtle characteristic of how constraint solvers explore the solution space.
 
-The heart of the problem lies in the inherent symmetries within the n-queens board. Think about it: if a board configuration is a solution, its horizontal reflection, its vertical reflection, and even rotations of 90, 180, and 270 degrees might also be solutions. However, these are not new *distinct* solutions. They are just mirrored or rotated versions of an already discovered configuration. A naive constraint solver might treat them as separate entities, leading to these duplicates. The core principle we need to grasp is that the solver is exploring every possible permutation within constraints, and this exploration inevitably leads to these symmetrical duplicates.
+The heart of the problem lies in the inherent symmetries within the n-queens board. Think about it: if a board configuration is a solution, its horizontal reflection, its vertical reflection, and even rotations of 90, 180, and 270 degrees might also be solutions. However, these are not new _distinct_ solutions. They are just mirrored or rotated versions of an already discovered configuration. A naive constraint solver might treat them as separate entities, leading to these duplicates. The core principle we need to grasp is that the solver is exploring every possible permutation within constraints, and this exploration inevitably leads to these symmetrical duplicates.
 
 Here’s the crux of the problem and the solution, broken into layers. The straightforward constraint model for n-queens, typically involving variables representing the row position of each queen, inherently allows for these symmetrical permutations.
 
@@ -38,9 +38,9 @@ if __name__ == '__main__':
         print(sol)
 ```
 
-Running this snippet for, say, a 4x4 board, will typically produce two solutions that are clearly symmetrical reflections of each other. The issue isn’t with the logic *per se*; the constraint correctly eliminates any configurations where queens are in the same row, column (implicit in the variable setup), or diagonals. It's that it doesn't actively reject the symmetric permutations.
+Running this snippet for, say, a 4x4 board, will typically produce two solutions that are clearly symmetrical reflections of each other. The issue isn’t with the logic _per se_; the constraint correctly eliminates any configurations where queens are in the same row, column (implicit in the variable setup), or diagonals. It's that it doesn't actively reject the symmetric permutations.
 
-Now, let's move towards strategies to address these duplicates. The common approach is to introduce additional constraints that enforce *lexicographical ordering* or otherwise break symmetry. A simple tactic is to fix the position of the first queen in some way – for example, by forcing its row to be less than or equal to n/2, or to specifically fix it at a particular position such as `row = 0`.
+Now, let's move towards strategies to address these duplicates. The common approach is to introduce additional constraints that enforce _lexicographical ordering_ or otherwise break symmetry. A simple tactic is to fix the position of the first queen in some way – for example, by forcing its row to be less than or equal to n/2, or to specifically fix it at a particular position such as `row = 0`.
 
 Here's an example modifying the previous code to fix the first queen's position to row 0:
 
@@ -76,7 +76,7 @@ if __name__ == '__main__':
 
 This version fixes the first queen's position to row `0`, effectively breaking the symmetry related to reflections over the horizontal axis. Notice that the solutions list is now reduced, showcasing the intended effect. While simple, this method is not suitable for all n-queens problem instances as it reduces search space arbitrarily.
 
-A more robust and generally applicable strategy involves enforcing an ordering on the solutions. This generally involves comparing solutions lexicographically and filtering them to keep only the unique ones. Here's a version that implements a basic lexicographical check on the solutions *after* they are discovered:
+A more robust and generally applicable strategy involves enforcing an ordering on the solutions. This generally involves comparing solutions lexicographically and filtering them to keep only the unique ones. Here's a version that implements a basic lexicographical check on the solutions _after_ they are discovered:
 
 ```python
 from constraint import *

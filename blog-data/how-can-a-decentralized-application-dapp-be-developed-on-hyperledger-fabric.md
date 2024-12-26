@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-decentralized-application-dapp-be-developed-on-hyperledger-fabric"
 ---
 
-Okay, let's tackle this. I remember back in 2018, during a project for a distributed supply chain initiative, we hit a snag trying to integrate our legacy systems with a blockchain solution. We chose Hyperledger Fabric for its permissioned nature and robust privacy controls, and the challenge then, as it often is, was crafting a usable decentralized application (dApp) on top of it. It’s not as straightforward as deploying a smart contract on, say, Ethereum. Fabric presents a different architecture requiring a slightly modified approach. Here's my perspective, drawing from that experience and subsequent projects.
+, let's tackle this. I remember back in 2018, during a project for a distributed supply chain initiative, we hit a snag trying to integrate our legacy systems with a blockchain solution. We chose Hyperledger Fabric for its permissioned nature and robust privacy controls, and the challenge then, as it often is, was crafting a usable decentralized application (dApp) on top of it. It’s not as straightforward as deploying a smart contract on, say, Ethereum. Fabric presents a different architecture requiring a slightly modified approach. Here's my perspective, drawing from that experience and subsequent projects.
 
 Developing a dApp on Hyperledger Fabric isn't just about writing smart contracts—or chaincode, as it's called in Fabric parlance. You're essentially building a distributed system with specific components communicating securely. The key elements are your client applications, which interact with the Fabric network; the chaincode, which holds your business logic; and the Fabric network itself, consisting of peers, orderers, and certificate authorities. The dApp aspect comes from how your client application uses the Fabric SDK to engage with the ledger, effectively making it a decentralized point of interaction.
 
@@ -15,43 +15,63 @@ Now, for the client application itself. It's critical to understand that this is
 Let's illustrate with a Node.js example. Assume we have a very basic chaincode that transfers assets between two users. Here's a snippet of a client application making a transaction:
 
 ```javascript
-const { Gateway, Wallets } = require('fabric-network');
-const path = require('path');
-const fs = require('fs');
+const { Gateway, Wallets } = require("fabric-network");
+const path = require("path");
+const fs = require("fs");
 
 async function submitTransferTransaction(userId, recipientId, amount) {
   try {
-    const ccpPath = path.resolve(__dirname, '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
-    const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
+    const ccpPath = path.resolve(
+      __dirname,
+      "..",
+      "..",
+      "test-network",
+      "organizations",
+      "peerOrganizations",
+      "org1.example.com",
+      "connection-org1.json"
+    );
+    const ccp = JSON.parse(fs.readFileSync(ccpPath, "utf8"));
 
-    const walletPath = path.join(process.cwd(), 'wallet');
+    const walletPath = path.join(process.cwd(), "wallet");
     const wallet = await Wallets.newFileSystemWallet(walletPath);
     const userExists = await wallet.get(userId);
     if (!userExists) {
-      console.log(`An identity for the user ${userId} does not exist in the wallet`);
+      console.log(
+        `An identity for the user ${userId} does not exist in the wallet`
+      );
       return;
     }
 
     const gateway = new Gateway();
-    await gateway.connect(ccp, { wallet, identity: userId, discovery: { enabled: true, asLocalhost: true } });
+    await gateway.connect(ccp, {
+      wallet,
+      identity: userId,
+      discovery: { enabled: true, asLocalhost: true },
+    });
 
-    const network = await gateway.getNetwork('mychannel');
-    const contract = network.getContract('mycc');
+    const network = await gateway.getNetwork("mychannel");
+    const contract = network.getContract("mycc");
 
-    const transaction = await contract.submitTransaction('transferAsset', userId, recipientId, amount.toString());
+    const transaction = await contract.submitTransaction(
+      "transferAsset",
+      userId,
+      recipientId,
+      amount.toString()
+    );
     console.log(`Transaction has been submitted`);
     await gateway.disconnect();
-
   } catch (error) {
     console.error(`Failed to submit transaction: ${error}`);
   }
 }
 
 // example usage:
-submitTransferTransaction('user1', 'user2', 10).then(() => {
-    console.log('transfer complete');
-}).catch(e => console.error(e));
-
+submitTransferTransaction("user1", "user2", 10)
+  .then(() => {
+    console.log("transfer complete");
+  })
+  .catch((e) => console.error(e));
 ```
 
 In this example, we're using the Fabric SDK to connect to the network, load our identity from the wallet, and submit a transaction to the `transferAsset` function in our chaincode. Notice how we're not directly handling any cryptographic signing here. It’s abstracted away by the SDK.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-initialize-a-request-in-getedithandler-in-a-modeladmin-class-in-wagtail"
 ---
 
-Alright, let’s tackle this. It’s a common point of confusion when working with wagtail's admin interface customization. I've certainly spent a few late nights debugging similar issues myself. The challenge is that `get_edit_handler` operates within the context of building the admin form, and directly initializing request-specific data in there isn't straightforward. Instead, you often need to use other hooks or methods to accomplish the task. Let me explain, and provide some practical examples.
+, let’s tackle this. It’s a common point of confusion when working with wagtail's admin interface customization. I've certainly spent a few late nights debugging similar issues myself. The challenge is that `get_edit_handler` operates within the context of building the admin form, and directly initializing request-specific data in there isn't straightforward. Instead, you often need to use other hooks or methods to accomplish the task. Let me explain, and provide some practical examples.
 
 The core issue is that `get_edit_handler` is called when the form definition is being created – think of it as blueprinting the admin form, rather than actively handling a specific user's request. The actual http request, with its cookies, headers, and user info, only becomes relevant during form processing. Therefore, attempting to grab data directly from a request within `get_edit_handler` will not work as you might expect. This is particularly problematic when, let's say, you want to pre-populate a form field based on the user or some data present in a query parameter.
 
@@ -42,7 +42,7 @@ class MyPage(Page):
 
     def get_form_class(self):
         form_class = super().get_form_class()
-        
+
         class CustomPageForm(form_class):
           def __init__(self, *args, **kwargs):
             self.request = kwargs.pop('request', None)
@@ -105,7 +105,7 @@ class MyPromoPage(Page):
 
 ```
 
-In this example, we've adapted the `get_form_class` method and our custom form to extract the 'promo' query parameter and set it as the initial value for the 'promo\_code' field.
+In this example, we've adapted the `get_form_class` method and our custom form to extract the 'promo' query parameter and set it as the initial value for the 'promo_code' field.
 
 **Example 3: More Complex Initialization Logic:**
 
@@ -131,7 +131,7 @@ class MyApiPage(Page):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-    
+
     def get_form_class(self):
       form_class = super().get_form_class()
       class CustomApiPageForm(form_class):
@@ -140,9 +140,9 @@ class MyApiPage(Page):
              super().__init__(*args, **kwargs)
 
           def process(self, *args, **kwargs):
-            
+
             response = super().process(*args, **kwargs)
-            
+
             if not self.is_valid():
                 return response
             if self.request:
@@ -158,14 +158,15 @@ class MyApiPage(Page):
 
       return CustomApiPageForm
 ```
+
 Here we are using the form `process` method to make an API call. You can replace the simulate API call by whatever is needed in your system, this was just an example to illustrate how the `request` is available to perform that type of operation.
 
 **Important Resources:**
 
 To delve deeper into this area, I'd recommend consulting the official Wagtail documentation. It's your most reliable source for this kind of information.
 
-*   **"Wagtail Documentation"**: Start with the official documentation pages on form customization and `ModelAdmin` classes. It contains detailed information and examples about `construct_initial`, `process` and `get_form_class`.
+- **"Wagtail Documentation"**: Start with the official documentation pages on form customization and `ModelAdmin` classes. It contains detailed information and examples about `construct_initial`, `process` and `get_form_class`.
 
-*   **"Django's Class-Based Form Documentation"**: Explore the django's documentation related to the forms class-based views, this will give you a deeper understanding on how `construct_initial` works.
+- **"Django's Class-Based Form Documentation"**: Explore the django's documentation related to the forms class-based views, this will give you a deeper understanding on how `construct_initial` works.
 
 In short, remember that you cannot directly rely on `request` inside `get_edit_handler`. Leveraging `get_form_class` with your own form class to add the request and then using `construct_initial` (or the `process` method) allows you to manipulate form initial values or form processing based on the request context. I’ve found these techniques to be invaluable when building more complex and user-aware admin interfaces with Wagtail. Always test thoroughly and consider edge cases like unauthenticated users when implementing these approaches. Good luck!

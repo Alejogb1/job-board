@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-integrate-a-yield-generator-into-a-spacy-pipeline-using-addpipe"
 ---
 
-Okay, let's tackle this. Integrating a generator function into a spaCy pipeline via `add_pipe` isn't immediately obvious, and I recall quite a few situations where I initially stumbled with this myself. It primarily stems from the way spaCy pipelines are designed to work with `Doc` objects, and generators operate on potentially different data structures. The key is understanding how to bridge that gap. I’ve spent considerable time troubleshooting this, particularly when handling large document collections and wanting to stream the processing rather than loading everything into memory. The benefits in those scenarios are tremendous, specifically when we're talking about resource constraints.
+, let's tackle this. Integrating a generator function into a spaCy pipeline via `add_pipe` isn't immediately obvious, and I recall quite a few situations where I initially stumbled with this myself. It primarily stems from the way spaCy pipelines are designed to work with `Doc` objects, and generators operate on potentially different data structures. The key is understanding how to bridge that gap. I’ve spent considerable time troubleshooting this, particularly when handling large document collections and wanting to stream the processing rather than loading everything into memory. The benefits in those scenarios are tremendous, specifically when we're talking about resource constraints.
 
 The core issue comes down to the fact that `add_pipe` expects a callable that accepts a `Doc` object as input and returns a modified `Doc` object, or simply returns `None` if its function is to merely modify the doc in place without generating a new one. Generators, on the other hand, generally yield individual items, not necessarily full `Doc` objects. So, we need to build an intermediary that can take the output from our generator and package it as a series of `Doc` objects that spaCy can understand.
 
@@ -42,7 +42,7 @@ if __name__ == "__main__":
 
     doc_generator = text_line_generator(file_path)
     component_fn = create_doc_component(nlp)
-    
+
     nlp.add_pipe(component_fn, name='custom_doc_generator', last = True)
 
     for doc in nlp.pipe(doc_generator):
@@ -52,11 +52,12 @@ if __name__ == "__main__":
     import os
     os.remove(file_path)
 ```
-Here, `text_line_generator` is our generator. `create_doc_component` creates a function that consumes the string yield, creates a `Doc` and yields the `Doc`. We then create the pipeline component with this function and add it using `add_pipe`.  This approach shows how to turn any string generator into a source for spaCy.
+
+Here, `text_line_generator` is our generator. `create_doc_component` creates a function that consumes the string yield, creates a `Doc` and yields the `Doc`. We then create the pipeline component with this function and add it using `add_pipe`. This approach shows how to turn any string generator into a source for spaCy.
 
 **Example 2: Generator Yielding Pre-Tokenized Text**
 
-Now, let’s assume that your generator doesn’t yield raw text but rather pre-tokenized data. Perhaps you have text in JSON format, or have applied some preprocessing already.  In this case, you need to utilize `nlp.tokenizer.tokens_from_list`.
+Now, let’s assume that your generator doesn’t yield raw text but rather pre-tokenized data. Perhaps you have text in JSON format, or have applied some preprocessing already. In this case, you need to utilize `nlp.tokenizer.tokens_from_list`.
 
 ```python
 import spacy
@@ -135,7 +136,7 @@ Here, we are yielding a dictionary containing the text along with other informat
 
 These three examples demonstrate various strategies for wrapping your generators. The common theme is that you have to create an intermediary component that iterates through the yielded objects and convert those objects into spaCy `Doc` objects.
 
-For more in-depth theoretical understanding of pipelining in NLP systems, I strongly recommend looking into the original publications by spaCy’s core team. Specifically, the work by Matthew Honnibal and Ines Montani on efficient pipelining and the design philosophy behind spaCy's architecture is invaluable. Consider also the work by Yoav Goldberg on neural networks for NLP, particularly regarding the efficiency of text processing frameworks. The official spaCy documentation is a great resource, obviously, but diving deeper into the theoretical underpinnings will clarify *why* certain approaches work and provide a more robust understanding.
+For more in-depth theoretical understanding of pipelining in NLP systems, I strongly recommend looking into the original publications by spaCy’s core team. Specifically, the work by Matthew Honnibal and Ines Montani on efficient pipelining and the design philosophy behind spaCy's architecture is invaluable. Consider also the work by Yoav Goldberg on neural networks for NLP, particularly regarding the efficiency of text processing frameworks. The official spaCy documentation is a great resource, obviously, but diving deeper into the theoretical underpinnings will clarify _why_ certain approaches work and provide a more robust understanding.
 
 One thing to be cautious about, especially with more complex generators, is to make sure your generator logic doesn't have hidden side effects, like inadvertently changing global state. This might not always cause an error, but it can lead to subtle bugs. Careful testing is paramount here.
 

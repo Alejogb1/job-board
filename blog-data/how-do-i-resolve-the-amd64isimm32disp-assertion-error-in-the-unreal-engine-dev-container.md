@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-resolve-the-amd64isimm32disp-assertion-error-in-the-unreal-engine-dev-container"
 ---
 
-Alright, let's tackle this `amd64_is_imm32(disp)` assertion error you're facing within your Unreal Engine dev container. This one rings a bell; I remember encountering something similar back when I was heavily involved in optimizing some custom rendering modules for a game that pushed the boundaries of the engine’s capabilities. It's certainly a frustrating roadblock, but let's break it down methodically. The core issue, as the assertion implies, revolves around the size of the displacement (`disp`) value being passed in a context where a 32-bit immediate value is expected within the x86-64 (amd64) architecture. When you're deep in engine code, this often arises due to either incorrect assembly generation, a compiler misinterpretation, or more commonly, issues with how memory addresses are being handled, particularly within generated shaders or low-level engine components.
+, let's tackle this `amd64_is_imm32(disp)` assertion error you're facing within your Unreal Engine dev container. This one rings a bell; I remember encountering something similar back when I was heavily involved in optimizing some custom rendering modules for a game that pushed the boundaries of the engine’s capabilities. It's certainly a frustrating roadblock, but let's break it down methodically. The core issue, as the assertion implies, revolves around the size of the displacement (`disp`) value being passed in a context where a 32-bit immediate value is expected within the x86-64 (amd64) architecture. When you're deep in engine code, this often arises due to either incorrect assembly generation, a compiler misinterpretation, or more commonly, issues with how memory addresses are being handled, particularly within generated shaders or low-level engine components.
 
 First, let's clarify what's going on under the hood. In x86-64 assembly, certain instructions that involve accessing memory locations utilize a displacement value, or offset, from a base register. This displacement can be encoded as a small immediate value (typically up to 32 bits) or require a more complex addressing mode. The assertion is essentially the code's way of screaming, "Hey, I expected a 32-bit displacement here, but something larger or different is showing up." This usually means the generated assembly is attempting to use an addressing scheme that involves a displacement outside of the permitted 32-bit range, which then triggers this error.
 
@@ -43,6 +43,7 @@ float exampleFunc() {
     return myData.data1[4000]; // This could generate a large displacement value
 }
 ```
+
 In this case, if the compiler directly encoded the offset to `data1[4000]` from the constant buffer base as a literal, rather than a register-based offset, the displacement may exceed 32 bits. The proper way to solve this issue is to ensure the data is accessed using appropriate base pointers and relative offsets.
 
 **Example 2: Improper Pointer Arithmetic in C++ Plugin:**
@@ -68,6 +69,7 @@ void CallProcessStruct(){
 }
 
 ```
+
 In this example, direct pointer arithmetic creates a large offset, which might become a non-immediate value during code generation. A much better solution would be to access the data structure using smaller offsets, relative to the base pointer that is within the structure itself rather than just casting and adding an offset from the beginning of the structure. For example by using a struct member rather than an arbitrary offset.
 
 **Example 3: Issue in a dynamically created function:**
@@ -95,9 +97,9 @@ Here, if `largeOffset` is too large, this might not be represented as a relative
 
 **Recommended Reading:**
 
-*   **"Computer Organization and Design" by David A. Patterson and John L. Hennessy:** Provides a comprehensive understanding of computer architecture, including instruction set architectures like x86-64, which is fundamental to understanding the origins of this issue.
-*   **"Optimizing C++" by Kurt Guntheroth:** Covers in depth the optimisation techniques of C++, and provides insights into how compilers transform code. This will allow you to better understand why an assertion such as this may have been triggered.
-*   **The Intel 64 and IA-32 Architectures Software Developer's Manual:** For the nitty-gritty detail on the x86-64 instruction set and addressing modes, the Intel manuals are the ultimate source of truth. These are accessible for free from Intel's website.
-*   **Shader Model Documentation by Microsoft:** While specific to DirectX, understanding shader models (like those used in HLSL) is important when diagnosing shader-related compilation and runtime issues.
+- **"Computer Organization and Design" by David A. Patterson and John L. Hennessy:** Provides a comprehensive understanding of computer architecture, including instruction set architectures like x86-64, which is fundamental to understanding the origins of this issue.
+- **"Optimizing C++" by Kurt Guntheroth:** Covers in depth the optimisation techniques of C++, and provides insights into how compilers transform code. This will allow you to better understand why an assertion such as this may have been triggered.
+- **The Intel 64 and IA-32 Architectures Software Developer's Manual:** For the nitty-gritty detail on the x86-64 instruction set and addressing modes, the Intel manuals are the ultimate source of truth. These are accessible for free from Intel's website.
+- **Shader Model Documentation by Microsoft:** While specific to DirectX, understanding shader models (like those used in HLSL) is important when diagnosing shader-related compilation and runtime issues.
 
 The key is to systematically trace the problem, investigate the source code and assembly, and adjust code/data structures to work within the bounds of the x86-64 instruction set. I hope these insights are useful in your troubleshooting journey. Remember, patience and a systematic approach are crucial.

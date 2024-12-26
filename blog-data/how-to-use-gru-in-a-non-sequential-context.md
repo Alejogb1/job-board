@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-gru-in-a-non-sequential-context"
 ---
 
-alright, so you're asking about using grus in a non-sequential context. that's a fun one, i've definitely been there. most folks, myself included initially, think of grus, or gated recurrent units, as these time-series powerhouses, perfect for handling sequences like text or audio. and they are, but limiting them to just that use-case is throwing away a lot of potential. i mean, the ‘recurrent’ part of their name makes everyone think they must have sequences. the thing is, what defines the sequence? the internal mechanics of a gru are all about the gates and cell states, and that’s totally orthogonal to a strict time dimension.
+, so you're asking about using grus in a non-sequential context. that's a fun one, i've definitely been there. most folks, myself included initially, think of grus, or gated recurrent units, as these time-series powerhouses, perfect for handling sequences like text or audio. and they are, but limiting them to just that use-case is throwing away a lot of potential. i mean, the ‘recurrent’ part of their name makes everyone think they must have sequences. the thing is, what defines the sequence? the internal mechanics of a gru are all about the gates and cell states, and that’s totally orthogonal to a strict time dimension.
 
 i remember when i first encountered this. it was maybe five, six years back. i was working on a project involving protein folding prediction. we had a bunch of spatial data, atom positions and such, and i was trying all sorts of graph neural networks. then, i stumbled upon a paper that used grus not on temporal sequences but rather based on relationships in the graph— like, they treated the neighbors of a node as a “sequence”. it blew my mind a bit. it was like using a hammer to screw things, but it worked… and it worked really well in some circumstances.
 
@@ -28,22 +28,22 @@ class GraphGRU(nn.Module):
         self.gru = nn.GRU(feature_size, hidden_size, batch_first=True)
 
     def forward(self, node_features, neighbor_indices):
-       
+
         batch_size = node_features.size(0)
         hidden_states = []
 
         for i in range(batch_size):
-           
+
             neighbors_features = node_features[i, neighbor_indices[i]]
 
-            _, h_n = self.gru(neighbors_features.unsqueeze(0))  
-            
+            _, h_n = self.gru(neighbors_features.unsqueeze(0))
+
             hidden_states.append(h_n.squeeze(0))
-        
+
         return torch.stack(hidden_states, dim=0)
 
 if __name__ == '__main__':
-    
+
     feature_size = 5
     hidden_size = 10
 
@@ -76,12 +76,12 @@ class SetGRU(nn.Module):
         self.gru = nn.GRU(feature_size, hidden_size, batch_first=True)
 
     def forward(self, features, order_indices):
-        ordered_features = features[:, order_indices, :] # reorder features 
+        ordered_features = features[:, order_indices, :] # reorder features
         _, h_n = self.gru(ordered_features)
         return h_n.squeeze(0)
-        
+
 if __name__ == '__main__':
-    
+
     feature_size = 10
     hidden_size = 20
     num_sets = 5 # batch size
@@ -89,8 +89,8 @@ if __name__ == '__main__':
 
     set_gru = SetGRU(feature_size, hidden_size)
 
-    features = torch.randn(num_sets, num_features, feature_size) 
-    order_indices = torch.randperm(num_features) 
+    features = torch.randn(num_sets, num_features, feature_size)
+    order_indices = torch.randperm(num_features)
 
     output = set_gru(features, order_indices)
     print(output.shape)  # output: torch.Size([5, 20])
@@ -101,6 +101,7 @@ here, `features` represents the set of features, and `order_indices` determines 
 example 3: processing feature interaction with positional encoding
 
 another way is to use positional encoding and treat features as elements in a sequence. even if they don’t have an inherent order, we can impose one through positional encodings, sort of like transformer models but with a gru. this allows for richer interactions between feature vectors because the “position” is taken into consideration by the gru. imagine features extracted from an image, there is no defined sequence, but we can inject a "sequence" via positional encoding of the grid.
+
 ```python
 import torch
 import torch.nn as nn
@@ -131,9 +132,9 @@ class FeatureInteractionGRU(nn.Module):
         encoded_features = self.pos_encoder(features)
         _, h_n = self.gru(encoded_features)
         return h_n.squeeze(0)
-        
+
 if __name__ == '__main__':
-    
+
     feature_size = 16
     hidden_size = 32
     num_features = 10
@@ -144,6 +145,7 @@ if __name__ == '__main__':
     output = interaction_gru(features)
     print(output.shape)  # output: torch.Size([3, 32])
 ```
+
 here, positional encoding adds "order" to the features which allows the gru to better process their interdependencies when they don't have a sequential nature. it's a bit like saying "feature a is to the left of feature b and this changes the context." it works surprisingly well when you want to enrich feature interactions.
 
 a word on resources: for a good theoretical grounding, i’d suggest “deep learning” by goodfellow, bengio and courville. it's a dense read, but it lays the foundation. also, search on arxiv.org for papers on graph neural networks, attention mechanisms and transformers, as these tend to explore different ways of processing non-sequential data and have practical implications for re-thinking how we apply grus. you will see a lot of researchers use it as a base in more innovative applications of the gru.

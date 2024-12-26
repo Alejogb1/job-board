@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-early-stopping-be-implemented-in-pytorch"
 ---
 
-Alright, let's tackle early stopping in PyTorch. It’s a topic I’ve spent quite a bit of time with, especially back when I was training a rather complex sequence-to-sequence model for natural language processing. I recall that model would happily overfit if given the chance, making early stopping a critical component to its overall success. Essentially, early stopping is a regularization technique, not unlike dropout or weight decay, that aims to prevent overfitting by halting training when the model’s performance on a validation set starts to degrade. The underlying idea is simple: we monitor a chosen metric (like validation loss or accuracy) and stop training when that metric stops improving or, even worse, starts getting worse.
+, let's tackle early stopping in PyTorch. It’s a topic I’ve spent quite a bit of time with, especially back when I was training a rather complex sequence-to-sequence model for natural language processing. I recall that model would happily overfit if given the chance, making early stopping a critical component to its overall success. Essentially, early stopping is a regularization technique, not unlike dropout or weight decay, that aims to prevent overfitting by halting training when the model’s performance on a validation set starts to degrade. The underlying idea is simple: we monitor a chosen metric (like validation loss or accuracy) and stop training when that metric stops improving or, even worse, starts getting worse.
 
 From my experience, a naïve implementation of early stopping can introduce as many problems as it solves, mainly if not handled carefully. Therefore, let’s get down to implementation details and a couple of examples to illustrate the point.
 
@@ -92,7 +92,7 @@ class EarlyStopperWithCheckpoint:
 
 This enhanced version now saves the model's state dictionary using `torch.save` when a new best loss is reached, and offers a `load_checkpoint` method to load those saved parameters back into the model. Additionally, the function `check_checkpoint` helps to make sure the checkpoint exists prior to attempting to load it.
 
-Finally, let's consider a scenario with a more complex metric, one where we track validation accuracy, instead of the loss. Furthermore, lets introduce an optional mode that can look for improvement on either a *min* or *max* metric, depending on the one we track. This can be implemented using the following code snippet:
+Finally, let's consider a scenario with a more complex metric, one where we track validation accuracy, instead of the loss. Furthermore, lets introduce an optional mode that can look for improvement on either a _min_ or _max_ metric, depending on the one we track. This can be implemented using the following code snippet:
 
 ```python
 import torch
@@ -127,7 +127,7 @@ class EarlyStopperWithMode:
           self.counter += 1
           if self.counter >= self.patience:
               self.early_stop = True
-    
+
     def load_checkpoint(self, model):
         model.load_state_dict(torch.load(self.path))
         return model

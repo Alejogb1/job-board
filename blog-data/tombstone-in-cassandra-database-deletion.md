@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "tombstone-in-cassandra-database-deletion"
 ---
 
-Okay so tombstone deletion in Cassandra yeah I’ve been down that rabbit hole a few times let me break it down for you from my personal experience because this is not theoretical stuff this is blood sweat and tears kind of knowledge we're talking about and I'll throw some code examples your way too
+tombstone deletion in Cassandra yeah I’ve been down that rabbit hole a few times let me break it down for you from my personal experience because this is not theoretical stuff this is blood sweat and tears kind of knowledge we're talking about and I'll throw some code examples your way too
 
 First off tombstones are markers for deleted data In Cassandra when you delete a row or even just a single column Cassandra doesn’t actually erase the data right away Instead it inserts a tombstone This tombstone essentially says hey this data is marked for deletion It’s a way to keep things consistent across all the nodes in your cluster especially when those nodes might be out of sync at times think network partitions and the like
 
@@ -16,7 +16,7 @@ So the tombstone process is usually the following deletion happens a tombstone i
 
 I had one client a few years back their application was creating a ton of delete operations which they thought was totally fine they even were thinking of increasing the number of deletions but little did they know we started to see massive performance drops reads were slow writes were slow and the cluster was starting to melt down we initially thought it was a hardware issue but we were wrong what we had was excessive tombstones which were causing reads to scan an unnecessary amount of data files
 
-Okay let's dig into some code first how we see tombstones in cassandra. The most common way to see a tombstone is to run a `SELECT` statement with the `WRITETIME` and `TTL` modifiers. Here’s an example:
+let's dig into some code first how we see tombstones in cassandra. The most common way to see a tombstone is to run a `SELECT` statement with the `WRITETIME` and `TTL` modifiers. Here’s an example:
 
 ```cql
 SELECT WRITETIME(column1), TTL(column1) FROM your_keyspace.your_table WHERE primary_key_column = 'your_key';
@@ -29,6 +29,7 @@ Next example how you would generally do deletions in Cassandra lets imagine a ta
 ```cql
 DELETE FROM your_keyspace.users WHERE user_id = 'user123';
 ```
+
 This is a very simple deletion statement but under the hood it creates a tombstone for the row where user_id is equal to user123.
 
 One more example to see the problem of excessive tombstones and the reason why we need to delete tombstones I will use `nodetool cfstats` which is a command line tool to see the status of table on Cassandra
@@ -36,6 +37,7 @@ One more example to see the problem of excessive tombstones and the reason why w
 ```bash
 nodetool cfstats your_keyspace.your_table
 ```
+
 this command will show you a lot of useful information but lets focus on these 2 values:
 
 `SSTable count` : number of sstable files where data is stored.

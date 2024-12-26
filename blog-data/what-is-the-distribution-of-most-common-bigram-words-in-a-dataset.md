@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-is-the-distribution-of-most-common-bigram-words-in-a-dataset"
 ---
 
-Alright, let’s tackle this bigram distribution issue. I've seen this crop up more times than I'd like to recall, particularly back when I was knee-deep in developing a text analysis engine for a large media outlet. Analyzing bigrams – sequences of two adjacent words – is fundamental to understanding textual nuances beyond just individual word frequencies. It's one thing to know "the" is common; it's another to understand "of the" or "in a" occur with high probability and carry significant meaning as a compound unit.
+, let’s tackle this bigram distribution issue. I've seen this crop up more times than I'd like to recall, particularly back when I was knee-deep in developing a text analysis engine for a large media outlet. Analyzing bigrams – sequences of two adjacent words – is fundamental to understanding textual nuances beyond just individual word frequencies. It's one thing to know "the" is common; it's another to understand "of the" or "in a" occur with high probability and carry significant meaning as a compound unit.
 
 The core concept is simple: we iterate through a text, taking each pair of consecutive words and counting their occurrences. However, the devil’s always in the details, specifically the preprocessing, the handling of edge cases, and how you intend to use the resultant distribution. In my experience, focusing on robustness at the outset saves considerable debugging time later.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-there-a-segfault-when-using-openmp-with-cmsis-nn"
 ---
 
-Alright, let's unpack this. A segmentation fault (segfault) when combining OpenMP with CMSIS-NN, specifically on embedded systems, isn't uncommon, and there's usually a clear reason behind it. I’ve encountered this kind of headache more than a few times across different platforms. It often boils down to shared resource contention, memory alignment, or incorrect handling of the execution environment's peculiarities.
+, let's unpack this. A segmentation fault (segfault) when combining OpenMP with CMSIS-NN, specifically on embedded systems, isn't uncommon, and there's usually a clear reason behind it. I’ve encountered this kind of headache more than a few times across different platforms. It often boils down to shared resource contention, memory alignment, or incorrect handling of the execution environment's peculiarities.
 
 First, understand that CMSIS-NN is designed for single-threaded execution on resource-constrained microcontrollers. It assumes full control over memory and execution contexts. OpenMP, on the other hand, introduces multi-threading, potentially leading to conflicts. The crux of the problem typically isn't that OpenMP and CMSIS-NN are fundamentally incompatible, but rather how they're interacting within the system’s limitations, and how developers manage concurrency.
 
@@ -141,9 +141,9 @@ int main() {
 
 For more in-depth understanding, I recommend the following:
 
-*   **"Programming Embedded Systems" by Michael Barr:** This is an excellent resource on embedded system design and often covers aspects of memory management and optimization crucial for solving such issues.
-*   **"Computer Architecture: A Quantitative Approach" by John L. Hennessy and David A. Patterson:** While not specific to microcontrollers, this book offers a deep dive into architectural details which are important when optimizing code for processors with specific alignment and data access requirements.
-*   **"The Definitive Guide to ARM Cortex-M3 and Cortex-M4 Processors" by Joseph Yiu:** A highly technical book with a focus on specific architecture which would be very helpful in getting details about how the ARM core operates and its interactions with software.
-*   **The OpenMP specification documentation:** For a complete understanding of how OpenMP works and the various features it offers, this should be used for reference.
+- **"Programming Embedded Systems" by Michael Barr:** This is an excellent resource on embedded system design and often covers aspects of memory management and optimization crucial for solving such issues.
+- **"Computer Architecture: A Quantitative Approach" by John L. Hennessy and David A. Patterson:** While not specific to microcontrollers, this book offers a deep dive into architectural details which are important when optimizing code for processors with specific alignment and data access requirements.
+- **"The Definitive Guide to ARM Cortex-M3 and Cortex-M4 Processors" by Joseph Yiu:** A highly technical book with a focus on specific architecture which would be very helpful in getting details about how the ARM core operates and its interactions with software.
+- **The OpenMP specification documentation:** For a complete understanding of how OpenMP works and the various features it offers, this should be used for reference.
 
 Remember that debugging segfaults is often an iterative process. It can require a deep dive into the interactions between the hardware, software libraries and the compiler. Careful consideration of memory management, alignment, and thread safety is essential when combining multithreading with real-time optimized libraries like CMSIS-NN. Always begin with minimal testing scenarios that are carefully designed to isolate any potential issues and gradually build up complexity to ensure correct behaviour.

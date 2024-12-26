@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-runtimeerror-mat1-and-mat2-shapes-cannot-be-multiplied-error"
 ---
 
-Alright, let's tackle this `RuntimeError: mat1 and mat2 shapes cannot be multiplied`. I've seen this particular error more times than I care to recall, and usually, it boils down to a mismatch in the dimensions of your matrices when you’re attempting matrix multiplication. It's a common hiccup, especially when working with libraries like numpy in python or similar matrix algebra operations in other languages. Don't worry, it's something we can definitely sort out.
+, let's tackle this `RuntimeError: mat1 and mat2 shapes cannot be multiplied`. I've seen this particular error more times than I care to recall, and usually, it boils down to a mismatch in the dimensions of your matrices when you’re attempting matrix multiplication. It's a common hiccup, especially when working with libraries like numpy in python or similar matrix algebra operations in other languages. Don't worry, it's something we can definitely sort out.
 
-The core issue, as the error message succinctly states, is a shape incompatibility during multiplication. When performing matrix multiplication, the number of columns in the first matrix (mat1) *must* equal the number of rows in the second matrix (mat2). If this condition isn’t met, the operation simply isn’t defined mathematically, and your runtime environment quite rightly throws an exception. Think of it like trying to fit a square peg into a round hole; it just won't work.
+The core issue, as the error message succinctly states, is a shape incompatibility during multiplication. When performing matrix multiplication, the number of columns in the first matrix (mat1) _must_ equal the number of rows in the second matrix (mat2). If this condition isn’t met, the operation simply isn’t defined mathematically, and your runtime environment quite rightly throws an exception. Think of it like trying to fit a square peg into a round hole; it just won't work.
 
 In my early days, I spent a good chunk of time debugging a recommender system I was building. We were using collaborative filtering, and I constantly stumbled upon this error. It turned out a data pre-processing step had inadvertently transposed some of our user-item interaction matrices, causing this exact mismatch when feeding the matrices into our model’s multiplication operations. It taught me a valuable lesson: always double-check your matrix dimensions, especially after transformations.
 
@@ -131,6 +131,7 @@ except RuntimeError as e:
    print(f"Caught a RuntimeError: {e}")
 
 ```
+
 This diagnostic step will reveal the shape incompatibility in the second matrix multiplication. To resolve this, you would either modify the definition of C or the earlier transformations in the chain, until the dimensions are correct for matrix multiplication. In this instance, I would need to modify C such that its number of rows match the number of columns in temp1 i.e., 5, for the final multiplication to be valid.
 
 **Recommendations for Further Study:**

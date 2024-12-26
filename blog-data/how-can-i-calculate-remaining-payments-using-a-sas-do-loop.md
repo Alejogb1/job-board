@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-calculate-remaining-payments-using-a-sas-do-loop"
 ---
 
-Okay, let's tackle this. I recall a particularly tricky project back in my days with a financial analytics firm where we were dealing with a high volume of loan data, needing to project remaining payments across various loan types. Leveraging SAS's do loop effectively became absolutely crucial for both speed and accuracy. What initially looked like a straightforward task quickly revealed its nuances, particularly when factoring in variable interest rates and principal-only payments.
+, let's tackle this. I recall a particularly tricky project back in my days with a financial analytics firm where we were dealing with a high volume of loan data, needing to project remaining payments across various loan types. Leveraging SAS's do loop effectively became absolutely crucial for both speed and accuracy. What initially looked like a straightforward task quickly revealed its nuances, particularly when factoring in variable interest rates and principal-only payments.
 
 The core challenge, as I understand it, is to iterate through a loan's payment schedule, keeping track of outstanding principal, interest, and the number of payments remaining. The standard approach, and frankly the most efficient within SAS, is indeed to use a `do` loop in conjunction with conditional logic. Let me break this down with a couple of practical examples, drawing from my own past experiences.
 
@@ -131,6 +131,6 @@ run;
 
 In this last example, we've added symbolic macro variables for additional principal payments. Inside the loop, we check if the current payment number matches a month with an additional principal payment and adjust the principal paid accordingly, before updating the `outstanding_principal`.
 
-For further reading, I’d recommend delving into resources on numerical methods; particularly, *Numerical Recipes: The Art of Scientific Computing* by Press et al. is an excellent resource that provides a good grounding in iterative calculations and the mathematics of amortization. Also, for specific financial applications and nuances within SAS, the SAS documentation for procedures like `PROC IML` and `PROC FCMP` is invaluable. These allow more advanced calculations but typically aren’t required for this basic task.
+For further reading, I’d recommend delving into resources on numerical methods; particularly, _Numerical Recipes: The Art of Scientific Computing_ by Press et al. is an excellent resource that provides a good grounding in iterative calculations and the mathematics of amortization. Also, for specific financial applications and nuances within SAS, the SAS documentation for procedures like `PROC IML` and `PROC FCMP` is invaluable. These allow more advanced calculations but typically aren’t required for this basic task.
 
 So, the key takeaway here is that the SAS `do` loop, combined with conditional logic and careful handling of variables, is incredibly flexible and powerful for calculating loan schedules and projecting remaining payments. It served me well when tackling large financial datasets, and I'm confident it will be beneficial for you. Remember to test your code thoroughly and adapt these examples to suit your specific use case; the devil is often in the details.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-run-two-suspend-functions-in-parallel-and-return-when-the-first-returns"
 ---
 
-Okay, let's talk about running suspend functions in parallel and returning the result of the first one that completes – a common task in asynchronous programming, and one I've certainly tackled more times than I'd care to count. It's more nuanced than simply launching two coroutines and calling it a day, especially when you need that specific "first to finish" behavior. In my experience, this kind of pattern often crops up when dealing with multiple data sources, or fallback mechanisms.
+, let's talk about running suspend functions in parallel and returning the result of the first one that completes – a common task in asynchronous programming, and one I've certainly tackled more times than I'd care to count. It's more nuanced than simply launching two coroutines and calling it a day, especially when you need that specific "first to finish" behavior. In my experience, this kind of pattern often crops up when dealing with multiple data sources, or fallback mechanisms.
 
 The core concept revolves around launching the suspend functions within their own coroutines and then employing the power of kotlin’s `async` and `await` mechanisms (or, as a similar analogy from other asynchronous patterns, its equivalent of promises and `await`). The trick, however, isn't just to launch them concurrently; it’s to monitor their results and cancel the slower one once the first completes. This requires a structured approach to coroutine management. Let's get into it, step by step, with code to illustrate.
 
@@ -229,20 +229,20 @@ suspend fun <T> awaitAny(deferreds: List<Deferred<T>>) : Deferred<T> {
 }
 ```
 
-In this version, I added a `shouldThrowError` parameter to `fetchDataWithError`. If set to true it throws a runtime exception.  The `awaitAny` function has been modified to handle exceptions by completing the future when the deferred variable succeeds, and ignoring it otherwise. The `resultDeferred.await` also contains a try catch to handle the exceptions thrown by the await call.
+In this version, I added a `shouldThrowError` parameter to `fetchDataWithError`. If set to true it throws a runtime exception. The `awaitAny` function has been modified to handle exceptions by completing the future when the deferred variable succeeds, and ignoring it otherwise. The `resultDeferred.await` also contains a try catch to handle the exceptions thrown by the await call.
 
 The cancellation of the other `async` operations ensures that you aren’t wasting resources once you’ve got the result you were looking for.
 
 **Key Takeaways and Further Reading**
 
-*   **Structured Concurrency:** Kotlin's coroutines provide a structured concurrency model, which simplifies the management of these kinds of scenarios. The use of `coroutineScope` is fundamental for ensuring that all launched coroutines are properly tracked and cancelled.
-*   **Cancellation:** Manual cancellation using the `cancel()` method on `Job` is necessary to free up resources when a solution is found.
-*   **Error Handling:** It is crucial to plan how you will handle errors within suspend functions launched in coroutines. The `try...catch` blocks are instrumental for managing exceptions thrown during the awaited actions.
+- **Structured Concurrency:** Kotlin's coroutines provide a structured concurrency model, which simplifies the management of these kinds of scenarios. The use of `coroutineScope` is fundamental for ensuring that all launched coroutines are properly tracked and cancelled.
+- **Cancellation:** Manual cancellation using the `cancel()` method on `Job` is necessary to free up resources when a solution is found.
+- **Error Handling:** It is crucial to plan how you will handle errors within suspend functions launched in coroutines. The `try...catch` blocks are instrumental for managing exceptions thrown during the awaited actions.
 
 For a deeper dive, I would recommend exploring the following:
 
-*   **"Kotlin Coroutines Deep Dive" by Marcin Moskala:** A comprehensive book dedicated to Kotlin coroutines, covering advanced use cases and internals. This is a good resource for understanding the behavior and inner workings.
-*   **Official Kotlin Coroutines Documentation:** The documentation provides the most authoritative guide to the behavior of the language features. It's essential for a proper understanding.
-*   **"Concurrent Programming on Windows" by Joe Duffy:** While not specific to Kotlin, it presents core concepts of concurrency that are applicable everywhere, especially regarding structured concurrency and cancellation.
+- **"Kotlin Coroutines Deep Dive" by Marcin Moskala:** A comprehensive book dedicated to Kotlin coroutines, covering advanced use cases and internals. This is a good resource for understanding the behavior and inner workings.
+- **Official Kotlin Coroutines Documentation:** The documentation provides the most authoritative guide to the behavior of the language features. It's essential for a proper understanding.
+- **"Concurrent Programming on Windows" by Joe Duffy:** While not specific to Kotlin, it presents core concepts of concurrency that are applicable everywhere, especially regarding structured concurrency and cancellation.
 
 These resources should give you a strong base to tackle complex asynchronous patterns. Remember, proper error handling, cancellation of other running routines, and the core concepts of structured concurrency are crucial when operating on async routines, and the above code and reading materials should be invaluable on this journey.

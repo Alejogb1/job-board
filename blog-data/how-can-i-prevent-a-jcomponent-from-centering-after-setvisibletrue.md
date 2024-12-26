@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-prevent-a-jcomponent-from-centering-after-setvisibletrue"
 ---
 
-Alright, let's tackle this centering issue. I've bumped into this quirky behavior with `JComponent`s more times than I care to remember, and it usually boils down to understanding how layout managers and window visibility interplay. It's less about the component *wanting* to center itself and more about how its parent container is being told to behave. You see, when you set a component to `setVisible(true)`, the swing framework kicks off a layout and paint cycle. If your parent container’s layout manager hasn’t been properly configured or if it isn’t respecting your size and positioning preferences, then a default centering behavior often occurs. So, preventing this involves controlling the parent container’s layout.
+, let's tackle this centering issue. I've bumped into this quirky behavior with `JComponent`s more times than I care to remember, and it usually boils down to understanding how layout managers and window visibility interplay. It's less about the component _wanting_ to center itself and more about how its parent container is being told to behave. You see, when you set a component to `setVisible(true)`, the swing framework kicks off a layout and paint cycle. If your parent container’s layout manager hasn’t been properly configured or if it isn’t respecting your size and positioning preferences, then a default centering behavior often occurs. So, preventing this involves controlling the parent container’s layout.
 
 The default behavior, especially with frames and dialogs that don't explicitly set layout managers and sizes, often results in the component occupying the center of the frame by default. This is a typical manifestation of using the default `BorderLayout`, where a single component added to the `CENTER` region will expand to fill that area. The core issue is that making a component visible triggers a layout request, and if you've not explicitly defined layout rules, the default behavior prevails.
 
@@ -12,9 +12,9 @@ Here's how we can tackle it: instead of fighting the system, we need to become m
 
 **Key Approaches and Considerations**
 
-First, you have to understand that directly setting a component’s location often *won't* work as expected if the parent container uses a layout manager. The layout manager dictates how components are arranged within its container and will override `setLocation()`, `setBounds()`, and similar methods when a re-layout is triggered. The most robust solution is to configure the *parent’s* layout manager.
+First, you have to understand that directly setting a component’s location often _won't_ work as expected if the parent container uses a layout manager. The layout manager dictates how components are arranged within its container and will override `setLocation()`, `setBounds()`, and similar methods when a re-layout is triggered. The most robust solution is to configure the _parent’s_ layout manager.
 
-Second, the timing matters. If you try to set sizes and positions *before* the window is made visible, your changes might be ignored or overwritten by the layout process once `setVisible(true)` is called.
+Second, the timing matters. If you try to set sizes and positions _before_ the window is made visible, your changes might be ignored or overwritten by the layout process once `setVisible(true)` is called.
 
 Third, the `JFrame` (or `JDialog`) itself is often the culprit. If you are adding a component directly to the frame (or dialog)'s content pane and do not configure the default `BorderLayout`, the component will expand to fill the center.
 
@@ -52,6 +52,7 @@ public class NonCenteringPanelExample {
     }
 }
 ```
+
 Here, we are setting the panel to have a `null` layout (not advised for general use due to potential resize issues). We are then setting the frame size and location, and adding the panel to the content pane. Importantly we are using `setBounds` to specify where to position the panel. This approach ensures that when `frame.setVisible(true)` is called, the panel does not center within the frame.
 
 **Scenario 2: Using a `FlowLayout` on the Frame's Content Pane**
@@ -134,6 +135,7 @@ public class NonCenteringGridBagLayout {
   }
 }
 ```
+
 Here, we've set up `GridBagLayout` on the frame and explicitly configured the placement of the two panels using `GridBagConstraints`. We are using `fill` to control how the components will occupy the space and `anchor` to specify their respective corners. When we set the window visible, these layout constraints are used and the panels are positioned as specified.
 
 **Key Takeaways and Recommendations**
@@ -142,8 +144,8 @@ The lesson here is: Don't fight the layout managers; configure them. When you wa
 
 For further reading, I recommend looking into the following:
 
-*   **"Core Java Volume I – Fundamentals" by Cay S. Horstmann:** This book has a very thorough chapter on Swing layout managers. It dives deep into all the details, including edge cases and common gotchas.
-*   **The official Java Swing documentation:** You can find this on Oracle's website and it's a very reliable source of information and contains detailed explanations of each layout manager and how to configure them.
-*   **"Filthy Rich Clients: Developing Animated and Graphical UIs" by Chet Haase and Romain Guy:** While somewhat dated, this book provides a deep understanding of how Swing works internally, including how it handles layouts, painting, and thread management. It's useful for understanding the underlying mechanics.
+- **"Core Java Volume I – Fundamentals" by Cay S. Horstmann:** This book has a very thorough chapter on Swing layout managers. It dives deep into all the details, including edge cases and common gotchas.
+- **The official Java Swing documentation:** You can find this on Oracle's website and it's a very reliable source of information and contains detailed explanations of each layout manager and how to configure them.
+- **"Filthy Rich Clients: Developing Animated and Graphical UIs" by Chet Haase and Romain Guy:** While somewhat dated, this book provides a deep understanding of how Swing works internally, including how it handles layouts, painting, and thread management. It's useful for understanding the underlying mechanics.
 
 Understanding layout managers is fundamental to building robust swing applications. This isn’t a problem where you ‘prevent’ centering, but rather where you explicitly instruct the container how to place elements, rather than relying on default behavior. Remember, explicitness is your ally.

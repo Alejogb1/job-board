@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-bidirectional-gru-from-keras-weight-to-inference-in-c"
 ---
 
-alright, so you're trying to take a keras bidirectional gru model and get it running inference in c. i've been down that road more than once, and it's definitely a place where things can get… interesting. let me walk you through what i've learned, focusing on a practical approach that avoids most of the deep-dive theory.
+, so you're trying to take a keras bidirectional gru model and get it running inference in c. i've been down that road more than once, and it's definitely a place where things can get… interesting. let me walk you through what i've learned, focusing on a practical approach that avoids most of the deep-dive theory.
 
 first off, the core issue isn't really about bidirectional grus themselves, it's about bridging the gap between a high-level framework like keras and a low-level language like c. keras is fantastic for building and training models but it abstracts away all the low-level matrix math. c, on the other hand, requires you to do everything by hand. this means you’ll need to extract the weights from your keras model, then manually implement the gru computations in c, taking into account both forward and backward directions.
 
@@ -308,11 +308,12 @@ this c code will be very slow, because the `matmul` is not optimized, you should
 this code demonstrates a simple gru cell. you'll need to iterate through your input sequence, passing the hidden state from each step, in both forward and backward directions. finally, the bidirectional part needs concatenation, and then, you will feed this concatenated output into the following dense layer which you have to implement as well. it's like a relay race, each step taking the baton from the previous.
 
 **important details:**
- * **weight order:** the `get_weights()` function returns a flat list of arrays. you will have to manually inspect its structure and figure out where the biases, weights for forward and backward direction, etc. are and how to map them to your c implementation. print the shapes as seen in the python example to help you in the process.
-* **matrix multiplication optimization:** as i mentioned before, the `matmul` function i presented is basic. for real projects, you should use highly optimized libraries like openblas or intel mkl to get any kind of reasonable speed.
-* **memory management:** dynamic memory allocation in c is tricky and you have to handle all memory allocation and dealocation by yourself, always free what you allocate, it can become a memory leak nightmare easily otherwise.
-* **activation functions:** make sure your c implementation of the activation functions (sigmoid, tanh) is accurate, and be careful about numerical stability.
-* **bidirectional specifics:** remember that you need to process the input sequence once in the forward direction and again in reverse, keeping track of the hidden states.
+
+- **weight order:** the `get_weights()` function returns a flat list of arrays. you will have to manually inspect its structure and figure out where the biases, weights for forward and backward direction, etc. are and how to map them to your c implementation. print the shapes as seen in the python example to help you in the process.
+- **matrix multiplication optimization:** as i mentioned before, the `matmul` function i presented is basic. for real projects, you should use highly optimized libraries like openblas or intel mkl to get any kind of reasonable speed.
+- **memory management:** dynamic memory allocation in c is tricky and you have to handle all memory allocation and dealocation by yourself, always free what you allocate, it can become a memory leak nightmare easily otherwise.
+- **activation functions:** make sure your c implementation of the activation functions (sigmoid, tanh) is accurate, and be careful about numerical stability.
+- **bidirectional specifics:** remember that you need to process the input sequence once in the forward direction and again in reverse, keeping track of the hidden states.
 
 this is a challenging task and is a bit like assembling a puzzle where the pieces are matrices and the instruction manual is a collection of equations. and it's quite easy to get some weight or bias mixed up and get gibberish output, like i did in the potato microcontroller project. (it turned out the potato was also not helping that much). the most time i had spent in that was just debugging the proper index and weight organization.
 

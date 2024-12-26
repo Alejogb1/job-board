@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-pass-non-json-serializable-parameters-in-airflow-230"
 ---
 
-Alright, let's talk about non-json serializable parameters in Airflow, specifically in the 2.3.0 version. I've bumped into this particular challenge a few times over the years, especially when dealing with more complex data structures, and it can certainly be a point of friction if not approached correctly.
+, let's talk about non-json serializable parameters in Airflow, specifically in the 2.3.0 version. I've bumped into this particular challenge a few times over the years, especially when dealing with more complex data structures, and it can certainly be a point of friction if not approached correctly.
 
 The core issue, as most probably know, is that Airflow's task parameters, when serialized and sent to workers, primarily rely on JSON serialization. This is a practical choice for its relative simplicity and widespread compatibility. However, this mechanism falls apart when you need to pass parameters that don't naturally translate to JSON – things like datetime objects, custom Python objects, or even sets and tuples.
 
@@ -140,8 +140,8 @@ Choosing the appropriate method for handling non-json serializable parameters de
 
 For further exploration, consider consulting the following resources:
 
-*   **"Programming in Python 3" by Mark Summerfield:** This book provides a very comprehensive overview of Python's core capabilities, including serialization techniques.
-*   **"Fluent Python" by Luciano Ramalho:** This is another excellent resource for understanding python best practices, including pickle limitations and json serialization.
-*   **The Apache Airflow documentation:** The official documentation provides thorough details about task parameters, XComs, and various configuration options that can be helpful. Search in particular the section on "xcoms" and serialization for the latest details.
+- **"Programming in Python 3" by Mark Summerfield:** This book provides a very comprehensive overview of Python's core capabilities, including serialization techniques.
+- **"Fluent Python" by Luciano Ramalho:** This is another excellent resource for understanding python best practices, including pickle limitations and json serialization.
+- **The Apache Airflow documentation:** The official documentation provides thorough details about task parameters, XComs, and various configuration options that can be helpful. Search in particular the section on "xcoms" and serialization for the latest details.
 
 By understanding these methods, I’m confident you can effectively navigate the challenges of working with non-json serializable parameters in Airflow. These solutions have consistently served me well in practice, providing a reliable way to maintain the functionality required, and have also helped avoid major disruptions in my workflows.

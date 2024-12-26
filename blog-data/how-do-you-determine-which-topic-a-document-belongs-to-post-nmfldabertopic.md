@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-you-determine-which-topic-a-document-belongs-to-post-nmfldabertopic"
 ---
 
-Okay, let’s tackle this. I’ve seen this problem arise in numerous contexts, from categorizing customer feedback to automatically sorting research papers. You’ve already used non-negative matrix factorization (nmf), latent dirichlet allocation (lda), or bertopic to get your topic representations – that’s a solid start. But the real challenge often comes afterwards: how do we use those topic representations to actually classify *new*, unseen documents? It's a nuanced process that goes beyond just picking the topic with the highest probability. I'll walk you through how I approach this, combining practical experience with a grounding in the underlying methods.
+, let’s tackle this. I’ve seen this problem arise in numerous contexts, from categorizing customer feedback to automatically sorting research papers. You’ve already used non-negative matrix factorization (nmf), latent dirichlet allocation (lda), or bertopic to get your topic representations – that’s a solid start. But the real challenge often comes afterwards: how do we use those topic representations to actually classify _new_, unseen documents? It's a nuanced process that goes beyond just picking the topic with the highest probability. I'll walk you through how I approach this, combining practical experience with a grounding in the underlying methods.
 
 First, a quick recap: NMF, LDA, and BERTopic aim to extract a set of topics from a corpus of documents. Essentially, they’re creating a lower-dimensional representation where documents are represented by their distribution over these topics. This is fantastic for analysis and exploration, but the output isn't immediately suitable for classification. Think of it as having extracted the ingredients from a dish; we now need to figure out how those ingredients fit together to create the desired meals (the topics).
 
@@ -45,6 +45,7 @@ predicted_topic, distribution = classify_document_lda(new_document, vectorizer, 
 print(f"predicted topic for '{new_document}': Topic {predicted_topic}, Distribution: {distribution}")
 
 ```
+
 **Important consideration:** The vectorizer needs to have been `fit` on the original dataset before being used to `transform` the new document. Otherwise, the vocabulary mapping will be inconsistent.
 
 **Strategy 2: Similarity to Topic Representations**
@@ -124,17 +125,18 @@ print(f"Predicted topic for '{new_document_2}': Topic {predicted_topic_2}, score
 
 **Key Considerations and Resources**
 
-*   **Hyperparameter Tuning**: The optimal parameters for your topic model directly affect classification performance. Pay close attention to the number of topics and any other algorithm-specific parameters when training your topic model. Consider using grid search or Bayesian optimization techniques to fine-tune these settings on a validation set.
+- **Hyperparameter Tuning**: The optimal parameters for your topic model directly affect classification performance. Pay close attention to the number of topics and any other algorithm-specific parameters when training your topic model. Consider using grid search or Bayesian optimization techniques to fine-tune these settings on a validation set.
 
-*   **Document Preprocessing**: The quality of your text preprocessing (tokenization, stemming/lemmatization, removal of stop words, etc.) impacts both topic modeling and subsequent classification. Experiment with different preprocessing techniques.
+- **Document Preprocessing**: The quality of your text preprocessing (tokenization, stemming/lemmatization, removal of stop words, etc.) impacts both topic modeling and subsequent classification. Experiment with different preprocessing techniques.
 
-*   **Evaluation Metrics**: Don't just rely on accuracy. Consider using metrics like precision, recall, and f1-score, especially if your dataset has imbalanced topic distributions.
+- **Evaluation Metrics**: Don't just rely on accuracy. Consider using metrics like precision, recall, and f1-score, especially if your dataset has imbalanced topic distributions.
 
-*   **Domain Adaptation**: If your new documents come from a different domain than your training set, expect a drop in performance. Domain adaptation techniques might be needed.
+- **Domain Adaptation**: If your new documents come from a different domain than your training set, expect a drop in performance. Domain adaptation techniques might be needed.
 
 **Recommended Reading**:
-*   **"Foundations of Statistical Natural Language Processing" by Christopher D. Manning and Hinrich Schütze:** This is a comprehensive text covering the foundational concepts in nlp, including topic models.
-*   **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** This provides thorough coverage of NLP techniques, and especially good insights on topics like text classification and word representations.
-*  **"Topic Modeling: A Comprehensive Survey" by David M. Blei:** An extensive review of all sorts of topic models if you need a deeper understanding of their mathematical background. (You can generally find this via a search engine or on a relevant academic resource like google scholar)
+
+- **"Foundations of Statistical Natural Language Processing" by Christopher D. Manning and Hinrich Schütze:** This is a comprehensive text covering the foundational concepts in nlp, including topic models.
+- **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** This provides thorough coverage of NLP techniques, and especially good insights on topics like text classification and word representations.
+- **"Topic Modeling: A Comprehensive Survey" by David M. Blei:** An extensive review of all sorts of topic models if you need a deeper understanding of their mathematical background. (You can generally find this via a search engine or on a relevant academic resource like google scholar)
 
 In short, there isn’t a single “correct” approach. It’s important to consider the characteristics of your data, the model you chose, and your specific requirements. Start with the basics, analyze performance carefully, and iteratively refine your process.

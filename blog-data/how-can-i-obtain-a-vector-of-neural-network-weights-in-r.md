@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-obtain-a-vector-of-neural-network-weights-in-r"
 ---
 
-Alright, let's talk about extracting neural network weights in R. This is a topic I've tackled numerous times over the years, often when needing to implement custom algorithms or perform detailed network analysis. It's not always straightforward, as the specifics depend heavily on the chosen library and how the model was constructed. However, the core principle remains consistent: you're aiming to access the stored parameters, often arranged in matrices or multidimensional arrays, that define the network's learned mappings.
+, let's talk about extracting neural network weights in R. This is a topic I've tackled numerous times over the years, often when needing to implement custom algorithms or perform detailed network analysis. It's not always straightforward, as the specifics depend heavily on the chosen library and how the model was constructed. However, the core principle remains consistent: you're aiming to access the stored parameters, often arranged in matrices or multidimensional arrays, that define the network's learned mappings.
 
 From my experience, particularly back when I was deeply immersed in a research project focused on neural network pruning, understanding the internal weights was critical. I spent weeks, sometimes nights, debugging custom R code that performed layer-wise manipulation of parameters, all of which began with this same fundamental step—accessing those weights. So, here’s how I’d approach obtaining a vector of neural network weights in R, breaking it down into specific scenarios and providing practical examples.
 
@@ -30,7 +30,7 @@ flattened_weights <- unlist(lapply(weights, function(x) as.vector(x)))
 print(head(flattened_weights))
 ```
 
-In this snippet, I create a simple sequential model (two dense layers), fetch the weights, and then flatten them into a single numeric vector using `unlist` after converting each matrix to a vector. Remember, the order here is critical, since the flattening will maintain the order of the layers and then parameters *within* each layer, as stored internally in keras. So, you need to pay close attention to the original model architecture if you are going to try to re-incorporate these weights later.
+In this snippet, I create a simple sequential model (two dense layers), fetch the weights, and then flatten them into a single numeric vector using `unlist` after converting each matrix to a vector. Remember, the order here is critical, since the flattening will maintain the order of the layers and then parameters _within_ each layer, as stored internally in keras. So, you need to pay close attention to the original model architecture if you are going to try to re-incorporate these weights later.
 
 Now, let’s consider `torch`. The `torch` package in R, which provides a wrapper for PyTorch, also requires a somewhat specific approach for weight extraction. Unlike `keras` which often implicitly returns parameter values, `torch` generally deals directly with tensors, and they need to be detached from the computational graph for further analysis. My early work with `torch` was heavily based on working with convolutional layers, so the process felt a bit more involved there due to their higher dimensionality. Here is an example that demonstrates the typical steps:
 

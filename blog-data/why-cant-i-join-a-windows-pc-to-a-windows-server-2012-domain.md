@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-cant-i-join-a-windows-pc-to-a-windows-server-2012-domain"
 ---
 
-Okay, let’s tackle this. The inability to join a Windows PC to a Windows Server 2012 domain, as I’ve seen countless times in my career, is seldom a straightforward issue. It’s a confluence of potential problems that range from basic network configurations to more intricate authentication protocols. I recall one particular instance where I spent a good portion of a Friday night tracking down the root cause, only to find it was a subtle DNS misconfiguration – these things can be frustrating, to say the least. Let's break down the common culprits.
+, let’s tackle this. The inability to join a Windows PC to a Windows Server 2012 domain, as I’ve seen countless times in my career, is seldom a straightforward issue. It’s a confluence of potential problems that range from basic network configurations to more intricate authentication protocols. I recall one particular instance where I spent a good portion of a Friday night tracking down the root cause, only to find it was a subtle DNS misconfiguration – these things can be frustrating, to say the least. Let's break down the common culprits.
 
 First, and perhaps most frequently, we need to examine network connectivity. Domain joins rely heavily on the client machine’s ability to reach the domain controller. This boils down to essential TCP/IP parameters. Specifically, the client machine must be configured to use a DNS server that can resolve the domain's fully qualified domain name (FQDN) to the IP address of a domain controller. Without proper DNS resolution, the domain join process is dead in the water. In a Windows environment, we use the Active Directory Domain Services (AD DS) which mandates that your DNS settings are configured to resolve your domain name to an appropriate domain controller. If your client machine is using public DNS servers like those from google (8.8.8.8 or 8.8.4.4), this will absolutely fail, they cannot resolve your internal domain information.
 
-To ensure basic connectivity, you’ll want to run a few diagnostics. The *ping* command is your first line of defense. From the client machine, ping the FQDN of your domain (e.g., *ping yourdomain.local*). If this fails, the issue likely resides in DNS, network connectivity, or both. Next, utilize the *nslookup* command to query the domain's records (e.g., *nslookup yourdomain.local*). This will help ascertain whether the DNS server you’re using can actually resolve the domain controller's IP address. If nslookup fails or returns the incorrect IP for a domain controller, you have a core DNS issue. If you cannot resolve the domain controllers, you need to adjust the DNS server settings on your client machine.
+To ensure basic connectivity, you’ll want to run a few diagnostics. The _ping_ command is your first line of defense. From the client machine, ping the FQDN of your domain (e.g., _ping yourdomain.local_). If this fails, the issue likely resides in DNS, network connectivity, or both. Next, utilize the _nslookup_ command to query the domain's records (e.g., _nslookup yourdomain.local_). This will help ascertain whether the DNS server you’re using can actually resolve the domain controller's IP address. If nslookup fails or returns the incorrect IP for a domain controller, you have a core DNS issue. If you cannot resolve the domain controllers, you need to adjust the DNS server settings on your client machine.
 
 Now, let’s consider potential network configuration issues. Incorrect subnet masks or default gateways on the client machine can easily cause connectivity problems. In complex scenarios with multiple subnets, routing configurations need to be meticulously planned. If routing isn't correctly configured to allow communication between the client and domain controller subnets, domain join requests will not succeed. Also, verify that firewall rules on both the client and the server are not blocking the necessary ports. AD DS utilizes a variety of ports, such as TCP/UDP 53 for DNS, TCP/UDP 88 for Kerberos, and TCP 389/636 for LDAP/LDAPS. Misconfigured firewall rules are a significant stumbling block.
 
@@ -25,7 +25,7 @@ if ($dnsLookupResult -like "*Address*") {
     Write-Host "DNS resolution successful. Testing connectivity to domain controllers."
 
     $domainController = ($dnsLookupResult | Select-String "Address:" |  ForEach-Object { $_.ToString().Split(" ")[-1] })
-    
+
         foreach ($dc in $domainController) {
             if (Test-NetConnection -ComputerName $dc -Port 389){
                 Write-Host "LDAP Port Connectivity Successful to domain controller: $dc"
@@ -105,6 +105,7 @@ if ($lmLevel -gt 2)
 
 
 ```
+
 This code reads the current 'LAN Manager Authentication Level' from the registry. It gives a human-readable output and if the setting is greater than 2 it will warn that it could be too restrictive.
 
 For deeper dives into these topics, I’d recommend the “Microsoft Windows Server 2012 Inside Out” series by Craig Zacker et al., and the official Microsoft documentation for Active Directory. The “TCP/IP Guide” by Charles Kozierok is also invaluable for networking fundamentals. Don’t be afraid to consult the event logs, these will be your best source of information when troubleshooting.

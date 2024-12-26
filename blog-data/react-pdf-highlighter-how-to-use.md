@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "react-pdf-highlighter-how-to-use"
 ---
 
-Okay so you're asking about how to use a React PDF highlighter right I've wrestled with this one before trust me. Its not always straightforward and you definitely can stumble down rabbit holes if you aren't careful. Been there done that got the t-shirt several times. I'm talking late nights debugging PDF parsers and getting intimately acquainted with coordinate systems. You know the drill.
+you're asking about how to use a React PDF highlighter right I've wrestled with this one before trust me. Its not always straightforward and you definitely can stumble down rabbit holes if you aren't careful. Been there done that got the t-shirt several times. I'm talking late nights debugging PDF parsers and getting intimately acquainted with coordinate systems. You know the drill.
 
 First things first the React part is pretty standard. You'll be building components probably a parent component to handle the PDF rendering and maybe a child component to handle the highlighting itself. You can totally roll your own but let's be real here reinventing the wheel is a mug's game. There are a few libraries out there that do the heavy lifting so we don't have to write a PDF parser from scratch thank heavens for that. I've tried doing that once I don't recommend.
 
@@ -17,9 +17,9 @@ A good starting point is to look for selection libraries that interface nicely w
 Here's a very basic example. This assumes you've already got a react project running:
 
 ```javascript
-import React, { useState } from 'react';
-import { Document, Page, pdfjs } from 'react-pdf';
-import { HighlightText } from 'react-pdf-highlighter';
+import React, { useState } from "react";
+import { Document, Page, pdfjs } from "react-pdf";
+import { HighlightText } from "react-pdf-highlighter";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 function App() {
@@ -37,9 +37,13 @@ function App() {
         onLoadSuccess={onDocumentLoadSuccess}
       >
         <Page pageNumber={pageNumber}>
-            {({ page, viewport }) => (
-                <HighlightText page={page} viewport={viewport} onSelection={console.log} />
-            )}
+          {({ page, viewport }) => (
+            <HighlightText
+              page={page}
+              viewport={viewport}
+              onSelection={console.log}
+            />
+          )}
         </Page>
       </Document>
     </div>
@@ -56,11 +60,10 @@ Now things are not always this simple there will be some configurations that you
 You can then expand the basic example by storing the selections in the state and rendering the highlights programmatically. So let's look at a more elaborate example:
 
 ```javascript
-import React, { useState } from 'react';
-import { Document, Page, pdfjs } from 'react-pdf';
-import { HighlightText } from 'react-pdf-highlighter';
+import React, { useState } from "react";
+import { Document, Page, pdfjs } from "react-pdf";
+import { HighlightText } from "react-pdf-highlighter";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-
 
 function App() {
   const [numPages, setNumPages] = useState(null);
@@ -71,7 +74,7 @@ function App() {
     setNumPages(numPages);
   };
 
- const handleTextSelection = (selection) => {
+  const handleTextSelection = (selection) => {
     setHighlights([...highlights, selection]);
   };
 
@@ -83,16 +86,16 @@ function App() {
       >
         <Page pageNumber={pageNumber}>
           {({ page, viewport }) => (
-              <HighlightText
-                page={page}
-                viewport={viewport}
-                onSelection={handleTextSelection}
-                highlights={highlights}
-                isSelectable
-                enableAreaSelection
-                highlightStyle={{backgroundColor: "yellow", opacity: "0.5"}}
-              />
-            )}
+            <HighlightText
+              page={page}
+              viewport={viewport}
+              onSelection={handleTextSelection}
+              highlights={highlights}
+              isSelectable
+              enableAreaSelection
+              highlightStyle={{ backgroundColor: "yellow", opacity: "0.5" }}
+            />
+          )}
         </Page>
       </Document>
     </div>
@@ -116,15 +119,15 @@ And finally about saving the highlights. You will probably need to serialize the
 
 ```javascript
 const saveHighlights = () => {
-  localStorage.setItem('pdf-highlights', JSON.stringify(highlights));
-}
+  localStorage.setItem("pdf-highlights", JSON.stringify(highlights));
+};
 
 const loadHighlights = () => {
-  const savedHighlights = localStorage.getItem('pdf-highlights');
+  const savedHighlights = localStorage.getItem("pdf-highlights");
   if (savedHighlights) {
     setHighlights(JSON.parse(savedHighlights));
   }
-}
+};
 
 // Call this on component mount
 useEffect(() => {
@@ -140,4 +143,4 @@ const handleTextSelection = (selection) => {
 
 I have only given a rough overview here. There is much more to react pdf and react-pdf-highlighter than what I could cover here. I suggest starting with the documentation of react-pdf and the example code of react-pdf-highlighter. I can recommend a few books and papers though. For a deeper understanding of the PDF structure I would recommend looking at the PDF reference documents released by Adobe. The PDF specification is your bible in that case. For a broad overview of document processing you can read “Document Engineering: Managing Documents Throughout Their Lifecycle” by Robert J. Glushko and Tim McGrath it has good information on Document formatting and different markup languages used for document processing. Finally “Web Application Architecture: Principles Protocols and Practices” by Leon Shklar and Richard Rosen provides a good overview of Web application structure which is useful when you are designing a system like this.
 
-Okay that's it. Hope this gives you a good starting point. Remember to take it one step at a time and don't be afraid to dive deep when needed. Good luck and let me know if you have any other questions and maybe I will give some good answers. I probably would given the amount of time I’ve wasted figuring this stuff out.
+that's it. Hope this gives you a good starting point. Remember to take it one step at a time and don't be afraid to dive deep when needed. Good luck and let me know if you have any other questions and maybe I will give some good answers. I probably would given the amount of time I’ve wasted figuring this stuff out.

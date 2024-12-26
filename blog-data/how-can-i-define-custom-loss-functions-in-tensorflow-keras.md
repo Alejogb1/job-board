@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-define-custom-loss-functions-in-tensorflow-keras"
 ---
 
-Okay, let’s tackle custom loss functions in TensorFlow Keras. It's a topic I’ve encountered more times than I can count, often in situations where the standard losses just don't cut it. I recall one particular project involving a highly imbalanced dataset of medical images, where relying on, say, binary cross-entropy alone led to a model that was practically useless in identifying the rarer, crucial cases. That experience underscored the necessity of really understanding how to craft bespoke loss functions. It's not just about theoretical knowledge, it's about practical problem-solving.
+, let’s tackle custom loss functions in TensorFlow Keras. It's a topic I’ve encountered more times than I can count, often in situations where the standard losses just don't cut it. I recall one particular project involving a highly imbalanced dataset of medical images, where relying on, say, binary cross-entropy alone led to a model that was practically useless in identifying the rarer, crucial cases. That experience underscored the necessity of really understanding how to craft bespoke loss functions. It's not just about theoretical knowledge, it's about practical problem-solving.
 
 The core idea is that loss functions guide the learning process, quantifying the difference between our model's predictions and the actual ground truth. When you're working with a well-defined problem, standard losses like mean squared error, binary cross-entropy, or categorical cross-entropy are often appropriate. However, real-world problems rarely fit into neat boxes. This is where the power of custom loss functions becomes apparent. Keras offers several ways to define them, but we'll focus on the most common and flexible approach: leveraging TensorFlow operations directly.
 
-Let’s start with the foundational aspect: a custom loss function in Keras is, at its simplest, a Python function that accepts two inputs: `y_true` (the true labels) and `y_pred` (the model's predictions). Both of these inputs are TensorFlow tensors. Crucially, your function must return a *scalar* tensor representing the computed loss for each input. Keras then averages this scalar over the entire batch to compute the loss for that batch. The computation, obviously, can be pretty much anything you can achieve using TensorFlow operations.
+Let’s start with the foundational aspect: a custom loss function in Keras is, at its simplest, a Python function that accepts two inputs: `y_true` (the true labels) and `y_pred` (the model's predictions). Both of these inputs are TensorFlow tensors. Crucially, your function must return a _scalar_ tensor representing the computed loss for each input. Keras then averages this scalar over the entire batch to compute the loss for that batch. The computation, obviously, can be pretty much anything you can achieve using TensorFlow operations.
 
 Now, let's get into some concrete examples. We'll explore three scenarios, each with a different flavour.
 
@@ -104,7 +104,7 @@ model_multiclass.fit(x_train_multiclass, y_train_multiclass, epochs=2)
 
 Here, we use one-hot encoding on our integer class labels, and the formula for focal loss is implemented directly, taking advantage of TensorFlow’s capabilities. We clip y_pred again to avoid log(0) issues.
 
-It’s important to note that in all these examples, we return a *scalar* that represents the mean of our computed loss across samples. If you don’t use `reduce_mean`, your model will not compile.
+It’s important to note that in all these examples, we return a _scalar_ that represents the mean of our computed loss across samples. If you don’t use `reduce_mean`, your model will not compile.
 
 When implementing custom losses, there are a couple of practices I strongly recommend: First, thoroughly test your loss function on a small, controlled dataset. This helps to verify that its behaviour matches your intentions. Second, ensure your loss is differentiable; TensorFlow relies on backpropagation, which requires that the loss function be differentiable. Most standard TensorFlow operations will automatically preserve differentiability. If you are using a very complex custom implementation, make sure to write test to verify it's differentiable.
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "new-to-nlp-help-needed-with-using-spacy-to-get-pos"
 ---
 
-alright, so you're diving into nlp and want to grab part-of-speech tags using spacy, right? been there, done that, got the t-shirt (and a few scars from debugging unicode issues). it's a fairly common starting point, and spacy is definitely a solid tool for this. i remember when i first touched nlp stuff back in the day. i was trying to build a rudimentary chatbot for my college project using nlp, and honestly, getting the basics of pos tagging correct was surprisingly tricky. i spent an entire weekend just staring at error messages and feeling very, very confused until i slowly got the hang of it with the help of some online guides (before stackoverflow was a thing, yeah i'm *that* old).
+, so you're diving into nlp and want to grab part-of-speech tags using spacy, right? been there, done that, got the t-shirt (and a few scars from debugging unicode issues). it's a fairly common starting point, and spacy is definitely a solid tool for this. i remember when i first touched nlp stuff back in the day. i was trying to build a rudimentary chatbot for my college project using nlp, and honestly, getting the basics of pos tagging correct was surprisingly tricky. i spent an entire weekend just staring at error messages and feeling very, very confused until i slowly got the hang of it with the help of some online guides (before stackoverflow was a thing, yeah i'm _that_ old).
 
 anyway, let's get down to business. pos tagging, if you're unfamiliar, is basically the process of marking each word in a sentence with its grammatical role. nouns, verbs, adjectives, adverbs, you get the idea. spacy makes this quite easy, but there are always a few things that can trip you up.
 
@@ -85,13 +85,13 @@ for token in doc:
 
 we use `token.is_punct` to check if a token is punctuation. that will help you filter them out. we should also note other methods available like `token.is_alpha` to check if the token is alphabetical and `token.is_digit` to check if it's a number. this can help you preprocess the text if needed, before you do any work on the pos tags. spacy is very fast and efficient in handling that.
 
-the code snippets should get you started with the core concepts. but, to *really* understand nlp and pos tagging, you should also check out some material in literature. instead of specific links i would recommend for example:
+the code snippets should get you started with the core concepts. but, to _really_ understand nlp and pos tagging, you should also check out some material in literature. instead of specific links i would recommend for example:
 
-*   "speech and language processing" by daniel jurafsky and james h. martin: this is kind of the standard book on nlp, and the sections on pos tagging go into a lot of depth. it gets very technical, but that is very helpful for any person trying to understand better the theory behind the tools.
+- "speech and language processing" by daniel jurafsky and james h. martin: this is kind of the standard book on nlp, and the sections on pos tagging go into a lot of depth. it gets very technical, but that is very helpful for any person trying to understand better the theory behind the tools.
 
-*   "natural language processing with python" by steven bird, ewan klein, and edward loper: this book is very practical, and it uses nltk, which is an alternative to spacy, but the core concepts are the same. understanding the basics of nlp is helpful no matter what library you end up using. in the long run, understanding nltk will complement your spacy knowledge.
+- "natural language processing with python" by steven bird, ewan klein, and edward loper: this book is very practical, and it uses nltk, which is an alternative to spacy, but the core concepts are the same. understanding the basics of nlp is helpful no matter what library you end up using. in the long run, understanding nltk will complement your spacy knowledge.
 
-*   research papers: many research papers are always being released in the nlp field. try searching google scholar for pos tagging. that should give you a vast array of technical papers explaining new approaches to pos tagging. this is important to keep up to date with the latest progress in the field.
+- research papers: many research papers are always being released in the nlp field. try searching google scholar for pos tagging. that should give you a vast array of technical papers explaining new approaches to pos tagging. this is important to keep up to date with the latest progress in the field.
 
 also, before i forget, there was this one time where i was debugging a spacy based pipeline and it kept telling me that 'the' was an adverb, i thought i was losing my mind, turns out i was using a pre-trained model for a different language (it was portuguese). the joys of coding, eh?
 

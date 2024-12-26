@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-does-tensorflow-1x-produce-an-error-when-batch-size-is-greater-than-1"
 ---
 
-Alright, let's unpack this one. The issue of TensorFlow 1.x throwing errors when the batch size exceeds 1 is something I've definitely seen crop up in a variety of projects, especially back in those pre-eager execution days. It’s a core behavior stemming from how TensorFlow 1.x managed its computational graph and how it handled placeholders, and it wasn't always immediately obvious what was going wrong.
+, let's unpack this one. The issue of TensorFlow 1.x throwing errors when the batch size exceeds 1 is something I've definitely seen crop up in a variety of projects, especially back in those pre-eager execution days. It’s a core behavior stemming from how TensorFlow 1.x managed its computational graph and how it handled placeholders, and it wasn't always immediately obvious what was going wrong.
 
-To get to the heart of the matter, remember that in TensorFlow 1.x, we first defined a static computational graph, and *then* we executed it within a session. When you defined a placeholder, you were essentially reserving a spot in that graph for data to be fed later. Crucially, placeholders in 1.x, when not explicitly specified with a batch dimension, were often interpreted as expecting a *single* sample. That’s the default behavior, not necessarily an assumption on your part.
+To get to the heart of the matter, remember that in TensorFlow 1.x, we first defined a static computational graph, and _then_ we executed it within a session. When you defined a placeholder, you were essentially reserving a spot in that graph for data to be fed later. Crucially, placeholders in 1.x, when not explicitly specified with a batch dimension, were often interpreted as expecting a _single_ sample. That’s the default behavior, not necessarily an assumption on your part.
 
 This became problematic when you tried to feed a batch of multiple samples (i.e., batch size > 1) into a placeholder that was designed to receive only one sample. The framework would detect a mismatch between the shape of the input you provided (a batch) and the expected shape of the placeholder (a single sample), leading to an error. Think of it as trying to insert a multi-pronged fork into a single-pronged socket – it just won’t fit, and the framework will complain.
 
-The problem wasn’t inherent to TensorFlow being unable to handle batches; it was that the *default* setup assumed you were working with single instances if you hadn't explicitly specified the dimension for a batch within the placeholder definition. This was often a source of confusion, particularly for those new to the framework. Now, let’s consider a practical example, something I’ve dealt with directly.
+The problem wasn’t inherent to TensorFlow being unable to handle batches; it was that the _default_ setup assumed you were working with single instances if you hadn't explicitly specified the dimension for a batch within the placeholder definition. This was often a source of confusion, particularly for those new to the framework. Now, let’s consider a practical example, something I’ve dealt with directly.
 
 Let's say you had a simple neural network input layer. We might have started with a placeholder defined like this:
 
@@ -29,7 +29,7 @@ y = tf.matmul(x, W) + b
 # Define cost function and optimizer... etc
 ```
 
-If you were to feed this with a single image (let's say a 784-element vector of pixel data), it might run perfectly fine. However, the moment you tried to feed it a *batch* of images, it would throw an error related to shape mismatch.
+If you were to feed this with a single image (let's say a 784-element vector of pixel data), it might run perfectly fine. However, the moment you tried to feed it a _batch_ of images, it would throw an error related to shape mismatch.
 
 Now, how do we correct this? By explicitly defining the batch dimension within the placeholder's shape. The code should look something like this:
 

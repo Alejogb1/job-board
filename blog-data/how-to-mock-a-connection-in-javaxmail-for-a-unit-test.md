@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-mock-a-connection-in-javaxmail-for-a-unit-test"
 ---
 
-alright, so you're looking to mock a connection in javax.mail for unit testing, yeah? i've been there, done that, got the t-shirt, and probably spilled coffee on it too. it's a pretty common hurdle when you're trying to isolate your email-sending logic and avoid the headache of actually sending emails during tests.
+, so you're looking to mock a connection in javax.mail for unit testing, yeah? i've been there, done that, got the t-shirt, and probably spilled coffee on it too. it's a pretty common hurdle when you're trying to isolate your email-sending logic and avoid the headache of actually sending emails during tests.
 
 first off, let's be clear, javax.mail isn't exactly built for easy mocking out of the box. it uses concrete classes and final methods in some places which makes it tricky. you can't just extend `javax.mail.Transport` and override methods, or something like that because they are final methods, and that's a real problem if you want to control the behavior of the email send process from a unit test. this limitation is why we need to get creative, basically we have to bypass it using different techniques.
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-rails-login-with-devise-and-encrypted-cookies"
 ---
 
-alright, let's talk about devise and encrypted cookies in rails. it's a common setup, and i've definitely been down this road a few times. i've seen it all, from the basic tutorial setup to some pretty hairy custom implementations where we were trying to squeeze every last bit of performance out.
+, let's talk about devise and encrypted cookies in rails. it's a common setup, and i've definitely been down this road a few times. i've seen it all, from the basic tutorial setup to some pretty hairy custom implementations where we were trying to squeeze every last bit of performance out.
 
 first off, devise is your go-to for authentication in rails. it handles a lot of the heavy lifting, from user registration and login to password resets and session management. but, the session part, that's where cookies enter the picture, and where things can get interesting, especially when you throw encryption into the mix.
 
@@ -62,7 +62,7 @@ module YourApp
 end
 ```
 
-**important note**: that `secret_key` for devise needs to be something really random and strong. don’t just put any random string there, actually *generate* a random string and store it in a place where it is really secure, like an environment variable for example. and use that in the configurations. do not hardcode keys in your code, this is an easy way to get hacked (i've seen this happen to a colleague, and it wasn't pretty). this is specially important because rails stopped using `secret_key_base` for this and it is better to use a dedicated value to encrypt cookies.
+**important note**: that `secret_key` for devise needs to be something really random and strong. don’t just put any random string there, actually _generate_ a random string and store it in a place where it is really secure, like an environment variable for example. and use that in the configurations. do not hardcode keys in your code, this is an easy way to get hacked (i've seen this happen to a colleague, and it wasn't pretty). this is specially important because rails stopped using `secret_key_base` for this and it is better to use a dedicated value to encrypt cookies.
 
 also, you might want to look into setting the `httponly` flag on your cookies to make sure that they cannot be accessed by javascript in the browser, and also use `secure: true` in production so they are only transmitted over https. is a quick win to help a lot your security.
 
@@ -125,10 +125,10 @@ end
 
 when things go wrong, and they always go wrong eventually, debugging session issues can be a pain. here are some things i usually check:
 
-*   make sure your devise secret key is set correctly and that it is the same everywhere (you do have separate keys for different environments, right? one day i forgot to configure it in test, and it was an hour of headaches).
-*   check your rails environment, make sure is loading the correct configuration based on your environment.
-*   use your browser's developer tools to inspect the cookies being set and the request headers, this can give you clues about what is going on.
-*   if you are using a custom cookie store, review it thoroughly.
-*   double check the `domain:` parameter if you have subdomains.
+- make sure your devise secret key is set correctly and that it is the same everywhere (you do have separate keys for different environments, right? one day i forgot to configure it in test, and it was an hour of headaches).
+- check your rails environment, make sure is loading the correct configuration based on your environment.
+- use your browser's developer tools to inspect the cookies being set and the request headers, this can give you clues about what is going on.
+- if you are using a custom cookie store, review it thoroughly.
+- double check the `domain:` parameter if you have subdomains.
 
 in terms of resources. the 'rails security guide' is a must read, and the official rails api documentation on cookies is your friend. also, if you're dealing with complex issues you might want to look at the 'owasp top ten' to understand common attack vectors and better protect your application, because if you think it's impossible to get hacked you might get a surprise, even if it seems just like "someone is accessing user data, who would do that?!". and there you have it. devise with encrypted cookies in rails, it is not that hard, you just have to understand what is going on under the hood. it is a mix of configurations, sensible security defaults from devise and rails, plus good practices. the key is to understand how sessions work with cookies and encryption, how to properly configure devise, and some basic debugging skills.

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-is-the-right-way-of-mini-batching-the-validation-set-while-training"
 ---
 
-alright, so you're asking about mini-batching the validation set during training, eh? it's a common gotcha, and i've definitely tripped over this myself a few times. i remember back when i was first messing around with convolutional neural nets for image recognition, i was naively just feeding the entire validation set in one go. it wasn't pretty. memory errors everywhere and the whole training process was sluggish, like a dial-up modem in 2024.
+, so you're asking about mini-batching the validation set during training, eh? it's a common gotcha, and i've definitely tripped over this myself a few times. i remember back when i was first messing around with convolutional neural nets for image recognition, i was naively just feeding the entire validation set in one go. it wasn't pretty. memory errors everywhere and the whole training process was sluggish, like a dial-up modem in 2024.
 
 the problem, as i see it, is this: your validation set, while usually smaller than your training data, can still be pretty large. if you try to compute metrics and gradients on it all at once, you're going to run into memory issues, slow down your training loop, and frankly, it's just not how it's supposed to be done. validation is more about evaluating the current state of model not training the model. we need to get metrics to track model progress, not contribute on the training.
 
@@ -42,6 +42,7 @@ def validate_model(model, validation_data, batch_size, loss_function, metric_fun
 
     return avg_loss, avg_metric
 ```
+
 this is pretty straightforward. notice the `model.eval()` and the `torch.no_grad()`. these are vital. if you leave the model in training mode or allow gradient calculations, your validation results are not going to be true. it also makes a great difference in training time to not calculate the backpropagation on validation. also, using .item() on loss is important to retrieve only the value of the scalar in that moment. not doing it would lead to unexpected memory issues because the loss tensor retains the computational graph history.
 
 that function is nice, but how do we call this? how do we retrieve the validation dataset to begin with? here's a small example of how to do it using a python list or similar, along with a simple example of the training loop and use of the validation routine:
@@ -98,7 +99,7 @@ for epoch in range(num_epochs):
         inputs, targets = zip(*batch)
         inputs = torch.stack(inputs).to(device) # stack the list of tensors in the batch
         targets = torch.stack(targets).to(device)
-        
+
         optimizer.zero_grad()
         outputs = model(inputs)
         loss = loss_function(outputs, targets)
@@ -110,11 +111,13 @@ for epoch in range(num_epochs):
 
 print("training finished")
 ```
+
 here, we set up a dummy training set and a dummy validation set. the important part is how we load these as batches in our training loop and validation loop. notice how the batch extraction from the dataset uses slices. and also, how the training and validation batches are not the same size, this highlights the fact that it is ok to do so. we also use `torch.stack` to convert the list of tensors that represent the batch into a single tensor ready to be used in the model.
 
 regarding best practices i have a couple of thoughts, the most important one is to shuffle your validation set, even if less important than shuffling the train data. for each epoch, shuffle the validation data so that the validation process isn’t biased towards the way data is presented. we must remember the purpose of validation is to see if the generalization error on the model is acceptable. it must see different samples every epoch. you are not going to see good results if you keep feeding the same samples in the same order every epoch, even if not training on it, your model may become biased on those. i have seen it happen. it is not fun to debug issues that appear by only neglecting a simple shuffle function.
 
 here's a modified version of the previous validation function that does the validation dataset shuffling, and shows the complete code including the training function as well:
+
 ```python
 import torch
 import torch.nn as nn
@@ -196,7 +199,7 @@ for epoch in range(num_epochs):
         inputs, targets = zip(*batch)
         inputs = torch.stack(inputs).to(device)
         targets = torch.stack(targets).to(device)
-        
+
         optimizer.zero_grad()
         outputs = model(inputs)
         loss = loss_function(outputs, targets)

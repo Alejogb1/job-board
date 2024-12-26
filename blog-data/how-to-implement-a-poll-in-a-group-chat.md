@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-implement-a-poll-in-a-group-chat"
 ---
 
-alright, so you're looking at building a poll feature within a group chat, right? i've been there, done that, got the t-shirt, and probably a few scars to show for it. i remember back in '08, i was working on a little side project—a sort of proto-discord for a gaming community i was part of. we really needed a way to decide on raid times, and well, that's when i learned about the joys and pains of real-time poll implementations. it sounds straightforward, but trust me, the devil is in the details.
+, so you're looking at building a poll feature within a group chat, right? i've been there, done that, got the t-shirt, and probably a few scars to show for it. i remember back in '08, i was working on a little side project—a sort of proto-discord for a gaming community i was part of. we really needed a way to decide on raid times, and well, that's when i learned about the joys and pains of real-time poll implementations. it sounds straightforward, but trust me, the devil is in the details.
 
 the basic idea isn't that complex, you're talking about capturing user input (their votes) and displaying the results in a way that's both informative and updates live, preferably. we’re not building a general purpose survey engine here, just something simple for a chat group, so it should be streamlined for that specific use case, focusing on simplicity of interaction.
 
@@ -19,14 +19,14 @@ class poll:
         self.options = options
         self.votes = {option: 0 for option in options}
         self.voters = {} # user_id -> option
-    
+
     def vote(self, user_id, option):
       if user_id in self.voters:
         old_option = self.voters[user_id]
         self.votes[old_option] -= 1
       self.voters[user_id] = option
       self.votes[option] += 1
-    
+
     def get_results(self):
       return self.votes
 ```
@@ -60,7 +60,7 @@ def process_vote_redis(poll_id, user_id, option):
     poll_data['voters'] = voters
 
     redis_client.set(poll_key, json.dumps(poll_data))
-    
+
     # Publish the update
     redis_client.publish(f"poll_updates:{poll_id}", json.dumps(poll_data))
 
@@ -70,7 +70,7 @@ def process_vote_redis(poll_id, user_id, option):
 in that case, on the client side, you would have a process constantly listening on the redis channel `poll_updates:{poll_id}` for the update. if you happen to have a javascript frontend, it can be as simple as the following using redis pub/sub client, but other languages have similar clients.
 
 ```javascript
-import { createClient } from 'redis';
+import { createClient } from "redis";
 
 const redisClient = createClient();
 
@@ -80,23 +80,23 @@ async function subscribeToPoll(poll_id, callback) {
   await subscriber.connect();
 
   await subscriber.subscribe(`poll_updates:${poll_id}`, (message) => {
-      try {
-          const update = JSON.parse(message);
-          callback(update); // Call the provided callback
-      } catch (e) {
-        console.error("error while parsing the json ",e);
-      }
+    try {
+      const update = JSON.parse(message);
+      callback(update); // Call the provided callback
+    } catch (e) {
+      console.error("error while parsing the json ", e);
+    }
   });
   return () => {
     subscriber.unsubscribe(`poll_updates:${poll_id}`);
     subscriber.disconnect();
     console.log("unsubscribed from poll", poll_id);
-  }
+  };
 }
 
 // usage:
-const unsub = subscribeToPoll(123,(update)=>{
-  console.log("poll update received",update);
+const unsub = subscribeToPoll(123, (update) => {
+  console.log("poll update received", update);
 });
 
 //to unsubscribe

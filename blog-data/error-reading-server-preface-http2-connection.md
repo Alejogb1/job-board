@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "error-reading-server-preface-http2-connection"
 ---
 
-Okay so you're hitting a "error reading server preface http2 connection" right Been there done that got the t-shirt seriously This error is a classic head scratcher especially when you think everything *should* be working
+you're hitting a "error reading server preface http2 connection" right Been there done that got the t-shirt seriously This error is a classic head scratcher especially when you think everything _should_ be working
 
 Let's break it down from my experience and what I've seen others wrestle with It almost always boils down to a fundamental mismatch or a hiccup in the initial handshake process between your client and the server when attempting an HTTP/2 connection The preface the error is bitching about is that specific sequence of bytes that says "hey we're talking HTTP/2"
 
@@ -21,27 +21,26 @@ Let's do some hypothetical examples cause I think they might help
 **Example 1: Node.js client using `node-fetch`**
 
 ```javascript
-const fetch = require('node-fetch');
+const fetch = require("node-fetch");
 
 async function makeHttp2Request() {
-    try {
-        const response = await fetch('https://example.com', {
-            // Note: http2 might not work out of the box you need an agent
-            // see `https://nodejs.org/api/http2.html` for http2 specific setup
-            // and https://github.com/nodejs/undici
-            // if you need to explicitly use http/1.1 force it
-            // see specific documentation for your fetch library
-             // agent: new http.Agent() //force http/1.1
-             
-        });
-        if (response.ok) {
-            console.log('Response received:', await response.text());
-        } else {
-            console.error('Request failed with status:', response.status);
-        }
-    } catch (error) {
-        console.error('Error during request:', error.message);
+  try {
+    const response = await fetch("https://example.com", {
+      // Note: http2 might not work out of the box you need an agent
+      // see `https://nodejs.org/api/http2.html` for http2 specific setup
+      // and https://github.com/nodejs/undici
+      // if you need to explicitly use http/1.1 force it
+      // see specific documentation for your fetch library
+      // agent: new http.Agent() //force http/1.1
+    });
+    if (response.ok) {
+      console.log("Response received:", await response.text());
+    } else {
+      console.error("Request failed with status:", response.status);
     }
+  } catch (error) {
+    console.error("Error during request:", error.message);
+  }
 }
 
 makeHttp2Request();
@@ -68,6 +67,7 @@ def make_http2_request():
 
 make_http2_request()
 ```
+
 Remember the Python `requests` library doesn't natively handle HTTP/2 so trying this will probably still result in an error You can see what happens if you try it and then you can start considering if the problem is on the server side or the client side
 
 **Example 3: Go client using `net/http`**
@@ -109,13 +109,14 @@ func main() {
 	fmt.Println("Response:\n", string(body))
 }
 ```
+
 In Go it is often more specific because `net/http` doesn't support HTTP/2 out of the box You need to specifically add `golang.org/x/net/http2` to make http2 requests like in the example provided This also highlights the fact that the server needs to support the HTTP/2 protocol or this will fail with similar errors we are discussing
 
-Alright another common gotcha is TLS configuration with HTTP/2 The spec requires TLS for HTTP/2 so if you're not using TLS or if your TLS configuration is incorrect you'll see a similar error The client needs to be able to negotiate a compatible TLS version and cipher suite and the server also needs to support that as well You want to check the TLS versions of both server and client they have to be compatible
+another common gotcha is TLS configuration with HTTP/2 The spec requires TLS for HTTP/2 so if you're not using TLS or if your TLS configuration is incorrect you'll see a similar error The client needs to be able to negotiate a compatible TLS version and cipher suite and the server also needs to support that as well You want to check the TLS versions of both server and client they have to be compatible
 
 And let's not forget the importance of SNI Server Name Indication especially if you're hosting multiple domains on the same IP address If the SNI is not sent or is sent incorrectly the server might not know what certificate to present which can cause the preface to be invalid That can lead to connection problems including that vague error you are seeing
 
-Ok so we've covered some main issues Now let's talk about debugging this mess if you still haven't found the problem Curl with the `-v` flag is your best friend for this  That gives you super detailed information about the TLS handshake and HTTP/2 negotiation The data is very low level and it is amazing to figure out the problem If curl works but other clients do not then you know it is client specific and not the server
+Ok so we've covered some main issues Now let's talk about debugging this mess if you still haven't found the problem Curl with the `-v` flag is your best friend for this That gives you super detailed information about the TLS handshake and HTTP/2 negotiation The data is very low level and it is amazing to figure out the problem If curl works but other clients do not then you know it is client specific and not the server
 
 I once spent a whole day just staring at tcpdumps trying to decipher why the client was behaving like a moron Turns out the client was trying to use an older TLS version that was disabled on the server it was truly a pain in the butt that day But it shows you that network capturing tools like tcpdump wireshark can be incredibly valuable too
 
@@ -123,7 +124,7 @@ Now I know you want real resources and I am not a fan of the "just google it" ap
 
 And if you want a more practical view check out "High Performance Browser Networking" by Ilya Grigorik it's a great book that covers HTTP/2 and related network protocols extensively and it has helped me several times with these issues It gives you all the best practices and deep insights that are very useful And the last thing I would recommend is to check the nodejs and other library specific HTTP/2 documentation because they can often have specific issues on their implementation which is not exactly standard
 
-Okay last bit a little joke I always tell myself when facing a similar issue when trying to debug server issues "It's always DNS... except when it's not" which is basically true most of the time but it also highlights how complex this thing can be
+last bit a little joke I always tell myself when facing a similar issue when trying to debug server issues "It's always DNS... except when it's not" which is basically true most of the time but it also highlights how complex this thing can be
 
 Anyways hopefully this wall of text helps you out If you have any specific parts of the configuration you are unsure about post it and I'll take another shot at it
 

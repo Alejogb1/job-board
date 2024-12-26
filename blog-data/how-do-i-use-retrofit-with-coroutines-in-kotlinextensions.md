@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-use-retrofit-with-coroutines-in-kotlinextensions"
 ---
 
-Alright, let's talk about integrating Retrofit with Kotlin coroutines, specifically when we’re working with Kotlin extensions. It's something I’ve dealt with extensively, particularly during a past project involving a complex data synchronization process for a mobile application. We needed seamless, asynchronous network calls, and the standard Retrofit callback system just wasn't cutting it. Using coroutines and Kotlin extensions turned out to be the cleaner, more maintainable approach.
+, let's talk about integrating Retrofit with Kotlin coroutines, specifically when we’re working with Kotlin extensions. It's something I’ve dealt with extensively, particularly during a past project involving a complex data synchronization process for a mobile application. We needed seamless, asynchronous network calls, and the standard Retrofit callback system just wasn't cutting it. Using coroutines and Kotlin extensions turned out to be the cleaner, more maintainable approach.
 
 The core idea here is to leverage Kotlin's suspend functions to make network requests directly from our coroutines. This allows us to write asynchronous code that looks almost synchronous, drastically reducing callback nesting and improving the overall readability. The magic lies in combining Retrofit's interfaces with Kotlin's powerful features. I'll walk you through the process, and provide code examples that show the approach we used.
 
@@ -29,7 +29,7 @@ interface UserService {
 }
 ```
 
-Notice the `suspend` keyword in front of `fun getUserProfile`. This is crucial. Retrofit, when configured correctly, will handle the actual asynchronous execution within the coroutine context. What this *actually* does is generate an implementation at runtime that, when called from within a coroutine scope, suspends the execution of the coroutine until the network operation is completed, and then resumes the coroutine with the result, or throws an exception.
+Notice the `suspend` keyword in front of `fun getUserProfile`. This is crucial. Retrofit, when configured correctly, will handle the actual asynchronous execution within the coroutine context. What this _actually_ does is generate an implementation at runtime that, when called from within a coroutine scope, suspends the execution of the coroutine until the network operation is completed, and then resumes the coroutine with the result, or throws an exception.
 
 Now let's see how to utilize this in our code. We’ll use a simple `viewModel` function that launches a coroutine:
 
@@ -101,9 +101,10 @@ class UserViewModel {
     }
 }
 ```
+
 In this updated example I have replaced the old `fetchUserProfile` function with a new `fetchMultipleUsers` function that takes a list of user ids and returns a list of user profiles. Inside of the function, I launched a new coroutine using the `async` builder. The `async` builder returns a `Deferred<List<UserProfile>>` which is similar to a `Promise` in Javascript. In the async block, I used `userIds.map` to create a new list of `Deferred<UserProfile>`. Then, I used `profiles.awaitAll()` to wait for all of those requests to complete, and it returned a list of `UserProfile`. Then, I called `await()` on the deferred returned by the async block to get the actual result.
 
-This shows how multiple requests can be launched in parallel and then the results can be combined. Note the function `fetchMultipleUsers` is a `suspend` function, meaning it *must* be called from within a coroutine, just like the `service.getUserProfile()` function, because of the coroutine suspension.
+This shows how multiple requests can be launched in parallel and then the results can be combined. Note the function `fetchMultipleUsers` is a `suspend` function, meaning it _must_ be called from within a coroutine, just like the `service.getUserProfile()` function, because of the coroutine suspension.
 
 The critical aspect to all of this is ensuring you are properly configuring Retrofit to use the converter factory. Without a converter, the body of the request would be raw text or the server could throw an error. GsonConverterFactory is just one option but for other options it is necessary to include other dependencies.
 

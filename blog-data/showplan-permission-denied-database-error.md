@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "showplan-permission-denied-database-error"
 ---
 
-Okay so "showplan permission denied database error" classic right I've seen this more times than I care to admit Let me break it down from my experience and how you can likely get this sorted it's a permission thing usually straightforward but the devil's always in the details
+"showplan permission denied database error" classic right I've seen this more times than I care to admit Let me break it down from my experience and how you can likely get this sorted it's a permission thing usually straightforward but the devil's always in the details
 
 So basically you're hitting this error probably when you're trying to get the query execution plan right That's the plan SQL Server uses to figure out how to fetch your data The SHOWPLAN permission is what allows you to view that plan without running the actual query and this permission problem is pretty common especially when you're not the database administrator or you're working with complex permission setups It's a little bit like asking to see the chef's recipe but you're not allowed in the kitchen
 
@@ -31,6 +31,7 @@ ALTER SERVER ROLE sysadmin ADD MEMBER your_user
 ALTER ROLE developer_role ADD MEMBER your_user;
 GO
 ```
+
 This script first creates a role called `developer_role` then the next line adds the showplan permissions to this role and finally the user gets assigned to this role this is more scalable than grant permissions to single users
 
 You'll need someone with sufficient permissions to run this usually a database administrator or someone with server admin privileges This is a one-time setup per user or role though If you are the database admin and for some reason you are getting the permission error then you need to first check that you actually have the admin rights on the SQL Server instance and you are really logged in with that account there are instances where people have more than one user accounts on their local machine and if they do not pay attention they are logged in into the instance with a different account than the one they think they are working with
@@ -46,6 +47,7 @@ GO
 SET SHOWPLAN_TEXT OFF;
 GO
 ```
+
 Replace `YourTable` and `YourCondition` with your actual table name and WHERE clause you will notice a textual representation of the query plan as a result of using `SET SHOWPLAN_TEXT ON` command if it is working properly this is an indication that showplan permissions have been granted correctly so this command will help you verify everything is set up correctly and you are good to go
 
 If you're using SQL Server Management Studio (SSMS) and trying to view the execution plan the shortcut is Ctrl+L and also make sure that you are logged in with the user that has the correct permissions When you get this error it is probably because you are trying to get the estimated execution plan If you want to see the actual execution plan which is something different you need to actually run the query and check the plan you get this plan by selecting `Display Actual Execution Plan` which is also under the query menu as an icon and also has a shortcut of `Ctrl + M` This usually gives you an idea how SQL Server executes your query but make sure you are working on a development environment if it is a big query as the query will be executed and can affect the system performance

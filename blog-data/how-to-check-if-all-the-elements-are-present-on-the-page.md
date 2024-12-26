@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-check-if-all-the-elements-are-present-on-the-page"
 ---
 
-alright, so you're asking about how to make sure all the expected elements are actually there on a webpage, right? i’ve been down that road, more times than i'd like to remember, and i've got some stuff to share. it’s a pretty common problem when you're doing any kind of front-end testing or scraping. it’s frustrating when a script breaks because an element didn't load or got renamed.
+, so you're asking about how to make sure all the expected elements are actually there on a webpage, right? i’ve been down that road, more times than i'd like to remember, and i've got some stuff to share. it’s a pretty common problem when you're doing any kind of front-end testing or scraping. it’s frustrating when a script breaks because an element didn't load or got renamed.
 
 basically, there are a few ways to approach this, and the best one really depends on the specifics of your situation, and honestly, what tools you're already using. i'll give you a couple of examples using different techniques, going from straightforward to a little more involved. i’m assuming you are comfortable with javascript, since this is the way i did it always. i'm also assuming that you already have a way of interacting with the page, like using puppeteer, playwright, or selenium, or even vanilla javascript with a browser environment. i mostly use puppeteer, because it is fast.
 
@@ -12,41 +12,40 @@ first, the simplest method that i used for a long time when i had a side project
 
 ```javascript
 async function checkElementsSimple(page, selectors) {
-    for (const selectorData of selectors) {
-        const {selector, expectedCount} = selectorData;
-        try{
-             const elements = await page.$$(selector);
-             if (elements.length !== expectedCount) {
-              console.warn(`mismatch found for selector ${selector}: expected ${expectedCount} , found ${elements.length}`)
-               return false;
-            }
-       } catch(error)
-       {
-         console.error(`error found for selector ${selector}: ${error}`)
-         return false
-       }
-   }
-    return true;
+  for (const selectorData of selectors) {
+    const { selector, expectedCount } = selectorData;
+    try {
+      const elements = await page.$$(selector);
+      if (elements.length !== expectedCount) {
+        console.warn(
+          `mismatch found for selector ${selector}: expected ${expectedCount} , found ${elements.length}`
+        );
+        return false;
+      }
+    } catch (error) {
+      console.error(`error found for selector ${selector}: ${error}`);
+      return false;
+    }
+  }
+  return true;
 }
-
 
 // example of usage:
 // here, the page would be an instance of pupeteer page, but can be replaced with any implementation of an abstraction
 // over the browser like playwright or similar
 // this list should be adjusted to your case, with the selectors and expected number of elements
 const selectorsToCheck = [
- {selector: '.product-card', expectedCount: 12},
- {selector: '#main-navigation li', expectedCount: 5},
- {selector: 'button.submit-button', expectedCount: 1},
+  { selector: ".product-card", expectedCount: 12 },
+  { selector: "#main-navigation li", expectedCount: 5 },
+  { selector: "button.submit-button", expectedCount: 1 },
 ];
-
 
 (async () => {
   const allElementsPresent = await checkElementsSimple(page, selectorsToCheck);
   if (allElementsPresent) {
-    console.log('all elements are present!');
+    console.log("all elements are present!");
   } else {
-    console.error('some elements are missing or have unexpected counts.');
+    console.error("some elements are missing or have unexpected counts.");
   }
 })();
 ```
@@ -58,66 +57,75 @@ the drawback with this method is that if the page has dynamically generated elem
 here's an example with a timeout and retry mechanism:
 
 ```javascript
-async function waitForElementWithRetry(page, selector, timeoutMs = 5000, maxRetries = 3) {
+async function waitForElementWithRetry(
+  page,
+  selector,
+  timeoutMs = 5000,
+  maxRetries = 3
+) {
   let retries = 0;
 
   while (retries < maxRetries) {
-      try {
-           await page.waitForSelector(selector, {timeout: timeoutMs});
-           return true;
-       } catch(error) {
-         console.warn(`wait for selector ${selector} timed out, retrying... attempt ${retries + 1} of ${maxRetries}`);
-          retries++;
-          await new Promise(resolve => setTimeout(resolve, 1000)); // small delay between retries
-       }
+    try {
+      await page.waitForSelector(selector, { timeout: timeoutMs });
+      return true;
+    } catch (error) {
+      console.warn(
+        `wait for selector ${selector} timed out, retrying... attempt ${
+          retries + 1
+        } of ${maxRetries}`
+      );
+      retries++;
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // small delay between retries
+    }
   }
   console.error(`max retries reached while waiting for selector: ${selector}`);
   return false;
-
 }
 
 async function checkElementsWithWait(page, selectors) {
-    for (const selectorData of selectors) {
-        const {selector, expectedCount} = selectorData;
-        const elementPresent = await waitForElementWithRetry(page, selector);
-          if(!elementPresent){
-            console.error(`element selector ${selector} was not found.`)
-            return false
-          }
-        try{
-          const elements = await page.$$(selector);
-           if (elements.length !== expectedCount) {
-            console.warn(`mismatch found for selector ${selector}: expected ${expectedCount} , found ${elements.length}`)
-            return false
-          }
-       } catch(error)
-       {
-         console.error(`error found for selector ${selector}: ${error}`)
-         return false
-       }
+  for (const selectorData of selectors) {
+    const { selector, expectedCount } = selectorData;
+    const elementPresent = await waitForElementWithRetry(page, selector);
+    if (!elementPresent) {
+      console.error(`element selector ${selector} was not found.`);
+      return false;
     }
-   return true;
+    try {
+      const elements = await page.$$(selector);
+      if (elements.length !== expectedCount) {
+        console.warn(
+          `mismatch found for selector ${selector}: expected ${expectedCount} , found ${elements.length}`
+        );
+        return false;
+      }
+    } catch (error) {
+      console.error(`error found for selector ${selector}: ${error}`);
+      return false;
+    }
+  }
+  return true;
 }
-
 
 // example of usage:
 // this list should be adjusted to your case, with the selectors and expected number of elements
 const selectorsToCheck = [
- {selector: '.product-card', expectedCount: 12},
- {selector: '#main-navigation li', expectedCount: 5},
- {selector: 'button.submit-button', expectedCount: 1},
+  { selector: ".product-card", expectedCount: 12 },
+  { selector: "#main-navigation li", expectedCount: 5 },
+  { selector: "button.submit-button", expectedCount: 1 },
 ];
 
-
 (async () => {
-  const allElementsPresent = await checkElementsWithWait(page, selectorsToCheck);
+  const allElementsPresent = await checkElementsWithWait(
+    page,
+    selectorsToCheck
+  );
   if (allElementsPresent) {
-    console.log('all elements are present!');
+    console.log("all elements are present!");
   } else {
-    console.error('some elements are missing or have unexpected counts.');
+    console.error("some elements are missing or have unexpected counts.");
   }
 })();
-
 ```
 
 this version is more robust and can handle slow loading pages and it is what i usually use these days. using a simple retry strategy with a small timeout, usually is more than enough to handle most of the cases. this avoids random errors with your test, or with your scripts. i have seen many people simply throwing errors without retries and this is a big mistake in any scripting system, because it can cause headaches. i've learned that from trying to debug these situations.
@@ -127,49 +135,57 @@ now, for the final example, if you are dealing with complex situations where the
 ```javascript
 async function checkElementsWithCondition(page, selectorsWithCondition) {
   for (const selectorData of selectorsWithCondition) {
-      const {selector, expectedCount, condition} = selectorData;
-      try{
-          await page.waitForFunction(condition, {timeout: 10000}); // wait until the condition is true, with a timeout
-          const elements = await page.$$(selector);
-          if (elements.length !== expectedCount) {
-            console.warn(`mismatch found for selector ${selector}: expected ${expectedCount} , found ${elements.length}`)
-            return false
-          }
-      } catch (error) {
-        console.error(`error while waiting or checking selector ${selector}: ${error}`)
+    const { selector, expectedCount, condition } = selectorData;
+    try {
+      await page.waitForFunction(condition, { timeout: 10000 }); // wait until the condition is true, with a timeout
+      const elements = await page.$$(selector);
+      if (elements.length !== expectedCount) {
+        console.warn(
+          `mismatch found for selector ${selector}: expected ${expectedCount} , found ${elements.length}`
+        );
         return false;
       }
+    } catch (error) {
+      console.error(
+        `error while waiting or checking selector ${selector}: ${error}`
+      );
+      return false;
+    }
   }
   return true;
 }
 
-
 // example of usage:
 const selectorsToCheck = [
-{
-    selector: '.product-card',
+  {
+    selector: ".product-card",
     expectedCount: 12,
-    condition: () => document.querySelectorAll('.product-card').length > 0,
-},
-{
-  selector: '#main-navigation li',
-  expectedCount: 5,
-  condition: () => document.querySelectorAll('#main-navigation li').length === 5,
-},
-{
-  selector: 'button.submit-button',
-  expectedCount: 1,
-  condition: () => document.querySelector('button.submit-button') !== null &&
-  document.querySelector('button.submit-button').disabled === false
-},
+    condition: () => document.querySelectorAll(".product-card").length > 0,
+  },
+  {
+    selector: "#main-navigation li",
+    expectedCount: 5,
+    condition: () =>
+      document.querySelectorAll("#main-navigation li").length === 5,
+  },
+  {
+    selector: "button.submit-button",
+    expectedCount: 1,
+    condition: () =>
+      document.querySelector("button.submit-button") !== null &&
+      document.querySelector("button.submit-button").disabled === false,
+  },
 ];
 
 (async () => {
-  const allElementsPresent = await checkElementsWithCondition(page, selectorsToCheck);
+  const allElementsPresent = await checkElementsWithCondition(
+    page,
+    selectorsToCheck
+  );
   if (allElementsPresent) {
-    console.log('all elements are present!');
+    console.log("all elements are present!");
   } else {
-    console.error('some elements are missing or have unexpected counts.');
+    console.error("some elements are missing or have unexpected counts.");
   }
 })();
 ```

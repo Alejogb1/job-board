@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-real-world-examples-of-using-aidl"
 ---
 
-Alright, let’s dive into AIDL. It's not always the first tool that springs to mind for many developers, but when you're facing certain interprocess communication (IPC) challenges on Android, it becomes absolutely crucial. I’ve seen its value firsthand, more times than I care to count over the years, particularly in situations where performance and structured communication are non-negotiable.
+, let’s dive into AIDL. It's not always the first tool that springs to mind for many developers, but when you're facing certain interprocess communication (IPC) challenges on Android, it becomes absolutely crucial. I’ve seen its value firsthand, more times than I care to count over the years, particularly in situations where performance and structured communication are non-negotiable.
 
 Let's not start from the textbook definition. Instead, consider a specific project I was on a few years back involving a custom Android POS system. We had multiple services running in separate processes: one handling payment processing, another managing inventory, and yet another dealing with user interface components. Sharing data between these via standard intents and broadcasts quickly became cumbersome and inefficient. We needed strong typing and a well-defined interface, not relying on string keys and the inherent type uncertainties. That’s where AIDL stepped in and saved us from a potential performance disaster.
 
@@ -200,6 +200,7 @@ interface IProductService {
 ```
 
 And lastly, a portion of the implementation in Java:
+
 ```java
 // ProductService.java
 package com.example.productservice;
@@ -303,4 +304,4 @@ In this case, the client provides an instance of `IProcessCallback` that the ser
 
 These are just a few examples of the various things you can achieve with AIDL. When dealing with multiple processes, especially for core system functionalities where performance is critical, AIDL provides a structured and efficient way to handle inter-process communication. It is more than just a convenient tool; it’s essential for building robust Android applications that involve complex, modular architectures.
 
-For anyone looking to go deeper, I highly recommend consulting the official Android developer documentation on AIDL. Additionally, for a broader understanding of concurrency and multi-threading patterns, *Concurrent Programming in Java* by Doug Lea is an excellent resource. And to really understand the nuances of Android's underlying architecture, specifically the binder mechanism, consider digging into *Understanding the Android OS*, by Karim Yaghmour. These will definitely provide a robust foundation for tackling more complex scenarios using AIDL.
+For anyone looking to go deeper, I highly recommend consulting the official Android developer documentation on AIDL. Additionally, for a broader understanding of concurrency and multi-threading patterns, _Concurrent Programming in Java_ by Doug Lea is an excellent resource. And to really understand the nuances of Android's underlying architecture, specifically the binder mechanism, consider digging into _Understanding the Android OS_, by Karim Yaghmour. These will definitely provide a robust foundation for tackling more complex scenarios using AIDL.

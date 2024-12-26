@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-azureml-tabulardatasettopandasdataframe-raise-an-invalidencoding-error"
 ---
 
-Alright, let’s talk about that persistent `InvalidEncoding` error you sometimes encounter when using `AzureML TabularDataset.to_pandas_dataframe()`. It's a classic case of data encoding mismatches, and I’ve personally spent more than a few late nights tracking down the culprits. I recall one particular project, a time-series analysis for a manufacturing client, where we wrestled with this exact issue across a vast dataset of sensor readings. It taught me a lot, so let me break it down for you in a way that hopefully clarifies the problem and offers tangible solutions.
+, let’s talk about that persistent `InvalidEncoding` error you sometimes encounter when using `AzureML TabularDataset.to_pandas_dataframe()`. It's a classic case of data encoding mismatches, and I’ve personally spent more than a few late nights tracking down the culprits. I recall one particular project, a time-series analysis for a manufacturing client, where we wrestled with this exact issue across a vast dataset of sensor readings. It taught me a lot, so let me break it down for you in a way that hopefully clarifies the problem and offers tangible solutions.
 
 The core issue revolves around the encoding used when your data was originally stored (perhaps in a csv, parquet, or other file format) versus the encoding that the `pandas.read_csv()` function, which `to_pandas_dataframe()` internally utilizes, is attempting to decode it with. When `to_pandas_dataframe()` encounters data it can’t interpret using its default assumptions, it throws the dreaded `InvalidEncoding` error. Think of it like trying to read a book written in Mandarin when your decoder is only set for English; the characters just don’t align.
 
@@ -109,6 +109,7 @@ for encoding in possible_encodings:
 if df is None:
      print("Failed to load with all tried encodings. Please inspect dataset.")
 ```
+
 In this snippet, I’ve defined a list of `possible_encodings`. The code then tries each one sequentially, breaking out of the loop when a successful conversion occurs or when an unexpected error occurs. This iterative process allows for exhaustive testing of encoding options. If you get to the end of the loop without success, then a more thorough investigation of the files is in order.
 
 **Recommendations for Further Study**

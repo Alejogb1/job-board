@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "prometheus-cpu-usage-query-example"
 ---
 
-Okay so someone's asking about Prometheus CPU usage queries right Been there done that got the t-shirt and probably burned a few CPUs along the way trying to get this right Over the years I've wrestled more than my fair share of wonky Prometheus setups so let's break it down for ya real simple and clear
+someone's asking about Prometheus CPU usage queries right Been there done that got the t-shirt and probably burned a few CPUs along the way trying to get this right Over the years I've wrestled more than my fair share of wonky Prometheus setups so let's break it down for ya real simple and clear
 
 First off just a quick reminder Prometheus works by scraping metrics from your target systems which are these little time series databases Each metric has a name some labels and values over time So when we're talking about CPU usage we are not just dealing with one number we're actually dealing with a flow of data that we've gotta manipulate to make sense of it all
 
@@ -16,7 +16,7 @@ Let's take a look at my go to query to do just that:
 sum(rate(process_cpu_seconds_total[5m])) by (instance)
 ```
 
-Okay so let's break this down for the newbies `process_cpu_seconds_total` is a common metric that exporters use for recording cumulative CPU time. Then I use `[5m]` which means I’m looking at CPU usage over the last five minutes `rate()` calculates the increase per second over that five minute window. and last `sum() by (instance)` is going to sum the CPU usage across all cores and then group it by instance label for each node I mean that's it pretty straightforward
+let's break this down for the newbies `process_cpu_seconds_total` is a common metric that exporters use for recording cumulative CPU time. Then I use `[5m]` which means I’m looking at CPU usage over the last five minutes `rate()` calculates the increase per second over that five minute window. and last `sum() by (instance)` is going to sum the CPU usage across all cores and then group it by instance label for each node I mean that's it pretty straightforward
 
 I recall this one time when I was first starting out and I forgot the `sum()` part and I was getting all these crazy graphs and just weird data. Yeah that’s how you get a PhD in Prometheus troubleshooting the hard way. Believe me after that I never forget the sum unless I am trying to diagnose some really low level issue with the core architecture of the system itself. It's amazing how such a tiny detail can throw everything into chaos right?
 
@@ -41,10 +41,12 @@ Let's show an example of that to illustrate a case where you might want to analy
 sum(rate(process_cpu_user_seconds_total[5m])) by (instance) /
 count(count(process_cpu_user_seconds_total) by (cpu) ) by (instance)
 ```
+
 ```promql
 sum(rate(process_cpu_system_seconds_total[5m])) by (instance) /
 count(count(process_cpu_system_seconds_total) by (cpu) ) by (instance)
 ```
+
 In this code snippet we can see that i used user time in the first query and system time in the second one. This is incredibly useful when you want to pinpoint what is actually causing high cpu usage.
 
 I can never remember which is which and I always find myself checking my own notes. The last thing you want is to go around telling people that the application is the problem when in fact your kernel is going nuts because of some faulty driver right? (it happened to me once and I am still ashamed to talk about it)
@@ -70,4 +72,4 @@ For a practical guide to Prometheus itself the "Prometheus: Up & Running" book b
 
 Also, the official Prometheus documentation is also excellent. It's always the first place to look if you need something clarified so go there first.
 
-Okay I hope this helps you out. I am done for the day see you around.
+I hope this helps you out. I am done for the day see you around.

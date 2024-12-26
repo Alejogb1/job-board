@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-async-and-await-to-replace-then-and-catch-in-nodejs"
 ---
 
-Okay, let’s tackle this. I've definitely been in the trenches with asynchronous javascript – more times than I care to recall, actually – and the move from `.then()` and `.catch()` to `async`/`await` was a significant improvement in my workflow and the readability of my codebase. It's not just about syntactic sugar; it fundamentally alters how you reason about and debug asynchronous operations. Let me walk you through it, drawing from past projects and the pain points I've personally encountered.
+, let’s tackle this. I've definitely been in the trenches with asynchronous javascript – more times than I care to recall, actually – and the move from `.then()` and `.catch()` to `async`/`await` was a significant improvement in my workflow and the readability of my codebase. It's not just about syntactic sugar; it fundamentally alters how you reason about and debug asynchronous operations. Let me walk you through it, drawing from past projects and the pain points I've personally encountered.
 
 The core issue stems from how promises are designed. Using `.then()` and `.catch()` introduces nested callbacks, leading to what is often called "callback hell" or "promise chaining hell". While manageable for simple cases, these structures can become incredibly difficult to follow and debug as the complexity increases. `async`/`await` was introduced precisely to mitigate these challenges by allowing us to write asynchronous code that appears more synchronous.
 
@@ -15,28 +15,31 @@ Now, let’s get practical. I’ve had to rewrite countless legacy modules movin
 ```javascript
 function fetchDataThenCatch(url) {
   return fetch(url)
-    .then(response => {
+    .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       return response.json();
     })
-    .then(data => {
+    .then((data) => {
       // Simulate some processing
-      const transformedData = data.map(item => ({ ...item, processed: true }));
+      const transformedData = data.map((item) => ({
+        ...item,
+        processed: true,
+      }));
       return transformedData;
     })
-    .catch(error => {
-      console.error('Error fetching and processing data:', error);
+    .catch((error) => {
+      console.error("Error fetching and processing data:", error);
       throw error; // Re-throwing for the caller to handle as they see fit
     });
 }
 
-fetchDataThenCatch('https://api.example.com/items')
-  .then(processedData => {
-      console.log("Processed data:", processedData);
+fetchDataThenCatch("https://api.example.com/items")
+  .then((processedData) => {
+    console.log("Processed data:", processedData);
   })
-  .catch(error => {
+  .catch((error) => {
     console.error("Final error handling:", error);
   });
 ```
@@ -54,20 +57,21 @@ async function fetchDataAsyncAwait(url) {
     }
     const data = await response.json();
     // Simulate some processing
-    const transformedData = data.map(item => ({ ...item, processed: true }));
+    const transformedData = data.map((item) => ({ ...item, processed: true }));
     return transformedData;
   } catch (error) {
-     console.error('Error fetching and processing data:', error);
-      throw error;
+    console.error("Error fetching and processing data:", error);
+    throw error;
   }
 }
 
-async function main(){
-  try{
-    const processedData = await fetchDataAsyncAwait('https://api.example.com/items');
+async function main() {
+  try {
+    const processedData = await fetchDataAsyncAwait(
+      "https://api.example.com/items"
+    );
     console.log("Processed data:", processedData);
-  }
-  catch(error){
+  } catch (error) {
     console.error("Final error handling:", error);
   }
 }
@@ -87,42 +91,41 @@ async function fetchDataRetry(url, retries = 3) {
   while (attempts < retries) {
     try {
       const response = await fetch(url);
-       if (!response.ok) {
-          if (response.status === 503) { //Service Unavailable
-              attempts++;
-              console.log(`Service unavailable, retry attempt: ${attempts}`);
-              await new Promise(resolve => setTimeout(resolve, 1000 * attempts)); // Exponential backoff
-              continue;
-            }
-         throw new Error(`HTTP error! Status: ${response.status}`);
-       }
+      if (!response.ok) {
+        if (response.status === 503) {
+          //Service Unavailable
+          attempts++;
+          console.log(`Service unavailable, retry attempt: ${attempts}`);
+          await new Promise((resolve) => setTimeout(resolve, 1000 * attempts)); // Exponential backoff
+          continue;
+        }
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
       const data = await response.json();
       return data;
-
     } catch (error) {
-        console.error(`Error during request: ${error}`);
-        if (attempts < retries) {
-           attempts++;
-            console.log(`Request failed, retry attempt: ${attempts}`);
-            await new Promise(resolve => setTimeout(resolve, 1000 * attempts)); // Exponential backoff
-            continue;
-        }
+      console.error(`Error during request: ${error}`);
+      if (attempts < retries) {
+        attempts++;
+        console.log(`Request failed, retry attempt: ${attempts}`);
+        await new Promise((resolve) => setTimeout(resolve, 1000 * attempts)); // Exponential backoff
+        continue;
+      }
 
-        throw error;
+      throw error;
     }
   }
-    throw new Error("Request failed after max retries.");
+  throw new Error("Request failed after max retries.");
 }
 
-
 async function main() {
-    try {
-      const fetchedData = await fetchDataRetry('https://api.example.com/items');
-      console.log('Data fetched:', fetchedData);
-    } catch (error) {
-      console.error('Final Error:', error);
-    }
+  try {
+    const fetchedData = await fetchDataRetry("https://api.example.com/items");
+    console.log("Data fetched:", fetchedData);
+  } catch (error) {
+    console.error("Final Error:", error);
   }
+}
 
 main();
 ```

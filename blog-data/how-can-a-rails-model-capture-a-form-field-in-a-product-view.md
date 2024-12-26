@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-a-rails-model-capture-a-form-field-in-a-product-view"
 ---
 
-Alright, let's tackle this. I’ve definitely seen this pattern play out, particularly early on in a few projects where we were rapidly prototyping e-commerce functionality. Capturing form field data within a Rails model, directly from a product view, might seem straightforward, but it often requires a bit of finesse to handle it correctly and avoid potential pitfalls. It's crucial to ensure that the data is properly associated and validated, so we don't end up with inconsistencies. Let me walk you through a couple of approaches I've used in the past, along with some code examples.
+, let's tackle this. I’ve definitely seen this pattern play out, particularly early on in a few projects where we were rapidly prototyping e-commerce functionality. Capturing form field data within a Rails model, directly from a product view, might seem straightforward, but it often requires a bit of finesse to handle it correctly and avoid potential pitfalls. It's crucial to ensure that the data is properly associated and validated, so we don't end up with inconsistencies. Let me walk you through a couple of approaches I've used in the past, along with some code examples.
 
 The core issue lies in the separation of concerns. A Rails model should primarily focus on data persistence and business logic; the view’s primary concern is rendering the user interface. Directly manipulating model attributes from the view can lead to tightly coupled code and makes testing harder. A preferred method involves passing parameters from the view through the controller and then to the model, where it can then be managed.
 
@@ -83,7 +83,7 @@ class Personalization < ApplicationRecord
   validates :field_name, presence: true
   validates :field_value, presence: true, unless: :logo_present? # allow value to be empty for logo uploads
   has_one_attached :logo # Assumes you have Active Storage configured
-  
+
   def logo_present?
     field_name == 'engraving_logo' && !logo.attached? # Check if logo is intended, and it’s attached
   end

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "which-is-the-proper-way-to-declare-this-kind-of-object-for-swagger"
 ---
 
-alright, so you're asking about how to properly define an object schema in swagger (or openapi, same thing mostly). i’ve been around the block a few times with this, trust me. it might seem straightforward, but there are a few ways to skin this cat, and some are definitely cleaner than others, especially when your api starts growing.
+, so you're asking about how to properly define an object schema in swagger (or openapi, same thing mostly). i’ve been around the block a few times with this, trust me. it might seem straightforward, but there are a few ways to skin this cat, and some are definitely cleaner than others, especially when your api starts growing.
 
 let's start with what i usually see people getting confused with – the difference between inline objects and using `$ref`. i remember back in my early days, i’d just throw everything inline into the `properties` section of my swagger definition. oh boy, what a mess that became! my swagger files were sprawling, duplicates were everywhere, and when i needed to make a tiny change, i had to hunt down each instance of the object. nightmare fuel, honestly. i even ended up, that one time, copy pasting the schema of the user object (first name, last name, id) into different parts of the schema definition just for the `getUser` endpoint and the `postUser` endpoint, and well... changing the id field type from int to string in one of them was enough to create a real mess for the frontend, good times... good times... if we can call that "good".
 
@@ -20,7 +20,7 @@ paths:
     get:
       summary: Get a list of users
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
@@ -78,14 +78,14 @@ paths:
     get:
       summary: Get a list of users
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
     post:
       summary: Create a new user
       requestBody:
@@ -93,8 +93,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
-
+              $ref: "#/components/schemas/User"
 ```
 
 here, we define the user object under `components/schemas/User` and then use `$ref` to reference it in the `get` and `post` responses. see how much cleaner that is? makes life easier, reduces copy-paste and keeps things consistent. i swear, copy-paste programming should be a crime; it's a gateway to more errors and bugs!
@@ -132,13 +131,12 @@ paths:
             type: integer
             format: int64
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserProfile'
-
+                $ref: "#/components/schemas/UserProfile"
 ```
 
 so, we’ve got `birthDate` defined as `type: string` with `format: date`, which tells swagger and the tools that consume it that it's a date string, not just any string. and the status is defined as an enum using the `enum` keyword. now that's some good stuff right there, much better than receiving a random string in a field that should be an enum, trust me, i've seen things... horrible things.

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-test-to-withdraw-funds-only-by-the-owner-in-solidity"
 ---
 
-alright, so you're hitting a classic solidity problem, how to make sure only the contract owner can pull funds out. i've definitely been there, staring at a gas estimate wondering where my eth went, because i messed up an access control modifier. let me share some experience and give you some practical code.
+, so you're hitting a classic solidity problem, how to make sure only the contract owner can pull funds out. i've definitely been there, staring at a gas estimate wondering where my eth went, because i messed up an access control modifier. let me share some experience and give you some practical code.
 
 the core issue is restricting access to the `withdraw` function. you don't want anyone with enough gas to siphon everything out. solidity provides mechanisms for this, and the most common is using the `msg.sender` and comparing that to the contract's owner, which is typically set on contract deployment. i'll show you how it's usually done.
 
@@ -38,7 +38,8 @@ now, to the critical part, the access control. we want the `withdraw` function t
    (bool success, ) = msg.sender.call{value: _amount}("");
    require(success, "withdrawal failed");
 ```
- so, the complete modified contract would be like this:
+
+so, the complete modified contract would be like this:
 
 ```solidity
 pragma solidity ^0.8.0;
@@ -59,6 +60,7 @@ contract fundmanager {
     }
 }
 ```
+
 this is the most basic implementation and what i usually use when i want a fast solution.
 
 the `require(msg.sender == owner, "only owner can withdraw funds");` line is doing the heavy lifting here. it checks that the address calling the `withdraw` function is identical to the address of the contract's owner which was set during deployment. if it's not the same address, the transaction will revert with the message “only owner can withdraw funds”, and that way no funds will be transferred. it will fail the transaction safely. after checking that msg.sender is the owner it attempts to send `_amount` to the owner's address with a call. if that call fails it reverts the whole transaction. it is usually a good idea to add a check for `address(this).balance >= _amount` before the transfer just to be completely sure, so lets do that next.

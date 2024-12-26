@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-afferent-and-efferent-coupling-be-measured-in-a-ruby-on-rails-application"
 ---
 
-Okay, let's tackle this. Measuring afferent and efferent coupling in a Rails application isn't just an academic exercise; it's fundamental to building maintainable and evolvable software. I've seen first-hand the chaos that uncontrolled coupling can unleash in a large project, so this is a topic near to my heart. It’s all about understanding the dependencies between your classes and modules.
+, let's tackle this. Measuring afferent and efferent coupling in a Rails application isn't just an academic exercise; it's fundamental to building maintainable and evolvable software. I've seen first-hand the chaos that uncontrolled coupling can unleash in a large project, so this is a topic near to my heart. It’s all about understanding the dependencies between your classes and modules.
 
-Essentially, afferent coupling (Ca) describes how many other classes or modules depend *on* a given class, and efferent coupling (Ce) describes how many other classes or modules a given class *depends on*. High afferent coupling can indicate a class that is too central and potentially too difficult to change without breaking other parts of the system. High efferent coupling suggests a class that's doing too much itself, and thus might violate the single responsibility principle.
+Essentially, afferent coupling (Ca) describes how many other classes or modules depend _on_ a given class, and efferent coupling (Ce) describes how many other classes or modules a given class _depends on_. High afferent coupling can indicate a class that is too central and potentially too difficult to change without breaking other parts of the system. High efferent coupling suggests a class that's doing too much itself, and thus might violate the single responsibility principle.
 
 We can’t just eyeball these metrics, especially in larger Rails applications. We need systematic ways to extract these coupling values. Let's delve into how I've approached this in the past, focusing on tools and practices. I’ll present specific code examples to ground this.
 
@@ -145,19 +145,19 @@ This output helps you quickly identify classes with high coupling. In practice, 
 
 These examples demonstrate the core mechanics. In a real-world Rails application, you would need:
 
-*   **Handle Rails Conventions:** Recognize standard Rails patterns like models, controllers, and helpers, and correctly parse these dependencies.
-*   **Namespace Resolution:** Properly resolve nested namespaces to avoid misattributing dependencies.
-*   **External Gem Dependencies:** Choose to ignore or include dependencies from gems. I've often opted to ignore them when focusing on internal application structure, as they are usually managed through dependency managers.
-*   **Dynamic Dependencies:** Handle metaprogramming and other dynamically resolved dependencies which may be hard to detect from static analysis.
-*   **Reporting and Visualization:** Enhance the output by generating reports or visual representations, for example, dependency graphs using gems such as `graphviz` or similar.
+- **Handle Rails Conventions:** Recognize standard Rails patterns like models, controllers, and helpers, and correctly parse these dependencies.
+- **Namespace Resolution:** Properly resolve nested namespaces to avoid misattributing dependencies.
+- **External Gem Dependencies:** Choose to ignore or include dependencies from gems. I've often opted to ignore them when focusing on internal application structure, as they are usually managed through dependency managers.
+- **Dynamic Dependencies:** Handle metaprogramming and other dynamically resolved dependencies which may be hard to detect from static analysis.
+- **Reporting and Visualization:** Enhance the output by generating reports or visual representations, for example, dependency graphs using gems such as `graphviz` or similar.
 
 **Resources for Deeper Understanding**
 
 To really master this, I’d recommend diving into these resources:
 
-*   **"Working Effectively with Legacy Code" by Michael Feathers:** This book is a classic and provides great insights into techniques for managing complex codebases, including how to tackle the issue of coupling and dependency management.
-*   **"Object-Oriented Software Construction" by Bertrand Meyer:** Although a rather detailed read, it gives a very thorough understanding of object-oriented design principles, including coupling, which can be applied to software architecture in general.
-*   **Ruby Parser Gem documentation:** Take the time to understand the `parser` and `astrolabe` gems documentation. The more comfortable you are with AST, the easier it will be to build powerful tools to analyse your Ruby code.
+- **"Working Effectively with Legacy Code" by Michael Feathers:** This book is a classic and provides great insights into techniques for managing complex codebases, including how to tackle the issue of coupling and dependency management.
+- **"Object-Oriented Software Construction" by Bertrand Meyer:** Although a rather detailed read, it gives a very thorough understanding of object-oriented design principles, including coupling, which can be applied to software architecture in general.
+- **Ruby Parser Gem documentation:** Take the time to understand the `parser` and `astrolabe` gems documentation. The more comfortable you are with AST, the easier it will be to build powerful tools to analyse your Ruby code.
 
 **Final Thoughts**
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-improve-the-accuracy-of-my-predictions-which-are-currently-zero"
 ---
 
-Alright, let's tackle this. Having a prediction model flatline at zero accuracy is, shall we say, a situation ripe for investigation. I’ve been there myself, more times than I care to count. It’s rarely a single issue, more often a confluence of factors. We need to break this down systematically. The fact your predictions are showing zero accuracy strongly suggests a fundamental problem, not just tweaking parameters. Let’s dive in.
+, let's tackle this. Having a prediction model flatline at zero accuracy is, shall we say, a situation ripe for investigation. I’ve been there myself, more times than I care to count. It’s rarely a single issue, more often a confluence of factors. We need to break this down systematically. The fact your predictions are showing zero accuracy strongly suggests a fundamental problem, not just tweaking parameters. Let’s dive in.
 
 Firstly, let’s address the obvious: zero accuracy often means that the model is predicting a single class or a single value regardless of the input. This is a significant clue, pointing to issues either in the data, the model itself, or how they interact.
 
@@ -20,10 +20,10 @@ Let me explain these concepts a bit more technically, and illustrate with code e
 
 As discussed earlier, severe class imbalance skews model learning. If one class dominates, the model will likely ignore the minority. Solutions include:
 
-*   **Oversampling:** Duplicating instances from the minority class. This is a straightforward technique, but it can lead to overfitting if not used carefully.
-*   **Undersampling:** Removing instances from the majority class. This can lead to loss of information if done excessively.
-*   **SMOTE (Synthetic Minority Over-sampling Technique):** Generates synthetic samples of the minority class. This is often more effective than simple oversampling, as it adds variability to the data.
-*   **Cost-Sensitive Learning:** Penalizes misclassification of the minority class more heavily than misclassification of the majority class.
+- **Oversampling:** Duplicating instances from the minority class. This is a straightforward technique, but it can lead to overfitting if not used carefully.
+- **Undersampling:** Removing instances from the majority class. This can lead to loss of information if done excessively.
+- **SMOTE (Synthetic Minority Over-sampling Technique):** Generates synthetic samples of the minority class. This is often more effective than simple oversampling, as it adds variability to the data.
+- **Cost-Sensitive Learning:** Penalizes misclassification of the minority class more heavily than misclassification of the majority class.
 
 Here's a Python snippet demonstrating SMOTE using the `imblearn` library:
 
@@ -51,9 +51,9 @@ This code snippet uses a simple imbalanced dataset represented by features in `X
 
 If your model is overly complex, it can start to “memorize” the training data rather than learning the underlying patterns. This is especially true when dealing with noisy datasets. Symptoms include high accuracy on the training set but poor performance on new, unseen data. Techniques to mitigate this:
 
-*   **Regularization (L1, L2):** Penalizes large weights, forcing the model to generalize.
-*   **Dropout:** Randomly "drops out" neurons during training, preventing complex co-adaptations.
-*   **Cross-Validation:** Evaluates the model's performance on multiple subsets of data, providing a more robust estimate.
+- **Regularization (L1, L2):** Penalizes large weights, forcing the model to generalize.
+- **Dropout:** Randomly "drops out" neurons during training, preventing complex co-adaptations.
+- **Cross-Validation:** Evaluates the model's performance on multiple subsets of data, providing a more robust estimate.
 
 Let’s illustrate L2 regularization with a simple linear regression example using scikit-learn:
 
@@ -89,10 +89,10 @@ Here, we split our simulated data into training and test sets, use a `Ridge` mod
 
 Sometimes the issue is not the model or the data balance itself, but the features you’re feeding it. In my experience, garbage in equals garbage out. Here’s where you need a fine tooth comb. Key points:
 
-*   **Feature Scaling/Normalization:** Ensure all features are on a similar scale. Many models perform poorly with features having drastically different magnitudes. Techniques like Min-Max scaling or standardization are vital.
-*   **Feature Selection:** Removing irrelevant or redundant features improves model performance and reduces training time.
-*   **Feature Generation:** Creating new features from existing ones can expose hidden relationships.
-*   **Missing Value Handling:** Decide on a robust approach for missing data such as imputation with mean or median, or using flags to denote missing data
+- **Feature Scaling/Normalization:** Ensure all features are on a similar scale. Many models perform poorly with features having drastically different magnitudes. Techniques like Min-Max scaling or standardization are vital.
+- **Feature Selection:** Removing irrelevant or redundant features improves model performance and reduces training time.
+- **Feature Generation:** Creating new features from existing ones can expose hidden relationships.
+- **Missing Value Handling:** Decide on a robust approach for missing data such as imputation with mean or median, or using flags to denote missing data
 
 Let’s show how we normalize and impute missing data:
 

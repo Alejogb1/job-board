@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "is-it-possible-to-create-hotel-room-ticket-nfts"
 ---
 
-Alright, let's tackle this. From my experience building distributed systems for various travel platforms, I can offer a detailed perspective on the feasibility of hotel room ticket nfts, along with practical considerations. It's not just a matter of "can it be done," but also *how* it can be done effectively and what the implications are.
+, let's tackle this. From my experience building distributed systems for various travel platforms, I can offer a detailed perspective on the feasibility of hotel room ticket nfts, along with practical considerations. It's not just a matter of "can it be done," but also _how_ it can be done effectively and what the implications are.
 
 The short answer is, yes, it is technically feasible to create hotel room ticket nfts. The longer answer, though, involves understanding the intricacies of both nft technology and hotel booking systems, and that's where things get interesting.
 
@@ -31,11 +31,10 @@ Here's an example of a basic metadata structure I've found useful in such scenar
     "price": {
       "value": 300,
       "currency": "USD"
-       },
-        "bookingDetailsLink" : "http://yourhotelsite/bookingdetails/xyz123456"
+    },
+    "bookingDetailsLink": "http://yourhotelsite/bookingdetails/xyz123456"
   }
 }
-
 ```
 
 This json structure contains essential booking information, and it can be readily included as the metadata within an nft token. It specifies the hotel details, booking dates, guest info, and cancellation terms. The “bookingDetailsLink” could redirect to a centralized system for retrieval of more verbose or dynamic information.
@@ -144,4 +143,4 @@ This contract, written using solidity, illustrates the process of changing booki
 
 In summary, creating hotel room ticket nfts is technically achievable, but it requires careful planning and robust systems integration. There needs to be a reliable system to manage metadata, an api to communicate with hotel databases, and a process for managing booking changes. The practical challenges are real but surmountable, and the benefits of increased transparency, tradability, and potentially lower transaction fees could make it a worthy endeavor, with implications on both sides of the hotel booking experience.
 
-For further detailed information, I recommend delving into scholarly papers on decentralized identity, such as "identity management using blockchain technology," published in the *ieee access* journal. Also, explore textbooks such as *mastering ethereum* by andreas antonopoulos for a solid foundational understanding of blockchain and smart contracts. These resources will provide deeper insights into the practical application of blockchain in real-world systems. The complexity lies not in a conceptual hurdle but in the implementation of a truly scalable and interconnected system.
+For further detailed information, I recommend delving into scholarly papers on decentralized identity, such as "identity management using blockchain technology," published in the _ieee access_ journal. Also, explore textbooks such as _mastering ethereum_ by andreas antonopoulos for a solid foundational understanding of blockchain and smart contracts. These resources will provide deeper insights into the practical application of blockchain in real-world systems. The complexity lies not in a conceptual hurdle but in the implementation of a truly scalable and interconnected system.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-exclude-specific-words-from-tokenwordstem"
 ---
 
-Alright, let's tackle this. I've definitely encountered situations where fine-tuning the tokenization process, particularly in relation to stemming, becomes crucial. Specifically, the problem of excluding certain words when using `token_wordstem()` isn't something directly built into many stemming libraries, so it often requires a bit of creative pre-processing.
+, let's tackle this. I've definitely encountered situations where fine-tuning the tokenization process, particularly in relation to stemming, becomes crucial. Specifically, the problem of excluding certain words when using `token_wordstem()` isn't something directly built into many stemming libraries, so it often requires a bit of creative pre-processing.
 
 The `token_wordstem()` function, often part of natural language processing toolkits, aims to reduce words to their root form. This is fantastic for unifying variations (e.g., 'running,' 'ran,' 'runs' all become 'run'). However, certain words might become meaningless or detrimental to analysis if they're stemmed; these words are ideally left untouched. From personal experience, I remember one project where we were analyzing customer feedback about a particular product. Certain product feature names, such as "ProVision," were being incorrectly stemmed and losing their semantic significance. It was a mess. We needed to preserve those terms exactly, and that's where the selective exclusion comes in.
 
@@ -31,7 +31,7 @@ def custom_stem(text, exclude_words):
         placeholder_word = placeholder + str(i)
         temp_text = temp_text.replace(word, placeholder_word)
         replacement_map[placeholder_word] = word
-    
+
     tokens = word_tokenize(temp_text)
     stemmed_tokens = [stemmer.stem(token) for token in tokens]
 
@@ -50,6 +50,7 @@ stemmed_text = custom_stem(text, exclude_terms)
 print(stemmed_text)
 # Output: ['the', 'run', 'process', 'involv', 'a', 'complex', 'ProVision', 'method', 'use', 'the', 'new', 'ProVision', 'version', '.']
 ```
+
 In this example, the word "ProVision" is replaced with a unique placeholder string, allowing the stemmer to process all other tokens. Finally, the placeholders are substituted back. This method is relatively simple to implement but might become less efficient with a massive exclusion list or a very large document.
 
 **Method 2: Token-by-Token Checking**
@@ -81,11 +82,12 @@ stemmed_text = custom_stem_v2(text, exclude_terms)
 print(stemmed_text)
 # Output: ['the', 'run', 'process', 'involv', 'a', 'complex', 'ProVision', 'method', 'use', 'the', 'new', 'ProVision', 'version', '.']
 ```
+
 This avoids string manipulations, which can be computationally costly with larger datasets. This method is conceptually clear and scales reasonably well, although it adds a check for each token.
 
 **Method 3: Utilizing Lemmatization Instead of Stemming (Where Appropriate)**
 
-Sometimes, stemming can be too aggressive and can actually distort the meaning of a word. Lemmatization, which converts words to their dictionary form, can often be more context-sensitive and avoid over-simplification. While technically not a direct exclusion method for stemming, using it *instead of* stemming could prevent some undesirable token transformations. Lemmatization can allow for preserving words with specific inflections, which stemming might reduce. If specific words are important in the form that they appear this can be a useful alternative approach.
+Sometimes, stemming can be too aggressive and can actually distort the meaning of a word. Lemmatization, which converts words to their dictionary form, can often be more context-sensitive and avoid over-simplification. While technically not a direct exclusion method for stemming, using it _instead of_ stemming could prevent some undesirable token transformations. Lemmatization can allow for preserving words with specific inflections, which stemming might reduce. If specific words are important in the form that they appear this can be a useful alternative approach.
 
 ```python
 import nltk
@@ -112,7 +114,7 @@ def custom_lemmatize(text, exclude_words):
             lemmatized_tokens.append(token)
         else:
             lemmatized_tokens.append(lemmatizer.lemmatize(token, get_wordnet_pos(token)))
-    
+
     return lemmatized_tokens
 
 # Example usage
@@ -125,6 +127,7 @@ print(lemmatized_text)
 ```
 
 This third approach demonstrates using lemmatization, specifically using nltk’s lemmatizer alongside a tagger to improve accuracy. Although different from exclusion, it could be more suitable if the goal is to keep the original form of certain words while still reducing the rest to their base form. You may need to download the necessary NLTK resources, which can be done by running the following in your environment if you haven't already:
+
 ```python
 import nltk
 nltk.download('punkt')

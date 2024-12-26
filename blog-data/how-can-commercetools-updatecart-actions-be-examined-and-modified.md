@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-commercetools-updatecart-actions-be-examined-and-modified"
 ---
 
-Alright, let's dive into manipulating `updateCart` actions within commercetools. This is a core area, and I've spent quite a bit of time on this across various projects, so I have a solid grasp of the intricacies. You're not just patching a cart here; you're often orchestrating a complex state transition, and understanding how these actions function, along with their potential impact, is vital.
+, let's dive into manipulating `updateCart` actions within commercetools. This is a core area, and I've spent quite a bit of time on this across various projects, so I have a solid grasp of the intricacies. You're not just patching a cart here; you're often orchestrating a complex state transition, and understanding how these actions function, along with their potential impact, is vital.
 
 So, how exactly do we examine and modify these `updateCart` actions? Well, at the foundational level, the commercetools platform uses a declarative approach for modifying cart data. We're not directly altering properties on some in-memory cart object. Instead, we construct a set of `actions`, each specifying a particular update we want to make. These actions are then packaged into an API request, which the platform uses to perform the necessary changes in an atomic and consistent way. This is crucial for ensuring data integrity, especially in high-concurrency scenarios.
 
@@ -27,7 +27,7 @@ def add_line_item_to_cart(client, cart_id, product_id, variant_id, quantity):
     product_variant = ProductVariant(id=variant_id)
     line_item_draft = LineItemDraft(productId=product_id, variantId=variant_id, quantity=quantity)
     action = CartAddLineItemAction(lineItem=line_item_draft)
-    
+
     cart = client.carts.get_by_id(cart_id)
     if cart:
        updated_cart = client.carts.update(id=cart.id, version=cart.version, actions=[action])
@@ -48,9 +48,10 @@ def add_line_item_to_cart(client, cart_id, product_id, variant_id, quantity):
 #   print("Cart not found or update failed.")
 
 ```
+
 This snippet shows how to add a line item to an existing cart using the `CartAddLineItemAction`. We fetch the existing cart first to have the correct version. We craft the necessary action and use the SDK `update` function. Notice the importance of including the current cart version within the request to prevent concurrent modification issues. It’s crucial to handle versioning properly. For further details on the specific actions and their parameters, refer to the commercetools API documentation on the official site. The reference section is very thorough, so use it as your starting point.
 
-Let's move to a more complex scenario. Imagine we need to apply a discount code *and* update the shipping address within a single request. Here’s how it could look:
+Let's move to a more complex scenario. Imagine we need to apply a discount code _and_ update the shipping address within a single request. Here’s how it could look:
 
 ```python
 from commercetools.platform.models import Cart, CartAddDiscountCodeAction, CartSetShippingAddressAction, Address

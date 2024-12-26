@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "alwaysff-vs-always-verilog-difference"
 ---
 
-Okay so you wanna know about `always_ff` vs `always` in Verilog right been there done that got the t-shirt let me tell you this isn't just some syntax sugar its a whole different way of thinking about hardware description trust me I've debugged enough of these things to have a few gray hairs so lets get down to brass tacks
+you wanna know about `always_ff` vs `always` in Verilog right been there done that got the t-shirt let me tell you this isn't just some syntax sugar its a whole different way of thinking about hardware description trust me I've debugged enough of these things to have a few gray hairs so lets get down to brass tacks
 
-Alright so lets talk about `always` first the classic the bread and butter of Verilog been around forever really its like that old reliable screwdriver you have in your tool box it works but sometimes it kinda gets you into trouble you know? The `always` block is a procedural block meaning things inside it happen sequentially its like a recipe you follow step by step you can use it for all sorts of things combinational logic sequential logic really whatever you throw at it that's both its strength and its weakness too much flexibility can make your code a bit of a mess if you're not careful see here's a basic example of an `always` block implementing some simple logic
+so lets talk about `always` first the classic the bread and butter of Verilog been around forever really its like that old reliable screwdriver you have in your tool box it works but sometimes it kinda gets you into trouble you know? The `always` block is a procedural block meaning things inside it happen sequentially its like a recipe you follow step by step you can use it for all sorts of things combinational logic sequential logic really whatever you throw at it that's both its strength and its weakness too much flexibility can make your code a bit of a mess if you're not careful see here's a basic example of an `always` block implementing some simple logic
 
 ```verilog
 module always_example (
@@ -29,7 +29,7 @@ module always_example (
 endmodule
 ```
 
-Okay so that code above right It uses an `always` block to define a register called `out` This register gets set to 0 on reset and then only when both inputs `a` and `b` are high will the register be set to 1 on the next clock edge other wise it stays at 0 See how easy that is? Now that specific example is fairly straightforward but the `always` block allows a lot of flexibility and sometimes people get a little too creative and that's where you can run into problems.
+that code above right It uses an `always` block to define a register called `out` This register gets set to 0 on reset and then only when both inputs `a` and `b` are high will the register be set to 1 on the next clock edge other wise it stays at 0 See how easy that is? Now that specific example is fairly straightforward but the `always` block allows a lot of flexibility and sometimes people get a little too creative and that's where you can run into problems.
 
 Now lets get to the cool kid on the block `always_ff` I mean it practically screams "flip-flop" doesn't it? This one is specifically for describing synchronous sequential logic your good ol flip-flops and registers nothing else I cannot stress this enough when you start using `always_ff` you're making a very explicit declaration to the synthesis tools "hey this is a flip-flop deal with it" that gives them a lot less room for interpretation and often results in more predictable and efficient hardware generation The tools know exactly what you intend to do they don't have to guess.
 
@@ -55,9 +55,10 @@ module always_ff_example (
 
 endmodule
 ```
+
 See it's pretty similar right? but the important detail is that with `always_ff` the tools know that this is a flip-flop and they aren't going to try and turn it into something else by mistake that might happen with the vanilla `always` block and trust me it can get ugly real fast I once spent 3 days tracking down a bug that was caused by me accidentally creating a latch using an `always` block because I missed one single case in the conditional it was my own fault obviously but I would have been spared the suffering had I been disciplined enough to use the `always_ff` keyword.
 
-Ok so you might be asking ok yeah they seem similar why should I go to the trouble of using the new one when the old one works? Well the most important thing here is that using `always_ff` promotes *correct by construction* hardware design what do I mean by that? well it means that it forces you to think about your hardware design in terms of flip-flops and registers when your intent is actually to implement a flip-flop or a register no combinational logic inside a always_ff block It prevents you from making common mistakes that can lead to timing problems or unintended latches in other words its like using seatbelts while you drive.
+Ok so you might be asking ok yeah they seem similar why should I go to the trouble of using the new one when the old one works? Well the most important thing here is that using `always_ff` promotes _correct by construction_ hardware design what do I mean by that? well it means that it forces you to think about your hardware design in terms of flip-flops and registers when your intent is actually to implement a flip-flop or a register no combinational logic inside a always_ff block It prevents you from making common mistakes that can lead to timing problems or unintended latches in other words its like using seatbelts while you drive.
 
 Here's another example with a little more stuff going on its a shift register.
 

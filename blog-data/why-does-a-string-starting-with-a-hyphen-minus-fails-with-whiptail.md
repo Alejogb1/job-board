@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-does-a-string-starting-with-a-hyphen-minus-fails-with-whiptail"
 ---
 
-alright, let's talk about why whiptail throws a fit when it sees a string starting with a hyphen-minus. it's a classic gotcha, and i've spent more time than i care to recall troubleshooting this exact issue. it's one of those things that seems simple on the surface, but the devil's in the details, as they say.
+, let's talk about why whiptail throws a fit when it sees a string starting with a hyphen-minus. it's a classic gotcha, and i've spent more time than i care to recall troubleshooting this exact issue. it's one of those things that seems simple on the surface, but the devil's in the details, as they say.
 
 the core problem stems from how whiptail (and many other command-line tools, for that matter) interprets arguments. anything that starts with a hyphen-minus, `-`, is generally treated as an option, a flag, or a switch. it's a signal to the program that what follows isn't a piece of data to be used, but rather a directive, an instruction on how to behave. whiptail is no exception.
 

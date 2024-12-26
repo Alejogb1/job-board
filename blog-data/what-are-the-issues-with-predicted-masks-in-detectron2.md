@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-issues-with-predicted-masks-in-detectron2"
 ---
 
-Alright, let's talk about predicted masks in Detectron2. I've spent more than my fair share of time debugging those little polygon soups, so I've got a few insights that might be useful. It's less about fundamental flaws within Detectron2 itself and more about understanding the nature of the task and the subtle ways things can go sideways.
+, let's talk about predicted masks in Detectron2. I've spent more than my fair share of time debugging those little polygon soups, so I've got a few insights that might be useful. It's less about fundamental flaws within Detectron2 itself and more about understanding the nature of the task and the subtle ways things can go sideways.
 
 One thing that always seems to rear its head is the inherent trade-off between mask precision and computational cost. Detectron2, at its core, often uses a mask head that predicts a binary mask for each object. This prediction typically involves a convolutional network followed by some form of upsampling. Now, while we hope this produces clean and accurate segmentation masks, the reality is often much more nuanced. The granularity of the initial feature maps and the degree of upsampling can introduce artifacts, particularly around object boundaries. Think about it—you're essentially going from a relatively low-resolution feature representation to a high-resolution output mask. This process inevitably involves interpolation, which can smooth out fine details and potentially introduce jagged or pixelated edges. I remember working on a project years ago where we were trying to identify small, oddly shaped components on an industrial assembly line. The predicted masks were generally good for the larger parts, but the tiny ones, oh boy… They often ended up as amorphous blobs, and we had to seriously revisit our training data and even explore different upsampling techniques.
 
@@ -29,6 +29,7 @@ cfg.MODEL.ROI_MASK_HEAD.CONV_HEAD_DIM = 256 # Adjust channel count for upscaling
 print(cfg.MODEL.ROI_MASK_HEAD)
 # Train your model with this configuration.
 ```
+
 Here, we are tweaking the `UPSAMPLE_STRIDES`. A higher value means more upsampling steps, which could mean coarser masks. Conversely, lower stride means a more detailed mask, but also greater computational cost. The channel count(`CONV_HEAD_DIM`) in the `conv_head` of `ROI_MASK_HEAD` might be another parameter to look into. The optimal settings vary per dataset, so experimentation is always necessary.
 
 **Example 2: Exploring Different Mask Thresholds**

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-create-an-inline-keyboard-with-values-in-a-telegram-bot-using-ruby"
 ---
 
-Okay, let’s dive right into this. I recall a project back in 2018, dealing with a rather complex logistics bot, where we needed exactly this functionality: inline keyboards that dynamically presented different values to the user. The implementation in Ruby for Telegram bots, while seemingly straightforward, does require a solid grasp of the Telegram Bot API structure and how to serialize data correctly for transmission. Let's break down how to achieve this, focusing on a technical yet easily understood explanation.
+, let’s dive right into this. I recall a project back in 2018, dealing with a rather complex logistics bot, where we needed exactly this functionality: inline keyboards that dynamically presented different values to the user. The implementation in Ruby for Telegram bots, while seemingly straightforward, does require a solid grasp of the Telegram Bot API structure and how to serialize data correctly for transmission. Let's break down how to achieve this, focusing on a technical yet easily understood explanation.
 
 The core concept revolves around constructing a `reply_markup` object within the message payload you send to the Telegram API. This `reply_markup` object, specifically when using inline keyboards, holds a nested structure of `inline_keyboard` arrays, which contain individual `InlineKeyboardButton` objects. The structure isn't particularly complex but requires careful crafting to avoid errors.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-use-viewcomponent-in-a-stimulus-controller"
 ---
 
-Okay, let's delve into that. The intersection of `view_component` and stimulus controllers can sometimes feel a bit like navigating a new, albeit familiar, terrain. I recall a project a few years back where we needed highly interactive components within our Rails application. We initially went down the path of traditional partials, but the logic became unwieldy quickly. That’s where `view_component` paired with stimulus really began to shine, offering a much more maintainable architecture.
+, let's delve into that. The intersection of `view_component` and stimulus controllers can sometimes feel a bit like navigating a new, albeit familiar, terrain. I recall a project a few years back where we needed highly interactive components within our Rails application. We initially went down the path of traditional partials, but the logic became unwieldy quickly. That’s where `view_component` paired with stimulus really began to shine, offering a much more maintainable architecture.
 
 The core idea is this: `view_component` handles the presentation logic and provides a nice encapsulation of component rendering, while stimulus handles the user interaction and associated client-side behaviors. When these two are properly integrated, you get components that are not only well-structured but also highly dynamic.
 
@@ -45,21 +45,21 @@ Here's the associated stimulus controller:
 
 ```javascript
 // app/javascript/controllers/card_controller.js
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = [ "content" ]
+  static targets = ["content"];
 
   connect() {
-    if(this.contentTarget.classList.contains('expanded')){
+    if (this.contentTarget.classList.contains("expanded")) {
       this.expanded = true;
     } else {
       this.expanded = false;
     }
   }
   toggle() {
-      this.expanded = !this.expanded;
-      this.contentTarget.classList.toggle('expanded');
+    this.expanded = !this.expanded;
+    this.contentTarget.classList.toggle("expanded");
   }
 }
 ```
@@ -118,14 +118,14 @@ Then, let's create a new stimulus controller to handle loading external content,
 
 ```javascript
 // app/javascript/controllers/card_controller.js
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = [ "content", "loader" ]
-  static values = { loadingUrl: String }
+  static targets = ["content", "loader"];
+  static values = { loadingUrl: String };
 
   connect() {
-    if(this.contentTarget.classList.contains('expanded')){
+    if (this.contentTarget.classList.contains("expanded")) {
       this.expanded = true;
     } else {
       this.expanded = false;
@@ -133,33 +133,33 @@ export default class extends Controller {
   }
 
   toggle() {
-      if (this.expanded) {
-          this.contentTarget.classList.remove('expanded');
+    if (this.expanded) {
+      this.contentTarget.classList.remove("expanded");
+    } else {
+      if (this.hasLoadingUrlValue) {
+        this.loadContent();
       } else {
-        if(this.hasLoadingUrlValue){
-          this.loadContent()
-        } else {
-          this.contentTarget.classList.add('expanded')
-        }
+        this.contentTarget.classList.add("expanded");
       }
-      this.expanded = !this.expanded;
+    }
+    this.expanded = !this.expanded;
   }
 
   async loadContent() {
     this.loaderTarget.textContent = "Loading...";
     try {
-      const response = await fetch(this.loadingUrlValue)
+      const response = await fetch(this.loadingUrlValue);
       if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.text();
-      this.contentTarget.innerHTML = data
+      this.contentTarget.innerHTML = data;
     } catch (error) {
-        console.error("Failed to load content", error)
-        this.contentTarget.textContent = "Error loading content."
+      console.error("Failed to load content", error);
+      this.contentTarget.textContent = "Error loading content.";
     } finally {
       this.loaderTarget.textContent = "";
-      this.contentTarget.classList.add('expanded')
+      this.contentTarget.classList.add("expanded");
     }
   }
 }

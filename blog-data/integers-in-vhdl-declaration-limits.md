@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "integers-in-vhdl-declaration-limits"
 ---
 
-Okay so integers in VHDL declaration limits right Been there done that got the t-shirt multiple times And yeah its a pain in the butt sometimes Lets break it down I've wrestled with this particular gremlin more than I care to admit Let's keep it straightforward
+integers in VHDL declaration limits right Been there done that got the t-shirt multiple times And yeah its a pain in the butt sometimes Lets break it down I've wrestled with this particular gremlin more than I care to admit Let's keep it straightforward
 
 First off VHDL integers theyre not like the integers in some other languages You dont have this infinite range thing going on Youre constrained by the number of bits you dedicate to representing that integer During synthesis this translates directly to hardware resource usage so its pretty important to get right And its not a matter of simply changing a data type without thinking
 
-The default integer type in VHDL is actually a *signed* integer think of it like a two's complement representation So if you don't specify anything it automatically goes for that which usually means a 32 bit range Which is great but what if you need more? or less? Youre gonna need more control than that And less if your FPGA resources need to be used correctly This is where things get interesting
+The default integer type in VHDL is actually a _signed_ integer think of it like a two's complement representation So if you don't specify anything it automatically goes for that which usually means a 32 bit range Which is great but what if you need more? or less? Youre gonna need more control than that And less if your FPGA resources need to be used correctly This is where things get interesting
 
 So the key thing to understand about integer declaration is the range You gotta explicitly state the upper and lower bounds That bounds the number of bits allocated to the integer variable You usually see something like this
 
@@ -18,9 +18,9 @@ signal my_counter : integer range 0 to 255;
 
 This declares a signal called `my_counter` as an integer that can hold values from 0 up to 255 This means your synthesized hardware would allocate an 8-bit register or a bunch of flip flops behind the scenes to hold that counter data And that's important If you accidentally exceed 255 it would overflow in a hard to debug manner And the debugger might not even show it
 
-Now here's where I messed up back in the day I thought *integer* was just a convenient way to represent numbers during development I assumed the synth tool would do some sort of clever optimization But nope The tool will create hardware exactly based on what you specify if you have a range from -100 to 100 it's going to make those ranges for you even though you might not even reach those values and you might have some space to optimize
+Now here's where I messed up back in the day I thought _integer_ was just a convenient way to represent numbers during development I assumed the synth tool would do some sort of clever optimization But nope The tool will create hardware exactly based on what you specify if you have a range from -100 to 100 it's going to make those ranges for you even though you might not even reach those values and you might have some space to optimize
 
-I was working on a video processing pipeline and I had a bunch of internal counters I was being lazy about declaring integers range because you know "oh ill optimize it later" big mistake I had all the counters running on a default 32bit integers even though they barely passed a maximum of 200 And you could imagine that wasted a lot of resources and I got hit with the *resource utilization too high* error during implementation Big slap in the face
+I was working on a video processing pipeline and I had a bunch of internal counters I was being lazy about declaring integers range because you know "oh ill optimize it later" big mistake I had all the counters running on a default 32bit integers even though they barely passed a maximum of 200 And you could imagine that wasted a lot of resources and I got hit with the _resource utilization too high_ error during implementation Big slap in the face
 
 Another common issue i had was trying to perform arithmetic operations that resulted in values outside of the specified range When you do that VHDL will not simply clamp the value or wrap it around you get undefined behavior during simulation and synthesis I spent hours tracking down a bug only to realize that a counter I had been incrementing reached its maximum value and just went bonkers Which brings us to overflow
 
@@ -59,7 +59,7 @@ While they both have same range of possible values 0 1 2 3 4 5 6 7 the way they 
 
 One more mistake I did was using the VHDL standard library `integer` type for doing math calculations and I never specified a range for the variable used to store intermediate results which leads to very hard to track bugs especially when multiplication operations are involved and this is why you should specify the limits when possible
 
-Okay so a quick story so I can break up the text wall Back in the day I had a very weird bug where my whole design failed randomly at very specific frequencies and after days of debugging i realized it was because the integer variable I was using for my PLL calculations didn't have enough bits to properly perform the multiplication and it was wrapping around without any indication causing the whole system to fail at seemingly random times so yeah integers in vhdl are dangerous so be careful and specify the range whenever you can
+a quick story so I can break up the text wall Back in the day I had a very weird bug where my whole design failed randomly at very specific frequencies and after days of debugging i realized it was because the integer variable I was using for my PLL calculations didn't have enough bits to properly perform the multiplication and it was wrapping around without any indication causing the whole system to fail at seemingly random times so yeah integers in vhdl are dangerous so be careful and specify the range whenever you can
 
 Now if you really need some arbitrary integer representation that is bigger than 32 bits and you have no way to constrain it you might want to look into using `std_logic_vector` for large unconstrained bitvectors or create your own custom type and logic for it It makes the code more complex but you might need to do this depending on your particular situation I never had to do it but I can see the benefit depending on your application
 

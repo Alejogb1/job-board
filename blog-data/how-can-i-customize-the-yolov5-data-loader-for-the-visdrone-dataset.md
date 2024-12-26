@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-customize-the-yolov5-data-loader-for-the-visdrone-dataset"
 ---
 
-Alright, let's delve into customizing the yolov5 data loader for VisDrone. I've navigated similar scenarios in the past, particularly when dealing with aerial imagery that differs significantly from standard benchmark datasets. The stock yolov5 loader is excellent for coco-style datasets, but VisDrone demands a more tailored approach due to its unique characteristics like smaller object sizes, varying perspectives, and irregular annotation formats. We're not just about making it *work*, but making it work *efficiently* for the task at hand.
+, let's delve into customizing the yolov5 data loader for VisDrone. I've navigated similar scenarios in the past, particularly when dealing with aerial imagery that differs significantly from standard benchmark datasets. The stock yolov5 loader is excellent for coco-style datasets, but VisDrone demands a more tailored approach due to its unique characteristics like smaller object sizes, varying perspectives, and irregular annotation formats. We're not just about making it _work_, but making it work _efficiently_ for the task at hand.
 
 The fundamental issue lies in adapting the data loading pipeline to understand VisDrone's annotation structure and potentially pre-process the images in a way that benefits training. My past projects frequently involved modifying the core data loading mechanism for specialized datasets. Let's get into the nitty-gritty.
 

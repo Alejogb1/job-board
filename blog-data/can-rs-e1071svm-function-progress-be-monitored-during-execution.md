@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "can-rs-e1071svm-function-progress-be-monitored-during-execution"
 ---
 
-Alright, let's delve into this. It's a question I've actually grappled with quite a bit, particularly when working on large-scale classification projects back in my days dealing with genomic data. The e1071 package's `svm` function in R, while powerful, doesn’t offer direct, built-in mechanisms for detailed progress monitoring during execution. This can be a frustration, especially when dealing with complex datasets where training time can stretch into considerable durations. Unlike some machine learning libraries that provide verbose output or callbacks, `e1071::svm` operates more quietly. However, this doesn't mean we are entirely in the dark. We can employ some clever workarounds to gain insights into its progress.
+, let's delve into this. It's a question I've actually grappled with quite a bit, particularly when working on large-scale classification projects back in my days dealing with genomic data. The e1071 package's `svm` function in R, while powerful, doesn’t offer direct, built-in mechanisms for detailed progress monitoring during execution. This can be a frustration, especially when dealing with complex datasets where training time can stretch into considerable durations. Unlike some machine learning libraries that provide verbose output or callbacks, `e1071::svm` operates more quietly. However, this doesn't mean we are entirely in the dark. We can employ some clever workarounds to gain insights into its progress.
 
-The core issue stems from the underlying libsvm library which e1071 wraps. Libsvm itself doesn’t inherently offer real-time feedback during the optimization process. Consequently, the progress is effectively hidden from the user within the C++ code until the final model object is returned. What I’ve learned over the years is that we need to think about *indirect* methods for tracking progress, typically by breaking the overall problem into smaller, manageable chunks or using iterative approaches.
+The core issue stems from the underlying libsvm library which e1071 wraps. Libsvm itself doesn’t inherently offer real-time feedback during the optimization process. Consequently, the progress is effectively hidden from the user within the C++ code until the final model object is returned. What I’ve learned over the years is that we need to think about _indirect_ methods for tracking progress, typically by breaking the overall problem into smaller, manageable chunks or using iterative approaches.
 
 One of the approaches, particularly useful when dealing with large datasets, involves breaking the data into subsets and training multiple SVM models in sequence. This allows us to monitor progress by timing each training iteration and potentially adjust hyperparameters dynamically based on the previous iteration’s results. The trade-off here is, of course, the potential for suboptimality compared to training on the entire dataset at once, but sometimes pragmatism is more critical, especially when time is at a premium.
 
@@ -69,7 +69,7 @@ for(c in costs) {
 
 Here, we are running the `svm` with different parameters and recording time taken by each model training. This technique is particularly useful when experimenting and tuning.
 
-Further, you could exploit cross-validation within your experimentation. Although this still doesn’t directly monitor the training of *a single* model, it gives you progress in evaluating the quality of the models with each set of parameters. It can be combined with a timing mechanism as per previous example. Example below:
+Further, you could exploit cross-validation within your experimentation. Although this still doesn’t directly monitor the training of _a single_ model, it gives you progress in evaluating the quality of the models with each set of parameters. It can be combined with a timing mechanism as per previous example. Example below:
 
 ```R
 library(e1071)

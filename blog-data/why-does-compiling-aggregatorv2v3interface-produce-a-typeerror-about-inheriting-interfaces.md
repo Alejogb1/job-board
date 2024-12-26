@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-does-compiling-aggregatorv2v3interface-produce-a-typeerror-about-inheriting-interfaces"
 ---
 
-Okay, let's dive into this. I've certainly seen this particular headache rear its head more than once, particularly back when I was knee-deep in optimizing contract deployments. The error, "TypeError about inheriting interfaces," when compiling something like `AggregatorV2V3Interface`, usually points to a fundamental misunderstanding or misconfiguration within your solidity inheritance structure. It's not necessarily a problem with the specific names 'AggregatorV2V3Interface,' but rather a pattern that surfaces often when interfaces inherit from each other. Let's unpack the reasons and provide practical solutions.
+, let's dive into this. I've certainly seen this particular headache rear its head more than once, particularly back when I was knee-deep in optimizing contract deployments. The error, "TypeError about inheriting interfaces," when compiling something like `AggregatorV2V3Interface`, usually points to a fundamental misunderstanding or misconfiguration within your solidity inheritance structure. It's not necessarily a problem with the specific names 'AggregatorV2V3Interface,' but rather a pattern that surfaces often when interfaces inherit from each other. Let's unpack the reasons and provide practical solutions.
 
-The crux of the issue lies in how solidity handles interface inheritance, particularly when dealing with multiple levels of inheritance and possible name clashes. Unlike classes, interfaces in solidity are essentially blueprints. They define the *what*, but not the *how*. When an interface inherits from another interface, it's expecting to incorporate all of the parent's function signatures. However, solidity's compiler is quite strict. It mandates that there cannot be ambiguous function definitions, either directly in an interface or indirectly via inheritance. If a function signature is inherited through multiple paths, and those paths conflict, you will hit this TypeError. And it's crucial to note this isn't about function *implementations* (interfaces don’t have implementations), it’s strictly about function *signatures* — name, parameters and returns.
+The crux of the issue lies in how solidity handles interface inheritance, particularly when dealing with multiple levels of inheritance and possible name clashes. Unlike classes, interfaces in solidity are essentially blueprints. They define the _what_, but not the _how_. When an interface inherits from another interface, it's expecting to incorporate all of the parent's function signatures. However, solidity's compiler is quite strict. It mandates that there cannot be ambiguous function definitions, either directly in an interface or indirectly via inheritance. If a function signature is inherited through multiple paths, and those paths conflict, you will hit this TypeError. And it's crucial to note this isn't about function _implementations_ (interfaces don’t have implementations), it’s strictly about function _signatures_ — name, parameters and returns.
 
 Let's imagine a scenario, somewhat simplified, that recreates what I often encountered when dealing with complex data feeds and oracles. We can break it down into three concrete examples, each demonstrating a slightly different flavor of the problem and the corresponding fixes.
 
@@ -91,6 +91,7 @@ interface AggregatorV2V3Interface is AggregatorV2, AggregatorV3 {
   function getPrice(bytes32 key) external view returns (int256);
 } // Resolved, by expliciting the required function
 ```
+
 By explicitly defining `getPrice` in `AggregatorV2V3Interface`, we specify the exact signature we require, and thus the compiler no longer finds any ambiguity. This effectively prioritizes the `bytes32` variant, but that is a matter of design and it is not hard-coded into the compiler. Note here the `string` variant is no longer directly accessible via the interface.
 
 **Example 3: Diamond Problem with Interfaces**
@@ -116,7 +117,7 @@ interface AggregatorV3 is BaseAggregator {
 interface AggregatorV2V3Interface is AggregatorV2, AggregatorV3 {} // Problem Here!
 ```
 
-Even though `getData()` is defined only once in `BaseAggregator`, `AggregatorV2V3Interface` inherits it through *two* paths: `AggregatorV2` and `AggregatorV3`. If the return type of getData had subtly different annotations - even the name of the return variable could cause an error, then this can be a problem. However in this example, the `getData()` method is identically inherited and therefore will be accepted by the compiler.
+Even though `getData()` is defined only once in `BaseAggregator`, `AggregatorV2V3Interface` inherits it through _two_ paths: `AggregatorV2` and `AggregatorV3`. If the return type of getData had subtly different annotations - even the name of the return variable could cause an error, then this can be a problem. However in this example, the `getData()` method is identically inherited and therefore will be accepted by the compiler.
 
 However, if we now were to introduce, even implicitly, a different method, then that could break things. For example if `AggregatorV3` defined the method as:
 `function getData() external pure returns (uint256);` then we would introduce the kind of clash which would cause the type error even if we did not have a diamond shape. The solution to this is identical as in example 2, by expliciting a `getData` method on the interface itself.

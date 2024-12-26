@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "which-strings-contain-words-from-both-list-a-and-list-b"
 ---
 
-Alright, let's tackle this string-matching problem. I've encountered this kind of task countless times, typically when dealing with data sanitization or complex log analysis. The challenge isn't simply finding a single match; it's identifying if a string contains words *from both* list a and list b, which adds a layer of nuance. We need to approach this strategically for both efficiency and clarity.
+, let's tackle this string-matching problem. I've encountered this kind of task countless times, typically when dealing with data sanitization or complex log analysis. The challenge isn't simply finding a single match; it's identifying if a string contains words _from both_ list a and list b, which adds a layer of nuance. We need to approach this strategically for both efficiency and clarity.
 
 My past experiences reveal that a naive double loop approach quickly becomes unsustainable, especially when you're dealing with large lists or numerous strings to evaluate. Let’s focus on methods that offer better performance without sacrificing readability. The core of the solution involves iterating through the input strings, tokenizing them into individual words, and then checking for presence in both lists. A good first step is always preprocessing to handle case sensitivity and edge cases like punctuation.
 
@@ -83,7 +83,7 @@ print(f"String 3 matches: {check_string_contains_both_lists_optimized(string3, l
 
 ```
 
-The `check_string_contains_both_lists_optimized` function pre-processes the input lists `list_a` and `list_b` into sets before starting the search. This small adjustment is incredibly important when you are evaluating a very large dataset because checking if an element exists in a set is an *O(1)* operation, compared to *O(n)* for lists.
+The `check_string_contains_both_lists_optimized` function pre-processes the input lists `list_a` and `list_b` into sets before starting the search. This small adjustment is incredibly important when you are evaluating a very large dataset because checking if an element exists in a set is an _O(1)_ operation, compared to _O(n)_ for lists.
 
 Now, consider a case where the performance is critical and you are using a language like C++. In my time working on real-time systems, I've found that meticulous memory handling and data structure selection is paramount. This final example translates the logic into C++ and uses `unordered_set`, which offers similar efficiency benefits:
 

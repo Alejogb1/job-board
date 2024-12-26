@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-deploy-multiple-ml-models-using-the-azure-ml-cli"
 ---
 
-Alright, let's talk about deploying multiple machine learning models using the Azure ML cli, something I've had to navigate quite a bit, particularly during a project involving personalized recommendation systems a few years back. We had multiple variations of the same core model, each fine-tuned for different user segments. Scaling that up and managing it required a robust deployment strategy, and the Azure ML cli was instrumental. The critical element here isn't just getting *a* model deployed; it's the systematic, maintainable deployment of *multiple* models, often concurrently and possibly with different configurations.
+, let's talk about deploying multiple machine learning models using the Azure ML cli, something I've had to navigate quite a bit, particularly during a project involving personalized recommendation systems a few years back. We had multiple variations of the same core model, each fine-tuned for different user segments. Scaling that up and managing it required a robust deployment strategy, and the Azure ML cli was instrumental. The critical element here isn't just getting _a_ model deployed; it's the systematic, maintainable deployment of _multiple_ models, often concurrently and possibly with different configurations.
 
 When we delve into this, we're not simply pushing code to a server. We need a systematic methodology. First, let's understand the key concepts. In the azure ml ecosystem, a model is often represented as a registered asset within your workspace. Deployment, then, involves creating endpoints or containers that serve that model for inference. The cli interacts with your azure ml workspace to handle all of this process.
 
@@ -31,7 +31,7 @@ az ml online-deployment create --name blue \
 
 In this initial snippet, we are initiating two commands. The first creates a named online endpoint which acts as the gateway through which requests reach our models. The second command deploys the specified model version under the alias 'blue'. This deployment includes specifying the virtual machine type, number of instances, path to your inference scripts (`./src`), and an environment to ensure consistency.
 
-Now, this method is okay for one or two models, but quickly becomes impractical at scale. Therefore, using deployment definitions through yaml files comes next, and it's a necessity when deploying multiple versions or variations of a model. This brings us to a more maintainable approach where you define everything in a configuration file, allowing for easier reproduction and modification.
+Now, this method is for one or two models, but quickly becomes impractical at scale. Therefore, using deployment definitions through yaml files comes next, and it's a necessity when deploying multiple versions or variations of a model. This brings us to a more maintainable approach where you define everything in a configuration file, allowing for easier reproduction and modification.
 
 Here's a sample configuration, let's name it `deployment_config.yaml`:
 

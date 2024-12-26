@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-bitcoins-merkle-tree-be-verified-and-developed"
 ---
 
-Okay, let’s tackle this. I've seen a few implementations go sideways over the years, so I'm glad to walk through a structured approach to verifying and developing bitcoin’s Merkle tree. It's a critical component for the system’s scalability and security, so getting it correct is paramount.
+, let’s tackle this. I've seen a few implementations go sideways over the years, so I'm glad to walk through a structured approach to verifying and developing bitcoin’s Merkle tree. It's a critical component for the system’s scalability and security, so getting it correct is paramount.
 
 Fundamentally, a merkle tree is a data structure used to efficiently verify data integrity. In the context of bitcoin, it’s used to summarise transactions within a block. Rather than broadcasting every transaction to every node, a single merkle root is included in the block header. This root summarises all transactions in a way that allows anyone to prove a specific transaction exists without needing the entire transaction list.
 
@@ -27,6 +27,7 @@ def hash_data(data):
         data = data.encode('utf-8')
     return hashlib.sha256(data).hexdigest()
 ```
+
 This helper function will be useful when constructing the next examples. It is very important for the security of bitcoin that this function is cryptographically sound and that SHA256 is not weakened.
 
 Next we will implement a basic Merkle tree building function and one to generate the proof for a specific transaction. We’ll keep this function simplistic, using a list of string transaction IDs as input. In a live setting, you would be dealing with byte sequences for transactions, but using strings for this example makes it easier to understand. This function will recursively hash the transaction hashes into an ordered Merkle tree, producing the required merkle root:
@@ -55,6 +56,7 @@ def build_merkle_tree(transactions):
 
     return layers[-1][0], layers
 ```
+
 This `build_merkle_tree` function takes the list of transaction IDs and constructs the tree bottom-up. If there are an odd number of elements in a layer, the last element is simply copied to the next layer. It is critical that the function correctly handles an odd number of elements, as this is a practical problem often missed during initial implementation. This can be seen in line 14, where we handle the case where there is only one hash in the current layer.
 
 Finally, here is the function to provide the merkle proof of a single transaction:

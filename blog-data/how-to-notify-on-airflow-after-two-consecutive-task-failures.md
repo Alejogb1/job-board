@@ -4,17 +4,17 @@ date: "2024-12-23"
 id: "how-to-notify-on-airflow-after-two-consecutive-task-failures"
 ---
 
-Alright, let’s tackle this. Notifying on two consecutive task failures in Apache Airflow is a common need, and frankly, one I've run into a fair few times during my career managing data pipelines. The default retry mechanisms can sometimes mask recurring issues, and a more targeted alert system is often necessary to really understand what’s going on. It's about moving beyond just handling a single failure to spotting patterns that might indicate something deeper. I’ll walk you through how I’ve approached this, providing some practical code examples and context.
+, let’s tackle this. Notifying on two consecutive task failures in Apache Airflow is a common need, and frankly, one I've run into a fair few times during my career managing data pipelines. The default retry mechanisms can sometimes mask recurring issues, and a more targeted alert system is often necessary to really understand what’s going on. It's about moving beyond just handling a single failure to spotting patterns that might indicate something deeper. I’ll walk you through how I’ve approached this, providing some practical code examples and context.
 
-The challenge here isn't about Airflow’s capacity for retries – it’s about *context*. Airflow, by default, retries tasks based on the `retries` and `retry_delay` parameters defined in your DAG. However, those retries often happen sequentially. If you want to be alerted specifically *after* a second *consecutive* failure, you need a bit more control and logic. The problem with a single failure alert is that it may not be critical, especially if configured to retry. We need to wait to see if a problem persists.
+The challenge here isn't about Airflow’s capacity for retries – it’s about _context_. Airflow, by default, retries tasks based on the `retries` and `retry_delay` parameters defined in your DAG. However, those retries often happen sequentially. If you want to be alerted specifically _after_ a second _consecutive_ failure, you need a bit more control and logic. The problem with a single failure alert is that it may not be critical, especially if configured to retry. We need to wait to see if a problem persists.
 
 My first experience with this was a particularly stubborn data ingestion pipeline. Data was coming from an external API which could be unstable. Simple retry logic wasn't enough; it kept triggering alerts that were ultimately resolved by the retries, leading to alert fatigue. I realised we needed to be smarter and more selective with these alerts. What worked for us was a combination of custom callbacks and leveraging Airflow's XCom system for state tracking.
 
 Let's break it down. At its core, our approach will revolve around these steps:
 
 1.  **Tracking Failure State:** We need to remember if a task has failed in the previous run. We’ll utilize XComs to persist this information across task executions.
-2.  **Conditional Alerting:** Within a callback function, we check if the task failed in the current execution, *and* if it failed in the previous run. If both are true, we trigger an alert.
-3.  **State Reset:** If the task succeeds, we need to clear any failure flags in XCom. This keeps track of *consecutive* failures, not just any failure.
+2.  **Conditional Alerting:** Within a callback function, we check if the task failed in the current execution, _and_ if it failed in the previous run. If both are true, we trigger an alert.
+3.  **State Reset:** If the task succeeds, we need to clear any failure flags in XCom. This keeps track of _consecutive_ failures, not just any failure.
 
 Here’s a python code snippet illustrating how this might be implemented as a custom callback for your DAG:
 
@@ -194,8 +194,8 @@ Here, the `@with_consecutive_failure_notification` decorator adds the necessary 
 
 For further learning on this topic, I’d recommend studying:
 
-*   **“Data Pipelines Pocket Reference” by James Densmore.** This book gives a comprehensive overview of building and maintaining reliable data pipelines, which includes sections on monitoring and alerting.
-*   The official **Apache Airflow documentation**, specifically the sections on callbacks, XComs, and task lifecycle. It’s comprehensive and up-to-date.
-*   Papers on **"Observability for data pipelines"**. This is a broad field, but focusing on publications that discuss failure detection and alerting will be useful. Specifically, research papers on building fault-tolerant distributed systems often discuss similar challenges and can provide valuable theoretical context.
+- **“Data Pipelines Pocket Reference” by James Densmore.** This book gives a comprehensive overview of building and maintaining reliable data pipelines, which includes sections on monitoring and alerting.
+- The official **Apache Airflow documentation**, specifically the sections on callbacks, XComs, and task lifecycle. It’s comprehensive and up-to-date.
+- Papers on **"Observability for data pipelines"**. This is a broad field, but focusing on publications that discuss failure detection and alerting will be useful. Specifically, research papers on building fault-tolerant distributed systems often discuss similar challenges and can provide valuable theoretical context.
 
 These resources should give you a solid theoretical grounding and practical techniques. Remember to tailor your approach to the specific demands of your pipelines. Consecutive failure notifications are a vital part of proactive monitoring, ensuring you catch issues before they become significant disruptions. And this way, you move from reactive to proactive issue management. It's worked well for me, and I hope it does for you too.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-my-azure-custom-domain-validating-ownership"
 ---
 
-Okay, let's tackle this. It's a frustrating experience when you're trying to get your custom domain hooked up to Azure and the ownership validation just refuses to cooperate. I've seen this particular issue crop up in various forms over the years, and it usually boils down to a few key areas. It’s rarely a fundamental flaw in the Azure platform itself; more often it’s an interaction issue that requires a careful review of the configuration on both your side and, sometimes, on your registrar’s side.
+, let's tackle this. It's a frustrating experience when you're trying to get your custom domain hooked up to Azure and the ownership validation just refuses to cooperate. I've seen this particular issue crop up in various forms over the years, and it usually boils down to a few key areas. It’s rarely a fundamental flaw in the Azure platform itself; more often it’s an interaction issue that requires a careful review of the configuration on both your side and, sometimes, on your registrar’s side.
 
 The process itself relies on DNS records. When Azure needs to verify that you own the domain, it doesn't just take your word for it. It requires you to add a specific type of record—either a TXT record or a CNAME record—to your DNS settings. This acts as cryptographic proof, effectively saying, "yes, the person asking for this domain to be registered to this azure service controls the domain." When validation fails, it's almost always about this DNS proof going sideways.
 
@@ -44,14 +44,14 @@ This simple script uses the `dnspython` library to query DNS servers for the spe
 
 **The CNAME Conundrum**
 
-Another route to domain verification involves CNAME records. Usually, this method is used when trying to point subdomains towards an azure service, rather than a root domain. While also conceptually simple, these too can have issues. The primary issue I've seen involves a conflicting record that already exists at the specified sub-domain or root domain. If there's an existing `A`, `AAAA`, or even a *different* `CNAME` record at the same hostname, the validation process will stumble because DNS rules dictate that only one of those record types can exist at a specific hostname. Let's look at a snippet using `dig` (which is a command line tool available on linux and macOS) to help you diagnose this:
+Another route to domain verification involves CNAME records. Usually, this method is used when trying to point subdomains towards an azure service, rather than a root domain. While also conceptually simple, these too can have issues. The primary issue I've seen involves a conflicting record that already exists at the specified sub-domain or root domain. If there's an existing `A`, `AAAA`, or even a _different_ `CNAME` record at the same hostname, the validation process will stumble because DNS rules dictate that only one of those record types can exist at a specific hostname. Let's look at a snippet using `dig` (which is a command line tool available on linux and macOS) to help you diagnose this:
 
 ```bash
 # Check for CNAME records at subdomain.yourdomain.com
 dig subdomain.yourdomain.com cname
 ```
 
-The response to the `dig` command would show any `CNAME` records present at that subdomain. If you expect this query to *only* contain the azure-specified CNAME and other CNAMEs exist, or if the *expected* azure `CNAME` is missing, that's a problem. Further to this issue, misconfiguration with domain apex CNAME records or "naked domain" records can also cause issues. Some DNS providers don't properly support CNAME flattening, requiring alternate solutions or workarounds.
+The response to the `dig` command would show any `CNAME` records present at that subdomain. If you expect this query to _only_ contain the azure-specified CNAME and other CNAMEs exist, or if the _expected_ azure `CNAME` is missing, that's a problem. Further to this issue, misconfiguration with domain apex CNAME records or "naked domain" records can also cause issues. Some DNS providers don't properly support CNAME flattening, requiring alternate solutions or workarounds.
 
 **The Azure Side of Things**
 

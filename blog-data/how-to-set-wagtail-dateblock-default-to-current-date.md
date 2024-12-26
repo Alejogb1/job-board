@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "how-to-set-wagtail-dateblock-default-to-current-date"
 ---
 
-alright, i’ve seen this one a bunch of times, it's a common pain point when you're setting up a wagtail site, especially if you're trying to get a bit more user friendly with date inputs. so, you want a wagtail dateblock to default to today’s date when a content editor creates a new page or block, yeah? i get it. it’s about making their lives easier and ensuring they don't have to manually select the current date every time. 
+, i’ve seen this one a bunch of times, it's a common pain point when you're setting up a wagtail site, especially if you're trying to get a bit more user friendly with date inputs. so, you want a wagtail dateblock to default to today’s date when a content editor creates a new page or block, yeah? i get it. it’s about making their lives easier and ensuring they don't have to manually select the current date every time.
 
 i can tell you from experience. i remember battling with this back when i was first getting my feet wet with wagtail on a project for a local museum's website; they had a whole section of their site that revolved around event dates and initially, editors were, let's say, less than thrilled about having to manually input the date every single time. i ended up spending a few hours figuring out a decent way around it. i even considered hacking wagtail’s core briefly, but that was just a silly thought. i definitely wasn’t about to do that.
 
-anyway, lets get to the meat of the problem.  wagtail's `dateblock` doesn’t inherently have a “default to today” option, which can feel a little frustrating at first. the solution usually involves a bit of custom logic in your model or in the `clean` method or in `get_context` if you are using the template based approach, which is the easiest and the one i am going to describe. the idea is to intercept the dateblock’s value and set it dynamically using python.
+anyway, lets get to the meat of the problem. wagtail's `dateblock` doesn’t inherently have a “default to today” option, which can feel a little frustrating at first. the solution usually involves a bit of custom logic in your model or in the `clean` method or in `get_context` if you are using the template based approach, which is the easiest and the one i am going to describe. the idea is to intercept the dateblock’s value and set it dynamically using python.
 
 so, we're not going to modify wagtail itself, no need for that kind of chaos; instead, we’re going to leverage wagtail’s api for blocks and the power of python’s date handling. what you're essentially going to be doing is overriding the `get_context` method on the streamfield block (or whatever block you're using that holds your dateblock) and ensure that you’re populating the dateblock’s value with today’s date if no date was explicitly provided when creating the block.
 
@@ -84,7 +84,7 @@ class EventPage(models.Model):
     # ... other fields
 ```
 
-this second example shows the usage of a `stream block` and the additional logic you will need to be able to set the date. the important part is that you will need to check the `type` attribute of the block if you are dealing with nested blocks to determine the correct dictionary to modify. you will need to look up how the data is stored inside the block you are dealing with, in particular if you are going to modify a `streamfield`. 
+this second example shows the usage of a `stream block` and the additional logic you will need to be able to set the date. the important part is that you will need to check the `type` attribute of the block if you are dealing with nested blocks to determine the correct dictionary to modify. you will need to look up how the data is stored inside the block you are dealing with, in particular if you are going to modify a `streamfield`.
 
 finally, if you are using a template, you can also do the same thing there, but this is slightly less performant as the data will need to travel through the whole rendering process and therefore the calculation of the default will be done later:
 
@@ -121,6 +121,6 @@ just remember to include the app that contains that code in the `installed_apps`
 
 the key here is not to modify wagtail itself, it's just about understanding where to intercept the data inside a block or the templates, and that depends on your setup. in a real world project, i've seen variations of this used in countless situations, from event dates to publication dates and beyond. it's a pretty standard little trick to improve the editorial experience.
 
-for further reading i would suggest looking at wagtail documentation on [streamfield](https://docs.wagtail.org/en/stable/topics/streamfield.html) and [blocks](https://docs.wagtail.org/en/stable/reference/wagtail.blocks/). and for python’s date manipulation i recommend the standard python documentation. additionally, the book “fluent python” by luciano ramalho has a really great section on datetime and all the nuances that entails. and here's a tip i wish i'd known back then; make sure you have good tests in place so you don’t end up with surprises later on. 
+for further reading i would suggest looking at wagtail documentation on [streamfield](https://docs.wagtail.org/en/stable/topics/streamfield.html) and [blocks](https://docs.wagtail.org/en/stable/reference/wagtail.blocks/). and for python’s date manipulation i recommend the standard python documentation. additionally, the book “fluent python” by luciano ramalho has a really great section on datetime and all the nuances that entails. and here's a tip i wish i'd known back then; make sure you have good tests in place so you don’t end up with surprises later on.
 
 oh, and a little joke, why was the python developer always so calm? because he knew how to handle exceptions! haha, bad i know. but anyway. yeah, that's about it for setting default dates on wagtail dateblocks. it’s straightforward once you know the way. any other questions you have just let me know and i am more than happy to help.

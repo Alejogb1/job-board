@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-read-json-input-parameters-with-hyphens-in-the-middle-using-jinja-in-airflow"
 ---
 
-Okay, let's tackle this. It's a common frustration when dealing with api payloads or configuration data and trying to parse it elegantly using Jinja within Airflow. The challenge stems from the fact that Jinja, by default, treats hyphens as subtraction operators, not as part of a property name. I’ve certainly run into this a few times, notably when we were integrating a legacy system that insisted on hyphenated field names in its responses. We had a pipeline trying to pull data from that, and it quickly became apparent that `{{ params.api-response-key }}` wasn't going to work. We had to find a more robust solution than just renaming keys. So, let's break down the approaches that work and why they work.
+, let's tackle this. It's a common frustration when dealing with api payloads or configuration data and trying to parse it elegantly using Jinja within Airflow. The challenge stems from the fact that Jinja, by default, treats hyphens as subtraction operators, not as part of a property name. I’ve certainly run into this a few times, notably when we were integrating a legacy system that insisted on hyphenated field names in its responses. We had a pipeline trying to pull data from that, and it quickly became apparent that `{{ params.api-response-key }}` wasn't going to work. We had to find a more robust solution than just renaming keys. So, let's break down the approaches that work and why they work.
 
 First and foremost, direct access via dot notation or bracket notation with simple string keys in Jinja won't function properly when encountering hyphens. Jinja attempts to interpret `params.api-response-key` as `params.api` minus `response` minus `key`. So, we need to bypass this interpretation.
 
@@ -67,6 +67,7 @@ with DAG(
 Here the `print_param_bracket` function will successfully retrieve and print the value, thanks to the usage of bracket notation. While it achieves the same result as `get()`, it can sometimes be more concise in certain contexts. The choice often comes down to personal preference and readability in a given situation. Both techniques avoid Jinja's problematic interpretation of hyphens as subtraction operators.
 
 A third, less common but still valuable solution, especially if you're dealing with a large number of hyphenated keys, is to pre-process the parameter dictionary using a jinja macro or function to convert all keys containing hyphens to something that Jinja can interpret directly. I typically use this when I need to use the dot notation and I absolutely can’t refactor the upstream api. For example, you could convert them to keys that use underscores. In this case, you would have to write the jinja macro yourself or provide a custom jinja environment that defines the macro.
+
 ```python
 from airflow.models.dag import DAG
 from airflow.operators.python import PythonOperator

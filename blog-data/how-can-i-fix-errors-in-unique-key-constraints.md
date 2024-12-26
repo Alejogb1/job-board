@@ -4,13 +4,13 @@ date: "2024-12-16"
 id: "how-can-i-fix-errors-in-unique-key-constraints"
 ---
 
-Alright, let’s talk about unique key constraint errors. I've certainly tripped over these more times than I care to remember, usually in the middle of some late-night data migration or when implementing a particularly thorny feature. It's never a fun moment, but thankfully, it's a very solvable problem. The core issue, fundamentally, is that you're trying to insert or update data that violates the uniqueness requirement you've established on one or more columns in your database. Let's break down how to tackle this.
+, let’s talk about unique key constraint errors. I've certainly tripped over these more times than I care to remember, usually in the middle of some late-night data migration or when implementing a particularly thorny feature. It's never a fun moment, but thankfully, it's a very solvable problem. The core issue, fundamentally, is that you're trying to insert or update data that violates the uniqueness requirement you've established on one or more columns in your database. Let's break down how to tackle this.
 
 The immediate symptom is, of course, an error from the database – something along the lines of "duplicate key value violates unique constraint". That message, though seemingly simple, points to a variety of potential culprits. The fix isn’t always a straightforward ‘delete this duplicate’ scenario. It usually necessitates a deeper dive into your data and, more importantly, a proper understanding of why the conflict arose in the first place.
 
 First, let's clarify that a unique key constraint ensures that all values within a specified column or set of columns across all rows within a table are distinct. This is crucial for maintaining data integrity and ensuring that each record is uniquely identifiable. This identifier may not be your primary key but still serves a critical purpose in preventing duplicated entities as far as a business rule is concerned. So, finding these errors is a must.
 
-Now, from my experiences, the common scenarios tend to fall into a few categories. First, you might have an outright duplication issue: multiple entries in your data source or input that simply have identical values for the constrained columns. Second, you could have a subtle data discrepancy. Perhaps string case differences ("John Doe" vs. "john doe") or leading/trailing whitespace issues ("  email@example.com" vs "email@example.com "). These look different to a human but, if not standardized, are treated as unique entries by your database, leading to conflict when such data is inserted. Finally, a less obvious case can arise during data merging or migrations, where you might be attempting to insert new data that clashes with existing records, often due to a flaw in your merge or transformation logic.
+Now, from my experiences, the common scenarios tend to fall into a few categories. First, you might have an outright duplication issue: multiple entries in your data source or input that simply have identical values for the constrained columns. Second, you could have a subtle data discrepancy. Perhaps string case differences ("John Doe" vs. "john doe") or leading/trailing whitespace issues (" email@example.com" vs "email@example.com "). These look different to a human but, if not standardized, are treated as unique entries by your database, leading to conflict when such data is inserted. Finally, a less obvious case can arise during data merging or migrations, where you might be attempting to insert new data that clashes with existing records, often due to a flaw in your merge or transformation logic.
 
 So, how do we approach correcting these? It’s usually a combination of identifying, cleaning, and preventing. To illustrate that, I will give you some code examples.
 
@@ -29,7 +29,7 @@ Let's assume you found some inconsistencies in email formatting as I’ve mentio
 
 ```sql
 INSERT INTO users (email, name, other_columns)
-SELECT  
+SELECT
     TRIM(LOWER(staging.email)),
     staging.name,
     staging.other_columns
@@ -46,7 +46,7 @@ import sqlite3
 
 def update_user_data(conn, staging_table, target_table, unique_col):
     cursor = conn.cursor()
-    
+
     # Get data from the staging table
     cursor.execute(f"SELECT * FROM {staging_table}")
     staging_data = cursor.fetchall()
@@ -54,13 +54,13 @@ def update_user_data(conn, staging_table, target_table, unique_col):
     for row in staging_data:
         # Construct a dictionary for easy access
         row_dict = dict(zip([col[0] for col in cursor.description], row))
-        
+
         # Check if a user with the same canonical id exists in the target table
         cursor.execute(f"SELECT * FROM {target_table} WHERE {unique_col} = ?", (row_dict[unique_col],))
         existing_user = cursor.fetchone()
-        
+
         if existing_user:
-            # User exists, update if needed or ignore 
+            # User exists, update if needed or ignore
             print(f"User with ID {row_dict[unique_col]} already exists. Skipping...")
         else:
             # User doesn't exist, insert the new user
@@ -68,9 +68,9 @@ def update_user_data(conn, staging_table, target_table, unique_col):
             columns = ', '.join(row_dict.keys())
             cursor.execute(f"INSERT INTO {target_table} ({columns}) VALUES ({placeholders})", tuple(row_dict.values()))
             print(f"Inserted user with ID: {row_dict[unique_col]}")
-    
+
     conn.commit()
-    
+
 
 #Example usage
 conn = sqlite3.connect('mydatabase.db')

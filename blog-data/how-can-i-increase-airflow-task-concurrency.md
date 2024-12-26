@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-increase-airflow-task-concurrency"
 ---
 
-Okay, let’s tackle this. Task concurrency in Airflow is a topic I've spent a good amount of time optimizing over the years, especially when scaling up data pipelines. I've had to navigate scenarios where we were initially bottlenecked, not by the processing power of the individual tasks themselves, but by the sheer volume and scheduling limitations of the Airflow environment. Increasing concurrency isn’t a one-size-fits-all solution; it requires a careful understanding of your environment, your workflows, and the underlying configuration. Let me walk you through a few key areas and some code examples that have served me well in the past.
+, let’s tackle this. Task concurrency in Airflow is a topic I've spent a good amount of time optimizing over the years, especially when scaling up data pipelines. I've had to navigate scenarios where we were initially bottlenecked, not by the processing power of the individual tasks themselves, but by the sheer volume and scheduling limitations of the Airflow environment. Increasing concurrency isn’t a one-size-fits-all solution; it requires a careful understanding of your environment, your workflows, and the underlying configuration. Let me walk you through a few key areas and some code examples that have served me well in the past.
 
-First, it's crucial to differentiate between *task* concurrency and *dag* concurrency. The question specifies task concurrency, so I'll focus primarily on that. This refers to the number of task instances that can be actively executing *at the same time*, across all dags. This is fundamentally controlled by the Airflow executor, and its configuration. Understanding the executor is where we need to start.
+First, it's crucial to differentiate between _task_ concurrency and _dag_ concurrency. The question specifies task concurrency, so I'll focus primarily on that. This refers to the number of task instances that can be actively executing _at the same time_, across all dags. This is fundamentally controlled by the Airflow executor, and its configuration. Understanding the executor is where we need to start.
 
 **Executor Configuration: The Heart of Concurrency**
 
@@ -14,9 +14,9 @@ Airflow supports different types of executors, each with distinct concurrency pr
 
 The `CeleryExecutor` leverages Celery as a task queue, allowing your worker processes to operate independently. This significantly increases concurrency, provided you have enough worker capacity. Critical configuration points here involve:
 
-*   `celery.worker_concurrency`: This defines the number of concurrent tasks a single Celery worker can execute.
-*   `celery.worker_prefetch_multiplier`: This determines how many tasks a worker will fetch from the queue in advance.
-*   The number of Celery workers themselves.
+- `celery.worker_concurrency`: This defines the number of concurrent tasks a single Celery worker can execute.
+- `celery.worker_prefetch_multiplier`: This determines how many tasks a worker will fetch from the queue in advance.
+- The number of Celery workers themselves.
 
 A significant incident I recall involved a rapid increase in data ingestion volume. We had a pipeline designed for lower load, using a relatively small number of Celery workers. Task backlogs began to build up quickly. To resolve this, we had to provision more Celery workers and adjust the `celery.worker_concurrency`. This incident taught me the importance of monitoring these metrics closely, especially during periods of expected load changes.
 
@@ -26,7 +26,7 @@ The `KubernetesExecutor`, on the other hand, dynamically spins up a new Kubernet
 
 To illustrate, let's look at a few snippets. I'll be using python code, the lingua franca of Airflow.
 
-*Snippet 1: Celery Configuration*
+_Snippet 1: Celery Configuration_
 
 ```python
 # airflow.cfg
@@ -38,9 +38,9 @@ broker_url = redis://localhost:6379/0   # Redis broker
 result_backend = redis://localhost:6379/0 # Result store
 ```
 
-In this example, we've set `worker_concurrency` to 16, which allows each Celery worker to run 16 tasks simultaneously. Remember, the actual number of parallel tasks running system wide is a function of the worker pool size * worker_concurrency. The `broker_url` and `result_backend` points towards our redis instances, the default choice. Note, it is crucial that broker and backend use the same redis instance.
+In this example, we've set `worker_concurrency` to 16, which allows each Celery worker to run 16 tasks simultaneously. Remember, the actual number of parallel tasks running system wide is a function of the worker pool size \* worker_concurrency. The `broker_url` and `result_backend` points towards our redis instances, the default choice. Note, it is crucial that broker and backend use the same redis instance.
 
-*Snippet 2: Kubernetes Executor Configuration*
+_Snippet 2: Kubernetes Executor Configuration_
 
 ```python
 # airflow.cfg
@@ -53,7 +53,7 @@ worker_pods_resource_requests_memory = 4G # Memory request per pod
 
 Here, we've specified resource constraints for each Kubernetes pod. These limits are important to ensure stable operations. Over allocation can lead to wasted resources, while under allocation can lead to pod evictions. Adjust these settings according to the resource demands of your specific tasks.
 
-*Snippet 3: Task level concurrency limits (pool)*
+_Snippet 3: Task level concurrency limits (pool)_
 
 ```python
 from airflow import DAG
@@ -93,6 +93,6 @@ Also, understanding the task level dependencies is paramount to scaling out, som
 
 **Further Resources**
 
-For deeper exploration, I recommend a couple of resources. The official Apache Airflow documentation, obviously, is essential and is the most updated material with the latest features. In particular, review the sections on executors and configurations. *“Programming Apache Airflow”* by Bas Geerdink is another excellent book that goes into the practical aspects of airflow in significant detail. For understanding Celery’s configuration options in more detail, go through their documentation, and specifically pay attention to the sections on task routing and result backends. For Kubernetes in particular, understand the intricacies of namespaces, resource quotas and how your cluster scheduling configurations can affect the performance of pods. This forms the base knowledge needed to properly tune the kubernetes executor.
+For deeper exploration, I recommend a couple of resources. The official Apache Airflow documentation, obviously, is essential and is the most updated material with the latest features. In particular, review the sections on executors and configurations. _“Programming Apache Airflow”_ by Bas Geerdink is another excellent book that goes into the practical aspects of airflow in significant detail. For understanding Celery’s configuration options in more detail, go through their documentation, and specifically pay attention to the sections on task routing and result backends. For Kubernetes in particular, understand the intricacies of namespaces, resource quotas and how your cluster scheduling configurations can affect the performance of pods. This forms the base knowledge needed to properly tune the kubernetes executor.
 
 In conclusion, increasing task concurrency requires a detailed understanding of Airflow's executors, a firm grasp on how your DAGs are structured, and constant monitoring of your system metrics. It's an iterative process, and you'll likely find yourself adjusting your configuration and DAG designs based on real-world performance. My approach has always been to start with the most conservative settings and scale up gradually to maintain system stability while maximizing resource utilization.

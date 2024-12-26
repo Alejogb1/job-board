@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-replace-intermediate-layers-in-keras-functional-models"
 ---
 
-Alright, let's talk about swapping out intermediate layers in Keras functional models. It's a task that I’ve definitely encountered more than once, and it often comes up when you're trying to fine-tune a network, implement custom modifications, or even just debug a complex architecture. It's not as straightforward as doing it with sequential models, but with a solid grasp of the functional api, it’s quite manageable.
+, let's talk about swapping out intermediate layers in Keras functional models. It's a task that I’ve definitely encountered more than once, and it often comes up when you're trying to fine-tune a network, implement custom modifications, or even just debug a complex architecture. It's not as straightforward as doing it with sequential models, but with a solid grasp of the functional api, it’s quite manageable.
 
 The challenge stems from how functional models are constructed. Instead of a linear stack of layers, you define how tensors flow from one layer to another through direct connections. So, replacing a layer involves more than simply removing one and inserting another; you need to carefully manage input/output connections.
 
@@ -167,20 +167,20 @@ Here, I've created a custom layer and replaced a standard dense layer with it. T
 
 **Important Notes:**
 
-*   **Tensor History:** The `._keras_history` attribute is a key part of accessing the necessary tensor connections within the functional API.
-*   **Shape Compatibility:** Always ensure that the new layer's input shape is compatible with the output of the preceding layer and that its output shape is compatible with the inputs of subsequent layers. Pay close attention to this, particularly when dealing with convolutional layers, pooling layers, etc, that alter the shape of the tensors.
-*   **Multiple Outputs:** In cases where a layer has multiple outputs (which is not as common but possible), you would need to iterate over them and establish new routes appropriately.
-*   **Model Complexity:** For very large models, this process can be error-prone due to the large number of connections and the inherent complexity of manually doing tensor rewiring. Keep a diagram of the network you are modifying when manually replacing intermediate layers.
-*   **Alternatives:** While direct layer replacement is possible using this technique, in many cases, it is easier to re-build the relevant sections of your network using the functional API. Consider doing this when you have to replace a large number of layers within the network.
-*   **Model Saving and Reloading:** After modifying models programmatically as I have just shown, ensure to save them to disk and reload them as a sanity check. Often, when you modify networks in a procedural way like this, it is not easily re-creatable unless you save the model to disk after modification.
+- **Tensor History:** The `._keras_history` attribute is a key part of accessing the necessary tensor connections within the functional API.
+- **Shape Compatibility:** Always ensure that the new layer's input shape is compatible with the output of the preceding layer and that its output shape is compatible with the inputs of subsequent layers. Pay close attention to this, particularly when dealing with convolutional layers, pooling layers, etc, that alter the shape of the tensors.
+- **Multiple Outputs:** In cases where a layer has multiple outputs (which is not as common but possible), you would need to iterate over them and establish new routes appropriately.
+- **Model Complexity:** For very large models, this process can be error-prone due to the large number of connections and the inherent complexity of manually doing tensor rewiring. Keep a diagram of the network you are modifying when manually replacing intermediate layers.
+- **Alternatives:** While direct layer replacement is possible using this technique, in many cases, it is easier to re-build the relevant sections of your network using the functional API. Consider doing this when you have to replace a large number of layers within the network.
+- **Model Saving and Reloading:** After modifying models programmatically as I have just shown, ensure to save them to disk and reload them as a sanity check. Often, when you modify networks in a procedural way like this, it is not easily re-creatable unless you save the model to disk after modification.
 
 **Recommendations for Further Learning:**
 
 For a deep dive, I highly recommend:
 
-*   **Deep Learning with Python by François Chollet:** The creator of Keras provides an exceptionally clear and concise overview of the functional API along with practical examples. This book is foundational.
-*   **Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow by Aurélien Géron:** This book provides a balanced approach, covering theory and implementation with practical case studies. Its coverage on Keras’ functional API is particularly helpful.
-*   **The Keras documentation** on the tensorflow website is the best and most authoritative source for details regarding specific api calls.
-*   **The source code of keras**: When in doubt, and when the documentation is not providing enough details on internal mechanisms, delving into the actual source code of keras can help answer particular questions. This is especially useful when using more advanced features.
+- **Deep Learning with Python by François Chollet:** The creator of Keras provides an exceptionally clear and concise overview of the functional API along with practical examples. This book is foundational.
+- **Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow by Aurélien Géron:** This book provides a balanced approach, covering theory and implementation with practical case studies. Its coverage on Keras’ functional API is particularly helpful.
+- **The Keras documentation** on the tensorflow website is the best and most authoritative source for details regarding specific api calls.
+- **The source code of keras**: When in doubt, and when the documentation is not providing enough details on internal mechanisms, delving into the actual source code of keras can help answer particular questions. This is especially useful when using more advanced features.
 
 Replacing layers in Keras functional models is all about understanding how tensors flow through the network. Once you grasp that, these seemingly intricate tasks become much more manageable. It's a skill well worth investing in, particularly when you are working on complex custom architectures.

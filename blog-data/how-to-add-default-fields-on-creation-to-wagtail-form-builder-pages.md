@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-add-default-fields-on-creation-to-wagtail-form-builder-pages"
 ---
 
-alright, so you’re looking to pre-populate some fields when creating new pages using wagtail’s form builder. it’s a common need, and i’ve definitely banged my head against that wall a few times in the past. i remember back in ‘16, i was building this online application portal for a small university – they wanted some default contact info fields automatically filled when admissions staff created a new application form page. took me a while to figure out the cleanest way to do it, and i ended up using a combination of models and custom panel configurations. it can be a bit fiddly, but it’s definitely achievable.
+, so you’re looking to pre-populate some fields when creating new pages using wagtail’s form builder. it’s a common need, and i’ve definitely banged my head against that wall a few times in the past. i remember back in ‘16, i was building this online application portal for a small university – they wanted some default contact info fields automatically filled when admissions staff created a new application form page. took me a while to figure out the cleanest way to do it, and i ended up using a combination of models and custom panel configurations. it can be a bit fiddly, but it’s definitely achievable.
 
 let’s break this down into a few approaches, focusing on what i found works best.
 
@@ -86,7 +86,7 @@ in this example, before a new `formpage` is saved, the `populate_default_departm
 
 now, sometimes, you need to set default form fields, the ones that are `abstractformfield` types. you can't use the `get_default` method to do this with abstractformfield type fields. the `abstractformfield` models are connected to the page with a `parentalkey` field. to solve that issue you'll have to create the fields on the `pre_save` signal as well. also, you'll need to make sure that we are actually creating a new `formpage`.
 
- here is how you would achieve that:
+here is how you would achieve that:
 
 ```python
 from django.db.models.signals import pre_save

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-data-be-edited-using-a-simple-form"
 ---
 
-Alright, let's tackle this. Having spent years wrestling, no… processing, various forms of data in web applications, I've seen this particular challenge arise countless times. The requirement is simple: allow users to modify data via a user-friendly interface, a standard form. But the underlying mechanics of how to do this effectively and robustly are far from trivial.
+, let's tackle this. Having spent years wrestling, no… processing, various forms of data in web applications, I've seen this particular challenge arise countless times. The requirement is simple: allow users to modify data via a user-friendly interface, a standard form. But the underlying mechanics of how to do this effectively and robustly are far from trivial.
 
 The core of the issue centers around translating user input from the form into changes in the underlying data store, whether it's a database, file system, or another system. We need to consider not just the mechanics of updating the data, but also important considerations like data validation, error handling, and preventing common security vulnerabilities.
 
@@ -15,11 +15,11 @@ Let's start with the basic principle: We must map form fields to data attributes
 ```html
 <form id="userForm">
   <label for="name">Name:</label>
-  <input type="text" id="name" name="name" required><br><br>
+  <input type="text" id="name" name="name" required /><br /><br />
   <label for="email">Email:</label>
-  <input type="email" id="email" name="email" required><br><br>
+  <input type="email" id="email" name="email" required /><br /><br />
   <label for="age">Age:</label>
-  <input type="number" id="age" name="age" min="0"><br><br>
+  <input type="number" id="age" name="age" min="0" /><br /><br />
   <button type="submit">Submit</button>
 </form>
 ```
@@ -29,38 +29,37 @@ This form, when submitted, sends a request to our server (or whichever processin
 Now, the crucial part: processing this data on the server-side (or equivalent data handling component). Using JavaScript (Node.js example with Express), a basic controller might look like this:
 
 ```javascript
-const express = require('express');
-const bodyParser = require('body-parser');
+const express = require("express");
+const bodyParser = require("body-parser");
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); // for handling json data
 
-app.post('/updateUser', (req, res) => {
+app.post("/updateUser", (req, res) => {
   const { name, email, age } = req.body;
 
   // Basic input validation
   if (!name || !email) {
-    return res.status(400).send('Name and email are required.');
+    return res.status(400).send("Name and email are required.");
   }
 
   if (age && isNaN(parseInt(age)))
-     return res.status(400).send('Age must be a number.');
+    return res.status(400).send("Age must be a number.");
 
   // Data processing logic (placeholder for DB update etc.)
   const updatedUserData = {
     name: name,
     email: email,
-    age: age ? parseInt(age) : null // Convert age to a number or keep null
+    age: age ? parseInt(age) : null, // Convert age to a number or keep null
   };
 
   // In a real app, you would update a db here. For this example:
-  console.log('Updated data:', updatedUserData);
-  res.status(200).send('User data updated.');
-
+  console.log("Updated data:", updatedUserData);
+  res.status(200).send("User data updated.");
 });
 
-app.listen(3000, () => console.log('Server running on port 3000'));
+app.listen(3000, () => console.log("Server running on port 3000"));
 ```
 
 This code snippet illustrates several key concepts. First, the `body-parser` middleware allows us to easily extract the submitted form data (`req.body`). Then, I’ve included a basic input validation step to check if required fields are present and if the age is indeed a valid number. The processing logic (here just console logging) is where you would connect to your data storage, update the specific record, and handle database related errors.
@@ -74,13 +73,13 @@ Now let's look at another scenario where you might have to deal with structured 
   <div id="skillsContainer">
     <div class="skillInput">
       <label>Skill 1: </label>
-      <input type="text" name="skills[]" value="Java">
-      <button type="button" class="removeSkill">Remove</button><br><br>
+      <input type="text" name="skills[]" value="Java" />
+      <button type="button" class="removeSkill">Remove</button><br /><br />
     </div>
     <div class="skillInput">
       <label>Skill 2: </label>
-      <input type="text" name="skills[]" value="Python">
-      <button type="button" class="removeSkill">Remove</button><br><br>
+      <input type="text" name="skills[]" value="Python" />
+      <button type="button" class="removeSkill">Remove</button><br /><br />
     </div>
   </div>
   <button type="button" id="addSkill">Add Skill</button>
@@ -91,47 +90,50 @@ Now let's look at another scenario where you might have to deal with structured 
 And using Javascript (in the browser), we can easily manage the dynamically adding of skill inputs:
 
 ```javascript
-document.addEventListener('DOMContentLoaded', function() {
-  const skillsContainer = document.getElementById('skillsContainer');
-  const addSkillButton = document.getElementById('addSkill');
+document.addEventListener("DOMContentLoaded", function () {
+  const skillsContainer = document.getElementById("skillsContainer");
+  const addSkillButton = document.getElementById("addSkill");
 
-  addSkillButton.addEventListener('click', () => {
-     const newSkillInput = document.createElement('div');
-     newSkillInput.className = 'skillInput';
-     newSkillInput.innerHTML = `<label>Skill ${skillsContainer.children.length + 1}:</label>
+  addSkillButton.addEventListener("click", () => {
+    const newSkillInput = document.createElement("div");
+    newSkillInput.className = "skillInput";
+    newSkillInput.innerHTML = `<label>Skill ${
+      skillsContainer.children.length + 1
+    }:</label>
                               <input type="text" name="skills[]">
                               <button type="button" class="removeSkill">Remove</button><br><br>`;
-     skillsContainer.appendChild(newSkillInput);
-     setupRemoveButtons();
+    skillsContainer.appendChild(newSkillInput);
+    setupRemoveButtons();
   });
 
   function setupRemoveButtons() {
-      document.querySelectorAll('.removeSkill').forEach(button => {
-         button.addEventListener('click', function(){
-              this.parentNode.remove();
-          })
+    document.querySelectorAll(".removeSkill").forEach((button) => {
+      button.addEventListener("click", function () {
+        this.parentNode.remove();
       });
+    });
   }
 
   setupRemoveButtons(); //initial setup
-
 });
 ```
 
 On server side, we could then process it (using nodeJS express again):
 
 ```javascript
-app.post('/updateSkills', (req, res) => {
+app.post("/updateSkills", (req, res) => {
   const skills = req.body.skills; // skills will be an array
 
-    if(!skills || !Array.isArray(skills) || skills.length == 0){
-       return res.status(400).send("At least one skill is required");
-    }
+  if (!skills || !Array.isArray(skills) || skills.length == 0) {
+    return res.status(400).send("At least one skill is required");
+  }
 
-    const cleanedSkills = skills.map(skill => skill.trim()).filter(skill => skill !== '');
+  const cleanedSkills = skills
+    .map((skill) => skill.trim())
+    .filter((skill) => skill !== "");
 
-    console.log("Updated Skills:", cleanedSkills); //Placeholder for DB Update
-    res.status(200).send("Skills updated successfully.");
+  console.log("Updated Skills:", cleanedSkills); //Placeholder for DB Update
+  res.status(200).send("Skills updated successfully.");
 });
 ```
 

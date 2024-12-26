@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-use-similarity-functions-on-words-outside-of-the-vocabulary"
 ---
 
-Okay, let's tackle this one. It's a situation I’ve definitely encountered more than a few times, especially back when I was working on that large-scale text analysis project for the legal firm, where we had a particularly messy dataset riddled with typos and neologisms. Dealing with out-of-vocabulary (OOV) words when using similarity functions is, shall we say, a non-trivial task, but it’s absolutely manageable with a structured approach.
+, let's tackle this one. It's a situation I’ve definitely encountered more than a few times, especially back when I was working on that large-scale text analysis project for the legal firm, where we had a particularly messy dataset riddled with typos and neologisms. Dealing with out-of-vocabulary (OOV) words when using similarity functions is, shall we say, a non-trivial task, but it’s absolutely manageable with a structured approach.
 
 Essentially, the problem is this: similarity functions, be it cosine similarity on word vectors or edit distance, are designed to work with known vocabulary. When a word pops up that’s not in our model's dictionary, those standard calculations simply fall flat. We're essentially asking the model to understand something it hasn't been trained to understand directly. This leads to either completely missing the similarities or generating incorrect and misleading results. But fear not, there are ways around this, and some are more effective than others depending on the context.
 
@@ -52,6 +52,7 @@ print(character_level_embedding(oov_word_2, char_embeddings, unknown_embedding))
 print(character_level_embedding(oov_word_3, char_embeddings, unknown_embedding))
 
 ```
+
 In this snippet, I illustrate how to create an embedding for both in-vocabulary and out-of-vocabulary words using simple averaging. The important part is that even if a character is not found, we can still generate a representation based on the parts we know and, if needed, by incorporating a predefined unknown or zero-filled embedding. In practice, you'd use real pre-trained character embeddings.
 
 Another robust technique is to employ sub-word tokenization algorithms, like byte-pair encoding (BPE) or word pieces. These methods learn common sub-word units from a corpus, allowing you to break down a rare or OOV word into smaller, known sub-word units. For example, “unbelievable” might be broken into "un", "believe", and "able". If these sub-words are present in our vocabulary, then the final embedding can be derived. This is especially useful when dealing with morphological variations of words. I vividly recall using this approach when tackling misspellings on product names when I worked for the e-commerce platform and the effectiveness was significant.
@@ -166,6 +167,7 @@ in_vocab_word = "abc"
 print(generate_oov_embedding(oov_word, char_to_idx, model,embedding_dim ))
 print(generate_oov_embedding(in_vocab_word, char_to_idx, model, embedding_dim))
 ```
+
 This example, while simplified, demonstrates how a model could be trained to derive embeddings of words, including OOV words, based on character embeddings. I must stress, this method requires good quality character or sub-word embeddings that are tuned to the dataset in question.
 
 For a deeper understanding of this topic, I’d highly recommend the following resources: "Speech and Language Processing" by Daniel Jurafsky and James H. Martin – it provides a solid theoretical grounding. The "Deep Learning" book by Ian Goodfellow, Yoshua Bengio, and Aaron Courville is another key text. For more practical and modern approaches, the documentation for libraries like TensorFlow and PyTorch is very helpful. Pay particular attention to the modules related to embeddings, tokenization, and neural network layers, as well as the papers that introduced Byte Pair Encoding (BPE) and Word Piece algorithms – these are fundamental for subword models.

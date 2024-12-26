@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-a-pid-file-not-created-when-puma-is-started-as-a-daemon"
 ---
 
-Okay, let's tackle this. I've seen this particular issue with puma and daemonization more times than I care to recall, often late on a Friday night when deployment pipelines decide to throw a curveball. The frustrating thing isn't usually the problem itself, but figuring out exactly where the configuration went sideways. The heart of the matter lies in how Puma handles daemonization and its dependency on explicit configuration for pid file creation. It’s not something that’s implicitly handled; it requires active setup.
+, let's tackle this. I've seen this particular issue with puma and daemonization more times than I care to recall, often late on a Friday night when deployment pipelines decide to throw a curveball. The frustrating thing isn't usually the problem itself, but figuring out exactly where the configuration went sideways. The heart of the matter lies in how Puma handles daemonization and its dependency on explicit configuration for pid file creation. It’s not something that’s implicitly handled; it requires active setup.
 
 Let's break down why this happens and how to fix it. Essentially, when you start Puma in daemon mode (using the `-d` or `--daemon` flag), it forks the process and detaches it from the controlling terminal. This means Puma is no longer directly connected to your shell's input/output. However, the creation of a pid file isn't an automatic byproduct of this daemonization. It's a separate action that needs to be explicitly requested via a configuration parameter. If that parameter isn’t specified, then no pid file will be created, regardless of whether Puma is running as a daemon.
 
@@ -20,7 +20,7 @@ Suppose you're launching Puma like this:
 puma -e production -d
 ```
 
-This command tells Puma to run in the production environment and as a daemon (detached from the terminal). It successfully launches the server, but will *not* generate a pid file. We’ll see the server is running, but can’t directly interact with it easily.
+This command tells Puma to run in the production environment and as a daemon (detached from the terminal). It successfully launches the server, but will _not_ generate a pid file. We’ll see the server is running, but can’t directly interact with it easily.
 
 **Example 2: Command-Line Startup (Correct)**
 

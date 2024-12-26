@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-delete-old-bot-messages-when-sending-new-ones-in-aiogram"
 ---
 
-Alright, let's talk about managing those pesky bot messages when using aiogram. It's a scenario I've bumped into countless times during my tenure developing Telegram bots, especially when dealing with rapidly changing information or interactive interfaces. You're essentially trying to avoid message clutter by removing the old context before presenting the new, and it's a very valid concern. Simply flooding a chat with updates leads to a poor user experience.
+, let's talk about managing those pesky bot messages when using aiogram. It's a scenario I've bumped into countless times during my tenure developing Telegram bots, especially when dealing with rapidly changing information or interactive interfaces. You're essentially trying to avoid message clutter by removing the old context before presenting the new, and it's a very valid concern. Simply flooding a chat with updates leads to a poor user experience.
 
 The core problem stems from Telegram's architecture. When you send a message via the Bot API, it becomes a permanent fixture, at least until manually removed by the bot or the user. There isn't an inherent 'replace' function, so you have to manage the removal process yourself. Thankfully, aiogram gives us the tools to do this effectively. The fundamental approach involves remembering the message ids of previously sent messages and using `bot.delete_message()` to clean them up before sending new ones. Let's break down how to achieve this cleanly and reliably.
 
@@ -52,7 +52,7 @@ async def handle_choice(callback_query: types.CallbackQuery, state: FSMContext):
       new_msg = await bot.send_message(callback_query.message.chat.id, "You chose option 1!")
   elif callback_query.data == "option2":
       new_msg = await bot.send_message(callback_query.message.chat.id, "You chose option 2!")
-  
+
   await state.update_data(last_message_id=new_msg.message_id)
   await callback_query.answer() # Acknowledge callback
 
@@ -60,6 +60,7 @@ if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
 
 ```
+
 In this example, each time a user interacts with the inline keyboard, the previous message is deleted before the new one is shown. Critically, error handling is included around `bot.delete_message()` since there are instances when this deletion might fail (e.g., if the message has already been deleted). It's vital to remember that Telegram can delete messages through other means, so never assume the deletion call will succeed.
 
 Now, if we consider a slightly more complex scenario, say you need to keep track of messages across different states and update them repeatedly, storing just the last message id within the FSM might not cut it. You’ll need something more persistent. This is where a simple dictionary or a database lookup could be useful to hold the different messages that have been sent.
@@ -85,7 +86,7 @@ user_messages = {} # dictionary to store message ids for each user
 @dp.message_handler(Command("start"))
 async def start_command(message: types.Message):
     user_id = message.from_user.id
-    
+
     if user_id in user_messages:
         for msg_id in user_messages[user_id]:
            try:
@@ -93,7 +94,7 @@ async def start_command(message: types.Message):
            except Exception as e:
                 print(f"Error deleting message: {e}")
         user_messages[user_id] = []
-    
+
     new_message = await message.answer("First message for this user.")
     if user_id not in user_messages:
       user_messages[user_id] = [new_message.message_id]
@@ -111,7 +112,7 @@ async def update_command(message: types.Message):
            except Exception as e:
                 print(f"Error deleting message: {e}")
         user_messages[user_id] = []
-    
+
     new_message = await message.answer("Updated message.")
     if user_id not in user_messages:
         user_messages[user_id] = [new_message.message_id]
@@ -124,6 +125,7 @@ if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
 
 ```
+
 Here, we maintain a `user_messages` dictionary. Whenever a user sends a command, all the old messages are deleted and new ones are added to the dictionary. As you can imagine, this would become a bottleneck if your bot was dealing with a large number of users and message. For more complex bots, something like Redis or a dedicated database would become a necessity.
 
 Finally, let's illustrate a slightly more advanced technique by using a more complex approach, utilizing an async Redis client for storing message ids. This is a more scalable solution suitable for larger deployments. You will have to install `aioredis`.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-brownie-local-tests-failing-with-ganache"
 ---
 
-Okay, let's talk about those frustrating Brownie test failures when using Ganache. It's a situation I’ve personally encountered more than once, and the culprits are often subtle, hiding just below the surface. It's rarely a direct incompatibility, but more often a mismatch in expectations between how Brownie configures its environment and how Ganache is operating. I’ve spent my share of late nights debugging similar issues, and I’ve found it's usually one of a few common pitfalls that cause the problem.
+, let's talk about those frustrating Brownie test failures when using Ganache. It's a situation I’ve personally encountered more than once, and the culprits are often subtle, hiding just below the surface. It's rarely a direct incompatibility, but more often a mismatch in expectations between how Brownie configures its environment and how Ganache is operating. I’ve spent my share of late nights debugging similar issues, and I’ve found it's usually one of a few common pitfalls that cause the problem.
 
 Fundamentally, Brownie provides a very flexible testing framework for solidity smart contracts, allowing you to easily interact with and test them using a local ethereum development network. Ganache, on the other hand, is a fantastic tool for creating this local environment, offering a blockchain sandbox with configurable parameters like block times, gas limits, and account setups. When they don't play nicely, it's usually a sign we've overlooked one of these configurations.
 
@@ -58,15 +58,15 @@ def test_timed_event_triggers(accounts):
     assert contract.eventTriggered() == True
 ```
 
-Here, if Ganache mines a single block on contract deployment and another *only* when `contract.triggerEvent()` is called, there may be less than ten seconds difference between those block timestamps. This, depending on the precise timing of the execution and the machine, could make `contract.eventTriggered()` unexpectedly return true before we expect. The sleep function in python doesn't dictate when ganache will advance the blockchain.
+Here, if Ganache mines a single block on contract deployment and another _only_ when `contract.triggerEvent()` is called, there may be less than ten seconds difference between those block timestamps. This, depending on the precise timing of the execution and the machine, could make `contract.eventTriggered()` unexpectedly return true before we expect. The sleep function in python doesn't dictate when ganache will advance the blockchain.
 
 **Incorrect Ganache Configuration:**
 
 Another frequent cause is an incorrect configuration of Ganache itself. Ganache's default settings are designed for quick prototyping but may not always perfectly mirror the conditions Brownie expects or your smart contract assumes. Key areas to check include:
 
-*   **`--blockTime`:** The interval between blocks being mined. Using the `--blockTime` parameter when starting Ganache with a constant block time can help synchronize Ganache’s block progression with Brownie's testing expectations. The block time needs to match any testing assumption about time progression. For testing scenarios where time is critical, using a fixed block time is ideal.
-*   **Gas Limits:** If your contract’s deployments or tests are consistently failing due to gas-related issues, check that Ganache’s gas limits are set high enough. By default, Ganache gives fairly high limits, but these can still sometimes be an issue.
-*   **Mining behavior:** As discussed, Ganache's default "on-demand" mining can lead to timestamp discrepancies. It’s sometimes beneficial to switch to an interval based block generation. This can be accomplished using the `--blockTime` parameter, or using a script that continuously mines blocks (although this is rarely necessary).
+- **`--blockTime`:** The interval between blocks being mined. Using the `--blockTime` parameter when starting Ganache with a constant block time can help synchronize Ganache’s block progression with Brownie's testing expectations. The block time needs to match any testing assumption about time progression. For testing scenarios where time is critical, using a fixed block time is ideal.
+- **Gas Limits:** If your contract’s deployments or tests are consistently failing due to gas-related issues, check that Ganache’s gas limits are set high enough. By default, Ganache gives fairly high limits, but these can still sometimes be an issue.
+- **Mining behavior:** As discussed, Ganache's default "on-demand" mining can lead to timestamp discrepancies. It’s sometimes beneficial to switch to an interval based block generation. This can be accomplished using the `--blockTime` parameter, or using a script that continuously mines blocks (although this is rarely necessary).
 
 **Account Management:**
 
@@ -130,8 +130,8 @@ When facing Brownie test failures with Ganache, start with these steps:
 
 For further learning, I highly recommend delving into the following resources:
 
-*   **"Mastering Ethereum" by Andreas M. Antonopoulos and Gavin Wood**: Offers a deep understanding of the Ethereum virtual machine (evm), blockchain concepts, and how transactions and blocks operate, crucial for debugging these issues.
-*   **The official Brownie documentation:** Specifically the sections on testing, environment configuration, and interacting with local networks.
-*   **Ganache's official documentation**: Pay attention to the CLI parameters and network configuration options. Understanding how Ganache works is critical for effective testing with local networks.
+- **"Mastering Ethereum" by Andreas M. Antonopoulos and Gavin Wood**: Offers a deep understanding of the Ethereum virtual machine (evm), blockchain concepts, and how transactions and blocks operate, crucial for debugging these issues.
+- **The official Brownie documentation:** Specifically the sections on testing, environment configuration, and interacting with local networks.
+- **Ganache's official documentation**: Pay attention to the CLI parameters and network configuration options. Understanding how Ganache works is critical for effective testing with local networks.
 
 In conclusion, while seemingly frustrating, the failures of Brownie tests with Ganache are usually due to these subtle discrepancies in environment expectations. By understanding block timing, Ganache configurations, and account handling, you’ll find you can swiftly identify the root cause and get back to developing. These issues require a blend of understanding the tools, their configurations, and a methodical approach to debugging, something any experienced developer will have in their toolbox.

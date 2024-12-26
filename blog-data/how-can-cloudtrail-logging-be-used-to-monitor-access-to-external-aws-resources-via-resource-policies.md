@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-cloudtrail-logging-be-used-to-monitor-access-to-external-aws-resources-via-resource-policies"
 ---
 
-Alright, let’s tackle this. I remember back in the early days of a previous project, we had a similar challenge concerning external access policies – it's not always straightforward to see *exactly* who's doing what when you're granting access to external entities. We leaned heavily on CloudTrail, and here's the breakdown of how we managed to get detailed insights into such access:
+, let’s tackle this. I remember back in the early days of a previous project, we had a similar challenge concerning external access policies – it's not always straightforward to see _exactly_ who's doing what when you're granting access to external entities. We leaned heavily on CloudTrail, and here's the breakdown of how we managed to get detailed insights into such access:
 
-The core challenge lies in the fact that resource policies, like those attached to s3 buckets or kms keys, govern who *can* do what, but they don’t directly create log events of access. Instead, CloudTrail logs *API calls*. Therefore, to monitor access granted by resource policies, you have to translate the "who" in the logs to the effective permissions resulting from those policies. This is where a good understanding of CloudTrail event structure and policy evaluation logic becomes vital. Essentially, CloudTrail allows you to see when an entity *attempts* an action, and a properly configured system means those attempts will often fail or succeed *because* of the resource policy.
+The core challenge lies in the fact that resource policies, like those attached to s3 buckets or kms keys, govern who _can_ do what, but they don’t directly create log events of access. Instead, CloudTrail logs _API calls_. Therefore, to monitor access granted by resource policies, you have to translate the "who" in the logs to the effective permissions resulting from those policies. This is where a good understanding of CloudTrail event structure and policy evaluation logic becomes vital. Essentially, CloudTrail allows you to see when an entity _attempts_ an action, and a properly configured system means those attempts will often fail or succeed _because_ of the resource policy.
 
 Let's start with the general principle. CloudTrail provides records of aws api calls. When a principal, internal or external, attempts to access a resource, that action triggers an api call. The relevant aspects that are important for us are the `userIdentity` section within each event – which tells us who made the request – and the `eventName`, which details what they tried to do (e.g., `s3:GetObject`, `kms:Decrypt`). Crucially, if the resource policy denies the action, this failure also appears as an API event in CloudTrail; similarly, if the action is allowed, we see that as well. The 'errorCode' will differ in both scenarios, helping differentiate the outcome.
 
@@ -25,6 +25,7 @@ To illustrate this, I will provide code snippets using python and boto3, aws's o
 **Snippet 1: Fetch CloudTrail Events for a Specific Resource**
 
 This snippet retrieves CloudTrail events filtered by resource and event type.
+
 ```python
 import boto3
 import json
@@ -60,11 +61,12 @@ if __name__ == '__main__':
     for event in events:
         print(json.dumps(event, indent=2))
 ```
+
 This code provides a basic extraction of cloudtrail logs, this can be used to filter by other parameters or look for different errors, like access-denied events, or those that originate from different regions than your own.
 
 **Snippet 2: Extract User Identity from CloudTrail Event**
 
-This snippet extracts the relevant `userIdentity` information for analysis. This is key to know *who* made a request.
+This snippet extracts the relevant `userIdentity` information for analysis. This is key to know _who_ made a request.
 
 ```python
 import json
@@ -130,4 +132,4 @@ if __name__ == '__main__':
 
 This illustrates a very basic approach to identifying `accessdenied` results in the cloudtrail logs. Note that other errors exist.
 
-For those wanting a deeper dive, I'd recommend focusing on the official AWS documentation for CloudTrail and resource policies. The AWS Security Blog often features posts about practical security patterns with CloudTrail. Additionally, “AWS Certified Security Specialty Exam Guide” by Ben Piper and David Pelly is an excellent resource for understanding the general security principles and how they interact with the service. The key is to move past the basic understanding of CloudTrail, and learn how to parse and correlate the resulting data. Understanding these concepts thoroughly is absolutely necessary to properly secure your cloud environment. CloudTrail alone isn't a security solution; it's an *auditing* tool that provides critical visibility. You have to be proactive in your analysis of its results to create a functional security system.
+For those wanting a deeper dive, I'd recommend focusing on the official AWS documentation for CloudTrail and resource policies. The AWS Security Blog often features posts about practical security patterns with CloudTrail. Additionally, “AWS Certified Security Specialty Exam Guide” by Ben Piper and David Pelly is an excellent resource for understanding the general security principles and how they interact with the service. The key is to move past the basic understanding of CloudTrail, and learn how to parse and correlate the resulting data. Understanding these concepts thoroughly is absolutely necessary to properly secure your cloud environment. CloudTrail alone isn't a security solution; it's an _auditing_ tool that provides critical visibility. You have to be proactive in your analysis of its results to create a functional security system.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-the-gas-estimation-failed-error-when-using-chainlinks-vrfconsumerbasev2"
 ---
 
-Alright, let's tackle this "Gas Estimation failed" error with Chainlink's `VRFConsumerBaseV2`. It’s a frustration I’ve seen many times, and truthfully, experienced firsthand more than I care to remember. It's rarely a straightforward issue, and the error message itself is, shall we say, less than helpful. The core problem stems from the fact that the EVM (Ethereum Virtual Machine) needs to simulate the transaction *before* executing it to figure out how much gas to charge. If that simulation fails, we get the dreaded "Gas Estimation failed." There are numerous reasons why this can occur, and I've found that it usually comes down to a few recurring patterns.
+, let's tackle this "Gas Estimation failed" error with Chainlink's `VRFConsumerBaseV2`. It’s a frustration I’ve seen many times, and truthfully, experienced firsthand more than I care to remember. It's rarely a straightforward issue, and the error message itself is, shall we say, less than helpful. The core problem stems from the fact that the EVM (Ethereum Virtual Machine) needs to simulate the transaction _before_ executing it to figure out how much gas to charge. If that simulation fails, we get the dreaded "Gas Estimation failed." There are numerous reasons why this can occur, and I've found that it usually comes down to a few recurring patterns.
 
 First, let’s discuss the most common culprit: the `requestRandomWords` call itself. This function requires the contract to be funded with link tokens and for the node operator to actually fulfill that request. If either of these conditions aren't met, the gas estimation will absolutely fail, because the subsequent simulation of the fulfillment process hits a dead end. I recall a project where we’d forgotten to fund the consumer contract properly after a redeployment; the error message was, as always, cryptically the same, forcing a painstaking debugging session. Let me be clear, your contract needs to have sufficient link tokens for a request to succeed and that’s where I typically start my troubleshooting. It’s less to do with the gas itself, but more about making sure Chainlink’s functionality can proceed in the simulation.
 
@@ -32,7 +32,7 @@ contract MyRandomNumberConsumer is VRFConsumerBaseV2 {
     constructor(address vrfCoordinatorV2, address linkToken) VRFConsumerBaseV2(vrfCoordinatorV2) {
         i_link = LinkTokenInterface(linkToken);
     }
-    
+
     function requestRandomNumber() external {
       uint64 requestId = requestRandomWords(
           0x0000000000000000000000000000000000000000000000000000000000000000, // keyHash
@@ -62,7 +62,7 @@ import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 contract MyRandomNumberConsumer is VRFConsumerBaseV2 {
     uint256 public randomNumber;
     uint256 public total;
-    
+
     constructor(address vrfCoordinatorV2) VRFConsumerBaseV2(vrfCoordinatorV2) {}
 
     function requestRandomNumber() external {
@@ -125,6 +125,7 @@ contract MyRandomNumberConsumer is VRFConsumerBaseV2 {
     }
 }
 ```
+
 Here, if `otherContract` was not correctly deployed or returns a revert, `fulfillRandomWords` will throw and the simulation will fail. The fix is ensuring that `_otherContract` is a valid address and that the `someFunction` method is not going to fail.
 
 To further your understanding, I strongly recommend going over the Chainlink documentation thoroughly, as well as reviewing the Solidity documentation, especially the gas estimation section. For a deeper theoretical understanding of the EVM, “Mastering Ethereum” by Andreas Antonopoulos and Gavin Wood is an invaluable resource. Additionally, delving into the specifics of how gas is calculated and simulated by the EVM, using Ethereum’s yellow paper, can illuminate some of the finer points of gas estimation failures.

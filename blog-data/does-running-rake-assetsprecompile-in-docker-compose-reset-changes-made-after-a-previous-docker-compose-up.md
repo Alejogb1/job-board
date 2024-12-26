@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "does-running-rake-assetsprecompile-in-docker-compose-reset-changes-made-after-a-previous-docker-compose-up"
 ---
 
-Alright, let's tackle this one. It's a question I've personally circled back to more than once, often after a particularly frustrating debug session. In short, whether `rake assets:precompile` within a docker-compose environment resets changes made after a previous `docker-compose up` really hinges on a few critical factors, predominantly related to how you're managing persistent data, and specifically how your Dockerfile and `docker-compose.yml` interact with your application's asset pipeline.
+, let's tackle this one. It's a question I've personally circled back to more than once, often after a particularly frustrating debug session. In short, whether `rake assets:precompile` within a docker-compose environment resets changes made after a previous `docker-compose up` really hinges on a few critical factors, predominantly related to how you're managing persistent data, and specifically how your Dockerfile and `docker-compose.yml` interact with your application's asset pipeline.
 
-The core issue stems from Docker's layered filesystem. When you build a Docker image, each instruction in your Dockerfile adds a new layer. These layers are read-only, with the exception of the topmost container layer. When `docker-compose up` starts your application, it's working with the final assembled image. Any changes made *within* the running container are written to this mutable container layer, not back to the image itself.
+The core issue stems from Docker's layered filesystem. When you build a Docker image, each instruction in your Dockerfile adds a new layer. These layers are read-only, with the exception of the topmost container layer. When `docker-compose up` starts your application, it's working with the final assembled image. Any changes made _within_ the running container are written to this mutable container layer, not back to the image itself.
 
-Now, consider the `rake assets:precompile` command. Typically, it compiles assets (like CSS, JavaScript, images) into a format suitable for production, often placing these processed files in a public directory such as `public/assets`. If this command is executed *inside* the container after you have already brought it up, any generated assets reside solely within the container's mutable layer. This is crucial.
+Now, consider the `rake assets:precompile` command. Typically, it compiles assets (like CSS, JavaScript, images) into a format suitable for production, often placing these processed files in a public directory such as `public/assets`. If this command is executed _inside_ the container after you have already brought it up, any generated assets reside solely within the container's mutable layer. This is crucial.
 
-If you then rebuild the image using `docker-compose build` (or `docker build` directly), these changes within the mutable layer, including the precompiled assets, will be lost. The new image is created anew based on your Dockerfile, which typically does *not* retain these in-container modifications. Subsequent `docker-compose up` will now start from this newly built, pristine image. This gives the *appearance* that changes have been reset, because the precompiled assets from the previous run are no longer present.
+If you then rebuild the image using `docker-compose build` (or `docker build` directly), these changes within the mutable layer, including the precompiled assets, will be lost. The new image is created anew based on your Dockerfile, which typically does _not_ retain these in-container modifications. Subsequent `docker-compose up` will now start from this newly built, pristine image. This gives the _appearance_ that changes have been reset, because the precompiled assets from the previous run are no longer present.
 
-Here's where it gets interesting: the *type* of changes you are referring to is important. If you modified your code *within the container's file system* directly after running `docker-compose up`, and then rebuilt the image, those code changes *would* be lost. However, if you're talking specifically about `rake assets:precompile`, the behaviour depends largely on where you have configured your volumes within `docker-compose.yml` and how the image itself is built.
+Here's where it gets interesting: the _type_ of changes you are referring to is important. If you modified your code _within the container's file system_ directly after running `docker-compose up`, and then rebuilt the image, those code changes _would_ be lost. However, if you're talking specifically about `rake assets:precompile`, the behaviour depends largely on where you have configured your volumes within `docker-compose.yml` and how the image itself is built.
 
 Let's break down a few common scenarios with some concrete examples:
 
@@ -23,7 +23,7 @@ This is the typical “gotcha” scenario. If you don’t map the `public/assets
 Here's how this might play out. Assume a basic `docker-compose.yml` like this:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   web:
     build: .
@@ -51,7 +51,7 @@ A named volume tells Docker to persist data beyond the life cycle of a container
 Here's an updated `docker-compose.yml` that utilizes a named volume for `public/assets`:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   web:
     build: .
@@ -63,7 +63,7 @@ volumes:
   assets-volume:
 ```
 
-Using the same Dockerfile as before, running `docker-compose up` followed by `docker-compose exec web rake assets:precompile` will store the precompiled assets in the `assets-volume`. Even if you rebuild the image with `docker-compose build`, subsequent `docker-compose up` commands will use the *existing* volume, preserving the precompiled assets. This, in effect, means the `rake assets:precompile` process only *needs* to run once during development, or during the initial build if you configure your Dockerfile to do so.
+Using the same Dockerfile as before, running `docker-compose up` followed by `docker-compose exec web rake assets:precompile` will store the precompiled assets in the `assets-volume`. Even if you rebuild the image with `docker-compose build`, subsequent `docker-compose up` commands will use the _existing_ volume, preserving the precompiled assets. This, in effect, means the `rake assets:precompile` process only _needs_ to run once during development, or during the initial build if you configure your Dockerfile to do so.
 
 **Scenario 3: Precompiling Assets during the Build Process.**
 
@@ -81,6 +81,6 @@ RUN RAILS_ENV=production bundle exec rake assets:precompile
 CMD ["rails", "server", "-b", "0.0.0.0"]
 ```
 
-With this Dockerfile, the assets are compiled as part of image build process itself with the `RUN RAILS_ENV=production bundle exec rake assets:precompile` command. After building this image using `docker-compose build`, starting a container with `docker-compose up` will *always* have precompiled assets built into the image. You would need to rebuild the image to get new assets. It's typically preferable to use volumes for local development to avoid having to rebuild the image each time you make changes to assets.
+With this Dockerfile, the assets are compiled as part of image build process itself with the `RUN RAILS_ENV=production bundle exec rake assets:precompile` command. After building this image using `docker-compose build`, starting a container with `docker-compose up` will _always_ have precompiled assets built into the image. You would need to rebuild the image to get new assets. It's typically preferable to use volumes for local development to avoid having to rebuild the image each time you make changes to assets.
 
 In summary, the answer to your question is a nuanced "it depends." If you're not using volumes to persist the `public/assets` directory, then yes, `rake assets:precompile` will appear to reset with each rebuild. Using a named volume for persistent asset storage or baking the precompiled assets into your Docker image during the build process mitigates the issue. For a detailed dive into these concepts, I highly recommend consulting Docker's official documentation on volumes and layered filesystems. Also, "The Docker Book" by James Turnbull is an invaluable resource for understanding docker workflows and principles. For more details on Rails asset pipeline, the official Rails Guides are the place to start. Finally, the classic “Effective DevOps” by Jennifer Davis provides great insight into how to structure modern deployment pipelines. Understanding how volumes interact within Docker will save you hours in debugging. I’ve learned it the hard way more than a few times.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-register-and-login-users-in-wagtail-using-api-v2"
 ---
 
-Okay, let's tackle user registration and login with Wagtail’s API v2. It’s a common challenge, and I’ve certainly seen a few implementations of varying degrees of robustness over the years, especially when trying to decouple the frontend from the Django/Wagtail backend. Let’s just dive into the practicalities of getting this done correctly, without much fluff.
+, let's tackle user registration and login with Wagtail’s API v2. It’s a common challenge, and I’ve certainly seen a few implementations of varying degrees of robustness over the years, especially when trying to decouple the frontend from the Django/Wagtail backend. Let’s just dive into the practicalities of getting this done correctly, without much fluff.
 
 From my experience, successfully setting this up hinges on a solid understanding of how Wagtail’s API interacts with Django's authentication framework and how to expose those mechanisms securely and efficiently. We're essentially creating custom endpoints to manage users through a dedicated api. Wagtail itself doesn't natively handle user management directly through its API v2, so we need to extend that functionality. Let’s go over that in some detail.
 
@@ -99,7 +99,7 @@ class UserLoginView(APIView):
             return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 ```
 
-In this login view, I’ve included an example using DRF’s Token authentication. You could use sessions, JWT, or any authentication you prefer. Here, the key is to utilize `authenticate` to verify the user credentials.  Upon successful authentication, a token is generated (or reused, if one exists).
+In this login view, I’ve included an example using DRF’s Token authentication. You could use sessions, JWT, or any authentication you prefer. Here, the key is to utilize `authenticate` to verify the user credentials. Upon successful authentication, a token is generated (or reused, if one exists).
 
 Now to the url configurations. You need to include these in `urls.py` of the Django app, not Wagtail's.
 
@@ -139,6 +139,6 @@ For deeper dives, I strongly recommend checking out "Two Scoops of Django" by Da
 
 Remember, security should be a central concern, specifically when dealing with user authentication and password storage. Django’s built in features take care of most of that for you, but make sure to thoroughly check your implementations. I have seen projects crumble due to inadequate security practices.
 
-In essence, what we have done here is extended Wagtail’s architecture by adding custom API endpoints for user authentication and registration using Django’s user management features and DRF.  Wagtail’s own API is left to manage page content while user management is handled separately. This separation of concerns makes the system more maintainable and secure. While Wagtail does a lot of things exceptionally well, user authentication isn't its specific domain.
+In essence, what we have done here is extended Wagtail’s architecture by adding custom API endpoints for user authentication and registration using Django’s user management features and DRF. Wagtail’s own API is left to manage page content while user management is handled separately. This separation of concerns makes the system more maintainable and secure. While Wagtail does a lot of things exceptionally well, user authentication isn't its specific domain.
 
 Hopefully, that explanation gets you started and gives you an understanding of the underlying principles for dealing with user registration and login within a Wagtail system leveraging the api v2. If you are still uncertain, I'd advise you to go through the tutorials on the DRF and Django documentation, step-by-step, then attempt to integrate that with Wagtail.

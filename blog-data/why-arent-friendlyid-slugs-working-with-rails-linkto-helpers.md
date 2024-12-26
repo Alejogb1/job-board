@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-arent-friendlyid-slugs-working-with-rails-linkto-helpers"
 ---
 
-Alright, let's tackle this. I recall a particularly frustrating sprint a few years back where we ran headfirst into this exact issue—friendly_id slugs playing hide-and-seek with Rails' `link_to` helpers. We had meticulously set up friendly_id, generated slugs that looked perfectly valid in the database, and yet, the links were stubbornly defaulting to numeric ids. It was enough to make any developer question their sanity. So, what's going on under the hood, and how do we fix it?
+, let's tackle this. I recall a particularly frustrating sprint a few years back where we ran headfirst into this exact issue—friendly_id slugs playing hide-and-seek with Rails' `link_to` helpers. We had meticulously set up friendly_id, generated slugs that looked perfectly valid in the database, and yet, the links were stubbornly defaulting to numeric ids. It was enough to make any developer question their sanity. So, what's going on under the hood, and how do we fix it?
 
 The core of the problem stems from how Rails’ `link_to` helper determines the route and parameters for generating URLs. By default, it leverages Active Record’s `to_param` method. This method, without intervention, returns the primary key, usually the `id` of your model. Friendly_id, on the other hand, operates by creating a slug attribute (often `slug`) and associating it with a unique identifier for your records. The challenge arises because Rails' default routing logic isn't automatically aware of this 'slug' magic; it's still reaching for the `id`.
 
@@ -49,7 +49,7 @@ Rails.application.routes.draw do
 end
 ```
 
-Notice the `param: :slug` within the `resources` block. This explicitly tells Rails to use the `slug` parameter in route generation for `Category` and `Article`. If we don’t include the `param: :slug`, the routes will expect an `id` and the generated url would be incorrect. It is imperative to set this for *all* resource routes in the application if you want to use slugs to identify records.
+Notice the `param: :slug` within the `resources` block. This explicitly tells Rails to use the `slug` parameter in route generation for `Category` and `Article`. If we don’t include the `param: :slug`, the routes will expect an `id` and the generated url would be incorrect. It is imperative to set this for _all_ resource routes in the application if you want to use slugs to identify records.
 
 Here's an example where it matters:
 
@@ -62,6 +62,7 @@ class ArticlesController < ApplicationController
   end
 end
 ```
+
 If the routes are set correctly with `param: :slug`, the params will contain the slug value instead of an id, but the code in the controller will still correctly find the resources using the slug. Without the param option on routes, `params[:category_slug]` and `params[:slug]` would look for a category id and an article id respectively.
 Finally, there are situations where you might need to implement a more nuanced `to_param` method. For example, when you have a localized application, you may wish to return the slug along with the locale in the url. In that case, your `to_param` might look more like this:
 
@@ -80,7 +81,9 @@ class Article < ApplicationRecord
     end
 end
 ```
+
 And here is how you might change your controller method to accommodate:
+
 ```ruby
 # app/controllers/articles_controller.rb
 class ArticlesController < ApplicationController
@@ -92,6 +95,7 @@ class ArticlesController < ApplicationController
   end
 end
 ```
+
 This approach returns the slug with a locale component for a link such as `/articles/my-article-slug-en`, which is then parsed in the controller to load the appropriate record based on the slug and locale, which you might handle in a before action to set the appropriate locale for the session. This approach is a bit more complex, but illustrates that sometimes a more nuanced approach is required depending on the application’s requirements.
 
 In summary, when you see friendly_id slugs failing to play nice with `link_to`, it almost always boils down to a few key areas: The overridden `to_param` method in your model, how you set the params in your routes using `param: :slug`, and how your application finds the records using the slug parameter in the controllers. Getting these three aspects working in harmony is paramount.

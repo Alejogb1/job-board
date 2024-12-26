@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "3-sat-to-independent-set-reduction"
 ---
 
-Okay so 3-SAT to Independent Set reduction right I've seen this rodeo before a few times back in the day when I was neck deep in my undergrad algorithms course feels like a lifetime ago honestly anyway the gist of it is that we're trying to show that the Independent Set problem is NP-complete which we do by showing it's at least as hard as 3-SAT which we know is NP-complete
+3-SAT to Independent Set reduction right I've seen this rodeo before a few times back in the day when I was neck deep in my undergrad algorithms course feels like a lifetime ago honestly anyway the gist of it is that we're trying to show that the Independent Set problem is NP-complete which we do by showing it's at least as hard as 3-SAT which we know is NP-complete
 
 Basically what we gotta do is construct an instance of the Independent Set problem from an arbitrary 3-SAT instance This construction has to be polynomial time otherwise the reduction is kinda pointless because it means that we could solve something really hard really quickly but we couldn't even turn it into the thing we want to solve in the first place It also needs to be correct which is to say if the 3-SAT instance has a satisfying assignment then the independent set instance has an independent set of a specific size and vice versa
 
@@ -36,7 +36,7 @@ Ok now what's the size of the independent set we're looking for well it's the nu
 
 The idea is that picking one vertex in each triangle corresponds to picking one literal to be true in that clause and by having edges between contradictory literals if we have an independent set this means we haven't chosen literals that would create a contradiction such as choosing both x1 and not x1 at the same time
 
-Okay let me show you some code This is in python because that's what I use most of the time You will need to install networkx to run the code it should be `pip install networkx`
+let me show you some code This is in python because that's what I use most of the time You will need to install networkx to run the code it should be `pip install networkx`
 
 ```python
 import networkx as nx
@@ -56,36 +56,36 @@ def sat_to_independent_set(clauses):
     G = nx.Graph()
     vertex_map = {}
     vertex_count = 0
-    
+
     for clause_index, clause in enumerate(clauses):
         for i, literal in enumerate(clause):
             vertex_id = vertex_count
             vertex_map[vertex_id] = literal
             G.add_node(vertex_id)
             vertex_count += 1
-    
+
         # Add edges within a triangle
         for i in range(len(clause)):
             for j in range(i + 1, len(clause)):
                G.add_edge(vertex_count - len(clause) + i, vertex_count - len(clause) + j)
-        
+
     #Add edges for contradictory literals
     for i in range(len(clauses)*3):
         for j in range (i+1, len(clauses)*3):
-            
+
             if (i in vertex_map and j in vertex_map):
-                
+
                 lit1 = vertex_map[i]
                 lit2 = vertex_map[j]
 
                 if lit1[0] == '~' and lit1[1:] == lit2:
-                   
+
                    G.add_edge(i,j)
                 if lit2[0] == '~' and lit2[1:] == lit1:
                    G.add_edge(i,j)
-    
+
     k = len(clauses)
-    
+
     return G,k
 
 
@@ -103,6 +103,7 @@ print(f"Size of the required Independent Set {k}")
 #import matplotlib.pyplot as plt
 #plt.show()
 ```
+
 The above code makes the graph and the k value for the independent set problem it is not meant to solve the independent set problem only construct it.
 
 So the core idea is we have this polynomial time reduction from 3SAT to Independent set and since 3-SAT is NP-Complete that means independent set is NP-hard And since independent set is in NP we can conclude that Independent Set is NP complete
@@ -111,7 +112,7 @@ I remember when I was studying this stuff and my professor said that reductions 
 
 Actually the biggest problem I had was my code used to be incorrect because I was not making a new count variable each time for the vertices and my edges were all messed up so always check your edge cases when writing code and always think about the math behind what you are doing not only about the code
 
-And sometimes when i'm trying to visualize this stuff i feel like i'm not only reducing the problem but also my own brain cells (is that considered a joke?) okay let's move on.
+And sometimes when i'm trying to visualize this stuff i feel like i'm not only reducing the problem but also my own brain cells (is that considered a joke?) let's move on.
 
 Here is another snippet to show how you would find independent sets given a graph using python this will be useful if you need to test if the independent set exists
 

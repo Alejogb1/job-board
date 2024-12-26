@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-are-the-pros-and-cons-of-mel-spectrogram-vs-mfcc-for-asr"
 ---
 
-Alright, let's talk about Mel-spectrograms and MFCCs in the context of Automatic Speech Recognition (ASR). I’ve spent a fair bit of time wrestling with these feature extraction techniques across various projects, from embedded systems with limited computational power to cloud-based large-scale speech models. The choice between them isn't always straightforward, and understanding their strengths and weaknesses is key to effective ASR system development.
+, let's talk about Mel-spectrograms and MFCCs in the context of Automatic Speech Recognition (ASR). I’ve spent a fair bit of time wrestling with these feature extraction techniques across various projects, from embedded systems with limited computational power to cloud-based large-scale speech models. The choice between them isn't always straightforward, and understanding their strengths and weaknesses is key to effective ASR system development.
 
 First, consider the core difference: both transform raw audio waveforms into representations suitable for machine learning models, but they do so with subtly different approaches and goals. A Mel-spectrogram essentially aims to mimic the way human ears perceive frequencies. It takes the magnitude spectrum of the signal and warps the frequency axis onto the mel scale, which is non-linear and compresses higher frequencies, emphasizing lower ones where speech information is typically concentrated. This frequency warping is a crucial aspect. The magnitude spectrum is calculated by applying a short-time Fourier transform (stft). The magnitude squared gives the power spectrum, which is then converted to a log-power spectrum. Following that, the frequency scale is converted to a mel scale which compresses high frequencies.
 
@@ -14,29 +14,29 @@ Now, let’s dive into the pros and cons. I’ll start with Mel-spectrograms.
 
 **Pros of Mel-Spectrograms for ASR:**
 
-*   **Direct Representation of Spectral Information:** Mel-spectrograms offer a more direct representation of the spectral content of the speech signal in a way that's arguably more closely related to human auditory perception. This can be beneficial, especially in situations where retaining the precise spectral structure matters, or if you plan to use data augmentation techniques that operate directly on spectral features.
-*   **Reduced Information Loss:** The step of performing a discrete cosine transform and discarding higher order coefficients can sometimes cause loss of information, while a Mel-spectrogram can retain more details that might be crucial in ASR applications such as distinguishing subtle phoneme differences.
-*   **Flexibility in Feature Engineering:** Because Mel-spectrograms are basically a sequence of spectral magnitude estimates on a mel scale, they allow for greater flexibility when combining it with other audio features. For example, if you want to combine Mel-spectrogram with delta and delta-delta features, it's fairly straightforward.
+- **Direct Representation of Spectral Information:** Mel-spectrograms offer a more direct representation of the spectral content of the speech signal in a way that's arguably more closely related to human auditory perception. This can be beneficial, especially in situations where retaining the precise spectral structure matters, or if you plan to use data augmentation techniques that operate directly on spectral features.
+- **Reduced Information Loss:** The step of performing a discrete cosine transform and discarding higher order coefficients can sometimes cause loss of information, while a Mel-spectrogram can retain more details that might be crucial in ASR applications such as distinguishing subtle phoneme differences.
+- **Flexibility in Feature Engineering:** Because Mel-spectrograms are basically a sequence of spectral magnitude estimates on a mel scale, they allow for greater flexibility when combining it with other audio features. For example, if you want to combine Mel-spectrogram with delta and delta-delta features, it's fairly straightforward.
 
 **Cons of Mel-Spectrograms for ASR:**
 
-*   **Higher Dimensionality:** The raw Mel-spectrogram typically results in a higher dimensional feature space compared to MFCCs. This can increase computational cost for model training and require larger storage for feature storage. This might impact performance when dealing with memory constraints, such as on embedded systems.
-*   **Potential Redundancy:** The Mel-spectrogram often contains correlated information across different frequency bins. This redundancy might not be ideal for models that thrive on well-decorrelated input data which leads to slower training times and suboptimal convergence.
-*   **Less Standardized:** While fairly common, Mel-spectrograms are slightly less standardized across various ASR toolkits and workflows, which can sometimes be a hurdle when collaborating across projects or porting code between different libraries.
+- **Higher Dimensionality:** The raw Mel-spectrogram typically results in a higher dimensional feature space compared to MFCCs. This can increase computational cost for model training and require larger storage for feature storage. This might impact performance when dealing with memory constraints, such as on embedded systems.
+- **Potential Redundancy:** The Mel-spectrogram often contains correlated information across different frequency bins. This redundancy might not be ideal for models that thrive on well-decorrelated input data which leads to slower training times and suboptimal convergence.
+- **Less Standardized:** While fairly common, Mel-spectrograms are slightly less standardized across various ASR toolkits and workflows, which can sometimes be a hurdle when collaborating across projects or porting code between different libraries.
 
 Now, moving onto MFCCs.
 
 **Pros of MFCCs for ASR:**
 
-*   **Compact Representation:** The most compelling advantage of MFCCs is their compact nature. The dimensionality reduction due to the DCT step makes them computationally efficient, both in terms of training time and storage needs. This is very relevant in situations with resource constraints or when processing large audio datasets.
-*   **Decorrelated Features:** The DCT step not only reduces dimensionality but also decorrelates the data. This provides a more independent representation of the spectral envelope which allows for more stable training and improved performance.
-*   **Widely Adopted Standard:** MFCCs are a long-established standard in the ASR community and are well supported across numerous libraries and tools, which simplifies development and deployment and makes for a smoother development workflow.
+- **Compact Representation:** The most compelling advantage of MFCCs is their compact nature. The dimensionality reduction due to the DCT step makes them computationally efficient, both in terms of training time and storage needs. This is very relevant in situations with resource constraints or when processing large audio datasets.
+- **Decorrelated Features:** The DCT step not only reduces dimensionality but also decorrelates the data. This provides a more independent representation of the spectral envelope which allows for more stable training and improved performance.
+- **Widely Adopted Standard:** MFCCs are a long-established standard in the ASR community and are well supported across numerous libraries and tools, which simplifies development and deployment and makes for a smoother development workflow.
 
 **Cons of MFCCs for ASR:**
 
-*   **Information Loss:** The process of taking the DCT and typically retaining the first 13 or so coefficients is a lossy transformation. It discards higher order information which can sometimes be relevant for fine distinctions in speech such as prosody or speaker characteristics.
-*   **Less Direct Spectral Interpretation:** MFCCs do not have the same direct link to the raw spectral information of the audio as a Mel-spectrogram and make interpretation of spectral information less straightforward as they are derived from the spectral envelope rather than the actual magnitudes of frequencies.
-*   **Potential for Information Compression:** The aggressive compression of spectral information into a few cepstral coefficients can sometimes lead to the loss of subtle details, which could impact overall performance.
+- **Information Loss:** The process of taking the DCT and typically retaining the first 13 or so coefficients is a lossy transformation. It discards higher order information which can sometimes be relevant for fine distinctions in speech such as prosody or speaker characteristics.
+- **Less Direct Spectral Interpretation:** MFCCs do not have the same direct link to the raw spectral information of the audio as a Mel-spectrogram and make interpretation of spectral information less straightforward as they are derived from the spectral envelope rather than the actual magnitudes of frequencies.
+- **Potential for Information Compression:** The aggressive compression of spectral information into a few cepstral coefficients can sometimes lead to the loss of subtle details, which could impact overall performance.
 
 To illustrate these points, I'll show some python code snippets using the `librosa` library which is commonly used for audio feature extraction. Let's start with Mel-spectrogram calculation:
 
@@ -88,6 +88,7 @@ plt.title('MFCCs')
 plt.tight_layout()
 plt.show()
 ```
+
 Finally, here's a brief example of how you could derive Mel-spectrogram features and their delta features for use as input in an ASR model.
 
 ```python

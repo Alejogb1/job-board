@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-test-applications-running-within-visual-studio-container-tools"
 ---
 
-Okay, let's tackle this. Testing applications within Visual Studio Container Tools—it's something I've navigated quite a bit over the years, and it definitely presents unique challenges. It’s not as straightforward as running tests on a local development server, primarily because of the isolation and network configurations that come with containerization. Over my time working on various microservices projects, I’ve seen firsthand how crucial it is to have a robust testing strategy when containers are involved. It’s really the only way to catch issues early and ensure that what you ship is actually functioning as intended in a containerized environment. So, let me walk you through the approaches I’ve found most effective.
+, let's tackle this. Testing applications within Visual Studio Container Tools—it's something I've navigated quite a bit over the years, and it definitely presents unique challenges. It’s not as straightforward as running tests on a local development server, primarily because of the isolation and network configurations that come with containerization. Over my time working on various microservices projects, I’ve seen firsthand how crucial it is to have a robust testing strategy when containers are involved. It’s really the only way to catch issues early and ensure that what you ship is actually functioning as intended in a containerized environment. So, let me walk you through the approaches I’ve found most effective.
 
 The key is to think about your tests in tiers: unit, integration, and end-to-end. While the core logic of your application within the container can be unit tested much like a traditional application, things become more involved when you're dealing with the container itself.
 
@@ -46,7 +46,7 @@ public class Calculator
 
 ```
 
-The important point is that this tests your *application logic*. You don't need the container *itself* running for these tests to pass. You want to have these tests run inside of your build pipeline.
+The important point is that this tests your _application logic_. You don't need the container _itself_ running for these tests to pass. You want to have these tests run inside of your build pipeline.
 
 **Integration Testing with Docker**
 
@@ -55,7 +55,7 @@ Integration testing is where things get more complex and where using containeriz
 For example, let's say your application inside of the container depends on a local database instance for the duration of the integration tests. You might use docker-compose to set this up. Here is a simple example of a docker-compose file to setup a test database and application.
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   db:
     image: postgres:13
@@ -64,7 +64,7 @@ services:
       POSTGRES_PASSWORD: testpassword
       POSTGRES_DB: testdb
     ports:
-        - "5432:5432"
+      - "5432:5432"
   my-app:
     build:
       context: .
@@ -156,11 +156,11 @@ This script builds and starts containers defined in your docker compose file. It
 
 When you're testing within containers, there are a few important aspects to keep in mind:
 
-*   **Test-Driven Development (TDD):** Write your tests *before* you write your containerized application logic. This ensures that your code is testable and, often, helps with the design and structure.
-*   **Environment Variables:** Use them to configure your application for different test environments (local, development, staging, production). This can simplify configuration and make it easier to migrate your application between environments.
-*   **Container Images:** Treat your container images as immutable artifacts. Changes should trigger a rebuild and a new set of tests to ensure that the change has not inadvertently broken the system.
-*   **Resource Management:** Be mindful of the resources your containers consume during testing. Large integration test suites can lead to issues if not configured correctly.
-*   **Logging:** Ensure that you have good logging in place to allow for easier debugging when things go wrong. Docker provides a `docker logs` function that can help immensely here.
+- **Test-Driven Development (TDD):** Write your tests _before_ you write your containerized application logic. This ensures that your code is testable and, often, helps with the design and structure.
+- **Environment Variables:** Use them to configure your application for different test environments (local, development, staging, production). This can simplify configuration and make it easier to migrate your application between environments.
+- **Container Images:** Treat your container images as immutable artifacts. Changes should trigger a rebuild and a new set of tests to ensure that the change has not inadvertently broken the system.
+- **Resource Management:** Be mindful of the resources your containers consume during testing. Large integration test suites can lead to issues if not configured correctly.
+- **Logging:** Ensure that you have good logging in place to allow for easier debugging when things go wrong. Docker provides a `docker logs` function that can help immensely here.
 
 **Further Reading:**
 

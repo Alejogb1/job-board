@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "application-calculation-vba-excel-function"
 ---
 
-Okay so you're looking at a VBA Excel function for some kind of application calculation right I've been there let me tell you it's a rabbit hole and I've spent some time spelunking in it So basically what you have is a need to do something more complex than a standard excel formula can handle and you're diving into VBA that's where all the fun begins
+you're looking at a VBA Excel function for some kind of application calculation right I've been there let me tell you it's a rabbit hole and I've spent some time spelunking in it So basically what you have is a need to do something more complex than a standard excel formula can handle and you're diving into VBA that's where all the fun begins
 
 First things first lets talk about the basics before we get lost in some deep code you need to understand how excel VBA functions work right? unlike your normal excel cell formulas these things are actually little programs they run when you call them in a cell
 
@@ -21,6 +21,7 @@ Function CalculateRectangleArea(length As Double, width As Double) As Double
 
 End Function
 ```
+
 Ok this code is simple i know it but it's useful to understand what is going on here see the `Function CalculateRectangleArea` this is saying that this block is function called `CalculateRectangleArea` see those `(length as Double, width as Double)` those are input variables we call arguments or parameters these are the values you pass into the function and the `As Double` on each of them is that both length and width should be numeric values the last `As Double` after the parenthesis it's saying that the output will also be a numeric value and then inside the function it just calculates the product and put the result into the name of the function itself that is how we can return a value from a function its magic i know
 
 Now in your spreadsheet you can just type `=CalculateRectangleArea(5, 10)` in a cell and you get 50 simple

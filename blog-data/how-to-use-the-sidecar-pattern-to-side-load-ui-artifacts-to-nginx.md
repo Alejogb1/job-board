@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-use-the-sidecar-pattern-to-side-load-ui-artifacts-to-nginx"
 ---
 
-Alright, let's tackle this. I've seen this exact scenario play out in a few different projects over the years, especially where we had a need to decouple application deployments from UI asset updates in a microservices architecture. The sidecar pattern, in this context, becomes really quite useful. It's not just about "copying files around;" it's about a strategic separation of concerns. Let me explain the approach, and then I'll walk you through a few practical implementations with code snippets.
+, . I've seen this exact scenario play out in a few different projects over the years, especially where we had a need to decouple application deployments from UI asset updates in a microservices architecture. The sidecar pattern, in this context, becomes really quite useful. It's not just about "copying files around;" it's about a strategic separation of concerns. Let me explain the approach, and then I'll walk you through a few practical implementations with code snippets.
 
 At its core, the sidecar pattern for side-loading UI artifacts involves deploying a separate container (the "sidecar") alongside your main NGINX container. This sidecar is responsible for fetching and managing the UI assets, essentially acting as an intermediary. NGINX, the workhorse web server, is then configured to serve these assets from the sidecar's volume, avoiding the need to rebuild or redeploy the primary NGINX container for UI updates. The benefit? Decoupling the release cycles. You can update UI elements independently of backend changes, leading to faster development iterations. I remember once we were having a major issue with constant NGINX re-deploys whenever our front-end team was doing A/B tests, the sidecar, in that specific case, was a life saver.
 
@@ -40,7 +40,8 @@ while true; do
     sleep "$POLL_INTERVAL"
 done
 ```
-*`GIT_REPO_URL` and `POLL_INTERVAL` would be environment variables passed to the container.*
+
+_`GIT_REPO_URL` and `POLL_INTERVAL` would be environment variables passed to the container._
 
 In this very simple example, our entrypoint loops indefinitely, cloning the UI assets, into a shared volume location at `/shared/ui-assets`. The simplicity comes at the expense of error handling and efficiency for the purposes of highlighting the fundamental mechanism.
 
@@ -93,13 +94,13 @@ In the full compose file, we define two containers, our `nginx` server and our `
 
 **Key Technical Points & Considerations**
 
-*   **Volume Mounting:** The precise mount points and permissions should be carefully configured, depending on how the NGINX image and sidecar expect their assets to be located. Using a read-only volume for nginx adds security and prevents accidental modification by the web server itself.
-*   **Polling Interval:** The sidecar's polling interval should be appropriate for the UI update frequency, avoiding excessive server load. In our simple git-pull sidecar, increasing the poll interval might mean that our UI updates won't be reflected in a timely manner.
-*   **Error Handling:** Robust error handling is essential for the sidecar. This includes handling network issues, git errors, and the like. We would be well-served to add retries with exponential backoff, logging and alerting on failures.
-*   **Advanced Sidecar Logic:** For more complex needs, the sidecar could use smarter methods for updating assets. Rather than simply pulling all assets, consider syncing only changed files or using a caching layer. Consider using a tool like `rsync` to efficiently sync changes. You might even use a small custom application to handle multiple types of artifact sources.
-*   **Security:** Ensure that the sidecar fetches assets securely, especially when dealing with sensitive code or data. Secret management, and credential handling should be done using secure best practices and managed by external secrets management tools.
-*   **Resource Management:** Be aware that the sidecar consumes resources. Monitor its resource usage to ensure that it isn't causing performance issues. It is especially important that any processes running within the sidecar is optimized to not introduce any bottlenecks.
-*   **Container Orchestration:** In a production environment, you'd likely be deploying these containers using Kubernetes or similar systems, using sidecar containers defined within the same Pod specification.
+- **Volume Mounting:** The precise mount points and permissions should be carefully configured, depending on how the NGINX image and sidecar expect their assets to be located. Using a read-only volume for nginx adds security and prevents accidental modification by the web server itself.
+- **Polling Interval:** The sidecar's polling interval should be appropriate for the UI update frequency, avoiding excessive server load. In our simple git-pull sidecar, increasing the poll interval might mean that our UI updates won't be reflected in a timely manner.
+- **Error Handling:** Robust error handling is essential for the sidecar. This includes handling network issues, git errors, and the like. We would be well-served to add retries with exponential backoff, logging and alerting on failures.
+- **Advanced Sidecar Logic:** For more complex needs, the sidecar could use smarter methods for updating assets. Rather than simply pulling all assets, consider syncing only changed files or using a caching layer. Consider using a tool like `rsync` to efficiently sync changes. You might even use a small custom application to handle multiple types of artifact sources.
+- **Security:** Ensure that the sidecar fetches assets securely, especially when dealing with sensitive code or data. Secret management, and credential handling should be done using secure best practices and managed by external secrets management tools.
+- **Resource Management:** Be aware that the sidecar consumes resources. Monitor its resource usage to ensure that it isn't causing performance issues. It is especially important that any processes running within the sidecar is optimized to not introduce any bottlenecks.
+- **Container Orchestration:** In a production environment, you'd likely be deploying these containers using Kubernetes or similar systems, using sidecar containers defined within the same Pod specification.
 
 **Resource Recommendations:**
 

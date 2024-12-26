@@ -4,18 +4,18 @@ date: "2024-12-23"
 id: "how-frequently-does-a-cdn-update-cached-content"
 ---
 
-Alright, let’s tackle this question about CDN update frequencies. It's a nuanced area, and I've certainly seen my fair share of headaches trying to get it just right, particularly back in my days working on the global e-commerce platform where keeping content fresh was critical for both user experience and inventory accuracy. The short answer, of course, is "it depends," but let's unpack that.
+, let’s tackle this question about CDN update frequencies. It's a nuanced area, and I've certainly seen my fair share of headaches trying to get it just right, particularly back in my days working on the global e-commerce platform where keeping content fresh was critical for both user experience and inventory accuracy. The short answer, of course, is "it depends," but let's unpack that.
 
 The frequency with which a Content Delivery Network (CDN) updates its cached content isn't governed by a single, universal rule. It's a combination of several factors including, primarily, the cache-control headers set by the origin server, CDN configurations, and the specific CDN vendor’s internal logic. In essence, a CDN acts as a sophisticated intermediary, storing copies of your data closer to users to reduce latency. However, if that cached data is stale, the benefits are negated, and users can have an inaccurate or frustrating experience.
 
 At the heart of the update process are http cache headers. The `cache-control` header is the most crucial. It dictates how long a resource can be considered fresh and thus, served directly from the cache without revalidation with the origin. The most pertinent directives here are `max-age` and `s-maxage`.
 
-*   `max-age`: Defines the maximum time in seconds a resource can be considered fresh by *any* cache (browsers, proxies, cdns).
-*   `s-maxage`: Similar to `max-age`, but specifically applicable to *shared* caches like CDNs. It usually overrides `max-age` when present. This means you can specify a different caching policy for your visitors' browsers and for intermediary caches like the CDN.
+- `max-age`: Defines the maximum time in seconds a resource can be considered fresh by _any_ cache (browsers, proxies, cdns).
+- `s-maxage`: Similar to `max-age`, but specifically applicable to _shared_ caches like CDNs. It usually overrides `max-age` when present. This means you can specify a different caching policy for your visitors' browsers and for intermediary caches like the CDN.
 
 If these directives aren't present, or if the specified time has elapsed, the CDN will then attempt a validation with the origin server. This is typically done through what's known as conditional requests. Essentially, the CDN sends a request with headers like `if-modified-since` or `if-none-match` containing timestamps or entity tags (etags), respectively. If the origin server responds with a 304 not modified, then the CDN will reuse its cached copy. If the origin server responds with a 200 ok and new data, then the CDN will cache the new response and update accordingly.
 
-It's not *just* about time-based expirations. CDNs also have invalidation capabilities. This allows you to proactively remove a cached version of a resource and force the CDN to fetch a fresh copy from the origin. Typically, vendors offer apis or management interfaces for invalidations. I used to regularly utilize these to update the pricing data immediately after product price updates – otherwise, we’d have confused customers.
+It's not _just_ about time-based expirations. CDNs also have invalidation capabilities. This allows you to proactively remove a cached version of a resource and force the CDN to fetch a fresh copy from the origin. Typically, vendors offer apis or management interfaces for invalidations. I used to regularly utilize these to update the pricing data immediately after product price updates – otherwise, we’d have confused customers.
 
 Let me show you how this might work in practice with a few scenarios and code examples (using Python with the `requests` library, but the concepts translate to other environments).
 

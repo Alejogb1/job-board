@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-are-some-alternative-methods-for-accessing-sales-navigator-data-without-directly-scraping-urls-teaching-point-introduces-indirect-data-extraction-techniques"
 ---
 
-Okay so you're looking at Sales Navigator data right without just brute forcing URLs like a robot digging through a sandbox cool I get it. Scraping can get you into trouble real fast plus it's kinda inefficient in the long run let's talk about alternatives that keep you on the right side of LinkedIn's rules.
+you're looking at Sales Navigator data right without just brute forcing URLs like a robot digging through a sandbox cool I get it. Scraping can get you into trouble real fast plus it's kinda inefficient in the long run let's talk about alternatives that keep you on the right side of LinkedIn's rules.
 
 One angle is thinking about the LinkedIn API itself. LinkedIn offers different APIs depending on what you're doing. There's the general developer API but that's often more geared towards job postings and company data not really the specific person-level data you get on Sales Nav. Still worth a quick peek at their documentation just in case something changes. It's usually more structured data anyway so better to use than scraping. Think of it like instead of breaking into a house you're using the front door.
 
@@ -16,7 +16,7 @@ Then there are these "integrations" or "partners" that LinkedIn authorizes to wo
 
 For example one option is using a third-party CRM that already integrates Sales Nav. You may find that the software you already use has a built in feature that lets you pull in leads. This is usually a lot easier than trying to build your own solution. You’re not hacking the system you're just using features that already exist for you.
 
-Okay let’s get to some code examples.
+let’s get to some code examples.
 
 **First, a simple python example using the LinkedIn Marketing API, let's assume you already have credentials and the API set up**
 
@@ -44,6 +44,7 @@ if __name__ == "__main__":
     if data:
         print(json.dumps(data, indent=4))
 ```
+
 This is simple example shows how you would use `requests` to fetch something from the API. You’re using a valid token for authorization you are getting structured JSON responses.
 
 **Second we can think about some general data handling using pandas, let’s pretend we got data from a partner or csv.**
@@ -71,35 +72,38 @@ if __name__ == "__main__":
     df_cleaned = clean_data(df)
     analyze_data(df_cleaned)
 ```
+
 This code snippet demonstrates pandas for cleaning up and getting the count of various fields from a table. It simulates processing data you might get from a third party.
 
 **Third we’ll touch on Javascript for API interaction. This demonstrates a different stack.**
+
 ```javascript
 async function fetchUserData(accessToken, profileId) {
-    const url = `https://api.linkedin.com/v2/people/${profileId}`;
+  const url = `https://api.linkedin.com/v2/people/${profileId}`;
 
-    const headers = {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json'
-    };
+  const headers = {
+    Authorization: `Bearer ${accessToken}`,
+    "Content-Type": "application/json",
+  };
 
-    try {
-        const response = await fetch(url, { headers });
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        console.log('User data:', data);
-        return data;
-    } catch (error) {
-        console.error('Failed to fetch user data:', error);
-        return null;
+  try {
+    const response = await fetch(url, { headers });
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
+    const data = await response.json();
+    console.log("User data:", data);
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch user data:", error);
+    return null;
+  }
 }
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = fetchUserData
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = fetchUserData;
 }
 ```
+
 This is a similar idea to the first snippet but this time in Javascript with `async` `await` to be able to work with the data properly using the `fetch` API.
 
 One more thing to think about its not all about the API calls directly. Consider the data you already have. If you are using a CRM there's often data enrichment services out there. They might use a Sales Navigator integration under the hood or they might have their own data source. Instead of pulling directly from LinkedIn you give them a name or company and they use their system to return things like emails phone numbers and job titles. So you are still get the data you need but indirectly.

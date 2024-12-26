@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-cant-parameters-be-updated-when-using-torchnndataparallel-to-train-on-multiple-gpus"
 ---
 
-Okay, let's tackle this. I've seen this trip up many a researcher and engineer, and honestly, it's one of those things that seems straightforward until you really get into the weeds. The core issue with `torch.nn.DataParallel`, and why direct parameter updates often fail when you’re working across multiple GPUs, stems from the way it handles model replication and gradient synchronization. I recall one particular project, a large-scale image segmentation model, where we initially tried to implement naive updates in a multi-gpu training setup. We ended up with a model that seemed to learn nothing, and debugging that was... instructive, to say the least.
+, let's tackle this. I've seen this trip up many a researcher and engineer, and honestly, it's one of those things that seems straightforward until you really get into the weeds. The core issue with `torch.nn.DataParallel`, and why direct parameter updates often fail when you’re working across multiple GPUs, stems from the way it handles model replication and gradient synchronization. I recall one particular project, a large-scale image segmentation model, where we initially tried to implement naive updates in a multi-gpu training setup. We ended up with a model that seemed to learn nothing, and debugging that was... instructive, to say the least.
 
-The fundamental problem lies in the fact that `DataParallel` replicates the entire model onto each available GPU. During the forward pass, each replica processes a different subset of the input data. After the backward pass, each GPU calculates gradients *locally*, which is crucial to understand. These local gradients are not automatically synchronized to create a global gradient across all replicas. Instead, `DataParallel` gathers these gradients from the different replicas, averages them, and then applies the *averaged* gradient to update the *single* model instance residing on the primary (usually GPU 0) device.
+The fundamental problem lies in the fact that `DataParallel` replicates the entire model onto each available GPU. During the forward pass, each replica processes a different subset of the input data. After the backward pass, each GPU calculates gradients _locally_, which is crucial to understand. These local gradients are not automatically synchronized to create a global gradient across all replicas. Instead, `DataParallel` gathers these gradients from the different replicas, averages them, and then applies the _averaged_ gradient to update the _single_ model instance residing on the primary (usually GPU 0) device.
 
-So, when we speak of updating parameters, they are only updated on the *primary model*, which then gets replicated back onto other GPUs in the next forward pass. The issue arises when folks try to update the gradients *directly* on the individual replicas’ parameters. These updates are localized and, because the primary model is the definitive version, they become effectively discarded in the subsequent step, leading to a loss of learning progress. Instead of each replica acting as a parallel worker contributing meaningfully to the overall model, it results in parallel but ultimately wasted gradient computations. It's like a group of artists each painting a section of a mural, but then only one person’s work actually goes into the final piece; the others’ effort is lost.
+So, when we speak of updating parameters, they are only updated on the _primary model_, which then gets replicated back onto other GPUs in the next forward pass. The issue arises when folks try to update the gradients _directly_ on the individual replicas’ parameters. These updates are localized and, because the primary model is the definitive version, they become effectively discarded in the subsequent step, leading to a loss of learning progress. Instead of each replica acting as a parallel worker contributing meaningfully to the overall model, it results in parallel but ultimately wasted gradient computations. It's like a group of artists each painting a section of a mural, but then only one person’s work actually goes into the final piece; the others’ effort is lost.
 
 Here's a more detailed breakdown along with some illustrative code examples:
 
@@ -77,11 +77,11 @@ else:
 # Subsequent iterations using this approach will fail to converge
 ```
 
-This is problematic because you’re directly manipulating the *local* gradients and parameters within the replicas, while the primary model remains unchanged. The next forward pass then overwrites any changes made locally, as each replica's parameters are reset to the primary model's state. The updates performed on the replicas are thrown away essentially. You're effectively trying to steer the car by only turning the wheels, without impacting the steering column, in effect.
+This is problematic because you’re directly manipulating the _local_ gradients and parameters within the replicas, while the primary model remains unchanged. The next forward pass then overwrites any changes made locally, as each replica's parameters are reset to the primary model's state. The updates performed on the replicas are thrown away essentially. You're effectively trying to steer the car by only turning the wheels, without impacting the steering column, in effect.
 
 **3. The Correct Approach: Using the Optimizer and Ensuring Synchronization**
 
-The correct method is to allow `DataParallel` to handle the gradient synchronization and apply the update *solely* to the parameters of the primary model via the optimizer, like this:
+The correct method is to allow `DataParallel` to handle the gradient synchronization and apply the update _solely_ to the parameters of the primary model via the optimizer, like this:
 
 ```python
 # Correct Example
@@ -97,7 +97,8 @@ loss.backward()
 optimizer.step() # Updates *only* the primary model's parameters
 # Subsequent iterations of training will now converge effectively.
 ```
-Here, `optimizer.step()` updates the parameters of the *single* model instance that `DataParallel` manages internally, based on the *averaged* gradients calculated from all the replicas. This is the intended way to work with `DataParallel`.
+
+Here, `optimizer.step()` updates the parameters of the _single_ model instance that `DataParallel` manages internally, based on the _averaged_ gradients calculated from all the replicas. This is the intended way to work with `DataParallel`.
 
 **Why does this matter in practice?**
 

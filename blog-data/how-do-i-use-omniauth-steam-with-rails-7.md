@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-omniauth-steam-with-rails-7"
 ---
 
-Okay, let's dive into this. I recall a project back in '21, a community forum for a game, actually, that absolutely required Steam authentication. We spent a good chunk of time getting omniauth-steam playing nicely with Rails, specifically around the then-new changes in Rails 7. I learned a few things that still hold true. It's not just about dropping in a gem and calling it a day; you have to understand the moving parts. So let's walk through what you need to do.
+, let's dive into this. I recall a project back in '21, a community forum for a game, actually, that absolutely required Steam authentication. We spent a good chunk of time getting omniauth-steam playing nicely with Rails, specifically around the then-new changes in Rails 7. I learned a few things that still hold true. It's not just about dropping in a gem and calling it a day; you have to understand the moving parts. So let's walk through what you need to do.
 
 First, the basics. OmniAuth is a framework for handling authentication with multiple providers, and `omniauth-steam` specifically targets Steam. The core challenge, in my experience, comes from properly configuring the middleware and mapping the authentication callbacks.
 
@@ -63,7 +63,7 @@ class SessionsController < ApplicationController
     user = User.find_or_create_by(steam_uid: steam_uid) do |user|
         user.username = steam_username
     end
-    
+
     session[:user_id] = user.id
 
     redirect_to root_path, notice: 'Successfully logged in with Steam!'
@@ -99,9 +99,9 @@ The above example is a good starting point, but in the real world, we'd need a m
 
 For a deep dive into authentication, I recommend checking out:
 
-*   **"OAuth 2.0: The Basics" by Aaron Parecki:** Provides a foundational understanding of OAuth 2.0, which underpins much of OmniAuth’s behavior.
-*   **"Rails Security Guide"**: The official Rails security guide is a must-read for understanding how to build secure Rails applications, especially in the context of authentication.
-*   **The official OmniAuth documentation:** Specifically the OmniAuth guides and the documentation for the `omniauth-steam` gem itself. You must review these thoroughly to understand their latest implementations and recommendations.
-*   **RFC 6749 (The OAuth 2.0 Authorization Framework):** The formal standard specification of OAuth 2.0, important for more advanced use cases, although somewhat dense.
+- **"OAuth 2.0: The Basics" by Aaron Parecki:** Provides a foundational understanding of OAuth 2.0, which underpins much of OmniAuth’s behavior.
+- **"Rails Security Guide"**: The official Rails security guide is a must-read for understanding how to build secure Rails applications, especially in the context of authentication.
+- **The official OmniAuth documentation:** Specifically the OmniAuth guides and the documentation for the `omniauth-steam` gem itself. You must review these thoroughly to understand their latest implementations and recommendations.
+- **RFC 6749 (The OAuth 2.0 Authorization Framework):** The formal standard specification of OAuth 2.0, important for more advanced use cases, although somewhat dense.
 
 In conclusion, while integrating OmniAuth with Steam in Rails 7 might seem straightforward initially, there are numerous details to consider to ensure robust security and functionality. By adhering to sound practices and referencing the recommended documentation, you can build a secure and reliable user authentication system. Remember, security is not something you can address as an afterthought; it needs to be incorporated into your design from the start. So take the time to understand the nuances, review your code, and don't be afraid to test thoroughly. It's a better approach than attempting to patch holes after they appear.

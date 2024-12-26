@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-fix-a-cairosurfacemarkdirtyrectangle-problem-in-gtkmm"
 ---
 
-alright, so you're banging your head against cairo_surface_mark_dirty_rectangle in gtkmm, right? i feel your pain, i've been there, done that, got the t-shirt that's stained with frustrated tears and probably a little bit of pizza sauce from late-night debugging sessions. let me break down what i've learned from past battles with this particular beast, and hopefully, we can get your app redrawing smoothly.
+, so you're banging your head against cairo_surface_mark_dirty_rectangle in gtkmm, right? i feel your pain, i've been there, done that, got the t-shirt that's stained with frustrated tears and probably a little bit of pizza sauce from late-night debugging sessions. let me break down what i've learned from past battles with this particular beast, and hopefully, we can get your app redrawing smoothly.
 
 the core of the issue with `cairo_surface_mark_dirty_rectangle` is that it’s all about telling cairo, the underlying graphics library, which parts of your drawing surface have changed and need to be redrawn. it's a performance optimization, and if used improperly can lead to partial or incorrect redraws. it’s not always intuitive how gtkmm uses this, so lets' dive deeper.
 
@@ -145,15 +145,15 @@ in this last snippet, you will see how it only draws the moving circle, not the 
 
 some tips and tricks based on my experience, not only with timelines or physical simulations but other stuff like games and image manipulation apps:
 
-*   **use debugging tools:** print the allocated width and height, print the coordinates you’re using. if you get those wrong, the dirty area is not what you think it is, and your application will not work correctly. sometimes we try to calculate stuff based on our intuition but its good practice to always check your assumptions.
-*   **start simple:** if you're dealing with a complex drawing operation, try to simplify it while you are debugging to find if your drawing functions are ok or if the problem is in the `cairo_surface_mark_dirty_rectangle` part. in my timeline project, i started by just drawing a rectangle before doing the waveform display. it helped a lot.
-*   **avoid premature optimization**: start with marking the whole thing as dirty. if you find that is slow, then start to optimize. mark too much instead of too little to find your optimal drawing area. i had a habit of trying to over-optimize before making it work, i ended up with a lot of buggy code. learn from my mistake, keep it simple and then optimize when the code works and if you need to.
-*   **understand the coordinate system:** be aware that cairo’s coordinate system has (0,0) in the upper-left corner of the drawing area. sometimes you can make mistakes if your intuition of a given drawing operation assumes a different convention. in some libraries (like open gl) the (0,0) is in the lower-left corner, which can lead to confusion.
-*   **learn more about cairo:** understanding how cairo works underneath the hood is super helpful. i highly recommend the cairo documentation, especially the section on surface management.
+- **use debugging tools:** print the allocated width and height, print the coordinates you’re using. if you get those wrong, the dirty area is not what you think it is, and your application will not work correctly. sometimes we try to calculate stuff based on our intuition but its good practice to always check your assumptions.
+- **start simple:** if you're dealing with a complex drawing operation, try to simplify it while you are debugging to find if your drawing functions are ok or if the problem is in the `cairo_surface_mark_dirty_rectangle` part. in my timeline project, i started by just drawing a rectangle before doing the waveform display. it helped a lot.
+- **avoid premature optimization**: start with marking the whole thing as dirty. if you find that is slow, then start to optimize. mark too much instead of too little to find your optimal drawing area. i had a habit of trying to over-optimize before making it work, i ended up with a lot of buggy code. learn from my mistake, keep it simple and then optimize when the code works and if you need to.
+- **understand the coordinate system:** be aware that cairo’s coordinate system has (0,0) in the upper-left corner of the drawing area. sometimes you can make mistakes if your intuition of a given drawing operation assumes a different convention. in some libraries (like open gl) the (0,0) is in the lower-left corner, which can lead to confusion.
+- **learn more about cairo:** understanding how cairo works underneath the hood is super helpful. i highly recommend the cairo documentation, especially the section on surface management.
 
 for deeper reading, i would recommend:
 
-*   the *cairo documentation*, as stated before, is an absolute must. the official api docs are indispensable.
-*   the *gtk documentation* for `gtk::drawingarea` is useful to understand how gtkmm uses cairo.
+- the _cairo documentation_, as stated before, is an absolute must. the official api docs are indispensable.
+- the _gtk documentation_ for `gtk::drawingarea` is useful to understand how gtkmm uses cairo.
 
 i hope this helps and if all of this fails you may want to consider if you are actually in a simulation and the world is in fact a very bad simulation of a game where redrawing stuff is inconsistent because you are in a badly simulated game. just kidding. let me know if you still have troubles!

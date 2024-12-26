@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-modify-a-compose-multiplatform-component-from-a-separate-button"
 ---
 
-Okay, let's tackle this. It’s a common scenario, and I’ve certainly been down this road more than a few times across various projects. Coordinating state changes between a composable and an external button in a Compose Multiplatform application isn't inherently straightforward, but it’s definitely achievable with a bit of structured approach. I recall a particularly challenging project involving a real-time data visualization dashboard; we had a central graph composable that had to dynamically update based on user selections in a separate control panel, which, in essence, is the same challenge you're facing.
+, let's tackle this. It’s a common scenario, and I’ve certainly been down this road more than a few times across various projects. Coordinating state changes between a composable and an external button in a Compose Multiplatform application isn't inherently straightforward, but it’s definitely achievable with a bit of structured approach. I recall a particularly challenging project involving a real-time data visualization dashboard; we had a central graph composable that had to dynamically update based on user selections in a separate control panel, which, in essence, is the same challenge you're facing.
 
 The key is to establish a mechanism for the button to communicate its intent to the composable, avoiding direct manipulation of the composable’s internal state from the outside. This directly leads us to state management, a fundamental aspect of declarative UI. You shouldn’t try to reach into the composable's internals and directly set its state – that breaks the reactive flow and can make things unpredictable.
 
@@ -12,11 +12,11 @@ Here's what I mean, structured into a few actionable strategies:
 
 **1. State Hoisting & Shared ViewModels:**
 
-My first approach when dealing with this scenario is almost always to centralize the state that influences the composable within a shared *ViewModel* (or equivalent, such as a *Presenter* in an MVI architecture). This means lifting the state up and out of the composable, which makes it shareable and modifiable by the external button.
+My first approach when dealing with this scenario is almost always to centralize the state that influences the composable within a shared _ViewModel_ (or equivalent, such as a _Presenter_ in an MVI architecture). This means lifting the state up and out of the composable, which makes it shareable and modifiable by the external button.
 
-*   **The Composable:** Your composable becomes a *stateless* representation of the state. It *observes* a mutable state held by the ViewModel and renders its UI based on it.
+- **The Composable:** Your composable becomes a _stateless_ representation of the state. It _observes_ a mutable state held by the ViewModel and renders its UI based on it.
 
-*   **The Button:** The external button interacts with the ViewModel to *modify* the shared state. The ViewModel, in turn, emits the updated state and triggers recomposition of the composable.
+- **The Button:** The external button interacts with the ViewModel to _modify_ the shared state. The ViewModel, in turn, emits the updated state and triggers recomposition of the composable.
 
 Here’s a practical example using Kotlin, assuming you have a simple toggle button that modifies the visibility of a text element:
 
@@ -72,6 +72,7 @@ fun MainScreen() {
    }
 }
 ```
+
 In this example, `MyTextDisplay` doesn't hold or manage the `isVisible` state; it simply displays text depending on its value. The `MyToggleButton` interacts with `MyViewModel` via `toggleVisibility` to modify the `_isVisible` state, triggering a recomposition of the `MyTextDisplay`.
 
 **2. Callbacks with Lambdas:**
@@ -115,7 +116,7 @@ Here, the `MyTextDisplayWithCallback` composable receives a function `onToggle` 
 
 **3. Custom State Holders:**
 
-In cases where you don't need the full complexity of a ViewModel, or are working within a more constrained architecture (like pure Compose without architecture components), custom *StateHolder* objects can provide an alternative. These objects maintain the mutable state and provide methods for interacting with it. You still create a similar separation from the UI, but you're avoiding view model specific code.
+In cases where you don't need the full complexity of a ViewModel, or are working within a more constrained architecture (like pure Compose without architecture components), custom _StateHolder_ objects can provide an alternative. These objects maintain the mutable state and provide methods for interacting with it. You still create a similar separation from the UI, but you're avoiding view model specific code.
 
 Here’s an example of how to achieve that:
 
@@ -172,8 +173,8 @@ Here, `MyStateHolder` manages the state with the `_isBold` variable and `toggleB
 
 **Essential Resources:**
 
-*   **“Jetpack Compose Internals” by Leland Richardson:** This book provides deep dive into how Compose works under the hood, and why these design patterns are beneficial. It helps to understand how state changes trigger recomposition.
-*  **"Effective Kotlin" by Marcin Moskała:** This is useful in many aspects, but particularly with an understanding of coroutines and state management.
-*   **Google's official Jetpack Compose documentation:** The official documentation is very detailed on state management with examples, and should be the starting point for every compose developer.
+- **“Jetpack Compose Internals” by Leland Richardson:** This book provides deep dive into how Compose works under the hood, and why these design patterns are beneficial. It helps to understand how state changes trigger recomposition.
+- **"Effective Kotlin" by Marcin Moskała:** This is useful in many aspects, but particularly with an understanding of coroutines and state management.
+- **Google's official Jetpack Compose documentation:** The official documentation is very detailed on state management with examples, and should be the starting point for every compose developer.
 
 In practice, I often find myself gravitating towards using a `ViewModel` for anything beyond simple callbacks due to the inherent scalability benefits in larger projects. My past experiences have hammered home the value of state management and keeping your components as stateless as possible. That’s the key to building maintainable, testable, and scalable Compose applications. So, that's my take on it, informed by years of debugging and refactoring. I hope it helps you navigate your own project effectively.

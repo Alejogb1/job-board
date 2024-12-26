@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "how-to-integrate-calendy-in-ruby-on-rails-application"
 ---
 
-alright, let's talk about calendly integration in rails. i've been down this road a few times, and it's usually not too bad once you get the basic flow.
+, let's talk about calendly integration in rails. i've been down this road a few times, and it's usually not too bad once you get the basic flow.
 
-so, at its core, calendly doesn't provide a straightforward api that allows you to, let's say, directly create appointments *within* your app in a fully customized way. instead, what we are dealing with is embedding their functionality through their api via iframes or redirects and some webhooks for status updates. i’ve seen folks trying all sorts of complex hacks to get around this but ultimately, it's usually better to just leverage their system, with an understanding of its limitations. trust me, i’ve been there trying to force a square peg into a round hole.
+so, at its core, calendly doesn't provide a straightforward api that allows you to, let's say, directly create appointments _within_ your app in a fully customized way. instead, what we are dealing with is embedding their functionality through their api via iframes or redirects and some webhooks for status updates. i’ve seen folks trying all sorts of complex hacks to get around this but ultimately, it's usually better to just leverage their system, with an understanding of its limitations. trust me, i’ve been there trying to force a square peg into a round hole.
 
 in my experience, the typical integration involves a few key aspects: generating user-specific calendly links, embedding calendly schedulers into your app, and handling webhook notifications for events created through calendly.
 
@@ -116,6 +116,6 @@ now, in terms of resources for further reading, i would recommend checking out c
 
 remember this: calendly integration is not a one-size-fits-all solution. the approach will vary depending on your specific application needs. you might have a more complex workflow than the examples here, especially if you are trying to have a fine-grained control. for instance, if you need to modify the appointment on calendly side, or cancel it from your application you need to use the calendly api and make sure your application is in sync with calendly. or if you are trying to change dynamically the calendly event types you need to make a couple more of api calls. this approach is quite useful.
 
-one funny thing happened to me. a client asked if we could make it so that after the user schedule a meeting, that all the data from the appointment will magically appear in the application database. i thought “sure, i'll just wave my magic wand”. *sigh*. webhooks is the answer here, but i think the client had different expectations.
+one funny thing happened to me. a client asked if we could make it so that after the user schedule a meeting, that all the data from the appointment will magically appear in the application database. i thought “sure, i'll just wave my magic wand”. _sigh_. webhooks is the answer here, but i think the client had different expectations.
 
 i know this was a bit long, but i hope it covers some ground and gives you a better understanding of how to integrate calendly in a rails application. just remember to test each component thoroughly before going to production. let me know if you have any other questions.

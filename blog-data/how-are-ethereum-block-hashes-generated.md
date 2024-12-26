@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-are-ethereum-block-hashes-generated"
 ---
 
-Alright, let's talk about ethereum block hashes. I've spent a fair amount of time elbow-deep in the ethereum codebase and related documentation, and I can tell you it’s a topic that often gets glossed over, even by people working directly with the technology. It's not magic, but there are definitely intricacies involved.
+, let's talk about ethereum block hashes. I've spent a fair amount of time elbow-deep in the ethereum codebase and related documentation, and I can tell you it’s a topic that often gets glossed over, even by people working directly with the technology. It's not magic, but there are definitely intricacies involved.
 
 Fundamentally, a block hash in ethereum is a cryptographic fingerprint of all the data contained within a block. This hash serves several crucial purposes: it uniquely identifies the block, it's used to chain blocks together chronologically, forming the blockchain, and it ensures the integrity of the data, as any change to the block would result in a different hash. It's vital to understand that this isn’t just an arbitrary number generated; it's the output of a very specific hashing algorithm applied to a structured representation of all the block's contents.
 

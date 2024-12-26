@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "verilog-bitwise-or-operator-definition"
 ---
 
-Okay so you're asking about the bitwise OR operator in Verilog right I've been there man plenty of times wrestling with logic gates at 3 am because of something I overlooked with these simple operators Lets dive in
+you're asking about the bitwise OR operator in Verilog right I've been there man plenty of times wrestling with logic gates at 3 am because of something I overlooked with these simple operators Lets dive in
 
 It's a core part of Verilog so it's a fundamental to understand I'll give you my take based on how I've used it over the years and the gotchas I've personally run into so here we go
 
@@ -12,7 +12,7 @@ The bitwise OR operator represented by the single pipe symbol `|` it performs a 
 
 Now I remember vividly one time I was debugging a custom memory controller and I was pulling my hair out trying to figure out why certain memory regions were getting corrupted It turned out to be a subtle mistake in how I was using the OR operation to set memory address flags I’d incorrectly assumed a different bit order in my flags register and you know once that mistake is in it propagates fast The whole design acted like a child throwing a tantrum I spent like two solid days just chasing that tiny little bug all because I was a bit careless with my OR operation
 
-So let me make this very clear the bitwise OR is a bit-by-bit operation it does *not* perform logical OR on the entire data word as a whole which is what you might be thinking if you are more used to programming languages. If you intend to perform logical OR operation you will need to reduce your expression to a single bit. That can be done by using reduction OR which is a single pipe before the expression. More on that later.
+So let me make this very clear the bitwise OR is a bit-by-bit operation it does _not_ perform logical OR on the entire data word as a whole which is what you might be thinking if you are more used to programming languages. If you intend to perform logical OR operation you will need to reduce your expression to a single bit. That can be done by using reduction OR which is a single pipe before the expression. More on that later.
 
 Let me give you some quick Verilog examples that you can try out this in your simulator these examples are just for illustration I'll start with basic bit manipulation:
 
@@ -56,7 +56,7 @@ endmodule
 
 Notice the use of concatenation. Here we expanded the `mask` to 8 bits to make the bitwise or operation valid and the result would be the first 4 bits from data in remain unchanged and the next 4 bits are changed if the mask is 1. This is a common way to set certain flags without altering the other bits.
 
-Now you wanted to know about that reduction OR I mentioned: That’s different and useful when you need to see if *any* bit in a word is set. Here’s an example of that:
+Now you wanted to know about that reduction OR I mentioned: That’s different and useful when you need to see if _any_ bit in a word is set. Here’s an example of that:
 
 ```verilog
 module reduction_or_example;

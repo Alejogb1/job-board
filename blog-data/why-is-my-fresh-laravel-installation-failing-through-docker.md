@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "why-is-my-fresh-laravel-installation-failing-through-docker"
 ---
 
-Okay, let's tackle this. I’ve seen this particular head-scratcher more times than I care to remember. A fresh Laravel install failing within a dockerized environment can be infuriating, primarily because the intent is often to *simplify* the setup, not complicate it further. The failure usually stems from discrepancies between what’s expected and what's actually happening inside the container. It's rarely one single cause, but rather an accumulation of several potential pitfalls. Let’s break down the common culprits, and I’ll illustrate with specific examples from my past experiences.
+, let's tackle this. I’ve seen this particular head-scratcher more times than I care to remember. A fresh Laravel install failing within a dockerized environment can be infuriating, primarily because the intent is often to _simplify_ the setup, not complicate it further. The failure usually stems from discrepancies between what’s expected and what's actually happening inside the container. It's rarely one single cause, but rather an accumulation of several potential pitfalls. Let’s break down the common culprits, and I’ll illustrate with specific examples from my past experiences.
 
-Firstly, the most prevalent issue involves network configuration. Docker containers, by default, operate in a network space isolated from your host machine. If your Laravel application attempts to connect to a database or other services on your host without explicit networking configurations, it'll inevitably fail. I recall one instance years back where a junior dev, fresh out of training, had their `.env` file pointing to `localhost` for the database connection, not realizing that `localhost` inside the container refers to the *container itself*, not their machine’s database server. It’s a very common oversight, and this usually manifests as connection refused or timeout errors. The fix, in most cases, is to adjust the database host in your `.env` or docker-compose configuration to either use the docker host gateway, if you are running database on your host machine, or the service name when using docker compose, if you are also containerizing your database.
+Firstly, the most prevalent issue involves network configuration. Docker containers, by default, operate in a network space isolated from your host machine. If your Laravel application attempts to connect to a database or other services on your host without explicit networking configurations, it'll inevitably fail. I recall one instance years back where a junior dev, fresh out of training, had their `.env` file pointing to `localhost` for the database connection, not realizing that `localhost` inside the container refers to the _container itself_, not their machine’s database server. It’s a very common oversight, and this usually manifests as connection refused or timeout errors. The fix, in most cases, is to adjust the database host in your `.env` or docker-compose configuration to either use the docker host gateway, if you are running database on your host machine, or the service name when using docker compose, if you are also containerizing your database.
 
 Here's an example of a standard docker-compose.yml configuration where the application is attempting to connect to a containerized database:
 
@@ -36,7 +36,7 @@ services:
       - MYSQL_USER=user
       - MYSQL_PASSWORD=secret
     ports:
-        - "3306:3306"
+      - "3306:3306"
 ```
 
 In this configuration, `DB_HOST=db` is crucial. `db` corresponds to the name of the database service in `docker-compose.yml`, and Docker's internal DNS will correctly resolve this name to the database container's IP address. If you were using an external database, you would need to replace it with the actual host ip, making sure that the database is configured to accept connections from your docker host ip.

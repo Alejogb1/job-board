@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-cant-i-connect-to-the-discord-voice-api-from-digitalocean"
 ---
 
-Okay, let’s unpack this. It's not uncommon to encounter connectivity issues when trying to interact with the Discord voice api, especially when doing so from cloud providers like DigitalOcean. I’ve personally seen these problems crop up countless times over the years, and they often stem from a few common culprits, each requiring a slightly different approach to resolve. It's never a straightforward 'this is *the* problem', but rather a process of systematic elimination.
+, let’s unpack this. It's not uncommon to encounter connectivity issues when trying to interact with the Discord voice api, especially when doing so from cloud providers like DigitalOcean. I’ve personally seen these problems crop up countless times over the years, and they often stem from a few common culprits, each requiring a slightly different approach to resolve. It's never a straightforward 'this is _the_ problem', but rather a process of systematic elimination.
 
 Let’s first establish the landscape we're working with. Discord’s voice api relies on udp for the actual audio transmission, while the signaling, things like connecting to a channel, is primarily done over websockets over tcp. DigitalOcean, like most cloud providers, operates within its network, and this is where potential complications can arise. A big thing to consider is that not all traffic is treated the same, and firewalls and other network configurations can block traffic, sometimes unintentionally.
 
@@ -53,7 +53,7 @@ if __name__ == "__main__":
 
 ```
 
-If this code fails to connect, and the exception points to a network issue, you would look to the aforementioned udp and firewall problems. A critical next step then is *very* detailed logging of the networking events to get a clearer picture of what's going on.
+If this code fails to connect, and the exception points to a network issue, you would look to the aforementioned udp and firewall problems. A critical next step then is _very_ detailed logging of the networking events to get a clearer picture of what's going on.
 
 ```python
 # snippet 2: enhanced logging example
@@ -98,9 +98,10 @@ if __name__ == "__main__":
     asyncio.run(main())
 
 ```
-This adjusted snippet introduces detailed logging to stdout. I can’t overstate the importance of looking through the output and seeing *precisely* which part of the connection process is failing. If you’re getting errors related to socket connection or timeouts, that is a big clue pointing to the firewall or udp issues.
 
-Now, let's say the connection *is* technically working (i.e., no connection errors), but you are still not getting any audio transmitted to Discord. This will require some lower-level packet analysis. A great tool for this is tcpdump. You can use tcpdump to capture the network packets being sent from your DigitalOcean droplet. This helps you confirm if your application is actually sending out audio data via udp, and also, whether the replies are being received correctly.
+This adjusted snippet introduces detailed logging to stdout. I can’t overstate the importance of looking through the output and seeing _precisely_ which part of the connection process is failing. If you’re getting errors related to socket connection or timeouts, that is a big clue pointing to the firewall or udp issues.
+
+Now, let's say the connection _is_ technically working (i.e., no connection errors), but you are still not getting any audio transmitted to Discord. This will require some lower-level packet analysis. A great tool for this is tcpdump. You can use tcpdump to capture the network packets being sent from your DigitalOcean droplet. This helps you confirm if your application is actually sending out audio data via udp, and also, whether the replies are being received correctly.
 
 To test this, you should first install tcpdump on your droplet:
 
@@ -108,14 +109,16 @@ To test this, you should first install tcpdump on your droplet:
 sudo apt-get update
 sudo apt-get install tcpdump
 ```
+
 Then, use tcpdump to listen for udp traffic going to/from the discord ip.
 
 ```bash
 sudo tcpdump -i any udp portrange 10000-65000 -w capture.pcap
 ```
+
 This captures all traffic on UDP ports in the range usually used by Discord, writing the capture data into `capture.pcap`. Afterward, you can analyze `capture.pcap` file, ideally on your local machine using wireshark, a network protocol analyzer. Looking at Wireshark, you can see things like if packets are being sent and if responses are coming back, and what the addresses and ports are. If you are not seeing any outbound udp packets from your server or no return packets, it is a strong indicator you have an underlying network configuration or firewall problem.
 
-Assuming you have confirmed the issue is either firewall or nat related, resolving these can be tricky. For firewall issues on DigitalOcean, you will need to configure the firewall settings to allow the dynamic range of UDP ports Discord voice servers use. This typically involves navigating to your Droplet’s firewall settings and adding new inbound rules that allow all traffic on the udp port range (which you can find in Discord's API documentation or the library docs). Be aware that you might not want to open *all* ports if you are concerned about security and should instead find the specific range needed by Discord. This step can be a bit fiddly, as the range can be large.
+Assuming you have confirmed the issue is either firewall or nat related, resolving these can be tricky. For firewall issues on DigitalOcean, you will need to configure the firewall settings to allow the dynamic range of UDP ports Discord voice servers use. This typically involves navigating to your Droplet’s firewall settings and adding new inbound rules that allow all traffic on the udp port range (which you can find in Discord's API documentation or the library docs). Be aware that you might not want to open _all_ ports if you are concerned about security and should instead find the specific range needed by Discord. This step can be a bit fiddly, as the range can be large.
 
 If it is nat-related, and your droplet is using a private ip in an internal network and nat to connect to the internet, the issue is trickier. You may need to use a dedicated public ip on your droplet for the voice api. Alternatively, you may need to investigate ways to implement udp hole punching or other nat traversal techniques if a dedicated public ip isn’t feasible. This approach is far more complex and often requires some very deep understanding of networking.
 

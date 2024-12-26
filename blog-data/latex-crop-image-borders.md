@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "latex-crop-image-borders"
 ---
 
-Okay so you wanna crop image borders in LaTeX right Been there done that got the t-shirt multiple times honestly this is like a rite of passage for anyone who spends enough time with LaTeX and images I've battled this beast more often than I'd like to admit let's dive in
+you wanna crop image borders in LaTeX right Been there done that got the t-shirt multiple times honestly this is like a rite of passage for anyone who spends enough time with LaTeX and images I've battled this beast more often than I'd like to admit let's dive in
 
 First off you’re probably dealing with a situation where your images got these annoying white borders or even worse some colored padding you don’t want right? Maybe they’re screenshots with some extra fluff or diagrams that have too much margin Whatever it is it's cramping your style and LaTeX is not automatically helping you out like it should I remember once I had this huge project due a journal publication and I had all these embedded plots from MATLAB yeah MATLAB and they all had this extra border that looked atrocious it was a nightmare i almost had a breakdown
 
@@ -63,9 +63,9 @@ Also remember that cropping is not something that you usually need to do it is a
 
 If you really want to delve deep into this area I recommend looking into:
 
-*   **The LaTeX Companion by Goossens et al:** It has an extensive section on graphics and image manipulation which can be really helpful. It is not something that changes fast in LaTeX so older versions are still valid for this sort of thing.
-*   **The Graphics Companion by Michel Goossens:** This is a separate book focused entirely on graphics within LaTeX. It provides a much deeper understanding of how LaTeX handles images and its options.
-*   **ImageMagick documentation:** For external image processing refer to the official documentation of ImageMagick it's a lot of material but very well organized
-*   **Some scripting language documentation related to the library/module that you will use:** For example if you chose python the `pillow` or the `opencv` libraries are a good start.
+- **The LaTeX Companion by Goossens et al:** It has an extensive section on graphics and image manipulation which can be really helpful. It is not something that changes fast in LaTeX so older versions are still valid for this sort of thing.
+- **The Graphics Companion by Michel Goossens:** This is a separate book focused entirely on graphics within LaTeX. It provides a much deeper understanding of how LaTeX handles images and its options.
+- **ImageMagick documentation:** For external image processing refer to the official documentation of ImageMagick it's a lot of material but very well organized
+- **Some scripting language documentation related to the library/module that you will use:** For example if you chose python the `pillow` or the `opencv` libraries are a good start.
 
 These are my go-to resources whenever I need to work with image manipulation in LaTeX. And remember a lot of the time when you are doing things programmatically you don't need `latex` and `dvips` anymore for example you can do everything with the `xelatex` engine and some other small details it really depends on your workflow. Anyway good luck with your image cropping battles you will get it eventually it might just take a couple of iterations.

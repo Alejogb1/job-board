@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-setup-individual-content-securitypolicy-for-grape-swagger-rails"
 ---
 
-alright, so you're tackling content security policy (csp) with grape-swagger-rails, a classic situation. i've been down this road myself, more times than i'd care to remember. it always starts with that initial "oh, this should be straightforward" thought, and then...well, then the nuances hit you. especially when you're trying to juggle multiple parts of an application and making sure each of them doesn't accidentally break the others.
+, so you're tackling content security policy (csp) with grape-swagger-rails, a classic situation. i've been down this road myself, more times than i'd care to remember. it always starts with that initial "oh, this should be straightforward" thought, and then...well, then the nuances hit you. especially when you're trying to juggle multiple parts of an application and making sure each of them doesn't accidentally break the others.
 
 let's get into it. grape-swagger-rails, if you've worked with it before, is pretty good at generating swagger documentation but doesn't natively offer much control over individual csp headers. by default, it tends to use whatever csp is set for the application globally, which is usually not enough. if your api endpoint and your swagger docs are on different paths that is more noticeable. to be precise the root of the problem is that grape-swagger-rails just renders html pages and doesn't provide a mechanism to set a custom header. so, that means we're in control. we have to use rails features to achieve this.
 

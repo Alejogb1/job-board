@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-query-parameters-compare-to-ids-in-ruby-on-rails-routes"
 ---
 
-Alright, let's tackle this. I've spent a fair amount of time navigating the intricacies of Rails routing, particularly when deciding between query parameters and IDs, and it's a decision that carries significant weight in terms of both functionality and maintainability. From my experience working on a large-scale e-commerce platform years back, the wrong choice could lead to performance bottlenecks and unnecessarily complicated logic, so careful consideration is paramount.
+, let's tackle this. I've spent a fair amount of time navigating the intricacies of Rails routing, particularly when deciding between query parameters and IDs, and it's a decision that carries significant weight in terms of both functionality and maintainability. From my experience working on a large-scale e-commerce platform years back, the wrong choice could lead to performance bottlenecks and unnecessarily complicated logic, so careful consideration is paramount.
 
 Essentially, both query parameters and IDs are mechanisms for passing data to your Rails application via the URL, but they serve fundamentally different purposes. The primary distinction lies in how they are treated by the routing system and the implied semantics of the data they represent.
 
@@ -111,6 +111,6 @@ When navigating this aspect of Rails routing, I'd recommend examining these reso
 
 2.  **The Rails Guides: Rails Routing:** The official Rails Guides documentation offers a thorough explanation of the routing system, including constraints, nesting, and parameter handling. This is the definitive resource for learning the mechanics of Rails routing.
 
-3. **"Building Microservices" by Sam Newman:** Although broader than just Rails routing, this book provides a valuable context on how to architect applications, especially in relation to microservices, which often involves making decisions about data access patterns via APIs and therefore routing methodologies.
+3.  **"Building Microservices" by Sam Newman:** Although broader than just Rails routing, this book provides a valuable context on how to architect applications, especially in relation to microservices, which often involves making decisions about data access patterns via APIs and therefore routing methodologies.
 
 In summary, while both IDs and query parameters are mechanisms to pass data via URLs, their purposes in Rails routes are quite distinct. IDs are for identifying specific resources, while query parameters provide filtering or additional request-specific data. Choosing correctly will help streamline the development process, keep code clean, and avoid many future headaches.

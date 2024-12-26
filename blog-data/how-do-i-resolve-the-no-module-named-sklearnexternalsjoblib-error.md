@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-resolve-the-no-module-named-sklearnexternalsjoblib-error"
 ---
 
-Alright, let's tackle this one. That "no module named 'sklearn.externals.joblib'" error, it’s a familiar face, isn't it? I remember encountering it myself back in '19, when I was migrating a rather large machine learning pipeline onto a new containerized environment. The pipeline relied heavily on scikit-learn and, like many at the time, had older code that was referencing `sklearn.externals.joblib`. It's a frustrating snag, but thankfully, quite straightforward to resolve once you understand the underlying cause.
+, let's tackle this one. That "no module named 'sklearn.externals.joblib'" error, it’s a familiar face, isn't it? I remember encountering it myself back in '19, when I was migrating a rather large machine learning pipeline onto a new containerized environment. The pipeline relied heavily on scikit-learn and, like many at the time, had older code that was referencing `sklearn.externals.joblib`. It's a frustrating snag, but thankfully, quite straightforward to resolve once you understand the underlying cause.
 
 Essentially, what's happening is that the `joblib` library, which scikit-learn uses for efficient model persistence and parallel computing, has undergone a significant restructuring. In older versions of scikit-learn (typically prior to version 0.23), `joblib` was accessed via the `sklearn.externals` submodule. However, the developers of scikit-learn decided to decouple `joblib` and integrate it directly as a standalone library. This shift improves the maintainability and update cycles of both packages. Therefore, newer versions of scikit-learn no longer house `joblib` under that particular submodule, resulting in this dreaded "no module" error.
 
@@ -82,7 +82,7 @@ if model_handler.model is not None:
 
 Notice that instead of trying to get `joblib` via an old `sklearn` import, I directly import it at the top of the module. This makes the dependence explicit. Additionally, I've included a basic `try-except` block and a conditional check. This adds a layer of robustness and gracefully handles the potential scenario of the model file not existing, a useful addition particularly in deployment or testing environments.
 
-Third, and less common but still worth mentioning, you might encounter situations where you have a pipeline that uses a *specific version* of joblib, and it is not aligned with what `scikit-learn` expects for its internal usage. Such scenarios are usually seen in complex workflows using older or highly custom setups. In these less common situations, it’s often a good practice to explicitly manage your dependencies using tools like `pip` or `conda`. Here’s a brief example of how that might look in a shell script or a similar environment configuration:
+Third, and less common but still worth mentioning, you might encounter situations where you have a pipeline that uses a _specific version_ of joblib, and it is not aligned with what `scikit-learn` expects for its internal usage. Such scenarios are usually seen in complex workflows using older or highly custom setups. In these less common situations, it’s often a good practice to explicitly manage your dependencies using tools like `pip` or `conda`. Here’s a brief example of how that might look in a shell script or a similar environment configuration:
 
 ```bash
 # Example of pinning both scikit-learn and joblib versions

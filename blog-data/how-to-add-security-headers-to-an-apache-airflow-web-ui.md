@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-add-security-headers-to-an-apache-airflow-web-ui"
 ---
 
-alright, so you're looking to beef up the security on your airflow web ui, understandable. it's not exactly a fortress straight out of the box, and adding those security headers is a pretty standard way to get a bit more peace of mind. i've definitely been down this road before, and it's a good habit to get into with web-facing stuff like this.
+, so you're looking to beef up the security on your airflow web ui, understandable. it's not exactly a fortress straight out of the box, and adding those security headers is a pretty standard way to get a bit more peace of mind. i've definitely been down this road before, and it's a good habit to get into with web-facing stuff like this.
 
 let me tell you a story. back in the day, i had this airflow setup running on a cloud instance for a small project, nothing too crazy. one day, the security team at the company i was working with ran a scan and came back with a bunch of flags about missing headers. i felt like a noob; hadn't even thought about it properly. it was one of those ‘learn by doing’ moments, and i spent a good part of a weekend figuring out how to configure it properly. i'll try to help you skip that specific step of the learning curve with what i learned.
 
@@ -51,7 +51,7 @@ here's the basic gist: you'll need to tweak your apache config file to include t
 </virtualhost>
 ```
 
-in this config, i'm setting `x-frame-options` to `sameorigin` to prevent clickjacking, `x-content-type-options` to `nosniff` to stop browser mime-sniffing exploits, and `strict-transport-security` with a `max-age` to force the use of https for a year, including subdomains.  the `content-security-policy` is where things get a bit more involved; i've set a basic one there that is good for starters allowing only content from same origin as the website, allowing unsafe-inline styles, some analytics and images as data: or self-hosted resources.
+in this config, i'm setting `x-frame-options` to `sameorigin` to prevent clickjacking, `x-content-type-options` to `nosniff` to stop browser mime-sniffing exploits, and `strict-transport-security` with a `max-age` to force the use of https for a year, including subdomains. the `content-security-policy` is where things get a bit more involved; i've set a basic one there that is good for starters allowing only content from same origin as the website, allowing unsafe-inline styles, some analytics and images as data: or self-hosted resources.
 
 now, here's the deal: the `content-security-policy` is a beast. it's incredibly powerful but also very finicky. if you get it wrong, things on your airflow web ui might stop working, so be very careful to test things out and start very relaxed with the policy rules, then as you get more knowledge, get stricter with it. the example i put up there should do for the most part, but you might need to tweak it depending on what external libraries or services your airflow setup is using. for example, i had to allow google analytics because i was using it in a dashboard view. also, notice the 'unsafe-inline' keywords in the csp? that's a no-no if you want to be super strict, and you may need to adjust your site to not use inline styles or scripts, but for airflow, it is easier to allow them as for a beginning setup, and it is better to be a little bit secure than completely insecure.
 
@@ -72,13 +72,14 @@ also, i like to add the below block of code in the apache config, usually in the
     # protect against xss attacks
     header set x-xss-protection "1; mode=block"
 ```
+
 the `serverTokens Prod` setting will turn off the server signatures which may give away more information that it is necessary, the `referrer-policy` sets rules when and what data to send in the header, making it safer in the process, and the `x-xss-protection` will mitigate against cross site scripting attacks.
 
 now, let's discuss that content security policy in more detail, i mean, it deserves some special attention, right? you see the `default-src 'self'`? this one says that, unless stated otherwise, the website will only allow loading resources from the same origin, that is your domain or subdomain. then the `script-src 'self' 'unsafe-inline' https://www.google-analytics.com` allows scripts from the same origin, unsafe-inline scripts, and google analytics specifically. the `style-src 'self' 'unsafe-inline'` does the same but for styles, and the `img-src 'self' data:` is for images, allowing local images and data images. and `font-src 'self' data:` the same but for fonts, allowing local fonts and data fonts. those are common to have, but you may need to adapt it if you need to have some other external dependencies or integrations.
 
 a quick note: if you're dealing with websockets, you'll likely need to add a `connect-src` directive to your csp to include the allowed origins for websocket connections. you need to add that if for instance you are using an external web app to render the progress of a task or something like that.
 
-also, this is a good moment to remind you that https is critical.  if you are exposing your apache airflow to the internet without it, you are essentially broadcasting your data in clear text, which is like writing all your passwords on a public board for anyone to see and steal. make sure you have a valid ssl/tls certificate set up correctly.
+also, this is a good moment to remind you that https is critical. if you are exposing your apache airflow to the internet without it, you are essentially broadcasting your data in clear text, which is like writing all your passwords on a public board for anyone to see and steal. make sure you have a valid ssl/tls certificate set up correctly.
 
 here is another snippet to configure tls/ssl in apache:
 
@@ -90,6 +91,7 @@ here is another snippet to configure tls/ssl in apache:
         sslcertificatekeyfile /path/to/your/ssl/private.key
         sslcertificatechainfile /path/to/your/ssl/ca_bundle.crt
 ```
+
 the `sslcipheresuite` will only allow very secure ciphers, the `sslprotocol` will make sure that old and insecure protocols are not accepted, and the `sslhonorcipherorder` makes sure that the cipher you picked is used and not another that is maybe less secure, and the last 3 ssl settings are to load your keys and certificate information.
 
 and since we are talking about apache config, let's just do this here, because it is important: consider tightening up your apache config generally. things like disabling unused modules, limiting the apache user's permissions, and keeping the software updated are all worthwhile steps to take. security is not a single thing, it is layered, and all layers matter.

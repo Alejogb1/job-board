@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-callable-function-between-two-colab-notebooks"
 ---
 
-Okay, let’s tackle this. You're looking to establish a method for invoking a function defined in one Google Colab notebook from another. This isn’t a direct, out-of-the-box feature, so it requires a bit of a workaround, but it's certainly achievable, and I've found myself needing this exact functionality in a few complex projects involving collaborative research. I recall one specific instance while developing a distributed machine learning pipeline for a large image dataset. We had separate notebooks for data preprocessing and model training, each run by a different team member. Getting the preprocessed data over to the training notebook dynamically was crucial, and the following strategies proved reliable.
+, let’s tackle this. You're looking to establish a method for invoking a function defined in one Google Colab notebook from another. This isn’t a direct, out-of-the-box feature, so it requires a bit of a workaround, but it's certainly achievable, and I've found myself needing this exact functionality in a few complex projects involving collaborative research. I recall one specific instance while developing a distributed machine learning pipeline for a large image dataset. We had separate notebooks for data preprocessing and model training, each run by a different team member. Getting the preprocessed data over to the training notebook dynamically was crucial, and the following strategies proved reliable.
 
 Essentially, the challenge here lies in the inherent isolated nature of Colab notebook execution environments. Each notebook operates within its own virtual machine, meaning you can't simply import code from one into another directly like you would with Python modules on your local file system. Therefore, we need to externalize the function code in a way that's accessible from both notebooks.
 
@@ -67,7 +67,7 @@ Here's how it's structured:
 
     The second snippet mounts the drive, adds the path containing the python script to python path and imports the shared functions. Note that the `script_path` variable must match in both notebooks.
 
-    *Practical Considerations:* This method is good for rapid prototyping and smaller projects. However, it can become cumbersome for larger function libraries as it necessitates manually pushing updates to Google Drive. For anything beyond a couple of functions, consider method 2.
+    _Practical Considerations:_ This method is good for rapid prototyping and smaller projects. However, it can become cumbersome for larger function libraries as it necessitates manually pushing updates to Google Drive. For anything beyond a couple of functions, consider method 2.
 
 **Method 2: Leveraging Git and Python Modules**
 
@@ -122,7 +122,7 @@ For more extensive shared code and better version control, utilising git is supe
 
     The code clones the git repository to the notebook's VM, appends the cloned repository's directory to Python's path, and then imports the required functions.
 
-    *Practical Considerations:* Git provides version control, allowing multiple contributors to work on the shared function library while maintaining version history. This scales much better than the Google Drive approach but requires the initial setup of a git repository. For deeper dives into version control best practices, I suggest looking into resources like Pro Git by Scott Chacon and Ben Straub.
+    _Practical Considerations:_ Git provides version control, allowing multiple contributors to work on the shared function library while maintaining version history. This scales much better than the Google Drive approach but requires the initial setup of a git repository. For deeper dives into version control best practices, I suggest looking into resources like Pro Git by Scott Chacon and Ben Straub.
 
 **Method 3: Cloud Functions**
 
@@ -181,6 +181,6 @@ For more complex scenarios involving asynchronous tasks, cloud functions (like G
 
     Both notebooks can call this API via `requests.post`.
 
-    *Practical Considerations:* This method is more complex to set up initially but is the most robust for complex workflows, allowing for asynchronous operations and scalability. For detailed understanding of the concepts behind cloud functions, I'd recommend looking into the Cloud Native Computing Foundation's resources and the documentation for specific cloud provider's services.
+    _Practical Considerations:_ This method is more complex to set up initially but is the most robust for complex workflows, allowing for asynchronous operations and scalability. For detailed understanding of the concepts behind cloud functions, I'd recommend looking into the Cloud Native Computing Foundation's resources and the documentation for specific cloud provider's services.
 
 In conclusion, the best approach to creating callable functions between Colab notebooks depends on the scale and complexity of your project. For small, simple function sharing, Google Drive suffices. For medium-sized projects with version control requirements, git modules are a good choice. For complex, production-ready applications, cloud functions offer robust asynchronous capabilities. I've used each of these methods successfully in various contexts and found them generally reliable. Remember to carefully consider the project’s requirements and pick the method that aligns best with them. Good luck.

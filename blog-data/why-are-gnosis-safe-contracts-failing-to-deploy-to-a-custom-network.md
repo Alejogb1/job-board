@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-gnosis-safe-contracts-failing-to-deploy-to-a-custom-network"
 ---
 
-Okay, let's tackle this. I've certainly seen my share of gnosis safe deployment issues, and the "custom network" angle always adds a layer of intrigue. From my experience, it rarely boils down to a single, easily pinpointed cause. Usually, it's a confluence of factors that need careful examination. Let me walk you through what I've encountered and how I've approached these problems in the past.
+, let's tackle this. I've certainly seen my share of gnosis safe deployment issues, and the "custom network" angle always adds a layer of intrigue. From my experience, it rarely boils down to a single, easily pinpointed cause. Usually, it's a confluence of factors that need careful examination. Let me walk you through what I've encountered and how I've approached these problems in the past.
 
 The first, and perhaps most common, hurdle revolves around the foundational network setup itself. Often, when dealing with custom networks, we’re not leveraging the same pre-configured environment that Ethereum Mainnet or even a common testnet like Goerli provides. This means that assumptions made by the standard gnosis safe deployment scripts, specifically regarding network identifiers (chain ids) or availability of crucial precompiles, often prove inaccurate. I vividly recall one project where I was initially puzzled by deployment failures; it turned out that the custom network’s chain id was colliding with a different development network that was being used by a colleague.
 
@@ -54,57 +54,65 @@ Here is another illustrative snippet, this time using ethers.js, showing how we 
 
 ```javascript
 const { ethers } = require("ethers");
-const Safe = require('@gnosis.pm/safe-contracts');
+const Safe = require("@gnosis.pm/safe-contracts");
 
 async function deploySafe(rpc_url, private_key) {
   const provider = new ethers.JsonRpcProvider(rpc_url);
   const wallet = new ethers.Wallet(private_key, provider);
 
-
-    // Deploy required singleton contracts
-  const singletonFactory = new ethers.ContractFactory(Safe.Singleton.abi, Safe.Singleton.bytecode, wallet);
-    const singleton = await singletonFactory.deploy();
-    await singleton.waitForDeployment();
+  // Deploy required singleton contracts
+  const singletonFactory = new ethers.ContractFactory(
+    Safe.Singleton.abi,
+    Safe.Singleton.bytecode,
+    wallet
+  );
+  const singleton = await singletonFactory.deploy();
+  await singleton.waitForDeployment();
 
   console.log(`Singleton Contract deployed to: ${singleton.target}`);
 
+  const proxyFactory = new ethers.ContractFactory(
+    Safe.ProxyFactory.abi,
+    Safe.ProxyFactory.bytecode,
+    wallet
+  );
+  const proxy = await proxyFactory.deploy();
+  await proxy.waitForDeployment();
 
-    const proxyFactory = new ethers.ContractFactory(Safe.ProxyFactory.abi, Safe.ProxyFactory.bytecode, wallet);
-    const proxy = await proxyFactory.deploy();
-    await proxy.waitForDeployment();
+  console.log(`ProxyFactory Contract deployed to: ${proxy.target}`);
 
-    console.log(`ProxyFactory Contract deployed to: ${proxy.target}`);
+  // Now create safe
+  const owners = [wallet.address];
+  const threshold = 1;
+  const safeFactory = new ethers.ContractFactory(
+    Safe.Safe.abi,
+    Safe.Safe.bytecode,
+    wallet
+  );
 
-    // Now create safe
-    const owners = [wallet.address];
-    const threshold = 1;
-    const safeFactory = new ethers.ContractFactory(Safe.Safe.abi, Safe.Safe.bytecode, wallet);
-
-   // Initialize Safe with singleton address and proxy
-     const safe = await safeFactory.deploy(
-         singleton.target,
-          proxy.target,
-        owners,
-        threshold,
-        0,
-        ethers.constants.AddressZero,
-         ethers.constants.AddressZero,
-         0,
-        ethers.constants.AddressZero
-     );
+  // Initialize Safe with singleton address and proxy
+  const safe = await safeFactory.deploy(
+    singleton.target,
+    proxy.target,
+    owners,
+    threshold,
+    0,
+    ethers.constants.AddressZero,
+    ethers.constants.AddressZero,
+    0,
+    ethers.constants.AddressZero
+  );
   await safe.waitForDeployment();
 
+  console.log(`Safe deployed to: ${safe.target}`);
+}
+// Example usage
+const rpc_endpoint = "http://localhost:8545";
+const privateKey = "0xYOUR_PRIVATE_KEY";
 
-    console.log(`Safe deployed to: ${safe.target}`);
-  }
-    // Example usage
-    const rpc_endpoint = "http://localhost:8545";
-    const privateKey = "0xYOUR_PRIVATE_KEY";
-
-   deploySafe(rpc_endpoint, privateKey)
+deploySafe(rpc_endpoint, privateKey)
   .then(() => console.log("Safe deployment complete."))
   .catch((error) => console.error("Safe deployment failed:", error));
-
 ```
 
 Lastly, gas management deserves its own dedicated discussion. Custom networks often have different gas economics compared to public blockchains. The gas limits in the transaction, and the price in which you are willing to pay for gas can drastically influence the outcome of your deployment. During a past debugging process, it took quite a few trials before we determined that the gas limit for some of the initialisation transactions was way too low. Therefore, manually adjusting the gas limits during deployment can frequently solve the deployment issues.

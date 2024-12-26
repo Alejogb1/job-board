@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-tensorflow-results-be-exported-to-a-csv-file"
 ---
 
-Alright, let’s tackle this. Exporting TensorFlow results to a CSV – it’s a task I’ve handled countless times over the years, often in scenarios where I needed to analyze model outputs outside the immediate training environment, or for downstream processing in other tools. Let me walk you through the approaches I’ve found most effective, keeping in mind that flexibility and performance are key. I recall a particularly challenging project where we had a massive classification model outputting hundreds of probabilities per input sample. We needed to not only export these results but also do it in a memory-efficient way. That experience shaped my perspective on this topic significantly.
+, let’s tackle this. Exporting TensorFlow results to a CSV – it’s a task I’ve handled countless times over the years, often in scenarios where I needed to analyze model outputs outside the immediate training environment, or for downstream processing in other tools. Let me walk you through the approaches I’ve found most effective, keeping in mind that flexibility and performance are key. I recall a particularly challenging project where we had a massive classification model outputting hundreds of probabilities per input sample. We needed to not only export these results but also do it in a memory-efficient way. That experience shaped my perspective on this topic significantly.
 
 Essentially, there are a few core techniques, each with its own trade-offs, but they revolve around retrieving the model’s output as a NumPy array or a TensorFlow tensor first and then transforming it into a format that the `csv` module in Python can handle. The critical step is ensuring your data is shaped appropriately before creating the CSV file.
 
@@ -47,6 +47,7 @@ def export_numpy_based(model, input_data, output_path='results.csv'):
 
 #export_numpy_based(model, input_data, 'example_numpy.csv')
 ```
+
 This example illustrates the basic process. First, we use the model to generate predictions. We must convert it to a numpy array using `.numpy()` if the output is a tensorflow tensor. Then, we open a CSV file for writing and create a csv writer object. I've included logic to handle both 1D and 2D output arrays, so it should be generally applicable in various use-cases. Remember that if your model has multiple output nodes, you might need to adjust the header row and the data writing part.
 
 Now, while the `numpy` method works well for many scenarios, it may have memory limitations if your output tensors are excessively large. For such cases, where you are working with high-volume data, it’s beneficial to stream the data. We can do this by processing smaller batches and writing the CSV in an iterative fashion, thereby minimizing the memory footprint. Here’s how that technique usually looks:

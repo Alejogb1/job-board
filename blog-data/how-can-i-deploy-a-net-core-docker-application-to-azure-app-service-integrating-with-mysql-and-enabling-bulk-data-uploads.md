@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-deploy-a-net-core-docker-application-to-azure-app-service-integrating-with-mysql-and-enabling-bulk-data-uploads"
 ---
 
-Alright, let's tackle this. I've spent my fair share of time orchestrating .net core applications in azure, so I've seen a few things when it comes to integrating with mysql and managing large data ingestion processes. We're diving into a fairly common scenario, but there are definitely nuances to consider, especially when optimizing for performance and reliability.
+, let's tackle this. I've spent my fair share of time orchestrating .net core applications in azure, so I've seen a few things when it comes to integrating with mysql and managing large data ingestion processes. We're diving into a fairly common scenario, but there are definitely nuances to consider, especially when optimizing for performance and reliability.
 
 Initially, when dealing with a similar setup a few years back, we had a particularly thorny issue with upload timeouts and database connection exhaustion, which I'll touch upon later. But, first, let's lay the groundwork for a successful deployment.
 
@@ -57,9 +57,9 @@ Again, replace the placeholders with the correct connection details. The `public
 
 This is where things get interesting. A naive approach might involve sending massive amounts of data through a standard http endpoint, which frequently results in request timeouts, excessive memory consumption on the server, and potential database performance issues. Instead, consider the following strategies:
 
-*   **Chunked uploads:** Break down large data files into smaller chunks. Your .net core application should receive these chunks and either store them temporarily or process them in batches.
-*   **Background processing:** Use a message queue like Azure Service Bus or Rabbitmq to offload the actual database insertion process to a background job. This allows your api to respond quickly and ensures robustness.
-*   **Database batch inserts:** Use libraries like entity framework core's `addrange` or a raw sql command with a large insert statement with multiple value sets, to insert multiple rows in a single operation instead of inserting one at a time.
+- **Chunked uploads:** Break down large data files into smaller chunks. Your .net core application should receive these chunks and either store them temporarily or process them in batches.
+- **Background processing:** Use a message queue like Azure Service Bus or Rabbitmq to offload the actual database insertion process to a background job. This allows your api to respond quickly and ensures robustness.
+- **Database batch inserts:** Use libraries like entity framework core's `addrange` or a raw sql command with a large insert statement with multiple value sets, to insert multiple rows in a single operation instead of inserting one at a time.
 
 Here's a .net core code snippet illustrating a simplified version of chunked uploads, assuming you're receiving a csv file, using a basic stream processing approach:
 
@@ -170,9 +170,9 @@ Avoid large single inserts. Implement chunked uploads and background processing 
 
 For deeper understanding on the topics discussed, I'd suggest exploring these resources:
 
-*   **"Programming Microsoft Azure, Second Edition" by David S. Platt:** A solid overview of azure services.
-*   **"Entity Framework Core in Action" by Jon P. Smith:** Deep dive into ef core best practices.
-*   **"Designing Data-Intensive Applications" by Martin Kleppmann:** An invaluable resource for understanding the fundamentals of data processing and distributed systems which will help you think about the problem from first principles.
-*  **The official documentation for Azure App Services, Azure database for mysql, and Azure service bus.** They are essential for staying up to date.
+- **"Programming Microsoft Azure, Second Edition" by David S. Platt:** A solid overview of azure services.
+- **"Entity Framework Core in Action" by Jon P. Smith:** Deep dive into ef core best practices.
+- **"Designing Data-Intensive Applications" by Martin Kleppmann:** An invaluable resource for understanding the fundamentals of data processing and distributed systems which will help you think about the problem from first principles.
+- **The official documentation for Azure App Services, Azure database for mysql, and Azure service bus.** They are essential for staying up to date.
 
 This should provide a fairly comprehensive starting point for deploying your application to azure while addressing those performance considerations that usually cause headaches. Remember that each scenario is unique, so adjustments might be needed based on your specific requirements and data structures. Good luck.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-calculate-the-most-common-bigram-words-distribution-in-a-dataset"
 ---
 
-Alright, let’s tackle this bigram distribution problem. It’s a fairly common task in natural language processing, and i’ve certainly bumped into it a few times across various projects, ranging from analyzing customer feedback to preprocessing text for machine learning models. The key here is not just to count the bigrams, but to understand the frequency distribution, which then allows us to glean valuable insights from the textual data.
+, let’s tackle this bigram distribution problem. It’s a fairly common task in natural language processing, and i’ve certainly bumped into it a few times across various projects, ranging from analyzing customer feedback to preprocessing text for machine learning models. The key here is not just to count the bigrams, but to understand the frequency distribution, which then allows us to glean valuable insights from the textual data.
 
 Essentially, a bigram is simply a sequence of two adjacent words. The distribution, then, refers to how frequently each of these bigrams appear within your dataset. This gives you an idea of common pairings and can reveal underlying patterns or thematic clusters that might not be obvious from looking at individual words. When I first approached this, I remember struggling a bit with naive implementations that were incredibly slow, especially on larger datasets, so optimization is crucial. Let's dive into a practical approach, complete with a few code snippets to illustrate.
 

@@ -4,15 +4,15 @@ date: "2024-12-15"
 id: "why-do-i-have-rl-incorrect-input-shapes-for-environment-and-model"
 ---
 
-alright, let’s get into this. incorrect input shapes between your reinforcement learning environment and your model, eh? been there, done that, got the t-shirt (and a few grey hairs to prove it). it's a classic pain point, and frankly, it's one of those things that seems to trip up folks at all experience levels.
+, let’s get into this. incorrect input shapes between your reinforcement learning environment and your model, eh? been there, done that, got the t-shirt (and a few grey hairs to prove it). it's a classic pain point, and frankly, it's one of those things that seems to trip up folks at all experience levels.
 
 so, the core of the issue is this: your rl agent (the model) is expecting data in a specific shape and format, and your environment (the simulator, the real world, whatever) is feeding it something different. imagine trying to fit a square peg in a round hole – it just won't work. in rl, this mismatch typically happens with the shape of your observation space (what the environment tells your agent) and the input layer of your neural network. likewise with the actions the agent outputs and the expected input shape for the environment to consume. it's a recipe for exploding gradients, tensor shape errors, and a general sense of rl despair.
 
 let’s break it down. typically, in rl you got two main components:
 
-*   **the environment:** this is what you're trying to interact with, like a game, a robotics simulation, or even real world data. it has an *observation space* which describes what the agent can ‘see’ or measure. this could be anything: a single number, a vector of numbers, an image, or a combination.
+- **the environment:** this is what you're trying to interact with, like a game, a robotics simulation, or even real world data. it has an _observation space_ which describes what the agent can ‘see’ or measure. this could be anything: a single number, a vector of numbers, an image, or a combination.
 
-*   **the agent (the model):** this is the brain of your operation, usually a neural network of some type. it takes the observations from the environment and decides what action to take. the model expects the observations to be in a certain shape for its input layer. the output layer of the agent produces actions (usually a number, or a set of numbers) the environment can understand.
+- **the agent (the model):** this is the brain of your operation, usually a neural network of some type. it takes the observations from the environment and decides what action to take. the model expects the observations to be in a certain shape for its input layer. the output layer of the agent produces actions (usually a number, or a set of numbers) the environment can understand.
 
 when these don't line up, chaos ensues. i remember spending a solid day on this back when i was first playing with deep q-networks (dqn). i was porting code from a tutorial, and i somehow managed to swap the row and column dimensions of my observation, which was a 2d grid. it took me way longer than i'd like to admit to realize why the training was doing absolutely nothing and producing tensor shape errors. it was like watching my agent have a complete existential crisis for hours on end.
 
@@ -46,7 +46,7 @@ if isinstance(env.action_space, gym.spaces.Discrete):
 
 this will give you the exact dimensions and format. if it is an image it will output something like `(height, width, channels)` if it's a continuous vector it might be `(number_of_dimensions,)`. action space will be an integer if it is discrete action space or a vector for continuous action spaces.
 
-2.  **examine your model's input layer:** once you have a clear view of your environment's input and output, check the input of your neural network. you'll want to make sure it accepts tensors of *exactly* the same shape as the observation space and the same as well with the action space expected by your environment. the output action of the model should match the expected action input to the environment. in pytorch, it usually looks something like this:
+2.  **examine your model's input layer:** once you have a clear view of your environment's input and output, check the input of your neural network. you'll want to make sure it accepts tensors of _exactly_ the same shape as the observation space and the same as well with the action space expected by your environment. the output action of the model should match the expected action input to the environment. in pytorch, it usually looks something like this:
 
 ```python
 import torch
@@ -58,7 +58,7 @@ class MyModel(nn.Module):
         self.fc1 = nn.Linear(np.prod(observation_shape), 128)  # flattening the observation space
         self.fc2 = nn.Linear(128, 128)
         self.fc3 = nn.Linear(128, np.prod(action_space_shape)) # output layer for action space
-        
+
     def forward(self, x):
         x = torch.flatten(x, 1)  # flatten the observation space to make it a vector, also can be done in layers.
         x = torch.relu(self.fc1(x))
@@ -99,7 +99,7 @@ class DummyEnv:
 
     def reset(self):
         return self.observation_space.sample(), {} # {} to match the return from gym.reset()
-    
+
     def step(self, action):
         observation = self.observation_space.sample()
         reward = 0 #dummy reward

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-delete-rows-based-on-text-in-sequential-files"
 ---
 
-Okay, let’s tackle this one. I've actually grappled with this exact scenario quite a few times over the years, particularly back when I was maintaining some older data pipelines that relied heavily on flat files. It’s a surprisingly common issue, and there isn't always a readily available, shiny new tool that neatly solves it. Sometimes, you just need to get down to basics and manipulate text files directly. The core problem, deleting rows based on text in sequential files, essentially boils down to selective filtering. You're reading each line of the file, evaluating if it matches a deletion criteria, and then either writing it to a new file (if it shouldn’t be deleted) or skipping it. Let’s look at how we might achieve this using different approaches, along with some gotchas I've encountered.
+, let’s tackle this one. I've actually grappled with this exact scenario quite a few times over the years, particularly back when I was maintaining some older data pipelines that relied heavily on flat files. It’s a surprisingly common issue, and there isn't always a readily available, shiny new tool that neatly solves it. Sometimes, you just need to get down to basics and manipulate text files directly. The core problem, deleting rows based on text in sequential files, essentially boils down to selective filtering. You're reading each line of the file, evaluating if it matches a deletion criteria, and then either writing it to a new file (if it shouldn’t be deleted) or skipping it. Let’s look at how we might achieve this using different approaches, along with some gotchas I've encountered.
 
 First and foremost, let’s clarify "sequential files." We’re talking about files where data is structured line by line, often with each line representing a single record. This encompasses things like csv files, log files, and any file where records are separated by newline characters, not complex formats like json or xml. When we speak of “text”, we’re referring to string data within these lines which you’re trying to pattern match against.
 
@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
 ```
 
-In this example, the function `filter_file` opens both the input and output files. It then iterates through each line of the input file. The `if delete_string not in line:` condition checks if the line does *not* contain the `delete_string`. If it does not, the line is written to the output file. This approach is generally effective for simple string-based filtering.
+In this example, the function `filter_file` opens both the input and output files. It then iterates through each line of the input file. The `if delete_string not in line:` condition checks if the line does _not_ contain the `delete_string`. If it does not, the line is written to the output file. This approach is generally effective for simple string-based filtering.
 
 A crucial point here is the performance implications. For truly massive files, this simple read-and-write approach can be slow. The entire input file is read line by line which creates some overhead. For performance on large data, using libraries like `pandas` in python or other data processing tools could prove beneficial, albeit involving a slightly more complex setup.
 
@@ -73,7 +73,7 @@ Another approach I’ve used in the past, especially when operating in a Unix en
 grep -v "delete_string" input.txt > output.txt
 ```
 
-This single line accomplishes the same task as our first python script, but by leveraging the `grep` utility directly at the shell level. The `-v` flag inverts the match, meaning it outputs lines that *do not* contain "delete_string". The output is then redirected to a new file “output.txt”. This is particularly advantageous because `grep` is highly optimized and can often outperform basic python scripts, especially on substantial datasets.
+This single line accomplishes the same task as our first python script, but by leveraging the `grep` utility directly at the shell level. The `-v` flag inverts the match, meaning it outputs lines that _do not_ contain "delete_string". The output is then redirected to a new file “output.txt”. This is particularly advantageous because `grep` is highly optimized and can often outperform basic python scripts, especially on substantial datasets.
 
 For very large datasets, that don't fit into memory, you would want to investigate tools like `awk` or dedicated data processing pipelines. Techniques like memory mapped files could be used to process data without loading everything into RAM. You also would want to examine batch processing strategies. These are often more complex to setup but necessary if you are working with gigabytes or terabytes of data.
 

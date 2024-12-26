@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-import-functions-in-python"
 ---
 
-Okay, let's tackle this. It’s a common frustration, and I've certainly spent my share of evenings debugging import errors. It often feels like the simplest thing— just wanting to use code you wrote somewhere else— becomes a strange labyrinth. The underlying mechanisms are generally quite logical, but the symptoms can vary widely. I’ll walk you through the common culprits and some strategies I’ve found effective over the years, drawing from my past experiences.
+, let's tackle this. It’s a common frustration, and I've certainly spent my share of evenings debugging import errors. It often feels like the simplest thing— just wanting to use code you wrote somewhere else— becomes a strange labyrinth. The underlying mechanisms are generally quite logical, but the symptoms can vary widely. I’ll walk you through the common culprits and some strategies I’ve found effective over the years, drawing from my past experiences.
 
 First, let's clarify what "importing" really entails. At its core, Python's import mechanism is about making code from one file (a module) available for use in another. When you write `import my_module` or `from my_module import my_function`, Python needs to locate `my_module.py` (or a package represented by a folder containing an `__init__.py` file) and execute it. The result is essentially that the variables, functions, and classes defined within `my_module` become accessible in the current scope of the importer. This process breaks down for a few recurring reasons.
 
@@ -88,11 +88,13 @@ from src.subdir import module_b
 print(module_a.hello_from_a())
 print(module_b.hello_from_b())
 ```
+
 In this snippet, we are adding the root directory `project` to `sys.path`, which then will allow python interpreter to correctly import `src` package.
 
 Another major contributor to import problems is circular dependencies. This occurs when two or more modules mutually depend on each other, creating a loop. Suppose we tweak our earlier example and add the following lines of code to our existing `module_a.py` and `module_b.py` files.
 
 `module_a.py` now becomes:
+
 ```python
 # module_a.py
 from src.subdir import module_b
@@ -100,7 +102,9 @@ from src.subdir import module_b
 def hello_from_a():
   return f"Hello from module A! module B says: {module_b.hello_from_b()}"
 ```
+
 and `module_b.py` is now:
+
 ```python
 # subdir/module_b.py
 from .. import module_a

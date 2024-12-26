@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-altair-chart-syntax-errors-when-deployed-in-streamlit"
 ---
 
-Alright, let's tackle this. I've certainly seen my share of head-scratching moments with Altair and Streamlit integrations, and it's rarely a single culprit. Debugging these issues often feels like peeling back layers of an onion. Let me share my experience and what I’ve found to be the common pitfalls.
+, let's tackle this. I've certainly seen my share of head-scratching moments with Altair and Streamlit integrations, and it's rarely a single culprit. Debugging these issues often feels like peeling back layers of an onion. Let me share my experience and what I’ve found to be the common pitfalls.
 
 The core issue with Altair chart syntax errors in a Streamlit deployment generally revolves around how Streamlit handles the rendering and transmission of these complex visualizations within a web application context. It’s not just about the Altair code itself—though that's always a primary suspect—but how that code interacts with Streamlit’s architecture.
 
@@ -37,6 +37,7 @@ chart_prob = alt.Chart(df).mark_point().encode(
 
 st.altair_chart(chart_prob)
 ```
+
 This initial attempt often fails in production because `details.x` is not how altair is able to access this nested information, but this might be missed in a local development run as the serialization might work but with an unintended structure. Let's fix that.
 
 ```python
@@ -99,6 +100,7 @@ agg_chart = alt.Chart(df).mark_circle().encode(
 st.altair_chart(agg_chart)
 
 ```
+
 Here, if there is some mismatch in how transformation are resolved and compiled between altair versions, it might introduce subtle inconsistencies that can trigger errors. While the local environment might handle this aggregation, serialization problems might emerge because the backend has compiled this into a different structure than what is expected by the browser running the Vega-Lite Javascript library.
 
 To avoid these issues, I always recommend the following:
@@ -106,7 +108,7 @@ To avoid these issues, I always recommend the following:
 1.  **Pin your dependencies**: use a `requirements.txt` file and/or a package manager like `poetry` or `pipenv` to control the exact version of `streamlit`, `altair`, `pandas`, `vega-lite`, and other packages involved. Maintain parity between development, testing, and deployment environments.
 2.  **Serialize data explicitly**: Always ensure your data is in a format that JSON can handle. Avoid nested data structures if possible, and serialize them into basic types before passing them to `st.altair_chart()`.
 3.  **Test in an environment as close as possible to production:** This means using a docker container or virtual environment that mirrors your deployment.
-4. **Inspect browser console**: Errors will show up in the browser, use your browser's dev tools to inspect these for hints.
+4.  **Inspect browser console**: Errors will show up in the browser, use your browser's dev tools to inspect these for hints.
 5.  **Read the logs**: Check Streamlit's logs and the logs from any web servers or container management platforms you use.
 6.  **Simplify and build iteratively:** Start with a basic chart and add complexity piece by piece. This approach helps isolate where a problem is occurring.
 

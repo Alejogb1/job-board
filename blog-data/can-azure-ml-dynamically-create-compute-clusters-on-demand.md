@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "can-azure-ml-dynamically-create-compute-clusters-on-demand"
 ---
 
-Alright, let's talk about dynamically provisioning compute resources within Azure Machine Learning. It’s a topic I've spent quite a bit of time navigating, especially back when we were scaling up our model training pipelines for that massive image classification project a few years back. We needed resources to spin up and down based on demand, and quickly. So, can Azure ML dynamically create compute clusters? Absolutely. And it’s a crucial feature for cost management and efficient resource utilization.
+, let's talk about dynamically provisioning compute resources within Azure Machine Learning. It’s a topic I've spent quite a bit of time navigating, especially back when we were scaling up our model training pipelines for that massive image classification project a few years back. We needed resources to spin up and down based on demand, and quickly. So, can Azure ML dynamically create compute clusters? Absolutely. And it’s a crucial feature for cost management and efficient resource utilization.
 
-The core idea behind dynamic scaling in Azure ML revolves around the concept of compute targets. These are the infrastructure resources that your jobs run on. We're primarily interested here in the *compute clusters*. Unlike manually managed VMs or other static resources, Azure ML compute clusters are specifically designed for this elastic scalability. They’re based on Azure Virtual Machine Scale Sets (VMSS), which are the underlying technology enabling the dynamic behavior we’re after.
+The core idea behind dynamic scaling in Azure ML revolves around the concept of compute targets. These are the infrastructure resources that your jobs run on. We're primarily interested here in the _compute clusters_. Unlike manually managed VMs or other static resources, Azure ML compute clusters are specifically designed for this elastic scalability. They’re based on Azure Virtual Machine Scale Sets (VMSS), which are the underlying technology enabling the dynamic behavior we’re after.
 
 Think of it like this: you define a configuration for your cluster, including the virtual machine size, the minimum and maximum number of nodes, and any specific settings. Azure ML then manages the scaling of these nodes based on the workload. When you submit a training job (or any job really), Azure ML automatically checks for available capacity within your specified cluster. If capacity is insufficient, and if scaling is configured, it will provision additional compute nodes, within the limits you have set, to handle the load. Once the job is completed, and no further jobs are running that require the extra capacity, Azure ML can automatically scale the cluster back down to the minimum number of nodes. This process is primarily driven by a combination of queued jobs and a configurable idle timeout period.
 
@@ -112,6 +112,7 @@ run.wait_for_completion(show_output=True)
 
 
 ```
+
 This snippet demonstrates how you submit your training script, specifying the compute cluster defined earlier as the execution target. Azure ML will handle scaling up the cluster as needed to accommodate the job. You would then see the node count increase on your Azure portal if starting at zero.
 
 Lastly, let's see how we can query the current state of the cluster, which can be very helpful for monitoring resource utilization:
@@ -139,6 +140,7 @@ else:
   print("Invalid or missing compute target.")
 
 ```
+
 This code fetches the compute target's status, showing you the current operational state, the number of nodes in each state (such as idle, running, creating, etc.), and configured scaling parameters. This is valuable for keeping track of the scaling and identifying bottlenecks.
 
 For more in-depth knowledge, I highly recommend looking into the official Azure documentation and the Azure ML SDK documentation, particularly around the `azureml.core.compute` and related packages. "Programming Machine Learning: From Data to Deployments" by Paolo Perrotta provides a good overall understanding of machine learning engineering practices which include topics on scaling compute resources. Also, for an in-depth understanding of cloud computing infrastructure, I recommend “Cloud Computing: Concepts, Technology & Architecture” by Ricardo Puttini & Thomas Erl. These resources provide a more rigorous and comprehensive understanding of the concepts and implementation details.

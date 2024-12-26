@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-the-google-colab-kernel-restart-error-warningrootkernel-550fdef7-0cf5-47e7-86a7-8a6a019a6aaa-restarted"
 ---
 
-Okay, let's tackle this. The infamous "kernel restarted" error in Google Colab, specifically that `WARNING:root:kernel [some_uuid] restarted`, is something I've seen more times than I'd like to recall. It's often not a singular issue, but a symptom of several underlying problems. Over the years, troubleshooting this has become a bit of a second nature, and it’s definitely something I’ve dealt with in my past projects on Colab—particularly when pushing the platform's boundaries with heavy data processing and complex computations.
+, let's tackle this. The infamous "kernel restarted" error in Google Colab, specifically that `WARNING:root:kernel [some_uuid] restarted`, is something I've seen more times than I'd like to recall. It's often not a singular issue, but a symptom of several underlying problems. Over the years, troubleshooting this has become a bit of a second nature, and it’s definitely something I’ve dealt with in my past projects on Colab—particularly when pushing the platform's boundaries with heavy data processing and complex computations.
 
 Essentially, this message indicates that the computational engine running your Python code, the kernel, has unexpectedly terminated and restarted. It’s like the program crashed and was automatically reloaded. The uuid is unique to each kernel instance, so it's essentially telling you which specific instance decided to take an unscheduled break. There are multiple root causes that can trigger this. Let's break them down.
 
@@ -58,7 +58,7 @@ print(f"Result is: {result}")
 
 ```
 
-While this won't *always* trigger a kernel restart, and often this code is feasible on Colab, it showcases a situation where prolonged processing can make the system become unresponsive or hit internal limits. If your script goes into a seemingly endless loop or takes a considerable amount of time, these limits could trigger a kernel restart.
+While this won't _always_ trigger a kernel restart, and often this code is feasible on Colab, it showcases a situation where prolonged processing can make the system become unresponsive or hit internal limits. If your script goes into a seemingly endless loop or takes a considerable amount of time, these limits could trigger a kernel restart.
 
 **Software and Library Issues:** Sometimes the problem isn't with your code per se, but with the libraries or underlying software environment. Bugs in libraries, particularly those involved in low-level operations (like CUDA, for example), can lead to instability and kernel crashes. It could also be that you have installed an incompatible library, which is leading to conflicts within the environment.
 
@@ -108,7 +108,7 @@ Debugging kernel restarts is a blend of investigation and mitigation. I’ve fou
 
 2.  **Batch Processing:** If processing large datasets, split them into smaller chunks. Iterating through smaller batches rather than processing everything at once greatly reduces memory pressure.
 
-3.  **Code Optimization:** Efficient code is crucial. Check for memory leaks, use generators instead of lists where appropriate, and optimize algorithms to reduce computational complexity. There are many great resources for general algorithm optimisation like *Introduction to Algorithms* by Cormen, Leiserson, Rivest, and Stein.
+3.  **Code Optimization:** Efficient code is crucial. Check for memory leaks, use generators instead of lists where appropriate, and optimize algorithms to reduce computational complexity. There are many great resources for general algorithm optimisation like _Introduction to Algorithms_ by Cormen, Leiserson, Rivest, and Stein.
 
 4.  **Library Updates:** Keep your libraries up to date. Sometimes, library updates fix bugs that cause instability. Use `pip install --upgrade <library_name>` to ensure you have the latest version.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-allow-access-to-an-azure-container-app-only-over-api-management"
 ---
 
-Alright, let's tackle this. I remember a project a few years back where we needed to secure a microservices backend running in Azure Container Apps. The client had a strict policy: no direct access to the containers, everything had to go through API Management (APIM). It seemed straightforward enough, but the devil, as always, was in the details. This isn't just about slapping a firewall rule; it requires a nuanced approach to networking and identity.
+, let's tackle this. I remember a project a few years back where we needed to secure a microservices backend running in Azure Container Apps. The client had a strict policy: no direct access to the containers, everything had to go through API Management (APIM). It seemed straightforward enough, but the devil, as always, was in the details. This isn't just about slapping a firewall rule; it requires a nuanced approach to networking and identity.
 
 The core principle here is to restrict access to the container app's ingress point and then configure API Management to proxy requests to it. First, we’ll isolate the container app within a virtual network (VNet), limiting public access. Then, we’ll configure APIM to communicate with the app internally, bypassing public internet exposure. Finally, we will rely on APIM's robust authentication and authorization policies to protect the backend. Think of it as a guardhouse (APIM) securing the inner sanctum (Container App).
 
@@ -21,48 +21,47 @@ Here's a simplified example of how this configuration might look in an ARM templ
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-        "managedEnvironmentName": {
-            "type": "string"
-        },
+    "managedEnvironmentName": {
+      "type": "string"
+    },
     "vnetResourceId": {
-            "type": "string"
-        },
-        "subnetResourceId": {
-            "type": "string"
-        },
+      "type": "string"
+    },
+    "subnetResourceId": {
+      "type": "string"
+    },
     "location": {
-        "type": "string"
+      "type": "string"
     }
   },
   "resources": [
-      {
-            "apiVersion": "2023-05-01",
-            "type": "Microsoft.App/managedEnvironments",
-            "name": "[parameters('managedEnvironmentName')]",
-            "location": "[parameters('location')]",
-             "properties": {
-                "vnetConfiguration": {
-                    "internal": true,
-                  "subnetId": "[parameters('subnetResourceId')]"
-                }
-              }
-
-        },
+    {
+      "apiVersion": "2023-05-01",
+      "type": "Microsoft.App/managedEnvironments",
+      "name": "[parameters('managedEnvironmentName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "vnetConfiguration": {
+          "internal": true,
+          "subnetId": "[parameters('subnetResourceId')]"
+        }
+      }
+    },
     {
       "type": "Microsoft.App/containerApps",
       "apiVersion": "2023-05-01",
       "name": "mycontainerapp",
       "location": "[parameters('location')]",
       "dependsOn": [
-       "[resourceId('Microsoft.App/managedEnvironments', parameters('managedEnvironmentName'))]"
+        "[resourceId('Microsoft.App/managedEnvironments', parameters('managedEnvironmentName'))]"
       ],
       "properties": {
         "managedEnvironmentId": "[resourceId('Microsoft.App/managedEnvironments', parameters('managedEnvironmentName'))]",
-         "configuration": {
+        "configuration": {
           "ingress": {
             "external": false,
             "targetPort": 8080
-           }
+          }
         },
         "template": {
           "containers": [
@@ -74,7 +73,6 @@ Here's a simplified example of how this configuration might look in an ARM templ
         }
       }
     }
-
   ]
 }
 ```
@@ -90,11 +88,11 @@ Here's a simplified example of a APIM backend configuration within an ARM templa
 ```json
 {
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-        "parameters": {
-        "apiManagementServiceName": {
-            "type": "string"
-        },
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "apiManagementServiceName": {
+      "type": "string"
+    },
     "containerAppHostName": {
       "type": "string"
     },
@@ -107,14 +105,13 @@ Here's a simplified example of a APIM backend configuration within an ARM templa
       "type": "Microsoft.ApiManagement/service/backends",
       "apiVersion": "2022-08-01",
       "name": "[concat(parameters('apiManagementServiceName'), '/containerappbackend')]",
-     "location": "[parameters('location')]",
+      "location": "[parameters('location')]",
       "properties": {
         "url": "[concat('https://', parameters('containerAppHostName'))]",
         "protocol": "http",
         "credentials": null
       }
     }
-
   ]
 }
 ```
@@ -149,19 +146,19 @@ Note this is a simple, example policy and is included to help visualize how api 
 
 **Key Considerations:**
 
-*   **DNS Resolution:** Ensure APIM can resolve your container app's internal DNS. If the default Azure DNS isn’t sufficient, you may need to configure a custom DNS resolver in the VNet.
-*   **Authentication:** Carefully consider your authentication method. API management provides many tools, such as client certificates, OAuth 2.0, and subscription keys, to authenticate clients.
-*   **Rate Limiting and Throttling:** Implement policies within APIM to protect your backend from abuse.
-*   **Network Security Groups:** Review the NSGs for both your APIM service and your container app to ensure you are not blocking needed communication.
-*   **Logging and Monitoring:** Setup logging and monitoring for both your APIM and your container apps to see where requests are going and how your service is working, and quickly identify any potential problems.
+- **DNS Resolution:** Ensure APIM can resolve your container app's internal DNS. If the default Azure DNS isn’t sufficient, you may need to configure a custom DNS resolver in the VNet.
+- **Authentication:** Carefully consider your authentication method. API management provides many tools, such as client certificates, OAuth 2.0, and subscription keys, to authenticate clients.
+- **Rate Limiting and Throttling:** Implement policies within APIM to protect your backend from abuse.
+- **Network Security Groups:** Review the NSGs for both your APIM service and your container app to ensure you are not blocking needed communication.
+- **Logging and Monitoring:** Setup logging and monitoring for both your APIM and your container apps to see where requests are going and how your service is working, and quickly identify any potential problems.
 
 **Recommended Resources:**
 
 For a deeper dive, I'd recommend these authoritative sources:
 
-*   **Azure documentation:** The official Microsoft documentation is an excellent starting point. Specific sections on container app networking and APIM configurations will be particularly useful.
-*   **"Cloud Native Patterns" by Cornelia Davis:** This book provides architectural patterns for modern cloud application development, with details that are pertinent to this scenario.
-*  **Microsoft’s Azure Architecture Center:** This resource provides reference architectures and best practices for building highly scalable and secure systems on Azure.
+- **Azure documentation:** The official Microsoft documentation is an excellent starting point. Specific sections on container app networking and APIM configurations will be particularly useful.
+- **"Cloud Native Patterns" by Cornelia Davis:** This book provides architectural patterns for modern cloud application development, with details that are pertinent to this scenario.
+- **Microsoft’s Azure Architecture Center:** This resource provides reference architectures and best practices for building highly scalable and secure systems on Azure.
 
 In practice, it took us several iterations to get this right, but the benefits of increased security and centralized API management were well worth it. The key takeaway is to understand the interplay between the different Azure services and to implement a layered security approach. By carefully configuring the vnet, setting up the correct dns resolution, and the backend connection in API management, it's possible to get your Azure container app to be accessed only through api management.
 

@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "valueerror-attempt-to-get-argmax-of-an-empty-sequence"
 ---
 
-Okay so "ValueError attempt to get argmax of an empty sequence" right Been there done that got the t-shirt or you know the debugging log that nearly set my screen on fire.
+"ValueError attempt to get argmax of an empty sequence" right Been there done that got the t-shirt or you know the debugging log that nearly set my screen on fire.
 
-This isn't a rare error it's a classic facepalm moment for anyone working with sequences and trying to find a maximum.  It means exactly what it says your code tried to use argmax on something that's empty an empty list a numpy array with no elements a pandas series with zilch absolutely nothing there.  `argmax` function's job is to tell you where the biggest thing is and well if there isn't anything there is no biggest thing. It cannot find the biggest element of nothing it simply doesn't compute
+This isn't a rare error it's a classic facepalm moment for anyone working with sequences and trying to find a maximum. It means exactly what it says your code tried to use argmax on something that's empty an empty list a numpy array with no elements a pandas series with zilch absolutely nothing there. `argmax` function's job is to tell you where the biggest thing is and well if there isn't anything there is no biggest thing. It cannot find the biggest element of nothing it simply doesn't compute
 
-I remember back in my early days I was working on a project a recommender system actually. A very very basic one. Think super rudimentary.  It was supposed to find the most popular item based on user interactions. Data came in as a list of user clicks and I had this beautifully crafted function that was meant to find the most clicked item index.  I felt quite clever at the time until boom "ValueError attempt to get argmax of an empty sequence". I had forgotten to properly handle cases where for some new user there was zero history and of course my function which looked for max number of clicks was then trying to argmax empty data. A good reminder that real data is almost never how you expect it to be at first. Never. It taught me the hard lesson about edge cases. Now I pretty much always anticipate them.
+I remember back in my early days I was working on a project a recommender system actually. A very very basic one. Think super rudimentary. It was supposed to find the most popular item based on user interactions. Data came in as a list of user clicks and I had this beautifully crafted function that was meant to find the most clicked item index. I felt quite clever at the time until boom "ValueError attempt to get argmax of an empty sequence". I had forgotten to properly handle cases where for some new user there was zero history and of course my function which looked for max number of clicks was then trying to argmax empty data. A good reminder that real data is almost never how you expect it to be at first. Never. It taught me the hard lesson about edge cases. Now I pretty much always anticipate them.
 
 The error usually stems from a few common situations:
 
@@ -17,7 +17,7 @@ The error usually stems from a few common situations:
 3. **Looping Errors:** You might be looping through a data structure and not having proper checks in place for empty iterations.
 4. **Conditional Errors:** You might have a conditional operation that is making a sequence empty
 
-It's a bit frustrating because Python or numpy or pandas are not trying to be mean when they throws it. It's just not possible to do argmax on nothing. No value no index simple as. The fix is always about defensive programming.  You need to check if your sequence is empty *before* trying to call `argmax` on it. Lets see how we can deal with this
+It's a bit frustrating because Python or numpy or pandas are not trying to be mean when they throws it. It's just not possible to do argmax on nothing. No value no index simple as. The fix is always about defensive programming. You need to check if your sequence is empty _before_ trying to call `argmax` on it. Lets see how we can deal with this
 
 **Example 1: Handling an Empty List**
 
@@ -148,6 +148,6 @@ else:
 
 We check the `array.size` and prevent the error. Simple solution. So simple that I once wrote a full research paper and only at the last moment found it I had made this mistake. Oh boy the fun I had at the last moment. It was a race against the deadline to fix it.
 
-The key takeaway here is to *always* check your data before operating on it. Don't assume your lists your dataframes your arrays are going to be populated.  Defensive programming is not a cool phrase its a necessary practice. Your code should handle all sorts of cases not just the pretty happy ones.
+The key takeaway here is to _always_ check your data before operating on it. Don't assume your lists your dataframes your arrays are going to be populated. Defensive programming is not a cool phrase its a necessary practice. Your code should handle all sorts of cases not just the pretty happy ones.
 
-As for resources I'd highly recommend diving into *Fluent Python* by Luciano Ramalho for mastering Python sequences this covers it really well. Also *Python for Data Analysis* by Wes McKinney is the bible for pandas and will help you understand how empty pandas series behave. For more on numpy you might want to look at *Guide to NumPy* by Travis Oliphant for a deeper understanding of its internals. These resources are more useful than generic websites for this specific issue as they offer detailed explanations that you can understand deeply.
+As for resources I'd highly recommend diving into _Fluent Python_ by Luciano Ramalho for mastering Python sequences this covers it really well. Also _Python for Data Analysis_ by Wes McKinney is the bible for pandas and will help you understand how empty pandas series behave. For more on numpy you might want to look at _Guide to NumPy_ by Travis Oliphant for a deeper understanding of its internals. These resources are more useful than generic websites for this specific issue as they offer detailed explanations that you can understand deeply.

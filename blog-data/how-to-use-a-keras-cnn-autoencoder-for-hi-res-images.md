@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-a-keras-cnn-autoencoder-for-hi-res-images"
 ---
 
-alright, so, you're diving into keras cnn autoencoders with high-resolution images, eh? i've been there, believe me. it's not always straightforward, and it’s easy to hit some snags. i remember back in the early 2010s when i was trying to build a denoising tool for old satellite imagery; i ran into similar problems trying to feed giant tiffs into the system.
+, so, you're diving into keras cnn autoencoders with high-resolution images, eh? i've been there, believe me. it's not always straightforward, and it’s easy to hit some snags. i remember back in the early 2010s when i was trying to build a denoising tool for old satellite imagery; i ran into similar problems trying to feed giant tiffs into the system.
 
 first thing's first, the sheer size of hi-res images will cause issues. your gpu, unless you're running on some super-powered cluster, will probably throw up out-of-memory errors faster than you can say "convolution". it’s important to preprocess those images before feeding them into the network.
 
@@ -176,12 +176,12 @@ this will train the autoencoder using the generator. notice that we use steps pe
 
 **important considerations**
 
-*   **gpu memory:** if you're still getting out-of-memory errors, try reducing the batch size, the target size or the number of filters in the layers. also try using mixed-precision training which saves memory. in keras its easily done by importing `from tensorflow.keras.mixed_precision import Policy` and creating a policy with `policy = Policy('mixed_float16')` and setting it `tf.keras.mixed_precision.set_global_policy(policy)`.
-*   **normalization:** ensure your input images are normalized to a suitable range (0-1) as i have done using `tf.cast(img, tf.float32) / 255.0`, autoencoders usually work better with normalized inputs. you could also try standardizing (zero mean, unit variance).
-*   **architecture:** the architecture i provide here is simple, feel free to experiment with deeper networks, different filter sizes, more sophisticated downsampling methods like strided convolutions, or skip connections in the encoder/decoder.
-*   **evaluation:** monitor your loss, but also look at reconstructed images to check if the quality of the reconstructed images. there's always a trade off between how much the model compress and the quality of the reconstructions.
-*   **latent space:** for autoencoders, the latent space usually is not that structured, so if you want to do something in the latent space like generating new images, variational autoencoders will probably be better than cnn autoencoders.
-*   **debugging:** use `model.summary()` to check the shape of all layers and feature maps, this helps in catching any issues. also, you could monitor training in tensorboard to see the metrics in real time.
+- **gpu memory:** if you're still getting out-of-memory errors, try reducing the batch size, the target size or the number of filters in the layers. also try using mixed-precision training which saves memory. in keras its easily done by importing `from tensorflow.keras.mixed_precision import Policy` and creating a policy with `policy = Policy('mixed_float16')` and setting it `tf.keras.mixed_precision.set_global_policy(policy)`.
+- **normalization:** ensure your input images are normalized to a suitable range (0-1) as i have done using `tf.cast(img, tf.float32) / 255.0`, autoencoders usually work better with normalized inputs. you could also try standardizing (zero mean, unit variance).
+- **architecture:** the architecture i provide here is simple, feel free to experiment with deeper networks, different filter sizes, more sophisticated downsampling methods like strided convolutions, or skip connections in the encoder/decoder.
+- **evaluation:** monitor your loss, but also look at reconstructed images to check if the quality of the reconstructed images. there's always a trade off between how much the model compress and the quality of the reconstructions.
+- **latent space:** for autoencoders, the latent space usually is not that structured, so if you want to do something in the latent space like generating new images, variational autoencoders will probably be better than cnn autoencoders.
+- **debugging:** use `model.summary()` to check the shape of all layers and feature maps, this helps in catching any issues. also, you could monitor training in tensorboard to see the metrics in real time.
 
 i've been using these techniques for a while now, so if you still face issues after following this just ask and i will try to help. i once spent a whole weekend debugging an oom error just because i was using an old version of tensorflow, that was not fun and my brain hurt. i had to buy a new laptop to try and fix that issue. it was an expensive weekend... haha.
 

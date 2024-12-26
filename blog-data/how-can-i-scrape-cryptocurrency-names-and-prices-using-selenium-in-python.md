@@ -4,13 +4,14 @@ date: "2024-12-23"
 id: "how-can-i-scrape-cryptocurrency-names-and-prices-using-selenium-in-python"
 ---
 
-Alright, let's talk about web scraping cryptocurrency data with Selenium and Python. This is a topic I’ve spent a fair bit of time on, particularly back in 2019 when I was building a simple portfolio tracker – before all the *interesting* market volatility, mind you. It’s less about the flash and more about methodical process, especially when dealing with dynamic content.
+, let's talk about web scraping cryptocurrency data with Selenium and Python. This is a topic I’ve spent a fair bit of time on, particularly back in 2019 when I was building a simple portfolio tracker – before all the _interesting_ market volatility, mind you. It’s less about the flash and more about methodical process, especially when dealing with dynamic content.
 
-The core issue, as you likely know, is that most modern websites, including cryptocurrency exchanges and tracking sites, load data dynamically using javascript. This means a simple request using something like `requests` will typically only grab the initial html skeleton. The actual prices and names we need are often fetched asynchronously and injected into the dom *after* the page has initially loaded. That’s where Selenium shines, because it automates a real browser, allowing you to interact with the page and wait for that javascript to complete its work.
+The core issue, as you likely know, is that most modern websites, including cryptocurrency exchanges and tracking sites, load data dynamically using javascript. This means a simple request using something like `requests` will typically only grab the initial html skeleton. The actual prices and names we need are often fetched asynchronously and injected into the dom _after_ the page has initially loaded. That’s where Selenium shines, because it automates a real browser, allowing you to interact with the page and wait for that javascript to complete its work.
 
 So, how do we go about it? The first crucial step is setting up your environment. You'll need selenium, of course, and a webdriver that matches your browser. I've used Chrome mostly, so I’d recommend downloading the chromedriver from the official site and making sure it's in your system path or provided to selenium explicitly. You'll also want to have the selenium package installed `pip install selenium`.
 
 The general strategy involves:
+
 1.  Instantiating a webdriver.
 2.  Navigating to the target page.
 3.  Implementing some kind of waiting mechanism to ensure the dynamic content loads.
@@ -116,7 +117,7 @@ if __name__ == '__main__':
      print(f"Extracted {len(coins_and_prices)} records")
 ```
 
-This one introduces the concept of iterating through multiple elements, specifically all the table rows.  It identifies the common css selectors to find the name and price elements *within* each row.  It also includes a `try-except` block inside the loop to avoid breaking the program if a particular row doesn't have the expected structure, which is a common consideration in real-world scraping scenarios.
+This one introduces the concept of iterating through multiple elements, specifically all the table rows. It identifies the common css selectors to find the name and price elements _within_ each row. It also includes a `try-except` block inside the loop to avoid breaking the program if a particular row doesn't have the expected structure, which is a common consideration in real-world scraping scenarios.
 
 **Example 3: Using Headless Mode**
 

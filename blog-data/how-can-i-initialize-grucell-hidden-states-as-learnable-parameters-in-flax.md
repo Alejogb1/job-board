@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-initialize-grucell-hidden-states-as-learnable-parameters-in-flax"
 ---
 
-Alright, let's talk about initializing GRUCell hidden states as learnable parameters in Flax. It’s a nuanced topic, and frankly, something I've had to tackle more than once in my past projects, especially when working with models that require a more fine-grained control over their initial conditions. The default approach in most deep learning libraries is often to initialize the hidden states of recurrent neural networks like GRUs to zeros. While this works in many cases, it can sometimes hinder learning or lead to less-than-optimal results, particularly in tasks where the initial context significantly impacts the subsequent sequence processing.
+, let's talk about initializing GRUCell hidden states as learnable parameters in Flax. It’s a nuanced topic, and frankly, something I've had to tackle more than once in my past projects, especially when working with models that require a more fine-grained control over their initial conditions. The default approach in most deep learning libraries is often to initialize the hidden states of recurrent neural networks like GRUs to zeros. While this works in many cases, it can sometimes hinder learning or lead to less-than-optimal results, particularly in tasks where the initial context significantly impacts the subsequent sequence processing.
 
 The core idea here isn't about some magical trick, it’s about treating the initial hidden state, which typically starts as a fixed value (usually zero), as a trainable variable. This allows the model to learn the optimal starting point for its internal representation of the sequence. This is particularly useful in scenarios where there is a clear semantic meaning associated with the beginning of a sequence or where the network benefits from a learned bias in its initial state.
 
@@ -49,6 +49,7 @@ params = model.init(key, inputs)['params']
 output = model.apply({'params': params}, inputs)
 print(f"Output shape: {output.shape}")
 ```
+
 Here, the `init_h` parameter is initialized as a Gaussian random vector. This acts as the initial hidden state for our GRU cell. The important part is the use of `self.param` to declare it as a Flax parameter. Flax’s parameter management system ensures that this parameter will be updated during the training process.
 
 **Example 2: Conditioned Initial State**
@@ -124,8 +125,8 @@ It is worth noting that while I've demonstrated three methods, the best approach
 
 For deeper dives into relevant topics, I recommend studying:
 
-1.  *Deep Learning* by Ian Goodfellow, Yoshua Bengio, and Aaron Courville: This is a comprehensive text on deep learning, including the fundamentals of RNNs and hidden states.
-2.  *Programming Machine Learning: From Coding to Deep Learning* by Paolo Perrotta: Great for practical insights and hands-on application of deep learning techniques.
-3.  *Sequence Modeling with Neural Networks* by Alex Graves: Provides in-depth coverage of sequence models and their practical applications, especially recurrent networks.
+1.  _Deep Learning_ by Ian Goodfellow, Yoshua Bengio, and Aaron Courville: This is a comprehensive text on deep learning, including the fundamentals of RNNs and hidden states.
+2.  _Programming Machine Learning: From Coding to Deep Learning_ by Paolo Perrotta: Great for practical insights and hands-on application of deep learning techniques.
+3.  _Sequence Modeling with Neural Networks_ by Alex Graves: Provides in-depth coverage of sequence models and their practical applications, especially recurrent networks.
 
 By treating your hidden state initialization as another learnable parameter within your model, you can unlock a new level of control and potential for learning more complex dynamics. This has proven a valuable technique in my own experience, and I encourage you to experiment with it in your projects.

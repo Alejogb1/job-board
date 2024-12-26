@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "what-causes-the-typeerror-in-the-assertnodifference-test"
 ---
 
-Alright, let’s tackle this `TypeError` within `assert_no_difference` tests. I’ve certainly bumped into this one a few times across various projects, and it usually boils down to some predictable discrepancies in how we’re handling data types or attempting comparisons. It’s a frustrating error, no doubt, but let’s dissect it so it becomes something you can quickly debug in the future.
+, let’s tackle this `TypeError` within `assert_no_difference` tests. I’ve certainly bumped into this one a few times across various projects, and it usually boils down to some predictable discrepancies in how we’re handling data types or attempting comparisons. It’s a frustrating error, no doubt, but let’s dissect it so it becomes something you can quickly debug in the future.
 
-Fundamentally, the `assert_no_difference` test, particularly in the context of something like testing database or object state transitions, relies on the ability to perform an *equality* comparison between two values or states *after* a given operation. The core issue arises when the comparison logic encounters values of incompatible types, triggering a `TypeError`. Think of it as trying to add an apple and a car – the operation is just nonsensical.
+Fundamentally, the `assert_no_difference` test, particularly in the context of something like testing database or object state transitions, relies on the ability to perform an _equality_ comparison between two values or states _after_ a given operation. The core issue arises when the comparison logic encounters values of incompatible types, triggering a `TypeError`. Think of it as trying to add an apple and a car – the operation is just nonsensical.
 
 My past experiences, especially within large systems handling complex data, have shown me the typical culprits are often related to one of these three things:
 
@@ -98,7 +98,7 @@ else:
   print("Assertion Passed Correctly")
 ```
 
-Here, we're dealing with custom `User` objects.  The initial attempt at a comparison using `!=` on the age of these objects (although now the age is an integer) would not have worked because it would compare object references not the actual data. The `__eq__` method was implemented to handle deep comparison. The first assertion fails to highlight the need for such a method and the fix is provided in the method `assert_no_difference_obj_fixed`
+Here, we're dealing with custom `User` objects. The initial attempt at a comparison using `!=` on the age of these objects (although now the age is an integer) would not have worked because it would compare object references not the actual data. The `__eq__` method was implemented to handle deep comparison. The first assertion fails to highlight the need for such a method and the fix is provided in the method `assert_no_difference_obj_fixed`
 
 **Example 3: Incompatible Data Structures**
 
@@ -148,15 +148,16 @@ Here, the attempt to compare a `list` and a `set` using the default comparison l
 
 The solution generally involves one of these actions:
 
-1.  **Explicit Type Conversion:** Ensure that values are consistently of the expected type *before* the comparison. Use `int()`, `float()`, `str()`, etc. to proactively convert the values if there's any possibility of type variation in the code.
+1.  **Explicit Type Conversion:** Ensure that values are consistently of the expected type _before_ the comparison. Use `int()`, `float()`, `str()`, etc. to proactively convert the values if there's any possibility of type variation in the code.
 
 2.  **Custom Comparison Functions:** For complex objects, implement `__eq__` and `__ne__` methods or provide a custom comparison method, tailored to evaluate your objects based on the properties or fields that actually matter for your test. Deep equality functions are your friend here, ensuring that you are comparing the data that matters and not object references.
 
 3.  **Consistent Data Structures:** When dealing with collections, ensure you are consistently using the same type of data structure for the data to be compared. It often helps to convert data to a consistent representation if that is necessary.
 
 For further study, I recommend looking into:
-*   "Effective Python" by Brett Slatkin, which has fantastic tips on handling object comparisons and best practices.
-*   The official Python documentation section on data model (specifically the `__eq__` and `__hash__` methods).
-*   "Clean Code" by Robert C. Martin for broader software engineering practices that encourage consistent data handling.
+
+- "Effective Python" by Brett Slatkin, which has fantastic tips on handling object comparisons and best practices.
+- The official Python documentation section on data model (specifically the `__eq__` and `__hash__` methods).
+- "Clean Code" by Robert C. Martin for broader software engineering practices that encourage consistent data handling.
 
 I hope this detailed explanation, along with these examples, provides a practical and technical understanding of `TypeError` within `assert_no_difference` tests. Remember, careful type management and a proper understanding of your data will save you time in the long run. Good luck.

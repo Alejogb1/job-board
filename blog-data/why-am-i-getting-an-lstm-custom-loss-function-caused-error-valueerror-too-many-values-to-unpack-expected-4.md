@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-an-lstm-custom-loss-function-caused-error-valueerror-too-many-values-to-unpack-expected-4"
 ---
 
-alright, let's talk about that `valueerror: too many values to unpack (expected 4)` you're getting with your lstm custom loss. it's a classic, i've seen it, i've lived it, and honestly, it’s one of those things that makes you feel like you're losing your mind for a while. let me break it down based on my past experiences.
+, let's talk about that `valueerror: too many values to unpack (expected 4)` you're getting with your lstm custom loss. it's a classic, i've seen it, i've lived it, and honestly, it’s one of those things that makes you feel like you're losing your mind for a while. let me break it down based on my past experiences.
 
 so, you’re crafting a custom loss function, probably something a bit more involved than mean squared error, i get it. i've been there. i once spent a whole weekend trying to get a custom contrastive loss working with lstms, and it turns out i had the same unpacking error. i was using a siamese network architecture and expected both embeddings and labels for my custom loss, and i was getting the `valueerror` instead. it was incredibly frustrating, until i realised the problem wasn't the loss itself, but how keras was passing things to it.
 
@@ -16,7 +16,7 @@ def custom_loss(y_true, y_pred):
     return loss_value
 ```
 
-that `y_true` is your true or target output that the network should predict. the `y_pred` is the networks actual prediction.  this is the standard input to most of the built-in loss functions too.
+that `y_true` is your true or target output that the network should predict. the `y_pred` is the networks actual prediction. this is the standard input to most of the built-in loss functions too.
 
 but if you try to do something like:
 
@@ -34,7 +34,7 @@ now, let's talk about lstms. why do they factor into this error? well, the long 
 
 so how do you fix it? there are a couple of ways.
 
-**1.  the lambda layer approach:** this is often the most straightforward. wrap your lstm, or the layer producing the extra output you need, with a lambda layer that outputs both predictions and the additional stuff. then, modify your custom loss to take both as inputs from this layer.
+**1. the lambda layer approach:** this is often the most straightforward. wrap your lstm, or the layer producing the extra output you need, with a lambda layer that outputs both predictions and the additional stuff. then, modify your custom loss to take both as inputs from this layer.
 
 here's a quick code example:
 
@@ -83,7 +83,7 @@ model.fit(x, [true_output, true_extra_output], epochs=1)
 notice that the lambda layer wraps your output and extra output. your loss now takes 2 tuples, each of size two, so 4 variables total, but the key part is that your lambda layer outputs the values you needed.
 the `y_true_tuple` and the `y_pred_tuple` each become a tuple in themselves (a list in essence).
 
-**2. using a wrapper in the loss:** now, if you want to avoid the lambda layer and pass the extra variables from somewhere else, you can wrap your loss to take the additional parameters. this implies some restructuring of the pipeline.  one way to do it is with a custom keras `loss` class with a `call` method, like so:
+**2. using a wrapper in the loss:** now, if you want to avoid the lambda layer and pass the extra variables from somewhere else, you can wrap your loss to take the additional parameters. this implies some restructuring of the pipeline. one way to do it is with a custom keras `loss` class with a `call` method, like so:
 
 ```python
 import tensorflow as tf

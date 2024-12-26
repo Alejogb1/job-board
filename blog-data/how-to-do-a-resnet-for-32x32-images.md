@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-a-resnet-for-32x32-images"
 ---
 
-alright, so you're tackling resnets with 32x32 images. been there, done that. it's a bit different from the usual imagenet stuff, but totally doable. let's break it down.
+, so you're tackling resnets with 32x32 images. been there, done that. it's a bit different from the usual imagenet stuff, but totally doable. let's break it down.
 
 first off, the typical resnet architectures, like resnet-50 or resnet-101, are designed for larger images, say, 224x224. these have a pretty deep series of convolutional layers, downsampling and pooling that bring the resolution down. when you try to apply these directly to tiny 32x32 images, you run into issues. you end up with a feature map that's way too small way too soon, and you kinda kill a lot of potentially useful information.
 
@@ -108,6 +108,7 @@ class ResNet32(nn.Module):
         out = self.fc(out)
         return out
 ```
+
 in this example we are just using three residual blocks at each stage. and we use a stride of 2 after each stage to downsample the spatial dimensions of the feature maps.
 
 last thing, about resources: if you want to deep dive, you should definitely read the original resnet paper. it's called "deep residual learning for image recognition." it will help you understand the core idea of the blocks. there is also the torchvision library on pytorch which is a good source of information and models but you may not find much for 32x32 images. but you can look into the code to see how the blocks are implemented. for more general stuff on convolutional neural networks and related concepts, i always recommend the deep learning book by goodfellow et al. it's a massive book, but the chapter on convolutional networks is very informative. just don’t expect that it will have code ready for you, but it's the right source for the theory. if it does, it might be outdated. i also think you need to get familiar with the pytorch tutorials for building up neural networks. they explain all the core concepts very well.

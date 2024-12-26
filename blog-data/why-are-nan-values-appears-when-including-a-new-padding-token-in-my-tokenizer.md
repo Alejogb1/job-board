@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-are-nan-values-appears-when-including-a-new-padding-token-in-my-tokenizer"
 ---
 
-alright, so you’re seeing nan values pop up after adding a new padding token to your tokenizer, right? i’ve been there, done that, got the t-shirt and probably spilled coffee on it too. it's a classic gotcha when you're messing with vocabulary and embeddings, especially in natural language processing stuff. let me break down what's likely going on and how i’ve typically tackled it in past projects.
+, so you’re seeing nan values pop up after adding a new padding token to your tokenizer, right? i’ve been there, done that, got the t-shirt and probably spilled coffee on it too. it's a classic gotcha when you're messing with vocabulary and embeddings, especially in natural language processing stuff. let me break down what's likely going on and how i’ve typically tackled it in past projects.
 
 the core problem usually boils down to how your model is handling the initial embedding vectors for the newly introduced token, specifically the padding token. when you add a new token to your tokenizer's vocabulary, a few things happen under the hood. first the tokenizer creates a new mapping between this new string or token and an integer index, lets say, ‘0’ for padding, now this integer will be used to look up the vector representation of this token. now, your model needs some way of assigning vector values for that new entry, this typically happen in two ways: one by initializing it randomly, or second, using the pre trained values.
 
@@ -118,6 +118,6 @@ also, consider if your embedding space is pre-trained or not. if you loaded weig
 
 as for resources, i'd recommend looking at the "attention is all you need" paper by vaswani et al., it gives great insights about how embeddings are used in transformers, even though its not specifically about embedding initialization, it helps to understand the fundamentals. there is also the book "natural language processing with transformers" by lewis tunstall which contains a very good explanation and practical examples about this problem. finally, look for the documentation for your specific framework, they usually have very complete information about how the embedding layer works, and how to use `masking` of padded tokens.
 
-and, speaking of padding, i once had a colleague who insisted on using spaces for padding, his code was a bit... *spacey* ... i had to actually go to his office and *debug* it. but seriously, check your code carefully and debug every step of the process.
+and, speaking of padding, i once had a colleague who insisted on using spaces for padding, his code was a bit... _spacey_ ... i had to actually go to his office and _debug_ it. but seriously, check your code carefully and debug every step of the process.
 
 hope this helps and good luck with your model.

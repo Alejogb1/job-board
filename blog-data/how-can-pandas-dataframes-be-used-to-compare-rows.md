@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-pandas-dataframes-be-used-to-compare-rows"
 ---
 
-Okay, let's tackle this one. Comparing rows in pandas DataFrames is a task I've encountered countless times across various data analysis projects. It might sound straightforward, but the devil's often in the details, especially when considering the types of comparisons needed and the performance implications on large datasets. Let's break it down.
+, let's tackle this one. Comparing rows in pandas DataFrames is a task I've encountered countless times across various data analysis projects. It might sound straightforward, but the devil's often in the details, especially when considering the types of comparisons needed and the performance implications on large datasets. Let's break it down.
 
-From my experience, one of the most common scenarios involves identifying differences between rows based on specific columns, rather than comparing entire rows as monolithic units. This is particularly useful when tracking changes over time or validating data consistency. I recall a project a few years ago where we were monitoring changes in a large sensor dataset. We needed to efficiently pinpoint rows where certain sensor readings had deviated significantly from their previous values. It wasn't just about finding *any* difference, but *specific* deviations that indicated a potential equipment malfunction.
+From my experience, one of the most common scenarios involves identifying differences between rows based on specific columns, rather than comparing entire rows as monolithic units. This is particularly useful when tracking changes over time or validating data consistency. I recall a project a few years ago where we were monitoring changes in a large sensor dataset. We needed to efficiently pinpoint rows where certain sensor readings had deviated significantly from their previous values. It wasn't just about finding _any_ difference, but _specific_ deviations that indicated a potential equipment malfunction.
 
 Now, while pandas doesn't offer a single function to directly compare all rows to each other at once in a 'pairwise' manner, there are robust methods we can use to achieve our goals. The key lies in leveraging vectorized operations and boolean indexing. Let's go through some scenarios and code examples.
 
@@ -81,7 +81,7 @@ df['is_greater'] = df.apply(compare_to_row0, axis=1)
 print("DataFrame with comparison results:\n", df)
 ```
 
-In this case, we define a function `compare_to_row0` that takes an individual row as input. Inside the function, we grab the first row using `.iloc[0]` and then compare the input row to it. Finally, we use `apply` with `axis=1` to iterate through all the rows of the dataframe applying this custom function.  While this `apply` function is easy to read and write, it is not the most performant operation, particularly when used on large dataframes. It is still an important approach to be aware of, especially when you need flexibility in your comparison logic and will serve you well on small to mid size datasets. Vectorization, which we use in the other examples is generally faster when applicable.
+In this case, we define a function `compare_to_row0` that takes an individual row as input. Inside the function, we grab the first row using `.iloc[0]` and then compare the input row to it. Finally, we use `apply` with `axis=1` to iterate through all the rows of the dataframe applying this custom function. While this `apply` function is easy to read and write, it is not the most performant operation, particularly when used on large dataframes. It is still an important approach to be aware of, especially when you need flexibility in your comparison logic and will serve you well on small to mid size datasets. Vectorization, which we use in the other examples is generally faster when applicable.
 
 **Technical Resources**
 

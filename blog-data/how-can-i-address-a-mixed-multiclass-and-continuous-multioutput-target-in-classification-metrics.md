@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-address-a-mixed-multiclass-and-continuous-multioutput-target-in-classification-metrics"
 ---
 
-Okay, let’s tackle this. Been there, seen that kind of modeling challenge – a mix of multiclass classification alongside continuous, multioutput targets. It’s not uncommon, and frankly, the “one-size-fits-all” metric approach simply breaks down. I recall a project where we were predicting customer behavior; some aspects were discrete categories (like product interest: 'A', 'B', or 'C'), while others were continuous, reflecting expected spending across various product lines. Throwing everything into a standard accuracy calculation was…uninformative, to say the least. So, we had to get a bit more granular.
+, let’s tackle this. Been there, seen that kind of modeling challenge – a mix of multiclass classification alongside continuous, multioutput targets. It’s not uncommon, and frankly, the “one-size-fits-all” metric approach simply breaks down. I recall a project where we were predicting customer behavior; some aspects were discrete categories (like product interest: 'A', 'B', or 'C'), while others were continuous, reflecting expected spending across various product lines. Throwing everything into a standard accuracy calculation was…uninformative, to say the least. So, we had to get a bit more granular.
 
 The key here is to decompose the problem and evaluate each target type using appropriate metrics before synthesizing a final, overall assessment. We can't expect a single metric to meaningfully capture performance across both classification and regression problems. It's like trying to measure the quality of a fruit salad with only a scale; you'll get the total weight, but nothing about the individual flavors or textures.
 
-For the multiclass classification part, I usually start with the basics: accuracy, precision, recall, and f1-score – *but* we need to be careful when dealing with imbalanced classes. Let's say, for example, that in the customer behavior prediction, most customers are interested in 'A', while 'B' and 'C' have relatively few cases. In such a situation, a high overall accuracy may hide poor performance on the minority classes. So, a better approach is to focus on the per-class precision, recall, and f1-scores, often reported as micro or macro averages to give a more balanced viewpoint. You might also investigate the area under the receiver operating characteristic curve (AUC-ROC) or the area under the precision-recall curve (AUC-PR) as well, particularly if imbalanced classes are present. In our earlier project, AUC-PR, considering the specific minority class performance, turned out to be a critical measure for diagnosing model shortcomings. We used this in tandem with a confusion matrix to really understand where things were misbehaving.
+For the multiclass classification part, I usually start with the basics: accuracy, precision, recall, and f1-score – _but_ we need to be careful when dealing with imbalanced classes. Let's say, for example, that in the customer behavior prediction, most customers are interested in 'A', while 'B' and 'C' have relatively few cases. In such a situation, a high overall accuracy may hide poor performance on the minority classes. So, a better approach is to focus on the per-class precision, recall, and f1-scores, often reported as micro or macro averages to give a more balanced viewpoint. You might also investigate the area under the receiver operating characteristic curve (AUC-ROC) or the area under the precision-recall curve (AUC-PR) as well, particularly if imbalanced classes are present. In our earlier project, AUC-PR, considering the specific minority class performance, turned out to be a critical measure for diagnosing model shortcomings. We used this in tandem with a confusion matrix to really understand where things were misbehaving.
 
 Then we get to the continuous multioutput aspect. The most obvious metric is, of course, the mean squared error (MSE) or its square root, root mean squared error (RMSE). However, as you know, if we're dealing with multiple output dimensions, the aggregate mean error alone can hide a lot of variance within the individual dimensions. We need to inspect individual output performance. So, we'd measure the error on each continuous target separately. Then, I would consider metrics like the mean absolute error (MAE). It is less sensitive to outliers than MSE, providing a more robust view of average deviations. Also, metrics like the R-squared value can help in understanding the proportion of variance explained by our model, for each individual output. This combination allows us to have a clear understanding of how well we are doing on the continuous outputs.
 
@@ -16,11 +16,11 @@ Now, the real trick is in synthesizing this information. You cannot just average
 
 Let's say we have our metrics as:
 
-*   *Classification Metric:* F1-score (weighted average)
-*   *Continuous Metric 1:* RMSE for output dimension 1
-*   *Continuous Metric 2:* MAE for output dimension 2
+- _Classification Metric:_ F1-score (weighted average)
+- _Continuous Metric 1:_ RMSE for output dimension 1
+- _Continuous Metric 2:_ MAE for output dimension 2
 
-Here's a python snippet illustrating how to compute these metrics, using *scikit-learn* and *numpy*, assuming we have our predictions and ground truth.
+Here's a python snippet illustrating how to compute these metrics, using _scikit-learn_ and _numpy_, assuming we have our predictions and ground truth.
 
 ```python
 import numpy as np
@@ -64,7 +64,7 @@ metrics = evaluate_mixed_targets(y_true_class, y_pred_class, y_true_reg, y_pred_
 print(metrics)
 ```
 
-And this snippet shows how you could structure your output. It’s crucial, however, that you think about the weights. For example, if improving prediction of product line spending is more critical than getting the product category classification exactly *perfect,* then the RMSE or MAE values might be weighted more heavily when synthesizing results. This weight isn't an arbitrary decision; it should flow from the specific business problem you're addressing.
+And this snippet shows how you could structure your output. It’s crucial, however, that you think about the weights. For example, if improving prediction of product line spending is more critical than getting the product category classification exactly _perfect,_ then the RMSE or MAE values might be weighted more heavily when synthesizing results. This weight isn't an arbitrary decision; it should flow from the specific business problem you're addressing.
 
 ```python
 def synthesize_metrics(metrics, classification_weight=0.5, regression_weights=[0.25, 0.25]):
@@ -91,7 +91,7 @@ combined_score = synthesize_metrics(metrics, classification_weight=0.4, regressi
 print(f"Combined score: {combined_score}")
 ```
 
-Finally, here's a short example of how you can use a multi-output regressor, such as sklearn's *MultiOutputRegressor* with *RandomForestRegressor* as a base estimator, along with a classifier such as *RandomForestClassifier* and combine it with the previously implemented evaluation functions:
+Finally, here's a short example of how you can use a multi-output regressor, such as sklearn's _MultiOutputRegressor_ with _RandomForestRegressor_ as a base estimator, along with a classifier such as _RandomForestClassifier_ and combine it with the previously implemented evaluation functions:
 
 ```python
 from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier

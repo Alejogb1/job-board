@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-bubble-size-in-altair-be-adjusted-independently-of-font-size"
 ---
 
-Okay, let's tackle this. It's a common frustration when you’re visualizing data with Altair and bubble charts, finding that the bubble size is tied to the font size, especially when you want more control over the visual hierarchy. I’ve bumped into this exact scenario more than a few times during data analysis projects, particularly when working on geographic visualizations where you might want large bubbles to indicate high values, regardless of the label size. The key here lies in understanding how Altair generates these charts and then leveraging its encoding capabilities to break that connection.
+, let's tackle this. It's a common frustration when you’re visualizing data with Altair and bubble charts, finding that the bubble size is tied to the font size, especially when you want more control over the visual hierarchy. I’ve bumped into this exact scenario more than a few times during data analysis projects, particularly when working on geographic visualizations where you might want large bubbles to indicate high values, regardless of the label size. The key here lies in understanding how Altair generates these charts and then leveraging its encoding capabilities to break that connection.
 
 The core issue stems from Altair’s default behavior of scaling bubble sizes based on an underlying data value which, when you introduce text labels, can inadvertently scale based on the font size of that label in some default rendering contexts, which is almost never what you want. To decouple them, we need to explicitly define the bubble size using a separate data field and encoding, effectively overriding any automatic scaling that might occur based on the font or text.
 
@@ -45,7 +45,8 @@ combined_chart = (chart+chart_with_text).resolve_scale(size='independent')
 
 combined_chart
 ```
-In this code, we first create a basic scatter plot with circle marks. Crucially, the `size` encoding is explicitly set to map the 'normalized\_population' field to the bubble size. I also set the range of the size using a scale. Then we create a separate mark for text and use the `text` encoding to display our labels. Finally we `resolve_scale` the `size` independently. You can clearly see the bubbles are based on the `normalized_population`, entirely disconnected from the text label size.
+
+In this code, we first create a basic scatter plot with circle marks. Crucially, the `size` encoding is explicitly set to map the 'normalized_population' field to the bubble size. I also set the range of the size using a scale. Then we create a separate mark for text and use the `text` encoding to display our labels. Finally we `resolve_scale` the `size` independently. You can clearly see the bubbles are based on the `normalized_population`, entirely disconnected from the text label size.
 
 Now let's look at a slight variation which demonstrates an alternative approach to creating bubbles using `mark_point`, which is also a valid approach. Here, I'm going to use a slightly different data set, focusing on an example from one of my previous projects related to product sales, for a better illustration of real-world cases.
 
@@ -89,7 +90,8 @@ combined_chart_points = (chart_points+chart_points_text).resolve_scale(size='ind
 
 combined_chart_points
 ```
-Here, we use `mark_point` with the `filled` option and customize the opacity. Again, we use `size` to map our `scaled_sales` values. Crucially, the size is based on this numeric field while the text labels are controlled separately. In my experience, this approach offers more direct control over the appearance of the bubbles. We decouple the size from the font size using the resolve\_scale which tells Altair to use independent scales for the size encoding.
+
+Here, we use `mark_point` with the `filled` option and customize the opacity. Again, we use `size` to map our `scaled_sales` values. Crucially, the size is based on this numeric field while the text labels are controlled separately. In my experience, this approach offers more direct control over the appearance of the bubbles. We decouple the size from the font size using the resolve_scale which tells Altair to use independent scales for the size encoding.
 
 Finally, let’s tweak this approach to demonstrate the creation of a geographical chart with independent control of the bubble size. Let's use a simple example with simulated location data.
 
@@ -129,7 +131,8 @@ combined_chart_geo = (chart_geo + chart_geo_text).resolve_scale(size='independen
 
 combined_chart_geo
 ```
-In this code, I'm mapping latitude and longitude to the X and Y axes.  We continue to decouple the size using a numeric field and use a separate mark for the text. The key takeaway is that the bubble sizes now respond to our explicit size mapping and not to the font sizes of the text labels. Resolving the scale independently ensures we have complete control over the visual hierarchy.
+
+In this code, I'm mapping latitude and longitude to the X and Y axes. We continue to decouple the size using a numeric field and use a separate mark for the text. The key takeaway is that the bubble sizes now respond to our explicit size mapping and not to the font sizes of the text labels. Resolving the scale independently ensures we have complete control over the visual hierarchy.
 
 For deeper insight into data visualization principles and encoding best practices, I would recommend reading “The Visual Display of Quantitative Information” by Edward Tufte. It's a foundational text for anyone serious about data visualization. Also, explore the Vega-Lite grammar, upon which Altair is built. Understanding its underlying structure can be quite helpful. The official Vega-Lite documentation is an invaluable resource that has helped me many times. Furthermore, “Information Visualization: Perception for Design” by Colin Ware will offer valuable guidance on human perception principles that will help design effective visualizations.
 

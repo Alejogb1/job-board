@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "trying-to-access-some-elements-in-an-indexset"
 ---
 
-Okay so you're wrestling with index sets right I've been there believe me its a surprisingly common pitfall especially when you start juggling complex data structures
+you're wrestling with index sets right I've been there believe me its a surprisingly common pitfall especially when you start juggling complex data structures
 
 Let's break it down because at its core dealing with index sets is about efficiently referencing collections of items typically in arrays or similar data containers You say you're trying to access elements that implies you're not just creating or manipulating sets but actually using them to pull data out
 
@@ -30,9 +30,11 @@ index_set = [1, 3, 5, 7] #Example index set to select 20 40 60 80
 elements = access_elements_python(data, index_set)
 print(elements) # Output: [20, 40, 60, 80]
 ```
+
 This is probably what you are trying to do i think its the most basic usage, it just retrieves the items by using each index in the set it iterates over it and accesses the item at that specific location in your data array
 
 Now let's see this concept in C++ since most of the low level performance optimizations are in that language here’s how it looks like
+
 ```cpp
 #include <iostream>
 #include <vector>
@@ -58,6 +60,7 @@ int main() {
     return 0;
 }
 ```
+
 Here we see a similar approach but in c++ which is a more performance-oriented language this is good because it shows how a similar problem is handled across different languages the fundamental logic is the same
 
 A really common usage case I used in the past is to remove or filter elements from a dataset using an indexset I was working on a computer vision project where we were detecting objects in a scene and we had a list of bounding boxes and we needed to filter those we can remove the ones that are too small or have low confidence scores an index set was very handy

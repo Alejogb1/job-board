@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "why-cant-fsmstate-connect-to-mongodb-through-aiogram"
 ---
 
-Okay, let's tackle this. I've encountered variations of this particular problem – state management within aiogram interacting with MongoDB – more times than I'd probably like to recall. It’s a common pitfall when trying to blend the asynchronous world of Telegram bots with the persistent data storage requirements of a database like MongoDB. The core issue isn’t usually that it’s outright impossible; it's more about how the asynchronous nature of `aiogram`’s event loop interacts with the blocking operations involved in database interactions, and how state is managed on top of that. Let me break it down based on my past experiences and solutions.
+, let's tackle this. I've encountered variations of this particular problem – state management within aiogram interacting with MongoDB – more times than I'd probably like to recall. It’s a common pitfall when trying to blend the asynchronous world of Telegram bots with the persistent data storage requirements of a database like MongoDB. The core issue isn’t usually that it’s outright impossible; it's more about how the asynchronous nature of `aiogram`’s event loop interacts with the blocking operations involved in database interactions, and how state is managed on top of that. Let me break it down based on my past experiences and solutions.
 
-The root cause often boils down to a misunderstanding or improper implementation of asynchronous practices. `aiogram` is intrinsically asynchronous. When you have a state machine – using `FSMContext`, for instance – you’re dealing with data that’s effectively tied to specific users and their bot interactions within that asynchronous context. Meanwhile, standard MongoDB drivers are typically *blocking* by default. This means that when you attempt a database operation (like reading or writing state data) synchronously within an `aiogram` handler, you’re likely to freeze the bot’s event loop, leading to unresponsive behavior or even timeouts.
+The root cause often boils down to a misunderstanding or improper implementation of asynchronous practices. `aiogram` is intrinsically asynchronous. When you have a state machine – using `FSMContext`, for instance – you’re dealing with data that’s effectively tied to specific users and their bot interactions within that asynchronous context. Meanwhile, standard MongoDB drivers are typically _blocking_ by default. This means that when you attempt a database operation (like reading or writing state data) synchronously within an `aiogram` handler, you’re likely to freeze the bot’s event loop, leading to unresponsive behavior or even timeouts.
 
-Think of it like this: the aiogram event loop is a finely tuned engine, and blocking database calls are like throwing a wrench into it. The loop needs to keep processing new updates, and if it's stuck waiting for a database operation to complete, it can't perform other tasks efficiently. The key here is to understand that the connection itself isn't usually the problem; rather, it's *how* that connection is used within the asynchronous flow.
+Think of it like this: the aiogram event loop is a finely tuned engine, and blocking database calls are like throwing a wrench into it. The loop needs to keep processing new updates, and if it's stuck waiting for a database operation to complete, it can't perform other tasks efficiently. The key here is to understand that the connection itself isn't usually the problem; rather, it's _how_ that connection is used within the asynchronous flow.
 
 There are typically two common scenarios where this manifests itself when using `FSMContext` and `MongoDB`:
 
@@ -58,7 +58,7 @@ There are typically two common scenarios where this manifests itself when using 
 
 The remedy lies in a two-pronged approach: embracing asynchronous I/O for MongoDB and designing a custom FSM Storage implementation which uses the asynchronous driver.
 
-First, for the database interaction, you *must* use an asynchronous MongoDB driver, such as `motor`. This allows MongoDB operations to be non-blocking, letting the `aiogram` event loop proceed without waiting indefinitely.
+First, for the database interaction, you _must_ use an asynchronous MongoDB driver, such as `motor`. This allows MongoDB operations to be non-blocking, letting the `aiogram` event loop proceed without waiting indefinitely.
 
 Second, it is advisable to create a custom state storage class that uses asynchronous operations with MongoDB. Here's how that might look in a practical example:
 
@@ -149,6 +149,7 @@ if __name__ == '__main__':
     from aiogram import executor
     executor.start_polling(dp, skip_updates=True)
 ```
+
 This `MongoStorage` class uses `motor` to handle asynchronous database interaction. The `set_data`, `get_data`, `set_state`, `get_state`, `reset_state` methods interact with MongoDB asynchronously. `FSMContext` uses this class to save the data related to each user. Note the `await` calls where necessary; this prevents the blocking behavior previously mentioned.
 
 Let's look at another example. If you're setting up a complex questionnaire using the FSM, you might want to save each answer in real-time to avoid losing data.
@@ -216,6 +217,7 @@ if __name__ == '__main__':
     from aiogram import executor
     executor.start_polling(dp, skip_updates=True)
 ```
+
 This example showcases a more complex FSM usage, where user responses are stored as data within the state. Every step of the questionnaire will be saved using the `MongoStorage` class.
 
 For further study, I recommend "Programming with asyncio" by Yury Selivanov. The book provides very detailed information about asynchronous programming in Python. Additionally, the MongoDB documentation itself, especially the sections on the `motor` driver, are essential resources. Also exploring the `aiogram`'s API reference, particularly on state storage implementation, would prove highly valuable.

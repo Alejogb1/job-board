@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-rasa-handle-custom-actions-after-a-response-is-selected"
 ---
 
-Alright, let's tackle this. The issue of managing custom actions *after* a response has been selected in Rasa is something I’ve encountered quite a bit over the years, particularly when building conversational interfaces that go beyond simple question-answer flows. It's not just about generating a text response; it's about orchestrating the complete interaction lifecycle, which often involves executing business logic, updating databases, or interacting with external services. Let’s break down how Rasa facilitates this, avoiding the trap of over-complicating the process.
+, let's tackle this. The issue of managing custom actions _after_ a response has been selected in Rasa is something I’ve encountered quite a bit over the years, particularly when building conversational interfaces that go beyond simple question-answer flows. It's not just about generating a text response; it's about orchestrating the complete interaction lifecycle, which often involves executing business logic, updating databases, or interacting with external services. Let’s break down how Rasa facilitates this, avoiding the trap of over-complicating the process.
 
-The key is understanding that Rasa’s architecture provides us with 'hooks,' essentially strategic places within the dialogue management process where we can insert our custom logic. Specifically, the *after-response selection* phase is handled by what Rasa calls custom actions. These actions are not part of the natural language understanding (nlu) or dialogue management (dm) pipelines directly, but they are triggered by the policy engine as an extension of the intent fulfillment.
+The key is understanding that Rasa’s architecture provides us with 'hooks,' essentially strategic places within the dialogue management process where we can insert our custom logic. Specifically, the _after-response selection_ phase is handled by what Rasa calls custom actions. These actions are not part of the natural language understanding (nlu) or dialogue management (dm) pipelines directly, but they are triggered by the policy engine as an extension of the intent fulfillment.
 
-Think of it like this: the nlu identifies the user's intent, the dm selects a response based on the current dialogue state, and *then* the policy might specify that certain custom actions need to be executed. These actions run in your custom action server – a separate process from the core Rasa server. This separation is essential; it isolates business logic and any potential performance issues with that logic, keeping the core conversational engine responsive. I’ve seen systems falter when actions were embedded directly in the dialogue flow. This architectural choice, of separating the concern, is one of the major reasons Rasa scales well.
+Think of it like this: the nlu identifies the user's intent, the dm selects a response based on the current dialogue state, and _then_ the policy might specify that certain custom actions need to be executed. These actions run in your custom action server – a separate process from the core Rasa server. This separation is essential; it isolates business logic and any potential performance issues with that logic, keeping the core conversational engine responsive. I’ve seen systems falter when actions were embedded directly in the dialogue flow. This architectural choice, of separating the concern, is one of the major reasons Rasa scales well.
 
-The trigger for these custom actions happens in the policy’s predictions; for example, a policy might predict the `utter_greet` template response and simultaneously predict the `action_log_user` custom action. After the text response is delivered (e.g., "Hello, how can I help?"), the `action_log_user` custom action is executed. This is important – the response and the action are distinct events. The response is *sent* to the user while the action is *executed* by the action server.
+The trigger for these custom actions happens in the policy’s predictions; for example, a policy might predict the `utter_greet` template response and simultaneously predict the `action_log_user` custom action. After the text response is delivered (e.g., "Hello, how can I help?"), the `action_log_user` custom action is executed. This is important – the response and the action are distinct events. The response is _sent_ to the user while the action is _executed_ by the action server.
 
 The mechanics involve your custom action server exposing an endpoint (often over http) that Rasa calls. Within your action server, you implement the code for each of your custom actions. These actions receive data about the current dialogue state (the tracker) and any slots that have been set and can modify that tracker or interact with external systems.
 
@@ -38,7 +38,7 @@ class ActionLogInteraction(Action):
        return []
 ```
 
-In this example, `ActionLogInteraction` retrieves the latest user intent and the text of the dispatched response from the tracker and dispatcher respectively. It then logs this information. The key thing is that this logic is *after* the dispatcher actually delivers the message. We also return an empty list ( `[]` ), indicating we are not modifying the conversational flow.
+In this example, `ActionLogInteraction` retrieves the latest user intent and the text of the dispatched response from the tracker and dispatcher respectively. It then logs this information. The key thing is that this logic is _after_ the dispatcher actually delivers the message. We also return an empty list ( `[]` ), indicating we are not modifying the conversational flow.
 
 **Example 2: Updating a User's Profile**
 
@@ -70,7 +70,7 @@ class ActionUpdateUserProfile(Action):
         return []
 ```
 
-Here, `ActionUpdateUserProfile` retrieves the `user_name` slot, makes a request to an external API, and handles errors appropriately. This action does not directly impact what the user sees but it does alter the state of the world *after* the user input and the response. This is a crucial aspect of actions; they enable your bot to do things, not just say things.
+Here, `ActionUpdateUserProfile` retrieves the `user_name` slot, makes a request to an external API, and handles errors appropriately. This action does not directly impact what the user sees but it does alter the state of the world _after_ the user input and the response. This is a crucial aspect of actions; they enable your bot to do things, not just say things.
 
 **Example 3: Triggering External Processes**
 
@@ -114,4 +114,4 @@ These examples illustrate the core mechanism: you define custom actions in your 
 
 To really understand this in detail, I’d recommend diving into the Rasa documentation, particularly the section on custom actions and policies. Also, the book “Natural Language Understanding with Python” by Dale, et al. provides a good foundational understanding of the underlying concepts of conversational AI and helps solidify your understanding of Rasa’s architecture. For a more theoretical treatment, consider reading “Speech and Language Processing” by Jurafsky and Martin which, while broader, gives the necessary context for a deeper comprehension.
 
-In practice, mastering the art of crafting good custom actions lies not just in the code, but in the careful design of your conversational flow and the judicious use of the tracker’s state management. Remember that actions are about *doing,* they are extensions of your bot’s capabilities beyond simply responding to user queries. It's all about creating that seamless and robust conversational experience.
+In practice, mastering the art of crafting good custom actions lies not just in the code, but in the careful design of your conversational flow and the judicious use of the tracker’s state management. Remember that actions are about _doing,_ they are extensions of your bot’s capabilities beyond simply responding to user queries. It's all about creating that seamless and robust conversational experience.

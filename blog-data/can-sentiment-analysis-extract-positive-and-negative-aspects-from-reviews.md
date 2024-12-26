@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "can-sentiment-analysis-extract-positive-and-negative-aspects-from-reviews"
 ---
 
-Alright, let's talk sentiment analysis and its capacity to dissect reviews into positive and negative components. It's a question I've grappled with firsthand, particularly during my time developing a customer feedback system for an e-commerce platform a few years back. We weren't just interested in an overall sentiment score; we needed to pinpoint *why* a user felt a certain way. The short answer is yes, sentiment analysis can absolutely extract positive and negative aspects from reviews, but the devil, as always, is in the details.
+, let's talk sentiment analysis and its capacity to dissect reviews into positive and negative components. It's a question I've grappled with firsthand, particularly during my time developing a customer feedback system for an e-commerce platform a few years back. We weren't just interested in an overall sentiment score; we needed to pinpoint _why_ a user felt a certain way. The short answer is yes, sentiment analysis can absolutely extract positive and negative aspects from reviews, but the devil, as always, is in the details.
 
 The fundamental process involves analyzing text and determining its emotional tone. At its most basic, this means identifying words or phrases associated with positivity or negativity. Think of terms like "excellent," "fantastic," or "love" as positive indicators, and words like "terrible," "awful," or "hate" as negative ones. However, it’s far from as simple as keyword matching. Context plays a huge role. "Not bad" doesn't indicate strong negativity despite containing "bad." We need models that understand nuances like negation, intensity, and even sarcasm.
 
-The extraction of specific aspects, such as features of a product, requires more than just general sentiment analysis. We typically use techniques known as aspect-based sentiment analysis (absa). Absa goes beyond overall polarity and aims to identify the specific aspects of a product or service that are being discussed and the sentiment towards each of these aspects. For example, in a phone review, "The camera takes amazing pictures, but the battery life is terrible," we want to understand that the sentiment towards the *camera* is positive while the sentiment towards the *battery life* is negative.
+The extraction of specific aspects, such as features of a product, requires more than just general sentiment analysis. We typically use techniques known as aspect-based sentiment analysis (absa). Absa goes beyond overall polarity and aims to identify the specific aspects of a product or service that are being discussed and the sentiment towards each of these aspects. For example, in a phone review, "The camera takes amazing pictures, but the battery life is terrible," we want to understand that the sentiment towards the _camera_ is positive while the sentiment towards the _battery life_ is negative.
 
 Here's where a few practical methods come into play. One common technique involves using pre-trained transformer models, like those based on BERT or RoBERTa, fine-tuned for absa tasks. These models are capable of capturing the intricate relationships between words within a sentence and are often trained on large datasets of annotated reviews.
 
@@ -36,7 +36,7 @@ sentiment_scores = analyze_sentiment(review_text)
 print(f"Sentiment Scores: {sentiment_scores}")
 # Expected Output:  {'neg': 0.0, 'neu': 0.357, 'pos': 0.643, 'compound': 0.802}
 
-review_text_negative = "The screen is terrible, but the battery is okay"
+review_text_negative = "The screen is terrible, but the battery is "
 sentiment_scores_negative = analyze_sentiment(review_text_negative)
 print(f"Sentiment Scores: {sentiment_scores_negative}")
 # Expected Output: {'neg': 0.465, 'neu': 0.535, 'pos': 0.0, 'compound': -0.6249}
@@ -44,7 +44,7 @@ print(f"Sentiment Scores: {sentiment_scores_negative}")
 
 ```
 
-This first snippet demonstrates a simple sentiment analysis using NLTK's VADER lexicon. It assigns a positive, negative, and neutral score to a given text, along with a compound score indicating overall sentiment. This illustrates a foundational step but is insufficient for extracting specific aspects. VADER doesn't really identify *what* is causing the sentiment, but rather just computes a score for the text.
+This first snippet demonstrates a simple sentiment analysis using NLTK's VADER lexicon. It assigns a positive, negative, and neutral score to a given text, along with a compound score indicating overall sentiment. This illustrates a foundational step but is insufficient for extracting specific aspects. VADER doesn't really identify _what_ is causing the sentiment, but rather just computes a score for the text.
 
 For more nuanced aspect extraction, we can move on to more involved techniques, using a pre-trained transformer, albeit without full fine-tuning in this example for brevity:
 
@@ -112,6 +112,7 @@ extracted_2 = extract_aspects_and_sentiment(review_2)
 print(f"Extracted: {extracted_2}")
 # Expected Output: {'aspects': ['software', 'support'], 'sentiments': ['amazing', 'awful']}
 ```
+
 The third snippet shows an example of dependency parsing to identify aspects (nouns) and sentiment (adjectives). This is rudimentary, focusing on parts of speech, rather than sophisticated dependency trees for relating aspects and sentiments directly and accurately, this is often handled with a dedicated dependency parser. But it conveys the general approach. Note that here, we do not relate the aspects and sentiments, but in a real use case, the parser would be used to link the 'beautiful' sentiment to the 'screen' aspect and 'terrible' sentiment to the 'weight' aspect.
 
 For further exploration of these methods, I'd recommend looking into several key resources. For a deep dive into natural language processing (nlp), "speech and language processing" by Daniel Jurafsky and James H. Martin is an authoritative text covering a very wide range of concepts, including dependency parsing and semantic analysis. For a more specific focus on transformer models, Vaswani et al.'s "attention is all you need" paper is crucial, which you can easily find with any search engine. For practical implementations, the documentation of libraries like `transformers` (from huggingface) and `nltk` are essential. There are also many research papers specifically dedicated to absa tasks. A good place to start is to search for papers on "aspect-based sentiment analysis using transformers" or "dependency parsing for aspect extraction" on academic databases like ACM digital library or IEEE xplore.

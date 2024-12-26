@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-key-value-pairs-to-a-hash-within-a-rails-model-without-altering-the-models-definition"
 ---
 
-Okay, let’s unpack this. I’ve definitely bumped into this scenario a few times, usually when dealing with legacy systems where modifying the core model schema is either impractical or carries too much risk. The core challenge, as you’ve noted, is adding supplementary data—essentially key-value pairs—to a model without altering its database table structure or directly injecting new methods. We're aiming for a flexible, maintainable approach.
+, let’s unpack this. I’ve definitely bumped into this scenario a few times, usually when dealing with legacy systems where modifying the core model schema is either impractical or carries too much risk. The core challenge, as you’ve noted, is adding supplementary data—essentially key-value pairs—to a model without altering its database table structure or directly injecting new methods. We're aiming for a flexible, maintainable approach.
 
 My first encounter with this was several years back while working on a large e-commerce platform. Product descriptions had become incredibly nuanced, requiring attributes that were too specific to be added as columns to the product table without blowing out its schema. What we needed was a way to dynamically attach metadata to each product. That's when I really started appreciating the power of options that didn’t involve schema changes.
 
@@ -111,7 +111,7 @@ class Product < ApplicationRecord
 end
 ```
 
-The inclusion of `ActiveModel::AttributeMethods` is critical here, it provides the foundation for dynamic method generation. The `attribute_method_prefix 'meta_'` line indicates that all methods beginning with 'meta_' should be handled dynamically using our defined `meta_get` and `meta_set` methods which interact with the instance variable @metadata. The `define_attribute_methods` line lets ActiveModel know what methods the prefix should be applied to.
+The inclusion of `ActiveModel::AttributeMethods` is critical here, it provides the foundation for dynamic method generation. The `attribute_method_prefix 'meta_'` line indicates that all methods beginning with 'meta\_' should be handled dynamically using our defined `meta_get` and `meta_set` methods which interact with the instance variable @metadata. The `define_attribute_methods` line lets ActiveModel know what methods the prefix should be applied to.
 
 Here’s the code in practice:
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-my-cnn-returning-tokens-instead-or-readable-labels"
 ---
 
-alright, so you've got a convolutional neural network (cnn) that's spitting out numerical tokens instead of, well, actual labels. i’ve been there, trust me. it’s a common gotcha, and it usually boils down to how the output layer is set up and how the model's final activation is handled. let’s walk through this.
+, so you've got a convolutional neural network (cnn) that's spitting out numerical tokens instead of, well, actual labels. i’ve been there, trust me. it’s a common gotcha, and it usually boils down to how the output layer is set up and how the model's final activation is handled. let’s walk through this.
 
 first off, let me tell you about the time i was working on a project that involved classifying satellite images. it was supposed to identify different types of land cover like forests, urban areas, and water bodies. i trained my cnn, feeling pretty good about my data preprocessing and architecture. then the output was just a bunch of numbers, like `[3, 1, 2, 0, 3]` – no labels, nothing meaningful. i spent a whole evening thinking i had messed up the data feeding process, and i had, but not exactly where i thought i had. that’s when i realized i had fallen into this very same trap of the output layer and the interpretation of the results.
 
@@ -120,6 +120,7 @@ output = model(dummy_input)
 predicted_classes = torch.argmax(output, dim=1) # get index with the highest probability
 print(predicted_classes) # prints the index corresponding to the predicted label
 ```
+
 notice how we added a softmax layer as part of the model and the output is now a list of probabilities. we still need to extract the actual label by using an `argmax` operation.
 
 so, to sum it up, a cnn gives you numerical scores, which are the logits. to get probabilities you apply a `softmax`. once you have probabilities you should get the label that corresponds to the highest probability using an `argmax`. most likely, this is the step you are missing.

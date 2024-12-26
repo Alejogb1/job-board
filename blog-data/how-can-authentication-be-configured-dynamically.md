@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-authentication-be-configured-dynamically"
 ---
 
-Alright, let's talk about dynamic authentication configuration – it’s a subject I've certainly navigated a few times, especially when scaling services. I remember one particularly challenging project where we had to accommodate an ever-growing list of authentication providers and methods; hardcoding was just not sustainable. That's when we really delved into the world of dynamic configuration. It’s about moving away from static, compile-time configurations to a system that adapts to changes at runtime. Instead of a rigid setup, imagine a flexible architecture where you can introduce new authentication mechanisms or tweak existing ones without needing to redeploy your entire application.
+, let's talk about dynamic authentication configuration – it’s a subject I've certainly navigated a few times, especially when scaling services. I remember one particularly challenging project where we had to accommodate an ever-growing list of authentication providers and methods; hardcoding was just not sustainable. That's when we really delved into the world of dynamic configuration. It’s about moving away from static, compile-time configurations to a system that adapts to changes at runtime. Instead of a rigid setup, imagine a flexible architecture where you can introduce new authentication mechanisms or tweak existing ones without needing to redeploy your entire application.
 
 The essence of dynamic authentication lies in abstracting the authentication process from the application's core logic. It’s less about the ‘how’ and more about the ‘what’ – what authentication methods are available, what settings are associated with them, and how to discover and utilize these configurations effectively. This typically involves a configuration store, an authentication service, and some glue code to tie them together. You can think of it as a bridge between your core application and any specific authentication method.
 
@@ -12,7 +12,7 @@ A configuration store – that's typically the central piece. It can take many f
 
 In the store, you'd typically hold information like the authentication type (e.g., OAuth2, LDAP, API key), necessary endpoints, client identifiers, secrets, scope requirements, user mapping rules, and so on. All this information is metadata that the authentication service will consume.
 
-Now, the authentication service itself. This acts as an intermediary between your application and the configuration store, responsible for dynamically loading configurations and making authentication decisions. Instead of having the application directly interacting with specific authentication libraries, it talks to this service. The service is responsible for knowing *how* to authenticate given the configurations from the store. This service should ideally implement strategies for refreshing configurations and handling failures, ensuring that changes are seamlessly applied and errors are gracefully managed. We implemented asynchronous reloading of the configuration on a timed interval as a means of ensuring changes were propagated effectively without interrupting the application flow. It's critical this is done in a thread-safe manner, but that's standard fare.
+Now, the authentication service itself. This acts as an intermediary between your application and the configuration store, responsible for dynamically loading configurations and making authentication decisions. Instead of having the application directly interacting with specific authentication libraries, it talks to this service. The service is responsible for knowing _how_ to authenticate given the configurations from the store. This service should ideally implement strategies for refreshing configurations and handling failures, ensuring that changes are seamlessly applied and errors are gracefully managed. We implemented asynchronous reloading of the configuration on a timed interval as a means of ensuring changes were propagated effectively without interrupting the application flow. It's critical this is done in a thread-safe manner, but that's standard fare.
 
 To illustrate these concepts, let’s explore a few code snippets. These are simplified for demonstration, focusing on key principles. Note, I am using python for clarity, but the ideas apply across any ecosystem.
 
@@ -109,7 +109,7 @@ oauth_auth, message = auth_service.authenticate("oauth2", {"client_id": "test_cl
 print(message)
 ```
 
-Here the authentication service determines the authentication strategy based on the `auth_type` provided, leveraging the configurations loaded by the configuration loader. You can extend this with more strategies as required. The key is decoupling the *how* from the *what*.
+Here the authentication service determines the authentication strategy based on the `auth_type` provided, leveraging the configurations loaded by the configuration loader. You can extend this with more strategies as required. The key is decoupling the _how_ from the _what_.
 
 **Example 3: Configuration Refreshing (Conceptual)**
 

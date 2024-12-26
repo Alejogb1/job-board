@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-return-a-subtype-of-a-generic-trait-in-scala"
 ---
 
-Alright, let's tackle this. It's a question that surfaces more often than you'd initially think, especially when you start building complex type hierarchies. I’ve personally spent a fair amount of time navigating this particular corner of Scala's type system, particularly when I was working on a system for processing various types of financial instruments. We had this generic `Instrument` trait, and, of course, different specialized subtypes like `Stock`, `Bond`, and `Option`. The challenge was returning these specific subtypes within a generic context, and doing it in a way that maintains type safety without relying on unsafe casts.
+, let's tackle this. It's a question that surfaces more often than you'd initially think, especially when you start building complex type hierarchies. I’ve personally spent a fair amount of time navigating this particular corner of Scala's type system, particularly when I was working on a system for processing various types of financial instruments. We had this generic `Instrument` trait, and, of course, different specialized subtypes like `Stock`, `Bond`, and `Option`. The challenge was returning these specific subtypes within a generic context, and doing it in a way that maintains type safety without relying on unsafe casts.
 
-The core of the issue lies in the limitations of type erasure and covariance in Scala's generics. When you define a generic trait like `trait Parser[T] { def parse(): T }`, you're essentially saying: "This parser produces a *T*." The problem arises when you have specific implementations – like a `StockParser` or a `BondParser` – that each produce different subtypes of some common base type, say `Instrument`. Directly returning a `T` from `Parser[Instrument]` won’t cut it if your logic actually generates a `Stock`.
+The core of the issue lies in the limitations of type erasure and covariance in Scala's generics. When you define a generic trait like `trait Parser[T] { def parse(): T }`, you're essentially saying: "This parser produces a _T_." The problem arises when you have specific implementations – like a `StockParser` or a `BondParser` – that each produce different subtypes of some common base type, say `Instrument`. Directly returning a `T` from `Parser[Instrument]` won’t cut it if your logic actually generates a `Stock`.
 
 Here are three common patterns that address this situation, each with its own set of trade-offs.
 
@@ -86,7 +86,7 @@ object ParserClient2 {
 }
 ```
 
-Here, `Parser` declares an abstract type member, `Result`, which is constrained to be a subtype of `Instrument`. Specific implementations, like `StockParser` and `BondParser`, specify the concrete type of `Result`. The key point is that the client code knows *exactly* what the `parse` method returns at compile time, through a refined type. The slightly awkward syntax `Parser { type Result = Stock }` helps to illustrate how the abstract type `Result` is defined for this particular parser. This technique provides greater flexibility than explicit parameterization as it decouples the generic type from the implementations. It works particularly well when you need polymorphism on parsers but the implementations differ on their output type.
+Here, `Parser` declares an abstract type member, `Result`, which is constrained to be a subtype of `Instrument`. Specific implementations, like `StockParser` and `BondParser`, specify the concrete type of `Result`. The key point is that the client code knows _exactly_ what the `parse` method returns at compile time, through a refined type. The slightly awkward syntax `Parser { type Result = Stock }` helps to illustrate how the abstract type `Result` is defined for this particular parser. This technique provides greater flexibility than explicit parameterization as it decouples the generic type from the implementations. It works particularly well when you need polymorphism on parsers but the implementations differ on their output type.
 
 **3. Using Path-Dependent Types**
 

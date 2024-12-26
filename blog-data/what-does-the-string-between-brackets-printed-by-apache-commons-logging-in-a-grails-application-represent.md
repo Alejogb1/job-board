@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-does-the-string-between-brackets-printed-by-apache-commons-logging-in-a-grails-application-represent"
 ---
 
-Okay, let's talk about those bracketed strings you see in Apache Commons Logging outputs within a Grails application. I've spent my fair share of debugging sessions staring at those lines, so I understand the question. It's a common point of confusion, especially when you're new to the ecosystem or even just working in a particularly complex application. What we're seeing there, inside the square brackets, isn't some arbitrary string; it's the *logger name*.
+, let's talk about those bracketed strings you see in Apache Commons Logging outputs within a Grails application. I've spent my fair share of debugging sessions staring at those lines, so I understand the question. It's a common point of confusion, especially when you're new to the ecosystem or even just working in a particularly complex application. What we're seeing there, inside the square brackets, isn't some arbitrary string; it's the _logger name_.
 
 In essence, logging frameworks, including Apache Commons Logging (ACL), use logger names to categorize log messages. Think of it like a hierarchical address system for your logs. The deeper into a particular namespace or class a log message originates from, the more specific its logger name becomes, and therefore, the better control you have over its output level. By default, Apache Commons Logging will use the full class name where the logging method was called as the logger name.
 
@@ -12,7 +12,7 @@ Let's break it down further. When you have a log statement like, `log.info("Proc
 
 This granularity is critical. When debugging a performance bottleneck or tracking down an elusive error, being able to selectively increase or decrease the verbosity of different areas of your code is indispensable. Instead of being flooded by an ocean of generic log messages, we can focus on the specific components generating the problem.
 
-Now, Apache Commons Logging itself is an *abstraction* layer. It doesn't directly implement the logging functionality, rather it acts as a facade. It delegates to another logging framework, typically Log4j, Logback, or even java.util.logging. This means the actual handling of the logger names and their output is delegated to one of these underlying implementations.
+Now, Apache Commons Logging itself is an _abstraction_ layer. It doesn't directly implement the logging functionality, rather it acts as a facade. It delegates to another logging framework, typically Log4j, Logback, or even java.util.logging. This means the actual handling of the logger names and their output is delegated to one of these underlying implementations.
 
 The fact that ACL is an abstraction means you could, theoretically, switch the underlying logging framework without changing your logging statements. However, be warned, such shifts might require configuration changes in your underlying implementation's configuration files.
 
@@ -79,7 +79,7 @@ root(Level.INFO, ["STDOUT"])
 logger("com.example.OrderService", Level.DEBUG, ["STDOUT"], false)
 ```
 
-Here, I've set the root log level to `INFO`, meaning only info level or above logs will be shown by default. However, I’ve then created a specific logger configuration for `com.example.OrderService` at `DEBUG` level, *without* `additivity`. This means messages logged from the `OrderService` will have the higher debug verbosity, while others will default to info. If additivity is enabled, logs would be captured by any parent loggers as well. The `false` here specifies to disable additivity.
+Here, I've set the root log level to `INFO`, meaning only info level or above logs will be shown by default. However, I’ve then created a specific logger configuration for `com.example.OrderService` at `DEBUG` level, _without_ `additivity`. This means messages logged from the `OrderService` will have the higher debug verbosity, while others will default to info. If additivity is enabled, logs would be captured by any parent loggers as well. The `false` here specifies to disable additivity.
 
 With this configuration, the log outputs from `orderService.processOrder(1L)` would now look like this:
 
@@ -111,6 +111,6 @@ root(Level.INFO, ["STDOUT"])
 logger("com.example", Level.DEBUG, ["STDOUT"], false)
 ```
 
-Here, I'm setting the log level to `DEBUG` for the entire `com.example` package. This will affect *any* classes within that package. All log outputs with package `com.example` would output `DEBUG` logs. So, if I add another class `com.example.ProductService`, then `com.example.ProductService` logs would be at `DEBUG` level as well.
+Here, I'm setting the log level to `DEBUG` for the entire `com.example` package. This will affect _any_ classes within that package. All log outputs with package `com.example` would output `DEBUG` logs. So, if I add another class `com.example.ProductService`, then `com.example.ProductService` logs would be at `DEBUG` level as well.
 
-In summary, the string between the brackets in Apache Commons Logging output is the logger name, usually the fully qualified class name. It’s your key to managing verbosity and output within your application. Understanding how these logger names work, and how they are configured in your chosen logging implementation is crucial for effectively debugging and maintaining your application. For further reading, I recommend looking into *Logging in Action* by Samual Halliday, and of course, the documentation for Log4j or Logback, depending on your project’s setup. The official documentation for Apache Commons Logging is also invaluable to understand the abstraction and its implications. Knowing this setup can turn logging from an annoyance into a very powerful and precise diagnostic tool.
+In summary, the string between the brackets in Apache Commons Logging output is the logger name, usually the fully qualified class name. It’s your key to managing verbosity and output within your application. Understanding how these logger names work, and how they are configured in your chosen logging implementation is crucial for effectively debugging and maintaining your application. For further reading, I recommend looking into _Logging in Action_ by Samual Halliday, and of course, the documentation for Log4j or Logback, depending on your project’s setup. The official documentation for Apache Commons Logging is also invaluable to understand the abstraction and its implications. Knowing this setup can turn logging from an annoyance into a very powerful and precise diagnostic tool.

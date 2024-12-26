@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-s3keysensor-function-in-airflow-2"
 ---
 
-Okay, let’s unpack the functionality of the `S3KeySensor` in Apache Airflow 2. I've encountered this particular sensor quite a few times in my projects, and it has proven to be an invaluable tool for triggering downstream tasks based on the presence (or absence) of files in Amazon S3. It's more nuanced than a simple file existence check, and understanding its intricacies can save you a lot of debugging time.
+, let’s unpack the functionality of the `S3KeySensor` in Apache Airflow 2. I've encountered this particular sensor quite a few times in my projects, and it has proven to be an invaluable tool for triggering downstream tasks based on the presence (or absence) of files in Amazon S3. It's more nuanced than a simple file existence check, and understanding its intricacies can save you a lot of debugging time.
 
 First off, let’s establish what a sensor generally does in Airflow. It's a task that repeatedly checks a condition. Instead of completing a single unit of work, sensors monitor external systems and only complete when that condition is met. Think of it as an active listener rather than a direct processor. The `S3KeySensor` specifically listens for keys (objects) within an S3 bucket.
 
@@ -65,9 +65,9 @@ with DAG(
     )
 ```
 
-Here, the `wildcard_match=True` parameter instructs the sensor to check for any object that has the prefix `logs/web_server_`. It doesn’t care what follows this, as long as *something* matches that prefix.
+Here, the `wildcard_match=True` parameter instructs the sensor to check for any object that has the prefix `logs/web_server_`. It doesn’t care what follows this, as long as _something_ matches that prefix.
 
-Finally, let’s consider a more unusual scenario where we're waiting for a file to be *removed* from the bucket (again, not super common but occasionally necessary).
+Finally, let’s consider a more unusual scenario where we're waiting for a file to be _removed_ from the bucket (again, not super common but occasionally necessary).
 
 ```python
 from airflow.providers.amazon.aws.sensors.s3 import S3KeySensor
@@ -97,4 +97,4 @@ In this example, the sensor will continue to poll S3 until the key `temp_files/o
 Now, a few important points I have picked up from practice. Firstly, be mindful of the polling interval. Too frequent and you might generate unnecessary API calls to AWS, potentially increasing costs. Too infrequent, and your workflow might suffer from unnecessary delays. Secondly, thoroughly test your Jinja templating if you're using dynamic key generation. Small syntax errors in the templates can be easily missed and can lead to sensor tasks perpetually waiting. Lastly, be aware of how AWS IAM permissions are set up, because the Airflow worker process running the sensor needs permission to access your S3 bucket.
 
 For those who are keen to dive deeper into sensors and how they operate in Airflow, I would highly recommend spending time with the official Airflow documentation, especially the section on sensors. Furthermore, for a solid understanding of the interaction with S3, a thorough look through boto3's documentation for the S3 service is advisable. I also found "Designing Data-Intensive Applications" by Martin Kleppmann particularly useful for understanding the underlying distributed system considerations for this kind of operation, even though it's not exclusively focused on Airflow.
-The goal is not just to get the sensor working, but to understand *why* it works and how it interacts with the underlying systems, which is often what separates proficiency from merely making something function.
+The goal is not just to get the sensor working, but to understand _why_ it works and how it interacts with the underlying systems, which is often what separates proficiency from merely making something function.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-resnet50-failing-to-identify-image-errors"
 ---
 
-Okay, let's unpack this. The seemingly straightforward issue of a ResNet50 model struggling with image errors actually has quite a few layers. It's not a problem of the model being inherently bad – far from it. ResNet50 is a robust architecture, but its strengths might not always align with the specific types of errors you’re trying to detect. I've seen similar scenarios play out in a few projects, particularly when dealing with unusual imaging artifacts, and the solutions often require a nuanced approach.
+, let's unpack this. The seemingly straightforward issue of a ResNet50 model struggling with image errors actually has quite a few layers. It's not a problem of the model being inherently bad – far from it. ResNet50 is a robust architecture, but its strengths might not always align with the specific types of errors you’re trying to detect. I've seen similar scenarios play out in a few projects, particularly when dealing with unusual imaging artifacts, and the solutions often require a nuanced approach.
 
 First off, let’s be clear on what we mean by "image errors." This could refer to anything from compression artifacts and noise to more complex aberrations like lens distortions or blur. The key point is that these errors often exist outside the scope of what ResNet50 was originally trained to recognize: objects, scenes, and patterns that are typically “clean” and well-defined. ImageNet, the dataset most often used to pre-train ResNet50, doesn't focus heavily on the types of imperfections you might be interested in identifying. This inherent bias in the training data is a crucial factor to consider.
 
@@ -124,7 +124,7 @@ This approach will often lead to better results. By training with a labeled data
 
 **Snippet 3: Using Specialized Modules (Improved Localization & Error Detection)**
 
-To further enhance error detection and provide not only classification but also *localization*, consider incorporating specialized modules specifically designed for anomaly detection, or even using a different type of network.
+To further enhance error detection and provide not only classification but also _localization_, consider incorporating specialized modules specifically designed for anomaly detection, or even using a different type of network.
 
 ```python
 import torch
@@ -161,6 +161,7 @@ anomaly_map = predict_anomaly(image_path_scratched)
 print(f"Anomaly Map: {anomaly_map.shape}") # Will output something like torch.Size([1, 1, 224, 224]) which is an anomaly map.
 # Further processing of the anomaly map is required to classify or segment error regions.
 ```
+
 Here, by using an anomaly detection model, which is better-suited to finding uncommon or unique patterns, we get both a sense of whether an error exists and, potentially, where it is located within the image. This combination provides much more robust information for diagnosing defects, especially when compared to the raw classification provided by ResNet50 in the initial scenario. Models like autoencoders or transformers can also be useful in error detection, depending on your specific task and the error characteristics.
 
 For a deeper dive into these concepts, I'd recommend looking into papers on anomaly detection in computer vision and domain adaptation techniques. Specifically, "Deep Learning for Anomaly Detection: A Comprehensive Review" by Pang et al. (2020) and "Domain Adaptation for Image Recognition" by Hoffman et al. (2018) are excellent starting points. Also, I strongly suggest studying "Deep Residual Learning for Image Recognition" by He et al. (2016) for a deeper understanding of the original ResNet architecture and its properties.

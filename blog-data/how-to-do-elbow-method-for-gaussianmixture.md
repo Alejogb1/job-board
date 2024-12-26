@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-elbow-method-for-gaussianmixture"
 ---
 
-alright, so you're asking about the elbow method for gaussian mixture models, eh? i've been down that road more than a few times, so let me lay out what i've picked up over the years. it's not always a walk in the park, i tell ya.
+, so you're asking about the elbow method for gaussian mixture models, eh? i've been down that road more than a few times, so let me lay out what i've picked up over the years. it's not always a walk in the park, i tell ya.
 
 first off, the elbow method isn't some magical, one-size-fits-all solution. it's a heuristic, a rule of thumb, if you will. it's about finding a balance point, like when you are tuning an old radio, where the cost of adding more components (in this case, more gaussian components) doesn't justify the gain in fit. we're trying to avoid overfitting and also underfitting the data.
 
@@ -101,9 +101,9 @@ this example uses the iris dataset. the bic is plotted, which is another criteri
 
 now, some things to keep in mind when using the elbow method:
 
-*   it’s not always clear-cut. sometimes, you won't get a perfect elbow. you might have multiple elbows or a very smooth curve with no clear bend. this can happen when the data doesn't fit the assumptions of gmms or when your data does not have well defined clusters in general.
-*   it's a visual method and can be subjective. one person’s elbow is another person’s slightly curved line. you have to use a bit of domain knowledge too.
-*   it does not guarantee the optimal number of components. it only gives a reasonable guess. you'll often have to combine this with other techniques like information criteria (aic or bic).
+- it’s not always clear-cut. sometimes, you won't get a perfect elbow. you might have multiple elbows or a very smooth curve with no clear bend. this can happen when the data doesn't fit the assumptions of gmms or when your data does not have well defined clusters in general.
+- it's a visual method and can be subjective. one person’s elbow is another person’s slightly curved line. you have to use a bit of domain knowledge too.
+- it does not guarantee the optimal number of components. it only gives a reasonable guess. you'll often have to combine this with other techniques like information criteria (aic or bic).
 
 now, for resources, i always recommend going back to the fundamentals. for understanding gmm, "pattern recognition and machine learning" by christopher bishop is a gold standard, it's dense but covers the topic rigorously. for a more practical view on clustering techniques in general, check out “elements of statistical learning” by hastie, tibshirani and friedman, they have good sections on gaussian mixture modeling and model selection, including the use of methods like aic or bic which are similar in nature to the elbow method.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-ruby-regular-expressions-mask-sensitive-information"
 ---
 
-Alright, let's tackle this. Masking sensitive data using regular expressions in Ruby is a common task, and something I've certainly spent time refining over the years, especially when dealing with logging and data sanitization pipelines. The key is to be both precise and flexible. You need patterns that effectively capture the sensitive elements, but you also need to ensure that you're not inadvertently mangling data you *don't* want to alter. The challenge lies in striking that delicate balance.
+, let's tackle this. Masking sensitive data using regular expressions in Ruby is a common task, and something I've certainly spent time refining over the years, especially when dealing with logging and data sanitization pipelines. The key is to be both precise and flexible. You need patterns that effectively capture the sensitive elements, but you also need to ensure that you're not inadvertently mangling data you _don't_ want to alter. The challenge lies in striking that delicate balance.
 
 My experience on a project involving secure payment processing, specifically, had me working with a complex Ruby on Rails application where card numbers and personal identification information needed to be scrubbed from log files. This wasn't a simple search-and-replace; we had to handle different card formats, various id patterns, and the potential for errors that could leave some data exposed. Let’s walk through the approaches, and I'll illustrate with actual code snippets I've used before.
 
@@ -36,14 +36,14 @@ puts "Masked text 3: #{mask_credit_card(text3)}"
 
 In this code:
 
-*   `(\d{4})` captures a sequence of four digits, and each capture group is surrounded by parentheses.
-*   `[- ]?` matches an optional hyphen or space, catering for varied formats.
-*   The replacement string `****-****-****-****` masks each group while retaining the structure.
-*   The output demonstrates the effect. The first and third cases are properly masked, while the second one is unaffected because there are no hyphens or spaces. This highlights the importance of having a specific pattern for sensitive data masking.
+- `(\d{4})` captures a sequence of four digits, and each capture group is surrounded by parentheses.
+- `[- ]?` matches an optional hyphen or space, catering for varied formats.
+- The replacement string `****-****-****-****` masks each group while retaining the structure.
+- The output demonstrates the effect. The first and third cases are properly masked, while the second one is unaffected because there are no hyphens or spaces. This highlights the importance of having a specific pattern for sensitive data masking.
 
 **Scenario 2: Masking Social Security Numbers**
 
-Social security numbers are another piece of sensitive information. In the United States, they are typically in the format `XXX-XX-XXXX`. However, relying only on a simple `\d` regex can lead to over-masking data that *isn't* a SSN but happens to have a similar numeric pattern. In the previous project, a mistake in a regex pattern led to masking portions of dates in log files, something that was incredibly annoying during debugging. Here's a more targeted approach:
+Social security numbers are another piece of sensitive information. In the United States, they are typically in the format `XXX-XX-XXXX`. However, relying only on a simple `\d` regex can lead to over-masking data that _isn't_ a SSN but happens to have a similar numeric pattern. In the previous project, a mistake in a regex pattern led to masking portions of dates in log files, something that was incredibly annoying during debugging. Here's a more targeted approach:
 
 ```ruby
 def mask_ssn(text)
@@ -65,12 +65,13 @@ puts "Masked text 6: #{mask_ssn(text6)}"
 ```
 
 In this code:
-* The regex pattern `(\d{3})-(\d{2})-(\d{4})` specifically looks for the hypenated groups.
-*   The output displays how only the text matching the correct SSN format is masked, without affecting dates or other phone numbers with similar formats.
+
+- The regex pattern `(\d{3})-(\d{2})-(\d{4})` specifically looks for the hypenated groups.
+- The output displays how only the text matching the correct SSN format is masked, without affecting dates or other phone numbers with similar formats.
 
 **Scenario 3: Masking Arbitrary Sensitive Information with Contextual Clues**
 
-Sometimes, the data you need to mask isn't in a strict format but can be identified by context, such as "user id" or "api key." In this scenario, we need more complex patterns that identify the keyword *and* the value.
+Sometimes, the data you need to mask isn't in a strict format but can be identified by context, such as "user id" or "api key." In this scenario, we need more complex patterns that identify the keyword _and_ the value.
 
 ```ruby
 def mask_api_keys(text)
@@ -99,11 +100,12 @@ puts "Masked text 10: #{mask_api_keys(text10)}"
 ```
 
 In this code:
-*   `(api[-_ ]?key|apikey)` matches "api key", "api-key", "api_key", or "apikey" (case-insensitive), providing flexibility on formatting. The `i` at the end of the regex denotes the match as case insensitive.
-*   `[:= ]*` matches any number of spaces, colons, or equal signs.
-*   `([a-zA-Z0-9-]+)` matches the actual api key, which usually consists of alphanumeric characters and hyphens.
-*   The block `do ... end` uses `Regexp.last_match` to access matched groups, allowing us to replace the api key with asterisks but preserve the key name, which is a key principle to allow for debugging (although never reveal the actual value.)
-* The output shows the masking operation is effective in the first two cases while cases 9 and 10 are not matched.
+
+- `(api[-_ ]?key|apikey)` matches "api key", "api-key", "api_key", or "apikey" (case-insensitive), providing flexibility on formatting. The `i` at the end of the regex denotes the match as case insensitive.
+- `[:= ]*` matches any number of spaces, colons, or equal signs.
+- `([a-zA-Z0-9-]+)` matches the actual api key, which usually consists of alphanumeric characters and hyphens.
+- The block `do ... end` uses `Regexp.last_match` to access matched groups, allowing us to replace the api key with asterisks but preserve the key name, which is a key principle to allow for debugging (although never reveal the actual value.)
+- The output shows the masking operation is effective in the first two cases while cases 9 and 10 are not matched.
 
 It is crucial to stress that regular expressions alone might not be sufficient for all complex data-masking scenarios, particularly with highly varied data formats. In those cases, using techniques such as tokenization and format-preserving encryption (FPE) is necessary. However, for a significant percentage of data sanitization, a well-crafted regex is highly effective.
 

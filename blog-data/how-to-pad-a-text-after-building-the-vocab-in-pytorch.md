@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-pad-a-text-after-building-the-vocab-in-pytorch"
 ---
 
-alright, so you're dealing with text padding after creating your vocabulary in pytorch, right? i've been there, more times than i'd like to remember. it's a classic gotcha when you're starting to get serious with sequence data. let me share what i've learned over the years, and a couple of things that have saved my bacon (and my precious gpu time).
+, so you're dealing with text padding after creating your vocabulary in pytorch, right? i've been there, more times than i'd like to remember. it's a classic gotcha when you're starting to get serious with sequence data. let me share what i've learned over the years, and a couple of things that have saved my bacon (and my precious gpu time).
 
 basically, you've built your vocabulary – you've turned all your words or tokens into unique integer ids. that's great. but when you're feeding sequences to your neural network, they need to be the same length. you can't just throw in variable-length sequences, at least not without some extra work (like using masking which is another beast for another time). that’s where padding comes in. we add extra tokens—usually a special token representing "padding"—to the end of shorter sequences until they match the length of the longest sequence in your batch.
 
@@ -106,7 +106,7 @@ padded_tensor = pad_sequences(id_sequences, pad_token)
 print(padded_tensor)
 ```
 
-here, i've broken it down into steps. we use `get_tokenizer` from `torchtext` to tokenize our text (we use a basic tokenizer here, but you can select others), then we build a vocab using `build_vocab_from_iterator` and the tokenized list. we add a `<unk>` and `<pad>` special tokens which we need. then we map each sequence to it's integer ids using our vocabulary.  finally, we use the same `pad_sequence` as before. this is how we achieve padding after building the vocab. the output should be a pytorch tensor.
+here, i've broken it down into steps. we use `get_tokenizer` from `torchtext` to tokenize our text (we use a basic tokenizer here, but you can select others), then we build a vocab using `build_vocab_from_iterator` and the tokenized list. we add a `<unk>` and `<pad>` special tokens which we need. then we map each sequence to it's integer ids using our vocabulary. finally, we use the same `pad_sequence` as before. this is how we achieve padding after building the vocab. the output should be a pytorch tensor.
 
 one thing i have learned over the years is that how and when do you do it also impacts your training. sometimes, depending on the problem, you might not need it per batch but per dataset. and it will also depend if the padding is done pre-training or if it is dynamic on the fly per batch, which could also improve model training. but that depends entirely on the use case. let's do another example of dynamically padding sequences.
 
@@ -189,7 +189,8 @@ dataloader = DataLoader(dataset, batch_size=2, shuffle=True, collate_fn=dataset.
 for batch in dataloader:
     print(batch)
 ```
-here we create a custom dataset and override the `collate_fn` method which provides a way to define how a batch is created from the data.  inside the `collate_fn`, we pad the data using the same `pad_sequence`. This is more efficient as we are not pre-padding the data. so that means each batch can be dynamically padded to its needed size and reduce computational load.
+
+here we create a custom dataset and override the `collate_fn` method which provides a way to define how a batch is created from the data. inside the `collate_fn`, we pad the data using the same `pad_sequence`. This is more efficient as we are not pre-padding the data. so that means each batch can be dynamically padded to its needed size and reduce computational load.
 
 finally, and just so you don't end up staring at exploding gradients, pay attention to what token you're using as padding. it should not be a token that represents some real word in your text; otherwise, your model will become confused. and, as the final advice, never assume that your padding is correct, print it, look at it, visualize it. in summary, always double check.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-arent-images-displaying-on-my-github-pages-site-after-adding-a-custom-domain"
 ---
 
-Okay, let's tackle this. I’ve seen this issue crop up more times than I care to count, and it's usually a subtle combination of factors rather than one glaring mistake. When you’re moving a GitHub Pages site over to a custom domain, image display problems are often tied to how paths are being interpreted relative to the new base url. Let's unpack that.
+, let's tackle this. I’ve seen this issue crop up more times than I care to count, and it's usually a subtle combination of factors rather than one glaring mistake. When you’re moving a GitHub Pages site over to a custom domain, image display problems are often tied to how paths are being interpreted relative to the new base url. Let's unpack that.
 
 The core problem usually stems from a mismatch between how your project references its assets, specifically images, and the way those paths are interpreted once the custom domain is in place. Think of it as navigating a city with familiar street names and suddenly those names change, requiring you to recalibrate your entire internal map. When you deploy on GitHub Pages directly (username.github.io/repo), the base path is straightforward. However, once a custom domain like `mydomain.com` is set up, that base path changes and your image paths may not reflect that.
 
@@ -21,13 +21,13 @@ If your images are called like this in your html file:
 ```html
 <!-- example.html -->
 <html>
-<head>
-  <title>My Page</title>
-</head>
-<body>
-  <img src="images/logo.png" alt="My Logo">
-  <p>Some Content Here</p>
-</body>
+  <head>
+    <title>My Page</title>
+  </head>
+  <body>
+    <img src="images/logo.png" alt="My Logo" />
+    <p>Some Content Here</p>
+  </body>
 </html>
 ```
 
@@ -51,13 +51,13 @@ You might think root-relative paths (starting with a `/`) are a safe bet. Howeve
 ```html
 <!-- another_example.html -->
 <html>
-<head>
-  <title>My Page</title>
-</head>
-<body>
-  <img src="/images/product.jpg" alt="Product Image">
-  <p>More Content Here</p>
-</body>
+  <head>
+    <title>My Page</title>
+  </head>
+  <body>
+    <img src="/images/product.jpg" alt="Product Image" />
+    <p>More Content Here</p>
+  </body>
 </html>
 ```
 
@@ -70,18 +70,18 @@ The solution in this case is two-fold:
     ```html
     <!-- corrected_example.html -->
     <html>
-    <head>
-    <title>My Page</title>
-     <base href="/my-project/">
-    </head>
-    <body>
-     <img src="/images/product.jpg" alt="Product Image">
-     <p>More Content Here</p>
-    </body>
+      <head>
+        <title>My Page</title>
+        <base href="/my-project/" />
+      </head>
+      <body>
+        <img src="/images/product.jpg" alt="Product Image" />
+        <p>More Content Here</p>
+      </body>
     </html>
     ```
 
-2. **If your site is hosted in a project with a repository name**. You should, in general, avoid the use of root paths in the code. In this case, using relative paths in html code, `src="images/product.jpg"` is a better option.
+2.  **If your site is hosted in a project with a repository name**. You should, in general, avoid the use of root paths in the code. In this case, using relative paths in html code, `src="images/product.jpg"` is a better option.
 
 **Scenario 3: Caching Issues and CDN Considerations**
 
@@ -93,8 +93,8 @@ Also, be mindful if you're utilizing a build process, such as with webpack or pa
 
 To get deeper into these topics, I recommend delving into resources that cover web deployment strategies and URL resolution. Specifically, the following are good resources:
 
-*   **"HTTP: The Definitive Guide" by David Gourley and Brian Totty:** This book is a comprehensive resource for all things related to HTTP and how it affects web development. Chapter 24, "Caching," and chapter 12, "URL Syntax and Semantics," are particularly relevant.
-*   **The MDN web docs on URLs:** The Mozilla Developer Network (MDN) has extensive documentation on how URLs work. Search for ‘URL’ to learn the formal syntax and how they are used in different situations.
-*   **The official github pages documentation:** It provides insights regarding how to use custom domains and is an essential reference.
+- **"HTTP: The Definitive Guide" by David Gourley and Brian Totty:** This book is a comprehensive resource for all things related to HTTP and how it affects web development. Chapter 24, "Caching," and chapter 12, "URL Syntax and Semantics," are particularly relevant.
+- **The MDN web docs on URLs:** The Mozilla Developer Network (MDN) has extensive documentation on how URLs work. Search for ‘URL’ to learn the formal syntax and how they are used in different situations.
+- **The official github pages documentation:** It provides insights regarding how to use custom domains and is an essential reference.
 
 In summary, image display issues after setting up a custom domain on GitHub Pages are usually rooted in path mismatches, which can stem from fully relative paths, misused root-relative paths, and caching. By systematically addressing these points, verifying that the deploy folder has all of the proper resources, and ensuring your pathing is accurate, you should be able to get your images working correctly. Always be methodical in your troubleshooting, check your browser’s developer tools for 404 errors related to image requests, and examine your build process to ensure everything is configured correctly for your custom domain.

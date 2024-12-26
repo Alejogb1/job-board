@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-terraforms-foreach-be-used-to-extract-resource-ids-from-a-map-of-objects"
 ---
 
-Alright, let's tackle this. I remember vividly a project a few years back where we were managing a complex infrastructure involving dozens of virtual machines, each with unique configurations defined in a large, cumbersome json file. Moving this into a more manageable, code-driven terraform setup quickly became paramount, and, naturally, `for_each` became our go-to tool. So, the core problem is how to gracefully retrieve specific resource identifiers from a map of objects using `for_each`. It might sound trivial, but when you have dozens of resources with interdependent relationships, the structure of that map can become quite a headache if not handled precisely.
+, let's tackle this. I remember vividly a project a few years back where we were managing a complex infrastructure involving dozens of virtual machines, each with unique configurations defined in a large, cumbersome json file. Moving this into a more manageable, code-driven terraform setup quickly became paramount, and, naturally, `for_each` became our go-to tool. So, the core problem is how to gracefully retrieve specific resource identifiers from a map of objects using `for_each`. It might sound trivial, but when you have dozens of resources with interdependent relationships, the structure of that map can become quite a headache if not handled precisely.
 
-The challenge stems from the inherent nature of `for_each`. It iterates over *keys* of a map or the *elements* of a set, not the values directly within the map if those values are objects. The goal isn't just iteration; it's about using those iterations to accurately define resource relationships by referencing the specific identifiers we need. This frequently involves dealing with a map of object, where each object might hold properties relevant to a given resource. Let me clarify that using specific examples and some snippets that represent what I’ve seen in similar projects.
+The challenge stems from the inherent nature of `for_each`. It iterates over _keys_ of a map or the _elements_ of a set, not the values directly within the map if those values are objects. The goal isn't just iteration; it's about using those iterations to accurately define resource relationships by referencing the specific identifiers we need. This frequently involves dealing with a map of object, where each object might hold properties relevant to a given resource. Let me clarify that using specific examples and some snippets that represent what I’ve seen in similar projects.
 
-Essentially, what we are trying to do is use a map where the *keys* represent some form of identifier for each of our objects in the map. These objects themselves have various attributes, and one of the attributes is the resource identifier (e.g. an instance id, a database id etc) that we need to reference elsewhere in our Terraform configuration.
+Essentially, what we are trying to do is use a map where the _keys_ represent some form of identifier for each of our objects in the map. These objects themselves have various attributes, and one of the attributes is the resource identifier (e.g. an instance id, a database id etc) that we need to reference elsewhere in our Terraform configuration.
 
 Let’s start with a basic example, which I'll expand on. Suppose we have a map representing database configurations:
 
@@ -89,11 +89,11 @@ resource "aws_instance" "example" {
 
 ```
 
-In this snippet, `for_each = local.database_configurations` iterates over each key-value pair in our `database_configurations` map. The `each.key` gives us access to "db_primary", "db_secondary", and "db_replica", and `each.value` gets us the *object* associated with that key; e.g. the entire object containing `engine`, `version`, `instance_id`, and `storage_size`. Then, in the `aws_security_group` resource, we can access attributes of the object like `each.value.instance_id` but, even more importantly in our case, we can use the `each.key` to uniquely reference each resource we created in our configuration. In the security group rule resource we used conditional logic based on `each.value.engine` to determine the port. We then reference the `aws_security_group` object using `aws_security_group.database_access[each.key].id`.
+In this snippet, `for_each = local.database_configurations` iterates over each key-value pair in our `database_configurations` map. The `each.key` gives us access to "db_primary", "db_secondary", and "db_replica", and `each.value` gets us the _object_ associated with that key; e.g. the entire object containing `engine`, `version`, `instance_id`, and `storage_size`. Then, in the `aws_security_group` resource, we can access attributes of the object like `each.value.instance_id` but, even more importantly in our case, we can use the `each.key` to uniquely reference each resource we created in our configuration. In the security group rule resource we used conditional logic based on `each.value.engine` to determine the port. We then reference the `aws_security_group` object using `aws_security_group.database_access[each.key].id`.
 
 The key point here is that `each.value` gives access to the object and allows us to pull out the `instance_id` or any other attributes as needed; `each.key` allows us to correctly reference each unique resource created in our `for_each` loop.
 
-Sometimes, our objects may not contain the resource identifier *directly*, but rather contain information that allows us to dynamically create that identifier via a computation. Consider this scenario:
+Sometimes, our objects may not contain the resource identifier _directly_, but rather contain information that allows us to dynamically create that identifier via a computation. Consider this scenario:
 
 ```terraform
 locals {
@@ -147,9 +147,10 @@ resource "aws_iam_role_policy" "app_policy" {
 
 
 ```
+
 Here, instead of an explicit resource id, we have the `env` and `key` which allow us to generate the `name` attribute using `${each.value.env}_${each.key}_role`. Critically, and in line with what was discussed previously, we can still refer to the correct `aws_iam_role` resource in our `aws_iam_role_policy` resource by using `aws_iam_role.app_roles[each.key].id`. The identifier may have been constructed instead of being pre-existing in the object, but the same principles still apply. The power lies in the iteration logic coupled with the `each.key` and `each.value` variables to maintain accurate references.
 
-In essence, using `for_each` effectively in situations like this relies on understanding that `each` provides both a key and the object itself, giving you flexibility in how you extract or generate resource identifiers. We’re leveraging the *key* not just as an arbitrary identifier but as a stable and uniquely identifying key to access the correct resources in our state.
+In essence, using `for_each` effectively in situations like this relies on understanding that `each` provides both a key and the object itself, giving you flexibility in how you extract or generate resource identifiers. We’re leveraging the _key_ not just as an arbitrary identifier but as a stable and uniquely identifying key to access the correct resources in our state.
 
 For more in-depth treatment on the intricacies of Terraform’s `for_each` and resource management, I'd strongly recommend reviewing “Terraform Up & Running” by Yevgeniy Brikman. This book does an excellent job of clarifying these concepts and offers a more complete look at the various nuances of using these features in production environments. Similarly, the official Terraform documentation for `for_each` is an invaluable resource, always worth going back to and refreshing your knowledge on.
 

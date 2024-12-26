@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-false-negatives-in-image-anomaly-detection-be-reduced"
 ---
 
-Alright, let’s tackle this one. False negatives in image anomaly detection – I've seen my fair share of those over the years, especially during that particularly challenging project involving automated quality control for semiconductor wafers. Dealing with the subtle imperfections that often passed unnoticed by initial models definitely forced me to delve deeper into the intricacies of this problem. It’s not just a theoretical concern; failing to detect a genuine anomaly can have significant downstream implications, ranging from production losses to potential safety hazards.
+, let’s tackle this one. False negatives in image anomaly detection – I've seen my fair share of those over the years, especially during that particularly challenging project involving automated quality control for semiconductor wafers. Dealing with the subtle imperfections that often passed unnoticed by initial models definitely forced me to delve deeper into the intricacies of this problem. It’s not just a theoretical concern; failing to detect a genuine anomaly can have significant downstream implications, ranging from production losses to potential safety hazards.
 
 The core issue with false negatives, of course, is that they represent anomalies that the detection system incorrectly classifies as normal. To effectively reduce them, we need to address multiple contributing factors. Fundamentally, it often boils down to the sensitivity and representational power of the detection model, the quality and diversity of the training data, and how well the model's parameters are tuned.
 
@@ -275,6 +275,7 @@ with torch.no_grad():
 print(f"number of false negatives: {torch.sum(false_negatives)}")
 
 ```
+
 This is again simplified for demonstration. For a full implementation, you would need more sophisticated approaches, including optimizing the training procedure for stable gan training. A critical aspect of using GANs for anomaly detection is selecting a suitable anomaly score, which in our example is the reconstruction loss. More complex metrics, such as feature matching within the discriminator, may improve results.
 
 Finally, the performance evaluation is as important as the model itself. I recommend looking into statistical performance evaluation metrics. Instead of focusing solely on the overall accuracy, pay close attention to precision, recall, and f1-scores, because these metrics explicitly differentiate the performance on each class. Additionally, use roc curves to better select the threshold value.

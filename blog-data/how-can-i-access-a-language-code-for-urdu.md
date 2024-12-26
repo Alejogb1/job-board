@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-i-access-a-language-code-for-urdu"
 ---
 
-alright, so you're looking to get the language code for urdu, right? i’ve definitely been down that road before, chasing language codes for various projects. seems simple enough, but these things always have a way of… well, let's just say they aren't always straightforward.
+, so you're looking to get the language code for urdu, right? i’ve definitely been down that road before, chasing language codes for various projects. seems simple enough, but these things always have a way of… well, let's just say they aren't always straightforward.
 
 first off, when we’re talking about language codes, we're usually dealing with standards, specifically iso standards. in this case, you’ll want iso 639. this standard defines codes for the representation of names of languages. it’s like a lingua franca for machines. think of it as the universal translator but for language identification. i remember back in my early days, working on a multilingual content management system. i spent a good few days trying to figure out why some languages were being displayed weirdly, and it all came down to not using the iso codes correctly. i was trying to map language names directly instead of using the codes. lesson learned that day, always stick to standards whenever possible.
 
@@ -46,11 +46,11 @@ now, if you're working in javascript environment, you might need something like 
 ```javascript
 function getLanguageCodes(languageName) {
   const languageCodes = {
-    "urdu": { "iso_639_1": "ur", "iso_639_3": "urd" },
-    "english": { "iso_639_1": "en", "iso_639_3": "eng" },
-    "spanish": { "iso_639_1": "es", "iso_639_3": "spa" },
-    "french": { "iso_639_1": "fr", "iso_639_3": "fra" },
-    "german": { "iso_639_1": "de", "iso_639_3": "deu" },
+    urdu: { iso_639_1: "ur", iso_639_3: "urd" },
+    english: { iso_639_1: "en", iso_639_3: "eng" },
+    spanish: { iso_639_1: "es", iso_639_3: "spa" },
+    french: { iso_639_1: "fr", iso_639_3: "fra" },
+    german: { iso_639_1: "de", iso_639_3: "deu" },
   };
 
   const lowerLanguageName = languageName.toLowerCase();
@@ -66,9 +66,8 @@ if (urduCodes) {
   console.log(`iso 639-1 code: ${urduCodes.iso_639_1}`);
   console.log(`iso 639-3 code: ${urduCodes.iso_639_3}`);
 } else {
-    console.log(`language ${languageName} code not found`);
+  console.log(`language ${languageName} code not found`);
 }
-
 ```
 
 the javascript version is basically the same thing but with a little less type safety. if you copy paste the code it will print the iso code to the console if the given language exists, if not it will output a message saying that the code was not found. i once had to refactor a gigantic client-side application to use proper iso language codes because of a similar issue. the application was doing string comparisons with language names directly in the code and that was generating a huge amount of bugs and un expected behaviour. that task was like a never ending rabbit hole.

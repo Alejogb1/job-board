@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "mathematica-substitution-code-explanation"
 ---
 
-Okay so you're asking about substitution in Mathematica right Been there done that man Let me tell you substitution can be a real headache if you're not careful but also incredibly powerful once you nail it I've wrestled with this beast for years trust me I've seen it all So let's dive in
+you're asking about substitution in Mathematica right Been there done that man Let me tell you substitution can be a real headache if you're not careful but also incredibly powerful once you nail it I've wrestled with this beast for years trust me I've seen it all So let's dive in
 
 First thing you gotta understand is that Mathematica is symbolic Its core strength is manipulating expressions not just crunching numbers You're not dealing with variables in the programming sense where they hold a value but rather symbols that can stand for anything You substitute one thing for another to transform or simplify the expression
 
 The basic workhorse is `/.` which is short for `ReplaceAll` It's the operator you'll use most often When you use `/.` you're telling Mathematica find this pattern and replace it with that pattern Think of it like find and replace in a text editor but for symbolic expressions This pattern matching thing can get tricky but its the crux of it all
 
-Okay let's get some code examples going because talking is cheap
+let's get some code examples going because talking is cheap
 
 ```mathematica
 expr = a x^2 + b x + c;
@@ -31,6 +31,7 @@ subs = {Sin[x] -> u, Cos[y] -> v, Exp[z] -> w};
 res = func /. subs;
 Print[res] (* Output: u + v + w *)
 ```
+
 See we're not just replacing symbols now but also functions with new symbols This substitution doesn't evaluate the function it replaces the function as a whole with something new This gives you the power to transform functions in a modular manner which is awesome for simplification or refactoring of your expressions
 
 I was doing this exact type of subsitution when i was working on my master's thesis and i spent like 3 days debugging some error in my expressions It turned out that i was not using correct transformation rules because the functions were not properly evaluated and when you substitute a function with a value or an expresion it will treat as it and won't evalute the function before the substitution so you have to careful about the order of evaluation when dealing with transformation of functions
@@ -50,9 +51,9 @@ So thats the basics `/.` for basic replacements and remember Mathematica's symbo
 
 Now some things I learned the hard way about substitution specifically when i had to do a complicated proof during my grad school years :
 
-*   **Order matters:** If you have multiple replacements in your rule list Mathematica will apply them in the order you specify If you want to prevent a substitution to another one then you should think about the order. Consider this you can inadvertently alter the expression in unexpected way if you dont consider the order of operations
-*   **Delayed substitutions:** Sometimes you want to postpone evaluation until after the substitution. Use `->` for immediate evaluation and `:> ` for delayed evaluation This small difference will save you a lot of time trust me i have been there
-*   **Wildcards and patterns:** You can use wildcards like `_` to match any expression. For example `f[_] -> g` will replace any function `f` with one argument with `g`. This is super useful in function replacements
+- **Order matters:** If you have multiple replacements in your rule list Mathematica will apply them in the order you specify If you want to prevent a substitution to another one then you should think about the order. Consider this you can inadvertently alter the expression in unexpected way if you dont consider the order of operations
+- **Delayed substitutions:** Sometimes you want to postpone evaluation until after the substitution. Use `->` for immediate evaluation and `:> ` for delayed evaluation This small difference will save you a lot of time trust me i have been there
+- **Wildcards and patterns:** You can use wildcards like `_` to match any expression. For example `f[_] -> g` will replace any function `f` with one argument with `g`. This is super useful in function replacements
 
 So how do you master this Well it takes a while but the best resources I found was "The Mathematica Book" by Stephen Wolfram of course. It sounds cliché I know but this book is like a bible for Mathematica users and it helped me understand the details of the substitution process. For a more advanced treatment I'd recommend "Programming in Mathematica" by Roman Maeder. It's less a reference and more a hands-on exploration of the underlying mechanisms and some more practical cases
 

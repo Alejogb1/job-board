@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-a-custom-training-loop-leverage-stateful-lstms"
 ---
 
-Alright, let's talk about training loops and stateful LSTMs. It's a topic that, if not handled correctly, can lead to some... interesting debugging sessions. I remember tackling a particularly thorny sequence prediction problem a few years back – customer behavior prediction, if you must know – where traditional stateless LSTMs just wouldn't cut it. The inherent temporal dependencies were so crucial that discarding the internal state at each batch boundary was throwing away vital information. That's when the stateful approach became less of an option and more of a necessity.
+, let's talk about training loops and stateful LSTMs. It's a topic that, if not handled correctly, can lead to some... interesting debugging sessions. I remember tackling a particularly thorny sequence prediction problem a few years back – customer behavior prediction, if you must know – where traditional stateless LSTMs just wouldn't cut it. The inherent temporal dependencies were so crucial that discarding the internal state at each batch boundary was throwing away vital information. That's when the stateful approach became less of an option and more of a necessity.
 
-So, how *do* you effectively train a stateful LSTM? The crux of it lies in understanding that, unlike their stateless cousins, stateful LSTMs retain their internal hidden and cell states across batches *within a sequence*. This implies a tighter relationship between your data and your training pipeline. The first, and perhaps most critical, adjustment you’ll need to make is how you prepare your training data. It needs to be carefully crafted to maintain sequence continuity across the batches you’re feeding into the model.
+So, how _do_ you effectively train a stateful LSTM? The crux of it lies in understanding that, unlike their stateless cousins, stateful LSTMs retain their internal hidden and cell states across batches _within a sequence_. This implies a tighter relationship between your data and your training pipeline. The first, and perhaps most critical, adjustment you’ll need to make is how you prepare your training data. It needs to be carefully crafted to maintain sequence continuity across the batches you’re feeding into the model.
 
 Let’s dive a bit deeper into the practical aspects. With stateless LSTMs, each batch is an independent chunk of data. You could shuffle your sequences almost arbitrarily and it wouldn’t impact the learning process significantly, save for introducing some noise into the gradient updates. But with stateful LSTMs, the order and grouping of your data are of utmost importance. You absolutely must avoid shuffling across sequences, and you should be aware of the number of sequences you’re processing simultaneously. The batch size is no longer just about computational efficiency; it directly dictates the number of independent sequences the LSTM maintains state for.
 
@@ -14,7 +14,7 @@ Let's see some code to solidify these concepts. We'll assume a simple scenario: 
 
 **Example 1: State Resetting at Sequence Boundaries**
 
-First, I'll show the skeleton of the core training loop. A crucial part when working with stateful lstms is reseting the state at the end of each sequence, but within an epoch. Note that you will need to have *batch_size* sequences for your code to work correctly.
+First, I'll show the skeleton of the core training loop. A crucial part when working with stateful lstms is reseting the state at the end of each sequence, but within an epoch. Note that you will need to have _batch_size_ sequences for your code to work correctly.
 
 ```python
 import tensorflow as tf
@@ -137,6 +137,7 @@ Here, we're introducing padding to ensure all sequences within a batch have equa
 **Example 3: Unrolling Sequences Step-by-Step**
 
 Finally, let's look at an approach that allows for the greatest control: manually unrolling sequences step-by-step. You may need this for more advanced scenarios, such as when you want to use teacher forcing.
+
 ```python
 import tensorflow as tf
 import numpy as np

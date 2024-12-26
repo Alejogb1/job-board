@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-a-javaxactivationdatahandler-class-missing"
 ---
 
-Okay, let's tackle this. It's not uncommon to find ourselves scratching our heads when a core class like `javax.activation.DataHandler` seems to have vanished. I've seen this exact scenario play out in production environments more than once, typically when migrating or upgrading java applications, particularly those reliant on older apis for handling complex data types in network communications. It usually boils down to classpath issues or incorrect module definitions, rather than an outright disappearance of the class itself. The `DataHandler`, as you know, is critical for working with arbitrary data formats, allowing you to encapsulate data and its associated mime type, essentially providing a neat and flexible way to handle things like file uploads or email attachments.
+, let's tackle this. It's not uncommon to find ourselves scratching our heads when a core class like `javax.activation.DataHandler` seems to have vanished. I've seen this exact scenario play out in production environments more than once, typically when migrating or upgrading java applications, particularly those reliant on older apis for handling complex data types in network communications. It usually boils down to classpath issues or incorrect module definitions, rather than an outright disappearance of the class itself. The `DataHandler`, as you know, is critical for working with arbitrary data formats, allowing you to encapsulate data and its associated mime type, essentially providing a neat and flexible way to handle things like file uploads or email attachments.
 
 So, let's unpack this. When `javax.activation.DataHandler` is missing, it’s very rarely that the class has ceased to exist in the Java Development Kit, it is more likely that the specific library that provides it—specifically the Java Activation Framework (JAF)—is not present on your classpath or not correctly declared as a module dependency. Back in the day, pre-java 9 modules, getting all the correct jars onto the classpath could be a bit of a headache. I remember spending a good day debugging a seemingly simple file upload service that failed spectacularly because jaf.jar wasn't included in the web archive.
 
@@ -47,7 +47,7 @@ public class DataHandlerTest {
 
 If you attempt to compile and execute this example without the `jaf.jar` on the classpath, you would see a `NoClassDefFoundError` or similar indicating that `javax.activation.DataHandler` is missing.
 
-*   **Solution:** In this scenario, the correction is straightforward: you need to include the `jaf.jar` (or, commonly now, `jakarta.activation-api`) on your classpath. You can typically download this from maven central or other artifact repositories. Adding the library to the project using a build tool like maven or gradle is advised.
+- **Solution:** In this scenario, the correction is straightforward: you need to include the `jaf.jar` (or, commonly now, `jakarta.activation-api`) on your classpath. You can typically download this from maven central or other artifact repositories. Adding the library to the project using a build tool like maven or gradle is advised.
 
 **Scenario 2: Modular Java (Java 9+)**
 
@@ -65,7 +65,7 @@ and the same java file.
 
 You might encounter the same error if the `java.activation` module is not made available to the project. This is because, in this case, it is required as an explicit dependency.
 
-*   **Solution:** You must explicitly declare a dependency on the `jakarta.activation-api` module in your `module-info.java` file. Something similar to this example, making sure to use the correct group id and artifact id depending on which artifact repository you use.
+- **Solution:** You must explicitly declare a dependency on the `jakarta.activation-api` module in your `module-info.java` file. Something similar to this example, making sure to use the correct group id and artifact id depending on which artifact repository you use.
 
 ```java
 module com.example.datatest {
@@ -96,7 +96,7 @@ dependencies {
 
 **Scenario 3: More Complex Module Resolution Issues**
 
-Sometimes, you might have a situation where you *think* you've included the module but still encounter issues. It could stem from an issue with a transitive dependency or a conflict between different versions of libraries. Let’s illustrate it with an example where a different library requires `activation`, but it has a version conflict, or its module definition does not correctly export the required package.
+Sometimes, you might have a situation where you _think_ you've included the module but still encounter issues. It could stem from an issue with a transitive dependency or a conflict between different versions of libraries. Let’s illustrate it with an example where a different library requires `activation`, but it has a version conflict, or its module definition does not correctly export the required package.
 
 ```java
 // This hypothetical scenario where you have an intermediate jar that might have an issue
@@ -126,10 +126,10 @@ public class Main {
 
 In this situation you might not have direct access to `thirdpartylib`, and yet it depends on `javax.activation` internally.
 
-*   **Solution:** This is where the real trouble shooting begins. You'll need to look into your dependency tree using the tooling your build system provides to understand if there is a conflict with the third party library versions. If there is no conflict, it may be that the third party library is missing a correct `module-info.java` that does not properly declare or export its dependencies. This might imply requesting an updated version or patching the library yourself, if possible. Also, using tools like `jdeps` (java dependency analysis tool) can help you discover these issues.
+- **Solution:** This is where the real trouble shooting begins. You'll need to look into your dependency tree using the tooling your build system provides to understand if there is a conflict with the third party library versions. If there is no conflict, it may be that the third party library is missing a correct `module-info.java` that does not properly declare or export its dependencies. This might imply requesting an updated version or patching the library yourself, if possible. Also, using tools like `jdeps` (java dependency analysis tool) can help you discover these issues.
 
-In these cases, a systematic approach is key, checking each dependency and its version compatibility. Don't assume that because *you* declared the correct `activation` module, all dependencies within your project use that version correctly. In a complex system, the version and module dependency resolution can become quite involved.
+In these cases, a systematic approach is key, checking each dependency and its version compatibility. Don't assume that because _you_ declared the correct `activation` module, all dependencies within your project use that version correctly. In a complex system, the version and module dependency resolution can become quite involved.
 
-For further reference, I'd recommend consulting official java documentation on modules, specifically the documentation on JPMS, to better understand how the module system and dependencies work. Also, the *Java Platform Module System* book by Nicolai Parlog provides deep technical insights into java 9 module system. The *Effective Java* book, by Joshua Bloch, also discusses dependency management and good practices which will be incredibly helpful. Finally, the jakarta activation API documentation will provide the specifics on how to use its various features.
+For further reference, I'd recommend consulting official java documentation on modules, specifically the documentation on JPMS, to better understand how the module system and dependencies work. Also, the _Java Platform Module System_ book by Nicolai Parlog provides deep technical insights into java 9 module system. The _Effective Java_ book, by Joshua Bloch, also discusses dependency management and good practices which will be incredibly helpful. Finally, the jakarta activation API documentation will provide the specifics on how to use its various features.
 
 In short, the missing `javax.activation.DataHandler` is rarely a disappearance of the class itself, but rather the result of incorrect classpath, module definition, or dependency resolution. By applying systematic debugging and a good understanding of module dependencies, you can almost always get your project working correctly. This is one of the things you get very accustomed to, when working on java based projects.

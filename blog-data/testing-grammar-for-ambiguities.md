@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "testing-grammar-for-ambiguities"
 ---
 
-Alright so you want to test grammar for ambiguities right I've been down that rabbit hole more times than I care to remember It's a tricky beast but totally solvable if you approach it methodically I've had my fair share of late nights debugging parser generators because of this so let me share some hard-won wisdom
+so you want to test grammar for ambiguities right I've been down that rabbit hole more times than I care to remember It's a tricky beast but totally solvable if you approach it methodically I've had my fair share of late nights debugging parser generators because of this so let me share some hard-won wisdom
 
 First off when we say ambiguity we mean a situation where a single input sequence can be parsed according to the grammar in more than one way This is a problem for our parsers because they're supposed to give us a single definitive structure for the input It's like trying to understand a sentence with multiple equally plausible meanings it just messes things up So we need to identify these spots in the grammar
 
@@ -82,10 +82,10 @@ And here is the joke if you have an ambiguous grammar you should be ashamed of y
 
 Ok so to recap Here is a simple list
 
-*   Look for overlapping rules that can derive the same sequences of tokens in different ways
-*   Carefully define operator precedence in your grammar avoiding ambiguity
-*   Use parser generators to identify parsing issues usually indirectly they will report an error if your grammar is ambiguous so you need to be careful on how you check that the grammer is actually working or not
-*   Test the grammar using examples that highlight different interpretations of the same expression
+- Look for overlapping rules that can derive the same sequences of tokens in different ways
+- Carefully define operator precedence in your grammar avoiding ambiguity
+- Use parser generators to identify parsing issues usually indirectly they will report an error if your grammar is ambiguous so you need to be careful on how you check that the grammer is actually working or not
+- Test the grammar using examples that highlight different interpretations of the same expression
 
 It's important to note that fixing ambiguities can sometimes be tricky You might need to refactor your grammar completely sometimes adding new non terminal symbols or using different ways to handle token sequences I've had to rewrite some grammars multiple times before getting them right It's all part of the process
 

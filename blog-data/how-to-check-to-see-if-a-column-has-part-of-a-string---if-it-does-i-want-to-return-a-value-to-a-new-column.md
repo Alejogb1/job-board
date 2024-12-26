@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "how-to-check-to-see-if-a-column-has-part-of-a-string---if-it-does-i-want-to-return-a-value-to-a-new-column"
 ---
 
-alright, so you’re looking to see if a string exists as a substring within values of a dataframe column, and if it does, then flag it in a new column. i’ve been down that road more times than i care to remember, it's a pretty common data cleaning task. let me walk you through how i usually handle this, and share some war stories from my past.
+, so you’re looking to see if a string exists as a substring within values of a dataframe column, and if it does, then flag it in a new column. i’ve been down that road more times than i care to remember, it's a pretty common data cleaning task. let me walk you through how i usually handle this, and share some war stories from my past.
 
 first off, i'm going to assume you're working in python, likely using pandas. that's where i spend most of my time when dealing with tabular data. if not, the core logic should be transferable but you'll need to adapt the syntax to your specific environment.
 
-the heart of the matter lies in using string methods effectively. pandas provides vectorized string operations, which means you can apply string functions to an entire column of data without looping, which is way more performant, and avoids python’s loops.  if you were working with basic python list and looping you are going to get crazy slow performance.
+the heart of the matter lies in using string methods effectively. pandas provides vectorized string operations, which means you can apply string functions to an entire column of data without looping, which is way more performant, and avoids python’s loops. if you were working with basic python list and looping you are going to get crazy slow performance.
 
 let's start with a simple example: say we have a dataframe representing customer information, and a column named 'customer_notes' where free form notes exist. we want to flag rows where the note contains the string “vip”:
 
@@ -29,10 +29,10 @@ print(df)
 
 what's happening here?
 
-*   we use `df['customer_notes'].str.contains(search_term)` . the `.str` accessor enables us to use string methods on the column values, which is awesome. the method `contains` does the heavy lifting, and returns `true` if the substring exist, and `false` otherwise.
-*   i have added the option `case=false`, which means this operation will be case insensitive. if you don't want that, omit the parameter and it will be case sensitive.
-*   finally, `.astype(int)` converts the boolean (`true`/`false`) results to integers (`1`/`0`), which is often useful. you can skip this if you want to keep the boolean result in the column.
-*  i am printing the whole dataframe so we can visually inspect the changes.
+- we use `df['customer_notes'].str.contains(search_term)` . the `.str` accessor enables us to use string methods on the column values, which is awesome. the method `contains` does the heavy lifting, and returns `true` if the substring exist, and `false` otherwise.
+- i have added the option `case=false`, which means this operation will be case insensitive. if you don't want that, omit the parameter and it will be case sensitive.
+- finally, `.astype(int)` converts the boolean (`true`/`false`) results to integers (`1`/`0`), which is often useful. you can skip this if you want to keep the boolean result in the column.
+- i am printing the whole dataframe so we can visually inspect the changes.
 
 when i started out, i totally missed the `.str` accessor and ended up iterating through every row, checking the substring. it was slow and terrible! i probably lost a week's worth of computing time to those bad loops, i still have nightmares about it. using vectorized operations from libraries like pandas is one of the biggest lessons i’ve learned over time.
 
@@ -62,10 +62,10 @@ print(df)
 
 in this scenario:
 
-*   i define a mapping `color_mapping` of what color corresponds to the new column value.
-*   i use a python function `apply_color_flags`, that we apply through the pandas `apply` method. since we need to check multiple conditions of the same column we need to perform the apply row by row, this is why we pass `axis=1`.
-*   inside the function, i lowercase the whole string to handle possible capitalization variations, then use `find` instead of `contains`. in this example i decided not to use the vectorized method and use a more common python style code because the goal was to assign multiple different values to the new column, this function is not as performant as the previous example.
-*   if no match is found, i return "no\_color" as a value for the column, you can leave that as a blank string if you like.
+- i define a mapping `color_mapping` of what color corresponds to the new column value.
+- i use a python function `apply_color_flags`, that we apply through the pandas `apply` method. since we need to check multiple conditions of the same column we need to perform the apply row by row, this is why we pass `axis=1`.
+- inside the function, i lowercase the whole string to handle possible capitalization variations, then use `find` instead of `contains`. in this example i decided not to use the vectorized method and use a more common python style code because the goal was to assign multiple different values to the new column, this function is not as performant as the previous example.
+- if no match is found, i return "no_color" as a value for the column, you can leave that as a blank string if you like.
 
 this approach allows you to handle different substrings and create new columns based on the matches. i have personally used this code to label sentiment from text and create categories based on keywords. in a former job where i was working on marketing datasets, we used to parse the text of different marketing campaigns, and use it to find which segments of users were more receptive to the text. with this method we could automate the tagging of thousands of campaigns.
 
@@ -94,10 +94,10 @@ print(df)
 
 the `re.search` method searches for the pattern and if finds a match it return the match object, which allows us to group the sub-matches.
 
-*   `r'product id: (\d+) price: ([\d.]+)'` is the regular expression. `(\d+)` means “one or more digits” and `([\d.]+)` means “one or more digits or periods”. the parenthesis will capture the groups, and we extract those with the `.group(1)` for the first group and `.group(2)` for the second group. we can extract more groups by using the corresponding index.
-*   if no match is found we return none for both groups.
-*   `result_type='expand'` makes sure that the returned tuple will be expanded into two separate columns. otherwise, it will return a single column with the tuple.
-*  i am printing the dataframe to see the result of the operation.
+- `r'product id: (\d+) price: ([\d.]+)'` is the regular expression. `(\d+)` means “one or more digits” and `([\d.]+)` means “one or more digits or periods”. the parenthesis will capture the groups, and we extract those with the `.group(1)` for the first group and `.group(2)` for the second group. we can extract more groups by using the corresponding index.
+- if no match is found we return none for both groups.
+- `result_type='expand'` makes sure that the returned tuple will be expanded into two separate columns. otherwise, it will return a single column with the tuple.
+- i am printing the dataframe to see the result of the operation.
 
 regular expressions are a powerful but complex tool. if i was starting out i would be more prone to use the previous methods to handle my string operations, and only use regular expressions when i cannot get my solution with normal string methods.
 

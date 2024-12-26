@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-change-the-path-of-grape-swagger-generated-documentation"
 ---
 
-alright, so you're looking at changing the output path for grape-swagger, got it. i've been there, spent way too long staring at config files and console outputs trying to get that swagger ui to show up where i actually wanted it. it's one of those things that feels like it *should* be simple, but then you hit some weird default and have to go digging.
+, so you're looking at changing the output path for grape-swagger, got it. i've been there, spent way too long staring at config files and console outputs trying to get that swagger ui to show up where i actually wanted it. it's one of those things that feels like it _should_ be simple, but then you hit some weird default and have to go digging.
 
 from the sounds of it, you're using grape, which is cool – i've done a lot of api work with it. and the grape-swagger gem, which is pretty much the standard way to generate swagger docs from your api definitions. the problem usually comes down to grape-swagger, by default, sticking things in a particular spot and if you're not using the default path, things get a bit wonky.
 

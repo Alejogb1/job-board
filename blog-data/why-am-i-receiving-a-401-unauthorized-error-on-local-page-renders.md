@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-receiving-a-401-unauthorized-error-on-local-page-renders"
 ---
 
-Alright, let's unpack this 401 unauthorized error you're seeing on your local page renders. It's a classic, and something I've debugged countless times over the years, especially back when I was deeply immersed in building microservices architectures. These errors, while seemingly straightforward, can stem from a variety of subtle configuration or implementation details. Let's get into it, focusing on how this might manifest locally, and, more importantly, how to diagnose and resolve it.
+, let's unpack this 401 unauthorized error you're seeing on your local page renders. It's a classic, and something I've debugged countless times over the years, especially back when I was deeply immersed in building microservices architectures. These errors, while seemingly straightforward, can stem from a variety of subtle configuration or implementation details. Let's get into it, focusing on how this might manifest locally, and, more importantly, how to diagnose and resolve it.
 
 The core issue, as indicated by the 401 status code, is that your client (most likely your browser in this case) is attempting to access a resource on your local server that requires authentication. However, either the authentication process isn't happening correctly, or the server isn't recognizing the credentials provided. Think of it like this: you're trying to enter a building requiring a key, but either you don't have the key, the key is wrong, or the door lock isn't recognizing your key.
 
@@ -20,14 +20,14 @@ This scenario usually involves an api endpoint protected by some form of authent
 // Example 1: Demonstrating missing Authorization header resulting in 401
 
 async function fetchDataWithoutAuth() {
-    try {
-      const response = await fetch('http://localhost:8080/api/protected-data');
-      console.log("Response Status:", response.status); // Likely prints 401
-      const data = await response.json(); // Will likely throw error due to 401
-      console.log("Data:", data);
-    } catch (error) {
-      console.error("Fetch error:", error);
-    }
+  try {
+    const response = await fetch("http://localhost:8080/api/protected-data");
+    console.log("Response Status:", response.status); // Likely prints 401
+    const data = await response.json(); // Will likely throw error due to 401
+    console.log("Data:", data);
+  } catch (error) {
+    console.error("Fetch error:", error);
+  }
 }
 
 fetchDataWithoutAuth();
@@ -39,24 +39,23 @@ In the above example, we are making a request to `/api/protected-data` without s
 // Example 2: Demonstrating Authorization header with Bearer token
 
 async function fetchDataWithToken() {
-  const token = 'your_valid_auth_token'; // Replace with a valid token
+  const token = "your_valid_auth_token"; // Replace with a valid token
   try {
-    const response = await fetch('http://localhost:8080/api/protected-data', {
+    const response = await fetch("http://localhost:8080/api/protected-data", {
       headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json', // Optional but often needed
-      }
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json", // Optional but often needed
+      },
     });
-      console.log("Response Status:", response.status);
-      const data = await response.json();
-      console.log("Data:", data);
-    } catch (error) {
-      console.error("Fetch error:", error);
-    }
+    console.log("Response Status:", response.status);
+    const data = await response.json();
+    console.log("Data:", data);
+  } catch (error) {
+    console.error("Fetch error:", error);
+  }
 }
 
 fetchDataWithToken();
-
 ```
 
 Here, we add an `Authorization` header with the `Bearer` scheme followed by a valid access token. The token retrieval logic itself is outside of this example, but often you'd get the token after login and store it securely, usually in local storage or an http-only cookie. The backend server then validates this token. Note that the `content-type` is often required depending on how the server has been set up. This illustrates that the simplest mistake is forgetting to include the needed headers.
@@ -77,53 +76,62 @@ const refreshToken = "initial_refresh_token"; // For demonstration, assume we st
 
 async function fetchDataWithToken() {
   try {
-    const response = await fetch('http://localhost:8080/api/protected-data', {
+    const response = await fetch("http://localhost:8080/api/protected-data", {
       headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      }
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
     });
 
-    if (response.status === 401) { // Token is likely expired, handle refresh
-        console.log("Attempting to refresh token...");
-        const refreshResponse = await fetch('http://localhost:8080/api/refresh-token', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ refreshToken: refreshToken })
-        });
-
-        if (refreshResponse.ok){
-            const data = await refreshResponse.json();
-            accessToken = data.accessToken; // Update the access token
-            console.log("Token refreshed, reattempting fetch");
-
-            const retryResponse = await fetch('http://localhost:8080/api/protected-data', {
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json',
-                }
-            });
-
-            if(retryResponse.ok){
-              console.log('Token refreshed and data fetched');
-            } else {
-                console.error("Failed to fetch data with refreshed token. Status:", retryResponse.status);
-            }
-
-        } else {
-            console.error('Failed to refresh token. Status:', refreshResponse.status);
+    if (response.status === 401) {
+      // Token is likely expired, handle refresh
+      console.log("Attempting to refresh token...");
+      const refreshResponse = await fetch(
+        "http://localhost:8080/api/refresh-token",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ refreshToken: refreshToken }),
         }
+      );
 
-    } else if (response.ok){
-         const data = await response.json();
-        console.log("Data:", data);
-    }
-    else {
+      if (refreshResponse.ok) {
+        const data = await refreshResponse.json();
+        accessToken = data.accessToken; // Update the access token
+        console.log("Token refreshed, reattempting fetch");
+
+        const retryResponse = await fetch(
+          "http://localhost:8080/api/protected-data",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (retryResponse.ok) {
+          console.log("Token refreshed and data fetched");
+        } else {
+          console.error(
+            "Failed to fetch data with refreshed token. Status:",
+            retryResponse.status
+          );
+        }
+      } else {
+        console.error(
+          "Failed to refresh token. Status:",
+          refreshResponse.status
+        );
+      }
+    } else if (response.ok) {
+      const data = await response.json();
+      console.log("Data:", data);
+    } else {
       console.error("Fetch failed. Status:", response.status);
     }
-
   } catch (error) {
     console.error("Fetch error:", error);
   }
@@ -140,7 +148,7 @@ This example shows how to try the first fetch, detect the 401, and then try to r
 When faced with 401s locally, I recommend systematically checking the following:
 
 1.  **Network Tab of Developer Tools:** Check the request headers. Are the authorization headers present and formatted correctly? Are the tokens what you expect? This is the first place I start.
-2.  **Server Logs:** Are there any specific error messages relating to authentication failures? Often, these logs will tell you more about the reason *why* the token is considered invalid. This is crucial when the issue involves token expiration or invalid signatures.
+2.  **Server Logs:** Are there any specific error messages relating to authentication failures? Often, these logs will tell you more about the reason _why_ the token is considered invalid. This is crucial when the issue involves token expiration or invalid signatures.
 3.  **Configuration:** Confirm that local environment variables related to authentication are correctly set. Are there any specific server-side settings that differ from production, potentially interfering with local development?
 4.  **Authentication Library Debugger:** If you're using an authentication library like `oidc-client` or similar, enable its debug mode. This can provide valuable insights into token acquisition, storage, and refresh processes.
 5.  **Test with Simple Tools:** Sometimes I use tools like curl or Postman to isolate issues to the client or server side, sending manual requests and examining the responses. It helps you understand whether a backend or client issue is the culprit

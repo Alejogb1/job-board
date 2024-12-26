@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-add-a-list-unsubscribe-header-to-emails-using-php-mailer"
 ---
 
-Alright, let's tackle this one. I recall a particular project some years ago where we were scaling up our email marketing efforts, and ensuring deliverability was paramount. Part of that, naturally, involved properly handling unsubscribe requests, and that included setting the List-Unsubscribe header. It's not just good etiquette; it directly impacts your sender reputation. Ignoring this header can land your emails straight into the spam folder, and nobody wants that. So, let’s discuss how we achieve this using PHP Mailer, with a few code examples to clarify things.
+, let's tackle this one. I recall a particular project some years ago where we were scaling up our email marketing efforts, and ensuring deliverability was paramount. Part of that, naturally, involved properly handling unsubscribe requests, and that included setting the List-Unsubscribe header. It's not just good etiquette; it directly impacts your sender reputation. Ignoring this header can land your emails straight into the spam folder, and nobody wants that. So, let’s discuss how we achieve this using PHP Mailer, with a few code examples to clarify things.
 
-The *List-Unsubscribe* header essentially provides an automated way for recipients to opt out of your mailing list. It's typically included within the email’s headers, and many modern email clients recognize it. They often display an unsubscribe link or button directly, making it easier for users to manage their subscriptions without having to hunt for the unsubscribe link tucked away in the email body. This greatly reduces the chances of recipients simply marking your email as spam.
+The _List-Unsubscribe_ header essentially provides an automated way for recipients to opt out of your mailing list. It's typically included within the email’s headers, and many modern email clients recognize it. They often display an unsubscribe link or button directly, making it easier for users to manage their subscriptions without having to hunt for the unsubscribe link tucked away in the email body. This greatly reduces the chances of recipients simply marking your email as spam.
 
 Now, the technical aspect: the header itself allows for multiple forms of unsubscribe mechanisms. We often see two in common use: one using an http url and the other using a mailto: link. The http link should point to a page on your website where the user can manage their subscription or unsubscribe. The mailto option directs the user to send an email to a specific address, which your system would then monitor to handle the unsubscribe. It's perfectly acceptable, and often advisable, to include both.
 
@@ -105,9 +105,10 @@ try {
 }
 ?>
 ```
+
 Here, instead of a URL, the header string includes a `mailto:` address. This is very simple and, in situations where a direct unsubscribe via a web link isn't viable (like a system that needs to process email replies) a good solution. The system must still monitor and handle unsubscribes received at `unsubscribe@example.com` in this case.
 
-And finally, for the best coverage and redundancy, you would typically include *both* an http and mailto link. Here’s the third example demonstrating this:
+And finally, for the best coverage and redundancy, you would typically include _both_ an http and mailto link. Here’s the third example demonstrating this:
 
 ```php
 <?php
@@ -153,9 +154,10 @@ try {
 }
 ?>
 ```
+
 As you can see, we are simply combining the http and mailto options, separating them with a comma, all within the angle brackets for the List-Unsubscribe header.
 
-Remember, handling the unsubscribe itself, whether through a web page or by monitoring a mailbox, is critical. This header doesn't *magically* unsubscribe users; it just provides the mechanism. You must implement the logic that actually processes the requests.
+Remember, handling the unsubscribe itself, whether through a web page or by monitoring a mailbox, is critical. This header doesn't _magically_ unsubscribe users; it just provides the mechanism. You must implement the logic that actually processes the requests.
 
 For a more in-depth dive into email best practices, particularly concerning headers and deliverability, I would recommend checking out the book "Email Marketing Rules" by Chad White. It’s an excellent resource covering the nuances of email deliverability. Also, research RFC 2369 and RFC 8058 which specify the technical details for the List-Unsubscribe header, as well as one click unsubscribes. They’ll help further understand the standards and provide more comprehensive information. Understanding these standards ensures proper integration with various email clients and services.
 

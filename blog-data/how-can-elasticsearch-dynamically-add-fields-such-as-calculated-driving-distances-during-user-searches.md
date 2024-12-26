@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-elasticsearch-dynamically-add-fields-such-as-calculated-driving-distances-during-user-searches"
 ---
 
-Alright, let's tackle this. I recall a particularly challenging project a few years back, a location-based service requiring real-time distance calculations. It’s a scenario that often trips up newcomers to Elasticsearch: dynamically incorporating data during the search phase rather than at index time. The issue, of course, boils down to not storing these computed fields directly in the index but needing them ‘on the fly.’ Elasticsearch isn't designed to perform arbitrary calculations during searches on indexed data as a first principle, but there are several well-established techniques we can employ, using scripting and custom function scores.
+, let's tackle this. I recall a particularly challenging project a few years back, a location-based service requiring real-time distance calculations. It’s a scenario that often trips up newcomers to Elasticsearch: dynamically incorporating data during the search phase rather than at index time. The issue, of course, boils down to not storing these computed fields directly in the index but needing them ‘on the fly.’ Elasticsearch isn't designed to perform arbitrary calculations during searches on indexed data as a first principle, but there are several well-established techniques we can employ, using scripting and custom function scores.
 
 Essentially, we need a way to execute code during query execution. Elasticsearch provides a few mechanisms to achieve this, primarily through scripting languages like painless, or via function scores. These methods allow us to manipulate search results based on the specific query parameters and the document data within the index.
 
@@ -92,7 +92,6 @@ Elasticsearch already provides built-in functions for spatial operations. Using 
     }
   }
 }
-
 ```
 
 In this example, the `gauss` function calculates a score based on the distance between each document's `location` and the origin point specified in "origin". We set the "scale" to 100 kilometers, which controls how fast the score decays as the distance from the origin increases. The "offset" parameter means we only penalize the documents starting after the offset value. This approach, using Elasticsearch's built-in functions, is generally more efficient than custom scripting for common spatial operations, as I’ve seen firsthand on production datasets. The result score will have high value when close to the origin point and low when far from it, which we can use to sort or filter results based on distance.

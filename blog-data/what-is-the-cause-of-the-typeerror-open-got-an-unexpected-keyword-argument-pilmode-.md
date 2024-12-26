@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-cause-of-the-typeerror-open-got-an-unexpected-keyword-argument-pilmode-"
 ---
 
-Alright, let's tackle this `TypeError`. It's a classic one that, if you've spent enough time in the image processing trenches, you've likely encountered. Specifically, the error message “`TypeError: _open() got an unexpected keyword argument 'pilmode'`” indicates a mismatch between the arguments you're passing to an image loading function and what the underlying image library expects. The short story: you're trying to use a `pilmode` argument where it's not supported. It's almost always related to how you interact with the python imaging library, pillow (formerly pil) and its image opening functions.
+, `TypeError`. It's a classic one that, if you've spent enough time in the image processing trenches, you've likely encountered. Specifically, the error message “`TypeError: _open() got an unexpected keyword argument 'pilmode'`” indicates a mismatch between the arguments you're passing to an image loading function and what the underlying image library expects. The short story: you're trying to use a `pilmode` argument where it's not supported. It's almost always related to how you interact with the python imaging library, pillow (formerly pil) and its image opening functions.
 
 The devil, as always, is in the details, so let's unpack this. This issue arises from changes across different versions of pillow and its internal mechanisms, or, occasionally, when you're unknowingly using a different library that's mimicking pillow's interface.
 
@@ -124,7 +124,8 @@ def load_image_wrapped(path, image_mode):
       return None
   return img
 ```
-If you encounter this `TypeError` from the library and cannot modify it, one workaround is to avoid calling the function that calls Image._open() directly. Instead, load the image using the proper pillow interface and convert the mode if needed after it's loaded.
+
+If you encounter this `TypeError` from the library and cannot modify it, one workaround is to avoid calling the function that calls Image.\_open() directly. Instead, load the image using the proper pillow interface and convert the mode if needed after it's loaded.
 Here is one way to handle it
 
 ```python

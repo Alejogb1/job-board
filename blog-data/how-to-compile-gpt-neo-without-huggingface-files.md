@@ -4,18 +4,18 @@ date: "2024-12-15"
 id: "how-to-compile-gpt-neo-without-huggingface-files"
 ---
 
-alright, so you're looking to compile gpt-neo, but without relying on huggingface's pre-packaged files. i get it. been there, done that. it's definitely a path less traveled, but it's a good learning experience and gives you finer control over the whole process. i've had my fair share of headaches trying to wrangle models directly, way back before huggingface transformers was as ubiquitous as it is now.
+, so you're looking to compile gpt-neo, but without relying on huggingface's pre-packaged files. i get it. been there, done that. it's definitely a path less traveled, but it's a good learning experience and gives you finer control over the whole process. i've had my fair share of headaches trying to wrangle models directly, way back before huggingface transformers was as ubiquitous as it is now.
 
-my first real run-in with this was back when i was trying to get a custom language model running on some embedded hardware. the resource constraints were brutal, and i had to go full low-level to eke out every ounce of performance. that meant no high-level libraries, and certainly no pre-trained model downloads – i had to build from the ground up. i spent a few weeks just mapping out the architecture and figuring out the best way to convert the model weights into something that could run on a microcontroller. fun times. not. 
+my first real run-in with this was back when i was trying to get a custom language model running on some embedded hardware. the resource constraints were brutal, and i had to go full low-level to eke out every ounce of performance. that meant no high-level libraries, and certainly no pre-trained model downloads – i had to build from the ground up. i spent a few weeks just mapping out the architecture and figuring out the best way to convert the model weights into something that could run on a microcontroller. fun times. not.
 
 anyway, let's tackle gpt-neo directly. the core issue is that huggingface typically abstracts away a lot of the low-level details of model loading, which is great for convenience, but less so if you want to understand things deeply, or if you want total freedom over deployment. we need to get under the hood and deal with the actual model parameters and the computational graph.
 
 the primary challenge here boils down to a few things:
 
-*   **accessing the model's architecture:** you need to know the exact layout of the network. the number of layers, the size of the embeddings, the dimension of the attention heads, and so forth. this is typically specified in a configuration file, often a json file. you can get this from sources other than huggingface too, github repos for example or directly from the original research papers if you are ambitious.
-*   **obtaining the model weights:** the model's "knowledge" is encoded in these numerical parameters. again, these are normally stored in a specific format by huggingface, but you can bypass that. the weights are the numbers and the architecture is the blueprint.
-*   **rebuilding the computational graph:** once you have the weights and architecture, you need to rebuild the code that performs the calculations needed to run a forward pass on the model. this involves coding the various layers like attention layers, feedforward layers, layer normalization, etc.
-*   **data feeding:** you need to convert your input texts into numerical tensors so that the model understands what to process.
+- **accessing the model's architecture:** you need to know the exact layout of the network. the number of layers, the size of the embeddings, the dimension of the attention heads, and so forth. this is typically specified in a configuration file, often a json file. you can get this from sources other than huggingface too, github repos for example or directly from the original research papers if you are ambitious.
+- **obtaining the model weights:** the model's "knowledge" is encoded in these numerical parameters. again, these are normally stored in a specific format by huggingface, but you can bypass that. the weights are the numbers and the architecture is the blueprint.
+- **rebuilding the computational graph:** once you have the weights and architecture, you need to rebuild the code that performs the calculations needed to run a forward pass on the model. this involves coding the various layers like attention layers, feedforward layers, layer normalization, etc.
+- **data feeding:** you need to convert your input texts into numerical tensors so that the model understands what to process.
 
 so, where do we start?
 
@@ -104,13 +104,13 @@ import numpy as np
 def load_weights(weight_path, model):
     # This is a very simplified example. Real weight loading will be more involved.
     # it's the same as huggingface checkpoint loader, but instead of loading from huggingface you will load it locally
-    
+
     weight_data = np.load(weight_path)  # Assuming weights are in .npy format
-    
+
     # Assuming you have the architecture defined in your model
-    
+
     model_params = model.state_dict()
-    
+
     #load tensors to the corresponding layers, for example this would load
     #weights for linear layers
     for name, param in model_params.items():
@@ -123,22 +123,22 @@ def load_weights(weight_path, model):
 
 #example usage
 if __name__ == '__main__':
-  
+
   # let's use the previously defined SingleLayer for example
   model_instance = SingleLayer(768, 3072)
-  
+
   # this is a sample path to the weights, you would change this to
   # your own local weights path
   weights_path = "./model_weights.npy"
-  
+
   # example weights data to show how it works, in practice
   # you would load the real data here
   layer_1_ffn_fc1_weight = np.random.rand(3072, 768).astype(np.float32)
   layer_1_ffn_fc2_weight = np.random.rand(768, 3072).astype(np.float32)
-  
+
   layer_norm1_weight = np.random.rand(768).astype(np.float32)
   layer_norm2_weight = np.random.rand(768).astype(np.float32)
-  
+
   layer_norm1_bias = np.random.rand(768).astype(np.float32)
   layer_norm2_bias = np.random.rand(768).astype(np.float32)
 
@@ -149,7 +149,7 @@ if __name__ == '__main__':
                     "layer_1_ffn_fc2_weight": layer_1_ffn_fc2_weight,
                     "layer_1_ln2_weight": layer_norm2_weight,
                     "layer_1_ln2_bias": layer_norm2_bias}
-  
+
   np.save(weights_path, model_weights)
 
   #load weights, make sure the model is defined first
@@ -188,9 +188,9 @@ you’ll need a proper tokenizer as well, which is a whole different ballgame, t
 
 **resources:**
 
-*   **the original gpt-neo paper:** this is crucial for understanding the exact model architecture. search for the specific gpt-neo model paper on google scholar.
-*   **textbooks on deep learning:** for understanding the various neural network layers, "deep learning" by goodfellow et al. is pretty comprehensive. also the book 'neural networks and deep learning' by nielsen, the online free version is perfect to understand the basics.
-*   **pytorch documentation:** obviously, if you decide to use pytorch.
-*   **research papers on tokenization:** byte-pair encoding is described in multiple papers online, searching for it on google scholar is a good way to start.
+- **the original gpt-neo paper:** this is crucial for understanding the exact model architecture. search for the specific gpt-neo model paper on google scholar.
+- **textbooks on deep learning:** for understanding the various neural network layers, "deep learning" by goodfellow et al. is pretty comprehensive. also the book 'neural networks and deep learning' by nielsen, the online free version is perfect to understand the basics.
+- **pytorch documentation:** obviously, if you decide to use pytorch.
+- **research papers on tokenization:** byte-pair encoding is described in multiple papers online, searching for it on google scholar is a good way to start.
 
 it's a non-trivial undertaking, i'm not going to lie. expect a long series of debug cycles, especially with the weight loading part since you're starting from the ground up. also, i should add: i once spent a whole night tracking a bug, only to discover that i was loading the weights transposed. it happens. remember to take breaks. it’s a marathon, not a sprint. anyway, good luck with it. let me know if you hit a wall and maybe i can help point you in the right direction.

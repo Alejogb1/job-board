@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-does-the-scipy-distance-transform-edt-function-work"
 ---
 
-Okay so you're asking about scipy's `distance_transform_edt` and how it actually works under the hood right cool I've been knee deep in spatial algorithms for years seriously this isn't my first rodeo with these things
+you're asking about scipy's `distance_transform_edt` and how it actually works under the hood right cool I've been knee deep in spatial algorithms for years seriously this isn't my first rodeo with these things
 
 First off the `distance_transform_edt` function in SciPy's `scipy.ndimage` module is a workhorse it's what you use when you need to calculate the Euclidean distance transform for a binary image That transform basically tells you for each pixel in the image how far away it is from the nearest pixel that's considered "on" or non-zero The output is another image same size but instead of ones and zeros you get those distances
 
@@ -134,8 +134,8 @@ By the way did you know that if you have a boolean array instead of zeros and on
 
 As for resources for a deeper understanding I’d recommend looking into papers specifically related to distance transform algorithms and especially the ones referencing 2-pass algorithms and the specific optimization strategies like raster scan algorithms which are the core of it
 
-*   **"Distance Transforms of Sampled Functions"** by P.E Danielsson this is kind of a classical paper it gets to the roots of the things and is a must read
-*   **"A Linear Algorithm for Computing the Euclidean Distance Transform"** by Felzenszwalb and Huttenlocher this paper discusses linear-time distance transform algorithms I think they describe a method very close to the one scipy is using
+- **"Distance Transforms of Sampled Functions"** by P.E Danielsson this is kind of a classical paper it gets to the roots of the things and is a must read
+- **"A Linear Algorithm for Computing the Euclidean Distance Transform"** by Felzenszwalb and Huttenlocher this paper discusses linear-time distance transform algorithms I think they describe a method very close to the one scipy is using
 
 These resources should get you a solid understanding of the underlying concepts and algorithms used by `scipy.ndimage.distance_transform_edt` and also similar methods that can be found across other computer vision and scientific libraries
 

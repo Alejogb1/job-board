@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-dags-not-appearing-in-the-airflow-ui"
 ---
 
-Okay, let's unpack this. It's a scenario I've bumped into more times than I care to remember, especially during the early phases of a new airflow deployment or after significant configuration changes. A missing DAG in the UI is often a symptom, not the problem itself, so diagnosing it requires a systematic approach. Instead of jumping straight to conclusions, we need to examine several potential culprits, all stemming from misconfigurations or subtle logical errors.
+, let's unpack this. It's a scenario I've bumped into more times than I care to remember, especially during the early phases of a new airflow deployment or after significant configuration changes. A missing DAG in the UI is often a symptom, not the problem itself, so diagnosing it requires a systematic approach. Instead of jumping straight to conclusions, we need to examine several potential culprits, all stemming from misconfigurations or subtle logical errors.
 
 Firstly, the obvious: let’s ensure the DAG files are actually being parsed. Airflow relies on the scheduler to discover, interpret, and subsequently make DAG definitions available within the user interface. This process involves the scheduler actively searching through the designated DAGs folder(s), specified either in `airflow.cfg` or via environment variables, for valid python files. If the scheduler isn't picking up anything, it's likely that either the path is incorrect or that airflow is having difficulty reading the contents of your directory.
 
@@ -75,7 +75,7 @@ if __name__ == "__main__":
 
 This basic script validates a single DAG file, and you can modify it to suit your workflow. You could use this on your CI pipeline to catch problems before they reach your airflow environment.
 
-Beyond simple syntax errors, problems can arise from imports or custom modules. If your DAG relies on external libraries or custom functions defined outside the DAG file and these are not available on the scheduler's machine, the parser will throw an error. Remember, Airflow needs to access and interpret *all* components required by the DAG file. For instance, consider a scenario where a common utility module used by your dags isn't available in the Python path of your scheduler:
+Beyond simple syntax errors, problems can arise from imports or custom modules. If your DAG relies on external libraries or custom functions defined outside the DAG file and these are not available on the scheduler's machine, the parser will throw an error. Remember, Airflow needs to access and interpret _all_ components required by the DAG file. For instance, consider a scenario where a common utility module used by your dags isn't available in the Python path of your scheduler:
 
 ```python
 from airflow import DAG
@@ -99,6 +99,7 @@ with DAG(
         python_callable=dummy_task
     )
 ```
+
 If `my_custom_utils` or the function `calculate_something` are not available in the scheduler's python path (e.g. they are not installed within the venv or they're not in the pythonpath variable used when launching the scheduler), this will prevent the DAG from being visible.
 
 Another aspect to examine is the `schedule_interval` or the `catchup` settings in your DAG declaration. If the `schedule_interval` is set to `None` and `catchup` is `False`, the DAG will not run automatically (as expected) and therefore no runs will appear in the UI until manually triggered. However, this also means that if there were no previous manually triggered runs, the DAG would be in a 'paused' state and thus not visible. If you intend to run the DAG with no schedule, ensure you have a manual trigger or activate the DAG via the UI or the `airflow dags unpause` command.

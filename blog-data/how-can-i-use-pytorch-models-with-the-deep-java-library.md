@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-can-i-use-pytorch-models-with-the-deep-java-library"
 ---
 
-Alright, let's talk about integrating PyTorch models with the Deep Java Library (DJL). I've spent a good chunk of my career navigating the intricacies of different machine learning frameworks, and getting these two to play nice is a common challenge. The core issue arises from the inherent differences in how models are defined and executed: PyTorch is Python-centric, leveraging its dynamic computational graphs, while DJL is a Java-based interface intended to be framework-agnostic. This requires a bridging mechanism, and thankfully, DJL is equipped to handle this reasonably well.
+, let's talk about integrating PyTorch models with the Deep Java Library (DJL). I've spent a good chunk of my career navigating the intricacies of different machine learning frameworks, and getting these two to play nice is a common challenge. The core issue arises from the inherent differences in how models are defined and executed: PyTorch is Python-centric, leveraging its dynamic computational graphs, while DJL is a Java-based interface intended to be framework-agnostic. This requires a bridging mechanism, and thankfully, DJL is equipped to handle this reasonably well.
 
-First, let's address the fundamental approach. DJL doesn't directly *import* a PyTorch `.pt` or `.pth` file as-is. Instead, it leverages the concept of a *model zoo* and model *engines*. Essentially, a PyTorch model needs to be converted into an intermediate representation (often referred to as a 'trace') that DJL can understand. This generally involves exporting the model from PyTorch into either a `TorchScript` format or an `ONNX` format, both of which DJL can load. `TorchScript` is generally preferred if the model was originally trained using PyTorch since DJL can leverage the full capabilities of the PyTorch engine. `ONNX` serves as a good alternative if interoperability across different frameworks is desired and some capabilities are less crucial.
+First, let's address the fundamental approach. DJL doesn't directly _import_ a PyTorch `.pt` or `.pth` file as-is. Instead, it leverages the concept of a _model zoo_ and model _engines_. Essentially, a PyTorch model needs to be converted into an intermediate representation (often referred to as a 'trace') that DJL can understand. This generally involves exporting the model from PyTorch into either a `TorchScript` format or an `ONNX` format, both of which DJL can load. `TorchScript` is generally preferred if the model was originally trained using PyTorch since DJL can leverage the full capabilities of the PyTorch engine. `ONNX` serves as a good alternative if interoperability across different frameworks is desired and some capabilities are less crucial.
 
 Let's break this down with examples. For the purpose of these code examples, let’s assume we have a simple PyTorch model, `SimpleNet`, defined as follows (python code):
 
@@ -43,9 +43,9 @@ if __name__ == '__main__':
         output_names = ['output'])
 ```
 
-This code snippet demonstrates how to prepare the model for DJL by saving two different formats: one using torchscript and another one using ONNX. The `torch.jit.trace` method creates a *scripted* version of the model based on a dummy input which makes it easy for DJL to interpret. The `torch.onnx.export` method does the same, but to ONNX format and includes a few extra arguments to ensure consistent naming of input and output tensors.
+This code snippet demonstrates how to prepare the model for DJL by saving two different formats: one using torchscript and another one using ONNX. The `torch.jit.trace` method creates a _scripted_ version of the model based on a dummy input which makes it easy for DJL to interpret. The `torch.onnx.export` method does the same, but to ONNX format and includes a few extra arguments to ensure consistent naming of input and output tensors.
 
-Now, let’s switch to the Java side and use DJL to load and run it. Here’s a Java example for loading the *TorchScript* version:
+Now, let’s switch to the Java side and use DJL to load and run it. Here’s a Java example for loading the _TorchScript_ version:
 
 ```java
 import ai.djl.*;
@@ -130,6 +130,7 @@ public class OnnxInference {
 }
 
 ```
+
 As you can see, the only difference is in the `criteria` part where we set the engine to be `"OnnxRuntime"` this is the only part that distinguishes that this code will load the ONNX model instead of the `torchscript` model.
 
 Several points are worth highlighting. First, ensuring your environment has the appropriate DJL dependencies for `PyTorch` or `OnnxRuntime` is key. You typically achieve this through maven or gradle by including relevant DJL artifacts. Second, the `optModelName` parameter in `Criteria` specifies the name of the model file without an extension. DJL searches the given path for files with known extensions for the specified engine, such as `.pt` or `.onnx`. Third, DJL expects input as an `NDArray` (n-dimensional array), so the input data needs to be converted accordingly, and reshaped if required. Finally, the output from the predictor is of type `Output`, which contains various properties of interest. It is generally required to extract the result by using the method `getData()`.

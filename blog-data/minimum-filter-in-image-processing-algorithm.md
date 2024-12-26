@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "minimum-filter-in-image-processing-algorithm"
 ---
 
-Alright so you're asking about a minimum filter in image processing right Been there done that trust me I've wrestled with this beast more times than I care to admit
+so you're asking about a minimum filter in image processing right Been there done that trust me I've wrestled with this beast more times than I care to admit
 
 So basically a minimum filter is a type of image processing operation that goes through an image pixel by pixel It doesn't care about the color in this context it operates on the pixel values in its neighborhood it looks around a selected pixel and finds the minimum pixel value within a predefined area and then it replaces the original pixel value with this minimum value So you can think of it as a kind of 'darkening' or 'erosion' operation which is useful in many contexts usually to reduce noise to make things more homogeneous It's not about averaging or blurring that’s a different thing this is about finding the darkest spot and making the center pixel match that darkest spot
 
@@ -28,13 +28,13 @@ def minimum_filter(image, kernel_size):
         for j in range(width):
             # Extract the neighborhood using array slicing
             neighborhood = padded_image[i:i + kernel_size, j:j + kernel_size]
-            
+
             # Find minimum pixel value in the kernel
             min_pixel = np.min(neighborhood)
-            
+
             # Set current pixel to the minimum value found
             output_image[i, j] = min_pixel
-    
+
     return output_image
 
 # Example use
@@ -85,9 +85,11 @@ if __name__ == '__main__':
   print("\nFiltered Image:")
   print(filtered_image)
 ```
+
 This way the code is more concise since the function already does all of the necessary heavy lifting but the underlying logic is exactly the same it still needs the same concepts of neighborhood and minimum value search
 
 Sometimes instead of a square neighborhood you might need a different shape for the kernel say a cross or a circle shaped one which brings us to the concept of the structuring element that is more complex than a simple square neighborhood and if you are using that you will need to use a different approach but it is usually something like this:
+
 ```python
 import numpy as np
 from scipy.ndimage import binary_erosion
@@ -111,7 +113,7 @@ if __name__ == '__main__':
     [25, 35, 45, 55, 65],
     [30, 40, 50, 60, 70]
     ], dtype=np.uint8)
-    
+
     radius = 1 # Radius for the disk structuring element
 
     filtered_image = minimum_filter_scipy_structured(example_image, radius) # 3x3 kernel
@@ -121,14 +123,14 @@ if __name__ == '__main__':
     print(filtered_image)
 ```
 
-This shows you how to use different kernels by applying what is known as morphological erosion which is actually a minimum filter but using the concept of structured element that allows the use of different forms. Note that morphological operations use binary images but they will work on greyscale images too as a minimum filter. The result depends on the form of the structure element in this case a circle and its radius which will determine the overall neighborhood size. 
+This shows you how to use different kernels by applying what is known as morphological erosion which is actually a minimum filter but using the concept of structured element that allows the use of different forms. Note that morphological operations use binary images but they will work on greyscale images too as a minimum filter. The result depends on the form of the structure element in this case a circle and its radius which will determine the overall neighborhood size.
 
 Now remember it's not a magical fix-all for image issues It has its limitations and can sometimes distort features or even make things worse if the kernel is too big or the image has structures that look similar to noise always experiment with different parameters and see what fits best your images and your needs also always experiment a lot
 
 Finally if you're looking for further reading I would suggest looking into:
 
-*   **"Digital Image Processing" by Rafael C. Gonzalez and Richard E. Woods:** This is a classic textbook in the field of image processing it covers everything in deep detail including morphological operations like erosion which are used as a minimum filter with custom kernels
-*   **"Computer Vision Algorithms and Applications" by Richard Szeliski:** This book has a broad overview of image processing algorithms including minimum and maximum filters among many other useful techniques.
-*   **Scientific papers on morphological image analysis:** Search on google scholar for papers on morphological image processing operations and you'll find tons of details on minimum and maximum filters or how to design structuring elements that might work for a very specific application you have in mind.
+- **"Digital Image Processing" by Rafael C. Gonzalez and Richard E. Woods:** This is a classic textbook in the field of image processing it covers everything in deep detail including morphological operations like erosion which are used as a minimum filter with custom kernels
+- **"Computer Vision Algorithms and Applications" by Richard Szeliski:** This book has a broad overview of image processing algorithms including minimum and maximum filters among many other useful techniques.
+- **Scientific papers on morphological image analysis:** Search on google scholar for papers on morphological image processing operations and you'll find tons of details on minimum and maximum filters or how to design structuring elements that might work for a very specific application you have in mind.
 
 I hope this helps you in your endeavor if you have any other questions please feel free to ask I might or might not have an answer and if that’s the case don’t worry someone else here will definitely know how to answer.

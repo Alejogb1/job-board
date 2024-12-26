@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-activesupportconcerns-documented-functionalities"
 ---
 
-Alright, let’s tackle this. I remember a particularly grueling project back in ‘09, a monolith destined for refactoring, where we leaned *heavily* on `ActiveSupport::Concern`. It became both a lifesaver and, admittedly, occasionally a source of subtle headaches if not carefully understood. So, speaking from that experience, let's break down the documented functionalities.
+, let’s tackle this. I remember a particularly grueling project back in ‘09, a monolith destined for refactoring, where we leaned _heavily_ on `ActiveSupport::Concern`. It became both a lifesaver and, admittedly, occasionally a source of subtle headaches if not carefully understood. So, speaking from that experience, let's break down the documented functionalities.
 
 `ActiveSupport::Concern`, fundamentally, provides a mechanism for encapsulating shared behavior in a module and then injecting that behavior into classes. It’s more than just a mixin; it’s about managing class-level dependencies and ensuring method overrides play nicely. It’s designed to address common scenarios where you need to extend classes with similar sets of methods, configurations, or class methods. It promotes DRY (Don’t Repeat Yourself) principles effectively, but only if applied correctly. Its core purpose isn't just code reuse; it's about achieving that reuse in a structured, maintainable, and predictable manner.
 
@@ -56,7 +56,7 @@ puts "Post updated at: #{blog_post.updated_at}"
 
 In this first example, you can see how `Timestampable` injects `set_timestamps` and the `created_at` and `updated_at` accessors into `BlogPost` as instance methods. Moreover, `record_creation_time` is made available as a class method. This encapsulates all timestamp related functionality into a reusable module.
 
-Now, let’s consider the `prepend` option, an important facet of `ActiveSupport::Concern` often overlooked. It allows you to effectively 'inject' the module methods *before* the existing methods in the class. The standard `include` appends them, thus allowing class methods to override module methods. But if you want the module's method to take precedence, `prepend` is the solution. This is particularly useful when you want to modify existing behavior consistently across multiple classes without altering those classes directly.
+Now, let’s consider the `prepend` option, an important facet of `ActiveSupport::Concern` often overlooked. It allows you to effectively 'inject' the module methods _before_ the existing methods in the class. The standard `include` appends them, thus allowing class methods to override module methods. But if you want the module's method to take precedence, `prepend` is the solution. This is particularly useful when you want to modify existing behavior consistently across multiple classes without altering those classes directly.
 
 Let's modify the previous example to show how `prepend` behaves:
 
@@ -105,7 +105,7 @@ my_prepended_instance = MyPrependedClass.new("Test")
 MyPrependedClass.track_initialization
 ```
 
-Notice in this example, `MyClass` includes the `Logging` concern as usual, and `MyPrependedClass` *prepends* it. Thus, during initialization of `MyPrependedClass`, the `Logging` module's `initialize` method runs *before* the class’s own `initialize` method, which is demonstrated in the output. The order of method execution is reversed by `prepend`, which can be very helpful for scenarios like logging or intercepting certain events.
+Notice in this example, `MyClass` includes the `Logging` concern as usual, and `MyPrependedClass` _prepends_ it. Thus, during initialization of `MyPrependedClass`, the `Logging` module's `initialize` method runs _before_ the class’s own `initialize` method, which is demonstrated in the output. The order of method execution is reversed by `prepend`, which can be very helpful for scenarios like logging or intercepting certain events.
 
 Finally, let’s look at another common usage: using concerns to handle complex dependencies. Imagine you have a series of modules that depend on one another. `ActiveSupport::Concern` allows you to ensure the proper order and dependencies are loaded. The example below is somewhat contrived but demonstrates the principle:
 

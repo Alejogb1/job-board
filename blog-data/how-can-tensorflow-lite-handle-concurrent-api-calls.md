@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-tensorflow-lite-handle-concurrent-api-calls"
 ---
 
-Alright, let’s tackle this. Concurrent api calls with tensorflow lite, particularly when it comes to the mobile and embedded space, can present a few interesting challenges. I’ve seen this issue play out on a few different projects, notably a real-time object detection app targeting low-power devices and a separate project involving edge inference for sensor data. Both required careful consideration of how we manage multiple requests against a single tflite interpreter.
+, let’s tackle this. Concurrent api calls with tensorflow lite, particularly when it comes to the mobile and embedded space, can present a few interesting challenges. I’ve seen this issue play out on a few different projects, notably a real-time object detection app targeting low-power devices and a separate project involving edge inference for sensor data. Both required careful consideration of how we manage multiple requests against a single tflite interpreter.
 
 The core problem arises from the fact that a standard tflite interpreter instance, as typically created, isn't inherently thread-safe. This means that attempting to simultaneously run inference from multiple threads against a single interpreter object will often result in undefined behavior, race conditions, and, quite frequently, crashes. I’ve debugged this type of scenario enough to confidently say that avoiding shared mutable state is paramount here.
 
@@ -115,6 +115,7 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
 Here, we create the single interpreter outside the threads, and then pass a lock object. Each thread acquires the lock before invoking the interpreter and releases it afterwards, thus ensuring exclusive access and preventing conflicts. Note the use of `with lock:`, which automatically handles acquisition and release and protects us from forgetting to release the lock. The performance impact here will be noticeable depending on the nature of the model and the level of concurrency. If threads are frequently waiting on the lock, throughput suffers, although memory consumption is reduced compared to the former implementation.
 
 The third approach, while not a core part of the TensorFlow Lite library, involves using a thread pool coupled with a queue for processing incoming inference tasks. You can use python’s `concurrent.futures` to accomplish this and is often useful for higher-volume requests without overloading a single core with thread context switching. While it may not strictly manage concurrent api calls directly against the interpreter itself, it acts as an abstraction layer for distributing inference tasks, preventing resource contention, and often leading to a smoother application performance. The example below illustrates this technique:

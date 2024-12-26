@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-do-tensor-dimensions-mismatch-at-index-1"
 ---
 
-Okay, let's tackle this tensor dimension mismatch issue. I've seen this one rear its head more than a few times in my career, and it’s usually due to a fundamental misunderstanding of how tensors are shaped and how operations affect those shapes. So, the specific error of “tensor dimensions mismatch at index 1” is almost always related to the second dimension in a multi-dimensional tensor, often representing columns in matrices or a sequence length in higher dimensions. Let me break it down with some context and examples.
+, let's tackle this tensor dimension mismatch issue. I've seen this one rear its head more than a few times in my career, and it’s usually due to a fundamental misunderstanding of how tensors are shaped and how operations affect those shapes. So, the specific error of “tensor dimensions mismatch at index 1” is almost always related to the second dimension in a multi-dimensional tensor, often representing columns in matrices or a sequence length in higher dimensions. Let me break it down with some context and examples.
 
 In my experience, this commonly occurs during neural network training, specifically when dealing with batched data. Let's say I was building a recurrent neural network (rnn) for time series prediction a while back. I had my input sequences, each with a varying length, prepared for batching. The initial issue I encountered is that some sequences were longer than others, leading to a direct mismatch when feeding them into the rnn layer.
 
-The core problem stems from how tensor operations are defined. They are typically element-wise or involve a transformation that requires compatible dimensions. When you perform an operation like matrix multiplication, or even an addition with tensors, the corresponding dimensions need to align. If you have a tensor of shape (m, n) and try to multiply it by a tensor of shape (p, q), the 'n' and 'p' have to match. That's the basic principle that often gets overlooked in more complex scenarios, and often, *that* specific mismatch happens at index 1.
+The core problem stems from how tensor operations are defined. They are typically element-wise or involve a transformation that requires compatible dimensions. When you perform an operation like matrix multiplication, or even an addition with tensors, the corresponding dimensions need to align. If you have a tensor of shape (m, n) and try to multiply it by a tensor of shape (p, q), the 'n' and 'p' have to match. That's the basic principle that often gets overlooked in more complex scenarios, and often, _that_ specific mismatch happens at index 1.
 
 Index 1 specifically means the second dimension, which is why it’s so frequently a point of contention. It represents the column in a 2d matrix and often the second axis in higher dimensions. Consider a tensor of shape (batch_size, sequence_length, feature_size). 'sequence_length' would be the dimension with index 1. Imagine you are working with batches of sentences. Some are padded or truncated to standardize their length. A mismatch in this ‘sequence_length’ could occur due to incorrect data preprocessing or operations not respecting the intended axis.
 
@@ -30,6 +30,7 @@ try:
 except RuntimeError as e:
     print(f"Error: {e}")
 ```
+
 The output shows a RuntimeError because the inner dimensions (4 and 5) are mismatched. You would get a similar error if you mismatched the second dimension after a batch operation on tensors. In practice, it would not be with matrix multiplication on two random tensors, but it would be the same issue. For instance, you might have an encoder output shape (batch_size, sequence_length, hidden_size) and try to directly multiply that by a transformation tensor that expects (hidden_size, target_vocab_size) without adjusting shapes first.
 
 **Example 2: Sequence Length Mismatch in Batching**

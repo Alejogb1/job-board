@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-cant-i-retrieve-user-attributes-using-the-profileopenid-scopes-in-aws-cognito"
 ---
 
-Okay, let's talk about why retrieving user attributes with just the `profile` or `openid` scopes in AWS Cognito often falls flat. I've seen this trip up a good number of folks, and it's usually not a matter of misconfigured settings, but rather a misunderstanding of how these scopes are intended to function within the context of OAuth 2.0 and OpenID Connect, which Cognito leverages.
+, let's talk about why retrieving user attributes with just the `profile` or `openid` scopes in AWS Cognito often falls flat. I've seen this trip up a good number of folks, and it's usually not a matter of misconfigured settings, but rather a misunderstanding of how these scopes are intended to function within the context of OAuth 2.0 and OpenID Connect, which Cognito leverages.
 
-First, let’s clarify something crucial: `profile` and `openid` scopes are not *directly* tied to the specific user attributes you define in your Cognito user pool, such as email, phone number, or custom fields. Instead, they primarily provide a standardized set of *claims* about the user’s identity within a token. The `openid` scope primarily signifies that you're requesting an OpenID Connect flow, which results in an `id_token`. This token includes basic identification claims such as the user's `sub` (subject identifier, which is a unique user id), `iss` (issuer), and `aud` (audience). The `profile` scope, while it might seem intuitively connected to user data, is specified in OpenID Connect to return a handful of *standard* user information claims that are widely accepted, like `name`, `given_name`, `family_name`, `picture`, etc.
+First, let’s clarify something crucial: `profile` and `openid` scopes are not _directly_ tied to the specific user attributes you define in your Cognito user pool, such as email, phone number, or custom fields. Instead, they primarily provide a standardized set of _claims_ about the user’s identity within a token. The `openid` scope primarily signifies that you're requesting an OpenID Connect flow, which results in an `id_token`. This token includes basic identification claims such as the user's `sub` (subject identifier, which is a unique user id), `iss` (issuer), and `aud` (audience). The `profile` scope, while it might seem intuitively connected to user data, is specified in OpenID Connect to return a handful of _standard_ user information claims that are widely accepted, like `name`, `given_name`, `family_name`, `picture`, etc.
 
-Now, the key point here is that Cognito's implementation of these scopes adheres to these standardized specifications. So, you'll notice that you're not getting your custom attributes simply because these standard scopes don't include them. Cognito *can* include other information in the id token, but that is not driven simply by the presence of these scopes alone. It requires the explicit mapping of user attributes to id token claims.
+Now, the key point here is that Cognito's implementation of these scopes adheres to these standardized specifications. So, you'll notice that you're not getting your custom attributes simply because these standard scopes don't include them. Cognito _can_ include other information in the id token, but that is not driven simply by the presence of these scopes alone. It requires the explicit mapping of user attributes to id token claims.
 
 In one particularly memorable project, I recall spending quite some time troubleshooting an application where the developers were under the impression that simply including the `profile` scope would give them access to the user's address and preferred language. They were baffled when they kept receiving an id token missing those details. It's a common mistake, and it underscores how easily assumptions can lead to dead ends.
 
@@ -16,7 +16,7 @@ So, how do you get the user attributes you actually need? You've got a few prima
 
 **Option 1: Mapping User Pool Attributes to ID Token Claims**
 
-This method directly addresses the problem. Within Cognito's user pool settings, you can configure a *mapping* between specific user attributes (including custom attributes) to standard or custom claims in the ID token. For example, you could map your custom "user_type" attribute to a claim named `custom:user_type`. This allows you to include this information in the token returned by Cognito when a user authenticates, in addition to those already supplied by `openid` and `profile`.
+This method directly addresses the problem. Within Cognito's user pool settings, you can configure a _mapping_ between specific user attributes (including custom attributes) to standard or custom claims in the ID token. For example, you could map your custom "user_type" attribute to a claim named `custom:user_type`. This allows you to include this information in the token returned by Cognito when a user authenticates, in addition to those already supplied by `openid` and `profile`.
 
 Here's how it roughly looks in code when you decode the ID token:
 
@@ -43,7 +43,7 @@ print(json.dumps(decoded_token, indent=4))
 
 ```
 
-Notice that the `custom:user_type` is included in the token, illustrating how you can map those fields to the id token claims via Cognito configurations. *Remember to handle the verification of signatures! In production the `verify_signature: False` should be removed, and a key material used.*
+Notice that the `custom:user_type` is included in the token, illustrating how you can map those fields to the id token claims via Cognito configurations. _Remember to handle the verification of signatures! In production the `verify_signature: False` should be removed, and a key material used._
 **Option 2: Using the Cognito User Pool API directly**
 
 If you're aiming for the most comprehensive and up-to-date user profile, you might opt to fetch the user attributes directly from the Cognito API. This is particularly useful if you need to access information that's not suited for inclusion in tokens (e.g., large or complex datasets) or if you must guarantee you're seeing the latest profile, including updates since the user last authenticated. This approach requires using the AWS SDK and having the appropriate IAM permissions.

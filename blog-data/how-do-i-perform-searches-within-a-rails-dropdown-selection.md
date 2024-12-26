@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-perform-searches-within-a-rails-dropdown-selection"
 ---
 
-Okay, let's tackle this. I’ve seen this exact requirement come up a number of times throughout my career, often in contexts where users need to quickly find a specific entry within a long list, and relying solely on scrolling becomes impractical, bordering on unusable. So, how do we inject some search functionality into a Rails dropdown selection? It's more nuanced than simply throwing in some client-side javascript, and there are several approaches, each with its own set of trade-offs.
+, let's tackle this. I’ve seen this exact requirement come up a number of times throughout my career, often in contexts where users need to quickly find a specific entry within a long list, and relying solely on scrolling becomes impractical, bordering on unusable. So, how do we inject some search functionality into a Rails dropdown selection? It's more nuanced than simply throwing in some client-side javascript, and there are several approaches, each with its own set of trade-offs.
 
 Essentially, the goal is to dynamically filter the dropdown options as the user types into a search field. We need to consider both the front-end interaction and the server-side data retrieval, thinking about performance, scalability, and the overall user experience. I've had to optimize solutions like this for applications handling thousands of dropdown entries, so I can tell you first hand: a naïve implementation won't cut it.
 
@@ -21,10 +21,10 @@ One common starting point, and often the quickest to implement, is a purely clie
 </select>
 
 <script>
-  $(document).ready(function() {
-    $('#my_dropdown').select2({
-      placeholder: 'Search for a fruit',
-      allowClear: true
+  $(document).ready(function () {
+    $("#my_dropdown").select2({
+      placeholder: "Search for a fruit",
+      allowClear: true,
     });
   });
 </script>
@@ -60,26 +60,27 @@ Now, let’s look at how to integrate this with the front-end javascript, modify
 <select id="my_dropdown" style="width:300px;"></select>
 
 <script>
-  $(document).ready(function() {
-      $('#my_dropdown').select2({
-          placeholder: 'Search for an item',
-          minimumInputLength: 2, // Start searching after at least 2 chars typed
-          ajax: {
-              url: '/dropdown/search',
-              dataType: 'json',
-              delay: 250, // Delay to reduce server hits during typing
-              data: function (params) {
-                return { query: params.term };
-              },
-              processResults: function (data) {
-                 return { results: data };
-              }
-          },
-          cache: true
-      });
+  $(document).ready(function () {
+    $("#my_dropdown").select2({
+      placeholder: "Search for an item",
+      minimumInputLength: 2, // Start searching after at least 2 chars typed
+      ajax: {
+        url: "/dropdown/search",
+        dataType: "json",
+        delay: 250, // Delay to reduce server hits during typing
+        data: function (params) {
+          return { query: params.term };
+        },
+        processResults: function (data) {
+          return { results: data };
+        },
+      },
+      cache: true,
+    });
   });
 </script>
 ```
+
 In this scenario, the `ajax` option within the `select2` configuration handles the asynchronous requests. `minimumInputLength` helps avoid sending requests when the user hasn't typed enough information, thus saving network traffic. The `delay` ensures you don't accidentally fire a request every keystroke; users get a second to type a few letters before the request triggers.
 
 I've found these general strategies to be robust. There are of course, other libraries that you could use, like `react-select` if you prefer that. The underlying principles, however, remain similar: either filter locally, if dataset is small, or use a server-side approach for larger lists with asynchronous calls and a limit on the results returned.

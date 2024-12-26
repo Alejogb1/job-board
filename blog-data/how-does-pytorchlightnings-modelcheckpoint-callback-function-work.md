@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-does-pytorchlightnings-modelcheckpoint-callback-function-work"
 ---
 
-Alright, let's talk ModelCheckpoint in PyTorch Lightning. I’ve spent a fair bit of time working with it, mostly on projects ranging from complex NLP tasks to some equally intricate computer vision systems. And believe me, getting checkpointing just *right* is crucial, especially when you're training models for days, or even weeks. It's definitely saved my bacon a few times.
+, let's talk ModelCheckpoint in PyTorch Lightning. I’ve spent a fair bit of time working with it, mostly on projects ranging from complex NLP tasks to some equally intricate computer vision systems. And believe me, getting checkpointing just _right_ is crucial, especially when you're training models for days, or even weeks. It's definitely saved my bacon a few times.
 
 At its core, the `ModelCheckpoint` callback in `pytorch_lightning` is designed to automatically save model checkpoints during training based on specified conditions. Think of it as an intelligent automated save button that’s tied to your training performance and configuration. Instead of needing to manually keep track of epochs or specific metrics and implement saving logic yourself, you define what criteria should trigger a save, and the callback handles the rest, ensuring a consistent and reliable process.
 
-The beauty of it is its configurability. You can save the *best* model based on a validation metric, or save every *n* epochs, or even save the last model after training finishes. You can even combine these. There are options for which files to keep after a save, which metric to monitor, and how to name your saved files. This flexibility is really what makes it so valuable, especially in large projects.
+The beauty of it is its configurability. You can save the _best_ model based on a validation metric, or save every _n_ epochs, or even save the last model after training finishes. You can even combine these. There are options for which files to keep after a save, which metric to monitor, and how to name your saved files. This flexibility is really what makes it so valuable, especially in large projects.
 
 Now, let’s break down how it actually functions under the hood. When you instantiate a `ModelCheckpoint` callback, you’re setting up an internal state machine. Lightning will call its hooks at key points during the training loop, particularly after each validation step (if you’ve specified one) and at the end of each epoch. This is where the `ModelCheckpoint` callback comes into play, monitoring your chosen metric (usually validation loss or accuracy) and checking against its set conditions.
 
@@ -64,9 +64,10 @@ checkpoint_callback = ModelCheckpoint(
 trainer = pl.Trainer(max_epochs=5, callbacks=[checkpoint_callback])
 trainer.fit(model, train_loader, val_loader)
 ```
+
 In this example, we initialize `ModelCheckpoint` to monitor `val_loss`, minimizing it. The `save_top_k=1` argument ensures only the best model will be retained. The `filename` parameter controls how the saved files are named, incorporating epoch and the validation loss.
 
-**Example 2: Saving a checkpoint every *n* epochs**
+**Example 2: Saving a checkpoint every _n_ epochs**
 
 ```python
 import torch

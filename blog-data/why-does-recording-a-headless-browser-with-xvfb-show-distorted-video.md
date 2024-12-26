@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-recording-a-headless-browser-with-xvfb-show-distorted-video"
 ---
 
-Okay, let's tackle this. It’s a problem I’ve certainly run into more than a few times over the years, especially when dealing with automated UI testing and web scraping pipelines. The issue you're describing—distorted video output when recording a headless browser using xvfb—isn't entirely straightforward, but it usually boils down to a combination of factors related to framebuffer management, resolution mismatch, and how the video encoding process interacts with this simulated display environment.
+, let's tackle this. It’s a problem I’ve certainly run into more than a few times over the years, especially when dealing with automated UI testing and web scraping pipelines. The issue you're describing—distorted video output when recording a headless browser using xvfb—isn't entirely straightforward, but it usually boils down to a combination of factors related to framebuffer management, resolution mismatch, and how the video encoding process interacts with this simulated display environment.
 
 From my experience, several key components contribute to this distortion, and understanding them is critical to finding a solution. First, consider xvfb itself. Xvfb, or X virtual framebuffer, is essentially an X server that operates entirely in memory. It doesn't have a physical display; it creates a virtual buffer to simulate the display, which is crucial for running GUI applications without a monitor, like headless browsers. This virtual framebuffer is where the browser renders its output. Now, when you try to record the output, what you are actually recording is the contents of this framebuffer, captured at specific intervals.
 
@@ -22,7 +22,7 @@ Let's look at some code examples, focusing on ffmpeg since that is a common tool
 
 **Example 1: Basic Capture with Resolution Mismatch**
 
-Here's an example where distortion is *likely* to occur due to mismatched resolutions:
+Here's an example where distortion is _likely_ to occur due to mismatched resolutions:
 
 ```bash
 #!/bin/bash
@@ -53,6 +53,7 @@ sleep 5 # wait for page to load.
 ffmpeg -f x11grab -video_size 1280x720 -i :0.0 \
     -c:v libx264 -pix_fmt yuv420p /tmp/correct_video.mp4
 ```
+
 Here we ensure that the xvfb resolution matches the `video_size` parameter passed to ffmpeg, greatly reducing the likelihood of a distorted output.
 
 **Example 3: Specifying Frame Rate for Consistent Capture**

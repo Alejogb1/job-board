@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-write-a-custom-rasa-component-for-text-preprocessing"
 ---
 
-Okay, let's unpack this. Building custom components for Rasa is a task I’ve found myself revisiting many times over the years, especially when dealing with very specific text preprocessing needs that the standard pipelines don’t quite cover. It’s where the rubber meets the road, so to speak, in making your conversational AI truly tailored to your domain.
+, let's unpack this. Building custom components for Rasa is a task I’ve found myself revisiting many times over the years, especially when dealing with very specific text preprocessing needs that the standard pipelines don’t quite cover. It’s where the rubber meets the road, so to speak, in making your conversational AI truly tailored to your domain.
 
 The core challenge, as I see it, is creating a modular, maintainable piece of code that fits seamlessly within Rasa's framework. We’re not just stringing together arbitrary functions; we're building a component that understands the Rasa input format, transforms it as needed, and then passes it along to the next stage of the pipeline. I've personally dealt with issues ranging from handling nuanced entity variations in product names to implementing highly specific stemming algorithms—each requiring a bespoke component.
 
@@ -12,11 +12,11 @@ First, let's talk structure. A Rasa component is essentially a python class that
 
 Here’s a breakdown of each:
 
-*   `__init__`: This is where you set up any internal state that your component will require, as well as load any external resources like dictionaries or pre-trained models. For example, if you're implementing a custom lemmatizer, this is where you'd load your lemmatization model.
-*   `train(training_data: TrainingData, config: RasaNLUModelConfig, **kwargs) -> None`: This is where the component learns or adapts to the training data. If your text preprocessing step is static, it might be an empty method, but if you are doing something that learns parameters, like a domain specific tokenizer, this is where it would happen.
-*   `process(message: Message, **kwargs) -> None`: This is where the magic happens. You receive a `Message` object containing the input text and related metadata. Your component then modifies the message object (adding attributes to its `data` dictionary, like tokenized words or new entities).
-*   `persist(file_name: Text, model_dir: Text) -> None`: Saves any state you want to retain between runs to a file on disk. This method is crucial to restore learned components or ensure that static resources are readily accessible to subsequent pipeline components.
-*   `load(meta: Dict[Text, Any], model_dir: Text) -> Optional[Component]`: (Optional). This is where the persisted component's information is loaded back into memory.
+- `__init__`: This is where you set up any internal state that your component will require, as well as load any external resources like dictionaries or pre-trained models. For example, if you're implementing a custom lemmatizer, this is where you'd load your lemmatization model.
+- `train(training_data: TrainingData, config: RasaNLUModelConfig, **kwargs) -> None`: This is where the component learns or adapts to the training data. If your text preprocessing step is static, it might be an empty method, but if you are doing something that learns parameters, like a domain specific tokenizer, this is where it would happen.
+- `process(message: Message, **kwargs) -> None`: This is where the magic happens. You receive a `Message` object containing the input text and related metadata. Your component then modifies the message object (adding attributes to its `data` dictionary, like tokenized words or new entities).
+- `persist(file_name: Text, model_dir: Text) -> None`: Saves any state you want to retain between runs to a file on disk. This method is crucial to restore learned components or ensure that static resources are readily accessible to subsequent pipeline components.
+- `load(meta: Dict[Text, Any], model_dir: Text) -> Optional[Component]`: (Optional). This is where the persisted component's information is loaded back into memory.
 
 Now, let’s get into some practical examples.
 

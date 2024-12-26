@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "triangle-strip-opengl-drawing"
 ---
 
-Okay so you want to draw triangle strips in OpenGL right Been there done that Got the t-shirt and probably a few bug reports to boot Let's break it down I mean no one starts out knowing this stuff right?
+you want to draw triangle strips in OpenGL right Been there done that Got the t-shirt and probably a few bug reports to boot Let's break it down I mean no one starts out knowing this stuff right?
 
 I've been messing with OpenGL for probably close to 15 years now started back when fixed-function pipelines were still kinda a thing I remember pulling my hair out with immediate mode glBegin glEnd madness Then came vertex buffers and shaders thank god And yeah triangle strips they seemed so simple on paper but little quirks little gotchas all over the place
 
@@ -47,7 +47,7 @@ Here's a snippet that sets up a VBO and renders it with glDrawArrays:
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 ```
 
-Okay let's break this code down a bit further first `glGenBuffers` and `glBindBuffer` are like giving the GPU space in RAM and pointing to it `glBufferData` is like copying data from RAM to GPU RAM
+let's break this code down a bit further first `glGenBuffers` and `glBindBuffer` are like giving the GPU space in RAM and pointing to it `glBufferData` is like copying data from RAM to GPU RAM
 
 `glVertexAttribPointer` is where you tell the GPU how your vertex data is organised what data type it is and where to start and also strides in this case we are saying it has 3 floats per vertex and there is no gaps between vertices `glEnableVertexAttribArray` activates the attribute
 
@@ -70,7 +70,8 @@ Now sometimes your strip isn't this neat quad shape you might have complex stuff
         0, 1, 2, 3, 5, 4, 1
     };
 ```
-Notice how the last index repeats `1` This is because when we define triangle strips it is okay to start a new strip using a degenerate triangle In this case we are creating two strips The first one goes from `0 to 3` and the second one goes from `3 to 1` which includes the degenerate triangle `3 5 4`
+
+Notice how the last index repeats `1` This is because when we define triangle strips it is to start a new strip using a degenerate triangle In this case we are creating two strips The first one goes from `0 to 3` and the second one goes from `3 to 1` which includes the degenerate triangle `3 5 4`
 
 And here’s how you'd render that with an element buffer object EBO or index buffer:
 
@@ -89,6 +90,7 @@ And here’s how you'd render that with an element buffer object EBO or index bu
 
     glDrawElements(GL_TRIANGLE_STRIP, 7, GL_UNSIGNED_INT, 0);
 ```
+
 It’s pretty similar to the non indexed version, but we added an element buffer object or EBO where we bind the index data and instead of `glDrawArrays` we have `glDrawElements` where we specify that the indices are unsigned ints
 
 One of the common gotchas with strips is making sure your vertices are in the right order Sometimes you’ll end up with backface culling issues or flipped normals because the winding order is wrong In the examples I provided it is counter-clockwise which is the default but sometimes you have to change it especially if you use different modelling softwares

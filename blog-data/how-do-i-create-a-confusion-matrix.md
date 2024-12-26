@@ -4,14 +4,14 @@ date: "2024-12-23"
 id: "how-do-i-create-a-confusion-matrix"
 ---
 
-Okay, so, tackling the creation of a confusion matrix is something I've certainly spent a fair bit of time on across different projects. It’s a foundational tool in evaluating classification models, and getting it implemented correctly, and interpreting it meaningfully, is crucial. I remember one project, a predictive maintenance system for industrial machinery, where we initially struggled to differentiate between genuine failures and minor anomalies; a well-structured confusion matrix quickly became our best friend.
+, so, tackling the creation of a confusion matrix is something I've certainly spent a fair bit of time on across different projects. It’s a foundational tool in evaluating classification models, and getting it implemented correctly, and interpreting it meaningfully, is crucial. I remember one project, a predictive maintenance system for industrial machinery, where we initially struggled to differentiate between genuine failures and minor anomalies; a well-structured confusion matrix quickly became our best friend.
 
-Let's break down what a confusion matrix *is* and how to implement it. In essence, it's a table that visualizes the performance of a classification model by showing the counts of:
+Let's break down what a confusion matrix _is_ and how to implement it. In essence, it's a table that visualizes the performance of a classification model by showing the counts of:
 
-*   **True Positives (TP):** Cases where the model correctly predicted the positive class.
-*   **True Negatives (TN):** Cases where the model correctly predicted the negative class.
-*   **False Positives (FP):** Cases where the model incorrectly predicted the positive class (also known as Type I error).
-*   **False Negatives (FN):** Cases where the model incorrectly predicted the negative class (also known as Type II error).
+- **True Positives (TP):** Cases where the model correctly predicted the positive class.
+- **True Negatives (TN):** Cases where the model correctly predicted the negative class.
+- **False Positives (FP):** Cases where the model incorrectly predicted the positive class (also known as Type I error).
+- **False Negatives (FN):** Cases where the model incorrectly predicted the negative class (also known as Type II error).
 
 The structure is typically presented as a 2x2 matrix for binary classification, but can be expanded to nxn for multi-class scenarios. The rows typically represent the actual (true) classes, and the columns represent the predicted classes (though some libraries or conventions may reverse this, always verify).
 
@@ -118,8 +118,8 @@ After creation, the confusion matrix allows us to calculate several performance 
 
 For a deeper understanding, I recommend exploring these resources:
 
-*   **"The Elements of Statistical Learning" by Hastie, Tibshirani, and Friedman:** This book offers comprehensive coverage of statistical learning, including detailed explanations of model evaluation and performance metrics.
-*   **"Pattern Recognition and Machine Learning" by Christopher Bishop:** This textbook provides a rigorous treatment of pattern recognition and machine learning algorithms, including classification and evaluation techniques.
-*   **Scikit-learn documentation:** The official documentation for `sklearn.metrics.confusion_matrix` is the best reference for detailed usage and parameter explanations.
+- **"The Elements of Statistical Learning" by Hastie, Tibshirani, and Friedman:** This book offers comprehensive coverage of statistical learning, including detailed explanations of model evaluation and performance metrics.
+- **"Pattern Recognition and Machine Learning" by Christopher Bishop:** This textbook provides a rigorous treatment of pattern recognition and machine learning algorithms, including classification and evaluation techniques.
+- **Scikit-learn documentation:** The official documentation for `sklearn.metrics.confusion_matrix` is the best reference for detailed usage and parameter explanations.
 
 In my experience, starting with the manual implementation (Example 1) is incredibly helpful, but using pre-built functions like the ones found in `sklearn` is critical for scaling to larger projects. The insights gained from a well-formed confusion matrix, combined with an understanding of the strengths and weaknesses of our models, are essential for successful model development and deployment.

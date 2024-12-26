@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-multiple-differently-trained-ml-models-be-combined-into-a-single-predictive-model-in-sagemaker"
 ---
 
-Alright, let's tackle this. The challenge of combining multiple machine learning models, each trained perhaps on slightly different datasets or using differing algorithms, into a unified predictor within SageMaker is definitely a nuanced one, and something I've personally grappled with in several projects. It's not just about stacking things together; it's about achieving a robust and often more accurate prediction by leveraging the strengths of each individual model.
+, let's tackle this. The challenge of combining multiple machine learning models, each trained perhaps on slightly different datasets or using differing algorithms, into a unified predictor within SageMaker is definitely a nuanced one, and something I've personally grappled with in several projects. It's not just about stacking things together; it's about achieving a robust and often more accurate prediction by leveraging the strengths of each individual model.
 
-The core principle we're focusing on here is *ensemble learning*. This approach isn't a single technique but rather a family of methods designed to improve predictive performance by combining the predictions of multiple models. I've seen firsthand how moving past a single model strategy can significantly boost overall system performance, especially in scenarios where you're dealing with complex datasets or have a variety of features that different models can excel at capturing. SageMaker offers several ways to implement ensemble methods. We will focus on three common strategies: averaging, voting, and stacking, each with its own set of benefits and implementation details.
+The core principle we're focusing on here is _ensemble learning_. This approach isn't a single technique but rather a family of methods designed to improve predictive performance by combining the predictions of multiple models. I've seen firsthand how moving past a single model strategy can significantly boost overall system performance, especially in scenarios where you're dealing with complex datasets or have a variety of features that different models can excel at capturing. SageMaker offers several ways to implement ensemble methods. We will focus on three common strategies: averaging, voting, and stacking, each with its own set of benefits and implementation details.
 
-Let’s begin with *averaging*, arguably the simplest approach. Here, we obtain predictions from each of our individual models and calculate the average of these predictions to arrive at the final output. This is incredibly useful when the individual models are relatively equal in performance and when we expect random noise in their predictions to cancel out through averaging.
+Let’s begin with _averaging_, arguably the simplest approach. Here, we obtain predictions from each of our individual models and calculate the average of these predictions to arrive at the final output. This is incredibly useful when the individual models are relatively equal in performance and when we expect random noise in their predictions to cancel out through averaging.
 
 ```python
 import numpy as np
@@ -48,7 +48,7 @@ print(final_prediction)
 
 In this code, each of the SageMaker endpoints specified in `model_endpoints` is queried using the SageMaker `Predictor`. The raw predictions are appended to a list, and finally, their mean is computed along axis 0 (across the models, not down the dataset rows). Note the explicit specification of serializers and deserializers, ensuring that data is correctly formatted for each model endpoint. This example assumes all models output numerical predictions.
 
-The second strategy is *voting*. Voting is most effective when dealing with classification problems. For hard voting, each model predicts a class label, and the final prediction is the class label that receives the majority of votes. For soft voting, each model predicts probabilities for each class, and the final prediction is the class with the highest average probability.
+The second strategy is _voting_. Voting is most effective when dealing with classification problems. For hard voting, each model predicts a class label, and the final prediction is the class label that receives the majority of votes. For soft voting, each model predicts probabilities for each class, and the final prediction is the class with the highest average probability.
 
 ```python
 import numpy as np
@@ -100,7 +100,7 @@ print("Soft Vote:", soft_vote_prediction)
 
 This snippet demonstrates both hard and soft voting, choosing the appropriate strategy based on the `voting_type` parameter. For 'hard' voting, we use `scipy.stats.mode` to determine the most frequent prediction for each input instance. For 'soft' voting, we return the average class probability, analogous to averaging with a different interpretation.
 
-Finally, the more sophisticated approach of *stacking* involves training a meta-model or blender on the predictions of the base models. The base models generate predictions, which then become the input features for the meta-model, which makes the final prediction. This method can potentially capture complex relationships between the base model predictions that would be lost using simple averaging or voting.
+Finally, the more sophisticated approach of _stacking_ involves training a meta-model or blender on the predictions of the base models. The base models generate predictions, which then become the input features for the meta-model, which makes the final prediction. This method can potentially capture complex relationships between the base model predictions that would be lost using simple averaging or voting.
 
 ```python
 import numpy as np
@@ -136,7 +136,7 @@ def stacking_ensemble(model_endpoints, input_data, meta_model=None, fit_meta=Tru
 
     if fit_meta:
       # In real scenarios one would split their data into train and test
-      # and train the base models on a train set and the meta-model on a 
+      # and train the base models on a train set and the meta-model on a
       # validation set using out of fold predictions
       # but here just use simple fit
        dummy_labels = np.random.randint(0,2,size=base_predictions.shape[0])

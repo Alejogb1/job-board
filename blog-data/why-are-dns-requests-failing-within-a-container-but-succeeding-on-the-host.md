@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-dns-requests-failing-within-a-container-but-succeeding-on-the-host"
 ---
 
-Okay, let's tackle this. It's a situation I've seen crop up countless times across various projects, and the reasons are usually buried somewhere in the network configuration. When a container can't resolve domain names, but the host it's running on can, we're dealing with a networking stack discrepancy, and there are a few common culprits.
+, let's tackle this. It's a situation I've seen crop up countless times across various projects, and the reasons are usually buried somewhere in the network configuration. When a container can't resolve domain names, but the host it's running on can, we're dealing with a networking stack discrepancy, and there are a few common culprits.
 
 From what I've experienced, the most frequent issues boil down to either a problem with the container's network configuration itself, a firewall interference, or a misalignment with the host's resolver settings. It might appear simple on the surface, but the devil’s always in the detail when it comes to container networking.
 
@@ -43,7 +43,7 @@ ping google.com # succeeds
 
 This approach avoids explicit dns configuration but it might not be desired in all situations.
 
-Another very common cause, and one that I've spent a fair bit of time tracking down in the past, involves the firewall. Even if a container has the correct dns settings, a host-level firewall might be blocking outgoing dns requests (typically UDP port 53) from the container's network interface. It's particularly sneaky since the host *itself* works just fine. The host might bypass the more stringent firewall rules since it operates in a separate network context compared to the container. Tools like `iptables` on linux-based systems, or equivalent tools on other platforms, will have rules configured that can impact traffic from containers. I’ve seen this often when a default deny rule is configured in a host-based firewall.
+Another very common cause, and one that I've spent a fair bit of time tracking down in the past, involves the firewall. Even if a container has the correct dns settings, a host-level firewall might be blocking outgoing dns requests (typically UDP port 53) from the container's network interface. It's particularly sneaky since the host _itself_ works just fine. The host might bypass the more stringent firewall rules since it operates in a separate network context compared to the container. Tools like `iptables` on linux-based systems, or equivalent tools on other platforms, will have rules configured that can impact traffic from containers. I’ve seen this often when a default deny rule is configured in a host-based firewall.
 
 For example, imagine a simple iptables setup where a rule blocks all outgoing udp traffic that is not on the loopback interface.
 

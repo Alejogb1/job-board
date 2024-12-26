@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-i-use-lineage-os-ota-in-aosp-projects"
 ---
 
-Alright, let's tackle the intricacies of integrating LineageOS' over-the-air (OTA) update mechanism into an AOSP (Android Open Source Project) based project. It’s a subject I've spent quite some time with, particularly back when we were customizing a rather unique set-top box distribution a few years ago. The need for seamless updates on devices deployed to, shall we say, less than tech-savvy users quickly pushed it to the forefront. It wasn’t a walk in the park, but it certainly yielded a robust system once properly implemented.
+, let's tackle the intricacies of integrating LineageOS' over-the-air (OTA) update mechanism into an AOSP (Android Open Source Project) based project. It’s a subject I've spent quite some time with, particularly back when we were customizing a rather unique set-top box distribution a few years ago. The need for seamless updates on devices deployed to, shall we say, less than tech-savvy users quickly pushed it to the forefront. It wasn’t a walk in the park, but it certainly yielded a robust system once properly implemented.
 
-The core idea is to leverage LineageOS' delta-based updates. Essentially, instead of downloading a complete new system image, we transmit only the *changes* between the current and target versions. This saves bandwidth and significantly reduces the time taken for an update, especially beneficial in resource-constrained environments. The whole architecture rests on a few key components: the `updater` binary, the `recovery` environment, and the update packages themselves, generally zips containing the patch information. The method isn't exactly plug-and-play and involves quite a bit of configuration. Let me walk you through the necessary steps, drawing from my prior experience.
+The core idea is to leverage LineageOS' delta-based updates. Essentially, instead of downloading a complete new system image, we transmit only the _changes_ between the current and target versions. This saves bandwidth and significantly reduces the time taken for an update, especially beneficial in resource-constrained environments. The whole architecture rests on a few key components: the `updater` binary, the `recovery` environment, and the update packages themselves, generally zips containing the patch information. The method isn't exactly plug-and-play and involves quite a bit of configuration. Let me walk you through the necessary steps, drawing from my prior experience.
 
 First, we need to make sure our AOSP build includes the correct `updater` binary, which is typically located in `system/bin/updater`. This is often tied to the `recovery` environment as well, and both rely on a specific set of tools and functionalities for patching the system. Usually, if you're using a recent AOSP source, this shouldn't be a major concern, as the basic updater tools will be there, but it's best to verify. If you find yourself needing a more up-to-date version or a specific lineageOS patch, you’ll need to pull in the relevant parts from the LineageOS GitHub repos.
 
@@ -83,6 +83,7 @@ int install_package(const char* path) {
 }
 
 ```
+
 This c code snippet attempts to illustrate a crucial point; hardcoded partition locations can be brittle. Instead, you should strive to dynamically obtain this information. The `recovery` environment is a limited environment, so this process might be device specific and more involved. This is where deep knowledge of your specific platform comes into play.
 
 Finally, the OTA system uses a manifest to describe the various components and their checksums and partition locations, usually inside the update package itself. These manifests (often in text format, e.g. `updater-script`) are crucial for the update process and have to be generated correctly using the AOSP tools.

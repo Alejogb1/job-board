@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-change-the-project-status-to-complete-in-open-air"
 ---
 
-alright, so you're looking to flip a project's status to 'complete' in open air. i've been there, done that, and got the t-shirt, more than once, and each time it's a little different depending on the specifics of your open air setup. it's not always as straightforward as you'd hope. let's break this down.
+, so you're looking to flip a project's status to 'complete' in open air. i've been there, done that, and got the t-shirt, more than once, and each time it's a little different depending on the specifics of your open air setup. it's not always as straightforward as you'd hope. let's break this down.
 
 first off, open air, as a platform, is quite configurable, which is a double edged sword. it means it can be powerful, but also that there isn't always one single way to do things. i'm assuming we're talking about a fairly standard project object within the open air ecosystem. we’re not going into those weird custom objects some places use that frankly, nobody understands. i've personally seen projects where they've used open air objects for things they really, really shouldn't have, like tracking lunch orders, and trust me, changing a status in those scenarios is… an adventure. i remember one place we moved to open air and someone setup the database as if it was a big excel sheet, i almost had to use a spork to fix that. i'm talking like hundreds of columns, it was insane. anyway, let's get back to our actual goal: setting a project's status to 'complete.'
 
@@ -20,10 +20,10 @@ this is usually the first place you'd look. navigate to the specific project in 
 
 here are some typical steps that might be required:
 
-*   **check for outstanding tasks:** make sure all associated tasks or milestones are marked as complete. look for any tasks that might be lingering with a "pending" or "in progress" status. i've been caught out a few times with these because someone forgot to update a small thing. sometimes they are really hard to find as well.
-*   **review and complete financials:** some workflows won't let you complete a project unless all financials are reconciled. this might include invoicing, expense reports, and time entries. there were projects where time entries where left unchecked for weeks and we had to get the entire project team to re-enter their time just to close out the project.
-*   **check dependencies:** are there dependencies on other projects or other objects? complete those as well as needed. sometimes, a project might be waiting for a sub-project to be done or other dependencies. i saw one of those and it ended in tears. it was a multi-dependencies chain and it was so long that nobody could follow it, we had to get an external consultant just to figure it out.
-*   **look for error messages:** open air usually provides guidance in the form of errors if a status transition cannot happen. read these closely, they usually contain hints to what's preventing the change. open air, surprisingly, is pretty good at telling you what's wrong when it wants to. i usually get all the time because i missed something super silly.
+- **check for outstanding tasks:** make sure all associated tasks or milestones are marked as complete. look for any tasks that might be lingering with a "pending" or "in progress" status. i've been caught out a few times with these because someone forgot to update a small thing. sometimes they are really hard to find as well.
+- **review and complete financials:** some workflows won't let you complete a project unless all financials are reconciled. this might include invoicing, expense reports, and time entries. there were projects where time entries where left unchecked for weeks and we had to get the entire project team to re-enter their time just to close out the project.
+- **check dependencies:** are there dependencies on other projects or other objects? complete those as well as needed. sometimes, a project might be waiting for a sub-project to be done or other dependencies. i saw one of those and it ended in tears. it was a multi-dependencies chain and it was so long that nobody could follow it, we had to get an external consultant just to figure it out.
+- **look for error messages:** open air usually provides guidance in the form of errors if a status transition cannot happen. read these closely, they usually contain hints to what's preventing the change. open air, surprisingly, is pretty good at telling you what's wrong when it wants to. i usually get all the time because i missed something super silly.
 
 if you encounter trouble, take a screenshot of the relevant section in the ui. the error message might prove useful in asking other colleagues or the support team. a screenshot is usually faster than me trying to explain in words the exact thing that i am seeing. remember to blur sensitive information, please.
 
@@ -178,20 +178,20 @@ if __name__ == "__main__":
 
 **debugging tips**
 
-*   **check the open air api documentation:** this is essential. your open air instance might have a custom api and the generic documentation may not be enough. they may have changed some functionality of the api too.
-*   **enable verbose logging:** use some logging to see the responses coming from the api and check them. i cannot stress how helpful this is. api logging is like a debugging superpower.
-*   **verify user permissions:** make sure the user or api key has the necessary permission to modify the project status. your user role may be preventing you to set the status to complete. i have found myself many times with the wrong permission and it was a pain to figure out what the problem was.
-*   **use a tool to inspect the api calls:** tools such as postman or insomnia are useful to inspect the actual api calls. sometimes your code is right but the server is sending something different. this will prove useful in that case.
-*   **inspect the error codes:** pay close attention to error codes. they usually indicate the exact issue you are dealing with.
+- **check the open air api documentation:** this is essential. your open air instance might have a custom api and the generic documentation may not be enough. they may have changed some functionality of the api too.
+- **enable verbose logging:** use some logging to see the responses coming from the api and check them. i cannot stress how helpful this is. api logging is like a debugging superpower.
+- **verify user permissions:** make sure the user or api key has the necessary permission to modify the project status. your user role may be preventing you to set the status to complete. i have found myself many times with the wrong permission and it was a pain to figure out what the problem was.
+- **use a tool to inspect the api calls:** tools such as postman or insomnia are useful to inspect the actual api calls. sometimes your code is right but the server is sending something different. this will prove useful in that case.
+- **inspect the error codes:** pay close attention to error codes. they usually indicate the exact issue you are dealing with.
 
 **recommended resources**
 
 instead of throwing random links at you, i'd recommend looking at the following types of resources. these usually have more long-term value:
 
-*   **your open air instance's specific documentation:** this is probably your best starting point. look for admin guides, api references and user manuals. it should be in your open air instance documentation.
-*   **books about workflow management:** "workflow modeling: tools for process improvement and application development" by alec sharp and patrick mcdermott could provide you with the theory behind workflow systems in general and you will understand better what you are dealing with. this can be very helpful to navigate the complexity of open air.
-*   **books about web api design:** "restful web apis" by leonard richardson, mike amundsen, and sam ruby can help you debug api issues and write better api requests and understand how an api works.
-*   **python request library documentation**: for the python code provided, the library requests’ documentation will help understand how the methods work and what you can do with it. the official documentation is located in the requests page.
-*   **consult your internal open air admin or support team:** they may have custom documentation or insights into the specific workflow implementation for your company. they probably already encountered a similar situation before.
+- **your open air instance's specific documentation:** this is probably your best starting point. look for admin guides, api references and user manuals. it should be in your open air instance documentation.
+- **books about workflow management:** "workflow modeling: tools for process improvement and application development" by alec sharp and patrick mcdermott could provide you with the theory behind workflow systems in general and you will understand better what you are dealing with. this can be very helpful to navigate the complexity of open air.
+- **books about web api design:** "restful web apis" by leonard richardson, mike amundsen, and sam ruby can help you debug api issues and write better api requests and understand how an api works.
+- **python request library documentation**: for the python code provided, the library requests’ documentation will help understand how the methods work and what you can do with it. the official documentation is located in the requests page.
+- **consult your internal open air admin or support team:** they may have custom documentation or insights into the specific workflow implementation for your company. they probably already encountered a similar situation before.
 
 so, there you go. changing a project's status in open air can be a little bit of a process, but with a bit of patience and the resources mentioned above, you should be able to mark those projects as complete. and remember: the worst possible thing is for code to not compile, or a project to be incomplete. haha, coding humour. if i can think of anything else i'll let you know. good luck, and happy coding.

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-get-the-training-metrics-in-a-file"
 ---
 
-alright, so you're asking how to get training metrics dumped into a file, right? been there, done that, got the t-shirt. or, well, a few crumpled notebooks filled with plots and handwritten notes, more like. it's a common problem when you're knee-deep in training neural networks or any kind of model really.
+, so you're asking how to get training metrics dumped into a file, right? been there, done that, got the t-shirt. or, well, a few crumpled notebooks filled with plots and handwritten notes, more like. it's a common problem when you're knee-deep in training neural networks or any kind of model really.
 
 let me tell you, early on in my career, i thought just printing to the console was enough. i'd have this glorious wall of numbers scrolling by, feeling like a true data scientist wizard, and then… poof, the session ends, the console clears, and i'm left with nothing. so, yeah, i learned the importance of logging to a file, the hard way. the amount of time wasted trying to recreate previous runs because i didn't log the metrics… man, i don’t want to revisit those days.
 
@@ -83,6 +83,7 @@ metrics = {"epoch":epoch, "loss":loss, "accuracy":accuracy}
 log_metrics_to_jsonl("training_log.jsonl", metrics)
 
 ```
+
 this writes each set of metrics as a json object to the file, one per line, using jsonl, which is great if you need to read the files later by doing
 
 ```python
@@ -96,6 +97,7 @@ def read_jsonl_file(filepath):
 for data in read_jsonl_file("training_log.jsonl"):
   print(data)
 ```
+
 i’ve used this jsonl approach in projects where i wanted to log more than just basic metrics like training time, hyperparameters, input data distribution, and so on. the json format allows for nested data structures, which is great when your logging requirements become more complex.
 
 and finally, if you want something more sophisticated you might consider using tensorboard. while it's not a plain file, it does output files that can be read to visualize the metrics and they are really useful for more complex models. if you're training deep learning models, it's almost a necessity to get good visualizations and insight. it's the only way that my team hasn’t gone mad after a few months.
@@ -140,7 +142,7 @@ writer.close() # good practice
 
 with tensorboard, you need to install the tensorboard package and then run it in the command line after the training, like this `tensorboard --logdir=runs`. it outputs a page with the graphs that is really useful. the nice thing about tensorboard is that it lets you visualize pretty much everything, not just simple numbers. histograms of weights, gradients, and all kinds of stuff are all very helpful to debug why your neural network isn't cooperating, but at this stage we are just creating basic files.
 
-if you are into the theory behind it all, i can recommend checking out the original tensorboard papers, they are very complete. you can search on google scholar for the work related to "tensorboard data visualization".  also, if you want to dive deeper in the techniques of model training, a very solid book is "deep learning" from goodfellow et al, that explains the math of it all and how to debug it.
+if you are into the theory behind it all, i can recommend checking out the original tensorboard papers, they are very complete. you can search on google scholar for the work related to "tensorboard data visualization". also, if you want to dive deeper in the techniques of model training, a very solid book is "deep learning" from goodfellow et al, that explains the math of it all and how to debug it.
 
 finally, one tip: be consistent in your logging. choose a format and stick with it across projects (as far as it's appropriate for the projects, of course). also, save not only the metrics themselves, but also the settings you used for that training. that way, if you are like me and you forget the parameters you used to get that nice result in the graph. you can quickly check it, trust me it has happened more often than i want to admit. also, it's not a good idea to log everything in the same file. if you start doing multiple runs it will become messy pretty fast. separate your logging output files per experiment, and use a naming convention that you understand.
 

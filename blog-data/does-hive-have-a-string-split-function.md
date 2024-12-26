@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "does-hive-have-a-string-split-function"
 ---
 
-Alright so you're asking about string splitting in Hive right Been there done that a bunch of times let me tell you Hive's a beast and its string handling can be well interesting
+so you're asking about string splitting in Hive right Been there done that a bunch of times let me tell you Hive's a beast and its string handling can be well interesting
 
 First things first yeah Hive totally has string split capabilities It's not like some obscure function hidden away in a dark corner It's front and center and ready to roll Specifically we are talking about the `split` function and this bad boy is your go to for turning a comma separated or any other delimited string into an array of strings and honestly I’ve used this more than I've had hot dinners.
 
@@ -47,7 +47,7 @@ FROM
   user_data;
 ```
 
-The delimiter can literally be any string not just a single character. Think of something really nasty like “|||” or even “*^%”. As long as the strings match in the `user_interests` column it will work. And yes I had to deal with that I don't want to talk about it.
+The delimiter can literally be any string not just a single character. Think of something really nasty like “|||” or even “\*^%”. As long as the strings match in the `user_interests` column it will work. And yes I had to deal with that I don't want to talk about it.
 
 Now here is a little gotcha for you. What if the delimiter is a character that is also used in regular expressions a common example of this is a dot '.' you will need to escape it in your split function and the way to do this is by using double backslashes like this `\\.`. In the same logic and to make it clear other special characters like the `|` needs also to be escaped with double backslashes like this `\\|`. I remember losing an afternoon to this issue when I was trying to split some DNS records with dots and I was getting empty arrays all the time. Turns out the dot meant "any character" in regex and so it just split everything and returned a huge empty array so yeah a great learning experience. I think I went to bed depressed after that debugging session. I'm not gonna lie.
 

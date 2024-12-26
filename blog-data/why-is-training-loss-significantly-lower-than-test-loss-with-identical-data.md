@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-training-loss-significantly-lower-than-test-loss-with-identical-data"
 ---
 
-Okay, let's unpack this discrepancy between training and test loss, because it's a scenario I've definitely encountered more than once in my career, particularly when dealing with complex models. It's a fundamental issue, really, and understanding the nuances can save a considerable amount of debugging time. The core problem, as the question highlights, is that our model performs exceptionally well on the data it was trained on – low training loss – but falters when presented with new, unseen data, indicated by higher test loss, even though the distributions are meant to be identical.
+, let's unpack this discrepancy between training and test loss, because it's a scenario I've definitely encountered more than once in my career, particularly when dealing with complex models. It's a fundamental issue, really, and understanding the nuances can save a considerable amount of debugging time. The core problem, as the question highlights, is that our model performs exceptionally well on the data it was trained on – low training loss – but falters when presented with new, unseen data, indicated by higher test loss, even though the distributions are meant to be identical.
 
 This situation predominantly signals one of two major culprits, and sometimes a blend of both: overfitting or a data leakage issue. These can manifest in subtle and not-so-subtle ways, so a systematic approach is crucial to diagnose the root cause and apply appropriate corrective strategies.
 
@@ -46,6 +46,7 @@ print(f"Test MSE: {mean_squared_error(y_test, y_test_pred):.4f}")
 
 
 ```
+
 In this example, the 15th-degree polynomial model easily fits the training data, leading to a low training MSE, but performs significantly worse on the test data. This is because it overfits to the training data and cannot generalize well.
 
 **Snippet 2: Mitigating Overfitting with Regularization (Python with Scikit-learn)**
@@ -78,6 +79,7 @@ y_test_pred = model.predict(X_test_poly)
 print(f"Training MSE with Ridge: {mean_squared_error(y_train, y_train_pred):.4f}")
 print(f"Test MSE with Ridge: {mean_squared_error(y_test, y_test_pred):.4f}")
 ```
+
 Here, we use ridge regression, which adds an l2 penalty to the complexity of the model. The test error will still be higher than train error but we will note that it is improved compared to the overfitting example. We should iterate on the regularization strength alpha to fine-tune model performance.
 
 **Snippet 3: Illustrating Data Leakage (Python with Pandas and Scikit-learn)**
@@ -131,6 +133,7 @@ y_test_pred = model.predict(X_test)
 print(f"Training MSE without Leakage: {mean_squared_error(y_train, y_train_pred):.4f}")
 print(f"Test MSE without Leakage: {mean_squared_error(y_test, y_test_pred):.4f}")
 ```
+
 In this case, including a leakage feature results in a significantly lower test mse than without the leakage feature. This demonstrates how a leakage feature can result in higher performance on test set than what would be expected.
 
 To dive deeper into these concepts, I'd highly recommend checking out 'The Elements of Statistical Learning' by Hastie, Tibshirani, and Friedman. It’s a comprehensive text covering many of these theoretical underpinnings. For more practical machine learning advice, consider 'Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow' by Aurélien Géron. It's excellent for learning best practices for implementing solutions. Finally, regarding data leakage, there are several excellent papers published by academic journals such as IEEE, and the ACM, covering various aspects of the issue. Search in these databases using phrases such as 'data leakage in machine learning'. These publications will provide a rich source of further information.

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "complete-the-following-table-with-your-observations-r-code"
 ---
 
-Okay so you’ve got a table thing going on right with observations and R code I get it Been there done that more times than I care to remember Lets dive in
+you’ve got a table thing going on right with observations and R code I get it Been there done that more times than I care to remember Lets dive in
 
 First off lets establish something R’s ecosystem is vast and wild its a beautiful jungle where data goes to party but sometimes you need a machete to get through the thick of it I’ve personally spent countless nights debugging stuff that seemed like it should just work I once spent three days tracking a bug that came down to a single rogue space in a data frame column name trust me we've all been there lets not linger on the past ok lets move to the answer
 
@@ -26,12 +26,12 @@ Let's look at some concrete examples assuming your table is actually a data fram
 
 **Example 1 Basic Summary Stats**
 
-| Observation | R Code |
-|---|---|
-| Mean of a numeric column | `mean(data_frame$numeric_column)` |
-| Median of a numeric column | `median(data_frame$numeric_column)` |
-| Standard deviation of a numeric column | `sd(data_frame$numeric_column)`|
-| Number of unique values in column | `length(unique(data_frame$another_column))`|
+| Observation                            | R Code                                      |
+| -------------------------------------- | ------------------------------------------- |
+| Mean of a numeric column               | `mean(data_frame$numeric_column)`           |
+| Median of a numeric column             | `median(data_frame$numeric_column)`         |
+| Standard deviation of a numeric column | `sd(data_frame$numeric_column)`             |
+| Number of unique values in column      | `length(unique(data_frame$another_column))` |
 
 **Code Snippet Example 1**
 
@@ -61,15 +61,16 @@ print(paste("Standard deviation:", sd_value))
 print(paste("Unique values:", unique_count))
 
 ```
+
 **Explanation**
 
 In this example we are using built-in R functions `mean` `median` and `sd` these functions by default will return `NA` if a `NA` value is present in the column that's why i add the na.rm option otherwise your result will always be `NA` if your column contains `NA`s `length(unique())` is used to obtain the amount of different values in the column we are dealing with I also added `na.rm=TRUE` to the mean median and standard deviation that’s a real life thing trust me
 
 **Example 2 Conditional Data Manipulation**
 
-| Observation | R Code |
-|---|---|
-| Filtering rows based on condition | `subset(data_frame, numeric_column > 25)` |
+| Observation                          | R Code                                                                           |
+| ------------------------------------ | -------------------------------------------------------------------------------- |
+| Filtering rows based on condition    | `subset(data_frame, numeric_column > 25)`                                        |
 | Adding new column based on condition | `data_frame$new_column <- ifelse(data_frame$numeric_column > 30, "High", "Low")` |
 
 **Code Snippet Example 2**
@@ -99,10 +100,10 @@ In this example I am showing you a subset and ifelse this are two very useful fu
 
 **Example 3 Grouped Data and Summarization**
 
-| Observation | R Code |
-|---|---|
-| Mean of a numeric column by group | `aggregate(numeric_column ~ another_column, data = data_frame, FUN = mean)` |
-| Number of observations by group | `aggregate(numeric_column ~ another_column, data = data_frame, FUN = length)`|
+| Observation                       | R Code                                                                        |
+| --------------------------------- | ----------------------------------------------------------------------------- |
+| Mean of a numeric column by group | `aggregate(numeric_column ~ another_column, data = data_frame, FUN = mean)`   |
+| Number of observations by group   | `aggregate(numeric_column ~ another_column, data = data_frame, FUN = length)` |
 
 **Code Snippet Example 3**
 
@@ -133,17 +134,17 @@ print(grouped_count)
 
 **Additional Notes**
 
-*   **Data Types:** Be very cautious of your data types R sometimes auto-converts things and that can lead to unexpected results always know the type of your data always
-*   **Missing Values:** NA values are the silent killers of data analysis use `na.rm=TRUE` in your functions or deal with them explicitly
-*   **Packages:** R is all about packages consider using `dplyr` it is a godsend for data manipulation I always recommend to learn it it simplifies your code very well I didn’t use it here to keep it simple and more basic but its a must
-*   **Error Messages:** R error messages can sometimes be cryptic but they often provide the clues if you spend time learning how to read them
+- **Data Types:** Be very cautious of your data types R sometimes auto-converts things and that can lead to unexpected results always know the type of your data always
+- **Missing Values:** NA values are the silent killers of data analysis use `na.rm=TRUE` in your functions or deal with them explicitly
+- **Packages:** R is all about packages consider using `dplyr` it is a godsend for data manipulation I always recommend to learn it it simplifies your code very well I didn’t use it here to keep it simple and more basic but its a must
+- **Error Messages:** R error messages can sometimes be cryptic but they often provide the clues if you spend time learning how to read them
 
 **Recommended Resources**
 
-*   **R for Data Science** by Hadley Wickham and Garrett Grolemund (Best book period for R data science)
-*   **The R Book** by Michael J Crawley (A thorough reference guide if you want to understand deeply)
-*   **Advanced R** by Hadley Wickham (For deeper understanding of the language mechanics)
-*  **The little schemer** Daniel P. Friedman and Matthias Felleisen (I know it’s not R but it will help you to think like a functional programmer which would help a lot in your R programming)
+- **R for Data Science** by Hadley Wickham and Garrett Grolemund (Best book period for R data science)
+- **The R Book** by Michael J Crawley (A thorough reference guide if you want to understand deeply)
+- **Advanced R** by Hadley Wickham (For deeper understanding of the language mechanics)
+- **The little schemer** Daniel P. Friedman and Matthias Felleisen (I know it’s not R but it will help you to think like a functional programmer which would help a lot in your R programming)
 
 **Final Thoughts**
 

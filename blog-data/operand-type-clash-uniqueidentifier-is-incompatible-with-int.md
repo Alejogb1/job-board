@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "operand-type-clash-uniqueidentifier-is-incompatible-with-int"
 ---
 
-Okay so operand type clash uniqueidentifier is incompatible with int right Yeah I’ve been there seen that movie multiple times its always a pain
+operand type clash uniqueidentifier is incompatible with int right Yeah I’ve been there seen that movie multiple times its always a pain
 
 So basically what this error screams is you’re trying to mix apples and oranges at the database level you’re slamming a unique identifier a GUID which is essentially a 128-bit number usually represented as a string into a place that expects a standard integer a 32-bit or 64-bit number Now the database engine is throwing its virtual hands up saying “Dude I cannot compute that”
 
@@ -54,17 +54,18 @@ FROM Products p
 JOIN Categories c ON p.CategoryID = c.CategoryID
 WHERE c.CategoryName = 'Electronics'
 ```
+
 This works as it expects that the `CategoryID` are integers in both Products and Categories tables and can be compared
 
 So there are some important lessons here
 
 1.  **Know your data types**: Understand what kind of data your columns hold before you try to do operations on it The database is not a toy you cannot treat uniqueidentifier as just another random integer and do math operations on it
 2.  **Explicit conversions**: If you really need to use an integer in relation to a GUID or uniqueidentifier you need to explicitly convert them or use proper foreign key relations to connect your tables on the integer id level
-3. **Parameterize your queries**: Always use parameterized queries to prevent SQL injection attacks but also for clarity in your code and prevent these type of errors
-4. **Debugging** use your database tools to inspect what you store in each column
-5. **Logging**: keep logs of your database errors to quickly spot the issue
-6. **Code Reviews**: This might prevent you from having silly errors before you go to production
-7. **Unit Tests**: Tests are your best friend write them to avoid silly bugs
+3.  **Parameterize your queries**: Always use parameterized queries to prevent SQL injection attacks but also for clarity in your code and prevent these type of errors
+4.  **Debugging** use your database tools to inspect what you store in each column
+5.  **Logging**: keep logs of your database errors to quickly spot the issue
+6.  **Code Reviews**: This might prevent you from having silly errors before you go to production
+7.  **Unit Tests**: Tests are your best friend write them to avoid silly bugs
 
 Now I know what you are thinking “ok dude this is great but is there any way that I can understand this in a more structured manner”
 
@@ -76,4 +77,4 @@ Now the real question is when do I use what data type GUID or integer? Well that
 
 Also if you see this error again it means someone is not respecting data types I would suggest you to have a good talk to them or start implementing strict type checking in your code you may start using a good IDE with strong static analysis that will catch these type of problems before you even start to run your code.
 
-Okay I am done ranting and giving you my ancient stories of software engineering mistakes Hopefully this gives you a good understanding of the error and how to properly fix it. Now go out there and build something awesome just make sure to respect data types. Also one last thing you know why programmers always mix up Halloween and Christmas? Because Oct 31 equals Dec 25
+I am done ranting and giving you my ancient stories of software engineering mistakes Hopefully this gives you a good understanding of the error and how to properly fix it. Now go out there and build something awesome just make sure to respect data types. Also one last thing you know why programmers always mix up Halloween and Christmas? Because Oct 31 equals Dec 25

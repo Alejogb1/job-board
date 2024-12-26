@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-do-i-modify-a-last-point-classification-and-save-it-in-the-input-file"
 ---
 
-Alright, let's tackle this. I've seen this scenario pop up more often than you might think, especially when dealing with point cloud data from LiDAR or other 3D scanning sources. You’ve got a point cloud, each point tagged with a classification indicating, say, ground, building, vegetation, etc., and you need to alter one or more of those classifications based on new insights and then, importantly, write that modified data back into the original file. This isn’t trivial if you want to do it correctly and efficiently. Over the years, I've dealt with similar tasks in various geospatial projects, from urban modeling to environmental analysis, and I've developed some best practices I can share.
+, let's tackle this. I've seen this scenario pop up more often than you might think, especially when dealing with point cloud data from LiDAR or other 3D scanning sources. You’ve got a point cloud, each point tagged with a classification indicating, say, ground, building, vegetation, etc., and you need to alter one or more of those classifications based on new insights and then, importantly, write that modified data back into the original file. This isn’t trivial if you want to do it correctly and efficiently. Over the years, I've dealt with similar tasks in various geospatial projects, from urban modeling to environmental analysis, and I've developed some best practices I can share.
 
 The first key consideration is the file format itself. Most often, you'll be dealing with formats like las/laz, ply, or perhaps even csv for more simplified point cloud representations. Each has its own nuances when it comes to how the data, including classifications, is stored and accessed. For instance, LAS/LAZ, being the industry standard for LiDAR, has dedicated fields for point classification, while ply might use properties that need to be mapped, and csv will likely have a comma-separated value representing that classification.
 
-When modifying classifications, I always advise against in-place file manipulation if possible. It's better to load the data into a structured representation in memory, make your changes there, and then write back to a *new* file. This avoids potentially corrupting your original data if anything goes wrong mid-process, and is far easier to debug. The process generally involves three stages: loading, modification, and then saving.
+When modifying classifications, I always advise against in-place file manipulation if possible. It's better to load the data into a structured representation in memory, make your changes there, and then write back to a _new_ file. This avoids potentially corrupting your original data if anything goes wrong mid-process, and is far easier to debug. The process generally involves three stages: loading, modification, and then saving.
 
 Let's break each stage down with practical code examples, focusing on the LAS/LAZ format, as that is the most prevalent. For these examples, we'll assume that the classification data is a single integer value, representing a class type and that we are using Python with the `laspy` library (which I recommend learning if you are doing any serious work with LAS/LAZ data). If you are working with ply data, consider using libraries like `trimesh` or `open3d`. For csv, standard csv handling in python will suffice.
 
@@ -70,7 +70,7 @@ def save_modified_las(original_file_path, output_file_path, points, modified_cla
      print(f"Error saving modified data: {e}")
 ```
 
-This `save_modified_las` function opens both the *original* file and a *new* output file. It uses the header from the original file, and then copies over the x, y, and z coordinates, and, crucially, the *modified* classification data. This ensures that all the attributes of the file are preserved, and only the classification data is modified. It's essential to use `mode='w'` when opening the output file to ensure that you are not overwriting the original.
+This `save_modified_las` function opens both the _original_ file and a _new_ output file. It uses the header from the original file, and then copies over the x, y, and z coordinates, and, crucially, the _modified_ classification data. This ensures that all the attributes of the file are preserved, and only the classification data is modified. It's essential to use `mode='w'` when opening the output file to ensure that you are not overwriting the original.
 
 **Putting It All Together:**
 
@@ -100,9 +100,9 @@ This driver code shows how to call each function in turn, and it includes error 
 
 For deeper dives, I recommend:
 
-*   **"OpenGIS Implementation Standard for Geographic information - Simple feature access"** from the Open Geospatial Consortium. This is a fantastic document to learn how geospatial data is structured in general.
-*  **"LAS Specification"** from the American Society for Photogrammetry and Remote Sensing (ASPRS). This is essential reading for understanding the LAS format and how it stores various point attributes.
-*   **"Programming Computer Vision with Python"** by Jan Erik Solem. This book, while not solely focused on point clouds, provides excellent information about image processing, and has an excellent section on point data. The mathematical principles behind transforming point clouds are very well explained.
-*   **"Advanced Algorithms for 3D Point Cloud Processing"** by Li Zhang. This book provides detailed insights into advanced algorithms for point cloud processing.
+- **"OpenGIS Implementation Standard for Geographic information - Simple feature access"** from the Open Geospatial Consortium. This is a fantastic document to learn how geospatial data is structured in general.
+- **"LAS Specification"** from the American Society for Photogrammetry and Remote Sensing (ASPRS). This is essential reading for understanding the LAS format and how it stores various point attributes.
+- **"Programming Computer Vision with Python"** by Jan Erik Solem. This book, while not solely focused on point clouds, provides excellent information about image processing, and has an excellent section on point data. The mathematical principles behind transforming point clouds are very well explained.
+- **"Advanced Algorithms for 3D Point Cloud Processing"** by Li Zhang. This book provides detailed insights into advanced algorithms for point cloud processing.
 
 The code snippets and explanations presented here should provide a solid foundation for modifying your point cloud classifications and saving your modifications, while emphasizing robust and repeatable approaches. Remember, that any time you are dealing with data manipulation, error handling is key, and testing your code on a small subset of data before running it on a large data set is strongly advisable. And as always, back up your data.

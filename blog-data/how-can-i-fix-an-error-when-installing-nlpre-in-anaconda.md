@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-fix-an-error-when-installing-nlpre-in-anaconda"
 ---
 
-Okay, let’s tackle this. I’ve definitely been down that rabbit hole with `nlpre` and Anaconda before, and it’s often not a straightforward install. It's rarely a single issue, but a cascade of environment, dependency, and even outdated package issues. I recall a particularly frustrating project a couple of years back where I was trying to use `nlpre` for some advanced text preprocessing, and the install was a nightmare. Let's unpack what usually goes wrong and how you can get it working.
+, let’s tackle this. I’ve definitely been down that rabbit hole with `nlpre` and Anaconda before, and it’s often not a straightforward install. It's rarely a single issue, but a cascade of environment, dependency, and even outdated package issues. I recall a particularly frustrating project a couple of years back where I was trying to use `nlpre` for some advanced text preprocessing, and the install was a nightmare. Let's unpack what usually goes wrong and how you can get it working.
 
 Typically, problems installing `nlpre` within an Anaconda environment stem from a few key areas: dependency conflicts, version mismatches, and incorrect channel configurations within `conda`. `nlpre` itself often has specific requirements on other libraries, especially regarding natural language processing and numerical computation, and these need to align with your environment.
 

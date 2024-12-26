@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-obtain-an-altair-binned-table-from-a-plot"
 ---
 
-alright, so you want to get the binned data from an altair plot, basically extracting the underlying table that altair used to create those bins, gotcha. it's a common need when you move from visual exploration to needing actual numbers for further analysis or reporting. been there, done that, got the t-shirt with the faded code print.
+, so you want to get the binned data from an altair plot, basically extracting the underlying table that altair used to create those bins, gotcha. it's a common need when you move from visual exploration to needing actual numbers for further analysis or reporting. been there, done that, got the t-shirt with the faded code print.
 
 i remember way back when, i was working on a project that involved analyzing user activity on a platform. we had this gorgeous altair histogram showing the distribution of login times, perfectly binned, visually great. but then, the boss comes in, and of course he asks for the actual numbers behind each bin, the classic case of “i need the data, not just the picture”. back then, my first instinct was to try and reverse-engineer the binning logic from the plot itself, which, let me tell you, was a proper nightmare of pandas groupby and cut operations, and not very reproducible. it felt like writing a whole library just to get the data. turns out there's a way easier route.
 

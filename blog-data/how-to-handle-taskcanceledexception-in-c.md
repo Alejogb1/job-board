@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-to-handle-taskcanceledexception-in-c"
 ---
 
-Alright, let's tackle this. TaskCanceledException, a somewhat common sight in asynchronous C# development, often trips up developers who are new to the async/await paradigm, and sometimes even those who aren't. I recall a particularly challenging project involving a large-scale data ingestion pipeline, where improper cancellation handling led to intermittent data loss and some rather stressful debugging sessions. It taught me the importance of robust cancellation strategies. The core issue is that when a `Task` is canceled, it throws a `TaskCanceledException`. This isn't necessarily an error in the traditional sense; it's an indicator that the task was intentionally stopped before completion. However, failing to handle this exception gracefully can lead to unexpected program behavior and potential resource leaks.
+, let's tackle this. TaskCanceledException, a somewhat common sight in asynchronous C# development, often trips up developers who are new to the async/await paradigm, and sometimes even those who aren't. I recall a particularly challenging project involving a large-scale data ingestion pipeline, where improper cancellation handling led to intermittent data loss and some rather stressful debugging sessions. It taught me the importance of robust cancellation strategies. The core issue is that when a `Task` is canceled, it throws a `TaskCanceledException`. This isn't necessarily an error in the traditional sense; it's an indicator that the task was intentionally stopped before completion. However, failing to handle this exception gracefully can lead to unexpected program behavior and potential resource leaks.
 
-The fundamental concept here involves cooperative cancellation. We don't *force* a task to stop; instead, we *request* it to stop, and the task itself should check its cancellation status and exit cleanly. This dance is primarily orchestrated using a `CancellationToken` and `CancellationTokenSource`. The `CancellationTokenSource` is responsible for issuing the cancellation request, and the `CancellationToken` is passed to the task, allowing it to monitor the cancellation state.
+The fundamental concept here involves cooperative cancellation. We don't _force_ a task to stop; instead, we _request_ it to stop, and the task itself should check its cancellation status and exit cleanly. This dance is primarily orchestrated using a `CancellationToken` and `CancellationTokenSource`. The `CancellationTokenSource` is responsible for issuing the cancellation request, and the `CancellationToken` is passed to the task, allowing it to monitor the cancellation state.
 
-Now, simply catching the `TaskCanceledException` isn’t enough. We need to understand *why* it was canceled and handle it appropriately. Should we log it? Should we retry the operation? Should we propagate the cancellation further? The answers depend heavily on the context of the application.
+Now, simply catching the `TaskCanceledException` isn’t enough. We need to understand _why_ it was canceled and handle it appropriately. Should we log it? Should we retry the operation? Should we propagate the cancellation further? The answers depend heavily on the context of the application.
 
 Let’s break it down with some practical examples.
 
@@ -127,7 +127,7 @@ public class CancellationExample2
 
 ```
 
-Here, `FirstOperationAsync` calls `SecondOperationAsync`, passing the same `CancellationToken`. If a cancellation is requested at any point, the exception will propagate up the call stack. `RunAsync` then catches the exception in order to log the cancellation. This example highlights the importance of ensuring that *all* cancellable operations in a chain of calls respect the `CancellationToken`. If any function along the path ignores the token, the entire operation may not cancel correctly.
+Here, `FirstOperationAsync` calls `SecondOperationAsync`, passing the same `CancellationToken`. If a cancellation is requested at any point, the exception will propagate up the call stack. `RunAsync` then catches the exception in order to log the cancellation. This example highlights the importance of ensuring that _all_ cancellable operations in a chain of calls respect the `CancellationToken`. If any function along the path ignores the token, the entire operation may not cancel correctly.
 
 **Example 3: Selective Cancellation Handling**
 

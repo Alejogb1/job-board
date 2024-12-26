@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-cross-regularization-between-two-neural-networks"
 ---
 
-alright, so you're asking about cross-regularization between two neural networks, a topic i've definitely sunk my teeth into a few times. it's a pretty nuanced area, and there isn't one single 'magic bullet' solution, but i can share my experiences and approaches that have worked for me.
+, so you're asking about cross-regularization between two neural networks, a topic i've definitely sunk my teeth into a few times. it's a pretty nuanced area, and there isn't one single 'magic bullet' solution, but i can share my experiences and approaches that have worked for me.
 
 essentially, cross-regularization aims to improve the generalization of multiple networks by leveraging the information learned by each other. instead of training each network independently, you introduce a regularization term that encourages them to be consistent in their predictions or representations. the goal is to reduce overfitting and improve robustness, particularly when you have limited data or noisy labels. i've found it especially useful in semi-supervised scenarios where you have a lot of unlabeled data.
 
@@ -33,7 +33,7 @@ def cross_reg_loss_outputs(model_a, model_b, inputs, outputs, lambda_reg):
     criterion = nn.CrossEntropyLoss()
     loss_a = criterion(output_a, outputs)
     loss_b = criterion(output_b, outputs)
-    
+
     # regularization term based on similarity between the outputs
     reg_loss = torch.mean(torch.abs(output_a - output_b))
 
@@ -54,7 +54,7 @@ def cross_reg_loss_features(model_a, model_b, inputs, outputs, lambda_reg, layer
     output_b = model_b(inputs)
     loss_a = criterion(output_a, outputs)
     loss_b = criterion(output_b, outputs)
-    
+
     # Regularization using mean squared error on features
     reg_loss = torch.mean((features_a - features_b)**2)
 
@@ -72,7 +72,7 @@ def extract_layer_output(model, inputs, layer_name):
     raise ValueError(f"layer {layer_name} not found.")
 ```
 
-note that in this case the function extract\_layer\_output is specific to the model. make sure you get the layer name and its outputs right. a common mistake i had made was getting the features too early in the networks, make sure you align the high level features not low-level image features. these are completely different between models most of the time.
+note that in this case the function extract_layer_output is specific to the model. make sure you get the layer name and its outputs right. a common mistake i had made was getting the features too early in the networks, make sure you align the high level features not low-level image features. these are completely different between models most of the time.
 
 finally, here's another more sophisticated version that could use a dynamic weighting based on confidence. here we use the network confidence (the probability of the class) to weight the contribution of that network to the regularization:
 
@@ -81,7 +81,7 @@ def cross_reg_loss_confidence_weighted(model_a, model_b, inputs, outputs, lambda
 
     output_a = model_a(inputs)
     output_b = model_b(inputs)
-    
+
     criterion = nn.CrossEntropyLoss()
     loss_a = criterion(output_a, outputs)
     loss_b = criterion(output_b, outputs)
@@ -89,7 +89,7 @@ def cross_reg_loss_confidence_weighted(model_a, model_b, inputs, outputs, lambda
     # Get the predicted probabilities for each class for both models
     probs_a = torch.softmax(output_a, dim=1)
     probs_b = torch.softmax(output_b, dim=1)
-    
+
     # get the confidence of each model
     conf_a, _ = torch.max(probs_a, dim=1)
     conf_b, _ = torch.max(probs_b, dim=1)

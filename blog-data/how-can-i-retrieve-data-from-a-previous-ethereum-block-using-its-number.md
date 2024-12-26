@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-retrieve-data-from-a-previous-ethereum-block-using-its-number"
 ---
 
-Alright, let’s tackle this. The need to access data from past Ethereum blocks is surprisingly common, and while it might seem straightforward on the surface, there are a few nuances to understand, particularly when you’re dealing with a live blockchain. I've personally bumped into this multiple times over the years, most notably when troubleshooting issues with smart contract migrations where we needed to audit states at specific points in the past. Let’s break down how to retrieve data by block number, and why it’s not as simple as just asking the current node.
+, let’s tackle this. The need to access data from past Ethereum blocks is surprisingly common, and while it might seem straightforward on the surface, there are a few nuances to understand, particularly when you’re dealing with a live blockchain. I've personally bumped into this multiple times over the years, most notably when troubleshooting issues with smart contract migrations where we needed to audit states at specific points in the past. Let’s break down how to retrieve data by block number, and why it’s not as simple as just asking the current node.
 
 At its core, accessing past block data revolves around interacting with an Ethereum node that has the necessary historical information. This generally means your node needs to have been running and syncing for a while (or it needs to be accessing a full archive node). The data you get back will be the raw block data, which needs further processing to extract exactly what you need - be it transaction data, state variables, or logs. The standard interfaces for this are through JSON-RPC calls, particularly the `eth_getBlockByNumber` method. This method is the backbone for retrieving a block by its number or by a specific tag, like 'latest' or 'pending'.
 
@@ -50,27 +50,26 @@ In this python example using `web3.py`, the `w3.eth.get_block(block_number)` fun
 **Example 2: JavaScript (with ethers.js)**
 
 ```javascript
-const { ethers } = require('ethers');
+const { ethers } = require("ethers");
 
 // Replace with your Infura project ID or archive node endpoint
-const INFURA_URL = 'https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID';
+const INFURA_URL = "https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID";
 const provider = new ethers.JsonRpcProvider(INFURA_URL);
 
 async function getBlockDataByNumber(blockNumber) {
   try {
     const block = await provider.getBlock(blockNumber);
     if (block) {
-        console.log(`Block Hash: ${block.hash}`);
-        console.log(`Block Timestamp: ${block.timestamp}`);
-        // Iterate through the transaction hashes if they exist
-        if (block.transactions && block.transactions.length > 0) {
-          block.transactions.forEach(txHash => {
-            console.log(`Transaction Hash: ${txHash}`);
-          });
-        }
-         else {
-          console.log("No Transactions in this block.")
-        }
+      console.log(`Block Hash: ${block.hash}`);
+      console.log(`Block Timestamp: ${block.timestamp}`);
+      // Iterate through the transaction hashes if they exist
+      if (block.transactions && block.transactions.length > 0) {
+        block.transactions.forEach((txHash) => {
+          console.log(`Transaction Hash: ${txHash}`);
+        });
+      } else {
+        console.log("No Transactions in this block.");
+      }
     } else {
       console.log(`Could not retrieve block: ${blockNumber}`);
     }

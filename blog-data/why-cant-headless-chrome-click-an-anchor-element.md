@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-cant-headless-chrome-click-an-anchor-element"
 ---
 
-Alright, let's talk about the curious case of headless Chrome and anchor element clicks. It's a problem that, if memory serves, I've bumped into more than once, particularly back in the day when we were automating browser-based UI tests. It often crops up in web scraping as well, and the frustration is certainly real when your automation script is staring blankly at a page, seemingly ignoring the anchor tag you’re so desperately trying to activate.
+, let's talk about the curious case of headless Chrome and anchor element clicks. It's a problem that, if memory serves, I've bumped into more than once, particularly back in the day when we were automating browser-based UI tests. It often crops up in web scraping as well, and the frustration is certainly real when your automation script is staring blankly at a page, seemingly ignoring the anchor tag you’re so desperately trying to activate.
 
-The core of the issue isn’t that headless Chrome *can't* click; it’s more nuanced than that. It's often a problem with how headless mode interacts with the page’s rendering and event handling. In a nutshell, it boils down to whether the element is perceived as "interactable" by the browser's engine, and that perception can vary significantly between a full graphical instance of Chrome and its headless counterpart.
+The core of the issue isn’t that headless Chrome _can't_ click; it’s more nuanced than that. It's often a problem with how headless mode interacts with the page’s rendering and event handling. In a nutshell, it boils down to whether the element is perceived as "interactable" by the browser's engine, and that perception can vary significantly between a full graphical instance of Chrome and its headless counterpart.
 
 Essentially, when you tell a browser to click an element, several things need to happen in sequence. First, the browser has to correctly identify the element you’re targeting based on your selector (e.g., CSS or xpath). Second, it needs to ensure that the element is within the browser's viewport, meaning it's visible and not hidden behind other elements or scrolled offscreen. Third, it triggers the appropriate JavaScript event associated with a click, which usually includes dispatching events like 'mousedown,' 'mouseup,' and 'click.'
 
@@ -36,14 +36,14 @@ driver = webdriver.Chrome(options=chrome_options)
 try:
     driver.get("https://example.com")  # Replace with test page
     # This will fail often in headless if there are Javascript updates
-    # driver.find_element(By.CSS_SELECTOR, 'a.my-link').click() 
-    
+    # driver.find_element(By.CSS_SELECTOR, 'a.my-link').click()
+
     # Instead, let's wait for the element to be clickable
     link = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, 'a.my-link'))
     )
     link.click()
-    
+
     print("Successfully clicked the link.")
 
 except Exception as e:
@@ -53,6 +53,7 @@ finally:
     driver.quit()
 
 ```
+
 This example illustrates the typical "element is not interactable" error I have seen in the past. Instead of immediately attempting to click the anchor tag, I wait using `WebDriverWait` and the expected condition `element_to_be_clickable`. This strategy gives the browser sufficient time to load and render the element as needed. If you comment out the `--headless` argument, it might even work without the waiting because the browser will draw it visually which forces the element updates and layout calculation.
 
 **Example 2: Scroll to View (Python with Selenium)**
@@ -73,7 +74,7 @@ try:
 
     # Get link element
     link = driver.find_element(By.CSS_SELECTOR, 'a.my-link')
-    
+
     # Scroll the element into view
     driver.execute_script("arguments[0].scrollIntoView();", link)
 
@@ -81,9 +82,9 @@ try:
     clickable_link = WebDriverWait(driver, 10).until(
        EC.element_to_be_clickable((By.CSS_SELECTOR, 'a.my-link'))
     )
-    
+
     clickable_link.click()
-    
+
     print("Successfully clicked the link.")
 
 except Exception as e:

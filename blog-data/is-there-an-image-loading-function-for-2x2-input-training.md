@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-there-an-image-loading-function-for-2x2-input-training"
 ---
 
-Okay, let's unpack this. The question of an "image loading function for 2x2 input training" isn't quite straightforward, because 2x2 images aren't something you'd typically encounter in practical scenarios, especially given the common minimum sizes for convolutional layers in deep learning. However, the underlying principles of loading and processing image data remain applicable regardless of image size. I've dealt with similar challenges in the past, particularly when working with highly specialized, sensor-based data where the "image" resolution was indeed exceptionally small. It's more a matter of adapting standard practices to such edge cases.
+, let's unpack this. The question of an "image loading function for 2x2 input training" isn't quite straightforward, because 2x2 images aren't something you'd typically encounter in practical scenarios, especially given the common minimum sizes for convolutional layers in deep learning. However, the underlying principles of loading and processing image data remain applicable regardless of image size. I've dealt with similar challenges in the past, particularly when working with highly specialized, sensor-based data where the "image" resolution was indeed exceptionally small. It's more a matter of adapting standard practices to such edge cases.
 
 The core issue isn't about the dimensions themselves, but more about ensuring your data pipeline efficiently feeds 2x2 matrices (which we’ll treat as grayscale single-channel “images” for this explanation) into your model. The process typically involves several key stages, regardless of image size: data loading, pre-processing (including resizing if needed, which, in this case, we’ll probably skip), and batching. We'll need to carefully consider each of these steps.
 
@@ -130,6 +130,7 @@ if __name__ == '__main__':
       print(f"Example batch with channel dim:\n{batch}")
 
 ```
+
 Here, I've taken the previous batch generator and introduced `np.expand_dims(img, axis=0)` to insert a channel dimension before using `np.stack`. The resulting batch tensor is now in the shape `(batch_size, 1, 2, 2)`. This ensures the input is suitable for a single channel convolutional neural network. It may be noted that such small input images may require specialised convolution layers with reduced kernel sizes or stride to effectively be trained.
 
 In terms of reference material, I’d suggest looking at:

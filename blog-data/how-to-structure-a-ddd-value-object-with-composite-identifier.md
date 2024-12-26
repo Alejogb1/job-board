@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-structure-a-ddd-value-object-with-composite-identifier"
 ---
 
-Okay, let's tackle this. The question of structuring a domain-driven design (DDD) value object with a composite identifier is one that I've bumped into more than a few times in my career. I recall one particularly gnarly project involving a distributed inventory system where product identifiers had to accommodate both internal system codes and external vendor SKUs – a perfect storm for composite key considerations. It’s more common than you might think, and it warrants a considered approach.
+, let's tackle this. The question of structuring a domain-driven design (DDD) value object with a composite identifier is one that I've bumped into more than a few times in my career. I recall one particularly gnarly project involving a distributed inventory system where product identifiers had to accommodate both internal system codes and external vendor SKUs – a perfect storm for composite key considerations. It’s more common than you might think, and it warrants a considered approach.
 
 The core principle here is that a value object should represent a concept in the domain that doesn't have identity over time; instead, its identity is derived entirely from its attributes. When you add a composite identifier into the mix, you're essentially creating a value object whose identity is determined by a combination of multiple fields, each having its own meaning within the system. If those combined fields are not directly related to business meaning as a single concept, but rather act as an identifier for some larger entity, then it might not be a proper value object, but perhaps an entity identifier instead. We need to be very clear on that line.
 
@@ -89,7 +89,7 @@ product_id5 = ProductIdentifier("ABC", "456")
 print(f"product_id5: {product_id5}")
 ```
 
-Here, I've added a validation rule to `__post_init__`.  The pattern `^[A-Z]{3}$` means that manufacturer codes must be three uppercase letters. This prevents creating an invalid object and allows us to implement domain rules at the value object level. This is essential when building robust systems; validate at the boundary.
+Here, I've added a validation rule to `__post_init__`. The pattern `^[A-Z]{3}$` means that manufacturer codes must be three uppercase letters. This prevents creating an invalid object and allows us to implement domain rules at the value object level. This is essential when building robust systems; validate at the boundary.
 
 **Example 3: Composite Identifier with Different Data Types**
 

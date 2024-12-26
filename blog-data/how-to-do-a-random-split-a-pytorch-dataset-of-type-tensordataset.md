@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-a-random-split-a-pytorch-dataset-of-type-tensordataset"
 ---
 
-alright, so you're looking to split a pytorch `tensordataset` into random subsets, i get it. been there, done that a bunch of times. it's a pretty common task when you're training machine learning models and need to create your training, validation, and testing splits. it's a pretty crucial step in the whole machine learning process.
+, so you're looking to split a pytorch `tensordataset` into random subsets, i get it. been there, done that a bunch of times. it's a pretty common task when you're training machine learning models and need to create your training, validation, and testing splits. it's a pretty crucial step in the whole machine learning process.
 
 i remember the first time i had to do this. i was working on this image recognition project. i had this huge dataset loaded up in memory as a `tensordataset`, it was a real pain. initially i just did a naive indexing approach, and everything worked fine on my small toy dataset, but then, with the real data it started to blow up in my face. i just thought that if i just picked the first 80% of the data for training and the next 10% for validation and the rest for testing, it would be enough. oh man, i was naive back then. i didn’t even shuffle the data, i was using a dataset with an implicit sort order (a-z by subject) so i ended up with all the pictures of the letter 'a' in my training set and all the 'z's in my test, it was a complete joke. i quickly realized that i had a big bias and no generalization. it was clear i needed proper random splitting. lets just say i spent a long night fixing that mess.
 
@@ -45,6 +45,7 @@ print(f"train dataset size: {len(train_dataset)}")
 print(f"validation dataset size: {len(val_dataset)}")
 print(f"test dataset size: {len(test_dataset)}")
 ```
+
 here’s the breakdown of what’s going on:
 
 1.  `torch.randperm(dataset_len)`: generates a tensor of random permutations of integers from 0 up to the length of your dataset. that's the random order you need.
@@ -122,13 +123,13 @@ class CustomDataset(Dataset):
         file_idx = self.indices[idx]
         data = np.load(os.path.join(self.data_dir, f'data_{file_idx}.npy'))
         label = np.load(os.path.join(self.data_dir, f'label_{file_idx}.npy'))
-        
+
         data = torch.from_numpy(data).float()
         label = torch.from_numpy(label).long()
-        
+
         if self.transform:
             data = self.transform(data)
-            
+
         return data, label
 
 def create_dummy_files(data_dir, num_files=100):
@@ -170,12 +171,13 @@ print(f"validation dataset size: {len(val_dataset)}")
 print(f"test dataset size: {len(test_dataset)}")
 
 ```
+
 here is what is going on:
 
 1.  `customdataset`: this is our dataset class. it has a `__getitem__` method which loads data from the file based on the provided index, from an external source (like files on disk). the example here uses `numpy` files, but you could easily use hdf5 or anything else.
 2.  `create_dummy_files`: this creates some dummy data in files to simulate a dataset too big to load in memory.
 3.  `create_splits`: this creates indices and stores them using `numpy` files, but you could easily change it to use python's `pickle` or any other format, this is usually what i do if i am handling large amounts of data that do not fit into memory. it has the added benefit that you can track the splits that you have used between training runs.
-4. we create the three datasets, and then we use `dataloader` to load the data in batches to do the actual training.
+4.  we create the three datasets, and then we use `dataloader` to load the data in batches to do the actual training.
 
 when dealing with large datasets this strategy is what you need. the key takeaway is that you don't need to load the whole dataset to do the split, you just need to track the indices.
 

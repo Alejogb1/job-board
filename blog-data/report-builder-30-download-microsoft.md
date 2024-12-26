@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "report-builder-30-download-microsoft"
 ---
 
-Okay so you’re asking about Microsoft Report Builder 3.0 and where to download it right Yeah I get that its a common pain point for anyone who’s been wrestling with SSRS reporting for a while
+you’re asking about Microsoft Report Builder 3.0 and where to download it right Yeah I get that its a common pain point for anyone who’s been wrestling with SSRS reporting for a while
 
 I've been down that rabbit hole myself believe me I’m talking way back when we were still calling it SQL Reporting Services not this fancy SSRS thing I remember clearly one project back in 2012 or maybe it was 13 where I needed to build some super complex reports for our financial guys the kind that had like nested tables and calculated fields everywhere it was insane
 
@@ -70,7 +70,7 @@ And then you'd use this parameter in your dataset query something like this
 </DataSet>
 ```
 
-Notice the @CustomerID in the SQL query and how that’s linked up in QueryParameters section with  `=Parameters!CustomerID.Value` this makes sure that whatever value the user enters into the “CustomerID” parameter gets passed down to the query This is basic but it trips up a lot of beginners
+Notice the @CustomerID in the SQL query and how that’s linked up in QueryParameters section with `=Parameters!CustomerID.Value` this makes sure that whatever value the user enters into the “CustomerID” parameter gets passed down to the query This is basic but it trips up a lot of beginners
 
 And finally to really make your reports interactive you'd probably want some sort of expression to control things
 
@@ -93,8 +93,8 @@ Microsoft does not have an updated official documentation for older versions of 
 
 For general SSRS reporting principles and design I'd check out a couple of books that focus on SSRS concepts even the old ones are valuable understanding the concepts is the key
 
-*   “Microsoft SQL Server Reporting Services Step by Step” by Stacia Misner and other authors in that series this will give you the fundamentals
-*   Look for older editions of books on SQL Server Reporting Services if you can find some older hard copies you will find that it is very focused on the older versions of SSRS (I think i have one in my attic) they still have relevance when working with older SSRS
+- “Microsoft SQL Server Reporting Services Step by Step” by Stacia Misner and other authors in that series this will give you the fundamentals
+- Look for older editions of books on SQL Server Reporting Services if you can find some older hard copies you will find that it is very focused on the older versions of SSRS (I think i have one in my attic) they still have relevance when working with older SSRS
 
 Also do not underestimate the power of the MSDN archives those pages might be a bit dusty but you might find some nuggets of information on Report Builder 3.0 if you do a deep dive
 

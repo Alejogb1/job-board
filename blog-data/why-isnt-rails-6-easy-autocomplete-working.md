@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-rails-6-easy-autocomplete-working"
 ---
 
-Okay, let's talk about this. Rails 6 and easy-autocomplete… it's a combination that, from my past debugging escapades, can present some nuanced challenges. I recall back in the mid-2020s, during a project migration, our team spent a solid day troubleshooting what initially appeared to be a simple javascript integration. The symptom, as you're likely experiencing, is that the autocomplete functionality, which should be providing suggestions as you type, simply isn't firing. No errors in the browser console, no server-side hiccups according to the logs, just… nothing. The frustrating kind of nothing, right?
+, let's talk about this. Rails 6 and easy-autocomplete… it's a combination that, from my past debugging escapades, can present some nuanced challenges. I recall back in the mid-2020s, during a project migration, our team spent a solid day troubleshooting what initially appeared to be a simple javascript integration. The symptom, as you're likely experiencing, is that the autocomplete functionality, which should be providing suggestions as you type, simply isn't firing. No errors in the browser console, no server-side hiccups according to the logs, just… nothing. The frustrating kind of nothing, right?
 
 Let’s unpack the common culprits. The first area I’d examine, and I’d bet money on this being a key element, is the asset pipeline. With Rails 6, webpacker has become the default JavaScript bundler replacing sprockets for many new projects, which means you’re most likely dealing with a situation where the easy-autocomplete js and css files haven’t been included properly in your application's build process. This is, in my experience, the number one reason why it appears to simply "not work." I've seen this happen when the gem's instructions for asset inclusion are overlooked, or incorrectly implemented within the configuration of webpacker. Essentially, the javascript isn't being bundled and loaded by the browser.
 
@@ -23,9 +23,9 @@ Once that is done we need to instruct webpack to package it up. In the default w
 ```javascript
 // app/javascript/packs/application.js
 
-import 'jquery';
-import 'easy-autocomplete';
-import 'easy-autocomplete/dist/easy-autocomplete.min.css';
+import "jquery";
+import "easy-autocomplete";
+import "easy-autocomplete/dist/easy-autocomplete.min.css";
 
 // Your other app scripts would follow
 ```
@@ -37,33 +37,38 @@ If this section is missing, or the css isn't included correctly (or included in 
 Let's say your html form field looks like this:
 
 ```html
-<input type="text" id="product_name" class="search-input" placeholder="Search products...">
+<input
+  type="text"
+  id="product_name"
+  class="search-input"
+  placeholder="Search products..."
+/>
 ```
 
 Your javascript code might try to initialise the plugin like this:
 
 ```javascript
 // app/javascript/packs/your_custom_script.js
-$(document).ready(function(){
-  $("#product_names").easyAutocomplete({ // Note the 's'
-     // Your options here
-     url: "/products/search.json",
-     getValue: "name"
-   });
+$(document).ready(function () {
+  $("#product_names").easyAutocomplete({
+    // Note the 's'
+    // Your options here
+    url: "/products/search.json",
+    getValue: "name",
+  });
 });
-
 ```
 
 See the issue? We are searching for the `#product_names` which does not exist in the html. This is a common oversight. A single extra character can lead to this type of problem. It should be `#product_name`. This makes for a silent fail because the plugin is never initialized against the specified html element, because it’s not found.
 
 ```javascript
 // app/javascript/packs/your_custom_script.js
-$(document).ready(function(){
+$(document).ready(function () {
   $("#product_name").easyAutocomplete({
-     // Your options here
-     url: "/products/search.json",
-     getValue: "name"
-   });
+    // Your options here
+    url: "/products/search.json",
+    getValue: "name",
+  });
 });
 ```
 

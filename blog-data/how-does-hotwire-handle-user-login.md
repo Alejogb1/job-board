@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-hotwire-handle-user-login"
 ---
 
-Okay, let's unpack how Hotwire tackles user authentication, or rather, *logins*. It's a topic I've certainly grappled with a few times, having implemented it in projects ranging from small internal tools to more public-facing web applications. There's no magical, single 'Hotwire way,' but rather, it's about leveraging Hotwire's core principles—particularly Turbo and Stimulus—within the larger context of server-side authentication. Forget single-page app (spa) patterns, that's not the ethos here. We're sticking with server-rendered views, enhanced with dynamic partials.
+, let's unpack how Hotwire tackles user authentication, or rather, _logins_. It's a topic I've certainly grappled with a few times, having implemented it in projects ranging from small internal tools to more public-facing web applications. There's no magical, single 'Hotwire way,' but rather, it's about leveraging Hotwire's core principles—particularly Turbo and Stimulus—within the larger context of server-side authentication. Forget single-page app (spa) patterns, that's not the ethos here. We're sticking with server-rendered views, enhanced with dynamic partials.
 
 The crux of it lies in how you manage the user session on the server, typically through cookies or tokens, while using Turbo to create a seamless user experience without full page reloads. The goal is to make the login process feel instantaneous, even when substantial server-side work is taking place.
 
@@ -29,7 +29,7 @@ class SessionsController < ApplicationController
       render turbo_stream: turbo_stream.replace("login-form", partial: "sessions/form", locals: { error: "Invalid credentials" })
     end
   end
-  
+
    def destroy
       session[:user_id] = nil
       redirect_to root_path, notice: "Logged out successfully."
@@ -81,28 +81,28 @@ This approach avoids the jarring feeling of a full page refresh while still main
 
 So, what if you want something more complex, such as multi-factor authentication? The core idea remains the same. Instead of directly logging in, the server might initially respond with a partial for entering a verification code, possibly sent via email or sms. When submitted, this second form again initiates a turbo stream response to either confirm the login or ask for a new code. All of this, without a single full page reload.
 
-Now, let's discuss Stimulus, which plays a complementary role. I've found it particularly useful for things like handling password visibility toggles or dynamic form validations on the client side *before* the form gets submitted. Stimulus, with its concise controller structure, allows for modular and maintainable code, without resorting to jQuery or other more heavyweight libraries. It allows us to do basic front-end validation, for example, that the password field is at least 8 characters long, ensuring that you aren't making unnecessary trips to the server.
+Now, let's discuss Stimulus, which plays a complementary role. I've found it particularly useful for things like handling password visibility toggles or dynamic form validations on the client side _before_ the form gets submitted. Stimulus, with its concise controller structure, allows for modular and maintainable code, without resorting to jQuery or other more heavyweight libraries. It allows us to do basic front-end validation, for example, that the password field is at least 8 characters long, ensuring that you aren't making unnecessary trips to the server.
 
 A simple stimulus controller for handling a password field could look like this:
 
 ```javascript
 // app/javascript/controllers/password_controller.js
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["passwordField", "toggleButton"]
+  static targets = ["passwordField", "toggleButton"];
 
   connect() {
-    this.passwordFieldTarget.type = "password"
+    this.passwordFieldTarget.type = "password";
   }
 
   toggleVisibility() {
-    if(this.passwordFieldTarget.type === "password") {
+    if (this.passwordFieldTarget.type === "password") {
       this.passwordFieldTarget.type = "text";
-      this.toggleButtonTarget.textContent = "Hide"
+      this.toggleButtonTarget.textContent = "Hide";
     } else {
       this.passwordFieldTarget.type = "password";
-      this.toggleButtonTarget.textContent = "Show"
+      this.toggleButtonTarget.textContent = "Show";
     }
   }
 }
@@ -131,4 +131,4 @@ To summarize, a Hotwire-based user login system boils down to:
 3.  **Turbo Stream Responses:** On success, return a turbo stream update that replaces parts of the view. On failure, show an error using a similar method.
 4.  **Stimulus Augmentation:** Use Stimulus for client-side interactions like password toggles and basic form validations, and enhance elements that may not rely on submission.
 
-For further study, I'd recommend diving deep into the documentation of *Turbo* and *Stimulus*. Additionally, reading "The Rails 7 Way" by David Heinemeier Hansson for a great overview of current best practices of the rails framework as well as how hotwire is best utilized within it, as well as the "Programming Phoenix LiveView" book by Bruce Tate for examples of similar server-side rendered approach. Understanding those resources will give you a solid grasp of the mechanics at play and how to implement them for any project.
+For further study, I'd recommend diving deep into the documentation of _Turbo_ and _Stimulus_. Additionally, reading "The Rails 7 Way" by David Heinemeier Hansson for a great overview of current best practices of the rails framework as well as how hotwire is best utilized within it, as well as the "Programming Phoenix LiveView" book by Bruce Tate for examples of similar server-side rendered approach. Understanding those resources will give you a solid grasp of the mechanics at play and how to implement them for any project.

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-implement-custom-weight-regularization-in-keras"
 ---
 
-Alright, let's talk about custom weight regularization in Keras. It's something I've had to delve into a fair bit over the years, particularly back when I was working on those deep learning models for anomaly detection in sensor data—required some very particular constraints on the weights to avoid overfitting. The built-in regularizers in Keras are undeniably useful, but there are cases where they simply don’t cut it. You need something tailored to your specific problem, and that’s where custom regularization comes into play.
+, let's talk about custom weight regularization in Keras. It's something I've had to delve into a fair bit over the years, particularly back when I was working on those deep learning models for anomaly detection in sensor data—required some very particular constraints on the weights to avoid overfitting. The built-in regularizers in Keras are undeniably useful, but there are cases where they simply don’t cut it. You need something tailored to your specific problem, and that’s where custom regularization comes into play.
 
 The challenge often lies in formulating your specific regularization strategy into a callable function that Keras can understand and apply during the training process. We're essentially going to be defining a function that calculates a penalty term based on the weights of a given layer. This penalty is then added to the overall loss function, thereby influencing the optimization process.
 
@@ -35,7 +35,7 @@ class CustomRegularizedLayer(layers.Layer):
         super(CustomRegularizedLayer, self).__init__(**kwargs)
         self.units = units
         self.kernel_regularizer = kernel_regularizer
-    
+
     def build(self, input_shape):
         self.kernel = self.add_weight(
             shape=(input_shape[-1], self.units),
@@ -96,7 +96,7 @@ class CustomRegularizedDense(layers.Layer):
         super(CustomRegularizedDense, self).__init__(**kwargs)
         self.units = units
         self.kernel_regularizer = kernel_regularizer
-    
+
     def build(self, input_shape):
         self.kernel = self.add_weight(
             shape=(input_shape[-1], self.units),

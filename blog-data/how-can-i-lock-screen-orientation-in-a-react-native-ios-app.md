@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-lock-screen-orientation-in-a-react-native-ios-app"
 ---
 
-Okay, let's delve into screen orientation locking in React Native for iOS. It's a fairly common requirement, but achieving it seamlessly across all devices and use cases can sometimes feel… well, like it requires a little finesse. I remember wrestling with this a few years back on a client project – a real estate app, as it happened – where we needed the main map view to always be in landscape, while the other sections had to be locked to portrait. We ended up opting for a flexible approach that allowed us to control this on a per-screen basis.
+, let's delve into screen orientation locking in React Native for iOS. It's a fairly common requirement, but achieving it seamlessly across all devices and use cases can sometimes feel… well, like it requires a little finesse. I remember wrestling with this a few years back on a client project – a real estate app, as it happened – where we needed the main map view to always be in landscape, while the other sections had to be locked to portrait. We ended up opting for a flexible approach that allowed us to control this on a per-screen basis.
 
 The core concept lies in interacting with the native iOS functionality through React Native bridge. Simply put, we can't directly manipulate the `UIDevice` orientation from within Javascript land. Instead, we'll use native modules to do the heavy lifting. So, where do we begin?
 
@@ -79,10 +79,10 @@ RCT_EXPORT_METHOD(unlockOrientation)
 Important points in this code snippet:
 
 1.  **`RCTBridgeModule` Protocol:** This protocol is crucial for exposing native functionality to the React Native environment.
-2.  **`RCT_EXPORT_MODULE()`:**  This macro registers the class as a native module.
+2.  **`RCT_EXPORT_MODULE()`:** This macro registers the class as a native module.
 3.  **`RCT_EXPORT_METHOD(...)`:** These macros expose the `lockToPortrait`, `lockToLandscape`, and `unlockOrientation` functions, making them callable from JavaScript.
 4.  **`dispatch_async(dispatch_get_main_queue(), ...)`:** Native iOS methods modifying the UI MUST be executed on the main thread. This ensures that no UI elements are unexpectedly updated outside the main UI loop.
-5. **iOS 16 specific handling:** The code now includes handling for devices running iOS 16 and later which uses the requestGeometryUpdateHandler on UIWindowScene to modify allowed orientations.
+5.  **iOS 16 specific handling:** The code now includes handling for devices running iOS 16 and later which uses the requestGeometryUpdateHandler on UIWindowScene to modify allowed orientations.
 
 **Linking the Native Module to React Native:**
 
@@ -94,42 +94,41 @@ Here is a simple way we can use this inside our react native project, we will us
 
 ```javascript
 // useOrientation.js
-import { NativeModules, Platform } from 'react-native';
+import { NativeModules, Platform } from "react-native";
 const { OrientationModule } = NativeModules;
 
 const useOrientation = () => {
   const lockToPortrait = () => {
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === "ios") {
       OrientationModule.lockToPortrait();
     }
   };
 
   const lockToLandscape = () => {
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === "ios") {
       OrientationModule.lockToLandscape();
     }
   };
 
   const unlockOrientation = () => {
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === "ios") {
       OrientationModule.unlockOrientation();
     }
   };
-    
+
   return { lockToPortrait, lockToLandscape, unlockOrientation };
 };
 
 export default useOrientation;
-
 ```
 
 This `useOrientation` hook abstracts away the complexities of interacting directly with the native module. In any of your React Native components, you can use this hook and lock/unlock the orientation based on the specific screen needs:
 
 ```javascript
 // ExampleComponent.js
-import React, { useEffect } from 'react';
-import { View, Text, Button } from 'react-native';
-import useOrientation from './useOrientation';
+import React, { useEffect } from "react";
+import { View, Text, Button } from "react-native";
+import useOrientation from "./useOrientation";
 
 const ExampleComponent = () => {
   const { lockToLandscape, unlockOrientation } = useOrientation();
@@ -138,29 +137,28 @@ const ExampleComponent = () => {
     lockToLandscape();
 
     return () => {
-        unlockOrientation(); //cleanup on unmount
+      unlockOrientation(); //cleanup on unmount
     };
   }, [lockToLandscape, unlockOrientation]); //dependancy array, should never change
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>This Screen is Locked in Landscape</Text>
     </View>
   );
 };
 
 export default ExampleComponent;
-
 ```
 
 In this `ExampleComponent`, we've used the `useEffect` hook to lock the orientation to landscape when the component mounts and unlock it when the component is unmounted. This ensures proper behaviour during navigation transitions, it is critical to clean up on component unmount to avoid unexpected behaviour.
 
 **Important Considerations**
 
-*   **iOS Version:** As you saw in the objective-c code, we need to adjust how we lock the orientation depending on the iOS version (iOS 16+ or below). This is because the way allowed orientations are specified changed in iOS 16, and we must use `requestGeometryUpdateHandler` and `UIWindowScene` to achieve the same result.
-*   **User Experience:** Never force the user into a particular orientation unless it is absolutely necessary for functionality. Consider implementing orientation changes with smooth transitions rather than sudden shifts.
-*   **Android:** While this response focuses on iOS, the approach is conceptually similar on Android using native modules, but you would have to look at `Activity` and its related methods.
-*   **Testing:** Always test your orientation locking on real devices and different iOS versions since the simulator sometimes doesn’t accurately reflect device behavior, especially when rotation is involved.
+- **iOS Version:** As you saw in the objective-c code, we need to adjust how we lock the orientation depending on the iOS version (iOS 16+ or below). This is because the way allowed orientations are specified changed in iOS 16, and we must use `requestGeometryUpdateHandler` and `UIWindowScene` to achieve the same result.
+- **User Experience:** Never force the user into a particular orientation unless it is absolutely necessary for functionality. Consider implementing orientation changes with smooth transitions rather than sudden shifts.
+- **Android:** While this response focuses on iOS, the approach is conceptually similar on Android using native modules, but you would have to look at `Activity` and its related methods.
+- **Testing:** Always test your orientation locking on real devices and different iOS versions since the simulator sometimes doesn’t accurately reflect device behavior, especially when rotation is involved.
 
 **Recommendations for Further Reading**
 

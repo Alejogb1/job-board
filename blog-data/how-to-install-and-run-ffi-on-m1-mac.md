@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-install-and-run-ffi-on-m1-mac"
 ---
 
-alright, let's talk about getting ffi running on an m1 mac. i've been down this road before, and it's... well, let's just say it can be a bit finicky, especially if you're coming from an intel-based machine. the arm architecture introduces some quirks that the older x86 systems didn't have. i’ve been doing low level stuff for many years starting with the 68000 assembly language on my amiga, so believe me i've seen some weird hardware stuff.
+, let's talk about getting ffi running on an m1 mac. i've been down this road before, and it's... well, let's just say it can be a bit finicky, especially if you're coming from an intel-based machine. the arm architecture introduces some quirks that the older x86 systems didn't have. i’ve been doing low level stuff for many years starting with the 68000 assembly language on my amiga, so believe me i've seen some weird hardware stuff.
 
 first things first, the 'ffi' you're asking about most likely refers to foreign function interface. this is essentially a mechanism that allows a program written in one language to call code written in another language. think python calling c functions, or ruby interacting with compiled libraries. it’s a powerful tool, but it does require that the various pieces are compatible with each other and, in our case, with the hardware.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-make-different-options-for-a-select-in-wagtail-admin"
 ---
 
-Alright, let's unpack creating dynamic and varied options for select fields within Wagtail’s admin interface. It’s a challenge I've tackled countless times, especially when dealing with increasingly complex content models. The need for flexible options in select dropdowns often arises when straightforward static choices don’t cut it – think of scenarios involving categories, taxonomies, or even dynamically generated settings. I’ve found the key lies in understanding Wagtail's field processing and how to inject customized data.
+, let's unpack creating dynamic and varied options for select fields within Wagtail’s admin interface. It’s a challenge I've tackled countless times, especially when dealing with increasingly complex content models. The need for flexible options in select dropdowns often arises when straightforward static choices don’t cut it – think of scenarios involving categories, taxonomies, or even dynamically generated settings. I’ve found the key lies in understanding Wagtail's field processing and how to inject customized data.
 
 The default way Wagtail handles select fields relies on a straightforward `choices` parameter during field definition. While suitable for a limited number of static options, this approach becomes cumbersome when dealing with dynamic datasets. We need a way to dynamically generate these options. The core mechanism for this involves overriding the widget that wagtail uses for select fields and providing our dynamic data from the backend.
 
@@ -99,6 +99,7 @@ class DynamicChoicePage(Page):
     ]
 
 ```
+
 This example demonstrates using `DynamicChoiceFormField` to customize the underlying form field. The `prepare_choices` function now dynamically returns the choices. Importantly, we inject `form_field_class=DynamicChoiceFormField` within `FieldPanel`, ensuring Wagtail utilizes our custom form field, and we also set the widget to `forms.Select` and added some example `attrs` to the html field.
 
 **Method 3: Using Javascript for Client-Side Filtering**
@@ -107,38 +108,40 @@ In situations where choices are extensive and may require filtering based on use
 This example requires modifying the template of the Wagtail Admin to add a simple client-side interaction using javascript. This is generally not recommended as it leads to a brittle solution.
 
 1. Include the following code in your wagtail admin template or create a custom panel:
+
 ```html
-    <div class="field">
-        <label for="id_filtered_choice">Filtered Choice:</label>
-        <select id="id_filtered_choice" name="filtered_choice">
-            {% for value, label in page.get_filtered_choices %}
-                <option value="{{value}}">{{ label }}</option>
-            {% endfor %}
-        </select>
-        <label for="id_filter">Filter:</label>
-        <input type="text" id="id_filter" >
-     </div>
+<div class="field">
+  <label for="id_filtered_choice">Filtered Choice:</label>
+  <select id="id_filtered_choice" name="filtered_choice">
+    {% for value, label in page.get_filtered_choices %}
+    <option value="{{value}}">{{ label }}</option>
+    {% endfor %}
+  </select>
+  <label for="id_filter">Filter:</label>
+  <input type="text" id="id_filter" />
+</div>
 
-    <script>
-        const filterInput = document.getElementById('id_filter');
-        const selectElement = document.getElementById('id_filtered_choice');
+<script>
+  const filterInput = document.getElementById("id_filter");
+  const selectElement = document.getElementById("id_filtered_choice");
 
-        filterInput.addEventListener('input', () => {
-            const filter = filterInput.value.toLowerCase();
-            const options = Array.from(selectElement.options);
+  filterInput.addEventListener("input", () => {
+    const filter = filterInput.value.toLowerCase();
+    const options = Array.from(selectElement.options);
 
-            options.forEach(option => {
-                if(option.textContent.toLowerCase().includes(filter)){
-                     option.style.display = '';
-                } else {
-                     option.style.display = 'none';
-                 }
-            });
-        });
-    </script>
+    options.forEach((option) => {
+      if (option.textContent.toLowerCase().includes(filter)) {
+        option.style.display = "";
+      } else {
+        option.style.display = "none";
+      }
+    });
+  });
+</script>
 ```
 
 2. Create a python method to return the choices
+
 ```python
 from django.db import models
 from wagtail.admin.edit_handlers import FieldPanel
@@ -168,6 +171,7 @@ class FilteredChoicePage(Page):
 
     ]
 ```
+
 This adds the choice on to the current page model, and generates the html with some simple javascript which filters the choices.
 
 **Recommendations for Further Exploration**

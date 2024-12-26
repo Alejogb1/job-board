@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "using-enum-in-verilog"
 ---
 
-Okay so you wanna talk about enums in Verilog right? Alright been there done that got the t-shirt and probably a few scars too. Let me tell you I’ve wrestled with this beast enough to fill a small notebook. Let's get into it.
+you wanna talk about enums in Verilog right? been there done that got the t-shirt and probably a few scars too. Let me tell you I’ve wrestled with this beast enough to fill a small notebook. Let's get into it.
 
 So yeah using `enum` in Verilog is something I see people struggle with all the time and honestly I used to struggle too way back when. It's not like some languages where you can just declare an enum and everything works magically. Verilog’s a bit more… deliberate you might say. You gotta be explicit or you’re gonna have a bad time trust me on this one.
 
@@ -25,7 +25,7 @@ module enum_example;
   } state_t;
 
   reg [1:0] current_state;  // Must be large enough to hold all enum values
-  
+
   always @(*) begin
     case (current_state)
       STATE_IDLE : $display("State is IDLE");
@@ -35,7 +35,7 @@ module enum_example;
       default : $display("Invalid State");
     endcase
   end
-  
+
   initial begin
     current_state = STATE_IDLE;
     #10 current_state = STATE_READ;
@@ -75,7 +75,7 @@ module enum_explicit_value;
       default : $display("Invalid Command");
     endcase
   end
-  
+
   initial begin
     current_command = CMD_RESET;
     #10 current_command = CMD_READ;
@@ -104,7 +104,7 @@ module enum_parameter;
  parameter  A = 10;
  parameter  B = 5;
  reg [31:0] result;
- 
+
  always @(*) begin
    case (opcode)
     OP_ADD: result = A + B;
@@ -115,9 +115,9 @@ module enum_parameter;
    endcase
    $display("Opcode: %d result = %d",opcode,result);
  end
-  
+
   initial begin
-    #10; 
+    #10;
   end
 
 endmodule

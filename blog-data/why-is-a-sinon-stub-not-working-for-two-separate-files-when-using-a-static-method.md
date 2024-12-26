@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "why-is-a-sinon-stub-not-working-for-two-separate-files-when-using-a-static-method"
 ---
 
-alright, so you've got a situation with sinon stubs and static methods not playing nice across multiple files, i've been there, and it's a classic gotcha. let's break it down.
+, so you've got a situation with sinon stubs and static methods not playing nice across multiple files, i've been there, and it's a classic gotcha. let's break it down.
 
 the core of the problem usually isn't with sinon itself, but more with how javascript (and most module systems in node.js) handles module caching and how static methods are bound to specific classes in memory. it's a bit of a dance of references and instances, and when the music stops, things can get confusing.
 
-first, the basic issue we're facing is that node.js caches modules after they're first required. this means that if you have two files requiring the same module, they're getting the same *instance* of that module. that's normally good for avoiding memory leaks and keeping things efficient. but it also means that if we try to stub a static method on a class in one file, that stub affects only that specific version of the class object cached there, not necessarily everywhere else where the class is also imported.
+first, the basic issue we're facing is that node.js caches modules after they're first required. this means that if you have two files requiring the same module, they're getting the same _instance_ of that module. that's normally good for avoiding memory leaks and keeping things efficient. but it also means that if we try to stub a static method on a class in one file, that stub affects only that specific version of the class object cached there, not necessarily everywhere else where the class is also imported.
 
 let's say we have the following scenario.
 
@@ -27,10 +27,10 @@ module.exports = myclass;
 and then file `file_a.js`:
 
 ```javascript
-const myclass = require('./my_class');
+const myclass = require("./my_class");
 
-function do_something_a(value){
-   return myclass.calculate(value);
+function do_something_a(value) {
+  return myclass.calculate(value);
 }
 
 module.exports = do_something_a;
@@ -39,10 +39,10 @@ module.exports = do_something_a;
 and also `file_b.js`:
 
 ```javascript
-const myclass = require('./my_class');
+const myclass = require("./my_class");
 
-function do_something_b(value){
-   return myclass.calculate(value);
+function do_something_b(value) {
+  return myclass.calculate(value);
 }
 
 module.exports = do_something_b;
@@ -51,55 +51,84 @@ module.exports = do_something_b;
 and we want to test `file_a.js` and `file_b.js`, here's a test example using mocha and sinon with `test.js`:
 
 ```javascript
-const sinon = require('sinon');
-const assert = require('assert');
+const sinon = require("sinon");
+const assert = require("assert");
 
-const do_something_a = require('./file_a');
-const do_something_b = require('./file_b');
-const myclass = require('./my_class'); // important, more on that later
+const do_something_a = require("./file_a");
+const do_something_b = require("./file_b");
+const myclass = require("./my_class"); // important, more on that later
 
+describe("my test", () => {
+  it("should mock method on file_a.js", () => {
+    const calculateStub = sinon.stub(myclass, "calculate").returns(10);
+    assert.strictEqual(
+      do_something_a(2),
+      10,
+      "should be using the stub method"
+    );
+    calculateStub.restore();
+    assert.strictEqual(
+      do_something_a(2),
+      4,
+      "should be using the original method"
+    );
+  });
 
-describe('my test', () => {
-    it('should mock method on file_a.js', () => {
-      const calculateStub = sinon.stub(myclass, 'calculate').returns(10);
-      assert.strictEqual(do_something_a(2), 10, "should be using the stub method");
-      calculateStub.restore();
-      assert.strictEqual(do_something_a(2), 4, "should be using the original method");
-    });
-
-    it('should mock method on file_b.js', () => {
-      const calculateStub = sinon.stub(myclass, 'calculate').returns(20);
-      assert.strictEqual(do_something_b(2), 20, "should be using the stub method");
-      calculateStub.restore();
-      assert.strictEqual(do_something_b(2), 4, "should be using the original method");
-
-    });
+  it("should mock method on file_b.js", () => {
+    const calculateStub = sinon.stub(myclass, "calculate").returns(20);
+    assert.strictEqual(
+      do_something_b(2),
+      20,
+      "should be using the stub method"
+    );
+    calculateStub.restore();
+    assert.strictEqual(
+      do_something_b(2),
+      4,
+      "should be using the original method"
+    );
+  });
 });
 ```
 
 if you run that test, it seems that both are working but if you tried to do both in the same test block things will go south. we can show that like this:
 
 ```javascript
-const sinon = require('sinon');
-const assert = require('assert');
+const sinon = require("sinon");
+const assert = require("assert");
 
-const do_something_a = require('./file_a');
-const do_something_b = require('./file_b');
-const myclass = require('./my_class'); // important, more on that later
+const do_something_a = require("./file_a");
+const do_something_b = require("./file_b");
+const myclass = require("./my_class"); // important, more on that later
 
-
-describe('my test', () => {
-    it('should mock method on file_a and file_b.js', () => {
-      const calculateStub = sinon.stub(myclass, 'calculate').returns(10);
-      assert.strictEqual(do_something_a(2), 10, "should be using the stub method");
-      assert.strictEqual(do_something_b(2), 10, "should be using the stub method");
-      calculateStub.restore();
-      assert.strictEqual(do_something_a(2), 4, "should be using the original method");
-      assert.strictEqual(do_something_b(2), 4, "should be using the original method");
-
-    });
+describe("my test", () => {
+  it("should mock method on file_a and file_b.js", () => {
+    const calculateStub = sinon.stub(myclass, "calculate").returns(10);
+    assert.strictEqual(
+      do_something_a(2),
+      10,
+      "should be using the stub method"
+    );
+    assert.strictEqual(
+      do_something_b(2),
+      10,
+      "should be using the stub method"
+    );
+    calculateStub.restore();
+    assert.strictEqual(
+      do_something_a(2),
+      4,
+      "should be using the original method"
+    );
+    assert.strictEqual(
+      do_something_b(2),
+      4,
+      "should be using the original method"
+    );
+  });
 });
 ```
+
 the problem with this is that if you try to add another test case for only `file_b.js` or only `file_a.js`, and using the stub, it will use the last stub used.
 
 the main reason is that `file_a.js` and `file_b.js` uses the same reference of `myclass`. this is why the test seems to work when used isolated but will not when using both stubs in the same test block.
@@ -113,30 +142,43 @@ the other way is to mock out the module using a tool like proxyquire. that appro
 let me provide an example using the most common approach, this fixes the previous example:
 
 ```javascript
-const sinon = require('sinon');
-const assert = require('assert');
+const sinon = require("sinon");
+const assert = require("assert");
 
-const do_something_a = require('./file_a');
-const do_something_b = require('./file_b');
-const myclass = require('./my_class');
+const do_something_a = require("./file_a");
+const do_something_b = require("./file_b");
+const myclass = require("./my_class");
 
+describe("my test", () => {
+  it("should mock method on file_a.js", () => {
+    const calculateStub = sinon.stub(myclass, "calculate").returns(10);
+    assert.strictEqual(
+      do_something_a(2),
+      10,
+      "should be using the stub method"
+    );
+    calculateStub.restore();
+    assert.strictEqual(
+      do_something_a(2),
+      4,
+      "should be using the original method"
+    );
+  });
 
-describe('my test', () => {
-    it('should mock method on file_a.js', () => {
-      const calculateStub = sinon.stub(myclass, 'calculate').returns(10);
-      assert.strictEqual(do_something_a(2), 10, "should be using the stub method");
-      calculateStub.restore();
-      assert.strictEqual(do_something_a(2), 4, "should be using the original method");
-
-    });
-
-    it('should mock method on file_b.js', () => {
-      const calculateStub = sinon.stub(myclass, 'calculate').returns(20);
-      assert.strictEqual(do_something_b(2), 20, "should be using the stub method");
-      calculateStub.restore();
-      assert.strictEqual(do_something_b(2), 4, "should be using the original method");
-
-    });
+  it("should mock method on file_b.js", () => {
+    const calculateStub = sinon.stub(myclass, "calculate").returns(20);
+    assert.strictEqual(
+      do_something_b(2),
+      20,
+      "should be using the stub method"
+    );
+    calculateStub.restore();
+    assert.strictEqual(
+      do_something_b(2),
+      4,
+      "should be using the original method"
+    );
+  });
 });
 ```
 
@@ -147,19 +189,20 @@ i have used that approach for many years and it never failed me, but it's import
 another solution is to use dependency injection and instead of requiring the `myclass` in the other files, pass the class as an argument to the function that needs it, this also forces you to think of code design when coding, an example:
 
 `file_a.js`:
-```javascript
 
-function do_something_a(myclass, value){
-   return myclass.calculate(value);
+```javascript
+function do_something_a(myclass, value) {
+  return myclass.calculate(value);
 }
 
 module.exports = do_something_a;
 ```
-`file_b.js`:
-```javascript
 
-function do_something_b(myclass, value){
-   return myclass.calculate(value);
+`file_b.js`:
+
+```javascript
+function do_something_b(myclass, value) {
+  return myclass.calculate(value);
 }
 
 module.exports = do_something_b;
@@ -168,30 +211,43 @@ module.exports = do_something_b;
 and the new test case:
 
 ```javascript
-const sinon = require('sinon');
-const assert = require('assert');
+const sinon = require("sinon");
+const assert = require("assert");
 
-const do_something_a = require('./file_a');
-const do_something_b = require('./file_b');
-const myclass = require('./my_class');
+const do_something_a = require("./file_a");
+const do_something_b = require("./file_b");
+const myclass = require("./my_class");
 
+describe("my test", () => {
+  it("should mock method on file_a.js", () => {
+    const calculateStub = sinon.stub(myclass, "calculate").returns(10);
+    assert.strictEqual(
+      do_something_a(myclass, 2),
+      10,
+      "should be using the stub method"
+    );
+    calculateStub.restore();
+    assert.strictEqual(
+      do_something_a(myclass, 2),
+      4,
+      "should be using the original method"
+    );
+  });
 
-describe('my test', () => {
-    it('should mock method on file_a.js', () => {
-      const calculateStub = sinon.stub(myclass, 'calculate').returns(10);
-      assert.strictEqual(do_something_a(myclass, 2), 10, "should be using the stub method");
-      calculateStub.restore();
-      assert.strictEqual(do_something_a(myclass, 2), 4, "should be using the original method");
-
-    });
-
-    it('should mock method on file_b.js', () => {
-      const calculateStub = sinon.stub(myclass, 'calculate').returns(20);
-      assert.strictEqual(do_something_b(myclass, 2), 20, "should be using the stub method");
-      calculateStub.restore();
-      assert.strictEqual(do_something_b(myclass, 2), 4, "should be using the original method");
-
-    });
+  it("should mock method on file_b.js", () => {
+    const calculateStub = sinon.stub(myclass, "calculate").returns(20);
+    assert.strictEqual(
+      do_something_b(myclass, 2),
+      20,
+      "should be using the stub method"
+    );
+    calculateStub.restore();
+    assert.strictEqual(
+      do_something_b(myclass, 2),
+      4,
+      "should be using the original method"
+    );
+  });
 });
 ```
 

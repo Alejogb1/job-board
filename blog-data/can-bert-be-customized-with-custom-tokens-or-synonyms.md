@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "can-bert-be-customized-with-custom-tokens-or-synonyms"
 ---
 
-Okay, let's tackle this. I've seen my fair share of natural language processing projects over the years, and the question of adapting models like BERT to specific domains, including the use of custom tokens and synonyms, is a recurrent theme. It's something I actually encountered head-on during a project involving highly specialized legal documents, where standard tokenization wasn't cutting it.
+, let's tackle this. I've seen my fair share of natural language processing projects over the years, and the question of adapting models like BERT to specific domains, including the use of custom tokens and synonyms, is a recurrent theme. It's something I actually encountered head-on during a project involving highly specialized legal documents, where standard tokenization wasn't cutting it.
 
 The short answer is: yes, BERT can be customized to handle custom tokens and, indirectly, synonyms, but it requires a nuanced understanding of how BERT operates and where modifications can be applied effectively. It’s not about simply plugging in a dictionary, but more about strategically altering the tokenization process and sometimes, the model's representation itself.
 
 Let's break down why. BERT, at its core, relies on a subword tokenization strategy, predominantly utilizing WordPiece. This approach breaks down words into smaller units, allowing the model to handle out-of-vocabulary words to some degree. However, this subword approach can be insufficient when dealing with highly specialized vocabularies or domain-specific terminology. In my experience with legal text, for example, terms like “habeas corpus” or specific procedural codes were often broken into less meaningful sub-tokens, diluting their representation. That's where the need for custom tokens comes into play.
 
-Now, how do we actually *do* this? The primary step involves modifying the tokenizer. We need to instruct the tokenizer to treat specific character sequences as single tokens rather than breaking them down further. This usually involves extending the tokenizer's vocabulary by adding these custom tokens. There are libraries like `transformers` (from hugging face), which provide the tools necessary for this.
+Now, how do we actually _do_ this? The primary step involves modifying the tokenizer. We need to instruct the tokenizer to treat specific character sequences as single tokens rather than breaking them down further. This usually involves extending the tokenizer's vocabulary by adding these custom tokens. There are libraries like `transformers` (from hugging face), which provide the tools necessary for this.
 
 Here's a practical example, using python with the `transformers` library:
 
@@ -37,7 +37,7 @@ print(f"Token IDs: {token_ids}")
 
 In this example, we're adding legal terminology as custom tokens to a standard `bert-base-uncased` tokenizer. The output will show that phrases like "habeas corpus" are now treated as single units, which can improve the semantic understanding of the text. The key is the `tokenizer.add_tokens()` method.
 
-Synonym handling is a bit more nuanced. BERT doesn’t inherently understand synonyms at the tokenizer level. What you *can* do is use techniques that manipulate the input text before it’s tokenized, or alter the training procedure. Here, we're moving from simple token adjustments to slightly more complex approaches.
+Synonym handling is a bit more nuanced. BERT doesn’t inherently understand synonyms at the tokenizer level. What you _can_ do is use techniques that manipulate the input text before it’s tokenized, or alter the training procedure. Here, we're moving from simple token adjustments to slightly more complex approaches.
 
 One approach I found beneficial is to pre-process the data and replace synonyms with a canonical form prior to tokenization. This can be done through a custom function or a look-up table. For example, terms like 'car,' 'automobile,' and 'vehicle' could be standardized to 'car.' Let's illustrate this with an example:
 
@@ -72,7 +72,7 @@ print(f"Tokens: {tokens}")
 print(f"Token IDs: {token_ids}")
 ```
 
-In this example, 'automobile' and 'vehicle' are replaced with 'car', and 'commence' with 'start' *before* tokenization. This way, BERT processes a text where synonyms are collapsed into single token. This approach simplifies the task for the model and can improve performance in certain scenarios, especially when dealing with limited datasets.
+In this example, 'automobile' and 'vehicle' are replaced with 'car', and 'commence' with 'start' _before_ tokenization. This way, BERT processes a text where synonyms are collapsed into single token. This approach simplifies the task for the model and can improve performance in certain scenarios, especially when dealing with limited datasets.
 
 However, a more advanced way to tackle synonyms is through fine-tuning the model with data that reflects these synonym relationships. This would be a situation where you explicitly add data where these concepts are used in different forms or you may use data augmentation that replaces words with synonyms. This approach allows the model to learn synonym relationships directly during training, which can be significantly more effective, although it is more resource intensive. This process involves taking your extended dataset with either synonyms replaced with their canonical form or with the natural language variations and using that data to fine-tune BERT.
 
@@ -142,9 +142,9 @@ Here, we're essentially fine-tuning a model to understand that these synonymous 
 
 For further exploration, I highly recommend delving into:
 
-*   **"Attention is All You Need"** (Vaswani et al., 2017): This is the foundational paper for the transformer architecture that BERT is based upon.
-*   **"BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding"** (Devlin et al., 2018): This paper explains the architecture and pre-training method for BERT.
-*   **"Transformers" documentation** from Hugging Face: Provides practical guides, tutorials and a deep technical description of the tool, especially related to tokenization and fine-tuning.
+- **"Attention is All You Need"** (Vaswani et al., 2017): This is the foundational paper for the transformer architecture that BERT is based upon.
+- **"BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding"** (Devlin et al., 2018): This paper explains the architecture and pre-training method for BERT.
+- **"Transformers" documentation** from Hugging Face: Provides practical guides, tutorials and a deep technical description of the tool, especially related to tokenization and fine-tuning.
 
 These resources offer a comprehensive understanding of the architecture and techniques involved.
 

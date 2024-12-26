@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-can-i-skip-tls-cert-checks-for-crictl-while-pulling-from-private-repos"
 ---
 
-Alright, let's tackle this. The situation you’re describing—needing to bypass TLS certificate verification when using `crictl` to pull images from a private registry—is a scenario I’ve certainly bumped into a few times, and it can be quite frustrating if you're not sure how to navigate it. Let me walk you through the options, drawing from some hands-on experience.
+, . The situation you’re describing—needing to bypass TLS certificate verification when using `crictl` to pull images from a private registry—is a scenario I’ve certainly bumped into a few times, and it can be quite frustrating if you're not sure how to navigate it. Let me walk you through the options, drawing from some hands-on experience.
 
-It’s important to understand why this problem occurs. Typically, when `crictl` (or any container runtime client) communicates with a registry, it establishes a secure TLS connection. This connection is verified using certificates issued by trusted certificate authorities (CAs). However, private registries often use self-signed certificates or certificates signed by a private CA. Unless the system running `crictl` trusts this private CA, certificate verification will fail. Skipping the verification entirely is definitely *not* a recommended practice in a production setting, as it introduces significant security risks, but during development or in a controlled environment, it might be a necessary evil.
+It’s important to understand why this problem occurs. Typically, when `crictl` (or any container runtime client) communicates with a registry, it establishes a secure TLS connection. This connection is verified using certificates issued by trusted certificate authorities (CAs). However, private registries often use self-signed certificates or certificates signed by a private CA. Unless the system running `crictl` trusts this private CA, certificate verification will fail. Skipping the verification entirely is definitely _not_ a recommended practice in a production setting, as it introduces significant security risks, but during development or in a controlled environment, it might be a necessary evil.
 
 I've seen this happen most frequently when setting up local development environments, or when a testing environment requires pulling from an internal registry that's still using a self-signed certificate. For the sake of this discussion, let's assume you understand the risks, and I'll approach the problem with that perspective.
 
@@ -29,7 +29,7 @@ crictl pull my.private.registry:5000/myimage:latest
 crictl pull another.private.registry:5000/anotherimage:latest
 ```
 
-Here's what's happening in the code: We're setting `CONTAINERD_INSECURE_REGISTRY` to contain a comma separated list of registries and specifying the port. When `containerd` subsequently tries to pull images, it'll consult this variable. Any registry included here has its TLS certificate check bypassed. This is convenient for dev environments where you might not want to deal with certificate management, and it gives you a working proof of concept. Bear in mind that this approach isn't portable across different runtimes. If you swap out `containerd` for, say, CRI-O, you'll need a different mechanism. Note also that this *completely* disables certificate verification for that registry. There’s no partial bypass here; either the verification occurs fully, or it's skipped. This method is best for testing or local development, but for a more secure approach, consider the next option.
+Here's what's happening in the code: We're setting `CONTAINERD_INSECURE_REGISTRY` to contain a comma separated list of registries and specifying the port. When `containerd` subsequently tries to pull images, it'll consult this variable. Any registry included here has its TLS certificate check bypassed. This is convenient for dev environments where you might not want to deal with certificate management, and it gives you a working proof of concept. Bear in mind that this approach isn't portable across different runtimes. If you swap out `containerd` for, say, CRI-O, you'll need a different mechanism. Note also that this _completely_ disables certificate verification for that registry. There’s no partial bypass here; either the verification occurs fully, or it's skipped. This method is best for testing or local development, but for a more secure approach, consider the next option.
 
 **Option 2: Adding the Private CA to the System's Trusted Store**
 
@@ -69,7 +69,9 @@ Usually, `containerd`'s configuration file lives in `/etc/containerd/config.toml
       [plugins."io.containerd.grpc.v1.cri".registry.configs."my.private.registry:5000".tls]
         insecure_skip_verify = true
 ```
+
 After you modify this configuration file, you'll need to restart the `containerd` service:
+
 ```bash
 sudo systemctl restart containerd
 ```
@@ -80,9 +82,9 @@ Here’s the breakdown. Inside the `config.toml` file, I am directly specifying 
 
 To get a deeper understanding, I would suggest:
 
-*   **"Docker Deep Dive" by Nigel Poulton:** This book provides a solid understanding of container technology and how runtimes work. While it focuses on Docker, it builds a strong foundation for understanding underlying concepts.
-*   **"Kubernetes in Action" by Marko Lukša:** This book offers a detailed look into Kubernetes, which often utilizes `containerd` or similar runtimes under the hood. This resource is especially helpful if you are dealing with Kubernetes and container images simultaneously.
-*   **The official containerd documentation:** This is a good reference for the configuration options, especially if you decide to modify the config files directly.
+- **"Docker Deep Dive" by Nigel Poulton:** This book provides a solid understanding of container technology and how runtimes work. While it focuses on Docker, it builds a strong foundation for understanding underlying concepts.
+- **"Kubernetes in Action" by Marko Lukša:** This book offers a detailed look into Kubernetes, which often utilizes `containerd` or similar runtimes under the hood. This resource is especially helpful if you are dealing with Kubernetes and container images simultaneously.
+- **The official containerd documentation:** This is a good reference for the configuration options, especially if you decide to modify the config files directly.
 
 These resources will help you understand not just the "how" but also the "why," especially when it comes to security concerns.
 

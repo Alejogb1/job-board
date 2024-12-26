@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-is-a-circular-dependency-preventing-the-autoloading-of-mwsclient"
 ---
 
-Okay, let's unpack this circular dependency problem with `MwsClient` autoloading. I’ve definitely been down this road before, and it’s one of those classic issues that can grind development to a halt if you don’t understand the root cause. The core of the problem lies, quite simply, in how your application's dependencies are arranged. Specifically, when two or more classes or modules are mutually dependent on each other, the autoloader can get caught in a frustrating loop, preventing the proper instantiation of any of them.
+, let's unpack this circular dependency problem with `MwsClient` autoloading. I’ve definitely been down this road before, and it’s one of those classic issues that can grind development to a halt if you don’t understand the root cause. The core of the problem lies, quite simply, in how your application's dependencies are arranged. Specifically, when two or more classes or modules are mutually dependent on each other, the autoloader can get caught in a frustrating loop, preventing the proper instantiation of any of them.
 
-Think of it like this: class A needs class B to function correctly, but class B *also* needs class A before it can do anything. When the autoloader encounters this, it’s essentially asking, "Which comes first? The chicken or the egg?" And the autoloader, of course, is not designed to solve existential paradoxes. It's designed to load classes in the order they're referenced. This dependency cycle prevents any class involved from being fully loaded, and thus, `MwsClient` isn't getting the chance it needs.
+Think of it like this: class A needs class B to function correctly, but class B _also_ needs class A before it can do anything. When the autoloader encounters this, it’s essentially asking, "Which comes first? The chicken or the egg?" And the autoloader, of course, is not designed to solve existential paradoxes. It's designed to load classes in the order they're referenced. This dependency cycle prevents any class involved from being fully loaded, and thus, `MwsClient` isn't getting the chance it needs.
 
 In my past life, working on an e-commerce platform heavily reliant on the Amazon MWS API, we had a similar situation. We’d initially separated responsibilities pretty neatly, or so we thought, into different modules. However, a quick refactoring – which in hindsight was a poor design decision – inadvertently introduced a circular dependency between the `OrderProcessing` module and our dedicated `MwsClient` wrapper. `OrderProcessing` needed `MwsClient` to pull order data; `MwsClient`, in turn, was designed to use parts of `OrderProcessing` for things like specific data formatting. We didn't spot it in code review, and boy did we pay for it during deployments.
 
@@ -51,7 +51,7 @@ class MwsClient
 
 In this extremely basic scenario, `OrderProcessing` directly instantiates `MwsClient`, and `MwsClient` directly instantiates `OrderProcessing`. This is the crux of the problem. The autoloader would try to load `OrderProcessing`, then see it needs `MwsClient`, then try to load `MwsClient`, which needs `OrderProcessing`, and so on, resulting in an infinite loading loop or a failure, preventing either class from being loaded successfully.
 
-How do we resolve this? Well, the key is to *break* the cycle. There are several ways to accomplish this, and the most suitable method depends on the specifics of your project. In our case, we adopted a combination of dependency injection and a dedicated data transfer object to avoid the mutual dependency.
+How do we resolve this? Well, the key is to _break_ the cycle. There are several ways to accomplish this, and the most suitable method depends on the specifics of your project. In our case, we adopted a combination of dependency injection and a dedicated data transfer object to avoid the mutual dependency.
 
 Let’s look at how we refactored the code. Here is snippet 2:
 

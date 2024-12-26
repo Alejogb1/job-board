@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-retrain-a-fitted-saved-model-in-neural-prophet-with-new-additional-datapoints"
 ---
 
-alright, so you've got a neural prophet model, trained it, saved it, and now, bam, more data shows up at the door. this happens, i've been there more times than i care to count. it's not as straightforward as just feeding the new stuff in. believe me, i wish it was. you can't just inject data into a frozen model and expect it to automatically learn. the model has already learned the patterns from the initial training set.
+, so you've got a neural prophet model, trained it, saved it, and now, bam, more data shows up at the door. this happens, i've been there more times than i care to count. it's not as straightforward as just feeding the new stuff in. believe me, i wish it was. you can't just inject data into a frozen model and expect it to automatically learn. the model has already learned the patterns from the initial training set.
 
 let's talk about the situation first, how i usually approach this is not by rewriting everything, is more like, how i go about updating the model with new information. essentially, you have two main paths here. path one, train a new model entirely with all of the data, the initial and the new. path two, find a way to use the existing model, and kinda nudge it in the direction of the new data.
 
@@ -23,7 +23,7 @@ metrics = model.fit(df, freq="D") #daily data, can be adjusted.
 model.save("my_model.pkl")
 ```
 
-pretty standard right? i've done this hundreds of times. 'my\_model.pkl' is where all the learned weights, biases and configurations of our model are stored. so next up, you get a data update.
+pretty standard right? i've done this hundreds of times. 'my_model.pkl' is where all the learned weights, biases and configurations of our model are stored. so next up, you get a data update.
 
 now, here's where things get interesting. when you get new data, and you want to incorporate this into your existing model. it's not just about throwing everything at the same training process and seeing what happens. that will make the model forget what it has already learnt and it will train over the new data, if the new data is not correlated with the old data, the model would be useless. you must 'warm-start' your model with the existing weights. we are not training an entirely new model, we are updating our current one.
 

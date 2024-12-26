@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-azureml-how-to-create-a-webservice-from-a-docker-image"
 ---
 
-alright, so you’re looking at deploying an azure machine learning webservice from a docker image, and yeah, it's not always super straightforward the first time around, been there done that. let me break down how i usually approach this, drawing from some of the stuff i’ve tripped over in the past.
+, so you’re looking at deploying an azure machine learning webservice from a docker image, and yeah, it's not always super straightforward the first time around, been there done that. let me break down how i usually approach this, drawing from some of the stuff i’ve tripped over in the past.
 
 first off, let's tackle the "why?" part. why docker images? because they offer a consistent, reproducible environment. think of it, you build your application and all its dependencies into a container, it will run the same way regardless of the target environment. this is killer for ml deployments where dependency hell can be a real problem. i remember one project where we spent more time fixing library conflicts than we did on the actual model, docker saved the day for that. also, it's not a black box anymore. you can verify each layer and see that your exact code is running as expected.
 
@@ -64,6 +64,7 @@ so how do we go about it? here’s a typical workflow, in my experience:
     docker tag my-ml-image myacr.azurecr.io/my-ml-image:v1
     docker push myacr.azurecr.io/my-ml-image:v1
     ```
+
     replace `myacr.azurecr.io` with your container registry address and `my-ml-image` with your image name. also note that versioning can become important, v1, v2 and so on is a good idea, especially for iterative updates.
 
 3.  **deploy with azureml:** now, here’s where you tell azureml to use your docker image. you do that using the azureml sdk, the python one specifically.
@@ -82,10 +83,10 @@ so how do we go about it? here’s a typical workflow, in my experience:
         name="my-ml-image",
         image_location=f"{ws.container_registry}.azurecr.io/my-ml-image:v1",
         )
-    
+
     # define deployment configuration
     deployment_config = AciWebservice.deploy_configuration(cpu_cores=1, memory_gb=1)
-    
+
     # deploy the webservice
     service = Webservice.deploy_from_image(
         deployment_config=deployment_config,
@@ -93,7 +94,7 @@ so how do we go about it? here’s a typical workflow, in my experience:
         name="my-ml-webservice",
         workspace=ws
     )
-    
+
     service.wait_for_deployment(show_output=True)
 
     print(service.state)

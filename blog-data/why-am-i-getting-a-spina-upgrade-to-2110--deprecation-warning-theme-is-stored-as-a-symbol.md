@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-a-spina-upgrade-to-2110--deprecation-warning-theme-is-stored-as-a-symbol"
 ---
 
-alright, so you're seeing that spina deprecation warning, "theme is stored as a symbol" after upgrading to 2.11.0. i've definitely been there, wrestling with ruby upgrades and weird gem behavior. it's not uncommon, especially with bigger framework updates like spina. let's break it down.
+, so you're seeing that spina deprecation warning, "theme is stored as a symbol" after upgrading to 2.11.0. i've definitely been there, wrestling with ruby upgrades and weird gem behavior. it's not uncommon, especially with bigger framework updates like spina. let's break it down.
 
 first off, the message itself is pretty clear. ruby symbols, if you're not familiar, are like lightweight, immutable strings. they’re often used as keys in hashes or as identifiers within code because they're faster for ruby to process than regular strings. so, spina, at some point prior to 2.11.0, was likely using symbols to represent your theme, which is often just a folder name within your rails project.
 
@@ -58,6 +58,7 @@ end
 # somewhere else in your code
 MyCustomTheme.get_theme_data("my_custom_theme")
 ```
+
 the issue here is that `my_custom_theme` and `another_theme` are symbols, and when you fetch the hash you need to convert the input to a symbol, which can cause this warning and other errors.
 
 the best way to fix this specific scenario is to also use strings, and use them everywhere, it will not affect performance that much, and at least you will be consistent. this is the refactored version :

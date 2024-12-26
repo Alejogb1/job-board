@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-2-documents-failing-to-index-in-my-elasticsearch-python-application"
 ---
 
-Okay, let's tackle this. Document indexing failures in Elasticsearch, particularly when they’re isolated to just a couple of cases, can be a surprisingly nuanced problem. I’ve seen this happen more times than I care to count, and it usually boils down to subtle data inconsistencies or unexpected mapping quirks. It's seldom a straight bug in the Elasticsearch cluster itself, especially if the rest of your pipeline is performing adequately.
+, let's tackle this. Document indexing failures in Elasticsearch, particularly when they’re isolated to just a couple of cases, can be a surprisingly nuanced problem. I’ve seen this happen more times than I care to count, and it usually boils down to subtle data inconsistencies or unexpected mapping quirks. It's seldom a straight bug in the Elasticsearch cluster itself, especially if the rest of your pipeline is performing adequately.
 
 From my experience, debugging these situations requires a systematic approach. First, don't immediately assume it’s some sort of major malfunction. We should start with the basics and methodically eliminate the common culprits. When two specific documents fail, but many others are indexed correctly, it often means those two documents contain peculiarities that are incompatible with your Elasticsearch index mapping or configuration.
 
@@ -58,6 +58,7 @@ for doc in documents:
     sanitized_doc = sanitize_document(doc)
     index_document(es, "products_index", sanitized_doc)
 ```
+
 In this example, I am parsing the float to integer, if it fails for some reason, the code continues gracefully without failing the whole indexing process. You can adapt this based on your specific needs.
 
 **2. Mapping Limitations or Dynamic Mapping Issues:**
@@ -122,16 +123,15 @@ Let's consider a situation where a document might have an invalid structure:
 
 ```json
 {
-    "product_name": "Widget 44",
-    "attributes": {
-       "color": "red",
-        "weight": 10,
-        "details" : {
-            "material": "metal"
-        }
+  "product_name": "Widget 44",
+  "attributes": {
+    "color": "red",
+    "weight": 10,
+    "details": {
+      "material": "metal"
     }
+  }
 }
-
 ```
 
 And your mapping only expects "color" and "weight" within the "attributes" object. Elasticsearch will reject this document as the extra nested object is not defined. Instead, you can use a type such as 'nested' to define such hierarchical data structures.

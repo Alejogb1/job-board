@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "why-isnt-simplecov-processing-statistics"
 ---
 
-alright, so you're having trouble with simplecov not generating coverage stats, right? i've been there, trust me. it's one of those things that can make you question your entire setup. let's unpack this. it’s not always immediately obvious, and there are several typical culprits at play.
+, so you're having trouble with simplecov not generating coverage stats, right? i've been there, trust me. it's one of those things that can make you question your entire setup. let's unpack this. it’s not always immediately obvious, and there are several typical culprits at play.
 
 first off, let's be sure about the basics. simplecov, at its core, is a code coverage tool for ruby. it works by hooking into the ruby runtime and tracking which lines of your code are executed during your test runs. if it's not producing stats, it means this instrumentation isn't happening or the data isn't making it to simplecov.
 
 i've seen this happen a lot, and usually, it boils down to one of a few key issues. i remember one time, back when i was working on a legacy rails app (you know, the kind with the ancient codebase that’s like archaeological artifact), i spent almost a whole day on this. it turned out i was loading simplecov in the wrong place. rookie mistake, but we all do it.
 
-so, let’s start with the setup. simplecov needs to be required *before* your application code and your test framework. this is absolutely crucial. it has to be the first thing that fires up in your test suite. if it’s loaded after your tests start running, it simply won’t instrument the code execution. it will miss those crucial details.
+so, let’s start with the setup. simplecov needs to be required _before_ your application code and your test framework. this is absolutely crucial. it has to be the first thing that fires up in your test suite. if it’s loaded after your tests start running, it simply won’t instrument the code execution. it will miss those crucial details.
 
 here’s how a typical setup should look in your `test/test_helper.rb` file, or something similar if you’re using another test framework like rspec:
 

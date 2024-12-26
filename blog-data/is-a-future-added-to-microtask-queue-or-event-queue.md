@@ -4,15 +4,15 @@ date: "2024-12-16"
 id: "is-a-future-added-to-microtask-queue-or-event-queue"
 ---
 
-Alright, let's tackle this one. I remember vividly a particularly challenging debugging session a few years back, where understanding the nuances of microtask and event queues was absolutely critical. We were dealing with a complex asynchronous data pipeline involving multiple promises and network requests, and the behavior of the ui seemed...well, unpredictable. That experience, more than anything, burned into my brain exactly how futures and their associated asynchronous operations are scheduled.
+, let's tackle this one. I remember vividly a particularly challenging debugging session a few years back, where understanding the nuances of microtask and event queues was absolutely critical. We were dealing with a complex asynchronous data pipeline involving multiple promises and network requests, and the behavior of the ui seemed...well, unpredictable. That experience, more than anything, burned into my brain exactly how futures and their associated asynchronous operations are scheduled.
 
-So, the short answer to your question: a `Future` *itself* is not directly added to either the microtask or event queue. Instead, the *operations resulting from* the completion of a `Future`, typically continuations like `.then()` or `async/await` blocks, are what get scheduled, and these are scheduled onto the microtask queue. Let's unpack that a bit because it's crucial to understand the subtle distinctions.
+So, the short answer to your question: a `Future` _itself_ is not directly added to either the microtask or event queue. Instead, the _operations resulting from_ the completion of a `Future`, typically continuations like `.then()` or `async/await` blocks, are what get scheduled, and these are scheduled onto the microtask queue. Let's unpack that a bit because it's crucial to understand the subtle distinctions.
 
-Think of a `Future` as a promise—a placeholder for a value that might not be available immediately. It represents an eventual result of an asynchronous operation. The key thing is that a `Future`'s operation, like a network call or a file read, typically originates from the event loop, but the *notification* of its completion and subsequent handling are what's orchestrated through the microtask queue.
+Think of a `Future` as a promise—a placeholder for a value that might not be available immediately. It represents an eventual result of an asynchronous operation. The key thing is that a `Future`'s operation, like a network call or a file read, typically originates from the event loop, but the _notification_ of its completion and subsequent handling are what's orchestrated through the microtask queue.
 
 Here's a more concrete picture. The event loop is the broader mechanism that handles all external events - user interactions, network activity, etc. When an asynchronous operation initiated by a future completes, say, a server sends back a response to a http request, that event goes through the event loop. This event then triggers the resolution or rejection of the associated future, and this resolution or rejection is followed by calling any `.then` clauses or `async/await` blocks. These callbacks are then pushed onto the microtask queue and processed before the event loop moves onto the next tick, ensuring a kind of ‘prioritized’ processing for these asynchronous actions.
 
-To clarify further, the event queue is primarily for external events that the browser is *waiting* for – things like user clicks, network responses, or timers expiring. These cause 'full' event loop iterations. The microtask queue, in contrast, acts as a buffer of more fine-grained, 'high-priority' asynchronous operations. After each 'full' event loop iteration, the browser first goes to microtask queue and handles all jobs within. Because of this, microtasks have priority. They effectively interweave between full event loop iterations. Futures are critical in utilizing this microtask queue effectively.
+To clarify further, the event queue is primarily for external events that the browser is _waiting_ for – things like user clicks, network responses, or timers expiring. These cause 'full' event loop iterations. The microtask queue, in contrast, acts as a buffer of more fine-grained, 'high-priority' asynchronous operations. After each 'full' event loop iteration, the browser first goes to microtask queue and handles all jobs within. Because of this, microtasks have priority. They effectively interweave between full event loop iterations. Futures are critical in utilizing this microtask queue effectively.
 
 Let’s look at some illustrative code snippets.
 
@@ -69,7 +69,7 @@ fetchData after await
 fetchData resolved: Data fetched
 ```
 
-Here, the `await` in `fetchData` effectively yields control back to the event loop, although the timer is set for 0. This effectively moves the rest of the `fetchData` function to the microtask queue through the Promise it creates behind the scenes. Observe how "Script end" is printed before the log after await in `fetchData`, and eventually, before the result of `fetchData` promise. Again, it’s the operations *after* the awaited operation, implicitly scheduled as a microtask via the compiler transforms, that are added.
+Here, the `await` in `fetchData` effectively yields control back to the event loop, although the timer is set for 0. This effectively moves the rest of the `fetchData` function to the microtask queue through the Promise it creates behind the scenes. Observe how "Script end" is printed before the log after await in `fetchData`, and eventually, before the result of `fetchData` promise. Again, it’s the operations _after_ the awaited operation, implicitly scheduled as a microtask via the compiler transforms, that are added.
 
 **Snippet 3: Chained `then` with nested Promise**
 
@@ -81,9 +81,9 @@ Promise.resolve()
     console.log("First then");
     return new Promise((resolve) => {
       console.log("Inner promise constructor");
-      resolve("inner resolved")
-    }).then(val=> {
-      console.log('Inner promise then', val)
+      resolve("inner resolved");
+    }).then((val) => {
+      console.log("Inner promise then", val);
     });
   })
   .then(() => {
@@ -91,7 +91,6 @@ Promise.resolve()
   });
 
 console.log("End main");
-
 ```
 
 Here, the order of operations is crucial. The output is:

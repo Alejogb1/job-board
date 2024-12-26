@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-does-tagify-in-rails-7-handle-json-tags-after-submission"
 ---
 
-Alright, let's talk about how Tagify plays with JSON tags in a Rails 7 context, a topic I've certainly spent my fair share of time navigating. I remember back in my days working on that community forum project, we adopted Tagify for a richer tagging experience, and subsequently had to deep dive into how Rails handled the submitted data, particularly the JSON aspect. Let me lay out the mechanics from my perspective, drawing from that experience, and provide some tangible code samples to solidify the concepts.
+, let's talk about how Tagify plays with JSON tags in a Rails 7 context, a topic I've certainly spent my fair share of time navigating. I remember back in my days working on that community forum project, we adopted Tagify for a richer tagging experience, and subsequently had to deep dive into how Rails handled the submitted data, particularly the JSON aspect. Let me lay out the mechanics from my perspective, drawing from that experience, and provide some tangible code samples to solidify the concepts.
 
 First, let's set the stage. Tagify, on the frontend, usually generates a structured array of tags, often represented as JSON objects, like this: `[{value: "technology"}, {value: "programming"}, {value: "rails"}]`. When this data is submitted within a form, typically via a POST request, it's important to understand the various steps Rails takes to process it. Now, the core thing here is that Rails, by default, doesn't automatically convert a complex JSON structure nested within form data into something that's directly usable by your model. It treats that JSON string as just that – a string.
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-a-custom-nrc-style-lexicon-on-syuzhet-for-r"
 ---
 
-alright, so, you're looking to use a custom nrc-style lexicon with syuzhet in r? i've been down this road, and let me tell you, it's not always a walk in the park but it’s fairly straightforward once you get your head around the data structures.
+, so, you're looking to use a custom nrc-style lexicon with syuzhet in r? i've been down this road, and let me tell you, it's not always a walk in the park but it’s fairly straightforward once you get your head around the data structures.
 
 let me break it down, and i'll give you a few code snippets that should help. i remember years ago, when i was first getting into text analysis, i was working on this project involving analyzing the sentiment in old forum posts, and i needed a lexicon that was more specific to internet slang rather than the broad nrc. i spent days trying to figure out how to shoehorn my lexicon into the existing tools - it was not fun at all, i mean for days, the kind of debugging nightmare that makes you question all your life decisions, so believe me, i get where you are coming from.
 
@@ -87,15 +87,15 @@ get_custom_sentiment <- function(text_vector, lexicon_data) {
   # create empty dataframe to store the results
   results <- data.frame(matrix(0, nrow=length(text_vector), ncol=ncol(lexicon_data)-1))
   names(results) <- names(lexicon_data)[2:ncol(lexicon_data)]
-    
+
     # loop through sentences
    for(i in 1:length(words)){
       # loop through words in each sentence
       for(word in words[[i]]){
-         
+
       # find which row has the given word, if any
         lex_row <- which(lexicon_data$word == word)
-    
+
         # if found, add the values in each column.
         if(length(lex_row) > 0){
           results[i, ] <- results[i, ] + lexicon_data[lex_row, 2:ncol(lexicon_data)]
@@ -115,7 +115,7 @@ this is doing the same thing as syuzhet's internal function (more or less) and u
 
 note, i’m doing minimal preprocessing here, lowercase and tokenization. in any real application, you probably also want to use more advanced text processing like removing punctuation, numbers, or performing lemmatization, but i'm keeping this example clean. you will find functions to do that in the package `tm` or `quanteda`, which might also be helpful for other text processing tasks.
 
-another point worth mentioning, for any lexicon approach, that you need to be careful on the scope of your words, for example some times words such as “not bad” might convey a positive sentiment, but a nrc-style lexicon might classify the word “bad” as a negative one and your approach might produce unexpected results. in cases where you might have a more specific or different context you might also need to use different kinds of analysis, such as topic modeling techniques or even more sophisticated machine learning algorithms. i've found great resources about this in the *speech and language processing* book by jurafsky and martin, in case you want to dive deeper into those concepts.
+another point worth mentioning, for any lexicon approach, that you need to be careful on the scope of your words, for example some times words such as “not bad” might convey a positive sentiment, but a nrc-style lexicon might classify the word “bad” as a negative one and your approach might produce unexpected results. in cases where you might have a more specific or different context you might also need to use different kinds of analysis, such as topic modeling techniques or even more sophisticated machine learning algorithms. i've found great resources about this in the _speech and language processing_ book by jurafsky and martin, in case you want to dive deeper into those concepts.
 
 final piece of code to create a sentiment score with a sum of positive and negative words, this is the kind of sentiment score that a lot of libraries use, and it is an easy one to implement with your custom lexicon, so in case you need it:
 
@@ -135,6 +135,6 @@ this uses the `dplyr` package to get a new column with the custom sentiment scor
 
 one thing i've learned over time is that there is never a silver bullet for text analysis. you need to try different approaches and evaluate their performance on your specific data, for example the sentiment score of positive minus negative might be enough in some cases, but not in other cases, you always need to test and adjust the parameters for your specific task. i once saw a senior dev spending a week trying to debug a single line of code - turned out it was a simple typo in a variable name! so always double check.
 
-as for further resources, besides jurafsky and martin mentioned before, i really recommend reading the paper by mohammad et al. (2013) *from once upon a time to happily ever after: tracking emotions in stories* it was super enlightening to understand the emotional aspect of the data. also, papers on sentiment analysis with lexicons usually also explain some of the underlying assumptions and limitations, and they are a very good resource to understand them.
+as for further resources, besides jurafsky and martin mentioned before, i really recommend reading the paper by mohammad et al. (2013) _from once upon a time to happily ever after: tracking emotions in stories_ it was super enlightening to understand the emotional aspect of the data. also, papers on sentiment analysis with lexicons usually also explain some of the underlying assumptions and limitations, and they are a very good resource to understand them.
 
 i hope this helped and saves you some of the headache i went through. let me know if you have other questions.

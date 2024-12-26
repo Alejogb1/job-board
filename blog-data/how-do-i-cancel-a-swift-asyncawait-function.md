@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-cancel-a-swift-asyncawait-function"
 ---
 
-Alright, let's tackle async/await cancellation in Swift. It's a topic that often pops up, and I recall spending a good chunk of time figuring out the nuances back when we were building that real-time collaborative document editor – a project rife with asynchronous operations that needed graceful termination. The standard approach initially didn't feel quite intuitive, but with understanding, it becomes fairly straightforward.
+, let's tackle async/await cancellation in Swift. It's a topic that often pops up, and I recall spending a good chunk of time figuring out the nuances back when we were building that real-time collaborative document editor – a project rife with asynchronous operations that needed graceful termination. The standard approach initially didn't feel quite intuitive, but with understanding, it becomes fairly straightforward.
 
 The core concept revolves around `Task`'s built-in cancellation mechanisms. Swift’s concurrency model doesn't directly ‘kill’ an async function mid-execution, but rather, it provides a cooperative model where you, the developer, must explicitly check for cancellation requests within your asynchronous code. This might feel less direct than some other paradigms, but it gives you much finer-grained control over cleanup and resource management.
 
@@ -39,7 +39,7 @@ func performAndCancelDataProcessing() async {
             print("An error occurred during data processing: \(error)")
         }
     }
-    
+
     // Simulate delay then cancel the task
     await Task.sleep(nanoseconds: 500_000_000)
     task.cancel()
@@ -61,14 +61,14 @@ class LargeDataset {
 
 func fetchData(id: Int) async throws -> LargeDataset {
     print("Fetching data for \(id)")
-    
+
     let dataset = LargeDataset()
     for i in 0..<100 {
         try Task.checkCancellation()
         await Task.sleep(nanoseconds: 50_000_000) // Simulate work
        print("Fetching \(id) Progress: \(i)%")
     }
-   
+
     print("Data fetched for \(id)")
     return dataset
 }
@@ -90,7 +90,7 @@ func performAndCancelDataFetch() async {
            print("Error encountered: \(error)")
        }
     }
-    
+
     await Task.sleep(nanoseconds: 300_000_000)
     task.cancel()
     dataset = nil // Explicitly release the strong reference after cancellation

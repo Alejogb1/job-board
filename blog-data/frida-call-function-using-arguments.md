@@ -4,23 +4,23 @@ date: "2024-12-13"
 id: "frida-call-function-using-arguments"
 ---
 
-Okay so you wanna call a function using Frida with arguments right I've been there dude tons of times This whole process can be a bit of a headache especially when you're dealing with weird data types or some quirky native code But don’t fret I’ve spilled enough coffee over this stuff to help you out
+you wanna call a function using Frida with arguments right I've been there dude tons of times This whole process can be a bit of a headache especially when you're dealing with weird data types or some quirky native code But don’t fret I’ve spilled enough coffee over this stuff to help you out
 
 Let's break it down First off the general idea is pretty straightforward You use Frida to hook the function you wanna call then you execute that function with your own arguments Now this seems simple but let me tell you some implementation can be a real pain in the rear end I’ve spent a week debugging a single argument passing issue in some legacy Java library Once I did a deep dive with Java reflection to figure out that the parameter was a proxy object and I had to create it from scratch on the fly in JS just to pass it to the hooked function And that’s not the worst I’ve seen it gets way worse when it comes to c++
 
 So first things first we need to get our function hooked up I usually start with this simple approach:
 
 ```javascript
-  //Assuming you have an already attached frida session in the 'session' var
-  var module = Process.getModuleByName("your_module.so");
-  var functionAddress = module.getExportByName("your_function_name").address;
+//Assuming you have an already attached frida session in the 'session' var
+var module = Process.getModuleByName("your_module.so");
+var functionAddress = module.getExportByName("your_function_name").address;
 
-  Interceptor.attach(functionAddress, {
-    onEnter: function (args) {
-      console.log("Function called with arguments:", args);
-      //Here you'd put your actual logic to call the function
-    }
-  });
+Interceptor.attach(functionAddress, {
+  onEnter: function (args) {
+    console.log("Function called with arguments:", args);
+    //Here you'd put your actual logic to call the function
+  },
+});
 ```
 
 This snippet is basic it hooks `your_function_name` located in `your_module.so`. The `onEnter` part logs the arguments it received Now this is a great starting point to see what’s happening when the function is called it will print all the arguments that were used on that invocation.
@@ -28,24 +28,27 @@ This snippet is basic it hooks `your_function_name` located in `your_module.so`.
 Now for the real deal calling the function with your own args we need to manipulate the `args` array or better yet we need to call the native function by using it directly That's where things get a bit more interesting I generally use `NativeFunction` for this and you will too. Here's an example that should get the job done for simple int and string cases.
 
 ```javascript
-  //Assume we want to call a function int your_function_name(int a, const char* b)
-  var module = Process.getModuleByName("your_module.so");
-  var functionAddress = module.getExportByName("your_function_name").address;
+//Assume we want to call a function int your_function_name(int a, const char* b)
+var module = Process.getModuleByName("your_module.so");
+var functionAddress = module.getExportByName("your_function_name").address;
 
-  var your_function = new NativeFunction(functionAddress, 'int', ['int', 'pointer']);
+var your_function = new NativeFunction(functionAddress, "int", [
+  "int",
+  "pointer",
+]);
 
-  var my_int_arg = 123;
-  var my_str_arg = Memory.allocUtf8String("Hello Frida!");
+var my_int_arg = 123;
+var my_str_arg = Memory.allocUtf8String("Hello Frida!");
 
-  var result = your_function(my_int_arg, my_str_arg);
-  console.log("Function result:", result);
+var result = your_function(my_int_arg, my_str_arg);
+console.log("Function result:", result);
 
-  // Remember to free the string you allocated once its not needed anymore.
-  // It is very common to miss this and end up with a very bad memory leak.
-  Memory.free(my_str_arg);
+// Remember to free the string you allocated once its not needed anymore.
+// It is very common to miss this and end up with a very bad memory leak.
+Memory.free(my_str_arg);
 ```
 
-Okay this snippet here is more involved We're using `NativeFunction` which takes the function's address the return type (int) and argument types as well. The most common type are `int` `uint` `pointer` `float` `double` and so on Be sure to check out the Frida documentation for more specific types if you are dealing with non common c data types.
+this snippet here is more involved We're using `NativeFunction` which takes the function's address the return type (int) and argument types as well. The most common type are `int` `uint` `pointer` `float` `double` and so on Be sure to check out the Frida documentation for more specific types if you are dealing with non common c data types.
 
 We create our arguments `my_int_arg` is an integer while for string `my_str_arg` we use `Memory.allocUtf8String` because we need to pass a pointer to the C function We then call the function like a normal Javascript method passing the arguments and printing the result.
 
@@ -56,29 +59,28 @@ If you are dealing with structures or complex object things gets complicated ver
 Let's say for example that you need to call a function that receives a C structure as input you will need to allocate that structure manually and then populate it with data before passing it as argument.
 
 ```javascript
- // Assume struct MyStruct { int field1; float field2; };
- // and  int your_function_name(MyStruct* my_struct)
-  var module = Process.getModuleByName("your_module.so");
-  var functionAddress = module.getExportByName("your_function_name").address;
+// Assume struct MyStruct { int field1; float field2; };
+// and  int your_function_name(MyStruct* my_struct)
+var module = Process.getModuleByName("your_module.so");
+var functionAddress = module.getExportByName("your_function_name").address;
 
-  var my_struct_size = 8; //Size of int + float
-  var my_struct_ptr = Memory.alloc(my_struct_size);
+var my_struct_size = 8; //Size of int + float
+var my_struct_ptr = Memory.alloc(my_struct_size);
 
-  // Set the struct fields
-  my_struct_ptr.writeS32(42); // field1 is int starting at offset 0
-  my_struct_ptr.add(4).writeFloat(3.1415); // field2 is float starting at offset 4
+// Set the struct fields
+my_struct_ptr.writeS32(42); // field1 is int starting at offset 0
+my_struct_ptr.add(4).writeFloat(3.1415); // field2 is float starting at offset 4
 
-  var your_function = new NativeFunction(functionAddress, 'int', ['pointer']);
+var your_function = new NativeFunction(functionAddress, "int", ["pointer"]);
 
-  var result = your_function(my_struct_ptr);
-  console.log("Function result:", result);
+var result = your_function(my_struct_ptr);
+console.log("Function result:", result);
 
-  // We do not need to free `my_struct_ptr` because it is memory allocated
-  // by Memory.alloc, you should free only when you use memory.allocUtf8String
-
+// We do not need to free `my_struct_ptr` because it is memory allocated
+// by Memory.alloc, you should free only when you use memory.allocUtf8String
 ```
 
-Alright this is where some deep knowledge of C data structures starts to help We first create a new allocated memory block `my_struct_ptr` based on the size of our struct in bytes. Then we manually write to that memory location using `writeS32` for the int and `writeFloat` for the float we increment the pointer position using the `add` method to ensure the next write operations are done on the right memory position. After that we call the hooked function with the address of our created struct and the usual log the return of the function.
+this is where some deep knowledge of C data structures starts to help We first create a new allocated memory block `my_struct_ptr` based on the size of our struct in bytes. Then we manually write to that memory location using `writeS32` for the int and `writeFloat` for the float we increment the pointer position using the `add` method to ensure the next write operations are done on the right memory position. After that we call the hooked function with the address of our created struct and the usual log the return of the function.
 
 Important note: In this specific example we didn't need to free the struct memory as it was allocated by `Memory.alloc`. Remember that only `Memory.allocUtf8String` memory needs to be manually deallocated.
 

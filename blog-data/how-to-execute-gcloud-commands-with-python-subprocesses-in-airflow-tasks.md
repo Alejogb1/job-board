@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-execute-gcloud-commands-with-python-subprocesses-in-airflow-tasks"
 ---
 
-Okay, let’s tackle this. I’ve been down this particular rabbit hole more times than I care to remember, and it’s always a subtle dance between getting the subprocess management correct, the gcloud authentication sorted, and ensuring it’s all playing nicely within the airflow context. Let's get into it.
+, let’s tackle this. I’ve been down this particular rabbit hole more times than I care to remember, and it’s always a subtle dance between getting the subprocess management correct, the gcloud authentication sorted, and ensuring it’s all playing nicely within the airflow context. Let's get into it.
 
 The core challenge when using `gcloud` commands within an Airflow task, particularly via Python’s `subprocess` module, revolves around orchestrating the shell environment, handling potential errors, and ensuring proper resource cleanup. We aren't just executing a script; we’re building a piece of infrastructure, and so we must treat it with that same care. The objective is to make sure that our airflow task can seamlessly invoke `gcloud`, passing it the necessary parameters, and reacting appropriately to its output.
 
@@ -99,7 +99,7 @@ except Exception as e:
     logging.error(f"Failed to create bucket: {e}")
 ```
 
-The key here is `subprocess.Popen` combined with `stdout=subprocess.PIPE` which captures the command's standard output, and `stderr=subprocess.PIPE` to capture any error messages separately.  I use a while loop to read the output line by line as it's produced. `shlex.split()` ensures proper handling of command strings that include spaces or special characters. We are checking the return code directly after the process is finished to determine if the command was successful. Note the use of `process.communicate()` to collect any remaining standard error messages after the standard output stream is done, an important step for capturing all potential failures, particularly when the command has finished but has not yet flushed the error messages.
+The key here is `subprocess.Popen` combined with `stdout=subprocess.PIPE` which captures the command's standard output, and `stderr=subprocess.PIPE` to capture any error messages separately. I use a while loop to read the output line by line as it's produced. `shlex.split()` ensures proper handling of command strings that include spaces or special characters. We are checking the return code directly after the process is finished to determine if the command was successful. Note the use of `process.communicate()` to collect any remaining standard error messages after the standard output stream is done, an important step for capturing all potential failures, particularly when the command has finished but has not yet flushed the error messages.
 
 **Strategy 3: Delegated Execution with Bash Scripts**
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "yoga-schema-resolvers-import"
 ---
 
-Okay so you're asking about yoga schema resolvers and import setups right I get it been there done that a million times it feels like
+you're asking about yoga schema resolvers and import setups right I get it been there done that a million times it feels like
 
 Let me break it down for ya because this is one of those things that can bite you in the butt if you're not careful especially when your project gets bigger and more complicated Believe me I've seen it first hand
 
@@ -17,11 +17,11 @@ Anyway back to the point the simplest way to import resolvers is to do it all in
 You can just import every resolver individually and plug them into your resolvers object it will be something like this
 
 ```javascript
-import { createYoga } from 'graphql-yoga'
-import { typeDefs } from './schema'
-import { userResolver } from './resolvers/user'
-import { postResolver } from './resolvers/post'
-import { commentResolver } from './resolvers/comment'
+import { createYoga } from "graphql-yoga";
+import { typeDefs } from "./schema";
+import { userResolver } from "./resolvers/user";
+import { postResolver } from "./resolvers/post";
+import { commentResolver } from "./resolvers/comment";
 
 const resolvers = {
   Query: {
@@ -30,18 +30,18 @@ const resolvers = {
     post: postResolver.post,
     posts: postResolver.posts,
     comment: commentResolver.comment,
-    comments: commentResolver.comments
-  }
-}
+    comments: commentResolver.comments,
+  },
+};
 
 const yoga = createYoga({
   schema: {
     typeDefs,
-    resolvers
-  }
-})
+    resolvers,
+  },
+});
 
-export default yoga
+export default yoga;
 ```
 
 Now this is fine for small projects but what if your resolvers are all split into multiple modules each with their own sets of queries and mutations and things become a little more complex Imagine this a project with user authentication roles and user details and then on top of that posts and comments and the ability to like them and add attachments and user profiles this whole thing can turn into a monster if you are not planning ahead
@@ -53,24 +53,24 @@ Here's how that might look instead
 First create `resolvers.js` or `resolvers/index.js` or `resolvers/resolvers.js` whatever floats your boat and keep your resolvers there and you can add sub folders if needed
 
 ```javascript
-import { userResolvers } from './user'
-import { postResolvers } from './post'
-import { commentResolvers } from './comment'
+import { userResolvers } from "./user";
+import { postResolvers } from "./post";
+import { commentResolvers } from "./comment";
 
 const resolvers = {
   Query: {
     ...userResolvers.Query,
     ...postResolvers.Query,
-    ...commentResolvers.Query
+    ...commentResolvers.Query,
   },
-  Mutation:{
+  Mutation: {
     ...userResolvers.Mutation,
     ...postResolvers.Mutation,
-    ...commentResolvers.Mutation
-  }
-}
+    ...commentResolvers.Mutation,
+  },
+};
 
-export default resolvers
+export default resolvers;
 ```
 
 And here is how your individual module user resolvers might look like
@@ -79,38 +79,38 @@ And here is how your individual module user resolvers might look like
 export const userResolvers = {
   Query: {
     user: (parent, { id }, context) => {
-        // your logic here
+      // your logic here
     },
     users: (parent, args, context) => {
       // your logic here
-    }
+    },
   },
-   Mutation: {
+  Mutation: {
     createUser: (parent, { input }, context) => {
       // your logic here
     },
-   updateUser: (parent, { id, input }, context) => {
+    updateUser: (parent, { id, input }, context) => {
       // your logic here
-    }
-  }
-}
+    },
+  },
+};
 ```
 
 And then on your main server file
 
 ```javascript
-import { createYoga } from 'graphql-yoga'
-import { typeDefs } from './schema'
-import resolvers from './resolvers'
+import { createYoga } from "graphql-yoga";
+import { typeDefs } from "./schema";
+import resolvers from "./resolvers";
 
 const yoga = createYoga({
   schema: {
     typeDefs,
-    resolvers
-  }
-})
+    resolvers,
+  },
+});
 
-export default yoga
+export default yoga;
 ```
 
 That cleans things up a bit right You are no longer importing 20 different resolvers each time you want to add something new This pattern allows you to keep things organized and easier to find and you can even go as far as having a specific resolver import file for each sub-folder inside of resolvers. This means that you can potentially add a feature by just creating a folder adding index file with the combined resolvers and changing the main resolvers import file
@@ -124,25 +124,24 @@ Now implementing a full dependency injection system for your resolvers might be 
 You could do something like this
 
 ```javascript
-import { userResolvers } from './user'
-import { postResolvers } from './post'
-import { commentResolvers } from './comment'
+import { userResolvers } from "./user";
+import { postResolvers } from "./post";
+import { commentResolvers } from "./comment";
 
 const createResolvers = (dependencies) => ({
   Query: {
     ...userResolvers.Query(dependencies),
     ...postResolvers.Query(dependencies),
-    ...commentResolvers.Query(dependencies)
+    ...commentResolvers.Query(dependencies),
   },
-   Mutation: {
+  Mutation: {
     ...userResolvers.Mutation(dependencies),
     ...postResolvers.Mutation(dependencies),
-    ...commentResolvers.Mutation(dependencies)
-  }
-})
+    ...commentResolvers.Mutation(dependencies),
+  },
+});
 
-
-export default createResolvers
+export default createResolvers;
 ```
 
 And on your individual resolvers file
@@ -151,44 +150,44 @@ And on your individual resolvers file
 export const userResolvers = (dependencies) => ({
   Query: {
     user: (parent, { id }, context) => {
-        // use dependencies here if you need them
+      // use dependencies here if you need them
     },
     users: (parent, args, context) => {
-       // use dependencies here if you need them
-    }
+      // use dependencies here if you need them
+    },
   },
-  Mutation:{
+  Mutation: {
     createUser: (parent, { input }, context) => {
-       // use dependencies here if you need them
+      // use dependencies here if you need them
     },
     updateUser: (parent, { id, input }, context) => {
-       // use dependencies here if you need them
-    }
-  }
-})
+      // use dependencies here if you need them
+    },
+  },
+});
 ```
 
 And your main file
 
 ```javascript
-import { createYoga } from 'graphql-yoga'
-import { typeDefs } from './schema'
-import createResolvers from './resolvers'
+import { createYoga } from "graphql-yoga";
+import { typeDefs } from "./schema";
+import createResolvers from "./resolvers";
 
 const dependencies = {
-    // your dependencies here like database connection etc
-}
+  // your dependencies here like database connection etc
+};
 
-const resolvers = createResolvers(dependencies)
+const resolvers = createResolvers(dependencies);
 
 const yoga = createYoga({
   schema: {
     typeDefs,
-    resolvers
-  }
-})
+    resolvers,
+  },
+});
 
-export default yoga
+export default yoga;
 ```
 
 Now why do this? Well you might ask yourself why do we need to pass those dependencies?

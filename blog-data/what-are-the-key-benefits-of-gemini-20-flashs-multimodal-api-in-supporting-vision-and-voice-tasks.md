@@ -4,19 +4,19 @@ date: "2024-12-12"
 id: "what-are-the-key-benefits-of-gemini-20-flashs-multimodal-api-in-supporting-vision-and-voice-tasks"
 ---
 
-Okay lets dive into Gemini 2.0 Flash and its multimodal magic specifically how it handles vision and voice stuff its kinda fascinating if you think about it like a super powered swiss army knife for AI
+lets dive into Gemini 2.0 Flash and its multimodal magic specifically how it handles vision and voice stuff its kinda fascinating if you think about it like a super powered swiss army knife for AI
 
 So first off multimodal think of it like a party where vision voice text and maybe even other senses are all invited before you had models that were specialized like a single purpose tool like a hammer for nails this is more like a full tool kit so Gemini 2.0 Flash being multimodal means it can process multiple types of data concurrently this is HUGE because real world scenarios rarely come in a single format you know
 
 Take an example lets say you're building an app that helps people organize their kitchens user snaps a pic of their pantry shelves and then describes what they need to find using voice regular models would need separate pipelines for image processing and voice recognition then you'd have to do all sorts of custom code to make sense of it all Gemini 2.0 Flash though can get both the image and audio input analyze them simultaneously and then give you an answer that considers both like "hey there's a can of beans on the third shelf"
 
-This concurrent processing really is the big enchilada here it isn't just about gluing two models together its about creating a model that *understands* the relationship between these different modalities the spatial context from the image informs what the voice query means and vice versa that means we move closer to models that reason like humans which is kind of wild to think about
+This concurrent processing really is the big enchilada here it isn't just about gluing two models together its about creating a model that _understands_ the relationship between these different modalities the spatial context from the image informs what the voice query means and vice versa that means we move closer to models that reason like humans which is kind of wild to think about
 
 Lets look at vision specifically Gemini 2.0 Flash is really good at image understanding object recognition scene analysis image captioning you name it the level of detail is pretty impressive for example you can not only identify objects in a picture but get detailed information about their attributes and relationships thats important think about self driving cars that need to identify not just that there's a person but their pose direction and potential intentions all at once thats pretty intense
 
 Then for voice we've got speech recognition of course also things like speaker identification and natural language understanding which is massive being able to go from raw audio to an understanding of intent is a complex problem and this model handles it incredibly efficiently it can deal with nuances in speech different accents and complex sentence structures its a step up from the sometimes kinda clunky voice assistants we've been stuck with
 
-Now heres the best part it's not just analyzing them separately it's *fusing* the information so voice can provide context to the vision and vice versa for example in a live broadcast you might use the image to identify the speaker and then use the audio for a real time transcription and summarization the whole thing works holistically and it is far more efficient
+Now heres the best part it's not just analyzing them separately it's _fusing_ the information so voice can provide context to the vision and vice versa for example in a live broadcast you might use the image to identify the speaker and then use the audio for a real time transcription and summarization the whole thing works holistically and it is far more efficient
 
 Lets talk about some key benefits to illustrate how different this whole approach is First off its about unified understanding which is a big deal previous approaches often relied on multiple models to each handle one type of input and the outputs from those then need to be integrated this is a lot of work and it can easily result in information loss Gemini 2.0 flash doesn't just take the output from one model and pass it to the next it handles them jointly which means you get a cohesive view of the input
 
@@ -28,7 +28,7 @@ And finally it's about resource efficiency we are talking about one model doing 
 
 Now I should mention this whole idea of models understanding context has its basis in the idea of embodied cognition and multimodal deep learning you should probably look up some research in these fields if you are interested in the fundamental aspects for example research papers exploring attention mechanisms in multimodal models would be a good starting point maybe explore some works around multimodal transformers that is where a lot of this is based
 
-Okay lets look at some pseudo code to get a feel for it these arent real code snippets you can actually run but they illustrate the concepts:
+lets look at some pseudo code to get a feel for it these arent real code snippets you can actually run but they illustrate the concepts:
 
 **Example 1: Image and Voice Captioning**
 

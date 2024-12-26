@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resume-keras-neural-network-training-from-a-specific-epoch"
 ---
 
-Okay, let's tackle this. I’ve been down this road countless times – interrupted training runs are an unfortunate reality, especially when dealing with complex models and lengthy datasets. The good news is, resuming a Keras training session from a specific epoch is straightforward, provided you've set things up correctly from the outset. It hinges primarily on leveraging the power of model checkpoints and potentially some customized callbacks.
+, let's tackle this. I’ve been down this road countless times – interrupted training runs are an unfortunate reality, especially when dealing with complex models and lengthy datasets. The good news is, resuming a Keras training session from a specific epoch is straightforward, provided you've set things up correctly from the outset. It hinges primarily on leveraging the power of model checkpoints and potentially some customized callbacks.
 
 My past experiences on projects involving large-scale image recognition have underscored how critical it is to save model progress. I recall one project where we were training a convolutional neural network for a medical imaging task; a sudden power outage at hour 20 of a 30-hour run was enough to make anyone swear under their breath. Thankfully, we had checkpointing enabled, which saved us from having to restart from scratch.
 
@@ -14,7 +14,7 @@ Let me break down the process and provide you with a couple of code examples to 
 
 **Setting Up Checkpointing**
 
-First, during the *initial* training run, it’s crucial to configure a `ModelCheckpoint` callback. You need to specify the filepath where the model and its state should be saved, the frequency of the saves (e.g., after each epoch or only when a specific metric improves), and whether to save only the best weights or all weights across every checkpoint.
+First, during the _initial_ training run, it’s crucial to configure a `ModelCheckpoint` callback. You need to specify the filepath where the model and its state should be saved, the frequency of the saves (e.g., after each epoch or only when a specific metric improves), and whether to save only the best weights or all weights across every checkpoint.
 
 ```python
 import tensorflow as tf
@@ -72,7 +72,7 @@ def resume_training(start_epoch=2):
     # load the previously trained model from a checkpoint
     # construct the checkpoint filepath based on the desired start epoch
     checkpoint_filepath = f'path_to_checkpoint/model_{start_epoch:02d}.h5'
-    
+
     model = keras.models.load_model(checkpoint_filepath)
 
     checkpoint_filepath_resume = 'path_to_checkpoint_resume/model_resume_{epoch:02d}.h5'
@@ -120,13 +120,13 @@ def resume_training_with_optimizer(start_epoch=2):
     # load the previously trained model from a checkpoint
     # construct the checkpoint filepath based on the desired start epoch
     checkpoint_filepath = f'path_to_checkpoint/model_{start_epoch:02d}.h5'
-    
+
     model = keras.models.load_model(checkpoint_filepath)
-    
+
     optimizer_filepath = 'path_to_optimizer_weights/optimizer_weights'
-    
+
     custom_optimizer_callback = SaveOptimizerCallback(optimizer_filepath)
-    
+
     # load optimizer weights
     custom_optimizer_callback.load_optimizer_weights(start_epoch)
 

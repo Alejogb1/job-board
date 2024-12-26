@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-does-ppo-using-stable-baselines-learn-from-iterating-through-a-dataframe"
 ---
 
-Alright, let's talk about how Proximal Policy Optimization (ppo), specifically when implemented using stable-baselines, learns from iterating through a dataframe. This isn't a common use-case people often highlight, but it’s a scenario I encountered a few years back while developing a complex inventory management system using reinforcement learning (rl). The initial system used a more conventional simulation environment. However, the need to optimize based on real-world historical data led me to explore this particular approach—training directly from a dataframe.
+, let's talk about how Proximal Policy Optimization (ppo), specifically when implemented using stable-baselines, learns from iterating through a dataframe. This isn't a common use-case people often highlight, but it’s a scenario I encountered a few years back while developing a complex inventory management system using reinforcement learning (rl). The initial system used a more conventional simulation environment. However, the need to optimize based on real-world historical data led me to explore this particular approach—training directly from a dataframe.
 
-The challenge lies in the fact that ppo, and indeed most rl algorithms, are fundamentally designed to interact with an *environment*, not just static data. The environment usually provides a current *state*, and based on that, the agent takes an *action*, which in turn results in a new *state* and a *reward*. This loop continues, with the agent learning a policy that maximizes cumulative reward over time. A dataframe, on the other hand, is just a collection of static data, with no inherent dynamics or notion of an environment.
+The challenge lies in the fact that ppo, and indeed most rl algorithms, are fundamentally designed to interact with an _environment_, not just static data. The environment usually provides a current _state_, and based on that, the agent takes an _action_, which in turn results in a new _state_ and a _reward_. This loop continues, with the agent learning a policy that maximizes cumulative reward over time. A dataframe, on the other hand, is just a collection of static data, with no inherent dynamics or notion of an environment.
 
 So, how do we bridge this gap? We essentially need to transform the dataframe into a pseudo-environment that ppo can interact with. Let's break down the key steps:
 
@@ -16,9 +16,9 @@ First, the dataframe needs to be structured such that each row can be considered
 
 This typically involves deciding:
 
-*   **State Representation:** Which column(s) within the dataframe should be considered as representing the state of the system? This might be a combination of different features. It is crucial that the state is informative enough to allow the agent to make informed decisions. In my inventory system, features included current stock levels, demand, lead times, etc.
-*   **Action Space:** How will actions be represented in the dataframe context? These should be actions the agent is able to take, typically represented as categorical values (e.g., “increase stock,” “decrease stock,” “do nothing”) or continuous values, depending on your action space. In my case, these were actions indicating how many units to order.
-*   **Reward Function:** Which column (or which calculation based on the columns) represents the immediate reward for transitioning from one row to the next? This can be anything from profit to cost, or a custom function derived from your data. Rewards are your feedback mechanism. I often utilized cost-related metrics, factoring in storage fees and penalties for stockouts.
+- **State Representation:** Which column(s) within the dataframe should be considered as representing the state of the system? This might be a combination of different features. It is crucial that the state is informative enough to allow the agent to make informed decisions. In my inventory system, features included current stock levels, demand, lead times, etc.
+- **Action Space:** How will actions be represented in the dataframe context? These should be actions the agent is able to take, typically represented as categorical values (e.g., “increase stock,” “decrease stock,” “do nothing”) or continuous values, depending on your action space. In my case, these were actions indicating how many units to order.
+- **Reward Function:** Which column (or which calculation based on the columns) represents the immediate reward for transitioning from one row to the next? This can be anything from profit to cost, or a custom function derived from your data. Rewards are your feedback mechanism. I often utilized cost-related metrics, factoring in storage fees and penalties for stockouts.
 
 Once you've determined these elements, the next part is to iterate through the dataframe as your environment, feeding the transitions to your ppo agent.
 
@@ -53,7 +53,7 @@ class DataframeEnv(gym.Env):
 
         if next_step >= self.total_steps:
             return current_state, 0, True, {}  # Terminal state, no reward
-        
+
         next_state = self._get_next_state(next_step)
         reward = self.dataframe.iloc[next_step][self.reward_column]
         self.current_step = next_step
@@ -81,12 +81,12 @@ def train_ppo_from_dataframe(dataframe, state_columns, action_space, reward_colu
 
 **Explanation of Code Snippet 1:**
 
-*   **`DataframeEnv` class:** This is where we bridge the gap between the dataframe and the rl agent. It inherits from `gym.Env`, and it implements the `step`, `reset` and other important methods required by any gym environment.
-*   **Initialization:** The constructor saves the dataframe along with the defined columns for states, actions, and rewards. I used `copy()` to prevent unintended modification of the original dataframe. The `observation_space` is also configured here, setting its shape and datatypes. I’ve also included an automatic termination step at the end of the dataframe, so we don’t run into index issues.
-*   **`step()` method:** This is where the transitions happen. It gets the current state, calculates the next state by stepping in our dataframe, and fetches the immediate reward, all according to the structure we defined. Importantly, the `done` variable is used to indicate if we've stepped through the entire dataframe.
-*   **`reset()` method:** It sets the step counter back to zero, which starts us at the beginning of our dataset. The starting state is returned for the agent.
-*   **Helper Methods:** The state fetching is encapsulated within the `_get_current_state` and `_get_next_state` methods. This improves readability and allows for easier modifications in the future.
-*   **`train_ppo_from_dataframe` function:** This function takes the dataframe along with configuration parameters, sets up the `DataframeEnv`, performs environment checks and initializes a ppo agent from stable-baselines. Finally, it trains the agent, which will learn the policy to maximize the rewards provided using the dataframe dynamics.
+- **`DataframeEnv` class:** This is where we bridge the gap between the dataframe and the rl agent. It inherits from `gym.Env`, and it implements the `step`, `reset` and other important methods required by any gym environment.
+- **Initialization:** The constructor saves the dataframe along with the defined columns for states, actions, and rewards. I used `copy()` to prevent unintended modification of the original dataframe. The `observation_space` is also configured here, setting its shape and datatypes. I’ve also included an automatic termination step at the end of the dataframe, so we don’t run into index issues.
+- **`step()` method:** This is where the transitions happen. It gets the current state, calculates the next state by stepping in our dataframe, and fetches the immediate reward, all according to the structure we defined. Importantly, the `done` variable is used to indicate if we've stepped through the entire dataframe.
+- **`reset()` method:** It sets the step counter back to zero, which starts us at the beginning of our dataset. The starting state is returned for the agent.
+- **Helper Methods:** The state fetching is encapsulated within the `_get_current_state` and `_get_next_state` methods. This improves readability and allows for easier modifications in the future.
+- **`train_ppo_from_dataframe` function:** This function takes the dataframe along with configuration parameters, sets up the `DataframeEnv`, performs environment checks and initializes a ppo agent from stable-baselines. Finally, it trains the agent, which will learn the policy to maximize the rewards provided using the dataframe dynamics.
 
 **3. Illustrative Example**
 
@@ -108,11 +108,11 @@ model = train_ppo_from_dataframe(df, state_columns, action_space, reward_column)
 
 **Explanation of Code Snippet 2:**
 
-*   **Sample Data:** I am using a simplified dataframe here that you can replicate. `stock_price` and `volume` are the two state variables. We have actions as 0: hold, 1: buy, 2: sell. And finally, the reward in the column profit.
-*   **Configuration:** We are choosing columns `stock_price` and `volume` to be part of the state.
-*   **Action space:** We use `spaces.Discrete(3)` to describe an action space where there are three possible actions.
-*   **`reward_column`:** Here we designate the profit column as the reward to be maximized.
-*   **Training:** Finally we call our `train_ppo_from_dataframe` to instantiate the environment and the agent, and train it using the data.
+- **Sample Data:** I am using a simplified dataframe here that you can replicate. `stock_price` and `volume` are the two state variables. We have actions as 0: hold, 1: buy, 2: sell. And finally, the reward in the column profit.
+- **Configuration:** We are choosing columns `stock_price` and `volume` to be part of the state.
+- **Action space:** We use `spaces.Discrete(3)` to describe an action space where there are three possible actions.
+- **`reward_column`:** Here we designate the profit column as the reward to be maximized.
+- **Training:** Finally we call our `train_ppo_from_dataframe` to instantiate the environment and the agent, and train it using the data.
 
 **4. Prediction After Training**
 
@@ -129,23 +129,23 @@ for i in range(5):
 
 **Explanation of Code Snippet 3:**
 
-*   **Instantiating the Environment:** We use the same dataframe that we used for training to instantiate a new environment.
-*   **Iterate through the Data:** I'm iterating through the beginning of the dataframe here, and predicting what action the policy will take given the states present in the data. The actions are printed on the console along with the states.
+- **Instantiating the Environment:** We use the same dataframe that we used for training to instantiate a new environment.
+- **Iterate through the Data:** I'm iterating through the beginning of the dataframe here, and predicting what action the policy will take given the states present in the data. The actions are printed on the console along with the states.
 
 **Important Considerations:**
 
-*   **Data Preprocessing:** Just as in supervised learning, proper data cleaning and preprocessing are essential. Normalizing or standardizing the input features, as well as handling missing values or outliers, can greatly impact the training process.
-*   **Stationarity Assumption:** This approach assumes, to some degree, that the dynamics captured by the dataframe are stationary, or that patterns are roughly similar across the dataset. Significant changes in the distribution may lead to issues.
-*   **Exploration vs Exploitation:** The approach effectively trains on data in a supervised manner, lacking exploration, which may not yield the true optimal policy if the provided data is not comprehensive. For more complex environments with high uncertainty, incorporating exploration might be necessary by adding some random exploration component to the `step` function, or creating a hybrid environment that utilizes both data and simulations. This requires additional design and experimentation, however.
-*   **Data Order:** The order of rows in the dataframe matters, since the temporal ordering represents how your environment changes with time. If your data is unordered, this can become a problem. In such cases, you might consider shuffling your rows, while being careful not to break the temporal integrity of any time-dependent relationships.
-*   **Evaluation:** Validate performance on a held-out test set or some other robust evaluation technique. Since we are training on historical data, testing and validation becomes extremely important to generalize on new examples.
+- **Data Preprocessing:** Just as in supervised learning, proper data cleaning and preprocessing are essential. Normalizing or standardizing the input features, as well as handling missing values or outliers, can greatly impact the training process.
+- **Stationarity Assumption:** This approach assumes, to some degree, that the dynamics captured by the dataframe are stationary, or that patterns are roughly similar across the dataset. Significant changes in the distribution may lead to issues.
+- **Exploration vs Exploitation:** The approach effectively trains on data in a supervised manner, lacking exploration, which may not yield the true optimal policy if the provided data is not comprehensive. For more complex environments with high uncertainty, incorporating exploration might be necessary by adding some random exploration component to the `step` function, or creating a hybrid environment that utilizes both data and simulations. This requires additional design and experimentation, however.
+- **Data Order:** The order of rows in the dataframe matters, since the temporal ordering represents how your environment changes with time. If your data is unordered, this can become a problem. In such cases, you might consider shuffling your rows, while being careful not to break the temporal integrity of any time-dependent relationships.
+- **Evaluation:** Validate performance on a held-out test set or some other robust evaluation technique. Since we are training on historical data, testing and validation becomes extremely important to generalize on new examples.
 
 **Relevant Resources:**
 
 For a deeper understanding of these concepts, I recommend the following:
 
-*   *Reinforcement Learning: An Introduction* by Richard S. Sutton and Andrew G. Barto: The canonical text on RL, it provides a comprehensive explanation of the underlying theory and concepts.
-*   The official stable-baselines3 documentation (available online): It has detailed information on the library, the available algorithms, and how to construct custom environments.
-*   "Proximal Policy Optimization Algorithms" by John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov: The original paper on ppo. It provides an in-depth explanation of the theoretical underpinnings of the algorithm.
+- _Reinforcement Learning: An Introduction_ by Richard S. Sutton and Andrew G. Barto: The canonical text on RL, it provides a comprehensive explanation of the underlying theory and concepts.
+- The official stable-baselines3 documentation (available online): It has detailed information on the library, the available algorithms, and how to construct custom environments.
+- "Proximal Policy Optimization Algorithms" by John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov: The original paper on ppo. It provides an in-depth explanation of the theoretical underpinnings of the algorithm.
 
 In my experience, training ppo from dataframes is a versatile technique when used with caution. It allows leveraging existing data, which might be hard to simulate otherwise, but should be considered as a starting point in the rl journey rather than the ultimate solution. While it might not provide the full power of a conventional reinforcement learning approach with a carefully designed simulation environment, it is a practical method when working with pre-existing historical datasets. Remember to always test thoroughly, and validate against different data distributions.

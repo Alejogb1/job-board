@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-plot-multiple-lines-with-incremental-logging-using-weights--biases"
 ---
 
-Alright, let's tackle this. I’ve certainly been down this road before – plotting multiple lines with incremental logging in Weights & Biases (wandb) can seem a bit tricky initially, but once you grasp the core concepts, it becomes quite straightforward and powerful. I recall back when we were training that large-scale transformer for a natural language task; managing those multiple loss and metric curves in a clear manner was crucial for quickly identifying bottlenecks and debugging, and frankly, wandb made it a significantly less painful process.
+, let's tackle this. I’ve certainly been down this road before – plotting multiple lines with incremental logging in Weights & Biases (wandb) can seem a bit tricky initially, but once you grasp the core concepts, it becomes quite straightforward and powerful. I recall back when we were training that large-scale transformer for a natural language task; managing those multiple loss and metric curves in a clear manner was crucial for quickly identifying bottlenecks and debugging, and frankly, wandb made it a significantly less painful process.
 
 The key lies in understanding how wandb handles data logging and structuring your logging process accordingly. Wandb primarily logs numerical data, strings, images, and other multimedia types against a timestamp associated with each logged entry. When plotting lines, particularly multiple lines representing different metrics or values changing over time (e.g., loss and accuracy for training and validation sets, or losses associated with distinct network components), you need to provide the data in a format that wandb can effectively interpret and visualize. This means ensuring that your metric data is logged in a manner that allows wandb to differentiate between the distinct lines you intend to plot.
 
@@ -29,6 +29,7 @@ for step in range(100):
 
 wandb.finish()
 ```
+
 In this example, within each loop iteration, I log a dictionary with two keys: `train_loss` and `val_loss`. Wandb recognizes each as a separate series, and upon plotting, you get two distinct lines. Crucially, I also include a key called "step" to be used as the x-axis to display the metrics changing over time. Without this, wandb would just plot based on the order of logging rather than any actual metric progression. I’ve seen some folks forget this 'step' parameter and wonder why their graphs were…well, messy. It’s a common oversight.
 
 Now, let's complicate things a bit. Suppose you have multiple metrics for both training and validation—maybe, in addition to loss, you also track accuracy. In this case, you’d expand the logged dictionary accordingly:
@@ -59,11 +60,13 @@ for step in range(100):
 
 wandb.finish()
 ```
+
 Here, you end up with four distinct lines on your wandb dashboard, labeled by those dictionary keys and plotted against the step number. This approach ensures that each metric is clearly distinguishable and tracked individually throughout the training process. The x-axis is important since wandb defaults to the ‘step’ key for its plots. If you omit the step key in your log dictionary, then wandb will just use the index of logging, which might not be what you want.
 
 It’s not always necessarily different metrics per se that you want to chart, sometimes you want to track the same metric calculated on different inputs. Imagine you have an ensemble of models and are logging a training loss calculated for each individual model in the ensemble, you can approach this by defining the unique key name for each model, like `loss_model_1`, `loss_model_2`, and so on, and then charting those in wandb.
 
 Lastly, let's consider a scenario where you need to log a multi-dimensional metric per step. For instance, let's assume you want to log the probability distribution of the classes predicted by the model, then you can log the metric as a list of numbers within each step, where each list represents the distribution of probability over each class. For example:
+
 ```python
 import wandb
 import time
@@ -83,6 +86,7 @@ for step in range(100):
 
 wandb.finish()
 ```
+
 In this example, I logged the `class_distribution` as a list. Wandb understands that it needs to log each item in the list as separate plot, creating multiple lines to show how the probability distributions changed over training.
 
 A word of caution on logging very high-dimensional distributions. If the number of dimensions is large, it will significantly increase the volume of log data, which could slow things down. It may be more appropriate to log a lower dimensional representation, like the variance, or a summary statistic instead, if detailed visualization of the multi-dimensional metric is not needed.

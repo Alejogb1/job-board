@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-to-handle-a-valueerror-not-enough-values-to-unpack-expected-4-got-1-when-working-with-a-dictionary"
 ---
 
-Alright, let's dissect this `ValueError: not enough values to unpack (expected 4, got 1)`. This specific error, while seemingly straightforward, often pops up in scenarios that require careful consideration of data structures and how we iterate through them, particularly dictionaries. I’ve bumped into this one more times than I care to count, usually in the wee hours of the morning when I'm neck-deep in data wrangling. Let me walk you through how I've tackled it, providing some code snippets along the way.
+, let's dissect this `ValueError: not enough values to unpack (expected 4, got 1)`. This specific error, while seemingly straightforward, often pops up in scenarios that require careful consideration of data structures and how we iterate through them, particularly dictionaries. I’ve bumped into this one more times than I care to count, usually in the wee hours of the morning when I'm neck-deep in data wrangling. Let me walk you through how I've tackled it, providing some code snippets along the way.
 
 The core issue revolves around Python's unpacking mechanism, commonly used when iterating through sequences or dictionaries. The error message "not enough values to unpack (expected 4, got 1)" plainly states that your code expects to receive four individual values to assign to four separate variables, but instead it only received one. This discrepancy almost invariably arises during iteration, especially with dictionaries. Let's get a bit more concrete.
 
-First, understand the default behavior of dictionary iteration. When you directly iterate over a dictionary, you're effectively iterating over its *keys*— not key-value pairs. This is crucial to recognize because if your code expects to unpack key-value pairs directly, it will fail when it encounters just a key. Imagine having a dictionary like this:
+First, understand the default behavior of dictionary iteration. When you directly iterate over a dictionary, you're effectively iterating over its _keys_— not key-value pairs. This is crucial to recognize because if your code expects to unpack key-value pairs directly, it will fail when it encounters just a key. Imagine having a dictionary like this:
 
 ```python
 data = {

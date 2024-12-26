@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "can-tensorflow-support-multiple-worker-processes-per-gpu-similar-to-pytorch"
 ---
 
-Alright, let's tackle this. I’ve spent quite a bit of time optimizing distributed training pipelines, and the nuances of multi-worker setups always seem to present interesting challenges. The short answer to whether TensorFlow supports multiple worker processes per GPU, akin to what you might see with PyTorch, is: yes, with caveats and a slightly different approach. It’s not as directly transparent as PyTorch’s `torch.distributed` might make it seem at first glance, but TensorFlow has certainly evolved to accommodate such scenarios.
+, let's tackle this. I’ve spent quite a bit of time optimizing distributed training pipelines, and the nuances of multi-worker setups always seem to present interesting challenges. The short answer to whether TensorFlow supports multiple worker processes per GPU, akin to what you might see with PyTorch, is: yes, with caveats and a slightly different approach. It’s not as directly transparent as PyTorch’s `torch.distributed` might make it seem at first glance, but TensorFlow has certainly evolved to accommodate such scenarios.
 
 In my previous work on large-scale recommendation systems, we often encountered situations where model training became the bottleneck. Our initial single-worker-per-GPU approach couldn’t keep pace with the ever-growing datasets. Transitioning to multi-worker setups within the same GPU significantly improved throughput. While the terminology and implementation differ from PyTorch's straightforward model parallelism, the underlying concept of maximizing GPU utilization via multiple processes still holds true.
 
 The crux of achieving this in TensorFlow revolves around strategies like `tf.distribute.MultiWorkerMirroredStrategy` (with per-worker devices explicitly set), combined with judicious use of TensorFlow's inherent support for distributed training. The core idea here is to leverage TensorFlow's distributed training APIs rather than relying on a PyTorch-style distributed data-parallel approach on the same GPU.
 
-Let’s delve into how this operates. TensorFlow effectively uses multiple processes to distribute computation, and in this specific case, multiple *worker* processes on the same *physical* GPU. Each worker still performs its training, but with the data and the gradient computation distributed accordingly.
+Let’s delve into how this operates. TensorFlow effectively uses multiple processes to distribute computation, and in this specific case, multiple _worker_ processes on the same _physical_ GPU. Each worker still performs its training, but with the data and the gradient computation distributed accordingly.
 
 Here’s a simple illustration of a distributed configuration setup using `MultiWorkerMirroredStrategy`:
 

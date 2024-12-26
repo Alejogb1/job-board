@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-handle-template-re-parsing-when-upgrading-liquid-versions"
 ---
 
-Okay, let's tackle this. I've been through the Liquid version upgrade wringer a few times, and it's never quite as straightforward as the release notes make it sound. You're asking about re-parsing templates after a Liquid upgrade, and there's a good reason why this can be tricky – it's not just a matter of dropping in the new library. Template parsing logic can shift subtly between versions, and what worked perfectly under version x might suddenly throw errors or, worse, render incorrectly under version y. So, a proactive approach is key.
+, let's tackle this. I've been through the Liquid version upgrade wringer a few times, and it's never quite as straightforward as the release notes make it sound. You're asking about re-parsing templates after a Liquid upgrade, and there's a good reason why this can be tricky – it's not just a matter of dropping in the new library. Template parsing logic can shift subtly between versions, and what worked perfectly under version x might suddenly throw errors or, worse, render incorrectly under version y. So, a proactive approach is key.
 
 The core problem stems from the fact that Liquid, like any templating engine, has an internal representation of the templates it processes. This representation isn't typically exposed or meant to be manipulated directly. When you upgrade the underlying Liquid library, this internal model can change. New tags might be supported, or existing syntax might be interpreted differently. The parser's behavior is fundamentally tied to the specific version. You’re not just replacing a library; you’re potentially altering the rules for how your templates are understood.
 
@@ -67,7 +67,7 @@ Here’s an example where a parsing change could happen: suppose Liquid version 
     {% endif %}
 ```
 
-This simple space change is enough to cause parsing failures. Your testing will identify these, then it's a matter of identifying *where* the issue lies. Once identified, carefully modify your templates and rerun the tests. This is often an iterative process.
+This simple space change is enough to cause parsing failures. Your testing will identify these, then it's a matter of identifying _where_ the issue lies. Once identified, carefully modify your templates and rerun the tests. This is often an iterative process.
 
 When you're using a substantial number of templates, or custom tags and filters, you might find it useful to employ a script for automated template scanning using the older and newer version of the parser. This way you can identify where potential inconsistencies or errors may be, making the migration easier. You could build this functionality yourself in any language that Liquid is available in, such as Ruby, Python, or JavaScript.
 
@@ -95,8 +95,8 @@ This script is a concept illustration. Real implementation would iterate over an
 
 **Key Resources:**
 
-*   **Official Liquid Documentation:** The documentation for each specific version of Liquid is invaluable. Pay special attention to the release notes, which often detail changes that could break existing code.
-*   **"Compilers: Principles, Techniques, & Tools" by Alfred V. Aho, Monica S. Lam, Ravi Sethi, and Jeffrey D. Ullman.** While this isn't specific to Liquid, this classic text provides a fundamental understanding of how compilers and parsers work, which is essential knowledge for debugging parser issues.
-*   **"Crafting Interpreters" by Robert Nystrom:** This is another excellent resource for understanding the inner workings of interpreters, which will help understand what might cause an issue in your upgrade.
+- **Official Liquid Documentation:** The documentation for each specific version of Liquid is invaluable. Pay special attention to the release notes, which often detail changes that could break existing code.
+- **"Compilers: Principles, Techniques, & Tools" by Alfred V. Aho, Monica S. Lam, Ravi Sethi, and Jeffrey D. Ullman.** While this isn't specific to Liquid, this classic text provides a fundamental understanding of how compilers and parsers work, which is essential knowledge for debugging parser issues.
+- **"Crafting Interpreters" by Robert Nystrom:** This is another excellent resource for understanding the inner workings of interpreters, which will help understand what might cause an issue in your upgrade.
 
 Upgrading Liquid versions can be complex because of the underlying parser changes. It's not a purely code-level task; it requires a deep understanding of your templates and how they are used. A disciplined, test-driven approach combined with a staged deployment strategy is the key to mitigating issues and ensuring a smooth transition to a new version. This will allow you to take your existing stable applications to newer versions without sacrificing reliability.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-rails-api-methods-dynamically-check-permissions"
 ---
 
-Alright, let's unpack this. Permissions in Rails APIs—a cornerstone for any robust application. I’ve spent a good chunk of my career ensuring APIs are not just functional, but also secure, and dealing with dynamic permissions has been a recurring theme. Rather than a static, “user is admin” approach, we often need something finer-grained, adaptable to various user roles and resource access levels. This isn't a trivial task, but certainly manageable with the right strategies.
+, let's unpack this. Permissions in Rails APIs—a cornerstone for any robust application. I’ve spent a good chunk of my career ensuring APIs are not just functional, but also secure, and dealing with dynamic permissions has been a recurring theme. Rather than a static, “user is admin” approach, we often need something finer-grained, adaptable to various user roles and resource access levels. This isn't a trivial task, but certainly manageable with the right strategies.
 
 Dynamic permission checking in a Rails API essentially means validating, often at the controller level, whether the current user is authorized to perform a specific action on a particular resource, where the permissions themselves might be determined by a multitude of factors. These factors could include the user’s role, the current state of the resource, or even external service responses. Hardcoding these rules is a recipe for disaster—it leads to brittle code, difficult maintenance, and a serious security risk.
 
@@ -105,7 +105,7 @@ class UserSerializer < ActiveModel::Serializer
     end
     hash
   end
-  
+
   def current_user
       scope
   end

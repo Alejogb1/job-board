@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-enforce-that-two-pyomo-variables-are-not-both-zero"
 ---
 
-Okay, let's tackle this. I remember back in '14, working on a complex supply chain optimization model, we ran into a similar issue with inventory levels and production quantities. The model kept spitting out trivial solutions where both were zero, which, while technically feasible, was useless. We had to enforce a constraint that prevented that. The key is understanding the behavior of your variables and strategically using constraints. In pyomo, you’re essentially building mathematical formulations of your problem, and sometimes, that requires a bit of creative constraint application.
+, let's tackle this. I remember back in '14, working on a complex supply chain optimization model, we ran into a similar issue with inventory levels and production quantities. The model kept spitting out trivial solutions where both were zero, which, while technically feasible, was useless. We had to enforce a constraint that prevented that. The key is understanding the behavior of your variables and strategically using constraints. In pyomo, you’re essentially building mathematical formulations of your problem, and sometimes, that requires a bit of creative constraint application.
 
-The core problem is that pyomo (and most solvers) tend to gravitate towards the simplest solution first, which often includes setting variables to zero when there isn't a direct incentive not to. When you need to *prevent* two variables from *simultaneously* being zero, you can't simply use a standard inequality or equality constraint. These work well with numerical bounds but not explicitly for logic. Instead, we'll have to introduce some clever manipulations to the model's structure.
+The core problem is that pyomo (and most solvers) tend to gravitate towards the simplest solution first, which often includes setting variables to zero when there isn't a direct incentive not to. When you need to _prevent_ two variables from _simultaneously_ being zero, you can't simply use a standard inequality or equality constraint. These work well with numerical bounds but not explicitly for logic. Instead, we'll have to introduce some clever manipulations to the model's structure.
 
 The fundamental strategy involves a logical 'or' condition: either variable 'x' must be greater than some very small positive number, or variable 'y' must also be greater than that same very small positive number. We achieve this through binary (0-1) variables and a well-established technique involving “big M” parameters. This is not unique to pyomo, it’s a common technique in mathematical programming.
 
@@ -23,9 +23,10 @@ The constraints you add to the model are:
 3.  `b_x + b_y >= 1`
 
 Here's the breakdown:
-*   Constraint 1: If `b_x` is 0, `x` is forced to be greater or equal to zero. If `b_x` is 1, `x` is forced to be greater than or equal to ε.
-*   Constraint 2: Similar logic applies to `y` and `b_y`.
-*   Constraint 3: This is the crucial constraint for the logical 'or'. If both `b_x` and `b_y` are 0, the constraint is violated, forcing at least one of them to be 1. Therefore, either `x` or `y` (or both) must be greater than epsilon.
+
+- Constraint 1: If `b_x` is 0, `x` is forced to be greater or equal to zero. If `b_x` is 1, `x` is forced to be greater than or equal to ε.
+- Constraint 2: Similar logic applies to `y` and `b_y`.
+- Constraint 3: This is the crucial constraint for the logical 'or'. If both `b_x` and `b_y` are 0, the constraint is violated, forcing at least one of them to be 1. Therefore, either `x` or `y` (or both) must be greater than epsilon.
 
 Let's translate this into pyomo:
 
@@ -70,7 +71,7 @@ print(f"b_x: {model.b_x.value}")
 print(f"b_y: {model.b_y.value}")
 ```
 
-This example demonstrates a simple model where the goal is to minimize x+y while ensuring at least one of the variables is not zero.  As you can see from the results, at least one of x or y will be greater than or equal to epsilon.
+This example demonstrates a simple model where the goal is to minimize x+y while ensuring at least one of the variables is not zero. As you can see from the results, at least one of x or y will be greater than or equal to epsilon.
 
 **Code Example 2: Incorporating into a Larger Model**
 
@@ -129,7 +130,7 @@ print(f"Is x active: {model.activate_x.value}")
 print(f"Is y active: {model.activate_y.value}")
 ```
 
-This example shows how you would use the 'or' constraint in the context of a decision problem.  It ensures that at least one of the production activities is non-zero.
+This example shows how you would use the 'or' constraint in the context of a decision problem. It ensures that at least one of the production activities is non-zero.
 
 **Code Example 3: Handling Zero Lower Bounds for Variables**
 
@@ -185,18 +186,18 @@ Notice how we modified the upper bound constraints to include the binary variabl
 
 **Important Considerations**
 
-*   **Big M value:** Carefully choose 'M'. If 'M' is too small, the constraint is ineffective. If it’s too large, it can cause numerical instability and make the solver struggle. Start with a reasonable estimate based on your variables' likely ranges.
-*   **Solver Choice:** Certain solvers, especially those dealing with mixed-integer problems, are more efficient than others.  Experiment with different options within pyomo like 'cbc' or commercial solvers like 'cplex' or 'gurobi'. For basic cases glpk can work but will likely be slow on large-scale models.
-*   **Epsilon:**  Make sure 'epsilon' is small enough to be effective without causing issues with numerical precision.
-*   **Reformulations:** Sometimes, you might need to reformulate your problem entirely if you continue to face issues. This can include introducing more variables or using different constraints.
+- **Big M value:** Carefully choose 'M'. If 'M' is too small, the constraint is ineffective. If it’s too large, it can cause numerical instability and make the solver struggle. Start with a reasonable estimate based on your variables' likely ranges.
+- **Solver Choice:** Certain solvers, especially those dealing with mixed-integer problems, are more efficient than others. Experiment with different options within pyomo like 'cbc' or commercial solvers like 'cplex' or 'gurobi'. For basic cases glpk can work but will likely be slow on large-scale models.
+- **Epsilon:** Make sure 'epsilon' is small enough to be effective without causing issues with numerical precision.
+- **Reformulations:** Sometimes, you might need to reformulate your problem entirely if you continue to face issues. This can include introducing more variables or using different constraints.
 
 **Recommended Resources**
 
 For a deeper understanding of mixed-integer programming and modeling techniques, I’d suggest these resources:
 
-*   **"Integer Programming" by Laurence A. Wolsey:** A comprehensive textbook on the theory and practice of integer programming.
-*   **"Modeling and Solving Linear Programming" by Robert Fourer:** An excellent resource if you are interested in linear programming fundamentals.
-*   **"Optimization in Operations Research" by Ronald L. Rardin:** This offers a broader perspective on optimization and related methodologies.
-*   **Pyomo Documentation:** The official documentation offers useful guidance on specific functionalities.
+- **"Integer Programming" by Laurence A. Wolsey:** A comprehensive textbook on the theory and practice of integer programming.
+- **"Modeling and Solving Linear Programming" by Robert Fourer:** An excellent resource if you are interested in linear programming fundamentals.
+- **"Optimization in Operations Research" by Ronald L. Rardin:** This offers a broader perspective on optimization and related methodologies.
+- **Pyomo Documentation:** The official documentation offers useful guidance on specific functionalities.
 
 In summary, enforcing that two variables cannot simultaneously be zero in pyomo requires the clever use of binary variables and 'big M' techniques. It's a common challenge when modelling logic inside the mathematical formulation, and once you grasp the basic approach you will likely find it useful in many different scenarios. Remember that effective optimization is not just about writing code, it's also about understanding the underlying mathematics and knowing the capabilities and limitations of your chosen solver.

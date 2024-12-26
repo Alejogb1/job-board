@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-wagtail-image-upload-errors-in-richtext-fields"
 ---
 
-Okay, let's talk about Wagtail image upload headaches within rich text fields. I’ve seen this issue rear its ugly head more times than I’d care to count, and it usually boils down to a few key areas. It's rarely a single, straightforward problem, more often a confluence of configurations, permissions, and sometimes just plain old code quirks.
+, let's talk about Wagtail image upload headaches within rich text fields. I’ve seen this issue rear its ugly head more times than I’d care to count, and it usually boils down to a few key areas. It's rarely a single, straightforward problem, more often a confluence of configurations, permissions, and sometimes just plain old code quirks.
 
 First, consider the fundamental mechanics of how Wagtail handles images in rich text. When you insert an image, Wagtail doesn’t directly store the base64 encoded image data within the rich text field itself. Instead, it uploads the image to your configured storage backend, saves metadata about it (like the filename and often size and alt text) in a database record, and then inserts a reference to this image using html with wagtail’s specific tag notation ` <embed alt="Image alt text" embedtype="image" id="12345" />` where `12345` is an image id. This separation is crucial for performance and scalability; imagine the bloat if every image were embedded as base64 within the text itself.
 
@@ -100,6 +100,7 @@ CSP_SCRIPT_SRC = ("'self'",)
 CSP_STYLE_SRC = ("'self'",)
 CSP_FONT_SRC = ("'self'",)
 ```
+
 The settings above will allow images to be loaded from your current domain `self`, from base64 strings `data:` and from urls that match your bucket or blob storage providers.
 
 To really grasp the intricacies of these error scenarios, I strongly recommend delving into several resources. For a deep understanding of Django's file handling, the official Django documentation on "File uploads" is invaluable. For understanding CSP, I find the resources on Mozilla's Developer Network (MDN) to be exceptionally comprehensive. Finally, for understanding the inner workings of wagtail image handling, a deep dive into the Wagtail source code (specifically `wagtail/images`) and its rich text processing components is essential. Additionally, there are many resources available on how to configure your specific storage provider, for example the Boto3 documentation for AWS S3 or the Azure SDK documentation for Azure blob storage. Understanding these specific issues and how they relate to your particular set up is key to successfully troubleshooting upload errors.

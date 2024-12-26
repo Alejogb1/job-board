@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "discretionary-data-from-magnetic-strip-credit-card-how-to-parse"
 ---
 
-Okay so magnetic stripe data parsing yeah I've been there done that probably more times than I care to admit Let's just say early days of embedded systems and point of sale terminals were a wild west of encoding standards and lack of proper documentation
+magnetic stripe data parsing yeah I've been there done that probably more times than I care to admit Let's just say early days of embedded systems and point of sale terminals were a wild west of encoding standards and lack of proper documentation
 
 First things first you gotta understand what you're actually dealing with A magnetic stripe card usually has three tracks Track 1 Track 2 and Track 3 but most of the time you're only interested in Track 1 and Track 2 Track 3 is less common and usually for internal use of financial institutions
 
@@ -32,7 +32,7 @@ The question mark means that discretionary data might not be there which is very
 
 Now the most confusing part is discretionary data It’s not standardized so it really depends on the issuer. You might find things like card sequence number CVV or CVC data extra security information or even just random padding to fill space. You need to figure out the format of that part based on how the data was encoded in the first place. And yes sometimes you need to reverse engineer this from the data that you have which is what I have done in my past. It’s pretty fun but pretty tiring too
 
-Okay let me show some python code this is not a complete solution just an outline
+let me show some python code this is not a complete solution just an outline
 
 ```python
 def parse_track1(track1_data):
@@ -97,9 +97,9 @@ So yeah that’s pretty much it for magnetic stripe card data parsing. It’s no
 
 Some resources you should check out if you really want to get deep into this:
 
-*   **ISO/IEC 7813**: This is the bible for magnetic stripe cards It defines the physical characteristics and data encoding This is a must read. You can find this document at a standards organization or library. You might have to pay for access but it’s worth it if you work with it often
-*   **Various EMV Specifications**: Although these specs focus on chip cards they also touch on data elements and processing related to track data. EMVCo website has all that info
-*   **"The Smart Card Handbook" by Wolfgang Rankl and Wolfgang Effing**: This is a great book for understanding not just magnetic stripe cards but also chip cards and related technologies It has a good section on magnetic stripe technology if you can find it at a library
-*   **Online forums**: There are a few forums dedicated to smart card and payment technologies where you might find someone who has tackled a specific issuer’s magnetic stripe implementation if you are really lucky
+- **ISO/IEC 7813**: This is the bible for magnetic stripe cards It defines the physical characteristics and data encoding This is a must read. You can find this document at a standards organization or library. You might have to pay for access but it’s worth it if you work with it often
+- **Various EMV Specifications**: Although these specs focus on chip cards they also touch on data elements and processing related to track data. EMVCo website has all that info
+- **"The Smart Card Handbook" by Wolfgang Rankl and Wolfgang Effing**: This is a great book for understanding not just magnetic stripe cards but also chip cards and related technologies It has a good section on magnetic stripe technology if you can find it at a library
+- **Online forums**: There are a few forums dedicated to smart card and payment technologies where you might find someone who has tackled a specific issuer’s magnetic stripe implementation if you are really lucky
 
 The general rule is that discretionary data is always a "figure it out yourself" sort of problem. If you have more questions or details about the discretionary data I might be able to provide more guidance. Good luck and happy parsing!

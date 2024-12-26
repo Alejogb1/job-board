@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-azure-vm-images-be-used-to-deploy-container-instances"
 ---
 
-Okay, let's tackle this. I remember a particularly hairy project a few years back where we were tasked with a rapid infrastructure spin-up, and container instances, specifically Azure Container Instances (ACI), were our tool of choice. However, the initial plan of building each container image from scratch was, frankly, unsustainable given the timeline. We needed a faster, more reproducible way. That's where leveraging pre-baked virtual machine (VM) images to streamline container deployment became absolutely essential. It’s a process that’s not immediately obvious, so let me break down how it works and why it can be incredibly useful.
+, let's tackle this. I remember a particularly hairy project a few years back where we were tasked with a rapid infrastructure spin-up, and container instances, specifically Azure Container Instances (ACI), were our tool of choice. However, the initial plan of building each container image from scratch was, frankly, unsustainable given the timeline. We needed a faster, more reproducible way. That's where leveraging pre-baked virtual machine (VM) images to streamline container deployment became absolutely essential. It’s a process that’s not immediately obvious, so let me break down how it works and why it can be incredibly useful.
 
-The direct deployment of a VM image *as* a container instance is not how ACI functions. ACI expects container images, typically Docker images, that are built to run within its environment. A VM image, on the other hand, is a snapshot of a full operating system with installed software, not the lightweight, single-process artifact of a container. So, the process isn’t about using a VM image *directly* as a container, but rather using it as a **source** to build container images more efficiently. Think of it this way: you are using the fully configured OS and environment within the VM image as a base for your container rather than building everything up from an empty container base.
+The direct deployment of a VM image _as_ a container instance is not how ACI functions. ACI expects container images, typically Docker images, that are built to run within its environment. A VM image, on the other hand, is a snapshot of a full operating system with installed software, not the lightweight, single-process artifact of a container. So, the process isn’t about using a VM image _directly_ as a container, but rather using it as a **source** to build container images more efficiently. Think of it this way: you are using the fully configured OS and environment within the VM image as a base for your container rather than building everything up from an empty container base.
 
 The core idea is to automate the process of creating container images that contain the necessary dependencies and configurations, starting from a VM image, thus speeding up your delivery process. You typically achieve this through automated build pipelines that incorporate tools like Packer, Docker, and Azure DevOps or GitHub Actions. This approach dramatically reduces the time spent configuring container environments each time you need to deploy a container instance.
 
@@ -18,41 +18,37 @@ First, we'll use Packer to take a snapshot of our existing Azure VM. Packer allo
 
 ```json
 {
-    "builders": [
-        {
-            "type": "azure-arm",
-            "client_id": "<your-client-id>",
-            "client_secret": "<your-client-secret>",
-            "tenant_id": "<your-tenant-id>",
-            "subscription_id": "<your-subscription-id>",
-            "os_type": "Linux",
-            "image_publisher": "<publisher-of-your-image>",
-            "image_offer": "<offer-of-your-image>",
-            "image_sku": "<sku-of-your-image>",
-           "location": "westus2",
-            "build_resource_group_name": "packer-build-rg",
-            "managed_image_resource_group_name": "packer-output-rg",
-            "managed_image_name": "my-source-vm-image",
-            "vm_size": "Standard_B2s"
-        }
-    ],
-    "provisioners": [
-      {
-       "type": "shell",
-          "inline": [
-              "sudo apt-get update -y",
-              "sudo apt-get install -y docker.io"
-            ]
-      }
-    ],
-        "post-processors": [
-          {
-            "type": "docker-import",
-              "target": "my-custom-image-repo/my-custom-image",
-                "tag": "latest"
-
-          }
-    ]
+  "builders": [
+    {
+      "type": "azure-arm",
+      "client_id": "<your-client-id>",
+      "client_secret": "<your-client-secret>",
+      "tenant_id": "<your-tenant-id>",
+      "subscription_id": "<your-subscription-id>",
+      "os_type": "Linux",
+      "image_publisher": "<publisher-of-your-image>",
+      "image_offer": "<offer-of-your-image>",
+      "image_sku": "<sku-of-your-image>",
+      "location": "westus2",
+      "build_resource_group_name": "packer-build-rg",
+      "managed_image_resource_group_name": "packer-output-rg",
+      "managed_image_name": "my-source-vm-image",
+      "vm_size": "Standard_B2s"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": ["sudo apt-get update -y", "sudo apt-get install -y docker.io"]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "docker-import",
+      "target": "my-custom-image-repo/my-custom-image",
+      "tag": "latest"
+    }
+  ]
 }
 ```
 
@@ -78,22 +74,23 @@ Then, using Azure Pipelines, our YAML configuration can push this to the contain
 
 ```yaml
 trigger:
-- main
+  - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: "ubuntu-latest"
 
 steps:
-- task: Docker@2
-  displayName: 'Build and push Docker image'
-  inputs:
-    containerRegistry: 'your-azure-container-registry'
-    repository: 'my-final-application-image'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
-    tags: |
-      $(Build.BuildId)
+  - task: Docker@2
+    displayName: "Build and push Docker image"
+    inputs:
+      containerRegistry: "your-azure-container-registry"
+      repository: "my-final-application-image"
+      command: "buildAndPush"
+      Dockerfile: "**/Dockerfile"
+      tags: |
+        $(Build.BuildId)
 ```
+
 This pipeline configuration triggers when changes are pushed to the `main` branch. The key task here is the `Docker@2` task, which handles building and pushing our Docker image to our container registry. Now, you have an up-to-date container image ready to be used in ACI.
 
 **Example 3: Deploying the Container Image to Azure Container Instances**
@@ -116,9 +113,9 @@ In summary, we're not directly using the VM image as a container. Instead, we ex
 
 For further exploration, I'd suggest taking a look at these resources:
 
-* **"Docker Deep Dive" by Nigel Poulton:** This book provides a comprehensive understanding of Docker concepts, crucial for building robust container images.
-* **"Effective DevOps" by Jennifer Davis and Ryn Daniels:** A valuable resource for adopting continuous integration/continuous delivery practices which will include use of tools like Azure pipelines.
-* **Packer documentation:** Directly diving into the Hashicorp documentation will help to better understand all the configurations needed for the `packer.json`.
-* **Azure Container Registry Documentation**: Familiarity with ACR and how it works is necessary to implement end to end workflows.
+- **"Docker Deep Dive" by Nigel Poulton:** This book provides a comprehensive understanding of Docker concepts, crucial for building robust container images.
+- **"Effective DevOps" by Jennifer Davis and Ryn Daniels:** A valuable resource for adopting continuous integration/continuous delivery practices which will include use of tools like Azure pipelines.
+- **Packer documentation:** Directly diving into the Hashicorp documentation will help to better understand all the configurations needed for the `packer.json`.
+- **Azure Container Registry Documentation**: Familiarity with ACR and how it works is necessary to implement end to end workflows.
 
 Using these resources and understanding the workflow I described, you can efficiently deploy containerized applications based on your existing VM images. It’s a powerful technique I’ve found invaluable in a multitude of rapid deployment scenarios.

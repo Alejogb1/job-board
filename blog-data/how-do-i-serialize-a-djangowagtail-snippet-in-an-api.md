@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-serialize-a-djangowagtail-snippet-in-an-api"
 ---
 
-Alright, let’s tackle serializing a Django/Wagtail snippet for an API. It’s a common hurdle, and I’ve definitely spent my share of time debugging those pesky serialization issues. The core challenge lies in effectively transforming Django’s model instances, in this case, Wagtail snippets, into a structured data format, like json, that an API can readily consume and an application (often a frontend) can understand. Standard django rest framework serializers usually handle this, but snippets often have some unique quirks that need to be considered for this process.
+, let’s tackle serializing a Django/Wagtail snippet for an API. It’s a common hurdle, and I’ve definitely spent my share of time debugging those pesky serialization issues. The core challenge lies in effectively transforming Django’s model instances, in this case, Wagtail snippets, into a structured data format, like json, that an API can readily consume and an application (often a frontend) can understand. Standard django rest framework serializers usually handle this, but snippets often have some unique quirks that need to be considered for this process.
 
 From my experience, particularly on a project a few years back where we were building a heavily componentized page builder system using Wagtail, we had to meticulously define how our snippets would be exposed through our api. We weren't just sending simple text or number fields, we had to take into account relations, images (wagtail’s built-in image handling was crucial), and nested structures. It's not about just converting raw data; it's about capturing the complete meaning of the snippet.
 

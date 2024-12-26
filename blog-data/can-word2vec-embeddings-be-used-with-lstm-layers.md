@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-word2vec-embeddings-be-used-with-lstm-layers"
 ---
 
-Alright, let’s tackle this one. I’ve seen my fair share of neural network architectures over the years, and the combination of word2vec embeddings with lstm layers is a particularly useful and, frankly, common one. It's something I worked with quite extensively on a large-scale natural language processing project a few years back. We were dealing with complex text sequences, and the traditional bag-of-words approach simply wasn’t cutting it. The key, as is often the case, was representing the words in a way that captured their semantic relationships.
+, let’s tackle this one. I’ve seen my fair share of neural network architectures over the years, and the combination of word2vec embeddings with lstm layers is a particularly useful and, frankly, common one. It's something I worked with quite extensively on a large-scale natural language processing project a few years back. We were dealing with complex text sequences, and the traditional bag-of-words approach simply wasn’t cutting it. The key, as is often the case, was representing the words in a way that captured their semantic relationships.
 
 So, to answer the question directly, yes, absolutely word2vec embeddings can be used, and often very effectively, with lstm layers. In fact, it's a pretty standard practice when dealing with sequential text data. Let's break down why and how this pairing works so well.
 
@@ -74,6 +74,7 @@ model.add(TimeDistributed(Dense(vocab_size, activation='softmax')))
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 model.fit(X_train, y_train, epochs=10, batch_size=32)
 ```
+
 In this second example, we’re using word2vec with an lstm for a basic sequence-to-sequence scenario. We have added a repeat vector to duplicate the representation output by the lstm, so we can feed into a second lstm and output a sequence of predicted words. TimeDistributed is used to allow the dense layer to act on each time step of the sequence.
 
 Finally, here's a snippet showing how to combine it with bidirectional lstms to capture context from both directions in the sequence:

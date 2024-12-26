@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-resolve-the-empty-received-an-invalid-combination-of-arguments-error-in-mushroomrl-involving-tuples"
 ---
 
-Alright, let's tackle this. I’ve definitely been down that rabbit hole with MushroomRL’s quirky handling of tuples within its `empty()` function, and it’s a frustration I’ve seen pop up more than once. The core issue, as the error message hints at, lies in how `empty()` expects shape arguments when creating tensors, particularly when those tensors are intended to represent batches of data. Let's break down why this happens and how to fix it.
+, let's tackle this. I’ve definitely been down that rabbit hole with MushroomRL’s quirky handling of tuples within its `empty()` function, and it’s a frustration I’ve seen pop up more than once. The core issue, as the error message hints at, lies in how `empty()` expects shape arguments when creating tensors, particularly when those tensors are intended to represent batches of data. Let's break down why this happens and how to fix it.
 
 MushroomRL, at its heart, uses PyTorch tensors as its primary data structure. The `torch.empty()` function, which MushroomRL leverages through its own `empty()` wrapper, expects a sequence of integers defining the dimensions of the tensor. When you pass a tuple directly, and it’s misinterpreted, you get that infamous "invalid combination of arguments" error. Usually, this occurs when the tuple you’re passing isn’t explicitly meant to define the tensor’s shape, but rather a more complex structure like, for example, a tuple representing both the batch size and a tuple of per-element shapes (like a tuple of observation or action shapes). This confusion is most frequent when dealing with batched inputs or when sampling from multi-dimensional environments.
 
@@ -30,7 +30,7 @@ except Exception as e:
     print(f"Error: {e}")
 ```
 
-This attempt tries to pass a tuple *representing the shape* of each element inside the batch *as a single argument* for the shape of the full tensor, in addition to `batch_size`. This results in `empty()` thinking that `obs_space_shape` should be treated as an extra size parameter rather than a multi-dimensional shape specification.
+This attempt tries to pass a tuple _representing the shape_ of each element inside the batch _as a single argument_ for the shape of the full tensor, in addition to `batch_size`. This results in `empty()` thinking that `obs_space_shape` should be treated as an extra size parameter rather than a multi-dimensional shape specification.
 
 **Example 1: The Correct Implementation**
 
@@ -71,6 +71,7 @@ except Exception as e:
 action_batch = empty(batch_size, *action_space_shape)
 print("Action batch shape:", action_batch.shape)
 ```
+
 Similar to the previous example, the initial naive attempt fails because `empty` receives a tuple representing the shape as a single argument, rather than individual size parameters. The correct approach, again, is to unpack `action_space_shape` into separate arguments. The `action_batch` tensor will have shape `(20, 2, 1)`, corresponding to the batch size and the dimensions of the action space.
 
 **Example 3: More Complex Nested Shapes**
@@ -100,6 +101,7 @@ print(f"Observation 2 batch shape: {batch_observation_2.shape}")
 
 
 ```
+
 Here, due to the structure, the `*` splat operator is insufficient for the whole shape. Each element of the tuple that makes up the `obs_space_shape` needs to be separately unpacked when we want to allocate a tensor for them respectively. The shapes would then be `(32, 64, 64, 3)` and `(32, 5)`.
 
 **Key Takeaways and Further Reading**

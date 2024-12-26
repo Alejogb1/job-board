@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "why-heroku-for-grails-5"
 ---
 
-alright, let's talk about grails 5 and heroku, i've been around the block a few times with these two. i've seen my fair share of deployments go sideways, and thankfully, a good number that went smoothly, so i'm going to try to share some of what i've picked up.
+, let's talk about grails 5 and heroku, i've been around the block a few times with these two. i've seen my fair share of deployments go sideways, and thankfully, a good number that went smoothly, so i'm going to try to share some of what i've picked up.
 
-first off, why heroku *at all*? it really boils down to simplicity, in my experience. i've spent weeks tweaking servers, fiddling with load balancers, and battling with configuration files – time i could have spent writing code. heroku, for all its quirks, does a great job abstracting a lot of that away. it's a platform as a service (paas) that lets you, the developer, focus on the application. you push your code, it runs, and generally it does it pretty well. sure, it isn't infinitely customizable, and that can be an issue at scale, but for most projects, especially early ones, it's often a perfect trade off.
+first off, why heroku _at all_? it really boils down to simplicity, in my experience. i've spent weeks tweaking servers, fiddling with load balancers, and battling with configuration files – time i could have spent writing code. heroku, for all its quirks, does a great job abstracting a lot of that away. it's a platform as a service (paas) that lets you, the developer, focus on the application. you push your code, it runs, and generally it does it pretty well. sure, it isn't infinitely customizable, and that can be an issue at scale, but for most projects, especially early ones, it's often a perfect trade off.
 
 now, bringing grails 5 into the picture makes the scenario pretty interesting. grails, if you aren't super familiar, is this groovy-based framework that's all about rapid development. it's got magic baked into it, kind of like rails, but for the jvm. that means you get a lot done with relatively little boilerplate code, which is great, but it also means you have a big complex thing happening under the hood. and that big thing needs a place to run. heroku provides this, and more importantly, provides it consistently.
 

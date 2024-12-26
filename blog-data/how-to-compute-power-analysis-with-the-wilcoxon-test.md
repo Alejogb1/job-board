@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-compute-power-analysis-with-the-wilcoxon-test"
 ---
 
-Alright, let's tackle this. Computing power analysis with the Wilcoxon test—a non-parametric alternative to the t-test—can indeed feel a bit less straightforward, and I’ve certainly seen its challenges firsthand. It's not as simple as plugging values into a pre-existing formula like you might for a t-test. Over the years, I've had to implement this several times, sometimes in rather complex scenarios, and I've developed a methodology that’s usually pretty reliable. I remember one particularly tricky project involving clinical trial data where parametric assumptions were clearly violated, leaving us with no choice but to use a Wilcoxon-based approach.
+, let's tackle this. Computing power analysis with the Wilcoxon test—a non-parametric alternative to the t-test—can indeed feel a bit less straightforward, and I’ve certainly seen its challenges firsthand. It's not as simple as plugging values into a pre-existing formula like you might for a t-test. Over the years, I've had to implement this several times, sometimes in rather complex scenarios, and I've developed a methodology that’s usually pretty reliable. I remember one particularly tricky project involving clinical trial data where parametric assumptions were clearly violated, leaving us with no choice but to use a Wilcoxon-based approach.
 
 The core issue is that power analysis fundamentally involves knowing or estimating the distribution of your test statistic under both the null hypothesis (usually that there’s no effect) and a specific alternative hypothesis (that there is some effect of a certain magnitude). With parametric tests like the t-test, we often can assume a normal distribution, which makes life considerably easier. With Wilcoxon, we're working with ranks, not the original data themselves, and the distribution of these ranks is more complex and depends on the sample size and specific alternative distribution shape.
 
@@ -102,7 +102,7 @@ power_estimate = wilcoxon_power_paired(sample_size, shift)
 print(f"Estimated power: {power_estimate}")
 ```
 
-Here, we use the `wilcoxon` function, which implicitly performs the signed-rank version because we’re giving it the *differences* as input. It's important to realize that in the paired case, the shift is introduced as a shift to each observation from the same set which affects the distribution of differences. This mirrors the reality that paired observations are correlated. Note that we used two independent sources of randomness, with one having a larger variance than the other so that the differences do not follow a degenerate distribution.
+Here, we use the `wilcoxon` function, which implicitly performs the signed-rank version because we’re giving it the _differences_ as input. It's important to realize that in the paired case, the shift is introduced as a shift to each observation from the same set which affects the distribution of differences. This mirrors the reality that paired observations are correlated. Note that we used two independent sources of randomness, with one having a larger variance than the other so that the differences do not follow a degenerate distribution.
 
 Finally, it's quite useful to visualize the relationship between these parameters. We can visualize the estimated power with different sample sizes for the same effect size:
 

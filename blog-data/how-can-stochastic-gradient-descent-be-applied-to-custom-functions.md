@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-stochastic-gradient-descent-be-applied-to-custom-functions"
 ---
 
-Okay, let's tackle this. I remember a particularly challenging project a few years back, developing a custom anomaly detection system for sensor data. We had this weird, non-standard loss function that wasn't playing nice with existing libraries, and that's where the deep dive into applying stochastic gradient descent (SGD) to custom functions really began. It's certainly more involved than just throwing data at a pre-built model, but absolutely achievable with a clear understanding of the underlying mechanisms.
+, let's tackle this. I remember a particularly challenging project a few years back, developing a custom anomaly detection system for sensor data. We had this weird, non-standard loss function that wasn't playing nice with existing libraries, and that's where the deep dive into applying stochastic gradient descent (SGD) to custom functions really began. It's certainly more involved than just throwing data at a pre-built model, but absolutely achievable with a clear understanding of the underlying mechanisms.
 
 Essentially, the power of SGD lies in its ability to iteratively adjust model parameters (weights, biases, etc.) to minimize a given cost or loss function. The function itself, in most deep learning scenarios, quantifies the error of our model’s predictions compared to the actual ground truth. When you move outside the realm of standard loss functions available in frameworks like tensorflow or pytorch, you need to be very explicit with how that process unfolds.
 
-The core idea is this: we calculate the gradient (a fancy term for the direction of steepest increase) of our custom loss function with respect to the model’s parameters. We then take a step in the *opposite* direction of this gradient – because we want to minimize the loss, not maximize it. That’s the "descent" part. The "stochastic" part comes from the fact that we calculate this gradient not over the *entire* dataset at once, but using small, randomly chosen subsets of the data (batches). This is much more efficient computationally, especially with large datasets.
+The core idea is this: we calculate the gradient (a fancy term for the direction of steepest increase) of our custom loss function with respect to the model’s parameters. We then take a step in the _opposite_ direction of this gradient – because we want to minimize the loss, not maximize it. That’s the "descent" part. The "stochastic" part comes from the fact that we calculate this gradient not over the _entire_ dataset at once, but using small, randomly chosen subsets of the data (batches). This is much more efficient computationally, especially with large datasets.
 
-Now, how do you apply this to a *custom* function? There are two key areas that need careful attention: defining the custom loss function itself and then ensuring that you can compute its gradient efficiently, either through symbolic or numeric differentiation. The former is dependent entirely on your particular problem, but the latter is what I want to focus on for implementation and explanation.
+Now, how do you apply this to a _custom_ function? There are two key areas that need careful attention: defining the custom loss function itself and then ensuring that you can compute its gradient efficiently, either through symbolic or numeric differentiation. The former is dependent entirely on your particular problem, but the latter is what I want to focus on for implementation and explanation.
 
 **Example 1: A simple custom MSE-like function**
 
@@ -158,15 +158,15 @@ In this snippet we see how we no longer need to explicitly calculate the gradien
 
 **Key Considerations and Recommendations:**
 
-*   **Gradient Checking:** Always, always double-check your gradient implementation, especially when doing it manually. Numerical differentiation using small perturbations can be a good check. Compare it against analytic gradients you derived.
-*   **Numerical Stability:** Be mindful of numerical issues with your loss functions. Avoid operations that can lead to infinities or NaN values, especially when using exponentiations. For example, it might be worthwhile to use log loss instead of directly calculating error probabilities.
-*   **Batching:** For large datasets, always train using mini-batches. This both provides noise that helps the optimization but also allows for a massive speed up due to parallelization.
-*   **Regularization:** If you see your custom model overfitting, be prepared to add regularizers. These can be incorporated directly into the custom loss function.
-*   **Learning Rates:** Tuning your learning rate will likely be necessary. You will probably see better results using adaptive optimizers (e.g. Adam, Adagrad) provided by your framework.
-*   **Further Reading**: I recommend the following books/papers if you want to deepen your understanding on the topic:
-    *   "Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville
-    *   "Numerical Optimization" by Jorge Nocedal and Stephen J. Wright
-    *   "Understanding the difficulty of training deep feedforward neural networks" by Xavier Glorot and Yoshua Bengio (ICML 2010)
-    *   Any good online course/MOOC in Neural Networks that teaches you the mathematics of backpropagation and differentiation.
+- **Gradient Checking:** Always, always double-check your gradient implementation, especially when doing it manually. Numerical differentiation using small perturbations can be a good check. Compare it against analytic gradients you derived.
+- **Numerical Stability:** Be mindful of numerical issues with your loss functions. Avoid operations that can lead to infinities or NaN values, especially when using exponentiations. For example, it might be worthwhile to use log loss instead of directly calculating error probabilities.
+- **Batching:** For large datasets, always train using mini-batches. This both provides noise that helps the optimization but also allows for a massive speed up due to parallelization.
+- **Regularization:** If you see your custom model overfitting, be prepared to add regularizers. These can be incorporated directly into the custom loss function.
+- **Learning Rates:** Tuning your learning rate will likely be necessary. You will probably see better results using adaptive optimizers (e.g. Adam, Adagrad) provided by your framework.
+- **Further Reading**: I recommend the following books/papers if you want to deepen your understanding on the topic:
+  - "Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville
+  - "Numerical Optimization" by Jorge Nocedal and Stephen J. Wright
+  - "Understanding the difficulty of training deep feedforward neural networks" by Xavier Glorot and Yoshua Bengio (ICML 2010)
+  - Any good online course/MOOC in Neural Networks that teaches you the mathematics of backpropagation and differentiation.
 
 Working with custom loss functions isn’t always straightforward, but it provides an incredible level of flexibility when tackling particular problems. The general process involves: define your custom loss function, calculate (either analytically or through autograd) its gradient, and then use that gradient to update the model's parameters in an iterative fashion. The examples provided are a good starting point and show the practical aspects of working on the problem. The key takeaway is that if you understand how gradients work you can apply your own functions. Remember that rigorous testing and validation are key to success.

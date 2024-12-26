@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-is-there-a-segmentation-fault-when-using-faiss-indexsearch-in-fastapi"
 ---
 
-Alright, let's tackle this. I've seen this particular gremlin pop up more times than I care to remember, usually in contexts where someone is trying to bridge the gap between high-performance vector search and a user-facing web service, like with FastAPI. Segmentation faults, or segfaults, are the bane of any developer, particularly when dealing with native libraries like FAISS. Let's break down why you're probably seeing this when using `index.search()` within your FastAPI application.
+, let's tackle this. I've seen this particular gremlin pop up more times than I care to remember, usually in contexts where someone is trying to bridge the gap between high-performance vector search and a user-facing web service, like with FastAPI. Segmentation faults, or segfaults, are the bane of any developer, particularly when dealing with native libraries like FAISS. Let's break down why you're probably seeing this when using `index.search()` within your FastAPI application.
 
 The root cause rarely lies with FAISS itself, if it works fine outside of your FastAPI setup. It's almost always an issue of memory management and thread safety, especially when those two concepts intersect with a framework like FastAPI that relies heavily on asynchronous operations and multiple worker processes. I’ve personally encountered this while building a recommendation engine that needed to quickly serve results based on pre-computed embeddings. The initial setup worked flawlessly in a test script, but as soon as I deployed it with uvicorn, segfaults became a recurring nightmare.
 
 Here's the core problem: FAISS, at its heart, is written in C++. It relies on native resources and low-level memory manipulation, which are very sensitive to how they are accessed. When you spawn multiple worker processes in your FastAPI application—often the default behavior when using uvicorn or similar servers—each process inherits a copy of the parent process’s memory. If that memory includes a FAISS index, you have multiple processes potentially trying to access and modify the same underlying resources. This is especially problematic if the index isn't initialized for thread safety, which is often the default configuration, and the issue is compounded if your FastAPI application is also using multiple threads within a worker process.
 
-Let's start with the memory aspect. FAISS index objects, especially large ones built from extensive vector datasets, are allocated in memory. When a worker process forks, it doesn’t create independent copies of *all* memory, but rather employs a copy-on-write mechanism. So initially, all the forked processes are essentially reading from the same memory page, which is where the index sits. If one process then tries to modify the index, that’s when the copy-on-write creates an independent copy, but this process of copying can lead to data corruption and segfaults. This is why you often get intermittent errors, because it's dependent on the timing and the specific operations being executed.
+Let's start with the memory aspect. FAISS index objects, especially large ones built from extensive vector datasets, are allocated in memory. When a worker process forks, it doesn’t create independent copies of _all_ memory, but rather employs a copy-on-write mechanism. So initially, all the forked processes are essentially reading from the same memory page, which is where the index sits. If one process then tries to modify the index, that’s when the copy-on-write creates an independent copy, but this process of copying can lead to data corruption and segfaults. This is why you often get intermittent errors, because it's dependent on the timing and the specific operations being executed.
 
 Thread safety is another crucial point. Even if you manage to avoid multiple processes modifying the same underlying data using techniques like preloading and sharing the index via shared memory (which is an advanced topic, but one you might eventually need to explore), it is highly likely that your FastAPI requests are handled by different threads within the worker processes, and if those threads attempt to concurrently access and modify data within the index object, you'll run into a similar set of problems. Certain FAISS indexing and searching routines are not inherently thread-safe, meaning they are not designed to handle concurrent access from multiple threads. This lack of thread safety is typically the source of corruption and the segfault.
 
@@ -47,7 +47,7 @@ This code will work fine if run in development mode with a single worker but wil
 
 **Example 2: Employing the Correct Approach – Avoiding Shared Resources (Process Isolation)**
 
-The most straightforward way to fix this is to create a new instance of the index *within each worker process*, ensuring that each process works with its own unique memory:
+The most straightforward way to fix this is to create a new instance of the index _within each worker process_, ensuring that each process works with its own unique memory:
 
 ```python
 import faiss
@@ -81,7 +81,7 @@ This approach eliminates the concurrency issue by making sure each process gets 
 
 **Example 3: Leveraging Thread Safety (if applicable) and Alternative Approaches (Shared Memory)**
 
-While FAISS itself doesn’t provide inherent thread-safety guarantees for the most complex index types, it is sometimes possible to employ techniques to improve efficiency. You can utilize specialized memory allocation or shared memory mechanisms, but these are advanced scenarios and introduce their own complexities and potential pitfalls. Here’s a snippet illustrating thread-safe index construction (assuming you’re using FAISS components that support it, or have a modified build, *this may not always apply*):
+While FAISS itself doesn’t provide inherent thread-safety guarantees for the most complex index types, it is sometimes possible to employ techniques to improve efficiency. You can utilize specialized memory allocation or shared memory mechanisms, but these are advanced scenarios and introduce their own complexities and potential pitfalls. Here’s a snippet illustrating thread-safe index construction (assuming you’re using FAISS components that support it, or have a modified build, _this may not always apply_):
 
 ```python
 import faiss

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-is-harvards-new-memory-loss-breakthrough"
 ---
 
-alright, let's break down this memory loss thing harvard's been up to, or seems like they've been up to. it's not really a simple on/off switch, more like a very complicated circuit board with a bunch of connections getting fuzzy. i've been playing around with similar concepts for years, not in the medical sense, but in my own data management projects, where memory loss can be a real pain. so, what's likely going on is not some magic pill, but a deeper understanding of how memories are encoded and retrieved at a biological level and translating this to some practical use.
+, let's break down this memory loss thing harvard's been up to, or seems like they've been up to. it's not really a simple on/off switch, more like a very complicated circuit board with a bunch of connections getting fuzzy. i've been playing around with similar concepts for years, not in the medical sense, but in my own data management projects, where memory loss can be a real pain. so, what's likely going on is not some magic pill, but a deeper understanding of how memories are encoded and retrieved at a biological level and translating this to some practical use.
 
 the core issue here is synaptic plasticity, the ability of the connections between neurons to strengthen or weaken over time. think of it like the wires in a computer, the more a wire is used, the better the connection. but when a wire isn’t used, that connection gets less efficient, maybe even disappears. this isn't just about forgetting what you had for breakfast, this is about the whole neural network that holds onto the data of your life getting its connections slightly degraded, that’s where the ‘memory loss’ is.
 
@@ -12,9 +12,9 @@ from what i've gathered from various academic papers, and some open access resea
 
 the practical side of things probably involves some kind of targeted stimulation of the brain. there's transcranial magnetic stimulation (tms) which is non-invasive, and probably is what harvard or any other similar lab is testing, but there are other more invasive methods, but i seriously doubt those are the ones harvard is using.
 
-think of it as using targeted pulses of electromagnetic energy to activate certain brain regions involved in memory encoding and retrieval. it’s like giving a gentle nudge to those neuronal connections that are fading. the trick here, is not just turning something on, but turning it on *at the right moment*, and at the *right intensity* so that the memory gets a boost of activity and, consequently, a better chance of getting consolidated into long-term memory. that’s where the complexity comes in, as you need a lot of data about an individual before doing any kind of intervention like that.
+think of it as using targeted pulses of electromagnetic energy to activate certain brain regions involved in memory encoding and retrieval. it’s like giving a gentle nudge to those neuronal connections that are fading. the trick here, is not just turning something on, but turning it on _at the right moment_, and at the _right intensity_ so that the memory gets a boost of activity and, consequently, a better chance of getting consolidated into long-term memory. that’s where the complexity comes in, as you need a lot of data about an individual before doing any kind of intervention like that.
 
-on a personal note, i’ve messed up my own fair share of neural networks while trying to get my machine learning models to remember specific data. one time, i created a model for classifying different types of vintage cameras and i kept feeding it the same dataset over and over and forgot to use ‘dropout’ on some layers. let's just say, it became *really good* at recognizing the same ten cameras, and *utterly terrible* at anything else. it had almost no generalization capacity, it was literally a memorization machine, it was just remembering details about the training data instead of learning to generalize. i had to re-architect the network and start the training again from scratch, this is very similar to what i'm guessing they are doing with the neurons, but instead of re-architecture the network they do stimulation.
+on a personal note, i’ve messed up my own fair share of neural networks while trying to get my machine learning models to remember specific data. one time, i created a model for classifying different types of vintage cameras and i kept feeding it the same dataset over and over and forgot to use ‘dropout’ on some layers. let's just say, it became _really good_ at recognizing the same ten cameras, and _utterly terrible_ at anything else. it had almost no generalization capacity, it was literally a memorization machine, it was just remembering details about the training data instead of learning to generalize. i had to re-architect the network and start the training again from scratch, this is very similar to what i'm guessing they are doing with the neurons, but instead of re-architecture the network they do stimulation.
 
 here's a quick example of how i would use dropout in a pytorch model i made for a simpler task, to avoid what happened with the camera project:
 
@@ -43,6 +43,7 @@ dropout_rate = 0.3
 model = simple_nn(input_size, hidden_size, output_size, dropout_rate)
 
 ```
+
 this example shows a basic neural network, with a dropout layer, and that’s a good way to reduce memorization and promote generalization. a similar principle might be at play in the harvard research, they are probably trying to enhance the generalization and long term retention capabilities of the neurons.
 
 another area of research is around the consolidation of memories during sleep. it’s known that during sleep there’s a replay of neural patterns related to previously acquired memories, this re-activation during sleep helps consolidate the information. harvard researchers might be looking into ways of enhancing this consolidation process, probably by combining neurostimulation techniques with some form of sleep monitoring. this is similar to the concept of data backups and redundancy i used in one of my projects. i've worked in distributed database systems where we implemented data replication and error-checking mechanisms that would rebuild the database if one node got corrupted. that is, if one of the memory parts of the system degraded or failed, the system would reconstruct the lost information. the brain seems to do something similar during sleep, that's the beauty of it.
@@ -81,6 +82,7 @@ plt.legend()
 plt.grid(true)
 plt.show()
 ```
+
 this script simulates how memory decays and is recovered during sleep by boosting it, this helps illustrate the concepts of consolidation.
 
 it is very important to highlight here that these models are way too simplistic and should not be seen as how things actually work, but they give a good intuition of some of the principles involved in the process.

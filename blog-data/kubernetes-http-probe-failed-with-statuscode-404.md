@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "kubernetes-http-probe-failed-with-statuscode-404"
 ---
 
-Alright so you're hitting that classic Kubernetes liveness probe 404 right I've seen this one more times than I've had lukewarm coffee at 3 am believe me. It's a pain in the neck but usually it's something straightforward. I've been wrestling with Kubernetes since version 1.2 which was like trying to tame a wild badger with a rubber chicken but we got through it somehow and honestly this specific error feels like a rite of passage.
+so you're hitting that classic Kubernetes liveness probe 404 right I've seen this one more times than I've had lukewarm coffee at 3 am believe me. It's a pain in the neck but usually it's something straightforward. I've been wrestling with Kubernetes since version 1.2 which was like trying to tame a wild badger with a rubber chicken but we got through it somehow and honestly this specific error feels like a rite of passage.
 
 First off let's break down what's probably going on that 404 error code means the Kubernetes probe is hitting your application at the specified path and your application is saying "nope I don't know what you're talking about" Basically the probe which is a really simple http request is not finding anything at the endpoint you configured. It's not a Kubernetes problem exactly it's your app not playing nice at the path.
 
@@ -15,14 +15,15 @@ Usually this falls into a couple of common categories I've learned through my sh
 This is the most obvious one and surprisingly common even with experience. You set up a probe like this in your pod manifest:
 
 ```yaml
-    livenessProbe:
-      httpGet:
-        path: /healthz
-        port: 8080
-      initialDelaySeconds: 5
-      periodSeconds: 10
+livenessProbe:
+  httpGet:
+    path: /healthz
+    port: 8080
+  initialDelaySeconds: 5
+  periodSeconds: 10
 ```
-Simple enough right Well you might have put /healthz in your kubernetes definition but is that *actually* the path your app is serving? Double check your application code. This is a human error situation. I had a whole microservice once that was actually using /health instead of /healthz because someone copy pasted some code and didn't pay attention or perhaps he did and he's just evil I don't know.
+
+Simple enough right Well you might have put /healthz in your kubernetes definition but is that _actually_ the path your app is serving? Double check your application code. This is a human error situation. I had a whole microservice once that was actually using /health instead of /healthz because someone copy pasted some code and didn't pay attention or perhaps he did and he's just evil I don't know.
 
 I have a special key in my notes "pay attention to your health endpoints" I know it seems too obvious to mention but sometimes when you have 20 different microservices and you are deploying every day things get overlooked its like having a memory of a goldfish.
 
@@ -37,20 +38,20 @@ Sometimes the application is booting up still. It's starting but hasn't reached 
 Let me show you a typical kubernetes definition with both probes that I use and I've found that works in many scenarios:
 
 ```yaml
-    livenessProbe:
-      httpGet:
-        path: /healthz
-        port: 8080
-      initialDelaySeconds: 15
-      periodSeconds: 10
-      failureThreshold: 3
-    readinessProbe:
-      httpGet:
-        path: /readyz
-        port: 8080
-      initialDelaySeconds: 5
-      periodSeconds: 5
-      failureThreshold: 3
+livenessProbe:
+  httpGet:
+    path: /healthz
+    port: 8080
+  initialDelaySeconds: 15
+  periodSeconds: 10
+  failureThreshold: 3
+readinessProbe:
+  httpGet:
+    path: /readyz
+    port: 8080
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  failureThreshold: 3
 ```
 
 With this example we also have a readinessProbe that might be needed. Usually when there is an endpoint like /readyz for example that means that your application can receive requests and it's good to go. This example shows that we give the liveness probe more time to fail. Sometimes the application might need more time than 5 seconds to boot up. Its a matter of testing and using the right parameters.
@@ -80,19 +81,18 @@ kubectl exec -it <pod-name> -n <namespace> -- curl http://localhost:8080/healthz
 Lets say you have a simple Node.js application. A health check could look like this:
 
 ```javascript
-const express = require('express');
+const express = require("express");
 const app = express();
 
-app.get('/healthz', (req, res) => {
-  res.status(200).send('OK');
+app.get("/healthz", (req, res) => {
+  res.status(200).send("OK");
 });
 
-app.get('/readyz', (req, res) => {
-    //check if the database is running or any other requirement you need
-    //if everything is ok respond 200
-    //else 503
-    res.status(200).send('Ready');
-
+app.get("/readyz", (req, res) => {
+  //check if the database is running or any other requirement you need
+  //if everything is ok respond 200
+  //else 503
+  res.status(200).send("Ready");
 });
 
 const port = 8080;

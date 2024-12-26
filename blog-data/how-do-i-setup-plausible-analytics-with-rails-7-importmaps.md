@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-setup-plausible-analytics-with-rails-7-importmaps"
 ---
 
-Okay, so let’s tackle integrating Plausible Analytics with a Rails 7 application using Importmaps. This isn’t exactly uncharted territory; I’ve navigated this type of integration several times over the years, and there are definitely some nuances to consider. My experiences, particularly with a large-scale e-commerce platform I worked on a few years back, revealed that getting this just so requires a deep understanding of how Importmaps function within the Rails asset pipeline. So, let's get to it.
+, so let’s tackle integrating Plausible Analytics with a Rails 7 application using Importmaps. This isn’t exactly uncharted territory; I’ve navigated this type of integration several times over the years, and there are definitely some nuances to consider. My experiences, particularly with a large-scale e-commerce platform I worked on a few years back, revealed that getting this just so requires a deep understanding of how Importmaps function within the Rails asset pipeline. So, let's get to it.
 
 The core challenge lies in the way Importmaps manage JavaScript dependencies. Instead of relying on Node.js and `npm` or `yarn`, Importmaps allow you to specify directly where JavaScript modules should be fetched from, typically a CDN, and how to import them into your project. This is more lightweight but requires careful configuration to avoid conflicts and ensure proper loading of Plausible's tracking script.
 
@@ -27,8 +27,8 @@ The key here is `pin "plausible", to: ...` . This tells Importmaps that when we 
 Next, you need to include the library in your application-wide js file, commonly stored in `app/javascript/application.js`. It's important to include this in this manner, as importmaps requires usage of the module import syntax. Add the following to the file:
 
 ```javascript
-import "./controllers" // rails default for controllers
-import "plausible"
+import "./controllers"; // rails default for controllers
+import "plausible";
 // any other required imports below this line.
 ```
 
@@ -69,15 +69,14 @@ To do this, you can use Turbo’s events. Here's an example using Turbo's `turbo
 ```javascript
 // app/javascript/application.js
 
-import "./controllers"
-import "plausible"
+import "./controllers";
+import "plausible";
 
 document.addEventListener("turbo:load", () => {
-    if (window.plausible) {
-        window.plausible('pageview')
-    }
+  if (window.plausible) {
+    window.plausible("pageview");
+  }
 });
-
 ```
 
 This code snippet ensures that a pageview is tracked every time the page updates via Turbo, thereby preserving accurate analytics in dynamic interfaces. If you utilize a different system to manage your routes, or a framework, it's important that you setup the equivalent functionality within the event system of said framework.
@@ -103,13 +102,13 @@ pin "plausible", to: "https://plausible.io/js/script.js", preload: true
 
 ```javascript
 // app/javascript/application.js
-import "./controllers"
-import "plausible"
+import "./controllers";
+import "plausible";
 
 document.addEventListener("turbo:load", () => {
-    if (window.plausible) {
-        window.plausible('pageview')
-    }
+  if (window.plausible) {
+    window.plausible("pageview");
+  }
 });
 ```
 
@@ -135,9 +134,9 @@ document.addEventListener("turbo:load", () => {
 
 **Resource Recommendations:**
 
-*   **"The Rails 7 Way" by David Heinemeier Hansson**: For an exhaustive understanding of how Rails, in its most modern form, operates.
-*   **"High Performance Browser Networking" by Ilya Grigorik**: A deep dive into how browsers fetch and load resources, critical for optimizing preload and general performance with external scripts like the one provided by Plausible.
-*  **The official Turbo Documentation**: To understand how the turbo system in rails functions, and what events are available.
+- **"The Rails 7 Way" by David Heinemeier Hansson**: For an exhaustive understanding of how Rails, in its most modern form, operates.
+- **"High Performance Browser Networking" by Ilya Grigorik**: A deep dive into how browsers fetch and load resources, critical for optimizing preload and general performance with external scripts like the one provided by Plausible.
+- **The official Turbo Documentation**: To understand how the turbo system in rails functions, and what events are available.
 
 **Final Thoughts**
 

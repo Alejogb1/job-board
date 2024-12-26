@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "does-training-a-pytorch-model-on-a-subset-of-class-labels-impact-testing-accuracy"
 ---
 
-Alright, let's talk about the impact of training on a subset of class labels on testing accuracy—it’s a topic I’ve spent more than a few late nights debugging. You’d think it'd be straightforward, but there's some subtlety involved, and the outcomes can be quite nuanced depending on the specifics of your dataset and model. From my experience, particularly on a large-scale image classification project we had back at *SynergyTech*, we ran into this problem head-on, and the results were… instructive.
+, let's talk about the impact of training on a subset of class labels on testing accuracy—it’s a topic I’ve spent more than a few late nights debugging. You’d think it'd be straightforward, but there's some subtlety involved, and the outcomes can be quite nuanced depending on the specifics of your dataset and model. From my experience, particularly on a large-scale image classification project we had back at _SynergyTech_, we ran into this problem head-on, and the results were… instructive.
 
-The short answer? Yes, absolutely, training on a subset of class labels can, and often *will*, impact testing accuracy, sometimes severely. Let me break down why this happens and what you can expect, based on both theory and hard-won experience.
+The short answer? Yes, absolutely, training on a subset of class labels can, and often _will_, impact testing accuracy, sometimes severely. Let me break down why this happens and what you can expect, based on both theory and hard-won experience.
 
 Firstly, we need to acknowledge that a model learns to represent the relationships between features and the full label space. When you restrict the label space during training, you’re essentially forcing the model to learn a narrower representation. This has a few immediate consequences. The most obvious is the limitation on the model’s ability to generalize. By not exposing the model to the full spectrum of classes during training, it's less likely to effectively recognize them during testing. The model has not had the opportunity to learn discriminative features that are relevant to these excluded classes. In effect, you are not asking it to be a broad classifier, you are training a specialized one.
 
-Secondly, there’s the issue of feature entanglement. In complex datasets, feature representations aren't always neatly orthogonal; many features are shared across classes. If you train the model only on a subset of classes, it may learn feature representations that are optimal *for that subset*, but potentially sub-optimal (or even detrimental) for recognizing classes it hasn’t seen before. Think of it like learning to play only string instruments; you may develop fantastic dexterity with strings but fail to develop the breath control required to play brass instruments. The underlying principles might be related, but the specific skills do not easily transfer.
+Secondly, there’s the issue of feature entanglement. In complex datasets, feature representations aren't always neatly orthogonal; many features are shared across classes. If you train the model only on a subset of classes, it may learn feature representations that are optimal _for that subset_, but potentially sub-optimal (or even detrimental) for recognizing classes it hasn’t seen before. Think of it like learning to play only string instruments; you may develop fantastic dexterity with strings but fail to develop the breath control required to play brass instruments. The underlying principles might be related, but the specific skills do not easily transfer.
 
 Thirdly, depending on the training setup, the network may become overly confident. When a model only ever sees a few labels during training, it can become too “sure” of its predictions, potentially leading to poor calibration when tested on novel classes. Even within its trained subset of classes, the relative probabilities for each class can be warped by the missing information.
 
@@ -78,6 +78,7 @@ accuracy_full = test_model(model_full, test_loader_full)
 
 print(f'Accuracy on full test dataset when trained on all classes: {accuracy_full:.2f}')
 ```
+
 This first example shows the baseline where the model is trained on all labels. Let's examine what happens when we restrict the training set.
 
 ```python

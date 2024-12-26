@@ -12,7 +12,7 @@ The process is generally this: register an application in Azure AD, obtain clien
 
 Before we get to the code, some conceptual background is crucial. You need to understand that Azure AD applications have two main types: delegated and application permissions. Delegated permissions mean you're acting on behalf of a user, requiring user consent, whereas application permissions mean your application is acting as itself and requires admin consent. In the context of email, it is quite common to require user delegation. We would need the `IMAP.AccessAsUser.All` delegated permission to access the user mailbox.
 
-Okay, let's get to the first snippet, which shows the OAuth flow using the `msal` library:
+, let's get to the first snippet, which shows the OAuth flow using the `msal` library:
 
 ```python
 import msal
@@ -33,7 +33,7 @@ async def acquire_token(client_id, client_secret, authority, scopes):
         flow = app.initiate_device_flow(scopes=scopes)
         print(flow['message'])
         result = app.acquire_token_by_device_flow(flow)
-    
+
     if 'access_token' in result:
        return result['access_token']
 

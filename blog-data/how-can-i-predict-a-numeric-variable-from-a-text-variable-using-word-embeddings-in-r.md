@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-predict-a-numeric-variable-from-a-text-variable-using-word-embeddings-in-r"
 ---
 
-Alright, let’s tackle this. I’ve been down this road more than a few times, dealing with text-to-numeric prediction problems. It’s a common challenge in various fields, from sentiment analysis predicting a numeric rating to predicting financial indicators from news articles. The core technique you’re going to lean on is, as you mentioned, word embeddings. These aren't just random numbers assigned to words; they capture semantic meaning by representing words as vectors in a high-dimensional space.
+, let’s tackle this. I’ve been down this road more than a few times, dealing with text-to-numeric prediction problems. It’s a common challenge in various fields, from sentiment analysis predicting a numeric rating to predicting financial indicators from news articles. The core technique you’re going to lean on is, as you mentioned, word embeddings. These aren't just random numbers assigned to words; they capture semantic meaning by representing words as vectors in a high-dimensional space.
 
 Think of it this way: traditionally, representing words as simple one-hot encodings is a disaster for anything beyond the simplest tasks. The curse of dimensionality hits you hard, and relationships between words are completely lost. "King" and "Queen," for example, would be equidistant from "chair" in the vector space. Word embeddings, on the other hand, learn these relationships. Words with similar meanings will have vector representations that are closer to each other. So, our goal here is to use these learned representations to build a predictive model for your numeric target.
 
@@ -129,14 +129,14 @@ I’ve included an example with a random forest to make this a bit more useful. 
 
 Now, for resources, I'd strongly recommend checking out the following:
 
-*   **"Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper**: This provides a fantastic foundation in NLP principles, even if you're using R. The core concepts of tokenization, n-grams, and embedding strategies are covered exceptionally well.
+- **"Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper**: This provides a fantastic foundation in NLP principles, even if you're using R. The core concepts of tokenization, n-grams, and embedding strategies are covered exceptionally well.
 
-*   **"Deep Learning with R" by François Chollet and J.J. Allaire**: While it covers deep learning, which we didn't directly use in the above example, it has a fantastic section on embeddings with Keras and how to apply them in practical applications. The core understanding will translate to any framework.
+- **"Deep Learning with R" by François Chollet and J.J. Allaire**: While it covers deep learning, which we didn't directly use in the above example, it has a fantastic section on embeddings with Keras and how to apply them in practical applications. The core understanding will translate to any framework.
 
-*   **The original Word2Vec paper:** *Efficient Estimation of Word Representations in Vector Space* by Tomas Mikolov et al. This paper is a classic and gives great insight into how these things actually work.
+- **The original Word2Vec paper:** _Efficient Estimation of Word Representations in Vector Space_ by Tomas Mikolov et al. This paper is a classic and gives great insight into how these things actually work.
 
-*   **The original GloVe paper:** *GloVe: Global Vectors for Word Representation* by Jeffrey Pennington, Richard Socher, and Christopher D. Manning. This is similar to Word2Vec and understanding the concepts is crucial to using them effectively.
+- **The original GloVe paper:** _GloVe: Global Vectors for Word Representation_ by Jeffrey Pennington, Richard Socher, and Christopher D. Manning. This is similar to Word2Vec and understanding the concepts is crucial to using them effectively.
 
-*   **The *text2vec* package documentation**: Always refer to the official documentation for practical details on using the functions correctly.
+- **The _text2vec_ package documentation**: Always refer to the official documentation for practical details on using the functions correctly.
 
 In summary, going from text to a numeric variable using word embeddings in R is a practical approach. You tokenize your text, transform the tokens to their corresponding word embeddings, and then average (or otherwise combine) those embeddings. These resulting vector representations become your model’s inputs. From here, you can use any number of machine-learning regression techniques. You will want to start simple, as I have outlined above, and then iterate to tune your model to better fit your data. Keep in mind that experimentation and iteration are key to achieving optimal results. The more you practice, the more intuitive this whole process becomes.

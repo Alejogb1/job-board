@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-use-a-pythonoperators-list-output-to-iterate-another-operator-in-airflow-2"
 ---
 
-Okay, let's tackle this. From a slightly different angle, instead of launching directly into a theoretical discussion, let's frame it around a scenario I encountered a few years back. We were processing a large dataset of image files. The initial stage involved using a pythonoperator to generate a list of file paths that needed further processing, and we needed to dynamically create tasks based on that list. If you've faced this sort of problem, you'll appreciate the need for efficient, flexible solutions within Airflow. So, how do we achieve this?
+, let's tackle this. From a slightly different angle, instead of launching directly into a theoretical discussion, let's frame it around a scenario I encountered a few years back. We were processing a large dataset of image files. The initial stage involved using a pythonoperator to generate a list of file paths that needed further processing, and we needed to dynamically create tasks based on that list. If you've faced this sort of problem, you'll appreciate the need for efficient, flexible solutions within Airflow. So, how do we achieve this?
 
 Fundamentally, the challenge is to transfer data— specifically, a list— outputted from one task to the next, and then use that data to generate dynamic tasks in Airflow 2.0 and beyond. The core lies in two primary mechanisms: XComs and task mapping. XComs allow tasks to communicate by pushing and pulling small amounts of data, and task mapping empowers us to dynamically expand tasks based on input from XComs. Let’s break this down.
 
-First, let’s examine a basic example of how to utilize a pythonoperator to generate a list. The python function in your pythonoperator *must* return the list, making it available to be pushed to an xcom.
+First, let’s examine a basic example of how to utilize a pythonoperator to generate a list. The python function in your pythonoperator _must_ return the list, making it available to be pushed to an xcom.
 
 ```python
 from airflow.decorators import task
@@ -36,7 +36,7 @@ with DAG(
    print(file_list) #This will print to the logs for the task.
 ```
 
-In this snippet, our `generate_file_list` function creates a list of sample file paths. The crucial part is that it *returns* the list. Airflow automatically pushes this return value to XCom, using the task id as the xcom key. In your logs you will find this printed. This example does not proceed to map more tasks, but it illustrates the generation of the list, and the printing of the list.
+In this snippet, our `generate_file_list` function creates a list of sample file paths. The crucial part is that it _returns_ the list. Airflow automatically pushes this return value to XCom, using the task id as the xcom key. In your logs you will find this printed. This example does not proceed to map more tasks, but it illustrates the generation of the list, and the printing of the list.
 
 Next, let’s consider how we can then use this list to dynamically create tasks via task mapping. Suppose we want to process each of the files in our generated list using another task called, “process_file”. Here's how we'd accomplish that:
 

@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "929-strings-to-integers-zybooks-problem"
 ---
 
-Okay so you're wrestling with Zybooks string to integer conversion right I've been there believe me its a classic CS 101 rite of passage I remember back in my freshman year I spent like a whole weekend debugging a particularly nasty edge case on this very problem man that was rough lets see if i can help you out without you tearing out all your hair
+you're wrestling with Zybooks string to integer conversion right I've been there believe me its a classic CS 101 rite of passage I remember back in my freshman year I spent like a whole weekend debugging a particularly nasty edge case on this very problem man that was rough lets see if i can help you out without you tearing out all your hair
 
-Alright so you've got a string and you need to turn it into a integer I'm guessing the Zybooks problem is throwing some curveballs at you like invalid input or maybe leading spaces or something else along those lines That’s very normal when dealing with user-provided input lets look into some patterns and techniques that I found quite helpful over the years
+so you've got a string and you need to turn it into a integer I'm guessing the Zybooks problem is throwing some curveballs at you like invalid input or maybe leading spaces or something else along those lines That’s very normal when dealing with user-provided input lets look into some patterns and techniques that I found quite helpful over the years
 
 First off lets handle the basic case. A straightforward string of digits. We can just iterate over the characters and convert them one by one. Here’s some Python code doing just that:
 
@@ -56,7 +56,7 @@ print(string_to_int_space_aware("    ")) #Output None
 
 ```
 
-Alright you have handled the leading whitespace but one big edge case that always pops up is negative signs. You need to check for a negative sign and adjust the result accordingly. This requires you to handle some extra logic. Here's an extended version that adds sign handling.
+you have handled the leading whitespace but one big edge case that always pops up is negative signs. You need to check for a negative sign and adjust the result accordingly. This requires you to handle some extra logic. Here's an extended version that adds sign handling.
 
 ```python
 def string_to_int_all_the_tricks(s):
@@ -89,6 +89,7 @@ print(string_to_int_all_the_tricks("abc"))    # Output: None
 print(string_to_int_all_the_tricks("-543")) # Output: -543
 
 ```
+
 This function checks for the first char if it's a minus sign it will set sign to negative and then move the index. It does the same thing for plus and if there is no sign or symbol it just starts with the digits. This gives you all the major parts you need. The function handles leading whitespaces negative signs plus signs and converts the string to an integer.
 
 Now you are probably thinking "that's it"? Well not quite. There are other things to think about but they mostly involve handling errors.

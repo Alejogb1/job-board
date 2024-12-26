@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-do-capybara-feature-specs-fail-when-using-turbo-drive"
 ---
 
-Okay, let's tackle this one. Capybara feature specs failing with Turbo Drive is a pain point I've encountered more than a few times, and it stems from a fundamental difference in how these two technologies operate. It's not always immediately apparent, so I understand the frustration. Essentially, the issue arises from the mismatch in Capybara’s assumptions about page transitions and the way Turbo Drive handles them.
+, let's tackle this one. Capybara feature specs failing with Turbo Drive is a pain point I've encountered more than a few times, and it stems from a fundamental difference in how these two technologies operate. It's not always immediately apparent, so I understand the frustration. Essentially, the issue arises from the mismatch in Capybara’s assumptions about page transitions and the way Turbo Drive handles them.
 
 Let me walk you through it. Capybara, by default, operates under the assumption that navigating to a new page involves a full page reload. It waits for the browser to fully load the new document and all its assets before proceeding with subsequent actions in your test. That’s pretty straightforward.
 
 Turbo Drive, on the other hand, aims for a smoother and faster user experience by intercepting standard link clicks and form submissions. Instead of doing a full reload, it fetches the new page over the network, replacing only the `<body>` content. This eliminates the flash of white you see during a regular page load, and speeds things up considerably. That's great for user experience, but it can cause havoc for our automated tests if we're not careful.
 
-The core problem is that Capybara’s default wait mechanisms are looking for a full page reload, including a new `DOMContentLoaded` event and potentially other events. When Turbo Drive does its partial update, these events never fire in the way Capybara expects. Capybara might think that the page hasn't loaded, leading to timeouts and failures, or it might interact with elements that are no longer in the DOM or haven't been correctly re-rendered. This usually surfaces as “element not found” exceptions, or "timeout waiting" errors, even when the element *does* eventually become visible.
+The core problem is that Capybara’s default wait mechanisms are looking for a full page reload, including a new `DOMContentLoaded` event and potentially other events. When Turbo Drive does its partial update, these events never fire in the way Capybara expects. Capybara might think that the page hasn't loaded, leading to timeouts and failures, or it might interact with elements that are no longer in the DOM or haven't been correctly re-rendered. This usually surfaces as “element not found” exceptions, or "timeout waiting" errors, even when the element _does_ eventually become visible.
 
 To illustrate this, think back to a project where we were migrating a Rails application to use Hotwire. We had a suite of feature specs that, after enabling Turbo, started failing sporadically with these exact types of errors. The tests were mostly clicking links that should have resulted in a simple page navigation – no complex JavaScript interactions, just basic functionality. It was baffling at first until we dug into how Turbo Drive operates behind the scenes.
 
@@ -39,7 +39,8 @@ RSpec.feature 'User navigation', type: :feature, js: true do
   end
 end
 ```
-In this example, we inject a small JavaScript snippet that listens for the `turbo:load` event and sets a variable.  Then we tell Capybara to wait until it sees the javascript variable done set to true, which guarantees that the turbo navigation event has occured before we check for the element on the next page.
+
+In this example, we inject a small JavaScript snippet that listens for the `turbo:load` event and sets a variable. Then we tell Capybara to wait until it sees the javascript variable done set to true, which guarantees that the turbo navigation event has occured before we check for the element on the next page.
 
 **Example 2: Custom Wait Helper**
 
@@ -77,6 +78,7 @@ RSpec.feature 'User navigation', type: :feature, js: true do
 end
 
 ```
+
 This allows for cleaner test code, reducing boilerplate. I recommend adopting this approach to streamline your test suite and make it easier to modify as you refine your testing patterns.
 
 **Example 3: Using `turbo:before-render` (Advanced Cases)**

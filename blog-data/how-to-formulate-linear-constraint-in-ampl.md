@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-formulate-linear-constraint-in-ampl"
 ---
 
-alright, so you're asking about formulating linear constraints in ampl, right? been there, done that. i remember back in the day, during my phd, i was working on this huge supply chain optimization problem. the thing was massive, we're talking hundreds of variables and what felt like a million constraints. trying to code all of that directly in some imperative language was just a nightmare, i kid you not. it was slow, error-prone, and just plain painful. that's when i discovered ampl. changed my life, i tell you, when dealing with that type of problem.
+, so you're asking about formulating linear constraints in ampl, right? been there, done that. i remember back in the day, during my phd, i was working on this huge supply chain optimization problem. the thing was massive, we're talking hundreds of variables and what felt like a million constraints. trying to code all of that directly in some imperative language was just a nightmare, i kid you not. it was slow, error-prone, and just plain painful. that's when i discovered ampl. changed my life, i tell you, when dealing with that type of problem.
 
 ampl really shines when dealing with these kinds of model formulations because it allows you to express the problem in a way that's very close to the mathematical notation. the separation of the model from the data is a game changer and makes your code much more readable and maintainable. let's break down how we'd tackle linear constraints in ampl with a few examples so you can get the gist of it.
 
@@ -41,6 +41,7 @@ param demand :=
     p2 20
     p3 15;
 ```
+
 the power here is how it abstracts from the number of products. if you add another item to the set `products` and provide its demand in the data file the `sum` will automatically include that product. that was awesome the first time i realized that.
 
 and it is not only summation. you can have any valid mathematical expression on either side of the inequality/equality. for example you can have scalar multiplication of the variable as well. suppose you have a problem where you want to relate two variables with a weight or something like that:
@@ -66,6 +67,7 @@ var production {products} >= 0; # production of each product
 subject to capacity_constraint {i in products}:
     production[i] <= capacity[i];
 ```
+
 in this example `i in products` will loop over each element of the set `products` and apply the constraint for each of the product indexes.
 
 now, a little more real-world example. during my research, i was working on a problem with production planning. we had different machines, each with a different efficiency, and we had to produce several products. the production of product `p` in machine `m` is given by variable `production[p, m]` and there is a capacity `capacity[m]` per machine and i also need to make the total production surpass a specific value `min_total_production`.

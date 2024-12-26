@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-airflow-best-send-emails-containing-small-database-tables"
 ---
 
-Okay, let’s tackle this. Generating and sending emails with small database tables within Airflow workflows is a common need, but it can be surprisingly nuanced. I've personally been down this road numerous times, from straightforward daily reports to more intricate data validation notifications. The key is to understand Airflow's strengths and limitations, and how to best leverage Python's capabilities within its context. I'll walk you through some practical approaches, explain why they work, and provide code snippets.
+, let’s tackle this. Generating and sending emails with small database tables within Airflow workflows is a common need, but it can be surprisingly nuanced. I've personally been down this road numerous times, from straightforward daily reports to more intricate data validation notifications. The key is to understand Airflow's strengths and limitations, and how to best leverage Python's capabilities within its context. I'll walk you through some practical approaches, explain why they work, and provide code snippets.
 
 The fundamental approach here is to use Python operators within your Airflow DAGs to: a) query your database, b) format the retrieved data into a user-friendly table, and c) then compose and send that data via email. It's tempting to think Airflow itself will handle the formatting, but that's not its role; Airflow is the orchestrator, not the transformer. We have to explicitly handle that part within our tasks.
 
@@ -99,50 +99,49 @@ with DAG(
 ```html
 <!DOCTYPE html>
 <html>
-<head>
-<style>
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
+  <head>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
 
-th, td {
-  border: 1px solid black;
-  padding: 8px;
-  text-align: left;
-}
-</style>
-</head>
-<body>
-
-  <table>
+      th,
+      td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
       <thead>
-          <tr>
-            {% for key in data[0].keys() %}
-            <th>{{ key }}</th>
-            {% endfor %}
-          </tr>
-        </thead>
-      <tbody>
-          {% for row in data %}
-          <tr>
-            {% for col in row.values() %}
-             <td> {{ col }}</td>
-            {% endfor %}
-          </tr>
+        <tr>
+          {% for key in data[0].keys() %}
+          <th>{{ key }}</th>
           {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in data %}
+        <tr>
+          {% for col in row.values() %}
+          <td>{{ col }}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
       </tbody>
-  </table>
-
-</body>
+    </table>
+  </body>
 </html>
 ```
 
-*Explanation:* This code first executes the `PostgresOperator` which executes the SQL query, then pulls this data using xcom to the `PythonOperator` task called `format_table_task`. The `format_table_task` loads the HTML file with Jinja2 and dynamically renders it by iterating over the query result. It stores this formatted HTML string to `xcom`, and it is pulled by the `send_email_task` and used to send the email via `smtplib`.
+_Explanation:_ This code first executes the `PostgresOperator` which executes the SQL query, then pulls this data using xcom to the `PythonOperator` task called `format_table_task`. The `format_table_task` loads the HTML file with Jinja2 and dynamically renders it by iterating over the query result. It stores this formatted HTML string to `xcom`, and it is pulled by the `send_email_task` and used to send the email via `smtplib`.
 
 **Example 2: Using pandas for Complex Formatting**
 
-For more sophisticated formatting, or if you need to do data transformations *before* the table appears in the email, using `pandas` is often the most efficient approach. Here's a modified example:
+For more sophisticated formatting, or if you need to do data transformations _before_ the table appears in the email, using `pandas` is often the most efficient approach. Here's a modified example:
 
 ```python
 from airflow import DAG
@@ -221,7 +220,7 @@ with DAG(
     get_data_from_db >> create_table_task >> send_email_task
 ```
 
-*Explanation:* Here, we pull the query results as a list of tuples (or records). Then, we use `pd.DataFrame.from_records` to create a pandas DataFrame (remember that this assumes the first result from your database contains the headers). This provides powerful manipulation tools – filtering, sorting, aggregations and then `df.to_html()` creates the table for the email. We also use `df.to_html` with css classes to style it. The rest of the email sending logic remains the same.
+_Explanation:_ Here, we pull the query results as a list of tuples (or records). Then, we use `pd.DataFrame.from_records` to create a pandas DataFrame (remember that this assumes the first result from your database contains the headers). This provides powerful manipulation tools – filtering, sorting, aggregations and then `df.to_html()` creates the table for the email. We also use `df.to_html` with css classes to style it. The rest of the email sending logic remains the same.
 
 **Example 3: Handling Sensitive Information**
 
@@ -304,21 +303,21 @@ with DAG(
     get_data_from_db >> mask_and_format_task >> send_email_task
 ```
 
-*Explanation:* We introduce a data transformation, where we mask out sensitive information from the query before sending it in the email. This is done using `apply` and a lambda function within pandas to mask the `sensitive_data` column.
+_Explanation:_ We introduce a data transformation, where we mask out sensitive information from the query before sending it in the email. This is done using `apply` and a lambda function within pandas to mask the `sensitive_data` column.
 
 **Key Considerations**
 
-*   **Error Handling:** Make sure all the steps here have adequate error handling. Network errors and server errors can happen while sending emails. Your database operator could also fail to retrieve the data. It's important to add try/except blocks and use logging statements.
-*   **Security:** Your SMTP credentials should be managed securely using Airflow's connection variables and secret backends.
-*   **Performance:** If you're dealing with large tables (although the question specifies *small* tables), you might want to implement pagination when querying the database. The examples provided will not scale to larger datasets.
-*  **Airflow Version:** Double check your Airflow version and its compatibility with the Python libraries you use.
-*   **Alternative Libraries:** While `pandas` and Jinja2 are very useful for these types of tasks, there are other options. If you want to generate very complex excel files, for example, using `openpyxl` might be preferable. Or, if you have complex text formatting requirements, use `textwrap`.
+- **Error Handling:** Make sure all the steps here have adequate error handling. Network errors and server errors can happen while sending emails. Your database operator could also fail to retrieve the data. It's important to add try/except blocks and use logging statements.
+- **Security:** Your SMTP credentials should be managed securely using Airflow's connection variables and secret backends.
+- **Performance:** If you're dealing with large tables (although the question specifies _small_ tables), you might want to implement pagination when querying the database. The examples provided will not scale to larger datasets.
+- **Airflow Version:** Double check your Airflow version and its compatibility with the Python libraries you use.
+- **Alternative Libraries:** While `pandas` and Jinja2 are very useful for these types of tasks, there are other options. If you want to generate very complex excel files, for example, using `openpyxl` might be preferable. Or, if you have complex text formatting requirements, use `textwrap`.
 
 **Resources**
 
-*   For Jinja2, I'd recommend starting with the official [Jinja2 documentation](https://jinja.palletsprojects.com/). It provides comprehensive explanations and examples.
-*   For pandas, "[Python for Data Analysis](https://wesmckinney.com/book/)" by Wes McKinney is the definitive resource.
-*   For working with SMTP in Python, review the [official documentation for the smtplib module](https://docs.python.org/3/library/smtplib.html).
-* For general Airflow documentation, refer to the official documentation: [https://airflow.apache.org/docs/](https://airflow.apache.org/docs/).
+- For Jinja2, I'd recommend starting with the official [Jinja2 documentation](https://jinja.palletsprojects.com/). It provides comprehensive explanations and examples.
+- For pandas, "[Python for Data Analysis](https://wesmckinney.com/book/)" by Wes McKinney is the definitive resource.
+- For working with SMTP in Python, review the [official documentation for the smtplib module](https://docs.python.org/3/library/smtplib.html).
+- For general Airflow documentation, refer to the official documentation: [https://airflow.apache.org/docs/](https://airflow.apache.org/docs/).
 
 In short, while Airflow isn't directly a data processing tool, its Python operator allows us to use Python libraries to prepare, process, and transform data effectively for emails. The above examples should give you a solid starting point to build upon. Focus on good error handling, data privacy, and scalability, and you should be well-equipped to handle a variety of table formatting and email delivery tasks with your Airflow workflows.

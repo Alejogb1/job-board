@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-uninstall-the-jetbrains-toolbox-on-ubuntu"
 ---
 
-Okay, let’s tackle this. I recall a rather frustrating afternoon several years back, attempting to clean up a development environment after a project wrapped up – and the JetBrains Toolbox, bless its heart, was proving rather persistent. Uninstalling it on Ubuntu, while not inherently complex, does have a few nuances that are useful to be aware of. Let’s go over the proper way to do this, with a bit of a practical perspective.
+, let’s tackle this. I recall a rather frustrating afternoon several years back, attempting to clean up a development environment after a project wrapped up – and the JetBrains Toolbox, bless its heart, was proving rather persistent. Uninstalling it on Ubuntu, while not inherently complex, does have a few nuances that are useful to be aware of. Let’s go over the proper way to do this, with a bit of a practical perspective.
 
 The JetBrains Toolbox, unlike some simpler applications, isn't always just a single package you can remove with `apt` or `dpkg`. It operates, fundamentally, as an installer and a manager for multiple JetBrains IDEs, and these components can be distributed across various locations on your system. This is key to understanding why a straightforward uninstall command sometimes falls short.
 

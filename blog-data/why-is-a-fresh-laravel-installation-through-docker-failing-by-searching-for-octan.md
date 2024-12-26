@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-is-a-fresh-laravel-installation-through-docker-failing-by-searching-for-octan"
 ---
 
-Alright, let’s dissect this one. Encountering a Laravel installation failing due to an apparent search for 'octan' during docker setup is a surprisingly common, though often perplexing, situation. I've personally debugged variations of this issue several times in my career, particularly when moving between different development environments or transitioning older projects to containerization. The core problem isn’t that Laravel inherently requires ‘octan,’ but rather that the docker configuration, most frequently the `docker-compose.yml` file or the Dockerfile used for the php-fpm container, contains settings or instructions that point to a service named 'octan' or is attempting to use a process or configuration specific to Laravel Octane, even when it's not supposed to. Let me explain further, step-by-step.
+, let’s dissect this one. Encountering a Laravel installation failing due to an apparent search for 'octan' during docker setup is a surprisingly common, though often perplexing, situation. I've personally debugged variations of this issue several times in my career, particularly when moving between different development environments or transitioning older projects to containerization. The core problem isn’t that Laravel inherently requires ‘octan,’ but rather that the docker configuration, most frequently the `docker-compose.yml` file or the Dockerfile used for the php-fpm container, contains settings or instructions that point to a service named 'octan' or is attempting to use a process or configuration specific to Laravel Octane, even when it's not supposed to. Let me explain further, step-by-step.
 
-The most frequent cause is a residual configuration setting left over from a previous project that *did* use Laravel Octane. Octane, for those not familiar, is a high-performance server for Laravel applications, significantly different from the standard php-fpm setup. Octane essentially keeps the application loaded in memory and thus does not perform a complete bootstrap on every request. It typically uses servers like Swoole or RoadRunner, and it isn’t compatible with standard php-fpm processes that listen on a port and rely on repeated bootstrapping. A typical clue is an attempt to execute a command like `php artisan octane:start` during the container build or start process, which is not necessary nor correct for a regular php-fpm application.
+The most frequent cause is a residual configuration setting left over from a previous project that _did_ use Laravel Octane. Octane, for those not familiar, is a high-performance server for Laravel applications, significantly different from the standard php-fpm setup. Octane essentially keeps the application loaded in memory and thus does not perform a complete bootstrap on every request. It typically uses servers like Swoole or RoadRunner, and it isn’t compatible with standard php-fpm processes that listen on a port and rely on repeated bootstrapping. A typical clue is an attempt to execute a command like `php artisan octane:start` during the container build or start process, which is not necessary nor correct for a regular php-fpm application.
 
 Now, a fresh Laravel installation, by default, won't use Octane. It's meant to run within a standard php-fpm container setup. If your docker setup is looking for 'octan', it means that somewhere within your docker configurations or the initialization steps of your application container, instructions are misaligned with the default project settings. The most common places where such misconfigurations can arise are:
 
@@ -42,7 +42,7 @@ services:
       context: ./docker/php-fpm
       dockerfile: Dockerfile
     volumes:
-       - ./:/var/www/html
+      - ./:/var/www/html
     ports:
       - "9000:9000"
     depends_on:
@@ -80,7 +80,7 @@ services:
       context: ./docker/php-fpm
       dockerfile: Dockerfile
     volumes:
-       - ./:/var/www/html
+      - ./:/var/www/html
     ports:
       - "9000:9000"
     depends_on:
@@ -91,7 +91,6 @@ services:
 networks:
   app-network:
     driver: bridge
-
 ```
 
 **Example 2: Incorrect Dockerfile**
@@ -148,6 +147,7 @@ php artisan route:cache
 php artisan migrate --force
 php artisan octane:start --host=0.0.0.0 --port=8000
 ```
+
 The crucial issue here is `php artisan octane:start`. To fix this, the line should simply be removed:
 
 ```bash

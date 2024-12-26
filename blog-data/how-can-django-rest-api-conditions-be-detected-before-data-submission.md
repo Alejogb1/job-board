@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-django-rest-api-conditions-be-detected-before-data-submission"
 ---
 
-Alright, let’s tackle this. I recall a project back in my days building a large e-commerce platform – handling data submission errors, especially on the api side, became critical to maintaining a good user experience and preventing data corruption. We needed a robust solution to detect issues *before* a request hit our database. So, let's break down how we can accomplish this in Django REST Framework (DRF).
+, let’s tackle this. I recall a project back in my days building a large e-commerce platform – handling data submission errors, especially on the api side, became critical to maintaining a good user experience and preventing data corruption. We needed a robust solution to detect issues _before_ a request hit our database. So, let's break down how we can accomplish this in Django REST Framework (DRF).
 
 The core issue centers around pre-submission validation, and that involves moving beyond merely relying on model validation at the database level. If you're only catching issues post-database interaction, you're already too late. We want to catch malformed requests, data type mismatches, or business logic violations as early as possible in the request lifecycle. DRF offers several layers that facilitate this, namely serializers and viewset actions (or function-based views), and it's at these points where we leverage that power most effectively.
 
-The primary mechanism for pre-submission condition checking within DRF is through its serializers. These are not just for serialization/deserialization of data; they’re also the ideal place for validation. Django Rest Framework provides robust mechanisms that we can leverage such as built-in validators, custom validators and methods such as validate_<field_name>.
+The primary mechanism for pre-submission condition checking within DRF is through its serializers. These are not just for serialization/deserialization of data; they’re also the ideal place for validation. Django Rest Framework provides robust mechanisms that we can leverage such as built-in validators, custom validators and methods such as validate\_<field_name>.
 
 The first point of interception occurs during serializer instantiation. Before you’ve even called `.save()` or initiated any model operations, the serializer has a chance to validate the incoming data. I usually implement several layers of validation to avoid data corruption or user error. Think of it like layers of security - each layer catches an issue that was missed by the one before.
 
@@ -38,6 +38,7 @@ class ProductSerializer(serializers.Serializer):
             raise ValidationError("This product name is restricted.")
          return data
 ```
+
 Here, we’ve used several mechanisms for validation. We first used DRF's built-in validators through `max_length`, `min_value` and `required`. Then, we created custom validations using the `validate_<field_name>` method that we can implement for each field within our serializer. I prefer this approach for simple, field-level validations. Finally, the generic `validate` method allows us to validate against multiple fields which is useful for cases where fields depend on one another.
 
 The beauty here is that if any of these validators fail, the serializer will raise a `ValidationError`, preventing the data from ever being passed to the model. The serializer is already handling this exception and will return a 400 error, with detailed error messages, which we can configure. This approach is far more efficient than letting database constraints do the error reporting, as it’s much faster and the user is made aware of the error quicker.

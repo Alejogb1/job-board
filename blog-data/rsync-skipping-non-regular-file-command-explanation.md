@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "rsync-skipping-non-regular-file-command-explanation"
 ---
 
-Okay so you're having an issue with rsync skipping stuff that ain't regular files right I've been there man oh boy have I been there Let me break it down for you based on my years of banging my head against the keyboard trying to get rsync to do what I want
+you're having an issue with rsync skipping stuff that ain't regular files right I've been there man oh boy have I been there Let me break it down for you based on my years of banging my head against the keyboard trying to get rsync to do what I want
 
 First things first rsync by default it's all about regular files Regular files think your text docs your images your source code the typical stuff that takes up space on a drive When rsync encounters something that is NOT a regular file it basically says "Nope not touching that" and moves on That's the skipping you're seeing
 
@@ -14,11 +14,11 @@ Think of it like this rsync is the diligent librarian it's only interested in bo
 
 Now let's talk about these non-regular files a bit more common ones you might encounter are
 
-*   **Directories** rsync handles directories but treats them differently than files It creates the directory structure and then copies the files *inside* those directories If a directory is empty it just creates it on the destination
-*   **Symbolic Links (symlinks)** These are like shortcuts to files or directories rsync can copy symlinks preserving the link but that's a special option It does not copy the thing it's pointing to unless you tell it to
-*   **Named Pipes (FIFOs)** These are for inter-process communication rsync is going to ignore them
-*   **Device Files** These represent hardware devices rsync definitely ignores these
-*   **Sockets** Another inter-process communication method rsync will move on
+- **Directories** rsync handles directories but treats them differently than files It creates the directory structure and then copies the files _inside_ those directories If a directory is empty it just creates it on the destination
+- **Symbolic Links (symlinks)** These are like shortcuts to files or directories rsync can copy symlinks preserving the link but that's a special option It does not copy the thing it's pointing to unless you tell it to
+- **Named Pipes (FIFOs)** These are for inter-process communication rsync is going to ignore them
+- **Device Files** These represent hardware devices rsync definitely ignores these
+- **Sockets** Another inter-process communication method rsync will move on
 
 So how can you get rsync to deal with these non-regular file types Well it depends on what you want to do and what you need for your job
 

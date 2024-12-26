@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-is-the-difference-between-the-following-tfdsload-calls"
 ---
 
-alright, let's break down those `tfds.load()` calls, because yeah, they can look pretty similar on the surface, but under the hood they're doing subtly different things. it's one of those areas where the devil is in the details, and if you’re not paying attention, you can end up with unexpected behaviour, trust me, i've been there.
+, let's break down those `tfds.load()` calls, because yeah, they can look pretty similar on the surface, but under the hood they're doing subtly different things. it's one of those areas where the devil is in the details, and if you’re not paying attention, you can end up with unexpected behaviour, trust me, i've been there.
 
 first off, `tfds.load()` is your go-to function in tensorflow datasets for, well, loading datasets. it handles all the complexities of downloading, preparing, and splitting data, so you can just get straight to working with it. but the exact way it does that depends a lot on the arguments you throw at it.
 
@@ -52,9 +52,9 @@ for `ds3` we would obtain an dictionary object like this:
 
 so, to summarise all of this in a practical way:
 
-*   if you just need one split of a dataset for training, use `tfds.load('dataset_name', split='split_name')` as in the example of `ds2`. it’s the most efficient for that case.
-*   if you need multiple splits, but not all, you can specify what you need by using `tfds.load('dataset_name', split=['split_name1', 'split_name2'])`, like the `ds3` example.
-*   if you want to access all the splits, including splits you might not need, you can simply use `tfds.load('dataset_name')` like the `ds1` example and then specify which one to use after you have the dictionary object.
+- if you just need one split of a dataset for training, use `tfds.load('dataset_name', split='split_name')` as in the example of `ds2`. it’s the most efficient for that case.
+- if you need multiple splits, but not all, you can specify what you need by using `tfds.load('dataset_name', split=['split_name1', 'split_name2'])`, like the `ds3` example.
+- if you want to access all the splits, including splits you might not need, you can simply use `tfds.load('dataset_name')` like the `ds1` example and then specify which one to use after you have the dictionary object.
 
 here's some code to show the differences in action:
 
@@ -124,8 +124,8 @@ this code will throw an error, because the dataset, a `tf.data.Dataset` object i
 
 now, some recommendations for further reading:
 
-*   the official tensorflow datasets documentation is crucial. they have examples and a more in depth explanation than i've given here.
-*   for deep dive into datasets there's "hands-on machine learning with scikit-learn, keras & tensorflow" by aurélien géron. this book has a whole section on working with data and tensorflow datasets.
-*   also, consider reading the tensorflow documentation on `tf.data.Dataset` api and it's various transformations, as this would be the main object that you are manipulating when training models in tensorflow.
+- the official tensorflow datasets documentation is crucial. they have examples and a more in depth explanation than i've given here.
+- for deep dive into datasets there's "hands-on machine learning with scikit-learn, keras & tensorflow" by aurélien géron. this book has a whole section on working with data and tensorflow datasets.
+- also, consider reading the tensorflow documentation on `tf.data.Dataset` api and it's various transformations, as this would be the main object that you are manipulating when training models in tensorflow.
 
 this should get you going, and help you better understand what's happening behind the scenes when using `tfds.load()`. it’s all about knowing what exactly you need from the data and choosing the correct method to access it. knowing this helped me a lot when dealing with very large datasets.

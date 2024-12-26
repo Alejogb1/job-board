@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-cnn-model-built-with-keras-be-translated-to-pytorch"
 ---
 
-Alright, let’s tackle this. Transitioning a convolutional neural network (CNN) from Keras to PyTorch is a task I've frequently encountered in my work, particularly when dealing with projects that need to leverage the specific strengths of each framework. It's not a matter of simply swapping libraries; there are nuances in how models are defined and managed that require a structured approach.
+, let’s tackle this. Transitioning a convolutional neural network (CNN) from Keras to PyTorch is a task I've frequently encountered in my work, particularly when dealing with projects that need to leverage the specific strengths of each framework. It's not a matter of simply swapping libraries; there are nuances in how models are defined and managed that require a structured approach.
 
 First, it's important to recognize that both Keras (typically running on TensorFlow in most cases) and PyTorch are fundamentally about describing and training neural networks. Keras, with its high-level API, excels at rapid prototyping and easy-to-understand syntax. PyTorch, on the other hand, gives you more granular control, which is beneficial when dealing with highly specialized models or research-oriented applications. This control often comes with a learning curve, which is why a direct translation isn't always trivial.
 
@@ -16,11 +16,11 @@ Here's a breakdown, with a focus on the practical aspect:
 
 1.  **Layer-by-layer translation:** For simple layers like convolutions, pooling, and fully connected layers (dense layers), the translation is usually straightforward. You need to map the Keras layer names and parameters to their PyTorch equivalents.
 
-    *   For `Conv2D` in Keras, you'd use `torch.nn.Conv2d` in PyTorch. The crucial parameters like `filters` (number of output channels), `kernel_size`, `strides`, and `padding` need careful alignment. Keras padding defaults to 'valid' but we need to pay attention to it, and `padding='same'` is implemented differently than PyTorch.
+    - For `Conv2D` in Keras, you'd use `torch.nn.Conv2d` in PyTorch. The crucial parameters like `filters` (number of output channels), `kernel_size`, `strides`, and `padding` need careful alignment. Keras padding defaults to 'valid' but we need to pay attention to it, and `padding='same'` is implemented differently than PyTorch.
 
-    *   Pooling layers, like `MaxPooling2D`, translate to `torch.nn.MaxPool2d` with similar considerations for `pool_size` and `strides`.
+    - Pooling layers, like `MaxPooling2D`, translate to `torch.nn.MaxPool2d` with similar considerations for `pool_size` and `strides`.
 
-    *   `Dense` layers in Keras are `torch.nn.Linear` in PyTorch, where the number of input and output features needs to be matched, along with activation functions.
+    - `Dense` layers in Keras are `torch.nn.Linear` in PyTorch, where the number of input and output features needs to be matched, along with activation functions.
 
 2.  **Activation functions:** Keras often uses string representations for activation functions (e.g., `'relu'`), whereas PyTorch usually requires calling activation function objects (e.g., `torch.nn.ReLU()`). The mapping is generally one-to-one for standard activations like ReLU, sigmoid, and tanh.
 

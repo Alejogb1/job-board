@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "does-an-lstm-model-retain-information-from-prior-training-iterations"
 ---
 
-Okay, let's unpack this. You're asking a fundamentally important question about long short-term memory (LSTM) networks and how they handle sequential information across different training epochs or iterations. It’s not a simple yes or no answer, and the subtleties matter quite a bit in practice, particularly when you're trying to optimize your model’s performance and prevent things like catastrophic forgetting. I've grappled with this personally in several projects, notably one where I was building a real-time financial forecasting model. The initial results were… less than ideal, partly because I hadn’t fully grasped this nuance of LSTM behavior.
+, let's unpack this. You're asking a fundamentally important question about long short-term memory (LSTM) networks and how they handle sequential information across different training epochs or iterations. It’s not a simple yes or no answer, and the subtleties matter quite a bit in practice, particularly when you're trying to optimize your model’s performance and prevent things like catastrophic forgetting. I've grappled with this personally in several projects, notably one where I was building a real-time financial forecasting model. The initial results were… less than ideal, partly because I hadn’t fully grasped this nuance of LSTM behavior.
 
-Essentially, LSTMs don’t inherently retain information *across* independent training runs or instances of model initialization. Each time you create a new instance of an LSTM model, whether it’s after changing a hyperparameter, or restarting a script, or loading from a saved architecture definition, it starts from a state of having learned absolutely nothing specific to your data. The model's weights, biases, and hidden states (which are crucial to the model's short-term memory capabilities) are generally initialized randomly or using some predefined method (like Xavier or He initialization), but that's *not* previously learned information; that's just a set of initial parameters.
+Essentially, LSTMs don’t inherently retain information _across_ independent training runs or instances of model initialization. Each time you create a new instance of an LSTM model, whether it’s after changing a hyperparameter, or restarting a script, or loading from a saved architecture definition, it starts from a state of having learned absolutely nothing specific to your data. The model's weights, biases, and hidden states (which are crucial to the model's short-term memory capabilities) are generally initialized randomly or using some predefined method (like Xavier or He initialization), but that's _not_ previously learned information; that's just a set of initial parameters.
 
-However, *within* a single training session (that is, during the training epochs of a given instantiation of the model), the LSTM certainly remembers information from prior iterations, that's precisely how it learns. The key to understanding this lies in the internal mechanisms of the LSTM cell and how it processes sequential data.
+However, _within_ a single training session (that is, during the training epochs of a given instantiation of the model), the LSTM certainly remembers information from prior iterations, that's precisely how it learns. The key to understanding this lies in the internal mechanisms of the LSTM cell and how it processes sequential data.
 
-The LSTM's memory mechanism isn’t a single monolithic thing; it’s a collection of gates and cell states that, at each step in the sequence, decide what information to retain, forget, or update. Specifically, the cell state serves as a kind of long-term memory that can carry relevant information across many time steps, and the hidden state acts as the current working memory, influenced by previous steps and current input. During training, the backpropagation algorithm adjusts the model’s weights based on the error signal at the output. These weights implicitly encode the information gleaned from the training data encountered *up to that point*, within a given training cycle.
+The LSTM's memory mechanism isn’t a single monolithic thing; it’s a collection of gates and cell states that, at each step in the sequence, decide what information to retain, forget, or update. Specifically, the cell state serves as a kind of long-term memory that can carry relevant information across many time steps, and the hidden state acts as the current working memory, influenced by previous steps and current input. During training, the backpropagation algorithm adjusts the model’s weights based on the error signal at the output. These weights implicitly encode the information gleaned from the training data encountered _up to that point_, within a given training cycle.
 
 When you're training the model, you typically process your data in batches across multiple epochs. Within a single epoch, the network iteratively updates its weights based on a gradient descent process. These weight updates adjust how the LSTM cell interacts with the input, hidden state, and cell state to minimize the defined loss function. Because the weights are adjusted with each batch within an epoch, and epochs are done sequentially, it retains the "memory" of learning from previous steps in the same training process.
 
@@ -68,7 +68,7 @@ print(output)
 
 In this example, the model learns the patterns and transitions within the provided `text` and, over the course of the 5 epochs (within one run), improves in generating text resembling the training input. The weights and internal states are being updated based on each batch of data. If you re-run this script from scratch, or even just the `model.fit` call after re-initializing the model with a new `model = Sequential(...)` declaration, the model starts from the initial weights.
 
-Here's an important point about *transfer learning*, a technique that *can* make use of information from prior training, but on a different dataset:
+Here's an important point about _transfer learning_, a technique that _can_ make use of information from prior training, but on a different dataset:
 
 ```python
 import tensorflow as tf
@@ -134,7 +134,7 @@ for _ in range(100):
 print(output)
 ```
 
-In this modified example, we first trained the model on `text1`, and then on `text2`. This demonstrates how, within a single run, you can leverage what the model has learned from one dataset to another, using transfer learning. The model’s weights have been adjusted from what was learned using the first text to adapt to the new text. But, the training is still within the *same* model instance across the two dataset uses.
+In this modified example, we first trained the model on `text1`, and then on `text2`. This demonstrates how, within a single run, you can leverage what the model has learned from one dataset to another, using transfer learning. The model’s weights have been adjusted from what was learned using the first text to adapt to the new text. But, the training is still within the _same_ model instance across the two dataset uses.
 
 Lastly, let's look at how you might load in pre-trained weights, another method to utilize prior information:
 
@@ -206,7 +206,8 @@ for _ in range(100):
 print(output)
 
 ```
-Here, we explicitly save weights from a trained model and then load those weights into a *new* instantiation of the model. This makes it so the new model uses weights derived from previous learning. This demonstrates that we can transfer the learned parameters from one trained instance to a different model instance.
+
+Here, we explicitly save weights from a trained model and then load those weights into a _new_ instantiation of the model. This makes it so the new model uses weights derived from previous learning. This demonstrates that we can transfer the learned parameters from one trained instance to a different model instance.
 
 If you’re interested in diving deeper into the specifics of how LSTMs work and how they are trained, I'd highly recommend "Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville, particularly the chapters on recurrent neural networks and sequence modeling. For more specific details on LSTM internals, consider the original paper on LSTMs by Hochreiter and Schmidhuber (1997). Also, “Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow” by Aurélien Géron is a fantastic practical resource. These are the ones I’ve always found the most useful.
 

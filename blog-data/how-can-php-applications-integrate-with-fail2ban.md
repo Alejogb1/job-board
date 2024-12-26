@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-php-applications-integrate-with-fail2ban"
 ---
 
-Alright, let's tackle this. I've seen my fair share of brute-force attacks over the years, and integrating PHP applications with Fail2Ban has been a staple in my security toolkit. It’s not as straightforward as simply installing the software, but the benefits in preventing automated abuse are substantial. Here’s how we approach it, drawing on what I've learned from past projects.
+, let's tackle this. I've seen my fair share of brute-force attacks over the years, and integrating PHP applications with Fail2Ban has been a staple in my security toolkit. It’s not as straightforward as simply installing the software, but the benefits in preventing automated abuse are substantial. Here’s how we approach it, drawing on what I've learned from past projects.
 
 The core idea is to get your PHP application to log specific security-related events in a way that Fail2Ban can understand and act upon. Fail2Ban, at its heart, monitors log files for patterns matching pre-defined regular expressions. When it detects these patterns repeatedly within a set timeframe from the same IP address, it blocks that IP using firewall rules. So, the challenge is two-pronged: first, generating the correct logs; and second, configuring Fail2Ban to recognize them.
 
@@ -69,7 +69,7 @@ if (isset($_POST['phoneNumber']) && !preg_match('/^[0-9]{10}$/', $_POST['phoneNu
 ?>
 ```
 
-Here we use the `DateTime` object to provide a formatted timestamp, giving you crucial time context for analyzing events. It logs specific information about *which* field is causing the issue along with the offending value. You might, for instance, log specific attempts to exploit SQL injection vulnerabilities by recording the attempted malicious SQL commands (obviously, after proper sanitization to avoid further vulnerability risks during logging itself!).
+Here we use the `DateTime` object to provide a formatted timestamp, giving you crucial time context for analyzing events. It logs specific information about _which_ field is causing the issue along with the offending value. You might, for instance, log specific attempts to exploit SQL injection vulnerabilities by recording the attempted malicious SQL commands (obviously, after proper sanitization to avoid further vulnerability risks during logging itself!).
 
 After logging is properly implemented, the next step is configuring Fail2Ban to monitor these logs. Here's an outline of how that's typically achieved by creating a custom filter and jail in Fail2Ban:
 
@@ -80,6 +80,7 @@ First, create a filter configuration file in `/etc/fail2ban/filter.d/`. Let's na
 failregex = Failed login attempt from IP: <HOST>
 ignoreregex =
 ```
+
 This `failregex` pattern uses the `<HOST>` placeholder which Fail2Ban will automatically replace with the actual IP address found in the log file. For the second example, where the timestamp is included, the filter would need to adapt accordingly. An example might be:
 
 ```

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-asynchronous-parameters-affect-function-behavior"
 ---
 
-Alright, let’s tackle this one. Asynchronous parameters—it’s a topic that, while seemingly straightforward, can trip up developers if you're not paying close attention to the mechanics involved. I’ve certainly had my share of debugging sessions where a seemingly innocuous asynchronous operation created unexpected behavior, back when I was architecting a distributed messaging system for a financial platform. We were pushing thousands of messages per second, and subtle variations in asynchronous processing cascaded into major operational issues. The key to understanding their impact lies in recognizing that asynchronous parameters introduce non-deterministic execution within a function’s scope.
+, let’s tackle this one. Asynchronous parameters—it’s a topic that, while seemingly straightforward, can trip up developers if you're not paying close attention to the mechanics involved. I’ve certainly had my share of debugging sessions where a seemingly innocuous asynchronous operation created unexpected behavior, back when I was architecting a distributed messaging system for a financial platform. We were pushing thousands of messages per second, and subtle variations in asynchronous processing cascaded into major operational issues. The key to understanding their impact lies in recognizing that asynchronous parameters introduce non-deterministic execution within a function’s scope.
 
-Specifically, what we're talking about is the potential for a function to complete *before* an asynchronous parameter, typically a promise or a future, has resolved or rejected. This is fundamentally different from synchronous operations, where parameters are fully evaluated before the function starts execution. This distinction is absolutely critical. The function doesn’t ‘wait’ for an asynchronous parameter; it simply receives a representation of an operation that *will* produce a value (or error) sometime later.
+Specifically, what we're talking about is the potential for a function to complete _before_ an asynchronous parameter, typically a promise or a future, has resolved or rejected. This is fundamentally different from synchronous operations, where parameters are fully evaluated before the function starts execution. This distinction is absolutely critical. The function doesn’t ‘wait’ for an asynchronous parameter; it simply receives a representation of an operation that _will_ produce a value (or error) sometime later.
 
 Consider this: when passing an asynchronous parameter, the parameter itself is generally a promise, often in a pending state. It's not the resolved value. The function's code then operates on this promise, usually via asynchronous control flow constructs (like `.then()` or `await`). If the function doesn't properly handle these constructs, it will likely complete before the promise settles. The behavior is no longer simply a reflection of the input parameters, but heavily influenced by the timing and state of asynchronous operations initiated by those parameters.
 
@@ -22,20 +22,19 @@ async function processData(asyncOperation, id) {
   return result;
 }
 
-function delayedPromise(value, delay){
-    return new Promise(resolve => setTimeout(() => resolve(value), delay));
+function delayedPromise(value, delay) {
+  return new Promise((resolve) => setTimeout(() => resolve(value), delay));
 }
 
-
-async function main(){
-  const p1 = delayedPromise('Data 1', 1000);
-  const p2 = delayedPromise('Data 2', 500);
-  processData(p1, 'one');
-  processData(p2, 'two');
-  console.log("Processing launched.")
+async function main() {
+  const p1 = delayedPromise("Data 1", 1000);
+  const p2 = delayedPromise("Data 2", 500);
+  processData(p1, "one");
+  processData(p2, "two");
+  console.log("Processing launched.");
 }
 
-main()
+main();
 ```
 
 Here, `processData` accepts a promise `asyncOperation` and an `id`. The crucial part is `await asyncOperation`. If we didn't have the `await`, the function would simply proceed without the resolved data. The output demonstrates that the "processing launched" statement appears before the resolved values, highlighting the asynchronous nature of the parameter. The execution order is not entirely linear. `p2` often completes before `p1` because of its shorter delay.
@@ -53,20 +52,20 @@ async function incrementCounter(asyncOperation) {
 }
 
 function delayedPromise(value, delay) {
-    return new Promise(resolve => setTimeout(() => resolve(value), delay));
+  return new Promise((resolve) => setTimeout(() => resolve(value), delay));
 }
 
-async function main(){
+async function main() {
   const p1 = delayedPromise(true, 100);
   const p2 = delayedPromise(true, 50);
   await Promise.all([incrementCounter(p1), incrementCounter(p2)]);
   console.log(`Final counter value ${counter}`);
 }
 
-main()
+main();
 ```
 
-This snippet shows how asynchronous parameters can expose race conditions. We expect the counter to be 2, but there is a short period where it might report 1, before all operations have completed. `incrementCounter` takes a promise, waits for its completion, and *then* increments the global `counter`. Depending on timing, either promise might resolve first, leading to a different intermediate state of `counter` and inconsistent logs, although in the end, the counter should reach 2 in this setup as we await on both promises using `Promise.all`. This demonstrates that modifying shared, mutable state from asynchronous callbacks needs careful synchronization, often with mutexes, atomic operations, or more refined concurrency mechanisms in non-trivial programs.
+This snippet shows how asynchronous parameters can expose race conditions. We expect the counter to be 2, but there is a short period where it might report 1, before all operations have completed. `incrementCounter` takes a promise, waits for its completion, and _then_ increments the global `counter`. Depending on timing, either promise might resolve first, leading to a different intermediate state of `counter` and inconsistent logs, although in the end, the counter should reach 2 in this setup as we await on both promises using `Promise.all`. This demonstrates that modifying shared, mutable state from asynchronous callbacks needs careful synchronization, often with mutexes, atomic operations, or more refined concurrency mechanisms in non-trivial programs.
 
 **Snippet 3: Complex Asynchronous Parameter Handling**
 
@@ -75,24 +74,23 @@ async function processMultipleData(arrayOfAsyncOperations) {
   const results = await Promise.all(arrayOfAsyncOperations);
   console.log("All results received");
   return results.reduce((acc, curr) => acc + curr, 0);
-
 }
 function delayedPromise(value, delay) {
-    return new Promise(resolve => setTimeout(() => resolve(value), delay));
+  return new Promise((resolve) => setTimeout(() => resolve(value), delay));
 }
 
-async function main(){
- const p1 = delayedPromise(10, 100);
- const p2 = delayedPromise(20, 200);
- const p3 = delayedPromise(30, 50);
- const result = await processMultipleData([p1,p2,p3]);
- console.log(`Final sum ${result}`);
+async function main() {
+  const p1 = delayedPromise(10, 100);
+  const p2 = delayedPromise(20, 200);
+  const p3 = delayedPromise(30, 50);
+  const result = await processMultipleData([p1, p2, p3]);
+  console.log(`Final sum ${result}`);
 }
 
 main();
 ```
 
-This final snippet introduces a higher order level of complexity: an array of asynchronous operations. `processMultipleData` takes an array of promises, resolves them all (using `Promise.all`), and then reduces their results to a single value. The return value here becomes meaningful only after *all* the promises have resolved. If a single promise fails, the entire operation fails due to the promise rejection. It's a common pattern when multiple operations, perhaps from multiple data sources, have to be completed before further processing or rendering can be done. Note that in the absence of `await Promise.all(...)` the function would have completed with a promise in a pending state.
+This final snippet introduces a higher order level of complexity: an array of asynchronous operations. `processMultipleData` takes an array of promises, resolves them all (using `Promise.all`), and then reduces their results to a single value. The return value here becomes meaningful only after _all_ the promises have resolved. If a single promise fails, the entire operation fails due to the promise rejection. It's a common pattern when multiple operations, perhaps from multiple data sources, have to be completed before further processing or rendering can be done. Note that in the absence of `await Promise.all(...)` the function would have completed with a promise in a pending state.
 
 So, when dealing with asynchronous parameters, remember these critical points:
 

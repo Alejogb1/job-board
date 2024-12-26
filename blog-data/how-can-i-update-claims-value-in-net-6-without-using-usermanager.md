@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "how-can-i-update-claims-value-in-net-6-without-using-usermanager"
 ---
 
-Okay, let’s unpack this. Updating claims values without leveraging `UserManager` in a .net 6 application is, shall we say, a scenario I've found myself navigating more often than I’d initially anticipated. It usually boils down to specific architectural constraints or performance considerations, and while `UserManager` simplifies many identity-related tasks, it's not always the most appropriate tool for surgical claim manipulation. I recall a particularly hairy project where we were integrating with a legacy system that had its own robust user management layer, rendering `UserManager` somewhat redundant and even obstructive. We couldn’t simply shoehorn it in, so we had to get creative.
+, let’s unpack this. Updating claims values without leveraging `UserManager` in a .net 6 application is, shall we say, a scenario I've found myself navigating more often than I’d initially anticipated. It usually boils down to specific architectural constraints or performance considerations, and while `UserManager` simplifies many identity-related tasks, it's not always the most appropriate tool for surgical claim manipulation. I recall a particularly hairy project where we were integrating with a legacy system that had its own robust user management layer, rendering `UserManager` somewhat redundant and even obstructive. We couldn’t simply shoehorn it in, so we had to get creative.
 
 The core problem stems from how claims are generally associated with a user's authentication context – typically represented by an `ClaimsPrincipal` object. `UserManager` is an abstraction designed to handle the complexities of user persistence, including managing and updating user claims within its own underlying data store. When you bypass `UserManager`, you're dealing directly with the `ClaimsPrincipal` and its underlying identity representation, which often requires a more hands-on approach.
 
-Firstly, it's crucial to understand that the `ClaimsPrincipal` is, in many contexts, immutable once it's established for the current request. This immutability ensures data integrity and prevents accidental modifications to the current session's claims set. What we *can* do is generate a *new* `ClaimsPrincipal` with the modified claims, and update the current authentication ticket or cookie accordingly.
+Firstly, it's crucial to understand that the `ClaimsPrincipal` is, in many contexts, immutable once it's established for the current request. This immutability ensures data integrity and prevents accidental modifications to the current session's claims set. What we _can_ do is generate a _new_ `ClaimsPrincipal` with the modified claims, and update the current authentication ticket or cookie accordingly.
 
 Let’s consider a scenario. Imagine you’ve got an application that authenticates users against a third-party system that provides access tokens enriched with claims. Upon successful authentication, you create an authentication cookie containing these claims for your application. Now, let's say you need to modify a user's role based on an internal event. Instead of making changes to the user store managed by `UserManager`, you must update the authentication cookie with modified claim values.
 
@@ -38,7 +38,7 @@ public async Task UpdateUserNickname(HttpContext context, string newNickname)
 
   var currentIdentity = (ClaimsIdentity?)currentPrincipal.Identity;
     if(currentIdentity is null) return;
-  
+
   var claims = currentIdentity.Claims.ToList();
     var nicknameClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName);
     if (nicknameClaim != null)
@@ -124,8 +124,8 @@ In all these examples, the key is to not modify the original `ClaimsPrincipal` o
 
 For further, in-depth exploration of claims-based authentication and authorization, I'd recommend a few resources:
 
-*   **"Programming Microsoft ASP.NET Core" by Dino Esposito:** This book provides a comprehensive overview of the entire ASP.NET Core framework, including detailed coverage of authentication and authorization, with a practical and applied focus.
-*   **"Professional ASP.NET Core 6" by Jason N. Gaylord et al.:** A valuable resource for deep diving into various features of ASP.NET Core 6, including detailed insights into identity management and claims-based authentication. It is particularly useful if you encounter more complex integration requirements.
-*   **The Official Microsoft Documentation:** The .net documentation, particularly the sections on ASP.NET Core Security, Claims-Based Identity, and Cookie Authentication, are invaluable. It offers the most up-to-date information on APIs and best practices.
+- **"Programming Microsoft ASP.NET Core" by Dino Esposito:** This book provides a comprehensive overview of the entire ASP.NET Core framework, including detailed coverage of authentication and authorization, with a practical and applied focus.
+- **"Professional ASP.NET Core 6" by Jason N. Gaylord et al.:** A valuable resource for deep diving into various features of ASP.NET Core 6, including detailed insights into identity management and claims-based authentication. It is particularly useful if you encounter more complex integration requirements.
+- **The Official Microsoft Documentation:** The .net documentation, particularly the sections on ASP.NET Core Security, Claims-Based Identity, and Cookie Authentication, are invaluable. It offers the most up-to-date information on APIs and best practices.
 
 Ultimately, while `UserManager` provides a convenient abstraction, it’s not the only pathway to updating claims. Direct manipulation of `ClaimsPrincipal` and authentication mechanisms provides us with the flexibility necessary when working with pre-existing user systems or when optimization is needed. Just remember to create a new `ClaimsPrincipal` when modifying claims, not the existing one, and to update the authentication context, typically using `SignInAsync`. It's a nuanced approach, yes, but one I've found incredibly helpful in situations where a "one-size-fits-all" approach doesn't apply.

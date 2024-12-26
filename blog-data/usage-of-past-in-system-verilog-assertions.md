@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "usage-of-past-in-system-verilog-assertions"
 ---
 
-Okay so you're asking about using `past` in SystemVerilog assertions right? Yeah I’ve been down that road a few times let me tell you. It's one of those things that seems simple on the surface but gets complex real quick once you start digging. Especially when you're dealing with real-world design bugs that are timing-sensitive.
+you're asking about using `past` in SystemVerilog assertions right? Yeah I’ve been down that road a few times let me tell you. It's one of those things that seems simple on the surface but gets complex real quick once you start digging. Especially when you're dealing with real-world design bugs that are timing-sensitive.
 
 So let me break it down from my experience. The `past` operator in SystemVerilog assertions basically lets you look back in time it allows you to access the value of a signal in previous clock cycles. This is crucial for verifying temporal properties you know things that happen over time and sequence. Imagine you’re validating a handshake protocol you need to make sure that `req` signal is asserted a cycle before the `ack` signal. You can't do that directly without some way of looking back.
 
@@ -65,6 +65,7 @@ module past_example_module;
 
 endmodule
 ```
+
 In this code the assertion `req |=> past(ack,1)` is key. It states that when `req` is asserted at any clock edge then `ack` signal should be asserted one clock cycle after. This highlights one of the most common use cases of `past` to check for sequencing. This is a simple example and it does not fail if there are no violations of this assumption which was true in my case for the first iteration of my code.
 
 Now let's talk syntax a bit. The general form is `past(expression, number_of_clocks)`. `expression` is the signal you're checking and `number_of_clocks` tells you how many clock cycles to go back. If you don't specify the `number_of_clocks` it defaults to one cycle.

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-do-i-iterate-through-solidity-mappings"
 ---
 
-Okay, let's tackle this one. I’ve certainly seen my share of developers grapple with iterating mappings in solidity. It’s a common pain point, and unlike arrays, mappings don't inherently support direct iteration. The structure is designed for key-value lookups, optimized for quick retrieval rather than sequential access. The fundamental challenge arises from the fact that mappings, in their native form within solidity, do not store information about the keys that have been used. Let’s dig into why this is the case and explore the practical solutions I've found effective.
+, let's tackle this one. I’ve certainly seen my share of developers grapple with iterating mappings in solidity. It’s a common pain point, and unlike arrays, mappings don't inherently support direct iteration. The structure is designed for key-value lookups, optimized for quick retrieval rather than sequential access. The fundamental challenge arises from the fact that mappings, in their native form within solidity, do not store information about the keys that have been used. Let’s dig into why this is the case and explore the practical solutions I've found effective.
 
 Mappings in solidity are essentially hash tables, where a key is hashed to determine the memory location of the corresponding value. This is lightning-fast for retrieval, but the process doesn't leave behind a readily accessible list of keys. Because of this underlying structure, there isn’t an internal mechanism to iterate through them as one would an array or a list. When I first encountered this limitation in one of the earlier defi projects, it certainly forced a shift in thinking. I had initially designed a contract with mappings all over, naively expecting straightforward iteration. That’s where the real learning began.
 
-So, how do we achieve something akin to iteration? The solution relies on maintaining a separate structure that *does* allow for iteration—typically an array. We keep track of the keys used in the mapping by updating this array alongside any changes to the mapping itself. It’s not optimal in terms of storage overhead, but it’s often the best we can do within the constraints of the evm.
+So, how do we achieve something akin to iteration? The solution relies on maintaining a separate structure that _does_ allow for iteration—typically an array. We keep track of the keys used in the mapping by updating this array alongside any changes to the mapping itself. It’s not optimal in terms of storage overhead, but it’s often the best we can do within the constraints of the evm.
 
 Let me break down three common approaches, each with a code snippet to illustrate the concept:
 
@@ -136,8 +136,8 @@ This example defines a library named `IterableMapping` with an internal struct n
 
 For deeper dives, I recommend exploring these resources:
 
-*   **"Mastering Ethereum" by Andreas M. Antonopoulos, Gavin Wood:** This is an excellent all-around resource that will give you a solid background on ethereum, including more context about storage costs.
-*   **"Solidity Documentation":** The official documentation (available at docs.soliditylang.org) is always the definitive source for language-specific details and updates.
-*   **"Ethereum Yellow Paper" by Gavin Wood:** This foundational paper, while dense, provides insight into the underlying mechanisms of the evm and will help you to better understand the gas and storage limitations you are working with.
+- **"Mastering Ethereum" by Andreas M. Antonopoulos, Gavin Wood:** This is an excellent all-around resource that will give you a solid background on ethereum, including more context about storage costs.
+- **"Solidity Documentation":** The official documentation (available at docs.soliditylang.org) is always the definitive source for language-specific details and updates.
+- **"Ethereum Yellow Paper" by Gavin Wood:** This foundational paper, while dense, provides insight into the underlying mechanisms of the evm and will help you to better understand the gas and storage limitations you are working with.
 
 To conclude, iterating through mappings in solidity is not a native operation, but maintaining a separate index array allows you to achieve similar functionality. Always consider the gas costs and complexities this adds, but it’s the most common technique for working with mapping-like data when sequential access is needed. Remember, thoughtful design is key when using mappings effectively in solidity.

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-get-the-co-ordinates-of-bounding-boxes-using-pixellib-with-its-object-class"
 ---
 
-alright, so you're looking to extract bounding box coordinates using pixellib, specifically with its object detection capabilities, right? i've been down that road, many, many times. i remember when i first got into computer vision, i was practically throwing code at the wall, hoping something would stick. getting those bounding boxes was always a fiddly part. but hey, we've all been there. let me share some of what i've learned and hopefully save you some headache.
+, so you're looking to extract bounding box coordinates using pixellib, specifically with its object detection capabilities, right? i've been down that road, many, many times. i remember when i first got into computer vision, i was practically throwing code at the wall, hoping something would stick. getting those bounding boxes was always a fiddly part. but hey, we've all been there. let me share some of what i've learned and hopefully save you some headache.
 
 first things first, pixellib, for those who might be less familiar, uses mask r-cnn under the hood. it's a powerful architecture for both object detection and segmentation. the good thing for us here is that it provides convenient methods for accessing the detection results, including bounding boxes.
 
@@ -38,11 +38,12 @@ else:
 ```
 
 let me break this down:
-*   we import the necessary pixellib libraries.
-*   we load an instance segmentation model. i'm using `mask_rcnn_coco.h5`, which is pre-trained on the coco dataset and good for general purpose detection. you may need to download it first if you don't have it locally; that's one of the things i usually forget about when i'm setting things up in new systems. it happens to the best of us. you could also use a custom-trained model.
-*   we run segmentation on our image `my_image.jpg`. the `show_bboxes=true` just shows the image with boxes on it but doesn't actually extract the data itself.
-*   the result is stored as a tuple, detections[0] are masks, detections[1] has all the rest, we check if the detections is not empty, then iterate over the bounding boxes in `detections[1]['rois']`. rois is short for 'regions of interest' by the way.
-*   finally, we unpack the bounding box coordinates and print them. these coordinates are `x1, y1, x2, y2`, representing the top-left and bottom-right corners, respectively.
+
+- we import the necessary pixellib libraries.
+- we load an instance segmentation model. i'm using `mask_rcnn_coco.h5`, which is pre-trained on the coco dataset and good for general purpose detection. you may need to download it first if you don't have it locally; that's one of the things i usually forget about when i'm setting things up in new systems. it happens to the best of us. you could also use a custom-trained model.
+- we run segmentation on our image `my_image.jpg`. the `show_bboxes=true` just shows the image with boxes on it but doesn't actually extract the data itself.
+- the result is stored as a tuple, detections[0] are masks, detections[1] has all the rest, we check if the detections is not empty, then iterate over the bounding boxes in `detections[1]['rois']`. rois is short for 'regions of interest' by the way.
+- finally, we unpack the bounding box coordinates and print them. these coordinates are `x1, y1, x2, y2`, representing the top-left and bottom-right corners, respectively.
 
 now, printing to the console is nice, but in real-world applications, you'd probably need to store or process these coordinates. here's an enhanced version that does that and also adds the class id and score associated with the detection:
 
@@ -80,10 +81,11 @@ else:
 ```
 
 here's what's new:
-*   we create an empty list `bounding_boxes_data` to hold all the results.
-*   for each bounding box, we also get the `class_id` and the `score`.
-*   we append all of this data into `bounding_boxes_data`, now each bounding box is an object.
-*   finally, we save the data into a `bboxes.json` file so we can use it later. the `indent` parameter in the `json.dump()` function makes the json file human readable.
+
+- we create an empty list `bounding_boxes_data` to hold all the results.
+- for each bounding box, we also get the `class_id` and the `score`.
+- we append all of this data into `bounding_boxes_data`, now each bounding box is an object.
+- finally, we save the data into a `bboxes.json` file so we can use it later. the `indent` parameter in the `json.dump()` function makes the json file human readable.
 
 this is more practical, you can now easily manipulate the bounding box information and classes in your other scripts or pass the data to other services or models.
 

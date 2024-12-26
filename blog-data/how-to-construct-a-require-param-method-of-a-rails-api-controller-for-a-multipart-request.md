@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-construct-a-require-param-method-of-a-rails-api-controller-for-a-multipart-request"
 ---
 
-alright, let's talk about handling multipart requests with rails api controllers, specifically when you need to extract those parameters. it's a common enough situation when you're dealing with file uploads or complex form data, and i've spent my share of late nights debugging this kind of thing. it can be a bit fiddly if you're not familiar with how rails handles these requests.
+, let's talk about handling multipart requests with rails api controllers, specifically when you need to extract those parameters. it's a common enough situation when you're dealing with file uploads or complex form data, and i've spent my share of late nights debugging this kind of thing. it can be a bit fiddly if you're not familiar with how rails handles these requests.
 
 so, the core issue is that when you send a multipart request, the parameters aren't just sitting there nicely in `params`. instead, they're often nested within the request payload. rails has ways of parsing this, but you need to be explicit about it, particularly when building a strong parameters method for your api controller.
 
@@ -53,9 +53,9 @@ here, we’re using `avatars: []` and `tags: []` to allow an array of values (or
 
 now, a few gotchas i've seen over the years:
 
-*   **missing require:** forgetting the `require` can result in weird situations where you’re working with nil parameters and scratching your head about why nothing is working. that `require` is a guard rail, really. if the parameter is absent an exception is thrown right away.
-*   **strong params misconfiguration**: if you don't permit a given parameter it is silently dropped by rails and it becomes more difficult to track why the data is not being saved. make sure your `permit` function reflects exactly the fields you are expecting to receive.
-*   **file handling weirdness**: as i mentioned before, the uploaded files are instances of `ActionDispatch::Http::UploadedFile`. you cannot simply treat them as strings or hashes. they have specific methods and attributes to access their content, name, type and more. you also must not forget about the file system. make sure your user has the proper permissions to write in the proper folder.
+- **missing require:** forgetting the `require` can result in weird situations where you’re working with nil parameters and scratching your head about why nothing is working. that `require` is a guard rail, really. if the parameter is absent an exception is thrown right away.
+- **strong params misconfiguration**: if you don't permit a given parameter it is silently dropped by rails and it becomes more difficult to track why the data is not being saved. make sure your `permit` function reflects exactly the fields you are expecting to receive.
+- **file handling weirdness**: as i mentioned before, the uploaded files are instances of `ActionDispatch::Http::UploadedFile`. you cannot simply treat them as strings or hashes. they have specific methods and attributes to access their content, name, type and more. you also must not forget about the file system. make sure your user has the proper permissions to write in the proper folder.
 
 one thing i learned early on is that it’s always better to be explicit in your params. don't assume rails is magically going to understand your data structure, declare it.
 
@@ -63,6 +63,6 @@ also i have a story for you. once, i spent hours trying to debug a multipart upl
 
 for resources, i found "agile web development with rails 7" book very helpful (though a new version might be out by now). another good option is looking at the rails documentation, specifically the action controller overview section and the section related to strong parameters. they have quite detailed examples and explanations, although at times it can feel a bit like reading a novel. you might also find some articles about active storage on the internet if you plan to use that functionality.
 
-the key takeaway is to understand the structure of your multipart request, use `require` to enforce the presence of required top level parameters, and `permit` to explicitly allow the parameters and their associated keys to be passed on. and always, *always*, double check what’s actually being sent in the request before blaming your code.
+the key takeaway is to understand the structure of your multipart request, use `require` to enforce the presence of required top level parameters, and `permit` to explicitly allow the parameters and their associated keys to be passed on. and always, _always_, double check what’s actually being sent in the request before blaming your code.
 
 handling multipart requests isn’t rocket science, but it demands a careful approach. get the param extraction correct, and you'll have a much smoother time building your api. hope this helps.

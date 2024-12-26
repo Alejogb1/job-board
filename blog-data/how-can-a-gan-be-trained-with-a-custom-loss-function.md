@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-a-gan-be-trained-with-a-custom-loss-function"
 ---
 
-Okay, let’s tackle this one. It’s a question I’ve seen pop up quite a bit, and it usually indicates someone is moving beyond the standard GAN implementations and venturing into the real world of complex, domain-specific tasks. I remember back in '18, working on a project involving medical image synthesis. The standard binary cross-entropy loss just wasn’t cutting it; we needed to enforce specific image characteristics for diagnostic purposes, which meant custom loss landscapes. So, let's break down how you can approach this.
+, let’s tackle this one. It’s a question I’ve seen pop up quite a bit, and it usually indicates someone is moving beyond the standard GAN implementations and venturing into the real world of complex, domain-specific tasks. I remember back in '18, working on a project involving medical image synthesis. The standard binary cross-entropy loss just wasn’t cutting it; we needed to enforce specific image characteristics for diagnostic purposes, which meant custom loss landscapes. So, let's break down how you can approach this.
 
 The core idea is that a generative adversarial network, or GAN, isn’t intrinsically tied to a specific loss function. The most common setup uses binary cross-entropy, particularly for the discriminator’s loss, because we’re essentially trying to distinguish between ‘real’ and ‘fake’ data. However, you have full control over that, as long as you can compute a scalar loss value and provide gradients to both the generator and discriminator. We are ultimately trying to minimize a loss. The architecture of a gan is set; what will change with each gan model is the input data and the loss function.
 
-When formulating a custom loss, it’s helpful to start with what you *need* from your generated data. For instance, with the medical images, we needed to maintain structural integrity, minimize artifacts, and ensure realistic tissue textures. This translates to specific error metrics we could leverage.
+When formulating a custom loss, it’s helpful to start with what you _need_ from your generated data. For instance, with the medical images, we needed to maintain structural integrity, minimize artifacts, and ensure realistic tissue textures. This translates to specific error metrics we could leverage.
 
 For the discriminator, you could consider modifying the binary cross-entropy to incorporate specific data quality metrics. For example, instead of just having it classify 'real' or 'fake,' you could add terms related to the clarity or some other domain-specific attribute you care about.
 
@@ -44,7 +44,7 @@ class CustomGeneratorLoss(nn.Module):
         # Content Loss
         def extract_features(img, model):
             return model(img)
-        
+
         gen_features = extract_features(generated_images, self.vgg)
         target_features = extract_features(target_images, self.vgg)
         content_loss = F.l1_loss(gen_features, target_features)
@@ -133,7 +133,7 @@ for epoch in range(num_epochs):
         discriminator_loss = discriminator_loss_fn(discriminator_output_real, discriminator_output_fake, real_images, generated_images.detach())
         discriminator_loss.backward()
         discriminator_optimizer.step()
-        
+
         # Train generator
         generator_optimizer.zero_grad()
         generated_images = generator(torch.randn(real_images.size(0),100,1,1))
@@ -141,7 +141,7 @@ for epoch in range(num_epochs):
         generator_loss = generator_loss_fn(generated_images, real_images, discriminator_output_fake)
         generator_loss.backward()
         generator_optimizer.step()
-        
+
         if i % 10 == 0:
             print(f'Epoch: {epoch}, Batch: {i}, Discriminator Loss: {discriminator_loss.item():.4f}, Generator Loss: {generator_loss.item():.4f}')
 ```
@@ -150,9 +150,9 @@ This example is more holistic and you can see that the losses get used in a trai
 
 This is just the tip of the iceberg. You can also explore things like:
 
-*   **Perceptual losses:** which use feature maps from pre-trained networks. [Johnson et al., "Perceptual Losses for Real-Time Style Transfer and Super-Resolution"] is a great resource for this.
-*   **Texture losses:** using Gram matrices to capture textures. [Gatys et al., "A Neural Algorithm of Artistic Style"] covers this approach in detail, and it's easily adaptable to texture matching.
-*   **Cycle consistency losses:** if you are doing unpaired image-to-image translation tasks. The original CycleGAN paper [Zhu et al., "Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks"] provides essential information and implementation strategies.
+- **Perceptual losses:** which use feature maps from pre-trained networks. [Johnson et al., "Perceptual Losses for Real-Time Style Transfer and Super-Resolution"] is a great resource for this.
+- **Texture losses:** using Gram matrices to capture textures. [Gatys et al., "A Neural Algorithm of Artistic Style"] covers this approach in detail, and it's easily adaptable to texture matching.
+- **Cycle consistency losses:** if you are doing unpaired image-to-image translation tasks. The original CycleGAN paper [Zhu et al., "Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks"] provides essential information and implementation strategies.
 
 The critical part of training gans with custom losses is to ensure that both losses (discriminator and generator) are well-defined, differentiable with respect to the model parameters, and that the total loss makes sense when it comes to what is desired by the model. This generally requires some testing and tweaking of the loss, and is heavily dependent on what the target data is.
 

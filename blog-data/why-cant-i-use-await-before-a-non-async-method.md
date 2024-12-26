@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-use-await-before-a-non-async-method"
 ---
 
-Okay, let's tackle this. It's a question that surfaces quite frequently, and I've certainly seen my fair share of confusion around it, especially during those early adoption phases of async/await in various projects. From what I've observed over the years, the root cause often stems from a misunderstanding of the fundamental mechanics underpinning asynchronous operations and how `async/await` integrates with that framework.
+, let's tackle this. It's a question that surfaces quite frequently, and I've certainly seen my fair share of confusion around it, especially during those early adoption phases of async/await in various projects. From what I've observed over the years, the root cause often stems from a misunderstanding of the fundamental mechanics underpinning asynchronous operations and how `async/await` integrates with that framework.
 
 The core issue is that `await` is a syntactic construct intrinsically tied to asynchronous functions, specifically those declared using the `async` keyword in javascript (and similar in other languages, though I'll focus on javascript for clarity). It's not a generic command that can be used with any method call, but rather a specialized operator designed to pause execution within an `async` function until a promise is resolved or rejected. The `async` keyword, in turn, transforms the function into a state machine, essentially handling the complexities of yielding control back to the event loop while waiting for the underlying asynchronous operation to complete.
 
@@ -38,7 +38,7 @@ Now, let’s see how a properly setup async function using `await` would work:
 
 ```javascript
 function asyncOperation(value) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve(value * 2);
     }, 500); // Simulating an async delay
@@ -66,25 +66,25 @@ Finally, let's demonstrate how you might need to refactor existing code for asyn
 function legacyAsyncOperation(value, callback) {
   setTimeout(() => {
     callback(null, value * 2); // simulate node-style callback
-  }, 500)
+  }, 500);
 }
 
 async function wrapLegacy() {
   return new Promise((resolve, reject) => {
     legacyAsyncOperation(5, (err, data) => {
-        if (err) {
-            return reject(err);
-        }
-        resolve(data);
+      if (err) {
+        return reject(err);
+      }
+      resolve(data);
     });
   });
 }
 
 async function useWrappedLegacy() {
   try {
-      const result = await wrapLegacy();
-      console.log("Result:", result);
-    } catch (error) {
+    const result = await wrapLegacy();
+    console.log("Result:", result);
+  } catch (error) {
     console.error("Error:", error);
   }
 }
@@ -94,7 +94,7 @@ useWrappedLegacy();
 
 In the above code, we have a legacy asynchronous function that uses a callback pattern. We cannot use await directly on this function, therefore a wrapper around it that returns a promise is needed before we can integrate it correctly with async/await.
 
-It's essential to understand that the `async` keyword doesn't *make* a function asynchronous. It merely facilitates the use of `await` within that function and ensures that the function *always* returns a promise. The actual asynchronous operations must still be implemented using promises, callbacks, or other similar constructs.
+It's essential to understand that the `async` keyword doesn't _make_ a function asynchronous. It merely facilitates the use of `await` within that function and ensures that the function _always_ returns a promise. The actual asynchronous operations must still be implemented using promises, callbacks, or other similar constructs.
 
 For anyone delving deeper into this, I'd highly recommend the 'You Don't Know JS' series, particularly the section on 'Asynchronous JavaScript', by Kyle Simpson. It provides a robust explanation of the underlying mechanisms. Also, the EcmaScript specification documents, which define how JavaScript works, will help to have a more nuanced understanding of async/await.
 

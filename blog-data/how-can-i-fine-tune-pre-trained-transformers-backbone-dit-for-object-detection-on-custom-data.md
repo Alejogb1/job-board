@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-fine-tune-pre-trained-transformers-backbone-dit-for-object-detection-on-custom-data"
 ---
 
-Alright, let's tackle fine-tuning diffusion transformers (DiT) for object detection on custom data. I've been down this road myself, several times, and it's definitely a process that requires a careful, methodical approach. Forget jumping straight into the code; successful fine-tuning relies on a solid understanding of the underlying principles and a clear strategy.
+, let's tackle fine-tuning diffusion transformers (DiT) for object detection on custom data. I've been down this road myself, several times, and it's definitely a process that requires a careful, methodical approach. Forget jumping straight into the code; successful fine-tuning relies on a solid understanding of the underlying principles and a clear strategy.
 
 My experience with DiTs for object detection started a couple of years ago, when I was involved in a project that needed to detect very specific, oddly shaped objects within high-resolution satellite imagery. Initially, we were looking at existing CNN-based approaches, but the results were… unsatisfying, to put it mildly. That's when I started experimenting with DiTs, inspired by their potential for image generation and their transformer architecture. The shift was significant, but only after a few painstaking iterations did we achieve the necessary accuracy and robustness.
 
@@ -144,6 +144,7 @@ def evaluate_model(model, dataloader, iou_threshold=0.5):
 mAP = evaluate_model(model, val_loader)
 print(f"Mean Average Precision: {mAP}")
 ```
+
 This code segment showcases an evaluation process, utilizing the `calculate_iou` function for determining overlap between predicted and ground truth boxes. It also utilizes sklearn's `average_precision_score` to compute the average precision for each class. Note, this is a highly simplified evaluation process. In practice, for a real-world project, one would typically implement a more robust process including handling multi-label datasets, precision-recall curves, and so on.
 
 For a deeper dive into this topic, I'd recommend starting with the original DiT paper: "Diffusion Transformers," which provides the foundational knowledge. Also, consider researching "Faster R-CNN" or "YOLO" as they are classic, widely used object detection models that use feature extractors. Exploring the “mmdetection” library in Python is highly recommended, as it provides well-documented implementations of object detection pipelines. Further, the work by Ross Girshick and co-authors on R-CNNs and subsequent improvements like Fast R-CNN are essential background reading to understand the principles behind object detection model architectures. Finally, keep an eye on any work by the "Deep Learning Indaba" community which focuses on machine learning in the African context.

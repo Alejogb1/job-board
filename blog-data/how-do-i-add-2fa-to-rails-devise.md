@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-do-i-add-2fa-to-rails-devise"
 ---
 
-Alright, let's tackle two-factor authentication (2fa) with devise in rails. It's a topic I've dealt with a fair bit, having rolled my own implementation more than once back before the robust gems we have today became common practice. It's not overly complex, but there are definitely some best practices that can smooth the path significantly.
+, let's tackle two-factor authentication (2fa) with devise in rails. It's a topic I've dealt with a fair bit, having rolled my own implementation more than once back before the robust gems we have today became common practice. It's not overly complex, but there are definitely some best practices that can smooth the path significantly.
 
-First, let's be clear: rolling your own 2fa solution is, generally speaking, a bad idea these days. There are solid, well-maintained libraries that handle the intricacies of generating secrets, verifying tokens, and, crucially, protecting against common vulnerabilities. The primary danger of diy implementations is that you tend to be unaware of edge cases and less frequent exploits, and your in-house solution might lack the security audit that publicly vetted code will have. So, while I have experience building 2fa from scratch, I absolutely do *not* recommend it.
+First, let's be clear: rolling your own 2fa solution is, generally speaking, a bad idea these days. There are solid, well-maintained libraries that handle the intricacies of generating secrets, verifying tokens, and, crucially, protecting against common vulnerabilities. The primary danger of diy implementations is that you tend to be unaware of edge cases and less frequent exploits, and your in-house solution might lack the security audit that publicly vetted code will have. So, while I have experience building 2fa from scratch, I absolutely do _not_ recommend it.
 
 For rails and devise, the go-to gem is usually `devise-two-factor`. It's quite mature, widely used, and integrates pretty seamlessly with the devise authentication framework. I've personally deployed it in several projects, and it's proven to be reliable and relatively straightforward.
 
@@ -32,6 +32,7 @@ class User < ApplicationRecord
          :two_factor_backupable
 end
 ```
+
 Notice the inclusion of `:two_factor_authenticatable` and `:two_factor_backupable`. The former enables the core 2fa logic; the latter provides the mechanism for handling backup codes, which are critical for users who lose access to their authentication app. These are essential to the `devise-two-factor` functioning correctly.
 
 The migrations will add fields to your users table for storing 2fa secrets and backup codes. Run `rails db:migrate` after making these changes.
@@ -112,7 +113,7 @@ This example demonstrates overriding the `create` and `destroy` actions to add l
 
 **Essential Resources and Further Reading**
 
-While the `devise-two-factor` gem takes care of the majority of the heavy lifting, it’s vital to understand the underlying principles of 2fa. I strongly recommend reading up on the rfc 6238 - time-based one-time password algorithm (totp), as that is often the underpinnings of authentication apps.  Understanding how totp works helps you in debugging issues. Additionally, the OATH (open authentication) standard is also crucial. Good sources for general security principals are books such as "Security Engineering" by Ross Anderson and "Serious Cryptography" by Jean-Philippe Aumasson. For a more focused look at secure web development, “The Tangled Web” by Michal Zalewski is excellent. For rails-specific resources, I’d recommend “Agile Web Development with Rails” by Sam Ruby, et al., though you need to note that it's not going to cover the 2fa area specifically, so you will still need to apply what you've learned through the resources mentioned earlier.
+While the `devise-two-factor` gem takes care of the majority of the heavy lifting, it’s vital to understand the underlying principles of 2fa. I strongly recommend reading up on the rfc 6238 - time-based one-time password algorithm (totp), as that is often the underpinnings of authentication apps. Understanding how totp works helps you in debugging issues. Additionally, the OATH (open authentication) standard is also crucial. Good sources for general security principals are books such as "Security Engineering" by Ross Anderson and "Serious Cryptography" by Jean-Philippe Aumasson. For a more focused look at secure web development, “The Tangled Web” by Michal Zalewski is excellent. For rails-specific resources, I’d recommend “Agile Web Development with Rails” by Sam Ruby, et al., though you need to note that it's not going to cover the 2fa area specifically, so you will still need to apply what you've learned through the resources mentioned earlier.
 
 **Final Thoughts**
 

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-hide-the-env-attribute-in-the-airflow-uis-task-instance-details"
 ---
 
-Okay, let's tackle this. Ah, the 'env' attribute on Airflow Task Instance Details. I've definitely been down that road a few times. It’s one of those things that, while incredibly useful for debugging and understanding task execution, can sometimes expose sensitive information that shouldn’t be readily available, especially in a shared environment. I recall, back in my previous gig at a fintech startup, we ran into a similar situation. We had accidentally deployed some secrets using environment variables, which were, of course, visible through the Airflow UI. It was a scramble to mitigate the issue quickly, and I learned a few hard lessons about secure configuration management that day.
+, let's tackle this. Ah, the 'env' attribute on Airflow Task Instance Details. I've definitely been down that road a few times. It’s one of those things that, while incredibly useful for debugging and understanding task execution, can sometimes expose sensitive information that shouldn’t be readily available, especially in a shared environment. I recall, back in my previous gig at a fintech startup, we ran into a similar situation. We had accidentally deployed some secrets using environment variables, which were, of course, visible through the Airflow UI. It was a scramble to mitigate the issue quickly, and I learned a few hard lessons about secure configuration management that day.
 
-So, let’s be precise. The default Airflow Task Instance Detail page exposes the `env` attribute which represents the environment variables set when executing a task. This can include sensitive data such as API keys, database passwords, or other confidential configurations that, as a matter of principle, should not be displayed in the UI. The primary challenge here isn't that we can’t *access* the information – we likely still need it to make the tasks function – it's that it’s being exposed unnecessarily and insecurely to users of the Airflow UI. Hiding this information is not about preventing access entirely; it's about implementing a principle of least privilege by limiting its visibility in this interface.
+So, let’s be precise. The default Airflow Task Instance Detail page exposes the `env` attribute which represents the environment variables set when executing a task. This can include sensitive data such as API keys, database passwords, or other confidential configurations that, as a matter of principle, should not be displayed in the UI. The primary challenge here isn't that we can’t _access_ the information – we likely still need it to make the tasks function – it's that it’s being exposed unnecessarily and insecurely to users of the Airflow UI. Hiding this information is not about preventing access entirely; it's about implementing a principle of least privilege by limiting its visibility in this interface.
 
-The underlying issue stems from how Airflow’s task execution framework handles and surfaces information. Task instances inherit their environment variables from the scheduler's environment, and these, by default, get added to the task's context and consequently become visible in the UI via a relatively straightforward access pattern in the web application code. The goal is to intercept this flow of information *before* it reaches the UI, ideally by either masking the values or completely removing the 'env' attribute during its rendering. Airflow doesn’t offer a simple toggle or configuration parameter to disable this directly, so we need to get a little bit creative.
+The underlying issue stems from how Airflow’s task execution framework handles and surfaces information. Task instances inherit their environment variables from the scheduler's environment, and these, by default, get added to the task's context and consequently become visible in the UI via a relatively straightforward access pattern in the web application code. The goal is to intercept this flow of information _before_ it reaches the UI, ideally by either masking the values or completely removing the 'env' attribute during its rendering. Airflow doesn’t offer a simple toggle or configuration parameter to disable this directly, so we need to get a little bit creative.
 
 The solution typically involves overriding or extending components within Airflow's webserver that are responsible for displaying task instance details. This usually involves creating a custom plugin. Let’s examine a few methods and dive into some code snippets.
 
@@ -41,7 +41,7 @@ In this snippet, we define a `mask_env` function that takes the environment dict
 
 **Method 2: Extending the Task Instance Detail View**
 
-A more involved but powerful method is to extend the `TaskInstance` view used in the UI. By subclassing the existing view, we can override the methods that fetch task instance details and manipulate the returned data *before* it's sent to the template.
+A more involved but powerful method is to extend the `TaskInstance` view used in the UI. By subclassing the existing view, we can override the methods that fetch task instance details and manipulate the returned data _before_ it's sent to the template.
 
 ```python
 from airflow.plugins_manager import AirflowPlugin
@@ -69,10 +69,10 @@ class CustomTaskInstanceView(ModelView):
 
         schema = TaskInstanceCollectionSchema()
         serialized_ti = schema.dump([ti])
-        
+
         if serialized_ti[0] and serialized_ti[0].get("env"):
             del serialized_ti[0]["env"]
-       
+
         return self.render_template(
             "airflow/taskinstance/taskinstance.html",
             task_instance=serialized_ti[0]

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-to-make-inline-keyboards-for-telegram-bots-with-values-in-ruby"
 ---
 
-Alright, let's tackle this. It's a situation I've found myself in more than once, crafting interactive Telegram bots with Ruby, and those inline keyboards are indeed a critical component for a smoother user experience. The core challenge, as you've probably already encountered, isn't just *displaying* buttons; it's connecting those buttons to actionable data—effectively, transmitting values that your bot can then process.
+, let's tackle this. It's a situation I've found myself in more than once, crafting interactive Telegram bots with Ruby, and those inline keyboards are indeed a critical component for a smoother user experience. The core challenge, as you've probably already encountered, isn't just _displaying_ buttons; it's connecting those buttons to actionable data—effectively, transmitting values that your bot can then process.
 
 From experience, I know the standard `reply_markup` approach, while suitable for some use cases, often falls short when you need more complex interactions, where each button press triggers a distinct, data-rich operation. This is where inline keyboards with callback data shine. Let’s break down how to do this effectively in Ruby.
 
-The principle is straightforward, albeit with some details to manage. Instead of sending a simple message, we craft a message with an `inline_keyboard` nested within the `reply_markup` field. This keyboard is comprised of rows, and each row contains one or more buttons. Critically, these buttons don’t just have text; they possess a `callback_data` field. This `callback_data` is the value that’s sent back to your bot when a user presses a particular button. This is vital; it’s how your bot knows *which* button was pressed and, consequently, what action should be taken.
+The principle is straightforward, albeit with some details to manage. Instead of sending a simple message, we craft a message with an `inline_keyboard` nested within the `reply_markup` field. This keyboard is comprised of rows, and each row contains one or more buttons. Critically, these buttons don’t just have text; they possess a `callback_data` field. This `callback_data` is the value that’s sent back to your bot when a user presses a particular button. This is vital; it’s how your bot knows _which_ button was pressed and, consequently, what action should be taken.
 
 Let’s dive into some practical Ruby code examples using the `telegram-bot-ruby` gem. I’ve found it to be reasonably straightforward for creating these interactions. I'll assume you already have the gem installed, set up your Telegram API token, and understand the basic structure of a Ruby bot with this gem.
 

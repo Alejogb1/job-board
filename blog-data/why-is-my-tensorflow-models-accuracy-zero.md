@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-tensorflow-models-accuracy-zero"
 ---
 
-Okay, let’s get into this. Zero accuracy in a TensorFlow model is definitely a frustrating place to be, but it's not uncommon, especially when starting out or when introducing a significant change. From my experience, seeing a model output absolute zero, rather than low-but-improving, usually points to specific categories of errors. Instead of broadly theorizing, let’s break down what I've seen causing this in the trenches, focusing on practical scenarios and how to tackle them.
+, let’s get into this. Zero accuracy in a TensorFlow model is definitely a frustrating place to be, but it's not uncommon, especially when starting out or when introducing a significant change. From my experience, seeing a model output absolute zero, rather than low-but-improving, usually points to specific categories of errors. Instead of broadly theorizing, let’s break down what I've seen causing this in the trenches, focusing on practical scenarios and how to tackle them.
 
 First off, let's ditch the assumption that the model itself is inherently flawed. More often than not, the issue isn't the architecture but what we're feeding it or how we’re training it. I’ve debugged countless hours thinking my layers were broken only to discover the problem was staring at me from the data preprocessing pipeline.
 
@@ -12,14 +12,14 @@ Typically, a zero accuracy result signals one of these three main problem areas:
 
 **1. Data Issues - The Foundation of Your Model**
 
-Data problems are notorious for creating seemingly inexplicable behavior. I remember one particular project where we were trying to classify images of damaged products. The model started spitting out zero accuracy, and after what felt like days, I discovered a bug in the data augmentation pipeline. It was accidentally shuffling image labels *independently* from the images, essentially turning our training set into pure noise. The model was trying to learn from completely random associations.
+Data problems are notorious for creating seemingly inexplicable behavior. I remember one particular project where we were trying to classify images of damaged products. The model started spitting out zero accuracy, and after what felt like days, I discovered a bug in the data augmentation pipeline. It was accidentally shuffling image labels _independently_ from the images, essentially turning our training set into pure noise. The model was trying to learn from completely random associations.
 
 Here’s how this manifests:
 
-   *   **Label Mismatch:** The most common is incorrect labeling of input data, such as mismatched labels (e.g., a picture of a cat is labeled as a dog). This can also occur in regression tasks if the target variable's scale is completely off from what the model expects.
-   *   **Data Scaling and Normalization:** If you haven't properly scaled or normalized your input features (especially for neural networks with activation functions sensitive to scale, like sigmoid or tanh), you might run into problems. Large input values can cause gradients to explode or saturate, leading to ineffective learning.
-   *   **Data Quality:** Missing values, duplicates, or inconsistent data encoding can throw off the learning process. Consider also the presence of “dead” or non-informative samples; data that holds no actual pattern.
-    * **Dataset Imbalance:** If you have a severely imbalanced dataset (one class significantly outnumbers the others), the model might get stuck predicting only the majority class, which results in low accuracy even if it is partially correct.
+- **Label Mismatch:** The most common is incorrect labeling of input data, such as mismatched labels (e.g., a picture of a cat is labeled as a dog). This can also occur in regression tasks if the target variable's scale is completely off from what the model expects.
+- **Data Scaling and Normalization:** If you haven't properly scaled or normalized your input features (especially for neural networks with activation functions sensitive to scale, like sigmoid or tanh), you might run into problems. Large input values can cause gradients to explode or saturate, leading to ineffective learning.
+- **Data Quality:** Missing values, duplicates, or inconsistent data encoding can throw off the learning process. Consider also the presence of “dead” or non-informative samples; data that holds no actual pattern.
+- **Dataset Imbalance:** If you have a severely imbalanced dataset (one class significantly outnumbers the others), the model might get stuck predicting only the majority class, which results in low accuracy even if it is partially correct.
 
 Let's show an example in code. Suppose you have a dataset of student scores and pass/fail labels. Here's a simple way to visualize potential data issues in the context of training:
 
@@ -65,8 +65,8 @@ If we were to train this model on the `raw_scores`, we might see some performanc
 
 Another key area is how the loss function interacts with the activation functions in your final layer. If you're using `sigmoid` activation for a multi-class classification, that's a clear red flag. Similarly, using `softmax` with binary cross-entropy will almost certainly lead to issues. In a regression task, using a classification loss like categorical cross-entropy will make little sense.
 
-   *   **Mismatched Loss and Output:** If the final activation function isn't aligned with the loss function's expectations, the model can't learn properly. For example, `sigmoid` output with categorical cross-entropy will lead to inconsistent gradients.
-   *   **Incorrect Activation:** For multi-class problems, `softmax` is typically used, whereas `sigmoid` is used for binary classification or multi-label problems. Using the incorrect one will result in the model having no proper way to quantify its error.
+- **Mismatched Loss and Output:** If the final activation function isn't aligned with the loss function's expectations, the model can't learn properly. For example, `sigmoid` output with categorical cross-entropy will lead to inconsistent gradients.
+- **Incorrect Activation:** For multi-class problems, `softmax` is typically used, whereas `sigmoid` is used for binary classification or multi-label problems. Using the incorrect one will result in the model having no proper way to quantify its error.
 
 To show this, let's modify our previous code snippet to introduce a problematic model setup:
 
@@ -107,9 +107,10 @@ The 'incorrect' model will likely have zero accuracy. The 'correct' model will p
 Finally, even with pristine data and correct model configuration, a badly set training process can lead to zero accuracy. One instance that stands out was a project with very small batches and a very aggressive learning rate. The model was jumping around the loss landscape without ever converging.
 
     *   **Learning Rate:** Too high or too low can hamper learning, causing divergence or painfully slow convergence. The learning rate is the step size of the optimization algorithm.
-   *   **Batch Size:** With small batch sizes, the gradients are estimated with high variance, leading to noisy updates. Too large, and the model might generalize poorly.
-   *   **Initialization:** Poor weight initialization can result in the model getting stuck in a local minimum.
-   *   **Insufficient Training:** If you don’t train your model long enough, it will not converge to an acceptable solution.
+
+- **Batch Size:** With small batch sizes, the gradients are estimated with high variance, leading to noisy updates. Too large, and the model might generalize poorly.
+- **Initialization:** Poor weight initialization can result in the model getting stuck in a local minimum.
+- **Insufficient Training:** If you don’t train your model long enough, it will not converge to an acceptable solution.
 
 Here’s another code example. This one uses MNIST but adds a tiny batch size and a very large learning rate to show how even with correct data and model choice, we can still achieve zero accuracy:
 
@@ -153,6 +154,6 @@ Notice how the model with incorrect training parameters will likely produce a ze
 
 **Further Learning**
 
-For more detail, I’d highly recommend looking into *Deep Learning* by Goodfellow, Bengio, and Courville; a fantastic foundational resource. Also, *Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow* by Aurélien Géron is excellent for practical application.
+For more detail, I’d highly recommend looking into _Deep Learning_ by Goodfellow, Bengio, and Courville; a fantastic foundational resource. Also, _Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow_ by Aurélien Géron is excellent for practical application.
 
 Debugging zero accuracy isn't always straightforward, but the process is typically methodical. Start with the data, check your loss function/activation function pairing, and finally review training parameters. Most often than not, the solution is found in one of these places.

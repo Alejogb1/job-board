@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-dynamically-change-the-localhost-variable-in-a-procfile-before-deploying-to-heroku"
 ---
 
-Alright, let's tackle this one. Dynamically altering the localhost variable in a `Procfile` before deploying to Heroku is a problem I've encountered several times, especially during the early days when containerization and environment variables weren't as ubiquitous as they are now. It’s the kind of situation where the “ideal” solution of fully containerizing and setting everything via environment variables wasn't always feasible or, sometimes, practical, given project constraints. I remember one particularly messy project where we were still heavily reliant on local file-based configuration for various modules - not ideal, but a reality at the time. We needed a way to ensure that the application, when running locally, would connect to a local database on `localhost:5432` but, on deployment, would connect to the database specified by the Heroku's `DATABASE_URL` environment variable. Simply hardcoding localhost wouldn't cut it.
+, let's tackle this one. Dynamically altering the localhost variable in a `Procfile` before deploying to Heroku is a problem I've encountered several times, especially during the early days when containerization and environment variables weren't as ubiquitous as they are now. It’s the kind of situation where the “ideal” solution of fully containerizing and setting everything via environment variables wasn't always feasible or, sometimes, practical, given project constraints. I remember one particularly messy project where we were still heavily reliant on local file-based configuration for various modules - not ideal, but a reality at the time. We needed a way to ensure that the application, when running locally, would connect to a local database on `localhost:5432` but, on deployment, would connect to the database specified by the Heroku's `DATABASE_URL` environment variable. Simply hardcoding localhost wouldn't cut it.
 
 The core issue revolves around how `Procfile` entries are interpreted by Heroku. They're essentially shell commands that get executed, not configuration files per se. Therefore, directly manipulating `localhost` within the `Procfile` isn't possible. Instead, we must utilize the power of shell scripting and environment variables. The most straightforward approach involves employing an intermediary script or inline command that checks for the presence of a Heroku specific environment variable and conditionally modifies the relevant connection string or config file.
 
@@ -27,13 +27,13 @@ This is perhaps the most versatile approach and works well with various setups. 
     node ./index.js
     ```
 
-2. **Modify the Procfile:**
+2.  **Modify the Procfile:**
 
     ```
     web: ./start.sh
     ```
 
-In this scenario, if the `DATABASE_URL` environment variable is *not* set (which is typical for local development), we fall back to the `localhost` connection string. On Heroku, the `DATABASE_URL` will be present, overriding the local setting, ensuring the application uses the Heroku-provided database connection.
+In this scenario, if the `DATABASE_URL` environment variable is _not_ set (which is typical for local development), we fall back to the `localhost` connection string. On Heroku, the `DATABASE_URL` will be present, overriding the local setting, ensuring the application uses the Heroku-provided database connection.
 
 **Solution 2: Inline Logic Directly in the Procfile**
 

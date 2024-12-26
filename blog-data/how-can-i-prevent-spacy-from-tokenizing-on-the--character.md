@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-prevent-spacy-from-tokenizing-on-the--character"
 ---
 
-Alright, let's tackle this. It's a common issue, and one I recall hitting during a project involving structured product data a few years back. We were processing descriptions that often included component specifications separated by forward slashes, and Spacy's default tokenizer, as you've probably discovered, tends to split these up, which was not desirable for our use case.
+, let's tackle this. It's a common issue, and one I recall hitting during a project involving structured product data a few years back. We were processing descriptions that often included component specifications separated by forward slashes, and Spacy's default tokenizer, as you've probably discovered, tends to split these up, which was not desirable for our use case.
 
 The core of the issue lies within Spacy's tokenizer configuration. Spacy, by default, uses a rule-based tokenizer that operates on a set of predefined patterns. The forward slash, `/`, is, unfortunately, one of those default token boundaries. To prevent this, we need to modify the tokenizer's behavior. I generally find two approaches that work reliably: either customizing the tokenization rules directly or by using a pre-tokenizer function. I'll walk you through both.
 
@@ -56,11 +56,11 @@ def create_custom_pretokenizer(nlp):
        # Replace all "/" by a very uncommon string
        modified_text = re.sub(r'/', '_slash_', text)
        return modified_text
-    
+
     prefix_re = compile_prefix_regex(nlp.Defaults.prefixes)
     suffix_re = compile_suffix_regex(nlp.Defaults.suffixes)
     infix_re = compile_infix_regex(nlp.Defaults.infixes)
-    
+
     tokenizer = Tokenizer(nlp.vocab,
                          prefix_search=prefix_re.search,
                          suffix_search=suffix_re.search,
@@ -70,11 +70,11 @@ def create_custom_pretokenizer(nlp):
     def custom_tokenizer(text):
         modified_text = pretokenize(text)
         doc = tokenizer(modified_text)
-        
+
         # Postprocess to replace uncommon strings back to slashes
         tokens_list = [t.text.replace('_slash_', '/') for t in doc]
         return tokens_list
-    
+
     nlp.tokenizer = custom_tokenizer
     return nlp
 
@@ -107,13 +107,13 @@ def create_custom_tokenizer_matcher(nlp):
     def custom_tokenizer(text):
         modified_text = pretokenize(text)
         doc = nlp(modified_text)
-        
+
         tokens_list = postprocess([t.text for t in doc])
         return tokens_list
 
     nlp.tokenizer = custom_tokenizer
     return nlp
-    
+
 nlp = spacy.load("en_core_web_sm")
 
 nlp = create_custom_tokenizer_matcher(nlp)
@@ -123,7 +123,7 @@ doc = nlp("component1/component2 other text/here and more/text")
 print(doc)
 ```
 
-Here I use a pretokenizer that only operates on character sets that usually surround the forward slash.  This more controlled replacement keeps `/` as a token separator in cases where we don't expect to see it separating component names.
+Here I use a pretokenizer that only operates on character sets that usually surround the forward slash. This more controlled replacement keeps `/` as a token separator in cases where we don't expect to see it separating component names.
 
 **Which Method to Choose**
 
@@ -135,9 +135,9 @@ As a final word of advice, don't be afraid to experiment and combine these techn
 
 For deeper understanding of the concepts I’ve discussed, consider these resources:
 
-*   **"Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper**: A classic text that covers the fundamentals of tokenization and text processing techniques. Chapter 3 "Processing Text with Python" is especially relevant.
-*   **Spacy's Official Documentation**: The documentation is thorough and provides detailed explanations of the tokenizer architecture and customization options. I would recommend looking at the Tokenizer documentation and the section on custom language model components.
-*   **Regular Expressions Cookbook" by Jan Goyvaerts and Steven Levithan**: If you intend to work with regular expressions at all I recommend you have a reference such as this.
-*   **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin**: A comprehensive textbook on NLP, which offers a deeper theoretical perspective, although often a bit higher-level.
+- **"Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper**: A classic text that covers the fundamentals of tokenization and text processing techniques. Chapter 3 "Processing Text with Python" is especially relevant.
+- **Spacy's Official Documentation**: The documentation is thorough and provides detailed explanations of the tokenizer architecture and customization options. I would recommend looking at the Tokenizer documentation and the section on custom language model components.
+- **Regular Expressions Cookbook" by Jan Goyvaerts and Steven Levithan**: If you intend to work with regular expressions at all I recommend you have a reference such as this.
+- **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin**: A comprehensive textbook on NLP, which offers a deeper theoretical perspective, although often a bit higher-level.
 
 I hope this helps you on your text processing journey. It's a field that rewards attention to detail, and mastering tokenization is a key step in getting the results you need.

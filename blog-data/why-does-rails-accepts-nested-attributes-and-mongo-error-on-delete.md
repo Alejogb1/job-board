@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "why-does-rails-accepts-nested-attributes-and-mongo-error-on-delete"
 ---
 
-alright, so you're hitting a classic gotcha with rails and mongo, specifically around nested attributes and how deletion cascades (or rather, *doesn't*) work. i've been down this rabbit hole myself, more times than i care to count, usually late at night fueled by way too much coffee. so let's break it down in a way that hopefully clicks.
+, so you're hitting a classic gotcha with rails and mongo, specifically around nested attributes and how deletion cascades (or rather, _doesn't_) work. i've been down this rabbit hole myself, more times than i care to count, usually late at night fueled by way too much coffee. so let's break it down in a way that hopefully clicks.
 
 first, rails nested attributes are, at their core, a convenience. think of it as syntactic sugar that lets you handle complex form submissions where one model relates to another. it allows a single form to modify data across multiple database tables or collections, depending on if we're talking about relational or document-based database. for example, if you have a `user` model and a `post` model and every user has multiple posts, nested attributes allow you to create a new user and simultaneously create several posts associated with the user, all from one form.
 
-rails uses mechanisms under the hood to detect if a nested attribute is new or existing, and whether it should be created, updated, or even marked for destruction. and, crucially, all this happens within the context of the *rails* application, using active record's understanding of relations and primary keys. this is key.
+rails uses mechanisms under the hood to detect if a nested attribute is new or existing, and whether it should be created, updated, or even marked for destruction. and, crucially, all this happens within the context of the _rails_ application, using active record's understanding of relations and primary keys. this is key.
 
 now, mongo, on the other hand, well, it operates on an entirely different paradigm. its a document database, not a relational one. that means mongo has no concept of foreign keys or, the type of relational links that active record relies on. a document stores everything inside itself, in a way. it's just a bunch of key-value pairs or nested documents, and it is not aware of relationships outside its boundaries.
 
@@ -23,13 +23,13 @@ for example, let's say you have your `user` document and it has embedded posts. 
   "_id": "user_id_123",
   "name": "John Doe",
   "posts": [
-      { "_id": "post_id_1", "title": "first post", "content": "some text"},
-      { "_id": "post_id_2", "title": "second post", "content": "other text"}
+    { "_id": "post_id_1", "title": "first post", "content": "some text" },
+    { "_id": "post_id_2", "title": "second post", "content": "other text" }
   ]
 }
 ```
 
-when you tell rails "delete this user," rails, when using active record and a relational database, is going to fire off a delete query for the user and because you may have defined a cascade delete rule it will fire another delete query for the related posts. however, with mongo, rails simply fires a delete query for the user *document*. mongo happily obliges and deletes the user document, which, in turn, *implicitly* deletes the embedded post documents as well. the deletion happens because everything is stored together as one document. it's not a deletion cascade in the relational sense, it is just a consequence of mongo's document structure and the fact that rails did not know what to do.
+when you tell rails "delete this user," rails, when using active record and a relational database, is going to fire off a delete query for the user and because you may have defined a cascade delete rule it will fire another delete query for the related posts. however, with mongo, rails simply fires a delete query for the user _document_. mongo happily obliges and deletes the user document, which, in turn, _implicitly_ deletes the embedded post documents as well. the deletion happens because everything is stored together as one document. it's not a deletion cascade in the relational sense, it is just a consequence of mongo's document structure and the fact that rails did not know what to do.
 
 the problem occurs when you use nested attributes and try to mark them for destruction via rails `accepts_nested_attributes_for`. if you send data to rails with a `_destroy: '1'` attribute for a nested post document, rails understands that it should delete that post document. but again, with mongo, this doesn't translate to an actual database-level delete operation of an associated document as rails expects from relational databases. rails just marks the nested document for removal within the context of the `user` document, and later, the updated user document without the marked post is saved in mongo effectively removing the post from the user document. this also can be done in a single database update call.
 
@@ -58,21 +58,21 @@ there are generally a few approaches:
     this code, however, assumes the posts have a `user_id` attribute, and again this has to be implemented by you as mongo does not handle this.
 
 2.  **embedded documents with a catch:** if your documents are genuinely embedded like in my first example, then mongo will cascade the delete for you, but be aware, marking destruction with `_destroy` will work only if the nested document is part of the main document, if it is a separate collection, that will not work. again, you have to remember what is happening here.
-3. **orphan removal in a single update call** this method works in the nested documents scenario like the first example. When you send data to rails with a `_destroy: '1'` attribute for a nested post document, rails understand that it should delete that post document. rails generates a query to update the parent document excluding the marked post.
+3.  **orphan removal in a single update call** this method works in the nested documents scenario like the first example. When you send data to rails with a `_destroy: '1'` attribute for a nested post document, rails understand that it should delete that post document. rails generates a query to update the parent document excluding the marked post.
 
-   ```ruby
-    class User < ApplicationRecord
-     accepts_nested_attributes_for :posts, allow_destroy: true
-    end
+    ```ruby
+     class User < ApplicationRecord
+      accepts_nested_attributes_for :posts, allow_destroy: true
+     end
     ```
 
-     and now, you can pass a `_destroy` attribute.
+    and now, you can pass a `_destroy` attribute.
 
     ```ruby
     user.update(posts_attributes: [{id: post.id, _destroy: '1'}])
     ```
 
-     this will remove the post from the user document in one single query.
+    this will remove the post from the user document in one single query.
 
 a note of caution: if you are planning to implement manual cascading deletes (option 1), you might want to ensure the queries are atomic to avoid inconsistency issues. this will probably become a point where you would require to implement transactions in mongo. which opens another can of worms.
 

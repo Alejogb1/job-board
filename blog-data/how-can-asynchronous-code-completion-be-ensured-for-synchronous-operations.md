@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-asynchronous-code-completion-be-ensured-for-synchronous-operations"
 ---
 
-Alright, let's unpack this. The challenge of ensuring asynchronous code completion when dealing with inherently synchronous operations is something I've encountered a fair few times, particularly back when I was knee-deep in legacy system integration. It's a common stumbling block, but there are definitely strategies we can employ to bridge that gap, rather than fighting the synchronous nature of the operations.
+, let's unpack this. The challenge of ensuring asynchronous code completion when dealing with inherently synchronous operations is something I've encountered a fair few times, particularly back when I was knee-deep in legacy system integration. It's a common stumbling block, but there are definitely strategies we can employ to bridge that gap, rather than fighting the synchronous nature of the operations.
 
 The core problem stems from the fact that synchronous operations, by their very definition, block the execution thread until they complete. This means that when you’re interacting with something synchronous in an asynchronous context, your application can easily become unresponsive. What we aim to do, then, is to encapsulate these synchronous calls in a manner that won't hinder our asynchronous workflow. We want to ensure that our asynchronous code can continue operating without being held hostage by the synchronous process, and that it receives confirmation that the operation has completed.
 
@@ -102,9 +102,9 @@ In this setup, `synchronous_api_call` is a stand-in for an external API interact
 
 To deepen your understanding of these techniques, I'd strongly recommend exploring the following:
 
-*   **"Operating System Concepts" by Abraham Silberschatz, Peter Baer Galvin, and Greg Gagne:** This provides a solid foundation on threading and process management, which is fundamental to understanding the methods discussed. Pay particular attention to chapters covering process synchronization and inter-process communication.
-*   **"Concurrency in Go" by Katherine Cox-Buday:** While language-specific, this book provides an excellent exploration of concurrency models, which are applicable to threading and asynchronous programming in general.
-*   **The Python `concurrent.futures` documentation and the `asyncio` module documentation:** A close read of the standard library is very valuable when applying these concepts in practical settings.
-* **"Programming Erlang: Software for a Concurrent World" by Joe Armstrong:** While this book focuses on Erlang, it offers a different and fascinating perspective on concurrency and how to reason about concurrent systems, which may be applicable to architectural decisions involving the handling of synchronous operations in asynchronous environments.
+- **"Operating System Concepts" by Abraham Silberschatz, Peter Baer Galvin, and Greg Gagne:** This provides a solid foundation on threading and process management, which is fundamental to understanding the methods discussed. Pay particular attention to chapters covering process synchronization and inter-process communication.
+- **"Concurrency in Go" by Katherine Cox-Buday:** While language-specific, this book provides an excellent exploration of concurrency models, which are applicable to threading and asynchronous programming in general.
+- **The Python `concurrent.futures` documentation and the `asyncio` module documentation:** A close read of the standard library is very valuable when applying these concepts in practical settings.
+- **"Programming Erlang: Software for a Concurrent World" by Joe Armstrong:** While this book focuses on Erlang, it offers a different and fascinating perspective on concurrency and how to reason about concurrent systems, which may be applicable to architectural decisions involving the handling of synchronous operations in asynchronous environments.
 
 In my experience, correctly handling synchronous tasks in an asynchronous environment is often the difference between a responsive application and a frustrating one. By carefully applying techniques like thread pools, process pools, and message queues, we can effectively bridge the gap and create robust and scalable systems. It's a complex problem, but a manageable one with the proper approach.

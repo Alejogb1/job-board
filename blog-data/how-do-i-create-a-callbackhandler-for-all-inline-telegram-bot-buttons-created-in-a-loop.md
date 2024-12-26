@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-do-i-create-a-callbackhandler-for-all-inline-telegram-bot-buttons-created-in-a-loop"
 ---
 
-alright, so you’re hitting the classic telegram bot callback loop issue. i’ve been there, trust me. it’s like trying to catch flies with chopsticks, at first it seems impossible, but there’s a simple method once you've seen it.
+, so you’re hitting the classic telegram bot callback loop issue. i’ve been there, trust me. it’s like trying to catch flies with chopsticks, at first it seems impossible, but there’s a simple method once you've seen it.
 
 basically, the problem arises when you dynamically generate inline keyboards in a loop, and all of their callbacks end up pointing to the same handler function, usually with the wrong data. it’s not the buttons fault, they are behaving as expected, it’s all about closure and how python (or most languages, really) handles variable scopes within loops.
 
@@ -149,20 +149,20 @@ in this last example, we're encoding our data in `json` format directly into the
 
 **some extra thoughts**
 
-*   remember that `callback_data` has a size limitation, so try to avoid dumping huge json objects in it. in such case i suggest using a database to store extra parameters that the handler can fetch.
+- remember that `callback_data` has a size limitation, so try to avoid dumping huge json objects in it. in such case i suggest using a database to store extra parameters that the handler can fetch.
 
-*   always cast your `callback_data` to string before setting it, it will save you future headaches.
+- always cast your `callback_data` to string before setting it, it will save you future headaches.
 
-*   be careful with using lambda functions in loops. they are very useful, but can create these tricky situations, specially if you’re not aware of the closure mechanics.
+- be careful with using lambda functions in loops. they are very useful, but can create these tricky situations, specially if you’re not aware of the closure mechanics.
 
-*   if you are dealing with very complex bot interactions, you might wanna explore using `callback_data` with a prefix system or an id system. for example `button_type:unique_id`, like `print:123`, `edit:456`. this will allow you to register different handlers based on the button prefix which keeps your code more structured.
+- if you are dealing with very complex bot interactions, you might wanna explore using `callback_data` with a prefix system or an id system. for example `button_type:unique_id`, like `print:123`, `edit:456`. this will allow you to register different handlers based on the button prefix which keeps your code more structured.
 
 now, for some resources, if you are interested in knowing more on the subject of callback handlers:
 
-*   **"programming in python 3: a complete introduction to the python language" by mark summerfield:** this is a very good book to solidify your knowledge about python, and it covers in depth the mechanics of lambdas and closures.
+- **"programming in python 3: a complete introduction to the python language" by mark summerfield:** this is a very good book to solidify your knowledge about python, and it covers in depth the mechanics of lambdas and closures.
 
-*   **official python documentation:** the python documentation on the `functools` module is always a good reference.
+- **official python documentation:** the python documentation on the `functools` module is always a good reference.
 
-*   **"fluent python: clear, concise, and effective programming" by luciano ramalho:** another must-read for intermediate python programmers. it also talks about closures and how to handle them in different use cases.
+- **"fluent python: clear, concise, and effective programming" by luciano ramalho:** another must-read for intermediate python programmers. it also talks about closures and how to handle them in different use cases.
 
 i hope this helps. and remember, when in doubt, try `partial`, it's like the swiss army knife of dynamic callback handlers. oh and a programmer joke, why did the programmer quit his job? because he didn't get arrays! (i'm sorry i couldn't resist). good luck, and happy coding!

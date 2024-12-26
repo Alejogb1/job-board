@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-implement-traits-for-multiple-types-in-rust"
 ---
 
-Alright, let's tackle this. Been around the block with Rust a few times, and this specific issue of implementing traits for multiple types pops up more often than one might think. It's a foundational concept when you're aiming for that sweet spot of code reusability and type safety. Instead of jumping straight to the examples, let’s unpack *why* we even need this. In essence, we want to define behavior that's not specific to a single concrete type, but applicable across a range of types, without resorting to dynamic dispatch or other runtime penalties if possible. Traits are Rust’s answer to this challenge.
+, let's tackle this. Been around the block with Rust a few times, and this specific issue of implementing traits for multiple types pops up more often than one might think. It's a foundational concept when you're aiming for that sweet spot of code reusability and type safety. Instead of jumping straight to the examples, let’s unpack _why_ we even need this. In essence, we want to define behavior that's not specific to a single concrete type, but applicable across a range of types, without resorting to dynamic dispatch or other runtime penalties if possible. Traits are Rust’s answer to this challenge.
 
 Now, when I first encountered this, I was working on a micro-service responsible for processing incoming data from various sources – json, csv, flat files – you name it. Each data source had different structures, but ultimately, I needed a unified way to extract, transform, and persist them. This is where traits really shined. Instead of writing separate functions for each data format, I defined a trait, `DataSource`, for example.
 
@@ -128,7 +128,7 @@ fn main() {
 
 Here, the `CustomDisplay` trait is defined, and implemented for our `WrappedI32`, a local struct we have defined in our scope that wraps a primitive i32 type. This showcases how trait implementation can add new functionality to existing types, even if you don’t own the type directly.
 
-Important to note here, while you can’t implement an external trait for an external type, you *can* implement your trait for external types, or external traits for your types. This is powerful, but it’s essential to be mindful of ownership and scope.
+Important to note here, while you can’t implement an external trait for an external type, you _can_ implement your trait for external types, or external traits for your types. This is powerful, but it’s essential to be mindful of ownership and scope.
 
 Now, for further exploration, I'd highly recommend focusing on several key resources. For a very thorough and authoritative deep dive into Rust, "The Rust Programming Language" (also known as the “Rust Book”) is indispensable. I'd also suggest looking into "Programming Rust: Fast, Safe Systems Development" by Jim Blandy, Jason Orendorff, and Leonora F. S. Tindall, which offers in-depth knowledge on more advanced topics. Additionally, exploring the `std::ops` module in the Rust standard library documentation will reveal numerous examples of traits that form the basis of many common operations (like addition, equality). Also, the section on trait objects in the Rust documentation is very helpful, particularly when you start needing runtime polymorphism.
 

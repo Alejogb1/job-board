@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "regex-length-string-match"
 ---
 
-Okay so you're asking about regex and length matching specifically for strings Right I've been there done that several times and I can definitely see where you might hit snags It seems simple at first but then you dig a bit deeper and you find all sorts of edge cases and gotchas
+you're asking about regex and length matching specifically for strings Right I've been there done that several times and I can definitely see where you might hit snags It seems simple at first but then you dig a bit deeper and you find all sorts of edge cases and gotchas
 
 First off let's clarify you want to match a string using regex but only if it meets a certain length criteria right Not just matching a particular pattern but the overall string length should also matter It's not really a regex primary job to count the length of a string you know regular expressions are fundamentally about matching sequences of characters not counting them So what we will be doing is using regex features along with other programming language features to achieve this kind of result
 
@@ -38,7 +38,7 @@ print(check_string_length_and_pattern(text4, regex_pattern, 5, 10)) # Output: Fa
 
 As you can see in the code I have a regex pattern that matches alphanumeric strings Then I use python's string `len()` function to check the string length along with the regex check `re.match()` This keeps your code clean and easy to understand and maintain
 
-Now you might be saying "Okay that's great but what about dynamic lengths based on other parameters" Sure I can show you that
+Now you might be saying " that's great but what about dynamic lengths based on other parameters" Sure I can show you that
 
 Lets say we are validating user input fields each field has its own validation rules including length requirements And the lengths can be stored in a database or configuration file. Instead of hard coding them or having multiple if-else I would recommend creating a function to handle this logic
 
@@ -54,7 +54,7 @@ function validateInput(input, regexPattern, minLength, maxLength) {
 }
 
 // Example usage
-const regexPattern1 = "^[a-zA-Z]+$";  // Example regex: letters only
+const regexPattern1 = "^[a-zA-Z]+$"; // Example regex: letters only
 const input1 = "HelloWorld";
 const input2 = "Hello123";
 const input3 = "World";
@@ -98,8 +98,8 @@ print(validate_string_with_rules(text5, regex_pattern_2, rules3))  # Output: Fal
 
 This is more flexible right You can use all the kind of rules you need by just adding the corresponding key to `length_rules` this example shows a way to add multiple rules for length validations and its still easy to understand and maintain
 
-Now this brings me to one final point and here's the joke part "Why was the regex programmer always so calm" because they knew how to handle any kind of string *expression* ok sorry.
+Now this brings me to one final point and here's the joke part "Why was the regex programmer always so calm" because they knew how to handle any kind of string _expression_ ok sorry.
 
 But seriously you should also study the theoretical aspects of this problem and for this I recommend looking for resources that talk about Formal Language theory This stuff is fundamental when you are working with regex I would advise against resources that only show tutorials and code snippets try to find books and research papers that cover the topic in a more rigorous way You will learn a lot trust me. "Introduction to Automata Theory Languages and Computation" by John E Hopcroft and Jeffrey D Ullman is a great resource I would highly recommend this one or any similar books that deal with finite automata and formal language theory
 
-Okay that's pretty much it you got it all I've done this quite a lot in my career so I know the issues you'll face you shouldn't just try to match everything in one big regex you should also use the tools that your programming language gives you It makes your code more readable more maintainable and you will thank yourself later. Keep it simple keep it clean. Good luck coding and be safe.
+that's pretty much it you got it all I've done this quite a lot in my career so I know the issues you'll face you shouldn't just try to match everything in one big regex you should also use the tools that your programming language gives you It makes your code more readable more maintainable and you will thank yourself later. Keep it simple keep it clean. Good luck coding and be safe.

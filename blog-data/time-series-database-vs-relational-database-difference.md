@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "time-series-database-vs-relational-database-difference"
 ---
 
-Okay so this again eh time series data versus relational databases I’ve been down this road so many times feels like a deja vu but hey let's get into it It's not a new question by any means and its importance is understated by many newcomers
+this again eh time series data versus relational databases I’ve been down this road so many times feels like a deja vu but hey let's get into it It's not a new question by any means and its importance is understated by many newcomers
 
 First off relational databases your MySQL PostgreSQL Sqlite the usual suspects they're built for data where relationships are the key thing think of your standard application data users products orders stuff that’s naturally related in structured ways relational is in the name really. Data is typically normalized you know breaking stuff into tables with foreign keys and all that jazz. It’s great for ensuring data integrity and consistency that's its bread and butter. Queries are often complex requiring multiple joins and conditions to get the right answer. This is what they are optimized for. You can do time based queries no problem but if all you are querying are time based this is like using a tank to crack an egg.
 
-On the other hand time series databases that’s where things get interesting if your data has a time dimension its first class citizen then these things are for you. These are databases like InfluxDB Prometheus TimescaleDB specifically designed to store data points that are indexed by time with optional tags and fields. It is about time first then other data. Imagine a sensor monitoring temperature voltage you have a lot of data coming in all indexed by time the query patterns are usually around time ranges and data aggregation not complicated joins and relationships. 
+On the other hand time series databases that’s where things get interesting if your data has a time dimension its first class citizen then these things are for you. These are databases like InfluxDB Prometheus TimescaleDB specifically designed to store data points that are indexed by time with optional tags and fields. It is about time first then other data. Imagine a sensor monitoring temperature voltage you have a lot of data coming in all indexed by time the query patterns are usually around time ranges and data aggregation not complicated joins and relationships.
 
 I remember way back in 2010 I was working on a system to monitor network devices and I was initially using PostgreSQL yeah mistake number one. It worked but it was slow queries were killing the database specially when trying to aggregate data over time. I was basically using a car to do gardening. It was cumbersome and inefficient. My queries ended up in unreadable SQL madness with loads of group by and window functions it was a mess I had to switch it out for influxDB for my own sanity at least. It made life significantly better and I started to sleep better that week.
 
@@ -43,6 +43,7 @@ FROM sensor_data
 WHERE time >= now() - 1d
 GROUP BY time(1h)
 ```
+
 See how much easier and simpler to read this is and more importantly it is very efficient compared to SQL variant for its specific purpose. It reads like how you would describe the problem you are trying to solve it is more intuitive. It should be obvious which one is better for this type of problem.
 
 And here's one more using PromQL from Prometheus just to give you another perspective of time series query language.

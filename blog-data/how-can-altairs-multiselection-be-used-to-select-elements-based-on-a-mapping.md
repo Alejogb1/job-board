@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-altairs-multiselection-be-used-to-select-elements-based-on-a-mapping"
 ---
 
-Okay, let's delve into using Altair's `MultiSelection` for element selection via mappings, a problem I encountered quite a bit back when I was architecting data visualization dashboards for a biotech company. We needed dynamic interactive plots that responded to user selections, and Altair, with its declarative syntax, proved invaluable.
+, let's delve into using Altair's `MultiSelection` for element selection via mappings, a problem I encountered quite a bit back when I was architecting data visualization dashboards for a biotech company. We needed dynamic interactive plots that responded to user selections, and Altair, with its declarative syntax, proved invaluable.
 
-The crux of the issue, as I see it, lies in the fact that `MultiSelection` inherently works with underlying data rows rather than directly with a mapped visual representation. This means we're not directly selecting, for instance, a circle that *represents* a data point but rather the data point itself, identified through its row index. However, there are some workarounds we can use to create the desired behavior using mapping.
+The crux of the issue, as I see it, lies in the fact that `MultiSelection` inherently works with underlying data rows rather than directly with a mapped visual representation. This means we're not directly selecting, for instance, a circle that _represents_ a data point but rather the data point itself, identified through its row index. However, there are some workarounds we can use to create the desired behavior using mapping.
 
 My approach has generally centered around using a specific mapping variable in a condition, coupled with layered charts. We essentially need a way to 'tag' elements based on selection, which then drives visual changes in our chart.
 
@@ -116,7 +116,7 @@ chart = (points + highlight)
 chart
 ```
 
-In example 3, we've added a new column 'month' which was derived from 'date' using a transformation. Our `selection` variable `selection = alt.selection_multi(fields=['month'], empty='none')` directly targets this new 'month' column. This is a key point. The selection is based on the *data* column, which happens to be derived, not on the original 'date' column. The visual encoding is only used to map the colors. The ability to dynamically select via transformed columns is particularly useful for interactive data exploration.
+In example 3, we've added a new column 'month' which was derived from 'date' using a transformation. Our `selection` variable `selection = alt.selection_multi(fields=['month'], empty='none')` directly targets this new 'month' column. This is a key point. The selection is based on the _data_ column, which happens to be derived, not on the original 'date' column. The visual encoding is only used to map the colors. The ability to dynamically select via transformed columns is particularly useful for interactive data exploration.
 
 **Key Takeaways & Further Exploration**
 
@@ -124,4 +124,4 @@ The `MultiSelection` doesn't work on the aesthetic mapping directly; it works by
 
 For a deep understanding, I highly recommend looking into the official Altair documentation, specifically the sections on selections, and the declarative syntax philosophy. Also, the book "Interactive Data Visualization for the Web" by Scott Murray gives a strong foundation in web visualization and will help solidify understanding of the declarative approach in libraries like Altair. More theoretically, “The Grammar of Graphics” by Leland Wilkinson, while not directly related to Altair, provides the theoretical bedrock for the data visualization layers that Altair implements. Understanding the foundations will greatly aid you in mastering Altair. Additionally, the Vega-Lite grammar documentation is invaluable as Altair compiles to Vega-Lite specifications. Exploring that will deepen one's understanding of why Altair works the way it does.
 
-In summary, my experience shows you must think carefully about the data fields you are selecting *on*, not necessarily the aesthetic properties that are visible. Map your data wisely, then select based on those data mappings, and the rest will usually fall into place. It is through a thoughtful mapping of data to visual encoding, that one gains the most out of `MultiSelection`.
+In summary, my experience shows you must think carefully about the data fields you are selecting _on_, not necessarily the aesthetic properties that are visible. Map your data wisely, then select based on those data mappings, and the rest will usually fall into place. It is through a thoughtful mapping of data to visual encoding, that one gains the most out of `MultiSelection`.

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-query-criteria-in-a-subclass-on-grails-3"
 ---
 
-alright, so, you're asking about query criteria within a subclass using grails 3, yeah? i’ve been there, more times than i care to count. it can be a bit fiddly, especially when you’re moving from simpler domain models to more complex inheritance hierarchies. let me break down what i’ve learned over the years, and share some code snippets that might help you out.
+, so, you're asking about query criteria within a subclass using grails 3, yeah? i’ve been there, more times than i care to count. it can be a bit fiddly, especially when you’re moving from simpler domain models to more complex inheritance hierarchies. let me break down what i’ve learned over the years, and share some code snippets that might help you out.
 
 basically, the challenge arises from how grails, or more precisely gorm, handles inheritance in its criteria queries. when you have a superclass and a subclass, and you try to use `createCriteria()` directly on the subclass, it can sometimes lead to unexpected behavior, specifically around the filtering applied to the superclass properties. the criteria often seem to "leak" down or not be applied correctly. i recall a particularly nasty incident in version 2.x, back when i was working on that legacy project, it caused a bug that took me a whole day to find and fix that, believe me, taught me a few things about domain models and inheritance.
 

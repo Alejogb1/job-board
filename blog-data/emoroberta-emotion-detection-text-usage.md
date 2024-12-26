@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "emoroberta-emotion-detection-text-usage"
 ---
 
-Okay so you're asking about using emoroberta for emotion detection in text right I've been down this road myself trust me Its a bit of a rabbit hole but definitely doable. Let me walk you through it based on my experience you'll see it's not as bad as it looks.
+you're asking about using emoroberta for emotion detection in text right I've been down this road myself trust me Its a bit of a rabbit hole but definitely doable. Let me walk you through it based on my experience you'll see it's not as bad as it looks.
 
 First off emoroberta its a flavor of roberta its been fine tuned for emotion classification tasks. It's not some magic box though it still needs proper handling and understanding. My first project with it was back in 2021 we were trying to gauge customer sentiment from their online forum posts. Oh boy was that a mess of slang and sarcasm. We initially tried a basic sentiment analyzer the kind that just looks for positive or negative words it was laughable it thought everything was a heated argument we are now using emoroberta and its doing much much better.
 
@@ -21,6 +21,7 @@ text_example = "This is really annoying. I'm so frustrated."
 result = emotion_classifier(text_example)
 print(result)
 ```
+
 This will output something like this: `[{'label': 'anger', 'score': 0.9234}]`. You know the basics you have to load the model with the pipeline function then simply pass your text and see what it comes out with in terms of emotional label and its score. A tip dont try to directly use the models from huggingface without the pipeline it is a nightmare.
 
 Now you might be thinking this is too easy yes its because the pipeline function is doing all the dirty work for you. Under the hood its tokenizing the text feeding it to the model and then interpreting the output.
@@ -32,6 +33,7 @@ I had a particularly bad time with customer feedback that was in a mix of langua
 Now lets move onto the more advanced stuff lets say you want to fine-tune this model. You can also use the transformers library to do that it is much more involved of a process. I recommend reading papers on fine tuning to properly prepare for this task.
 
 Here is a simple snippet with the most common setup with pytorch.
+
 ```python
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, Trainer, TrainingArguments

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-customize-a-wav2vec2ctctokenizer-with-rules"
 ---
 
-Okay, let's tackle this. Customizing a `Wav2Vec2CTCTokenizer` with specific rules – I've been down that road more times than I care to recall. It's not always straightforward, but with a clear understanding of how tokenizers work and the specific mechanisms available within the transformers library, it’s definitely achievable. The issue usually isn't that the library can’t do it, it's often more about finding the *precise* way to instruct it to do what we need.
+, let's tackle this. Customizing a `Wav2Vec2CTCTokenizer` with specific rules – I've been down that road more times than I care to recall. It's not always straightforward, but with a clear understanding of how tokenizers work and the specific mechanisms available within the transformers library, it’s definitely achievable. The issue usually isn't that the library can’t do it, it's often more about finding the _precise_ way to instruct it to do what we need.
 
 My own experience with this came during a project involving very specific phonetic transcriptions where standard tokenizations were proving inadequate. The base models were trained on large datasets with broadly applicable vocabularies, but we had a narrow domain with its own quirks. We needed custom rules to map certain sounds and symbols to specific tokens, and that’s where the real work started.
 
@@ -50,7 +50,7 @@ def add_custom_tokens(tokenizer, custom_tokens):
     # First, get the current vocabulary
     vocab = tokenizer.get_vocab()
     current_vocab_size = len(vocab)
-    
+
     # Next, get the tokenizer’s reverse vocab
     reverse_vocab = {v: k for k, v in vocab.items()}
 
@@ -58,7 +58,7 @@ def add_custom_tokens(tokenizer, custom_tokens):
         if token in vocab:
             print(f"Token '{token}' already in vocabulary at index {vocab[token]}. Ignoring")
             continue
-        
+
         # Append to vocab as the next index, ensuring the reverse vocab is also updated
         new_index = current_vocab_size
         vocab[token] = new_index
@@ -114,7 +114,7 @@ class SpeechDataset(torch.utils.data.Dataset):
 
     def __len__(self):
         return len(self.audio_paths)
-    
+
     def __getitem__(self, index):
       audio_path = self.audio_paths[index]
       label = self.labels[index]
@@ -178,8 +178,8 @@ This example shows a vastly simplified fine-tuning process. In a real scenario, 
 
 **Further Reading:**
 
-*   **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** A comprehensive textbook that provides a foundational understanding of natural language processing and speech. Its sections on tokenization and speech recognition are invaluable.
-*  **The Transformers library documentation**: The official Hugging Face documentation for the Transformers library is an excellent and very practical reference. Refer to the specific pages on `PreTrainedTokenizer`, and related classes.
-*   **Original papers on Wav2Vec2:** The original papers, such as “wav2vec 2.0: A Framework for Self-Supervised Learning of Speech Representations” provides an important understanding of how the model operates on a fundamental level, including the importance of the tokenizer in the framework.
+- **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** A comprehensive textbook that provides a foundational understanding of natural language processing and speech. Its sections on tokenization and speech recognition are invaluable.
+- **The Transformers library documentation**: The official Hugging Face documentation for the Transformers library is an excellent and very practical reference. Refer to the specific pages on `PreTrainedTokenizer`, and related classes.
+- **Original papers on Wav2Vec2:** The original papers, such as “wav2vec 2.0: A Framework for Self-Supervised Learning of Speech Representations” provides an important understanding of how the model operates on a fundamental level, including the importance of the tokenizer in the framework.
 
 Customizing tokenizers, especially for CTC based models, is an involved process, but it allows for a very fine degree of control over how text is represented and mapped to tokens, an area where fine tuning can be as critical to a models performance as the choice of neural network architecture. By following a methodology that involves understanding the original vocabulary, carefully creating custom token mappings, and fine-tuning the model, you should be able to achieve the precise behaviour you need.

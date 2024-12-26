@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-2fa-to-rails-devise"
 ---
 
-Okay, let's talk about bolstering the security of your Rails application with two-factor authentication (2FA) using Devise. It's a crucial step these days, and thankfully Devise, a staple authentication solution for Rails, is quite extensible in this regard. I’ve actually tackled this on a project where we were handling sensitive user data for a financial platform; the experience definitely hammered home just how critical this security layer is. We weren’t relying solely on passwords, and neither should you.
+, let's talk about bolstering the security of your Rails application with two-factor authentication (2FA) using Devise. It's a crucial step these days, and thankfully Devise, a staple authentication solution for Rails, is quite extensible in this regard. I’ve actually tackled this on a project where we were handling sensitive user data for a financial platform; the experience definitely hammered home just how critical this security layer is. We weren’t relying solely on passwords, and neither should you.
 
 My approach tends to favor simplicity and maintainability. Therefore, while you'll find several options out there – from building your own custom solution to using a full-fledged service – I typically lean towards using the 'devise-two-factor' gem. It's well-maintained, integrates seamlessly with Devise, and offers a good balance between ease of use and flexibility. The gem uses the Time-based One-time Password (TOTP) algorithm, which is widely accepted and supported by authenticator apps like Google Authenticator, Authy, and many others.
 
@@ -60,7 +60,7 @@ The general workflow will involve these core steps:
 2.  **Displaying a QR code:** The application will display a QR code, which the user scans using their authenticator app.
 3.  **Verifying the first TOTP code:** After scanning, the user will provide a TOTP code to confirm that the setup process was successful.
 4.  **Enabling 2FA:** If verification is successful, the `second_factor_enabled` flag is set to true.
-5.  **Authentication process:** Subsequently, when a user logs in, they’ll have to provide both their username/password *and* a TOTP code.
+5.  **Authentication process:** Subsequently, when a user logs in, they’ll have to provide both their username/password _and_ a TOTP code.
 
 **Code Snippets**
 
@@ -205,19 +205,19 @@ end
 
 **Important Considerations**
 
-*   **Error Handling:** The code snippets above are for demonstration purposes. Real-world applications will need robust error handling and input validation to address corner cases.
-*   **Backup Codes:** Don't forget to implement the backup code recovery process. This involves generating a set of one-time use codes at the same time that you enable 2FA, and storing them securely so a user can regain access if they lose their authenticator app.
-*   **Rate Limiting:** Implement rate limiting on failed login attempts to avoid brute-force attacks on the 2FA code entry.
-*   **Security:** Make sure your secret keys are stored in an encrypted format, at rest in your database, using the mechanism supplied by the gem, and use appropriate access control on the data layer.
-*   **User Experience:** Consider how users enable, disable, or recover 2FA as part of your overall design. It should be relatively intuitive, and also should provide useful error messaging.
+- **Error Handling:** The code snippets above are for demonstration purposes. Real-world applications will need robust error handling and input validation to address corner cases.
+- **Backup Codes:** Don't forget to implement the backup code recovery process. This involves generating a set of one-time use codes at the same time that you enable 2FA, and storing them securely so a user can regain access if they lose their authenticator app.
+- **Rate Limiting:** Implement rate limiting on failed login attempts to avoid brute-force attacks on the 2FA code entry.
+- **Security:** Make sure your secret keys are stored in an encrypted format, at rest in your database, using the mechanism supplied by the gem, and use appropriate access control on the data layer.
+- **User Experience:** Consider how users enable, disable, or recover 2FA as part of your overall design. It should be relatively intuitive, and also should provide useful error messaging.
 
 **Further Reading**
 
 I highly recommend delving into the following resources for a deeper understanding:
 
-*   **RFC 6238 (TOTP):** *Time-Based One-Time Password Algorithm*. The foundational document for TOTP. A deep understanding here is crucial.
-*   **The Ruby on Rails Security Guide:** The official Rails security documentation is an invaluable resource for overall security best practices with Rails.
-*   **Devise Gem documentation:** Explore the comprehensive Devise documentation, and also the specific documentation for the `devise-two-factor` gem.
-*   **OWASP Authentication Cheat Sheet:** Provides a lot of best practice advice for implementing secure authentication mechanisms including 2FA.
+- **RFC 6238 (TOTP):** _Time-Based One-Time Password Algorithm_. The foundational document for TOTP. A deep understanding here is crucial.
+- **The Ruby on Rails Security Guide:** The official Rails security documentation is an invaluable resource for overall security best practices with Rails.
+- **Devise Gem documentation:** Explore the comprehensive Devise documentation, and also the specific documentation for the `devise-two-factor` gem.
+- **OWASP Authentication Cheat Sheet:** Provides a lot of best practice advice for implementing secure authentication mechanisms including 2FA.
 
 Implementing 2FA is not just a checkmark on a security audit, but it’s a commitment to safeguarding user data. These steps, paired with the right resources, will move you towards a more secure Rails application. Remember to test thoroughly and to consider user experience with each change you implement. The goal is a balanced approach that combines robust security with ease of use.

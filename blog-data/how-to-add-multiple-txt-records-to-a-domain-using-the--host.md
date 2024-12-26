@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-to-add-multiple-txt-records-to-a-domain-using-the--host"
 ---
 
-Alright, let's delve into the specifics of adding multiple TXT records to a domain at the root level (represented by the `@` host). This is a fairly common task, and although it seems straightforward on the surface, it can have some subtleties, especially when dealing with different DNS management interfaces. I've certainly had my share of late nights debugging DNS configurations, so I can speak from experience on this one.
+, let's delve into the specifics of adding multiple TXT records to a domain at the root level (represented by the `@` host). This is a fairly common task, and although it seems straightforward on the surface, it can have some subtleties, especially when dealing with different DNS management interfaces. I've certainly had my share of late nights debugging DNS configurations, so I can speak from experience on this one.
 
 The core issue lies in understanding that the `@` symbol in DNS zone files, or the equivalent field in various DNS management UIs, simply means 'this domain itself'. So, when we talk about adding TXT records for `@`, we are adding those records directly to the domain name (e.g., example.com). This is where we store records for things like SPF, DKIM, and DMARC. These records, often used for email authentication, require multiple TXT records. Crucially, DNS allows for multiple TXT records to exist for the same host, including `@`.
 
-However, the *way* you achieve this differs depending on your DNS provider. Some providers have very intuitive interfaces, while others might require a bit of technical maneuvering. It's almost never a case of simply overwriting an existing record; that would cause problems. The DNS system expects a record to be added as an *additional* record, not replaced, when we need more than one TXT record for the same name.
+However, the _way_ you achieve this differs depending on your DNS provider. Some providers have very intuitive interfaces, while others might require a bit of technical maneuvering. It's almost never a case of simply overwriting an existing record; that would cause problems. The DNS system expects a record to be added as an _additional_ record, not replaced, when we need more than one TXT record for the same name.
 
 Let me give you an example from a past project, a migration of an enterprise email system. We had to move from an old legacy platform to a new cloud provider, and this transition required meticulously setting up email authentication. So there was a need for several TXT records for `@`. We had to correctly create each of those new records, without accidentally deleting the others.
 
@@ -46,7 +46,7 @@ Cloudflare has an intuitive interface, but you still need to understand how to a
 4. Choose ‘TXT’ as the type.
 5. In the 'Name' field, enter `@`.
 6. In the 'Content' field, add your TXT record value (e.g., `"v=spf1 include:_spf.example.com ~all"`), and save.
-7. Repeat steps 3-6 for *each* additional TXT record. Importantly, you *don't* re-enter the name or try to comma-separate or concatenate TXT values here. Cloudflare, like most modern DNS providers, will handle multiple records correctly. Each will have the `@` in the name field and the data content field will hold individual text value.
+7. Repeat steps 3-6 for _each_ additional TXT record. Importantly, you _don't_ re-enter the name or try to comma-separate or concatenate TXT values here. Cloudflare, like most modern DNS providers, will handle multiple records correctly. Each will have the `@` in the name field and the data content field will hold individual text value.
 
 This might look like the JSON structure beneath the web interface:
 
@@ -61,11 +61,11 @@ This might look like the JSON structure beneath the web interface:
   {
     "type": "TXT",
     "name": "@",
-     "content": "google-site-verification=xxxxxxxxxxxxxxxxxxxxxxxxx",
+    "content": "google-site-verification=xxxxxxxxxxxxxxxxxxxxxxxxx",
     "ttl": 300
   },
   {
-   "type": "TXT",
+    "type": "TXT",
     "name": "@",
     "content": "dmarc=v=DMARC1; p=reject; rua=mailto:mailauth@example.com",
     "ttl": 300
@@ -94,47 +94,47 @@ Here's a conceptual example of how this might be represented in the Route 53 API
 {
   "ChangeBatch": {
     "Changes": [
-        {
+      {
         "Action": "CREATE",
         "ResourceRecordSet": {
-            "Name": "example.com",
-            "Type": "TXT",
-            "TTL": 300,
-            "ResourceRecords": [
-                {
-                  "Value": "\"v=spf1 include:_spf.example.com ~all\""
-                 }
-              ]
-          }
-        },
-         {
-        "Action": "CREATE",
-        "ResourceRecordSet": {
-            "Name": "example.com",
-            "Type": "TXT",
-            "TTL": 300,
-            "ResourceRecords": [
-                {
-                   "Value": "\"google-site-verification=xxxxxxxxxxxxxxxxxxxxxxxxx\""
-                 }
-               ]
+          "Name": "example.com",
+          "Type": "TXT",
+          "TTL": 300,
+          "ResourceRecords": [
+            {
+              "Value": "\"v=spf1 include:_spf.example.com ~all\""
             }
-          },
-          {
-          "Action": "CREATE",
-          "ResourceRecordSet": {
-              "Name": "example.com",
-              "Type": "TXT",
-              "TTL": 300,
-              "ResourceRecords": [
-                    {
-                      "Value": "\"dmarc=v=DMARC1; p=reject; rua=mailto:mailauth@example.com\""
-                   }
-                ]
-              }
-          }
+          ]
+        }
+      },
+      {
+        "Action": "CREATE",
+        "ResourceRecordSet": {
+          "Name": "example.com",
+          "Type": "TXT",
+          "TTL": 300,
+          "ResourceRecords": [
+            {
+              "Value": "\"google-site-verification=xxxxxxxxxxxxxxxxxxxxxxxxx\""
+            }
+          ]
+        }
+      },
+      {
+        "Action": "CREATE",
+        "ResourceRecordSet": {
+          "Name": "example.com",
+          "Type": "TXT",
+          "TTL": 300,
+          "ResourceRecords": [
+            {
+              "Value": "\"dmarc=v=DMARC1; p=reject; rua=mailto:mailauth@example.com\""
+            }
+          ]
+        }
+      }
     ]
-   }
+  }
 }
 ```
 
@@ -142,10 +142,10 @@ This structure shows that the same zone ("example.com") is the target for multip
 
 **Key Points & Resources:**
 
-*   **Avoid overwriting:** Never replace an existing TXT record when you want to add another; that will lead to issues. Always add new records as independent entries, even if the ‘name’ or ‘host’ (@ in this case) is identical.
-*   **Quoting matters:** Be meticulous about quoting your TXT record data. Many DNS providers require double quotes. However, remember to use backslashes to escape any double quotes already inside the text you're saving.
-*   **Propagation Time:** Remember that DNS changes may take time to propagate fully across the internet, which can often be anywhere from a few minutes to up to 48 hours. Patience is key.
+- **Avoid overwriting:** Never replace an existing TXT record when you want to add another; that will lead to issues. Always add new records as independent entries, even if the ‘name’ or ‘host’ (@ in this case) is identical.
+- **Quoting matters:** Be meticulous about quoting your TXT record data. Many DNS providers require double quotes. However, remember to use backslashes to escape any double quotes already inside the text you're saving.
+- **Propagation Time:** Remember that DNS changes may take time to propagate fully across the internet, which can often be anywhere from a few minutes to up to 48 hours. Patience is key.
 
-For authoritative information on DNS, I'd suggest starting with *DNS and BIND* by Paul Albitz and Cricket Liu – it's a classic and indispensable guide for a deeper understanding of DNS architecture. Another resource is RFC 1035, *Domain Names—Implementation and Specification*, which you can find on the Internet Engineering Task Force website (ietf.org). This details the underlying protocol. Also look at RFC 7208, *Sender Policy Framework (SPF) for Authorizing Use of Domains in Email*, and RFC 7489, *Domain-based Message Authentication, Reporting, and Conformance (DMARC)* for email related records. These will give you valuable insight into the purpose and structure of TXT records used for email authentication.
+For authoritative information on DNS, I'd suggest starting with _DNS and BIND_ by Paul Albitz and Cricket Liu – it's a classic and indispensable guide for a deeper understanding of DNS architecture. Another resource is RFC 1035, _Domain Names—Implementation and Specification_, which you can find on the Internet Engineering Task Force website (ietf.org). This details the underlying protocol. Also look at RFC 7208, _Sender Policy Framework (SPF) for Authorizing Use of Domains in Email_, and RFC 7489, _Domain-based Message Authentication, Reporting, and Conformance (DMARC)_ for email related records. These will give you valuable insight into the purpose and structure of TXT records used for email authentication.
 
 By keeping these principles in mind, adding multiple TXT records to the `@` host should become a far more predictable process, avoiding frustrating configuration headaches. Remember, paying close attention to the structure expected by your specific DNS provider is crucial.

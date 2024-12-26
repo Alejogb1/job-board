@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-implement-from-for-nested-arrays-without-specifying-generic-types-repeatedly"
 ---
 
-Okay, let's tackle this. The frustration with needing to repeatedly specify generic types when working with nested structures, particularly during `from` conversions, is a pain point I've certainly encountered—more times than I care to remember, especially back in the days when I was heavily involved in systems programming for a large e-commerce platform. We were dealing with highly variable data formats, and repetitive type specifications quickly became both cumbersome and error-prone. I recall one particular incident that involved converting a deeply nested configuration structure read from an external file, and the type annotations alone were longer than the actual logic. It became clear we needed a better way, and while direct language features aren't always there to offer an immediate solution, the way we implement `From` traits provides a flexible way forward.
+, let's tackle this. The frustration with needing to repeatedly specify generic types when working with nested structures, particularly during `from` conversions, is a pain point I've certainly encountered—more times than I care to remember, especially back in the days when I was heavily involved in systems programming for a large e-commerce platform. We were dealing with highly variable data formats, and repetitive type specifications quickly became both cumbersome and error-prone. I recall one particular incident that involved converting a deeply nested configuration structure read from an external file, and the type annotations alone were longer than the actual logic. It became clear we needed a better way, and while direct language features aren't always there to offer an immediate solution, the way we implement `From` traits provides a flexible way forward.
 
 The core issue, as you're probably aware, arises when `From<T>` implementations themselves depend on generics. If you have nested structures, say `Vec<Vec<Vec<i32>>>` and you want to convert it to, perhaps, a custom data structure, the immediate inclination is often to write `impl From<Vec<Vec<Vec<i32>>>> for MyStruct`. Now, imagine you also want to support `Vec<Vec<Vec<u64>>>`, and `Vec<Vec<Vec<String>>>`. The combinatorial explosion of required `From` implementations is quite obvious, and it becomes incredibly tedious and, again, error-prone, especially when the nesting gets more complex or you have even more possible inner types.
 
@@ -86,6 +86,7 @@ fn main() {
 
 }
 ```
+
 We create a `NestedList` of `MyData<i32>` by calling `NestedList::from` on `vec![vec![1,2],vec![3,4]]` without needing to create a specific `From` implementation for `Vec<Vec<i32>>`. This is the flexibility we're going for. The same thing works for strings. The program runs successfully, demonstrating the ability to convert our nested vectors to custom data structures without explicitly defining implementations for the combination of every type.
 
 This technique effectively circumvents the need to write a `From` implementation for every nested level of every possible inner type. It also neatly encapsulates the conversion logic within the generic `From` implementations, leading to more maintainable and reusable code.

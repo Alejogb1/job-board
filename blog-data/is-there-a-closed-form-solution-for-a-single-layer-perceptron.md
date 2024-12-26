@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-there-a-closed-form-solution-for-a-single-layer-perceptron"
 ---
 
-Alright, let's unpack this. The question of a closed-form solution for a single-layer perceptron is something I’ve encountered more than once in my career, particularly when working on early attempts at machine learning implementations. The short answer is: *it depends*, but mostly, no, not in the way you might initially hope. Let me elaborate.
+, let's unpack this. The question of a closed-form solution for a single-layer perceptron is something I’ve encountered more than once in my career, particularly when working on early attempts at machine learning implementations. The short answer is: _it depends_, but mostly, no, not in the way you might initially hope. Let me elaborate.
 
 By "closed-form solution," we’re generally referring to a mathematical expression that provides a direct calculation of the optimal parameters (weights) of our model without needing an iterative process like gradient descent. It’s the kind of solution that, given input data, spits out the perfect answer in a single step. With linear regression, for instance, you can find the weights using the normal equation. This elegant, direct approach is what we'd ideally want with every problem.
 
@@ -12,11 +12,11 @@ However, a single-layer perceptron introduces a crucial element that complicates
 
 When I was working on a prototype for an image classifier back in the early 2000s, I initially attempted to shoehorn a closed-form approach into a perceptron, naively hoping for a quick and direct solution. The dataset was deceptively small and relatively well-separated, which masked the inherent limitations. This approach involved manipulating the equations to resemble linear regression, effectively ignoring the step function for the initial calculation and treating the problem as a linear one in a very specific manner. This did not scale and had obvious drawbacks.
 
-Let’s delve into how we can attempt a closed-form approach for a single-layer perceptron *under specific conditions* and then highlight the limitations.
+Let’s delve into how we can attempt a closed-form approach for a single-layer perceptron _under specific conditions_ and then highlight the limitations.
 
 **A Simplified Case: Linear Separability and Pseudoinverse**
 
-Suppose we have a simple binary classification task with linearly separable data. Further, imagine we're not dealing with a step function but rather an *identity* activation (effectively, no activation). We can represent this as:
+Suppose we have a simple binary classification task with linearly separable data. Further, imagine we're not dealing with a step function but rather an _identity_ activation (effectively, no activation). We can represent this as:
 
 ```python
 import numpy as np
@@ -93,11 +93,11 @@ predictions = predict_with_threshold(X, w)
 print("Predictions:", predictions)
 ```
 
-As you can see, this shows how predictions can be made for a chosen set of weights using a defined threshold. However, it doesn't provide a method for directly computing the optimal weights *given* the targets.
+As you can see, this shows how predictions can be made for a chosen set of weights using a defined threshold. However, it doesn't provide a method for directly computing the optimal weights _given_ the targets.
 
 **The Need for Iterative Methods**
 
-Instead, what we typically resort to is an *iterative process* like the perceptron learning algorithm, or a more sophisticated approach like gradient descent when used with a differentiable activation function such as a sigmoid. These approaches start with random weights and then iteratively improve them by adjusting the parameters based on the error observed on each training sample.
+Instead, what we typically resort to is an _iterative process_ like the perceptron learning algorithm, or a more sophisticated approach like gradient descent when used with a differentiable activation function such as a sigmoid. These approaches start with random weights and then iteratively improve them by adjusting the parameters based on the error observed on each training sample.
 
 For example, a basic perceptron training loop (which itself relies on an update rule, not a closed-form solution) can be defined as follows:
 
@@ -131,7 +131,7 @@ The code illustrates a training loop, which is completely different from a close
 
 **Key takeaways**
 
-So, to revisit our question, *no*, there isn't a general closed-form solution for a single-layer perceptron with its standard step function. The non-differentiable nature of the step function means we can't directly calculate the optimal weights using linear algebra. Closed-form approaches only work in very particular scenarios like when using an identity activation or when data is perfectly separable in a specific linear format. Instead, we need to employ iterative methods such as the perceptron learning algorithm or other gradient-based approaches which are not closed-form in nature.
+So, to revisit our question, _no_, there isn't a general closed-form solution for a single-layer perceptron with its standard step function. The non-differentiable nature of the step function means we can't directly calculate the optimal weights using linear algebra. Closed-form approaches only work in very particular scenarios like when using an identity activation or when data is perfectly separable in a specific linear format. Instead, we need to employ iterative methods such as the perceptron learning algorithm or other gradient-based approaches which are not closed-form in nature.
 
 For further understanding, I'd recommend digging into "Pattern Classification" by Duda, Hart, and Stork. It's a classic and provides a solid foundational understanding of machine learning concepts including perceptrons and their limitations. "Neural Networks for Pattern Recognition" by Christopher Bishop is another excellent text, offering a deeper dive into various aspects of neural networks.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-reconcile-differing-input-and-target-sizes-in-a-neural-network"
 ---
 
-Okay, let's tackle this. I remember encountering this exact issue back when I was developing a time-series forecasting model for energy consumption a few years ago. We were pulling data from multiple sources, each with a different reporting frequency, leading to significant variations in input sequence lengths, and naturally, the desired output had its own specific dimension. It’s a common hurdle, and there are several established methods to address it. It isn't a single-shot solution; the best approach really depends on the nature of your data and the specific problem you're trying to solve.
+, let's tackle this. I remember encountering this exact issue back when I was developing a time-series forecasting model for energy consumption a few years ago. We were pulling data from multiple sources, each with a different reporting frequency, leading to significant variations in input sequence lengths, and naturally, the desired output had its own specific dimension. It’s a common hurdle, and there are several established methods to address it. It isn't a single-shot solution; the best approach really depends on the nature of your data and the specific problem you're trying to solve.
 
 The core of the issue lies in the fundamental architecture of most neural networks, particularly fully connected layers and convolutional layers that expect a fixed-size input. When your input sequences or data points vary in size, you need a preprocessing step to harmonize them before they can be fed into your model. Likewise, your target might be something completely different, like a single classification label from a variable-length input, or a fixed-size output when predicting a time series. Here's a breakdown of some techniques I've used successfully, illustrated with some examples:
 
@@ -115,6 +115,7 @@ dummy_output = np.random.rand(5, output_dim) # 5 batches, each has a forecast
 
 model.fit(dummy_input, dummy_output, epochs=10) # we train with padded inputs, but the output will always be of fixed size
 ```
+
 In this example, the `create_forecasting_model` function will process the padded input sequence via an LSTM layer, but use a final dense layer with fixed output size, appropriate for one-step time series forecasting. Crucially the `return_sequences=False` option of the LSTM layer only returns the final hidden state, thus producing a fixed size input to the dense layer, regardless of original input sequence length.
 
 For deeper learning on encoder-decoder architectures and attention mechanisms, "Neural Machine Translation by Jointly Learning to Align and Translate" by Bahdanau et al. (2014) is a seminal paper. Additionally, Chapter 10 of "Deep Learning" mentioned earlier also covers sequence-to-sequence models extensively.

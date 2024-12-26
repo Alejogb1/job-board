@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-do-a-linear-regression-with-a-rolling-window"
 ---
 
-Alright, let’s tackle this. I remember quite vividly a project back at 'Aetheria Labs' where we had to model energy consumption patterns based on a continuous stream of sensor data. Standard linear regression was just too static; we needed to adapt to the changing trends, and that’s where rolling window regression became indispensable. So, let's unpack this.
+, let’s tackle this. I remember quite vividly a project back at 'Aetheria Labs' where we had to model energy consumption patterns based on a continuous stream of sensor data. Standard linear regression was just too static; we needed to adapt to the changing trends, and that’s where rolling window regression became indispensable. So, let's unpack this.
 
 The core idea behind a rolling window linear regression is to apply linear regression not to the entire dataset at once but to a sliding subset or window of the data. This approach acknowledges that relationships between variables are rarely constant over long periods. Instead of fitting a single model to the entire range, you fit multiple models, each to a small, localized window of data, and move this window across the data. This technique is incredibly beneficial when dealing with time-series data or any dataset where the underlying relationships may evolve. It allows you to capture short-term changes and produce a model that's more reflective of the immediate data context.
 
@@ -67,11 +67,13 @@ print(f"The start index of the last model: {last_model_index}")
 print(f"The calculated slope of the last model is: {slope}")
 print(f"The calculated intercept of the last model is: {intercept}")
 ```
+
 This snippet illustrates the most straightforward implementation of a rolling linear regression. It iterates through the dataset, creates a window, fits a `LinearRegression` model within that window, and stores it. The code includes some basic error handling, such as checking that `x` and `y` arrays have the same length, as well as that the window size is valid.
 
 **Example 2: Weighted Rolling Window Regression**
 
 Now, let's add the weighting I spoke about. This example employs exponential weights, giving more importance to recent observations:
+
 ```python
 import numpy as np
 from sklearn.linear_model import LinearRegression
@@ -184,8 +186,9 @@ window = 20
 rolling_regression_df = pandas_rolling_regression(df, 'x','y',window)
 print(rolling_regression_df.tail())
 ```
+
 Here, we leverage `pandas`'s `rolling()` method combined with an `apply()` function. This provides a very clean and efficient method for working with time-series data. `rolling()` creates a sliding window view on the DataFrame and `apply()` lets us implement an arbitrary function to calculate the desired output within each window. The output is also returned as a Pandas DataFrame, which is very useful for further analysis and plotting.
 
-For further reading and an in-depth understanding, I highly recommend reviewing the textbook "*Time Series Analysis* by James D. Hamilton." It provides a solid theoretical foundation for understanding time series modeling, including various regression techniques. Also, the "*Elements of Statistical Learning*" by Hastie, Tibshirani, and Friedman is an excellent resource for anyone looking to deepen their understanding of machine learning algorithms, including regression. These sources are, in my experience, the best for a strong foundational understanding.
+For further reading and an in-depth understanding, I highly recommend reviewing the textbook "_Time Series Analysis_ by James D. Hamilton." It provides a solid theoretical foundation for understanding time series modeling, including various regression techniques. Also, the "_Elements of Statistical Learning_" by Hastie, Tibshirani, and Friedman is an excellent resource for anyone looking to deepen their understanding of machine learning algorithms, including regression. These sources are, in my experience, the best for a strong foundational understanding.
 
 In summary, implementing rolling window linear regression requires careful consideration of the window size and whether weighting schemes are necessary. These decisions depend on the nature of your data and the patterns you are trying to capture. Start simple, experiment, and iterate based on what you observe. That’s the best way to become proficient in this, and indeed, most other analytical techniques.

@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "why-is-roboflow-throwing-an-attributeerror-normalize-error"
 ---
 
-Okay, let's unpack this `AttributeError: normalize` issue with Roboflow. I've encountered this one a few times over the years, particularly during those late-night model training sessions, and it often boils down to a mismatch between expected data formats and how Roboflow’s API or internal processes are attempting to handle them.
+, let's unpack this `AttributeError: normalize` issue with Roboflow. I've encountered this one a few times over the years, particularly during those late-night model training sessions, and it often boils down to a mismatch between expected data formats and how Roboflow’s API or internal processes are attempting to handle them.
 
 The core issue, as the `AttributeError` implies, is that somewhere in the Roboflow processing pipeline, an object is being accessed for its `normalize` attribute, and that attribute simply doesn't exist on the particular object it's trying to use. It’s crucial to understand that this doesn’t necessarily mean there’s a problem with Roboflow itself but often indicates the input data isn't formatted the way it expects. This could arise from several different places within the processing flow, but given the typical context, it usually boils down to data augmentation or image preprocessing steps within Roboflow’s platform or API that are calling this `normalize` operation on the wrong object type.
 
 From what I’ve observed across different projects, the `normalize` method typically applies to numerical arrays, often pixel data from images, or sometimes coordinates. These pixel arrays are often represented as NumPy arrays or, less frequently, as python lists. Roboflow, particularly in its training pipeline, standardizes inputs, which often means converting pixel values to a specified range, usually between 0 and 1, or sometimes between -1 and 1, depending on the specific model. If, for instance, instead of receiving an image object in an appropriate format, it gets something like a file path string, a list of bounding box annotations, or a non-numerical data structure, the `.normalize()` call will fail because those objects do not implement that method.
 
-Let's break down common causes and look at some illustrative examples. Imagine this scenario: I had a project a while back where I was feeding Roboflow data sourced from a custom image extraction script. I was pre-processing the images locally but then somehow, during a data pipeline refactoring, missed converting the images to NumPy arrays *before* sending them to Roboflow. I was sending the image file paths as strings instead, wrapped inside some custom object. Roboflow, expecting a numerical array, called `normalize` on it and predictably, threw this error.
+Let's break down common causes and look at some illustrative examples. Imagine this scenario: I had a project a while back where I was feeding Roboflow data sourced from a custom image extraction script. I was pre-processing the images locally but then somehow, during a data pipeline refactoring, missed converting the images to NumPy arrays _before_ sending them to Roboflow. I was sending the image file paths as strings instead, wrapped inside some custom object. Roboflow, expecting a numerical array, called `normalize` on it and predictably, threw this error.
 
-Here's an analogous snippet showing this concept, *as if* we were passing a string:
+Here's an analogous snippet showing this concept, _as if_ we were passing a string:
 
 ```python
 import numpy as np

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-there-no-connection-to-a-different-serverip"
 ---
 
-Alright, let's tackle this disconnection issue. I've seen this problem crop up more times than I'd care to count over the years, and while the surface might seem straightforward – "why can't I connect?" – the root causes can be surprisingly multifaceted. It's rarely ever one single thing, and often involves a methodical approach to peel back the layers of potential issues. Let's explore some key reasons and potential resolutions, drawing from some cases I've encountered firsthand.
+, let's tackle this disconnection issue. I've seen this problem crop up more times than I'd care to count over the years, and while the surface might seem straightforward – "why can't I connect?" – the root causes can be surprisingly multifaceted. It's rarely ever one single thing, and often involves a methodical approach to peel back the layers of potential issues. Let's explore some key reasons and potential resolutions, drawing from some cases I've encountered firsthand.
 
 My experience has taught me that a lack of connection to a different server or ip address generally falls into several broad categories: network configuration problems, server-side issues, or client-side misconfigurations. Let's dive in.
 
@@ -14,13 +14,13 @@ Another prevalent culprit is network address translation, or nat. Nat is commonl
 
 Then there's the potential for a client-side issue. It might be a badly configured local firewall, or it could be a network interface misconfiguration. I've witnessed instances where a machine with multiple interfaces (like a wired ethernet and a wireless adapter) defaulted to the incorrect one, resulting in an inability to reach a server on a different network segment. Simple mistakes can make for long debugging sessions.
 
-On the server side, the issues can vary greatly. The server application itself may not be listening on the correct interface or port, or it might not be running at all. I recall a particular incident where a service crashed immediately after starting up, and it took some digging to find the root cause in the application logs, revealing a misconfigured database connection string. Even though the server *appeared* to be running from the user's perspective (the service manager said it was started), it wasn't actually listening for incoming connections.
+On the server side, the issues can vary greatly. The server application itself may not be listening on the correct interface or port, or it might not be running at all. I recall a particular incident where a service crashed immediately after starting up, and it took some digging to find the root cause in the application logs, revealing a misconfigured database connection string. Even though the server _appeared_ to be running from the user's perspective (the service manager said it was started), it wasn't actually listening for incoming connections.
 
 Let's look at some examples. Let’s suppose we're trying to connect to an http server on port 80.
 
 **Example 1: Simple Network Check**
 
-This first example, using python, demonstrates a rudimentary check to see if a server port is open. This does not definitively prove there is a web service *running*, but it confirms the underlying network connection is possible.
+This first example, using python, demonstrates a rudimentary check to see if a server port is open. This does not definitively prove there is a web service _running_, but it confirms the underlying network connection is possible.
 
 ```python
 import socket
@@ -51,7 +51,7 @@ This code attempts a tcp connection to the specified host and port. `connect_ex`
 
 Next, let’s illustrate a firewall simulation (on the server-side) using basic netcat, which is useful for manual port testing and is widely available on linux and macos. This isn't intended to be a realistic full firewall implementation, but to help understand the behaviour of a block.
 
-First, on the *server* terminal, let's simulate a listening service:
+First, on the _server_ terminal, let's simulate a listening service:
 
 ```bash
 nc -l 8080

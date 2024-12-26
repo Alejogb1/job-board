@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "why-cant-my-code-find-jpeg-images-in-the-folder"
 ---
 
-Alright, let's tackle this. The inability to locate .jpeg images within a folder, while seemingly straightforward, often stems from a confluence of subtle factors. It’s something I've encountered numerous times over the years, and the solution usually involves methodical troubleshooting. It's rarely ever a single, obvious error but rather a combination of issues. From my experience, the culprits generally fall into a few specific categories: file path discrepancies, case sensitivity, file extension variations, and sometimes, lurking operating system quirks.
+, let's tackle this. The inability to locate .jpeg images within a folder, while seemingly straightforward, often stems from a confluence of subtle factors. It’s something I've encountered numerous times over the years, and the solution usually involves methodical troubleshooting. It's rarely ever a single, obvious error but rather a combination of issues. From my experience, the culprits generally fall into a few specific categories: file path discrepancies, case sensitivity, file extension variations, and sometimes, lurking operating system quirks.
 
-First off, let's consider file path issues. The most common mistake, especially for newcomers, involves incorrect absolute or relative paths. I recall debugging an image processing script for a client a few years back. They were certain the images were present, and indeed, they were. However, the python script kept throwing "file not found" errors. It turned out they were constructing a relative path expecting the script's current working directory to be a folder up from where it was executed. Relative paths are resolved *relative to the current working directory of the process, not the script's location.*
+First off, let's consider file path issues. The most common mistake, especially for newcomers, involves incorrect absolute or relative paths. I recall debugging an image processing script for a client a few years back. They were certain the images were present, and indeed, they were. However, the python script kept throwing "file not found" errors. It turned out they were constructing a relative path expecting the script's current working directory to be a folder up from where it was executed. Relative paths are resolved _relative to the current working directory of the process, not the script's location._
 
 Let’s illustrate this with a small example using Python:
 
@@ -40,40 +40,47 @@ The second common source of error lies in case sensitivity. Depending on the ope
 Let me demonstrate with a piece of Javascript code, focusing on case sensitivity:
 
 ```javascript
-const fs = require('node:fs');
+const fs = require("node:fs");
 
 function findImageCase(directory, imageName) {
-    // Assuming 'directory' is a valid path.
-    const caseSensitiveImagePath = `${directory}/${imageName}`;
-    const caseInsensitiveImagePath1 = `${directory}/${imageName.toLowerCase()}`;
-    const caseInsensitiveImagePath2 = `${directory}/${imageName.toUpperCase()}`;
+  // Assuming 'directory' is a valid path.
+  const caseSensitiveImagePath = `${directory}/${imageName}`;
+  const caseInsensitiveImagePath1 = `${directory}/${imageName.toLowerCase()}`;
+  const caseInsensitiveImagePath2 = `${directory}/${imageName.toUpperCase()}`;
 
+  if (fs.existsSync(caseSensitiveImagePath)) {
+    console.log(`Found image (case-sensitive): ${caseSensitiveImagePath}`);
+  } else {
+    console.log(`Image not found (case-sensitive): ${caseSensitiveImagePath}`);
+  }
 
-    if (fs.existsSync(caseSensitiveImagePath)) {
-        console.log(`Found image (case-sensitive): ${caseSensitiveImagePath}`);
-    } else {
-         console.log(`Image not found (case-sensitive): ${caseSensitiveImagePath}`);
-    }
+  if (fs.existsSync(caseInsensitiveImagePath1)) {
+    console.log(
+      `Found image (case-insensitive, lower): ${caseInsensitiveImagePath1}`
+    );
+  } else {
+    console.log(
+      `Image not found (case-insensitive, lower): ${caseInsensitiveImagePath1}`
+    );
+  }
 
-    if (fs.existsSync(caseInsensitiveImagePath1)) {
-         console.log(`Found image (case-insensitive, lower): ${caseInsensitiveImagePath1}`);
-    } else {
-         console.log(`Image not found (case-insensitive, lower): ${caseInsensitiveImagePath1}`);
-    }
-
-    if (fs.existsSync(caseInsensitiveImagePath2)) {
-         console.log(`Found image (case-insensitive, upper): ${caseInsensitiveImagePath2}`);
-    } else {
-       console.log(`Image not found (case-insensitive, upper): ${caseInsensitiveImagePath2}`);
-    }
+  if (fs.existsSync(caseInsensitiveImagePath2)) {
+    console.log(
+      `Found image (case-insensitive, upper): ${caseInsensitiveImagePath2}`
+    );
+  } else {
+    console.log(
+      `Image not found (case-insensitive, upper): ${caseInsensitiveImagePath2}`
+    );
+  }
 }
 
 // Example usage
-const directoryPath = './'; // Replace with relevant path
+const directoryPath = "./"; // Replace with relevant path
 
-findImageCase(directoryPath, 'image.jpeg'); // Assumes the existence of 'image.jpeg' in the directory
-findImageCase(directoryPath, 'IMAGE.JPEG'); // Checks with uppercase
-findImageCase(directoryPath, 'Image.Jpeg'); // Checks with mixed case
+findImageCase(directoryPath, "image.jpeg"); // Assumes the existence of 'image.jpeg' in the directory
+findImageCase(directoryPath, "IMAGE.JPEG"); // Checks with uppercase
+findImageCase(directoryPath, "Image.Jpeg"); // Checks with mixed case
 ```
 
 This Javascript example demonstrates testing multiple combinations of case to see if the file system would find it based on the variation, but highlights the importance of ensuring consistent case across your codebase.

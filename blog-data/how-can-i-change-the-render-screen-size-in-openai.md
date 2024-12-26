@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-change-the-render-screen-size-in-openai"
 ---
 
-Alright, let's tackle this. Changing the render screen size in OpenAI Gym environments – it's a fairly common need, particularly when you're working with vision-based agents or need to optimize performance. I remember one project where I was training a reinforcement learning agent to play a simple driving game. The default render window was tiny, making it incredibly difficult to visually track progress and troubleshoot issues. Adjusting the render size became crucial for debugging and even for producing more user-friendly demonstrations of the agent's capabilities. So, from my experience, it isn't a feature you directly modify in the environment's creation parameters, but there are effective methods you can use to achieve your desired outcome.
+, let's tackle this. Changing the render screen size in OpenAI Gym environments – it's a fairly common need, particularly when you're working with vision-based agents or need to optimize performance. I remember one project where I was training a reinforcement learning agent to play a simple driving game. The default render window was tiny, making it incredibly difficult to visually track progress and troubleshoot issues. Adjusting the render size became crucial for debugging and even for producing more user-friendly demonstrations of the agent's capabilities. So, from my experience, it isn't a feature you directly modify in the environment's creation parameters, but there are effective methods you can use to achieve your desired outcome.
 
 The core issue is that OpenAI Gym doesn't directly expose a parameter for altering the render screen size within the standard `env.render()` function. Instead, this method typically relies on backend rendering mechanisms specific to the environment, like Pyglet or similar. The default configuration often sets a specific resolution. To change this, you primarily need to interact with these underlying systems or, more commonly, create a custom rendering function.
 
@@ -12,7 +12,7 @@ Here's how you can approach it, and I'll break down the nuances and provide prac
 
 **Method 1: Direct Frame Modification (Most common, often the best approach)**
 
-This is the most straightforward approach and the one I typically recommend for most scenarios. Instead of changing the rendering *itself*, you modify the frame *after* it's rendered. The `env.render()` function typically returns a numpy array representing the rendered image. We can manipulate this array (which represents the pixel data) using libraries like `opencv-python` or `scikit-image` to resize the image before displaying it.
+This is the most straightforward approach and the one I typically recommend for most scenarios. Instead of changing the rendering _itself_, you modify the frame _after_ it's rendered. The `env.render()` function typically returns a numpy array representing the rendered image. We can manipulate this array (which represents the pixel data) using libraries like `opencv-python` or `scikit-image` to resize the image before displaying it.
 
 Here’s a working example:
 
@@ -115,7 +115,7 @@ Here, instead of using the default render, we create a Pyglet window with specif
 
 **Method 3: Configuration Files/Parameters (Environment Specific)**
 
-Occasionally, certain OpenAI Gym environments might provide configurations or parameters that *indirectly* affect the rendering size through their underlying simulator setup. This approach is highly dependent on the environment itself and it’s not a standardized feature within the Gym framework. If the environment comes with a configuration file or class attributes that relate to the frame size, check the environment's specific documentation for details on how to tweak these.
+Occasionally, certain OpenAI Gym environments might provide configurations or parameters that _indirectly_ affect the rendering size through their underlying simulator setup. This approach is highly dependent on the environment itself and it’s not a standardized feature within the Gym framework. If the environment comes with a configuration file or class attributes that relate to the frame size, check the environment's specific documentation for details on how to tweak these.
 
 Let's use an example that is again, a very simplified abstraction of how such things could be approached in a hypothetical environment:
 
@@ -165,8 +165,8 @@ In this example, the `ConfigurableEnv` is initialized with a configuration dicti
 
 For a deep dive into computer graphics and rendering mechanisms, especially relevant to method 2, I recommend the following resources:
 
-*   **"Computer Graphics: Principles and Practice" by Foley, van Dam, Feiner, and Hughes:** A comprehensive textbook on computer graphics concepts, covering a wide range of topics including rendering techniques.
-*   **OpenGL Programming Guide (the "Red Book"):** A classic guide to OpenGL, widely used for 3D rendering, and a cornerstone in understanding the details of graphics programming.
-*   **"Digital Image Processing" by Rafael C. Gonzalez and Richard E. Woods:** This book focuses on image processing techniques, which are crucial when modifying frames, particularly with the first method, covering aspects like resizing algorithms.
+- **"Computer Graphics: Principles and Practice" by Foley, van Dam, Feiner, and Hughes:** A comprehensive textbook on computer graphics concepts, covering a wide range of topics including rendering techniques.
+- **OpenGL Programming Guide (the "Red Book"):** A classic guide to OpenGL, widely used for 3D rendering, and a cornerstone in understanding the details of graphics programming.
+- **"Digital Image Processing" by Rafael C. Gonzalez and Richard E. Woods:** This book focuses on image processing techniques, which are crucial when modifying frames, particularly with the first method, covering aspects like resizing algorithms.
 
 In my experience, starting with the first method (direct frame modification) is usually the fastest and most straightforward approach to achieving your goal of changing the rendered screen size for most Gym environments. The other approaches are very useful for specialized cases, and often necessary for more advanced, custom environments. Hopefully, this has clarified the nuances of changing the rendering screen size, providing a few practical methods you can put to immediate use.

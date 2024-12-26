@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-a-runtimeerror-when-using-tensorboard"
 ---
 
-alright, let's talk about that runtimeerror with tensorboard. it’s a familiar headache, i’ve banged my head against that particular wall more times than i care to count. the thing is, tensorboard is, at its core, a web application that reads data from your training runs and displays it, so when something goes sideways, it’s usually a communication breakdown, or a misunderstanding of paths, ports, or data formats.
+, let's talk about that runtimeerror with tensorboard. it’s a familiar headache, i’ve banged my head against that particular wall more times than i care to count. the thing is, tensorboard is, at its core, a web application that reads data from your training runs and displays it, so when something goes sideways, it’s usually a communication breakdown, or a misunderstanding of paths, ports, or data formats.
 
 first off, the fact that it’s a runtimeerror and not some syntax error is telling. it means your python script itself is running fine, at least initially. the issue arises when tensorboard is trying to do its job, which is pulling data from your log files. so, it's not about your python, per se, but about how tensorboard interacts with it.
 
@@ -56,13 +56,13 @@ another thing is that old versions of tensorflow and pytorch might have slightly
 
 **debugging tips:**
 
-*   **start simple:** begin with a basic logging setup. make sure you can get tensorboard to read the data from a simple scalar variable like the loss, before diving in with complex graphs and histograms.
+- **start simple:** begin with a basic logging setup. make sure you can get tensorboard to read the data from a simple scalar variable like the loss, before diving in with complex graphs and histograms.
 
-*   **verbose output:** use the `-v` or `--verbose` flag with tensorboard. it often gives more detailed error messages and this can be helpful.
+- **verbose output:** use the `-v` or `--verbose` flag with tensorboard. it often gives more detailed error messages and this can be helpful.
 
-*   **check the browser console:** sometimes the error is happening on the front-end side of tensorboard. the browser's console can provide some additional context. check for javascript errors.
+- **check the browser console:** sometimes the error is happening on the front-end side of tensorboard. the browser's console can provide some additional context. check for javascript errors.
 
-*   **clean slate:** when debugging, sometimes it is best to just remove the directory with the log files and start over. tensorboard might be confused by some cached files, or old versions of the log files. it is not the most refined way of doing things but it has saved me hours when i was stuck.
+- **clean slate:** when debugging, sometimes it is best to just remove the directory with the log files and start over. tensorboard might be confused by some cached files, or old versions of the log files. it is not the most refined way of doing things but it has saved me hours when i was stuck.
 
 **resources:**
 

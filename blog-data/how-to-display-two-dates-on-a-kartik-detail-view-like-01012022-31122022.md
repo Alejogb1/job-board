@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-display-two-dates-on-a-kartik-detail-view-like-01012022-31122022"
 ---
 
-alright, let's talk about displaying date ranges in a kartik detail view. it sounds like you're aiming to have something like `01/01/2022-31/12/2022` rendered nicely. i've been down this path before, and it's pretty straightforward once you get the hang of it.
+, let's talk about displaying date ranges in a kartik detail view. it sounds like you're aiming to have something like `01/01/2022-31/12/2022` rendered nicely. i've been down this path before, and it's pretty straightforward once you get the hang of it.
 
 first off, let's be clear, kartik isn't a single entity, it's a collection of yii2 widgets. you're most likely talking about kartik's `detailview` widget when you mention detail view. i assume you have two date attributes, say `start_date` and `end_date` that you're trying to display.
 
@@ -94,6 +94,7 @@ echo DetailView::widget([
 ]);
 ?>
 ```
+
 this is cleaner, more maintainable, and uses the component we just created. this also centralizes the formatting logic. you can then easily change how the date range string looks in one single place.
 
 one last thing that i've used in the past, suppose you want to use a javascript date library, like moment js, this is totally doable inside the `value` property. it is better to do formatting inside php but javascript formatting can be done like so:

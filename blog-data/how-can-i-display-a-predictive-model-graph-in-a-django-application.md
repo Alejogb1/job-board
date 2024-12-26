@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-display-a-predictive-model-graph-in-a-django-application"
 ---
 
-Okay, let's tackle this. I've been down this road a few times, particularly with some complex time-series models in previous projects. Presenting predictive model outputs visually in a Django application isn’t always straightforward, but it’s certainly achievable with a combination of backend computation and frontend rendering. The key is to decouple the model execution and data preparation from the actual display logic.
+, let's tackle this. I've been down this road a few times, particularly with some complex time-series models in previous projects. Presenting predictive model outputs visually in a Django application isn’t always straightforward, but it’s certainly achievable with a combination of backend computation and frontend rendering. The key is to decouple the model execution and data preparation from the actual display logic.
 
 The core challenge lies in efficiently transferring the model's output, which is often a numerical dataset suitable for graphing, to the client-side browser where it can be rendered. Simply sending raw data isn't user-friendly. We need a structured format that a charting library can easily consume. I've found that using a combination of Django's view layer to compute predictions, structuring the output as JSON, and then using a Javascript charting library on the frontend works best.
 
@@ -78,22 +78,23 @@ Here's the template with the chart rendering logic:
 ```html
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Sales Prediction</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <canvas id="myChart"></canvas>
     <script>
       async function fetchPredictionData() {
-        const xDataInput = document.getElementById('x_data_input');
+        const xDataInput = document.getElementById("x_data_input");
         const xDataString = xDataInput.value;
-        const xDataArray = xDataString.split(',').map(Number); // Parse comma separated input to numbers
+        const xDataArray = xDataString.split(",").map(Number); // Parse comma separated input to numbers
 
-        const response = await fetch('/sales_prediction/', { // ensure your django view path matches this
-          method: 'POST',
+        const response = await fetch("/sales_prediction/", {
+          // ensure your django view path matches this
+          method: "POST",
           headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
+            "Content-Type": "application/x-www-form-urlencoded",
           },
           body: `x_data=${xDataArray}`,
         });
@@ -103,47 +104,51 @@ Here's the template with the chart rendering logic:
         if (response.ok) {
           renderChart(data.x_values, data.y_predicted);
         } else {
-            console.error("Error fetching data: ", data.error);
+          console.error("Error fetching data: ", data.error);
         }
       }
 
-
-        function renderChart(x_values, y_predicted) {
-          const ctx = document.getElementById('myChart').getContext('2d');
-          new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels: x_values,
-              datasets: [{
-                  label: 'Predicted Sales',
-                  data: y_predicted,
-                  borderColor: 'rgb(75, 192, 192)',
-                  tension: 0.1
-              }]
+      function renderChart(x_values, y_predicted) {
+        const ctx = document.getElementById("myChart").getContext("2d");
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: x_values,
+            datasets: [
+              {
+                label: "Predicted Sales",
+                data: y_predicted,
+                borderColor: "rgb(75, 192, 192)",
+                tension: 0.1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: "Time Period",
+                },
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: "Sales",
+                },
+              },
             },
-              options: {
-                scales: {
-                    x: {
-                      title: {
-                          display: true,
-                          text: 'Time Period'
-                      }
-                    },
-                    y: {
-                      title: {
-                          display: true,
-                          text: 'Sales'
-                      }
-                  }
-                }
-              }
-          });
-        }
+          },
+        });
+      }
     </script>
-    <input type="text" id="x_data_input" placeholder="Enter x values comma separated e.g., 1,2,3,4">
+    <input
+      type="text"
+      id="x_data_input"
+      placeholder="Enter x values comma separated e.g., 1,2,3,4"
+    />
     <button onclick="fetchPredictionData()">Get Prediction</button>
-
-</body>
+  </body>
 </html>
 ```
 

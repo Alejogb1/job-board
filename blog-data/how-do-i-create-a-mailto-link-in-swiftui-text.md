@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-create-a-mailto-link-in-swiftui-text"
 ---
 
-Alright, let's delve into this. I've tackled `mailto` links in SwiftUI Text more than a few times, particularly during a project where we were building a contact page in a mobile app. It wasn't as straightforward as web development, which might be your initial thought, but it's entirely manageable. The key is understanding how SwiftUI handles attributed strings and how we can leverage that to incorporate tap actions with specific protocols.
+, let's delve into this. I've tackled `mailto` links in SwiftUI Text more than a few times, particularly during a project where we were building a contact page in a mobile app. It wasn't as straightforward as web development, which might be your initial thought, but it's entirely manageable. The key is understanding how SwiftUI handles attributed strings and how we can leverage that to incorporate tap actions with specific protocols.
 
 The challenge arises because `Text` view in SwiftUI, in its basic form, doesn’t directly support tappable links like HTML's `<a>` tag. We can’t simply embed a `mailto:` protocol string. Instead, we need to make use of `NSAttributedString` or its SwiftUI-compatible wrapper, `AttributedString`. We need to create an attributed string where a specific part of the string—the email address, in our case—has a link attribute associated with it. This attribute is what SwiftUI then recognizes and acts upon when tapped.
 
@@ -37,7 +37,7 @@ struct MailtoLinkBasic_Previews: PreviewProvider {
 }
 ```
 
-In this first example, `createAttributedMailtoLink()` dynamically constructs an `AttributedString` using a base string with the email address. We locate the range of the email address within that string and then apply the `link` attribute to that specific part, using the `mailto:` url scheme. This is the minimum necessary to make the email address tappable and trigger the email app on a device. Notice, this simple implementation handles *only* the email address. What if you want to link a more verbose phrase?
+In this first example, `createAttributedMailtoLink()` dynamically constructs an `AttributedString` using a base string with the email address. We locate the range of the email address within that string and then apply the `link` attribute to that specific part, using the `mailto:` url scheme. This is the minimum necessary to make the email address tappable and trigger the email app on a device. Notice, this simple implementation handles _only_ the email address. What if you want to link a more verbose phrase?
 
 Now, let's say we want to incorporate a custom display phrase for our link instead of the email itself. That is, a link saying "Email Support" or "Contact Us" that actually opens the email client. Here is how that looks:
 
@@ -70,7 +70,7 @@ struct MailtoLinkCustomText_Previews: PreviewProvider {
 }
 ```
 
-This adaptation modifies our approach to display *linkText*, an arbitrary string, which when tapped opens the mail client using the *emailAddress* value. This is a more user-friendly approach, as it avoids exposing email addresses directly in your text, which is often preferable. We still leverage the `range(of:)` method to target our phrase for attribute application.
+This adaptation modifies our approach to display _linkText_, an arbitrary string, which when tapped opens the mail client using the _emailAddress_ value. This is a more user-friendly approach, as it avoids exposing email addresses directly in your text, which is often preferable. We still leverage the `range(of:)` method to target our phrase for attribute application.
 
 The method I've outlined works well for singular email links. However, what if we need a dynamic approach? What if the text could contain several phrases or links? The approach would need to programmatically construct several ranges of linked text. Here is an example showing multiple, independent links in the same view:
 
@@ -87,7 +87,7 @@ struct MailtoMultipleLinks: View {
     }
     func createMultipleAttributedLinks() -> AttributedString {
         var attributedString = AttributedString("Contact \(linkText1) or \(linkText2).")
-        
+
         if let range1 = attributedString.range(of: linkText1) {
            attributedString[range1].link = URL(string: "mailto:\(emailAddress1)")
         }
@@ -105,6 +105,7 @@ struct MailtoMultipleLinks_Previews: PreviewProvider {
     }
 }
 ```
+
 In this final snippet, you can see that our attributed string now includes multiple email addresses with corresponding custom link texts in a single Text element. This is accomplished by iterating through each linkable portion of the full string, and assigning a custom `mailto:` URL scheme for each segment. This is a practical solution for real-world use cases where you might need several distinct email contacts accessible through the same interface, or, indeed, a combination of hyperlinks to different resources, not just email.
 
 For further reading on `AttributedString` and its capabilities, I'd recommend exploring Apple's official documentation on `Foundation.AttributedString`. Additionally, the book "SwiftUI by Tutorials" (multiple editions) offers practical insights into how `AttributedString` is used in SwiftUI, specifically chapter devoted to advanced text handling. "Programming iOS 17" by Matt Neuburg also provides a deep dive into the underlying text management in Apple's platforms.

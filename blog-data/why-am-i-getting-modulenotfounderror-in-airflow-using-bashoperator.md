@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "why-am-i-getting-modulenotfounderror-in-airflow-using-bashoperator"
 ---
 
-alright, so you're hitting that frustrating `modulenotfounderror` when using `bashoperator` in airflow, eh? i've been there, many times. it's a classic, and usually points to something not being quite aligned with how airflow executes bash commands. it can be a real head-scratcher, but it’s almost always a pathing or environment issue, and i'll explain what i mean by it with personal experience from my past projects.
+, so you're hitting that frustrating `modulenotfounderror` when using `bashoperator` in airflow, eh? i've been there, many times. it's a classic, and usually points to something not being quite aligned with how airflow executes bash commands. it can be a real head-scratcher, but it’s almost always a pathing or environment issue, and i'll explain what i mean by it with personal experience from my past projects.
 
-first off, let’s recap how `bashoperator` works under the hood. basically, when your dag calls a `bashoperator`, airflow spawns a new bash process. that process then executes the command you’ve provided. it's important to understand that this new shell *isn't* necessarily the same shell environment your airflow scheduler or webserver might be running in. this is where things get tricky.
+first off, let’s recap how `bashoperator` works under the hood. basically, when your dag calls a `bashoperator`, airflow spawns a new bash process. that process then executes the command you’ve provided. it's important to understand that this new shell _isn't_ necessarily the same shell environment your airflow scheduler or webserver might be running in. this is where things get tricky.
 
 my first rodeo with this was back when i was building a data pipeline for an e-commerce startup, using a pretty complex workflow. i had a custom python module that did all our data transformation, and my `bashoperator` was simply calling a python script that used this custom module. local testing was perfect. deployed? disaster. the `modulenotfounderror` was screaming at me. turned out, airflow’s shell was not seeing my virtual environment. it was a painful lesson that cost me a weekend of debugging (and a lot of coffee).
 
@@ -46,9 +46,9 @@ always use absolute paths for scripts and modules inside `bashoperator` command 
 
 **3. understanding the `airflow` execution context:**
 
-when i was working on a project, i had a very weird scenario, where I had all absolute paths, had the venv activated, everything was seemingly alright. yet it was still raising the dreaded error. after spending way more time than i should have, i discovered that it wasn't the virtual env itself that was the problem, it was the user. because of course, the `airflow` process was being executed under a different user than i was assuming.
+when i was working on a project, i had a very weird scenario, where I had all absolute paths, had the venv activated, everything was seemingly . yet it was still raising the dreaded error. after spending way more time than i should have, i discovered that it wasn't the virtual env itself that was the problem, it was the user. because of course, the `airflow` process was being executed under a different user than i was assuming.
 
-always remember, if `airflow` runs under a different user than your dev user, you need to make sure that *that* user has the proper permissions to access your python scripts and your custom modules. the paths must be accessible by the `airflow` user. often the simple fix would be giving ownership to the user running the airflow services or to the group this user belongs to. i had to modify the user in the `airflow.cfg` file the first time this issue hit me, but it can vary depending on your deployment, of course.
+always remember, if `airflow` runs under a different user than your dev user, you need to make sure that _that_ user has the proper permissions to access your python scripts and your custom modules. the paths must be accessible by the `airflow` user. often the simple fix would be giving ownership to the user running the airflow services or to the group this user belongs to. i had to modify the user in the `airflow.cfg` file the first time this issue hit me, but it can vary depending on your deployment, of course.
 
 **4. environment variables in `bashoperator`:**
 
@@ -76,6 +76,7 @@ with DAG(
     )
 
 ```
+
 then inside your python script `/path/to/my/script_with_env.py` you would read the environment variables like this for example:
 
 ```python
@@ -93,11 +94,11 @@ the joke is that the credentials are not very secret since they are hardcoded in
 
 to summarize, the `modulenotfounderror` in `bashoperator` usually boils down to the shell not being able to find your modules. make sure:
 
-*   you activate your virtual environment in the bash command itself (or any other required environment context).
-*   you use absolute paths for all your python scripts.
-*   that the user that airflow is using can access the files.
-*   pass the environment variables that your scripts need.
+- you activate your virtual environment in the bash command itself (or any other required environment context).
+- you use absolute paths for all your python scripts.
+- that the user that airflow is using can access the files.
+- pass the environment variables that your scripts need.
 
-for more in-depth info on python packaging and path issues, i recommend looking into the *python packaging user guide*, it is a free online resource. for more details on environment variables you can check the *unix programming environment* by brian kernighan and rob pike, although old it’s concepts are still valid, and very important for these kind of problems. and of course, go deep into airflow documentation, specifically the section on `bashoperator` and environment configuration, the official documentation is the best place to start.
+for more in-depth info on python packaging and path issues, i recommend looking into the _python packaging user guide_, it is a free online resource. for more details on environment variables you can check the _unix programming environment_ by brian kernighan and rob pike, although old it’s concepts are still valid, and very important for these kind of problems. and of course, go deep into airflow documentation, specifically the section on `bashoperator` and environment configuration, the official documentation is the best place to start.
 
 i hope this was comprehensive enough. don’t hesitate to ask if you have any more questions. happy coding!

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-vdsr-change-the-order-of-a-mosaicplot"
 ---
 
-alright, so you're looking to tweak the arrangement of categories in a mosaic plot, and specifically, it seems like you're working within vds/r, which i'm assuming refers to some statistical visualization system or maybe a specific r implementation. i've definitely been there, staring at a mosaic that's just not showing the data in the way i need it to. it can be a real pain point when you're trying to communicate insights effectively.
+, so you're looking to tweak the arrangement of categories in a mosaic plot, and specifically, it seems like you're working within vds/r, which i'm assuming refers to some statistical visualization system or maybe a specific r implementation. i've definitely been there, staring at a mosaic that's just not showing the data in the way i need it to. it can be a real pain point when you're trying to communicate insights effectively.
 
 from my own experience, it's usually not a problem with the core plotting engine itself, but more about how you’re feeding in the data or how the system is internally processing it before making the plot. mosaic plots, at their heart, represent frequencies within categorical variables, so that order can be super important. i've spent many hours scratching my head because the plot didn't quite match the order of my factors.
 

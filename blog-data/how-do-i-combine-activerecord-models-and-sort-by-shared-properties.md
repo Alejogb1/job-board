@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-i-combine-activerecord-models-and-sort-by-shared-properties"
 ---
 
-Okay, let's tackle this. Sorting ActiveRecord models based on shared properties—it's a classic challenge, and I've certainly banged my head against it a few times over the years. A common scenario is wanting to list users based on something like their most recent order date, which isn't directly stored on the `users` table, or perhaps ordering blog posts by the total number of comments. The trick isn't about hacking ActiveRecord, but about leveraging the database’s inherent capabilities and expressing your intent clearly.
+, let's tackle this. Sorting ActiveRecord models based on shared properties—it's a classic challenge, and I've certainly banged my head against it a few times over the years. A common scenario is wanting to list users based on something like their most recent order date, which isn't directly stored on the `users` table, or perhaps ordering blog posts by the total number of comments. The trick isn't about hacking ActiveRecord, but about leveraging the database’s inherent capabilities and expressing your intent clearly.
 
-The fundamental issue boils down to the fact that you want to sort based on data not immediately available within the model's table itself. Instead, this data usually exists in related tables, connected via associations. Now, ActiveRecord, being the ORM (Object-Relational Mapper) that it is, typically encourages you to operate with Ruby objects, leading some towards inefficient methods like loading everything and then sorting in memory. Don't do that, unless you *really* have to for a limited scope. The key is to perform that sorting operation at the database level, which is far more efficient.
+The fundamental issue boils down to the fact that you want to sort based on data not immediately available within the model's table itself. Instead, this data usually exists in related tables, connected via associations. Now, ActiveRecord, being the ORM (Object-Relational Mapper) that it is, typically encourages you to operate with Ruby objects, leading some towards inefficient methods like loading everything and then sorting in memory. Don't do that, unless you _really_ have to for a limited scope. The key is to perform that sorting operation at the database level, which is far more efficient.
 
 My experience with a large e-commerce platform some years back solidified this. We initially tried loading all users and then sorting based on order date – it completely crippled the application. Refactoring to leverage SQL's capabilities turned the lights back on, so to speak.
 
@@ -73,10 +73,10 @@ end
 
 The logic here is very similar to the previous example:
 
-1.  **`left_joins(:comments)`:**  Again, we use a `LEFT JOIN` to include posts with no comments.
+1.  **`left_joins(:comments)`:** Again, we use a `LEFT JOIN` to include posts with no comments.
 2.  **`group('posts.id')`:** We group by `post.id`.
 3.  **`order('COUNT(comments.id) DESC')`:** We sort by the count of comments for each post in descending order. SQL’s `COUNT()` function efficiently performs this.
-4.  **`select('posts.*, COUNT(comments.id) AS comment_count')`:**  We fetch all post attributes and calculate the total number of comments, assigning it to `comment_count`.
+4.  **`select('posts.*, COUNT(comments.id) AS comment_count')`:** We fetch all post attributes and calculate the total number of comments, assigning it to `comment_count`.
 
 **Scenario 3: Complex Sorting with Multiple Joins**
 
@@ -114,7 +114,7 @@ Key concepts here include:
 1.  **`left_joins(articles: :views)`:** We use nested joins to fetch the related articles and views for each user.
 2.  **`group('users.id')`:** Group by the user id.
 3.  **`order('COUNT(articles.id) DESC, SUM(views.id) DESC')`:** We are now sorting by two things: First by number of articles and then secondly by total views of all user articles.
-4.  **`select('users.*, COUNT(articles.id) AS article_count, SUM(views.id) AS total_views')`:**  Fetching the user attributes and the results of the counts, aliased appropriately.
+4.  **`select('users.*, COUNT(articles.id) AS article_count, SUM(views.id) AS total_views')`:** Fetching the user attributes and the results of the counts, aliased appropriately.
 
 **Further Reading and Resources**
 

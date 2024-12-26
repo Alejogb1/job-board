@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-azure-ml-executablenotfound-when-running-dot"
 ---
 
-Okay, let's tackle this Azure ML `ExecutableNotFound` situation when trying to use `dot`. It’s a frustrating error, I know, and I've certainly spent my share of time debugging similar issues in past projects. It usually boils down to a few core reasons, and it's rarely a problem with azure ml itself, but rather with how the environment is set up.
+, let's tackle this Azure ML `ExecutableNotFound` situation when trying to use `dot`. It’s a frustrating error, I know, and I've certainly spent my share of time debugging similar issues in past projects. It usually boils down to a few core reasons, and it's rarely a problem with azure ml itself, but rather with how the environment is set up.
 
 First, let’s clarify what `dot` refers to here. It's part of Graphviz, an open-source graph visualization software. Azure ML environments, being sandboxed and curated, don't inherently come pre-loaded with tools like Graphviz. When your pipeline tries to execute a python script that uses the `graphviz` library (which, under the hood, needs the `dot` executable), you can get this error if `dot` isn't present or accessible in the execution environment. This was exactly what hit me about two years ago when deploying a complex model that required visualizing decision trees, for example.
 
@@ -26,8 +26,8 @@ dependencies:
   - pip
   - graphviz
   - pip:
-    - azureml-defaults
-    - <your-other-dependencies> # Add your model's other dependency
+      - azureml-defaults
+      - <your-other-dependencies> # Add your model's other dependency
 ```
 
 ```python
@@ -66,7 +66,7 @@ myenv.register(workspace=ws)
 print(f"Environment '{env_name}' successfully registered to the workspace.")
 ```
 
-Here, the `environment.yml` specifies `graphviz` as a direct dependency.  This ensures that when your azure ml job runs, the `dot` executable will be installed and be in the path of the process.
+Here, the `environment.yml` specifies `graphviz` as a direct dependency. This ensures that when your azure ml job runs, the `dot` executable will be installed and be in the path of the process.
 
 **Method 2: Post-Install Script (for custom containers or greater control)**
 
@@ -122,7 +122,7 @@ print(f"Environment '{env_name}' successfully registered to the workspace.")
 
 Here, the Dockerfile includes a `post_install.sh` script that runs `apt-get install graphviz`. This is more flexible than the conda approach, but you are now responsible for managing the base OS, packages, etc. The flexibility here is that you can customize anything you want.
 
-**Method 3:  Python-level Path Handling (least ideal)**
+**Method 3: Python-level Path Handling (least ideal)**
 
 While not preferred, you could technically attempt to handle path issues directly in your python script using something like:
 
@@ -183,8 +183,8 @@ The key to resolving this issue is acknowledging that libraries rely on system u
 
 For a deeper understanding of this and related topics, I highly recommend the following:
 
-*   **"Operating System Concepts" by Abraham Silberschatz, Peter Baer Galvin, and Greg Gagne:** This book covers fundamental concepts related to operating systems, process execution, and environment variables. Understanding the mechanics behind these will aid in grasping the problem.
-*  **"Effective Python: 90 Specific Ways to Write Better Python" by Brett Slatkin:** While not directly about environment configurations, the principles of clean, maintainable code and the avoidance of fragile solutions are crucial here. The book offers excellent guidance on good python practices.
-*   **Azure Machine Learning Documentation:** The official documentation is always the most authoritative source for specific configuration details and environment management practices related to Azure ML. Pay close attention to environment creation, custom images, and dependency management.
+- **"Operating System Concepts" by Abraham Silberschatz, Peter Baer Galvin, and Greg Gagne:** This book covers fundamental concepts related to operating systems, process execution, and environment variables. Understanding the mechanics behind these will aid in grasping the problem.
+- **"Effective Python: 90 Specific Ways to Write Better Python" by Brett Slatkin:** While not directly about environment configurations, the principles of clean, maintainable code and the avoidance of fragile solutions are crucial here. The book offers excellent guidance on good python practices.
+- **Azure Machine Learning Documentation:** The official documentation is always the most authoritative source for specific configuration details and environment management practices related to Azure ML. Pay close attention to environment creation, custom images, and dependency management.
 
 In summary, the `ExecutableNotFound` for `dot` in Azure ML pipelines is usually caused by an improperly configured environment. Using the appropriate approach, such as those outlined in examples 1 and 2, to include the necessary components and paths, will solve this common issue, leading to a more reliable Azure ML process. Remember to choose the method that best fits your overall project scope and complexity. I hope this explanation and these practical examples prove helpful.

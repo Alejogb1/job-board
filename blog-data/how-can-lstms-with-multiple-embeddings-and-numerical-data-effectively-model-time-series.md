@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-lstms-with-multiple-embeddings-and-numerical-data-effectively-model-time-series"
 ---
 
-Okay, let's tackle this. I've actually spent a fair bit of time building forecasting models, and incorporating multi-modal data into lstms is something I've consistently found quite valuable. It's not just about throwing everything at the network; there's definitely a nuanced approach to get it working effectively.
+, let's tackle this. I've actually spent a fair bit of time building forecasting models, and incorporating multi-modal data into lstms is something I've consistently found quite valuable. It's not just about throwing everything at the network; there's definitely a nuanced approach to get it working effectively.
 
 The core issue here revolves around the heterogeneous nature of your input. We're not dealing with a single, uniform data type. You have text represented as embeddings, alongside numerical time-series data. The challenge lies in ensuring that these disparate inputs contribute meaningfully to the model's understanding of temporal patterns. A naive approach of just concatenating everything and feeding it to an lstm won't cut it; we need a more structured methodology.
 
@@ -12,7 +12,7 @@ First off, let's consider why we use embeddings for text. Words, or more accurat
 
 Now, how do we handle combining this with numerical data? The simplest method, the aforementioned concatenation, often underperforms. The issue is that the magnitude of values in embedding spaces and numerical time-series data can vary dramatically, and the model can become biased towards the higher magnitude data. In my experience, scaling becomes absolutely vital. Before anything else, standardize your numerical data to have zero mean and unit variance or use min-max scaling, ensuring that their numerical ranges align better with the embedding values. Also, it's not enough to merely scale the inputs, but also the final concatenated embedding layer before passing through the lstm cell.
 
-Moreover, rather than just direct concatenation, a more effective strategy often involves processing the inputs *separately* through distinct layers and then merging those processed representations. Think about it: we're likely asking the lstm to understand different types of information. An lstm handling numerical data will learn temporal dependencies within that numerical domain, whereas another layer processing embeddings will learn from the semantic relationships contained within the text. The key lies in letting each specialize. After each lstm layer does its work, we then combine the two layers through another layer (this layer should not be an lstm as it is not concerned with temporal relations, think dense or convolutional).
+Moreover, rather than just direct concatenation, a more effective strategy often involves processing the inputs _separately_ through distinct layers and then merging those processed representations. Think about it: we're likely asking the lstm to understand different types of information. An lstm handling numerical data will learn temporal dependencies within that numerical domain, whereas another layer processing embeddings will learn from the semantic relationships contained within the text. The key lies in letting each specialize. After each lstm layer does its work, we then combine the two layers through another layer (this layer should not be an lstm as it is not concerned with temporal relations, think dense or convolutional).
 
 Here’s a schematic idea and code snippet to demonstrate this concept using keras (with tensorflow backend):
 
@@ -61,7 +61,7 @@ model.fit([numerical_data, text_data], target, epochs=5)
 
 This code illustrates a setup where numerical data and text data follow different paths up to the merging layer. Note that each branch has its own lstm, and that text input branch goes through an embedding layer first before reaching the lstm. After each branch processes the information, the merged layers are fed to a series of dense layers before the final output. The specific architecture can and should be adjusted for your particular problem, for example, by adding more dense layers or lstm layers to the merge layer.
 
-Another very important technique to consider is the use of attention mechanisms. Attention can help the lstm selectively focus on the most relevant parts of the input sequence. This is often crucial when the text component is quite long or when not every part of the text is equally important for the prediction. Adding an attention layer *before* merging can be very effective to filter through the embeddings effectively.
+Another very important technique to consider is the use of attention mechanisms. Attention can help the lstm selectively focus on the most relevant parts of the input sequence. This is often crucial when the text component is quite long or when not every part of the text is equally important for the prediction. Adding an attention layer _before_ merging can be very effective to filter through the embeddings effectively.
 
 Let’s consider an example with attention over the embedding branch. This modification involves adding a attention layer to the embedding branch:
 

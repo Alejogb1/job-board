@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-run-aiosqlite-queries-while-using-await-and-waitfor-in-discordpy"
 ---
 
-Alright, let’s dive into this. It's a situation I’ve seen quite a few times, especially when building more complex Discord bots that require reliable database interaction. The combination of `asyncio`, `aiosqlite`, and `discord.py`'s asynchronous environment can be a bit tricky if you're not careful about handling concurrency and timeout situations. Let’s break down how I've tackled this in the past and how you can ensure your queries play nicely with `await` and `wait_for()`.
+, let’s dive into this. It's a situation I’ve seen quite a few times, especially when building more complex Discord bots that require reliable database interaction. The combination of `asyncio`, `aiosqlite`, and `discord.py`'s asynchronous environment can be a bit tricky if you're not careful about handling concurrency and timeout situations. Let’s break down how I've tackled this in the past and how you can ensure your queries play nicely with `await` and `wait_for()`.
 
 The core issue lies in ensuring your database operations don’t block the main event loop, and that you appropriately handle situations where your database query might take longer than expected. Blocking the main loop can lead to your bot becoming unresponsive, which isn't good for anyone. We aim for smooth, non-blocking operations, and this is where `aiosqlite` and `asyncio` shine.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-mspacman-v4-game-import-failing"
 ---
 
-Alright, let's tackle this MsPacman-v4 import failure. I've seen this type of issue pop up quite a few times, especially when dealing with reinforcement learning environments like those from OpenAI's gym (now gymnasium). It’s not uncommon, and it usually boils down to a few predictable culprits.
+, MsPacman-v4 import failure. I've seen this type of issue pop up quite a few times, especially when dealing with reinforcement learning environments like those from OpenAI's gym (now gymnasium). It’s not uncommon, and it usually boils down to a few predictable culprits.
 
 The error, as I understand it, manifests when you attempt to import or initialize the `MsPacman-v4` environment, likely within a python-based reinforcement learning workflow. The most common reason stems from version discrepancies or incorrect environment registration within the gymnasium library, which is likely the underlying environment framework. Occasionally, I've also seen it caused by a lack of required dependencies. Let's break down these potential causes and their solutions based on my experience debugging similar problems.
 
@@ -12,7 +12,7 @@ Firstly, a crucial aspect involves gymnasium’s environment registry and how it
 
 To start, verify your environment setup. I typically begin by double-checking the version of `gymnasium` that's installed. An out-of-date version might be missing the specific Atari environment you're trying to load. You'd use `pip list` in your terminal to confirm. If needed, update gymnasium with `pip install --upgrade gymnasium`.
 
-But the problem might lie deeper, specifically concerning the `atari_py` dependency. This is a crucial component, and it handles the interface with the actual Atari ROMs, which are *required* for games such as Ms Pacman. If the ROMs cannot be found, the environment import fails. This is where things get a bit nuanced, because the ROMs themselves are not distributed with `atari_py`. You need to obtain them independently, adhering to the license terms for use with the library. Sometimes people might use copies from other repositories, but this is not recommended due to copyright reasons and a possible mismatch with `atari_py` library.
+But the problem might lie deeper, specifically concerning the `atari_py` dependency. This is a crucial component, and it handles the interface with the actual Atari ROMs, which are _required_ for games such as Ms Pacman. If the ROMs cannot be found, the environment import fails. This is where things get a bit nuanced, because the ROMs themselves are not distributed with `atari_py`. You need to obtain them independently, adhering to the license terms for use with the library. Sometimes people might use copies from other repositories, but this is not recommended due to copyright reasons and a possible mismatch with `atari_py` library.
 
 In my past experience on projects dealing with RL in the 90's games, I've seen a common fix is to explicitly set the path to the ROMs via an environment variable. If you don't have these ROMs in your path, import fails. Usually, the environment variable, often named something like `ATARI_ROM_DIR`, needs to be set, pointing to the directory that holds the Atari ROM files. Let's say you've got the correct ROM file (named something like `mspacman.bin`) and it's located in `/path/to/your/atari/roms/`. Then you'd need to set the environment variable like so (this is operating system dependent, here’s what it would look like on a Linux or macOS machine):
 

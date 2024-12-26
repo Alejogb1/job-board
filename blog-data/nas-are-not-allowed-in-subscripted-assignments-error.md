@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "nas-are-not-allowed-in-subscripted-assignments-error"
 ---
 
-Okay I see what's going on here this is a classic "why is Python being so annoying" moment I've banged my head against this particular wall more times than I'd like to admit believe me you are not alone
+I see what's going on here this is a classic "why is Python being so annoying" moment I've banged my head against this particular wall more times than I'd like to admit believe me you are not alone
 
 The core issue as I see it you're trying to use `np.nan` inside a subscripted assignment and getting this "nas are not allowed in subscripted assignments" error right? It's super specific and it basically comes down to how numpy handles assignment operations especially when dealing with masked arrays or complex data types I've been there it's a real gotcha and i remember being in my first job having the same issue for hours.
 
@@ -32,6 +32,7 @@ print(masked_data) # outputs: [1 2 -- 4 -- 6] where "--" indicates masked
 masked_data[masked_data.mask] = 10 # replace those missing parts
 print(masked_data) # outputs [1 2 10 4 10 6]
 ```
+
 In this code I was using -999 to mark the 'bad data' points but you can mark them as you want depending on your data. We use that `masked_where` function to create a mask on top of our data wherever the elements are equal to -999 and later on when we perform assignments we target the mask with this expression `masked_data.mask`. When working with real data the mask might be very complex this is just a basic example and remember to clean up that mask before you assign anything or it might mess up with the logic that you need to implement in your application.
 
 This works because `masked_data[masked_data.mask]` directly targets only the missing elements the ones that are already masked we are not trying to implicitly introduce `np.nan` into our data set this lets us work around that subscripted assignment restriction. This `masked_where` function is your best friend in these scenarios its super useful.
@@ -83,14 +84,14 @@ This pattern of using `.astype(float)` is a good safety net it ensures that your
 
 The reason why numpy does this is for consistency and data type integrity. `np.nan` is a float and numpy works under the hood with pre allocated blocks of memory so it needs to make sure your underlying data types are consistent and this can lead to a lot of headaches when you are working with data that is not fully controlled by you. Numpy does not want to go into situations where it needs to reallocate or change its internal representation because this can slow down calculations and introduce unexpected behaviors so it rather give you the error at the beginning rather than at the end of your calculation which would be a much harder bug to debug.
 
-Also this behavior protects you from unknowingly converting integers into floats especially in performance-critical loops where unexpected conversions can lead to significant slowdowns. It is like if numpy is looking at you saying *are you sure you know what you are doing?* its a good check in place for the long run believe me. I have seen very weird bugs over the years and most of them could have been avoided with a more careful use of numpy and a better understanding of how it works under the hood. The error you encountered is an indicator that you must stop for a second and think *ok what's going on here?*
+Also this behavior protects you from unknowingly converting integers into floats especially in performance-critical loops where unexpected conversions can lead to significant slowdowns. It is like if numpy is looking at you saying _are you sure you know what you are doing?_ its a good check in place for the long run believe me. I have seen very weird bugs over the years and most of them could have been avoided with a more careful use of numpy and a better understanding of how it works under the hood. The error you encountered is an indicator that you must stop for a second and think _ok what's going on here?_
 
 **Resources**
 
 If you want to dive deeper into these concepts I'd suggest looking into these specific references:
 
-*   **"NumPy User Guide"**: This is the bible for all things Numpy. Look for the sections on data types, masked arrays and array indexing.
-*   **"Python Data Science Handbook" by Jake VanderPlas:** This book dedicates good sections on numpy and masked arrays and it covers pretty much everything you need to understand and have solid fundaments on what numpy does.
-*   **Scientific Computing with Python for Beginners**: There are a lot of these books out there find one that fits your style they usually have a whole chapter on numpy and how to deal with this kind of problems.
+- **"NumPy User Guide"**: This is the bible for all things Numpy. Look for the sections on data types, masked arrays and array indexing.
+- **"Python Data Science Handbook" by Jake VanderPlas:** This book dedicates good sections on numpy and masked arrays and it covers pretty much everything you need to understand and have solid fundaments on what numpy does.
+- **Scientific Computing with Python for Beginners**: There are a lot of these books out there find one that fits your style they usually have a whole chapter on numpy and how to deal with this kind of problems.
 
 There's no magic wand here you gotta be explicit about how you handle `np.nan` it's a good practice in general when you are dealing with data because data is a mess. These examples should get you on the right track and remember if you still have questions don't hesitate to ask. And please don't use global variables they can lead to problems believe me i had a very stressful day once. They are like the dark side of the force.

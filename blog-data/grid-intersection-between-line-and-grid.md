@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "grid-intersection-between-line-and-grid"
 ---
 
-Okay so grid intersection line grid right I’ve been there man countless times Actually the first time I bumped into this was way back when I was messing with game dev on a ZX Spectrum emu yeah I know fossils right But hey the fundamentals are still the same its geometry right nothing too crazy
+grid intersection line grid right I’ve been there man countless times Actually the first time I bumped into this was way back when I was messing with game dev on a ZX Spectrum emu yeah I know fossils right But hey the fundamentals are still the same its geometry right nothing too crazy
 
 See what we're talking about here is given a grid usually a set of equally spaced lines both horizontal and vertical we've got a line defined by two points and we need to figure out where that line hits the grid if at all and the coordinates of those intersection points
 
@@ -116,6 +116,7 @@ def generate_grid_lines(x_min, x_max, y_min, y_max, cell_size):
         current_y += cell_size
     return x_lines y_lines
 ```
+
 Just remember that `cell_size` is an important parameter you can tweak that to get different resolutions
 
 Now some people may ask about performance for small grids it's fast enough for large ones we can optimize by using algorithms that help limit the number of intersection calculations we don't want to iterate over the full grid if it’s outside our bounding box

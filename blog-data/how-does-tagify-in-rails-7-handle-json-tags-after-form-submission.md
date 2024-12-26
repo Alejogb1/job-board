@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-tagify-in-rails-7-handle-json-tags-after-form-submission"
 ---
 
-Alright, let's talk about how Tagify handles json tags in Rails 7, since this is a scenario I’ve certainly encountered more than a few times while working on front-end integrations with backend APIs. We'll dive into the nitty-gritty here.
+, let's talk about how Tagify handles json tags in Rails 7, since this is a scenario I’ve certainly encountered more than a few times while working on front-end integrations with backend APIs. We'll dive into the nitty-gritty here.
 
 It’s essential to understand that Tagify, at its core, is a javascript library designed for creating user-friendly tag input fields. When you integrate it with a Rails 7 application, the interaction involves both the client-side (browser) and the server-side (Rails) handling of tag data, often transmitted as a json payload. The client, after Tagify's processing, sends json data to the server, typically as a string, and then it's Rails’ job to convert that string into usable objects or arrays for database storage or further processing. There are nuances around how this is accomplished within the context of Rails’ strong parameters and attribute assignment. I’ve seen projects stumble here, so let’s unpack it.
 
@@ -17,25 +17,25 @@ First, let's look at the html part, this should be relatively familiar to anyone
 ```html
 <form action="/blog_posts" method="post">
   <!-- other fields -->
-  <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
   <input
-    type="text"
-    name="blog_post[tags]"
-    id="tags-input"
-  >
-   <!-- other fields -->
-  <input type="submit" value="Create Post">
+    name="authenticity_token"
+    type="hidden"
+    value="<%= form_authenticity_token %>"
+  />
+  <input type="text" name="blog_post[tags]" id="tags-input" />
+  <!-- other fields -->
+  <input type="submit" value="Create Post" />
 </form>
 
 <script>
-  const input = document.querySelector('#tags-input')
+  const input = document.querySelector("#tags-input");
   const tagify = new Tagify(input, {
-      whitelist: [], // Or load whitelisted items from an API endpoint
-      enforceWhitelist: false,
-      transformTag: (tagData) => {
-          // Modify tag before add
-          return tagData;
-      },
+    whitelist: [], // Or load whitelisted items from an API endpoint
+    enforceWhitelist: false,
+    transformTag: (tagData) => {
+      // Modify tag before add
+      return tagData;
+    },
   });
 </script>
 ```
@@ -105,41 +105,41 @@ In this example, we attempt to parse the incoming stringified JSON array using `
 To further refine this, let’s assume that we have an API request that provides the user with suggested tags, which is extremely common.
 
 ```javascript
-  const tagify = new Tagify(input, {
-      whitelist: [], // Or load whitelisted items from an API endpoint
-      enforceWhitelist: false,
-      transformTag: (tagData) => {
-          // Modify tag before add
-          return tagData;
-      },
-        dropdown : {
-            enabled: 1,
-            closeOnSelect: false
-          },
-  });
+const tagify = new Tagify(input, {
+  whitelist: [], // Or load whitelisted items from an API endpoint
+  enforceWhitelist: false,
+  transformTag: (tagData) => {
+    // Modify tag before add
+    return tagData;
+  },
+  dropdown: {
+    enabled: 1,
+    closeOnSelect: false,
+  },
+});
 
-  tagify.on('input', function(e){
-     let term = e.detail.value
-     if (term.length > 2) {
-        fetch(`/api/tags/suggest?q=${encodeURIComponent(term)}`, { method: 'get' })
-            .then(res => res.json())
-            .then(data => {
-                tagify.settings.whitelist.length = 0
-                tagify.settings.whitelist = data.map(item => {
-                   return {
-                       value: item.value,
-                       text: item.text
-                   }
-                });
-                tagify.dropdown.show.call(tagify,term)
-             });
-      }
- })
+tagify.on("input", function (e) {
+  let term = e.detail.value;
+  if (term.length > 2) {
+    fetch(`/api/tags/suggest?q=${encodeURIComponent(term)}`, { method: "get" })
+      .then((res) => res.json())
+      .then((data) => {
+        tagify.settings.whitelist.length = 0;
+        tagify.settings.whitelist = data.map((item) => {
+          return {
+            value: item.value,
+            text: item.text,
+          };
+        });
+        tagify.dropdown.show.call(tagify, term);
+      });
+  }
+});
 ```
 
 Here we are fetching suggested tags when the input is greater than 2 characters and reconfiguring the whitelist of Tagify, this is a common use case that allows users to quickly select suggested tags.
 
-Lastly, it's worthwhile mentioning that sometimes you might want to transform the data structure to fit your storage needs.  For instance, you may want to store only the `value` attribute and not the entire hash. To accomplish this, one might modify the `blog_post_params` further:
+Lastly, it's worthwhile mentioning that sometimes you might want to transform the data structure to fit your storage needs. For instance, you may want to store only the `value` attribute and not the entire hash. To accomplish this, one might modify the `blog_post_params` further:
 
 ```ruby
 def blog_post_params

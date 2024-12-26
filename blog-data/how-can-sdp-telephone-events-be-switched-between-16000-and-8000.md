@@ -4,17 +4,17 @@ date: "2024-12-23"
 id: "how-can-sdp-telephone-events-be-switched-between-16000-and-8000"
 ---
 
-Alright, let's tackle this. Switching SDP (Session Description Protocol) telephone events between 16000 Hz and 8000 Hz sampling rates is something I've dealt with more than once, and it’s not always as straightforward as flipping a switch. The core challenge lies in ensuring that both the audio data itself and the associated SDP signaling are correctly modified to maintain call quality and compatibility. This involves adjusting the media format information within the SDP payload and potentially resampling the actual audio stream if it's being generated dynamically.
+, let's tackle this. Switching SDP (Session Description Protocol) telephone events between 16000 Hz and 8000 Hz sampling rates is something I've dealt with more than once, and it’s not always as straightforward as flipping a switch. The core challenge lies in ensuring that both the audio data itself and the associated SDP signaling are correctly modified to maintain call quality and compatibility. This involves adjusting the media format information within the SDP payload and potentially resampling the actual audio stream if it's being generated dynamically.
 
-To begin, let's unpack what we're actually manipulating. SDP, as defined in RFC 4566, describes multimedia sessions, including audio. A crucial part of the SDP is the ‘m’ line, which specifies the media type (audio), transport port, and a list of *RTP payload types*. For telephone events, often termed *DTMF tones* or *in-band signaling*, we typically see these events being carried as RTP payload types associated with specific encoding parameters. The sampling rate is a fundamental parameter in these encoding definitions.
+To begin, let's unpack what we're actually manipulating. SDP, as defined in RFC 4566, describes multimedia sessions, including audio. A crucial part of the SDP is the ‘m’ line, which specifies the media type (audio), transport port, and a list of _RTP payload types_. For telephone events, often termed _DTMF tones_ or _in-band signaling_, we typically see these events being carried as RTP payload types associated with specific encoding parameters. The sampling rate is a fundamental parameter in these encoding definitions.
 
-Now, if we assume a scenario where the original SDP advertises telephone events at 16000 Hz, and we need to switch to 8000 Hz, it’s critical that we handle this consistently across both sides of the call. The SDP, which describes the capabilities of each endpoint, needs to be updated first. This update ensures the receiving end correctly interprets the incoming data. We must adjust the parameters associated with the specific payload type that carries the telephone events. A common payload type used for this is dynamic payload type numbers in the range 96-127, and the *fmtp* attribute will be where much of the action takes place, in particular the *rate* and potentially the *ptime* and *maxptime* parameters.
+Now, if we assume a scenario where the original SDP advertises telephone events at 16000 Hz, and we need to switch to 8000 Hz, it’s critical that we handle this consistently across both sides of the call. The SDP, which describes the capabilities of each endpoint, needs to be updated first. This update ensures the receiving end correctly interprets the incoming data. We must adjust the parameters associated with the specific payload type that carries the telephone events. A common payload type used for this is dynamic payload type numbers in the range 96-127, and the _fmtp_ attribute will be where much of the action takes place, in particular the _rate_ and potentially the _ptime_ and _maxptime_ parameters.
 
-Let me describe a scenario from my past. I worked on a legacy VoIP system that initially used 16000 Hz for all audio, including DTMF, which was using a dynamic payload type, lets say payload type 97, and advertised using *telephone-event/16000*. We then needed to integrate with a system that only supported 8000 Hz for DTMF signals. This required a change to the SDP, in addition to the audio resampling, which in turn required significant care.
+Let me describe a scenario from my past. I worked on a legacy VoIP system that initially used 16000 Hz for all audio, including DTMF, which was using a dynamic payload type, lets say payload type 97, and advertised using _telephone-event/16000_. We then needed to integrate with a system that only supported 8000 Hz for DTMF signals. This required a change to the SDP, in addition to the audio resampling, which in turn required significant care.
 
 Here's how we managed it, and the code examples will illustrate this further:
 
-First, we would generate a *new SDP* for offering 8000Hz telephone events and the corresponding *answer SDP* would contain the necessary parameters. Let's assume payload type 97 for 16000 Hz had previously been defined like so:
+First, we would generate a _new SDP_ for offering 8000Hz telephone events and the corresponding _answer SDP_ would contain the necessary parameters. Let's assume payload type 97 for 16000 Hz had previously been defined like so:
 
 ```sdp
 m=audio 1234 RTP/AVP 97
@@ -22,7 +22,7 @@ a=rtpmap:97 telephone-event/16000
 a=fmtp:97 0-15
 ```
 
-We would need to change the *rtpmap* line and potentially adjust the transport parameters of the new answer to:
+We would need to change the _rtpmap_ line and potentially adjust the transport parameters of the new answer to:
 
 ```sdp
 m=audio 1234 RTP/AVP 97
@@ -30,7 +30,7 @@ a=rtpmap:97 telephone-event/8000
 a=fmtp:97 0-15
 ```
 
-This change to the 'a=rtpmap' attribute defines the encoding parameter of that payload type, and would be applied to the *offer sdp* message going out and subsequently in the *answer sdp*. Note that the *fmtp* attribute remained the same as the range of codes it defines are independant of the rate.
+This change to the 'a=rtpmap' attribute defines the encoding parameter of that payload type, and would be applied to the _offer sdp_ message going out and subsequently in the _answer sdp_. Note that the _fmtp_ attribute remained the same as the range of codes it defines are independant of the rate.
 
 However, just changing the SDP might not be enough. Depending on how your system processes the DTMF tones, you might need to actually resample the audio. Let me explain: Suppose your system encodes the telephone events as a sequence of audio samples at 16000 Hz, this will produce a very short sequence. When you transmit that sequence, with a change in the SDP, as if it was samples at 8000 Hz this will be replayed at half the speed and would therefore sound like very slow and low pitch DTMF tones at the receiving end.
 
@@ -63,7 +63,7 @@ print(f"Original data: {original_audio_16k} Resampled data: {resampled_audio_8k}
 print(f"Original sample rate : 16000, Resampled sample rate : 8000")
 ```
 
-The example above shows how the raw audio data is resampled, before sending via RTP. The resampled audio is what is packaged into RTP packets and sent over the network according to the *new* SDP description.
+The example above shows how the raw audio data is resampled, before sending via RTP. The resampled audio is what is packaged into RTP packets and sent over the network according to the _new_ SDP description.
 
 Finally, if you are not generating the audio from samples as the previous example described but rather you are generating the tones on the fly it's worth remembering that you should be generating those tones, from scratch, at the target sample rate for example a generator would generate a tone at 8000 Hz if that is what was needed. Here is an example that demonstrates that:
 

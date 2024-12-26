@@ -4,11 +4,12 @@ date: "2024-12-23"
 id: "how-to-execute-a-dag-from-code-without-encountering-no-run-dates-were-found-errors"
 ---
 
-Alright, let’s unpack this common frustration. I’ve spent more than a few late nights troubleshooting 'no run dates were found' errors while working with directed acyclic graphs (DAGs) in various systems, from simpler batch processing pipelines to more complex data orchestration platforms. It's rarely a fundamental flaw in the DAG itself, but rather an issue with how the scheduler is interpreting the temporal constraints for task execution. The crux of the problem usually lies in either incorrect or missing definitions for when your DAG should actually run, and it’s crucial to understand these scheduling mechanisms to avoid this pitfall.
+, let’s unpack this common frustration. I’ve spent more than a few late nights troubleshooting 'no run dates were found' errors while working with directed acyclic graphs (DAGs) in various systems, from simpler batch processing pipelines to more complex data orchestration platforms. It's rarely a fundamental flaw in the DAG itself, but rather an issue with how the scheduler is interpreting the temporal constraints for task execution. The crux of the problem usually lies in either incorrect or missing definitions for when your DAG should actually run, and it’s crucial to understand these scheduling mechanisms to avoid this pitfall.
 
-Essentially, the "no run dates were found" error signals that the scheduler—whether it’s Airflow, Prefect, or something custom—can’t determine when it should initiate a DAG run. DAGs, at their core, represent a sequence of operations or tasks with defined dependencies. However, they don’t inherently know when to activate themselves; that’s our responsibility to specify. Typically, this involves setting up a *schedule*, which tells the scheduler on which dates and times, or under what conditions, the DAG should trigger an execution. If that’s not properly configured, you’re left with a DAG that’s perfectly structured but utterly inactive.
+Essentially, the "no run dates were found" error signals that the scheduler—whether it’s Airflow, Prefect, or something custom—can’t determine when it should initiate a DAG run. DAGs, at their core, represent a sequence of operations or tasks with defined dependencies. However, they don’t inherently know when to activate themselves; that’s our responsibility to specify. Typically, this involves setting up a _schedule_, which tells the scheduler on which dates and times, or under what conditions, the DAG should trigger an execution. If that’s not properly configured, you’re left with a DAG that’s perfectly structured but utterly inactive.
 
 The error itself can stem from multiple sources, broadly categorized as:
+
 1. **Missing or Incorrect Schedule Definitions:** No `schedule_interval` or similar parameter has been provided, or the definition is faulty in some way. For instance, an invalid cron expression or a datetime that’s passed already.
 2. **Misunderstanding Schedule Logic:** Some schedulers support advanced scheduling features like catchup or backfill. Not handling these settings correctly can prevent runs from being registered.
 3. **External Dependencies Affecting the Trigger:** A DAG may be intended to run based on the arrival of a specific file or message. If that condition is not met or is incorrectly configured, no run dates will be generated.
@@ -41,7 +42,7 @@ class DummyScheduler:  # Simplified mock scheduler
         start = self.runs[dag_id]['start_date']
 
         if isinstance(schedule, str): # Assume cron string
-             # Note:  A proper parsing of a cron string is missing for simplification, 
+             # Note:  A proper parsing of a cron string is missing for simplification,
             #        but it would be in a production environment using dedicated libraries.
             #        This would calculate run dates based on now and the provided cron.
             if now.day == 1: # Simulating a run at the first day of the month
@@ -196,7 +197,7 @@ else:
 
 ```
 
-With `catchup=True`, the scheduler will generate all the missed run dates between the `start_date` and the current time. Setting `catchup=False` will cause the scheduler to consider only the *most recent* schedule point, if applicable, which may result in skipping runs if the schedule point is too old or not available. Missing this nuance can lead to the ‘no run dates’ error if you’re expecting past runs to be triggered.
+With `catchup=True`, the scheduler will generate all the missed run dates between the `start_date` and the current time. Setting `catchup=False` will cause the scheduler to consider only the _most recent_ schedule point, if applicable, which may result in skipping runs if the schedule point is too old or not available. Missing this nuance can lead to the ‘no run dates’ error if you’re expecting past runs to be triggered.
 
 **Example 3: External Trigger Considerations**
 

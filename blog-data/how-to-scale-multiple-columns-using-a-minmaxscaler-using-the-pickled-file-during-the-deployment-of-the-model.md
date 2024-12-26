@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-scale-multiple-columns-using-a-minmaxscaler-using-the-pickled-file-during-the-deployment-of-the-model"
 ---
 
-alright, so you're looking at scaling multiple columns with minmaxscaler and dealing with pickled files during model deployment. i've been there, done that, got the t-shirt (and probably spilled coffee on it while debugging a similar issue). it's a common spot to stumble, but let's break it down.
+, so you're looking at scaling multiple columns with minmaxscaler and dealing with pickled files during model deployment. i've been there, done that, got the t-shirt (and probably spilled coffee on it while debugging a similar issue). it's a common spot to stumble, but let's break it down.
 
 the core problem is that you can't just throw a bunch of unscaled data at your model after you've trained it on scaled data. your model is expecting inputs within a specific range, usually [0, 1], thanks to minmaxscaler. the pickle file, if i'm guessing correctly, contains your trained model, and not your scaler object.
 

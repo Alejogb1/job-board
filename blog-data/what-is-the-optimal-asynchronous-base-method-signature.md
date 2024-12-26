@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-optimal-asynchronous-base-method-signature"
 ---
 
-Alright, let’s unpack the complexities surrounding optimal asynchronous method signatures. It's a topic I've grappled with extensively over the years, particularly during a project involving a distributed microservices architecture where performance was absolutely paramount. We faced significant challenges with latency and resource contention, necessitating a thorough rethink of how our asynchronous operations were designed. The seemingly innocuous choices in the signature can have profound implications on the maintainability, scalability, and, most importantly, the performance of your application.
+, let’s unpack the complexities surrounding optimal asynchronous method signatures. It's a topic I've grappled with extensively over the years, particularly during a project involving a distributed microservices architecture where performance was absolutely paramount. We faced significant challenges with latency and resource contention, necessitating a thorough rethink of how our asynchronous operations were designed. The seemingly innocuous choices in the signature can have profound implications on the maintainability, scalability, and, most importantly, the performance of your application.
 
 The core issue revolves around balancing flexibility with predictability when you’re dealing with asynchronous workflows. There isn't a single "perfect" signature that will universally apply across every use case, but there are design patterns and best practices that tend to consistently yield better results. I've found a focus on returning `Task<T>` or `ValueTask<T>` in most scenarios to be quite effective, especially within the .net ecosystem, with some crucial nuances.
 
@@ -14,7 +14,7 @@ However, implementing asynchronous methods properly requires careful considerati
 
 However, the key optimization I've leaned into is the selective use of `ValueTask<T>`. This structure was introduced primarily to address the heap allocation overhead that can occur with `Task<T>`. When you're returning cached or already completed results synchronously, `ValueTask<T>` can bypass this allocation, which, in high-throughput scenarios, makes a noticeable difference.
 
-The signature, thus, often looks something like `public async ValueTask<T> MyAsyncOperationAsync(...)` if an immediate return might be feasible. The `async` keyword isn't *part* of the signature itself, it's compiler syntactic sugar that enables the use of `await` and transforms the method into a state machine.
+The signature, thus, often looks something like `public async ValueTask<T> MyAsyncOperationAsync(...)` if an immediate return might be feasible. The `async` keyword isn't _part_ of the signature itself, it's compiler syntactic sugar that enables the use of `await` and transforms the method into a state machine.
 
 Now, here are three code examples to illustrate these points and their typical usage scenarios:
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-project-terrain-onto-a-surface-using-directx"
 ---
 
-Okay, let's tackle this. I've certainly navigated the terrain projection problem in DirectX a few times over the years, particularly back when I was knee-deep in a large-scale terrain rendering project using DirectX 11. It’s a fascinating challenge that often requires a nuanced approach, and the specific solution depends quite a bit on the underlying setup of your terrain data and the surface you’re projecting onto.
+, let's tackle this. I've certainly navigated the terrain projection problem in DirectX a few times over the years, particularly back when I was knee-deep in a large-scale terrain rendering project using DirectX 11. It’s a fascinating challenge that often requires a nuanced approach, and the specific solution depends quite a bit on the underlying setup of your terrain data and the surface you’re projecting onto.
 
 Essentially, you're trying to map points from a 2D terrain heightmap onto a 3D surface, which itself might be a complex mesh or a relatively simple plane. The core process involves several key steps: retrieving terrain height data, establishing a correspondence between the 2D terrain coordinates and the 3D surface coordinates, and then using this correspondence to manipulate the target surface. This typically boils down to transforming the vertices of your target surface based on the sampled heightmap data.
 
@@ -34,6 +34,7 @@ float3 terrainProject(float3 vertexPos, float2 terrainScale, float terrainHeight
     return projectedPosition;
 }
 ```
+
 This shader function `terrainProject` is intended to be called per vertex. This snippet samples the heightmap at the corresponding xz-coordinates and adjusts the y component of the vertex position. This method works well when the target surface is generally aligned with the terrain and the deformation needed isn't extreme. Note, I would use a `samplerState` for controlling texture sampling behavior to avoid artifacts.
 
 For more complex surfaces, particularly those that aren’t flat, the mapping might not be as simple. Here, a more sophisticated strategy is necessary. One such approach involves establishing an inverse mapping between the target surface and the terrain. This means finding the specific x,z coordinates of the terrain that corresponds to a given point on the target surface. This is generally more computationally intensive, especially if you need to compute that inverse mapping in real time.
@@ -74,9 +75,9 @@ std::vector<Vertex> projectTerrainOntoSurface(const std::vector<Vertex>& surface
 }
 ```
 
-In this cpp example, I'm approximating an inverse mapping based on the target surface’s x,z bounds. *This isn’t a perfect method,* and a real-world application would likely necessitate more sophisticated geometric calculations. The important thing here is it communicates the core principle: finding the corresponding terrain coordinates for each surface vertex and manipulating the vertex position based on the sampled height. Again, the practical implementation might be a precomputed lookup texture (which maps surface points to terrain UVs) or use a more complex calculation usually involving normal vectors or ray intersections.
+In this cpp example, I'm approximating an inverse mapping based on the target surface’s x,z bounds. _This isn’t a perfect method,_ and a real-world application would likely necessitate more sophisticated geometric calculations. The important thing here is it communicates the core principle: finding the corresponding terrain coordinates for each surface vertex and manipulating the vertex position based on the sampled height. Again, the practical implementation might be a precomputed lookup texture (which maps surface points to terrain UVs) or use a more complex calculation usually involving normal vectors or ray intersections.
 
-Finally, consider the case where you are projecting a larger, more detailed mesh representing an arbitrary surface onto a terrain. Often, in games or simulations, you wouldn't be modifying the vertices of a large detailed mesh directly on the CPU. Instead, you use the GPU, by employing a technique commonly known as *displacement mapping* (or tessellation in some cases). In this approach, you feed your terrain's heightmap data and a mesh surface to the shader. Then, for each vertex or tessellated point, you perform similar calculations as before, but this time on the GPU:
+Finally, consider the case where you are projecting a larger, more detailed mesh representing an arbitrary surface onto a terrain. Often, in games or simulations, you wouldn't be modifying the vertices of a large detailed mesh directly on the CPU. Instead, you use the GPU, by employing a technique commonly known as _displacement mapping_ (or tessellation in some cases). In this approach, you feed your terrain's heightmap data and a mesh surface to the shader. Then, for each vertex or tessellated point, you perform similar calculations as before, but this time on the GPU:
 
 ```hlsl
 // Vertex shader stage

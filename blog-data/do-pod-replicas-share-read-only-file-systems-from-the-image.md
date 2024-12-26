@@ -4,13 +4,13 @@ date: "2024-12-16"
 id: "do-pod-replicas-share-read-only-file-systems-from-the-image"
 ---
 
-Alright, let’s tackle this one. It’s a frequently encountered question, and a fundamental aspect of understanding containerized environments like Kubernetes pods. The core issue revolves around how containers within a pod, particularly the replicas, access the filesystem originating from the container image. The short answer is yes, pod replicas typically share read-only file systems derived directly from their respective container images. However, as is often the case in software, the devil is in the details.
+, let’s tackle this one. It’s a frequently encountered question, and a fundamental aspect of understanding containerized environments like Kubernetes pods. The core issue revolves around how containers within a pod, particularly the replicas, access the filesystem originating from the container image. The short answer is yes, pod replicas typically share read-only file systems derived directly from their respective container images. However, as is often the case in software, the devil is in the details.
 
 My past experience on a large-scale microservices project, where we were running hundreds of pods handling various backend tasks, highlighted just how crucial understanding this mechanism is. Initially, we assumed every instance had a fully isolated writable volume, which led to some unexpected data loss issues during scaling events. We had incorrectly modified files in-place inside the container itself, which of course was not the proper design pattern. It was a painful lesson, but a great example of how even seasoned developers can fall victim to misunderstanding the underlying technology.
 
 Here’s the breakdown: when a container image is built, it typically consists of layers. These layers represent the files and directories added at each step of the build process. Think of it like a stack of read-only slices, where each layer builds upon the previous one. When you deploy a pod and its replicas, each replica gets instantiated with an identical read-only copy of this layered filesystem as defined by the image manifest. This ensures consistency across all instances.
 
-The crucial takeaway here is that changes made *within* a running container are usually not persistent unless they're directed into specific volumes that are mounted separately (and thus are not read-only). These volumes can be either *ephemeral*, existing only for the lifetime of the pod, or *persistent*, surviving pod restarts. Modifications done to the container's root filesystem in-place within the running instance of the container are lost on restart.
+The crucial takeaway here is that changes made _within_ a running container are usually not persistent unless they're directed into specific volumes that are mounted separately (and thus are not read-only). These volumes can be either _ephemeral_, existing only for the lifetime of the pod, or _persistent_, surviving pod restarts. Modifications done to the container's root filesystem in-place within the running instance of the container are lost on restart.
 
 Now, let's illustrate this with some concrete examples. I’ll provide snippets in pseudo-yaml, simulating how these settings typically appear in a kubernetes pod definition, along with python code examples to demonstrate file access.
 
@@ -34,9 +34,9 @@ spec:
         app: basic-read
     spec:
       containers:
-      - name: alpine-container
-        image: alpine:latest
-        command: ["sh", "-c", "sleep 3600"] # Keep the container running
+        - name: alpine-container
+          image: alpine:latest
+          command: ["sh", "-c", "sleep 3600"] # Keep the container running
 ```
 
 If we exec into any of these containers and try to modify a file in the root filesystem, it will either fail because of the read-only nature or, if the container does have a mounted scratch or tmpfs write layer, the changes will be lost when the container is restarted.
@@ -70,15 +70,15 @@ spec:
         app: empty-dir
     spec:
       containers:
-      - name: alpine-container
-        image: alpine:latest
-        command: ["sh", "-c", "python /app/write_to_shared.py"] # Keep the container running
-        volumeMounts:
-        - name: shared-volume
-          mountPath: /shared-data
+        - name: alpine-container
+          image: alpine:latest
+          command: ["sh", "-c", "python /app/write_to_shared.py"] # Keep the container running
+          volumeMounts:
+            - name: shared-volume
+              mountPath: /shared-data
       volumes:
-      - name: shared-volume
-        emptyDir: {}
+        - name: shared-volume
+          emptyDir: {}
 ```
 
 And then, within the image we've created a python script, `write_to_shared.py`, like this:
@@ -115,16 +115,16 @@ spec:
         app: persistent-volume
     spec:
       containers:
-      - name: alpine-container
-        image: alpine:latest
-        command: ["sh", "-c", "python /app/write_to_persistent.py"]
-        volumeMounts:
-        - name: persistent-volume
-          mountPath: /persistent-data
+        - name: alpine-container
+          image: alpine:latest
+          command: ["sh", "-c", "python /app/write_to_persistent.py"]
+          volumeMounts:
+            - name: persistent-volume
+              mountPath: /persistent-data
       volumes:
-      - name: persistent-volume
-        persistentVolumeClaim:
-          claimName: my-pvc # This PVC must already exist.
+        - name: persistent-volume
+          persistentVolumeClaim:
+            claimName: my-pvc # This PVC must already exist.
 ```
 
 And the application, which also resides in the image, now targets a persistent volume claim:
@@ -139,4 +139,4 @@ time.sleep(120)
 
 In summary, yes, pod replicas share read-only file systems from the container image. This provides immutability and consistency across instances. Writing to files within this read-only filesystem will typically be lost unless you explicitly utilize volumes, like `emptyDir` or, for persistence, `PersistentVolumes`.
 
-If you want to gain deeper understanding about this topic, I'd highly recommend the *Kubernetes in Action* book by Marko Lukša, which provides a very comprehensive overview of the core concepts and best practices. Also, exploring the official Kubernetes documentation, especially the sections on volumes and persistent storage, is invaluable. For a broader view on container image layers, *Docker Deep Dive* by Nigel Poulton offers fantastic insights. Finally, the paper *Docker: Lightweight Linux Containers for Consistent Development and Deployment*, from the USENIX 2014 LISA conference, though slightly older, provides invaluable insight to the design concepts behind modern containerization. It's important to stay grounded in both the theoretical and practical aspects of these systems. This will enable a proper understanding of how to build efficient and reliable systems utilizing this underlying technology.
+If you want to gain deeper understanding about this topic, I'd highly recommend the _Kubernetes in Action_ book by Marko Lukša, which provides a very comprehensive overview of the core concepts and best practices. Also, exploring the official Kubernetes documentation, especially the sections on volumes and persistent storage, is invaluable. For a broader view on container image layers, _Docker Deep Dive_ by Nigel Poulton offers fantastic insights. Finally, the paper _Docker: Lightweight Linux Containers for Consistent Development and Deployment_, from the USENIX 2014 LISA conference, though slightly older, provides invaluable insight to the design concepts behind modern containerization. It's important to stay grounded in both the theoretical and practical aspects of these systems. This will enable a proper understanding of how to build efficient and reliable systems utilizing this underlying technology.

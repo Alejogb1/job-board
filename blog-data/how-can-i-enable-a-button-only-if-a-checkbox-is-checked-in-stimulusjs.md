@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-enable-a-button-only-if-a-checkbox-is-checked-in-stimulusjs"
 ---
 
-Okay, let's tackle this. I’ve seen this scenario crop up quite a bit, especially when building interactive forms with StimulusJS. It’s a fundamental piece of the puzzle when you need to control user input based on certain conditions. The key here lies in judiciously using Stimulus’s data attributes and action system to orchestrate the enabling and disabling of the button. Let's get into the practicalities, drawing on some past experiences that solidified my approach.
+, let's tackle this. I’ve seen this scenario crop up quite a bit, especially when building interactive forms with StimulusJS. It’s a fundamental piece of the puzzle when you need to control user input based on certain conditions. The key here lies in judiciously using Stimulus’s data attributes and action system to orchestrate the enabling and disabling of the button. Let's get into the practicalities, drawing on some past experiences that solidified my approach.
 
 My introduction to this particular challenge came during a project for a rather complex e-commerce platform. We had a form where users needed to agree to terms and conditions before being able to proceed to checkout. A simple checkbox controlled the “Proceed to Checkout” button. Initially, the logic was all over the place, resulting in a brittle codebase. That's when I really dove deep into leveraging Stimulus’s capabilities.
 
@@ -14,8 +14,14 @@ First, let's establish the HTML structure. We'll have a wrapping `div` that serv
 
 ```html
 <div data-controller="checkbox-enabler">
-  <input type="checkbox" data-action="change->checkbox-enabler#toggleButton" data-target="checkbox-enabler.checkbox">
-  <button type="submit" data-target="checkbox-enabler.button" disabled>Proceed</button>
+  <input
+    type="checkbox"
+    data-action="change->checkbox-enabler#toggleButton"
+    data-target="checkbox-enabler.checkbox"
+  />
+  <button type="submit" data-target="checkbox-enabler.button" disabled>
+    Proceed
+  </button>
 </div>
 ```
 
@@ -27,12 +33,12 @@ Here, `data-controller="checkbox-enabler"` designates that this `div` is managed
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-    static targets = ["checkbox", "button"];
+  static targets = ["checkbox", "button"];
 
-    toggleButton() {
-      this.buttonTarget.disabled = !this.checkboxTarget.checked;
-    }
+  toggleButton() {
+    this.buttonTarget.disabled = !this.checkboxTarget.checked;
   }
+}
 ```
 
 This `toggleButton` function is the heart of the operation. It checks the `checked` property of the checkbox, and then sets the `disabled` property of the button accordingly. The exclamation point (`!`) negates the value of the checkbox's `checked` property, meaning that if the checkbox is checked, `this.checkboxTarget.checked` will return `true` and `!this.checkboxTarget.checked` will return `false`. Thus the button will be enabled. And if the checkbox is unchecked, the button will be disabled.
@@ -45,16 +51,16 @@ That's the fundamental concept in its most concise form. However, we could also 
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-    static targets = ["checkbox", "button"];
+  static targets = ["checkbox", "button"];
 
-    connect() {
-        this.toggleButton()
-    }
-
-    toggleButton() {
-      this.buttonTarget.disabled = !this.checkboxTarget.checked;
-    }
+  connect() {
+    this.toggleButton();
   }
+
+  toggleButton() {
+    this.buttonTarget.disabled = !this.checkboxTarget.checked;
+  }
+}
 ```
 
 By adding a `connect()` lifecycle callback method, we can ensure that the button’s disabled state is correctly set when the controller is first connected to the DOM. This provides a better user experience, ensuring the initial state of the button reflects the initial state of the checkbox.
@@ -67,25 +73,23 @@ Here's a third, slightly more advanced pattern I’ve employed which also handle
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-    static targets = ["checkbox", "button"];
+  static targets = ["checkbox", "button"];
 
-    initialize() {
-      this.initialButtonState()
-    }
-
-    initialButtonState() {
-        this.toggleButton();
-    }
-
-
-    toggleButton() {
-      this.buttonTarget.disabled = !this.checkboxTarget.checked;
-    }
+  initialize() {
+    this.initialButtonState();
   }
 
+  initialButtonState() {
+    this.toggleButton();
+  }
+
+  toggleButton() {
+    this.buttonTarget.disabled = !this.checkboxTarget.checked;
+  }
+}
 ```
 
-Here, we use the `initialize` lifecycle hook, which happens *before* `connect`, to set the correct state of the button, taking the persisted checkbox state into consideration. Again, `toggleButton` handles the actual enabling/disabling based on the checkbox's checked property. This is helpful for situations where the user’s preferences are stored, and the initial state of controls needs to reflect their prior choices.
+Here, we use the `initialize` lifecycle hook, which happens _before_ `connect`, to set the correct state of the button, taking the persisted checkbox state into consideration. Again, `toggleButton` handles the actual enabling/disabling based on the checkbox's checked property. This is helpful for situations where the user’s preferences are stored, and the initial state of controls needs to reflect their prior choices.
 
 Now, to discuss more on best practices and deeper topics. One thing that I've found helpful is to avoid complex logic within the controller itself. A good rule of thumb is that a controller’s primary responsibility is to wire up the interaction; the business logic is best left to a specialized service or helper class. Furthermore, ensure that the data attributes are descriptive and follow a consistent naming convention across your project. This makes your code easier to read and maintain. Also, while this example is fairly simple, be sure to extensively test interactions like these, especially in complex forms. Unit tests, while helpful, only go so far; end-to-end tests give you more confidence that the interactions work correctly across a wide range of scenarios.
 

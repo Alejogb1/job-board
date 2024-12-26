@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-chainlinks-dynamic-upkeep-registration-example-failing-with-upkeepidconsumerexampleregisterandpredictid-errored-execution-reverted"
 ---
 
-Okay, let's dive into this. I remember dealing with a similar issue a while back when integrating Chainlink Keepers into a particularly complex smart contract system. The `execution reverted` error you're seeing with `UpkeepIDConsumerExample.registerAndPredictID` is, unfortunately, a fairly common pitfall, and it typically boils down to a few core issues within the Keeper registration process or the contract interaction itself. It's less likely to be a fundamental flaw in Chainlink and more a matter of configuration and contract logic alignment.
+, let's dive into this. I remember dealing with a similar issue a while back when integrating Chainlink Keepers into a particularly complex smart contract system. The `execution reverted` error you're seeing with `UpkeepIDConsumerExample.registerAndPredictID` is, unfortunately, a fairly common pitfall, and it typically boils down to a few core issues within the Keeper registration process or the contract interaction itself. It's less likely to be a fundamental flaw in Chainlink and more a matter of configuration and contract logic alignment.
 
 The core of the problem generally lies within how you’re interacting with the `KeeperRegistry` contract and how your target contract, `UpkeepIDConsumerExample` in this case, is configured to handle keeper registration. The error `execution reverted` means that somewhere along the line, a transaction attempted to execute an operation that failed based on pre-defined criteria or logic within the smart contract. Let's break down potential causes and solutions.
 
@@ -12,7 +12,7 @@ First, let’s focus on the **registration process** itself. The `registerAndPre
 
 Second, consider the **parameters of the registration**. Specifically, look closely at the `checkData` and `performData`. These byte arrays need to be properly formatted and consistent with what your `checkUpkeep` and `performUpkeep` functions in the target contract expect. This is crucial. Incorrect or mismatched data will trigger the `checkUpkeep` function to revert, which will cause the entire `registerAndPredictID` to fail, as the check operation needs to be successful for the registration to go through.
 
-Third, let's examine your **`UpkeepIDConsumerExample` contract** itself. I've seen many issues arise from improperly defined or unimplemented `checkUpkeep` and `performUpkeep` functions, or due to the incorrect return values from these functions. For example, your `checkUpkeep` function *must* return a boolean value indicating whether the upkeep should be performed and, optionally, additional data to be passed to `performUpkeep`. If you are not returning a boolean, you'll get a revert. The data must be encoded correctly. Often a `abi.encode` or some variation is used to encode complex values for return. Let's check some examples to make this clearer.
+Third, let's examine your **`UpkeepIDConsumerExample` contract** itself. I've seen many issues arise from improperly defined or unimplemented `checkUpkeep` and `performUpkeep` functions, or due to the incorrect return values from these functions. For example, your `checkUpkeep` function _must_ return a boolean value indicating whether the upkeep should be performed and, optionally, additional data to be passed to `performUpkeep`. If you are not returning a boolean, you'll get a revert. The data must be encoded correctly. Often a `abi.encode` or some variation is used to encode complex values for return. Let's check some examples to make this clearer.
 
 Here’s a simplified code example that shows a typical scenario:
 
@@ -30,6 +30,7 @@ contract SimpleUpkeepConsumer {
   }
 }
 ```
+
 In this example, while the `checkUpkeep` returns `true`, it returns empty bytes when the perform function might have expected some data or did not encode data properly. The `registerAndPredictID` transaction would likely revert. To fix this you might have to use `abi.encode()` function before returning the `bytes`.
 Here’s another example:
 

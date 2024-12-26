@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-is-my-docker-container-unable-to-reach-a-site"
 ---
 
-Okay, let's unpack this. It's a scenario I've bumped into more times than I care to count, and the reasons why a Docker container can't reach a site are usually a result of one or more of a few core problems. It's rarely a simple case of ‘it doesn’t work’, and more often a detective game of network configurations, DNS issues, or routing mishaps. I recall one particularly frustrating incident years ago where a seemingly trivial deployment kept failing silently; turned out to be a subtle misalignment in the way the container's network was being configured in a multi-host environment. That taught me a lot about the importance of methodical debugging.
+, let's unpack this. It's a scenario I've bumped into more times than I care to count, and the reasons why a Docker container can't reach a site are usually a result of one or more of a few core problems. It's rarely a simple case of ‘it doesn’t work’, and more often a detective game of network configurations, DNS issues, or routing mishaps. I recall one particularly frustrating incident years ago where a seemingly trivial deployment kept failing silently; turned out to be a subtle misalignment in the way the container's network was being configured in a multi-host environment. That taught me a lot about the importance of methodical debugging.
 
-First, we have to talk about networking. By default, Docker containers operate within their own isolated network namespace, which means they're not directly connected to your host's network or the external internet unless you explicitly tell them to be. The most common problem, and the one I see tripped up most often, is a container being in a network that doesn't allow outgoing internet access. Docker provides different networking modes. The default 'bridge' network works for simple setups, but it creates a NAT (Network Address Translation) layer. This means your container can reach the internet but the outside world can't easily reach *it*, which isn't usually the cause of your problem, but a critical understanding to have.
+First, we have to talk about networking. By default, Docker containers operate within their own isolated network namespace, which means they're not directly connected to your host's network or the external internet unless you explicitly tell them to be. The most common problem, and the one I see tripped up most often, is a container being in a network that doesn't allow outgoing internet access. Docker provides different networking modes. The default 'bridge' network works for simple setups, but it creates a NAT (Network Address Translation) layer. This means your container can reach the internet but the outside world can't easily reach _it_, which isn't usually the cause of your problem, but a critical understanding to have.
 
 A container on the bridge network will usually have an IP address within the `172.17.0.0/16` range by default, or something similar. This address isn’t directly reachable from outside of the Docker host. If you have a very basic setup and things aren’t working, a good first step is to confirm your container's network settings. You can check this by running `docker inspect <container_name>`. You'll see a large json blob, but what you're interested in is under the `NetworkSettings` key, which contains information about the container’s ip address, network configurations, and more.
 
@@ -27,6 +27,7 @@ cmd ["sleep", "infinity"] # Keep the container running so we can exec into it
 ```
 
 Now, let's build this as an image called `test-curl`:
+
 ```bash
 docker build -t test-curl .
 ```
@@ -38,10 +39,12 @@ docker run -d --name test-container test-curl
 ```
 
 And then try to exec in to curl the site.
+
 ```bash
 docker exec -it test-container sh
 curl https://www.google.com
 ```
+
 If you can’t reach google, but can from the host, it is very likely there is a container network problem. By default, the bridge network should be configured to route to the internet. However, if you've messed with custom bridge setups, or firewalls, then the problem likely is there.
 
 **Example 2: DNS resolution Problem**
@@ -51,7 +54,9 @@ Let's suppose that your host machine is using a custom dns server, and your cont
 ```bash
 docker run -d --name test-container-dns  --dns 8.8.8.8 test-curl
 ```
+
 Now try curling as before, from a shell within the running container, as in example 1.
+
 ```bash
 docker exec -it test-container-dns sh
 curl https://www.google.com

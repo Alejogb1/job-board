@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "are-all-n-gram-combinations-considered-in-the-analysis"
 ---
 
-Alright, let's tackle this one. It's a question that crops up quite frequently when discussing text analysis and, in my experience, it often leads to some misconceptions. So, let’s get into the specifics of n-gram processing and whether *all* combinations are indeed considered.
+, let's tackle this one. It's a question that crops up quite frequently when discussing text analysis and, in my experience, it often leads to some misconceptions. So, let’s get into the specifics of n-gram processing and whether _all_ combinations are indeed considered.
 
 In short, the answer is usually no, not all possible n-gram combinations are analyzed in practical applications. This might seem counterintuitive at first, so let’s break down why and what the common strategies are. When we talk about n-grams, we're referring to contiguous sequences of ‘n’ items (usually words) from a given text. For example, “the quick brown fox” would yield the following bigrams (n=2): "the quick", "quick brown", "brown fox”. Trigrams (n=3) would give "the quick brown", "quick brown fox". And so on. The potential number of such combinations grows exponentially with n and the length of the text, which poses serious computational challenges.
 
@@ -18,7 +18,7 @@ Next, we can improve things with **POS tagging**. Using a tool like spaCy, NLTK,
 
 Another essential step is **stop word removal**. Stop words are extremely common words (like 'the', 'a', 'is') that carry little semantic meaning on their own. Before we calculate n-grams, it’s typical to remove these words, reducing the overall n-gram vocabulary size and allowing more meaningful patterns to surface.
 
-Finally, there's the strategy of using **maximal n-grams**. Instead of considering all n-grams from n=1 to a maximum length, you might focus on the *longest* meaningful n-grams. If the text “the very quick brown fox jumps” is processed, you might keep “very quick brown fox jumps” and not all the contained subsets like “quick brown”, “brown fox jumps” etc. The assumption here is that the longest n-gram contains the most context and the shorter n-grams do not add much additional information.
+Finally, there's the strategy of using **maximal n-grams**. Instead of considering all n-grams from n=1 to a maximum length, you might focus on the _longest_ meaningful n-grams. If the text “the very quick brown fox jumps” is processed, you might keep “very quick brown fox jumps” and not all the contained subsets like “quick brown”, “brown fox jumps” etc. The assumption here is that the longest n-gram contains the most context and the shorter n-grams do not add much additional information.
 
 To concretely demonstrate these principles, here are three simplified Python code examples using NLTK. The first one performs simple n-gram generation without filtering, to show how quickly the number of n-grams can explode. The second adds frequency-based filtering, and the third incorporates POS-based filtering.
 
@@ -36,6 +36,7 @@ print("Bigrams:", bigrams)
 print("Trigrams:", trigrams)
 
 ```
+
 This snippet demonstrates that, even for a small sentence, the amount of n-grams increases with the value of n and that there are numerous n-grams that will be meaningless. Let's add some frequency filtering:
 
 ```python
@@ -55,6 +56,7 @@ print("Filtered Bigrams:", filtered_bigrams)
 ```
 
 This example shows how we can drastically reduce the list of n-grams by setting a frequency threshold. Finally, let's move on to POS-based filtering.
+
 ```python
 # Example 3: N-Gram Generation with POS-Based Filtering
 import nltk

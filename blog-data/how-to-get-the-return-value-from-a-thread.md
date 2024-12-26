@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-get-the-return-value-from-a-thread"
 ---
 
-Okay so you want to grab a return value from a thread right been there done that many times let me tell you its not exactly straightforward when you're just starting out I've lost more than a few nights to this kind of thing believe me
+you want to grab a return value from a thread right been there done that many times let me tell you its not exactly straightforward when you're just starting out I've lost more than a few nights to this kind of thing believe me
 
 First off the core problem is that threads by their very nature operate concurrently they're off doing their own thing and they don't automatically hand back some results when they finish its not like a regular function call that gives you a value back on the spot You need some mechanism to receive that value after the thread has completed
 
@@ -71,6 +71,7 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor: # Create 
     for future in concurrent.futures.as_completed(futures): # iterate when results are available
         print("Result:", future.result())
 ```
+
 Here we're using a thread pool executor this makes it easier to manage multiple threads at once instead of manually creating and joining them individually and the `executor.submit()` method returns a `future` object you use this to get the result once the thread completes with `future.result()`. This approach was quite a game changer for me when I started to use this since it abstracts away the complexity of creating manually multiple threads and handling the return values at the same time. It also allows you to use callbacks or other advanced features for parallel processing.
 
 The `as_completed` method is also great because you can process results in the order that they finish and this can speed things up considerably if some threads take more time than others.

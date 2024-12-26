@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-a-graphql-playground-to-query-loopring-nfts"
 ---
 
-Okay, let's get into this. I recall a particularly challenging project some time back involving Loopring's layer-2 scaling solution. We were tasked with building a custom marketplace aggregator, and naturally, querying the chain for NFTs was paramount. A GraphQL playground became indispensable, and through that experience, I gained a fairly comprehensive understanding of how to leverage it for Loopring NFTs. I’ll try to break it down for you, focusing on the core practicalities, and then provide some concrete examples.
+, let's get into this. I recall a particularly challenging project some time back involving Loopring's layer-2 scaling solution. We were tasked with building a custom marketplace aggregator, and naturally, querying the chain for NFTs was paramount. A GraphQL playground became indispensable, and through that experience, I gained a fairly comprehensive understanding of how to leverage it for Loopring NFTs. I’ll try to break it down for you, focusing on the core practicalities, and then provide some concrete examples.
 
 First things first, understanding that Loopring is an ethereum layer-2 scaling solution is critical. It doesn't store NFT data exactly like the base ethereum layer. Instead, you're interacting with Loopring's APIs which have their own GraphQL endpoint. You won’t be directly hitting the Ethereum blockchain using a standard Ethereum GraphQL client for this. The key is understanding where Loopring stores its NFT data and how it exposes it for querying.
 
@@ -12,10 +12,10 @@ The crucial starting point is the Loopring GraphQL endpoint itself. It’s typic
 
 Once you have that schema, you’ll see that Loopring's API typically allows querying for things like:
 
-*   **Account information:** Details about wallet addresses on the Loopring network, including their associated NFT balances.
-*   **NFT Metadata:** The properties and attributes of particular NFT collections and individual NFTs.
-*   **Transfer history:** Past ownership changes and movement of NFTs.
-*   **Market data:** Information about NFT sales and offers on the loopring marketplace (though this may be in a separate API).
+- **Account information:** Details about wallet addresses on the Loopring network, including their associated NFT balances.
+- **NFT Metadata:** The properties and attributes of particular NFT collections and individual NFTs.
+- **Transfer history:** Past ownership changes and movement of NFTs.
+- **Market data:** Information about NFT sales and offers on the loopring marketplace (though this may be in a separate API).
 
 Now, how can a GraphQL playground, such as GraphiQL or Altair, become our tool of choice? The process is straightforward: you configure your GraphQL playground to point to the Loopring GraphQL endpoint. This involves simply entering the correct URL into the "endpoint" field of your playground. The playground then loads the schema and provides tools for writing queries.
 
@@ -34,8 +34,8 @@ query GetUserNFTs {
           nftId
           metadataUri
           collection {
-             name
-             contractAddress
+            name
+            contractAddress
           }
         }
       }
@@ -60,7 +60,7 @@ query GetNFTMetadata {
       value
     }
     collection {
-       name
+      name
     }
   }
 }
@@ -74,17 +74,19 @@ Sometimes, you might need to fetch multiple NFTs based on certain criteria, for 
 
 ```graphql
 query GetNFTsFromCollection {
-    nfts(where: {
-        collectionContractAddress: "0x12345abcde67890fghijk1234567890lmn",
-        ownerAddress: "0x123abc456def789ghi012jkl345mno678pqr901stu234"
-    }) {
-        edges {
-            node {
-                nftId
-                metadataUri
-            }
-        }
+  nfts(
+    where: {
+      collectionContractAddress: "0x12345abcde67890fghijk1234567890lmn"
+      ownerAddress: "0x123abc456def789ghi012jkl345mno678pqr901stu234"
     }
+  ) {
+    edges {
+      node {
+        nftId
+        metadataUri
+      }
+    }
+  }
 }
 ```
 

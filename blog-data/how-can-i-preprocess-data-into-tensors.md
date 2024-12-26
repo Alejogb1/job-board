@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-i-preprocess-data-into-tensors"
 ---
 
-alright, so you're looking at prepping data into tensors, right? been there, done that, got the t-shirt – probably several, stained with coffee from late nights debugging this exact thing. it's one of those foundational steps that can make or break your whole machine learning pipeline, and trust me, i've seen it break, spectacularly.
+, so you're looking at prepping data into tensors, right? been there, done that, got the t-shirt – probably several, stained with coffee from late nights debugging this exact thing. it's one of those foundational steps that can make or break your whole machine learning pipeline, and trust me, i've seen it break, spectacularly.
 
 let's break it down like we're debugging some nasty code. the core issue here is that machine learning models, especially the deep learning ones, don't understand raw data. they crave numbers, organized into multi-dimensional arrays – tensors. whether it's text, images, audio, or tabular data, it all needs to be transformed into this format. you can't just throw a bunch of strings or jpegs at a neural network and expect magic to happen.
 
@@ -110,6 +110,7 @@ target_size = (64,64)
 image_tensors = image_to_tensor(image_paths,target_size)
 print(image_tensors.shape)
 ```
+
 **general approach:**
 
 the idea in all these cases is the same, transform the raw data into numerical representation and then structure it into an array that your model can consume. a good approach is to start simple, get your basic tensor preprocessing working, and then gradually add more complex techniques, as you see fit. don't prematurely optimize if you don't have to. that’s what i’ve learned. once you get the data in the form of tensors, you often have to shuffle your data set before training. and sometimes, data needs to be pre-splitted into train, validation, and test sets, this helps avoid overfitting and gives a more accurate measure of the model performance. one more tip, always plot the histograms and distributions of your data before you actually start training and after processing to get a grasp on what is actually happening. i once missed an outlier which was creating a total mess on my training until i saw it in the histogram. it is a good practice.

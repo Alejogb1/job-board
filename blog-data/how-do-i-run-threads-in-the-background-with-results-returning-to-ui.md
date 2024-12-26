@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-run-threads-in-the-background-with-results-returning-to-ui"
 ---
 
-Okay, let’s dive into this. I've tackled this particular challenge countless times over the years, and it’s one that tends to surface across many different types of applications. The core issue, as you've phrased it, is about offloading work onto background threads without creating a tangled mess when it comes to getting those results back to the user interface (ui) thread. This requires a careful approach, as ui frameworks, by their very nature, are typically single-threaded. Direct modifications from any thread that isn't the ui thread tend to cause issues, often resulting in exceptions or, even worse, subtle, hard-to-debug glitches.
+, let’s dive into this. I've tackled this particular challenge countless times over the years, and it’s one that tends to surface across many different types of applications. The core issue, as you've phrased it, is about offloading work onto background threads without creating a tangled mess when it comes to getting those results back to the user interface (ui) thread. This requires a careful approach, as ui frameworks, by their very nature, are typically single-threaded. Direct modifications from any thread that isn't the ui thread tend to cause issues, often resulting in exceptions or, even worse, subtle, hard-to-debug glitches.
 
 My experience stems from working on various projects, including a rather complex data visualization tool which involved heavy processing of large datasets. The need to perform these calculations in the background without freezing the ui was absolutely essential. We quickly discovered that naive approaches, like directly updating ui elements from background threads, were simply not viable.
 
@@ -109,42 +109,41 @@ Modern javascript environments, particularly those running within the browser or
 ```javascript
 // Conceptual javascript example
 function performWorkAsync(data) {
-   return new Promise(resolve => {
-       setTimeout(() => {
-           const result = `Processed data: ${data}`; // Simulate processing
-           resolve(result);
-       }, 2000);
-    });
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const result = `Processed data: ${data}`; // Simulate processing
+      resolve(result);
+    }, 2000);
+  });
 }
 
-
-async function updateUi(){
-
-  console.log('Starting background processing')
-   const result = await performWorkAsync("Initial Data");
-   // update the ui here. In a browser environment, this would likely
-   // be DOM manipulation using querySelector or similar
-   console.log(`Result is: ${result} `);
-   console.log('UI Updated with processed data')
+async function updateUi() {
+  console.log("Starting background processing");
+  const result = await performWorkAsync("Initial Data");
+  // update the ui here. In a browser environment, this would likely
+  // be DOM manipulation using querySelector or similar
+  console.log(`Result is: ${result} `);
+  console.log("UI Updated with processed data");
 }
 
-updateUi()
-console.log('Ui Main thread is running');
+updateUi();
+console.log("Ui Main thread is running");
 ```
+
 In this javascript implementation, `performWorkAsync` returns a promise, which will resolve with the processed data. The `async` function `updateUi` waits for this promise to resolve using the `await` keyword. Once it has resolved, the result is then available to update the ui elements. Since Javascript is primarily single threaded, this utilizes a message queue and non-blocking operations to simulate background processing, and thus is a perfect way to handle ui updates in this setting.
 
 **Key Considerations:**
 
-*   **Error Handling:** In all of these approaches, it’s imperative to include robust error handling. Background threads can throw exceptions just like any other code, and it’s important to catch these, possibly log them, and communicate potential failures to the user on the ui thread (again using dispatch mechanisms).
-*   **Progress Reporting:** For lengthy operations, displaying progress to the user is generally a best practice. You can use event mechanisms or callbacks to provide status updates from the background thread to the ui.
-*   **Cancellation:** Allowing the user to cancel a long-running operation is a common requirement. Implementing this might involve using flags that the background thread checks regularly, or using the built-in cancellation mechanisms provided by the particular framework that you're using.
-*   **Framework Specifics:** The specifics of your ui framework really matter. Every system has its own way of dispatching work to the ui thread, and it is essential to understand your framework's recommendations. For example, in desktop development this may be achieved through using a dispatcher, or in other frameworks such as Android/Kotlin it may be a call to runOnUiThread.
-*   **UI Thread Responsiveness:** If your background work is too frequent or too heavy it is still possible to cause ui freezing or unresponsiveness. Therefore, it’s crucial to keep the operations in the ui thread as quick as possible to ensure a smooth experience.
+- **Error Handling:** In all of these approaches, it’s imperative to include robust error handling. Background threads can throw exceptions just like any other code, and it’s important to catch these, possibly log them, and communicate potential failures to the user on the ui thread (again using dispatch mechanisms).
+- **Progress Reporting:** For lengthy operations, displaying progress to the user is generally a best practice. You can use event mechanisms or callbacks to provide status updates from the background thread to the ui.
+- **Cancellation:** Allowing the user to cancel a long-running operation is a common requirement. Implementing this might involve using flags that the background thread checks regularly, or using the built-in cancellation mechanisms provided by the particular framework that you're using.
+- **Framework Specifics:** The specifics of your ui framework really matter. Every system has its own way of dispatching work to the ui thread, and it is essential to understand your framework's recommendations. For example, in desktop development this may be achieved through using a dispatcher, or in other frameworks such as Android/Kotlin it may be a call to runOnUiThread.
+- **UI Thread Responsiveness:** If your background work is too frequent or too heavy it is still possible to cause ui freezing or unresponsiveness. Therefore, it’s crucial to keep the operations in the ui thread as quick as possible to ensure a smooth experience.
 
 **Resources for Further Reading:**
 
-*   **"Concurrent Programming in Java: Design Principles and Patterns"** by Doug Lea. This is a classic text that provides a deep understanding of concurrency concepts. Although focused on Java, the principles are widely applicable.
-*   **"C# 7.0 in a Nutshell"** by Joseph Albahari and Ben Albahari. This book provides a comprehensive overview of C# features including asynchronous programming and threading constructs available in .net.
-*   **Specific platform documentation:** For web development, the mdn web docs, which are highly authoritative, will provide in-depth coverage of promises, asynchronous programming, and ui manipulation in the context of javascript. For Android, consult the official Android developer documentation, which will guide you through the use of coroutines or other methods for background processing.
+- **"Concurrent Programming in Java: Design Principles and Patterns"** by Doug Lea. This is a classic text that provides a deep understanding of concurrency concepts. Although focused on Java, the principles are widely applicable.
+- **"C# 7.0 in a Nutshell"** by Joseph Albahari and Ben Albahari. This book provides a comprehensive overview of C# features including asynchronous programming and threading constructs available in .net.
+- **Specific platform documentation:** For web development, the mdn web docs, which are highly authoritative, will provide in-depth coverage of promises, asynchronous programming, and ui manipulation in the context of javascript. For Android, consult the official Android developer documentation, which will guide you through the use of coroutines or other methods for background processing.
 
 In my experience, mastering background processing techniques like the ones outlined above is fundamental to creating responsive and professional applications. By correctly dispatching work between threads, you can ensure your application is both efficient and provides a good user experience. Remember that the core principle of dispatching results back to the ui thread remains consistent, even though the specific implementation might vary depending on your particular framework.

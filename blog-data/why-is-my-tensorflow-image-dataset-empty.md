@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-tensorflow-image-dataset-empty"
 ---
 
-Alright, let's tackle this. I've seen this scenario play out more times than I care to count, and the "empty TensorFlow image dataset" is often less about tensorflow itself being broken and more about the journey of getting the data into the right format and the pipeline correctly configured. Let me walk you through my past experiences, detailing the common culprits and how I've addressed them, along with some practical code snippets to illustrate these points.
+, let's tackle this. I've seen this scenario play out more times than I care to count, and the "empty TensorFlow image dataset" is often less about tensorflow itself being broken and more about the journey of getting the data into the right format and the pipeline correctly configured. Let me walk you through my past experiences, detailing the common culprits and how I've addressed them, along with some practical code snippets to illustrate these points.
 
 First off, we’re dealing with an issue of data input, and that typically boils down to one of a few root causes: problems with file paths, issues with file loading or processing logic, or, less frequently, incorrect batching or preprocessing steps. Let’s start with the most common.
 
@@ -191,8 +191,9 @@ for image_batch, label_batch in preprocessed_dataset.take(1):
     print("Shape of image batch:", image_batch.shape)
     print("Shape of label batch:", label_batch.shape)
 ```
+
 As you can see, we have explicitly loaded the files, labeled them, processed the image data, and batched them, giving us control and clarity in each step. This ensures no silent failures.
 
 In conclusion, the reasons for an empty TensorFlow image dataset often boil down to meticulous attention to detail in how your data is loaded and processed. By paying close attention to file paths, formats, and explicitly designing data pipelines with functions like map and batch, you can significantly mitigate these issues. Remember, if you are working with a custom pipeline using `tf.data`, to always test each step of the pipeline to ensure data is loaded and processed correctly.
 
-For further reading and deeper insights into these topics, I highly recommend referencing the *TensorFlow documentation itself*. It is your single most reliable guide. Additionally, *“Deep Learning with Python” by François Chollet* provides excellent theoretical background and practical examples using Keras. Finally, if you really want to understand the inner workings of the `tf.data` api, and how it can be used to build efficient pipelines, you should try reading: *“Effective TensorFlow” by Pete Warden*. These resources have been invaluable to me over the years. Hope this helps you get your dataset loading smoothly!
+For further reading and deeper insights into these topics, I highly recommend referencing the _TensorFlow documentation itself_. It is your single most reliable guide. Additionally, _“Deep Learning with Python” by François Chollet_ provides excellent theoretical background and practical examples using Keras. Finally, if you really want to understand the inner workings of the `tf.data` api, and how it can be used to build efficient pipelines, you should try reading: _“Effective TensorFlow” by Pete Warden_. These resources have been invaluable to me over the years. Hope this helps you get your dataset loading smoothly!

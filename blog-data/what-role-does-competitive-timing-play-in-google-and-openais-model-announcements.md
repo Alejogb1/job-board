@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-role-does-competitive-timing-play-in-google-and-openais-model-announcements"
 ---
 
-Okay lets dive into this whole Google OpenAI model announcement timing thing its kinda fascinating right? Its not just random chance that they drop these big AI bombshells when they do there's a definite competitive dance going on a very techy high stakes waltz if you will
+lets dive into this whole Google OpenAI model announcement timing thing its kinda fascinating right? Its not just random chance that they drop these big AI bombshells when they do there's a definite competitive dance going on a very techy high stakes waltz if you will
 
 First lets talk about the basic premise its all about attention and mindshare in this fast-moving AI space being first means being talked about being mentioned in every tech blog post every podcast every youtube video that's gold for these companies. Its a weird battle for intellectual supremacy and brand recognition.
 
@@ -56,7 +56,7 @@ def encoder_layer(x, d_model, d_ff, mask=None):
     attention_output = attention_output+x #residual connection
     ff_output = feed_forward(attention_output, d_model, d_ff)
     return ff_output+attention_output #residual connection
-    
+
 # Dummy example
 d_model=512
 d_ff = 2048
@@ -125,7 +125,7 @@ def word_to_vector(word, embedding_matrix, word_to_index):
     return embedding_matrix[index]
   else:
     return None
-  
+
 #Dummy vocabulary
 vocab = ['hello','world','ai','is','amazing']
 vocab_size = len(vocab)

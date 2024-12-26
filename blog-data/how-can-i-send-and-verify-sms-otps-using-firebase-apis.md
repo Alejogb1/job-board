@@ -4,35 +4,46 @@ date: "2024-12-23"
 id: "how-can-i-send-and-verify-sms-otps-using-firebase-apis"
 ---
 
-Alright, let’s get into the specifics of handling SMS one-time passwords (OTPs) with Firebase. This is something I’ve dealt with extensively over the years, and it’s evolved quite a bit. I remember back in my early days, we had to roll our own solutions, managing SMS gateways and dealing with all the complexities that came with it. Thankfully, Firebase simplifies a lot of that now. The key lies in Firebase Authentication's phone number sign-in feature, which provides built-in OTP mechanisms. Let's break it down step-by-step, focusing on both the sending and verification aspects, and avoiding any of the fluff.
+, let’s get into the specifics of handling SMS one-time passwords (OTPs) with Firebase. This is something I’ve dealt with extensively over the years, and it’s evolved quite a bit. I remember back in my early days, we had to roll our own solutions, managing SMS gateways and dealing with all the complexities that came with it. Thankfully, Firebase simplifies a lot of that now. The key lies in Firebase Authentication's phone number sign-in feature, which provides built-in OTP mechanisms. Let's break it down step-by-step, focusing on both the sending and verification aspects, and avoiding any of the fluff.
 
 First, the core idea revolves around the `signInWithPhoneNumber` method, typically on the client side of your application. It starts the process by requesting an OTP to be sent to the user’s provided phone number. Then, you receive a verification id which you'll use later. The Firebase backend handles the SMS sending, so you don't need to worry about the intricacies of carrier networks. This is a significant improvement over older approaches. After receiving the OTP, the user inputs it, and you use that to complete the verification and authenticate the user.
 
 Now, let's look at this practically. Here's a simplified JavaScript example, assuming you're working in a web application environment. I’ll provide analogous snippets in other common environments later:
 
 ```javascript
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import {
+  getAuth,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+} from "firebase/auth";
 
 const auth = getAuth();
 
 function sendVerificationCode(phoneNumber) {
-  window.recaptchaVerifier = new RecaptchaVerifier('sign-in-button', {
-        'size': 'invisible'
-      }, auth);
+  window.recaptchaVerifier = new RecaptchaVerifier(
+    "sign-in-button",
+    {
+      size: "invisible",
+    },
+    auth
+  );
 
   const appVerifier = window.recaptchaVerifier;
 
   signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-  .then((confirmationResult) => {
-    window.confirmationResult = confirmationResult;
-    // Store the confirmation result, often in your state management system
-    console.log("SMS sent successfully with verification id:", confirmationResult.verificationId);
-    // Proceed to the UI that prompts for the OTP input
-  })
-  .catch((error) => {
-    console.error("Error sending SMS:", error);
-    // Handle the error appropriately, perhaps informing the user
-  });
+    .then((confirmationResult) => {
+      window.confirmationResult = confirmationResult;
+      // Store the confirmation result, often in your state management system
+      console.log(
+        "SMS sent successfully with verification id:",
+        confirmationResult.verificationId
+      );
+      // Proceed to the UI that prompts for the OTP input
+    })
+    .catch((error) => {
+      console.error("Error sending SMS:", error);
+      // Handle the error appropriately, perhaps informing the user
+    });
 }
 
 // example usage:
@@ -44,22 +55,28 @@ In this snippet, you'll see the use of a `RecaptchaVerifier`. Firebase uses this
 Moving on, let's address the verification step. After the user enters the OTP sent via SMS, this code executes:
 
 ```javascript
-import { getAuth, signInWithCredential, PhoneAuthProvider } from "firebase/auth";
-
+import {
+  getAuth,
+  signInWithCredential,
+  PhoneAuthProvider,
+} from "firebase/auth";
 
 function verifyCodeAndSignIn(otpCode, confirmationResult) {
   const auth = getAuth();
-  const credential = PhoneAuthProvider.credential(confirmationResult.verificationId, otpCode);
+  const credential = PhoneAuthProvider.credential(
+    confirmationResult.verificationId,
+    otpCode
+  );
 
   signInWithCredential(auth, credential)
     .then((userCredential) => {
-        const user = userCredential.user;
-        console.log("User signed in:", user);
-        // Redirect the user or update application state as necessary
+      const user = userCredential.user;
+      console.log("User signed in:", user);
+      // Redirect the user or update application state as necessary
     })
     .catch((error) => {
-        console.error("Error verifying OTP:", error);
-        // Handle the error appropriately, inform the user, and allow to re-enter if needed
+      console.error("Error verifying OTP:", error);
+      // Handle the error appropriately, inform the user, and allow to re-enter if needed
     });
 }
 

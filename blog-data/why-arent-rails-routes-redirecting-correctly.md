@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-arent-rails-routes-redirecting-correctly"
 ---
 
-Alright, let's tackle this. I've certainly been down that rabbit hole of baffling Rails routing issues more times than I care to remember. It’s one of those areas where things can seem straightforward on the surface, but quickly become complex when unexpected behavior surfaces. The core problem usually isn't a broken `routes.rb` file (though that's *always* worth double-checking), but rather a combination of misunderstanding the routing engine's priorities, subtle code errors, or sometimes even caching issues that can lead to these redirection problems.
+, let's tackle this. I've certainly been down that rabbit hole of baffling Rails routing issues more times than I care to remember. It’s one of those areas where things can seem straightforward on the surface, but quickly become complex when unexpected behavior surfaces. The core problem usually isn't a broken `routes.rb` file (though that's _always_ worth double-checking), but rather a combination of misunderstanding the routing engine's priorities, subtle code errors, or sometimes even caching issues that can lead to these redirection problems.
 
 For me, the most common culprits tend to fall into these categories: incorrect verb matching, ambiguous route definitions, and the often-overlooked middleware layer interfering with the redirection process. Let's break each of those down.
 
@@ -54,7 +54,7 @@ It's a surprisingly common error and a great example of how understanding how th
 
 Sometimes, the issue isn't with the routes themselves but with middleware that intercepts or alters requests. Authentication middleware, especially custom ones, is a prime example. It's common for authentication systems to redirect unauthenticated users. If your code is intended to redirect but another middleware layer intercepts the request first, the original redirection might be overridden or lost.
 
-For example, imagine you're using a custom authentication middleware that checks for an active session. This middleware may be set up to redirect to a `/login` route if the user isn't logged in, *before* your intended application-level redirection can occur. Here's a skeletal example of what this middleware might look like (simplified for clarity):
+For example, imagine you're using a custom authentication middleware that checks for an active session. This middleware may be set up to redirect to a `/login` route if the user isn't logged in, _before_ your intended application-level redirection can occur. Here's a skeletal example of what this middleware might look like (simplified for clarity):
 
 ```ruby
 # simplified middleware example

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-trigger-an-airflow-dag-based-on-the-content-of-dagrunconf"
 ---
 
-Okay, let's unpack this. Triggering an Apache Airflow dag based on the contents of the `dag_run.conf`— I've been down this road more times than I care to count, and there are some subtleties that often trip people up. It's a really powerful feature when used correctly, but like any tool, it needs a firm understanding of its nuances. Back in my days managing data pipelines for a large e-commerce platform, we relied heavily on dynamically generated configs to avoid creating a proliferation of dags for slightly different use cases. Let's dive into how to achieve this effectively.
+, let's unpack this. Triggering an Apache Airflow dag based on the contents of the `dag_run.conf`— I've been down this road more times than I care to count, and there are some subtleties that often trip people up. It's a really powerful feature when used correctly, but like any tool, it needs a firm understanding of its nuances. Back in my days managing data pipelines for a large e-commerce platform, we relied heavily on dynamically generated configs to avoid creating a proliferation of dags for slightly different use cases. Let's dive into how to achieve this effectively.
 
 The core concept here revolves around the `dag_run.conf` dictionary, which is passed as an argument to your dag’s execution context. This dictionary can contain any key-value pairs, and it's available within any task executed within that particular dag run. The trick is accessing this data and using it to dynamically drive the behavior of your tasks.
 
@@ -20,13 +20,13 @@ import logging
 def process_data_from_conf(conf):
     log = logging.getLogger(__name__)
     log.info(f"Received configuration: {conf}")
-    
+
     source_bucket = conf.get("source_bucket", "default_bucket")
     target_path = conf.get("target_path", "/default/path")
-    
+
     log.info(f"Processing data from {source_bucket} to {target_path}")
     # Simulate some processing based on the conf values
-    
+
     return {"status": "success", "message": f"Processed from {source_bucket} to {target_path}"}
 
 ```
@@ -44,16 +44,16 @@ import logging
 def branch_by_config(conf):
     log = logging.getLogger(__name__)
     log.info(f"Branching decision based on config: {conf}")
-    
+
     branch_condition = conf.get("branch_condition", False)
-    
+
     if branch_condition:
         log.info("Branching to branch_a")
         return "branch_a"
     else:
         log.info("Branching to branch_b")
         return "branch_b"
-    
+
 with DAG(
     dag_id="branching_dag",
     schedule=None,
@@ -61,16 +61,16 @@ with DAG(
     catchup=False
 ) as dag:
     start = DummyOperator(task_id='start')
-    
+
     branch_task = BranchPythonOperator(
         task_id='branch_task',
         python_callable=branch_by_config
-        
+
     )
 
     branch_a = DummyOperator(task_id='branch_a')
     branch_b = DummyOperator(task_id='branch_b')
-    
+
     end = DummyOperator(task_id='end', trigger_rule=TriggerRule.NONE_FAILED)
 
     start >> branch_task

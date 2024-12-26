@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-loaded-pytorch-models-produce-different-results-than-their-trained-counterparts"
 ---
 
-Alright, let's tackle this. It's a scenario I've personally encountered quite a few times, usually after some late nights debugging seemingly inexplicable behavior. The issue of loaded PyTorch models behaving differently from their trained counterparts is, at its core, a matter of nuanced state and the potential for unintended deviations introduced during the saving and loading process. It's rarely a fundamental flaw in PyTorch itself, but rather a consequence of how we interact with it.
+, . It's a scenario I've personally encountered quite a few times, usually after some late nights debugging seemingly inexplicable behavior. The issue of loaded PyTorch models behaving differently from their trained counterparts is, at its core, a matter of nuanced state and the potential for unintended deviations introduced during the saving and loading process. It's rarely a fundamental flaw in PyTorch itself, but rather a consequence of how we interact with it.
 
 At the heart of it, when you train a PyTorch model, the `torch.nn.Module` object maintains a complex internal state. This state includes not only the learned weights (the parameters) but also things like the running statistics for batch normalization layers, or, if you’re using it, the state of optimizers. When you save the model using `torch.save`, depending on how you approach it, you might not be capturing the entire state precisely, leading to discrepancies upon reloading.
 
@@ -57,7 +57,7 @@ loaded_output = loaded_model(data)
 print(torch.allclose(original_output, loaded_output))
 ```
 
-This will likely show that the outputs are *not* allclose. The discrepancy arises because when we load only the state dict, we load the parameters, but the batch norm layers are initialized with default running mean and variance of 0 and 1 respectively, and not the running statistics gathered from training. It is important to call `model.eval()` on both models as this disables dropout layers and ensures the batch norm layer switches to using running means instead of batch means. However, `eval()` does not fix the problem as it does not update the model to the correct running statistics.
+This will likely show that the outputs are _not_ allclose. The discrepancy arises because when we load only the state dict, we load the parameters, but the batch norm layers are initialized with default running mean and variance of 0 and 1 respectively, and not the running statistics gathered from training. It is important to call `model.eval()` on both models as this disables dropout layers and ensures the batch norm layer switches to using running means instead of batch means. However, `eval()` does not fix the problem as it does not update the model to the correct running statistics.
 
 The solution is to save the entire model object, which will include all the buffers and running statistics along with the weights. Here is how you can do it correctly:
 
@@ -129,7 +129,7 @@ print(torch.allclose(original_output, loaded_output))
 
 By explicitly converting the model to a specific dtype during training, and making sure the input data during inference is also of the same dtype, we reduce the chances of inconsistencies related to precision.
 
-Finally, a common source of unexpected behavior stems from the evaluation vs. training mode. Remember that specific layers, like batch normalization and dropout, behave differently depending on the model’s mode (`model.train()` or `model.eval()`). You *must* put your model into `eval()` mode before inference. The example before this one already does this, but it is an easy step to miss when debugging.
+Finally, a common source of unexpected behavior stems from the evaluation vs. training mode. Remember that specific layers, like batch normalization and dropout, behave differently depending on the model’s mode (`model.train()` or `model.eval()`). You _must_ put your model into `eval()` mode before inference. The example before this one already does this, but it is an easy step to miss when debugging.
 
 For anyone looking to deepen their understanding of these nuances, I'd suggest reviewing the official PyTorch documentation on model saving and loading very carefully, including the sections on state dictionaries and buffers. The "Deep Learning with PyTorch" book by Eli Stevens, Luca Antiga, and Thomas Viehmann goes into the fine details of model structure and implementation, and is also a great source of knowledge. Also, research papers relating to batch normalization such as "Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift" (Sergey Ioffe and Christian Szegedy) provide very detailed knowledge on the inner workings of the batch normalization layers and why they can cause the discussed discrepancies. Furthermore, any deep learning textbook or course from a reputable university will cover this in a significant amount of detail. Understanding these details is vital for achieving consistent and reliable performance.
 

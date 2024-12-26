@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-do-i-retrieve-the-volume-id-of-a-terminated-ebs-volume"
 ---
 
-Alright, let's tackle this. It’s a question that’s come up more than once in my career, especially during incident response and infrastructure audits. Dealing with the aftermath of terminated resources can be a bit tricky, but fortunately, the aws ecosystem provides the mechanisms, albeit often a little less obvious than we might like. You're asking about retrieving the volume id of a *terminated* ebs volume, and the key thing to understand is that once an ebs volume is completely terminated, it's no longer an active resource, and its volume id isn’t readily available through typical describe calls.
+, let's tackle this. It’s a question that’s come up more than once in my career, especially during incident response and infrastructure audits. Dealing with the aftermath of terminated resources can be a bit tricky, but fortunately, the aws ecosystem provides the mechanisms, albeit often a little less obvious than we might like. You're asking about retrieving the volume id of a _terminated_ ebs volume, and the key thing to understand is that once an ebs volume is completely terminated, it's no longer an active resource, and its volume id isn’t readily available through typical describe calls.
 
 My experience comes from those hairy days working with a microservices architecture where we had frequent turnover of instances and, occasionally, some unfortunate accidental deletions. In one such instance, an automation script had an oversight, and we inadvertently terminated a bunch of instances, along with their associated ebs volumes. we needed to piece together what was lost, and the standard describe calls were no help. what we ended up relying on was the trail left by cloudtrail and, to some degree, the snapshot system.
 
 Here’s the breakdown of how we typically go about this, and what the different approaches look like.
 
-First off, cloudtrail logging is your primary source for this information. If configured correctly (and it absolutely should be for audit purposes), cloudtrail captures every api call made to your aws account, including the termination of ebs volumes. the ‘deletevolume’ event will include the volume id in its details. this is generally the fastest and most reliable method provided cloudtrail logging was enabled *before* the deletion.
+First off, cloudtrail logging is your primary source for this information. If configured correctly (and it absolutely should be for audit purposes), cloudtrail captures every api call made to your aws account, including the termination of ebs volumes. the ‘deletevolume’ event will include the volume id in its details. this is generally the fastest and most reliable method provided cloudtrail logging was enabled _before_ the deletion.
 
 ```python
 import boto3
@@ -54,9 +54,9 @@ print(f"found the following deleted volume ids: {deleted_ids}")
 
 ```
 
-This python script leverages the boto3 library, which you need to have installed ('pip install boto3'). it filters cloudtrail events for the 'deletevolume' event. it parses through the event details, and if it finds the volume id, it adds it to a list and returns it.  it also gives an example of how to filter the results if you already know a volume id. This is generally the preferred method since it gets the volume ids as they were prior to deletion.
+This python script leverages the boto3 library, which you need to have installed ('pip install boto3'). it filters cloudtrail events for the 'deletevolume' event. it parses through the event details, and if it finds the volume id, it adds it to a list and returns it. it also gives an example of how to filter the results if you already know a volume id. This is generally the preferred method since it gets the volume ids as they were prior to deletion.
 
-Now, a secondary method is to analyze any existing snapshots. snapshots created of the deleted volume will include its volume id, even if the volume no longer exists. you can use this method as a failsafe if you are unsure if cloudtrail was enabled correctly or for confirmation.  However, it's critical to understand this only works if snapshots were taken of the volume *before* deletion.
+Now, a secondary method is to analyze any existing snapshots. snapshots created of the deleted volume will include its volume id, even if the volume no longer exists. you can use this method as a failsafe if you are unsure if cloudtrail was enabled correctly or for confirmation. However, it's critical to understand this only works if snapshots were taken of the volume _before_ deletion.
 
 ```python
 import boto3
@@ -108,7 +108,7 @@ print(f"found the following volume ids from backups: {backup_volume_ids}")
 
 This snippet uses the aws backup service to locate recovery points of ebs volumes. It then extracts the volume id from the resource arn and adds them to the set. this method works as long as backups of the deleted volumes existed.
 
-Remember that if snapshots and backups were not configured *prior* to the deletion of your volume, your most reliable method remains the cloudtrail logs. The accuracy of snapshot metadata and backup configuration should always be independently validated as well, to ensure data integrity and accessibility.
+Remember that if snapshots and backups were not configured _prior_ to the deletion of your volume, your most reliable method remains the cloudtrail logs. The accuracy of snapshot metadata and backup configuration should always be independently validated as well, to ensure data integrity and accessibility.
 
 For deep dives into these areas, i would recommend reading “aws certified solutions architect study guide” by ben piper and david clark which does into detail about using cloudtrail and different forms of monitoring in the aws environment. “mastering aws networking” by samuel j. carpenter and michael l. weinhardt provides a detailed look into the networking aspects of cloud infrastructure, which, while not directly related to volume ids, provides foundational knowledge that can aid in understanding the holistic landscape of cloud resources. lastly, the aws documentation itself is your most authoritative source, so i'd recommend going through the documentation on cloudtrail, ec2 snapshots, and aws backup services for the most accurate information. They’re constantly updated, and you’ll find the latest specifics there.
 

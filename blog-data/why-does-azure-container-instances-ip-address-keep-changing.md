@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-azure-container-instances-ip-address-keep-changing"
 ---
 
-Okay, let's talk about that ever-shifting Azure Container Instance (ACI) IP address. I've personally spent a few late nights troubleshooting this exact issue, and it can definitely be frustrating if you're expecting static behavior. The core of the problem stems from ACI's design philosophy, which prioritizes ephemeral, on-demand container execution over persistent infrastructure. It's essentially a serverless container service, and its IP address behavior reflects that.
+, let's talk about that ever-shifting Azure Container Instance (ACI) IP address. I've personally spent a few late nights troubleshooting this exact issue, and it can definitely be frustrating if you're expecting static behavior. The core of the problem stems from ACI's design philosophy, which prioritizes ephemeral, on-demand container execution over persistent infrastructure. It's essentially a serverless container service, and its IP address behavior reflects that.
 
 Fundamentally, when you deploy an ACI, you’re not getting a dedicated virtual machine with a static IP assigned to it. Instead, you're requesting resources on a shared infrastructure. Each time you initiate or restart an ACI, it might be scheduled on a different underlying host within Azure's compute fabric. This re-scheduling is a cornerstone of how ACI provides its elasticity and on-demand characteristics. The associated IP address is dynamically allocated from a pool of available addresses for that compute host. Consequently, this allocated IP address is often different each time the container group is started or de-allocated and re-allocated.
 
@@ -155,7 +155,8 @@ inbound_rule = network_client.load_balancer_load_balancing_rules.begin_create_or
 ).result()
 print(f"Inbound rule created: {inbound_rule.id}")
 ```
-*This is a simplified snippet, focusing on load balancer basics, not a fully functional script and requires extensive environment setup*. You'd then make use of this load balancer's static public IP address instead of the ACI’s dynamically assigned address. The ACI will need to be part of the virtual network where the load balancer resides.
+
+_This is a simplified snippet, focusing on load balancer basics, not a fully functional script and requires extensive environment setup_. You'd then make use of this load balancer's static public IP address instead of the ACI’s dynamically assigned address. The ACI will need to be part of the virtual network where the load balancer resides.
 
 **3. Reverse Proxy with Static Public IP:**
 
@@ -181,6 +182,7 @@ services:
 networks:
   backend:
 ```
+
 Here’s a minimal `nginx.conf` to make this work:
 
 ```nginx
@@ -200,8 +202,8 @@ This basic setup will route all traffic reaching the Nginx proxy on port 80 to t
 
 For further information, I highly recommend diving into these resources:
 
-*   **Microsoft Azure documentation:** The official Azure documentation is paramount. Pay special attention to the sections on ACI networking, load balancing, and DNS. Look at the resources available through the Microsoft Learn portal, as these are often updated with new content.
-*  **"Cloud Native Patterns" by Cornelia Davis:** For a deep dive into cloud-native architectures and container orchestration, this book provides excellent patterns and design principles relevant to understanding the choices made with services like ACI.
-*  **"Kubernetes in Action" by Marko Luksa:** While not directly about ACI, understanding Kubernetes principles surrounding networking and service discovery is very helpful, as the core concepts are applicable. Many of the design patterns used in Kubernetes are also applicable in other container environments, as is the case here.
+- **Microsoft Azure documentation:** The official Azure documentation is paramount. Pay special attention to the sections on ACI networking, load balancing, and DNS. Look at the resources available through the Microsoft Learn portal, as these are often updated with new content.
+- **"Cloud Native Patterns" by Cornelia Davis:** For a deep dive into cloud-native architectures and container orchestration, this book provides excellent patterns and design principles relevant to understanding the choices made with services like ACI.
+- **"Kubernetes in Action" by Marko Luksa:** While not directly about ACI, understanding Kubernetes principles surrounding networking and service discovery is very helpful, as the core concepts are applicable. Many of the design patterns used in Kubernetes are also applicable in other container environments, as is the case here.
 
 In summary, while the dynamic IP address behavior of Azure Container Instances can initially present challenges, there are many effective workarounds and proper solutions. Using DNS, load balancers, or reverse proxies can help you get the stable access points you require without fighting against the core design philosophy of ACI. Choosing the right approach ultimately depends on the specific needs of your application, and the amount of configuration and operational complexity you are comfortable with.

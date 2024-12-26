@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "memory-limitations-in-artificial-intelligence-error-type"
 ---
 
-Okay so you're asking about memory limitations in AI errors specifically eh I've wrestled with that beast myself more times than I care to remember let me tell you it's a deep rabbit hole and it’s frustrating to the point of contemplating a career change to something less… computationally demanding like maybe competitive knitting but let’s get real and focus on AI memory errors
+you're asking about memory limitations in AI errors specifically eh I've wrestled with that beast myself more times than I care to remember let me tell you it's a deep rabbit hole and it’s frustrating to the point of contemplating a career change to something less… computationally demanding like maybe competitive knitting but let’s get real and focus on AI memory errors
 
 First off let's clarify a bit when you say memory limitations causing errors in AI we're usually not talking about your RAM running out and the computer crashing although that can also happen and it's a real pain in the neck especially when you're running a complex model that took 8 hours to train trust me I've been there done that and got the t-shirt that says "Segmentation Fault: 11" in bold letters
 
@@ -59,6 +59,7 @@ for epoch in range(100):
     if epoch % 10 == 0:
         print(f'Epoch {epoch} Loss: {loss.item()}')
 ```
+
 This code simulates the short-term memory issue increasing the sequence length will show the degradation of performance on simple RNNs but this is not exactly the error but a performance problem as an example. Notice that how the simple RNN doesn’t have any specific memory cell and as the sequence increases so does the model’s performance because it cannot handle long sequence effectively
 
 Also the problem of catastrophic forgetting is also linked to this where a neural network suddenly forgets the old information when new information is presented this usually happens when the model is not regularly re-trained or if the new information is vastly different from the old this is like me suddenly forgetting how to drive after reading a book on cooking that’s actually not very different from my actual life at some point I tried to use a trained image classifier to learn new objects after it already learnt some and it completely forgot all the previous object I had to retrain it from scratch or add an architectural modification for incremental learning. This can be a big problem in practical applications because we always want our AI models to learn from new data without losing track of what they already know.
@@ -123,6 +124,7 @@ optimizer = optim.Adam(model.parameters(), lr=0.001) # reset optimizer
 print("Training on dataset 2...")
 train(dataset2_inputs, dataset2_labels, 100)
 ```
+
 In this example after learning the first dataset which is data with 2 classes we change the number of classes to 3 and train on a new dataset. We can see that the model will "forget" or perform badly on the first dataset it was initially trained on
 
 There are many strategies to mitigate these issues you might want to have a look at "Deep Learning" by Goodfellow, Bengio and Courville this is a very deep textbook covering a lot of the mathematics and practical aspects of neural networks or even "Neural Networks and Deep Learning" by Michael Nielsen it’s an excellent resource for understanding the foundations of neural networks especially if you are new to the subject. You could also check out papers on continual learning, they usually delve into methods on how to prevent or mitigate catastrophic forgetting.

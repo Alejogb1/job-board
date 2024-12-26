@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-could-i-split-many-subfolders-of-classes-with-imbalanced-data-into-train-val-test-without-classes-overlapping"
 ---
 
-alright, i see the pickle you're in. dealing with imbalanced datasets across a bunch of subfolders – been there, done that, got the t-shirt. it's a common headache in the ml world, especially when things are organized in a particular way. let me walk you through how i've handled this in the past, and it should point you in the direction you need.
+, i see the pickle you're in. dealing with imbalanced datasets across a bunch of subfolders – been there, done that, got the t-shirt. it's a common headache in the ml world, especially when things are organized in a particular way. let me walk you through how i've handled this in the past, and it should point you in the direction you need.
 
 the key here is to ensure, as you pointed out, that you don't get class leakage across your train, validation, and test splits. by that i mean, a class showing in one split shouldn't be present in the other two. this is critical for proper evaluation. you wouldn't want your model to have "seen" the test classes during training. that defeats the whole purpose of independent evaluation.
 
@@ -58,22 +58,22 @@ def create_splits(root_dir, train_ratio=0.7, val_ratio=0.15):
     Returns:
       dict: dictionary containing train/val/test file lists.
     """
-    
+
     all_classes = os.listdir(root_dir)
     splits = defaultdict(list)
 
     for class_name in all_classes:
         if not os.path.isdir(os.path.join(root_dir, class_name)):
             continue  #skip non dir files
-        
+
         class_path = os.path.join(root_dir, class_name)
         all_items = [os.path.join(class_path,item) for item in os.listdir(class_path) if os.path.isdir(os.path.join(class_path, item))]
-        
+
         random.shuffle(all_items)
         num_items = len(all_items)
         num_train = int(num_items * train_ratio)
         num_val = int(num_items * val_ratio)
-        
+
         splits['train'].extend(all_items[:num_train])
         splits['val'].extend(all_items[num_train:num_train + num_val])
         splits['test'].extend(all_items[num_train + num_val:])
@@ -81,6 +81,7 @@ def create_splits(root_dir, train_ratio=0.7, val_ratio=0.15):
     return splits
 
 ```
+
 this function takes your root directory, where all those subfolders are stored and calculates the train, validation, test splits respecting the input ratios. by randomly shuffle the list first, we ensure that the train, val, test lists will have diverse data avoiding having patients or similar in the same dataset.
 
 to use this, you would call it like this.
@@ -116,6 +117,7 @@ def move_files_to_splits(splits, output_dir):
 output_dir = "split_scans"
 move_files_to_splits(splits, output_dir)
 ```
+
 this would recreate the data structure with the files in it respecting the splits.
 now, depending on your specific needs, you might need to tweak things a bit further.
 

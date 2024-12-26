@@ -4,15 +4,15 @@ date: "2024-12-16"
 id: "how-can-useeffect-use-axios-with-asyncawait"
 ---
 
-Alright, let's tackle this. I remember back in '17, I was working on a real-time dashboard project – a classic example of needing to fetch data from an api on component mount and update the view. Using `useEffect` with `axios` and `async/await` felt clunky initially, but after some refinement, I landed on a pattern that’s been pretty reliable since. The core issue stems from `useEffect`'s design: it doesn't directly support asynchronous functions as its callback. This is because `useEffect` expects a synchronous function or a cleanup function (returned from the effect) – and an async function, inherently, returns a promise, not a cleanup callback directly.
+, let's tackle this. I remember back in '17, I was working on a real-time dashboard project – a classic example of needing to fetch data from an api on component mount and update the view. Using `useEffect` with `axios` and `async/await` felt clunky initially, but after some refinement, I landed on a pattern that’s been pretty reliable since. The core issue stems from `useEffect`'s design: it doesn't directly support asynchronous functions as its callback. This is because `useEffect` expects a synchronous function or a cleanup function (returned from the effect) – and an async function, inherently, returns a promise, not a cleanup callback directly.
 
-To get around this, you essentially need to define an asynchronous function *inside* the `useEffect` callback and call it. This isn't a hack, but a necessary construction based on how React's effect system is structured. Let’s break down a common approach and see how it works in practice.
+To get around this, you essentially need to define an asynchronous function _inside_ the `useEffect` callback and call it. This isn't a hack, but a necessary construction based on how React's effect system is structured. Let’s break down a common approach and see how it works in practice.
 
 The most basic version would look something like this:
 
 ```javascript
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 function DataComponent() {
   const [data, setData] = useState(null);
@@ -23,12 +23,12 @@ function DataComponent() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get('https://api.example.com/data');
+        const response = await axios.get("https://api.example.com/data");
         setData(response.data);
         setError(null); // Clear any previous error
       } catch (err) {
-        console.error('Error fetching data:', err);
-        setError('Failed to load data. Please try again.');
+        console.error("Error fetching data:", err);
+        setError("Failed to load data. Please try again.");
         setData(null); // Reset data in case of failure
       } finally {
         setLoading(false);
@@ -39,15 +39,15 @@ function DataComponent() {
   }, []); // Empty dependency array, runs only once on mount
 
   if (loading) {
-      return <p>Loading...</p>;
+    return <p>Loading...</p>;
   }
 
-  if(error){
-      return <p>Error: {error}</p>;
+  if (error) {
+    return <p>Error: {error}</p>;
   }
 
-  if(!data) {
-     return <p>No Data Available</p>;
+  if (!data) {
+    return <p>No Data Available</p>;
   }
   return (
     <div>
@@ -65,8 +65,8 @@ Here, I've introduced a few crucial elements. The `fetchData` function is declar
 Now, imagine our project gets more complicated. Perhaps you need to perform a different action depending on the component's props. Or maybe you have several similar requests in one component. We can refactor to make things more maintainable and less repetitive by extracting the `fetchData` logic and using a custom hook. Let’s look at the second snippet showcasing this:
 
 ```javascript
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const useFetch = (url) => {
   const [data, setData] = useState(null);
@@ -74,34 +74,32 @@ const useFetch = (url) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-      let isMounted = true;
+    let isMounted = true;
 
     const fetchData = async () => {
-        setLoading(true);
+      setLoading(true);
       try {
         const response = await axios.get(url);
-        if(isMounted){
+        if (isMounted) {
           setData(response.data);
           setError(null);
         }
-
       } catch (err) {
-        if(isMounted){
-            console.error('Error fetching data:', err);
-            setError('Failed to load data. Please try again.');
-            setData(null);
+        if (isMounted) {
+          console.error("Error fetching data:", err);
+          setError("Failed to load data. Please try again.");
+          setData(null);
         }
-
       } finally {
-        if (isMounted){
+        if (isMounted) {
           setLoading(false);
         }
-
       }
     };
-     fetchData();
-     return () => { isMounted = false; };
-
+    fetchData();
+    return () => {
+      isMounted = false;
+    };
   }, [url]);
 
   return { data, loading, error };
@@ -113,18 +111,18 @@ function DataComponent({ apiUrl }) {
   if (loading) {
     return <p>Loading...</p>;
   }
-  if(error){
+  if (error) {
     return <p>Error: {error}</p>;
   }
-  if(!data) {
-      return <p>No Data Available</p>;
+  if (!data) {
+    return <p>No Data Available</p>;
   }
 
   return (
-      <div>
-        {/* Render your data here */}
-          <pre>{JSON.stringify(data, null, 2)}</pre>
-      </div>
+    <div>
+      {/* Render your data here */}
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </div>
   );
 }
 
@@ -136,8 +134,8 @@ This version shows us encapsulating the data fetching logic within a reusable cu
 Finally, let's explore a slightly more complex scenario. Consider a situation where you need to cancel an ongoing request when the component unmounts. This is essential for performance and preventing memory leaks, especially when components that perform fetches are often rendered and unrendered frequently. `axios` provides a mechanism for this using cancellation tokens:
 
 ```javascript
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 function DataComponent() {
   const [data, setData] = useState(null);
@@ -150,22 +148,21 @@ function DataComponent() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get('https://api.example.com/data', {
+        const response = await axios.get("https://api.example.com/data", {
           cancelToken: source.token,
         });
         setData(response.data);
         setError(null);
       } catch (err) {
-         if (axios.isCancel(err)) {
-             console.log("Request cancelled", err.message)
-             //Request was cancelled so don't set error or re-render
-             setError(null)
-         } else {
-            console.error('Error fetching data:', err);
-            setError('Failed to load data. Please try again.');
-            setData(null);
+        if (axios.isCancel(err)) {
+          console.log("Request cancelled", err.message);
+          //Request was cancelled so don't set error or re-render
+          setError(null);
+        } else {
+          console.error("Error fetching data:", err);
+          setError("Failed to load data. Please try again.");
+          setData(null);
         }
-
       } finally {
         setLoading(false);
       }
@@ -174,25 +171,25 @@ function DataComponent() {
     fetchData();
 
     return () => {
-        source.cancel('Component unmounted, request cancelled.');
+      source.cancel("Component unmounted, request cancelled.");
     };
   }, []);
 
   if (loading) {
     return <p>Loading...</p>;
   }
-  if(error){
-      return <p>Error: {error}</p>;
+  if (error) {
+    return <p>Error: {error}</p>;
   }
 
-    if(!data) {
-      return <p>No Data Available</p>;
-    }
+  if (!data) {
+    return <p>No Data Available</p>;
+  }
 
   return (
     <div>
       {/* Render your data here */}
-        <pre>{JSON.stringify(data, null, 2)}</pre>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   );
 }

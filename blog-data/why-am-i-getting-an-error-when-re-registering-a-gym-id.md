@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-an-error-when-re-registering-a-gym-id"
 ---
 
-Alright, let’s tackle this gym ID re-registration error. I’ve seen this pop up more than a few times in my career, particularly in systems dealing with unique identifiers and persistent data stores. It’s almost always a variation of the same core issues, just manifesting in different ways depending on the specific implementation. The problem typically arises from how the system handles the lifecycle of these gym IDs. It’s not a simple case of assigning an ID, it’s about the processes that occur before and after that assignment. Let’s delve into some of the common culprits and how to approach them.
+, let’s tackle this gym ID re-registration error. I’ve seen this pop up more than a few times in my career, particularly in systems dealing with unique identifiers and persistent data stores. It’s almost always a variation of the same core issues, just manifesting in different ways depending on the specific implementation. The problem typically arises from how the system handles the lifecycle of these gym IDs. It’s not a simple case of assigning an ID, it’s about the processes that occur before and after that assignment. Let’s delve into some of the common culprits and how to approach them.
 
 First off, when you’re trying to re-register a gym ID, it means that somewhere along the line the system has recognized a previously existing entry associated with that specific identifier. The fact that it's generating an error instead of, say, overwriting it, strongly suggests the underlying logic has some form of uniqueness constraint or validation. This is generally a good thing; it prevents accidental data corruption. The devil, as they say, is in the implementation details.
 
@@ -67,7 +67,7 @@ def register_gym(gym_id, name, address):
       # redis_client.delete(f'gym:{gym_id}') <--- This line is required after update
 ```
 
-In this simplified cache example, the `get_gym` function first checks the cache. If it exists, it returns the cached version. The `register_gym` checks to see if the gym_id exists (using `get_gym`) before creating a new one. If an existing record is found in the *cache*, it throws an error, preventing a new entry from being created. However, after the database is updated, the cache is not being invalidated (no call to `redis_client.delete(f'gym:{gym_id}')`), meaning on the next request it will likely still retrieve the stale record. Proper cache invalidation strategies are crucial to avoid these kinds of consistency problems.
+In this simplified cache example, the `get_gym` function first checks the cache. If it exists, it returns the cached version. The `register_gym` checks to see if the gym_id exists (using `get_gym`) before creating a new one. If an existing record is found in the _cache_, it throws an error, preventing a new entry from being created. However, after the database is updated, the cache is not being invalidated (no call to `redis_client.delete(f'gym:{gym_id}')`), meaning on the next request it will likely still retrieve the stale record. Proper cache invalidation strategies are crucial to avoid these kinds of consistency problems.
 
 **Example 3: Incomplete Update Logic**
 

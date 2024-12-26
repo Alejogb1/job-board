@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-gurobipy-how-to-add-a-constraint-that-limits-the-number-of-times-a-certain-tupledict-value-can-appear-in-the-optimal-solution"
 ---
 
-alright so, you’re facing a classic combinatorial optimization problem here, and gurobipy is definitely the tool for the job. limiting the number of times a certain tupledict value appears in the optimal solution… yeah, i’ve been there. it’s surprisingly common and can get tricky depending on how your model is structured. i've spent countless hours staring at my screen debugging similar stuff, trust me.
+so, you’re facing a classic combinatorial optimization problem here, and gurobipy is definitely the tool for the job. limiting the number of times a certain tupledict value appears in the optimal solution… yeah, i’ve been there. it’s surprisingly common and can get tricky depending on how your model is structured. i've spent countless hours staring at my screen debugging similar stuff, trust me.
 
 so, let’s break this down. i’m assuming you have a tupledict, maybe something like `x[(i,j)]`, which represents a decision variable indicating if, say, a link between node `i` and node `j` is active. and you need to restrict how many times a specific link, say `x[(3,7)]`, can be activated in the optimal solution.
 
@@ -55,12 +55,13 @@ if model.status == GRB.OPTIMAL:
 else:
     print("No optimal solution found")
 ```
+
 in this case `model.addConstr(x[(3, 7)] <= 2, "max_use_of_3_7")` is exactly what we need to restrict the number of times that link is activated. in essence you are limiting the upper bound of the binary variable. pretty direct.
 but, what if you have more restrictions?.
 
 **more complex constraint:**
 
-now, let’s say instead of a specific edge, you want to limit the total number of edges involving a particular node, like the total number of links involving location 3,  that can be active. you’d have to sum all of them and add that as a constraint. it's very similar to the previous approach but instead of adding one variable, you would need to add all the variables that are linked to a specific node.
+now, let’s say instead of a specific edge, you want to limit the total number of edges involving a particular node, like the total number of links involving location 3, that can be active. you’d have to sum all of them and add that as a constraint. it's very similar to the previous approach but instead of adding one variable, you would need to add all the variables that are linked to a specific node.
 
 ```python
 import gurobipy as gp
@@ -100,6 +101,7 @@ else:
     print("No optimal solution found")
 
 ```
+
 here `model.addConstr(gp.quicksum(x[3,j] for j in locations if j!=3) + gp.quicksum(x[i,3] for i in locations if i!=3) <= 4 , "max_use_of_node_3")` adds a constraint that sums all the incoming and outcoming links of location 3, and limits that sum to 4, in this case.
 
 **using tuplelists for even more flexibility:**
@@ -148,13 +150,14 @@ else:
     print("No optimal solution found")
 
 ```
+
 in this case, we leverage a python list called `items_to_limit` to store the relevant edges and we create a constraint that limits the sum of these variables that belong to `items_to_limit` to be at most 3.
 
 **some things to keep in mind:**
 
-*   **binary vs. integer variables:** the examples i’ve given use binary variables (`vtype=GRB.BINARY`). if your decision variables can take integer values greater than one, you’d want to adjust the right-hand side of the `addConstr` accordingly. the logic behind of adding the constraint remains the same.
-*   **performance**: if you find your model is becoming slow, investigate the structure of your constraints. sometimes, a subtle change in how you express the constraint can dramatically impact performance. also, using `gp.quicksum()` is better than a python `sum` when summing up over many terms of gurobi variables, as it will be done within gurobi’s core.
-*   **debugging:** always print the model status and the variables values to diagnose if the model is solving properly. i tend to write small test cases first, to test only one constraint. that's a good practice.
+- **binary vs. integer variables:** the examples i’ve given use binary variables (`vtype=GRB.BINARY`). if your decision variables can take integer values greater than one, you’d want to adjust the right-hand side of the `addConstr` accordingly. the logic behind of adding the constraint remains the same.
+- **performance**: if you find your model is becoming slow, investigate the structure of your constraints. sometimes, a subtle change in how you express the constraint can dramatically impact performance. also, using `gp.quicksum()` is better than a python `sum` when summing up over many terms of gurobi variables, as it will be done within gurobi’s core.
+- **debugging:** always print the model status and the variables values to diagnose if the model is solving properly. i tend to write small test cases first, to test only one constraint. that's a good practice.
 
 **additional resources:**
 

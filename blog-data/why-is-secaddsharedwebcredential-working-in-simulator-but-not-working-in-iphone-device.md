@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-secaddsharedwebcredential-working-in-simulator-but-not-working-in-iphone-device"
 ---
 
-alright, so, you're seeing secaddsharedwebcredential behaving differently between the simulator and an actual iphone device, right? yeah, i've been there. it's a classic head-scratcher when things work perfectly in the simulated world but go sideways when deployed to a real device. let me break down what’s probably happening and what i’ve learned the hard way over the years, trying to get these shared web credentials to behave.
+, so, you're seeing secaddsharedwebcredential behaving differently between the simulator and an actual iphone device, right? yeah, i've been there. it's a classic head-scratcher when things work perfectly in the simulated world but go sideways when deployed to a real device. let me break down what’s probably happening and what i’ve learned the hard way over the years, trying to get these shared web credentials to behave.
 
 the first thing to understand is that the security framework on ios, while conceptually the same across the simulator and the device, has some practical differences. the simulator environment is far more forgiving. it's essentially a sandbox running on your mac, so it doesn't have all the real-world constraints of a hardware device. your actual iphone, on the other hand, operates under much stricter security rules that are deeply tied to the secure enclave and hardware-level protections.
 
@@ -37,29 +37,25 @@ the contents of the json should be like this:
 ```json
 {
   "applinks": {
-      "apps": [],
-        "details": [
-            {
-                "appID": "teamid.bundleid",
-                "paths": [
-                    "/ *"
-                ]
-            }
-        ]
-    },
-    "webcredentials": {
-        "apps": [
-             "teamid.bundleid"
-         ]
-    }
+    "apps": [],
+    "details": [
+      {
+        "appID": "teamid.bundleid",
+        "paths": ["/ *"]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": ["teamid.bundleid"]
+  }
 }
 ```
 
 replace `teamid` with your development team id and `bundleid` with your application's bundle identifier. this should match precisely the entitlement identifier you configured in your entitlements file. if either of these identifiers is not correctly set the authentication will silently fail and you will be scratching your head wondering what is happening.
 
-now, there is a subtle but important thing to remember, you have to use the full app identifier, so something like this: “teamid.your.bundle.id”. and the key is that this needs to match *exactly* the one you use to sign your app. also, confirm that you have https configured correctly because if you don’t the configuration won’t be considered and the handshake will fail. it is like trying to talk to someone through a broken phone. it just won't work.
+now, there is a subtle but important thing to remember, you have to use the full app identifier, so something like this: “teamid.your.bundle.id”. and the key is that this needs to match _exactly_ the one you use to sign your app. also, confirm that you have https configured correctly because if you don’t the configuration won’t be considered and the handshake will fail. it is like trying to talk to someone through a broken phone. it just won't work.
 
-third, the actual code for saving the credential. i've had cases where the code looked alright but subtle bugs were causing the credential saving to fail. while the simulator is forgiving, the device is not. for instance the service parameter on your call has to be fully equal to the configured service type in your credentials configuration.
+third, the actual code for saving the credential. i've had cases where the code looked but subtle bugs were causing the credential saving to fail. while the simulator is forgiving, the device is not. for instance the service parameter on your call has to be fully equal to the configured service type in your credentials configuration.
 
 ```swift
 func saveWebCredential(username: string, password: string, service: string, completion: @escaping (bool, error?) -> void) {

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-reload-a-kubernetes-container"
 ---
 
-Okay, let's unpack this. Reloading a Kubernetes container, in practice, isn’t quite the same as hitting a 'refresh' button. It's a process with nuances, and the ideal approach often depends on exactly *why* you need to reload it. I’ve seen this come up countless times in my years, from simple config changes to more dramatic shifts in underlying logic. We'll cover several common scenarios and their solutions.
+, let's unpack this. Reloading a Kubernetes container, in practice, isn’t quite the same as hitting a 'refresh' button. It's a process with nuances, and the ideal approach often depends on exactly _why_ you need to reload it. I’ve seen this come up countless times in my years, from simple config changes to more dramatic shifts in underlying logic. We'll cover several common scenarios and their solutions.
 
 Fundamentally, Kubernetes doesn’t offer a direct 'reload container' command. Instead, the goal is achieved by triggering a restart or re-creation of the pod in which the container is running. This ensures that changes, whether they pertain to configuration, code, or environment variables, are consistently and reliably applied. Now, let’s explore some common ways this is achieved, drawing on experiences from various projects I've worked on.
 
@@ -17,12 +17,13 @@ metadata:
   name: my-app
 spec:
   containers:
-  - name: my-container
-    image: my-registry/my-image:v1
-    env:
-    - name: DATABASE_URL
-      value: "old_database_url" # This is the key to be updated
+    - name: my-container
+      image: my-registry/my-image:v1
+      env:
+        - name: DATABASE_URL
+          value: "old_database_url" # This is the key to be updated
 ```
+
 Now, to implement the change, you’d edit this yaml file, altering `value` to the new connection string (e.g., `"new_database_url"`), and then apply the changes:
 
 ```bash
@@ -53,18 +54,18 @@ metadata:
   name: my-config-app
 spec:
   containers:
-  - name: my-config-container
-    image: my-registry/config-image:v1
-    volumeMounts:
-      - name: config-volume
-        mountPath: /app/config
+    - name: my-config-container
+      image: my-registry/config-image:v1
+      volumeMounts:
+        - name: config-volume
+          mountPath: /app/config
   volumes:
-  - name: config-volume
-    configMap:
-      name: my-config
+    - name: config-volume
+      configMap:
+        name: my-config
 ```
 
-Now, if you modify the `app.config` in the `my-config` ConfigMap, the changes will *not* automatically reflect inside the existing pods. You'll need to trigger a rollout by touching the pod template hash for the Deployment or StatefulSet. This will force a new rollout that recreates the pods, and during the process the volumes are updated with new information from the config map. It can be achieved by using `kubectl rollout restart deployment/your-deployment`. This process ensures that pods are created with the new configuration. This is a crucial aspect; it’s designed so that configuration changes don’t propagate unexpectedly to running containers. They require explicit action to ensure stability and predictability.
+Now, if you modify the `app.config` in the `my-config` ConfigMap, the changes will _not_ automatically reflect inside the existing pods. You'll need to trigger a rollout by touching the pod template hash for the Deployment or StatefulSet. This will force a new rollout that recreates the pods, and during the process the volumes are updated with new information from the config map. It can be achieved by using `kubectl rollout restart deployment/your-deployment`. This process ensures that pods are created with the new configuration. This is a crucial aspect; it’s designed so that configuration changes don’t propagate unexpectedly to running containers. They require explicit action to ensure stability and predictability.
 
 Finally, there are scenarios when the container's core code itself has been modified; a new version of the container image has been created. For instance, imagine I've pushed a new version of my application image to my container registry. My deployment yaml will then need to be updated to reflect the new image tag. Let’s say, my existing deployment configuration looked like this:
 
@@ -84,8 +85,8 @@ spec:
         app: my-app
     spec:
       containers:
-      - name: my-container
-        image: my-registry/my-image:v1
+        - name: my-container
+          image: my-registry/my-image:v1
 ```
 
 To update to `v2` of my image, I’d edit this yaml file to specify:
@@ -106,8 +107,8 @@ spec:
         app: my-app
     spec:
       containers:
-      - name: my-container
-        image: my-registry/my-image:v2  # Updated to v2
+        - name: my-container
+          image: my-registry/my-image:v2 # Updated to v2
 ```
 
 Applying this change using `kubectl apply -f my-deployment.yaml` will trigger a rolling update. Each old pod will be gradually replaced with the new version, ensuring minimal downtime. This is a standard approach for deploying new code in Kubernetes, which emphasizes zero downtime rolling updates.

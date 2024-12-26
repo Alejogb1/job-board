@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-isnt-flashnow-outputting-after-rendering"
 ---
 
-Alright, let's tackle this flash.now conundrum. I've spent more than my fair share debugging asynchronous code in environments similar to Flash, and the fact that `flash.now` isn't immediately reflected post-render often points to a fundamental misunderstanding of how the render pipeline operates, coupled with how asynchronous operations are handled in the specific Flash environment in question. It’s less about an outright *error* with `flash.now` itself, and more about its interaction within the context of the execution flow.
+, let's tackle this flash.now conundrum. I've spent more than my fair share debugging asynchronous code in environments similar to Flash, and the fact that `flash.now` isn't immediately reflected post-render often points to a fundamental misunderstanding of how the render pipeline operates, coupled with how asynchronous operations are handled in the specific Flash environment in question. It’s less about an outright _error_ with `flash.now` itself, and more about its interaction within the context of the execution flow.
 
-The core issue is typically this: `flash.now` (or its equivalent in older Flash environments) reflects the current state of the timeline. If you modify a variable or object immediately prior to checking the `flash.now` timestamp within the same single-threaded execution block (i.e., within the same frame), you will likely not see the update *after rendering*. That's because the actual rendering process and update of the display list happens *after* your code finishes executing, not within it. You're, in essence, looking at the system time *before* the rendering engine has actually had a chance to draw the frame and propagate changes.
+The core issue is typically this: `flash.now` (or its equivalent in older Flash environments) reflects the current state of the timeline. If you modify a variable or object immediately prior to checking the `flash.now` timestamp within the same single-threaded execution block (i.e., within the same frame), you will likely not see the update _after rendering_. That's because the actual rendering process and update of the display list happens _after_ your code finishes executing, not within it. You're, in essence, looking at the system time _before_ the rendering engine has actually had a chance to draw the frame and propagate changes.
 
 Let's illustrate this with a few code snippets, assuming an ActionScript 3-like environment (as flash.now was most common there). Even though flash is dated technology, the fundamental principles of single-threaded graphics rendering are still highly relevant. These examples, slightly simplified for clarity, should get the point across.
 
@@ -55,7 +55,7 @@ package {
 
 ```
 
-In this example, we set the `outputTxt`'s text value to the time, grab another timestamp immediately afterward, and log them both to the console and display them in the text field. The crucial part here is that *both* timestamps are acquired before the rendering of the frame ever occurs, hence the text field output on screen at the end will show that same initial start time, even though the second trace will reflect a slightly higher number. The visual update lags, and `flash.now` taken immediately after updating the field doesn't magically force a render.
+In this example, we set the `outputTxt`'s text value to the time, grab another timestamp immediately afterward, and log them both to the console and display them in the text field. The crucial part here is that _both_ timestamps are acquired before the rendering of the frame ever occurs, hence the text field output on screen at the end will show that same initial start time, even though the second trace will reflect a slightly higher number. The visual update lags, and `flash.now` taken immediately after updating the field doesn't magically force a render.
 
 **Snippet 2: Demonstrating the Render Cycle**
 
@@ -103,7 +103,7 @@ package {
 }
 ```
 
-Here, we employ a timer. This timer triggers a separate execution block, *after* the current frame has been rendered. Inside the `timerComplete` event handler, the text field is updated. This demonstrates that if we change the display list in one execution block (the initial setup within 'init' function) and check `flash.now`, the updates will be applied during the next render cycle, not immediately. We see a new output from the textfield *after the next frame is rendered*. Timers in these types of environments effectively force a 're-draw' which can make it appear as if they've 'fixed' a problem they didn't. The key thing is they're introducing another *frame*.
+Here, we employ a timer. This timer triggers a separate execution block, _after_ the current frame has been rendered. Inside the `timerComplete` event handler, the text field is updated. This demonstrates that if we change the display list in one execution block (the initial setup within 'init' function) and check `flash.now`, the updates will be applied during the next render cycle, not immediately. We see a new output from the textfield _after the next frame is rendered_. Timers in these types of environments effectively force a 're-draw' which can make it appear as if they've 'fixed' a problem they didn't. The key thing is they're introducing another _frame_.
 
 **Snippet 3: Using `enterFrame` for a Continuous Update (but with caveats)**
 
@@ -152,9 +152,9 @@ package {
 }
 ```
 
-In this example, we use the `enterFrame` event, which will be called on every frame. This forces an update to the text field on every render cycle, showing the timestamp at each frame. However, while this approach solves the “not updating” problem, it can come at a cost of performance, especially if you are doing intensive calculations on every frame. *It also might not be what you need*. If you only need a one-time update you don't want an `enterFrame` listener constantly updating.
+In this example, we use the `enterFrame` event, which will be called on every frame. This forces an update to the text field on every render cycle, showing the timestamp at each frame. However, while this approach solves the “not updating” problem, it can come at a cost of performance, especially if you are doing intensive calculations on every frame. _It also might not be what you need_. If you only need a one-time update you don't want an `enterFrame` listener constantly updating.
 
-To understand this deeply, you should really dive into literature on graphics pipelines. A great start would be the chapter on rendering architectures in *Real-Time Rendering* by Tomas Akenine-Möller, Eric Haines, and Naty Hoffman. This book details the common stages of rendering and how updates propagate in these types of environments.
+To understand this deeply, you should really dive into literature on graphics pipelines. A great start would be the chapter on rendering architectures in _Real-Time Rendering_ by Tomas Akenine-Möller, Eric Haines, and Naty Hoffman. This book details the common stages of rendering and how updates propagate in these types of environments.
 
 **Practical Conclusions and Advice from Experience:**
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-do-pytorch-losses-connect-to-model-parameters"
 ---
 
-alright, so you're asking how pytorch losses actually nudge the model parameters, a pretty fundamental thing when dealing with neural networks. i've spent a good chunk of my career elbow-deep in this stuff, and it's definitely one of those things that clicks better once you've seen it in action a few times. let's break it down without getting lost in too much math jargon.
+, so you're asking how pytorch losses actually nudge the model parameters, a pretty fundamental thing when dealing with neural networks. i've spent a good chunk of my career elbow-deep in this stuff, and it's definitely one of those things that clicks better once you've seen it in action a few times. let's break it down without getting lost in too much math jargon.
 
 at its core, a loss function, it's just a mathematical formula. you feed it the model's predictions and the actual, correct answers, and it spits out a single number – the loss. this number represents how bad the model's predictions were. a higher loss means the model is doing a lousy job, and a lower loss means it's getting closer to the correct answers.
 

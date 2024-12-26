@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-isnt-an-openstack-ssh-keypair-being-authorized-on-an-instance"
 ---
 
-Alright, let’s tackle this authorization puzzle. From my experience, when an openstack ssh keypair refuses to authorize correctly, it rarely boils down to a singular cause. It's typically a multi-faceted issue, requiring a systematic investigation. I’ve personally been through this more times than i’d care to count, often with a late-night troubleshooting session involved. Let’s break it down into the most likely culprits and how to address them.
+, let’s tackle this authorization puzzle. From my experience, when an openstack ssh keypair refuses to authorize correctly, it rarely boils down to a singular cause. It's typically a multi-faceted issue, requiring a systematic investigation. I’ve personally been through this more times than i’d care to count, often with a late-night troubleshooting session involved. Let’s break it down into the most likely culprits and how to address them.
 
-Firstly, we need to consider that the issue might not actually be *with* the keypair itself, but rather with the propagation mechanism, the instance's configuration, or even the user's procedure. When I've faced this in the past, I've found it useful to start by verifying the basics, moving gradually toward the more complex scenarios.
+Firstly, we need to consider that the issue might not actually be _with_ the keypair itself, but rather with the propagation mechanism, the instance's configuration, or even the user's procedure. When I've faced this in the past, I've found it useful to start by verifying the basics, moving gradually toward the more complex scenarios.
 
-Let’s begin with the keypair itself. I’ve seen numerous instances where users accidentally upload the public *and* private key as a keypair or, conversely, try to use a public key format that isn’t recognized by openstack. Openstack expects the key to be in a specific ssh-rsa format, often encoded in the traditional ssh public key format, starting with “ssh-rsa”, followed by the base64 encoded key material and, often, an optional comment.
+Let’s begin with the keypair itself. I’ve seen numerous instances where users accidentally upload the public _and_ private key as a keypair or, conversely, try to use a public key format that isn’t recognized by openstack. Openstack expects the key to be in a specific ssh-rsa format, often encoded in the traditional ssh public key format, starting with “ssh-rsa”, followed by the base64 encoded key material and, often, an optional comment.
 
 Here's a quick snippet in Python demonstrating how you could extract a correctly formatted ssh public key if you happen to have the private one available using the `paramiko` library:
 

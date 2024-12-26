@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "nolint-clang-tidy-how-to-use"
 ---
 
-Okay so someone wants to know about `nolint clang-tidy` right I've been down this rabbit hole more times than I care to admit Lets break it down real simple no frills just the tech
+someone wants to know about `nolint clang-tidy` right I've been down this rabbit hole more times than I care to admit Lets break it down real simple no frills just the tech
 
 First off `nolint` is not a command itself it's a directive a comment really It tells `clang-tidy` "hey ignore this specific piece of code don't bother me with your warnings" It's a way to silence noise when you know better than the static analyzer at least you think you do you sometimes don't but hey we all learn
 
@@ -24,6 +24,7 @@ int calculateSomething(int a, int b) {
     return a + b;  // NOLINT(hicpp-signed-bitwise)
 }
 ```
+
 Here you're specifically telling `clang-tidy` to ignore the `hicpp-signed-bitwise` check its a specific type of warning so you know exactly what is being suppressed be specific when using the `nolint` as it could mask other actual warnings
 
 Sometimes it's good to explain why you are disabling the linter warnings so when you go back to the code a year later you're not just scratching your head I added a small note below
@@ -48,11 +49,11 @@ void complexFunction() {
     // NOLINTBEGIN
     int a = 10;
     char* b = (char*)malloc(100);
-   
-    
+
+
     // lots of messy legacy code that clang-tidy would flag
     //...
-    
+
     free(b);
     // NOLINTEND
 }
@@ -75,7 +76,7 @@ This allows you to have specific exceptions on one line only instead of multiple
 
 **How do I know what checks to disable**
 
-`clang-tidy` usually outputs the name of the check that's being violated for example  `hicpp-signed-bitwise` or `cppcoreguidelines-no-malloc` you'll see it in the output when running the `clang-tidy`
+`clang-tidy` usually outputs the name of the check that's being violated for example `hicpp-signed-bitwise` or `cppcoreguidelines-no-malloc` you'll see it in the output when running the `clang-tidy`
 
 `clang-tidy` documentation is your friend you will find all the checks there its a really good resource https://clang.llvm.org/extra/clang-tidy/checks/list.html but there are other resources like the book "Effective Modern C++" by Scott Meyers its not about static analysis but having a deeper understanding of the language helps to avoid these types of issues all together sometimes
 
@@ -83,7 +84,7 @@ I've found that the checks are quite comprehensive and there are a lot of them t
 
 **When should you NOT use nolint**
 
-This is important `nolint` is not a get-out-of-jail-free card I've seen people use it as a crutch masking all the real problems with a bunch of `NOLINT` comments  Its never a good idea It's almost like having a bad habit and then you make a comment like it's a feature instead of a problem You know what I mean? no? you do you are like me I know you are.
+This is important `nolint` is not a get-out-of-jail-free card I've seen people use it as a crutch masking all the real problems with a bunch of `NOLINT` comments Its never a good idea It's almost like having a bad habit and then you make a comment like it's a feature instead of a problem You know what I mean? no? you do you are like me I know you are.
 
 If you are getting a lot of warnings it is better to fix the root cause of the problem rather than just suppressing all the warnings It could be a design problem an architectural mistake or just some bad programming practices sometimes the clang-tidy warnings are like little hints telling you to check the code with a fresh set of eyes
 

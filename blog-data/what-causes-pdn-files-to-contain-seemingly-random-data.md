@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-pdn-files-to-contain-seemingly-random-data"
 ---
 
-Alright, let's talk about .pdn files and the apparent chaos you sometimes find within them. I've spent quite a bit of time dissecting these things over the years, back from when we were heavily reliant on Paint.NET in our graphics pipeline before the switch to more industrial-grade software. And yes, “seemingly random” is a very apt way to describe what can sometimes occur.
+, let's talk about .pdn files and the apparent chaos you sometimes find within them. I've spent quite a bit of time dissecting these things over the years, back from when we were heavily reliant on Paint.NET in our graphics pipeline before the switch to more industrial-grade software. And yes, “seemingly random” is a very apt way to describe what can sometimes occur.
 
 The underlying reason why a .pdn file can appear to contain random data comes down to a few specific areas, primarily how Paint.NET handles its file storage, and what happens when things go slightly awry. It's not magic; it's fundamentally about how data is serialized to disk, compressed, and then deserialized on load. Let's break it down.
 
@@ -18,7 +18,7 @@ Another significant source of apparent "randomness" originates from how Paint.NE
 
 Now, let's look at some fictional past experience and working examples that highlight how these issues might manifest.
 
-*Example 1: The Corrupted Stream*
+_Example 1: The Corrupted Stream_
 
 Back in 2012, I encountered a situation where our image assets would periodically become unusable. Upon inspection, several .pdn files exhibited what seemed like random noise. After quite a bit of work, it turned out to be a faulty network share. The files were being saved remotely, and the network connection would occasionally flicker during write operations. This meant that a portion of the data being written to the file was incomplete, causing the deflate stream to become unparsable. The resulting “image” looked like static.
 
@@ -39,7 +39,7 @@ function readPDNFile(filepath) {
 // A corrupted file can be partially written, or incompletely transferred over the network, resulting in mangled compressed_data
 ```
 
-*Example 2: The Invalid Layer Mask*
+_Example 2: The Invalid Layer Mask_
 
 In another case, we had a scenario where a particular brush effect plugin was unstable and, due to a memory access violation, wrote random data in a layer mask during the save process. On reloading the affected .pdn files, this manifested as weird, distorted alpha channels and partially transparent artifacts. The actual pixel data was still largely intact, but the way the layers were combined was drastically incorrect.
 
@@ -60,7 +60,7 @@ function apply_layer(base_layer, mask, blend_mode) {
 //When it is being read, the 'mask_is_valid' check can trigger the fallback case and show incorrect image
 ```
 
-*Example 3: The Misaligned Undo History*
+_Example 3: The Misaligned Undo History_
 
 And yet again, we observed a series of “random” color shifts and pixel distortions when an older version of the software was used to load a .pdn file that had been edited using a newer version. In this case, the issue was due to incompatibilities in how the history data was serialized. The older program couldn’t correctly interpret the more recent data structure used for managing the undo history. This resulted in erroneous transformations being applied to the image when it was loaded.
 

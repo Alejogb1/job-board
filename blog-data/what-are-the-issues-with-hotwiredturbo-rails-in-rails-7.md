@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "what-are-the-issues-with-hotwiredturbo-rails-in-rails-7"
 ---
 
-Okay, let's talk about `@hotwired/turbo-rails` in Rails 7, specifically the challenges I've encountered and how I've addressed them. It's a powerful tool, no doubt, but like any technology, it presents its own set of interesting puzzles. I’ve spent a fair amount of time working with it, going back to when it was brand new, and I’ve got a few scars to show for it.
+, let's talk about `@hotwired/turbo-rails` in Rails 7, specifically the challenges I've encountered and how I've addressed them. It's a powerful tool, no doubt, but like any technology, it presents its own set of interesting puzzles. I’ve spent a fair amount of time working with it, going back to when it was brand new, and I’ve got a few scars to show for it.
 
 The core of Turbo's appeal lies in its ability to accelerate page interactions through selective DOM updates via websockets and server-rendered html fragments. However, the transition to this approach wasn’t always frictionless. Here’s a breakdown of what I've faced:
 
-One of the primary challenges that I experienced early on was managing complex form interactions, particularly those involving nested attributes. Turbo's default behavior for form submissions can be, shall we say, *surprising* if you’re used to traditional Rails UJS. Specifically, when a form fails to validate, or requires a server-side redirect (for example, after creating a record), it can lead to a rather inconsistent user experience. The primary issue is that Turbo's partial updates might not accurately reflect the state of the form after processing. This can especially happen with validation errors. The typical behavior is for the server to render the same form with validation errors, and this needs to be gracefully handled by Turbo to avoid issues like losing user input or showing incorrect messages.
+One of the primary challenges that I experienced early on was managing complex form interactions, particularly those involving nested attributes. Turbo's default behavior for form submissions can be, shall we say, _surprising_ if you’re used to traditional Rails UJS. Specifically, when a form fails to validate, or requires a server-side redirect (for example, after creating a record), it can lead to a rather inconsistent user experience. The primary issue is that Turbo's partial updates might not accurately reflect the state of the form after processing. This can especially happen with validation errors. The typical behavior is for the server to render the same form with validation errors, and this needs to be gracefully handled by Turbo to avoid issues like losing user input or showing incorrect messages.
 
 For instance, imagine a form for creating a user with an address. Initially, I found myself relying heavily on the default Turbo behavior which, when a validation error occurred, returned the form partial again. This sometimes resulted in a brief, disorienting flash of the unvalidated form, and worse, a state where error messages didn’t render reliably. What I eventually realized is that for forms like this, with nested attributes or complex interactions, a combination of techniques is often necessary. This involves careful use of the `turbo_stream` responses, custom javascript events, and, occasionally, a more declarative approach to rendering error messages in the HTML itself, instead of solely relying on Turbo’s replacement behavior.
 
@@ -87,21 +87,21 @@ Here’s an example demonstrating how to leverage Turbo streams alongside custom
 
 ```javascript
 // application.js
-document.addEventListener('turbo:load', function() {
-  document.addEventListener('click', function(event) {
-    if (event.target.matches('[data-modal-trigger]')) {
+document.addEventListener("turbo:load", function () {
+  document.addEventListener("click", function (event) {
+    if (event.target.matches("[data-modal-trigger]")) {
       event.preventDefault();
-      const target = event.target.getAttribute('data-modal-target');
-      document.getElementById(target).classList.add('modal--open');
+      const target = event.target.getAttribute("data-modal-target");
+      document.getElementById(target).classList.add("modal--open");
 
-        // Ensure that Turbo is aware of these changes and avoids reloads that will
-        // discard our open modal
+      // Ensure that Turbo is aware of these changes and avoids reloads that will
+      // discard our open modal
     }
 
-    if (event.target.matches('[data-modal-close]')) {
+    if (event.target.matches("[data-modal-close]")) {
       event.preventDefault();
-       const modal = event.target.closest('.modal');
-        modal.classList.remove('modal--open');
+      const modal = event.target.closest(".modal");
+      modal.classList.remove("modal--open");
     }
   });
 });
@@ -117,6 +117,7 @@ document.addEventListener('turbo:load', function() {
   </div>
 
 ```
+
 ```erb
 # some_view.html.erb
 <%= button_tag "Open Modal", data: { modal_trigger: true, modal_target: "my-modal" }  %>
@@ -164,45 +165,47 @@ class ChatChannel < ApplicationCable::Channel
   end
 end
 ```
+
 ```erb
 # messages/_message.html.erb
  <div class="message">
     <p><%= message.content %></p>
  </div>
 ```
+
 ```javascript
 // application.js
-import { Turbo } from "@hotwired/turbo-rails"
-import * as ActionCable from "@rails/actioncable"
-window.addEventListener('turbo:load', () => {
-     const cable =  ActionCable.createConsumer()
-     cable.subscriptions.create('ChatChannel', {
-            connected() {
-                // Called when the subscription is ready for use on the server
-            },
+import { Turbo } from "@hotwired/turbo-rails";
+import * as ActionCable from "@rails/actioncable";
+window.addEventListener("turbo:load", () => {
+  const cable = ActionCable.createConsumer();
+  cable.subscriptions.create("ChatChannel", {
+    connected() {
+      // Called when the subscription is ready for use on the server
+    },
 
-            disconnected() {
-                // Called when the subscription has been terminated by the server
-            },
+    disconnected() {
+      // Called when the subscription has been terminated by the server
+    },
 
-            received(data) {
-              if(data.turbo_stream){
-                   Turbo.renderStreamMessage(data.message)
-              }
-           },
-           send_message(message) {
-             this.perform("receive", { message: message })
-           }
-
-     })
-     document.getElementById("send_message").addEventListener("click", function(e) {
-       e.preventDefault()
-       const messageInput = document.getElementById("message_input")
-       cable.subscriptions.subscriptions[0].send_message(messageInput.value)
-       messageInput.value = "";
-     })
-
-    })
+    received(data) {
+      if (data.turbo_stream) {
+        Turbo.renderStreamMessage(data.message);
+      }
+    },
+    send_message(message) {
+      this.perform("receive", { message: message });
+    },
+  });
+  document
+    .getElementById("send_message")
+    .addEventListener("click", function (e) {
+      e.preventDefault();
+      const messageInput = document.getElementById("message_input");
+      cable.subscriptions.subscriptions[0].send_message(messageInput.value);
+      messageInput.value = "";
+    });
+});
 ```
 
 ```erb

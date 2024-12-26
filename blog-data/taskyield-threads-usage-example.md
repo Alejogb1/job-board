@@ -4,15 +4,15 @@ date: "2024-12-13"
 id: "taskyield-threads-usage-example"
 ---
 
-Okay so you're asking about `taskyield` and threads especially how to use it right I've been around the block a few times with this stuff and yeah it's a bit of a tricky area if you're not careful lets dive in
+you're asking about `taskyield` and threads especially how to use it right I've been around the block a few times with this stuff and yeah it's a bit of a tricky area if you're not careful lets dive in
 
-First off forget everything you thought you knew about simple thread programming `taskyield` isn't about making threads faster or doing some magic it's about *cooperative multitasking* within a single thread its a way to give up control of the execution without completely ending it
+First off forget everything you thought you knew about simple thread programming `taskyield` isn't about making threads faster or doing some magic it's about _cooperative multitasking_ within a single thread its a way to give up control of the execution without completely ending it
 
-I remember way back when I was working on this old simulation framework written in C++ we had this massive particle system and it was all single threaded and it was *slow* it locked up the UI something awful We tried throwing more threads at it but the synchronization overhead killed it even harder We eventually stumbled on the idea of using some form of manual yield in the main loop and that's where my adventures with this idea began although we used platform specific stuff back then
+I remember way back when I was working on this old simulation framework written in C++ we had this massive particle system and it was all single threaded and it was _slow_ it locked up the UI something awful We tried throwing more threads at it but the synchronization overhead killed it even harder We eventually stumbled on the idea of using some form of manual yield in the main loop and that's where my adventures with this idea began although we used platform specific stuff back then
 
-So imagine a single thread that's your main execution space Then you have *tasks* basically function calls you want to do but that might take a while `taskyield` is your tool to say hey this task needs a break let someone else run for a bit think of it like a polite line at the grocery store you take your place in the line and let the others check out
+So imagine a single thread that's your main execution space Then you have _tasks_ basically function calls you want to do but that might take a while `taskyield` is your tool to say hey this task needs a break let someone else run for a bit think of it like a polite line at the grocery store you take your place in the line and let the others check out
 
-Now lets get down to the specifics  why and how and some of the nasty pitfalls i’ve stepped into over the years
+Now lets get down to the specifics why and how and some of the nasty pitfalls i’ve stepped into over the years
 
 First things first `taskyield` isn’t available everywhere directly you'll usually find it hidden behind a library or a framework think of python's `asyncio` or C#'s `Task.Yield` if you are working on a platform that supports it you are not usually seeing `taskyield` directly you are more likely to see `yield` or `await` which is syntactic sugar for the underlying cooperative multitasking mechanics
 
@@ -132,9 +132,9 @@ Also this is not a replacement for threading You can't use `taskyield` instead o
 
 For more detail I recommend the following:
 
-*   "Operating System Concepts" by Abraham Silberschatz et al This book is a classic in OS concepts and gives good idea about how thread and process scheduling works
-*   "Concurrency in Go" by Katherine Cox-Buday if you want to learn go concurrency go has excellent built in support for this
-*   The official documentation for the library or framework you use if its Python’s `asyncio` or C# `Task` or any other async library these usually explain how `taskyield` works and also include some usage patterns
+- "Operating System Concepts" by Abraham Silberschatz et al This book is a classic in OS concepts and gives good idea about how thread and process scheduling works
+- "Concurrency in Go" by Katherine Cox-Buday if you want to learn go concurrency go has excellent built in support for this
+- The official documentation for the library or framework you use if its Python’s `asyncio` or C# `Task` or any other async library these usually explain how `taskyield` works and also include some usage patterns
 
 **A joke**
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-a-mismatch-in-the-number-of-cases-despite-there-are-the-same-number-of-cases-sktime"
 ---
 
-alright, so you're banging your head against a wall with sktime and getting a mismatch in the number of cases, even though you're certain you have the same number of cases. i've been there, it's a classic gotcha that can trip up even the most seasoned time series wranglers. let's break this down, and i'll share some battle scars from my own encounters with this particular beast.
+, so you're banging your head against a wall with sktime and getting a mismatch in the number of cases, even though you're certain you have the same number of cases. i've been there, it's a classic gotcha that can trip up even the most seasoned time series wranglers. let's break this down, and i'll share some battle scars from my own encounters with this particular beast.
 
 first off, let's talk about what sktime means by "cases." in time series land, "cases" usually refer to individual time series instances. think of it like this: if you’re tracking stock prices, each stock is a case. if you're measuring temperatures in different cities, each city's temperature readings are a case. sktime expects your data to be structured in a way where each case is identifiable and separate. this is where things can get tricky, because data doesn't always arrive in that format.
 
@@ -26,6 +26,7 @@ df = pd.DataFrame(data)
 
 print(df)
 ```
+
 this structure looks ok, but if you pass this to a sktime function expecting each row to be a case, it will assume we have one case with a time series for the `building_id` column and another timeseries for `energy_data`, which is of course wrong.
 
 sktime's transformers and estimators operate on the premise that they can iterate over rows which are cases. when i first encountered this error, i was convinced i was going insane, as every manual check told me the counts were equal. it was a good couple of hours of debugging before i understood the issue.
@@ -68,7 +69,7 @@ print(df)
 
 in this structure `feature1` might be mis-interpreted as a time-series column by sktime, even though it's meant to be a numerical feature associated with each case. in such a scenario, if you were expecting three cases, sktime might end up considering four.
 
-to mitigate this, make sure you're feeding sktime *only* the time series columns.  and when doing that use `from_nested_to_3d_numpy` to convert your pandas df to a 3d numpy array which sktime expects. this ensures that you have the dimensions correct.
+to mitigate this, make sure you're feeding sktime _only_ the time series columns. and when doing that use `from_nested_to_3d_numpy` to convert your pandas df to a 3d numpy array which sktime expects. this ensures that you have the dimensions correct.
 
 ```python
 import pandas as pd
@@ -91,7 +92,7 @@ print(ts_array.shape)
 
 ```
 
-finally, one additional problem i’ve seen is when dealing with unevenly sampled time series. if different cases have different time lengths, sktime can get confused, especially when applying operations that require consistent dimensions. in this situation, it might appear that there are fewer or more cases depending on how sktime handles that internally.  you would be better of standardising the length of each series before attempting to use sktime’s functions.
+finally, one additional problem i’ve seen is when dealing with unevenly sampled time series. if different cases have different time lengths, sktime can get confused, especially when applying operations that require consistent dimensions. in this situation, it might appear that there are fewer or more cases depending on how sktime handles that internally. you would be better of standardising the length of each series before attempting to use sktime’s functions.
 
 one time I was working on some network data where different machines had different amounts of data available, sktime kept returning different number of instances. the reason was that the estimator, behind the scenes, was dropping cases with insufficient datapoints as part of some implicit checks and I wasn't aware of this preprocessing step.
 it's an odd feeling to see the case counts differ, despite having checked the data with my own eyes countless of times, it can make you feel like the data is haunted (or maybe the code is...).
@@ -100,11 +101,12 @@ so, here’s a quick recap of how to avoid this gotcha.
 
 1.  **check your dataframe structure:** make sure each row is a case and that the data structure is of the correct form, long format is usually preferable.
 2.  **explicitly select time series columns:** when dealing with multiple columns, make sure to explicitly provide sktime with only the correct time series columns. using `from_nested_to_3d_numpy` or similarly helpful functions to avoid errors.
-3. **standardise time series lengths:** if you are dealing with time series of varying lengths, ensure these are consistently shaped or take these inconsistencies into account in the sktime pipeline.
+3.  **standardise time series lengths:** if you are dealing with time series of varying lengths, ensure these are consistently shaped or take these inconsistencies into account in the sktime pipeline.
 
 for further reading, i recommend checking out the following:
-*   **"time series analysis" by james hamilton**: a deep dive into the mathematical foundations of time series, it covers the underlying statistical theory and will provide a much deeper understanding.
-*   **"forecasting: principles and practice" by hyndman and athanasopoulos**: this is a more hands-on guide to practical forecasting methods including some good insights in time series data handling.
-* **the sktime documentation** is also quite good.
+
+- **"time series analysis" by james hamilton**: a deep dive into the mathematical foundations of time series, it covers the underlying statistical theory and will provide a much deeper understanding.
+- **"forecasting: principles and practice" by hyndman and athanasopoulos**: this is a more hands-on guide to practical forecasting methods including some good insights in time series data handling.
+- **the sktime documentation** is also quite good.
 
 i hope this helps you get unstuck. data wrangling with time series data can be a real test of patience, but keep at it, and you'll get there.

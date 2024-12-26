@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-fix-a-typeerror-module-object-is-not-callable-error"
 ---
 
-Alright, let's talk about that frustrating `TypeError: 'module' object is not callable`. I've definitely bumped into this particular gremlin a few times over the years, and it's usually a facepalm moment once you track it down. It crops up in Python when you’re trying to invoke a module as if it were a function or class, which, of course, it's not intended to be.
+, let's talk about that frustrating `TypeError: 'module' object is not callable`. I've definitely bumped into this particular gremlin a few times over the years, and it's usually a facepalm moment once you track it down. It crops up in Python when you’re trying to invoke a module as if it were a function or class, which, of course, it's not intended to be.
 
 Essentially, Python is telling you that you’re using the module object – the imported file itself – incorrectly. You’ve likely tried to use the module's name with parentheses, like this: `my_module()`, when what you actually needed was to access a function, class, or variable within that module. This is a common source of confusion, especially for developers new to Python or when working with larger, more complex projects that have numerous dependencies.
 
@@ -73,6 +73,7 @@ data = [1, 2, 3]
 processed = utility_module.process_data(data) # This will raise the TypeError
 print(processed)
 ```
+
 In this scenario, we have inadvertently assigned the integer `5` to the name `utility_module` in the second script, effectively overriding the module reference we expected. As a result, Python thinks you are trying to use an integer as a module, triggering `TypeError`.
 
 Here's the proper way to handle it: ensure you don't reassign the variable holding the module to something else.
@@ -128,14 +129,15 @@ print(normalized_data)
 # normalized_data = normalize_data(data)
 # print(normalized_data)
 ```
+
 Here, we import only what we need by utilizing specific imports. Alternatively, if you need all members, you could also just import the whole module.
 
 **Key Takeaways**
 
-*   **Understand namespaces:** Python uses namespaces to organize code. When you import a module, you are bringing its namespace into your current script. Always be conscious of which namespace a variable or function belongs to.
-*   **Use dot notation for access:** Access members of a module using the dot (`.`) notation. For example: `module_name.function_name()`.
-*   **Be mindful of imports:** Carefully choose between `import module_name` and `from module_name import function_name`. Using the latter directly introduces function names without the prefix, but you won't be able to access other elements from that module without explicitly importing them too.
-*   **Avoid naming collisions:** Don't accidentally reassign a module object by giving another variable the same name.
+- **Understand namespaces:** Python uses namespaces to organize code. When you import a module, you are bringing its namespace into your current script. Always be conscious of which namespace a variable or function belongs to.
+- **Use dot notation for access:** Access members of a module using the dot (`.`) notation. For example: `module_name.function_name()`.
+- **Be mindful of imports:** Carefully choose between `import module_name` and `from module_name import function_name`. Using the latter directly introduces function names without the prefix, but you won't be able to access other elements from that module without explicitly importing them too.
+- **Avoid naming collisions:** Don't accidentally reassign a module object by giving another variable the same name.
 
 For a deeper understanding of namespaces and modules in Python, I recommend exploring the official Python documentation on modules and packages, as well as delving into books such as "Fluent Python" by Luciano Ramalho, which provides a comprehensive look at the intricacies of Python's object model. "Effective Python" by Brett Slatkin is also a good choice for picking up practical coding habits and further grasp Python's core concepts. Additionally, specific academic resources on modular programming, while not strictly about Python, will deepen your understanding of the overall concepts that are at the core of this error. For example, academic papers discussing program decomposition will offer more insight on the principles of modular programming.
 

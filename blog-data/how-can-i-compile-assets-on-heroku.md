@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-i-compile-assets-on-heroku"
 ---
 
-Alright, let's talk about asset compilation on Heroku. I've been through this process quite a few times, back from the days when precompiling assets wasn’t the near-automatic affair it is today. Trust me, manually troubleshooting failed asset pipelines in production is an experience you don't want. So, let's break down how we get those static assets ready for serving on Heroku.
+, let's talk about asset compilation on Heroku. I've been through this process quite a few times, back from the days when precompiling assets wasn’t the near-automatic affair it is today. Trust me, manually troubleshooting failed asset pipelines in production is an experience you don't want. So, let's break down how we get those static assets ready for serving on Heroku.
 
 The core issue is that Heroku runs your application in an environment distinct from your development machine. The most straightforward approach is to precompile your static assets before pushing your code, but there are other methods, and specific situations often demand careful consideration. Generally, we're talking about css, javascript, images, and sometimes fonts—basically, anything static that doesn't need backend processing in the application’s core runtime. These files often benefit from minification, bundling, and potentially other transformations, which is where the precompilation process comes in.
 
 Precompilation fundamentally involves using a tool, like webpack, gulp, or the rails asset pipeline, to transform your source files into production-ready assets. These transformed files are then committed to your repository and deployed with your code, avoiding any on-the-fly asset compilation during runtime, which, let's be honest, is a massive performance hit, particularly on a platform like Heroku where resources are managed and shared.
 
-Let's say, for instance, I was working on a Ruby on Rails project. The default behavior of Rails’ asset pipeline is to compile assets during deployment on Heroku. Now, while that *can* work, it’s incredibly slow, and frankly, a less-than-ideal approach. I encountered this early on, where deploying even small applications took an agonizing amount of time, and sometimes even timed out during the asset compilation step, resulting in failed deploys.
+Let's say, for instance, I was working on a Ruby on Rails project. The default behavior of Rails’ asset pipeline is to compile assets during deployment on Heroku. Now, while that _can_ work, it’s incredibly slow, and frankly, a less-than-ideal approach. I encountered this early on, where deploying even small applications took an agonizing amount of time, and sometimes even timed out during the asset compilation step, resulting in failed deploys.
 
 My fix was, and almost always is, precompiling the assets locally and pushing the generated `public/assets` directory to git. This means modifying the deployment process to compile assets locally before pushing. Let's illustrate with a bash script example:
 
@@ -45,9 +45,10 @@ For a node.js project using a package.json file and Webpack, here's a practical 
   "scripts": {
     "build": "webpack --mode production",
     "start": "node server.js"
-    }
+  }
 }
 ```
+
 ```bash
 #!/bin/bash
 # ensure nodejs and npm dependencies are in place

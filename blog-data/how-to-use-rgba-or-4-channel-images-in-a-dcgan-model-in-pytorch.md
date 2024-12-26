@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-rgba-or-4-channel-images-in-a-dcgan-model-in-pytorch"
 ---
 
-alright, so you're looking to feed rgba images, essentially four-channel images, into a dcgan built with pytorch. i've been down this road myself, and let me tell you, it's not always as straightforward as it seems. i remember back when i was working on a generative art project, i initially assumed it would be a simple matter of tweaking the input channels. oh boy, was i mistaken. ended up spending a good chunk of a weekend debugging some truly weird output.
+, so you're looking to feed rgba images, essentially four-channel images, into a dcgan built with pytorch. i've been down this road myself, and let me tell you, it's not always as straightforward as it seems. i remember back when i was working on a generative art project, i initially assumed it would be a simple matter of tweaking the input channels. oh boy, was i mistaken. ended up spending a good chunk of a weekend debugging some truly weird output.
 
 the core issue is that most dcgan examples you'll find online, and even some tutorials, are built assuming you're working with grayscale or rgb images – one or three channels. your rgba images have that extra alpha channel, and if you don't handle it correctly, your model won't learn properly. the discriminator might just see noise, or the generator might output weird patterns.
 
@@ -36,7 +36,7 @@ class Generator(nn.Module):
             nn.ConvTranspose2d(hidden_dim * 4, hidden_dim * 2, 4, 2, 1, bias=False),
             nn.BatchNorm2d(hidden_dim * 2),
             nn.ReLU(True),
-            
+
             nn.ConvTranspose2d(hidden_dim * 2, hidden_dim, 4, 2, 1, bias=False),
             nn.BatchNorm2d(hidden_dim),
             nn.ReLU(True),
@@ -72,15 +72,15 @@ class Discriminator(nn.Module):
       self.main = nn.Sequential(
           nn.Conv2d(channels_in, hidden_dim, 4, 2, 1, bias=False),
           nn.LeakyReLU(0.2, inplace=True),
-          
+
           nn.Conv2d(hidden_dim, hidden_dim*2, 4, 2, 1, bias=False),
           nn.BatchNorm2d(hidden_dim*2),
           nn.LeakyReLU(0.2, inplace=True),
-          
+
           nn.Conv2d(hidden_dim * 2, hidden_dim*4, 4, 2, 1, bias=False),
           nn.BatchNorm2d(hidden_dim*4),
           nn.LeakyReLU(0.2, inplace=True),
-          
+
           nn.Conv2d(hidden_dim * 4, hidden_dim*8, 4, 2, 1, bias=False),
           nn.BatchNorm2d(hidden_dim*8),
           nn.LeakyReLU(0.2, inplace=True),
@@ -88,7 +88,7 @@ class Discriminator(nn.Module):
           nn.Conv2d(hidden_dim*8, 1, 4, 1, 0, bias=False), # output the probability of real or fake image.
           nn.Sigmoid() # probability between 0 and 1 for real or fake image.
       )
-    
+
     def forward(self, input):
         return self.main(input)
 if __name__ == '__main__':
@@ -148,7 +148,7 @@ if __name__ == '__main__':
 
     dataset = RGBAImageDataset(image_dir="dummy_images", transform=transform)
     dataloader = DataLoader(dataset, batch_size=4, shuffle=True)
-    
+
     for batch_idx, images in enumerate(dataloader):
         print("Batch:", batch_idx, "Image shape:", images.shape)
         break

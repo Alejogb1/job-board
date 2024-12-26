@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-pass-messages-from-aiogram-message-handlers-to-callback-handlers"
 ---
 
-Alright, let's dive into this. Handling inter-handler communication in AIOgram, particularly between message and callback handlers, is a common challenge I’ve encountered in several bot projects. It’s a problem that initially seems tricky but becomes quite manageable with the correct approach. You wouldn't want your bot to lose context or require excessive, clunky state management, would you?
+, let's dive into this. Handling inter-handler communication in AIOgram, particularly between message and callback handlers, is a common challenge I’ve encountered in several bot projects. It’s a problem that initially seems tricky but becomes quite manageable with the correct approach. You wouldn't want your bot to lose context or require excessive, clunky state management, would you?
 
 One might think of it as coordinating different departments in a company. The message handler, which processes initial user inputs, acts as the customer service team receiving requests. The callback handler, responding to inline keyboard interactions, is more like the specialist team fulfilling those requests based on details. These teams need to communicate, and efficiently, without losing track of what's going on. My past project building an internal task management bot extensively explored various solutions for this, finally settling on a few stable methods I'll walk you through.
 
@@ -95,7 +95,7 @@ async def option_callback_handler(callback_query: types.CallbackQuery):
     data = callback_query.data.split("_")
     option = data[0]
     user_id = int(data[2])
-    
+
     if user_id in message_cache:
         message_cache[user_id]["option"] = option
         await callback_query.message.edit_text(f"You chose {option}. Now what?")
@@ -108,14 +108,14 @@ async def option_callback_handler(callback_query: types.CallbackQuery):
 async def final_handler(message: types.Message):
     user_id = message.from_user.id
     user_data = message_cache.get(user_id)
-    
+
     if user_data:
       option = user_data["option"]
       await message.reply(f"Your selected option was: {option}")
       del message_cache[user_id]
     else:
         await message.reply("Something went wrong.")
-    
+
 
 if __name__ == '__main__':
     from aiogram import executor
@@ -159,7 +159,7 @@ async def option_callback_handler(callback_query: types.CallbackQuery):
   redis_client.set(f"user:{user_id}:option", option)
   await callback_query.message.edit_text(f"You chose {option}. Now what?")
   await callback_query.answer()
-  
+
 
 
 # Message handler to access cached values
@@ -170,7 +170,7 @@ async def final_handler(message: types.Message):
     await message.reply(f"Your selected option was: {option}")
     redis_client.delete(f"user:{user_id}:option")
     redis_client.delete(f"user:{user_id}:step")
-    
+
 
 if __name__ == '__main__':
     from aiogram import executor

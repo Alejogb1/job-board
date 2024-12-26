@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-is-heroku-not-using-the-specified-ruby-version"
 ---
 
-Okay, let's tackle this. I've certainly seen my share of "unexpected ruby versions" on Heroku deployments. It's a common hiccup, and usually stems from a few core issues. We can unpack this systematically. My experience with it actually goes back to a particularly stubborn legacy app we were migrating – quite the headache at the time.
+, let's tackle this. I've certainly seen my share of "unexpected ruby versions" on Heroku deployments. It's a common hiccup, and usually stems from a few core issues. We can unpack this systematically. My experience with it actually goes back to a particularly stubborn legacy app we were migrating – quite the headache at the time.
 
-The first thing to understand is how Heroku manages Ruby versions. It relies heavily on your application's `Gemfile` and, crucially, the associated `Gemfile.lock`. This lock file is *the* source of truth for dependency versions, including Ruby itself. Heroku reads the `ruby` declaration specified inside, not just what might be in a `.ruby-version` file or environment variable – though those can certainly affect your local setup. Essentially, if there's no explicit ruby version in your gemfile or lockfile, Heroku defaults to a version its platform currently supports which may not be your desired target, leading to unexpected outcomes.
+The first thing to understand is how Heroku manages Ruby versions. It relies heavily on your application's `Gemfile` and, crucially, the associated `Gemfile.lock`. This lock file is _the_ source of truth for dependency versions, including Ruby itself. Heroku reads the `ruby` declaration specified inside, not just what might be in a `.ruby-version` file or environment variable – though those can certainly affect your local setup. Essentially, if there's no explicit ruby version in your gemfile or lockfile, Heroku defaults to a version its platform currently supports which may not be your desired target, leading to unexpected outcomes.
 
-The most frequent problem I've encountered is an outdated or incorrect `Gemfile.lock`. Let's say, hypothetically, you’ve just upgraded your ruby version locally, edited your `Gemfile` and ran `bundle install`. Now you're pushing to Heroku. If you forget to commit the *updated* `Gemfile.lock`, Heroku will still use the old one, which specifies the old Ruby version. The system sees a mismatch, and defaults to what it's configured to use for that lockfile, which again, isn't necessarily the latest and greatest or what you want. Think of `Gemfile.lock` as a precise recipe; if it's not updated with the right ingredients after you've made changes, you won't get the desired result. It's crucial to make sure both `Gemfile` and `Gemfile.lock` are consistently updated and committed *together* after any dependency modifications.
+The most frequent problem I've encountered is an outdated or incorrect `Gemfile.lock`. Let's say, hypothetically, you’ve just upgraded your ruby version locally, edited your `Gemfile` and ran `bundle install`. Now you're pushing to Heroku. If you forget to commit the _updated_ `Gemfile.lock`, Heroku will still use the old one, which specifies the old Ruby version. The system sees a mismatch, and defaults to what it's configured to use for that lockfile, which again, isn't necessarily the latest and greatest or what you want. Think of `Gemfile.lock` as a precise recipe; if it's not updated with the right ingredients after you've made changes, you won't get the desired result. It's crucial to make sure both `Gemfile` and `Gemfile.lock` are consistently updated and committed _together_ after any dependency modifications.
 
 Here's an example of a problematic scenario:
 
@@ -56,7 +56,7 @@ COPY . .
 CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
 ```
 
-In this hypothetical scenario, if the `Gemfile.lock` specifies a ruby version less than `3.3.0`, you will have a conflict. You need to ensure that the ruby version set during build *matches* what's specified in your gemfile and lockfile.
+In this hypothetical scenario, if the `Gemfile.lock` specifies a ruby version less than `3.3.0`, you will have a conflict. You need to ensure that the ruby version set during build _matches_ what's specified in your gemfile and lockfile.
 
 **Recommendations:**
 
@@ -72,8 +72,8 @@ To avoid these problems, keep a meticulous approach:
 
 For deeper understanding, I highly recommend consulting these resources:
 
-*   **Bundler Documentation:** The official Bundler documentation is invaluable for learning more about managing Gemfiles and lockfiles. Pay particular attention to the sections dealing with lockfiles.
-*   **Heroku Buildpack Documentation:** The Heroku documentation for its buildpacks – specifically the Ruby one – details how it determines the ruby version and how to debug issues.
-*   **"Effective Ruby" by Peter J. Jones:** This book has a section that details best practices around dependency management and avoiding environmental inconsistencies, highly relevant to the topic.
+- **Bundler Documentation:** The official Bundler documentation is invaluable for learning more about managing Gemfiles and lockfiles. Pay particular attention to the sections dealing with lockfiles.
+- **Heroku Buildpack Documentation:** The Heroku documentation for its buildpacks – specifically the Ruby one – details how it determines the ruby version and how to debug issues.
+- **"Effective Ruby" by Peter J. Jones:** This book has a section that details best practices around dependency management and avoiding environmental inconsistencies, highly relevant to the topic.
 
 In closing, while the "wrong ruby version" issue can seem confounding, it’s usually a case of misaligned configurations. By adhering to best practices regarding `Gemfile` and `Gemfile.lock`, and by carefully monitoring your build process, these challenges become quite manageable. I hope this clarifies things and helps you in your Heroku deployments.

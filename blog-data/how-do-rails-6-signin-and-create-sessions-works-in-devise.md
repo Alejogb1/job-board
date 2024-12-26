@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-do-rails-6-signin-and-create-sessions-works-in-devise"
 ---
 
-alright, so you're asking about how devise handles sign-in and session creation in rails 6, right? yeah, i've been down that rabbit hole plenty of times. it's one of those things that seems simple on the surface, but when you start needing to tweak it or debug weird behavior, things get interesting real fast.
+, so you're asking about how devise handles sign-in and session creation in rails 6, right? yeah, i've been down that rabbit hole plenty of times. it's one of those things that seems simple on the surface, but when you start needing to tweak it or debug weird behavior, things get interesting real fast.
 
 first off, devise is a gem, a ruby gem, and it's not just a piece of code, it's a full authentication system. that's why it touches a bunch of stuff when you use it, not just models, or controllers. it basically automates the whole user authentication process, from registration to session management. when it comes to signing in, devise relies on a few core rails mechanisms, especially sessions.
 
@@ -53,6 +53,7 @@ class UserSignInTest < ActionDispatch::IntegrationTest
   end
 end
 ```
+
 the `sign_in` method is a devise's helper that is used to simulate the login flow of devise, meaning that is setting up the session as the user had just logged in. it is important to note here that this method is not directly related to a devise method with the same name, this method is from the `devise::test::integrationhelpers` module. this is very common when you deal with authentication, and there's plenty of methods and helpers that are specific to tests. so don't try to find it in the controller itself.
 
 now, how does the session gets created? devise does that under the hood by saving the user id inside the session. here's what it might look like if you were inspecting the session object:
@@ -61,6 +62,7 @@ now, how does the session gets created? devise does that under the hood by savin
 session[:user_id] = user.id # this is what devise does internally
 # after this the user is considered signed in
 ```
+
 this is a simplified way, but it shows the main idea, devise saves the user id in the session. when devise checks for the current user, it looks for the session user id, if it finds it, then tries to find the user with that id, if it finds it, it returns the user, if not it returns nil.
 
 now, if you are dealing with rails, you're mostly using cookies to manage sessions, by default, and that's usually enough. but, remember, the cookie itself does not contain any of the session information. it's like a key to the actual session on the server. if you need to store more data, it would be in the server memory, not in the cookies. if you're on a system that is dealing with thousands of users, a database session store would be a better approach for that.

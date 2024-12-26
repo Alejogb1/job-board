@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-set-hiddenunits-as-a-list-in-vertex-ai"
 ---
 
-Alright, let's delve into this. Setting `hidden_units` as a list in Vertex AI’s custom training jobs is something I've tackled more than a few times, particularly when experimenting with complex architectures that necessitate variable hidden layer dimensions. It’s not always immediately obvious how to get the configuration working correctly, and the documentation, while comprehensive, can sometimes feel a bit abstract. Let me share my experience and shed some light on the approach, along with a couple of examples.
+, let's delve into this. Setting `hidden_units` as a list in Vertex AI’s custom training jobs is something I've tackled more than a few times, particularly when experimenting with complex architectures that necessitate variable hidden layer dimensions. It’s not always immediately obvious how to get the configuration working correctly, and the documentation, while comprehensive, can sometimes feel a bit abstract. Let me share my experience and shed some light on the approach, along with a couple of examples.
 
 The crucial aspect here is understanding how Vertex AI parses and utilizes the configuration you provide when defining your custom training job. When it comes to `hidden_units`—which typically dictates the number of neurons in your fully connected layers—Vertex AI expects a particular structure depending on how you’ve set up your training logic within the provided training script.
 
@@ -69,6 +69,7 @@ job.run(
 )
 
 ```
+
 Here, `json.dumps()` serializes `params_list` into a string that's passed to the training script via command line arguments. Again, inside your python script, you need to parse this string using `json.loads()`.
 
 **Example 3: Training script using argparse for parsing**
@@ -119,8 +120,8 @@ For further understanding, I recommend exploring these resources:
 
 **Practical Considerations**
 
-*   **Error Handling:** Always implement robust error handling when parsing arguments. Invalid JSON, or missing arguments can cause your entire job to fail. The included example captures this explicitly to avoid unhelpful failure modes.
-*   **Logging:** Use a proper logging framework to trace your hyperparameters. This is absolutely vital for debugging. When jobs run in a detached way, stdout and stderr are often insufficient for diagnosing problems.
-*   **Input Validation:** Once parsed, always validate the contents of the `hidden_units` list, ensuring that it contains valid numbers for the model. Catching these issues early will save time and compute resources.
+- **Error Handling:** Always implement robust error handling when parsing arguments. Invalid JSON, or missing arguments can cause your entire job to fail. The included example captures this explicitly to avoid unhelpful failure modes.
+- **Logging:** Use a proper logging framework to trace your hyperparameters. This is absolutely vital for debugging. When jobs run in a detached way, stdout and stderr are often insufficient for diagnosing problems.
+- **Input Validation:** Once parsed, always validate the contents of the `hidden_units` list, ensuring that it contains valid numbers for the model. Catching these issues early will save time and compute resources.
 
 In conclusion, setting `hidden_units` as a list in Vertex AI isn’t a direct process due to the string-based nature of its argument passing. However, by utilizing string serialization and deserialization with tools like `json.dumps()` and `json.loads()`, you can effectively provide complex lists to your training scripts, enabling flexible neural network configurations. It's about understanding how Vertex AI interprets the configuration passed to it and adapting accordingly. I hope these examples and suggestions prove useful.

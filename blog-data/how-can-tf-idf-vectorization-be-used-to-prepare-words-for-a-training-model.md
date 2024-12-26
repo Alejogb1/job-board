@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-tf-idf-vectorization-be-used-to-prepare-words-for-a-training-model"
 ---
 
-Okay, let’s tackle this. TF-IDF, or Term Frequency-Inverse Document Frequency, is certainly a technique I've leaned on heavily over the years, particularly when preparing textual data for machine learning models. I remember a particularly thorny project involving analyzing thousands of customer support tickets; the raw text was, shall we say, less than ideal for feeding into a model. That’s where TF-IDF proved its worth.
+, let’s tackle this. TF-IDF, or Term Frequency-Inverse Document Frequency, is certainly a technique I've leaned on heavily over the years, particularly when preparing textual data for machine learning models. I remember a particularly thorny project involving analyzing thousands of customer support tickets; the raw text was, shall we say, less than ideal for feeding into a model. That’s where TF-IDF proved its worth.
 
-At its core, TF-IDF aims to quantify the importance of a word to a document within a corpus. It's more sophisticated than simply counting word frequencies. Straight counts can often be misleading, as common words like 'the,' 'a,' or 'is' tend to dominate, regardless of the document's content. They aren't particularly informative when differentiating between documents. This is where TF-IDF shines, by factoring in not just how often a term appears *within* a document, but also how rare it is *across* the entire collection of documents.
+At its core, TF-IDF aims to quantify the importance of a word to a document within a corpus. It's more sophisticated than simply counting word frequencies. Straight counts can often be misleading, as common words like 'the,' 'a,' or 'is' tend to dominate, regardless of the document's content. They aren't particularly informative when differentiating between documents. This is where TF-IDF shines, by factoring in not just how often a term appears _within_ a document, but also how rare it is _across_ the entire collection of documents.
 
 The 'term frequency' (TF) component is exactly what it sounds like: how frequently a word occurs in a given document. We typically calculate it as the number of times a term appears, divided by the total number of terms in that document. This normalizes for document length, preventing longer documents from having inflated scores simply by virtue of their size.
 
@@ -116,8 +116,8 @@ This snippet demonstrates how we can incorporate TF-IDF directly into the model 
 
 For further study and a more in-depth understanding, I would recommend the following resources:
 
-*   **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** This book provides a detailed explanation of text processing techniques, including TF-IDF, and is considered a foundational resource in the field. The coverage is comprehensive and quite rigorous.
-*   **"Foundations of Statistical Natural Language Processing" by Christopher D. Manning and Hinrich Schütze:** This book also provides a robust theoretical background on various NLP techniques, including detailed discussion of TF-IDF and its variations. It is very strong from a theoretical perspective.
-*   **Scikit-learn documentation:** The scikit-learn library documentation for the `TfidfVectorizer` class is an excellent place to learn the practical aspects of applying TF-IDF and the different configurations and parameters that you can use. It is a great resource when working with the library.
+- **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** This book provides a detailed explanation of text processing techniques, including TF-IDF, and is considered a foundational resource in the field. The coverage is comprehensive and quite rigorous.
+- **"Foundations of Statistical Natural Language Processing" by Christopher D. Manning and Hinrich Schütze:** This book also provides a robust theoretical background on various NLP techniques, including detailed discussion of TF-IDF and its variations. It is very strong from a theoretical perspective.
+- **Scikit-learn documentation:** The scikit-learn library documentation for the `TfidfVectorizer` class is an excellent place to learn the practical aspects of applying TF-IDF and the different configurations and parameters that you can use. It is a great resource when working with the library.
 
 In closing, TF-IDF has been an invaluable tool in my experience, and it continues to be a solid approach for text preparation. It handles the complexities of word frequency and rarity effectively, making data ready for downstream machine learning tasks. While it’s not a silver bullet, it provides a solid baseline for many text-based projects.

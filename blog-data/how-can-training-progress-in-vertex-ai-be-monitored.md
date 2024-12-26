@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-training-progress-in-vertex-ai-be-monitored"
 ---
 
-Okay, let's unpack this one. Monitoring training progress in Vertex AI, or indeed any machine learning environment, is not merely about watching numbers go up and down. It’s a critical part of ensuring that your models actually learn what they're supposed to, and more importantly, it allows you to intervene when things go sideways. Over my years, I’ve seen far too many training runs that looked promising initially only to reveal fundamental flaws much later, often at great expense. So, let's get down to the details of how to stay on top of that in Vertex AI.
+, let's unpack this one. Monitoring training progress in Vertex AI, or indeed any machine learning environment, is not merely about watching numbers go up and down. It’s a critical part of ensuring that your models actually learn what they're supposed to, and more importantly, it allows you to intervene when things go sideways. Over my years, I’ve seen far too many training runs that looked promising initially only to reveal fundamental flaws much later, often at great expense. So, let's get down to the details of how to stay on top of that in Vertex AI.
 
-The first layer of monitoring, and arguably the most fundamental, comes from the built-in tools that Vertex AI provides. During training, Vertex AI automatically logs a number of crucial metrics, which are easily accessible through the cloud console. These include standard metrics like training loss, validation loss, accuracy, and other metrics relevant to your chosen model and task (precision, recall, F1 scores etc.). It's not just about raw numbers though; it's the *trends* that matter.
+The first layer of monitoring, and arguably the most fundamental, comes from the built-in tools that Vertex AI provides. During training, Vertex AI automatically logs a number of crucial metrics, which are easily accessible through the cloud console. These include standard metrics like training loss, validation loss, accuracy, and other metrics relevant to your chosen model and task (precision, recall, F1 scores etc.). It's not just about raw numbers though; it's the _trends_ that matter.
 
 For example, a common situation I’ve encountered is a rapidly decreasing training loss coupled with a stagnating or even increasing validation loss. This signals overfitting. Seeing that early allows me to implement regularization techniques, such as dropout, early stopping, or weight decay, before I’ve wasted significant compute time. Conversely, if both training and validation loss are consistently high, it might point to an issue with the data, model architecture, or the learning rate. Without this continuous, granular insight, debugging becomes a shot in the dark.
 
@@ -91,7 +91,7 @@ def train_and_tune_model(training_image_uri, script_path, machine_type="n1-stand
     """
     Trains and tunes a custom model using Vertex AI and logs metrics.
     """
-    
+
     tuning_job = aiplatform.HyperparameterTuningJob(
       display_name="hyperparameter_tuning_job_logging_metrics",
       trials=3,
@@ -144,7 +144,7 @@ if __name__ == "__main__":
 
 ```
 
-In this second snippet, the key change is that we now define a `HyperparameterTuningJob` which wraps a `CustomJob`, effectively reusing the same script as before, but modifying it by adding CLI arguments for learning rate and batch size. Also, note we only log the 'loss' metric here. The tuning service tries different combinations of hyper parameters and picks the one that minimizes the 'loss'. The main takeaway is that we do *not* need to change our logging approach to log custom metrics.
+In this second snippet, the key change is that we now define a `HyperparameterTuningJob` which wraps a `CustomJob`, effectively reusing the same script as before, but modifying it by adding CLI arguments for learning rate and batch size. Also, note we only log the 'loss' metric here. The tuning service tries different combinations of hyper parameters and picks the one that minimizes the 'loss'. The main takeaway is that we do _not_ need to change our logging approach to log custom metrics.
 
 Finally, it’s important to remember that model training isn't a fire-and-forget process. I almost always create alerts based on key metrics like training time and early termination conditions. Vertex AI offers Cloud Monitoring integration, which lets you create alerts based on custom metrics. This is critical, especially for long-running jobs, so you get notified if there's a dramatic deviation from expected behavior. For example, you may want to stop the training job when loss stops improving for a specified number of steps.
 
@@ -175,7 +175,7 @@ def create_alert_policy(
       project_name = f"projects/{project_id}"
 
       filter = f'resource.type="aiplatform.googleapis.com/CustomJob" AND resource.labels.job_id="{training_job_id}" AND metric.type="aiplatform.googleapis.com/training/custom_metric" AND metric.label.metric_id="loss"'
-      
+
       condition = {
           "display_name": "loss-decrease",
           "condition_threshold": {
@@ -185,7 +185,7 @@ def create_alert_policy(
               "threshold_value": 0.2 # loss < 0.2
             }
        }
-      
+
       alert_policy = {
         "display_name": display_name,
         "combiner": monitoring_v3.enums.AlertPolicy.CombinerType.OR,
@@ -218,7 +218,7 @@ if __name__ == "__main__":
             """)
 
     TRAINING_IMAGE_URI = "us-docker.pkg.dev/vertex-ai/training/pytorch-xla.1-12:latest"
-    
+
     job = aiplatform.CustomJob.from_script(
         display_name="custom_training_job_alert_policy",
         container_uri=TRAINING_IMAGE_URI,
@@ -232,4 +232,4 @@ if __name__ == "__main__":
 
 This third snippet sets up a very simple Cloud Monitoring alert based on a threshold of loss. Note the important parts: it specifies the job type via the resource type filter, the job id itself, the name of the custom metric we are tracking and finally the threshold based on a duration and a value. You would, of course, adapt this to your specific requirements and also configure notification channels to receive those alerts.
 
-To conclude, effective training monitoring in Vertex AI isn’t just one thing; it’s a combination of using the built-in metrics, logging custom metrics, leveraging TensorBoard, automating hyperparameter tuning, and setting up alerts. This holistic approach ensures that you’re not just passively waiting for a model to finish training but actively guiding it to the best possible outcome. Regarding learning resources, I suggest delving into the official Google Cloud documentation for Vertex AI, particularly the sections on Custom training, hyperparameter tuning and monitoring, which provide very detailed explanations. Furthermore, *Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow* by Aurélien Géron provides solid grounding in model training and monitoring in general. And if you want to dive deep into advanced techniques like model compression, I recommend *Deep Learning for Vision Systems* by Mohamed Elgendy. These resources have helped me countless times and will equip you to get the most out of Vertex AI's monitoring features.
+To conclude, effective training monitoring in Vertex AI isn’t just one thing; it’s a combination of using the built-in metrics, logging custom metrics, leveraging TensorBoard, automating hyperparameter tuning, and setting up alerts. This holistic approach ensures that you’re not just passively waiting for a model to finish training but actively guiding it to the best possible outcome. Regarding learning resources, I suggest delving into the official Google Cloud documentation for Vertex AI, particularly the sections on Custom training, hyperparameter tuning and monitoring, which provide very detailed explanations. Furthermore, _Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow_ by Aurélien Géron provides solid grounding in model training and monitoring in general. And if you want to dive deep into advanced techniques like model compression, I recommend _Deep Learning for Vision Systems_ by Mohamed Elgendy. These resources have helped me countless times and will equip you to get the most out of Vertex AI's monitoring features.

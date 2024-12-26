@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-an-actioncontrollerroutingerror-related-to-stimulus-loadingjs-and-importmap-rails"
 ---
 
-Okay, let's tackle this. I've seen this exact scenario crop up a few times in projects, and it can be a bit frustrating if you’re not familiar with the intricacies of how `importmap-rails` and Stimulus interact. It usually stems from a misalignment in how your application expects to find the necessary JavaScript modules, and here’s a breakdown of why and what you can do.
+, let's tackle this. I've seen this exact scenario crop up a few times in projects, and it can be a bit frustrating if you’re not familiar with the intricacies of how `importmap-rails` and Stimulus interact. It usually stems from a misalignment in how your application expects to find the necessary JavaScript modules, and here’s a breakdown of why and what you can do.
 
 The `ActionController::RoutingError` in this case isn't directly about your Rails routes in the traditional sense, but rather, it indicates that the browser is requesting a resource (in this case, `stimulus-loading.js`) at a URL that Rails can't map to a file on disk. This happens because `importmap-rails` alters how your JavaScript dependencies are handled. Instead of relying on Webpack or a similar bundler, it leverages browser-native JavaScript modules and an import map.
 
@@ -16,7 +16,7 @@ This can arise from a few key areas:
 
 2.  **Incorrect or Absent Assets:** Even if the mapping is correct, the actual JavaScript file might not be available at the location specified. This could be because the file wasn't precompiled, or if you're experimenting with development setup, not properly served as a static asset.
 
-3. **Import statement not being used with importmap:** `importmap-rails` does not magically make any javascript available, if the modules are not defined in the `importmap.rb` or imported in the `application.js` file then it won't be available
+3.  **Import statement not being used with importmap:** `importmap-rails` does not magically make any javascript available, if the modules are not defined in the `importmap.rb` or imported in the `application.js` file then it won't be available
 
 Let me illustrate with some practical examples.
 
@@ -71,7 +71,7 @@ pin "@hotwired/stimulus-loading", to: "https://ga.jspm.io/npm:@hotwired/stimulus
 You might think that it would now be accessible in your application, but unless you add the following line into your `application.js` you won't have the module available in your app.
 
 ```javascript
-import "@hotwired/stimulus-loading"
+import "@hotwired/stimulus-loading";
 ```
 
 In most applications you do not need to add this line as the module is loaded automatically when loading a Stimulus controller, but if it isn't there then it will be worth checking.
@@ -86,9 +86,9 @@ In most applications you do not need to add this line as the module is loaded au
 
 **Recommended Resources:**
 
-*   **The `importmap-rails` gem documentation:** The official documentation provides the most detailed explanation of how to use it and its features. Focus especially on the configuration sections and asset loading in different environments.
-*   **Hotwired Documentation:** As `@hotwired/stimulus` and `stimulus-loading` are part of the Hotwired ecosystem, referencing the official documentation will help clarify how they work together, specifically if you run into trouble with another module.
-*   **"JavaScript Everywhere" by Adam D. Scott:** While not exclusively focused on Rails, this book provides a comprehensive understanding of modern JavaScript module systems, which can be beneficial in understanding the reasoning behind `importmap-rails`.
-*   **"Rails 7: From Zero to Deploy" by Andrea Leopardi:** This book has a great section covering the specifics of using importmap-rails in Rails, and could be very helpful for setting it up correctly.
+- **The `importmap-rails` gem documentation:** The official documentation provides the most detailed explanation of how to use it and its features. Focus especially on the configuration sections and asset loading in different environments.
+- **Hotwired Documentation:** As `@hotwired/stimulus` and `stimulus-loading` are part of the Hotwired ecosystem, referencing the official documentation will help clarify how they work together, specifically if you run into trouble with another module.
+- **"JavaScript Everywhere" by Adam D. Scott:** While not exclusively focused on Rails, this book provides a comprehensive understanding of modern JavaScript module systems, which can be beneficial in understanding the reasoning behind `importmap-rails`.
+- **"Rails 7: From Zero to Deploy" by Andrea Leopardi:** This book has a great section covering the specifics of using importmap-rails in Rails, and could be very helpful for setting it up correctly.
 
 These steps and resources should provide a solid foundation for resolving the `ActionController::RoutingError` in your situation. Remember that these tools are designed to streamline development when used correctly and a small misunderstanding can cause disproportionate problems.

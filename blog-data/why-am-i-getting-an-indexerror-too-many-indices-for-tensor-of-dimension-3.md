@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-am-i-getting-an-indexerror-too-many-indices-for-tensor-of-dimension-3"
 ---
 
-Alright, let's unpack this `IndexError: too many indices for tensor of dimension 3` situation. I've been through this particular rodeo more times than I care to count, and it’s often a head-scratcher until you really break down what's going on with your tensor indexing.
+, let's unpack this `IndexError: too many indices for tensor of dimension 3` situation. I've been through this particular rodeo more times than I care to count, and it’s often a head-scratcher until you really break down what's going on with your tensor indexing.
 
 Essentially, this error crops up when you’re attempting to access a tensor using more indices than its actual number of dimensions. Think of a tensor like a multi-dimensional array. A 3-dimensional tensor is like a cube; it has width, height, and depth, corresponding to three indices needed to pinpoint a specific element. If you mistakenly try to access it with four indices, your code is essentially asking for a location that doesn’t exist within the defined structure, leading to this `IndexError`. The core problem lies in a mismatch between your indexing operation and the tensor’s shape.
 
-Now, let me offer a real-world example. Back in my days working on a medical imaging project, we were dealing with volumetric scans, which naturally represented 3D data. Imagine these scans were stored as a tensor with dimensions `(slices, rows, columns)`, each representing a particular aspect of the medical image data. Initially, we had code that was trying to index these scans in a 4D way; something similar to `tensor[slice_idx, row_idx, col_idx, time_point]`. The *time_point* element was completely wrong. These scans weren't video recordings; they were single-frame volumes captured at one instance. Because of this mistaken interpretation, an `IndexError` was thrown which sent us spinning for a bit before we figured it out. Let’s dive into specifics.
+Now, let me offer a real-world example. Back in my days working on a medical imaging project, we were dealing with volumetric scans, which naturally represented 3D data. Imagine these scans were stored as a tensor with dimensions `(slices, rows, columns)`, each representing a particular aspect of the medical image data. Initially, we had code that was trying to index these scans in a 4D way; something similar to `tensor[slice_idx, row_idx, col_idx, time_point]`. The _time_point_ element was completely wrong. These scans weren't video recordings; they were single-frame volumes captured at one instance. Because of this mistaken interpretation, an `IndexError` was thrown which sent us spinning for a bit before we figured it out. Let’s dive into specifics.
 
 The heart of the problem usually boils down to how you’re creating, manipulating, or interpreting your tensors, and here are a few common culprits. Firstly, there might be a misconception about the actual number of dimensions in your tensor, which is easily misjudged if you're concatenating or reshaping them. Let's say you’re working with time series data, and you have a series of 2D images that are actually intended to form a single 3D volume, but due to some incorrect operation you may end up with them stored in a 4D tensor. The code expects a 3D tensor and indexes it as such, leading to this error.
 
@@ -28,7 +28,7 @@ image1 = torch.randn(2, 3, 4)
 image2 = torch.randn(2, 3, 4)
 
 # Intended stacking to make a 3D tensor (3rd dimension is like "time")
-volume = torch.stack((image1, image2), dim=0)  # Shape: [2, 2, 3, 4] 
+volume = torch.stack((image1, image2), dim=0)  # Shape: [2, 2, 3, 4]
 
 # Incorrect indexing; assuming volume is 3D, not 4D
 try:

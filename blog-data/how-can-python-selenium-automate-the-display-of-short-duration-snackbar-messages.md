@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-python-selenium-automate-the-display-of-short-duration-snackbar-messages"
 ---
 
-Alright, let's talk about automating those pesky snackbar messages using Python and Selenium. This isn't always straightforward, as snackbars, by their nature, are designed to be transient. I've encountered this specific challenge multiple times, especially when working on front-end automation for web applications that heavily rely on user feedback via these brief, non-intrusive notifications. You're not just looking for a static element; you're trying to interact with something that appears and disappears based on timing and, sometimes, user events. It requires a somewhat nuanced approach beyond simply finding a static web element.
+, let's talk about automating those pesky snackbar messages using Python and Selenium. This isn't always straightforward, as snackbars, by their nature, are designed to be transient. I've encountered this specific challenge multiple times, especially when working on front-end automation for web applications that heavily rely on user feedback via these brief, non-intrusive notifications. You're not just looking for a static element; you're trying to interact with something that appears and disappears based on timing and, sometimes, user events. It requires a somewhat nuanced approach beyond simply finding a static web element.
 
 First, understanding how snackbars generally function is critical. Typically, they are dynamically generated elements added to the document object model (dom) after some interaction. They might fade in, display for a short interval, and then fade out. The specific implementations vary across web frameworks and libraries (e.g., material ui, bootstrap, custom implementations), each potentially handling rendering and dismissal differently. Therefore, any automation strategy has to be flexible enough to adapt to these variations.
 
@@ -53,7 +53,7 @@ if __name__ == '__main__':
     driver.quit()
 ```
 
-In the first snippet, the `verify_snackbar_message` function is a reusable helper. It makes use of the `WebDriverWait` class, with `ec.visibility_of_element_located`. This tells Selenium to explicitly wait until the element becomes both present in the dom *and* visible. If, within the specified timeout (5 seconds by default), the element isn't found or visible, it catches a `TimeoutException`. This ensures our tests aren't brittle and aren't just trying to guess if the snackbar is there. The verification also checks the text of the message to confirm that it matches what's expected.
+In the first snippet, the `verify_snackbar_message` function is a reusable helper. It makes use of the `WebDriverWait` class, with `ec.visibility_of_element_located`. This tells Selenium to explicitly wait until the element becomes both present in the dom _and_ visible. If, within the specified timeout (5 seconds by default), the element isn't found or visible, it catches a `TimeoutException`. This ensures our tests aren't brittle and aren't just trying to guess if the snackbar is there. The verification also checks the text of the message to confirm that it matches what's expected.
 
 Now, consider a situation where the snackbar doesn't have a consistent css class or id. Perhaps it's generated with a unique identifier every time. In such cases, using xpath with a relative locator might be more reliable, leveraging the fact that snackbars typically reside within a specific parent container.
 

@@ -17,7 +17,7 @@ library(quanteda)
 
 # Sample text data (simulated customer review)
 text_data <- c("This product is fantastic! The camera is great and the battery life is amazing. I had no issues with shipping.",
-               "The screen is very responsive, but the battery life could be better. Overall, it's okay, I guess.",
+               "The screen is very responsive, but the battery life could be better. Overall, it's , I guess.",
                "I love the camera. The picture quality is phenomenal. But the shipping took forever!",
                 "Battery life is not good. Camera quality, however, is decent.")
 
@@ -70,7 +70,7 @@ library(stringr)
 
 # Sample text data (same as before)
 text_data <- c("This product is fantastic! The camera is great and the battery life is amazing. I had no issues with shipping.",
-               "The screen is very responsive, but the battery life could be better. Overall, it's okay, I guess.",
+               "The screen is very responsive, but the battery life could be better. Overall, it's , I guess.",
                "I love the camera. The picture quality is phenomenal. But the shipping took forever!",
                "Battery life is not good. Camera quality, however, is decent.")
 

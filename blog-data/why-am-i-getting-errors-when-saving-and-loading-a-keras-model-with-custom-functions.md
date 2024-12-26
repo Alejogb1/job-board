@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-am-i-getting-errors-when-saving-and-loading-a-keras-model-with-custom-functions"
 ---
 
-Alright, let's unpack this. I've seen this scenario play out more times than I care to remember, particularly back when I was deeply involved in a large-scale machine learning project for predictive maintenance – a real headache at times when our custom layers didn’t quite mesh with the persistence mechanisms. The core issue, as I understand it, is that Keras, and indeed TensorFlow underneath, isn't inherently designed to serialize and deserialize arbitrary python functions. When you craft a model with custom layers, losses, or metrics, these components are often intricately tied to Python code that needs to be reproducible during loading, not just the numerical weights.
+, let's unpack this. I've seen this scenario play out more times than I care to remember, particularly back when I was deeply involved in a large-scale machine learning project for predictive maintenance – a real headache at times when our custom layers didn’t quite mesh with the persistence mechanisms. The core issue, as I understand it, is that Keras, and indeed TensorFlow underneath, isn't inherently designed to serialize and deserialize arbitrary python functions. When you craft a model with custom layers, losses, or metrics, these components are often intricately tied to Python code that needs to be reproducible during loading, not just the numerical weights.
 
-The problem arises because when Keras saves a model (e.g., using `model.save()`), it typically serializes the model architecture and the trained weights. However, it doesn't natively serialize the actual *code* of your custom functions. This isn't a failing of Keras; it's a practical limitation given the dynamic nature of python and the complexities of reliably converting generic code into a saved format. The `model.save()` function and related utilities are essentially concerned with serializing the *computational graph* - the operations and tensors, rather than Python logic. During loading, if it can't find the function by the exact name and scope that was present during saving, then it throws an error. It essentially says, "Hey, I know I need to do *this* operation, but where is *this*?”
+The problem arises because when Keras saves a model (e.g., using `model.save()`), it typically serializes the model architecture and the trained weights. However, it doesn't natively serialize the actual _code_ of your custom functions. This isn't a failing of Keras; it's a practical limitation given the dynamic nature of python and the complexities of reliably converting generic code into a saved format. The `model.save()` function and related utilities are essentially concerned with serializing the _computational graph_ - the operations and tensors, rather than Python logic. During loading, if it can't find the function by the exact name and scope that was present during saving, then it throws an error. It essentially says, "Hey, I know I need to do _this_ operation, but where is _this_?”
 
 This commonly surfaces in the following ways: you have a custom layer which depends on a local python function or a custom loss function that uses an obscure lambda. During model saving, those are just names in your graph structure. Upon loading the model, Keras attempts to match the operations it needs to reconstruct but lacks the code to do so, hence the infamous error messages indicating an unknown or missing object.
 
@@ -89,7 +89,7 @@ except Exception as e:
 
 ```
 
-Again, you’ll get a `ValueError` during the loading phase. The problem is not the custom loss *per se* but that Keras isn’t informed of how to reconstitute the lambda, as it is an anonymous function. These functions simply cannot be reconstructed on loading.
+Again, you’ll get a `ValueError` during the loading phase. The problem is not the custom loss _per se_ but that Keras isn’t informed of how to reconstitute the lambda, as it is an anonymous function. These functions simply cannot be reconstructed on loading.
 
 **Example 3: Correct Approach – Serializing with `custom_objects`**
 
@@ -172,8 +172,8 @@ The critical change here is, during the loading operation, we pass a dictionary 
 
 For more in-depth information on Keras model serialization and handling custom components, I recommend looking into the following:
 
-*   **TensorFlow documentation:** The official TensorFlow documentation on saving and loading models provides a comprehensive look at different model saving approaches and the use of `custom_objects`.
-*   **"Deep Learning with Python" by François Chollet:** This book offers excellent coverage of Keras, with detailed sections on custom layers, losses and how they interact with the Keras API. Pay particular attention to how Chollet recommends writing these with serialization in mind.
-*   **The Keras source code itself:** It might seem daunting, but diving into the Keras source code (specifically, the `saving` module) can provide valuable insights into how serialization is implemented.
+- **TensorFlow documentation:** The official TensorFlow documentation on saving and loading models provides a comprehensive look at different model saving approaches and the use of `custom_objects`.
+- **"Deep Learning with Python" by François Chollet:** This book offers excellent coverage of Keras, with detailed sections on custom layers, losses and how they interact with the Keras API. Pay particular attention to how Chollet recommends writing these with serialization in mind.
+- **The Keras source code itself:** It might seem daunting, but diving into the Keras source code (specifically, the `saving` module) can provide valuable insights into how serialization is implemented.
 
 To summarize, the errors you are encountering when saving and loading a Keras model with custom functions stem from Keras' inability to serialize and deserialize arbitrary Python code. The solution involves explicitly telling Keras how to reconstruct these components using the `custom_objects` parameter during loading. This ensures the model is correctly reassembled, preserving its behavior and functionality. These techniques have served me well, and they will be essential as you develop more sophisticated and custom neural network architectures. Remember that well-structured and well-named classes/functions can go a long way toward not only maintainability, but a more robust implementation.

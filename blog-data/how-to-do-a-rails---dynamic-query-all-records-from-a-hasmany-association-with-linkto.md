@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-a-rails---dynamic-query-all-records-from-a-hasmany-association-with-linkto"
 ---
 
-alright, so you're looking at dynamically querying records from a `has_many` association in rails, and you want to use `link_to` to drive that, i've been there, trust me. this is a classic problem, and there are several ways to approach it, each with its own trade-offs. let's break it down, and i'll try to keep it simple.
+, so you're looking at dynamically querying records from a `has_many` association in rails, and you want to use `link_to` to drive that, i've been there, trust me. this is a classic problem, and there are several ways to approach it, each with its own trade-offs. let's break it down, and i'll try to keep it simple.
 
 first off, the basic idea is that you need to generate links that, when clicked, will filter your associated records based on some criteria. this usually involves passing parameters through the url. the tricky part is making this dynamic, so the filter can change based on the user's choice.
 

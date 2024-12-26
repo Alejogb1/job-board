@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-is-my-program-not-behaving-asynchronously"
 ---
 
-Alright, let's tackle this. I've seen this scenario play out more times than I care to count, and it’s usually less about some mystical force and more about subtle missteps in how asynchronous operations are handled. The frustration is real – you expect things to happen concurrently, but instead, it feels like your program is stubbornly marching along one step at a time. So, let’s break down why your program might not be behaving asynchronously, using some specific cases from my own past projects for context.
+, let's tackle this. I've seen this scenario play out more times than I care to count, and it’s usually less about some mystical force and more about subtle missteps in how asynchronous operations are handled. The frustration is real – you expect things to happen concurrently, but instead, it feels like your program is stubbornly marching along one step at a time. So, let’s break down why your program might not be behaving asynchronously, using some specific cases from my own past projects for context.
 
-The core of asynchronous programming lies in the ability to initiate a task and, crucially, *not wait* for it to complete before moving on to the next operation. If your program isn’t exhibiting this behavior, it likely means that somewhere along the line, you're either blocking the main thread or incorrectly managing the asynchronous operations themselves.
+The core of asynchronous programming lies in the ability to initiate a task and, crucially, _not wait_ for it to complete before moving on to the next operation. If your program isn’t exhibiting this behavior, it likely means that somewhere along the line, you're either blocking the main thread or incorrectly managing the asynchronous operations themselves.
 
 The first common pitfall is the improper use of blocking calls within asynchronous contexts. I recall a particularly hair-pulling experience working on a high-throughput data processing system. We were using Python's `asyncio` library, and initially, everything seemed to be set up correctly. However, our throughput was embarrassingly low. After some deep investigation, I pinpointed the issue: buried inside a seemingly harmless helper function, there was a standard synchronous function call, `time.sleep()`. In an async context, `time.sleep()` completely blocks the event loop, preventing other coroutines from running. It’s a classic mistake; a small piece of synchronous code, unintentionally placed in an asynchronous flow.
 
@@ -50,29 +50,28 @@ async function fetchWithPotentialError(url) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     return await response.json();
-  } catch(error) {
-    console.error("Error fetching data:", error)
+  } catch (error) {
+    console.error("Error fetching data:", error);
     throw error; //Re-throw the error
   }
 }
 
 async function fetchData() {
-  try{
+  try {
     const [data1, data2] = await Promise.all([
-        fetchWithPotentialError('https://api.example.com/data1'),
-        fetchWithPotentialError('https://api.example.com/data2'),
+      fetchWithPotentialError("https://api.example.com/data1"),
+      fetchWithPotentialError("https://api.example.com/data2"),
     ]);
     console.log("Fetched data:", data1, data2);
-    }
-  catch(error){
-    console.error("All operations failed as an error occurred")
+  } catch (error) {
+    console.error("All operations failed as an error occurred");
     //All operations failed due to rethrowing error
   }
 }
 
 fetchData();
-
 ```
+
 In this example, if the `fetchWithPotentialError` call for `'https://api.example.com/data1'` fails, the entire `Promise.all` will reject, even if the call for `data2` was successful. While this behaviour is correct according to the spec, it may not always be desired or expected. More control is often needed in real world scenarios. This can be resolved with something like `Promise.allSettled` which will always provide a result for each promise.
 
 Finally, sometimes the issue isn’t with how you write your asynchronous operations, but rather with the underlying system's resources. I remember a project that used a thread pool to handle background tasks. Everything looked asynchronous, and I could see the tasks being queued up correctly but the program was still behaving sequentially. The issue was that the number of threads in the pool was smaller than the number of tasks arriving. Therefore, instead of executing tasks in parallel as intended, tasks were simply queued up and executed sequentially as threads became available. The bottleneck was the thread pool, not the async logic itself. The pool size was significantly small so the queue had a back log which was effectively executing async code in a sequential manner.

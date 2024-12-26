@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-build-errors-when-using-cargo-build-bpf"
 ---
 
-Alright, let's talk about the complexities that can arise when using `cargo build-bpf`. It’s a common sticking point, and I've definitely spent more than a few late nights debugging these kinds of errors back in my days working on a custom network monitoring solution built around eBPF. The experience taught me that, while `cargo build-bpf` simplifies the process quite a bit, it doesn't magically eliminate all potential pitfalls. Instead, it shifts the complexity to more specific areas, primarily revolving around how Rust interacts with the BPF toolchain.
+, let's talk about the complexities that can arise when using `cargo build-bpf`. It’s a common sticking point, and I've definitely spent more than a few late nights debugging these kinds of errors back in my days working on a custom network monitoring solution built around eBPF. The experience taught me that, while `cargo build-bpf` simplifies the process quite a bit, it doesn't magically eliminate all potential pitfalls. Instead, it shifts the complexity to more specific areas, primarily revolving around how Rust interacts with the BPF toolchain.
 
 Firstly, let's understand that `cargo build-bpf` is a meta-tool of sorts; it's not doing the low-level compilation itself. It leverages the underlying llvm toolchain, specifically designed for BPF, after your Rust code has been compiled to an intermediate representation. Consequently, the usual suspects for build errors in standard rust projects might be less immediately relevant, but the process does introduce a new set of challenges.
 
@@ -61,7 +61,7 @@ pub fn my_program(_ctx: XdpContext) -> XdpResult {
 ```
 
 If the system's default clang or llvm version doesn't align with the `aya-bpf-codegen` dependency's requirements, you'll see cryptic error messages. They won't be directly related to your rust code, but rather things like, "cannot find compiler," "incompatible llvm version" or even build failures that look like compilation errors within your rust code but are really problems in the translation process.
-The fix for this problem is to ensure the environment is properly setup and the toolchain is compatible.  We'll need to define the llvm toolchain explicitly. For example, let’s assume the llvm binaries are in the `/opt/llvm/bin` directory, we would then ensure the PATH environment variable is set correctly (e.g. `export PATH="/opt/llvm/bin:$PATH"`) before running the build command. If you are not sure you can add an alias to a specific version of clang: `alias clang=/opt/llvm/bin/clang-16` and `alias llvm-ar=/opt/llvm/bin/llvm-ar-16`. Usually, a specific version of the `llvm` is required, which should match the `aya-bpf-codegen` requirements.
+The fix for this problem is to ensure the environment is properly setup and the toolchain is compatible. We'll need to define the llvm toolchain explicitly. For example, let’s assume the llvm binaries are in the `/opt/llvm/bin` directory, we would then ensure the PATH environment variable is set correctly (e.g. `export PATH="/opt/llvm/bin:$PATH"`) before running the build command. If you are not sure you can add an alias to a specific version of clang: `alias clang=/opt/llvm/bin/clang-16` and `alias llvm-ar=/opt/llvm/bin/llvm-ar-16`. Usually, a specific version of the `llvm` is required, which should match the `aya-bpf-codegen` requirements.
 
 **Example 2: Incorrect Target Architecture**
 
@@ -72,17 +72,20 @@ To showcase the problem, I will add the following configuration on the `Cargo.to
 [target.'cfg(target_arch = "bpf")']
 rustflags = ["-C", "link-arg=-elf64ltsb", "-C", "link-arg=--target=bpf"]
 ```
+
 The above configuration assumes that the linker will do the job. However, if we run `cargo build-bpf --target bpfel-unknown-none` , this config is going to be ignored. The proper configuration should be as follows:
 
 ```toml
 [target.'bpfel-unknown-none']
 rustflags = ["-C", "link-arg=-elf64ltsb", "-C", "link-arg=--target=bpf"]
 ```
+
 This ensures the rustc will use the correct flags for the target. The `cargo build-bpf` needs the target specification to match the target in your build config in `Cargo.toml`. Thus, if you are targeting the big-endian architecture, the correct command should be `cargo build-bpf --target bpfeb-unknown-none`.
 
 **Example 3: Missing or Incorrect License**
 
 Let's still assume the previous configuration with the correctly specified target architecture, but for this example, I'll focus on a build error related to the license. In my code I need to add the following meta-information to the bpf program to make sure the program can be loaded and verified correctly by the BPF verifier.
+
 ```rust
 #[program]
 #[link_section = "license"]
@@ -92,6 +95,7 @@ pub fn my_program(_ctx: XdpContext) -> XdpResult {
     Ok(XdpAction::Pass)
 }
 ```
+
 If the license is missing, this could lead to errors during the BPF program verification. While the build itself might complete, the BPF program won’t load successfully. Similarly, if you were using the wrong license format, the build will still complete, however, the program will be rejected by the kernel BPF verifier, resulting in errors during load time. Although a build time error will not occur for a wrong formatted license, it is a good practice to explicitly define it and have some control over the license. It could prevent issues down the road when loading the BPF program into the kernel.
 
 To summarise, while `cargo build-bpf` attempts to streamline the build process, it's not foolproof. The primary culprits for build errors are:

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-pytorchs-corrcholeskytransform-to-get-a-valid-cholesky-factor-as-neural-network-output"
 ---
 
-alright, so you're trying to wrangle pytorch's `corrcholeskytransform` to spit out a valid cholesky factor from your neural net, right? i've been down that rabbit hole, and let me tell you, it can feel like trying to debug a kernel module after a long night. i remember my first encounter with this back when i was still working on my master's project on probabilistic graphical models—i was naively trying to output the entire covariance matrix directly, leading to all sorts of not-positive-definite headaches. let's just say it involved a lot of frantic searching through linear algebra papers and way too much coffee.
+, so you're trying to wrangle pytorch's `corrcholeskytransform` to spit out a valid cholesky factor from your neural net, right? i've been down that rabbit hole, and let me tell you, it can feel like trying to debug a kernel module after a long night. i remember my first encounter with this back when i was still working on my master's project on probabilistic graphical models—i was naively trying to output the entire covariance matrix directly, leading to all sorts of not-positive-definite headaches. let's just say it involved a lot of frantic searching through linear algebra papers and way too much coffee.
 
 the core issue here, as i see it, is that a neural network, in its vanilla form, doesn't have the inherent constraints to naturally produce a cholesky factor—you know, the lower triangular matrix with positive diagonal elements. it's just churning out floating-point numbers. `corrcholeskytransform` is a powerful tool, but it needs the right input to actually give you a valid decomposition. if your input data isn't coming from a space with values that are within the correct ranges, then you might get errors like 'not positive-definite'.
 
@@ -51,9 +51,9 @@ if __name__ == '__main__':
 
 in this code:
 
-*   `mymodel` outputs the unconstrained vector directly. the key here is to correctly calculate the `output_dim` so the transformation can work.
-*   `unconstrained_to_cholesky` does the crucial work of shaping the unconstrained output to fit the `corrcholeskytransform`.
-*   we then test if the cholesky factor is actually lower triangular, and if its diagonal elements are all positives.
+- `mymodel` outputs the unconstrained vector directly. the key here is to correctly calculate the `output_dim` so the transformation can work.
+- `unconstrained_to_cholesky` does the crucial work of shaping the unconstrained output to fit the `corrcholeskytransform`.
+- we then test if the cholesky factor is actually lower triangular, and if its diagonal elements are all positives.
 
 now, this is a very basic example. in most real-world scenarios, you'd have a much more complex network architecture. also, you may want to constrain the output layer to a smaller range for more numerically stable results. for example, instead of simply using linear transformation you could use an activation function, like `tanh`, in the beginning to ensure the network is in a stable and appropriate range.
 

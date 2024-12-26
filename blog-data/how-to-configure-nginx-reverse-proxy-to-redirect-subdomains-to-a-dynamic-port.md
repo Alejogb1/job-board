@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-configure-nginx-reverse-proxy-to-redirect-subdomains-to-a-dynamic-port"
 ---
 
-Alright, let's tackle this subdomain redirection via nginx to a dynamic port; it's a fairly common scenario in microservices architectures or development environments where services are constantly spinning up on different ports. From my experience, there's a few ways to go about it, each with their own nuances and tradeoffs, and the optimal choice often depends on the specifics of your setup. I’ve certainly tripped over my fair share of configuration files getting it just so.
+, let's tackle this subdomain redirection via nginx to a dynamic port; it's a fairly common scenario in microservices architectures or development environments where services are constantly spinning up on different ports. From my experience, there's a few ways to go about it, each with their own nuances and tradeoffs, and the optimal choice often depends on the specifics of your setup. I’ve certainly tripped over my fair share of configuration files getting it just so.
 
 First, let's dissect what we actually mean by "dynamic port." Typically, when we think of port assignments, we tend to associate a service with a specific port, say, port 8080 for a web application. However, for various reasons, these ports might not be fixed. Perhaps you have a Docker swarm dynamically assigning ports, or your application server’s runtime selects them on each startup. In these scenarios, relying on static port configurations in nginx will obviously fail.
 
@@ -20,7 +20,7 @@ http {
     upstream service_a_dynamic {
       resolver 127.0.0.11 valid=10s; # Use docker’s internal dns if relevant, with a validity time.
       set $service_a_port 3000; # Default port.
-      
+
       # Fetch the dynamic port from the port mapper api.
       js_content_by_lua_block {
         local http = require "resty.http"
@@ -82,7 +82,7 @@ http {
         default "";
         service_a.example.com dns_txt_record.service_a._tcp.example.com;
     }
-    
+
     # Define an upstream block, using a variable in the server address
     upstream service_a_dynamic_dns {
         resolver 127.0.0.11 valid=10s; # Use docker’s internal dns if relevant, with a validity time.
@@ -130,6 +130,7 @@ http {
     }
 }
 ```
+
 Here, `${SERVICE_A_PORT}` refers to an environment variable, and nginx will read it during startup. This approach is simple, but restarting nginx is required every time the port changes. In development or situations where ports change very infrequently, this method may be adequate.
 
 When choosing between these approaches, you should assess your specific needs. The Lua based approach offers dynamic updates and real-time checking, making it ideal for highly dynamic environments, though requires more complexity. The dns based approach can be simpler, if your existing platform uses dns already. Environment variables are a good choice when the port is defined by the host environment.

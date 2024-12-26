@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-keras-model-be-overfit-on-a-single-batch"
 ---
 
-Alright, let's dive into overfitting a Keras model on a single batch—something I've had to debug more than a few times back when I was building custom anomaly detection systems for streaming sensor data. It's a fascinating and often frustrating phenomenon, illustrating just how powerfully neural networks can memorize even the smallest of datasets.
+, let's dive into overfitting a Keras model on a single batch—something I've had to debug more than a few times back when I was building custom anomaly detection systems for streaming sensor data. It's a fascinating and often frustrating phenomenon, illustrating just how powerfully neural networks can memorize even the smallest of datasets.
 
 The core concept here revolves around the model's capacity to learn the training data so thoroughly that it loses the ability to generalize to new, unseen examples. When you're dealing with a single batch, you're essentially presenting the model with an extremely limited representation of the problem space. The model, driven by the optimization algorithm, rapidly adapts to fit this specific batch, often at the expense of everything else. Think of it as trying to learn everything about the ocean from a single drop of water.
 
@@ -117,7 +117,7 @@ The key takeaway is that when a model learns a single batch with the entire data
 
 **Further Reading and Resources**
 
-If you want to explore the theoretical underpinnings of overfitting and how to mitigate it, here are some resources I'd strongly recommend. First, explore the classic work, *The Elements of Statistical Learning* by Hastie, Tibshirani, and Friedman. It provides a rigorous foundation in statistical learning concepts. Next, consider *Deep Learning* by Goodfellow, Bengio, and Courville, this is the go-to textbook for a comprehensive overview of neural networks, including detailed explanations of generalization and regularization techniques. For a more specific treatment on regularization, look at any research paper discussing dropout, l1/l2 regularization or other techniques such as Batch Normalization and its impact on generalization.
+If you want to explore the theoretical underpinnings of overfitting and how to mitigate it, here are some resources I'd strongly recommend. First, explore the classic work, _The Elements of Statistical Learning_ by Hastie, Tibshirani, and Friedman. It provides a rigorous foundation in statistical learning concepts. Next, consider _Deep Learning_ by Goodfellow, Bengio, and Courville, this is the go-to textbook for a comprehensive overview of neural networks, including detailed explanations of generalization and regularization techniques. For a more specific treatment on regularization, look at any research paper discussing dropout, l1/l2 regularization or other techniques such as Batch Normalization and its impact on generalization.
 
 Finally, working on projects with different types of datasets can provide invaluable practical experience in identifying and addressing overfitting and generalization challenges. I’ve found that working with time-series data in particular provides many interesting lessons in how these concepts are expressed in the real world.
 

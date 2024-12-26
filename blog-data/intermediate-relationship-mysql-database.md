@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "intermediate-relationship-mysql-database"
 ---
 
-Alright so intermediate relationships in MySQL I’ve been down this road more times than I care to admit Trust me I've seen the good the bad and the downright ugly when it comes to managing these things Let's dive right in I’m not gonna sugarcoat anything this can get messy if you don't plan properly
+so intermediate relationships in MySQL I’ve been down this road more times than I care to admit Trust me I've seen the good the bad and the downright ugly when it comes to managing these things Let's dive right in I’m not gonna sugarcoat anything this can get messy if you don't plan properly
 
 First off we’re talking about a scenario where you have two entities let's call them A and B and they don't have a direct one to one or one to many relationship instead you have a many to many situation think users and groups or maybe products and categories You need a middle man a table that acts as a bridge between these two entities this bridge is what we call the intermediate table and it's crucial for modeling complex relationships in a relational database
 
@@ -33,7 +33,7 @@ CREATE TABLE users_groups (
 );
 ```
 
-See that `users_groups` table there it's the linchpin the real hero here It holds the `user_id` and `group_id` as foreign keys and together they form a composite primary key which ensures uniqueness of the relationship for this many-to-many setup  The primary key bit is crucial if you don't want to have duplicate entries where the same user can be part of the same group multiple times without a good reason.
+See that `users_groups` table there it's the linchpin the real hero here It holds the `user_id` and `group_id` as foreign keys and together they form a composite primary key which ensures uniqueness of the relationship for this many-to-many setup The primary key bit is crucial if you don't want to have duplicate entries where the same user can be part of the same group multiple times without a good reason.
 
 Now let's talk about querying this data it's not as simple as a straightforward join you need to go through the intermediary table to get from A to B or vice versa Let's say you want to fetch all the groups a specific user belongs to using their `user_id` here’s the query
 

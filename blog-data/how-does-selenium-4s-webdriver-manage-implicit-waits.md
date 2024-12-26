@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-does-selenium-4s-webdriver-manage-implicit-waits"
 ---
 
-Okay, let's talk about implicit waits in Selenium 4. From my experience, they are often a point of confusion, especially when you're dealing with dynamic web applications. I’ve certainly seen my share of flaky tests due to misunderstood implicit wait behavior. So, let's break it down.
+, let's talk about implicit waits in Selenium 4. From my experience, they are often a point of confusion, especially when you're dealing with dynamic web applications. I’ve certainly seen my share of flaky tests due to misunderstood implicit wait behavior. So, let's break it down.
 
 The core idea behind an implicit wait is to tell the webdriver to pause for a specified duration when attempting to find an element that isn't immediately present in the document object model (dom). Instead of throwing a `NoSuchElementException` immediately, selenium will periodically poll the dom for the element until either the element is found or the specified wait time elapses. This mechanism provides a somewhat cleaner way of handling asynchronous loading compared to hardcoded `Thread.sleep()` calls, which are notoriously brittle.
 
-Now, it’s crucial to understand that implicit waits are *global* in scope for the webdriver session. Once you set an implicit wait, it applies to *all* subsequent `find_element` and `find_elements` calls during that session. This is both its strength and potential pitfall. Its strength is that it reduces code verbosity and makes handling dynamic loads easier in the majority of situations. The pitfall, though, is that it can lead to unexpected delays and masking of actual errors if not used carefully.
+Now, it’s crucial to understand that implicit waits are _global_ in scope for the webdriver session. Once you set an implicit wait, it applies to _all_ subsequent `find_element` and `find_elements` calls during that session. This is both its strength and potential pitfall. Its strength is that it reduces code verbosity and makes handling dynamic loads easier in the majority of situations. The pitfall, though, is that it can lead to unexpected delays and masking of actual errors if not used carefully.
 
 For example, let’s say you set an implicit wait of, say, 10 seconds. If an element is present in the dom instantly, then selenium finds it instantly. There’s no waiting. However, if the element is not there at first, selenium will check regularly (polling) until 10 seconds has passed or the element is found. If after 10 seconds, it’s still not found, then, and only then, will a `NoSuchElementException` will be thrown.
 
@@ -115,7 +115,7 @@ def test_conflicting_implicit_waits():
 test_conflicting_implicit_waits()
 ```
 
-As you can see, the second `implicitly_wait(2)` call overrode the earlier setting of 10 seconds. This underscores the critical point that only the *last* implicit wait set on a driver instance is the effective setting. This kind of silent override can mask test setup issues or timing problems.
+As you can see, the second `implicitly_wait(2)` call overrode the earlier setting of 10 seconds. This underscores the critical point that only the _last_ implicit wait set on a driver instance is the effective setting. This kind of silent override can mask test setup issues or timing problems.
 
 To manage this properly, I often advise using a combination of best practices:
 

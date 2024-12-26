@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-prevent-nft-minting-vulnerabilities"
 ---
 
-Alright, let’s talk about securing the NFT minting process. I've been in this space since the early days, and I've seen firsthand the various ways that vulnerabilities can creep into smart contracts, especially when dealing with something as sensitive as minting. It's not just about preventing someone from stealing existing NFTs; it's about ensuring the entire mechanism is robust and trustworthy. Let's break down some critical preventative measures and I'll walk you through some practical examples based on things I’ve encountered.
+, let’s talk about securing the NFT minting process. I've been in this space since the early days, and I've seen firsthand the various ways that vulnerabilities can creep into smart contracts, especially when dealing with something as sensitive as minting. It's not just about preventing someone from stealing existing NFTs; it's about ensuring the entire mechanism is robust and trustworthy. Let's break down some critical preventative measures and I'll walk you through some practical examples based on things I’ve encountered.
 
 The core problem with NFT minting vulnerabilities often revolves around insufficient access control, faulty logic in minting functions, and the misuse or misunderstanding of external dependencies. It’s easy to see why, when developers are under pressure to get their projects out, these aspects can sometimes be overlooked.
 
@@ -89,6 +89,7 @@ contract SecureLimitedMinter {
 
 }
 ```
+
 In this example, the contract maintains a counter (`_tokenIdCounter`) and verifies both that the total supply is not exceeded and that a given token ID has not already been minted before minting, using the `minted` mapping. This prevents double-minting and ensures that no more tokens than intended can be generated. I strongly recommend looking into the documentation from the OpenZeppelin library for more robust versions of counters. This leads well to another major area of concern: external dependencies.
 
 Finally, let's talk about the risks associated with interacting with external contracts or using external libraries. While external libraries like OpenZeppelin are highly valuable, they should always be used and integrated carefully and with deep understanding. If an external dependency has a vulnerability, your contract could be exposed as well. Additionally, any contract that your smart contract interacts with directly via the `call` function, for instance, could be exploited. Always try to minimize the number of external calls your contract makes and use the low level call operations only when absolutely necessary; prefer higher-level, more secure options if possible.

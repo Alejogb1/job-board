@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-i-change-the-nodejs-version-on-heroku-and-cloud9-for-a-ruby-on-rails-application"
 ---
 
-Alright, let's tackle this. It's a common scenario, and I've definitely navigated this particular configuration challenge myself more than a few times, especially back when I was working on that large-scale data pipeline project – remember 'Project Chimera'? Yeah, that one. We had several teams working across different environments and maintaining consistent Node.js versions was crucial, particularly for the asset pipeline.
+, let's tackle this. It's a common scenario, and I've definitely navigated this particular configuration challenge myself more than a few times, especially back when I was working on that large-scale data pipeline project – remember 'Project Chimera'? Yeah, that one. We had several teams working across different environments and maintaining consistent Node.js versions was crucial, particularly for the asset pipeline.
 
-The core issue here is not really *about* Ruby on Rails per se, it's about managing environment dependencies. Both Heroku and Cloud9 (or AWS Cloud9 as it's now known) offer mechanisms for specifying the Node.js version, but they're implemented differently. Let's break down each platform.
+The core issue here is not really _about_ Ruby on Rails per se, it's about managing environment dependencies. Both Heroku and Cloud9 (or AWS Cloud9 as it's now known) offer mechanisms for specifying the Node.js version, but they're implemented differently. Let's break down each platform.
 
 First, Heroku. Heroku primarily relies on buildpacks to configure the runtime environment for your application. Node.js is generally handled by the `heroku/nodejs` buildpack. By default, Heroku picks the latest stable version compatible with your application. This ‘magic’ is sometimes…less than desirable, especially when you have specific dependencies that require a precise Node.js version. To specify this, you’ll need to create a file named `package.json` at the root of your Rails project, even though this is not a pure node application. This file tells the `heroku/nodejs` buildpack what Node.js version to use.
 
@@ -35,44 +35,47 @@ Here's how you could use `nvm` to manage your Node.js version in Cloud9:
     ```bash
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
     ```
+
     (Note: Check the official nvm repository for the most current installation script at [https://github.com/nvm-sh/nvm](https://github.com/nvm-sh/nvm) )
 
 2.  **Source `nvm`:**
 
     After installation, you'll need to source `nvm` by running the following in the terminal:
 
-   ```bash
-    . ~/.nvm/nvm.sh
-   ```
+```bash
+ . ~/.nvm/nvm.sh
+```
 
 3.  **Install the required Node.js version:**
-   Use `nvm` to install the specific version of Node.js you need. For example:
-   ```bash
-    nvm install 18.16.0
-   ```
+    Use `nvm` to install the specific version of Node.js you need. For example:
+
+```bash
+ nvm install 18.16.0
+```
 
 4.  **Use the installed version:**
-   Use the installed version in your current terminal session:
-   ```bash
-    nvm use 18.16.0
-    ```
+    Use the installed version in your current terminal session:
+
+````bash
+ nvm use 18.16.0
+ ```
 5. **Set default version:**
 
-   To set the installed version as the default for new terminal sessions:
-   ```bash
-    nvm alias default 18.16.0
-    ```
+To set the installed version as the default for new terminal sessions:
+```bash
+ nvm alias default 18.16.0
+ ```
 
 This sets the Node.js version to `18.16.0` for this particular terminal session, and future sessions. It's worth noting that `nvm` operates at the user level. If you have multiple team members accessing the same Cloud9 environment, ensure everyone is aware of the Node.js version they need and that they set it correctly with `nvm`.
 
 Here's a third, more practical example, extending the `nvm` approach, showing you how to set a particular version inside a project directory so that it’s automatically selected when you enter that directory. This approach is very handy for projects where particular version dependencies are crucial. Inside your Rails project directory:
 ```bash
-    nvm install 18.16.0
-    nvm use 18.16.0
-    nvm alias default 18.16.0
-    nvm --version
-    echo "18.16.0" > .nvmrc
-```
+ nvm install 18.16.0
+ nvm use 18.16.0
+ nvm alias default 18.16.0
+ nvm --version
+ echo "18.16.0" > .nvmrc
+````
 
 Now, any time you `cd` into your rails project directory, assuming you have properly configured `nvm`, the specified version of Node.js will be automatically selected by `nvm`. This approach can be useful for maintaining consistent versions throughout your workflow with multiple projects.
 

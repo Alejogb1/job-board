@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-create-custom-weight-regularization-in-keras"
 ---
 
-Alright, let's talk about custom weight regularization in Keras. I've tackled this a few times, mostly when the standard l1 or l2 options just didn't cut it for specific use cases. It’s less common than basic regularization but incredibly powerful when you need fine-grained control. We aren't limited to the pre-built implementations when we understand the underlying concepts. I remember a particularly challenging project involving a recurrent neural network for time-series analysis where I needed to penalize rapid fluctuations in the weights—a situation that neither l1 nor l2 could effectively handle, so I had to dive into custom regularization.
+, let's talk about custom weight regularization in Keras. I've tackled this a few times, mostly when the standard l1 or l2 options just didn't cut it for specific use cases. It’s less common than basic regularization but incredibly powerful when you need fine-grained control. We aren't limited to the pre-built implementations when we understand the underlying concepts. I remember a particularly challenging project involving a recurrent neural network for time-series analysis where I needed to penalize rapid fluctuations in the weights—a situation that neither l1 nor l2 could effectively handle, so I had to dive into custom regularization.
 
 The core principle here revolves around understanding that weight regularization, at its heart, is about adding a penalty term to your model's loss function. During backpropagation, the optimizer tries to minimize the total loss—both the error of the model’s predictions and this added penalty. Keras conveniently provides mechanisms to do this, letting us define our own penalization logic. Let's break down how it works.
 
@@ -52,6 +52,7 @@ model.fit(X, y, epochs=10, verbose = 0) # silent training.
 # Print summary to see the model structure
 model.summary()
 ```
+
 This function `total_variation_regularizer` calculates the sum of the absolute differences between adjacent weights. The higher the fluctuations in weights, the higher the penalty, incentivizing smoother weight updates.
 
 **Example 2: Constraining Weights to a Specific Range**
@@ -86,6 +87,7 @@ model.fit(X, y, epochs=10, verbose = 0) # silent training.
 # Print summary to see the model structure
 model.summary()
 ```
+
 Here, `range_constraint_regularizer` clips the weights to be within the `min_val` and `max_val` range, calculating the sum of squared differences between the original and clipped weights. This way, any deviations from that range are penalized, pulling the weights back into it.
 
 **Example 3: Group Sparsity with Custom Regularization**
@@ -126,8 +128,8 @@ In the `group_sparsity_regularizer`, the function divides the weight matrix into
 
 For deeper dives into these concepts, I’d recommend the following resources:
 
-*   *Deep Learning* by Ian Goodfellow, Yoshua Bengio, and Aaron Courville: This is a comprehensive guide covering all fundamental concepts related to neural networks, and has excellent chapters detailing regularization techniques. It's essential reading for any practitioner.
-*   *Neural Networks and Deep Learning* by Michael Nielsen: A highly accessible, online book with a fantastic introduction to neural networks. It covers backpropagation clearly and provides a solid base for understanding regularization.
-*   *TensorFlow Documentation*: Specifically, the sections covering Keras layers and custom layer functionality. It gives you the official perspective and all the details on how layers can be customized, including regularization parameters and techniques.
+- _Deep Learning_ by Ian Goodfellow, Yoshua Bengio, and Aaron Courville: This is a comprehensive guide covering all fundamental concepts related to neural networks, and has excellent chapters detailing regularization techniques. It's essential reading for any practitioner.
+- _Neural Networks and Deep Learning_ by Michael Nielsen: A highly accessible, online book with a fantastic introduction to neural networks. It covers backpropagation clearly and provides a solid base for understanding regularization.
+- _TensorFlow Documentation_: Specifically, the sections covering Keras layers and custom layer functionality. It gives you the official perspective and all the details on how layers can be customized, including regularization parameters and techniques.
 
 Implementing custom regularization provides powerful control for model training. Remember to design regularizers that genuinely help with the specific problem you are trying to tackle, rather than just trying random ideas. Experiment, evaluate and refine. I hope these examples and insights help you on your coding journey!

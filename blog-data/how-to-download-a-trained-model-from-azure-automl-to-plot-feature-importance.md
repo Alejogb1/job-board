@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-to-download-a-trained-model-from-azure-automl-to-plot-feature-importance"
 ---
 
-Okay, let’s tackle this. I've personally dealt with this scenario a few times, extracting models from Azure AutoML to analyze feature importance, and it's not always as straightforward as one might hope. The process involves a few crucial steps, and understanding the underlying components is key to doing it properly. The challenge primarily revolves around the way AutoML packages trained models and the diverse model types it can generate. Let’s break this down.
+, let’s tackle this. I've personally dealt with this scenario a few times, extracting models from Azure AutoML to analyze feature importance, and it's not always as straightforward as one might hope. The process involves a few crucial steps, and understanding the underlying components is key to doing it properly. The challenge primarily revolves around the way AutoML packages trained models and the diverse model types it can generate. Let’s break this down.
 
-First, remember that when you train a model with Azure AutoML, it’s not immediately a standalone pickle file waiting for you. Instead, AutoML constructs a complex pipeline including preprocessing steps, feature engineering, and the final model itself. To extract the feature importance, you typically need to access the model instance *after* applying the preprocessing.
+First, remember that when you train a model with Azure AutoML, it’s not immediately a standalone pickle file waiting for you. Instead, AutoML constructs a complex pipeline including preprocessing steps, feature engineering, and the final model itself. To extract the feature importance, you typically need to access the model instance _after_ applying the preprocessing.
 
 So, the initial hurdle is locating that fully assembled model. Typically, the way to get at this is by using the `mlflow` integration that Azure AutoML uses. When you initiate an AutoML run, the model and its associated artifacts get logged in the experiment’s run history, accessible through the `mlflow` tracking URI. Now, the exact code will depend slightly on if you're using the SDKv1 or SDKv2 for Azure Machine Learning. For this example, let's consider we’re using SDKv2 as it's the more current and recommended approach.
 

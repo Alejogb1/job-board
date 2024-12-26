@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-send-files-from-google-cloud-storage-to-a-slack-channel-using-apache-airflow"
 ---
 
-Okay, let's tackle this. I've certainly seen this integration need pop up quite a few times, especially in environments relying heavily on both cloud storage and real-time communication like Slack. The core challenge revolves around orchestrating the data transfer from Google Cloud Storage (gcs) to a Slack channel, and doing it reliably. Apache Airflow, with its scheduling and task management capabilities, is definitely the tool for this job. I’ll detail a few approaches, showing practical examples built from my experience with different project setups.
+, let's tackle this. I've certainly seen this integration need pop up quite a few times, especially in environments relying heavily on both cloud storage and real-time communication like Slack. The core challenge revolves around orchestrating the data transfer from Google Cloud Storage (gcs) to a Slack channel, and doing it reliably. Apache Airflow, with its scheduling and task management capabilities, is definitely the tool for this job. I’ll detail a few approaches, showing practical examples built from my experience with different project setups.
 
 First, let's establish the general idea. We are looking to create an airflow dag that, on a schedule, will: (1) identify files in a specific gcs bucket path, (2) download those files locally (to where the airflow worker will have access), and (3) send those files to a configured slack channel via the slack api. A few critical steps are therefore necessary. We will need to configure airflow with the proper gcp and slack credentials. Then we need to write the dag, which will include operators to pull data from gcs, potentially transform it, and post it to slack.
 
@@ -83,7 +83,7 @@ def list_and_download_gcs_files(bucket_name, prefix, download_dir, gcp_conn_id):
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
     blobs = bucket.list_blobs(prefix=prefix)
-    
+
     downloaded_files = []
     for blob in blobs:
         file_path = os.path.join(download_dir, blob.name.split('/')[-1])
@@ -121,7 +121,7 @@ with DAG(
             "gcp_conn_id": "gcp_default"
           },
     )
-    
+
     send_slack_message = PythonOperator(
         task_id="send_slack_message_task",
         python_callable=format_and_send_slack_message,
@@ -134,6 +134,7 @@ with DAG(
 
     download_gcs_files >> send_slack_message
 ```
+
 Here, `list_and_download_gcs_files` dynamically grabs all files from a prefix, downloads them locally, and returns a list of filepaths. The `format_and_send_slack_message` then crafts a message with a basic listing of the file names. In practice, you might want to format a more elaborate message with links to the actual files, potentially to signed urls. Notice, that the returned list of file paths are passed through XCOM as they are needed as context for the next task.
 
 **Example 3: Utilizing a Custom Airflow Hook for Slack**
@@ -179,7 +180,7 @@ with DAG(
     catchup=False,
     tags=["gcs", "slack", "custom_hook"],
 ) as dag:
-    
+
     #reuse the 'list_and_download_gcs_files' from previous example
     download_gcs_files = PythonOperator(
         task_id="download_gcs_files_task",
@@ -191,7 +192,7 @@ with DAG(
             "gcp_conn_id": "gcp_default"
           },
     )
-    
+
     slack_op = PythonOperator(
         task_id="custom_slack_operator",
         python_callable=send_custom_slack_message,
@@ -212,9 +213,9 @@ Here, the key is the `CustomSlackHook`, inheriting from Airflow's `SlackHook` an
 
 For in-depth understanding of the underlying concepts I would recommend the following resources:
 
-*   **"Designing Data-Intensive Applications" by Martin Kleppmann**: While not solely about Airflow, it covers the fundamental principles of data systems, which greatly improves how to architect a system such as this.
-*   **"Google Cloud Platform for Data Engineering" by Danilo Sato**: Great resource to learn more about Google Cloud services.
-*  **Apache Airflow Documentation**: The official docs offer a wide range of information regarding the framework, operators and best practices.
-*  **Slack API Documentation**: This should be the source for all updates on how slack interacts with python.
+- **"Designing Data-Intensive Applications" by Martin Kleppmann**: While not solely about Airflow, it covers the fundamental principles of data systems, which greatly improves how to architect a system such as this.
+- **"Google Cloud Platform for Data Engineering" by Danilo Sato**: Great resource to learn more about Google Cloud services.
+- **Apache Airflow Documentation**: The official docs offer a wide range of information regarding the framework, operators and best practices.
+- **Slack API Documentation**: This should be the source for all updates on how slack interacts with python.
 
 In closing, sending files from GCS to Slack via Airflow is a common task. These snippets should give you a solid starting point, whether you're doing a single file transfer, dynamically listing, or using a custom slack hook. The key is understanding your specific requirements and then building a solution incrementally. Remember to always handle credentials securely and test your dags thoroughly.

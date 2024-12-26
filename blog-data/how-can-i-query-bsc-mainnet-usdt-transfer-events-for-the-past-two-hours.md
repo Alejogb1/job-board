@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-query-bsc-mainnet-usdt-transfer-events-for-the-past-two-hours"
 ---
 
-Alright, let's tackle this. Querying blockchain events, especially for something as common as USDT transfers on the binance smart chain (bsc) mainnet, is a task I've found myself needing more times than I care to count. It’s more than just a simple data retrieval operation; it involves understanding the intricacies of the blockchain, specific contract interactions, and the tools at your disposal. I remember dealing with a similar situation back when I was working on an on-chain arbitrage bot. Efficiently retrieving transfer events was crucial for near real-time strategy adjustments. So, let's break down the process step-by-step, focusing on how you'd achieve this for the last two hours.
+, let's tackle this. Querying blockchain events, especially for something as common as USDT transfers on the binance smart chain (bsc) mainnet, is a task I've found myself needing more times than I care to count. It’s more than just a simple data retrieval operation; it involves understanding the intricacies of the blockchain, specific contract interactions, and the tools at your disposal. I remember dealing with a similar situation back when I was working on an on-chain arbitrage bot. Efficiently retrieving transfer events was crucial for near real-time strategy adjustments. So, let's break down the process step-by-step, focusing on how you'd achieve this for the last two hours.
 
 First, let’s establish the foundational understanding. We aren’t directly querying a database; instead, we’re interacting with a blockchain node that holds a distributed ledger. Each block on the chain contains multiple transactions, and each transaction may or may not emit events (also known as logs). In the case of erc-20 tokens, like usdt, transfers are typically represented by a `transfer` event emitted by the usdt contract itself. This is crucial. We need to know the specific contract address and the event signature to fetch the appropriate data. On the bsc mainnet, the usdt contract address is usually `0x55d398326f99059ff775485246999027b3197955`.
 
@@ -30,18 +30,18 @@ def get_block_number_from_timestamp(timestamp):
 
     if (timestamp > block_time):
       raise Exception("provided timestamp is in the future")
-    
+
     if (timestamp == block_time):
       return current_block_number
 
     low = 0
     high = current_block_number
-    
+
     while(low <= high):
       mid = (low + high) // 2
       mid_block = w3.eth.get_block(mid)
       mid_time = mid_block.timestamp
-      
+
       if (mid_time == timestamp):
           return mid
       elif (mid_time < timestamp):
@@ -51,7 +51,7 @@ def get_block_number_from_timestamp(timestamp):
 
     prev_block = w3.eth.get_block(low -1)
     prev_time = prev_block.timestamp
-    
+
     curr_block = w3.eth.get_block(low)
     curr_time = curr_block.timestamp
 
@@ -97,110 +97,104 @@ This python code snippet first establishes a connection to a bsc node. Then it r
 Here is a javascript/node.js equivalent using `web3.js`:
 
 ```javascript
-const Web3 = require('web3');
+const Web3 = require("web3");
 
 const rpc_endpoint = "https://bsc-dataseed.binance.org/"; // Replace with your rpc endpoint
 const web3 = new Web3(rpc_endpoint);
 
 async function getBlockNumberFromTimestamp(timestamp) {
   let targetBlock = null;
-  const currentBlock = await web3.eth.getBlock('latest');
+  const currentBlock = await web3.eth.getBlock("latest");
   const blockTime = currentBlock.timestamp;
   const currentBlockNumber = currentBlock.number;
 
   if (timestamp > blockTime) {
-      throw new Error("provided timestamp is in the future");
-    }
-  
+    throw new Error("provided timestamp is in the future");
+  }
+
   if (timestamp == blockTime) {
-     return currentBlockNumber;
+    return currentBlockNumber;
   }
 
   let low = 0;
   let high = currentBlockNumber;
-  
-  while(low <= high) {
+
+  while (low <= high) {
     const mid = Math.floor((low + high) / 2);
     const midBlock = await web3.eth.getBlock(mid);
     const midTime = midBlock.timestamp;
-    
+
     if (midTime == timestamp) {
       return mid;
-    }
-    else if (midTime < timestamp) {
-       low = mid + 1;
-    }
-    else {
-        high = mid - 1;
+    } else if (midTime < timestamp) {
+      low = mid + 1;
+    } else {
+      high = mid - 1;
     }
   }
 
-    const prevBlock = await web3.eth.getBlock(low - 1);
-    const prevTime = prevBlock.timestamp;
+  const prevBlock = await web3.eth.getBlock(low - 1);
+  const prevTime = prevBlock.timestamp;
 
-    const currBlock = await web3.eth.getBlock(low)
-    const currTime = currBlock.timestamp
+  const currBlock = await web3.eth.getBlock(low);
+  const currTime = currBlock.timestamp;
 
-    const diffPrevToTimestamp = Math.abs(prevTime - timestamp);
-    const diffCurrToTimestamp = Math.abs(currTime - timestamp);
+  const diffPrevToTimestamp = Math.abs(prevTime - timestamp);
+  const diffCurrToTimestamp = Math.abs(currTime - timestamp);
 
-    if (diffPrevToTimestamp < diffCurrToTimestamp) {
-       return low - 1;
-    }
-    else {
-       return low;
-    }
+  if (diffPrevToTimestamp < diffCurrToTimestamp) {
+    return low - 1;
+  } else {
+    return low;
+  }
 }
-
 
 async function fetchUsdtTransfersLastTwoHours() {
   const usdt_contract_address = "0x55d398326f99059ff775485246999027b3197955";
   const usdt_abi = [
     {
-        "anonymous": false,
-        "inputs": [
-          {
-            "indexed": true,
-            "name": "from",
-            "type": "address"
-          },
-          {
-            "indexed": true,
-            "name": "to",
-            "type": "address"
-          },
-          {
-            "indexed": false,
-            "name": "value",
-            "type": "uint256"
-          }
-        ],
-        "name": "Transfer",
-        "type": "event"
-      }
+      anonymous: false,
+      inputs: [
+        {
+          indexed: true,
+          name: "from",
+          type: "address",
+        },
+        {
+          indexed: true,
+          name: "to",
+          type: "address",
+        },
+        {
+          indexed: false,
+          name: "value",
+          type: "uint256",
+        },
+      ],
+      name: "Transfer",
+      type: "event",
+    },
   ];
   const usdtContract = new web3.eth.Contract(usdt_abi, usdt_contract_address);
   const currentTimestamp = Math.floor(Date.now() / 1000);
-  const twoHoursAgoTimestamp = currentTimestamp - (2 * 60 * 60);
+  const twoHoursAgoTimestamp = currentTimestamp - 2 * 60 * 60;
 
   const endBlock = await getBlockNumberFromTimestamp(currentTimestamp);
   const startBlock = await getBlockNumberFromTimestamp(twoHoursAgoTimestamp);
 
-
-  const allTransfers = await usdtContract.getPastEvents('Transfer', {
-      fromBlock: startBlock,
-      toBlock: endBlock
+  const allTransfers = await usdtContract.getPastEvents("Transfer", {
+    fromBlock: startBlock,
+    toBlock: endBlock,
   });
 
   return allTransfers;
 }
 
-
 async function main() {
-    const transfers = await fetchUsdtTransfersLastTwoHours();
-    transfers.forEach(transfer => {
-        console.log(transfer);
-    });
+  const transfers = await fetchUsdtTransfersLastTwoHours();
+  transfers.forEach((transfer) => {
+    console.log(transfer);
+  });
 }
 
 main();

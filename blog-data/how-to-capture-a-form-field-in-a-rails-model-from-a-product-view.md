@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-capture-a-form-field-in-a-rails-model-from-a-product-view"
 ---
 
-Okay, let's unpack this. It's a common scenario, and frankly, one I’ve tackled countless times over the years. You've got a product view in your rails application, presumably with some kind of form, and you need to get that submitted data—a specific field— into your model. Now, there are several ways to approach this, each with its own nuances. It’s not about just throwing code at the problem; it’s about understanding the underlying mechanics of how rails handles form submissions and then crafting the solution that best fits your specific context.
+, let's unpack this. It's a common scenario, and frankly, one I’ve tackled countless times over the years. You've got a product view in your rails application, presumably with some kind of form, and you need to get that submitted data—a specific field— into your model. Now, there are several ways to approach this, each with its own nuances. It’s not about just throwing code at the problem; it’s about understanding the underlying mechanics of how rails handles form submissions and then crafting the solution that best fits your specific context.
 
 The core principle here revolves around correctly defining the routes, controller actions, and model attributes. The form in your view, when submitted, sends a request to a particular controller action. That controller action then needs to: (a) identify the relevant model instance (typically through an id), and (b) update that instance using the submitted data. Let's consider the most straightforward setup first and then dive into some variations.
 

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-split-a-time-series-into-custom-seasons"
 ---
 
-Okay, let’s tackle this. It's not uncommon to encounter the need for custom seasonality in time series analysis, especially when dealing with data that doesn't conform to standard calendar-based patterns. In fact, I remember a project back in '15 involving environmental sensor data where we had to account for shifts in seasonal patterns influenced by specific weather anomalies; something off-the-shelf tools simply wouldn't handle. We needed to break away from traditional monthly or quarterly segments.
+, let’s tackle this. It's not uncommon to encounter the need for custom seasonality in time series analysis, especially when dealing with data that doesn't conform to standard calendar-based patterns. In fact, I remember a project back in '15 involving environmental sensor data where we had to account for shifts in seasonal patterns influenced by specific weather anomalies; something off-the-shelf tools simply wouldn't handle. We needed to break away from traditional monthly or quarterly segments.
 
-The core challenge isn't simply partitioning a time series—it’s *meaningfully* segmenting it according to underlying patterns, even if those patterns are unique to the specific data set. I've found that the most effective approaches involve combining a clear understanding of the data with a pragmatic strategy. Let’s dive into how we can achieve this.
+The core challenge isn't simply partitioning a time series—it’s _meaningfully_ segmenting it according to underlying patterns, even if those patterns are unique to the specific data set. I've found that the most effective approaches involve combining a clear understanding of the data with a pragmatic strategy. Let’s dive into how we can achieve this.
 
-Essentially, splitting a time series into custom seasons relies on identifying the breakpoints that mark the transition from one season to another. These breakpoints aren’t always obvious and might require a combination of data exploration and potentially domain knowledge. I would normally look at several areas: first, descriptive statistics over small time windows (mean, variance, skew, and kurtosis); second, visual plots of the data; and third, any available external data that might be influencing these seasons. The goal here is to find *features* that change drastically at season boundaries.
+Essentially, splitting a time series into custom seasons relies on identifying the breakpoints that mark the transition from one season to another. These breakpoints aren’t always obvious and might require a combination of data exploration and potentially domain knowledge. I would normally look at several areas: first, descriptive statistics over small time windows (mean, variance, skew, and kurtosis); second, visual plots of the data; and third, any available external data that might be influencing these seasons. The goal here is to find _features_ that change drastically at season boundaries.
 
 Once you identify these boundary points, several techniques can be employed to formalize this segmentation process. Let's look at some examples using python, a very common tool for these types of tasks. We'll use `pandas` for handling time series data and `numpy` for numerical operations.
 
@@ -163,16 +163,16 @@ print(data.head())
 print(data.groupby('season').describe())
 ```
 
-In this final example, I've used the `ruptures` library, which offers algorithms specifically designed to locate change points in time series. The `Pelt` algorithm identifies changes in the statistical properties of the data, which become our season boundaries.  The result is an array of dates where "significant" changes happen in the series.
+In this final example, I've used the `ruptures` library, which offers algorithms specifically designed to locate change points in time series. The `Pelt` algorithm identifies changes in the statistical properties of the data, which become our season boundaries. The result is an array of dates where "significant" changes happen in the series.
 
 **Resources and Further Study:**
 
 For deeper exploration, I’d recommend the following:
 
-*   **"Time Series Analysis and Its Applications" by Robert H. Shumway and David S. Stoffer:** This is a classic textbook covering various time series analysis techniques. It will provide a solid foundation on many of the concepts discussed here, especially if you want to understand the statistical basis of approaches like change point detection.
+- **"Time Series Analysis and Its Applications" by Robert H. Shumway and David S. Stoffer:** This is a classic textbook covering various time series analysis techniques. It will provide a solid foundation on many of the concepts discussed here, especially if you want to understand the statistical basis of approaches like change point detection.
 
-*  **"Forecasting: Principles and Practice" by Rob J Hyndman and George Athanasopoulos:** An excellent, freely available online resource that covers various time series analysis and forecasting methods, including handling seasonality.
+- **"Forecasting: Principles and Practice" by Rob J Hyndman and George Athanasopoulos:** An excellent, freely available online resource that covers various time series analysis and forecasting methods, including handling seasonality.
 
-*  **Scikit-learn documentation:** While scikit-learn doesn’t directly handle all the above needs, its core models and preprocessing methods are essential.
+- **Scikit-learn documentation:** While scikit-learn doesn’t directly handle all the above needs, its core models and preprocessing methods are essential.
 
 In summary, splitting a time series into custom seasons is not a one-size-fits-all problem. The best approach depends heavily on your data and available knowledge. Start with simple methods like fixed date ranges, graduate to threshold-based approaches, and consider change point detection techniques when needed. Remember to validate your results using domain expertise or by testing against different model performance metrics.

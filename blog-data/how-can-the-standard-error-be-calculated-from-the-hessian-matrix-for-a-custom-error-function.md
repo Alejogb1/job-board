@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-the-standard-error-be-calculated-from-the-hessian-matrix-for-a-custom-error-function"
 ---
 
-Okay, let's tackle this. I've actually dealt with this exact scenario a few times, particularly when optimizing complex machine learning models with custom loss functions. It’s a step that's often overlooked, but crucial for understanding the uncertainty around your parameter estimates.
+, let's tackle this. I've actually dealt with this exact scenario a few times, particularly when optimizing complex machine learning models with custom loss functions. It’s a step that's often overlooked, but crucial for understanding the uncertainty around your parameter estimates.
 
 The core challenge here revolves around deriving the standard errors of parameter estimates when you’re not using a standard loss function, like mean squared error (mse) or cross-entropy. With those, you often get standard error calculations baked into the optimization algorithms or statistical packages. However, when you roll your own, you’re on your own. The Hessian matrix, in such cases, becomes our primary tool for extracting that information.
 
@@ -21,6 +21,7 @@ This is usually the most computationally expensive part. For a function with `n`
 ```
 H_ij = ∂²L / ∂θ_i ∂θ_j
 ```
+
 Where `θ_i` and `θ_j` are the `i`th and `j`th parameters, respectively.
 
 Depending on the complexity of the function, you might be able to derive these analytically, or more likely, you'll need to approximate it using numerical methods. Finite difference methods are quite common here, either central differences (more accurate but more computationally expensive) or forward/backward differences (less accurate, but faster).
@@ -59,11 +60,11 @@ def custom_loss(w, x, y):
 
 def hessian(w, x, y):
     # analytic second derivative (Hessian for single parameter w)
-    # Note, the double derivative of |r|^2 w.r.t. w is 2x^2*sign(y-wx), 
+    # Note, the double derivative of |r|^2 w.r.t. w is 2x^2*sign(y-wx),
     # the sign part depends on which side of the zero the prediction falls.
     #  Here I am approximating it as |r| not zero, which works fine for most data.
-    
-    residuals = y - (w*x) 
+
+    residuals = y - (w*x)
     hessian_val = np.sum(2 * x**2 * np.sign(residuals))
 
     return hessian_val

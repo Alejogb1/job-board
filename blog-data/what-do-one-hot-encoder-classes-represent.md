@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-do-one-hot-encoder-classes-represent"
 ---
 
-Alright, let's talk about one-hot encoders. I remember a particularly frustrating project back in my early days, dealing with customer data. We had all these categorical variables – things like 'browser type,' 'subscription tier,' and 'device operating system' – and, initially, we just tried to treat them like numbers. Needless to say, our models performed… poorly. That’s when I got a very clear, very painful lesson in why one-hot encoding is fundamental to machine learning with categorical data.
+, let's talk about one-hot encoders. I remember a particularly frustrating project back in my early days, dealing with customer data. We had all these categorical variables – things like 'browser type,' 'subscription tier,' and 'device operating system' – and, initially, we just tried to treat them like numbers. Needless to say, our models performed… poorly. That’s when I got a very clear, very painful lesson in why one-hot encoding is fundamental to machine learning with categorical data.
 
 So, to answer your question directly: a one-hot encoder class essentially represents a transformation strategy for converting categorical data into a numerical format suitable for machine learning algorithms. Specifically, it converts each unique category within a feature into a new binary column, where a ‘1’ indicates the presence of that category for a given data point, and ‘0’ indicates its absence.
 
@@ -12,7 +12,7 @@ Let's break that down a bit further. Imagine you have a feature, let's say, “c
 
 One-hot encoding neatly avoids this problem. The one-hot encoder will transform the “color” feature into three separate columns: “color_red”, “color_blue”, and “color_green”. If an observation has "red" as its color, the “color_red” column will have a value of 1, while “color_blue” and “color_green” will have 0. The same logic applies for the other categories. Essentially, we are mapping each category to its own dimension in a higher-dimensional space, thus, the term "one-hot".
 
-What's useful about these encoder classes, beyond just the basic concept, is that they provide a standardized way to execute and maintain this transformation across your data pipeline. You use an encoder *object*— which has 'fit' and 'transform' methods — to "learn" the categories present in the dataset, and then apply that learned transformation consistently. This is crucial when dealing with training and validation datasets, and particularly so when applying the model on entirely new, unseen data.
+What's useful about these encoder classes, beyond just the basic concept, is that they provide a standardized way to execute and maintain this transformation across your data pipeline. You use an encoder _object_— which has 'fit' and 'transform' methods — to "learn" the categories present in the dataset, and then apply that learned transformation consistently. This is crucial when dealing with training and validation datasets, and particularly so when applying the model on entirely new, unseen data.
 
 Now, let’s look at some practical examples using python, assuming you have `scikit-learn` installed:
 
@@ -66,6 +66,7 @@ encoded_df = pd.DataFrame(encoded_data, columns=encoder.get_feature_names_out(['
 print(encoded_df)
 
 ```
+
 Here we have two categorical features, which are handled seamlessly by the encoder. The `fit_transform` method can be used on more than one column at a time. This results in one hot encoded columns for all the features given to it. This example illustrates how you can scale this approach beyond a single feature.
 
 **Example 3: Integrating with a Machine Learning Pipeline**

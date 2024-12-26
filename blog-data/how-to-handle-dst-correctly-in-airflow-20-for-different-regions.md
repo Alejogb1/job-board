@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-handle-dst-correctly-in-airflow-20-for-different-regions"
 ---
 
-alright, so handling dst in airflow, especially when you're juggling different regions, yeah, that's a classic headache. been there, done that, got the t-shirt with the slightly confusing timezone abbreviations. let me break down how i’ve tackled this beast, specifically within the context of airflow 2.0 and above.
+, so handling dst in airflow, especially when you're juggling different regions, yeah, that's a classic headache. been there, done that, got the t-shirt with the slightly confusing timezone abbreviations. let me break down how i’ve tackled this beast, specifically within the context of airflow 2.0 and above.
 
 first off, the core issue boils down to how airflow stores and interprets datetime objects. by default, airflow uses utc internally. this is good, because it gives us a single source of truth. but the problem arises when you start introducing dags and tasks that need to be aware of local timezones, especially those that observe daylight saving time. if not done correctly this will completely mess up your scheduling.
 
@@ -38,7 +38,7 @@ with DAG(
     catchup=False,
     tags=["timezones"],
 ) as dag:
-    
+
     run_task_london = PythonOperator(
         task_id='python_task_london',
         python_callable=my_python_task,
@@ -78,6 +78,7 @@ with DAG(
         python_callable=process_log,
     )
 ```
+
 here, we get the current utc time and convert it to 'america/new_york' time within the task using pendulum's `.in_timezone()` method. this way your log time will be formatted according to the new york timezone.
 
 **3. configuration approach:**
@@ -118,11 +119,11 @@ in this setup, the python operator is going to get the timezone configured in th
 
 **some additional points:**
 
-*   **be consistent:** pick one of these strategies and stick to it. avoid mixing and matching, as that leads to confusion and subtle bugs. once you set up your system use it consistently through the dag and task definitions.
-*   **testing:** rigorously test your dag's execution, especially when daylight saving time changes occur. use pendulum's library methods to simulate different dates and times to test the pipeline. it could save you from having some very long and frustrating debugging sessions.
-*   **logging:** log datetime objects with their timezones in the tasks outputs. this makes debugging much easier. always print out the timezone in the logs so you can keep track of what’s happening.
-*   **ui:** note that the airflow ui displays time in your configured webserver’s timezone by default. keep that in mind when interpreting times, it can be confusing for a beginner. there are settings for changing the timezone used by the ui as well.
-*   **documentation:** if you are in a team environment document all timezone policies. it's a good idea to have a shared place for time-related info.
+- **be consistent:** pick one of these strategies and stick to it. avoid mixing and matching, as that leads to confusion and subtle bugs. once you set up your system use it consistently through the dag and task definitions.
+- **testing:** rigorously test your dag's execution, especially when daylight saving time changes occur. use pendulum's library methods to simulate different dates and times to test the pipeline. it could save you from having some very long and frustrating debugging sessions.
+- **logging:** log datetime objects with their timezones in the tasks outputs. this makes debugging much easier. always print out the timezone in the logs so you can keep track of what’s happening.
+- **ui:** note that the airflow ui displays time in your configured webserver’s timezone by default. keep that in mind when interpreting times, it can be confusing for a beginner. there are settings for changing the timezone used by the ui as well.
+- **documentation:** if you are in a team environment document all timezone policies. it's a good idea to have a shared place for time-related info.
 
 i would recommend reading the pendulum documentation thoroughly it will help you gain a deep understanding of how timezones and conversions work. it's also worth checking out the “timezones and scheduling” section of the airflow documentation. it contains some good practical examples on how to implement the concepts described here. finally, for a comprehensive understanding of datetime handling in general, the book “time and date” by edward m. reingold and nachum dershowitz is a great resource. it covers all the basics and the more intricate details of time and date calculations. that book is probably the most advanced and deep diving book on this topic i've ever read. and you know what? it’s a great read to be used when you want to fall asleep as well, i mean, who does not like timekeeping algorithms to fall asleep?
 

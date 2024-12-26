@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-periodic-client-side-errors"
 ---
 
-Alright, let’s tackle this. I've seen my share of those frustrating client-side errors that seem to pop up with an infuriating rhythm, like some kind of digital metronome gone haywire. They're rarely a single issue; often, it’s a confluence of factors interacting in unfortunate ways. Let me break down the usual suspects and offer some insights gained from hard-won experience.
+, let’s tackle this. I've seen my share of those frustrating client-side errors that seem to pop up with an infuriating rhythm, like some kind of digital metronome gone haywire. They're rarely a single issue; often, it’s a confluence of factors interacting in unfortunate ways. Let me break down the usual suspects and offer some insights gained from hard-won experience.
 
 Essentially, periodic client-side errors manifest as disruptions in the user experience that aren't constant; they come and go, making them notoriously difficult to track down. These errors are usually symptomatic of inconsistencies or bottlenecks somewhere in the system that only reveal themselves under specific conditions or at specific times.
 
@@ -22,18 +22,17 @@ First, consider resource contention within the browser's javascript engine. Imag
 
 ```javascript
 function animateElements() {
-  const elements = document.querySelectorAll('.animated-element');
+  const elements = document.querySelectorAll(".animated-element");
   for (let i = 0; i < elements.length; i++) {
     const element = elements[i];
     let position = parseInt(element.style.left) || 0;
     position += 5;
-    element.style.left = position + 'px';
+    element.style.left = position + "px";
     if (position > window.innerWidth) {
       position = -element.offsetWidth;
     }
-      requestAnimationFrame(() => animateElements()); // note the recursive call
+    requestAnimationFrame(() => animateElements()); // note the recursive call
   }
-
 }
 
 animateElements();
@@ -45,14 +44,15 @@ Next, let’s examine a scenario with improperly handled asynchronous operations
 
 ```javascript
 async function fetchData() {
-  const data1 = await fetch('/api/data1').then(res => res.json());
-  const data2 = await fetch('/api/data2').then(res => res.json());
+  const data1 = await fetch("/api/data1").then((res) => res.json());
+  const data2 = await fetch("/api/data2").then((res) => res.json());
 
   updateUI(data1, data2);
 }
 
 function updateUI(data1, data2) {
-    document.getElementById('target').innerHTML = data1.value + " : " + data2.value;
+  document.getElementById("target").innerHTML =
+    data1.value + " : " + data2.value;
 }
 fetchData();
 ```
@@ -61,17 +61,18 @@ If the `/api/data2` endpoint is faster than `/api/data1`, which might happen occ
 
 ```javascript
 async function fetchData() {
-    const [data1, data2] = await Promise.all([
-      fetch('/api/data1').then(res => res.json()),
-      fetch('/api/data2').then(res => res.json())
-    ]);
-    updateUI(data1, data2);
-  }
-  
-  function updateUI(data1, data2) {
-      document.getElementById('target').innerHTML = data1.value + " : " + data2.value;
-  }
-  fetchData();
+  const [data1, data2] = await Promise.all([
+    fetch("/api/data1").then((res) => res.json()),
+    fetch("/api/data2").then((res) => res.json()),
+  ]);
+  updateUI(data1, data2);
+}
+
+function updateUI(data1, data2) {
+  document.getElementById("target").innerHTML =
+    data1.value + " : " + data2.value;
+}
+fetchData();
 ```
 
 This approach makes the code more resilient and immune to data arrival order.
@@ -81,14 +82,14 @@ Finally, let’s illustrate how server-side issues can manifest as client-side p
 ```javascript
 async function fetchUserData() {
   try {
-    const response = await fetch('/api/user');
+    const response = await fetch("/api/user");
     if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
     const userData = await response.json();
-    document.getElementById('username').textContent = userData.name;
+    document.getElementById("username").textContent = userData.name;
   } catch (error) {
-    console.error('Failed to fetch user data:', error);
+    console.error("Failed to fetch user data:", error);
     // client does nothing in case of error, leading to empty or missing data
     // in the best case scenario, or even worse if the error leads to additional logic issues
   }

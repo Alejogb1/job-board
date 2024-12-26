@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-optimal-maxpooling-kernel-sizes-eg-2x2-3x3-5x5-and-how-are-they-chosen-for-different-applications"
 ---
 
-Alright, let's talk about max pooling kernel sizes. I've spent quite a bit of time tinkering with these in different contexts, and it's not always as straightforward as grabbing the first option off the shelf. The ‘optimal’ size really depends on the specifics of your data and what you're trying to achieve with your model, so a one-size-fits-all answer doesn’t really exist. But, I can share some insights that should help guide your decisions.
+, let's talk about max pooling kernel sizes. I've spent quite a bit of time tinkering with these in different contexts, and it's not always as straightforward as grabbing the first option off the shelf. The ‘optimal’ size really depends on the specifics of your data and what you're trying to achieve with your model, so a one-size-fits-all answer doesn’t really exist. But, I can share some insights that should help guide your decisions.
 
 First off, let's quickly recap what max pooling actually does. It's a downsampling operation. Within a given kernel (or window), it selects the maximum value and discards the rest. This has several benefits: it reduces the spatial dimensions of your feature maps, which in turn decreases the number of parameters in your model and thereby decreases computational load. It also adds a degree of translational invariance, meaning that small shifts in the input won't drastically alter the features it extracts. Think of it as a kind of spatial feature summarization.
 
@@ -30,6 +30,7 @@ max_pool_2x2 = tf.nn.max_pool(input_tensor,
 print(f"Input shape: {input_tensor.shape}")
 print(f"Output shape after 2x2 pooling: {max_pool_2x2.shape}")
 ```
+
 Notice how the spatial dimensions are reduced by a factor of 2 due to the kernel size of 2x2 and stride of 2.
 
 **The 3x3 Kernel: When More Context is Needed**
@@ -52,6 +53,7 @@ max_pool_3x3 = tf.nn.max_pool(input_tensor,
 print(f"Input shape: {input_tensor.shape}")
 print(f"Output shape after 3x3 pooling with stride 2: {max_pool_3x3.shape}")
 ```
+
 Here we used a 3x3 kernel with a stride of 2. This shows how even with an increase in kernel size, we are still able to reduce the dimensions. The reduction is less aggressive than the 2x2 version above due to the larger kernel size, and the dimensions become 13x13 instead of 14x14 (resulting from the 2x2 kernel) given an input of 28x28.
 
 **Larger Kernels: Niche Cases**
@@ -59,6 +61,7 @@ Here we used a 3x3 kernel with a stride of 2. This shows how even with an increa
 Larger kernels like 5x5, or occasionally larger, are less commonly used and typically reserved for very specific cases. For instance, if you’re dealing with exceptionally large images with abundant redundant information, or your input features have very large, uniform areas, using a 5x5 kernel can offer considerable downsampling, allowing you to capture high-level features more efficiently. However, this comes at the cost of more aggressive information loss and requires careful evaluation as it might lead to the model missing crucial details.
 
 Here's an example demonstrating a 5x5 kernel:
+
 ```python
 import tensorflow as tf
 

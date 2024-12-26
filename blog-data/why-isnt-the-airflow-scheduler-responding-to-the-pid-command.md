@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-the-airflow-scheduler-responding-to-the-pid-command"
 ---
 
-Alright, let's tackle this. I've encountered this exact scenario a few times over the years, particularly when dealing with large-scale deployments of Apache Airflow. The frustration of seeing the scheduler not responding to `pid` commands can be a real headache, but more often than not, the root causes stem from a few specific areas. It's rarely a bug in Airflow itself, although that's always something we need to rule out.
+, let's tackle this. I've encountered this exact scenario a few times over the years, particularly when dealing with large-scale deployments of Apache Airflow. The frustration of seeing the scheduler not responding to `pid` commands can be a real headache, but more often than not, the root causes stem from a few specific areas. It's rarely a bug in Airflow itself, although that's always something we need to rule out.
 
 First, let's clarify that when we talk about the Airflow scheduler not responding to `pid`, we're usually referring to the failure of commands like `airflow scheduler pid` to return a valid process ID, or, more concerningly, no output at all. This often leads us down a rabbit hole of diagnostics. What's going on under the hood is that when you execute `airflow scheduler pid`, the command attempts to find the pid file associated with the running scheduler process. If this file isn't present or accessible, the command will fail. This command relies heavily on the correct configuration and execution environment.
 
@@ -65,6 +65,7 @@ def simulate_missing_pid_file(pid_file_path="airflow-scheduler.pid"):
 if __name__ == "__main__":
     simulate_missing_pid_file()
 ```
+
 This snippet simulates an issue if the file does not exist or is not at the expected location, mirroring a case when the scheduler has not been launched or has not written its pid correctly. This would output `Error: PID file not found at airflow-scheduler.pid`.
 
 **Example 3: Permission Issue Simulation**
@@ -107,6 +108,6 @@ if __name__ == "__main__":
 
 This will trigger a `PermissionError`, simulating the scenario in which the user running the `airflow scheduler pid` command lacks the permissions to access the pid file.
 
-To further your understanding, I'd suggest reviewing the *Apache Airflow Documentation*, paying particular attention to sections covering the scheduler configuration, specifically the `[scheduler]` section in `airflow.cfg`. Additionally, studying resources like “*Effective Python*” by Brett Slatkin, is useful for debugging and writing your own utilities around this type of problem. Also “*Operating System Concepts*” by Silberschatz, Galvin, and Gagne is invaluable for understanding system calls, file permissions and process management which underpin these types of issues.
+To further your understanding, I'd suggest reviewing the _Apache Airflow Documentation_, paying particular attention to sections covering the scheduler configuration, specifically the `[scheduler]` section in `airflow.cfg`. Additionally, studying resources like “_Effective Python_” by Brett Slatkin, is useful for debugging and writing your own utilities around this type of problem. Also “_Operating System Concepts_” by Silberschatz, Galvin, and Gagne is invaluable for understanding system calls, file permissions and process management which underpin these types of issues.
 
 In summary, the failure of `airflow scheduler pid` typically points to problems with the scheduler's configuration, its execution environment, or file permissions. Start by verifying if the scheduler is actually running, check the `pid_file` path in your `airflow.cfg`, and ensure the necessary read permissions are in place. In my experience, systematically ruling out each of these potential issues usually leads to finding the root cause.

@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "no-st-link-detected-stm32-programming-error"
 ---
 
-Okay so you're hitting the "no st-link detected" error right? Classic. Seen this one a few times more than I'd like. Been wrestling with STM32s since back when you had to solder everything by hand seriously almost had to build my own debugger at one point. Okay maybe not that far but you get the picture I've had my fair share of ST-Link headaches.
+you're hitting the "no st-link detected" error right? Classic. Seen this one a few times more than I'd like. Been wrestling with STM32s since back when you had to solder everything by hand seriously almost had to build my own debugger at one point. maybe not that far but you get the picture I've had my fair share of ST-Link headaches.
 
-First off lets' get this straight this isn't some mystical voodoo thing. It's usually a pretty straightforward issue and it’s almost never a problem with the ST-Link hardware itself like some people immediately think. Don't go throwing out your debugger yet alright?
+First off lets' get this straight this isn't some mystical voodoo thing. It's usually a pretty straightforward issue and it’s almost never a problem with the ST-Link hardware itself like some people immediately think. Don't go throwing out your debugger yet ?
 
-Okay lets' break this down step by step. It usually comes down to a couple of common problems. Most likely culprit one is the connection. I mean the actual physical stuff. Check your wires. And I mean REALLY check them. Are they connected to the right pins? The SWCLK and SWDIO pins need to be hooked up to the right places. I've seen folks accidentally swap them before and yeah that will definitely cause "no ST-Link detected". And also you are using the correct pins on the ST-Link itself right? Not all ST-Links are created equal and some pinouts vary especially if you have an older clone.
+lets' break this down step by step. It usually comes down to a couple of common problems. Most likely culprit one is the connection. I mean the actual physical stuff. Check your wires. And I mean REALLY check them. Are they connected to the right pins? The SWCLK and SWDIO pins need to be hooked up to the right places. I've seen folks accidentally swap them before and yeah that will definitely cause "no ST-Link detected". And also you are using the correct pins on the ST-Link itself right? Not all ST-Links are created equal and some pinouts vary especially if you have an older clone.
 
 Also are you sure you're powering up the target board? The ST-Link usually does not provide the power to the target processor. Are you sure that VDD pin is connected and have power supply and ground? Its amazing how often I've seen that happen. You're staring at the code trying to debug and the whole thing isn't even on. Like trying to drive a car with no fuel.
 
@@ -29,18 +29,18 @@ Here is an example of a simple clock configuration code. This is an example to b
 void SystemClock_Config(void) {
     RCC_OscInitTypeDef RCC_OscInitStruct = {0};
     RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-    
+
     RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
     RCC_OscInitStruct.HSEState = RCC_HSE_ON; // or RCC_HSE_OFF
     RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
     RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
     // ... rest of the configuration for your specific hardware
-    
+
     if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
     {
         Error_Handler();
     }
-    
+
     RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                                  |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
     RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
@@ -51,6 +51,7 @@ void SystemClock_Config(void) {
     }
 }
 ```
+
 Be careful modifying the clock. A small error can make the microcontroller go berserk.
 
 Another common issue which is related to code is the debug pins themselves being re-used as GPIOs. This is something that can be easily missed when configuring the IOs and you can completely disable the debug capabilities.
@@ -61,7 +62,7 @@ Here's an example of how you would initialize the GPIO without re-using the debu
 // Example GPIO Configuration (VERY GENERIC and SIMPLIFIED)
 void GPIO_Config(void) {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
-    
+
     //Enable clock for GPIOA
     __HAL_RCC_GPIOA_CLK_ENABLE();
 
@@ -82,6 +83,7 @@ void GPIO_Config(void) {
 }
 
 ```
+
 Note the very important commented lines. You MUST check your specific MCU's datasheet to find which pins are the SWD/JTAG pins and take care not to re-use them as GPIO's. This is a classic beginner mistake. I also did it once not gonna lie.
 
 Also make sure that if you are using sleep modes that the microcontroller is actually awake when you start the debugger session. I have personally made this mistake way too many times. Like putting a coffee maker into deep sleep mode then complaining it doesnt make coffee. You need to wake it up first.
@@ -105,6 +107,7 @@ void disableLowPowerMode(void) {
 }
 
 ```
+
 There are a lot more considerations about using low power modes but this is just an example.
 
 So to recap:
@@ -116,8 +119,8 @@ So to recap:
 5.  Review your debug configuration in your IDE.
 6.  Make sure no other tools or IDE are interfering.
 7.  Verify your clock settings in code.
-8. Ensure SWD/JTAG pins are not used for other purposes.
-9. Make sure your device is not stuck in a low power mode when you start a debugger session.
+8.  Ensure SWD/JTAG pins are not used for other purposes.
+9.  Make sure your device is not stuck in a low power mode when you start a debugger session.
 
 If you’ve gone through all that and you’re still seeing the error then we could be in a deeper problem. In that case start considering checking electrical traces and components on the board. Check if your board has any problems that are preventing communication to the MCU. But do the easy stuff first. We don't start with nuclear option unless its necessary.
 

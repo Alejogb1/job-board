@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-a-filesystemwatcher-in-a-layered-architecture"
 ---
 
-Alright, let's tackle this. I've grappled with file system monitoring in layered architectures more times than I care to count, and it's rarely as straightforward as the tutorials suggest. The key challenge isn't just *using* a `FileSystemWatcher`, it's doing it cleanly without creating a tangled mess of dependencies and breaking your carefully crafted separation of concerns. Over the years, I've found that a pragmatic, event-driven approach, coupled with careful encapsulation, generally works best.
+, let's tackle this. I've grappled with file system monitoring in layered architectures more times than I care to count, and it's rarely as straightforward as the tutorials suggest. The key challenge isn't just _using_ a `FileSystemWatcher`, it's doing it cleanly without creating a tangled mess of dependencies and breaking your carefully crafted separation of concerns. Over the years, I've found that a pragmatic, event-driven approach, coupled with careful encapsulation, generally works best.
 
 The core issue revolves around where the `FileSystemWatcher` lives and how it communicates changes back to the higher layers of your application. If you directly instantiate the watcher in your business logic or presentation layers, you're setting yourself up for tight coupling and testing nightmares. Ideally, the `FileSystemWatcher` itself should be tucked away within an infrastructure layer, acting as a kind of "data source" for your application, much like a database or an external api.
 
@@ -188,20 +188,20 @@ In this example, a basic service collection is created, the required classes for
 
 **Further Considerations**
 
-*   **Error Handling:** Robust error handling is crucial, especially when dealing with file system operations. Log exceptions appropriately within the infrastructure layer. I've found that using a logging library that adheres to structured logging practices helps.
+- **Error Handling:** Robust error handling is crucial, especially when dealing with file system operations. Log exceptions appropriately within the infrastructure layer. I've found that using a logging library that adheres to structured logging practices helps.
 
-*   **Testing:** Because we've decoupled the application logic, we can easily mock `FileSystemEventAggregator` and test `FileProcessor` in isolation without hitting the file system.
+- **Testing:** Because we've decoupled the application logic, we can easily mock `FileSystemEventAggregator` and test `FileProcessor` in isolation without hitting the file system.
 
-*   **Scalability:** If dealing with a very high volume of file system events, consider using a message queue (e.g., RabbitMQ or Kafka) between the infrastructure and application layers to avoid overwhelming the application and also ensure no message is lost. The infrastructure layer publishes change events to the message queue and the application layer consumes these events asynchronously.
+- **Scalability:** If dealing with a very high volume of file system events, consider using a message queue (e.g., RabbitMQ or Kafka) between the infrastructure and application layers to avoid overwhelming the application and also ensure no message is lost. The infrastructure layer publishes change events to the message queue and the application layer consumes these events asynchronously.
 
 **Recommended Resources**
 
 For more comprehensive understanding of these concepts, I'd recommend:
 
-*   **"Domain-Driven Design: Tackling Complexity in the Heart of Software"** by Eric Evans. This is crucial for understanding the importance of separating concerns and modeling your domain appropriately.
+- **"Domain-Driven Design: Tackling Complexity in the Heart of Software"** by Eric Evans. This is crucial for understanding the importance of separating concerns and modeling your domain appropriately.
 
-*   **"Patterns of Enterprise Application Architecture"** by Martin Fowler. This book gives excellent practical insights and patterns on working with the architecture of complex software.
+- **"Patterns of Enterprise Application Architecture"** by Martin Fowler. This book gives excellent practical insights and patterns on working with the architecture of complex software.
 
-*   **"Dependency Injection in .NET"** by Mark Seemann. A deep dive into DI best practices with many practical examples.
+- **"Dependency Injection in .NET"** by Mark Seemann. A deep dive into DI best practices with many practical examples.
 
 Using a layered approach with a clean separation of concerns is the most resilient strategy for handling file system monitoring. It makes your code easier to understand, easier to test, and easier to adapt to future changes. This approach has served me well over numerous projects, and I hope it’ll be of help to you too.

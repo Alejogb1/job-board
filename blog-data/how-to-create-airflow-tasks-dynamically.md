@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-create-airflow-tasks-dynamically"
 ---
 
-Alright, let's talk about dynamic task creation in Airflow. It's a topic I’ve tackled quite a bit, particularly during my time managing an e-commerce platform's data pipeline. We often needed to ingest data from various sources, each with a slightly different configuration and schedule, and static DAGs just weren't cutting it. The key is to move beyond hardcoded task definitions and embrace programmatic approaches that can scale and adapt to changing requirements.
+, let's talk about dynamic task creation in Airflow. It's a topic I’ve tackled quite a bit, particularly during my time managing an e-commerce platform's data pipeline. We often needed to ingest data from various sources, each with a slightly different configuration and schedule, and static DAGs just weren't cutting it. The key is to move beyond hardcoded task definitions and embrace programmatic approaches that can scale and adapt to changing requirements.
 
 Dynamic task creation in Airflow fundamentally boils down to generating tasks at runtime, rather than defining them statically within your DAG file. This is incredibly useful for situations where you don’t know the full scope of your work at the time of DAG definition, such as when dealing with a variable list of input files, databases, or APIs. Instead of creating a separate DAG for each, you build a single DAG that can create the appropriate tasks based on your current circumstances. There are, broadly, a few effective methods to approach this.
 

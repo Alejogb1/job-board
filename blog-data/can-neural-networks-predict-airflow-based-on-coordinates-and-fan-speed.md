@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-neural-networks-predict-airflow-based-on-coordinates-and-fan-speed"
 ---
 
-Okay, let's unpack this. My experience with computational fluid dynamics (CFD) simulations, particularly when integrated with machine learning, gives me some perspective on this seemingly simple question: "Can neural networks predict airflow based on coordinates and fan speed?" The short answer is, yes, absolutely. But the nuances are where the real interest lies. It's far from a plug-and-play scenario.
+, let's unpack this. My experience with computational fluid dynamics (CFD) simulations, particularly when integrated with machine learning, gives me some perspective on this seemingly simple question: "Can neural networks predict airflow based on coordinates and fan speed?" The short answer is, yes, absolutely. But the nuances are where the real interest lies. It's far from a plug-and-play scenario.
 
 During a project at a now-defunct HVAC company, we were attempting to optimize duct design using reinforcement learning, and the core problem was predicting airflow, initially via CFD, then later with machine learning to speed things up. I remember the initial shock of realizing how complex even seemingly basic systems like a single fan in a simple enclosure could be.
 
@@ -32,7 +32,7 @@ def create_features(coordinates, fan_speeds):
     # Assume the first coordinate is related to the fan position
     fan_location = coordinates[0] # this is for demonstration, in reality this may require a lookup from the dataset
     radial_distances = np.sqrt(np.sum((coordinates - fan_location)**2, axis=1))
-    
+
     # Normalize distances as well
     max_distance = np.max(radial_distances)
     normalized_distances = radial_distances / max_distance
@@ -76,7 +76,7 @@ def continuity_loss(model, coordinates, fan_speeds):
         tape.watch(coordinates)
         features = create_features(coordinates, fan_speeds) # Reuse the create_features function from above
         predicted_velocities = model(features)
-    
+
     # Calculate spatial derivatives
     velocities_gradients = tape.gradient(predicted_velocities, coordinates)
 
@@ -145,7 +145,7 @@ class AirflowGAN(keras.Model):
 
         batch_size = tf.shape(real_coordinates)[0]
         noise = tf.random.normal(shape=(batch_size, real_coordinates.shape[1] + 1)) # Noise input for the generator (coordinates + fan speed)
-        
+
         with tf.GradientTape() as gen_tape, tf.GradientTape() as disc_tape:
           generated_flows = self.generator(tf.concat([real_coordinates, tf.reshape(real_speeds, (-1, 1))], axis=1))
 
@@ -183,6 +183,6 @@ for epoch in range(10):
 
 This final snippet represents a highly simplified GAN structure. In practice, training stable GANs can be a challenging exercise requiring parameter tuning, and a good dataset.
 
-For further study, I would recommend delving into these topics: “*Deep Learning*” by Goodfellow, Bengio, and Courville for foundational knowledge on neural networks; "Computational Fluid Dynamics: The Basics with Applications" by John D. Anderson Jr. for solid grounding in CFD; and papers on physics-informed neural networks (PINNs) and adversarial networks in engineering (many are available on ArXiv). I'd also recommend the *Handbook of Fluid Dynamics*, edited by Richard W. Johnson.
+For further study, I would recommend delving into these topics: “_Deep Learning_” by Goodfellow, Bengio, and Courville for foundational knowledge on neural networks; "Computational Fluid Dynamics: The Basics with Applications" by John D. Anderson Jr. for solid grounding in CFD; and papers on physics-informed neural networks (PINNs) and adversarial networks in engineering (many are available on ArXiv). I'd also recommend the _Handbook of Fluid Dynamics_, edited by Richard W. Johnson.
 
 In summary, predicting airflow with neural networks based solely on coordinates and fan speed is possible but not trivial. It requires thoughtful feature engineering, a good understanding of fluid mechanics, and, often, incorporating physical constraints either directly into the loss function or implicitly through methods such as GANs or data augmentation. And in practice, the implementation will always require careful evaluation and validation of results against either experiment or high-fidelity simulations.

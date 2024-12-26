@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-rgb-ground-truth-segmentation-masks-be-cleaned-using-nearest-neighbor-interpolation-in-python-numpy"
 ---
 
-Okay, let’s tackle this. I recall dealing with a particularly noisy dataset of satellite imagery a few years back. The initial RGB ground truth segmentation masks were, to put it mildly, riddled with artifacts. We needed a way to smooth those edges and fill in small gaps reliably. Nearest neighbor interpolation, while simple, proved to be a surprisingly effective tool when used thoughtfully within a NumPy environment. It’s definitely not the fanciest algorithm we have, but its efficiency and ease of implementation made it ideal for our processing pipeline.
+, let’s tackle this. I recall dealing with a particularly noisy dataset of satellite imagery a few years back. The initial RGB ground truth segmentation masks were, to put it mildly, riddled with artifacts. We needed a way to smooth those edges and fill in small gaps reliably. Nearest neighbor interpolation, while simple, proved to be a surprisingly effective tool when used thoughtfully within a NumPy environment. It’s definitely not the fanciest algorithm we have, but its efficiency and ease of implementation made it ideal for our processing pipeline.
 
 The core idea with nearest neighbor interpolation for segmentation masks is straightforward: for any pixel that needs to be filled or smoothed, we assign it the value of the closest available, valid pixel. In the context of a segmentation mask, this means finding the nearest labeled region and extending its boundary a little bit. It's not going to reconstruct complex shapes, but it’s excellent for removing small isolated errors, filling little holes, or correcting rough edges.
 
@@ -106,11 +106,11 @@ if __name__ == '__main__':
     #      plt.show()
 ```
 
-The code above defines a function which performs the nearest neighbor interpolation.  The function constructs a `KDTree` using valid pixel locations. Then, for every invalid pixel, we use the `KDTree` to query and find the nearest valid pixel coordinates, finally, using these coordinates, the invalid pixel is set to the color of the nearest valid pixel. This fills in the invalid regions with the color of their neighbors.  Finally, the modified mask is returned.
+The code above defines a function which performs the nearest neighbor interpolation. The function constructs a `KDTree` using valid pixel locations. Then, for every invalid pixel, we use the `KDTree` to query and find the nearest valid pixel coordinates, finally, using these coordinates, the invalid pixel is set to the color of the nearest valid pixel. This fills in the invalid regions with the color of their neighbors. Finally, the modified mask is returned.
 
 One crucial consideration is how you might want to adapt this for very sparse masks, or where there are large gaps. In such cases, a single nearest neighbor approach might propagate artifacts if you don’t have enough densely clustered valid pixels in the original mask. A good approach in these scenarios, would be a combination with another method, such as a simple morphological operations like dilation first to expand the labels, followed by the nearest neighbor interpolation to smooth things out.
 
-Finally, here’s an extension that includes a dilation step, as described.  This is important because while nearest-neighbor does well with small, isolated holes, it doesn't handle larger empty areas well. Dilation is an effective preprocessing step. This snippet includes dilation by using the `binary_dilation` function from SciPy's `ndimage` module. The function first dilates the valid regions, expanding them and reducing the 'holes,' then performs nearest neighbor interpolation on the expanded regions.
+Finally, here’s an extension that includes a dilation step, as described. This is important because while nearest-neighbor does well with small, isolated holes, it doesn't handle larger empty areas well. Dilation is an effective preprocessing step. This snippet includes dilation by using the `binary_dilation` function from SciPy's `ndimage` module. The function first dilates the valid regions, expanding them and reducing the 'holes,' then performs nearest neighbor interpolation on the expanded regions.
 
 ```python
 import numpy as np
@@ -128,15 +128,15 @@ def dilated_nearest_neighbor_interpolation(mask, invalid_value=0, dilation_itera
     Returns:
         np.ndarray: The interpolated mask.
     """
-    
+
     valid_mask = np.any(mask != invalid_value, axis=-1) # Create a boolean mask of valid pixels
     dilated_mask = binary_dilation(valid_mask,iterations=dilation_iterations).astype(np.uint8)
     dilated_mask_rgb = np.stack([dilated_mask,dilated_mask,dilated_mask], axis=-1) #Stack to make into 3D RGB equivalent
-    
+
     temp_mask = mask.copy()
     #Replace original mask with dilated mask only in areas where it's newly valid.
     temp_mask[dilated_mask_rgb == 1] = [invalid_value,invalid_value,invalid_value]
-    
+
 
     return nearest_neighbor_interpolation(temp_mask,invalid_value) #Use our existing interpolation on the dilated areas.
 

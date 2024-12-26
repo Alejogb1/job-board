@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "how-to-handle-rails--ajax-response-from-controller"
 ---
 
-alright, so you're hitting that classic rails and ajax dance, where the controller needs to talk back to the javascript, eh? been there, crashed that server more times than i care to count. let's break it down, from a trenches perspective.
+, so you're hitting that classic rails and ajax dance, where the controller needs to talk back to the javascript, eh? been there, crashed that server more times than i care to count. let's break it down, from a trenches perspective.
 
-first off, the basic premise is simple enough: the javascript throws an ajax request at your rails controller, the controller does its thing, and then spits back a response. the trick is in formatting that response so the javascript understands it and can actually *do* something with it. i've seen countless folks stumble here, usually because they're not quite thinking about the separation of concerns. your rails controller shouldn’t be pushing html strings; it’s better to send data and let the javascript handle the presentation.
+first off, the basic premise is simple enough: the javascript throws an ajax request at your rails controller, the controller does its thing, and then spits back a response. the trick is in formatting that response so the javascript understands it and can actually _do_ something with it. i've seen countless folks stumble here, usually because they're not quite thinking about the separation of concerns. your rails controller shouldn’t be pushing html strings; it’s better to send data and let the javascript handle the presentation.
 
 back in the day, when i was first getting into this, i made all sorts of messes. i remember this one project, a simple to-do app. i thought it would be clever to render partial views directly from the controller action and send it back to javascript. it worked, technically, but man, what a pain to maintain. it quickly became spaghetti code. javascript was coupled to the html structure of the view and every time i had to change anything in the view, i ended up having to debug the javascript too. it wasn't pretty. the whole application became a ticking time bomb.
 
@@ -51,42 +51,43 @@ now, on the javascript side, we'd catch this response using something like the f
 // javascript example using fetch
 
 function createTask(title, description) {
-    fetch('/tasks', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({ task: { title: title, description: description } })
-    })
-    .then(response => {
-       if (!response.ok) {
+  fetch("/tasks", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "X-CSRF-Token": document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content"),
+    },
+    body: JSON.stringify({ task: { title: title, description: description } }),
+  })
+    .then((response) => {
+      if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-       return response.json();
+      return response.json();
     })
-    .then(data => {
-        if (data.status === 'success') {
-            console.log('task created:', data.task);
-            //do something like rendering the new task
-            //on the page or display a success message
-        } else {
-          console.error('error creating task:', data.errors);
-          //handle errors properly and display validation errors
-        }
+    .then((data) => {
+      if (data.status === "success") {
+        console.log("task created:", data.task);
+        //do something like rendering the new task
+        //on the page or display a success message
+      } else {
+        console.error("error creating task:", data.errors);
+        //handle errors properly and display validation errors
+      }
     })
-    .catch(error => {
-        console.error('fetch error', error);
-        //handle network errors
+    .catch((error) => {
+      console.error("fetch error", error);
+      //handle network errors
     });
 }
 
 //example usage
-document.getElementById('create_button').addEventListener('click', function () {
+document.getElementById("create_button").addEventListener("click", function () {
   createTask("my new task title", "my new task description");
 });
-
 ```
 
 the javascript code sends a post request with the task data as json. it then processes the response, checking if it was successful based on the `status` key in the json response. we use `.then()` to handle the response, checking if there was an error (`response.ok`). we use `.catch()` to handle any networking errors. i’ve seen some people get tripped up here too, forgetting the `response.json()`. that part’s crucial. the `X-CSRF-Token` header is also necessary in rails applications to protect from csrf attacks.
@@ -113,37 +114,40 @@ and here is the javascript snippet:
 ```javascript
 // javascript example using fetch
 function fetchTasks() {
-    fetch('/tasks', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        }
-    })
-    .then(response => {
-       if (!response.ok) {
+  fetch("/tasks", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "X-CSRF-Token": document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content"),
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-       return response.json();
+      return response.json();
     })
-    .then(data => {
-        if (data.status === 'success') {
-            console.log('tasks fetched:', data.tasks);
-            //render the tasks on the page
-        }
+    .then((data) => {
+      if (data.status === "success") {
+        console.log("tasks fetched:", data.tasks);
+        //render the tasks on the page
+      }
     })
-    .catch(error => {
-        console.error('fetch error', error);
-        //handle network errors
+    .catch((error) => {
+      console.error("fetch error", error);
+      //handle network errors
     });
 }
 
 //example usage
-document.getElementById('fetch_tasks_button').addEventListener('click', function () {
-  fetchTasks();
-});
-
+document
+  .getElementById("fetch_tasks_button")
+  .addEventListener("click", function () {
+    fetchTasks();
+  });
 ```
 
 in this case we're using `get` method and we're fetching all tasks from the database. we’re sending the entire list back in the response as json under a `tasks` key. the javascript code then iterates over this array, maybe rendering the task list on the page. the `X-CSRF-Token` header is important again since this is a rails app.
@@ -152,12 +156,12 @@ i recall one time, i was debugging a similar system and the problem was i wasn't
 
 a few other quick notes:
 
--   **status codes matter**: 200, 201, 400, 404, 422, 500, etc. use them correctly to help your javascript code handle errors and success scenarios. it's not a case of randomly choosing, you should use the status code that most closely fits the specific situation.
+- **status codes matter**: 200, 201, 400, 404, 422, 500, etc. use them correctly to help your javascript code handle errors and success scenarios. it's not a case of randomly choosing, you should use the status code that most closely fits the specific situation.
 
--   **always sanitize user input**. i’m repeating this. *always sanitize user input*. it’s not just about ajax responses, it’s good practice in general, but it's crucial for security. do not trust any data coming from the client. this is one of those times where you should be paranoid.
+- **always sanitize user input**. i’m repeating this. _always sanitize user input_. it’s not just about ajax responses, it’s good practice in general, but it's crucial for security. do not trust any data coming from the client. this is one of those times where you should be paranoid.
 
--   **think about error handling**. don't just log the error to the console, make the user know there was an error, and let them know what they can do about it.
+- **think about error handling**. don't just log the error to the console, make the user know there was an error, and let them know what they can do about it.
 
-resources? skip the overly simplified tutorials. dive into the actual documentation. *restful web services* by leonard richardson is a good starting point in thinking about api architecture. the *rails api* docs will be your bread and butter for dealing with the controller side. and the *fetch api* documentation is essential in the javascript front.
+resources? skip the overly simplified tutorials. dive into the actual documentation. _restful web services_ by leonard richardson is a good starting point in thinking about api architecture. the _rails api_ docs will be your bread and butter for dealing with the controller side. and the _fetch api_ documentation is essential in the javascript front.
 
-that's all. it's a common problem. the key is simple json, correct http codes, proper error handling and don't ever try to render partials from the rails controller and send that to javascript. that last point... trust me on that one. that's how you make code that is, like, technically working but it's all just... *wrong*.
+that's all. it's a common problem. the key is simple json, correct http codes, proper error handling and don't ever try to render partials from the rails controller and send that to javascript. that last point... trust me on that one. that's how you make code that is, like, technically working but it's all just... _wrong_.

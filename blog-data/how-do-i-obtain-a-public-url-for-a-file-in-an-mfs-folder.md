@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-i-obtain-a-public-url-for-a-file-in-an-mfs-folder"
 ---
 
-Alright, let's talk about obtaining a public url for a file within an mfs (mutable file system) folder. This is a problem I've tackled quite a few times, especially back when I was architecting a distributed content platform where we relied heavily on ipfs and its mfs component. I’ve seen several approaches, some elegant, others less so, and it generally boils down to understanding the interplay between the mutable and immutable nature of ipfs, and how to bridge that gap.
+, let's talk about obtaining a public url for a file within an mfs (mutable file system) folder. This is a problem I've tackled quite a few times, especially back when I was architecting a distributed content platform where we relied heavily on ipfs and its mfs component. I’ve seen several approaches, some elegant, others less so, and it generally boils down to understanding the interplay between the mutable and immutable nature of ipfs, and how to bridge that gap.
 
-The core challenge stems from the fact that ipfs, by design, creates content-addressed hashes (cids). When you add a file to ipfs, whether directly or through the mfs, it's assigned a cid. This cid is permanently linked to that specific file content. Now, the mfs provides a familiar file-system-like abstraction where you can add, edit, and move files. These changes don't modify the original cids of the content stored within; instead, they alter the *mfs tree*, which is represented by another cid. This mfs tree, in effect, is a directory structure that points to the file content cids.
+The core challenge stems from the fact that ipfs, by design, creates content-addressed hashes (cids). When you add a file to ipfs, whether directly or through the mfs, it's assigned a cid. This cid is permanently linked to that specific file content. Now, the mfs provides a familiar file-system-like abstraction where you can add, edit, and move files. These changes don't modify the original cids of the content stored within; instead, they alter the _mfs tree_, which is represented by another cid. This mfs tree, in effect, is a directory structure that points to the file content cids.
 
 So, when you’re dealing with the mfs, you aren't working directly with the content-addressed data but rather with a mutable pointer to this data. If you want to share a file publicly via a url, you usually want the content-addressed cid (the immutable one) and not just the path in the mfs (which changes whenever the tree changes).
 
@@ -53,7 +53,7 @@ This python code snippet utilizes the `ipfshttpclient` library. The `files.stat(
 
 **Scenario 2: Adding a new file to MFS and obtaining its content CID.**
 
-Let’s say we're uploading a new file and want to share it directly. When adding a file through mfs, you receive a cid. But, it is essential to understand that this cid is not the file's content-addressed cid, it's the cid for the *mfs update* that includes this new addition. To get the content cid, it’s imperative to extract the *content* hash from the mfs tree.
+Let’s say we're uploading a new file and want to share it directly. When adding a file through mfs, you receive a cid. But, it is essential to understand that this cid is not the file's content-addressed cid, it's the cid for the _mfs update_ that includes this new addition. To get the content cid, it’s imperative to extract the _content_ hash from the mfs tree.
 
 ```python
 import ipfshttpclient
@@ -125,21 +125,22 @@ if new_file_cid:
    public_url_new = generate_public_url(new_file_cid)
    print(f"Public url of new file: {public_url_new}")
 ```
+
 This snippet simply combines the ipfs gateway url and the cid into a full address. You can replace `https://ipfs.io/ipfs/` with your own gateway URL.
 
 **Important Considerations:**
 
-*   **Pinning**:  Remember, if you only use an ipfs gateway, your content will only stay available as long as nodes on the ipfs network cache it.  To ensure reliable availability, you should pin your content to a pinning service. This is especially crucial for production applications.
-*   **Gateway Choice**: The `ipfs.io` gateway is free and easy to use, but for production, consider running your own or using a professional pinning service for more control and reliability.
-*   **Performance**: Accessing content through public gateways can have performance implications, especially if the data is not cached on nearby nodes.  Consider using a CDN if performance is crucial.
-*   **File Size**: Very large files might present challenges when served through gateways. Break large content into chunks if necessary.
+- **Pinning**: Remember, if you only use an ipfs gateway, your content will only stay available as long as nodes on the ipfs network cache it. To ensure reliable availability, you should pin your content to a pinning service. This is especially crucial for production applications.
+- **Gateway Choice**: The `ipfs.io` gateway is free and easy to use, but for production, consider running your own or using a professional pinning service for more control and reliability.
+- **Performance**: Accessing content through public gateways can have performance implications, especially if the data is not cached on nearby nodes. Consider using a CDN if performance is crucial.
+- **File Size**: Very large files might present challenges when served through gateways. Break large content into chunks if necessary.
 
 **Recommended resources:**
 
 For a deeper understanding, I suggest checking out:
 
-*   **The official IPFS documentation**: It has detailed information on mfs and various other topics related to ipfs.
-*   **"Distributed Systems: Concepts and Design" by George Coulouris, et al.**: This is a classic text that delves into the theoretical underpinnings of distributed systems.
-*   **"Mastering Bitcoin" by Andreas Antonopoulos**: While focusing on bitcoin, the underlying concepts of hash chains and distributed ledgers are relevant to ipfs.
+- **The official IPFS documentation**: It has detailed information on mfs and various other topics related to ipfs.
+- **"Distributed Systems: Concepts and Design" by George Coulouris, et al.**: This is a classic text that delves into the theoretical underpinnings of distributed systems.
+- **"Mastering Bitcoin" by Andreas Antonopoulos**: While focusing on bitcoin, the underlying concepts of hash chains and distributed ledgers are relevant to ipfs.
 
 In conclusion, obtaining a public url for a file in an mfs folder involves understanding that you're not referencing the mfs path directly but its underlying content cid. Extracting that cid and utilizing an ipfs gateway (and ideally a pinning service) is the practical approach I've consistently used and refined over time.

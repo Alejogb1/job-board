@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-simple-container-pipeline-be-implemented-using-github-actions-or-webhooks"
 ---
 
-Okay, let’s tackle container pipeline implementations, a topic I’ve navigated countless times across various projects. Thinking back, I vividly remember a particularly frustrating deployment process at a startup where we were pushing manually built docker images. It was messy, error-prone, and consumed precious developer time. Implementing a proper pipeline, whether with GitHub Actions or webhooks, became critical, and it fundamentally altered how we approached deployments. So, let's break down how to construct a straightforward container pipeline leveraging these two methods.
+, let’s tackle container pipeline implementations, a topic I’ve navigated countless times across various projects. Thinking back, I vividly remember a particularly frustrating deployment process at a startup where we were pushing manually built docker images. It was messy, error-prone, and consumed precious developer time. Implementing a proper pipeline, whether with GitHub Actions or webhooks, became critical, and it fundamentally altered how we approached deployments. So, let's break down how to construct a straightforward container pipeline leveraging these two methods.
 
 First, it's important to grasp the core concept: we want to automate the process of building, testing, and deploying containerized applications. That automation should trigger from code changes – usually a push to a repository. The pipeline needs to encapsulate these steps: source code retrieval, container image construction, some kind of testing (ideally unit and integration), and finally, pushing the built image to a container registry, which could be Docker Hub, GitHub Container Registry (ghcr.io), or others. We’ll consider both GitHub Actions and webhook approaches, each with its own advantages.
 
@@ -45,15 +45,15 @@ jobs:
           tags: ghcr.io/${{ github.repository }}:${{ github.run_id }}
 
   test:
-   runs-on: ubuntu-latest
-   needs: build-and-push
-   steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Run tests
-      run: |
-        echo "This is a placeholder for your tests"
-        # your actual test commands here
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run tests
+        run: |
+          echo "This is a placeholder for your tests"
+          # your actual test commands here
 ```
 
 In this workflow, the `on: push` event specifies that this pipeline is activated when code is pushed to the `main` branch. The `build-and-push` job uses the `docker/build-push-action`, which streamlines building, tagging, and pushing the docker image to the GitHub Container Registry (ghcr.io). The `test` job is a placeholder, but crucial – you should place the commands to execute your testing suites here and it depends on the build-and-push stage completing successfully. The `github.actor` and `GITHUB_TOKEN` are context variables provided by GitHub Actions, providing authentication. The tag `${{ github.run_id }}` will ensure each build has a unique tag. This is a very basic version, of course, but this sets the foundation.

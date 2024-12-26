@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-bert-for-relation-extraction"
 ---
 
-alright, so you're looking to use bert for relation extraction. it's a pretty common task these days, and bert's actually a solid choice for it. i've spent some time in this area myself, and i can share what i've learned.
+, so you're looking to use bert for relation extraction. it's a pretty common task these days, and bert's actually a solid choice for it. i've spent some time in this area myself, and i can share what i've learned.
 
 basically, relation extraction is about identifying relationships between entities in text. think about it like this: in the sentence "steve jobs co-founded apple," we want to extract that 'steve jobs' is related to 'apple' through the relation 'co-founded'. there are other relations of course, like 'is a' or 'located in' and so on, it all depends on your specific task.
 
@@ -37,7 +37,7 @@ class RelationExtractionDataset(Dataset):
 
     def __getitem__(self, idx):
         sent, ent1_start, ent1_end, ent2_start, ent2_end, relation = self.data[idx]
-        
+
         encoding = self.tokenizer(
             sent,
             add_special_tokens=True,
@@ -47,14 +47,14 @@ class RelationExtractionDataset(Dataset):
             return_attention_mask=True,
             return_tensors='pt'
         )
-        
+
         # creating a 'mention mask' that is 1 on the entity tokens and 0 otherwise
         mention_mask = torch.zeros(self.max_len, dtype=torch.long)
-        
-        # mapping the character based indexes from the original string 
+
+        # mapping the character based indexes from the original string
         # to the tokenized indexes
         token_offsets = encoding.offset_mapping[0]
-        
+
         token_start_1 = -1
         token_end_1 = -1
 
@@ -63,7 +63,7 @@ class RelationExtractionDataset(Dataset):
                 token_start_1 = token_index
             if start < ent1_end <= end:
                 token_end_1 = token_index
-        
+
         if token_start_1 != -1 and token_end_1 != -1:
           mention_mask[token_start_1:token_end_1+1] = 1
 
@@ -78,7 +78,7 @@ class RelationExtractionDataset(Dataset):
 
         if token_start_2 != -1 and token_end_2 != -1:
           mention_mask[token_start_2:token_end_2+1] = 1
-        
+
         return {
             'input_ids': encoding['input_ids'].flatten(),
             'attention_mask': encoding['attention_mask'].flatten(),
@@ -118,7 +118,7 @@ for epoch in range(num_epochs):
         attention_mask = batch['attention_mask'].to(device)
         mention_mask = batch['mention_mask'].to(device)
         labels = batch['labels'].to(device)
-        
+
         optimizer.zero_grad()
         outputs = model(input_ids=input_ids, attention_mask=attention_mask, labels=labels)
         loss = outputs.loss
@@ -144,10 +144,10 @@ for epoch in range(num_epochs):
 
 this code does a few things:
 
-*   it sets up a custom `dataset` class for your relation data which loads your text, identifies the start and end positions of each entity and converts it into a format that is useful for bert's input. importantly, it uses `offset_mapping` from the tokenizer to map the original character-level positions of the entities into the positions of the tokens from the bert tokenization process. this is very important since the tokenization is not the same as a character or word based index.
-*   it shows how to set up the bert model for sequence classification. you specify the number of classes in the `num_labels` argument. this will define how many distinct relations that you want to predict.
-* it shows a standard training process that iterates through the training set in batches with the backward pass and the optimizer that will adapt the weights of the model
-*   it also shows validation which is important to track the performance of your training and detect overfitting
+- it sets up a custom `dataset` class for your relation data which loads your text, identifies the start and end positions of each entity and converts it into a format that is useful for bert's input. importantly, it uses `offset_mapping` from the tokenizer to map the original character-level positions of the entities into the positions of the tokens from the bert tokenization process. this is very important since the tokenization is not the same as a character or word based index.
+- it shows how to set up the bert model for sequence classification. you specify the number of classes in the `num_labels` argument. this will define how many distinct relations that you want to predict.
+- it shows a standard training process that iterates through the training set in batches with the backward pass and the optimizer that will adapt the weights of the model
+- it also shows validation which is important to track the performance of your training and detect overfitting
 
 but, that's only one way to do it. there are others, here's another approach.
 
@@ -175,11 +175,11 @@ class RelationExtractionDataset(Dataset):
         sent, ent1_start, ent1_end, ent2_start, ent2_end, relation = self.data[idx]
 
         # insert entity markers into the original sentence
-        marked_sent = sent[:ent2_end] + self.special_tokens[3] + sent[ent2_end:] 
-        marked_sent = marked_sent[:ent2_start] + self.special_tokens[2] + marked_sent[ent2_start:] 
+        marked_sent = sent[:ent2_end] + self.special_tokens[3] + sent[ent2_end:]
+        marked_sent = marked_sent[:ent2_start] + self.special_tokens[2] + marked_sent[ent2_start:]
         marked_sent = marked_sent[:ent1_end] + self.special_tokens[1] + marked_sent[ent1_end:]
         marked_sent = marked_sent[:ent1_start] + self.special_tokens[0] + marked_sent[ent1_start:]
-                
+
         encoding = self.tokenizer(
             marked_sent,
             add_special_tokens=True,
@@ -228,7 +228,7 @@ for epoch in range(num_epochs):
         input_ids = batch['input_ids'].to(device)
         attention_mask = batch['attention_mask'].to(device)
         labels = batch['labels'].to(device)
-        
+
         optimizer.zero_grad()
         outputs = model(input_ids=input_ids, attention_mask=attention_mask, labels=labels)
         loss = outputs.loss
@@ -252,8 +252,8 @@ for epoch in range(num_epochs):
 
 this is how that previous code is different:
 
-*   it uses special tokens to mark the entity mentions. these are added to the sentence strings before tokenization, which requires adding new tokens to the tokenizer vocabulary. also after adding the new tokens it's necessary to resize the embedding layer of the bert model.
-* the rest of the training code follows the same logic from before.
+- it uses special tokens to mark the entity mentions. these are added to the sentence strings before tokenization, which requires adding new tokens to the tokenizer vocabulary. also after adding the new tokens it's necessary to resize the embedding layer of the bert model.
+- the rest of the training code follows the same logic from before.
 
 now, there are other ways too, like using a pooling strategy over the entity tokens or modifying the attention mechanism, but those are more complex, and usually only give marginal improvements. but you could look into that after you have something basic working.
 
@@ -271,20 +271,20 @@ class RelationExtractionModel(nn.Module):
     def __init__(self, bert_model_name, num_relations, lstm_hidden_size):
         super().__init__()
         self.bert = BertModel.from_pretrained(bert_model_name)
-        self.lstm = nn.LSTM(self.bert.config.hidden_size, 
-                            lstm_hidden_size, 
-                            batch_first=True, 
+        self.lstm = nn.LSTM(self.bert.config.hidden_size,
+                            lstm_hidden_size,
+                            batch_first=True,
                             bidirectional=True)
         self.classifier = nn.Linear(lstm_hidden_size * 2, num_relations)
 
     def forward(self, input_ids, attention_mask, mention_mask):
-      
+
         bert_output = self.bert(input_ids, attention_mask=attention_mask).last_hidden_state
 
         masked_output = bert_output * mention_mask.unsqueeze(-1)
 
         lstm_out, _ = self.lstm(masked_output)
-        
+
         # mean pooling
         pooled_output = lstm_out.sum(dim=1) / (mention_mask.sum(dim=1, keepdim=True)+1e-10)
 
@@ -303,7 +303,7 @@ class RelationExtractionDataset(Dataset):
 
     def __getitem__(self, idx):
         sent, ent1_start, ent1_end, ent2_start, ent2_end, relation = self.data[idx]
-        
+
         encoding = self.tokenizer(
             sent,
             add_special_tokens=True,
@@ -313,14 +313,14 @@ class RelationExtractionDataset(Dataset):
             return_attention_mask=True,
             return_tensors='pt'
         )
-        
+
         # creating a 'mention mask' that is 1 on the entity tokens and 0 otherwise
         mention_mask = torch.zeros(self.max_len, dtype=torch.long)
-        
-        # mapping the character based indexes from the original string 
+
+        # mapping the character based indexes from the original string
         # to the tokenized indexes
         token_offsets = encoding.offset_mapping[0]
-        
+
         token_start_1 = -1
         token_end_1 = -1
 
@@ -329,7 +329,7 @@ class RelationExtractionDataset(Dataset):
                 token_start_1 = token_index
             if start < ent1_end <= end:
                 token_end_1 = token_index
-        
+
         if token_start_1 != -1 and token_end_1 != -1:
           mention_mask[token_start_1:token_end_1+1] = 1
 
@@ -344,7 +344,7 @@ class RelationExtractionDataset(Dataset):
 
         if token_start_2 != -1 and token_end_2 != -1:
           mention_mask[token_start_2:token_end_2+1] = 1
-        
+
         return {
             'input_ids': encoding['input_ids'].flatten(),
             'attention_mask': encoding['attention_mask'].flatten(),
@@ -381,7 +381,7 @@ for epoch in range(num_epochs):
         attention_mask = batch['attention_mask'].to(device)
         mention_mask = batch['mention_mask'].to(device)
         labels = batch['labels'].to(device)
-        
+
         optimizer.zero_grad()
         logits = model(input_ids=input_ids, attention_mask=attention_mask, mention_mask=mention_mask)
         loss_fn = CrossEntropyLoss()
@@ -408,10 +408,10 @@ for epoch in range(num_epochs):
 
 here is what is different:
 
-*   it creates a custom `RelationExtractionModel` class that takes bert as a base and adds a bi-lstm layer and a final linear classifier on top.
-*   it mask the output of bert with `mention_mask` and uses that as input to the lstm
-*   instead of using the loss output of `BertForSequenceClassification` a manual loss function is used for training with the output logits of the model.
-*  rest of the code remains the same.
+- it creates a custom `RelationExtractionModel` class that takes bert as a base and adds a bi-lstm layer and a final linear classifier on top.
+- it mask the output of bert with `mention_mask` and uses that as input to the lstm
+- instead of using the loss output of `BertForSequenceClassification` a manual loss function is used for training with the output logits of the model.
+- rest of the code remains the same.
 
 for further reading, i would suggest looking at the original bert paper "bert: pre-training of deep bidirectional transformers for language understanding" which gives you the fundamentals. also, papers on relation extraction are worth looking into to understand the nuances like "joint entity and relation extraction using a hybrid neural network" or "relation extraction with multi-instance learning" that will give you different insights into the common techniques used.
 

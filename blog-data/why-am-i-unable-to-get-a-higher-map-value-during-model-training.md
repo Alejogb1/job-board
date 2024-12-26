@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-unable-to-get-a-higher-map-value-during-model-training"
 ---
 
-alright, so you're hitting a wall with your mAP during model training, right? i've been there, many times. it's one of those things that makes you question your sanity, especially when you've poured hours into tweaking things. let's break this down like we're debugging a particularly stubborn piece of code.
+, so you're hitting a wall with your mAP during model training, right? i've been there, many times. it's one of those things that makes you question your sanity, especially when you've poured hours into tweaking things. let's break this down like we're debugging a particularly stubborn piece of code.
 
 first, let's assume we're talking about object detection, since mAP (mean average precision) is a core metric there. and when i say i've been there, i mean i've stared at mAP curves that look like a flatline for days, wondering where i went wrong. one time, i spent a whole weekend convinced my dataset was cursed, only to realize i had a tiny but fatal error in my bounding box annotation parsing logic. a misplaced comma, of all things. it haunts me to this day.
 
@@ -24,17 +24,17 @@ so, why is your mAP stuck? well, it's rarely just one thing. it's usually a comb
 
 the way i typically go about this is systematic, i try not to change everything at once. that just makes it impossible to know what solved it. here is the general process that worked for me:
 
-*   **simplify:** start with a smaller subset of your data and see if you can get it to train. this will allow you to iterate faster.
-*   **baseline:** make sure you start with a known working model and configuration for your dataset type. for example, the pre-trained weights provided by libraries like pytorch are a good place to start.
-*   **visualize:** visualize as much as possible. your training loss curves, ground truth bounding boxes, predicted boxes, the features maps output from intermediate layers. a picture is worth a thousand words.
-*   **experiment:** change one thing at a time, observe the results and keep notes of what works and what doesn't. it’s important to have an idea of what effect each change will have on the result, try not to change stuff randomly, there should be a hypothesis behind it.
-*   **patience:** sometimes it simply takes a while to converge. do not stop training too early. and most importantly, do not get discouraged, we’ve all been there.
+- **simplify:** start with a smaller subset of your data and see if you can get it to train. this will allow you to iterate faster.
+- **baseline:** make sure you start with a known working model and configuration for your dataset type. for example, the pre-trained weights provided by libraries like pytorch are a good place to start.
+- **visualize:** visualize as much as possible. your training loss curves, ground truth bounding boxes, predicted boxes, the features maps output from intermediate layers. a picture is worth a thousand words.
+- **experiment:** change one thing at a time, observe the results and keep notes of what works and what doesn't. it’s important to have an idea of what effect each change will have on the result, try not to change stuff randomly, there should be a hypothesis behind it.
+- **patience:** sometimes it simply takes a while to converge. do not stop training too early. and most importantly, do not get discouraged, we’ve all been there.
 
 **code snippets for reference:**
 
 let's look at some small code snippets that are very common in training routines, just as an example. note that they are simplified, and may need adapting to specific situations. i'll give an example on how to use learning rate schedulers, how to calculate losses, and how to visualize the output bounding boxes.
 
-*learning rate scheduler example (pytorch)*
+_learning rate scheduler example (pytorch)_
 
 ```python
 import torch.optim as optim
@@ -50,7 +50,7 @@ for epoch in range(100): #training loop
 
 the important part here is `scheduler.step()` that is applied after each optimizer step. note that you have a bunch of different schedulers to choose from, in the pytorch documentation there are many examples that you can take a look at.
 
-*loss calculation (simplified pytorch example):*
+_loss calculation (simplified pytorch example):_
 
 ```python
 import torch
@@ -72,7 +72,7 @@ def compute_losses(predictions, targets):
 
 in this example, the classification loss is calculated using `cross_entropy` and bounding box loss using `smooth_l1_loss`. normally your `predictions` and `targets` will have more details and might involve more steps. this is just to give a general idea. also you might need to incorporate a weighted average over all classes, or a more complicated way of doing this.
 
-*bounding box visualization (example):*
+_bounding box visualization (example):_
 
 ```python
 import cv2
@@ -98,10 +98,10 @@ this code just loads a bounding box output (in the `boxes` variable, which is us
 
 instead of just throwing links at you, let me suggest a few classic papers and textbooks that i found really helpful over the years:
 
-*   "deep learning" by ian goodfellow et al.: this book is a bible for any deep learning practitioner, it's a must-have.
-*   the original faster r-cnn and yolo papers, and their newer iterations: these papers are the foundation of modern object detection. really good for understanding the intuition behind them.
-*   the pytorch documentation: it has a ton of examples, tutorials and descriptions, it's like having a deep learning guru at your disposal.
-*   "computer vision: algorithms and applications" by richard szeliski: a very comprehensive computer vision textbook with very detailed explanations.
+- "deep learning" by ian goodfellow et al.: this book is a bible for any deep learning practitioner, it's a must-have.
+- the original faster r-cnn and yolo papers, and their newer iterations: these papers are the foundation of modern object detection. really good for understanding the intuition behind them.
+- the pytorch documentation: it has a ton of examples, tutorials and descriptions, it's like having a deep learning guru at your disposal.
+- "computer vision: algorithms and applications" by richard szeliski: a very comprehensive computer vision textbook with very detailed explanations.
 
 **final thoughts (and a very bad joke)**
 

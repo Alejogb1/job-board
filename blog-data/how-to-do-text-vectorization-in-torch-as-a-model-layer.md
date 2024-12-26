@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-text-vectorization-in-torch-as-a-model-layer"
 ---
 
-alright, so you're looking to slot text vectorization directly into your pytorch model as a layer, right? i've been down that rabbit hole myself a few times, so i can definitely share some insights and, most importantly, code that actually works. believe me, i’ve had my share of headaches getting this piece to play nice with the rest of the network.
+, so you're looking to slot text vectorization directly into your pytorch model as a layer, right? i've been down that rabbit hole myself a few times, so i can definitely share some insights and, most importantly, code that actually works. believe me, i’ve had my share of headaches getting this piece to play nice with the rest of the network.
 
 the issue most people run into is that typical text preprocessing steps – tokenization, vocabulary creation, integer encoding – they are often done as separate, upfront operations. which means your model is only getting preprocessed number sequences as input. it's fine for experimentation, but when you're pushing for a full, end-to-end system, it's way cleaner and faster to have that vectorization step baked right into your model architecture. it simplifies the data pipeline a lot.
 
@@ -54,7 +54,7 @@ def build_vocab(texts, min_freq=2):
         text = text.lower()
         text = re.sub(r'[^a-z0-9\s]', '', text)
         tokens.extend(text.split())
-    
+
     token_counts = Counter(tokens)
     vocab = {'<unk>': 0, '<pad>': 1}
     for token, count in token_counts.items():
@@ -156,7 +156,7 @@ def build_vocab_advanced(texts, min_freq=2):
         text = text.lower()
         text = re.sub(r'[^a-z0-9\s]', '', text)
         tokens.extend(text.split())
-    
+
     token_counts = Counter(tokens)
     vocab = {'<unk>': 0, '<pad>': 1}
     for token, count in token_counts.items():
@@ -177,7 +177,7 @@ if __name__ == '__main__':
     print(f'vocabulary: {vocab}')
     embedding_dim = 100
     glove_file_path = 'glove.6b.100d.txt'  #replace this with the actual file path, make sure the file is in the same folder of this code
-    
+
     if not os.path.exists(glove_file_path):
         print(f"Error: {glove_file_path} not found. Please download it.")
     else:
@@ -277,7 +277,7 @@ def build_vocab_advanced(texts, min_freq=2):
         text = text.lower()
         text = re.sub(r'[^a-z0-9\s]', '', text)
         tokens.extend(text.split())
-    
+
     token_counts = Counter(tokens)
     vocab = {'<unk>': 0, '<pad>': 1}
     for token, count in token_counts.items():
@@ -314,6 +314,7 @@ if __name__ == '__main__':
         print(f'concatenated tensor shape: {concatenated_batch.shape}')
 
 ```
+
 in this final example, the `textandnumericvectorizer` class now includes a linear layer `numeric_layer`, a dropout layer, and takes the numeric batch as an input to the forward method. you can now see that in the main execution part, both text data and numeric are passed to the forward method to combine text embeddings with the numerical features. after passing through the numeric linear layer, both are concatenated and returned. this setup allows more complex model architectures.
 
 it’s a bit more involved, but it gives you full control. you can handle pretty much any scenario you might encounter when processing text data.

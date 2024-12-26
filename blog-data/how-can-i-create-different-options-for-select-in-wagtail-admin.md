@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-create-different-options-for-select-in-wagtail-admin"
 ---
 
-Alright, let’s tackle this. Been down this road a few times with Wagtail, and it’s a common need, wanting a bit more flexibility with those dropdowns in the admin panel. We’re not limited to just basic text fields; we can absolutely create more nuanced options for our `Select` fields, catering to diverse data needs. The key lies in leveraging Wagtail's field panels and model properties effectively, along with a little Python magic.
+, let’s tackle this. Been down this road a few times with Wagtail, and it’s a common need, wanting a bit more flexibility with those dropdowns in the admin panel. We’re not limited to just basic text fields; we can absolutely create more nuanced options for our `Select` fields, catering to diverse data needs. The key lies in leveraging Wagtail's field panels and model properties effectively, along with a little Python magic.
 
 The standard way, of course, is to define a `CharField` with `choices` directly in your model, like so:
 

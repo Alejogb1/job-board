@@ -4,13 +4,13 @@ date: "2024-12-16"
 id: "why-are-transformer-summarizer-outputs-not-consistent-with-a-fixed-seed"
 ---
 
-Okay, let's talk about inconsistent transformer summarization outputs, even with a fixed seed. It's something I’ve definitely banged my head against in more than a few projects, especially back in my early days optimizing NLP pipelines. Thinking I had a fully reproducible system, only to find subtly different summaries creeping in – quite frustrating. So, why does this happen? It’s not a flaw in the concept of random seeding itself, but rather, a convergence of several factors inherent to how these models operate.
+, let's talk about inconsistent transformer summarization outputs, even with a fixed seed. It's something I’ve definitely banged my head against in more than a few projects, especially back in my early days optimizing NLP pipelines. Thinking I had a fully reproducible system, only to find subtly different summaries creeping in – quite frustrating. So, why does this happen? It’s not a flaw in the concept of random seeding itself, but rather, a convergence of several factors inherent to how these models operate.
 
-The most foundational issue stems from the non-deterministic nature of operations on floating-point numbers at the hardware level. While seeding certainly forces the initialization parameters of your model to be the same across runs, it does not guarantee *bit-wise* reproducibility. Floating-point arithmetic, especially within highly parallelized environments like gpus used for training and inference with transformers, isn't precisely reproducible even with the same seed due to parallel reduction operations like summation, which may accumulate values in different orders. Slight variations in hardware or even the specific order in which data is processed during each run can introduce minute numerical differences. These differences, though minuscule initially, can propagate and be amplified through the complex, layered architecture of a transformer.
+The most foundational issue stems from the non-deterministic nature of operations on floating-point numbers at the hardware level. While seeding certainly forces the initialization parameters of your model to be the same across runs, it does not guarantee _bit-wise_ reproducibility. Floating-point arithmetic, especially within highly parallelized environments like gpus used for training and inference with transformers, isn't precisely reproducible even with the same seed due to parallel reduction operations like summation, which may accumulate values in different orders. Slight variations in hardware or even the specific order in which data is processed during each run can introduce minute numerical differences. These differences, though minuscule initially, can propagate and be amplified through the complex, layered architecture of a transformer.
 
 Another important area is the handling of random operations within the inference process, beyond model initialization. Beam search, which is commonly used for generating text in summarization tasks, involves making probabilistic decisions at each decoding step. Even with a fixed random seed, there can be subtle differences in how the search explores the space of possible word sequences due to the inherent computational variance we discussed. Furthermore, some libraries and frameworks may contain non-deterministic implementations or functions that can affect the outcome.
 
-Finally, let's not forget the specific implementations of components within transformer models that can contribute to variations. For instance, dropout layers, commonly used for regularization, introduce randomness during training *and* sometimes even during inference. If dropout is active during summarization, the mask applied will vary even if the seed is fixed, influencing the output. Similarly, while less common, some implementations might include other random operations during specific inference procedures. Therefore, having consistent model architecture is necessary but not sufficient. It also implies consistent implementation details from library to library and different backend technologies used for model deployment.
+Finally, let's not forget the specific implementations of components within transformer models that can contribute to variations. For instance, dropout layers, commonly used for regularization, introduce randomness during training _and_ sometimes even during inference. If dropout is active during summarization, the mask applied will vary even if the seed is fixed, influencing the output. Similarly, while less common, some implementations might include other random operations during specific inference procedures. Therefore, having consistent model architecture is necessary but not sufficient. It also implies consistent implementation details from library to library and different backend technologies used for model deployment.
 
 Now, let’s break this down with some code examples to highlight these factors. The code will be in python, assuming you are using pytorch and transformers library.
 
@@ -97,7 +97,7 @@ def generate_summary(text, seed, use_dropout=False):
     np.random.seed(seed)
 
     summarizer = pipeline("summarization", model="facebook/bart-large-cnn", device=0 if torch.cuda.is_available() else -1)
-    
+
     if use_dropout:
         summary = summarizer(text, num_beams=4, length_penalty=2.0, return_dict=True, output_attentions=False, use_cache=False, dropout=0.1)[0]['summary_text']
     else:
@@ -133,7 +133,7 @@ As you will notice, adding dropout consistently produces non-deterministic resul
 
 **Practical Steps for Improved Consistency**
 
-Okay, so if exact reproducibility is extremely difficult, what can we do? The goal should be to minimize, not eradicate, inconsistencies:
+, so if exact reproducibility is extremely difficult, what can we do? The goal should be to minimize, not eradicate, inconsistencies:
 
 1.  **Control the Environment:** Use consistent versions of libraries, frameworks, and underlying hardware if possible. This also includes using the same version of operating system, docker images and python versions. This is why containerization is so helpful in the machine learning context.
 2.  **Disable Randomization Where Possible:** Examine your inference code. If you are using a library that allows it, disable dropout during inference, and any other operations you can identify as non-deterministic during prediction.
@@ -145,8 +145,8 @@ Okay, so if exact reproducibility is extremely difficult, what can we do? The go
 
 For a deeper dive, I recommend looking into these resources:
 
-*   "Numerical Recipes: The Art of Scientific Computing" by William H. Press et al., offers a robust understanding of numerical computations, including a detailed treatment of floating-point arithmetic.
-*   "Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville, although it doesn’t specifically cover this issue in depth, provides the foundational knowledge of deep learning principles necessary for understanding why these models behave this way.
-*   The research papers for specific model implementations, such as the original "Attention is All You Need" paper (for the general transformer architecture), provide an insight into potential sources of non-determinism if one reads carefully. Look for specific non-deterministic operations like dropout, or beam search in the documentation or paper associated with your chosen model architecture.
+- "Numerical Recipes: The Art of Scientific Computing" by William H. Press et al., offers a robust understanding of numerical computations, including a detailed treatment of floating-point arithmetic.
+- "Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville, although it doesn’t specifically cover this issue in depth, provides the foundational knowledge of deep learning principles necessary for understanding why these models behave this way.
+- The research papers for specific model implementations, such as the original "Attention is All You Need" paper (for the general transformer architecture), provide an insight into potential sources of non-determinism if one reads carefully. Look for specific non-deterministic operations like dropout, or beam search in the documentation or paper associated with your chosen model architecture.
 
 In conclusion, achieving perfect reproducibility with transformer summarization, especially across varying hardware or software environments is extremely challenging, or often impossible. The non-deterministic nature of floating-point arithmetic, along with the complexities of algorithms like beam search and the inclusion of dropout during inference, introduce variability despite the presence of a fixed random seed. Understanding these underlying issues, and actively trying to minimize them will lead to more reliable and reproducible results. Remember, striving for consistency is an ongoing process, and it’s critical to approach it with a clear understanding of the root causes.

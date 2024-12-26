@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-laravel-model-collections-be-filtered-using-closures"
 ---
 
-Alright, let's tackle this. Filtering Laravel model collections using closures is a staple of efficient data manipulation, and it's something I've relied on heavily throughout my years working with the framework. I recall a particularly complex project involving inventory management where we needed to dynamically filter product lists based on user-defined criteria; closures proved to be essential for keeping that logic clean and maintainable. It's a concept that, while straightforward, often benefits from a clear explanation and concrete examples.
+, let's tackle this. Filtering Laravel model collections using closures is a staple of efficient data manipulation, and it's something I've relied on heavily throughout my years working with the framework. I recall a particularly complex project involving inventory management where we needed to dynamically filter product lists based on user-defined criteria; closures proved to be essential for keeping that logic clean and maintainable. It's a concept that, while straightforward, often benefits from a clear explanation and concrete examples.
 
 Fundamentally, Laravel’s collections, which are often returned from database queries via Eloquent models, provide a `filter()` method. This method accepts a closure as its argument. The closure, in turn, receives each individual model instance within the collection as input. The closure's responsibility is to return a boolean value: `true` if the model should be included in the filtered collection, and `false` if it should be excluded. This mechanism allows for highly flexible and expressive filtering based on any property or computed value of the model. It's far more powerful than relying on simple where clauses within your initial database queries, especially when the filtering logic depends on data not readily available in your database schema or on complex combinations of conditions.
 
@@ -32,6 +32,7 @@ foreach($pendingOrders as $order) {
 }
 ?>
 ```
+
 In this example, the closure receives each `$order` instance from the `$orders` collection. The condition `$order->status === 'pending'` is evaluated for every order. If it evaluates to true, the order is included in the resulting `$pendingOrders` collection; otherwise, it’s excluded. This illustrates the basic application of filtering by a single model attribute.
 
 **Scenario 2: Filtering by a Related Model's Attribute**
@@ -60,11 +61,12 @@ foreach($electronicsProducts as $product) {
 
 ?>
 ```
+
 Here, we’re using the `use` keyword to pass the `$electronicsCategory` variable into the scope of the closure. Inside the closure, we access the related `category` through the `Product` model relationship and compare their ids. Crucially, if there’s a possibility that a product might not have a category (e.g. if it's optional) it would be necessary to check for that via `if ($product->category)` before accessing the `id` property, or use an optional chaining operator like `?->` depending on your PHP version. It’s these kinds of edge cases that highlight the benefit of performing complex logic at the collection level.
 
 **Scenario 3: Filtering Using Multiple Complex Criteria**
 
-Let's push this further by combining multiple conditions. Consider again an `Order` model, but now we want to find all orders that are either 'pending' *or* that were placed within the last 24 hours. This level of logic becomes unwieldy with traditional query builder mechanisms.
+Let's push this further by combining multiple conditions. Consider again an `Order` model, but now we want to find all orders that are either 'pending' _or_ that were placed within the last 24 hours. This level of logic becomes unwieldy with traditional query builder mechanisms.
 
 ```php
 <?php
@@ -88,11 +90,11 @@ foreach($recentOrPendingOrders as $order) {
 ?>
 ```
 
-In this third example, we see the real power of filtering with closures.  We are able to use more complex logic, leveraging helper libraries like `Carbon` to calculate the cutoff date, and then perform a combined condition. This would be cumbersome to translate into database-centric where clauses.
+In this third example, we see the real power of filtering with closures. We are able to use more complex logic, leveraging helper libraries like `Carbon` to calculate the cutoff date, and then perform a combined condition. This would be cumbersome to translate into database-centric where clauses.
 
 **Best Practices and Considerations**
 
-While powerful, it's essential to note some considerations. Filtering on model collections is performed in memory, meaning all the records are loaded initially from the database before being filtered, as opposed to more performant database-level filtering. If you're dealing with very large datasets, it's often more efficient to filter at the database layer with your Eloquent queries if the filtering criteria allow for it. However, there are cases where you *need* the additional flexibility that a collection filter offers. It is always a matter of balancing needs and performance. As an additional best practice, avoid directly modifying the models within your filter closures. Focus on checking properties for filtering purposes, instead of attempting to change data. This maintains the immutability of the original collection.
+While powerful, it's essential to note some considerations. Filtering on model collections is performed in memory, meaning all the records are loaded initially from the database before being filtered, as opposed to more performant database-level filtering. If you're dealing with very large datasets, it's often more efficient to filter at the database layer with your Eloquent queries if the filtering criteria allow for it. However, there are cases where you _need_ the additional flexibility that a collection filter offers. It is always a matter of balancing needs and performance. As an additional best practice, avoid directly modifying the models within your filter closures. Focus on checking properties for filtering purposes, instead of attempting to change data. This maintains the immutability of the original collection.
 
 **Further Reading and Resources**
 

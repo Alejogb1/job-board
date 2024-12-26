@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "how-to-use-knn-to-find-outlier-in-a-grouped-pandas-dataframe"
 ---
 
-alright, so you're looking at using k-nearest neighbors (knn) to find outliers in a pandas dataframe, where you've got some sort of grouping going on, yeah? i've been down this rabbit hole a few times, and it's a pretty common scenario when dealing with complex datasets. let me share what i've learned, and some code snippets that'll hopefully get you on the right track.
+, so you're looking at using k-nearest neighbors (knn) to find outliers in a pandas dataframe, where you've got some sort of grouping going on, yeah? i've been down this rabbit hole a few times, and it's a pretty common scenario when dealing with complex datasets. let me share what i've learned, and some code snippets that'll hopefully get you on the right track.
 
-the core idea here is that you're not just looking for outliers in the entire dataset, but you want to find them *within* each group. think about it like this: imagine you have data on people's heights, but split by country. a height that's unusual in a group from south-east asia might be perfectly normal in northern europe. that's why we need to apply knn for outlier detection within each group separately.
+the core idea here is that you're not just looking for outliers in the entire dataset, but you want to find them _within_ each group. think about it like this: imagine you have data on people's heights, but split by country. a height that's unusual in a group from south-east asia might be perfectly normal in northern europe. that's why we need to apply knn for outlier detection within each group separately.
 
 my first time tackling something like this, i was dealing with telemetry data from a bunch of sensors on industrial machines, split by machine type. i tried global outlier detection at first, and it was a total mess. it was flagging normal readings on one machine type as outliers just because it had a very different operating range than others. it was a facepalm moment to put it mildly. i wasted a whole day trying to understand why my perfectly reasonable models were going mad. lesson learned hard.
 

@@ -6,7 +6,7 @@ id: "why-are-sales-navigator-urls-unable-to-be-resolved-into-regular-linkedin-pr
 
 Second suggestion is: What would be the limitations of scraping Sales Navigator data without utilizing the official LinkedIn API? (Teaching point: Explains the practical challenges, such as rate limits, legal considerations, and data structure variations.)
 Third suggestion is: How could one implement a system that keeps track of the changes in a LinkedIn profile over time? (Teaching point: Discusses change data capture and data diffing techniques.)
-Okay so lets unpack this stuff its like diving into the rabbit hole of LinkedIn yeah? Sales Navigator URLs thats a tricky one you see the whole point is exclusivity its not just about fancy features its about keeping you within their ecosystem they dont want you easily jumping from Sales Nav to regular profiles unless youre playing by their rules and those rules involve being logged in
+lets unpack this stuff its like diving into the rabbit hole of LinkedIn yeah? Sales Navigator URLs thats a tricky one you see the whole point is exclusivity its not just about fancy features its about keeping you within their ecosystem they dont want you easily jumping from Sales Nav to regular profiles unless youre playing by their rules and those rules involve being logged in
 
 think of it like a members only club the url itself is like an invite but it only works if you flash your membership card which in this case is your active linkedin session the url carries some kind of session token or identifier that is only valid while youre logged in and they check this on their end when you try to resolve the url they do a quick validation "hey is this user legit are they a paying member are they even logged in" if not bam access denied youre redirected back to the login page it's all about controlling access and user experience but more so about control
 
@@ -95,4 +95,5 @@ hash_value= create_hash_of_profile(profile_data)
 
 print(f"The sha256 of the profile is {hash_value}")
 ```
+
 so thats it in a nutshell its all connected its all about how websites work how they control access how they prevent misuse of their data and how you as a developer have to constantly adapt to the changing landscape its like a dance between innovation and security a cat and mouse game and its pretty intense.

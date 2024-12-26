@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-import-sgd-and-adam-optimizers-in-tensorflow-keras"
 ---
 
-Alright, let’s tackle this one. I've seen this question pop up in various forms over the years, and while it might seem straightforward at first glance, nuances in how you integrate optimizers can definitely impact the training of your neural networks. So, let's unpack it methodically.
+, let’s tackle this one. I've seen this question pop up in various forms over the years, and while it might seem straightforward at first glance, nuances in how you integrate optimizers can definitely impact the training of your neural networks. So, let's unpack it methodically.
 
 I recall a project back in my early days involving a complex image segmentation task. We were battling with vanishing gradients and needed to experiment with various optimizers to find the sweet spot for convergence. That experience really solidified my understanding of not only how to import these optimizers, but also how to choose the right one for a given scenario. In that project, we went through the typical iterations – starting with the basic stochastic gradient descent (sgd) and eventually making our way to adaptive methods like adam.
 

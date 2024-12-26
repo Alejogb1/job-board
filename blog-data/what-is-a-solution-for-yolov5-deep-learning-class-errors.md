@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-a-solution-for-yolov5-deep-learning-class-errors"
 ---
 
-Alright, let's dive into this. Class errors with YOLOv5, or any object detection model for that matter, can be a real headache. I've definitely spent my fair share of late nights debugging misclassifications, and while there's no magic bullet, a systematic approach usually gets you closer to a robust solution. Over the years, I've found it's less about singular fixes and more about addressing interconnected areas like data quality, model architecture, and training parameters. Let me explain what I mean and show you some examples that have worked for me in the past.
+, let's dive into this. Class errors with YOLOv5, or any object detection model for that matter, can be a real headache. I've definitely spent my fair share of late nights debugging misclassifications, and while there's no magic bullet, a systematic approach usually gets you closer to a robust solution. Over the years, I've found it's less about singular fixes and more about addressing interconnected areas like data quality, model architecture, and training parameters. Let me explain what I mean and show you some examples that have worked for me in the past.
 
 Typically, these errors break down into a few main categories: false positives (detecting something that isn't there), false negatives (missing a true detection), and misclassifications (detecting the object but assigning the wrong class label). Pinpointing the exact cause often involves a process of elimination, and it begins, as most things do in machine learning, with the data.
 
@@ -30,6 +30,7 @@ class_weights = [1.0, 2.5, 1.0, 1.0] # Weights corresponding to each class.
 # Train the model using the custom class weights
 model.train(data='custom_dataset.yaml', epochs=100, device=0, class_weights=class_weights)
 ```
+
 In this example, `class_weights` is a list where each element represents a weight to be applied to the respective classes during loss calculation. The higher the weight, the more the loss of this class is considered, which helps address the class imbalance during training. This would be the primary solution if we were to approach the imbalanced dataset situation I mentioned earlier.
 
 Next, let's consider a data augmentation example using albumentations library. This is vital to artificially boost the amount of usable data for training, and improve the model’s robustness:

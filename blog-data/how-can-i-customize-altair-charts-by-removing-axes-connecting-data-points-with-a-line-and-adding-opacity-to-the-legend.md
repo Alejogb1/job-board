@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-customize-altair-charts-by-removing-axes-connecting-data-points-with-a-line-and-adding-opacity-to-the-legend"
 ---
 
-Alright, let's tackle this. I've spent quite a bit of time crafting visualizations with altair, and I've certainly encountered situations where the defaults just don't cut it. Your request to remove axes, connect points with lines, and apply opacity to the legend is a common scenario, and achieving it is pretty straightforward once you understand the underlying principles of altair's declarative approach.
+, let's tackle this. I've spent quite a bit of time crafting visualizations with altair, and I've certainly encountered situations where the defaults just don't cut it. Your request to remove axes, connect points with lines, and apply opacity to the legend is a common scenario, and achieving it is pretty straightforward once you understand the underlying principles of altair's declarative approach.
 
 To begin, remember that altair works by composing marks (like points, lines, bars) and encoding channels (like x, y, color, size). When you see a chart with axes, it's a consequence of altair's default configuration for those encodings. Removing axes essentially boils down to overriding those defaults.
 
@@ -56,7 +56,7 @@ This snippet generates a line chart. Now, the points are implicitly connected by
 
 **Adding Opacity to the Legend**
 
-Altering the opacity of a legend isn’t directly accomplished by manipulating legend settings but by modifying the opacity of the *marks* that the legend represents. To explain, a legend in Altair doesn’t have its own independent opacity. It reflects the visual properties of the data. We need to apply an opacity to all the marks in the chart to alter the legend's apparent opacity, then optionally change the opacity of certain marks. Here's an example using multiple lines with different opacities – this could simulate, for example, visualizing different communication channels over the same timeline:
+Altering the opacity of a legend isn’t directly accomplished by manipulating legend settings but by modifying the opacity of the _marks_ that the legend represents. To explain, a legend in Altair doesn’t have its own independent opacity. It reflects the visual properties of the data. We need to apply an opacity to all the marks in the chart to alter the legend's apparent opacity, then optionally change the opacity of certain marks. Here's an example using multiple lines with different opacities – this could simulate, for example, visualizing different communication channels over the same timeline:
 
 ```python
 import altair as alt
@@ -82,7 +82,7 @@ chart.show()
 
 ```
 
-In this example, I've added an `opacity` encoding, setting it to 0.6. This applies the transparency to the line *and* also to how it's shown in the legend. If you just want a faded legend, but not faded marks, there isn't a direct, built-in way to do that. You would have to manually create a legend with custom markers using something other than altair (or create custom mark encodings using conditional logic which can be complex).
+In this example, I've added an `opacity` encoding, setting it to 0.6. This applies the transparency to the line _and_ also to how it's shown in the legend. If you just want a faded legend, but not faded marks, there isn't a direct, built-in way to do that. You would have to manually create a legend with custom markers using something other than altair (or create custom mark encodings using conditional logic which can be complex).
 
 **Further Exploration**
 

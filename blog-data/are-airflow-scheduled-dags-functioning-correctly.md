@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "are-airflow-scheduled-dags-functioning-correctly"
 ---
 
-Okay, let's tackle this. I’ve spent more than a few nights staring at Airflow logs, so I have a reasonable sense of the common pitfalls when scheduled dags seem…off. The deceptively simple question of “are my dags working correctly?” actually unravels into a pretty complex set of considerations. It's rarely a binary yes or no. It’s much more nuanced than that. We're essentially probing the health and behavior of a system, and that requires looking at multiple facets.
+, let's tackle this. I’ve spent more than a few nights staring at Airflow logs, so I have a reasonable sense of the common pitfalls when scheduled dags seem…off. The deceptively simple question of “are my dags working correctly?” actually unravels into a pretty complex set of considerations. It's rarely a binary yes or no. It’s much more nuanced than that. We're essentially probing the health and behavior of a system, and that requires looking at multiple facets.
 
 One of the first things I learned, painfully I might add, is that “scheduled” doesn’t always mean “executed as anticipated.” The scheduler component within Airflow is fairly sophisticated, but it’s also sensitive to its environment and the configuration it’s given. When a DAG isn't running when and how you expect it, the diagnosis requires a systematic approach. We can’t just assume the code is broken. It's crucial to eliminate infrastructure issues first. I've seen cases where network outages, database contention, or even simply resource exhaustion on the scheduler server prevented dags from initiating.
 
 Consider this past project of mine. We were ingesting large datasets daily. The dags were set to trigger at midnight. What we found, after some frustrating delays and late nights, was that the Airflow metadata database was under considerable load from the end-of-day reporting batch jobs. This was causing a significant lag in the scheduler’s ability to detect and trigger new DAG runs at the scheduled time. The symptoms were seemingly random delays in dag execution. The code wasn’t the problem, the system was overloaded and the metadata queries were taking too long to complete.
 
-So, first, let’s address the most direct interpretation of the question – is the dag running *at all* at the scheduled time? We need to check a few specific things.
+So, first, let’s address the most direct interpretation of the question – is the dag running _at all_ at the scheduled time? We need to check a few specific things.
 
-**1. Is the DAG *enabled*?** This is a classic blunder, trust me, I've done it. The dag’s “is_paused” attribute needs to be set to `False`. It's an easy thing to miss during a deployment or when playing with local setups.
+**1. Is the DAG _enabled_?** This is a classic blunder, trust me, I've done it. The dag’s “is_paused” attribute needs to be set to `False`. It's an easy thing to miss during a deployment or when playing with local setups.
 
 **2. Has the DAG been parsed and is it visible in the UI?** If the DAG isn’t showing up, or it’s showing errors, there’s an issue with the dag file itself. Parsing errors are typically due to syntax issues or problems with imports.
 
@@ -20,7 +20,7 @@ So, first, let’s address the most direct interpretation of the question – is
 
 **4. Check the scheduler logs.** These logs are gold for debugging. Look for indications of errors related to dag parsing, scheduling, or issues with the database. The logs will give you hints about any connection problems to the database or any failures when attempting to schedule DAG runs.
 
-Once we’ve ascertained the DAG is visible, enabled, and the scheduler is running, the next step is to look at the *timing and execution* of our dags.
+Once we’ve ascertained the DAG is visible, enabled, and the scheduler is running, the next step is to look at the _timing and execution_ of our dags.
 
 Here's a very simple example illustrating the typical dag configuration to help illustrate some points:
 
@@ -46,7 +46,7 @@ with DAG(
 
 ```
 
-Let's dig into why some of the parameters we see in there are important. The `schedule` parameter dictates when our dag should run. It uses crontab-like syntax (e.g., "0 0 * * *") or predefined schedule identifiers like "@daily". Misunderstandings about how these schedules translate to execution times are a frequent source of confusion.
+Let's dig into why some of the parameters we see in there are important. The `schedule` parameter dictates when our dag should run. It uses crontab-like syntax (e.g., "0 0 \* \* \*") or predefined schedule identifiers like "@daily". Misunderstandings about how these schedules translate to execution times are a frequent source of confusion.
 
 Another crucial element is the `start_date` and the `catchup` parameter. Airflow, by default, will backfill past dag runs if catchup is true. If you have a dag defined to start on, say, Jan 1st, 2023 and it's now July 2023 and `catchup` is true, it will try to execute all runs between those dates upon unpausing, potentially overloading your system. It’s usually wise to set catchup to `False`, particularly when deploying a new dag.
 

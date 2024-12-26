@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "datatime-python-formatting-date"
 ---
 
-Okay so datetime formatting in python eh classic pain point I've spent way more time than I care to admit wrestling with this beast so let me break it down for you based on hard learned experience and some late night debugging sessions.
+datetime formatting in python eh classic pain point I've spent way more time than I care to admit wrestling with this beast so let me break it down for you based on hard learned experience and some late night debugging sessions.
 
 First off you're probably looking to convert a datetime object into a string representation or maybe the other way around string to datetime I've been there done that got the t-shirt and the sleep deprivation trust me. Python's datetime module is pretty powerful but the formatting stuff can be a little quirky at first.
 
@@ -54,22 +54,22 @@ The real trouble comes when you have to deal with different formats. You know yo
 
 Here's a table of the common directives I use a lot:
 
-| Directive | Meaning | Example |
-|---|---|---|
-| %Y | Year with century | 2024 |
-| %y | Year without century | 24 |
-| %m | Month as a zero-padded decimal number | 07 |
-| %d | Day of the month as a zero-padded decimal number | 28 |
-| %H | Hour (24-hour clock) as a zero-padded decimal number | 14 |
-| %I | Hour (12-hour clock) as a zero-padded decimal number | 02 |
-| %M | Minute as a zero-padded decimal number | 35 |
-| %S | Second as a zero-padded decimal number | 12 |
-| %f | Microsecond as a decimal number zero-padded on the left | 345678 |
-| %p | Locale's equivalent of AM or PM | PM |
-| %a | Locale's abbreviated weekday name | Mon |
-| %A | Locale's full weekday name | Monday |
-| %b | Locale's abbreviated month name | Jul |
-| %B | Locale's full month name | July |
+| Directive | Meaning                                                 | Example |
+| --------- | ------------------------------------------------------- | ------- |
+| %Y        | Year with century                                       | 2024    |
+| %y        | Year without century                                    | 24      |
+| %m        | Month as a zero-padded decimal number                   | 07      |
+| %d        | Day of the month as a zero-padded decimal number        | 28      |
+| %H        | Hour (24-hour clock) as a zero-padded decimal number    | 14      |
+| %I        | Hour (12-hour clock) as a zero-padded decimal number    | 02      |
+| %M        | Minute as a zero-padded decimal number                  | 35      |
+| %S        | Second as a zero-padded decimal number                  | 12      |
+| %f        | Microsecond as a decimal number zero-padded on the left | 345678  |
+| %p        | Locale's equivalent of AM or PM                         | PM      |
+| %a        | Locale's abbreviated weekday name                       | Mon     |
+| %A        | Locale's full weekday name                              | Monday  |
+| %b        | Locale's abbreviated month name                         | Jul     |
+| %B        | Locale's full month name                                | July    |
 
 And there are many more. You can check out the python documentation for the datetime module I highly recommend reading it. I personally find the oficial documentation great. There's also a good discussion about locale differences in the datetime module’s documentation which is very useful for localization and internationalization issues. These are important topics if you're dealing with users from all over the world.
 

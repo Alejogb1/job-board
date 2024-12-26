@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-does-the-deployment-of-smart-contracts-on-a-private-ethereum-blockchain-need-to-consume-gas-fee-while-the-invocation-does-not"
 ---
 
-alright, let's break down why deploying a smart contract on a private ethereum blockchain still costs gas, even though calling its functions might not. i've been around the block a few times with this, so i'll try to give you the straight dope from my experience, with some code to make it clearer.
+, let's break down why deploying a smart contract on a private ethereum blockchain still costs gas, even though calling its functions might not. i've been around the block a few times with this, so i'll try to give you the straight dope from my experience, with some code to make it clearer.
 
 first off, think about what deployment actually is. you’re not just copying some text into the blockchain, you're executing code which creates a new contract address and saves the bytecode (the machine readable version of your contract) to the chain. this write operation involves all the validators on the network confirming that a new piece of code now exists and has a unique address, and every single node in the network needs to do this. this is resource intensive, similar to installing a program on every computer on a network.
 

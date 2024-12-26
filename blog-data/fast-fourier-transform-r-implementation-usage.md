@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "fast-fourier-transform-r-implementation-usage"
 ---
 
-Okay so you're asking about fast fourier transforms FFTs in R right Been there done that a million times seems like. R and signal processing is a weird beast I’ve wrestled with this so many times it’s not even funny. Let's just say I’ve spent more time debugging FFT outputs in R than I have sleeping some months. No seriously it's true I’ve probably got the eye bags to prove it.
+you're asking about fast fourier transforms FFTs in R right Been there done that a million times seems like. R and signal processing is a weird beast I’ve wrestled with this so many times it’s not even funny. Let's just say I’ve spent more time debugging FFT outputs in R than I have sleeping some months. No seriously it's true I’ve probably got the eye bags to prove it.
 
-So the core of what you’re dealing with is taking a time-domain signal and flipping it into the frequency domain.  Think of it like decomposing a chord into its individual notes it’s the same concept but way more math intensive. R makes it easier though thank goodness. The `fft()` function is your go-to tool it’s built right in so no extra package install needed for the basic implementation but beware there are nuances.
+So the core of what you’re dealing with is taking a time-domain signal and flipping it into the frequency domain. Think of it like decomposing a chord into its individual notes it’s the same concept but way more math intensive. R makes it easier though thank goodness. The `fft()` function is your go-to tool it’s built right in so no extra package install needed for the basic implementation but beware there are nuances.
 
 Let's start with something dead simple because it seems like you may be a beginner you know never assume always start from the basics. I will assume that you know what time and frequency domains are but just in case I will go very slow I’ll show you a sine wave just to keep things extra simple. We’ll generate a time series and then transform it into the frequency space.
 
@@ -35,7 +35,7 @@ That's your first look an absolute basic one there is no extra work here no wind
 
 Now a little gotcha here that a lot of people mess up and I’ve seen it so many times it’s a classic case of RTFM. R's `fft()` output is actually a bit weird because it outputs complex values by default and they are symmetrical which means that the output from say 0hz to the fs/2 is the mirror of fs/2 to the fs. What does this mean? It means that in general we are interested in only half of the output the positive frequencies so only 0 up to fs/2 are important so don’t get confused there. This is also due to the Nyquist theorem in case you want to look it up.
 
-Alright let's move to the next scenario. Let's suppose you have an actual dataset right not just a perfect sine wave like we had in the previous example. Let's say you have a recording with multiple frequencies in it. It could be anything it could be audio it could be vibration data or whatever. So here you're going to see that you are dealing with a noisy signal.
+let's move to the next scenario. Let's suppose you have an actual dataset right not just a perfect sine wave like we had in the previous example. Let's say you have a recording with multiple frequencies in it. It could be anything it could be audio it could be vibration data or whatever. So here you're going to see that you are dealing with a noisy signal.
 
 ```R
 # Simulate a signal with multiple frequencies

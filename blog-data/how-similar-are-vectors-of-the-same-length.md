@@ -4,21 +4,21 @@ date: "2024-12-23"
 id: "how-similar-are-vectors-of-the-same-length"
 ---
 
-Okay, let's tackle this. I've definitely spent a good chunk of my career knee-deep in linear algebra, and the seemingly simple question of how similar vectors of the same length are actually has some surprisingly nuanced answers. It's a question that pops up more often than you might think, especially when dealing with things like machine learning, graphics, or signal processing. The key here isn't a binary "similar" or "dissimilar;" rather, it's about the specific metric you choose to quantify that similarity.
+, let's tackle this. I've definitely spent a good chunk of my career knee-deep in linear algebra, and the seemingly simple question of how similar vectors of the same length are actually has some surprisingly nuanced answers. It's a question that pops up more often than you might think, especially when dealing with things like machine learning, graphics, or signal processing. The key here isn't a binary "similar" or "dissimilar;" rather, it's about the specific metric you choose to quantify that similarity.
 
 The core issue is that "similarity" isn't a well-defined mathematical operation without a clear definition. We're dealing with multiple vectors residing in the same dimensional space, and their "sameness" hinges on how we decide to measure the relationships between them. Because they have the same length, we’ve already taken the initial step of comparing them on the same dimensional basis; but that just means we can directly compare their components. Their similarities are most commonly assessed by looking at angle and/or magnitude in various combinations. Here are three common metrics, and some concrete examples:
 
 **1. The Dot Product (and Cosine Similarity)**
 
-The dot product is a foundational concept in linear algebra, and it is frequently used to assess vector similarity. It’s defined as the sum of the products of corresponding components of two vectors. Mathematically, given vectors *a* and *b* of length *n*:
+The dot product is a foundational concept in linear algebra, and it is frequently used to assess vector similarity. It’s defined as the sum of the products of corresponding components of two vectors. Mathematically, given vectors _a_ and _b_ of length _n_:
 
-*a* ⋅ *b* = Σ (*a<sub>i</sub>* *b<sub>i</sub>*) for *i* = 1 to *n*
+_a_ ⋅ _b_ = Σ (_a<sub>i</sub>_ _b<sub>i</sub>_) for _i_ = 1 to _n_
 
-While the dot product itself isn't a direct similarity measure, it forms the basis for cosine similarity, which *is*. The cosine similarity normalizes the dot product by dividing it by the product of the magnitudes of the two vectors:
+While the dot product itself isn't a direct similarity measure, it forms the basis for cosine similarity, which _is_. The cosine similarity normalizes the dot product by dividing it by the product of the magnitudes of the two vectors:
 
-cos(θ) = (*a* ⋅ *b*) / (||*a*|| * ||*b*||)
+cos(θ) = (_a_ ⋅ _b_) / (||_a_|| * ||*b\*||)
 
-Where ||*v*|| represents the magnitude (or Euclidean norm) of vector *v*, calculated as √(Σ *v<sub>i</sub><sup>2</sup>*).
+Where ||_v_|| represents the magnitude (or Euclidean norm) of vector _v_, calculated as √(Σ _v<sub>i</sub><sup>2</sup>_).
 
 Cosine similarity effectively measures the angle between the two vectors, ignoring their magnitudes. A cosine value of 1 means the vectors point in the same direction, -1 means they point in opposite directions, and 0 indicates they are orthogonal (perpendicular).
 
@@ -53,11 +53,11 @@ In my experience, cosine similarity is particularly useful when dealing with doc
 
 **2. Euclidean Distance**
 
-Euclidean distance is another widely used metric, though it measures the *dissimilarity* between vectors. It’s essentially the straight-line distance between the points represented by the vectors in the n-dimensional space.
+Euclidean distance is another widely used metric, though it measures the _dissimilarity_ between vectors. It’s essentially the straight-line distance between the points represented by the vectors in the n-dimensional space.
 
-Given vectors *a* and *b*:
+Given vectors _a_ and _b_:
 
-d(*a*, *b*) = √[ Σ (*b<sub>i</sub>* - *a<sub>i</sub>*)<sup>2</sup> ] for *i* = 1 to *n*
+d(_a_, _b_) = √[ Σ (*b<sub>i</sub>* - *a<sub>i</sub>*)<sup>2</sup> ] for _i_ = 1 to _n_
 
 A smaller euclidean distance signifies that the vectors are more similar (or closer to each other in space).
 
@@ -86,7 +86,7 @@ I found euclidean distance to be invaluable when I worked on clustering problems
 
 Manhattan distance, also known as L1 distance or city block distance, is another way to quantify the dissimilarity between vectors. Instead of a straight line like Euclidean distance, it calculates the sum of the absolute differences between corresponding components of the vectors, as if traveling through a city grid.
 
-d(*a*, *b*) = Σ |*a<sub>i</sub>* - *b<sub>i</sub>*| for *i* = 1 to *n*
+d(_a_, _b_) = Σ |_a<sub>i</sub>_ - _b<sub>i</sub>_| for _i_ = 1 to _n_
 
 ```python
 import numpy as np
@@ -111,10 +111,10 @@ I've relied on manhattan distance in various applications where a "grid-like" si
 
 The choice of which metric to use heavily depends on the specific application. There isn’t a one-size-fits-all solution.
 
-*   **Cosine Similarity:** Best for directional similarity, ignores magnitude, useful in text processing, recommendation systems.
-*   **Euclidean Distance:** Direct spatial distance, useful in clustering, feature-based analysis. Sensitive to scaling.
-*   **Manhattan Distance:** Good for situations with grid-like structures or where individual component differences are relevant. More robust to outliers than Euclidean distance.
+- **Cosine Similarity:** Best for directional similarity, ignores magnitude, useful in text processing, recommendation systems.
+- **Euclidean Distance:** Direct spatial distance, useful in clustering, feature-based analysis. Sensitive to scaling.
+- **Manhattan Distance:** Good for situations with grid-like structures or where individual component differences are relevant. More robust to outliers than Euclidean distance.
 
-To further your understanding on these techniques, I would highly recommend exploring *Linear Algebra and Its Applications* by Gilbert Strang, which provides a solid foundation in the mathematical concepts behind these metrics. For a more machine learning-focused viewpoint, *Pattern Recognition and Machine Learning* by Christopher Bishop offers practical insights. *Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow* by Aurélien Géron is also useful for applying these concepts in practice, with code examples.
+To further your understanding on these techniques, I would highly recommend exploring _Linear Algebra and Its Applications_ by Gilbert Strang, which provides a solid foundation in the mathematical concepts behind these metrics. For a more machine learning-focused viewpoint, _Pattern Recognition and Machine Learning_ by Christopher Bishop offers practical insights. _Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow_ by Aurélien Géron is also useful for applying these concepts in practice, with code examples.
 
 In summary, vectors of the same length can be assessed for similarity using a variety of techniques. It’s vital to pick a technique that matches the context of your problem since each technique measures different aspects of similarity, and the results will greatly depend on the method used. The key takeaway is that "similarity" is not a universal concept, but rather a tool that’s crafted by a specific mathematical lens.

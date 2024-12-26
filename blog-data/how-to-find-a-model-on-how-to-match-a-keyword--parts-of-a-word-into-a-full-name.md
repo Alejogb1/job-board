@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "how-to-find-a-model-on-how-to-match-a-keyword--parts-of-a-word-into-a-full-name"
 ---
 
-alright, let's talk about matching keywords or word fragments to full names. i've been down this rabbit hole more times than i care to remember, and it's never quite as straightforward as it first appears. you’d think, "oh, a simple string comparison" but nope. real-world data is messy.
+, let's talk about matching keywords or word fragments to full names. i've been down this rabbit hole more times than i care to remember, and it's never quite as straightforward as it first appears. you’d think, "oh, a simple string comparison" but nope. real-world data is messy.
 
 so, you're essentially asking how to build a system that can say, "hey, 'joh' probably refers to 'john smith'," or "is 'son' a part of 'jackson anderson'?" this isn't a simple `if substring in string` scenario. we need something a bit more nuanced.
 
-first, the naive approach, which i tried way back when i started, is the classic substring search. you basically just check if your keyword is present *anywhere* in the full name. for that you would use something very basic in python:
+first, the naive approach, which i tried way back when i started, is the classic substring search. you basically just check if your keyword is present _anywhere_ in the full name. for that you would use something very basic in python:
 
 ```python
 def naive_match(keyword, full_name):
@@ -22,7 +22,7 @@ print(naive_match("son", "sarah johnson")) #output True
 
 it works for the simplest cases, like the first two examples, but look at that third case. "son" matching "sarah johnson", that's useless. this simple approach is way too broad and will give you many false positives. it doesn't consider word boundaries, which is critical when dealing with names. you end up with lots of noise. i remember the first time i did this in my first real project, it was a disaster. the system was matching everything with anything, people ended up with the wrong appointments on the calendar, it was not a happy ending.
 
-next logical step, i thought, was to use regular expressions. okay, now we’re getting somewhere. we can make the search more specific by using word boundary anchors, that is, `\b` in most regex dialects. this is an improvement over the simple `in` operator since we are not matching middle of words anymore. for example, we could check if the keyword matches the beginning of a word in the full name. we can do that like this:
+next logical step, i thought, was to use regular expressions. , now we’re getting somewhere. we can make the search more specific by using word boundary anchors, that is, `\b` in most regex dialects. this is an improvement over the simple `in` operator since we are not matching middle of words anymore. for example, we could check if the keyword matches the beginning of a word in the full name. we can do that like this:
 
 ```python
 import re
@@ -37,7 +37,7 @@ print(regex_match("son", "jackson anderson"))#output True
 print(regex_match("son", "sarah johnson")) #output False
 ```
 
-see? `son` is now correctly *not* matching `sarah johnson`. this pattern enforces that `son` has to be the beginning of a word, thus not matching `sarah johnson` this is better. this is one of those ah-ha moments you get when solving a problem that makes your day a bit better.
+see? `son` is now correctly _not_ matching `sarah johnson`. this pattern enforces that `son` has to be the beginning of a word, thus not matching `sarah johnson` this is better. this is one of those ah-ha moments you get when solving a problem that makes your day a bit better.
 
 however, regex only got me so far, i found out in later projects. people's names often have variations, nicknames, middle names, initials, and even typos. a regex match, while more accurate, is also very rigid. for example, regex would fail to match "john" to "johnathan". if you have "john" in a search bar and your system finds no results that is an issue. regex simply does not capture these nuances. my attempt to improve this was adding more regex variations to catch those types of cases, it became very complex very quickly. i was essentially writing a small programming language inside a regular expression, this was far from ideal.
 
@@ -89,7 +89,7 @@ print(levenshtein_match("mik", "sarah johnson")) # output False
 
 now we're getting somewhere. the `levenshtein_match` function now handles typos, variations and also word boundary issues. with an adequate threshold, we can also avoid unrelated matches. it matches `john` to `johnathan`. we also made an addition to handle nicknames with `micheal` matching `mike`, you could set a small threshold for that, 1 for instance to handle small errors or variations like `mik` matching `mike`.
 
-another avenue, and something that i did to improve my matching system further, is using phonetic matching algorithms such as soundex or metaphone. these algorithms encode words based on how they sound, not how they're spelled. this is particularly useful for names where different spellings might sound alike and are frequently misspelled. i am not going to put any code here because soundex and metaphone alone, without the previously mentioned techniques are not optimal for this particular problem. you may find those implementations online and experiment with them, however. they usually are implemented as a transformation of the word itself so you could do soundex(keyword) and match with soundex(names). they usually involve dropping vowels and specific rules on consonants. so, if two words have the same code after the transformation, they *sound* alike. it is good for fuzzy matching names but not ideal alone.
+another avenue, and something that i did to improve my matching system further, is using phonetic matching algorithms such as soundex or metaphone. these algorithms encode words based on how they sound, not how they're spelled. this is particularly useful for names where different spellings might sound alike and are frequently misspelled. i am not going to put any code here because soundex and metaphone alone, without the previously mentioned techniques are not optimal for this particular problem. you may find those implementations online and experiment with them, however. they usually are implemented as a transformation of the word itself so you could do soundex(keyword) and match with soundex(names). they usually involve dropping vowels and specific rules on consonants. so, if two words have the same code after the transformation, they _sound_ alike. it is good for fuzzy matching names but not ideal alone.
 
 if you're looking for a deeper understanding, i'd recommend reading through "speech and language processing" by daniel jurafsky and james h. martin, a classic, specifically the parts on string matching and phonetic algorithms. there's also "natural language processing with python" by steven bird, ewan klein, and edward loper, that you can use to get more familiar with the theory. while not strictly about matching names, these books give the fundamentals needed to implement these kinds of systems yourself.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-combine-activerecord-models-and-sort-by-shared-properties"
 ---
 
-Okay, let's tackle this one. It’s a challenge I've encountered multiple times over the years, usually when dealing with complex data visualizations or consolidated reporting. The core issue, as I see it, is how to efficiently combine information from different ActiveRecord models and then sort the resulting data by a common attribute that might not exist in all models individually. It requires a bit of careful planning and, frankly, a willingness to move beyond the usual ActiveRecord query patterns.
+, let's tackle this one. It’s a challenge I've encountered multiple times over the years, usually when dealing with complex data visualizations or consolidated reporting. The core issue, as I see it, is how to efficiently combine information from different ActiveRecord models and then sort the resulting data by a common attribute that might not exist in all models individually. It requires a bit of careful planning and, frankly, a willingness to move beyond the usual ActiveRecord query patterns.
 
 My personal experience stems from a project where we had a system tracking both ‘events’ and ‘tasks’, each with its own specific model and set of properties. However, we needed to present a chronological timeline sorted by a combined timestamp, even though the timestamp was called something different in each table (e.g., `created_at` for events, and `due_date` for tasks). ActiveRecord's built-in methods aren't ideally suited for this kind of cross-model sorting, so we had to get creative.
 

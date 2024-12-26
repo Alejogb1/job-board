@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-rails-6-omniauth-work-locally-but-not-on-heroku"
 ---
 
-Alright, let’s tackle this. I’ve seen this exact scenario play out more times than I care to remember, and it's usually a combination of a few common culprits rather than one glaring error. You've got your Rails 6 application running smoothly on your local machine with OmniAuth humming along, but the moment you push to Heroku, it all falls apart. It's frustrating, I get it. Let me walk you through the most probable reasons, focusing on practical debugging and solutions that I've applied in similar situations.
+, let’s tackle this. I’ve seen this exact scenario play out more times than I care to remember, and it's usually a combination of a few common culprits rather than one glaring error. You've got your Rails 6 application running smoothly on your local machine with OmniAuth humming along, but the moment you push to Heroku, it all falls apart. It's frustrating, I get it. Let me walk you through the most probable reasons, focusing on practical debugging and solutions that I've applied in similar situations.
 
 First and foremost, the core issue often boils down to configuration differences between your local development environment and the Heroku production environment. These aren't always immediately obvious. On your local setup, you're likely using the `development` environment configuration. On Heroku, it defaults to the `production` environment, and that's where subtle discrepancies arise. Specifically, differences in environment variables and callback URLs are the most frequent culprits.
 

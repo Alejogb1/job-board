@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-pending-promise-be-resolved-to-maintain-a-sharp-variable-value"
 ---
 
-Okay, let's tackle this. I recall a particular project involving a complex data pipeline where we were pulling information from multiple asynchronous sources, and ensuring the integrity of the derived variables was a constant challenge. It’s a classic problem: managing the state of variables that are dependent on promises which may not have resolved yet. The core issue here is that javascript promises are, by nature, asynchronous. If you directly assign the result of a promise to a variable, the variable won’t hold the value *immediately*; instead, it might hold the initial undefined or whatever was assigned initially while the promise is pending. This leads to a 'sharpness' issue, where our variable's value isn't what we expect, particularly within complex logic.
+, let's tackle this. I recall a particular project involving a complex data pipeline where we were pulling information from multiple asynchronous sources, and ensuring the integrity of the derived variables was a constant challenge. It’s a classic problem: managing the state of variables that are dependent on promises which may not have resolved yet. The core issue here is that javascript promises are, by nature, asynchronous. If you directly assign the result of a promise to a variable, the variable won’t hold the value _immediately_; instead, it might hold the initial undefined or whatever was assigned initially while the promise is pending. This leads to a 'sharpness' issue, where our variable's value isn't what we expect, particularly within complex logic.
 
 Essentially, a “pending promise” means that the asynchronous operation (like a network request, file read, etc.) it represents is still running and hasn't yet yielded a success (resolve) or a failure (reject). The challenge arises when you need a clean, accurate value from that asynchronous operation to proceed with subsequent synchronous logic. The usual approach involves leveraging the `then` and `async`/`await` mechanisms to manage these asynchronous flows, but even those need careful implementation to keep your variables consistent. Let’s delve into some methods and practical scenarios I encountered.
 
@@ -30,13 +30,12 @@ console.log("User data (incorrect):", userData); // Output: Promise {<pending>}
 // Corrected approach
 fetchUserData(1)
   .then((data) => {
-     userData = data;
-     console.log("User data (correct - within then):", userData); // Output: { id: 1, name: 'User 1' }
+    userData = data;
+    console.log("User data (correct - within then):", userData); // Output: { id: 1, name: 'User 1' }
   })
-  .catch(error => {
-      console.error("Error fetching user data:", error);
+  .catch((error) => {
+    console.error("Error fetching user data:", error);
   });
-
 ```
 
 In this example, the first `userData` is immediately assigned the promise object itself, not the resolved value. Only by using `.then()` do we gain access to the resolved value after the asynchronous operation completes. This is the foundational step – understanding that promises need to be handled asynchronously with `.then()`, or a similar construct. The variable gets updated within the scope of the `.then()` function.
@@ -45,18 +44,18 @@ Now, let’s move to the more common scenario where you have to manage multiple 
 
 ```javascript
 async function processUserData(userId) {
-    let user;
-    try {
-        user = await fetchUserData(userId);
-    } catch (error) {
-        console.error("Error in processUserData:", error);
-        return; // Exit on error;
-    }
+  let user;
+  try {
+    user = await fetchUserData(userId);
+  } catch (error) {
+    console.error("Error in processUserData:", error);
+    return; // Exit on error;
+  }
 
-    // Proceed once user is fetched
-    let formattedUserName = user.name.toUpperCase();
-    console.log("Formatted user name (using await):", formattedUserName)
-    return formattedUserName;
+  // Proceed once user is fetched
+  let formattedUserName = user.name.toUpperCase();
+  console.log("Formatted user name (using await):", formattedUserName);
+  return formattedUserName;
 }
 
 processUserData(2); // Output: Formatted user name (using await): USER 2
@@ -68,24 +67,22 @@ Finally, consider situations where you may need to perform asynchronous operatio
 
 ```javascript
 async function processMultipleUsers(userIds) {
-    const userPromises = userIds.map(fetchUserData);
-    let users;
-    try {
-        users = await Promise.all(userPromises);
-    } catch(error) {
-        console.error("Error fetching multiple users:", error);
-        return; // exit early on error.
-    }
+  const userPromises = userIds.map(fetchUserData);
+  let users;
+  try {
+    users = await Promise.all(userPromises);
+  } catch (error) {
+    console.error("Error fetching multiple users:", error);
+    return; // exit early on error.
+  }
 
-    // all user data fetched now
-    const userNames = users.map(user => user.name);
-    console.log("Names of all users fetched:", userNames);
-    return userNames;
-
+  // all user data fetched now
+  const userNames = users.map((user) => user.name);
+  console.log("Names of all users fetched:", userNames);
+  return userNames;
 }
 
 processMultipleUsers([3, 4, 5]); // Output: Names of all users fetched: ['User 3', 'User 4', 'User 5']
-
 ```
 
 Here, `Promise.all()` waits for all the promises in `userPromises` to resolve. The `users` variable is then assigned an array containing all the resolved values, ensuring that the variable is 'sharp' once the entire set of operations is complete. This also allows us to handle the errors centrally within the try catch and provides a clear exit in case the process doesn't complete successfully.

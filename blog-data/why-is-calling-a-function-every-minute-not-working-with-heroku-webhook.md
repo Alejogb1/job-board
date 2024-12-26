@@ -6,9 +6,9 @@ id: "why-is-calling-a-function-every-minute-not-working-with-heroku-webhook"
 
 ah, i see what's happening. this is a classic gotcha with heroku and background tasks, especially when involving webhooks. let me walk you through this, i've banged my head against this particular wall more times than i'd like to remember.
 
-first off, the core issue isn't necessarily with your code's logic for executing a function every minute. that part, i'm guessing, you've got nailed down. the problem lies with *where* and *how* heroku handles processes and time-based triggers. see, heroku's dynos aren't meant to be long-running, persistently active virtual machines in the traditional sense. they spin up, handle requests, and might get scaled down when idle. that 'idle' state, that's where your timer runs into problems. heroku, by design, isn't really set up to guarantee that your little one-minute timer is going to keep on ticking reliably in the background on a web dyno.
+first off, the core issue isn't necessarily with your code's logic for executing a function every minute. that part, i'm guessing, you've got nailed down. the problem lies with _where_ and _how_ heroku handles processes and time-based triggers. see, heroku's dynos aren't meant to be long-running, persistently active virtual machines in the traditional sense. they spin up, handle requests, and might get scaled down when idle. that 'idle' state, that's where your timer runs into problems. heroku, by design, isn't really set up to guarantee that your little one-minute timer is going to keep on ticking reliably in the background on a web dyno.
 
-let me tell you about my experience, this one project i was working on, about five years back, was this data aggregation platform. it had a webhook that needed to be called every hour by an api provider and then it was supposed to do some database magic. i set it up with a simple `while True` and `time.sleep` in a script running on the web dyno. i thought, hey, that’s it, done. it seemed to work okay in dev, but on heroku, it would just randomly stop after some time. logs were sporadic and confusing. i learned very quickly that’s a no-go in production.
+let me tell you about my experience, this one project i was working on, about five years back, was this data aggregation platform. it had a webhook that needed to be called every hour by an api provider and then it was supposed to do some database magic. i set it up with a simple `while True` and `time.sleep` in a script running on the web dyno. i thought, hey, that’s it, done. it seemed to work in dev, but on heroku, it would just randomly stop after some time. logs were sporadic and confusing. i learned very quickly that’s a no-go in production.
 
 the problem with your current approach (calling a function every minute), from what i can gather, is that heroku web dynos are primarily designed to process incoming web requests. they're not meant to be persistent background task runners. the thing to note here is that the web dyno is often 'sleeping' when there are no requests coming to your application. so, your timer, which is likely tied to the web dyno's process lifecycle, simply stops being executed when the dyno goes to sleep or is recycled. heroku's dyno manager, in its efforts to be efficient and conserve resources, can often end up terminating processes which are perceived to be non-essential or idle. a function that's supposed to be called every minute, might not be seen as essential for responding to http requests, and therefore gets pruned.
 
@@ -89,6 +89,7 @@ if __name__ == '__main__':
     worker = Worker([q], connection=redis_conn)
     worker.work()
 ```
+
 this approach, although a bit more complex, is more robust and scalable. you're effectively separating your web requests processing from background tasks. it allows you to scale your worker dynos independently of your web dynos, which is great if you need to handle a lot of webhook calls. it also addresses the issue of web dynos sleeping or being terminated. a good book about it is "scalable internet architectures" it goes in deep into queue systems and how to use them.
 
 a very important detail is that for worker dynos, remember to configure a `procfile` with a command that runs the queue worker script on startup:
@@ -120,6 +121,7 @@ if __name__ == '__main__':
   scheduler.start()
 
 ```
+
 and your procfile would look like this:
 
 ```

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-save-a-keras-model-within-a-kedro-project"
 ---
 
-Okay, let's tackle this. Saving a Keras model within a Kedro project is a task I’ve handled a number of times, and it’s one that touches on several aspects of good data engineering practices. It’s more than just about hitting “save”; it’s about ensuring reproducibility, version control, and seamless integration with your pipeline. I’ve seen it go wrong enough times to know the nuances. The key is to treat the model like any other dataset—a crucial intermediate artifact in your overall workflow.
+, let's tackle this. Saving a Keras model within a Kedro project is a task I’ve handled a number of times, and it’s one that touches on several aspects of good data engineering practices. It’s more than just about hitting “save”; it’s about ensuring reproducibility, version control, and seamless integration with your pipeline. I’ve seen it go wrong enough times to know the nuances. The key is to treat the model like any other dataset—a crucial intermediate artifact in your overall workflow.
 
 The standard Keras method of saving models with `.save()` or `.save_weights()` works, of course, but it’s not really suited for integration with Kedro’s approach to managing data and project structure. Kedro leverages its data catalog to maintain a record of datasets and their corresponding storage locations. Trying to manually manage the file paths for saved models outside of the catalog will lead to headaches further down the line, particularly in collaborative environments.
 
@@ -66,7 +66,7 @@ class KerasWeightsDataSet(AbstractDataSet):
 
     def _load(self) -> tf.keras.Model:
         # Assume you have a function 'create_model' that defines your architecture
-        model = create_model()  
+        model = create_model()
         model.load_weights(self._filepath)
         return model
 
@@ -75,7 +75,7 @@ class KerasWeightsDataSet(AbstractDataSet):
         return dict(filepath=self._filepath)
 ```
 
-Notice how `data.save_weights` is used instead of `data.save`. Also, `_load` now requires creating the Keras model using a `create_model` function before loading weights into it; this means the model architecture *must* match the weights. This version would be useful when you have large complex models and don't want the full overhead of saving the entire model object.
+Notice how `data.save_weights` is used instead of `data.save`. Also, `_load` now requires creating the Keras model using a `create_model` function before loading weights into it; this means the model architecture _must_ match the weights. This version would be useful when you have large complex models and don't want the full overhead of saving the entire model object.
 
 Finally, let's address the case where you want to have multiple different models or model versions within a project. This can be managed by using parameters passed to the dataset definition in Kedro's catalog. Consider this `catalog.yml` entry:
 

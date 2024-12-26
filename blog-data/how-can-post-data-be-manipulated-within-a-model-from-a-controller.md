@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-can-post-data-be-manipulated-within-a-model-from-a-controller"
 ---
 
-Okay, let's tackle this. I’ve definitely seen my fair share of situations where manipulating post data within a model feels necessary. It's a common scenario, and if not handled correctly, it can lead to all sorts of headaches, from unintended data modifications to tightly coupled architectures that become nightmares to maintain. We need to be methodical and strategic about how we approach this.
+, let's tackle this. I’ve definitely seen my fair share of situations where manipulating post data within a model feels necessary. It's a common scenario, and if not handled correctly, it can lead to all sorts of headaches, from unintended data modifications to tightly coupled architectures that become nightmares to maintain. We need to be methodical and strategic about how we approach this.
 
-The core issue, as I see it, is that the controller's job is primarily about *orchestration*. It receives the request (including the post data), it validates the request (to a degree), and then it determines what action to take. Models, on the other hand, are about the *data itself* and any associated business logic. This distinction is fundamental, and blurring it by pushing post-data manipulation directly into the model is generally a bad idea. We want to avoid having our models overly reliant on the nuances of the request object.
+The core issue, as I see it, is that the controller's job is primarily about _orchestration_. It receives the request (including the post data), it validates the request (to a degree), and then it determines what action to take. Models, on the other hand, are about the _data itself_ and any associated business logic. This distinction is fundamental, and blurring it by pushing post-data manipulation directly into the model is generally a bad idea. We want to avoid having our models overly reliant on the nuances of the request object.
 
-Now, I'm not suggesting models should be completely oblivious. There *are* cases where a model needs to respond to data provided in a post request, but there's a clear separation of concerns we should strive for. My approach has generally been to utilize what I call ‘data shaping’ or ‘data mapping’ techniques between the controller and the model, ensuring that the model only sees well-defined, processed data relevant to its specific domain. This is crucial for long-term maintainability.
+Now, I'm not suggesting models should be completely oblivious. There _are_ cases where a model needs to respond to data provided in a post request, but there's a clear separation of concerns we should strive for. My approach has generally been to utilize what I call ‘data shaping’ or ‘data mapping’ techniques between the controller and the model, ensuring that the model only sees well-defined, processed data relevant to its specific domain. This is crucial for long-term maintainability.
 
 I remember a particularly challenging project a few years back where we initially fell into the trap of having our models directly accessing the `request` object to get at post variables. It worked fine… until we decided to introduce a web socket interface. Suddenly, the model logic that was coupled to the http request was entirely out of its depth. That's where the pain points started, teaching us a valuable lesson about keeping controller-level concerns separate. The solution was to refactor, introduce a transformation layer, and significantly improve the overall architecture.
 
-The question isn’t *can* you manipulate post data in the model. The real question is: *should* you? And the answer, from my perspective, is almost always no, not directly. You should be transforming or sanitizing the incoming data beforehand.
+The question isn’t _can_ you manipulate post data in the model. The real question is: _should_ you? And the answer, from my perspective, is almost always no, not directly. You should be transforming or sanitizing the incoming data beforehand.
 
 So, how can we achieve this data transformation, ensuring our models receive only the data they need, in the format they expect? Let's look at three practical code snippets, using a fictional example of creating a user in a hypothetical system. We'll assume a simplified PHP environment here.
 
@@ -164,7 +164,7 @@ class UserService {
           'password' => password_hash($password, PASSWORD_DEFAULT),
           'created_at' => date("Y-m-d H:i:s"), //Added created at field
         ];
-        
+
        $user = new User();
        $user->create($userData);
 

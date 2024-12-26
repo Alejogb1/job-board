@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-failsafe-rerunfailingtestscount-re-running-failed-tests-again-though-it-passed-in-first-rerun-and-still-it-re-runs-till-the-number-of-count-is-defined"
 ---
 
-alright, let's break down this failsafe rerunFailingTestsCount behavior. it’s a common gotcha when dealing with maven surefire and failsafe plugins, especially when aiming for robust automated testing. i've spent quite a few late nights tracking down similar issues, so i think i can shed some light here from my experience.
+, let's break down this failsafe rerunFailingTestsCount behavior. it’s a common gotcha when dealing with maven surefire and failsafe plugins, especially when aiming for robust automated testing. i've spent quite a few late nights tracking down similar issues, so i think i can shed some light here from my experience.
 
 the core problem stems from how failsafe (and surefire, to some extent) interprets “success” versus "stability" in the context of flaky tests. the `rerunFailingTestsCount` parameter isn’t really about just getting a test to pass once. it's more about ensuring that a test, once failed, can consistently pass within a set number of attempts. it’s a way to mitigate the impact of intermittent failures that might occur due to external factors like network glitches, resource contention, or concurrency bugs that are hard to pinpoint.
 
@@ -81,11 +81,12 @@ class FlakyTest {
         System.out.println("Test failed after multiple retries.");
     }
      private boolean simulateFlakiness(int attempt) {
-       return attempt > 1;  // Simulate success on 2nd retry. 
+       return attempt > 1;  // Simulate success on 2nd retry.
      }
 
 }
 ```
+
 the above example is a simple java junit example with no external dependencies. however, the logic can be incorporated to other testing frameworks. it simply tries to run the code inside the loop `maxRetries` times with an increasing delay.
 
 here is another example that incorporates that same backoff logic but using an implementation of the maven `surefire` or `failsafe` plugins:
@@ -167,7 +168,8 @@ public class RetryableJUnitProvider implements SurefireProvider {
     }
 }
 ```
-this example above is a full blown maven surefire provider implementation. there are other things needed like the service loader declaration file under the  `META-INF/services` folder and the proper maven dependency declarations. it showcases that the junit tests are executed under a loop and the results will be re-tried with an exponential backoff until it succeeds or fails. there are many details about how a surefire provider works but the important part is the while loop that uses the exponential backoff strategy. there is also a joke in this example (it’s quite *abstract* if you are a java programmer).
+
+this example above is a full blown maven surefire provider implementation. there are other things needed like the service loader declaration file under the `META-INF/services` folder and the proper maven dependency declarations. it showcases that the junit tests are executed under a loop and the results will be re-tried with an exponential backoff until it succeeds or fails. there are many details about how a surefire provider works but the important part is the while loop that uses the exponential backoff strategy. there is also a joke in this example (it’s quite _abstract_ if you are a java programmer).
 
 finally, i recommend checking out the official maven documentation for both surefire and failsafe plugins. they have quite detailed descriptions of all configurable parameters. also, you might want to take a look at "testing java" by hammett and keogh, a great resource on test automation patterns. and although not specifically about maven, "clean code" by robert c. martin is invaluable for writing more stable tests.
 

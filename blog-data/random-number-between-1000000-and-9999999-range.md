@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "random-number-between-1000000-and-9999999-range"
 ---
 
-Okay so you need a random number between 1000000 and 9999999 range right I've been there done that a bunch of times it sounds simple but you can mess it up if you aren't careful especially when you are under pressure dealing with critical systems
+you need a random number between 1000000 and 9999999 range right I've been there done that a bunch of times it sounds simple but you can mess it up if you aren't careful especially when you are under pressure dealing with critical systems
 
 Let's break it down and I'll give you my take on it and share some code snippets based on my painful past experiences
 
@@ -44,6 +44,7 @@ def get_random_number_in_range_exclusive():
 random_num = get_random_number_in_range_exclusive()
 print(random_num)
 ```
+
 This variation uses `random.randrange()` which by default it will return from min inclusive to max exclusive range in programming the exclusive range method is usually preferred so you may need this version more often than not also pay attention on the name `randrange` it makes it pretty clear
 
 I once spent hours debugging a problem where I was expecting an exclusive upper bound but used an inclusive one in my code I was simulating an event timer and because of that mistake the event trigger could trigger one step further than what it should do and it caused an unexpected cascade error it was one of those "slaps forehead" moments

@@ -4,16 +4,15 @@ date: "2024-12-11"
 id: "why-is-machine-learning-unique-in-creating-artifacts-like-neural-networks-that-no-one-fully-designs-or-understands"
 ---
 
-Okay so you wanna know why machine learning is all weird and creates these brain-like things nobody really gets right  its kinda mind blowing right  Like we build these neural networks these crazy interconnected webs of math and data and they learn stuff on their own  we dont tell them exactly what to do we just give them a bunch of examples and say "figure it out" and they do  its like having a super smart pet that learns way faster than you can teach it  and thats the weird part  we design the basic architecture the overall structure but the specifics the intricate connections the weights and biases that actually make it work thats all learned  its emergent behavior  its like building a really complex Lego castle but instead of following instructions the Legos themselves figure out how to assemble themselves into a cool castle
+you wanna know why machine learning is all weird and creates these brain-like things nobody really gets right its kinda mind blowing right Like we build these neural networks these crazy interconnected webs of math and data and they learn stuff on their own we dont tell them exactly what to do we just give them a bunch of examples and say "figure it out" and they do its like having a super smart pet that learns way faster than you can teach it and thats the weird part we design the basic architecture the overall structure but the specifics the intricate connections the weights and biases that actually make it work thats all learned its emergent behavior its like building a really complex Lego castle but instead of following instructions the Legos themselves figure out how to assemble themselves into a cool castle
 
-Its not like traditional programming where you explicitly tell the computer every single step its more like training a really really smart dog  you show it what a "fetch" is a bunch of times and eventually it understands even if you dont fully understand exactly how it internalized the concept  neural networks are similar  we define the learning process we give it data and a goal but the internal representation the actual "understanding" the network develops thats a black box for the most part  we can probe it we can analyze its performance but understanding the precise workings of a large complex neural network  thats a monumental task  think about a giant city  you can see the roads the buildings the overall layout but understanding every single interaction every single person's journey within that city  thats impossible  similarly understanding every connection and weight in a large neural network its just too complex  thats what makes it unique  its a form of automated design and automated understanding  we create the system that creates the understanding
+Its not like traditional programming where you explicitly tell the computer every single step its more like training a really really smart dog you show it what a "fetch" is a bunch of times and eventually it understands even if you dont fully understand exactly how it internalized the concept neural networks are similar we define the learning process we give it data and a goal but the internal representation the actual "understanding" the network develops thats a black box for the most part we can probe it we can analyze its performance but understanding the precise workings of a large complex neural network thats a monumental task think about a giant city you can see the roads the buildings the overall layout but understanding every single interaction every single person's journey within that city thats impossible similarly understanding every connection and weight in a large neural network its just too complex thats what makes it unique its a form of automated design and automated understanding we create the system that creates the understanding
 
-And this isn't just some philosophical point its got real world implications  consider the problem of bias  if you train a neural network on biased data it will learn those biases  it will replicate them in its predictions even if you dont intend it to  thats why its crucial to have diverse and representative datasets  but even with perfect data there are still surprises  sometimes a network learns shortcuts it finds patterns in the data that we dont even see  its like it discovers hidden rules or connections that we missed completely its almost as if its making its own discoveries
+And this isn't just some philosophical point its got real world implications consider the problem of bias if you train a neural network on biased data it will learn those biases it will replicate them in its predictions even if you dont intend it to thats why its crucial to have diverse and representative datasets but even with perfect data there are still surprises sometimes a network learns shortcuts it finds patterns in the data that we dont even see its like it discovers hidden rules or connections that we missed completely its almost as if its making its own discoveries
 
-This lack of complete understanding isnt necessarily bad  sometimes its an advantage  if we knew exactly how a network worked we might be limited by our own biases and assumptions  the networks ability to find unexpected solutions is a powerful tool  but its also a challenge  we need to develop new methods for interpreting and understanding these networks if we want to use them responsibly  think about medical diagnosis  imagine a neural network that can diagnose diseases more accurately than any doctor but we dont fully understand how it arrives at its diagnosis  thats both incredible and terrifying right
+This lack of complete understanding isnt necessarily bad sometimes its an advantage if we knew exactly how a network worked we might be limited by our own biases and assumptions the networks ability to find unexpected solutions is a powerful tool but its also a challenge we need to develop new methods for interpreting and understanding these networks if we want to use them responsibly think about medical diagnosis imagine a neural network that can diagnose diseases more accurately than any doctor but we dont fully understand how it arrives at its diagnosis thats both incredible and terrifying right
 
-Now lets look at some code examples to make this a bit more concrete  Ill show you simple examples but real world networks are way more complex
-
+Now lets look at some code examples to make this a bit more concrete Ill show you simple examples but real world networks are way more complex
 
 **Example 1: A Simple Perceptron**
 
@@ -38,13 +37,11 @@ output = perceptron(inputs weights bias)
 print(f"Output: {output}")
 ```
 
-This is super simple just one neuron  but you can see how weights and bias affect the output  and its this process of adjusting weights and biases based on data that leads to learning  we dont explicitly program the sigmoid function to recognize patterns we just train it to
+This is super simple just one neuron but you can see how weights and bias affect the output and its this process of adjusting weights and biases based on data that leads to learning we dont explicitly program the sigmoid function to recognize patterns we just train it to
 
-
-**Example 2:  A Simple Neural Network with One Hidden Layer**
+**Example 2: A Simple Neural Network with One Hidden Layer**
 
 This adds a hidden layer making things a little more interesting
-
 
 ```python
 import numpy as np
@@ -67,12 +64,11 @@ output = neural_network(inputs weights1 weights2 bias1 bias2)
 print(f"Output: {output}")
 ```
 
-See  we have weights and biases for each connection  again  the magic is in how these are adjusted during training through backpropagation a process that we understand in principle but whose full effects on a large network are often opaque
+See we have weights and biases for each connection again the magic is in how these are adjusted during training through backpropagation a process that we understand in principle but whose full effects on a large network are often opaque
 
-**Example 3:  A Tiny bit of TensorFlow/Keras**
+**Example 3: A Tiny bit of TensorFlow/Keras**
 
 This shows a more realistic (though still extremely simplified) setup using a popular deep learning library
-
 
 ```python
 import tensorflow as tf
@@ -97,9 +93,8 @@ model.compile(optimizer='adam'
 
 ```
 
-This is a very basic example  but even here its clear that the specifics of what the network learns are not directly programmed  we specify the architecture the optimizer and the loss function but the actual learned weights  thats still mysterious
+This is a very basic example but even here its clear that the specifics of what the network learns are not directly programmed we specify the architecture the optimizer and the loss function but the actual learned weights thats still mysterious
 
+To understand this better look into books like "Deep Learning" by Goodfellow Bengio and Courville "Pattern Recognition and Machine Learning" by Christopher Bishop or papers on specific network architectures or training methods Its a vast field but these resources will give you a solid base
 
-To understand this better look into books like "Deep Learning" by Goodfellow Bengio and Courville  "Pattern Recognition and Machine Learning" by Christopher Bishop or papers on specific network architectures or training methods  Its a vast field but these resources will give you a solid base
-
-So yeah  machine learning's unique because it creates these systems that learn and adapt in ways we dont fully grasp  Its a powerful tool but its also a complex one  and understanding its complexities is a challenge we are still facing
+So yeah machine learning's unique because it creates these systems that learn and adapt in ways we dont fully grasp Its a powerful tool but its also a complex one and understanding its complexities is a challenge we are still facing

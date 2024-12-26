@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-webdriver-sessions-with-testcontainers-be-video-recorded"
 ---
 
-Okay, let's tackle this. It's a common challenge I've seen crop up quite a few times, especially when debugging those tricky, intermittent UI test failures. Capturing the full session, in video, provides invaluable context. I recall back at 'XyloTech', we had a complex e-commerce platform, and hunting down the cause of random checkout errors was like chasing shadows. We finally implemented this recording solution and it significantly accelerated our diagnosis speed. Let's break down how you can achieve this with WebDriver and Testcontainers.
+, let's tackle this. It's a common challenge I've seen crop up quite a few times, especially when debugging those tricky, intermittent UI test failures. Capturing the full session, in video, provides invaluable context. I recall back at 'XyloTech', we had a complex e-commerce platform, and hunting down the cause of random checkout errors was like chasing shadows. We finally implemented this recording solution and it significantly accelerated our diagnosis speed. Let's break down how you can achieve this with WebDriver and Testcontainers.
 
 The core issue is that Testcontainers, while fantastic for managing containerized dependencies like browsers, doesn't inherently provide video recording capabilities for WebDriver sessions. Therefore, we need to introduce a mechanism that sits between the WebDriver actions and the browser, capturing the display output. A relatively straightforward approach is using a VNC server within the container coupled with recording software, or, perhaps more elegantly, leveraging the built-in screen recording capabilities of a suitable headless browser image. My preference leans towards the latter, as it simplifies the setup.
 
@@ -131,55 +131,56 @@ Here, the Java code uses similar ChromeOptions and specifies a volume mount to p
 **Example 3: Node.js**
 
 ```javascript
-const { GenericContainer } = require('testcontainers');
-const { Builder, Capabilities } = require('selenium-webdriver');
-const chrome = require('selenium-webdriver/chrome');
-const fs = require('fs');
-const path = require('path');
+const { GenericContainer } = require("testcontainers");
+const { Builder, Capabilities } = require("selenium-webdriver");
+const chrome = require("selenium-webdriver/chrome");
+const fs = require("fs");
+const path = require("path");
 
 async function recordWebDriverSessionNode() {
+  const videoPath = path.resolve("videos");
+  if (!fs.existsSync(videoPath)) {
+    fs.mkdirSync(videoPath, { recursive: true });
+  }
 
-    const videoPath = path.resolve('videos');
-    if (!fs.existsSync(videoPath)) {
-        fs.mkdirSync(videoPath, { recursive: true });
-    }
+  const chromeOptions = new chrome.Options();
+  chromeOptions.addArguments("--no-sandbox");
+  chromeOptions.addArguments("--disable-dev-shm-usage");
+  chromeOptions.addArguments("--headless=new");
+  chromeOptions.addArguments(`--screen-record-file=/videos/recording.mp4`);
+  chromeOptions.addArguments("--screen-record-format=mp4");
 
-    const chromeOptions = new chrome.Options();
-    chromeOptions.addArguments('--no-sandbox');
-    chromeOptions.addArguments('--disable-dev-shm-usage');
-    chromeOptions.addArguments('--headless=new');
-    chromeOptions.addArguments(`--screen-record-file=/videos/recording.mp4`);
-    chromeOptions.addArguments('--screen-record-format=mp4');
+  const chromeContainer = await new GenericContainer(
+    "selenium/standalone-chrome:latest"
+  )
+    .withExposedPorts(4444)
+    .withWaitStrategy({
+      waitUntil: "log",
+      logMessage: "Selenium Server is ready",
+    })
+    .start();
 
+  const capabilities = Capabilities.chrome();
+  capabilities.set(chrome.Options.name, chromeOptions);
 
-    const chromeContainer = await new GenericContainer('selenium/standalone-chrome:latest')
-        .withExposedPorts(4444)
-        .withWaitStrategy({
-            waitUntil: 'log',
-            logMessage: 'Selenium Server is ready',
-        })
-        .start();
+  const driver = await new Builder()
+    .usingServer(
+      `http://${chromeContainer.getHost()}:${chromeContainer.getMappedPort(
+        4444
+      )}/wd/hub`
+    )
+    .withCapabilities(capabilities)
+    .build();
 
+  await driver.get("https://example.com");
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+  await driver.quit();
 
+  const volumeMount = `${videoPath}:/videos`;
+  chromeContainer.addFileSystemBind(volumeMount);
+  await chromeContainer.stop();
 
-    const capabilities = Capabilities.chrome()
-    capabilities.set(chrome.Options.name, chromeOptions);
-
-
-    const driver = await new Builder()
-        .usingServer(`http://${chromeContainer.getHost()}:${chromeContainer.getMappedPort(4444)}/wd/hub`)
-        .withCapabilities(capabilities)
-        .build();
-
-    await driver.get('https://example.com');
-    await new Promise(resolve => setTimeout(resolve, 5000));
-    await driver.quit();
-
-    const volumeMount = `${videoPath}:/videos`;
-    chromeContainer.addFileSystemBind(volumeMount);
-    await chromeContainer.stop();
-
-    console.log("Video Recording Completed: check your local folder 'videos'");
+  console.log("Video Recording Completed: check your local folder 'videos'");
 }
 
 recordWebDriverSessionNode();
@@ -189,9 +190,9 @@ This Node.js example, uses `testcontainers` library to start the chrome containe
 
 **Important Notes and Further Reading**
 
-*   **Browser Specifics:** The exact flags and options for screen recording may differ slightly between Chromium-based browsers (Chrome, Edge) and Firefox. Always consult the documentation for your specific browser version.
-*   **Performance:** Video recording can impact performance and memory usage. Optimize your recording settings, such as frame rate and resolution, according to your requirements.
-*   **File Management:** Implement robust logic to handle scenarios where no recording is generated (e.g., due to session failures) and implement proper cleanup of video files over time.
+- **Browser Specifics:** The exact flags and options for screen recording may differ slightly between Chromium-based browsers (Chrome, Edge) and Firefox. Always consult the documentation for your specific browser version.
+- **Performance:** Video recording can impact performance and memory usage. Optimize your recording settings, such as frame rate and resolution, according to your requirements.
+- **File Management:** Implement robust logic to handle scenarios where no recording is generated (e.g., due to session failures) and implement proper cleanup of video files over time.
 
 For further reading, I'd recommend diving deep into the WebDriver W3C specifications, specifically the capabilities for browser options and arguments which dictates how to manipulate them. The Selenium documentation on advanced browser settings is also a valuable resource. Additionally, studying the Docker documentation related to volume mounts will enhance your understanding of how the video files are extracted. You might also find it beneficial to explore the specific capabilities of the chrome or firefox driver you are using, or the specific `Dockerfile` for your `selenium/standalone-chrome` image on docker hub. Finally, always refer to the Testcontainers documentation to deeply understand what features are available.
 

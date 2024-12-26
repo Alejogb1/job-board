@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-get-map-for-a-custom-test-set-with-valpy-in-yolov5"
 ---
 
-Okay, let's tackle this. I've certainly been down this road more than once—modifying YOLOv5's `val.py` to evaluate custom datasets, especially when you need to go beyond the default validation split. It's a common enough scenario, and while the basic mechanics are there, tweaking it requires a clear understanding of the process. So, let’s break it down and I'll share some of what I've learned through experience.
+, let's tackle this. I've certainly been down this road more than once—modifying YOLOv5's `val.py` to evaluate custom datasets, especially when you need to go beyond the default validation split. It's a common enough scenario, and while the basic mechanics are there, tweaking it requires a clear understanding of the process. So, let’s break it down and I'll share some of what I've learned through experience.
 
 First off, the core issue you're facing is that `val.py` by default looks to the data configuration file (like `data/coco128.yaml` or similar) to define the path to your validation data. We want to override that, pointing it instead to our bespoke test dataset, while keeping the model and other parameters the same. This involves a bit of direct intervention in the script's logic. It's not a terribly difficult fix, but understanding the rationale behind the modification is key. The default setup is efficient for standard cases, but real-world projects invariably require flexibility like this.
 
@@ -292,6 +292,7 @@ if __name__ == "__main__":
 ```
 
 In this second example, I've modified the `run_validation` method to open the `data_path` (which we are now passing the dataset yaml file) and look for the `test` tag, which is used to locate the correct testing data. The rest of the script is the same, except that we now pass the dataset file to `run_validation` rather than the test data path. In your `dataset.yaml` file you would add:
+
 ```yaml
 test: "./dataset/test/"
 ```
@@ -346,7 +347,7 @@ class CustomDataset(Dataset):
             labels = torch.from_numpy(labels)
         else:
             labels = torch.zeros(size=(0,5)) # Return empty tensors if no labels exist
-        
+
         return img.float()/255, labels, str(img_path), [self.img_size,self.img_size]
 
 
@@ -357,7 +358,7 @@ class CustomDataset(Dataset):
         y[:,2] = x[:,0] * size + x[:,2] * size / 2
         y[:,3] = x[:,1] * size + x[:,3] * size / 2
         return y
-    
+
 def run_validation(weights, data_path, img_size, batch_size, device, single_cls, model):
         # Load the model and its parameters if the model is None
         if model is None:

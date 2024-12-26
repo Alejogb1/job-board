@@ -24,7 +24,7 @@ Suppose you have a CSS file referencing an image:
 
 ```css
 .my-element {
-  background-image: url('../images/background.png');
+  background-image: url("../images/background.png");
 }
 ```
 
@@ -32,7 +32,7 @@ In Rails, using `sprockets`, your asset pipeline can help resolve this by using 
 
 ```css
 .my-element {
-  background-image: url(asset-path('background.png'));
+  background-image: url(asset-path("background.png"));
 }
 ```
 
@@ -43,21 +43,24 @@ By using `asset-path`, the pipeline automatically calculates the correct relativ
 Consider a basic Express application serving static assets:
 
 ```javascript
-const express = require('express');
-const path = require('path');
+const express = require("express");
+const path = require("path");
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, 'public'), {
-  maxAge: '1d' // Example caching configuration
-}));
+app.use(
+  express.static(path.join(__dirname, "public"), {
+    maxAge: "1d", // Example caching configuration
+  })
+);
 ```
+
 Here, we're using the `express.static` middleware with an optional `maxAge` setting. In a development environment, it might be tempting to turn caching off completely for fast iteration. However, this is not usually recommended. In production, you'll need some level of caching. To ensure that users see the latest changes, you need to implement proper cache busting using a query parameter or a hash in file names. You should also explore the benefits of a Content Delivery Network (CDN) such as Cloudflare or Amazon CloudFront, as mentioned in "High Performance Web Sites" by Steve Souders for best practices in web performance optimization, which includes a comprehensive look at caching.
 
 **Example 3: Browser Compatibility Testing (an explanation, not code):**
 
 Rather than a code snippet, this example highlights an important process. It is impossible to anticipate all the intricacies of various browsers manually. Automated testing across different browsers is essential. You would need to use tools such as Selenium, Cypress, Playwright to create comprehensive tests that run on multiple browsers and versions. It's also important to understand each of these tools' limitations in terms of testing specific browser features, as some features that work smoothly locally might present unexpected behaviours in production. For more information on this, refer to the browser testing sections in the documentation of these tools and also "Cross-Browser Testing Techniques" by the World Wide Web Consortium (W3C) documentation, which lays out guidelines for consistent web behaviour.
 
-In my experience, the key to resolving these differences is a systematic approach. First, I’d carefully review the Heroku build logs and any logs pertaining to the asset compilation process. This often unveils configuration issues I was not aware of locally. I then check for errors related to missing files or failed asset compilation. If that appears okay, I explore the possibility of caching issues and browser incompatibilities. Thoroughly testing the application on multiple browsers or using a service like BrowserStack is a vital step.
+In my experience, the key to resolving these differences is a systematic approach. First, I’d carefully review the Heroku build logs and any logs pertaining to the asset compilation process. This often unveils configuration issues I was not aware of locally. I then check for errors related to missing files or failed asset compilation. If that appears , I explore the possibility of caching issues and browser incompatibilities. Thoroughly testing the application on multiple browsers or using a service like BrowserStack is a vital step.
 
 In conclusion, the styling differences between local development and Heroku are typically a combination of asset compilation nuances, relative paths, caching, and browser variations. By understanding the build processes and carefully testing your application in a diverse range of browsers, you can greatly reduce the number of surprises and ensure a consistent user experience across different platforms. This kind of debugging is a rite of passage for any web developer, and the experience is invaluable in building a truly robust application.

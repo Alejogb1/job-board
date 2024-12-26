@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-get-integer-output-from-continuous-action-ppo-rl"
 ---
 
-Okay, let's tackle this. I've certainly been down this road before, especially when trying to apply reinforcement learning to robotics control where discrete actions, such as gear shifts or actuator positions, are often preferable to a continuous space. The challenge, as you’ve discovered, is that Proximal Policy Optimization (PPO) inherently deals with continuous action spaces – usually outputting actions as real numbers or vectors, often floating-point values. To bridge that gap and get usable integer outputs, we need to introduce some intelligent discretization and mapping mechanisms.
+, let's tackle this. I've certainly been down this road before, especially when trying to apply reinforcement learning to robotics control where discrete actions, such as gear shifts or actuator positions, are often preferable to a continuous space. The challenge, as you’ve discovered, is that Proximal Policy Optimization (PPO) inherently deals with continuous action spaces – usually outputting actions as real numbers or vectors, often floating-point values. To bridge that gap and get usable integer outputs, we need to introduce some intelligent discretization and mapping mechanisms.
 
 The core issue arises because PPO, at its heart, learns a policy function that directly outputs the parameters of a probability distribution over the action space. In the case of continuous spaces, this distribution is typically a Gaussian (or similar). This produces actions that can take any value within a specified range, and these are seldom integers. To transform this, we need a pipeline that performs the following:
 
@@ -54,6 +54,7 @@ float_action = 6.9
 discrete_action = discretize_action_rounding(float_action, min_action_val, max_action_val)
 print(f"Continuous Action: {float_action}, Discrete Action: {discrete_action}")
 ```
+
 This code shows how to simply take a floating point action and round it, before clipping the results to the min and max action values.
 
 This method’s simplicity is its strength. It’s computationally inexpensive, easy to implement, and often provides an acceptable solution, especially when the underlying continuous action space learned by PPO isn’t too sensitive. However, a notable limitation is that it can be difficult to get fine-grained control near the boundaries, particularly if the PPO output ranges broadly.
@@ -158,6 +159,7 @@ action = get_discrete_action(logits)
 
 print(f"Logits: {logits}, Discrete Action: {action}")
 ```
+
 This example shows how to create a simple neural network that outputs logits for the number of discrete actions, rather than continuous values. It then shows how to obtain the action.
 
 The advantage here is that you are now directly training the neural network to output probabilities over your discrete action set, thus moving away from the need for post-hoc discretisation. It more naturally fits into the PPO framework and generally produces much better results. It’s important to adjust the PPO loss function and update steps to correctly handle the discrete nature of the outputs, as you no longer have a continuous action distribution.
@@ -166,9 +168,9 @@ The advantage here is that you are now directly training the neural network to o
 
 To delve deeper into the theoretical underpinnings and alternative methods, I would suggest exploring the following resources:
 
-*   **"Reinforcement Learning: An Introduction" by Richard S. Sutton and Andrew G. Barto**: This book provides a thorough grounding in the theory of reinforcement learning, including a discussion of both discrete and continuous action spaces.
-*   **"Deep Reinforcement Learning Hands-On" by Maxim Lapan**: This provides practical insights with coding examples for various reinforcement learning techniques, including policy gradient methods like PPO.
-*   **Original PPO paper (Schulman et al., 2017) "Proximal Policy Optimization Algorithms"**: While the paper focuses more on continuous actions, it’s imperative to understand how the basic algorithm functions to be able to modify it. A detailed understanding of the algorithm's mechanics is often vital when tackling the more difficult task of discretisation.
+- **"Reinforcement Learning: An Introduction" by Richard S. Sutton and Andrew G. Barto**: This book provides a thorough grounding in the theory of reinforcement learning, including a discussion of both discrete and continuous action spaces.
+- **"Deep Reinforcement Learning Hands-On" by Maxim Lapan**: This provides practical insights with coding examples for various reinforcement learning techniques, including policy gradient methods like PPO.
+- **Original PPO paper (Schulman et al., 2017) "Proximal Policy Optimization Algorithms"**: While the paper focuses more on continuous actions, it’s imperative to understand how the basic algorithm functions to be able to modify it. A detailed understanding of the algorithm's mechanics is often vital when tackling the more difficult task of discretisation.
 
 These are not exhaustive, but they’ll provide a solid foundation. From my experience, understanding the principles behind these techniques is crucial.
 

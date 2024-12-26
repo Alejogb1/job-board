@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-create-a-new-column-containing-the-most-relevant-word-from-each-comment-in-a-pandas-dataframe"
 ---
 
-Okay, let’s tackle this. I remember facing a similar challenge a few years back when I was working on a large-scale social media sentiment analysis project. We had thousands of text comments, and extracting the most relevant keyword from each was crucial for our topic modeling. The problem wasn't just about finding the "most frequent" word; it was about finding the *most meaningful* one. Let's explore how to approach this using pandas, which, as we all know, is often our data manipulation workhorse.
+, let’s tackle this. I remember facing a similar challenge a few years back when I was working on a large-scale social media sentiment analysis project. We had thousands of text comments, and extracting the most relevant keyword from each was crucial for our topic modeling. The problem wasn't just about finding the "most frequent" word; it was about finding the _most meaningful_ one. Let's explore how to approach this using pandas, which, as we all know, is often our data manipulation workhorse.
 
-Firstly, when we talk about "relevant" words, we need to define it rigorously. We can't just grab the first non-stop word that comes along. Generally, what constitutes a relevant word depends heavily on the context, but a good starting point involves understanding two things: stop words and word frequencies, but crucially *also* incorporating some measure of importance.
+Firstly, when we talk about "relevant" words, we need to define it rigorously. We can't just grab the first non-stop word that comes along. Generally, what constitutes a relevant word depends heavily on the context, but a good starting point involves understanding two things: stop words and word frequencies, but crucially _also_ incorporating some measure of importance.
 
 Let's assume you've got your data in a pandas DataFrame, something like this:
 
@@ -45,6 +45,7 @@ def find_relevant_word_nltk(comment):
 df['relevant_word_nltk'] = df['comment'].apply(find_relevant_word_nltk)
 print(df)
 ```
+
 This example employs the `nltk` library for stop word removal and tokenization. The `find_relevant_word_nltk` function tokenizes each comment, filters out stop words and punctuation, and then returns the most frequent word from the remaining words. If no relevant words exist, it returns `None`. The pandas `apply` function neatly integrates this function and creates a new column called `relevant_word_nltk`.
 
 In that sentiment analysis project, however, frequency alone wasn't always enough. Sometimes a word appearing less often could be more significant in the context of the discussion. To address this, I frequently resorted to using TF-IDF (Term Frequency-Inverse Document Frequency). TF-IDF emphasizes words that are frequent in a document but not necessarily across all documents. It’s a nice middle ground between focusing on globally common words and focusing purely on local frequency. For that, I'd utilize `scikit-learn`. Here is a snippet implementing that:
@@ -80,7 +81,8 @@ vectorizer.fit(df['comment'])
 df['relevant_word_tfidf'] = df['comment'].apply(lambda x: find_relevant_word_tfidf(x, vectorizer))
 print(df)
 ```
-In this example, we instantiate a `TfidfVectorizer` with english stop words and fit it on the corpus of comments in the dataframe. We use its transform method to generate the TF-IDF vectors and look for the best token. We create a new 'relevant_word_tfidf' column using this function. It's worth noting that TF-IDF tends to perform well when the document set isn't excessively diverse. The benefit is that it down-weights words that are commonly used in all documents, giving relevance to words that are important for the *specific* text being analyzed.
+
+In this example, we instantiate a `TfidfVectorizer` with english stop words and fit it on the corpus of comments in the dataframe. We use its transform method to generate the TF-IDF vectors and look for the best token. We create a new 'relevant_word_tfidf' column using this function. It's worth noting that TF-IDF tends to perform well when the document set isn't excessively diverse. The benefit is that it down-weights words that are commonly used in all documents, giving relevance to words that are important for the _specific_ text being analyzed.
 
 Now, let's consider a scenario where we need a more sophisticated approach because both of the previous examples were looking only at single words. What if your significant content was expressed in terms of multi-word phrases? This requires us to handle n-grams, where 'n' can represent bi-grams (two words), tri-grams (three words) or larger sequences of words. It also adds a new layer of difficulty because n-grams can have varying lengths, which is challenging with our approach, so we will generate ngrams of all possible sizes from 1 to 3 and then apply TF-IDF as before.
 
@@ -114,6 +116,7 @@ vectorizer.fit(df['comment'])
 df['relevant_ngram_tfidf'] = df['comment'].apply(lambda x: find_relevant_ngram_tfidf(x, vectorizer))
 print(df)
 ```
+
 Here, the only change is the addition of the `ngram_range=(1,3)` parameter when we instantiate our vectorizer. Now it generates uni-grams, bi-grams, and tri-grams. The rest is the same as the previous example, so the code generates the same output, but in terms of ngrams this time.
 
 These examples provide three different approaches, each with its own trade-offs. For simple cases, just identifying the most frequent word with stop word removal might be adequate. However, if you are working with complex text you'll likely get better results using TF-IDF, especially when dealing with larger corpuses. If key phrases are your target, ngrams are invaluable, but note that these come with an increase in computational cost.

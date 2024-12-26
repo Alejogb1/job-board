@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-image-edges-be-sharpened"
 ---
 
-Alright, let's tackle edge sharpening in images. It's a subject I've spent a good amount of time on, especially back when we were working on a particularly challenging low-light camera system. We needed to pull as much detail as possible from noisy captures, and sharpening was a crucial step.
+, let's tackle edge sharpening in images. It's a subject I've spent a good amount of time on, especially back when we were working on a particularly challenging low-light camera system. We needed to pull as much detail as possible from noisy captures, and sharpening was a crucial step.
 
 Fundamentally, edge sharpening aims to enhance the visual contrast along the boundaries of objects within an image. These boundaries, or edges, often define the shapes and textures we perceive. By increasing the contrast at these transitions, we essentially make the image appear crisper and more defined. Think of it as artificially amplifying the changes in pixel intensity that indicate where an object ends and another begins. Now, how we achieve this can be approached through several techniques, each with its nuances.
 
@@ -127,7 +127,7 @@ if __name__ == '__main__':
         print("Image sharpened with Laplacian filter and saved as laplacian_sharpened_image.jpg")
 ```
 
-Here, `cv2.Laplacian` calculates the second derivatives, which, in essence, highlight areas where intensity changes rapidly - which are usually the edges. Note that here we *subtract* the Laplacian rather than *add* like in Unsharp Masking. This is because the laplacian effectively represents edge information, and we are effectively amplifying these edges by subtracting them from the image itself.
+Here, `cv2.Laplacian` calculates the second derivatives, which, in essence, highlight areas where intensity changes rapidly - which are usually the edges. Note that here we _subtract_ the Laplacian rather than _add_ like in Unsharp Masking. This is because the laplacian effectively represents edge information, and we are effectively amplifying these edges by subtracting them from the image itself.
 
 Now, a word of caution, and something I learned the hard way while working on that camera project. Over-sharpening can lead to artifacts, often referred to as “halos,” which are unnatural bright or dark areas that appear adjacent to edges. It’s crucial to carefully tune parameters like kernel size, sigma, and amount, based on your specific input images and desired result. Furthermore, some image processing tasks can have their own specific requirements. For instance, processing noisy images before sharpening, usually using a gaussian blur or median filter, will often yield better results.
 

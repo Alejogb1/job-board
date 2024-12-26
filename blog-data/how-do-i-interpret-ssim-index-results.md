@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "how-do-i-interpret-ssim-index-results"
 ---
 
-alright, so you’re looking at ssim scores, right? i've been there, staring at those numbers wondering what they actually mean. it's not always as straightforward as it seems, so let’s break it down from someone who's spent way too much time comparing images.
+, so you’re looking at ssim scores, right? i've been there, staring at those numbers wondering what they actually mean. it's not always as straightforward as it seems, so let’s break it down from someone who's spent way too much time comparing images.
 
-first off, ssim, or structural similarity index, is a metric that tries to quantify how similar two images are, from a *human perception* point of view. it doesn’t just look at pixel-by-pixel differences, like a simple mean squared error (mse) would. instead, it looks at local patterns of brightness, contrast, and structure. this makes it a much better measure of perceived image quality than mse, especially when comparing compressed or processed images to their original versions.
+first off, ssim, or structural similarity index, is a metric that tries to quantify how similar two images are, from a _human perception_ point of view. it doesn’t just look at pixel-by-pixel differences, like a simple mean squared error (mse) would. instead, it looks at local patterns of brightness, contrast, and structure. this makes it a much better measure of perceived image quality than mse, especially when comparing compressed or processed images to their original versions.
 
 the ssim score ranges from -1 to 1. a score of 1 means the two images are identical. a score of 0 means there's no structural similarity, which rarely happens in practice because well…usually some pixel values are shared. and a score of -1 suggests the images are inverted or completely opposite in terms of structural details (this is usually something we don't see in image processing as well).
 
@@ -84,13 +84,13 @@ also consider that when comparing images you may get very different results with
 
 as a general rule of thumb, and this is just from my personal experience with different image processing tasks, you can loosely say that:
 
-*   ssim > 0.95: very high similarity. the images are usually visually indistinguishable by the human eye. this is often your target if your goal is to reduce the information that is lost in image processing.
+- ssim > 0.95: very high similarity. the images are usually visually indistinguishable by the human eye. this is often your target if your goal is to reduce the information that is lost in image processing.
 
-*   0.8 < ssim < 0.95: good similarity. some visual differences might be noticeable, but the structure of the images is still very similar. this is usually a good result with some lossy compression, or when you are targeting a specific quality, or a certain rate for compressed images.
+- 0.8 < ssim < 0.95: good similarity. some visual differences might be noticeable, but the structure of the images is still very similar. this is usually a good result with some lossy compression, or when you are targeting a specific quality, or a certain rate for compressed images.
 
-*   0.7 < ssim < 0.8: moderate similarity. structural differences are more apparent. image processing algorithms that perform changes to a photo might end up in this range if they are significant changes.
+- 0.7 < ssim < 0.8: moderate similarity. structural differences are more apparent. image processing algorithms that perform changes to a photo might end up in this range if they are significant changes.
 
-*   ssim < 0.7: low similarity. there are significant structural differences. the comparison does not resemble what it is meant to represent visually.
+- ssim < 0.7: low similarity. there are significant structural differences. the comparison does not resemble what it is meant to represent visually.
 
 but remember, these ranges are not fixed thresholds. you’ll need to adjust them based on your specific use case and the type of images you're dealing with. also, keep in mind that in image analysis there is not a universally agreed metric, and often, the metric is just a rough approximation of the subjective human perceived quality.
 

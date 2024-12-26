@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-pass-a-view-value-to-a-controller-on-rails"
 ---
 
-alright, so, passing a view value to a controller in rails, i’ve definitely been there, done that, got the t-shirt, and probably debugged it for longer than i'd like to remember. it's one of those things that seems straightforward but can trip you up if you're not thinking about the data flow. when i first started with rails, i got tangled in the idea of direct view-to-controller communication, like trying to make two wires connect without a proper socket. it doesn't work that way.
+, so, passing a view value to a controller in rails, i’ve definitely been there, done that, got the t-shirt, and probably debugged it for longer than i'd like to remember. it's one of those things that seems straightforward but can trip you up if you're not thinking about the data flow. when i first started with rails, i got tangled in the idea of direct view-to-controller communication, like trying to make two wires connect without a proper socket. it doesn't work that way.
 
 fundamentally, views are for displaying data, and controllers are for handling logic and requests. the communication path, in a standard rails app follows this, view->http request->controller->model->database (if needed). so, you need to use a form or a link to generate an http request. this request will carry the value, usually as a parameter, that you want to pass from your view to your controller.
 
@@ -21,6 +21,7 @@ the most common case is that you have some data input by the user, using a form.
   <%= submit_tag "submit" %>
 <% end %>
 ```
+
 here, `form_tag users_path, method: :post` sets up a form that, when submitted, will send a post request to the `users#create` action, or whatever is defined by the `/users` route. the key part is `<input type="text" id="favorite_language" name="favorite_language">`. the `name` attribute, which is 'favorite_language' is what matters here. rails will use this name as the key in the `params` hash in your controller.
 
 then, in your controller (`app/controllers/users_controller.rb`), you can access this value like so:
@@ -54,6 +55,7 @@ in your view (say in `app/views/products/index.html.erb`) you could create a lin
     </p>
   <% end %>
 ```
+
 here, the `product_path(product, format: :html, category_id: product.category_id)` helper generates a url like `/products/123?category_id=456` (assuming `product.id` is 123 and category id is 456) also including the `format: :html`. rails will automatically append the id to the path. the `category_id: product.category_id` part shows how you can add arbitrary values as parameters in the link and `format: :html` is another, and common one, to control the type of response.
 then, in the `products#show` action of your controller (`app/controllers/products_controller.rb`), you can do the following to access this value:
 
@@ -67,6 +69,7 @@ class ProductsController < ApplicationController
   end
 end
 ```
+
 just as in the form case `params[:category_id]` gives you the passed value.
 
 i once struggled because i was trying to access the id of a record in the view, directly, before the actual http request, before the controller's actions happened. i was trying to `params[:id]` in the view, which is incorrect, of course. views render after the controller actions have run so, parameters are only available on controllers. my colleague, who is really into databases, found it funny that i tried to query the params database before the controller.
@@ -74,6 +77,7 @@ i once struggled because i was trying to access the id of a record in the view, 
 **scenario 3: hidden fields within a form**
 
 sometimes, you need to pass a value that the user doesn't directly input, like an id of a parent record. you can do this using hidden fields inside a form. you can add a hidden field in your view, (inside any `form_tag` block, in `app/views/comments/_form.html.erb` say):
+
 ```erb
 <%= form_with(model: @comment, url: comments_path) do |form| %>
     <%= form.hidden_field :post_id, value: @post.id %>
@@ -82,6 +86,7 @@ sometimes, you need to pass a value that the user doesn't directly input, like a
 <% end %>
 
 ```
+
 here, `<%= form.hidden_field :post_id, value: @post.id %>` adds a hidden input with the name 'comment[post_id]' and its value would be the id of the `@post` object. note the syntax `comment[post_id]` for nested attributes which rails will treat nicely when saving data.
 
 in your controller (`app/controllers/comments_controller.rb`), you can access it like so:
@@ -104,6 +109,7 @@ class CommentsController < ApplicationController
   end
 end
 ```
+
 here `params[:comment][:post_id]` would give you the hidden value. note the use of strong parameters in rails. is considered good practice.
 
 i've used hidden fields quite extensively in my projects. i also recall that i forgot to include them in the strong parameters method and that took me a while to figure out. another lesson learned the hard way, haha.

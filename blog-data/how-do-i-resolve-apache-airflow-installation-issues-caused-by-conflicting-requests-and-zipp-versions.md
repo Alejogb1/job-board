@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-resolve-apache-airflow-installation-issues-caused-by-conflicting-requests-and-zipp-versions"
 ---
 
-Okay, let's tackle this. I've seen this specific headache more times than I'd care to count. Conflicting dependencies, particularly those involving `requests` and `zipp` versions in Apache Airflow environments, are a classic source of deployment frustration. It’s not uncommon, especially when you’re juggling various projects or inheriting an existing setup that hasn't been meticulously maintained. It always feels like a deep dive into the python package management world, but it’s usually solvable with some systematic troubleshooting. My experience, spanning several years of orchestrating complex data pipelines, has taught me a few reliable approaches.
+, let's tackle this. I've seen this specific headache more times than I'd care to count. Conflicting dependencies, particularly those involving `requests` and `zipp` versions in Apache Airflow environments, are a classic source of deployment frustration. It’s not uncommon, especially when you’re juggling various projects or inheriting an existing setup that hasn't been meticulously maintained. It always feels like a deep dive into the python package management world, but it’s usually solvable with some systematic troubleshooting. My experience, spanning several years of orchestrating complex data pipelines, has taught me a few reliable approaches.
 
 The core issue usually stems from the fact that Airflow itself, along with its provider packages (like those for aws, gcp, etc.) and any other libraries you install, rely on specific versions of supporting libraries. These dependencies often specify upper or lower bounds for versions they are compatible with. `requests`, being a fundamental http library, and `zipp`, which is used extensively for working with zip archives in packages, frequently find themselves at odds because of these strict versioning requirements. This manifests as installation failures, import errors, or even unpredictable runtime behavior.
 
@@ -29,7 +29,7 @@ This error clearly lays out that `airflow-provider-google` requires older versio
     source .venv/bin/activate
     ```
 
-2.  **Pin Specific Versions**: Instead of relying on broad version ranges in your `requirements.txt`, explicitly define the precise versions you want. If I'm encountering a conflict, and my initial guess at a compatible combination doesn’t work, I would create a `requirements.txt` that *explicitly* specifies `requests` and `zipp` versions. For example, based on the error above, I might try this:
+2.  **Pin Specific Versions**: Instead of relying on broad version ranges in your `requirements.txt`, explicitly define the precise versions you want. If I'm encountering a conflict, and my initial guess at a compatible combination doesn’t work, I would create a `requirements.txt` that _explicitly_ specifies `requests` and `zipp` versions. For example, based on the error above, I might try this:
 
     ```
     apache-airflow==2.7.2 # or your chosen version
@@ -44,7 +44,7 @@ This error clearly lays out that `airflow-provider-google` requires older versio
     pip install -r requirements.txt
     ```
 
-    This approach ensures you have the *exact* versions of libraries required to support both Airflow (and its providers) and any other libraries you need. I have also found it extremely useful to specify the entire dependency tree if you are using Poetry or similar packaging tools to prevent similar conflicts. This is crucial for reproducible builds.
+    This approach ensures you have the _exact_ versions of libraries required to support both Airflow (and its providers) and any other libraries you need. I have also found it extremely useful to specify the entire dependency tree if you are using Poetry or similar packaging tools to prevent similar conflicts. This is crucial for reproducible builds.
 
 **Example 2: The Package Upgrade Cascade**
 
@@ -69,7 +69,7 @@ Now, you’ve updated `requests` and `zipp` to versions that conflict with what 
 
 **Example 3: The Unseen Dependency**
 
-A more insidious form of this issue arises when the conflict isn’t directly with the version of `requests` or `zipp` that *you* explicitly install, but a *transitive* dependency—meaning it’s required by something that you’re already using. For example, you may have a custom library or another package from PyPi that also includes its version of a request library.
+A more insidious form of this issue arises when the conflict isn’t directly with the version of `requests` or `zipp` that _you_ explicitly install, but a _transitive_ dependency—meaning it’s required by something that you’re already using. For example, you may have a custom library or another package from PyPi that also includes its version of a request library.
 
 Consider the following situation, where the `requirements.txt` has no immediate conflicts:
 
@@ -90,9 +90,9 @@ This shows a graphical tree, from which we can identify which packages are intro
 
 For further research, I highly recommend these:
 
-*   **PEP 440**: It provides a comprehensive overview of Python version specifications, which are vital to understand how dependencies work.
-*   **The official pip documentation**: It will help you master techniques such as installing specific versions, using constraint files, or utilizing tools like `pip-tools`.
-*   **"Effective Python" by Brett Slatkin**: While not directly focused on Airflow, this book offers excellent guidance on writing robust and maintainable Python code, which directly translates to better dependency management.
-*   **"Python Packaging User Guide"**: The official resource which details all aspects of creating, packaging, and installing python packages. This is invaluable for understanding the ecosystem better.
+- **PEP 440**: It provides a comprehensive overview of Python version specifications, which are vital to understand how dependencies work.
+- **The official pip documentation**: It will help you master techniques such as installing specific versions, using constraint files, or utilizing tools like `pip-tools`.
+- **"Effective Python" by Brett Slatkin**: While not directly focused on Airflow, this book offers excellent guidance on writing robust and maintainable Python code, which directly translates to better dependency management.
+- **"Python Packaging User Guide"**: The official resource which details all aspects of creating, packaging, and installing python packages. This is invaluable for understanding the ecosystem better.
 
-In my experience, these types of dependency issues often stem from a lack of version control practices. Adopting a more deliberate approach to dependency management, using isolated environments, and rigorously testing changes in development before pushing them to production environments drastically reduces the likelihood of these problems. It may seem laborious initially, but it prevents significant headaches later down the line, I promise. And remember, it is crucial to understand that these are never truly *isolated* incidents. They are symptoms of an underlying issue of not having a controlled dependency management process. So, taking the time to address them thoughtfully will pay dividends.
+In my experience, these types of dependency issues often stem from a lack of version control practices. Adopting a more deliberate approach to dependency management, using isolated environments, and rigorously testing changes in development before pushing them to production environments drastically reduces the likelihood of these problems. It may seem laborious initially, but it prevents significant headaches later down the line, I promise. And remember, it is crucial to understand that these are never truly _isolated_ incidents. They are symptoms of an underlying issue of not having a controlled dependency management process. So, taking the time to address them thoughtfully will pay dividends.

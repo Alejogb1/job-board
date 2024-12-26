@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-is-my-django-filefield-using-custom-storage-still-using-the-default-googlecloudstorage"
 ---
 
-Alright, let's dissect this Django `FileField` and custom storage quandary, shall we? It's a situation I’ve encountered more times than I care to recall, usually late on a Friday. You've meticulously crafted your custom storage backend, believing you've decoupled from Google Cloud Storage (GCS), only to find the files stubbornly persisting there. I’ve even seen cases where it partially works, leading to even more confusion. This often boils down to a few common culprits, and we can walk through them systematically.
+, let's dissect this Django `FileField` and custom storage quandary, shall we? It's a situation I’ve encountered more times than I care to recall, usually late on a Friday. You've meticulously crafted your custom storage backend, believing you've decoupled from Google Cloud Storage (GCS), only to find the files stubbornly persisting there. I’ve even seen cases where it partially works, leading to even more confusion. This often boils down to a few common culprits, and we can walk through them systematically.
 
-The core issue usually revolves around how Django's settings, the model definitions, and custom storage classes interact. My experience suggests the problem isn't typically with GCS itself, or necessarily with how your custom storage *should* work, but rather with how Django interprets your setup. We need to ensure everything is talking the same language, if you will. Let's consider the usual suspects, starting with the most likely.
+The core issue usually revolves around how Django's settings, the model definitions, and custom storage classes interact. My experience suggests the problem isn't typically with GCS itself, or necessarily with how your custom storage _should_ work, but rather with how Django interprets your setup. We need to ensure everything is talking the same language, if you will. Let's consider the usual suspects, starting with the most likely.
 
 **1. The `DEFAULT_FILE_STORAGE` Setting and Context:**
 
-Django uses the `DEFAULT_FILE_STORAGE` setting in your `settings.py` file to determine which storage backend to use *by default*. If this is still pointing to `django.core.files.storage.FileSystemStorage` (the default) or any other storage backend referencing GCS (directly or indirectly, even via another custom backend), your `FileField` might be inadvertently using that instead of your intended custom storage, especially when no storage argument is passed to it. To illustrate, imagine you have this in your `settings.py`:
+Django uses the `DEFAULT_FILE_STORAGE` setting in your `settings.py` file to determine which storage backend to use _by default_. If this is still pointing to `django.core.files.storage.FileSystemStorage` (the default) or any other storage backend referencing GCS (directly or indirectly, even via another custom backend), your `FileField` might be inadvertently using that instead of your intended custom storage, especially when no storage argument is passed to it. To illustrate, imagine you have this in your `settings.py`:
 
 ```python
 # settings.py
@@ -31,7 +31,7 @@ class MyModel(models.Model):
 
 Despite having a perfectly valid custom storage class elsewhere, `my_file` will default to Google Cloud Storage. Why? Because `DEFAULT_FILE_STORAGE` dictates the global default and we haven't provided a specific storage for that field.
 
-**Solution:** Be explicit. You have two choices: Either modify `DEFAULT_FILE_STORAGE` to point to your custom storage *if you want it to be the system-wide default*, or provide a `storage` argument *directly* to the `FileField` if you want to have it on a per-field or per-model basis.
+**Solution:** Be explicit. You have two choices: Either modify `DEFAULT_FILE_STORAGE` to point to your custom storage _if you want it to be the system-wide default_, or provide a `storage` argument _directly_ to the `FileField` if you want to have it on a per-field or per-model basis.
 
 Here's how to correct the above, explicitly:
 
@@ -130,8 +130,9 @@ Even if your storage class intends to use the local file system, instantiating a
 **Solution:** Review your custom class carefully. Ensure you’re only doing what you intend to do within your methods and that you're not inadvertently using GCS specific calls or resources. Remove any GCS instantiation from the custom class and instead focus solely on the specific file or object location where you intend to store the file.
 
 For reference and further technical depth, I suggest exploring the following:
-* The *Django documentation on file storage* is, of course, indispensable. Pay special attention to the parts about custom storage backends, storage classes and the interface they define.
-* *'Two Scoops of Django 3' by Audrey Roy Greenfeld and Daniel Roy Greenfeld* gives excellent insights on practical Django development, with good discussions on storage patterns.
-* The *source code for `django.core.files.storage.Storage`*, and `FileSystemStorage` itself, within Django’s codebase. This provides direct access to understand how these basic classes operate, which will help you write effective custom storage classes.
+
+- The _Django documentation on file storage_ is, of course, indispensable. Pay special attention to the parts about custom storage backends, storage classes and the interface they define.
+- _'Two Scoops of Django 3' by Audrey Roy Greenfeld and Daniel Roy Greenfeld_ gives excellent insights on practical Django development, with good discussions on storage patterns.
+- The _source code for `django.core.files.storage.Storage`_, and `FileSystemStorage` itself, within Django’s codebase. This provides direct access to understand how these basic classes operate, which will help you write effective custom storage classes.
 
 Remember, debugging storage problems often requires stepping through your code and watching precisely how files are handled by both Django and your custom storage class. In my experience, these three issues are the primary causes for this specific problem. Double-check your settings, verify your custom storage implementation thoroughly, and you should be able to fix your file storage issues. Good luck!

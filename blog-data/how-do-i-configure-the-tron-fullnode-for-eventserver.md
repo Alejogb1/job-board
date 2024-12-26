@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-configure-the-tron-fullnode-for-eventserver"
 ---
 
-Alright, let's unpack this. Getting the tron fullnode to play nicely with an event server isn't always plug-and-play, and I’ve certainly spent my fair share of late nights staring at logs to get it working smoothly. I remember a particular project a few years back involving a high-volume dapp where we relied heavily on real-time events—that’s where I really had to roll up my sleeves on this. So, let's focus on getting *your* configuration straightened out.
+, let's unpack this. Getting the tron fullnode to play nicely with an event server isn't always plug-and-play, and I’ve certainly spent my fair share of late nights staring at logs to get it working smoothly. I remember a particular project a few years back involving a high-volume dapp where we relied heavily on real-time events—that’s where I really had to roll up my sleeves on this. So, let's focus on getting _your_ configuration straightened out.
 
 Fundamentally, the tron fullnode isn’t set up to directly push events to external systems. It’s designed primarily for blockchain consensus, data storage, and transaction processing. To bridge this gap, we need to configure it to publish events, usually via some mechanism like websockets or a message queue, and then have the event server subscribe to these streams. In the tron ecosystem, the most common method involves using the gRPC interface, coupled with the event subscription features.
 

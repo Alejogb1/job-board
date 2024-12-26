@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "how-to-use-jsonapi-serializer-to-hide-the-id-of-a-model"
 ---
 
-alright, so you're looking to ditch the `id` field when serializing your models with `jsonapi-serializer`, right? i've been there, staring blankly at json payloads wondering why that pesky identifier is always hanging around. it's actually pretty common and i've run into this exact problem multiple times over the years working with various apis. let me share my experiences and the solutions i've found.
+, so you're looking to ditch the `id` field when serializing your models with `jsonapi-serializer`, right? i've been there, staring blankly at json payloads wondering why that pesky identifier is always hanging around. it's actually pretty common and i've run into this exact problem multiple times over the years working with various apis. let me share my experiences and the solutions i've found.
 
-first up, why would someone even *want* to hide the `id`? often, when you're building an api, the `id` is really an internal implementation detail. it might be perfectly relevant to your database, but to the client consuming the api, it might be meaningless or even a security concern to expose. sometimes it's simply unnecessary noise. the client might be using a different identifier or even a unique composite key. in other words, when doing microservices the entity identification may not be needed or useful between services. i remember this one project, a real mess, where we were exposing our internal `id`s directly to a client that was then trying to interpret them as unique keys on their side. it was a debugging nightmare, and taught me a valuable lesson: never assume that your internal structure is what the client needs or expects. since that fiasco i became super deliberate about what i expose through the api.
+first up, why would someone even _want_ to hide the `id`? often, when you're building an api, the `id` is really an internal implementation detail. it might be perfectly relevant to your database, but to the client consuming the api, it might be meaningless or even a security concern to expose. sometimes it's simply unnecessary noise. the client might be using a different identifier or even a unique composite key. in other words, when doing microservices the entity identification may not be needed or useful between services. i remember this one project, a real mess, where we were exposing our internal `id`s directly to a client that was then trying to interpret them as unique keys on their side. it was a debugging nightmare, and taught me a valuable lesson: never assume that your internal structure is what the client needs or expects. since that fiasco i became super deliberate about what i expose through the api.
 
 now, `jsonapi-serializer` is great because it provides a decent level of customization which lets us fine-tune this exactly. the trick here isn’t about totally removing the `id` from the underlying model (which you shouldn't), but rather controlling its visibility during serialization.
 
-the most straightforward way to accomplish this is through the `attributes` option, or more precisely, what we choose *not* to include in it. by default, `jsonapi-serializer` will try to grab all attributes and the `id` for output unless you specify what should appear explicitly. we can leverage this to our advantage.
+the most straightforward way to accomplish this is through the `attributes` option, or more precisely, what we choose _not_ to include in it. by default, `jsonapi-serializer` will try to grab all attributes and the `id` for output unless you specify what should appear explicitly. we can leverage this to our advantage.
 
 here’s an example using ruby which is something i'm used to:
 
@@ -68,6 +68,7 @@ puts MyModelSerializer.new.serialize(my_model_instance)
 # Output:
 #{"data":{"attributes":{"name":"test entity","description":"example description"},"relationships":{"related_models":{"data":[{"type":"related_model","attributes":{"related_field1":"value_1","related_field2":"value_2"}},{"type":"related_model","attributes":{"related_field1":"value_3","related_field2":"value_4"}}]}},"type":"my_model"}}
 ```
+
 notice how the `related_model` also does not include the `id` in the serialized representation. this gives you more fine-grained control, and this is usually where people get into trouble, because they don't realize that the `attributes` section will only serialize the attributes listed and not anything that has an association.
 
 sometimes, you might want a little more control, perhaps to dynamically decide what to hide based on the context. you could use a custom serializer to implement this logic. this is a little more involved, but it's still pretty straightforward. just remember not to overcomplicate it for the sake of it. try and get the simplest solution to work first.
@@ -75,31 +76,32 @@ sometimes, you might want a little more control, perhaps to dynamically decide w
 for example, let's say you want to hide the `id` only for certain users, you could add this logic in your serializer. this example requires you to have a user object to be passed into the serializer. i'm going to move to javascript, since i also tend to use that a lot.
 
 ```javascript
-const JSONAPISerializer = require('jsonapi-serializer').Serializer;
+const JSONAPISerializer = require("jsonapi-serializer").Serializer;
 
-
-const MyModelSerializer = new JSONAPISerializer('my_model', {
-    attributes: ['name', 'description', 'other_relevant_field'],
-    id: (myModel, context) => {
-        if (context && context.user && context.user.isAdmin) {
-          return myModel.id; // Show id for admin
-        }
-        return undefined; // Hide id for normal user
-      }
+const MyModelSerializer = new JSONAPISerializer("my_model", {
+  attributes: ["name", "description", "other_relevant_field"],
+  id: (myModel, context) => {
+    if (context && context.user && context.user.isAdmin) {
+      return myModel.id; // Show id for admin
+    }
+    return undefined; // Hide id for normal user
+  },
 });
 
 const myModel = {
   id: 123,
-  name: 'test entity',
-  description: 'example description',
-  other_relevant_field: 'stuff'
+  name: "test entity",
+  description: "example description",
+  other_relevant_field: "stuff",
 };
 
 const adminUser = { isAdmin: true };
 const normalUser = { isAdmin: false };
 
 const adminOutput = MyModelSerializer.serialize(myModel, { user: adminUser });
-const normalUserOutput = MyModelSerializer.serialize(myModel, { user: normalUser });
+const normalUserOutput = MyModelSerializer.serialize(myModel, {
+  user: normalUser,
+});
 
 console.log(JSON.stringify(adminOutput, null, 2));
 // Output
@@ -116,7 +118,6 @@ console.log(JSON.stringify(adminOutput, null, 2));
   }
 }
 */
-
 
 console.log(JSON.stringify(normalUserOutput, null, 2));
 // Output
@@ -136,7 +137,7 @@ console.log(JSON.stringify(normalUserOutput, null, 2));
 
 here, the `id` function uses the context to check if the user is an admin. if so, the `id` is included, otherwise, it's omitted. when i first tried this context trick, i remember spending hours trying to figure out why it wasn't working. turned out, i was passing the context incorrectly and there was no debug output. that day i decided to always write a test to see if the context data is what i think it is, since then i’ve had far fewer debugging sessions. i mean i still have debugging sessions, just not on this.
 
-a few resources that i found useful when diving deep into jsonapi (and that helped me avoid lots of potential headaches) are: the official json api specification, which sounds obvious, but i always recommend reading the source and specification documentation first. it’s available online.  also, the "building microservices" by sam newman is a must read, even if you're not building microservices, the concepts he introduces about decoupling and designing apis are invaluable. there is also "restful web apis" by leonard richardson and mike amundsen which is also a great read to get a general view on how restful apis should work. the last one i'll recommend is not a book but it’s a paper: "you aren't gonna need it" this article talks about avoiding premature optimization. that's a good principle to apply to code always.
+a few resources that i found useful when diving deep into jsonapi (and that helped me avoid lots of potential headaches) are: the official json api specification, which sounds obvious, but i always recommend reading the source and specification documentation first. it’s available online. also, the "building microservices" by sam newman is a must read, even if you're not building microservices, the concepts he introduces about decoupling and designing apis are invaluable. there is also "restful web apis" by leonard richardson and mike amundsen which is also a great read to get a general view on how restful apis should work. the last one i'll recommend is not a book but it’s a paper: "you aren't gonna need it" this article talks about avoiding premature optimization. that's a good principle to apply to code always.
 
 so to summarize, hiding ids is usually just about not including them in the `attributes` section. if you need more dynamic control, the custom serializer is your friend. i’d start with the simplest version and only add complexity when absolutely needed. it’s easy to over-engineer this so keep it simple.
 

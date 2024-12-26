@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-tfx-required-if-i-already-have-airflow-for-orchestration"
 ---
 
-Alright, let's tackle this one. The question of whether TFX is strictly *required* when you've already got Airflow in your toolkit is something I've grappled with on several projects. It’s not a simple yes or no answer, as it often depends on the specific needs and maturity of your machine learning infrastructure. To get to the heart of it, let's break down what each tool brings to the table and then I’ll share my experiences to illustrate.
+, let's tackle this one. The question of whether TFX is strictly _required_ when you've already got Airflow in your toolkit is something I've grappled with on several projects. It’s not a simple yes or no answer, as it often depends on the specific needs and maturity of your machine learning infrastructure. To get to the heart of it, let's break down what each tool brings to the table and then I’ll share my experiences to illustrate.
 
 Airflow, as we all know, is a fantastic workflow orchestration tool. Its strength lies in scheduling, managing, and monitoring Directed Acyclic Graphs (DAGs). These DAGs can represent virtually any sequence of tasks, making it incredibly versatile for orchestrating various parts of your ML pipeline—data ingestion, feature engineering, model training, evaluation, deployment, and so on. I’ve personally used Airflow to manage everything from scheduled batch data processing to real-time model updates via custom operators, and it’s quite robust when configured correctly.
 
@@ -14,7 +14,7 @@ Now, here's where the nuance enters. Having Airflow does not automatically negat
 
 We then evaluated and introduced TFX in a modular fashion. We didn't replace our Airflow implementation entirely. Instead, we used Airflow to trigger TFX pipelines, treating the entire TFX workflow as a single 'task' within the broader orchestration framework. This allowed us to leverage TFX’s components for data validation, schema evolution, model evaluation using complex metrics and techniques like Slicing, and model pushing with version control. TFX ensured our ML system was robust and reliable, while Airflow retained its role in high-level task scheduling and system management.
 
-The crucial realization was that while Airflow is superb at handling workflow execution and dependencies, TFX shines at the *specifics* of building and maintaining robust ML pipelines. They don't necessarily compete, but complement each other. Here are three examples illustrating that complementarity:
+The crucial realization was that while Airflow is superb at handling workflow execution and dependencies, TFX shines at the _specifics_ of building and maintaining robust ML pipelines. They don't necessarily compete, but complement each other. Here are three examples illustrating that complementarity:
 
 **Example 1: Data Validation:**
 
@@ -127,8 +127,8 @@ pusher = components.Pusher(
 
 TFX pushes the validated model, ensuring that only models that have passed evaluation thresholds are deployed. It’s consistent, versioned, and traceable.
 
-To summarize, using Airflow alone *can* work, but you'll end up implementing much of what TFX already provides – data validation, model evaluation, robust deployment mechanisms. TFX, when used correctly alongside Airflow, allows you to focus more on the model and its logic, less on the heavy lifting of a robust and scalable ML system.
+To summarize, using Airflow alone _can_ work, but you'll end up implementing much of what TFX already provides – data validation, model evaluation, robust deployment mechanisms. TFX, when used correctly alongside Airflow, allows you to focus more on the model and its logic, less on the heavy lifting of a robust and scalable ML system.
 
 For further study, I recommend reviewing the official TFX documentation on tensorflow.org. Also, exploring “Machine Learning Engineering” by Andriy Burkov gives a deep understanding of ML pipelines and helps understand the necessity of these tools. “Building Machine Learning Pipelines” by Hannes Hapke and Catherine Nelson are invaluable for understanding how various pipeline components are assembled. These resources offer the kind of theoretical background you’ll need, along with specific guidance that’ll help you navigate the intricacies of building production-ready ML systems.
 
-So, is TFX required? No, not *strictly*. But if your goal is to build a robust, reliable, and scalable machine learning system, TFX is a powerful tool that can significantly reduce the complexity and effort required, especially when combined with a general-purpose orchestrator such as Airflow. The choice comes down to the level of standardization, automation, and robustness you need for your ML projects.
+So, is TFX required? No, not _strictly_. But if your goal is to build a robust, reliable, and scalable machine learning system, TFX is a powerful tool that can significantly reduce the complexity and effort required, especially when combined with a general-purpose orchestrator such as Airflow. The choice comes down to the level of standardization, automation, and robustness you need for your ML projects.

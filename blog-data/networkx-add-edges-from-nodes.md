@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "networkx-add-edges-from-nodes"
 ---
 
-Alright so you wanna add edges to a NetworkX graph cool been there done that a million times seems simple right it kinda is but there are nuances you need to be aware of to avoid headaches later i remember back in my undergrad days i was working on this social network analysis project and i naively thought i could just slap edges together like legos boy was i wrong data types were a mess things just weren't connected as they should it was a real trial by fire i'll tell you
+so you wanna add edges to a NetworkX graph cool been there done that a million times seems simple right it kinda is but there are nuances you need to be aware of to avoid headaches later i remember back in my undergrad days i was working on this social network analysis project and i naively thought i could just slap edges together like legos boy was i wrong data types were a mess things just weren't connected as they should it was a real trial by fire i'll tell you
 
 let's get straight to it the basic idea is straightforward you have a graph instance created with NetworkX and you need to connect your nodes with edges the most fundamental way to do this is using the `add_edge()` method this guy takes two node IDs as arguments and bam you've got a connection
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-configure-sustainsyssaml2-to-accept-unsigned-logout-responses"
 ---
 
-Alright, let's tackle this. Accepting unsigned logout responses with Sustainsys.Saml2… it's a situation I've encountered firsthand, and it's definitely one that requires a nuanced approach, especially in production environments. I remember a project back in '18 where we were integrating with an identity provider that, shall we say, wasn't the most rigorous about signing logout responses. Dealing with that brought some specific challenges. The short answer, of course, is that you *can* configure Sustainsys.Saml2 to do this, but you have to carefully consider the security implications.
+, let's tackle this. Accepting unsigned logout responses with Sustainsys.Saml2… it's a situation I've encountered firsthand, and it's definitely one that requires a nuanced approach, especially in production environments. I remember a project back in '18 where we were integrating with an identity provider that, shall we say, wasn't the most rigorous about signing logout responses. Dealing with that brought some specific challenges. The short answer, of course, is that you _can_ configure Sustainsys.Saml2 to do this, but you have to carefully consider the security implications.
 
 The core issue is that the saml specification, particularly for production deployments, strongly recommends signing all assertions and messages, including logout responses, to ensure integrity and non-repudiation. An unsigned response is inherently vulnerable to tampering. Someone could potentially spoof the identity provider and initiate a forced logout or worse. However, in specific, controlled scenarios, like during development, integration testing, or when dealing with a very limited test environment, accepting unsigned responses can be a temporary necessity. Never ever consider this acceptable in a real production setting.
 
@@ -16,16 +16,17 @@ Here are three ways to achieve this, going from the least to most flexible:
 
 This method relies on adjusting the configuration file directly. It’s the most straightforward way to enable the behaviour, although it’s somewhat limited in that it’s a blanket setting for your entire application. The disadvantage is this can not be done on specific logouts from specific identity providers - its an 'all or nothing' approach.
 
-In your `saml2.config` file, within the `<serviceProviders>` section (or `<identityProviders>` if you're dealing with a logout *request* that you need to accept unsigned), you would add a `allowUnsignedLogoutResponses="true"` attribute to the relevant provider. It looks something like this:
+In your `saml2.config` file, within the `<serviceProviders>` section (or `<identityProviders>` if you're dealing with a logout _request_ that you need to accept unsigned), you would add a `allowUnsignedLogoutResponses="true"` attribute to the relevant provider. It looks something like this:
 
 ```xml
 <serviceProviders>
-    <add entityId="https://your-app.com/saml" 
+    <add entityId="https://your-app.com/saml"
         allowUnsignedLogoutResponses="true"
        ...
     </add>
 </serviceProviders>
 ```
+
 Or if you are the idp accepting the request, not a service provider:
 
 ```xml
@@ -65,6 +66,7 @@ public class MyCustomLogoutResponse : LogoutResponse
     }
 }
 ```
+
 Next, we create a factory that can create the `MyCustomLogoutResponse` object:
 
 ```csharp
@@ -86,6 +88,7 @@ public class CustomMessageFactory : MessageFactory
 }
 
 ```
+
 Then we need to instruct `Sustainsys.Saml2` to use our new factory:
 
 ```csharp
@@ -140,12 +143,13 @@ options.Events = new Saml2Events
 
 });
 ```
+
 Here, we’ve modified the `IsSigned` property on the `LogoutResponse` before processing to indicate we have validated the signature, regardless of whether it was signed in the first place. This method offers great flexibility, allowing you to implement complex custom logic, even checking for an accepted list of providers that do not sign responses. It can also be easily unit tested without having to mock out the message parsing itself.
 
 **Considerations and Resources**
 
 Remember, disabling signature validation on logout responses isn't something you should take lightly. You’re opening up a potential vulnerability. It’s imperative you have absolute control over the environments where this is done.
 
-For a deeper understanding of the saml protocol, I would recommend *“Understanding SAML”* by Peter J. Davis. It provides an excellent overview and a detailed look at the mechanisms involved. Also, carefully review the specification document, “*Assertions and Protocols for the OASIS Security Assertion Markup Language (SAML) V2.0*, because you need to be familiar with the security implications you introduce when deviating from it. Additionally, the Sustainsys.Saml2 GitHub repository has excellent example configuration and documentation that can help fine tune your specific implementation. Finally, familiarize yourself with common saml implementation vulnerabilities, to avoid them.
+For a deeper understanding of the saml protocol, I would recommend _“Understanding SAML”_ by Peter J. Davis. It provides an excellent overview and a detailed look at the mechanisms involved. Also, carefully review the specification document, “_Assertions and Protocols for the OASIS Security Assertion Markup Language (SAML) V2.0_, because you need to be familiar with the security implications you introduce when deviating from it. Additionally, the Sustainsys.Saml2 GitHub repository has excellent example configuration and documentation that can help fine tune your specific implementation. Finally, familiarize yourself with common saml implementation vulnerabilities, to avoid them.
 
 In closing, while accepting unsigned logout responses is technically achievable with Sustainsys.Saml2, it's a decision that should be made with a full understanding of the associated risks and a strong mitigation plan. Always lean towards the more secure configuration and only make exceptions when you absolutely have to and understand the risk involved.

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-implement-a-generic-trait-but-only-for-a-specific-type"
 ---
 
-alright, so you're looking at implementing a generic trait but wanting it to behave differently based on the specific type it's applied to. i've been there, plenty of times. it's a pretty common pattern when you're trying to write more reusable and flexible code. i think i've lost count on how many times i've stumbled onto this in different languages and frameworks. it might seem tricky, but actually there's a few solid ways to tackle this.
+, so you're looking at implementing a generic trait but wanting it to behave differently based on the specific type it's applied to. i've been there, plenty of times. it's a pretty common pattern when you're trying to write more reusable and flexible code. i think i've lost count on how many times i've stumbled onto this in different languages and frameworks. it might seem tricky, but actually there's a few solid ways to tackle this.
 
 i remember back when i was working on a image processing library, something i did for a side project for the university. i had this generic `processor` trait, meant to handle various pixel formats. some operations, like resizing, worked pretty much the same for every pixel type. but then i had this super complex gamma correction function that was a total pain for different colour spaces. rgb, rgba, cmyk, you name it. i really needed a way to have my `processor` trait behave specific to the pixel type, without having a huge conditional block that checked on every call what to do. it was a nightmare. that was when i really started to get comfortable with the concept we're talking about here.
 

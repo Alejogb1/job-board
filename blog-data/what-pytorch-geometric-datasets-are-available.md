@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-pytorch-geometric-datasets-are-available"
 ---
 
-Alright, let's dive into the world of PyTorch Geometric datasets. It's a topic I've spent a fair amount of time navigating, especially during a project a couple of years back where we were working on graph-based anomaly detection. We needed very specific datasets, and the standard ones weren’t cutting it, leading to quite a deep investigation into the available options.
+, let's dive into the world of PyTorch Geometric datasets. It's a topic I've spent a fair amount of time navigating, especially during a project a couple of years back where we were working on graph-based anomaly detection. We needed very specific datasets, and the standard ones weren’t cutting it, leading to quite a deep investigation into the available options.
 
 So, first things first, PyTorch Geometric (PyG) provides a robust collection of datasets, neatly categorized for different types of graph learning tasks. These datasets aren't just raw data dumps; they’re thoughtfully structured `torch_geometric.data.Data` objects, facilitating easier model development and experimentation. When we consider categories, we can generally talk about node classification, graph classification, and link prediction datasets as the main players.
 
@@ -92,6 +92,6 @@ print(f'Edge index (example): {data.edge_index[:,:5]}')
 
 This last example provides a snippet to illustrate how one would go about creating a custom dataset. This becomes handy, as I mentioned, when you have specialized data formats or need to implement specific train/test splits.
 
-For further reading and deeper understanding, I'd highly recommend the following: For a foundational understanding of graph neural networks, check out *Graph Representation Learning* by William Hamilton. For a more PyG-centric dive, exploring the official documentation and example notebooks on the project's GitHub repository is invaluable. Additionally, papers from the Open Graph Benchmark (OGB) are crucial for understanding larger and more complex benchmarks and datasets. Specifically, I’d recommend “Benchmarking Graph Neural Networks” published in JMLR, which describes some of these popular graph benchmark datasets in detail.
+For further reading and deeper understanding, I'd highly recommend the following: For a foundational understanding of graph neural networks, check out _Graph Representation Learning_ by William Hamilton. For a more PyG-centric dive, exploring the official documentation and example notebooks on the project's GitHub repository is invaluable. Additionally, papers from the Open Graph Benchmark (OGB) are crucial for understanding larger and more complex benchmarks and datasets. Specifically, I’d recommend “Benchmarking Graph Neural Networks” published in JMLR, which describes some of these popular graph benchmark datasets in detail.
 
 In summary, PyTorch Geometric comes with a diverse set of graph datasets, covering many common graph learning scenarios. However, as with many other situations in software engineering, sometimes you have to get your hands dirty and craft some custom solutions. Having a grasp on these datasets and the ability to extend them provides a solid base for your graph learning endeavors.

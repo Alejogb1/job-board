@@ -4,19 +4,19 @@ date: "2024-12-15"
 id: "why-am-i-getting-a-neural-network-from-scratch---forward-propagation-error"
 ---
 
-alright, so you're hitting a snag with forward propagation in your neural network from scratch. i've been there, many times. it’s a classic debugging situation, and it usually boils down to a few common culprits. let’s walk through the things i typically check when i see this kind of error, drawing on my own history with these types of headaches.
+, so you're hitting a snag with forward propagation in your neural network from scratch. i've been there, many times. it’s a classic debugging situation, and it usually boils down to a few common culprits. let’s walk through the things i typically check when i see this kind of error, drawing on my own history with these types of headaches.
 
 first off, when you say "forward propagation error", i'm assuming we’re talking about the output of your network not being what you expect, or more often, it's spitting out NaNs (not a number) or infinities, or simply incorrect values, causing problems down the line when you start trying to calculate the loss or gradient. it's almost never the theoretical stuff, usually the devil is in the details of how you are moving the data.
 
 my first go-to check is always data shapes. seriously, i cannot emphasize this enough. back in the early days when i was first getting into this, i spent an entire evening fighting a similar problem, only to realize that i had accidentally transposed my weights matrix. what looked like perfectly valid code on the surface was actually feeding my network data with completely incorrect dimensions. so, let's be precise about this:
 
-*   **input shape:** make sure the input you’re feeding into your network has the correct number of columns or features. if your input samples are rows, and you have, say, 10 features each sample should be a row vector with length 10.
+- **input shape:** make sure the input you’re feeding into your network has the correct number of columns or features. if your input samples are rows, and you have, say, 10 features each sample should be a row vector with length 10.
 
-*   **weight shapes:** each layer's weights should be shaped to properly transform the output from the previous layer to the input of the next. if the previous layer outputs something with dimension n, and the current layer has m neurons, then this layer’s weight matrix should have the shape (m, n). a common error is to do (n, m) which will cause a shape error in the forward propagation multiplication.
+- **weight shapes:** each layer's weights should be shaped to properly transform the output from the previous layer to the input of the next. if the previous layer outputs something with dimension n, and the current layer has m neurons, then this layer’s weight matrix should have the shape (m, n). a common error is to do (n, m) which will cause a shape error in the forward propagation multiplication.
 
-*   **bias shapes:** biases are additive components, they should match the output dimension of the layer they are associated with. they are typically vectors, each element of which is added to the corresponding element of the layer’s output.
+- **bias shapes:** biases are additive components, they should match the output dimension of the layer they are associated with. they are typically vectors, each element of which is added to the corresponding element of the layer’s output.
 
-for example, let's say you have an input *x*, that’s a row vector of shape (1, 5) and a layer with 3 neurons, you would normally expect a matrix multiplication of *x* (1,5) with *w*, weight matrix of shape (3, 5), plus biases, a vector with shape (3, 1) resulting in *z* which will have a shape of (1, 3). then this becomes the input of the next layer. in code this may look like:
+for example, let's say you have an input _x_, that’s a row vector of shape (1, 5) and a layer with 3 neurons, you would normally expect a matrix multiplication of _x_ (1,5) with _w_, weight matrix of shape (3, 5), plus biases, a vector with shape (3, 1) resulting in _z_ which will have a shape of (1, 3). then this becomes the input of the next layer. in code this may look like:
 
 ```python
 import numpy as np
@@ -92,11 +92,13 @@ print(f"Sigmoid output: {a}")
 dz = sigmoid_derivative(a)
 print(f"Sigmoid derivative: {dz}")
 ```
+
 this code snippet shows a typical sigmoid implementation and its derivative. make sure your activation and derivative match, because a wrong derivative function means no correct gradient calculations during backpropagation later on.
 
 another critical piece is your initialization. how are you initializing weights and biases? if you’re using all zeros or random small numbers from a very narrow range, your network might struggle to learn. i remember trying to get something working with small random initializations and it simply could not converge, i then used Xavier initialization (also known as glorot initialization) and it worked right away. a very common approach that works quite well is to use a random initialization of small numbers based on a gaussian distribution scaled using the size of the layer. and if you have a very deep net, then you will want to look at even more advanced initializations.
 
 here's an example of random weight initialization:
+
 ```python
 import numpy as np
 def initialize_weights_xavier(input_size, output_size):
@@ -123,12 +125,13 @@ w, b = initialize_weights_xavier(input_size, output_size)
 print(f"Initialized weight shape: {w.shape}")
 print(f"Initialized bias shape: {b.shape}")
 ```
+
 this piece shows the Xavier initializer, and you can also experiment with other initialization methods which are well documented.
 
 i've seen people sometimes forget that forward propagation requires you to iterate through all layers of your network doing the transformations step by step. forgetting to apply the forward function in some layers, or applying in the wrong order, will definitely not get you to where you want. remember to go step by step, doing the transformations between layers using the output of the previous layer as the input for the next one. and if you have a loop for this operation, make sure that you are indexing into the correct variables and the variables are properly initialized. the same with your matrix multiplications, make sure they are done in the correct order. i’ve made this mistake so many times. it’s always worth checking.
 
 finally, a last tip based on a situation i experienced. if you are dealing with regression problems, make sure your output layer activation function is suitable for that kind of problem. if you have outputs outside the range of the activation function of the last layer then your network won't be able to output them and will result in an error.
 
-in terms of resources, i'd recommend looking into "deep learning" by goodfellow, bengio, and courville. this is the main resource for deep learning. and also "neural networks and deep learning" by michael nielsen. these are not only a reference but also show the fundamentals. there’s a wealth of detailed explanations that help you understand not just how, but also *why* these things are done this way.
+in terms of resources, i'd recommend looking into "deep learning" by goodfellow, bengio, and courville. this is the main resource for deep learning. and also "neural networks and deep learning" by michael nielsen. these are not only a reference but also show the fundamentals. there’s a wealth of detailed explanations that help you understand not just how, but also _why_ these things are done this way.
 
 so, to recap, focus on these key areas when debugging your forward propagation: data shapes, correct implementation of your activation functions and their derivatives, proper weight initialization, and correctly calling the forward step of all layers. if you meticulously check these, you’ll likely find the cause of your errors. sometimes it’s something completely dumb and trivial. once i spent an entire afternoon debugging, only to find i was initializing my biases wrong... let's not talk about that. i hope these tips help. let me know how it goes.

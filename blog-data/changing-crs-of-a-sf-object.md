@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "changing-crs-of-a-sf-object"
 ---
 
-Alright listen up I've seen this rodeo a few times you want to change the coordinate reference system CRS of a simple features sf object in R right That's like trying to change the language of a document after its written tricky but doable Been there done that got the t-shirt And by t-shirt I mean several late nights wrestling with geospatial data
+listen up I've seen this rodeo a few times you want to change the coordinate reference system CRS of a simple features sf object in R right That's like trying to change the language of a document after its written tricky but doable Been there done that got the t-shirt And by t-shirt I mean several late nights wrestling with geospatial data
 
 So the question is "changing CRS of a sf object" yeah that's pretty vague Lets dive into it its about spatial data and how its referenced on earth That's the core stuff of geospatial analysis I've personally spent probably months of my life on this you know that feeling of getting something to align properly finally after a day of errors that's the vibe I get when someone asks this
 
@@ -48,7 +48,7 @@ st_crs(my_sf_data_transformed)
 # It's done!
 ```
 
-What’s happening here? We load `sf` obviously. We create a simple sf object with dummy point data using  `st_sfc` it is just a small example it could be a polygon a line just does not matter We specify the original CRS as 4326 (WGS 84 which is the geographic coordinate system that everyone uses at least most of people if you are not living in mars or something) Then the magic happens the `st_transform` function takes the sf object and the new CRS specified as an EPSG code this way we are using numbers not names to specify what CRS is and we want which makes it easier to handle and faster in most cases and we obtain a new object with the transformed coordinates and the new CRS assigned to it If you do `st_crs` of the transformed data it shows you the new projection.
+What’s happening here? We load `sf` obviously. We create a simple sf object with dummy point data using `st_sfc` it is just a small example it could be a polygon a line just does not matter We specify the original CRS as 4326 (WGS 84 which is the geographic coordinate system that everyone uses at least most of people if you are not living in mars or something) Then the magic happens the `st_transform` function takes the sf object and the new CRS specified as an EPSG code this way we are using numbers not names to specify what CRS is and we want which makes it easier to handle and faster in most cases and we obtain a new object with the transformed coordinates and the new CRS assigned to it If you do `st_crs` of the transformed data it shows you the new projection.
 
 **Snippet 2: Handling Custom PROJ Strings**
 
@@ -124,15 +124,15 @@ Here’s what we do: `st_crs` confirms there is no CRS this means that the geome
 
 **Important Considerations**
 
-*   **Accuracy:** Reprojection involves mathematical transformations the original accuracy of the coordinates is preserved or sometimes can be lost if you do not know what you are doing but in general the accuracy is the same.
+- **Accuracy:** Reprojection involves mathematical transformations the original accuracy of the coordinates is preserved or sometimes can be lost if you do not know what you are doing but in general the accuracy is the same.
 
-*   **Units:** Pay attention to units Different CRSs have different units for distances like meters degrees or feet and you need to know what is going on with those otherwise you might end up with a small object that you thought was huge or vice versa.
+- **Units:** Pay attention to units Different CRSs have different units for distances like meters degrees or feet and you need to know what is going on with those otherwise you might end up with a small object that you thought was huge or vice versa.
 
-*   **EPSG Codes:** These are unique identifiers for coordinate systems a great resource is the `epsg.io` website which is a pretty standard thing in the geospatial world.
+- **EPSG Codes:** These are unique identifiers for coordinate systems a great resource is the `epsg.io` website which is a pretty standard thing in the geospatial world.
 
-*  **Datum transformations:** sometimes, you might need to specify the exact datum transformation if your data is really old. That’s a topic for another day but know it exists. I once spent 3 days on that trying to figure out why a dataset looked like it had gone through a blender.
+- **Datum transformations:** sometimes, you might need to specify the exact datum transformation if your data is really old. That’s a topic for another day but know it exists. I once spent 3 days on that trying to figure out why a dataset looked like it had gone through a blender.
 
-* **PROJ String Documentation:**  The definitive resource for understanding PROJ strings is the official PROJ documentation they are pretty deep and are not simple to understand but they are like the bible for PROJ strings and also you can find some introductory stuff in papers related to geodesy not the usual mapping stuff but it is related to the same.
+- **PROJ String Documentation:** The definitive resource for understanding PROJ strings is the official PROJ documentation they are pretty deep and are not simple to understand but they are like the bible for PROJ strings and also you can find some introductory stuff in papers related to geodesy not the usual mapping stuff but it is related to the same.
 
 And finally a joke because you asked for one I spent so much time learning about projections I think I can now project my life in multiple parallel realities just to compare them. Hah ha.
 

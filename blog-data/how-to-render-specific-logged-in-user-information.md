@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-render-specific-logged-in-user-information"
 ---
 
-Alright, let's tackle this. User-specific information rendering, while seemingly straightforward, often throws up some interesting challenges in real-world applications. I've personally spent a fair amount of time debugging situations where user data leaked across sessions or wasn't displayed correctly, so let's unpack this with a focus on practical methods. The core issue revolves around securely fetching and displaying data that pertains exclusively to the currently logged-in user. We need to ensure that no one sees another user’s information and that the data presented is accurate and up-to-date.
+, let's tackle this. User-specific information rendering, while seemingly straightforward, often throws up some interesting challenges in real-world applications. I've personally spent a fair amount of time debugging situations where user data leaked across sessions or wasn't displayed correctly, so let's unpack this with a focus on practical methods. The core issue revolves around securely fetching and displaying data that pertains exclusively to the currently logged-in user. We need to ensure that no one sees another user’s information and that the data presented is accurate and up-to-date.
 
 The fundamental pattern, at its most basic, involves authenticating the user and then using that authentication context to query the relevant data. There are several layers to this process. Typically, we begin with user authentication (using, for example, username/password, OAuth, or session tokens). Once a user is confirmed, a unique identifier for that user becomes available. This identifier is critical; it’s what allows us to differentiate user data and prevent mix-ups. Let’s consider a basic scenario: rendering a user’s name and email after login.
 
@@ -64,32 +64,36 @@ This code snippet simulates a Flask backend API. The important aspect here is ho
 **Example 2: Simple Client-Side Rendering (JavaScript with Fetch)**
 
 ```javascript
-document.addEventListener('DOMContentLoaded', function() {
-    fetch('/api/userinfo')
-    .then(response => {
-        if (!response.ok){
-           if(response.status === 401)
-             {
-                document.getElementById('user-data').innerHTML = 'User is not logged in.';
-                return;
-              }
-             throw new Error('Network response was not ok')
+document.addEventListener("DOMContentLoaded", function () {
+  fetch("/api/userinfo")
+    .then((response) => {
+      if (!response.ok) {
+        if (response.status === 401) {
+          document.getElementById("user-data").innerHTML =
+            "User is not logged in.";
+          return;
         }
-        return response.json();
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
     })
-    .then(data => {
-        if (data) {
-            document.getElementById('user-data').innerHTML = `
+    .then((data) => {
+      if (data) {
+        document.getElementById("user-data").innerHTML = `
             <p>Username: ${data.username}</p>
             <p>Email: ${data.email}</p>
             `;
-        }
+      }
     })
-    .catch(error => {
-      console.error('There has been a problem with your fetch operation: ', error);
+    .catch((error) => {
+      console.error(
+        "There has been a problem with your fetch operation: ",
+        error
+      );
     });
 });
 ```
+
 This example showcases a simple client-side JavaScript that fetches the user data from the API endpoint and renders it within the `user-data` element. Handling the 401 status code is essential for a better user experience. It also demonstrates basic error handling.
 
 **Example 3: Handling More Complex Data (GraphQL example)**
@@ -124,10 +128,10 @@ Here, the GraphQL schema specifies a `me` query, which, in practice, will resolv
 
 **Key Considerations:**
 
-*   **Authentication Context:** The mechanism for passing authentication context between the client and the server is critical. Session tokens are the most common, but bear in mind JWT (JSON Web Tokens) for stateless authentication. For more information, explore the RFC 7519 standards document on JWT.
-*   **Authorization:** Fetching data based on user authentication isn't sufficient. You should also implement authorization checks to determine what a specific user is allowed to access, read, write, etc. I've often relied on role-based access controls (RBAC) as well as more complex policies based on the application needs. "Role-Based Access Control" by David Ferraiolo, Richard Kuhn, and Ramaswamy Chandramouli is an excellent resource on the subject.
-*   **Data Sanitization:** On the server side, always sanitize data obtained from external sources including the database. The OWASP website offers comprehensive resources regarding sanitizing data to prevent vulnerabilities, such as XSS (cross-site scripting).
-*   **Database Design:** The structure of your database also matters. It's important to avoid storing sensitive data unnecessarily in the client's session/cookies, but instead keep it on the backend and fetch it as needed using authenticated identifiers.
-*   **API design**: Consider versioning your API to handle changes effectively, and make sure your documentation is up-to-date. "RESTful Web APIs" by Leonard Richardson and Mike Amundsen is a great starting point if you're working with REST.
+- **Authentication Context:** The mechanism for passing authentication context between the client and the server is critical. Session tokens are the most common, but bear in mind JWT (JSON Web Tokens) for stateless authentication. For more information, explore the RFC 7519 standards document on JWT.
+- **Authorization:** Fetching data based on user authentication isn't sufficient. You should also implement authorization checks to determine what a specific user is allowed to access, read, write, etc. I've often relied on role-based access controls (RBAC) as well as more complex policies based on the application needs. "Role-Based Access Control" by David Ferraiolo, Richard Kuhn, and Ramaswamy Chandramouli is an excellent resource on the subject.
+- **Data Sanitization:** On the server side, always sanitize data obtained from external sources including the database. The OWASP website offers comprehensive resources regarding sanitizing data to prevent vulnerabilities, such as XSS (cross-site scripting).
+- **Database Design:** The structure of your database also matters. It's important to avoid storing sensitive data unnecessarily in the client's session/cookies, but instead keep it on the backend and fetch it as needed using authenticated identifiers.
+- **API design**: Consider versioning your API to handle changes effectively, and make sure your documentation is up-to-date. "RESTful Web APIs" by Leonard Richardson and Mike Amundsen is a great starting point if you're working with REST.
 
 In summary, rendering specific user information involves much more than merely fetching data. Secure authentication, authorization, and careful data handling are all paramount to building reliable applications. Avoid directly using user ids from client to query backend. Always use an intermediate secure and authenticated layer. These steps, when implemented consistently and correctly, mitigate the potential for exposing information that should remain private.

@@ -4,15 +4,15 @@ date: "2024-12-15"
 id: "if-ten-people-call-a-function-that-counts-up-by-1-every-time-it-is-called-how-are-these-requests-handled-if-theyre-submitted-to-the-same-block"
 ---
 
-alright, so we're talking about a classic concurrency issue, specifically with a shared resource – that counter – and how multiple threads or processes hammer on it at the same time. i've been down this rabbit hole more than a few times, and it's always a great reminder of why we need to think carefully about how we handle shared state.
+, so we're talking about a classic concurrency issue, specifically with a shared resource – that counter – and how multiple threads or processes hammer on it at the same time. i've been down this rabbit hole more than a few times, and it's always a great reminder of why we need to think carefully about how we handle shared state.
 
-first off, if we're talking about ten separate function calls all hitting the same block of code (let’s assume this block is part of a process), the outcome isn't going to be a consistent count of ten.  the reason is race conditions. imagine each call is trying to increment the counter, essentially:
+first off, if we're talking about ten separate function calls all hitting the same block of code (let’s assume this block is part of a process), the outcome isn't going to be a consistent count of ten. the reason is race conditions. imagine each call is trying to increment the counter, essentially:
 
 1.  read the current value
 2.  add one to that value
 3.  write the new value back
 
-now, this looks simple enough. but in the real world, processors don't do things serially unless forced to. let me give you a little bit of my history here, back in my early days as a junior engineer, i once wrote a really naive web app that kept track of visitor counts.  i remember thinking, "hey, it's just a single int, should be easy," which is the classic newbie move, and then i deployed it and noticed the counts were all wrong. sometimes it would be off by a little, other times by a lot. turns out, that "easy" increment operation wasn't so easy at all, in real life. so, let’s visualize, this is what actually happens: if call one reads the counter, say its zero and before it can write back, call two reads it also zero. call one writes back one. call two writes back one too, so now the count is one instead of two because the operation is not atomic. multiple threads can read the initial value at approximately the same time, and then increment and write back causing the values to get overwritten and lost. a classical case of a race condition. that code was like a clown show, frankly.
+now, this looks simple enough. but in the real world, processors don't do things serially unless forced to. let me give you a little bit of my history here, back in my early days as a junior engineer, i once wrote a really naive web app that kept track of visitor counts. i remember thinking, "hey, it's just a single int, should be easy," which is the classic newbie move, and then i deployed it and noticed the counts were all wrong. sometimes it would be off by a little, other times by a lot. turns out, that "easy" increment operation wasn't so easy at all, in real life. so, let’s visualize, this is what actually happens: if call one reads the counter, say its zero and before it can write back, call two reads it also zero. call one writes back one. call two writes back one too, so now the count is one instead of two because the operation is not atomic. multiple threads can read the initial value at approximately the same time, and then increment and write back causing the values to get overwritten and lost. a classical case of a race condition. that code was like a clown show, frankly.
 
 if it is within the same thread, it's not that much of a problem since threads are mostly executed sequentially within the main process although some interleaving of the code can happen but if ten independent threads or processes are calling that counter function, the problem gets much worse, like much much worse, the results are quite often unpredictable. so you can have threads taking turns but in no particular order or completely overwriting the values. that simple increment operation isn't atomic. you have multiple steps involved. the processor and the memory manager are working all at the same time and that read, add, and write can be interrupted by other threads or processes all trying to do the same thing. this is where bad stuff happens, and a great way to debug this is the dreaded “print statements”, which usually makes it even worse, like an observer effect kind of thing. we have to somehow force those threads to have a more civilized way to access the resource.
 
@@ -67,7 +67,7 @@ if __name__ == '__main__':
 
 ```
 
-here, the `threading.lock()` part ensures that only one thread can be within the `with lock:` block at any given time.  it's a way of saying "hold on everyone else, i'm using this counter now!".  this ensures that the increment operation happens atomically and without interruptions.
+here, the `threading.lock()` part ensures that only one thread can be within the `with lock:` block at any given time. it's a way of saying "hold on everyone else, i'm using this counter now!". this ensures that the increment operation happens atomically and without interruptions.
 
 and you can also use atomic operations if the language and os support it:
 

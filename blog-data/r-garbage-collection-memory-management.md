@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "r-garbage-collection-memory-management"
 ---
 
-Okay so you're asking about garbage collection and if it's memory management That's a common question especially if you're new to lower-level systems or maybe you've been coding in higher-level languages for a while and are starting to dive deeper I've been around the block a few times with this stuff so let me lay it out for you like you'd see it in a real codebase
+you're asking about garbage collection and if it's memory management That's a common question especially if you're new to lower-level systems or maybe you've been coding in higher-level languages for a while and are starting to dive deeper I've been around the block a few times with this stuff so let me lay it out for you like you'd see it in a real codebase
 
-First off yes garbage collection is definitely a form of memory management but it's a *specific* *automatic* kind You gotta think of it like this You got your program running it needs to store data in RAM right That RAM is a finite resource we call that memory The operating system generally manages which parts of the memory are given to your program and the process itself then can have its own management logic to how it uses allocated memory and that's where your garbage collection comes into play
+First off yes garbage collection is definitely a form of memory management but it's a _specific_ _automatic_ kind You gotta think of it like this You got your program running it needs to store data in RAM right That RAM is a finite resource we call that memory The operating system generally manages which parts of the memory are given to your program and the process itself then can have its own management logic to how it uses allocated memory and that's where your garbage collection comes into play
 
 Think back about 15 years ago when I was neck-deep in this project porting a complex financial application from C++ to Java We had all kinds of memory leaks in the C++ version which is normal if you're dealing with manual memory management with raw pointers and `malloc` and `free` stuff It was a mess and hours of debugging and even using memory analysis tools like valgrind didn't fully solve the problem We could allocate memory but it was not always guaranteed to be free So we would just pray the system would not run out of memory
 
@@ -22,8 +22,8 @@ int main() {
     *my_int_ptr = 42;
 
     std::cout << "Value: " << *my_int_ptr << std::endl;
-    
-    delete my_int_ptr; //Deallocate the memory 
+
+    delete my_int_ptr; //Deallocate the memory
     my_int_ptr = nullptr; //good practice
 
     return 0;

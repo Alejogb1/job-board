@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-arent-tensorflows-tensor2tensor-colab-notebooks-running"
 ---
 
-Alright, let’s tackle this. It’s not uncommon to encounter hiccups when working with TensorFlow’s Tensor2Tensor (T2T), especially within colab notebooks, and I’ve certainly spent my fair share of late nights troubleshooting similar issues. Let's unpack some of the most frequent culprits and how to approach them.
+, let’s tackle this. It’s not uncommon to encounter hiccups when working with TensorFlow’s Tensor2Tensor (T2T), especially within colab notebooks, and I’ve certainly spent my fair share of late nights troubleshooting similar issues. Let's unpack some of the most frequent culprits and how to approach them.
 
 The typical scenarios that halt T2T colabs are generally related to version mismatches, dependency conflicts, and subtle changes in the environment, or sometimes even just incorrect syntax within the provided notebooks. In my experience building a custom summarization model a few years back, one seemingly insignificant discrepancy in library versions led to hours of debugging. I learned that meticulous attention to these details is paramount when dealing with such a complex framework. I remember explicitly rolling back several libraries one by one until the notebook finally started running correctly.
 
@@ -35,6 +35,7 @@ estimator = t2t_trainer.T2TModel(
     hparams=hparams, problem=problem, run_config=None
 )
 ```
+
 The key here is that `T2TModel` has been deprecated, and using the newer `T2TProblem` class would be essential here. In a modern T2T workflow, you would now define an estimator through more generic TensorFlow Estimator APIs, rather than relying on a T2T-specific class.
 
 **Snippet 2: Dependency Conflicts with TensorFlow-Datasets**
@@ -70,6 +71,7 @@ from tensor2tensor import problems
 problem_name = "translate_en_fr_wmt_32k"
 problem = problems.problem(problem_name) # this will fail if dataset doesn't exist
 ```
+
 The solution is to check for the correct dataset naming conventions using the `t2t-problem-list` command or checking the official documentation.
 
 Now, how do we actually fix these issues? First, always verify the **TensorFlow, T2T, and related package versions** specified in the colab notebook's requirements. If they're not explicitly stated, make an informed guess based on the notebook's creation date, or from any documentation available, or by trying various options. Then, try explicitly installing those versions within the colab environment. You can typically do this using `pip install package_name==version`.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "where-does-portainer-find-the-container-environment-variable-manager"
 ---
 
-Alright, let's unpack this. I've seen my share of kubernetes clusters and docker setups over the years, and the question of how Portainer handles environment variables is a common one, especially when things aren't behaving as expected. It's not always a single place, and the answer is nuanced by the environment Portainer is managing, be it a local docker daemon, a swarm cluster, or a kubernetes setup.
+, let's unpack this. I've seen my share of kubernetes clusters and docker setups over the years, and the question of how Portainer handles environment variables is a common one, especially when things aren't behaving as expected. It's not always a single place, and the answer is nuanced by the environment Portainer is managing, be it a local docker daemon, a swarm cluster, or a kubernetes setup.
 
 From my experience, when someone asks about where Portainer "finds" environment variable managers, they're usually encountering one of a few scenarios, often involving a mismatch between expectations and how Portainer actually interacts with the underlying container orchestration system. It's less about Portainer having some magical database of variables, and more about it acting as a mediator, querying and presenting information that's already configured in the host environment.
 
@@ -120,8 +120,8 @@ The key takeaway is that Portainer doesn’t have a variable manager of its own.
 
 To really dive into this, I recommend focusing on the specific environments you're using:
 
-*   **For Docker:** The official Docker documentation is invaluable, particularly the sections on docker run, docker-compose, and the docker api.
-*   **For Docker Swarm:** Refer to the docker swarm documentation, with emphasis on service definition and management.
-*   **For Kubernetes:** The Kubernetes documentation is indispensable, focusing on pod definitions, deployments, and environment variable injection using configmaps and secrets as well. The “Kubernetes in Action” by Marko Lukša is another fantastic and comprehensive resource. Additionally “Programming Kubernetes” by Michael Hausenblas and Stefan Schimanski can offer a more developer oriented view.
+- **For Docker:** The official Docker documentation is invaluable, particularly the sections on docker run, docker-compose, and the docker api.
+- **For Docker Swarm:** Refer to the docker swarm documentation, with emphasis on service definition and management.
+- **For Kubernetes:** The Kubernetes documentation is indispensable, focusing on pod definitions, deployments, and environment variable injection using configmaps and secrets as well. The “Kubernetes in Action” by Marko Lukša is another fantastic and comprehensive resource. Additionally “Programming Kubernetes” by Michael Hausenblas and Stefan Schimanski can offer a more developer oriented view.
 
 I’ve seen time and time again, that environment variable misconfigurations are a common source of pain. Understanding the underlying mechanisms of how these variables are set and consumed is essential for effective container management, and while Portainer is a great tool, it is just a visual presentation of what already exists in the configuration of your containers, services, or pods. So when things aren’t working, look to those platforms. They’re the source of truth.

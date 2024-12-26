@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-is-somefutureonsuccess-returning-null-instead-of-a-future-in-vertx-v425"
 ---
 
-Alright, let's unpack this. The behavior you're observing with `someFuture.onSuccess()` seemingly returning null, instead of a new future, is a classic gotcha that I've bumped into a few times, particularly when things get a little complex with asynchronous flows in Vert.x. It's not a bug, as such, but rather a misunderstanding of how `onSuccess` (and its counterparts) are designed to function within the context of Vert.x’s asynchronous model and composability.
+, let's unpack this. The behavior you're observing with `someFuture.onSuccess()` seemingly returning null, instead of a new future, is a classic gotcha that I've bumped into a few times, particularly when things get a little complex with asynchronous flows in Vert.x. It's not a bug, as such, but rather a misunderstanding of how `onSuccess` (and its counterparts) are designed to function within the context of Vert.x’s asynchronous model and composability.
 
-In essence, the core issue isn't that `onSuccess` is *failing* to return anything; it's that it’s *not supposed to return a future directly*. What it actually does is register a callback to be executed when the original future completes successfully. The return type of `onSuccess` itself is void, which means it doesn’t yield a new future you can chain off of directly in the conventional manner where you expect subsequent asynchronous steps. This is a subtle but important distinction.
+In essence, the core issue isn't that `onSuccess` is _failing_ to return anything; it's that it’s _not supposed to return a future directly_. What it actually does is register a callback to be executed when the original future completes successfully. The return type of `onSuccess` itself is void, which means it doesn’t yield a new future you can chain off of directly in the conventional manner where you expect subsequent asynchronous steps. This is a subtle but important distinction.
 
 Let's illustrate with a bit of a contrived example, based on some rather messy code I had to refactor years back: Imagine I was building a service that fetches user data, enriches it with profile information from another source, and then stores it in a database. Initially, I had this, or something very similar:
 
@@ -47,9 +47,10 @@ public void processUser() {
    //...and this causes problem because profileDataFuture will be void after the first call
 }
 ```
+
 In the code snippet, I was incorrectly assuming that `userDataFuture.onSuccess(...)` would somehow transform into a new future representing the result of `fetchUserProfile()`. That assumption is not correct. The problem lies in the misunderstanding of void return value from onSuccess, which does not chain the async flow in a sequential manner and instead tries to run the asynchronous function in a separate event loop, without affecting the main chain that was started with `userDataFuture`.
 
-This led to the common problem of seeing `profileData` as null in the next `.onSuccess` as it was never the return value of previous `onSuccess`. Instead it was triggered by the completion of  `userDataFuture`'s event loop. The function within `onSuccess` was executed asynchronously and did not directly return a value used by the next call of `onSuccess` in the chain. That is the core of the issue here.
+This led to the common problem of seeing `profileData` as null in the next `.onSuccess` as it was never the return value of previous `onSuccess`. Instead it was triggered by the completion of `userDataFuture`'s event loop. The function within `onSuccess` was executed asynchronously and did not directly return a value used by the next call of `onSuccess` in the chain. That is the core of the issue here.
 
 To resolve this, we should use `compose`. `compose` is specifically designed for chaining asynchronous operations where the result of one operation becomes the input to the next, providing a new future that represents the result of the entire chain. Let’s look at a revised version:
 
@@ -75,7 +76,7 @@ public void processUserCorrected(){
 }
 ```
 
-Here, `compose` acts as the correct way of continuing the asynchronous execution chain. Each `compose` takes the result of the previous future and passes it to its provided function that returns a future, effectively chaining operations sequentially. The return value of the previous function passed to the next future, making the chain work. This results in `combinedFuture` being the actual resulting future of the composition of `fetchUserData`, `fetchUserProfile` and `storeEnrichedData`, correctly chaining the results from each to the next one in the pipeline.  This prevents the issue of `null` values where we expected futures.
+Here, `compose` acts as the correct way of continuing the asynchronous execution chain. Each `compose` takes the result of the previous future and passes it to its provided function that returns a future, effectively chaining operations sequentially. The return value of the previous function passed to the next future, making the chain work. This results in `combinedFuture` being the actual resulting future of the composition of `fetchUserData`, `fetchUserProfile` and `storeEnrichedData`, correctly chaining the results from each to the next one in the pipeline. This prevents the issue of `null` values where we expected futures.
 
 Another related mistake I've observed is trying to perform multiple operations that should happen in parallel without correctly accounting for their potential concurrency. Let's say we had two different user profile enrichments to perform:
 
@@ -97,6 +98,7 @@ public void processParallelUserData() {
 
 }
 ```
+
 In the above scenario, we're still using `onSuccess` incorrectly for parallel operations, creating a similar void type problem, but also potentially introducing race conditions. The intended behavior is that both `fetchUserProfile` and `fetchAdditionalProfile` run in parallel, but the incorrect use of `onSuccess` with subsequent calls makes this fail again. The `profile1Future` and `profile2Future` are still void and the code will likely execute out of order, causing unexpected null pointer exceptions.
 
 The correct way to do this is to use `CompositeFuture` to wait for both of them to complete, before combining results:
@@ -128,6 +130,6 @@ Future<JsonObject> fetchAdditionalProfile(JsonObject userData) {
 
 Using `CompositeFuture.all()`, we create a new future that will complete when both `profile1Future` and `profile2Future` complete successfully (or fail if one or both fail). We also need to make sure that we call the `fetchUserProfile` and `fetchAdditionalProfile` with `userDataFuture.result()` instead of just on the `onSuccess` callback, otherwise, the futures will never be correctly created. This method allows us to correctly perform parallel operations, wait for them to finish and then compose our resulting object once they both are done, correctly avoiding unexpected null pointer errors in asynchronous operations.
 
-In summary, the key takeaway is that `onSuccess`, while useful for side effects that don’t impact the main async flow, *does not return a new future suitable for chaining*. For sequential asynchronous flows, `compose` is what you need; for parallel execution of multiple futures, `CompositeFuture` is your friend. These are essential concepts when dealing with asynchronous programming in vert.x and, as i've seen time and time again, a lack of understanding of how they work leads to these frustrating null-related issues.
+In summary, the key takeaway is that `onSuccess`, while useful for side effects that don’t impact the main async flow, _does not return a new future suitable for chaining_. For sequential asynchronous flows, `compose` is what you need; for parallel execution of multiple futures, `CompositeFuture` is your friend. These are essential concepts when dealing with asynchronous programming in vert.x and, as i've seen time and time again, a lack of understanding of how they work leads to these frustrating null-related issues.
 
 For deeper exploration, I'd recommend reviewing the Vert.x documentation, particularly the sections on Futures and Composition. Also, reading the excellent book "Reactive Systems in Java" by Kenny Bastani will give you a more nuanced view of reactive programming concepts that underline how futures work and why they behave as they do in Vert.x. Another useful resource is “Java Concurrency in Practice” by Brian Goetz, which, although it’s not specific to Vert.x, provides fundamental understanding of concurrency that helps immensely when working with Vert.x's asynchronous model. The official documentation does an excellent job, but having these additional resources in your toolkit can only make you more effective when using Vert.x.

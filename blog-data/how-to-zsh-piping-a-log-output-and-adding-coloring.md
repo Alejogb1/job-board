@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-zsh-piping-a-log-output-and-adding-coloring"
 ---
 
-alright, so you're looking to pipe log output in zsh and get some color action going. i've definitely been down this road before, it’s a common thing when you’re staring at walls of text and need to parse things more easily. i remember my first serious run-in with this, it was back when i was working on this distributed system. the logs were, let's just say, verbose. monochrome logs were like trying to navigate a maze blindfolded. so yeah, i get the need.
+, so you're looking to pipe log output in zsh and get some color action going. i've definitely been down this road before, it’s a common thing when you’re staring at walls of text and need to parse things more easily. i remember my first serious run-in with this, it was back when i was working on this distributed system. the logs were, let's just say, verbose. monochrome logs were like trying to navigate a maze blindfolded. so yeah, i get the need.
 
 the core issue here is that standard output often just spits out raw text, and we need something to interpret and add those lovely ansi color codes. there isn't a magic command built into zsh to do this all at once, it's more about combining tools we already have available, and understanding how they chain together. think of it like a pipeline in a factory where each stage takes the raw material and adds to it to create a final product.
 
@@ -36,11 +36,11 @@ cat my_app.log | sed -E 's/\[(info)\]/\x1b[32m[info]\x1b[0m/g; s/\[(error)\]/\x1
 
 let me break that down:
 
-*   `cat my_app.log` - this spits out all log entries.
-*   `|` - pipes this output to the next command.
-*   `sed -E` - starts sed with extended regular expressions enabled.
-*   `s/\[(info)\]/\x1b[32m[info]\x1b[0m/g` - a substitution command that finds `[info]` (escaped brackets with `\` because they have special meaning in regular expressions), and replaces it with `\x1b[32m[info]\x1b[0m`. here `\x1b[32m` is the ansi code for green, and `\x1b[0m` resets the color to default. the `g` flag indicates that this substitution should be performed globally (all occurrences in the line)
-*   the rest are similar but for error and debug with red and yellow colors respectively.
+- `cat my_app.log` - this spits out all log entries.
+- `|` - pipes this output to the next command.
+- `sed -E` - starts sed with extended regular expressions enabled.
+- `s/\[(info)\]/\x1b[32m[info]\x1b[0m/g` - a substitution command that finds `[info]` (escaped brackets with `\` because they have special meaning in regular expressions), and replaces it with `\x1b[32m[info]\x1b[0m`. here `\x1b[32m` is the ansi code for green, and `\x1b[0m` resets the color to default. the `g` flag indicates that this substitution should be performed globally (all occurrences in the line)
+- the rest are similar but for error and debug with red and yellow colors respectively.
 
 so that would take the log file and replace all `[info]` occurrences with green color. all `[error]` occurrences with red and all `[debug]` with yellow, and you now got a nicely colored log.
 
@@ -65,11 +65,11 @@ cat my_app.log | awk '{
 
 let's break this `awk` magic down:
 
-*   `cat my_app.log | awk '{ ... }'` - same as before, takes our logs and feeds it to `awk`.
-*   `level = $3;` - this assigns the third field of each line to a variable named `level`.
-*   `if (level == "[info]") { ... }` - checks the level and prints the line with green color using `printf`. `substr($0, length($1) + length($2) + length($3) + 4)` is used to extract the rest of the line, it basically takes all from the 4th field and beyond.
-*   same happens for `error` and `debug`, coloring red and yellow.
-*   the `else {print}` at the end handles the cases where it did not match any of our colorized levels.
+- `cat my_app.log | awk '{ ... }'` - same as before, takes our logs and feeds it to `awk`.
+- `level = $3;` - this assigns the third field of each line to a variable named `level`.
+- `if (level == "[info]") { ... }` - checks the level and prints the line with green color using `printf`. `substr($0, length($1) + length($2) + length($3) + 4)` is used to extract the rest of the line, it basically takes all from the 4th field and beyond.
+- same happens for `error` and `debug`, coloring red and yellow.
+- the `else {print}` at the end handles the cases where it did not match any of our colorized levels.
 
 the important thing here is that instead of matching whole lines, we are matching fields, which makes things more flexible.
 

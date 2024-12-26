@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "how-do-i-test-airflow-tasks-with-parameters-using-the-api"
 ---
 
-Okay, let's tackle this. I've seen a fair share of Airflow setups in my time, and testing tasks, particularly when they involve parameters passed in via the API, is something that crops up regularly. It's a crucial step for reliable pipelines, and a lack of proper testing often leads to brittle and error-prone deployments. We're not just trying to make things work; we’re trying to make things work predictably and robustly.
+, let's tackle this. I've seen a fair share of Airflow setups in my time, and testing tasks, particularly when they involve parameters passed in via the API, is something that crops up regularly. It's a crucial step for reliable pipelines, and a lack of proper testing often leads to brittle and error-prone deployments. We're not just trying to make things work; we’re trying to make things work predictably and robustly.
 
 The core issue stems from the fact that Airflow tasks are typically orchestrated via DAG runs, which are themselves triggered through the scheduler or the API. When parameters are introduced, they become part of this entire lifecycle, and testing needs to account for this entire flow – the task itself and its interaction with the passed-in parameters.
 
-I recall a particular project where we were ingesting a large number of files based on dynamically generated file paths, which were passed as a parameter to our tasks. We initially fell into the trap of just testing the task code directly, bypassing the API and its associated parameter passing. This led to a lot of surprises in production, because the task would execute *differently* when launched through the API than it did in our isolated tests. We ended up needing to refactor everything to ensure we tested the whole pipeline, including parameter propagation.
+I recall a particular project where we were ingesting a large number of files based on dynamically generated file paths, which were passed as a parameter to our tasks. We initially fell into the trap of just testing the task code directly, bypassing the API and its associated parameter passing. This led to a lot of surprises in production, because the task would execute _differently_ when launched through the API than it did in our isolated tests. We ended up needing to refactor everything to ensure we tested the whole pipeline, including parameter propagation.
 
 So, how do you actually do it? Well, there are several approaches, but here's my preferred way, based on that experience, and it involves a combination of unit testing the core task logic and integration testing the task invocation via the API.
 
@@ -44,6 +44,7 @@ def create_processing_task(file_param_name="file_path", out_param_name = "output
       }
   )
 ```
+
 Here, `file_param_name` and `out_param_name` would be strings representing the keys used to pass data via the API.
 
 Now, a corresponding unit test might look like this:
@@ -68,7 +69,7 @@ class TestProcessData(unittest.TestCase):
         with open(temp_output_path, 'r') as f:
             output_content = f.read()
             self.assertEqual(output_content, "Processed: sample data")
-    
+
         import os
         os.remove(temp_input_path)
         os.remove(temp_output_path)
@@ -79,14 +80,14 @@ class TestProcessData(unittest.TestCase):
             temp_input_path = temp_input_file.name
         with tempfile.NamedTemporaryFile(mode='w', delete=False) as temp_output_file:
             temp_output_path = temp_output_file.name
-        
+
         result = process_data(temp_input_path,temp_output_path)
         self.assertEqual(result, temp_output_path)
 
         with open(temp_output_path, 'r') as f:
             output_content = f.read()
             self.assertEqual(output_content, "Processed: ")
-        
+
         import os
         os.remove(temp_input_path)
         os.remove(temp_output_path)
@@ -140,10 +141,10 @@ class TestAirflowApiTask(unittest.TestCase):
 
          with tempfile.NamedTemporaryFile(mode='w', delete=False) as temp_output_file:
             temp_output_path = temp_output_file.name
-            
+
          dag_run_id = test_api_task_with_parameters("my_sample_dag", temp_input_path, temp_output_path)
          self.assertIsNotNone(dag_run_id)
-         
+
          #Poll for status to be succesful then assert things about the result of the run. This needs more robust error handling and retries.
          #This is not fully fleshed out due to the scope of this example.
 

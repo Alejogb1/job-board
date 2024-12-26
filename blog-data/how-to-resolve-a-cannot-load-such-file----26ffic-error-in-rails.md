@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resolve-a-cannot-load-such-file----26ffic-error-in-rails"
 ---
 
-Alright, let's tackle this. I recall wrestling (though I suppose *solving* is a better word) with this particular `cannot load such file -- 2.6/ffi_c` error on a legacy Rails application a few years back. It’s a classic, frustrating issue stemming from inconsistencies in the way native extensions, particularly those built using `ffi`, are handled across different ruby versions and environments. It's a gem version and architecture mismatch dance, fundamentally.
+, let's tackle this. I recall wrestling (though I suppose _solving_ is a better word) with this particular `cannot load such file -- 2.6/ffi_c` error on a legacy Rails application a few years back. It’s a classic, frustrating issue stemming from inconsistencies in the way native extensions, particularly those built using `ffi`, are handled across different ruby versions and environments. It's a gem version and architecture mismatch dance, fundamentally.
 
 The core issue here isn't necessarily that the `ffi` gem itself is broken; it's usually about its compiled C extensions being incompatible with the runtime environment where the Rails application is being launched. The error, `cannot load such file -- 2.6/ffi_c`, is ruby's way of saying "hey, I'm looking for a compiled binary for ffi specifically built for ruby version 2.6, and I can’t find it, or what I found doesn't work here". This typically happens when you switch between ruby versions using tools like `rvm` or `rbenv`, or when deploying to a server with a different environment than your development machine.
 
@@ -14,7 +14,7 @@ Let me walk you through some practical steps that, in my experience, are typical
 
 **Step 1: Verifying Ruby Versions & Rebuilding Gems**
 
-First, use `ruby -v` to confirm the ruby version on both the development and deployment environments. Ensure they are, for all intents and purposes, the *same* version and patch level if possible. If they diverge, that's the first red flag. Let's assume they are slightly different and we are using `rbenv`:
+First, use `ruby -v` to confirm the ruby version on both the development and deployment environments. Ensure they are, for all intents and purposes, the _same_ version and patch level if possible. If they diverge, that's the first red flag. Let's assume they are slightly different and we are using `rbenv`:
 
 ```bash
 # In your development machine
@@ -70,6 +70,7 @@ platforms :x86_64_linux do # specific to your deployment architecture
   gem 'nokogiri'
 end
 ```
+
 Here, the `platforms` directive specifies gem installations that should occur only for the given platform type. This can help prevent using pre-built gems that are not compatible with the running environment. Following that adjustment, it is crucial to run `bundle install` again to apply changes. This ensures that the correct architecture and platform-specific gems are installed as per the configuration.
 
 **Root Cause Analysis and Prevention**
@@ -80,9 +81,9 @@ Beyond immediate fixes, it is necessary to understand why such issues happen, pa
 
 For a deeper understanding of native extensions in Ruby, I'd recommend exploring the following:
 
-*   "Programming Ruby 1.9 & 2.0: The Pragmatic Programmers' Guide" by Dave Thomas, Chad Fowler, and Andy Hunt, especially the sections on C extensions, gem management, and the nuances of the ruby runtime environment.
-*   "Ruby Under a Microscope" by Pat Shaughnessy, provides detailed insight into ruby's internal processes, memory management and more related to the behaviour of native extensions.
-*   Official documentation for `ffi` on rubygems.org, which has information on platform-specific compilation requirements and troubleshooting advice.
-*   For an understanding of best practices in CI/CD, consider reading "Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation" by Jez Humble and David Farley, focusing on building repeatable and reliable pipelines for building and deployment.
+- "Programming Ruby 1.9 & 2.0: The Pragmatic Programmers' Guide" by Dave Thomas, Chad Fowler, and Andy Hunt, especially the sections on C extensions, gem management, and the nuances of the ruby runtime environment.
+- "Ruby Under a Microscope" by Pat Shaughnessy, provides detailed insight into ruby's internal processes, memory management and more related to the behaviour of native extensions.
+- Official documentation for `ffi` on rubygems.org, which has information on platform-specific compilation requirements and troubleshooting advice.
+- For an understanding of best practices in CI/CD, consider reading "Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation" by Jez Humble and David Farley, focusing on building repeatable and reliable pipelines for building and deployment.
 
 Ultimately, the error `cannot load such file -- 2.6/ffi_c` is a symptom of environmental and versioning mismatches. By focusing on ensuring consistent environments and rebuilding gems correctly, it can be resolved effectively. These approaches have helped me in the past with this, and I hope this also helps you. Remember, careful verification and targeted solutions are far better than haphazard attempts.

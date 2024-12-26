@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-query-an-ignite-cache-created-in-java-using-sqlline"
 ---
 
-Alright, let's unpack this. I’ve spent quite a bit of time working with Apache Ignite, particularly the nuances of accessing cached data using various query methods. Sqlline, in particular, can seem a bit daunting at first, but it’s a powerful tool once you understand its ins and outs. You're essentially trying to connect to an in-memory data grid and execute sql queries, which requires a specific approach. It’s not like connecting to a standard relational database; Ignite’s architecture and distributed nature demand a certain level of understanding. Let me share some practical experience from past projects where I’ve used this exact method, and I’ll give you some working code examples to make this crystal clear.
+, let's unpack this. I’ve spent quite a bit of time working with Apache Ignite, particularly the nuances of accessing cached data using various query methods. Sqlline, in particular, can seem a bit daunting at first, but it’s a powerful tool once you understand its ins and outs. You're essentially trying to connect to an in-memory data grid and execute sql queries, which requires a specific approach. It’s not like connecting to a standard relational database; Ignite’s architecture and distributed nature demand a certain level of understanding. Let me share some practical experience from past projects where I’ve used this exact method, and I’ll give you some working code examples to make this crystal clear.
 
 The first hurdle is ensuring that your ignite cluster is running and that the cache you’re targeting is correctly configured with proper sql schema. This is foundational. Let's assume you've got that covered and the cache is primed with data. Now, sqlline needs to know how to reach your ignite cluster. This means connecting via jdbc.
 
@@ -14,7 +14,7 @@ The basic connection string, as I’ve found, is usually something along the lin
 
 Where `<host_or_comma_separated_hosts>` is the ip address or hostname of the node(s) in your ignite cluster and `<port>` is the jdbc thin client port (default is 10800). It’s absolutely crucial this connection works before trying to query anything. Incorrect settings here or incorrect firewall rules will stop you dead in your tracks. I recall debugging a misconfigured network firewall for several hours once; not a fun experience.
 
-Once you've established your connection in sqlline, the key is understanding that your queries target the *schema* you defined for your cache, not the cache name directly. Ignite treats caches as tables in a virtual database, hence the need for a schema. This is critical. In simple terms, if you defined the cache to have a schema called, say, ‘my_schema’, you would need to qualify your tables with `my_schema.` prefix. So, a query for a cache with a table named 'customer' would look like this:
+Once you've established your connection in sqlline, the key is understanding that your queries target the _schema_ you defined for your cache, not the cache name directly. Ignite treats caches as tables in a virtual database, hence the need for a schema. This is critical. In simple terms, if you defined the cache to have a schema called, say, ‘my_schema’, you would need to qualify your tables with `my_schema.` prefix. So, a query for a cache with a table named 'customer' would look like this:
 
 ```sql
 select * from my_schema.customer;
@@ -65,7 +65,7 @@ public class IgniteCacheConfig {
         employeeCache.put(1L, new Employee(1L, "John Doe", "Engineering"));
         employeeCache.put(2L, new Employee(2L, "Jane Smith", "Marketing"));
         employeeCache.put(3L, new Employee(3L, "Peter Jones", "Engineering"));
-       
+
         System.out.println("Cache configured and data loaded.");
 
         ignite.close();

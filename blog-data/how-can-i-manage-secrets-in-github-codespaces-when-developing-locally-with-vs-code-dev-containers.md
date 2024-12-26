@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-manage-secrets-in-github-codespaces-when-developing-locally-with-vs-code-dev-containers"
 ---
 
-Okay, let's tackle this. I’ve had my share of headaches dealing with secrets in development environments, particularly when transitioning between local dev containers and cloud-based platforms like GitHub Codespaces. It's a pain point many developers run into, and there isn’t a one-size-fits-all solution; it often demands a blend of techniques. My experiences, especially with a large microservices project a while back, really hammered home the importance of doing this correctly. So, let’s break down the approaches I’ve found most effective, and why.
+, let's tackle this. I’ve had my share of headaches dealing with secrets in development environments, particularly when transitioning between local dev containers and cloud-based platforms like GitHub Codespaces. It's a pain point many developers run into, and there isn’t a one-size-fits-all solution; it often demands a blend of techniques. My experiences, especially with a large microservices project a while back, really hammered home the importance of doing this correctly. So, let’s break down the approaches I’ve found most effective, and why.
 
 The core challenge, as you’ve likely discovered, is avoiding the hardcoding of sensitive information directly into your codebase or container configurations. Committing secrets to version control is, frankly, a disaster waiting to happen. What works smoothly in one environment might not translate to another, leading to deployment issues and, worse, security vulnerabilities. We need a system that allows us to use different secrets locally and in Codespaces, and does so securely.
 
@@ -20,13 +20,13 @@ And in your `.devcontainer.json`, you might see something like:
 
 ```json
 {
-    "name": "your-container-name",
-    "build": {
-      "dockerfile": "Dockerfile"
-    },
-    "containerEnv": {
-        "API_KEY": "${localEnv:API_KEY}"
-    }
+  "name": "your-container-name",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "containerEnv": {
+    "API_KEY": "${localEnv:API_KEY}"
+  }
 }
 ```
 
@@ -36,7 +36,7 @@ For GitHub Codespaces, GitHub provides a secure secrets management system. You c
 
 Now, here is the problem: we need to be able to read these secrets from both local dev containers and codespaces in a transparent way. This is not something that happens automatically. Let’s focus on a solution pattern I’ve seen used in several projects: leveraging a configuration manager within your application combined with separate environment variables.
 
-My preferred approach involves introducing an abstraction layer that fetches the configuration from specific environment variables *but* doesn't care if it's from a `.env` file on your local machine or the secret manager in GitHub Codespaces. Here’s how we can implement this using Python as an example:
+My preferred approach involves introducing an abstraction layer that fetches the configuration from specific environment variables _but_ doesn't care if it's from a `.env` file on your local machine or the secret manager in GitHub Codespaces. Here’s how we can implement this using Python as an example:
 
 ```python
 import os
@@ -73,13 +73,13 @@ And, in your `.devcontainer.json`, we’d modify the environment variables, like
 
 ```json
 {
-    "name": "your-container-name",
-    "build": {
-      "dockerfile": "Dockerfile"
-    },
-    "containerEnv": {
-        "MY_APP_API_KEY": "${localEnv:MY_APP_API_KEY}"
-    }
+  "name": "your-container-name",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "containerEnv": {
+    "MY_APP_API_KEY": "${localEnv:MY_APP_API_KEY}"
+  }
 }
 ```
 
@@ -130,14 +130,14 @@ And your `.devcontainer.json` would look like this:
 
 ```json
 {
-    "name": "your-container-name",
-    "build": {
-      "dockerfile": "Dockerfile"
-    },
-    "containerEnv": {
-      "MY_APP_DB_CONNECTION_STRING": "${localEnv:MY_APP_DB_CONNECTION_STRING}",
-      "MY_APP_AUTH_TOKEN": "${localEnv:MY_APP_AUTH_TOKEN}"
-    }
+  "name": "your-container-name",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "containerEnv": {
+    "MY_APP_DB_CONNECTION_STRING": "${localEnv:MY_APP_DB_CONNECTION_STRING}",
+    "MY_APP_AUTH_TOKEN": "${localEnv:MY_APP_AUTH_TOKEN}"
+  }
 }
 ```
 

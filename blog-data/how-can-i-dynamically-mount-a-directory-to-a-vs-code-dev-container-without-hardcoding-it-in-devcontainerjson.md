@@ -4,15 +4,16 @@ date: "2024-12-23"
 id: "how-can-i-dynamically-mount-a-directory-to-a-vs-code-dev-container-without-hardcoding-it-in-devcontainerjson"
 ---
 
-Alright, let's tackle this. I've bumped into this exact scenario more times than I care to remember, typically when working with projects that have highly variable data or configuration directories that shouldn't be baked into the image itself or checked into version control. We want flexibility, something that lets us adjust those mounts based on the specific environment we're working in, without needing to constantly modify the `devcontainer.json` file. The core of the issue lies in how dev containers handle mounting volumes: they read instructions primarily from `devcontainer.json`, which is not ideal when the source of the mount is dynamic.
+, let's tackle this. I've bumped into this exact scenario more times than I care to remember, typically when working with projects that have highly variable data or configuration directories that shouldn't be baked into the image itself or checked into version control. We want flexibility, something that lets us adjust those mounts based on the specific environment we're working in, without needing to constantly modify the `devcontainer.json` file. The core of the issue lies in how dev containers handle mounting volumes: they read instructions primarily from `devcontainer.json`, which is not ideal when the source of the mount is dynamic.
 
-My preferred strategy to address this involves leveraging environment variables, typically configured outside of the container's scope, along with some clever manipulation during container creation. It's a combination of techniques, but the result is a clean, maintainable setup. The crux of the matter is to have dev containers read environment variables that exist *outside* of the container's definition and use those to set up the mounts.
+My preferred strategy to address this involves leveraging environment variables, typically configured outside of the container's scope, along with some clever manipulation during container creation. It's a combination of techniques, but the result is a clean, maintainable setup. The crux of the matter is to have dev containers read environment variables that exist _outside_ of the container's definition and use those to set up the mounts.
 
 Let me give you an example from a past project where we were working on a large data analysis platform. We had terabytes of data spread across several storage solutions. Hardcoding each of those paths in `devcontainer.json` was a no-go, as each engineer needed to work with a specific subset of the overall dataset. Here’s how we solved it, and I'll illustrate this with code snippets.
 
 **The core idea:** Inject environment variables during container creation and use them within `devcontainer.json`'s `mounts` array using variable substitution.
 
 Here's the setup process:
+
 1. **Set the Environment Variables:** Outside of the container, before you initiate the dev container, we will define variables that point to the directories to be mounted. I've seen this done using `.env` files that are read by the shell, set directly in the terminal, or managed by system-level settings. We would typically have scripts in the project repository that would do this setup automatically based on parameters provided by the engineers.
 2. **Use Variable Substitution in `devcontainer.json`:** Inside the `devcontainer.json`, we’ll use string interpolation to reference these environment variables. This approach allows us to avoid hardcoding the path.
 3. **Optional: Docker Compose and Custom Scripts:** Sometimes you might need to do more complex mounting or setup which is best delegated to a custom docker-compose file, that could be setup in `.devcontainer/docker-compose.yml` and then referenced in the `devcontainer.json`.
@@ -31,18 +32,18 @@ Then, in your `devcontainer.json`:
 
 ```json
 {
-    "name": "My Dev Container",
-    "image": "mcr.microsoft.com/devcontainers/universal:2",
-    "mounts": [
-      "source=${env:MY_DATA_DIR},target=/app/data,type=bind,consistency=cached"
-    ],
-    "customizations": {
-        "vscode": {
-            "settings": {
-                "terminal.integrated.defaultProfile.linux": "bash"
-            }
-        }
+  "name": "My Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "mounts": [
+    "source=${env:MY_DATA_DIR},target=/app/data,type=bind,consistency=cached"
+  ],
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
     }
+  }
 }
 ```
 
@@ -63,19 +64,19 @@ And here's how we set it up in our devcontainer.json:
 
 ```json
 {
-    "name": "My Dev Container",
-    "image": "mcr.microsoft.com/devcontainers/universal:2",
-    "mounts": [
-        "source=${env:DATA_DIRECTORY_1},target=/app/data1,type=bind,consistency=cached",
-        "source=${env:CONFIG_DIRECTORY},target=/app/config,type=bind,consistency=cached"
-    ],
-    "customizations": {
-        "vscode": {
-            "settings": {
-                "terminal.integrated.defaultProfile.linux": "bash"
-            }
-        }
+  "name": "My Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "mounts": [
+    "source=${env:DATA_DIRECTORY_1},target=/app/data1,type=bind,consistency=cached",
+    "source=${env:CONFIG_DIRECTORY},target=/app/config,type=bind,consistency=cached"
+  ],
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
     }
+  }
 }
 ```
 
@@ -88,7 +89,7 @@ For more complex setup, such as dynamically setting a specific user or other par
 First, our `.devcontainer/docker-compose.yml`:
 
 ```yaml
-version: '3.9'
+version: "3.9"
 services:
   devcontainer:
     image: mcr.microsoft.com/devcontainers/universal:2
@@ -112,16 +113,16 @@ Then, in `devcontainer.json`:
 
 ```json
 {
-    "name": "My Dev Container with Docker Compose",
-     "dockerComposeFile": ["docker-compose.yml"],
-     "service": "devcontainer",
-    "customizations": {
-        "vscode": {
-            "settings": {
-                "terminal.integrated.defaultProfile.linux": "bash"
-            }
-        }
+  "name": "My Dev Container with Docker Compose",
+  "dockerComposeFile": ["docker-compose.yml"],
+  "service": "devcontainer",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
     }
+  }
 }
 ```
 

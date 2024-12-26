@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "how-to-get-an-active-record-relation-of-polymorphic-parents-from-a-child-object"
 ---
 
-alright, so you're diving into the fun world of polymorphic associations with active record, i get it. it can feel a little tangled at first, especially when you want to hop directly from a child record up to its potentially various parent types. i've been there, spent more hours than i'd like to remember staring at similar problems. let me walk you through how i usually tackle this kind of situation, and share some code along the way.
+, so you're diving into the fun world of polymorphic associations with active record, i get it. it can feel a little tangled at first, especially when you want to hop directly from a child record up to its potentially various parent types. i've been there, spent more hours than i'd like to remember staring at similar problems. let me walk you through how i usually tackle this kind of situation, and share some code along the way.
 
-basically, the challenge here is that active record's magic, while generally awesome, needs a little nudge when we're dealing with polymorphic relationships. it doesn't automatically know *which* parent table to look in, since a child can be related to different types of parent models.
+basically, the challenge here is that active record's magic, while generally awesome, needs a little nudge when we're dealing with polymorphic relationships. it doesn't automatically know _which_ parent table to look in, since a child can be related to different types of parent models.
 
 let's say you have a `comment` model, which is designed to be associated with either a `post`, a `photo`, or maybe even a `video`. in your `comments` table you have `commentable_id` and `commentable_type` columns, these are your bread and butter for polymorphs.
 
@@ -21,6 +21,7 @@ for instance, if you're starting from a specific comment, say `@comment`, and yo
   puts parent_record.inspect
   # => #<Post id: 1, ...> or #<Photo id: 2, ...> or #<Video id: 3, ...>
 ```
+
 pretty clean and straightforward. what happens if you try to get a list of all `commentable` objects? then it starts to be a problem.
 
 but what if, instead of one comment, you have a collection of comments and you need their associated parents? the basic `each` loop will work fine, though it is a little verbose:
@@ -34,6 +35,7 @@ but what if, instead of one comment, you have a collection of comments and you n
   puts parents.inspect
   # => [#<Post id: 1, ...>, #<Photo id: 2, ...>, #<Video id: 3, ...>, ...]
 ```
+
 this works, but it’s not very efficient, especially when you have a lot of comments. every time we loop to get a `commentable` object we are triggering a new sql query. this leads to n+1 issues.
 
 a more optimized approach would be to use `includes`, which will try to load all records in a single query. you will save tons of sql queries this way.
@@ -46,6 +48,7 @@ a more optimized approach would be to use `includes`, which will try to load all
   # => [#<Post id: 1, ...>, #<Photo id: 2, ...>, #<Video id: 3, ...>, ...]
 
 ```
+
 using `includes(:commentable)` tells active record to preload the associated parent records, minimizing database hits. the `map` operation then simply extracts the parent from each comment. if your parent record contains data that is relevant for the view or the application logic, then this is the recommended approach.
 
 now, what if you needed to filter those comments based on specific parent types? for example, what if you only wanted to find all comments that belong to posts? we can achieve this by including a where clause that checks for a particular `commentable_type`.

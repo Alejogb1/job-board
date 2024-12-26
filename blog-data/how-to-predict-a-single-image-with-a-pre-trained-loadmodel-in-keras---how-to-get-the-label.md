@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-predict-a-single-image-with-a-pre-trained-loadmodel-in-keras---how-to-get-the-label"
 ---
 
-alright, so you're looking at how to take a single image, push it through a keras model you've already trained, and then actually get a useful label out the other end. i've been down this road more times than i care to recall, and it can be a little finicky if you're not paying attention to the details, so let's break it down.
+, so you're looking at how to take a single image, push it through a keras model you've already trained, and then actually get a useful label out the other end. i've been down this road more times than i care to recall, and it can be a little finicky if you're not paying attention to the details, so let's break it down.
 
 first, loading the model itself is usually straightforward. keras makes this pretty easy with `tf.keras.models.load_model()`. i remember early on in my ml journey, i was trying to implement some custom model loading logic that was a total mess. then i found this and never looked back. assuming you saved your model with `model.save('my_model.h5')`, the loading code is:
 

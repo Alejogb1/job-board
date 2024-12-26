@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "how-to-move-container-registrations-to-a-new-assembly-with-prismunityforms"
 ---
 
-alright, so, you're facing the classic prism.unity.forms container migration headache, right? i’ve been there, multiple times, and it’s never *fun*. i've spent way more hours than i care to count staring at registration errors. it usually starts when your project grows and you realize putting everything in the main application assembly was a terrible idea (we all do it, don’t judge too hard). let's get into it.
+, so, you're facing the classic prism.unity.forms container migration headache, right? i’ve been there, multiple times, and it’s never _fun_. i've spent way more hours than i care to count staring at registration errors. it usually starts when your project grows and you realize putting everything in the main application assembly was a terrible idea (we all do it, don’t judge too hard). let's get into it.
 
 the core issue is that prism’s unity container needs to know where all your types are so it can do its dependency injection magic. when you start splitting your registrations across different assemblies, unity gets confused. prism has some ways to deal with this, but they’re not always obvious.
 
-first, forget the idea of moving all your registrations to one other assembly. this is often a bad design idea. the better pattern, generally is to move the registrations related to a *feature* into the assembly that contains the feature. this will reduce coupling and make the project more maintainable in the long run.
+first, forget the idea of moving all your registrations to one other assembly. this is often a bad design idea. the better pattern, generally is to move the registrations related to a _feature_ into the assembly that contains the feature. this will reduce coupling and make the project more maintainable in the long run.
 
 so, you've got your main application project, let’s call it `mycoolapp`. it used to have all your view models, services, etc., and the unity registrations inside. now, you've created a new assembly, `mycoolapp.featureA`, for some specific functionality. you want to register the types defined in `mycoolapp.featureA` with unity. the straightforward, but often problematic approach, is just trying to get unity to scan the new assembly. that typically ends in pain.
 
@@ -100,12 +100,12 @@ a more complex scenario is when you start injecting types from the main applicat
 
 now, some tips from the trenches:
 
-*   **always double-check your references**. a missing reference is the cause of 90% of the issues in these kinds of projects. ensure each project is referencing all the required nuget packages and project dependencies.
-*   **use the ioc debug tools**. prism and unity usually have internal logging that can help debug problems, look for binding errors, and other issues. the unity documentation itself is a good starting point.
-*   **start simple**. don’t try to move everything at once. move one or two types at a time, testing after each change. it is the way to go.
-*   **modularize in a proper way**. don't move things into modules just to move things. make sure each module represents a feature that can be decoupled from the rest of the app.
+- **always double-check your references**. a missing reference is the cause of 90% of the issues in these kinds of projects. ensure each project is referencing all the required nuget packages and project dependencies.
+- **use the ioc debug tools**. prism and unity usually have internal logging that can help debug problems, look for binding errors, and other issues. the unity documentation itself is a good starting point.
+- **start simple**. don’t try to move everything at once. move one or two types at a time, testing after each change. it is the way to go.
+- **modularize in a proper way**. don't move things into modules just to move things. make sure each module represents a feature that can be decoupled from the rest of the app.
 
-finally, i’m kidding with this, but remember kids, always test your code before pushing it to production. unless you *really* like debugging runtime exceptions on your release build. i once spend 3 days debugging a runtime null exception, that was simply caused by a missing dependency, so, if this can happen to me it can happen to anyone.
+finally, i’m kidding with this, but remember kids, always test your code before pushing it to production. unless you _really_ like debugging runtime exceptions on your release build. i once spend 3 days debugging a runtime null exception, that was simply caused by a missing dependency, so, if this can happen to me it can happen to anyone.
 
 also remember that prism has plenty of documentation about this subject which should be your starting point. look for the `iModule` and `iModuleCatalog` and unity’s documentation about dependency injection and lifetime. those are your bread and butter when solving issues about ioc registrations in prism.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-changing-nprocess-affect-spacy-30s-nlppipe"
 ---
 
-Alright, let's talk about `nlp.pipe` in spaCy 3.0 and how fiddling with `n_process` can impact its performance. I’ve spent quite a few late nights optimizing NLP pipelines, and this parameter is definitely one you'll want to understand intimately.
+, let's talk about `nlp.pipe` in spaCy 3.0 and how fiddling with `n_process` can impact its performance. I’ve spent quite a few late nights optimizing NLP pipelines, and this parameter is definitely one you'll want to understand intimately.
 
 I remember a project a few years back, a huge text classification task involving thousands of legal documents. We initially deployed our spaCy pipeline with the default `n_process` value, and the processing times were... suboptimal. It became clear that understanding the intricacies of how spaCy utilizes multiprocessing was crucial to get the performance we needed. The problem wasn't the algorithm itself, but rather how efficiently we were leveraging the available system resources.
 
@@ -55,6 +55,7 @@ print(f"Processing time (n_process=4): {end_time - start_time:.4f} seconds")
 In this case, I’ve assumed your machine has at least four cores. You will likely see an improvement in processing speed versus the sequential example. If you have a larger number of cores, you can experiment with this value. Be aware that the number of workers (separate processes) are spawned from the main Python process, each taking up system resources. So, if you have only two cores, spawning four workers does not increase processing speed and will likely decrease it.
 
 **Example 3: Over-Parallelization (Potentially Detrimental)`n_process=100`**
+
 ```python
 import spacy
 import time
@@ -69,6 +70,7 @@ end_time = time.time()
 print(f"Processing time (n_process=100): {end_time - start_time:.4f} seconds")
 
 ```
+
 This snippet attempts to utilize a very large number of processes, likely exceeding the machine's capacity. You will likely experience diminished returns in terms of performance. In some cases, you might see a slower processing time than the sequential example, due to context switching and resource contention.
 
 As you can see by experimenting with these snippets, the right value of `n_process` depends on the specific setup. It's not a "one-size-fits-all" situation. It’s essential to experiment and benchmark different values to determine the most efficient configuration for your context.
@@ -77,10 +79,10 @@ Beyond just the performance implications, be mindful of how your operating syste
 
 To dive deeper into these concepts, I recommend looking into the following resources:
 
-*   **"Programming in Python 3" by Mark Summerfield:** This is a solid introduction to using multiprocessing in Python, which can help you understand the mechanisms spaCy utilizes under the hood. Pay close attention to the sections on using the `multiprocessing` module.
+- **"Programming in Python 3" by Mark Summerfield:** This is a solid introduction to using multiprocessing in Python, which can help you understand the mechanisms spaCy utilizes under the hood. Pay close attention to the sections on using the `multiprocessing` module.
 
-*   **"Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper:** While the book is not specific to spaCy 3.0, it provides good background on the different NLP operations that spaCy performs, and how these operations may benefit from parallelization. You can correlate the operations to specific parts of the spaCy pipeline to make better decisions about optimizing performance.
+- **"Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper:** While the book is not specific to spaCy 3.0, it provides good background on the different NLP operations that spaCy performs, and how these operations may benefit from parallelization. You can correlate the operations to specific parts of the spaCy pipeline to make better decisions about optimizing performance.
 
-*   **The official Python documentation for the `multiprocessing` module:** Reading the official documentation directly will give you the most accurate information on how Python handles subprocesses, and the implications and limitations that might arise in a multi-processing context.
+- **The official Python documentation for the `multiprocessing` module:** Reading the official documentation directly will give you the most accurate information on how Python handles subprocesses, and the implications and limitations that might arise in a multi-processing context.
 
 In summary, `n_process` is a powerful tool in spaCy's `nlp.pipe`. However, it's not just about cranking the number up to the maximum; it's about making informed choices based on your specific hardware, dataset size, and model complexity, and making sure you understand that the multiprocessing library used under the hood has its own performance characteristics to consider. Through experimentation and a deeper understanding of the underlying mechanisms, you can optimize your spaCy pipelines and achieve substantial gains in efficiency.

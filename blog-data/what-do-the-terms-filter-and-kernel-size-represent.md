@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "what-do-the-terms-filter-and-kernel-size-represent"
 ---
 
-alright, let's break down filters and kernel size. i’ve messed around with these enough to feel like i can explain it plainly, without any of that academic fluff.
+, let's break down filters and kernel size. i’ve messed around with these enough to feel like i can explain it plainly, without any of that academic fluff.
 
 so, when we talk about filters and kernel size, we’re usually knee-deep in the world of convolutional neural networks, or cnns. these things are basically the workhorses of image processing, and a bunch of other stuff too. forget fancy math for a second, at the core of a cnn lies the convolution operation. this is where filters and kernel size come into play.
 
 think of a filter as a little matrix, a grid of numbers, a bunch of parameters if you will. the kernel size? that's just the dimensions of that filter. so, a 3x3 kernel means a filter that’s three rows tall and three columns wide. a 5x5 kernel is five by five and so on. simple enough.
 
-now, what do these filters actually *do*? well, they’re designed to detect specific patterns in the input data. if we're talking images, these could be edges, corners, textures, or even more complex features. the numbers in the filter act as weights, and these weights are trained during the learning process. as the neural network sees more and more data, it adjusts these weights to better pick out those specific patterns that help it achieve the target objective of the network.
+now, what do these filters actually _do_? well, they’re designed to detect specific patterns in the input data. if we're talking images, these could be edges, corners, textures, or even more complex features. the numbers in the filter act as weights, and these weights are trained during the learning process. as the neural network sees more and more data, it adjusts these weights to better pick out those specific patterns that help it achieve the target objective of the network.
 
 to make this a little clearer, imagine you're trying to find vertical edges in a grayscale image. a typical filter to do so could be:
 

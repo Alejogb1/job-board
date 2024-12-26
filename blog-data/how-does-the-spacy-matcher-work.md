@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "how-does-the-spacy-matcher-work"
 ---
 
-alright, so you're asking about the spacy matcher, eh? i’ve spent way more time than i'd like to *confess* battling with that thing, so i can probably give you the lowdown. it's not rocket science, but there's a bit of nuance to it.
+, so you're asking about the spacy matcher, eh? i’ve spent way more time than i'd like to _confess_ battling with that thing, so i can probably give you the lowdown. it's not rocket science, but there's a bit of nuance to it.
 
 basically, the spacy matcher is a tool within the spacy library that lets you find specific sequences of tokens in a text. now, when i say tokens, i mean the individual words, punctuation, or even whitespace that spacy breaks your text into. it’s not just about matching exact strings; you can specify patterns based on all sorts of token attributes – think part-of-speech tags, lemma forms, and even custom attributes.
 
-my first encounter with the matcher was a real *head-scratcher*. i was trying to extract specific product descriptions from customer reviews, and i was initially using regex. total disaster. regex, while powerful, became a tangled mess when dealing with the variations in language. for example, trying to catch "amazing camera" "best camera" "great camera" with regex ended up being like trying to catch water with a sieve. the slightest variation, and regex would fail. that’s where the spacy matcher came into play.
+my first encounter with the matcher was a real _head-scratcher_. i was trying to extract specific product descriptions from customer reviews, and i was initially using regex. total disaster. regex, while powerful, became a tangled mess when dealing with the variations in language. for example, trying to catch "amazing camera" "best camera" "great camera" with regex ended up being like trying to catch water with a sieve. the slightest variation, and regex would fail. that’s where the spacy matcher came into play.
 
 the way the matcher works is by defining patterns. these patterns are lists of dictionaries, where each dictionary describes the attributes a token in the sequence should have. the order of dictionaries in the list is critical because it represents the order of tokens you’re searching for in your text. let’s say you want to find sequences where you have an adjective followed by a noun. here’s a simple pattern example:
 
@@ -46,24 +46,26 @@ for match_id, start, end in matches:
 ```
 
 running the code above will output: "adj_noun_pattern 1 3 big dog".
-here we load the english model, create a matcher, declare a pattern for adjective + noun and then add the pattern to the matcher giving it a name of *adj_noun_pattern*. we then define a sample text, process it to a spacy document and run the matcher on it. the result gives you the string name of the pattern, the starting position, the ending position and the actual text of the match.
+here we load the english model, create a matcher, declare a pattern for adjective + noun and then add the pattern to the matcher giving it a name of _adj_noun_pattern_. we then define a sample text, process it to a spacy document and run the matcher on it. the result gives you the string name of the pattern, the starting position, the ending position and the actual text of the match.
 
 the real power lies in the ability to use a wide variety of token attributes. you can use:
-*   `text`: for matching specific words, case sensitively.
-*   `lower`: for matching specific words ignoring case.
-*   `lemma`: for matching based on lemma forms
-*   `pos`: for part-of-speech tags.
-*   `tag`: for detailed part-of-speech tags.
-*   `dep`: for dependency labels.
-*   `is_alpha`, `is_digit`, `is_punct`, etc: for checking token properties
-*   `shape`: for matching the token shape, like all upper or all lower.
-*   custom attributes: the user can add custom attributes for custom needs
+
+- `text`: for matching specific words, case sensitively.
+- `lower`: for matching specific words ignoring case.
+- `lemma`: for matching based on lemma forms
+- `pos`: for part-of-speech tags.
+- `tag`: for detailed part-of-speech tags.
+- `dep`: for dependency labels.
+- `is_alpha`, `is_digit`, `is_punct`, etc: for checking token properties
+- `shape`: for matching the token shape, like all upper or all lower.
+- custom attributes: the user can add custom attributes for custom needs
 
 the matcher also lets you use operators within the patterns to make matches more flexible, they work the same as regular expressions, but using a dictionary object instead of regular expressions characters. here's a quick rundown:
-*   `{OP: "!"}`: negated token, match if the token does not have the condition.
-*   `{OP: "?"}`: optional token, the token can be present or not.
-*   `{OP: "*"}`: zero or more tokens of this type.
-*   `{OP: "+"}`: one or more tokens of this type.
+
+- `{OP: "!"}`: negated token, match if the token does not have the condition.
+- `{OP: "?"}`: optional token, the token can be present or not.
+- `{OP: "*"}`: zero or more tokens of this type.
+- `{OP: "+"}`: one or more tokens of this type.
 
 lets say i want to catch phrases like "a big car", "a very big car", "a very very big car", "big car", "a car". using the operators i can easily do this using the matcher. check this code:
 
@@ -99,7 +101,7 @@ the output will be:
 `adj_noun_pattern 18 20 a car`
 `adj_noun_pattern 22 24 yellow car`
 
-as you can see using the operators and the token characteristics allows us to match different forms of phrases that have different words on them. note the *op:"?"* for "a" that states that the word a is optional, and the *op:"*"* for the adv, that states that the adverbs can be repeated 0 or n times.
+as you can see using the operators and the token characteristics allows us to match different forms of phrases that have different words on them. note the _op:"?"_ for "a" that states that the word a is optional, and the _op:"_"\* for the adv, that states that the adverbs can be repeated 0 or n times.
 
 so, for my product review example, this became incredibly useful. i could define patterns for things like "positive adjective" + product name (where product name was also defined via a pattern). i could also account for modifiers and even negations. the code became far more readable and maintainable than it ever was with regex.
 

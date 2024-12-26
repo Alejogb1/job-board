@@ -4,16 +4,16 @@ date: "2024-12-23"
 id: "how-can-i-create-a-confusion-matrix-for-binary-classification-with-a-neural-network"
 ---
 
-Okay, let’s tackle this. From my experience working on a few projects involving image analysis and medical diagnosis, I've become pretty familiar with the ins and outs of confusion matrices, particularly when evaluating binary classification models. So, constructing one from neural network predictions is definitely something I can walk you through.
+, let’s tackle this. From my experience working on a few projects involving image analysis and medical diagnosis, I've become pretty familiar with the ins and outs of confusion matrices, particularly when evaluating binary classification models. So, constructing one from neural network predictions is definitely something I can walk you through.
 
 The core idea behind a confusion matrix is to provide a detailed breakdown of a model's prediction performance. In binary classification, we deal with two classes – say, ‘positive’ and ‘negative’ (or ‘1’ and ‘0,’ ‘true’ and ‘false,’ whatever fits your problem domain). The matrix then lays out how many instances were predicted correctly and incorrectly for each class. It’s a vital tool for moving beyond simple accuracy and understanding where your model is strong or weak.
 
 A basic confusion matrix has four elements:
 
-*   **True Positives (TP):** Instances correctly predicted as positive.
-*   **True Negatives (TN):** Instances correctly predicted as negative.
-*   **False Positives (FP):** Instances incorrectly predicted as positive (Type I error).
-*   **False Negatives (FN):** Instances incorrectly predicted as negative (Type II error).
+- **True Positives (TP):** Instances correctly predicted as positive.
+- **True Negatives (TN):** Instances correctly predicted as negative.
+- **False Positives (FP):** Instances incorrectly predicted as positive (Type I error).
+- **False Negatives (FN):** Instances incorrectly predicted as negative (Type II error).
 
 Let's frame this with a practical example from a past project. I was developing a neural network to detect a specific type of anomaly in sensor data. The data was inherently imbalanced, with anomalies being far less frequent than normal readings. Simply reporting accuracy was misleading, as the model could appear highly accurate by predominantly predicting the common ‘normal’ class. Here's where the confusion matrix became crucial.
 
@@ -49,9 +49,11 @@ cm_example = create_confusion_matrix(y_true_example, y_pred_prob_example)
 print(cm_example)
 
 ```
+
 This function, `create_confusion_matrix`, takes the true labels (`y_true`) and predicted probabilities (`y_pred_prob`), applies the threshold to classify to predicted binary labels and then leverages `sklearn.metrics.confusion_matrix` to calculate and output the matrix. Notice the use of `astype(int)` to convert boolean values `y_pred` to numerical values.
 
 Now, what if you're working with probabilities coming directly from your neural network model, possibly using something like a sigmoid activation in the output layer? The output from a neural network needs to be processed to obtain binary values for comparison with the true labels. Here’s another snippet, showing how this might fit in an actual inference loop with, say, PyTorch, one of my go-to frameworks:
+
 ```python
 import torch
 import torch.nn as nn
@@ -92,7 +94,7 @@ def evaluate_model(model, data_loader, threshold=0.5):
             outputs = model(inputs)
             all_true_labels.extend(labels.numpy().flatten())
             all_predicted_probs.extend(outputs.numpy().flatten())
-    
+
     return create_confusion_matrix(np.array(all_true_labels), np.array(all_predicted_probs), threshold)
 
 # Setup dummy data
@@ -152,14 +154,14 @@ def evaluate_model_one_hot(model, data_loader, threshold=0.5):
     with torch.no_grad(): # Disable gradient calculation
         for inputs, labels in data_loader:
             outputs = model(inputs)
-            
+
             # Convert one-hot to binary labels using argmax
             _, predicted_classes = torch.max(outputs, 1)
-            
+
             # Get the probability for the predicted class
             predicted_probs = torch.gather(outputs, 1, predicted_classes.unsqueeze(1)).squeeze(1)
 
-            
+
             all_true_labels.extend(torch.argmax(labels, dim=1).numpy()) # convert one-hot true labels to numeric labels
             all_predicted_probs.extend(predicted_probs.numpy())
 
@@ -180,6 +182,7 @@ print(cm)
 
 
 ```
+
 Here, you can see the model’s output layer uses 2 outputs, one for each class, and the function `evaluate_model_one_hot` converts the output to binary labels and probability with the use of `torch.max` and `torch.gather`. The true labels are converted from one-hot encoding to numerical values with `torch.argmax`.
 
 For further reading, I’d recommend “Pattern Recognition and Machine Learning” by Christopher Bishop. This book offers a rigorous treatment of statistical learning and is valuable for understanding the theory behind performance metrics. Another good option is “Deep Learning” by Goodfellow, Bengio, and Courville which provides comprehensive coverage of neural networks. Both are excellent resources for deepening your knowledge of model evaluation and deep learning practices.

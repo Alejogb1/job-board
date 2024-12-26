@@ -97,6 +97,7 @@ data.each { |item|
 
 browser.quit
 ```
+
 see how the javascript code is nicely included inside a multiline string literal. this keeps the code readable, instead of making one long, hard to read string. also, see how all the processing is done inside the browser, so only the final result needs to be returned.
 
 i almost forgot, always, and i mean always, make sure that the browser is properly closed after use, using the `browser.quit` method. you don’t want to leave browser instances running in the background, especially when running a lot of tests or scrapers.
@@ -105,4 +106,4 @@ one final point. if your website uses a lot of iframes or shadow dom, that is an
 
 regarding resources, i recommend "javascript: the definitive guide" by david flanagan, for deeper understanding of javascript internals, "high performance javascript" by nicholas c. zakas if you have to deal with performance issues in the browser or want to write efficient javascript. but there are tons of good resources online.
 
-debugging `ferrum` evaluate can be frustrating, but with careful timing, understanding page rendering, and verifying selector presence, you should be able to track the cause. the key is to be systematic and to break the problem down into small pieces. and never assume that it just works. there is always a reason for the behavior and it is up to us to find it. i know that, some times, that reason can be "user error", and that is okay too. i myself have made so many mistakes that i have lost count of them. we have to embrace making mistakes, and we have to learn from them. we should, because that’s how we improve our work.
+debugging `ferrum` evaluate can be frustrating, but with careful timing, understanding page rendering, and verifying selector presence, you should be able to track the cause. the key is to be systematic and to break the problem down into small pieces. and never assume that it just works. there is always a reason for the behavior and it is up to us to find it. i know that, some times, that reason can be "user error", and that is too. i myself have made so many mistakes that i have lost count of them. we have to embrace making mistakes, and we have to learn from them. we should, because that’s how we improve our work.

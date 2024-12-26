@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-await-a-firebase-call-within-a-kotlin-loop"
 ---
 
-Alright, let's tackle this. I've seen this scenario pop up a good few times over the years, especially when dealing with batch operations against Firebase databases. The core issue revolves around the asynchronous nature of Firebase calls clashing with the synchronous execution of a loop in Kotlin. It’s a classic case of needing to manage concurrency gracefully, and often the naive approach leads to unexpected results or race conditions.
+, let's tackle this. I've seen this scenario pop up a good few times over the years, especially when dealing with batch operations against Firebase databases. The core issue revolves around the asynchronous nature of Firebase calls clashing with the synchronous execution of a loop in Kotlin. It’s a classic case of needing to manage concurrency gracefully, and often the naive approach leads to unexpected results or race conditions.
 
 The heart of the problem is that when you initiate a Firebase operation, it doesn’t immediately return a result. Instead, it executes asynchronously, meaning your code moves onto the next iteration of the loop without waiting for the Firebase operation to complete. This often results in sending multiple requests simultaneously, rather than sequentially as intended, and can lead to data inconsistencies or unexpected behavior when Firebase attempts to process the calls. The typical pitfall occurs when developers attempt to simply place a standard `await()` call within the loop, believing it will pause each iteration until the Firebase promise is resolved. While it seems intuitive, Kotlin's coroutine scope often requires a more structured approach to ensure operations are executed correctly.
 
@@ -105,6 +105,7 @@ suspend fun main() {
     println("All operations finished.")
 }
 ```
+
 Here, each firebase call is executed only after the previous one is completed, which offers complete control over the sequence of calls. It does, however, sacrifice the potential speedup offered by concurrency.
 
 Choosing the appropriate method depends entirely on your specific requirements. The `runBlocking` method, while simple to understand, can cause performance issues when used outside of test scenarios. The approach using `async` with `awaitAll` maximizes concurrency and is generally the preferred choice for production-level code when order of operations does not matter. And in situations where sequential execution is needed, the last approach we looked into is what you will use.

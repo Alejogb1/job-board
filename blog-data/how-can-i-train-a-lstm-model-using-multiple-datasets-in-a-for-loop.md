@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-train-a-lstm-model-using-multiple-datasets-in-a-for-loop"
 ---
 
-Okay, let’s tackle this. I've spent my share of time wrestling with training recurrent networks, especially LSTMs, across different datasets. It's a common scenario, and the way you structure your loop is crucial for both efficiency and model performance. A straightforward loop might seem intuitive, but you'll quickly find that careful handling of data loading, model state, and even the specific training order can make or break your project.
+, let’s tackle this. I've spent my share of time wrestling with training recurrent networks, especially LSTMs, across different datasets. It's a common scenario, and the way you structure your loop is crucial for both efficiency and model performance. A straightforward loop might seem intuitive, but you'll quickly find that careful handling of data loading, model state, and even the specific training order can make or break your project.
 
 So, how do we approach training an LSTM using multiple datasets within a loop? The core idea revolves around iterative training, treating each dataset as an independent, possibly augmented training cycle. The key components include the data pipeline, model initialization, careful management of the internal state of the LSTM layers, and the control of hyperparameters across all training datasets. Let's break it down with some practical examples.
 
@@ -237,6 +237,7 @@ learning_rate = 0.001
 training_order = [0,2,1] # 1st, 3rd and then second dataset
 train_multiple_datasets_ordered(dataset_paths, batch_size, input_size, hidden_size, num_layers, num_classes, num_epochs, learning_rate, training_order)
 ```
+
 In the last snippet, I have modified the generator to yield batches as well as the dataset name. Additionally the data_generator_ordered now can take an ordering parameter. When specified the datasets will be trained on in that order. This snippet demonstrates that the datasets don’t necessarily need to be trained in the original order, which will be useful when you want to pre-train on specific datasets before training on other ones.
 
 For further reading, I recommend “Deep Learning” by Goodfellow, Bengio, and Courville for a strong theoretical background on LSTMs. “Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow” by Géron provides practical examples and implementation details. Finally, I find that the research paper “Sequence to Sequence Learning with Neural Networks” by Sutskever et al. (2014), though focusing on machine translation, offers valuable insights into how LSTMs can handle sequences. These resources should equip you with a good understanding to tackle these challenges effectively.

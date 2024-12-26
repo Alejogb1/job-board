@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-automatic-differentiation-be-used-for-incrementally-updating-states"
 ---
 
-Alright, let's talk about incremental state updates with automatic differentiation (ad). It’s a topic I’ve spent a fair bit of time with, especially back when I was working on a complex fluid dynamics simulation. We needed to adjust parameters on the fly, and manual derivation was just not cutting it. So, here’s how I approach it, drawing from those experiences.
+, let's talk about incremental state updates with automatic differentiation (ad). It’s a topic I’ve spent a fair bit of time with, especially back when I was working on a complex fluid dynamics simulation. We needed to adjust parameters on the fly, and manual derivation was just not cutting it. So, here’s how I approach it, drawing from those experiences.
 
 The core idea here is that you want to adjust internal state variables of a system based on some error signal, and you need the gradients of that error with respect to those state variables. Automatic differentiation lets you calculate these gradients without the need for manual derivations, making it perfect for incremental adjustments. Instead of repeatedly computing everything from scratch, you use the computed gradients to slightly nudge the state variables towards a lower-error configuration, one step at a time. This iterative process refines the system's internal representation, resulting in improved performance.
 
@@ -121,6 +121,7 @@ for i in range(10):
   params = update_parameters_implicit(params,init_state,x, target_state,learning_rate)
   print(f"Iteration {i+1}: a = {params[0]:.4f}, b = {params[1]:.4f}")
 ```
+
 This is more illustrative of what happens in complex stateful systems. We use `next_state` to simulate a state transition. The `loss_function_implicit` accumulates the state over a number of iterations. The loss is then the distance between this final state and the target state. We then calculate the gradient with respect to parameters `a` and `b`, updating these parameters to minimize the loss. This scenario shows how you can optimize parameters to lead to a specific state configuration using automatic differentiation.
 
 For further reading, I’d highly recommend "Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville for a comprehensive overview of ad and its uses in deep learning. Additionally, "Numerical Optimization" by Jorge Nocedal and Stephen Wright is an excellent resource for understanding the optimization algorithms used alongside automatic differentiation. A more focused text on automatic differentiation itself is “Evaluating Derivatives: Principles and Techniques of Algorithmic Differentiation,” by Andreas Griewank and Andrea Walther, which goes into great detail about various modes of automatic differentiation. These will provide a good theoretical basis for understanding the practical aspects I’ve shown here.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-submit-local-jobs-using-dslpipeline"
 ---
 
-Alright, let's talk about submitting local jobs with `dsl.pipeline`. I've spent a good portion of my career working with orchestration tools, and this particular area – local job execution within a larger pipeline framework – has certainly presented its share of nuanced challenges. It's not always straightforward, but there are reliable ways to get it running smoothly. I recall one project a few years back, a data processing pipeline for a financial institution, where we needed to execute specific processing steps locally for rapid prototyping and debugging. That's where understanding the nuances of using `dsl.pipeline` for local submissions really came into play.
+, let's talk about submitting local jobs with `dsl.pipeline`. I've spent a good portion of my career working with orchestration tools, and this particular area – local job execution within a larger pipeline framework – has certainly presented its share of nuanced challenges. It's not always straightforward, but there are reliable ways to get it running smoothly. I recall one project a few years back, a data processing pipeline for a financial institution, where we needed to execute specific processing steps locally for rapid prototyping and debugging. That's where understanding the nuances of using `dsl.pipeline` for local submissions really came into play.
 
 The core issue, fundamentally, is that `dsl.pipeline` in many workflow orchestration frameworks (like, say, kubeflow pipelines) is designed to operate primarily within a distributed environment. It expects to be deploying containerized steps to some form of cluster. However, what if you need a quick test, or just want to use locally available resources without the overhead of containerization for some components? This is where the techniques we’ll discuss become essential.
 
@@ -131,15 +131,15 @@ In this example, `run_local_cli_tool` executes an arbitrary command, simulating 
 
 **Important Considerations and Further Reading**
 
-*   **Security:** When executing local commands, be incredibly mindful of the code you are running. Ensure that you fully understand its implications, as you are giving the code direct access to your system. Be especially careful when passing dynamically generated commands.
-*   **Environment Consistency:** Local environments can differ significantly. If these local jobs involve complex logic or depend on a specific environment, you should consider encapsulating them within Docker images and then executing those images locally through the same `subprocess` technique to maintain a more controlled environment.
-*   **State Management:** When dealing with file manipulation, as in example 2, local operations often don’t have the isolation that containerized steps usually provide. Be cautious about creating/overwriting files unexpectedly.
+- **Security:** When executing local commands, be incredibly mindful of the code you are running. Ensure that you fully understand its implications, as you are giving the code direct access to your system. Be especially careful when passing dynamically generated commands.
+- **Environment Consistency:** Local environments can differ significantly. If these local jobs involve complex logic or depend on a specific environment, you should consider encapsulating them within Docker images and then executing those images locally through the same `subprocess` technique to maintain a more controlled environment.
+- **State Management:** When dealing with file manipulation, as in example 2, local operations often don’t have the isolation that containerized steps usually provide. Be cautious about creating/overwriting files unexpectedly.
 
 For further study, I’d highly recommend:
 
-*   **"Kubeflow Pipelines: Understanding the Architecture and Key Concepts"**: This deep-dives into the underlying mechanics of Kubeflow Pipelines, including the concept of pipeline execution.
-*   **The official documentation for your specific `dsl.pipeline` framework:** Whether it’s Kubeflow, Apache Airflow, or another system, the official documentation will be your most authoritative resource. Look specifically for information on custom component creation, local runners, and debugging techniques.
-*   **"Operating System Concepts" by Silberschatz, Galvin, and Gagne:** To truly grasp what is happening behind the scenes with local process execution, understanding OS concepts is paramount. Specifically related to process management and I/O interactions.
-*   **Python’s 'subprocess' documentation:** A thorough understanding of this module is necessary to execute local commands effectively and safely.
+- **"Kubeflow Pipelines: Understanding the Architecture and Key Concepts"**: This deep-dives into the underlying mechanics of Kubeflow Pipelines, including the concept of pipeline execution.
+- **The official documentation for your specific `dsl.pipeline` framework:** Whether it’s Kubeflow, Apache Airflow, or another system, the official documentation will be your most authoritative resource. Look specifically for information on custom component creation, local runners, and debugging techniques.
+- **"Operating System Concepts" by Silberschatz, Galvin, and Gagne:** To truly grasp what is happening behind the scenes with local process execution, understanding OS concepts is paramount. Specifically related to process management and I/O interactions.
+- **Python’s 'subprocess' documentation:** A thorough understanding of this module is necessary to execute local commands effectively and safely.
 
 In summary, while `dsl.pipeline` is typically designed for orchestrated cluster environments, you can execute tasks locally using custom components leveraging the subprocess module. Be sure to manage environmental dependencies and handle security concerns appropriately. This approach has been invaluable to me in various projects, and I’m confident it’ll assist you as well.

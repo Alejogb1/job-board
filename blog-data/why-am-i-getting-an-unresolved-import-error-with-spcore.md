@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-an-unresolved-import-error-with-spcore"
 ---
 
-Alright, let's tackle this "unresolved import" issue you're encountering with `sp_core`. It’s a frustration I've certainly felt myself, back in the days of heavy substrate experimentation, and it often boils down to a few core reasons. Having spent countless hours wrestling (oops, almost slipped there!) with similar dependency puzzles, I've come to appreciate how meticulous the setup needs to be.
+, "unresolved import" issue you're encountering with `sp_core`. It’s a frustration I've certainly felt myself, back in the days of heavy substrate experimentation, and it often boils down to a few core reasons. Having spent countless hours wrestling (oops, almost slipped there!) with similar dependency puzzles, I've come to appreciate how meticulous the setup needs to be.
 
 Essentially, when you see that "unresolved import" error specifically related to `sp_core`, it signals that your project’s build system—whether it’s cargo, or something else—can't locate the necessary code definitions or binaries for the `sp_core` crate. This crate is part of the substrate ecosystem and provides essential, low-level building blocks for runtime development, so its absence is quite fundamental. It's not something you can simply ignore; it's like trying to build a car without an engine.
 
@@ -54,7 +54,8 @@ edition = "2021"
 frame-system = { version = "4.0.0-dev", default-features = false }
 sp-core = { version = "6.0.0", default-features = false }
 ```
-*Note:* You'd need to adjust the `sp-core` version based on the versions of `frame-system`, and other substrate crates you might be using. Check the releases of Polkadot or Substrate to find compatible crate versions.
+
+_Note:_ You'd need to adjust the `sp-core` version based on the versions of `frame-system`, and other substrate crates you might be using. Check the releases of Polkadot or Substrate to find compatible crate versions.
 
 **Example 2: Incompatible dependency versions**
 
@@ -111,6 +112,7 @@ cargo update -v
 These are the common issues that trigger the 'unresolved import' error for `sp_core`. The key to troubleshooting is being systematic and careful in managing dependencies, checking the Substrate releases notes for compatibility, and ensuring your build environment is properly configured.
 
 For further reading, I recommend looking at the following resources:
+
 1.  **The Rust Programming Language** (often referred to as "the book") – This is essential to understanding the fundamentals of how Rust handles dependencies.
 2.  **Substrate documentation** – particularly the sections on dependencies and runtime setup. This resource details how to properly use substrate-related crates.
 3.  **Polkadot’s repository** – Check out the release notes of the various Polkadot and Substrate repositories as that is where you will see the compatible versions of the different crates.

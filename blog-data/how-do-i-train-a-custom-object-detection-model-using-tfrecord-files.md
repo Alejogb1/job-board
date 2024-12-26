@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-do-i-train-a-custom-object-detection-model-using-tfrecord-files"
 ---
 
-Alright, let's talk about training a custom object detection model using tfrecord files. I've seen my share of data pipelines and training setups, and using tfrecords correctly is often the difference between a smooth training run and a frustrating debugging session. It's a topic that often crops up, and for good reason. It’s efficient, scalable, and when set up properly, it significantly speeds up the loading process for training.
+, let's talk about training a custom object detection model using tfrecord files. I've seen my share of data pipelines and training setups, and using tfrecords correctly is often the difference between a smooth training run and a frustrating debugging session. It's a topic that often crops up, and for good reason. It’s efficient, scalable, and when set up properly, it significantly speeds up the loading process for training.
 
 The foundational premise is straightforward: tfrecords are Google's binary storage format designed to optimize the reading and writing of large datasets, particularly for TensorFlow-based models. They pack your image data (and associated metadata, like bounding box coordinates) into serialized strings, which minimizes overhead compared to directly reading image files from disk. This isn’t just theoretical either, I once had a project where we reduced our data load time from several minutes to seconds simply by switching to tfrecords. The speed improvement in training was remarkable.
 
-When you move to custom object detection, you aren't usually dealing with standardized datasets. This is where the work really begins – you have to convert your specific dataset into the tfrecord format. This means you first have to know *how* to structure your data. Typically, you will need, at a minimum: an image, bounding boxes delineating objects, and object class labels (or ids).
+When you move to custom object detection, you aren't usually dealing with standardized datasets. This is where the work really begins – you have to convert your specific dataset into the tfrecord format. This means you first have to know _how_ to structure your data. Typically, you will need, at a minimum: an image, bounding boxes delineating objects, and object class labels (or ids).
 
 Let's dive into the process. The conversion requires a structured approach and generally includes the following steps: First, you'll need to read all the image files from your dataset, along with their corresponding metadata. This is usually facilitated using python libraries like PIL or OpenCV. Second, you'll transform this information into a `tf.train.Example` proto, a building block for the tfrecord structure. The proto encapsulates all the needed data: image bytes, coordinates for your bounding boxes, and the label IDs. These protos are then serialized and written to a tfrecord file. Now, let's get down to specifics with some code examples.
 
@@ -109,6 +109,7 @@ def create_tfrecords(data_list, output_path, class_mapping):
   if writer:
       writer.close()
 ```
+
 Here, I also added the logic to split up your dataset into multiple tfrecord files. This is essential when dealing with very large datasets, because having single gigantic tfrecord files would become unwieldy.
 
 **Example 3: Reading from tfrecord files for training**

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-await-a-reserved-word-in-jest-tests"
 ---
 
-Okay, let's tackle this one. It's something I've bumped into a few times, particularly when refactoring older test suites, and it often generates confusion. The short answer is that `await` being a reserved word within the scope of jest tests, specifically those using the asynchronous test function framework, is fundamentally about controlling the execution flow of asynchronous operations and ensuring test assertions are made at the correct points in time. It's not just a syntactic quirk; it’s a crucial mechanism for reliable and predictable test outcomes.
+, let's tackle this one. It's something I've bumped into a few times, particularly when refactoring older test suites, and it often generates confusion. The short answer is that `await` being a reserved word within the scope of jest tests, specifically those using the asynchronous test function framework, is fundamentally about controlling the execution flow of asynchronous operations and ensuring test assertions are made at the correct points in time. It's not just a syntactic quirk; it’s a crucial mechanism for reliable and predictable test outcomes.
 
 My past experience with this comes from a large-scale web application where we had to shift from a synchronous testing paradigm to one that embraced asynchronous operations, particularly when dealing with network requests, animations, and complex state transitions. We had test failures that seemed utterly baffling until we understood the asynchronous nature of javascript and how jest handles it. The core problem is that JavaScript is fundamentally single-threaded, and asynchronous operations don’t pause the execution thread; instead, they schedule callbacks for execution at some point in the future. This means that without a mechanism to pause the execution of a test until an async operation completes, assertions might be made before the actual outcome is realized, leading to flaky or false positive tests.
 
@@ -17,14 +17,14 @@ For example, imagine you have a function that fetches data using a promise-based
 ```javascript
 // simulate fetching data with a promise
 function fetchData() {
-  return new Promise(resolve => {
-    setTimeout(() => resolve({ data: 'some data' }), 100);
+  return new Promise((resolve) => {
+    setTimeout(() => resolve({ data: "some data" }), 100);
   });
 }
 
-test('incorrect usage of fetchData without await', () => {
+test("incorrect usage of fetchData without await", () => {
   let result;
-  fetchData().then(data => {
+  fetchData().then((data) => {
     result = data;
   });
   expect(result).toBeDefined(); // This will most likely fail
@@ -33,13 +33,13 @@ test('incorrect usage of fetchData without await', () => {
 
 In this scenario, the `expect` assertion might run before the `fetchData` promise resolves, meaning `result` is still undefined. The test appears to pass but fails in actuality, which is exactly what we want to prevent in testing. This type of test will be flaky and unreliable due to race conditions.
 
-This problem leads us to why `await` is reserved in these contexts. By using `await`, we are telling Javascript and by extension Jest, to *pause* the test function’s execution until the promise returned by `fetchData()` resolves. This ensures that `result` will be available for inspection when we get to the `expect` call. Rewriting the test correctly would look like this:
+This problem leads us to why `await` is reserved in these contexts. By using `await`, we are telling Javascript and by extension Jest, to _pause_ the test function’s execution until the promise returned by `fetchData()` resolves. This ensures that `result` will be available for inspection when we get to the `expect` call. Rewriting the test correctly would look like this:
 
 ```javascript
-test('correct usage of fetchData with await', async () => {
+test("correct usage of fetchData with await", async () => {
   let result = await fetchData();
   expect(result).toBeDefined();
-  expect(result.data).toBe('some data');
+  expect(result.data).toBe("some data");
 });
 ```
 
@@ -50,22 +50,21 @@ Secondly, the reservation of `await` also extends to the structure of the test i
 The need for async functions is often not readily apparent, especially if you have tests that don’t appear to be asynchronous. Consider a simple set of tests that use mocks. If these mocks return promises, then `await` is still necessary.
 
 ```javascript
-const mockFetch = jest.fn().mockResolvedValue({data: 'mocked data'});
+const mockFetch = jest.fn().mockResolvedValue({ data: "mocked data" });
 
-test('using a mocked async function without await', () => {
-    let result;
-    mockFetch().then(data => {
-      result = data;
-    })
+test("using a mocked async function without await", () => {
+  let result;
+  mockFetch().then((data) => {
+    result = data;
+  });
 
-    expect(result).toBeDefined(); // likely will fail
+  expect(result).toBeDefined(); // likely will fail
 });
 
-
-test('using a mocked async function with await', async () => {
+test("using a mocked async function with await", async () => {
   const result = await mockFetch();
   expect(result).toBeDefined();
-  expect(result.data).toBe('mocked data')
+  expect(result.data).toBe("mocked data");
 });
 ```
 

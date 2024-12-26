@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-get-an-access-token-using-the-plaid-api-in-a-java-android-application"
 ---
 
-Alright, let's tackle obtaining an access token with the Plaid API in a Java-based Android app. I've been down this road a few times, and it's a bit of a process, but certainly manageable with a structured approach. The core challenge revolves around safely initializing the Plaid Link module and then securely exchanging a public token for a more durable access token. Let's break this down, piece by piece.
+, let's tackle obtaining an access token with the Plaid API in a Java-based Android app. I've been down this road a few times, and it's a bit of a process, but certainly manageable with a structured approach. The core challenge revolves around safely initializing the Plaid Link module and then securely exchanging a public token for a more durable access token. Let's break this down, piece by piece.
 
 From the outset, understand that we're dealing with sensitive financial information. Therefore, security needs to be paramount. Storing API keys directly in your app is a big no-no; ideally, they should reside on your secure backend server and be accessed only when absolutely necessary. For this explanation, I will assume a backend service handles secret management and only provides the necessary keys to the client for initialization purposes in a secure way. Let's also assume that our Android app has a simple ui and a single Activity called `MainActivity`.
 
@@ -16,7 +16,7 @@ implementation 'com.plaid.link:link-sdk-android:latest'
 
 Replace `latest` with the specific version you’re targeting. At the time of writing, it's wise to double-check for the most recent stable release on Plaid's documentation pages. Beyond the SDK, you’ll need to configure the link token which provides initialization data for Plaid link module.
 
-Okay, so now to illustrate this process, let’s start with the initialization within our `MainActivity`. Suppose, our backend endpoint `/get-link-token` provides the necessary link token for initializing the Plaid Link module. Assuming we have a helper class, `NetworkManager`, that handles networking requests, it would fetch the link token. This code snippet would go into `MainActivity`:
+, so now to illustrate this process, let’s start with the initialization within our `MainActivity`. Suppose, our backend endpoint `/get-link-token` provides the necessary link token for initializing the Plaid Link module. Assuming we have a helper class, `NetworkManager`, that handles networking requests, it would fetch the link token. This code snippet would go into `MainActivity`:
 
 ```java
 import android.os.Bundle;
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
-Here, the `fetchLinkToken` method retrieves the link token from your backend (assuming the `NetworkManager` handles HTTP requests).  After retrieval, `initializePlaidLink` sets up the `PlaidHandler` with the token. The PlaidHandler manages the Plaid Link UI and the various callbacks. Upon successful linking of an item, the `onSuccess` method is triggered, which in turn calls `exchangePublicToken`. This last function sends the public token back to your server to exchange for an access token. The final step in your backend should be that it can exchange a public token for a permanent access token. The server should use the `public_token` and call the Plaid API `/item/public_token/exchange` endpoint with appropriate credentials. The response would include the desired access token.
+Here, the `fetchLinkToken` method retrieves the link token from your backend (assuming the `NetworkManager` handles HTTP requests). After retrieval, `initializePlaidLink` sets up the `PlaidHandler` with the token. The PlaidHandler manages the Plaid Link UI and the various callbacks. Upon successful linking of an item, the `onSuccess` method is triggered, which in turn calls `exchangePublicToken`. This last function sends the public token back to your server to exchange for an access token. The final step in your backend should be that it can exchange a public token for a permanent access token. The server should use the `public_token` and call the Plaid API `/item/public_token/exchange` endpoint with appropriate credentials. The response would include the desired access token.
 
 Now, to complete this, let’s consider what might be happening inside our fictitious `NetworkManager`. This class provides abstracted functions to interact with the network. For the purpose of this example, I'll include dummy URLs and placeholder response handling:
 

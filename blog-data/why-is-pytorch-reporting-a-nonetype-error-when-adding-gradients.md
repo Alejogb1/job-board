@@ -4,19 +4,19 @@ date: "2024-12-23"
 id: "why-is-pytorch-reporting-a-nonetype-error-when-adding-gradients"
 ---
 
-Alright, let's tackle this 'NoneType' error that crops up in PyTorch when gradients go awry. I’ve seen this particular headache more times than I care to recall, often in situations where the underlying issue wasn't immediately obvious. It’s almost always related to how PyTorch manages its computational graph and backpropagation.
+, let's tackle this 'NoneType' error that crops up in PyTorch when gradients go awry. I’ve seen this particular headache more times than I care to recall, often in situations where the underlying issue wasn't immediately obvious. It’s almost always related to how PyTorch manages its computational graph and backpropagation.
 
-Here's the core problem: when you try to compute gradients using `loss.backward()`, PyTorch propagates gradients backwards through your graph. If at any point in that graph, a tensor required to compute the gradient isn't actually part of the computation *chain*, or if the computation chain has been detached, you might end up trying to access a gradient that simply hasn’t been calculated. That results in, you guessed it, a `NoneType` being returned instead of a tensor. This commonly manifests when you try to add these ‘None’ gradient values somewhere later in your code.
+Here's the core problem: when you try to compute gradients using `loss.backward()`, PyTorch propagates gradients backwards through your graph. If at any point in that graph, a tensor required to compute the gradient isn't actually part of the computation _chain_, or if the computation chain has been detached, you might end up trying to access a gradient that simply hasn’t been calculated. That results in, you guessed it, a `NoneType` being returned instead of a tensor. This commonly manifests when you try to add these ‘None’ gradient values somewhere later in your code.
 
 Let's break down the primary reasons why this might occur, and then we'll walk through some illustrative code examples. I'm going to speak from my experience, drawing from past project challenges that have forced me to get quite intimate with PyTorch's internals.
 
 One frequent cause is detaching tensors from the computational graph. Consider a scenario where you've performed some operation and you need to extract data for analysis, or perhaps for some pre-processing step before another part of your model, and you inadvertently use `.detach()` on a tensor that is part of your forward computation. This action severs the tensor's connection to the graph, meaning no gradient will be computed for it or anything that depends on it. If that detached tensor is later used in a computation that requires gradients, then bingo, you've got a problem.
 
-Another issue can stem from operations performed *in-place*. PyTorch will issue warnings about these, but they can sometimes slip past you. Performing in-place operations, like directly modifying a tensor with `+=` or `*=`, changes the tensor data without updating the computational graph properly. This can invalidate the tracked gradients of the tensors that were modified. For example, if you update weights of your model with an in-place operation instead of a proper gradient descent, subsequent gradient computations will try to find gradients of the previous weights, which are now unavailable.
+Another issue can stem from operations performed _in-place_. PyTorch will issue warnings about these, but they can sometimes slip past you. Performing in-place operations, like directly modifying a tensor with `+=` or `*=`, changes the tensor data without updating the computational graph properly. This can invalidate the tracked gradients of the tensors that were modified. For example, if you update weights of your model with an in-place operation instead of a proper gradient descent, subsequent gradient computations will try to find gradients of the previous weights, which are now unavailable.
 
 Finally, a third, often overlooked, source of this error is using tensors that aren't initially part of the graph in the computation that needs gradients. For instance, if you create a tensor without the `requires_grad=True` argument, it doesn't participate in gradient calculations, even if it is used later in a computation with another tensor that requires a gradient. PyTorch won't implicitly make this a tracked tensor; you need to specify this up-front.
 
-Alright, let’s move to some code examples. These will illustrate the different causes I’ve just discussed, and how to fix them.
+, let’s move to some code examples. These will illustrate the different causes I’ve just discussed, and how to fix them.
 
 **Example 1: Detaching a Tensor**
 
@@ -48,7 +48,8 @@ loss.backward() #no issues now.
 
 print(f"x.grad after fixing: {x.grad}") # gradients computed
 ```
-In this example, we’ve purposely detached `y` from the computation graph before multiplying it by 3. When we try to call `loss.backward()`, PyTorch attempts to propagate the gradient all the way back to `x`, but it can’t do so because the chain is broken at `detached_y`.  The fix is simple: remove the `detach()` call so that `y` is kept part of the computational graph.
+
+In this example, we’ve purposely detached `y` from the computation graph before multiplying it by 3. When we try to call `loss.backward()`, PyTorch attempts to propagate the gradient all the way back to `x`, but it can’t do so because the chain is broken at `detached_y`. The fix is simple: remove the `detach()` call so that `y` is kept part of the computational graph.
 
 **Example 2: In-Place Operation**
 
@@ -82,7 +83,7 @@ loss.backward() #no issues
 print(f"x.grad after fixing: {x.grad}") # gradients computed
 ```
 
-Here, the in-place addition `y += 1` disrupts the gradient computation.  PyTorch is essentially trying to backtrack through an operation that’s already been overwritten. Changing `y += 1` to `y = y + 1` creates a new tensor, thus maintaining the computation graph as expected. The old tensor with its history stays as part of the graph.
+Here, the in-place addition `y += 1` disrupts the gradient computation. PyTorch is essentially trying to backtrack through an operation that’s already been overwritten. Changing `y += 1` to `y = y + 1` creates a new tensor, thus maintaining the computation graph as expected. The old tensor with its history stays as part of the graph.
 
 **Example 3: Tensors without 'requires_grad'**
 

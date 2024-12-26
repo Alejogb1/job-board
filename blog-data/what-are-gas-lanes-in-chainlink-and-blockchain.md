@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-gas-lanes-in-chainlink-and-blockchain"
 ---
 
-Alright, let's talk about gas lanes, a subject that, trust me, has occupied more of my brain space than I care to calculate over the years. I distinctly remember back in '21, working on a decentralized derivatives platform, we hit a wall with transaction costs, specifically when trying to reliably pull data from Chainlink oracles, and that's where gas lanes really came into the foreground. It's more complex than it appears at first glance.
+, let's talk about gas lanes, a subject that, trust me, has occupied more of my brain space than I care to calculate over the years. I distinctly remember back in '21, working on a decentralized derivatives platform, we hit a wall with transaction costs, specifically when trying to reliably pull data from Chainlink oracles, and that's where gas lanes really came into the foreground. It's more complex than it appears at first glance.
 
 The core issue revolves around the fluctuating gas prices on blockchains, specifically networks like ethereum. These price fluctuations are influenced by network congestion, creating a scenario where the cost of a transaction to fetch data from a Chainlink oracle can suddenly spike, making it prohibitively expensive and therefore highly unreliable. That's where the concept of gas lanes becomes critical.
 
@@ -44,11 +44,13 @@ contract PriceConsumer {
     }
 }
 ```
+
 In this basic setup, the `getLatestPrice()` function relies on the default gas parameters when it interacts with the `priceFeed` smart contract, potentially leading to transaction failures during high network activity, or overspending in periods of low network load.
 
 **Example 2: Introducing Gas Lanes with Direct Gas Specification**
 
 Let's say we want to address this instability. We would need to use a more nuanced approach, specifying gas limits directly, maybe via constructor parameters, or using an intermediate layer for more complex configurations. Here is an example using a constructor to set specific gas parameters:
+
 ```solidity
 pragma solidity ^0.8.0;
 
@@ -75,6 +77,7 @@ contract PriceConsumerGasLanes {
     }
 }
 ```
+
 In this version, `PriceConsumerGasLanes` takes a `_gasLimit` parameter during contract deployment. This way, each transaction within that contract using the `getLatestPrice()` function is sent with a predetermined gas limit, which allows us to manage how much gas this process consumes, creating a basic gas lane. While this isn't the complex multi-lane setup that Chainlink nodes manage, it illustrates the core principle.
 
 **Example 3: Gas Lanes via an Intermediate Request Contract (Advanced)**

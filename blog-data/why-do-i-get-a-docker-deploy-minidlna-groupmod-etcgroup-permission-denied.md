@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-do-i-get-a-docker-deploy-minidlna-groupmod-etcgroup-permission-denied"
 ---
 
-alright, let's unpack this "permission denied" with docker and minidlna. it's a classic, i've seen it countless times, usually when folks are getting into containerization and linux file permissions. i've been there myself, pulling my hair out in my early days trying to get simple things like sharing media to work reliably. it usually comes down to how docker containers and user/group ids interact, especially when you are trying to modify system files inside the container.
+, let's unpack this "permission denied" with docker and minidlna. it's a classic, i've seen it countless times, usually when folks are getting into containerization and linux file permissions. i've been there myself, pulling my hair out in my early days trying to get simple things like sharing media to work reliably. it usually comes down to how docker containers and user/group ids interact, especially when you are trying to modify system files inside the container.
 
 the core of the problem is that the `groupmod` command you see in the error log is trying to modify `/etc/group` within the docker container. this is a pretty sensitive file in a linux system, it stores user group information. and by default docker containers run with a user id and group id that are not root (usually something like uid 1000, gid 1000). this is a security thing docker does. but the thing is that `groupmod` needs root level permissions to change `/etc/group`.
 
@@ -21,7 +21,9 @@ here's how you'd do it by using the `--user` flag with `docker run`:
 ```bash
 docker run --user root your-minidlna-image
 ```
+
 or through docker-compose:
+
 ```yaml
 version: "3.9"
 services:
@@ -30,7 +32,7 @@ services:
     user: "root"
 ```
 
-but please, tread carefully here. running as root adds risks. it might be okay for a development environment, or when you are testing but not in production.
+but please, tread carefully here. running as root adds risks. it might be for a development environment, or when you are testing but not in production.
 
 a more secure, and often preferred approach is to modify the dockerfile so that you don't need to modify system files at runtime. instead of using `groupmod` during the container run, what if you add the user to the group during the image build phase?. this way we preconfigure the needed group membership before container starts and prevent our app from trying to modify system files in the first place.
 
@@ -73,6 +75,7 @@ fi
 
 exec gosu minidlna "$@"
 ```
+
 this `entrypoint.sh` script is then referenced in the dockerfile as entrypoint:
 
 ```dockerfile
@@ -88,9 +91,9 @@ CMD ["minidlnad", "-f", "/etc/minidlna.conf"]
 
 this approach allows you to dynamically change user and group ids at runtime which is very convenient when the same image can be run on different environments and user configurations. the idea behind this pattern is that the container starts initially as `root` so that we can create the user, group, but then immediately we drop `root` privileges as soon as we can by using `gosu` or `su-exec`. you will need to install `gosu` in the container.
 
-a good resource to check the details about users in linux containers is *understanding linux containers* from the oracle documentation. another book that helped me understand linux user management in depth is *how linux works: what every superuser should know* it is a pretty deep dive on how the system works internally.
+a good resource to check the details about users in linux containers is _understanding linux containers_ from the oracle documentation. another book that helped me understand linux user management in depth is _how linux works: what every superuser should know_ it is a pretty deep dive on how the system works internally.
 
-and one of my favorites to really dig into the details of docker configurations is *docker in practice*, it has pretty detailed explanations on advanced configurations and the ins and outs of containerization.
+and one of my favorites to really dig into the details of docker configurations is _docker in practice_, it has pretty detailed explanations on advanced configurations and the ins and outs of containerization.
 
 so in conclusion, the "permission denied" you are seeing is usually because the docker container user lacks the authority to change the system's group information. the solutions are to run the container as root (not recommended for production), preconfigure the group membership in the dockerfile or using a helper script to switch users at runtime. each option has its tradeoffs and the preferred way depends on the security requirements and your specific setup.
 

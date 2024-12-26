@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "boosting-in-r-model-usage"
 ---
 
-Okay so you're asking about boosting in R model usage right I've been down this rabbit hole a few times myself Let me tell you it's not always smooth sailing but the results can be pretty sweet. I mean who doesn't want a model that performs better right?
+you're asking about boosting in R model usage right I've been down this rabbit hole a few times myself Let me tell you it's not always smooth sailing but the results can be pretty sweet. I mean who doesn't want a model that performs better right?
 
 So the question isn't about just using any boosting algorithm randomly that's a rookie mistake a model is only as good as the data you feed it. We're talking about optimizing the whole process. First let's get the basics straight the boosting concept is simple you take weak learners combine them sequentially and give more weight to those that misclassify. This sequential process helps reduce bias and variance leading to better overall model performance.
 
@@ -106,6 +106,7 @@ lgb_model <- lgb.train(
 predictions <- predict(lgb_model, data = as.matrix(test_data[, -which(names(test_data) == "target"])))
 # Evaluate model here
 ```
+
 `lgb.Dataset` is a similar pre-processing step as in `xgboost` and you'll notice I have a `valids` argument which is to evaluate the model on the test dataset while training which is helpful for monitoring overfitting. I once saw a guy use a boosting algorithm with 10000 trees and then asked me why his model doesn't generalize well I mean its pretty obvious right?
 
 Now here's the deal don't just pick a library and start throwing parameters at it. You need to think about your data understand what your model is doing. There's a lot of trial and error involved in boosting and there's no magic bullet that will get you the best model right away. There is some theoretical background to study to get a better grip on the underlying processes as well.

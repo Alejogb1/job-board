@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-effective-is-a-conv1d-lstm-model-for-time-series-classification"
 ---
 
-Alright, let's tackle this. I've spent a good chunk of my career playing around with time series data, and the combination of a Conv1D and LSTM—that's a combo I've seen both excel and occasionally stumble, so I’ve got a pretty solid grasp on their effectiveness, or lack thereof, depending on the situation. Instead of a generic overview, let's break down where this architecture really shines and where its limitations lie.
+, . I've spent a good chunk of my career playing around with time series data, and the combination of a Conv1D and LSTM—that's a combo I've seen both excel and occasionally stumble, so I’ve got a pretty solid grasp on their effectiveness, or lack thereof, depending on the situation. Instead of a generic overview, let's break down where this architecture really shines and where its limitations lie.
 
 I remember a project a few years back, dealing with sensor data from a manufacturing line. The task was to classify different types of mechanical failures based on short snippets of time-series readings. We started with more traditional methods like statistical feature extraction and then tried some basic recurrent neural networks, but the performance wasn't cutting it. That's when we started exploring hybrid architectures like Conv1D-LSTM.
 
@@ -53,6 +53,7 @@ example_input = torch.randn(batch_size, input_size, sequence_length)
 output = model(example_input)
 print(output.shape) # Output will be: torch.Size([16, 3])
 ```
+
 This snippet illustrates a fairly standard setup. A Conv1D layer with `kernel_size` and the `conv_channels`, activated by a ReLU. Then, we reformat the output of the convolution to be suitable for the LSTM layer, using the `permute` method to adjust the tensor dimensions and ultimately using the last output of the LSTM to feed into a final fully connected (fc) layer for the actual classification task.
 
 Here's another more granular example that shows how multiple convolutional layers can be stacked:

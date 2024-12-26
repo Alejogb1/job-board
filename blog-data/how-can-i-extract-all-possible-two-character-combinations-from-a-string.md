@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-all-possible-two-character-combinations-from-a-string"
 ---
 
-Okay, let's tackle this. I remember facing a similar challenge a few years back while working on a genomic sequence analysis project. We needed to examine overlapping di-nucleotide patterns, and the sheer volume of data meant efficiency was paramount. The question of extracting all two-character combinations from a string, while seemingly simple, requires some careful thought to optimize for performance and handle edge cases properly.
+, let's tackle this. I remember facing a similar challenge a few years back while working on a genomic sequence analysis project. We needed to examine overlapping di-nucleotide patterns, and the sheer volume of data meant efficiency was paramount. The question of extracting all two-character combinations from a string, while seemingly simple, requires some careful thought to optimize for performance and handle edge cases properly.
 
 The fundamental approach involves iterating through the string using a sliding window of size two. This means for a string 'abcde', you'd generate 'ab', 'bc', 'cd', and 'de'. The process isn't difficult to conceptualize, but the devil, as they say, is in the implementation details. We need to consider aspects such as string immutability and the trade-offs between various data structures for storing and returning the combinations.
 
@@ -62,8 +62,8 @@ console.log(result); // Output: ["ab", "bc", "cd", "de", "ef", "fg"]
 const stringShort = "a";
 const resultShort = extractTwoCharCombinationsJs(stringShort);
 console.log(resultShort); // Output: []
-
 ```
+
 The JavaScript code is very similar in structure to the Python example. It uses a similar 'for' loop and string manipulation methods for slicing (`substring`) and the same pre-check for short strings. The performance differences between these two implementations are likely to be negligible in most cases unless you’re processing extremely large strings with tight performance requirements, in which case other more low-level languages could be preferable for optimal performance.
 
 Now, let’s consider a scenario where instead of a simple list, we might need to use a more specialized data structure such as a set, perhaps to maintain uniqueness in cases where identical combinations might occur. Let’s look at an example using C++:

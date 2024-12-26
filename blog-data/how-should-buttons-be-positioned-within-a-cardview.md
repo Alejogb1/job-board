@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-should-buttons-be-positioned-within-a-cardview"
 ---
 
-Okay, let's tackle button placement within a CardView. It’s a design detail that often gets glossed over, but proper button positioning is critical for usability and a polished user interface. I've seen my fair share of apps where this went south, leading to frustrating user experiences. One particularly memorable instance was a mobile banking app where the "transfer funds" button was so awkwardly placed within a card that users frequently mis-tapped and ended up on the account details screen instead. It took a round of user testing and a bit of redesigning to correct that.
+, let's tackle button placement within a CardView. It’s a design detail that often gets glossed over, but proper button positioning is critical for usability and a polished user interface. I've seen my fair share of apps where this went south, leading to frustrating user experiences. One particularly memorable instance was a mobile banking app where the "transfer funds" button was so awkwardly placed within a card that users frequently mis-tapped and ended up on the account details screen instead. It took a round of user testing and a bit of redesigning to correct that.
 
 When considering button positions within a card, we need to balance aesthetic appeal with practical considerations. Think about hierarchy, visual flow, and the primary actions users typically want to take. There’s no single correct answer here; it often comes down to context and what the card represents. However, some general guidelines and approaches consistently prove effective.
 

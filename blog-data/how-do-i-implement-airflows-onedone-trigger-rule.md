@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-do-i-implement-airflows-onedone-trigger-rule"
 ---
 
-Alright, let's talk about Airflow's `one_done` trigger rule. It's one of those features that seems straightforward on the surface but can be surprisingly nuanced when you’re orchestrating complex workflows. I’ve encountered this quite a bit over the years, particularly when dealing with scenarios where a DAG’s downstream tasks shouldn’t proceed until at least one of their upstream tasks has successfully finished, but not necessarily *all* of them.
+, let's talk about Airflow's `one_done` trigger rule. It's one of those features that seems straightforward on the surface but can be surprisingly nuanced when you’re orchestrating complex workflows. I’ve encountered this quite a bit over the years, particularly when dealing with scenarios where a DAG’s downstream tasks shouldn’t proceed until at least one of their upstream tasks has successfully finished, but not necessarily _all_ of them.
 
-For context, recall the standard Airflow behavior. Without specifying a `trigger_rule`, the default is `all_success`. This means a task will only proceed if *all* of its upstream tasks have completed successfully. This works well for most linear workflows but falls short when we need more flexible dependency management. That’s where `one_done` comes in; it’s the antithesis of that 'all-or-nothing' approach. I've used it to handle situations involving redundant data pipelines where only one source needs to successfully feed a downstream processing task. Specifically, imagine we're pulling data from multiple APIs, each with a slightly different response structure but ultimately providing the same data. Instead of failing the entire pipeline when one API is down, we use `one_done` and continue processing the data from whatever sources have succeeded.
+For context, recall the standard Airflow behavior. Without specifying a `trigger_rule`, the default is `all_success`. This means a task will only proceed if _all_ of its upstream tasks have completed successfully. This works well for most linear workflows but falls short when we need more flexible dependency management. That’s where `one_done` comes in; it’s the antithesis of that 'all-or-nothing' approach. I've used it to handle situations involving redundant data pipelines where only one source needs to successfully feed a downstream processing task. Specifically, imagine we're pulling data from multiple APIs, each with a slightly different response structure but ultimately providing the same data. Instead of failing the entire pipeline when one API is down, we use `one_done` and continue processing the data from whatever sources have succeeded.
 
 Now, getting into the nitty-gritty, the `one_done` trigger rule requires a bit of careful consideration regarding task design. It essentially implies that your downstream task must be able to handle various data formats and potential states stemming from one successful upstream task versus another. Think of it as handling several possible outputs from different upstream processes, each leading to the desired end state. The challenge here lies not so much in implementation itself, but rather in ensuring your downstream logic is robust and can gracefully accommodate the varying outcomes.
 
@@ -14,7 +14,7 @@ Let’s illustrate this with some concrete examples. I’ve tried to keep it suc
 
 **Example 1: Simple API Data Collection**
 
-Here's a basic scenario where we are pulling data from three different APIs, and the downstream `process_data` task executes once *any* of those APIs have responded successfully. Note that we aren't actually calling external APIs in this example; these are just placeholders.
+Here's a basic scenario where we are pulling data from three different APIs, and the downstream `process_data` task executes once _any_ of those APIs have responded successfully. Note that we aren't actually calling external APIs in this example; these are just placeholders.
 
 ```python
 from airflow import DAG
@@ -117,7 +117,7 @@ def process_files(**kwargs):
 
     if server3_status:
         available_files.append("server3_file.txt")
-    
+
     print(f"Processing files from available servers: {available_files}")
 
     # Process the available files, etc.
@@ -155,7 +155,7 @@ Here, even though server 2 isn’t available, the `process_files_task` will stil
 
 **Example 3: Prioritized Task Execution (with Caution)**
 
-Finally, here's an example of using `one_done` in a kind of prioritized execution. It's crucial to use this with *extreme* caution because it can lead to potentially unexpected behavior if your "priority" logic isn't carefully thought through.
+Finally, here's an example of using `one_done` in a kind of prioritized execution. It's crucial to use this with _extreme_ caution because it can lead to potentially unexpected behavior if your "priority" logic isn't carefully thought through.
 
 ```python
 from airflow import DAG
@@ -202,7 +202,7 @@ with DAG(
 
 ```
 
-In this case, we may prefer the 'priority_task' to be attempted before the 'standard_task', with both feeding a downstream task. If 'priority_task' succeeds, then 'downstream_task' executes before the standard task. If 'priority_task' fails however, 'standard_task' may still execute and trigger 'downstream_task'. This setup *should* lead to less computation overall. But this introduces additional complexity to the execution order and should only be done when truly necessary.
+In this case, we may prefer the 'priority_task' to be attempted before the 'standard_task', with both feeding a downstream task. If 'priority_task' succeeds, then 'downstream_task' executes before the standard task. If 'priority_task' fails however, 'standard_task' may still execute and trigger 'downstream_task'. This setup _should_ lead to less computation overall. But this introduces additional complexity to the execution order and should only be done when truly necessary.
 
 For deepening your understanding, I would highly recommend studying the 'Airflow documentation' directly, as it's consistently the most accurate and authoritative source. Also, the book "Data Pipelines with Apache Airflow" by Bas P. Harenslak and Julian Rutger is a fantastic resource that dives into practical applications of Airflow. You might find “Designing Data-Intensive Applications” by Martin Kleppmann useful for the broader architectural considerations around managing dependencies and resilience in distributed systems.
 

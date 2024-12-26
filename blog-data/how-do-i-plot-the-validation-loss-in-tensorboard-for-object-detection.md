@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-do-i-plot-the-validation-loss-in-tensorboard-for-object-detection"
 ---
 
-alright, so you're looking to visualize your validation loss during object detection training in tensorboard, that's a pretty standard need, and i've been down this road more times than i care to count. it's crucial to monitor this to avoid overfitting and ensure your model is actually learning something useful, not just memorizing the training data.
+, so you're looking to visualize your validation loss during object detection training in tensorboard, that's a pretty standard need, and i've been down this road more times than i care to count. it's crucial to monitor this to avoid overfitting and ensure your model is actually learning something useful, not just memorizing the training data.
 
 i remember one particular project back in my early days, it involved training a custom object detector to identify different types of defects on silicon wafers. we had this massive dataset of high-resolution images, and our initial setup, while it could achieve impressive results on the training set, absolutely crumbled when fed with new data, we were basically training a very expensive and useless image memorization machine. it became very obvious we were overfitting. the initial logs, just numbers scrolling by were simply not cutting it, i needed graphs! it felt like staring at a wall of code without any understanding. i learnt the hard way back then: real-time visualization of metrics is a must, it saves you a ton of time and helps you understand exactly what is going on under the hood.
 
@@ -159,6 +159,7 @@ if __name__ == '__main__':
   train(num_epochs, train_data, validation_data, dummy_model, optimizer, loss_function, summary_writer)
   print('training completed!')
 ```
+
 here the `tf.summary.scalar('validation loss', val_loss, step=epoch)` does the magic of logging the validation loss. remember the tensorboard instance can be visualized by running `tensorboard --logdir logs`. assuming `logs` is your target directory.
 
 and for a more concrete case, let's assume you are using an object detection specific library like `detectron2`. this one already has integrated tensorboard support, but lets assume you want to log another validation metric, for example a custom iou, but with a similar logging approach:
@@ -317,11 +318,12 @@ if __name__ == "__main__":
     trainer.resume_or_load(resume=False)
     trainer.train()
 ```
+
 in this last snippet, we are extending the `DefaultTrainer` class and adding our own custom metrics, in this case, a simple average iou. detectron2 takes care of the tensorboard integration, so we are just logging the new `val_iou` metric using `storage.put_scalar("val_iou", avg_iou)`. when running this you should be able to see the `val_iou` and any other metrics logged in tensorboard. note this example is much more involved and complex than the previous ones and the `cfg.MODEL.WEIGHTS` value refers to weights from the official model zoo for detectron2.
 
 also. i've seen people accidentally log their training loss as the validation loss more than once, so double check you're feeding in the validation data. the easiest way to verify is to graph them both in tensorboard and check their individual behavior, when training goes well, your training loss should tend to go down as expected and your validation loss may plateau or start to increase if overfitting, a typical sign of a model that is just learning the training data by heart.
 
-one final note, remember that you should be always monitoring your hardware utilization, if you are not using your gpu efficiently, a simple tweak on the dataloader might solve that, otherwise you could be sitting there for a long time just waiting for the model to learn, or worse, you may be overfitting your model with a really slow training process. it's like trying to fill a swimming pool with a drinking straw. just not efficient, *rimshot*.
+one final note, remember that you should be always monitoring your hardware utilization, if you are not using your gpu efficiently, a simple tweak on the dataloader might solve that, otherwise you could be sitting there for a long time just waiting for the model to learn, or worse, you may be overfitting your model with a really slow training process. it's like trying to fill a swimming pool with a drinking straw. just not efficient, _rimshot_.
 
 regarding resources, i'd suggest "deep learning" by ian goodfellow, yoshua bengio, and aaron courville; that's like the deep learning bible. another good one is "programming pytorch for deep learning" by ian pointer if you're leaning towards pytorch or "hands-on machine learning with scikit-learn, keras & tensorflow" by aurélien géron, if you are more a tensorflow person. you'll find more technical descriptions, but the principle of logging validation metrics remains consistent.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-interact-with-trc20-tokens-using-solidity"
 ---
 
-Alright, let's tackle TRC20 token interaction in Solidity. It’s a subject I’ve spent a fair amount of time with, specifically during the development of a decentralized exchange module a few years back. The complexities can sneak up on you if you’re not careful, so a structured approach is critical. It’s not just about mimicking ERC20—there are subtle nuances to be aware of.
+, let's tackle TRC20 token interaction in Solidity. It’s a subject I’ve spent a fair amount of time with, specifically during the development of a decentralized exchange module a few years back. The complexities can sneak up on you if you’re not careful, so a structured approach is critical. It’s not just about mimicking ERC20—there are subtle nuances to be aware of.
 
 First, let's establish a foundational understanding. TRC20, the token standard for the Tron blockchain, is conceptually very similar to ERC20 on Ethereum. It provides a common interface allowing applications to interact with various tokens in a predictable manner. However, we're not dealing with Ethereum virtual machine (EVM) bytecode; instead, Tron uses the Tron Virtual Machine (TVM). While syntactically Solidity compiles for TVM in a very similar manner, there are operational differences to keep in mind regarding gas limitations and overall architecture.
 

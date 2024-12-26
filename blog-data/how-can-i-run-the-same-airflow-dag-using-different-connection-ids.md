@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-run-the-same-airflow-dag-using-different-connection-ids"
 ---
 
-Alright, let's tackle this. I’ve definitely been down this road before, specifically during a project where we were migrating data between several environments, each with its own unique set of credentials. It's a common challenge, and the key lies in understanding how Airflow’s templating and variable systems can interact to achieve dynamic connection handling. Instead of hardcoding connection ids within your DAG, you need to make them parametric.
+, let's tackle this. I’ve definitely been down this road before, specifically during a project where we were migrating data between several environments, each with its own unique set of credentials. It's a common challenge, and the key lies in understanding how Airflow’s templating and variable systems can interact to achieve dynamic connection handling. Instead of hardcoding connection ids within your DAG, you need to make them parametric.
 
 The core concept revolves around passing the connection id as a variable to your operators at runtime. This allows the same DAG definition to operate against different targets without any code alteration. Now, the magic here comes from the templating engine and the way it processes Jinja expressions within Airflow configurations. It's not enough to simply define a string within the DAG, you must pass it through a context that Airflow provides.
 
@@ -118,10 +118,10 @@ In this scenario, the `select_connection` task, a PythonOperator, "decides" whic
 
 A few things to keep in mind while implementing this:
 
-*   **Security:** Be cautious with how you pass connection ids, particularly within `dag_run.conf`. Ensure you have appropriate access controls and avoid passing sensitive information directly. Leverage Airflow’s variable storage or, even better, consider using a secrets backend if you're dealing with genuinely sensitive data.
-*   **Error Handling:** Implement robust error handling, specifically around the possibility of the variable or the key within configuration not existing. Provide default values as illustrated or raise informative exceptions.
-*   **Templating Syntax:** Understand how Airflow’s templating engine interprets Jinja templates. Double curly braces `{{ ... }}` are crucial. Make sure you are using them correctly, especially for complex logic.
-*   **Testing:**  Thoroughly test each configuration using both your standard "default" configurations but also the dynamic connection setup, ensuring it performs as expected in all targeted environments.
+- **Security:** Be cautious with how you pass connection ids, particularly within `dag_run.conf`. Ensure you have appropriate access controls and avoid passing sensitive information directly. Leverage Airflow’s variable storage or, even better, consider using a secrets backend if you're dealing with genuinely sensitive data.
+- **Error Handling:** Implement robust error handling, specifically around the possibility of the variable or the key within configuration not existing. Provide default values as illustrated or raise informative exceptions.
+- **Templating Syntax:** Understand how Airflow’s templating engine interprets Jinja templates. Double curly braces `{{ ... }}` are crucial. Make sure you are using them correctly, especially for complex logic.
+- **Testing:** Thoroughly test each configuration using both your standard "default" configurations but also the dynamic connection setup, ensuring it performs as expected in all targeted environments.
 
 For further reading on Jinja templating within Airflow, I'd recommend taking a look at the official Airflow documentation for templating. Additionally, exploring the “Programming Apache Airflow” book by Bas P. Harenslak and Julian Rutger de Ruiter, can also give further insight into advanced concepts. It provides excellent real-world examples on using Jinja templates and variables for complex workflow configurations, including dynamic connection handling. You'll find much deeper explanations and more specific use cases for each method discussed here. For a deep dive into airflow internals, “Airflow Cookbook” by Andreas Kretz is also an excellent resource.
 

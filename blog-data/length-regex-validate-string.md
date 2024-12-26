@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "length-regex-validate-string"
 ---
 
-Okay so length regex validate string right I've been there man I've definitely been there a lot so let's break this down its actually simpler than it looks at first glance Youre basically trying to see if a string matches a certain pattern and that pattern involves how long the string is That's a fairly common use case in like data validation or when youre processing user inputs
+length regex validate string right I've been there man I've definitely been there a lot so let's break this down its actually simpler than it looks at first glance Youre basically trying to see if a string matches a certain pattern and that pattern involves how long the string is That's a fairly common use case in like data validation or when youre processing user inputs
 
 The core concept really boils down to these three things
 
@@ -17,8 +17,9 @@ So I remember one time back in my early days when I was hacking on a web form pr
 First attempt failed miserably it looked like this
 
 ```javascript
-const usernameRegexFail = /^[a-zA-Z0-9]+$/
+const usernameRegexFail = /^[a-zA-Z0-9]+$/;
 ```
+
 this regex just says anything goes for usernames as long as it has letters and numbers no length check so users could input a single letter or like the entire Lord of the Rings script you know what i mean
 
 So i quickly corrected it that experience was a humbling moment it taught me to double check my regexes even for the simplest stuff
@@ -26,14 +27,15 @@ So i quickly corrected it that experience was a humbling moment it taught me to 
 Here's where length gets involved the key part of regex for length specification is the `{min,max}` quantifier We use it in conjunction with the rest of the characters we are willing to accept the character classes i remember from that old project i used `[a-zA-Z0-9]` this matches all upper case letters lowercase letters and the digits `0` to `9` and then its time for length specification
 
 ```javascript
-const usernameRegex = /^[a-zA-Z0-9]{6,12}$/
+const usernameRegex = /^[a-zA-Z0-9]{6,12}$/;
 ```
+
 This regex is now saying ok the start of the string with the `^` then accepts any combination of letters and numbers `[a-zA-Z0-9]` now the meat of the regex `{}6,12}` this is like the golden code this part means that the characters need to match between 6 and 12 times then the end of the string with the `$` so this is now matching exactly what we wanted username inputs that are between 6 and 12 chars long and they use letters and digits
 
 Another scenario i dealt with was when I was writing a function to sanitize data for an old legacy database It was accepting a bunch of weird data formats like zip codes and phone numbers some of which had optional parts and sometimes data was missing or invalid In that case I was more interested in validating if zip code was 5 or 10 characters in length and only numbers no letters or special symbols
 
 ```javascript
-const zipCodeRegex = /^\d{5}(?:\d{5})?$/
+const zipCodeRegex = /^\d{5}(?:\d{5})?$/;
 ```
 
 Lets break down that one i know it looks a bit complex but its not really scary the `^` marks the start as we saw before the `\d{5}` this matches exactly 5 digits in a row then `(?:\d{5})?` this is a non capturing group that matches an extra 5 digits and the `?` means that its an optional part so the overall pattern matches 5 digits or 10 digits and only digits
@@ -41,7 +43,7 @@ Lets break down that one i know it looks a bit complex but its not really scary 
 Ok for an exact length its simpler its just a single number between the curly brackets `{n}` where n is the required length so if you had to check for a exactly 8 characters length using letters numbers and special characters here is how it would look like in regex
 
 ```javascript
-const exactlyEightRegex = /^.{8}$/
+const exactlyEightRegex = /^.{8}$/;
 ```
 
 The `.` matches any character except line breaks and the `8` in the curly brackets tells regex to accept exactly 8 characters nothing less nothing more and of course we mark the start with the `^` and end with the `$`

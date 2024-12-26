@@ -17,9 +17,10 @@ data_augmentation = tf.keras.Sequential([
   tf.keras.layers.experimental.preprocessing.RandomZoom(0.1),
 ])
 ```
+
 this snippet shows how to use the keras sequential model to add common augmentation techniques. it’s just a starting point, but it shows how easy it is to integrate these into your model flow.
 
-next, let’s talk about architecture. are you using the layers that make sense for your data? i’ve seen people throw deep models at simple problems and wonder why things aren't working. overkill. a simpler network might be all that you need, and will train faster, and prevent overfitting. also, are you choosing proper activation functions? for example, a relu might struggle with some types of negative valued input, leaky relu might be better, or even some of the other more exotic ones. your choice of pooling matters too: average or max-pooling will affect feature extraction, it’s worth trying them both in an experimentation phase. the kernel size is another point: too small and the network might miss larger structures in the image, too large and it might blur details too much. also have you tried using batch normalization? it can really stabilize the training process, preventing vanishing or exploding gradients that might occur in deep networks and even let you increase the learning rate. my rule of thumb now is to start with a simpler network, prove my data is okay, and then add complexity only if needed, it’s a principle of parsimony. i always end up making this mistake.
+next, let’s talk about architecture. are you using the layers that make sense for your data? i’ve seen people throw deep models at simple problems and wonder why things aren't working. overkill. a simpler network might be all that you need, and will train faster, and prevent overfitting. also, are you choosing proper activation functions? for example, a relu might struggle with some types of negative valued input, leaky relu might be better, or even some of the other more exotic ones. your choice of pooling matters too: average or max-pooling will affect feature extraction, it’s worth trying them both in an experimentation phase. the kernel size is another point: too small and the network might miss larger structures in the image, too large and it might blur details too much. also have you tried using batch normalization? it can really stabilize the training process, preventing vanishing or exploding gradients that might occur in deep networks and even let you increase the learning rate. my rule of thumb now is to start with a simpler network, prove my data is , and then add complexity only if needed, it’s a principle of parsimony. i always end up making this mistake.
 
 ```python
 import tensorflow as tf
@@ -34,6 +35,7 @@ model = tf.keras.Sequential([
 ])
 
 ```
+
 this is a very basic cnn i would start with if i was classifying something like mnist digits for example. small but it works. it has proper padding to keep the feature map sizes, max pooling for downsampling, and a softmax activation at the end for multi-class classification.
 
 the training process also has a lot of knobs that can throw things off. the learning rate is critical. too high and the model might never converge and jump all over the parameter space, too low and you'll wait forever for it to improve. optimizers also have their quirks, adam is popular for a reason, but sometimes, for certain problems, other optimizers like sgd with momentum might be the one. also the loss function has a huge impact: categorical crossentropy is standard for classification, but is the right one for your case? what about your batch size, did you increase it too much and are not getting a proper estimation of the gradient? also, did you remember to shuffle your dataset for each epoch? i once didn't do that and the model was just overfitting to the order of the samples in the dataset. it was such an embarrassing error. another important part is early stopping. did you implement it? if not, your network may be just memorizing the training set and not actually generalizing. did you use a validation set? it is a cardinal sin to not use a validation set to check the generalization performance of the model while training, if you want a model that does not overfit to your training data.
@@ -46,6 +48,7 @@ loss_fn = tf.keras.losses.CategoricalCrossentropy()
 model.compile(optimizer=optimizer, loss=loss_fn, metrics=['accuracy'])
 
 ```
+
 this snippet shows the simplest way to compile your model with adam and categorical crossentropy. also showing that you can easily tell the model to show you the accuracy while training.
 
 then there’s the sneaky overfitting problem. if the training accuracy is really high but validation is not, that's a clear sign. data augmentation, as i mentioned, can help, but so can things like dropout. also, simpler models tend to overfit less. it is very much like overfitting in a regression model in a simple statistic class, you are just learning your training set really well, but generalizing poorly. it can be a real struggle. this is one of the hardest things to diagnose because you could think that your model is good, it just happens that it does not generalize at all. the difference between 95% accuracy in training and 65% in validation can mean you have a huge overfit, but also it might mean something is wrong with your validation set, which brings us again to the data problem.

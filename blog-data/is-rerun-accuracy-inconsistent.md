@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-rerun-accuracy-inconsistent"
 ---
 
-Alright, let's unpack this. The idea of "rerun accuracy" being inconsistent is something I’ve seen firsthand, particularly when dealing with complex, non-deterministic systems. It's not so much a fundamental flaw in the process of rerunning a computation, but rather the intricate interplay of factors that can lead to different outputs even with identical inputs. It's an area where you really start to appreciate the subtleties of how software interacts with its environment.
+, let's unpack this. The idea of "rerun accuracy" being inconsistent is something I’ve seen firsthand, particularly when dealing with complex, non-deterministic systems. It's not so much a fundamental flaw in the process of rerunning a computation, but rather the intricate interplay of factors that can lead to different outputs even with identical inputs. It's an area where you really start to appreciate the subtleties of how software interacts with its environment.
 
 I recall a particularly challenging project a few years back. We were developing a large-scale simulation engine for financial markets. The core simulation relied on a Monte Carlo approach, which, as you likely know, involves a degree of randomness. Initially, we were puzzled by the fact that rerunning the exact same simulation, using the same seed values for the random number generator, would sometimes produce slightly different results. This wasn't just a rounding error level of difference; the variance in output could be significant enough to skew our analyses. It took a considerable amount of debugging, profiling, and deep dives into the code before we understood what was happening.
 

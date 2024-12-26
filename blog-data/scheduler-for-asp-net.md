@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "scheduler-for-asp-net"
 ---
 
-Alright so you're looking for a scheduler in ASP NET right Been there done that quite a few times myself You want something that just works and doesn't make your code look like a plate of spaghetti right
+so you're looking for a scheduler in ASP NET right Been there done that quite a few times myself You want something that just works and doesn't make your code look like a plate of spaghetti right
 
 Look its a fairly common problem people end up needing some sort of scheduled task in their web application maybe you need to clean up old data send out reminder emails or process some hefty batch job and you don't want your users to have to do it manually Every single web app I've ever worked on eventually needed this
 
@@ -76,7 +76,7 @@ public class MyBackgroundService : BackgroundService
 }
 ```
 
-The *real* deal the one I recommend is using a dedicated job scheduling library. There are several options out there but honestly, Quartz NET is the one I've used most frequently and its rock solid. It provides a full blown scheduler with all the features you could possibly need like cron triggers job persistence in case of crashes and a ton of configuration options. You don't wanna end up writing this stuff yourself again trust me.
+The _real_ deal the one I recommend is using a dedicated job scheduling library. There are several options out there but honestly, Quartz NET is the one I've used most frequently and its rock solid. It provides a full blown scheduler with all the features you could possibly need like cron triggers job persistence in case of crashes and a ton of configuration options. You don't wanna end up writing this stuff yourself again trust me.
 
 Its definitely more upfront setup but once its configured you can be confident your scheduled tasks will run when you need them to and it saves you a whole ton of problems down the road I have seen it happen with timers or even just simple background services before.
 

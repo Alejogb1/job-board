@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "are-3-subnets-in-a-single-availability-zone-sufficient-for-rds-in-aws"
 ---
 
-Okay, let’s tackle this. The question of whether three subnets within a single Availability Zone are "sufficient" for RDS in AWS is nuanced and depends heavily on what we actually mean by "sufficient." It’s not a simple yes or no. Instead, we need to break down the various factors at play. My experience managing infrastructure at scale has taught me that while technically feasible, limiting yourself to a single availability zone for a production RDS instance carries significant risks that are crucial to understand.
+, let’s tackle this. The question of whether three subnets within a single Availability Zone are "sufficient" for RDS in AWS is nuanced and depends heavily on what we actually mean by "sufficient." It’s not a simple yes or no. Instead, we need to break down the various factors at play. My experience managing infrastructure at scale has taught me that while technically feasible, limiting yourself to a single availability zone for a production RDS instance carries significant risks that are crucial to understand.
 
-From a purely operational standpoint, yes, you *can* configure an RDS instance with three subnets in a single Availability Zone. AWS allows it. The documentation explicitly says you need at least two subnets, so three obviously meets that criteria. The problem, however, lies not with the configuration acceptance, but with the resilience and high-availability of your database. When I first started in cloud operations, we had a similar setup – three subnets, one zone. It seemed fine. Until we had our first minor hiccup with the AZ itself. The temporary network congestion made the entire database unavailable for critical periods. That taught me a valuable lesson: availability zones aren't completely isolated units, and depending on only one for RDS is risky.
+From a purely operational standpoint, yes, you _can_ configure an RDS instance with three subnets in a single Availability Zone. AWS allows it. The documentation explicitly says you need at least two subnets, so three obviously meets that criteria. The problem, however, lies not with the configuration acceptance, but with the resilience and high-availability of your database. When I first started in cloud operations, we had a similar setup – three subnets, one zone. It seemed fine. Until we had our first minor hiccup with the AZ itself. The temporary network congestion made the entire database unavailable for critical periods. That taught me a valuable lesson: availability zones aren't completely isolated units, and depending on only one for RDS is risky.
 
 Let's dissect why three subnets in one AZ isn’t optimal.
 
 First, understand that the purpose of having multiple subnets within an AZ is usually for better resource segregation or organizing logical networks for different instance tiers in your architecture. It doesn't provide increased availability across failure domains. Think of it like having three doors to the same room; if the room has a power failure, all three doors lead to the same problem. In the same way, if there's an issue with the underlying infrastructure of the single AZ (such as a network failure, power outage in a specific section, or maintenance impacting the zone), all your RDS instances, even distributed across the three subnets, will likely suffer the same fate.
 
-The true power of having multi-AZ RDS deployments, which requires spreading across *multiple* Availability Zones, lies in its ability to automatically failover to a standby database instance in a separate AZ in the event of an outage. That’s something you simply can’t achieve by having multiple subnets in the same AZ. With the single AZ setup, you’re essentially relying on the resilience of one specific failure domain, which, as my past experiences show, isn’t a good idea for anything beyond a proof-of-concept or development environment.
+The true power of having multi-AZ RDS deployments, which requires spreading across _multiple_ Availability Zones, lies in its ability to automatically failover to a standby database instance in a separate AZ in the event of an outage. That’s something you simply can’t achieve by having multiple subnets in the same AZ. With the single AZ setup, you’re essentially relying on the resilience of one specific failure domain, which, as my past experiences show, isn’t a good idea for anything beyond a proof-of-concept or development environment.
 
 Now, let's get to some code examples to illustrate this concept. We'll use AWS CloudFormation templates, which are a convenient and industry-standard approach to defining AWS infrastructure as code.
 
@@ -25,14 +25,14 @@ Resources:
     Properties:
       DBSubnetGroupDescription: Subnets for the RDS instance in single az
       SubnetIds:
-        - !Ref Subnet1A  # subnet in AZ a
-        - !Ref Subnet2A  # subnet in AZ a
-        - !Ref Subnet3A  # subnet in AZ a
+        - !Ref Subnet1A # subnet in AZ a
+        - !Ref Subnet2A # subnet in AZ a
+        - !Ref Subnet3A # subnet in AZ a
   MyRDSInstance:
     Type: AWS::RDS::DBInstance
     Properties:
       DBInstanceIdentifier: MySingleAZDatabase
-      AllocatedStorage: '20'
+      AllocatedStorage: "20"
       DBInstanceClass: db.t3.small
       Engine: mysql
       MasterUsername: myuser
@@ -60,7 +60,7 @@ Resources:
     Type: AWS::RDS::DBInstance
     Properties:
       DBInstanceIdentifier: MyMultiAZDatabase
-      AllocatedStorage: '20'
+      AllocatedStorage: "20"
       DBInstanceClass: db.t3.small
       Engine: mysql
       MasterUsername: myuser
@@ -85,10 +85,10 @@ While we can't trigger a real outage via code, this example demonstrates the vul
 # If us-east-1a fails, the database will fail over to us-east-1b.
 ```
 
-The text commentary here highlights the inherent difference. With the single-AZ configuration, the entire deployment, and its *three* subnets, becomes unavailable. With the multi-AZ, failover is handled transparently.
+The text commentary here highlights the inherent difference. With the single-AZ configuration, the entire deployment, and its _three_ subnets, becomes unavailable. With the multi-AZ, failover is handled transparently.
 
 To improve on the original question, while a three-subnet setup in a single AZ may be technically permissible, it falls short in terms of resilience for anything beyond a dev environment. The availability zone is the primary failure domain. You should instead aim for a multi-AZ setup, with at least two subnets spanning two separate availability zones, for real production reliability.
 
 For deeper dives on this topic, I recommend looking at the AWS Well-Architected Framework, specifically the reliability pillar. Additionally, the book "Site Reliability Engineering" from Google provides excellent theoretical grounding and real-world case studies related to high availability systems. The official AWS documentation on RDS high availability also provides in-depth explanations on the specific features available. Furthermore, the research paper “Failure Trends in a Large Cloud Environment” by Google and UC Santa Cruz is worth reading for better understanding the nature of cloud failures and thus, the importance of multi-az deployment. These resources should give you a comprehensive understanding of the topic and why it’s essential to consider more than just the minimum requirements when dealing with infrastructure.
 
-In short, while technically permissible to use three subnets within a single Availability Zone, *it's not sufficient for real-world, resilient applications*. Opt for multi-az and save yourself some future downtime.
+In short, while technically permissible to use three subnets within a single Availability Zone, _it's not sufficient for real-world, resilient applications_. Opt for multi-az and save yourself some future downtime.

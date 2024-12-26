@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-causes-aws-aurora-serverless-failovers-with-wso2-api-manager"
 ---
 
-Alright, let's tackle this. I’ve seen this exact scenario play out a few times now, particularly in environments pushing the limits of what both Aurora Serverless and WSO2 API Manager can handle. It's rarely a single smoking gun, but rather a confluence of factors that lead to those frustrating failovers. I'll break down the key contributing elements, drawing on my experiences supporting large-scale deployments, and offer some concrete examples to illustrate the points.
+, let's tackle this. I’ve seen this exact scenario play out a few times now, particularly in environments pushing the limits of what both Aurora Serverless and WSO2 API Manager can handle. It's rarely a single smoking gun, but rather a confluence of factors that lead to those frustrating failovers. I'll break down the key contributing elements, drawing on my experiences supporting large-scale deployments, and offer some concrete examples to illustrate the points.
 
 Firstly, let's address the inherent nature of aurora serverless. Unlike provisioned instances, it scales compute and memory resources automatically based on demand. This scaling, while convenient, isn't instantaneous. When WSO2 API Manager generates a surge in database requests – perhaps from a sudden influx of API calls or a scheduled background process – aurora serverless has to spin up new resources. This scaling process, while swift, can lead to brief periods where the database is temporarily less responsive or outright unavailable. These short periods of unavailability, if not handled gracefully by the API Manager, can be misconstrued as a failure, triggering its internal failover mechanisms. This is not an aurora failure in the traditional sense; it is a consequence of the scaling process being slower than the immediate request from the application.
 
@@ -39,7 +39,7 @@ Suppose WSO2 API Manager runs the following hypothetical SQL query frequently:
 SELECT * FROM api_definitions WHERE api_name LIKE '%search_term%';
 ```
 
-This query, using a wildcard at the beginning of the `LIKE` operator, prevents the database from using any index on the `api_name` column. As the number of api definitions grows, this query becomes increasingly slow. Combine this with a scaling event on aurora serverless, and the prolonged execution time may well cause the WSO2 API Manager to believe the database is unresponsive. It's not *down* necessarily, but it’s taking too long. A better approach would be:
+This query, using a wildcard at the beginning of the `LIKE` operator, prevents the database from using any index on the `api_name` column. As the number of api definitions grows, this query becomes increasingly slow. Combine this with a scaling event on aurora serverless, and the prolonged execution time may well cause the WSO2 API Manager to believe the database is unresponsive. It's not _down_ necessarily, but it’s taking too long. A better approach would be:
 
 ```sql
 -- Optimized Query
@@ -116,7 +116,8 @@ public class ApiManagerDatabase {
 }
 
 ```
- This improved method includes retry logic and uses an exponential backoff when an issue is encountered. The `sleep` operation is crucial to avoid hammering the database, potentially worsening things. Additionally, the retries are logged, allowing for better observability.
+
+This improved method includes retry logic and uses an exponential backoff when an issue is encountered. The `sleep` operation is crucial to avoid hammering the database, potentially worsening things. Additionally, the retries are logged, allowing for better observability.
 
 To summarize, aurora serverless failovers with wso2 api manager are usually caused by one or more of the following: aurora scaling events outpacing application demands, poorly configured connection management within the api manager, and inefficient queries placing excessive load on the database, and a lack of retry strategies. Addressing these points systematically will greatly improve the stability and reliability of the environment.
 

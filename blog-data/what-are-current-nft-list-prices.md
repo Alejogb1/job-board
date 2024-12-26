@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-current-nft-list-prices"
 ---
 
-Okay, let's tackle this. It's not as straightforward as one might initially think, and the answer varies significantly depending on several factors. When someone asks about "current NFT list prices," it's important to understand they're really asking about a highly dynamic and fragmented market. It's less like checking the price of a barrel of oil and more like trying to track the value of individual, unique pieces of art scattered across numerous galleries, each with its own pricing structure.
+, let's tackle this. It's not as straightforward as one might initially think, and the answer varies significantly depending on several factors. When someone asks about "current NFT list prices," it's important to understand they're really asking about a highly dynamic and fragmented market. It's less like checking the price of a barrel of oil and more like trying to track the value of individual, unique pieces of art scattered across numerous galleries, each with its own pricing structure.
 
 From my time building systems for crypto exchanges and marketplaces, I’ve seen firsthand how these prices fluctuate – sometimes wildly. We can’t just pull up a single, definitive number. Instead, we need to dissect what "list price" means in the context of NFTs and how to approach the problem technically.
 
@@ -45,11 +45,12 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
 This code will pull general collection data for the given slug, including some summary sale stats. It is essential to read the OpenSea API documentation to understand the structure of the JSON response and the available filtering and sorting options. We can also query the 'assets' endpoint within the API to get individual NFT information, including their list price, but this would require iterating through each NFT within the collection. This demonstrates the scale of the challenge – fetching list prices for a large collection requires multiple API calls, which can be rate-limited and costly in terms of computation. The output from this is a JSON document, and the actual list price will be part of the individual asset's information.
 
 **Example 2: Using Etherscan's API (For Ethereum-based NFTs)**
 
-For NFTs on the Ethereum blockchain, Etherscan provides a powerful API to analyze transaction data, which can be cross-referenced to list prices. While Etherscan does not explicitly provide live *list* prices, it records contract events that might relate to listing and sales. This requires more work to interpret, and won't give us a simple list price like a marketplace's API might, but it can be beneficial to cross-reference when validating price trends. This is where it gets complicated, requiring you to understand contract specific events and their associated parameters:
+For NFTs on the Ethereum blockchain, Etherscan provides a powerful API to analyze transaction data, which can be cross-referenced to list prices. While Etherscan does not explicitly provide live _list_ prices, it records contract events that might relate to listing and sales. This requires more work to interpret, and won't give us a simple list price like a marketplace's API might, but it can be beneficial to cross-reference when validating price trends. This is where it gets complicated, requiring you to understand contract specific events and their associated parameters:
 
 ```python
 import requests

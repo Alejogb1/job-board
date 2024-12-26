@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "is-epoch-loss-increasing"
 ---
 
-Okay, let's talk about epoch loss and when it starts to misbehave. It's a scenario I’ve definitely seen a few times in my career, and it’s often not as straightforward as “it’s increasing, therefore it’s bad.” Let’s unpack it. Typically, during the training of a neural network, we expect the loss function to decrease with each passing epoch. It's the fundamental signal that our model is learning. However, encountering a situation where the epoch loss *increases* isn't necessarily a catastrophic failure; it's more of a 'flag' prompting further investigation.
+, let's talk about epoch loss and when it starts to misbehave. It's a scenario I’ve definitely seen a few times in my career, and it’s often not as straightforward as “it’s increasing, therefore it’s bad.” Let’s unpack it. Typically, during the training of a neural network, we expect the loss function to decrease with each passing epoch. It's the fundamental signal that our model is learning. However, encountering a situation where the epoch loss _increases_ isn't necessarily a catastrophic failure; it's more of a 'flag' prompting further investigation.
 
-First, we should define what we mean by epoch loss. It's the average loss calculated across all the training samples within a single pass through the complete training dataset. If that value goes up over an epoch, it means the model is, in a sense, getting *worse* at its task during that particular training cycle. Not ideal, but let's explore the common causes.
+First, we should define what we mean by epoch loss. It's the average loss calculated across all the training samples within a single pass through the complete training dataset. If that value goes up over an epoch, it means the model is, in a sense, getting _worse_ at its task during that particular training cycle. Not ideal, but let's explore the common causes.
 
 One very common reason is an excessively high learning rate. Imagine you’re adjusting the weights of the neural network with a hammer. If you swing too hard (the high learning rate), you might overshoot the optimal values and land in a region of higher loss. This is especially prominent at the beginning of the training process, but it can surface later if the learning rate hasn’t been properly reduced as training progresses. I've had projects where the initial optimism of a large learning rate quickly turned into increased loss and model instability; it is not a fun place to be.
 
@@ -53,6 +53,7 @@ for epoch in range(num_epochs):
     print(f'Epoch {epoch+1}/{num_epochs}, Avg Loss: {avg_loss:.4f}')
 
 ```
+
 Running this you may see an early decrease, but it will quickly jump upwards showing an unstable training situation and an increasing loss.
 
 Next, consider the data quality issue. Assume we have a training dataset where a significant portion of data contains randomly flipped labels. Here’s how this might be simulated:
@@ -101,6 +102,7 @@ for epoch in range(num_epochs):
     avg_loss = total_loss / len(dataloader)
     print(f'Epoch {epoch+1}/{num_epochs}, Avg Loss: {avg_loss:.4f}')
 ```
+
 When you run this snippet you will find that, while the loss might decrease initially, it will not approach 0 and may start to increase after a while, illustrating the impact of poor data quality on the training process.
 
 Finally let's consider an issue with exploding gradients, this one requires a slightly deeper network:
@@ -160,6 +162,7 @@ for epoch in range(num_epochs):
     print(f'Epoch {epoch+1}/{num_epochs}, Avg Loss: {avg_loss:.4f}')
 
 ```
+
 This model, depending on random weight initialization might exhibit an upward trend in loss as a consequence of exploding gradients. This is an oversimplification but serves to demonstrate the point. Techniques like gradient clipping are generally needed to control this phenomenon.
 
 So, what do you do? First, verify your data. Make sure it's clean, consistent, and representative. Next, meticulously fine-tune your learning rate. Using techniques like learning rate schedulers (e.g., cosine annealing, exponential decay) as part of your optimization strategy is extremely beneficial. Also consider using batch normalization within your network or gradient clipping to make sure your model trains smoothly. The appropriate loss function for your task is also very important, and in complex classification problems you may want to include class weights in case of imbalances.

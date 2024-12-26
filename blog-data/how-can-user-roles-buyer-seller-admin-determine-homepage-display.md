@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-user-roles-buyer-seller-admin-determine-homepage-display"
 ---
 
-Alright, let's tackle this. I’ve dealt with similar access control scenarios in quite a few projects, ranging from small e-commerce platforms to larger enterprise applications. The key, as with most things in software, is having a well-defined, scalable, and maintainable strategy for managing user roles and their associated permissions, particularly when it comes to tailoring the homepage experience. We're not just talking about hiding a few buttons; it’s about providing relevant content and features based on who’s actually logged in. Let’s break down how this can be achieved, focusing on both the logical design and practical implementation.
+, let's tackle this. I’ve dealt with similar access control scenarios in quite a few projects, ranging from small e-commerce platforms to larger enterprise applications. The key, as with most things in software, is having a well-defined, scalable, and maintainable strategy for managing user roles and their associated permissions, particularly when it comes to tailoring the homepage experience. We're not just talking about hiding a few buttons; it’s about providing relevant content and features based on who’s actually logged in. Let’s break down how this can be achieved, focusing on both the logical design and practical implementation.
 
-My approach always starts with a clear separation of concerns. We need to abstract away the specifics of *how* the user roles are managed from *where* the homepage content is rendered. In other words, the homepage rendering logic shouldn’t be directly querying a user database or checking for specific role string matches. This leads to brittle code and makes future changes more complex. Instead, I prefer to utilize an authorization service or middleware that abstracts away these checks and simplifies it for rendering.
+My approach always starts with a clear separation of concerns. We need to abstract away the specifics of _how_ the user roles are managed from _where_ the homepage content is rendered. In other words, the homepage rendering logic shouldn’t be directly querying a user database or checking for specific role string matches. This leads to brittle code and makes future changes more complex. Instead, I prefer to utilize an authorization service or middleware that abstracts away these checks and simplifies it for rendering.
 
 Firstly, consider your data model. User roles are generally represented in your database alongside the user record, often as a single string or an integer referencing a separate roles table. However, I’ve seen more maintainable systems where a user has multiple roles. This allows for greater flexibility without having to constantly edit a singular role field when users’ responsibilities change. When handling multiple roles, it's best to use a relational table mapping users to roles; that's what I’ve found scales best long term.
 
@@ -63,16 +63,20 @@ This Flask snippet simulates how a server would handle retrieving user roles, ap
 **Frontend (Pseudo-React):**
 
 ```javascript
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 function Homepage() {
-  const [authContext, setAuthContext] = useState({ can_buy: false, can_sell: false, is_admin: false }); // Assume we're setting up a initial default value
-  const userId = 1 // Here we just set it to 1 for demo purposes
+  const [authContext, setAuthContext] = useState({
+    can_buy: false,
+    can_sell: false,
+    is_admin: false,
+  }); // Assume we're setting up a initial default value
+  const userId = 1; // Here we just set it to 1 for demo purposes
 
   useEffect(() => {
     fetch(`/user/context?user_id=${userId}`) //Fetch the auth context
-      .then(response => response.json())
-      .then(data => setAuthContext(data));
+      .then((response) => response.json())
+      .then((data) => setAuthContext(data));
   }, [userId]);
 
   return (
@@ -81,7 +85,7 @@ function Homepage() {
       {authContext.can_buy && <button>Buy Now</button>}
       {authContext.can_sell && <button>Sell Item</button>}
       {authContext.is_admin && <button>Admin Panel</button>}
-        <p>Generic Information visible to all</p>
+      <p>Generic Information visible to all</p>
     </div>
   );
 }
@@ -96,61 +100,61 @@ This is a simplified React example. Instead of having all the role logic in the 
 To take this a bit further, imagine a slightly different homepage structure where we have dedicated component for different user types:
 
 ```javascript
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-function BuyerHomepage({authContext}) {
-    return (
-        <div>
-            <h2>Welcome Buyer!</h2>
-            {authContext.can_buy && <button>Buy Now</button>}
-        </div>
-    )
+function BuyerHomepage({ authContext }) {
+  return (
+    <div>
+      <h2>Welcome Buyer!</h2>
+      {authContext.can_buy && <button>Buy Now</button>}
+    </div>
+  );
 }
 
-function SellerHomepage({authContext}) {
-    return (
-        <div>
-            <h2>Welcome Seller!</h2>
-            {authContext.can_sell && <button>Sell Item</button>}
-        </div>
-    )
+function SellerHomepage({ authContext }) {
+  return (
+    <div>
+      <h2>Welcome Seller!</h2>
+      {authContext.can_sell && <button>Sell Item</button>}
+    </div>
+  );
 }
 
-
-function AdminHomepage({authContext}) {
-    return (
-        <div>
-            <h2>Welcome Administrator!</h2>
-            {authContext.is_admin && <button>Admin Panel</button>}
-        </div>
-    )
+function AdminHomepage({ authContext }) {
+  return (
+    <div>
+      <h2>Welcome Administrator!</h2>
+      {authContext.is_admin && <button>Admin Panel</button>}
+    </div>
+  );
 }
-
 
 function Homepage() {
-  const [authContext, setAuthContext] = useState({ can_buy: false, can_sell: false, is_admin: false });
-  const userId = 4 // Setting userId to 4 to demonstrate a mixed role
+  const [authContext, setAuthContext] = useState({
+    can_buy: false,
+    can_sell: false,
+    is_admin: false,
+  });
+  const userId = 4; // Setting userId to 4 to demonstrate a mixed role
 
   useEffect(() => {
     fetch(`/user/context?user_id=${userId}`)
-      .then(response => response.json())
-      .then(data => setAuthContext(data));
+      .then((response) => response.json())
+      .then((data) => setAuthContext(data));
   }, [userId]);
 
   return (
     <div>
       <h1>Welcome to our Platform</h1>
-        {authContext.can_buy && <BuyerHomepage authContext={authContext} />}
-        {authContext.can_sell && <SellerHomepage authContext={authContext} />}
-        {authContext.is_admin && <AdminHomepage authContext={authContext} />}
-        <p>Generic Information visible to all</p>
-
+      {authContext.can_buy && <BuyerHomepage authContext={authContext} />}
+      {authContext.can_sell && <SellerHomepage authContext={authContext} />}
+      {authContext.is_admin && <AdminHomepage authContext={authContext} />}
+      <p>Generic Information visible to all</p>
     </div>
   );
 }
 
 export default Homepage;
-
 ```
 
 In this example, depending on the values of authContext different components will be rendered. For example, if the user has both buyer and seller role then both `BuyerHomepage` and `SellerHomepage` components will be rendered. This strategy enhances component reusability and simplifies each component's logic, resulting in a more structured codebase.

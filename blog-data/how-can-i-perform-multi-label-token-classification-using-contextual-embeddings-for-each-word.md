@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-perform-multi-label-token-classification-using-contextual-embeddings-for-each-word"
 ---
 
-Okay, let's tackle this. It’s a scenario I’ve encountered a few times in past projects, specifically when dealing with complex text categorization where a single token can have multiple associated labels. Think of something like identifying different entities within a medical text – a single word might be both a symptom and a medication, for example. Traditional approaches often stumble here, which is where contextual embeddings really shine.
+, let's tackle this. It’s a scenario I’ve encountered a few times in past projects, specifically when dealing with complex text categorization where a single token can have multiple associated labels. Think of something like identifying different entities within a medical text – a single word might be both a symptom and a medication, for example. Traditional approaches often stumble here, which is where contextual embeddings really shine.
 
 The core challenge is that we need a system that not only understands the individual words but also how they are used within the surrounding context. This is where models like BERT, RoBERTa, or even some of the more recent transformer variants, become incredibly useful because they produce embeddings that are highly dependent on the input sequence.
 
@@ -39,7 +39,7 @@ def get_contextual_embeddings(text):
         outputs = model(**tokens)
     embeddings = outputs.last_hidden_state # Shape: [batch_size, sequence_length, embedding_dimension]
     return tokens, embeddings
-    
+
 text = "The patient reported a headache and dizziness."
 tokens, embeddings = get_contextual_embeddings(text)
 
@@ -65,7 +65,7 @@ class MultiLabelClassifier(nn.Module):
         logits = self.fc(embeddings)
         probabilities = self.sigmoid(logits)
         return probabilities
-    
+
 
 # Example of label mapping. In reality, this comes from your specific dataset
 label_map = {"symptom": 0, "finding": 1, "drug":2} # Simplified version
@@ -113,16 +113,16 @@ This illustrates how to train the classifier. We define a binary cross-entropy l
 
 Now, the above code provides a simplified view. In a practical application, several factors will affect your results:
 
-*   **Dataset Size:** For training a robust model, having a large, well-annotated dataset is vital. The more examples your model has, the better it will understand the nuances of multi-label text.
-*   **Model Selection:** The choice of the pre-trained transformer model can significantly impact performance. Experiment with different models and architectures.
-*   **Hyperparameter Tuning:** Finding the ideal learning rate, batch size, and other parameters is crucial. This often requires experimenting on a validation set.
-*   **Handling Special Tokens:** The model will produce embeddings for special tokens (like padding tokens) so you might need to address this in pre and post-processing.
-*   **Evaluation Metrics:** Multi-label classification often uses metrics such as F1 score, recall, precision, and accuracy. Choose these metrics depending on the task.
+- **Dataset Size:** For training a robust model, having a large, well-annotated dataset is vital. The more examples your model has, the better it will understand the nuances of multi-label text.
+- **Model Selection:** The choice of the pre-trained transformer model can significantly impact performance. Experiment with different models and architectures.
+- **Hyperparameter Tuning:** Finding the ideal learning rate, batch size, and other parameters is crucial. This often requires experimenting on a validation set.
+- **Handling Special Tokens:** The model will produce embeddings for special tokens (like padding tokens) so you might need to address this in pre and post-processing.
+- **Evaluation Metrics:** Multi-label classification often uses metrics such as F1 score, recall, precision, and accuracy. Choose these metrics depending on the task.
 
 Finally, for a deeper understanding, I highly recommend diving into the following resources:
 
-*   **“Attention is All You Need”** (Vaswani et al., 2017). This is the foundational paper for transformers.
-*   **"BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding"** (Devlin et al., 2018). Essential for understanding the workings of BERT-based models.
-*   **The Hugging Face Transformers library documentation.** This is invaluable for getting hands-on experience with state-of-the-art models.
+- **“Attention is All You Need”** (Vaswani et al., 2017). This is the foundational paper for transformers.
+- **"BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding"** (Devlin et al., 2018). Essential for understanding the workings of BERT-based models.
+- **The Hugging Face Transformers library documentation.** This is invaluable for getting hands-on experience with state-of-the-art models.
 
 Performing multi-label token classification requires a clear understanding of the underlying transformer architecture, and its limitations. By carefully processing your data, encoding labels appropriately, and applying the correct loss function, you should be well-equipped to tackle this complex and interesting NLP task. Remember, iterate through model architectures and hyperparameter options to fine-tune your model.

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "c-vector-popback-performance-meaning"
 ---
 
-Alright so you're asking about `std::vector::pop_back` performance specifically in C++ right I've wrestled with this beast enough times to have some thoughts to spill on it let me tell you
+so you're asking about `std::vector::pop_back` performance specifically in C++ right I've wrestled with this beast enough times to have some thoughts to spill on it let me tell you
 
 So first things first `pop_back` on a `std::vector` that's basically just saying hey vector remove the last element right? You'd think it's trivial just chop off the end and we're done but there's actually more happening under the hood and that's where the performance aspects come into play It's not always a simple "chop" operation lets get into the nitty gritty
 
@@ -31,6 +31,7 @@ public:
     }
 }
 ```
+
 Now the catch The potential problem arises when the vector's capacity is much larger than the size Say you have a vector with a capacity of a million elements but you're only using the first ten If you keep calling `pop_back` you are not really freeing the memory only marking elements as no longer valid part of the vector and this is fine its very fast But when should you worry? Well not unless you need to worry about the memory being used
 
 This is where things get more interesting If you do a lot of pushes and pops the vector might have a very large capacity than what is needed and this memory may not be needed anymore Imagine it as a parking lot with space for 100 cars and just 10 car using it now you dont really need such a big parking spot You are using the resources that you don't need
@@ -99,7 +100,7 @@ int main() {
 
 If the vector is not empty then you call `pop_back()` and in the else block a message if the vector is empty and the code is not going to crash you might also use a try catch block in your code to avoid crashes but that’s a bit more work
 
-So wrapping up `pop_back` is usually fast O(1) but it doesn't actually deallocate the underlying memory You only need to think about the memory overhead when you are having large vector and lots of pop_back operations and if you need to reclaim the extra allocated memory using shrink\_to\_fit but keep in mind this has an O(n) complexity
+So wrapping up `pop_back` is usually fast O(1) but it doesn't actually deallocate the underlying memory You only need to think about the memory overhead when you are having large vector and lots of pop_back operations and if you need to reclaim the extra allocated memory using shrink_to_fit but keep in mind this has an O(n) complexity
 
 If you want to dive deeper into understanding the nuances of C++ memory management and containers I would highly recommend reading "Effective Modern C++" by Scott Meyers its gold If you are a purist and want a more formal approach "The C++ Programming Language" by Bjarne Stroustrup (the creator of c++) will provide you with all you need. You can also check out the cppreference page on std::vector its documentation is pretty accurate and technical.
 

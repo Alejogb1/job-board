@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-fastais-dynamicunet-lack-a-finetune-method"
 ---
 
-Alright, let's unpack the reason behind the absence of a `fine_tune` method in FastAI's `DynamicUnet`. It's a question that certainly popped up during a project I worked on a couple of years back involving high-resolution medical image segmentation. We were aiming for pixel-perfect classifications, and the standard fine-tuning approach we were accustomed to seemed to be missing for the `DynamicUnet`. The initial confusion gave way to a much more insightful understanding of how this specific architecture is built and trained.
+, let's unpack the reason behind the absence of a `fine_tune` method in FastAI's `DynamicUnet`. It's a question that certainly popped up during a project I worked on a couple of years back involving high-resolution medical image segmentation. We were aiming for pixel-perfect classifications, and the standard fine-tuning approach we were accustomed to seemed to be missing for the `DynamicUnet`. The initial confusion gave way to a much more insightful understanding of how this specific architecture is built and trained.
 
 The core reason you won’t find a `fine_tune` method on a `DynamicUnet` object directly stems from its construction philosophy and the dynamic nature of the model itself. Unlike a standard image classification network, where you'd typically freeze earlier layers and train the later ones (the classic fine-tuning procedure), `DynamicUnet` doesn't adhere to that rigid structure. It's built to be adaptable and, in a way, already encompasses a form of fine-tuning through its architecture and the training approach it follows.
 

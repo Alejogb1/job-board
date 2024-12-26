@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-python-code-be-tested-for-concurrent-cooperation"
 ---
 
-Alright, let's delve into testing concurrent cooperation in Python. I recall a particularly frustrating project a few years back involving a distributed data processing pipeline. We had numerous worker threads, all interacting with a shared resource, and initially, testing felt like navigating a minefield. We kept hitting intermittent failures, difficult to reproduce and even harder to debug. That experience solidified for me the crucial need for robust strategies when dealing with concurrency.
+, let's delve into testing concurrent cooperation in Python. I recall a particularly frustrating project a few years back involving a distributed data processing pipeline. We had numerous worker threads, all interacting with a shared resource, and initially, testing felt like navigating a minefield. We kept hitting intermittent failures, difficult to reproduce and even harder to debug. That experience solidified for me the crucial need for robust strategies when dealing with concurrency.
 
 Testing concurrent code isn't as straightforward as testing sequential logic. We need to verify not only that the individual units of work are correct but also that they cooperate effectively when executed simultaneously. This is where a combination of techniques and careful considerations becomes paramount. A simple unit test that passes when a piece of code is run serially may very well fail when multiple threads or processes interact with the same state or resources.
 
@@ -90,6 +90,7 @@ def test_safe_counter():
 # Run this to verify the safe behaviour:
 # test_safe_counter()
 ```
+
 In this updated version, the `threading.Lock` ensures that only one thread can access and modify the counter at a time, preventing race conditions and the assertion should now pass.
 
 Another crucial area is testing for deadlocks. Deadlocks occur when two or more threads are blocked indefinitely, waiting for each other to release a resource. These are some of the most problematic issues to debug as they can manifest quite randomly and unexpectedly. To test for deadlocks, we often use specialized frameworks or tools. However, we can still design tests to increase the probability of triggering these scenarios. It might involve carefully crafted sequences of resource acquisition and release, or using timeouts.

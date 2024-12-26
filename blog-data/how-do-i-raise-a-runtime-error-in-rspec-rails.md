@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-raise-a-runtime-error-in-rspec-rails"
 ---
 
-Alright, let's talk about runtime errors in rspec within a rails context. It's a topic I've certainly navigated a fair bit, especially during my tenure at that fin-tech startup where we were building out a fairly complex transaction processing engine. More often than not, you're going to want your tests to explicitly check for situations where things go sideways, ensuring your application behaves gracefully (or at the very least, blows up predictably). Rspec, with its expressive syntax, gives us several robust mechanisms to achieve this.
+, let's talk about runtime errors in rspec within a rails context. It's a topic I've certainly navigated a fair bit, especially during my tenure at that fin-tech startup where we were building out a fairly complex transaction processing engine. More often than not, you're going to want your tests to explicitly check for situations where things go sideways, ensuring your application behaves gracefully (or at the very least, blows up predictably). Rspec, with its expressive syntax, gives us several robust mechanisms to achieve this.
 
 The core idea isn’t just about testing that your code _works_ under ideal conditions, but also how it _fails_. When we discuss runtime errors, we’re generally talking about exceptions that occur during program execution, not compile-time issues. These could be caused by things like unexpected data, network failures, or logic flaws that only manifest during runtime. So, how do we specifically target and verify these in rspec? We employ the combination of `expect { ... }.to raise_error(SpecificError)` . It’s a cornerstone of robust testing when it comes to ensuring that exceptional situations are handled as planned.
 
@@ -137,9 +137,9 @@ The examples above are merely a starting point, yet they are fundamental for con
 
 For deepening your knowledge, consider looking into the following resources:
 
-*   **"Working Effectively with Legacy Code" by Michael Feathers:** Though it doesn't focus on rspec, its principles are foundational for testing in general, and you'll find ideas on how to better understand what constitutes testable behavior.
-*   **"Test Driven Development by Example" by Kent Beck:** This book will give you a solid understanding of how to approach test design, which includes how to tackle error handling proactively using TDD.
-*   **The official RSpec documentation:** The RSpec docs are an excellent source for understanding the nuances of expectation syntax, including the `raise_error` matcher. Pay close attention to how different error types and messages can be validated using various options.
-*   **Blog posts and tutorials on RSpec mocking and stubbing:** Exploring the intricacies of using libraries like `webmock` in the context of raising errors in tests will make you more efficient at testing more complex scenarios where you are depending on external services.
+- **"Working Effectively with Legacy Code" by Michael Feathers:** Though it doesn't focus on rspec, its principles are foundational for testing in general, and you'll find ideas on how to better understand what constitutes testable behavior.
+- **"Test Driven Development by Example" by Kent Beck:** This book will give you a solid understanding of how to approach test design, which includes how to tackle error handling proactively using TDD.
+- **The official RSpec documentation:** The RSpec docs are an excellent source for understanding the nuances of expectation syntax, including the `raise_error` matcher. Pay close attention to how different error types and messages can be validated using various options.
+- **Blog posts and tutorials on RSpec mocking and stubbing:** Exploring the intricacies of using libraries like `webmock` in the context of raising errors in tests will make you more efficient at testing more complex scenarios where you are depending on external services.
 
 Testing runtime errors rigorously can save you hours of painful debugging later. By mastering the use of `raise_error` and practicing it frequently, your applications will become more robust and your development workflow will become significantly more efficient. Remember that each of the examples above can be expanded and adapted to meet the needs of your specific project, and thorough understanding of these fundamental aspects is key to building reliable software.

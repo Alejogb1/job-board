@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-i-train-an-lstm-model-using-multiple-datasets-within-a-for-loop"
 ---
 
-Alright, let's tackle this. It's a situation I've found myself in more than once – handling multiple datasets for LSTM training, especially when you're looping through them. The essence of the problem comes down to properly managing state between loops and ensuring that your model learns effectively from each dataset without introducing unwanted bias or forgetting. I'll walk you through how I usually handle this, drawing on some personal experience and the techniques I've found most reliable.
+, let's tackle this. It's a situation I've found myself in more than once – handling multiple datasets for LSTM training, especially when you're looping through them. The essence of the problem comes down to properly managing state between loops and ensuring that your model learns effectively from each dataset without introducing unwanted bias or forgetting. I'll walk you through how I usually handle this, drawing on some personal experience and the techniques I've found most reliable.
 
-The primary challenge when using a `for` loop to train an LSTM on different datasets stems from the inherent sequential nature of LSTMs themselves. LSTMs maintain an internal state—both cell state and hidden state—which carries information across time steps within a *single sequence*. If you simply feed a new dataset into the model after finishing training on the previous one, you risk the following:
+The primary challenge when using a `for` loop to train an LSTM on different datasets stems from the inherent sequential nature of LSTMs themselves. LSTMs maintain an internal state—both cell state and hidden state—which carries information across time steps within a _single sequence_. If you simply feed a new dataset into the model after finishing training on the previous one, you risk the following:
 
 1.  **State Carry-Over:** The model might carry over information from the final sequence of one dataset to the initial sequence of the next, corrupting the learning process. We want each dataset to impact the model, starting in a reasonably fresh state.
 2.  **Catastrophic Forgetting:** If the datasets are significantly different, the model might 'forget' what it learned from previous datasets, quickly adapting to the new one and potentially discarding prior knowledge. This isn't desirable, as the intent is usually for the model to leverage all available information.
@@ -218,7 +218,7 @@ for i, (X,y, lengths) in enumerate(datasets):
 
 ```
 
-In this scenario, the model is *re-initialized* at the start of each dataset loop as the input shape is now the maximum length. This is because padding has introduced sequence length information which changes input dimensions. However, there's another important aspect—*batching*. You might consider batching the data before feeding it into the model. This is especially useful when dealing with large datasets, and most frameworks provide batching mechanisms that will handle the padding automatically.
+In this scenario, the model is _re-initialized_ at the start of each dataset loop as the input shape is now the maximum length. This is because padding has introduced sequence length information which changes input dimensions. However, there's another important aspect—_batching_. You might consider batching the data before feeding it into the model. This is especially useful when dealing with large datasets, and most frameworks provide batching mechanisms that will handle the padding automatically.
 
 **Further Considerations:**
 

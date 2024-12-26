@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-a-dataframe-be-split-into-multiple-dataframes"
 ---
 
-Alright, let’s tackle this. The need to partition a large dataframe into smaller, more manageable pieces crops up quite frequently in data manipulation workflows. I've personally encountered this numerous times, especially when dealing with datasets that push the boundaries of memory capacity or require parallel processing across multiple compute resources. The key is understanding the various strategies available, and choosing the most appropriate one based on the specific context. Let's break down the common approaches.
+, let’s tackle this. The need to partition a large dataframe into smaller, more manageable pieces crops up quite frequently in data manipulation workflows. I've personally encountered this numerous times, especially when dealing with datasets that push the boundaries of memory capacity or require parallel processing across multiple compute resources. The key is understanding the various strategies available, and choosing the most appropriate one based on the specific context. Let's break down the common approaches.
 
-First, understand that the “how” depends heavily on *why* you need to split the dataframe. Is it based on row count, specific categorical values in a column, or something else entirely? Let's explore a few of the most common scenarios I've faced and how to approach them practically with python's pandas library.
+First, understand that the “how” depends heavily on _why_ you need to split the dataframe. Is it based on row count, specific categorical values in a column, or something else entirely? Let's explore a few of the most common scenarios I've faced and how to approach them practically with python's pandas library.
 
 **Splitting by Row Count (Chunking):**
 

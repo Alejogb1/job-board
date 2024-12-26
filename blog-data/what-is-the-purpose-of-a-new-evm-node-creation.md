@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-is-the-purpose-of-a-new-evm-node-creation"
 ---
 
-alright, so, you're asking about the purpose of spinning up a fresh evm node, eh? i’ve been around the block a few times with this stuff, so let me break it down from my perspective, the trenches, so to speak.
+, so, you're asking about the purpose of spinning up a fresh evm node, eh? i’ve been around the block a few times with this stuff, so let me break it down from my perspective, the trenches, so to speak.
 
 basically, a new evm (ethereum virtual machine) node is all about either joining an existing network or creating a new, isolated one. why would you want to do that? well, it depends on what you're trying to achieve. it’s not a one-size-fits-all kind of deal. i've seen this used for a whole range of things, from simple local dev environments to full-blown production deployments.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-rename-tags-when-copying-an-azure-container-registry"
 ---
 
-Alright, let's tackle this. I've seen this scenario play out more times than I care to count, especially during large infrastructure migrations or when teams are adopting more stringent naming conventions. It's not a trivial copy-paste; there’s a bit more nuance when it comes to preserving your sanity while shifting container images between Azure container registries and keeping your tags consistent.
+, let's tackle this. I've seen this scenario play out more times than I care to count, especially during large infrastructure migrations or when teams are adopting more stringent naming conventions. It's not a trivial copy-paste; there’s a bit more nuance when it comes to preserving your sanity while shifting container images between Azure container registries and keeping your tags consistent.
 
 The fundamental issue here is that Azure Container Registry (acr) copy operations, in their most basic form, aren't equipped with a simple ‘rename-on-copy’ flag. This means a straight copy operation faithfully replicates your image along with its existing tags to the destination registry. That’s helpful, but sometimes, and probably in your case, it's simply not the desired behaviour. You might have legacy naming conventions, or perhaps a new organizational structure requires adjustments. So, how do we wrangle it?
 
@@ -73,7 +73,7 @@ az acr import \
 echo "Image imported and retagged successfully."
 ```
 
-Notice the `--source` and `--image` parameters here. The `--source` specifies the source registry, repository, and tag. The `--image` parameter, on the other hand, specifies the destination registry and the *new* tag we want to assign the image. This functionality lets us modify tags during the copy process within Azure’s network and is typically much faster. This approach is brilliant for deployments where performance and automated workflows are key. It sidesteps the need for a local Docker environment, which is a bonus when operating within serverless or cloud-based CI/CD pipelines.
+Notice the `--source` and `--image` parameters here. The `--source` specifies the source registry, repository, and tag. The `--image` parameter, on the other hand, specifies the destination registry and the _new_ tag we want to assign the image. This functionality lets us modify tags during the copy process within Azure’s network and is typically much faster. This approach is brilliant for deployments where performance and automated workflows are key. It sidesteps the need for a local Docker environment, which is a bonus when operating within serverless or cloud-based CI/CD pipelines.
 
 **Approach 3: Utilizing a script with `az acr repository list-tags` & `az acr import` (for more dynamic operations)**
 
@@ -110,15 +110,15 @@ This script does the following: First, it obtains a list of tags for a given rep
 
 **Key considerations:**
 
-*   **Authentication:** Always ensure your service principal or user has the correct access permissions to both the source and destination container registries.
-*   **Testing:** Always test any renaming script or process on a non-production registry first before applying the same process to your live environment.
-*   **Tagging schemes:** Consider implementing consistent tagging conventions to simplify future migrations. Avoid overly generic naming; descriptive and semantic naming helps a lot in debugging and operations.
-*   **Tooling choices:** The right tool depends heavily on your use case. Command-line operations are good for quick tasks, while Azure CLI commands are essential for scaling and automated workflows.
+- **Authentication:** Always ensure your service principal or user has the correct access permissions to both the source and destination container registries.
+- **Testing:** Always test any renaming script or process on a non-production registry first before applying the same process to your live environment.
+- **Tagging schemes:** Consider implementing consistent tagging conventions to simplify future migrations. Avoid overly generic naming; descriptive and semantic naming helps a lot in debugging and operations.
+- **Tooling choices:** The right tool depends heavily on your use case. Command-line operations are good for quick tasks, while Azure CLI commands are essential for scaling and automated workflows.
 
 **Recommended resources:**
 
-*   **"Docker Deep Dive" by Nigel Poulton**: This book will give you a foundational understanding of how docker images are structured and how tagging works behind the scenes.
-*   **Azure documentation on `az acr` CLI commands**: Specifically, go through the documentation for `az acr login`, `az acr import`, and `az acr repository`.
-*   **"The Azure Cloud Native Handbook"**: Although broader, this provides excellent context for managing containers within the larger azure ecosystem. This covers best practices regarding container registry management and security.
+- **"Docker Deep Dive" by Nigel Poulton**: This book will give you a foundational understanding of how docker images are structured and how tagging works behind the scenes.
+- **Azure documentation on `az acr` CLI commands**: Specifically, go through the documentation for `az acr login`, `az acr import`, and `az acr repository`.
+- **"The Azure Cloud Native Handbook"**: Although broader, this provides excellent context for managing containers within the larger azure ecosystem. This covers best practices regarding container registry management and security.
 
 In closing, renaming tags during an acr copy isn’t natively supported via a single command. However, by leveraging tools like docker, the Azure CLI, and a touch of scripting, you can achieve the desired result in a manageable and scalable way. Start simple, test thoroughly, and you'll navigate these challenges with a lot less stress.

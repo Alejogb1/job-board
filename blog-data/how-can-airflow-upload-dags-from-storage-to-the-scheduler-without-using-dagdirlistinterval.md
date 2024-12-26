@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-airflow-upload-dags-from-storage-to-the-scheduler-without-using-dagdirlistinterval"
 ---
 
-Okay, let's talk about orchestrating DAG uploads in Airflow, specifically how we can move away from the often problematic `dag_dir_list_interval`. I’ve seen firsthand the scaling issues and performance hiccups this configuration can introduce, especially as DAG numbers grow into the hundreds and thousands. It becomes a polling bottleneck; not ideal. The default behavior, having the scheduler constantly scan a directory, while conceptually simple, just isn't robust enough for large-scale deployments.
+, let's talk about orchestrating DAG uploads in Airflow, specifically how we can move away from the often problematic `dag_dir_list_interval`. I’ve seen firsthand the scaling issues and performance hiccups this configuration can introduce, especially as DAG numbers grow into the hundreds and thousands. It becomes a polling bottleneck; not ideal. The default behavior, having the scheduler constantly scan a directory, while conceptually simple, just isn't robust enough for large-scale deployments.
 
 My experience dealing with this wasn't theoretical; picture a sprawling data platform handling multiple terabytes daily, and the scheduler frequently choking. That prompted our team to explore alternatives. The root of the problem is how the scheduler discovers DAG files. It basically does a `os.listdir()` and then processes each file, which is not efficient. We need a push mechanism rather than a pull-based approach.
 

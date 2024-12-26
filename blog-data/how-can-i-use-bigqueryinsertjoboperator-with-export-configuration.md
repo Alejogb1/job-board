@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-use-bigqueryinsertjoboperator-with-export-configuration"
 ---
 
-Alright, let's talk about using `BigQueryInsertJobOperator` with export configurations. It's a combination that comes up more frequently than you might initially expect, especially when you're dealing with complex data pipelines. I've personally spent a fair share of late nights debugging exactly this scenario. The straightforward insert operator often isn't sufficient when you need more than just data insertion; you're often looking to also archive or transfer that data.
+, let's talk about using `BigQueryInsertJobOperator` with export configurations. It's a combination that comes up more frequently than you might initially expect, especially when you're dealing with complex data pipelines. I've personally spent a fair share of late nights debugging exactly this scenario. The straightforward insert operator often isn't sufficient when you need more than just data insertion; you're often looking to also archive or transfer that data.
 
 Essentially, the `BigQueryInsertJobOperator` in Apache Airflow is your workhorse for triggering BigQuery jobs. However, the real power, and complexity, emerges when you start combining it with configurations, particularly `extract` configurations that handle data export to cloud storage. The operator natively supports creating and running extract jobs, but you need to understand how to structure your configuration effectively, and that’s where the details truly become crucial. I’ve found the key to success lies in three areas: precise configuration details, robust error handling, and thorough testing.
 
@@ -85,7 +85,7 @@ with DAG(
     )
 ```
 
-Notice the `destinationFormat` is `NEWLINE_DELIMITED_JSON`. I have added `fieldDelimiter` since in some cases, even though we use json, we still need to delimit. I’ve also set `printHeader` to `False`, and added the `projectionFields` argument. This allows me to explicitly select only the specified columns (`column1`, `column2`, `column3`), and avoid exporting all table columns which is very useful when extracting just a subset of the table information. The use of  `useAvroLogicalTypes` is also essential in many real-world cases, ensuring correct type handling for nested and complex data structures.
+Notice the `destinationFormat` is `NEWLINE_DELIMITED_JSON`. I have added `fieldDelimiter` since in some cases, even though we use json, we still need to delimit. I’ve also set `printHeader` to `False`, and added the `projectionFields` argument. This allows me to explicitly select only the specified columns (`column1`, `column2`, `column3`), and avoid exporting all table columns which is very useful when extracting just a subset of the table information. The use of `useAvroLogicalTypes` is also essential in many real-world cases, ensuring correct type handling for nested and complex data structures.
 
 **Example 3: Using wildcards with partitioned tables and date patterns**
 
@@ -119,6 +119,7 @@ with DAG(
         },
     )
 ```
+
 Here, the `tableId` is `my_partitioned_table_2024*`. This wildcard `*` selects all the partitions with table names starting with `my_partitioned_table_2024`, allowing for a flexible data export process which can also be dynamic.
 
 These examples highlight the importance of precise configuration. It's far too easy to miss a nested key or specify the wrong data type and end up spending hours debugging a cryptic error message. One common mistake is forgetting that `destinationUris` is an array, not a string, for instance. Or misconfiguring the file format, which can be tricky between csv and json and compressed or not compressed.

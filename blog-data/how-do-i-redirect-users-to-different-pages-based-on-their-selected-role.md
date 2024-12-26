@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-do-i-redirect-users-to-different-pages-based-on-their-selected-role"
 ---
 
-Okay, let's tackle this. Redirecting users based on their selected role is a very common requirement, and I've implemented this countless times over my career. I recall a specific project early on, a large e-learning platform, where we had students, instructors, and administrators, each needing a distinct initial landing experience upon login. The challenge wasn’t just about getting the redirects to work; it was about doing it efficiently and securely. Let's break down how you can achieve this, focusing on clarity and practicality, not convoluted theoretical constructs.
+, let's tackle this. Redirecting users based on their selected role is a very common requirement, and I've implemented this countless times over my career. I recall a specific project early on, a large e-learning platform, where we had students, instructors, and administrators, each needing a distinct initial landing experience upon login. The challenge wasn’t just about getting the redirects to work; it was about doing it efficiently and securely. Let's break down how you can achieve this, focusing on clarity and practicality, not convoluted theoretical constructs.
 
-The core idea revolves around identifying the user's role *after* successful authentication, and then using that role information to direct them to the appropriate page. This involves a few key steps: authentication, role retrieval, and finally, the redirection logic. I've found that layering this approach makes the system more robust and easier to maintain.
+The core idea revolves around identifying the user's role _after_ successful authentication, and then using that role information to direct them to the appropriate page. This involves a few key steps: authentication, role retrieval, and finally, the redirection logic. I've found that layering this approach makes the system more robust and easier to maintain.
 
-First, authentication needs to be solid. Your authentication mechanism (be it OAuth2, JWT, or something else) should verify the user's credentials. Once that's done, you'll need to *reliably* obtain the user's role. I strongly advise storing user roles either directly in your user database table or, preferably, in a separate table specifically designed for roles and permissions. Avoid baking roles directly into the authentication tokens unless the system is exceedingly simple. Storing this information directly ensures you have a source of truth, and makes it far easier to adjust role assignments in the future.
+First, authentication needs to be solid. Your authentication mechanism (be it OAuth2, JWT, or something else) should verify the user's credentials. Once that's done, you'll need to _reliably_ obtain the user's role. I strongly advise storing user roles either directly in your user database table or, preferably, in a separate table specifically designed for roles and permissions. Avoid baking roles directly into the authentication tokens unless the system is exceedingly simple. Storing this information directly ensures you have a source of truth, and makes it far easier to adjust role assignments in the future.
 
-After retrieving the role, we move to redirection. This is usually done server-side, but it can also be handled client-side with more effort. I’ll show server-side examples here as they offer a greater degree of security and control. It’s crucial to think in terms of request-response cycles when constructing the logic for your redirects. The user requests a protected page; your server authenticates, retrieves the user’s role, then *responds* with a redirect to the correct location.
+After retrieving the role, we move to redirection. This is usually done server-side, but it can also be handled client-side with more effort. I’ll show server-side examples here as they offer a greater degree of security and control. It’s crucial to think in terms of request-response cycles when constructing the logic for your redirects. The user requests a protected page; your server authenticates, retrieves the user’s role, then _responds_ with a redirect to the correct location.
 
 Here’s how I've approached it in different contexts, and how you can do it as well:
 
@@ -93,82 +93,78 @@ In this example, the `get_user_role` function (which, in a production app, would
 Here's an analogous example using Node.js with Express.js:
 
 ```javascript
-const express = require('express');
-const session = require('express-session');
+const express = require("express");
+const session = require("express-session");
 const app = express();
 
 app.use(express.urlencoded({ extended: true })); // for parsing form data
-app.use(session({
-  secret: 'your_secret_key',
-  resave: false,
-  saveUninitialized: true,
-}));
+app.use(
+  session({
+    secret: "your_secret_key",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 function getUserRole(userId) {
-    //In real life, fetch from db.
-    if(userId == 1){
-      return "admin";
-    } else if(userId == 2){
-      return "student";
-    } else{
-      return null;
-    }
-
+  //In real life, fetch from db.
+  if (userId == 1) {
+    return "admin";
+  } else if (userId == 2) {
+    return "student";
+  } else {
+    return null;
+  }
 }
 
 function loginRequired(role = null) {
-    return (req, res, next) => {
-        if (!req.session.userId) {
-            return res.redirect('/login');
-        }
-        const userRole = getUserRole(req.session.userId);
-        if (role && userRole !== role) {
-            return res.status(403).send("Unauthorized for this route."); //Or redirect.
-        }
-        next();
-    };
+  return (req, res, next) => {
+    if (!req.session.userId) {
+      return res.redirect("/login");
+    }
+    const userRole = getUserRole(req.session.userId);
+    if (role && userRole !== role) {
+      return res.status(403).send("Unauthorized for this route."); //Or redirect.
+    }
+    next();
+  };
 }
 
-app.get('/login', (req, res) => {
-    res.send(`
+app.get("/login", (req, res) => {
+  res.send(`
         <form method="post">
           <input type="text" name="user_id">
           <button type="submit">Login</button>
         </form>`);
 });
 
-app.post('/login', (req, res) => {
-    //In real life, auth. Get user id.
-    const userId = parseInt(req.body.user_id);
-    req.session.userId = userId;
-    res.redirect('/');
+app.post("/login", (req, res) => {
+  //In real life, auth. Get user id.
+  const userId = parseInt(req.body.user_id);
+  req.session.userId = userId;
+  res.redirect("/");
 });
 
-
-app.get('/', loginRequired(), (req, res) => {
-    const userRole = getUserRole(req.session.userId);
-    if (userRole === 'admin') {
-        res.redirect('/admin_dashboard');
-    } else if (userRole === 'student') {
-        res.redirect('/student_dashboard');
-    }
-    else {
-      res.send("Unknown Role");
-    }
-
+app.get("/", loginRequired(), (req, res) => {
+  const userRole = getUserRole(req.session.userId);
+  if (userRole === "admin") {
+    res.redirect("/admin_dashboard");
+  } else if (userRole === "student") {
+    res.redirect("/student_dashboard");
+  } else {
+    res.send("Unknown Role");
+  }
 });
 
-
-app.get('/admin_dashboard', loginRequired('admin'), (req, res) => {
-    res.send('Admin Dashboard');
+app.get("/admin_dashboard", loginRequired("admin"), (req, res) => {
+  res.send("Admin Dashboard");
 });
 
-app.get('/student_dashboard', loginRequired('student'), (req, res) => {
-    res.send('Student Dashboard');
+app.get("/student_dashboard", loginRequired("student"), (req, res) => {
+  res.send("Student Dashboard");
 });
 
-
-app.listen(3000, () => console.log('Server running on port 3000'));
+app.listen(3000, () => console.log("Server running on port 3000"));
 ```
 
 This example closely mirrors the Python/Flask version, using express-session for session management and the `loginRequired` middleware to handle authentication and authorization. It highlights that the logic remains consistent regardless of the server-side language.

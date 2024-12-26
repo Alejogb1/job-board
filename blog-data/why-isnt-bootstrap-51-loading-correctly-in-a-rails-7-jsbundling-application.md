@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-bootstrap-51-loading-correctly-in-a-rails-7-jsbundling-application"
 ---
 
-Okay, let's unpack this. I've spent my fair share of time debugging front-end asset pipelines, especially when integrating frameworks like Bootstrap into Rails. The issue you're seeing with Bootstrap 5.1 not loading correctly in a Rails 7 JSBundling application often boils down to a few common culprits. It's rarely a single, glaring error, but rather a combination of setup nuances that can throw things off. Based on my experience, here’s what we should consider, moving step-by-step:
+, let's unpack this. I've spent my fair share of time debugging front-end asset pipelines, especially when integrating frameworks like Bootstrap into Rails. The issue you're seeing with Bootstrap 5.1 not loading correctly in a Rails 7 JSBundling application often boils down to a few common culprits. It's rarely a single, glaring error, but rather a combination of setup nuances that can throw things off. Based on my experience, here’s what we should consider, moving step-by-step:
 
 First, let's clarify what we mean by “not loading correctly.” Are we seeing no styling at all, partially applied styles, or perhaps console errors related to missing components? These details are critical to diagnosing the issue. Let's assume, for now, you're seeing minimal styling and that JavaScript-based Bootstrap components aren't working.
 
@@ -17,30 +17,37 @@ The first step is ensuring Bootstrap and its dependencies are correctly installe
 ```bash
 npm install bootstrap @popperjs/core
 ```
+
 or
+
 ```bash
 yarn add bootstrap @popperjs/core
 ```
 
-Now the critical part: importing the CSS and Javascript into your project. If you've simply included a `<link>` tag in your layout referencing a locally served file, but haven't actually *bundled* the CSS and JS using the JSBundler, it's not going to work as expected.
+Now the critical part: importing the CSS and Javascript into your project. If you've simply included a `<link>` tag in your layout referencing a locally served file, but haven't actually _bundled_ the CSS and JS using the JSBundler, it's not going to work as expected.
 
 Here’s how we need to adjust. A typical import strategy inside your `app/javascript/application.js` (or similar file) would look something like this:
 
 ```javascript
 // app/javascript/application.js
 
-import * as bootstrap from 'bootstrap';
+import * as bootstrap from "bootstrap";
 import "@popperjs/core"; // Explicitly import popper
 
 // Optional, to load CSS, if not using external stylesheet
-import 'bootstrap/dist/css/bootstrap.min.css'
+import "bootstrap/dist/css/bootstrap.min.css";
 
 // Optional: Example of initialising a tooltip
-document.addEventListener('DOMContentLoaded', function() {
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+document.addEventListener("DOMContentLoaded", function () {
+  const tooltipTriggerList = document.querySelectorAll(
+    '[data-bs-toggle="tooltip"]'
+  );
+  const tooltipList = [...tooltipTriggerList].map(
+    (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+  );
 });
 ```
+
 Let me clarify a few points. This code explicitly imports everything in bootstrap (it's an object containing all Bootstrap’s modules) and also specifically imports "@popperjs/core" for necessary components. The `import 'bootstrap/dist/css/bootstrap.min.css'` is only necessary if you want to import Bootstrap CSS via your javascript bundler; you can also directly link to the compiled css in your `app/views/layouts/application.html.erb` via a stylesheet link. The "DOMContentLoaded" block ensures the tooltip code doesn't execute until the full page has loaded, a common mistake that can lead to errors.
 
 However, importing all of Bootstrap may lead to a bloated bundle if you're not using all of the components. This is where more refined importing comes in. Here is another variation of the `application.js` file.
@@ -48,21 +55,29 @@ However, importing all of Bootstrap may lead to a bloated bundle if you're not u
 ```javascript
 // app/javascript/application.js
 
-import { Tooltip, Popover, Collapse } from 'bootstrap';
+import { Tooltip, Popover, Collapse } from "bootstrap";
 import "@popperjs/core";
 
 // CSS import can be here or elsewhere, not in a javascript file.
 // import 'bootstrap/dist/css/bootstrap.min.css'
 
-document.addEventListener('DOMContentLoaded', function() {
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
+document.addEventListener("DOMContentLoaded", function () {
+  const tooltipTriggerList = document.querySelectorAll(
+    '[data-bs-toggle="tooltip"]'
+  );
+  const tooltipList = [...tooltipTriggerList].map(
+    (tooltipTriggerEl) => new Tooltip(tooltipTriggerEl)
+  );
 
-    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new Popover(popoverTriggerEl))
+  const popoverTriggerList = document.querySelectorAll(
+    '[data-bs-toggle="popover"]'
+  );
+  const popoverList = [...popoverTriggerList].map(
+    (popoverTriggerEl) => new Popover(popoverTriggerEl)
+  );
 });
-
 ```
+
 Here, we are selectively importing only the specific components (Tooltip, Popover, and Collapse) we need, potentially reducing bundle size. I've also shown another way of initializing the tooltips and popovers, this time instantiating their respective classes from the import statements rather than from a main `bootstrap` object. The specific method used here depends entirely on your needs.
 
 Finally, let’s address a common issue concerning version conflicts or misaligned dependency versions. If the version of Bootstrap you are referencing doesn't exactly match the version of Popper you've installed (or are configured with) in your project, it might cause conflicts that manifest as unresponsive components or layout issues. Check your `package.json` file and ensure you've specified compatible versions. It's also worth checking your `yarn.lock` or `package-lock.json` files to ensure you've actually installed the exact dependency versions expected. These locks files can sometimes cause confusion. I once spent a few hours troubleshooting a similar issue that stemmed from an unexpected version conflict that was locked via yarn, so it’s always worth verifying.

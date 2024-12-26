@@ -4,17 +4,18 @@ date: "2024-12-23"
 id: "how-should-loss-and-metric-curves-be-interpreted"
 ---
 
-Alright, let's tackle the interpretation of loss and metric curves – something I've certainly seen my share of during model development, and honestly, it can often make or break a project. It's more than just a pretty graph; it’s a diagnostic tool that reveals a lot about how your model is learning, and whether it’s learning effectively.
+, let's tackle the interpretation of loss and metric curves – something I've certainly seen my share of during model development, and honestly, it can often make or break a project. It's more than just a pretty graph; it’s a diagnostic tool that reveals a lot about how your model is learning, and whether it’s learning effectively.
 
 First off, we need to differentiate between loss and metrics. Loss, often minimized during training, represents the error made by the model on each iteration. Think of it as the model’s internal cost function it's striving to lower. Metrics, on the other hand, provide a more human-interpretable evaluation of model performance. For example, accuracy, precision, recall, f1-score – these are what we ultimately care about when deploying a model. They give you a sense of how well the model is actually performing in a given task. Both loss and metrics are typically tracked across training epochs (or iterations) to generate curves, giving us a visual representation of model progress.
 
-Now, what do we look for? Generally, we expect the loss to decrease as training progresses. A healthy training curve would exhibit a steady decline in training loss, which ideally converges to a stable, lower value. If the loss plateaus early, that might be an indication that the model has learned all it can given its current architecture, hyper parameters or data – in which case, we might be dealing with a capacity limitation. Conversely, if the loss fluctuates significantly, or worse, *increases* at times during the training run, we could be looking at unstable training or a learning rate that’s too high.
+Now, what do we look for? Generally, we expect the loss to decrease as training progresses. A healthy training curve would exhibit a steady decline in training loss, which ideally converges to a stable, lower value. If the loss plateaus early, that might be an indication that the model has learned all it can given its current architecture, hyper parameters or data – in which case, we might be dealing with a capacity limitation. Conversely, if the loss fluctuates significantly, or worse, _increases_ at times during the training run, we could be looking at unstable training or a learning rate that’s too high.
 
-The validation loss, though, is just as critical. This curve reveals the performance of the model on unseen data. Crucially, the validation loss might *start* higher than the training loss—that’s often expected because the model is learning specifically on the training data. What we don't want to see is the validation loss starting to increase *after* a certain point, while training loss continues to decrease. This is a classic sign of overfitting. The model is memorizing the training data instead of learning generalizable features. You might see this scenario commonly in scenarios where the dataset size isn't large enough for the complexity of your model or where some regularisation (e.g. dropout) isn't being applied.
+The validation loss, though, is just as critical. This curve reveals the performance of the model on unseen data. Crucially, the validation loss might _start_ higher than the training loss—that’s often expected because the model is learning specifically on the training data. What we don't want to see is the validation loss starting to increase _after_ a certain point, while training loss continues to decrease. This is a classic sign of overfitting. The model is memorizing the training data instead of learning generalizable features. You might see this scenario commonly in scenarios where the dataset size isn't large enough for the complexity of your model or where some regularisation (e.g. dropout) isn't being applied.
 
 Metrics curves offer additional insights into model performance. For instance, if you're evaluating a classification model, you would look at the accuracy curve. An ideal scenario would show both training and validation accuracy increasing steadily and converging at a high value. Again, a discrepancy between these curves can suggest potential issues. If the training accuracy skyrockets while validation accuracy remains stagnant or decreases, that's a red flag. The model may be overly focused on the training data and therefore not be performing well with data outside its experience.
 
 It's important to note that ‘good’ curves aren't universally defined. What constitutes acceptable performance depends on the specific problem, dataset, and application. However, a generally healthy situation involves:
+
 1.  Decreasing training loss.
 2.  Decreasing validation loss initially.
 3.  Convergence of both training and validation losses over time.
@@ -24,6 +25,7 @@ It's important to note that ‘good’ curves aren't universally defined. What c
 Let’s make this more concrete. Below are three Python code snippets, each illustrating some of the concepts we’ve discussed. I will be using the scikit-learn library as an example but the principles hold in any ML/DL framework:
 
 **Snippet 1: Illustrating Underfitting and Overfitting.**
+
 ```python
 import numpy as np
 from sklearn.linear_model import LinearRegression
@@ -68,9 +70,11 @@ plt.xlabel('X'); plt.ylabel('y'); plt.legend();plt.title('Underfitting and Overf
 plt.show()
 
 ```
-*Explanation:* In this snippet, we’re generating simple data that's linearly correlated with noise. The underfitting model (a simple linear model) doesn’t capture the complexity of the data. The overfitting model (a high-degree polynomial) has very low training loss, but because we are fitting to noise in the training data this performance doesn't generalise to the validation set (higher validation loss).
+
+_Explanation:_ In this snippet, we’re generating simple data that's linearly correlated with noise. The underfitting model (a simple linear model) doesn’t capture the complexity of the data. The overfitting model (a high-degree polynomial) has very low training loss, but because we are fitting to noise in the training data this performance doesn't generalise to the validation set (higher validation loss).
 
 **Snippet 2: Illustrating Ideal Training**
+
 ```python
 import numpy as np
 from sklearn.linear_model import Ridge
@@ -105,7 +109,8 @@ plt.xlabel('X'); plt.ylabel('y'); plt.legend();plt.title('Ideal Model Fit')
 plt.show()
 
 ```
-*Explanation:* Here, we are using the same dataset, but a ridge regression model with l2 regularization and the results show that our model can both fit the training set well and perform well on the validation set, without overfitting to the noise as before.
+
+_Explanation:_ Here, we are using the same dataset, but a ridge regression model with l2 regularization and the results show that our model can both fit the training set well and perform well on the validation set, without overfitting to the noise as before.
 
 **Snippet 3: Illustrating Plotting Loss and Accuracy curves.**
 
@@ -165,7 +170,8 @@ plt.tight_layout()
 plt.show()
 
 ```
-*Explanation:* This snippet simulates the process of generating loss and accuracy curves from training a logistic regression model over a number of epochs (optimisation steps). In this specific example, both training and validation accuracy increase as training goes on while the loss drops. This scenario represents a well behaved model which could be improved with a few more training epochs.
+
+_Explanation:_ This snippet simulates the process of generating loss and accuracy curves from training a logistic regression model over a number of epochs (optimisation steps). In this specific example, both training and validation accuracy increase as training goes on while the loss drops. This scenario represents a well behaved model which could be improved with a few more training epochs.
 
 Finally, a few recommendations for further study: For a theoretical understanding of statistical learning and generalization, “The Elements of Statistical Learning” by Hastie, Tibshirani, and Friedman is an excellent resource. On a more practical note, I highly recommend “Deep Learning” by Goodfellow, Bengio, and Courville which has excellent chapters on model training, validation, and evaluation. Furthermore, reading research papers in areas like neural network optimization and hyperparameter tuning can offer additional valuable perspectives. Specifically, I'd suggest looking into papers on regularization techniques, batch normalization and learning rate scheduling.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-txt-file-be-converted-to-a-python-dictionary"
 ---
 
-Alright, let’s tackle this. Converting a plain text file to a python dictionary, something I've bumped into more times than I care to count, isn't a monolithic task. It really boils down to the structure of your text file. Is it simple key-value pairs? More complex nested data? Let's walk through some common scenarios and their respective solutions.
+, let’s tackle this. Converting a plain text file to a python dictionary, something I've bumped into more times than I care to count, isn't a monolithic task. It really boils down to the structure of your text file. Is it simple key-value pairs? More complex nested data? Let's walk through some common scenarios and their respective solutions.
 
 I've been there, staring at a large text file, thinking "surely there's a better way than manually parsing this." And there is, of course, Python’s strength often lies in its elegant handling of data manipulation. My experiences range from dealing with configuration files for legacy systems to parsing raw log outputs, so this conversion process is pretty close to home for me.
 
@@ -119,6 +119,7 @@ occupation: Mathematician
 type: Enigma
 location: Bletchley Park
 ```
+
 This example looks a little like configuration files you might find in the wild. Here is how you can parse this into a nested dictionary:
 
 ```python
@@ -169,15 +170,16 @@ if __name__ == "__main__":
         print(data_dictionary)
         # Output: {'person': {'name': 'Alan Turing', 'age': '41', 'occupation': 'Mathematician'}, 'machine': {'type': 'Enigma', 'location': 'Bletchley Park'}}
 ```
+
 Here I use regular expressions to identify sections, defined by the square brackets. If the line is not a header, it adds the parsed value to the correct section in the result dictionary. This is more complex, but it handles files where there's a clear hierarchy of data, and is a common configuration file structure. This also has error checks built-in.
 
 **Resources:**
 
 To deepen your understanding, I would highly recommend looking into the following resources:
 
-*   **"Fluent Python" by Luciano Ramalho:** This book provides an extensive look at Python's data structures, including dictionaries and how to effectively manipulate them. Especially helpful for more complex scenarios.
-*   **Python's `csv` module documentation:** The official documentation is a very clear and concise explanation of how the csv module handles various delimited file formats. You should absolutely familiarize yourself with this.
-*   **Regular Expression Operations documentation:** Knowing regex is vital to extract data when delimiters aren't enough. Take a look at the official Python regex library and practice with different examples.
+- **"Fluent Python" by Luciano Ramalho:** This book provides an extensive look at Python's data structures, including dictionaries and how to effectively manipulate them. Especially helpful for more complex scenarios.
+- **Python's `csv` module documentation:** The official documentation is a very clear and concise explanation of how the csv module handles various delimited file formats. You should absolutely familiarize yourself with this.
+- **Regular Expression Operations documentation:** Knowing regex is vital to extract data when delimiters aren't enough. Take a look at the official Python regex library and practice with different examples.
 
 These provide a strong foundation for parsing various text file formats.
 

@@ -4,18 +4,18 @@ date: "2024-12-16"
 id: "how-can-graphql-query-looprings-nfts"
 ---
 
-Okay, let’s tackle this. It’s a question I remember grappling with quite a bit, specifically around 2022 when we were integrating with the Loopring L2 solution for a marketplace. Initially, querying on-chain NFT data through traditional means—like direct calls to the smart contract or even leveraging the Loopring API—proved less than ideal, especially for the nuanced, aggregated data we needed for user interfaces. GraphQL became a natural avenue to explore for its inherent flexibility in data fetching. Let’s break down how one might construct such a solution and the key considerations.
+, let’s tackle this. It’s a question I remember grappling with quite a bit, specifically around 2022 when we were integrating with the Loopring L2 solution for a marketplace. Initially, querying on-chain NFT data through traditional means—like direct calls to the smart contract or even leveraging the Loopring API—proved less than ideal, especially for the nuanced, aggregated data we needed for user interfaces. GraphQL became a natural avenue to explore for its inherent flexibility in data fetching. Let’s break down how one might construct such a solution and the key considerations.
 
-The fundamental challenge here isn’t merely *can* you query Loopring NFTs, but rather *how efficiently and effectively* can you do so? Loopring itself, being a layer-two scaling solution on Ethereum, doesn't expose a direct GraphQL interface for all its on-chain data. That means our strategy needs to bridge a gap—we need to get the data from its source (on-chain, indexers, or loopring api) and then format it for graphql consumption.
+The fundamental challenge here isn’t merely _can_ you query Loopring NFTs, but rather _how efficiently and effectively_ can you do so? Loopring itself, being a layer-two scaling solution on Ethereum, doesn't expose a direct GraphQL interface for all its on-chain data. That means our strategy needs to bridge a gap—we need to get the data from its source (on-chain, indexers, or loopring api) and then format it for graphql consumption.
 
 Firstly, it’s essential to understand the various data sources. The Loopring API offers a starting point, providing access to account information, transactions, and NFT holdings. However, it's not graphql friendly and doesn't provide complex filtering or aggregation on-the-fly. Secondly, there are third-party indexers that track blockchain data, such as subgraph (though no official subgraph exists for loopring, but the idea of it is applicable). These can be a valuable source for querying specific types of NFT data but requires trusting external providers. Finally, there is always the option of directly reading from the Loopring smart contract on the Ethereum network, which is most robust but extremely taxing on infrastructure. Ideally, we aim for a hybrid approach that best utilises these data sources.
 
 The crucial piece is developing a GraphQL server that acts as the middleman, consolidating data from these diverse sources. This server defines our schema, describing the fields and types available for querying, and implements resolvers that actually fetch the data. A key step in this is defining our schema based on how our users interact with NFT data. What kind of filtering, sorting, and aggregation do they need? Usually, this entails designing queries to retrieve:
 
-*   **NFT Metadata:** Details like the name, description, image URL, and associated attributes.
-*   **Ownership Information:** Who owns each NFT, transaction history, and transfer data.
-*   **Collection Data:** Information about collections, such as the total supply and the creator’s address.
-*   **User Specific Data:** Which nfts they have, how many, and in which collection.
+- **NFT Metadata:** Details like the name, description, image URL, and associated attributes.
+- **Ownership Information:** Who owns each NFT, transaction history, and transfer data.
+- **Collection Data:** Information about collections, such as the total supply and the creator’s address.
+- **User Specific Data:** Which nfts they have, how many, and in which collection.
 
 Now, let's look at some code examples. Note these are illustrative and would require integration with actual loopring endpoints, but the structure is valid and generally applicable.
 
@@ -64,6 +64,7 @@ def resolve_user_nfts(obj, info, accountId):
 
     return nfts
 ```
+
 This example illustrates the very basic way to go about this by simulating calls to the loopring API. In a production environment, this would entail error handling, caching, rate limiting, and pagination.
 
 **Example 2: Using Indexed Data with Filters**
@@ -78,22 +79,22 @@ type NFTMetadata {
 }
 
 type NFT {
-    id: ID!
-    contractAddress: String!
-    tokenID: String!
-    metadata: NFTMetadata
-    ownerAddress: String!
-    collection: String!
+  id: ID!
+  contractAddress: String!
+  tokenID: String!
+  metadata: NFTMetadata
+  ownerAddress: String!
+  collection: String!
 }
 
 type Query {
-    nfts(
-      contractAddress: String,
-      collection: String,
-      ownerAddress: String,
-      first: Int,
-      skip: Int
-    ): [NFT]
+  nfts(
+    contractAddress: String
+    collection: String
+    ownerAddress: String
+    first: Int
+    skip: Int
+  ): [NFT]
 }
 ```
 
@@ -156,11 +157,11 @@ type NFTMetadata {
 }
 
 type NFT {
-    id: ID!
-    contractAddress: String!
-    tokenID: String!
-    metadata: NFTMetadata
-    ownerAddress: String!
+  id: ID!
+  contractAddress: String!
+  tokenID: String!
+  metadata: NFTMetadata
+  ownerAddress: String!
 }
 
 type Query {
@@ -214,6 +215,6 @@ def resolve_nft(obj, info, contractAddress, tokenID):
 
 This last snippet demonstrates the most complex scenario, where data is retrieved directly from the smart contract by first fetching the token metadata URI and then making a request to that URI to retrieve the metadata. This is the most reliable but also the most resource-intensive.
 
-For further understanding, I’d recommend looking at *“GraphQL: From Data to Query”* by Daniel Winter and *“Programming Ethereum: Building Smart Contracts and DApps”* by Andreas Antonopoulos and Gavin Wood to get a deeper understanding on Web3 related issues. For more advanced concepts about building these kind of data pipelines for chain-like information, the *“Designing Data-Intensive Applications”* by Martin Kleppmann will provide important information on building resilient systems.
+For further understanding, I’d recommend looking at _“GraphQL: From Data to Query”_ by Daniel Winter and _“Programming Ethereum: Building Smart Contracts and DApps”_ by Andreas Antonopoulos and Gavin Wood to get a deeper understanding on Web3 related issues. For more advanced concepts about building these kind of data pipelines for chain-like information, the _“Designing Data-Intensive Applications”_ by Martin Kleppmann will provide important information on building resilient systems.
 
 To sum it up, querying Loopring NFTs via GraphQL is definitely achievable. It's a process that involves architecting a system capable of gathering data from various sources and presenting a clear and flexible schema via a GraphQL API. The key is understanding the trade-offs between data sources and implementing a pragmatic system that fits the needs of the user applications.

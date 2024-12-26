@@ -4,13 +4,13 @@ date: "2024-12-16"
 id: "why-isnt-the-perceptron-algorithm-converging-properly"
 ---
 
-Alright, let’s tackle this. I’ve certainly spent my fair share of late nights debugging perceptron issues, and I can tell you, it’s rarely a single, obvious cause. The apparent simplicity of the algorithm can be deceptive, and the reasons for non-convergence can range from subtle implementation quirks to fundamental problems with the dataset itself.
+, let’s tackle this. I’ve certainly spent my fair share of late nights debugging perceptron issues, and I can tell you, it’s rarely a single, obvious cause. The apparent simplicity of the algorithm can be deceptive, and the reasons for non-convergence can range from subtle implementation quirks to fundamental problems with the dataset itself.
 
 I remember one particularly frustrating project back when I was working on a rudimentary image recognition system. The core of it relied on a perceptron, and I was absolutely baffled when it wouldn’t converge, despite what seemed like a perfectly reasonable dataset. We spent days examining the code, tweaking the learning rate, and questioning the sanity of the universe in general. What eventually emerged was a combination of a few factors, which, I've found, are surprisingly common. Let's delve into those and how to approach them.
 
 First off, and perhaps most frequently, a non-linearly separable dataset is the culprit. The perceptron algorithm, in its most basic form, is designed to find a hyperplane that perfectly separates two classes. If such a hyperplane doesn't exist, because the classes are intertwined or overlapping in the feature space, convergence will fail. The perceptron will oscillate, perpetually adjusting its weights without ever settling on a stable solution. Think of it as trying to draw a straight line that perfectly divides a circle of red dots from a circle of blue dots where the circles are slightly overlapping—it's simply impossible. You'll see this as the error term (or cost function if you have one) fluctuating instead of decreasing towards zero.
 
-To address this, you have a couple of options. The first is to move to a more complex model. The perceptron's limitation is its linear nature. You might need to explore algorithms like multilayer perceptrons (also known as neural networks), support vector machines (SVMs) with non-linear kernels, or other more powerful techniques if you're working with data that has inherently non-linear relationships. Another approach, which can be surprisingly effective, is feature engineering. Can you create new features, perhaps by combining or transforming existing ones, that *do* make the data more linearly separable? For example, if your original features are coordinates (x, y), maybe features like distance from the center or the square of the x-coordinate make the data separable.
+To address this, you have a couple of options. The first is to move to a more complex model. The perceptron's limitation is its linear nature. You might need to explore algorithms like multilayer perceptrons (also known as neural networks), support vector machines (SVMs) with non-linear kernels, or other more powerful techniques if you're working with data that has inherently non-linear relationships. Another approach, which can be surprisingly effective, is feature engineering. Can you create new features, perhaps by combining or transforming existing ones, that _do_ make the data more linearly separable? For example, if your original features are coordinates (x, y), maybe features like distance from the center or the square of the x-coordinate make the data separable.
 
 Let's illustrate a basic perceptron using Python that fails due to a non-separable dataset. The dataset I’ll create has points that aren’t easily separated.
 
@@ -71,9 +71,10 @@ print("Weights with decay:", weights) # Output will now tend towards a stable va
 print("Bias with decay:", bias)
 
 ```
+
 In the above case, the decay mechanism helps achieve a stable weight set.
 
-Finally, a less commonly discussed but vital factor is poor initialization of the weights. While it's often the case to initialize weights randomly, sometimes this random initialization can put the algorithm in a poor starting position in the optimization landscape. You may be starting very far away from any solution, or in a region where there is no significant gradient to propel training. While not directly causing non-convergence, a poor initialization can significantly slow it down, to the point where it might *appear* that the algorithm isn't converging.
+Finally, a less commonly discussed but vital factor is poor initialization of the weights. While it's often the case to initialize weights randomly, sometimes this random initialization can put the algorithm in a poor starting position in the optimization landscape. You may be starting very far away from any solution, or in a region where there is no significant gradient to propel training. While not directly causing non-convergence, a poor initialization can significantly slow it down, to the point where it might _appear_ that the algorithm isn't converging.
 
 Experimenting with different initialization techniques, such as Xavier or He initialization, might help in these scenarios. They help ensure that the initial weights are more compatible with the scale of the data and reduce the likelihood of exploding or vanishing gradients early in the training.
 

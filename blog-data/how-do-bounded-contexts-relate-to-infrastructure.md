@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-bounded-contexts-relate-to-infrastructure"
 ---
 
-Alright, let's tackle this. Thinking back to a project I was on several years ago, the complexities of integrating multiple microservices, each with its own data store, really hammered home the importance of bounded contexts and their direct impact on infrastructure choices. We started with a monolithic application—classic, I know—and the migration to microservices forced us to really confront how those contexts delineated not only our domain logic but also our infrastructure needs. It's not just about drawing boxes on a whiteboard; it's about making practical decisions that affect deployment, data management, and even team structures.
+, let's tackle this. Thinking back to a project I was on several years ago, the complexities of integrating multiple microservices, each with its own data store, really hammered home the importance of bounded contexts and their direct impact on infrastructure choices. We started with a monolithic application—classic, I know—and the migration to microservices forced us to really confront how those contexts delineated not only our domain logic but also our infrastructure needs. It's not just about drawing boxes on a whiteboard; it's about making practical decisions that affect deployment, data management, and even team structures.
 
 So, how do bounded contexts relate to infrastructure? In essence, a well-defined bounded context acts as a blueprint for its corresponding infrastructural needs. It dictates the types of technologies we use, how we deploy them, and even how we scale them. A bounded context, at its core, encapsulates a specific area of the domain, defining its language, models, and the business logic relevant only within its own boundaries. This separation, far from being just a conceptual exercise, directly influences the technological stack employed. When thinking about the infrastructure, we're not merely considering hardware but also the deployment strategies, databases, message queues, and all the operational necessities that keep the application running.
 
@@ -91,7 +91,7 @@ class OrderStore:
       self.conn.close()
 ```
 
-Here, sqlite3 is used to provide a simple, transactional database. While this is just an example, you can imagine we would use a more robust solution in production. The key takeaway is that the *type* of database is chosen based on the needs of the bounded context.
+Here, sqlite3 is used to provide a simple, transactional database. While this is just an example, you can imagine we would use a more robust solution in production. The key takeaway is that the _type_ of database is chosen based on the needs of the bounded context.
 
 **Example 3: Inter-Context Communication**
 

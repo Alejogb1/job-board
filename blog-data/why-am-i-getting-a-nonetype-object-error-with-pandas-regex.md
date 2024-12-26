@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-a-nonetype-object-error-with-pandas-regex"
 ---
 
-Okay, let’s unpack this common "NoneType" error you're encountering with pandas regex operations. It's a frequent hiccup, and honestly, I've probably debugged variations of this more times than I care to remember. The core issue stems from the way pandas' string accessor methods handle regular expressions when a match isn't found. Instead of returning an empty string or another sentinel value, they gracefully—or perhaps not-so-gracefully in this case—return `None`, and subsequently, any attempts to use methods on this `None` value result in a `NoneType` object error.
+, let’s unpack this common "NoneType" error you're encountering with pandas regex operations. It's a frequent hiccup, and honestly, I've probably debugged variations of this more times than I care to remember. The core issue stems from the way pandas' string accessor methods handle regular expressions when a match isn't found. Instead of returning an empty string or another sentinel value, they gracefully—or perhaps not-so-gracefully in this case—return `None`, and subsequently, any attempts to use methods on this `None` value result in a `NoneType` object error.
 
 I recall a project several years ago, we were scraping website data for an e-commerce client, and a crucial step involved extracting specific numerical values from product descriptions using regex. We initially approached it directly, thinking it was straightforward enough; the product descriptions, however, were a free-for-all, a real mixed bag of formats. When our code inevitably tripped up on a description that lacked the anticipated numeric pattern, bam! `NoneType` errors scattered across our logs like fallen leaves in autumn. It wasn't just irritating; it actually halted the entire data processing pipeline.
 
@@ -23,7 +23,9 @@ print(df)
 print(df['price'].dtype)
 
 ```
+
 This will yield the following output :
+
 ```
        product   price
 0   Laptop: $1200  1200
@@ -32,6 +34,7 @@ This will yield the following output :
 3     Headphones  None
 object
 ```
+
 As you can observe, when no price is found, we get ‘None’ values. And ‘None’ is an `object` type. If we were to attempt a numeric operation using this column without handling None values first we get a `NoneType` error. For example: `df['price'].astype(int)` would fail, as python's int() cannot convert a 'None' value.
 
 One robust strategy I frequently adopt is to combine regex operations with the `.fillna()` method to explicitly handle cases where no match is found. This allows us to substitute a sensible default value—often an empty string or a specified placeholder. Here’s how I typically approach that:
@@ -46,6 +49,7 @@ df['price'] = df['product'].str.extract(r'\$([\d]+)').fillna('0').astype(int)
 print(df)
 print(df['price'].dtype)
 ```
+
 Here, we explicitly fill the `None` values with '0', and then we can convert the type to an integer, without errors.
 
 However, let's say you're dealing with a scenario where extracting multiple matches is necessary, a situation where `str.extractall()` comes into play. It's even more prone to generating unexpected `None` types. For example, we might want to extract all the numeric values, let’s say, product sizes, from text:
@@ -60,14 +64,17 @@ extracted_sizes = df['product'].str.extractall(r'(\d+) inch')
 print(extracted_sizes)
 
 ```
+
 The output is as follows:
+
 ```
              0
-  match  
+  match
 0 0         13
 1 0         10
 2 0          7
 ```
+
 Notice here, that rows 3 is completely absent. If we want to keep all rows, with a default value in case of no match, we need to do something slightly different:
 
 ```python
@@ -80,6 +87,7 @@ extracted_sizes = df['product'].apply(lambda x: re.findall(r'(\d+) inch', x) or 
 df['sizes'] = extracted_sizes
 print(df)
 ```
+
 Here, we have explicitly handle missing matches. We use python’s `re` module’s findall function, and supply a default value `[None]` if there is no match. This results in the following output:
 
 ```

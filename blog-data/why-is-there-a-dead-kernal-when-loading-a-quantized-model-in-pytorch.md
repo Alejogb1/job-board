@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "why-is-there-a-dead-kernal-when-loading-a-quantized-model-in-pytorch"
 ---
 
-alright, so, a dead kernel when loading a quantized pytorch model, right? i’ve been there, seen that, got the t-shirt. it’s a frustrating one, and it usually comes down to a few key things, mostly involving mismatches in your environment or how the quantization was actually performed. let me walk you through it based on my own painful experiences.
+, so, a dead kernel when loading a quantized pytorch model, right? i’ve been there, seen that, got the t-shirt. it’s a frustrating one, and it usually comes down to a few key things, mostly involving mismatches in your environment or how the quantization was actually performed. let me walk you through it based on my own painful experiences.
 
-first off, let's clarify what “dead kernel” generally means in this context. it means the python process running your pytorch code crashes unexpectedly. it’s a hard crash, no traceback, no helpful error message – just *poof*, gone. it's like your computer suddenly decided to take a nap without telling you. this is often the result of an issue deep within the c++ backend that pytorch uses, which isn't always surfaced gracefully to the python layer.
+first off, let's clarify what “dead kernel” generally means in this context. it means the python process running your pytorch code crashes unexpectedly. it’s a hard crash, no traceback, no helpful error message – just _poof_, gone. it's like your computer suddenly decided to take a nap without telling you. this is often the result of an issue deep within the c++ backend that pytorch uses, which isn't always surfaced gracefully to the python layer.
 
 my first rodeo with this was back in the day when i was trying to deploy a mobile image classifier. i’d gone through the whole quantization process, felt like i’d nailed it, and then bam, the dead kernel monster reared its ugly head. the code, which ran perfectly fine with the original floating-point model, died silently. after hours of printf debugging and a lot of caffeine i traced the issue to the architecture mismatch between my quantization environment and my deployment environment.
 
@@ -73,6 +73,7 @@ calibrate_model(model_prepared, dataloader)
 #perform quantization
 model_quantized = torch.quantization.convert(model_prepared)
 ```
+
 in the above code make sure that the dataset provided for the calibration process really represents the data that will be used for the inference.
 
 furthermore, pytorch version mismatches can also lead to problems. if your training environment is running pytorch version x.y.z, but your deployment is running a different version, say x.a.b, you may face dead kernels. the quantization process can be tied very tightly to the specifics of each pytorch version and the quantization algorithms implementation used, sometimes even in very low levels. it’s good practice to keep your environments identical and also very important to re-train your model when you upgrade pytorch as it’s usually not backward compatible.

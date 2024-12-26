@@ -4,23 +4,23 @@ date: "2024-12-15"
 id: "why-jetbrains-ides-how-to-add-a-semicolon-automatically"
 ---
 
-alright, so you're looking at automatically adding semicolons in jetbrains ides. this is a classic, and i've been down this rabbit hole myself more times than i care to count. let me break down what i've learned, and what i've found works well.
+, so you're looking at automatically adding semicolons in jetbrains ides. this is a classic, and i've been down this rabbit hole myself more times than i care to count. let me break down what i've learned, and what i've found works well.
 
-first off, it’s good to understand *why* this even matters. for me, it started back in my early days of javascript when i was switching between languages that did and didn’t require semicolons. i'd constantly forget them, and i got tired of the linter yelling at me and of the unexpected weird behaviours. i remember this one project using node.js and it was really a nightmare because of this issue. it was some kind of backend thing to control some custom hardware. the company decided to adopt a semicolons-mandatory style rule and i had to re-format the whole codebase because some developers did not use them, it was quite a task. that experience, needless to say, made me really appreciate automatic semicolon insertion. i wanted to avoid that pain in the future. the same happened when i had to work with typescript after a long java period. the transition was a bit hard at the beginning. so, yeah, semicolons matter, or at least, consistency in the use of semicolons matters.
+first off, it’s good to understand _why_ this even matters. for me, it started back in my early days of javascript when i was switching between languages that did and didn’t require semicolons. i'd constantly forget them, and i got tired of the linter yelling at me and of the unexpected weird behaviours. i remember this one project using node.js and it was really a nightmare because of this issue. it was some kind of backend thing to control some custom hardware. the company decided to adopt a semicolons-mandatory style rule and i had to re-format the whole codebase because some developers did not use them, it was quite a task. that experience, needless to say, made me really appreciate automatic semicolon insertion. i wanted to avoid that pain in the future. the same happened when i had to work with typescript after a long java period. the transition was a bit hard at the beginning. so, yeah, semicolons matter, or at least, consistency in the use of semicolons matters.
 
-now, let's dive into how jetbrains ides handle this. essentially, the auto-completion that happens when you are writing, and the reformatting capabilities are what we're going to be exploiting here.  there isn't a single, giant 'add semicolons' button. it's more about configuring the ide to insert them in the correct places as you code and, of course, when reformatting.
+now, let's dive into how jetbrains ides handle this. essentially, the auto-completion that happens when you are writing, and the reformatting capabilities are what we're going to be exploiting here. there isn't a single, giant 'add semicolons' button. it's more about configuring the ide to insert them in the correct places as you code and, of course, when reformatting.
 
 the key part lives in the settings. here's where you need to go:
 
-*   open your jetbrains ide (e.g., intellij idea, pycharm, webstorm, etc)
-*   go to ‘file’ -> ‘settings’ (or ‘intellij idea’ -> ‘preferences’ on macos).
-*   navigate to ‘editor’ -> ‘code style’
-*   select the language you are working with (javascript, typescript, kotlin, etc.)
-*   check for something named like "use semicolons" or something related.
+- open your jetbrains ide (e.g., intellij idea, pycharm, webstorm, etc)
+- go to ‘file’ -> ‘settings’ (or ‘intellij idea’ -> ‘preferences’ on macos).
+- navigate to ‘editor’ -> ‘code style’
+- select the language you are working with (javascript, typescript, kotlin, etc.)
+- check for something named like "use semicolons" or something related.
 
 each language has its own specific way to configure code style, but usually the important options will be related with semicolon-handling. look for the 'punctuation' or 'other' tab if you don't see it immediately. enable the option to "enforce semicolons" or something similar. this is the first and most important step.
 
-once that is set, the ide should start adding semicolons in auto-completion contexts and during code formatting. but this leads to the next question... what about *existing* code that doesn't have semicolons?
+once that is set, the ide should start adding semicolons in auto-completion contexts and during code formatting. but this leads to the next question... what about _existing_ code that doesn't have semicolons?
 
 here's where the ‘reformat code’ function comes into play. use it after having enabled the setting. it’s usually a keyboard shortcut. `ctrl+alt+l` (or `cmd+alt+l` on macos) is the standard one but you can customize it. this shortcut will format the code based on the code style settings that you just configured. that includes adding missing semicolons based on the rule you’ve just configured.
 
@@ -28,10 +28,10 @@ let me give you an example. imagine i have javascript code like this:
 
 ```javascript
 function calculateSum(a, b) {
-  let sum = a + b
-  return sum
+  let sum = a + b;
+  return sum;
 }
-console.log(calculateSum(5, 3))
+console.log(calculateSum(5, 3));
 ```
 
 after using `ctrl+alt+l` with the right semicolon configuration, it transforms into:
@@ -51,31 +51,31 @@ here’s another example. i work a lot with typescript. a common scenario would 
 
 ```typescript
 interface User {
-  id: number
-  name: string
-  email: string
+  id: number;
+  name: string;
+  email: string;
 }
 
-const myUser:User = {
-    id: 1,
-    name:"John Doe",
-    email: "john@example.com"
-}
+const myUser: User = {
+  id: 1,
+  name: "John Doe",
+  email: "john@example.com",
+};
 ```
 
 and after reformatting with `ctrl+alt+l` we get
 
 ```typescript
 interface User {
-    id: number;
-    name: string;
-    email: string;
+  id: number;
+  name: string;
+  email: string;
 }
 
 const myUser: User = {
-    id: 1,
-    name: "John Doe",
-    email: "john@example.com"
+  id: 1,
+  name: "John Doe",
+  email: "john@example.com",
 };
 ```
 

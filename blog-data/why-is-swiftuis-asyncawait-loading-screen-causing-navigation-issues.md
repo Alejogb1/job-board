@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-swiftuis-asyncawait-loading-screen-causing-navigation-issues"
 ---
 
-Alright, let’s unpack this SwiftUI async/await loading screen navigation conundrum. I've certainly seen my share of these quirks crop up, having spent a good chunk of time working on iOS applications that rely heavily on asynchronous data loading. It’s a fairly common pitfall, and it stems from a subtle interplay between SwiftUI’s declarative nature and the imperative actions often associated with data fetching.
+, let’s unpack this SwiftUI async/await loading screen navigation conundrum. I've certainly seen my share of these quirks crop up, having spent a good chunk of time working on iOS applications that rely heavily on asynchronous data loading. It’s a fairly common pitfall, and it stems from a subtle interplay between SwiftUI’s declarative nature and the imperative actions often associated with data fetching.
 
 The core issue isn't necessarily with async/await itself, which is a fantastic feature for streamlining asynchronous code. Instead, the problem lies in how SwiftUI's view updates interact with navigation transitions and the timing of those async tasks. When you initiate an asynchronous loading process and then attempt to programmatically navigate, or let the user tap a navigation element while the loading is still in progress, it can lead to race conditions or view state inconsistencies that manifest as those irritating navigation glitches.
 
@@ -96,9 +96,9 @@ class AppState: ObservableObject {
     func loginUser() async {
         isLoading = true
         defer { isLoading = false }
-        
+
         try? await Task.sleep(nanoseconds: 2_000_000_000)
-        
+
         isLoggedIn = true
     }
 }

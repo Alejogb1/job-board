@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-snippet-problems-arose-after-upgrading-wagtail-from-113-to-20"
 ---
 
-Okay, let's tackle this. I recall a rather involved migration project a few years back, moving a large content platform from Wagtail 1.13 to 2.0. The upgrade itself, while largely smooth, surfaced a few significant issues concerning snippets that required some thoughtful restructuring. It wasn't a simple find-and-replace, that's for sure.
+, let's tackle this. I recall a rather involved migration project a few years back, moving a large content platform from Wagtail 1.13 to 2.0. The upgrade itself, while largely smooth, surfaced a few significant issues concerning snippets that required some thoughtful restructuring. It wasn't a simple find-and-replace, that's for sure.
 
 The core problem stemmed from a combination of changes introduced in Wagtail 2.0, specifically how snippets are managed and referenced within page models. The old model, using `ForeignKey` relationships with the `related_name` attribute, had a tendency to become a bit… unwieldy. Let's break it down.
 
@@ -126,8 +126,8 @@ This script illustrates how we iterated through all instances of the `HomePage` 
 
 For anyone facing similar issues, I recommend thoroughly familiarizing themselves with the following:
 
-*   **The Wagtail documentation on StreamFields:** The official Wagtail documentation is your best starting point. Pay special attention to how `StreamBlock` and `StructBlock` types interact.
-*   **"Effective Django" by Jeff Triplett:** This book offers excellent insights into best practices for using Django, Wagtail's underlying framework, and would provide a more foundational knowledge of database design concepts that come in handy here.
-*   **Django's ORM documentation:** Deep understanding of how Django queries work will allow you to identify performance issues resulting from database calls.
+- **The Wagtail documentation on StreamFields:** The official Wagtail documentation is your best starting point. Pay special attention to how `StreamBlock` and `StructBlock` types interact.
+- **"Effective Django" by Jeff Triplett:** This book offers excellent insights into best practices for using Django, Wagtail's underlying framework, and would provide a more foundational knowledge of database design concepts that come in handy here.
+- **Django's ORM documentation:** Deep understanding of how Django queries work will allow you to identify performance issues resulting from database calls.
 
 In summary, the move from Wagtail 1.13 to 2.0, while improving maintainability and flexibility, introduced significant changes regarding snippet handling. The shift to `StreamFields` meant data migration scripts were essential, requiring a deep dive into the way content is stored and handled. Learning and documenting the changes is a key factor for a successful migration. By addressing these considerations during your planning and execution, you can significantly reduce pain points during the migration and unlock the full potential of the new architecture, creating more flexible and reusable content.

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-am-i-getting-issues-with-callback-query-handlers-in-a-bot"
 ---
 
-Okay, let's tackle this. Callback query handler issues in bots—it’s a familiar frustration, and I’ve certainly spent my share of late nights debugging them. The symptoms can vary, but they usually boil down to the bot not reacting as expected when a user interacts with an inline keyboard or a similar element. Here’s what I’ve observed and learned through some real-world debugging battles, coupled with the technical understanding that helped me resolve them.
+, let's tackle this. Callback query handler issues in bots—it’s a familiar frustration, and I’ve certainly spent my share of late nights debugging them. The symptoms can vary, but they usually boil down to the bot not reacting as expected when a user interacts with an inline keyboard or a similar element. Here’s what I’ve observed and learned through some real-world debugging battles, coupled with the technical understanding that helped me resolve them.
 
-Let's start with the fundamental concept: callback queries are messages sent *back* to your bot when a user interacts with an inline button that is associated with a message your bot has sent. Crucially, they're not regular text messages; they’re requests that carry data you embedded within that inline button. The primary problem you're likely experiencing hinges on a mismatch between what the bot expects, and what’s actually arriving in the callback query.
+Let's start with the fundamental concept: callback queries are messages sent _back_ to your bot when a user interacts with an inline button that is associated with a message your bot has sent. Crucially, they're not regular text messages; they’re requests that carry data you embedded within that inline button. The primary problem you're likely experiencing hinges on a mismatch between what the bot expects, and what’s actually arriving in the callback query.
 
 First, let's address what I've seen be a pervasive problem: incorrect data handling. A frequent issue is a mismatch between the data you’re encoding into a callback button and how you're decoding it within your handler. For instance, if you encode a JSON object, but treat it as a plain string, your handler is going to have a bad time.
 
@@ -26,6 +26,7 @@ def create_button_data(question_id, answer_id):
 question_1_button_data = create_button_data(1, "A")
 question_2_button_data = create_button_data(2, "B")
 ```
+
 This creates the data we attach to the buttons. The issue often arises in how this data is parsed on the receiving end. Let's look at a faulty handler example:
 
 ```python
@@ -52,6 +53,7 @@ def handle_callback_query(update, context):
     except json.JSONDecodeError:
         print("Error: Unable to decode callback data.")
 ```
+
 In this example, the initial handler attempts to directly access dictionary keys on a string, which throws an error, or produces unexpected behavior. The corrected implementation demonstrates the correct usage of the `json.loads()` method to parse the incoming data before attempting to extract key-value pairs. This might seem obvious now, but the rush of development often leads to such oversights.
 
 A closely related problem is that your callback data is larger than the permitted limit for some bot api libraries. While Telegram’s API documentation specifies 1-64 bytes, many libraries may use string representations that exceed the limitation. This limit, when exceeded, will cause the callback queries to fail and will be difficult to diagnose. When I was developing a bot that would allow users to select multiple options from a large dataset, I encountered this issue. My initial approach encoded all of the user's selected options directly into the callback data. This worked flawlessly during early testing with a small number of selected items but failed catastrophically once the user had selected a larger set, because the string was now too long.
@@ -101,6 +103,7 @@ def handle_callback_query(update, context):
         print("Error: Unable to decode callback data.")
 
 ```
+
 This approach is better because the callback data remains concise, as we are not storing all the selection options inside the callback. In this example we generate a unique id for the selected options, persist the mapping to the server, and then send that id in the callback data. Then we just look up the user selections in the callback handler using the generated id.
 
 Another common mistake, and one I've certainly made, is neglecting to acknowledge the callback query. It’s not enough to just process the query; you have to tell Telegram that your bot received it. Failing to do so might cause the client to display a loading animation indefinitely to the user, and potentially lead to the client not receiving future updates. This acknowledgement, usually done through methods like `query.answer()` in python-telegram-bot, ensures the user experience is seamless. It also plays a crucial role in preventing your bot from being overwhelmed or flagged as unresponsive. The issue often occurs when debugging and adding breakpoints in between code segments, preventing the acknowledgement from being called which can lead to a frustrating user experience.

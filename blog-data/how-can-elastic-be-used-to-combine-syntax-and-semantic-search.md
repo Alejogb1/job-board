@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-elastic-be-used-to-combine-syntax-and-semantic-search"
 ---
 
-Okay, let’s tackle this. I’ve seen my share of search implementations, and the blend of syntax and semantics is often where things get…interesting. It’s not just about keyword matching or some fancy natural language processing (nlp) bolt-on. It’s about understanding the user's *intent* in conjunction with the *structure* of their query and the data itself.
+, let’s tackle this. I’ve seen my share of search implementations, and the blend of syntax and semantics is often where things get…interesting. It’s not just about keyword matching or some fancy natural language processing (nlp) bolt-on. It’s about understanding the user's _intent_ in conjunction with the _structure_ of their query and the data itself.
 
 In my past life, managing the backend search infrastructure for a content platform with millions of articles, we ran into this problem head-on. Pure keyword-based searches were returning a lot of noise, and relying solely on pre-trained embeddings proved too computationally expensive and sometimes not granular enough for our specific needs. We had to devise a hybrid approach combining the strengths of both.
 
-First, let’s break down what we mean by "syntax" and "semantics" in this context. *Syntax* is essentially the structure of the query. Think of it as the specific words used, their order, and any Boolean operators or wildcards involved. Elastic's full-text search capabilities, like its query DSL with `match` and `bool` queries, are masters of syntax. They’re excellent at finding documents containing specific keywords and at adhering to filters.
+First, let’s break down what we mean by "syntax" and "semantics" in this context. _Syntax_ is essentially the structure of the query. Think of it as the specific words used, their order, and any Boolean operators or wildcards involved. Elastic's full-text search capabilities, like its query DSL with `match` and `bool` queries, are masters of syntax. They’re excellent at finding documents containing specific keywords and at adhering to filters.
 
-*Semantics*, however, is about meaning. It’s the intention behind the user's query. This usually involves a deeper understanding of relationships between words and concepts. For example, searching for "fast cars" should ideally return results containing terms like "high-performance vehicles," "sports cars," or even specific car models known for speed. This goes beyond literal keyword matching.
+_Semantics_, however, is about meaning. It’s the intention behind the user's query. This usually involves a deeper understanding of relationships between words and concepts. For example, searching for "fast cars" should ideally return results containing terms like "high-performance vehicles," "sports cars," or even specific car models known for speed. This goes beyond literal keyword matching.
 
 To blend these two successfully with Elastic, I found a three-pronged strategy particularly effective:
 
@@ -30,7 +30,7 @@ Here's a basic example of a boosted query:
             "title": {
               "query": "quantum computing",
               "boost": 3
-             }
+            }
           }
         },
         {
@@ -39,7 +39,7 @@ Here's a basic example of a boosted query:
           }
         }
       ],
-    "minimum_should_match": 1
+      "minimum_should_match": 1
     }
   }
 }
@@ -49,7 +49,7 @@ This query will prioritize results where "quantum computing" appears in the `tit
 
 **2. Introducing Semantic Search with Text Embeddings and Approximate Nearest Neighbor Search (ANN):**
 
-Here's where we start understanding the meaning behind words. Instead of using just plain text for matching, we can transform our document text into dense vector representations (embeddings). Libraries like sentence-transformers (which are excellent for sentence and paragraph embeddings) or even the built-in vector fields within Elastic can be used for this transformation. These embeddings capture the semantic essence of a text. A sentence like “the vehicle was speedy” will have a vector that’s more similar to “the car had high performance” than to something like “the flower is red”. Once your text is vectorized, we utilize approximate nearest neighbor (ann) search capabilities. The crucial point here is that this allows us to find documents that are *semantically similar* to a query, even if they don’t share the exact keywords. Elastic's built-in `dense_vector` field type with the `knn` query (for k-nearest neighbors) is perfectly suited for this.
+Here's where we start understanding the meaning behind words. Instead of using just plain text for matching, we can transform our document text into dense vector representations (embeddings). Libraries like sentence-transformers (which are excellent for sentence and paragraph embeddings) or even the built-in vector fields within Elastic can be used for this transformation. These embeddings capture the semantic essence of a text. A sentence like “the vehicle was speedy” will have a vector that’s more similar to “the car had high performance” than to something like “the flower is red”. Once your text is vectorized, we utilize approximate nearest neighbor (ann) search capabilities. The crucial point here is that this allows us to find documents that are _semantically similar_ to a query, even if they don’t share the exact keywords. Elastic's built-in `dense_vector` field type with the `knn` query (for k-nearest neighbors) is perfectly suited for this.
 
 Here's an example of indexing documents with dense vectors:
 

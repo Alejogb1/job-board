@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-keras-model-failing-to-compile"
 ---
 
-Alright, let's unpack this. Compiling issues with Keras models can stem from a handful of fairly specific areas, and I’ve definitely navigated this maze more times than I care to remember. It's rarely a single, glaring error, but more often a combination of factors subtly conspiring to prevent a successful build. I'm going to walk through the most common culprits based on my experience, and include some practical code examples that I've seen resolve similar compilation headaches.
+, let's unpack this. Compiling issues with Keras models can stem from a handful of fairly specific areas, and I’ve definitely navigated this maze more times than I care to remember. It's rarely a single, glaring error, but more often a combination of factors subtly conspiring to prevent a successful build. I'm going to walk through the most common culprits based on my experience, and include some practical code examples that I've seen resolve similar compilation headaches.
 
 The fundamental reason a keras model fails to compile is often related to the incompatibility of its constituent parts, specifically the model architecture, the loss function, and the optimizer. These are the key players in the training process and they must play nicely with one another. In a way, it's like ensuring you've selected the correct components from a library before assembling them into something functional.
 
@@ -37,6 +37,7 @@ model_correct.compile(optimizer='adam', loss='categorical_crossentropy', metrics
 
 # Correct compile. No problems here.
 ```
+
 Notice how the corrected example changes the `sigmoid` output to `softmax` to be compatible with `categorical_crossentropy`. A subtle difference, but a crucial one. This highlights the importance of thoroughly understanding the mathematical underpinnings of your chosen activation and loss functions.
 
 Another frequent area that can break the compile process is input shape incompatibility. Keras needs to know the shape of the incoming data to correctly set up all of its internal connections. Let's take a look at another example. There was a time when I was experimenting with convolutional neural networks (CNNs), and I kept running into a compilation wall. After quite some investigation, I realized my input data did not have the same dimensions that my input layer expected. My data had 2 dimensions, when I should have provided data with 3 dimensions due to the `Conv2D` layer needing height, width, and channel information. Keras uses the `input_shape` parameter to specify the expected dimensions for the first layer.
@@ -59,15 +60,15 @@ model_incorrect_input = keras.Sequential([
 try:
     #This should fail
     # model_incorrect_input.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-    
+
     # Sample 2D input data. Shape should be (batch_size, 28, 28) not (batch_size, 28, 28, channels).
     X_incorrect = np.random.rand(100, 28, 28)
     # Uncomment below and it will result in a shape error
     #model_incorrect_input.fit(X_incorrect, np.random.randint(0, 9, size=(100, 1)), epochs = 1)
-    
+
 except ValueError as e:
     print(f"Compilation failed with error: {e}")
-    
+
 # Correct model definition for 3D data.
 model_correct_input = keras.Sequential([
     layers.Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)), # channels added.
@@ -82,6 +83,7 @@ X_correct = np.random.rand(100, 28, 28, 1)
 model_correct_input.fit(X_correct, np.random.randint(0, 9, size=(100, 1)), epochs = 1)
 
 ```
+
 Notice that the `input_shape` in `Conv2D` is modified to account for the missing channels and, crucially, the input data X has the extra dimension to match. In real-world data, this could mean handling color images (3 channel) or monochrome (1 channel).
 
 Thirdly, the `optimizer` is the mechanism through which the model learns. Its parameters and overall choice must be consistent with the chosen loss function and model characteristics. I've encountered cases where, for example, an extremely small learning rate for adam or stochastic gradient descent was used in conjunction with a complex model, which lead to difficulties in training, often manifested as a compilation error. The optimizer needs to be set up to align well with the gradient calculations that come from the loss function. Sometimes the loss is too difficult for the default learning rate, or an optimizer might not be appropriate for the model’s task. For example, `Adam` is typically a safe choice for many models, but in very specific cases, something like `RMSprop` or a modified version of SGD may work better. You may find that a model with non-convex loss may require using an optimizer with momentum. In many cases, the compilation may not fail, but your model may just be very slow to train or not train at all.

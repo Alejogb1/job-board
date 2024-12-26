@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-i-use-the-separate-function-in-r-to-split-a-column-into-as-many-columns-a"
 ---
 
-Okay so you’re wrestling with `separate` in R right splitting one column into multiple based on a delimiter I’ve been there trust me It's a common data wrangling pain point especially when you're dealing with messy data and let me tell you that I know this all too well been there done that got the t-shirt or rather the stack overflow badge
+you’re wrestling with `separate` in R right splitting one column into multiple based on a delimiter I’ve been there trust me It's a common data wrangling pain point especially when you're dealing with messy data and let me tell you that I know this all too well been there done that got the t-shirt or rather the stack overflow badge
 
 First off let’s be clear `separate` from the `tidyr` package is your friend in this scenario It's like a data surgeon it cuts things up neatly into what you need it to be You probably already know `dplyr` if you're using `separate` but just a reminder both are parts of the `tidyverse` which is super useful when you start dealing with more complicated stuff
 
@@ -50,7 +50,7 @@ print(my_data_separated)
 
 ```
 
-Here `col = compound` specifies which column to split `into` is an argument containing a character vector telling the names of the new columns and `sep = "-"` is the separator. Notice how I also used a `tibble` for data so it's more reproducible because people tend to use `data.frames` which is okay but `tibbles` are slightly more refined to be used with `tidyverse` functions
+Here `col = compound` specifies which column to split `into` is an argument containing a character vector telling the names of the new columns and `sep = "-"` is the separator. Notice how I also used a `tibble` for data so it's more reproducible because people tend to use `data.frames` which is but `tibbles` are slightly more refined to be used with `tidyverse` functions
 
 Now you mentioned “as many columns” this is where it gets interesting and can be a pain if you do not think it through carefully `separate` can handle cases with a variable number of split parts it will just create `NA` in the columns if they do not exist so in this case the column parts need to be the same
 
@@ -110,7 +110,7 @@ One thing to keep in mind is that `separate` can be a bit verbose and it's often
 
 Now a little cautionary note if the number of parts on the split varies a lot and you need to perform operations on each part it could be a sign that your data might benefit from a long format data structure instead of the wide format this will mean a lot of reshaping and restructuring using `pivot_longer` and `pivot_wider` but that might be a discussion for another time.
 
-Resources wise for learning more about `tidyr` and data manipulation in general you cannot go wrong with Hadley Wickham’s *R for Data Science* book it is pretty much the bible for data wrangling in R and is available online freely although it’s good to have a hard copy for quick references or you can find several courses on platforms such as Coursera or Datacamp but I am not allowed to give the links here sorry. For a deep dive into string manipulation in R specifically I also would recommend *Hands-On Programming with R* by Garrett Grolemund which has a solid chapter on strings and the `stringr` package. Oh yeah and of course the online documentation for `tidyr` is very comprehensive and usually answers most of the questions.
+Resources wise for learning more about `tidyr` and data manipulation in general you cannot go wrong with Hadley Wickham’s _R for Data Science_ book it is pretty much the bible for data wrangling in R and is available online freely although it’s good to have a hard copy for quick references or you can find several courses on platforms such as Coursera or Datacamp but I am not allowed to give the links here sorry. For a deep dive into string manipulation in R specifically I also would recommend _Hands-On Programming with R_ by Garrett Grolemund which has a solid chapter on strings and the `stringr` package. Oh yeah and of course the online documentation for `tidyr` is very comprehensive and usually answers most of the questions.
 
 And a quick joke for your troubles why did the R programmer quit his job Because he didn't get arrays haha I know it's terrible but I had to anyway.
 

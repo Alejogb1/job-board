@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-create-a-numpy-tuple-from-image-files-or-a-csv"
 ---
 
-Alright, let's tackle this. I've seen variations of this requirement pop up a few times over the years, particularly when dealing with initial data loading for machine learning projects or image processing pipelines. The core of the issue is transforming data from files – whether image files or structured data like CSV – into a NumPy tuple. It’s a useful step, because NumPy arrays (and tuples of them) are often the workhorses of numerical computation in Python. Let’s break it down.
+, let's tackle this. I've seen variations of this requirement pop up a few times over the years, particularly when dealing with initial data loading for machine learning projects or image processing pipelines. The core of the issue is transforming data from files – whether image files or structured data like CSV – into a NumPy tuple. It’s a useful step, because NumPy arrays (and tuples of them) are often the workhorses of numerical computation in Python. Let’s break it down.
 
-The key to successfully creating a NumPy tuple isn’t just the *creation* part; it's also ensuring that the data is in the correct format and efficiently loaded. We're going to handle this by examining different methods depending on the source data type.
+The key to successfully creating a NumPy tuple isn’t just the _creation_ part; it's also ensuring that the data is in the correct format and efficiently loaded. We're going to handle this by examining different methods depending on the source data type.
 
 **First, let's address image files.**
 
@@ -63,7 +63,7 @@ else:
     print("Image loading failed")
 ```
 
-A couple things to point out here: error handling, and proper type checking. I included a try-except inside the loop which lets me handle individual file issues without crashing the whole process. We also check if the directory and the files exist using `os.path` calls to make sure we don't go off the rails right away if something is amiss. Notice that we build up a list `images` and then convert to a tuple *only at the end*, which is generally much more efficient than trying to append to a tuple. The `.lower()` call in the file check also makes it a little more flexible when handling different file extensions with varying capitalization.
+A couple things to point out here: error handling, and proper type checking. I included a try-except inside the loop which lets me handle individual file issues without crashing the whole process. We also check if the directory and the files exist using `os.path` calls to make sure we don't go off the rails right away if something is amiss. Notice that we build up a list `images` and then convert to a tuple _only at the end_, which is generally much more efficient than trying to append to a tuple. The `.lower()` call in the file check also makes it a little more flexible when handling different file extensions with varying capitalization.
 
 **Now, let's move on to CSV files.**
 
@@ -116,6 +116,7 @@ else:
     print("CSV loading failed.")
 
 ```
+
 Again, there is error handling, a try-except structure, and type management, with the assumption that we're dealing with numeric values in the CSV. The important aspect to highlight here is how each row gets processed and added to the results as a NumPy array. We also added the `continue` keyword which prevents us from trying to add un-processed rows to the list—we simply skip them. Remember, sometimes your dataset is messy and you need to handle things gracefully.
 
 **Finally, let's handle a more complex case: loading data where each row in the CSV is a path to another file and you need to load those files.** This is a fairly common scenario in machine learning or data processing applications.
@@ -191,9 +192,9 @@ In all three cases, we first build a list and convert to a tuple at the end to m
 
 For further exploration, I would strongly suggest looking into:
 
-*   **"Numerical Recipes" by William H. Press et al.** This book has excellent information about working with numerical algorithms. The code is generally FORTRAN-based, but the concepts are extremely valuable.
-*   **"Python Data Science Handbook" by Jake VanderPlas.** This is a fantastic resource for learning the ins and outs of NumPy, Pandas, and other data science tools.
-*   **The official NumPy documentation**: It's extensive and well-maintained. Always a great reference point.
-*   **The official `imageio` documentation:** This is another well-maintained source for all its features, file formats, and options.
+- **"Numerical Recipes" by William H. Press et al.** This book has excellent information about working with numerical algorithms. The code is generally FORTRAN-based, but the concepts are extremely valuable.
+- **"Python Data Science Handbook" by Jake VanderPlas.** This is a fantastic resource for learning the ins and outs of NumPy, Pandas, and other data science tools.
+- **The official NumPy documentation**: It's extensive and well-maintained. Always a great reference point.
+- **The official `imageio` documentation:** This is another well-maintained source for all its features, file formats, and options.
 
 These are resources I've found to be helpful throughout my own work and should get you pretty far. Remember that this is a general framework, you might have to adjust this to specific needs in your own projects. Good luck!

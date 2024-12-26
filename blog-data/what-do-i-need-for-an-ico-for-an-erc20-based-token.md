@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-do-i-need-for-an-ico-for-an-erc20-based-token"
 ---
 
-alright, so you're diving into the wonderful world of initial coin offerings, specifically with an erc20 token. i've been there, done that, got the t-shirt – and the lingering feeling of having needed more coffee. let's break down what you’ll actually need. forget the hype, we're talking practicalities here.
+, so you're diving into the wonderful world of initial coin offerings, specifically with an erc20 token. i've been there, done that, got the t-shirt – and the lingering feeling of having needed more coffee. let's break down what you’ll actually need. forget the hype, we're talking practicalities here.
 
 first, the token itself, this is the core. you’re saying erc20 which is good, it means you’re building on ethereum. you’ll need a smart contract that implements the erc20 standard. there are tons of examples out there but it's crucial to understand it instead of blindly copying and pasting. i made that mistake once, back in '17, thought i’d just tweak some code i found on a forum. ended up with a token that would mint to the moon but not transfer properly, what a headache. look, you need to understand the nuances of `transfer`, `approve`, `allowance`… it is not just about changing the name of the variables.
 
@@ -57,7 +57,7 @@ contract MyToken {
 }
 ```
 
-this shows you the basic functions. but for an ico, you will need to add some things, like a function to handle minting during the sale. so, you're going to need a *sale contract*, this is very important. don’t bake it into the token contract itself, you are asking for trouble. i once helped troubleshoot an ico where the sale logic was part of the token smart contract, things got very messy when they needed to adjust the price during the sale and we had to migrate the whole thing.
+this shows you the basic functions. but for an ico, you will need to add some things, like a function to handle minting during the sale. so, you're going to need a _sale contract_, this is very important. don’t bake it into the token contract itself, you are asking for trouble. i once helped troubleshoot an ico where the sale logic was part of the token smart contract, things got very messy when they needed to adjust the price during the sale and we had to migrate the whole thing.
 
 here's a snippet of how a basic sale contract might look:
 
@@ -108,59 +108,57 @@ i always keep some resources handy that i consult whenever i have doubts: "progr
 for an actual simple example of how to interact with this contract using web3.js here is a quick guide:
 
 ```javascript
-const Web3 = require('web3');
+const Web3 = require("web3");
 
 // Replace with your own provider and contract details
-const providerUrl = 'YOUR_PROVIDER_URL';
-const tokenAddress = 'YOUR_TOKEN_ADDRESS';
-const saleAddress = 'YOUR_SALE_ADDRESS';
+const providerUrl = "YOUR_PROVIDER_URL";
+const tokenAddress = "YOUR_TOKEN_ADDRESS";
+const saleAddress = "YOUR_SALE_ADDRESS";
 
 const web3 = new Web3(providerUrl);
 
 // Define the contract ABI (Application Binary Interface)
 const tokenAbi = [
-    // ... (your ERC20 token ABI from compilation)
+  // ... (your ERC20 token ABI from compilation)
 ];
 const saleAbi = [
-    //... (your MyTokenSale contract ABI from compilation)
+  //... (your MyTokenSale contract ABI from compilation)
 ];
 
 const tokenContract = new web3.eth.Contract(tokenAbi, tokenAddress);
 const saleContract = new web3.eth.Contract(saleAbi, saleAddress);
 
-
 async function buyTokens(amountInEther) {
-    try {
-        const accounts = await web3.eth.getAccounts();
-        const account = accounts[0]; // Using the first account
-        const weiValue = web3.utils.toWei(amountInEther, 'ether');
+  try {
+    const accounts = await web3.eth.getAccounts();
+    const account = accounts[0]; // Using the first account
+    const weiValue = web3.utils.toWei(amountInEther, "ether");
 
-        const tx = await saleContract.methods.buyTokens().send({
-            from: account,
-            value: weiValue,
-        });
+    const tx = await saleContract.methods.buyTokens().send({
+      from: account,
+      value: weiValue,
+    });
 
-        console.log('Transaction successful:', tx);
-    } catch (error) {
-        console.error('Error during token purchase:', error);
-    }
+    console.log("Transaction successful:", tx);
+  } catch (error) {
+    console.error("Error during token purchase:", error);
+  }
 }
 
 //Example call: buyTokens('0.1'); //to buy tokens with 0.1 ethers for instance
 // set new price for the sale
-async function setNewPrice(newPriceInWei){
-     try {
-          const accounts = await web3.eth.getAccounts();
-          const account = accounts[0];
-           const tx = await saleContract.methods.setTokenPrice(newPriceInWei).send({
-            from: account,
-        });
+async function setNewPrice(newPriceInWei) {
+  try {
+    const accounts = await web3.eth.getAccounts();
+    const account = accounts[0];
+    const tx = await saleContract.methods.setTokenPrice(newPriceInWei).send({
+      from: account,
+    });
 
-         console.log('Transaction successful:', tx);
-     } catch (error) {
-        console.error('Error during price set:', error);
-    }
-
+    console.log("Transaction successful:", tx);
+  } catch (error) {
+    console.error("Error during price set:", error);
+  }
 }
 
 //Example call: setNewPrice('1000000000000000'); //to set new price to 0.001 ethers per token for instance

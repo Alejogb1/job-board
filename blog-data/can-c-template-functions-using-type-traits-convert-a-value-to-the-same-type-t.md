@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-c-template-functions-using-type-traits-convert-a-value-to-the-same-type-t"
 ---
 
-Okay, let’s tackle this one. It's a question that seems straightforward initially but has some nuance when you get down into the details. The short answer is, yes, absolutely, C++ template functions leveraging type traits can facilitate the conversion of a value to its own type, `T`. But, the interesting part, as always, lies in *how* we achieve it effectively, and what considerations to keep in mind. I've encountered scenarios like this countless times, particularly when dealing with generic algorithms or custom data structures, and I've learned some effective approaches along the way.
+, let’s tackle this one. It's a question that seems straightforward initially but has some nuance when you get down into the details. The short answer is, yes, absolutely, C++ template functions leveraging type traits can facilitate the conversion of a value to its own type, `T`. But, the interesting part, as always, lies in _how_ we achieve it effectively, and what considerations to keep in mind. I've encountered scenarios like this countless times, particularly when dealing with generic algorithms or custom data structures, and I've learned some effective approaches along the way.
 
 The core idea hinges on using type traits from the `<type_traits>` header, allowing us to introspect on the provided type `T` at compile time. This empowers us to apply the correct conversion logic, or, in cases where no conversion is needed, avoid redundant operations. The simplest case, and what I initially thought you were alluding to, involves no actual work. The value is already of type `T`, so we can just return it directly. However, that doesn’t answer the full question. We need to explore the scenario where, say, a type is not explicitly of type `T`, but is convertible.
 
@@ -49,7 +49,7 @@ int main() {
 
 In this first example, the `convert_to_same_type` function is quite general. The code explicitly checks if the types are the same using `std::is_same_v`. If they are, we just return the original value without further work. If not, the next check is if the conversion is possible using `std::is_convertible_v`. If convertible, it uses `static_cast` which is the appropriate conversion method in these cases. Finally, the `static_assert` generates a compile-time error if an impossible conversion is attempted. That avoids the problem of runtime errors from badly formed type conversions.
 
-Now, it’s worth exploring a slightly more complex situation. Suppose you are dealing with types that might be implicitly convertible by means of a single-argument constructor.  In this case, the value needs to be converted using a constructor of `T`. The static_cast method will not always be sufficient. For example, consider you have a custom type like a Rational Number. The following demonstrates that.
+Now, it’s worth exploring a slightly more complex situation. Suppose you are dealing with types that might be implicitly convertible by means of a single-argument constructor. In this case, the value needs to be converted using a constructor of `T`. The static_cast method will not always be sufficient. For example, consider you have a custom type like a Rational Number. The following demonstrates that.
 
 ```cpp
 #include <iostream>

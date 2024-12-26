@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-make-a-stepwise-regression-function-that-runs-fine-on-a-single-csv-to-run-on-a-folder-full-of-csvs-using-lapply-in-r"
 ---
 
-Alright, let's dive into this. I recall a similar situation I encountered during a data consolidation project a few years back; we had a deluge of sensor data coming in as separate CSV files, and needing to build a regression model for each was quite a task. The basic principle for running a stepwise regression function across multiple files using `lapply` in R is straightforward, but there are nuances to handle to ensure efficiency and maintainability.
+, let's dive into this. I recall a similar situation I encountered during a data consolidation project a few years back; we had a deluge of sensor data coming in as separate CSV files, and needing to build a regression model for each was quite a task. The basic principle for running a stepwise regression function across multiple files using `lapply` in R is straightforward, but there are nuances to handle to ensure efficiency and maintainability.
 
 Essentially, the challenge is transforming a procedure that processes one CSV file into a procedure that efficiently and systematically manages a whole directory of them. The core of our solution will revolve around leveraging the functional programming paradigm that `lapply` enables. We need to structure our code so that it applies the regression process to each file, and then aggregates or stores the results as appropriate.
 
@@ -52,6 +52,7 @@ perform_stepwise_folder <- function(folderpath) {
 }
 
 ```
+
 Here, `list.files` collects all `.csv` files within the specified folder. The full.names parameter makes sure that we get the full paths to these files. Then, `lapply` takes each file path and passes it into our `perform_stepwise_regression` function from the previous example. Note the use of `lapply` rather than a loop, as this simplifies the process and usually runs faster. Crucially, each returned model is stored in a list, `model_list`, which is then returned.
 
 Now, a common concern is what to do with the output. The previous example returns a list of models. Often, it’s beneficial to have not just the models but some associated information such as filename or some summary statistics. Here's an example to modify the function for capturing more details:

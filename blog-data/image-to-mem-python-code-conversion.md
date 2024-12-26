@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "image-to-mem-python-code-conversion"
 ---
 
-Alright so you're looking to convert an image to a memory representation in Python yeah I've been there done that got the t-shirt and probably some scars along the way it's a pretty common task actually and you'll find yourself doing this more often than you think especially if you're messing with image processing machine learning or even just trying to transfer images over a network or store them in a database. Let's get into the nitty-gritty.
+so you're looking to convert an image to a memory representation in Python yeah I've been there done that got the t-shirt and probably some scars along the way it's a pretty common task actually and you'll find yourself doing this more often than you think especially if you're messing with image processing machine learning or even just trying to transfer images over a network or store them in a database. Let's get into the nitty-gritty.
 
 First off we need to clarify what we mean by "memory representation" you can mean a few different things here. Do you want a raw byte string a numpy array which is often the go-to in scientific computing a base64 encoded string for easier text transport or something else entirely. I'm going to assume you want to work with both raw bytes and numpy arrays since those are the most broadly applicable.
 
 I remember back in the day I was building a real-time image processing pipeline for a project and I started off using Pillow and it was great and easy then the memory usage just went crazy it was like a runaway train then I had to start diving deep into optimizing memory layouts and data structures it was a learning experience to say the least and it is why I now prefer to just load my stuff as bytes first. It is probably the best way to manage things from my experience.
 
-Okay so let's get to the actual code. For the raw bytes we can use the built-in `open` function and the `.read()` method to get the content as bytes:
+let's get to the actual code. For the raw bytes we can use the built-in `open` function and the `.read()` method to get the content as bytes:
 
 ```python
 def image_to_bytes(image_path):
@@ -96,6 +96,7 @@ if numpy_array_data_opencv is not None:
     print(f"Image loaded as numpy array with shape {numpy_array_data_opencv.shape}")
 
 ```
+
 The major difference here is that OpenCV loads images in BGR color order rather than RGB so the `cv2.cvtColor` is needed if you need to work with RGB. Otherwise it is very similar.
 
 So here's the thing sometimes you might want a base64 encoded string if you're doing web stuff or need to embed the image directly in JSON or something this is not exactly a memory representation per se but it's often used so let's tackle that as well I am going to leave that as an exercise for you to go and figure out and it will be a useful experience for you to learn base64 too. Google is your friend there. But it is pretty simple.
@@ -106,12 +107,12 @@ Now regarding resources since we are not linking and all here are some books and
 
 1.  **"Digital Image Processing" by Rafael C. Gonzalez and Richard E. Woods:** This is the bible of image processing it covers pretty much everything you would ever want to know about images algorithms and all sorts of different processing techniques a real must have for any serious image person.
 
-2.  **"Python Data Science Handbook" by Jake VanderPlas:**  This is a good resource for understanding numpy arrays and how to use them efficiently within the context of data science and scientific applications it has a great section on dealing with images in numpy.
+2.  **"Python Data Science Handbook" by Jake VanderPlas:** This is a good resource for understanding numpy arrays and how to use them efficiently within the context of data science and scientific applications it has a great section on dealing with images in numpy.
 
 3.  **"Learning OpenCV" by Gary Bradski and Adrian Kaehler:** If you plan to work extensively with OpenCV this is a solid book it is good because it is very practical and gets you up and running quickly with OpenCV and it is packed with real examples which is nice.
 
-4.   **Various papers on image formats:** Read up about the different image format structures in pdf format these are useful for understanding the raw byte structure and how the image actually stores the pixel information you should be able to find them on google scholar just search for the image format you are interested in like 'JPEG format' or 'PNG format' these papers can help you understand the inner workings of image files and how the data is structured.
+4.  **Various papers on image formats:** Read up about the different image format structures in pdf format these are useful for understanding the raw byte structure and how the image actually stores the pixel information you should be able to find them on google scholar just search for the image format you are interested in like 'JPEG format' or 'PNG format' these papers can help you understand the inner workings of image files and how the data is structured.
 
 Finally just a little tip here if you are dealing with very large images and your system memory is not that high think about using memory mapping or lazy loading techniques which can be very useful but I am going to leave that as another exercise for you because explaining that would make this answer too long and you would probably get bored.
 
-And here's the joke: Why did the image file break up with the database? Because they said it wasn't seeing eye to eye! Alright alright sorry I had to use it. But seriously though remember that understanding these low-level details can save you a lot of headaches especially when dealing with performance issues. Good luck with your image processing.
+And here's the joke: Why did the image file break up with the database? Because they said it wasn't seeing eye to eye! sorry I had to use it. But seriously though remember that understanding these low-level details can save you a lot of headaches especially when dealing with performance issues. Good luck with your image processing.

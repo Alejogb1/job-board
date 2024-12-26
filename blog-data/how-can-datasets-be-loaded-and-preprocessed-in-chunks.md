@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-datasets-be-loaded-and-preprocessed-in-chunks"
 ---
 
-Alright, let's talk about chunked data loading and preprocessing. It’s a topic that I’ve found myself revisiting countless times, particularly when working with datasets that approach or exceed available memory. Instead of trying to jam everything into ram at once, we break things down—a sensible strategy when dealing with real-world datasets. This approach isn't just about avoiding memory errors; it allows us to perform analyses and transformations on datasets that would otherwise be completely intractable.
+, let's talk about chunked data loading and preprocessing. It’s a topic that I’ve found myself revisiting countless times, particularly when working with datasets that approach or exceed available memory. Instead of trying to jam everything into ram at once, we break things down—a sensible strategy when dealing with real-world datasets. This approach isn't just about avoiding memory errors; it allows us to perform analyses and transformations on datasets that would otherwise be completely intractable.
 
 When I first encountered this problem a few years back, I was working on a system that processed historical sensor data. The raw data files were absolutely massive—several gigabytes each—and attempting to load the entire dataset into memory consistently led to out-of-memory exceptions. It became clear that a chunk-based strategy was essential. The core idea behind chunked processing is to load the data in manageable, smaller portions, process each portion, and then either discard it or write the result to disk. This avoids overloading the memory while still allowing for comprehensive data manipulation.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-display-all-products-of-a-single-order-on-a-single-page"
 ---
 
-Alright, let's tackle this. It's a common requirement, and the devil, as they say, is often in the details. From my experience, displaying order-specific product details on a single page usually involves carefully managing database relationships, crafting efficient queries, and structuring your frontend to present the data cleanly. In past projects, I’ve encountered similar needs, ranging from simple e-commerce platforms to more complex supply chain management systems. This experience has solidified the best practices I’ll share here.
+, let's tackle this. It's a common requirement, and the devil, as they say, is often in the details. From my experience, displaying order-specific product details on a single page usually involves carefully managing database relationships, crafting efficient queries, and structuring your frontend to present the data cleanly. In past projects, I’ve encountered similar needs, ranging from simple e-commerce platforms to more complex supply chain management systems. This experience has solidified the best practices I’ll share here.
 
 The core challenge is usually threefold: retrieving the correct data, structuring it in a way that is consumable by the frontend, and presenting it in a user-friendly format. Let's delve deeper into each aspect.
 
@@ -163,21 +163,21 @@ Finally, regarding frontend presentation, the structured data (whether coming fr
 
 ```javascript
 function displayOrderProducts(products, containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
+  const container = document.getElementById(containerId);
+  if (!container) return;
 
-    container.innerHTML = ''; // Clear previous content
+  container.innerHTML = ""; // Clear previous content
 
-    products.forEach(product => {
-        const productDiv = document.createElement('div');
-        productDiv.innerHTML = `
+  products.forEach((product) => {
+    const productDiv = document.createElement("div");
+    productDiv.innerHTML = `
             <h3>${product.product_name}</h3>
             <p>Description: ${product.product_description}</p>
             <p>Price: $${product.product_price}</p>
             <p>Quantity: ${product.order_quantity}</p>
         `;
-        container.appendChild(productDiv);
-    });
+    container.appendChild(productDiv);
+  });
 }
 
 // Assuming 'orderProducts' contains the results from one of the back-end methods:

@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "which-operations-are-not-trivial-in-this-code"
 ---
 
-Okay, let's tackle this. Instead of jumping straight into code analysis, let's think about what "non-trivial" actually means in a practical coding context. To me, it typically implies operations that aren't immediately obvious, that might carry performance implications, or that could easily lead to subtle bugs if not handled carefully. I've seen my share of seemingly innocuous lines cause cascading issues in production, so I've learned to be cautious. Looking at your question, I’m immediately thinking about the areas where computational complexity rises or where the underlying mechanics require a deeper understanding to prevent errors.
+, let's tackle this. Instead of jumping straight into code analysis, let's think about what "non-trivial" actually means in a practical coding context. To me, it typically implies operations that aren't immediately obvious, that might carry performance implications, or that could easily lead to subtle bugs if not handled carefully. I've seen my share of seemingly innocuous lines cause cascading issues in production, so I've learned to be cautious. Looking at your question, I’m immediately thinking about the areas where computational complexity rises or where the underlying mechanics require a deeper understanding to prevent errors.
 
-Over the years, I’ve found that pinpointing these non-trivial aspects requires moving beyond just syntax and focusing on the algorithmic core of the operation and its interactions with the program’s state. I remember a particularly messy case involving a custom graph search algorithm where an unoptimized node traversal function became a bottleneck at scale. We had to completely rewrite it using a more efficient priority queue approach. That experience highlighted the importance of not just getting code to "work," but ensuring it works *efficiently* under realistic loads.
+Over the years, I’ve found that pinpointing these non-trivial aspects requires moving beyond just syntax and focusing on the algorithmic core of the operation and its interactions with the program’s state. I remember a particularly messy case involving a custom graph search algorithm where an unoptimized node traversal function became a bottleneck at scale. We had to completely rewrite it using a more efficient priority queue approach. That experience highlighted the importance of not just getting code to "work," but ensuring it works _efficiently_ under realistic loads.
 
 So, with that in mind, let's analyze common culprits for non-trivial behavior. I'll illustrate with specific code examples to make these abstract points more concrete.
 
@@ -22,7 +22,7 @@ def process_data(data):
     return temp
 ```
 
-At a glance, it looks straightforward: copy a data structure, iterate, modify, and return. However, in python, `temp = data` creates a *shallow* copy. This means that `temp` now points to the same objects as `data`. Any modification within the loop to the `item['value']` will alter the original `data` structure as well. This is a classic example of an operation that appears to be a copy, but isn't. It's non-trivial because it requires an understanding of how references work, especially with mutable objects. The "fix" or more correct way to handle this would be to use python’s `deepcopy` function. This would be as follows:
+At a glance, it looks straightforward: copy a data structure, iterate, modify, and return. However, in python, `temp = data` creates a _shallow_ copy. This means that `temp` now points to the same objects as `data`. Any modification within the loop to the `item['value']` will alter the original `data` structure as well. This is a classic example of an operation that appears to be a copy, but isn't. It's non-trivial because it requires an understanding of how references work, especially with mutable objects. The "fix" or more correct way to handle this would be to use python’s `deepcopy` function. This would be as follows:
 
 ```python
 import copy
@@ -33,28 +33,28 @@ def process_data_deep_copy(data):
     return temp
 ```
 
-This operation, involving deep copying, introduces a significant performance consideration. Shallow copying has a constant time complexity *O(1)*, but deep copying has a complexity that’s proportional to the size of the structure *O(n)*. The seemingly simple "copy" operation here is actually quite non-trivial and needs care to correctly implement.
+This operation, involving deep copying, introduces a significant performance consideration. Shallow copying has a constant time complexity _O(1)_, but deep copying has a complexity that’s proportional to the size of the structure _O(n)_. The seemingly simple "copy" operation here is actually quite non-trivial and needs care to correctly implement.
 
 **Example 2: Resource Intensive Operations within Loops**
 
 Operations performed inside loops are always prime candidates for non-trivial analysis. Here is a contrived example:
 
 ```javascript
-function calculate_sum(data_array){
-    let sum = 0;
-    for (let i = 0; i < data_array.length; i++) {
-        let result = calculate_complicated_value(data_array[i]); // this operation is computationally expensive
-        sum += result;
-    }
-    return sum;
+function calculate_sum(data_array) {
+  let sum = 0;
+  for (let i = 0; i < data_array.length; i++) {
+    let result = calculate_complicated_value(data_array[i]); // this operation is computationally expensive
+    sum += result;
+  }
+  return sum;
 }
 
-function calculate_complicated_value(number){
-    let a = number;
-    for (let j = 0; j< 10000; j++){
-       a += number;
-    }
-    return a;
+function calculate_complicated_value(number) {
+  let a = number;
+  for (let j = 0; j < 10000; j++) {
+    a += number;
+  }
+  return a;
 }
 ```
 

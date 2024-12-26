@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "nnsequential-pytorch-model-definition"
 ---
 
-Okay so you're asking about `nn.Sequential` in PyTorch right Been there done that let's talk
+you're asking about `nn.Sequential` in PyTorch right Been there done that let's talk
 
 First off `nnSequential` it's basically PyTorch's way of letting you build a neural network by just stacking layers one after the other like lego bricks Think of it as a container where you throw in your layers and it automatically handles the data flow for you in that specific sequence It simplifies things a whole lot especially if you're dealing with feedforward networks that is things where the output of one layer becomes the input of the next
 
@@ -41,7 +41,7 @@ Now here's something to consider though `nnSequential` it's great but it's also 
 
 **Example 2: Convolutional Neural Network (CNN)**
 
-Okay let's step things up a notch How about a simple CNN with `nnSequential`
+let's step things up a notch How about a simple CNN with `nnSequential`
 
 ```python
 import torch
@@ -96,20 +96,21 @@ input_tensor = torch.randn(1, 784)
 output = model(input_tensor)
 print(output.shape) # Output shape should be torch.Size([1, 10])
 ```
+
 Easy peasy right Just throw in `nnBatchNorm1d` after the linear layers and `nnDropout` after the ReLU activation functions And this works because `nnSequential` handles the data flow for you Now I'm pretty sure you have everything you need to start using `nnSequential` for your own projects
 
-Now someone asked me one time what the most confusing part about tensor dimensions was and I told them the 3rd dimension it's a bit of a pain in the *neck* heheh
+Now someone asked me one time what the most confusing part about tensor dimensions was and I told them the 3rd dimension it's a bit of a pain in the _neck_ heheh
 
-Okay I'll stop now
+I'll stop now
 
 Resources
 
 As for resources forget the random websites you find online Check these actual papers and books instead because it will be a better use of your time You'll need to understand the math behind this stuff
 
-*   **"Deep Learning" by Goodfellow et al** A must read it explains everything and even more it's more than 700 pages long so be prepared
-*   **"Hands-On Machine Learning with Scikit-Learn Keras and TensorFlow" by Aurélien Géron** This covers a practical side of things and it's very helpful
-*   **"Neural Networks and Deep Learning" by Michael Nielsen** It's a free online book and it provides a great start for understanding the fundamentals in a very clear way
-*   And for understanding the math behind convolutional operations **"Convolutional Neural Networks" by LeCun et al** This paper is the go to when understanding the convolutional layers
+- **"Deep Learning" by Goodfellow et al** A must read it explains everything and even more it's more than 700 pages long so be prepared
+- **"Hands-On Machine Learning with Scikit-Learn Keras and TensorFlow" by Aurélien Géron** This covers a practical side of things and it's very helpful
+- **"Neural Networks and Deep Learning" by Michael Nielsen** It's a free online book and it provides a great start for understanding the fundamentals in a very clear way
+- And for understanding the math behind convolutional operations **"Convolutional Neural Networks" by LeCun et al** This paper is the go to when understanding the convolutional layers
 
 Don't just copy-paste code Actually try and experiment with the parameters tweak the network architecture try different activation functions and so on That's the only way you will truly understand how deep learning models actually work and don't forget about the math it is the key
 

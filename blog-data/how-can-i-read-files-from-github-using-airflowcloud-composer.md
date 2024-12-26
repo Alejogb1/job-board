@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-read-files-from-github-using-airflowcloud-composer"
 ---
 
-Alright, let's tackle reading files from GitHub using Airflow, particularly within a Cloud Composer context. This is a common scenario, and frankly, I've debugged this enough times over the years to have a fairly clear picture of the best approaches. The initial inclination might be to reach for a simple bash operator, but that can quickly become unwieldy and less maintainable. So, we'll explore more robust methods.
+, let's tackle reading files from GitHub using Airflow, particularly within a Cloud Composer context. This is a common scenario, and frankly, I've debugged this enough times over the years to have a fairly clear picture of the best approaches. The initial inclination might be to reach for a simple bash operator, but that can quickly become unwieldy and less maintainable. So, we'll explore more robust methods.
 
 When I encountered this a few years back at a previous company, we were deploying data pipelines that pulled in configuration files and occasionally small datasets from a private GitHub repository. We initially relied on simple `git clone` commands in bash operators, but we soon realized that security, authentication, and versioning became messy quickly. We needed a more controlled and integrated solution.
 
-The core problem here isn't necessarily *reading* the file; it's securely and efficiently *accessing* the file from GitHub within the Airflow environment. Cloud Composer runs on Google Cloud Platform (GCP), and there's a beautiful set of features within GCP that we can leverage. The most effective path generally involves a combination of these components:
+The core problem here isn't necessarily _reading_ the file; it's securely and efficiently _accessing_ the file from GitHub within the Airflow environment. Cloud Composer runs on Google Cloud Platform (GCP), and there's a beautiful set of features within GCP that we can leverage. The most effective path generally involves a combination of these components:
 
 1.  **GitHub Personal Access Tokens (PATs):** Instead of embedding credentials directly in code, which is a huge security no-no, we use PATs to authenticate with GitHub. These tokens have granular permissions, letting us control exactly what our pipeline can access.
 2.  **Google Secret Manager:** We store the GitHub PAT securely within Google Secret Manager. Composer integrates seamlessly with Secret Manager, allowing Airflow DAGs to retrieve secrets without exposing them.
@@ -68,7 +68,7 @@ with DAG(
     )
 ```
 
-*Explanation:*
+_Explanation:_
 This snippet demonstrates how to fetch a file directly using its raw URL. It's important to handle potential errors gracefully using `response.raise_for_status()`. Remember to replace placeholders like `your-gcp-project`, `your-github-user`, `your-repo`, and `your-github-pat-secret` with your actual values. The `requests` library makes HTTP calls clean, and the Google Secret Manager client handles secure retrieval of the token. This is often sufficient for simpler use cases.
 
 **Example 2: Using `PyGithub` for a more feature-rich approach**
@@ -121,7 +121,7 @@ with DAG(
     )
 ```
 
-*Explanation:*
+_Explanation:_
 This example leverages the `PyGithub` library for a more API-driven approach. It first obtains a `Github` object using the PAT, then fetches the repository, and finally, retrieves the file's content. This pattern is helpful when you need more metadata associated with the file or if you plan on doing more with the GitHub API. Similar to the first example, handling potential errors with `try-except` blocks is critical.
 
 **Example 3: Handling larger files and potential API rate limits**
@@ -181,16 +181,16 @@ with DAG(
     )
 ```
 
-*Explanation:* This shows how to save to disk to efficiently handle larger files. The `stream=True` parameter makes the code fetch the data in chunks which reduces memory usage.  It also helps with avoiding the rate limit issues. The local file created is accessible by other tasks and allows you to process the file without loading all data into memory.
+_Explanation:_ This shows how to save to disk to efficiently handle larger files. The `stream=True` parameter makes the code fetch the data in chunks which reduces memory usage. It also helps with avoiding the rate limit issues. The local file created is accessible by other tasks and allows you to process the file without loading all data into memory.
 
 **Further Exploration**
 
 For a deeper understanding of the relevant technologies, I recommend exploring the following resources:
 
-*   **GitHub API Documentation:** Directly from the source; it’s crucial for understanding rate limits, authentication, and API endpoints.
-*   **Google Cloud Secret Manager documentation:** This dives into the best practices for storing and retrieving secrets in GCP.
-*   **Python `requests` library documentation:**  This provides a detailed look at HTTP requests, error handling, and stream handling.
-*   **`PyGithub` library documentation:** This is invaluable for anyone planning on leveraging the full power of the GitHub API.
-*   **"Effective Python: 90 Specific Ways to Write Better Python" by Brett Slatkin:** This provides best practices for Python code, focusing on efficiency and clarity.
+- **GitHub API Documentation:** Directly from the source; it’s crucial for understanding rate limits, authentication, and API endpoints.
+- **Google Cloud Secret Manager documentation:** This dives into the best practices for storing and retrieving secrets in GCP.
+- **Python `requests` library documentation:** This provides a detailed look at HTTP requests, error handling, and stream handling.
+- **`PyGithub` library documentation:** This is invaluable for anyone planning on leveraging the full power of the GitHub API.
+- **"Effective Python: 90 Specific Ways to Write Better Python" by Brett Slatkin:** This provides best practices for Python code, focusing on efficiency and clarity.
 
 In closing, reading files from GitHub in Airflow is achievable with a bit of setup using Secret Manager, a reliable HTTP library, and a deep understanding of your data and workflow. My experience shows that starting with secure authentication and error handling from the outset can save a lot of time. It's about creating solutions that are not just functional but also maintainable and secure in the long run.

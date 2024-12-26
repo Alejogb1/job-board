@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-typeerror-inputs-to-a-layer-should-be-tensors-got-none"
 ---
 
-Okay, let’s tackle this `TypeError: Inputs to a layer should be tensors. Got: None`. It’s a common head-scratcher, and frankly, I've spent more than my share of late nights debugging this exact error during various deep learning projects. Let's dissect it from the ground up, not just to fix it, but also to understand its root causes. This isn't some theoretical quirk; it's very much an error born out of how tensor-based frameworks, like TensorFlow or PyTorch, operate.
+, let’s tackle this `TypeError: Inputs to a layer should be tensors. Got: None`. It’s a common head-scratcher, and frankly, I've spent more than my share of late nights debugging this exact error during various deep learning projects. Let's dissect it from the ground up, not just to fix it, but also to understand its root causes. This isn't some theoretical quirk; it's very much an error born out of how tensor-based frameworks, like TensorFlow or PyTorch, operate.
 
 The core issue, as the error message plainly states, is that a layer within your neural network is expecting a tensor—a multi-dimensional array of numerical data—but it's receiving `None` instead. Think of it like this: you're trying to pass a null pointer to a function that requires a valid memory address containing data. The layer cannot perform any calculations if it gets `None`. This usually doesn’t happen in a single step, but rather when tensors either haven’t been properly initialized or aren't propagated correctly within the computational graph.
 
@@ -57,7 +57,7 @@ for images, labels in dataset.take(5):
 
 In this example, the `faulty_data_generator` sometimes returns `None` for images and labels. The tensorflow `Dataset` still processes it. While the generator prints a warning, when the `None` data is passed to the layer (`MockLayer`) in the model, it leads to a `TypeError`, because it expects a tensor not `None`. This demonstrates a common scenario where faulty data loading logic results in propagating `None` to the model.
 
-**Resolution:** Ensure your data loading functions *always* return valid tensors. Implement thorough checks in data preprocessing to handle null or missing values, potentially by skipping such data points or imputing them, instead of allowing `None` to propagate through your pipeline.
+**Resolution:** Ensure your data loading functions _always_ return valid tensors. Implement thorough checks in data preprocessing to handle null or missing values, potentially by skipping such data points or imputing them, instead of allowing `None` to propagate through your pipeline.
 
 **Scenario 2: Incorrect Model Architecture or Connection**
 
@@ -149,7 +149,7 @@ except Exception as e:
 
 Here, the custom `FaultyCustomLayer`’s `call` method conditionally returns `None`. When the random condition results in `None`, the subsequent dense layer receives `None` and throws the `TypeError`.
 
-**Resolution:** When developing custom layers, verify that the `call()` method *always* returns a valid tensor with the expected shape, regardless of input conditions. It’s often beneficial to include a shape check or add a default case so that in unexpected situations, the layer at least returns a zero or a constant tensor, preventing a hard crash and allowing further debugging and logging.
+**Resolution:** When developing custom layers, verify that the `call()` method _always_ returns a valid tensor with the expected shape, regardless of input conditions. It’s often beneficial to include a shape check or add a default case so that in unexpected situations, the layer at least returns a zero or a constant tensor, preventing a hard crash and allowing further debugging and logging.
 
 For additional reading on debugging neural networks, I would recommend the book "Deep Learning" by Goodfellow, Bengio, and Courville, particularly the chapters covering debugging techniques and network architecture. For understanding TensorFlow more thoroughly, the official TensorFlow documentation is an excellent resource. And for more in-depth understanding on data preprocessing, you can consult the excellent book “Feature Engineering for Machine Learning” by Alice Zheng and Amanda Casari.
 

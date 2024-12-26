@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-cross-origin-frame-access-blocked-and-how-can-i-resolve-this"
 ---
 
-Okay, let's tackle this. I recall wrestling with cross-origin frame access issues back in my early days managing a web application that integrated content from various partner sites. It’s a frustrating, but ultimately necessary, security feature of modern browsers. Essentially, what you're experiencing is the browser's same-origin policy at work.
+, let's tackle this. I recall wrestling with cross-origin frame access issues back in my early days managing a web application that integrated content from various partner sites. It’s a frustrating, but ultimately necessary, security feature of modern browsers. Essentially, what you're experiencing is the browser's same-origin policy at work.
 
 The same-origin policy is a cornerstone of web security, preventing malicious scripts from one website from accessing sensitive data or manipulating the content of another website. This applies to frames (iframes) just as much as it does to direct network requests. A 'cross-origin' frame, in simple terms, is an iframe where the page loaded inside it has a different origin (protocol, domain, or port) than the page hosting the iframe.
 
@@ -18,38 +18,41 @@ Here’s a sample snippet for the parent window:
 
 ```javascript
 // parent.html
-const iframe = document.getElementById('myIframe');
-iframe.onload = function() {
-  iframe.contentWindow.postMessage({type: 'init', message: 'Hello from the parent!'}, 'https://example.com');
+const iframe = document.getElementById("myIframe");
+iframe.onload = function () {
+  iframe.contentWindow.postMessage(
+    { type: "init", message: "Hello from the parent!" },
+    "https://example.com"
+  );
 };
 
+window.addEventListener("message", function (event) {
+  if (event.origin !== "https://example.com") return;
 
-window.addEventListener('message', function(event) {
-    if (event.origin !== 'https://example.com') return;
-
-    if(event.data.type === 'response'){
-      console.log('Parent Received:', event.data.message);
-    }
+  if (event.data.type === "response") {
+    console.log("Parent Received:", event.data.message);
+  }
 });
-
 ```
 
 And here's the corresponding code for the iframe content:
 
 ```javascript
 // iframe.html (loaded from https://example.com)
-window.addEventListener('message', function(event) {
-    if (event.origin !== 'https://yourdomain.com') return;
+window.addEventListener("message", function (event) {
+  if (event.origin !== "https://yourdomain.com") return;
 
-    if(event.data.type === 'init'){
-     console.log('Iframe Received Init:', event.data.message);
-     event.source.postMessage({type:'response', message: 'Hello from the iframe!'}, 'https://yourdomain.com');
-    }
+  if (event.data.type === "init") {
+    console.log("Iframe Received Init:", event.data.message);
+    event.source.postMessage(
+      { type: "response", message: "Hello from the iframe!" },
+      "https://yourdomain.com"
+    );
+  }
 });
-
 ```
 
-Key aspects here: *event.origin* is checked in the message event listeners to verify the messages are coming from the expected source; also *event.source* is used for the return message. It’s crucial to specify the target origin when using `postMessage` for security. You'll see `'https://example.com'` and `'https://yourdomain.com'` used respectively in each snippet which makes the whole cross-domain communication possible. The target origin parameter ensures the message is only sent if the source window matches that origin, improving security.
+Key aspects here: _event.origin_ is checked in the message event listeners to verify the messages are coming from the expected source; also _event.source_ is used for the return message. It’s crucial to specify the target origin when using `postMessage` for security. You'll see `'https://example.com'` and `'https://yourdomain.com'` used respectively in each snippet which makes the whole cross-domain communication possible. The target origin parameter ensures the message is only sent if the source window matches that origin, improving security.
 
 Second, if you have control over the server that serves the iframe's content, setting the `Access-Control-Allow-Origin` header offers a viable solution. This header, returned by the server, tells the browser which origins are allowed to access resources on the server. For example, if the iframe content is served from `https://example.com` you could set this header:
 

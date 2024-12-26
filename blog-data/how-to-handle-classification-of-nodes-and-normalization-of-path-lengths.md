@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-handle-classification-of-nodes-and-normalization-of-path-lengths"
 ---
 
-alright, so you're dealing with node classification and path length normalization, right? been there, done that, got the t-shirt and the lingering feeling of needing a strong coffee. let me tell you, this combo can get tricky, but it's definitely solvable with a few solid techniques. i’ve spent my fair share of late nights staring at graphs and trying to make sense of it all, and i'm hoping my experience can save you some time and headache.
+, so you're dealing with node classification and path length normalization, right? been there, done that, got the t-shirt and the lingering feeling of needing a strong coffee. let me tell you, this combo can get tricky, but it's definitely solvable with a few solid techniques. i’ve spent my fair share of late nights staring at graphs and trying to make sense of it all, and i'm hoping my experience can save you some time and headache.
 
 first off, let’s break down the problem. you’ve got a graph, and each node has some properties (or you want to assign them) and then you need to consider distances among the nodes, likely for some kind of feature engineering or to guide your classifier. it’s a common scenario in graph machine learning. you are looking to classify nodes using the graph structure and you need to handle path lengths so everything works smoothly.
 
@@ -115,7 +115,7 @@ class gcn(torch.nn.module):
         torch.manual_seed(12345)
         self.conv1 = gcnconv(num_node_features, hidden_channels)
         self.conv2 = gcnconv(hidden_channels, num_classes)
-    
+
     def forward(self, x, edge_index):
         x = self.conv1(x, edge_index)
         x = x.relu()
@@ -155,6 +155,7 @@ if __name__ == '__main__':
   data.train_mask = torch.tensor([True, True, True, True, True, True, True, True], dtype=torch.bool)
   train_gcn(data)
 ```
+
 in the gcn example, we use pytorch geometric, which simplifies working with graph data and neural networks. the basic setup is similar to the scikit-learn example, the features are computed and normalized, but the data is processed into a format ready to work with pytorch geometric. we have defined `create_torch_graph()` which creates a `data` object that contains the graph information in the required format for pytorch geometric. after that, we define a simple gcn model inside the `gcn` class, and a training loop in the function `train_gcn()`. the main part of the program calls these function and the model is trained.
 
 it's worth remembering that graph data can be really sparse and this means that performance can vary a lot depending on which algorithm you use and the way you preprocess the data. therefore, there's a lot of room for tweaks and experimentation.

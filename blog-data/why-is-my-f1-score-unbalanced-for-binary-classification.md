@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-my-f1-score-unbalanced-for-binary-classification"
 ---
 
-Alright, let’s tackle this f1 score imbalance issue. It's a classic head-scratcher in classification, and frankly, I've been there more times than I'd like to count. Back in my days working on a fraud detection system for a large e-commerce platform, we faced something similar. We had great accuracy, but our f1 score for identifying fraudulent transactions was alarmingly low, while it was sky-high for legitimate ones. That imbalance threw a serious wrench in our monitoring. Understanding *why* this happens is the first crucial step.
+, let’s tackle this f1 score imbalance issue. It's a classic head-scratcher in classification, and frankly, I've been there more times than I'd like to count. Back in my days working on a fraud detection system for a large e-commerce platform, we faced something similar. We had great accuracy, but our f1 score for identifying fraudulent transactions was alarmingly low, while it was sky-high for legitimate ones. That imbalance threw a serious wrench in our monitoring. Understanding _why_ this happens is the first crucial step.
 
 The f1 score, as you probably know, is the harmonic mean of precision and recall. It aims to balance both aspects, which makes it a handy metric, particularly when dealing with imbalanced datasets. However, an unbalanced f1 score for a binary classification problem usually points towards one, or a combination of, the following culprits: class imbalance, model bias, or data issues.
 
@@ -95,6 +95,7 @@ y_pred = model.predict(X_test)
 
 print("F1 Score:", f1_score(y_test, y_pred))
 ```
+
 This example shows how to use the parameter, but depending on your needs you could also define your own dictionary of weights, should ‘balanced’ not suffice.
 
 **Strategy 3: Choosing a Suitable Model and Feature Engineering**

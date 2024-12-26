@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-non-parallel-awaited-async-calls-in-entity-framework-core-throw-invalidoperationexception"
 ---
 
-Okay, let’s dive into this. It's a classic pitfall I’ve seen trip up many developers, including myself back in my early days with Entity Framework Core (EF Core). The issue with non-parallel, awaited async calls throwing `InvalidOperationException` when dealing with database operations is not a bug, per se, but a consequence of how EF Core manages its context and its expectations around execution flow. Let me explain.
+, let’s dive into this. It's a classic pitfall I’ve seen trip up many developers, including myself back in my early days with Entity Framework Core (EF Core). The issue with non-parallel, awaited async calls throwing `InvalidOperationException` when dealing with database operations is not a bug, per se, but a consequence of how EF Core manages its context and its expectations around execution flow. Let me explain.
 
 The core problem stems from the fact that `DbContext`, the heart of EF Core, is not inherently thread-safe. It’s designed to operate within a single, linear execution path. When you introduce asynchronous operations (`async`/`await`) without understanding their implications, you risk violating this expectation. The `await` keyword doesn't magically make your code execute in parallel; instead, it effectively pauses the current method's execution, allows other tasks to proceed, and resumes where it left off once the awaited operation completes. This is crucial to understand.
 
@@ -12,7 +12,7 @@ Imagine a scenario where you have a method that's supposed to, say, retrieve a u
 
 A typical manifestation of this error is when you attempt to perform another database operation, via `await` call on the same context, before the first has fully completed. EF Core expects operations on the same context to be serialized. Even though you have `await` in between operations, it’s possible for the runtime to bring multiple tasks using the same context, interleaved in a way that the `DbContext` internal operation flow is confused.
 
-This contrasts with scenarios where you *do* have parallel executions via threading. In those scenarios, you are likely to have separate instances of your `DbContext` and therefore the mentioned race condition related to interleaved operations with the same instance is less likely to occur.
+This contrasts with scenarios where you _do_ have parallel executions via threading. In those scenarios, you are likely to have separate instances of your `DbContext` and therefore the mentioned race condition related to interleaved operations with the same instance is less likely to occur.
 
 To make this more concrete, consider the following example. Let's assume a simplified case where you have a user entity and you're trying to retrieve it, update it and retrieve an order for that user.
 
@@ -27,7 +27,7 @@ public async Task ProcessUserAsync(int userId, ApplicationDbContext context)
 
     var order = await context.Orders
                              .FirstOrDefaultAsync(o => o.UserId == userId); // Subsequent await call.
-        
+
     if (order != null) {
         Console.WriteLine($"Order ID: {order.Id}");
         }
@@ -35,9 +35,9 @@ public async Task ProcessUserAsync(int userId, ApplicationDbContext context)
 }
 ```
 
-In this code, you might *sometimes* not encounter an exception, depending on the timing of the underlying database I/O. However, the potential for the `InvalidOperationException` is certainly there since there is an `await` call after an `await` call using the same `DbContext` and its associated internal state. Although you don’t have multiple calls that are happening at exactly the same time because of the `await`, the problem exists because the context can receive updates out of order if there are multiple tasks interleaving in a way the execution flow is disrupted. The `DbContext` is not designed for this and expects each operation to complete before another starts operating on its internal state.
+In this code, you might _sometimes_ not encounter an exception, depending on the timing of the underlying database I/O. However, the potential for the `InvalidOperationException` is certainly there since there is an `await` call after an `await` call using the same `DbContext` and its associated internal state. Although you don’t have multiple calls that are happening at exactly the same time because of the `await`, the problem exists because the context can receive updates out of order if there are multiple tasks interleaving in a way the execution flow is disrupted. The `DbContext` is not designed for this and expects each operation to complete before another starts operating on its internal state.
 
-Now, let’s demonstrate how to *correctly* approach this by making these calls sequentially.
+Now, let’s demonstrate how to _correctly_ approach this by making these calls sequentially.
 
 ```csharp
 public async Task ProcessUserCorrectedAsync(int userId, ApplicationDbContext context)
@@ -72,7 +72,7 @@ public async Task ProcessUserParallelAsync(int userId, string connectionString)
                 user.LastLogin = DateTime.UtcNow;
                 await context.SaveChangesAsync();
             }
-            
+
         }
 
     });

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-run-a-tail-command-as-a-background-process-in-python"
 ---
 
-Okay, let's unpack this. I recall a project a few years back where we were aggregating logs from a fleet of microservices. We needed to monitor these logs in real-time, push any anomalies to a message queue, and keep this process running independently of our main application. Trying to simply pipe the output of `tail -f` to a python subprocess wasn't robust enough, leading to numerous headaches with process management and resource consumption. The direct subprocess approach, while seemingly simple, glossed over some crucial details. So, let's explore some more effective and production-ready ways to achieve this, and I’ll illustrate with some code examples.
+, let's unpack this. I recall a project a few years back where we were aggregating logs from a fleet of microservices. We needed to monitor these logs in real-time, push any anomalies to a message queue, and keep this process running independently of our main application. Trying to simply pipe the output of `tail -f` to a python subprocess wasn't robust enough, leading to numerous headaches with process management and resource consumption. The direct subprocess approach, while seemingly simple, glossed over some crucial details. So, let's explore some more effective and production-ready ways to achieve this, and I’ll illustrate with some code examples.
 
 The core of the problem lies in asynchronously managing a long-running external process like `tail -f`, while simultaneously processing its output. Directly launching a subprocess with `subprocess.Popen` and then blocking on its `communicate` method isn't suitable. It would cause our python script to halt, pending the termination of the `tail` process, which, of course, will run indefinitely. We need a non-blocking mechanism.
 
@@ -226,21 +226,22 @@ async def main():
 if __name__ == '__main__':
     asyncio.run(main())
 ```
+
 In this example, a thread reads from the output of `tail -f` and inserts the log lines in a thread-safe queue. Then the async function `process_log_from_queue` consumes from the queue, and asynchronously process each line. As before, we also included an example of cancellation.
 
 **Key Considerations & Further Learning**
 
-*   **Error Handling:** Robust code should handle subprocess failures, invalid file paths, and other potential issues.
-*   **Resource Limits:** Monitor CPU and memory usage, especially with a large number of log streams.
-*   **Log Rotation:** Be aware of how your logs are rotated and handle any potential file-not-found or permissions errors.
-*  **Process management:** Handle signals such as SIGTERM and SIGINT to shutdown the process gracefully.
-*   **`shlex.quote`:** If the file path is variable and contains spaces, use `shlex.quote` to escape it before passing it to subprocess.
-*   **Logging:** Integrate a good logging system for your scripts.
+- **Error Handling:** Robust code should handle subprocess failures, invalid file paths, and other potential issues.
+- **Resource Limits:** Monitor CPU and memory usage, especially with a large number of log streams.
+- **Log Rotation:** Be aware of how your logs are rotated and handle any potential file-not-found or permissions errors.
+- **Process management:** Handle signals such as SIGTERM and SIGINT to shutdown the process gracefully.
+- **`shlex.quote`:** If the file path is variable and contains spaces, use `shlex.quote` to escape it before passing it to subprocess.
+- **Logging:** Integrate a good logging system for your scripts.
 
 For deeper understanding on topics covered above I recommend:
 
-*   **"Python Cookbook" by David Beazley and Brian K. Jones:** A go-to guide for practical Python programming including topics such as subprocess management and concurrency.
-*   **"Effective Python" by Brett Slatkin:** A detailed guide on writing clean and pythonic code which includes topics related to concurrency and async coding.
-*   The Python documentation for the `subprocess` and `asyncio` modules.
+- **"Python Cookbook" by David Beazley and Brian K. Jones:** A go-to guide for practical Python programming including topics such as subprocess management and concurrency.
+- **"Effective Python" by Brett Slatkin:** A detailed guide on writing clean and pythonic code which includes topics related to concurrency and async coding.
+- The Python documentation for the `subprocess` and `asyncio` modules.
 
 These examples demonstrate effective techniques for running `tail -f` as a background process using Python. Choosing the best approach depends on the specific needs of your application in terms of resource constraints and the complexity of your logic. As usual, testing thoroughly in your environment is critical.

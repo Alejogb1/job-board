@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-get-logits-from-a-t5-hugging-face-model-using-the-forward-method-without-labels"
 ---
 
-Alright, let's tackle this. It’s a situation I've found myself in more than a few times, particularly when I was experimenting with T5 for various text generation tasks beyond straightforward supervised fine-tuning. You need the raw logits from a T5 model, specifically using the `forward()` method, but you don't have labels. That's completely valid, and in many cases, it’s the precise thing you need for advanced manipulation or analysis.
+, let's tackle this. It’s a situation I've found myself in more than a few times, particularly when I was experimenting with T5 for various text generation tasks beyond straightforward supervised fine-tuning. You need the raw logits from a T5 model, specifically using the `forward()` method, but you don't have labels. That's completely valid, and in many cases, it’s the precise thing you need for advanced manipulation or analysis.
 
 The core concept is understanding what the `forward()` method of a Hugging Face model returns. With T5, typically it yields an `EncoderDecoderModelOutput` object if you pass in both `input_ids` and `labels`, or a `Seq2SeqModelOutput` when no labels are present. Crucially, these objects contain the `logits` attribute, which is exactly what you're after.
 
@@ -39,7 +39,7 @@ print(f"Shape of logits: {logits.shape}")
 print(logits[0, :5, :5]) # print a small section to show the output is numbers and has the expected shape.
 ```
 
-In this first example, the `forward()` method is called with the tokenized input, but crucially *without* passing any labels. The result is a `Seq2SeqModelOutput` object (or `EncoderDecoderModelOutput` as defined in some versions of the library), and we directly access the `logits` attribute. The shape of the logits will be `(batch_size, sequence_length, vocab_size)`, reflecting the raw scores for each token in the vocabulary for each position in the sequence within your batch.
+In this first example, the `forward()` method is called with the tokenized input, but crucially _without_ passing any labels. The result is a `Seq2SeqModelOutput` object (or `EncoderDecoderModelOutput` as defined in some versions of the library), and we directly access the `logits` attribute. The shape of the logits will be `(batch_size, sequence_length, vocab_size)`, reflecting the raw scores for each token in the vocabulary for each position in the sequence within your batch.
 
 **Example 2: Controlling Generation and Obtaining Logits**
 
@@ -90,6 +90,7 @@ logits = torch.cat(logits_list, dim=0)
 print(f"Shape of logits: {logits.shape}")
 print(logits[0, :5]) # print the first set of scores for the first generated token
 ```
+
 In this example, we perform decoding step-by-step. In each step, we store the logits for the next predicted token. These logits will now reveal a more granular picture of the model's output during the generation process.
 
 **Example 3: Logits for specific tasks (e.g., for contrastive learning)**

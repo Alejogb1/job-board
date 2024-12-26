@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "whats-the-best-way-for-mobile-dapps-to-interact-with-smart-contracts"
 ---
 
-Okay, let's dive into this. Mobile dapp interaction with smart contracts can feel a bit…*involved* sometimes, especially when you're trying to optimize for a smooth user experience. I remember back in the early days of, say, 2018, when we were building a location-based nft game, the struggles were real. We initially relied heavily on web3.js injected through a browser extension, which, predictably, caused no end of headaches with mobile browsers. That’s when I realized the importance of thoughtfully architecting this interaction. So, let me break down what I’ve learned, focusing on practical approaches, and how they can improve your development experience.
+, let's dive into this. Mobile dapp interaction with smart contracts can feel a bit…_involved_ sometimes, especially when you're trying to optimize for a smooth user experience. I remember back in the early days of, say, 2018, when we were building a location-based nft game, the struggles were real. We initially relied heavily on web3.js injected through a browser extension, which, predictably, caused no end of headaches with mobile browsers. That’s when I realized the importance of thoughtfully architecting this interaction. So, let me break down what I’ve learned, focusing on practical approaches, and how they can improve your development experience.
 
-Fundamentally, a mobile dapp interacting with a smart contract requires establishing a communication bridge. Unlike web browsers where a handy extension can inject the provider, on mobile, things are more fragmented. The problem arises from how mobile browsers handle, or often *don’t* handle, injected javascript libraries like web3.js. This leads to limited functionality, unreliable connectivity, and a generally poor user experience.
+Fundamentally, a mobile dapp interacting with a smart contract requires establishing a communication bridge. Unlike web browsers where a handy extension can inject the provider, on mobile, things are more fragmented. The problem arises from how mobile browsers handle, or often _don’t_ handle, injected javascript libraries like web3.js. This leads to limited functionality, unreliable connectivity, and a generally poor user experience.
 
-The most direct solution – and this is what I’d recommend – involves using a mobile wallet as the intermediary. These wallets, such as Metamask mobile, Trust Wallet, or Coinbase Wallet, often bundle an integrated provider. The dapp needs to connect to *that* provider, rather than trying to rely on a browser-injected one. This approach means the dapp isn't directly interfacing with the ethereum node itself; it’s interacting through the wallet app's managed connection.
+The most direct solution – and this is what I’d recommend – involves using a mobile wallet as the intermediary. These wallets, such as Metamask mobile, Trust Wallet, or Coinbase Wallet, often bundle an integrated provider. The dapp needs to connect to _that_ provider, rather than trying to rely on a browser-injected one. This approach means the dapp isn't directly interfacing with the ethereum node itself; it’s interacting through the wallet app's managed connection.
 
 The typical workflow looks like this:
 
@@ -53,8 +53,8 @@ async function getContractData(contractAddress, abi, provider) {
     console.log("Value from contract:", someValue);
     return someValue;
   } catch (error) {
-      console.error("Error getting data from contract:", error);
-      return null;
+    console.error("Error getting data from contract:", error);
+    return null;
   }
 }
 ```
@@ -65,19 +65,20 @@ Finally, sending a transaction to a contract:
 
 ```javascript
 async function interactWithContract(contractAddress, abi, signer, valueToSend) {
-    try {
-        const contract = new ethers.Contract(contractAddress, abi, signer);
-        const tx = await contract.someFunction({ value: ethers.parseEther(valueToSend) }); // Pass value as eth
-        console.log("Transaction hash:", tx.hash);
-        await tx.wait();
-        console.log("Transaction confirmed");
-        return tx.hash;
-    } catch (error) {
-        console.error("Error interacting with contract:", error);
-        return null;
-    }
+  try {
+    const contract = new ethers.Contract(contractAddress, abi, signer);
+    const tx = await contract.someFunction({
+      value: ethers.parseEther(valueToSend),
+    }); // Pass value as eth
+    console.log("Transaction hash:", tx.hash);
+    await tx.wait();
+    console.log("Transaction confirmed");
+    return tx.hash;
+  } catch (error) {
+    console.error("Error interacting with contract:", error);
+    return null;
+  }
 }
-
 ```
 
 This time we're using the `signer` instance which also came from the `connectWallet` function, instead of the `provider`, because we need a signed transaction. The value to send is converted to the correct unit using `ethers.parseEther`. We call an example contract function `someFunction` and log the transaction hash and wait for the transaction to be confirmed. Again, error handling is important to incorporate into your application to manage potential exceptions.
@@ -88,4 +89,4 @@ Now, beyond the code itself, let’s talk about architectural decisions. A cruci
 
 For further learning, I highly recommend diving into the official documentation for `ethers.js` and `web3.js`, both of which are exceptionally thorough. Additionally, “Mastering Ethereum” by Andreas M. Antonopoulos and Gavin Wood provides a deep, fundamental understanding of the Ethereum ecosystem itself, including practical examples. While not strictly about mobile specifically, the foundational knowledge is essential. If you are curious about the underlying protocols, exploring the Ethereum Yellow Paper will prove very useful.
 
-Remember, the goal isn't just to get a dapp working; it’s about crafting a secure, reliable, and user-friendly experience. That means properly managing network connections, handling errors gracefully, and, above all, focusing on the specific limitations and capabilities of the mobile environment. And that, in my experience, is where the *best* practices lie.
+Remember, the goal isn't just to get a dapp working; it’s about crafting a secure, reliable, and user-friendly experience. That means properly managing network connections, handling errors gracefully, and, above all, focusing on the specific limitations and capabilities of the mobile environment. And that, in my experience, is where the _best_ practices lie.

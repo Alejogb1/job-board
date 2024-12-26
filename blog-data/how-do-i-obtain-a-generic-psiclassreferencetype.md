@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-obtain-a-generic-psiclassreferencetype"
 ---
 
-Alright, let’s delve into the intricacies of obtaining a generic `PsiClassReferenceType`, a task I've encountered more times than I care to count across various Java plugin development endeavors over the years. Specifically, it’s a common hurdle when you're deeply involved with static code analysis or code generation features within IntelliJ plugin development. Obtaining a `PsiClassReferenceType` that encapsulates a generic type isn’t always straightforward. Let’s walk through it, focusing on practical approaches rather than theoretical abstractions.
+, let’s delve into the intricacies of obtaining a generic `PsiClassReferenceType`, a task I've encountered more times than I care to count across various Java plugin development endeavors over the years. Specifically, it’s a common hurdle when you're deeply involved with static code analysis or code generation features within IntelliJ plugin development. Obtaining a `PsiClassReferenceType` that encapsulates a generic type isn’t always straightforward. Let’s walk through it, focusing on practical approaches rather than theoretical abstractions.
 
 The fundamental challenge here lies in the way generics are represented within the Psi (Program Structure Interface) model of IntelliJ. Generics exist as type parameters, and these type parameters are effectively placeholders. A `PsiClassReferenceType`, without any manipulation, represents the raw type (e.g., `List` instead of `List<String>`). What we need is a way to weave in the specific generic type arguments.
 
@@ -66,7 +66,7 @@ public class GenericTypeExample {
 }
 ```
 
-In this example, we extract the `PsiType` from an existing element, in this case, a parameter. We then verify it is indeed a `PsiClassType` and that it’s resolvable to a `java.util.List`. Crucially, the `getParameters()` method gets us the generic arguments (e.g. `String` in `List<String>`). From here we can do additional checks, as I've shown, to ensure it matches what we're after, and it can be returned as is. It's worth mentioning that if we needed a *new* `PsiClassReferenceType` with different parameterizations, we'd need a different approach.
+In this example, we extract the `PsiType` from an existing element, in this case, a parameter. We then verify it is indeed a `PsiClassType` and that it’s resolvable to a `java.util.List`. Crucially, the `getParameters()` method gets us the generic arguments (e.g. `String` in `List<String>`). From here we can do additional checks, as I've shown, to ensure it matches what we're after, and it can be returned as is. It's worth mentioning that if we needed a _new_ `PsiClassReferenceType` with different parameterizations, we'd need a different approach.
 
 **Example 2: Creating a Generic Type from Scratch Using a `PsiSubstitutor`**
 
@@ -108,11 +108,11 @@ public class GenericTypeCreation {
 }
 ```
 
-Here, we locate the `java.util.Map` class. Then, we find the concrete types `Integer` and `String`. We create `PsiTypes` for them. We then retrieve the type parameters from the `Map` class, ensuring that we have two (for the key and value).  A new `PsiSubstitutor` is created, and type parameters are associated with the desired concrete types. Finally, we generate a new `PsiClassReferenceType` with the substitutor, effectively creating `Map<Integer, String>`. This approach works when building Psi elements programmatically.
+Here, we locate the `java.util.Map` class. Then, we find the concrete types `Integer` and `String`. We create `PsiTypes` for them. We then retrieve the type parameters from the `Map` class, ensuring that we have two (for the key and value). A new `PsiSubstitutor` is created, and type parameters are associated with the desired concrete types. Finally, we generate a new `PsiClassReferenceType` with the substitutor, effectively creating `Map<Integer, String>`. This approach works when building Psi elements programmatically.
 
 **Example 3: Working with Wildcards**
 
-Sometimes you need to obtain a type containing wildcards such as `List<? extends Number>`.  This requires slightly more finesse, leveraging the `PsiWildcardType`.
+Sometimes you need to obtain a type containing wildcards such as `List<? extends Number>`. This requires slightly more finesse, leveraging the `PsiWildcardType`.
 
 ```java
 import com.intellij.openapi.project.Project;
@@ -144,6 +144,7 @@ public class WildcardTypeExample {
     }
 }
 ```
+
 Here, we find both `List` and `Number`. Then we construct a `PsiWildcardType` indicating `? extends Number`. Then, similar to the `Map` example we use a substitutor to place the wildcard into the generic `List` type. The result is `List<? extends Number>` as a `PsiClassReferenceType`.
 
 **Recommendations**

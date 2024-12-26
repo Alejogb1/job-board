@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-i-save-the-result-of-nltkchunknechunk-as-a-list"
 ---
 
-alright, so you're looking to get the output of `nltk.chunk.ne_chunk` into a list format, not the tree structure it spits out by default. i get it. i've been there.
+, so you're looking to get the output of `nltk.chunk.ne_chunk` into a list format, not the tree structure it spits out by default. i get it. i've been there.
 
 it's a common enough thing when you're working with natural language processing, especially if you want to do further analysis or feed that data into a different system. the tree representation can be a pain to traverse when all you really want is the extracted named entities.
 

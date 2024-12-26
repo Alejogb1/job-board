@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "how-does-rails-resize-images-if-the-variant-does-not-exist"
 ---
 
-alright, let's talk about rails and image resizing, specifically what happens when a variant isn't there. i've been messing with rails and image handling for a while, so i've bumped into this exact scenario more than a few times. it's one of those things that seems simple on the surface, but there's a fair bit going on under the hood.
+, let's talk about rails and image resizing, specifically what happens when a variant isn't there. i've been messing with rails and image handling for a while, so i've bumped into this exact scenario more than a few times. it's one of those things that seems simple on the surface, but there's a fair bit going on under the hood.
 
 first off, when you're using `active_storage` and define a variant, rails doesn't magically generate all the possible sizes upfront. that would be incredibly wasteful, especially if you have lots of images and many variants. instead, it’s a lazy process. the variant is only created when it's first requested. so if a variant doesn’t exist, that’s totally normal.
 
-the key bit here is how rails handles this “missing variant” situation. basically, when you call something like `my_image.variant(resize_to_limit: [100, 100])`, rails checks if a variant with those *exact* parameters already exists in storage. if not, it proceeds to generate it. here’s how the process often unfolds:
+the key bit here is how rails handles this “missing variant” situation. basically, when you call something like `my_image.variant(resize_to_limit: [100, 100])`, rails checks if a variant with those _exact_ parameters already exists in storage. if not, it proceeds to generate it. here’s how the process often unfolds:
 
 1.  **variant definition and request:** your view or controller requests a specific variant using `variant()`. for example, `.variant(resize_to_fill: [200, 200])` or `.variant(resize_to_limit: [400, 300])`. this call doesn’t perform the resize operation directly. it returns an object that describes the variant requested.
 

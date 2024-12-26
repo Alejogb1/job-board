@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-load-a-smaller-mnist-dataset-in-pytorch"
 ---
 
-Okay, let's tackle this. I’ve often found myself needing a quick way to work with a reduced MNIST dataset, be it for rapid prototyping, debugging, or resource-constrained environments. Full-size datasets can be cumbersome when you're just trying to validate a new architectural idea, so efficient subsampling is a crucial skill. The good news is that it's surprisingly straightforward in PyTorch. Let’s break it down systematically.
+, let's tackle this. I’ve often found myself needing a quick way to work with a reduced MNIST dataset, be it for rapid prototyping, debugging, or resource-constrained environments. Full-size datasets can be cumbersome when you're just trying to validate a new architectural idea, so efficient subsampling is a crucial skill. The good news is that it's surprisingly straightforward in PyTorch. Let’s break it down systematically.
 
-The core challenge is not the *loading* itself, but the *selection* of a smaller subset from the standard MNIST dataset. PyTorch’s `torchvision.datasets.MNIST` module neatly handles the initial download and storage. The trick lies in how we manipulate the data after it’s loaded, or even during the loading process, to extract our desired reduced set.
+The core challenge is not the _loading_ itself, but the _selection_ of a smaller subset from the standard MNIST dataset. PyTorch’s `torchvision.datasets.MNIST` module neatly handles the initial download and storage. The trick lies in how we manipulate the data after it’s loaded, or even during the loading process, to extract our desired reduced set.
 
 My personal experience involved a project where I was experimenting with a novel learning rate scheduler. Training on the full MNIST felt wasteful during early testing, especially given how quickly things can go wrong in the early stages. I needed a way to quickly iterate, and waiting minutes for a single epoch wasn't conducive to that. I had initially tried slicing the tensors after loading the whole dataset, but this was inefficient in terms of memory usage. So, I refined my approach. I developed methods based on indexing and creating a custom subset. This saved both time and computational resources.
 
@@ -45,7 +45,7 @@ if __name__ == '__main__':
 
 ```
 
-In this example, the `load_smaller_mnist_subset` function downloads the entire MNIST training dataset using `torchvision.datasets.MNIST`, but then uses numpy’s `random.choice` to randomly select `subset_size` indices without replacement. A `Subset` object is created using these random indices, which acts as a pointer to the original data and returns only the selected samples when accessed. This is significantly more memory-efficient than storing the entire dataset in memory when only a subset is required.  `replace=False` ensures we don't select the same index twice. The `transform` is the standard way to process the MNIST images to tensor and normalize them for better training.
+In this example, the `load_smaller_mnist_subset` function downloads the entire MNIST training dataset using `torchvision.datasets.MNIST`, but then uses numpy’s `random.choice` to randomly select `subset_size` indices without replacement. A `Subset` object is created using these random indices, which acts as a pointer to the original data and returns only the selected samples when accessed. This is significantly more memory-efficient than storing the entire dataset in memory when only a subset is required. `replace=False` ensures we don't select the same index twice. The `transform` is the standard way to process the MNIST images to tensor and normalize them for better training.
 
 **Method 2: Using Indices within a `DataLoader`**
 
@@ -83,7 +83,7 @@ if __name__ == '__main__':
 
 Here, we’re still loading the full MNIST dataset. However, instead of creating a separate `Subset` object, we generate indices using the same `numpy` methodology and then feed these indices as the `sampler` in the `DataLoader`. This allows the `DataLoader` to only iterate over these chosen samples. The key is using `SubsetRandomSampler`, a specific sampler designed to sample from a subset based on the passed indices. This approach is effective when you need to control the iteration order and batching behavior, without creating explicit `Subset` objects.
 
-**Method 3:  Manual Slicing with `torch.utils.data.TensorDataset`**
+**Method 3: Manual Slicing with `torch.utils.data.TensorDataset`**
 
 This approach directly manipulates the underlying data tensors to create a subsampled dataset. While less elegant than the previous two methods, it’s useful when you want very fine-grained control or need to interface with data already loaded as tensors.
 

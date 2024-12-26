@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-the-tflite-library-with-mediapipe-in-ios-objective-c"
 ---
 
-Alright, let's tackle this. I've certainly been down the rabbit hole of integrating tflite with mediapipe in iOS using Objective-C; it’s not always the smoothest of rides, but it’s definitely achievable with the correct approach. From my past experience working on a real-time object recognition project that used camera feed input, I remember we had to carefully manage the data flow between the two libraries for optimal performance.
+, let's tackle this. I've certainly been down the rabbit hole of integrating tflite with mediapipe in iOS using Objective-C; it’s not always the smoothest of rides, but it’s definitely achievable with the correct approach. From my past experience working on a real-time object recognition project that used camera feed input, I remember we had to carefully manage the data flow between the two libraries for optimal performance.
 
 The core challenge lies in the fact that mediapipe handles the image processing pipelines, typically providing image buffers, while tflite expects a specific tensor format as input. Therefore, our focus is primarily on bridging the gap between these different data representations. In essence, we'll leverage mediapipe to capture and preprocess our image data, and then we’ll convert that into a suitable tensor format for consumption by tflite. It's about meticulous data handling and format conversions.
 
@@ -49,7 +49,7 @@ Here’s an example in Objective-C that demonstrates how to convert `CVPixelBuff
 
 
   size_t numComponents = (pixelFormat == kCVPixelFormatType_24RGB)? 3 : 4;
-  
+
   // Allocate memory for float32 array.
   size_t floatArraySize = inputWidth * inputHeight * 3 * sizeof(float);
   float *floatArray = (float *)malloc(floatArraySize);
@@ -66,7 +66,7 @@ Here’s an example in Objective-C that demonstrates how to convert `CVPixelBuff
         uint8_t *rowStart = (uint8_t*)(baseAddress + y * bytesPerRow);
             for(int x = 0; x < width; x++) {
                 float r,g,b;
-                
+
                 if (pixelFormat == kCVPixelFormatType_24RGB) {
                     r = (float)rowStart[3 * x] ;
                     g = (float)rowStart[3 * x + 1];
@@ -77,16 +77,16 @@ Here’s an example in Objective-C that demonstrates how to convert `CVPixelBuff
                     b = (float)rowStart[4 * x + 2] ; // Blue
                     // Note the alpha is not used here
                 }
-                
+
                //Normalization happens here. Remember that the range is from -1 to 1
                 floatPtr[0] = ((r / 255.0f) * 2.0f) - 1.0f;
                 floatPtr[1] = ((g / 255.0f) * 2.0f) - 1.0f;
                 floatPtr[2] = ((b / 255.0f) * 2.0f) - 1.0f;
-                
+
                floatPtr += 3;
             }
         }
-  
+
 
   CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
 
@@ -138,14 +138,14 @@ Once the data is in the correct format (a float array as an NSData instance), we
        return;
     }
 
-   
+
     // Copy input data into tensor
     BOOL dataCopySuccess = [inputTensor copyData:inputData error:&error];
     if(!dataCopySuccess || error){
         NSLog(@"Error copying data to tensor: %@", error.localizedDescription);
        return;
     }
-    
+
      // Run the interpreter
     BOOL invokeSuccess = [interpreter invokeWithError:&error];
 
@@ -180,18 +180,18 @@ TFLite will output results which we then need to process according to the model'
 **Key Considerations and Best Practices:**
 
 1.  **Pixel Format:** The pixel format used by mediapipe and the expected format by tflite needs to match. It is important to ensure your pixel buffer is in the correct format, such as rgb, rgba, or bgra.
-2. **Memory Management:** When dealing with `CVPixelBufferRef` and raw memory, be sure to release memory correctly using appropriate methods like `CVPixelBufferUnlockBaseAddress` and `free()`. Otherwise, you might face leaks or crashes.
+2.  **Memory Management:** When dealing with `CVPixelBufferRef` and raw memory, be sure to release memory correctly using appropriate methods like `CVPixelBufferUnlockBaseAddress` and `free()`. Otherwise, you might face leaks or crashes.
 3.  **Error Handling:** Thoroughly check for errors during each stage, including tensor access, data copying and inference runs. This ensures your app behaves gracefully when unexpected issues arise.
-4. **Performance:** Data copying between buffers and performing format conversions can be costly. Optimize your code to minimize data copies and use accelerated libraries where possible, such as `Accelerate.framework` for resizing and other image operations.
-5. **Model Input Specification:** Carefully analyze your tflite model using tools like `netron`, and note the input shape, input type, normalization needs, and output shape of the model. This is crucial for successful integration.
+4.  **Performance:** Data copying between buffers and performing format conversions can be costly. Optimize your code to minimize data copies and use accelerated libraries where possible, such as `Accelerate.framework` for resizing and other image operations.
+5.  **Model Input Specification:** Carefully analyze your tflite model using tools like `netron`, and note the input shape, input type, normalization needs, and output shape of the model. This is crucial for successful integration.
 6.  **Threading:** Offload the conversion and inference to background threads to avoid blocking the UI thread. This keeps your application responsive even when inference is running.
 
 **Recommended Resources:**
 
-*   **"Mobile Machine Learning with TensorFlow Lite" by Pete Warden:** A great practical guide that details all the aspects of using tflite with mobile platforms.
-*   **TensorFlow documentation (official tflite documentation):** Essential resource for checking the tflite model’s input output specifications, and understanding tflite internals.
-*   **Apple's documentation on Core Video and Accelerate:** Understanding pixel buffer manipulation and using the accelerate framework to make this efficient.
-* **Mediapipe documentation:** Detailed overview of how to use mediapipe for different tasks.
+- **"Mobile Machine Learning with TensorFlow Lite" by Pete Warden:** A great practical guide that details all the aspects of using tflite with mobile platforms.
+- **TensorFlow documentation (official tflite documentation):** Essential resource for checking the tflite model’s input output specifications, and understanding tflite internals.
+- **Apple's documentation on Core Video and Accelerate:** Understanding pixel buffer manipulation and using the accelerate framework to make this efficient.
+- **Mediapipe documentation:** Detailed overview of how to use mediapipe for different tasks.
 
 **Conclusion**
 

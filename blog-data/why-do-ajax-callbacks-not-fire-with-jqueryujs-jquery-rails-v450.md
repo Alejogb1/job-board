@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-do-ajax-callbacks-not-fire-with-jqueryujs-jquery-rails-v450"
 ---
 
-alright, so you're banging your head against the wall because your ajax callbacks aren't triggering when using jquery_ujs, especially with jquery-rails v4.5.0, right? i’ve been there, trust me. it’s like staring at a perfectly good piece of code that just refuses to cooperate. let me tell you about my escapades with this beast.
+, so you're banging your head against the wall because your ajax callbacks aren't triggering when using jquery_ujs, especially with jquery-rails v4.5.0, right? i’ve been there, trust me. it’s like staring at a perfectly good piece of code that just refuses to cooperate. let me tell you about my escapades with this beast.
 
 back in the day, when rails was still young and jquery was king, i spent a solid week debugging what looked like a simple form submission. i was trying to get a modal to update dynamically after a user submitted some data. i had all the callbacks set up, the `ajax:success`, `ajax:error`, even `ajax:complete`, i thought i was in the clear. the server was receiving the data, processing it, and sending back the correct response. but the modal? yeah, it remained stubbornly unchanged. no errors, no console output, just… silence.
 
@@ -17,12 +17,12 @@ the first common mistake is attaching callbacks directly to the form or button e
 ```javascript
 // this is how *not* to do it
 
-$('#my-form').on('ajax:success', function(event, data, status, xhr) {
-    console.log('successful ajax call... but not really!');
-    $('#my-modal-content').html(data.content);
+$("#my-form").on("ajax:success", function (event, data, status, xhr) {
+  console.log("successful ajax call... but not really!");
+  $("#my-modal-content").html(data.content);
 });
-
 ```
+
 in this case, jquery_ujs intercepts the form submission, creates an xhr request, sends it, and processes the response. the problem is, the callback is not attached where the event is triggered, i.e. the document. so the callback simply does not fire.
 
 here's how we fix that. the proper way to handle this is by using event delegation in jquery. you bind the callback to the document and then filter for the element that initiated the event. this is particularly important when you are dealing with dynamically created content.
@@ -30,9 +30,9 @@ here's how we fix that. the proper way to handle this is by using event delegati
 ```javascript
 // correct way to handle it
 
-$(document).on('ajax:success', '#my-form', function(event, data, status, xhr) {
-    console.log('ajax success firing!');
-    $('#my-modal-content').html(data.content);
+$(document).on("ajax:success", "#my-form", function (event, data, status, xhr) {
+  console.log("ajax success firing!");
+  $("#my-modal-content").html(data.content);
 });
 ```
 
@@ -45,8 +45,8 @@ also, a thing that i've seen happen frequently is that people may have forgotten
 //= require jquery
 //= require rails-ujs
 //= require_tree .
-
 ```
+
 if you have included jquery-ujs, but your callbacks are still failing, there could be another potential issue. for example, maybe your response is not a json response, so, your `ajax:success` method cannot process it.
 
 another problem i’ve encountered is related to how the server responds. jquery_ujs, by default expects a json response. if your rails backend returns plain html for instance, the ajax handlers will be skipped. you'll get the data, but the callbacks never trigger because the content type isn't right. let me show you the difference between a json response and a html one.

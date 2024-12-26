@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-spring-boot-application-taking-a-long-time-to-start-on-azure-app-service"
 ---
 
-Okay, let's tackle this. I've definitely seen my share of slow-starting Spring Boot applications on Azure App Service, and it's rarely just one culprit. Usually, it's a combination of factors, and pinpointing the exact cause often requires a methodical approach. I recall one particularly frustrating case where a client was launching a fairly straightforward microservice, and it was taking upwards of two minutes to become fully operational. That was unacceptable, and it spurred a thorough investigation that revealed a few common bottlenecks.
+, let's tackle this. I've definitely seen my share of slow-starting Spring Boot applications on Azure App Service, and it's rarely just one culprit. Usually, it's a combination of factors, and pinpointing the exact cause often requires a methodical approach. I recall one particularly frustrating case where a client was launching a fairly straightforward microservice, and it was taking upwards of two minutes to become fully operational. That was unacceptable, and it spurred a thorough investigation that revealed a few common bottlenecks.
 
 The startup time of a Spring Boot application is essentially the duration it takes from the moment the JVM starts to the point where the application is ready to serve requests. This involves several phases: JVM initialization, class loading, bean instantiation, context refresh, and the eventual starting of embedded servers (like Tomcat). Azure App Service introduces its own layer of complexity, primarily due to the environment's characteristics and any network interactions required.
 
@@ -39,11 +39,13 @@ public class SlowBean {
     }
 }
 ```
+
 **Explanation**: This `SlowBean` intentionally introduces a 5-second delay during initialization. If multiple such beans exist in an application, the cumulative delay adds up quickly.
 
 **Solution:** Review bean initializations and look for operations that may take a long time to execute during startup. Asynchronous initialization could resolve this. For instance, consider using Spring's `@Async` to perform these tasks outside the main startup thread, improving the startup time and improving responsiveness of the application. For more details, refer to the "Pro Spring 5" by Iuliana Cosmina et al. for advanced context initialization and asynchronous execution details.
 
 **Example 2: Inadequate database connection pooling:**
+
 ```java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -69,6 +71,7 @@ public class DatabaseChecker {
     }
 }
 ```
+
 **Explanation**: In the code example above, the connection establishment is not initialized until the bean is actually used. Connection pool parameters are often overlooked which can lead to delay during application startup as the connection is established on first access.
 
 **Solution**: We can either initialize the pool upfront using `spring.datasource.initialization-mode=always` property in `application.properties`, or make it so that this bean is initialized during the startup and not on first use. Adjusting pool settings, such as initial size and maximum size in the configuration, will minimize delays during the initial connection phase. This ensures connections are already available when needed. Reading "High Performance Java Persistence" by Vlad Mihalcea is greatly recommended for understanding the intricacies of connection pooling with databases.

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-is-the-dqn-agent-failing-the-test-due-to-incorrect-input-shape"
 ---
 
-Okay, let's tackle this. It’s a classic issue, one I’ve seen pop up more times than I care to remember, especially in the early stages of a reinforcement learning project. Specifically, when your Deep Q-Network (DQN) agent is failing the test, and the error points to incorrect input shape, it's almost certainly a mismatch between how your environment represents states and how your neural network expects them. It's rarely the network's fault at its core, but rather how we, as developers, present the data.
+, let's tackle this. It’s a classic issue, one I’ve seen pop up more times than I care to remember, especially in the early stages of a reinforcement learning project. Specifically, when your Deep Q-Network (DQN) agent is failing the test, and the error points to incorrect input shape, it's almost certainly a mismatch between how your environment represents states and how your neural network expects them. It's rarely the network's fault at its core, but rather how we, as developers, present the data.
 
 I recall a project back in 2018, attempting to train a DQN to play a simplified version of a real-time strategy game. We were using a combination of pixel data and game-state variables as input. Initially, it seemed straightforward enough. I diligently constructed a convolutional neural network (cnn) architecture, fed it the pixel data, and expected great results. What I got, however, was consistent failure and the telltale input shape error. The problem was not a fundamental misunderstanding of the DQN algorithm, but a fundamental misunderstanding of how my data was structured, and how it needed to conform to the layers in my neural network.
 
-Here's the breakdown. A DQN agent, at its heart, uses a neural network as a function approximator. This neural network takes a state from the environment as input and outputs Q-values for each possible action. The key word here is *state*, and the critical factor is the shape of that *state*. The input shape of your network must perfectly match the shape of the state that you are feeding it. Failure to do so will result in the kind of error you're experiencing.
+Here's the breakdown. A DQN agent, at its heart, uses a neural network as a function approximator. This neural network takes a state from the environment as input and outputs Q-values for each possible action. The key word here is _state_, and the critical factor is the shape of that _state_. The input shape of your network must perfectly match the shape of the state that you are feeding it. Failure to do so will result in the kind of error you're experiencing.
 
 Let’s explore the typical scenarios where this crops up and how to address them.
 
@@ -100,7 +100,7 @@ In this code snippet, our cnn is initialized to take a single input channel, lik
 
 **Scenario 3: Incorrect Order of Dimensions**
 
-While less frequent, there could be cases where you have the correct *number* of dimensions and the correct values, but they are in the wrong order. This is more common if you are manually formatting the data. For instance, you might be accidentally passing a tensor where the channel dimension is interpreted as the batch dimension or vice versa. PyTorch, as well as Tensorflow, often expect a particular format and order of dimensions, for example `batch_size, channel, height, width`.
+While less frequent, there could be cases where you have the correct _number_ of dimensions and the correct values, but they are in the wrong order. This is more common if you are manually formatting the data. For instance, you might be accidentally passing a tensor where the channel dimension is interpreted as the batch dimension or vice versa. PyTorch, as well as Tensorflow, often expect a particular format and order of dimensions, for example `batch_size, channel, height, width`.
 
 **Example 3: Incorrect Dimension Order**
 Here, we will show an example where the order of dimensions is incorrect.

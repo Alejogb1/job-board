@@ -29,6 +29,7 @@ impl<D, T> Processor for DataProcessor<D> {
     }
 }
 ```
+
 Now, this doesn’t compile, and it's often the first 'ah-ha' moment many encounter. The compiler throws a fit, complaining about how it can't determine the concrete type of `T` when `DataProcessor` implements `Processor`.
 
 The fundamental reason for this failure is tied to monomorphization. Rust's generics are resolved at compile time. For every different type `T` used with `DataProcessor<D>::process<T>`, Rust generates a completely new function, specializing it for that specific type `T`. This is what we call monomorphization—a form of static dispatch, which is incredibly efficient at runtime. But this mechanism does not play well with how trait objects work.
@@ -45,9 +46,9 @@ fn main() {
 }
 ```
 
-The `process` method on the trait object needs to work for _any_ type that might be passed as `T`. However, because `T` is a generic parameter on the `process` function, Rust has no way of knowing what concrete implementations to use at compile time since that dispatching happens at *runtime*. Each concrete `T` would require a separate monomorphized function; trait objects and dynamic dispatch cannot handle this.
+The `process` method on the trait object needs to work for _any_ type that might be passed as `T`. However, because `T` is a generic parameter on the `process` function, Rust has no way of knowing what concrete implementations to use at compile time since that dispatching happens at _runtime_. Each concrete `T` would require a separate monomorphized function; trait objects and dynamic dispatch cannot handle this.
 
-Okay, so what can we do about it? This is where we start thinking differently about how we structure our code, avoiding generic method signatures on traits where dynamic dispatch is needed. Here are a few strategies I’ve successfully used:
+, so what can we do about it? This is where we start thinking differently about how we structure our code, avoiding generic method signatures on traits where dynamic dispatch is needed. Here are a few strategies I’ve successfully used:
 
 **1. Associated Types:**
 
@@ -184,6 +185,6 @@ fn main() {
 
 Here, instead of trying to make the `process` method generic in the trait, we define trait implementations for specific input types. This approach shifts the burden of type specialization onto the trait implementations. The `DataProcessor` implements `Processor` twice, once for `i32` and once for `f64`, providing corresponding processing logic.
 
-In my experience, the “right” approach depends on the specific problem. For broader understanding, I'd recommend looking into *Programming Rust* by Jim Blandy, Jason Orendorff, and Leonora F. S. Tindall; it dives deeply into Rust's type system and generics. Further, *Effective Rust* by Doug Milford offers valuable practical insights on how to apply these concepts effectively. In addition, *The Rustonomicon* is excellent for understanding the low-level details and the 'why' behind these restrictions.
+In my experience, the “right” approach depends on the specific problem. For broader understanding, I'd recommend looking into _Programming Rust_ by Jim Blandy, Jason Orendorff, and Leonora F. S. Tindall; it dives deeply into Rust's type system and generics. Further, _Effective Rust_ by Doug Milford offers valuable practical insights on how to apply these concepts effectively. In addition, _The Rustonomicon_ is excellent for understanding the low-level details and the 'why' behind these restrictions.
 
 The key takeaway is that mixing runtime polymorphism (trait objects) with compile-time polymorphism (generics) in the way initially intended in your question creates an inherent type resolution problem for the compiler. It's essential to re-evaluate your code when encountering this, adapting either your trait design, your method signatures, or the way input data is handled, allowing the Rust type system to guide you towards a robust and efficient solution.

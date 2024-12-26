@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-python-be-used-to-animate-bubble-maps"
 ---
 
-Alright, let's tackle this one. Animated bubble maps, eh? I recall a project back in my geospatial analysis days where we needed to visualize urban migration patterns over time; a static map just wouldn't cut it. Python, thankfully, has a rich ecosystem that made that feasible. It's more than possible, and I've found that focusing on a few core libraries makes the process relatively straightforward.
+, let's tackle this one. Animated bubble maps, eh? I recall a project back in my geospatial analysis days where we needed to visualize urban migration patterns over time; a static map just wouldn't cut it. Python, thankfully, has a rich ecosystem that made that feasible. It's more than possible, and I've found that focusing on a few core libraries makes the process relatively straightforward.
 
 The general approach involves three primary phases: data preparation, map rendering, and animation. Each has its own nuances, of course, but let’s unpack them.
 
@@ -88,7 +88,7 @@ Of course, a simple animation like the above might not be sufficient in all case
 
 2.  **Add Tooltips/Labels:** Consider making your map interactive by adding tooltips when hovering over a bubble. For this, I've often used matplotlib’s `Annotation` and `pick_event` to trigger a function that displays detailed information. This can be implemented, though it's beyond a simple snippet, and it typically requires a slightly different framework where you’re generating a separate set of plots that gets displayed based on hover.
 
-3. **Use Different Map Projections**: `cartopy` has a wide array of map projections that may better suit your data or provide a different visual aesthetic. Experimenting with various projections, such as `LambertAzimuthalEqualArea`, can sometimes provide a more effective perspective.
+3.  **Use Different Map Projections**: `cartopy` has a wide array of map projections that may better suit your data or provide a different visual aesthetic. Experimenting with various projections, such as `LambertAzimuthalEqualArea`, can sometimes provide a more effective perspective.
 
 Let's showcase a slightly more complex example, where we dynamically rescale the bubbles and handle missing data better:
 
@@ -143,6 +143,7 @@ df = pd.DataFrame(data)
 
 enhanced_animate_bubble_map(df)
 ```
+
 In this version, I added a check to make sure the magnitude column does not contain negative values and ensures that the bubble sizes are scaled relative to the max value within each frame, improving the visual representation if magnitudes vary across years.
 
 For a deep dive into cartographic projections and their mathematical underpinnings, I recommend exploring "Map Projections: A Working Manual" by Snyder. For mastering Matplotlib, "Python Data Science Handbook" by Jake VanderPlas is excellent. Further, "Geographic Information Systems: A Gentle Introduction" by Paul Longley provides a good foundation for understanding the concepts involved in geospatial data handling.

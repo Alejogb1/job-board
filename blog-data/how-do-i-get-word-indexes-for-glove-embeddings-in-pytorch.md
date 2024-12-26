@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-do-i-get-word-indexes-for-glove-embeddings-in-pytorch"
 ---
 
-alright, so you're looking to grab word indices that jive with your glove embeddings in pytorch, eh? i’ve been down that rabbit hole more times than i care to count, so i can definitely lend a hand. it's a pretty common task, especially when you're diving into the deep end of nlp projects.
+, so you're looking to grab word indices that jive with your glove embeddings in pytorch, eh? i’ve been down that rabbit hole more times than i care to count, so i can definitely lend a hand. it's a pretty common task, especially when you're diving into the deep end of nlp projects.
 
 let me tell you, my first encounter with this was a real head-scratcher. i was working on this sentiment analysis model, back in the day, like early pytorch days, v0.4 or something. i had my glove embeddings, all pre-trained and ready, but feeding the actual words to the network? yeah, that wasn’t going to cut it. i was just throwing random strings in there. it ended up being a completely random classifier. i thought it was a pytorch problem, but no, it was me! i was going about it all wrong. i needed to find the mapping between words and the numerical indexes, which are how the tensors were accessing them, you know. felt like such a silly mistake afterwards. it was a classic case of ‘look before you leap’. thankfully, i learned fast.
 
@@ -49,6 +49,7 @@ print(f"shape of the glove embedding matrix:{embedding_matrix.shape}") #torch.Si
 the_embedding = embedding_matrix[word_index]
 print(f"embedding of the word 'the': {the_embedding[:5]}") # print the first 5 values
 ```
+
 this snippet uses `torchtext` which is a really handy tool for text pre-processing in pytorch. it does a lot of the heavy lifting for you. `vocab.vocab` lets you create the word to index mapping. after that, you can load the pretrained glove embeddings using `vocab.glove`, specifying the name and dimension you need.
 
 i remember when `torchtext` wasn't a thing, we had to build the vocabulary mapping on our own. it was messy, believe me. like lots of manual iteration on arrays with no numpy vectorized functions. `torchtext` saved a lot of my time for sure. i suggest you learn how to use it well.

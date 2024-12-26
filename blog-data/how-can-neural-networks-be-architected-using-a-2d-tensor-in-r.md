@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-neural-networks-be-architected-using-a-2d-tensor-in-r"
 ---
 
-Okay, let's dive into this. I remember a particularly challenging project a few years back. We were tasked with processing some geospatial data, and the initial naive approach of flattening everything into 1D vectors for a traditional feedforward network just wasn't cutting it. The spatial relationships were crucial, and we were losing that information. That led us down the path of figuring out how to leverage the 2D structure directly using neural networks, specifically within an R environment. It's certainly doable, and far more elegant than forcing everything into a single dimension.
+, let's dive into this. I remember a particularly challenging project a few years back. We were tasked with processing some geospatial data, and the initial naive approach of flattening everything into 1D vectors for a traditional feedforward network just wasn't cutting it. The spatial relationships were crucial, and we were losing that information. That led us down the path of figuring out how to leverage the 2D structure directly using neural networks, specifically within an R environment. It's certainly doable, and far more elegant than forcing everything into a single dimension.
 
-The crux of the issue lies in understanding that a “2D tensor” in the context of neural networks within R doesn't typically refer to some inherently different data structure R uses. It’s more about how we *interpret* the data during the calculations within the network and how we structure the network's layers to process it appropriately. In essence, it means the input to a layer is treated as a matrix, or more generally, as a batch of matrices. The typical setup involves manipulating R's `array` type, which effectively handles multi-dimensional data.
+The crux of the issue lies in understanding that a “2D tensor” in the context of neural networks within R doesn't typically refer to some inherently different data structure R uses. It’s more about how we _interpret_ the data during the calculations within the network and how we structure the network's layers to process it appropriately. In essence, it means the input to a layer is treated as a matrix, or more generally, as a batch of matrices. The typical setup involves manipulating R's `array` type, which effectively handles multi-dimensional data.
 
 To achieve this, we often employ convolutional neural networks (CNNs), which are specifically designed for working with grid-like data, like images, which are inherently 2D. However, there are other architectures, such as recurrent neural networks (RNNs) with a modified input layer, which could also process 2D input if that's your need, although this is less common. Let's focus primarily on CNNs as they offer the most direct approach for handling spatial relationships inherent in 2D data.
 
@@ -38,6 +38,7 @@ output <- model(dummy_data)
 
 cat("Shape of the output:", dim(output), "\n")
 ```
+
 In this first snippet, we define a single convolutional layer. The `input_shape` specifies that we expect inputs with dimensions 28x28 and a single channel. The `layer_conv_2d` function specifies the number of filters, kernel size, and activation function. Notice that the input data itself is structured to reflect the image dimensions. This first convolutional layer processes the 2D data by using kernels of size 3x3 that move across the input, creating multiple feature maps (32 in this example) that can capture different local patterns or features.
 
 **Snippet 2: Adding MaxPooling and Flattening**

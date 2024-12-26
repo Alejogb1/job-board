@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-remove-trailing-slashes-from-directories-using-htaccess"
 ---
 
-Okay, let's tackle this trailing slash issue in `.htaccess`. I've certainly been down that rabbit hole more times than I care to remember, and it always seems like something relatively straightforward that can cause unexpected headaches if not handled correctly. My experience, particularly during my time maintaining an old e-commerce platform a few years back, is filled with examples of how a seemingly simple configuration change can impact SEO, user experience, and even break seemingly unrelated application functionality if not carefully considered. Essentially, trailing slashes, while semantically unimportant to the browser, can be viewed as separate URLs by search engines, causing duplication issues and diluting link authority.
+, let's tackle this trailing slash issue in `.htaccess`. I've certainly been down that rabbit hole more times than I care to remember, and it always seems like something relatively straightforward that can cause unexpected headaches if not handled correctly. My experience, particularly during my time maintaining an old e-commerce platform a few years back, is filled with examples of how a seemingly simple configuration change can impact SEO, user experience, and even break seemingly unrelated application functionality if not carefully considered. Essentially, trailing slashes, while semantically unimportant to the browser, can be viewed as separate URLs by search engines, causing duplication issues and diluting link authority.
 
 So, how do we address this with `.htaccess`? The magic lies in the power of `mod_rewrite`. This Apache module is incredibly versatile and is our tool for crafting precise redirection rules. The aim is to consistently redirect URLs ending with a trailing slash to their non-trailing slash counterparts.
 
@@ -42,6 +42,7 @@ RewriteCond %{REQUEST_URI} !\.php$
 RewriteCond %{REQUEST_URI} ^(.*)/$
 RewriteRule ^(.*)/$ $1 [R=301,L]
 ```
+
 I've now included an extra condition, `RewriteCond %{REQUEST_FILENAME} !-d`, which checks if the request path doesn't resolve to a directory on the server. This is an important check. If it is a valid directory, the rewrite rule should not be applied. If it is not a valid directory, then the other rules will apply. This prevents endless redirects in cases where you might already be viewing a URL without a trailing slash, or where you are viewing a file on disk. This is an important rule that was missing in my previous code snippets, demonstrating that attention to detail is necessary. This addresses the most complex cases we might encounter when dealing with URLs.
 
 A couple of things to note in practice: always test these rewrite rules in a development environment before deploying them to production. Subtle errors can have significant impacts, and debugging rewrite rules in a live production environment is a nerve wracking experience. Another point is to make sure your web server has the `mod_rewrite` module enabled. This is usually on by default for apache installations, but if not, you'll need to adjust server settings.

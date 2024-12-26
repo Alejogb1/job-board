@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "import-in-the-middle-esm-modules-problem"
 ---
 
-Okay so import-in-the-middle ESM modules yeah I've been down that rabbit hole more times than I'd like to admit Let me break down what I think you're probably running into and how I've tackled it in the past
+import-in-the-middle ESM modules yeah I've been down that rabbit hole more times than I'd like to admit Let me break down what I think you're probably running into and how I've tackled it in the past
 
 First things first when you say "import-in-the-middle" I'm assuming you're hitting a scenario where module A imports module B and then module C imports both A and B but you need to somehow intercept or modify B before it gets to C right That's the classic dance of dependency management gone a little sideways especially when we're dealing with ESM modules and their lovely strictness
 
@@ -20,29 +20,27 @@ One approach that actually yielded some fruit was using a intermediary module a 
 
 ```javascript
 // moduleB.js (Original Module)
-export function originalFunction(){
-    console.log("Original Function Executed")
+export function originalFunction() {
+  console.log("Original Function Executed");
 }
 ```
 
 ```javascript
 // moduleBProxy.js (The Interceptor Proxy)
-import * as originalModule from './moduleB.js';
+import * as originalModule from "./moduleB.js";
 
 function enhancedFunction() {
-    console.log("Interceptor Executed")
-    originalModule.originalFunction();
-    console.log("Interceptor Done")
+  console.log("Interceptor Executed");
+  originalModule.originalFunction();
+  console.log("Interceptor Done");
 }
 
-
 export const modifiedFunction = enhancedFunction;
-
 ```
 
 ```javascript
 // moduleC.js (Module that needs modified B)
-import { modifiedFunction } from './moduleBProxy.js'
+import { modifiedFunction } from "./moduleBProxy.js";
 
 modifiedFunction();
 ```
@@ -64,38 +62,38 @@ export async function getCachedData(key, fetchFunction) {
   if (!currentCacheImplementation) {
     return fetchFunction();
   }
-    const cached = await currentCacheImplementation.get(key);
-    if (cached) return cached;
-  
-    const data = await fetchFunction();
-    await currentCacheImplementation.set(key, data);
-    return data
+  const cached = await currentCacheImplementation.get(key);
+  if (cached) return cached;
+
+  const data = await fetchFunction();
+  await currentCacheImplementation.set(key, data);
+  return data;
 }
 ```
 
 ```javascript
 // dataFetcher.js
 
-import { getCachedData } from './cacheManager.js';
+import { getCachedData } from "./cacheManager.js";
 
 export async function fetchData(url) {
-    return getCachedData(url, async () => {
-        const response = await fetch(url)
-        return response.json();
-    })
+  return getCachedData(url, async () => {
+    const response = await fetch(url);
+    return response.json();
+  });
 }
 ```
+
 ```javascript
 // app.js
 
-import { setCacheImplementation } from './cacheManager.js';
-import { fetchData } from './dataFetcher.js';
+import { setCacheImplementation } from "./cacheManager.js";
+import { fetchData } from "./dataFetcher.js";
 
 async function init() {
-    await setCacheImplementation('./localCacheModule.js'); // or './redisCacheModule.js'
-    const data = await fetchData('https://example.com/api/data');
-    console.log(data);
-
+  await setCacheImplementation("./localCacheModule.js"); // or './redisCacheModule.js'
+  const data = await fetchData("https://example.com/api/data");
+  console.log(data);
 }
 
 init();
@@ -107,32 +105,34 @@ Another important concept to keep in mind here is module augmentation if you nee
 
 ```typescript
 // moduleA.d.ts
-declare module './moduleA' {
+declare module "./moduleA" {
   interface CustomModuleA {
-      extraFunction(value:number):string
+    extraFunction(value: number): string;
   }
 
-    interface DefaultExport{
-         customProp:string;
-    }
+  interface DefaultExport {
+    customProp: string;
+  }
 }
 ```
+
 ```typescript
 // moduleA.js
 export default {
-    customProp: "Hello World"
+  customProp: "Hello World",
 };
 ```
+
 ```typescript
 // moduleB.ts
-import moduleA from './moduleA';
+import moduleA from "./moduleA";
 
-moduleA.extraFunction = (value:number) =>  {
-    console.log('value added ' + value);
-    return value.toString()
-}
+moduleA.extraFunction = (value: number) => {
+  console.log("value added " + value);
+  return value.toString();
+};
 
-moduleA.customProp = 'Hello Universe';
+moduleA.customProp = "Hello Universe";
 console.log(moduleA.customProp);
 moduleA.extraFunction(123);
 ```

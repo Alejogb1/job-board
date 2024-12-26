@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-naive-bayes-classifier-be-iteratively-applied-to-a-list-of-strings"
 ---
 
-Alright, let's tackle this. It's a problem I've seen surface quite a bit, especially when dealing with evolving datasets in text classification. The core challenge with iterative application of a Naive Bayes classifier to strings comes down to how you manage the model’s state as new data comes in and how you adapt to that new information without just retraining from scratch every time. It's a balancing act between performance, accuracy, and the computational cost of rebuilding the model.
+, let's tackle this. It's a problem I've seen surface quite a bit, especially when dealing with evolving datasets in text classification. The core challenge with iterative application of a Naive Bayes classifier to strings comes down to how you manage the model’s state as new data comes in and how you adapt to that new information without just retraining from scratch every time. It's a balancing act between performance, accuracy, and the computational cost of rebuilding the model.
 
 In my experience, I encountered this head-on while working on an internal content categorization system for a large media archive. We were dealing with thousands of new articles daily, and retraining the Naive Bayes model from the ground up every night was proving to be incredibly resource-intensive and, quite frankly, unnecessary. We needed a way to feed new data continuously into the existing model and refine it on the fly.
 
@@ -12,10 +12,10 @@ The traditional Naive Bayes algorithm, in its simplest form, is designed for bat
 
 Here's the core concept we’ll be working with:
 
-*   **Feature Extraction:** Before you can apply Naive Bayes, you need to convert your strings (the text of an article, for example) into a set of features that the algorithm can understand – usually a bag-of-words or tf-idf representation. This process occurs before both initial training and each update, but each time it must be applied consistently to both old and new data.
-*   **Probability Updates:** The crux of the iterative process. Instead of recalculating the probabilities from scratch, we add to the prior counts of each feature for each class based on the new data. This allows us to adapt the model without a full retraining.
-*   **Handling Missing Features:** When new data presents features that weren't in the original training set, we need to account for them, normally by introducing a smoothing technique or by setting an initial frequency for unseen features.
-*   **Recalculation Triggers:** While incremental updates are efficient, a full recalculation of the model's probabilities might become necessary periodically, especially if large changes are introduced in the data. We implemented this in our system by monitoring the model's predictive performance and triggered a full recalculation after accuracy dropped by a specific threshold.
+- **Feature Extraction:** Before you can apply Naive Bayes, you need to convert your strings (the text of an article, for example) into a set of features that the algorithm can understand – usually a bag-of-words or tf-idf representation. This process occurs before both initial training and each update, but each time it must be applied consistently to both old and new data.
+- **Probability Updates:** The crux of the iterative process. Instead of recalculating the probabilities from scratch, we add to the prior counts of each feature for each class based on the new data. This allows us to adapt the model without a full retraining.
+- **Handling Missing Features:** When new data presents features that weren't in the original training set, we need to account for them, normally by introducing a smoothing technique or by setting an initial frequency for unseen features.
+- **Recalculation Triggers:** While incremental updates are efficient, a full recalculation of the model's probabilities might become necessary periodically, especially if large changes are introduced in the data. We implemented this in our system by monitoring the model's predictive performance and triggered a full recalculation after accuracy dropped by a specific threshold.
 
 Let's get into some practical code examples to illustrate this. We’ll use Python since it's a common choice for text analysis, and I’ll keep it fairly self-contained. For simplicity, I'll assume the use of bag-of-words, but it could be expanded to TF-IDF.
 

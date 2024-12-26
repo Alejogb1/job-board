@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "is-using-an-async-function-in-computed-proper-in-vuejs"
 ---
 
-Okay, let's dive into this. I recall a rather complex project a few years back involving a real-time dashboard built with Vue.js, where we initially tried to shoehorn async operations directly into computed properties. It quickly turned into a debugging nightmare, highlighting why that approach is generally not recommended. So, the short answer is: while technically possible, directly using async functions within computed properties in Vue.js is generally a bad practice and introduces significant complexity.
+, let's dive into this. I recall a rather complex project a few years back involving a real-time dashboard built with Vue.js, where we initially tried to shoehorn async operations directly into computed properties. It quickly turned into a debugging nightmare, highlighting why that approach is generally not recommended. So, the short answer is: while technically possible, directly using async functions within computed properties in Vue.js is generally a bad practice and introduces significant complexity.
 
 Why? Computed properties in Vue.js are designed to be synchronous and deterministic. They are meant to derive a value from existing data and return it immediately. The Vue reactivity system heavily relies on this predictable behavior. When you introduce asynchronous operations, like fetching data from an api, within a computed property, the expected flow breaks down. The reactivity system expects a return value instantly, not a promise that resolves at some future time.
 
@@ -22,10 +22,10 @@ export default {
     };
   },
   computed: {
-      async userData() {
-        const response = await fetch(`/api/users/${this.userId}`);
-        return await response.json();
-      },
+    async userData() {
+      const response = await fetch(`/api/users/${this.userId}`);
+      return await response.json();
+    },
   },
 };
 ```
@@ -45,33 +45,32 @@ export default {
       userId: 1,
       user: null,
       loading: false,
-      error: null
+      error: null,
     };
   },
   methods: {
-     async fetchUserData() {
-        this.loading = true;
-        this.error = null;
-        try {
-          const response = await fetch(`/api/users/${this.userId}`);
-          if(!response.ok){
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          this.user = await response.json();
-        } catch (err) {
-          this.error = err.message
-        } finally {
-           this.loading = false;
+    async fetchUserData() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const response = await fetch(`/api/users/${this.userId}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
-     }
+        this.user = await response.json();
+      } catch (err) {
+        this.error = err.message;
+      } finally {
+        this.loading = false;
+      }
+    },
   },
   watch: {
-      userId: {
-          immediate: true,
-          handler: 'fetchUserData'
-      }
-  }
-
+    userId: {
+      immediate: true,
+      handler: "fetchUserData",
+    },
+  },
 };
 ```
 
@@ -81,47 +80,46 @@ Finally, consider a more nuanced scenario, where you need to format the fetched 
 
 ```javascript
 export default {
-    data() {
-      return {
-          userId: 1,
-          user: null,
-          loading: false,
-          error: null
-      };
-    },
-   methods: {
-     async fetchUserData() {
-        this.loading = true;
-        this.error = null;
-        try {
-          const response = await fetch(`/api/users/${this.userId}`);
-          if(!response.ok){
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          this.user = await response.json();
-        } catch (err) {
-          this.error = err.message
-        } finally {
-           this.loading = false;
+  data() {
+    return {
+      userId: 1,
+      user: null,
+      loading: false,
+      error: null,
+    };
+  },
+  methods: {
+    async fetchUserData() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const response = await fetch(`/api/users/${this.userId}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
-     }
-   },
-    computed: {
-        formattedUserName() {
-            if(this.user){
-               return `${this.user.firstName} ${this.user.lastName.toUpperCase()}`;
-            }
-            return "Loading..."; //Or perhaps a better placeholder here.
-        }
+        this.user = await response.json();
+      } catch (err) {
+        this.error = err.message;
+      } finally {
+        this.loading = false;
+      }
     },
+  },
+  computed: {
+    formattedUserName() {
+      if (this.user) {
+        return `${this.user.firstName} ${this.user.lastName.toUpperCase()}`;
+      }
+      return "Loading..."; //Or perhaps a better placeholder here.
+    },
+  },
   watch: {
     userId: {
-        immediate: true,
-        handler: 'fetchUserData'
-      }
-  }
+      immediate: true,
+      handler: "fetchUserData",
+    },
+  },
 };
-
 ```
 
 In this example, the `formattedUserName` computed property is now correctly used to format the user's name, based on the asynchronously fetched `user` data. The async logic is clearly separated into a method, making the system easier to reason about. Note the inclusion of the error handling, and loading state, as this is important for a better user experience.

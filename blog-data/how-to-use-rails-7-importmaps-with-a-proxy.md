@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-rails-7-importmaps-with-a-proxy"
 ---
 
-alright, let's talk importmaps and proxies in rails 7. it's a setup i've definitely banged my head against a few times, so i can share what i've learned, and some pitfalls i encountered.
+, let's talk importmaps and proxies in rails 7. it's a setup i've definitely banged my head against a few times, so i can share what i've learned, and some pitfalls i encountered.
 
 first off, importmaps are rails' way of handling javascript dependencies without needing node. it's all about defining which modules to load directly in the browser using es modules, instead of bundling everything with webpack or a similar tool. this keeps things simple in many cases, but it introduces a wrinkle when you're working behind a proxy server, which a lot of us are, especially in enterprise environments.
 
@@ -53,24 +53,28 @@ then, use a bundler like esbuild or rollup to produce es modules bundles, those 
 let's create a simple esbuild file called `esbuild.config.js`:
 
 ```javascript
-const esbuild = require('esbuild');
+const esbuild = require("esbuild");
 
-esbuild.build({
-  entryPoints: [
-    'node_modules/@hotwired/turbo/dist/turbo.es2017-esm.js',
-    'node_modules/@hotwired/stimulus/dist/stimulus.js',
-    'node_modules/@rails/actioncable/app/assets/javascripts/actioncable.esm.js'
-    // add other packages as needed
-  ],
-  bundle: false,
-  outdir: 'public/assets/js', // where your local cdn will be served
-  format: 'esm',
-  splitting: true,
-  sourcemap: 'external',
-  minify: false,
-}).then(() => console.log('build finished'));
+esbuild
+  .build({
+    entryPoints: [
+      "node_modules/@hotwired/turbo/dist/turbo.es2017-esm.js",
+      "node_modules/@hotwired/stimulus/dist/stimulus.js",
+      "node_modules/@rails/actioncable/app/assets/javascripts/actioncable.esm.js",
+      // add other packages as needed
+    ],
+    bundle: false,
+    outdir: "public/assets/js", // where your local cdn will be served
+    format: "esm",
+    splitting: true,
+    sourcemap: "external",
+    minify: false,
+  })
+  .then(() => console.log("build finished"));
 ```
+
 and then run with
+
 ```bash
 node esbuild.config.js
 ```
@@ -94,4 +98,4 @@ as for resources, instead of links, i can recommend a few good books/papers. whi
 
 one last thing i had a difficult time when starting with importmaps was with nested paths in the importmap. make sure to have the path correctly defined when pinning something, as this may cause some troubles, that you may think they are a proxy issue but are not (a lot of time was spent by me in this specific case, just to realize i had a typo in the importmap).
 
-and, of course, remember to clear your browser cache after making changes, because browser caching is, as i like to say, *the friend that always forgets to update*. i hope this helps, and you will not spend as much time as i did on this.
+and, of course, remember to clear your browser cache after making changes, because browser caching is, as i like to say, _the friend that always forgets to update_. i hope this helps, and you will not spend as much time as i did on this.

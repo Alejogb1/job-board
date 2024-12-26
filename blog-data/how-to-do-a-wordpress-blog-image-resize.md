@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-a-wordpress-blog-image-resize"
 ---
 
-alright, so you're facing the classic wordpress image resize conundrum, right? been there, done that, got the t-shirt, and probably even wrote a plugin about it at some point. let's break down what usually happens and how to get around it.
+, so you're facing the classic wordpress image resize conundrum, right? been there, done that, got the t-shirt, and probably even wrote a plugin about it at some point. let's break down what usually happens and how to get around it.
 
 first off, wordpress handles image resizing in a few different ways, and none of them are perfect out of the box. when you upload an image, wordpress automatically generates several sizes based on your theme's configuration and your wordpress settings. these usually include thumbnail, medium, and large versions, but they vary. the issue comes when you need a very specific size not preconfigured, or when you want to control this process more than wordpress defaults allow. or if you have older images that weren't generated correctly. i remember one time i was working on a project for a travel blog and they had a ton of old, wonky images uploaded by multiple editors that didn’t understand resizing, and let me tell you, debugging that mess was like trying to find a specific grain of sand on a beach after a storm.
 
@@ -33,7 +33,7 @@ this code will hook into the `image_resize_dimensions` filter. it checks if the 
 add_image_size('my_custom_image_size_name', 600, 400, true );
 ```
 
-this line tells wordpress that when you request the ‘my\_custom\_image\_size\_name’ image size, use a width of 600, a height of 400, and force a hard crop (cropping if the aspect ratio doesn't match). remember, this won’t retroactively resize existing images. you need to regenerate thumbnails for that, but we will get into that later. the name 'my\_custom\_image\_size\_name' must match the name used in the first code snippet in the `if` condition, and that is how they relate to each other.
+this line tells wordpress that when you request the ‘my_custom_image_size_name’ image size, use a width of 600, a height of 400, and force a hard crop (cropping if the aspect ratio doesn't match). remember, this won’t retroactively resize existing images. you need to regenerate thumbnails for that, but we will get into that later. the name 'my_custom_image_size_name' must match the name used in the first code snippet in the `if` condition, and that is how they relate to each other.
 
 now, to use this new image size in your templates, you can call the standard `the_post_thumbnail` wordpress function with our new image size name as a parameter:
 
@@ -78,7 +78,7 @@ function resize_image_on_demand($image_url, $width, $height, $crop = false) {
     if ( is_wp_error( $result ) ) {
       return null;
     }
-    
+
     return $resized_url;
 }
 ```

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "are-there-pitfalls-in-converting-an-f-aspnet-webapi-route-from-synchronous-to-asynchronous"
 ---
 
-Okay, let's talk about moving an F# ASP.NET web api from synchronous to asynchronous operations. I’ve been down this road more than a few times, and it's definitely a journey where seemingly minor changes can have significant repercussions if not handled thoughtfully. In my experience, I’ve seen several projects where a well-intended effort to introduce asynchronous patterns led to more headaches than improvements. The potential for issues isn't trivial, so it's good we're addressing it head-on.
+, let's talk about moving an F# ASP.NET web api from synchronous to asynchronous operations. I’ve been down this road more than a few times, and it's definitely a journey where seemingly minor changes can have significant repercussions if not handled thoughtfully. In my experience, I’ve seen several projects where a well-intended effort to introduce asynchronous patterns led to more headaches than improvements. The potential for issues isn't trivial, so it's good we're addressing it head-on.
 
 The primary motivation, of course, is to improve scalability and responsiveness. Asynchronous operations, by freeing up thread pool resources while waiting for I/O-bound tasks (like database queries or external api calls), can handle more concurrent requests. However, the switch isn't as simple as sprinkling `async` and `await` keywords everywhere. There are nuances within both the F# language and the asp.net core pipeline that we need to be mindful of.
 
@@ -37,9 +37,10 @@ let getUsersAsyncBad (db : DbContext) : Task<User list> =
 [<HttpGet("bad")]
 member this.GetUsersBad() =
     this.DbContext |> getUsersAsyncBad |> Async.RunSynchronously
-    
+
 ```
-This seems straightforward, right? It *looks* asynchronous, but it's fatally flawed. Notice that we’re executing the asynchronous `getUsersAsyncBad` using `Async.RunSynchronously`. We’re blocking the calling thread, essentially turning an asynchronous operation back into a synchronous one. In the ASP.NET core context, this leads to a potential deadlock. The thread awaiting the task is blocked, and the task itself might need that same thread to complete, leading to a standstill. This is a classic example of how mixing sync and async contexts can go terribly wrong.
+
+This seems straightforward, right? It _looks_ asynchronous, but it's fatally flawed. Notice that we’re executing the asynchronous `getUsersAsyncBad` using `Async.RunSynchronously`. We’re blocking the calling thread, essentially turning an asynchronous operation back into a synchronous one. In the ASP.NET core context, this leads to a potential deadlock. The thread awaiting the task is blocked, and the task itself might need that same thread to complete, leading to a standstill. This is a classic example of how mixing sync and async contexts can go terribly wrong.
 
 **Example 2: The Unhandled Exception**
 
@@ -57,7 +58,7 @@ let fetchExternalDataAsync (url : string) : Async<string> =
          with
          | :? System.Net.Http.HttpRequestException as ex ->
               failwithf "Error fetching data from %s. Error %s" url ex.Message
-        
+
     }
 ```
 
@@ -68,15 +69,16 @@ Now, let’s use this in our controller without considering error handling caref
 [<HttpGet("unhandled")]
 member this.GetExternalDataUnhandled() =
     task {
-         let! data = fetchExternalDataAsync "https://example.com/api/data" |> Async.StartAsTask 
+         let! data = fetchExternalDataAsync "https://example.com/api/data" |> Async.StartAsTask
          return Ok(data)
     }
 ```
+
 Here, we're relying on `failwithf` inside the async workflow which is fine, but this exception will not be caught by the ASP.NET core middleware pipeline as the computation might already be running at the point the request completes. We also didn't wrap the usage of the `fetchExternalDataAsync` call in a `try...with` at the controller level. Any exception within `fetchExternalDataAsync`, such as a network error or an invalid url, could terminate the request unexpectedly without giving us a change to send a more helpful response to the client.
 
 **Example 3: Proper Asynchronous Handling**
 
-Now let’s correct both of the previous examples and show what we *should* do:
+Now let’s correct both of the previous examples and show what we _should_ do:
 
 ```fsharp
 //Correct Asynchronous version
@@ -102,7 +104,7 @@ let fetchExternalDataAsyncCorrect (url : string) : Async<string> =
          with
          | :? System.Net.Http.HttpRequestException as ex ->
               failwithf "Error fetching data from %s. Error %s" url ex.Message
-        
+
     }
 // Controller
 [<HttpGet("handled")]
@@ -112,7 +114,7 @@ member this.GetExternalDataHandled() =
            let! data = fetchExternalDataAsyncCorrect "https://example.com/api/data" |> Async.StartAsTask
            return Ok(data)
         with
-            | ex ->  
+            | ex ->
                 this.Logger.LogError(ex, "An error occurred when fetching external data")
                 return  Problem(title = "Error fetching external data", detail = ex.Message, statusCode = (int)System.Net.HttpStatusCode.InternalServerError)
 

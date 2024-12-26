@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-simulate-a-computer-network-with-docker-containers--socket-programming"
 ---
 
-alright, so you want to spin up a simulated network using docker and socket programming, that's a cool project, and i've been there. i actually did something similar back when i was fiddling around with distributed systems for my uni thesis, it was a real headache at first.
+, so you want to spin up a simulated network using docker and socket programming, that's a cool project, and i've been there. i actually did something similar back when i was fiddling around with distributed systems for my uni thesis, it was a real headache at first.
 
 essentially, what you're doing is creating a bunch of isolated containers that can talk to each other as if they were on a real network. docker helps us with the isolation part, creating these mini-virtual machines, and socket programming gives us the tools to make them communicate. i'm not gonna lie, it does take a bit to wrap your head around it the first time, but it's very doable.
 
@@ -83,6 +83,7 @@ while True:
 # when finished close the connection
 connection.close()
 ```
+
 and for the `client.py` file:
 
 ```python
@@ -110,7 +111,7 @@ notice how the client is connecting to 'server'. this is the crucial part where 
 here's a docker-compose.yml that sets up a simple server-client network:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   server:
     build: ./server # this folder contains your server Dockerfile
@@ -119,7 +120,7 @@ services:
   client:
     build: ./client # this folder contains your client Dockerfile
     depends_on:
-      - server  # tells docker that the client depends on the server
+      - server # tells docker that the client depends on the server
 ```
 
 you'll save these files in an accessible location for you like a folder called `sim-network`. the directory structure would be something like this:
@@ -134,6 +135,7 @@ sim-network/
     ├── Dockerfile
     └── client.py
 ```
+
 to use it you will have to navigate to the sim-network directory and run `docker compose up --build`. docker-compose will now build your docker images using the dockerfiles provided and run these based on the configuration found in the docker-compose file.
 
 a couple of things here. first, notice the `depends_on` in docker-compose. this makes sure the server container starts before the client. second, the client uses 'server' as the hostname which docker uses to resolve to the container named server when networking between containers on the same bridge network. this is called the docker network. third, if you have more clients you can just add more of them. finally, the port mapping in the server section of the docker-compose file, is useful if you want to connect to the server from outside the docker network but is not needed for the client to work.

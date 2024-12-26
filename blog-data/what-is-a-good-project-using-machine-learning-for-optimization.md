@@ -4,17 +4,17 @@ date: "2024-12-15"
 id: "what-is-a-good-project-using-machine-learning-for-optimization"
 ---
 
-alright, so you're looking for a good ml project focusing on optimization, right? i've been around the block a few times with these sorts of things, and i've got a few ideas bubbling up from the old memory banks. it's less about some grandiose, groundbreaking invention and more about getting hands-on with the core concepts. it's about truly understanding how ml can effectively improve existing processes, you know? not trying to recreate the wheel.
+, so you're looking for a good ml project focusing on optimization, right? i've been around the block a few times with these sorts of things, and i've got a few ideas bubbling up from the old memory banks. it's less about some grandiose, groundbreaking invention and more about getting hands-on with the core concepts. it's about truly understanding how ml can effectively improve existing processes, you know? not trying to recreate the wheel.
 
 first off, let’s think about where ml shines in optimization tasks. we’re talking about scenarios where you have a goal you want to achieve, and you have multiple variables that influence how well you reach that goal, but those variables interact in complex ways. it's not always clear which combination of variables is the best. that's where ml comes in. ml models, especially the regression kind, can learn these relationships from data and then propose better configurations of those variables.
 
 i remember back in '08 or '09, i was messing around with optimizing server resource allocation. we had this cluster of servers, each running various services. things were always getting bogged down. sometimes a service would hog resources, and other services would choke. the load balancer was, let's just say, less than ideal. it was a naive algorithm that simply distributed requests across servers in a round-robin fashion. i thought, "there has to be a better way." that's when i tried to apply some basic ml principles, and believe me, it was much more rudimentary back then.
 
-so, here's an idea for a project that pulls from my experience but refined and more relevant to today’s landscape: *optimizing hyperparameter tuning for a simple ml model*.
+so, here's an idea for a project that pulls from my experience but refined and more relevant to today’s landscape: _optimizing hyperparameter tuning for a simple ml model_.
 
 let's say you’ve got a basic linear regression model you want to train. you have hyperparameters like the learning rate, regularization strength, and the number of epochs to train. picking these hyperparameters randomly or by some simple grid search isn't very efficient. that can be time-consuming and doesn't always give you the optimal parameters. we can do better.
 
-you could build a project that uses a regression model (for example, a gradient boosting regressor) to *predict* the performance of your linear regression model based on the chosen hyperparameters. think of it as a model *evaluating* another model's performance in advance. you feed the booster different combinations of hyperparameters as inputs and it predicts the error you will get from training the simple regression model. then, you can use an optimization algorithm on top of it to suggest the best hyperparameter configuration, like a better version of a grid search.
+you could build a project that uses a regression model (for example, a gradient boosting regressor) to _predict_ the performance of your linear regression model based on the chosen hyperparameters. think of it as a model _evaluating_ another model's performance in advance. you feed the booster different combinations of hyperparameters as inputs and it predicts the error you will get from training the simple regression model. then, you can use an optimization algorithm on top of it to suggest the best hyperparameter configuration, like a better version of a grid search.
 
 the booster helps us find combinations faster, instead of trying all of them. this is all about intelligent exploration of the parameter space. you are not training the main model many times to do a grid search, but training only one model to predict how the parameters of the main model will perform.
 
@@ -53,7 +53,7 @@ def train_and_evaluate_booster(hyperparameters, X_train, y_train, X_test, y_test
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
     return mean_squared_error(y_test, y_pred)
-    
+
 def booster_objective(trial, X_train, y_train, X_test, y_test):
     learning_rate = trial.suggest_float('learning_rate', 0.01, 0.2)
     n_estimators = trial.suggest_int('n_estimators', 100, 500)
@@ -86,11 +86,11 @@ print(f"best hyperparameters for the Booster model: {best_booster_params}")
 
 this is a very basic illustration and you can get much more advanced with more complex models and hyperparameter spaces.
 
-now, here's the beauty of it. let's say you take the above code and make it work well. the output will be a better set of parameters for the *main model* by using `optuna`. we are *optimizing* the process of *finding good parameters* by using a booster model that has its parameters optimized with `optuna` too!
+now, here's the beauty of it. let's say you take the above code and make it work well. the output will be a better set of parameters for the _main model_ by using `optuna`. we are _optimizing_ the process of _finding good parameters_ by using a booster model that has its parameters optimized with `optuna` too!
 
 this is a more direct example of optimization. but it gets more interesting when you start to think about process optimization.
 
-another area that's been getting a lot of traction is in resource allocation. consider a data pipeline. you have several steps, each taking a different amount of time and resources. you want to optimize the pipeline for speed and cost. ml can learn patterns of how different data flows through the pipeline and suggest the most efficient resource allocation for each step. the machine can *learn* the best allocation for the *process*.
+another area that's been getting a lot of traction is in resource allocation. consider a data pipeline. you have several steps, each taking a different amount of time and resources. you want to optimize the pipeline for speed and cost. ml can learn patterns of how different data flows through the pipeline and suggest the most efficient resource allocation for each step. the machine can _learn_ the best allocation for the _process_.
 
 i was involved in something similar with an ad serving platform. we had various stages in the ad selection process. the performance of each stage varied depending on the time of the day, user segment, ad creatives, and a bunch of other variables. it was a complicated mess of dependencies. we tried a variety of traditional heuristics, but it was all pretty inefficient. with some ml magic, we managed to predict the best allocation for each stage at each moment. we reduced overall serving latency by a good amount. i even got a pat on the back! the moral of the story is that ml can help a lot with dynamic optimization.
 
@@ -156,7 +156,7 @@ plt.show()
 
 you can expand this, including more features, using deep reinforcement learning or monte carlo simulations. this snippet provides the general idea. reinforcement learning is very powerful for dynamic allocation.
 
-another idea, and this one is a bit more abstract, but still very practical: *optimizing database query performance*. you can train an ml model to predict the performance of database queries based on their structure and the underlying data distribution. then, you can use this model to suggest rewritten, optimized versions of the queries.
+another idea, and this one is a bit more abstract, but still very practical: _optimizing database query performance_. you can train an ml model to predict the performance of database queries based on their structure and the underlying data distribution. then, you can use this model to suggest rewritten, optimized versions of the queries.
 
 this was a pet project of mine for a while. i was dealing with some really complex sql queries, that were constantly bringing down our backend. writing a query optimizer by hand was not cutting it. i ended up building an ml model (mostly a graph neural network) that would predict the execution time of a given query and suggest alternative (and better) queries. it was a journey, i tell you. i learned that databases are more complicated than they look.
 
@@ -217,6 +217,7 @@ optimized_features, optimized_predicted = optimize_query(model, query_features)
 print(f"Optimized query features: {optimized_features} predicted execution time: {optimized_predicted[0]}")
 
 ```
+
 as you can see, in reality the data for this could be anything, but the idea is there. the more realistic models would use textual features of the query.
 
 now, resources. if you want to learn more about optimization using ml, i’d suggest looking into the following. for a deeper dive into optimization algorithms, "numerical optimization" by jorge nocedal and stephen wright is an excellent resource. for ml techniques in optimization "hands-on machine learning with scikit-learn, keras & tensorflow" by aurélien géron is solid. and for reinforcement learning, i’d recommend the book "reinforcement learning: an introduction" by richard s. sutton and andrew g. barto, which is the gold standard.

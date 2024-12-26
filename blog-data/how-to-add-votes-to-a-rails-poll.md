@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-to-add-votes-to-a-rails-poll"
 ---
 
-Okay, let's tackle this. I've seen my fair share of poll implementations, and the voting mechanism is always a surprisingly nuanced area. When we’re adding votes to a Rails poll, it's not just about incrementing a counter. We need to think about data integrity, race conditions, user experience, and efficient querying. In my experience building a community platform years ago, I had to implement a robust voting system, and these are the core lessons I learned.
+, let's tackle this. I've seen my fair share of poll implementations, and the voting mechanism is always a surprisingly nuanced area. When we’re adding votes to a Rails poll, it's not just about incrementing a counter. We need to think about data integrity, race conditions, user experience, and efficient querying. In my experience building a community platform years ago, I had to implement a robust voting system, and these are the core lessons I learned.
 
-First, the simplest approach, directly updating a counter on the poll option, can lead to problems. Imagine multiple users voting at the same time: there's a high chance we'll lose some votes due to a race condition. To avoid this, we absolutely *must* implement some sort of locking or use an atomic operation.
+First, the simplest approach, directly updating a counter on the poll option, can lead to problems. Imagine multiple users voting at the same time: there's a high chance we'll lose some votes due to a race condition. To avoid this, we absolutely _must_ implement some sort of locking or use an atomic operation.
 
 Here’s a basic setup. We'll assume you have a `Poll` model with a `has_many :options` relationship, and each `Option` has a `votes` integer column. We’ll also have a `Vote` model. Let's start with the basic model definitions:
 
@@ -29,7 +29,7 @@ class Vote < ApplicationRecord
 end
 ```
 
-Now, for the core logic, the most straightforward implementation—though *not* recommended for production—might involve the following controller action:
+Now, for the core logic, the most straightforward implementation—though _not_ recommended for production—might involve the following controller action:
 
 ```ruby
 # app/controllers/votes_controller.rb (Unsafe example - don't use in production)
@@ -41,7 +41,7 @@ def create
 end
 ```
 
-While this code appears to work, `increment!` is *not* thread-safe. If two or more users vote for the same option simultaneously, they might read the same initial `votes` value and both increment from that, resulting in a lost vote. This highlights why we need better concurrency control.
+While this code appears to work, `increment!` is _not_ thread-safe. If two or more users vote for the same option simultaneously, they might read the same initial `votes` value and both increment from that, resulting in a lost vote. This highlights why we need better concurrency control.
 
 The first improved strategy, and usually sufficient in most cases, is to use a database-level atomic update. Rails provides `increment_counter` for this. Here’s how you’d refactor the above:
 

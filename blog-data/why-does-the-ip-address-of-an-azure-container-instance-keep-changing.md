@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-ip-address-of-an-azure-container-instance-keep-changing"
 ---
 
-Okay, let's tackle the curious case of the perpetually shifting IP address on Azure Container Instances (ACI). It's a scenario I've definitely navigated more than a few times over the years, especially during early deployments where the infrastructure patterns weren't quite as mature. And it's a question that often surfaces when developers, familiar with the more static nature of virtual machines, first encounter containerized deployments in Azure.
+, let's tackle the curious case of the perpetually shifting IP address on Azure Container Instances (ACI). It's a scenario I've definitely navigated more than a few times over the years, especially during early deployments where the infrastructure patterns weren't quite as mature. And it's a question that often surfaces when developers, familiar with the more static nature of virtual machines, first encounter containerized deployments in Azure.
 
 The short, technical answer is that by default, Azure Container Instances are ephemeral resources. They don't inherently have a dedicated, fixed IP address that persists across restarts or redeployments. Instead, they are usually assigned a dynamic IP from a pool within the Azure network. This is fundamentally different from how, say, a virtual machine operates where you explicitly configure the network interface with either a static address or a reservation.
 
@@ -46,41 +46,41 @@ The configuration of the Application Gateway often relies on a health check endp
   "location": "[resourceGroup().location]",
   "properties": {
     "backendAddressPools": [
-        {
-            "name": "myAciBackendPool",
-            "properties": {
-                "backendAddresses": [
-                    // ACI IP addresses will not be specified here, the backend will resolve dynamically using DNS
-                ]
-            }
-        }
-    ],
-     "backendHttpSettingsCollection": [
       {
-            "name": "myAciHttpSettings",
-            "properties": {
-                "port": 80,
-                "protocol": "http",
-                "requestTimeout": 20,
-                 "probe": {
-                   "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name,'/providers/Microsoft.Network/applicationGateways/', parameters('appGatewayName'),'/probes/healthProbe')]"
-                  }
-            }
+        "name": "myAciBackendPool",
+        "properties": {
+          "backendAddresses": [
+            // ACI IP addresses will not be specified here, the backend will resolve dynamically using DNS
+          ]
+        }
+      }
+    ],
+    "backendHttpSettingsCollection": [
+      {
+        "name": "myAciHttpSettings",
+        "properties": {
+          "port": 80,
+          "protocol": "http",
+          "requestTimeout": 20,
+          "probe": {
+            "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name,'/providers/Microsoft.Network/applicationGateways/', parameters('appGatewayName'),'/probes/healthProbe')]"
+          }
+        }
       }
     ],
     "httpListeners": [
-        {
-          "name": "myHttpListener",
-          "properties": {
-            "protocol": "Http",
-            "frontendPort": {
-               "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/applicationGateways/', parameters('appGatewayName'),'/frontendPorts/port80')]"
-             },
-             "frontendIpConfiguration": {
-                 "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/applicationGateways/', parameters('appGatewayName'),'/frontendIpConfigurations/publicIpGatewayConfig')]"
-               }
+      {
+        "name": "myHttpListener",
+        "properties": {
+          "protocol": "Http",
+          "frontendPort": {
+            "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/applicationGateways/', parameters('appGatewayName'),'/frontendPorts/port80')]"
+          },
+          "frontendIpConfiguration": {
+            "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/applicationGateways/', parameters('appGatewayName'),'/frontendIpConfigurations/publicIpGatewayConfig')]"
           }
         }
+      }
     ],
     "requestRoutingRules": [
       {
@@ -89,20 +89,19 @@ The configuration of the Application Gateway often relies on a health check endp
           "ruleType": "Basic",
           "priority": 100,
           "backendAddressPool": {
-              "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/applicationGateways/', parameters('appGatewayName'),'/backendAddressPools/myAciBackendPool')]"
+            "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/applicationGateways/', parameters('appGatewayName'),'/backendAddressPools/myAciBackendPool')]"
           },
           "backendHttpSettings": {
-              "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/applicationGateways/', parameters('appGatewayName'),'/backendHttpSettingsCollection/myAciHttpSettings')]"
+            "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/applicationGateways/', parameters('appGatewayName'),'/backendHttpSettingsCollection/myAciHttpSettings')]"
           },
           "httpListener": {
-              "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/applicationGateways/', parameters('appGatewayName'),'/httpListeners/myHttpListener')]"
-            }
+            "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/applicationGateways/', parameters('appGatewayName'),'/httpListeners/myHttpListener')]"
+          }
         }
       }
     ]
   }
 }
-
 ```
 
 In essence, the application gateway accepts requests and forward them to the ACI backend via the backend address pool. This config avoids directly referencing the ACI ip.

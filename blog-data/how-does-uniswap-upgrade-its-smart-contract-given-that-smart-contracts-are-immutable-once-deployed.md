@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-does-uniswap-upgrade-its-smart-contract-given-that-smart-contracts-are-immutable-once-deployed"
 ---
 
-Alright, let's tackle this one. It's a common misconception that smart contracts are *entirely* immutable in a practical sense. While it's true that the code itself, once deployed, cannot be directly modified on the blockchain, there are well-established patterns to enable upgrades. I’ve certainly navigated this situation more than once in my time, particularly when working on decentralized finance protocols, which often need to evolve rapidly.
+, let's tackle this one. It's a common misconception that smart contracts are _entirely_ immutable in a practical sense. While it's true that the code itself, once deployed, cannot be directly modified on the blockchain, there are well-established patterns to enable upgrades. I’ve certainly navigated this situation more than once in my time, particularly when working on decentralized finance protocols, which often need to evolve rapidly.
 
 The core challenge lies in that foundational principle of immutability – how do you change the rules of the game when the rules are etched in stone? The solution, broadly speaking, involves a layer of indirection and careful planning during the contract's initial deployment. It's not magic; it's good engineering. Uniswap, like many other projects facing this issue, leverages what we often refer to as proxy patterns for this purpose.
 
-Instead of interacting directly with a contract that contains all the logic, users interface with a *proxy contract*. This proxy contract has a single, crucial job: to delegate calls to a different contract, the *implementation contract*, which contains the actual business logic. Crucially, the address of the implementation contract is stored in the proxy and can be changed by the contract owner (usually through a multi-sig wallet, or a governance protocol).
+Instead of interacting directly with a contract that contains all the logic, users interface with a _proxy contract_. This proxy contract has a single, crucial job: to delegate calls to a different contract, the _implementation contract_, which contains the actual business logic. Crucially, the address of the implementation contract is stored in the proxy and can be changed by the contract owner (usually through a multi-sig wallet, or a governance protocol).
 
-When an upgrade is needed, you don't modify the deployed implementation contract; you deploy a *new* version. Then, the proxy contract's stored implementation address is updated to point to this new version. This seamlessly switches users to the new logic. This also preserves the storage, which remains with the proxy contract and is still accessed by the new logic. This separation of storage and logic is crucial.
+When an upgrade is needed, you don't modify the deployed implementation contract; you deploy a _new_ version. Then, the proxy contract's stored implementation address is updated to point to this new version. This seamlessly switches users to the new logic. This also preserves the storage, which remains with the proxy contract and is still accessed by the new logic. This separation of storage and logic is crucial.
 
 Now, let's unpack how this process unfolds with some more detail and examples.
 
@@ -119,7 +119,7 @@ This highlights several core principles that I’ve seen consistently in effecti
 
 1.  **Separation of Concerns:** Keep your storage logic separate from your business logic via proxy contracts.
 2.  **Backward Compatibility:** Ensure your updated implementation contracts maintain the same interface, wherever possible, to reduce the potential for disruption or require updates on the user side.
-3. **Data Migration:** More sophisticated upgrade scenarios might necessitate a data migration function or procedure that copies data from the old storage structure to the new one during the upgrade. This can be a fairly complex step depending on the degree of change involved.
+3.  **Data Migration:** More sophisticated upgrade scenarios might necessitate a data migration function or procedure that copies data from the old storage structure to the new one during the upgrade. This can be a fairly complex step depending on the degree of change involved.
 4.  **Governance:** Establishing a transparent and well-defined governance process for upgrades minimizes the risk of malicious or flawed updates. Multi-signature wallets are very commonly used to control the `Proxy` contract’s upgrade function.
 
 Of course, this is a simplified example. In reality, Uniswap's upgrade procedures are far more nuanced. They often involve extensive testing, audit procedures, and community input to ensure that upgrades are secure and beneficial. These include features such as access control, emergency shutdown mechanisms, and other security considerations.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-webpack-command-not-found-during-heroku-deployment-of-my-rails-app"
 ---
 
-Alright, let's address this webpack issue. It's a classic head-scratcher, and I've bumped into this exact situation more times than I care to remember, particularly with Rails deployments on Heroku. It usually boils down to a combination of environmental discrepancies and package management hiccups. Let’s unpack this, because "webpack command not found" is rarely a webpack problem *itself*, more a symptom of something else.
+, let's address this webpack issue. It's a classic head-scratcher, and I've bumped into this exact situation more times than I care to remember, particularly with Rails deployments on Heroku. It usually boils down to a combination of environmental discrepancies and package management hiccups. Let’s unpack this, because "webpack command not found" is rarely a webpack problem _itself_, more a symptom of something else.
 
 The first place I always look, and where my years have taught me is most fruitful, is the Heroku build process. Heroku builds your application in an environment that isn’t always a direct mirror of your development machine. This is deliberate; it allows for a clean, consistent build regardless of the developer's setup. The problem is that this 'clean' environment often lacks dependencies that are assumed to be present locally.
 
@@ -25,12 +25,10 @@ This is the most common solution, and the most dependable. We're going to explic
   "engines": {
     "node": "16.x"
   },
-  "dependencies": {
-  }
-  ,
+  "dependencies": {},
   "devDependencies": {
-      "webpack": "^5.0.0",
-     "webpack-cli": "^4.0.0"
+    "webpack": "^5.0.0",
+    "webpack-cli": "^4.0.0"
   }
 }
 ```
@@ -45,18 +43,16 @@ Once webpack is available in `node_modules`, we need to ensure that Rails (durin
 {
   "name": "your-rails-app",
   "version": "1.0.0",
-    "engines": {
-        "node": "16.x"
-    },
-  "dependencies": {
-  }
-  ,
-   "devDependencies": {
-        "webpack": "^5.0.0",
-        "webpack-cli": "^4.0.0"
-    },
-    "scripts": {
-        "build": "webpack --mode production"
+  "engines": {
+    "node": "16.x"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "webpack": "^5.0.0",
+    "webpack-cli": "^4.0.0"
+  },
+  "scripts": {
+    "build": "webpack --mode production"
   }
 }
 ```
@@ -82,22 +78,22 @@ Finally, we need to make sure the Rails asset pipeline is triggered to use the s
   end
 ```
 
-Note the inclusion of  `config.webpacker.check_missing_packages = false` which is not always required, but sometimes helps prevent errors. Also note the use of  `config.assets.initialize_on_precompile = false` this prevents Rails from performing unneeded database interactions during the precompilation step.
+Note the inclusion of `config.webpacker.check_missing_packages = false` which is not always required, but sometimes helps prevent errors. Also note the use of `config.assets.initialize_on_precompile = false` this prevents Rails from performing unneeded database interactions during the precompilation step.
 
 By defining `config.assets.configure`, we direct Rails precompilation stage to execute the command `npm run build`. As specified in our `package.json`, this command in turn executes the `webpack` command that is now local to our project.
 
-By implementing these steps, Heroku should now be able to correctly build your assets during deployment and will not encounter the "webpack command not found" error. The critical factor here is not simply *having* webpack, but explicitly instructing Heroku's build process where to find it and how to execute it.
+By implementing these steps, Heroku should now be able to correctly build your assets during deployment and will not encounter the "webpack command not found" error. The critical factor here is not simply _having_ webpack, but explicitly instructing Heroku's build process where to find it and how to execute it.
 
 **Resources:**
 
 For further, more in-depth exploration, I recommend these specific resources:
 
-*   **"High Performance Browser Networking" by Ilya Grigorik**: This book (available online) provides a detailed explanation of how asset pipelines work and how to optimise asset delivery. It's useful in understanding why certain configurations are essential.
+- **"High Performance Browser Networking" by Ilya Grigorik**: This book (available online) provides a detailed explanation of how asset pipelines work and how to optimise asset delivery. It's useful in understanding why certain configurations are essential.
 
-*   **"Pro Git" by Scott Chacon and Ben Straub:** Although not specifically about webpack, a thorough understanding of git and version control practices (as discussed in this book) is invaluable for understanding and debugging deployment issues, since deployment and versioning are tightly interconnected.
+- **"Pro Git" by Scott Chacon and Ben Straub:** Although not specifically about webpack, a thorough understanding of git and version control practices (as discussed in this book) is invaluable for understanding and debugging deployment issues, since deployment and versioning are tightly interconnected.
 
-*   **The official Heroku documentation, specifically on buildpacks:** This is essential reading for anyone deploying to Heroku, as it details the specifics of each build process. The documentation for the Ruby buildpack, as well as the Node.js one, is highly pertinent.
+- **The official Heroku documentation, specifically on buildpacks:** This is essential reading for anyone deploying to Heroku, as it details the specifics of each build process. The documentation for the Ruby buildpack, as well as the Node.js one, is highly pertinent.
 
-*   **Webpack's official documentation**: When addressing specific webpack configurations, nothing beats the source itself. Pay particular attention to the sections about configuration, output, and module resolution.
+- **Webpack's official documentation**: When addressing specific webpack configurations, nothing beats the source itself. Pay particular attention to the sections about configuration, output, and module resolution.
 
 These resources, used in conjunction with the information discussed above, should provide a strong foundation for resolving not only this particular issue but for gaining a deeper understanding of the underlying mechanisms of web application deployment. The devil is often in the details, so understanding the nuances of the entire chain, from build process to deployment, is crucial. I hope this helps steer you back on track and towards a successful deployment.

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-pytorchs-data-parallel-not-using-all-my-gpus-and-it-seems-to-not-speed-up-my-training-either"
 ---
 
-alright, so you're seeing a classic pitfall with pytorch's data parallel, where it's seemingly ignoring some of your gpus and not giving you the performance boost you'd expect. i've been there, spent more nights than i care to recall staring at tensorboard and wondering what went wrong. it's never a pleasant feeling when you think your code should be flying but it's just kinda...puttering along.
+, so you're seeing a classic pitfall with pytorch's data parallel, where it's seemingly ignoring some of your gpus and not giving you the performance boost you'd expect. i've been there, spent more nights than i care to recall staring at tensorboard and wondering what went wrong. it's never a pleasant feeling when you think your code should be flying but it's just kinda...puttering along.
 
 let's break down why this happens, and some ways to troubleshoot. the first and most common issue i’ve seen is that the `dataparallel` implementation, while convenient, isn't always the most efficient way to parallelize training, particularly when you have a large number of gpus or when your model has some architectural specifics. it basically replicates the model across all available gpus and then shuffles the batches of your input data to those gpu. this is a simple solution that works most of the times but its drawbacks are many.
 
@@ -12,7 +12,7 @@ the initial clue, and probably the one i missed myself when i started with pytor
 
 that data movement is often the culprit. if the communication between the gpus and the main cpu is not fast enough, the computation units stay idle waiting for the data to arrive and become available. the gpu utilization becomes low, not to mention that this also can affect the performance on your main cpu. the more gpus you use the more you might notice it. that means that in some cases even with more gpus the training time might even be higher than with just one gpu, due to all the overhead.
 
- another very common situation is when your model itself has some parts that are only running on the main gpu. for instance, let’s say you have a custom layer that performs some post-processing or a very particular loss function only running on cpu or the primary gpu. these operations are sequential and often it’s not trivial to parallelize it which means you are still suffering from a bottleneck and not scaling properly. data parallel relies on having all or a good portion of the computations happening within the gpus and not on the cpu and main gpu.
+another very common situation is when your model itself has some parts that are only running on the main gpu. for instance, let’s say you have a custom layer that performs some post-processing or a very particular loss function only running on cpu or the primary gpu. these operations are sequential and often it’s not trivial to parallelize it which means you are still suffering from a bottleneck and not scaling properly. data parallel relies on having all or a good portion of the computations happening within the gpus and not on the cpu and main gpu.
 
 here’s a first step i usually take when seeing this issue. i'll often check which gpus pytorch is even seeing using a simple command:
 
@@ -116,6 +116,7 @@ you would have something like:
       loss.backward()
       optimizer.step()
 ```
+
 and i promise that you will probably notice a good performance boost on your gpus utilization. you should use tensorboard or `nvidia-smi` to check your results.
 
 finally, if you're dealing with a particularly large model, you might find that even distributed data parallel is hitting memory limits. in such cases, exploring model parallelism in conjunction with data parallelism can be necessary. this is more advanced but i have used it in several occasions. the basic idea is to split the model itself over several gpus as well as the data, making it a more complex but sometimes necessary approach.

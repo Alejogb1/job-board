@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "mpi-comm-split-explanation"
 ---
 
-Alright so you're asking about MPI_Comm_split eh yeah I've been there done that a few times it's one of those things that seems simple at first but can get hairy real quick if you're not careful So let me break it down from my perspective having wrestled with this in the trenches of parallel computing back in my grad school days and beyond
+so you're asking about MPI_Comm_split eh yeah I've been there done that a few times it's one of those things that seems simple at first but can get hairy real quick if you're not careful So let me break it down from my perspective having wrestled with this in the trenches of parallel computing back in my grad school days and beyond
 
 MPI_Comm_split is essentially a way to carve up an existing MPI communicator into smaller more manageable subgroups It's like taking a big group of people and splitting them into smaller teams based on some criteria Makes sense right Each team can then do its own thing without bothering the others or they can still do some cooperative work if you set it up that way
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-tensorboard-is-not-creating-any-files"
 ---
 
-alright, so tensorboard isn't spitting out files, right? been there, fought that battle. it's usually something pretty straightforward but can feel like you're chasing ghosts in the machine when it's not cooperating. let’s troubleshoot this.
+, so tensorboard isn't spitting out files, right? been there, fought that battle. it's usually something pretty straightforward but can feel like you're chasing ghosts in the machine when it's not cooperating. let’s troubleshoot this.
 
 first off, let’s be clear, tensorboard isn’t some magical file-generating wizard; it's a visualization tool that needs data, specifically event files, usually with `.tfevents` extensions, to display. these event files contain the logs of your training process, things like loss, accuracy, and histogram of activations. if tensorboard doesn't see those, it's going to be a barren wasteland.
 
@@ -30,7 +30,7 @@ so, where to start with your issue? the most common problems fall into a few mai
            tf.summary.scalar('my_metric', step * 0.1, step=step)
    ```
 
-   here, `tf.summary.create_file_writer()` sets up where the event files will be written (`log_dir` in this case), and `tf.summary.scalar()` adds the actual data (a metric, in this case). the key thing is you *have* to have these logging calls *inside* your training process. if you just have this alone outside of a training loop it will not do much.
+   here, `tf.summary.create_file_writer()` sets up where the event files will be written (`log_dir` in this case), and `tf.summary.scalar()` adds the actual data (a metric, in this case). the key thing is you _have_ to have these logging calls _inside_ your training process. if you just have this alone outside of a training loop it will not do much.
 
    if you use pytorch, the process is pretty similar:
 
@@ -74,43 +74,43 @@ so, where to start with your issue? the most common problems fall into a few mai
 
 3. **are you launching tensorboard correctly?**
 
-   tensorboard doesn’t automatically pick up changes. once you’ve started it, you need to point it to the *base* directory where your event files are nested. not to the individual event files.
+   tensorboard doesn’t automatically pick up changes. once you’ve started it, you need to point it to the _base_ directory where your event files are nested. not to the individual event files.
 
    so if in tensorflow, let's say your log directory looks like this:
    `logs/20240311-120000/events.out.tfevents.1710128477.mycomputer.4231.4231.1`
    then the command line to launch tensorboard should be something like:
-    `tensorboard --logdir logs`
+   `tensorboard --logdir logs`
 
-   and *not*
-    `tensorboard --logdir logs/20240311-120000`
+   and _not_
+   `tensorboard --logdir logs/20240311-120000`
 
-    similarly, in pytorch you will have:
-     `runs/20240311-120000/events.out.tfevents.1710128477.mycomputer.4231`
-     the command line will be:
-     `tensorboard --logdir runs`
+   similarly, in pytorch you will have:
+   `runs/20240311-120000/events.out.tfevents.1710128477.mycomputer.4231`
+   the command line will be:
+   `tensorboard --logdir runs`
 
-     again, pointing it to the base directory.
+   again, pointing it to the base directory.
 
    tensorboard will then recursively scan all the subdirectories in `logs` or `runs` and load in all the `.tfevents` file that it finds there.
 
-   if you start tensorboard *before* your training process starts generating the log files or if you are pointing it to the wrong folder, it won’t find any relevant information and will show you a blank screen. try killing tensorboard and starting it again if that is the case. this fixes a surprisingly large number of issues.
+   if you start tensorboard _before_ your training process starts generating the log files or if you are pointing it to the wrong folder, it won’t find any relevant information and will show you a blank screen. try killing tensorboard and starting it again if that is the case. this fixes a surprisingly large number of issues.
 
-    here’s a tiny joke for you: why did the neural network get bad grades? because it had poor hyperparameters and didn’t log its progress into tensorboard, obviously.
+   here’s a tiny joke for you: why did the neural network get bad grades? because it had poor hyperparameters and didn’t log its progress into tensorboard, obviously.
 
 **general troubleshooting tips**
 
-*   **simplification:** if things are not working, try to strip down your code to a very simple example. just something that outputs a single scalar value. this helps in isolating issues. it's a classic debugging technique, and it never hurts.
-*   **versioning:** i’ve noticed subtle issues with tensorboard across different versions of tensorflow and pytorch. so checking that your versions are compatible is also useful. sometimes downgrading or upgrading certain libraries can be useful as a last resort, but you probably do not want to do that first.
-*   **browser issues:** sometimes browser caching or extensions might interfere. try clearing your browser’s cache or using a different browser altogether. i’ve had cases where the data was there, but the browser was being finicky. and even though that looks like some browser specific issue, sometimes can cause errors that look related to logging or path issues.
-*   **permissions:** make sure your script has write permissions in the log directory. if you are running docker, sometimes you will run into permission issues if user ids are mapped incorrectly.
+- **simplification:** if things are not working, try to strip down your code to a very simple example. just something that outputs a single scalar value. this helps in isolating issues. it's a classic debugging technique, and it never hurts.
+- **versioning:** i’ve noticed subtle issues with tensorboard across different versions of tensorflow and pytorch. so checking that your versions are compatible is also useful. sometimes downgrading or upgrading certain libraries can be useful as a last resort, but you probably do not want to do that first.
+- **browser issues:** sometimes browser caching or extensions might interfere. try clearing your browser’s cache or using a different browser altogether. i’ve had cases where the data was there, but the browser was being finicky. and even though that looks like some browser specific issue, sometimes can cause errors that look related to logging or path issues.
+- **permissions:** make sure your script has write permissions in the log directory. if you are running docker, sometimes you will run into permission issues if user ids are mapped incorrectly.
 
 **suggested resources**
 
 while i can't give you specific urls here, i'd strongly recommend these kinds of resources, they helped me a lot:
 
-*   **tensorflow documentation:** the official tensorflow documentation on tensorboard is pretty comprehensive. it's probably the best place to start for understanding tensorflow-specific logging. look for sections on summaries and event files.
-*   **pytorch documentation:** the same applies to pytorch. search for "tensorboard" in their docs, you’ll find tutorials on how to integrate the `summarywriter` class into your projects.
-*   **deep learning with python by francois chollet:** this book provides a clear explanation of how to use tensorflow (and sometimes keras) with practical examples, including usage of tensorboard.
-*   **hands-on machine learning with scikit-learn, keras & tensorflow by aurelien geron:** a more general machine learning book, but it has dedicated sections on tensorboard and how to use it for visualizing deep learning models.
+- **tensorflow documentation:** the official tensorflow documentation on tensorboard is pretty comprehensive. it's probably the best place to start for understanding tensorflow-specific logging. look for sections on summaries and event files.
+- **pytorch documentation:** the same applies to pytorch. search for "tensorboard" in their docs, you’ll find tutorials on how to integrate the `summarywriter` class into your projects.
+- **deep learning with python by francois chollet:** this book provides a clear explanation of how to use tensorflow (and sometimes keras) with practical examples, including usage of tensorboard.
+- **hands-on machine learning with scikit-learn, keras & tensorflow by aurelien geron:** a more general machine learning book, but it has dedicated sections on tensorboard and how to use it for visualizing deep learning models.
 
 in conclusion, if tensorboard isn’t working, it’s almost always a logging setup issue. double-check you are actually generating log events, that they are going to the right place, that you are launching tensorboard pointed at the base log folder. take it step by step, and you'll find the culprit. if you are doing things exactly as the examples in the documentation, it is very likely that there is some typo in the paths or names of directories that is causing the problem. good luck and keep an eye on those curves.

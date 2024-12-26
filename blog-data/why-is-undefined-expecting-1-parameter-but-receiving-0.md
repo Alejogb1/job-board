@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-is-undefined-expecting-1-parameter-but-receiving-0"
 ---
 
-Alright, let's tackle this one. I've seen this error crop up more times than I care to count, particularly in my early days of JavaScript development. It always seems deceptively simple at first glance, that "undefined" error message glaring back at you. It's not actually "undefined" *expecting* anything, in the sense of a function designed to take a parameter. Instead, it's indicative of something attempting to be used as a function, which simply isn't. Let me elaborate with some practical examples, based on some of the less-than-ideal code I’ve debugged over the years.
+, let's tackle this one. I've seen this error crop up more times than I care to count, particularly in my early days of JavaScript development. It always seems deceptively simple at first glance, that "undefined" error message glaring back at you. It's not actually "undefined" _expecting_ anything, in the sense of a function designed to take a parameter. Instead, it's indicative of something attempting to be used as a function, which simply isn't. Let me elaborate with some practical examples, based on some of the less-than-ideal code I’ve debugged over the years.
 
-Essentially, when you see the "undefined is not a function (expecting 1 parameter but got 0)" error, it signifies that you're trying to invoke something as a function (using those parentheses – `()` ), but that something evaluates to `undefined` at runtime. Crucially, this often masks the *real* issue, which isn’t that `undefined` *wants* an argument, but that your code tried to execute an operation that expects something callable, and instead found nothing. The "expecting 1 parameter but got 0" part is a bit of a red herring. It suggests the interpreter is attempting to perform some type of function call optimization based on previous function information, but ultimately, it throws an error because the target is `undefined`.
+Essentially, when you see the "undefined is not a function (expecting 1 parameter but got 0)" error, it signifies that you're trying to invoke something as a function (using those parentheses – `()` ), but that something evaluates to `undefined` at runtime. Crucially, this often masks the _real_ issue, which isn’t that `undefined` _wants_ an argument, but that your code tried to execute an operation that expects something callable, and instead found nothing. The "expecting 1 parameter but got 0" part is a bit of a red herring. It suggests the interpreter is attempting to perform some type of function call optimization based on previous function information, but ultimately, it throws an error because the target is `undefined`.
 
 Let's break this down with a few scenarios. Remember the old days when dynamically generated lists were all the rage? I recall one instance where we were using a complex object structure to drive the content.
 
@@ -15,27 +15,31 @@ Let's break this down with a few scenarios. Remember the old days when dynamical
 ```javascript
 const data = {
   items: [
-    { id: 1, process: function(value) { return value * 2; } },
-    { id: 2 }
-  ]
+    {
+      id: 1,
+      process: function (value) {
+        return value * 2;
+      },
+    },
+    { id: 2 },
+  ],
 };
 
 function processItem(itemId, value) {
-    const item = data.items.find(item => item.id === itemId);
-    if (item) {
-      const result = item.process(value); // This is where the error occurs!
-      console.log("Processed:", result);
-    } else {
-      console.log("Item not found");
-    }
+  const item = data.items.find((item) => item.id === itemId);
+  if (item) {
+    const result = item.process(value); // This is where the error occurs!
+    console.log("Processed:", result);
+  } else {
+    console.log("Item not found");
+  }
 }
 
 processItem(1, 5); // Works fine
 processItem(2, 10); // Triggers "undefined is not a function (expecting 1 parameter but got 0)"
-
 ```
 
-In this case, the second object in the `items` array does not have a `process` property. When `processItem` is called with `itemId` 2, `item.process` evaluates to `undefined` because the property is missing, resulting in the dreaded error when we try to call it as a function with the `(value)` syntax. The fix, of course, is to ensure all objects that need this function actually *have* this function defined.
+In this case, the second object in the `items` array does not have a `process` property. When `processItem` is called with `itemId` 2, `item.process` evaluates to `undefined` because the property is missing, resulting in the dreaded error when we try to call it as a function with the `(value)` syntax. The fix, of course, is to ensure all objects that need this function actually _have_ this function defined.
 
 **Example 2: Misplaced Function Calls**
 
@@ -43,14 +47,13 @@ I also remember a system where we were dealing with a complicated API which had 
 
 ```javascript
 const apiData = {
-    fetchUserData: function() {
-        return { name: "Alice", age: 30 };
-    },
-    userDetails: {
-        location: "New York"
-    }
+  fetchUserData: function () {
+    return { name: "Alice", age: 30 };
+  },
+  userDetails: {
+    location: "New York",
+  },
 };
-
 
 function displayUserData() {
   const userData = apiData.fetchUserData();
@@ -61,7 +64,7 @@ function displayUserData() {
 displayUserData(); // "TypeError: apiData.userDetails is not a function (expecting 1 parameter but got 0)"
 ```
 
-Here, `apiData.userDetails` is an object and *not* a function, so attempting to invoke it with parentheses leads to the same error. The correct access would be `apiData.userDetails.location`. This is a frequent error when transitioning between object structures that contain functions versus data. The expectation was that all 'data' in API objects was accessed using function calls, leading to an unintended call of what was not a function.
+Here, `apiData.userDetails` is an object and _not_ a function, so attempting to invoke it with parentheses leads to the same error. The correct access would be `apiData.userDetails.location`. This is a frequent error when transitioning between object structures that contain functions versus data. The expectation was that all 'data' in API objects was accessed using function calls, leading to an unintended call of what was not a function.
 
 **Example 3: Incorrect Scope and Function Declarations**
 
@@ -70,16 +73,22 @@ Finally, a subtle issue I’ve seen more than once, especially in larger applica
 ```javascript
 function outerFunction() {
   let innerFunction;
-  if (true){ // Some complex condition.
-        innerFunction = function(x) { return x * x;};
+  if (true) {
+    // Some complex condition.
+    innerFunction = function (x) {
+      return x * x;
+    };
   }
-    console.log(innerFunction(5)); // Works Fine
+  console.log(innerFunction(5)); // Works Fine
 }
 
 function outerFunction2() {
   let innerFunction;
-  if (false){ //Some complex condition.
-        innerFunction = function(x) { return x * x;};
+  if (false) {
+    //Some complex condition.
+    innerFunction = function (x) {
+      return x * x;
+    };
   }
   console.log(innerFunction(5)); // Error Here!
 }

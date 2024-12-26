@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "spreading-a-table-using-tidyr-with-multiple-keys-or-values"
 ---
 
-Alright so you're wrestling with spreading a table using tidyr with multiple keys or values eh Been there done that got the t-shirt and the caffeine jitters to prove it This isn't exactly rocket science but tidyr can feel a bit cryptic sometimes when you’re trying to bend it to your will
+so you're wrestling with spreading a table using tidyr with multiple keys or values eh Been there done that got the t-shirt and the caffeine jitters to prove it This isn't exactly rocket science but tidyr can feel a bit cryptic sometimes when you’re trying to bend it to your will
 
 Let me tell you about the time I was elbow deep in genomic data My supervisor wanted a specific data format and tidyr was my only hope I had a table that was almost there but the spread operation kept giving me headaches I was dealing with multiple keys a classic problem really but it wasn't intuitive at first
 
@@ -37,11 +37,13 @@ print(example_data)
 # 5 C     x         50    500
 # 6 C     y         60    600
 ```
+
 Notice that the combination of `group` and `variable` should become my headers and `value1` and `value2` are the values we want to spread out
 
 Now with legacy spread you could get into some clunky syntax and be like why is this not working but that is why we do not use spread anymore
 
 Here's how you can do it properly using `pivot_wider()`
+
 ```r
 spreaded_data <- example_data %>%
   pivot_wider(names_from = c(variable), values_from = c(value1, value2))
@@ -104,6 +106,7 @@ print(spreaded_data_complex)
 #1 A                      1                  2                  3               10               20               30
 #2 B                      4                  5                  6               40               50               60
 ```
+
 In this case we used unite to create intermediary columns so that we could have columns with time and metric1 in name and then to use pivot_wider with that newly created column
 It could probably be done in a more efficient manner but i think it is better to show an example that works but it is a bit clunky to show that it is also a possible way to solve that issue
 
@@ -145,7 +148,7 @@ print(spreaded_messy_data)
 #3 C       50    60
 ```
 
-Here `values_fill = list(value = 0)` fills the missing values with 0 and the  `values_fn = list(value = mean)` calculates the mean of the `value` column when duplicated columns exist
+Here `values_fill = list(value = 0)` fills the missing values with 0 and the `values_fn = list(value = mean)` calculates the mean of the `value` column when duplicated columns exist
 
 The main idea is that you are generally pivoting your data from a long to a wide format
 

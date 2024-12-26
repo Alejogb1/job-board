@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "how-to-testing-python-code-that-produces-altair-graphs"
 ---
 
-alright, so you're hitting that classic wall of testing visualizations, right? i’ve been there, staring at the monitor wondering how to assert that my beautiful altair chart is actually, well, beautiful *and* correct. it's not like checking a simple integer return value. it’s a visual thing, and testing visuals programmatically is a different beast.
+, so you're hitting that classic wall of testing visualizations, right? i’ve been there, staring at the monitor wondering how to assert that my beautiful altair chart is actually, well, beautiful _and_ correct. it's not like checking a simple integer return value. it’s a visual thing, and testing visuals programmatically is a different beast.
 
 first off, let's clear the air, testing altair outputs directly like we might with, say, a math function is a headache. you can't just `assert chart == some_expected_chart`. altair charts are complex objects that are essentially a spec for a visualization. they are not an image, not a pixel-perfect thing. so, we need a different strategy.
 
 my experience started back when i was building this data dashboard, the one for monitoring server utilization. i got so deep into the charting that i skipped the tests, and, well, you can guess. one friday evening, the dashboard decided to display some nonsense and i was stuck debugging till late. that's when i learned i needed actual tests.
 
-what i settled on is this approach: focus on the *data* and the chart *specification*. altair is all about taking data and turning it into a json specification that a renderer, like vega-lite, consumes. that json specification is our gold mine for testing.
+what i settled on is this approach: focus on the _data_ and the chart _specification_. altair is all about taking data and turning it into a json specification that a renderer, like vega-lite, consumes. that json specification is our gold mine for testing.
 
 so instead of testing images you will want to test the structure of the json or data it uses.
 
@@ -37,7 +37,7 @@ df = pd.DataFrame(data)
 chart = create_scatter_chart(df)
 ```
 
-now, instead of trying to verify the *rendered* chart, we will look at the generated json spec. we can access the chart's json using the `.to_json()` method and then compare its parts. something like this:
+now, instead of trying to verify the _rendered_ chart, we will look at the generated json spec. we can access the chart's json using the `.to_json()` method and then compare its parts. something like this:
 
 ```python
 def test_scatter_chart_data():
@@ -85,6 +85,7 @@ data = {'x': [1, 2, 3, 4, 5, 6],
 df = pd.DataFrame(data)
 chart = create_rolling_mean_chart(df)
 ```
+
 now we want to test that it generates the correct transform in the specification. again, we go straight to the json.
 
 ```python
@@ -114,4 +115,4 @@ also, for more theoretical knowledge on data visualization i find “the grammar
 
 last but not least, regarding testing, i've found "pragmatic programmer" a great book that covers testing in a general context. you might think that testing visualization is a hard problem, but it's still software at the end of the day, so everything the book explains applies, and should help you build more robust visualization tools.
 
-it’s more about how you approach testing, and less about the chart itself. and no, don't try to pixel compare the images of the charts, i mean, unless you *really* want to spend a lot of time dealing with image differences, that's where it all started for me, and trust me, it's a rabbit hole. i spent more time tweaking the tests than debugging the actual charting code (that was ironic, the irony is always the best test).
+it’s more about how you approach testing, and less about the chart itself. and no, don't try to pixel compare the images of the charts, i mean, unless you _really_ want to spend a lot of time dealing with image differences, that's where it all started for me, and trust me, it's a rabbit hole. i spent more time tweaking the tests than debugging the actual charting code (that was ironic, the irony is always the best test).

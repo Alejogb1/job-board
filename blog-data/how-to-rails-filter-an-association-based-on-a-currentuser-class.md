@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "how-to-rails-filter-an-association-based-on-a-currentuser-class"
 ---
 
-alright, so you're looking at filtering an association in rails based on the current user, yeah? i've been down this road more times than i can count. it's one of those things that seems simple on the surface but can get tricky real fast, especially when you start throwing in more complex relationships or need to optimize for performance. let's break it down.
+, so you're looking at filtering an association in rails based on the current user, yeah? i've been down this road more times than i can count. it's one of those things that seems simple on the surface but can get tricky real fast, especially when you start throwing in more complex relationships or need to optimize for performance. let's break it down.
 
-i remember this one project i had back in '13. we were building an internal tool for managing access to different datasets. we had users, we had datasets, and users could be granted access to specific datasets through a join table. standard stuff. the problem was, displaying only the datasets that the *current* user had access to in a dropdown was proving to be a headache, at first. we kept running into n+1 query issues, because we were naive and tried filtering on the view using ruby loops. not pretty. the database was groaning.
+i remember this one project i had back in '13. we were building an internal tool for managing access to different datasets. we had users, we had datasets, and users could be granted access to specific datasets through a join table. standard stuff. the problem was, displaying only the datasets that the _current_ user had access to in a dropdown was proving to be a headache, at first. we kept running into n+1 query issues, because we were naive and tried filtering on the view using ruby loops. not pretty. the database was groaning.
 
 the core issue here is that you want to restrict the data being returned from a database query based on the attributes of the `current_user` object, but this filtering needs to happen at the database level, not in ruby after the fact. this avoids those nasty n+1 issues. there are a few ways you can do this, and the "best" approach really depends on your specific setup and preferences, but it always involves at least one association. let's start with a basic scenario and then we can talk about how you can use different approaches.
 
@@ -24,7 +24,7 @@ class Post < ApplicationRecord
 end
 ```
 
-and let's assume in your controller, you have `current_user`. if you wanted to get *all* posts by the `current_user` you could use this filter:
+and let's assume in your controller, you have `current_user`. if you wanted to get _all_ posts by the `current_user` you could use this filter:
 
 ```ruby
 #app/controllers/posts_controller.rb
@@ -63,7 +63,7 @@ class Post < ApplicationRecord
 end
 ```
 
-now this is where things get a little more involved. you can't just call `@posts = current_user.posts`, because that would return *all* posts related to the user, even if not part of a group the user is member of. instead, you need to filter through the association. one way to do this is by using a scope. it could look something like this:
+now this is where things get a little more involved. you can't just call `@posts = current_user.posts`, because that would return _all_ posts related to the user, even if not part of a group the user is member of. instead, you need to filter through the association. one way to do this is by using a scope. it could look something like this:
 
 ```ruby
 # app/models/post.rb
@@ -75,6 +75,7 @@ class Post < ApplicationRecord
   }
 end
 ```
+
 and then in your controller:
 
 ```ruby
@@ -96,6 +97,7 @@ class Post < ApplicationRecord
     end
 end
 ```
+
 then in the controller you would call:
 
 ```ruby
@@ -105,7 +107,7 @@ def index
 end
 ```
 
-in that approach, i was filtering the `posts` based on the user id and if the post was published, so it was more complex, but it showcases the ability to use multiple `where` filters inside a model. and i know what you are thinking, can't we just move the filters to the controller? and the answer is, you can, but it might create redundant code and make it harder to refactor later. personally, i like to keep the database logic inside the models as much as possible. you could say that's my *model* code of conduct.
+in that approach, i was filtering the `posts` based on the user id and if the post was published, so it was more complex, but it showcases the ability to use multiple `where` filters inside a model. and i know what you are thinking, can't we just move the filters to the controller? and the answer is, you can, but it might create redundant code and make it harder to refactor later. personally, i like to keep the database logic inside the models as much as possible. you could say that's my _model_ code of conduct.
 
 now, the performance can be an issue too. if you have complex relationships, joins can slow things down. sometimes it's worth denormalizing a tiny bit if you can to reduce the amount of joins. or, if that isn't possible, consider using indices on the columns you're using to filter, it might be a life saver if you have a large database. also caching is your friend, if the `current_user` changes very little it might be better to get all records at once and filter them based on the user changes. it depends on the application. i've seen applications where we cached the whole result because the filters were small and the records were not that many, versus some other ones where we had thousands of `posts` and we had to be very careful on how we fetch them.
 
@@ -121,4 +123,4 @@ another common approach that we didn't cover is using a gem like `pundit` or `ca
 
 for deeper knowledge, i'd really recommend checking out the "eloquent ruby" book by russ olsen. the chapter on active record is great. or the official rails guides, specifically the section about active record queries, or better even the active record source code, i've learned a lot from there. if you feel like reading something more academic, you could check some papers on relational algebra, since at the end of the day that is what database queries are all about.
 
-filtering associations based on `current_user` in rails is a really common task. it's definitely a thing that takes some time to fully grasp the nuances of, but once you get the hang of it, it becomes second nature. the important thing is to understand that you must always, always filter as much as possible at the database level, avoid ruby loops after getting the records, and to consider performance and optimize your queries. remember to always validate your filters, test your code and use a good debugger. if you follow this guide you should be alright.
+filtering associations based on `current_user` in rails is a really common task. it's definitely a thing that takes some time to fully grasp the nuances of, but once you get the hang of it, it becomes second nature. the important thing is to understand that you must always, always filter as much as possible at the database level, avoid ruby loops after getting the records, and to consider performance and optimize your queries. remember to always validate your filters, test your code and use a good debugger. if you follow this guide you should be .

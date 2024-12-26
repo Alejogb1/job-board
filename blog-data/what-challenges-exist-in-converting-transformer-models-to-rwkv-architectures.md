@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-challenges-exist-in-converting-transformer-models-to-rwkv-architectures"
 ---
 
-Alright so transformer models to RWKV right That's a juicy topic kinda like trying to swap out a V8 engine for a super high-revving rotary in a classic car sounds cool on paper but definitely not a plug-and-play operation
+so transformer models to RWKV right That's a juicy topic kinda like trying to swap out a V8 engine for a super high-revving rotary in a classic car sounds cool on paper but definitely not a plug-and-play operation
 
 The whole thing boils down to fundamentally different architectures transformers with their attention mechanisms are parallel processing powerhouses they look at every part of the input at once which is awesome for many tasks especially when you can throw a ton of GPUs at it RWKV on the other hand it's this cool idea inspired by RNNs but with some serious upgrades It processes input sequentially like a stream of data using time mixing which makes it more memory efficient and potentially easier to run on limited hardware and that difference that sequential vs parallel nature that's the biggest hurdle right there
 
@@ -80,7 +80,7 @@ class RWKVTimeMixing(nn.Module):
 
     def forward(self, x, state):
         batch_size, seq_len, _ = x.size()
-        
+
         output = torch.zeros_like(x)
 
         for i in range(seq_len):
@@ -94,7 +94,7 @@ class RWKVTimeMixing(nn.Module):
           t_mix_v = torch.sigmoid(self.time_mix_v(current_x))
           t_mix_r = torch.sigmoid(self.time_mix_r(current_x))
           t_mix_g = torch.sigmoid(self.time_mix_g(current_x))
-          
+
           k = self.key(current_x*t_mix_k + prev_state*(1-t_mix_k))
           v = self.value(current_x*t_mix_v + prev_state*(1-t_mix_v))
           r = torch.sigmoid(self.receptance(current_x*t_mix_r + prev_state*(1-t_mix_r)))
@@ -109,6 +109,7 @@ class RWKVTimeMixing(nn.Module):
 This snippet illustrates RWKV's time mixing where each token's processing depends on the previous state and the current token a sequential processing as opposed to a parallel one Notice how it uses sigmoid to weight the current input against the previous state It does have the key value mechanism as well but with a totally different purpose
 
 **The Core Issue**
+
 ```python
 # This code is just to illustrate the conceptual difference
 # not how a real transform would look like
@@ -134,6 +135,7 @@ def conceptual_transform(transformer_state,rwkv_state):
 
   return rwkv_state
 ```
+
 The core issue is that we are transforming parallel global-context models into a sequential model, so we need to figure out how to efficiently transform that global context into local sequential context and that is what makes this a tough problem because you are essentially learning a new set of features and a whole new dynamics.
 
 So yeah it's a really complex challenge converting these guys It's not just a matter of swapping code or doing a simple weight transfer it's a lot of rethinking and re-engineering to go from attention to time mixing It’s a new frontier in efficient deep learning and i guess we'll have to wait for new research to make this more of a practical thing for now its still a big open area

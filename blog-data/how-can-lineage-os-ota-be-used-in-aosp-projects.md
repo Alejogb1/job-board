@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-can-lineage-os-ota-be-used-in-aosp-projects"
 ---
 
-Okay, let's talk about integrating LineageOS's over-the-air (ota) update system into a generic android open source project (aosp). I've certainly been down this road before, and it's a journey that involves understanding quite a few interlocking pieces. My particular experience was with a heavily customized Android build for embedded devices, where we needed the robust update mechanisms offered by LineageOS, but not the complete rom itself.
+, let's talk about integrating LineageOS's over-the-air (ota) update system into a generic android open source project (aosp). I've certainly been down this road before, and it's a journey that involves understanding quite a few interlocking pieces. My particular experience was with a heavily customized Android build for embedded devices, where we needed the robust update mechanisms offered by LineageOS, but not the complete rom itself.
 
-The crux of leveraging LineageOS’s ota system in AOSP boils down to two key elements: the update client (essentially the software on the device handling the download and application of updates) and the server-side components (which prepare and serve the update packages). LineageOS doesn't use a generic aosp ota server; it has its own suite of scripts and tools tailored to its specific structure. However, we don't necessarily need *everything*.
+The crux of leveraging LineageOS’s ota system in AOSP boils down to two key elements: the update client (essentially the software on the device handling the download and application of updates) and the server-side components (which prepare and serve the update packages). LineageOS doesn't use a generic aosp ota server; it has its own suite of scripts and tools tailored to its specific structure. However, we don't necessarily need _everything_.
 
 Firstly, let’s address the client-side. The primary component you’re interested in is the `Updater` app, found within the LineageOS source tree. This isn’t just a single app though; it's interwoven with various system services and native libraries. Its primary job is to:
 
@@ -50,9 +50,9 @@ cc_library_static {
 
 Notice that we’re specifying a `static_libs` list; this is crucial. `libupdater-support` is a placeholder and you’ll likely need to build or port existing LineageOS libraries, handling any native code dependencies.
 
-For the server-side, LineageOS usually employs a python-based set of tools that use the `ota-tools` library to generate the update packages. These tools create the incremental and full update zips from the two versions of the system images. The `build-target-files` script generates a *target files* zip, which contains everything we need to create an update package, such as system, vendor, boot, and recovery images and the manifest file that describes the contents. The server then needs to serve this package to the device via HTTP or HTTPS. This aspect is comparatively straightforward.
+For the server-side, LineageOS usually employs a python-based set of tools that use the `ota-tools` library to generate the update packages. These tools create the incremental and full update zips from the two versions of the system images. The `build-target-files` script generates a _target files_ zip, which contains everything we need to create an update package, such as system, vendor, boot, and recovery images and the manifest file that describes the contents. The server then needs to serve this package to the device via HTTP or HTTPS. This aspect is comparatively straightforward.
 
-We don’t need to mirror their server implementation exactly, but we do need to create update packages in a compatible format. The key here is understanding how `ota-tools` operates, rather than directly using LineageOS's server code. We can also use other tools, for instance `adb sideload` to apply the ota package for testing and development purposes. Let’s assume for simplicity you've produced a new *target files* zip that has been served over http to http://your-server.com/update.zip.
+We don’t need to mirror their server implementation exactly, but we do need to create update packages in a compatible format. The key here is understanding how `ota-tools` operates, rather than directly using LineageOS's server code. We can also use other tools, for instance `adb sideload` to apply the ota package for testing and development purposes. Let’s assume for simplicity you've produced a new _target files_ zip that has been served over http to http://your-server.com/update.zip.
 
 Here's a simplified snippet that simulates the `Updater` downloading and validating an update (the download part could also use `java.net.HttpURLConnection`, but `okhttp` is more robust in production code):
 
@@ -136,7 +136,7 @@ public class Updater {
 
 This java snippet demonstrates the essentials. In a practical setup, you would integrate parts of this with the existing `Updater` app from LineageOS. It highlights the need to secure package downloads via checksum validation (sha256 in this case), and then the general logic for downloading a file from a url. You can obviously replace parts of it, but it gives you the general idea.
 
-A final snippet, this time from python, using the `ota_tools` library, can generate an incremental update package based on two *target files* zips:
+A final snippet, this time from python, using the `ota_tools` library, can generate an incremental update package based on two _target files_ zips:
 
 ```python
 import os
@@ -174,8 +174,8 @@ This python example, which requires `ota-tools`, demonstrates the basic principl
 
 For more in-depth information, I strongly recommend the following:
 
-*   **"Android Internals" by Jonathan Levin**: This book provides a deep dive into the Android system architecture, which is invaluable for understanding how ota updates work. It's a must-read for serious Android system development.
-*   **The LineageOS source code**: Specifically, the `packages/apps/Updater`, `system/update_engine` and the `build` directory in their repository.  Examine how the updater application is built and how they integrate it with the `recovery` process. You can find their repo on github.
-*   **Google's official AOSP documentation on ota updates**: Google provides comprehensive documentation of the generic AOSP ota system, which is useful for understanding how it's structured even if you intend to replace it with LineageOS mechanisms. See the official AOSP docs in the "system" and "tools" subdirectories.
+- **"Android Internals" by Jonathan Levin**: This book provides a deep dive into the Android system architecture, which is invaluable for understanding how ota updates work. It's a must-read for serious Android system development.
+- **The LineageOS source code**: Specifically, the `packages/apps/Updater`, `system/update_engine` and the `build` directory in their repository. Examine how the updater application is built and how they integrate it with the `recovery` process. You can find their repo on github.
+- **Google's official AOSP documentation on ota updates**: Google provides comprehensive documentation of the generic AOSP ota system, which is useful for understanding how it's structured even if you intend to replace it with LineageOS mechanisms. See the official AOSP docs in the "system" and "tools" subdirectories.
 
 In conclusion, while it requires significant effort, integrating LineageOS's ota system into a generic AOSP build is possible, and offers substantial benefits, notably the ability to perform robust, signed updates. Focus on carefully extracting the client components, understanding package formats, and ensuring you're using proper cryptographic validation. It's a process that requires dedication to detail, but the resulting system is both powerful and maintainable.

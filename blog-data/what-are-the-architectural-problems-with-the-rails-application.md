@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-architectural-problems-with-the-rails-application"
 ---
 
-Alright, let’s talk about the architectural quirks you often stumble upon in larger Rails applications. It's a topic I've spent a good chunk of my career grappling with, migrating and refactoring my way out of some truly interesting messes. It’s never a single, colossal flaw, but rather a collection of decisions made over time that, when combined, create headaches. I've seen the same patterns emerge across various projects – and that, in itself, is valuable insight.
+, let’s talk about the architectural quirks you often stumble upon in larger Rails applications. It's a topic I've spent a good chunk of my career grappling with, migrating and refactoring my way out of some truly interesting messes. It’s never a single, colossal flaw, but rather a collection of decisions made over time that, when combined, create headaches. I've seen the same patterns emerge across various projects – and that, in itself, is valuable insight.
 
 One of the primary concerns that tends to surface is the notorious ‘fat model’ problem, or even more precisely, the ‘god model’ antipattern. In many early Rails projects, especially those that grew organically, the model layer becomes an indiscriminate dumping ground for all business logic. Instead of focusing purely on data persistence and retrieval, these models end up handling everything from complex calculations to interactions with external services and validations that should rightly belong elsewhere. I remember a particularly challenging e-commerce platform where the ‘product’ model, in addition to managing product attributes and database operations, was also handling inventory management, discount calculations, and even the generation of order summaries for emails. This not only bloated the model, making it difficult to maintain and test, but it also violated the single responsibility principle, making changes risky and error-prone. Any modification, even seemingly minor, had the potential to impact other unrelated areas of the application. It was a nightmare to debug.
 
@@ -91,8 +91,8 @@ Thirdly, a clear and consistent directory structure is crucial. As an applicatio
 
 To delve deeper into these concepts, I’d highly recommend exploring the following resources:
 
-*   **"Patterns of Enterprise Application Architecture" by Martin Fowler:** This is a foundational text for understanding enterprise-level design patterns, and is relevant even when talking about Rails apps.
-*   **"Domain-Driven Design: Tackling Complexity in the Heart of Software" by Eric Evans:** While not Rails-specific, it provides invaluable guidance on organizing business logic into domains and subdomains, which is very useful when designing the architecture of large Rails applications.
-*  **“Refactoring: Improving the Design of Existing Code” by Martin Fowler**: This book will help understand how to move from a "fat" Rails project to a lean, well structured one.
+- **"Patterns of Enterprise Application Architecture" by Martin Fowler:** This is a foundational text for understanding enterprise-level design patterns, and is relevant even when talking about Rails apps.
+- **"Domain-Driven Design: Tackling Complexity in the Heart of Software" by Eric Evans:** While not Rails-specific, it provides invaluable guidance on organizing business logic into domains and subdomains, which is very useful when designing the architecture of large Rails applications.
+- **“Refactoring: Improving the Design of Existing Code” by Martin Fowler**: This book will help understand how to move from a "fat" Rails project to a lean, well structured one.
 
 Ultimately, building maintainable Rails applications isn't about adhering to a rigid set of rules, but rather applying design principles consistently and understanding how different architectural choices will impact your project over time. It's an ongoing process, a constant balancing act between features and maintainability. My experience tells me that by addressing these problems early on, you can save yourself a lot of headaches down the line.

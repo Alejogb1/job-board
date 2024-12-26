@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-are-dags-intermittently-failing-to-read-files-from-the-data-gcs-bucket"
 ---
 
-Alright, let's unpack this. A failing DAG intermittently unable to read files from a GCS (Google Cloud Storage) bucket is a frustratingly common scenario, and over the years, I've seen it crop up in various guises. It’s rarely a simple, single cause. Instead, it's often a confluence of factors, and diagnosing it requires a systematic approach. I recall one particularly memorable incident back at an e-commerce platform where product feed DAGs would sporadically fail for seemingly no reason. We’d spend hours tracing through logs, only to find it wasn't the code, but something more subtle lurking in the infrastructure or configuration.
+, let's unpack this. A failing DAG intermittently unable to read files from a GCS (Google Cloud Storage) bucket is a frustratingly common scenario, and over the years, I've seen it crop up in various guises. It’s rarely a simple, single cause. Instead, it's often a confluence of factors, and diagnosing it requires a systematic approach. I recall one particularly memorable incident back at an e-commerce platform where product feed DAGs would sporadically fail for seemingly no reason. We’d spend hours tracing through logs, only to find it wasn't the code, but something more subtle lurking in the infrastructure or configuration.
 
-The first area to examine revolves around permissions and authentication. Are you absolutely certain the service account or user running the DAG has the necessary read permissions on the specific GCS bucket *and* any subdirectories involved? These permissions can sometimes be inadvertently modified, or a new subdirectory might have different access control policies. I'd suggest you explicitly double-check the IAM (Identity and Access Management) settings both on the bucket itself, and recursively, down into any relevant folder structures. The “Principle of Least Privilege” should be your mantra here – grant the service account or user only the permissions absolutely needed to perform the required tasks. For instance, you wouldn't use a service account with bucket-level admin if it was only supposed to read data in a specific subdirectory. Use the `gsutil iam get` command to review these configurations.
+The first area to examine revolves around permissions and authentication. Are you absolutely certain the service account or user running the DAG has the necessary read permissions on the specific GCS bucket _and_ any subdirectories involved? These permissions can sometimes be inadvertently modified, or a new subdirectory might have different access control policies. I'd suggest you explicitly double-check the IAM (Identity and Access Management) settings both on the bucket itself, and recursively, down into any relevant folder structures. The “Principle of Least Privilege” should be your mantra here – grant the service account or user only the permissions absolutely needed to perform the required tasks. For instance, you wouldn't use a service account with bucket-level admin if it was only supposed to read data in a specific subdirectory. Use the `gsutil iam get` command to review these configurations.
 
 Next, network connectivity between the DAG execution environment (wherever your DAG is running, e.g., Cloud Composer, Kubernetes, or a custom setup) and GCS is a prime suspect. Is there any intermittent network disruption? Perhaps transient connectivity problems with GCS? It can occur. To test this, outside of the DAG context, try using the `gsutil ls` command directly from the execution environment against the same paths that are failing in your DAG. This can rule out application-level issues and highlight any lower-level connectivity bottlenecks or packet loss issues. Observe the timing, frequency, and latency of these test commands; this will provide useful diagnostics. Furthermore, look into the networking settings of your DAG environment. For example, when using a managed service, there may be VPC network configurations or firewall rules which could be affecting accessibility to GCS.
 
@@ -49,8 +49,9 @@ with DAG(
     )
 
 ```
-*Issue*: If the service account running the DAG lacks read permissions on `data/my_file.txt` or `my_bucket`, this will fail with a permissions error from GCS.
-*Solution*: Verify IAM permissions on both the bucket and the specific object/directory structure.
+
+_Issue_: If the service account running the DAG lacks read permissions on `data/my_file.txt` or `my_bucket`, this will fail with a permissions error from GCS.
+_Solution_: Verify IAM permissions on both the bucket and the specific object/directory structure.
 
 **Example 2: File Listing and Handling Rate Limits**
 
@@ -90,8 +91,8 @@ with DAG(
     )
 ```
 
-*Issue*: If there are a very large number of objects within the 'data' folder, calling `bucket.list_blobs()` with the `prefix` may still fail to return all the files. Additionally, repeated calls of `download_as_string()` may introduce rate-limiting issues. This approach could also fail if the specified prefix does not exist.
-*Solution*: Using `bucket.list_blobs` with pagination is a good practice and will help to avoid memory issues when the number of the blobs in the GCS is very large. You can use `pageToken` in successive calls in `list_blobs` until there is no more next page to process. Adding explicit error handling and logging can also aid in diagnostics.
+_Issue_: If there are a very large number of objects within the 'data' folder, calling `bucket.list_blobs()` with the `prefix` may still fail to return all the files. Additionally, repeated calls of `download_as_string()` may introduce rate-limiting issues. This approach could also fail if the specified prefix does not exist.
+_Solution_: Using `bucket.list_blobs` with pagination is a good practice and will help to avoid memory issues when the number of the blobs in the GCS is very large. You can use `pageToken` in successive calls in `list_blobs` until there is no more next page to process. Adding explicit error handling and logging can also aid in diagnostics.
 
 **Example 3: Potential File Not Found Issues**
 
@@ -127,7 +128,8 @@ with DAG(
         op_kwargs={"bucket_name": "my_bucket", "file_path": "data/my_file.txt"},
     )
 ```
-*Issue*: This script could still fail if the data file is deleted or overwritten between the time the script checks for file existence, and the call to `blob.download_as_string()`. This is known as a race condition.
-*Solution*: It is important to have robust file handling in place, especially for scenarios in which external processes, like other DAGs, can be manipulating files in GCS, or using the blob-level generation metadata checks. More generally, consider building your DAGs to be robust to these issues. Error trapping and retries might be useful.
+
+_Issue_: This script could still fail if the data file is deleted or overwritten between the time the script checks for file existence, and the call to `blob.download_as_string()`. This is known as a race condition.
+_Solution_: It is important to have robust file handling in place, especially for scenarios in which external processes, like other DAGs, can be manipulating files in GCS, or using the blob-level generation metadata checks. More generally, consider building your DAGs to be robust to these issues. Error trapping and retries might be useful.
 
 In summary, intermittent failures when reading from GCS are rarely due to a single issue, they usually result from a mix of these factors. Thorough checking of permissions, network connectivity, resource limitations, and the code logic itself will lead to resolution. I would recommend these references as a deep dive: "Google Cloud Platform Cookbook" by Ted Goas, "Programming Google Cloud Platform" by Rui Costa, and the official Google Cloud Documentation, specifically the section concerning Cloud Storage and IAM. And remember, detailed logging at all stages of the DAG execution is crucial for diagnostics when these issues arise. Good luck debugging, it is rarely straightforward but following a methodological approach should help.

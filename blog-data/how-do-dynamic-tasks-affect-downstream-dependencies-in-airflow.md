@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-do-dynamic-tasks-affect-downstream-dependencies-in-airflow"
 ---
 
-Okay, let's talk about dynamic tasks in Apache Airflow and their potential impact on downstream dependencies. It's a topic I’ve circled back to more than a few times over the years, primarily because what seems straightforward on the surface can quickly become a bit… nuanced, shall we say? I recall one particular project, a data pipeline for a multinational retailer, where we initially underestimated the ripple effect dynamic task generation could create. The result? A few very late nights debugging DAG runs that inexplicably stalled. So, let me break it down based on that hard-earned experience, and offer some concrete examples.
+, let's talk about dynamic tasks in Apache Airflow and their potential impact on downstream dependencies. It's a topic I’ve circled back to more than a few times over the years, primarily because what seems straightforward on the surface can quickly become a bit… nuanced, shall we say? I recall one particular project, a data pipeline for a multinational retailer, where we initially underestimated the ripple effect dynamic task generation could create. The result? A few very late nights debugging DAG runs that inexplicably stalled. So, let me break it down based on that hard-earned experience, and offer some concrete examples.
 
-The essence of the problem stems from the fact that dynamic tasks, unlike statically defined ones, aren't entirely known to the Airflow scheduler at the DAG parsing time. Instead, they are generated at run-time, usually based on the results of previous tasks or external data sources. This introduces a layer of unpredictability. Airflow, at its core, manages task dependencies based on the DAG structure it can parse *before* execution. When tasks are dynamically created, this foundational structure is, effectively, being altered mid-flight.
+The essence of the problem stems from the fact that dynamic tasks, unlike statically defined ones, aren't entirely known to the Airflow scheduler at the DAG parsing time. Instead, they are generated at run-time, usually based on the results of previous tasks or external data sources. This introduces a layer of unpredictability. Airflow, at its core, manages task dependencies based on the DAG structure it can parse _before_ execution. When tasks are dynamically created, this foundational structure is, effectively, being altered mid-flight.
 
-Think about this: consider a simple scenario where task ‘A’ needs to process a list of files. In a traditional setup, we would know all the file names at DAG parse time and create a task for each file (A_file1, A_file2, etc.). But what if those files are only available from an API at runtime? That’s where dynamic tasks come in. We would have a task ‘A_gather_files’ which gathers a list of files and *then* generates tasks to process each file dynamically. The immediate implication is that downstream tasks, say ‘B,’ which depend on the completion of all file processing tasks from ‘A,’ must somehow become aware of all the dynamically generated tasks.
+Think about this: consider a simple scenario where task ‘A’ needs to process a list of files. In a traditional setup, we would know all the file names at DAG parse time and create a task for each file (A_file1, A_file2, etc.). But what if those files are only available from an API at runtime? That’s where dynamic tasks come in. We would have a task ‘A_gather_files’ which gathers a list of files and _then_ generates tasks to process each file dynamically. The immediate implication is that downstream tasks, say ‘B,’ which depend on the completion of all file processing tasks from ‘A,’ must somehow become aware of all the dynamically generated tasks.
 
-The key mechanism in Airflow for handling this is via the `expand` function, usually in conjunction with a task group. When a task group is expanded using `expand`, the returned task instances are automatically added to the DAG’s dependencies. This means that downstream tasks referencing this task group will effectively wait for *all* dynamically generated instances to complete. Without this, ‘B’ might execute prematurely, before all files are processed.
+The key mechanism in Airflow for handling this is via the `expand` function, usually in conjunction with a task group. When a task group is expanded using `expand`, the returned task instances are automatically added to the DAG’s dependencies. This means that downstream tasks referencing this task group will effectively wait for _all_ dynamically generated instances to complete. Without this, ‘B’ might execute prematurely, before all files are processed.
 
 Now, let's move to a practical example. Assume we have a task that fetches a list of customer IDs from a database, and for each ID, we need to generate a set of data analysis tasks.
 
@@ -55,9 +55,9 @@ with DAG(
     processed_customers >> aggregate_results_task
 ```
 
-In this example, `get_customer_ids` fetches a list of customer IDs. The `process_customer` task group, using `expand`, then creates a task instance for each customer, dynamically creating analysis tasks. The `aggregate_results` task only runs *after* all these dynamically generated `process_customer` instances (and their internal `analyze_data` tasks) complete. Without the `.expand()` all the task dependency might not work as you expect and you might have some concurrency issues.
+In this example, `get_customer_ids` fetches a list of customer IDs. The `process_customer` task group, using `expand`, then creates a task instance for each customer, dynamically creating analysis tasks. The `aggregate_results` task only runs _after_ all these dynamically generated `process_customer` instances (and their internal `analyze_data` tasks) complete. Without the `.expand()` all the task dependency might not work as you expect and you might have some concurrency issues.
 
-The importance of the right approach can't be overstated. I've seen cases where, without proper use of `expand`, downstream tasks would start running only after the *first* instance of the dynamic task group was complete, creating race conditions and corrupted data. This can be especially painful when the dynamic task is dependent on external conditions.
+The importance of the right approach can't be overstated. I've seen cases where, without proper use of `expand`, downstream tasks would start running only after the _first_ instance of the dynamic task group was complete, creating race conditions and corrupted data. This can be especially painful when the dynamic task is dependent on external conditions.
 
 Let’s consider another example, this time where the number of dynamically created tasks is dependent on the result of a previous task involving API calls.
 
@@ -109,7 +109,7 @@ with DAG(
 
 ```
 
-Here, the number of `process_endpoint` task groups is derived from the `fetch_api_endpoints` task. The `merge_data` task only initiates after *all* the generated task groups and their respective `download_data` and `process_downloaded_data` tasks complete, again because of the `expand` function. This approach is invaluable when you are working with variable data sources or APIs.
+Here, the number of `process_endpoint` task groups is derived from the `fetch_api_endpoints` task. The `merge_data` task only initiates after _all_ the generated task groups and their respective `download_data` and `process_downloaded_data` tasks complete, again because of the `expand` function. This approach is invaluable when you are working with variable data sources or APIs.
 
 Finally, let's introduce the concept of mapping, where we process the same function in parallel with a dynamic list. In this case, we’ll simulate a scenario where we need to apply a transformation to each value in a dynamically generated list.
 
@@ -147,6 +147,7 @@ with DAG(
     transformed_data = transform_data.map(data_list)
     aggregate_data_task = aggregate_transformed_data(transformed_data)
 ```
+
 In this example, `transform_data` is mapped to the `data_list`, resulting in parallel executions and a dynamically generated list of transformed results which is then used by the downstream `aggregate_transformed_data` task.
 
 These examples should make it clear: dynamic tasks, when not handled carefully, can create complex and error-prone dependencies. It’s crucial to understand how `expand` and `map` function, not just at the basic level, but also how they interact with different dependency strategies to avoid unexpected behaviors in your DAGs. A strong understanding of Airflow's underlying dependency management is critical, and not something you can skimp on.

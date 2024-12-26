@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-mnist-ml-output-incorrect"
 ---
 
-Okay, let’s tackle this. It’s a familiar frustration, the infamous ‘incorrect output’ from an MNIST classifier. It's less about the magical black box suddenly misbehaving, and more about the layers of abstraction and potential pitfalls that can accumulate in even seemingly straightforward machine learning projects. I remember a project from a few years back, implementing a convolutional neural network for digit recognition; we thought we had it nailed, the training loss was plummeting, but the validation accuracy… well, it was erratic, often misclassifying even trivially simple digits. So, let’s break down the common reasons why your MNIST model might not be performing as expected.
+, let’s tackle this. It’s a familiar frustration, the infamous ‘incorrect output’ from an MNIST classifier. It's less about the magical black box suddenly misbehaving, and more about the layers of abstraction and potential pitfalls that can accumulate in even seemingly straightforward machine learning projects. I remember a project from a few years back, implementing a convolutional neural network for digit recognition; we thought we had it nailed, the training loss was plummeting, but the validation accuracy… well, it was erratic, often misclassifying even trivially simple digits. So, let’s break down the common reasons why your MNIST model might not be performing as expected.
 
 First off, let’s address the data itself. The MNIST dataset is, thankfully, generally very well-structured and clean, but issues can still arise here. One common culprit is inconsistent input formatting. When training, your images are expected to be pre-processed in a very specific manner. If you inadvertently feed in data that’s not correctly scaled, normalized, or even shaped, the model's internal calculations will likely lead to misclassifications. For example, if some of the images in your batch are represented as grayscale pixels on a 0-255 scale, while others are already normalized to a range of 0-1, the network will get confused. It’s vital to ensure every data point has undergone identical pre-processing before entering the network.
 
@@ -44,6 +44,7 @@ print("Output of model on scaled data:", model(scaled_data[:1]).numpy().shape)
 print("Output of model on unscaled data:", model(unscaled_data[:1]).numpy().shape)
 
 ```
+
 This code snippet shows two distinct batches – one properly scaled to between 0 and 1 and the other using the raw pixel values of 0 to 255. The model may run, but its effectiveness would be severely compromised if this inconsistency occurs during the training process.
 
 **Example 2: A Simple MLP Failing, Compared to CNN**
@@ -152,6 +153,6 @@ print(f"dropout Accuracy: {dropout_accuracy:.4f}")
 
 This example demonstrates an overly complex model without dropout, likely to overfit on the training data. It will likely achieve high training accuracy but suffer in terms of test set accuracy. By adding a dropout layer, we are regularizing the model and reducing the chances of overfitting. This should lead to an increased validation and test accuracy.
 
-To get a deeper understanding, I'd highly recommend exploring books such as *Deep Learning* by Goodfellow, Bengio, and Courville, for its theoretical depth, and the Keras documentation itself for practical implementation. The online resources for *Fast.ai’s* deep learning courses are also excellent. Another invaluable paper would be *ImageNet Classification with Deep Convolutional Neural Networks* by Krizhevsky, Sutskever, and Hinton. These resources should provide a much more comprehensive understanding of the fundamentals.
+To get a deeper understanding, I'd highly recommend exploring books such as _Deep Learning_ by Goodfellow, Bengio, and Courville, for its theoretical depth, and the Keras documentation itself for practical implementation. The online resources for _Fast.ai’s_ deep learning courses are also excellent. Another invaluable paper would be _ImageNet Classification with Deep Convolutional Neural Networks_ by Krizhevsky, Sutskever, and Hinton. These resources should provide a much more comprehensive understanding of the fundamentals.
 
 In essence, incorrect outputs from your mnist model aren't due to any single fault, but a combination of factors that accumulate across your pipeline. You should methodically examine and resolve each aspect individually to ensure a properly performing model.

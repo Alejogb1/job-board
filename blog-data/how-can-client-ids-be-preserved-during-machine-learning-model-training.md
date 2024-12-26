@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-client-ids-be-preserved-during-machine-learning-model-training"
 ---
 
-Okay, let's unpack this. It's a problem I've seen crop up more than a few times in practice, especially when dealing with data that has inherent individual or user-level structure. The core issue, as you've framed it, is how to maintain the association between specific data points and their respective client IDs throughout the machine learning model training process, without letting those IDs inadvertently influence the model in ways we don’t intend. We don't want to leak client-specific information into the trained model itself and we certainly don't want the model to simply memorize client IDs or develop a bias related to them.
+, let's unpack this. It's a problem I've seen crop up more than a few times in practice, especially when dealing with data that has inherent individual or user-level structure. The core issue, as you've framed it, is how to maintain the association between specific data points and their respective client IDs throughout the machine learning model training process, without letting those IDs inadvertently influence the model in ways we don’t intend. We don't want to leak client-specific information into the trained model itself and we certainly don't want the model to simply memorize client IDs or develop a bias related to them.
 
 It’s tempting to think, "Just include the ID as a feature!" but that's often a recipe for disaster, especially if the IDs are highly unique and granular. Such an approach can lead to overfitting and poor generalization, since our model could learn to associate very specific patterns with individual client identifiers rather than the underlying characteristics we are actually interested in modelling. We need a more nuanced approach.
 
@@ -151,8 +151,8 @@ This function creates a split based on unique client ids first so that no client
 
 To deepen your understanding of these topics, I recommend examining the following:
 
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book provides a solid grounding in practical machine learning techniques and covers many aspects of feature engineering and model training that are relevant here.
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** Specifically, the sections covering representation learning and embeddings can significantly improve your ability to work with complex features such as client ids.
-*   **Research papers on Federated Learning:** If the issue you are dealing with involves a distributed setting where the data is directly owned by clients, then understanding federated learning principles is crucial, particularly the techniques for privacy preserving learning that these systems often incorporate.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book provides a solid grounding in practical machine learning techniques and covers many aspects of feature engineering and model training that are relevant here.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** Specifically, the sections covering representation learning and embeddings can significantly improve your ability to work with complex features such as client ids.
+- **Research papers on Federated Learning:** If the issue you are dealing with involves a distributed setting where the data is directly owned by clients, then understanding federated learning principles is crucial, particularly the techniques for privacy preserving learning that these systems often incorporate.
 
 These techniques should provide you with a good starting point for preserving client IDs during machine learning model training, while avoiding direct leakage. The specific approach will depend heavily on the context of your data and the exact problem you are trying to solve, but these strategies should be a solid foundation. Remember, the goal is to model the underlying phenomena, not to memorize individual client identifiers. Always prioritize generalization and avoid the pitfalls of overfitting.

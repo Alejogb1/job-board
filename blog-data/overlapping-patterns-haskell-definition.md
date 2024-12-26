@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "overlapping-patterns-haskell-definition"
 ---
 
-Okay so you're asking about overlapping patterns in Haskell right I've been there man believe me it's a rabbit hole and I've spent more nights than I care to admit debugging code because of it
+you're asking about overlapping patterns in Haskell right I've been there man believe me it's a rabbit hole and I've spent more nights than I care to admit debugging code because of it
 
 First off let's be crystal clear what we're talking about Overlapping patterns happen in function definitions when you have multiple patterns that could potentially match the same input Haskell usually tries patterns in the order they're written so it's mostly about the order but that doesn't mean it's all sunshine and rainbows because ambiguity can still creep in
 
@@ -55,6 +55,7 @@ processList (x:xs) = "Short List"
 processList [] = "Empty List"
 processList (x:xs) | length xs > 5 = "Long List"
 ```
+
 Now the first pattern matches everything that is not empty so the empty pattern and the long list pattern will never be matched and you will never see "Empty list" or "Long List" as output and this type of error is extremely hard to debug believe me
 
 You see the problem here right? Order matters big time and the ordering of these functions can alter the program behavior significantly in a way you didn't expect when you reorder them and you are just refactoring some small function it happened to me many times and I had to be extremely careful after that it's like dealing with a very sensitive system one change in the wrong place and everything starts to misbehave

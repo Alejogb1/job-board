@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "does-mlflow-automatically-create-a-new-experiment-run-when-manually-logging-alongside-automatic-logging"
 ---
 
-Okay, let’s tackle this one. The intricacies of mlflow experiment runs, especially when mixing manual and automatic logging, is something I’ve definitely spent a fair amount of time debugging over the years. It’s a very common point of confusion, and it’s absolutely necessary to understand how mlflow handles this to maintain organized experiments. So, to the point: does mlflow automatically create a new experiment run when manually logging alongside automatic logging? The answer isn’t a straightforward ‘yes’ or ‘no’ – it’s conditional, and it depends on the exact context of your code. Let's dissect it.
+, let’s tackle this one. The intricacies of mlflow experiment runs, especially when mixing manual and automatic logging, is something I’ve definitely spent a fair amount of time debugging over the years. It’s a very common point of confusion, and it’s absolutely necessary to understand how mlflow handles this to maintain organized experiments. So, to the point: does mlflow automatically create a new experiment run when manually logging alongside automatic logging? The answer isn’t a straightforward ‘yes’ or ‘no’ – it’s conditional, and it depends on the exact context of your code. Let's dissect it.
 
-The core of the matter revolves around mlflow’s concept of an 'active run'. Mlflow keeps track of an active run, typically initialized through `mlflow.start_run()`, or implicitly through certain automatic logging mechanisms. If you are using an auto-logging library, it may begin a run in the background, which makes the situation trickier. When you manually log parameters, metrics, or artifacts, these are associated with the *currently active run*. If no active run is present, mlflow typically attempts to start a new one implicitly, usually based on any set configurations such as experiment name, or if none is provided a default one is initialized, or in some cases, throws an error.
+The core of the matter revolves around mlflow’s concept of an 'active run'. Mlflow keeps track of an active run, typically initialized through `mlflow.start_run()`, or implicitly through certain automatic logging mechanisms. If you are using an auto-logging library, it may begin a run in the background, which makes the situation trickier. When you manually log parameters, metrics, or artifacts, these are associated with the _currently active run_. If no active run is present, mlflow typically attempts to start a new one implicitly, usually based on any set configurations such as experiment name, or if none is provided a default one is initialized, or in some cases, throws an error.
 
-However, and this is the crucial part, if you have an active run (started manually or automatically) and then initiate an automatic logging function, *it will typically attach that automatic logging to the existing run*. This means that no new run is automatically created; everything gets logged under the same run id. This is particularly relevant when using auto-logging functions provided by libraries like scikit-learn or tensorflow, which can get tangled with manually logged parameters.
+However, and this is the crucial part, if you have an active run (started manually or automatically) and then initiate an automatic logging function, _it will typically attach that automatic logging to the existing run_. This means that no new run is automatically created; everything gets logged under the same run id. This is particularly relevant when using auto-logging functions provided by libraries like scikit-learn or tensorflow, which can get tangled with manually logged parameters.
 
 Let's make this concrete with a few code snippets based on scenarios I've encountered.
 
@@ -46,7 +46,7 @@ with mlflow.start_run() as run:
     print(f"Run ID: {run.info.run_id}")
 ```
 
-In this scenario, the `mlflow.start_run()` explicitly creates a run. Then, when `mlflow.sklearn.autolog()` is called and the model is trained, everything gets logged under *that same run ID*, and no new run is automatically started. This is a key thing to understand – auto logging generally doesn’t introduce new runs once you have one active. We've manually logged a parameter, used autolog and also logged a metric, but they all belong to one and only one run.
+In this scenario, the `mlflow.start_run()` explicitly creates a run. Then, when `mlflow.sklearn.autolog()` is called and the model is trained, everything gets logged under _that same run ID_, and no new run is automatically started. This is a key thing to understand – auto logging generally doesn’t introduce new runs once you have one active. We've manually logged a parameter, used autolog and also logged a metric, but they all belong to one and only one run.
 
 **Scenario 2: Automatic Logging First, Manual Logging Afterward - Still One Run**
 
@@ -86,6 +86,7 @@ with mlflow.active_run() as run:
     loss = model.evaluate(X_test, y_test, verbose=0)
     mlflow.log_metric("test_loss", loss)
 ```
+
 In this instance, the `mlflow.tensorflow.autolog()` function starts a background run, the model training logs metrics, then we manually log a parameter under the same active run and a metric. So, you still have a single run, and all information is neatly packaged under that run. Again, if an active run exists, auto logging attaches to that instead of starting a new one.
 
 **Scenario 3: No Active Run, Then Manual Logging, Then Auto Logging - Still one Run**
@@ -117,7 +118,7 @@ with mlflow.active_run() as run:
     print(f"Run ID: {run.info.run_id}")
 ```
 
-Here, we manually log a parameter *before* any run has been explicitly started. Then, `mlflow.sklearn.autolog()` sees no current active run and will implicitly start one.  The manual parameter logging goes into this run. All subsequent automatic logging by scikit-learn also falls under this single run. If, we try to log parameter before the autolog call *and* without starting a run, mlflow will often auto start a run for us.
+Here, we manually log a parameter _before_ any run has been explicitly started. Then, `mlflow.sklearn.autolog()` sees no current active run and will implicitly start one. The manual parameter logging goes into this run. All subsequent automatic logging by scikit-learn also falls under this single run. If, we try to log parameter before the autolog call _and_ without starting a run, mlflow will often auto start a run for us.
 
 In summary, the core principle is that if an active run exists, any logging, whether manual or automatic, will generally attach to it. The question of a new run primarily boils down to whether an active run was present when automatic logging is triggered. It also becomes a question of whether you attempt to log without a started run at all (either explicitly or implicitly). If no active run is present when you try to log something, it will often start a new run for you.
 

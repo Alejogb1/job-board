@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "extracting-metadata-from-large-set-of-images"
 ---
 
-Okay so you’re wrestling with extracting metadata from a ton of images right I get it Been there done that more times than I care to remember It's like the universe decided to dump all its picture data on your doorstep and said “have fun”
+you’re wrestling with extracting metadata from a ton of images right I get it Been there done that more times than I care to remember It's like the universe decided to dump all its picture data on your doorstep and said “have fun”
 
 First off we are talking serious scale here right It's not like 20 pictures from your phone we are dealing with potentially thousands or hundreds of thousands or even more So forget about manually going through each file and pulling out Exif data by hand we need a proper automated pipeline
 
@@ -96,6 +96,7 @@ if __name__ == '__main__':
         print("Could not extract metadata")
 
 ```
+
 See how this gives you coordinate reference systems bounds and much more all useful for geospatial data analysis. If you’re not dealing with this type of data you will probably ignore this example
 
 Now another big thing to consider is the sheer volume of data you’re processing doing it all serially is probably not going to cut it. For example if you have 100000 images and processing one image takes let's say half a second you are talking about processing images for half a day without interruption. We should try to parallelize our processing and not do this sequentially
@@ -150,6 +151,7 @@ if __name__ == '__main__':
       else:
         print(f"Metadata not found for {file_path}")
 ```
+
 Notice that this is a basic example for parallelism there are better faster ways with other tools but it serves to illustrate the approach
 
 Also remember that I am only printing stuff here you will probably want to save this extracted metadata to a file something like a csv file for each image or to a database that you can later analyze. You probably need to create an appropriate database to store this metadata. Also consider that you may need a schema of the kind of metadata you are looking for.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-vector-output-files-pdf-eps-generated-using-mplcairo-excessively-large"
 ---
 
-Okay, let's talk about vector output file sizes with mplcairo. It’s a frustration I've certainly grappled with during my time building visualization tools, particularly when aiming for crisp, scalable graphics. The issue isn't typically with the vector format itself (PDF or EPS), but rather with how mplcairo often handles complex plots, resulting in bloated files. It all boils down to a few key factors which, fortunately, are addressable.
+, let's talk about vector output file sizes with mplcairo. It’s a frustration I've certainly grappled with during my time building visualization tools, particularly when aiming for crisp, scalable graphics. The issue isn't typically with the vector format itself (PDF or EPS), but rather with how mplcairo often handles complex plots, resulting in bloated files. It all boils down to a few key factors which, fortunately, are addressable.
 
 The primary reason for these excessively large vector files stems from how mplcairo renders graphical elements. It tends to convert many elements—especially text and complex markers—into paths, rather than keeping them as native text or shape objects. This transformation, while ensuring that the plot looks identical regardless of the rendering engine, comes at a steep cost. Paths are essentially a series of connected lines and curves. For anything other than the simplest element, this results in a vast number of data points that must be stored in the file, significantly increasing its size. Think about a simple scatter plot: if each point, instead of being rendered as a circle or a cross, is represented by a complex path, the file will balloon dramatically, even for a modest number of data points.
 
@@ -92,6 +92,7 @@ fig, ax = plt.subplots()
 ax.scatter(x, y, marker='.', s = 1 ) # Optimized marker size and using point instead of circle.
 fig.savefig("scatter_optimized.pdf")
 ```
+
 You should see that `scatter_optimized.pdf` is smaller. The default circle marker generates more path points. Using a simple point marker ('.') dramatically improves the situation with scatter plots.
 
 To delve deeper and obtain a more comprehensive understanding of these underlying mechanisms, I'd recommend reading "PostScript Language Program Design" by Adobe Systems Incorporated. This book, though focusing on PostScript (which EPS files are essentially a derivative of), provides profound insights into the nature of vector graphics and the different ways objects can be represented. Also, "The Matplotlib API reference" provides details about mplcairo configurations for generating plots. Additionally, searching for research papers on path simplification algorithms such as the Ramer-Douglas-Peucker algorithm (a method often used in graphics to reduce the number of points in a path while maintaining its visual quality) will be beneficial. These resources, along with mplcairo’s official documentation, are invaluable to understanding and improving the optimization strategies we’ve discussed above.

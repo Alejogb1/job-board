@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-interpret-training-and-testing-errors-when-using-batch-gradient-descent-in-python"
 ---
 
-Okay, let's get into it. I've seen this pattern more than a few times in my years, and interpreting training and testing errors, especially with batch gradient descent, is a crucial skill for any practitioner of machine learning. It's not just about getting the numbers, but understanding the *why* behind them. A good grasp here can be the difference between a model that generalizes well and one that spectacularly fails on unseen data. I remember one project where we were building a predictive model for sensor data, and the initial training results were… well, concerning, but we cracked it by carefully examining these error trends.
+, let's get into it. I've seen this pattern more than a few times in my years, and interpreting training and testing errors, especially with batch gradient descent, is a crucial skill for any practitioner of machine learning. It's not just about getting the numbers, but understanding the _why_ behind them. A good grasp here can be the difference between a model that generalizes well and one that spectacularly fails on unseen data. I remember one project where we were building a predictive model for sensor data, and the initial training results were… well, concerning, but we cracked it by carefully examining these error trends.
 
 So, when we talk about training error and testing error with batch gradient descent, we're basically looking at two different perspectives on how well our model is learning. Training error, which we often calculate on the training set, tells us how well our model is fitting the data it has already seen. Testing error, calculated on a held-out test set, gives us a view of how well our model is likely to perform on completely new, unseen data. The ideal situation is to have both errors decreasing concurrently, plateauing at a low value. This implies the model has learned the underlying patterns without overfitting.
 
@@ -20,7 +20,7 @@ It is worth noting that batch size also impacts the training trajectory. The bat
 
 To illustrate these points, let's jump into some Python code using NumPy, which I find convenient for demonstrating these core concepts. I am deliberately keeping it simple, to focus on interpretation over more advanced implementations.
 
-First, let's explore a case of *overfitting*. I'll simulate a dataset with some non-linear structure, and then try to fit it with an excessively complex model and examine the impact:
+First, let's explore a case of _overfitting_. I'll simulate a dataset with some non-linear structure, and then try to fit it with an excessively complex model and examine the impact:
 
 ```python
 import numpy as np
@@ -106,7 +106,7 @@ plt.show()
 
 In this case, you would likely see a low training error but a considerably higher test error, demonstrating overfitting. Note that I have used a polynomial of degree 10 to simulate an overly complex model.
 
-Next, let's showcase an example of *underfitting*. I will use a model that is too simplistic, fitting the same dataset from before.
+Next, let's showcase an example of _underfitting_. I will use a model that is too simplistic, fitting the same dataset from before.
 
 ```python
 import numpy as np

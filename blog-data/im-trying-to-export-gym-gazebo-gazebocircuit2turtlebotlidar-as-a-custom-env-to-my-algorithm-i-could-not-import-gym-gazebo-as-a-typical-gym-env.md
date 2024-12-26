@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "im-trying-to-export-gym-gazebo-gazebocircuit2turtlebotlidar-as-a-custom-env-to-my-algorithm-i-could-not-import-gym-gazebo-as-a-typical-gym-env"
 ---
 
-alright, so you’re hitting that classic wall with gym-gazebo, right? i've been there, staring blankly at the screen after hours of trying to get a custom gazebo environment to play nice with my reinforcement learning algorithm. it's definitely not as straightforward as just `import gym; gym.make('my-env')`, and i totally get the frustration.
+, so you’re hitting that classic wall with gym-gazebo, right? i've been there, staring blankly at the screen after hours of trying to get a custom gazebo environment to play nice with my reinforcement learning algorithm. it's definitely not as straightforward as just `import gym; gym.make('my-env')`, and i totally get the frustration.
 
 first off, gym-gazebo isn't a regular gym environment you can install from pip. it's more of a framework that bridges the gap between gazebo, the robot simulator, and the gym api. this means you need a bit of setup, it's not just a plug-and-play situation.
 
@@ -49,7 +49,7 @@ here's a rough sketch of what usually works for me.
 
     make sure that the path corresponds to your real directory where the environment is located. i suggest always double-checking these paths, i've lost more time debugging paths than any algorithm bug i had in my life.
 
-3. **create your environment script `gazebo_circuit2_turtlebot_lidar_env.py`:**
+3.  **create your environment script `gazebo_circuit2_turtlebot_lidar_env.py`:**
     this is the file that includes the logic of your gym environment, it has the reset, step, render and other mandatory methods. here's the skeleton that i usually use and you can start from it:
 
     ```python
@@ -153,10 +153,10 @@ here's a rough sketch of what usually works for me.
 
 important caveats:
 
-*   **ros dependency:** gym-gazebo heavily relies on ros. make sure your ros environment is correctly set up (ros core running, gazebo running).
-*   **correct paths:** the path in the entry_point is very important and have caused me many headaches, double-check that it's correct.
-*   **ros package dependencies:** your gazebo robot package has to be inside a catkin workspace. so `catkin_make` it before running your code, and if you don't you should run `source devel/setup.bash` to ensure ros is sourcing your catkin workspace and packages.
-*   **gazebo simulation:** you need to have gazebo correctly configured and running beforehand.
+- **ros dependency:** gym-gazebo heavily relies on ros. make sure your ros environment is correctly set up (ros core running, gazebo running).
+- **correct paths:** the path in the entry_point is very important and have caused me many headaches, double-check that it's correct.
+- **ros package dependencies:** your gazebo robot package has to be inside a catkin workspace. so `catkin_make` it before running your code, and if you don't you should run `source devel/setup.bash` to ensure ros is sourcing your catkin workspace and packages.
+- **gazebo simulation:** you need to have gazebo correctly configured and running beforehand.
 
 i've lost countless hours just because of one of these caveats. i remember spending an entire afternoon debugging a path problem once, only to realize i had a typo in the `entry_point` in the `__init__.py`. it is frustrating sometimes because these mistakes are sometimes not easy to spot. sometimes i think it's a simulation problem until i realize that's just python being python.
 

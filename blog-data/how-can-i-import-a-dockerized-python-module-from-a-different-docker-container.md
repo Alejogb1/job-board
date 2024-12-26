@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-import-a-dockerized-python-module-from-a-different-docker-container"
 ---
 
-Okay, let's tackle this. I remember one particularly challenging project back in 2018, where we had a core data processing module written in Python, containerized, and then several independent microservices, also containerized, that needed to use that core module. It wasn’t as straightforward as just dropping files into a shared directory, and we had to get quite clever with our solution. Importing a Dockerized Python module from a separate Docker container isn't inherently supported in a direct, module-like import sense because each container is, by design, isolated. However, with some clever maneuvering, we can achieve the functional equivalent. The core lies in understanding how to expose and access the required code.
+, let's tackle this. I remember one particularly challenging project back in 2018, where we had a core data processing module written in Python, containerized, and then several independent microservices, also containerized, that needed to use that core module. It wasn’t as straightforward as just dropping files into a shared directory, and we had to get quite clever with our solution. Importing a Dockerized Python module from a separate Docker container isn't inherently supported in a direct, module-like import sense because each container is, by design, isolated. However, with some clever maneuvering, we can achieve the functional equivalent. The core lies in understanding how to expose and access the required code.
 
 At its heart, the problem is one of resource access. Containers operate in their own namespaces and filesystems, preventing direct access between them. We have three principal paths, broadly speaking, to navigate this: building the module into both containers at build time, using a shared volume, or exposing the module via an API and having the consumer communicate that way.
 
@@ -39,20 +39,20 @@ Here is an example of how this can be achieved using `docker-compose` (while you
 
 ```yaml
 # docker-compose.yml
-version: '3.8'
+version: "3.8"
 services:
   module_container:
     build: ./module_service # Path to the module's Dockerfile
     volumes:
-      - my_shared_volume:/app/my_module  # Mount volume here
+      - my_shared_volume:/app/my_module # Mount volume here
     # You can optionally run the module here if you wish, or leave it to run on-demand
 
   consumer_container:
     build: ./consumer_service # Path to the consumer's Dockerfile
     volumes:
-      - my_shared_volume:/app/my_module  # Mount volume here
+      - my_shared_volume:/app/my_module # Mount volume here
     depends_on:
-        - module_container # Consumer depends on the module container, or at least needs that shared volume.
+      - module_container # Consumer depends on the module container, or at least needs that shared volume.
 
 volumes:
   my_shared_volume:

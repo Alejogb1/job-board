@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-idp-post-data-be-converted-to-a-samesitestrict-session-cookie"
 ---
 
-Okay, let's tackle this. Handling IdP responses and translating them into secure session cookies, particularly with `SameSite=Strict`, is a topic I’ve navigated quite a bit in past projects, particularly when dealing with sensitive data across different domains. The crux of the matter lies in the careful orchestration of the IdP’s response and how we leverage that to establish a secure and reliable session within our application. It’s not always straightforward, but understanding the mechanics helps significantly.
+, let's tackle this. Handling IdP responses and translating them into secure session cookies, particularly with `SameSite=Strict`, is a topic I’ve navigated quite a bit in past projects, particularly when dealing with sensitive data across different domains. The crux of the matter lies in the careful orchestration of the IdP’s response and how we leverage that to establish a secure and reliable session within our application. It’s not always straightforward, but understanding the mechanics helps significantly.
 
 The core challenge, as you rightly pointed out, involves receiving data, often as a `POST` request from an identity provider (IdP), and using that data to establish a session managed by a `SameSite=Strict` cookie. This means we're dealing with a cross-site context which, in a standard setup, would block the setting of the cookie. However, there's a workaround: the temporary redirect.
 
@@ -76,37 +76,37 @@ if __name__ == '__main__':
 In the Flask example, the same logic holds. The `/idp_callback` route handles the initial POST request and generates a unique session id. We then construct a response with a redirect to `/dashboard` and include the `set-cookie` header with the session id, same-site attribute, and secure flag.
 
 **Example 3: NodeJS (Express) implementation**
+
 ```javascript
-const express = require('express');
-const crypto = require('crypto');
+const express = require("express");
+const crypto = require("crypto");
 const app = express();
-const cookieParser = require('cookie-parser');
+const cookieParser = require("cookie-parser");
 
 app.use(express.urlencoded({ extended: true })); // To parse URL-encoded bodies
 app.use(cookieParser());
 
-app.post('/idp_callback', (req, res) => {
-    //  In reality, validate the IdP response here.
-    const userId = "user789"; // Simulated user ID from validated assertion
-    const sessionId = crypto.randomBytes(32).toString('hex');
+app.post("/idp_callback", (req, res) => {
+  //  In reality, validate the IdP response here.
+  const userId = "user789"; // Simulated user ID from validated assertion
+  const sessionId = crypto.randomBytes(32).toString("hex");
 
-
-    res.cookie('session_id', sessionId, {
-      httpOnly: true,
-      sameSite: 'strict',
-      secure: true,
-      path: '/',
-    });
-    res.redirect(303, '/dashboard');
+  res.cookie("session_id", sessionId, {
+    httpOnly: true,
+    sameSite: "strict",
+    secure: true,
+    path: "/",
+  });
+  res.redirect(303, "/dashboard");
 });
 
-app.get('/dashboard', (req, res) => {
-    res.send('Welcome to the dashboard!');
+app.get("/dashboard", (req, res) => {
+  res.send("Welcome to the dashboard!");
 });
 
-app.listen(3000, () => console.log('Server started on port 3000'));
-
+app.listen(3000, () => console.log("Server started on port 3000"));
 ```
+
 Here, the NodeJS example uses `express` and `cookie-parser`. Similarly, the `/idp_callback` route is where we handle the POST and generate the session and issue a redirect. It will add the `Set-Cookie` response header to the redirect.
 
 The key takeaway from all these examples is the redirect with the `set-cookie` header. This step is fundamental to circumventing the restrictions imposed by `SameSite=Strict` in cross-site `POST` requests. It allows you to correctly set a secure session cookie when the user is redirected back to your domain from the IdP.

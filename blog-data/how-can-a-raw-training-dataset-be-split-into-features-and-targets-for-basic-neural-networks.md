@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-raw-training-dataset-be-split-into-features-and-targets-for-basic-neural-networks"
 ---
 
-Okay, let's tackle this. I've been in the trenches with data science and machine learning for quite some time, and the process of preparing datasets, specifically splitting them into features and targets, is foundational. It’s one of those steps that, while seemingly simple, can have a dramatic impact on model performance and requires a solid understanding. You absolutely cannot effectively train a network without it.
+, let's tackle this. I've been in the trenches with data science and machine learning for quite some time, and the process of preparing datasets, specifically splitting them into features and targets, is foundational. It’s one of those steps that, while seemingly simple, can have a dramatic impact on model performance and requires a solid understanding. You absolutely cannot effectively train a network without it.
 
 My experience comes from several projects, from working on predictive maintenance systems in industrial settings to personalized recommendation engines for e-commerce. Each time, data wrangling and this split have been crucial. Let me walk you through it.
 
@@ -12,7 +12,7 @@ The core idea here is that a neural network learns a mapping from inputs (featur
 
 The method for splitting this data depends quite a bit on how your dataset is structured. Usually, you'll find data in one of a few common formats: csv, json, or databases. For our purposes here, let’s imagine we have the data loaded in Python, primarily using libraries such as pandas or numpy, the tools I generally lean on in this phase. I’ll use those in the examples that follow.
 
-A common mistake I've seen, especially with newer folks, is treating all the columns the same. It’s essential to correctly identify which columns represent the features and which represent the targets *before* you even begin any coding. This is often decided by the problem you're trying to solve. It is where a lot of headaches get started if not handled thoughtfully.
+A common mistake I've seen, especially with newer folks, is treating all the columns the same. It’s essential to correctly identify which columns represent the features and which represent the targets _before_ you even begin any coding. This is often decided by the problem you're trying to solve. It is where a lot of headaches get started if not handled thoughtfully.
 
 Let's take a look at three different scenarios.
 
@@ -42,6 +42,7 @@ targets = df[target_column].values
 print("Features (first 2 rows):\n", features[:2])
 print("Targets (first 2 values):\n", targets[:2])
 ```
+
 Here, `feature_columns` holds the names of the columns we'll use as features, and `target_column` is the column that contains our target variable. We then select those columns using the pandas dataframe's indexing to create numpy arrays that are suitable for input into neural network models in libraries like TensorFlow and PyTorch. The usage of `.values` to extract the numpy array from pandas is critical for numerical computations later in the modeling pipeline.
 
 **Scenario 2: Data in a tabular format with multiple target columns**
@@ -70,7 +71,7 @@ print("Features (first 2 rows):\n", features[:2])
 print("Targets (first 2 rows):\n", targets[:2])
 ```
 
-The key difference is that now `target_columns` is a *list* of column names, and the extraction works similarly to the previous case. The resulting `targets` will be a numpy array where each *row* represents multiple targets for a single sample.
+The key difference is that now `target_columns` is a _list_ of column names, and the extraction works similarly to the previous case. The resulting `targets` will be a numpy array where each _row_ represents multiple targets for a single sample.
 
 **Scenario 3: Data from a time series, where historical data are the features and a future value is the target.**
 

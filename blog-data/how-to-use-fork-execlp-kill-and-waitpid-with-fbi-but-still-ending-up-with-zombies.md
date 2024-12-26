@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-fork-execlp-kill-and-waitpid-with-fbi-but-still-ending-up-with-zombies"
 ---
 
-alright, so, you're running into the classic zombie process problem when trying to use fork, execlp, kill, and waitpid, particularly with fbi involved. i've been down this road, seen this movie a few times, it's not a fun one. let me unpack what's likely happening and how i've tackled similar issues.
+, so, you're running into the classic zombie process problem when trying to use fork, execlp, kill, and waitpid, particularly with fbi involved. i've been down this road, seen this movie a few times, it's not a fun one. let me unpack what's likely happening and how i've tackled similar issues.
 
 first, the basics: you're forking a process, then in the child process, you're using execlp to run fbi (the framebuffer image viewer i presume). the parent process, meanwhile, is supposed to use waitpid to clean up after the child process finishes, preventing it from becoming a zombie. the problem, as you’ve noticed, is that sometimes, and seemingly at random, you get these lingering zombie processes.
 
@@ -45,7 +45,7 @@ int main() {
 }
 ```
 
-this first example is what you might expect, right? it forks, the child executes fbi and the parent waits for its completion. the problem here is that the `waitpid` in the parent process isn't fully robust. if the child exits unusually, or if the parent process receives a signal (like sigint) *while* `waitpid` is blocking, it can exit before `waitpid` returns. you end up with a child process that exits correctly, but without a parent process to clean it up, becoming a zombie.
+this first example is what you might expect, right? it forks, the child executes fbi and the parent waits for its completion. the problem here is that the `waitpid` in the parent process isn't fully robust. if the child exits unusually, or if the parent process receives a signal (like sigint) _while_ `waitpid` is blocking, it can exit before `waitpid` returns. you end up with a child process that exits correctly, but without a parent process to clean it up, becoming a zombie.
 
 a better approach is to add a loop around `waitpid`, along with non-blocking behavior and checks for the return values of waitpid, and handling for interrupted system calls:
 
@@ -69,9 +69,9 @@ int main() {
     perror("execlp failed");
     exit(1);
   } else if (pid > 0) { // parent process
-      
+
       do {
-        pid_t w = waitpid(pid, &status, WNOHANG); 
+        pid_t w = waitpid(pid, &status, WNOHANG);
         if (w == -1) {
             if (errno == EINTR) {
                 //system call was interrupted try again

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-make-different-options-for-select-in-wagtail-admin"
 ---
 
-Alright, let's tackle this one. I've seen this specific requirement pop up quite a few times in my years working with wagtail, and there are some elegant, scalable ways to approach creating diverse select options within the admin panel. It’s not a one-size-fits-all situation, which is probably why you’re asking, and frankly, that’s good—it forces you to think about your data structures carefully.
+, let's tackle this one. I've seen this specific requirement pop up quite a few times in my years working with wagtail, and there are some elegant, scalable ways to approach creating diverse select options within the admin panel. It’s not a one-size-fits-all situation, which is probably why you’re asking, and frankly, that’s good—it forces you to think about your data structures carefully.
 
 The core challenge here revolves around how wagtail's admin interface integrates with django forms and how we can leverage those interfaces to customize the options available in a `<select>` element when editing a wagtail page or snippet. We essentially need to manipulate the form field definition. We can accomplish this in a few ways, each with different implications for flexibility and maintainability. I'll walk you through three methods that I've found effective in past projects, each targeting different levels of complexity and customization.
 
@@ -119,7 +119,7 @@ class MyPage(Page):
     ]
 ```
 
-Here, we’ve created a snippet model called `Tag`, and we link our `MyPage` model to it with a `ForeignKey`.  The wagtail admin interface will understand that this needs to be treated as a relationship, generating a slightly different UI element than a regular `<select>` element. We use `SnippetChooserPanel` in our `content_panels`, rather than `FieldPanel`, to instruct wagtail on how this field should be presented. This is also advantageous because it allows you to manage the options from another area in the Wagtail admin instead of editing the page model every time you need a new option. This reduces the need for code deployments as you can add tags from within the admin and this will update the dropdown in the page editing UI.
+Here, we’ve created a snippet model called `Tag`, and we link our `MyPage` model to it with a `ForeignKey`. The wagtail admin interface will understand that this needs to be treated as a relationship, generating a slightly different UI element than a regular `<select>` element. We use `SnippetChooserPanel` in our `content_panels`, rather than `FieldPanel`, to instruct wagtail on how this field should be presented. This is also advantageous because it allows you to manage the options from another area in the Wagtail admin instead of editing the page model every time you need a new option. This reduces the need for code deployments as you can add tags from within the admin and this will update the dropdown in the page editing UI.
 
 This approach works exceptionally well when the 'options' themselves have associated data that you also want to manage. It's also great if these 'options' can be reused in other models. If all you needed was just a string and were using this option just for a dynamic dropdown, this may be an unnecessary level of complexity.
 
@@ -129,6 +129,6 @@ For a deeper understanding, I’d recommend exploring the following resources:
 
 1.  **"Two Scoops of Django 3.x: Best Practices for the Django Web Framework" by Daniel Roy Greenfeld and Audrey Roy Greenfeld**: This book provides invaluable insights into how Django forms, which are the foundation of wagtail forms, function. Chapters on forms are particularly useful here.
 2.  **Official Django Documentation:** Specifically, look at the documentation on models (`django.db.models`), form fields (`django.forms.fields`), and creating choices. The official documentation is always the best reference when you need a detailed understanding.
-3. **Official Wagtail Documentation**: Wagtail’s official documentation on model editing panels and page models is essential reading. Pay attention to the sections on FieldPanels and SnippetChooserPanels.
+3.  **Official Wagtail Documentation**: Wagtail’s official documentation on model editing panels and page models is essential reading. Pay attention to the sections on FieldPanels and SnippetChooserPanels.
 
 Implementing diverse select options in wagtail admin is about understanding where the options come from, how dynamic they need to be, and what relationships those options have with other data. Choosing between static choices, dynamically populated choices, and foreign key relationships depends on your specific needs, so select the strategy that makes the most sense. I've used each of these options in different projects and found all of them reliable and scalable, so I hope this helps.

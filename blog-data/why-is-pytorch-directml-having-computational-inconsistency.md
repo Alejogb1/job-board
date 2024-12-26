@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-pytorch-directml-having-computational-inconsistency"
 ---
 
-Alright, let's talk about the computational inconsistencies sometimes observed when using pytorch with directml. This is a topic I've spent a fair bit of time troubleshooting over the years, especially back when I was heavily involved in optimizing deep learning models for diverse hardware configurations. It's a nuanced issue, and there isn't a single root cause, but rather a confluence of factors. Let’s unpack it systematically.
+, let's talk about the computational inconsistencies sometimes observed when using pytorch with directml. This is a topic I've spent a fair bit of time troubleshooting over the years, especially back when I was heavily involved in optimizing deep learning models for diverse hardware configurations. It's a nuanced issue, and there isn't a single root cause, but rather a confluence of factors. Let’s unpack it systematically.
 
 Fundamentally, the problem stems from the fact that directml is a different hardware acceleration backend compared to nvidia’s cuda or even intel’s oneapi. These backends, while all striving to achieve the same computational results, often have different numerical implementations under the hood, especially in lower-level operations. It’s crucial to remember that floating-point arithmetic isn't always deterministic. The order of operations, the precise algorithms used in specific kernel implementations, and even small differences in rounding modes can lead to minute, but consequential variations, particularly when accumulated across many layers of a deep neural network.
 

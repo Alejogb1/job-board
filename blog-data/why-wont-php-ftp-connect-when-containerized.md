@@ -4,13 +4,13 @@ date: "2024-12-16"
 id: "why-wont-php-ftp-connect-when-containerized"
 ---
 
-Okay, let's tackle this. I've seen this particular headache rear its ugly head more times than I care to remember, often when transitioning a legacy php application into a containerized environment. The scenario of a php script failing to establish an ftp connection when running inside a container, while seemingly working fine outside, is almost always rooted in network configuration or permissions issues, not some inherent flaw in php itself. It's a frustrating situation, granted, but usually boils down to a few fairly common culprits.
+, let's tackle this. I've seen this particular headache rear its ugly head more times than I care to remember, often when transitioning a legacy php application into a containerized environment. The scenario of a php script failing to establish an ftp connection when running inside a container, while seemingly working fine outside, is almost always rooted in network configuration or permissions issues, not some inherent flaw in php itself. It's a frustrating situation, granted, but usually boils down to a few fairly common culprits.
 
 My first encounter with this was back in 2015, migrating a fairly critical inventory management system to docker. The php ftp functions worked perfectly locally during development. Yet, the moment the docker container spun up, the ftp connection failed silently, leaving a very perplexed support team. After a lot of head-scratching and tcpdump sessions, the pattern became very clear.
 
 Essentially, when you're working locally, your php script is typically running directly on your host machine, giving it direct access to your network and localhost. Containers, however, introduce a layer of abstraction. The network environment is no longer the host's direct network, but a virtualized one managed by the container runtime. This immediately introduces several potential points of failure for ftp connections.
 
-Firstly, the most frequent culprit is the absence of proper *name resolution*. Inside a container, the default dns resolver might not be set up correctly, or it may not have access to the dns servers that resolve your ftp server's hostname. Consider this example, a very simplified php ftp connection attempt:
+Firstly, the most frequent culprit is the absence of proper _name resolution_. Inside a container, the default dns resolver might not be set up correctly, or it may not have access to the dns servers that resolve your ftp server's hostname. Consider this example, a very simplified php ftp connection attempt:
 
 ```php
 <?php
@@ -37,7 +37,7 @@ This code, when run inside a container with incorrect or missing dns configurati
 
 Secondly, firewalls can present significant obstacles. The container’s network stack, particularly when using the bridge network driver, might block outgoing connections to the standard ftp ports (21 for control and generally 20 for active data transfers or a higher range of ports for passive mode). If your host machine has a firewall enabled, you should ensure that connections from the docker bridge network are allowed to pass through. Likewise, any firewalls or network rules configured in the network where the ftp server is located must also permit connections from your docker container.
 
-Often, the problem boils down to choosing the correct connection mode in the ftp protocol. Active mode ftp involves the server making a connection *back* to the client, which, in the case of a container, means the server would need to connect to the container’s often ephemeral and dynamically allocated ip address. This becomes a challenge when network address translation is at play. Passive mode (which, thankfully, has become more common) simplifies this by having the client initiate *all* connections, thereby mitigating the active connection issues. If you're not specifying the passive mode, you're likely having active mode issues without realizing it. You can force the passive mode in php like so:
+Often, the problem boils down to choosing the correct connection mode in the ftp protocol. Active mode ftp involves the server making a connection _back_ to the client, which, in the case of a container, means the server would need to connect to the container’s often ephemeral and dynamically allocated ip address. This becomes a challenge when network address translation is at play. Passive mode (which, thankfully, has become more common) simplifies this by having the client initiate _all_ connections, thereby mitigating the active connection issues. If you're not specifying the passive mode, you're likely having active mode issues without realizing it. You can force the passive mode in php like so:
 
 ```php
 <?php

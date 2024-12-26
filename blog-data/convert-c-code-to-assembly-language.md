@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "convert-c-code-to-assembly-language"
 ---
 
-Okay so you want to go from C to assembly eh I get it I've been there plenty of times It's like looking at a high-level description of a building and wanting to see the nitty-gritty blueprints the actual nuts and bolts stuff I mean you can read the manual and know what the function does but sometimes you want to know *how* it does it right I remember back in my early days struggling with this exact thing I was working on this embedded system project something with a tiny microcontroller and I needed to optimize the heck out of the code for speed and power Turns out the C compiler was doing some weird things that were far from optimal so I had to dive deep into assembly to see where the bottlenecks were and rewrite parts of it by hand It's a rite of passage for any serious low-level programmer
+you want to go from C to assembly eh I get it I've been there plenty of times It's like looking at a high-level description of a building and wanting to see the nitty-gritty blueprints the actual nuts and bolts stuff I mean you can read the manual and know what the function does but sometimes you want to know _how_ it does it right I remember back in my early days struggling with this exact thing I was working on this embedded system project something with a tiny microcontroller and I needed to optimize the heck out of the code for speed and power Turns out the C compiler was doing some weird things that were far from optimal so I had to dive deep into assembly to see where the bottlenecks were and rewrite parts of it by hand It's a rite of passage for any serious low-level programmer
 
 So let’s start with the basic premise C code is essentially a set of instructions that a computer needs to execute but those instructions aren’t what the hardware actually understands They need to be translated to a language the processor can directly understand and that's assembly language Assembly is low-level language directly corresponding to processor instructions Its like a middleman its closer to the hardware than C ever will be Its a human readable representation of machine code and different processors have different assembly languages ARM x86 MIPS etc Each assembly instruction typically corresponds to a single machine instruction which makes it good for understanding what the processor is doing at a very detailed level
 
@@ -87,6 +87,7 @@ main:
 	.ident	"GCC: (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0"
 	.section	.note.GNU-stack,"",@progbits
 ```
+
 Notice how the C code is broken down into assembly instructions such as `pushq`, `movl`, `addl` etc These instructions directly manipulate the processor's registers and stack In the `add` function you can see how the two arguments are moved from the register to the stack the addition is done then the result is moved to the return register. The main function also does the same pushes the data to stack calls add and saves the return value before passing everything to printf
 
 Now a second method is for more advanced stuff when you want to be able to compile to assembly as part of your build process. Now lets say you have a simple file `helper.c`
@@ -96,6 +97,7 @@ int increment(int x) {
     return x + 1;
 }
 ```
+
 and you want to compile it to an object file without linking it yet
 
 then the command `gcc -c helper.c -o helper.o` will do the trick and you can examine the assembly generated inside object file with command `objdump -d helper.o` which yields an output similar to this. It will be very similar to what you get with `-S` but its stored inside the object file itself which you later can use with your linker
@@ -112,8 +114,9 @@ Disassembly of section .text:
    7:	8b 45 fc             	mov    -0x4(%rbp),%eax
    a:	83 c0 01             	add    $0x1,%eax
    d:	5d                   	pop    %rbp
-   e:	c3                   	ret    
+   e:	c3                   	ret
 ```
+
 You can also use compilers from different vendors like intel's icc or Microsoft's cl Each have different options that accomplish roughly the same purpose of inspecting generated assembly output. In the case of Microsoft cl you can use the `/Fa` flag and similarly the corresponding commands to view the output can differ
 
 Now these first two methods rely on a compiler to generate the assembly for you. But lets say that you want to translate the assembly by hand because you want to become truly enlightened in low-level programming This is the hard way but its the most rewarding and it will let you really understand how a processor actually works
@@ -148,8 +151,9 @@ set_bit:
     pop rbp
     ret
 ```
+
 As you can see its a very different beast than the C code directly You can see that registers are involved in computations and memory locations are accessed explicitly This level of detail is useful for performance tuning or working with very specific hardware
 
-Now for learning materials on this I would recommend *Computer Organization and Design: The Hardware/Software Interface* by David Patterson and John Hennessy it gives great detailed insight into all computer architecture concepts and hardware operations. Also for deeper assembly language specifics there are many books depending on your target architecture like for example *Assembly Language for x84 Processors* by Kip Irvine for x86 and for ARM specific processor architecture manuals directly from ARM
+Now for learning materials on this I would recommend _Computer Organization and Design: The Hardware/Software Interface_ by David Patterson and John Hennessy it gives great detailed insight into all computer architecture concepts and hardware operations. Also for deeper assembly language specifics there are many books depending on your target architecture like for example _Assembly Language for x84 Processors_ by Kip Irvine for x86 and for ARM specific processor architecture manuals directly from ARM
 
 I think that should be more than enough to get you started converting C code to assembly or at least understanding better how to do it. Now if you excuse me I need to go back to debugging this race condition it’s getting personal you know like when two threads try to access the same data and things start going haywire its like a dance-off between threads and nobody can agree on who goes first or when its their turn you get me? Good luck and have fun playing with assembly remember the key is practice practice practice.

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-choose-the-best-grid-search-strategy-in-pytorch-trainer"
 ---
 
-Okay, let's tackle this. Deciding on the optimal grid search strategy within a pytorch training loop, especially when you're managing a complex model and a sea of hyperparameters, can feel like navigating a labyrinth. I've been down that road myself, more times than I care to remember, and it often comes down to more than just randomly throwing values at the wall to see what sticks. It’s about efficiency, avoiding wasting compute, and ultimately, finding a solid model configuration.
+, let's tackle this. Deciding on the optimal grid search strategy within a pytorch training loop, especially when you're managing a complex model and a sea of hyperparameters, can feel like navigating a labyrinth. I've been down that road myself, more times than I care to remember, and it often comes down to more than just randomly throwing values at the wall to see what sticks. It’s about efficiency, avoiding wasting compute, and ultimately, finding a solid model configuration.
 
 The 'best' strategy, of course, isn't universal. It's highly context-dependent, influenced by factors like your model's complexity, dataset size, available computational resources, and the specific parameters you're tuning. Generally speaking, we aren’t just considering the pure breadth of the search (how many different configurations we explore) but also the depth – how granular we get within the ranges of each parameter.
 
@@ -205,6 +205,7 @@ study.optimize(objective, n_trials=10)
 
 print(f"Best hyperparameters: {study.best_params}, accuracy {study.best_value}")
 ```
+
 Optuna optimizes the values of the hyperparameters in such a way that we aim to maximize the validation accuracy score.
 
 My experiences have shown me that starting with a broad randomized search is often the best initial strategy, allowing you to quickly identify promising parameter regions. Then you can narrow the search using either more targeted randomized trials or employing Bayesian optimization if computation allows.

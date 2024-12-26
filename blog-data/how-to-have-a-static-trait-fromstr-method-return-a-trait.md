@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-have-a-static-trait-fromstr-method-return-a-trait"
 ---
 
-alright, so you're hitting that classic rust wall, where you want a static method on a trait, specifically `from_str`, to return another trait, and yeah, it's a bit of a head-scratcher at first. i’ve spent more hours than i care to count banging my head against similar type system puzzles. it's like rust is saying "i know what you want, but also, i don't like it".
+, so you're hitting that classic rust wall, where you want a static method on a trait, specifically `from_str`, to return another trait, and yeah, it's a bit of a head-scratcher at first. i’ve spent more hours than i care to count banging my head against similar type system puzzles. it's like rust is saying "i know what you want, but also, i don't like it".
 
 first things first, the core issue is that traits in rust are not concrete types, they're like blueprints. you can't directly instantiate a trait, because the compiler doesn't know the actual size or behavior associated with that blueprint until it knows the concrete type that implements that trait. when you want to return something from a function or method, rust needs a concrete type at compile time, not a trait.
 

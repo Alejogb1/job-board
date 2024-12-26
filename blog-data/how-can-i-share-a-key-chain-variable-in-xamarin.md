@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-share-a-key-chain-variable-in-xamarin"
 ---
 
-Alright, let's delve into the specifics of securely sharing keychain variables across your Xamarin applications. From my experience, dealing with sensitive data like API keys, tokens, or configuration settings always requires careful consideration. I recall one project where we had a suite of Xamarin applications, and managing credentials consistently became a real headache. That's where understanding the nuances of keychain access truly shines. Let me walk you through the process and the key considerations.
+, let's delve into the specifics of securely sharing keychain variables across your Xamarin applications. From my experience, dealing with sensitive data like API keys, tokens, or configuration settings always requires careful consideration. I recall one project where we had a suite of Xamarin applications, and managing credentials consistently became a real headache. That's where understanding the nuances of keychain access truly shines. Let me walk you through the process and the key considerations.
 
 Fundamentally, we’re aiming to achieve secure, cross-application data sharing via the operating system's built-in keychain functionality. It's not about a shared memory space that we control directly; rather, it’s about leveraging the secure storage provided by iOS and Android. For the purposes of our discussion, I’ll focus on the core concepts and illustrate them with c# code snippets suitable for Xamarin.Forms. While Xamarin.Native is definitely still an option, Xamarin.Forms makes the concepts more relatable to a broader audience.
 
@@ -51,6 +51,7 @@ public static class KeychainHelper
 }
 
 ```
+
 This code snippet sets up a shared service name. Remember that on iOS, `ServiceName` is equivalent to your shared keychain group. In your Entitlements.plist file, you need to configure the keychain access group:
 
 ```xml
@@ -101,7 +102,9 @@ public static class KeychainHelper
     }
 }
 ```
+
 In this example the service name is the same as the iOS example, demonstrating how the use of `Xamarin.Essentials` provides platform abstraction. Android manages this internally through its keystore. Critically, if you want to have shared keychain access on Android you need to ensure all applications have the same `user id`. This is done in the `AndroidManifest.xml`:
+
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="com.yourcompany.app1"

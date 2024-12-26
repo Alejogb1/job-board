@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-pancake-swap-pancake-k-error-when-swapping-with-a-smart-contract"
 ---
 
-Okay, so you're bumping into that *Pancake Swap, Pancake K* error, a familiar frustration when dealing with smart contracts on the Binance Smart Chain (BSC). I’ve seen this exact scenario play out countless times, usually in the wee hours when debugging a seemingly simple swap integration. Let's unpack what's likely going on. This error isn't exactly a single, monolithic issue; instead, it's a rather vague signal pointing to a handful of common underlying problems. The 'K' in 'Pancake K' typically refers to the *constant product formula* (x * y = k) used by the automated market maker (AMM) on PancakeSwap. When you trigger a swap, the contract interacts with this formula, and a 'Pancake K' error means something went awry during that process.
+, so you're bumping into that _Pancake Swap, Pancake K_ error, a familiar frustration when dealing with smart contracts on the Binance Smart Chain (BSC). I’ve seen this exact scenario play out countless times, usually in the wee hours when debugging a seemingly simple swap integration. Let's unpack what's likely going on. This error isn't exactly a single, monolithic issue; instead, it's a rather vague signal pointing to a handful of common underlying problems. The 'K' in 'Pancake K' typically refers to the _constant product formula_ (x \* y = k) used by the automated market maker (AMM) on PancakeSwap. When you trigger a swap, the contract interacts with this formula, and a 'Pancake K' error means something went awry during that process.
 
 Essentially, these errors boil down to failures in the preconditions for a successful transaction. I've personally spent hours troubleshooting these, sometimes after what felt like incredibly subtle changes. First off, let’s talk about slippage, which is one of the most frequent offenders. In volatile markets, the price of tokens can shift rapidly between the time you initiate the transaction and when it's actually executed. If the price deviates beyond the slippage tolerance you’ve configured, the transaction will fail. This is a built-in safety mechanism to protect users from getting unexpected (and sometimes unfavorable) exchange rates. I recall one particularly late night where a bot was front-running transactions, leading to consistent slippage errors until we implemented a more sophisticated method to handle it.
 
@@ -116,7 +116,7 @@ import time
 def check_and_swap(w3, router_contract, pool_contract, path, amount_in, slippage_tolerance, account_address, private_key):
     reserves = pool_contract.functions.getReserves().call()
     reserve0, reserve1, _ = reserves
-    
+
     # Assumes the path[0] is token0 in the pool
     # and path[1] is token1
     # Adjust logic if the token order is reversed
@@ -166,7 +166,7 @@ def check_and_swap(w3, router_contract, pool_contract, path, amount_in, slippage
 #    print(f"Transaction Hash: {tx_hash.hex()}")
 ```
 
-This example is slightly different, as it attempts to retrieve liquidity levels from the pool contract before a swap is even attempted. If the swap is likely to fail due to the transaction being large in comparison to pool size, the transaction is cancelled early. The 20% limit is simply an example, and may change for a variety of reasons. Please note, this example *assumes that the correct pool contract has been obtained*, which can be difficult to do on its own, as well as it *assumes the `token0` and `token1` calls return the correct data*. Incorrect pool addresses or incorrectly mapped tokens will cause this to fail.
+This example is slightly different, as it attempts to retrieve liquidity levels from the pool contract before a swap is even attempted. If the swap is likely to fail due to the transaction being large in comparison to pool size, the transaction is cancelled early. The 20% limit is simply an example, and may change for a variety of reasons. Please note, this example _assumes that the correct pool contract has been obtained_, which can be difficult to do on its own, as well as it _assumes the `token0` and `token1` calls return the correct data_. Incorrect pool addresses or incorrectly mapped tokens will cause this to fail.
 
 To really understand this, I strongly recommend taking a look at the official PancakeSwap documentation, specifically the sections concerning AMMs and their smart contract interactions. Additionally, resources like 'Mastering Ethereum' by Andreas M. Antonopoulos, or the white papers on Uniswap v2 (which PancakeSwap’s core is based on) can give you a more in-depth understanding of these mechanisms.
 

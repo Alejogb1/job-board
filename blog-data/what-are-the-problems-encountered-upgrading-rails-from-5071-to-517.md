@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "what-are-the-problems-encountered-upgrading-rails-from-5071-to-517"
 ---
 
-Alright, let's talk about that leap from Rails 5.0.7.1 to 5.1.7. It’s a seemingly small version jump, but trust me, the devil's often in those point releases. I’ve been on the frontline of plenty of these upgrades, and this one, in particular, brings back a few memories – and a fair amount of debugging.
+, let's talk about that leap from Rails 5.0.7.1 to 5.1.7. It’s a seemingly small version jump, but trust me, the devil's often in those point releases. I’ve been on the frontline of plenty of these upgrades, and this one, in particular, brings back a few memories – and a fair amount of debugging.
 
 The most significant challenges I encountered were typically in three main categories: subtle changes in Active Record behavior, specifically around how attributes are handled; alterations to the asset pipeline and the handling of precompiled assets; and, finally, the shift in how Rails deals with parameters and request handling. Let's unpack each of those with some specific cases and code snippets.
 
 **Active Record Attribute Behavior**
 
-One of the first things that hit me, and I’ve seen this trip others up too, was the slightly modified way Active Record handles attribute assignment and changes in attribute tracking. In earlier versions, there were some edge cases where attribute assignments wouldn't always trigger the change tracking machinery as precisely as one might expect, particularly with nested attributes or when working with serialized columns. Rails 5.1.7 introduced some refinements to how attributes are identified and tracked as having been changed. This wasn't a major bug fix necessarily, but it shifted the playing field and meant code that *appeared* to work fine before would suddenly throw unexpected errors or result in incomplete updates.
+One of the first things that hit me, and I’ve seen this trip others up too, was the slightly modified way Active Record handles attribute assignment and changes in attribute tracking. In earlier versions, there were some edge cases where attribute assignments wouldn't always trigger the change tracking machinery as precisely as one might expect, particularly with nested attributes or when working with serialized columns. Rails 5.1.7 introduced some refinements to how attributes are identified and tracked as having been changed. This wasn't a major bug fix necessarily, but it shifted the playing field and meant code that _appeared_ to work fine before would suddenly throw unexpected errors or result in incomplete updates.
 
 For instance, imagine a model with serialized attributes like this (using a hypothetical 'settings' column stored as jsonb in postgresql):
 
@@ -28,7 +28,7 @@ user.settings['theme'] = 'dark'
 user.save
 ```
 
-And *sometimes* it would persist; other times, not so much. In 5.1.7, the behavior became more stringent, requiring us to explicitly signal the change so that Active Record knows to update the database row:
+And _sometimes_ it would persist; other times, not so much. In 5.1.7, the behavior became more stringent, requiring us to explicitly signal the change so that Active Record knows to update the database row:
 
 ```ruby
 user = User.find(1)
@@ -74,4 +74,4 @@ end
 
 In some cases, Rails 5.0.7.1 might have silently ignored improperly formatted data within the `preferences` hash, potentially storing incomplete data. Rails 5.1.7 would raise an `ActionController::ParameterMissing` exception if the `:user` parameter was absent, or throw `ActiveModel::ForbiddenAttributesError` exceptions for unpermitted parameters. The code remains the same but now it's imperative that all parameters are correctly formatted before they're passed to the model. To resolve issues like this, it's essential to carefully review what data your APIs are expected to receive and ensure that the parameters permit configuration is complete and matches the expected inputs. I would recommend reading the section on strong parameters in 'Agile Web Development with Rails 5', by Sam Ruby. This is an invaluable resource covering these aspects. It provides detailed explanations of the parameter handling system.
 
-In summary, upgrading from Rails 5.0.7.1 to 5.1.7, while not a monumental shift, did present subtle but impactful changes, particularly with attribute handling, asset precompilation and the stricter handling of parameters. Thorough testing and careful examination of code are vital during upgrades, and leveraging excellent resources such as the publications I mentioned will prove invaluable in troubleshooting these scenarios. These challenges aren't specific to these versions of rails however, so these practices should always be a part of any upgrade process. It’s not just about getting the code to work, but about ensuring that you know *why* it works in the way that it does.
+In summary, upgrading from Rails 5.0.7.1 to 5.1.7, while not a monumental shift, did present subtle but impactful changes, particularly with attribute handling, asset precompilation and the stricter handling of parameters. Thorough testing and careful examination of code are vital during upgrades, and leveraging excellent resources such as the publications I mentioned will prove invaluable in troubleshooting these scenarios. These challenges aren't specific to these versions of rails however, so these practices should always be a part of any upgrade process. It’s not just about getting the code to work, but about ensuring that you know _why_ it works in the way that it does.

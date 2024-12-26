@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-failed-email-recipients-be-caught-in-symfony-mailer-6x"
 ---
 
-Alright, let's talk about email delivery failures in Symfony Mailer 6.x. It's a topic I’ve grappled with extensively in past projects, particularly one involving a notification system for a large user base. We needed to ensure every critical email reached its intended destination, and any hiccup in the delivery process needed immediate attention. Relying solely on the transport layer's success response isn't sufficient; it only tells you that the message was *accepted* for delivery, not that it actually *arrived*. So, how do we catch those failed recipients? The key lies in understanding bounces, deferred deliveries, and implementing robust error handling.
+, let's talk about email delivery failures in Symfony Mailer 6.x. It's a topic I’ve grappled with extensively in past projects, particularly one involving a notification system for a large user base. We needed to ensure every critical email reached its intended destination, and any hiccup in the delivery process needed immediate attention. Relying solely on the transport layer's success response isn't sufficient; it only tells you that the message was _accepted_ for delivery, not that it actually _arrived_. So, how do we catch those failed recipients? The key lies in understanding bounces, deferred deliveries, and implementing robust error handling.
 
-Let's break this down, keeping in mind that the Symfony Mailer component provides a good foundation, but we need to extend its capabilities to get the insights we need. First off, we can use Symfony's built-in tools to understand the *initial* acceptance or rejection by the mail server. This is usually exposed through exceptions thrown when sending the message. But this isn’t what we're after directly; that's just the first hurdle. Real failures happen later, after your server has handed off the message to the mail exchange.
+Let's break this down, keeping in mind that the Symfony Mailer component provides a good foundation, but we need to extend its capabilities to get the insights we need. First off, we can use Symfony's built-in tools to understand the _initial_ acceptance or rejection by the mail server. This is usually exposed through exceptions thrown when sending the message. But this isn’t what we're after directly; that's just the first hurdle. Real failures happen later, after your server has handed off the message to the mail exchange.
 
 We are focused on asynchronous failures here. So, the primary mechanism for catching these are bounce messages, or NDRs (Non-Delivery Reports). They are usually delivered back to a designated address and contain information regarding permanent or temporary failures for individual recipient addresses.
 
@@ -45,7 +45,7 @@ function processBouncedEmails(array $emails): array
                 }
                }
            }
-          
+
         } catch (\Exception $e) {
            // Log the exception for debugging if we can't parse.
            //This could be an email other than a bounce message.
@@ -66,7 +66,7 @@ function extractFailedRecipientsFromBounce(string $subject, string $text): ?arra
             $failedRecipients = $matches[2];
         }
     }
-    
+
     return count($failedRecipients) > 0 ? $failedRecipients : null;
 }
 ```
@@ -75,7 +75,7 @@ This is a very simplified example and shows the start of the process. Here I hav
 
 **Code Snippet 2: Integrating with Your Mail Sending Process**
 
-Now, when you send an email using the Symfony Mailer, you need to ensure that the sender address, specified in `->from()`, is *not* your bounce mailbox address. The bounce mailbox is exclusively for receiving bounces; you’ll generally use something like `noreply@yourdomain.com` as the sender for outgoing messages:
+Now, when you send an email using the Symfony Mailer, you need to ensure that the sender address, specified in `->from()`, is _not_ your bounce mailbox address. The bounce mailbox is exclusively for receiving bounces; you’ll generally use something like `noreply@yourdomain.com` as the sender for outgoing messages:
 
 ```php
 <?php

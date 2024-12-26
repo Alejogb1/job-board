@@ -4,13 +4,13 @@ date: "2024-12-16"
 id: "why-is-ml-code-found-on-github-not-working"
 ---
 
-Alright, let’s tackle this. I’ve seen my fair share of “doesn’t work” machine learning code from GitHub, and the root causes are seldom straightforward. It's rarely a single, isolated issue; more often, it's a confluence of factors. Let me break down some common culprits, drawing from my experiences attempting to use shared models in past projects.
+, let’s tackle this. I’ve seen my fair share of “doesn’t work” machine learning code from GitHub, and the root causes are seldom straightforward. It's rarely a single, isolated issue; more often, it's a confluence of factors. Let me break down some common culprits, drawing from my experiences attempting to use shared models in past projects.
 
 Firstly, environment mismatch is a pervasive problem. Think of it like this: someone has meticulously crafted their model within a specific set of constraints—specific versions of python packages, particular operating systems, and even proprietary hardware configurations. When you try to execute that code within your environment, things frequently fall apart. It's not malicious; it’s simply the challenge of reproducible research and development in a constantly evolving landscape. Imagine, if you will, a scenario from a previous project where I was trying to implement a complex neural network for image recognition, only to find that it was built on an older version of tensorflow, and my system had the latest version. The immediate conflict made it impossible to simply run the code; instead, it required considerable time spent resolving dependency clashes.
 
 The second, equally prominent, issue is the lack of thorough documentation. The code might function flawlessly in its author's world, but without clear explanations of expected inputs, outputs, and preprocessing steps, it's effectively useless to anyone else. I recall once spending a couple of days attempting to replicate an anomaly detection algorithm where the author hadn't mentioned the crucial data normalization that had been undertaken prior to feeding the data into the model. The model appeared to perform well in the author's results, but on our data, it performed abysmally until we replicated that hidden normalization step. The absence of a comprehensive `readme.md` or comments inside the code turns the project into a cryptic puzzle.
 
-Thirdly, I've often encountered issues related to the inherent complexity of machine learning workflows and data pipeline problems. The code might implement the *core* model correctly, but the data ingestion, preprocessing, or post-processing steps could be uniquely tailored to the author's dataset and environment, meaning it won't generalize directly. Let me give you an example from a past project involving time series forecasting. The published code worked on a very specific format of data with a fixed interval. My team’s data had different sampling frequencies, and our preprocessing steps required different smoothing methods. The published code, while well-written, did not directly generalize to our input, necessitating significant refactoring of the data handling logic.
+Thirdly, I've often encountered issues related to the inherent complexity of machine learning workflows and data pipeline problems. The code might implement the _core_ model correctly, but the data ingestion, preprocessing, or post-processing steps could be uniquely tailored to the author's dataset and environment, meaning it won't generalize directly. Let me give you an example from a past project involving time series forecasting. The published code worked on a very specific format of data with a fixed interval. My team’s data had different sampling frequencies, and our preprocessing steps required different smoothing methods. The published code, while well-written, did not directly generalize to our input, necessitating significant refactoring of the data handling logic.
 
 Now, let’s get into some examples.
 
@@ -62,7 +62,7 @@ prediction = model_predict(preprocessed_image, my_model)
 print(prediction)
 ```
 
-This code *appears* to be performing preprocessing on some kind of image data, but there is no comment explaining why it divides by 255.0 or expands dimensions. Without this crucial context, a user might struggle to integrate it with different types of input. Is it expecting a single-channel image? Are these values pixels? Without that information, you are guessing which means introducing the potential for error. Effective documentation would include something like:
+This code _appears_ to be performing preprocessing on some kind of image data, but there is no comment explaining why it divides by 255.0 or expands dimensions. Without this crucial context, a user might struggle to integrate it with different types of input. Is it expecting a single-channel image? Are these values pixels? Without that information, you are guessing which means introducing the potential for error. Effective documentation would include something like:
 
 ```python
 import numpy as np
@@ -130,7 +130,7 @@ import datetime as dt
 def load_data(filepath, date_column='date', date_format=None):
     """
         Loads data from csv files, and handles various data format and name.
-        
+
         Args:
              filepath: string, file path of the csv
              date_column: string, name of the date column, defaults to 'date'

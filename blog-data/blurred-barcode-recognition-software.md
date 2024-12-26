@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "blurred-barcode-recognition-software"
 ---
 
-Okay so blurred barcode recognition you say right Yeah I've been down that rabbit hole before trust me It's not as simple as slapping a library on and calling it a day believe me I learned that the hard way back in my early days working at a shipping company We had a conveyor belt going at warp speed and the barcodes were a mess mostly due to some old printer and rough handling like I'm talking smudged faded you name it The commercially available scanners were choking on them big time That's where the real fun started for me
+blurred barcode recognition you say right Yeah I've been down that rabbit hole before trust me It's not as simple as slapping a library on and calling it a day believe me I learned that the hard way back in my early days working at a shipping company We had a conveyor belt going at warp speed and the barcodes were a mess mostly due to some old printer and rough handling like I'm talking smudged faded you name it The commercially available scanners were choking on them big time That's where the real fun started for me
 
 First thing I realized was that your typical barcode scanner relies on crisp edges sharp contrasts that stuff isn't there when you are dealing with a blurred barcode It’s like trying to read a bad scan that's been through a washing machine a couple of times So you can't just rely on simple thresholding and edge detection techniques you need to get a little bit fancy
 
-My first approach was a little naive I was all like okay let’s just do some gaussian smoothing to remove noise and enhance the edges I tried a variety of standard image processing libraries like OpenCV and Scikit Image in python It helped a bit but not nearly enough. The problem was the gaussian blur also blurred the barcode edges even more that it was kind of counterproductive Here's how I tried that initial shot
+My first approach was a little naive I was all like let’s just do some gaussian smoothing to remove noise and enhance the edges I tried a variety of standard image processing libraries like OpenCV and Scikit Image in python It helped a bit but not nearly enough. The problem was the gaussian blur also blurred the barcode edges even more that it was kind of counterproductive Here's how I tried that initial shot
 
 ```python
 import cv2
@@ -22,8 +22,8 @@ def naive_barcode_enhance(image_path):
     blurred = cv2.GaussianBlur(img, (5,5), 0)
     thresh = cv2.threshold(blurred, 127, 255, cv2.THRESH_BINARY)[1]
     return thresh
-    
-#example usage 
+
+#example usage
 enhanced_image = naive_barcode_enhance("barcode_image.jpg")
 if enhanced_image is not None:
     cv2.imshow("enhanced image",enhanced_image)
@@ -45,29 +45,29 @@ def wiener_barcode_enhance(image_path):
     if img is None:
         print("Error: Could not load image.")
         return None
-    
+
     blurred_np = np.array(img, dtype=np.float64)
-    
-    # Using a simple kernel and variance as an approximation 
+
+    # Using a simple kernel and variance as an approximation
     # In reality this will depend a lot on the image itself
-    
+
     kernel = np.ones((3,3),dtype=np.float64)/9
-    
+
     psf = kernel
     variance = 100 # estimate of noise variance
-    
+
     deblurred = wiener(blurred_np,psf,variance)
     deblurred_np = np.uint8(np.clip(deblurred,0,255))
     thresh = cv2.threshold(deblurred_np, 127, 255, cv2.THRESH_BINARY)[1]
-    
+
     # some morphological ops
     kernel_morph = np.ones((2,2),np.uint8)
     dilated = cv2.dilate(thresh,kernel_morph,iterations=1)
     eroded = cv2.erode(dilated,kernel_morph,iterations=1)
-    
+
     return eroded
 
-#example usage 
+#example usage
 enhanced_image = wiener_barcode_enhance("barcode_image.jpg")
 if enhanced_image is not None:
     cv2.imshow("enhanced image",enhanced_image)
@@ -95,9 +95,9 @@ def barcode_pipeline(image_path):
 
     # Region of Interest
     # This is a simple method you could use contours to try to find the area where the barcode is
-    
+
     img_roi = img[10:img.shape[0]-10, 10:img.shape[1]-10]
-    
+
     # Wiener deblur
     blurred_np = np.array(img_roi, dtype=np.float64)
     kernel = np.ones((3,3),dtype=np.float64)/9
@@ -112,7 +112,7 @@ def barcode_pipeline(image_path):
 
     # Threshold
     thresh = cv2.threshold(equalized, 127, 255, cv2.THRESH_BINARY)[1]
-    
+
     # Morphological ops
     kernel_morph = np.ones((2,2),np.uint8)
     dilated = cv2.dilate(thresh,kernel_morph,iterations=1)
@@ -122,8 +122,8 @@ def barcode_pipeline(image_path):
     if decoded_data:
         return eroded, decoded_data
     return eroded,None
-    
-#example usage 
+
+#example usage
 enhanced_image, decoded_data = barcode_pipeline("barcode_image.jpg")
 if enhanced_image is not None:
     cv2.imshow("enhanced image",enhanced_image)
@@ -131,7 +131,7 @@ if enhanced_image is not None:
       for barcode in decoded_data:
         print(f"Decoded Barcode: {barcode.data.decode('utf-8')}")
     else:
-       print("Failed to decode") 
+       print("Failed to decode")
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 ```

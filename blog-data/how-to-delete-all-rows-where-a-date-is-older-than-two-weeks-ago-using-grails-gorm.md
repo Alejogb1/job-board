@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-delete-all-rows-where-a-date-is-older-than-two-weeks-ago-using-grails-gorm"
 ---
 
-alright, so you're looking to prune some old data based on a date field in your grails app, using gorm. i've been there, done that, got the t-shirt – more than a few times. this kind of cleanup is pretty standard, especially if you're dealing with anything that generates a fair bit of data. let me walk you through how i typically handle this sort of thing, and a few things to watch out for.
+, so you're looking to prune some old data based on a date field in your grails app, using gorm. i've been there, done that, got the t-shirt – more than a few times. this kind of cleanup is pretty standard, especially if you're dealing with anything that generates a fair bit of data. let me walk you through how i typically handle this sort of thing, and a few things to watch out for.
 
 first off, let’s talk about the core operation: deleting rows older than a certain point. gorm gives us a few ways to approach this. you could fetch all the records and iterate through them to delete each, but trust me on this – that's wildly inefficient. we want a single database operation to do all the heavy lifting.
 

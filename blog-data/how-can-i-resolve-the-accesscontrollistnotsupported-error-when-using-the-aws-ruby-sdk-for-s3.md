@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-resolve-the-accesscontrollistnotsupported-error-when-using-the-aws-ruby-sdk-for-s3"
 ---
 
-Okay, let’s get into this. The "AccessControlListNotSupported" error when interacting with S3 using the AWS Ruby SDK is something I’ve definitely encountered more than once in my career – usually when migrating older infrastructure or dealing with legacy bucket configurations. It’s a frustrating message, but understanding its root cause and how to navigate around it makes it considerably less daunting.
+, let’s get into this. The "AccessControlListNotSupported" error when interacting with S3 using the AWS Ruby SDK is something I’ve definitely encountered more than once in my career – usually when migrating older infrastructure or dealing with legacy bucket configurations. It’s a frustrating message, but understanding its root cause and how to navigate around it makes it considerably less daunting.
 
 The core issue boils down to this: AWS, over time, has deprecated the use of Access Control Lists (ACLs) for permissions management in favor of bucket policies and IAM roles. While ACLs are still functional for backwards compatibility, the best practice, and the direction of AWS, is very much towards the latter. Therefore, the SDK sometimes defaults to using a newer pathway that doesn't play nicely with buckets that are primarily governed by ACLs instead of bucket policies. The “AccessControlListNotSupported” error essentially means the SDK is trying to apply an ACL operation, but that specific operation isn't permitted because the bucket (or object) is explicitly controlled by its bucket policy. Often, this happens when you are uploading with the `put_object` method which, by default, attempts to apply some level of ACL during the upload.
 
@@ -21,7 +21,7 @@ require 'aws-sdk-s3'
 
 def upload_to_s3(bucket_name, file_path, object_key)
   s3 = Aws::S3::Client.new
-  
+
   begin
     s3.put_object(
       bucket: bucket_name,
@@ -32,7 +32,7 @@ def upload_to_s3(bucket_name, file_path, object_key)
     puts "Object uploaded successfully to s3://#{bucket_name}/#{object_key}"
   rescue Aws::S3::Errors::AccessControlListNotSupported => e
     puts "Error: AccessControlListNotSupported - Switching to disabling acl manipulation during upload."
-    
+
     s3.put_object(
         bucket: bucket_name,
         key: object_key,
@@ -67,7 +67,7 @@ def check_bucket_policy(bucket_name)
     s3 = Aws::S3::Client.new
     begin
       policy = s3.get_bucket_policy(bucket: bucket_name)
-        
+
       if policy.policy
         puts "Bucket policy exists for: #{bucket_name}. Proceeding without acl manipulation."
         return true # Policy exists
@@ -85,7 +85,7 @@ end
 
 def upload_to_s3_smart(bucket_name, file_path, object_key)
     s3 = Aws::S3::Client.new
-    
+
     policy_exists = check_bucket_policy(bucket_name)
 
     begin
@@ -144,7 +144,7 @@ require 'aws-sdk-s3'
 
 def upload_with_iam_role(bucket_name, file_path, object_key)
   s3 = Aws::S3::Client.new
-    
+
     begin
         s3.put_object(
            bucket: bucket_name,

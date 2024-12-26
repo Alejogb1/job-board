@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-i-trigger-an-airflow-dag-in-a-different-environment"
 ---
 
-Alright, let’s talk about triggering Airflow DAGs across environments. It’s a common hurdle, and I've definitely spent my share of time navigating those complexities. I remember a project back at ‘Data Solutions Inc.’ where we had a development environment, a staging one, and then, naturally, production. We started with the naive approach, deploying the same dags everywhere, but quickly realized that approach was untenable. The problem wasn’t merely code duplication; it was the configuration—variables, connections, and even the underlying infrastructure differed across environments. It led to all sorts of headaches, with dags failing unpredictably because of resource constraints or missing credentials.
+, let’s talk about triggering Airflow DAGs across environments. It’s a common hurdle, and I've definitely spent my share of time navigating those complexities. I remember a project back at ‘Data Solutions Inc.’ where we had a development environment, a staging one, and then, naturally, production. We started with the naive approach, deploying the same dags everywhere, but quickly realized that approach was untenable. The problem wasn’t merely code duplication; it was the configuration—variables, connections, and even the underlying infrastructure differed across environments. It led to all sorts of headaches, with dags failing unpredictably because of resource constraints or missing credentials.
 
-The key here isn’t to just *trigger* a dag in a different environment; it’s to trigger a *version* of the dag that is appropriate for the target environment. We need separation of concerns: the *logical flow* of the dag (the tasks and their dependencies) should remain consistent, but the *details* of execution (the specific resources used, the exact data paths, etc.) must be adaptable.
+The key here isn’t to just _trigger_ a dag in a different environment; it’s to trigger a _version_ of the dag that is appropriate for the target environment. We need separation of concerns: the _logical flow_ of the dag (the tasks and their dependencies) should remain consistent, but the _details_ of execution (the specific resources used, the exact data paths, etc.) must be adaptable.
 
 There isn't a single "best" way, but the most common and robust strategies revolve around external triggers leveraging the Airflow rest api and then utilizing parameterized dags. Let's break down how this works and the common strategies I've used.
 
-The core idea is that instead of deploying and executing the same dag everywhere, we deploy *environment-specific* versions of the dag, and then we use external calls to trigger the correct version based on context. This involves using parameterized dag definitions along with the Airflow Rest API.
+The core idea is that instead of deploying and executing the same dag everywhere, we deploy _environment-specific_ versions of the dag, and then we use external calls to trigger the correct version based on context. This involves using parameterized dag definitions along with the Airflow Rest API.
 
 Here's how I've implemented this in the past, along with examples.
 
@@ -102,7 +102,7 @@ with DAG(
     bash_task >> other_task
 ```
 
-In this example, the `environment` is fetched from the dag's configuration. Based on the `environment` variable, the data path used is modified. This is a simplification, obviously. In real-world scenarios, this can include changing connections, parameters for cloud operations (like s3 bucket names), and other resource configurations. We might, for instance, use a dictionary to map environments to database connection ids, or use an Airflow variable to hold such information. The key is to make the configuration *dynamic*.
+In this example, the `environment` is fetched from the dag's configuration. Based on the `environment` variable, the data path used is modified. This is a simplification, obviously. In real-world scenarios, this can include changing connections, parameters for cloud operations (like s3 bucket names), and other resource configurations. We might, for instance, use a dictionary to map environments to database connection ids, or use an Airflow variable to hold such information. The key is to make the configuration _dynamic_.
 
 **Approach 3: Using Environment Variables**
 
@@ -150,8 +150,8 @@ These strategies are not mutually exclusive, and in more complex scenarios, you 
 
 For learning more about these concepts, I recommend these resources:
 
-*   **"Programming Apache Airflow" by Bas P. Harenslak and Julian de Ruiter:** This book goes into detail about advanced dag concepts, including parameterization.
-*   **The official Apache Airflow documentation:** The docs are your best friend. Pay close attention to the section on the Rest API and template variables.
-*   **"Designing Data-Intensive Applications" by Martin Kleppmann**: While not specific to Airflow, this book can provide the design principles for ensuring your entire data ecosystem, including your dags, is robust and maintainable. Understanding the 'separation of concerns' as it is discussed here will help greatly.
+- **"Programming Apache Airflow" by Bas P. Harenslak and Julian de Ruiter:** This book goes into detail about advanced dag concepts, including parameterization.
+- **The official Apache Airflow documentation:** The docs are your best friend. Pay close attention to the section on the Rest API and template variables.
+- **"Designing Data-Intensive Applications" by Martin Kleppmann**: While not specific to Airflow, this book can provide the design principles for ensuring your entire data ecosystem, including your dags, is robust and maintainable. Understanding the 'separation of concerns' as it is discussed here will help greatly.
 
 The key takeaways for triggering a dag in another environment? Parameterization, separation of configuration from workflow, and a sound understanding of the Airflow Rest API. Deploying the same dag everywhere is a recipe for failure. Embrace parameterization and you’ll find it simplifies the complexities of cross-environment workflows quite a bit. I hope this was useful. Good luck out there!

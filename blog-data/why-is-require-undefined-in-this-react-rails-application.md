@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-require-undefined-in-this-react-rails-application"
 ---
 
-Okay, let's tackle this one. I've seen this particular head-scratcher pop up more times than I'd care to count, often in the thick of a late-night debugging session. The issue of `require` being undefined in a React application bootstrapped within a Rails environment can seem initially bewildering, but it usually boils down to a fundamental difference in how modules are handled between the server-side Rails and client-side React worlds. It's not a bug so much as a mismatch in expectations about how code is structured and loaded.
+, let's tackle this one. I've seen this particular head-scratcher pop up more times than I'd care to count, often in the thick of a late-night debugging session. The issue of `require` being undefined in a React application bootstrapped within a Rails environment can seem initially bewildering, but it usually boils down to a fundamental difference in how modules are handled between the server-side Rails and client-side React worlds. It's not a bug so much as a mismatch in expectations about how code is structured and loaded.
 
 The crux of the problem lies in JavaScript module systems. Rails, by default, uses Sprockets or Webpacker (depending on your version) to manage assets, which historically handled JavaScript with a server-side mindset, where things like CommonJS `require` were often used within Rails' asset pipeline. React, especially when built with tools like create-react-app or using a modern bundling setup, leans heavily on modern JavaScript module systems like ES Modules (`import/export`).
 
@@ -22,10 +22,8 @@ To illustrate these concepts further, let's look at some scenarios with code. Ke
 // app/assets/javascripts/react_components/my_component.jsx
 // DON'T DO THIS in a modern React app
 function MyComponent() {
-  const someModule = require('./some_utility');
-  return (
-    <div>{someModule.someFunction()}</div>
-    )
+  const someModule = require("./some_utility");
+  return <div>{someModule.someFunction()}</div>;
 }
 
 export default MyComponent;
@@ -38,12 +36,10 @@ In this snippet, you would see `require is not defined` when the code executes i
 ```javascript
 // app/assets/javascripts/react_components/my_component.jsx
 // Using ES modules - this is the way
-import someModule from './some_utility';
+import someModule from "./some_utility";
 
 function MyComponent() {
-  return (
-    <div>{someModule.someFunction()}</div>
-  );
+  return <div>{someModule.someFunction()}</div>;
 }
 
 export default MyComponent;
@@ -57,24 +53,24 @@ This example demonstrates how to correctly use ES modules. We're now using the `
 // config/webpack/webpack.config.js (simplified)
 // example webpack config snippet
 module.exports = {
-    module: {
-        rules: [
-        {
-           test: /\.(js|jsx)$/,
-            exclude: /node_modules/,
-            use: {
-               loader: 'babel-loader',
-                   options: {
-                       presets: ['@babel/preset-env', '@babel/preset-react'],
-                         plugins: ["@babel/plugin-transform-runtime"]
-                   }
-             }
-         }
-      ]
-    },
-    resolve: {
-        extensions: ['.js', '.jsx']
-    }
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env", "@babel/preset-react"],
+            plugins: ["@babel/plugin-transform-runtime"],
+          },
+        },
+      },
+    ],
+  },
+  resolve: {
+    extensions: [".js", ".jsx"],
+  },
 };
 ```
 
@@ -84,9 +80,9 @@ So, in essence, the "fix" isn't actually about making `require` work. It's about
 
 To dive deeper into the specifics, I’d recommend exploring resources like:
 
-*   **"JavaScript: The Definitive Guide" by David Flanagan:** A comprehensive overview of JavaScript, including its module systems. Crucial for understanding the foundations.
-*   **Webpack documentation:** The official webpack docs are an invaluable resource for understanding how it handles module bundling, and the specifics of configuration.
-*   **Babel documentation:** Understanding how Babel transforms modern JavaScript is crucial for the setup. The Babel documentation explains the plugins and presets that are critical for transforming your jsx and javascript into something compatible with older browsers.
-*   **"Effective JavaScript" by David Herman:** A resource dedicated to improving overall JavaScript coding practices, including module management.
+- **"JavaScript: The Definitive Guide" by David Flanagan:** A comprehensive overview of JavaScript, including its module systems. Crucial for understanding the foundations.
+- **Webpack documentation:** The official webpack docs are an invaluable resource for understanding how it handles module bundling, and the specifics of configuration.
+- **Babel documentation:** Understanding how Babel transforms modern JavaScript is crucial for the setup. The Babel documentation explains the plugins and presets that are critical for transforming your jsx and javascript into something compatible with older browsers.
+- **"Effective JavaScript" by David Herman:** A resource dedicated to improving overall JavaScript coding practices, including module management.
 
 The key takeaway here is that `require`’s absence isn't an error to be fixed directly; it's a signal to change the approach. In a React application using bundlers, it should be replaced with ES module syntax, which requires a bundler configuration to parse and convert your javascript files. It’s a matter of understanding the environment where your code executes and aligning your module handling techniques with that environment. Overcoming this confusion is a crucial step in mastering modern web development and integrating React effectively within larger application contexts like Rails.

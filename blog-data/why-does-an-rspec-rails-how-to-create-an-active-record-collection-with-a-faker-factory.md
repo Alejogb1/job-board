@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-does-an-rspec-rails-how-to-create-an-active-record-collection-with-a-faker-factory"
 ---
 
-alright, so, you're asking about how to make a collection of active record objects using faker and factorybot (or similar) in your rspec-rails tests. i've definitely been there, spent a good chunk of time head-scratching over similar issues, particularly early on when i was trying to get my testing setup more robust.
+, so, you're asking about how to make a collection of active record objects using faker and factorybot (or similar) in your rspec-rails tests. i've definitely been there, spent a good chunk of time head-scratching over similar issues, particularly early on when i was trying to get my testing setup more robust.
 
 the core problem is that factorybot, or other similar libraries, by default usually only produce single instances. that's cool and all when you need just one user or one post for a specific test, but when you're testing relationships or pagination or anything else that needs a bunch of records, you end up writing a whole bunch of manual loops and it gets messy real fast. trust me, i've seen enough of those loops to last a lifetime, especially when i worked on that old e-commerce app that had like 10 different user types. trying to make a set of customers was… not fun.
 
@@ -102,7 +102,7 @@ FactoryBot.define do
             create_list(:post, 10, user: user)
         end
     end
-    
+
     factory :user_with_no_posts do
       # no posts attached
     end

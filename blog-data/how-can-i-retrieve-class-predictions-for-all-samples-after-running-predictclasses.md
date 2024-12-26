@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-retrieve-class-predictions-for-all-samples-after-running-predictclasses"
 ---
 
-Okay, let's talk about retrieving class predictions after using `predict_classes`. It's a common scenario, and while the name might seem straightforward, it can sometimes lead to a bit of a head-scratch, particularly when you need more nuanced output than just the argmax indices. I recall a project back in '17, where we were dealing with time-series data for anomaly detection; we needed not just the predicted class, but the full probability distribution for each sample to evaluate model confidence, something `predict_classes` doesn't directly offer.
+, let's talk about retrieving class predictions after using `predict_classes`. It's a common scenario, and while the name might seem straightforward, it can sometimes lead to a bit of a head-scratch, particularly when you need more nuanced output than just the argmax indices. I recall a project back in '17, where we were dealing with time-series data for anomaly detection; we needed not just the predicted class, but the full probability distribution for each sample to evaluate model confidence, something `predict_classes` doesn't directly offer.
 
-The core issue stems from the way `predict_classes` is designed. Under the hood, it does two things: first, it uses the model's `predict` method to generate class probabilities (or logits, depending on your model's architecture). Then, it applies an `argmax` operation along the class dimension to get the index of the most probable class. This is computationally efficient and often exactly what's needed, but it sacrifices the information about the probabilities for *all* classes. So, to get that detailed output, we need to tweak our approach slightly. We can circumvent `predict_classes` entirely and call `predict` directly, subsequently handling the argmax logic ourselves if a single class prediction is desired.
+The core issue stems from the way `predict_classes` is designed. Under the hood, it does two things: first, it uses the model's `predict` method to generate class probabilities (or logits, depending on your model's architecture). Then, it applies an `argmax` operation along the class dimension to get the index of the most probable class. This is computationally efficient and often exactly what's needed, but it sacrifices the information about the probabilities for _all_ classes. So, to get that detailed output, we need to tweak our approach slightly. We can circumvent `predict_classes` entirely and call `predict` directly, subsequently handling the argmax logic ourselves if a single class prediction is desired.
 
-The first approach is the most straightforward, simply using the model's `predict` method. This yields a matrix where each row corresponds to an input sample, and each column represents the probability (or logit) for a particular class. If your model outputs logits, you'll need to apply a softmax operation to convert them into probabilities. This gives you the *full* output distribution for every sample. Then, if needed, you can derive the class predictions by taking the `argmax` across the class axis.
+The first approach is the most straightforward, simply using the model's `predict` method. This yields a matrix where each row corresponds to an input sample, and each column represents the probability (or logit) for a particular class. If your model outputs logits, you'll need to apply a softmax operation to convert them into probabilities. This gives you the _full_ output distribution for every sample. Then, if needed, you can derive the class predictions by taking the `argmax` across the class axis.
 
 Here’s how that looks in practice using a TensorFlow Keras model:
 
@@ -99,7 +99,7 @@ print(f"First sample's probabilities: {probabilities[0]}")
 print(f"First sample's predicted class: {predicted_classes[0]}")
 ```
 
-Here, we've illustrated the need for explicit conversion when dealing with logits.  `tf.nn.softmax` is used on the model's output to obtain probabilities and from that we derive class predictions.
+Here, we've illustrated the need for explicit conversion when dealing with logits. `tf.nn.softmax` is used on the model's output to obtain probabilities and from that we derive class predictions.
 
 When working with these approaches, it's crucial to ensure your data input matches the model's expected input shape, both during prediction and training. The `input_shape` argument in the initial layer definition of the example snippets should always be consistent with your training and prediction pipeline. In my previous experiences, shape mismatches have led to frustrating debugging sessions, especially in more complex model architectures.
 

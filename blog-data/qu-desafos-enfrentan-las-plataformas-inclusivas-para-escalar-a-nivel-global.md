@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "qu-desafos-enfrentan-las-plataformas-inclusivas-para-escalar-a-nivel-global"
 ---
 
-okay so scaling inclusive platforms globally is a real beast you know it's not just about more servers it gets complicated real quick let's break down some of the big hurdles I've seen and thought about
+scaling inclusive platforms globally is a real beast you know it's not just about more servers it gets complicated real quick let's break down some of the big hurdles I've seen and thought about
 
 first up language localization is massive it's not just translating words literally you need to think about cultural context right to left languages different number formats pluralization rules this stuff is deep if your platform doesn't handle that smoothly users bounce fast and you lose any chance at real inclusivity a simple translation engine will not cut it for example consider something like a date picker if you hardcode it for mm/dd/yyyy it's useless in a lot of places you need something way more flexible
 
@@ -19,6 +19,7 @@ def format_date(date, locale):
   else:
     return str(date) # Fallback
 ```
+
 this is a super simplified python function but it shows how you need to be aware of different date formats even for a simple piece of text a full internationalization library is the way to go it does all this for you plus more look into the `gettext` module and similar things from other languages too
 
 next accessibility like real accessibility is a big deal you can't just slap on some alt text and call it a day think about people using screen readers people with motor disabilities people with cognitive differences proper contrast ratios keyboard navigation logical heading structure this requires a fundamental shift in how you think about design it's not an afterthought you need to build it into the foundation from the start a good resource here is the web content accessibility guidelines w3c wcag they go deep into specifics it's dry but essential
@@ -37,23 +38,24 @@ finally and this is really important community building and moderation different
 
 ```javascript
 function formatCurrency(amount, locale) {
-    const formatter = new Intl.NumberFormat(locale, {
-        style: 'currency',
-        currency: getCurrencyCode(locale) ,
-    });
-    return formatter.format(amount);
+  const formatter = new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: getCurrencyCode(locale),
+  });
+  return formatter.format(amount);
 }
 function getCurrencyCode(locale) {
-    if (locale === 'en-US') return 'USD';
-    if (locale === 'es-ES') return 'EUR';
-    if (locale === 'ja-JP') return 'JPY';
-     return 'USD'  // Fallback
+  if (locale === "en-US") return "USD";
+  if (locale === "es-ES") return "EUR";
+  if (locale === "ja-JP") return "JPY";
+  return "USD"; // Fallback
 }
 ```
+
 here's an example of how to handle different currencies using javascript its not only about the symbol it is about the formatting and the language too the `Intl.NumberFormat` is a powerfull resource here
 
 ```html
-<img src="my_image.jpg" alt="Description of image for accessibility">
+<img src="my_image.jpg" alt="Description of image for accessibility" />
 ```
 
 a final one just a simple html image tag example see the alt attribute that is basic accessibility but you need to go much further than that the important is to use accessibility from the beginning

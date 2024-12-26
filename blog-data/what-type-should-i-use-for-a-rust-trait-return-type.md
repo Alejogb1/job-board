@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-type-should-i-use-for-a-rust-trait-return-type"
 ---
 
-Alright, let's tackle this. The question of what type to use for a trait return type in Rust is, in my experience, one that comes up frequently – and for good reason. It's not always a simple choice, and getting it wrong can lead to some frustrating compiler errors. I’ve personally navigated this minefield more times than I care to count, particularly during a project a few years back where we were building a modular authentication system, relying heavily on traits for abstraction. What might seem like a minor detail early on can really impact your code's flexibility and performance down the line.
+, let's tackle this. The question of what type to use for a trait return type in Rust is, in my experience, one that comes up frequently – and for good reason. It's not always a simple choice, and getting it wrong can lead to some frustrating compiler errors. I’ve personally navigated this minefield more times than I care to count, particularly during a project a few years back where we were building a modular authentication system, relying heavily on traits for abstraction. What might seem like a minor detail early on can really impact your code's flexibility and performance down the line.
 
 The core problem arises from the fact that traits aren't concrete types; they define behavior, not a specific representation in memory. Consequently, the compiler needs additional information to figure out how much space to allocate for the return value and what code to generate to handle it. Broadly, you have a few key strategies at your disposal, each with its own strengths and trade-offs. These primarily involve using associated types, `impl Trait`, or box-allocated trait objects, specifically `Box<dyn Trait>`.
 
@@ -91,7 +91,8 @@ fn main() {
 }
 
 ```
-In this snippet, `impl std::fmt::Display` doesn’t mean we could return a different displayable type on each call, but it does mean that our function can return any type that implements `Display` without naming the specific type explicitly in the return signature. As an aside, if you need to return *different* concrete types that implement the same trait based on the specific execution path, `impl Trait` would not be the appropriate choice. You will need to resort to a trait object.
+
+In this snippet, `impl std::fmt::Display` doesn’t mean we could return a different displayable type on each call, but it does mean that our function can return any type that implements `Display` without naming the specific type explicitly in the return signature. As an aside, if you need to return _different_ concrete types that implement the same trait based on the specific execution path, `impl Trait` would not be the appropriate choice. You will need to resort to a trait object.
 
 Finally, if you need maximum flexibility and your function might return different concrete types at runtime that all implement the same trait, you will likely need to opt for a trait object, specifically through `Box<dyn Trait>`. In this scenario, the returned type is dynamically determined at runtime. This adds a minor overhead in performance (dynamic dispatch) but grants considerable freedom.
 

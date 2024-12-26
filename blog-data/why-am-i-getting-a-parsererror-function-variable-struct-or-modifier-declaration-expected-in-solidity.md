@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "why-am-i-getting-a-parsererror-function-variable-struct-or-modifier-declaration-expected-in-solidity"
 ---
 
-alright, let's get into this parsererror. "function, variable, struct or modifier declaration expected" in solidity. i've seen this error a bunch of times, and it usually points to a structural issue in your solidity code, not necessarily a logical flaw. think of it as solidity telling you, "hey, i was expecting a building block, but i got something else entirely".
+, let's get into this parsererror. "function, variable, struct or modifier declaration expected" in solidity. i've seen this error a bunch of times, and it usually points to a structural issue in your solidity code, not necessarily a logical flaw. think of it as solidity telling you, "hey, i was expecting a building block, but i got something else entirely".
 
 basically, solidity has very specific rules about where things should go and what should be inside what. it's like a really picky construction worker – everything has its place, and if something's out of order, they'll throw their hands up and say it's not going to work.
 
 i remember this one time back when i was working on a decentralized lottery system, i kept getting this error and it was driving me nuts. i was trying to define a mapping inside a function, something i wouldn't even consider doing now, but, back then, my knowledge of solidity was still fairly new. spent a good few hours with a friend tracing every line, only to find i had misplaced the declaration. classic mistake.
 
-so, what's likely happening is that you're trying to declare something (a function, variable, struct or modifier) in a place where it's not allowed. let's break down where these things *should* be located:
+so, what's likely happening is that you're trying to declare something (a function, variable, struct or modifier) in a place where it's not allowed. let's break down where these things _should_ be located:
 
 **1. contracts, libraries, and interfaces: the main containers**
 
@@ -48,6 +48,7 @@ function addTwoNumbers(uint256 _a, uint256 _b) public pure returns (uint256) {
     return sum;
 }
 ```
+
 if you try to define state variables within a function scope, or declare a variable with no type you will encounter this error, as variable declaration cannot exist outside the contract or library scope.
 
 **4. struct declarations: inside contracts or libraries**
@@ -55,6 +56,7 @@ if you try to define state variables within a function scope, or declare a varia
 structs are custom data structures that you can define. they're super useful for grouping related data together. they need to be declared at contract level, not inside functions, and the members of the struct can be of various types.
 
 here's what a struct definition looks like:
+
 ```solidity
 struct MyStruct {
     uint256 id;
@@ -62,6 +64,7 @@ struct MyStruct {
     string name;
 }
 ```
+
 if you attempt to define this struct inside a function, or outside a contract you will see this parser error.
 
 **5. modifier declarations: inside contracts or libraries**
@@ -81,12 +84,12 @@ if you happen to declare a modifier inside a function instead of at contract lev
 
 here’s a more refined list of things that usually trigger this error based on my experiences:
 
-*   **missing keywords:** forgetting the `function`, `struct`, `modifier`, or variable type is a usual suspect. just one missing keyword makes the compiler confused, it doesn't really know if it's a typo or you want to do some non-existent operation. it's very fussy about this.
-*   **incorrect placement:** declaring a variable inside a function where it should be a state variable, or defining state variables within a function.
-*   **incomplete definitions:** not providing a return type for a function, or the body of the function, or variable type can cause this error.
-*   **syntax errors:** typos in keywords or misplaced parenthesis, brackets or semicolons. you'd be surprised how much this happens.
-*   **incorrect or missing visibility modifiers:** missing or invalid modifiers like `public`, `private`, `internal` for variables and functions. a common mistake.
-*   **out-of-order statements:** for example, attempting to call a function before it's defined, or trying to access a variable before its declaration. solidity is very particular about the order things are declared. it's like telling a story out of order.
+- **missing keywords:** forgetting the `function`, `struct`, `modifier`, or variable type is a usual suspect. just one missing keyword makes the compiler confused, it doesn't really know if it's a typo or you want to do some non-existent operation. it's very fussy about this.
+- **incorrect placement:** declaring a variable inside a function where it should be a state variable, or defining state variables within a function.
+- **incomplete definitions:** not providing a return type for a function, or the body of the function, or variable type can cause this error.
+- **syntax errors:** typos in keywords or misplaced parenthesis, brackets or semicolons. you'd be surprised how much this happens.
+- **incorrect or missing visibility modifiers:** missing or invalid modifiers like `public`, `private`, `internal` for variables and functions. a common mistake.
+- **out-of-order statements:** for example, attempting to call a function before it's defined, or trying to access a variable before its declaration. solidity is very particular about the order things are declared. it's like telling a story out of order.
 
 **debugging advice**
 
@@ -99,10 +102,10 @@ here’s a more refined list of things that usually trigger this error based on 
 
 i'd suggest looking into these resources to understand the structure of solidity in-depth:
 
-*   **the official solidity documentation:** this is always the go-to source for the most accurate and up-to-date information. everything from syntax to compiler details. it's like the bible for solidity developers.
-*   **"mastering ethereum" by andreas antonopoulos and gavin wood:** it's a good in-depth look at the ethereum virtual machine and the smart contract model. not purely about solidity, but it helps you understand underlying workings.
-*   **"solidity programming essentials" by ryan c. o'leary:** this book offers a good structured introduction to solidity programming, it walks you through many important concepts and has code examples.
-*   **the chainlink documentation:** for when you dive into the specifics of using external data in solidity code. also, it provides many use cases of solidity code in a real world context.
+- **the official solidity documentation:** this is always the go-to source for the most accurate and up-to-date information. everything from syntax to compiler details. it's like the bible for solidity developers.
+- **"mastering ethereum" by andreas antonopoulos and gavin wood:** it's a good in-depth look at the ethereum virtual machine and the smart contract model. not purely about solidity, but it helps you understand underlying workings.
+- **"solidity programming essentials" by ryan c. o'leary:** this book offers a good structured introduction to solidity programming, it walks you through many important concepts and has code examples.
+- **the chainlink documentation:** for when you dive into the specifics of using external data in solidity code. also, it provides many use cases of solidity code in a real world context.
 
 a bit of advice based on my experience, debugging solidity code can be a real pain sometimes. you start seeing these errors and wondering if you have done something so terribly wrong in your life. it's like trying to solve a puzzle in the dark while also having to deal with the picky construction worker mentioned before. however, with practice, and patience, and a little bit of understanding it gets easier. remember when i had to spend several hours debugging a contract, only to realize i had declared something in the wrong place? i'm telling you, it happens to all of us. it's part of the journey. you will get the hang of it. you just need to keep coding and checking your code.
 

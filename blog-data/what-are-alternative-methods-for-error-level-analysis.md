@@ -4,14 +4,14 @@ date: "2024-12-23"
 id: "what-are-alternative-methods-for-error-level-analysis"
 ---
 
-Okay, let's tackle this. I’ve spent my share of late nights debugging, and the usual `try...except` blocks sometimes just don't cut it when you're trying to really understand what's going wrong, particularly in complex systems. Error level analysis, as we usually define it, can be pretty basic—logging, raising exceptions, etc. But there are definitely more nuanced ways to dissect and categorize errors, leading to better debugging and more resilient code. I’ve seen firsthand how adopting some of these methods can be game-changers.
+, let's tackle this. I’ve spent my share of late nights debugging, and the usual `try...except` blocks sometimes just don't cut it when you're trying to really understand what's going wrong, particularly in complex systems. Error level analysis, as we usually define it, can be pretty basic—logging, raising exceptions, etc. But there are definitely more nuanced ways to dissect and categorize errors, leading to better debugging and more resilient code. I’ve seen firsthand how adopting some of these methods can be game-changers.
 
 Firstly, let's move beyond simply classifying errors as "fatal" or "non-fatal." A more sophisticated approach involves categorizing errors based on their **impact and scope.** Think of a tiered system:
 
-*   **Critical Errors:** These are the showstoppers, the ones that completely halt an application or process. Data corruption, fundamental system failures, or security breaches would fall here. They often require immediate manual intervention.
-*   **Major Errors:** These significantly disrupt operations but don't necessarily cause a complete standstill. Think of a service failing, a critical component malfunctioning, or losing connection to a database. They might allow partial functionality, but not without considerable user impact.
-*   **Minor Errors:** These are less disruptive, such as transient network issues, input validation failures, or problems with peripheral systems. They cause inconvenience but don't typically affect core functionality.
-*   **Informational Errors/Warnings:** These indicate potential issues, deviations from expected behavior, or opportunities for performance improvement. They don't represent a current failure, but warrant attention.
+- **Critical Errors:** These are the showstoppers, the ones that completely halt an application or process. Data corruption, fundamental system failures, or security breaches would fall here. They often require immediate manual intervention.
+- **Major Errors:** These significantly disrupt operations but don't necessarily cause a complete standstill. Think of a service failing, a critical component malfunctioning, or losing connection to a database. They might allow partial functionality, but not without considerable user impact.
+- **Minor Errors:** These are less disruptive, such as transient network issues, input validation failures, or problems with peripheral systems. They cause inconvenience but don't typically affect core functionality.
+- **Informational Errors/Warnings:** These indicate potential issues, deviations from expected behavior, or opportunities for performance improvement. They don't represent a current failure, but warrant attention.
 
 This categorization isn’t just for documentation; it should be deeply ingrained in your error-handling logic. Instead of just throwing exceptions and calling it a day, consider incorporating this tiered system. This approach gives you a richer view of what's happening.
 
@@ -66,7 +66,7 @@ process_data(data_process_error)
 
 This snippet demonstrates how, instead of generic error messages, you’re now categorizing the problem within the log itself. Monitoring tools and dashboards can then easily filter and react based on these severity levels.
 
-Secondly, think about **context-aware error analysis.** A failed network request during a non-critical background task is vastly different than the same failure when retrieving crucial user data. Error handling should consider *where* and *when* the error occurs. Consider adding metadata—such as the user id, transaction id, system component, or time—to error logs. This transforms a general error message into a valuable debugging tool.
+Secondly, think about **context-aware error analysis.** A failed network request during a non-critical background task is vastly different than the same failure when retrieving crucial user data. Error handling should consider _where_ and _when_ the error occurs. Consider adding metadata—such as the user id, transaction id, system component, or time—to error logs. This transforms a general error message into a valuable debugging tool.
 
 For this second scenario, let’s say we were building a microservice architecture. We needed context about the origin of the error:
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-a-sequence-of-length-3-being-passed-where-a-sequence-of-length-0-is-expected-at-dimension-2"
 ---
 
-Okay, let's tackle this. A rather peculiar issue you've stumbled upon—a sequence of length 3 where a zero-length one was anticipated at dimension 2. I recall a project back in my days working on a complex time-series forecasting model. It was a beast, involving multiple neural network layers stacked deep, and this exact error, or a close cousin of it, popped up more often than I cared to see. It often indicates a fundamental mismatch in your data's expected shape versus what your model is actually receiving, especially when dealing with multi-dimensional arrays.
+, let's tackle this. A rather peculiar issue you've stumbled upon—a sequence of length 3 where a zero-length one was anticipated at dimension 2. I recall a project back in my days working on a complex time-series forecasting model. It was a beast, involving multiple neural network layers stacked deep, and this exact error, or a close cousin of it, popped up more often than I cared to see. It often indicates a fundamental mismatch in your data's expected shape versus what your model is actually receiving, especially when dealing with multi-dimensional arrays.
 
 Dimension 2, in many machine learning frameworks, especially those handling multi-dimensional data like numpy or pytorch tensors, often corresponds to features, the innermost level of sequence, or, in the context of image data, the channels within an image (although that's not directly what we're dealing with here, the concept of dimension applies). When your framework expects no sequence (length 0), it likely means it anticipates either a single data point, or that that dimension is meant to be absent entirely for that particular operation. Sending a sequence of length three disrupts this expectation significantly, leading to the error you're seeing.
 
@@ -12,7 +12,7 @@ The root cause usually lies in a misconfiguration during data preprocessing or m
 
 **Scenario 1: Incorrect Data Reshaping or Padding**
 
-Imagine you have time series data where certain instances have varying lengths, but your model assumes a fixed-length sequence. If, in your attempt to pad shorter sequences, you mistakenly pad *all* sequences including the ones you expect to have length zero, you will run into this issue.
+Imagine you have time series data where certain instances have varying lengths, but your model assumes a fixed-length sequence. If, in your attempt to pad shorter sequences, you mistakenly pad _all_ sequences including the ones you expect to have length zero, you will run into this issue.
 
 ```python
 import numpy as np
@@ -70,6 +70,7 @@ correct_padded_tensor = np.array(padded_sequences_correct)
 
 print(f"Correct padded tensor shape: {correct_padded_tensor.shape}")
 ```
+
 The crucial insight here is that the padding operation in the incorrect implementation introduces the sequence of length three we were trying to avoid. The correct version only pads the dimension that should change. We keep the dimension with size zero as empty.
 
 **Scenario 2: Mismatched Model Layer Input Shape**

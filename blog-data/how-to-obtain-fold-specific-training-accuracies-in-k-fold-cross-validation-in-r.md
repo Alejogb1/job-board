@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-obtain-fold-specific-training-accuracies-in-k-fold-cross-validation-in-r"
 ---
 
-Okay, let's tackle this. I remember back on the 'Project Nightingale' initiative, we had a real need for granular performance metrics within our model validation process. We were using k-fold cross-validation quite extensively, but the standard aggregated accuracy wasn't cutting it. We needed to see *exactly* how well the model was performing on each fold to diagnose any inconsistencies. So, here's how we went about it, explained in a way that I hope demystifies things.
+, let's tackle this. I remember back on the 'Project Nightingale' initiative, we had a real need for granular performance metrics within our model validation process. We were using k-fold cross-validation quite extensively, but the standard aggregated accuracy wasn't cutting it. We needed to see _exactly_ how well the model was performing on each fold to diagnose any inconsistencies. So, here's how we went about it, explained in a way that I hope demystifies things.
 
 The crux of the matter is that standard implementations of k-fold cross-validation often only give you the average performance across all folds. This can mask significant variations. To get those fold-specific accuracies, you need to essentially "peel back" the layers of abstraction that these functions provide. The approach generally involves manually setting up the folds, training a model within each fold's training data, and then evaluating that specific model against the corresponding test data. This is a tad more work, but the insights gained are well worth it.
 
@@ -33,7 +33,7 @@ get_fold_accuracies_base <- function(data, k = 10, response_variable_name) {
 
     model <- your_model_training_function(train_predictors, train_response)
     predictions <- predict(model, test_predictors)
-    
+
     # Assuming predictions are in the same format as the response (classification labels)
     accuracy <- mean(predictions == test_response)
     all_fold_accuracies[i] <- accuracy
@@ -73,7 +73,7 @@ get_fold_accuracies_caret <- function(data, k = 10, response_variable_name) {
 
       model <- your_model_training_function(train_predictors, train_response)
       predictions <- predict(model, test_predictors)
-    
+
     accuracy <- mean(predictions == test_response)
     all_fold_accuracies[i] <- accuracy
   }
@@ -98,18 +98,18 @@ library(caret)
 
 get_fold_accuracies_caret_train <- function(data, k = 10, response_variable_name, method = "your_method") {
   train_control <- trainControl(method = "cv", number = k, returnResamp = "all")
-  
+
   # Ensure the response variable is a factor when performing classification
   if(is.factor(data[[response_variable_name]])){
     data[[response_variable_name]] <- as.factor(data[[response_variable_name]])
     }
-  
+
   model_train <- train(as.formula(paste(response_variable_name, "~.")), data = data,
                     method = method, trControl = train_control)
 
   # Extract the resamples for accuracies
   resamples <- model_train$resamples
-  
+
   # Extract fold number and the accuracy for each fold
   all_fold_accuracies <- tapply(resamples$Accuracy, resamples$Resample, mean)
 
@@ -128,10 +128,10 @@ In this approach, the `train` function sets up the training process with cross-v
 
 **Important Considerations**
 
-*   **Model-Specific Prediction:** Replace `your_model_training_function` with your actual model training code. Be sure to adapt prediction method as needed, especially considering the type of the output you're expecting. For instance, a classification model may return probabilities which would require additional conversion to class labels for the mean accuracy calculation as performed above. Ensure the data type returned by your prediction function matches the response data type for accurate comparison, and that prediction is performed on hold-out data for a given fold.
-*   **Stratified K-Fold:** For classification problems, consider stratified k-fold to ensure a balanced class distribution in each fold, as we touched on with `caret::createFolds`.
-*   **Hyperparameter Tuning:** If your model requires tuning, incorporate this into each fold's training loop.
-*   **Data Preprocessing:** Be cautious with data transformations. If you use data scaling or other transformations, apply these within the individual folds using train data to avoid leakage of information from your testing data.
+- **Model-Specific Prediction:** Replace `your_model_training_function` with your actual model training code. Be sure to adapt prediction method as needed, especially considering the type of the output you're expecting. For instance, a classification model may return probabilities which would require additional conversion to class labels for the mean accuracy calculation as performed above. Ensure the data type returned by your prediction function matches the response data type for accurate comparison, and that prediction is performed on hold-out data for a given fold.
+- **Stratified K-Fold:** For classification problems, consider stratified k-fold to ensure a balanced class distribution in each fold, as we touched on with `caret::createFolds`.
+- **Hyperparameter Tuning:** If your model requires tuning, incorporate this into each fold's training loop.
+- **Data Preprocessing:** Be cautious with data transformations. If you use data scaling or other transformations, apply these within the individual folds using train data to avoid leakage of information from your testing data.
 
 **Further Reading**
 

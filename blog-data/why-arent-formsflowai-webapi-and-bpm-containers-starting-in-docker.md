@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-arent-formsflowai-webapi-and-bpm-containers-starting-in-docker"
 ---
 
-Okay, let's unpack this. The issue of Formsflow.ai WebAPI and BPM containers failing to start in a Docker environment is, unfortunately, a fairly common stumbling block I’ve encountered several times in my past work, particularly when setting up complex workflow systems. It’s rarely one single culprit, but rather a confluence of potential problems that need methodical examination. Let me share what I’ve learned and how I approach debugging this.
+, let's unpack this. The issue of Formsflow.ai WebAPI and BPM containers failing to start in a Docker environment is, unfortunately, a fairly common stumbling block I’ve encountered several times in my past work, particularly when setting up complex workflow systems. It’s rarely one single culprit, but rather a confluence of potential problems that need methodical examination. Let me share what I’ve learned and how I approach debugging this.
 
-The first thing I always check is the container logs. The output from `docker logs <container_id or container_name>` is your best friend here. Don't just glance at it; read it *carefully*. Look for exceptions, errors, and warnings. These logs often reveal the root cause – sometimes a simple misconfiguration or a missing dependency. I’ve seen instances where the problem was as elementary as an incorrect environment variable pointing to the wrong database host or missing credentials. Sometimes the issues are more nuanced.
+The first thing I always check is the container logs. The output from `docker logs <container_id or container_name>` is your best friend here. Don't just glance at it; read it _carefully_. Look for exceptions, errors, and warnings. These logs often reveal the root cause – sometimes a simple misconfiguration or a missing dependency. I’ve seen instances where the problem was as elementary as an incorrect environment variable pointing to the wrong database host or missing credentials. Sometimes the issues are more nuanced.
 
 One recurring theme I’ve witnessed is the failure of these containers to establish the necessary network connectivity. This can manifest in various ways: the WebAPI container might be unable to reach the BPM container or vice-versa, or perhaps neither can communicate with the backing database. Docker networks, by default, provide isolation, and if the containers aren't properly configured to exist on the same user-defined network or are not using bridge mode to reach the host, communication will be hampered.
 
@@ -31,29 +31,29 @@ services:
     ports:
       - "5000:5000"
     environment:
-        - "DATABASE_URL=postgresql://user:password@db:5432/mydb" # example
-        - "BPM_URL=http://formsflow-bpm:8080" # example
+      - "DATABASE_URL=postgresql://user:password@db:5432/mydb" # example
+      - "BPM_URL=http://formsflow-bpm:8080" # example
     depends_on:
       - db
       - formsflow-bpm
     deploy:
-        resources:
-          limits:
-            memory: 2g
-            cpus: '2'
+      resources:
+        limits:
+          memory: 2g
+          cpus: "2"
   formsflow-bpm:
     image: formsflow/formsflow-bpm:latest
     ports:
       - "8080:8080"
     environment:
-        - "DATABASE_URL=postgresql://user:password@db:5432/mydb" # example
+      - "DATABASE_URL=postgresql://user:password@db:5432/mydb" # example
     depends_on:
       - db
     deploy:
-        resources:
-          limits:
-            memory: 1g
-            cpus: '1'
+      resources:
+        limits:
+          memory: 1g
+          cpus: "1"
   db:
     image: postgres:13 # using a postgres database
     environment:

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-react-components-fetch-and-render-rails-i18n-translations"
 ---
 
-Okay, let's tackle this. I've personally navigated this terrain quite a few times, particularly back when I was maintaining that massive e-commerce platform. Localization became a constant headache, and getting React and Rails to speak the same language regarding translations wasn't trivial. We ended up refining a solution that worked quite well, and I can walk you through my approach, along with some alternatives and code examples.
+, let's tackle this. I've personally navigated this terrain quite a few times, particularly back when I was maintaining that massive e-commerce platform. Localization became a constant headache, and getting React and Rails to speak the same language regarding translations wasn't trivial. We ended up refining a solution that worked quite well, and I can walk you through my approach, along with some alternatives and code examples.
 
 Fundamentally, the challenge lies in bridging two distinct ecosystems: the server-side rendering and management of translations in Rails and the client-side consumption and rendering of those translations within React. Rails, with its powerful i18n gem, handles translation files, pluralization rules, and locale management beautifully. React, on the other hand, is largely a JavaScript world. We need to find a method for React to efficiently access those Rails-managed translations.
 
@@ -31,11 +31,8 @@ Now, in the Rails layout, we would embed these initial translations as a JSON st
 <html>
   <head>
     <title>My App</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag 'application', media: 'all' %>
-    <%= javascript_pack_tag 'application' %>
+    <%= csrf_meta_tags %> <%= csp_meta_tag %> <%= stylesheet_link_tag
+    'application', media: 'all' %> <%= javascript_pack_tag 'application' %>
   </head>
 
   <body>
@@ -47,6 +44,7 @@ Now, in the Rails layout, we would embed these initial translations as a JSON st
   </body>
 </html>
 ```
+
 The crucial aspect here is using `raw` to prevent Rails from escaping the JSON string. Now, the `window.initialTranslations` will hold a JavaScript object ready for consumption in our React application.
 
 In the React application, we create a translation context. This context will serve as a centralized location to manage translations. We initialize it with the data coming from the server, and we also create a function for fetching further translations, if needed. I’ll outline the React code next:
@@ -54,36 +52,43 @@ In the React application, we create a translation context. This context will ser
 ```javascript
 // src/i18n/i18nContext.js
 
-import React, { createContext, useState, useContext, useCallback } from 'react';
+import React, { createContext, useState, useContext, useCallback } from "react";
 
 const I18nContext = createContext();
 
 export function I18nProvider({ children }) {
-  const [translations, setTranslations] = useState(window.initialTranslations || {});
+  const [translations, setTranslations] = useState(
+    window.initialTranslations || {}
+  );
   const [loading, setLoading] = useState(false);
 
-  const fetchTranslations = useCallback(async (keys, locale) => {
-      if(keys.length === 0) return;
-    setLoading(true);
-    try {
-      const params = new URLSearchParams({ keys, locale });
-      const response = await fetch(`/api/translations?${params}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+  const fetchTranslations = useCallback(
+    async (keys, locale) => {
+      if (keys.length === 0) return;
+      setLoading(true);
+      try {
+        const params = new URLSearchParams({ keys, locale });
+        const response = await fetch(`/api/translations?${params}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setTranslations((prevTranslations) => ({
+          ...prevTranslations,
+          ...data,
+        }));
+      } catch (error) {
+        console.error("Failed to fetch translations:", error);
+      } finally {
+        setLoading(false);
       }
-      const data = await response.json();
-      setTranslations((prevTranslations) => ({...prevTranslations, ...data}));
-    } catch (error) {
-      console.error("Failed to fetch translations:", error);
-    } finally {
-      setLoading(false);
-    }
-  }, [setLoading, setTranslations]);
-
+    },
+    [setLoading, setTranslations]
+  );
 
   const translate = (key) => {
-      return translations[key] || key;
-  }
+    return translations[key] || key;
+  };
   return (
     <I18nContext.Provider value={{ translate, fetchTranslations, loading }}>
       {children}
@@ -102,23 +107,23 @@ Finally, to illustrate how to actually use this setup, consider this example Rea
 
 ```javascript
 // src/components/MyComponent.js
-import React, { useEffect } from 'react';
-import { useI18n } from '../i18n/i18nContext';
+import React, { useEffect } from "react";
+import { useI18n } from "../i18n/i18nContext";
 
 function MyComponent() {
-    const { translate, fetchTranslations } = useI18n();
+  const { translate, fetchTranslations } = useI18n();
 
   useEffect(() => {
-    fetchTranslations(['welcome_message', 'button.label'], 'en');
+    fetchTranslations(["welcome_message", "button.label"], "en");
   }, [fetchTranslations]);
 
-    return (
-        <div>
-            <h1>{translate('hello')}</h1>
-            <p>{translate('welcome_message')}</p>
-            <button>{translate('button.label')}</button>
-        </div>
-    );
+  return (
+    <div>
+      <h1>{translate("hello")}</h1>
+      <p>{translate("welcome_message")}</p>
+      <button>{translate("button.label")}</button>
+    </div>
+  );
 }
 
 export default MyComponent;
@@ -145,4 +150,4 @@ Remember that the above code provides a starting point. The error handling and o
 
 Key points to remember here are to initially load a subset of translations, use a context to maintain global access, lazy load when necessary and establish an efficient endpoint for fetching translations. This overall approach proved to be effective for me and can handle a substantial load while keeping things relatively organized.
 
-For further studies, I'd highly recommend delving into the “Internationalization with Rails” chapter in the *Agile Web Development with Rails* book by Sam Ruby, David Bryant, and Dave Thomas. Furthermore, research regarding i18n in react should point towards the use of contexts, hooks, and techniques related to lazy loading. Also, examining how internationalization works with more established frameworks such as Java Spring's i18n or ASP.NET localization would provide great comparative understanding.
+For further studies, I'd highly recommend delving into the “Internationalization with Rails” chapter in the _Agile Web Development with Rails_ book by Sam Ruby, David Bryant, and Dave Thomas. Furthermore, research regarding i18n in react should point towards the use of contexts, hooks, and techniques related to lazy loading. Also, examining how internationalization works with more established frameworks such as Java Spring's i18n or ASP.NET localization would provide great comparative understanding.

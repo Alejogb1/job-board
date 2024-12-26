@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "1e-13-scientific-notation-meaning"
 ---
 
-Alright so you're asking about 1e-13 scientific notation right Been there done that seen it all let me break it down for you like I'm talking to a rubber duck I swear I’ve debugged worse stuff than this at 3 AM fueled by stale pizza and lukewarm coffee
+so you're asking about 1e-13 scientific notation right Been there done that seen it all let me break it down for you like I'm talking to a rubber duck I swear I’ve debugged worse stuff than this at 3 AM fueled by stale pizza and lukewarm coffee
 
 1e-13 is just a compact way of writing a really really small number in decimal form It's a shortcut it’s essentially telling you to take 1 and multiply it by 10 raised to the power of -13 Think of it as moving the decimal point 13 places to the left
 
@@ -25,6 +25,7 @@ value = 1e-13
 print(value)  # Output: 1e-13
 print(type(value)) #Output: <class 'float'>
 ```
+
 Simple right It treats `1e-13` as any other float You can do math with it too no drama there
 
 ```python
@@ -34,6 +35,7 @@ another_small_number=2.5e-12
 result = small_number + another_small_number
 print(result) #Output: 2.6e-12
 ```
+
 This will output as expected it is not always the case but python makes it quite easy
 
 Now here is where things get hairy if you are working in low level languages like C or C++ or even something close to the metal Like assembly or something you need to be careful
@@ -50,6 +52,7 @@ int main() {
     return 0;
 }
 ```
+
 This will also print the expected value but you see the constants `FLT_MIN` and `DBL_MIN` these constants shows the smallest values that can be represented by a float and by a double respectively so you get a picture of how close to zero floating point numbers can be
 
 And here is a C++ example with the `std::numeric_limits` that offers even more information
@@ -75,9 +78,10 @@ So the main takeaways are
 3 Watch out for precision issues specially in very low level languages like C and C++
 
 Now if you're looking for some good stuff to dive deeper I'd recommend checking out
-*   "What Every Computer Scientist Should Know About Floating-Point Arithmetic" a classic paper by David Goldberg it’s a must read it will save you headaches
 
-*   And also a good old book called "Numerical Recipes" covers all sorts of numerical methods and you will have a solid foundation if you dig through that thing It will give you insights on how floating point numbers are represented and handled in computer systems so you will know exactly what to expect
+- "What Every Computer Scientist Should Know About Floating-Point Arithmetic" a classic paper by David Goldberg it’s a must read it will save you headaches
+
+- And also a good old book called "Numerical Recipes" covers all sorts of numerical methods and you will have a solid foundation if you dig through that thing It will give you insights on how floating point numbers are represented and handled in computer systems so you will know exactly what to expect
 
 Oh and one more thing just for a laugh and to break the monotony I heard some programmer tried to divide by zero once they didn't get a result they just got a bunch of error messages It's almost as if zero didn’t want to be in the equation
 

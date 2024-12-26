@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-dataspell-remote-r-console-failing"
 ---
 
-Alright, let's dive into this DataSpell remote R console conundrum. I've seen this issue crop up more times than I’d care to count, especially when dealing with complex setups involving remote environments. It’s rarely a straightforward case, often stemming from a confluence of factors that require a systematic approach to unravel. The key isn't just knowing *what* is broken, but *why* it’s breaking.
+, let's dive into this DataSpell remote R console conundrum. I've seen this issue crop up more times than I’d care to count, especially when dealing with complex setups involving remote environments. It’s rarely a straightforward case, often stemming from a confluence of factors that require a systematic approach to unravel. The key isn't just knowing _what_ is broken, but _why_ it’s breaking.
 
 First, understand that a DataSpell remote R console doesn't communicate directly with your local machine’s R installation. Instead, it establishes a remote connection to an R process running on a separate server, whether that’s a cloud instance, a dedicated server, or even a virtual machine. This layer of indirection is what introduces most of the potential failure points.
 
@@ -36,7 +36,7 @@ else
 fi
 ```
 
-This script uses `netcat` ( `nc` ) to perform a simple connect scan. Replace "your\_server\_ip\_address" with the actual server's IP and "6312" with the port DataSpell is configured to use. If the connection fails, it points to a networking issue. This is critical for ruling out general network accessibility before delving into R specifics.
+This script uses `netcat` ( `nc` ) to perform a simple connect scan. Replace "your_server_ip_address" with the actual server's IP and "6312" with the port DataSpell is configured to use. If the connection fails, it points to a networking issue. This is critical for ruling out general network accessibility before delving into R specifics.
 
 **Example 2: Ensuring R is Listening (R Code - Run on the Remote Server)**
 

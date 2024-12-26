@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-declare-integer-variable-in-verilog-to-keep-track-of-a-value-to-be-used-i"
 ---
 
-Alright so you wanna declare an integer in Verilog to keep track of a value lets say for indexing right I've been there countless times and let me tell you it’s easy once you grasp the fundamentals it's not like rocket science or anything fancy just basic digital design stuff and verilog does the job very well
+so you wanna declare an integer in Verilog to keep track of a value lets say for indexing right I've been there countless times and let me tell you it’s easy once you grasp the fundamentals it's not like rocket science or anything fancy just basic digital design stuff and verilog does the job very well
 
 First things first you need to understand how verilog handles data types it's a strongly typed language that means you have to be explicit about what kind of data you are storing unlike some other languages we all know and love well some of us anyway for integers we use the `integer` keyword. Simple right
 
@@ -20,7 +20,7 @@ always @(posedge clk) begin
 end
 ```
 
-See how it's done inside begin end block simple easy to understand and we are in a always block we are using non blocking assignment the `<=` so that everything executes in parallel. No blocking assignment ` = ` is generally a big no no unless you know what you are doing and you are working with combinational logic which is not the case here
+See how it's done inside begin end block simple easy to understand and we are in a always block we are using non blocking assignment the `<=` so that everything executes in parallel. No blocking assignment `=` is generally a big no no unless you know what you are doing and you are working with combinational logic which is not the case here
 
 Also we can declare the same inside modules in a similar way as follows
 

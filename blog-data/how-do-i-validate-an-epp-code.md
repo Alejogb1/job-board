@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-validate-an-epp-code"
 ---
 
-Okay, let’s tackle this. Validating an EPP code, or authorization code as it's sometimes called, for domain transfers can certainly feel like navigating a maze if you haven’t had the experience. I've spent a good chunk of my career dealing with systems that involve domain registration and management, and trust me, getting this process secure and accurate is crucial. It's not just about checking if the code *looks* right; it’s about adhering to specific formats and standards. Let's break down the process.
+, let’s tackle this. Validating an EPP code, or authorization code as it's sometimes called, for domain transfers can certainly feel like navigating a maze if you haven’t had the experience. I've spent a good chunk of my career dealing with systems that involve domain registration and management, and trust me, getting this process secure and accurate is crucial. It's not just about checking if the code _looks_ right; it’s about adhering to specific formats and standards. Let's break down the process.
 
 Essentially, an EPP code (Extensible Provisioning Protocol) is a secure password used to authorize the transfer of a domain name from one registrar to another. The registrar managing the domain generates this code, and the receiving registrar requires it to initiate the transfer process. There’s no single, universally defined format; variations exist based on the registry’s requirements and often the registrar's particular implementation. However, some common rules and best practices apply, which we’ll discuss.
 
@@ -117,7 +117,7 @@ print(flexible_epp_code_validation("12345", "registry_c")) # Output: (False, 'EP
 print(flexible_epp_code_validation("test", "unknown_registry")) # Output: (False, 'Unsupported registry type.')
 ```
 
-In this example, we have added a "registry\_type" parameter. This would allow you to specify a format based on which registrar you are interacting with. Again, this exemplifies the different possible scenarios that one can face in real life.
+In this example, we have added a "registry_type" parameter. This would allow you to specify a format based on which registrar you are interacting with. Again, this exemplifies the different possible scenarios that one can face in real life.
 
 For further in-depth learning about the EPP protocol itself, I would highly recommend reviewing the RFC 5730, RFC 5731, RFC 5732, RFC 5733, and RFC 5734 documents, which describe the core EPP standards, providing the specifications for the communication protocol itself. The book "Domain Name System: Implementation and Specification" by Paul Albitz and Cricket Liu also provides very detailed technical insights into the entire ecosystem of domain registration, including valuable context surrounding EPP codes.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "invalid-char-between-encapsulated-token-and-delimiter-in-apache-commons-csv-libr"
 ---
 
-Okay so you're banging your head against the wall with that pesky `Invalid char between encapsulated token and delimiter` error in Apache Commons CSV right I feel your pain man I've been there done that got the t-shirt and the stack trace burnt into my retinas
+you're banging your head against the wall with that pesky `Invalid char between encapsulated token and delimiter` error in Apache Commons CSV right I feel your pain man I've been there done that got the t-shirt and the stack trace burnt into my retinas
 
 This error basically screams that you've got some funky character lurking between your quoted field and the comma or whatever you’re using as a delimiter It’s usually spaces or tabs sometimes even some weird invisible unicode gremlin messing up your day
 
@@ -32,7 +32,7 @@ let's assume you have this type of data
 "value1", " value2  ", "value3"
 ```
 
-See that single space between the second field ` "field 2" ` and the second comma there is also multiple spaces before and after the `value2` value? That's the gremlin we are hunting This space is usually the problem That’s the invalid character between encapsulated token and delimiter
+See that single space between the second field `"field 2"` and the second comma there is also multiple spaces before and after the `value2` value? That's the gremlin we are hunting This space is usually the problem That’s the invalid character between encapsulated token and delimiter
 
 The thing is that commons CSV is pretty strict about this and is correct in reporting it as incorrect data. Usually real world data isn't always clean though right?
 

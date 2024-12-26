@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "i-am-not-able-to-understand-how-to-use-ivotes-contract-address-in-a-governorvotes-contract"
 ---
 
-alright, so you're having a bit of a head-scratcher with integrating an `ivotes` contract address into a `governorvotes` contract. i've been down this road before, it can feel a bit like trying to fit a square peg into a round hole if you're not careful with the details. let me walk you through what i've learned, based on some hard-won battles with similar setups in the past.
+, so you're having a bit of a head-scratcher with integrating an `ivotes` contract address into a `governorvotes` contract. i've been down this road before, it can feel a bit like trying to fit a square peg into a round hole if you're not careful with the details. let me walk you through what i've learned, based on some hard-won battles with similar setups in the past.
 
 first off, let's break down the core problem. `ivotes` usually acts as the data source for voting power – it keeps track of who has how many votes. a `governorvotes` contract, on the other hand, uses this data to enable governance proposals and voting. the trick is to make sure the `governorvotes` contract knows where to fetch the voting power from, which is your `ivotes` contract address.
 
@@ -19,9 +19,9 @@ import "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
 
 
 contract CustomGovernor is Governor, GovernorVotes {
-    
-    constructor(address _votesAddress) 
-    Governor("MyGovernor") 
+
+    constructor(address _votesAddress)
+    Governor("MyGovernor")
     GovernorVotes(_votesAddress) {
     }
 }
@@ -31,7 +31,7 @@ in the code above, we're making use of openzeppelin's contracts. i've used this 
 
 you might be wondering, why do we need this `_votesAddress` variable to be an `address`? because that's how contracts interact with each other within the ethereum virtual machine, or evm. in the evm, every contract has a unique address. when you want one contract to talk to another, you have to know the address of the contract you want to interact with.
 
-okay, let's talk about how to practically use that address, like inside the constructor, it's the best place in my opinion. i've had my share of mistakes in the past where i tried to update variables after the construction phase only to find out that it makes things a bit more complex that it has to be.
+, let's talk about how to practically use that address, like inside the constructor, it's the best place in my opinion. i've had my share of mistakes in the past where i tried to update variables after the construction phase only to find out that it makes things a bit more complex that it has to be.
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -49,7 +49,7 @@ contract CustomGovernor is Governor, GovernorVotes {
         GovernorVotes(_votesAddress)
     {
     }
-    
+
     function token() public pure override returns (address) {
         //we do not need the token function here, because the votes logic is handled by the IVotes contract.
         revert("we do not use ERC20 token here");
@@ -79,11 +79,11 @@ interface ICustomVotes {
 
 
 contract CustomGovernor is Governor, GovernorVotes {
-    
+
     ICustomVotes public votesContract;
 
-    constructor(address _votesAddress) 
-    Governor("MyGovernor") 
+    constructor(address _votesAddress)
+    Governor("MyGovernor")
     GovernorVotes(_votesAddress) {
         votesContract = ICustomVotes(_votesAddress);
 

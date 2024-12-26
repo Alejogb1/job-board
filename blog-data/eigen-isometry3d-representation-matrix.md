@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "eigen-isometry3d-representation-matrix"
 ---
 
-Okay so eigen isometry3d representation matrix right I've been there man trust me this is like digging into a particularly stubborn API from the early 2000s that has documentation written in like hieroglyphics
+eigen isometry3d representation matrix right I've been there man trust me this is like digging into a particularly stubborn API from the early 2000s that has documentation written in like hieroglyphics
 
-Okay so lemme break it down from my perspective having wrestled with this beast a few times over the years Back when I was first trying my hand at building this 3D model viewer for my grad project it hit me like a ton of bricks these rotations and translations well they just wouldn't behave especially when I started dealing with animated models That's where I crashed headfirst into this isometry matrix problem and it took a few late nights fueled by bad instant coffee to really get it
+lemme break it down from my perspective having wrestled with this beast a few times over the years Back when I was first trying my hand at building this 3D model viewer for my grad project it hit me like a ton of bricks these rotations and translations well they just wouldn't behave especially when I started dealing with animated models That's where I crashed headfirst into this isometry matrix problem and it took a few late nights fueled by bad instant coffee to really get it
 
 So what we're talking about is a 4x4 matrix this thing represents a transformation that preserves distance That's the core idea This isometry keeps shapes and sizes intact it's just changing their orientation and position in 3D space Think rigid body transformations your typical rotation translation combos you know the good stuff
 
-Now the *eigen* part is what throws a wrench into things Usually eigen relates to eigen vectors and eigen values they describe directions and magnitude scaling along those directions but in this case we're not talking about scaling we're talking about composing rotations and translations The question might be a bit misleading we are really dealing with the structure of the matrix not its "eigen" properties in the classical sense though we could find its eigendecomposition but that won't give you rotations and translations directly
+Now the _eigen_ part is what throws a wrench into things Usually eigen relates to eigen vectors and eigen values they describe directions and magnitude scaling along those directions but in this case we're not talking about scaling we're talking about composing rotations and translations The question might be a bit misleading we are really dealing with the structure of the matrix not its "eigen" properties in the classical sense though we could find its eigendecomposition but that won't give you rotations and translations directly
 
 An isometry matrix in 3D consists of a 3x3 rotation matrix and a 3x1 translation vector that makes up part of the last column of the 4x4 matrix and the last row is generally always `0 0 0 1` This is for homogeneous coordinates that's how we group translations with rotations in a single matrix If you've ever worked with 3D graphics or robotics this is pretty standard stuff so far
 
@@ -89,7 +89,7 @@ print("Extracted Rotation Matrix:\n", extracted_rotation)
 print("\nExtracted Translation Vector:\n", extracted_translation)
 ```
 
-Okay this one is important because it reverses that process. It shows how to take an existing 4x4 matrix and pull out the rotation and translation components separately. This can be handy when you are receiving matrix data from sensors or another system for example some robotics platform. One tip I learned is to always double check the data format of the matrix because sometimes its row major sometimes column major and those small mistakes always cost a lot of debugging time.
+this one is important because it reverses that process. It shows how to take an existing 4x4 matrix and pull out the rotation and translation components separately. This can be handy when you are receiving matrix data from sensors or another system for example some robotics platform. One tip I learned is to always double check the data format of the matrix because sometimes its row major sometimes column major and those small mistakes always cost a lot of debugging time.
 
 **Example 3: Applying the Isometry to a 3D Point**
 
@@ -133,13 +133,13 @@ print(transformed_point)
 
 This example shows how you use the matrix to actually transform a 3D point. You must convert to homogeneous coordinates and apply the transformation by multiplying the matrix by the homogenous representation of your point. I know this is trivial to do but doing this wrong always throws off every single point you are trying to visualize. Once you grasp that that is how rotations and translations are applied in 3D you can do a lot of cool things like applying multiple transformations by just multiplying the transformation matrices together.
 
-Now a little note for the road *always* remember that the matrix multiplication order matters It is not commutative. Rotating then translating is different than translating then rotating So keep an eye on those things.
+Now a little note for the road _always_ remember that the matrix multiplication order matters It is not commutative. Rotating then translating is different than translating then rotating So keep an eye on those things.
 
 For reference materials on this stuff if you want to go a bit deeper:
 
-*   **"3D Math Primer for Graphics and Game Development" by Fletcher Dunn and Ian Parberry:** This is like the bible for 3D maths its super clear and starts from very basic concepts
-*   **"Geometric Tools for Computer Graphics" by Philip J. Schneider and David H. Eberly:** A more advanced text that deals with the math behind many of these concepts including rotations in more detail (and also goes into very interesting topics)
-*   **"Robotics: Modelling Planning and Control" by Bruno Siciliano et al:** This is a textbook for robotics engineers but many concepts of rotations and translations are explained well there with a great focus on applications.
+- **"3D Math Primer for Graphics and Game Development" by Fletcher Dunn and Ian Parberry:** This is like the bible for 3D maths its super clear and starts from very basic concepts
+- **"Geometric Tools for Computer Graphics" by Philip J. Schneider and David H. Eberly:** A more advanced text that deals with the math behind many of these concepts including rotations in more detail (and also goes into very interesting topics)
+- **"Robotics: Modelling Planning and Control" by Bruno Siciliano et al:** This is a textbook for robotics engineers but many concepts of rotations and translations are explained well there with a great focus on applications.
 
 Remember when they say that "mathematics is the language of the universe" well matrices are a very important part of that language. Understanding this 4x4 transformation will unlock many doors for you in the 3D world. It's tricky in the beginning but once it clicks it's really elegant and powerful.
 

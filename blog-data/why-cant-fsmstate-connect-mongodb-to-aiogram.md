@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-cant-fsmstate-connect-mongodb-to-aiogram"
 ---
 
-Okay, let's unpack this. The question of why `FSMState` from aiogram doesn't directly connect to MongoDB touches on a few key architectural differences and how state management works within these two systems. It's not a case of a missing library or a simple configuration oversight; rather, it's a fundamental mismatch of purpose and scope. I’ve run into similar issues numerous times in past projects, often involving different state management solutions and various data stores. What might seem like a straightforward linkage on the surface requires a more nuanced approach because they weren't designed to speak to each other directly.
+, let's unpack this. The question of why `FSMState` from aiogram doesn't directly connect to MongoDB touches on a few key architectural differences and how state management works within these two systems. It's not a case of a missing library or a simple configuration oversight; rather, it's a fundamental mismatch of purpose and scope. I’ve run into similar issues numerous times in past projects, often involving different state management solutions and various data stores. What might seem like a straightforward linkage on the surface requires a more nuanced approach because they weren't designed to speak to each other directly.
 
-Here's the core issue: `FSMState` in aiogram is primarily about managing the user's conversational context within a Telegram bot. It tracks where the user is in a conversation flow – what data needs to be collected, what action to perform next. This information is typically kept in memory, or at most, a lightweight, simple key-value store like Redis for horizontal scalability, if needed. It’s designed for *short-lived*, transient data related to the current interaction. MongoDB, on the other hand, is a robust, document-oriented database designed for *persistent*, long-term storage and retrieval of structured data. Think of it as a way to archive a lot of information that needs to be kept and referenced over time.
+Here's the core issue: `FSMState` in aiogram is primarily about managing the user's conversational context within a Telegram bot. It tracks where the user is in a conversation flow – what data needs to be collected, what action to perform next. This information is typically kept in memory, or at most, a lightweight, simple key-value store like Redis for horizontal scalability, if needed. It’s designed for _short-lived_, transient data related to the current interaction. MongoDB, on the other hand, is a robust, document-oriented database designed for _persistent_, long-term storage and retrieval of structured data. Think of it as a way to archive a lot of information that needs to be kept and referenced over time.
 
 `FSMState` doesn't persist data directly to disk; it maintains the state within the aiogram framework’s memory structure. It only knows about the conversational flow. MongoDB, by contrast, expects a structured query to retrieve or save data, not a conversation state object. There isn't a native way for `FSMState` to automatically convert its current state data into something MongoDB could handle directly, nor is there a mechanism for MongoDB to signal state transitions back to `FSMState`. The connection is missing because they have fundamentally different roles in the application architecture.
 
-So, if we want to use MongoDB for persistent storage, we need to build a bridge – that is, *we* have to handle the conversion ourselves. We don't connect `FSMState` directly, we write code that interprets the `FSMState` data, and uses that information to write to or retrieve from MongoDB. It's a deliberate process, not automatic. Let's dive into some practical implementations of how to accomplish this.
+So, if we want to use MongoDB for persistent storage, we need to build a bridge – that is, _we_ have to handle the conversion ourselves. We don't connect `FSMState` directly, we write code that interprets the `FSMState` data, and uses that information to write to or retrieve from MongoDB. It's a deliberate process, not automatic. Let's dive into some practical implementations of how to accomplish this.
 
 **Scenario 1: Persisting Simple User Data**
 
@@ -109,13 +109,14 @@ async def process_update_email(message: types.Message, state: FSMContext):
     await state.finish()
 
 ```
+
 In this update email example, we take the new email, get the user id, and use `$set` in MongoDB to update the user's email field. Once again, `FSMState` helps us navigate the user interaction, and our handler code handles all communication with the database.
 
 To solidify your understanding of these concepts, consider reading:
 
-*   **"Database Internals" by Alex Petrov**: This book provides a profound insight into how databases work, especially in terms of storage and retrieval methods, helping you understand the fundamentals of why a direct connection with `FSMState` isn't a viable design.
-*   **The official MongoDB documentation**: It’s a fantastic resource for understanding MongoDB’s querying, document handling, and other relevant database principles.
-*   **The official aiogram documentation:** This will deepen your knowledge of `FSMState`, how to work with state context, and its place in a bot's logic.
-*   **"Designing Data-Intensive Applications" by Martin Kleppmann**: This book provides comprehensive guidelines for building scalable, fault-tolerant data architectures, particularly useful when integrating state management with persistent storage solutions.
+- **"Database Internals" by Alex Petrov**: This book provides a profound insight into how databases work, especially in terms of storage and retrieval methods, helping you understand the fundamentals of why a direct connection with `FSMState` isn't a viable design.
+- **The official MongoDB documentation**: It’s a fantastic resource for understanding MongoDB’s querying, document handling, and other relevant database principles.
+- **The official aiogram documentation:** This will deepen your knowledge of `FSMState`, how to work with state context, and its place in a bot's logic.
+- **"Designing Data-Intensive Applications" by Martin Kleppmann**: This book provides comprehensive guidelines for building scalable, fault-tolerant data architectures, particularly useful when integrating state management with persistent storage solutions.
 
 In summary, it's essential to recognize that `FSMState` is a transient, conversational-context tool while MongoDB is a persistent data storage mechanism. There is no direct connection, nor should there be. Instead, the responsibility of managing how the information within `FSMState` gets translated to and from the database falls squarely on the developer. We've demonstrated how to achieve this by explicitly manipulating the data, rather than trying to force an unsuitable connection. This requires a good understanding of both how each framework works independently to design an effective solution that is both robust and scalable.

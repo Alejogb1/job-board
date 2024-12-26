@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resolve-rubygems-rbenv-and-rbenv-vars-issues-in-ubuntu-2004"
 ---
 
-Alright, let's talk about the often-encountered, and frankly, sometimes frustrating trifecta of RubyGems, rbenv, and `rbenv-vars` on Ubuntu 20.04. I've spent my share of late nights untangling the spaghetti these tools can sometimes create, and I've learned a few things along the way, so I hope my experience will help you navigate these waters. It's a common source of headaches, particularly when you're juggling multiple ruby versions across different projects.
+, let's talk about the often-encountered, and frankly, sometimes frustrating trifecta of RubyGems, rbenv, and `rbenv-vars` on Ubuntu 20.04. I've spent my share of late nights untangling the spaghetti these tools can sometimes create, and I've learned a few things along the way, so I hope my experience will help you navigate these waters. It's a common source of headaches, particularly when you're juggling multiple ruby versions across different projects.
 
 The core problem generally stems from the way these tools interact with each other and the environment, specifically in the context of Ubuntu 20.04's rather particular setup. `rbenv` is designed to manage ruby versions, RubyGems manages packages, and `rbenv-vars` is a handy plugin for setting project-specific environment variables. The trouble often arises from environment path conflicts, incorrect ruby version selection, or misconfigured gems. Let’s break down these individual components and common issues.
 
@@ -47,6 +47,7 @@ gem install bundler
 bundle install # this installs project-specific gems
 bundle exec rails -v # Verifying rails version
 ```
+
 This guarantees that each project uses its own specific ruby and gem versions, eliminating cross-project conflicts and ensuring build stability. `bundle install` uses the Gemfile for project dependencies. `bundle exec` prefixes any execution with the correct gem paths for the project, preventing the wrong versions from being invoked.
 
 Now, let’s discuss `rbenv-vars`. This plugin is incredibly useful for managing project-specific environment variables without polluting your global environment. However, there are times when `rbenv-vars` can appear to malfunction. Problems typically arise from incorrectly created `.rbenv-vars` files or incorrect syntax within those files. I recall a situation where a developer had misplaced the `.rbenv-vars` file in the parent directory instead of in the root of the project directory. It was failing silently because the rbenv hook to parse the file was not triggered for that specific project, leading to variables not being available. The file should always be placed at the same level as `.ruby-version`.

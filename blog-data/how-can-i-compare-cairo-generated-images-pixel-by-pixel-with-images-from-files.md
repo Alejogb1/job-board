@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-compare-cairo-generated-images-pixel-by-pixel-with-images-from-files"
 ---
 
-Alright, let's tackle this pixel-by-pixel comparison of Cairo-generated images and those from files. It's a common scenario, and I've been down this path myself quite a few times, especially back when I was working on a cross-platform rendering engine. The devil is always in the details with image comparisons, and simply looking at visual differences often isn’t enough; we need the precision of a pixel-level comparison.
+, let's tackle this pixel-by-pixel comparison of Cairo-generated images and those from files. It's a common scenario, and I've been down this path myself quite a few times, especially back when I was working on a cross-platform rendering engine. The devil is always in the details with image comparisons, and simply looking at visual differences often isn’t enough; we need the precision of a pixel-level comparison.
 
 The core challenge lies in the way images are represented and accessed. Cairo, when creating its output, typically gives you a surface – an in-memory buffer of pixel data. File-based images, on the other hand, usually come in encoded formats like PNG or JPEG, requiring decoding to get to the raw pixel information. The crucial steps, therefore, involve getting both types of images into a comparable raw pixel format, and then implementing the actual comparison logic.
 
@@ -160,10 +160,10 @@ Here, we created a simple `compare_images` function using numpy to check if all 
 
 **Resources**
 
-*   **"Computer Graphics: Principles and Practice"** by Foley, van Dam, Feiner, and Hughes: A classic textbook covering fundamental concepts of computer graphics, including color spaces, image representations, and rendering techniques.
-*   **"Digital Image Processing"** by Rafael C. Gonzalez and Richard E. Woods: A comprehensive textbook on image processing, which will discuss pixel manipulation, image transformation, and image analysis. The book is a must have for image understanding.
-*   **Cairo Documentation:** The Cairo documentation provides detailed information about surfaces, contexts, and image manipulation in Cairo.
-*   **Pillow (PIL) Documentation:** Pillow offers comprehensive guides on image loading, format conversion, and manipulation.
-*   **NumPy Documentation:** Documentation for NumPy arrays and array manipulations should be included in your search, and is essential to making your code faster.
+- **"Computer Graphics: Principles and Practice"** by Foley, van Dam, Feiner, and Hughes: A classic textbook covering fundamental concepts of computer graphics, including color spaces, image representations, and rendering techniques.
+- **"Digital Image Processing"** by Rafael C. Gonzalez and Richard E. Woods: A comprehensive textbook on image processing, which will discuss pixel manipulation, image transformation, and image analysis. The book is a must have for image understanding.
+- **Cairo Documentation:** The Cairo documentation provides detailed information about surfaces, contexts, and image manipulation in Cairo.
+- **Pillow (PIL) Documentation:** Pillow offers comprehensive guides on image loading, format conversion, and manipulation.
+- **NumPy Documentation:** Documentation for NumPy arrays and array manipulations should be included in your search, and is essential to making your code faster.
 
 I hope this provides a good starting point for your pixel comparison endeavors. This field can get detailed very fast, so make sure to start small, then scale as you become more comfortable with the process. Good luck.

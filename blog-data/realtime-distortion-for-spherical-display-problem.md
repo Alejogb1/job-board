@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "realtime-distortion-for-spherical-display-problem"
 ---
 
-Okay so you're talking about realtime distortion for spherical displays right I've been down that rabbit hole more times than I'd like to admit Back in the day when I was working on that immersive art project thing a giant half-dome display was our biggest nightmare we had this incredibly detailed 3D model and we wanted to project it onto the dome in real time without everything looking like a melted Dali painting and man it was not pretty initially We’re not talking about a simple flat screen projection here we're working with a curved surface so what works for a regular monitor is gonna look seriously messed up
+you're talking about realtime distortion for spherical displays right I've been down that rabbit hole more times than I'd like to admit Back in the day when I was working on that immersive art project thing a giant half-dome display was our biggest nightmare we had this incredibly detailed 3D model and we wanted to project it onto the dome in real time without everything looking like a melted Dali painting and man it was not pretty initially We’re not talking about a simple flat screen projection here we're working with a curved surface so what works for a regular monitor is gonna look seriously messed up
 
 The core issue here is that a flat image which is what our graphics cards naturally render needs to be warped or distorted in such a way that when it's projected onto a sphere it appears undistorted from the viewers perspective Think about projecting a rectangular photo onto a basketball it just doesn't work you need to pre-distort that image so it looks correct on the curve it's not simple its some serious matrix math manipulation
 
 So initially when we tackled this we tried the basic fisheye lens type distortion it was straightforward yeah its simple enough to implement but the problem was the extreme warping towards the edges of the dome we got some serious stretching and loss of detail and the more we tried to compensate for the edges the more the center ended up looking squished it was a mess We even tried some basic texture mapping techniques but the mapping was like a flat plane projected onto the spherical surface we got pinching and that's not what we're after that was a total no go too much effort for garbage results
 
-Okay lets get into the nuts and bolts of a couple of things we actually tried I mean the real deal here first up we played around with pre-rendered lookup tables this approach uses an offline process to compute the distortion for a whole grid of pixels Then during the projection each pixel on the display grabs its pre-calculated pixel from the table That was an idea to speed things up later on I'll put the code on the bottom first example was some precalc stuff but it was not real time enough so we needed a real solution later on
+lets get into the nuts and bolts of a couple of things we actually tried I mean the real deal here first up we played around with pre-rendered lookup tables this approach uses an offline process to compute the distortion for a whole grid of pixels Then during the projection each pixel on the display grabs its pre-calculated pixel from the table That was an idea to speed things up later on I'll put the code on the bottom first example was some precalc stuff but it was not real time enough so we needed a real solution later on
 
 ```python
 import numpy as np
@@ -39,12 +39,12 @@ def generate_lookup_table(width, height, sphere_radius):
       phi = np.arcsin(r)
 
       theta = np.arctan2(ny, nx)
-      
+
       spherical_x = np.cos(theta) * sphere_radius * phi / r if r!=0 else 0
       spherical_y = np.sin(theta) * sphere_radius * phi / r if r!=0 else 0
-    
-      
-      
+
+
+
       lookup_table[y,x] = np.array([(spherical_x / sphere_radius + 1)/2,(spherical_y/sphere_radius + 1)/2 ])
   return lookup_table
 # Example usage
@@ -55,6 +55,7 @@ lookup_table = generate_lookup_table(width, height, radius)
 
 print(lookup_table)
 ```
+
 This python snippit just generates the lookup table for a specific radius and resolution you can use it in the shaders later on to get the texture position
 
 We then moved onto a more robust approach using shaders directly this means we're doing the distortion calculations on the graphics card which is what you want for realtime results The idea is this each pixel on your projected flat image corresponds to a point on the sphere so in the vertex shader you transform each point in the source texture into spherical coordinates and then from those coordinates you calculate the position on the display surface the key element is to handle the normalization so it looks right when projected the first try on this was ok but we were far away from perfection
@@ -89,6 +90,7 @@ void main()
 ```
 
 Now that shader needs to run on a surface that you want to render your scene which in this case is like a flat quad mesh where the texture coordinates are used to map the texture into a 3D model the shader above is only the vertex shader here is the fragment shader example:
+
 ```glsl
 #version 330 core
 out vec4 FragColor;
@@ -99,6 +101,7 @@ void main()
     FragColor = texture(ourTexture, TexCoord);
 }
 ```
+
 Now these two simple shaders do not include things like uv mapping or normal mapping or any other advance lighting techniques but they are the core for basic realtime distortion in spherical displays The vertex shader transform the vertexes using the spherical projection function to properly display the texture and the fragment shader will just copy the pixel color from texture to the display
 
 Now a big problem we had early on was getting the parameters right the field of view of your virtual camera and the radius of your display have to be calibrated perfectly otherwise you end up with stretched or pinched images getting these values correct is crucial if you have a physical dome display you can measure the radius you can also use different values for x and y radii if you want to have a different curved display

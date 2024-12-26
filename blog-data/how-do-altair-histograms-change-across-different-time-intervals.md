@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-altair-histograms-change-across-different-time-intervals"
 ---
 
-Alright, let's tackle this. It's a question that brings back memories of a rather complex project I worked on a few years back, where analyzing sensor data for predictive maintenance was crucial. Specifically, we were using Altair to visualize those temporal changes, and the nuances of how histograms shifted over time were pivotal to our analysis. So, when we're talking about Altair histograms and their behavior across time intervals, we're essentially dissecting how the distribution of a particular variable evolves. This isn't merely about slapping some bars on a chart; it’s about understanding the story those distributions tell over time, and how Altair can effectively portray that.
+, let's tackle this. It's a question that brings back memories of a rather complex project I worked on a few years back, where analyzing sensor data for predictive maintenance was crucial. Specifically, we were using Altair to visualize those temporal changes, and the nuances of how histograms shifted over time were pivotal to our analysis. So, when we're talking about Altair histograms and their behavior across time intervals, we're essentially dissecting how the distribution of a particular variable evolves. This isn't merely about slapping some bars on a chart; it’s about understanding the story those distributions tell over time, and how Altair can effectively portray that.
 
-Firstly, it's important to clarify that "change" can mean several things in this context. The simplest case involves static datasets that have an associated timestamp and we display each slice as a separate histogram alongside each other. More advanced uses, which often lead to deeper insight, concern the evolution of the *shape* of the distribution itself; does it become more or less skewed, more or less spread out, move towards a different central tendency? All of this data is encoded within the shape of the histogram and will vary across time if the underlying generating process changes over time.
+Firstly, it's important to clarify that "change" can mean several things in this context. The simplest case involves static datasets that have an associated timestamp and we display each slice as a separate histogram alongside each other. More advanced uses, which often lead to deeper insight, concern the evolution of the _shape_ of the distribution itself; does it become more or less skewed, more or less spread out, move towards a different central tendency? All of this data is encoded within the shape of the histogram and will vary across time if the underlying generating process changes over time.
 
 The core idea is to create multiple histograms—each representing a specific time interval—and then arrange them in a way that allows for visual comparison. Altair makes this fairly straightforward through its layering capabilities and by carefully constructing the data. Let's dive into a few examples based on my experiences, and I will use some sample code to illustrate.
 
@@ -75,11 +75,12 @@ chart = alt.Chart(data).mark_bar(opacity=0.7).encode(
 )
 chart.show()
 ```
+
 Here we see that by overlaying histograms, the differences in the distributions become visually clearer. The use of `opacity=0.7` allows us to see through the overlapping bars, revealing the density of measurements in each range for each period. This is far superior to placing the histograms side-by-side when there is significant overlap between the distributions. The change in the central tendency of the distribution is immediately apparent.
 
 **Example 3: Animated Histograms Across a Time Series**
 
-For truly dynamic temporal analysis, animation is the next logical step. Instead of simply showing static slices, animations allow us to observe the *continuous* evolution of the distribution. This can bring out underlying trends that static charts struggle to convey. For this, we can use Altair in conjunction with some techniques to pre-process our data in the manner needed to properly animate. This example assumes a very granular dataset with minute-by-minute samples.
+For truly dynamic temporal analysis, animation is the next logical step. Instead of simply showing static slices, animations allow us to observe the _continuous_ evolution of the distribution. This can bring out underlying trends that static charts struggle to convey. For this, we can use Altair in conjunction with some techniques to pre-process our data in the manner needed to properly animate. This example assumes a very granular dataset with minute-by-minute samples.
 
 ```python
 import altair as alt
@@ -106,6 +107,7 @@ chart = alt.Chart(df).mark_bar().encode(
 chart.show()
 
 ```
+
 In this case we are animating the bins using the `alt.Frame` parameter, which allows the histogram to morph in a smooth and continuous manner. It's important to emphasize that the data used to generate such animations might require pre-processing to ensure that the bins align correctly across frames and that the transition is smooth. This method is incredibly useful in situations with high temporal granularity.
 
 In summary, visualizing histogram change in Altair relies heavily on careful data structuring and using Altair’s expressive encoding capabilities. While the side-by-side method is great for initial comparisons, layering and animation provide far more impactful views when dealing with nuanced changes in distributions over time.

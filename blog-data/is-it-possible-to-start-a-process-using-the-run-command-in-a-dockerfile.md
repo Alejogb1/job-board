@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-it-possible-to-start-a-process-using-the-run-command-in-a-dockerfile"
 ---
 
-Okay, let's tackle this. I've seen this particular point trip up many a developer, and it's understandable. The core issue revolves around the fundamental lifecycle of a Docker container build versus its runtime. The short answer is: yes, technically you *can* start a process using `RUN` in a Dockerfile, but it's crucial to understand that the process will **not** persist when the container is run from the resulting image. This often leads to confusion, and in my experience, it's where many debugging hours are spent.
+, let's tackle this. I've seen this particular point trip up many a developer, and it's understandable. The core issue revolves around the fundamental lifecycle of a Docker container build versus its runtime. The short answer is: yes, technically you _can_ start a process using `RUN` in a Dockerfile, but it's crucial to understand that the process will **not** persist when the container is run from the resulting image. This often leads to confusion, and in my experience, it's where many debugging hours are spent.
 
 Let’s unpack why and how that is, drawing from past projects where I’ve had to navigate this exact situation. Imagine building an image for a web application. You might be tempted to use `RUN` to start the server during the image build process, thinking that the server will then automatically be running when a container is created from that image. You might see something along these lines:
 
@@ -20,11 +20,11 @@ EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
-Here, `RUN service nginx start` attempts to start the nginx service during image building. The important takeaway is that this command executes within a *temporary* container that's created during the build. Once the command finishes, this container is discarded, and the resulting filesystem changes become a new layer in your image. Therefore, the nginx process, while started within that temporary container, does not persist in the final image. This is a crucial distinction.
+Here, `RUN service nginx start` attempts to start the nginx service during image building. The important takeaway is that this command executes within a _temporary_ container that's created during the build. Once the command finishes, this container is discarded, and the resulting filesystem changes become a new layer in your image. Therefore, the nginx process, while started within that temporary container, does not persist in the final image. This is a crucial distinction.
 
-The `RUN` command, at its core, executes commands *during* the image build process. Its main purpose is to install software, copy files, set up configurations, and perform other image preparations. It isn't meant to create persistent running processes within the final container. Anything you start with `RUN` exists only within the ephemeral build container.
+The `RUN` command, at its core, executes commands _during_ the image build process. Its main purpose is to install software, copy files, set up configurations, and perform other image preparations. It isn't meant to create persistent running processes within the final container. Anything you start with `RUN` exists only within the ephemeral build container.
 
-What you *do* want to use to start your main application process in the container is either the `CMD` or `ENTRYPOINT` instruction, or sometimes a combination of both. These instructions define the command that will run when the container is launched from the image. The `CMD` instruction provides a default command that can be overridden when running the container, whereas `ENTRYPOINT` sets the main command that will always be executed, possibly with arguments provided from `CMD` or the command line during runtime.
+What you _do_ want to use to start your main application process in the container is either the `CMD` or `ENTRYPOINT` instruction, or sometimes a combination of both. These instructions define the command that will run when the container is launched from the image. The `CMD` instruction provides a default command that can be overridden when running the container, whereas `ENTRYPOINT` sets the main command that will always be executed, possibly with arguments provided from `CMD` or the command line during runtime.
 
 To illustrate the correct approach, consider the following example:
 

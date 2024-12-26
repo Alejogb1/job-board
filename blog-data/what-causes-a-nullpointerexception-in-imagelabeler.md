@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-causes-a-nullpointerexception-in-imagelabeler"
 ---
 
-Okay, let's talk about nullpointerexceptions in an image labeling context. I've seen my share of these over the years, often cropping up when you least expect them. It's not always immediately obvious where they stem from, and that's what makes debugging them a bit of a journey. Generally, a `nullpointerexception` in an `imagelabeler` – or really, anywhere in java or similar languages – boils down to attempting to use a reference that doesn't point to a valid object. It's like trying to use a key on a lock that doesn’t exist; things are just going to break down.
+, let's talk about nullpointerexceptions in an image labeling context. I've seen my share of these over the years, often cropping up when you least expect them. It's not always immediately obvious where they stem from, and that's what makes debugging them a bit of a journey. Generally, a `nullpointerexception` in an `imagelabeler` – or really, anywhere in java or similar languages – boils down to attempting to use a reference that doesn't point to a valid object. It's like trying to use a key on a lock that doesn’t exist; things are just going to break down.
 
 With image labeling, the problem is frequently hidden within the pipeline – how images are loaded, processed, and then how labels are applied. Let's break down common culprits and, importantly, how to address them.
 
@@ -46,7 +46,7 @@ public class Main {
 }
 ```
 
-In this example, if `loadImage` fails, it returns `null`, and subsequently when we attempt to use `image.getWidth()` inside the `ImageLabeler`, a `nullpointerexception` occurs. The remedy here is straightforward: a null check *before* you use `image`. Something like:
+In this example, if `loadImage` fails, it returns `null`, and subsequently when we attempt to use `image.getWidth()` inside the `ImageLabeler`, a `nullpointerexception` occurs. The remedy here is straightforward: a null check _before_ you use `image`. Something like:
 
 ```java
 public class ImageLabeler {
@@ -133,7 +133,7 @@ public class ImageLabeler {
 
 This defensive coding style is important, particularly when dealing with external data. It's better to catch the error gracefully than to have a program crash in a more unpredictable fashion.
 
-Finally, a more nuanced cause relates to object references *within* the image processing. For instance, the `imagelabeler` might use a custom class to represent an object in the image (say a `DetectedObject` class), or might rely on another framework component that, through a series of method calls, could eventually return null. Suppose we have such a scenario like this:
+Finally, a more nuanced cause relates to object references _within_ the image processing. For instance, the `imagelabeler` might use a custom class to represent an object in the image (say a `DetectedObject` class), or might rely on another framework component that, through a series of method calls, could eventually return null. Suppose we have such a scenario like this:
 
 ```java
 import java.util.Random;

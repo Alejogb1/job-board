@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-a-ruby-rails-error-bundler-could-not-find-compatible-versions-for-gem-bundler"
 ---
 
-alright, so you're banging your head against the wall with a bundler version issue in your rails project, i get it. it's a classic, been there, done that, got the t-shirt kind of problem. let’s unpack this.
+, so you're banging your head against the wall with a bundler version issue in your rails project, i get it. it's a classic, been there, done that, got the t-shirt kind of problem. let’s unpack this.
 
 basically, bundler, the gem that manages your project dependencies, is telling you it can't find a version of itself that plays nice with the rest of your setup. this error, "bundler could not find compatible versions for gem 'bundler'", happens because of a mismatch in bundler versions or some other gems compatibility requirements you have in your Gemfile. it's like trying to fit a square peg in a round hole, or trying to use a usb-a cable in a usb-c port. frustration ensues.
 

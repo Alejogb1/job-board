@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-add-step-results-using-the-testrail-api"
 ---
 
-Alright, let’s tackle this. I've seen this come up more than a few times, usually in the context of automating large test suites or needing granular feedback from complex processes. Adding step results to TestRail via its API, while not conceptually difficult, requires careful construction of your requests and a solid understanding of the underlying data structure. It's definitely not a one-size-fits-all situation; the specifics of your test framework will influence the implementation.
+, let’s tackle this. I've seen this come up more than a few times, usually in the context of automating large test suites or needing granular feedback from complex processes. Adding step results to TestRail via its API, while not conceptually difficult, requires careful construction of your requests and a solid understanding of the underlying data structure. It's definitely not a one-size-fits-all situation; the specifics of your test framework will influence the implementation.
 
 The core idea here revolves around the `add_result_for_case` endpoint, or specifically `add_result_for_case_with_steps` if you're dealing with test cases that break down into multiple steps. I'll primarily focus on the latter, because in my experience, that's where the real complexity usually lies. I once had to rebuild a rather chaotic automated framework; the original implementers hadn't properly considered how detailed results needed to be structured in TestRail, leading to practically useless overall test runs. We rectified that, but it was a lesson in planning and data integrity.
 
@@ -112,7 +112,8 @@ if __name__ == '__main__':
     add_step_results_example_2(test_run_id, case_id, test_output, testrail_url, testrail_user, testrail_key)
 
 ```
-Here, I have created a dictionary named ‘test\_output’ with the output of an execution of a test framework. The logic in the function `add_step_results_example_2` will convert this output format into the format needed by TestRail. The important thing to note here is that I am also setting the overall test status, based on whether all the steps passed, or at least one failed. It’s crucial that you map the status values correctly. Inconsistent mappings will lead to inaccurate TestRail reports.
+
+Here, I have created a dictionary named ‘test_output’ with the output of an execution of a test framework. The logic in the function `add_step_results_example_2` will convert this output format into the format needed by TestRail. The important thing to note here is that I am also setting the overall test status, based on whether all the steps passed, or at least one failed. It’s crucial that you map the status values correctly. Inconsistent mappings will lead to inaccurate TestRail reports.
 
 Finally, let's consider a more involved scenario. Imagine your framework generates artifacts—screenshots, log files, etc.—related to individual steps. TestRail allows you to attach these artifacts, albeit via a separate API call. To attach them to steps, it's easiest if you associate them with each step via a custom field. You will need to create a custom field in TestRail of type ‘URL’, and then, when adding the results, you can set the URL of the artifact in that custom field for the corresponding step. Here is a basic version of that process without the full artifact upload (because that would complicate the snippet).
 
@@ -166,5 +167,6 @@ if __name__ == '__main__':
 
     add_step_results_example_3(test_run_id, case_id, steps_data, testrail_url, testrail_user, testrail_key)
 ```
+
 Here I am assuming that there is a custom field in TestRail called `custom_step_artifact_url`. I am then using this field to specify the artifact URL inside each step. Remember to create this field in TestRail before running the code.
 For a deeper understanding of the TestRail API, I recommend consulting the official TestRail documentation; it’s quite comprehensive and keeps pace with updates. The “Test Automation using TestRail’s API” section is particularly helpful. Also, keep an eye on the `requests` library documentation (if you are using python). They give valuable information regarding the usage and troubleshooting of API calls. You can also delve into “Restful Web Services” by Leonard Richardson and Sam Ruby to solidify your understanding of the underlying web concepts. Good luck, and remember, meticulous planning and clear data structures are key to success in this arena.

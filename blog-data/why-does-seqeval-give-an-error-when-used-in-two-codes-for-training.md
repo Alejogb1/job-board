@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-does-seqeval-give-an-error-when-used-in-two-codes-for-training"
 ---
 
-alright, so you're running into a seqeval hiccup when using it across two training scripts, right? yeah, i’ve been there, felt that exact pain. it’s less of a seqeval issue and more about how evaluation metrics, especially the finicky ones like sequence labeling metrics, get handled in distributed or multi-process training scenarios. i've been battling this sort of thing since back when tensorflow was still young. not the 1.0 versions, think pre-eager execution days. i was working on a named entity recognition model, a basic crf, but splitting the training across multiple gpus, and i swear, every other week, my metrics would do the exact same dance of death.
+, so you're running into a seqeval hiccup when using it across two training scripts, right? yeah, i’ve been there, felt that exact pain. it’s less of a seqeval issue and more about how evaluation metrics, especially the finicky ones like sequence labeling metrics, get handled in distributed or multi-process training scenarios. i've been battling this sort of thing since back when tensorflow was still young. not the 1.0 versions, think pre-eager execution days. i was working on a named entity recognition model, a basic crf, but splitting the training across multiple gpus, and i swear, every other week, my metrics would do the exact same dance of death.
 
 let's unpack this, because there are a couple of potential culprits here. mostly it boils down to data aggregation and state synchronization between your training runs. seqeval, if you’re using the default implementation, assumes a single, isolated environment. when you throw in multiple processes or gpus, you're introducing a bunch of chances for things to get out of whack.
 
@@ -54,6 +54,7 @@ if __name__ == '__main__':
     results = evaluate_text(y_true, y_pred)
     print(results)
 ```
+
 this simple python code will evaluate `y_true` with `y_pred` using seqeval. It will work fine because the evaluation is localized, it is done locally, in one single machine.
 
 the root cause is usually how the labels and predictions are gathered before being fed to seqeval. it might involve some steps that are not trivial, specially if you use a framework to train the model. most of them does not use distributed metrics out of the box.
@@ -65,6 +66,7 @@ i remember one very specific occasion where i had a similar problem. i was worki
 so, what can you do? several options, depending on your exact setup.
 
 one approach is to use distributed data-parallelism with proper aggregation of evaluation metrics. many libraries like pytorch and tensorflow have mechanisms to help. for example, if using pytorch distributed data parallel, you’d make sure that the evaluation happens only at the main process by passing the correct rank and gathering labels and predictions there. something like this, consider the following example:
+
 ```python
 import torch
 import torch.distributed as dist
@@ -166,6 +168,7 @@ another strategy is to use an external metric aggregation service, and i've foun
 in general, the problem with the evaluation and the error you are facing is because seqeval is looking at a partial view of the training process, which is expected because each one is training a part of the dataset.
 
 and if you have a model, that has multiple outputs, you can aggregate the output metrics in the same way i showed previously.
+
 ```python
 import torch
 import torch.distributed as dist
@@ -271,6 +274,7 @@ if __name__ == '__main__':
 
     dist.destroy_process_group()
 ```
+
 this example shows how to treat multiple outputs of the model, it has a few extra steps, but it serves to illustrate the need to adapt the evaluation process to distributed training. i've seen models with upwards of 5 different outputs, each one needs to be individually aggregated and evaluated. i still remember a particular case where the evaluation was failing silently because the multiple outputs were not handled, and i wasted a whole week trying to debug it. it is funny now, but wasn't at the time.
 
 for resources, besides the documentation of your framework, i strongly recommend looking into "deep learning with pytorch" by elias and others. it has a very clear explanation of distributed training and how to deal with metrics, and "distributed training of deep neural networks" by ben-nun and others. this paper is a classic, but the underlying theory it explains is very applicable to your problem. it really is worth the time to read these materials.

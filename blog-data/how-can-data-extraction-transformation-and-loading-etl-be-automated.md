@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-data-extraction-transformation-and-loading-etl-be-automated"
 ---
 
-Alright, let's tackle this one. Automating etl, or data extraction, transformation, and loading, is something I've spent a significant chunk of my career refining. Back in my days working on a large-scale e-commerce platform, we had this daily ritual of manually triggering etl jobs. It was tedious, error-prone, and definitely not scalable. We quickly realized that automation wasn't just a luxury; it was a necessity for staying afloat. I think what makes it tricky is the inherent complexity of etl pipelines themselves, but breaking it down systematically makes the problem much more manageable.
+, let's tackle this one. Automating etl, or data extraction, transformation, and loading, is something I've spent a significant chunk of my career refining. Back in my days working on a large-scale e-commerce platform, we had this daily ritual of manually triggering etl jobs. It was tedious, error-prone, and definitely not scalable. We quickly realized that automation wasn't just a luxury; it was a necessity for staying afloat. I think what makes it tricky is the inherent complexity of etl pipelines themselves, but breaking it down systematically makes the problem much more manageable.
 
 The core of etl automation involves shifting from manual, script-based operations to orchestrated, scheduled workflows. I've found that this usually involves leveraging several key components: a robust scheduler, a reliable workflow engine, and well-defined data schemas. Instead of running scripts by hand or relying on cron jobs (which I’ve seen go south more often than I care to remember), we need a more sophisticated approach.
 
@@ -83,6 +83,7 @@ if __name__ == "__main__":
         print(transformed_df)
 
 ```
+
 **Example 3: Automated workflow using airflow**
 
 Here's an oversimplified example of an airflow dag. This script defines a simple workflow that can be run using apache airflow. This illustrates how to orchestrate the extraction, transformation, and loading steps using a task dependency structure that's both clear and easy to manage. You would configure your airflow environment and then place this script in the dags folder to run the etl job.

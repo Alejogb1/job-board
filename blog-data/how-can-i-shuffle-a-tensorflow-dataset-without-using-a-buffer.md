@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-shuffle-a-tensorflow-dataset-without-using-a-buffer"
 ---
 
-Okay, let's tackle this. Shuffling a TensorFlow dataset without relying on a buffer—it’s a challenge that’s come up a few times in my career, particularly when dealing with massive datasets that don’t play nicely with memory limitations. I recall one project, crunching through telemetry data from a fleet of satellites, where buffering was simply not feasible. We had to get creative.
+, let's tackle this. Shuffling a TensorFlow dataset without relying on a buffer—it’s a challenge that’s come up a few times in my career, particularly when dealing with massive datasets that don’t play nicely with memory limitations. I recall one project, crunching through telemetry data from a fleet of satellites, where buffering was simply not feasible. We had to get creative.
 
 The fundamental issue with a bufferless shuffle lies in the way datasets are traditionally shuffled. The standard `tf.data.Dataset.shuffle(buffer_size)` method essentially grabs a subset of your data (determined by `buffer_size`), shuffles it in memory, and then uses that subset to provide batches. This works great for moderate-sized datasets, but once you scale up, that `buffer_size` can quickly become a problem. So, how do we achieve randomness in the ordering of the elements without that temporary storage? The solution typically hinges on leveraging the inherent properties of the dataset itself and incorporating a bit of clever mapping and prefetching.
 
@@ -65,6 +65,7 @@ hashed_index_dataset = create_hashed_index_dataset(sample_dataset)
 #     print(index.numpy())
 
 ```
+
 This first example focuses on the core piece of shuffling: generating those new, randomized-like indices. The `deterministic_hash` function is a simplified version; you’d usually need something more robust, particularly if your dataset size is large to ensure good distribution. Notice it's also designed to be deterministic, a key factor for reproducibility. The function `create_hashed_index_dataset` provides this dataset of shuffled indices.
 
 **Example 2: Full Shuffle Implementation**
@@ -115,9 +116,11 @@ shuffled_dataset = shuffle_dataset_bufferless(sample_dataset)
 #     print(batch.numpy())
 
 ```
+
 This second example fully implements the shuffle. Here you can see the complete process: First we generate the shuffled indices using a deterministic hashing function. These indices are then sorted to provide the shuffled order. Finally, we look up our data using the original dataset with the new sorted index order. The returned dataset is then flattened, since `lookup_data_by_original_index` can be used to build datasets within datasets. The `lookup_data_by_original_index` function here serves as a "sparse lookup" tool, fetching the corresponding datapoint given the original index. The sorting based on the hashed indices ensures that the final indices are sorted in the correct shuffled order.
 
 **Example 3: Integrating with `tf.data.Dataset.prefetch`**
+
 ```python
 import tensorflow as tf
 
@@ -178,9 +181,9 @@ This final example demonstrates how to integrate prefetching with the shuffle im
 
 For deeper understanding, I recommend exploring the following:
 
-*   **"Large-Scale Machine Learning with TensorFlow"** by Marciano, et al., This book covers in-depth techniques for handling large datasets, which goes well beyond just shuffling and addresses broader performance considerations.
-*   **"Efficient Data Loading for Deep Learning: Techniques and Tools"**, a survey paper often published in conferences like NeurIPS or ICLR. A quick search on Google scholar can find you an up to date paper.
-*   **TensorFlow documentation on `tf.data.Dataset`:** It's essential to understand the underlying mechanics of the data API, in particular the functions I’ve used.
+- **"Large-Scale Machine Learning with TensorFlow"** by Marciano, et al., This book covers in-depth techniques for handling large datasets, which goes well beyond just shuffling and addresses broader performance considerations.
+- **"Efficient Data Loading for Deep Learning: Techniques and Tools"**, a survey paper often published in conferences like NeurIPS or ICLR. A quick search on Google scholar can find you an up to date paper.
+- **TensorFlow documentation on `tf.data.Dataset`:** It's essential to understand the underlying mechanics of the data API, in particular the functions I’ve used.
 
 These resources provide a solid foundation for understanding data pipelines and methods to optimize the loading and processing of very large data sets.
 

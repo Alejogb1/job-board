@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-bep-20-tokenized-investment-funds-operate-through-smart-contracts"
 ---
 
-Okay, let’s unpack BEP-20 tokenized investment funds. It's a concept I’ve seen evolve firsthand, particularly during my time managing a portfolio system that incorporated several decentralized finance (defi) instruments. We actually had a very interesting case with a client who wanted to launch a small-scale fund using this approach back in 2021, which brought many of these concepts into sharp focus.
+, let’s unpack BEP-20 tokenized investment funds. It's a concept I’ve seen evolve firsthand, particularly during my time managing a portfolio system that incorporated several decentralized finance (defi) instruments. We actually had a very interesting case with a client who wanted to launch a small-scale fund using this approach back in 2021, which brought many of these concepts into sharp focus.
 
 The core idea hinges on representing shares of an investment fund as BEP-20 tokens on the Binance Smart Chain (bsc). Instead of traditional fund management where units or shares are recorded in a centralized database, here we’re using the immutability and transparency of a blockchain. These tokens act as digital receipts, verifiable on the chain, that represent a stakeholder’s fractional ownership of the underlying assets within the fund.
 
@@ -19,6 +19,7 @@ The valuation aspect is particularly interesting. Smart contracts themselves don
 Let's take a look at some simplified code examples to illustrate this. The snippets below are not production-ready and are simplified for understanding:
 
 **Example 1: Basic Token Minting**
+
 ```solidity
 pragma solidity ^0.8.0;
 
@@ -45,9 +46,11 @@ contract InvestmentFundToken is ERC20 {
     }
 }
 ```
+
 This snippet demonstrates a basic contract for a BEP-20 token where we have a function allowing users to mint tokens by sending a BUSD equivalent and how a fund manager can change the token's price. `OpenZeppelin` contracts library is used for this.
 
 **Example 2: Basic Redemption Functionality**
+
 ```solidity
 pragma solidity ^0.8.0;
 
@@ -84,9 +87,11 @@ interface IERC20 {
   function balanceOf(address account) external view returns (uint256);
 }
 ```
+
 Here, we are illustrating a simplified version of how the redemption process might occur. The contract burns tokens from the user, calculates redemption amount using the nav and sends corresponding BUSD back. Again, simplifying for clarity. You'd never hardcode addresses or simple access mechanisms in production.
 
 **Example 3: Basic Oracle Integration**
+
 ```solidity
 pragma solidity ^0.8.0;
 

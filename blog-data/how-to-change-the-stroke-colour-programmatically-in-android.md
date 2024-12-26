@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-change-the-stroke-colour-programmatically-in-android"
 ---
 
-alright, so you're looking at programmatically changing the stroke color of something in android, eh? i've been there, done that, got the t-shirt, and probably a few stress-induced grey hairs to show for it. it sounds like a pretty straightforward thing but trust me it can lead to some very confusing moments when you first try it. let me walk you through how i've done it and some of the gotchas i've seen.
+, so you're looking at programmatically changing the stroke color of something in android, eh? i've been there, done that, got the t-shirt, and probably a few stress-induced grey hairs to show for it. it sounds like a pretty straightforward thing but trust me it can lead to some very confusing moments when you first try it. let me walk you through how i've done it and some of the gotchas i've seen.
 
 basically, you're working with either a drawable, usually something like a shape drawable (a `gradientdrawable` or `shapeshape`) or maybe a vector drawable. the method changes a bit depending on what you have.
 
@@ -48,7 +48,7 @@ public class MyActivity extends AppCompatActivity {
         if(originalDrawable instanceof GradientDrawable){ //check if it is a gradient drawable
 
             GradientDrawable shapeDrawable = (GradientDrawable) originalDrawable.mutate();
-             shapeDrawable.setStroke(4, Color.RED); //red color example 
+             shapeDrawable.setStroke(4, Color.RED); //red color example
 
             myImageView.setImageDrawable(shapeDrawable);
 
@@ -94,14 +94,14 @@ public class MyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    
+
         ImageView myImageView = findViewById(R.id.my_image_view);
-    
+
          Drawable originalDrawable = getResources().getDrawable(R.drawable.my_vector, getTheme());
 
         if (originalDrawable instanceof VectorDrawable) {
             VectorDrawable vectorDrawable = (VectorDrawable) originalDrawable.mutate();
-            
+
             //this is the important part, we are grabbing the first path
             DrawableCompat.setTint(vectorDrawable, Color.BLUE);
             myImageView.setImageDrawable(vectorDrawable);
@@ -127,9 +127,9 @@ public class MyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    
+
         ImageView myImageView = findViewById(R.id.my_image_view);
-    
+
         GradientDrawable shapeDrawable = new GradientDrawable();
         shapeDrawable.setShape(GradientDrawable.RECTANGLE);
         shapeDrawable.setColor(Color.WHITE); // Set the solid color if necessary

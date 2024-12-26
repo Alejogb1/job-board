@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "why-am-i-getting-undefined-method-willsavechangetoaddress"
 ---
 
-Alright, let's tackle this. Undefined method errors, particularly ones involving active record's change tracking mechanisms, are a frequent source of head-scratching. 'will_save_change_to_address' specifically points to a problem with how active record's change tracking is being accessed in a particular context, usually within a rails application. I've seen this exact error pop up on several projects, and it's almost always related to the version of rails being used and how certain fields or methods are being accessed in models and callbacks.
+, let's tackle this. Undefined method errors, particularly ones involving active record's change tracking mechanisms, are a frequent source of head-scratching. 'will_save_change_to_address' specifically points to a problem with how active record's change tracking is being accessed in a particular context, usually within a rails application. I've seen this exact error pop up on several projects, and it's almost always related to the version of rails being used and how certain fields or methods are being accessed in models and callbacks.
 
-The fundamental issue stems from Active Record's internal mechanics regarding attribute change detection. In more recent versions of Rails (specifically since Rails 5.0), the way we check if a field will change on saving has changed. Instead of the older `attribute_changed?`, we now have `will_save_change_to_attribute?` and its related variants. The "will_save" prefix is critical here because it checks if the change will persist to the database *after all callbacks are executed*, whereas other change-related methods show the change immediately or upon initial assignment. However, `will_save_change_to_address` doesn’t materialize out of thin air; it’s dynamically generated based on your model’s attributes. When you hit that `undefined method` error, it generally signifies one of the following: you are either accessing this method outside of an ActiveRecord instance (like in a class method) or you are using an older rails version that doesn't support `will_save_change_to_*?`. Let's break down those scenarios and their solutions further.
+The fundamental issue stems from Active Record's internal mechanics regarding attribute change detection. In more recent versions of Rails (specifically since Rails 5.0), the way we check if a field will change on saving has changed. Instead of the older `attribute_changed?`, we now have `will_save_change_to_attribute?` and its related variants. The "will*save" prefix is critical here because it checks if the change will persist to the database *after all callbacks are executed*, whereas other change-related methods show the change immediately or upon initial assignment. However, `will_save_change_to_address` doesn’t materialize out of thin air; it’s dynamically generated based on your model’s attributes. When you hit that `undefined method` error, it generally signifies one of the following: you are either accessing this method outside of an ActiveRecord instance (like in a class method) or you are using an older rails version that doesn't support `will_save_change_to*\*?`. Let's break down those scenarios and their solutions further.
 
-First, the most common cause is *trying to use a change-tracking method on a non-instance* or static context of your model. Consider the following simplified scenario: we have a `User` model with an `address` attribute, and we’re trying to access its change tracking directly in a class method.
+First, the most common cause is _trying to use a change-tracking method on a non-instance_ or static context of your model. Consider the following simplified scenario: we have a `User` model with an `address` attribute, and we’re trying to access its change tracking directly in a class method.
 
 ```ruby
 # models/user.rb
@@ -26,7 +26,7 @@ end
 User.check_address_change
 ```
 
-In this instance, running `User.check_address_change` would trigger the `NoMethodError` because you’re calling an instance method (`will_save_change_to_address?`) on the *class* `User`. These change-tracking methods only exist on *instances* of the model—the specific records you retrieve from the database or are about to save. The fix here is to call this method within a scope where you have a valid model instance (an instantiated object, not the class definition), such as within an instance method or a before_save callback:
+In this instance, running `User.check_address_change` would trigger the `NoMethodError` because you’re calling an instance method (`will_save_change_to_address?`) on the _class_ `User`. These change-tracking methods only exist on _instances_ of the model—the specific records you retrieve from the database or are about to save. The fix here is to call this method within a scope where you have a valid model instance (an instantiated object, not the class definition), such as within an instance method or a before_save callback:
 
 ```ruby
 # models/user.rb
@@ -48,7 +48,7 @@ user.address = 'New Address'
 user.save # The callback will now execute correctly
 ```
 
-Secondly, another common culprit is using the method on an attribute that *isn't directly associated with a database column*. If you are attempting to use change tracking on a virtual attribute (defined with `attr_accessor` or similar), you won't have the corresponding `will_save_change_to_*?` method generated. ActiveRecord is designed to provide these methods specifically for database-backed columns.
+Secondly, another common culprit is using the method on an attribute that _isn't directly associated with a database column_. If you are attempting to use change tracking on a virtual attribute (defined with `attr_accessor` or similar), you won't have the corresponding `will_save_change_to_*?` method generated. ActiveRecord is designed to provide these methods specifically for database-backed columns.
 
 ```ruby
 # models/user.rb
@@ -67,7 +67,7 @@ end
 
 In this scenario `formatted_address` is a virtual attribute and there is no related database column, therefore, `will_save_change_to_formatted_address?` is not generated. To resolve this, you'd have to keep a separate internal state of this change if tracking this change is actually critical.
 
-Finally, it's worth confirming *your Rails version*. Prior to Rails 5, `attribute_changed?` was the typical method used. If you’re encountering the error and are using an older version, the solution isn't to use `will_save_change_to_*?`, but rather the older syntax:
+Finally, it's worth confirming _your Rails version_. Prior to Rails 5, `attribute_changed?` was the typical method used. If you’re encountering the error and are using an older version, the solution isn't to use `will_save_change_to_*?`, but rather the older syntax:
 
 ```ruby
 # models/user.rb (Rails < 5)

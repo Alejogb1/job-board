@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "valueerror-posx-and-posy-should-be-finite-values"
 ---
 
-Alright listen up I've seen this `ValueError posx and posy should be finite values` more times than I care to admit It's a classic and it usually means you've messed up somewhere with your coordinate calculations or data handling It always comes back to those sneaky infinite or NaN values that can creep into your code.
+listen up I've seen this `ValueError posx and posy should be finite values` more times than I care to admit It's a classic and it usually means you've messed up somewhere with your coordinate calculations or data handling It always comes back to those sneaky infinite or NaN values that can creep into your code.
 
 So yeah it throws when you are expecting numerical coordinates to be finite but you pass in infinity or NaN values its common particularly when using libraries that deal with geometric figures or any operations that may divide by zero or use some function of a log where log zero can happen
 
@@ -116,15 +116,15 @@ And one thing that I always say if your code is not failing is because you did n
 
 Here are some suggested resources instead of a bunch of links.
 
-*   **"Numerical Recipes"** by Press et al. It is a classic for numerical algorithms and discusses many issues with precision and error handling.
-*   **"Python Data Science Handbook"** by Jake VanderPlas. This is an essential resource for data handling and cleaning with Python and its common libraries. It has sections dedicated to working with `NaN`s and infinities.
-*   **The IEEE 754 standard** You should also familiarize yourself with the IEEE 754 standard for floating-point arithmetic. Understanding how computers represent real numbers can really help you debug these types of numerical problems.
-* **The Numerical Python book by Travis Oliphant** a great book to learn how to use the numerical side of python.
+- **"Numerical Recipes"** by Press et al. It is a classic for numerical algorithms and discusses many issues with precision and error handling.
+- **"Python Data Science Handbook"** by Jake VanderPlas. This is an essential resource for data handling and cleaning with Python and its common libraries. It has sections dedicated to working with `NaN`s and infinities.
+- **The IEEE 754 standard** You should also familiarize yourself with the IEEE 754 standard for floating-point arithmetic. Understanding how computers represent real numbers can really help you debug these types of numerical problems.
+- **The Numerical Python book by Travis Oliphant** a great book to learn how to use the numerical side of python.
 
 I know that the problem is pretty simple but the solution is not. This is just one of those things you learn by doing and making all the possible mistakes. Now I think the best option is to go through your code with a fine comb. Maybe have a co-worker check it out too just to have another pair of eyes looking. You'd be surprised how often a fresh perspective can spot a subtle bug and hey I wish you good luck because debugging those type of errors is never fun.
 
 And let's end this with a very bad programming joke
 
-Why did the programmer quit his job because he didn't get arrays (a raise) * I know sorry not a good one.
+Why did the programmer quit his job because he didn't get arrays (a raise) \* I know sorry not a good one.
 
 Good luck debugging.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-a-local-rails-workstations-time-differ-from-the-servers"
 ---
 
-Okay, let’s tackle this one. From my experience, dealing with inconsistent time across development environments and production servers is a recurring headache, and it usually stems from a few common culprits. It's not something isolated to rails, but the framework’s reliance on server time for various operations makes the issue particularly noticeable. Let's break down the why and how to address it.
+, let’s tackle this one. From my experience, dealing with inconsistent time across development environments and production servers is a recurring headache, and it usually stems from a few common culprits. It's not something isolated to rails, but the framework’s reliance on server time for various operations makes the issue particularly noticeable. Let's break down the why and how to address it.
 
 First, understand that the time on your local workstation and a remote server are independent entities. They're driven by their own internal clocks and configurations. The most common causes for discrepancies revolve around how these clocks are set and maintained:
 
@@ -16,7 +16,7 @@ First, understand that the time on your local workstation and a remote server ar
 
 **4. Virtualization or Containerization Issues:** If your server is running in a virtual machine (VM) or container, time synchronization can become more complex. The VM’s clock might not synchronize with the host machine, or containers can start with incorrect times if not properly configured. This can create a situation where the virtual environment reports a different time than the host server and this different than your local workstation, adding layers of complexity to the issue. This is especially true if the container isn't correctly configured to use NTP within its environment.
 
-Okay, enough with the theory; let’s move on to practical solutions. Here are some code snippets that demonstrate how to address these points within a rails context, but these principles are applicable across many other development workflows.
+, enough with the theory; let’s move on to practical solutions. Here are some code snippets that demonstrate how to address these points within a rails context, but these principles are applicable across many other development workflows.
 
 **Snippet 1: Correcting Time Zone Issues in Rails**
 
@@ -45,11 +45,11 @@ Time.zone = "America/New_York"
 Time.zone.now # this will be the current time in new york
 ```
 
-In the `application.rb` file, I am setting both the application's time zone and ActiveRecord’s default time zone to UTC.  This ensures that date/time operations internally within rails are UTC based, while your application code can utilize `Time.zone` to convert to other zones. This approach simplifies reasoning about time, especially when working across different geographical regions. Furthermore, databases typically work in UTC for best practices, and ActiveRecord allows you to have consistency in how your data is handled in regards to time. I've seen situations where developers used different time zones for the application versus the database, which creates problems when trying to query records and compare time values. Ensuring both are aligned to the same timezone is crucial. Remember that for timezone aware columns in the database, the date/time is stored in UTC, but when the database displays the record in a client, it will convert it to the time zone configured.
+In the `application.rb` file, I am setting both the application's time zone and ActiveRecord’s default time zone to UTC. This ensures that date/time operations internally within rails are UTC based, while your application code can utilize `Time.zone` to convert to other zones. This approach simplifies reasoning about time, especially when working across different geographical regions. Furthermore, databases typically work in UTC for best practices, and ActiveRecord allows you to have consistency in how your data is handled in regards to time. I've seen situations where developers used different time zones for the application versus the database, which creates problems when trying to query records and compare time values. Ensuring both are aligned to the same timezone is crucial. Remember that for timezone aware columns in the database, the date/time is stored in UTC, but when the database displays the record in a client, it will convert it to the time zone configured.
 
 **Snippet 2: Checking and Synchronizing Server Time with NTP**
 
-While not strictly Rails code, here is the command line to check if NTP is working and how to manually run it.  This would apply to servers that host your Rails application:
+While not strictly Rails code, here is the command line to check if NTP is working and how to manually run it. This would apply to servers that host your Rails application:
 
 ```bash
 # To check if ntpd is running (on linux systems)
@@ -63,7 +63,8 @@ ntpq -p
 # To manually update time
 sudo ntpdate pool.ntp.org
 ```
-These commands check the status of the NTP daemon (ntpd). If it's not running or if the output of `ntpq -p` indicates issues, such as all servers being unreachable (shown by a * before the address), then there is an issue. I always advise setting up NTP on servers. It’s essential for maintaining accurate time. The command `ntpdate pool.ntp.org` is useful for a one time manual synchronization if there appears to be a major time difference on your system. This is useful if the service is failing and to be a quick fix. Keep in mind that you should always try to have NTP running as a daemon, this one time update is for emergencies only.
+
+These commands check the status of the NTP daemon (ntpd). If it's not running or if the output of `ntpq -p` indicates issues, such as all servers being unreachable (shown by a \* before the address), then there is an issue. I always advise setting up NTP on servers. It’s essential for maintaining accurate time. The command `ntpdate pool.ntp.org` is useful for a one time manual synchronization if there appears to be a major time difference on your system. This is useful if the service is failing and to be a quick fix. Keep in mind that you should always try to have NTP running as a daemon, this one time update is for emergencies only.
 
 **Snippet 3: Time Zone Aware Rails App**
 
@@ -95,6 +96,7 @@ class User < ApplicationRecord
   before_action :set_time_zone, on: :create, on: :update
 end
 ```
+
 Here, we are setting the `Time.zone` for a user based on their selected time zone, enabling us to display times in the user's local time. It's important to save the user's chosen timezone so this functionality works as expected. We are also setting the `Time.zone` using a before action. A common user experience practice is to allow users to select their timezone, and store this in a database field. This then allows you to display times relative to the user, instead of in UTC.
 
 To further your knowledge on this topic, I'd recommend delving into "Time Zones and Databases" by Markus Winand, it’s an invaluable resource on how time zones are handled in databases. Also, "Effective Java" by Joshua Bloch, discusses the importance of working with time correctly and not relying on system time alone for reliable operations, although the examples are in java, the concepts are universally relevant. Furthermore, the official documentation for `ActiveSupport::TimeZone` and `Time` is also extremely helpful.

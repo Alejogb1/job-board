@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-is-the-dag-not-found-in-airflow"
 ---
 
-Alright, let's dive into this. It's a question that's popped up a few times over the years, usually accompanied by a rising sense of panic from folks new to Apache Airflow. From my experience, the "DAG not found" error, while seemingly straightforward, often masks a handful of interconnected issues. It's not typically a single, glaring problem, but rather a symptom of misconfigurations, pathing issues, or even subtle coding errors. So, let me walk you through what I've seen and how I’ve approached debugging it.
+, let's dive into this. It's a question that's popped up a few times over the years, usually accompanied by a rising sense of panic from folks new to Apache Airflow. From my experience, the "DAG not found" error, while seemingly straightforward, often masks a handful of interconnected issues. It's not typically a single, glaring problem, but rather a symptom of misconfigurations, pathing issues, or even subtle coding errors. So, let me walk you through what I've seen and how I’ve approached debugging it.
 
 First off, it’s vital to understand Airflow's DAG discovery mechanism. Airflow doesn't magically know where your DAG definitions are located. It scans specified directories, looking for python files that contain DAG object instantiations. If your DAG isn’t there, or if Airflow can’t find the python files, you're going to get the “DAG not found” error.
 
 The core configuration point here is the `dags_folder` setting in your `airflow.cfg` file. This parameter directs Airflow to the location it should scan. If this path is incorrect, or if you've placed your DAG files outside of this directory, the scheduler won't discover them. This is usually the first place I check. You might have it set to something like `/home/airflow/dags`, when in fact, your DAG files are in `/opt/airflow/my_dags`. Pay very close attention to these path settings; typos are remarkably common.
 
-Beyond pathing, there are two major reasons why your DAG file *can* exist in the correct folder yet not be detected by Airflow. The first is import errors within your DAG file. Python, as we all know, will halt execution the moment it encounters an import error. This includes things like missing dependencies, circular imports, or referencing modules that are not in the python path of the airflow worker or scheduler. If an error occurs during parsing your DAG file it won't be seen by Airflow and it will also not throw an error to the logs, instead it will not be included in the list of available DAGs.
+Beyond pathing, there are two major reasons why your DAG file _can_ exist in the correct folder yet not be detected by Airflow. The first is import errors within your DAG file. Python, as we all know, will halt execution the moment it encounters an import error. This includes things like missing dependencies, circular imports, or referencing modules that are not in the python path of the airflow worker or scheduler. If an error occurs during parsing your DAG file it won't be seen by Airflow and it will also not throw an error to the logs, instead it will not be included in the list of available DAGs.
 
 Let’s consider a simple example where an import is missing. We might have a DAG definition like this:
 
@@ -119,12 +119,14 @@ with DAG(
         python_callable=load_settings
     )
 ```
+
 As you can see, by moving the file handling logic into the `load_settings` function and assigning that to a task with `PythonOperator` the import error won't be raised when parsing the DAG file.
 
 To effectively debug these kinds of issues, you will often need to review the airflow logs, specifically for the scheduler component. Also, checking the system or worker logs of any machine that is running airflow might yield some useful errors. The scheduler often provides very generic error messages, as is the case here, which is why understanding the failure cases is more helpful than depending on logs.
 
 To further deepen your understanding, I’d suggest diving into the internals of Airflow's DAG loading process. The official Airflow documentation is, of course, a great starting point, but for a more in-depth look I would recommend these references:
-*   **"Data Pipelines with Apache Airflow" by Bas P. Harenslak and Julian Rutger:** This is a comprehensive practical guide that provides a clear explanation of Airflow's core concepts including a detailed explanation of how DAGs are loaded.
-*   **The Apache Airflow Source Code (particularly the DAG parsing code):** While this might seem daunting, it's an invaluable resource. The actual source code is the final authority and you can find more information on the inner workings of dag parsing here. Be aware that the core libraries can change between version so keep an eye on any changes.
+
+- **"Data Pipelines with Apache Airflow" by Bas P. Harenslak and Julian Rutger:** This is a comprehensive practical guide that provides a clear explanation of Airflow's core concepts including a detailed explanation of how DAGs are loaded.
+- **The Apache Airflow Source Code (particularly the DAG parsing code):** While this might seem daunting, it's an invaluable resource. The actual source code is the final authority and you can find more information on the inner workings of dag parsing here. Be aware that the core libraries can change between version so keep an eye on any changes.
 
 In my experience, “DAG not found” usually comes down to these issues. It’s rarely something too complex. By systematically addressing the directory locations, checking for Python errors and top-level code that should be contained in a task, you’ll usually be able to get the DAGs to appear. Always remember that the scheduler logs are there to give a little extra help, even if the errors are not always immediately clear.

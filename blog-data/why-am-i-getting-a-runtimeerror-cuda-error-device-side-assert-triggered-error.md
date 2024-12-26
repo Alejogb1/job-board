@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-runtimeerror-cuda-error-device-side-assert-triggered-error"
 ---
 
-Okay, let’s unpack that `RuntimeError: CUDA error: device-side assert triggered` issue. I’ve certainly seen my share of those during my time building accelerated computing applications. It’s a particularly frustrating error because it often doesn't point directly to the source of the problem, demanding a bit of detective work to uncover the root cause.
+, let’s unpack that `RuntimeError: CUDA error: device-side assert triggered` issue. I’ve certainly seen my share of those during my time building accelerated computing applications. It’s a particularly frustrating error because it often doesn't point directly to the source of the problem, demanding a bit of detective work to uncover the root cause.
 
-Fundamentally, this error means that an assertion you or a library you're using put into the CUDA code failed *on the GPU itself*. This isn't an issue with your Python or high-level code directly; it’s an issue that has happened within the low-level CUDA execution. These asserts are there to catch conditions that the programmer knew were errors, things that shouldn't logically occur, such as memory out-of-bounds access, or invalid inputs to a kernel. These checks are usually in place for debugging, to help flag issues early on rather than allowing silent, catastrophic behavior. However, when we hit one, it means there's a fundamental flaw in how the code is interacting with the GPU.
+Fundamentally, this error means that an assertion you or a library you're using put into the CUDA code failed _on the GPU itself_. This isn't an issue with your Python or high-level code directly; it’s an issue that has happened within the low-level CUDA execution. These asserts are there to catch conditions that the programmer knew were errors, things that shouldn't logically occur, such as memory out-of-bounds access, or invalid inputs to a kernel. These checks are usually in place for debugging, to help flag issues early on rather than allowing silent, catastrophic behavior. However, when we hit one, it means there's a fundamental flaw in how the code is interacting with the GPU.
 
 The first step in tackling this problem is understanding the contexts where it commonly surfaces. In my past projects, I've most often seen this when:
 
@@ -74,7 +74,7 @@ __global__ void reciprocal_good(float *input, float *output, int size) {
 }
 ```
 
-This version checks if an input value is zero and, rather than performing the division and inducing an error, it assigns an appropriate value (in this case, 0.0f). While the original error wouldn't strictly be a device-side assert, it *can* trigger such an assertion depending on CUDA runtime and compiler settings. Handling invalid input values like this is fundamental to prevent a cascade of unexpected behavior.
+This version checks if an input value is zero and, rather than performing the division and inducing an error, it assigns an appropriate value (in this case, 0.0f). While the original error wouldn't strictly be a device-side assert, it _can_ trigger such an assertion depending on CUDA runtime and compiler settings. Handling invalid input values like this is fundamental to prevent a cascade of unexpected behavior.
 
 **Example 3: Synchronization Errors**
 
@@ -128,7 +128,7 @@ When faced with this error, your approach should follow a structured debugging m
 
 Regarding resources to enhance your knowledge, I’d recommend the following:
 
-*   **“CUDA by Example: An Introduction to General-Purpose GPU Programming” by Jason Sanders and Edward Kandrot:** This book provides a comprehensive introduction to CUDA programming and covers important concepts such as kernel programming, memory management, and synchronization.
-*   **The CUDA C++ Programming Guide:** This is the official reference manual from Nvidia and it provides detailed insights into CUDA programming as well as the different types of memory available on GPUs.
+- **“CUDA by Example: An Introduction to General-Purpose GPU Programming” by Jason Sanders and Edward Kandrot:** This book provides a comprehensive introduction to CUDA programming and covers important concepts such as kernel programming, memory management, and synchronization.
+- **The CUDA C++ Programming Guide:** This is the official reference manual from Nvidia and it provides detailed insights into CUDA programming as well as the different types of memory available on GPUs.
 
 The `RuntimeError: CUDA error: device-side assert triggered` is a demanding error but it's ultimately an opportunity to enhance your understanding of CUDA and parallel programming. By thoroughly examining your code and applying these debugging steps, you can track down the root of the problem and implement robust solutions.

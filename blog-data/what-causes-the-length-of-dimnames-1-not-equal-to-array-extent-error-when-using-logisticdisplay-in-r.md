@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-the-length-of-dimnames-1-not-equal-to-array-extent-error-when-using-logisticdisplay-in-r"
 ---
 
-Alright, let's unpack this one. I've certainly run into the "length of 'dimnames' [1] not equal to array extent" error more times than I care to remember, especially when working with logistic regression outputs and trying to format them nicely using functions like `logistic.display` (often found in packages like `rms` or similar). It's a bit of a head-scratcher at first, but once you understand what’s going on under the hood, it becomes quite manageable. The error itself stems from a mismatch between the expected dimensions of your data and the dimension names you're providing (or, more often, the ones you *think* you're providing).
+, let's unpack this one. I've certainly run into the "length of 'dimnames' [1] not equal to array extent" error more times than I care to remember, especially when working with logistic regression outputs and trying to format them nicely using functions like `logistic.display` (often found in packages like `rms` or similar). It's a bit of a head-scratcher at first, but once you understand what’s going on under the hood, it becomes quite manageable. The error itself stems from a mismatch between the expected dimensions of your data and the dimension names you're providing (or, more often, the ones you _think_ you're providing).
 
 This problem generally crops up when the function that needs the dimension names (like `logistic.display`) is expecting a data structure, such as an array or matrix, where the number of rows or columns (extents) exactly matches the number of names supplied in the `dimnames` attribute. `dimnames` in R is a list that specifies names for each dimension of an array. If you provide the wrong length, well, you get the error. It’s R's way of saying: "Hey, these labels don't match the size of the thing they’re supposed to label!"
 
@@ -104,8 +104,8 @@ When you encounter this error, here is my typical approach:
 
 For a deeper understanding of R's data structures and handling, I would recommend the following:
 
-*   **"R for Data Science" by Hadley Wickham and Garrett Grolemund:** This is a comprehensive guide to data manipulation in R, including a clear explanation of vectors, matrices, arrays, and data frames.
-*   **"Advanced R" by Hadley Wickham:** This book delves into more advanced aspects of R programming, including how dimension names work, and how to debug issues like these.
-*   **The R Language Definition:** (Available on CRAN) – The official R documentation. Though technical, understanding the base language is invaluable.
+- **"R for Data Science" by Hadley Wickham and Garrett Grolemund:** This is a comprehensive guide to data manipulation in R, including a clear explanation of vectors, matrices, arrays, and data frames.
+- **"Advanced R" by Hadley Wickham:** This book delves into more advanced aspects of R programming, including how dimension names work, and how to debug issues like these.
+- **The R Language Definition:** (Available on CRAN) – The official R documentation. Though technical, understanding the base language is invaluable.
 
 In conclusion, the "length of 'dimnames' [1] not equal to array extent" error, while sometimes frustrating, is usually a result of simple mismatches between the size of your data and its labels. Careful data manipulation, along with understanding of data structure types in R, will make these issues much easier to avoid and resolve. Pay attention to the number of dimensions, and ensure that your dimension names correspond correctly. Keep practicing and you will soon be debugging these issues quickly and efficiently.

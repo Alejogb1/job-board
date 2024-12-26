@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "can-a-custom-function-override-wagtailhooksregister"
 ---
 
-Alright, let’s tackle this one. I recall a project a few years back, a rather complex publishing platform built atop Wagtail, where this precise question became rather critical. We were aiming to integrate a very specialized content modification process that required us to intervene at a point where Wagtail’s standard hook mechanism wasn't quite providing the flexibility we needed. And that’s when we encountered the core of this, the potential override of `wagtail.hooks.register`. The short answer is no, not directly in the sense of "overriding" the existing registration. However, you can absolutely achieve the desired effect of modifying or extending its behavior. Let me explain, and I'll illustrate with a few code snippets to clarify the concepts.
+, let’s tackle this one. I recall a project a few years back, a rather complex publishing platform built atop Wagtail, where this precise question became rather critical. We were aiming to integrate a very specialized content modification process that required us to intervene at a point where Wagtail’s standard hook mechanism wasn't quite providing the flexibility we needed. And that’s when we encountered the core of this, the potential override of `wagtail.hooks.register`. The short answer is no, not directly in the sense of "overriding" the existing registration. However, you can absolutely achieve the desired effect of modifying or extending its behavior. Let me explain, and I'll illustrate with a few code snippets to clarify the concepts.
 
-The crux of the issue lies in how `wagtail.hooks.register` operates. It's fundamentally designed to *append* functions to a designated hook point. Think of it less as a table where you can overwrite an existing entry and more as a list where you keep adding items. Each function associated with a specific hook gets executed sequentially, in the order it was registered. Consequently, you can't use a new function definition to ‘override’ an earlier registered one. Instead, to alter behaviour, you work within the confines of the existing hook system, using your function to make necessary changes.
+The crux of the issue lies in how `wagtail.hooks.register` operates. It's fundamentally designed to _append_ functions to a designated hook point. Think of it less as a table where you can overwrite an existing entry and more as a list where you keep adding items. Each function associated with a specific hook gets executed sequentially, in the order it was registered. Consequently, you can't use a new function definition to ‘override’ an earlier registered one. Instead, to alter behaviour, you work within the confines of the existing hook system, using your function to make necessary changes.
 
 Now, if you want to alter an action that a previously registered hook performs, you'll need to carefully understand the function that’s being executed at that specific hook point. The trick is to craft your new function to either:
 
 1.  **Modify existing output or data.** This assumes the earlier hook function is passing along a result that your function can then modify.
 2.  **Short circuit or prevent the default action.** This is trickier, and depends heavily on the implementation of the original hook function. It might involve inspecting parameters, raising exceptions, or otherwise preventing the function’s later logic from executing.
-3. **Replicate and enhance.** If modification is not viable, and the data is readily accessible, you might find yourself replicating the actions of an existing function in your own, perhaps with some extra logic thrown in.
+3.  **Replicate and enhance.** If modification is not viable, and the data is readily accessible, you might find yourself replicating the actions of an existing function in your own, perhaps with some extra logic thrown in.
 
 Let me provide an example from my own experience, where we had a hook that was adding specific class names to HTML elements during page rendering. We wanted to add some new, more specific, classes while keeping the originals. Here’s how we approached it.
 
@@ -35,7 +35,7 @@ def add_specific_classes(page, template, context, request):
        context['classes'] =  ['specific-class-1', 'specific-class-2']
 ```
 
-In this case, we're not overriding the existing logic. Instead, we are reading the existing list of classes generated earlier in the process (assumed), then appending our new class names to this. By appending to a `list` or updating a `dict`, you modify the output, rather than replacing or blocking the initial registered function. Crucially, this is *after* the original function has run, so you are working on it’s output.
+In this case, we're not overriding the existing logic. Instead, we are reading the existing list of classes generated earlier in the process (assumed), then appending our new class names to this. By appending to a `list` or updating a `dict`, you modify the output, rather than replacing or blocking the initial registered function. Crucially, this is _after_ the original function has run, so you are working on it’s output.
 
 Now, consider a scenario where a function is supposed to render a specific block and you wish to prevent it for certain cases. This requires more careful inspection of the context and might need a more intrusive approach.
 
@@ -60,6 +60,7 @@ def prevent_default_block(page, block_value, context, request):
         return
     # Continue normal processing by not modifying the context, or return the httpResponse
 ```
+
 In this snippet, we are inspecting the page's type. If it meets our special condition we modify the context to prevent further processing and avoid rendering the default block. This demonstrates a way to short-circuit the usual flow. It’s important to note that if the original function's logic doesn’t check for such a key/context, it may not have any impact, underscoring the need to understand how hook functions are constructed. In our fictional past, we had to debug this one a few times.
 
 Finally, if modifying the context isn't viable, one might need to essentially replicate the logic of an existing hook function, but this is generally the least desirable solution and should be considered a last resort. However, I'll include an example here for completeness.

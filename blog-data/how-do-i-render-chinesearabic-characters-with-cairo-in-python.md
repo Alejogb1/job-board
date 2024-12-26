@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-render-chinesearabic-characters-with-cairo-in-python"
 ---
 
-Alright, let's talk about rendering complex scripts like Chinese and Arabic with Cairo in Python. It's a topic I've tackled quite a few times over the years, usually when dealing with multilingual document generation or image processing pipelines. The core issue, as you might suspect, isn't simply about having the correct font installed; it’s about correctly handling glyph shaping and directionality. These scripts are far more nuanced than, say, basic Latin.
+, let's talk about rendering complex scripts like Chinese and Arabic with Cairo in Python. It's a topic I've tackled quite a few times over the years, usually when dealing with multilingual document generation or image processing pipelines. The core issue, as you might suspect, isn't simply about having the correct font installed; it’s about correctly handling glyph shaping and directionality. These scripts are far more nuanced than, say, basic Latin.
 
 First, let's acknowledge that Cairo by itself doesn't inherently manage the intricacies of shaping complex text. It's a rendering library, and it requires help with layout, especially when dealing with characters that may change shape depending on their position in a word (as in Arabic), or require combining multiple code points into a single glyph (common in several complex scripts). That's where pango comes into the picture. Pango is a library designed for text layout, and Cairo integrates with it quite seamlessly.
 

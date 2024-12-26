@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "what-is-a-datadog-replacement-for-local-development"
 ---
 
-alright, so you're looking for a datadog-like setup for your local dev environment, right? i've been down that rabbit hole a few times, let me tell you. datadog's great for production, no doubt, but when you're hacking away locally, it's often overkill and adds unnecessary complexity. i've always found that simplicity is the key for rapid prototyping and debugging local stuff.
+, so you're looking for a datadog-like setup for your local dev environment, right? i've been down that rabbit hole a few times, let me tell you. datadog's great for production, no doubt, but when you're hacking away locally, it's often overkill and adds unnecessary complexity. i've always found that simplicity is the key for rapid prototyping and debugging local stuff.
 
-i remember back in my early days, i was working on this microservice architecture for a toy project. i tried using datadog agents locally, and while it technically *worked*, it was just too much overhead. resource hogging, the constant configuration headaches, it was like trying to use a sledgehammer to crack a nut. that's when i started exploring lighter alternatives. i learned it’s better to have simpler tools when you are working locally.
+i remember back in my early days, i was working on this microservice architecture for a toy project. i tried using datadog agents locally, and while it technically _worked_, it was just too much overhead. resource hogging, the constant configuration headaches, it was like trying to use a sledgehammer to crack a nut. that's when i started exploring lighter alternatives. i learned it’s better to have simpler tools when you are working locally.
 
 so, what can you use? well, it really depends on what aspects of datadog you need to replicate. are you mainly after metrics, logs, tracing, or all of the above? for most local setups, you can achieve a lot with readily available open-source tools.
 

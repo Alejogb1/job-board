@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-get-the-most-liked-posts-using-the-votable-gem-in-rails"
 ---
 
-Alright, let's unpack this. I remember back in the day, working on a social platform for amateur photographers, we had a similar challenge. Users were constantly creating new posts, and the need to surface the "most liked" content became critical for user engagement. The votable gem, as you mentioned, is a solid choice for implementing voting functionality in Rails, and extracting that 'most liked' data efficiently is certainly achievable. Here's how I approach this, combining database optimization techniques with straightforward ActiveRecord queries.
+, let's unpack this. I remember back in the day, working on a social platform for amateur photographers, we had a similar challenge. Users were constantly creating new posts, and the need to surface the "most liked" content became critical for user engagement. The votable gem, as you mentioned, is a solid choice for implementing voting functionality in Rails, and extracting that 'most liked' data efficiently is certainly achievable. Here's how I approach this, combining database optimization techniques with straightforward ActiveRecord queries.
 
 Essentially, the core concept hinges on using the `votes_for` association, which `votable` provides and leverages SQL aggregations to retrieve our top content. The key is to craft our queries to work with the underlying data in a performant manner, especially as the data scales.
 
@@ -90,6 +90,7 @@ end
 most_liked = Post.top_posts_cached(5)
 most_liked.each { |post| puts "Post ID: #{post.id}, Likes: #{post.vote_count}" }
 ```
+
 Here, we've added a `vote_count` column to our `posts` table, and each time a vote is created or destroyed, we update this count. Now, our retrieval is as simple as ordering by that column. This provides extremely fast query times at the cost of maintaining data consistency across vote and post records.
 
 This denormalization approach trades consistency overhead (in the form of callback computation) for faster read times, and should be evaluated based on your actual load patterns and needs. For the initial stage of most projects, the optimized sql query example (number two) is typically sufficient.

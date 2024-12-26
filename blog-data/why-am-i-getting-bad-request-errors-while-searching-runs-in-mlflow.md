@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-bad-request-errors-while-searching-runs-in-mlflow"
 ---
 
-Alright, let’s get into this. Bad request errors during mlflow run searches can be surprisingly frustrating, especially when everything *appears* to be configured correctly. I've personally chased down a few of these gremlins over the years, and they often boil down to a mismatch between what you're *asking* mlflow to find and what it's actually *capable* of delivering given the data it has, or how you're phrasing your requests.
+, let’s get into this. Bad request errors during mlflow run searches can be surprisingly frustrating, especially when everything _appears_ to be configured correctly. I've personally chased down a few of these gremlins over the years, and they often boil down to a mismatch between what you're _asking_ mlflow to find and what it's actually _capable_ of delivering given the data it has, or how you're phrasing your requests.
 
 The core issue, in my experience, frequently stems from the structure and content of the search criteria you’re providing to mlflow’s search_runs() function. This function, while powerful, is quite particular about the query syntax and data types. The errors themselves might seem vague at first, but they usually point towards a few common pitfalls. Let's break them down.
 
@@ -53,7 +53,7 @@ except Exception as e:
     print(f"Error during incorrect filtering (string number): {e}")
 ```
 
-In the first example, `params.learning_rate > 0.01` and `params.epochs < 10` are both valid since they are using numerical comparisons with numerical parameters. In the second example,  `params.learning_rate like '0.0%'` is incorrect and results in an error, because like is a string operation. Similarly, the third one `params.epochs = '10'` is incorrect as we are comparing integer field to string value. Always be mindful of the underlying types of the data you are filtering against.
+In the first example, `params.learning_rate > 0.01` and `params.epochs < 10` are both valid since they are using numerical comparisons with numerical parameters. In the second example, `params.learning_rate like '0.0%'` is incorrect and results in an error, because like is a string operation. Similarly, the third one `params.epochs = '10'` is incorrect as we are comparing integer field to string value. Always be mindful of the underlying types of the data you are filtering against.
 
 Another common source of bad requests lies in the way you specify experiment IDs. If you pass a list of strings as experiment ids when mlflow expects integers, you will encounter a bad request error. The mlflow UI can show ids as strings when displayed, but the internal representation in the storage backend is typically numeric.
 
@@ -90,7 +90,7 @@ except Exception as e:
 
 This code shows clearly, how using correct integer based experiment ids does not cause an error, while using a list of string ids results in an error. The critical point is that when using ids with the mlflow client, they must be in the correct format, so be mindful of the storage schema of the mlflow backend you are using.
 
-Lastly, be cautious when dealing with parameters that are not consistently logged across all runs. If your filter query references a parameter that's missing in some of the runs within the specified experiments, you will likely encounter a bad request error.  Mlflow expects that all the fields that are referenced in the `filter` string must exists in all the runs. It doesn't handle this scenario gracefully. So, before creating your filter, make sure that the parameters you are using exist in the run metadata. Using a try-except block to handle any exceptions arising from `search_runs()` is always a good practice.
+Lastly, be cautious when dealing with parameters that are not consistently logged across all runs. If your filter query references a parameter that's missing in some of the runs within the specified experiments, you will likely encounter a bad request error. Mlflow expects that all the fields that are referenced in the `filter` string must exists in all the runs. It doesn't handle this scenario gracefully. So, before creating your filter, make sure that the parameters you are using exist in the run metadata. Using a try-except block to handle any exceptions arising from `search_runs()` is always a good practice.
 
 ```python
 import mlflow
@@ -130,6 +130,6 @@ except Exception as e:
 
 In short, these errors usually arise from mismatches in data types and query syntax. Always double-check your filter strings, verify data types, and make sure that all the parameters used in the filter are present in the run metadata.
 
-For a deeper dive into this area, I recommend consulting the official mlflow documentation, particularly the sections on `mlflow.search_runs()` and its query language, which can be found online. Additionally, the book *Machine Learning Engineering* by Andriy Burkov offers some excellent insights on practical aspects of managing machine learning experiments using tools such as mlflow. Another valuable resource, specifically when understanding how to build and structure scalable machine learning pipelines, is *Designing Machine Learning Systems* by Chip Huyen, which provides a lot of practical tips.
+For a deeper dive into this area, I recommend consulting the official mlflow documentation, particularly the sections on `mlflow.search_runs()` and its query language, which can be found online. Additionally, the book _Machine Learning Engineering_ by Andriy Burkov offers some excellent insights on practical aspects of managing machine learning experiments using tools such as mlflow. Another valuable resource, specifically when understanding how to build and structure scalable machine learning pipelines, is _Designing Machine Learning Systems_ by Chip Huyen, which provides a lot of practical tips.
 
 Hopefully, this explanation helps you navigate the complexities of mlflow run searches and avoid those pesky bad request errors.

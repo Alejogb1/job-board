@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-set-pythonpath-in-aws-mwaa"
 ---
 
-Alright, let's talk about `PYTHONPATH` in the context of AWS Managed Workflows for Apache Airflow (MWAA). It’s a topic that often surfaces, and I recall a particular incident a few years back when a colleague was wrestling with a similar setup. We had a rather complex multi-package project, and getting MWAA to recognize our custom libraries felt… well, let's just say it involved a fair amount of troubleshooting. So, I'll share my experience and insights based on those lessons learned.
+, let's talk about `PYTHONPATH` in the context of AWS Managed Workflows for Apache Airflow (MWAA). It’s a topic that often surfaces, and I recall a particular incident a few years back when a colleague was wrestling with a similar setup. We had a rather complex multi-package project, and getting MWAA to recognize our custom libraries felt… well, let's just say it involved a fair amount of troubleshooting. So, I'll share my experience and insights based on those lessons learned.
 
 Essentially, `PYTHONPATH` is an environment variable that tells the Python interpreter where to look for module files when you `import` something. Normally, Python searches the standard library directories, plus the directory of the script being executed. But if your custom packages or modules aren't located in those default places, you need to inform Python using `PYTHONPATH`. In an MWAA environment, this becomes particularly important when your DAGs (Directed Acyclic Graphs) need to utilize custom operators, hooks, or utilities residing outside of the default paths. This can occur when working with a multi-module project that's not entirely installed as a Python package within the MWAA environment.
 
@@ -168,7 +168,7 @@ s3://my-mwaa-bucket/
 ```
 
 Then during the creation or update of the MWAA environment, you can add environment variables, within the 'Environment Configuration' settings under 'Environment Variables', with key `PYTHONPATH` and value `s3://my-mwaa-bucket/custom_libs` . Note that you will need to make sure that this S3 location has permissions to be read from the MWAA environment. You also need to ensure that any directories that should be included in the python path are added to the `PYTHONPATH`, and that `PYTHONPATH` already contains some default directories from MWAA, therefore make sure not to overwrite, but to append to the current value.
- Then within your DAG file, or custom package files you can import your custom modules:
+Then within your DAG file, or custom package files you can import your custom modules:
 
 ```python
 # dags/my_dag.py
@@ -204,8 +204,8 @@ For most cases, I would recommend the first approach utilizing `requirements.txt
 
 For further reading, I suggest exploring these resources:
 
-*   **"Effective Python: 90 Specific Ways to Write Better Python" by Brett Slatkin:** Provides detailed insights into Python best practices, including package management, which helps understand why certain methods are better than others.
-*   **"Python Cookbook" by David Beazley and Brian K. Jones:** A comprehensive resource for Python developers, which can help with creating robust and easily maintainable Python packages.
-*   **The Apache Airflow documentation:** Pay close attention to the sections on environment setup, custom providers, and plugins, as they provide specific insights into configuring Airflow in a way that’s compatible with MWAA.
+- **"Effective Python: 90 Specific Ways to Write Better Python" by Brett Slatkin:** Provides detailed insights into Python best practices, including package management, which helps understand why certain methods are better than others.
+- **"Python Cookbook" by David Beazley and Brian K. Jones:** A comprehensive resource for Python developers, which can help with creating robust and easily maintainable Python packages.
+- **The Apache Airflow documentation:** Pay close attention to the sections on environment setup, custom providers, and plugins, as they provide specific insights into configuring Airflow in a way that’s compatible with MWAA.
 
 Setting up `PYTHONPATH` can sometimes be challenging, but taking the time to understand how Python locates modules, and the specific nuances of MWAA, will save you a lot of headaches. These examples should offer a solid foundation, and these recommendations will help you navigate the world of Python development with confidence.

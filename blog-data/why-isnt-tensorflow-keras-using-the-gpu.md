@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-tensorflow-keras-using-the-gpu"
 ---
 
-Okay, let's tackle this one. I've certainly spent my share of evenings debugging exactly this issue – why my TensorFlow/Keras model is chugging along on the CPU while the GPU sits idle, mocking my aspirations for faster training times. It's a common frustration, and it often stems from a handful of specific, though not always obvious, culprits. Let's break it down methodically.
+, let's tackle this one. I've certainly spent my share of evenings debugging exactly this issue – why my TensorFlow/Keras model is chugging along on the CPU while the GPU sits idle, mocking my aspirations for faster training times. It's a common frustration, and it often stems from a handful of specific, though not always obvious, culprits. Let's break it down methodically.
 
 First off, we need to acknowledge that TensorFlow, by default, isn't always automatically configured to use the GPU. Several factors play a role in this, and the solution isn't a one-size-fits-all fix. My experience from working on an image classification project a few years ago with massive datasets taught me that these problems often have multiple layers. We finally got it working, but it took some careful examination to see what was causing the issue.
 
@@ -102,8 +102,8 @@ In this snippet, the `tf.device('/GPU:0')` context manager attempts to place the
 
 For further exploration, I recommend looking into the following resources:
 
-*   **TensorFlow documentation:** The official TensorFlow documentation is always the first and best resource for issues with its usage. The API is well explained and always provides updated information.
-*   **"Deep Learning with Python" by François Chollet:** This book offers a solid understanding of deep learning using Keras, along with practical tips on optimizing performance, including GPU usage.
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** Another very useful book, this provides hands-on practical advice for getting the most out of these libraries.
+- **TensorFlow documentation:** The official TensorFlow documentation is always the first and best resource for issues with its usage. The API is well explained and always provides updated information.
+- **"Deep Learning with Python" by François Chollet:** This book offers a solid understanding of deep learning using Keras, along with practical tips on optimizing performance, including GPU usage.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** Another very useful book, this provides hands-on practical advice for getting the most out of these libraries.
 
 Ultimately, solving GPU usage issues in TensorFlow requires a systematic approach. Double-check your TensorFlow installation, ensure you have the correct drivers, explicitly configure memory allocation, and, if necessary, control device placement within your code. By working through these steps methodically, you will usually find a solution, and learn more about the underlying system in the process.

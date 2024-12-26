@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-has-railswebpacker-failed-to-load-locales-json-files-from-the-assets-folder"
 ---
 
-alright, let's talk about webpacker and those pesky locale files. i've been around the block a few times with rails and webpack, and i’ve definitely hit this wall before. it's that classic “works-on-my-machine” situation that can really grind your gears, isn't it? the frustration is real when your app refuses to pick up those beautifully crafted json locale files.
+, let's talk about webpacker and those pesky locale files. i've been around the block a few times with rails and webpack, and i’ve definitely hit this wall before. it's that classic “works-on-my-machine” situation that can really grind your gears, isn't it? the frustration is real when your app refuses to pick up those beautifully crafted json locale files.
 
 first, let's get this straight, @rails/webpacker by itself isn't "failing". it's more about how we've configured it, or perhaps an assumption we're making. webpacker, at its core, is a bundler – it takes your assets, processes them, and spits them out in a way the browser can understand. it doesn't inherently "know" that your json files in the `assets` folder are locales meant to be loaded in a specific way. that's where we, the developers, come in and guide the bundler.
 
@@ -15,23 +15,23 @@ the default configuration is geared towards js, css, and images. json isn't trea
 the most straightforward way is to configure webpack to load your json files and make them available to your javascript code. here's a simple example of how you would modify your `webpack.config.js` in the rails application's `config/webpack` directory:
 
 ```javascript
-const path = require('path');
-const { webpackConfig, merge } = require('@rails/webpacker');
+const path = require("path");
+const { webpackConfig, merge } = require("@rails/webpacker");
 
 module.exports = merge(webpackConfig, {
   resolve: {
-    extensions: ['.json'],
+    extensions: [".json"],
   },
-    module: {
-        rules: [
-        {
-            test: /\.json$/,
-            type: 'javascript/auto',
-            include: path.resolve(__dirname, '../app/assets/locales'),
-            loader: 'json-loader'
-          },
-        ],
-    },
+  module: {
+    rules: [
+      {
+        test: /\.json$/,
+        type: "javascript/auto",
+        include: path.resolve(__dirname, "../app/assets/locales"),
+        loader: "json-loader",
+      },
+    ],
+  },
 });
 ```
 
@@ -42,8 +42,8 @@ with this configuration, you could import the locale files directly within your 
 ```javascript
 // app/javascript/packs/application.js
 
-import en from 'locales/en.json';
-import es from 'locales/es.json';
+import en from "locales/en.json";
+import es from "locales/es.json";
 
 console.log(en);
 console.log(es);
@@ -60,20 +60,22 @@ yarn add copy-webpack-plugin
 and here is an example webpack configuration:
 
 ```javascript
-const path = require('path');
-const { webpackConfig, merge } = require('@rails/webpacker');
-const CopyPlugin = require('copy-webpack-plugin');
+const path = require("path");
+const { webpackConfig, merge } = require("@rails/webpacker");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = merge(webpackConfig, {
   plugins: [
-     new CopyPlugin({
-          patterns: [
-               { from: path.resolve(__dirname, '../app/assets/locales'), to: 'locales' }
-          ],
-     }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, "../app/assets/locales"),
+          to: "locales",
+        },
+      ],
+    }),
   ],
 });
-
 ```
 
 this plugin configuration copies all files within the `app/assets/locales` directory and puts them in a folder named 'locales' in the public folder of the rails application, and they are accesible under `/locales/<name_of_the_file>.json`, and you can use that path to load the json files using fetch api.
@@ -81,14 +83,13 @@ this plugin configuration copies all files within the `app/assets/locales` direc
 ```javascript
 // app/javascript/packs/application.js
 
-fetch('/locales/en.json')
-  .then(response => response.json())
-  .then(data => console.log(data));
+fetch("/locales/en.json")
+  .then((response) => response.json())
+  .then((data) => console.log(data));
 
-fetch('/locales/es.json')
-  .then(response => response.json())
-  .then(data => console.log(data));
-
+fetch("/locales/es.json")
+  .then((response) => response.json())
+  .then((data) => console.log(data));
 ```
 
 choosing between these two depends on your needs. the first approach is useful if you want to access the locales directly from javascript, as data structures. the second approach, the one with copy-webpack-plugin, is more suitable if you intend to use a different library to handle the loading of translations, or to fetch them directly. i prefer the first one in most cases, it's cleaner in my opinion, and easier to manage if you have a lot of files.

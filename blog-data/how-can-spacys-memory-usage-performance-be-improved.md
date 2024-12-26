@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-can-spacys-memory-usage-performance-be-improved"
 ---
 
-Okay, let's tackle this. I remember back in '19, we were deploying a large-scale text analysis pipeline, and the spacy memory footprint was causing us some serious headaches. We were processing millions of documents daily, and the server was just...choking. We initially approached it as a simple scaling issue, but quickly realized the underlying problem was more nuanced than just adding more RAM. It wasn't enough; we had to fundamentally change how we were using spacy. Here’s what I learned.
+, let's tackle this. I remember back in '19, we were deploying a large-scale text analysis pipeline, and the spacy memory footprint was causing us some serious headaches. We were processing millions of documents daily, and the server was just...choking. We initially approached it as a simple scaling issue, but quickly realized the underlying problem was more nuanced than just adding more RAM. It wasn't enough; we had to fundamentally change how we were using spacy. Here’s what I learned.
 
-Improving spacy's memory performance primarily revolves around understanding how it manages resources internally, especially its models, and then applying techniques to minimize that load. The core of the problem usually stems from the pre-trained language models themselves. These models, while incredibly powerful, are resource-intensive. We are essentially loading a massive network of parameters into memory. Therefore, the first step is to load *only* what we actually need. Spacy models aren't monolithic blobs; they are structured with various components (tagger, parser, entity recognizer, etc.). If your application only needs, say, named entity recognition, you absolutely shouldn't be loading the parser as well.
+Improving spacy's memory performance primarily revolves around understanding how it manages resources internally, especially its models, and then applying techniques to minimize that load. The core of the problem usually stems from the pre-trained language models themselves. These models, while incredibly powerful, are resource-intensive. We are essentially loading a massive network of parameters into memory. Therefore, the first step is to load _only_ what we actually need. Spacy models aren't monolithic blobs; they are structured with various components (tagger, parser, entity recognizer, etc.). If your application only needs, say, named entity recognition, you absolutely shouldn't be loading the parser as well.
 
 The primary strategy we employed involved selectively disabling components of the pipeline we weren't using. Let’s start with an illustrative python code snippet:
 
@@ -91,6 +91,7 @@ for doc in nlp.pipe(texts):
     print([(token.text, token.pos_) for token in doc]) #process each document
 
 ```
+
 This method processes the documents in a streaming fashion. Instead of loading all documents into memory at once, they are processed in a loop. Each document is parsed and outputted before the next document is parsed. This is critical when dealing with large data sets where the whole data may not fit into the available memory, helping keep your memory footprint small and manageable.
 
 Finally, and this may seem obvious, ensure your environment itself isn't wasting memory. Keep your system and libraries up to date, and regularly clean up any unnecessary objects or data that your pipeline might create but not utilize. These are the steps that might sound small but collectively provide a significant impact.

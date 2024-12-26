@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-i-append-error-message-to-target-notempty"
 ---
 
-alright, so you're looking to append an error message specifically to elements with the class `.not.empty`. been there, done that, got the t-shirt – and a few debugging scars to show for it. i remember back in '08, i was building this real-time form validation system using mostly vanilla javascript (pre-jquery days, can you imagine?), and i had this exact situation. i needed to visually flag input fields that were not filled out.
+, so you're looking to append an error message specifically to elements with the class `.not.empty`. been there, done that, got the t-shirt – and a few debugging scars to show for it. i remember back in '08, i was building this real-time form validation system using mostly vanilla javascript (pre-jquery days, can you imagine?), and i had this exact situation. i needed to visually flag input fields that were not filled out.
 
 it turns out, targeting elements with a specific class and then appending something dynamically isn't all that tricky once you understand the basics of dom manipulation. let me break it down for you, focusing on how i'd tackle it today with javascript, and throw in some examples to get us on the same page.
 
@@ -13,13 +13,13 @@ first off, we need to select all the elements that have the class `.not.empty`. 
 here's the most straightforward way to do it:
 
 ```javascript
-const notEmptyElements = document.querySelectorAll('.not.empty');
+const notEmptyElements = document.querySelectorAll(".not.empty");
 
-notEmptyElements.forEach(element => {
-    const errorMessage = document.createElement('span');
-    errorMessage.textContent = 'this field cannot be empty';
-    errorMessage.classList.add('error-message'); // optional styling
-    element.parentNode.insertBefore(errorMessage, element.nextSibling);
+notEmptyElements.forEach((element) => {
+  const errorMessage = document.createElement("span");
+  errorMessage.textContent = "this field cannot be empty";
+  errorMessage.classList.add("error-message"); // optional styling
+  element.parentNode.insertBefore(errorMessage, element.nextSibling);
 });
 ```
 
@@ -41,28 +41,28 @@ now, that's pretty basic, but often, we want to do more than just slap error mes
 
 ```javascript
 function validateNotEmpty(element) {
-    const hasValue = element.value && element.value.trim() !== '';
-    const existingError = element.parentNode.querySelector('.error-message');
+  const hasValue = element.value && element.value.trim() !== "";
+  const existingError = element.parentNode.querySelector(".error-message");
 
-    if (!hasValue) {
-        if (!existingError) {
-            const errorMessage = document.createElement('span');
-            errorMessage.textContent = 'this field cannot be empty';
-            errorMessage.classList.add('error-message');
-            element.parentNode.insertBefore(errorMessage, element.nextSibling);
-        }
-    } else {
-        if (existingError) {
-            existingError.remove();
-        }
+  if (!hasValue) {
+    if (!existingError) {
+      const errorMessage = document.createElement("span");
+      errorMessage.textContent = "this field cannot be empty";
+      errorMessage.classList.add("error-message");
+      element.parentNode.insertBefore(errorMessage, element.nextSibling);
     }
+  } else {
+    if (existingError) {
+      existingError.remove();
+    }
+  }
 }
 
-const notEmptyInputs = document.querySelectorAll('.not.empty');
+const notEmptyInputs = document.querySelectorAll(".not.empty");
 
-notEmptyInputs.forEach(input => {
-    input.addEventListener('blur', () => validateNotEmpty(input));
-    input.addEventListener('input', () => validateNotEmpty(input));
+notEmptyInputs.forEach((input) => {
+  input.addEventListener("blur", () => validateNotEmpty(input));
+  input.addEventListener("input", () => validateNotEmpty(input));
 });
 ```
 
@@ -86,30 +86,29 @@ let me show you one last example, this time, let's assume your `.not.empty` elem
 
 ```javascript
 function validateNotEmptyContent(element) {
-    const hasContent = element.innerHTML.trim() !== '';
-    const existingError = element.parentNode.querySelector('.error-message');
+  const hasContent = element.innerHTML.trim() !== "";
+  const existingError = element.parentNode.querySelector(".error-message");
 
-    if (!hasContent) {
-        if (!existingError) {
-            const errorMessage = document.createElement('span');
-            errorMessage.textContent = 'this element should have content';
-            errorMessage.classList.add('error-message');
-            element.parentNode.insertBefore(errorMessage, element.nextSibling);
-        }
-    } else {
-        if (existingError) {
-            existingError.remove();
-        }
+  if (!hasContent) {
+    if (!existingError) {
+      const errorMessage = document.createElement("span");
+      errorMessage.textContent = "this element should have content";
+      errorMessage.classList.add("error-message");
+      element.parentNode.insertBefore(errorMessage, element.nextSibling);
     }
+  } else {
+    if (existingError) {
+      existingError.remove();
+    }
+  }
 }
 
-const notEmptyElementsContent = document.querySelectorAll('.not.empty');
+const notEmptyElementsContent = document.querySelectorAll(".not.empty");
 
-notEmptyElementsContent.forEach(element => {
-    // i'm not adding the input or blur events here because that does not make sense with content containers.
-    // you could implement an observer to check if contents are added or removed if needed.
-    validateNotEmptyContent(element); // calling it initially for each element on the load.
-
+notEmptyElementsContent.forEach((element) => {
+  // i'm not adding the input or blur events here because that does not make sense with content containers.
+  // you could implement an observer to check if contents are added or removed if needed.
+  validateNotEmptyContent(element); // calling it initially for each element on the load.
 });
 ```
 
@@ -123,11 +122,11 @@ some things change here:
 
 now, a few things to keep in mind:
 
-*   always sanitize your inputs. never trust data coming from the user (i saw some weird stuff back when i was working on that validation project) if your error messages come from user data, you want to prevent cross site scripting (xss), using textContent instead of innerhtml is often a good solution here, as we did with our examples.
+- always sanitize your inputs. never trust data coming from the user (i saw some weird stuff back when i was working on that validation project) if your error messages come from user data, you want to prevent cross site scripting (xss), using textContent instead of innerhtml is often a good solution here, as we did with our examples.
 
-*   for more complex validations, consider using a library like vee-validate, react-hook-form (if you're into react), or similar. i've spent a bunch of time building my own validation engine from scratch, and although it was a great learning experience, i do not always recommend that, often a library or framework will do a better job faster and with fewer headaches.
+- for more complex validations, consider using a library like vee-validate, react-hook-form (if you're into react), or similar. i've spent a bunch of time building my own validation engine from scratch, and although it was a great learning experience, i do not always recommend that, often a library or framework will do a better job faster and with fewer headaches.
 
-*   you can, of course, modify the example to target different elements or change the way that validation behaves, the core logic should still be there.
+- you can, of course, modify the example to target different elements or change the way that validation behaves, the core logic should still be there.
 
 for learning more, i'd recommend reading the mdn documentation on the dom, and diving into javascript books like "eloquent javascript" or "you don't know js" if you really want to understand the nitty-gritty details. they helped me immensely over the years. also the "javascript patterns" book by stoyan stefanov was also very helpful in the past. they cover more complex examples than this, and they would provide you with more powerful tools for your everyday tasks.
 

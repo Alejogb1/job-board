@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-many-trees-should-be-used-per-boosting-round-in-xgboost"
 ---
 
-Alright, let’s tackle this. The question of how many trees to use in each boosting round within XGBoost is definitely a nuanced one, and it's something I've spent a fair bit of time optimizing in various projects. It's less about a single magic number and much more about understanding the trade-offs and dynamics at play. I'll break down my thought process and provide some tangible examples from my past work, rather than just giving a textbook answer.
+, let’s tackle this. The question of how many trees to use in each boosting round within XGBoost is definitely a nuanced one, and it's something I've spent a fair bit of time optimizing in various projects. It's less about a single magic number and much more about understanding the trade-offs and dynamics at play. I'll break down my thought process and provide some tangible examples from my past work, rather than just giving a textbook answer.
 
-First, let's clarify what we mean by "trees per boosting round." In XGBoost, the term 'boosting round' is essentially synonymous with a single iteration of the boosting process. In each round, a new tree is built, aiming to correct the errors made by the ensemble of trees built in prior rounds. This new tree isn't just *added* to the existing ensemble; rather, the predictions from all previous trees, including the new one, are aggregated to make the new prediction of the model. The total number of trees a model uses is therefore the number of boosting rounds that have taken place, which in turn dictates the complexity of the model.
+First, let's clarify what we mean by "trees per boosting round." In XGBoost, the term 'boosting round' is essentially synonymous with a single iteration of the boosting process. In each round, a new tree is built, aiming to correct the errors made by the ensemble of trees built in prior rounds. This new tree isn't just _added_ to the existing ensemble; rather, the predictions from all previous trees, including the new one, are aggregated to make the new prediction of the model. The total number of trees a model uses is therefore the number of boosting rounds that have taken place, which in turn dictates the complexity of the model.
 
 Now, traditionally, many resources would lean heavily on something like an "optimal n_estimators" setting. Yes, the `n_estimators` parameter determines the total number of boosting rounds and therefore the number of trees. And, yes, there's a tendency to see folks aiming for a specific number in each round. But thinking about it that way is quite limiting because it ignores the interplay with other hyperparameters and the nature of your data. The problem is, there’s no free lunch—more trees usually mean higher training time and a greater chance of overfitting, especially if not balanced correctly.
 
@@ -93,7 +93,7 @@ mse = mean_squared_error(y_test, y_pred)
 print(f"Mean Squared Error: {mse:.4f}")
 ```
 
-Finally, for a scenario with a highly complex non-linear dataset, consider using early stopping. This is a technique where we monitor the performance of the model on a validation set, and stop adding boosting rounds if we no longer observe improvements in its performance. In this context, we might start with a relatively high number of `n_estimators` and let early stopping determine the optimal number. This means the *effective* number of boosting rounds could be quite variable depending on the data and can result in optimal performance.
+Finally, for a scenario with a highly complex non-linear dataset, consider using early stopping. This is a technique where we monitor the performance of the model on a validation set, and stop adding boosting rounds if we no longer observe improvements in its performance. In this context, we might start with a relatively high number of `n_estimators` and let early stopping determine the optimal number. This means the _effective_ number of boosting rounds could be quite variable depending on the data and can result in optimal performance.
 
 Here’s an example:
 

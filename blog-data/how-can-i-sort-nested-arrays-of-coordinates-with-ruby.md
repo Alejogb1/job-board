@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-sort-nested-arrays-of-coordinates-with-ruby"
 ---
 
-Alright, let’s tackle sorting nested arrays of coordinates in Ruby. This is a problem I've bumped into a few times over the years, particularly when working on geospatial data processing projects, and it's surprisingly common. The trick isn't just about sorting numbers, it’s about understanding *how* those numbers represent coordinates, and what kind of sorting you actually need. You'll quickly realize there isn't a one-size-fits-all approach.
+, let’s tackle sorting nested arrays of coordinates in Ruby. This is a problem I've bumped into a few times over the years, particularly when working on geospatial data processing projects, and it's surprisingly common. The trick isn't just about sorting numbers, it’s about understanding _how_ those numbers represent coordinates, and what kind of sorting you actually need. You'll quickly realize there isn't a one-size-fits-all approach.
 
 Let's consider a typical scenario: you might have data structures that look like this: `[[x1, y1], [x2, y2], [x3, y3], ...]`. These could be 2D coordinates, though the same principles apply to 3D or even higher dimensions. The way you sort them really depends on the application. Is it sorting by X-coordinate first, then Y? Or maybe by distance from a specific origin? Or perhaps even by a complex custom algorithm based on spatial relationships.
 
@@ -74,7 +74,7 @@ puts sorted_coordinates.inspect
 # Output: [[1, 1], [1, 5], [2, 3], [3.1, 1], [3, 2]]
 ```
 
-Here, we provided a block to the sort method, using `coord_a` and `coord_b` as variables representing two coordinates being compared. The logic first checks if the x-coordinates are within a set threshold. If they are, we compare the y-coordinates in *descending* order. Otherwise, we revert to an *ascending* sort by x.
+Here, we provided a block to the sort method, using `coord_a` and `coord_b` as variables representing two coordinates being compared. The logic first checks if the x-coordinates are within a set threshold. If they are, we compare the y-coordinates in _descending_ order. Otherwise, we revert to an _ascending_ sort by x.
 
 **Key takeaways and further learning:**
 
@@ -88,8 +88,8 @@ Here, we provided a block to the sort method, using `coord_a` and `coord_b` as v
 
 For deeper study, I would suggest looking at:
 
-*   **"Introduction to Algorithms" by Thomas H. Cormen et al.:** a standard text on computer algorithms, including sorting. This will give a solid base understanding of the underpinnings of common sorting algorithms
-*   **"Geographic Information Systems and Science" by Paul A. Longley et al.:** For background on how sorting and spatial relationships work.
-*   **Ruby documentation for `Array#sort` and `Array#sort_by`:** a key resource to understand the core mechanisms.
+- **"Introduction to Algorithms" by Thomas H. Cormen et al.:** a standard text on computer algorithms, including sorting. This will give a solid base understanding of the underpinnings of common sorting algorithms
+- **"Geographic Information Systems and Science" by Paul A. Longley et al.:** For background on how sorting and spatial relationships work.
+- **Ruby documentation for `Array#sort` and `Array#sort_by`:** a key resource to understand the core mechanisms.
 
 In my experience, the correct sorting method is critical for the reliability of a geospatial application. These three examples are a great start. I encourage you to experiment, play with different datasets, and always consider the specific needs of your use case.

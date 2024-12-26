@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-the-wallect-connect-pop-up-appearing-in-my-metamask-mobile-wallet"
 ---
 
-Okay, let’s tackle this. It's a frustrating situation, I know, especially when you're trying to integrate a dApp seamlessly with MetaMask mobile. I’ve personally debugged countless similar scenarios over the years, and the issue rarely boils down to one simple thing. Usually, it's a combination of factors conspiring against you. Let's break down the typical culprits and, crucially, how to address them.
+, let’s tackle this. It's a frustrating situation, I know, especially when you're trying to integrate a dApp seamlessly with MetaMask mobile. I’ve personally debugged countless similar scenarios over the years, and the issue rarely boils down to one simple thing. Usually, it's a combination of factors conspiring against you. Let's break down the typical culprits and, crucially, how to address them.
 
 First off, let's be clear: the wallet connect pop-up relies on a carefully orchestrated dance between your dApp and MetaMask’s mobile app. If any step falters, the pop-up won't appear. The most common reasons I’ve encountered fall into several categories: incorrect initialization of the wallet connect library, issues with the dApp’s connection handling logic, problems with the MetaMask mobile app itself (though rarer), or even something as subtle as incorrect network configuration. I'll walk you through the troubleshooting process as I have experienced it.
 
@@ -16,7 +16,7 @@ Here's an example, using a simplified version of a javascript implementation, to
 // example 1: improper promise handling
 
 async function connectWallet() {
-  const provider = await walletConnect.enable();  // might reject
+  const provider = await walletConnect.enable(); // might reject
   console.log("Connected!", provider); // might never get here if enable fails
 }
 
@@ -31,13 +31,13 @@ A better approach is to incorporate a try/catch block, or use the `.then()` and 
 // example 2: improved error handling
 
 async function connectWallet() {
-    try {
-        const provider = await walletConnect.enable();
-        console.log("Connected!", provider);
-    } catch (error) {
-        console.error("Failed to connect:", error);
-        // handle the error gracefully, maybe display to user
-    }
+  try {
+    const provider = await walletConnect.enable();
+    console.log("Connected!", provider);
+  } catch (error) {
+    console.error("Failed to connect:", error);
+    // handle the error gracefully, maybe display to user
+  }
 }
 
 connectWallet();
@@ -51,23 +51,23 @@ Now, the next area I commonly see problems in is how the dApp handles the connec
 // example 3: handling connection changes
 
 async function initializeWallet() {
-    const provider = await walletConnect.enable();
-    console.log("Initial connection success: ", provider);
+  const provider = await walletConnect.enable();
+  console.log("Initial connection success: ", provider);
 
-    provider.on("accountsChanged", (accounts) => {
-        console.log("Accounts changed:", accounts);
-        // update your app state
-    });
+  provider.on("accountsChanged", (accounts) => {
+    console.log("Accounts changed:", accounts);
+    // update your app state
+  });
 
-    provider.on("chainChanged", (chainId) => {
-        console.log("Chain changed:", chainId);
-        // update your app state, possibly reconnect if not using an approved network
-    });
+  provider.on("chainChanged", (chainId) => {
+    console.log("Chain changed:", chainId);
+    // update your app state, possibly reconnect if not using an approved network
+  });
 
-    provider.on('disconnect', (code, reason) => {
-        console.log("Disconnect:", code, reason);
-        // handle wallet disconnect
-    });
+  provider.on("disconnect", (code, reason) => {
+    console.log("Disconnect:", code, reason);
+    // handle wallet disconnect
+  });
 }
 
 initializeWallet();

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-lstm-be-used-with-tf-idf-for-nlp-tasks"
 ---
 
-Alright, let’s tackle this one. I've certainly spent my fair share of time navigating the intersection of LSTMs and tf-idf, particularly back in my early days working on a large-scale document classification project. That experience taught me a few crucial things about how to leverage these tools effectively.
+, let’s tackle this one. I've certainly spent my fair share of time navigating the intersection of LSTMs and tf-idf, particularly back in my early days working on a large-scale document classification project. That experience taught me a few crucial things about how to leverage these tools effectively.
 
 The core idea here is bridging the gap between two distinct representation strategies for text. tf-idf (term frequency-inverse document frequency) provides a static, sparse representation of text based on word importance within a corpus, while an LSTM (long short-term memory network) is a dynamic, sequence-aware model that excels at learning patterns in ordered data. They address different aspects of the problem, so marrying the two can lead to robust performance.
 
@@ -12,7 +12,7 @@ Here's how I typically approach this integration:
 
 Firstly, tf-idf serves as a preprocessing step, transforming your raw text into a numerical format that an LSTM can ingest. Instead of feeding raw word tokens, which are categorical, into the LSTM, you're feeding their tf-idf weights. This addresses two key challenges: the high dimensionality of vocabulary (common when dealing with large text corpora) and the fact that not all words are equally important for a given task. Tf-idf scores down-weights frequent words (like “the,” “a,” “is”) and gives higher weight to terms that are more specific to a document within the corpus.
 
-My usual implementation proceeds something like this: We begin by fitting a tf-idf vectorizer on the entire text corpus. This fit generates a vocabulary and the necessary idf values. Then, we transform each document (or sentence depending on the task) in our training, validation, and test sets into a sparse tf-idf vector. These tf-idf vectors are then used to populate the input sequences for the LSTM. The tf-idf transformation happens *before* any sequence padding or batching occurs.
+My usual implementation proceeds something like this: We begin by fitting a tf-idf vectorizer on the entire text corpus. This fit generates a vocabulary and the necessary idf values. Then, we transform each document (or sentence depending on the task) in our training, validation, and test sets into a sparse tf-idf vector. These tf-idf vectors are then used to populate the input sequences for the LSTM. The tf-idf transformation happens _before_ any sequence padding or batching occurs.
 
 Now, let’s look at some code to solidify these concepts. Here is a python example using `scikit-learn` and `tensorflow`:
 
@@ -74,7 +74,7 @@ print (f'Predictions: {predictions}')
 
 In this snippet, the tf-idf vectorizer transforms the texts into numerical features that the LSTM can process. The LSTM’s input shape is determined by the shape of the output from the tf-idf vectorizer, and note that I've treated entire documents as single sequences here, which is useful for document-level classification tasks.
 
-It's worth mentioning a slight variation on how you can use tf-idf: instead of using the tf-idf vectors *directly* as input, you could use them to generate an embedding matrix. This involves calculating the tf-idf scores for the entire corpus, and then training an embedding layer in your LSTM model using these weights as initial values. The intuition here is to provide the LSTM with information on word importance before the learning begins.
+It's worth mentioning a slight variation on how you can use tf-idf: instead of using the tf-idf vectors _directly_ as input, you could use them to generate an embedding matrix. This involves calculating the tf-idf scores for the entire corpus, and then training an embedding layer in your LSTM model using these weights as initial values. The intuition here is to provide the LSTM with information on word importance before the learning begins.
 
 Here is an example demonstrating the initial embedding approach:
 
@@ -149,9 +149,9 @@ print (f'Predictions: {predictions}')
 
 In this variation, we first convert the texts to token-based sequences, then we leverage a tokenizer to build the sequences. We use the computed tf-idf weights to generate the initial embedding matrix, and then feed these sequences into the embedding layer of our network.
 
-One additional technique that can improve results would be to *fine-tune* this embedding layer during training. This is demonstrated in the above code where `trainable=True` is specified in the embedding layer initialization, allowing the network to refine these tf-idf-informed embeddings.
+One additional technique that can improve results would be to _fine-tune_ this embedding layer during training. This is demonstrated in the above code where `trainable=True` is specified in the embedding layer initialization, allowing the network to refine these tf-idf-informed embeddings.
 
-Finally, there's also a method where tf-idf can be used alongside more traditional word embeddings like word2vec or GloVe. Here you'd have *two* input branches—one for tf-idf, which is typically flattened and fed into a dense layer, and the other for word embeddings going into the LSTM. These are then concatenated before passing into further layers. This enables the model to capture a wider variety of semantic signals. The implementation of this would be more complex and is beyond the scope of this current response.
+Finally, there's also a method where tf-idf can be used alongside more traditional word embeddings like word2vec or GloVe. Here you'd have _two_ input branches—one for tf-idf, which is typically flattened and fed into a dense layer, and the other for word embeddings going into the LSTM. These are then concatenated before passing into further layers. This enables the model to capture a wider variety of semantic signals. The implementation of this would be more complex and is beyond the scope of this current response.
 
 For further learning, I'd recommend delving into "Speech and Language Processing" by Daniel Jurafsky and James H. Martin, which covers tf-idf in detail, as well as "Deep Learning" by Ian Goodfellow et al., for a comprehensive overview of LSTMs and deep learning principles. Additionally, the original paper on LSTMs by Hochreiter and Schmidhuber is a foundational text and worth reading directly. A good understanding of information retrieval from textbooks such as "Introduction to Information Retrieval" by Manning, Raghavan, and Schütze would help greatly.
 

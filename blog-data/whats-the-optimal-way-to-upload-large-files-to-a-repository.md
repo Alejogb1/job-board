@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "whats-the-optimal-way-to-upload-large-files-to-a-repository"
 ---
 
-Alright, let's tackle this. The "optimal" way, as with most things in engineering, isn't a single, universally applicable solution. It’s a balancing act of several factors: reliability, speed, resource consumption, and, crucially, the constraints of the system you're working with. I've personally been through the wringer with large file uploads on more than one occasion, especially back when I was developing a system for handling medical imaging data – believe me, those files can be *massive*. We quickly realized that the naive approaches simply wouldn't cut it.
+, let's tackle this. The "optimal" way, as with most things in engineering, isn't a single, universally applicable solution. It’s a balancing act of several factors: reliability, speed, resource consumption, and, crucially, the constraints of the system you're working with. I've personally been through the wringer with large file uploads on more than one occasion, especially back when I was developing a system for handling medical imaging data – believe me, those files can be _massive_. We quickly realized that the naive approaches simply wouldn't cut it.
 
 The most rudimentary method is often a single, direct upload. While simple to implement, it's incredibly fragile for large files. A network hiccup, a brief server outage, or even a browser crash mid-upload can mean starting the whole process again from scratch. That's unacceptable when we're talking about gigabytes of data. So, the first vital step towards optimality involves breaking the large file into smaller, manageable chunks. This concept is known as chunking or multi-part upload.
 
@@ -76,6 +76,7 @@ if __name__ == '__main__':
    }
    publish_to_queue('file_processing_queue', file_info)
 ```
+
 Here, a message is published to 'file_processing_queue' which a worker process can later consume and begin processing. This allows the upload operation to complete quickly, decoupling it from the heavier operations. Note the `delivery_mode=2`, this ensures the message is persisted in the queue so it is not lost if the queue is restarted or the connection fails.
 
 Finally, another important component often overlooked, is transfer protocol selection. Using http/https, while very common, is not always the most performant for large data transfers. Transfer protocols like WebDAV can offer benefits in terms of partial uploads and efficient handling of large data, as well as built-in support for file locking. In specific scenarios where webdav is appropriate, it can significantly improve large file transfers.
@@ -113,6 +114,7 @@ if __name__ == '__main__':
     webdav_chunk_upload(webdav_url, webdav_user, webdav_pass, local_file, remote_file)
 
 ```
+
 The `upload_chunked` method, within the webdav3 library allows you to control the upload process in a way that is not always possible with other protocols.
 
 To summarize, achieving optimal large file uploads is not a single trick, but a combination of techniques. Chunking is indispensable, as it introduces fault tolerance and enables parallel uploads. Server-side considerations, like queuing mechanisms, are vital to preventing bottlenecks. Selecting appropriate protocols beyond http/https can also increase efficiency. And, of course, adequate error handling and retries are critical to ensuring a robust and reliable system. In terms of further learning, I'd recommend exploring the documentation for these technologies and reading academic papers on large data transfers, particularly those focused on distributed systems and network performance, as well as documentation for `requests`, `webdav3`, `rabbitmq`, and whatever libraries you are considering to use for your solution.

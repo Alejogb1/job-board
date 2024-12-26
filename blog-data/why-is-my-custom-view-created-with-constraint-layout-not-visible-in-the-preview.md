@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-custom-view-created-with-constraint-layout-not-visible-in-the-preview"
 ---
 
-Okay, let's tackle this. It’s a situation I’ve seen countless times, and it usually boils down to a few core issues when your custom view, built with `ConstraintLayout`, decides to play hide-and-seek in the preview. Having personally debugged this more than I'd like to remember, I can tell you it rarely points to a fundamental flaw in your logic, but more commonly to how layout previews are rendered and interpreted.
+, let's tackle this. It’s a situation I’ve seen countless times, and it usually boils down to a few core issues when your custom view, built with `ConstraintLayout`, decides to play hide-and-seek in the preview. Having personally debugged this more than I'd like to remember, I can tell you it rarely points to a fundamental flaw in your logic, but more commonly to how layout previews are rendered and interpreted.
 
 The preview in Android Studio, while immensely helpful, isn’t a perfect representation of the runtime environment. It operates under slightly different constraints and assumptions, leading to these frustrating moments where everything seems correctly configured yet doesn't appear. We need to look beyond the obvious. The core problem isn't that the preview is broken, but that your view is missing the necessary context to render itself within that confined environment. Let's unpack the likely suspects.
 
@@ -144,6 +144,7 @@ public class CustomButton extends View {
 ```
 
 In your `attrs.xml`:
+
 ```xml
 <resources>
     <declare-styleable name="CustomButton">
@@ -152,6 +153,7 @@ In your `attrs.xml`:
 </resources>
 
 ```
+
 And in the layout:
 
 ```xml
@@ -164,6 +166,7 @@ And in the layout:
 ```
 
 Here, if you forget to define the `buttonColor` attribute within the XML, the preview may show nothing or a default view because the `getColor` method fetches the attribute color or a default (in this case blue). However, if the default is not explicitly set the color can default to transparent. Now consider if you define the attribute in xml like so:
+
 ```xml
 <com.example.myapp.CustomButton
     android:id="@+id/customButton"
@@ -173,6 +176,7 @@ Here, if you forget to define the `buttonColor` attribute within the XML, the pr
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 ```
+
 The view now works in preview because a concrete colour is set via the XML attribute. If you are still having issues, it’s crucial to thoroughly inspect your `onMeasure` and `onDraw` methods, ensuring that no critical dependencies are overlooked by the preview's renderer. This includes any external dependencies on context-specific objects or values that might not be initialized or accessible in the preview context.
 
 To delve deeper into the intricacies of custom view creation and layout rendering, I recommend resources such as “Android Programming: The Big Nerd Ranch Guide” by Bill Phillips, Chris Stewart, and Brian Hardy. This book provides comprehensive coverage of view rendering and layout best practices. Also, the official Android documentation on custom views (developer.android.com) offers vital, practical guidance on implementing views properly, which can significantly reduce such headaches. I'd also suggest exploring articles from Romain Guy, especially older pieces on layout and rendering as the fundamentals are still very relevant. Understanding the intricacies of how Android layouts and views are created and rendered at lower levels is extremely helpful.

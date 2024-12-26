@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-build-a-neural-network-from-scratch"
 ---
 
-alright, so you're looking to build a neural network from the ground up. that's a pretty solid challenge, and i'm totally on board with that kind of project. i’ve spent more time than i care to recall debugging some gnarly custom nn implementations, and let me tell you, it's a journey, but a very rewarding one.
+, so you're looking to build a neural network from the ground up. that's a pretty solid challenge, and i'm totally on board with that kind of project. i’ve spent more time than i care to recall debugging some gnarly custom nn implementations, and let me tell you, it's a journey, but a very rewarding one.
 
 first off, when i say 'from scratch', i assume we're not talking about using high-level libraries like tensorflow or pytorch. those are great for prototyping and production but bypass much of the core mechanics. we're going down to matrix operations, gradient calculation and the whole nine yards, right?.
 
@@ -14,13 +14,13 @@ anyway, here's the lowdown on how i tackle this kind of thing these days, focusi
 
 the core ingredients:
 
-*   **data preparation:** this is the unsung hero of ml. you can have the fanciest network architecture, but if your data is garbage or poorly formatted, you'll get garbage results. preprocessing like normalization or standardization are fundamental. also, if you are dealing with images, reshaping is key.
-*   **linear algebra knowledge:** you need to be comfortable with matrices and vectors. matrix multiplication, transposition, and understanding their relationship to neural network layers is essential. if these are foggy areas, i recommend spending some time studying the mathematics behind it. a good start is "linear algebra and its applications" by gilbert strang, it covers all the bases.
-*   **activation functions:** these introduce non-linearity into your network, which is crucial for learning complex patterns. sigmoid, relu, tanh and their variants are your standard tools here. you must know how their derivatives look like because they are needed in backpropagation.
-*   **forward propagation:** this is where the input data travels through the network, layer by layer, getting transformed by the weights and biases. this is simple enough, basically matrix multiplication and application of the activation function, but it’s fundamental.
-*   **loss function:** this measures how well your network's predictions match the actual values. it gives you a scalar value that tells how bad or good the prediction is. mean squared error and cross-entropy are popular choices. you must choose this well depending on your task, classification or regression.
-*   **backpropagation:** this is the heavy lifting. it calculates gradients of the loss with respect to the network's weights, which then help you update those weights in the right direction. this often gets tricky in multilayer networks and you will find yourself debugging the backpropagation for hours.
-*   **optimization algorithm:** stochastic gradient descent (sgd) and its variants like adam or rmsprop are often used to update the weights based on the computed gradients. if you decide to go for sgd you need to tune the learning rate well. this parameter changes everything.
+- **data preparation:** this is the unsung hero of ml. you can have the fanciest network architecture, but if your data is garbage or poorly formatted, you'll get garbage results. preprocessing like normalization or standardization are fundamental. also, if you are dealing with images, reshaping is key.
+- **linear algebra knowledge:** you need to be comfortable with matrices and vectors. matrix multiplication, transposition, and understanding their relationship to neural network layers is essential. if these are foggy areas, i recommend spending some time studying the mathematics behind it. a good start is "linear algebra and its applications" by gilbert strang, it covers all the bases.
+- **activation functions:** these introduce non-linearity into your network, which is crucial for learning complex patterns. sigmoid, relu, tanh and their variants are your standard tools here. you must know how their derivatives look like because they are needed in backpropagation.
+- **forward propagation:** this is where the input data travels through the network, layer by layer, getting transformed by the weights and biases. this is simple enough, basically matrix multiplication and application of the activation function, but it’s fundamental.
+- **loss function:** this measures how well your network's predictions match the actual values. it gives you a scalar value that tells how bad or good the prediction is. mean squared error and cross-entropy are popular choices. you must choose this well depending on your task, classification or regression.
+- **backpropagation:** this is the heavy lifting. it calculates gradients of the loss with respect to the network's weights, which then help you update those weights in the right direction. this often gets tricky in multilayer networks and you will find yourself debugging the backpropagation for hours.
+- **optimization algorithm:** stochastic gradient descent (sgd) and its variants like adam or rmsprop are often used to update the weights based on the computed gradients. if you decide to go for sgd you need to tune the learning rate well. this parameter changes everything.
 
 let's break down a simple example: a single-layer perceptron (essentially a logistic regression)
 
@@ -248,6 +248,7 @@ for epoch in range(epochs):
 print(f"prediction after training {forward_prop(inputs, weights1, bias1, weights2, bias2)}")
 
 ```
+
 in this code, instead of processing all the data at once, we process it in mini-batches. this greatly improves training speed for large datasets, since the gradient is calculated in smaller subsets of the training data and the parameters are updated more often. it also helps to reduce overfitting and helps the training find better local minimum in the cost function.
 
 these snippets give you a starting point for building your own neural network from the ground up. building a neural network involves more than just matrix multiplications and derivatives. you’ll also want to consider stuff like initialization strategies, batch normalization and regularization. that's probably a conversation for another time, or you can explore more in "deep learning" by ian goodfellow, yoshua bengio, and aaron courville, which is a very comprehensive text. building a network is like constructing a house brick by brick, if you understand every part well, you will be able to build a very solid and interesting neural network. and hey, remember, don’t initialize your weights with random numbers from zero to one. i learned that one the hard way. or did i?.

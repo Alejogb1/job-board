@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-to-pick-stories-summing-to-a-teams-capacity-using-cplex"
 ---
 
-Alright, let's tackle this. The task of selecting a subset of user stories that fit within a team's capacity, particularly when that capacity is measured in story points or some comparable metric, is a common challenge. I’ve personally encountered this exact scenario multiple times across different project lifecycles. The core problem, when framed mathematically, actually boils down to a variation of the classic knapsack problem, a well-studied area in operations research. Now, while various heuristic approaches might give you acceptable results, using a proper optimization engine like cplex (or similar) provides you with guarantees of optimality, assuming you've properly modelled the constraints. I remember one particular project where we had a wildly fluctuating team velocity. Trying to plan manually was just becoming unsustainable. That’s when I really started leaning heavily into constraint programming solutions, and cplex was a real workhorse.
+, let's tackle this. The task of selecting a subset of user stories that fit within a team's capacity, particularly when that capacity is measured in story points or some comparable metric, is a common challenge. I’ve personally encountered this exact scenario multiple times across different project lifecycles. The core problem, when framed mathematically, actually boils down to a variation of the classic knapsack problem, a well-studied area in operations research. Now, while various heuristic approaches might give you acceptable results, using a proper optimization engine like cplex (or similar) provides you with guarantees of optimality, assuming you've properly modelled the constraints. I remember one particular project where we had a wildly fluctuating team velocity. Trying to plan manually was just becoming unsustainable. That’s when I really started leaning heavily into constraint programming solutions, and cplex was a real workhorse.
 
-The initial step is to formulate the problem appropriately. We're not just throwing items into a bag, we're selecting stories based on their estimated points while adhering to a total team capacity. The model should aim to *maximize* some value, and in our case, I usually optimize for a combination of factors: the value assigned to the story by product owners, or a priority score. For simplicity, let's focus on optimizing total value. This helps ensures we are selecting the most impactful stories within the available capacity.
+The initial step is to formulate the problem appropriately. We're not just throwing items into a bag, we're selecting stories based on their estimated points while adhering to a total team capacity. The model should aim to _maximize_ some value, and in our case, I usually optimize for a combination of factors: the value assigned to the story by product owners, or a priority score. For simplicity, let's focus on optimizing total value. This helps ensures we are selecting the most impactful stories within the available capacity.
 
-The core idea behind this using cplex is to build a mixed-integer programming (mip) model. Essentially, we're using integer variables to indicate if a story is *in* or *out* (1 or 0), and cplex then figures out the optimal combination that maximizes the defined objective function, while respecting capacity constraint.
+The core idea behind this using cplex is to build a mixed-integer programming (mip) model. Essentially, we're using integer variables to indicate if a story is _in_ or _out_ (1 or 0), and cplex then figures out the optimal combination that maximizes the defined objective function, while respecting capacity constraint.
 
 Here's a python snippet using `docplex`, the python api for cplex, demonstrating how this is modeled:
 
@@ -137,7 +137,7 @@ else:
 
 Here, a `dependencies` dictionary is introduced, and added as constraints in the model that ensures any dependent story `b` is only included if prerequisite story `a` is also selected. This kind of dependency handling can be crucial in a realistic sprint planning process.
 
-Finally, sometimes you might not be working solely with points and value. You could also have constraints around the *type* of story (front-end, back-end, etc), or specific skills needed. Here is an example demonstrating this:
+Finally, sometimes you might not be working solely with points and value. You could also have constraints around the _type_ of story (front-end, back-end, etc), or specific skills needed. Here is an example demonstrating this:
 
 ```python
 from docplex.mp.model import Model
@@ -204,6 +204,7 @@ if selected:
 else:
     print("No solution found (infeasible problem)")
 ```
+
 Here we’ve added a "skill" column to the story definition. The `skill_limits` dictionary enforces constraints on how many story points of each skill type can be chosen.
 
-When building out your models, I'd recommend starting simple and then adding complexity only as necessary.  For a deeper dive, consider exploring "Integer Programming" by Wolsey for a comprehensive understanding of mixed-integer programming. "Optimization in Operations Research" by Ronald Rardin provides an excellent mathematical framework. I’ve used these resources often. The key is understanding that cplex isn't a magical box; it's a powerful tool, but it requires that we understand how to formulate the problem mathematically and encode that into constraints and objective functions. Doing so gives you the confidence of knowing you're making mathematically sound choices that will lead to more predictable sprint execution, which, at the end of the day, is what all of this is about.
+When building out your models, I'd recommend starting simple and then adding complexity only as necessary. For a deeper dive, consider exploring "Integer Programming" by Wolsey for a comprehensive understanding of mixed-integer programming. "Optimization in Operations Research" by Ronald Rardin provides an excellent mathematical framework. I’ve used these resources often. The key is understanding that cplex isn't a magical box; it's a powerful tool, but it requires that we understand how to formulate the problem mathematically and encode that into constraints and objective functions. Doing so gives you the confidence of knowing you're making mathematically sound choices that will lead to more predictable sprint execution, which, at the end of the day, is what all of this is about.

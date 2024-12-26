@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-word2vec-for-word-embedding-of-sentences"
 ---
 
-Okay, let's tackle this. I recall a project some years back, dealing with large volumes of customer feedback. We needed to move beyond simple keyword matching and understand the *semantic* context of their complaints. That's where leveraging word embeddings, specifically something like Word2Vec, became critical, but applying it directly to sentences presents some interesting challenges, and it’s not as straightforward as one might initially think.
+, let's tackle this. I recall a project some years back, dealing with large volumes of customer feedback. We needed to move beyond simple keyword matching and understand the _semantic_ context of their complaints. That's where leveraging word embeddings, specifically something like Word2Vec, became critical, but applying it directly to sentences presents some interesting challenges, and it’s not as straightforward as one might initially think.
 
 The core concept of Word2Vec is, as I’m sure you’re aware, to map individual words into a dense vector space, capturing their semantic relationships. Words that appear in similar contexts have vectors that are closer together in this space. However, sentences, being sequences of words, don't directly translate to these vector representations. We need to go beyond single words to handle the entire sentence. There are several ways we tackled this, and I’ll walk you through the common ones and some considerations for each.
 
@@ -77,7 +77,7 @@ print(f"Weighted sentence vector shape: {sentence_vector.shape}")
 print(f"First 10 elements of weighted sentence vector: {sentence_vector[:10]}")
 ```
 
-Here, we initialize a `TfidfVectorizer` and fit it with our sentences.  We modify the `weighted_average_sentence_vector` to incorporate tf-idf scores as weights in our averaging of the word vectors.  This can improve the representations compared to simple averaging, often capturing more of the nuances in the sentence. However, this still doesn't fully leverage the sequential nature of the sentence.
+Here, we initialize a `TfidfVectorizer` and fit it with our sentences. We modify the `weighted_average_sentence_vector` to incorporate tf-idf scores as weights in our averaging of the word vectors. This can improve the representations compared to simple averaging, often capturing more of the nuances in the sentence. However, this still doesn't fully leverage the sequential nature of the sentence.
 
 For more advanced sequence modeling, Recurrent Neural Networks (RNNs), specifically Long Short-Term Memory (LSTM) or Gated Recurrent Unit (GRU) architectures, are better suited. These networks process sequences sequentially, keeping track of information over time through their internal memory mechanisms. One approach is to treat each word embedding as an input at a particular timestep and then take the final hidden state of the RNN as the sentence embedding. This captures the temporal context very effectively.
 
@@ -114,7 +114,7 @@ print(f"LSTM sentence vector shape: {sentence_vector.shape}")
 print(f"First 10 elements of LSTM sentence vector: {sentence_vector[:10]}")
 ```
 
-Here we build a basic sequential model with an Embedding layer initialized with our pre-trained word embeddings and then an LSTM layer. We also set trainable = False to ensure that the pre-trained embeddings are kept intact. `lstm_sentence_vector` takes a sentence, the constructed model and the Word2Vec model.  It encodes the words to their respective integer indices based on the word2vec vocabulary, and pads the input to ensure all input sequences are of the same length before using the model to predict a final state vector. Note that using a simple `pad_sequences` is not necessarily ideal for real-world situations but is sufficient for this example.
+Here we build a basic sequential model with an Embedding layer initialized with our pre-trained word embeddings and then an LSTM layer. We also set trainable = False to ensure that the pre-trained embeddings are kept intact. `lstm_sentence_vector` takes a sentence, the constructed model and the Word2Vec model. It encodes the words to their respective integer indices based on the word2vec vocabulary, and pads the input to ensure all input sequences are of the same length before using the model to predict a final state vector. Note that using a simple `pad_sequences` is not necessarily ideal for real-world situations but is sufficient for this example.
 
 For practical implementations, you'll probably want to explore techniques like Sentence-BERT (SBERT), which is specifically trained to produce meaningful sentence embeddings. Also, it is recommended that you dig deeper into the mechanics of how the LSTM's hidden state can be utilized to extract useful information in sequence models.
 

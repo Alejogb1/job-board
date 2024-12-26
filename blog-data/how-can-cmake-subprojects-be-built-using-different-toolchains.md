@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-cmake-subprojects-be-built-using-different-toolchains"
 ---
 
-Alright, let's talk toolchains with cmake subprojects, something I've definitely navigated a few times, especially back when we were migrating our embedded systems build to a more modular approach. The basic problem, as you've probably encountered, isn't *if* you can use different toolchains—cmake, thankfully, provides the mechanisms—but *how* to do it gracefully and consistently. The trick lies in understanding how cmake manages build configurations, especially when dealing with external projects included through `add_subdirectory`. The first, and probably most common, approach involves leveraging cmake toolchain files.
+, let's talk toolchains with cmake subprojects, something I've definitely navigated a few times, especially back when we were migrating our embedded systems build to a more modular approach. The basic problem, as you've probably encountered, isn't _if_ you can use different toolchains—cmake, thankfully, provides the mechanisms—but _how_ to do it gracefully and consistently. The trick lies in understanding how cmake manages build configurations, especially when dealing with external projects included through `add_subdirectory`. The first, and probably most common, approach involves leveraging cmake toolchain files.
 
 A toolchain file, for those not overly familiar, is essentially a script that tells cmake about the compiler, linker, archiver, and related tools needed to build for a specific platform or target. We're not just talking about `gcc` vs `clang` here; we could be dealing with cross-compilation scenarios where you're building on an x86_64 host for, say, an arm-based embedded system. Now, the key here is to avoid setting global toolchain options, which is where many trips up. You want to define those on a per-subproject basis.
 
@@ -21,7 +21,7 @@ project/
     └── source_b.c
 ```
 
-In the top-level `CMakeLists.txt`, you would *not* directly specify a toolchain file. Instead, your main `CMakeLists.txt` might look something like:
+In the top-level `CMakeLists.txt`, you would _not_ directly specify a toolchain file. Instead, your main `CMakeLists.txt` might look something like:
 
 ```cmake
 cmake_minimum_required(VERSION 3.10)
@@ -75,7 +75,7 @@ add_executable(sub_a source_a.c)
 # Do sub-project-specific setup for build files...
 ```
 
-The crucial point here is that the `CMAKE_TOOLCHAIN_FILE` variable is set *locally* within each subproject, using the `CMAKE_CURRENT_SOURCE_DIR` to make the path relative. The `CACHE` keyword ensures that the toolchain file path is remembered for subsequent cmake runs and can be configured using the cmake gui, if needed. This lets each subproject know exactly which toolchain it should use when it is included and prevents global settings interfering. When building `main_project`, cmake will process these `CMakeLists.txt` files in order, applying the toolchains as they are encountered.
+The crucial point here is that the `CMAKE_TOOLCHAIN_FILE` variable is set _locally_ within each subproject, using the `CMAKE_CURRENT_SOURCE_DIR` to make the path relative. The `CACHE` keyword ensures that the toolchain file path is remembered for subsequent cmake runs and can be configured using the cmake gui, if needed. This lets each subproject know exactly which toolchain it should use when it is included and prevents global settings interfering. When building `main_project`, cmake will process these `CMakeLists.txt` files in order, applying the toolchains as they are encountered.
 
 Now, let's consider a more advanced scenario where you might want to dynamically select toolchains, perhaps based on command-line arguments. I had this exact requirement once when we were building software that had to target multiple embedded platforms in the same build process, for testing and analysis purposes. Instead of relying on cached variables, you can use conditional logic to set toolchain files based on options. In your top-level `CMakeLists.txt`, you could add something like this:
 
@@ -130,6 +130,7 @@ add_executable(sub_a source_a.c)
 
 # Do sub-project-specific setup for build files...
 ```
+
 This approach offers considerably more flexibility. When building from the command line you can run `cmake -DTARGET_PLATFORM=arm ..` to build everything for the arm toolchain. The option is also exposed via the cmake gui. In this case, the toolchain variable isn't stored in the cache, and it must be set at each cmake execution. If no platform is provided the sub-projects will use their default toolchains (if specified, otherwise it will build against the host machine) which is a good way to default to a local, cross-platform target.
 
 Now, the third scenario I want to describe relates to dependencies. What happens when your subprojects depend on each other, and they need to be built using different toolchains? This situation occurred when I was working on a project where the core library needed to be built with a more mature, stable toolchain, while specialized subcomponents could use newer, more experimental ones. The key in this scenario is to make sure that dependencies are linked properly regardless of toolchain.

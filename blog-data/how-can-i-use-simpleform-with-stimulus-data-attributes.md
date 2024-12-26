@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-use-simpleform-with-stimulus-data-attributes"
 ---
 
-Okay, let's tackle this. I remember back in '18, during a particularly gnarly project involving a complex multi-step form, I ran into this exact situation. We were attempting to leverage stimulus.js for dynamic form behavior, and it felt like wrestling an octopus to get it to play nicely with simple_form's output. The challenge, as I see it, isn't really that they're inherently incompatible, but rather that their individual approaches to markup generation and DOM manipulation require a bit of strategic alignment. We can definitely make them work together effectively, it just takes a considered approach.
+, . I remember back in '18, during a particularly gnarly project involving a complex multi-step form, I ran into this exact situation. We were attempting to leverage stimulus.js for dynamic form behavior, and it felt like wrestling an octopus to get it to play nicely with simple_form's output. The challenge, as I see it, isn't really that they're inherently incompatible, but rather that their individual approaches to markup generation and DOM manipulation require a bit of strategic alignment. We can definitely make them work together effectively, it just takes a considered approach.
 
 The core problem lies in how simple_form generates its html, specifically its reliance on semantic wrapper elements. Stimulus relies on data attributes to link html elements to controllers and actions. When simple_form produces an input field, it often adds elements like `div.input`, `div.string`, or others, nested inside the form. These aren’t usually directly targeted by stimulus. Hence, we can't directly apply `data-controller` or `data-action` attributes to the `<input>` elements that we actually want stimulus to interact with. The trick is to strategically place these attributes, often on parent elements, and rely on scope within your stimulus controller.
 
@@ -34,16 +34,16 @@ Notice how we've added `data: { controller: "dependent-field" }` to the form ele
 
 ```javascript
 // app/javascript/controllers/dependent_field_controller.js
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["otherInput"]
+  static targets = ["otherInput"];
 
   toggle(event) {
-      if(event.target.value === 'Other') {
-        this.otherInputTarget.style.display = 'block'
-      } else {
-        this.otherInputTarget.style.display = 'none'
+    if (event.target.value === "Other") {
+      this.otherInputTarget.style.display = "block";
+    } else {
+      this.otherInputTarget.style.display = "none";
     }
   }
 }
@@ -73,20 +73,20 @@ Here we are generating a list with inputs, and using a button to remove list ele
 
 ```javascript
 // app/javascript/controllers/dynamic_list_controller.js
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["listContainer", "listItem"]
+  static targets = ["listContainer", "listItem"];
 
   addItem() {
-    let newIndex = this.listItemTargets.length
+    let newIndex = this.listItemTargets.length;
     let newItemHTML = `
       <div data-dynamic-list-target="listItem">
         <input type="text" name="my_model[items][${newIndex}][name]" data-dynamic-list-target="itemSelect">
         <button type='button' data-action="dynamic-list#removeItem" data-dynamic-list-index="${newIndex}">Remove</button>
       </div>
-    `
-    this.listContainerTarget.insertAdjacentHTML('beforeend', newItemHTML);
+    `;
+    this.listContainerTarget.insertAdjacentHTML("beforeend", newItemHTML);
   }
 
   removeItem(event) {
@@ -108,26 +108,28 @@ Finally, let's consider a situation with input validation. Imagine you want to p
     <%= f.button :submit %>
 <% end %>
 ```
+
 And the corresponding stimulus controller:
+
 ```javascript
 // app/javascript/controllers/validation_controller.js
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-    static targets = ["emailInput", "emailError"]
+  static targets = ["emailInput", "emailError"];
 
-    validateEmail() {
-        const email = this.emailInputTarget.value;
-        if(this.isValidEmail(email)) {
-            this.emailErrorTarget.style.display = "none";
-        } else {
-            this.emailErrorTarget.style.display = "block"
-        }
+  validateEmail() {
+    const email = this.emailInputTarget.value;
+    if (this.isValidEmail(email)) {
+      this.emailErrorTarget.style.display = "none";
+    } else {
+      this.emailErrorTarget.style.display = "block";
     }
-    isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
+  }
+  isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
 }
 ```
 
@@ -135,4 +137,4 @@ In this example, we trigger the validation method on the input’s `change` even
 
 In all of these examples, the key isn’t to directly modify simple_form, but to leverage its output by placing stimulus attributes on strategic elements and then utilizing targets and actions in your controllers to handle the desired behavior. If you delve into the source code of stimulus.js itself, you’ll see it's fundamentally a lightweight framework based around a set of very specific interaction patterns. The same is true of simple_form. The goal is understanding both and how to make them dance together.
 
-For further study, I'd recommend reading the official stimulus documentation thoroughly - it's quite comprehensive and will give you a very solid grounding. I’d also look at *Practical Object-Oriented Design in Ruby* by Sandi Metz; while not directly about stimulus or simple_form, the principles of object-oriented design she outlines are invaluable for building maintainable and extensible Javascript controllers. Finally, looking at the source code of simple_form on github will give you a far better picture of exactly what it generates. The ability to view the markup it creates directly is important as it is the basis for the targeting in stimulus. With a bit of planning, you can create highly interactive forms using the combination of simple_form and stimulus.js effectively.
+For further study, I'd recommend reading the official stimulus documentation thoroughly - it's quite comprehensive and will give you a very solid grounding. I’d also look at _Practical Object-Oriented Design in Ruby_ by Sandi Metz; while not directly about stimulus or simple_form, the principles of object-oriented design she outlines are invaluable for building maintainable and extensible Javascript controllers. Finally, looking at the source code of simple_form on github will give you a far better picture of exactly what it generates. The ability to view the markup it creates directly is important as it is the basis for the targeting in stimulus. With a bit of planning, you can create highly interactive forms using the combination of simple_form and stimulus.js effectively.

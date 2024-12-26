@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "how-to-reference-different-names-in-joins-with-scopes"
 ---
 
-alright, let's talk about referencing different names in joins with scopes, i've definitely been down this rabbit hole before, and it can get tricky real fast. it's a common scenario when dealing with database schemas that have evolved over time, or when integrating with systems that have different naming conventions. basically, you're trying to join tables but the columns you need to join on don't share the same name across tables and you need to also use scopes to filter your data.
+, let's talk about referencing different names in joins with scopes, i've definitely been down this rabbit hole before, and it can get tricky real fast. it's a common scenario when dealing with database schemas that have evolved over time, or when integrating with systems that have different naming conventions. basically, you're trying to join tables but the columns you need to join on don't share the same name across tables and you need to also use scopes to filter your data.
 
 i remember this one project back when i was freelancing; a real estate app. we had listings from multiple sources, and each source had a different database schema. one source would have a `property_id` column in their `listings` table, while another would use `listing_ref` in their equivalent table. things get complicated fast when you need to run complex queries and filter them using scopes. it was not a pretty sight to start with.
 
- the core issue here is that when using activerecord or an equivalent orm you’re working with ruby or other languages constructs that then are translated into sql. when doing your normal joins with a scope it assumes the naming is homogeneous, so when it is not it fails and fails silently. this is one of the most common mistakes i have seen in my career.
+the core issue here is that when using activerecord or an equivalent orm you’re working with ruby or other languages constructs that then are translated into sql. when doing your normal joins with a scope it assumes the naming is homogeneous, so when it is not it fails and fails silently. this is one of the most common mistakes i have seen in my career.
 
 let me break down the solution using a rails-centric perspective, because that’s what i'm most comfortable with and what i used in that project. however, the principles should be applicable to other orms and frameworks if you adapt the syntax. we will be using active record here.
 
@@ -53,7 +53,7 @@ User.active.joins(:profile)
 
 ```
 
- this will fail because the `join(:profile)` is assuming that the `profile` table has a foreign key called `user_id` and not `profile_ref`. this can be solved by implementing the same logic we saw in the basic join example. but, now, in a scope.
+this will fail because the `join(:profile)` is assuming that the `profile` table has a foreign key called `user_id` and not `profile_ref`. this can be solved by implementing the same logic we saw in the basic join example. but, now, in a scope.
 
 ```ruby
 class User < ApplicationRecord
@@ -121,6 +121,6 @@ if you are coming from other orms or frameworks, there is always a way to explic
 
 one additional aspect to consider in these kind of situations is using database views, basically, you create a view with the joined data and then query that. it could be a viable solution if you have to deal with very complex joins that would be unreadable if done in the application logic, and that could also increase the performance by caching the result in the database. this is a more advanced approach and if you are not comfortable with database view it’s better to avoid them. there is a trade off between readability and performance and you need to carefully consider what solution is best for your case. in my real estate application i avoided creating views and tried to do all the joins in the application logic.
 
-for resources, i'd recommend checking out the activerecord documentation as the primary source for any specific syntax questions, and it also has tons of examples on how to handle complex queries. additionally i've found *patterns of enterprise application architecture* by martin fowler, invaluable when thinking about these types of issues from a system design perspective. also, the book *refactoring databases* by scott ambler is a classic in the field if you are working in projects with rapidly changing schemas.
+for resources, i'd recommend checking out the activerecord documentation as the primary source for any specific syntax questions, and it also has tons of examples on how to handle complex queries. additionally i've found _patterns of enterprise application architecture_ by martin fowler, invaluable when thinking about these types of issues from a system design perspective. also, the book _refactoring databases_ by scott ambler is a classic in the field if you are working in projects with rapidly changing schemas.
 
 remember the best approach depends on your specific needs and project constraints. what i try to achieve is making the code understandable and maintainable, that’s why i would lean towards the activerecord association approach rather than raw sql, but always be aware of the other alternatives, like database views, that could help you in the long run if you master them. one of the biggest issues in software development it’s not the complexity of the code but the complexity to understand the code and maintain it.

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-omit-an-internal-server-error-log-rspec-rails"
 ---
 
-alright, so you're trying to silence those pesky internal server error logs during your rspec tests in rails, right? i've been there, more times than i'd like to recall. it's like trying to find a needle in a haystack sometimes, especially when you just want clean test output and not a wall of red error messages that don't actually break anything functionally.
+, so you're trying to silence those pesky internal server error logs during your rspec tests in rails, right? i've been there, more times than i'd like to recall. it's like trying to find a needle in a haystack sometimes, especially when you just want clean test output and not a wall of red error messages that don't actually break anything functionally.
 
 let me tell you about a particularly annoying situation i had a few years back. i was working on a legacy rails application, the kind where the codebase seemed to have grown organically, like a jungle. we had integration tests that were incredibly brittle, and any little blip in a dependent service would cause a flood of `500 internal server error` logs, even if the main feature we were testing was working perfectly. these weren't actual bugs in our app's core logic, but errors in external api calls, things like timeouts or unavailable resources. so the tests passed, but the logs were ugly. debugging became a pain, because we had to filter out these red herrings all the time. it was incredibly unproductive.
 
@@ -30,7 +30,7 @@ what this code does is simple. before each request spec is run, it sets the rail
 
 this approach works well because it only disables logging during request specs where you might expect server errors, keeping the regular application logging functionality for other types of tests. i use `type: :request` here because that's where you often have full stack integration tests that interact with the server, but you might use something else if that fits better with your project setup such as feature specs.
 
-however, there's a small catch. the above snippet doesn't prevent errors from showing up in the rspec output if the tests are being run with the `--format documentation` flag. if you do that, rspec will show backtraces for errors raised during the request. this is different from the standard error logs and we'll need a different approach for it. in that case, we need to change how rspec handles exceptions. in rspec, that is done through what we call *exception handling*.
+however, there's a small catch. the above snippet doesn't prevent errors from showing up in the rspec output if the tests are being run with the `--format documentation` flag. if you do that, rspec will show backtraces for errors raised during the request. this is different from the standard error logs and we'll need a different approach for it. in that case, we need to change how rspec handles exceptions. in rspec, that is done through what we call _exception handling_.
 
 here's a more robust way of doing that, that deals with rspec output:
 
@@ -58,7 +58,7 @@ the `config.around` hook is a powerful mechanism. it lets you run arbitrary code
 
 here, inside the begin-rescue block, we're catching any exception that occurs within the test, and then we decide whether to re-raise it or let it pass, effectively suppressing the error output. in the code i wrote above i check if the raised error is an instance of `ActionController::RoutingError` or `ActiveRecord::RecordNotFound`, if so i do nothing and suppress the error. it's like a bouncer that refuses entry to specific types of errors. i've done this before for testing scenarios that deliberately try to hit a nonexistent route.
 
-*note*: make sure you know exactly which type of exception is raised when the internal server error occurs. you can then filter these in the `if` statement. this snippet has been created based on the assumption you will be using `ActionController::RoutingError` or `ActiveRecord::RecordNotFound`, but this will highly depend on the server errors you are trying to suppress.
+_note_: make sure you know exactly which type of exception is raised when the internal server error occurs. you can then filter these in the `if` statement. this snippet has been created based on the assumption you will be using `ActionController::RoutingError` or `ActiveRecord::RecordNotFound`, but this will highly depend on the server errors you are trying to suppress.
 
 you could expand this to filter any kind of exception based on its message too, or other error details. for example, if a particular gem raises a known error you can filter it out. the catch here is that you do not filter out bugs you need to see. this filtering should be specific to the errors you know you can ignore. this way you can be more granular in your error handling during tests and only suppress errors that you expect and understand.
 

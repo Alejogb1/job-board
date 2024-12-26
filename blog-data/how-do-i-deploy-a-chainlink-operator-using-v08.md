@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-deploy-a-chainlink-operator-using-v08"
 ---
 
-Okay, let's tackle Chainlink operator deployment using v0.8. I've certainly been down this road a few times, and it's a process that requires a careful balance of understanding the underlying mechanisms and the pragmatic application of those concepts. It's not necessarily straightforward, but breaking it down into discrete steps makes it far more manageable.
+, let's tackle Chainlink operator deployment using v0.8. I've certainly been down this road a few times, and it's a process that requires a careful balance of understanding the underlying mechanisms and the pragmatic application of those concepts. It's not necessarily straightforward, but breaking it down into discrete steps makes it far more manageable.
 
 From my experience, the core of deploying a Chainlink operator involves three key stages: setting up the environment, configuring the operator’s nodes, and then managing the node’s operational lifecycle. Each of these requires a specific understanding of v0.8’s nuances.
 
@@ -30,7 +30,7 @@ CMD ["chainlink", "node"]
 This Dockerfile is the foundation. Note the use of the `smartcontract/chainlink:v0.8` image, which is a readily available, trusted source. I've had issues with custom built images in the past that failed at scale due to subtle dependencies. Next, you'd need a `docker-compose.yml` like this:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   chainlink:
     build: .
@@ -59,7 +59,7 @@ volumes:
 
 This example uses a simple Postgres database for the node's persistent data. You'll see environment variables such as `DATABASE_URL`, which you will need to change based on your setup. The crucial point is to treat configuration with care and never commit your secrets to version control. Use docker secrets or a dedicated secret management service instead. It’s best practice to always separate configuration from code.
 
-Moving on from environment setup, we reach node configuration. This is where the Chainlink node itself is customized to perform the oracle tasks it will be responsible for. Crucial here is the `chainlink.env` file and `config.toml`. The `chainlink.env` file is used for sensitive information: the API credentials, the Ethereum keys used to sign transactions, and any other relevant secrets. Never, and I mean *never*, hardcode these into your `config.toml`. My personal experience with such a mistake resulted in a few hours of needless debugging.
+Moving on from environment setup, we reach node configuration. This is where the Chainlink node itself is customized to perform the oracle tasks it will be responsible for. Crucial here is the `chainlink.env` file and `config.toml`. The `chainlink.env` file is used for sensitive information: the API credentials, the Ethereum keys used to sign transactions, and any other relevant secrets. Never, and I mean _never_, hardcode these into your `config.toml`. My personal experience with such a mistake resulted in a few hours of needless debugging.
 
 An example of `chainlink.env` might look something like this:
 

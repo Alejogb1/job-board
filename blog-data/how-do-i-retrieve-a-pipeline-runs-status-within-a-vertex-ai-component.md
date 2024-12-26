@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-retrieve-a-pipeline-runs-status-within-a-vertex-ai-component"
 ---
 
-Alright, let's tackle retrieving pipeline run status from within a Vertex ai component. I've bumped into this particular challenge more than once in the past, and it’s a pretty common requirement when dealing with more complex workflows. Initially, during a project involving automated model retraining, I needed to trigger subsequent steps based on the success or failure of a training pipeline. The core of the issue boils down to how you access metadata concerning your pipeline execution from within a component, which, by its very nature, operates in isolation.
+, let's tackle retrieving pipeline run status from within a Vertex ai component. I've bumped into this particular challenge more than once in the past, and it’s a pretty common requirement when dealing with more complex workflows. Initially, during a project involving automated model retraining, I needed to trigger subsequent steps based on the success or failure of a training pipeline. The core of the issue boils down to how you access metadata concerning your pipeline execution from within a component, which, by its very nature, operates in isolation.
 
 The challenge arises because components are designed to be self-contained. They don’t inherently know about the pipeline they're part of, including its current status. The solution, therefore, involves leveraging Vertex AI’s metadata store and the client library to query this information. This approach ensures that components remain modular and decouples them from specific pipeline runs, thus making the solution reusable across different pipeline executions.
 

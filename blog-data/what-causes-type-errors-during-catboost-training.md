@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-type-errors-during-catboost-training"
 ---
 
-Alright, let's dive into type errors during CatBoost training. I've spent quite a bit of time debugging these over the years, and they can be surprisingly nuanced. The short answer is data type mismatches between what CatBoost expects and what it receives, but that's only the tip of the iceberg. Let me break this down with a focus on the specific pitfalls I've encountered.
+, let's dive into type errors during CatBoost training. I've spent quite a bit of time debugging these over the years, and they can be surprisingly nuanced. The short answer is data type mismatches between what CatBoost expects and what it receives, but that's only the tip of the iceberg. Let me break this down with a focus on the specific pitfalls I've encountered.
 
 In my experience, these errors generally stem from three primary sources: incorrect feature types specified during initialization, data type inconsistencies within your input dataframe, and occasionally, issues within how CatBoost handles categorical features when they’re provided inconsistently. Think of CatBoost as having a well-defined “contract” for the types of data it's willing to ingest. If anything deviates from that agreement, you’re going to run into issues.
 
@@ -72,11 +72,13 @@ model_consistent.fit(train_pool_consistent)
 print("Corrected training successful")
 
 ```
+
 Here, you see that directly feeding mixed data types into CatBoost results in an error, whereas explicit coercion to a numerical type with pandas and handling of missing data resolves it. It's vital to clean and preprocess your data rigorously to ensure data types are consistent. A good practice is to inspect the unique values and data types within your pandas dataframe, handling errors, missing values, or inconsistencies upfront.
 
 Finally, although less frequent, categorical feature handling within CatBoost itself can cause issues, particularly if you're not consistent in providing the same range of categories across different datasets. For example, during training, your categorical feature might contain values 'A', 'B', and 'C'. But if, during prediction, a new dataset only includes 'A' and 'B', CatBoost can sometimes struggle if the internal mappings have changed. CatBoost, under the hood, creates internal numerical IDs representing categories. If these mappings change, inconsistencies arise during the usage of models. Explicitly defining and ensuring consistent categories across training, validation, and deployment datasets is key to preventing these types of problems.
 
 The following snippet presents an example of mismatched categories between the train and test sets, and how specifying the initial categorical values can prevent this error:
+
 ```python
 import pandas as pd
 from catboost import CatBoostClassifier, Pool

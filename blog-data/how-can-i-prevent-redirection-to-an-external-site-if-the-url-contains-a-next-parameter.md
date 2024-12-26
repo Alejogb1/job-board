@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-prevent-redirection-to-an-external-site-if-the-url-contains-a-next-parameter"
 ---
 
-Okay, let's tackle this. I've seen this particular problem pop up countless times, particularly with user-provided URLs and authentication flows. The risk of an open redirect vulnerability lurking behind a seemingly innocent 'next' parameter is a genuine concern, and properly handling it requires a multi-layered approach. It's not a case of simply stripping the parameter; we need a more considered strategy. Here’s how I'd break it down, drawing on my experience working on a few large-scale web applications.
+, let's tackle this. I've seen this particular problem pop up countless times, particularly with user-provided URLs and authentication flows. The risk of an open redirect vulnerability lurking behind a seemingly innocent 'next' parameter is a genuine concern, and properly handling it requires a multi-layered approach. It's not a case of simply stripping the parameter; we need a more considered strategy. Here’s how I'd break it down, drawing on my experience working on a few large-scale web applications.
 
 The core issue stems from the fact that a 'next' parameter is typically used to redirect a user back to a specific location after a process is completed. That process could be anything from login to a form submission. The problem arises when that destination is uncontrolled and, potentially, malicious. An attacker could craft a URL containing a 'next' parameter pointing to an external site under their control, thus tricking a user into following a seemingly legitimate link to a phishing page. Prevention relies on rigorous validation and controlled redirection.
 
@@ -42,7 +42,7 @@ def safe_redirect(next_url, allowed_hosts):
           return next_url
        else:
           return None # Reject any unexpected relative path
-    
+
     if parsed_url.netloc not in allowed_hosts:
         return None
 
@@ -78,30 +78,34 @@ Here is a javascript snippet that highlights basic frontend validation:
 
 ```javascript
 function safeRedirectFrontEnd(nextUrl, allowedHosts) {
-    if (!nextUrl) {
-        return null;
-    }
-    try {
-        const parsedUrl = new URL(nextUrl, window.location.origin);
+  if (!nextUrl) {
+    return null;
+  }
+  try {
+    const parsedUrl = new URL(nextUrl, window.location.origin);
 
-         if (parsedUrl.origin !== window.location.origin && !allowedHosts.includes(parsedUrl.hostname)) {
-            return null;
-         }
-
-         if (parsedUrl.pathname.startsWith("/") || parsedUrl.origin === window.location.origin){
-            return nextUrl;
-         }
-         
-    
-    } catch(e) {
-        // malformed url
+    if (
+      parsedUrl.origin !== window.location.origin &&
+      !allowedHosts.includes(parsedUrl.hostname)
+    ) {
       return null;
     }
+
+    if (
+      parsedUrl.pathname.startsWith("/") ||
+      parsedUrl.origin === window.location.origin
+    ) {
+      return nextUrl;
+    }
+  } catch (e) {
+    // malformed url
     return null;
+  }
+  return null;
 }
 
 // Example usage:
-const allowed = ['example.com', 'www.example.com', 'internal.example.com'];
+const allowed = ["example.com", "www.example.com", "internal.example.com"];
 
 const input_url_1 = "https://www.example.com/profile";
 const valid_url_front_1 = safeRedirectFrontEnd(input_url_1, allowed);
@@ -118,10 +122,9 @@ console.log(`Frontend URL 3 Validation: ${valid_url_front_3}`);
 const input_url_4 = "dashboard";
 const invalid_url_front_4 = safeRedirectFrontEnd(input_url_4, allowed);
 console.log(`Frontend URL 4 Validation: ${invalid_url_front_4}`);
-
 ```
 
-This JavaScript function, `safeRedirectFrontEnd`, uses the built-in `URL` constructor. Critically, this snippet checks that the URL's origin either matches the website's origin (for relative paths), or, if its absolute, that it's listed in `allowedHosts`. If it doesn't match, or any error is thrown during parsing, the function returns null.  Just like the backend example, it requires refinement for various specific scenarios.
+This JavaScript function, `safeRedirectFrontEnd`, uses the built-in `URL` constructor. Critically, this snippet checks that the URL's origin either matches the website's origin (for relative paths), or, if its absolute, that it's listed in `allowedHosts`. If it doesn't match, or any error is thrown during parsing, the function returns null. Just like the backend example, it requires refinement for various specific scenarios.
 
 Let's add a final example, showing how you might integrate the backend method, in combination with the frontend, into a real-world flow. Imagine a user logging in and being redirected using the 'next' parameter.
 
@@ -135,7 +138,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'www.example.com']
 def login():
     next_param = request.args.get('next')
     safe_url = safe_redirect(next_param, ALLOWED_HOSTS)
-    
+
     if safe_url:
         return redirect(safe_url)
     else:
@@ -149,4 +152,4 @@ Here, Flask is being used to mock a login page. The `login` endpoint retrieves t
 
 For further reading on this topic, I’d strongly recommend checking out the OWASP (Open Web Application Security Project) documentation on URL redirection vulnerabilities. OWASP’s guidance, particularly the material on the prevention of open redirection vulnerabilities is essential. Also, I suggest reading the relevant sections from "Web Application Hacker’s Handbook" by Dafydd Stuttard and Marcus Pinto. Finally, the RFC 3986, defining URIs, offers a technical understanding of how URLs are constructed and parsed; understanding that RFC can be very beneficial for properly validating paths.
 
-In conclusion, preventing redirection to external sites via a 'next' parameter isn't just about stripping out potentially dangerous characters. It’s about a combination of strict validation, employing allow lists of permitted hosts, and, when possible, using relative redirects within our own application. And, ultimately, it's about establishing a principle of *least privilege* with user provided urls. The techniques I've outlined, and the resources I've suggested, should provide a foundation for secure redirect handling. Remember: validation should be a constant effort, not a one-off task.
+In conclusion, preventing redirection to external sites via a 'next' parameter isn't just about stripping out potentially dangerous characters. It’s about a combination of strict validation, employing allow lists of permitted hosts, and, when possible, using relative redirects within our own application. And, ultimately, it's about establishing a principle of _least privilege_ with user provided urls. The techniques I've outlined, and the resources I've suggested, should provide a foundation for secure redirect handling. Remember: validation should be a constant effort, not a one-off task.

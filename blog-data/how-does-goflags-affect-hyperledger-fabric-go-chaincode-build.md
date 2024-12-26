@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-goflags-affect-hyperledger-fabric-go-chaincode-build"
 ---
 
-Okay, let's dive into how `GOFLAGS` influences the build process for Hyperledger Fabric Go chaincode. It's a topic that, in my experience, often trips up newcomers and even seasoned developers if they don’t pay close attention. It's definitely not something you can just gloss over, having seen a fair share of deployments fail because of it.
+, let's dive into how `GOFLAGS` influences the build process for Hyperledger Fabric Go chaincode. It's a topic that, in my experience, often trips up newcomers and even seasoned developers if they don’t pay close attention. It's definitely not something you can just gloss over, having seen a fair share of deployments fail because of it.
 
 I remember back when we were implementing a supply chain tracking system on Fabric v1.4, we ran into quite a perplexing build issue. The chaincode built fine locally on our development machines, but it kept failing during the deployment pipeline in our staging environment. Hours of debugging led us to the subtle but critical role of `GOFLAGS`. It's an environment variable used during the Go build process, and it allows you to inject specific compiler flags. This, in the context of chaincode, can either enhance or completely break your build.
 
@@ -70,8 +70,8 @@ Here, `-gcflags=all=-N -l` disables compiler optimizations and inlining for debu
 
 For a deeper understanding, I recommend diving into a few key resources:
 
-*   **"Go Modules: Managing dependencies" documentation from the Go official website:** This documentation explains in detail how Go's dependency management works.
-*   **"Hyperledger Fabric Documentation on Chaincode Development":** Specifically the sections related to chaincode packaging and deployment, which will detail some of the Fabric conventions around building chaincode.
-*   **The "Go Command" documentation from the Go official website:** Dive deep into each of the individual `go` commands such as `go build`, `go mod`, and their associated flags.
+- **"Go Modules: Managing dependencies" documentation from the Go official website:** This documentation explains in detail how Go's dependency management works.
+- **"Hyperledger Fabric Documentation on Chaincode Development":** Specifically the sections related to chaincode packaging and deployment, which will detail some of the Fabric conventions around building chaincode.
+- **The "Go Command" documentation from the Go official website:** Dive deep into each of the individual `go` commands such as `go build`, `go mod`, and their associated flags.
 
 In conclusion, `GOFLAGS` isn't just some environment variable; it's a critical tool for ensuring the reliable and secure deployment of your Hyperledger Fabric chaincode. When you use it strategically to manage dependencies, you avoid numerous potential issues, especially in production environments. Taking the time to really understand and configure `GOFLAGS` correctly, like I did after that initial failure a few years ago, will definitely save you a lot of headaches down the road. This isn't something that should be treated as an afterthought but as a primary consideration in your development workflow.

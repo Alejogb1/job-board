@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-get-multiple-plots-from-multiple-learners-on-one-plot"
 ---
 
-alright, so you're looking to cram several learning model outputs onto a single visualization. been there, done that, got the t-shirt (and probably a few gray hairs). it's a common need when you're comparing how different models are performing, or maybe you're showcasing how they converge over training epochs.
+, so you're looking to cram several learning model outputs onto a single visualization. been there, done that, got the t-shirt (and probably a few gray hairs). it's a common need when you're comparing how different models are performing, or maybe you're showcasing how they converge over training epochs.
 
 first thing, let's establish what we mean by 'plots'. i'm assuming you're working with some kind of numerical data, whether it's regression outputs, classification probabilities, or even loss curves. also, i'm figuring you have multiple learners – think different algorithms like linear regression, support vector machines, decision trees, or even neural nets.
 
@@ -97,10 +97,10 @@ now, before i sign off i recommend that if you want to really dive deep on visua
 
 a few final points to keep in mind:
 
-*   always label your axes and add a title. don't make the reader guess what they're looking at.
-*   use a legend to clarify which line or point corresponds to which model.
-*   choose the right plot type for the data. are lines, scatterplots, bar charts, or heat maps more appropriate? that's always a tricky question.
-*   think about color schemes and the overall aesthetic. a little bit of thought makes a big difference on how easy your plots are to read.
-*  if you have many models or high dimensionality consider alternative ways to summarize the model differences. a few metrics may give you more insight than trying to plot 100 models in the same graph (i know someone who did that once, not recommending it).
+- always label your axes and add a title. don't make the reader guess what they're looking at.
+- use a legend to clarify which line or point corresponds to which model.
+- choose the right plot type for the data. are lines, scatterplots, bar charts, or heat maps more appropriate? that's always a tricky question.
+- think about color schemes and the overall aesthetic. a little bit of thought makes a big difference on how easy your plots are to read.
+- if you have many models or high dimensionality consider alternative ways to summarize the model differences. a few metrics may give you more insight than trying to plot 100 models in the same graph (i know someone who did that once, not recommending it).
 
 that should get you started. plotting multiple learners on a single plot isn't that tricky once you get the basics down. the hardest part is usually deciding what to show, or not to show.

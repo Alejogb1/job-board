@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "cmo-pueden-las-plataformas-educativas-inclusivas-reducir-la-carga-adicional-para-los-padres-de-estudiantes-con-dea"
 ---
 
-okay so how do inclusive edtech platforms actually lighten the load for parents dealing with kids with learning differences like ADHD and dyslexia its a real thing and parents are often doing the work of like three full-time jobs just trying to keep things going the way it is right now we can break this down into a few key areas where tech can help a lot
+how do inclusive edtech platforms actually lighten the load for parents dealing with kids with learning differences like ADHD and dyslexia its a real thing and parents are often doing the work of like three full-time jobs just trying to keep things going the way it is right now we can break this down into a few key areas where tech can help a lot
 
 first off a huge part of the parental burden is simply keeping track of everything deadlines assignments which materials to use if you’ve got a kid with a learning difference this is often magnified because theres a lot more moving pieces individualized learning plans specific accommodations things that might look very different from a typical classroom setting right so a good platform should have a centralized dashboard a place where everything is visible assignments deadlines messages from teachers all of it should be presented in a clear and concise format that can easily be checked by both parents and students this eliminates the need for parents to constantly nag their kids or dig through emails and folders it puts the information in one spot and its constantly updated
 
@@ -50,21 +50,20 @@ in this simplification the dashboard class manages assignments allowing to retri
 here's an example of the message system
 
 ```javascript
-const messageList = document.querySelector('#messageList');
-const messageInput = document.querySelector('#messageInput');
-const sendButton = document.querySelector('#sendButton');
-const userId = 'parent-123'; //hard coded for now for illustration
+const messageList = document.querySelector("#messageList");
+const messageInput = document.querySelector("#messageInput");
+const sendButton = document.querySelector("#sendButton");
+const userId = "parent-123"; //hard coded for now for illustration
 
-sendButton.addEventListener('click', () => {
+sendButton.addEventListener("click", () => {
   const messageText = messageInput.value;
-    if (messageText.trim() !== ''){
-       const newMessage = document.createElement('li');
-       newMessage.textContent = `${userId}: ${messageText}`
-       messageList.appendChild(newMessage);
-       messageInput.value = ""; //reset message
+  if (messageText.trim() !== "") {
+    const newMessage = document.createElement("li");
+    newMessage.textContent = `${userId}: ${messageText}`;
+    messageList.appendChild(newMessage);
+    messageInput.value = ""; //reset message
   }
-})
-
+});
 ```
 
 a very simple example using client side javascript for a chat interface where a message is sent and displayed instantly for a specific user. a backend system would be required to have different users and persistent messages but the core functionality is shown.

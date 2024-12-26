@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-attributeerror-nonetype-object-has-no-attribute-statedict-in-azure-ml-studio-with-pytorch"
 ---
 
-Okay, let's tackle this. I’ve seen this particular `AttributeError` rear its head a few times over the years, especially within the Azure Machine Learning ecosystem when folks are working with PyTorch. It's not usually a PyTorch core issue per se, but rather how PyTorch models are handled and saved, or perhaps mismanaged, in the context of Azure ML Studio pipelines and environments. The `AttributeError: 'NoneType' object has no attribute 'state_dict'` generally means that you're trying to call the `state_dict()` method on something that's `None` instead of a PyTorch model object. Let's break down why this happens, and then I'll walk through some examples.
+, let's tackle this. I’ve seen this particular `AttributeError` rear its head a few times over the years, especially within the Azure Machine Learning ecosystem when folks are working with PyTorch. It's not usually a PyTorch core issue per se, but rather how PyTorch models are handled and saved, or perhaps mismanaged, in the context of Azure ML Studio pipelines and environments. The `AttributeError: 'NoneType' object has no attribute 'state_dict'` generally means that you're trying to call the `state_dict()` method on something that's `None` instead of a PyTorch model object. Let's break down why this happens, and then I'll walk through some examples.
 
 The core problem typically revolves around how your model is instantiated, trained (or not!), and then ultimately saved and loaded within the various stages of an Azure ML Studio experiment. In my experience, it often boils down to one of these three primary scenarios:
 
@@ -142,8 +142,8 @@ Based on my experiences, the fixes often involve one or more of these techniques
 
 **Recommended Resources:**
 
-*   **PyTorch Documentation:** The official PyTorch documentation is the best starting point for understanding how PyTorch models are saved and loaded. Pay particular attention to the `torch.save()` and `torch.load()` functions.
-*   **Azure ML Documentation:** The official Azure ML documentation provides details on how to use PyTorch within Azure ML pipelines.
-*   **"Deep Learning with PyTorch" by Eli Stevens, Luca Antiga, and Thomas Viehmann:** This is an excellent book that goes into the mechanics of using PyTorch and includes practical sections on saving and loading models effectively.
+- **PyTorch Documentation:** The official PyTorch documentation is the best starting point for understanding how PyTorch models are saved and loaded. Pay particular attention to the `torch.save()` and `torch.load()` functions.
+- **Azure ML Documentation:** The official Azure ML documentation provides details on how to use PyTorch within Azure ML pipelines.
+- **"Deep Learning with PyTorch" by Eli Stevens, Luca Antiga, and Thomas Viehmann:** This is an excellent book that goes into the mechanics of using PyTorch and includes practical sections on saving and loading models effectively.
 
 The `AttributeError: 'NoneType' object has no attribute 'state_dict'` error can be frustrating, but by understanding the common pitfalls related to model instantiation, saving/loading, and pipeline management, you can effectively debug and resolve it. Remember to meticulously track model objects and ensure they exist and are of the correct type before trying to access their properties.

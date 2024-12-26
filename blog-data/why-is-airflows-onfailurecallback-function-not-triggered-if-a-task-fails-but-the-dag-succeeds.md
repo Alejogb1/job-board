@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-is-airflows-onfailurecallback-function-not-triggered-if-a-task-fails-but-the-dag-succeeds"
 ---
 
-Okay, let's tackle this peculiar behavior with Airflow's `on_failure_callback`. I remember facing this exact issue when we were migrating a hefty ETL pipeline to Airflow a few years back; it was baffling initially, as we expected every task failure to trigger the callback regardless of overall dag success. It took some thorough investigation to fully grasp the mechanics at play.
+, let's tackle this peculiar behavior with Airflow's `on_failure_callback`. I remember facing this exact issue when we were migrating a hefty ETL pipeline to Airflow a few years back; it was baffling initially, as we expected every task failure to trigger the callback regardless of overall dag success. It took some thorough investigation to fully grasp the mechanics at play.
 
-The core of the matter lies in the distinction between task states and dag states, and how Airflow orchestrates the execution flow. When a task within a dag encounters a failure, such as a python exception, the task's individual state is marked as "failed." This transition *does* indeed trigger the various task-level listeners like `on_failure_callback` if they're defined on that *specific task*. However, and this is the critical part, it doesn't necessarily translate into the entire dag failing.
+The core of the matter lies in the distinction between task states and dag states, and how Airflow orchestrates the execution flow. When a task within a dag encounters a failure, such as a python exception, the task's individual state is marked as "failed." This transition _does_ indeed trigger the various task-level listeners like `on_failure_callback` if they're defined on that _specific task_. However, and this is the critical part, it doesn't necessarily translate into the entire dag failing.
 
-A dag's success is judged primarily on its ability to reach its terminal state. If a dag is designed to allow certain tasks to fail without causing the entire pipeline to abort, it will still be marked as successful *as long as the downstream tasks which are not dependent on the failed task execute successfully*. This is by design, allowing for fault tolerance and handling transient failures without halting the entire process. In essence, a dag success means that the dag *workflow*, according to its dependencies, has been completed even if individual parts experienced problems.
+A dag's success is judged primarily on its ability to reach its terminal state. If a dag is designed to allow certain tasks to fail without causing the entire pipeline to abort, it will still be marked as successful _as long as the downstream tasks which are not dependent on the failed task execute successfully_. This is by design, allowing for fault tolerance and handling transient failures without halting the entire process. In essence, a dag success means that the dag _workflow_, according to its dependencies, has been completed even if individual parts experienced problems.
 
 It's helpful to visualize this as a relay race. If one runner falls (a task failure) but the next runner successfully picks up the baton and completes their leg, the team (the dag) still finishes the race. We might want to know that one runner fell (hence the need for task-level `on_failure_callback`), but it doesn't negate the overall result of the race.
 
@@ -57,9 +57,9 @@ with DAG(
     task_a >> task_b >> task_c
 ```
 
-In this scenario, the `failure_callback_func` *will* execute when task_b fails, due to it being specified within the `task_b` operator. The DAG will *still* be marked as successful because, despite task_b failing, task_c is not dependent on its success. The workflow completes without any further impediments.
+In this scenario, the `failure_callback_func` _will_ execute when task_b fails, due to it being specified within the `task_b` operator. The DAG will _still_ be marked as successful because, despite task_b failing, task_c is not dependent on its success. The workflow completes without any further impediments.
 
-Let's explore a variation. Let's say we change the dag so that `task_c` now depends on the *successful* completion of `task_b`. In this case, the dag would indeed be marked as failed. Here’s that updated code:
+Let's explore a variation. Let's say we change the dag so that `task_c` now depends on the _successful_ completion of `task_b`. In this case, the dag would indeed be marked as failed. Here’s that updated code:
 
 ```python
 from airflow import DAG
@@ -110,9 +110,10 @@ with DAG(
 
     task_a >> task_b >> task_c
 ```
-The critical change is the `trigger_rule=TriggerRule.ALL_SUCCESS` parameter applied to `task_c`. This makes `task_c` require all its upstream tasks (in this case, only `task_b`) to be successful.  Because `task_b` fails, this now causes `task_c` to be skipped, and consequently, the overall DAG will be marked as failed. If you wanted to trigger a dag level on_failure callback, you would need to define it in the DAG constructor. The previous example, and its output, might confuse some at first.
 
-To bring it home, let’s make it explicit: a DAG has `on_failure_callback` which executes when the dag as a whole is marked as failed (after being unsuccessful and retries exhausted). The *tasks* have `on_failure_callback` and this callback fires when the task itself has failed. The trigger is based on the *task*, not the *dag*.
+The critical change is the `trigger_rule=TriggerRule.ALL_SUCCESS` parameter applied to `task_c`. This makes `task_c` require all its upstream tasks (in this case, only `task_b`) to be successful. Because `task_b` fails, this now causes `task_c` to be skipped, and consequently, the overall DAG will be marked as failed. If you wanted to trigger a dag level on_failure callback, you would need to define it in the DAG constructor. The previous example, and its output, might confuse some at first.
+
+To bring it home, let’s make it explicit: a DAG has `on_failure_callback` which executes when the dag as a whole is marked as failed (after being unsuccessful and retries exhausted). The _tasks_ have `on_failure_callback` and this callback fires when the task itself has failed. The trigger is based on the _task_, not the _dag_.
 
 Here is an example of dag-level on failure callback being fired. This will only be fired when the whole DAG has failed.
 

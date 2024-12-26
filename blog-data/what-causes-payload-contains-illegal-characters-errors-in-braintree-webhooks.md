@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-payload-contains-illegal-characters-errors-in-braintree-webhooks"
 ---
 
-Alright, let’s tackle this one. This “payload contains illegal characters” error with Braintree webhooks is something I’ve bumped into more times than I care to remember during my time building payment integrations. It’s a specific pain point, and understanding the underlying causes is critical to ensuring smooth operations. Essentially, this error boils down to a mismatch in character encoding between what Braintree sends in its webhook payload and how your server is interpreting it. Let's dive into the details.
+, let’s tackle this one. This “payload contains illegal characters” error with Braintree webhooks is something I’ve bumped into more times than I care to remember during my time building payment integrations. It’s a specific pain point, and understanding the underlying causes is critical to ensuring smooth operations. Essentially, this error boils down to a mismatch in character encoding between what Braintree sends in its webhook payload and how your server is interpreting it. Let's dive into the details.
 
 Specifically, the core issue arises from how webhooks transmit data – typically through HTTP POST requests, where the data is encoded in the body of the request. Braintree, like many other systems, usually encodes this data using UTF-8. UTF-8 is a widely adopted character encoding that supports a vast range of characters from different languages. However, if your server-side code is not correctly configured to expect or decode UTF-8, you'll run into problems. What you’re seeing with that error is the server encountering byte sequences it can’t translate into meaningful characters based on its assumed encoding (often a more limited encoding like ISO-8859-1 or ASCII).
 
@@ -29,7 +29,7 @@ def braintree_webhook():
     try:
         payload = request.get_data().decode('utf-8') #explicitly decoding as utf-8
         # This next line might be redundant, but including it for clarity
-        data = json.loads(payload) 
+        data = json.loads(payload)
         # process webhook data
         print(data)
         return "Webhook received", 200
@@ -82,25 +82,24 @@ In this Java example, while we don’t explicitly decode the incoming `String` p
 For a Node.js application using Express, you need to ensure you’re using the appropriate middleware to parse the incoming request body.
 
 ```javascript
-const express = require('express');
-const bodyParser = require('body-parser'); // Import body-parser
+const express = require("express");
+const bodyParser = require("body-parser"); // Import body-parser
 
 const app = express();
-app.use(bodyParser.text({ type: 'application/json' })); // use text parsing with json type
+app.use(bodyParser.text({ type: "application/json" })); // use text parsing with json type
 
-app.post('/braintree_webhook', (req, res) => {
+app.post("/braintree_webhook", (req, res) => {
   try {
     const data = JSON.parse(req.body);
     console.log(data);
     res.send("Webhook received");
-  } catch(e) {
+  } catch (e) {
     console.log(`Error: ${e}`);
-    res.status(400).send("Error processing webhook")
+    res.status(400).send("Error processing webhook");
   }
-
 });
 
-app.listen(3000, () => console.log('Server listening on port 3000'));
+app.listen(3000, () => console.log("Server listening on port 3000"));
 ```
 
 Here, `bodyParser.text({ type: 'application/json' })` is used to specifically parse the incoming request as text before passing it through the json parser. This is often implicitly handled by express body parsing libraries but it is essential to make sure your parsing rules are aligned to the data format you're receiving. If the request body is not being decoded correctly by the body-parser middleware, the string that is input into `JSON.parse` might not be valid.

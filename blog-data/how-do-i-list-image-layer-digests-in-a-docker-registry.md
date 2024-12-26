@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-i-list-image-layer-digests-in-a-docker-registry"
 ---
 
-Okay, let's tackle this. I recall back in the early days of our cloud infrastructure, we had a particularly knotty issue with rogue container images bloating our storage. It became critically important to understand exactly what was inside these images, and specifically, how to inspect their individual layers. Listing image layer digests is fundamental to that process, and it’s something I’ve found myself revisiting more often than I initially expected. The approach isn’t particularly complicated, but the specifics can sometimes trip people up.
+, let's tackle this. I recall back in the early days of our cloud infrastructure, we had a particularly knotty issue with rogue container images bloating our storage. It became critically important to understand exactly what was inside these images, and specifically, how to inspect their individual layers. Listing image layer digests is fundamental to that process, and it’s something I’ve found myself revisiting more often than I initially expected. The approach isn’t particularly complicated, but the specifics can sometimes trip people up.
 
-The core principle here is that a Docker image isn't a single monolithic file. It's constructed from a sequence of read-only layers, each identified by a unique content addressable hash, the *digest*. These digests aren't just random identifiers; they're cryptographic hashes calculated from the layer's content, ensuring integrity and enabling deduplication across images. This means that if two images share a layer, that layer is stored only once in the registry, saving space.
+The core principle here is that a Docker image isn't a single monolithic file. It's constructed from a sequence of read-only layers, each identified by a unique content addressable hash, the _digest_. These digests aren't just random identifiers; they're cryptographic hashes calculated from the layer's content, ensuring integrity and enabling deduplication across images. This means that if two images share a layer, that layer is stored only once in the registry, saving space.
 
 The registry, thankfully, provides the necessary endpoints to query for these digests. It’s not a matter of directly accessing the image files themselves, but rather using the registry’s api to navigate the image metadata. This interaction typically involves http requests following the docker registry http api v2. I’ll walk you through it.
 
@@ -125,7 +125,7 @@ func main() {
 		os.Exit(1)
     }
     defer authResp.Body.Close()
-	
+
 	if authResp.StatusCode != http.StatusOK {
 		fmt.Println("Authentication failed with status code:", authResp.StatusCode)
         os.Exit(1)
@@ -195,6 +195,6 @@ This go program also fetches the token, then uses it to fetch the manifest, and 
 
 **Further Learning**
 
-For a detailed understanding of the Docker registry http api v2, I strongly recommend reviewing the official documentation at [distribution/distribution](https://github.com/distribution/distribution/blob/main/docs/spec/api.md). Specifically, the sections related to manifest retrieval and layer retrieval are key here. Additionally, *“Docker in Action”* by Jeff Nickoloff and *“Programming Kubernetes”* by Michael Hausenblas and Stefan Schimanski can provide useful background information on container and image management. The official docker docs at [https://docs.docker.com/](https://docs.docker.com/) are invaluable to review the docker image and layer structure concepts.
+For a detailed understanding of the Docker registry http api v2, I strongly recommend reviewing the official documentation at [distribution/distribution](https://github.com/distribution/distribution/blob/main/docs/spec/api.md). Specifically, the sections related to manifest retrieval and layer retrieval are key here. Additionally, _“Docker in Action”_ by Jeff Nickoloff and _“Programming Kubernetes”_ by Michael Hausenblas and Stefan Schimanski can provide useful background information on container and image management. The official docker docs at [https://docs.docker.com/](https://docs.docker.com/) are invaluable to review the docker image and layer structure concepts.
 
 In conclusion, extracting image layer digests is crucial for effective image analysis and storage management. As you can see, the core process remains consistent across different environments. Understanding how to interact with the docker registry via the API is a core competency that any professional working with docker should possess. It's about more than just running containers; it's about understanding the fundamental pieces that make up a container image and this is what allowed us to track down the bloated images back in those early days of the infrastructure.

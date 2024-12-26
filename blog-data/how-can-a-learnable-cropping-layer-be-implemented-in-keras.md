@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-learnable-cropping-layer-be-implemented-in-keras"
 ---
 
-Alright, let's tackle this one. I've seen this come up quite a bit, actually, and it's a genuinely useful problem to solve when you’re working with image data. I remember a particularly frustrating project involving highly variable image resolutions where a fixed crop just wasn't cutting it, and that's when I had to delve deeply into learnable cropping layers. The standard `Cropping2D` in Keras is good for static crops, but when you need the cropping region to adapt based on the image content, you’re venturing into learnable parameters. The core idea here is to make the coordinates that define the crop boundary trainable during the network's backpropagation.
+, let's tackle this one. I've seen this come up quite a bit, actually, and it's a genuinely useful problem to solve when you’re working with image data. I remember a particularly frustrating project involving highly variable image resolutions where a fixed crop just wasn't cutting it, and that's when I had to delve deeply into learnable cropping layers. The standard `Cropping2D` in Keras is good for static crops, but when you need the cropping region to adapt based on the image content, you’re venturing into learnable parameters. The core idea here is to make the coordinates that define the crop boundary trainable during the network's backpropagation.
 
 At its most basic, a learnable cropping layer needs to accomplish a few things. First, it needs to generate the crop coordinates, preferably as output from another part of your model that processes input. Second, it needs to apply the actual crop to the input tensor. We can’t just pass coordinates into the existing Keras `Cropping2D` layer; we need to manipulate the tensor indices directly based on what the network decides. Essentially, you're moving from a fixed slicing operation to a trainable parameter that controls the slicing indices.
 
@@ -92,12 +92,12 @@ class LearnableCropWithSize(layers.Layer):
     def call(self, inputs):
         # Predict x, y, and crop size (scale)
         crop_parameters = self.crop_params(inputs)
-        
+
         # Split parameters
         scaled_x = tf.cast(crop_parameters[:,0] * self.input_width, dtype=tf.int32)
         scaled_y = tf.cast(crop_parameters[:,1] * self.input_height, dtype=tf.int32)
         crop_size_scale = crop_parameters[:,2] #scale between 0 and 1
-        
+
         # Calculate crop size based on scale with minimum size guarantee
         max_crop_size = tf.reduce_min([self.input_height, self.input_width], axis=-1)
         scaled_crop_size = tf.cast(crop_size_scale * (max_crop_size - self.min_crop_size), dtype=tf.int32) + self.min_crop_size
@@ -105,7 +105,7 @@ class LearnableCropWithSize(layers.Layer):
         # Ensure we're not out of bounds
         end_x = scaled_x + scaled_crop_size
         end_y = scaled_y + scaled_crop_size
-        
+
         end_x = tf.clip_by_value(end_x, clip_value_min =0, clip_value_max = self.input_width)
         end_y = tf.clip_by_value(end_y, clip_value_min =0, clip_value_max = self.input_height)
 
@@ -139,6 +139,7 @@ input_data = tf.random.normal((1, 256, 256, 3))
 output = model(input_data)
 print("Output shape:", output.shape)
 ```
+
 Here, the dense layer predicts three values (x, y, and a scale parameter for crop size). Note the clipping to ensure we don't try to crop out of bounds. We are also ensuring that there is a minimum crop size. The cropping operation itself stays the same using `tf.slice`. We also handle the case where the scale factor for crop size could result in out-of-bound values.
 
 **Example 3: Handling Variable Output Size with Resizing**
@@ -165,12 +166,12 @@ class LearnableCropWithResize(layers.Layer):
     def call(self, inputs):
         # Predict x, y, and crop size (scale)
         crop_parameters = self.crop_params(inputs)
-        
+
         # Split parameters
         scaled_x = tf.cast(crop_parameters[:,0] * self.input_width, dtype=tf.int32)
         scaled_y = tf.cast(crop_parameters[:,1] * self.input_height, dtype=tf.int32)
         crop_size_scale = crop_parameters[:,2] #scale between 0 and 1
-        
+
         # Calculate crop size based on scale with minimum size guarantee
         max_crop_size = tf.reduce_min([self.input_height, self.input_width], axis=-1)
         scaled_crop_size = tf.cast(crop_size_scale * (max_crop_size - self.min_crop_size), dtype=tf.int32) + self.min_crop_size
@@ -178,7 +179,7 @@ class LearnableCropWithResize(layers.Layer):
         # Ensure we're not out of bounds
         end_x = scaled_x + scaled_crop_size
         end_y = scaled_y + scaled_crop_size
-        
+
         end_x = tf.clip_by_value(end_x, clip_value_min =0, clip_value_max = self.input_width)
         end_y = tf.clip_by_value(end_y, clip_value_min =0, clip_value_max = self.input_height)
 

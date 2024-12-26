@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-trade-offs-are-present-in-gemini-20-flashs-performance-on-mrcr-long-context-benchmarks"
 ---
 
-alright so gemini 2.0 flash and mrcr long context thats a hefty topic lets dive in thinking about performance on those benchmarks we gotta unpack whats really going on its not just about speed or accuracy its a tangled web of choices the google folks made
+so gemini 2.0 flash and mrcr long context thats a hefty topic lets dive in thinking about performance on those benchmarks we gotta unpack whats really going on its not just about speed or accuracy its a tangled web of choices the google folks made
 
 first up mrcr means machine reading comprehension with reasoning and the "long context" part thats the real kicker its not just about understanding a short paragraph its about grokking documents that are thousands upon thousands of words long think research papers dense legal text or even whole books now these benchmarks are designed to push these models to their limits they test not just memorization but also true comprehension the ability to connect ideas across vast distances within a text
 

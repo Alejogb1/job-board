@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-java-constraints-be-passed-as-arguments"
 ---
 
-Okay, let's tackle this. I remember a particularly tricky project a few years back where we were heavily reliant on configurable data validation. The challenge was, we needed the flexibility to swap validation rules dynamically, without resorting to a massive, monolithic class filled with conditional logic. We were essentially looking at how to pass constraints, not as static configuration, but as arguments to our validation methods or services. Java, being Java, doesn’t have a direct way to pass constraints as first-class objects the way some more dynamic languages might, but we found some effective workarounds leveraging its strong type system and object-oriented features.
+, let's tackle this. I remember a particularly tricky project a few years back where we were heavily reliant on configurable data validation. The challenge was, we needed the flexibility to swap validation rules dynamically, without resorting to a massive, monolithic class filled with conditional logic. We were essentially looking at how to pass constraints, not as static configuration, but as arguments to our validation methods or services. Java, being Java, doesn’t have a direct way to pass constraints as first-class objects the way some more dynamic languages might, but we found some effective workarounds leveraging its strong type system and object-oriented features.
 
-At the core of the issue is that “constraints” themselves are typically expressed as annotations or, less often, as a set of predefined rules. They're not inherently objects we can directly manipulate as parameters. However, we can create abstractions that represent constraints and pass *those* abstractions around. Think about it, we're not passing the annotation itself, but something that *represents* what the annotation *does*. There are several effective strategies, and the best one will usually depend on the specifics of your situation. Let’s look at a few common approaches and illustrate them with some code examples.
+At the core of the issue is that “constraints” themselves are typically expressed as annotations or, less often, as a set of predefined rules. They're not inherently objects we can directly manipulate as parameters. However, we can create abstractions that represent constraints and pass _those_ abstractions around. Think about it, we're not passing the annotation itself, but something that _represents_ what the annotation _does_. There are several effective strategies, and the best one will usually depend on the specifics of your situation. Let’s look at a few common approaches and illustrate them with some code examples.
 
-One powerful method is using the *Strategy Pattern*. This pattern allows you to encapsulate different validation algorithms in separate classes (our "strategies") that implement a common interface. That interface can represent the abstract notion of a “constraint." The validation logic itself then becomes independent of the specific constraint it’s applying, making it highly flexible and testable.
+One powerful method is using the _Strategy Pattern_. This pattern allows you to encapsulate different validation algorithms in separate classes (our "strategies") that implement a common interface. That interface can represent the abstract notion of a “constraint." The validation logic itself then becomes independent of the specific constraint it’s applying, making it highly flexible and testable.
 
 Here’s a simplified example:
 
@@ -64,7 +64,7 @@ public class StrategyPatternExample {
 
 In this snippet, `ValidationStrategy` is our abstraction for a constraint. We have concrete strategies such as `NotEmptyValidation` and `LengthValidation`. The `Validator` class doesn’t care which strategy is used; it just calls the `validate` method. This allows you to pass these validation strategies as arguments to the `isValid` method. This worked incredibly well for us, particularly when we had multiple variations of validation based on the data context.
 
-Another robust approach, particularly when dealing with complex rules or composing validation constraints, involves building a *specification pattern* on top of a functional interface, usually involving `java.util.function.Predicate`. A `Predicate` acts as a test, which maps beautifully to the concept of a validation check.
+Another robust approach, particularly when dealing with complex rules or composing validation constraints, involves building a _specification pattern_ on top of a functional interface, usually involving `java.util.function.Predicate`. A `Predicate` acts as a test, which maps beautifully to the concept of a validation check.
 
 Here’s how it could look:
 

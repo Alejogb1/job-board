@@ -4,13 +4,13 @@ date: "2024-12-16"
 id: "how-do-i-create-light-weight-docker-images-based-on-redhat-images"
 ---
 
-Alright, let's talk about lightweighting those redhat-based docker images. It's a situation I've faced countless times in my career, especially when dealing with resource-constrained environments or aiming for faster deployment pipelines. We often start with these incredibly feature-rich, yet bulky, redhat base images and find ourselves needing to trim the fat. It's rarely a single-step solution, but a combination of thoughtful techniques that work together to achieve the desired outcome.
+, let's talk about lightweighting those redhat-based docker images. It's a situation I've faced countless times in my career, especially when dealing with resource-constrained environments or aiming for faster deployment pipelines. We often start with these incredibly feature-rich, yet bulky, redhat base images and find ourselves needing to trim the fat. It's rarely a single-step solution, but a combination of thoughtful techniques that work together to achieve the desired outcome.
 
 My experience dates back to a large-scale microservices project where we initially used standard RHEL images for each service. The deployment times were atrocious and resource consumption was through the roof. We had to aggressively optimize our approach. The core issue is that many pre-built images come packed with tools and libraries that are simply not needed for the specific application you are deploying. They're designed for general use, which is understandable, but it’s up to us as engineers to tailor them for our narrow use case.
 
 The primary goal is to minimize the image size, which directly impacts build and deploy times, resource consumption, and even security surface. Let’s explore the key strategies that proved most effective.
 
-First and foremost, we must adopt a **multi-stage build process**. This technique is a game-changer. Think of it as creating two separate dockerfiles – one for building your application and the other for producing the final, minimal image. In the first stage, you build everything including all the necessary build tools, dependencies, etc. Then, in the second stage, you copy *only* the compiled artifacts and the runtime dependencies to a much smaller base image. This separation ensures your production image doesn’t carry unnecessary development baggage.
+First and foremost, we must adopt a **multi-stage build process**. This technique is a game-changer. Think of it as creating two separate dockerfiles – one for building your application and the other for producing the final, minimal image. In the first stage, you build everything including all the necessary build tools, dependencies, etc. Then, in the second stage, you copy _only_ the compiled artifacts and the runtime dependencies to a much smaller base image. This separation ensures your production image doesn’t carry unnecessary development baggage.
 
 Here's a basic example using a hypothetical java application:
 
@@ -85,6 +85,7 @@ COPY my-app /app/my-app
 CMD ["/app/my-app"]
 
 ```
+
 In this example, we are removing some utilities and text editing programs, which might not be required in a production application container, and installing those which might. The important point to notice is that the specifics of the `remove` commands would depend on your target application requirements and understanding of the image. Using `microdnf` instead of `dnf` also has its impact on image size. The optional steps (commented out) show advanced steps like removing documentation which requires very careful consideration but can further reduce the image size.
 
 Beyond these three core techniques, other strategies include using optimized file formats like `.tar.gz` to reduce the size of copied files within the container image, carefully ordering docker commands to optimize layer caching and ensure only changed layers are rebuilt, and regularly reviewing and updating your base images to get the benefits of any optimization from Red Hat.

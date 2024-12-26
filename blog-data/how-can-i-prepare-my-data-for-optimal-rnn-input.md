@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-prepare-my-data-for-optimal-rnn-input"
 ---
 
-Okay, let’s talk about feeding recurrent neural networks (RNNs). It’s not as straightforward as simply tossing raw data at them. I remember back in '17, dealing with a particularly nasty dataset of time series sensor data – the kind that’d make your average model weep. That experience really hammered home the importance of careful data preparation for RNNs. Getting that input *just right* can be the difference between a useful prediction and utter gibberish.
+, let’s talk about feeding recurrent neural networks (RNNs). It’s not as straightforward as simply tossing raw data at them. I remember back in '17, dealing with a particularly nasty dataset of time series sensor data – the kind that’d make your average model weep. That experience really hammered home the importance of careful data preparation for RNNs. Getting that input _just right_ can be the difference between a useful prediction and utter gibberish.
 
 Essentially, optimizing data for RNN input involves a few key processes, each targeting a specific need of the model. We're aiming for a representation that's not only informative but also structured in a way that the RNN can efficiently process. Think of it as crafting the perfect fuel for a finely tuned engine. The main processes i usually focus on are sequence construction, normalization, and handling categorical features. Let's break each of these down with code examples to illustrate.
 
-First, the most crucial aspect: *sequence construction*. RNNs, by their very nature, operate on sequences. The network maintains a 'hidden state' that gets updated as it processes each item in the sequence, allowing it to retain memory of past inputs. If your data isn’t already in a sequential form, you need to structure it accordingly. For time series data, this often involves creating fixed-length windows, also known as time steps. Imagine the sensor data from that old project; we didn't feed the readings individually. We grouped, say, 60 consecutive readings into a single sequence, moving that window along the timeline in increments or 'steps'. This resulted in a series of sequential inputs.
+First, the most crucial aspect: _sequence construction_. RNNs, by their very nature, operate on sequences. The network maintains a 'hidden state' that gets updated as it processes each item in the sequence, allowing it to retain memory of past inputs. If your data isn’t already in a sequential form, you need to structure it accordingly. For time series data, this often involves creating fixed-length windows, also known as time steps. Imagine the sensor data from that old project; we didn't feed the readings individually. We grouped, say, 60 consecutive readings into a single sequence, moving that window along the timeline in increments or 'steps'. This resulted in a series of sequential inputs.
 
 Here’s a Python snippet using NumPy that demonstrates this concept:
 
@@ -48,7 +48,7 @@ print("\nTargets:", targets)
 
 This function slides a window of `seq_length` across the input data and extracts these into sequences, selecting the data point that follows each sequence as a target value for prediction if training a predictive model. The step size controls how much we advance our window each time – the smaller the step, the more overlapping sequences will be generated and more training data generated at the cost of more repetition.
 
-Next up is *normalization*. Raw data often comes in various scales, which can be problematic for the gradient-based learning that RNNs employ. Large values can lead to exploding gradients, small values to vanishing gradients and in general, models can get stuck at suboptimal solutions. To avoid this, it's wise to normalize the data so that all features have a similar range and central tendency. Common strategies include min-max scaling (scaling to a 0-1 range) or standardization (zero mean, unit variance).
+Next up is _normalization_. Raw data often comes in various scales, which can be problematic for the gradient-based learning that RNNs employ. Large values can lead to exploding gradients, small values to vanishing gradients and in general, models can get stuck at suboptimal solutions. To avoid this, it's wise to normalize the data so that all features have a similar range and central tendency. Common strategies include min-max scaling (scaling to a 0-1 range) or standardization (zero mean, unit variance).
 
 Here’s a code example of using standardization:
 
@@ -77,9 +77,9 @@ print("Original Data:", raw_data)
 print("Standardized Data:", normalized_data)
 ```
 
-This standardization technique centers the data around zero with a standard deviation of 1. This ensures each feature contributes evenly to the learning process of the model and greatly increases learning efficiency. Remember, the mean and standard deviation should be calculated based on the *training data only* and then applied to the test data to prevent data leakage.
+This standardization technique centers the data around zero with a standard deviation of 1. This ensures each feature contributes evenly to the learning process of the model and greatly increases learning efficiency. Remember, the mean and standard deviation should be calculated based on the _training data only_ and then applied to the test data to prevent data leakage.
 
-Finally, let's talk about handling *categorical features*. RNNs, at their core, operate on numerical data. If your data contains categorical features (like product categories or sensor IDs), you'll need to convert them into a numerical representation. One-hot encoding is a common way to handle this. It converts each category into a binary vector. The vector has a length equal to the total number of unique categories. When a specific category is present, the corresponding index in the vector becomes a one, while all other elements are zeros.
+Finally, let's talk about handling _categorical features_. RNNs, at their core, operate on numerical data. If your data contains categorical features (like product categories or sensor IDs), you'll need to convert them into a numerical representation. One-hot encoding is a common way to handle this. It converts each category into a binary vector. The vector has a length equal to the total number of unique categories. When a specific category is present, the corresponding index in the vector becomes a one, while all other elements are zeros.
 
 Here's how one-hot encoding might look in Python using scikit-learn:
 

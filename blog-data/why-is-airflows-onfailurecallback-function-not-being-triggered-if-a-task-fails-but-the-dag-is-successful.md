@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "why-is-airflows-onfailurecallback-function-not-being-triggered-if-a-task-fails-but-the-dag-is-successful"
 ---
 
-Okay, let's tackle this. I've seen this tripped up a fair number of folks over the years, and I've personally spent time debugging this exact scenario, so I understand the frustration it can cause. It's a nuanced issue stemming from how Airflow distinguishes between task failures and dag failures.
+, let's tackle this. I've seen this tripped up a fair number of folks over the years, and I've personally spent time debugging this exact scenario, so I understand the frustration it can cause. It's a nuanced issue stemming from how Airflow distinguishes between task failures and dag failures.
 
-The core reason why your `on_failure_callback` isn't firing when a task fails, but the dag reports as successful, lies in Airflow’s internal logic regarding task states and dag run states. A task failing doesn't automatically equate to the dag failing. Airflow essentially sees tasks as individual units of work within a larger workflow. A dag run only fails if there's a failure that Airflow considers "terminal" for the *entire* workflow. This distinction is crucial to understand.
+The core reason why your `on_failure_callback` isn't firing when a task fails, but the dag reports as successful, lies in Airflow’s internal logic regarding task states and dag run states. A task failing doesn't automatically equate to the dag failing. Airflow essentially sees tasks as individual units of work within a larger workflow. A dag run only fails if there's a failure that Airflow considers "terminal" for the _entire_ workflow. This distinction is crucial to understand.
 
-Consider this scenario: you have a dag with multiple tasks, some of which have retries enabled. If a task fails initially, it goes into a "failed" state, but because retries are configured, Airflow will try again. If the retries succeed, the task eventually becomes "success," even though it initially failed. The crucial part here is that the dag run itself continues onward. The `on_failure_callback` defined at the *dag* level is only triggered when there's a *dag* failure, not a transient *task* failure that is eventually resolved.
+Consider this scenario: you have a dag with multiple tasks, some of which have retries enabled. If a task fails initially, it goes into a "failed" state, but because retries are configured, Airflow will try again. If the retries succeed, the task eventually becomes "success," even though it initially failed. The crucial part here is that the dag run itself continues onward. The `on_failure_callback` defined at the _dag_ level is only triggered when there's a _dag_ failure, not a transient _task_ failure that is eventually resolved.
 
 To illustrate, imagine a dag that loads data into a database. The first task might be to extract data from an api, and the second is to load it. Let's say the extract task fails twice before successfully fetching the data. The dag completes successfully overall, even with those initial failures in the extract task. That initial failure will not trigger the `on_failure_callback` of the DAG since the DAG run is a success.
 
-Now, let's look at some specific examples to demonstrate this in action, including what *will* trigger the task level failure handling and how to work with it, and what triggers the dag level one.
+Now, let's look at some specific examples to demonstrate this in action, including what _will_ trigger the task level failure handling and how to work with it, and what triggers the dag level one.
 
 **Example 1: Task-Level Failure Handling Using a Decorator**
 
@@ -49,11 +49,11 @@ def task_example_dag():
 task_example_dag()
 ```
 
-In this example, `failing_task` has a specific `on_failure_callback`. Since it's designed to raise an exception, `my_failure_handler` will *always* be called immediately after the task fails. Note that even if you have `retries=2` here the `my_failure_handler` will be called each time the task fails but before retry is initiated. The dummy task will proceed normally as the DAG run has not failed.
+In this example, `failing_task` has a specific `on_failure_callback`. Since it's designed to raise an exception, `my_failure_handler` will _always_ be called immediately after the task fails. Note that even if you have `retries=2` here the `my_failure_handler` will be called each time the task fails but before retry is initiated. The dummy task will proceed normally as the DAG run has not failed.
 
 **Example 2: Dag-Level Failure Handling**
 
-Now, let’s see a dag failure example. The key to ensuring the dag failure handler is invoked is to let a task fail without retry *and* ensure that subsequent tasks are not designed to proceed regardless, so that the whole DAG run cannot complete normally.
+Now, let’s see a dag failure example. The key to ensuring the dag failure handler is invoked is to let a task fail without retry _and_ ensure that subsequent tasks are not designed to proceed regardless, so that the whole DAG run cannot complete normally.
 
 ```python
 from airflow.decorators import dag, task
@@ -87,7 +87,7 @@ def dag_example_dag():
 dag_example_dag()
 ```
 
-In this second example, we have the `on_failure_callback` defined at the dag level. When `failing_task` fails (and has no retry) and its subsequent task is not set to run "regardless" the entire dag run is marked as a failure. In such instances, `dag_failure_handler` is invoked, because now, the *dag* has failed, not just an individual task, stopping the DAG run execution from completing.
+In this second example, we have the `on_failure_callback` defined at the dag level. When `failing_task` fails (and has no retry) and its subsequent task is not set to run "regardless" the entire dag run is marked as a failure. In such instances, `dag_failure_handler` is invoked, because now, the _dag_ has failed, not just an individual task, stopping the DAG run execution from completing.
 
 **Example 3: Using Task Groups to handle failures**
 
@@ -132,14 +132,15 @@ def task_group_example_dag():
 
 task_group_example_dag()
 ```
+
 Here, when any task inside the "my_failing_tasks" TaskGroup fails without a retry it will trigger the `group_failure_handler` callback. Since the dummy task is not inside the group and the group's failure does not stop the whole DAG run, the DAG will still complete successfully. This allows for isolated failure handling of a portion of the workflow, without affecting the broader DAG success or failure.
 
 **Key Takeaways and Recommendations:**
 
-*   **Task-Level Failures:** Use the `@task` decorator or the `BaseOperator`'s `on_failure_callback` for individual task failures. This callback is triggered after the task retries (if any) are exhausted.
-*   **Dag-Level Failures:** The dag's `on_failure_callback` is triggered when the *entire dag run* fails to complete successfully. This typically means no retries are enabled, or tasks are designed to fail and block future steps.
-*   **Task Groups:** Utilize Task Groups and their specific callback to isolate failures to a group of tasks. This avoids unnecessary DAG failures when only certain sections are having issues.
-*   **Understand Task States:** Familiarize yourself with the various task states in Airflow (e.g., queued, running, success, failed, up_for_retry, etc.) to better grasp when callbacks are triggered.
+- **Task-Level Failures:** Use the `@task` decorator or the `BaseOperator`'s `on_failure_callback` for individual task failures. This callback is triggered after the task retries (if any) are exhausted.
+- **Dag-Level Failures:** The dag's `on_failure_callback` is triggered when the _entire dag run_ fails to complete successfully. This typically means no retries are enabled, or tasks are designed to fail and block future steps.
+- **Task Groups:** Utilize Task Groups and their specific callback to isolate failures to a group of tasks. This avoids unnecessary DAG failures when only certain sections are having issues.
+- **Understand Task States:** Familiarize yourself with the various task states in Airflow (e.g., queued, running, success, failed, up_for_retry, etc.) to better grasp when callbacks are triggered.
 
 For deeper understanding, I strongly recommend the following resources:
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-add-attributes-to-custom-rails-exceptions"
 ---
 
-alright, so you’re hitting that spot where rails' built-in exceptions just aren't cutting it, and you need to stuff more info into your custom exceptions. i’ve been there, many times. let me tell you a bit about how i've tackled this. it's less about some magical fix and more about understanding how ruby classes and exception handling work, and then bending them to your will.
+, so you’re hitting that spot where rails' built-in exceptions just aren't cutting it, and you need to stuff more info into your custom exceptions. i’ve been there, many times. let me tell you a bit about how i've tackled this. it's less about some magical fix and more about understanding how ruby classes and exception handling work, and then bending them to your will.
 
 first, let’s get the basics down. when you create a custom exception in rails, it's just a ruby class that inherits from `standarderror` or one of its subclasses. this means you can treat it like any other class and add instance variables, methods, and whatever else you fancy.
 
@@ -80,6 +80,7 @@ begin
     )
   end
 ```
+
 we're parsing the json body and extracting specific error details into the new attribute in the custom exception. this allows us to capture the extra information about the api call.
 
 one last piece of advice i can give is to be careful about what you stuff into your exceptions. avoid adding sensitive info like passwords or session tokens, especially if they are logged or displayed in any way. if you start adding too many attributes, it might indicate that your exception isn't well-defined. think about the core problem you're trying to represent with the exception and whether all that information is truly necessary. or, you might want to make different, more specific, exceptions.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-input-an-image-into-a-cnn-rnn-model"
 ---
 
-Alright, let's talk image input to a CNN-RNN model. It's a problem I've tackled a few times, most notably when I was working on a project that aimed to generate captions for short videos, which meant handling both spatial and temporal data. The challenge, as you've likely discovered, lies in bridging the gap between the spatial representation of an image (handled well by CNNs) and the sequential nature of information processing in RNNs. It's not a straightforward plug-and-play, but with a bit of careful structuring, it becomes quite manageable.
+, let's talk image input to a CNN-RNN model. It's a problem I've tackled a few times, most notably when I was working on a project that aimed to generate captions for short videos, which meant handling both spatial and temporal data. The challenge, as you've likely discovered, lies in bridging the gap between the spatial representation of an image (handled well by CNNs) and the sequential nature of information processing in RNNs. It's not a straightforward plug-and-play, but with a bit of careful structuring, it becomes quite manageable.
 
 The crux of it is transforming the image into a suitable input sequence for the RNN. Instead of feeding the raw pixel data, which would be computationally infeasible and not very meaningful, we use the CNN as a feature extractor. This initial phase is crucial because it pre-processes the image into a higher-level, more compressed representation that is easier for the RNN to process.
 
@@ -64,9 +64,10 @@ caption_length = torch.tensor([1]) #Dummy Sequence length for batch = 1
 output = model(dummy_image_batch, caption_length)
 print(output.shape) # Should be [32, 1000]
 ```
+
 This example shows how a single image is passed through a CNN, flattened, and then treated as the single time step input for the RNN.
 
-Now, what if we are dealing with sequence of images? This is where we need to be careful. A typical example is video classification or action recognition. We need to extract the CNN features *for each frame* and treat them as a sequence. Here’s an example illustrating this.
+Now, what if we are dealing with sequence of images? This is where we need to be careful. A typical example is video classification or action recognition. We need to extract the CNN features _for each frame_ and treat them as a sequence. Here’s an example illustrating this.
 
 **Example 2: Image Sequence Input (Video Classification):**
 
@@ -120,6 +121,7 @@ In the video classification example above, I reshaped the input tensor and appli
 Finally, if you are dealing with sequential images and generating a sequential output (e.g., video captioning), you need to combine the single-image example and the image sequence example. It becomes an extension of the sequence example, but the RNN layer will not output a single classification, but a sequence.
 
 **Example 3: Image Sequence Input, Sequence Output (Video Captioning):**
+
 ```python
 import torch
 import torch.nn as nn
@@ -164,12 +166,14 @@ dummy_captions = torch.randint(0, 1000, (32,20)) #Batch size, sequence_length
 output = model(dummy_image_sequence, dummy_captions)
 print(output.shape) # Should be [32, 10, 1000]
 ```
+
 This example, shows a common approach, feeding the image representation for each time step, and then generating a sequence of words. This architecture also serves as a general purpose encoder-decoder, where the encoder can be a CNN, followed by an RNN or a transformer, and the decoder is typically an RNN or a transformer.
 
 For deeper understanding of the underlying concepts, I would highly recommend checking out the seminal works on image captioning and video understanding such as:
-*   **"Show and Tell: A Neural Image Caption Generator"** by Vinyals et al., (2015), which is a great starting point for image-to-text tasks.
-*   **"Long-Term Recurrent Convolutional Networks for Visual Recognition and Description"** by Donahue et al., (2015). This is great for understanding the spatio-temporal fusion aspects.
-*   For a good treatment of sequence to sequence models, read through **“Sequence to Sequence Learning with Neural Networks”** by Sutskever et al., (2014).
+
+- **"Show and Tell: A Neural Image Caption Generator"** by Vinyals et al., (2015), which is a great starting point for image-to-text tasks.
+- **"Long-Term Recurrent Convolutional Networks for Visual Recognition and Description"** by Donahue et al., (2015). This is great for understanding the spatio-temporal fusion aspects.
+- For a good treatment of sequence to sequence models, read through **“Sequence to Sequence Learning with Neural Networks”** by Sutskever et al., (2014).
 
 Also, the official documentation and tutorials for Pytorch or Tensorflow, depending on your preference, offer numerous practical implementations of CNN-RNN models.
 

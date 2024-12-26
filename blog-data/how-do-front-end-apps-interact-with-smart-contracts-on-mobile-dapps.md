@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-front-end-apps-interact-with-smart-contracts-on-mobile-dapps"
 ---
 
-Alright, let's break down how front-end applications, particularly on mobile dapps, interact with smart contracts. I've spent quite a bit of time in the trenches on this, most notably back in the early days of a project involving a distributed supply chain tracker. What seemed conceptually straightforward—a mobile app displaying product provenance—turned into a deeper dive into the nuances of web3 integration. The core challenge, as I’m sure you’re aware, is bridging the gap between the user interface, usually built with frameworks like react native or flutter, and the immutable code that defines the logic of your smart contract, typically written in solidity and deployed on a blockchain network like ethereum or polygon.
+, let's break down how front-end applications, particularly on mobile dapps, interact with smart contracts. I've spent quite a bit of time in the trenches on this, most notably back in the early days of a project involving a distributed supply chain tracker. What seemed conceptually straightforward—a mobile app displaying product provenance—turned into a deeper dive into the nuances of web3 integration. The core challenge, as I’m sure you’re aware, is bridging the gap between the user interface, usually built with frameworks like react native or flutter, and the immutable code that defines the logic of your smart contract, typically written in solidity and deployed on a blockchain network like ethereum or polygon.
 
 The primary mechanism for this interaction involves using a web3 library. These libraries are essential intermediaries which abstract away the low-level complexity of interacting directly with the blockchain. Think of them as translators; they take your javascript or dart commands and turn them into the necessary requests to the blockchain network and vice-versa. Most mobile dapps these days leverage something along the lines of `web3.js` for javascript based apps or `ethers.js` which offers more comprehensive functionalities, and a similar library might exist in dart if you're working with flutter.
 
@@ -29,45 +29,47 @@ Now, in your javascript-based front-end, you'd interact with it like this:
 
 ```javascript
 // javascript code snippet
-import Web3 from 'web3';
+import Web3 from "web3";
 
-const contractAddress = '0xYourContractAddress...';
+const contractAddress = "0xYourContractAddress...";
 const contractAbi = [
   {
-    "inputs": [],
-    "name": "getGreeting",
-    "outputs": [
+    inputs: [],
+    name: "getGreeting",
+    outputs: [
       {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
-  }
+    stateMutability: "view",
+    type: "function",
+  },
 ];
 
 async function fetchGreeting() {
   if (window.ethereum) {
-      const web3 = new Web3(window.ethereum);
-      try{
-        await window.ethereum.request({ method: "eth_requestAccounts" });
-      }catch(error){
-        console.error("user denied wallet connection", error);
-        return;
-      }
+    const web3 = new Web3(window.ethereum);
+    try {
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+    } catch (error) {
+      console.error("user denied wallet connection", error);
+      return;
+    }
 
-
-      const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
-      try {
-        const greeting = await contractInstance.methods.getGreeting().call();
-        console.log("greeting:", greeting); // output: "Hello, World!"
-      } catch (error) {
-        console.error("error fetching greeting", error);
-      }
+    const contractInstance = new web3.eth.Contract(
+      contractAbi,
+      contractAddress
+    );
+    try {
+      const greeting = await contractInstance.methods.getGreeting().call();
+      console.log("greeting:", greeting); // output: "Hello, World!"
+    } catch (error) {
+      console.error("error fetching greeting", error);
+    }
   } else {
-      console.log("no wallet found");
+    console.log("no wallet found");
   }
 }
 
@@ -80,48 +82,51 @@ If you needed to modify state on the blockchain, let's say you had a function `s
 
 ```javascript
 // javascript code snippet
-import Web3 from 'web3';
+import Web3 from "web3";
 
-const contractAddress = '0xYourContractAddress...';
+const contractAddress = "0xYourContractAddress...";
 const contractAbi = [
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "_newGreeting",
-        "type": "string"
-      }
+        internalType: "string",
+        name: "_newGreeting",
+        type: "string",
+      },
     ],
-    "name": "setGreeting",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  }
+    name: "setGreeting",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
 ];
 
 async function updateGreeting(newGreeting) {
-    if (window.ethereum) {
-        const web3 = new Web3(window.ethereum);
-        try{
-          await window.ethereum.request({ method: "eth_requestAccounts" });
-        }catch(error){
-          console.error("user denied wallet connection", error);
-          return;
-        }
+  if (window.ethereum) {
+    const web3 = new Web3(window.ethereum);
+    try {
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+    } catch (error) {
+      console.error("user denied wallet connection", error);
+      return;
+    }
 
+    const contractInstance = new web3.eth.Contract(
+      contractAbi,
+      contractAddress
+    );
 
-        const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
-
-        try {
-            const tx = await contractInstance.methods.setGreeting(newGreeting).send({from: (await web3.eth.getAccounts())[0]});
-            console.log("Transaction hash:", tx.transactionHash);
-             //you would likely need a way to track the transaction, such as using web3.eth.getTransactionReceipt
-
-        } catch (error) {
-          console.error("error setting greeting", error);
-        }
+    try {
+      const tx = await contractInstance.methods
+        .setGreeting(newGreeting)
+        .send({ from: (await web3.eth.getAccounts())[0] });
+      console.log("Transaction hash:", tx.transactionHash);
+      //you would likely need a way to track the transaction, such as using web3.eth.getTransactionReceipt
+    } catch (error) {
+      console.error("error setting greeting", error);
+    }
   } else {
-      console.log("no wallet found");
+    console.log("no wallet found");
   }
 }
 
@@ -183,6 +188,7 @@ void main() async {
   print('Greeting: $greeting'); //output: Greeting: Hello World!
 }
 ```
+
 In this dart example, we're using `web3dart`. Again, we connect to an rpc endpoint, specify the contract's address and ABI, and invoke the `getGreeting` function. Note the use of `http` client, as opposed to the injected provider of a browser-based app. This connection strategy is also useful in mobile contexts where user wallets may be a different connection strategy altogether (such as direct wallet connect via their API).
 
 You’ll notice a recurring theme: you need the contract ABI and address, the correct web3 library, a provider, and an understanding of whether you're reading from the chain or modifying state. The details, obviously, vary based on your tools, but this interaction pattern remains fundamental.

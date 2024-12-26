@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ee-certificate-key-too-weak-ssl-problem"
 ---
 
-Okay so you've got an "ee certificate key too weak ssl problem" classic Been there done that got the t-shirt and probably a few server restarts under my belt Let me break this down for you in a way that I hope will make sense given my experience
+you've got an "ee certificate key too weak ssl problem" classic Been there done that got the t-shirt and probably a few server restarts under my belt Let me break this down for you in a way that I hope will make sense given my experience
 
 First off "ee certificate key too weak" is generally a browser error or a tool report indicating that the encryption key used in your SSL/TLS certificate isn't up to current standards In plain terms the key length is too short making it easier for someone with malicious intent to crack the encryption This is why browsers scream and rightfully so
 
@@ -23,6 +23,7 @@ Here's how you do it with openssl assuming you want a 4096-bit RSA key this is t
 ```bash
 openssl genrsa -out myprivate.key 4096
 ```
+
 That gives you the private key myprivate.key and from that you can make your certificate signing request or CSR now your CSR has a 4096-bit key
 
 ```bash
@@ -36,6 +37,7 @@ Now let's say you already have a key but want to know its size you can check it 
 ```bash
 openssl rsa -in myprivate.key -text -noout
 ```
+
 Look for the modulus length its usually near the beginning of the text output it should show you the number of bits
 
 Now for your certificate once you have the certificate from your provider and your private key use the following command to verify your certificate chain and key strength
@@ -55,6 +57,7 @@ Here's a quick example of how to create a self-signed root certificate which you
 ```bash
 openssl req -x509 -newkey rsa:4096 -keyout myrootca.key -out myrootca.crt -days 3650 -nodes
 ```
+
 This generates a self-signed certificate that lasts for 10 years. This is just an example. You need to specify at least some subject information for the certificate
 
 Now if you have an old certificate that has a bad key length but you still have to use it because your software does not support newer certificates it is generally bad practice but there are some valid use cases for this like embedded devices which are difficult or even impossible to update. I'll suggest you to have these devices behind a firewall and only expose the API that you need from a single IP. If you have a web interface just disable the web interface and keep it as internal only. If you have a public service exposed by a weak certificate or bad protocol for any reason at the network level like the one i just suggested you should consider doing some packet inspection in a separate machine and inspect that the traffic is what you expect it to be, because most of the exploit tools for weak certificates will target the software itself and will cause a crash which will be much worse than the data leak

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-render-custom-error-pages-with-layouts-in-rails-5-and-later"
 ---
 
-Okay, let's tackle this. I remember a particularly challenging project a few years back where we had incredibly granular error handling requirements, way beyond the default Rails setup. We needed customized error pages, with layouts, but also with conditional content and logging. It wasn't straightforward, but it underscored the importance of mastering Rails' error handling. Here's how you can approach rendering custom error pages with layouts in Rails 5 and later, avoiding the pitfalls I encountered, and focusing on practical solutions.
+, let's tackle this. I remember a particularly challenging project a few years back where we had incredibly granular error handling requirements, way beyond the default Rails setup. We needed customized error pages, with layouts, but also with conditional content and logging. It wasn't straightforward, but it underscored the importance of mastering Rails' error handling. Here's how you can approach rendering custom error pages with layouts in Rails 5 and later, avoiding the pitfalls I encountered, and focusing on practical solutions.
 
 The default Rails error handling often falls short when you require branding consistency and detailed error information. Simply displaying a raw stack trace isn't user-friendly, nor is it particularly useful from a debugging standpoint in production environments. What you need is a controlled, consistent experience that provides the necessary information while maintaining user interface coherence.
 
@@ -49,19 +49,22 @@ end
 ```
 
 Here's what's happening:
+
 1.  `rescue_from ActiveRecord::RecordNotFound, with: :render_not_found`: this line specifies we want to catch `ActiveRecord::RecordNotFound` exceptions and handle them using a method named `render_not_found`.
-2. `logger.error "Record Not Found: #{exception.message}"`: this line provides invaluable debugging by logging the specific error to your server's logs, helping you diagnose issues in real time.
+2.  `logger.error "Record Not Found: #{exception.message}"`: this line provides invaluable debugging by logging the specific error to your server's logs, helping you diagnose issues in real time.
 3.  `respond_to do |format| ... end`: this block ensures that different request formats (like html or json) can be handled with different responses. In this case:
-    *   `format.html { render template: 'errors/not_found', layout: 'error', status: :not_found }`: for html requests, we render a template located at `app/views/errors/not_found.html.erb` (or `.haml`) using the `error` layout and return a 404 `not_found` status.
-    *   `format.json { render json: { error: 'Not Found' }, status: :not_found }`: for JSON requests, a simple JSON object is returned with a `not_found` status.
+    - `format.html { render template: 'errors/not_found', layout: 'error', status: :not_found }`: for html requests, we render a template located at `app/views/errors/not_found.html.erb` (or `.haml`) using the `error` layout and return a 404 `not_found` status.
+    - `format.json { render json: { error: 'Not Found' }, status: :not_found }`: for JSON requests, a simple JSON object is returned with a `not_found` status.
 
 For the template `app/views/errors/not_found.html.erb` you would typically have the following structure:
+
 ```html+erb
 <div class="error-message">
   <h1>Oops!</h1>
   <p>The resource you were looking for could not be found.</p>
 </div>
 ```
+
 This combination provides a user-friendly message while enabling debugging.
 
 Now, let’s extend this with a more complex scenario. Suppose we need to handle generic server errors (500) and want to show more technical detail while only displaying minimal information to users in production.
@@ -92,19 +95,24 @@ class ApplicationController < ActionController::Base
   end
 end
 ```
+
 In this enhanced implementation:
-1.  `rescue_from StandardError, with: :render_server_error`:  we catch all unhandled exceptions which are of the `StandardError` class or descend from it.
-2.   The `logger.error` line now includes the full stack trace.
+
+1.  `rescue_from StandardError, with: :render_server_error`: we catch all unhandled exceptions which are of the `StandardError` class or descend from it.
+2.  The `logger.error` line now includes the full stack trace.
 3.  We conditionally render either `errors/server_error_development` or `errors/server_error_production` depending on the environment. This enables displaying detailed error messages and backtraces in development while providing a simplified version in production, critical for security.
 
 Now you have corresponding views: `app/views/errors/server_error_production.html.erb`:
+
 ```html+erb
 <div class="error-message">
   <h1>Oops! Something Went Wrong</h1>
   <p>Our team has been notified. Please try again later.</p>
 </div>
 ```
+
 And for `app/views/errors/server_error_development.html.erb`:
+
 ```html+erb
 <div class="error-message">
   <h1>Oops! Something Went Wrong</h1>
@@ -117,4 +125,4 @@ This gives you a clear distinction between user-facing information and developme
 
 In my experience, handling errors this way makes for a more robust application. It separates concerns nicely and avoids presenting raw, unformatted error pages to users. It also provides far more actionable data in your logs, making debugging far simpler. Remember to meticulously log errors, as they are the most critical pieces of data during incidents.
 
-For a deeper understanding, I strongly recommend referring to *Effective Ruby: 48 Specific Ways to Write Better Ruby*, by Peter J. Jones. It’s a fantastic resource that touches on many aspects of Rails development, including effective error handling. Another useful resource is *Crafting Rails Applications*, by José Valim, which explores more intricate patterns for Rails applications. Finally, while not specific to errors, the official Rails guides at guides.rubyonrails.org is an invaluable resource, particularly the sections concerning routing, controllers, and exception handling. These resources will give you a solid foundation for implementing robust error handling in your Rails applications. This approach, while requiring some initial configuration, pays dividends in the long run.
+For a deeper understanding, I strongly recommend referring to _Effective Ruby: 48 Specific Ways to Write Better Ruby_, by Peter J. Jones. It’s a fantastic resource that touches on many aspects of Rails development, including effective error handling. Another useful resource is _Crafting Rails Applications_, by José Valim, which explores more intricate patterns for Rails applications. Finally, while not specific to errors, the official Rails guides at guides.rubyonrails.org is an invaluable resource, particularly the sections concerning routing, controllers, and exception handling. These resources will give you a solid foundation for implementing robust error handling in your Rails applications. This approach, while requiring some initial configuration, pays dividends in the long run.

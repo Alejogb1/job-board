@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "what-are-the-problems-with-using-a-multidimensional-array-within-a-stdpair"
 ---
 
-Alright, let’s unpack this. I've actually run into this specific scenario more often than I’d care to recall, mostly during early days of optimization efforts on some simulation engines back in '08 – '12. The temptation to use a `std::pair` to couple something, say a position and a matrix transformation, can be strong, especially when rapid prototyping is the name of the game. However, when you start shoving multidimensional arrays inside, you're stepping onto thin ice, both conceptually and practically.
+, let’s unpack this. I've actually run into this specific scenario more often than I’d care to recall, mostly during early days of optimization efforts on some simulation engines back in '08 – '12. The temptation to use a `std::pair` to couple something, say a position and a matrix transformation, can be strong, especially when rapid prototyping is the name of the game. However, when you start shoving multidimensional arrays inside, you're stepping onto thin ice, both conceptually and practically.
 
-The core issue isn't that it's syntactically *impossible* to have a `std::pair<Type1, Type2>` where one or both types are multidimensional arrays; it's more that it's a generally bad idea for a variety of reasons, ranging from memory management complexities to maintainability nightmares. Let’s break that down.
+The core issue isn't that it's syntactically _impossible_ to have a `std::pair<Type1, Type2>` where one or both types are multidimensional arrays; it's more that it's a generally bad idea for a variety of reasons, ranging from memory management complexities to maintainability nightmares. Let’s break that down.
 
-First, **memory allocation and deallocation become incredibly brittle.** When you declare a multi-dimensional array directly, as in `int matrix[3][3]`, the memory is usually managed statically on the stack or within a containing object’s memory block. But, when this array is part of a `std::pair` (especially if the array’s size isn't known at compile time and you need a dynamically allocated array), you start dealing with raw pointers and manual memory management. Now, `std::pair` is just a plain old data structure; it doesn't implicitly handle allocation or deallocation for anything more complex than built-in types or trivial objects. You end up having to manage this memory *explicitly*, which introduces risks like memory leaks and dangling pointers.
+First, **memory allocation and deallocation become incredibly brittle.** When you declare a multi-dimensional array directly, as in `int matrix[3][3]`, the memory is usually managed statically on the stack or within a containing object’s memory block. But, when this array is part of a `std::pair` (especially if the array’s size isn't known at compile time and you need a dynamically allocated array), you start dealing with raw pointers and manual memory management. Now, `std::pair` is just a plain old data structure; it doesn't implicitly handle allocation or deallocation for anything more complex than built-in types or trivial objects. You end up having to manage this memory _explicitly_, which introduces risks like memory leaks and dangling pointers.
 
 For example, consider a scenario where you’re trying to pair a position (let's keep it 2d for simplicity) with a transform matrix.
 
@@ -72,7 +72,7 @@ int main() {
     std::cout << "Original: " << transformedData.second[0][0] << std::endl;
 
 
-  //Problem: we need to cleanup the transformMatrix memory manually, 
+  //Problem: we need to cleanup the transformMatrix memory manually,
   //but trying to do so for the copy as well is a double free error.
     for(int i = 0; i < 2; i++)
     {
@@ -84,6 +84,7 @@ int main() {
   return 0;
 }
 ```
+
 Here, modifying `transformedDataCopy.second` changes the data accessed through `transformedData.second`, due to the shallow copy. It is not intuitive and leads to difficult debugging, and if we were to try and delete the data associated to the second pointer of both pair objects, we’d encounter a double free error since they both point to the same memory.
 
 Thirdly, there's a **readability and maintenance** problem. When you have a complex nested structure involving raw arrays managed manually inside a `std::pair`, the code becomes harder to understand and debug. Encapsulation is broken; it’s unclear who is responsible for memory allocation. This makes code reuse difficult. It also obscures intent as you would expect the pair to manage itself. When you see a `std::pair`, you shouldn’t have to be immediately concerned about memory management. This decreases code maintainability since it forces readers to understand the inner workings of the pair and not assume it to be a simple tuple.
@@ -108,7 +109,7 @@ int main() {
       }
        sequenceOfMatrices.push_back({i, transformMatrix});
     }
-  
+
     //Lots of manual memory management to handle
   for(const auto& matrixData: sequenceOfMatrices)
   {
@@ -130,7 +131,7 @@ As you can see, not only is the initial allocation error prone, but now there's 
 
 **Better Alternatives**
 
-The solution isn't to avoid using `std::pair` entirely; it's to use it *correctly*. Instead of trying to stuff raw arrays into it, consider using classes, or standard containers like `std::vector` or `std::array`, and encapsulate the raw arrays there. These tools offer memory management capabilities and copy semantics that prevent many of the aforementioned problems.
+The solution isn't to avoid using `std::pair` entirely; it's to use it _correctly_. Instead of trying to stuff raw arrays into it, consider using classes, or standard containers like `std::vector` or `std::array`, and encapsulate the raw arrays there. These tools offer memory management capabilities and copy semantics that prevent many of the aforementioned problems.
 
 For instance, you could create a dedicated `Matrix` class or use a suitable matrix library that handles all the memory management and arithmetic operations, and then create a `std::pair<int[2], Matrix>`. The `Matrix` class will ensure proper deep copying and memory deallocation. Similarly, if the dimensionality is dynamic, you can encapsulate a dynamically sized matrix in a class and use that class.
 

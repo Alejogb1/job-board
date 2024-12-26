@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-save-a-trained-model-to-a-frozen-file-pb-with-tensorflow-140"
 ---
 
-alright, so you're trying to save a tensorflow model as a frozen graph in a .pb file, and you're on tensorflow 1.4.0. i’ve been there. it's not exactly straightforward, especially with the older versions. i remember banging my head against the wall for a good couple of days trying to get this working with a custom network back in, oh, probably 2018? i was working on a project that involved image segmentation, and i needed to deploy the model on an embedded device which didn't exactly play nice with the dynamic graph nature of tensorflow at the time.
+, so you're trying to save a tensorflow model as a frozen graph in a .pb file, and you're on tensorflow 1.4.0. i’ve been there. it's not exactly straightforward, especially with the older versions. i remember banging my head against the wall for a good couple of days trying to get this working with a custom network back in, oh, probably 2018? i was working on a project that involved image segmentation, and i needed to deploy the model on an embedded device which didn't exactly play nice with the dynamic graph nature of tensorflow at the time.
 
 the key thing to understand is that a frozen graph is a single file that contains your model’s architecture (the computational graph), and the values of all the trained weights. this is different from saving checkpoints. checkpoints only store the weights and not the actual graph structure and you need to have a graph already defined somewhere to restore them, usually in a training script. a frozen graph, on the other hand, is self-contained. this makes it very portable and easy to deploy.
 
@@ -46,7 +46,7 @@ with tf.Session(graph=graph) as sess:
     saver.save(sess, "path/to/your/model.ckpt") # save checkpoint files
 ```
 
-okay, this is your standard model training process and now you have your model weights saved as checkpoints in the `path/to/your/model.ckpt` location. the goal now is to transform all this information into a single frozen graph .pb file that you can deploy.
+, this is your standard model training process and now you have your model weights saved as checkpoints in the `path/to/your/model.ckpt` location. the goal now is to transform all this information into a single frozen graph .pb file that you can deploy.
 
 here is how you would create the frozen graph for your model, it is basically a function that accepts your model, the path where your checkpoint files are, the name of the final operation (usually the output of the model) and path to save the frozen graph.
 
@@ -92,7 +92,7 @@ output_node = 'output/BiasAdd'
 freeze_graph('path/to/your/model.ckpt', output_node,'path/to/your/frozen_model.pb')
 ```
 
-notice that `output/BiasAdd` was the output node for the example neural network in the previous code snippet. you will need to adjust the output node name depending on your model output name. usually if you did not specify an output name or output operation it defaults to `<your layer name>/BiasAdd` or `/Relu` or `/Sigmoid` and so on. this will depend on the activation function of your final layer, in the example it's a linear layer so it will end with `BiasAdd`.  use `tensorboard` to check for the right operation name, it is usually the output of the last layer.
+notice that `output/BiasAdd` was the output node for the example neural network in the previous code snippet. you will need to adjust the output node name depending on your model output name. usually if you did not specify an output name or output operation it defaults to `<your layer name>/BiasAdd` or `/Relu` or `/Sigmoid` and so on. this will depend on the activation function of your final layer, in the example it's a linear layer so it will end with `BiasAdd`. use `tensorboard` to check for the right operation name, it is usually the output of the last layer.
 
 the `freeze_graph` function basically loads the meta graph which contains your graph definition, then it loads the weights from your checkpoint file, and finally it uses the utility `graph_util.convert_variables_to_constants` which creates a frozen graph with variables as constant and removes some unnecesary operations that are not needed to make inferences. finally, it saves it to a pb file.
 
@@ -108,7 +108,7 @@ def load_graph(frozen_graph_filename):
     with tf.gfile.GFile(frozen_graph_filename, "rb") as f:
         graph_def = tf.GraphDef()
         graph_def.ParseFromString(f.read())
-    
+
     # Import graph and set as default
     with tf.Graph().as_default() as graph:
       tf.import_graph_def(graph_def, name='') # this name argument can be any name

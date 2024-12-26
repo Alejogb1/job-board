@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-a-logisticregression-classifier"
 ---
 
-alright, so you want to get your hands dirty with logistic regression, right? been there, done that, got the t-shirt (and probably a few debugging scars to prove it). i've spent a good chunk of my career knee-deep in machine learning models, and logistic regression is one of those workhorses you'll find yourself coming back to time and again. don’t be fooled by its simplicity; it's powerful and surprisingly versatile.
+, so you want to get your hands dirty with logistic regression, right? been there, done that, got the t-shirt (and probably a few debugging scars to prove it). i've spent a good chunk of my career knee-deep in machine learning models, and logistic regression is one of those workhorses you'll find yourself coming back to time and again. don’t be fooled by its simplicity; it's powerful and surprisingly versatile.
 
 i remember way back when i was working on a project trying to predict customer churn for a subscription service. i thought i'd jump straight into the deep learning pool, because that's what all the cool kids were doing. i built this monstrous neural network, threw in all the customer data i could find. results were... less than stellar. turned out, i was massively overfitting, the whole thing was a mess, and the thing was as slow as a snail on a rainy day. i was pulling my hair out until an old-timer in the office, this graybeard who’d been coding since before the internet was a thing, suggested i try a simple logistic regression. i scoffed, i mean, how could that be the solution? boy, was i wrong. it was cleaner, faster, and surprisingly accurate after all that mess of my first neural net attempt. i learned my lesson that day: always start simple.
 
@@ -117,6 +117,7 @@ print("first 10 predicted:",predictions[:10])
 accuracy = model.score(x_test, y_test)
 print(f"accuracy: {accuracy}")
 ```
+
 i’ve set `c` to 0.1 here, which imposes more regularization than the default. you’ll need to experiment with this value and maybe a grid search to find what works best for your particular data.
 
 now, let's talk about resources for further study, because code snippets are just the tip of the iceberg. for a solid theoretical foundation, i'd highly recommend grabbing a copy of "the elements of statistical learning" by hastie, tibshirani, and friedman. it’s a classic that covers all the math underlying logistic regression, plus a bunch of other useful stuff. its not a light read but it is very comprehensive. it's a fantastic book which i keep coming back to from time to time. another great book is "pattern recognition and machine learning" by christopher bishop. it is a bit more accessible than the hastie book but it still goes deep into all the technical details. its good companion to the other book. also a very popular resource is "hands-on machine learning with scikit-learn, keras & tensorflow" by aurelien geron. this is a more practical approach to learning machine learning concepts, which is good for getting the hands-on experience.

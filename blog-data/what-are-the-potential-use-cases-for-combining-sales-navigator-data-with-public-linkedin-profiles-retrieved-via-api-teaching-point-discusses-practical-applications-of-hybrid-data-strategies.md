@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-are-the-potential-use-cases-for-combining-sales-navigator-data-with-public-linkedin-profiles-retrieved-via-api-teaching-point-discusses-practical-applications-of-hybrid-data-strategies"
 ---
 
-Alright so you're asking about mixing Sales Nav data with public LinkedIn profile info from the API yeah okay I get that sounds useful lets break it down think real world not just theoretical stuff
+so you're asking about mixing Sales Nav data with public LinkedIn profile info from the API yeah I get that sounds useful lets break it down think real world not just theoretical stuff
 
 First big thing is obviously enhanced lead qualification Sales Nav gives you all those juicy filters like job title industry seniority company size and all that good stuff but the public API can add details you sometimes miss like the actual skills listed the projects people mention or even the groups they’re actively participating in
 
@@ -45,28 +45,27 @@ You can use this for targeted recruiting too Sales Nav will give you potential c
 // Example using JavaScript with a hypothetical API and promise-based operations
 
 async function enrichCandidates(salesNavCandidates, apiFetcher) {
-    const enriched = [];
-    for (const candidate of salesNavCandidates) {
-       if (candidate && candidate.linkedinUrl) {
-        try {
-           const publicProfileData = await apiFetcher(candidate.linkedinUrl);
-           if (publicProfileData) {
-              candidate.skills = publicProfileData.skills || [];
-               candidate.projects = publicProfileData.projects || [];
-                enriched.push(candidate);
-           }
-        } catch (error) {
-              console.error("error fetching public profile:", error);
-         }
+  const enriched = [];
+  for (const candidate of salesNavCandidates) {
+    if (candidate && candidate.linkedinUrl) {
+      try {
+        const publicProfileData = await apiFetcher(candidate.linkedinUrl);
+        if (publicProfileData) {
+          candidate.skills = publicProfileData.skills || [];
+          candidate.projects = publicProfileData.projects || [];
+          enriched.push(candidate);
+        }
+      } catch (error) {
+        console.error("error fetching public profile:", error);
       }
-   }
+    }
+  }
   return enriched;
 }
 
 // async function apiFetcher(linkedinUrl){ /* your api fetch operation */ return Promise.resolve({skills:["javascript", "react"], projects:["github.com/reactproject"]})}
 // const salesNavCandidates = [{linkedinUrl:"url1"}, {linkedinUrl:"url2"}]
 // enrichCandidates(salesNavCandidates, apiFetcher).then(enrichedData => console.log(enrichedData))
-
 ```
 
 This JavaScript snippet shows a promise based operation to do the same thing. The advantage is that it's non-blocking while it fetches data from the public API
@@ -93,25 +92,27 @@ For resources on this I would definitely dig into papers or books on data integr
     "linkedin_url": "linkedin.com/in/johndoe",
     "enriched_data": {
       "skills": ["javascript", "node.js", "react"],
-      "projects": ["github.com/johndoe/project1", "github.com/johndoe/project2"],
+      "projects": [
+        "github.com/johndoe/project1",
+        "github.com/johndoe/project2"
+      ],
       "groups": ["node js developers", "react enthusiasts"],
       "additional": { "has_contributed_to_opensource": true }
     }
   },
   {
-     "sales_nav_id": "salesnav_lead_456",
-      "name":"Jane Smith",
-       "job_title": "Marketing Manager",
-      "company": "Retail Inc",
-      "linkedin_url": "linkedin.com/in/janesmith",
-      "enriched_data": {
-         "skills":["digital marketing", "seo", "social media"],
-        "projects":["campaign_report_2023", "social_media_report_2023"],
-          "groups":["digital marketers","retail marketing"],
-          "additional":{"last_activity": "2023-11-23"}
-         }
-   }
-
+    "sales_nav_id": "salesnav_lead_456",
+    "name": "Jane Smith",
+    "job_title": "Marketing Manager",
+    "company": "Retail Inc",
+    "linkedin_url": "linkedin.com/in/janesmith",
+    "enriched_data": {
+      "skills": ["digital marketing", "seo", "social media"],
+      "projects": ["campaign_report_2023", "social_media_report_2023"],
+      "groups": ["digital marketers", "retail marketing"],
+      "additional": { "last_activity": "2023-11-23" }
+    }
+  }
 ]
 ```
 

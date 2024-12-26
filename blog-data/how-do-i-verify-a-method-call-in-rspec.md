@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-verify-a-method-call-in-rspec"
 ---
 
-Okay, let's talk about method verification in RSpec. I’ve spent a fair amount of time debugging brittle tests over the years, and it's definitely a topic that benefits from a solid understanding. Often, simply asserting the *outcome* of a method isn't enough; you need to ensure the method itself was invoked correctly. That’s where RSpec's mocking and stubbing capabilities come into play, particularly the `expect(...).to receive(...)` syntax. This is not just about catching errors; it's about writing tests that accurately reflect the intent and interactions of your code.
+, let's talk about method verification in RSpec. I’ve spent a fair amount of time debugging brittle tests over the years, and it's definitely a topic that benefits from a solid understanding. Often, simply asserting the _outcome_ of a method isn't enough; you need to ensure the method itself was invoked correctly. That’s where RSpec's mocking and stubbing capabilities come into play, particularly the `expect(...).to receive(...)` syntax. This is not just about catching errors; it's about writing tests that accurately reflect the intent and interactions of your code.
 
 In essence, verifying a method call in RSpec means asserting that a specific method on a specific object was called a certain number of times, with specific arguments, during the execution of the code you're testing. This is extremely important when dealing with interactions between objects, particularly in decoupled systems where the outcome might be dependent on these interactions. You don't want to rely solely on the eventual state of the system if you also need to make sure the intermediate steps occur as expected.
 
@@ -61,6 +61,7 @@ RSpec.describe CheckoutService do
   end
 end
 ```
+
 Here, we use `instance_double` to create a mock of `DiscountCalculator`. This isolates the `CheckoutService` from the real implementation of the discount calculation. We then use `allow(...).to receive(...).and_return(...)` to stub the method’s behavior and verify it was called. `expect(...).to have_received(...)` is the crucial verification step. It asserts that the `apply_discount` method was called on the mock object.
 
 Now, let's look at another scenario. Sometimes you need to be more specific about the arguments passed to the method.
@@ -150,10 +151,10 @@ Here, we use `exactly(3).times` to assert that the `log` method is called exactl
 
 Now, regarding further learning resources, I’d recommend focusing on a couple of key books and articles:
 
-*   **"Growing Object-Oriented Guided by Tests" by Steve Freeman and Nat Pryce:** This book provides a comprehensive understanding of test-driven development and explains in detail how mocking and stubbing are utilized to achieve loosely coupled, testable code. The section on interaction testing is particularly valuable.
+- **"Growing Object-Oriented Guided by Tests" by Steve Freeman and Nat Pryce:** This book provides a comprehensive understanding of test-driven development and explains in detail how mocking and stubbing are utilized to achieve loosely coupled, testable code. The section on interaction testing is particularly valuable.
 
-*   **Martin Fowler’s articles on Mocks, Stubs, and Test Doubles:** Martin Fowler’s website is an excellent resource on various testing patterns. Specifically, his articles on mocks, stubs, and test doubles provide clarity on the different types of test substitutes and when to use them. This will give you a sound theoretical basis.
+- **Martin Fowler’s articles on Mocks, Stubs, and Test Doubles:** Martin Fowler’s website is an excellent resource on various testing patterns. Specifically, his articles on mocks, stubs, and test doubles provide clarity on the different types of test substitutes and when to use them. This will give you a sound theoretical basis.
 
-*   **The RSpec documentation itself:** The official RSpec documentation offers detailed explanations of all features, including mocking and stubbing. Spend some time browsing and learning about the different features and options, which will broaden the possibilities for verification.
+- **The RSpec documentation itself:** The official RSpec documentation offers detailed explanations of all features, including mocking and stubbing. Spend some time browsing and learning about the different features and options, which will broaden the possibilities for verification.
 
 Mastering method verification in RSpec isn’t just about writing passing tests; it's about crafting reliable, maintainable, and robust code. It allows you to decouple your system, test units in isolation, and ensure that the different parts of your application work together as intended. It takes practice, so experiment with different mocking and stubbing scenarios, and you'll quickly find yourself writing more effective tests. Remember, focusing on clear intent and accurate interactions is key to successful testing strategies.

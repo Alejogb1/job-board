@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-azure-container-instance-changing-ip-address"
 ---
 
-Okay, let’s unpack this. It’s a situation I've encountered multiple times across various projects, particularly in the early days of adopting Azure Container Instances (ACI) for microservices backends. The seemingly random IP address changes can indeed throw a wrench in things, especially when you’re relying on static IP dependencies or have tightly coupled networking configurations. So, the core issue here isn't a bug in ACI itself but rather a fundamental aspect of how it’s designed to operate, coupled with configuration nuances that are easy to overlook.
+, let’s unpack this. It’s a situation I've encountered multiple times across various projects, particularly in the early days of adopting Azure Container Instances (ACI) for microservices backends. The seemingly random IP address changes can indeed throw a wrench in things, especially when you’re relying on static IP dependencies or have tightly coupled networking configurations. So, the core issue here isn't a bug in ACI itself but rather a fundamental aspect of how it’s designed to operate, coupled with configuration nuances that are easy to overlook.
 
 Essentially, an ACI container, by default, doesn’t have a persistent IP address. Each time an ACI instance is deployed or restarted (even if it's ostensibly the same container definition), it gets assigned a new IP address from the Azure network pool. This is because ACI is primarily meant to be an ephemeral, serverless compute service, designed for short-lived jobs or isolated containerized workloads that don't inherently require long-term, fixed network addresses. Think of it as a container that spins up, does its work, and then disappears. This paradigm differs significantly from, say, virtual machines where you explicitly control the underlying infrastructure and network interfaces.
 
@@ -12,7 +12,7 @@ The "why" stems from efficiency and scalability. Azure can dynamically allocate 
 
 Let’s get into some practical solutions based on my experiences. When we initially migrated our microservices to ACI, we were baffled by this behavior until we understood the underlying architecture. Our main challenge revolved around connecting to our legacy database, which had strict IP address-based access control. We quickly realized we needed to explicitly manage our ACI networking.
 
-The first strategy, which is fairly straightforward for simple cases, is to use an Azure Virtual Network (VNet) and private IP allocation. This involves creating a VNet, a subnet, and then deploying your ACI instance within this private network space. When using a VNet, you can control the IP address range, and you will get a private IP address assigned within that range, which *will remain the same* during the ACI lifecycle, as long as the container is associated with the same subnet. This requires some initial configuration, but the stability is worth it in the majority of scenarios, especially for applications needing consistency in their internal network addresses.
+The first strategy, which is fairly straightforward for simple cases, is to use an Azure Virtual Network (VNet) and private IP allocation. This involves creating a VNet, a subnet, and then deploying your ACI instance within this private network space. When using a VNet, you can control the IP address range, and you will get a private IP address assigned within that range, which _will remain the same_ during the ACI lifecycle, as long as the container is associated with the same subnet. This requires some initial configuration, but the stability is worth it in the majority of scenarios, especially for applications needing consistency in their internal network addresses.
 
 Here’s a snippet showing the basics of deploying an ACI instance to a VNet using the Azure CLI:
 
@@ -29,52 +29,51 @@ az container create \
 
 In this command, `--vnet myvnet` and `--subnet mySubnet` specify the virtual network and subnet where the ACI instance will reside. This ensures that the ACI container receives an IP address from the designated subnet's private range.
 
-However, often internal private addresses are not sufficient. You may need a stable *public* IP address, for instance to expose a public API. To achieve this, we turned to utilizing an Azure Load Balancer or an Application Gateway in conjunction with our VNet. The basic idea is that the Load Balancer has a static public IP, and it routes traffic to your ACI instance, which resides on the internal VNet subnet. The ACI container's actual private IP may change within the network, but the externally exposed static IP through the load balancer remains consistent. This approach adds some complexity and cost, but the stability it provides is often crucial for production workloads.
+However, often internal private addresses are not sufficient. You may need a stable _public_ IP address, for instance to expose a public API. To achieve this, we turned to utilizing an Azure Load Balancer or an Application Gateway in conjunction with our VNet. The basic idea is that the Load Balancer has a static public IP, and it routes traffic to your ACI instance, which resides on the internal VNet subnet. The ACI container's actual private IP may change within the network, but the externally exposed static IP through the load balancer remains consistent. This approach adds some complexity and cost, but the stability it provides is often crucial for production workloads.
 
 Here’s the basic principle applied in an ARM template fragment:
 
 ```json
 {
-    "type": "Microsoft.Network/loadBalancers",
-    "apiVersion": "2023-09-01",
-    "name": "myLoadBalancer",
-    "location": "[resourceGroup().location]",
-    "properties": {
-        "frontendIPConfigurations": [
-            {
-                "name": "myFrontendIpConfig",
-                "properties": {
-                    "publicIPAddress": {
-                        "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'myStaticPublicIP')]"
-                    }
-                }
-            }
-        ],
-        "backendAddressPools": [
-            {
-                "name": "myBackendAddressPool"
-            }
-        ],
-        "loadBalancingRules": [
-            {
-                "name": "myLoadBalancingRule",
-                "properties": {
-                    "frontendIPConfiguration": {
-                        "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/myLoadBalancer/frontendIPConfigurations/myFrontendIpConfig')]"
-                    },
-                    "frontendPort": 80,
-                    "backendPort": 80,
-                    "protocol": "Tcp",
-                    "enableFloatingIP": false,
-                    "idleTimeoutInMinutes": 4,
-                    "backendAddressPool": {
-                        "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/myLoadBalancer/backendAddressPools/myBackendAddressPool')]"
-                    }
-
-                }
-            }
-        ]
-    }
+  "type": "Microsoft.Network/loadBalancers",
+  "apiVersion": "2023-09-01",
+  "name": "myLoadBalancer",
+  "location": "[resourceGroup().location]",
+  "properties": {
+    "frontendIPConfigurations": [
+      {
+        "name": "myFrontendIpConfig",
+        "properties": {
+          "publicIPAddress": {
+            "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'myStaticPublicIP')]"
+          }
+        }
+      }
+    ],
+    "backendAddressPools": [
+      {
+        "name": "myBackendAddressPool"
+      }
+    ],
+    "loadBalancingRules": [
+      {
+        "name": "myLoadBalancingRule",
+        "properties": {
+          "frontendIPConfiguration": {
+            "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/myLoadBalancer/frontendIPConfigurations/myFrontendIpConfig')]"
+          },
+          "frontendPort": 80,
+          "backendPort": 80,
+          "protocol": "Tcp",
+          "enableFloatingIP": false,
+          "idleTimeoutInMinutes": 4,
+          "backendAddressPool": {
+            "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/myLoadBalancer/backendAddressPools/myBackendAddressPool')]"
+          }
+        }
+      }
+    ]
+  }
 }
 ```
 
@@ -103,4 +102,4 @@ This command creates a route table and a default route that points all traffic (
 
 In summary, the changing IP of your ACI isn't a flaw but an architectural choice. Addressing this requires a shift from the default ephemeral nature of ACI to a more explicit network configuration through VNets, Load Balancers, and/or User-Defined Routes, tailored to the specific demands of your deployment. Understanding these alternatives and adopting them early on in your ACI strategy can save you quite a headache later.
 
-For further reading, I'd recommend diving into the official Azure documentation on ACI networking, particularly the section on virtual networks and load balancing. Also, *Microsoft Azure Networking Cookbook* by Lee Kuo and *Programming Microsoft Azure* by David Pallmann offer in-depth explanations of VNet and Azure networking which prove beneficial to fully understanding the principles here. These resources, along with hands-on experimentation with the Azure CLI, will give you the practical knowledge needed to handle this scenario efficiently and predictably.
+For further reading, I'd recommend diving into the official Azure documentation on ACI networking, particularly the section on virtual networks and load balancing. Also, _Microsoft Azure Networking Cookbook_ by Lee Kuo and _Programming Microsoft Azure_ by David Pallmann offer in-depth explanations of VNet and Azure networking which prove beneficial to fully understanding the principles here. These resources, along with hands-on experimentation with the Azure CLI, will give you the practical knowledge needed to handle this scenario efficiently and predictably.

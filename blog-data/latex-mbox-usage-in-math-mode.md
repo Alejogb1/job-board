@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "latex-mbox-usage-in-math-mode"
 ---
 
-Okay so you’re banging your head against the wall with `\mbox` in LaTeX math mode right I've been there man believe me it's like trying to fit a square peg in a round hole I remember when I first started messing with LaTeX typesetting my math was a complete trainwreck especially when I wanted to include text inside equations I thought `\text` would always do the trick but nope that's when I discovered the wild world of `\mbox` and other weird solutions that people use
+you’re banging your head against the wall with `\mbox` in LaTeX math mode right I've been there man believe me it's like trying to fit a square peg in a round hole I remember when I first started messing with LaTeX typesetting my math was a complete trainwreck especially when I wanted to include text inside equations I thought `\text` would always do the trick but nope that's when I discovered the wild world of `\mbox` and other weird solutions that people use
 
-Okay let's break it down what exactly is the problem here well `\mbox` is a box it creates a horizontal box and it does not care if its inside of a math environment It treats the content inside as plain text and it keeps the box that it is in the same size and the text itself the exact dimensions as if it was in normal paragraph text Now the tricky thing is when you're using it inside math mode it can sometimes look wonky the spacing is off and sometimes the size is inconsistent and it doesn't always play nice with other math elements like variables and fractions and so on
+let's break it down what exactly is the problem here well `\mbox` is a box it creates a horizontal box and it does not care if its inside of a math environment It treats the content inside as plain text and it keeps the box that it is in the same size and the text itself the exact dimensions as if it was in normal paragraph text Now the tricky thing is when you're using it inside math mode it can sometimes look wonky the spacing is off and sometimes the size is inconsistent and it doesn't always play nice with other math elements like variables and fractions and so on
 
 It's like you're trying to write a sentence and then you randomly throw some words in a completely different language and expect everything to flow seamlessly it doesn't work that way right
 
@@ -43,6 +43,7 @@ But now if we switch to `\text` from `amsmath`
 
 \end{document}
 ```
+
 It is slightly better its still there but at least it looks like is connected to the equation The spacing is definitely better and the text is handled correctly
 
 But lets say that what you actually wanted was to write it as a formal equation with the definition of each variable
@@ -52,7 +53,7 @@ But lets say that what you actually wanted was to write it as a formal equation 
 \usepackage{amsmath}
 \begin{document}
 \[
-    v = \frac{d}{t} 
+    v = \frac{d}{t}
     \text{ where } v \text{ is velocity,}  d \text{ is distance, and } t \text{ is time}
 \]
 \end{document}

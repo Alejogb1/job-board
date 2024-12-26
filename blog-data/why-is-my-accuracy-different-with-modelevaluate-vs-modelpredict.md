@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-is-my-accuracy-different-with-modelevaluate-vs-modelpredict"
 ---
 
-Alright, let’s tackle this. The discrepancy you’re seeing between `model.evaluate` and `model.predict` accuracy is a common source of confusion, and frankly, I've banged my head against the wall on this one a few times myself back in my early days building predictive models for, let's say, high-frequency trading algorithms – a domain where even minor inaccuracies could be financially disastrous. The difference isn't arbitrary; it stems from how these two functions operate and the data they use under the hood.
+, let’s tackle this. The discrepancy you’re seeing between `model.evaluate` and `model.predict` accuracy is a common source of confusion, and frankly, I've banged my head against the wall on this one a few times myself back in my early days building predictive models for, let's say, high-frequency trading algorithms – a domain where even minor inaccuracies could be financially disastrous. The difference isn't arbitrary; it stems from how these two functions operate and the data they use under the hood.
 
-First, it's critical to understand that `model.evaluate` provides an *aggregate* measure of performance over a given dataset, usually the validation or test set. It computes loss and metrics (like accuracy) across all the provided data at once and returns *scalar* values that represent averages. This process often includes a batch-wise forward pass through the entire set, calculating losses on each batch, then averaging the results. In essence, it's designed to offer an overall view of your model's performance.
+First, it's critical to understand that `model.evaluate` provides an _aggregate_ measure of performance over a given dataset, usually the validation or test set. It computes loss and metrics (like accuracy) across all the provided data at once and returns _scalar_ values that represent averages. This process often includes a batch-wise forward pass through the entire set, calculating losses on each batch, then averaging the results. In essence, it's designed to offer an overall view of your model's performance.
 
 On the other hand, `model.predict` generates predictions for each individual sample you pass to it. It doesn't inherently calculate any loss or performance metrics. It outputs the predictions, whether these are class probabilities or regression outputs. When you then calculate metrics, you're doing it manually on these predictions using tools like `sklearn.metrics` or similar. The critical distinction lies in the fact that the 'accuracy' you derive post-`predict` is often based on a different calculation methodology or a subset of data and doesn’t include intermediate batch averaging in the loss calculation directly within the Keras API.
 
@@ -136,6 +136,7 @@ accuracy_predict_scaled = accuracy_score(y_test, y_pred_scaled)
 print(f"Accuracy from manual prediction (scaled data): {accuracy_predict_scaled}")
 
 ```
+
 In the third example, you'll see that the raw data gives different accuracy to the one obtained from evaluating the scaled data. When `model.evaluate` is used, the pre-processed test data is used. However, if `model.predict` is called on the raw, unscaled data (which might happen if someone is not careful), this causes a discrepancy. Always ensure data passed to `.evaluate` and `.predict` has gone through the same preprocessing pipeline as the training data.
 
 To go deeper, I highly recommend reviewing the source code for Keras’ `model.evaluate` and `model.predict` methods directly. Beyond that, spending some time with “Deep Learning” by Ian Goodfellow, Yoshua Bengio, and Aaron Courville is invaluable. For a more practical perspective focused on model evaluation, “Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow” by Aurélien Géron is a fantastic resource.

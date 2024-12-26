@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "valueerror-endog-must-be-in-the-unit-interval"
 ---
 
-Okay so you've got a `ValueError` that says `endog must be in the unit interval` right Been there done that more times than I care to admit Man that error message is like a rite of passage in certain types of stats modeling especially when dealing with proportions or probabilities and yeah it's frustrating I get it
+you've got a `ValueError` that says `endog must be in the unit interval` right Been there done that more times than I care to admit Man that error message is like a rite of passage in certain types of stats modeling especially when dealing with proportions or probabilities and yeah it's frustrating I get it
 
 First off let's break this down endog thats your dependent variable in stats speak you know the thing you're trying to predict or explain And unit interval means it needs to be between 0 and 1 inclusive In other words a value between 0 and 1 basically a probability or a proportion It is important to clarify what kind of models commonly use this sort of variable
 
@@ -46,9 +46,11 @@ try:
 except ValueError as e:
     print("Error caught when input data is not in the correct unit interval range\n", e)
 ```
+
 What I did here was basically showing you a common pitfall when modeling probabilities In this case `endog_incorrect` would cause the mentioned `ValueError` because it is not between zero and one as expected The correct approach is to calculate the rate first and then feed it to the model which is what I did with the `endog_correct` variable.
 
 The solution is simple just make sure your data is actually a proportion This might involve some careful data manipulation before it even reaches the modeling phase So lets make another example. Suppose you already have proportions but still get the error This usually happens when there are rounding or tiny calculation errors
+
 ```python
 import numpy as np
 import statsmodels.api as sm
@@ -81,6 +83,7 @@ model_edge_case_fixed = sm.GLM(proportions_fixed, exog, family=sm.families.Binom
 result_edge_case_fixed = model_edge_case_fixed.fit()
 print("Fixed edge case model success\n", result_edge_case_fixed.summary())
 ```
+
 So in this second case I introduced some edge cases where you have values that are almost zero or almost one or even slightly more than one due to floating point calculations This can also trigger the unit interval error So I fixed it using the numpy clip function That's a lifesaver in these situations it basically cuts off the values that go beyond the desired bounds.
 
 Sometimes even rounding errors can do the trick So always look for the smallest of mistakes in the data In the past I have spent hours looking for this tiny errors and they can be frustrating sometimes. The errors we commit are quite simple and the fix is simple also but finding the error is the issue.
@@ -88,6 +91,7 @@ Sometimes even rounding errors can do the trick So always look for the smallest 
 And of course make sure the model you are using actually needs values between zero and one Sometimes there are other ways to model similar kind of outcomes like if the outcomes are counts you might want to use a Poisson model instead so in the end all this debugging effort depends on your particular problem
 
 Let's do another common case when you get the error is when you are doing predictions sometimes you may forget to transform your outcome back to the original unit before plugging it to the inverse function of your link in a GLM framework for instance.
+
 ```python
 import numpy as np
 import statsmodels.api as sm
@@ -123,6 +127,7 @@ try:
 except ValueError as e:
     print("Prediction error caught \n",e)
 ```
+
 In this last example I showed how using predictions that are not in the unit interval can lead to the error if you forget to inverse transform them from logit scale to probability scale.
 
 As for resources if you really want to understand this stuff you're going to have to get into the statistical theory behind these models Look for the books related to Generalized Linear Models and Exponential Family This kind of stuff is very well documented in those resources I am not linking it because that is against the rules. But search for those keywords you will find good starting points Also knowing the difference between link functions and the inverse link function is crucial here

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-i-import-a-python-script-into-airflow"
 ---
 
-Okay, let’s tackle this head-on. Importing a Python script into Apache Airflow might seem straightforward, but it's a process that benefits from a careful understanding of Airflow's execution environment and Python's module import system. Over the years, I've seen a variety of approaches to this, some more maintainable than others, and I've certainly had my share of debugging headaches related to this seemingly simple task. Let’s break it down.
+, let’s tackle this head-on. Importing a Python script into Apache Airflow might seem straightforward, but it's a process that benefits from a careful understanding of Airflow's execution environment and Python's module import system. Over the years, I've seen a variety of approaches to this, some more maintainable than others, and I've certainly had my share of debugging headaches related to this seemingly simple task. Let’s break it down.
 
-The core challenge isn't really about *importing*; Python’s `import` statement is quite capable. The real issue stems from where Airflow is looking for your scripts when it's executing a task. Airflow tasks are run by workers, often in separate processes or even on separate machines. Therefore, your Python script needs to be discoverable in the environment where the worker executes the code. We can address this in several ways, and I'll outline the most common, practical, and maintainable strategies I’ve found work well.
+The core challenge isn't really about _importing_; Python’s `import` statement is quite capable. The real issue stems from where Airflow is looking for your scripts when it's executing a task. Airflow tasks are run by workers, often in separate processes or even on separate machines. Therefore, your Python script needs to be discoverable in the environment where the worker executes the code. We can address this in several ways, and I'll outline the most common, practical, and maintainable strategies I’ve found work well.
 
 First, consider the `PYTHONPATH` environment variable. This is probably the simplest starting point, though not always the most robust long-term solution for a large-scale deployment. When Python encounters an `import` statement, it searches specific directories, and `PYTHONPATH` allows you to add additional paths. Imagine you have a script, `my_script.py`, located in a custom directory `/opt/my_scripts`. You could set `PYTHONPATH` to include `/opt/my_scripts` in your Airflow environment's worker configuration. I've done this frequently with smaller setups; it's quick to get up and running, but it becomes cumbersome to manage with numerous directories and changes.
 
@@ -49,6 +49,7 @@ my_package/
     ├── my_utils.py
     └── __init__.py
 ```
+
 Inside `my_utils.py`, you might have a function:
 
 ```python

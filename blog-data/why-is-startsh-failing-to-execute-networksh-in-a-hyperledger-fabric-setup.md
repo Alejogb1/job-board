@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-startsh-failing-to-execute-networksh-in-a-hyperledger-fabric-setup"
 ---
 
-Alright, let's tackle this. I remember debugging similar issues quite a few times back when I was setting up a particularly complex Hyperledger Fabric network for a supply chain application. We’d have these seemingly straightforward shell scripts, and yet, the execution chain would just break down mysteriously. The problem you're describing, where `./start.sh` fails to properly execute `./network.sh`, is usually symptomatic of a few common underlying causes, and they’re rarely ever *just* about typos. Let me break down some likely suspects and what to do about them.
+, let's tackle this. I remember debugging similar issues quite a few times back when I was setting up a particularly complex Hyperledger Fabric network for a supply chain application. We’d have these seemingly straightforward shell scripts, and yet, the execution chain would just break down mysteriously. The problem you're describing, where `./start.sh` fails to properly execute `./network.sh`, is usually symptomatic of a few common underlying causes, and they’re rarely ever _just_ about typos. Let me break down some likely suspects and what to do about them.
 
 First off, the most frequent culprit I've encountered is a problem with **file permissions and executability**. Linux, and consequently many of the environments we run Fabric in, is very particular about file permissions. If `./network.sh` doesn’t have the execute bit set, the shell interpreting `./start.sh` won't be able to launch it as a program. We need to ensure `./network.sh` has the `x` (execute) permission for the user running the script, or even just for any user depending on your setup. Here's a quick command I'd usually employ to fix that, if this is the issue: `chmod +x ./network.sh`. I'd recommend checking the output of `ls -l ./network.sh` before and after to see the change. You should see an 'x' appearing in the permissions string.
 
@@ -36,6 +36,7 @@ And a very basic `network.sh`:
 echo "Running network script"
 echo "Current directory: $(pwd)"
 ```
+
 If `network.sh` does not have execute permission and is executed like the first line commented out above then it will cause the failure to run it.
 If the user executes start.sh from `/home/user/project/` the current directory reported by network.sh would be the same. However if they execute it from `/home/user` then network.sh would report a different directory. Changing `start.sh` to the below would prevent this:
 
@@ -71,6 +72,7 @@ echo "Network script completed"
 
 If `start.sh` does not set this variable, it would produce an error because `network.sh` would find that the necessary path is not defined.
 A basic version of `start.sh` would look something like this which will fail:
+
 ```bash
 #!/bin/bash
 echo "Starting the network setup..."
@@ -89,6 +91,7 @@ sh "./network.sh"
 echo "Network setup script executed (or failed)."
 
 ```
+
 By using the `export` command the variable is set, and it will be available to any scripts launched after it.
 
 **Example 3: Sourcing and Variable Scope**

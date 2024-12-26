@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-did-capistrano-fail-to-deploy-the-rails-application-due-to-openssl-30-incompatibility"
 ---
 
-Alright, let’s talk about that Capistrano deployment snafu you're experiencing with OpenSSL 3.0. I've been down this road myself, a few times, actually, and it’s a frustrating, yet educational experience. The crux of the issue usually lies within the delicate dance between ruby versions, gem dependencies, and the system-level OpenSSL library. Specifically, migrating to OpenSSL 3.0 often reveals latent compatibility issues that older setups might’ve conveniently masked.
+, let’s talk about that Capistrano deployment snafu you're experiencing with OpenSSL 3.0. I've been down this road myself, a few times, actually, and it’s a frustrating, yet educational experience. The crux of the issue usually lies within the delicate dance between ruby versions, gem dependencies, and the system-level OpenSSL library. Specifically, migrating to OpenSSL 3.0 often reveals latent compatibility issues that older setups might’ve conveniently masked.
 
 My first encounter with this was during a client project, about five years back. We were running a rather intricate rails app, heavily reliant on older encryption protocols, and when the infrastructure team moved to systems with OpenSSL 3.0, it was… well, let's just say, chaotic. The initial capistrano deployments were throwing cryptic errors, mostly related to failed ssl handshakes during the asset precompilation and database migration stages. After an uncomfortably long debugging session, the problem traced back to ruby’s interaction with OpenSSL.
 

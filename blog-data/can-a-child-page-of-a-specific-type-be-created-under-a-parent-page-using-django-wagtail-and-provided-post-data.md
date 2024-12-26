@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "can-a-child-page-of-a-specific-type-be-created-under-a-parent-page-using-django-wagtail-and-provided-post-data"
 ---
 
-Okay, let's unpack this. Creating child pages in Wagtail, especially when driven by post data, is something I’ve navigated many times, and it’s a very common requirement in any content-driven website. It sounds simple at first, but the devil’s always in the details, particularly when considering data validation and the broader implications on your Wagtail setup.
+, let's unpack this. Creating child pages in Wagtail, especially when driven by post data, is something I’ve navigated many times, and it’s a very common requirement in any content-driven website. It sounds simple at first, but the devil’s always in the details, particularly when considering data validation and the broader implications on your Wagtail setup.
 
 Here's the breakdown of how I would approach this, drawing from my experience. Let's assume you're not just dealing with straightforward fields but potentially relational data as well. We’ll tackle this step by step with accompanying code examples to make things crystal clear.
 
-First, the key lies in understanding Wagtail's class-based page models and form handling. Wagtail doesn't give you an ‘out-of-the-box’ solution specifically for creating child pages using post data within a generic request context. You'll need to craft the process yourself using the django forms api and Wagtail’s own page model functionalities. The post data generally represents how users interact with a form rendered on the page, which then drives the creation. This means we need to build a form, process the data, validate it, and *then* instantiate our desired child page type.
+First, the key lies in understanding Wagtail's class-based page models and form handling. Wagtail doesn't give you an ‘out-of-the-box’ solution specifically for creating child pages using post data within a generic request context. You'll need to craft the process yourself using the django forms api and Wagtail’s own page model functionalities. The post data generally represents how users interact with a form rendered on the page, which then drives the creation. This means we need to build a form, process the data, validate it, and _then_ instantiate our desired child page type.
 
 Let's say we have a parent page model called `BlogIndexPage` and we want to create a child page type called `BlogPostPage` through post data. Our first task is to set up our page models in `models.py`
 
@@ -101,13 +101,12 @@ A couple of key observations here: First, I retrieve the parent page using its I
 The final piece of the puzzle is our template `create_blog_post.html`, which is quite straightforward:
 
 ```html
-  <!-- create_blog_post.html -->
-    <h1>Create New Blog Post</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Create Post</button>
-    </form>
+<!-- create_blog_post.html -->
+<h1>Create New Blog Post</h1>
+<form method="post">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit">Create Post</button>
+</form>
 ```
 
 The form rendering here is handled via the Django Forms API. You would access this functionality at a specific url linked to the view, making sure that it is properly set up in your `urls.py`

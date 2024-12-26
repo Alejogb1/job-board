@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-instantly-assign-a-value-to-a-controller-variable"
 ---
 
-Alright, let's tackle this. The desire to instantly assign a value to a controller variable is a common one, particularly when dealing with user interfaces or real-time data updates. It often arises when we need to bypass the typical asynchronous mechanisms that frameworks like React, Angular, or Vue employ for managing state updates. In my own past work, I've frequently encountered scenarios – for instance, when directly controlling a third-party charting library that demands immediate value setting outside the component's render cycle – where directly assigning a value to a controller variable becomes essential. The challenge lies in achieving this without triggering undesirable side effects, like uncontrolled re-renders or race conditions.
+, let's tackle this. The desire to instantly assign a value to a controller variable is a common one, particularly when dealing with user interfaces or real-time data updates. It often arises when we need to bypass the typical asynchronous mechanisms that frameworks like React, Angular, or Vue employ for managing state updates. In my own past work, I've frequently encountered scenarios – for instance, when directly controlling a third-party charting library that demands immediate value setting outside the component's render cycle – where directly assigning a value to a controller variable becomes essential. The challenge lies in achieving this without triggering undesirable side effects, like uncontrolled re-renders or race conditions.
 
 Direct assignment, while seemingly straightforward, often creates inconsistencies because the framework’s reconciliation process expects changes to flow through its lifecycle. A basic direct variable change might show an immediate visual effect but could be overwritten later by the framework’s update mechanisms, leading to erratic application behavior. Therefore, simply assigning a value like `this.myControllerVar = newValue` is often the path of most resistance and can introduce difficult-to-debug issues further down the development path. The core issue is that you're essentially stepping outside the normal control flow that these frameworks expect, which is why it often becomes problematic.
 
-Instead of direct assignment, we need to leverage more specific, albeit potentially slightly more complex, strategies which are suitable for particular cases. Often, we aren’t actually trying to *instantaneously* assign a value that bypasses rendering cycles, but rather we want to achieve the result that appears instantaneous *within* a render cycle. Sometimes, we are talking about bypassing it completely, such as in cases where the controller isn’t a component, but rather some external logic for a third-party library. Therefore, the specific methodology depends greatly on the context in which the assignment is required.
+Instead of direct assignment, we need to leverage more specific, albeit potentially slightly more complex, strategies which are suitable for particular cases. Often, we aren’t actually trying to _instantaneously_ assign a value that bypasses rendering cycles, but rather we want to achieve the result that appears instantaneous _within_ a render cycle. Sometimes, we are talking about bypassing it completely, such as in cases where the controller isn’t a component, but rather some external logic for a third-party library. Therefore, the specific methodology depends greatly on the context in which the assignment is required.
 
 Let’s go through a few ways that I’ve often employed:
 
@@ -19,7 +19,7 @@ The `useRef` hook in React (or its equivalent in other frameworks) provides a wa
 Here's a practical snippet illustrating its use:
 
 ```javascript
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from "react";
 
 function MyComponent() {
   const myRef = useRef(0); // Initialize with a default value
@@ -27,32 +27,29 @@ function MyComponent() {
   useEffect(() => {
     // Example: Using myRef within a third-party library callback
     const someLib = {
-       onValueChange:(val)=> {
-         myRef.current = val; //Direct update using ref
-         console.log('Ref value changed to: ',myRef.current)
-       }
-    }
+      onValueChange: (val) => {
+        myRef.current = val; //Direct update using ref
+        console.log("Ref value changed to: ", myRef.current);
+      },
+    };
 
     //Simulate that some library triggers a value change.
-    setTimeout(()=> someLib.onValueChange(100), 1000);
-
+    setTimeout(() => someLib.onValueChange(100), 1000);
   }, []);
-
-
 
   //Displaying the current value in the UI, requires a state change for a rerender
   //In this case we are setting the ref to 100 in an outside method, and after
   //the first render we use state to display that change.
-  const [displayValue, setDisplayValue] = React.useState(myRef.current)
-    React.useEffect(()=>{
-        setDisplayValue(myRef.current);
-      },[myRef.current]);
+  const [displayValue, setDisplayValue] = React.useState(myRef.current);
+  React.useEffect(() => {
+    setDisplayValue(myRef.current);
+  }, [myRef.current]);
 
   return (
-      <div>
-          <p>Ref Value: {displayValue}</p>
-      </div>
-  )
+    <div>
+      <p>Ref Value: {displayValue}</p>
+    </div>
+  );
 }
 
 export default MyComponent;
@@ -67,7 +64,7 @@ Sometimes the direct manipulation of state is required, especially if you're wor
 Here’s an example assuming a simplified Redux-like structure, just for illustrative purposes:
 
 ```javascript
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 // Simplified Redux-like store simulation
 const createStore = (reducer, initialState) => {
@@ -79,13 +76,13 @@ const createStore = (reducer, initialState) => {
     state = reducer(state, action);
     listeners.forEach((listener) => listener());
   };
-    const subscribe = (listener) => {
+  const subscribe = (listener) => {
     listeners.push(listener);
     return () => {
-        const index = listeners.indexOf(listener);
-        if (index > -1) {
-          listeners.splice(index, 1);
-        }
+      const index = listeners.indexOf(listener);
+      if (index > -1) {
+        listeners.splice(index, 1);
+      }
     };
   };
   return { getState, dispatch, subscribe };
@@ -94,7 +91,7 @@ const createStore = (reducer, initialState) => {
 // Reducer function
 const myReducer = (state, action) => {
   switch (action.type) {
-    case 'SET_VALUE':
+    case "SET_VALUE":
       return { ...state, myValue: action.payload };
     default:
       return state;
@@ -107,20 +104,17 @@ const store = createStore(myReducer, initialState);
 function MyComponent() {
   const [value, setValue] = useState(store.getState().myValue);
 
-
   useEffect(() => {
-
     const unsubscribe = store.subscribe(() => {
-        setValue(store.getState().myValue);
-      });
+      setValue(store.getState().myValue);
+    });
 
     //Simulate an external change
-      setTimeout(()=>{
-        store.dispatch({ type: 'SET_VALUE', payload: 200});
-      }, 2000);
+    setTimeout(() => {
+      store.dispatch({ type: "SET_VALUE", payload: 200 });
+    }, 2000);
 
-
-      return () => unsubscribe();
+    return () => unsubscribe();
   }, []);
 
   return (
@@ -133,7 +127,7 @@ function MyComponent() {
 export default MyComponent;
 ```
 
-In this simplified example, we create a basic store similar to Redux.  We manage state in the component via `store.subscribe` and `setValue` to update the UI when the store changes. In a typical application this should be done using hooks to access the store. The important part is that we are dispatching a change to our data using `store.dispatch`. The store’s reducer will then directly update that variable. If you needed to manipulate the data directly, you could access `store.getState()` and manually change the `store.state`, though this method is not recommended, as it could lead to inconsistencies with your framework. Consult the documentation for libraries like Redux or Zustand for details on their best practices.
+In this simplified example, we create a basic store similar to Redux. We manage state in the component via `store.subscribe` and `setValue` to update the UI when the store changes. In a typical application this should be done using hooks to access the store. The important part is that we are dispatching a change to our data using `store.dispatch`. The store’s reducer will then directly update that variable. If you needed to manipulate the data directly, you could access `store.getState()` and manually change the `store.state`, though this method is not recommended, as it could lead to inconsistencies with your framework. Consult the documentation for libraries like Redux or Zustand for details on their best practices.
 
 **3. Using Instance Variables (for Class Components or Objects):**
 
@@ -148,31 +142,33 @@ class MyController {
   }
 
   setValue(newValue) {
-     this.internalValue = newValue;
+    this.internalValue = newValue;
   }
 
-   getValue() {
-       return this.internalValue
-   }
+  getValue() {
+    return this.internalValue;
+  }
 }
 
 function MyComponent() {
-    const controllerRef = React.useRef(new MyController());
-    const [displayValue, setDisplayValue] = React.useState(controllerRef.current.getValue());
+  const controllerRef = React.useRef(new MyController());
+  const [displayValue, setDisplayValue] = React.useState(
+    controllerRef.current.getValue()
+  );
 
-    React.useEffect(()=>{
-        //Simulate that some external value has changed.
-        setTimeout(()=> {
-            controllerRef.current.setValue(300);
-            setDisplayValue(controllerRef.current.getValue());
-        }, 2500);
-    }, [])
+  React.useEffect(() => {
+    //Simulate that some external value has changed.
+    setTimeout(() => {
+      controllerRef.current.setValue(300);
+      setDisplayValue(controllerRef.current.getValue());
+    }, 2500);
+  }, []);
 
-    return (
-       <div>
-           <p>Controller value: {displayValue}</p>
-       </div>
-    );
+  return (
+    <div>
+      <p>Controller value: {displayValue}</p>
+    </div>
+  );
 }
 export default MyComponent;
 ```

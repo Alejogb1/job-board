@@ -4,15 +4,15 @@ date: "2024-12-15"
 id: "how-to-use-oauth2-to-send-a-bearer-token-in-an-api"
 ---
 
-alright, so you're asking about using oauth2 to send a bearer token in an api. it's a pretty common scenario, and i've definitely banged my head against this wall a few times over the years. let me walk you through how i typically approach it, based on my own experiences.
+, so you're asking about using oauth2 to send a bearer token in an api. it's a pretty common scenario, and i've definitely banged my head against this wall a few times over the years. let me walk you through how i typically approach it, based on my own experiences.
 
-the core idea is that oauth2 is all about authorization, not authentication. we're not trying to verify *who* the user is directly, but *what* they're allowed to do. the bearer token becomes a key that proves they've been authorized.
+the core idea is that oauth2 is all about authorization, not authentication. we're not trying to verify _who_ the user is directly, but _what_ they're allowed to do. the bearer token becomes a key that proves they've been authorized.
 
 my first encounter with this was back in my early days working on a microservices project. we had several services that needed to communicate, and rather than passing around credentials we decided to use oauth2 with a central authorization server. it was a bit of a mess at first, as we tried to roll our own solution before discovering the magic of existing libraries, but lesson learned the hard way.
 
 the general process for sending a bearer token goes something like this. first, your client application (whether it's a mobile app, a web frontend, or another service) needs to obtain an access token. this usually involves going through an oauth2 flow like the authorization code grant. that flow is out of this topic, but lets suppose that we already have an access token.
 
-once you have that access token, it needs to be included in the *authorization* header of your http request to your api, using the *bearer* scheme. the header should be like this `authorization: bearer <your_access_token>`.
+once you have that access token, it needs to be included in the _authorization_ header of your http request to your api, using the _bearer_ scheme. the header should be like this `authorization: bearer <your_access_token>`.
 
 now, let's look at some code examples. i'm going to show examples in python with the `requests` library, and assuming you already have the access token. python is mostly what i use for api related tasks. if you're using a different language or library, the concepts should be pretty similar, the syntax is the thing that will be different.
 
@@ -39,7 +39,7 @@ else:
     print(response.text)
 ```
 
-in this snippet, we define the `access_token` variable that is where your token will go. then we craft the `headers` dictionary, including the *authorization* header with the bearer scheme. the f-string makes it easy to insert the token. finally, we make the get request and handle the response.
+in this snippet, we define the `access_token` variable that is where your token will go. then we craft the `headers` dictionary, including the _authorization_ header with the bearer scheme. the f-string makes it easy to insert the token. finally, we make the get request and handle the response.
 
 it might be worth noting that i once spent hours debugging a similar setup just to realize that i had a single character typo in the `bearer` keyword. a lesson in copy pasting carefully and testing the most basic things first (and not assuming things are right on the first go).
 
@@ -126,7 +126,7 @@ if response:
     print(response)
 ```
 
-this example shows a more robust approach by handling expired tokens. we wrap the request logic in a `make_api_request` function, and check for a `401 unauthorized` status code. if we get it, it *should* mean that our token has expired. in a real application, you'd use the refresh token to get a new access token and retry the request. in this example, the refresh token part is not implemented. please remember to put it when you use this example in a production application, or your users may have a bad experience.
+this example shows a more robust approach by handling expired tokens. we wrap the request logic in a `make_api_request` function, and check for a `401 unauthorized` status code. if we get it, it _should_ mean that our token has expired. in a real application, you'd use the refresh token to get a new access token and retry the request. in this example, the refresh token part is not implemented. please remember to put it when you use this example in a production application, or your users may have a bad experience.
 
 now, about resources: i'd recommend checking out the official oauth2 specification (rfc 6749) if you want a deep understanding of the protocol. it can be a bit dry, but it's a great resource to know how things work at the lower levels. also, a very good book i recommend is "oauth 2 in action", it really helped me clarify many doubts i had initially.
 

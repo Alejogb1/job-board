@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-implement-a-mvvm-navigation-service-and-how-to-create-a-navigate-method-that-waits-for-another-view-model-to-be-closed"
 ---
 
-alright, so you're tackling mvvm navigation with a twist – making it wait for a viewmodel to close. i get it, i've been there, staring at the screen wondering why my flow is all kinds of messed up. its a common situation with asynchronous navigation. i spent a good chunk of my early career messing this up in a project for an inventory management system. ended up with a bunch of memory leaks and a very unhappy client. lets break this down into simple parts.
+, so you're tackling mvvm navigation with a twist – making it wait for a viewmodel to close. i get it, i've been there, staring at the screen wondering why my flow is all kinds of messed up. its a common situation with asynchronous navigation. i spent a good chunk of my early career messing this up in a project for an inventory management system. ended up with a bunch of memory leaks and a very unhappy client. lets break this down into simple parts.
 
 the core of this whole thing is building a navigation service that actually controls transitions between different views. think of it as the air traffic controller for your application. in mvvm, viewmodels shouldn't be directly fiddling with the ui, that includes navigation. the service is the middleman. you'll need some interfaces for this, it makes swapping implementations and unit testing easier, trust me on that one.
 
@@ -192,11 +192,11 @@ this basic structure should give you a solid base for building a navigation syst
 
 now, some things to keep in mind:
 
-*   **error handling:** you'll want to add try-catch blocks, perhaps setting `exception` in the `taskcompletionsource` if navigation fails. it is important to add handling to the `goback` and navigation methods, in case the view model or the view are not registered.
-*   **multiple navigation requests:** you'll need to decide how to handle concurrent navigation. you might want to queue requests or cancel previous navigations. i had a fun time figuring out that one in a side project where i tried to implement a single-page application but had several buttons that could trigger navigation, it was like a crazy navigation loop.
-*   **passing parameters:** you might want to pass parameters during navigation, you can add parameters to the navigate method, but you should always use viewmodel properties to transmit data, using the method parameters is not a very good pattern.
-*   **dialogs/popups:** you might want a specific navigation service for dialogs or popups, as they behave slightly differently. in one project, i used to use the main window to display all the dialogs, that was a horrible mistake, everything was coupled to the main window and all the business logic. i do not recommend that practice.
-*   **unit testing:** having a interface for navigation allows to easily test the viewmodels and the navigation service without having to open the window, just mock the interface. i have seen a lot of developers skip unit testing navigation, it is a very bad idea as it can be very difficult to debug and fix.
+- **error handling:** you'll want to add try-catch blocks, perhaps setting `exception` in the `taskcompletionsource` if navigation fails. it is important to add handling to the `goback` and navigation methods, in case the view model or the view are not registered.
+- **multiple navigation requests:** you'll need to decide how to handle concurrent navigation. you might want to queue requests or cancel previous navigations. i had a fun time figuring out that one in a side project where i tried to implement a single-page application but had several buttons that could trigger navigation, it was like a crazy navigation loop.
+- **passing parameters:** you might want to pass parameters during navigation, you can add parameters to the navigate method, but you should always use viewmodel properties to transmit data, using the method parameters is not a very good pattern.
+- **dialogs/popups:** you might want a specific navigation service for dialogs or popups, as they behave slightly differently. in one project, i used to use the main window to display all the dialogs, that was a horrible mistake, everything was coupled to the main window and all the business logic. i do not recommend that practice.
+- **unit testing:** having a interface for navigation allows to easily test the viewmodels and the navigation service without having to open the window, just mock the interface. i have seen a lot of developers skip unit testing navigation, it is a very bad idea as it can be very difficult to debug and fix.
 
 for more in-depth details on this stuff, i'd recommend taking a look at the "patterns of enterprise application architecture" by martin fowler for architecture, and for the async part "concurrency in c# cookbook" by stephen cleary.
 

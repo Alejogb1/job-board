@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-terminate-a-rails-server"
 ---
 
-Alright, let’s talk about gracefully shutting down a Rails server. I’ve seen this trip up folks countless times, usually when they’re just starting out or dealing with more complex deployment scenarios. The straightforward answer – smashing ctrl+c – certainly works, but it's not always the *best* approach, particularly in production environments where you want to avoid abruptly cutting off connections. We need a more controlled shutdown to ensure no data loss or requests getting dropped mid-process. Let's break down the various ways to achieve this, focusing on the underlying mechanisms at play, rather than just reciting commands.
+, let’s talk about gracefully shutting down a Rails server. I’ve seen this trip up folks countless times, usually when they’re just starting out or dealing with more complex deployment scenarios. The straightforward answer – smashing ctrl+c – certainly works, but it's not always the _best_ approach, particularly in production environments where you want to avoid abruptly cutting off connections. We need a more controlled shutdown to ensure no data loss or requests getting dropped mid-process. Let's break down the various ways to achieve this, focusing on the underlying mechanisms at play, rather than just reciting commands.
 
 First and foremost, it's vital to understand what's happening under the hood when you launch a Rails server. Typically, you’re invoking some kind of web server like Puma or Unicorn (or even Webrick, but let’s be honest, that's mostly for development). These servers handle incoming HTTP requests and route them to your Rails application. When you want to shut down the server, you're actually targeting that underlying process, which means simply killing the Ruby process directly can lead to unexpected behavior.
 
@@ -53,7 +53,7 @@ kill -SIGTERM $PID
 pkill -SIGTERM -f 'puma -b tcp://0.0.0.0:3000'
 ```
 
-This approach sends a `SIGTERM` directly to the Puma process. The `-f` option in `pkill` means that the matching occurs against the entire process command line, so it matches all processes where 'puma -b tcp://0.0.0.0:3000' is the command. It is crucial that you target the *main* puma process pid, not any child processes it may create, which the method above will do. In the provided example, the main process's pid is captured by using the `ps`, `grep`, and `awk` commands. This will also allow you to target multiple puma servers with similar command line arguments.
+This approach sends a `SIGTERM` directly to the Puma process. The `-f` option in `pkill` means that the matching occurs against the entire process command line, so it matches all processes where 'puma -b tcp://0.0.0.0:3000' is the command. It is crucial that you target the _main_ puma process pid, not any child processes it may create, which the method above will do. In the provided example, the main process's pid is captured by using the `ps`, `grep`, and `awk` commands. This will also allow you to target multiple puma servers with similar command line arguments.
 
 **Snippet 3: Using Puma's 'pumactl' tool (if configured)**
 
@@ -66,7 +66,7 @@ pumactl -S /tmp/puma.sock stop
 
 This sends the `stop` command to the Puma process via the socket. The advantage of this method is that it is specifically designed for interacting with Puma. This allows for more control and, under certain configurations, may even allow for zero downtime restarts using features like phased restarts, if you configure your server that way. You can read more about the pumactl tool, the phased restarts feature, and configuration options in the puma documentation, available on the puma webserver official Github repository.
 
-In each example, a key point is that we’re initiating the shutdown process by sending a signal or using a command specifically targeting the server, *not* simply killing the Ruby process, which would result in an uncontrolled exit. This graceful shutdown ensures the server stops accepting new connections, processes existing requests, and then terminates, maintaining data consistency and avoiding issues with concurrent requests.
+In each example, a key point is that we’re initiating the shutdown process by sending a signal or using a command specifically targeting the server, _not_ simply killing the Ruby process, which would result in an uncontrolled exit. This graceful shutdown ensures the server stops accepting new connections, processes existing requests, and then terminates, maintaining data consistency and avoiding issues with concurrent requests.
 
 For deeper understanding, I recommend delving into the documentation for your specific web server (Puma, Unicorn, etc.). For general process management, resources on unix signals are invaluable – books like "Advanced Programming in the UNIX Environment" by W. Richard Stevens are great. I would also advise looking into systemd manuals if that is the route you're taking for managing the server in a production environment. Understanding how init systems like systemd or upstart manage services and signal processes is crucial for proper deployment. The documentation for the specific deployment tools that you are using to deploy the rails application will also contain more details on how they handle shutting down web servers and processes.
 

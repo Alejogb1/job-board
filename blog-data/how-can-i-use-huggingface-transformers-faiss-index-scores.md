@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-huggingface-transformers-faiss-index-scores"
 ---
 
-Okay, let's talk about using FAISS index scores with Hugging Face Transformers. This is a topic I've spent a fair amount of time exploring, particularly when building a semantic search system for a large document corpus back at [fictional company name] a few years ago. It's not simply about retrieving the nearest neighbors, but understanding the *meaning* of those scores in the context of your specific application, which can often be more intricate than it seems at first glance.
+, let's talk about using FAISS index scores with Hugging Face Transformers. This is a topic I've spent a fair amount of time exploring, particularly when building a semantic search system for a large document corpus back at [fictional company name] a few years ago. It's not simply about retrieving the nearest neighbors, but understanding the _meaning_ of those scores in the context of your specific application, which can often be more intricate than it seems at first glance.
 
 At the heart of this lies the fact that FAISS, the Facebook AI Similarity Search library, doesn't inherently deal in probabilities or confidences directly comparable across different queries or datasets. The scores it returns are essentially distance metrics, reflective of how far apart (in embedding space) a query vector is from indexed vectors. The lower the score, generally, the closer the vectors are. However, these scores are highly dependent on the embedding space created by your transformer model and the indexing parameters used within FAISS.
 
@@ -14,7 +14,7 @@ So, what do we do? First, let's acknowledge there's rarely a 'one-size-fits-all'
 
 **1. Relative Ranking Within a Query:**
 
-The most straightforward and often most valuable interpretation of FAISS scores is their relative rank for a *specific* query. Forget any absolute score thresholds initially. The lowest scoring result for a given query should be considered the *most relevant* result in the context of that single query. This provides a relative ordering of results, which often aligns quite well with human intuition. We often used this as our default approach, then augmented based on other heuristics.
+The most straightforward and often most valuable interpretation of FAISS scores is their relative rank for a _specific_ query. Forget any absolute score thresholds initially. The lowest scoring result for a given query should be considered the _most relevant_ result in the context of that single query. This provides a relative ordering of results, which often aligns quite well with human intuition. We often used this as our default approach, then augmented based on other heuristics.
 
 Here's a basic python snippet to illustrate that:
 

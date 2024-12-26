@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-part-of-a-log-be-removed-in-loki"
 ---
 
-Okay, let's address this. I've seen this exact challenge crop up countless times, particularly when dealing with sensitive data or overly verbose applications pumping logs into Loki. Removing specific parts of log lines within Loki isn't a direct "delete" operation like you might find with a database. Instead, it's more about filtering and reshaping the data before it's ingested or presented in queries. The key here is understanding how Loki handles logs and the tools at our disposal. I'll walk you through several approaches, drawing on past experiences battling noisy logging setups.
+, let's address this. I've seen this exact challenge crop up countless times, particularly when dealing with sensitive data or overly verbose applications pumping logs into Loki. Removing specific parts of log lines within Loki isn't a direct "delete" operation like you might find with a database. Instead, it's more about filtering and reshaping the data before it's ingested or presented in queries. The key here is understanding how Loki handles logs and the tools at our disposal. I'll walk you through several approaches, drawing on past experiences battling noisy logging setups.
 
 The primary way to "remove" parts of a log in Loki involves the combination of log processing within the ingestion pipeline and the filtering capabilities of LogQL (Loki's query language). When logs enter Loki, they pass through a configurable pipeline where we can manipulate them before storage. This pipeline uses a component called a `stage`, which contains actions. A key concept is to never truly "remove" anything permanently but rather mask or exclude it in a way that it is not visible downstream for analysis or querying.
 
@@ -16,7 +16,7 @@ Imagine a scenario where we have logs containing potentially sensitive informati
 
 ```yaml
 scrape_configs:
-  - job_name: 'my_app_logs'
+  - job_name: "my_app_logs"
     static_configs:
       - targets:
           - localhost:3000 # example
@@ -26,15 +26,15 @@ scrape_configs:
       - regex:
           expression: '(?P<email>[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})'
       - replace:
-         source: "email"
-         replace: "REDACTED"
+          source: "email"
+          replace: "REDACTED"
 ```
 
-What this configuration does, is first uses a regex expression `(?P<email>[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})` to search for email addresses, and capture it as a label named `email`. The next `replace` stage replaces the content of the `email` label, which is the found email, with the string "REDACTED". Importantly, it does *not* change the actual log line itself. To do that we need to use the `template` stage.
+What this configuration does, is first uses a regex expression `(?P<email>[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})` to search for email addresses, and capture it as a label named `email`. The next `replace` stage replaces the content of the `email` label, which is the found email, with the string "REDACTED". Importantly, it does _not_ change the actual log line itself. To do that we need to use the `template` stage.
 
 ```yaml
 scrape_configs:
-  - job_name: 'my_app_logs'
+  - job_name: "my_app_logs"
     static_configs:
       - targets:
           - localhost:3000 # example
@@ -44,10 +44,10 @@ scrape_configs:
       - regex:
           expression: '(?P<email>[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})'
       - replace:
-         source: "email"
-         replace: "REDACTED"
+          source: "email"
+          replace: "REDACTED"
       - template:
-          source: 'log'
+          source: "log"
           template: '{{ replace .log ( .email | default "" ) "REDACTED" }}'
 ```
 
@@ -59,7 +59,7 @@ Let’s consider a situation where our application logs are prefixing each line 
 
 ```yaml
 scrape_configs:
-  - job_name: 'my_app_logs'
+  - job_name: "my_app_logs"
     static_configs:
       - targets:
           - localhost:3000 # example
@@ -69,8 +69,8 @@ scrape_configs:
       - regex:
           expression: '^(?P<prefix>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z\s+\[[A-Z]+\]\s+-\s+)(?P<message>.+)$'
       - template:
-          source: 'log'
-          template: '{{ .message }}'
+          source: "log"
+          template: "{{ .message }}"
 ```
 
 Here, the regex `^(?P<prefix>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z\s+\[[A-Z]+\]\s+-\s+)(?P<message>.+)$` captures the timestamp/prefix in a group called "prefix" and the remaining content in a group called "message." The `template` stage then takes the log line using the `.log` keyword, and replaces the entire contents with only the `message` group, effectively removing the prefix, and storing only the important message.
@@ -83,7 +83,7 @@ Sometimes, you don't want to remove data from the log line itself, but instead w
 {job="my_app"} |= "debug" |~ `(?i).*error.*`
 ```
 
-This query uses a LogQL `|=` operator which performs a substring search which will only return logs which *contain* the word debug. We then pipe it to the `|~` operator, which executes a regex and returns logs which contain `error` in them. Note that the `(?i)` at the beginning of the regex performs a case-insensitive match. This allows you to focus on specific errors or information by filtering out the uninteresting data during query time, so the actual log data is unchanged.
+This query uses a LogQL `|=` operator which performs a substring search which will only return logs which _contain_ the word debug. We then pipe it to the `|~` operator, which executes a regex and returns logs which contain `error` in them. Note that the `(?i)` at the beginning of the regex performs a case-insensitive match. This allows you to focus on specific errors or information by filtering out the uninteresting data during query time, so the actual log data is unchanged.
 
 These examples highlight how you can effectively "remove" parts of logs in Loki. It's crucial to remember that these techniques are fundamentally about filtering and transforming log data, either at ingestion time or query time, not about altering the underlying log files themselves. The choice between manipulating logs during ingestion with regex stages or filtering them at query time with LogQL depends on the specific use case. If you need to sanitize data or remove unnecessary prefixes from all logs, the former is generally preferable for efficiency and data security. If filtering is done on an ad-hoc basis, or in a very limited number of cases, LogQL is the faster method of filtering out specific information.
 

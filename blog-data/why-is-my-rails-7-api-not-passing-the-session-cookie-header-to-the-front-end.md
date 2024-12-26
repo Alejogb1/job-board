@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-is-my-rails-7-api-not-passing-the-session-cookie-header-to-the-front-end"
 ---
 
-Alright, let's tackle this persistent issue of Rails 7 APIs and the vanishing session cookie. It’s a situation I’ve certainly found myself troubleshooting more than once, and the root cause often lies in a combination of subtle configuration nuances. The symptom, as you've experienced, is a lack of the session cookie header being passed from the backend API to your front-end application, leading to a frustrating state of unauthorized access. The problem isn't usually a fault in Rails itself, but rather how we’ve set things up or misunderstand how cookies and cross-origin requests operate.
+, let's tackle this persistent issue of Rails 7 APIs and the vanishing session cookie. It’s a situation I’ve certainly found myself troubleshooting more than once, and the root cause often lies in a combination of subtle configuration nuances. The symptom, as you've experienced, is a lack of the session cookie header being passed from the backend API to your front-end application, leading to a frustrating state of unauthorized access. The problem isn't usually a fault in Rails itself, but rather how we’ve set things up or misunderstand how cookies and cross-origin requests operate.
 
-From my experience, there are primarily three areas where these types of problems arise. The first revolves around the configured *domain and security settings for the cookie*. The second involves the crucial topic of *Cross-Origin Resource Sharing (CORS) configuration*, and the final one, which often surprises newer developers, relates to the * nuances of the `sameSite` cookie attribute*. It’s worth noting that these aren’t separate silos, but interlinked systems, and misconfiguring one can affect the others.
+From my experience, there are primarily three areas where these types of problems arise. The first revolves around the configured _domain and security settings for the cookie_. The second involves the crucial topic of _Cross-Origin Resource Sharing (CORS) configuration_, and the final one, which often surprises newer developers, relates to the _ nuances of the `sameSite` cookie attribute_. It’s worth noting that these aren’t separate silos, but interlinked systems, and misconfiguring one can affect the others.
 
 Let’s dive into each of these aspects, along with specific code examples that illuminate how to rectify them. I'll present a pragmatic approach, echoing the kind of solutions I've employed in production environments.
 
@@ -31,10 +31,10 @@ Rails.application.config.session_store :cookie_store, key: '_your_app_session',
 
 Let’s break this down:
 
-*   `domain: '.yourdomain.com'`: This allows the cookie to be sent to any subdomain of `yourdomain.com`, including your API and your frontend, which might be `api.yourdomain.com` and `app.yourdomain.com` or something similar. Replace `.yourdomain.com` with your actual domain or use a wildcard subdomain for dev/staging environments.
-*   `secure: Rails.env.production?`: The cookie is only sent over HTTPS when in production.
-*   `http_only: true`:  Helps to prevent client-side javascript from accessing the cookie, improving security, but does not prevent server-side attacks.
-*    `same_site: :none`: We will discuss this below in more detail.
+- `domain: '.yourdomain.com'`: This allows the cookie to be sent to any subdomain of `yourdomain.com`, including your API and your frontend, which might be `api.yourdomain.com` and `app.yourdomain.com` or something similar. Replace `.yourdomain.com` with your actual domain or use a wildcard subdomain for dev/staging environments.
+- `secure: Rails.env.production?`: The cookie is only sent over HTTPS when in production.
+- `http_only: true`: Helps to prevent client-side javascript from accessing the cookie, improving security, but does not prevent server-side attacks.
+- `same_site: :none`: We will discuss this below in more detail.
 
 **2. Cross-Origin Resource Sharing (CORS)**
 
@@ -58,17 +58,17 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
 end
 ```
 
-* `origins`: List your front end origin(s). If you use an asterisk `*` as the origin, the browser will not send your session cookies.
-* `resource '*'`: This specifies which routes to apply the CORS configurations to. `*` for all routes.
-* `credentials: true`: This is the critical part, enabling the inclusion of cookies, authorization headers and TLS client certificates in cross-origin requests.
+- `origins`: List your front end origin(s). If you use an asterisk `*` as the origin, the browser will not send your session cookies.
+- `resource '*'`: This specifies which routes to apply the CORS configurations to. `*` for all routes.
+- `credentials: true`: This is the critical part, enabling the inclusion of cookies, authorization headers and TLS client certificates in cross-origin requests.
 
 **3. The `sameSite` Cookie Attribute**
 
 The `sameSite` attribute is a newer addition to cookie specifications, designed to mitigate cross-site request forgery (CSRF) attacks. It controls when cookies are sent with cross-site requests. It has three options: `Lax`, `Strict`, and `None`.
 
-*   **`Strict`**: Cookies are sent only with same-site requests, that is, requests originating from the same domain. This prevents the cookie from being sent along with cross-domain requests.
-*   **`Lax`**: Cookies are sent with same-site requests and also with some top-level navigation cross-site requests, such as when following a link.
-*   **`None`**: Cookies are sent with both same-site and cross-site requests. However, it *requires* the cookie to also have the `secure` attribute set (i.e., your site must be served over HTTPS).
+- **`Strict`**: Cookies are sent only with same-site requests, that is, requests originating from the same domain. This prevents the cookie from being sent along with cross-domain requests.
+- **`Lax`**: Cookies are sent with same-site requests and also with some top-level navigation cross-site requests, such as when following a link.
+- **`None`**: Cookies are sent with both same-site and cross-site requests. However, it _requires_ the cookie to also have the `secure` attribute set (i.e., your site must be served over HTTPS).
 
 In our case, since the API and front-end are likely on different domains, `sameSite: :none` is necessary to allow the cookie to be passed to the front end on the cross-domain request. As you saw previously, the `sameSite` attribute is set to `:none` in `session_store.rb` so we can pass the session cookie in this case.
 
@@ -86,8 +86,8 @@ In my experience, these three areas are the primary culprits. Let’s recap the 
 
 For further study, I'd recommend diving into the following:
 
-*   **RFC 6265bis:** The current draft of the HTTP State Management Mechanism (Cookies) specification. This is a dense document, but it contains all the nitty-gritty details about cookies and their attributes.
-*   **OWASP (Open Web Application Security Project):** The OWASP website has lots of useful documentation on security-related aspects of web development, including how cookies and session management should be approached. Their cheat sheets are an excellent place to start.
-*   **"HTTP: The Definitive Guide" by David Gourley and Brian Totty:** While a bit dated, this book provides in-depth knowledge of the fundamentals of HTTP. It contains a detailed exploration of how headers and cookies function. It's a great reference for getting a comprehensive understanding of the underlying protocols.
+- **RFC 6265bis:** The current draft of the HTTP State Management Mechanism (Cookies) specification. This is a dense document, but it contains all the nitty-gritty details about cookies and their attributes.
+- **OWASP (Open Web Application Security Project):** The OWASP website has lots of useful documentation on security-related aspects of web development, including how cookies and session management should be approached. Their cheat sheets are an excellent place to start.
+- **"HTTP: The Definitive Guide" by David Gourley and Brian Totty:** While a bit dated, this book provides in-depth knowledge of the fundamentals of HTTP. It contains a detailed exploration of how headers and cookies function. It's a great reference for getting a comprehensive understanding of the underlying protocols.
 
 Troubleshooting sessions and cookies can be a complex puzzle. These three areas are crucial to understand. Start with session store setup, implement CORS, and pay close attention to the sameSite attribute. Debugging in your browser should provide additional context to pinpoint the exact cause and rectify the situation quickly. In most cases, a combination of those changes will solve the problem.

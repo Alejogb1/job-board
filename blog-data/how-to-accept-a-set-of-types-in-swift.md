@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-accept-a-set-of-types-in-swift"
 ---
 
-alright, so you're looking at how to make a swift function, or perhaps a class, flexible enough to accept different data types, instead of being stuck with just one. i've been down this road more times than i can count, and let me tell you, swift gives us some pretty neat tools for this, but it's all in how you use them. let's walk through a few ways i’ve tackled this, and the situations where i found each one most useful.
+, so you're looking at how to make a swift function, or perhaps a class, flexible enough to accept different data types, instead of being stuck with just one. i've been down this road more times than i can count, and let me tell you, swift gives us some pretty neat tools for this, but it's all in how you use them. let's walk through a few ways i’ve tackled this, and the situations where i found each one most useful.
 
 first off, we have generics. this is probably the most straightforward way to handle multiple types when those types are unknown at compile time, but must conform to a certain behaviour. imagine i’m working on a logging system, back in 2017. i needed it to be able to handle integers, strings, custom structures. i didn’t want to write a separate logging function for each type. generics came to the rescue. the basic idea is you define a placeholder type, often named `t` or `element`, within angle brackets, and then you can use it within your function or struct.
 

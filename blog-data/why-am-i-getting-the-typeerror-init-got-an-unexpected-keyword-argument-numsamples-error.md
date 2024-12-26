@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-the-typeerror-init-got-an-unexpected-keyword-argument-numsamples-error"
 ---
 
-Okay, let's unpack this. The `TypeError: __init__() got an unexpected keyword argument 'num_samples'` error is a classic case of mismatches between how you're trying to instantiate a class and how that class's initializer, the `__init__` method, is defined. It's a situation I've encountered countless times, usually when working with third-party libraries or poorly documented codebases – that's where the real fun begins, isn't it?
+, let's unpack this. The `TypeError: __init__() got an unexpected keyword argument 'num_samples'` error is a classic case of mismatches between how you're trying to instantiate a class and how that class's initializer, the `__init__` method, is defined. It's a situation I've encountered countless times, usually when working with third-party libraries or poorly documented codebases – that's where the real fun begins, isn't it?
 
 In essence, Python's object instantiation process hinges on the `__init__` method. When you call a class like `MyClass(some_arg=value, num_samples=10)`, Python translates that to `MyClass.__init__(self, some_arg=value, num_samples=10)`. The `self` parameter, of course, is implicitly passed and refers to the new instance being created. The error arises when `__init__` doesn't have a parameter named `num_samples` in its method signature, but your instantiation attempts to pass a keyword argument of that name.
 
@@ -139,6 +139,7 @@ sampler = SamplerFactory.get_sampler("sequential", data)
 samples = sampler.sample(20)
 print(f"Samples from factory: {samples}")
 ```
+
 This particular case highlights the importance of not just understanding the class you're directly instantiating, but also how that class is accessed and how that access affects the parameters you use to call the initializer. The factory's `get_sampler` method returns a `SequentialSampler` which does not have `__init__` that takes `num_samples`.
 
 **Resolution and Practical Advice**
@@ -147,8 +148,8 @@ To effectively troubleshoot these situations, always remember these few key step
 
 For further in-depth learning, I highly recommend resources like:
 
-*   **"Fluent Python" by Luciano Ramalho:** This book goes into extreme detail about Python's object model and is crucial for understanding advanced class mechanics.
-*   **Python documentation:** The official Python documentation, especially the sections on classes, inheritance, and the data model, is very detailed and surprisingly approachable.
-*   **"Effective Python" by Brett Slatkin:** This book provides a collection of best practices for using Python effectively which would greatly improve how you are interacting with classes, especially those in third party libraries.
+- **"Fluent Python" by Luciano Ramalho:** This book goes into extreme detail about Python's object model and is crucial for understanding advanced class mechanics.
+- **Python documentation:** The official Python documentation, especially the sections on classes, inheritance, and the data model, is very detailed and surprisingly approachable.
+- **"Effective Python" by Brett Slatkin:** This book provides a collection of best practices for using Python effectively which would greatly improve how you are interacting with classes, especially those in third party libraries.
 
 These scenarios aren't just isolated incidents. They highlight fundamental concepts in Python development and debugging. Having this understanding of the `__init__` method, parameter checking and awareness of inherited behavior is critical to writing robust, debuggable code. The more you practice careful code review and version management, the less frequently you'll find yourself staring down these error messages.

@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "longest-cycle-graph-theory-algorithm"
 ---
 
-Alright so you wanna find the longest cycle in a graph right Been there done that a few times back in my day let me tell you its not always a walk in the park but lets break it down
+so you wanna find the longest cycle in a graph right Been there done that a few times back in my day let me tell you its not always a walk in the park but lets break it down
 
-First thing first you gotta understand that finding the absolute *longest* cycle in a general graph is NP-hard it's like trying to find a needle in a haystack but the needle is also made of hay and that hay is also hay its a mess this basically means no one has found a super-efficient algorithm that works for *every* type of graph out there that guarantees finding the absolute longest cycle in a reasonable timeframe if the graphs are large enough so we have to do some clever stuff depending on what kind of graph we're dealing with
+First thing first you gotta understand that finding the absolute _longest_ cycle in a general graph is NP-hard it's like trying to find a needle in a haystack but the needle is also made of hay and that hay is also hay its a mess this basically means no one has found a super-efficient algorithm that works for _every_ type of graph out there that guarantees finding the absolute longest cycle in a reasonable timeframe if the graphs are large enough so we have to do some clever stuff depending on what kind of graph we're dealing with
 
-Now you didn't specify *what* kind of graph you have so I'll assume it's a general undirected graph think of it like a network of nodes (think computers) connected by edges (network cables) So without more constraint it's tricky
+Now you didn't specify _what_ kind of graph you have so I'll assume it's a general undirected graph think of it like a network of nodes (think computers) connected by edges (network cables) So without more constraint it's tricky
 
 **Here is what we know so far and what we should do**
 
@@ -22,7 +22,7 @@ So what can we do in practice? Here are a few things I've messed around with in 
 
 **1. Depth-First Search (DFS) Based Approach**
 
-This is your go-to for finding *any* cycle and can be adapted to try and find *longer* ones The idea is you explore paths in the graph and if you hit a node you already visited you have a cycle Keep track of how long the cycles are and pick the longest one you found.
+This is your go-to for finding _any_ cycle and can be adapted to try and find _longer_ ones The idea is you explore paths in the graph and if you hit a node you already visited you have a cycle Keep track of how long the cycles are and pick the longest one you found.
 
 Here is an example code snippet in python just to give you an idea this code is a bit naive and may not be very efficient if your graphs are big
 
@@ -94,7 +94,7 @@ def find_initial_cycle(graph):
             path.append(next_node)
             cycle_start_index = path.index(next_node)
             return path[cycle_start_index:]
-        
+
         path.append(next_node)
         visited.add(next_node)
         current_node = next_node
@@ -103,7 +103,7 @@ def improve_cycle(graph, cycle):
     for _ in range(100):
       if len(cycle) < 3:
           return cycle # can't really improve
-      
+
       a_index = random.randint(0,len(cycle)-1)
       b_index = random.randint(0,len(cycle)-1)
       if a_index == b_index:
@@ -111,21 +111,21 @@ def improve_cycle(graph, cycle):
 
       a = cycle[a_index]
       b = cycle[b_index]
-      
+
       neighbors_of_a = graph[a]
       neighbors_of_b = graph[b]
-      
+
       for c in neighbors_of_a:
           for d in neighbors_of_b:
               if c != a and c != b and d!= a and d!= b and (c not in cycle) and (d not in cycle):
-                    
+
                     new_cycle = cycle[:]
                     new_cycle.insert(a_index+1,c)
                     new_cycle.insert(b_index+1,d)
-                    
+
                     if len(new_cycle) > len(cycle) :
                          return new_cycle
-      
+
     return cycle
 
 def find_longest_cycle_local_search(graph):
@@ -135,11 +135,11 @@ def find_longest_cycle_local_search(graph):
         initial_cycle = find_initial_cycle(graph)
         if initial_cycle is None:
             continue
-        
+
         current_cycle = initial_cycle
         for _ in range(10):
             current_cycle = improve_cycle(graph, current_cycle)
-        
+
         if len(current_cycle) > len(longest_cycle):
             longest_cycle = current_cycle
 
@@ -161,9 +161,10 @@ print("Longest cycle:", longest_cycle)
 
 **3. Branch and Bound (if you need to be more precise)**
 
-If you absolutely need the best solution or want to try for a *better* solution in a big graph and willing to sacrifice some processing time you can try a branch and bound approach This involves exploring possible cycles while keeping track of the best cycle found so far It's computationally intensive but can yield better results than a basic DFS or local search if you give it enough time. It is really the most thorough approach
+If you absolutely need the best solution or want to try for a _better_ solution in a big graph and willing to sacrifice some processing time you can try a branch and bound approach This involves exploring possible cycles while keeping track of the best cycle found so far It's computationally intensive but can yield better results than a basic DFS or local search if you give it enough time. It is really the most thorough approach
 
 The idea is:
+
 1. **Initialization:** Start by finding a valid cycle and save this as the current best cycle.
 2. **Branching:** Explore all options for extending the path by adding possible nodes one by one.
 3. **Bounding:** Every time you branch, check if the current partial path has a potential for improving the best cycle found so far by calculating an upper bound of the path. If not prune that branch.
@@ -179,7 +180,7 @@ def branch_and_bound_longest_cycle(graph):
     def is_promising(path, max_cycle_length):
         if len(path) == 0:
             return True
-        
+
         max_possible_length = len(path) + len(graph) - len(set(path))
         return max_possible_length > max_cycle_length
 
@@ -189,7 +190,7 @@ def branch_and_bound_longest_cycle(graph):
 
         visited.add(current_node)
         path.append(current_node)
-        
+
         for neighbor in graph[current_node]:
             if neighbor in path:
                 cycle_start_index = path.index(neighbor)
@@ -197,15 +198,15 @@ def branch_and_bound_longest_cycle(graph):
                 if len(cycle) > max_cycle_length:
                     max_cycle_length = len(cycle)
                     max_cycle_path = cycle
-                
+
                 continue
 
             if neighbor not in visited and is_promising(path, max_cycle_length):
                 find_cycle_recursive(neighbor, path, visited.copy())
 
-        
+
         path.pop()
-        
+
 
     for node in graph:
         find_cycle_recursive(node, [], set())
@@ -224,12 +225,13 @@ graph = {
 longest_cycle = branch_and_bound_longest_cycle(graph)
 print("Longest cycle:", longest_cycle)
 ```
+
 **Things to keep in mind**
 
-*   **Performance:** DFS and the local search approach are generally faster but they may not be the most efficient but if your graph is large it's better to start with a fast approach The branch and bound approach will be the slowest in most cases but it should give you better results than the other approaches.
-*   **Graph Size:** As I said if your graph gets larger any of the above approaches can slow down quite a bit You'll need to be more clever with caching and other optimization tricks but remember NP-hardness is a pain in the butt.
-*   **Graph Type:** Remember that the graph type is key it may provide ways of optimization like for bipartite graphs.
-*   **Randomness:** As you saw the local search has an element of randomness and can yield different results each time so you might need to run it several times to get the best result you can
+- **Performance:** DFS and the local search approach are generally faster but they may not be the most efficient but if your graph is large it's better to start with a fast approach The branch and bound approach will be the slowest in most cases but it should give you better results than the other approaches.
+- **Graph Size:** As I said if your graph gets larger any of the above approaches can slow down quite a bit You'll need to be more clever with caching and other optimization tricks but remember NP-hardness is a pain in the butt.
+- **Graph Type:** Remember that the graph type is key it may provide ways of optimization like for bipartite graphs.
+- **Randomness:** As you saw the local search has an element of randomness and can yield different results each time so you might need to run it several times to get the best result you can
 
 **Resources**
 

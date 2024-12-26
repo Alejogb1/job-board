@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-previously-trained-mask-r-cnn-weights-be-retained-during-retraining"
 ---
 
-Okay, let's talk about retaining previously trained Mask R-CNN weights during retraining. It's a situation I've definitely navigated more than once, usually when adapting a model for a slightly different task or a different dataset. Instead of always starting from scratch, preserving those pre-trained weights can lead to significantly faster convergence and often, better final performance. It's not always a straightforward process though, so let's get into the practical details.
+, let's talk about retaining previously trained Mask R-CNN weights during retraining. It's a situation I've definitely navigated more than once, usually when adapting a model for a slightly different task or a different dataset. Instead of always starting from scratch, preserving those pre-trained weights can lead to significantly faster convergence and often, better final performance. It's not always a straightforward process though, so let's get into the practical details.
 
 The core idea behind retaining pre-trained weights is transfer learning, a cornerstone technique in deep learning. Essentially, we're leveraging the knowledge the model has already accumulated from a potentially large, general dataset (like coco, which is common for mask r-cnn pre-training) and applying it to our specific problem. This reduces the need to learn low-level features from random initialization. When we say we want to retain weights, we're typically talking about two things: the convolutional layers, which learn image features, and the region proposal network (rpn) that proposes object bounding boxes and masks.
 
@@ -59,7 +59,7 @@ if __name__ == "__main__":
 
 ```
 
-In this snippet, we're loading either pre-trained weights from a local file or downloading them directly via torchvision. We then initialize the new model using the pre-trained backbone, rpn, and roi heads. Notice that `num_classes` is set to your new dataset, including background. A key aspect here is freezing the parameters, which is a common practice in transfer learning. It ensures that the already-learned features are only tuned slightly and that we only allow learning in the head of the model. This can save a lot of time and computational resources, as well as prevent over-fitting. In my past experiences, I've seen cases where *not* freezing the parameters leads to rapid overfitting and a drop in performance because the optimizer destroys well-learned parameters.
+In this snippet, we're loading either pre-trained weights from a local file or downloading them directly via torchvision. We then initialize the new model using the pre-trained backbone, rpn, and roi heads. Notice that `num_classes` is set to your new dataset, including background. A key aspect here is freezing the parameters, which is a common practice in transfer learning. It ensures that the already-learned features are only tuned slightly and that we only allow learning in the head of the model. This can save a lot of time and computational resources, as well as prevent over-fitting. In my past experiences, I've seen cases where _not_ freezing the parameters leads to rapid overfitting and a drop in performance because the optimizer destroys well-learned parameters.
 
 Now let’s look at using a specific part of the model for retraining - the mask heads only:
 
@@ -107,7 +107,7 @@ if __name__ == "__main__":
 
 Here, the difference is that we are only training the mask predictor, and all other parts of the model remain frozen. I've used this approach when the object detections themselves are fairly straightforward but the masks are more complex or need adaptation to specific types of shapes. It is usually more effective when only a few examples of objects and masks are available.
 
-Lastly, here’s an example focusing on just the *last* few layers, a technique I found very useful when the new data is similar to the old one but with minor nuances:
+Lastly, here’s an example focusing on just the _last_ few layers, a technique I found very useful when the new data is similar to the old one but with minor nuances:
 
 ```python
 import torch
@@ -153,6 +153,7 @@ if __name__ == "__main__":
     print("model loaded and is ready to train")
 
 ```
+
 In this instance, we iterate through the children of the mask predictor and box predictor, selecting the last few layers by index (determined by ‘layers_to_train’). This allows us to target only the final layers of these components, providing a finer degree of control. I find this useful when the task is very similar to the pretraining data but some higher-level feature adjustments may be needed. It offers a balance between full freezing and tuning all parameters.
 
 For more in-depth information on transfer learning and mask r-cnn, I'd recommend reviewing papers such as “Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks” by Shaoqing Ren et al. and "Mask R-CNN" by Kaiming He et al. Additionally, the torchvision documentation on model weights and finetuning is an invaluable resource, and the book "Deep Learning with Python" by François Chollet does a great job of explaining the concepts and trade offs.

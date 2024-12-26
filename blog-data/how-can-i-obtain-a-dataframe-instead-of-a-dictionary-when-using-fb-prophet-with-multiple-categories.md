@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-obtain-a-dataframe-instead-of-a-dictionary-when-using-fb-prophet-with-multiple-categories"
 ---
 
-Okay, let's unpack this. It's a common stumbling block when moving beyond basic time series forecasting with prophet, especially when you’re dealing with grouped data. I've certainly seen this myself; in a previous project predicting sales across different product categories, we ran smack into the 'dictionary instead of dataframe' issue. It's frustrating, but there are straightforward solutions once you understand how prophet handles multiple categories internally.
+, let's unpack this. It's a common stumbling block when moving beyond basic time series forecasting with prophet, especially when you’re dealing with grouped data. I've certainly seen this myself; in a previous project predicting sales across different product categories, we ran smack into the 'dictionary instead of dataframe' issue. It's frustrating, but there are straightforward solutions once you understand how prophet handles multiple categories internally.
 
 The crux of the matter lies in how prophet’s `fit()` and `predict()` methods operate when given grouped data, and this is something not always immediately obvious from the documentation. Typically, when you provide a pandas dataframe with a ‘ds’ (datetime) column and a ‘y’ (target value) column, prophet treats it as a single time series. But when you have additional columns that represent different categories or groups, you're essentially telling prophet that you have multiple time series that need independent models, a different process than just a single dataframe forecast.
 
-Prophet, under the hood, isn't directly generating a single large dataframe with forecasted values for all categories. Instead, it trains a separate model for each group and the output, when you call predict on a dataframe with all your historical data grouped, is typically a *dictionary*. The keys of this dictionary correspond to the unique identifiers for your categories and the values are the *forecast dataframes* for those categories. This makes sense; it means the model training and prediction happen in a modular, isolated fashion, but it definitely means a little extra work to get back to a single combined dataframe format for visualization or further processing.
+Prophet, under the hood, isn't directly generating a single large dataframe with forecasted values for all categories. Instead, it trains a separate model for each group and the output, when you call predict on a dataframe with all your historical data grouped, is typically a _dictionary_. The keys of this dictionary correspond to the unique identifiers for your categories and the values are the _forecast dataframes_ for those categories. This makes sense; it means the model training and prediction happen in a modular, isolated fashion, but it definitely means a little extra work to get back to a single combined dataframe format for visualization or further processing.
 
 The primary objective here is to transform that dictionary into a single, cohesive dataframe. I'll show you a few techniques I've found useful, moving from the most basic to some more streamlined options. Let's dive into some specific examples, and I'll touch on why each works, along with some caveats.
 
@@ -98,13 +98,13 @@ Here, `df.groupby('category').apply(get_prophet_forecast)` groups the original d
 
 **Important Considerations and Recommended Reading:**
 
-*   **Model Complexity:** If you have a very large number of categories, you might consider techniques to speed up the model fitting process. For example, you might experiment with reduced model complexity settings within Prophet (`growth='linear'`, `seasonality_mode` etc).
-*   **Parameter Tuning:** Each category might benefit from different prophet parameters. In my past work, I've seen very significant performance improvements from per-category hyperparameter optimization. Be sure to explore methods such as cross validation to find the best parameters for your data.
-*   **Error Handling:** Robust code should include checks for empty groups or unexpected data inputs. It would be wise to include error handling within these methods.
+- **Model Complexity:** If you have a very large number of categories, you might consider techniques to speed up the model fitting process. For example, you might experiment with reduced model complexity settings within Prophet (`growth='linear'`, `seasonality_mode` etc).
+- **Parameter Tuning:** Each category might benefit from different prophet parameters. In my past work, I've seen very significant performance improvements from per-category hyperparameter optimization. Be sure to explore methods such as cross validation to find the best parameters for your data.
+- **Error Handling:** Robust code should include checks for empty groups or unexpected data inputs. It would be wise to include error handling within these methods.
 
 For deeper learning, I recommend the following:
 
-1.  **The Prophet Paper:** "Forecasting at Scale." Taylor, S. J., & Letham, B. (2018). *The American Statistician*, *72*(1), 37-45. This provides detailed information regarding the methodology of prophet, making it invaluable for understanding the underlying models used.
+1.  **The Prophet Paper:** "Forecasting at Scale." Taylor, S. J., & Letham, B. (2018). _The American Statistician_, _72_(1), 37-45. This provides detailed information regarding the methodology of prophet, making it invaluable for understanding the underlying models used.
 2.  **"Python for Data Analysis" by Wes McKinney:** The definitive guide to pandas, it contains everything you need to know about grouping, aggregation, and applying functions to dataframes.
 3.  **"Time Series Analysis and Its Applications" by Robert H. Shumway and David S. Stoffer:** A theoretical but incredibly useful resource if you need a deep dive into time series forecasting methods, including many techniques beyond prophet.
 

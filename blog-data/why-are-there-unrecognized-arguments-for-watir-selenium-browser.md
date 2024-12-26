@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-are-there-unrecognized-arguments-for-watir-selenium-browser"
 ---
 
-Alright, let’s tackle this. It’s a situation I’ve personally navigated quite a bit over the years, especially when managing test automation suites with Watir-Selenium. The issue of unrecognized arguments with the browser instantiation can feel perplexing, but it generally stems from a few distinct areas within the interplay of Watir, Selenium, and the underlying browser drivers. It's not uncommon to see configurations fall out of sync if not managed with precision.
+, let’s tackle this. It’s a situation I’ve personally navigated quite a bit over the years, especially when managing test automation suites with Watir-Selenium. The issue of unrecognized arguments with the browser instantiation can feel perplexing, but it generally stems from a few distinct areas within the interplay of Watir, Selenium, and the underlying browser drivers. It's not uncommon to see configurations fall out of sync if not managed with precision.
 
-Let's delve into what typically causes this. First and foremost, there’s the question of *driver compatibility* and the version mismatches. When you initiate a Watir browser object, like `Watir::Browser.new :chrome, headless: true`, the `headless: true` bit is passed down to the Selenium WebDriver, which then uses the appropriate driver to control the browser. The key lies here: the version of your Selenium WebDriver (e.g., chromedriver, geckodriver) must be compatible with both the browser you intend to automate (chrome, firefox, etc.) *and* the version of Selenium used by Watir. If these pieces aren’t aligned, you'll often encounter these unrecognized argument errors because the driver simply doesn't know what to do with them. It may also manifest as incorrect behavior, like the `headless: true` option being ignored altogether.
+Let's delve into what typically causes this. First and foremost, there’s the question of _driver compatibility_ and the version mismatches. When you initiate a Watir browser object, like `Watir::Browser.new :chrome, headless: true`, the `headless: true` bit is passed down to the Selenium WebDriver, which then uses the appropriate driver to control the browser. The key lies here: the version of your Selenium WebDriver (e.g., chromedriver, geckodriver) must be compatible with both the browser you intend to automate (chrome, firefox, etc.) _and_ the version of Selenium used by Watir. If these pieces aren’t aligned, you'll often encounter these unrecognized argument errors because the driver simply doesn't know what to do with them. It may also manifest as incorrect behavior, like the `headless: true` option being ignored altogether.
 
 For instance, let's say your installed version of Chrome is 110, and you’ve got a chromedriver version 105 lying around. That’s a prime candidate for a headache because version 105 might not fully recognize some newer arguments or options introduced after it. In these situations, the error message might not explicitly state "version incompatibility" but rather appear as "unrecognized argument," because the WebDriver cannot interpret options it simply hasn't been programmed to handle.
 
-Another common source is simply passing arguments in the wrong format or place. Watir expects specific options in particular ways. A `headless: true` is a straightforward example, but other browser-specific options often need to be within a browser options object, which in turn is passed to the underlying Selenium driver. This is where understanding the distinction of how Watir wraps Selenium is crucial. If we attempted to pass a chrome-specific argument directly in `Watir::Browser.new`, it will likely fail; we need to pass it *via* a `Selenium::WebDriver::Chrome::Options` object.
+Another common source is simply passing arguments in the wrong format or place. Watir expects specific options in particular ways. A `headless: true` is a straightforward example, but other browser-specific options often need to be within a browser options object, which in turn is passed to the underlying Selenium driver. This is where understanding the distinction of how Watir wraps Selenium is crucial. If we attempted to pass a chrome-specific argument directly in `Watir::Browser.new`, it will likely fail; we need to pass it _via_ a `Selenium::WebDriver::Chrome::Options` object.
 
 Finally, there are also cases where underlying webdriver libraries have not been updated to recognize options, meaning sometimes an option that is valid in the browser itself or even in a different language wrapper for Selenium (such as Python's Selenium) may not be implemented in the specific versions of selenium Ruby bindings which Watir is using. So you have to look at Watir and the Selenium version, both.
 
@@ -36,11 +36,11 @@ puts browser.title
 browser.close
 ```
 
-In this example, notice that `headless: true` is replaced with `--headless=new` within Chrome's options. This represents the current best approach for a headless chrome implementation.  We are explicitly providing a collection of acceptable arguments to the browser, and the driver will correctly process them, avoiding an error message that an argument is unrecognized.
+In this example, notice that `headless: true` is replaced with `--headless=new` within Chrome's options. This represents the current best approach for a headless chrome implementation. We are explicitly providing a collection of acceptable arguments to the browser, and the driver will correctly process them, avoiding an error message that an argument is unrecognized.
 
 **Example 2: Incorrect Option Placement**
 
-Now, let's demonstrate what *not* to do. This snippet illustrates where unrecognized arguments typically stem from. This often manifests as a type error indicating that the passed options were not of the expected type or do not map to existing behavior.
+Now, let's demonstrate what _not_ to do. This snippet illustrates where unrecognized arguments typically stem from. This often manifests as a type error indicating that the passed options were not of the expected type or do not map to existing behavior.
 
 ```ruby
 require 'watir'
@@ -59,6 +59,7 @@ rescue => e
     puts "Error caught: #{e.message}"
 end
 ```
+
 Here, `headless: true` and `disable_gpu: true` are passed directly as arguments to `Watir::Browser.new`. Watir doesn't directly interpret these options in this way. It expects a `Selenium::WebDriver::Options` object. This will likely trigger a problem because it won't map these options to the correct places within the browser driver layer.
 
 **Example 3: Handling Firefox Options**

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "with-airflow-and-kubernetesexecutor-how-to-get-network-access-to-worker-pods-from-outside"
 ---
 
-alright, so you're banging your head against the wall trying to get your airflow worker pods, running on kubernetes, to talk to the outside world. been there, done that, got the t-shirt (and probably a few gray hairs). it's a common problem and can feel like pulling teeth at first, but it's totally solvable. let's break it down.
+, so you're banging your head against the wall trying to get your airflow worker pods, running on kubernetes, to talk to the outside world. been there, done that, got the t-shirt (and probably a few gray hairs). it's a common problem and can feel like pulling teeth at first, but it's totally solvable. let's break it down.
 
 first off, the default setup for airflow on kubernetes, especially using the kubernetesexecutor, is often pretty isolated. the worker pods are usually tucked away in their little kubernetes cluster network, not exposed directly to the internet. that's generally good for security, but not so great when your tasks need to reach out to external apis, databases, or other services.
 
@@ -33,8 +33,8 @@ but what if the resources you need are not reachable via the public internet? fo
       name: internal-database
     spec:
       ports:
-      - port: 5432 # the port in your pod
-        targetPort: 5432 # the port in the db
+        - port: 5432 # the port in your pod
+          targetPort: 5432 # the port in the db
       selector:
         app: internal-db
     ```

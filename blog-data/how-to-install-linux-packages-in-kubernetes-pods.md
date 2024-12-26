@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-install-linux-packages-in-kubernetes-pods"
 ---
 
-alright, so you’re asking about installing linux packages *inside* kubernetes pods. this is a fairly common task, but it’s not exactly a ‘default’ kubernetes workflow, if that makes sense. let me break down my experiences, the ways i’ve tackled it, and give some examples.
+, so you’re asking about installing linux packages _inside_ kubernetes pods. this is a fairly common task, but it’s not exactly a ‘default’ kubernetes workflow, if that makes sense. let me break down my experiences, the ways i’ve tackled it, and give some examples.
 
 the core issue is that pods in k8s are designed to be ephemeral and immutable. they spin up based on a defined image, and if that image doesn't have the packages you need pre-installed, you’re not gonna magically get them during runtime. the whole idea is that you modify the image and redeploy if you want a new setup, not change things on the fly. however there are workarounds.
 
@@ -25,8 +25,8 @@ spec:
   initContainers:
     - name: package-installer
       image: ubuntu:latest
-      command: ['apt-get', 'update']
-      args: ['&&', 'apt-get', 'install', '-y', 'your-package'] # change your-package
+      command: ["apt-get", "update"]
+      args: ["&&", "apt-get", "install", "-y", "your-package"] # change your-package
   containers:
     - name: main-app
       image: your-main-app-image:latest # your main app image
@@ -38,7 +38,7 @@ here, i’m using a basic `ubuntu` image for the init container and then just ru
 
 **2. using a sidecar container:**
 
-sidecar containers run alongside your main app container. while they’re not typically used for installing packages, they *can* be used for situations where you require a helper service or a specialized process that handles some operations *after* the main container is running. i rarely have done this because in that case i'd usually use init containers instead, however you can install packages during its setup.
+sidecar containers run alongside your main app container. while they’re not typically used for installing packages, they _can_ be used for situations where you require a helper service or a specialized process that handles some operations _after_ the main container is running. i rarely have done this because in that case i'd usually use init containers instead, however you can install packages during its setup.
 
 ```yaml
 apiVersion: v1
@@ -51,8 +51,10 @@ spec:
       image: your-main-app-image:latest
     - name: package-installer-sidecar
       image: ubuntu:latest
-      command: ['/bin/bash', '-c']
-      args: ['apt-get update && apt-get install -y your-package && while true; do sleep 60; done'] # change your-package
+      command: ["/bin/bash", "-c"]
+      args: [
+          "apt-get update && apt-get install -y your-package && while true; do sleep 60; done",
+        ] # change your-package
 ```
 
 the major difference is that this container runs alongside your main app. so it will always be there running, in this case doing nothing but waiting every minute, once it has done the package installation. while this is technically a working example, this method feels less 'clean' than init containers. plus you have a forever-running process eating up resources. i’d only resort to this if the dependencies are complex and dynamic during the application lifetime, or in special scenarios like log collection or monitoring setups. not my favorite, but it exists.
@@ -61,7 +63,7 @@ the major difference is that this container runs alongside your main app. so it 
 
 this is the method i used back in the day with the old janky app, and i’ll put a disclaimer on it: this is not something i recommend, it's messy, and you are much better using init containers. here, you modify your application image to include a custom entrypoint script that installs packages before it starts the actual application. let me show an example of how it looks like:
 
-*dockerfile:*
+_dockerfile:_
 
 ```dockerfile
 from your-main-app-image:latest
@@ -71,7 +73,7 @@ copy entrypoint.sh /
 entrypoint ["/entrypoint.sh"]
 ```
 
-*entrypoint.sh:*
+_entrypoint.sh:_
 
 ```bash
 #!/bin/bash

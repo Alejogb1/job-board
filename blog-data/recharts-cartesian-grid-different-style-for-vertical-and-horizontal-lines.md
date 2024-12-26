@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "recharts-cartesian-grid-different-style-for-vertical-and-horizontal-lines"
 ---
 
-Alright so you're trying to get recharts cartesian grid to behave right like different styles for vertical and horizontal lines I've been there man believe me this one's a classic pain point I remember way back when I first started tinkering with data viz and yeah recharts was a go-to for me it looked clean and simple which is always a trap you know
+so you're trying to get recharts cartesian grid to behave right like different styles for vertical and horizontal lines I've been there man believe me this one's a classic pain point I remember way back when I first started tinkering with data viz and yeah recharts was a go-to for me it looked clean and simple which is always a trap you know
 
 So the default grid in recharts right it's all one style all lines the same color width dash whatever and you're sitting there like no no I want the x-axis lines one way and y-axis lines another way and the thing is recharts doesn't give you a direct prop to split them up like that its approach is more like build your own damn it you know but thankfully not too hard let's walk through it
 
@@ -17,30 +17,43 @@ I remember back in my earlier days I tried to hack into the source code of recha
 So here's the first code snippet this is your basic setup to get those separated lines
 
 ```jsx
-import React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import React from "react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from "recharts";
 
 const data = [
-  {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
-  {name: 'Page B', uv: 3000, pv: 1398, amt: 2210},
-  {name: 'Page C', uv: 2000, pv: 9800, amt: 2290},
-  {name: 'Page D', uv: 2780, pv: 3908, amt: 2000},
-  {name: 'Page E', uv: 1890, pv: 4800, amt: 2181},
-  {name: 'Page F', uv: 2390, pv: 3800, amt: 2500},
-  {name: 'Page G', uv: 3490, pv: 4300, amt: 2100},
+  { name: "Page A", uv: 4000, pv: 2400, amt: 2400 },
+  { name: "Page B", uv: 3000, pv: 1398, amt: 2210 },
+  { name: "Page C", uv: 2000, pv: 9800, amt: 2290 },
+  { name: "Page D", uv: 2780, pv: 3908, amt: 2000 },
+  { name: "Page E", uv: 1890, pv: 4800, amt: 2181 },
+  { name: "Page F", uv: 2390, pv: 3800, amt: 2500 },
+  { name: "Page G", uv: 3490, pv: 4300, amt: 2100 },
 ];
 
 const MyChart = () => {
   return (
     <LineChart width={700} height={300} data={data}>
-        <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="#ccc" />
-        <CartesianGrid horizontal={false} stroke="#ddd" />
-        <XAxis dataKey="name"/>
-        <YAxis />
-        <Tooltip/>
-        <Legend />
-        <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{r: 8}}/>
-        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+      <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="#ccc" />
+      <CartesianGrid horizontal={false} stroke="#ddd" />
+      <XAxis dataKey="name" />
+      <YAxis />
+      <Tooltip />
+      <Legend />
+      <Line
+        type="monotone"
+        dataKey="pv"
+        stroke="#8884d8"
+        activeDot={{ r: 8 }}
+      />
+      <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
     </LineChart>
   );
 };
@@ -55,46 +68,55 @@ Now you might be thinking ok great but what if I want to control the spacing or 
 Ok that previous example is good and works perfectly but we want to customize spacing a little so this snippet will be more useful to many people
 
 ```jsx
-import React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import React from "react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from "recharts";
 
 const data = [
-  {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
-  {name: 'Page B', uv: 3000, pv: 1398, amt: 2210},
-  {name: 'Page C', uv: 2000, pv: 9800, amt: 2290},
-  {name: 'Page D', uv: 2780, pv: 3908, amt: 2000},
-  {name: 'Page E', uv: 1890, pv: 4800, amt: 2181},
-  {name: 'Page F', uv: 2390, pv: 3800, amt: 2500},
-  {name: 'Page G', uv: 3490, pv: 4300, amt: 2100},
+  { name: "Page A", uv: 4000, pv: 2400, amt: 2400 },
+  { name: "Page B", uv: 3000, pv: 1398, amt: 2210 },
+  { name: "Page C", uv: 2000, pv: 9800, amt: 2290 },
+  { name: "Page D", uv: 2780, pv: 3908, amt: 2000 },
+  { name: "Page E", uv: 1890, pv: 4800, amt: 2181 },
+  { name: "Page F", uv: 2390, pv: 3800, amt: 2500 },
+  { name: "Page G", uv: 3490, pv: 4300, amt: 2100 },
 ];
 
 const MyChart = () => {
   return (
-      <LineChart width={700} height={300} data={data}>
-          <XAxis dataKey="name" tickLine={false}/>
-          <YAxis tickLine={false} />
-            <CartesianGrid
-              horizontal={false}
-              strokeDasharray="3 3"
-              stroke="#ccc"
-              vertical={false}
-             />
-          <CartesianGrid
-            horizontal={false}
-            stroke="#ddd"
-            vertical={false}
-            />
-          <CartesianGrid
-            horizontal={true}
-            stroke="#ccc"
-            strokeDasharray="5 5"
-            vertical={false}
-            />
-          <Tooltip/>
-          <Legend />
-          <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{r: 8}}/>
-          <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-      </LineChart>
+    <LineChart width={700} height={300} data={data}>
+      <XAxis dataKey="name" tickLine={false} />
+      <YAxis tickLine={false} />
+      <CartesianGrid
+        horizontal={false}
+        strokeDasharray="3 3"
+        stroke="#ccc"
+        vertical={false}
+      />
+      <CartesianGrid horizontal={false} stroke="#ddd" vertical={false} />
+      <CartesianGrid
+        horizontal={true}
+        stroke="#ccc"
+        strokeDasharray="5 5"
+        vertical={false}
+      />
+      <Tooltip />
+      <Legend />
+      <Line
+        type="monotone"
+        dataKey="pv"
+        stroke="#8884d8"
+        activeDot={{ r: 8 }}
+      />
+      <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+    </LineChart>
   );
 };
 
@@ -108,38 +130,44 @@ By now you might be thinking what if I want more control over the number of line
 Here we are the last code snippet that will solve almost everything and I think it's a good example to help many people in a similar situation
 
 ```jsx
-import React from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from 'recharts';
+import React from "react";
+import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from "recharts";
 
 const data = [
-    {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
-    {name: 'Page B', uv: 3000, pv: 1398, amt: 2210},
-    {name: 'Page C', uv: 2000, pv: 9800, amt: 2290},
-    {name: 'Page D', uv: 2780, pv: 3908, amt: 2000},
-    {name: 'Page E', uv: 1890, pv: 4800, amt: 2181},
-    {name: 'Page F', uv: 2390, pv: 3800, amt: 2500},
-    {name: 'Page G', uv: 3490, pv: 4300, amt: 2100},
+  { name: "Page A", uv: 4000, pv: 2400, amt: 2400 },
+  { name: "Page B", uv: 3000, pv: 1398, amt: 2210 },
+  { name: "Page C", uv: 2000, pv: 9800, amt: 2290 },
+  { name: "Page D", uv: 2780, pv: 3908, amt: 2000 },
+  { name: "Page E", uv: 1890, pv: 4800, amt: 2181 },
+  { name: "Page F", uv: 2390, pv: 3800, amt: 2500 },
+  { name: "Page G", uv: 3490, pv: 4300, amt: 2100 },
 ];
 
 const MyChart = () => {
-    return (
-        <LineChart width={700} height={300} data={data}>
-            <XAxis dataKey="name"
-            ticks={[ 'Page A', 'Page C', 'Page E', 'Page G']}
-            axisLine={{ stroke: '#ccc' }}
-            tickLine={{ stroke: '#ccc' }}
-        />
-            <YAxis
-            ticks={[0,2000,4000,6000,8000, 10000]}
-             axisLine={{ stroke: '#ddd' }}
-             tickLine={{ stroke: '#ddd' }}
-           />
-            <Tooltip/>
-            <Legend />
-            <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{r: 8}}/>
-            <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-        </LineChart>
-    );
+  return (
+    <LineChart width={700} height={300} data={data}>
+      <XAxis
+        dataKey="name"
+        ticks={["Page A", "Page C", "Page E", "Page G"]}
+        axisLine={{ stroke: "#ccc" }}
+        tickLine={{ stroke: "#ccc" }}
+      />
+      <YAxis
+        ticks={[0, 2000, 4000, 6000, 8000, 10000]}
+        axisLine={{ stroke: "#ddd" }}
+        tickLine={{ stroke: "#ddd" }}
+      />
+      <Tooltip />
+      <Legend />
+      <Line
+        type="monotone"
+        dataKey="pv"
+        stroke="#8884d8"
+        activeDot={{ r: 8 }}
+      />
+      <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+    </LineChart>
+  );
 };
 
 export default MyChart;

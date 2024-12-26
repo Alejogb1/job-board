@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-use-xcom-operator-with-snowflakeoperator"
 ---
 
-Alright, let's talk about orchestrating tasks between Apache Airflow, specifically using the `SnowflakeOperator`, and how to effectively leverage XCOM (cross-communication) to pass data between them. This is a pattern I’ve seen repeatedly, and getting it smooth really unlocks some complex workflows. I've had my fair share of headaches debugging poorly implemented pipelines, so I'm happy to share the solutions that have consistently worked.
+, let's talk about orchestrating tasks between Apache Airflow, specifically using the `SnowflakeOperator`, and how to effectively leverage XCOM (cross-communication) to pass data between them. This is a pattern I’ve seen repeatedly, and getting it smooth really unlocks some complex workflows. I've had my fair share of headaches debugging poorly implemented pipelines, so I'm happy to share the solutions that have consistently worked.
 
 The core issue here is often about passing information between task instances within an Airflow DAG (Directed Acyclic Graph). The `SnowflakeOperator`, after it executes a query, produces results which, more often than not, you need in subsequent tasks. This is where XCOM comes into play, allowing you to exchange small amounts of data—think strings, numbers, small lists, and dictionaries—between tasks.
 
@@ -52,6 +52,7 @@ with DAG(
 
     snowflake_task >> process_data_task
 ```
+
 In this example, the critical part is `do_xcom_push=True` in the `SnowflakeOperator`. When set to true, the `SnowflakeOperator` will automatically push its query results to xcom under the default key of `return_value`, or a custom key if defined in `xcom_push_key`. The `extract_data_from_snowflake` python operator function then pulls this information by accessing the Task Instance (ti) and using `ti.xcom_pull(task_ids='snowflake_task', key='return_value')`..
 This `return_value` is crucial. Without it, you’d be pulling metadata, not the results themselves.
 
@@ -178,6 +179,7 @@ with DAG(
 
     snowflake_to_dataframe >> snowflake_to_s3_task >> s3_to_process_task
 ```
+
 Here, the `SnowflakeOperator` pushes data as dataframe into XCOM by using `do_xcom_push=True`, then the `snowflake_to_s3` PythonOperator function converts data into csv, saves data to s3 bucket and pushes the s3 path into xcom. The subsequent task `s3_to_process_task` simply grabs this file path from xcom and can process the data in place using boto library. This keeps the load off XCOM and maintains the efficiency of your pipeline.
 
 For further depth on these topics, I recommend exploring the Apache Airflow documentation, particularly the sections on operators, hooks, and XCOM. Specifically, the documentation relating to the `providers.snowflake` package will be helpful for the `SnowflakeOperator`. For a more theoretical perspective on data workflows, "Designing Data-Intensive Applications" by Martin Kleppmann provides an excellent foundation. Finally, for in-depth guidance on building robust, scalable systems, look into resources on distributed system architectures.

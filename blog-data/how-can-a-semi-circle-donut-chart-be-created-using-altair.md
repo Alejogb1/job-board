@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-semi-circle-donut-chart-be-created-using-altair"
 ---
 
-Alright, let's tackle this semi-circle donut chart challenge with Altair. I’ve certainly bumped into similar visualization needs during various data explorations, especially when space is a premium or when a standard pie chart feels…excessive. The trick lies in manipulating Altair's arc marks and careful data transformations, which I've streamlined over time through a few different project contexts. Let's get into the practicalities.
+, let's tackle this semi-circle donut chart challenge with Altair. I’ve certainly bumped into similar visualization needs during various data explorations, especially when space is a premium or when a standard pie chart feels…excessive. The trick lies in manipulating Altair's arc marks and careful data transformations, which I've streamlined over time through a few different project contexts. Let's get into the practicalities.
 
 Firstly, the essence of a semi-circle donut chart involves visualizing data as arcs covering only 180 degrees instead of the full 360. Altair, being declarative, doesn't inherently offer a 'semi-circle' chart type. Instead, we achieve it by calculating and applying start and end angles for our arc marks. This requires a specific data structure and encoding, which is where understanding the nuances becomes essential.
 
@@ -40,7 +40,7 @@ chart = alt.Chart(data).mark_arc(innerRadius=50, outerRadius=100).encode(
 chart.show()
 ```
 
-Here, we compute each category's angle as a proportion of the total, convert it to radians (multiplying by *pi*), then we compute start and end angles by accumulating this new angle. We then encode these computed values using the *startAngle* and *endAngle* attributes. This is the basic mechanism for creating arc-based charts in Altair when working with angles. Note the use of *innerRadius* and *outerRadius* to generate the donut hole.
+Here, we compute each category's angle as a proportion of the total, convert it to radians (multiplying by _pi_), then we compute start and end angles by accumulating this new angle. We then encode these computed values using the _startAngle_ and _endAngle_ attributes. This is the basic mechanism for creating arc-based charts in Altair when working with angles. Note the use of _innerRadius_ and _outerRadius_ to generate the donut hole.
 
 **Example 2: Adding Colors and a Background Arc**
 
@@ -81,7 +81,7 @@ combined_chart = (background + chart)
 combined_chart.show()
 ```
 
-Here, a *background* chart is added and positioned behind the arc chart, representing the overall shape. I've found that this helps viewers grasp that the display is actually half of a circle. Note the explicit encoding of data type (Q = Quantitative, N = Nominal) in Altair. This is crucial for correct interpretation and avoids errors.
+Here, a _background_ chart is added and positioned behind the arc chart, representing the overall shape. I've found that this helps viewers grasp that the display is actually half of a circle. Note the explicit encoding of data type (Q = Quantitative, N = Nominal) in Altair. This is crucial for correct interpretation and avoids errors.
 
 **Example 3: Adding Labels and Adjusting Parameters**
 
@@ -129,10 +129,10 @@ combined_chart.show()
 
 ```
 
-Here, we generate a *text* chart to add labels that are placed a bit outside the donut. A *midAngle* field is generated to position the labels properly. The radius is also increased here to move labels outside the donut and *configure_view* is added to remove the default border and *properties* are used to limit the chart size.
+Here, we generate a _text_ chart to add labels that are placed a bit outside the donut. A _midAngle_ field is generated to position the labels properly. The radius is also increased here to move labels outside the donut and _configure_view_ is added to remove the default border and _properties_ are used to limit the chart size.
 
 Key takeaway is that each 'layer' you see being built upon in the code examples – the background arc, the data arc marks, and the text labels – are all combined together to create the overall semi-circle chart that we want. This is part of the beauty of Altair, as it allows modular composition of charts in a very readable format.
 
-For further exploration into advanced chart customizations with Altair, I would recommend checking out the official documentation; it's a treasure trove of information and examples. Specifically for understanding the underlying grammar of graphics, I would suggest Hadley Wickham's *ggplot2: Elegant Graphics for Data Analysis*, while it’s about R’s ggplot2 package, the principles it presents regarding layered graphics and visual encoding transfer directly to Altair. Also, *Interactive Data Visualization for the Web* by Scott Murray is an excellent, broader resource for creating data visualizations with JavaScript, and many of the concepts covered are foundational for understanding what libraries like Altair are doing under the hood.
+For further exploration into advanced chart customizations with Altair, I would recommend checking out the official documentation; it's a treasure trove of information and examples. Specifically for understanding the underlying grammar of graphics, I would suggest Hadley Wickham's _ggplot2: Elegant Graphics for Data Analysis_, while it’s about R’s ggplot2 package, the principles it presents regarding layered graphics and visual encoding transfer directly to Altair. Also, _Interactive Data Visualization for the Web_ by Scott Murray is an excellent, broader resource for creating data visualizations with JavaScript, and many of the concepts covered are foundational for understanding what libraries like Altair are doing under the hood.
 
 Working with Altair can sometimes seem tricky, especially when dealing with custom charts, but breaking down the visualization into simpler components (like calculating angles, layering chart types, setting text attributes, etc.) simplifies the process. This systematic, composable, approach, while requiring some initial setup, provides great flexibility when tackling various data display challenges.

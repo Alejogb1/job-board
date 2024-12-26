@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-r-package-names-being-reported-as-"
 ---
 
-Okay, let’s unpack this. Encountering “â” in place of an actual package name in R output is a fairly common, and frankly frustrating, issue, particularly when you're not expecting it. I remember back in my early days of working with large-scale statistical analyses, this showed up unexpectedly and led me down a bit of a rabbit hole. The core problem, nine times out of ten, stems from character encoding mismatches, specifically a clash between the encoding used to create the package name and the encoding your R session and console are expecting.
+, let’s unpack this. Encountering “â” in place of an actual package name in R output is a fairly common, and frankly frustrating, issue, particularly when you're not expecting it. I remember back in my early days of working with large-scale statistical analyses, this showed up unexpectedly and led me down a bit of a rabbit hole. The core problem, nine times out of ten, stems from character encoding mismatches, specifically a clash between the encoding used to create the package name and the encoding your R session and console are expecting.
 
 To understand this, we need to touch on what character encoding is all about. Fundamentally, a computer stores text as sequences of numbers, not as the actual letters we see on the screen. Character encodings are systems that map these numerical representations to specific characters. For instance, the character "a" in ASCII might be represented by the number 97. Different encodings use different mappings, and the "â" character, technically the Latin small letter a with circumflex, often pops up because it's the result of incorrectly interpreting a sequence of bytes meant to represent a different character in another encoding. Typically, it’s when software interprets a UTF-8 encoded character as though it were in a simpler, single-byte encoding like ISO-8859-1.
 
@@ -28,7 +28,7 @@ print(misinterpreted_name)
 #Note this may look different but the principle is the same.
 ```
 
-In this case, the `stringi` package helps simulate an encoding issue to see how this presents in R output. The output of print(misinterpreted\_name) might show you an odd character sequence, possibly including "â", illustrating the problem with incorrect encoding interpretation.
+In this case, the `stringi` package helps simulate an encoding issue to see how this presents in R output. The output of print(misinterpreted_name) might show you an odd character sequence, possibly including "â", illustrating the problem with incorrect encoding interpretation.
 
 **Example 2: Forcing UTF-8 Encoding**
 
@@ -65,7 +65,7 @@ print(pkg_data) # show that the "name_mangled" is now correct
 
 ```
 
-Here, we use `dplyr` for dataframe handling, create a dataframe with some package names, then simulate an encoding error and then correct it. You will now be able to see the before and after effect on the "name\_mangled" column.
+Here, we use `dplyr` for dataframe handling, create a dataframe with some package names, then simulate an encoding error and then correct it. You will now be able to see the before and after effect on the "name_mangled" column.
 
 In real-world scenarios, particularly with data originating outside your immediate R environment, you need to be aware that this problem can crop up at various stages. Any interaction with a source whose encoding is ambiguous can introduce these issues. Debugging this often boils down to a process of elimination: check the file encoding (if reading from a file), investigate database encodings if pulling from a database, or examine the environment settings that might be affecting the default text handling of your R instance or related libraries.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-fresh-laravel-install-failing-through-docker-due-to-octan"
 ---
 
-Okay, let's tackle this. I've seen this particular problem surface more than a few times, especially in projects adopting the newer Laravel ecosystem features, and it’s almost always down to a few key configuration mismatches between the expected environment by Octane and what's actually being provided by the docker setup. It's definitely not a ‘one size fits all’ diagnosis, but we can generally trace it back to issues with file permissions, shared memory, and specifically, the specific way Octane expects to interact with the underlying server.
+, let's tackle this. I've seen this particular problem surface more than a few times, especially in projects adopting the newer Laravel ecosystem features, and it’s almost always down to a few key configuration mismatches between the expected environment by Octane and what's actually being provided by the docker setup. It's definitely not a ‘one size fits all’ diagnosis, but we can generally trace it back to issues with file permissions, shared memory, and specifically, the specific way Octane expects to interact with the underlying server.
 
 The core of the problem usually boils down to the fact that Octane relies heavily on shared memory and file system access optimizations to achieve its performance gains. Docker containers, by their nature, are isolated environments, and sometimes the configurations required for Octane to function correctly aren't readily available out-of-the-box. Specifically, when you're seeing a failure right after a fresh Laravel install, it indicates a pretty fundamental incompatibility. Let's unpack this a little further.
 
@@ -36,7 +36,7 @@ services:
       - "8000:8000"
     volumes:
       - .:/var/www/html
-    shm_size: '256m' # Crucial addition
+    shm_size: "256m" # Crucial addition
 ```
 
 The `shm_size: '256m'` line is absolutely vital. You may need to adjust the size based on the specifics of your application load, but 256MB is a decent starting point. If you skip this, Octane will stumble, especially on initial startup because of failing to allocate the necessary shared resources. Note, this assumes you're using a standard `docker-compose` configuration. If you're using Kubernetes or another orchestration platform, the shared memory configuration will be different but the underlying principle remains the same.
@@ -72,6 +72,7 @@ The line `RUN chown -R www-data:www-data /var/www/html` ensures the application 
 Finally, a subtle point, but also critical, is the configuration of your `.env` file. Specifically, ensure the `SERVER` variable is correctly set for Octane. Sometimes, if you’re moving between different environments, this configuration can be overlooked. If this variable is not properly set or there is no `SERVER` variable at all, Octane might not be able to launch with the expected settings. Ensure that the server configuration matches the setup inside your docker environment.
 
 Here is an example of a correct way to define `SERVER` within your `.env` file.
+
 ```env
 APP_NAME=Laravel
 APP_ENV=local
@@ -115,6 +116,7 @@ MAIL_FROM_NAME="${APP_NAME}"
 # Specific to octan
 SERVER=swoole
 ```
+
 Here, `SERVER=swoole` or `SERVER=roadrunner` would be a correct configuration. If `SERVER` was set to `fpm` or not defined at all, Octane may misbehave and not start properly.
 
 To deepen your understanding, I recommend delving into a few key resources. First, consult the official Laravel documentation, particularly the section on Octane. It details the specific configuration requirements. For a more in-depth view of docker networking, read "Docker in Practice" by Ian Miell and Aidan Hobson Sayers. It provides a more thorough understanding of the underlying networking implications of running containerized applications. Lastly, to get a good understanding of how file permissions work, especially in a linux environment, "How Linux Works" by Brian Ward provides excellent insights.

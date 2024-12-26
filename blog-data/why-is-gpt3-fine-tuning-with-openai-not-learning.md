@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-is-gpt3-fine-tuning-with-openai-not-learning"
 ---
 
-Okay, let’s dissect this. I’ve seen this scenario play out numerous times across various projects, and the issue rarely lies within the model itself but more often within the nuanced details of the fine-tuning process and the data provided. Saying that ‘gpt-3 isn’t learning’ during fine-tuning is a broad statement that needs more scrutiny. Based on my experiences, this usually breaks down into a few key areas.
+, let’s dissect this. I’ve seen this scenario play out numerous times across various projects, and the issue rarely lies within the model itself but more often within the nuanced details of the fine-tuning process and the data provided. Saying that ‘gpt-3 isn’t learning’ during fine-tuning is a broad statement that needs more scrutiny. Based on my experiences, this usually breaks down into a few key areas.
 
-First, it's essential to understand that fine-tuning isn't a magic bullet. It's not about dumping data into the api and magically getting the model to behave as you expect. The core of the issue often stems from a mismatch between what you *expect* the fine-tuned model to learn and what you're *actually* training it on. This is more than just a "data problem," it's a deeper issue relating to the signal-to-noise ratio within your training data.
+First, it's essential to understand that fine-tuning isn't a magic bullet. It's not about dumping data into the api and magically getting the model to behave as you expect. The core of the issue often stems from a mismatch between what you _expect_ the fine-tuned model to learn and what you're _actually_ training it on. This is more than just a "data problem," it's a deeper issue relating to the signal-to-noise ratio within your training data.
 
 The signal refers to the specific patterns and relationships you want the model to learn. Noise, on the other hand, encompasses anything irrelevant, inconsistent, or outright contradictory that interferes with that learning process. If your training dataset has too much noise relative to the signal, the model will struggle to converge to the desired behavior. We've seen this countless times in production systems where a lack of preprocessing or poor data curation leads to suboptimal fine-tuning outcomes.
 

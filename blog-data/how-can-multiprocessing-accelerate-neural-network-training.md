@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-multiprocessing-accelerate-neural-network-training"
 ---
 
-Alright, let's tackle this. I remember a project a few years back where we were training a particularly hefty convolutional neural network for image classification. The initial training time on a single CPU was, frankly, excruciating. Days. We explored several avenues, and leveraging multiprocessing made a significant impact. Let me explain why and how.
+, let's tackle this. I remember a project a few years back where we were training a particularly hefty convolutional neural network for image classification. The initial training time on a single CPU was, frankly, excruciating. Days. We explored several avenues, and leveraging multiprocessing made a significant impact. Let me explain why and how.
 
 The core issue with training large neural networks is the computational cost, especially during backpropagation. Each training iteration requires numerous matrix multiplications and gradient calculations, which can overwhelm a single processor. This is where multiprocessing shines. Instead of executing these operations sequentially on a single core, we can divide the workload across multiple cores (or even multiple machines), achieving significant speedups. Specifically, the primary benefit is in **parallelizing the data loading and the computation of gradients during training**.
 
@@ -139,15 +139,16 @@ if __name__ == '__main__':
     print(f"Time taken: {end_time - start_time:.2f} seconds")
     print("new model params: ", new_params)
 ```
+
 In this snippet, we use `shared_memory` to share the data array among multiple processes. This avoids making copies which improves efficiency and reduces communication overhead for large data sets. Also note that shared memory management is quite important - we have to ensure we close and unlink them after their use.
 
 **Further Reading:**
 
 For a comprehensive understanding, I recommend looking into the following:
 
-*   **"Parallel Programming: Techniques and Applications Using Networked Workstations and Parallel Computers" by Barry Wilkinson and Michael Allen:** This book provides a detailed foundation in parallel programming principles, including shared memory and distributed memory paradigms, which are relevant to the multiprocessing techniques I’ve described.
-*   **"Programming Massively Parallel Processors: A Hands-on Approach" by David B. Kirk and Wen-mei W. Hwu:** This book, while primarily focused on GPU programming, also provides valuable background on parallel computation concepts that apply to multiprocessing.
-*   Research papers on **distributed training** in the context of deep learning. There's a wealth of literature on optimization techniques tailored for distributed settings. Look for papers on data parallelism and model parallelism. Google Scholar is a good starting point.
-*   The official documentation of your chosen deep learning framework (TensorFlow, PyTorch) for details on their distributed training capabilities.
+- **"Parallel Programming: Techniques and Applications Using Networked Workstations and Parallel Computers" by Barry Wilkinson and Michael Allen:** This book provides a detailed foundation in parallel programming principles, including shared memory and distributed memory paradigms, which are relevant to the multiprocessing techniques I’ve described.
+- **"Programming Massively Parallel Processors: A Hands-on Approach" by David B. Kirk and Wen-mei W. Hwu:** This book, while primarily focused on GPU programming, also provides valuable background on parallel computation concepts that apply to multiprocessing.
+- Research papers on **distributed training** in the context of deep learning. There's a wealth of literature on optimization techniques tailored for distributed settings. Look for papers on data parallelism and model parallelism. Google Scholar is a good starting point.
+- The official documentation of your chosen deep learning framework (TensorFlow, PyTorch) for details on their distributed training capabilities.
 
 In summary, multiprocessing is a powerful tool to accelerate neural network training by leveraging the parallel processing capabilities of modern hardware. By dividing the work of data loading and gradient computation across multiple processes, we can drastically reduce training times, enabling the development of more complex and effective models. However, it’s also vital to consider communication overhead and manage shared resources correctly to ensure effective parallelization.

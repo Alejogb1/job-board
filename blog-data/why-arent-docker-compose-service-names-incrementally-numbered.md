@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-arent-docker-compose-service-names-incrementally-numbered"
 ---
 
-Alright, let’s talk about Docker Compose service naming conventions and why you don't see that incremental numbering scheme. It’s a solid question, one that I certainly pondered myself early on in my Docker journey. In fact, I recall a particularly frustrating afternoon back in my early days at “TechSolutions Inc.” (a fictional company, mind you), where I was trying to debug a particularly messy multi-container setup. I kept expecting `service-1`, `service-2`, and so on, only to find that Compose wasn't playing that game. So, let’s unpack the logic behind this, and what it means for practical deployments.
+, let’s talk about Docker Compose service naming conventions and why you don't see that incremental numbering scheme. It’s a solid question, one that I certainly pondered myself early on in my Docker journey. In fact, I recall a particularly frustrating afternoon back in my early days at “TechSolutions Inc.” (a fictional company, mind you), where I was trying to debug a particularly messy multi-container setup. I kept expecting `service-1`, `service-2`, and so on, only to find that Compose wasn't playing that game. So, let’s unpack the logic behind this, and what it means for practical deployments.
 
 The core issue here boils down to the way Docker Compose is designed and how it manages service dependencies and network resolution. The short answer is that incrementing service names automatically would introduce far more problems than it would solve. Instead, Docker Compose relies on declarative configuration and name-based service discovery, providing more stability and predictability for complex deployments. Let’s dive into the technical details.
 
@@ -12,7 +12,7 @@ When you create a `docker-compose.yml` file, you're essentially defining a bluep
 
 Docker Compose aims for idempotent operations: If you run `docker-compose up` multiple times with the same configuration, you expect the same outcome. Automatically numbered service names would compromise this principle. You might end up with a database container with a different numeric identifier each time you deploy. The containers relying on that database would fail to connect using the previously assigned and now different name.
 
-Moreover, these names serve as keys for service dependencies, environment variables, and other configurations. Imagine that you wanted to refer to a dependent service, like a database in another container. You do it by specifying the *service* name in your config files. If this name changed, your whole application would break. In other words, Compose is built with an expectation of stable, pre-defined service names. This design choice ensures that deployments are reproducible and predictable. Instead of counting things, Compose allows you to refer to logical units of your application by name, similar to how you might refer to variables in code.
+Moreover, these names serve as keys for service dependencies, environment variables, and other configurations. Imagine that you wanted to refer to a dependent service, like a database in another container. You do it by specifying the _service_ name in your config files. If this name changed, your whole application would break. In other words, Compose is built with an expectation of stable, pre-defined service names. This design choice ensures that deployments are reproducible and predictable. Instead of counting things, Compose allows you to refer to logical units of your application by name, similar to how you might refer to variables in code.
 
 Let's look at a few code snippets to highlight these ideas:
 
@@ -70,7 +70,8 @@ services:
     depends_on:
       - app
 ```
-This example demonstrates a slightly more complex setup, where we have scaled the 'app' service into 3 separate containers. Docker Compose gives these instances random IDs to distinguish them, but the *service* name itself is maintained. The load balancer will load balance amongst the three containers that all have their service name equal to `app`. So `app` remains the service name, and `app` is used for resolution on the internal network, not some random numbered `app-1`, `app-2`, `app-3` etc. This approach avoids any complex dependency tracking.
+
+This example demonstrates a slightly more complex setup, where we have scaled the 'app' service into 3 separate containers. Docker Compose gives these instances random IDs to distinguish them, but the _service_ name itself is maintained. The load balancer will load balance amongst the three containers that all have their service name equal to `app`. So `app` remains the service name, and `app` is used for resolution on the internal network, not some random numbered `app-1`, `app-2`, `app-3` etc. This approach avoids any complex dependency tracking.
 
 So, instead of incremental numbers, you gain a system that encourages you to think in terms of logical services and their relationships. This paradigm leads to more robust, maintainable, and scalable applications in a containerized environment.
 

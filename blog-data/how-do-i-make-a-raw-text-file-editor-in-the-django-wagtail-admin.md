@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-i-make-a-raw-text-file-editor-in-the-django-wagtail-admin"
 ---
 
-Okay, let's tackle this. The concept of embedding a raw text file editor directly within the Wagtail admin panel is something I've actually dealt with a couple of times in past projects, and it always brings up interesting challenges. It's less about directly manipulating the file system within the browser and more about providing a safe and user-friendly way to view and modify text-based content associated with your Wagtail pages or settings.
+, let's tackle this. The concept of embedding a raw text file editor directly within the Wagtail admin panel is something I've actually dealt with a couple of times in past projects, and it always brings up interesting challenges. It's less about directly manipulating the file system within the browser and more about providing a safe and user-friendly way to view and modify text-based content associated with your Wagtail pages or settings.
 
-The core issue isn't about "editing a raw file" directly in the sense of a local filesystem, but rather, providing a UI within Wagtail’s admin to handle string-based content that *represents* the content of a hypothetical text file, or potentially loads from an actual text file stored server-side. We don't want the user poking around actual files. Instead, we focus on the text, which we store in our model or settings, or pull from the file, edit, and then potentially re-save if desired.
+The core issue isn't about "editing a raw file" directly in the sense of a local filesystem, but rather, providing a UI within Wagtail’s admin to handle string-based content that _represents_ the content of a hypothetical text file, or potentially loads from an actual text file stored server-side. We don't want the user poking around actual files. Instead, we focus on the text, which we store in our model or settings, or pull from the file, edit, and then potentially re-save if desired.
 
 So, forget about filesystem operations directly in the browser, it's just not going to happen securely and reliably. Instead, I’ll describe how to approach this, providing practical examples and focusing on the implementation details, drawing from my experiences.
 
@@ -105,9 +105,9 @@ This form overrides the default widget for the 'content' field and uses `CodeMir
 
 **Example 3: Handling File Loading and Saving to a file**
 
-Finally, let’s consider a more complex example where the text content is loaded from a file, edited via the admin, and then written back to that file. *Note that this example is conceptual and might require further adaptation based on your specific needs.* We introduce functions that interact with the filesystem and are wrapped in exception handling to prevent issues. We will assume your files are stored relative to your `MEDIA_ROOT` setting, in a directory we will call `text_files`.
+Finally, let’s consider a more complex example where the text content is loaded from a file, edited via the admin, and then written back to that file. _Note that this example is conceptual and might require further adaptation based on your specific needs._ We introduce functions that interact with the filesystem and are wrapped in exception handling to prevent issues. We will assume your files are stored relative to your `MEDIA_ROOT` setting, in a directory we will call `text_files`.
 
-First, we’ll adjust the model. Note that the actual text *is not* stored within the model itself, but rather the *path* to the text file.
+First, we’ll adjust the model. Note that the actual text _is not_ stored within the model itself, but rather the _path_ to the text file.
 
 ```python
 import os
@@ -178,7 +178,7 @@ class TextFileSnippetForm(WagtailAdminModelForm):
             self.initial['content'] = instance.get_text_content()
 
     content = forms.CharField(widget=CodeMirrorTextarea(config={'mode': 'text/plain', 'lineNumbers': True}), required=False)
-    
+
     def clean(self):
        cleaned_data = super().clean()
        instance = self.instance
@@ -200,14 +200,14 @@ class TextFileSnippetForm(WagtailAdminModelForm):
 
 In this modified model and form:
 
-*   The `file_path` field stores the relative path.
-*   `get_full_path` constructs the full filepath, using the `MEDIA_ROOT` for the base directory and appending the text_files folder.
-*   `get_text_content` retrieves the content of the corresponding file.
-*   `set_text_content` attempts to save any provided content back to the same file.
-*   We override the default form widget to be a `TextInput` for the file path.
-*   `clean` is used to perform the file-save operations and any extra validation
+- The `file_path` field stores the relative path.
+- `get_full_path` constructs the full filepath, using the `MEDIA_ROOT` for the base directory and appending the text_files folder.
+- `get_text_content` retrieves the content of the corresponding file.
+- `set_text_content` attempts to save any provided content back to the same file.
+- We override the default form widget to be a `TextInput` for the file path.
+- `clean` is used to perform the file-save operations and any extra validation
 
-*It’s important to acknowledge that file system operations introduce significant security considerations.* Error handling and robust sanitization are absolutely essential.
+_It’s important to acknowledge that file system operations introduce significant security considerations._ Error handling and robust sanitization are absolutely essential.
 
 **Recommended Resources**
 
@@ -216,6 +216,6 @@ To further your understanding of the concepts described above, I would recommend
 1.  **"Two Scoops of Django 3.x" by Daniel Roy Greenfeld and Audrey Roy Greenfeld:** This provides a practical, real-world approach to building Django projects. It covers many topics, including forms, models, and more general best practices.
 2.  **The Django Documentation:** Always the primary source for learning Django, especially around model fields, forms, and form processing.
 3.  **The Wagtail Documentation:** A great starting point and reference for learning to use the platform and integrate it effectively into your projects.
-4. **Django CodeMirror2 Package Documentation**: Specific documentation on using codemirror within django including customisations.
+4.  **Django CodeMirror2 Package Documentation**: Specific documentation on using codemirror within django including customisations.
 
 Remember to always test your code thoroughly and handle exceptions gracefully. This is not intended to be used as production-ready code without review, modifications, and extensive testing, but serves to describe how such a system might be built. Good luck with your project!

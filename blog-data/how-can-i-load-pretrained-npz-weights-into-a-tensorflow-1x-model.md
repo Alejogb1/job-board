@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-load-pretrained-npz-weights-into-a-tensorflow-1x-model"
 ---
 
-Alright, let’s tackle this one. I've spent a fair chunk of my career navigating the intricacies of TensorFlow, and loading pre-trained weights, particularly those in `.npz` format from the 1.x era, is a scenario I’ve encountered more than once. It’s not always as straightforward as one might hope, but it’s certainly manageable with a solid understanding of how TensorFlow models work under the hood and how numpy arrays interact with them.
+, let’s tackle this one. I've spent a fair chunk of my career navigating the intricacies of TensorFlow, and loading pre-trained weights, particularly those in `.npz` format from the 1.x era, is a scenario I’ve encountered more than once. It’s not always as straightforward as one might hope, but it’s certainly manageable with a solid understanding of how TensorFlow models work under the hood and how numpy arrays interact with them.
 
 Essentially, `.npz` files are compressed archives of numpy arrays, which often represent the weights (and sometimes biases) of neural networks. When we talk about ‘pre-trained’ weights, we usually mean a model that's been trained on a large dataset, allowing us to leverage that learning on new tasks. TensorFlow 1.x, with its graph-based architecture, has a specific way of dealing with these weights, which we need to mirror when loading them.
 
@@ -34,10 +34,10 @@ def load_npz_weights(npz_path, model):
       # We will fill this later.
 
     assign_ops = [] # To store TensorFlow operations to load the weights.
-    
+
     # Now, we need to iterate over the TensorFlow variables and map them
     # to the loaded weights.
-    
+
     for var in tf.trainable_variables():
       var_name = var.name.split(':')[0]
       if var_name in loaded_weights:

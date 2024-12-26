@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-do-i-create-a-shap-summaryplot-for-selected-features"
 ---
 
-Alright, let's tackle this. I recall a particularly challenging project back in my days at the data science division of a fintech firm. We were building a complex credit risk model, and accurately communicating feature importance to stakeholders was paramount. Simply presenting aggregate importance scores wouldn't cut it; we needed to delve into how each feature influenced predictions across different value ranges. This is where the need for selective shap summary plots became crucial, beyond the all-encompassing view.
+, let's tackle this. I recall a particularly challenging project back in my days at the data science division of a fintech firm. We were building a complex credit risk model, and accurately communicating feature importance to stakeholders was paramount. Simply presenting aggregate importance scores wouldn't cut it; we needed to delve into how each feature influenced predictions across different value ranges. This is where the need for selective shap summary plots became crucial, beyond the all-encompassing view.
 
-When working with shap (SHapley Additive exPlanations) values, the `summary_plot` function from the `shap` library provides an incredibly powerful visual tool for understanding model behavior. However, the standard output often displays the impact of all features, which can sometimes be overwhelming or, frankly, irrelevant when we are focusing on specific aspects of our model. Creating summary plots for *selected* features, therefore, allows for greater precision in analysis and communication. This isn't a capability directly provided as a named parameter, but we can achieve it via clever manipulation of the `shap_values` array before plotting.
+When working with shap (SHapley Additive exPlanations) values, the `summary_plot` function from the `shap` library provides an incredibly powerful visual tool for understanding model behavior. However, the standard output often displays the impact of all features, which can sometimes be overwhelming or, frankly, irrelevant when we are focusing on specific aspects of our model. Creating summary plots for _selected_ features, therefore, allows for greater precision in analysis and communication. This isn't a capability directly provided as a named parameter, but we can achieve it via clever manipulation of the `shap_values` array before plotting.
 
 The core concept hinges on creating a reduced `shap_values` matrix and a corresponding reduced feature set for the plot. The original `shap_values` array has dimensions corresponding to the number of samples and the number of features, so by selecting columns of the appropriate features, we get the desired subset. Let's consider this in detail.
 
@@ -101,7 +101,7 @@ plt.show()
 
 ```
 
-The core difference here lies in handling shap values for classifiers. `shap.TreeExplainer` with a classifier model will return a *list* of shap values - one set per class. We are usually interested in the values corresponding to the positive class, typically found at index `1`. We then proceed identically as in the regression case: selecting features and plotting. This example also demonstrates the ability to select multiple features as opposed to just two.
+The core difference here lies in handling shap values for classifiers. `shap.TreeExplainer` with a classifier model will return a _list_ of shap values - one set per class. We are usually interested in the values corresponding to the positive class, typically found at index `1`. We then proceed identically as in the regression case: selecting features and plotting. This example also demonstrates the ability to select multiple features as opposed to just two.
 
 Finally, let's look at a third example where the original dataset could be a NumPy array and not a Pandas DataFrame:
 
@@ -146,6 +146,7 @@ shap.summary_plot(reduced_shap_values, reduced_features_array, feature_names=sel
 import matplotlib.pyplot as plt
 plt.show()
 ```
+
 Here we are showcasing what to do when you have a numpy array rather than a dataframe. While the approach is identical in the sense that we slice the shap values, in this example, we just pass the reduced `X` array rather than a DataFrame with reduced feature names and instead pass `selected_features` as `feature_names`. This provides the same visual output, but we do so without needing to convert our array back to a dataframe.
 
 For further reading, I highly recommend consulting the original SHAP paper by Lundberg and Lee ("A Unified Approach to Interpreting Model Predictions"). This paper, available on ArXiv, provides the theoretical underpinning of SHAP values. For a practical guide to implementations, the official SHAP documentation on GitHub is invaluable. Additionally, Chapter 10 of "Interpretable Machine Learning" by Christoph Molnar will offer more context and practical insights around interpreting SHAP plots, while Chapter 7 of "Python Machine Learning" by Sebastian Raschka will cover the specifics of model building and explanation using scikit-learn that was relevant for these examples. These are the primary sources I relied on in my daily work and continue to recommend.

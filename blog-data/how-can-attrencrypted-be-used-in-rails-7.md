@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-attrencrypted-be-used-in-rails-7"
 ---
 
-Alright, let’s tackle this. I've spent a fair bit of time wrangling encrypted data in Rails, and `attr_encrypted` has been a tool in my arsenal for a long while. It's particularly handy when you need to store sensitive information in your database without resorting to full-disk encryption, though, keep in mind it's not a replacement for it. It also pairs well when compliance requirements around handling user data come into play. Now, in Rails 7, the core principles remain the same, but let’s delve into how you’d typically approach it, and we can look at some concrete examples to make it crystal clear.
+, let’s tackle this. I've spent a fair bit of time wrangling encrypted data in Rails, and `attr_encrypted` has been a tool in my arsenal for a long while. It's particularly handy when you need to store sensitive information in your database without resorting to full-disk encryption, though, keep in mind it's not a replacement for it. It also pairs well when compliance requirements around handling user data come into play. Now, in Rails 7, the core principles remain the same, but let’s delve into how you’d typically approach it, and we can look at some concrete examples to make it crystal clear.
 
 Essentially, `attr_encrypted` allows you to define ActiveRecord attributes that are automatically encrypted before being stored in the database and decrypted when retrieved. It's transparent to the application layer – you work with the attributes as you normally would, without needing to worry about the encryption and decryption process directly. This makes for cleaner and more maintainable code.
 
@@ -26,7 +26,7 @@ class User < ApplicationRecord
 end
 ```
 
-There are a few critical aspects here. Firstly, we use `attr_encrypted` to declare which attributes to encrypt. Secondly, we specify a `key` for encryption, which for security should come from environment variables, and never hardcoded. Using a unique key per attribute adds an extra layer of security. Thirdly, I've included `attribute: 'encrypted_credit_card'` and `attribute: 'encrypted_ssn'`. By default, `attr_encrypted` stores the encrypted value in a column with the same name as the original attribute with "_encrypted" appended. However, explicitly specifying it makes your intention clear and can help avoid issues later, especially when doing schema modifications. I have also specified the `mode` for `social_security_number`. By default, `attr_encrypted` uses the `per_attribute_iv` mode. This encrypts the sensitive data using an initialization vector but reuses the IV for each encryption. Since SSN's are of a very sensitive nature, we want to leverage `per_attribute_iv_and_salt` to add a per attribute salt on each encryption and decryption operation, and also generate unique IV's for the encryption. This drastically minimizes chances of pattern exploitation.
+There are a few critical aspects here. Firstly, we use `attr_encrypted` to declare which attributes to encrypt. Secondly, we specify a `key` for encryption, which for security should come from environment variables, and never hardcoded. Using a unique key per attribute adds an extra layer of security. Thirdly, I've included `attribute: 'encrypted_credit_card'` and `attribute: 'encrypted_ssn'`. By default, `attr_encrypted` stores the encrypted value in a column with the same name as the original attribute with "\_encrypted" appended. However, explicitly specifying it makes your intention clear and can help avoid issues later, especially when doing schema modifications. I have also specified the `mode` for `social_security_number`. By default, `attr_encrypted` uses the `per_attribute_iv` mode. This encrypts the sensitive data using an initialization vector but reuses the IV for each encryption. Since SSN's are of a very sensitive nature, we want to leverage `per_attribute_iv_and_salt` to add a per attribute salt on each encryption and decryption operation, and also generate unique IV's for the encryption. This drastically minimizes chances of pattern exploitation.
 
 The 'encrypted_credit_card' and 'encrypted_ssn' columns would be added to your database through a migration:
 
@@ -38,6 +38,7 @@ class AddEncryptedColumnsToUsers < ActiveRecord::Migration[7.0]
   end
 end
 ```
+
 and remember to run `rails db:migrate`.
 
 Now, when you interact with the `User` model, the encryption and decryption are handled automatically. You can access or set `user.credit_card` as if it were unencrypted. `attr_encrypted` takes care of the rest.
@@ -68,6 +69,7 @@ class AddEncryptedSettingsToSettings < ActiveRecord::Migration[7.0]
   end
 end
 ```
+
 and run `rails db:migrate` again.
 
 Here, we're also using a `marshal: true` option. This allows us to serialize the encrypted value using marshal. This can be extremely useful when you don't want the encrypted value to be a string, but potentially a complex data structure. You have to ensure your data is marshalable. The 'encrypted_settings' attribute is a `jsonb` column in this case and will store a hash that includes both the encrypted api key and the per attribute IV.
@@ -89,6 +91,7 @@ class Order < ApplicationRecord
               serializer: JSON
 end
 ```
+
 ```ruby
 class AddEncryptedAddressToOrders < ActiveRecord::Migration[7.0]
   def change
@@ -96,6 +99,7 @@ class AddEncryptedAddressToOrders < ActiveRecord::Migration[7.0]
   end
 end
 ```
+
 and run `rails db:migrate`.
 
 In this case, we're also introducing the `encode` option which converts the output into base64. This option has other related options, `encode_iv` and `encode_salt`, that similarly convert the initialization vector and the salt to base64 strings, which ensures the values can be serialized properly in case of string based columns. We're also specifically saying we want to serialize the value using `JSON`. This can be helpful if you need the flexibility to store serialized data in a plain text column.

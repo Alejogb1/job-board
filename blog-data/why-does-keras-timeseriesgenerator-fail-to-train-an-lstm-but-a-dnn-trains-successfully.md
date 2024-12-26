@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-keras-timeseriesgenerator-fail-to-train-an-lstm-but-a-dnn-trains-successfully"
 ---
 
-Alright, let's tackle this. I've seen this issue pop up more than a few times, and it usually boils down to a few key differences in how LSTMs and Dense Neural Networks (DNNs) handle input data, especially when we're talking about time series. Specifically, the `TimeseriesGenerator` in Keras, while incredibly useful, can sometimes be a bit… finicky. The problem isn’t that LSTMs are inherently worse; it's more about how the data is shaped and fed into them compared to a standard DNN.
+, let's tackle this. I've seen this issue pop up more than a few times, and it usually boils down to a few key differences in how LSTMs and Dense Neural Networks (DNNs) handle input data, especially when we're talking about time series. Specifically, the `TimeseriesGenerator` in Keras, while incredibly useful, can sometimes be a bit… finicky. The problem isn’t that LSTMs are inherently worse; it's more about how the data is shaped and fed into them compared to a standard DNN.
 
 Before we get deep into the weeds, let's clarify. DNNs, which are often used for classification and regression tasks on static data, are designed to process independent input vectors. Each input is treated as a separate instance with no inherent temporal ordering or relationship to others. They’re essentially looking at the data in a snapshot-like manner. LSTMs, on the other hand, are recurrent neural networks (RNNs) designed to handle sequential data. They are built to remember previous inputs and learn temporal dependencies within the data. That sequential processing is where the `TimeseriesGenerator` and the LSTM's expectations can clash if we’re not careful.
 
@@ -97,14 +97,15 @@ While the unscaled and scaled data have the same shape, the use of the scaler ca
 **In summary:**
 
 The fact that a DNN can train on the data while an LSTM doesn’t usually boils down to:
-1.	The **input shape** being misconfigured by the `TimeseriesGenerator` (missing or incorrect sequence length), leading to an incorrect input shape for an LSTM.
-2.  An **insufficient sequence length**, which means that the LSTM does not have enough context to capture the temporal dependencies needed for training, while a DNN may not rely on such dependencies.
-3.  **Normalization or pre-processing issues**, particularly with unscaled data, where LSTMs are often more sensitive than DNNs.
+
+1. The **input shape** being misconfigured by the `TimeseriesGenerator` (missing or incorrect sequence length), leading to an incorrect input shape for an LSTM.
+2. An **insufficient sequence length**, which means that the LSTM does not have enough context to capture the temporal dependencies needed for training, while a DNN may not rely on such dependencies.
+3. **Normalization or pre-processing issues**, particularly with unscaled data, where LSTMs are often more sensitive than DNNs.
 
 For deeper understanding, I'd recommend delving into:
 
-*   "Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville: The canonical text on deep learning, offering thorough insights into LSTMs and RNNs.
-*   "Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron: Practical guide with detailed examples and explanations, perfect for getting hands-on with Keras and time series.
-*   Research papers on ‘vanishing gradients’ in RNNs, particularly the original LSTM paper by Hochreiter and Schmidhuber, that can help you understand the inner workings and requirements of LSTMs.
+- "Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville: The canonical text on deep learning, offering thorough insights into LSTMs and RNNs.
+- "Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron: Practical guide with detailed examples and explanations, perfect for getting hands-on with Keras and time series.
+- Research papers on ‘vanishing gradients’ in RNNs, particularly the original LSTM paper by Hochreiter and Schmidhuber, that can help you understand the inner workings and requirements of LSTMs.
 
 I hope this clarifies why you might be encountering this issue. Remember to always double-check your input shapes, experiment with sequence lengths, and pay close attention to preprocessing when dealing with time series data and LSTMs. It's always the little details that can make the difference.

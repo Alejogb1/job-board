@@ -4,17 +4,17 @@ date: "2024-12-23"
 id: "where-are-tomcat-security-constraints-defined-webxml-or-web-infwebxml"
 ---
 
-Okay, let's talk about Tomcat security constraints. I've had my share of late nights troubleshooting these, so I'll lay out what I know from practical experience, not just theoretical textbook concepts. The short answer – and I’m going to get into *why* this is – is that security constraints in a Tomcat web application are defined primarily within the `WEB-INF/web.xml` file, often referred to simply as the `web.xml`.
+, let's talk about Tomcat security constraints. I've had my share of late nights troubleshooting these, so I'll lay out what I know from practical experience, not just theoretical textbook concepts. The short answer – and I’m going to get into _why_ this is – is that security constraints in a Tomcat web application are defined primarily within the `WEB-INF/web.xml` file, often referred to simply as the `web.xml`.
 
 Let’s unpack that. You won't find security configurations, in the context of web applications, directly embedded in a top-level `web.xml` file alongside, say, the `catalina.sh` script in the Tomcat root. Those are configuration files for Tomcat itself, not for the deployed web applications. Instead, each web application, packaged as a WAR (Web Application Archive) file, carries its own `web.xml` located in the `WEB-INF` directory.
 
-I remember vividly a project years ago where we had multiple applications running on the same Tomcat instance. Each needed its own authentication and authorization scheme, and things got pretty messy before we standardized. This highlighted exactly why Tomcat utilizes `WEB-INF/web.xml` for *application-specific* settings, including security constraints. It encapsulates the specifics of each application, keeping them independent and preventing conflicts.
+I remember vividly a project years ago where we had multiple applications running on the same Tomcat instance. Each needed its own authentication and authorization scheme, and things got pretty messy before we standardized. This highlighted exactly why Tomcat utilizes `WEB-INF/web.xml` for _application-specific_ settings, including security constraints. It encapsulates the specifics of each application, keeping them independent and preventing conflicts.
 
 Now, let’s drill into the structure. Within `web.xml`, the security configuration is handled via the `<security-constraint>` elements. These elements specify the following essential pieces:
 
-*   **`<web-resource-collection>`:** Defines the resources (URLs or URL patterns) to which this security constraint applies. It uses the `<url-pattern>` tag.
-*   **`<auth-constraint>`:** Defines the roles required to access those resources specified in `<web-resource-collection>`. It includes one or more `<role-name>` tags.
-*   **`<user-data-constraint>`:** Specifies how data should be transmitted, particularly for sensitive information; mostly regarding whether to enforce HTTPS via `<transport-guarantee>` set to `CONFIDENTIAL`.
+- **`<web-resource-collection>`:** Defines the resources (URLs or URL patterns) to which this security constraint applies. It uses the `<url-pattern>` tag.
+- **`<auth-constraint>`:** Defines the roles required to access those resources specified in `<web-resource-collection>`. It includes one or more `<role-name>` tags.
+- **`<user-data-constraint>`:** Specifies how data should be transmitted, particularly for sensitive information; mostly regarding whether to enforce HTTPS via `<transport-guarantee>` set to `CONFIDENTIAL`.
 
 These are the foundational components. I've often found that neglecting any one of these can lead to gaping security holes. For instance, accidentally leaving out `<auth-constraint>` makes the associated resources publicly accessible. It's a common mistake that we learned to avoid after a few early security reviews.
 
@@ -49,7 +49,7 @@ To illustrate, let's look at some simple code examples. First, a basic example w
 </web-app>
 ```
 
-In this configuration, all requests to URLs matching `/admin/*` require the user to have the `administrator` role. Crucially, this doesn't *implement* authentication. Tomcat itself will use the `login-config` to trigger an authentication process. The roles themselves are typically handled by a security realm set up in Tomcat’s server configuration (`server.xml`), or via an application-specific mechanism. The essential thing to note here is the clear declaration of the constraint in the web.xml.
+In this configuration, all requests to URLs matching `/admin/*` require the user to have the `administrator` role. Crucially, this doesn't _implement_ authentication. Tomcat itself will use the `login-config` to trigger an authentication process. The roles themselves are typically handled by a security realm set up in Tomcat’s server configuration (`server.xml`), or via an application-specific mechanism. The essential thing to note here is the clear declaration of the constraint in the web.xml.
 
 Next, consider a scenario where you need different access requirements for different parts of your application. You can add multiple `<security-constraint>` elements. Let's say you want to restrict access to `/secure/*` to users with a `premium` role and also ensure https for this secure resource only.
 

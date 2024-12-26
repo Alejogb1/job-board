@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-pass-the-certificate-when-runs-the-container-in-the-azure-container-apps"
 ---
 
-alright, so you're bumping into the certificate issue when your container spins up in azure container apps, right? been there, done that, got the t-shirt (and probably a few gray hairs along the way). this isn't uncommon, actually. it’s one of those things that feels like a black box until you've gone through it a couple of times. let me share what i've learned from my own trials and errors. it seems like your application inside the container needs to access a certificate, but it's not finding it, or it's not authorized to use it within the azure container apps environment. that's usually what the problem boils down to.
+, so you're bumping into the certificate issue when your container spins up in azure container apps, right? been there, done that, got the t-shirt (and probably a few gray hairs along the way). this isn't uncommon, actually. it’s one of those things that feels like a black box until you've gone through it a couple of times. let me share what i've learned from my own trials and errors. it seems like your application inside the container needs to access a certificate, but it's not finding it, or it's not authorized to use it within the azure container apps environment. that's usually what the problem boils down to.
 
 first, let's break down the most common ways this goes wrong, and then we’ll look at fixes. generally, the certificate is required for tls/ssl connections (like talking to another api securely), or maybe for client authentication. now, the core of the problem resides in how your application is designed to access the certificate and how that mechanism integrates with the azure container app environment. if your application expects a cert at a specific path or uses a particular mechanism for accessing it, that must align with how azure container apps makes the certificate available to your container.
 
@@ -42,7 +42,7 @@ in this example, i'm copying `my-cert.pfx` into the `/app/certs` directory insid
 
 ok, let’s assume you’ve done that part correctly and the certificate is present, but your application still can't use it. this usually comes down to either file permissions or the application not looking in the correct path.
 
-*   **file permissions:** if your certificate file is sitting in the container, but the user running the application doesn't have the permissions to read it, then you'll run into problems. make sure the user that your application runs as has the appropriate permissions using `chown` and `chmod`. you can add that in the dockerfile itself. for example:
+- **file permissions:** if your certificate file is sitting in the container, but the user running the application doesn't have the permissions to read it, then you'll run into problems. make sure the user that your application runs as has the appropriate permissions using `chown` and `chmod`. you can add that in the dockerfile itself. for example:
 
 ```dockerfile
 # example dockerfile
@@ -72,7 +72,7 @@ cmd ["python", "my_app.py"]
 
 in this snippet we are changing the file owner and also the permission, and at the end we switch the user to the user that the app uses. it is good practice to run the app as a non-root user for security reasons, so it is important to set the user ownership correctly for that purpose. this is a common error and one that i have made many many times.
 
-*   **application path configuration:** this is another common one. double-check that your application’s configuration is pointing to the correct path for the certificate inside the container. this may mean editing your application configuration files, environment variables, or command line arguments. this is the most basic error anyone can do (me included) even though it is really simple to fix, it can take a very long time to find out.
+- **application path configuration:** this is another common one. double-check that your application’s configuration is pointing to the correct path for the certificate inside the container. this may mean editing your application configuration files, environment variables, or command line arguments. this is the most basic error anyone can do (me included) even though it is really simple to fix, it can take a very long time to find out.
 
 **scenario 3: using azure key vault for certificates**
 
@@ -116,8 +116,8 @@ this python script is using cryptography library to load the certificate. you'll
 
 **recommendations and resources**
 
-*   **azure documentation:** the official microsoft azure documentation is your best source of information. look for the azure container apps specific pages on managing secrets and managed identities.
-*   **docker docs:** familiarize yourself with the best practices when creating docker images (especially for security).
-*   **security best practices:** look at papers about application security like owasp.
+- **azure documentation:** the official microsoft azure documentation is your best source of information. look for the azure container apps specific pages on managing secrets and managed identities.
+- **docker docs:** familiarize yourself with the best practices when creating docker images (especially for security).
+- **security best practices:** look at papers about application security like owasp.
 
 i hope this helps. let me know if you hit any more snags. we've all been there, and sometimes it just takes some focused troubleshooting. this stuff can be annoying sometimes. but once you grasp the core concepts you will be fine. good luck!

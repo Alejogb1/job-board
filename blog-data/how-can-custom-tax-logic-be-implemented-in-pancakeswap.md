@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-custom-tax-logic-be-implemented-in-pancakeswap"
 ---
 
-Okay, let's tackle this one. I remember a particularly challenging project back in the early days of defi where we had to implement a rather intricate tax structure for a yield-farming protocol on a fork of an early AMM model. It wasn't pancakeSwap precisely, but the core principles of incorporating custom logic into token transfers, especially taxation, are quite similar. Dealing with that experience gave me some practical insights I’d be happy to share concerning your question about pancakeSwap.
+, let's tackle this one. I remember a particularly challenging project back in the early days of defi where we had to implement a rather intricate tax structure for a yield-farming protocol on a fork of an early AMM model. It wasn't pancakeSwap precisely, but the core principles of incorporating custom logic into token transfers, especially taxation, are quite similar. Dealing with that experience gave me some practical insights I’d be happy to share concerning your question about pancakeSwap.
 
 Fundamentally, pancakeSwap, like most decentralized exchanges, operates on the principle of automated market makers (AMMs) and the transfer of erc-20 tokens. Implementing custom tax logic means inserting code that alters the standard token transfer mechanism when trading on the platform. This isn't something that pancakeSwap directly provides, per se, as its core functionality is the trading mechanism. Instead, you need to implement this logic within the contract of the token itself, not the pancakeSwap exchange contracts. Let’s clarify that crucial distinction; the tax isn’t enforced by pancakeSwap, but by the logic embedded within the specific token’s smart contract being used for trading.
 
@@ -142,6 +142,7 @@ contract DynamicTaxedToken is ERC20 {
 }
 }
 ```
+
 In this iteration, we use an array, `exchangeAddresses`, to hold known exchange contract addresses. When a transfer is initiated, the `recipient` is checked against this array, and the appropriate tax is applied: `exchangeTaxRate` if it's a known exchange, otherwise, `walletTaxRate`. The `Arrays.contains` is taken from the openzeppelin library. The tax rates and the ability to add or remove exchange addresses are configurable by the contract owner.
 
 **Example 3: Tax Redistribution to Holders**
@@ -219,7 +220,7 @@ Here, we iterate through every token holder and distribute tax based on their pr
 
 **Important Considerations and Further Reading**
 
-Implementing custom tax logic like this can lead to a token with different behavior compared to a standard ERC20, but is how many tokens achieve their desired tax mechanisms.  It's critical to thoroughly test these smart contracts. Audits from reputable blockchain security firms are highly recommended before deploying such code to a live network. Thorough unit and integration testing is non-negotiable. For a deeper dive, I would highly recommend examining the source code of battle-tested, publicly released tokens that have similar tax mechanisms you’re looking to implement, which often provide specific implementation detail.
+Implementing custom tax logic like this can lead to a token with different behavior compared to a standard ERC20, but is how many tokens achieve their desired tax mechanisms. It's critical to thoroughly test these smart contracts. Audits from reputable blockchain security firms are highly recommended before deploying such code to a live network. Thorough unit and integration testing is non-negotiable. For a deeper dive, I would highly recommend examining the source code of battle-tested, publicly released tokens that have similar tax mechanisms you’re looking to implement, which often provide specific implementation detail.
 
 Furthermore, while the provided examples demonstrate the basic mechanics, there are always trade-offs to be considered. Increased complexity can drive up gas costs. Also, be mindful of reentrancy issues and other security vulnerabilities that can be introduced through complex transfer logic, especially when interacting with external contracts or the chain directly. If you are looking into deeper considerations of security implications you can check out "Mastering Ethereum" by Andreas Antonopoulos, Gavin Wood, which covers many security issues to be aware of. For erc-20 specific standard details you should review the EIP-20 specification itself. If you’re seeking best-practices for writing safe smart contracts you can reference the material in the “Solidity documentation” official material and additionally the book “Programming Ethereum” by Andreas Antonopoulos and Dr. Gavin Wood.
 

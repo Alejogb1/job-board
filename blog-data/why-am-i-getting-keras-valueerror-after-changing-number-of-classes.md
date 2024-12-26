@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-keras-valueerror-after-changing-number-of-classes"
 ---
 
-Alright, let's tackle this. I’ve seen this particular `ValueError` with Keras more times than I care to count, and it almost always boils down to a mismatch in the expected shape of your data, specifically concerning the output layer and the loss function when you alter the number of classes. It's a common hiccup, especially during iterative model development, and it’s definitely solvable once we pinpoint the root cause.
+, let's tackle this. I’ve seen this particular `ValueError` with Keras more times than I care to count, and it almost always boils down to a mismatch in the expected shape of your data, specifically concerning the output layer and the loss function when you alter the number of classes. It's a common hiccup, especially during iterative model development, and it’s definitely solvable once we pinpoint the root cause.
 
 The core issue stems from the fact that Keras, and indeed most deep learning frameworks, demand consistency between the number of units in your output layer, the shape of your target data (your labels), and the chosen loss function. When you change the number of classes, you are, in essence, altering the fundamental dimensionality of your classification problem. The model, without proper adjustments, will stubbornly expect the previous dimensionality, resulting in the `ValueError`.
 
@@ -154,12 +154,12 @@ model_incorrect_labels.fit(X_train_new, y_train_correct_labels, epochs = 1)
 
 For a deeper understanding of these issues and a solid foundation in neural networks and Keras, I'd suggest looking at:
 
-*   **"Deep Learning with Python" by François Chollet:** The creator of Keras offers a great introduction to deep learning with a focus on Keras. Chapters covering classification, output layers, and loss functions are particularly relevant.
+- **"Deep Learning with Python" by François Chollet:** The creator of Keras offers a great introduction to deep learning with a focus on Keras. Chapters covering classification, output layers, and loss functions are particularly relevant.
 
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** Provides detailed explanations and practical examples. You can focus on sections related to model building, data preprocessing, and loss function considerations.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** Provides detailed explanations and practical examples. You can focus on sections related to model building, data preprocessing, and loss function considerations.
 
-*   **The official TensorFlow and Keras documentation:** Always the best source for the most up-to-date information and specific implementation details. Look at the API documentation for the `Dense` layer, different loss functions like `categorical_crossentropy`, and `sparse_categorical_crossentropy`. Pay close attention to the expected input shapes and dimensions.
+- **The official TensorFlow and Keras documentation:** Always the best source for the most up-to-date information and specific implementation details. Look at the API documentation for the `Dense` layer, different loss functions like `categorical_crossentropy`, and `sparse_categorical_crossentropy`. Pay close attention to the expected input shapes and dimensions.
 
-*   **The original papers on softmax activation:** Understanding how softmax computes probabilities can be key to debugging these issues. Read about softmax and its properties in relation to neural networks.
+- **The original papers on softmax activation:** Understanding how softmax computes probabilities can be key to debugging these issues. Read about softmax and its properties in relation to neural networks.
 
 In conclusion, consistently check your output layer dimensions against your number of classes, ensure correct encoding for your labels (one-hot versus integer) depending on your chosen loss function, and also review the range of possible values for those labels. These straightforward steps will prevent you from wasting hours debugging code that is not the actual problem. This has been my experience, and by paying close attention to the details, you’ll quickly find these `ValueErrors` to be more of an inconvenience rather than a major blocker.

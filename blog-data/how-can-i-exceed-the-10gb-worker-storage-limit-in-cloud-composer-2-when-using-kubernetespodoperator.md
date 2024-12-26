@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-exceed-the-10gb-worker-storage-limit-in-cloud-composer-2-when-using-kubernetespodoperator"
 ---
 
-Okay, let's tackle this. I’ve been down this road myself, more times than I care to remember, and it's a common pain point when scaling workflows on Cloud Composer. The 10GB limit on worker storage for the `KubernetesPodOperator` can feel restrictive, especially when dealing with larger datasets or complex processing pipelines. It's not a hard limit in the sense that there's no workaround; it's more about understanding how Kubernetes volumes and resource requests interact within the Cloud Composer ecosystem.
+, let's tackle this. I’ve been down this road myself, more times than I care to remember, and it's a common pain point when scaling workflows on Cloud Composer. The 10GB limit on worker storage for the `KubernetesPodOperator` can feel restrictive, especially when dealing with larger datasets or complex processing pipelines. It's not a hard limit in the sense that there's no workaround; it's more about understanding how Kubernetes volumes and resource requests interact within the Cloud Composer ecosystem.
 
 The core issue stems from how Cloud Composer’s underlying GKE cluster provisions worker nodes. Each worker gets a default persistent disk with 10GB of storage, and that's where your pod’s workspace is typically mounted. When your `KubernetesPodOperator` tasks exceed this limit, things can get messy – tasks failing, pods being evicted due to lack of disk space, and generally a frustrating experience. Here’s how I’ve addressed this in various projects, focusing on the core concepts of volume management and data handling:
 
@@ -169,12 +169,12 @@ The `my_temp_processor.py` script would then use `/temp/` as a work directory fo
 
 **Considerations and Best Practices:**
 
-*   **Cost:** Using persistent storage will have ongoing storage costs, so keep those in mind, especially with data that needs to be actively written and retained. GCS, while cost effective, will still have egress charges and storage costs, so monitor it carefully.
-*   **Performance:** For large datasets, direct cloud storage integration often performs better due to its optimized data retrieval. Network performance is key here.
-*   **Security:** Ensure your Kubernetes pods have appropriate access rights when accessing cloud storage. Utilize service accounts and secrets correctly.
-*   **Data Management:** Implement robust data handling within your scripts. If utilising GCS or similar object storage for temporary data, ensure any temporary files are cleaned up once the task is complete.
-*   **Resource Requests and Limits:** Define reasonable resource requests and limits for your pods. While this directly addresses the storage constraint, it's a crucial practice for pod stability and resource consumption within Kubernetes.
-*   **Documentation:** Familiarize yourself with the official Kubernetes documentation regarding volume types and their usage, it's invaluable: Kubernetes Volumes Documentation. Also, I'd advise looking at *Kubernetes in Action* by Marko Luksa, for a deep dive into Kubernetes architecture and resource management. For GCS specific operations, the Google Cloud Client Library documentation and their related books like *Programming Google Cloud Platform* by Rui Costa et al are a good start.
-*   **Monitoring:** Regularly monitor your cluster and pod storage usage. Tools like Cloud Monitoring and Kubernetes dashboard are invaluable here.
+- **Cost:** Using persistent storage will have ongoing storage costs, so keep those in mind, especially with data that needs to be actively written and retained. GCS, while cost effective, will still have egress charges and storage costs, so monitor it carefully.
+- **Performance:** For large datasets, direct cloud storage integration often performs better due to its optimized data retrieval. Network performance is key here.
+- **Security:** Ensure your Kubernetes pods have appropriate access rights when accessing cloud storage. Utilize service accounts and secrets correctly.
+- **Data Management:** Implement robust data handling within your scripts. If utilising GCS or similar object storage for temporary data, ensure any temporary files are cleaned up once the task is complete.
+- **Resource Requests and Limits:** Define reasonable resource requests and limits for your pods. While this directly addresses the storage constraint, it's a crucial practice for pod stability and resource consumption within Kubernetes.
+- **Documentation:** Familiarize yourself with the official Kubernetes documentation regarding volume types and their usage, it's invaluable: Kubernetes Volumes Documentation. Also, I'd advise looking at _Kubernetes in Action_ by Marko Luksa, for a deep dive into Kubernetes architecture and resource management. For GCS specific operations, the Google Cloud Client Library documentation and their related books like _Programming Google Cloud Platform_ by Rui Costa et al are a good start.
+- **Monitoring:** Regularly monitor your cluster and pod storage usage. Tools like Cloud Monitoring and Kubernetes dashboard are invaluable here.
 
 In summary, surpassing the 10GB worker storage limitation for `KubernetesPodOperator` isn’t about brute force but rather understanding and utilising the flexibility of Kubernetes’ volume management. Choosing the appropriate solution depends entirely on your specific requirements for data persistence, size, and access patterns. It’s always a trade off, so careful consideration and testing are required.

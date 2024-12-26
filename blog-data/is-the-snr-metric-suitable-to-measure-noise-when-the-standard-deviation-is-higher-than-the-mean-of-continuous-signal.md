@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "is-the-snr-metric-suitable-to-measure-noise-when-the-standard-deviation-is-higher-than-the-mean-of-continuous-signal"
 ---
 
-alright, let's talk about signal-to-noise ratio (snr) and when it kinda… breaks down. you’ve hit on a really key point here – the relationship between the mean and standard deviation of your signal and how that messes with snr.
+, let's talk about signal-to-noise ratio (snr) and when it kinda… breaks down. you’ve hit on a really key point here – the relationship between the mean and standard deviation of your signal and how that messes with snr.
 
 snr, at its core, is all about comparing the power of your desired signal to the power of the noise contaminating it. classically, it’s defined as the ratio of signal power to noise power, often expressed in decibels (db). you calculate the power as the square of the signal's amplitude. for a single tone or a constant signal we can use the root mean square (rms) to get the ‘power’. so when we have a signal and some kind of noise we are trying to do this:
 
@@ -25,7 +25,7 @@ print(f"snr in db: {calculate_snr(signal, noise):.2f} db")
 
 ```
 
-now, what happens when that standard deviation gets larger than the mean? well, the snr starts to lose its meaning, badly.  the basic assumption behind snr is that the ‘signal’ is well, significant. if the variability (standard deviation) is bigger than the average itself, you do not have a well-defined signal.
+now, what happens when that standard deviation gets larger than the mean? well, the snr starts to lose its meaning, badly. the basic assumption behind snr is that the ‘signal’ is well, significant. if the variability (standard deviation) is bigger than the average itself, you do not have a well-defined signal.
 
 let's use an illustrative example, you know, something i actually stumbled upon a while back when i was working on this crazy acoustic sensor project for underwater vehicles. basically, we were trying to detect these really faint whale calls – which is already not easy. and the background noise, it was horrendous from the ship’s motors and, like, random sea activity.
 
@@ -67,11 +67,11 @@ so, if not snr, what should we use? well it depends on what you are trying to fi
 
 sometimes you are more interested in detecting a signal than measuring its power relative to noise. and that is when you can try alternative metrics that aren’t tied to this power ratio. for example:
 
-*   **signal detection theory (sdt) based metrics**: sdt introduces the concept of detection performance, where you're trying to differentiate a signal event from background noise. metrics like d-prime (d’) can give you a better sense of how easy it is to discriminate between signal and noise, particularly when the noise is dominant. d-prime is basically calculated as the difference between the means of the signal-plus-noise and the noise-only distributions, divided by the standard deviation of the noise distribution. it gives you a more robust measure of signal detectability. the caveat here is that it assumes you can define the signal and noise distributions clearly and that you are doing a detection task.
+- **signal detection theory (sdt) based metrics**: sdt introduces the concept of detection performance, where you're trying to differentiate a signal event from background noise. metrics like d-prime (d’) can give you a better sense of how easy it is to discriminate between signal and noise, particularly when the noise is dominant. d-prime is basically calculated as the difference between the means of the signal-plus-noise and the noise-only distributions, divided by the standard deviation of the noise distribution. it gives you a more robust measure of signal detectability. the caveat here is that it assumes you can define the signal and noise distributions clearly and that you are doing a detection task.
 
-*   **normalized mean square error (nmse)**: while not directly a measure of noise, nmse looks at the total error in approximating a given signal by another. if you consider your 'noisy' signal as an approximation to the 'clean' one, then nmse becomes a metric for noise presence, and unlike snr, it’s less sensitive to the situation where your signal has a small mean but significant variability. it basically normalizes the error by the average power of the clean signal which makes it behave more predictably under varying conditions. here you need a reference signal considered clean, which might not be always the case.
+- **normalized mean square error (nmse)**: while not directly a measure of noise, nmse looks at the total error in approximating a given signal by another. if you consider your 'noisy' signal as an approximation to the 'clean' one, then nmse becomes a metric for noise presence, and unlike snr, it’s less sensitive to the situation where your signal has a small mean but significant variability. it basically normalizes the error by the average power of the clean signal which makes it behave more predictably under varying conditions. here you need a reference signal considered clean, which might not be always the case.
 
-*   **cepstral analysis**: if your noise is periodic (like from machines), techniques that look at the signal's cepstrum can pull out features that might be buried by the noise. the cepstrum represents the rate of change of the spectrum of a signal, kind of like a “spectrum of the spectrum”. periodic noise components often show up as spikes in the cepstrum, which makes it easier to filter them out. i’ve used it when a device we were testing had a very annoying oscillating frequency that masked lower amplitudes.
+- **cepstral analysis**: if your noise is periodic (like from machines), techniques that look at the signal's cepstrum can pull out features that might be buried by the noise. the cepstrum represents the rate of change of the spectrum of a signal, kind of like a “spectrum of the spectrum”. periodic noise components often show up as spikes in the cepstrum, which makes it easier to filter them out. i’ve used it when a device we were testing had a very annoying oscillating frequency that masked lower amplitudes.
 
 here’s a brief, kinda simplistic example of calculating d’:
 

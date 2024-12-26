@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "what-are-the-resolvable-bootstrap-urls-for-kafka"
 ---
 
-Okay, let's talk about resolvable bootstrap urls for kafka – I’ve definitely spent my fair share of time troubleshooting connection issues tied to this. It’s not just a matter of listing them; it's about understanding what "resolvable" really means in the context of a distributed system like Kafka, especially when you're dealing with diverse network configurations, containers, and cloud deployments.
+, let's talk about resolvable bootstrap urls for kafka – I’ve definitely spent my fair share of time troubleshooting connection issues tied to this. It’s not just a matter of listing them; it's about understanding what "resolvable" really means in the context of a distributed system like Kafka, especially when you're dealing with diverse network configurations, containers, and cloud deployments.
 
 The bootstrap url, or bootstrap servers list, is essentially the entry point for Kafka clients to discover the entire cluster. It's a comma-separated list of host:port pairs. For example, `kafka1.example.com:9092,kafka2.example.com:9092,kafka3.example.com:9092`. Now, the crux of the matter is the 'resolvable' part. A url is resolvable when the client application, wherever it's running, can translate the hostname in the url into an ip address using a name resolution system, typically dns. A classic issue occurs when a client attempts to resolve a hostname that exists in a different network scope. For example, a containerized application might use hostnames that are only resolvable within the container's network namespace, and these hostnames would not be resolvable by a client outside that namespace.
 
-This was particularly apparent during my work on a microservices project a few years back. We had Kafka running within a Kubernetes cluster, exposed internally using service hostnames – something like `kafka-service.kafka-ns.svc.cluster.local:9092`. While perfectly usable *within* the cluster, this bootstrap url was useless for any clients running outside the cluster. Clients were erroring out with inability to resolve the hostnames. We had to expose the brokers with hostnames that were resolvable outside the cluster and reconfigure the clients to use the external address and ports.
+This was particularly apparent during my work on a microservices project a few years back. We had Kafka running within a Kubernetes cluster, exposed internally using service hostnames – something like `kafka-service.kafka-ns.svc.cluster.local:9092`. While perfectly usable _within_ the cluster, this bootstrap url was useless for any clients running outside the cluster. Clients were erroring out with inability to resolve the hostnames. We had to expose the brokers with hostnames that were resolvable outside the cluster and reconfigure the clients to use the external address and ports.
 
-The first major point to understand is that these are *not* broker addresses per se. The bootstrap list only gives the client a starting point. Once connected, the client queries these initial brokers for the full list of brokers that comprise the cluster, including their internal endpoints. Thus, while you *need* resolvable addresses in the bootstrap list, these addresses don’t dictate the addresses the client uses for communication *after* the initial handshake.
+The first major point to understand is that these are _not_ broker addresses per se. The bootstrap list only gives the client a starting point. Once connected, the client queries these initial brokers for the full list of brokers that comprise the cluster, including their internal endpoints. Thus, while you _need_ resolvable addresses in the bootstrap list, these addresses don’t dictate the addresses the client uses for communication _after_ the initial handshake.
 
 Here’s a breakdown of the typical issues and their remedies:
 
@@ -18,19 +18,19 @@ Here’s a breakdown of the typical issues and their remedies:
 
 1.  **DNS Issues:** The most frequent problem. The hostnames in your bootstrap list simply might not resolve to IP addresses from the client’s perspective.
 
-    *   **Solution:** Check your dns configuration. If you're in a containerized environment or a virtual network, ensure that the dns service can resolve the hostnames to the appropriate ip addresses for the network segment your clients are in.
+    - **Solution:** Check your dns configuration. If you're in a containerized environment or a virtual network, ensure that the dns service can resolve the hostnames to the appropriate ip addresses for the network segment your clients are in.
 
 2.  **Network Access:** Even if dns is configured correctly, network firewalls or security groups might be blocking traffic to the specified ports on the Kafka brokers.
 
-    *   **Solution:** Verify the firewall rules to ensure that your client can establish a connection to the bootstrap server ports. This typically involves opening up the designated port (e.g. 9092) on any relevant network firewalls or security groups for the client's ip ranges.
+    - **Solution:** Verify the firewall rules to ensure that your client can establish a connection to the bootstrap server ports. This typically involves opening up the designated port (e.g. 9092) on any relevant network firewalls or security groups for the client's ip ranges.
 
 3.  **Internal vs. External Addresses:** This ties back to my earlier experience. Kafka brokers themselves often bind to internal addresses for communication within the cluster. The address used by brokers to communicate among themselves can and will be different than address the broker makes available for the client. The externally addressable port needs to be specified in a configuration file that kafka reads from at start time. Thus, while the initial client connection utilizes the bootstrap servers, the communication after the initial connection utilizes the address that brokers communicate on.
 
-    *   **Solution:** If you’re dealing with containerized environments or cloud platforms, understand the internal and external networking. You might need to configure separate external access points using load balancers or nodeports and update your bootstrap url accordingly. Also, there is a configuration setting for setting the host that kafka advertises to clients, and this must be set to an externally addressable address if external clients need to connect directly to the broker.
+    - **Solution:** If you’re dealing with containerized environments or cloud platforms, understand the internal and external networking. You might need to configure separate external access points using load balancers or nodeports and update your bootstrap url accordingly. Also, there is a configuration setting for setting the host that kafka advertises to clients, and this must be set to an externally addressable address if external clients need to connect directly to the broker.
 
 4.  **Incorrect port numbers:** It's worth repeating that the port number must be the port that the external clients are using. If the clients are connecting via an externally facing load balancer, that port must be used in the bootstrap url and if clients are connecting directly to kafka, the port number must be the port number the kafka brokers are listening to and advertising to clients.
 
-    *   **Solution:** Check the port numbers carefully. If you are using a load balancer or external service, ensure that the port in your client bootstrap urls match the port the load balancer is listening on.
+    - **Solution:** Check the port numbers carefully. If you are using a load balancer or external service, ensure that the port in your client bootstrap urls match the port the load balancer is listening on.
 
 **Code Snippets to Illustrate**
 
@@ -94,7 +94,7 @@ Here, `kafka.external.example.com` is assumed to be an externally resolvable hos
 For a comprehensive understanding of kafka networking, I highly recommend these sources:
 
 1.  **"Kafka: The Definitive Guide" by Neha Narkhede, Gwen Shapira, and Todd Palino:** This is an invaluable resource for all things kafka. Specifically, the chapters on cluster configuration, networking, and security are directly relevant to our topic here.
-2. **Apache Kafka documentation:** The official documentation is always a primary resource. Look at the section dedicated to broker configurations and networking.
+2.  **Apache Kafka documentation:** The official documentation is always a primary resource. Look at the section dedicated to broker configurations and networking.
 3.  **Kubernetes Networking Documentation:** If you're using kafka in Kubernetes, understanding how services, ingress controllers, and network policies work in the kubernetes is essential for resolving networking and reachability issues.
 
 In essence, resolving bootstrap url issues isn't just about listing addresses; it’s about understanding your networking topology, ensuring correct dns resolution, proper port configurations and matching the client's viewpoint of the network with the brokers network reachability. When I've run into connection problems in the past, it always comes down to a few of these common scenarios. So, make sure to examine your environment closely and take all the steps laid out. Remember, it is crucial to ensure clients can resolve hostnames and are able to communicate with brokers, and a structured approach to debugging these issues will save you much time.

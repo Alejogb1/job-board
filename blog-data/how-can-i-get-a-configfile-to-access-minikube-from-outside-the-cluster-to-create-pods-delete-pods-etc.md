@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-get-a-configfile-to-access-minikube-from-outside-the-cluster-to-create-pods-delete-pods-etc"
 ---
 
-Okay, let’s tackle this. It's a common scenario, and one I’ve personally encountered a few times, usually when setting up local development environments or CI pipelines. The core challenge is ensuring your `kubectl` client, running outside the minikube VM, has the correct configuration to interact with the cluster's api server. Simply put, we need to provide it with the appropriate authentication and endpoint details.
+, let’s tackle this. It's a common scenario, and one I’ve personally encountered a few times, usually when setting up local development environments or CI pipelines. The core challenge is ensuring your `kubectl` client, running outside the minikube VM, has the correct configuration to interact with the cluster's api server. Simply put, we need to provide it with the appropriate authentication and endpoint details.
 
 Now, when you initially install minikube, it configures `kubectl` on your host machine to communicate with the newly created cluster, generating a kubeconfig file for this purpose. However, this file is usually specific to your local user context and may not be immediately accessible or usable from other environments, including those running within different terminal sessions or, crucially, from other applications outside the confines of your shell.
 
@@ -14,13 +14,13 @@ So, how do we access this information and use it reliably from any context outsi
 
 Here’s the breakdown of the process and some key techniques:
 
-First, it's helpful to understand *why* a simple copy-paste of the kubeconfig might fail. The main reason is that the kubeconfig stores *local* paths to certificates and keys. For example, a certificate might point to `/home/youruser/.minikube/certs/apiserver.crt` inside the minikube vm. When you use this from the host, the path is likely invalid. Thus, what needs to be done is adjusting for these paths or providing the data directly. We don't need to necessarily extract from the minikube vm, it is perfectly sufficient to get the data from our local host environment.
+First, it's helpful to understand _why_ a simple copy-paste of the kubeconfig might fail. The main reason is that the kubeconfig stores _local_ paths to certificates and keys. For example, a certificate might point to `/home/youruser/.minikube/certs/apiserver.crt` inside the minikube vm. When you use this from the host, the path is likely invalid. Thus, what needs to be done is adjusting for these paths or providing the data directly. We don't need to necessarily extract from the minikube vm, it is perfectly sufficient to get the data from our local host environment.
 
 Let's examine some concrete examples, along with associated code.
 
 **Approach 1: Explicit Kubeconfig Path**
 
-This is the most straightforward solution for situations where you want to access minikube from a script or application running on the *same* machine as where minikube is running. It involves explicitly telling `kubectl` where to find the kubeconfig file.
+This is the most straightforward solution for situations where you want to access minikube from a script or application running on the _same_ machine as where minikube is running. It involves explicitly telling `kubectl` where to find the kubeconfig file.
 
 ```bash
 #!/bin/bash
@@ -52,6 +52,7 @@ First, find the name of the minikube context:
 ```bash
 kubectl config get-contexts
 ```
+
 This command will show you available contexts; usually, one will be named `minikube`.
 
 Now, use the context name in your kubectl commands:
@@ -88,11 +89,12 @@ if __name__ == "__main__":
    delete_pod(minikube_context)
 
 ```
+
 Here, I've used Python to execute kubectl commands. The key is passing `--context` followed by the minikube context name with every invocation. This helps to avoid confusion when you're working with multiple clusters or configurations. You can easily adapt this approach to other scripting or application languages.
 
 **Approach 3: Embedding the Config Data**
 
-In more advanced scenarios, where you may not want to rely on the environment or external files, you can use the *in-memory* method. This approach involves directly embedding the crucial parts of the `kubeconfig` file as strings within your application. While this could be a convenient method, it's worth noting security considerations as this method stores tokens or certs directly.
+In more advanced scenarios, where you may not want to rely on the environment or external files, you can use the _in-memory_ method. This approach involves directly embedding the crucial parts of the `kubeconfig` file as strings within your application. While this could be a convenient method, it's worth noting security considerations as this method stores tokens or certs directly.
 
 ```python
 from kubernetes import config, client

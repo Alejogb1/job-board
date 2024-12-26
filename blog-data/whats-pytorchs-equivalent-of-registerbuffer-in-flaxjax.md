@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "whats-pytorchs-equivalent-of-registerbuffer-in-flaxjax"
 ---
 
-Okay, let's talk about replicating the behavior of pytorch’s `register_buffer` within a flax/jax environment. It’s a question that comes up quite a bit, especially when transitioning between the two frameworks. I remember dealing with this very issue a few years back when my team was migrating a complex forecasting model from pytorch to jax. We had relied heavily on `register_buffer` for various state variables, and finding the correct approach in flax took some careful consideration and a bit of experimentation.
+, let's talk about replicating the behavior of pytorch’s `register_buffer` within a flax/jax environment. It’s a question that comes up quite a bit, especially when transitioning between the two frameworks. I remember dealing with this very issue a few years back when my team was migrating a complex forecasting model from pytorch to jax. We had relied heavily on `register_buffer` for various state variables, and finding the correct approach in flax took some careful consideration and a bit of experimentation.
 
-At its core, `register_buffer` in pytorch is designed to hold tensors that are part of a module's state, but which are *not* considered model parameters that should be optimized during backpropagation. These buffers are typically used for things like running mean and variance in batch normalization, fixed embeddings, or any other persistent state that evolves through forward passes but shouldn’t be updated via gradient descent.
+At its core, `register_buffer` in pytorch is designed to hold tensors that are part of a module's state, but which are _not_ considered model parameters that should be optimized during backpropagation. These buffers are typically used for things like running mean and variance in batch normalization, fixed embeddings, or any other persistent state that evolves through forward passes but shouldn’t be updated via gradient descent.
 
-Flax, being a functional framework, takes a somewhat different approach. There isn’t a direct equivalent like `register_buffer` that you can simply call. Instead, we leverage flax's parameter handling system in conjunction with the *concept* of mutable variables to achieve a similar effect. It’s not a single function call, but rather a design pattern that's pretty effective.
+Flax, being a functional framework, takes a somewhat different approach. There isn’t a direct equivalent like `register_buffer` that you can simply call. Instead, we leverage flax's parameter handling system in conjunction with the _concept_ of mutable variables to achieve a similar effect. It’s not a single function call, but rather a design pattern that's pretty effective.
 
 The crucial distinction here lies in flax's explicit state management. Flax parameters (created using `self.param` in a module) are designed to be updated by optimizers. To hold variables that are not parameters, we need to use a combination of `self.variable` and a specific 'collection' to differentiate these from the model's trainable parameters. We typically use the collection named 'batch_stats' for this, or create custom collections if needed.
 
@@ -105,7 +105,7 @@ print("Embedding output shape: ", output.shape)
 
 In this case, the `fixed_embedding_matrix` is defined within the 'params' collection, initialized with random values and marked as immutable by default. The model does not intend to change the embedding matrix via gradient descent, making it analogous to a buffer in pytorch terms.
 
-A final example, using a slightly more complex case -  a stateful layer that maintains its internal state across calls:
+A final example, using a slightly more complex case - a stateful layer that maintains its internal state across calls:
 
 ```python
 class StatefulLayer(nn.Module):
@@ -138,7 +138,8 @@ print("Output shape after second call:", output_2.shape)
 print("Updated state after second call:", state_2)
 
 ```
-Here, we keep the internal state within a mutable variable named 'internal\_state' under the collection ‘state’, which is updated every call of the module and used in the calculation. The `mutable=['state']` argument informs the `apply` function to allow modifications to the ‘state’ collection.
+
+Here, we keep the internal state within a mutable variable named 'internal_state' under the collection ‘state’, which is updated every call of the module and used in the calculation. The `mutable=['state']` argument informs the `apply` function to allow modifications to the ‘state’ collection.
 
 In summary, while flax lacks a direct equivalent to `register_buffer`, we achieve similar functionality using `self.variable` and different variable collections along with `mutable` flags. It's crucial to understand this distinction – in flax, everything is explicit. This design promotes clarity and avoids hidden state changes, making your models more predictable and debuggable, a benefit I appreciated greatly as I navigated my own transition from pytorch.
 

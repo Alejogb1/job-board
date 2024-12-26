@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "what-is-the-best-approach-to-build-a-model-with-multiple-targets-on-the-y-set"
 ---
 
-alright, so tackling multiple targets in your y set, right? been there, done that, got the t-shirt (and a few sleepless nights). it's a common problem, and thankfully, we've got a few solid paths we can take. it really boils down to the nature of your targets and what kind of relationship you expect between them. let's walk through it.
+, so tackling multiple targets in your y set, right? been there, done that, got the t-shirt (and a few sleepless nights). it's a common problem, and thankfully, we've got a few solid paths we can take. it really boils down to the nature of your targets and what kind of relationship you expect between them. let's walk through it.
 
 first, let's break down what we mean by "multiple targets." are we talking about:
 
-*   **multi-label classification?** this is where each instance can have multiple labels active at the same time. think tagging images with keywords, where one image could be "cat," "indoors," and "sleeping."
-*   **multi-output regression?** here, we're predicting multiple continuous values. for example, predicting the temperature, humidity, and wind speed all at once.
-*   **a mix of classification and regression targets?** it happens. maybe you're trying to predict a product category *and* its price, or a patient’s disease *and* their age.
+- **multi-label classification?** this is where each instance can have multiple labels active at the same time. think tagging images with keywords, where one image could be "cat," "indoors," and "sleeping."
+- **multi-output regression?** here, we're predicting multiple continuous values. for example, predicting the temperature, humidity, and wind speed all at once.
+- **a mix of classification and regression targets?** it happens. maybe you're trying to predict a product category _and_ its price, or a patient’s disease _and_ their age.
 
 the approach shifts depending on which one of these you're facing.
 
@@ -176,4 +176,4 @@ now, for resources, i would highly recommend checking out the "elements of stati
 
 as a bonus, let me throw in a little joke: what did the machine learning model say to the dataset with multiple targets? "you're more than a single feature to me, i can see you have many sides". i know, i know, i should stop.
 
-so, in short, you have options. start simple with independent models if your targets allow, but don't hesitate to explore multi-output models, particularly deep learning or gradient boosting, if you have that type of data. always test what works best for *your* particular case; there is no magic formula. and hey, happy modeling!
+so, in short, you have options. start simple with independent models if your targets allow, but don't hesitate to explore multi-output models, particularly deep learning or gradient boosting, if you have that type of data. always test what works best for _your_ particular case; there is no magic formula. and hey, happy modeling!

@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "what-causes-the-uninitialized-constant-error-when-reloading-a-ruby-application-after-enabling-zeitwerk"
 ---
 
-Okay, let's dissect this. I've certainly spent my fair share of evenings staring at `uninitialized constant` errors after flipping the zeitwerk switch, and let me tell you, it’s rarely a straightforward ‘aha!’ moment. More often, it’s a trail of breadcrumbs you have to carefully follow. Let's break down what's going on and why this happens specifically when reloading after zeitwerk adoption.
+, let's dissect this. I've certainly spent my fair share of evenings staring at `uninitialized constant` errors after flipping the zeitwerk switch, and let me tell you, it’s rarely a straightforward ‘aha!’ moment. More often, it’s a trail of breadcrumbs you have to carefully follow. Let's break down what's going on and why this happens specifically when reloading after zeitwerk adoption.
 
 The core issue stems from how zeitwerk, the modern code loader for Ruby, differs from the traditional, often implicit, autoloading mechanisms. Think of autoloading as a kind of 'lazy loading' driven by ruby’s require mechanism. When a constant is encountered that ruby hasn’t seen yet, it kicks off the require process to locate it, using a predefined set of load paths. This often works well enough, but it has some drawbacks - race conditions during multi-threading scenarios, potential for inconsistencies and slower startup.
 
 Zeitwerk, in contrast, is proactive. Instead of relying on implicit constant lookup to trigger file loads, it scans your project’s directory structure upon startup, building a mapping of file paths to their corresponding class and module names. This ‘map’ is the source of truth. Instead of relying on the first access to a name, zeitwerk expects that when a specific constant is needed, the file containing that constant is already loaded according to this map, by loading all the files at start-up. This provides speed-ups and avoids any sort of race conditions, making it a much more robust mechanism in general.
 
-So, where does the 'uninitialized constant' come in? It appears during *reloading* because the application’s state becomes inconsistent with what zeitwerk *expects*. When you make a change to your codebase, for example renaming a file or modifying a file that contains a class definition, the code needs to be reloaded, and if this process does not also re-evaluate zeitwerk's map, you'll get errors. Let's explore the scenarios:
+So, where does the 'uninitialized constant' come in? It appears during _reloading_ because the application’s state becomes inconsistent with what zeitwerk _expects_. When you make a change to your codebase, for example renaming a file or modifying a file that contains a class definition, the code needs to be reloaded, and if this process does not also re-evaluate zeitwerk's map, you'll get errors. Let's explore the scenarios:
 
 **Scenario 1: File Renaming/Movement Without Proper Reflection**
 
@@ -53,6 +53,7 @@ class Account
    # ... some code here
 end
 ```
+
 Here, we’re updating the class name, matching the new filename, resolving the naming inconsistency, and removing the root cause of the uninitialized constant error.
 
 **Example 2: Naming Mismatch**
@@ -69,6 +70,7 @@ end
 ```
 
 The fix is to ensure class definitions align with the file path and naming conventions.
+
 ```ruby
 # app/services/user_processor.rb (Corrected)
 class UserProcessor
@@ -77,9 +79,11 @@ class UserProcessor
    end
 end
 ```
+
 This demonstrates that the class name needs to match the snake case version of the file name.
 
 **Example 3: Circular Dependencies**
+
 ```ruby
 # app/models/post.rb
 class Post
@@ -90,6 +94,7 @@ class Post
 end
 
 ```
+
 ```ruby
 # app/models/comment.rb
 class Comment
@@ -120,10 +125,10 @@ To ensure stability when dealing with these kinds of problems, always try to kee
 
 To dig deeper, I'd recommend you consult the following:
 
-*   **The "Zeitwerk" gem documentation:** It is absolutely essential to understand how zeitwerk works; this gem's documentation (available on RubyGems and Github) will always be your first point of reference.
+- **The "Zeitwerk" gem documentation:** It is absolutely essential to understand how zeitwerk works; this gem's documentation (available on RubyGems and Github) will always be your first point of reference.
 
-*   **"The Ruby Programming Language" by David Flanagan and Yukihiro Matsumoto**: This provides a foundational understanding of ruby's object model, which is critical in understanding how class loading operates in general, and can help you understand how the traditional autoloader works.
+- **"The Ruby Programming Language" by David Flanagan and Yukihiro Matsumoto**: This provides a foundational understanding of ruby's object model, which is critical in understanding how class loading operates in general, and can help you understand how the traditional autoloader works.
 
-*   **"Confident Ruby" by Avdi Grimm**: This helps solidify principles for building well-structured code, which aids in avoiding issues like circular dependencies and confusing namespace hierarchies.
+- **"Confident Ruby" by Avdi Grimm**: This helps solidify principles for building well-structured code, which aids in avoiding issues like circular dependencies and confusing namespace hierarchies.
 
 Remember, understanding how zeitwerk's pre-loading mechanism works is key to preventing these `uninitialized constant` issues during reloading, it is also key to understanding the performance increases that come with it. I have seen many projects that were simply misconfigured due to a failure to understand the conventions that the zeitwerk gem follows, so learning about this mechanism will be very beneficial. By being meticulous about following zeitwerk's conventions and by adopting best practices for project structure, you will be able to avoid most, if not all, of these errors. Good luck, and may your constants always be initialized!

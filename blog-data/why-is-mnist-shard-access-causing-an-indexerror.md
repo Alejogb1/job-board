@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-is-mnist-shard-access-causing-an-indexerror"
 ---
 
-Okay, let's break down why you're likely seeing that `indexerror` when accessing mnist shards, because trust me, I've seen this specific error more times than I care to remember. It almost always boils down to a mismatch between how you're slicing your data and how the mnist dataset is structured, especially when dealing with sharding. Consider this a kind of post-mortem analysis from a scenario I encountered a few years back while building a distributed training pipeline for image recognition.
+, let's break down why you're likely seeing that `indexerror` when accessing mnist shards, because trust me, I've seen this specific error more times than I care to remember. It almost always boils down to a mismatch between how you're slicing your data and how the mnist dataset is structured, especially when dealing with sharding. Consider this a kind of post-mortem analysis from a scenario I encountered a few years back while building a distributed training pipeline for image recognition.
 
-The core issue here isn't actually with the mnist dataset itself, but how we typically interact with it through libraries like tensorflow or pytorch datasets. The dataset, essentially, is a large array of images and corresponding labels. Sharding, on the other hand, divides this large array into smaller, manageable pieces, usually for distributed processing or easier loading. The `indexerror` pops up when we mistakenly try to access an index that falls *outside* the boundaries of a particular shard, essentially trying to access data that's not there.
+The core issue here isn't actually with the mnist dataset itself, but how we typically interact with it through libraries like tensorflow or pytorch datasets. The dataset, essentially, is a large array of images and corresponding labels. Sharding, on the other hand, divides this large array into smaller, manageable pieces, usually for distributed processing or easier loading. The `indexerror` pops up when we mistakenly try to access an index that falls _outside_ the boundaries of a particular shard, essentially trying to access data that's not there.
 
 Let’s imagine the mnist data is a long train. Each carriage is a data point (an image, and its label). Now, sharding is like splitting the train into several shorter trains. If you try to look into the tenth carriage of the first small train and there are only 5 carriages, boom - `indexerror`. My experience with image datasets taught me that not accounting for these boundaries is a very common trap.
 
-The key thing to grasp here is that sharding introduces *local indices* for each shard. When you iterate through a sharded dataset using something like `tf.data.Dataset.shard()` in tensorflow or similar functionalities in pytorch, you're not accessing the global data index; rather, each shard has its own independent numbering starting from zero.
+The key thing to grasp here is that sharding introduces _local indices_ for each shard. When you iterate through a sharded dataset using something like `tf.data.Dataset.shard()` in tensorflow or similar functionalities in pytorch, you're not accessing the global data index; rather, each shard has its own independent numbering starting from zero.
 
 Let's walk through some typical scenarios and how they result in the dreaded `indexerror`.
 
@@ -50,11 +50,11 @@ print(f"Number of elements in the sharded dataset: {len(list(sharded_dataset.as_
 
 ```
 
-Here, the important thing to note is that we are trying to access index 30000 *within shard 0*, not within the whole dataset. Since the shard only has 30,000 entries, attempting to access an item beyond the boundary will indeed cause an error, specifically `tf.errors.OutOfRangeError`. This is an illustration of accessing global index where local index is expected.
+Here, the important thing to note is that we are trying to access index 30000 _within shard 0_, not within the whole dataset. Since the shard only has 30,000 entries, attempting to access an item beyond the boundary will indeed cause an error, specifically `tf.errors.OutOfRangeError`. This is an illustration of accessing global index where local index is expected.
 
 **Scenario 2: Shard Indices Out of Range**
 
-Let's switch gears and look at what happens if you're using multiple shards, but your logic for determining which shard to access is faulty. Imagine you’re working with four shards, and your code incorrectly attempts to access a "fifth" shard (shard id equal to 4), which of course, doesn't exist, leading to an `indexerror` when trying to load data from that non-existent shard. The dataset itself is okay but our shard ID is erroneous. This happens when you don't correctly implement distributed training logic. Let's explore a simplified version:
+Let's switch gears and look at what happens if you're using multiple shards, but your logic for determining which shard to access is faulty. Imagine you’re working with four shards, and your code incorrectly attempts to access a "fifth" shard (shard id equal to 4), which of course, doesn't exist, leading to an `indexerror` when trying to load data from that non-existent shard. The dataset itself is but our shard ID is erroneous. This happens when you don't correctly implement distributed training logic. Let's explore a simplified version:
 
 ```python
 import tensorflow as tf
@@ -81,7 +81,7 @@ In this case, tensorflow doesn't return an error as an invalid `shard_id` does n
 
 **Scenario 3: Incorrectly Applying Transformations after Sharding**
 
-Finally, another common place where these errors sneak in is when you are doing transformations on the dataset *after* sharding without being cautious. For example, filtering data might inadvertently reduce the size of a particular shard. If you're not careful to recalculate your boundaries and indices after that transformation, you’ll encounter an error. Take the following, for example:
+Finally, another common place where these errors sneak in is when you are doing transformations on the dataset _after_ sharding without being cautious. For example, filtering data might inadvertently reduce the size of a particular shard. If you're not careful to recalculate your boundaries and indices after that transformation, you’ll encounter an error. Take the following, for example:
 
 ```python
 import tensorflow as tf

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-rails-active-record-encrypt-numerical-data"
 ---
 
-Alright, let's tackle encrypting numerical data in rails active record. it's a common challenge, and i’ve definitely seen my share of implementations, both good and less so, in my time. The trick here isn’t necessarily finding *a way* to do it – there are many – but finding a way that's secure, performant, and maintainable within the rails ecosystem. I've seen projects where the approach was… less than ideal, let's say, and it resulted in performance bottlenecks and security concerns down the line.
+, let's tackle encrypting numerical data in rails active record. it's a common challenge, and i’ve definitely seen my share of implementations, both good and less so, in my time. The trick here isn’t necessarily finding _a way_ to do it – there are many – but finding a way that's secure, performant, and maintainable within the rails ecosystem. I've seen projects where the approach was… less than ideal, let's say, and it resulted in performance bottlenecks and security concerns down the line.
 
 The core problem with numerical data is that it’s inherently structured, unlike plain text. Directly encrypting integers or floats with naive approaches can introduce predictable patterns, especially with small ranges of values. For instance, if you're just directly encrypting product prices, a savvy attacker might start correlating encrypted values with price ranges and potentially break your security. So, we need a more sophisticated strategy.
 
@@ -112,10 +112,11 @@ class Transaction < ApplicationRecord
   encrypts_number_randomized :amount
 end
 ```
+
 This version adds a 20 character hex string to the number before encrypting and then slices it off after decryption. This ensures the input for encryption isn't predictable based solely on the number you are encrypting. You should adjust the length of the random string to your needs, which means you will also need to adjust the amount you slice off.
 
 Finally, if you require more stringent control over the encryption process, it may be worth exploring `ActiveEncryption`, as introduced in Rails 7.1. This provides support for transparently encrypting entire columns using database level encryption techniques and external key management services. You will need to be careful with the migration process, and the performance and setup can be quite complex. I'd recommend looking at the official rails documentation and the `activeencryption` gem’s documentation if you plan on going this route.
 
-For further reading i strongly suggest reading *Applied Cryptography* by Bruce Schneier. It's a thorough and comprehensive guide to the theory and practice of cryptography. For a more practical rails oriented approach, you can check out the official rails guides, especially around `ActiveSupport::MessageEncryptor` and the activeencryption gem documentation. Also, the *Cryptography Engineering* book by Niels Ferguson, Bruce Schneier and Tadayoshi Kohno is an excellent resource, especially for building your intuition around these topics.
+For further reading i strongly suggest reading _Applied Cryptography_ by Bruce Schneier. It's a thorough and comprehensive guide to the theory and practice of cryptography. For a more practical rails oriented approach, you can check out the official rails guides, especially around `ActiveSupport::MessageEncryptor` and the activeencryption gem documentation. Also, the _Cryptography Engineering_ book by Niels Ferguson, Bruce Schneier and Tadayoshi Kohno is an excellent resource, especially for building your intuition around these topics.
 
 These are the general approaches that I have used successfully. When implementing these, always test them thoroughly and be particularly careful when migrating your existing data, as incorrect key management can lead to permanent data loss. Start simple, and incrementally improve the security and complexity based on the specific needs of your application.

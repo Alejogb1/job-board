@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-isnt-the-google-cloud-connection-listed-when-adding-a-new-connection-on-the-airflow-webserver"
 ---
 
-Okay, let's tackle this. It's a scenario I've certainly seen a few times, especially when setting up fresh Airflow environments or when transitioning to cloud-based orchestration. You're looking at the connection management section in the Airflow web UI and, seemingly inexplicably, 'Google Cloud' isn’t an option in the dropdown when adding a new connection. This isn't a bug, per se, but a consequence of how Airflow manages its connections and dependencies. It's usually a matter of missing components or configuration, and it's pretty straightforward to resolve once you understand the underlying mechanics.
+, let's tackle this. It's a scenario I've certainly seen a few times, especially when setting up fresh Airflow environments or when transitioning to cloud-based orchestration. You're looking at the connection management section in the Airflow web UI and, seemingly inexplicably, 'Google Cloud' isn’t an option in the dropdown when adding a new connection. This isn't a bug, per se, but a consequence of how Airflow manages its connections and dependencies. It's usually a matter of missing components or configuration, and it's pretty straightforward to resolve once you understand the underlying mechanics.
 
-The core reason why you're not seeing 'Google Cloud' listed is because the necessary *provider package* isn't installed in your Airflow environment. Think of provider packages as plugins. Airflow, by design, is modular. It doesn't include every possible integration directly in the core installation; it instead relies on these external provider packages. These packages bundle all the code, logic, and dependencies required to interact with external services, such as Google Cloud Platform. For Google Cloud, the relevant package is typically `apache-airflow-providers-google`.
+The core reason why you're not seeing 'Google Cloud' listed is because the necessary _provider package_ isn't installed in your Airflow environment. Think of provider packages as plugins. Airflow, by design, is modular. It doesn't include every possible integration directly in the core installation; it instead relies on these external provider packages. These packages bundle all the code, logic, and dependencies required to interact with external services, such as Google Cloud Platform. For Google Cloud, the relevant package is typically `apache-airflow-providers-google`.
 
 I recall a particularly memorable instance a couple of years back where a new team member was setting up an Airflow instance for a big data pipeline, and they ran headfirst into this exact problem. They had Airflow up and running, could create basic DAGs, but were completely stumped by the absence of the Google Cloud option. It turned out they had just followed the basic installation guide and missed the step about installing the Google provider. It was a perfect illustration of how crucial these provider packages are, and how easy it is to overlook them.
 
@@ -37,11 +37,11 @@ Another layer to this is permissions. Even with the provider installed, if the u
 
 To add a bit more practical context, let’s consider how this plays out when you are actually setting up your Airflow connection through the GUI. Assume you successfully installed `apache-airflow-providers-google` and restarted the web server. Upon navigating to the "Admin" then "Connections" sections in the UI, and clicking on "Create", "Google Cloud" should appear in the dropdown. You can now specify your connection parameters, including:
 
-*   **Connection ID:** A user-defined unique name for your connection, used by your DAGs.
-*   **Connection Type:** Set this to "Google Cloud".
-*   **Project ID:** The identifier of the Google Cloud project you want to connect to.
-*   **Keyfile Path/JSON:** The local path to a valid JSON credentials file, or the JSON content itself.
-*   **Scopes:** A comma-separated list of permissions (scopes) your connection requires.
+- **Connection ID:** A user-defined unique name for your connection, used by your DAGs.
+- **Connection Type:** Set this to "Google Cloud".
+- **Project ID:** The identifier of the Google Cloud project you want to connect to.
+- **Keyfile Path/JSON:** The local path to a valid JSON credentials file, or the JSON content itself.
+- **Scopes:** A comma-separated list of permissions (scopes) your connection requires.
 
 If you are using application default credentials (adc), then you do not need to specify a keyfile path or content, as the gcp authentication process can pick up the credentials automatically if the instance is set up correctly. However, explicitly providing a service account key is generally the preferred method, especially for production environments.
 

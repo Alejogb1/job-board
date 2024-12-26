@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-a-nomethod-error-when-adding-a-new-column-in-adminproductsform"
 ---
 
-alright, so you’re hitting a `nomethoderror` when trying to add a new column to your admin product form. i’ve been there, trust me. it’s one of those errors that looks simple at first glance, but can have a surprising number of root causes. let’s unpack it.
+, so you’re hitting a `nomethoderror` when trying to add a new column to your admin product form. i’ve been there, trust me. it’s one of those errors that looks simple at first glance, but can have a surprising number of root causes. let’s unpack it.
 
 basically, a `nomethoderror` in rails means you're trying to call a method on an object that doesn't actually define that method. in this context, it usually boils down to one of a few things. given you are in `admin/products/_form`, i'm assuming you are using active admin or some other form of rails admin panel. these panels often abstract a lot of the underlying form generation, so it’s not always immediately obvious where things are going wrong.
 
@@ -52,6 +52,7 @@ ActiveAdmin.register Product do
   end
 end
 ```
+
 another possibility, and i've seen this happen way too often when i was a junior programmer, is that you might have a typo either in the column name itself in the migration, or typo in the form when you define the input field. for example, you might have added a column named `feature_colour` (with a 'u'), but you are trying to input `feature_color` (without a 'u') in the form. these sorts of seemingly small errors are actually quite hard to catch, and that was one of my main problems as a beginner. so always double check your spelling and case sensitivity.
 
 ```ruby
@@ -95,6 +96,7 @@ ActiveAdmin.register Product do
   end
 end
 ```
+
 in this case, rails form builder might get confused with the virtual attribute and not process the form correctly, or the external service is not working. in these situations it is harder to detect the error, and the best way i always find is to `puts` some `binding.pry` or `byebug` in the code.
 
 another thing that may help is to ensure that you are running the latest version of all gems, it is not uncommon that there might be a bug on older versions of either active admin, form builder, or any gem that is related to forms, sometimes you upgrade a gem and the problem disappears like magic (or with some work). i was once working with an internal gem and this happened to me, i was getting a weird error and it was gone in a new release.
@@ -113,9 +115,9 @@ to debug such errors, i generally follow a structured approach. first, i check t
 
 as for resources, i highly recommend checking out the official rails guides. the active record basics guide and action view form helpers guide are invaluable. i’ve found that these are way more helpful than any random blog post:
 
-*   [rails active record basics](https://guides.rubyonrails.org/active_record_basics.html)
-*  [rails action view form helpers](https://guides.rubyonrails.org/form_helpers.html)
-*   "agile web development with rails 7" book for broader context on rails forms and models.
-*   "metaprogramming ruby 2" book to understand the internals of how rails works and how dynamic metaprogramming happens in ruby which powers forms.
+- [rails active record basics](https://guides.rubyonrails.org/active_record_basics.html)
+- [rails action view form helpers](https://guides.rubyonrails.org/form_helpers.html)
+- "agile web development with rails 7" book for broader context on rails forms and models.
+- "metaprogramming ruby 2" book to understand the internals of how rails works and how dynamic metaprogramming happens in ruby which powers forms.
 
 finally, just as a little anecdote, i remember once spending an entire day debugging a `nomethoderror` only to realize i had a syntax error on a different part of the code, a comma missing in my routes file was the root cause, it had a weird way to propagate the error in forms. so don't always fixate on the `nomethoderror`, the error may be far away. i always say that debugging is like going on a treasure hunt, you never know what you will find, and sometimes it’s a comma.

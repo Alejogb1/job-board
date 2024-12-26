@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-tika-server-fail-to-start-in-airflow-on-kubernetes-after-the-fourth-simultaneous-run"
 ---
 
-Okay, let’s tackle this. I’ve seen this specific issue, or variations of it, pop up more times than I care to count, and it usually boils down to a combination of resource contention and how Tika server is behaving under load. It's a classic example of where seemingly innocent concurrent processes can expose unexpected limitations. It’s not just a Tika problem; it’s often a canary in the coal mine pointing to other underlying architectural aspects needing attention.
+, let’s tackle this. I’ve seen this specific issue, or variations of it, pop up more times than I care to count, and it usually boils down to a combination of resource contention and how Tika server is behaving under load. It's a classic example of where seemingly innocent concurrent processes can expose unexpected limitations. It’s not just a Tika problem; it’s often a canary in the coal mine pointing to other underlying architectural aspects needing attention.
 
 From my experience, setting up Tika as a service within a Kubernetes environment intended for parallel processing in Airflow – precisely as you describe – initially seems straightforward. You package Tika, expose the relevant port, and off you go. The first few runs might seem flawless, but then, predictably, around the fourth concurrent launch, things fall apart. The Tika server refuses to initialize. Let's break down why this happens, focusing on practicalities and offering concrete examples.
 
@@ -25,10 +25,10 @@ metadata:
   name: tika-pod
 spec:
   containers:
-  - name: tika-container
-    image: your-tika-image:latest
-    ports:
-    - containerPort: 9998
+    - name: tika-container
+      image: your-tika-image:latest
+      ports:
+        - containerPort: 9998
 ```
 
 Here, you are not explicitly setting any memory limitations. This can be a recipe for disaster in a constrained Kubernetes environment. A better practice is to explicitly define memory limits and requests.
@@ -40,15 +40,15 @@ metadata:
   name: tika-pod
 spec:
   containers:
-  - name: tika-container
-    image: your-tika-image:latest
-    ports:
-    - containerPort: 9998
-    resources:
-      requests:
-        memory: "512Mi"
-      limits:
-        memory: "1024Mi"
+    - name: tika-container
+      image: your-tika-image:latest
+      ports:
+        - containerPort: 9998
+      resources:
+        requests:
+          memory: "512Mi"
+        limits:
+          memory: "1024Mi"
 ```
 
 This specification sets both the memory request, the guaranteed amount of memory assigned to this pod, and the memory limit, the maximum amount that the pod can attempt to allocate. This prevents a runaway Tika instance from consuming all available resources and taking down the node. Note this may vary based on the needs of the Tika processing you require, and you'd likely need to increase these further to meet real-world demand. The next important piece is how the Java process is launched inside of the Tika image. Specifically, you need to set the JVM heap options.

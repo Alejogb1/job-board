@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-i-obtain-the-gcskeyfile-for-google-cloud-storage-hmac-authentication"
 ---
 
-Alright, let’s tackle this. The question of how to obtain the `gcs.keyfile` for Google Cloud Storage HMAC authentication has come up a few times in my experience, and it’s a pertinent one. It often arises when transitioning from service account based authentication to a more nuanced approach, particularly when dealing with applications that handle sensitive data or require granular access controls beyond service accounts.
+, let’s tackle this. The question of how to obtain the `gcs.keyfile` for Google Cloud Storage HMAC authentication has come up a few times in my experience, and it’s a pertinent one. It often arises when transitioning from service account based authentication to a more nuanced approach, particularly when dealing with applications that handle sensitive data or require granular access controls beyond service accounts.
 
-The crucial point to understand is that `gcs.keyfile` isn’t a file in the way a service account JSON key file is. Instead, it's a placeholder for two distinct pieces of information: an *access id* and a *secret key*. These are obtained by creating a dedicated HMAC key specifically for a given service account or user within your Google Cloud project. Essentially, you're not downloading a file; you're generating credentials.
+The crucial point to understand is that `gcs.keyfile` isn’t a file in the way a service account JSON key file is. Instead, it's a placeholder for two distinct pieces of information: an _access id_ and a _secret key_. These are obtained by creating a dedicated HMAC key specifically for a given service account or user within your Google Cloud project. Essentially, you're not downloading a file; you're generating credentials.
 
 Here’s how it unfolded in one project I managed, where we were processing sensitive image data uploaded by external clients. Initially, we used service account keys, but that exposed more permissions than we wanted, and rotating them frequently was a hassle. The shift to HMAC keys allowed us to lock down access to only the bucket used for external uploads and also provided a way to revoke the access quickly, if ever needed.
 
@@ -35,7 +35,7 @@ Running the above command will output a JSON file (`hmac-key.json` in this case)
 
 Here, the `accessId` is what you would use as your HMAC access id, and the `secret` field is your HMAC secret key, and the combination represents your `gcs.keyfile`.
 
-*Caveat:* This secret will be displayed only *once*. You won't be able to retrieve it again through gcloud commands. This means it is crucial to store it somewhere secure, such as in a secret manager (google cloud secret manager in this case is the most recommended way).
+_Caveat:_ This secret will be displayed only _once_. You won't be able to retrieve it again through gcloud commands. This means it is crucial to store it somewhere secure, such as in a secret manager (google cloud secret manager in this case is the most recommended way).
 
 **Snippet 2: Python Example (using google-cloud-storage library)**
 

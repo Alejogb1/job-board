@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-do-i-docker-run-an-image-from-a-cache"
 ---
 
-Alright, let's tackle this one. It’s a question that pops up more often than you'd think, especially when you're trying to optimize build pipelines or manage a complex development environment. The gist of it, as I understand, is that you've got a docker image already present locally and you want to launch a container using that specific cached version, without pulling anything new. It's not quite as straightforward as just assuming docker will automatically grab the cached copy, particularly if you're not careful with how you’ve set things up. I’ve seen this trip up quite a few teams over the years, myself included during a particularly frustrating project involving microservices and a terribly flaky network.
+, let's tackle this one. It’s a question that pops up more often than you'd think, especially when you're trying to optimize build pipelines or manage a complex development environment. The gist of it, as I understand, is that you've got a docker image already present locally and you want to launch a container using that specific cached version, without pulling anything new. It's not quite as straightforward as just assuming docker will automatically grab the cached copy, particularly if you're not careful with how you’ve set things up. I’ve seen this trip up quite a few teams over the years, myself included during a particularly frustrating project involving microservices and a terribly flaky network.
 
-So, let's break down what's happening and how you make sure docker actually *uses* your cached image.
+So, let's break down what's happening and how you make sure docker actually _uses_ your cached image.
 
-The core mechanism here hinges on how docker identifies images. It uses image IDs (a long hexadecimal string) and image tags (human-readable identifiers, like `my-image:latest` or `my-image:v1.2.3`). When you issue a `docker run` command, docker first checks locally. If it finds an image with the specified tag *and* that image has not been updated in the registry, it uses that cached copy. The "not updated" part is crucial; docker is smart enough to check if a newer image exists at the remote registry specified in the image tag. If a newer version is present, docker by default will pull that newer version, potentially overwriting your locally cached image.
+The core mechanism here hinges on how docker identifies images. It uses image IDs (a long hexadecimal string) and image tags (human-readable identifiers, like `my-image:latest` or `my-image:v1.2.3`). When you issue a `docker run` command, docker first checks locally. If it finds an image with the specified tag _and_ that image has not been updated in the registry, it uses that cached copy. The "not updated" part is crucial; docker is smart enough to check if a newer image exists at the remote registry specified in the image tag. If a newer version is present, docker by default will pull that newer version, potentially overwriting your locally cached image.
 
 Now, to explicitly force the use of a cached image, you can take a couple of approaches. The simplest method usually involves either specifically referencing the image by its ID or carefully managing your tags and pull behavior.
 
@@ -30,7 +30,7 @@ docker run "$IMAGE_ID" # Directly uses the image ID
 
 In the example above, `docker images -q my-image:latest` fetches the ID of the `my-image:latest` image, if it exists. The `-q` option makes the command output the image id only. Then, that ID is stored in the variable `IMAGE_ID` and passed directly to `docker run`. If the image doesn't exist locally, the script will exit.
 
-This approach is pretty bulletproof when you *know* which specific image you need, especially in automated scripts. However, manually having to grab the ID each time can get tedious quickly, and can be a bit less clear when reading scripts, compared to using tags.
+This approach is pretty bulletproof when you _know_ which specific image you need, especially in automated scripts. However, manually having to grab the ID each time can get tedious quickly, and can be a bit less clear when reading scripts, compared to using tags.
 
 **Method 2: Careful Tag Management and Avoiding Pulls**
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-showing-a-filenotfound-error-when-trying-to-open-a-file-from-another-directory-in-python"
 ---
 
-alright, so you're seeing that pesky `filenotfounderror` when trying to open a file from a different directory in python, yeah? i've definitely banged my head against that wall a few times. it's a common pitfall, and it almost always boils down to python not knowing exactly where to look for your file. let me break it down from my experience.
+, so you're seeing that pesky `filenotfounderror` when trying to open a file from a different directory in python, yeah? i've definitely banged my head against that wall a few times. it's a common pitfall, and it almost always boils down to python not knowing exactly where to look for your file. let me break it down from my experience.
 
 the core issue here is that python’s file operations, like `open()`, work relative to the current working directory, that’s the directory python thinks its running from. this isn't necessarily the same directory where your script `.py` file is located. so, if your script sits in `project/scripts/my_script.py` and you’re trying to open a file from `project/data/my_file.txt`, and your script uses a path like `'my_file.txt'`, it wont find it. that's because python is probably looking for it in `project/scripts/` not `project/data/`.
 
@@ -95,7 +95,7 @@ it can also be used as the start point for a config file approach, where you def
 
 if you really want to deep dive into all the intricacies of file systems and path handling, i’d highly recommend:
 
-*   **"operating system concepts" by abraham silberschatz, peter baer galvin, and greg gagne:** this book is a classic and has a great section on file system implementations and how paths work at a lower level. while its not python specific is a must if you want to fully understand the topic.
-*   **python documentation on the `os` and `os.path` modules:** the official documentation is always a great resource. they have very detailed descriptions of all available functions, and great examples.
+- **"operating system concepts" by abraham silberschatz, peter baer galvin, and greg gagne:** this book is a classic and has a great section on file system implementations and how paths work at a lower level. while its not python specific is a must if you want to fully understand the topic.
+- **python documentation on the `os` and `os.path` modules:** the official documentation is always a great resource. they have very detailed descriptions of all available functions, and great examples.
 
 so, the next time you see a `filenotfounderror`, don't panic. just remember the rules of relative paths and current working directory, and you will get there, it's just that simple. oh and by the way, why did the programmer quit his job? because he didn't get arrays.

@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "why-does-buildah-run-show-container-not-known-error"
 ---
 
-Alright, let's tackle this "container not known" error with `buildah run`. It’s a classic snag, and I’ve certainly encountered it a few times myself, usually during the frantic pace of a late-night deployment push or when experimenting with some new containerization strategy. The core problem, as you might suspect, revolves around how `buildah` manages and references containers, specifically when they haven’t been properly committed or tagged after creation.
+, let's tackle this "container not known" error with `buildah run`. It’s a classic snag, and I’ve certainly encountered it a few times myself, usually during the frantic pace of a late-night deployment push or when experimenting with some new containerization strategy. The core problem, as you might suspect, revolves around how `buildah` manages and references containers, specifically when they haven’t been properly committed or tagged after creation.
 
-The `buildah run` command isn’t designed to operate directly on the image layers that `buildah` builds up in its working directories. Instead, it needs a container instance, which is essentially an editable snapshot of an image. When you use `buildah from <image>`, `buildah container` creates a working container instance based on this image but does not give that instance a name. This container instance is where you make changes, install packages, and perform all the necessary tweaks. When you execute `buildah run`, it expects to act upon a *named* container instance, not just the working build context. When the error "container not known" appears, it usually means `buildah run` cannot locate the named container you specified in its arguments.
+The `buildah run` command isn’t designed to operate directly on the image layers that `buildah` builds up in its working directories. Instead, it needs a container instance, which is essentially an editable snapshot of an image. When you use `buildah from <image>`, `buildah container` creates a working container instance based on this image but does not give that instance a name. This container instance is where you make changes, install packages, and perform all the necessary tweaks. When you execute `buildah run`, it expects to act upon a _named_ container instance, not just the working build context. When the error "container not known" appears, it usually means `buildah run` cannot locate the named container you specified in its arguments.
 
 Let me walk you through what typically happens and how to avoid this, drawing from some projects where I’ve had to debug similar issues. It’s not uncommon to see newcomers use `buildah from <image>`, then immediately try `buildah run <command>`. This workflow skips a crucial step, the naming and management of that created container. We must create a container instance and give it a name before we can refer to it.
 
@@ -29,7 +29,7 @@ buildah run my-test-image echo "Hello from within the image"
 # output: container my-test-image not known
 ```
 
-Here, we’ve made the classic mistake. `buildah run` doesn't take the image name as an argument, and tries to use it as if it is the name of a created container. It is trying to locate a container named `my-test-image`, and of course, it can’t, because we haven't created one yet. You’ve built an *image*, not a *container instance*. The fix here involves creating a container from the image.
+Here, we’ve made the classic mistake. `buildah run` doesn't take the image name as an argument, and tries to use it as if it is the name of a created container. It is trying to locate a container named `my-test-image`, and of course, it can’t, because we haven't created one yet. You’ve built an _image_, not a _container instance_. The fix here involves creating a container from the image.
 
 **Scenario 2: Correctly creating and then running within a container**
 

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-remove-e-output-headers-from-base64-strings-generated-by-tcpdf"
 ---
 
-Alright, let’s talk about those pesky 'E' headers in base64 strings from TCPDF. I've encountered this particular quirk a few times in the past, particularly when dealing with dynamic image generation for pdf reports. It's annoying, I get it. The issue stems from how TCPDF handles encoding certain images within its document structure, sometimes prepending what looks like an 'E' header, which isn’t strictly part of the actual base64 encoded data and can cause issues when you’re expecting a pure base64 string for direct consumption by other systems. It's not a bug per se, but more of an internal implementation detail that leaks out.
+, let’s talk about those pesky 'E' headers in base64 strings from TCPDF. I've encountered this particular quirk a few times in the past, particularly when dealing with dynamic image generation for pdf reports. It's annoying, I get it. The issue stems from how TCPDF handles encoding certain images within its document structure, sometimes prepending what looks like an 'E' header, which isn’t strictly part of the actual base64 encoded data and can cause issues when you’re expecting a pure base64 string for direct consumption by other systems. It's not a bug per se, but more of an internal implementation detail that leaks out.
 
 The core problem isn't with the base64 encoding itself; it's that TCPDF sometimes (not always, which adds to the fun) adds these additional bytes that it uses internally for image handling, and they get mixed in with what we expect to be a clean base64 output when methods like `Image()` or `ImagePngAlpha()` are used. These aren’t part of the standard encoding and you’ll find that any decent base64 decoder will choke on it. Think of it as TCPDF wrapping your base64 payload in its own internal metadata.
 
-Now, there isn't a straightforward setting in TCPDF to just magically switch this off, so we need to be a bit more hands-on in how we retrieve and use this data. The key is to understand *where* the base64 is generated and how to extract just the encoded part.
+Now, there isn't a straightforward setting in TCPDF to just magically switch this off, so we need to be a bit more hands-on in how we retrieve and use this data. The key is to understand _where_ the base64 is generated and how to extract just the encoded part.
 
 Here's the general approach I've found effective, based on past project experience: We need to intercept the base64 data at its source before it gets the unwanted header. This usually involves manipulating the `Image()` or equivalent method's output or using alternative methods of inserting image data where such headers are not generated. The `Image()` method internally calls underlying functions that perform the necessary base64 conversion and might add the extra 'E' header based on the image type or its source.
 
@@ -142,7 +142,7 @@ echo "Cleaned Base64 String:\n". $cleanedBase64 . "\n";
 ?>
 ```
 
-By encoding the data before handing it over to TCPDF, we sidestep its internal encoding process and prevent it from embedding additional headers.  The base64 encoded data is then directly placed in the pdf. We still need to extract the data through a regex, but by having complete control at the image processing stage we are assured that the correct base64 encoded string is in the document.
+By encoding the data before handing it over to TCPDF, we sidestep its internal encoding process and prevent it from embedding additional headers. The base64 encoded data is then directly placed in the pdf. We still need to extract the data through a regex, but by having complete control at the image processing stage we are assured that the correct base64 encoded string is in the document.
 
 For a deeper understanding of base64 encoding and image handling within pdfs, I highly recommend the following resources: "Programming with PDF" by Tom Tromey is an excellent text on the inner workings of PDF, while the RFC 4648 specification for base64 is crucial for understanding the encoding standards, and for TCPDF specifics, the official TCPDF documentation is the go to.
 

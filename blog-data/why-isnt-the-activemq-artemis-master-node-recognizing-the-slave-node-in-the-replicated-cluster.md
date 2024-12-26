@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-the-activemq-artemis-master-node-recognizing-the-slave-node-in-the-replicated-cluster"
 ---
 
-Okay, let’s tackle this. I've spent a fair amount of time knee-deep in message broker configurations, and a failure for an ActiveMQ Artemis master to recognize its slave is a classic headache. It's usually not a single dramatic failure, but rather a cascade of subtle configuration misalignments or network gremlins. Let me break down the most common culprits, drawing from situations I've encountered myself.
+, let’s tackle this. I've spent a fair amount of time knee-deep in message broker configurations, and a failure for an ActiveMQ Artemis master to recognize its slave is a classic headache. It's usually not a single dramatic failure, but rather a cascade of subtle configuration misalignments or network gremlins. Let me break down the most common culprits, drawing from situations I've encountered myself.
 
 First off, let’s dismiss the obvious: a disconnected network cable. While unlikely in a well-managed environment, it’s a check worth doing. Assuming our network layer is solid, the problem typically lies in these areas: address binding, cluster configurations, and resource limitations.
 
@@ -52,7 +52,7 @@ This configuration must be completely congruent on the slave node as well. Here 
 
 The host and port here needs to resolve to the correct master node in order for the slave to initiate its handshaking.
 
-My third point of concern revolves around resource contention. Consider this scenario: I had a situation where the slave server was running on an under-provisioned virtual machine. The resources (cpu, memory, and importantly disk i/o) were not sufficient, leading the slave to experience connection timeouts. I spent a frustrating evening checking configurations until I realized the problem was the poor performance of the virtualized disk storage layer. While it could *start* the replication process, it could never *maintain* it, causing constant disconnection and re-connection attempts. In such cases the slave’s logs will indicate network timeouts, rather than connection failures. It's critical to verify, not just that the configurations are correct, but that both master and slave have adequate resources to function efficiently. Here's a snippet from a common `logging.properties` file which can show these errors:
+My third point of concern revolves around resource contention. Consider this scenario: I had a situation where the slave server was running on an under-provisioned virtual machine. The resources (cpu, memory, and importantly disk i/o) were not sufficient, leading the slave to experience connection timeouts. I spent a frustrating evening checking configurations until I realized the problem was the poor performance of the virtualized disk storage layer. While it could _start_ the replication process, it could never _maintain_ it, causing constant disconnection and re-connection attempts. In such cases the slave’s logs will indicate network timeouts, rather than connection failures. It's critical to verify, not just that the configurations are correct, but that both master and slave have adequate resources to function efficiently. Here's a snippet from a common `logging.properties` file which can show these errors:
 
 ```properties
 log4j.appender.FILE.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p [%t] (%c:%L) - %m%n
@@ -60,7 +60,7 @@ log4j.logger.org.apache.activemq.artemis=DEBUG,FILE
 log4j.logger.org.jgroups=DEBUG,FILE
 ```
 
-Having the `org.jgroups` level to `DEBUG` here will output copious amounts of log messages, and this can be very helpful in debugging network and node discovery issues. By checking the timestamps and log messages you might discover a pattern that shows you node discovery works *sometimes*, but then breaks due to timeouts. This is a clear signal of resource issues rather than a configuration problem.
+Having the `org.jgroups` level to `DEBUG` here will output copious amounts of log messages, and this can be very helpful in debugging network and node discovery issues. By checking the timestamps and log messages you might discover a pattern that shows you node discovery works _sometimes_, but then breaks due to timeouts. This is a clear signal of resource issues rather than a configuration problem.
 
 Finally, while less common, firewalls can be a silent killer. I recall a particularly difficult debug session where a port used by the jgroups protocol was blocked by a security policy on one of the nodes, without an active rule to explicitly allow it. Always, always ensure that the necessary ports are open between the master and slave machines, particularly the ports defined in both the `socket-binding` on the jgroups protocol, and the ports defined in the connectors.
 

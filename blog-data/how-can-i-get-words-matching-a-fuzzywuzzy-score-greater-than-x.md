@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-get-words-matching-a-fuzzywuzzy-score-greater-than-x"
 ---
 
-Okay, let's tackle this. I've seen this exact issue pop up more than a few times in data processing pipelines and during search implementation work, particularly when dealing with user-generated content that might have typos or inconsistent spellings. The core challenge lies in efficiently filtering through a corpus of text and extracting strings that exhibit a similarity above a certain threshold based on a fuzzy matching algorithm like the one provided by fuzzywuzzy (which, for those unfamiliar, is based on Levenshtein distance).
+, let's tackle this. I've seen this exact issue pop up more than a few times in data processing pipelines and during search implementation work, particularly when dealing with user-generated content that might have typos or inconsistent spellings. The core challenge lies in efficiently filtering through a corpus of text and extracting strings that exhibit a similarity above a certain threshold based on a fuzzy matching algorithm like the one provided by fuzzywuzzy (which, for those unfamiliar, is based on Levenshtein distance).
 
-The key isn't just about *using* the fuzzywuzzy library—that’s straightforward enough. It’s about understanding how to integrate it into a process that avoids common pitfalls, notably performance bottlenecks, especially when dealing with larger datasets. You need a strategy beyond naive iteration and comparison.
+The key isn't just about _using_ the fuzzywuzzy library—that’s straightforward enough. It’s about understanding how to integrate it into a process that avoids common pitfalls, notably performance bottlenecks, especially when dealing with larger datasets. You need a strategy beyond naive iteration and comparison.
 
 Let’s consider a hypothetical scenario from a few years back. I was working on an e-commerce site, and we had a product catalog with various brand names. Users, as they often do, would type in slightly modified or misspelled brand names into the search bar. We needed to find relevant products even when the input was imperfect. Simply using exact string matching was failing miserably. Enter fuzzy matching.
 
@@ -121,8 +121,8 @@ Here, the `preprocess_word_list` function groups words based on their lengths. W
 
 For those diving deeper, I highly suggest reviewing these resources:
 
-*   **"Information Retrieval: Implementing and Evaluating Search Engines" by Stefan Büttcher, Charles L.A. Clarke, and Gordon V. Cormack:** A comprehensive overview of search techniques, including those relevant to approximate string matching and indexing.
-*   **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** This book goes deep into the algorithms behind string similarity measures, including Levenshtein distance, and provides context on how these measures are used in more complex linguistic tasks.
-*   **Papers on the Levenshtein distance:** Search for papers discussing the Levenshtein distance and algorithms for its efficient computation, such as those focused on optimized dynamic programming techniques.
+- **"Information Retrieval: Implementing and Evaluating Search Engines" by Stefan Büttcher, Charles L.A. Clarke, and Gordon V. Cormack:** A comprehensive overview of search techniques, including those relevant to approximate string matching and indexing.
+- **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** This book goes deep into the algorithms behind string similarity measures, including Levenshtein distance, and provides context on how these measures are used in more complex linguistic tasks.
+- **Papers on the Levenshtein distance:** Search for papers discussing the Levenshtein distance and algorithms for its efficient computation, such as those focused on optimized dynamic programming techniques.
 
 In summary, while the basic fuzzywuzzy library offers a straightforward starting point, creating an efficient solution for large-scale applications requires optimization strategies such as pre-processing, indexing, and, potentially, using a full-fledged search engine that's optimized for such operations. The approach must be tailored to the scale and context of your dataset, something you learn best through experience.

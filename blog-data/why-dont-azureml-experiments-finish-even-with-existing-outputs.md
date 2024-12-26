@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "why-dont-azureml-experiments-finish-even-with-existing-outputs"
 ---
 
-Okay, let's delve into why Azure Machine Learning (AzureML) experiments sometimes stubbornly refuse to complete, even when the expected outputs are, seemingly, already present. This is a frustration many of us have encountered, and it’s not always a straightforward issue. I’ve personally spent hours debugging such scenarios, and it usually boils down to nuanced behaviors in the execution framework rather than a simple 'missing file' error.
+, let's delve into why Azure Machine Learning (AzureML) experiments sometimes stubbornly refuse to complete, even when the expected outputs are, seemingly, already present. This is a frustration many of us have encountered, and it’s not always a straightforward issue. I’ve personally spent hours debugging such scenarios, and it usually boils down to nuanced behaviors in the execution framework rather than a simple 'missing file' error.
 
-The primary reason, in my experience, centers around AzureML's job management system and how it tracks dependencies and completeness. It doesn’t just look for the *existence* of output files; it verifies that the job *actually generated* them as part of its assigned task. Think of it as an audit trail, ensuring integrity and reproducibility. Simply copying a file into the output location isn't enough; AzureML expects its worker processes to have performed the operations that resulted in those files.
+The primary reason, in my experience, centers around AzureML's job management system and how it tracks dependencies and completeness. It doesn’t just look for the _existence_ of output files; it verifies that the job _actually generated_ them as part of its assigned task. Think of it as an audit trail, ensuring integrity and reproducibility. Simply copying a file into the output location isn't enough; AzureML expects its worker processes to have performed the operations that resulted in those files.
 
 Specifically, several factors contribute to this behavior:
 
@@ -185,14 +185,15 @@ time.sleep(10) #Simulate a situation where the process has finished but the stat
 
 step_run.wait_for_completion(show_output=True)
 ```
+
 If, for some reason (e.g., a container crash or a network blip), the status of step3 is not correctly logged by the job management system, the run might hang even if the output file 'data.txt' exists. The internal tracking metadata, which is not easily visible, will not reflect a completed task, hence the job remains in progress.
 
 **Recommendations for Further Study:**
 
 To get a deeper understanding of AzureML job execution, dependency management, and caching, I would recommend the following resources:
 
-*   **"Programming Machine Learning: From Data to Deployment" by Paolo Perrotta:** While not AzureML specific, this book offers a solid foundation in the principles of machine learning pipelines and how dependencies and caching work. This is very important for understanding what goes on under the hood.
-*   **Azure Machine Learning Documentation:** Specifically, the documentation sections on "Pipelines," "Caching," and "Data Management" are indispensable. Pay close attention to how `PipelineData`, `outputs` parameters, and compute target settings influence job completion.
-*   **Microsoft's AzureML samples:** You'll find many example notebooks that can be dissected to reveal how job management is implemented. A good starting point is the documentation on the AzureML github repository.
+- **"Programming Machine Learning: From Data to Deployment" by Paolo Perrotta:** While not AzureML specific, this book offers a solid foundation in the principles of machine learning pipelines and how dependencies and caching work. This is very important for understanding what goes on under the hood.
+- **Azure Machine Learning Documentation:** Specifically, the documentation sections on "Pipelines," "Caching," and "Data Management" are indispensable. Pay close attention to how `PipelineData`, `outputs` parameters, and compute target settings influence job completion.
+- **Microsoft's AzureML samples:** You'll find many example notebooks that can be dissected to reveal how job management is implemented. A good starting point is the documentation on the AzureML github repository.
 
 In summary, the "existing output but still running" problem in AzureML is usually not about the files themselves, but rather about the system's internal consistency checks for dependencies, caching, and metadata completeness. Careful attention to these nuances, especially when configuring your pipelines, will lead to more efficient and predictable experiment executions. It’s often not the code itself, but the orchestration that requires scrutiny.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-access-time-series-data-associated-with-support-vector-regression-predictions"
 ---
 
-Alright, let’s tackle this. Accessing time series data *associated* with support vector regression (svr) predictions isn’t always straightforward, especially given svr’s focus on mapping inputs to outputs rather than explicitly modeling temporal dependencies, unlike, say, recurrent neural networks. From my experience, this challenge often arises when you're using svr for forecasting and subsequently need to analyze the residuals, model fit over time, or even construct confidence intervals. It’s not something you inherently get out-of-the-box with most implementations.
+, let’s tackle this. Accessing time series data _associated_ with support vector regression (svr) predictions isn’t always straightforward, especially given svr’s focus on mapping inputs to outputs rather than explicitly modeling temporal dependencies, unlike, say, recurrent neural networks. From my experience, this challenge often arises when you're using svr for forecasting and subsequently need to analyze the residuals, model fit over time, or even construct confidence intervals. It’s not something you inherently get out-of-the-box with most implementations.
 
 The core issue here is that svr’s prediction, by its nature, is a static mapping from the input feature vector to a target. It doesn't inherently maintain a link to the time index associated with those inputs after the prediction is made. It’s not a time-aware model in the same sense that arima or lstms are. So, the linkage between predictions and original timestamps isn’t built into the model itself. The process of getting this linkage typically involves some careful bookkeeping and possibly some pre- or post-processing depending on how the original data was structured.
 
@@ -78,11 +78,12 @@ y_predicted_indexed = pd.Series(y_predicted, index=dates)
 
 print(y_predicted_indexed.head())
 ```
+
 This approach involves a bit more manual data handling but offers flexibility if you're working in a situation where dataframes cannot be stored or used.
 
 **3. Feature Engineering with Lagged or Rolling Time Data**
 
-Although not directly accessing the original time series *after* prediction, you may need to *include* time as a feature. One way to do this implicitly is through feature engineering. You can create new features based on lagged or rolling window summaries of the time series. For example, you can incorporate the previous value of the target variable (lagged by one time step) as a feature for the svr, or even a moving average, std. deviation, or other aggregation over recent values. This way, the svr does not have direct time awareness, but your features do. You should be able to see if this makes your model perform differently across time, and your models performance may change if your data or behavior changes through time.
+Although not directly accessing the original time series _after_ prediction, you may need to _include_ time as a feature. One way to do this implicitly is through feature engineering. You can create new features based on lagged or rolling window summaries of the time series. For example, you can incorporate the previous value of the target variable (lagged by one time step) as a feature for the svr, or even a moving average, std. deviation, or other aggregation over recent values. This way, the svr does not have direct time awareness, but your features do. You should be able to see if this makes your model perform differently across time, and your models performance may change if your data or behavior changes through time.
 
 ```python
 import pandas as pd

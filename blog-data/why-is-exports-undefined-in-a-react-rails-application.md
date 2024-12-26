@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-exports-undefined-in-a-react-rails-application"
 ---
 
-Alright, let’s tackle this. It's a common head-scratcher, and I remember dealing with this specific issue quite a few times early in my career, specifically when we were migrating a legacy Rails app to incorporate more modern javascript practices, particularly leveraging React. The appearance of an `undefined exports` error within a React-Rails context often signals a fundamental misunderstanding of how module systems, particularly commonjs and es modules, interact within the Rails asset pipeline and webpack configurations. It isn't usually a single, easily identifiable culprit but rather a confluence of factors.
+, let’s tackle this. It's a common head-scratcher, and I remember dealing with this specific issue quite a few times early in my career, specifically when we were migrating a legacy Rails app to incorporate more modern javascript practices, particularly leveraging React. The appearance of an `undefined exports` error within a React-Rails context often signals a fundamental misunderstanding of how module systems, particularly commonjs and es modules, interact within the Rails asset pipeline and webpack configurations. It isn't usually a single, easily identifiable culprit but rather a confluence of factors.
 
 Essentially, the `exports` variable is typically associated with commonjs module environments. Think of it as the mechanism by which you define what a module makes available to other parts of your codebase. When a module is processed in a commonjs context, it expects `exports` (and sometimes `module.exports`) to be present, allowing you to essentially “package up” things like functions, objects, or classes for use elsewhere. Now, React, especially in more modern setups, leans heavily on ES modules (using `import` and `export` syntax). This difference in module formats is a frequent cause for the error you’re seeing.
 
@@ -16,7 +16,7 @@ Let’s break this down with some practical examples, based on issues I've encou
 
 In one instance, we had some React components housed in `.jsx` files, but the way we included them in a top-level javascript file meant they weren't being handled by webpack, and the asset pipeline just bundled them as is. Consider this overly simplified example.
 
-*   **`app/javascript/components/MyComponent.jsx`:**
+- **`app/javascript/components/MyComponent.jsx`:**
 
 ```javascript
 function MyComponent() {
@@ -24,10 +24,9 @@ function MyComponent() {
 }
 
 export default MyComponent;
-
 ```
 
-*   **`app/javascript/packs/application.js`:**
+- **`app/javascript/packs/application.js`:**
 
 ```javascript
 //= require ./components/MyComponent
@@ -37,62 +36,61 @@ This approach fails because sprockets, the default asset pipeline, will bundle `
 
 **Example 2: Missing Webpack Configuration**
 
-Let's say you *are* using webpack, but your configuration isn't set up properly to process the code. Suppose you're using a basic `webpack.config.js` file like this:
+Let's say you _are_ using webpack, but your configuration isn't set up properly to process the code. Suppose you're using a basic `webpack.config.js` file like this:
 
 ```javascript
-const path = require('path');
+const path = require("path");
 
 module.exports = {
-  entry: './app/javascript/packs/application.js',
+  entry: "./app/javascript/packs/application.js",
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'app/assets/javascripts'),
-  }
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "app/assets/javascripts"),
+  },
 };
 ```
 
 And your `application.js` file looks like this:
 
 ```javascript
-import React from 'react';
-import ReactDOM from 'react-dom';
-import MyComponent from '../components/MyComponent.jsx';
+import React from "react";
+import ReactDOM from "react-dom";
+import MyComponent from "../components/MyComponent.jsx";
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(<MyComponent />, document.getElementById('root'));
+document.addEventListener("DOMContentLoaded", () => {
+  ReactDOM.render(<MyComponent />, document.getElementById("root"));
 });
 ```
 
 While webpack is now involved, it still doesn't know how to handle `.jsx` files out of the box. This is where we need to add rules for the webpack to process .jsx files. In essence it needs to handle the transpilation of the JSX syntax. We're still likely to see the `exports` is undefined error here if the modules aren't processed correctly and are therefore not in the correct module format. Here's how you would adjust the `webpack.config.js`:
 
 ```javascript
-const path = require('path');
+const path = require("path");
 
 module.exports = {
-  entry: './app/javascript/packs/application.js',
+  entry: "./app/javascript/packs/application.js",
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'app/assets/javascripts'),
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "app/assets/javascripts"),
   },
   module: {
     rules: [
-        {
-           test: /\.(js|jsx)$/,
-           exclude: /node_modules/,
-           use: {
-             loader: 'babel-loader',
-             options: {
-               presets: ['@babel/preset-env', '@babel/preset-react']
-             }
-           }
-         }
-    ]
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env", "@babel/preset-react"],
+          },
+        },
+      },
+    ],
   },
   resolve: {
-    extensions: ['.js', '.jsx']
-  }
+    extensions: [".js", ".jsx"],
+  },
 };
-
 ```
 
 This configuration now utilizes `babel-loader`, along with `@babel/preset-env` and `@babel/preset-react`, to transpile your JSX code before it's bundled by webpack. Now, when webpack encounters that `import` statement, it will correctly process the ES module using the rules we have defined.
@@ -104,6 +102,7 @@ Sometimes the issue might arise when the asset pipeline, although seemingly not 
 ```ruby
 <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 ```
+
 and in your `app/assets/javascripts/application.js` you might have some code such as:
 
 ```javascript

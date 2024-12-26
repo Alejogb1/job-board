@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-cnn-model-be-trained-using-keras"
 ---
 
-Okay, let's delve into that. I've spent a fair bit of time wrestling (oops, almost slipped into a bad habit there) with convolutional neural networks (CNNs) in Keras, and it’s definitely a topic where details matter. It's not just about slapping layers together; a thoughtful approach to architecture, data handling, and training methodology significantly impacts the final performance.
+, let's delve into that. I've spent a fair bit of time wrestling (oops, almost slipped into a bad habit there) with convolutional neural networks (CNNs) in Keras, and it’s definitely a topic where details matter. It's not just about slapping layers together; a thoughtful approach to architecture, data handling, and training methodology significantly impacts the final performance.
 
 Training a CNN in Keras, at its core, involves defining the network structure, preparing your dataset, selecting a suitable loss function and optimizer, and then iterating over your data in batches to adjust the model's internal parameters (weights and biases). I vividly recall working on a project a few years back involving satellite imagery classification; the raw data was vast and varied, requiring significant preprocessing and a meticulously designed CNN to achieve reasonable results. That experience ingrained in me the importance of each stage.
 

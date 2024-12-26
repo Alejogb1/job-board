@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-find-best-matches-of-a-substring-from-a-list-in-a-corpus"
 ---
 
-alright, so you’re asking about finding the closest matches of a substring within a larger body of text. it's a pretty common task, and i've definitely spent more than a few late nights tackling this kind of problem. let me walk you through some of the approaches i've used, and how i'd break it down. it's not exactly rocket science, but getting it efficient and accurate takes a bit of thought.
+, so you’re asking about finding the closest matches of a substring within a larger body of text. it's a pretty common task, and i've definitely spent more than a few late nights tackling this kind of problem. let me walk you through some of the approaches i've used, and how i'd break it down. it's not exactly rocket science, but getting it efficient and accurate takes a bit of thought.
 
 first off, it's essential to clarify what we mean by "best match." do we want exact matches? or are we looking for fuzzy matches that are similar but not identical? this decision significantly impacts the techniques we use. and what about the size of the corpus? are we talking a few kilobytes of text or gigabytes? that also has a big impact, because if it is just a few kilobytes the naive approach is just fine.
 
@@ -34,7 +34,7 @@ matches = find_exact_matches(corpus, substrings)
 print(matches) # Output: {'test': [10, 26], 'string': [15]}
 ```
 
-pretty straightforward, eh? now, this method is fine for small corpora, but it's not going to scale well. its time complexity is something around *o(m*n)* where 'm' is the number of substrings and 'n' the size of the corpus, which is not ideal as the corpus grows. for fuzzy matching, we need something better than just direct comparison.
+pretty straightforward, eh? now, this method is fine for small corpora, but it's not going to scale well. its time complexity is something around *o(m*n)\* where 'm' is the number of substrings and 'n' the size of the corpus, which is not ideal as the corpus grows. for fuzzy matching, we need something better than just direct comparison.
 
 for fuzzy matching, one of the more common approaches i've seen used, and one that i've used a lot, is the levenshtein distance (also known as edit distance). the levenshtein distance calculates the minimum number of single-character edits (insertions, deletions, substitutions) required to change one string into another. a lower distance means a closer match. i had a situation long ago when i had to handle misspelling, because the user used a voice recognition system, and the output was far from perfect. the levenshtein distance was a life saver.
 
@@ -79,10 +79,10 @@ function find_fuzzy_matches(corpus, substrings, max_distance) {
   for (const substring of substrings) {
     results[substring] = [];
     const words = corpus.split(/\s+/);
-    for (const word of words){
-      const distance = levenshteinDistance(substring, word)
-      if(distance <= max_distance) {
-          results[substring].push({word: word, distance: distance})
+    for (const word of words) {
+      const distance = levenshteinDistance(substring, word);
+      if (distance <= max_distance) {
+        results[substring].push({ word: word, distance: distance });
       }
     }
   }
@@ -92,11 +92,11 @@ function find_fuzzy_matches(corpus, substrings, max_distance) {
 //example
 const corpus = "this is a test string with test and testing inside";
 const substrings = ["test", "sting", "tes"];
-const matches = find_fuzzy_matches(corpus, substrings, 2)
+const matches = find_fuzzy_matches(corpus, substrings, 2);
 console.log(matches);
 ```
 
-this javascript example isn’t the fastest implementation. to use this efficiently, you can pre-compute the distances, but that can take a lot of space for large corps. the runtime for the levenshtein is *o(mn)* where m and n are the lengths of the strings being compared. so you need to factor that in as you have to calculate the distance of the substring for every word in your corpus for each substring. that is not an easy task.
+this javascript example isn’t the fastest implementation. to use this efficiently, you can pre-compute the distances, but that can take a lot of space for large corps. the runtime for the levenshtein is _o(mn)_ where m and n are the lengths of the strings being compared. so you need to factor that in as you have to calculate the distance of the substring for every word in your corpus for each substring. that is not an easy task.
 
 now, this is a classic computer science problem so there is always more to it and improvements can be done. i find that often using a combination of techniques is necessary. for example, you might start by splitting your corpus into smaller chunks and then use a levenshtein method. or even use another algorithm like the damerau–levenshtein distance which accounts for transpositions (swapping adjacent characters) which can improve your results. this algorithm i remember using it in college for a school project to build a spell checker.
 

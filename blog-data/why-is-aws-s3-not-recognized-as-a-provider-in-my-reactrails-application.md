@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-aws-s3-not-recognized-as-a-provider-in-my-reactrails-application"
 ---
 
-Alright, let's tackle this. It's a situation I've seen unfold more times than I’d care to remember. The dreaded "S3 provider not recognized" error in a React/Rails stack – often a culmination of several subtle configuration mismatches rather than a single glaring flaw. My experience, particularly with a complex e-commerce platform a few years back, involved precisely this issue, and it forced me to understand the nuances of how these two ecosystems interact.
+, let's tackle this. It's a situation I've seen unfold more times than I’d care to remember. The dreaded "S3 provider not recognized" error in a React/Rails stack – often a culmination of several subtle configuration mismatches rather than a single glaring flaw. My experience, particularly with a complex e-commerce platform a few years back, involved precisely this issue, and it forced me to understand the nuances of how these two ecosystems interact.
 
 The problem typically boils down to a failure in the authentication and authorization handshake between your front-end (React) and back-end (Rails) when interacting with AWS S3. It's rarely a direct issue with S3 itself, but rather how your application is configured to connect. Let's break down the common culprits and how to resolve them.
 
@@ -48,13 +48,13 @@ This simple controller demonstrates how to generate a presigned url using the `a
 
 ```javascript
 // src/components/FileUpload.js
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 function FileUpload() {
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const [uploadStatus, setUploadStatus] = useState('');
+  const [uploadStatus, setUploadStatus] = useState("");
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -64,10 +64,10 @@ function FileUpload() {
     if (!file) return;
 
     setUploading(true);
-    setUploadStatus('Preparing upload...');
+    setUploadStatus("Preparing upload...");
 
     try {
-      const response = await axios.get('/api/s3/presigned_url', {
+      const response = await axios.get("/api/s3/presigned_url", {
         params: { key: `uploads/${file.name}` },
       });
 
@@ -75,13 +75,13 @@ function FileUpload() {
 
       await axios.put(presignedUrl, file, {
         headers: {
-          'Content-Type': file.type,
+          "Content-Type": file.type,
         },
       });
-      setUploadStatus('Upload successful.');
+      setUploadStatus("Upload successful.");
     } catch (error) {
       console.error("Upload failed:", error);
-      setUploadStatus('Upload failed. Check console for errors.');
+      setUploadStatus("Upload failed. Check console for errors.");
     } finally {
       setUploading(false);
     }
@@ -90,7 +90,9 @@ function FileUpload() {
   return (
     <div>
       <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload} disabled={uploading}>Upload</button>
+      <button onClick={handleUpload} disabled={uploading}>
+        Upload
+      </button>
       <p>{uploadStatus}</p>
     </div>
   );
@@ -105,21 +107,17 @@ This React component demonstrates how a file can be uploaded to S3 using a pre-s
 
 ```json
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "s3:PutObject",
-                "s3:GetObject",
-                "s3:ListBucket"
-            ],
-            "Resource": [
-                "arn:aws:s3:::your-bucket-name",
-                "arn:aws:s3:::your-bucket-name/*"
-            ]
-        }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": ["s3:PutObject", "s3:GetObject", "s3:ListBucket"],
+      "Resource": [
+        "arn:aws:s3:::your-bucket-name",
+        "arn:aws:s3:::your-bucket-name/*"
+      ]
+    }
+  ]
 }
 ```
 
@@ -127,6 +125,6 @@ This IAM policy allows the associated user/role to perform `PutObject`, `GetObje
 
 To troubleshoot your situation, I would recommend systematically checking each of these areas. Begin by verifying your AWS credentials and that the used profile is valid, then move on to your IAM policies and finally ensure the CORS settings are configured correctly in your S3 bucket.
 
-Regarding technical resources, I'd highly recommend exploring "Programming AWS SDK for Ruby" by Chris Fidao for a comprehensive view of the AWS SDK in Ruby and "Effective Java" by Joshua Bloch is always a solid choice for general programming principles and good coding habits that can be applied in JavaScript, as well. Also, the official AWS documentation is an invaluable source for IAM Policies, CORS configurations and the details of the SDK libraries across various languages. Specifically, the S3 documentation section on *Access Management* and *CORS configuration* are invaluable.
+Regarding technical resources, I'd highly recommend exploring "Programming AWS SDK for Ruby" by Chris Fidao for a comprehensive view of the AWS SDK in Ruby and "Effective Java" by Joshua Bloch is always a solid choice for general programming principles and good coding habits that can be applied in JavaScript, as well. Also, the official AWS documentation is an invaluable source for IAM Policies, CORS configurations and the details of the SDK libraries across various languages. Specifically, the S3 documentation section on _Access Management_ and _CORS configuration_ are invaluable.
 
 Ultimately, getting this integration correct is often an iterative process. Focus on breaking the problem down into these distinct areas, checking every configuration, and your application should be connecting to S3 in no time. Good luck, and don’t hesitate to reach out if you encounter further issues.

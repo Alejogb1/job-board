@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-load-local-and-appgroup-nspersistentcontainers-in-coredata"
 ---
 
-Okay, let's tackle this. I remember a particularly thorny project back in 2018, a shared task manager that needed to sync across a user's main app and a widget. It became a deep dive into the nuances of `NSPersistentContainer` and how to manage data both locally and within an app group context. What you're aiming for isn't particularly difficult once you grasp the underlying mechanisms. Essentially, you're dealing with two separate data stores, potentially on different paths, each needing its own container.
+, let's tackle this. I remember a particularly thorny project back in 2018, a shared task manager that needed to sync across a user's main app and a widget. It became a deep dive into the nuances of `NSPersistentContainer` and how to manage data both locally and within an app group context. What you're aiming for isn't particularly difficult once you grasp the underlying mechanisms. Essentially, you're dealing with two separate data stores, potentially on different paths, each needing its own container.
 
 Let’s start with the local container, which is usually straightforward. The critical part here is setting up the `NSPersistentContainer` with the correct model and store description. This local store will generally reside in your application’s document directory. Here's a simple example showing a basic setup:
 
@@ -17,7 +17,7 @@ class LocalDataManager {
 
     private init() {
         persistentContainer = NSPersistentContainer(name: "YourDataModel") // Replace with your data model name
-        
+
         // Load persistent stores
         persistentContainer.loadPersistentStores { (storeDescription, error) in
             if let error = error as NSError? {
@@ -41,29 +41,29 @@ import CoreData
 class AppGroupDataManager {
     static let shared = AppGroupDataManager()
     let persistentContainer: NSPersistentContainer
-    
+
     private init() {
       persistentContainer = NSPersistentContainer(name: "YourDataModel")
-      
+
       let sharedContainerIdentifier = "group.your.appgroupidentifier" // Replace with your group identifier
       guard let sharedContainerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: sharedContainerIdentifier) else {
         fatalError("Unable to get app group container URL")
       }
-      
+
       let storeURL = sharedContainerURL.appendingPathComponent("shared.sqlite") // Ensure this matches your file name.
-      
+
       let storeDescription = NSPersistentStoreDescription(url: storeURL)
       persistentContainer.persistentStoreDescriptions = [storeDescription]
-      
+
        // Load persistent stores
       persistentContainer.loadPersistentStores { (storeDescription, error) in
           if let error = error as NSError? {
               fatalError("Unresolved error \(error), \(error.userInfo)")
           }
       }
-        
+
     }
-    
+
   // ... methods for interacting with shared context
 }
 ```
@@ -79,28 +79,28 @@ import CoreData
 import Combine
 class DataSyncManager {
     static let shared = DataSyncManager()
-  
+
     let localDataManager: LocalDataManager = LocalDataManager.shared
     let appGroupDataManager: AppGroupDataManager = AppGroupDataManager.shared
 
     private var cancellables = Set<AnyCancellable>()
-    
+
     private init() {
         NotificationCenter.default.publisher(for: .NSManagedObjectContextDidSave, object: localDataManager.persistentContainer.viewContext)
             .sink { [weak self] notification in
                 self?.syncFromLocalToAppGroup(notification: notification)
             }.store(in: &cancellables)
-        
+
       NotificationCenter.default.publisher(for: .NSManagedObjectContextDidSave, object: appGroupDataManager.persistentContainer.viewContext)
             .sink { [weak self] notification in
                 self?.syncFromAppGroupToLocal(notification: notification)
             }.store(in: &cancellables)
     }
-    
+
     private func syncFromLocalToAppGroup(notification: Notification) {
         // Sync data from local context to app group context
         guard let context = appGroupDataManager.persistentContainer.viewContext else {return}
-        
+
         context.perform {
             do {
                 let changes = self.getChanges(fromNotification: notification, toContext: context)
@@ -110,12 +110,12 @@ class DataSyncManager {
             }
         }
     }
-    
-  
+
+
     private func syncFromAppGroupToLocal(notification: Notification) {
          // Sync data from app group context to local context
         guard let context = localDataManager.persistentContainer.viewContext else {return}
-      
+
         context.perform {
             do {
                 let changes = self.getChanges(fromNotification: notification, toContext: context)
@@ -125,25 +125,25 @@ class DataSyncManager {
             }
         }
     }
-  
+
     private func getChanges(fromNotification notification: Notification, toContext context: NSManagedObjectContext) -> [AnyHashable: Any]
     {
        guard let userInfo = notification.userInfo else {return [:]}
-      
+
         var changes: [AnyHashable: Any] = [:]
-      
+
         if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject> {
           changes[NSInsertedObjectsKey] = inserts.compactMap{ context.object(with: $0.objectID) }
         }
-      
+
          if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject> {
            changes[NSUpdatedObjectsKey] = updates.compactMap { context.object(with: $0.objectID) }
         }
-        
+
         if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject> {
           changes[NSDeletedObjectsKey] = deletes.compactMap{context.object(with: $0.objectID) }
         }
-        
+
         return changes
     }
 }

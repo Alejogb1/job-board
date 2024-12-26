@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-is-better-for-asr-mel-spectrogram-or-mfcc"
 ---
 
-Okay, let's delve into this. It's a question I've actually seen come up quite a bit in my time working on various speech recognition projects, and honestly, the answer isn't always a straightforward "this one is universally better." It’s much more nuanced than that, dependent on the specifics of your use case, and the trade-offs you're willing to make. In my experience, I've found that both mel-spectrograms and Mel-Frequency Cepstral Coefficients (MFCCs) have their strengths and weaknesses when it comes to automatic speech recognition (ASR).
+, let's delve into this. It's a question I've actually seen come up quite a bit in my time working on various speech recognition projects, and honestly, the answer isn't always a straightforward "this one is universally better." It’s much more nuanced than that, dependent on the specifics of your use case, and the trade-offs you're willing to make. In my experience, I've found that both mel-spectrograms and Mel-Frequency Cepstral Coefficients (MFCCs) have their strengths and weaknesses when it comes to automatic speech recognition (ASR).
 
 The fundamental goal of using either feature type is to represent the raw audio signal in a way that's more useful for machine learning models. Raw audio waveforms, while containing all the information, are inherently high-dimensional and can be hard to work with directly. We need a representation that highlights the essential aspects of the speech signal, typically focusing on the frequency content, without the irrelevant variations.
 

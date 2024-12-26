@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-move-all-zero-values-to-the-end-of-a-postgresql-table-using-ruby-on-rails"
 ---
 
-Okay, let's tackle this. I remember back during my time working on a large e-commerce platform, we ran into a similar scenario with product inventory. Zero stock counts had a way of cluttering up our data views, and the business folks wanted those relegated to the bottom. It wasn't about just hiding the data; we needed to physically reorganize it at the database level, mainly for performance reasons when generating reports. Let’s walk through how I approached moving those zero values to the end of a PostgreSQL table, using Ruby on Rails.
+, let's tackle this. I remember back during my time working on a large e-commerce platform, we ran into a similar scenario with product inventory. Zero stock counts had a way of cluttering up our data views, and the business folks wanted those relegated to the bottom. It wasn't about just hiding the data; we needed to physically reorganize it at the database level, mainly for performance reasons when generating reports. Let’s walk through how I approached moving those zero values to the end of a PostgreSQL table, using Ruby on Rails.
 
 The core concept here is a carefully crafted sql query. While Rails provides an elegant abstraction layer with ActiveRecord, sometimes, for optimal performance, especially when dealing with large datasets, we need to drop down and get our hands dirty with raw SQL. It's a balancing act, knowing when to leverage the framework's power and when to write the precise query required.
 
@@ -59,6 +59,7 @@ result.each do |row|
   puts "Product ID: #{row['id']}, Stock: #{row['stock_count']}"
 end
 ```
+
 Here, `Product.reorder_by_zero_stock_raw` returns a result set where each row can be accessed via its column name, for instance, `row['id']` or `row['stock_count']`.
 
 **Snippet 3: Using `order` with a SQL fragment**
@@ -82,15 +83,15 @@ In this example, `Product.reorder_by_zero_stock_active_record` uses `order`, and
 
 When using any of these approaches, consider these factors:
 
-*   **Performance**: While the SQL query itself is relatively efficient, on very large tables, an index on the column in question (`stock_count` in this example) could help. If frequent sorting like this is happening, the index would provide the necessary performance for the query. This is something to evaluate using `EXPLAIN ANALYZE` on Postgres. I've often seen this simple addition boost performance by several orders of magnitude in large datasets.
-*   **Data Integrity**: This operation doesn’t change any data, just the order of rows being returned. Still, be cautious when applying such transformations to production. Always test on a staging environment.
-*   **Abstraction Level**: Choosing between `find_by_sql`, `connection.execute`, or using `order` with SQL fragments depends on the specific context, performance requirement, and level of abstraction you’re comfortable working with. `find_by_sql` is useful if you need active record objects, while `connection.execute` is better when needing a raw result. `order` gives you a nice compromise, as demonstrated.
-*   **Maintainability**: While raw SQL can be very powerful, consider the long-term maintainability of your code. If your schema changes, ensure the sql query gets updated as well.
+- **Performance**: While the SQL query itself is relatively efficient, on very large tables, an index on the column in question (`stock_count` in this example) could help. If frequent sorting like this is happening, the index would provide the necessary performance for the query. This is something to evaluate using `EXPLAIN ANALYZE` on Postgres. I've often seen this simple addition boost performance by several orders of magnitude in large datasets.
+- **Data Integrity**: This operation doesn’t change any data, just the order of rows being returned. Still, be cautious when applying such transformations to production. Always test on a staging environment.
+- **Abstraction Level**: Choosing between `find_by_sql`, `connection.execute`, or using `order` with SQL fragments depends on the specific context, performance requirement, and level of abstraction you’re comfortable working with. `find_by_sql` is useful if you need active record objects, while `connection.execute` is better when needing a raw result. `order` gives you a nice compromise, as demonstrated.
+- **Maintainability**: While raw SQL can be very powerful, consider the long-term maintainability of your code. If your schema changes, ensure the sql query gets updated as well.
 
 If you want to deepen your knowledge further, I recommend the following:
 
-*   **"SQL and Relational Theory: How to Write Accurate SQL Code" by C.J. Date**. This book is a phenomenal resource for understanding the theoretical underpinnings of SQL, which is very helpful when optimizing database interactions.
-*   **"PostgreSQL Documentation"**: The official postgres documentation is a goldmine of information regarding all specific commands, options, and features of postgresql. Specifically, I would look at the section of “queries” and specifically `order by` clauses.
-*   **"Effective Java" by Joshua Bloch**: While it's not directly related to SQL, this book promotes good coding practices, which can be applied to any domain, including database interaction. The core concepts of clarity, modularity, and efficiency are as important for writing database queries as they are for application code.
+- **"SQL and Relational Theory: How to Write Accurate SQL Code" by C.J. Date**. This book is a phenomenal resource for understanding the theoretical underpinnings of SQL, which is very helpful when optimizing database interactions.
+- **"PostgreSQL Documentation"**: The official postgres documentation is a goldmine of information regarding all specific commands, options, and features of postgresql. Specifically, I would look at the section of “queries” and specifically `order by` clauses.
+- **"Effective Java" by Joshua Bloch**: While it's not directly related to SQL, this book promotes good coding practices, which can be applied to any domain, including database interaction. The core concepts of clarity, modularity, and efficiency are as important for writing database queries as they are for application code.
 
 In conclusion, moving zero values to the end of a Postgresql table using Ruby on Rails is a fairly straightforward task, primarily focusing on a carefully constructed SQL query leveraging the power of `ORDER BY`. The correct implementation will depend on your specific needs. Always prioritize testing and performance analysis and choose an approach that balances functionality with maintainability. Remember to check the documentation for the latest syntax and be very deliberate with any query executed against your database, especially in production.

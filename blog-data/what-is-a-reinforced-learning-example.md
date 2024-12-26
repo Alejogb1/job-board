@@ -4,17 +4,17 @@ date: "2024-12-23"
 id: "what-is-a-reinforced-learning-example"
 ---
 
-Alright, let's talk reinforcement learning (rl). I've seen quite a few implementations of it over the years, some beautifully elegant, others... less so. I've debugged systems where the agent stubbornly refused to learn, and also witnessed incredible emergent behavior. So, I'm speaking from experience when I say, understanding an rl example thoroughly can really illuminate the whole field.
+, let's talk reinforcement learning (rl). I've seen quite a few implementations of it over the years, some beautifully elegant, others... less so. I've debugged systems where the agent stubbornly refused to learn, and also witnessed incredible emergent behavior. So, I'm speaking from experience when I say, understanding an rl example thoroughly can really illuminate the whole field.
 
 Essentially, at its core, reinforcement learning is about teaching an agent to make decisions by interacting with an environment and learning from the feedback it receives. Unlike supervised learning, where we have labeled data telling us what is 'correct', rl agents learn from trial and error, maximizing a reward signal. It's a bit like training a dog: you don't give the dog a labelled dataset of "sit" and "don't sit". Instead, you reward it when it sits correctly and give it a negative feedback, like a gentle correction, when it doesn't.
 
 A typical rl setup involves these key components:
 
-*   **The Agent:** This is the learner, the entity that makes decisions. Think of it as the algorithm making decisions on a strategy.
-*   **The Environment:** The world the agent interacts with. It can be a simulation, a game, or even a real-world robotic system.
-*   **The State:** The current situation of the environment that the agent observes. It provides the context for the agent to make an informed decision.
-*   **The Action:** The decision the agent makes, influencing the environment and thus the next state.
-*   **The Reward:** A scalar value that provides feedback to the agent about the consequences of its action. A positive reward is good; a negative one, obviously, not so good.
+- **The Agent:** This is the learner, the entity that makes decisions. Think of it as the algorithm making decisions on a strategy.
+- **The Environment:** The world the agent interacts with. It can be a simulation, a game, or even a real-world robotic system.
+- **The State:** The current situation of the environment that the agent observes. It provides the context for the agent to make an informed decision.
+- **The Action:** The decision the agent makes, influencing the environment and thus the next state.
+- **The Reward:** A scalar value that provides feedback to the agent about the consequences of its action. A positive reward is good; a negative one, obviously, not so good.
 
 Now, let’s look at a specific, simplified example I encountered in a project where I was developing a rudimentary autonomous navigation system for a simulated robot. It needed to move around a small maze, and the goal was to reach the target location. This is where reinforcement learning came in.
 
@@ -185,6 +185,7 @@ print("value from network:", model.predict(np.array([test_state]).reshape(1,-1))
 
 
 ```
+
 Here, we use a neural network to approximate the q-function using deep q learning. The `ContinuousEnvironment` simulates a simplified control task, with state being continuous. The neural network takes the current state as input and outputs the value function, representing how good is to be at that state. The experience replay is implemented and used to train the network. The learning method is based on the deep q learning method, which is an improvement on the traditional tabular q-learning.
 
 Finally, let’s illustrate one last type of rl scenario, where policy gradients can be useful, especially when dealing with actions that are continuous. Imagine you want to train a robot to make its joints move smoothly. We can leverage techniques like policy gradient. Here's a simplified version:

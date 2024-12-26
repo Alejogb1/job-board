@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-gcp-vertex-ais-auto-packaged-custom-training-yield-excessively-large-docker-images"
 ---
 
-Okay, let's tackle this. I’ve spent a fair amount of time wrangling with custom training pipelines on Vertex AI, and the issue of image size, particularly with auto-packaging, is definitely something I've encountered firsthand. It's a nuanced problem, not a straightforward 'yes' or 'no,' but rather a matter of understanding *why* those images can become bulky, and what strategies we have at our disposal to address it.
+, let's tackle this. I’ve spent a fair amount of time wrangling with custom training pipelines on Vertex AI, and the issue of image size, particularly with auto-packaging, is definitely something I've encountered firsthand. It's a nuanced problem, not a straightforward 'yes' or 'no,' but rather a matter of understanding _why_ those images can become bulky, and what strategies we have at our disposal to address it.
 
 From what I've seen, the 'excessively large' tag isn't inherently a flaw in Vertex AI's auto-packaging mechanism itself. Instead, it's often a consequence of the default approach the system takes when it builds those container images. By default, it’s designed to be inclusive, err on the side of caution, and include everything potentially needed for your custom training job. This includes all your specified dependencies and, often, a bit more. Think of it like packing for a long trip; it’s easy to overpack “just in case.”
 
@@ -12,7 +12,7 @@ My experience with a complex NLP model training project illustrates this well. W
 
 The good news is that we have options, and understanding these options is crucial to managing image size effectively. The strategy typically involves a mix of specifying explicit dependencies, using leaner base images and employing build-time optimization techniques. Let’s break those down and see how we can implement them.
 
-First off, it’s incredibly important to be meticulous with your `requirements.txt` file. I mean, ruthlessly so. Don't just slap in every dependency you’ve ever touched; specify only the *absolute minimum* you need for your training job. Avoid using wildcard or open range dependencies. Each additional dependency adds to the final image size, especially those with large transitive dependencies, meaning libraries that in turn depend on more libraries, and so on. Pinning the versions of the packages is essential. This not only helps control size but also ensures consistency and reproducibility. Here is a sample of a `requirements.txt` for such purpose.
+First off, it’s incredibly important to be meticulous with your `requirements.txt` file. I mean, ruthlessly so. Don't just slap in every dependency you’ve ever touched; specify only the _absolute minimum_ you need for your training job. Avoid using wildcard or open range dependencies. Each additional dependency adds to the final image size, especially those with large transitive dependencies, meaning libraries that in turn depend on more libraries, and so on. Pinning the versions of the packages is essential. This not only helps control size but also ensures consistency and reproducibility. Here is a sample of a `requirements.txt` for such purpose.
 
 ```
 # requirements.txt
@@ -68,6 +68,7 @@ COPY --from=builder /app /app
 COPY . .
 CMD ["python", "train.py"]
 ```
+
 This ensures that unnecessary artifacts used for the build phase are not included in the final docker image. The build stage installs the dependencies and then copies them into a fresh, slim final stage image with only what is necessary to run the training code.
 
 The idea is that you construct your training program by using the first image, and then you copy only the result into a second, smaller image.

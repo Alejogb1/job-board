@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-import-chai-assertions-for-openapi-response-validation"
 ---
 
-Okay, let's tackle this. I recall back in my days working on a large microservices platform, we faced a similar challenge when trying to ensure API contract adherence throughout our continuous integration pipeline. We needed something robust, maintainable, and crucially, something that allowed us to express clear validation logic. The core of the issue, as you're hinting, is how to integrate the expressive power of an assertion library like Chai with the structured, schema-driven world of OpenAPI responses. Simply put, we need to verify that what we receive from our APIs matches the expectations defined in our OpenAPI specification. This isn't just about basic data types; it also involves structural integrity, required fields, and potentially, even custom validation rules.
+, let's tackle this. I recall back in my days working on a large microservices platform, we faced a similar challenge when trying to ensure API contract adherence throughout our continuous integration pipeline. We needed something robust, maintainable, and crucially, something that allowed us to express clear validation logic. The core of the issue, as you're hinting, is how to integrate the expressive power of an assertion library like Chai with the structured, schema-driven world of OpenAPI responses. Simply put, we need to verify that what we receive from our APIs matches the expectations defined in our OpenAPI specification. This isn't just about basic data types; it also involves structural integrity, required fields, and potentially, even custom validation rules.
 
 The approach I found most effective involves a combination of a few key techniques. First, we'd use a library specifically designed for OpenAPI validation. Several exist; however, the one I gravitated towards is 'openapi-schema-validator'. This library lets you validate a response against an OpenAPI schema. Next, and this is where Chai comes into play, we'd construct Chai assertions that are informed by the result of the schema validation. It's about layering the clarity of Chai's assertion syntax on top of the validation process. Instead of relying on ‘if’ statements, we’re building fluent assertions that pinpoint exactly what went wrong. This leads to more readable and maintainable test code.
 
@@ -13,33 +13,32 @@ Now, let's break it down with some practical examples. Imagine you have an OpenA
 ```javascript
 // Example 1: Basic schema validation with Chai
 
-const { OpenApiSchemaValidator } = require('openapi-schema-validator');
-const chai = require('chai');
+const { OpenApiSchemaValidator } = require("openapi-schema-validator");
+const chai = require("chai");
 const expect = chai.expect;
-const apiSchema = require('./openapi.json'); // Replace with your path
-const userSchemaPath = '#/components/schemas/User';
+const apiSchema = require("./openapi.json"); // Replace with your path
+const userSchemaPath = "#/components/schemas/User";
 
 const validator = new OpenApiSchemaValidator({
-  schemas: [apiSchema]
+  schemas: [apiSchema],
 });
 
 async function validateUserResponse(response) {
   const validationResult = validator.validate(response, userSchemaPath);
-  expect(validationResult.errors).to.be.an('array').that.is.empty;
+  expect(validationResult.errors).to.be.an("array").that.is.empty;
 }
 
-
 // In your tests (e.g., using mocha)
-describe('User API', () => {
-    it('should return a valid user object', async () => {
-      const responseData = {
-        id: 123,
-        username: 'testUser',
-        email: 'test@example.com'
-      };
+describe("User API", () => {
+  it("should return a valid user object", async () => {
+    const responseData = {
+      id: 123,
+      username: "testUser",
+      email: "test@example.com",
+    };
 
-      await validateUserResponse(responseData);
-    });
+    await validateUserResponse(responseData);
+  });
 });
 ```
 
@@ -50,46 +49,52 @@ Let's move to the next stage, where we can provide more details on schema valida
 ```javascript
 // Example 2: Enhanced validation with explicit error messages
 
-const { OpenApiSchemaValidator } = require('openapi-schema-validator');
-const chai = require('chai');
+const { OpenApiSchemaValidator } = require("openapi-schema-validator");
+const chai = require("chai");
 const expect = chai.expect;
-const apiSchema = require('./openapi.json'); // Replace with your path
-const userSchemaPath = '#/components/schemas/User';
+const apiSchema = require("./openapi.json"); // Replace with your path
+const userSchemaPath = "#/components/schemas/User";
 
 const validator = new OpenApiSchemaValidator({
-  schemas: [apiSchema]
+  schemas: [apiSchema],
 });
 
 async function validateUserResponseWithDetails(response) {
   const validationResult = validator.validate(response, userSchemaPath);
-  expect(validationResult.errors, 'OpenAPI schema validation errors').to.be.an('array').that.is.empty;
+  expect(validationResult.errors, "OpenAPI schema validation errors").to.be.an(
+    "array"
+  ).that.is.empty;
 
-    if (validationResult.errors.length > 0) {
-    const errorMessages = validationResult.errors.map(error =>
-        `${error.instancePath} - ${error.message}`
+  if (validationResult.errors.length > 0) {
+    const errorMessages = validationResult.errors.map(
+      (error) => `${error.instancePath} - ${error.message}`
     );
-    expect(errorMessages, 'Detailed OpenAPI schema validation errors').to.be.an('array').that.is.empty; // We assert empty so it will fail if it is not empty
-   }
+    expect(errorMessages, "Detailed OpenAPI schema validation errors").to.be.an(
+      "array"
+    ).that.is.empty; // We assert empty so it will fail if it is not empty
+  }
 }
 
-
 // In your tests (e.g., using mocha)
-describe('User API', () => {
-    it('should return a valid user object with error details', async () => {
-      const responseData = {
-        id: 123,
-        // Missing username, causing validation to fail
-        email: 'test@example.com'
-      };
+describe("User API", () => {
+  it("should return a valid user object with error details", async () => {
+    const responseData = {
+      id: 123,
+      // Missing username, causing validation to fail
+      email: "test@example.com",
+    };
 
-      try {
-        await validateUserResponseWithDetails(responseData);
-      } catch (error) {
-           expect(error.message).to.include("Detailed OpenAPI schema validation errors");
-            expect(error.message).to.include("/ - must have required property 'username'")
-      }
-
-    });
+    try {
+      await validateUserResponseWithDetails(responseData);
+    } catch (error) {
+      expect(error.message).to.include(
+        "Detailed OpenAPI schema validation errors"
+      );
+      expect(error.message).to.include(
+        "/ - must have required property 'username'"
+      );
+    }
+  });
 });
 ```
 
@@ -100,41 +105,44 @@ Finally, let's show how this scales with multiple schema components. This makes 
 ```javascript
 // Example 3: Validating different responses using different schemas
 
-const { OpenApiSchemaValidator } = require('openapi-schema-validator');
-const chai = require('chai');
+const { OpenApiSchemaValidator } = require("openapi-schema-validator");
+const chai = require("chai");
 const expect = chai.expect;
-const apiSchema = require('./openapi.json'); // Replace with your path
-const userSchemaPath = '#/components/schemas/User';
-const postSchemaPath = '#/components/schemas/Post';
+const apiSchema = require("./openapi.json"); // Replace with your path
+const userSchemaPath = "#/components/schemas/User";
+const postSchemaPath = "#/components/schemas/Post";
 
 const validator = new OpenApiSchemaValidator({
-  schemas: [apiSchema]
+  schemas: [apiSchema],
 });
 
 async function validateResponseAgainstSchema(response, schemaPath) {
   const validationResult = validator.validate(response, schemaPath);
-  expect(validationResult.errors, `Schema validation failed for: ${schemaPath}`).to.be.an('array').that.is.empty;
+  expect(
+    validationResult.errors,
+    `Schema validation failed for: ${schemaPath}`
+  ).to.be.an("array").that.is.empty;
 }
 
 // In your tests (e.g., using mocha)
-describe('API endpoints', () => {
-    it('should return a valid user object', async () => {
-      const responseData = {
-        id: 123,
-        username: 'testUser',
-        email: 'test@example.com'
-      };
-      await validateResponseAgainstSchema(responseData, userSchemaPath);
-    });
+describe("API endpoints", () => {
+  it("should return a valid user object", async () => {
+    const responseData = {
+      id: 123,
+      username: "testUser",
+      email: "test@example.com",
+    };
+    await validateResponseAgainstSchema(responseData, userSchemaPath);
+  });
 
-    it('should return a valid post object', async () => {
-       const responseData = {
-          id: 456,
-          title: 'Example post',
-          content: 'This is an example post.'
-      };
-        await validateResponseAgainstSchema(responseData, postSchemaPath);
-    });
+  it("should return a valid post object", async () => {
+    const responseData = {
+      id: 456,
+      title: "Example post",
+      content: "This is an example post.",
+    };
+    await validateResponseAgainstSchema(responseData, postSchemaPath);
+  });
 });
 ```
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-my-mask-r-cnn-predict-all-objects-as-belonging-to-a-single-class"
 ---
 
-Okay, let’s dive into this. It's a frustrating situation when your Mask R-CNN spits out predictions all labeled the same class, believe me, I've been there. It typically points to a training issue, not necessarily a fundamental problem with the model architecture itself. I distinctly remember a project a few years back where I was tasked with object segmentation for a robotics application, and ran smack into this identical issue. We were trying to differentiate between several categories of tools, and every prediction ended up labeled as “tool”, regardless of the actual type. Let’s unpack why this happens and what we can do about it.
+, let’s dive into this. It's a frustrating situation when your Mask R-CNN spits out predictions all labeled the same class, believe me, I've been there. It typically points to a training issue, not necessarily a fundamental problem with the model architecture itself. I distinctly remember a project a few years back where I was tasked with object segmentation for a robotics application, and ran smack into this identical issue. We were trying to differentiate between several categories of tools, and every prediction ended up labeled as “tool”, regardless of the actual type. Let’s unpack why this happens and what we can do about it.
 
 The root cause usually boils down to the training dataset and how the loss function is behaving. Specifically, we need to consider the following possibilities:
 

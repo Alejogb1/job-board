@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-split-a-multi-dataset-folder-into-training-and-testing-sets-using-pytorch"
 ---
 
-Alright, let’s talk about splitting multi-dataset folders for PyTorch. It's a problem I've encountered more than a few times, especially when dealing with custom datasets that aren’t neatly packaged. I remember one project, involving satellite imagery classification – we had hundreds of folders, each representing a different geographical region, and within each folder were images. We needed to reliably split each region's data into training and testing sets without introducing any leakage, ensuring proper generalization. It's definitely something you'll bump into.
+, let’s talk about splitting multi-dataset folders for PyTorch. It's a problem I've encountered more than a few times, especially when dealing with custom datasets that aren’t neatly packaged. I remember one project, involving satellite imagery classification – we had hundreds of folders, each representing a different geographical region, and within each folder were images. We needed to reliably split each region's data into training and testing sets without introducing any leakage, ensuring proper generalization. It's definitely something you'll bump into.
 
-The challenge isn’t just about randomly picking files; it's about maintaining the integrity of the datasets, especially when you’re dealing with structured directory layouts. You’ll want a method that’s flexible, deterministic for reproducibility, and handles varying dataset sizes effectively. PyTorch itself doesn't offer a direct built-in utility for this specific task of splitting *folder-based* multi-datasets. Instead, we build this functionality ourselves, leveraging PyTorch's data loading capabilities.
+The challenge isn’t just about randomly picking files; it's about maintaining the integrity of the datasets, especially when you’re dealing with structured directory layouts. You’ll want a method that’s flexible, deterministic for reproducibility, and handles varying dataset sizes effectively. PyTorch itself doesn't offer a direct built-in utility for this specific task of splitting _folder-based_ multi-datasets. Instead, we build this functionality ourselves, leveraging PyTorch's data loading capabilities.
 
 The foundational principle we’ll use is building custom `Dataset` classes. These allow us to abstract away the data loading complexity and handle the train-test splitting within the dataset initialization, rather than before we load the data into PyTorch. Here’s a breakdown of how we typically accomplish this, including a few practical examples.
 
@@ -38,7 +38,7 @@ class ImageFolderDataset(Dataset):
             self.image_paths.extend(images[:split_point])
           else:
             self.image_paths.extend(images[split_point:])
-          
+
           # Labels here are assumed to be the folder name - could be modified if needed
           label = os.path.basename(subfolder)
           self.labels.extend([label] * len(images[:split_point] if split == 'train' else images[split_point:]))
@@ -55,9 +55,9 @@ class ImageFolderDataset(Dataset):
         return image, label
 ```
 
-In this code snippet, the dataset takes a `root_dir` where subfolders representing different datasets reside.  Within each subfolder, image files are collected and then divided into training and test sets according to the `train_ratio`. `random.shuffle` shuffles files to provide a random split. Note how I've avoided fixed indexes, relying on the `split_point` for train or test indexing.
+In this code snippet, the dataset takes a `root_dir` where subfolders representing different datasets reside. Within each subfolder, image files are collected and then divided into training and test sets according to the `train_ratio`. `random.shuffle` shuffles files to provide a random split. Note how I've avoided fixed indexes, relying on the `split_point` for train or test indexing.
 
-Now, while the above approach works, it might be beneficial to introduce a global, deterministic seed to keep random splits consistent across multiple runs.  This is vital for reproducibility during experimentation.  Here’s the modified version:
+Now, while the above approach works, it might be beneficial to introduce a global, deterministic seed to keep random splits consistent across multiple runs. This is vital for reproducibility during experimentation. Here’s the modified version:
 
 ```python
 import os
@@ -104,7 +104,7 @@ class ImageFolderDataset(Dataset):
 
 This version introduces a `seed` parameter, using the same seed guarantees you'll get the same data split each run, which is beneficial for debugging and reproducible science. Note that the seed should also be specified for numpy, if used for data transformations inside the dataloaders.
 
-Now, while random splits work for many cases, *stratified splits*, as discussed before, are much better when class balance is essential for proper training. This requires a slight adjustment in the code. We’d need to keep class counts and ensure each split maintains these proportions. I will skip the code for this and recommend reading the scikit-learn documentation concerning stratified splits. In general, it involves collecting labels per folder and using `train_test_split` function in `sklearn.model_selection` to achieve this. You can see some usage of this in the following code which assumes all images in the same folder represent the same class:
+Now, while random splits work for many cases, _stratified splits_, as discussed before, are much better when class balance is essential for proper training. This requires a slight adjustment in the code. We’d need to keep class counts and ensure each split maintains these proportions. I will skip the code for this and recommend reading the scikit-learn documentation concerning stratified splits. In general, it involves collecting labels per folder and using `train_test_split` function in `sklearn.model_selection` to achieve this. You can see some usage of this in the following code which assumes all images in the same folder represent the same class:
 
 ```python
 import os
@@ -134,7 +134,7 @@ class ImageFolderDatasetStratified(Dataset):
 
         # Use sklearn's train_test_split for stratified split
         train_paths, test_paths, train_labels, test_labels = train_test_split(all_paths, all_labels, train_size=train_ratio, stratify=all_labels, random_state = seed)
-        
+
         if split == 'train':
             self.image_paths = train_paths
             self.labels = train_labels

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-grails-push-notification-from-one-user-to-another"
 ---
 
-alright, so you're looking at setting up push notifications in grails, going from one user to another. this is a pretty common ask when you’re building anything that needs real-time interaction, like a chat application or a social media feed. i've been down this road a few times, and it can get a bit intricate, but let’s break it down.
+, so you're looking at setting up push notifications in grails, going from one user to another. this is a pretty common ask when you’re building anything that needs real-time interaction, like a chat application or a social media feed. i've been down this road a few times, and it can get a bit intricate, but let’s break it down.
 
 first things first, you're not going to be pushing notifications directly from your grails server to a user’s device. that's not how push notifications work. the standard approach is to use a push notification service – think firebase cloud messaging (fcm) or apple push notification service (apns) – they handle the heavy lifting of getting messages to the right devices.
 
@@ -33,7 +33,7 @@ class Device {
         user nullable: false
         platform inList: ["ios", "android"], blank: false
     }
-    
+
     static mapping = {
         user column: "user_id"
     }
@@ -108,9 +108,9 @@ public class FcmService {
 
 what this does is:
 
-*   it initializes the firebase app when the application starts.
-*   it loads the credentials from the given path in the application properties.
-*   it provides a `sendPushNotification` method to send a message using the device token.
+- it initializes the firebase app when the application starts.
+- it loads the credentials from the given path in the application properties.
+- it provides a `sendPushNotification` method to send a message using the device token.
 
 remember to add the firebase admin sdk dependency to your gradle file:
 

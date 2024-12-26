@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-function-that-ignores-blank-values-in-a-column-containing-panda-data"
 ---
 
-Alright, let’s dive into handling those pesky blank values in pandas. It’s something I’ve tackled countless times, especially back when I was working with legacy datasets pulled from less-than-perfect data entry systems. There's a lot of nuance when it comes to 'blank' values in the context of data analysis and pandas specifically, and simply skipping them isn't always the most elegant solution if you need to preserve the structure. So, let's explore a few effective ways to approach this, keeping things flexible and efficient.
+, let’s dive into handling those pesky blank values in pandas. It’s something I’ve tackled countless times, especially back when I was working with legacy datasets pulled from less-than-perfect data entry systems. There's a lot of nuance when it comes to 'blank' values in the context of data analysis and pandas specifically, and simply skipping them isn't always the most elegant solution if you need to preserve the structure. So, let's explore a few effective ways to approach this, keeping things flexible and efficient.
 
 The first thing to understand is that pandas actually represents blank values in several different ways. Common ones are `None`, `NaN` (Not a Number), empty strings (`''`), and sometimes even strings containing only whitespace (`'   '`). Depending on your data source and prior processing steps, you might encounter any combination of these. That's why a function needs to be adaptable.
 
@@ -142,8 +142,8 @@ Which outputs:
 Sum of col_e (ignoring blanks) 9.0
 ```
 
-Here, we clean and filter out rows with blank values *before* the computation. This approach ensures that any downstream functions will always have consistent data to work with, as we eliminate inconsistent blank value representations before performing any aggregation. This is critical to avoid inaccurate results.
+Here, we clean and filter out rows with blank values _before_ the computation. This approach ensures that any downstream functions will always have consistent data to work with, as we eliminate inconsistent blank value representations before performing any aggregation. This is critical to avoid inaccurate results.
 
 For resources, I recommend looking into the pandas documentation, specifically sections on handling missing data. Also, Wes McKinney's "Python for Data Analysis" is an excellent book covering the nuances of using pandas effectively, and it includes great sections on cleaning data. If you need more advanced insights into numerical analysis with python, check out "Numerical Python" by Robert Johansson, which dedicates a whole chapter to dealing with missing values, covering much of the same material but from a more numerical analysis focused point of view.
 
-In my experience, consistently applying a cleaning step that replaces all the different forms of blankness and then doing a filtration or applying a computation while keeping in mind how pandas handles NaN values generally gets you very far. I find this approach more reliable and less prone to errors when dealing with real-world data, which often comes in with varying levels of messiness. Remember, the trick is consistency, clarity, and always thinking through what *exactly* a “blank” value can mean in your data context.
+In my experience, consistently applying a cleaning step that replaces all the different forms of blankness and then doing a filtration or applying a computation while keeping in mind how pandas handles NaN values generally gets you very far. I find this approach more reliable and less prone to errors when dealing with real-world data, which often comes in with varying levels of messiness. Remember, the trick is consistency, clarity, and always thinking through what _exactly_ a “blank” value can mean in your data context.

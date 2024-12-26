@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "segmented-least-squares-algorithm-dynamic-programming"
 ---
 
-Okay so you wanna talk segmented least squares and dynamic programming I've been around this block more times than I care to remember man this is old news but a goodie I guess let's dive in
+you wanna talk segmented least squares and dynamic programming I've been around this block more times than I care to remember man this is old news but a goodie I guess let's dive in
 
-Right off the bat segmented least squares it's about finding the best way to break a bunch of points into segments where each segment is fitted by a line or some other curve you're not dealing with one massive least squares fit that would likely be a horrific mess but a series of smaller much more manageable fits Now the cool part is how you're going to find the *optimal* segmentation and that's where dynamic programming comes in real handy it's like a cheat code but a legit one you know
+Right off the bat segmented least squares it's about finding the best way to break a bunch of points into segments where each segment is fitted by a line or some other curve you're not dealing with one massive least squares fit that would likely be a horrific mess but a series of smaller much more manageable fits Now the cool part is how you're going to find the _optimal_ segmentation and that's where dynamic programming comes in real handy it's like a cheat code but a legit one you know
 
 I've seen so many folks try to brute force this I even had a go myself back in my university days a student back then we just started working in C++ and i was trying to implement this segmented least square thing on some random sensor readings of a robot arm It was terrible we were trying every possible combination like some madmen it was awful. Needless to say we didn't even get close to a useful solution it was basically a crash course in why dynamic programming exists. The runtime was literally days. I remember the professor mentioning in his last class about dynamic programming, how it was like a very efficient approach to solving complex problems by breaking them into simpler overlapping subproblems. The guy was right you know, but i didn't have enough coffee for it that day and skipped that part. It was a painful realization that the brute force way is a dead end.
 
@@ -27,32 +27,32 @@ def cost(points):
         return 0
     x_values = np.array([p[0] for p in points])
     y_values = np.array([p[1] for p in points])
-    
+
     if len(x_values) <= 1:
         return 0 #No cost for single or zero points
-    
-    
+
+
     #Simplified linear fit just for demonstration
-    
-    
+
+
     n = len(x_values)
-    
+
     x_bar = np.mean(x_values)
     y_bar = np.mean(y_values)
 
-    
-    
+
+
     numerator = sum((x - x_bar) * (y - y_bar) for x,y in zip(x_values, y_values) )
     denominator = sum((x - x_bar)**2 for x in x_values)
-    
+
     if denominator == 0:
        return float('inf')
-    
+
     b = numerator / denominator
 
     a = y_bar - b * x_bar
-    
-    
+
+
     total_error = sum((y - (a + b*x) )**2 for x,y in zip(x_values,y_values))
     return total_error
 
@@ -61,41 +61,41 @@ def segmented_least_squares(points, max_segments, penalty):
     n = len(points)
     dp = np.full((n + 1, max_segments + 1), float('inf'))
     dp[0][0] = 0
-    
-    
+
+
     break_points = np.empty((n+1,max_segments+1), dtype=object)
     break_points[:] = None
 
     for i in range(1, n + 1):
       for j in range(max_segments + 1):
-        
+
         for k in range(i):
          current_cost = dp[k][j-1] if j>0 else float('inf')
-         
-         
+
+
          segment_cost = cost(points[k:i])
          total_cost = current_cost + segment_cost + penalty
-         
+
          if total_cost < dp[i][j]:
             dp[i][j] = total_cost
             if j > 0:
                 break_points[i][j] = k
             else:
                 break_points[i][j] = 0
-            
-            
+
+
 
     # Backtrack to find segmentation
     segmentation = []
     if max_segments > 0:
-        
+
         current_index = n
         current_segments = max_segments
-        
+
         while current_index > 0 and current_segments >0:
-            
+
             segment_start = break_points[current_index][current_segments]
-           
+
             segmentation.insert(0,(segment_start,current_index))
             current_index = segment_start
             current_segments -= 1
@@ -115,36 +115,36 @@ import matplotlib.pyplot as plt
 def plot_segments(points, segmentation):
     x_values = [p[0] for p in points]
     y_values = [p[1] for p in points]
-    
-    
+
+
     plt.scatter(x_values,y_values, label="data points", color='blue')
-    
-    
+
+
     for segment_start, segment_end in segmentation:
         segment = points[segment_start:segment_end]
         if len(segment) > 1 : # Only plot if there are two or more points
             x_seg = [p[0] for p in segment]
             y_seg = [p[1] for p in segment]
-            
 
-            
-            
+
+
+
             x_bar = np.mean(x_seg)
             y_bar = np.mean(y_seg)
-            
-            
-            
+
+
+
             numerator = sum((x - x_bar) * (y - y_bar) for x,y in zip(x_seg, y_seg) )
             denominator = sum((x - x_bar)**2 for x in x_seg)
-            
+
             if denominator !=0:
 
                 b = numerator / denominator
-            
-            
-            
+
+
+
                 a = y_bar - b * x_bar
-                
+
                 x_fit = np.linspace(min(x_seg), max(x_seg), 100)
                 y_fit = a + b * x_fit
                 plt.plot(x_fit, y_fit, color='red')

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-deal-with-imbalanced-data-classification"
 ---
 
-Alright so you've got imbalanced data classification right? Been there done that got the t-shirt and probably a few grey hairs. Let me tell you its a classic pain point we all hit sooner or later when you're knee-deep in machine learning projects. You think you've got everything set up your model's humming along then bam accuracy is great but specificity or recall is in the toilet. We've all stared at those numbers feeling like we're talking to a wall I've had that feeling myself way back when I was working on a fraud detection system for a small fintech startup.
+so you've got imbalanced data classification right? Been there done that got the t-shirt and probably a few grey hairs. Let me tell you its a classic pain point we all hit sooner or later when you're knee-deep in machine learning projects. You think you've got everything set up your model's humming along then bam accuracy is great but specificity or recall is in the toilet. We've all stared at those numbers feeling like we're talking to a wall I've had that feeling myself way back when I was working on a fraud detection system for a small fintech startup.
 
 I remember my first time vividly. We had transaction data millions of them and maybe a couple thousand labeled as fraudulent. The model was absolutely thrilled predicting not-fraud every single time because it was so easy I mean 99.99% not-fraud what’s the big deal right? High accuracy but absolutely useless. That’s when I really understood the sting of imbalanced datasets. So let’s break this down we'll go through some common solutions and hopefully give you some real world advice and not just theoretical BS.
 
@@ -110,18 +110,18 @@ Remember though its not just the algorithm itself you need to be sure to use a m
 
 **Some Additional Advice From the Trenches**
 
-*   **Don't blindly apply techniques.** Explore your data understand why it’s imbalanced is it a sampling issue or truly a skewed distribution?
-*   **Use cross-validation properly.**  Avoid data leakage at all costs. Make sure you sample the train set and then split into cross-validation sets so there is no data leakage.
-*   **Tune your hyperparameters.** Its rare to have the default parameter values be the optimum ones. Try to run a gridsearch or bayesian optimization.
-*   **Be sure to monitor your metrics correctly.** Make sure to use precision recall or F1 scores not just accuracy.
-*   **Sometimes better data can solve everything.** See if you can get more data for the minority class if possible or if you can generate better features from the ones you have
+- **Don't blindly apply techniques.** Explore your data understand why it’s imbalanced is it a sampling issue or truly a skewed distribution?
+- **Use cross-validation properly.** Avoid data leakage at all costs. Make sure you sample the train set and then split into cross-validation sets so there is no data leakage.
+- **Tune your hyperparameters.** Its rare to have the default parameter values be the optimum ones. Try to run a gridsearch or bayesian optimization.
+- **Be sure to monitor your metrics correctly.** Make sure to use precision recall or F1 scores not just accuracy.
+- **Sometimes better data can solve everything.** See if you can get more data for the minority class if possible or if you can generate better features from the ones you have
 
 **Resources**
 
 Instead of sending you random links I'd suggest looking into books like:
 
-*   "Applied Predictive Modeling" by Max Kuhn and Kjell Johnson. Good overall resource that includes techniques for imbalanced data
-*   "Data Mining: Practical Machine Learning Tools and Techniques" by Ian H. Witten, Eibe Frank, Mark A. Hall. Another solid foundation book
+- "Applied Predictive Modeling" by Max Kuhn and Kjell Johnson. Good overall resource that includes techniques for imbalanced data
+- "Data Mining: Practical Machine Learning Tools and Techniques" by Ian H. Witten, Eibe Frank, Mark A. Hall. Another solid foundation book
 
 I would also advise you to read articles from the original papers if you wish to better understand the technique you are using rather than just using the default library methods. You can find those by doing a quick search in Google Scholar or similar search engine.
 

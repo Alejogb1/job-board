@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-a-dictionary-be-restructured-for-use-in-pythons-mailmerge"
 ---
 
-Alright, let's tackle this. I've seen this particular issue crop up more than a few times, particularly when integrating systems that don't inherently play nice with MailMerge's expected input format. MailMerge, for those unfamiliar, expects a dictionary where the *keys* are the merge field names you'd use in your document (like `{{name}}`, `{{address}}`), and the *values* are the data corresponding to those fields. Often, however, your data might arrive in a less convenient structure - perhaps nested, or even a flat list of dictionaries. So, it’s less about “restructuring a dictionary” and more about transforming your source data into what MailMerge needs.
+, let's tackle this. I've seen this particular issue crop up more than a few times, particularly when integrating systems that don't inherently play nice with MailMerge's expected input format. MailMerge, for those unfamiliar, expects a dictionary where the _keys_ are the merge field names you'd use in your document (like `{{name}}`, `{{address}}`), and the _values_ are the data corresponding to those fields. Often, however, your data might arrive in a less convenient structure - perhaps nested, or even a flat list of dictionaries. So, it’s less about “restructuring a dictionary” and more about transforming your source data into what MailMerge needs.
 
 Let's talk practicalities. Suppose I once had to pull user information from a legacy database where each record was a tuple of database fields with associated column names. This wasn’t a readily usable dictionary structure; instead, it was an unmanageable flat list of tuples, each one representing a row with no clear path to usable key-value pairs for mail merging. My task? Transform this mess.
 
-The fundamental concept here is data transformation, taking data from its source structure and putting it into a form that's compatible for consumption. We're not modifying an existing dictionary in place; rather, we're creating a *new* dictionary structure that we feed into MailMerge. This often involves iteration, conditional logic, and a good understanding of the data we're starting with.
+The fundamental concept here is data transformation, taking data from its source structure and putting it into a form that's compatible for consumption. We're not modifying an existing dictionary in place; rather, we're creating a _new_ dictionary structure that we feed into MailMerge. This often involves iteration, conditional logic, and a good understanding of the data we're starting with.
 
 Let’s explore three common scenarios and solutions with code examples:
 
@@ -126,8 +126,8 @@ The core principle is that you need to transform your source data to match the s
 
 For further study, I'd recommend looking into resources that delve deeper into data transformation techniques:
 
-*   "Data Wrangling with Python" by Jacqueline Nolis and Kathryn Huff: This book offers a deep dive into various techniques for manipulating data, and is relevant to handling varied and non-standard input formats.
-*   "Python Data Science Handbook" by Jake VanderPlas: A detailed exploration of working with data in Python including how to perform complex data transformations, using tools such as pandas if needed for bigger datasets, or to leverage built in python data structures for smaller datasets.
-*   Documentation for libraries like `pandas` (if dealing with larger datasets). Understanding how to use a library such as pandas to ingest and transform data sets can be invaluable when handling larger or more complex datasets, but its a overkill for many smaller mail merge operations.
+- "Data Wrangling with Python" by Jacqueline Nolis and Kathryn Huff: This book offers a deep dive into various techniques for manipulating data, and is relevant to handling varied and non-standard input formats.
+- "Python Data Science Handbook" by Jake VanderPlas: A detailed exploration of working with data in Python including how to perform complex data transformations, using tools such as pandas if needed for bigger datasets, or to leverage built in python data structures for smaller datasets.
+- Documentation for libraries like `pandas` (if dealing with larger datasets). Understanding how to use a library such as pandas to ingest and transform data sets can be invaluable when handling larger or more complex datasets, but its a overkill for many smaller mail merge operations.
 
 In summary, the process of restructuring a dictionary for MailMerge really boils down to applying the proper transformation techniques specific to the data's source structure. It’s a common task in any data-driven workflow, and understanding these fundamentals will serve you well.

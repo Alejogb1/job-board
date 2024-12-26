@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-do-i-remove-a-car-from-an-image"
 ---
 
-Alright, let's talk about removing a car from an image. This isn’t a trivial task, and there are multiple ways to approach it depending on the desired outcome and the complexity of the image. In my experience, having spent considerable time on image processing projects, I've found that a combination of techniques often yields the best results. It's not a single solution but rather a careful process leveraging a few key concepts. Let's unpack this.
+, let's talk about removing a car from an image. This isn’t a trivial task, and there are multiple ways to approach it depending on the desired outcome and the complexity of the image. In my experience, having spent considerable time on image processing projects, I've found that a combination of techniques often yields the best results. It's not a single solution but rather a careful process leveraging a few key concepts. Let's unpack this.
 
-First off, the core challenge revolves around *in-painting*, which is the art of filling in missing or removed areas of an image in a plausible way. We're not just erasing pixels; we're essentially reconstructing what *should* be behind the car, as the image would appear if the car wasn’t there. This is where the algorithms come into play.
+First off, the core challenge revolves around _in-painting_, which is the art of filling in missing or removed areas of an image in a plausible way. We're not just erasing pixels; we're essentially reconstructing what _should_ be behind the car, as the image would appear if the car wasn’t there. This is where the algorithms come into play.
 
 One of the first methods I usually consider when dealing with simpler images is using a combination of masking and basic image manipulation techniques. We start with manually or semi-automatically masking the car. By 'masking,' I mean creating a separate black and white image that outlines the car's region. White pixels signify the area we wish to remove/replace, and black pixels indicate the parts of the original image we want to preserve. Once the mask is ready, we can apply in-painting algorithms.
 
-A simple method involves using something I refer to as “patch-based in-painting". It's straightforward to grasp: the algorithm identifies small image patches (square sections of the image) in the surrounding area *outside* of the mask. It then looks for patches that are visually similar to the masked area. These similar patches are then used to fill in the masked region, blending them together. This method works well when the background is relatively uniform, such as a plain road, grass, or sky. I once used this technique extensively to remove small objects from aerial images, where the background was mostly trees and fields, achieving surprisingly good results with minimal computational effort.
+A simple method involves using something I refer to as “patch-based in-painting". It's straightforward to grasp: the algorithm identifies small image patches (square sections of the image) in the surrounding area _outside_ of the mask. It then looks for patches that are visually similar to the masked area. These similar patches are then used to fill in the masked region, blending them together. This method works well when the background is relatively uniform, such as a plain road, grass, or sky. I once used this technique extensively to remove small objects from aerial images, where the background was mostly trees and fields, achieving surprisingly good results with minimal computational effort.
 
 Let's translate this into a basic python example using `opencv` and `numpy`. For this example, consider we’ve manually created a mask called `mask.png` – a black and white image where white indicates the car area.
 
@@ -23,10 +23,10 @@ def patch_based_inpaint(image_path, mask_path, patch_size=15):
     mask = cv2.imread(mask_path, cv2.IMREAD_GRAYSCALE)
 
     mask_indices = np.where(mask == 255) # Find white pixels (masked region)
-    
+
     # Convert to float for calculations
-    image_float = image.astype(float) 
-    
+    image_float = image.astype(float)
+
     for y, x in zip(*mask_indices):
         best_patch = None
         min_distance = float('inf')
@@ -88,11 +88,11 @@ import numpy as np
 
 def simple_encoder_decoder(image, mask, latent_dim=16):
     # Simulating encoder (replace with your actual model)
-    encoded_image = np.mean(image, axis=(0,1,2)) + np.random.normal(0, 0.1, latent_dim) 
+    encoded_image = np.mean(image, axis=(0,1,2)) + np.random.normal(0, 0.1, latent_dim)
 
     # Simulating decoder (replace with your actual model)
     reconstructed_part = np.random.normal(0.5, 0.2, image.shape) # Placeholder for generated content
-    
+
     masked_image = image.copy()
     masked_image[mask == 255] = reconstructed_part[mask == 255]
 
@@ -130,7 +130,7 @@ def image_quilting_inpaint(image, mask, patch_size=20, overlap=5):
             if np.sum(mask[y:y+patch_size, x:x+patch_size]) == 0:  # Make sure patch lies completely outside mask
                 return patch, x, y
 
-    
+
     inpainted_image = image.copy()
 
     for y,x in zip(*mask_indices):
@@ -138,7 +138,7 @@ def image_quilting_inpaint(image, mask, patch_size=20, overlap=5):
           continue # Skip non-masked pixels
 
         patch, px, py = extract_patch(image, patch_size)
-        
+
         top_left_y = max(0, y - patch_size // 2)
         top_left_x = max(0, x - patch_size // 2)
         bottom_right_y = min(image.shape[0], y + patch_size // 2)

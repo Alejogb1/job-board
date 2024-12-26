@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-play-a-video-in-fullscreen-in-landscape-with-exoplayer"
 ---
 
-alright, so fullscreen landscape with exoplayer, yeah i’ve been down that road a few times. it always seems like it should be a one-liner, but it usually isn’t. i remember my first real encounter with this, back in the pre-android jetpack days, it was a mess of manual layout calculations and handling rotation myself. i’m talking about pre-2015, using the old support library. we had to juggle ui flags, view groups, and calculate dimensions by hand it felt like i was performing a pixel dance every time the orientation changed. let's just say, it made me appreciate the api updates that came later.
+, so fullscreen landscape with exoplayer, yeah i’ve been down that road a few times. it always seems like it should be a one-liner, but it usually isn’t. i remember my first real encounter with this, back in the pre-android jetpack days, it was a mess of manual layout calculations and handling rotation myself. i’m talking about pre-2015, using the old support library. we had to juggle ui flags, view groups, and calculate dimensions by hand it felt like i was performing a pixel dance every time the orientation changed. let's just say, it made me appreciate the api updates that came later.
 
 anyway, the basic idea involves a few core steps. firstly, you need to toggle the system ui flags, basically telling android to go fullscreen and get rid of the navigation and status bars. then, your player view has to adapt to the fullscreen dimensions, which is usually the parent view's dimensions. finally, rotation to landscape needs to be done programmatically.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-an-rnn-model-trained-with-pytorch-without-pytorch"
 ---
 
-Okay, let’s tackle this. It's a common scenario, actually, particularly when you're moving a model from the prototyping phase to, say, a production environment or an embedded system where direct PyTorch deployment isn't practical or desirable. I've had to navigate this exact hurdle a few times in my career – specifically, when deploying a sentiment analysis model onto resource-constrained devices where every kilobyte of memory counts. The key here is understanding the underlying mechanics of the model and then replicating them in your target environment.
+, let’s tackle this. It's a common scenario, actually, particularly when you're moving a model from the prototyping phase to, say, a production environment or an embedded system where direct PyTorch deployment isn't practical or desirable. I've had to navigate this exact hurdle a few times in my career – specifically, when deploying a sentiment analysis model onto resource-constrained devices where every kilobyte of memory counts. The key here is understanding the underlying mechanics of the model and then replicating them in your target environment.
 
 Fundamentally, an RNN (Recurrent Neural Network), whether it’s a vanilla RNN, an LSTM, or a GRU, operates on a series of matrix operations. PyTorch, and similar libraries, are essentially offering high-level abstractions of these calculations, streamlining the training process significantly. However, once trained, the model's ‘knowledge’ is stored in the trained weights and biases. These are just numerical values. So, our objective is to extract these values from the trained PyTorch model and then implement the forward pass calculation ourselves in another system or programming language.
 
@@ -61,6 +61,7 @@ for key, value in state_dict.items():
 print("Parameters saved to 'lstm_parameters/'")
 
 ```
+
 This code saves the individual parameter tensors as separate files in a directory called ‘lstm_parameters’. The key part here is that we’re explicitly iterating through each layer's weights and biases, allowing very granular access and extraction. Remember to create the 'lstm_parameters' directory before running.
 
 **2. Implementing the Forward Pass:**
@@ -112,7 +113,7 @@ def manual_forward(input_seq):
     c = np.zeros(hidden_size)
     for t in range(input_seq.shape[0]):
         h, c = lstm_step(input_seq[t], h, c)
-    
+
     #output layer calculation
     output_pre = np.dot(w_fc,h) + b_fc
     return output_pre
@@ -130,6 +131,7 @@ with torch.no_grad():
 print("Pytorch Output:", output_pytorch)
 
 ```
+
 Here, we’re loading parameters from disk as numpy arrays. The `lstm_step` function performs the calculations that happen at each time step in an LSTM network; we sequentially perform these steps for each time step in the input sequence using the `manual_forward` function. Finally, the last hidden state is fed into the fully connected layer. This provides a ‘manual’ calculation that, assuming we have performed our matrix operations correctly and loaded the parameters in the correct order, should be numerically equivalent to the PyTorch forward pass. We compare our manual implementation result with the output from PyTorch's forward pass to confirm they align. Small variations can occur given numerical differences with computation environments (GPUs, CPUs, NumPy vs PyTorch backends), but the results should be very similar.
 
 **3. Real-World Considerations & Further Improvements:**

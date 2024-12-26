@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-validate-yaml-files-on-github"
 ---
 
-Alright, let's talk about YAML validation on GitHub. I’ve spent a fair amount of time navigating the intricacies of configuration management, and invalid YAML slipping through is, let's be honest, a headache we all try to avoid. The crux of the matter isn't just about preventing deployments from failing; it's about ensuring consistency, predictability, and maintainability. Having dealt with that firsthand – a particularly memorable incident involving a missing colon and a multi-hour debugging session – i can confidently say that proactive validation is key.
+, let's talk about YAML validation on GitHub. I’ve spent a fair amount of time navigating the intricacies of configuration management, and invalid YAML slipping through is, let's be honest, a headache we all try to avoid. The crux of the matter isn't just about preventing deployments from failing; it's about ensuring consistency, predictability, and maintainability. Having dealt with that firsthand – a particularly memorable incident involving a missing colon and a multi-hour debugging session – i can confidently say that proactive validation is key.
 
-The challenge isn't whether validation *can* be done, but rather how to incorporate it seamlessly into your GitHub workflow. We're essentially aiming for a system that automatically flags invalid YAML files, ideally before they even merge into the main branch. This isn't just about finding syntax errors, although that's crucial. We need to consider logical errors as well, where the YAML might be syntactically valid but semantically incorrect for your application.
+The challenge isn't whether validation _can_ be done, but rather how to incorporate it seamlessly into your GitHub workflow. We're essentially aiming for a system that automatically flags invalid YAML files, ideally before they even merge into the main branch. This isn't just about finding syntax errors, although that's crucial. We need to consider logical errors as well, where the YAML might be syntactically valid but semantically incorrect for your application.
 
 Now, let's get into how to make this happen. The most effective approach involves leveraging GitHub Actions. This allows us to set up continuous integration (CI) pipelines that execute checks whenever changes are pushed to a repository or a pull request is created. We'll need two main components: a YAML validator and a GitHub Actions workflow to run it. There are several validation tools out there, but i often fall back on a combination of `yamllint` for general syntax checks and custom schema validation, particularly when dealing with complex configurations.
 
@@ -38,7 +38,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-            python-version: '3.x'
+          python-version: "3.x"
 
       - name: Install yamllint
         run: pip install yamllint
@@ -52,7 +52,6 @@ jobs:
                 exit 1
             fi
           done
-
 ```
 
 This workflow first checks out the code, then sets up Python (as `yamllint` is python-based). Next, it installs `yamllint` and searches for all files ending in .yaml or .yml. It then runs `yamllint` on each file. If `yamllint` returns a non-zero exit code, meaning an error was found, the workflow will exit, effectively marking the build as failed.
@@ -137,7 +136,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: "3.x"
 
       - name: Install yamllint
         run: pip install yamllint
@@ -161,6 +160,7 @@ In this updated workflow, we’ve added a new step to run the custom `validator.
 These snippets are just the starting point, of course. In a real project, the schema validation might get more complex, involving libraries for more rigorous schema enforcement.
 
 For resources on delving deeper, I'd recommend looking at:
+
 - **"Effective DevOps" by Jennifer Davis and Katherine Daniels**: This provides a great overview of automation and infrastructure as code best practices, including the role of validation.
 - **The official yamllint documentation**: For understanding all the possibilities offered by `yamllint`, including extensive configurations.
 - **"Designing Data-Intensive Applications" by Martin Kleppmann:** Although broader in scope, it covers crucial concepts related to data formats and schema, vital for understanding why strict validation is important.

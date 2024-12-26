@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-explicitly-set-a-dependency-using-the-taskflowapi"
 ---
 
-alright, so you're looking at explicitly setting a dependency in airflow's taskflow api, yeah? i've been down that road more times than i care to count, and it can be a bit tricky initially. especially when you move from the old way of defining dependencies with bitshift operators, it feels like a whole new ball game.
+, so you're looking at explicitly setting a dependency in airflow's taskflow api, yeah? i've been down that road more times than i care to count, and it can be a bit tricky initially. especially when you move from the old way of defining dependencies with bitshift operators, it feels like a whole new ball game.
 
 my early days with airflow, oh man, that was a learning curve. i remember this one particular pipeline i was building. it involved scraping data, cleaning it, and then shoving it into a database. i initially tried to make it all one huge dag, one huge task. that was a mistake, a huge mistake. it was like trying to fit a square peg in a round hole and when i finally realized the error i was making it was too late i had to refactor all from scratch. debugging that mess was a nightmare because things would randomly fail without any indication of why and i had to use print statements like a debugging dinosaur to figure out all the dependencies i had mixed up. that's when i learned the power of modularity and how important it is to understand the taskflow api and not just blindly copy paste things from the web.
 

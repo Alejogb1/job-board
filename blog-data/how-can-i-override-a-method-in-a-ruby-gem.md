@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-override-a-method-in-a-ruby-gem"
 ---
 
-Alright, let's tackle this. Overriding methods in a Ruby gem, while not something you'd ideally do regularly, is occasionally necessary when you hit a particular corner case or need specific behavior that wasn't foreseen by the gem's maintainers. I've definitely found myself in this situation more than once, especially when dealing with older or less actively maintained projects. The key here is understanding Ruby's object model and leveraging its flexibility while maintaining best practices, like keeping our changes isolated and easy to track.
+, let's tackle this. Overriding methods in a Ruby gem, while not something you'd ideally do regularly, is occasionally necessary when you hit a particular corner case or need specific behavior that wasn't foreseen by the gem's maintainers. I've definitely found myself in this situation more than once, especially when dealing with older or less actively maintained projects. The key here is understanding Ruby's object model and leveraging its flexibility while maintaining best practices, like keeping our changes isolated and easy to track.
 
 The direct method of modification—changing the gem's source code—is generally a very bad idea. Any gem update will wipe out your changes, potentially introducing instability, and making your project extremely difficult to maintain. So, we need to be smarter about this. We’ll focus on techniques that use Ruby's dynamic nature to our advantage without fundamentally altering the gem itself.
 
-The most common and often safest approach is to use **monkey patching**, although the term has some negative connotations. Let’s call it *class reopening* or *method aliasing and overriding* to avoid that. Fundamentally, what this entails is redefining an existing method or adding new methods to an existing class. Importantly, this can be done even if that class was defined in a gem.
+The most common and often safest approach is to use **monkey patching**, although the term has some negative connotations. Let’s call it _class reopening_ or _method aliasing and overriding_ to avoid that. Fundamentally, what this entails is redefining an existing method or adding new methods to an existing class. Importantly, this can be done even if that class was defined in a gem.
 
 Consider a scenario where, in a fictional project circa 2015, I needed to adjust how a gem named `LegacyDataProcessor` handled data parsing. The original method, let's say, was called `process_record` within the `DataFormatter` class of this gem and it wasn't quite robust enough for the edge cases I was encountering in the production environment. So, here’s how we could have handled that situation.
 
@@ -30,10 +30,10 @@ class LegacyDataProcessor::DataFormatter
 
       # Apply our custom processing, replacing or enhancing the gem's original implementation
       processed_data = record.transform_values { |value| value.to_s.strip } # For example, trimming whitespace
-       
+
       # Call the original method to maintain core functionality
       super(processed_data)  rescue return nil # handle it when super call fails
-      
+
 
       # Logging after processing
       Rails.logger.info("Record processing completed: #{processed_data}") if defined?(Rails) && Rails.logger
@@ -93,7 +93,7 @@ class CustomDataFormatter < LegacyDataProcessor::DataFormatter
   def process_record(record)
     # Your customized implementation here
     formatted_data = record.transform_keys(&:downcase)
-     
+
     super(formatted_data) # Call the original implementation with the adjusted data
 
   end
@@ -111,4 +111,4 @@ Here we create `CustomDataFormatter` by inheriting from `LegacyDataProcessor::Da
 
 A final thought: this type of modification can lead to problems when updating gems, so ensure to test thoroughly. You can also use automated testing that specifically tests this kind of monkey-patch. Also, document your patches well and consider submitting a pull request to the gem’s maintainers if your changes address a bug or improve the gem's behavior for others.
 
-For further study on these concepts, I would suggest looking at *“Metaprogramming Ruby”* by Paolo Perrotta for a very in-depth explanation of Ruby’s object model and dynamic features. Additionally, *“Eloquent Ruby”* by Russ Olsen gives great insights into practical ruby practices. These resources can provide a solid foundation to effectively handle such situations while also understanding the potential pitfalls. Finally, any documentation on object-oriented design and inheritance patterns will also be valuable. Good luck!
+For further study on these concepts, I would suggest looking at _“Metaprogramming Ruby”_ by Paolo Perrotta for a very in-depth explanation of Ruby’s object model and dynamic features. Additionally, _“Eloquent Ruby”_ by Russ Olsen gives great insights into practical ruby practices. These resources can provide a solid foundation to effectively handle such situations while also understanding the potential pitfalls. Finally, any documentation on object-oriented design and inheritance patterns will also be valuable. Good luck!

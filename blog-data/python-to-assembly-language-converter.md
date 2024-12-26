@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "python-to-assembly-language-converter"
 ---
 
-Okay so you wanna go from Python to Assembly right Alright I get it Been there done that Got the scars to prove it
+you wanna go from Python to Assembly right I get it Been there done that Got the scars to prove it
 
 See a while back I was knee-deep in a project involving a custom embedded system something that needed to be ridiculously low-level We were talking about squeezing every single clock cycle out of this little chip and Python wasn't exactly cutting it for real-time performance So yeah I needed a way to translate Python logic into assembly I didn't need a full compiler mind you more of a translator for specific parts of the code
 
@@ -30,7 +30,7 @@ If you run that snippet you will see something like this I am using cpython so h
               6 RETURN_VALUE
 ```
 
-Okay so you see the instructions here `LOAD_FAST` `BINARY_ADD` `RETURN_VALUE` Those are basically the low level operations that the python virtual machine performs to run the high level Python code You could potentially translate those to assembly but it depends on the target architecture
+you see the instructions here `LOAD_FAST` `BINARY_ADD` `RETURN_VALUE` Those are basically the low level operations that the python virtual machine performs to run the high level Python code You could potentially translate those to assembly but it depends on the target architecture
 
 For example `LOAD_FAST` in x86_64 could turn into a `mov` instruction to copy a variable to a register `BINARY_ADD` would be like `add` or equivalent instruction and `RETURN_VALUE` means move to the stack or return registers
 
@@ -80,9 +80,9 @@ The Python to assembly problem is not an issue you can just quickly solve in 5 m
 
 One last thing I had a friend who got lost in a recursive function call one time I guess you can say he got stack overflowed (lol) anyways if you really need to go down this rabbit hole these resources might help you more than me:
 
-*   "Computer Organization and Design" by Patterson and Hennessy It's a classic for learning about computer architecture and instruction sets
-*   "Modern Operating Systems" by Andrew S Tanenbaum will give you a deeper understanding of how operating systems handle execution of code and memory and also low level interaction between software and hardware
-*   The instruction manual for your target architecture The instruction manual is the bible of your processor architecture It has a complete specification of what that machine can do how it can do it and all the instructions it understands It's a must have
-*   Python documentation regarding the `dis` module is also very valuable so keep that on the side to help yourself with the intermediate python bytecode
+- "Computer Organization and Design" by Patterson and Hennessy It's a classic for learning about computer architecture and instruction sets
+- "Modern Operating Systems" by Andrew S Tanenbaum will give you a deeper understanding of how operating systems handle execution of code and memory and also low level interaction between software and hardware
+- The instruction manual for your target architecture The instruction manual is the bible of your processor architecture It has a complete specification of what that machine can do how it can do it and all the instructions it understands It's a must have
+- Python documentation regarding the `dis` module is also very valuable so keep that on the side to help yourself with the intermediate python bytecode
 
 And of course don't be afraid to experiment and see for yourself what works for your particular problem it's the best way to understand such a complicated subject

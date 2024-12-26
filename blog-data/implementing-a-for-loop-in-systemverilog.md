@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "implementing-a-for-loop-in-systemverilog"
 ---
 
-Okay so you wanna loop in SystemVerilog right been there done that got the t-shirt and probably spilled coffee on it too more times than I'd like to admit Let's break this down it's not rocket science but it's got its quirks
+you wanna loop in SystemVerilog right been there done that got the t-shirt and probably spilled coffee on it too more times than I'd like to admit Let's break this down it's not rocket science but it's got its quirks
 
 See SystemVerilog isn't your average C++ or Python it's hardware description language at its core so looping isn't like banging out some quick iterations it's about describing hardware that will do the looping for you that's a big difference and a big mindset shift
 
@@ -21,11 +21,11 @@ end
 
 Easy right? Sort of But the details matter a lot in this world
 
-*   **Initialization:** This is where you declare and often set your loop counter variable It is good practice to declare the iterator variable within the for statement but you don't have to. It's scoped to the loop.
-*   **Condition:** This is where the loop decides whether to keep going. If the condition is true it continues if false the loop is done. Simple enough.
-*   **Step:** This determines what happens to the loop counter after every iteration usually an increment or decrement.
+- **Initialization:** This is where you declare and often set your loop counter variable It is good practice to declare the iterator variable within the for statement but you don't have to. It's scoped to the loop.
+- **Condition:** This is where the loop decides whether to keep going. If the condition is true it continues if false the loop is done. Simple enough.
+- **Step:** This determines what happens to the loop counter after every iteration usually an increment or decrement.
 
-Let's get concrete This is an example of a basic loop that increments a value across a vector called *output_data*. It iterates through 16 values using `i` as a simple counter
+Let's get concrete This is an example of a basic loop that increments a value across a vector called _output_data_. It iterates through 16 values using `i` as a simple counter
 
 ```systemverilog
 module for_loop_example (
@@ -41,7 +41,7 @@ module for_loop_example (
 endmodule
 ```
 
-Okay few things. First the `integer i` bit is the standard way to define a loop counter variable here We use `@(*)` because this is combinational logic. This loop is not happening in time it will create a circuit and the variable "i" will change continuously with respect to whatever inputs the circuit has (nothing in this case but the value will be different if the code was inside a bigger module and inputs existed).
+few things. First the `integer i` bit is the standard way to define a loop counter variable here We use `@(*)` because this is combinational logic. This loop is not happening in time it will create a circuit and the variable "i" will change continuously with respect to whatever inputs the circuit has (nothing in this case but the value will be different if the code was inside a bigger module and inputs existed).
 
 Second, the `output_data[i] = i;` part does what it says its gonna assign a value to the output array it will assign zero to `output_data[0]` one to `output_data[1]` and so on.
 
@@ -49,9 +49,9 @@ But hold on we’re not done with the caveats
 
 One big mistake I see people make is trying to do loops inside clocked always blocks for example without understanding the implication of synthesizable code.
 
-If you are in a clocked `always @(posedge clk)` block then the loop needs to be *unrolled* when it's synthesized into hardware. The way we get the correct and synthesizable loop behavior with clocked sequential circuits is by creating a state machine. The loop variable needs to become a register and that needs to be controlled by sequential circuits this way we have correct values during the operation of the loop.
+If you are in a clocked `always @(posedge clk)` block then the loop needs to be _unrolled_ when it's synthesized into hardware. The way we get the correct and synthesizable loop behavior with clocked sequential circuits is by creating a state machine. The loop variable needs to become a register and that needs to be controlled by sequential circuits this way we have correct values during the operation of the loop.
 
-Let's look at another example with a `posedge clk` and an input called *input\_data* and a variable called *sum*. The goal is to sum up the vector *input\_data* and store it inside *sum*.
+Let's look at another example with a `posedge clk` and an input called _input_data_ and a variable called _sum_. The goal is to sum up the vector _input_data_ and store it inside _sum_.
 
 ```systemverilog
 module clocked_for_loop (
@@ -87,7 +87,7 @@ module clocked_for_loop (
           // do nothing
          end
         default: begin
-        // something wrong 
+        // something wrong
         state <= IDLE;
         end
     endcase
@@ -103,7 +103,7 @@ What did we do here? We created a state machine with `IDLE`, `LOOP`, and `DONE` 
 
 Another tricky thing to remember SystemVerilog loops are usually executed as part of the synthesis step so don't expect a dynamically sized loop based on run-time variables in the general case. The size and shape are generally determined before the synthesis happens. The synthesizable code means that these loops need to be constant. This means that the number of iterations needs to be known in advance and at compile time so the synthesizer can unroll that logic.
 
-Another useful loop construct that can be useful in SystemVerilog is the *foreach* loop, which is great for iterating through array elements when you are not using hardware but are using SystemVerilog to verify your design. This is not part of the hardware that will be synthesized. It’s part of the verification environment. Let's see the example of this kind of loop
+Another useful loop construct that can be useful in SystemVerilog is the _foreach_ loop, which is great for iterating through array elements when you are not using hardware but are using SystemVerilog to verify your design. This is not part of the hardware that will be synthesized. It’s part of the verification environment. Let's see the example of this kind of loop
 
 ```systemverilog
 module verification_loop();
@@ -120,13 +120,13 @@ endmodule
 
 ```
 
-This will print the values of the array to the console one by one. `foreach` does the iteration and you get the values of the indexes inside `i`. This is a testbench level tool and is a great example of the *verification features* that systemverilog gives you.
+This will print the values of the array to the console one by one. `foreach` does the iteration and you get the values of the indexes inside `i`. This is a testbench level tool and is a great example of the _verification features_ that systemverilog gives you.
 
 Now I know what you are thinking "How can I learn more about this black magic". You won't find it on page 33 of some manual. Here are some of my recommendations based on my experience:
 
-*   **"SystemVerilog for Design" by Stuart Sutherland:** This is a classic it’s the bible for SystemVerilog it goes deep into all the details you need when thinking about implementation. I've had this book since forever.
-*   **"Verification Methodology Manual" (VMM):** This one is really good for understanding the verification concepts specifically but it does go into SystemVerilog concepts that are useful for implementation as well. It is a methodology bible for verification.
-*   **"Digital Design and Computer Architecture" by David Money Harris and Sarah L Harris:** This one is not specifically about SystemVerilog but this is the book that helped me understand the hardware side of things. It's good to know what's happening inside hardware after you synthesize your code.
+- **"SystemVerilog for Design" by Stuart Sutherland:** This is a classic it’s the bible for SystemVerilog it goes deep into all the details you need when thinking about implementation. I've had this book since forever.
+- **"Verification Methodology Manual" (VMM):** This one is really good for understanding the verification concepts specifically but it does go into SystemVerilog concepts that are useful for implementation as well. It is a methodology bible for verification.
+- **"Digital Design and Computer Architecture" by David Money Harris and Sarah L Harris:** This one is not specifically about SystemVerilog but this is the book that helped me understand the hardware side of things. It's good to know what's happening inside hardware after you synthesize your code.
 
 Oh and one last thing a bit of personal advice if you get stuck with a for loop issue in SystemVerilog and spend too much time you have to start looking at the bigger design picture. Sometimes you have to rethink things maybe you are using a tool that is not appropriate for the task and then you will find the solution when least expect it. I once was stuck with a for loop for an entire afternoon it turns out I could avoid the loop all together by using better memory structure... It was one of those “Doh” moments.
 

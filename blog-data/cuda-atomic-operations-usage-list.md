@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cuda-atomic-operations-usage-list"
 ---
 
-Alright so you're asking about CUDA atomic operations like a good old stack overflow question right I've been there done that a few times trust me I've wrestled with CUDA's memory model and atomics more than I care to admit especially back in the day when I was trying to get my first big parallel simulation running on a single GTX 480 yeah those were times I still remember the pain of debugging memory corruption issues and race conditions luckily we've come a long way since then but the core concepts of atomics still apply
+so you're asking about CUDA atomic operations like a good old stack overflow question right I've been there done that a few times trust me I've wrestled with CUDA's memory model and atomics more than I care to admit especially back in the day when I was trying to get my first big parallel simulation running on a single GTX 480 yeah those were times I still remember the pain of debugging memory corruption issues and race conditions luckily we've come a long way since then but the core concepts of atomics still apply
 
 So basically you're dealing with situations where multiple threads in your CUDA kernel want to access and modify the same memory location concurrently it's like a crowded street where everyone is trying to write on the same whiteboard at the same time without any coordination chaos right That's where atomic operations step in they ensure that these operations are performed as a single indivisible unit preventing data corruption and race conditions
 
@@ -24,7 +24,8 @@ __global__ void atomicAddKernel(int* data, int* sum, int n) {
 }
 
 ```
-Here `data` is an input array and we're accumulating all the values into a single location pointed to by sum This is a pretty straightforward example of how to use the `atomicAdd` function notice it directly adds to the *sum* pointer not to a local copy of the *sum* variable its important you understand this aspect.
+
+Here `data` is an input array and we're accumulating all the values into a single location pointed to by sum This is a pretty straightforward example of how to use the `atomicAdd` function notice it directly adds to the _sum_ pointer not to a local copy of the _sum_ variable its important you understand this aspect.
 
 **Atomic Sub**
 
@@ -57,13 +58,13 @@ __global__ void atomicExchKernel(bool* flag, bool* oldValue, int n) {
 
 ```
 
-Here the *oldValue* pointer stores the value that the *flag* pointer had prior to setting it to true and the operation is atomic if *flag* was false it will be stored in *oldValue* and *flag* will be true. If *flag* was true it will remain true and the *oldValue* will be true as well. This is good if you only need to execute code once
+Here the _oldValue_ pointer stores the value that the _flag_ pointer had prior to setting it to true and the operation is atomic if _flag_ was false it will be stored in _oldValue_ and _flag_ will be true. If _flag_ was true it will remain true and the _oldValue_ will be true as well. This is good if you only need to execute code once
 
 Now there are more atomic operations like `atomicMin` `atomicMax` `atomicAnd` `atomicOr` `atomicXor` these behave like their names suggest so if you need a min max and or xor operation check the documentation for those operations but there are some important things you need to know about atomic operations.
 
-*   **Memory Scope:** Atomic operations are not just about the operations themselves they're also about where they operate If you are doing shared memory atomics on the kernel's shared memory they're going to be much faster than if they're operating on global memory its very simple shared memory is closer to the processor it also depends on your GPU architecture. Atomic operations on shared memory are often faster than those on global memory.
-*   **Performance:** Atomic operations can be expensive due to their need for synchronization If you have too many threads contesting for the same atomic operation it will drastically slow down your kernel. Avoid using atomics if you have other methods such as a reduction algorithm which does not depend on atomic operations which are usually faster. But use them when needed.
-*   **Correctness:** You need to be extra careful with atomics because race conditions can be very hard to debug a small mistake in how you implement atomics and you might have memory corruption which is very hard to debug. Start with simple test cases and try to visualize what is happening before jumping into bigger code implementations.
+- **Memory Scope:** Atomic operations are not just about the operations themselves they're also about where they operate If you are doing shared memory atomics on the kernel's shared memory they're going to be much faster than if they're operating on global memory its very simple shared memory is closer to the processor it also depends on your GPU architecture. Atomic operations on shared memory are often faster than those on global memory.
+- **Performance:** Atomic operations can be expensive due to their need for synchronization If you have too many threads contesting for the same atomic operation it will drastically slow down your kernel. Avoid using atomics if you have other methods such as a reduction algorithm which does not depend on atomic operations which are usually faster. But use them when needed.
+- **Correctness:** You need to be extra careful with atomics because race conditions can be very hard to debug a small mistake in how you implement atomics and you might have memory corruption which is very hard to debug. Start with simple test cases and try to visualize what is happening before jumping into bigger code implementations.
 
 **Why do I even care about this**
 

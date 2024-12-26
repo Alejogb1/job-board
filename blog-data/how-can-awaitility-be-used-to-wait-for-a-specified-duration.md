@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-awaitility-be-used-to-wait-for-a-specified-duration"
 ---
 
-Alright, let’s talk about `awaitility` and how to wrangle time-based conditions with it—something I've spent quite a few hours doing, trust me. It's more nuanced than just saying "wait for five seconds." We need to delve into how it manages that, and what makes it a more reliable alternative to, say, a simple `Thread.sleep()` in many concurrent scenarios.
+, let’s talk about `awaitility` and how to wrangle time-based conditions with it—something I've spent quite a few hours doing, trust me. It's more nuanced than just saying "wait for five seconds." We need to delve into how it manages that, and what makes it a more reliable alternative to, say, a simple `Thread.sleep()` in many concurrent scenarios.
 
-First off, when we're speaking of using `awaitility` to wait for a specified duration, we're not *just* passively sleeping. Instead, we're often dealing with situations where asynchronous processes, message queues, or other operations are involved. We want to ensure that a certain condition becomes true within that time, or at least confirm it hasn't become true if we're expecting a failure scenario. A fixed duration of waiting isn’t always the best fit; rather, we should wait until something *happens*.
+First off, when we're speaking of using `awaitility` to wait for a specified duration, we're not _just_ passively sleeping. Instead, we're often dealing with situations where asynchronous processes, message queues, or other operations are involved. We want to ensure that a certain condition becomes true within that time, or at least confirm it hasn't become true if we're expecting a failure scenario. A fixed duration of waiting isn’t always the best fit; rather, we should wait until something _happens_.
 
 The fundamental concept in `awaitility` revolves around continuously evaluating a condition until it is met, or a timeout occurs. This is incredibly useful in integration tests or system tests where we need to observe a change of state driven by other parts of the application. Let’s get this clarified further with concrete examples.
 
@@ -94,7 +94,7 @@ public class Example2 {
         .pollInterval(100, TimeUnit.MILLISECONDS)
         .until(items::size, hasSize(2));
     }
-    
+
     public static void main(String[] args){
       Example2 example = new Example2();
       example.waitForItemsToBeAdded();
@@ -103,6 +103,7 @@ public class Example2 {
 }
 
 ```
+
 This example showcases `awaitility` checking for a specific condition based on a collection size. We’re explicitly defining the expected state as a size of 2 using `hasSize(2)` again with Hamcrest matchers. Note here, I’ve deliberately included the method `items::size`, indicating a method reference being used as a supplier for awaiting. It will check the size of list `items` every 100 milliseconds for three seconds or until the size is 2.
 
 **Example 3: Waiting using a custom condition**
@@ -119,7 +120,7 @@ import static org.awaitility.Awaitility.await;
 
 public class Example3 {
   private Integer randomValue = 0;
-    
+
     public void generateValue() {
       new Thread(() -> {
            try {
@@ -139,11 +140,11 @@ public class Example3 {
            .pollInterval(100, TimeUnit.MILLISECONDS)
            .until(customConditionSupplier());
     }
-   
+
     private Supplier<Boolean> customConditionSupplier() {
        return () -> randomValue > 50;
     }
-    
+
    public static void main(String[] args){
         Example3 example = new Example3();
         example.waitForCondition();
@@ -162,8 +163,8 @@ These are some fundamental ways `awaitility` can be used. The actual implementat
 
 To truly understand the details and how to use them effectively, I’d suggest the following:
 
-*   **"Java Concurrency in Practice" by Brian Goetz:** While not specifically about `awaitility`, this book provides an essential deep dive into concurrency concepts that are necessary for understanding asynchronous programming, which `awaitility` so elegantly helps with testing.
-*  **"Effective Java" by Joshua Bloch:** It's a general Java programming book, but it contains sections that are immensely helpful regarding using immutability and concurrency in Java.
-*   **`Awaitility`'s official documentation:** The official documentation has a wealth of information, examples and insights that is essential for getting the best out of the library. This can be found on the project's github page.
+- **"Java Concurrency in Practice" by Brian Goetz:** While not specifically about `awaitility`, this book provides an essential deep dive into concurrency concepts that are necessary for understanding asynchronous programming, which `awaitility` so elegantly helps with testing.
+- **"Effective Java" by Joshua Bloch:** It's a general Java programming book, but it contains sections that are immensely helpful regarding using immutability and concurrency in Java.
+- **`Awaitility`'s official documentation:** The official documentation has a wealth of information, examples and insights that is essential for getting the best out of the library. This can be found on the project's github page.
 
 `Awaitility` does much more, including custom exception messages and much more sophisticated polling strategies. These three examples should at least get you started in how to approach the problem of checking conditions based on time. It is not just about the time it takes; rather, it is about waiting for the right state to be achieved. As always, focus on clarity in your tests, and `awaitility` is a key tool for that.

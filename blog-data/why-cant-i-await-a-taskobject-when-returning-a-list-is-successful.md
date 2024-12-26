@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-cant-i-await-a-taskobject-when-returning-a-list-is-successful"
 ---
 
-Alright, let's tackle this. It's a situation I've bumped into more than a few times over the years, especially when dealing with asynchronous operations that are returning potentially heterogeneous data. You've got an `async` method declared to return a `Task<object>`, and everything goes swimmingly, the underlying process completes, and you've got your data ready. However, if this data is a `List`, attempting to directly `await` it can lead to unexpected outcomes. Let’s unpack why this happens, and I'll also show you some patterns to handle these cases gracefully.
+, let's tackle this. It's a situation I've bumped into more than a few times over the years, especially when dealing with asynchronous operations that are returning potentially heterogeneous data. You've got an `async` method declared to return a `Task<object>`, and everything goes swimmingly, the underlying process completes, and you've got your data ready. However, if this data is a `List`, attempting to directly `await` it can lead to unexpected outcomes. Let’s unpack why this happens, and I'll also show you some patterns to handle these cases gracefully.
 
-The core problem stems from type variance and the way the C# compiler handles `async` and `await`. `Task<T>` is a type that represents an asynchronous operation that yields a result of type `T`. When you declare an `async` method to return `Task<object>`, you are promising the caller a `Task` that, upon completion, will produce an object. Crucially, if your method successfully constructs a `List<T>` (where `T` could be anything), it is still fundamentally a list, and not a direct instance of object. It *can* be treated *as* an object through polymorphism, but when you `await` the `Task<object>`, the result must conform directly to an `object` reference, not just a derivative type.
+The core problem stems from type variance and the way the C# compiler handles `async` and `await`. `Task<T>` is a type that represents an asynchronous operation that yields a result of type `T`. When you declare an `async` method to return `Task<object>`, you are promising the caller a `Task` that, upon completion, will produce an object. Crucially, if your method successfully constructs a `List<T>` (where `T` could be anything), it is still fundamentally a list, and not a direct instance of object. It _can_ be treated _as_ an object through polymorphism, but when you `await` the `Task<object>`, the result must conform directly to an `object` reference, not just a derivative type.
 
 The compiler handles asynchronous operations by wrapping the return value within the `Task` instance. When a method returns, it checks the declared return type and packages it appropriately, effectively creating a wrapper. If you return a specific list like `List<int>`, the compiler will create a `Task<List<int>>`, not a `Task<object>`. Since you declared `Task<object>` as your method’s return type, the compiler will implicitly convert your `Task<List<int>>` into a `Task<object>` at method return by treating it as the base `object` type via a boxing operation. It's when you `await` this `Task<object>` you get the boxing and subsequent type mismatch. We have to consider that what you await is just the object inside the Task, not necessarily the `Task<List<int>>` itself.
 
@@ -56,9 +56,11 @@ public async Task RunExample()
 
 }
 ```
+
 As you can see, simply casting it to a `List<string>` fails when trying to directly treat the returned object as a list because the actual type returned is not `List<string>`, but a boxed `List<string>` wrapped within a `Task<object>`. Therefore, you need to check the type and then cast accordingly, to avoid a runtime exception.
 
 Let’s examine another, more detailed example, which is something akin to what I had to fix when retrieving data from a database using an ORM:
+
 ```csharp
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -124,7 +126,7 @@ public class Consumer
 
 Here, the `FetchDataAsync` method returns either a single anonymous object or a `List` of anonymous objects, both boxed to a `Task<object>`. The consumer code checks the return type and then handles appropriately.
 
-Let me give you a slightly different perspective, addressing what happens when you *think* you're awaiting a `Task<List<T>>` but really aren't:
+Let me give you a slightly different perspective, addressing what happens when you _think_ you're awaiting a `Task<List<T>>` but really aren't:
 
 ```csharp
 using System.Collections.Generic;
@@ -162,4 +164,4 @@ To address these challenges robustly, consider a couple of approaches. If the re
 
 For deeper understanding, I'd highly recommend the book "C# in Depth" by Jon Skeet. It's an exceptional resource for diving into the intricacies of C# asynchronous programming. Also, the official Microsoft documentation on async/await is incredibly useful and should be your go-to whenever you have similar questions. Additionally, Leslie Lamport’s papers on “Time, Clocks, and the Ordering of Events in a Distributed System” (1978) may provide insightful context on the challenge of asynchronous operations in general. While it is focused on distributed systems, the concepts of time and ordering are fundamental to asynchronous behaviour.
 
-In summary, the issue isn't that you cannot `await` when returning a list; it's that you’re awaiting a `Task<object>` which contains *an object*, and a list, even an anonymous one, needs to be treated *as a list* which requires additional logic such as a type check. The boxing introduced in async functions with return type `Task<object>` changes type resolution during method return, requiring careful handling of the result. Designing your methods for type safety from the outset, can significantly simplify your code and reduce the incidence of runtime errors.
+In summary, the issue isn't that you cannot `await` when returning a list; it's that you’re awaiting a `Task<object>` which contains _an object_, and a list, even an anonymous one, needs to be treated _as a list_ which requires additional logic such as a type check. The boxing introduced in async functions with return type `Task<object>` changes type resolution during method return, requiring careful handling of the result. Designing your methods for type safety from the outset, can significantly simplify your code and reduce the incidence of runtime errors.

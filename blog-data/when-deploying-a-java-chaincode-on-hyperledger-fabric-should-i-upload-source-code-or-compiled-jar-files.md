@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "when-deploying-a-java-chaincode-on-hyperledger-fabric-should-i-upload-source-code-or-compiled-jar-files"
 ---
 
-Okay, let's talk about this. I remember back in my early days with Fabric, I made this exact mistake, deploying source code instead of the compiled jar – twice, actually. The sheer headache it caused taught me a thing or two. So, the short answer, unequivocally, is: you *absolutely* should be deploying compiled jar files when working with Java chaincode on Hyperledger Fabric. And let me explain why, going deeper than just a simple recommendation.
+, let's talk about this. I remember back in my early days with Fabric, I made this exact mistake, deploying source code instead of the compiled jar – twice, actually. The sheer headache it caused taught me a thing or two. So, the short answer, unequivocally, is: you _absolutely_ should be deploying compiled jar files when working with Java chaincode on Hyperledger Fabric. And let me explain why, going deeper than just a simple recommendation.
 
-The fundamental reason boils down to how Hyperledger Fabric executes chaincode. Fabric doesn’t have a built-in java compiler within the peer nodes. It operates under the principle of containerization and expects to execute a ready-to-run artifact. Uploading source code, such as `.java` files, requires an intermediary compilation step *within* the Fabric network, which it isn't equipped to handle. The chaincode execution environment leverages Docker containers; these containers need a packaged artifact that the container runtime can readily launch, not source code requiring a full development toolchain.
+The fundamental reason boils down to how Hyperledger Fabric executes chaincode. Fabric doesn’t have a built-in java compiler within the peer nodes. It operates under the principle of containerization and expects to execute a ready-to-run artifact. Uploading source code, such as `.java` files, requires an intermediary compilation step _within_ the Fabric network, which it isn't equipped to handle. The chaincode execution environment leverages Docker containers; these containers need a packaged artifact that the container runtime can readily launch, not source code requiring a full development toolchain.
 
 My first stumble with this came when I assumed the peer could perform a quick `javac` call in the background. The result was a lot of confusing error messages about missing classes and environment inconsistencies. It quickly became clear that Fabric's model is about deterministic execution based on packaged applications. Source code, inherently, introduces variables that could lead to different compilation results across different nodes, undermining the consensus mechanism that Fabric relies on.
 
@@ -47,6 +47,7 @@ public class BasicAsset extends ChaincodeBase {
 Uploading this `BasicAsset.java` file directly won’t work, Fabric won't be able to compile and execute it, since the compilation phase and associated tooling doesn’t exist within the network peers.
 
 Now let's examine how we would properly compile this into a jar. Assuming you have a `build.gradle` or `pom.xml` file set up for your project using tools like gradle or maven, the following command would generate the required jar file:
+
 ```bash
 // Example build command
 gradle build  # or mvn package depending on the tool you use
@@ -69,10 +70,10 @@ You see, Fabric operates on this artifact, loading the bytecode which is ready f
 
 The advantages here are numerous:
 
-*   **Consistency:** Ensures identical execution across all peer nodes since the compiled bytecode is the same.
-*   **Efficiency:** No overhead of repeated compilation on each node.
-*   **Security:** Prevents unexpected compilation outcomes and potential vulnerabilities related to the compilation environment.
-*   **Standardization:** Aligns with the container-based execution model Fabric adopts.
+- **Consistency:** Ensures identical execution across all peer nodes since the compiled bytecode is the same.
+- **Efficiency:** No overhead of repeated compilation on each node.
+- **Security:** Prevents unexpected compilation outcomes and potential vulnerabilities related to the compilation environment.
+- **Standardization:** Aligns with the container-based execution model Fabric adopts.
 
 To be clear, this isn't a limitation of Fabric. It's a design choice that makes the system robust and reliable. Think of it like any other server deployment - you'd rarely deploy source code for a web server application; you'd deploy a compiled or packaged artifact.
 

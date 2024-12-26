@@ -12,9 +12,9 @@ let's break this down. we are dealing with a time series random forest, which in
 
 **feature importance: a starting point, but it's not the whole story**
 
-most of us jump straight to feature importance scores that rf models conveniently provide, and that’s a good place to start. in python, if you are using scikit-learn, this would be: `model.feature_importances_`. these numbers are calculated based on how much a feature, on average, reduces the model’s impurity over all decision trees. a higher value suggests a more significant contribution to the final prediction accuracy, but it doesn't really tell you how that contribution *behaves*. it is an aggregate metric. you can use it, but consider it a first approximation. the feature could be important just because it is correlated with other features which are the actual cause of changes in output.
+most of us jump straight to feature importance scores that rf models conveniently provide, and that’s a good place to start. in python, if you are using scikit-learn, this would be: `model.feature_importances_`. these numbers are calculated based on how much a feature, on average, reduces the model’s impurity over all decision trees. a higher value suggests a more significant contribution to the final prediction accuracy, but it doesn't really tell you how that contribution _behaves_. it is an aggregate metric. you can use it, but consider it a first approximation. the feature could be important just because it is correlated with other features which are the actual cause of changes in output.
 
-in my experience, feature importances can be a bit misleading in time series scenarios. a feature might score high simply because it's correlated with other features or with the output because of the time series aspect. or it might have a lot of variance or many values in training data that caused it to be chosen often in the tree splitting procedure, not necessarily because of its causal impact. a non-causal high correlation due to time series may lead to over-reliance on this variable. the real kicker is that it doesn't explain the *direction* of the impact either. does an increase in this variable lead to an increase or decrease in the output? the feature importance is agnostic to this information. it only tells you how “important” it is in making predictions. also, it’s usually not enough to know which variable *is* important, you want to know *how* it is important, meaning what is its effect on the final predicted value. for this, you need to go further than vanilla feature importances.
+in my experience, feature importances can be a bit misleading in time series scenarios. a feature might score high simply because it's correlated with other features or with the output because of the time series aspect. or it might have a lot of variance or many values in training data that caused it to be chosen often in the tree splitting procedure, not necessarily because of its causal impact. a non-causal high correlation due to time series may lead to over-reliance on this variable. the real kicker is that it doesn't explain the _direction_ of the impact either. does an increase in this variable lead to an increase or decrease in the output? the feature importance is agnostic to this information. it only tells you how “important” it is in making predictions. also, it’s usually not enough to know which variable _is_ important, you want to know _how_ it is important, meaning what is its effect on the final predicted value. for this, you need to go further than vanilla feature importances.
 
 **permutation importance: a more robust take**
 
@@ -53,11 +53,12 @@ result = permutation_importance(model, X_test, y_test, n_repeats=10, random_stat
 permutation_importances = pd.Series(result.importances_mean, index=X.columns)
 print(permutation_importances)
 ```
+
 in this snippet we first create some dummy data, in a real life example you would load your actual data. the main thing is to pay attention to `train_test_split(..., shuffle=False)` which is crucial for timeseries. this permutation importance will tell you how much the model's predictive performance suffers when the information of a specific feature is scrambled. it’s a better metric to use in timeseries, but it still doesn’t give the direction of the effect of the variable, so we need more investigation.
 
 **partial dependence plots (pdp): showing the directional impact**
 
-okay, now we're getting into the interesting part. feature importance tells us *which* features matter, but pdp tells us *how* they matter. partial dependence plots (pdp) show how the model's predicted output changes as we vary a specific feature, while keeping all other features constant (averaged out in a manner), in a timeseries setting, this becomes a very useful tool, if you do the proper procedures to generate it.
+, now we're getting into the interesting part. feature importance tells us _which_ features matter, but pdp tells us _how_ they matter. partial dependence plots (pdp) show how the model's predicted output changes as we vary a specific feature, while keeping all other features constant (averaged out in a manner), in a timeseries setting, this becomes a very useful tool, if you do the proper procedures to generate it.
 
 the principle of this plot is to show the average change in output when changing a given variable in the data domain and keeping all other variables constant (but in reality, averaged out to a specific value), this gives you a sense of the direction of impact and the magnitude. there are some limitations of these graphs, like not showing the interactions between variables, but it provides a more detailed insight than just feature importances.
 
@@ -95,6 +96,7 @@ fig, ax = plt.subplots(figsize=(8, 6))
 display = PartialDependenceDisplay.from_estimator(model, X_test, features=['feature1'], ax=ax, kind='average')
 plt.show()
 ```
+
 the `PartialDependenceDisplay.from_estimator` function does all the heavy lifting for you, plotting the change in the output prediction based on the feature in question. by default the argument `kind='average'` will perform averaging across all samples to produce a single line on the graph. if you change it to `kind='both'` you would see also the individual partial dependence for each sample.
 
 a nice thing about pdps is that you can visualize not only linear effects, but also non-linear effects, and also non-monotonic effects too (effects that go up and down within the range of the variable), something that is hard to see with simple statistical correlations.
@@ -138,6 +140,7 @@ display = PartialDependenceDisplay.from_estimator(model, X_test, features=['feat
 plt.show()
 
 ```
+
 the only change from the pdp code is the `kind='individual'` which plots the prediction changes of each sample individually. it may get hard to understand if you have too many samples, but on the other hand, you have the full picture on how the model is using a given variable. it is up to you to choose which representation is best for your needs.
 
 **a note on time dependencies and interactions**

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-converting-an-inputstream-to-a-byte-array-and-assigning-it-to-a-variable-result-in-an-empty-byte-array"
 ---
 
-Alright, let's tackle this. It’s something I’ve seen trip up many folks, and it usually boils down to a subtle misunderstanding of how input streams work in conjunction with memory allocation and buffer management. I recall a particular project involving a custom file processing system back in '12, where this exact issue surfaced, leading to a frustrating debugging session until we pinpointed the cause.
+, let's tackle this. It’s something I’ve seen trip up many folks, and it usually boils down to a subtle misunderstanding of how input streams work in conjunction with memory allocation and buffer management. I recall a particular project involving a custom file processing system back in '12, where this exact issue surfaced, leading to a frustrating debugging session until we pinpointed the cause.
 
 The crux of the matter is that `inputstream` objects are inherently forward-only streams of data. Once you read from an input stream, the read pointer advances. It's not like a random access data structure where you can fetch the same chunk of data repeatedly from the same location. When you attempt to convert an `inputstream` to a byte array, you are essentially reading through the stream from the beginning to the end. If you then try to "re-read" from that same stream or use the `inputstream` again for another conversion without resetting the read pointer to the beginning, you won’t get a second copy of data. Instead, you’ll get an empty result or whatever data might be available from the point in the stream where the read pointer already is. And that can easily manifest as an empty byte array depending on the implementation details. Let’s delve a bit deeper into the process.
 
@@ -86,7 +86,7 @@ public class SecondStreamError {
 
 This code is a simple illustration. The byte array output is identical because we are creating a new input stream each time, from the original array. The stream is being correctly read and converted, and we are not trying to convert the same, previously consumed stream.
 
-So what is the actual fix? The solution depends on the nature of your input source. If it's possible to reset the `inputstream`, you can use the `reset()` method *if the `inputstream` supports marking and resetting*. A ByteArrayInputStream has this capability. However, many `inputstream` instances like file input streams do not natively support it, and calling `reset()` on them will throw an `IOException`. In such situations, you should recreate the input stream from the original source every time you need to convert it.
+So what is the actual fix? The solution depends on the nature of your input source. If it's possible to reset the `inputstream`, you can use the `reset()` method _if the `inputstream` supports marking and resetting_. A ByteArrayInputStream has this capability. However, many `inputstream` instances like file input streams do not natively support it, and calling `reset()` on them will throw an `IOException`. In such situations, you should recreate the input stream from the original source every time you need to convert it.
 
 Here’s an example demonstrating the `reset()` method with a `ByteArrayInputStream`:
 

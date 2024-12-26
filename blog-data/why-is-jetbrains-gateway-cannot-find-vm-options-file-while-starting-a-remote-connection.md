@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-jetbrains-gateway-cannot-find-vm-options-file-while-starting-a-remote-connection"
 ---
 
-alright, so you're hitting the "cannot find vm options file" error with jetbrains gateway, right? i've been there, felt that particular flavor of frustration more than a few times, especially when i started messing around with remote development. it’s a pain, but usually, there's a straightforward reason why it pops up, it's rarely some deeply hidden config issue.
+, so you're hitting the "cannot find vm options file" error with jetbrains gateway, right? i've been there, felt that particular flavor of frustration more than a few times, especially when i started messing around with remote development. it’s a pain, but usually, there's a straightforward reason why it pops up, it's rarely some deeply hidden config issue.
 
 let me break down what's probably happening and how i've solved it in the past. essentially, jetbrains gateway, when initiating a remote connection, needs a specific file that tells it how to launch the backend ide process – the actual code editor that runs on the remote machine. this file, the vm options file, dictates things like the jvm heap size, specific jvm flags, and other important settings. the error message you’re seeing simply means that gateway can't locate this crucial configuration file in the expected location.
 
@@ -54,32 +54,32 @@ this simple script takes the product name (like "idea", "pycharm") and the versi
 
 if you do find the file, double-check that:
 
-   * it has read permissions for the user that will start the remote ide process.
-   * the file exists.
-   * the product name and version in the path match what you're trying to connect to.
-   * the file isn’t empty or corrupted. i had a situation where a transfer issue corrupted a vm options file, took me way to long to figure it out.
+- it has read permissions for the user that will start the remote ide process.
+- the file exists.
+- the product name and version in the path match what you're trying to connect to.
+- the file isn’t empty or corrupted. i had a situation where a transfer issue corrupted a vm options file, took me way to long to figure it out.
 
 **2. the file is not being created or correctly created during remote setup:**
 
 this one happens quite a lot. sometimes, when setting up the remote backend for the first time, the ide or jetbrains toolbox might fail to create the `*.vmoptions` file correctly in the configuration directory. the symptoms are usually that everything seems to be installed correctly, but there is no vm options file. the fix is quite simple, just initiate the remote connection again, preferably after restarting the remote machine. you can also manually create the file, with the correct jvm memory configurations, like the one below but if you follow this route then you need to create the file inside a directory matching the version and product type.
 
-   ```
-   -Xms256m
-   -Xmx2048m
-   -XX:ReservedCodeCacheSize=512m
-   -XX:+UseG1GC
-   -XX:SoftRefLRUPolicyMSPerMB=50
-   -XX:CICompilerCount=2
-   -ea
-   -Dsun.io.useCanonCaches=false
-   -Djdk.http.auth.tunneling.disabledSchemes=""
-   -Djava.net.preferipv4stack=true
-   -Djdk.attach.allowAttachSelf
-   -Dkotlinx.coroutines.debug=off
-   -Djdk.module.illegalAccess.silent=true
-   -Dide.no.platform.update=true
-   -Dterminal.ansi=true
-   ```
+```
+-Xms256m
+-Xmx2048m
+-XX:ReservedCodeCacheSize=512m
+-XX:+UseG1GC
+-XX:SoftRefLRUPolicyMSPerMB=50
+-XX:CICompilerCount=2
+-ea
+-Dsun.io.useCanonCaches=false
+-Djdk.http.auth.tunneling.disabledSchemes=""
+-Djava.net.preferipv4stack=true
+-Djdk.attach.allowAttachSelf
+-Dkotlinx.coroutines.debug=off
+-Djdk.module.illegalAccess.silent=true
+-Dide.no.platform.update=true
+-Dterminal.ansi=true
+```
 
 that above is a generic example of a vmoptions file with some usual settings, you may need more, or less depending on your needs.
 

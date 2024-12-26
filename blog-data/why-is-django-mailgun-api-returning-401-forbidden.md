@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-django-mailgun-api-returning-401-forbidden"
 ---
 
-alright, so you're hitting a 401 forbidden with the django mailgun api, that's a classic. been there, debugged that, got the t-shirt. it's usually not mailgun itself being flaky, but rather some pesky authentication issue lurking in your django setup. let's get down to the nitty-gritty, shall we?
+, so you're hitting a 401 forbidden with the django mailgun api, that's a classic. been there, debugged that, got the t-shirt. it's usually not mailgun itself being flaky, but rather some pesky authentication issue lurking in your django setup. let's get down to the nitty-gritty, shall we?
 
 i've seen this happen more times than i'd like to recall. first time was back in, i wanna say, 2017? i was working on a small e-commerce side project, and i thought i had everything set up perfectly. emails were going to be crucial for order confirmations and all that jazz. followed the docs to the letter, or so i thought. the first few test emails worked flawlessly. i deployed, feeling like a boss, then… bam! 401s everywhere. spent half the night tracing configurations. ended up being a tiny typo in the api key. a single character. lesson learned: always double-check, triple-check, and then check again.
 
@@ -78,7 +78,7 @@ def send_templated_email(request):
 
 in this example we are using `EmailMultiAlternatives` to send a html email using a template, if you're using templates, double-check your templates. there is a potential issue there. that html email is just a way to send a formatted email.
 
-now, assuming everything seems alright, and the 401 is still popping up, try the following:
+now, assuming everything seems , and the 401 is still popping up, try the following:
 
 1.  **check the logs**: django's loggers are your friends here. configure django to log email sending attempts. this could give you a more detailed error message (if available). check for errors in your application logs.
 2.  **test with a simple request**: forget the django email layer for a minute. use a tool like `curl` or postman to directly test the mailgun api. this is very important, if this fails, you have an issue outside your django application. this is a very useful step.
@@ -90,8 +90,8 @@ and don’t forget the obvious: did you register your domain with mailgun? did y
 
 resources:
 
-*   *django documentation*: the official django documentation is a goldmine, especially the section on email handling: <https://docs.djangoproject.com/en/stable/topics/email/>. this is your go-to resource for django specifics.
-*   *mailgun's documentation*: the mailgun documentation explains the api in detail, and also has troubleshooting tips: <https://documentation.mailgun.com/>. it is absolutely essential to go through their material.
-*   *the "python crash course" book*: if you're newer to python, this book is an excellent practical guide, and has also sections on sending emails and deploying python projects: eric matthes, python crash course.
+- _django documentation_: the official django documentation is a goldmine, especially the section on email handling: <https://docs.djangoproject.com/en/stable/topics/email/>. this is your go-to resource for django specifics.
+- _mailgun's documentation_: the mailgun documentation explains the api in detail, and also has troubleshooting tips: <https://documentation.mailgun.com/>. it is absolutely essential to go through their material.
+- _the "python crash course" book_: if you're newer to python, this book is an excellent practical guide, and has also sections on sending emails and deploying python projects: eric matthes, python crash course.
 
 so, that’s pretty much my experience with django + mailgun 401s. it's almost always a misconfiguration, a typo, or some forgotten dns record. and, speaking of forgotten things, if i had a nickel for every time i misconfigured my email, i'd have enough money to buy a large pizza. but hey, at least now i'm pretty good at debugging email issues.

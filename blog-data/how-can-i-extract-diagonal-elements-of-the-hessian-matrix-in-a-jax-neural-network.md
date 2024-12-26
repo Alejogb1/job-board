@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-extract-diagonal-elements-of-the-hessian-matrix-in-a-jax-neural-network"
 ---
 
-Okay, let's tackle this. I've definitely been down this road before, and extracting diagonal elements from a Hessian in a JAX neural network, especially for larger models, can become quite a computational challenge. It's not a straightforward, one-line affair, but with the right tools and understanding, it’s entirely manageable. My past experience involved training a complex recurrent neural network, and we needed Hessian diagonals for curvature analysis and approximating certain second-order optimization methods. It was, let's say, instructive.
+, let's tackle this. I've definitely been down this road before, and extracting diagonal elements from a Hessian in a JAX neural network, especially for larger models, can become quite a computational challenge. It's not a straightforward, one-line affair, but with the right tools and understanding, it’s entirely manageable. My past experience involved training a complex recurrent neural network, and we needed Hessian diagonals for curvature analysis and approximating certain second-order optimization methods. It was, let's say, instructive.
 
 The core issue is that the Hessian matrix, representing second-order partial derivatives, grows quadratically with the number of parameters. Calculating the full Hessian for even a moderate network is, practically, not feasible due to memory limitations. We are only concerned with the diagonal, which thankfully provides us with valuable information about the curvature of the loss surface per parameter without having to compute the whole thing.
 
-In JAX, our primary tool is the `jax.grad` and `jax.vmap` functions, and judicious use of `jax.hessian`. Instead of calculating the entire Hessian, which `jax.hessian` would do, we can compute the gradient of the gradient with respect to a *single* parameter at a time. This essentially gives us a single column of the Hessian. We can then extract the corresponding diagonal element by accessing the element that corresponds to that parameter.
+In JAX, our primary tool is the `jax.grad` and `jax.vmap` functions, and judicious use of `jax.hessian`. Instead of calculating the entire Hessian, which `jax.hessian` would do, we can compute the gradient of the gradient with respect to a _single_ parameter at a time. This essentially gives us a single column of the Hessian. We can then extract the corresponding diagonal element by accessing the element that corresponds to that parameter.
 
 Here's the step-by-step methodology I often find useful, explained with code examples:
 

@@ -4,17 +4,17 @@ date: "2024-12-23"
 id: "how-can-i-base64-encode-the-subject-header-in-a-systemnetmailsmtpclient"
 ---
 
-Alright, let's tackle this. Encoding the subject header when using `System.Net.Mail.SmtpClient` isn't as straightforward as you might initially think, particularly if you're aiming for robust handling of special characters. I’ve certainly bumped into this in past projects, notably one where we were dealing with a global client base and character encoding inconsistencies kept messing up email subjects. Let me walk you through it, drawing from my experience and throwing in some code examples.
+, let's tackle this. Encoding the subject header when using `System.Net.Mail.SmtpClient` isn't as straightforward as you might initially think, particularly if you're aiming for robust handling of special characters. I’ve certainly bumped into this in past projects, notably one where we were dealing with a global client base and character encoding inconsistencies kept messing up email subjects. Let me walk you through it, drawing from my experience and throwing in some code examples.
 
-First, the crux of the issue is that the email subject header, according to internet standards, has limitations on the characters it can directly contain. Characters beyond the basic ASCII range, along with certain reserved characters, need to be encoded. While base64 isn't typically used for email subjects in its raw form, it becomes an essential component when implementing *MIME encoded-word* syntax, which uses base64 to encode text data.
+First, the crux of the issue is that the email subject header, according to internet standards, has limitations on the characters it can directly contain. Characters beyond the basic ASCII range, along with certain reserved characters, need to be encoded. While base64 isn't typically used for email subjects in its raw form, it becomes an essential component when implementing _MIME encoded-word_ syntax, which uses base64 to encode text data.
 
 The `System.Net.Mail.MailMessage` class doesn’t automatically handle this encoding for you in a truly comprehensive manner, especially when considering display in diverse email clients. So, we have to take matters into our own hands. This means that instead of just assigning a string to `MailMessage.Subject`, we'll be crafting the subject string ourselves in the format required by MIME, which has the general structure: `=?charset?encoding?encoded-text?=`.
 
 Here's a breakdown of the key components and how we use them with base64 encoding:
 
-*   **`charset`**: This specifies the character set used in the text, typically utf-8 for maximum compatibility.
-*   **`encoding`**: This indicates the encoding method, and in our case, it's `B` for base64.
-*   **`encoded-text`**: This is the base64 encoded text of the subject.
+- **`charset`**: This specifies the character set used in the text, typically utf-8 for maximum compatibility.
+- **`encoding`**: This indicates the encoding method, and in our case, it's `B` for base64.
+- **`encoded-text`**: This is the base64 encoded text of the subject.
 
 Now, let's look at how to construct this. The essential part is getting the base64 encoding of your subject text, wrapped in the proper mime syntax.
 
@@ -34,7 +34,7 @@ public class EmailSender
         using (var message = new MailMessage())
         {
             message.To.Add(toAddress);
-            
+
             // Encode the subject
             string encodedSubject = EncodeSubject(subjectText, "utf-8");
 
@@ -161,7 +161,7 @@ public class EmailSenderWithRepair
 
         var repairedSubjectParts = new List<string>();
         int lastIndex = 0;
-      
+
         foreach (Match match in matches)
         {
             if (match.Index > lastIndex)
@@ -172,7 +172,7 @@ public class EmailSenderWithRepair
             string charset = match.Groups[1].Value;
             string encoding = match.Groups[2].Value;
             string encodedText = match.Groups[3].Value;
-            
+
            if (encoding.Equals("B", StringComparison.OrdinalIgnoreCase))
              {
                  try
@@ -194,12 +194,12 @@ public class EmailSenderWithRepair
           }
            lastIndex = match.Index + match.Length;
         }
-      
+
         if (lastIndex < subject.Length)
         {
           repairedSubjectParts.Add(subject.Substring(lastIndex));
         }
-     
+
         return string.Join("",repairedSubjectParts);
     }
 

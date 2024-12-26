@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-dag-options-in-airflow-be-set-conditionally"
 ---
 
-Alright, let's talk about conditional DAG settings in Airflow. I’ve actually spent a fair amount of time grappling with this in several projects, and it's a surprisingly common challenge. Initially, one might think a simple if/else block would suffice, but it quickly becomes clear that the design of airflow and, specifically, the dag definition requires more nuanced handling. The core issue is that DAGs, when parsed by the Airflow scheduler, are static definitions. They're evaluated once at load time, not dynamically as they run. This means you can't typically embed logic that directly alters *which* parameters are assigned to the dag during the dag object’s creation, based on runtime conditions. However, all is not lost; we definitely have viable, scalable solutions.
+, let's talk about conditional DAG settings in Airflow. I’ve actually spent a fair amount of time grappling with this in several projects, and it's a surprisingly common challenge. Initially, one might think a simple if/else block would suffice, but it quickly becomes clear that the design of airflow and, specifically, the dag definition requires more nuanced handling. The core issue is that DAGs, when parsed by the Airflow scheduler, are static definitions. They're evaluated once at load time, not dynamically as they run. This means you can't typically embed logic that directly alters _which_ parameters are assigned to the dag during the dag object’s creation, based on runtime conditions. However, all is not lost; we definitely have viable, scalable solutions.
 
-The primary technique for conditionally configuring DAG options lies in leveraging environment variables and configuration files *before* the dag definition is parsed. Essentially, instead of trying to make the dag definition dynamic at runtime, we make its instantiation dynamic based on the environment it's loaded into. This involves carefully extracting parameters from outside the dag’s direct code, and then using those parameters to configure the dag.
+The primary technique for conditionally configuring DAG options lies in leveraging environment variables and configuration files _before_ the dag definition is parsed. Essentially, instead of trying to make the dag definition dynamic at runtime, we make its instantiation dynamic based on the environment it's loaded into. This involves carefully extracting parameters from outside the dag’s direct code, and then using those parameters to configure the dag.
 
 Let's break down a few common scenarios and how I approached them in previous projects.
 
@@ -107,7 +107,7 @@ By setting `enable_feature_x` to `true` or `false` in the `config.yaml` and load
 
 **Scenario 3: Dynamically Setting DAG Schedule**
 
-A somewhat trickier use-case I faced was altering the dag's schedule based on some property in an external database. While you can't directly change a DAG's schedule *while it is running*, you can change it *at load time*. We pulled this data during DAG parsing by making an external API call. Please note, however, that calling external APIs every time airflow parses the DAG definition can be a performance issue. Consider caching the results of this call if it takes a significant amount of time. Here’s a simplified version:
+A somewhat trickier use-case I faced was altering the dag's schedule based on some property in an external database. While you can't directly change a DAG's schedule _while it is running_, you can change it _at load time_. We pulled this data during DAG parsing by making an external API call. Please note, however, that calling external APIs every time airflow parses the DAG definition can be a performance issue. Consider caching the results of this call if it takes a significant amount of time. Here’s a simplified version:
 
 ```python
 import requests
@@ -158,15 +158,15 @@ These three examples demonstrate a common principle: decoupling the dag definiti
 
 1.  **Environment Variables and Configuration Files**: The most common solution is to extract settings from environment variables or configuration files. This is robust and allows easy modification of configuration without altering code.
 2.  **External APIs/Databases**: While possible, use external API calls and database lookups sparingly due to potential performance implications, particularly if these operations are not cached.
-3. **Avoid runtime changes:** DAGs are statically parsed. Don't try to alter the DAG structure dynamically based on the execution state. All logic must be executed *before* the dag is created.
+3.  **Avoid runtime changes:** DAGs are statically parsed. Don't try to alter the DAG structure dynamically based on the execution state. All logic must be executed _before_ the dag is created.
 4.  **Error Handling**: Make sure your code handles cases where an environment variable is missing, a configuration file cannot be found, or an external call fails. Graceful degradation is important, and the DAG should not load under incorrect parameters.
-5. **Configuration Management**: Use version controlled files for your configuration. This helps with auditability and disaster recovery.
-6. **Testing**: Use unit tests to verify that your logic correctly picks up the correct configuration, making sure that each setting is applied.
+5.  **Configuration Management**: Use version controlled files for your configuration. This helps with auditability and disaster recovery.
+6.  **Testing**: Use unit tests to verify that your logic correctly picks up the correct configuration, making sure that each setting is applied.
 
 For further information and deeper insights, I'd recommend these resources:
 
-*   **The Apache Airflow Documentation:** Always the first place to look for definitive answers on Airflow. Pay close attention to sections on DAG definition and configuration.
-*   **"Designing Data-Intensive Applications" by Martin Kleppmann:** While not specifically about Airflow, this book covers many of the theoretical principles related to configuration management and operational aspects of large-scale data systems, making it a very useful read for data engineers.
-*   **"Infrastructure as Code" by Kief Morris**: Excellent material that helps with the operational and philosophical aspects of building and deploying infrastructure components using code.
+- **The Apache Airflow Documentation:** Always the first place to look for definitive answers on Airflow. Pay close attention to sections on DAG definition and configuration.
+- **"Designing Data-Intensive Applications" by Martin Kleppmann:** While not specifically about Airflow, this book covers many of the theoretical principles related to configuration management and operational aspects of large-scale data systems, making it a very useful read for data engineers.
+- **"Infrastructure as Code" by Kief Morris**: Excellent material that helps with the operational and philosophical aspects of building and deploying infrastructure components using code.
 
 By leveraging these techniques and carefully planning your conditional configuration, you can create Airflow DAGs that are adaptable, scalable, and robust. Remember to keep the DAGs stateless and to manage your configurations externally. This has proven to be an effective method for the projects I've worked on.

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-doesnt-tailscale-reconnect-after-wan-failover"
 ---
 
-Alright, let's tackle this one. I’ve seen this scenario play out a good number of times, usually when dealing with network setups that require high availability – a critical need where a simple wan failover can unfortunately cascade into other connection issues, like with Tailscale. You'd expect a clean switchover from one internet connection to another, but Tailscale, like other vpn solutions, can sometimes hiccup. Let me break down why this happens and what you can do about it, drawing from my experience with a particularly troublesome setup at a small datacenter years ago where we had redundant wan links.
+, let's tackle this one. I’ve seen this scenario play out a good number of times, usually when dealing with network setups that require high availability – a critical need where a simple wan failover can unfortunately cascade into other connection issues, like with Tailscale. You'd expect a clean switchover from one internet connection to another, but Tailscale, like other vpn solutions, can sometimes hiccup. Let me break down why this happens and what you can do about it, drawing from my experience with a particularly troublesome setup at a small datacenter years ago where we had redundant wan links.
 
 The core issue isn’t that Tailscale is inherently flawed, it’s more about how network environments and their protocols behave during a failover event. Here's the gist: Tailscale relies on establishing secure connections through something known as 'tunnels'. These tunnels are built upon persistent, usually long-lived, connections, and during a wan failover, the underlying internet protocol address (ip address) changes on the router and this disrupts the established tunnels. Think of it like a phone call: the moment your phone's network changes – maybe you move from wifi to cellular or your isp's system switches over – the call needs to be re-established. That’s a crude analogy, but it captures the essence.
 
@@ -114,14 +114,14 @@ Now, what practical steps can you take to mitigate this? While there isn't a sin
 
 2.  **Persistent Configuration and DNS:** Ensure your configuration remains persistent across reboots and network changes. This includes using fixed Tailscale hostnames, not ip addresses, where possible and making sure all your devices have stable dns settings and access to tailscale's coordination servers.
 
-3. **Utilize Tailscale's DERP Servers:** Tailscale's DERP servers act as relay servers and can assist in connecting behind firewalls and complex network configurations, this is configured by default, but if not consider enabling and configuring them to increase the chances of reconnecting. These also are helpful for devices behind nat.
+3.  **Utilize Tailscale's DERP Servers:** Tailscale's DERP servers act as relay servers and can assist in connecting behind firewalls and complex network configurations, this is configured by default, but if not consider enabling and configuring them to increase the chances of reconnecting. These also are helpful for devices behind nat.
 
 For deep dives, I recommend you look into the following resources:
 
-*   **“TCP/IP Illustrated, Volume 1: The Protocols” by W. Richard Stevens:** This classic gives a comprehensive understanding of tcp/ip, and is crucial for diagnosing and solving network related issues. You’ll find invaluable info regarding how connections are established and maintained.
+- **“TCP/IP Illustrated, Volume 1: The Protocols” by W. Richard Stevens:** This classic gives a comprehensive understanding of tcp/ip, and is crucial for diagnosing and solving network related issues. You’ll find invaluable info regarding how connections are established and maintained.
 
-*   **"Understanding Linux Network Internals" by Christian Benvenuti:** While not specifically about Tailscale, understanding the linux networking stack is vital for those administering devices using linux. This book dives into the architecture of networking within linux and can help with debugging connection related issues in linux.
+- **"Understanding Linux Network Internals" by Christian Benvenuti:** While not specifically about Tailscale, understanding the linux networking stack is vital for those administering devices using linux. This book dives into the architecture of networking within linux and can help with debugging connection related issues in linux.
 
-*   **The Tailscale Documentation:** Tailscale provides comprehensive documentation on its website that outlines its configuration, troubleshooting, and general networking principles. This is the first stop for anyone working with the service, it goes into fine details about how the protocol works.
+- **The Tailscale Documentation:** Tailscale provides comprehensive documentation on its website that outlines its configuration, troubleshooting, and general networking principles. This is the first stop for anyone working with the service, it goes into fine details about how the protocol works.
 
 Ultimately, ensuring a smooth reconnection after a wan failover comes down to understanding the underlying networking mechanics and tailoring your system with redundant network strategies. No system is foolproof, but with the knowledge of the basic building blocks, your setups become more robust and predictable. It's a journey of learning and adapting, and there’s no reason why these kinds of issues can't be handled effectively with the right approach.

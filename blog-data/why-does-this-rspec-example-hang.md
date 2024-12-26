@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-does-this-rspec-example-hang"
 ---
 
-Okay, let's unpack this. I’ve seen this sort of thing more times than I care to remember, particularly in larger, more complex Rails applications. An RSpec test suite suddenly hanging, with no clear error message, is often symptomatic of a few recurring underlying issues. Let’s delve into the most probable causes and how to approach debugging them, based on personal experiences troubleshooting similar situations.
+, let's unpack this. I’ve seen this sort of thing more times than I care to remember, particularly in larger, more complex Rails applications. An RSpec test suite suddenly hanging, with no clear error message, is often symptomatic of a few recurring underlying issues. Let’s delve into the most probable causes and how to approach debugging them, based on personal experiences troubleshooting similar situations.
 
-The core problem, generally, boils down to some form of *blocking* within the test environment. RSpec, by its nature, is single-threaded. If a resource is acquired but never released, or a loop continues indefinitely without exiting, that thread grinds to a halt, and the test suite appears hung. This isn’t necessarily a bug within RSpec itself, but rather a consequence of how we've constructed our code and test fixtures.
+The core problem, generally, boils down to some form of _blocking_ within the test environment. RSpec, by its nature, is single-threaded. If a resource is acquired but never released, or a loop continues indefinitely without exiting, that thread grinds to a halt, and the test suite appears hung. This isn’t necessarily a bug within RSpec itself, but rather a consequence of how we've constructed our code and test fixtures.
 
 One frequent culprit, especially in applications that interface with external systems, is improperly mocked or stubbed external service calls. Imagine a service that takes a while to respond, and you've mocked it in your test, but the mock is either incomplete or behaves in a way that the real service would not. I distinctly recall a case where a mock HTTP client was set to return `nil` in a specific scenario, triggering an infinite loop down the line when code tried to process that `nil`. The real API always returned either a data payload or an error; the `nil` was an artifact of a hastily created mock. The key takeaway here is that mocks and stubs must mirror the behavior of the real system, paying close attention to both successful and failure modes.
 
@@ -114,7 +114,7 @@ RSpec.describe ResourceLocker do
 end
 ```
 
-In this setup, two threads access the same resource with a simple mutex. While this is not a deadlock *per se*, it might hang depending on timing conditions, and exposes the general problem. If we removed the `sleep(0.1)`, the first thread would most likely modify the shared `resource` and the test would not see the other value. The fix usually includes more granular locking or other forms of synchronization and depends a lot on use cases.
+In this setup, two threads access the same resource with a simple mutex. While this is not a deadlock _per se_, it might hang depending on timing conditions, and exposes the general problem. If we removed the `sleep(0.1)`, the first thread would most likely modify the shared `resource` and the test would not see the other value. The fix usually includes more granular locking or other forms of synchronization and depends a lot on use cases.
 
 **Example 3: Unclosed Database Connection**
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-bundle-exec-passenger-start-failing-when-running-rake-tasks"
 ---
 
-Alright, let's address this. I've seen this scenario play out more times than I care to count, and usually, it boils down to subtle environmental mismatches between how your Rake tasks are invoked and how Phusion Passenger expects things to be set up. When `bundle exec passenger start` fails when running Rake tasks, it isn’t typically Passenger itself that's broken; rather, it's usually about how the gem environment and the application’s runtime are being coordinated.
+, let's address this. I've seen this scenario play out more times than I care to count, and usually, it boils down to subtle environmental mismatches between how your Rake tasks are invoked and how Phusion Passenger expects things to be set up. When `bundle exec passenger start` fails when running Rake tasks, it isn’t typically Passenger itself that's broken; rather, it's usually about how the gem environment and the application’s runtime are being coordinated.
 
 Here's the thing: Passenger manages the application environment very specifically. When it starts, it loads the application with a very particular set of environment variables and gem paths, essentially creating a sandboxed context. Rake tasks, on the other hand, often rely on the shell's environment and your system's gem configuration, particularly when you run them directly. This difference is where the issues start to creep in.
 
@@ -20,7 +20,7 @@ The most common reason is that the gems required by your Rake tasks aren't expli
 
 **Solution:** Make sure all necessary gems are specified in your `Gemfile`. This includes development dependencies that you may think are trivial but are actually being utilized within your rake task.
 
-*Example Code Snippet:*
+_Example Code Snippet:_
 
 ```ruby
 # Gemfile
@@ -45,7 +45,7 @@ Rake tasks might rely on environment variables that are only set in your shell's
 
 **Solution:** Ensure that necessary environment variables are explicitly set within your Passenger configuration. You could use a `.env` file in conjunction with something like the `dotenv-rails` gem. Or you can configure Passenger's startup environment directly.
 
-*Example Code Snippet:*
+_Example Code Snippet:_
 
 ```ruby
 # config/passenger.conf (example for standalone Passenger)
@@ -54,6 +54,7 @@ passenger_app_env development
 passenger_env_var DATABASE_URL "postgresql://user:password@host:5432/database"
 PASSENGER_ENV_VAR SECRET_KEY_BASE "your_secret"
 ```
+
 The important point is you have to explicitly set the variables that your rake task depends on, or it will fail, as it cannot 'see' the settings in your shell configurations.
 
 **3. Incorrect Path Configurations:**
@@ -62,7 +63,7 @@ Sometimes, your Rake tasks might rely on executables located in directories that
 
 **Solution:** Ensure the correct paths are included in Passenger's environment.
 
-*Example Code Snippet:*
+_Example Code Snippet:_
 
 ```ruby
 # config/passenger.conf (example for standalone Passenger)

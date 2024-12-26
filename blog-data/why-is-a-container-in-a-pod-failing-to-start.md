@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-a-container-in-a-pod-failing-to-start"
 ---
 
-Okay, let's talk about a container stubbornly refusing to launch within a pod. It's a classic headache, and trust me, I’ve spent more late nights than I care to remember chasing down these kinds of issues. The beauty, or perhaps the frustration, of container orchestration lies in the myriad reasons a container might be stuck in a limbo state. We're talking about complex systems interacting, each with its potential points of failure. Let's break down why this happens, with the focus on root causes and practical troubleshooting, and we will look at a few code examples that help resolve some common scenarios I’ve bumped into.
+, let's talk about a container stubbornly refusing to launch within a pod. It's a classic headache, and trust me, I’ve spent more late nights than I care to remember chasing down these kinds of issues. The beauty, or perhaps the frustration, of container orchestration lies in the myriad reasons a container might be stuck in a limbo state. We're talking about complex systems interacting, each with its potential points of failure. Let's break down why this happens, with the focus on root causes and practical troubleshooting, and we will look at a few code examples that help resolve some common scenarios I’ve bumped into.
 
 First, it's crucial to understand that a container's launch failure within a pod is often not an isolated event. It's a cascade, potentially triggered by a single misstep in the configuration, image, or even the underlying infrastructure. We need to approach it systematically, moving from the most common culprits to the more esoteric ones.
 
@@ -25,15 +25,15 @@ metadata:
   name: problematic-pod
 spec:
   containers:
-  - name: my-container
-    image: myregistry.example.com/myapp:v10
-    resources:
-      requests:
-        cpu: "100m"
-        memory: "256Mi"
-      limits:
-        cpu: "500m"
-        memory: "512Mi"
+    - name: my-container
+      image: myregistry.example.com/myapp:v10
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "256Mi"
+        limits:
+          cpu: "500m"
+          memory: "512Mi"
 ```
 
 In this scenario, let's assume there’s an issue with the tag "v10", maybe that version hasn’t been built, or the registry does not contain the image with this tag. We’d fix this by checking the container registry for the right tag and updating the manifest. Perhaps the proper image tag should be v1.0, for example, so we would then change it.
@@ -45,16 +45,17 @@ metadata:
   name: fixed-pod
 spec:
   containers:
-  - name: my-container
-    image: myregistry.example.com/myapp:v1.0
-    resources:
-      requests:
-        cpu: "100m"
-        memory: "256Mi"
-      limits:
-        cpu: "500m"
-        memory: "512Mi"
+    - name: my-container
+      image: myregistry.example.com/myapp:v1.0
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "256Mi"
+        limits:
+          cpu: "500m"
+          memory: "512Mi"
 ```
+
 The next code example demonstrates a resource limit problem. If the application attempts to allocate memory beyond the defined limits, it’ll get terminated by Kubernetes.
 
 ```yaml
@@ -64,13 +65,13 @@ metadata:
   name: memory-limited-pod
 spec:
   containers:
-  - name: memory-hungry-container
-    image: myregistry.example.com/memoryapp:latest
-    resources:
-      requests:
-        memory: "128Mi"
-      limits:
-        memory: "256Mi"
+    - name: memory-hungry-container
+      image: myregistry.example.com/memoryapp:latest
+      resources:
+        requests:
+          memory: "128Mi"
+        limits:
+          memory: "256Mi"
 ```
 
 To resolve this, we would update the resource limits to align with the application’s memory requirements. If our application needs 500Mi, we'd increase the resource definition accordingly:
@@ -82,13 +83,13 @@ metadata:
   name: memory-fixed-pod
 spec:
   containers:
-  - name: memory-hungry-container
-    image: myregistry.example.com/memoryapp:latest
-    resources:
-      requests:
-        memory: "256Mi"
-      limits:
-        memory: "512Mi"
+    - name: memory-hungry-container
+      image: myregistry.example.com/memoryapp:latest
+      resources:
+        requests:
+          memory: "256Mi"
+        limits:
+          memory: "512Mi"
 ```
 
 Lastly, here's an example of a problematic liveness probe that's set up to be too aggressive. Say we are setting up a webserver that takes a while to launch, and we expect the health endpoint to respond successfully, but the server has not yet finished starting.
@@ -100,14 +101,14 @@ metadata:
   name: aggressive-health-check
 spec:
   containers:
-  - name: my-webserver
-    image: myregistry.example.com/webapp:latest
-    livenessProbe:
-      httpGet:
-        path: /health
-        port: 8080
-      initialDelaySeconds: 5
-      periodSeconds: 10
+    - name: my-webserver
+      image: myregistry.example.com/webapp:latest
+      livenessProbe:
+        httpGet:
+          path: /health
+          port: 8080
+        initialDelaySeconds: 5
+        periodSeconds: 10
 ```
 
 The application's `health` endpoint might not become available until after 5 seconds. Consequently, Kubernetes will kill the container due to failed health check. We need to increase the delay to allow the application to initialise before the liveness probe is started. A solution would be to adjust `initialDelaySeconds` or adjust `periodSeconds`:
@@ -119,14 +120,14 @@ metadata:
   name: fixed-health-check
 spec:
   containers:
-  - name: my-webserver
-    image: myregistry.example.com/webapp:latest
-    livenessProbe:
-      httpGet:
-        path: /health
-        port: 8080
-      initialDelaySeconds: 20
-      periodSeconds: 10
+    - name: my-webserver
+      image: myregistry.example.com/webapp:latest
+      livenessProbe:
+        httpGet:
+          path: /health
+          port: 8080
+        initialDelaySeconds: 20
+        periodSeconds: 10
 ```
 
 Debugging these kinds of problems is part and parcel of working with containerized applications. My experience is that consistent logging, combined with a methodical approach, is essential for identifying the root cause. Always start by examining the pod's events using `kubectl describe pod <pod-name>`, which often contains detailed messages about the reason for the failure. Don’t underestimate the value of meticulously checking your pod specs for typos or misconfigurations. Once you've gained experience in the field, you’ll develop a good intuition and sense for where to focus your efforts, but even after years of doing this, sometimes the solution is a simple as checking a typo.

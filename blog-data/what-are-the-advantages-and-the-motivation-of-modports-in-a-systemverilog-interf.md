@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "what-are-the-advantages-and-the-motivation-of-modports-in-a-systemverilog-interf"
 ---
 
-Alright so you're asking about modports in SystemVerilog interfaces right Been there done that I've spent more nights than I care to remember debugging designs without proper modport usage trust me it's a pain point
+so you're asking about modports in SystemVerilog interfaces right Been there done that I've spent more nights than I care to remember debugging designs without proper modport usage trust me it's a pain point
 
 Let's dive right in forget the fluff I’ll give you the real deal from someone who’s actually wrestled with this stuff not just read about it in a textbook I’ve been doing this for like 15 years now so I’ve seen my fair share of messy Verilog and the salvation that is SystemVerilog
 
@@ -68,6 +68,7 @@ module master_module(my_interface.master iface);
   end
 endmodule
 ```
+
 This `iface.ready <= 1'b0` line causes a compilation error because it’s trying to write to a signal declared as input in the master modport definition preventing bugs from sneaking into your code
 
 The advantages well besides avoiding the absolute chaos I already talked about modports increase code readability It is much easier to understand which signals are inputs and which are outputs in every particular interaction they improve design intent documentation right there in the code and better verification by enabling compile time checks as we already mentioned before. Also if you change the direction of a signal in your interface and you also have modports its easier to check which module uses this particular modport and change it locally to that module and no change should propagate everywhere.

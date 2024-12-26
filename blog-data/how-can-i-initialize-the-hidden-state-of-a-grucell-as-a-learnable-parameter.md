@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-initialize-the-hidden-state-of-a-grucell-as-a-learnable-parameter"
 ---
 
-Alright, let's tackle this. I’ve definitely been in situations where tweaking the initial hidden state of a recurrent neural network made all the difference, particularly with shorter sequences or complex, non-Markovian dependencies. Specifically, I recall working on a time-series forecasting project where the standard zero-initialization just wasn’t cutting it. We needed the model to develop a more nuanced understanding of the very *beginning* of the sequence. That's when we explored making the initial hidden state learnable, and it improved performance notably.
+, let's tackle this. I’ve definitely been in situations where tweaking the initial hidden state of a recurrent neural network made all the difference, particularly with shorter sequences or complex, non-Markovian dependencies. Specifically, I recall working on a time-series forecasting project where the standard zero-initialization just wasn’t cutting it. We needed the model to develop a more nuanced understanding of the very _beginning_ of the sequence. That's when we explored making the initial hidden state learnable, and it improved performance notably.
 
 So, you're asking how to initialize the hidden state of a `GRUCell` (Gated Recurrent Unit cell) as a learnable parameter. Essentially, you want the network to learn what the optimal starting hidden state should be, rather than defaulting to zeros. This is crucial because the initial state can significantly impact how the network processes the first few elements of your sequence, especially when starting from scratch or when dealing with sequences that have significant initial context.
 
@@ -175,8 +175,8 @@ When using a learnable initial state, keep a few things in mind:
 
 For further reading, I'd suggest these resources:
 
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This is the definitive textbook on deep learning. The sections on recurrent neural networks provide a comprehensive theoretical background. While it doesn't directly address this particular implementation detail, the understanding it gives about RNNs is fundamental.
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** A very practical guide with in-depth explanations and hands-on examples. This book is especially useful for TensorFlow users.
-*  **"Dive into Deep Learning" by Aston Zhang, et al.:** A great resource that combines theory and code, and has a particularly good discussion on RNNs. It's available for free online and covers both TensorFlow and PyTorch implementations.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This is the definitive textbook on deep learning. The sections on recurrent neural networks provide a comprehensive theoretical background. While it doesn't directly address this particular implementation detail, the understanding it gives about RNNs is fundamental.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** A very practical guide with in-depth explanations and hands-on examples. This book is especially useful for TensorFlow users.
+- **"Dive into Deep Learning" by Aston Zhang, et al.:** A great resource that combines theory and code, and has a particularly good discussion on RNNs. It's available for free online and covers both TensorFlow and PyTorch implementations.
 
 In practice, I've found that a learnable initial hidden state is particularly valuable when dealing with data where the starting context is extremely important and when the sequence is shorter. It's also handy when trying to capture the system's state at the beginning of time, rather than relying on it learning this from scratch. By treating the initial hidden state as a parameter, you allow the model to adapt to this starting point in a more informed way. Give these implementations a try, and I'm confident you'll see the benefits it can bring. Remember that a careful analysis of your specific data and problem is always paramount.

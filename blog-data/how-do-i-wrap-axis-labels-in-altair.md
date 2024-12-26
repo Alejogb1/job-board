@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-wrap-axis-labels-in-altair"
 ---
 
-Alright, let's tackle this. I've certainly bumped into this particular formatting challenge with Altair countless times, especially when visualizing datasets with long, descriptive categories. It's a common frustration, really. The default behavior of truncating or overlapping axis labels simply isn't acceptable for professional-looking charts. So, wrapping the labels becomes a necessity. It's not baked-in as a single, straightforward option within Altair, but the flexibility of the Vega-Lite spec, which Altair sits on top of, does allow for several workarounds. I'll walk you through a few techniques I've found effective over the years, each with its pros and cons.
+, let's tackle this. I've certainly bumped into this particular formatting challenge with Altair countless times, especially when visualizing datasets with long, descriptive categories. It's a common frustration, really. The default behavior of truncating or overlapping axis labels simply isn't acceptable for professional-looking charts. So, wrapping the labels becomes a necessity. It's not baked-in as a single, straightforward option within Altair, but the flexibility of the Vega-Lite spec, which Altair sits on top of, does allow for several workarounds. I'll walk you through a few techniques I've found effective over the years, each with its pros and cons.
 
 First off, let’s be clear: we're not directly setting a "wrap" property. Instead, we're leveraging a combination of strategies that use things like adjusting the angle of the labels, using newline characters within the labels themselves, or even employing Vega expressions to dynamically manipulate how those labels are displayed. These approaches, when executed well, give the desired effect.
 
@@ -94,7 +94,7 @@ This version utilizes a Vega expression within the axis configuration. The `labe
 
 Let’s talk briefly about recommended resources. If you are going to be working with complex chart customizations regularly, I would suggest looking into these:
 
-1.  **The Vega-Lite Documentation:** This is *the* source of truth for how Altair charts work. You can find it easily online, and it details all configurations possible via the Vega-Lite specification. This document lets you deeply understand the configurations that you can pass through Altair.
+1.  **The Vega-Lite Documentation:** This is _the_ source of truth for how Altair charts work. You can find it easily online, and it details all configurations possible via the Vega-Lite specification. This document lets you deeply understand the configurations that you can pass through Altair.
 2.  **"Interactive Data Visualization for the Web" by Scott Murray**: While focusing more on D3.js, it offers an exceptional explanation of core visualization concepts, which is incredibly helpful for better comprehending how Vega-Lite (and therefore Altair) renders its charts, and the underlying principles that you should be thinking about when making visualizations.
 3.  **"Storytelling with Data: A Data Visualization Guide for Business Professionals" by Cole Nussbaumer Knaflic:** This is less technical but is essential for understanding best practices in creating clear and effective data visualizations. It reinforces the importance of readable labels and helps contextualize why solving these sorts of visual issues are important in practice.
 

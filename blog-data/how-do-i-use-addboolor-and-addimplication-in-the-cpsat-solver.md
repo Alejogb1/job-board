@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-do-i-use-addboolor-and-addimplication-in-the-cpsat-solver"
 ---
 
-Alright, let's tackle this. I've certainly spent my share of late nights debugging constraint programming models, and understanding the nuances of `AddBoolOr` and `AddImplication` in the `cp_sat` solver is definitely crucial for building effective solutions. It’s not just about knowing *what* these functions do, but also *when* and *how* to best utilize them. We’ll break it down with some examples that reflect scenarios I’ve faced in previous projects.
+, let's tackle this. I've certainly spent my share of late nights debugging constraint programming models, and understanding the nuances of `AddBoolOr` and `AddImplication` in the `cp_sat` solver is definitely crucial for building effective solutions. It’s not just about knowing _what_ these functions do, but also _when_ and _how_ to best utilize them. We’ll break it down with some examples that reflect scenarios I’ve faced in previous projects.
 
-`AddBoolOr` and `AddImplication` are core tools for expressing logical relationships between boolean variables within the constraint programming (CP) framework. In essence, `AddBoolOr` allows you to enforce that *at least one* of a list of boolean variables must be true. This translates to an “or” relationship. On the flip side, `AddImplication` defines an “if-then” logic; if one boolean variable is true, then another must also be true. Let's get into the details.
+`AddBoolOr` and `AddImplication` are core tools for expressing logical relationships between boolean variables within the constraint programming (CP) framework. In essence, `AddBoolOr` allows you to enforce that _at least one_ of a list of boolean variables must be true. This translates to an “or” relationship. On the flip side, `AddImplication` defines an “if-then” logic; if one boolean variable is true, then another must also be true. Let's get into the details.
 
-First, consider `AddBoolOr`. The method signature, usually, accepts an array (or list, depending on the language binding) of boolean variables. The underlying solver guarantees that in any valid solution, at least one of these boolean variables will evaluate to true. If none are true, your solution is deemed infeasible. I once used this extensively in a resource allocation problem, where different tasks could be assigned to multiple machines, but each task *had* to be assigned to at least one. The code looked somewhat like this (using a Python-like syntax for simplicity, although the actual implementation details might vary):
+First, consider `AddBoolOr`. The method signature, usually, accepts an array (or list, depending on the language binding) of boolean variables. The underlying solver guarantees that in any valid solution, at least one of these boolean variables will evaluate to true. If none are true, your solution is deemed infeasible. I once used this extensively in a resource allocation problem, where different tasks could be assigned to multiple machines, but each task _had_ to be assigned to at least one. The code looked somewhat like this (using a Python-like syntax for simplicity, although the actual implementation details might vary):
 
 ```python
 from ortools.sat.python import cp_model
@@ -36,7 +36,7 @@ else:
 
 In the above code, regardless of what other constraints are present in the model, the solver is now forced to assign at least one of `x1`, `x2`, or `x3` to a `true` value. This is useful in various scenarios, like ensuring that a specific functionality is activated, or that at least one resource is allocated if there are multiple options. It's a foundational building block for formulating more complex conditions.
 
-Now, let's talk about `AddImplication`. This method connects two boolean variables. The method signature often takes two boolean variables as inputs: a *condition* (or antecedent) and a *consequent*. If the condition evaluates to true, then the consequent *must* also be true. In contrast, if the condition is false, there's no requirement on the consequent.
+Now, let's talk about `AddImplication`. This method connects two boolean variables. The method signature often takes two boolean variables as inputs: a _condition_ (or antecedent) and a _consequent_. If the condition evaluates to true, then the consequent _must_ also be true. In contrast, if the condition is false, there's no requirement on the consequent.
 
 I recall a project involving scheduling dependencies between tasks. A particular task (`task_b`) could only be started if another task (`task_a`) was completed, which I modeled with an implication. Here's a simplified representation:
 
@@ -70,7 +70,7 @@ else:
 
 Notice how `AddImplication` forces `task_b_done` to be true when `task_a_done` is true. The key is that there’s no constraint on `task_b_done` when `task_a_done` is false, offering flexibility. This sort of rule is essential when modeling sequential processes, conditional resource usage, or any scenario where events are interlinked. It’s crucial, however, to remember that implication doesn't work the other way; it doesn't enforce that if `task_b_done` is true, then `task_a_done` has to be true.
 
-Now, it's worth exploring a more intricate combination of the two. Let's say, for example, that we have multiple mutually exclusive scenarios, each with its specific dependencies. In a project with multiple product lines, each represented by a boolean variable, we might have requirements such that activating *one* product line has its implications. If product line 1 is active, then feature X must be activated, and so on.
+Now, it's worth exploring a more intricate combination of the two. Let's say, for example, that we have multiple mutually exclusive scenarios, each with its specific dependencies. In a project with multiple product lines, each represented by a boolean variable, we might have requirements such that activating _one_ product line has its implications. If product line 1 is active, then feature X must be activated, and so on.
 
 ```python
 from ortools.sat.python import cp_model

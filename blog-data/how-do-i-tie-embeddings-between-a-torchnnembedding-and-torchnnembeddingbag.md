@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-tie-embeddings-between-a-torchnnembedding-and-torchnnembeddingbag"
 ---
 
-Alright, let’s tackle this. I remember a project a few years back, involved heavily optimized natural language processing on resource-constrained devices. We were experimenting with various forms of embedding layers to squeeze maximum performance, and this exact problem of tying `torch.nn.Embedding` and `torch.nn.EmbeddingBag` came up. It's not immediately obvious, but definitely solvable with a bit of careful planning.
+, let’s tackle this. I remember a project a few years back, involved heavily optimized natural language processing on resource-constrained devices. We were experimenting with various forms of embedding layers to squeeze maximum performance, and this exact problem of tying `torch.nn.Embedding` and `torch.nn.EmbeddingBag` came up. It's not immediately obvious, but definitely solvable with a bit of careful planning.
 
 Essentially, you're aiming to share the underlying weight matrix between these two different kinds of embedding layers in PyTorch. Think of it as having one source of truth for your word embeddings, which both layers can tap into. The motivation behind this, as I experienced, is often memory efficiency and maintaining consistency between contexts where you need individual token embeddings (`torch.nn.Embedding`) and those where you need to aggregate embeddings over a sequence (`torch.nn.EmbeddingBag`).
 
@@ -64,11 +64,12 @@ print(torch.equal(weight_from_embed, weight_from_embedbag)) #Output: True
 print("First Embedding Vector (from embedding):", weight_from_embed[:5]) #First five numbers
 print("First Embedding Vector (from embedding bag):", weight_from_embedbag[:5]) #First five numbers
 ```
+
 The crucial detail is the `with torch.no_grad():` block here. Since we're manually setting values, this will prevent PyTorch from tracking those modifications for backward passes if that were to be part of the computational graph. The tensors pulled from the two embedding layers have identical data showing we’ve successfully tied the underlying tensor.
 
 It's also worth noting a few important practical considerations based on my past work. Firstly, always make sure you're handling gradients correctly, particularly when modifying weights directly. Using `torch.no_grad()` is vital to prevent errors during backpropagation as demonstrated. If you are training, and want to change values for debugging, don't forget the `with torch.no_grad()` or you will face many frustrating bugs. This is very important for the `torch.nn.Embedding` object, but is automatically taken care of by `torch.nn.EmbeddingBag`.
 
-Finally, another crucial point is dealing with situations where the embedding layers aren’t created at the same time. I've encountered cases where we'd pre-load weights into a separate `Embedding` object, perhaps from a pre-trained model, and *then* create the `EmbeddingBag`. Here’s how you could handle that:
+Finally, another crucial point is dealing with situations where the embedding layers aren’t created at the same time. I've encountered cases where we'd pre-load weights into a separate `Embedding` object, perhaps from a pre-trained model, and _then_ create the `EmbeddingBag`. Here’s how you could handle that:
 
 ```python
 # Load pretrained embeddings from a matrix or file.
@@ -90,6 +91,7 @@ print(pretrained_embedding.weight is new_embeddingbag.weight) # Output: True
 print("First five weights from pre-trained embedding", pretrained_embedding.weight[0][:5]) # First five
 print("First five weights from embedding_bag", new_embeddingbag.weight[0][:5]) # First five
 ```
+
 The important aspect is again passing the `pretrained_embedding.weight` to the `EmbeddingBag`. We also demonstrate that the actual weights are the same in both objects.
 
 This is a reasonably efficient method, especially when dealing with large vocabularies, as you’re not duplicating the memory footprint of the embedding matrix. It also allows seamless sharing of weights if, for example, you are transitioning between different types of layers for different inputs, within the same model.

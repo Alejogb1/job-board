@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-ruby-generically-create-instance-variables-using-concatenation-and-interpolation"
 ---
 
-Alright, let's tackle this. I've certainly encountered this particular challenge a few times in my career, particularly when dealing with dynamic configurations and meta-programming in Ruby. Creating instance variables on the fly using string concatenation and interpolation is a powerful technique, but one that requires careful consideration of its implications.
+, let's tackle this. I've certainly encountered this particular challenge a few times in my career, particularly when dealing with dynamic configurations and meta-programming in Ruby. Creating instance variables on the fly using string concatenation and interpolation is a powerful technique, but one that requires careful consideration of its implications.
 
 The crux of the issue lies in the fact that instance variables, denoted by the `@` prefix, are essentially string representations when Ruby's parser encounters them. We can leverage this, along with the `instance_variable_set` and `instance_variable_get` methods, to construct the variable names dynamically. Let’s unpack the process and its applications with concrete examples.
 
@@ -164,10 +164,10 @@ Therefore, I suggest limiting its use to scenarios where you truly benefit from 
 
 For further exploration, I’d recommend looking at the following:
 
-*   **"Metaprogramming Ruby" by Paolo Perrotta:** This book provides a deep dive into Ruby's meta-programming capabilities, including methods like `instance_variable_set` and `instance_variable_get`.
+- **"Metaprogramming Ruby" by Paolo Perrotta:** This book provides a deep dive into Ruby's meta-programming capabilities, including methods like `instance_variable_set` and `instance_variable_get`.
 
-*   **Ruby documentation on `Object` Class:** Pay particular attention to methods such as `instance_variable_set`, `instance_variable_get`, `instance_variables`, `instance_variable_defined?`. Understanding these methods is vital for effective use of dynamic instance variable creation.
+- **Ruby documentation on `Object` Class:** Pay particular attention to methods such as `instance_variable_set`, `instance_variable_get`, `instance_variables`, `instance_variable_defined?`. Understanding these methods is vital for effective use of dynamic instance variable creation.
 
-*   **Ruby design patterns:** Search for patterns such as data mappers or strategy patterns where a dynamic variable creation technique might be a good fit.
+- **Ruby design patterns:** Search for patterns such as data mappers or strategy patterns where a dynamic variable creation technique might be a good fit.
 
 Dynamic instance variable creation is a tool; like all tools, it has its best use cases. It should be applied when the dynamism brings meaningful benefit without sacrificing clarity or maintainability.

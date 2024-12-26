@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-keras-in-google-colab-showing-valueerror-after-changing-the-number-of-classes"
 ---
 
-Alright, let's tackle this. I’ve seen this particular ValueError pop up more times than I care to remember, particularly when modifying class counts in Keras models within a Google Colab environment. It’s a surprisingly common pitfall, and understanding the nuances is crucial for smooth model development. Let's explore the reasons behind it and how we can reliably resolve the issue.
+, let's tackle this. I’ve seen this particular ValueError pop up more times than I care to remember, particularly when modifying class counts in Keras models within a Google Colab environment. It’s a surprisingly common pitfall, and understanding the nuances is crucial for smooth model development. Let's explore the reasons behind it and how we can reliably resolve the issue.
 
 The crux of the problem, often manifesting as a `ValueError`, when you alter the number of classes in your Keras model, particularly after it's been partially defined or even trained, stems primarily from mismatches in the expected output shape and the actual output shape during model compilation or fitting. This becomes especially prominent after you have initially trained the model with a specific number of output nodes (corresponding to classes) and you decide to adjust it later.
 
@@ -123,20 +123,21 @@ model_multi.fit(X_train, y_train_multi, epochs=2, verbose = 0)
 
 print("Training with modified model passed")
 ```
+
 In this modified version, we obtain all layers of the initial model except the last one. We create a new model out of those layers and then add the new final layer with the desired number of classes, avoiding potential problems with layer reuse.
 
 Key Takeaways
 
-*   **Model Architecture Alignment:** Always ensure that your final layer’s output count matches the number of classes in your training data. If the model has already been created and trained, any change in classes must be accompanied by an adjustment to the output layers.
-*   **Model Re-creation or Modification:** When the number of classes changes, it is generally safer to create a new model and adjust its output layer directly, as shown in Example 2. Alternatively, you could create a new model reusing the pre-existing layers, and adding the appropriate final one, as seen in Example 3.
-*   **Loss Function Consistency:** Match your loss function to your data type. For multiclass problems (more than two classes), `sparse_categorical_crossentropy` and the `softmax` output activation are generally recommended, particularly if the labels are encoded as integers.
+- **Model Architecture Alignment:** Always ensure that your final layer’s output count matches the number of classes in your training data. If the model has already been created and trained, any change in classes must be accompanied by an adjustment to the output layers.
+- **Model Re-creation or Modification:** When the number of classes changes, it is generally safer to create a new model and adjust its output layer directly, as shown in Example 2. Alternatively, you could create a new model reusing the pre-existing layers, and adding the appropriate final one, as seen in Example 3.
+- **Loss Function Consistency:** Match your loss function to your data type. For multiclass problems (more than two classes), `sparse_categorical_crossentropy` and the `softmax` output activation are generally recommended, particularly if the labels are encoded as integers.
 
 **Relevant Reading**
 
 For a deeper dive, consider the following resources:
 
-*   **“Deep Learning with Python” by François Chollet:** A Keras masterclass that clarifies many of these architectural subtleties. In particular, pay close attention to the chapters dealing with multi-class classification, and how different activation and loss functions operate.
-*   **“Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow” by Aurélien Géron:** A practical guide that covers end-to-end model design, training and tuning, focusing on real-world implementation. The chapter on artificial neural networks is particularly insightful.
-*   **TensorFlow documentation:** The official TensorFlow site has extensive API documentation for Keras layers, providing crucial details on input/output shapes, activation functions and loss functions.
+- **“Deep Learning with Python” by François Chollet:** A Keras masterclass that clarifies many of these architectural subtleties. In particular, pay close attention to the chapters dealing with multi-class classification, and how different activation and loss functions operate.
+- **“Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow” by Aurélien Géron:** A practical guide that covers end-to-end model design, training and tuning, focusing on real-world implementation. The chapter on artificial neural networks is particularly insightful.
+- **TensorFlow documentation:** The official TensorFlow site has extensive API documentation for Keras layers, providing crucial details on input/output shapes, activation functions and loss functions.
 
 Remember, model building and debugging is a process of iterative learning. These seemingly small errors often reveal important underlying principles in neural network design. Through repeated encounters, one grows the 'intuition' for what will work well, and where to look first when it doesn't.

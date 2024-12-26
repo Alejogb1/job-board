@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "optimize-r-function-parameters"
 ---
 
-Okay so you're asking about optimizing parameters in R functions right Been there done that got the t-shirt and probably spilled coffee on it more than once I've seen this rodeo before so lets dive in and ill lay out what i know from personal war stories and some stuff ive picked up along the way
+you're asking about optimizing parameters in R functions right Been there done that got the t-shirt and probably spilled coffee on it more than once I've seen this rodeo before so lets dive in and ill lay out what i know from personal war stories and some stuff ive picked up along the way
 
 First off let's be clear optimizing parameters isn't a one-size-fits-all type of situation The optimal parameter depends a whole lot on the specific function the data you're throwing at it and what you're trying to achieve You gotta understand the terrain before you start hiking
 
@@ -105,6 +105,7 @@ print(optimized_result$solution)
 print(optimized_result$objective)
 
 ```
+
 You have to provide a function that calculates the objective given the data and parameters as well as the initial parameter guesses The `nloptr` function also takes lower bounds as argument this lower bounds can be set to -inf to make a parameter unconstrained in the lower end. It also has more control over algorithms and stopping criteria
 
 Now i'll be honest this is where things get interesting There are different algorithms for minimization and maximization each has its strength and its weakness depending on the objective function you are looking at. When optimizing parameters and using gradient based approaches a very important requirement is that the function being optimized must be somewhat smooth and have a well defined gradient. But there are other algorithms available to use when that assumption cannot be met. Genetic algorithms for instance do not require a well defined derivative function of your objective and they can be good candidates if the gradient methods fails to converge. But sometimes even after trying all this you find yourself still in a hole so keep calm and carry on

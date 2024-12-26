@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-an-error-while-using-gpu-on-a-unet-with-flux-in-julia"
 ---
 
-Alright, let's address this error you're encountering with your UNET and GPU usage within the Flux.jl framework in Julia. I've certainly been down similar roads before, particularly when pushing models to leverage the acceleration capabilities of a GPU. It's often a confluence of configuration, data types, and specific operations that can trigger these issues.
+, let's address this error you're encountering with your UNET and GPU usage within the Flux.jl framework in Julia. I've certainly been down similar roads before, particularly when pushing models to leverage the acceleration capabilities of a GPU. It's often a confluence of configuration, data types, and specific operations that can trigger these issues.
 
 From what I've gleaned over the years, and through my own experiments, the challenges with GPUs and Flux often stem from a few core areas. Let's dive into the potential culprits, and how to mitigate them.
 
@@ -164,7 +164,7 @@ grads = Flux.gradient(loss, x_gpu, y_gpu)
 
 ```
 
-Here, I’m using `fmap` to explicitly ensure that *all* the parameters of the model (weights, biases etc.) are cast to `Float32`. This is useful if you are loading pre-trained weights or if you want to ensure that no issues arising from type differences exist, even if it is often not required. By using `fmap`, it applies the conversion recursively to all elements in the model.
+Here, I’m using `fmap` to explicitly ensure that _all_ the parameters of the model (weights, biases etc.) are cast to `Float32`. This is useful if you are loading pre-trained weights or if you want to ensure that no issues arising from type differences exist, even if it is often not required. By using `fmap`, it applies the conversion recursively to all elements in the model.
 
 To gain a deeper understanding, I'd suggest referencing the official `CUDA.jl` documentation. Pay close attention to the sections discussing data transfers and memory management. Another highly recommended source is "Deep Learning with Julia" by Yuxi Liu and Avik Pal. It provides in-depth examples, covering the GPU usage nuances. Also, the Flux.jl documentation itself provides insights into leveraging GPUs effectively.
 

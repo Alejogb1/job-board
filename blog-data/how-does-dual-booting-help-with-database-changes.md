@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-does-dual-booting-help-with-database-changes"
 ---
 
-Alright, let’s unpack this. The notion of dual booting as a strategy for managing database changes isn't something you'd see in every textbook, and it’s definitely not a standard deployment methodology. Instead, it's a tactic that emerges from specific, often complex, situations, and I've seen its practical value in projects where conventional methods simply weren't adequate. It's less about a general-purpose tool and more about a high-stakes, niche application.
+, let’s unpack this. The notion of dual booting as a strategy for managing database changes isn't something you'd see in every textbook, and it’s definitely not a standard deployment methodology. Instead, it's a tactic that emerges from specific, often complex, situations, and I've seen its practical value in projects where conventional methods simply weren't adequate. It's less about a general-purpose tool and more about a high-stakes, niche application.
 
 The core idea behind leveraging dual booting in this context is to create isolated environments for making changes to a database. Think of it like this: you've got a live, production database instance that's humming along nicely, serving your users. Simultaneously, you need to make a set of structural or data changes that are significant enough to warrant caution. Traditional workflows, involving staging or test databases, can sometimes fall short if the changes are particularly invasive or involve extensive data migrations. This is where dual booting, conceptually speaking, can offer a unique advantage.
 
@@ -83,15 +83,12 @@ Finally, let's take an example involving a versioned schema for a NoSQL database
 
 // 2. Javascript migration script executed against 'staging_db'
 
-db.users.find().forEach(function(doc) {
+db.users.find().forEach(function (doc) {
   db.users.updateOne(
-     {_id: doc._id},
-     {$set: { user: {name: doc.userName}}}
+    { _id: doc._id },
+    { $set: { user: { name: doc.userName } } }
   );
-    db.users.updateOne(
-        { _id: doc._id },
-        { $unset: { userName: 1 } }
-    );
+  db.users.updateOne({ _id: doc._id }, { $unset: { userName: 1 } });
 });
 
 // Testing and then switch over occurs.

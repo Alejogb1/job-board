@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "find-symbol-from-image-ai-vision"
 ---
 
-Okay so you're looking to pluck symbols out of images using AI vision right I get it Been there done that Seriously I've spent way too many nights wrestling with this exact problem back in my early days when I was trying to build a text recognition system for old scanned documents think ancient Sumerian cuneiform but in image form yeah it was a nightmare
+you're looking to pluck symbols out of images using AI vision right I get it Been there done that Seriously I've spent way too many nights wrestling with this exact problem back in my early days when I was trying to build a text recognition system for old scanned documents think ancient Sumerian cuneiform but in image form yeah it was a nightmare
 
 Basically you're venturing into the realm of object detection and character recognition sometimes called Optical Character Recognition or OCR but in your case it's generalized to symbols not necessarily characters which is a bit more complex Let's break this down in a way that even someone relatively new to this can grasp I'll throw in some code examples in Python since that's what most folks use these days
 
@@ -71,6 +71,7 @@ def detect_symbols(image_path):
 
 detect_symbols("image.jpg")
 ```
+
 This example assumes you have the YOLOv3 weights `yolov3.weights` configuration `yolov3.cfg` and class names file `coco.names` ready to go You need to download them online they are readily available Don't worry too much if you don't understand every line of code right now Just know that it takes an image as input and tries to detect objects from the coco dataset like person car etc If it detects any object the code draws bounding boxes around the detected objects showing them visually The core logic is in there
 
 Now this is generic object detection You need a model that's trained on your specific symbols This is where transfer learning comes in handy
@@ -103,7 +104,7 @@ class CustomDataset(Dataset):
             for image_name in os.listdir(class_dir):
               self.image_paths.append(os.path.join(class_dir,image_name))
               self.labels.append(idx)
-        
+
 
     def __len__(self):
         return len(self.image_paths)
@@ -115,7 +116,7 @@ class CustomDataset(Dataset):
 
         if self.transform:
             image = self.transform(image)
-        
+
         return image, label
 
 # Define transformations
@@ -126,7 +127,7 @@ transform = transforms.Compose([
 ])
 
 # Load data
-data_dir = "symbol_dataset" # replace this for your data structure 
+data_dir = "symbol_dataset" # replace this for your data structure
 train_dataset = CustomDataset(os.path.join(data_dir,"train"), transform=transform)
 train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
 
@@ -170,7 +171,7 @@ for epoch in range(num_epochs):
         loss.backward()
         optimizer.step()
         running_loss += loss.item()
-    
+
     print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {running_loss/len(train_loader):.4f}')
 
     #Validation step
@@ -184,10 +185,11 @@ for epoch in range(num_epochs):
              total += labels.size(0)
              correct += (predicted==labels).sum().item()
     print('Validation Accuracy of the model on the validation images: {} %'.format(100*correct/total))
-    
+
 
 print('Finished Training')
 ```
+
 This is a basic image classification example not object detection so do not expect to detect any image but it will get you started on the pytorch side The idea is that you need to use a classifier to recognize the bounding boxes extracted from the first step
 
 Now once you have the bounding boxes you need to recognize what the symbol inside each bounding box is This is where the actual classification comes in
@@ -254,15 +256,16 @@ evaluation_results = model.evaluate(val_dataset)
 print(f"Validation Loss: {evaluation_results[0]:.4f}")
 print(f"Validation Accuracy: {evaluation_results[1]:.4f}")
 ```
+
 This code is similar to the pytorch code but now using tensorflow
 
 Now about the resources you asked for Instead of giving random links I'd suggest checking out these books
 
-*   **"Deep Learning with Python" by François Chollet**  This is a great starting point for deep learning in general especially if you're using Keras with TensorFlow
+- **"Deep Learning with Python" by François Chollet** This is a great starting point for deep learning in general especially if you're using Keras with TensorFlow
 
-*   **"Computer Vision: Algorithms and Applications" by Richard Szeliski** This is more of an academic dive but it covers everything from the basics to very advanced computer vision techniques
+- **"Computer Vision: Algorithms and Applications" by Richard Szeliski** This is more of an academic dive but it covers everything from the basics to very advanced computer vision techniques
 
-*   **"Hands-On Machine Learning with Scikit-Learn Keras & TensorFlow" by Aurélien Géron** This will help with the practical side of machine learning including preprocessing pipelines and stuff like that
+- **"Hands-On Machine Learning with Scikit-Learn Keras & TensorFlow" by Aurélien Géron** This will help with the practical side of machine learning including preprocessing pipelines and stuff like that
 
 And remember building a good symbol recognition system takes time and experimentation Don't get discouraged by the initial results or if your cat steals your data labels They're more complicated than it might seem initially I've been debugging computer vision problems for years and still sometimes I'm just like what just happened and why is my bounding box off by 3 pixels
 

@@ -4,44 +4,47 @@ date: "2024-12-23"
 id: "how-to-notify-users-via-email-when-a-button-is-clicked"
 ---
 
-Okay, let's dive into the specifics of triggering email notifications upon a button click. It’s a common requirement, and while it might seem straightforward, the devil’s often in the details. I've seen my fair share of pitfalls with implementations of this over the years, ranging from security concerns to performance bottlenecks. So, let me break down my approach, honed through multiple projects where this was a core functionality.
+, let's dive into the specifics of triggering email notifications upon a button click. It’s a common requirement, and while it might seem straightforward, the devil’s often in the details. I've seen my fair share of pitfalls with implementations of this over the years, ranging from security concerns to performance bottlenecks. So, let me break down my approach, honed through multiple projects where this was a core functionality.
 
-First, understand that the immediate click of a button on a user's browser shouldn't directly trigger an email sending. That's inefficient and presents a security risk, potentially exposing credentials. The correct approach involves decoupling the user’s action from the actual email sending process. The button click should trigger an action on your *server*, which then takes care of dispatching the email. The user’s front-end remains agnostic to the intricacies of email configuration.
+First, understand that the immediate click of a button on a user's browser shouldn't directly trigger an email sending. That's inefficient and presents a security risk, potentially exposing credentials. The correct approach involves decoupling the user’s action from the actual email sending process. The button click should trigger an action on your _server_, which then takes care of dispatching the email. The user’s front-end remains agnostic to the intricacies of email configuration.
 
 Here's a typical workflow: The user clicks a button. This event triggers an ajax request (or a more modern equivalent like fetch) to an endpoint on your server. The server receives this request, processes any necessary data, and then initiates an email sending task. This task can be synchronous or asynchronous, though I overwhelmingly favor asynchronous execution for performance reasons.
 
 Let’s start with the client-side implementation, using javascript. This might be within a larger framework, but fundamentally it's the same principle. Assume we have a button element with an `id="notifyButton"`:
 
 ```javascript
-document.getElementById('notifyButton').addEventListener('click', function(event) {
+document
+  .getElementById("notifyButton")
+  .addEventListener("click", function (event) {
     event.preventDefault(); // Prevent default form submission, if any
 
-    fetch('/api/notify-user', {  // Server-side endpoint
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            // Include any required data for the server, e.g., user id
-            userId:  12345,
-            notificationType: "button_click",
-        })
+    fetch("/api/notify-user", {
+      // Server-side endpoint
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // Include any required data for the server, e.g., user id
+        userId: 12345,
+        notificationType: "button_click",
+      }),
     })
-    .then(response => {
-       if(!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
         return response.json();
-    })
-    .then(data => {
-       console.log('Success:', data);
+      })
+      .then((data) => {
+        console.log("Success:", data);
         // Optional: display success feedback to the user
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-       // Handle errors, like a message to the user.
-    });
-});
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        // Handle errors, like a message to the user.
+      });
+  });
 ```
 
 This snippet illustrates the core functionality: an event listener attached to the button, which on click, sends a POST request to the `/api/notify-user` endpoint. We’re sending a simple JSON payload that includes a `userId` and a `notificationType`. In a real application, you'd send appropriate data relevant to the event. The `fetch` api handles the asynchronous request, using promises for handling the response and any errors. Note that error handling is crucial.

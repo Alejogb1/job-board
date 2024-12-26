@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-update-a-local-gems-github-token"
 ---
 
-Okay, let's tackle this. It's a situation I've certainly encountered more times than I care to remember, usually just when I thought my automated deployment pipeline was finally working flawlessly. The issue of updating a gem's GitHub token, or any API token for that matter, is a microcosm of the broader problem of secure secret management within a development lifecycle. It’s crucial to get this process nailed down correctly, as exposing such credentials can have significant consequences.
+, let's tackle this. It's a situation I've certainly encountered more times than I care to remember, usually just when I thought my automated deployment pipeline was finally working flawlessly. The issue of updating a gem's GitHub token, or any API token for that matter, is a microcosm of the broader problem of secure secret management within a development lifecycle. It’s crucial to get this process nailed down correctly, as exposing such credentials can have significant consequences.
 
 The need for updating a local gem's GitHub token generally arises when you're interacting with GitHub's APIs from within a gem – perhaps for CI/CD purposes, or to automatically update repository metadata, or even to fetch dependencies under a specific set of authenticated conditions. The tokens in question here are typically personal access tokens (pats) generated within GitHub’s settings. These tokens function as an alternative to usernames and passwords for authentication. Critically, these tokens shouldn't be hardcoded directly into your gem's code or checked into version control. That's a major security faux pas. I've seen it, and trust me, it never ends well.
 
@@ -35,7 +35,7 @@ end
 
 In this snippet, the `Client` class initializes an Octokit client by obtaining the `GITHUB_TOKEN` from the environment. If the `GITHUB_TOKEN` is not present, the initialization process will raise an error, preventing unintended operation without a valid token.
 
-Now, let’s assume your original token needs to be updated. The process is relatively simple. You would log into your GitHub account, navigate to *Settings* > *Developer Settings* > *Personal access tokens*, and then either generate a new token (making sure to select the correct permissions for your use case, usually repository access at a minimum), or revoke an existing one and create a replacement.
+Now, let’s assume your original token needs to be updated. The process is relatively simple. You would log into your GitHub account, navigate to _Settings_ > _Developer Settings_ > _Personal access tokens_, and then either generate a new token (making sure to select the correct permissions for your use case, usually repository access at a minimum), or revoke an existing one and create a replacement.
 
 Once you have the new token, you need to provide that token to the environment where your gem executes. How you do this depends on your specific setup. For local development, you can typically set it directly in your shell before running any commands. For instance, in bash, you would do something like this:
 
@@ -83,7 +83,7 @@ end
 
 Here we now load environment variables from `.env` file with `require 'dotenv/load'`. Using dotenv, you don't need to `export` the variable, which can be useful for more complex setups.
 
-Finally, in a more complex deployment scenario, particularly within a CI/CD pipeline like Github Actions, you would usually configure the environment variable as part of the pipeline’s configuration. You typically don’t want to hardcode tokens even there. Instead, you'd often use secure secrets management provided by the CI/CD platform, storing the token as a *secret variable* and then injecting it as an environment variable during the CI/CD run. This is vital for security and prevents sensitive information from being exposed in your CI/CD logs.
+Finally, in a more complex deployment scenario, particularly within a CI/CD pipeline like Github Actions, you would usually configure the environment variable as part of the pipeline’s configuration. You typically don’t want to hardcode tokens even there. Instead, you'd often use secure secrets management provided by the CI/CD platform, storing the token as a _secret variable_ and then injecting it as an environment variable during the CI/CD run. This is vital for security and prevents sensitive information from being exposed in your CI/CD logs.
 
 Here is an example for a Github Action configuration demonstrating this concept:
 
@@ -105,7 +105,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2' # Replace with your Ruby version
+          ruby-version: "3.2" # Replace with your Ruby version
       - name: Install Dependencies
         run: bundle install
       - name: Run Deployment Script

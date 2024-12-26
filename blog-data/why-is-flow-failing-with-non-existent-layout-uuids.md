@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-flow-failing-with-non-existent-layout-uuids"
 ---
 
-Okay, let's unpack this. I've seen this particular issue with Flow and non-existent layout uuids crop up more times than I care to remember, and it usually boils down to a few key culprits. It's never a fun debugging session, I can tell you that. Typically, this error manifests when your application, using a system like Flow that manages UI layout and component states, tries to access a layout or view that hasn’t actually been defined or has been somehow removed from its registered structure. Think of it like a city planning system: if you’re asking for a building at address ‘XYZ-123’ that was demolished last week, the system is going to throw an error—it simply can’t find what you're requesting.
+, let's unpack this. I've seen this particular issue with Flow and non-existent layout uuids crop up more times than I care to remember, and it usually boils down to a few key culprits. It's never a fun debugging session, I can tell you that. Typically, this error manifests when your application, using a system like Flow that manages UI layout and component states, tries to access a layout or view that hasn’t actually been defined or has been somehow removed from its registered structure. Think of it like a city planning system: if you’re asking for a building at address ‘XYZ-123’ that was demolished last week, the system is going to throw an error—it simply can’t find what you're requesting.
 
 The first place I always start investigating is the lifecycle of the components and layout definitions within Flow. My experience, particularly back during that project where we were migrating a legacy application to a react-based architecture, taught me that timing issues are incredibly common. For instance, a component might be trying to establish a connection to a specific layout before the layout has been fully instantiated and registered in the Flow system. Similarly, it’s possible that a component holding a reference to the layout uuid could get unmounted, or its state updated, before it has a chance to properly use it.
 
@@ -32,8 +32,8 @@ class LayoutLoader extends React.Component {
   componentDidMount() {
     // Simulating an async fetch of the layout definition
     setTimeout(() => {
-      const newLayoutUuid = 'layout-456';
-       //Simulating the registration with Flow
+      const newLayoutUuid = "layout-456";
+      //Simulating the registration with Flow
       // flow.registerLayout(newLayoutUuid, {/* layout definition */});
       this.setState({ layoutUuid: newLayoutUuid });
       this.props.onLayoutLoaded(newLayoutUuid);
@@ -43,19 +43,18 @@ class LayoutLoader extends React.Component {
   render() {
     if (!this.state.layoutUuid) return <div>Loading...</div>;
 
-    return  <LayoutViewer layoutUuid={this.state.layoutUuid}/>
-
+    return <LayoutViewer layoutUuid={this.state.layoutUuid} />;
   }
 }
 
 class LayoutViewer extends React.Component {
-    componentDidMount() {
-        // This might fail if the layout wasn't registered in time
-       // Flow.getLayout(this.props.layoutUuid).render();
-    }
-    render() {
-      return <div>View loaded</div>
-    }
+  componentDidMount() {
+    // This might fail if the layout wasn't registered in time
+    // Flow.getLayout(this.props.layoutUuid).render();
+  }
+  render() {
+    return <div>View loaded</div>;
+  }
 }
 
 // Usage :
@@ -72,7 +71,7 @@ In this scenario, an incorrect conditional check can cause the code to attempt t
 class ConditionalView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { showLayout: false, layoutUuid: 'layout-789' };
+    this.state = { showLayout: false, layoutUuid: "layout-789" };
   }
 
   toggleLayout = () => {
@@ -80,16 +79,17 @@ class ConditionalView extends React.Component {
   };
 
   componentDidMount() {
-       // flow.registerLayout(this.state.layoutUuid, {/* layout definition */})
+    // flow.registerLayout(this.state.layoutUuid, {/* layout definition */})
   }
   render() {
     return (
       <div>
         <button onClick={this.toggleLayout}>Toggle Layout</button>
-        {this.state.showLayout &&  <LayoutViewer layoutUuid={this.state.layoutUuid}/> }
-        {/*Incorrect implementation below that will throw error because of incorrect usage of state */ }
-         {/* !this.state.showLayout &&  <LayoutViewer layoutUuid={this.state.layoutUuid}/> */}
-
+        {this.state.showLayout && (
+          <LayoutViewer layoutUuid={this.state.layoutUuid} />
+        )}
+        {/*Incorrect implementation below that will throw error because of incorrect usage of state */}
+        {/* !this.state.showLayout &&  <LayoutViewer layoutUuid={this.state.layoutUuid}/> */}
       </div>
     );
   }
@@ -99,7 +99,7 @@ class ConditionalView extends React.Component {
 // <ConditionalView/>
 ```
 
-Here, if you uncomment the incorrect implementation, the `LayoutViewer` will always attempt to access the same layout uuid, even when `this.state.showLayout` is false. This results in an attempt to access the layout even when the view is not rendered or available, resulting in a error message.  The solution is to ensure your conditional logic correctly reflects the presence and absence of the required resources and make sure that the layout is properly released from the Flow system if you are switching views.
+Here, if you uncomment the incorrect implementation, the `LayoutViewer` will always attempt to access the same layout uuid, even when `this.state.showLayout` is false. This results in an attempt to access the layout even when the view is not rendered or available, resulting in a error message. The solution is to ensure your conditional logic correctly reflects the presence and absence of the required resources and make sure that the layout is properly released from the Flow system if you are switching views.
 
 **Example 3: Configuration Inconsistency**
 
@@ -107,17 +107,16 @@ This final example illustrates the potential issue with configuration:
 
 ```javascript
 // Configuration (e.g., loaded from a JSON file)
-const configLayoutId = 'layout-101';
- // flow.registerLayout(configLayoutId, {/* layout definition */})
-
+const configLayoutId = "layout-101";
+// flow.registerLayout(configLayoutId, {/* layout definition */})
 
 class ConfiguredView extends React.Component {
-    componentDidMount() {
-        // Error if the configuration is incorrect
-       //  Flow.getLayout(configLayoutId).render();
-    }
+  componentDidMount() {
+    // Error if the configuration is incorrect
+    //  Flow.getLayout(configLayoutId).render();
+  }
   render() {
-     return <div>Configured Layout View</div>;
+    return <div>Configured Layout View</div>;
   }
 }
 

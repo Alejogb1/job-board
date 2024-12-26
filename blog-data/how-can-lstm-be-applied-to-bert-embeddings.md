@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-lstm-be-applied-to-bert-embeddings"
 ---
 
-Alright, let's unpack the question of how to leverage Long Short-Term Memory (LSTM) networks with BERT embeddings. It's a topic I've certainly encountered a few times during my work on various natural language processing (NLP) projects, and the integration can be pretty powerful when done correctly. I remember one particular project, where we were trying to improve sentiment analysis on very nuanced customer reviews, where simple bag-of-words or even standard word embedding methods were falling short. That’s where exploring the marriage of BERT and LSTMs became invaluable.
+, let's unpack the question of how to leverage Long Short-Term Memory (LSTM) networks with BERT embeddings. It's a topic I've certainly encountered a few times during my work on various natural language processing (NLP) projects, and the integration can be pretty powerful when done correctly. I remember one particular project, where we were trying to improve sentiment analysis on very nuanced customer reviews, where simple bag-of-words or even standard word embedding methods were falling short. That’s where exploring the marriage of BERT and LSTMs became invaluable.
 
 Essentially, we’re talking about combining the strengths of two powerful neural network architectures. BERT, a transformer-based model, excels at capturing contextualized word representations – giving each word a different embedding based on its surrounding words. On the other hand, LSTMs are adept at processing sequential data, making them great for tasks where the order of words matters, such as sentence-level understanding.
 
 So, how do we practically do this? The typical approach involves first passing your text input through a BERT model to get contextualized embeddings for each word. Then, these embeddings, treated as a sequence of vectors, are fed into an LSTM layer. The LSTM can learn dependencies and patterns across the sequence of these BERT-generated embeddings.
 
-The rationale here isn't simply about stacking models for the sake of complexity. It's about letting BERT handle the complex semantic understanding of each word within its context and using the LSTM to understand the sequential relationships *between* those contextualized word representations. This combined approach often leads to better performance, particularly in tasks that require capturing long-range dependencies or understanding sequential patterns that BERT's single-layer output might miss.
+The rationale here isn't simply about stacking models for the sake of complexity. It's about letting BERT handle the complex semantic understanding of each word within its context and using the LSTM to understand the sequential relationships _between_ those contextualized word representations. This combined approach often leads to better performance, particularly in tasks that require capturing long-range dependencies or understanding sequential patterns that BERT's single-layer output might miss.
 
 Now, let’s illustrate this with a few code snippets. I'll use Python with PyTorch for these examples, as that's the framework I've found most convenient for these operations. Consider the following setup:
 
@@ -93,11 +93,11 @@ This last snippet wraps it all together. We have a function that takes the text 
 
 Important notes based on my experience:
 
-*   **Sequence Length:** When using BERT, you typically need to pad or truncate sequences to a specific length because the model cannot handle variable-length sequences without this preprocessing. Ensure both your BERT and LSTM are dealing with sequences of the same length.
-*   **LSTM parameters:** The number of hidden units in the LSTM and the number of LSTM layers are essential parameters to tune based on the complexity of your specific problem.
-*   **Training:** When training such a combined model, I'd suggest starting with a lower learning rate to prevent abrupt updates that could destabilize the learning of both BERT and LSTM components. Fine-tuning the BERT model alongside the LSTM *may* improve results, but will require more resources and careful consideration of the data. I found that freezing BERT’s weights initially and only fine-tuning the LSTM then unfreezing BERT later is a great starting point.
-*   **Bidirectional LSTMs:** Consider using a bidirectional LSTM for tasks where the context both before and after a word is crucial.
-*   **Attention Mechanisms:** If you are looking for further improvement, you can consider adding an attention layer to the LSTM’s output to give certain parts of the sequence more weight during classification or regression tasks.
+- **Sequence Length:** When using BERT, you typically need to pad or truncate sequences to a specific length because the model cannot handle variable-length sequences without this preprocessing. Ensure both your BERT and LSTM are dealing with sequences of the same length.
+- **LSTM parameters:** The number of hidden units in the LSTM and the number of LSTM layers are essential parameters to tune based on the complexity of your specific problem.
+- **Training:** When training such a combined model, I'd suggest starting with a lower learning rate to prevent abrupt updates that could destabilize the learning of both BERT and LSTM components. Fine-tuning the BERT model alongside the LSTM _may_ improve results, but will require more resources and careful consideration of the data. I found that freezing BERT’s weights initially and only fine-tuning the LSTM then unfreezing BERT later is a great starting point.
+- **Bidirectional LSTMs:** Consider using a bidirectional LSTM for tasks where the context both before and after a word is crucial.
+- **Attention Mechanisms:** If you are looking for further improvement, you can consider adding an attention layer to the LSTM’s output to give certain parts of the sequence more weight during classification or regression tasks.
 
 For further learning, I highly recommend checking out the original BERT paper, "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding" (available on arXiv). For an in-depth understanding of LSTMs, the book "Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville provides a thorough explanation. Finally, for a practical, hands-on approach, the documentation for Hugging Face's Transformers library (which I used in the snippets) is invaluable.
 

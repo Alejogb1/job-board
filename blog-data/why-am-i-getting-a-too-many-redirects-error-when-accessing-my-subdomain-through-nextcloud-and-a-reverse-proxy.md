@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-too-many-redirects-error-when-accessing-my-subdomain-through-nextcloud-and-a-reverse-proxy"
 ---
 
-Alright, let's tackle this "too many redirects" issue. It’s a classic pain point when dealing with reverse proxies and applications like Nextcloud, especially when you’re managing subdomains. I've definitely seen this a few times during past projects—remember that project back in '18? Similar problem, took a while to pin down. The core issue, in my experience, lies in a miscommunication, often around the expected protocols and host headers, between your reverse proxy and your Nextcloud instance. It’s like trying to have a conversation with someone who speaks a slightly different dialect; both parties are speaking but not understanding each other correctly.
+, let's tackle this "too many redirects" issue. It’s a classic pain point when dealing with reverse proxies and applications like Nextcloud, especially when you’re managing subdomains. I've definitely seen this a few times during past projects—remember that project back in '18? Similar problem, took a while to pin down. The core issue, in my experience, lies in a miscommunication, often around the expected protocols and host headers, between your reverse proxy and your Nextcloud instance. It’s like trying to have a conversation with someone who speaks a slightly different dialect; both parties are speaking but not understanding each other correctly.
 
 Fundamentally, the "too many redirects" error arises when a server continually redirects a client request back and forth, eventually exceeding a limit set by the client (typically the browser). In our context, this loop usually involves your reverse proxy and your Nextcloud application server. To understand why it occurs, let’s unpack the common configuration points.
 
-First, we have the *reverse proxy*. This component, often something like Nginx or Apache, sits in front of your Nextcloud instance. It's designed to receive external requests on your public-facing subdomain and then forwards these requests to your internal Nextcloud server. The key here is that the proxy also relays information—headers, including the host header which tells the backend server the original requested domain.
+First, we have the _reverse proxy_. This component, often something like Nginx or Apache, sits in front of your Nextcloud instance. It's designed to receive external requests on your public-facing subdomain and then forwards these requests to your internal Nextcloud server. The key here is that the proxy also relays information—headers, including the host header which tells the backend server the original requested domain.
 
-Then we have *Nextcloud itself*. Nextcloud has its own configuration that dictates how it expects to be accessed. This involves settings related to trusted domains and protocols (http or https). When Nextcloud receives a request, it checks the host header. If the host header doesn’t match what it expects, it might redirect you to the correct domain according to its internal settings. This is where the potential redirect loop can begin.
+Then we have _Nextcloud itself_. Nextcloud has its own configuration that dictates how it expects to be accessed. This involves settings related to trusted domains and protocols (http or https). When Nextcloud receives a request, it checks the host header. If the host header doesn’t match what it expects, it might redirect you to the correct domain according to its internal settings. This is where the potential redirect loop can begin.
 
 Let's illustrate with a scenario. Suppose your subdomain is `cloud.example.com`, which points to your reverse proxy. The proxy, in turn, communicates with your Nextcloud instance running locally on `192.168.1.100:8080`. The problem typically arises if the reverse proxy sends requests to Nextcloud without properly modifying or passing on the correct host headers, especially if Nextcloud is not configured to accept these requests. Nextcloud sees a request with a host header it does not recognise, it redirects to what it thinks is the correct domain. This in turn might get picked up by the proxy and you are off to the races.
 
@@ -18,7 +18,7 @@ Now, let's dive into some code examples—or rather, configuration snippets—to
 
 **Example 1: Nginx Proxy Configuration (Common Misconfiguration)**
 
-This snippet shows a typical *incorrect* Nginx configuration that could lead to redirect issues:
+This snippet shows a typical _incorrect_ Nginx configuration that could lead to redirect issues:
 
 ```nginx
 server {
@@ -39,7 +39,7 @@ The key mistake here often lies with the line `proxy_set_header Host $host;`. In
 
 **Example 2: Nginx Proxy Configuration (Corrected)**
 
-Here's the *corrected* Nginx configuration that is less likely to trigger redirect loops:
+Here's the _corrected_ Nginx configuration that is less likely to trigger redirect loops:
 
 ```nginx
 server {

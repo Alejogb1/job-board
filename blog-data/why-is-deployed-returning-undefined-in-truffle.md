@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-is-deployed-returning-undefined-in-truffle"
 ---
 
-Okay, let's tackle this. The frustration of `deployed()` returning `undefined` in Truffle is something I’ve definitely encountered, and I've seen it trip up countless developers. It's rarely a simple "oops," but more a confluence of factors, typically centered around misunderstanding the lifecycle of contract deployments and how Truffle interacts with the underlying Ethereum Virtual Machine (evm). Let's break it down, drawing from my experience working on several complex decentralized applications over the years.
+, let's tackle this. The frustration of `deployed()` returning `undefined` in Truffle is something I’ve definitely encountered, and I've seen it trip up countless developers. It's rarely a simple "oops," but more a confluence of factors, typically centered around misunderstanding the lifecycle of contract deployments and how Truffle interacts with the underlying Ethereum Virtual Machine (evm). Let's break it down, drawing from my experience working on several complex decentralized applications over the years.
 
-The core issue lies in how `deployed()` operates within Truffle’s test and migration environment. It doesn't magically track the state of contracts across all executions. Instead, `deployed()` relies on retrieving the *instance* of a deployed contract based on artifacts – primarily the address – stored after a successful migration. If those artifacts are missing, corrupted, or if the migration hasn’t actually completed correctly, then `deployed()` will indeed return `undefined`. It’s crucial to understand that `deployed()` is an asynchronous operation, and a common error is attempting to access the result of `deployed()` as if it was synchronous.
+The core issue lies in how `deployed()` operates within Truffle’s test and migration environment. It doesn't magically track the state of contracts across all executions. Instead, `deployed()` relies on retrieving the _instance_ of a deployed contract based on artifacts – primarily the address – stored after a successful migration. If those artifacts are missing, corrupted, or if the migration hasn’t actually completed correctly, then `deployed()` will indeed return `undefined`. It’s crucial to understand that `deployed()` is an asynchronous operation, and a common error is attempting to access the result of `deployed()` as if it was synchronous.
 
-Firstly, and perhaps the most frequent culprit, is asynchronous code execution. The Truffle framework, being built on top of Node.js, heavily leverages promises. When you use `Contract.deployed()`, it returns a promise that *resolves* to the contract instance, not the instance itself. This means you *must* use either `.then()` or `await` to access the contract instance. Neglecting this leads to accessing the unfulfilled promise, thus the infamous `undefined`.
+Firstly, and perhaps the most frequent culprit, is asynchronous code execution. The Truffle framework, being built on top of Node.js, heavily leverages promises. When you use `Contract.deployed()`, it returns a promise that _resolves_ to the contract instance, not the instance itself. This means you _must_ use either `.then()` or `await` to access the contract instance. Neglecting this leads to accessing the unfulfilled promise, thus the infamous `undefined`.
 
 Let's look at a common mistake and a corrected snippet. Suppose we have a simple contract `SimpleStorage.sol`:
 
@@ -85,10 +85,13 @@ const Implementation = artifacts.require("Implementation");
 contract("ProxyWithImplementation", () => {
   it("should use a deployed implementation via proxy", async () => {
     const proxyInstance = await Proxy.deployed();
-    const implementationAddress = await proxyInstance.getImplementationAddress(); //Assume getImplementationAddress returns a valid address
+    const implementationAddress =
+      await proxyInstance.getImplementationAddress(); //Assume getImplementationAddress returns a valid address
 
-    const implementationInstance = await Implementation.at(implementationAddress); // using .at() with a specific address
-     // now you can work with implementationInstance
+    const implementationInstance = await Implementation.at(
+      implementationAddress
+    ); // using .at() with a specific address
+    // now you can work with implementationInstance
     const value = await implementationInstance.getValue();
     assert.equal(value.toNumber(), 42);
   });

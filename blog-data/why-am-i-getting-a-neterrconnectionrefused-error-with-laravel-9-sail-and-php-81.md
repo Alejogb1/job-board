@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-neterrconnectionrefused-error-with-laravel-9-sail-and-php-81"
 ---
 
-Okay, let's tackle this. Seeing `net::ERR_CONNECTION_REFUSED` when you're trying to get a Laravel 9 app up and running with Sail and PHP 8.1 is, unfortunately, a reasonably common scenario, and it usually boils down to a few core areas. I've personally spent a fair amount of time debugging similar situations over the years. It's rarely a single, glaring issue; rather, it's often a combination of small misconfigurations or misunderstandings about how these technologies interact.
+, let's tackle this. Seeing `net::ERR_CONNECTION_REFUSED` when you're trying to get a Laravel 9 app up and running with Sail and PHP 8.1 is, unfortunately, a reasonably common scenario, and it usually boils down to a few core areas. I've personally spent a fair amount of time debugging similar situations over the years. It's rarely a single, glaring issue; rather, it's often a combination of small misconfigurations or misunderstandings about how these technologies interact.
 
 At its heart, `net::ERR_CONNECTION_REFUSED` indicates that your browser, or whatever client is making the request, is trying to reach a server (in this case, your Laravel application via Sail), but there’s nothing listening on the specified port. Let’s systematically work through the most probable causes.
 
@@ -12,8 +12,8 @@ First, the most common culprit is the port mapping. Docker, which Sail leverages
 
 ```yaml
 ports:
-    - '${APP_PORT:-80}:80'
-    - '${FORWARD_DB_PORT:-3306}:3306'
+  - "${APP_PORT:-80}:80"
+  - "${FORWARD_DB_PORT:-3306}:3306"
 ```
 
 Pay close attention to the left side of the colon. That’s the port on your local machine that needs to match the port you're trying to access in the browser. The right side is the port inside the docker container, which in the case of the web server (port 80), it should almost always be 80. The `APP_PORT` variable is typically defined in the `.env` file or the `.env.example` file. Ensure that it's set to 80 or whatever you intend to use for your local development server.
@@ -62,28 +62,28 @@ Let's look at some specific, actionable steps to check against these potential i
 
 ```yaml
 services:
-    laravel.test:
-        build:
-            context: ./docker/8.1
-            dockerfile: Dockerfile
-            args:
-                WWWGROUP: '${WWWGROUP}'
-        image: sail-8.1/app
-        ports:
-            - '${APP_PORT:-80}:80'
-        environment:
-            WWWUSER: '${WWWUSER}'
-            LARAVEL_SAIL: true
-        volumes:
-            - '.:/var/www/html'
-        networks:
-            - sail
-        depends_on:
-            - mysql
-            - redis
-            - meilisearch
-            - mailhog
-    # ... other services ...
+  laravel.test:
+    build:
+      context: ./docker/8.1
+      dockerfile: Dockerfile
+      args:
+        WWWGROUP: "${WWWGROUP}"
+    image: sail-8.1/app
+    ports:
+      - "${APP_PORT:-80}:80"
+    environment:
+      WWWUSER: "${WWWUSER}"
+      LARAVEL_SAIL: true
+    volumes:
+      - ".:/var/www/html"
+    networks:
+      - sail
+    depends_on:
+      - mysql
+      - redis
+      - meilisearch
+      - mailhog
+  # ... other services ...
 ```
 
 Second, make sure the `APP_PORT` variable in your `.env` file is correctly configured:

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-am-i-getting-permission-denied-with-airflow-bashoperator"
 ---
 
-Alright, let's dissect this "permission denied" issue with Airflow's BashOperator. It’s a surprisingly common stumbling block, and I've seen it trip up teams ranging from scrappy startups to large enterprises. I can recall one particularly challenging situation back at [fictional company name], where we spent a frustrating afternoon debugging exactly this. The root cause is often multifaceted, and it's rarely a simple case of "just add execute permissions."
+, let's dissect this "permission denied" issue with Airflow's BashOperator. It’s a surprisingly common stumbling block, and I've seen it trip up teams ranging from scrappy startups to large enterprises. I can recall one particularly challenging situation back at [fictional company name], where we spent a frustrating afternoon debugging exactly this. The root cause is often multifaceted, and it's rarely a simple case of "just add execute permissions."
 
-Fundamentally, the BashOperator in Airflow executes a shell command within a specific context, and that context matters a great deal. You’re basically telling a system user (the one running your airflow scheduler and workers) to run a command that might be trying to interact with resources for which it lacks the necessary authorizations. It’s not about whether *you* have the permissions when you test things locally; it’s about whether the user that Airflow’s workers run as has those permissions in the production environment. This difference is critical.
+Fundamentally, the BashOperator in Airflow executes a shell command within a specific context, and that context matters a great deal. You’re basically telling a system user (the one running your airflow scheduler and workers) to run a command that might be trying to interact with resources for which it lacks the necessary authorizations. It’s not about whether _you_ have the permissions when you test things locally; it’s about whether the user that Airflow’s workers run as has those permissions in the production environment. This difference is critical.
 
 Often, the primary culprit is a discrepancy in user identities. Airflow workers usually run under a specific system user (for example, `airflow`), distinct from your user account you use to develop and test your dag scripts, or even the user used when running local test setups like `airflow dags test my_dag`. Your script may create a file, attempt to modify a folder, or execute another script where the user executing the command, and therefore acting on those resources, has no permissions to do it. It’s a straightforward, albeit common issue, leading to a “permission denied” error, but it requires a close examination of your execution environment.
 
@@ -68,6 +68,7 @@ To fix this, first make sure the script is executable by running `chmod +x /opt/
 **Example 3: File Access Permissions**
 
 Another common case is when your script tries to read/write a specific file.
+
 ```python
 from airflow import DAG
 from airflow.operators.bash import BashOperator
@@ -84,6 +85,7 @@ with DAG(
         bash_command = "cat /opt/data/config.json"
      )
 ```
+
 Here, if the airflow worker user does not have read permissions on `/opt/data/config.json` this will result in a permission denied error.
 
 The resolution is to adjust the permissions of `/opt/data/config.json` to allow the airflow worker to read the file. Using the command `chmod 444 /opt/data/config.json` may be sufficient if the user only needs read permissions. If the user needs read and write permissions, you can use `chmod 664 /opt/data/config.json`. It would also be prudent to consider the user and group ownership, using chown and chgrp, as these can impact permission as well.
@@ -98,7 +100,7 @@ Debugging these kinds of issues often involves a few key steps:
 
 4.  **Absolute Paths:** Ensure all file and script paths are absolute rather than relative to the current working directory of the airflow task. The working directory of the airflow task may not be what you are expecting, so this step is very important.
 
-5. **Test as the Airflow User:** A good practice is to `sudo -u [airflow-worker-user] bash` and execute the same commands as your BashOperator directly on the machine running the worker. This verifies that there's no issue with the script, or file path and isolates the issue to permissions issues.
+5.  **Test as the Airflow User:** A good practice is to `sudo -u [airflow-worker-user] bash` and execute the same commands as your BashOperator directly on the machine running the worker. This verifies that there's no issue with the script, or file path and isolates the issue to permissions issues.
 
 For deeper understanding of linux permission models I would recommend “Understanding the Linux Kernel” by Daniel P. Bovet and Marco Cesati. This book provides insights into how permissions are handled in the kernel level. The classic "Operating System Concepts" by Abraham Silberschatz, Peter Baer Galvin, and Greg Gagne is also a fantastic reference that covers general operating system concepts that are relevant in these situations.
 

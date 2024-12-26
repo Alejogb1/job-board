@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-build-vocab-in-doc2vec"
 ---
 
-alright, so you’re looking at building vocabulary with doc2vec, right? i’ve been down that road more times than i care to remember, so let me share some hard-earned knowledge. it’s not always straightforward, but there are definite ways to get a good vocab.
+, so you’re looking at building vocabulary with doc2vec, right? i’ve been down that road more times than i care to remember, so let me share some hard-earned knowledge. it’s not always straightforward, but there are definite ways to get a good vocab.
 
 first off, let’s clarify something – doc2vec, at its heart, is about learning vector representations of documents. vocabulary building isn't separate; it's a crucial part of the process. when you’re training the model, the vocabulary is inherently generated from the text you feed it. the model doesn't magically know words beforehand. it constructs its vocabulary based on the unique tokens (words, usually) it encounters during training.
 
@@ -66,6 +66,7 @@ also, consider using subword tokenization, rather than full words. this is more 
 i would recommend checking out the original doc2vec paper by mikolov et al, which explains the basics of the algorithm and you can get a sense of how the vocab is produced. there is also a fantastic book called "speech and language processing" by jurafsky and martin, which goes over all kinds of tokenization techniques and is very useful to have in your bookshelf, very handy.
 
 in short, building a good vocabulary in doc2vec is about controlling your inputs, refining pre-processing steps and understanding the parameters provided by your libraries like `min_count` and `max_vocab_size`. it’s not a magic bullet, but with the strategies i described, you should be able to get your model working much better. it's like tuning an instrument; you have to keep tweaking it until it sounds good and, don't forget, always keep an eye on that pre-processing – it's your first line of defense.
+
 ```python
 import gensim
 from gensim.models.doc2vec import Doc2Vec, TaggedDocument

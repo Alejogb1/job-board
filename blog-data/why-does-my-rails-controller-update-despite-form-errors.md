@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-my-rails-controller-update-despite-form-errors"
 ---
 
-Okay, let's tackle this. I've seen this particular head-scratcher more times than I care to remember, and it always boils down to a few specific nuances in how Rails handles form submissions and data persistence. It’s a classic symptom of how the framework’s lifecycle interacts with your code, and it’s something we’ve all had to debug at some point.
+, let's tackle this. I've seen this particular head-scratcher more times than I care to remember, and it always boils down to a few specific nuances in how Rails handles form submissions and data persistence. It’s a classic symptom of how the framework’s lifecycle interacts with your code, and it’s something we’ve all had to debug at some point.
 
 The scenario, as I understand it, is that you’re submitting a form, your model's validations are kicking in (good!), errors are being generated (also good, in a way, it means validations are working!), but despite those errors, the record is still being updated in the database, which, of course, is not what you want. It feels counterintuitive, because logically, one might expect the update to be entirely blocked on the presence of validation failures.
 
@@ -21,13 +21,13 @@ def update
 end
 ```
 
-The crucial part, and the source of our problem, is `record.update(record_params)`. This method attempts to update the attributes of the record and then tries to save it to the database. The key here is that `update` *first* updates the attributes on the object *in memory*, and *then* it triggers the save process. If the save fails due to validations, that's fine - Rails has mechanisms for that, and you are checking them. But, crucially, the attributes have already been updated on `@record`.
+The crucial part, and the source of our problem, is `record.update(record_params)`. This method attempts to update the attributes of the record and then tries to save it to the database. The key here is that `update` _first_ updates the attributes on the object _in memory_, and _then_ it triggers the save process. If the save fails due to validations, that's fine - Rails has mechanisms for that, and you are checking them. But, crucially, the attributes have already been updated on `@record`.
 
-The crucial, hidden detail in `update` is that it doesn't return `true` or `false` strictly based on whether the save *succeeded*. Instead, it returns `true` if the record was valid *at some point*, meaning it passed validations, and it returned `false` if *it did not*. However, due to the two step process, the update to the object's attributes happens *before* validation, meaning even if the save fails, your `@record` has already been updated with the new form values. The problem is not that the database record is updated when validations fail (it is not, because save failed), but that your `@record` *object* in memory is updated. When you render the `:edit` view, that object, already carrying the new (and invalid) attributes, is what gets rendered. This creates the illusion of database changes.
+The crucial, hidden detail in `update` is that it doesn't return `true` or `false` strictly based on whether the save _succeeded_. Instead, it returns `true` if the record was valid _at some point_, meaning it passed validations, and it returned `false` if _it did not_. However, due to the two step process, the update to the object's attributes happens _before_ validation, meaning even if the save fails, your `@record` has already been updated with the new form values. The problem is not that the database record is updated when validations fail (it is not, because save failed), but that your `@record` _object_ in memory is updated. When you render the `:edit` view, that object, already carrying the new (and invalid) attributes, is what gets rendered. This creates the illusion of database changes.
 
-This behavior is not a bug; it's designed this way to facilitate showing validation errors within the form. Without this behavior, your form would display the *previous* valid data, which doesn't provide clear feedback to the user.
+This behavior is not a bug; it's designed this way to facilitate showing validation errors within the form. Without this behavior, your form would display the _previous_ valid data, which doesn't provide clear feedback to the user.
 
-Okay, so what’s the fix? Well, there are a couple of things we could try. Let's examine a revised approach. Instead of relying solely on `update`, we can perform the attribute updates and the save process explicitly in two steps. Here's the amended code:
+, so what’s the fix? Well, there are a couple of things we could try. Let's examine a revised approach. Instead of relying solely on `update`, we can perform the attribute updates and the save process explicitly in two steps. Here's the amended code:
 
 ```ruby
 def update
@@ -46,7 +46,7 @@ def update
 end
 ```
 
-This version of the `update` action first explicitly sets the attributes with `assign_attributes` which performs the in-memory update. Then, it checks if the *modified* record is valid before attempting to persist to the database. If it’s not valid, we immediately short-circuit the save, preventing the confusion, and render the edit form, with errors. This ensures that the database is only touched when all validations pass. Crucially, even if the validations fail, the original data for that model record is still available, because we have not performed the save.
+This version of the `update` action first explicitly sets the attributes with `assign_attributes` which performs the in-memory update. Then, it checks if the _modified_ record is valid before attempting to persist to the database. If it’s not valid, we immediately short-circuit the save, preventing the confusion, and render the edit form, with errors. This ensures that the database is only touched when all validations pass. Crucially, even if the validations fail, the original data for that model record is still available, because we have not performed the save.
 
 Now, there’s another approach that can be useful, particularly in scenarios where the model includes custom save behavior or you want finer-grained control. Instead of `update`, we can explicitly use `assign_attributes` followed by a conditional save. Here’s an example:
 
@@ -61,6 +61,7 @@ def update
   end
 end
 ```
+
 In this case, if the save fails, rendering the edit form will show the invalid changes in the form, exactly as intended, but without persisting them to the database if validations fail. The difference, in practice, between this and the previous example is that this approach doesn't explicitly check for validations before saving, whereas the previous one does. This approach still separates attribute assignment from saving, providing better control.
 
 The key thing to remember is the two-step process of attribute assignment and persistence. `update` does both of those in sequence, whereas `assign_attributes` only updates the object in memory. Therefore, checking `valid?` immediately after attribute assignment allows you to make an informed decision about persistence.

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-feature-importance-be-assessed-in-mlr3-classification-forests-using-iml"
 ---
 
-Okay, let's tackle this. I've spent a fair amount of time wrestling—pardon me, *working with*—machine learning models over the years, and feature importance is one of those things that seems straightforward but often needs careful handling, particularly with ensembles like random forests. Specifically addressing your question on using `iml` with `mlr3` classification forests, here’s my take, drawing from experience.
+, let's tackle this. I've spent a fair amount of time wrestling—pardon me, _working with_—machine learning models over the years, and feature importance is one of those things that seems straightforward but often needs careful handling, particularly with ensembles like random forests. Specifically addressing your question on using `iml` with `mlr3` classification forests, here’s my take, drawing from experience.
 
-The interplay between `mlr3`'s structured machine learning paradigm and `iml`'s model-agnostic interpretation tools can sometimes feel like a puzzle. However, `iml` provides robust and flexible methods for assessing feature importance even when dealing with the complexities of a random forest constructed within the `mlr3` framework. The key isn’t just extracting raw feature importance scores but understanding *what* those scores mean and *how* they are derived. We need to consider the nuances.
+The interplay between `mlr3`'s structured machine learning paradigm and `iml`'s model-agnostic interpretation tools can sometimes feel like a puzzle. However, `iml` provides robust and flexible methods for assessing feature importance even when dealing with the complexities of a random forest constructed within the `mlr3` framework. The key isn’t just extracting raw feature importance scores but understanding _what_ those scores mean and _how_ they are derived. We need to consider the nuances.
 
 Firstly, let's clarify that `iml`’s feature importance isn't tied to a specific type of model (as with, for instance, a native random forest implementation’s feature importance), which is a boon for consistent analysis across different algorithms. It calculates importance through a permutation-based approach. Essentially, it randomizes (or permutes) the values of each feature in your dataset and evaluates how much the model’s performance degrades. The larger the decrease in performance, the more crucial that feature is deemed to be.
 
@@ -45,7 +45,7 @@ feature_imp <- FeatureImp$new(predictor, loss = "classif.ce") # classification e
 print(feature_imp$results)
 ```
 
-In this example, after setting up the basic environment and a simple classification problem with `mlr3` and `ranger` (a random forest implementation), we convert the model and dataset into a `Predictor` object. `iml` requires this specific object to work with.  We then calculate feature importance using the `FeatureImp` function, indicating our loss function as classification error, which is common for classification problems. The `feature_imp$results` object contains the scores and standard errors for each feature in the model. The higher the score, the more important the feature.
+In this example, after setting up the basic environment and a simple classification problem with `mlr3` and `ranger` (a random forest implementation), we convert the model and dataset into a `Predictor` object. `iml` requires this specific object to work with. We then calculate feature importance using the `FeatureImp` function, indicating our loss function as classification error, which is common for classification problems. The `feature_imp$results` object contains the scores and standard errors for each feature in the model. The higher the score, the more important the feature.
 
 **Code Snippet 2: Handling Factor Variables**
 

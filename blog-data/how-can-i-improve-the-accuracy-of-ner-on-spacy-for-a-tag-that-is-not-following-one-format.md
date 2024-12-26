@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-improve-the-accuracy-of-ner-on-spacy-for-a-tag-that-is-not-following-one-format"
 ---
 
-Alright, let's tackle this. It's a problem I've certainly bumped into more than a few times. You're dealing with a named entity recognition (NER) challenge using spaCy, and the hurdle is that your specific entity tag isn't conforming to a predictable pattern. This isn't uncommon; real-world data rarely fits neatly into pre-defined boxes. It's the kind of issue that often requires a bit of fine-tuning beyond just relying on out-of-the-box models.
+, let's tackle this. It's a problem I've certainly bumped into more than a few times. You're dealing with a named entity recognition (NER) challenge using spaCy, and the hurdle is that your specific entity tag isn't conforming to a predictable pattern. This isn't uncommon; real-world data rarely fits neatly into pre-defined boxes. It's the kind of issue that often requires a bit of fine-tuning beyond just relying on out-of-the-box models.
 
 I remember a project a few years back where I was working on processing legal documents. We had to identify specific clauses related to contract terminations, which weren't always worded consistently, nor were they marked with obvious keywords. The standard spaCy models did a decent job on the more structured parts, but for these termination clauses, the accuracy was consistently low.
 
@@ -48,6 +48,7 @@ doc = nlp(text)
 for ent in doc.ents:
     print(ent.text, ent.label_)
 ```
+
 In this example, I define several pattern objects for common terminological language surrounding terminations. In addition to matching tokens, you can also use lemmatization, regular expression matches, or even custom functions within your patterns to capture very specific rules for your entity.
 In this approach, we are adding a new pipeline component. The original NER model will still run and identify it's tags as it normally would, but after this process, we augment the document's entities with our patterns.
 
@@ -96,6 +97,7 @@ for ent in doc.ents:
     print(ent.text, ent.label_)
 
 ```
+
 Here we're creating a custom NER model from scratch. The `TRAIN_DATA` includes text samples and their annotated entities with the "TERMINATION_CLAUSE" label. This allows spaCy to learn the specific nuances of your tag from your training data. Note, this example is for demonstration purposes, ideally you'd want more training examples. A practical approach would be to also start from a base model (such as 'en_core_web_sm') and train only the ner component.
 
 **Example 3: Data Augmentation using Rules and Patterns**
@@ -163,9 +165,9 @@ Here, we use pattern matching to find instances that may lead to termination, li
 
 For further understanding, you should explore the following resources:
 
-*   **The spaCy documentation:** It's the definitive source for everything spaCy-related, including fine-tuning and training procedures: `https://spacy.io/usage/training`.
-*  **"Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper:** A classic resource on NLP, providing a strong foundation for understanding the fundamentals behind spaCy's techniques.
-* **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** A very comprehensive resource on computational linguistics that covers many concepts underlying spaCy's models, including sequence models.
-* **"Deep Learning for Natural Language Processing" by Jason Brownlee:** This is a more modern take on the matter which deals with the deep learning algorithms at the core of many contemporary NLP tools.
+- **The spaCy documentation:** It's the definitive source for everything spaCy-related, including fine-tuning and training procedures: `https://spacy.io/usage/training`.
+- **"Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper:** A classic resource on NLP, providing a strong foundation for understanding the fundamentals behind spaCy's techniques.
+- **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** A very comprehensive resource on computational linguistics that covers many concepts underlying spaCy's models, including sequence models.
+- **"Deep Learning for Natural Language Processing" by Jason Brownlee:** This is a more modern take on the matter which deals with the deep learning algorithms at the core of many contemporary NLP tools.
 
 In my experience, a combination of these techniques often works best. Start with pattern matching to address the easier cases. Then, prepare a good training dataset and fine-tune a new model or pipeline component. Consider augmenting the data with generative techniques, which can enhance both model accuracy and its robustness. Remember that iterative improvement is key: evaluate, refine, and repeat. It’s an ongoing process, but the result is usually a much more precise and valuable NER system for real-world applications.

@@ -4,21 +4,21 @@ date: "2024-12-15"
 id: "what-is-distributed-training-terminology-micro-batch-and-per-replica-batch-size"
 ---
 
-alright, let's get down to brass tacks with distributed training, specifically micro-batch and per-replica batch sizes. i've been elbow-deep in this stuff for years, and trust me, it can get confusing fast if you don't nail the basics. it's not rocket science, but it’s close, and the devil is often in the detail when dealing with multiple machines.
+, let's get down to brass tacks with distributed training, specifically micro-batch and per-replica batch sizes. i've been elbow-deep in this stuff for years, and trust me, it can get confusing fast if you don't nail the basics. it's not rocket science, but it’s close, and the devil is often in the detail when dealing with multiple machines.
 
 so, first off, when we talk about "batch size" in machine learning, we're generally referring to the number of training examples processed before updating the model's parameters. standard single-gpu training deals with one batch size at a time. you feed the model, compute gradients, adjust weights, and move on to the next batch. simple enough. but then you go into the land of distributed training, and things change. dramatically.
 
 now, distributed training splits the workload across multiple devices (gpus or even machines), and here's where micro-batches and per-replica batches enter the fray. think of it as a factory line: each machine is an individual station doing its job, but collectively all the stations work to produce a final product faster. in our case, the 'product' is a trained machine learning model.
 
-let's start with the per-replica batch size. imagine each of the machines is a 'replica' of our training process, all executing the same code but on different parts of the data. the *per-replica batch size* is the number of training examples each individual replica processes in each forward and backward pass. it's just like your standard batch size in single gpu training except now each worker has its own and the batches may be different between workers.
+let's start with the per-replica batch size. imagine each of the machines is a 'replica' of our training process, all executing the same code but on different parts of the data. the _per-replica batch size_ is the number of training examples each individual replica processes in each forward and backward pass. it's just like your standard batch size in single gpu training except now each worker has its own and the batches may be different between workers.
 
 for example, if you set a per-replica batch size of 32 and you're using 4 gpus, each gpu will process 32 training examples. independently, mind you.
 
-the micro-batch is a more recent concept that usually emerges when you are dealing with larger models or limited memory on each of the workers. it breaks down the per-replica batch size into even smaller chunks. you do a forward and backward pass for each micro-batch, accumulating gradients, and only update the weights *after* you've gone through all of the micro-batches that comprise one per-replica batch. think of it as a form of gradient accumulation but done explicitly at a framework level (like pytorch or tensorflow) at the level of each worker. it enables larger per-replica batch sizes than your limited gpu memory might otherwise allow.
+the micro-batch is a more recent concept that usually emerges when you are dealing with larger models or limited memory on each of the workers. it breaks down the per-replica batch size into even smaller chunks. you do a forward and backward pass for each micro-batch, accumulating gradients, and only update the weights _after_ you've gone through all of the micro-batches that comprise one per-replica batch. think of it as a form of gradient accumulation but done explicitly at a framework level (like pytorch or tensorflow) at the level of each worker. it enables larger per-replica batch sizes than your limited gpu memory might otherwise allow.
 
 for instance, if you have a per-replica batch size of 64 and a micro-batch size of 16, each replica will actually do four forward and backward passes before updating the model parameters for this per-replica batch. it will process 16 elements, accumulate the gradients, then 16 more, and so on, until you reach 64 and now the weights are updated on each worker. this process is a way to simulate a larger per-replica batch on memory limited gpus.
 
-it's crucial to understand that the effective batch size (sometimes called the *global batch size*) you are effectively using is the *per-replica batch size* times the number of replicas, not the micro-batch. continuing our previous example, you have a per-replica batch size of 64 and 4 gpus. this results in a global batch size of 64 x 4 = 256. regardless of the micro-batch size. the micro-batch is just an implementation detail and allows for larger per-replica batch sizes on each worker to work.
+it's crucial to understand that the effective batch size (sometimes called the _global batch size_) you are effectively using is the _per-replica batch size_ times the number of replicas, not the micro-batch. continuing our previous example, you have a per-replica batch size of 64 and 4 gpus. this results in a global batch size of 64 x 4 = 256. regardless of the micro-batch size. the micro-batch is just an implementation detail and allows for larger per-replica batch sizes on each worker to work.
 
 it can be confusing at first but once you understand each element you will get it.
 
@@ -36,7 +36,7 @@ def train_one_replica(data_shard, per_replica_batch_size, micro_batch_size, mode
         start = i * micro_batch_size
         end = start + micro_batch_size
         micro_batch = data_shard[start:end]
-        
+
         # forward pass
         output = model(micro_batch)
         loss = compute_loss(output, labels)
@@ -49,13 +49,13 @@ def train_one_replica(data_shard, per_replica_batch_size, micro_batch_size, mode
             if param_name not in accumulated_gradients:
                 accumulated_gradients[param_name] = torch.zeros_like(gradient) # create if it doesnt exist
             accumulated_gradients[param_name] += gradient
-    
+
     #update parameters
     optimizer.apply_gradients(accumulated_gradients)
     # clear accumulated gradients after param update on the worker
     for param_name in accumulated_gradients:
         accumulated_gradients[param_name] = torch.zeros_like(accumulated_gradients[param_name])
-    
+
 ```
 
 in this example, we have the `train_one_replica` which takes a data shard, batch sizes and the model and does the training process in one replica. you can see the explicit micro-batch implementation, gradient accumulation and then the optimizer is updated at the end of processing all the micro-batches within the per-replica batch.
@@ -156,7 +156,7 @@ class SimpleModel(nn.Module):
         self.fc1 = nn.Linear(784, 64)
         self.relu = nn.ReLU()
         self.fc2 = nn.Linear(64, 10)
-    
+
     def forward(self, x):
         x = self.relu(self.fc1(x))
         x = self.fc2(x)
@@ -181,9 +181,9 @@ def train_one_epoch(dataloader, model, optimizer, rank, micro_batch_size):
     for batch_idx, (inputs, labels) in enumerate(dataloader):
         per_replica_batch_size = inputs.shape[0]
         num_micro_batches = per_replica_batch_size // micro_batch_size # how many forward/backward to do before updating params
-        
+
         accumulated_gradients = {} # initialize gradient accumulator for all params of model.
-        
+
         for i in range(num_micro_batches):
             start = i * micro_batch_size
             end = start + micro_batch_size
@@ -203,7 +203,7 @@ def train_one_epoch(dataloader, model, optimizer, rank, micro_batch_size):
                     if param_name not in accumulated_gradients:
                         accumulated_gradients[param_name] = torch.zeros_like(param.grad)
                     accumulated_gradients[param_name] += param.grad
-                    
+
             # zero grads
             optimizer.zero_grad()
 
@@ -232,7 +232,7 @@ def train_distributed(rank, world_size):
     model = SimpleModel().to(rank)
     ddp_model = DDP(model, device_ids=[rank])
     optimizer = optim.Adam(ddp_model.parameters())
-    
+
     # Train for 3 epochs.
     for epoch in range(3):
         train_one_epoch(dataloader, ddp_model, optimizer, rank, micro_batch_size)
@@ -253,6 +253,6 @@ in this last example, you can see how the micro-batch training process is implem
 
 i’d suggest diving into some solid resources for a deeper understanding. the pytorch documentation on distributed training is quite good as well as the tensorflow tutorials. some academic papers that have been foundational in this are “distributed sgd with mini-batches” by dean, jeffrey; corrado, greg; mongiovì, rafael; chen, kai; mathieu, matthieu; ranzato, marc'aurelio; and "imagenet classification with deep convolutional neural networks" by krizhevsky, alex; sutskever, ilya; and hinton, geoffrey e. if you want to get even more academic. also "deep learning" by goodfellow, ian; bengio, yoshua; and courville, aaron, has excellent chapters about parallelization and optimization methods for deep learning. reading these books and papers will definitely clarify the topics we discussed today.
 
-so, to summarize, the *per-replica batch size* is how much data each individual device processes before updating its local weights. the *micro-batch size* is an implementation detail, a way to further subdivide this work into mini-batches. it allows us to work around the memory limitation of our devices and still achieve faster training via larger *global batch sizes*.
+so, to summarize, the _per-replica batch size_ is how much data each individual device processes before updating its local weights. the _micro-batch size_ is an implementation detail, a way to further subdivide this work into mini-batches. it allows us to work around the memory limitation of our devices and still achieve faster training via larger _global batch sizes_.
 
 that's my take on the topic, hope this helps, and happy training.

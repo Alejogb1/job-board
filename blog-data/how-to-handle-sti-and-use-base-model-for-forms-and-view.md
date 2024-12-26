@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-handle-sti-and-use-base-model-for-forms-and-view"
 ---
 
-alright, so handling single table inheritance (sti) with forms and views, right? i've been down that road more times than i care to count, and it can get a bit hairy if you're not careful. basically, you're cramming multiple model types into one database table, and then trying to keep it all straight in your app. it's not inherently bad, but it does require a specific way of thinking. i'll lay out how i've approached it in the past, specifically focusing on getting those forms and views playing nice.
+, so handling single table inheritance (sti) with forms and views, right? i've been down that road more times than i care to count, and it can get a bit hairy if you're not careful. basically, you're cramming multiple model types into one database table, and then trying to keep it all straight in your app. it's not inherently bad, but it does require a specific way of thinking. i'll lay out how i've approached it in the past, specifically focusing on getting those forms and views playing nice.
 
 the core of the issue is that you have one table, let's say 'products', but you actually want to treat those rows as different things depending on their 'type' column. it could be ‘book’, ‘movie’, ‘software’, whatever. that type column is what defines the sti. ruby on rails handles this pretty well out of the box. you'll define a base model, for example `product`, then specific sub-classes, like `book`, `movie`, each inheriting from `product`.
 
@@ -112,6 +112,7 @@ class ProductsController < ApplicationController
     end
 end
 ```
+
 notice that i'm using `params[:type].constantize` which turns that string of class name into an actual constant. i’ve had that not work before when dealing with namespaced models. just keep an eye out for that. also note that all the fields are allowed in `product_params` that's because the same form is used for all product types. it might seem like a security concern at first but it is not as long as you use the correct `type` and the correct classes are used in the form. if someone sends in a `director` when creating a book, that field will simply be ignored because the `Book` model does not have a `director` attribute.
 
 a word of caution, when working with sti you should be very careful to avoid naming conflicts, if not you will enter a debugging rabbit hole that will make you cry. it's something i have personally suffered and would not wish to anyone.

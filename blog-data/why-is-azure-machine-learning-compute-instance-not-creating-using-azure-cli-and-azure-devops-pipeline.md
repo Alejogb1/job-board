@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-azure-machine-learning-compute-instance-not-creating-using-azure-cli-and-azure-devops-pipeline"
 ---
 
-Alright, let's unpack this. I've seen my fair share of Azure Machine Learning compute instance creation failures, and it's rarely a straightforward single cause. Usually, it's a combination of factors that need careful examination, particularly when using Azure CLI within an Azure DevOps pipeline. The fact that it’s failing in this automated scenario points to issues beyond just a faulty local CLI command, which would be much easier to troubleshoot.
+, let's unpack this. I've seen my fair share of Azure Machine Learning compute instance creation failures, and it's rarely a straightforward single cause. Usually, it's a combination of factors that need careful examination, particularly when using Azure CLI within an Azure DevOps pipeline. The fact that it’s failing in this automated scenario points to issues beyond just a faulty local CLI command, which would be much easier to troubleshoot.
 
 Let me recount a project where we were deploying a complex MLOps pipeline that heavily relied on compute instances for training. We were consistently running into a similar issue – compute instances refusing to materialize via the pipeline, and initially we suspected code issues, but the local CLI commands worked. It took a deep dive to reveal the real culprits, and I'll share some of that learning here.
 

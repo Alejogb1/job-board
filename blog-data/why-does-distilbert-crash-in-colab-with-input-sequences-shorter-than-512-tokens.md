@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-does-distilbert-crash-in-colab-with-input-sequences-shorter-than-512-tokens"
 ---
 
-Okay, let's unpack this DistilBERT-in-Colab-with-short-sequences issue. I’ve seen this behavior crop up a few times in various projects, and it’s usually a combination of underlying framework expectations colliding with default Colab configurations. It's frustrating, especially when you think you've got the pipeline dialed in. The key problem isn't necessarily a flaw in DistilBERT itself, but rather a misunderstanding of how it's designed to interact with padded sequences, particularly when you're deviating from the pre-training input length it was exposed to.
+, let's unpack this DistilBERT-in-Colab-with-short-sequences issue. I’ve seen this behavior crop up a few times in various projects, and it’s usually a combination of underlying framework expectations colliding with default Colab configurations. It's frustrating, especially when you think you've got the pipeline dialed in. The key problem isn't necessarily a flaw in DistilBERT itself, but rather a misunderstanding of how it's designed to interact with padded sequences, particularly when you're deviating from the pre-training input length it was exposed to.
 
 The core of the matter lies in the attention mechanism inherent to transformer models like DistilBERT. This mechanism works by processing all input tokens simultaneously. In its pre-training phase, DistilBERT, like BERT, is often exposed to sequences that are close to the 512-token limit. When you input sequences drastically shorter than this and have automatic padding applied, the internal computations, especially within the self-attention layers, can sometimes become numerically unstable. This instability, particularly if there’s inadequate numerical precision available (which can sometimes happen with certain CUDA configurations in Colab), manifests as the model crashing.
 
-Essentially, even though technically the input *is* padded to 512 tokens, the information carried in those padded tokens (which are typically zero or a masking token) is not uniform, and the model hasn't been adequately trained to handle these extreme padded ratios during inference. Remember, during training, there’s a lot of effort to normalize gradient flow, which is somewhat bypassed when you run inference outside of its expected domain.
+Essentially, even though technically the input _is_ padded to 512 tokens, the information carried in those padded tokens (which are typically zero or a masking token) is not uniform, and the model hasn't been adequately trained to handle these extreme padded ratios during inference. Remember, during training, there’s a lot of effort to normalize gradient flow, which is somewhat bypassed when you run inference outside of its expected domain.
 
 Furthermore, let's consider padding from a practical standpoint. The padding mechanism is adding zeros to the input vectors representing the input tokens which doesn't add meaningful data. When a lot of the vector's values are zero, and this propagates through the computation layers, this can trigger instabilities and floating-point errors or underflows, particularly in the attention score calculation and the softmax operations, especially if you're running on lower precision hardware like some default Colab gpu setups. These computational problems are not always immediately obvious, often showing up as a crash with a cryptic error message that points to a cuda-related issue.
 
@@ -16,7 +16,7 @@ Let’s illustrate this with code and some potential remedies. In practice, the 
 
 **Approach 1: Explicit Padding to a Fixed Length Before Tokenization**
 
-This technique avoids relying on automatic padding and gives us more fine-grained control. We pad the input *before* it reaches the tokenizer. This means we're actually passing the full-length sequence to the tokenizer, and DistilBERT will process it like it expects.
+This technique avoids relying on automatic padding and gives us more fine-grained control. We pad the input _before_ it reaches the tokenizer. This means we're actually passing the full-length sequence to the tokenizer, and DistilBERT will process it like it expects.
 
 ```python
 from transformers import DistilBertTokenizer, DistilBertModel
@@ -47,7 +47,7 @@ except Exception as e:
 
 ```
 
-Here, I explicitly created the padding tokens, ensuring the final input sequence *does* have 512 tokens after tokenization and padding. The attention mask is equally vital; it instructs the model to ignore the padding tokens when computing attention scores.
+Here, I explicitly created the padding tokens, ensuring the final input sequence _does_ have 512 tokens after tokenization and padding. The attention mask is equally vital; it instructs the model to ignore the padding tokens when computing attention scores.
 
 **Approach 2: Using `pad_to_max_length=True` and `truncation=True` Within the Tokenizer Directly**
 
@@ -72,11 +72,12 @@ try:
 except Exception as e:
      print(f"Error: {e}")
 ```
+
 This approach is much more convenient. The `tokenizer()` method does all the heavy lifting for us; padding to a max length, truncating longer inputs, and returning the result in the correct format as pytorch tensors which we unpack into model as kwargs.
 
 **Approach 3: Dynamically Batching Sequences Before Padding (More Advanced)**
 
-If you're dealing with highly variable sequence lengths, you might not want to pad *all* sequences to 512, especially when batching. This can lead to very inefficient computations if you have a batch of 10 sequences each having a few tokens and a max sequence length of 512 which would lead to a huge amount of padding. A more efficient approach is dynamic batching. Here’s a simplistic example:
+If you're dealing with highly variable sequence lengths, you might not want to pad _all_ sequences to 512, especially when batching. This can lead to very inefficient computations if you have a batch of 10 sequences each having a few tokens and a max sequence length of 512 which would lead to a huge amount of padding. A more efficient approach is dynamic batching. Here’s a simplistic example:
 
 ```python
 from transformers import DistilBertTokenizer, DistilBertModel
@@ -103,7 +104,7 @@ except Exception as e:
 
 ```
 
-In this scenario, the tokenizer now pads to the longest sequence *within the batch*. This reduces the amount of unnecessary padding within the computation. While this is only a simple illustration for a batch of 3 samples, you can use `torch.utils.data.DataLoader` and custom datasets to implement more complex and dynamic batching strategies.
+In this scenario, the tokenizer now pads to the longest sequence _within the batch_. This reduces the amount of unnecessary padding within the computation. While this is only a simple illustration for a batch of 3 samples, you can use `torch.utils.data.DataLoader` and custom datasets to implement more complex and dynamic batching strategies.
 
 From experience, I recommend focusing on the fundamentals before delving into more complex solutions, start with approach 2. Always remember to check your framework versions and Colab's CUDA runtime versions, as these can cause issues. If you are using a lower precision (e.g. fp16) for faster processing and are still experiencing these issues, I recommend using fp32 when running inference on Colab.
 

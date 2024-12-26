@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-use-the-dbcontext-interface-in-ddd"
 ---
 
-Alright, let's tackle this. I've seen this question come up quite a bit, and it’s a crucial one when you're aiming for a robust, domain-centric architecture. The core challenge, as I've experienced firsthand over the years with various projects, lies in maintaining the integrity of your domain model while using an infrastructure concern like a `dbcontext`. The temptation to bleed the persistence details into the domain is very real. Let me share what I've learned.
+, let's tackle this. I've seen this question come up quite a bit, and it’s a crucial one when you're aiming for a robust, domain-centric architecture. The core challenge, as I've experienced firsthand over the years with various projects, lies in maintaining the integrity of your domain model while using an infrastructure concern like a `dbcontext`. The temptation to bleed the persistence details into the domain is very real. Let me share what I've learned.
 
 The `dbcontext`, typically from entity framework or similar orms, acts as your gateway to the database. In a pure domain-driven design (ddd) implementation, this represents an infrastructure concern. The domain model, on the other hand, should be completely ignorant of the database and persistence mechanisms. It's about defining your business logic and entities in terms of the problem domain, not how they are stored. This is the core principle we’ll be navigating.
 
@@ -12,9 +12,9 @@ Now, the crux of the matter is that directly injecting a `dbcontext` into domain
 
 The proper approach, which I've implemented in several large-scale projects with significant success, involves using a repository pattern that acts as an intermediary layer. Let me explain this by going back to when I was brought in to streamline a legacy system riddled with db context calls sprinkled throughout the domain. The resulting tight coupling made testing an absolute nightmare, and modifications to the domain layer required changes to infrastructure, and vice versa. It was not ideal, to put it mildly.
 
-The repository pattern provides an abstraction over data access, encapsulating the mechanics of retrieving and storing domain entities. This pattern defines an interface for data access that lives *within* the domain layer (as an abstraction), while the concrete implementation of the interface sits in the infrastructure layer and uses the `dbcontext`.
+The repository pattern provides an abstraction over data access, encapsulating the mechanics of retrieving and storing domain entities. This pattern defines an interface for data access that lives _within_ the domain layer (as an abstraction), while the concrete implementation of the interface sits in the infrastructure layer and uses the `dbcontext`.
 
-Think of it like this: the domain layer knows *what* data it needs to work with (the *how* is handled by the infrastructure, using something like the `dbcontext`). This is what allows you to swap out the underlying data access technology without impacting the domain logic.
+Think of it like this: the domain layer knows _what_ data it needs to work with (the _how_ is handled by the infrastructure, using something like the `dbcontext`). This is what allows you to swap out the underlying data access technology without impacting the domain logic.
 
 Here's a typical approach I would now use, starting with the repository interface within the domain:
 
@@ -152,6 +152,6 @@ In this snippet, the application service doesn't know anything about the `dbcont
 
 This clear separation of concerns simplifies testing and enhances maintainability. You can easily test `UserService` with a mocked repository, without setting up an actual database, improving test speed and reducing test complexity. If the underlying database technology is changed, your domain and application layers remain untouched.
 
-For further understanding, I strongly recommend looking into *Domain-Driven Design: Tackling Complexity in the Heart of Software* by Eric Evans—a fundamental text on the subject. Also, *Implementing Domain-Driven Design* by Vaughn Vernon provides very practical and detailed advice. In the context of .net and entity framework, the documentation and sample projects at Microsoft’s official site can be invaluable resources. Another great book is *Patterns of Enterprise Application Architecture* by Martin Fowler, especially regarding the repository pattern. These resources, along with a bit of focused practice, will significantly enhance your understanding and capability to implement ddd principles effectively.
+For further understanding, I strongly recommend looking into _Domain-Driven Design: Tackling Complexity in the Heart of Software_ by Eric Evans—a fundamental text on the subject. Also, _Implementing Domain-Driven Design_ by Vaughn Vernon provides very practical and detailed advice. In the context of .net and entity framework, the documentation and sample projects at Microsoft’s official site can be invaluable resources. Another great book is _Patterns of Enterprise Application Architecture_ by Martin Fowler, especially regarding the repository pattern. These resources, along with a bit of focused practice, will significantly enhance your understanding and capability to implement ddd principles effectively.
 
 In summary, don't let the `dbcontext` leak into your domain. Rely on abstractions like the repository pattern, focus on the ‘what’ and not the ‘how’, and your domain will be much more resilient and testable in the long run. I hope this sheds some light on how to effectively incorporate the `dbcontext` in a ddd-compliant manner.

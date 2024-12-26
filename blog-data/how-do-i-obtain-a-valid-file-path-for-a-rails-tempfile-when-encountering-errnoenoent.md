@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-obtain-a-valid-file-path-for-a-rails-tempfile-when-encountering-errnoenoent"
 ---
 
-Alright, let's talk about `Errno::ENOENT` errors when dealing with tempfiles in Rails. It’s a situation I've encountered more than a few times, particularly when handling file uploads or processing data streams. The core issue here is that a tempfile, despite being initially created, might not always persist in the expected location or be accessible by the code trying to use it, leading to the frustrating “No such file or directory” error. There are a few common scenarios where this can happen, and understanding the nuances can save you a lot of debugging time.
+, let's talk about `Errno::ENOENT` errors when dealing with tempfiles in Rails. It’s a situation I've encountered more than a few times, particularly when handling file uploads or processing data streams. The core issue here is that a tempfile, despite being initially created, might not always persist in the expected location or be accessible by the code trying to use it, leading to the frustrating “No such file or directory” error. There are a few common scenarios where this can happen, and understanding the nuances can save you a lot of debugging time.
 
 Let’s start with the root cause: Tempfiles are, by their very nature, ephemeral. They're designed for temporary storage, and the operating system, or sometimes even Ruby itself, might decide to clean them up. This can happen if the garbage collector kicks in or if the tempfile's scope ends abruptly, either because a method exits unexpectedly or an exception is thrown. Rails’ tempfile handling, generally speaking, is quite robust, but it’s not foolproof against incorrect usage patterns.
 
@@ -28,6 +28,7 @@ def process_file_incorrectly(uploaded_file)
   #...
 end
 ```
+
 Here, the `tempfile` object is local to the function. When the function ends, unless explicitly preserved, Ruby's garbage collector might clean it up, and the path you have extracted is no longer valid.
 
 The correct way is to do this:
@@ -55,7 +56,7 @@ def do_something_with_filepath(tempfile, filepath)
 end
 ```
 
-In this example, we are passing the `tempfile` object itself into another function that will interact with the temporary file on disk. Crucially, we're not relying on a local variable to retain that object. This prevents premature garbage collection of the underlying file system object. Once you have finished with the file, you may close and unlink it. The important part here is understanding the *scope* of your tempfile object.
+In this example, we are passing the `tempfile` object itself into another function that will interact with the temporary file on disk. Crucially, we're not relying on a local variable to retain that object. This prevents premature garbage collection of the underlying file system object. Once you have finished with the file, you may close and unlink it. The important part here is understanding the _scope_ of your tempfile object.
 
 **2. Leveraging `Tempfile.open` with a Block:**
 

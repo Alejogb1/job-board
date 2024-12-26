@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-oracle-cloud-ubuntu-20-connection-refusing"
 ---
 
-Okay, let's tackle this. I've definitely seen my share of head-scratching connection refusals, particularly when dealing with cloud instances. The Oracle Cloud Infrastructure (oci) combined with Ubuntu 20 can occasionally present a few unique challenges, and 'connection refused' is often the symptom, not the root cause. Let's break down why this might be happening and, more importantly, how to diagnose and resolve it. From my experience, these issues usually boil down to a handful of suspects, which I'll detail here with examples.
+, let's tackle this. I've definitely seen my share of head-scratching connection refusals, particularly when dealing with cloud instances. The Oracle Cloud Infrastructure (oci) combined with Ubuntu 20 can occasionally present a few unique challenges, and 'connection refused' is often the symptom, not the root cause. Let's break down why this might be happening and, more importantly, how to diagnose and resolve it. From my experience, these issues usually boil down to a handful of suspects, which I'll detail here with examples.
 
 First, let's discard the simple things: are you using the correct public ip address? I've certainly tripped myself up with outdated ip lists before. Also ensure you are using the proper ssh key. These sound like basic things, but it's essential to check before moving to more complex potential problems. This initial step often prevents a more prolonged investigation.
 
@@ -12,7 +12,7 @@ The most common culprit is a firewall misconfiguration, specifically around the 
 
 On the OCI side, your virtual cloud network (vnc) has security lists (formerly called network access control lists or nacls) that govern the traffic allowed in and out. If your vcn security list isn't configured to allow incoming tcp traffic on port 22 (or your custom ssh port), the connection will be blocked before it even reaches your instance. To check this, use the oci console or the oci cli and review the relevant security lists associated with your instance's subnet. I recall a particularly late night a few years back when a junior member of my team inadvertently created a new rule which only allowed icmp traffic and nothing else – very efficient at shutting things down!
 
-Here's how a correct rule *should* look (as a representation of the concepts, not actual oci configuration):
+Here's how a correct rule _should_ look (as a representation of the concepts, not actual oci configuration):
 
 ```
 {
@@ -39,7 +39,9 @@ This will show you if the firewall is active and what the current rules are. If 
 ```bash
 sudo ufw allow 22/tcp
 ```
+
 followed by:
+
 ```bash
 sudo ufw enable
 ```
@@ -51,10 +53,13 @@ Another issue, though less common now with modern oci images, can be the ssh ser
 ```bash
 sudo systemctl status sshd
 ```
+
 If the status is inactive or failed, you need to activate or correct the configuration. This can be done with the following:
+
 ```bash
 sudo systemctl start sshd
 ```
+
 and if you want to have the service start after every reboot:
 
 ```bash

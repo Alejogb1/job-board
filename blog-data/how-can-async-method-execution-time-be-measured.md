@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-async-method-execution-time-be-measured"
 ---
 
-Alright, let's talk about timing async methods—a topic I've definitely spent some quality hours navigating in the trenches. I remember back at "Cyberdyne Systems" – not the *actual* one, mind you, but a fictional company I worked at – we had a particularly thorny issue with a microservice that was becoming increasingly sluggish. Pinpointing the source of the delay among the numerous async calls was like searching for a specific grain of sand on a beach, so to speak. That's when I really honed my skills in this area. The core challenge, as you'll probably find out for yourself, isn't merely the clock; it's about accurately capturing time within the non-blocking nature of asynchronous operations.
+, let's talk about timing async methods—a topic I've definitely spent some quality hours navigating in the trenches. I remember back at "Cyberdyne Systems" – not the _actual_ one, mind you, but a fictional company I worked at – we had a particularly thorny issue with a microservice that was becoming increasingly sluggish. Pinpointing the source of the delay among the numerous async calls was like searching for a specific grain of sand on a beach, so to speak. That's when I really honed my skills in this area. The core challenge, as you'll probably find out for yourself, isn't merely the clock; it's about accurately capturing time within the non-blocking nature of asynchronous operations.
 
 Essentially, the straightforward `DateTime.Now` or equivalent approach, while simple, falls short when dealing with asynchronous code. Async methods typically involve tasks that are executed independently of the calling thread, potentially pausing their execution while waiting for external resources. A traditional stopwatch, started before the async call and stopped after it, could easily yield inaccurate results, potentially including time spent waiting on I/O rather than the actual work being performed. Therefore, we need a more granular approach that takes the asynchronous flow into consideration.
 
-The crux of the solution lies in instrumenting the execution flow surrounding the `await` points. This allows us to measure the time spent within the *actual* asynchronous operation rather than the total elapsed wall-clock time which includes wait periods, context switches and similar overheads. To do this effectively, I typically use a combination of techniques which, combined, paints a clearer picture of the method's execution profile. Here are some strategies I've found particularly useful, accompanied by code examples:
+The crux of the solution lies in instrumenting the execution flow surrounding the `await` points. This allows us to measure the time spent within the _actual_ asynchronous operation rather than the total elapsed wall-clock time which includes wait periods, context switches and similar overheads. To do this effectively, I typically use a combination of techniques which, combined, paints a clearer picture of the method's execution profile. Here are some strategies I've found particularly useful, accompanied by code examples:
 
 **1. Using Stopwatch and Task Continuations**
 
@@ -54,7 +54,7 @@ In this example, the `TimeAsyncMethod` wrapper encapsulates the target asynchron
 
 **2. Profiling with `Stopwatch` within the Async Method**
 
-To address the issue of measuring *actual* execution time within async operations, embedding stopwatch logic inside the async method can prove more helpful. We track time within the method itself to get the work being done as opposed to any wait states:
+To address the issue of measuring _actual_ execution time within async operations, embedding stopwatch logic inside the async method can prove more helpful. We track time within the method itself to get the work being done as opposed to any wait states:
 
 ```csharp
 using System;
@@ -69,7 +69,7 @@ public class AsyncTimerExample2
 
         // Simulate some actual work
         await Task.Delay(50);
-         
+
         var operationTime = stopwatch.ElapsedMilliseconds;
 
         stopwatch.Restart();
@@ -89,6 +89,7 @@ public class AsyncTimerExample2
 }
 
 ```
+
 Here, we've moved the stopwatch directly into the async method. This enables the ability to isolate the timing of specific code blocks. This technique allows us to profile various parts of the function, identifying potential bottlenecks. We start and restart the stopwatch within specific operations.
 
 **3. Using `System.Diagnostics.Activity` for Contextualized Timing (Advanced)**

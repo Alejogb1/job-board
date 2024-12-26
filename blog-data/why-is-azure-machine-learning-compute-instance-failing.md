@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-azure-machine-learning-compute-instance-failing"
 ---
 
-Alright, let’s talk about compute instance failures in Azure Machine Learning. I’ve seen my fair share of these issues, and they can be incredibly frustrating, particularly when you’re in the middle of a critical experiment. From my experience, these failures generally don’t stem from a single cause but rather a confluence of underlying problems. It's rarely a simple “oops” moment; it's typically a systemic issue that needs careful examination.
+, let’s talk about compute instance failures in Azure Machine Learning. I’ve seen my fair share of these issues, and they can be incredibly frustrating, particularly when you’re in the middle of a critical experiment. From my experience, these failures generally don’t stem from a single cause but rather a confluence of underlying problems. It's rarely a simple “oops” moment; it's typically a systemic issue that needs careful examination.
 
 The most common culprits, in my view, can be grouped into resource limitations, networking problems, and software/configuration inconsistencies. Let’s break down each of these categories in detail, and I’ll provide practical examples and code snippets to illustrate how you can tackle them.
 
@@ -73,7 +73,7 @@ import subprocess
 
 def check_environment_packages():
     print("Current Python environment path:", sys.executable)
-    
+
     try:
         result = subprocess.run([sys.executable, '-m', 'pip', 'list'], capture_output=True, text=True, check=True)
         print("Installed packages in this environment:\n", result.stdout)

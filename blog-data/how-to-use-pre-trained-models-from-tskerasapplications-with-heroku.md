@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "how-to-use-pre-trained-models-from-tskerasapplications-with-heroku"
 ---
 
-alright, so you're looking at using keras pre-trained models from `ts.keras.applications` within a heroku deployment. this is a pretty common scenario, and i've banged my head against it a few times myself. it mostly boils down to making sure your dependencies are managed properly and that the model loading process is smooth in a cloud environment. i’ll walk through my past hiccups with this and how i typically handle it now.
+, so you're looking at using keras pre-trained models from `ts.keras.applications` within a heroku deployment. this is a pretty common scenario, and i've banged my head against it a few times myself. it mostly boils down to making sure your dependencies are managed properly and that the model loading process is smooth in a cloud environment. i’ll walk through my past hiccups with this and how i typically handle it now.
 
-the biggest initial snag i hit, and many others too i'd bet, was assuming that heroku's build process would automatically install everything perfectly. i mean, it *does* try, but when you're pulling in hefty things like tensorflow, keras, and potentially some pre-processing libraries, things can go sideways. the first time i tried it, i had a model that was running locally like butter, a resnet50 if i recall correctly. the thing was classifying images of cats and dogs, you know, the typical introductory deep learning project. i deployed it thinking, 'easy peasy' and then i got that beautiful heroku application error screen. turned out, i was missing a specific version of tensorflow in my `requirements.txt`. a lesson well learned.
+the biggest initial snag i hit, and many others too i'd bet, was assuming that heroku's build process would automatically install everything perfectly. i mean, it _does_ try, but when you're pulling in hefty things like tensorflow, keras, and potentially some pre-processing libraries, things can go sideways. the first time i tried it, i had a model that was running locally like butter, a resnet50 if i recall correctly. the thing was classifying images of cats and dogs, you know, the typical introductory deep learning project. i deployed it thinking, 'easy peasy' and then i got that beautiful heroku application error screen. turned out, i was missing a specific version of tensorflow in my `requirements.txt`. a lesson well learned.
 
 so, step one is to get your requirements spot on. now you probably have a `requirements.txt` file, if not please create one. make sure that you specify the tensorflow version that you used during your development and training. it is very critical. i'd advise you to also include keras and any other relevant packages. this is not the time to skimp on details. for instance, you'd have something that looks similar to:
 
@@ -20,7 +20,7 @@ pillow==9.4.0
 
 notice how i'm pinning the versions? this is very important and essential. relying on the latest version can lead to unexpected issues if heroku's environment has a different default. it is basically chaos management. the number of hours you save from dependency headaches by pinning versions is remarkable.
 
-now, the `ts` prefix in `ts.keras.applications` implies that you are working with tensorflow and keras models. that's good. this part should be straightforward because the models are already there; you don't need to load weights or do extensive model building. the real trick is to make sure heroku can *find* and *load* them at runtime. here is the minimal amount of code for just loading the model and giving an example using an image:
+now, the `ts` prefix in `ts.keras.applications` implies that you are working with tensorflow and keras models. that's good. this part should be straightforward because the models are already there; you don't need to load weights or do extensive model building. the real trick is to make sure heroku can _find_ and _load_ them at runtime. here is the minimal amount of code for just loading the model and giving an example using an image:
 
 ```python
 import tensorflow as tf
@@ -74,7 +74,7 @@ def load_and_predict_local(image_url):
         # Load the pretrained model
         weights_path = 'model_weights/resnet50_weights_tf_dim_ordering_tf_kernels.h5'
         model = keras.applications.resnet50.ResNet50(weights=weights_path)
-        
+
         # Load and preprocess the image
         response = requests.get(image_url)
         img = Image.open(BytesIO(response.content)).resize((224, 224))

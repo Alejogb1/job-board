@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-determine-which-document-falls-under-a-particular-topic-after-applying-topic-modeling-techniques"
 ---
 
-Okay, let's tackle this. The question of assigning documents to specific topics post-topic modeling is a common one, and it's something I’ve spent a fair amount of time refining in past projects, particularly during a large-scale text analysis effort involving customer feedback data. You've run your models, you have your beautiful topics, but now the real work begins: figuring out which document belongs where. This isn't always as straightforward as it seems, and it involves understanding the output of your model and choosing a suitable assignment method.
+, let's tackle this. The question of assigning documents to specific topics post-topic modeling is a common one, and it's something I’ve spent a fair amount of time refining in past projects, particularly during a large-scale text analysis effort involving customer feedback data. You've run your models, you have your beautiful topics, but now the real work begins: figuring out which document belongs where. This isn't always as straightforward as it seems, and it involves understanding the output of your model and choosing a suitable assignment method.
 
 Generally, topic modeling algorithms like latent dirichlet allocation (LDA) or non-negative matrix factorization (NMF) provide you with two key pieces of information: the word distributions for each topic, and the topic distribution for each document. The word distributions tell you what words are highly associated with each topic, while the topic distributions tell you the proportion of each topic present in each document. It’s these topic distributions that form the basis of document assignment, though interpreting them accurately is essential.
 
@@ -67,7 +67,7 @@ Here's where the practical choices come in, and these often depend on the nature
 
     The choice of the threshold is key here and may require some experimentation to achieve optimal performance. You could consider using methods such as area under the precision-recall curve or some F-score as a metric for performance if you have access to labeled data. You’d then adjust the threshold to maximise this metric.
 
-3. **Weighted Topic Assignment:** This strategy takes into account the probability of each topic within a document to provide a score for each document-topic pairing. Rather than simply assigning the document to the topic with the highest probability, the weighted assignment creates a weighted relationship between each document and every topic. This is useful when you require a continuous measure of a document's relevance to each topic, and not a discrete assignment. This measure may be used to rank or group documents by their degree of association with each topic.
+3.  **Weighted Topic Assignment:** This strategy takes into account the probability of each topic within a document to provide a score for each document-topic pairing. Rather than simply assigning the document to the topic with the highest probability, the weighted assignment creates a weighted relationship between each document and every topic. This is useful when you require a continuous measure of a document's relevance to each topic, and not a discrete assignment. This measure may be used to rank or group documents by their degree of association with each topic.
 
     ```python
     import numpy as np

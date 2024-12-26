@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-an-airflow-module-not-found"
 ---
 
-alright, let's break down this airflow module not found thing, i've seen this movie more times than i care to remember. it's a classic, a rite of passage for anyone who's spent some quality time with airflow. basically, when you're seeing that "module not found" error, airflow is telling you it can't locate a python module that you're trying to use in your dags or custom operators. it's not a complex issue but tracking it down can sometimes feel like a marathon.
+, let's break down this airflow module not found thing, i've seen this movie more times than i care to remember. it's a classic, a rite of passage for anyone who's spent some quality time with airflow. basically, when you're seeing that "module not found" error, airflow is telling you it can't locate a python module that you're trying to use in your dags or custom operators. it's not a complex issue but tracking it down can sometimes feel like a marathon.
 
 first off, let's talk about the usual suspects. it almost always boils down to one of these three things, and i've tripped over each of them myself at different stages of my career. i remember once, i was on a project where we had a really convoluted airflow setup with multiple docker containers and venvs; oh boy, that was a nightmare debugging session, but hey we got through it and learned a ton.
 
@@ -41,7 +41,7 @@ if you're not using docker, make sure the module is installed in the same enviro
 
 **2. python path issues:**
 
-sometimes, the module *is* installed but python just doesn't know where to look for it. this is where the `pythonpath` environment variable comes in. it tells python where to search for modules. i remember a situation once where my local development machine had a different path config than the server, leading to hours of debugging which should not take more than a few minutes.
+sometimes, the module _is_ installed but python just doesn't know where to look for it. this is where the `pythonpath` environment variable comes in. it tells python where to search for modules. i remember a situation once where my local development machine had a different path config than the server, leading to hours of debugging which should not take more than a few minutes.
 
 you can verify what paths python uses to find modules by printing `sys.path` from within a python script being executed from the airflow environment.
 
@@ -77,9 +77,9 @@ this may seem a lot of information but, with time and experience you will get us
 
 **some additional stuff**
 
-*   **double-check module names:** sometimes, it's just a typo. it's easy to get caught out by a missing underscore or slightly different spelling in your import statements, i have done it a lot of times, i’m not gonna lie.
-*   **check the logs carefully:** airflow's scheduler and worker logs are usually the first place to look to debug module issues, sometimes it prints more context around the error making it much easier to find the reason.
-*   **permissions:** rarely it can be related to permission issues with the python path, specially if you are adding the paths manually to your dags. so be sure to check the permissions of the module files and the paths where they are located to avoid these issues. i know, a bit rare but it has happened to me once in a legacy system when the security policies were not very well defined.
+- **double-check module names:** sometimes, it's just a typo. it's easy to get caught out by a missing underscore or slightly different spelling in your import statements, i have done it a lot of times, i’m not gonna lie.
+- **check the logs carefully:** airflow's scheduler and worker logs are usually the first place to look to debug module issues, sometimes it prints more context around the error making it much easier to find the reason.
+- **permissions:** rarely it can be related to permission issues with the python path, specially if you are adding the paths manually to your dags. so be sure to check the permissions of the module files and the paths where they are located to avoid these issues. i know, a bit rare but it has happened to me once in a legacy system when the security policies were not very well defined.
 
 **reading recommendations:**
 

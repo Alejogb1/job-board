@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-measure-exactly-what-data-out-in-azure-web-app"
 ---
 
-Okay so you're asking about figuring out exactly what data is flowing in and out of an Azure Web App that's a classic problem I've wrestled with a fair bit myself over the years Let's break this down because there isn't one single magic bullet solution it's more of a toolbox approach and what you reach for depends a lot on what exactly you're trying to measure
+you're asking about figuring out exactly what data is flowing in and out of an Azure Web App that's a classic problem I've wrestled with a fair bit myself over the years Let's break this down because there isn't one single magic bullet solution it's more of a toolbox approach and what you reach for depends a lot on what exactly you're trying to measure
 
 First up you gotta differentiate between network traffic and app-level data flow Network traffic is the raw bytes going across the wire http requests responses etc while app-level is like the data your app actually processes the actual database queries the json payloads and so on Network stuff you're often interested in the bandwidth usage how many connections you're seeing maybe even some latency data App data well that’s about the structure of the data the size of requests how often certain API endpoints are hit etc
 
@@ -33,7 +33,7 @@ Now the drawback with these is they are not very specific they don't tell you wh
 
 **Application Insights**
 
-Now when we talk about the *application level* data flow this is where Application Insights really shines It's not just about performance metrics it can also tell you what your app is sending and receiving this is where you can really dive into how your API is behaving This requires some instrumentation in your app but the payoff is worth it for this specific type of analysis
+Now when we talk about the _application level_ data flow this is where Application Insights really shines It's not just about performance metrics it can also tell you what your app is sending and receiving this is where you can really dive into how your API is behaving This requires some instrumentation in your app but the payoff is worth it for this specific type of analysis
 
 I've spent many a late night debugging complex APIs and Application Insights helped me narrow down all of the weird corner cases. There was this time I was using signalR and my front end was working perfectly but the back end was acting weird and then I had to use app insights to look at the messages and it turns out it was a client side version incompatibility. App Insights for sure helped me narrow it down.
 
@@ -83,7 +83,7 @@ Now if you need to get even more into the nitty gritty you may need to go deeper
 
 **Advanced Data Analysis tools**
 
- Sometimes App Insights isn't enough to get super specific details about the data itself If you need to see the exact payloads or if you want more flexibility you'll need to go another level deeper You could do some form of custom logging in your app itself
+Sometimes App Insights isn't enough to get super specific details about the data itself If you need to see the exact payloads or if you want more flexibility you'll need to go another level deeper You could do some form of custom logging in your app itself
 
 One method is to add a middleware to track all requests and responses in a format you can control. This can be very powerful but it also means adding your own stuff and if done wrong it might be slow or expose private data you should be careful
 
@@ -145,10 +145,10 @@ This gives you full control over logging request and responses with body This ca
 
 Instead of just giving you links I find its better to point you to some core resources:
 
-*   "Microsoft Azure Architectures" by John Savill. This book gives an overview of the Azure ecosystem and it touches all of these aspects in different contexts it will give you an understanding of the platform and how the different tools interoperate
-*   "Cloud Native Patterns" by Cornelia Davis has also helped me think about how to apply these data monitoring techniques within microservices. This book has helped me decouple the problem with application performance and data analysis and gave me some good patterns to follow when measuring all of the things I need to measure
-*   The official Azure documentation is always a solid go-to if you are more of a reference person
-*   For specifics on Application Insights "Microsoft Application Insights" is always the best place to be
+- "Microsoft Azure Architectures" by John Savill. This book gives an overview of the Azure ecosystem and it touches all of these aspects in different contexts it will give you an understanding of the platform and how the different tools interoperate
+- "Cloud Native Patterns" by Cornelia Davis has also helped me think about how to apply these data monitoring techniques within microservices. This book has helped me decouple the problem with application performance and data analysis and gave me some good patterns to follow when measuring all of the things I need to measure
+- The official Azure documentation is always a solid go-to if you are more of a reference person
+- For specifics on Application Insights "Microsoft Application Insights" is always the best place to be
 
 **Final thoughts**
 

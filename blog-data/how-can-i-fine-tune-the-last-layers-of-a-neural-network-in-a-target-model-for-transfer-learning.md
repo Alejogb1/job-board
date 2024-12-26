@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-fine-tune-the-last-layers-of-a-neural-network-in-a-target-model-for-transfer-learning"
 ---
 
-Okay, let's talk about fine-tuning those last layers. It's a common scenario, and I’ve certainly spent my fair share of time navigating this particular landscape. Back in my days working on a rather quirky image recognition project for a specialized manufacturing process, we heavily relied on transfer learning. We had a pre-trained model, a ResNet-50 if memory serves, trained on ImageNet, and our task involved differentiating various material defects. The data was quite different from ImageNet—we had specific lighting conditions, unique defect patterns, and a relatively small labeled dataset. The fully pre-trained model, while having a solid backbone, didn't immediately provide the accuracy we needed. That's when we zeroed in on strategically fine-tuning the last few layers.
+, let's talk about fine-tuning those last layers. It's a common scenario, and I’ve certainly spent my fair share of time navigating this particular landscape. Back in my days working on a rather quirky image recognition project for a specialized manufacturing process, we heavily relied on transfer learning. We had a pre-trained model, a ResNet-50 if memory serves, trained on ImageNet, and our task involved differentiating various material defects. The data was quite different from ImageNet—we had specific lighting conditions, unique defect patterns, and a relatively small labeled dataset. The fully pre-trained model, while having a solid backbone, didn't immediately provide the accuracy we needed. That's when we zeroed in on strategically fine-tuning the last few layers.
 
 Now, why focus on the last layers specifically? Well, the early layers in a convolutional neural network (CNN), for instance, tend to learn more general, low-level features, like edges and corners. As you move deeper, the layers extract more complex, task-specific features. In transfer learning, we often leverage those generic feature extractors from the pre-trained model. However, the final layers, which act as the classifier, are often highly specialized to the source domain, ImageNet in our case. Fine-tuning these later layers allows the model to adapt those high-level representations to your target task, without throwing away the valuable feature extraction learned previously.
 
@@ -50,7 +50,7 @@ In this example, we freeze the convolutional base (`base_model.trainable = False
 
 **Scenario 2: Fine-tuning a small number of convolutional layers**
 
-Sometimes, adapting only the classification head isn't enough. You may need to fine-tune some of the *last* convolutional blocks to further adapt the features to your dataset. Here's how you could accomplish that:
+Sometimes, adapting only the classification head isn't enough. You may need to fine-tune some of the _last_ convolutional blocks to further adapt the features to your dataset. Here's how you could accomplish that:
 
 ```python
 import tensorflow as tf
@@ -128,7 +128,7 @@ for layer in model.layers:
      if layer.name in lr_dict:
        layer.add_loss(lambda: 0.0)
        layer.add_update(tf.Variable(0.0, trainable=False)) # Make layers trainable
-     
+
 model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-excel-data-be-imported-into-testrail"
 ---
 
-Let's tackle this query on importing Excel data into TestRail. It's a topic that I've certainly had to navigate multiple times throughout my career, especially when inheriting project structures from organizations that heavily relied on spreadsheets for test case management before adopting a more formal tool like TestRail. So, yes, it absolutely *can* be done, but it's not a simple copy-paste operation. The process requires some understanding of how TestRail expects its data to be formatted, and a little bit of data transformation to bridge the gap.
+query on importing Excel data into TestRail. It's a topic that I've certainly had to navigate multiple times throughout my career, especially when inheriting project structures from organizations that heavily relied on spreadsheets for test case management before adopting a more formal tool like TestRail. So, yes, it absolutely _can_ be done, but it's not a simple copy-paste operation. The process requires some understanding of how TestRail expects its data to be formatted, and a little bit of data transformation to bridge the gap.
 
 The primary challenge lies in the different structures. Excel, being a general-purpose spreadsheet program, allows for free-form data entry. TestRail, on the other hand, is a structured database system optimized for managing test cases, suites, runs, and other testing related entities. Direct import is generally not supported because the program needs standardized fields to map the excel data to and TestRail can only import data through csv format. Therefore, to import Excel data, you are forced to use csv format which may or may not be what your data originally looks like, thus requiring transformation.
 
@@ -21,6 +21,7 @@ Let’s delve into some code snippets, since I find that often illuminates the p
 **Example 1: Basic CSV Creation**
 
 This example assumes you've already cleaned up your Excel file, and you have a simple table with test case id and title.
+
 ```python
 import pandas as pd
 
@@ -68,11 +69,12 @@ print(f"Created test_cases_with_priority.csv")
 
 ```
 
-Here, we've added a 'priority' column, which then is renamed to 'custom\_priority\_2' to map to a custom field in TestRail with an id of 2. TestRail expects that custom fields be renamed to `custom_fieldid` where `fieldid` is replaced with the actual field id of the custom field that it maps to.
+Here, we've added a 'priority' column, which then is renamed to 'custom_priority_2' to map to a custom field in TestRail with an id of 2. TestRail expects that custom fields be renamed to `custom_fieldid` where `fieldid` is replaced with the actual field id of the custom field that it maps to.
 
 **Example 3: Handling Multi-line Descriptions**
 
 Sometimes, descriptions in Excel might contain multiple lines. This demonstrates how to handle those.
+
 ```python
 import pandas as pd
 
@@ -97,6 +99,7 @@ df.to_csv('test_cases_with_descriptions.csv', index=False)
 print(f"Created test_cases_with_descriptions.csv")
 
 ```
+
 This example shows that pandas will automatically take care of multi-line descriptions. CSV files are capable of handling line breaks, so no extra work is required when preparing them for import into testrail.
 
 These examples demonstrate simple scenarios; real-world situations can be far more complex. For example you might have pre-conditions, steps, expected results, all mixed into a single cell. In such cases, additional logic would be required to parse each cell, then separate out the various elements into distinct columns. This can be a significant effort, requiring custom scripting, data mapping, and transformation, however, the core principle remains the same.

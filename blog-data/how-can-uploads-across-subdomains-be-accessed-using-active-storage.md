@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-uploads-across-subdomains-be-accessed-using-active-storage"
 ---
 
-Alright, let's tackle this. I recall a project from a few years back, where we had a sprawling microservices architecture. Part of that involved users uploading files across various subdomains, and needing a unified way to access them, which of course, we opted to manage using active storage. It wasn't a completely straightforward setup, and it presented some interesting challenges with browser security and cors, so let me walk you through my experience and some solutions.
+, let's tackle this. I recall a project from a few years back, where we had a sprawling microservices architecture. Part of that involved users uploading files across various subdomains, and needing a unified way to access them, which of course, we opted to manage using active storage. It wasn't a completely straightforward setup, and it presented some interesting challenges with browser security and cors, so let me walk you through my experience and some solutions.
 
 Fundamentally, the issue stems from the browser's same-origin policy. When an upload happens from `app.example.com`, the browser will block requests to fetch that file from, say, `api.example.com` or `cdn.example.com` without explicit permissions. Active storage itself, as a tool to abstract away file management, handles the saving and processing, but doesn’t inherently solve the cross-domain accessibility problem. You need to configure the webservers appropriately to allow cross-origin resource sharing (cors).
 
@@ -65,6 +65,7 @@ amazon:
         #             'default-bucket'
          #        end %>
 ```
+
 This snippet shows the `storage.yml` file, where we define different s3 buckets for different `rails.env` environments. You can also see an commented out section using request subdomains instead of rails environments. This snippet shows how you can use ruby's embedded ruby (erb) template functionality to dynamically determine which bucket to target. This way, regardless of where the user is interacting with your system from, the pre-signed url will point to the appropriate storage bucket.
 
 Moving on, when the user interfaces with the application at `app.example.com`, our rails application generates pre-signed urls. These pre-signed urls permit access to the object on a one off basis, without requiring public access and without making a resource available directly. These pre-signed urls would target, in this case, the `production-bucket` if in production, which is configured to allow the necessary domains to access resources. Here's an example of how you can generate these pre-signed urls with rails:
@@ -92,6 +93,7 @@ class UploadController < ApplicationController
 end
 
 ```
+
 In this `uploadcontroller` example, the `create` action generates a pre-signed url, which is sent back to the user interface for uploading a file. The `show` action handles displaying a file when you have a `signed_id`. This utilizes active storage's `service_url_for_direct_upload` to provide the necessary url for the upload. When redirecting to the url of the attachment itself, rails takes care of setting the headers correctly to allow access across domains.
 
 Now, what if you need more granular control? You might need to introduce a proxy layer, possibly another service acting as an intermediary to further control access to the uploaded files. However, that adds complexity and could be a further point of failure in your infrastructure. The described method has generally worked well for us across multiple production deployments.

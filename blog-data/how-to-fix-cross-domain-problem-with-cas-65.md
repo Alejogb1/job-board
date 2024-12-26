@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "how-to-fix-cross-domain-problem-with-cas-65"
 ---
 
-alright, so you're hitting a cross-domain issue with cas 6.5. been there, done that, got the t-shirt – and probably a few gray hairs too. it’s a classic headache when you're dealing with different origins, especially with the added layer of a system like cas. let me walk you through how i’ve tackled this beast in the past.
+, so you're hitting a cross-domain issue with cas 6.5. been there, done that, got the t-shirt – and probably a few gray hairs too. it’s a classic headache when you're dealing with different origins, especially with the added layer of a system like cas. let me walk you through how i’ve tackled this beast in the past.
 
 the core problem, as i'm sure you're aware, is that browsers enforce something called the same-origin policy. basically, if your web application running on, say, `app.example.com` tries to make a request to `cas.example.net`, the browser will usually block it unless certain conditions are met. cas is usually deployed on a different domain than the apps using it so it's a common scenario. this is designed as a security measure to prevent malicious scripts from accessing sensitive data from other websites. but when you're trying to build a legitimate application, this can be a real pain.
 
-i recall a project a few years back – a single page application built with vue.js needing to authenticate against a cas server. i remember pulling my hair out for hours trying to debug why the authentication wasn’t working, only to realize that cors was the main culprit. the logs were a mess. i didn't even know what cors stood for, i spent one day researching. it was that frustrating. 
+i recall a project a few years back – a single page application built with vue.js needing to authenticate against a cas server. i remember pulling my hair out for hours trying to debug why the authentication wasn’t working, only to realize that cors was the main culprit. the logs were a mess. i didn't even know what cors stood for, i spent one day researching. it was that frustrating.
 
 in cas 6.5, there are a few common ways to address this. the typical strategy revolves around configuring cas to support cross-origin resource sharing (cors). this allows your browser to understand it can trust requests from a different origin. cas does this with filter that runs on every request, that why the cors filter configurations are the right way to go.
 
@@ -28,40 +28,40 @@ cas.webflow.cors.maxAge=3600
 
 breakdown:
 
-*   `cas.webflow.cors.enabled=true`: this turns cors support on.
-*   `cas.webflow.cors.allowedOrigins`: lists the origin urls that are permitted to access the cas resources. i use wild cards on subdomains when i can. like `https://*.example.com`
-*   `cas.webflow.cors.allowedMethods`: specifies the allowed http methods that the browser can send to cas endpoints, like `get`, `post`, `put` and so on. this is a crucial part of allowing certain kinds of operations.
-*   `cas.webflow.cors.allowedHeaders`: which http headers you expect to see, for example custom headers. you need to add `authorization` so you can sent your bearer tokens, which is common with oauth.
-*   `cas.webflow.cors.exposedHeaders`:  headers cas should expose to the clients, like location.
-*   `cas.webflow.cors.allowCredentials=true`: important if your app needs cookies for authorization, or any kind of credential.
-*   `cas.webflow.cors.maxAge`: specifies how long a browser is allowed to cache the preflight request, which speeds up things.
+- `cas.webflow.cors.enabled=true`: this turns cors support on.
+- `cas.webflow.cors.allowedOrigins`: lists the origin urls that are permitted to access the cas resources. i use wild cards on subdomains when i can. like `https://*.example.com`
+- `cas.webflow.cors.allowedMethods`: specifies the allowed http methods that the browser can send to cas endpoints, like `get`, `post`, `put` and so on. this is a crucial part of allowing certain kinds of operations.
+- `cas.webflow.cors.allowedHeaders`: which http headers you expect to see, for example custom headers. you need to add `authorization` so you can sent your bearer tokens, which is common with oauth.
+- `cas.webflow.cors.exposedHeaders`: headers cas should expose to the clients, like location.
+- `cas.webflow.cors.allowCredentials=true`: important if your app needs cookies for authorization, or any kind of credential.
+- `cas.webflow.cors.maxAge`: specifies how long a browser is allowed to cache the preflight request, which speeds up things.
 
 after doing this in the cas properties, you might also need to make changes in your front-end code. for example, if you are sending requests from javascript, you may need to add cors support to the javascript part of your application. you might have to configure the fetch api, or any library you are using. also note the cors filter applies to every request that passes through the servlet, so even the login endpoint. if you are hitting the cas login endpoint you might not see it working.
 
 here's an example using fetch api how it might look like (remember you need to enable `withCredentials` when doing cross origin requests)
 
 ```javascript
-fetch('https://cas.example.net/cas/login', {
-    method: 'GET',
-    mode: 'cors',
-    credentials: 'include'
-  })
-  .then(response => {
-   if (!response.ok) {
-       throw new Error(`http error: ${response.status}`);
-      }
+fetch("https://cas.example.net/cas/login", {
+  method: "GET",
+  mode: "cors",
+  credentials: "include",
+})
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(`http error: ${response.status}`);
+    }
     return response.text();
   })
-  .then(data => {
-    console.log('cas response:', data);
+  .then((data) => {
+    console.log("cas response:", data);
   })
-  .catch(error => {
-      console.error('fetch error:', error);
+  .catch((error) => {
+    console.error("fetch error:", error);
   });
 ```
 
-*   `mode: 'cors'` : tells the browser it should follow the cors rules for this request.
-*    `credentials: 'include'` : this makes sure that the request will include cookies, if cas sends them, very important for sessions.
+- `mode: 'cors'` : tells the browser it should follow the cors rules for this request.
+- `credentials: 'include'` : this makes sure that the request will include cookies, if cas sends them, very important for sessions.
 
 another thing to consider is the preflight request. whenever the browser detects a cors request it might send an extra http method called "options" to ask the server if the origin is allowed. the server must be configured to respond correctly to this. it is very common to mess up and have problems with that. this usually is handled in the filter, but it is an additional step in the request. the reason the browser does this is because cross origin requests are deemed dangerous, that's why it has to negotiate with the server before.
 
@@ -87,7 +87,7 @@ i remember once i forgot to add `credentials: 'include'` in a fetch request and 
 
 in the end it all boils down to understanding how cors works, checking the documentation, and being very thorough in the debugging. it’s a topic that seems simple but it can get very complex when different layers start interfering with each other.
 
-for deeper dives, i'd recommend checking the mozilla developer network (mdn) web docs on cors, it is a very good reference with a lot of examples, that helped me many times. there is also a book by martin fowler, titled *enterprise application integration: patterns and strategies*, although it is old, and not specific to cas, it's a very good general resource for dealing with distributed systems, that is also valuable when dealing with cas. the book *rest in practice* by jim webber et al. also provides good insights, regarding rest and general concepts that are useful. those are good options if you need to go deeper on the concepts. also the internet engineering task force (ietf) has some good documents if you like to read standards, like rfc6265 and rfc9110, to dig deeper into http and cookies.
+for deeper dives, i'd recommend checking the mozilla developer network (mdn) web docs on cors, it is a very good reference with a lot of examples, that helped me many times. there is also a book by martin fowler, titled _enterprise application integration: patterns and strategies_, although it is old, and not specific to cas, it's a very good general resource for dealing with distributed systems, that is also valuable when dealing with cas. the book _rest in practice_ by jim webber et al. also provides good insights, regarding rest and general concepts that are useful. those are good options if you need to go deeper on the concepts. also the internet engineering task force (ietf) has some good documents if you like to read standards, like rfc6265 and rfc9110, to dig deeper into http and cookies.
 
 remember, it is not you vs the machine, but you and the machine, so dont get too frustrated. it will work eventually, and the feeling of finally resolving that cross-domain problem is quite satisfying.
 

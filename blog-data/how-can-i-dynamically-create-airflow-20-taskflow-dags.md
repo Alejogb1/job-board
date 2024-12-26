@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-dynamically-create-airflow-20-taskflow-dags"
 ---
 
-Alright, let's talk about dynamically generating Airflow 2.0 TaskFlow DAGs. This is something I've spent a good bit of time on in a previous role, where we were moving away from manually written DAGs toward a more programmatic approach. The key challenge, as you've likely encountered, is managing the complexity inherent in orchestrating a variable number of tasks without ending up with a tangled mess of code. The move to TaskFlow in Airflow 2.0 provides an elegant solution through decorators, but dynamic creation requires a more structured methodology than what you might initially expect.
+, let's talk about dynamically generating Airflow 2.0 TaskFlow DAGs. This is something I've spent a good bit of time on in a previous role, where we were moving away from manually written DAGs toward a more programmatic approach. The key challenge, as you've likely encountered, is managing the complexity inherent in orchestrating a variable number of tasks without ending up with a tangled mess of code. The move to TaskFlow in Airflow 2.0 provides an elegant solution through decorators, but dynamic creation requires a more structured methodology than what you might initially expect.
 
 The most common approach, and frankly the most maintainable, revolves around generating your DAG definitions through a function that accepts parameters defining the shape and content of the DAG. We are not going to be generating a whole DAG from scratch on every run or trying to edit the DAG file while it's active. Instead, think of this as a recipe for constructing different DAGs based on variable inputs at definition time.
 
@@ -43,7 +43,7 @@ def create_dynamic_dag(dag_id, num_tasks, start_date):
 dag1 = create_dynamic_dag(dag_id="dynamic_dag_1", num_tasks=3, start_date=datetime(2024, 1, 1))
 ```
 
-In this code snippet, `create_dynamic_dag` takes parameters like `dag_id`, `num_tasks`, and `start_date` to create the DAG. The TaskFlow decorated `sample_task` is defined within the function, and we loop to create instances of this task, overriding the task ID for clarity.  This produces a dag with a varying number of sequentially executed tasks based on the provided number.
+In this code snippet, `create_dynamic_dag` takes parameters like `dag_id`, `num_tasks`, and `start_date` to create the DAG. The TaskFlow decorated `sample_task` is defined within the function, and we loop to create instances of this task, overriding the task ID for clarity. This produces a dag with a varying number of sequentially executed tasks based on the provided number.
 
 Now, let’s extend this example to a scenario where the task’s function is itself dynamic, based on configuration:
 
@@ -154,7 +154,7 @@ For a deeper dive into the concepts, I highly recommend looking at the following
 
 1.  **The official Apache Airflow documentation:** Start with the Airflow documentation site, specifically the sections on TaskFlow and DAG definition. This resource is indispensable.
 2.  **"Data Pipelines with Apache Airflow" by Bas P. Harenslak and Julian J. de Ruiter:** This book provides a comprehensive guide to best practices with Airflow, including techniques for creating dynamic DAGs. It's a useful reference.
-3. **"Designing Data-Intensive Applications" by Martin Kleppmann:** While not directly about Airflow, this book offers excellent insight into building robust and scalable systems which is valuable when working on complex pipeline systems.
-4. **Blog posts by the Airflow contributors and community members:** You can often find helpful articles about cutting edge techniques and best practices. These are often very practical.
+3.  **"Designing Data-Intensive Applications" by Martin Kleppmann:** While not directly about Airflow, this book offers excellent insight into building robust and scalable systems which is valuable when working on complex pipeline systems.
+4.  **Blog posts by the Airflow contributors and community members:** You can often find helpful articles about cutting edge techniques and best practices. These are often very practical.
 
 Remember, dynamic DAG generation is a powerful tool, but with power comes responsibility. Keep your designs modular, well-documented, and test your solutions rigorously before moving into production. Over-engineering can lead to more problems. Start with a simple use case, work with incremental improvements, and always strive for simplicity where possible. It is always better to be clear about the structure than to generate something so complex it is unmaintainable.

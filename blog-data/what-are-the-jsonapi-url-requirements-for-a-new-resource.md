@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-are-the-jsonapi-url-requirements-for-a-new-resource"
 ---
 
-alright, so, you're asking about the url structure needed when creating a new resource using jsonapi. got it. this is something i’ve bumped into more times than i care to remember, specially back when i was working on that microservices project for a fictional online bookstore, 'bookworm'. good times, mostly frustrating with some wins in the mix, naturally.
+, so, you're asking about the url structure needed when creating a new resource using jsonapi. got it. this is something i’ve bumped into more times than i care to remember, specially back when i was working on that microservices project for a fictional online bookstore, 'bookworm'. good times, mostly frustrating with some wins in the mix, naturally.
 
 the core idea here with jsonapi is to maintain consistency and predictability in how resources are accessed and manipulated. it's all about conventions, really, and when it comes to creating new resources, the url part is usually pretty straightforward, but there are some important details.
 
@@ -25,11 +25,13 @@ now, let's talk about the nuances, because there are always nuances.
 when we talk about related resources, and creating new related resources it gets a little bit more involved. jsonapi does not typically define any specific urls for creating a resource within relationship because the recommendation is to use the primary resource endpoint to create the resource directly instead of nested structures in the url. the resource object returned from creating the related resource contains the id information and the relationship data in the resource returned. so while it looks tempting to create a url like this: `/authors/123/books`, when creating a new book related to the author with id 123 that's not how jsonapi intends it to be. so we do not add the resource id in the url, but include the relationship data in the request body.
 
 so, to be clear the common and recomended way to create new resources is:
-* `post /books`: to create a book.
+
+- `post /books`: to create a book.
 
 and for relationships is as follows:
-*  `post /books`: when creating a book that belongs to an author, you include the author's id under the `relationships` in the json body.
-* `post /authors`: to create a new author
+
+- `post /books`: when creating a book that belongs to an author, you include the author's id under the `relationships` in the json body.
+- `post /authors`: to create a new author
 
 if you're thinking about nesting urls and thinking "should i use urls like `/authors/123/books`?" the simple answer is: no. jsonapi does not need that level of url nesting for creating related resources. instead, the relationships section of the payload is where the magic happens, and you pass in the related resource identifier.
 
@@ -54,19 +56,21 @@ here’s a simple json payload example for creating a new book, and linking it t
   }
 }
 ```
+
 and for completeness, this is the example json for creating an author:
 
 ```json
 {
-    "data": {
-      "type": "authors",
-      "attributes": {
-        "name": "alice programmer",
-        "biography": "an amazing author"
-      }
+  "data": {
+    "type": "authors",
+    "attributes": {
+      "name": "alice programmer",
+      "biography": "an amazing author"
     }
+  }
 }
 ```
+
 and the http post request to `post /authors` with the example json above, creates a new author.
 
 the important thing is that the type field, should match the jsonapi endpoint on the server, the attributes contain the actual fields of the resource and the relationships points to other resources in the api. this way the api knows how to interpret the request.

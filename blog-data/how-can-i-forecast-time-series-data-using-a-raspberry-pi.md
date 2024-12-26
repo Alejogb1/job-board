@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-forecast-time-series-data-using-a-raspberry-pi"
 ---
 
-Alright, let's talk time series forecasting on a Raspberry Pi. It's a question that hits close to home, as I recall working on a sensor network project a few years back where a fleet of Pis were our data collection and preliminary analysis hubs. The challenge, of course, was taking those raw readings and predicting future values – all within the constraints of a tiny, low-power computer. It's more than doable, but you need to approach it methodically.
+, let's talk time series forecasting on a Raspberry Pi. It's a question that hits close to home, as I recall working on a sensor network project a few years back where a fleet of Pis were our data collection and preliminary analysis hubs. The challenge, of course, was taking those raw readings and predicting future values – all within the constraints of a tiny, low-power computer. It's more than doable, but you need to approach it methodically.
 
 First off, understand that we're not going to be throwing around complex deep learning models here – not practically, anyway. The Pi has limitations in terms of processing power and memory, so we're looking at classical time series techniques, or at most, very lightweight machine learning approaches. This isn't a deficiency, rather, it's a fantastic learning exercise, forcing us to be efficient and understand the fundamentals. We'll consider approaches using both statistical models and simple machine learning models to demonstrate a range of potential solutions.
 
@@ -104,6 +104,7 @@ for i in range(forecast_steps):
 
 print("Future Forecast SVR:", future_predictions)
 ```
+
 Here, we used `scikit-learn` for SVR and feature generation. The process of creating lagged features is quite common in machine learning applications involving sequential data. Choosing the number of lags is another parameter that requires careful consideration and cross-validation, similar to selecting the ARIMA order. The kernel type, c, and gamma are also crucial parameters for the SVR and often require parameter tuning for optimal performance. Note that forecasting further into the future with SVR requires iteratively updating the input based on our previous predictions. This example shows a basic way to do it.
 
 Finally, let’s consider a simplified version of an exponential smoothing model, specifically Holt-Winters, which is useful when the time series shows both trend and seasonality. Holt-Winters methods are relatively inexpensive to compute which makes them suitable for devices like Raspberry Pi. It makes use of levels, trend and seasonality which are updated using smoothing parameters, alpha, beta and gamma, respectively.
@@ -140,6 +141,7 @@ print(f"RMSE (Holt-Winters): {rmse}")
 future_forecast = model_fit.forecast(steps=24)
 print("Future Forecast Holt-Winters:", future_forecast)
 ```
+
 This utilizes `statsmodels` for a simpler implementation of Exponential Smoothing. The important element here is to be aware of how your seasonal component of data might be represented. The seasonal_periods parameter is crucial and should be set according to your data. For instance, a daily pattern with hourly readings would need `seasonal_periods` to be set to 24. “Forecasting: Principles and Practice” by Rob J Hyndman and George Athanasopoulos is a great resource for understanding these types of methods.
 
 Choosing the appropriate technique is an iterative process. Always start with simpler models and gradually increase the complexity as needed. You'll need to continuously monitor and evaluate the accuracy of your models, perhaps using techniques like rolling forecast origins, where you re-train your models over small rolling windows of past observations to adapt to changes in your data. Parameter tuning, evaluation metrics and a thoughtful approach to data exploration are the most critical parts of making reliable forecasts on any device, including a Raspberry Pi.

@@ -4,19 +4,20 @@ date: "2024-12-13"
 id: "su-must-be-suid-work-root"
 ---
 
-Okay so you're asking why `su` which is the switch user command needs the setuid bit set and also needs to be owned by root right Got it I've been down this rabbit hole more times than I care to admit lets unpack this thing
+you're asking why `su` which is the switch user command needs the setuid bit set and also needs to be owned by root right Got it I've been down this rabbit hole more times than I care to admit lets unpack this thing
 
 So first off lets talk about what `su` even does in simple terms it lets you change your current user context to another user Usually its used to become root so you can do system level administration stuff but you can also use it to switch to other regular users
 
 Now you might be thinking well why cant I just run a program as any user I want like I own the computer right Wrong operating systems do not work like that They have a concept called user ids or UIDs each user has a unique numerical UID and processes are tagged with the UID of the user who started them This is essential for file permissions and security in general If you could just switch UIDs willy nilly things would be chaos So to run a program with a different UID the system needs a mechanism
 
-And that's where the setuid bit comes in The setuid bit is a special file permission bit when set on an executable it tells the kernel to run that executable with the UID of the *owner* of the executable not the user who executed it This is very different so keep that in mind
+And that's where the setuid bit comes in The setuid bit is a special file permission bit when set on an executable it tells the kernel to run that executable with the UID of the _owner_ of the executable not the user who executed it This is very different so keep that in mind
 
 Now lets look at `su` specifically. If you do an `ls -l /bin/su` or `/usr/bin/su` which is the common place you'll find it you would probably see something like this
 
 ```bash
 -rwsr-xr-x 1 root root 47048 Oct 17 2022 /bin/su
 ```
+
 See that `s` in the user permissions spot not `x` That means the setuid bit is set this is critical
 
 Also the file is owned by root as you saw which is also critical. If the file is not owned by root or if the setuid bit is not set `su` simply will not work as you expect it or at all.
@@ -25,7 +26,7 @@ Now imagine you are a regular user with UID 1000 lets call you user bob. You typ
 
 The `su` program now does its thing asking you for the root password checking it and then spawning a new shell process but this shell process now has the UID of root. This is how you become root.
 
-Okay so why does `su` absolutely positively need root ownership. Well the setuid bit only works if the executable is owned by the *user* whose privileges you are trying to inherit in our case its the all powerful root UID 0. It also needs to be owned by root to make sure that only an admin can modify the su program.
+why does `su` absolutely positively need root ownership. Well the setuid bit only works if the executable is owned by the _user_ whose privileges you are trying to inherit in our case its the all powerful root UID 0. It also needs to be owned by root to make sure that only an admin can modify the su program.
 
 If you tried setting the setuid bit and the owner was not root then it would just mean that the process will temporarily have the user id of say bob or any other user and not root or what ever the owner of the `/bin/su` file is
 
@@ -56,6 +57,7 @@ int main() {
     return 0;
 }
 ```
+
 The `getuid()` system call is how you check who the current user is in any program running. Here the idea is that when we run the program we check for uid to be 0 if yes that means the process is executing with uid 0 not the uid of the user who ran the program which is what would happen without the setuid bit being set.
 
 The whole concept is very important to understand when doing security on linux systems. Lets move to more practical stuff now.
@@ -78,6 +80,7 @@ chmod u+s /tmp/my_su
 # try to run it again
 /tmp/my_su
 ```
+
 You will notice that it won't work it wont give you root because it's not owned by root It doesn't matter if you give the file the permission it will still check to see the owner of the program. This demonstrates the importance of root ownership with the setuid bit.
 
 Now I'll add another pseudo code that is very close to the idea of what `su` does in essence just for a better understanding again do not run this as this is insecure and only for educational purposes.
@@ -111,7 +114,7 @@ int main(int argc, char *argv[]) {
     }
 
     uid_t target_uid = target_pw->pw_uid;
-    
+
     // This is a very dangerous operation only for educational purposes. Do not use this
     if (setuid(target_uid) != 0) {
         perror("setuid failed");

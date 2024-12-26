@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-convert-a-label-without-a-color-palette-to-a-class-array"
 ---
 
-alright, so you've got labels, probably from some image segmentation or object detection task, and these labels are just numbers, not tied to any specific color, and you need them as a class array, a one-hot encoded representation, i'm guessing? been there, done that. it’s a common thing when you move from working with label images to feeding data into a machine learning model.
+, so you've got labels, probably from some image segmentation or object detection task, and these labels are just numbers, not tied to any specific color, and you need them as a class array, a one-hot encoded representation, i'm guessing? been there, done that. it’s a common thing when you move from working with label images to feeding data into a machine learning model.
 
 let's break down why this is needed and how i usually approach it. basically, when you have a label image, each pixel holds an integer representing a class. for instance, `0` might be background, `1` could be a cat, `2` a dog, and so on. now, many machine learning models, particularly those using categorical cross-entropy loss, require the labels to be in a one-hot encoded format. this means that instead of a single number per pixel, you need a vector (or array) of probabilities for each class. only one of these elements is `1` (hot), corresponding to the correct class, and the rest are `0`. this is a lot easier for neural nets to handle.
 
@@ -62,6 +62,7 @@ print(class_array.shape)
 #  [1. 0. 0.]]]
 #(3, 3, 3)
 ```
+
 so there it is, if you want you can also vectorize the above, since numpy is cool at this:
 
 ```python
@@ -82,13 +83,15 @@ def labels_to_class_array_vec(labels, num_classes):
 
     return class_array
 ```
+
 this is much faster but some times not that clear if you don't know the `np.eye` function and how to leverage it for one hot encoding. what this function does is create an identity matrix with the size of num classes, this basically represents the one hot encoded array of each possible number, from `0` to `num_classes-1`, then, it index the `labels` reshaped as a `(-1)` vector, and this replaces the `0,1,2,...` from our labels to their corresponding one hot encoded array, after that we reshape back to the image dimension shape, and boom it works.
 
 some important notes i have gathered over the years:
-*   **data type**: make sure your `labels` array has an integer type, for example `np.int32` or similar, i ran into problems before when the data type was `float`. Also, it is a good idea to force the class array to be `float32`, especially if you are going to use tensorflow, as it is more performant and the default type.
-*   **handling edge cases:** be careful with missing class values, if you labels does not have all the possible classes represented in them, for example if you have classes from `0` to `4` but the image labels only have classes `0, 1, 3`, then `num_classes` should be `5` and not `3` (max label). a good sanity check you can make is `np.unique(labels)` to understand all the different classes in the image.
-*   **large datasets:** if you're working with very big images or lots of them, you might want to explore ways to optimize further, for instance, you could try batch processing or using a better backend framework. this is something i had to do when working with microscopy images. those files can get incredibly large.
-*   **check `num_classes`:** always double-check if the number of classes you are using is correct, this is a common source of issues, and it causes the model to train in the incorrect domain. trust me, i've spent hours hunting down such a simple typo.
+
+- **data type**: make sure your `labels` array has an integer type, for example `np.int32` or similar, i ran into problems before when the data type was `float`. Also, it is a good idea to force the class array to be `float32`, especially if you are going to use tensorflow, as it is more performant and the default type.
+- **handling edge cases:** be careful with missing class values, if you labels does not have all the possible classes represented in them, for example if you have classes from `0` to `4` but the image labels only have classes `0, 1, 3`, then `num_classes` should be `5` and not `3` (max label). a good sanity check you can make is `np.unique(labels)` to understand all the different classes in the image.
+- **large datasets:** if you're working with very big images or lots of them, you might want to explore ways to optimize further, for instance, you could try batch processing or using a better backend framework. this is something i had to do when working with microscopy images. those files can get incredibly large.
+- **check `num_classes`:** always double-check if the number of classes you are using is correct, this is a common source of issues, and it causes the model to train in the incorrect domain. trust me, i've spent hours hunting down such a simple typo.
 
 i would recommend checking some books if you want to deepen your knowledge on this issue and similar, i would start with "deep learning" by ian goodfellow for a strong mathematical background, and "hands-on machine learning with scikit-learn, keras & tensorflow" by aurelien geron for a more practical approach, especially if you are going to use python. these books are like the bible of machine learning and they are very useful in many occasions.
 

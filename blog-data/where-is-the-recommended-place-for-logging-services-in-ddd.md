@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "where-is-the-recommended-place-for-logging-services-in-ddd"
 ---
 
-Okay, let's tackle this one. I've seen this discussion come up more than a few times, and it's a detail that, while seemingly small, can have a significant impact on the maintainability and overall health of a system designed with domain-driven design (ddd). The short answer is: logging is an *infrastructure concern*, not a core domain one. Let's break down why, and how to implement it in a way that doesn't pollute your domain logic.
+, let's tackle this one. I've seen this discussion come up more than a few times, and it's a detail that, while seemingly small, can have a significant impact on the maintainability and overall health of a system designed with domain-driven design (ddd). The short answer is: logging is an _infrastructure concern_, not a core domain one. Let's break down why, and how to implement it in a way that doesn't pollute your domain logic.
 
 Let’s begin with the perspective I developed through a particularly challenging migration project about six years ago. We were transitioning a legacy monolith to a microservices architecture underpinned by ddd principles. Initially, the team had scattered logging statements across domain entities, services, and even within value objects. This made debugging a nightmare because we were drowning in irrelevant logs and struggled to extract actionable insights. What appeared as an elegant solution in isolation, soon transformed into a maintenance disaster.
 
-So, the core problem stems from the nature of logging. Domain logic should be concerned with the “what” and not the “how”. Consider a bank transfer operation. The domain is concerned with ensuring the correct amount is debited from one account and credited to another, adhering to rules such as insufficient funds or account lockouts. How this process is logged – using a particular format, routing to a specific data store, or even the severity of the log level – is entirely separate from the core business rules. That's an *infrastructure* decision. Injecting logging directly into domain objects introduces an unnecessary dependency on the logging infrastructure. This breaks the separation of concerns, tightly coupling the domain to specific technical implementations, and making the core logic harder to test and evolve.
+So, the core problem stems from the nature of logging. Domain logic should be concerned with the “what” and not the “how”. Consider a bank transfer operation. The domain is concerned with ensuring the correct amount is debited from one account and credited to another, adhering to rules such as insufficient funds or account lockouts. How this process is logged – using a particular format, routing to a specific data store, or even the severity of the log level – is entirely separate from the core business rules. That's an _infrastructure_ decision. Injecting logging directly into domain objects introduces an unnecessary dependency on the logging infrastructure. This breaks the separation of concerns, tightly coupling the domain to specific technical implementations, and making the core logic harder to test and evolve.
 
 When we had this realization in our previous project, we immediately began refactoring towards a structured logging approach. We extracted all logging logic into infrastructure-specific concerns, creating dedicated services or decorators responsible for logging. This yielded significant benefits in terms of code readability, maintainability, and testability.
 
@@ -57,7 +57,7 @@ class LoggingAccountTransferService(AccountTransferService):
             raise
 ```
 
-In this example `DefaultAccountTransferService` implements core domain logic. The `LoggingAccountTransferService` acts as a decorator, wrapping the core service and adding logging logic *around* the domain logic execution. This follows the open/closed principle - we can extend the core behaviour (in this case adding logging) without modifying its source.
+In this example `DefaultAccountTransferService` implements core domain logic. The `LoggingAccountTransferService` acts as a decorator, wrapping the core service and adding logging logic _around_ the domain logic execution. This follows the open/closed principle - we can extend the core behaviour (in this case adding logging) without modifying its source.
 
 **2. Infrastructure Layer Logging Service**
 
@@ -111,7 +111,7 @@ class BankService {
 
 ```
 
-Here, the `DefaultBankingLogger` is a concrete implementation using Slf4j. The logging logic is abstracted and can be easily replaced, such as using log4j2, without affecting the business layer. `BankService` then consumes this. Notice that this service doesn’t concern itself with how log output is generated, only with *what* should be logged.
+Here, the `DefaultBankingLogger` is a concrete implementation using Slf4j. The logging logic is abstracted and can be easily replaced, such as using log4j2, without affecting the business layer. `BankService` then consumes this. Notice that this service doesn’t concern itself with how log output is generated, only with _what_ should be logged.
 
 **3. Logging Within Event Handlers**
 
@@ -154,10 +154,10 @@ public class AccountCreatedEvent {
 }
 ```
 
-Here, `AccountCreatedEventHandler` handles the `AccountCreatedEvent`.  We leverage `ILogger` from Microsoft’s extension library for logging capabilities. Notice that logging is not directly embedded within the event or domain logic, but handled by the infrastructure.
+Here, `AccountCreatedEventHandler` handles the `AccountCreatedEvent`. We leverage `ILogger` from Microsoft’s extension library for logging capabilities. Notice that logging is not directly embedded within the event or domain logic, but handled by the infrastructure.
 
 **Resources and Further Reading:**
 
-For a deeper dive into ddd and separation of concerns, I'd recommend *Domain-Driven Design: Tackling Complexity in the Heart of Software* by Eric Evans. For more on general software architecture and design patterns, I recommend *Patterns of Enterprise Application Architecture* by Martin Fowler. Further, reading about the open/closed principle and general solid programming principles will be beneficial. These are the texts I found most informative when I was building systems with these requirements, and will be particularly helpful for the principles discussed in this response.
+For a deeper dive into ddd and separation of concerns, I'd recommend _Domain-Driven Design: Tackling Complexity in the Heart of Software_ by Eric Evans. For more on general software architecture and design patterns, I recommend _Patterns of Enterprise Application Architecture_ by Martin Fowler. Further, reading about the open/closed principle and general solid programming principles will be beneficial. These are the texts I found most informative when I was building systems with these requirements, and will be particularly helpful for the principles discussed in this response.
 
 In summary, logging is crucial for observability, but it's an infrastructure concern that should be carefully isolated from domain logic. Keep your domain clean and focused on the "what," leaving the "how" of logging to the application and infrastructure layers. This makes your code more modular, testable, and maintainable in the long run.

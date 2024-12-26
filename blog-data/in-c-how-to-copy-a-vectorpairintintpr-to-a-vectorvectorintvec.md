@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "in-c-how-to-copy-a-vectorpairintintpr-to-a-vectorvectorintvec"
 ---
 
-alright, so you've got a `vector<pair<int, int>>` and want to transform it into a `vector<vector<int>>`. i've been there, trust me. it sounds like a simple copy operation, but the data structure difference requires a little more than a `std::copy`. i remember banging my head against this for an hour when i was porting some old physics simulation code that was all over the place with its data formats ( i know we all have done this at some point, lol ). let's get down to it.
+, so you've got a `vector<pair<int, int>>` and want to transform it into a `vector<vector<int>>`. i've been there, trust me. it sounds like a simple copy operation, but the data structure difference requires a little more than a `std::copy`. i remember banging my head against this for an hour when i was porting some old physics simulation code that was all over the place with its data formats ( i know we all have done this at some point, lol ). let's get down to it.
 
 the core issue here is that you're not just copying values, you're restructuring them. a `pair<int, int>` is two integers paired together, and a `vector<int>` is a dynamic array of integers. a `vector<vector<int>>` is a dynamic array of dynamic arrays of integers. so, you're essentially taking each pair and turning it into its own individual vector within the larger vector.
 

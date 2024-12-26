@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-you-get-the-result-from-golearn-models"
 ---
 
-Alright, let's talk about extracting results from `golearn` models. I’ve spent a fair chunk of my career building and deploying machine learning models, and `golearn` has been one of those tools I've frequently used. It's efficient and has a surprisingly well-structured api, but the specific ways you pull out results can sometimes be a bit nuanced. This isn't about some theoretical exercise; this is about translating the statistical magic into actionable data, the kind that your software actually uses.
+, let's talk about extracting results from `golearn` models. I’ve spent a fair chunk of my career building and deploying machine learning models, and `golearn` has been one of those tools I've frequently used. It's efficient and has a surprisingly well-structured api, but the specific ways you pull out results can sometimes be a bit nuanced. This isn't about some theoretical exercise; this is about translating the statistical magic into actionable data, the kind that your software actually uses.
 
 The straightforward way, obviously, is through the model's `Predict` method. You feed it data, and it hands back predictions. Simple enough in principle, but the devil is always in the details – which details, specifically, depends heavily on the type of problem we're tackling. Think about it: are you dealing with classification, regression, clustering, or something more complex? Each of those model types returns slightly different outputs.
 
@@ -54,6 +54,7 @@ func main() {
 	}
 }
 ```
+
 In this snippet, we’re fitting a logistic regression to some sample data. When we call `lr.Predict(newX)`, we receive a `base.FixedDataGrid`, not simply a list of predicted classes. This grid often contains several useful columns, such as the raw predictions, or probabilities. In most use cases, we extract the class labels by iterating and fetching each prediction as shown. Be aware that the exact content within the prediction grid can vary based on the model being used.
 
 Now, let's shift our attention to regression. When I was developing a model to forecast the sale price of houses, we naturally moved towards linear regression. Here’s how I got results from it:
@@ -100,6 +101,7 @@ func main() {
     }
 }
 ```
+
 With linear regression, the `Predict` method returns a `base.FixedDataGrid` with predicted numerical values (usually floats). We then proceed to pull these values as we did with the classification example. This is crucial; you don’t receive the actual numbers back, but a structure containing them which you then have to extract as required. The column we’re retrieving from is always `0` in a standard call to `Predict`, unless you configure the model to output more features during the `Fit` step (which is relatively rare).
 
 Finally, consider unsupervised learning, specifically clustering. When working on an anomaly detection system, clustering algorithms like k-means proved to be incredibly powerful at identifying irregular data points. Here’s how we extracted cluster assignments:
@@ -142,6 +144,7 @@ func main() {
 
 }
 ```
+
 The interesting thing here is that while we’re still using the `Predict` method, it behaves differently. The result isn't a continuous value or probabilities, but discrete cluster IDs, represented as string labels. Each instance receives a label representing its assigned cluster, and those labels usually need to be processed further depending on the task you are trying to accomplish.
 
 So, what are some things to pay close attention to? Firstly, understand that `golearn` focuses heavily on the `base.Instances` and `base.FixedDataGrid` structures. This means that you will have to convert your data into `base.Instances` initially, then interpret the output as a `base.FixedDataGrid` after a `Predict` call. This also means that you might have to iterate or convert to more familiar data structures before you use the results. Secondly, remember the specific properties of each model. A binary classifier outputs discrete class labels; a regressor outputs numerical values; a clusterer outputs cluster ids. And finally, always remember to check the error returned by methods like `Fit` and `Predict` as it can give some information about issues with the data.

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-i-obtain-the-gradient-of-a-tensorflow-2-output-with-respect-to-an-intermediate-layers-activation"
 ---
 
-Alright, let’s dive into this. I remember a project a few years back where we were trying to visualize which parts of an input image were most influential in a convolutional neural network's classification decision. That meant calculating gradients with respect to intermediate layers, and it wasn't exactly straightforward initially. The beauty of TensorFlow 2, however, lies in its flexibility and the tools it provides for exactly this sort of task. It's more about understanding the mechanics than just knowing a magic function.
+, let’s dive into this. I remember a project a few years back where we were trying to visualize which parts of an input image were most influential in a convolutional neural network's classification decision. That meant calculating gradients with respect to intermediate layers, and it wasn't exactly straightforward initially. The beauty of TensorFlow 2, however, lies in its flexibility and the tools it provides for exactly this sort of task. It's more about understanding the mechanics than just knowing a magic function.
 
-Essentially, to get the gradient of your output with respect to the activation of an intermediate layer, you're going to leverage TensorFlow's automatic differentiation capabilities. Specifically, you'll use `tf.GradientTape`. The key is to wrap the forward pass computations *up to* your target intermediate layer within the tape's context. After that, you'll need to separately compute the rest of the forward pass and then calculate the gradient. This lets you isolate which computations are contributing to your desired gradient calculation.
+Essentially, to get the gradient of your output with respect to the activation of an intermediate layer, you're going to leverage TensorFlow's automatic differentiation capabilities. Specifically, you'll use `tf.GradientTape`. The key is to wrap the forward pass computations _up to_ your target intermediate layer within the tape's context. After that, you'll need to separately compute the rest of the forward pass and then calculate the gradient. This lets you isolate which computations are contributing to your desired gradient calculation.
 
 Let's break it down step-by-step, and then I'll show you some code examples. First, you define your model. Then, you establish two sections of forward computation. The first part (within the `GradientTape`) goes up to the intermediate layer, and the second section completes the forward pass from the output of that layer to your loss function. Finally, you calculate the gradient of your loss, with respect to the intermediate layer's output that was recorded by the tape.
 
@@ -65,7 +65,7 @@ print("Shape of intermediate output:", intermediate_output.shape)
 print("Shape of gradients:", gradients.shape)
 ```
 
-In this example, we want the gradients with respect to `model.conv2` *after* the output passes through `model.pool1`. Note that we must compute the output of `model.pool1` within the tape's context. That is the layer we want to compute the gradient with respect to. The rest of the forward pass occurs outside the tape to not interfere.
+In this example, we want the gradients with respect to `model.conv2` _after_ the output passes through `model.pool1`. Note that we must compute the output of `model.pool1` within the tape's context. That is the layer we want to compute the gradient with respect to. The rest of the forward pass occurs outside the tape to not interfere.
 
 **Example 2: More Explicit Layer Access**
 

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-resolve-argument-passing-errors-in-python-code-running-in-a-jupyter-notebook"
 ---
 
-Alright, let’s tackle this. I’ve seen my fair share of argument passing issues in Jupyter Notebooks, and they can be quite frustrating because the interactive nature sometimes obscures the usual debugging paths. It's not always immediately apparent *why* your function, which seems perfectly fine in isolation, is suddenly throwing errors when called within the notebook’s environment. From my experience, the issue usually boils down to a few common culprits, and I'll walk you through them with some practical examples.
+, let’s tackle this. I’ve seen my fair share of argument passing issues in Jupyter Notebooks, and they can be quite frustrating because the interactive nature sometimes obscures the usual debugging paths. It's not always immediately apparent _why_ your function, which seems perfectly fine in isolation, is suddenly throwing errors when called within the notebook’s environment. From my experience, the issue usually boils down to a few common culprits, and I'll walk you through them with some practical examples.
 
 First off, let’s remember that Jupyter Notebooks are essentially fancy wrappers around IPython, meaning they maintain state. This stateful environment can sometimes lead to variable scope and type issues that wouldn't normally arise in a traditional script. This is crucial, as arguments being passed from one cell to another are subject to this environment and its sometimes quirky behavior.
 
-One of the most frequent problems I’ve encountered is incorrect data type passing. I recall a project involving geospatial analysis where we had a function designed to process coordinates from a pandas dataframe. The function correctly parsed coordinates when called directly, however, when the dataframe was passed from a different notebook cell the function threw a cryptic type error. Turns out, we had mistakenly overwritten the dataframe variable in an earlier, unrelated cell with a *different* object type, which then propagated into the later cells.
+One of the most frequent problems I’ve encountered is incorrect data type passing. I recall a project involving geospatial analysis where we had a function designed to process coordinates from a pandas dataframe. The function correctly parsed coordinates when called directly, however, when the dataframe was passed from a different notebook cell the function threw a cryptic type error. Turns out, we had mistakenly overwritten the dataframe variable in an earlier, unrelated cell with a _different_ object type, which then propagated into the later cells.
 
 Let me illustrate this with a simplified example. Assume we have a function that expects a list of integers:
 
@@ -101,7 +101,7 @@ print(result)
 
 This approach makes your code much more robust and easier to reason about, as you're not relying on hidden global state impacting argument values.
 
-Finally, another source of frustration can be related to *lambda functions and closures* in the notebook. Lambda functions may not behave as you’d expect when used inside loops or with default function parameters because they capture variables by reference, and that can cause issues when these variables get updated later.
+Finally, another source of frustration can be related to _lambda functions and closures_ in the notebook. Lambda functions may not behave as you’d expect when used inside loops or with default function parameters because they capture variables by reference, and that can cause issues when these variables get updated later.
 
 Here is a minimal example demonstrating this.
 
@@ -143,9 +143,9 @@ In summary, these are just three of the typical argument passing pitfalls you mi
 
 For further study I would suggest:
 
-*   **"Fluent Python" by Luciano Ramalho:** This book covers many of Python’s advanced concepts including closures and how scoping rules work, and I highly recommend it.
-*   **The Python Language Reference documentation:** Specifically, the sections related to scoping rules, function definitions, and lambda expressions provide the most authoritative understanding of these issues.
-*   **Effective Python by Brett Slatkin:** Although not entirely focused on notebook environments, this book offers a lot of best practices that are very helpful in this context, especially concerning how to write clear and maintainable code.
-*   **"Python Cookbook" by David Beazley and Brian K. Jones:** The chapter on functions is very useful in understanding common patterns and challenges.
+- **"Fluent Python" by Luciano Ramalho:** This book covers many of Python’s advanced concepts including closures and how scoping rules work, and I highly recommend it.
+- **The Python Language Reference documentation:** Specifically, the sections related to scoping rules, function definitions, and lambda expressions provide the most authoritative understanding of these issues.
+- **Effective Python by Brett Slatkin:** Although not entirely focused on notebook environments, this book offers a lot of best practices that are very helpful in this context, especially concerning how to write clear and maintainable code.
+- **"Python Cookbook" by David Beazley and Brian K. Jones:** The chapter on functions is very useful in understanding common patterns and challenges.
 
 Remember, the key to resolving these kinds of issues is to write clear, well-structured code with explicit argument passing. When in doubt, use the debugger, inspect your variable types often, and carefully consider how variables flow through the notebook's stateful environment. It can be tricky at first, but with practice, you'll find these kinds of issues become far less troublesome.

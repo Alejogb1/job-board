@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-tcp-connection-established-on-localhost-terminate-by-rst-right-after-a-three-way-handshake-sometimes"
 ---
 
-Okay, let's tackle this. It’s a situation I've encountered several times during my career, usually in the midst of debugging some rather complex microservices architecture. The scenario, a localhost tcp connection getting immediately terminated by a reset (rst) packet right after the three-way handshake, can be perplexing at first glance, but there are several underlying causes which we can methodically explore. I've personally spent late nights in front of packet captures figuring out these exact problems, and I’ve learned to approach it systematically.
+, let's tackle this. It’s a situation I've encountered several times during my career, usually in the midst of debugging some rather complex microservices architecture. The scenario, a localhost tcp connection getting immediately terminated by a reset (rst) packet right after the three-way handshake, can be perplexing at first glance, but there are several underlying causes which we can methodically explore. I've personally spent late nights in front of packet captures figuring out these exact problems, and I’ve learned to approach it systematically.
 
 The quick explanation is that the rst flag in a tcp packet signifies an abrupt termination. It’s essentially a "no-nonsense" way for the operating system or network stack to indicate something went wrong, and there’s no recovery available or intended by the sending side. When you see this happening immediately after a successful three-way handshake (syn, syn-ack, ack), it strongly suggests a problem beyond the basic connection establishment, focusing on the actual application interaction that follows.
 
@@ -38,7 +38,7 @@ if __name__ == "__main__":
     broken_server()
 ```
 
-Here, we create a socket, bind and listen. Crucially, after accepting a connection, we immediately close the *connection* socket, and then the *server* socket. This makes it very easy to trigger the `rst`. The operating system receives the close signal and generates an RST. Any data sent on the connection side after the handshake would be met with immediate reset. To the client, it appears that a handshake completes and then immediately fails.
+Here, we create a socket, bind and listen. Crucially, after accepting a connection, we immediately close the _connection_ socket, and then the _server_ socket. This makes it very easy to trigger the `rst`. The operating system receives the close signal and generates an RST. Any data sent on the connection side after the handshake would be met with immediate reset. To the client, it appears that a handshake completes and then immediately fails.
 
 **Scenario 2: Data Format Mismatch (or Unexpected Initial Payload)**
 
@@ -95,6 +95,7 @@ if __name__ == "__main__":
     mismatch_client()
 
 ```
+
 Here, the server explicitly checks for "correct_prefix". if it receives something different, the server closes the connection, and this often results in an `rst`. This kind of situation can be surprisingly difficult to detect without careful logging or packet capture analysis.
 
 **Scenario 3: Timeout Related Issues**

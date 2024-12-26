@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "concatenate-inputs-in-verilog"
 ---
 
-Alright so you wanna concatenate inputs in Verilog right Been there done that got the t-shirt and probably a few scars from debugging late night synthesis runs let me tell you its a classic problem with a few solid solutions and some gotchas you should definitely know about
+so you wanna concatenate inputs in Verilog right Been there done that got the t-shirt and probably a few scars from debugging late night synthesis runs let me tell you its a classic problem with a few solid solutions and some gotchas you should definitely know about
 
 First off lets talk about the basics The easiest way to smash signals together is using the concatenation operator its that `{}` curly brace thing you see everywhere you can throw individual bits variables even whole vectors into it it’ll just line them up like they’re waiting for a bus kinda thing
 
@@ -38,6 +38,7 @@ module complex_concatenate (
 
 endmodule
 ```
+
 notice how we mixed variables and binary literals inside the curly braces we created a fixed header `2'b10` added the data bus some zeros as padding the control signals and an end of packet bit and a status flag that’s a common technique when creating a data packet or a memory address
 
 Ok now where things get hairy is when you start using the replication operator inside the concatenations its the `{n{signal}}` thing that repeats the given signal n number of times so it’s not just adding it like `assign c = {a,a,a};` in the previous examples it is the `n` amount of copies of signal what’s the big deal you ask well it looks simple but you can make your design look much cleaner without creating helper variables specially if you need the same value repeated more than just 3 or 4 times also this is a useful feature that reduces the amount of code you need to write and makes it more readable trust me on this your future self will thank you
@@ -55,6 +56,7 @@ module replication_concatenate (
 
 endmodule
 ```
+
 In this example we are creating an output data packet we replicated parity bit 8 times added 4 times the data then added the data and finally four zero bits for good measure think of this as filling up a memory address with a particular pattern if you want to understand it
 
 Now for a gotcha that will probably bite you in the butt one day and I mean it the sizes of the inputs in the concatenation need to be well defined its a huge mistake to concatenate signals with unknown sizes that happens usually when using parameters that are not defined or if your inputs are using non constant width signals it is very common and when it happens it gives you weird synthesis errors or weird waveform behaviors I mean we're talking about unexpected signal values or timing issues in the design and if you are not careful with this kind of situation you might fall into the famous situation where you spend all your day debugging something really stupid that you should have avoided from the beginning
@@ -67,7 +69,7 @@ Remember that synthesis tools are optimizing for resources and they might not al
 
 Another thing you should take in to account is the timing of your signals in synchronous circuits a typical concatenation will not add much delay it is just a wire but if you are using replication or very wide vectors it might need a little bit of time to propagate through the hardware and you need to account for that and that is why you should always run timing analysis after implementation of your designs to make sure your design is within the time constraints of your hardware
 
-Alright now lets talk about resources because I am a big fan of books and papers instead of random tutorials on the internet
+now lets talk about resources because I am a big fan of books and papers instead of random tutorials on the internet
 
 You definitely need a good verilog reference book I recommend "Verilog HDL" by Samir Palnitkar its a classic and goes deep into everything including concatenation It is useful for a good foundation for everything you might need to know about Verilog syntax and use cases it is a staple in many universities
 

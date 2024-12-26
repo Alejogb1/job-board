@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-improve-the-accuracy-of-a-vgg16-model-given-potential-underfitting-or-overfitting-issues"
 ---
 
-Okay, let's tackle this. I’ve definitely been in the trenches with VGG16 before, seen its quirks and its strengths. Improving accuracy, especially when you're juggling underfitting and overfitting, can feel like a tightrope walk, but it's absolutely achievable with a systematic approach. It's not a magic bullet, but a combination of techniques applied thoughtfully. Here’s how I generally approach this, based on lessons learned.
+, let's tackle this. I’ve definitely been in the trenches with VGG16 before, seen its quirks and its strengths. Improving accuracy, especially when you're juggling underfitting and overfitting, can feel like a tightrope walk, but it's absolutely achievable with a systematic approach. It's not a magic bullet, but a combination of techniques applied thoughtfully. Here’s how I generally approach this, based on lessons learned.
 
 First, let's clarify the enemy, so to speak: underfitting versus overfitting. Underfitting usually means our model hasn’t learned the underlying patterns in the data well enough. It might have too few parameters, or not have trained for long enough. Overfitting, on the other hand, means the model has learned the training data too well, including the noise, leading to poor generalization on unseen data. Diagnosing which issue you have is critical before deciding on the appropriate adjustments. Looking at your training and validation curves is usually the first step: if both curves are high and close to each other, you have a case of underfitting, whereas a large gap between both indicates overfitting.
 
@@ -36,7 +36,7 @@ def create_data_generator(batch_size=32, image_size=(224, 224)):
 def load_images_from_directory(directory_path, image_size=(224,224), batch_size=32, datagen=None, subset=None):
   if datagen is None:
     datagen = create_data_generator()
-  
+
   image_gen = datagen.flow_from_directory(
     directory_path,
     target_size=image_size,
@@ -129,9 +129,9 @@ In this snippet, I've added batch normalization after the first dense layer and 
 
 For a deeper dive, I highly recommend exploring these resources:
 
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book provides a comprehensive theoretical foundation for deep learning concepts, including all the techniques I discussed here.
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book offers practical insights into building and deploying deep learning models using Keras and TensorFlow.
-*   **Papers on Transfer Learning:** Search for research papers on transfer learning in computer vision. Keywords like 'fine-tuning,' 'domain adaptation,' and 'feature extraction' can be helpful. Pay attention to different techniques used by researchers who try to tackle these issues.
-*   **Papers on Regularization:** Research papers on L1 and L2 regularization, dropout and batch normalization, which offer theoretical understanding of these techniques.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book provides a comprehensive theoretical foundation for deep learning concepts, including all the techniques I discussed here.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book offers practical insights into building and deploying deep learning models using Keras and TensorFlow.
+- **Papers on Transfer Learning:** Search for research papers on transfer learning in computer vision. Keywords like 'fine-tuning,' 'domain adaptation,' and 'feature extraction' can be helpful. Pay attention to different techniques used by researchers who try to tackle these issues.
+- **Papers on Regularization:** Research papers on L1 and L2 regularization, dropout and batch normalization, which offer theoretical understanding of these techniques.
 
 Improving a model is an iterative process. Monitor your training and validation metrics after each adjustment. If you make a change and it doesn’t work, don't be afraid to undo it and try something else. It's rarely a straightforward path, but with a structured approach and an understanding of these techniques, you will get there. Remember that there’s no magic recipe and that different datasets might need slightly different approaches.

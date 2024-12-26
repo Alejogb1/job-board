@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-combine-activerecord-models-and-sort-by-shared-properties"
 ---
 
-Alright, let's tackle this. It's a scenario I've bumped into more times than I'd like to recall, particularly when dealing with complex data structures where multiple models share common attributes. The core challenge is efficient sorting, and ActiveRecord, while powerful, doesn't natively provide this out of the box, at least not in the way one might initially expect.
+, let's tackle this. It's a scenario I've bumped into more times than I'd like to recall, particularly when dealing with complex data structures where multiple models share common attributes. The core challenge is efficient sorting, and ActiveRecord, while powerful, doesn't natively provide this out of the box, at least not in the way one might initially expect.
 
 The issue stems from the fundamental structure of a relational database and the way ActiveRecord abstracts interactions with it. When you’re working with disparate models, each model often exists within its own table, with its own unique set of columns (and sometimes, shared ones). ActiveRecord, operating primarily on a per-table basis, doesn’t inherently understand how to perform sorting on attributes that exist across multiple different tables. We have to facilitate that ourselves.
 
@@ -28,12 +28,13 @@ def combined_and_sort_in_memory
   sorted_combined
 end
 ```
-*Explanation:*
 
-*   We start by retrieving all the records from each model and convert the ActiveRecord relations to plain arrays using `.to_a`.
-*   The two arrays are merged into a single array, `combined`.
-*   We sort the combined array based on the `created_at` attribute of each object in descending order. Notice the use of the `&:` operator here, which provides a concise shorthand for calling methods on elements within an array.
-*   The sorted result is then returned.
+_Explanation:_
+
+- We start by retrieving all the records from each model and convert the ActiveRecord relations to plain arrays using `.to_a`.
+- The two arrays are merged into a single array, `combined`.
+- We sort the combined array based on the `created_at` attribute of each object in descending order. Notice the use of the `&:` operator here, which provides a concise shorthand for calling methods on elements within an array.
+- The sorted result is then returned.
 
 This approach works nicely with small or moderate datasets, but if you're dealing with thousands or millions of records, this will strain server memory, and become inefficient, especially if pagination is needed. Performance will quickly deteriorate as your dataset increases.
 
@@ -56,11 +57,11 @@ end
 
 ```
 
-*Explanation:*
+_Explanation:_
 
-*   We generate custom sql queries to fetch only necessary columns from each model, also adding a `type` column so we can distinguish between Article and Blogpost instances.
-*   The two queries are combined using SQL's `UNION ALL`, which appends the results of the second query to the first. It is also important to note that we explicitly select the same columns from both tables and use `UNION ALL` rather than `UNION` as `UNION` will remove duplicate records.
-*   We use `ActiveRecord::Base.connection.exec_query` to execute the final SQL query. Note that this returns a result set, but not a standard ActiveRecord Relation. We also wrap the results into a custom Struct, in this case, `CombinedResult` for further manipulation.
+- We generate custom sql queries to fetch only necessary columns from each model, also adding a `type` column so we can distinguish between Article and Blogpost instances.
+- The two queries are combined using SQL's `UNION ALL`, which appends the results of the second query to the first. It is also important to note that we explicitly select the same columns from both tables and use `UNION ALL` rather than `UNION` as `UNION` will remove duplicate records.
+- We use `ActiveRecord::Base.connection.exec_query` to execute the final SQL query. Note that this returns a result set, but not a standard ActiveRecord Relation. We also wrap the results into a custom Struct, in this case, `CombinedResult` for further manipulation.
 
 This approach is considerably faster than the in-memory sort, particularly for larger datasets, as the database server is generally much more efficient at sorting than Rails. It’s important to note that we need to manually define a struct to hold the results which is usually the price we pay for raw SQL queries and gives us great flexibility.
 
@@ -86,22 +87,24 @@ class BlogPost < ApplicationRecord
 end
 ```
 
-*Explanation:*
+_Explanation:_
 
-*   We define the `Content` model, which contains shared properties like `created_at`, and a polymorphic association via `contentable`.
-*   Both the `Article` and `BlogPost` models now have a `content` association.
-*   The `accepts_nested_attributes_for :content` enables us to create new `Content` entries through the respective models.
+- We define the `Content` model, which contains shared properties like `created_at`, and a polymorphic association via `contentable`.
+- Both the `Article` and `BlogPost` models now have a `content` association.
+- The `accepts_nested_attributes_for :content` enables us to create new `Content` entries through the respective models.
 
 This facilitates more structured data storage as well as simplified sorting, albeit at the cost of introducing more tables to manage:
+
 ```ruby
 def sort_with_polymorphic_association
     Content.order(created_at: :desc).includes(:contentable)
 end
 ```
-*Explanation:*
 
-*   We leverage the now centralized `Content` model to sort by the `created_at` column directly
-*   We include the `contentable` association so we can access the associated model (article or blog post).
+_Explanation:_
+
+- We leverage the now centralized `Content` model to sort by the `created_at` column directly
+- We include the `contentable` association so we can access the associated model (article or blog post).
 
 This approach is more suitable when dealing with shared columns such as `created_at`, `updated_at`, and other general attributes which are used by various models as this consolidates common data and sorting logic to a central place in the application.
 
@@ -117,8 +120,8 @@ When making your decision on the approach you will be using, consider the follow
 
 **Recommended Resources:**
 
-*   **“SQL and Relational Theory” by C.J. Date**: Provides a deep understanding of relational database concepts, crucial for efficient SQL usage.
-*   **“Database System Concepts” by Abraham Silberschatz, Henry F. Korth, and S. Sudarshan:** A comprehensive resource that covers the underpinnings of database management systems.
-*  **The Official ActiveRecord documentation**: The official documentation for ActiveRecord offers insights into its inner workings, which will prove useful when you are trying to optimise operations involving this library.
+- **“SQL and Relational Theory” by C.J. Date**: Provides a deep understanding of relational database concepts, crucial for efficient SQL usage.
+- **“Database System Concepts” by Abraham Silberschatz, Henry F. Korth, and S. Sudarshan:** A comprehensive resource that covers the underpinnings of database management systems.
+- **The Official ActiveRecord documentation**: The official documentation for ActiveRecord offers insights into its inner workings, which will prove useful when you are trying to optimise operations involving this library.
 
 In my experience, a combination of these techniques is often necessary for creating highly efficient and scalable applications. The "correct" approach depends on the particular circumstances and you will need to weigh the pros and cons of each approach in your specific application. Always begin with the most straightforward method, which would likely be combining results and sorting in memory, and then progressively enhance it if and when performance demands it.

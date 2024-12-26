@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "why-do-i-get-an-indexerror-too-many-indices-for-tensors-of-dimension-3"
 ---
 
-Okay, let's unpack that `IndexError: too many indices` you're encountering with your 3-dimensional tensors. It's a common pitfall, and I've certainly tripped over it more than a few times during my time developing neural network architectures, particularly when transitioning between data representations. It’s not a fundamental flaw in tensor operations, but rather an indication that you're providing more index parameters than the tensor's dimensionality allows. This essentially means you're trying to access elements that don't exist within the tensor's structural constraints.
+, let's unpack that `IndexError: too many indices` you're encountering with your 3-dimensional tensors. It's a common pitfall, and I've certainly tripped over it more than a few times during my time developing neural network architectures, particularly when transitioning between data representations. It’s not a fundamental flaw in tensor operations, but rather an indication that you're providing more index parameters than the tensor's dimensionality allows. This essentially means you're trying to access elements that don't exist within the tensor's structural constraints.
 
-Fundamentally, a tensor’s dimensions determine how many indices are needed to pinpoint a single element within it. A 1-dimensional tensor (like a simple vector) requires one index. A 2-dimensional tensor (a matrix) needs two – one for the row and another for the column. Consequently, a 3-dimensional tensor needs three indices: one each for depth, row, and column, or whatever three dimensions you've defined it to represent. The error occurs when you mistakenly try to access an element using *more* indices than the tensor actually supports.
+Fundamentally, a tensor’s dimensions determine how many indices are needed to pinpoint a single element within it. A 1-dimensional tensor (like a simple vector) requires one index. A 2-dimensional tensor (a matrix) needs two – one for the row and another for the column. Consequently, a 3-dimensional tensor needs three indices: one each for depth, row, and column, or whatever three dimensions you've defined it to represent. The error occurs when you mistakenly try to access an element using _more_ indices than the tensor actually supports.
 
-Consider this a structural mismatch. The tensor, as a data container, is pre-allocated with a specific shape. Accessing it incorrectly is like trying to find the 3rd floor of a 2-story building - it simply isn't there. The error explicitly tells you that you are specifying *too many* indices, which is a clear pointer toward the issue.
+Consider this a structural mismatch. The tensor, as a data container, is pre-allocated with a specific shape. Accessing it incorrectly is like trying to find the 3rd floor of a 2-story building - it simply isn't there. The error explicitly tells you that you are specifying _too many_ indices, which is a clear pointer toward the issue.
 
 To better illustrate this with examples, let’s pretend we’re analyzing sensor data in a robotics context, which is where I first stumbled upon this error a few years back. I was dealing with a three-dimensional tensor that represented readings from multiple sensors across different time points. Let me demonstrate a working example to better clarify the situation:
 
@@ -29,13 +29,13 @@ print(f"Shape of the tensor: {sensor_data.shape}")
 print(f"Specific element accessed: {reading}")
 ```
 
-Here, the `sensor_data` tensor has a shape of `(2, 3, 4)`. To retrieve a specific element, we correctly use *three* indices: `[0, 1, 2]`. This selects the sensor at index `0`, the time point at index `1`, and the specific value at index `2` within that reading. This works fine, as it should, because we're working within the tensor’s dimensions.
+Here, the `sensor_data` tensor has a shape of `(2, 3, 4)`. To retrieve a specific element, we correctly use _three_ indices: `[0, 1, 2]`. This selects the sensor at index `0`, the time point at index `1`, and the specific value at index `2` within that reading. This works fine, as it should, because we're working within the tensor’s dimensions.
 
 Now, here's where things can go wrong, leading to the error:
 
 **Example 2: Incorrect Indexing (Too Many Indices)**
 
-Imagine trying to grab a value with *four* indices, which, given our 3D tensor, is simply not valid.
+Imagine trying to grab a value with _four_ indices, which, given our 3D tensor, is simply not valid.
 
 ```python
 import torch
@@ -48,6 +48,7 @@ try:
 except IndexError as e:
   print(f"Error: {e}")
 ```
+
 This code will produce the `IndexError: too many indices` because we attempted to use four indices, `[0, 1, 2, 1]`, on a tensor that is only 3-dimensional.
 
 Let’s solidify the concept further. Imagine a case where you have image data represented as a 3D tensor. Suppose, for instance, you are working with a batch of grayscale images. The typical layout would be `(batch_size, height, width)`. Attempting to access an element with four indices will, again, throw the same error:

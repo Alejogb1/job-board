@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "what-are-the-causes-of-the-adamw-optimizer-warning-in-hugging-face-transformers-longformer"
 ---
 
-Okay, let's tackle this. I remember back in '21, working on a large-scale summarization project, we were pushing the boundaries of Longformer's sequence length capabilities. We kept hitting this AdamW warning with surprising regularity, and it was more than just an annoyance—it was affecting the stability of training. The warnings typically looked something along the lines of: *“UserWarning: This implementation of AdamW is deprecated. Please use the `optim.AdamW` implementation from pytorch directly.”*. It took a good bit of investigation to really understand what was going on under the hood.
+, let's tackle this. I remember back in '21, working on a large-scale summarization project, we were pushing the boundaries of Longformer's sequence length capabilities. We kept hitting this AdamW warning with surprising regularity, and it was more than just an annoyance—it was affecting the stability of training. The warnings typically looked something along the lines of: _“UserWarning: This implementation of AdamW is deprecated. Please use the `optim.AdamW` implementation from pytorch directly.”_. It took a good bit of investigation to really understand what was going on under the hood.
 
-Essentially, the problem isn't with the Longformer model itself, but with the version of the AdamW optimizer that was bundled, *or rather, *not* bundled properly, within some older versions of Hugging Face Transformers. It’s less about the specifics of Longformer and more about how the training loop and optimizer are configured. The core issue stems from inconsistencies between the *deprecated* AdamW implementation within `transformers` and the more stable, optimized version available directly through PyTorch’s `torch.optim`.
+Essentially, the problem isn't with the Longformer model itself, but with the version of the AdamW optimizer that was bundled, *or rather, *not* bundled properly, within some older versions of Hugging Face Transformers. It’s less about the specifics of Longformer and more about how the training loop and optimizer are configured. The core issue stems from inconsistencies between the *deprecated\* AdamW implementation within `transformers` and the more stable, optimized version available directly through PyTorch’s `torch.optim`.
 
 To understand it better, we have to delve into the history of AdamW’s implementation. The original Adam algorithm has known issues with weight decay, particularly as it interacts with adaptive learning rates. AdamW was introduced to address this by decoupling the weight decay from the adaptive learning rate calculation, leading to improved generalization.
 
@@ -25,6 +25,7 @@ Here are the three main causes I saw in my own work and in debugging other's set
 To illustrate, let’s walk through a few code snippets that demonstrate these points.
 
 **Example 1: Incorrect Usage with Older Library (Illustrative - Not Meant To Run as such)**
+
 ```python
 # This is representative of code that would have triggered the warning
 # This code will likely error as it is a hypothetical older version of the transformers library
@@ -38,9 +39,11 @@ optimizer = AdamW(model.parameters(), lr=5e-5) # Old AdamW version
 # Imagine this part is a training loop - it would likely produce the warning.
 print("Optimizer selected", optimizer) # This will print transformers AdamW and produce a warning when training
 ```
-In this case, we're *explicitly* importing `AdamW` from `transformers.optimization`, forcing the deprecated version into use, which would result in the warning during training if this was part of training loop.
+
+In this case, we're _explicitly_ importing `AdamW` from `transformers.optimization`, forcing the deprecated version into use, which would result in the warning during training if this was part of training loop.
 
 **Example 2: Corrected Implementation with PyTorch Native Optimizer**
+
 ```python
 from transformers import LongformerForSequenceClassification
 import torch.optim as optim
@@ -51,9 +54,11 @@ optimizer = optim.AdamW(model.parameters(), lr=5e-5) # Correct PyTorch AdamW
 
 print("Optimizer selected", optimizer) # this will print the torch.optim version and will not produce a warning.
 ```
+
 This revised code uses the `optim.AdamW` directly from PyTorch. This is the correct way to use the optimizer as this is the standard. This will not cause the warning during the training loop. This code will use the standard torch AdamW instead of the deprecated version.
 
 **Example 3: Correct Implementation with Trainer API**
+
 ```python
 from transformers import LongformerForSequenceClassification, Trainer, TrainingArguments
 import torch.optim as optim
@@ -92,8 +97,9 @@ trainer = Trainer(
 
 trainer.train()
 ```
-In this case, when using the `Trainer` API with no specified `optimizers` parameter, it automatically uses `torch.optim.AdamW`, avoiding the warnings. The trainer implicitly defaults to the standard PyTorch `AdamW`. If a custom optimizer is provided to the `trainer` or in a manual training loop, you must *explicitly* use the PyTorch version from `torch.optim`.
 
-For further reading and a more in-depth understanding of these optimizer nuances, I strongly recommend checking out the original AdamW paper by Ilya Loshchilov and Frank Hutter, published in ICLR 2019. Also, delving into the PyTorch documentation for `torch.optim` is crucial. The *Deep Learning with PyTorch* book by Eli Stevens, Luca Antiga, and Thomas Viehmann is an excellent resource, providing detailed explanations of various optimizers and best practices. Understanding how different implementations may vary and how that impacts overall model performance is foundational to training large language models effectively.
+In this case, when using the `Trainer` API with no specified `optimizers` parameter, it automatically uses `torch.optim.AdamW`, avoiding the warnings. The trainer implicitly defaults to the standard PyTorch `AdamW`. If a custom optimizer is provided to the `trainer` or in a manual training loop, you must _explicitly_ use the PyTorch version from `torch.optim`.
+
+For further reading and a more in-depth understanding of these optimizer nuances, I strongly recommend checking out the original AdamW paper by Ilya Loshchilov and Frank Hutter, published in ICLR 2019. Also, delving into the PyTorch documentation for `torch.optim` is crucial. The _Deep Learning with PyTorch_ book by Eli Stevens, Luca Antiga, and Thomas Viehmann is an excellent resource, providing detailed explanations of various optimizers and best practices. Understanding how different implementations may vary and how that impacts overall model performance is foundational to training large language models effectively.
 
 In summary, the AdamW warning isn't a direct problem with the Longformer model but a message that signals the need to move to the standard PyTorch implementation of AdamW. By paying close attention to library versions, avoiding explicit imports of deprecated optimizers, and ensuring the correct version is being used in your training pipeline you will avoid this warning and ultimately improve the stability and efficacy of your training process. The move to `torch.optim.AdamW` is a standard and important step for consistent, reliable results.

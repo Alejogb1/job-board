@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-to-resolve-jsondecodeerror-when-using-airflows-googlebasehook"
 ---
 
-Okay, let's talk about `JSONDecodeError` when interacting with Google services via Airflow's `GoogleBaseHook`. It's a surprisingly common snag, and one I've definitely spent my fair share of time debugging, particularly in those early days scaling our data pipelines. The good news is it's usually a matter of carefully handling the response format, not a fundamental problem with the hook itself.
+, let's talk about `JSONDecodeError` when interacting with Google services via Airflow's `GoogleBaseHook`. It's a surprisingly common snag, and one I've definitely spent my fair share of time debugging, particularly in those early days scaling our data pipelines. The good news is it's usually a matter of carefully handling the response format, not a fundamental problem with the hook itself.
 
-The core issue stems from how the `GoogleBaseHook` interacts with google apis. It fetches data, which often comes back as a json-formatted string, or at least it's *supposed* to. However, sometimes, due to various reasons – from unexpected error codes to partial responses or even issues with how the api serializes data – you get something that isn't a valid json string. Then, when `json.loads` (which the hook uses internally) tries to interpret it, boom, `JSONDecodeError`.
+The core issue stems from how the `GoogleBaseHook` interacts with google apis. It fetches data, which often comes back as a json-formatted string, or at least it's _supposed_ to. However, sometimes, due to various reasons – from unexpected error codes to partial responses or even issues with how the api serializes data – you get something that isn't a valid json string. Then, when `json.loads` (which the hook uses internally) tries to interpret it, boom, `JSONDecodeError`.
 
 First, let’s break down the typical causes for this error. One of the most frequent scenarios is error responses from the google api itself. You might be thinking, “But shouldn’t those be in json format?” Theoretically, yes, but practically, particularly during peak load or less common error situations, you sometimes receive text-based error messages or html-based responses instead of the standardized json. Imagine, for instance, a rate limit error might be accompanied by a plain text message indicating a retry policy, rather than a structured json payload. Also, intermittent network issues can cause a truncated response, making the resultant string invalid json.
 
@@ -36,7 +36,7 @@ def execute_with_retry(hook: GoogleBaseHook, api_method, **kwargs):
             print(f"Other exception: {e}")
             raise # re-raise other issues
 
-        
+
     return None # Or some default value if retries fail
 
 
@@ -58,6 +58,7 @@ except Exception as e:
 
 
 ```
+
 In this example, we wrap the `json.loads` call within a try-except block, specifically targeting `json.JSONDecodeError`. If we catch that specific exception, we log it, and retry up to a certain number of times. This gives the api call a chance to succeed if the error is due to temporary issues. It also gracefully handles other exceptions and re-raises them so you are aware of issues beyond a simple json decoding problem. I always found a retry pattern to be beneficial in production environments.
 
 Now, moving onto preprocessing. Sometimes, the response might contain unexpected characters. The json may come packaged as a string with escape characters or contain non-utf-8 encodings. You could also encounter cases with leading or trailing whitespace. Therefore, before even attempting `json.loads`, a quick preprocessing pass can eliminate common issues. Here is an example:
@@ -74,10 +75,10 @@ def preprocess_and_load_json(response_string):
         response_string = response_string.strip()  # Remove whitespace
         # Optional: check for specific leading characters and remove as needed.
         # Or implement more robust char encoding handling.
-        
+
         if response_string.startswith("\ufeff"): # Remove BOM
               response_string = response_string[1:]
-        
+
         try:
 
           return json.loads(response_string)
@@ -103,6 +104,7 @@ print(f"Data 1: {data1}")
 print(f"Data 2: {data2}")
 print(f"Data 3: {data3}")
 ```
+
 Here, we check for any leading or trailing whitespace and remove it via `strip()`. We also remove BOM's. This function will try to parse the json or return `None` if decoding fails and logs this to the console. This preprocessing can go a long way in preventing `JSONDecodeError` exceptions. This example is also robust by checking for invalid types other than string.
 
 Finally, it's worth looking closely at your `GoogleBaseHook` implementation. Ensure you are passing the correct parameters to the underlying google api, and consider adding logging statements to the hook’s `execute` call. This will let you examine the raw response before the `json.loads` function is called, allowing for better debugging.
@@ -127,6 +129,7 @@ try:
 except Exception as e:
     print(f"Exception: {e}")
 ```
+
 This approach allows you to log the request parameters and, more importantly, the complete raw response coming from Google's APIs, without any decoding.
 
 For deeper exploration on json handling, I recommend picking up a copy of “Effective Python” by Brett Slatkin, which goes into excellent detail on exception handling and other best practices. For an understanding of how google apis work and their error handling conventions, check out google’s official api documentation; it is essential for understanding the structure of json responses. Finally, the official Python documentation for the `json` library is always a solid resource to understand the intricacies of `json.loads`.

@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-do-i-choose-a-grid-search-method-when-working-with-trainerhyperparametersearch"
 ---
 
-Okay, let's unpack this. Choosing the *right* grid search method within the context of `trainer.hyperparameter_search` is less about some magical selection and more about understanding the trade-offs between computation time, search space granularity, and the potential for finding truly optimal hyperparameters. This isn’t just a theoretical exercise; I've been on the sharp end of underperforming models due to inadequate hyperparameter optimization more times than I care to recall, and refining my approach to this has been crucial.
+, let's unpack this. Choosing the _right_ grid search method within the context of `trainer.hyperparameter_search` is less about some magical selection and more about understanding the trade-offs between computation time, search space granularity, and the potential for finding truly optimal hyperparameters. This isn’t just a theoretical exercise; I've been on the sharp end of underperforming models due to inadequate hyperparameter optimization more times than I care to recall, and refining my approach to this has been crucial.
 
 When we talk about grid search, what we're fundamentally dealing with is an exhaustive exploration of a predefined hyperparameter space. The “method” we choose within `trainer.hyperparameter_search`, while often presented as distinct options, are often just different implementations or augmentations to this core concept. The library, like many others, usually defaults to a standard exhaustive grid search, where you supply a dictionary of hyperparameters and their corresponding values and the system tries every possible combination. Now, this is incredibly thorough, but it can quickly become computationally prohibitive, particularly as the hyperparameter space grows. That's where you'll need to make a choice. Let's consider several approaches I've used in my own work, along with their implications:
 
 **1. Standard Exhaustive Grid Search:**
 
-This is the simplest form: You specify a discrete set of values for each hyperparameter, and the grid search iterates over all combinations. It is brute-force and guarantees, given sufficient time, that you will find the best performing parameter set *within the defined search space*. Its drawback is its exponential growth in required iterations. Suppose we're tuning a simple neural network with learning rate, batch size, and number of hidden units. Here’s an example with PyTorch Lightning and an abstract `Trainer`:
+This is the simplest form: You specify a discrete set of values for each hyperparameter, and the grid search iterates over all combinations. It is brute-force and guarantees, given sufficient time, that you will find the best performing parameter set _within the defined search space_. Its drawback is its exponential growth in required iterations. Suppose we're tuning a simple neural network with learning rate, batch size, and number of hidden units. Here’s an example with PyTorch Lightning and an abstract `Trainer`:
 
 ```python
 import torch
@@ -35,16 +35,16 @@ class SimpleNet(pl.LightningModule):
         x = self.relu(self.fc1(x))
         x = self.fc2(x)
         return x
-    
+
     def training_step(self, batch, batch_idx):
          x, y = batch
          y_hat = self(x)
          loss = self.loss_fn(y_hat, y)
          return loss
-    
+
     def configure_optimizers(self):
         return optim.Adam(self.parameters(), lr=self.learning_rate)
-    
+
     def train_dataloader(self):
         train_data = torch.rand(100, 10)
         train_labels = torch.randint(0, 2, (100,))
@@ -81,15 +81,15 @@ def grid_search(hyperparameter_grid):
     best_params = None
 
     keys, values = zip(*hyperparameter_grid.items())
-    
+
     import itertools
-    
+
     for combination in itertools.product(*values):
-            
+
         hyperparameters = dict(zip(keys, combination))
-        
+
         loss = objective(hyperparameters)
-    
+
         if loss < best_loss:
             best_loss = loss
             best_params = hyperparameters
@@ -133,16 +133,16 @@ class SimpleNet(pl.LightningModule):
         x = self.relu(self.fc1(x))
         x = self.fc2(x)
         return x
-    
+
     def training_step(self, batch, batch_idx):
          x, y = batch
          y_hat = self(x)
          loss = self.loss_fn(y_hat, y)
          return loss
-    
+
     def configure_optimizers(self):
         return optim.Adam(self.parameters(), lr=self.learning_rate)
-    
+
     def train_dataloader(self):
         train_data = torch.rand(100, 10)
         train_labels = torch.randint(0, 2, (100,))
@@ -178,11 +178,11 @@ def randomized_search(hyperparameter_grid, num_iterations):
     best_params = None
 
     keys, values = list(hyperparameter_grid.items())
-    
+
     for _ in range(num_iterations):
-        
+
         random_hyperparams = {k: random.choice(v) for k, v in hyperparameter_grid.items()}
-        
+
         loss = objective(random_hyperparams)
 
         if loss < best_loss:
@@ -192,7 +192,7 @@ def randomized_search(hyperparameter_grid, num_iterations):
 
     print(f'Best parameters: {best_params}')
     print(f'Best Loss: {best_loss}')
-    
+
 randomized_search(hyperparameter_grid, 10)
 ```
 
@@ -204,13 +204,13 @@ There exist various optimization methods such as Bayesian optimization or evolut
 
 Additionally, when selecting between methods, I’ve often considered these questions:
 
-*   **Computational Budget:** How much time and resources do I have to spend? If the answer is “not much,” you may find more value in performing random search, or even early stopping for the more computationally costly search processes.
-*   **Parameter Sensitivity:** How sensitive is your model to each of the hyperparameters? In some cases, a broad exploration may be enough; in others, you may need to do a more fine-grained search around the most impactful hyperparameters. Use visualisations to assess this, even before doing any hyperparameter search.
+- **Computational Budget:** How much time and resources do I have to spend? If the answer is “not much,” you may find more value in performing random search, or even early stopping for the more computationally costly search processes.
+- **Parameter Sensitivity:** How sensitive is your model to each of the hyperparameters? In some cases, a broad exploration may be enough; in others, you may need to do a more fine-grained search around the most impactful hyperparameters. Use visualisations to assess this, even before doing any hyperparameter search.
 
-*   **Search space knowledge:** Do you have a good sense of the ranges for your hyperparameters, or is it almost completely open ended? The more knowledgeable you are, the more intelligently you can use the available algorithms.
-*   **Early stopping:** Is it possible to stop training in cases where it is clear that progress is not being made? This is useful for computationally costly operations.
+- **Search space knowledge:** Do you have a good sense of the ranges for your hyperparameters, or is it almost completely open ended? The more knowledgeable you are, the more intelligently you can use the available algorithms.
+- **Early stopping:** Is it possible to stop training in cases where it is clear that progress is not being made? This is useful for computationally costly operations.
 
 In summary, the "best" grid search method isn’t static; it depends heavily on your particular situation. Standard exhaustive search provides maximal coverage, but quickly becomes impractical. Randomized search often provides an excellent balance between exploration and computation. Consider the factors outlined above to make informed decisions.
 
-For a more comprehensive grasp of hyperparameter optimization techniques, I’d suggest taking a look at *“Hyperparameter Optimization”* by Bergstra, Bengio, and 
-Bardenet; it is an excellent review of the area. “*Deep Learning*” by Goodfellow, Bengio, and Courville also contains relevant chapters. Lastly, to gain familiarity with different search methods in practical contexts, a hands-on exploration of resources like scikit-learn’s documentation (although it's not deep learning specific) may be useful, as well as the documentation for any specific libraries you are using such as PyTorch Lightning, TensorFlow, etc. Their documentation will often have specific implementations or guidelines for various hyperparameter optimization algorithms.
+For a more comprehensive grasp of hyperparameter optimization techniques, I’d suggest taking a look at _“Hyperparameter Optimization”_ by Bergstra, Bengio, and
+Bardenet; it is an excellent review of the area. “_Deep Learning_” by Goodfellow, Bengio, and Courville also contains relevant chapters. Lastly, to gain familiarity with different search methods in practical contexts, a hands-on exploration of resources like scikit-learn’s documentation (although it's not deep learning specific) may be useful, as well as the documentation for any specific libraries you are using such as PyTorch Lightning, TensorFlow, etc. Their documentation will often have specific implementations or guidelines for various hyperparameter optimization algorithms.

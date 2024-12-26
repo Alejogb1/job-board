@@ -29,6 +29,7 @@ class Enrollment < ApplicationRecord
   belongs_to :course
 end
 ```
+
 in this scenario, a student can have many courses through many enrollments. now, let's flip it, let's say you want to track the primary course of a student (like their major), which, in theory should be only one course.
 
 that's when you would be tempted to do this:
@@ -54,9 +55,9 @@ class Enrollment < ApplicationRecord
 end
 ```
 
-you are probably thinking, that's it, problem solved! but here is where the gotcha is, because you are not specifying how the `major_enrollment` should get populated, nor the `major_course`, because `has_one :through` relationships, unlike `has_many :through`, expect a single associated record, they don't automatically handle multiple records in the join table. it needs a mechanism to tell which one is *the one*. this has_one association will not get created automatically, you need to specify how to select it.
+you are probably thinking, that's it, problem solved! but here is where the gotcha is, because you are not specifying how the `major_enrollment` should get populated, nor the `major_course`, because `has_one :through` relationships, unlike `has_many :through`, expect a single associated record, they don't automatically handle multiple records in the join table. it needs a mechanism to tell which one is _the one_. this has_one association will not get created automatically, you need to specify how to select it.
 
-the way to handle a `has_one :through` with a join table that *could* have many entries (similar to a has_many-style) involves adding a constraint, usually via a foreign key or some column that specifies which is *the one*. lets change the migrations to add a constraint that only a single enrollment can be the major enrollment:
+the way to handle a `has_one :through` with a join table that _could_ have many entries (similar to a has_many-style) involves adding a constraint, usually via a foreign key or some column that specifies which is _the one_. lets change the migrations to add a constraint that only a single enrollment can be the major enrollment:
 
 ```ruby
 class CreateEnrollments < ActiveRecord::Migration[7.1]
@@ -114,6 +115,6 @@ also, i found "refactoring databases" by scott w. ambler and pramod j. sadalage 
 
 you could find other solutions online, but those books cover all those topics extensively and will be a good investment. it will make you understand why rails handles relationships the way it does.
 
-remember, it is okay to have a bit of a headache sometimes! as a wise man once said: "why do programmers prefer dark mode? because light attracts bugs!" (had to get that one out of my system, sorry).
+remember, it is to have a bit of a headache sometimes! as a wise man once said: "why do programmers prefer dark mode? because light attracts bugs!" (had to get that one out of my system, sorry).
 
 i hope this explanation and the code snippets help clarify how to handle `has_one :through` when your join table might contain multiple matching entries, and how to structure your update method. it took me a while to get the hang of this myself, so don't get too discouraged. just keep trying things out and you'll get there.

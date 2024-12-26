@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-fix-a-misaligned-substring-index-in-a-python-string"
 ---
 
-Alright, let's talk about misaligned substring indices in Python. I've certainly bumped into this little gremlin more times than I'd care to recall over the years, particularly when dealing with data parsing and text manipulation coming from less-than-perfect sources. It’s one of those frustrating situations that, at first glance, might seem like you’re going crazy, only to realize it’s often a subtle interplay of encoding, edge cases, or just plain overlooked assumptions.
+, let's talk about misaligned substring indices in Python. I've certainly bumped into this little gremlin more times than I'd care to recall over the years, particularly when dealing with data parsing and text manipulation coming from less-than-perfect sources. It’s one of those frustrating situations that, at first glance, might seem like you’re going crazy, only to realize it’s often a subtle interplay of encoding, edge cases, or just plain overlooked assumptions.
 
 The core problem here, fundamentally, stems from the way Python handles strings and indexing. Unlike languages where strings might be treated as simple arrays of bytes, Python strings are sequences of Unicode code points. This distinction is absolutely crucial. If your data is not pure ASCII – think accented characters, special symbols, anything beyond the basic English alphabet – then the assumption that each character equates to a single byte, and thus a single index position, can lead to serious headaches. You end up with index values pointing to the middle of multi-byte characters rather than the beginning, resulting in mangled substrings, encoding errors, or outright program crashes.
 
@@ -100,7 +100,7 @@ So, how to combat these alignment issues? The solutions are generally preventati
 2.  **Normalize your text**: Use `unicodedata.normalize()` to bring all text into a consistent normalized form (NFC or NFKC are generally good options). If you precompute indices, always normalize the strings first.
 3.  **Sanitize your text**: Remove zero-width characters early, especially if you don't need them. Regex substitutions with a character class like `[\u200b-\u200f\ufeff]` can handle common cases.
 4.  **Use character-based indices consistently**: The best approach is to ensure that your indices are derived from a decoded, normalized, and sanitized representation of the string. You shouldn’t be calculating indices before performing these operations. If you calculate indices from a decoded string, and then normalize the string after the fact, you’ll get incorrect substrings.
-5. **Validate assumptions about the source:** If you are dealing with data originating from another system, or program, make sure that you understand the assumptions that have been made regarding encoding and character encoding.
+5.  **Validate assumptions about the source:** If you are dealing with data originating from another system, or program, make sure that you understand the assumptions that have been made regarding encoding and character encoding.
 
 For further reading on this, I’d recommend looking into the Unicode Standard, especially the sections on encoding and normalization. The "Python Unicode HOWTO" documentation (available online) is also very helpful for understanding how Python handles text internally. Additionally, the book “Programming with Unicode” by Victor Stinner provides a very comprehensive discussion of all things Unicode in Python.
 

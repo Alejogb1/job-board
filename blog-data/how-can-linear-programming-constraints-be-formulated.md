@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-linear-programming-constraints-be-formulated"
 ---
 
-Okay, let's tackle the formulation of linear programming constraints. This isn't just academic; I've seen firsthand how critical a clear and accurate formulation is to actually solving real-world optimization problems. It’s often the bottleneck, believe me. It's one thing to understand the theory; it's another to translate business or engineering requirements into a set of mathematically tractable constraints. I remember a particularly grueling project where we were optimizing a supply chain, and a single incorrectly formulated constraint led to utterly nonsensical production schedules. So, yeah, details matter here.
+, let's tackle the formulation of linear programming constraints. This isn't just academic; I've seen firsthand how critical a clear and accurate formulation is to actually solving real-world optimization problems. It’s often the bottleneck, believe me. It's one thing to understand the theory; it's another to translate business or engineering requirements into a set of mathematically tractable constraints. I remember a particularly grueling project where we were optimizing a supply chain, and a single incorrectly formulated constraint led to utterly nonsensical production schedules. So, yeah, details matter here.
 
 Linear programming (lp) fundamentally revolves around optimizing a linear objective function subject to a set of linear constraints. These constraints define the feasible region—the space of solutions that satisfy all conditions. Formulating them precisely is paramount. At their core, constraints are mathematical inequalities or equalities that limit the possible values of the decision variables in your model. These decision variables, often represented by x, y, z, etc., are the things you're actually trying to find the optimal values for.
 
@@ -23,17 +23,18 @@ Let's dive into the nitty-gritty with some practical examples and code snippets.
 Imagine you have two types of products, A and B, to manufacture. Each requires different amounts of raw materials and labor, and you have limited resources.
 
 Let:
-* `x` be the number of units of product A produced.
-* `y` be the number of units of product B produced.
-* Product A requires 2 units of material and 3 hours of labor per unit.
-* Product B requires 1 unit of material and 4 hours of labor per unit.
-* You have 10 units of material and 20 hours of labor available.
+
+- `x` be the number of units of product A produced.
+- `y` be the number of units of product B produced.
+- Product A requires 2 units of material and 3 hours of labor per unit.
+- Product B requires 1 unit of material and 4 hours of labor per unit.
+- You have 10 units of material and 20 hours of labor available.
 
 The constraints can be formulated as:
 
-*   Material constraint: 2x + 1y <= 10
-*   Labor constraint: 3x + 4y <= 20
-*   Non-negativity constraints: x >= 0, y >= 0 (you can’t produce negative products)
+- Material constraint: 2x + 1y <= 10
+- Labor constraint: 3x + 4y <= 20
+- Non-negativity constraints: x >= 0, y >= 0 (you can’t produce negative products)
 
 Here’s how you might express this using `scipy`:
 
@@ -65,18 +66,20 @@ print("Optimal objective value:", -result.fun) #negate back to get the actual ma
 Consider a blending problem. A food company wants to produce a feed mix using two ingredients, Grain X and Grain Y. Each grain contains different amounts of nutrients A, B, and C. The company wants to meet specific minimum levels of nutrients while minimizing cost.
 
 Let:
-*  `x` be the amount (in kg) of Grain X in the mix.
-*  `y` be the amount (in kg) of Grain Y in the mix.
-* Grain X contains 0.3 kg of A, 0.2 kg of B, and 0.1 kg of C per kg.
-* Grain Y contains 0.1 kg of A, 0.3 kg of B, and 0.2 kg of C per kg.
-* The minimum required nutrients in the mix are 2 kg of A, 2.5 kg of B, and 1 kg of C.
-* The cost of Grain X is $2 per kg and Grain Y is $3 per kg.
+
+- `x` be the amount (in kg) of Grain X in the mix.
+- `y` be the amount (in kg) of Grain Y in the mix.
+- Grain X contains 0.3 kg of A, 0.2 kg of B, and 0.1 kg of C per kg.
+- Grain Y contains 0.1 kg of A, 0.3 kg of B, and 0.2 kg of C per kg.
+- The minimum required nutrients in the mix are 2 kg of A, 2.5 kg of B, and 1 kg of C.
+- The cost of Grain X is $2 per kg and Grain Y is $3 per kg.
 
 The constraints are:
-*   Nutrient A constraint: 0.3x + 0.1y >= 2
-*   Nutrient B constraint: 0.2x + 0.3y >= 2.5
-*   Nutrient C constraint: 0.1x + 0.2y >= 1
-*  Non-negativity constraints: x >= 0, y >= 0
+
+- Nutrient A constraint: 0.3x + 0.1y >= 2
+- Nutrient B constraint: 0.2x + 0.3y >= 2.5
+- Nutrient C constraint: 0.1x + 0.2y >= 1
+- Non-negativity constraints: x >= 0, y >= 0
 
 Here’s the python implementation:
 
@@ -109,27 +112,28 @@ Note that because `linprog` by default uses A\*x <= b format we multiply our mat
 Let's look at something slightly different. A store needs a certain number of employees during each shift throughout the day. The goal is to minimize the total cost while meeting staffing requirements.
 
 Let:
-*   `x1` be the number of employees starting at shift 1.
-*   `x2` be the number of employees starting at shift 2.
-*   `x3` be the number of employees starting at shift 3.
-* Each shift lasts 8 hours.
-* Shift 1 covers 6 am - 2 pm.
-* Shift 2 covers 10 am - 6 pm.
-* Shift 3 covers 2 pm - 10 pm.
-* Requirements:
-    * 6 am - 10 am: minimum 10 employees needed.
-    * 10 am - 2 pm: minimum 15 employees needed.
-    * 2 pm - 6 pm: minimum 12 employees needed.
-    * 6 pm - 10 pm: minimum 8 employees needed.
-*  Assume each employee costs $150 for the 8-hour shift.
+
+- `x1` be the number of employees starting at shift 1.
+- `x2` be the number of employees starting at shift 2.
+- `x3` be the number of employees starting at shift 3.
+- Each shift lasts 8 hours.
+- Shift 1 covers 6 am - 2 pm.
+- Shift 2 covers 10 am - 6 pm.
+- Shift 3 covers 2 pm - 10 pm.
+- Requirements:
+  - 6 am - 10 am: minimum 10 employees needed.
+  - 10 am - 2 pm: minimum 15 employees needed.
+  - 2 pm - 6 pm: minimum 12 employees needed.
+  - 6 pm - 10 pm: minimum 8 employees needed.
+- Assume each employee costs $150 for the 8-hour shift.
 
 The constraints are:
 
-*   6 am - 10 am: x1 >= 10
-*   10 am - 2 pm: x1 + x2 >= 15
-*   2 pm - 6 pm: x2 + x3 >= 12
-*   6 pm - 10 pm: x3 >= 8
-*   Non-negativity constraints: x1 >= 0, x2 >= 0, x3 >= 0
+- 6 am - 10 am: x1 >= 10
+- 10 am - 2 pm: x1 + x2 >= 15
+- 2 pm - 6 pm: x2 + x3 >= 12
+- 6 pm - 10 pm: x3 >= 8
+- Non-negativity constraints: x1 >= 0, x2 >= 0, x3 >= 0
 
 Here's the Python code for this scenario:
 

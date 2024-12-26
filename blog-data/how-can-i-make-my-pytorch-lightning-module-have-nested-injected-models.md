@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-make-my-pytorch-lightning-module-have-nested-injected-models"
 ---
 
-Alright, let's delve into the fascinating world of nested, injected models within PyTorch Lightning modules. This isn't an uncommon pattern, and I've certainly encountered it a few times in more complex architectures, especially when dealing with things like modularized generative models or multi-task learning setups. The key here is managing the lifecycle and accessibility of these nested components effectively, and PyTorch Lightning, thankfully, provides several avenues for doing so elegantly.
+, let's delve into the fascinating world of nested, injected models within PyTorch Lightning modules. This isn't an uncommon pattern, and I've certainly encountered it a few times in more complex architectures, especially when dealing with things like modularized generative models or multi-task learning setups. The key here is managing the lifecycle and accessibility of these nested components effectively, and PyTorch Lightning, thankfully, provides several avenues for doing so elegantly.
 
 From my experience, one of the initial pitfalls I see developers stumble into is the assumption that a LightningModule is a monolith. It isn’t; rather, it's more like a sophisticated container or a conductor, orchestrating the training and inference of your model(s). So, the first step is to recognize that these nested models aren't just random attributes hanging around. They need to be properly initialized and integrated within the LightningModule's structure, so it understands how to handle their training, inference, and parameter management.
 

@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-does-the-jetbrains-marketplace-determine-ide-version-compatibility"
 ---
 
-Alright, let's break down how JetBrains Marketplace tackles the ever-present challenge of plugin compatibility with varying IDE versions. It's a complex dance, and I've certainly seen my fair share of missteps during my time building and maintaining plugins, which gives me a good perspective on this. It's not simply a matter of checking a version number; there's quite a bit more going on under the hood.
+, let's break down how JetBrains Marketplace tackles the ever-present challenge of plugin compatibility with varying IDE versions. It's a complex dance, and I've certainly seen my fair share of missteps during my time building and maintaining plugins, which gives me a good perspective on this. It's not simply a matter of checking a version number; there's quite a bit more going on under the hood.
 
 Fundamentally, the process revolves around several layers of metadata and validation that JetBrains utilizes both during plugin submission and during the installation phase on a user's IDE. This system is designed to ensure a reasonable level of stability and prevent those dreaded "plugin incompatible" error messages from appearing too frequently.
 
-First, let's talk about how compatibility is *specified*. At the heart of each plugin is the `plugin.xml` file. This file contains a plethora of information, and crucial to our discussion is the `<idea-version>` tag. This tag uses attributes to specify compatible versions. You typically see one or more of these attributes:
+First, let's talk about how compatibility is _specified_. At the heart of each plugin is the `plugin.xml` file. This file contains a plethora of information, and crucial to our discussion is the `<idea-version>` tag. This tag uses attributes to specify compatible versions. You typically see one or more of these attributes:
 
-*   `since-build`: Specifies the lowest build number that the plugin is compatible with. This is crucial for ensuring a plugin isn't attempting to use APIs that don't exist in older versions.
-*   `until-build`: Defines the highest build number the plugin supports. This prevents installation on IDE versions where significant API changes could lead to problems.
-*   `platform-version`: This attribute is less commonly used but specifies a particular platform version, mainly when you're targetting specific IDEs. It's useful for ensuring plugins are installed only on the right IDE (e.g., IntelliJ vs. PyCharm).
+- `since-build`: Specifies the lowest build number that the plugin is compatible with. This is crucial for ensuring a plugin isn't attempting to use APIs that don't exist in older versions.
+- `until-build`: Defines the highest build number the plugin supports. This prevents installation on IDE versions where significant API changes could lead to problems.
+- `platform-version`: This attribute is less commonly used but specifies a particular platform version, mainly when you're targetting specific IDEs. It's useful for ensuring plugins are installed only on the right IDE (e.g., IntelliJ vs. PyCharm).
 
 These attributes don’t just check major version numbers like 2023.3 or 2024.1, but rather uses internal build numbers. For example, `233.11799.241` or similar build number which can then be matched appropriately. Each IDE release uses the `<since-build>` and `<until-build>` number in its own core configuration.
 
@@ -31,9 +31,9 @@ Now, let me give you a practical example from when I developed a plugin for code
 
 In this example, `since-build="201.6668"` indicates the plugin requires build number `201.6668` or any later build number within the same branch. The `until-build="202.6947"` means any IDE build numbered `202.6947` or before is also compatible, but not `202.6948` or any later build number in this example. This is crucial since the changes introduced in build `202.6948` could break the plugin completely.
 
-When a user attempts to install a plugin through the Marketplace, the Marketplace client (integrated in the IDE) examines this `<idea-version>` tag. It compares the IDE’s build number with the specified ranges in the plugin’s `plugin.xml`. If the IDE’s build number falls outside of the defined range, the plugin is flagged as incompatible. This happens *before* the plugin is even downloaded, meaning the user is alerted before potentially destabilizing their IDE installation.
+When a user attempts to install a plugin through the Marketplace, the Marketplace client (integrated in the IDE) examines this `<idea-version>` tag. It compares the IDE’s build number with the specified ranges in the plugin’s `plugin.xml`. If the IDE’s build number falls outside of the defined range, the plugin is flagged as incompatible. This happens _before_ the plugin is even downloaded, meaning the user is alerted before potentially destabilizing their IDE installation.
 
-Another crucial element of this process occurs during the *plugin verification* stage before plugin publication to the JetBrains Marketplace. JetBrains runs a series of compatibility checks automatically based on the given `<since-build>` and `<until-build>` numbers within plugin’s descriptor. If the declared versions are in conflict or there is an internal issue with the plugin’s structure that may affect functionality and stability, then plugin verification might fail.
+Another crucial element of this process occurs during the _plugin verification_ stage before plugin publication to the JetBrains Marketplace. JetBrains runs a series of compatibility checks automatically based on the given `<since-build>` and `<until-build>` numbers within plugin’s descriptor. If the declared versions are in conflict or there is an internal issue with the plugin’s structure that may affect functionality and stability, then plugin verification might fail.
 
 This prevents developers from publishing plugins that have the potential to break user IDE installations. The verification process also catches plugin authors who might be tempted to skip setting the ranges correctly or who are not aware of breaking API changes in newer versions.
 

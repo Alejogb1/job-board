@@ -22,7 +22,7 @@ Here's how the corresponding JSON response from your fulfillment might look:
     {
       "text": {
         "text": [
-          "Okay, here are the instructions for that recipe. If you'd like to see the full recipe with pictures, you can use the link below."
+          ", here are the instructions for that recipe. If you'd like to see the full recipe with pictures, you can use the link below."
         ]
       }
     },
@@ -51,23 +51,25 @@ const productId = "123"; // Assuming you've extracted the product ID from the us
 const productUrl = `https://www.example.com/products/product?id=${productId}`;
 
 const responseJson = {
-    "fulfillmentMessages": [
-        {
-            "text": {
-                "text": ["Okay, I found a smart thermostat. Here’s a link to the product details."]
-            }
-        },
-        {
-            "suggestions": {
-                "suggestions": [
-                    {
-                        "title": "View Product Details",
-                        "url": productUrl
-                    }
-                ]
-            }
-        }
-    ]
+  fulfillmentMessages: [
+    {
+      text: {
+        text: [
+          ", I found a smart thermostat. Here’s a link to the product details.",
+        ],
+      },
+    },
+    {
+      suggestions: {
+        suggestions: [
+          {
+            title: "View Product Details",
+            url: productUrl,
+          },
+        ],
+      },
+    },
+  ],
 };
 
 console.log(JSON.stringify(responseJson));
@@ -85,7 +87,7 @@ Consider an example where your action has an intent `check_order_status`. Here i
     {
       "text": {
         "text": [
-          "Okay, I've found an order that matches your request. To check the status, click the link below."
+          ", I've found an order that matches your request. To check the status, click the link below."
         ]
       }
     },
@@ -94,9 +96,9 @@ Consider an example where your action has an intent `check_order_status`. Here i
         "suggestions": [
           {
             "title": "Check Order Status",
-             "action": {
-                 "intent":"check_order_status"
-               }
+            "action": {
+              "intent": "check_order_status"
+            }
           }
         ]
       }
@@ -104,6 +106,7 @@ Consider an example where your action has an intent `check_order_status`. Here i
   ]
 }
 ```
+
 In this example, instead of a url, the suggestions objects contains an action key, which defines the target intent. This allows the conversational action to navigate the conversation without the need of the user to say further sentences.
 
 From a practical perspective, when you are building conversational interfaces, I’d advise focusing on clarity and relevance when using button links. The title of the button should accurately reflect its destination, whether it's a webpage or another part of your action. Avoid generic titles like "Click Here"; instead, use descriptive titles that give the user a clear idea of what will happen after they click. Pay attention to mobile responsiveness, especially if your button links redirect to external webpages.

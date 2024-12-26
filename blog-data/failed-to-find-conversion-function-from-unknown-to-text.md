@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "failed-to-find-conversion-function-from-unknown-to-text"
 ---
 
-Okay so you're hitting the "failed to find conversion function from unknown to text" classic right Been there done that got the t-shirt and a few gray hairs to prove it This one pops up more than you'd think especially when you're dealing with data coming from different places or systems that weren't exactly designed to play nice with each other
+you're hitting the "failed to find conversion function from unknown to text" classic right Been there done that got the t-shirt and a few gray hairs to prove it This one pops up more than you'd think especially when you're dealing with data coming from different places or systems that weren't exactly designed to play nice with each other
 
 Let's break this down from my perspective a veteran of many late nights debugging this exact thing I've probably wrestled with this in more languages than I care to admit so I feel your pain
 
@@ -48,50 +48,48 @@ This Python example is the most basic one it leverages python's built-in `str()`
 **Example 2 Handling bytes encoding in Javascript**
 
 ```javascript
-function tryConvertToText(data){
-  try{
-    if (typeof data === 'string'){
+function tryConvertToText(data) {
+  try {
+    if (typeof data === "string") {
       return data;
     } else if (data instanceof ArrayBuffer) {
-      const decoder = new TextDecoder('utf-8'); // Assuming UTF-8 encoding
+      const decoder = new TextDecoder("utf-8"); // Assuming UTF-8 encoding
       return decoder.decode(data);
     } else if (data instanceof Uint8Array) {
-       const decoder = new TextDecoder('utf-8'); // Assuming UTF-8 encoding
+      const decoder = new TextDecoder("utf-8"); // Assuming UTF-8 encoding
       return decoder.decode(data);
+    } else {
+      return String(data);
     }
-     else{
-        return String(data);
-     }
-
   } catch (error) {
-      console.error("Error:", error);
-      return null;
+    console.error("Error:", error);
+    return null;
   }
 }
 
 //Example Usage
 let unknownData = "hello";
 let textVersion = tryConvertToText(unknownData);
-if(textVersion){
+if (textVersion) {
   console.log(textVersion); // Output: "hello"
 }
 
 unknownData = new TextEncoder().encode("hello"); // Uint8Array
 textVersion = tryConvertToText(unknownData);
-if(textVersion){
-   console.log(textVersion) // Output: "hello"
+if (textVersion) {
+  console.log(textVersion); // Output: "hello"
 }
 
 unknownData = new ArrayBuffer(12);
 textVersion = tryConvertToText(unknownData);
-if(textVersion){
-   console.log(textVersion) // Output: ""
+if (textVersion) {
+  console.log(textVersion); // Output: ""
 }
 
-unknownData = 123
-textVersion = tryConvertToText(unknownData)
-if(textVersion){
- console.log(textVersion) // Output: "123"
+unknownData = 123;
+textVersion = tryConvertToText(unknownData);
+if (textVersion) {
+  console.log(textVersion); // Output: "123"
 }
 ```
 

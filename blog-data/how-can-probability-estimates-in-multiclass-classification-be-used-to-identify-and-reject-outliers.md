@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-probability-estimates-in-multiclass-classification-be-used-to-identify-and-reject-outliers"
 ---
 
-Alright, let’s talk outliers in multiclass classification, a problem I've certainly bumped into more times than I'd care to remember, especially back in my days working on automated image tagging systems. That's where the 'odd-duck' images would wreak havoc on otherwise solid models. I’ve learned a few tricks that have proven reliable over the years. We’re not just talking about model performance here; we’re talking about production stability and preventing cascading failures caused by unexpected inputs. So, how do we leverage those often-overlooked probability estimates to identify these troublemakers?
+, let’s talk outliers in multiclass classification, a problem I've certainly bumped into more times than I'd care to remember, especially back in my days working on automated image tagging systems. That's where the 'odd-duck' images would wreak havoc on otherwise solid models. I’ve learned a few tricks that have proven reliable over the years. We’re not just talking about model performance here; we’re talking about production stability and preventing cascading failures caused by unexpected inputs. So, how do we leverage those often-overlooked probability estimates to identify these troublemakers?
 
 The core concept is that, ideally, a well-trained multiclass classifier should produce relatively confident probability distributions for in-distribution data. That means, for any given input, the model should confidently assign a high probability to one or a few specific classes, with the probabilities for the remaining classes being significantly lower. Outliers, however, tend to generate different, less decisive probability distributions. These distributions often exhibit one of two characteristics: either they are close to uniform (i.e., almost equal probability across all classes), indicating the model has no clue, or they show unexpectedly high probability for low-probability classes according to the training data. We can use these characteristics as the basis for our outlier detection mechanisms.
 
 First, let’s delve into some specifics. One useful metric to analyze those probability distributions is the entropy. Shannon entropy, to be precise. In essence, entropy measures the uncertainty or randomness of a probability distribution. A low entropy means the model is highly confident in a specific class or two, while a high entropy suggests a lack of certainty. Formally, the entropy H of a discrete probability distribution p is calculated as:
 
-H(p) = - Σ p(i) * log(p(i)), where i iterates through each class.
+H(p) = - Σ p(i) \* log(p(i)), where i iterates through each class.
 
 The logarithm base doesn't significantly affect the outcome, but it's often base-2 in information theory contexts. In our case, let's work with the natural logarithm because it's usually built-in to most math libraries.
 

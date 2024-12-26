@@ -4,16 +4,16 @@ date: "2024-12-16"
 id: "is-using-useeffect-with-axios--await-the-most-efficient"
 ---
 
-Alright, let's talk about `useEffect`, `axios`, and `async/await`, a combination I've seen trip up a fair few developers over the years, and definitely something I've spent some time optimizing myself. Is it *the* most efficient method? Well, it's more nuanced than a simple yes or no, and that's where understanding the underlying mechanisms really pays off. We're not after absolutes here; we're after pragmatism and performance that actually translates to a good user experience.
+, let's talk about `useEffect`, `axios`, and `async/await`, a combination I've seen trip up a fair few developers over the years, and definitely something I've spent some time optimizing myself. Is it _the_ most efficient method? Well, it's more nuanced than a simple yes or no, and that's where understanding the underlying mechanisms really pays off. We're not after absolutes here; we're after pragmatism and performance that actually translates to a good user experience.
 
-From my perspective, the common pattern of directly slapping an `async` function into a `useEffect` callback and fetching data with `axios` and `await` *can* work, but it's often far from optimal. The issue isn't with `axios` or `async/await` themselves—they’re perfectly fine tools. The rub lies in the way React's lifecycle and asynchronous operations interact, and how we manage things like re-renders, cleanup, and error handling within `useEffect`. I’ve been burned by subtle bugs stemming from this exact scenario numerous times, which has led me to refine my approach significantly.
+From my perspective, the common pattern of directly slapping an `async` function into a `useEffect` callback and fetching data with `axios` and `await` _can_ work, but it's often far from optimal. The issue isn't with `axios` or `async/await` themselves—they’re perfectly fine tools. The rub lies in the way React's lifecycle and asynchronous operations interact, and how we manage things like re-renders, cleanup, and error handling within `useEffect`. I’ve been burned by subtle bugs stemming from this exact scenario numerous times, which has led me to refine my approach significantly.
 
 Let’s start with the core problem. When you define `useEffect` like this:
 
 ```javascript
 useEffect(async () => {
   try {
-    const response = await axios.get('https://api.example.com/data');
+    const response = await axios.get("https://api.example.com/data");
     setData(response.data);
   } catch (error) {
     setError(error);
@@ -23,16 +23,16 @@ useEffect(async () => {
 
 React will throw a warning, correctly pointing out that `useEffect` expects a synchronous function or a function that returns a cleanup function. `async` functions, of course, implicitly return a promise. React might not treat it as a standard cleanup function, and this can result in inconsistent or unexpected behavior, especially with more complex interactions or when components unmount prematurely. While the code might appear to "work," under the surface, it can introduce subtle bugs and resource leaks. You're essentially using a workaround, not leveraging the intended pattern of `useEffect`.
 
-So, how do we do it better? The standard solution is to declare an internal `async` function *within* the `useEffect` callback and call that function:
+So, how do we do it better? The standard solution is to declare an internal `async` function _within_ the `useEffect` callback and call that function:
 
 ```javascript
 useEffect(() => {
   const fetchData = async () => {
     try {
-        const response = await axios.get('https://api.example.com/data');
-        setData(response.data);
+      const response = await axios.get("https://api.example.com/data");
+      setData(response.data);
     } catch (error) {
-        setError(error);
+      setError(error);
     }
   };
   fetchData();
@@ -46,8 +46,8 @@ The critical addition to make this approach robust and more efficient is incorpo
 Here's a more robust example that addresses cleanup and cancellation:
 
 ```javascript
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 function MyComponent() {
   const [data, setData] = useState(null);
@@ -60,11 +60,13 @@ function MyComponent() {
 
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://api.example.com/data', { signal });
+        const response = await axios.get("https://api.example.com/data", {
+          signal,
+        });
         setData(response.data);
         setLoading(false);
       } catch (error) {
-        if (error.name !== 'AbortError') {
+        if (error.name !== "AbortError") {
           setError(error);
           setLoading(false);
         }
@@ -78,16 +80,16 @@ function MyComponent() {
     };
   }, []);
 
-  if(loading) {
-    return <p>Loading...</p>
+  if (loading) {
+    return <p>Loading...</p>;
   }
 
   if (error) {
     return <p>Error: {error.message}</p>;
   }
 
-  if(data){
-    return <pre>{JSON.stringify(data, null, 2)}</pre>
+  if (data) {
+    return <pre>{JSON.stringify(data, null, 2)}</pre>;
   }
 
   return null;
@@ -96,7 +98,7 @@ function MyComponent() {
 
 In this example, we create a new `AbortController` on each effect run, passing the signal to `axios` to enable request cancellation. In the cleanup function returned by `useEffect`, we call `abortController.abort()` to cancel the request if the component unmounts. The catch block checks for the `AbortError` and only sets the error state if it's a different error. This way, we avoid setting an error if a request is canceled on unmount. The addition of loading state is also common in real-world apps to improve user experience.
 
-Now, as for whether this is the *most* efficient, the answer is still nuanced. The use of `async/await` within that inner function, in most cases, introduces only a tiny amount of overhead. The benefits of clarity, easier debugging, and consistent behavior vastly outweigh these marginal performance costs. In the vast majority of projects you'll be working on, this is a completely acceptable level of performance trade-off. The real gains from an efficiency point of view come from the cleanup and cancellation we added.
+Now, as for whether this is the _most_ efficient, the answer is still nuanced. The use of `async/await` within that inner function, in most cases, introduces only a tiny amount of overhead. The benefits of clarity, easier debugging, and consistent behavior vastly outweigh these marginal performance costs. In the vast majority of projects you'll be working on, this is a completely acceptable level of performance trade-off. The real gains from an efficiency point of view come from the cleanup and cancellation we added.
 
 However, there are situations where you might want to go even further. If, for example, you are building an extremely performance-sensitive application and find that the overhead of creating new abort controllers or resolving promises is causing a bottleneck, you might look into alternative approaches, which might include using an asynchronous event emitter based on web socket technology directly rather than an HTTP library in certain instances. But those are niche cases that you probably won’t encounter frequently.
 

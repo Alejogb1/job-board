@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resolve-uid-issues-in-visual-studio-code-remote-containers"
 ---
 
-Okay, let's unpack this. I’ve certainly been down the rabbit hole of UID mismatches in VS Code remote containers a few times, and it’s never fun. It usually manifests as permission errors, inability to save files, or, in extreme cases, total container chaos. The core problem stems from the fact that user ids (UIDs) and group ids (GIDs) inside the container might not align with those on your local host. This discrepancy trips up the file system because the container’s user is effectively operating with different permissions than the user context where the volume mount exists on the host. It’s a classic case of the containerized world and the host world failing to speak the same language on user identities.
+, let's unpack this. I’ve certainly been down the rabbit hole of UID mismatches in VS Code remote containers a few times, and it’s never fun. It usually manifests as permission errors, inability to save files, or, in extreme cases, total container chaos. The core problem stems from the fact that user ids (UIDs) and group ids (GIDs) inside the container might not align with those on your local host. This discrepancy trips up the file system because the container’s user is effectively operating with different permissions than the user context where the volume mount exists on the host. It’s a classic case of the containerized world and the host world failing to speak the same language on user identities.
 
 The root cause? Container images typically create users with default UIDs, often starting at 1000, or sometimes even 10000 in more secure systems. If your local user happens to have a different UID, for example, my usual local user is 1001, then any volume mount will be interpreted by the container with incorrect ownership. This means your container user might not have write access to files that you created, or vice versa.
 
@@ -55,19 +55,17 @@ If modifying the Dockerfile isn't an option (perhaps you're using a base image y
 
 ```json
 {
-    "name": "My Application",
-    "build": {
-        "dockerfile": "Dockerfile"
-    },
-    "remoteUser": "developer",
-    "workspaceFolder": "/app",
-    "customizations": {
-        "vscode": {
-          "extensions": [
-              "ms-python.python"
-           ]
-         }
-       }
+  "name": "My Application",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "remoteUser": "developer",
+  "workspaceFolder": "/app",
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python"]
+    }
+  }
 }
 ```
 
@@ -83,23 +81,23 @@ First, you must configure docker to pass environment variables to your container
 
 ```json
 {
-    "name": "My Application",
-    "build": {
-        "dockerfile": "Dockerfile"
-    },
-    "runArgs": [
-        "--env", "LOCAL_USER_UID=${localEnv:UID}",
-        "--env", "LOCAL_USER_GID=${localEnv:GID}"
-    ],
-    "remoteUser": "developer",
-    "workspaceFolder": "/app",
-    "customizations": {
-      "vscode": {
-          "extensions": [
-              "ms-python.python"
-           ]
-         }
-       }
+  "name": "My Application",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "runArgs": [
+    "--env",
+    "LOCAL_USER_UID=${localEnv:UID}",
+    "--env",
+    "LOCAL_USER_GID=${localEnv:GID}"
+  ],
+  "remoteUser": "developer",
+  "workspaceFolder": "/app",
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python"]
+    }
+  }
 }
 ```
 
@@ -141,8 +139,8 @@ This approach uses environment variables and will retrieve the local UID and GID
 
 For further reading, I highly recommend these:
 
-*   **Docker’s Official Documentation**: Start with the basics. The sections on user namespaces and user configuration within images will be crucial.
-*   **“Docker Deep Dive” by Nigel Poulton**: This is an in-depth look at all things Docker, including advanced topics about user management within containers.
-*   **“The Linux Programming Interface” by Michael Kerrisk**: This book provides detailed insight into user and group management in Linux, which forms the foundation of how containers handle these. Especially useful if you're building custom Linux images.
+- **Docker’s Official Documentation**: Start with the basics. The sections on user namespaces and user configuration within images will be crucial.
+- **“Docker Deep Dive” by Nigel Poulton**: This is an in-depth look at all things Docker, including advanced topics about user management within containers.
+- **“The Linux Programming Interface” by Michael Kerrisk**: This book provides detailed insight into user and group management in Linux, which forms the foundation of how containers handle these. Especially useful if you're building custom Linux images.
 
 In closing, resolving UID/GID issues often requires understanding the specific needs of your project and development environment. Each method has its strengths and weaknesses. I generally lean towards method 1 for maintainability, but often use a combination of 2 and 3 when dealing with external base images, always keeping in mind the need for consistency and security in a production context. Remember to test thoroughly!

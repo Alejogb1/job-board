@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-efficiently-return-a-newly-created-activerecord-object"
 ---
 
-Okay, let's tackle this. I’ve spent my share of time wrestling with ActiveRecord object creation workflows, and getting the newly minted record back efficiently is something I've optimized in various projects. It's more than just calling `.save` and moving on; there are subtle nuances to consider, especially when performance is a concern.
+, let's tackle this. I’ve spent my share of time wrestling with ActiveRecord object creation workflows, and getting the newly minted record back efficiently is something I've optimized in various projects. It's more than just calling `.save` and moving on; there are subtle nuances to consider, especially when performance is a concern.
 
 The core challenge with returning a newly created ActiveRecord object efficiently boils down to avoiding unnecessary database queries. After you invoke `.save`, ActiveRecord, by default, is designed to refresh the object from the database, ensuring you have the most up-to-date values, including those auto-populated or modified by database triggers. This behavior, while robust, adds an extra query which can be redundant in many situations. My approach, refined over the years, prioritizes only re-querying the database when absolutely needed.
 
@@ -39,9 +39,9 @@ end
 
 ```
 
-Here, I've skipped validations during the save operation. Validations are not always necessary, especially in the context of internal API calls where you might have already validated the data prior to this point. Crucially, the updated at is compared to the created at and only reloads if the timestamps are different, indicating a server-side update occurred. The `.save(validate: false)` trick reduces the immediate redundant query. It bypasses the built-in validation mechanisms, though it shifts the responsibility of ensuring data correctness to the caller of `save`.  I’ve found this approach to be useful for initial data entry where we can guarantee basic sanitization is performed before persisting an object. Note, you must fully understand the ramifications of disabling validations before using this strategy.
+Here, I've skipped validations during the save operation. Validations are not always necessary, especially in the context of internal API calls where you might have already validated the data prior to this point. Crucially, the updated at is compared to the created at and only reloads if the timestamps are different, indicating a server-side update occurred. The `.save(validate: false)` trick reduces the immediate redundant query. It bypasses the built-in validation mechanisms, though it shifts the responsibility of ensuring data correctness to the caller of `save`. I’ve found this approach to be useful for initial data entry where we can guarantee basic sanitization is performed before persisting an object. Note, you must fully understand the ramifications of disabling validations before using this strategy.
 
-Now, let's say we've got a more complex setup. Perhaps we're dealing with database triggers that, behind the scenes, modify the object after insertion. For example, imagine a system that automatically calculates and sets a "level" field for our user upon creation based on certain initial attributes. In such scenarios, the previous optimization wouldn’t be sufficient; we *do* need the database to update the object's data for correctness. Here’s an example that might seem simplistic, but it's quite illustrative:
+Now, let's say we've got a more complex setup. Perhaps we're dealing with database triggers that, behind the scenes, modify the object after insertion. For example, imagine a system that automatically calculates and sets a "level" field for our user upon creation based on certain initial attributes. In such scenarios, the previous optimization wouldn’t be sufficient; we _do_ need the database to update the object's data for correctness. Here’s an example that might seem simplistic, but it's quite illustrative:
 
 ```ruby
 def create
@@ -55,7 +55,7 @@ def create
 end
 ```
 
-In this case, even using `validate: false` is useless. If the level is not part of the `user_params`, the controller will not know what the level of the user is. Therefore, the reload query is not redundant, it is actually *required*.
+In this case, even using `validate: false` is useless. If the level is not part of the `user_params`, the controller will not know what the level of the user is. Therefore, the reload query is not redundant, it is actually _required_.
 
 There are, however, still scenarios where the default behavior is inefficient, such as when we create several objects in a row, but we only need the `ids` of these objects, consider this:
 

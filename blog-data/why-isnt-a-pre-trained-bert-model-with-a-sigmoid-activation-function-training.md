@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-a-pre-trained-bert-model-with-a-sigmoid-activation-function-training"
 ---
 
-Alright, let’s tackle this. It's a situation I've definitely seen a few times, and it usually boils down to a few core issues when a pre-trained BERT model with a sigmoid output isn’t playing ball during training. It’s particularly frustrating because, on the surface, it seems straightforward. We’ve got this powerful language model, and we want to nudge it towards a binary classification or a multilabel task using a sigmoid, yet...silence from the loss function. Let me walk you through the common culprits and illustrate them with practical examples, based on past encounters with this kind of problem.
+, let’s tackle this. It's a situation I've definitely seen a few times, and it usually boils down to a few core issues when a pre-trained BERT model with a sigmoid output isn’t playing ball during training. It’s particularly frustrating because, on the surface, it seems straightforward. We’ve got this powerful language model, and we want to nudge it towards a binary classification or a multilabel task using a sigmoid, yet...silence from the loss function. Let me walk you through the common culprits and illustrate them with practical examples, based on past encounters with this kind of problem.
 
 First, let’s think about what the sigmoid does. It’s an activation function that squeezes its input between 0 and 1. That's beautiful when you're dealing with probabilities, like the probability of a document being relevant or not, but it means we are dealing with values very close to 0 or 1 once training starts converging. When paired with a loss function like binary cross-entropy, any error pushes back on the logits going into the sigmoid function, and if those logits are too far away from 0, these gradients can become very small, practically vanishing. This is a classic case of vanishing gradients, even more pronounced at scale with deeper networks like BERT.
 
@@ -80,7 +80,7 @@ for epoch in range(100):
     print(f'Epoch: {epoch+1}, Loss: {loss.item()}')
 ```
 
-You should observe that the loss in this version *does* decrease, showing the model learning. This is a common mistake, and switching to `BCEWithLogitsLoss` is often all you need for a binary classification or multilabel classification task. It’s so common because if the output from the linear layer is saturated, the gradients are small. `BCEWithLogitsLoss` avoids this by doing the sigmoid internally.
+You should observe that the loss in this version _does_ decrease, showing the model learning. This is a common mistake, and switching to `BCEWithLogitsLoss` is often all you need for a binary classification or multilabel classification task. It’s so common because if the output from the linear layer is saturated, the gradients are small. `BCEWithLogitsLoss` avoids this by doing the sigmoid internally.
 
 Finally, another important factor to consider is the learning rate, particularly if you’re fine-tuning a pre-trained BERT model. You may need to experiment with smaller rates, something around 1e-5 or 2e-5 is a typical starting point. BERT, having already been pre-trained on a massive dataset, does not require large jumps in parameter space.
 

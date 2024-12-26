@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-reset-a-dm-player-with-a-js-api"
 ---
 
-alright, so you're looking at resetting a direct messaging player, presumably one that's implemented within a javascript environment, using its api. i’ve been there, done that, and have the scars—digital ones, of course—to prove it. trust me, this can get messy fast if you're not careful.
+, so you're looking at resetting a direct messaging player, presumably one that's implemented within a javascript environment, using its api. i’ve been there, done that, and have the scars—digital ones, of course—to prove it. trust me, this can get messy fast if you're not careful.
 
 let me unpack this. when we talk about a "dm player", we're essentially talking about a custom widget or component that manages some kind of a direct messaging or chat experience on a web page. it usually has its own internal state—think things like the current message being composed, the currently selected recipient, scroll position in the message history, or maybe even some data loading flags. resetting it means bringing all that back to a starting point.
 
@@ -15,13 +15,15 @@ i recall back when i was working on "chatzilla"—a project involving a very com
 first, if you are lucky and the component exposes a reset method. the simplest case, assuming your dm player has a straightforward reset function built in, looks something like this:
 
 ```javascript
-const dmPlayer = document.getElementById('your-dm-player-id');
+const dmPlayer = document.getElementById("your-dm-player-id");
 
-if (dmPlayer && dmPlayer.api && typeof dmPlayer.api.reset === 'function') {
+if (dmPlayer && dmPlayer.api && typeof dmPlayer.api.reset === "function") {
   dmPlayer.api.reset();
-  console.log('dm player reset successfully');
+  console.log("dm player reset successfully");
 } else {
-  console.error('dm player reset function not found or dm player not found, check your player initialization.');
+  console.error(
+    "dm player reset function not found or dm player not found, check your player initialization."
+  );
 }
 ```
 
@@ -30,16 +32,18 @@ in this snippet, we grab the dom element representing the player, then we check 
 that's all nice and easy when things go well, but it's more often than not, when they don't. most dm players, at least the complex ones i have worked with, typically don't have a simple reset button, which is a challenge. it's usually more involved and this will be dependent on how the dm player was built internally, it can be done in one of two ways. first, if the player has methods exposed in the api to modify each of its different variables. for example, one method to reset the current selected user, one method to reset the message being written, and so on. in this case you could reset it by calling all these methods sequentially. let me give you another real example that i actually implemented in chatzilla:
 
 ```javascript
-const dmPlayer = document.getElementById('your-dm-player-id');
+const dmPlayer = document.getElementById("your-dm-player-id");
 
-if (dmPlayer && dmPlayer.api ) {
+if (dmPlayer && dmPlayer.api) {
   dmPlayer.api.clearSelectedUser();
   dmPlayer.api.clearMessageInput();
   dmPlayer.api.resetScrollPosition();
   dmPlayer.api.clearUnreadMessages();
-  console.log('dm player reset by parts successfully');
+  console.log("dm player reset by parts successfully");
 } else {
-   console.error('dm player api not found or dm player not found, check your player initialization.');
+  console.error(
+    "dm player api not found or dm player not found, check your player initialization."
+  );
 }
 ```
 
@@ -50,31 +54,34 @@ if your dm player does not expose a reset function or functions to reset by part
 here is an example, that was not used in chatzilla, but in another chat app i did during some internship, where we had to destroy and rebuild the player using vanilla js:
 
 ```javascript
-let dmPlayer = document.getElementById('your-dm-player-container');
-let playerId = 'your-dm-player-id';
+let dmPlayer = document.getElementById("your-dm-player-container");
+let playerId = "your-dm-player-id";
 if (dmPlayer) {
-    let instance = dmPlayer.querySelector('#' + playerId);
-    if (instance && instance.api && typeof instance.api.destroy === 'function') {
-      instance.api.destroy();
-      instance.remove();
-       //rebuild it from scratch.
-      const newInstance = document.createElement('div');
-      newInstance.id = playerId;
-      dmPlayer.appendChild(newInstance);
-      initDmPlayer(newInstance);  // function that recreates the component
-       console.log('dm player destroyed and rebuilt successfully.');
-    } else {
-       console.error('dm player destroy function not found or dm player not found, check your player initialization.');
-    }
-
-}else{
-    console.error('dm player container not found, check your player initialization.');
+  let instance = dmPlayer.querySelector("#" + playerId);
+  if (instance && instance.api && typeof instance.api.destroy === "function") {
+    instance.api.destroy();
+    instance.remove();
+    //rebuild it from scratch.
+    const newInstance = document.createElement("div");
+    newInstance.id = playerId;
+    dmPlayer.appendChild(newInstance);
+    initDmPlayer(newInstance); // function that recreates the component
+    console.log("dm player destroyed and rebuilt successfully.");
+  } else {
+    console.error(
+      "dm player destroy function not found or dm player not found, check your player initialization."
+    );
+  }
+} else {
+  console.error(
+    "dm player container not found, check your player initialization."
+  );
 }
 
 function initDmPlayer(element) {
   // here goes your logic to create/re-initialize the dm player
-    // example : new DMplayer(element,options);
-    // this is a dummy function that illustrates how to recreate the player
+  // example : new DMplayer(element,options);
+  // this is a dummy function that illustrates how to recreate the player
 }
 ```
 

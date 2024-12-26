@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "do-unnecessary-constraints-in-constraintlayout-impact-performance"
 ---
 
-Okay, let's tackle this one. I've certainly seen my share of tangled `ConstraintLayout` setups over the years, and the question of whether unnecessary constraints can bog things down is valid. It's something I've had to debug on numerous occasions – performance analysis on mobile apps can get quite granular.
+, let's tackle this one. I've certainly seen my share of tangled `ConstraintLayout` setups over the years, and the question of whether unnecessary constraints can bog things down is valid. It's something I've had to debug on numerous occasions – performance analysis on mobile apps can get quite granular.
 
-In short, yes, absolutely. Unnecessary constraints *can* impact performance, although it's not usually a dramatic, application-crashing kind of hit. Instead, we're talking about potentially subtle increases in layout time, which, if multiplied across many views or complex hierarchies, can noticeably affect frame rates and user experience. Let me elaborate.
+In short, yes, absolutely. Unnecessary constraints _can_ impact performance, although it's not usually a dramatic, application-crashing kind of hit. Instead, we're talking about potentially subtle increases in layout time, which, if multiplied across many views or complex hierarchies, can noticeably affect frame rates and user experience. Let me elaborate.
 
 The Android layout system, at its core, operates in a multi-pass approach. When a view hierarchy is invalidated and needs to be redrawn, it goes through measure, layout, and draw phases. `ConstraintLayout` is an incredibly powerful layout manager because it flattens view hierarchies, which is a good thing for avoiding the dreaded deep nesting performance penalty. However, all those constraints you define are ultimately processed by the constraint solver engine. Each constraint adds to the complexity of this solver's task. While the solver is highly optimized, it does still require computational effort to understand and apply constraints to correctly place the views.
 
@@ -129,7 +129,7 @@ Now, let’s examine an instance of potentially redundant constraints within a c
 </androidx.constraintlayout.widget.ConstraintLayout>
 ```
 
-Here,  the chain is `spread` , and by definition each button has no bias, adding `app:layout_constraintHorizontal_bias="0.5"` to any of the elements does not change the position, therefore, it is redundant.
+Here, the chain is `spread` , and by definition each button has no bias, adding `app:layout_constraintHorizontal_bias="0.5"` to any of the elements does not change the position, therefore, it is redundant.
 
 **Example 3: Misusing match_constraint with a fixed dimension**
 
@@ -175,7 +175,7 @@ The `textViewMisuseMatchConstraint` is using `match_constraint` for its width wi
 
 So, what’s the takeaway here? First, strive for clarity and minimalism in your `ConstraintLayout` declarations. Every constraint should serve a clear purpose. Use the layout inspector often to visually confirm your layout behaves as you expect. Profiling tools in Android Studio are also vital; they will pinpoint slow areas within your layouts, and that often makes the presence of unnecessary constraints more apparent.
 
-As for literature, I'd recommend looking into *Android UI Development with Jetpack Compose* by Mike Wolfson for a deeper look at composable UI paradigms which handle layout in a slightly different manner (which does not make `ConstraintLayout` obsolete, it's still very relevant and necessary for complex views). The *Android Developer Documentation* for `ConstraintLayout` is, as always, a key reference for best practices.
+As for literature, I'd recommend looking into _Android UI Development with Jetpack Compose_ by Mike Wolfson for a deeper look at composable UI paradigms which handle layout in a slightly different manner (which does not make `ConstraintLayout` obsolete, it's still very relevant and necessary for complex views). The _Android Developer Documentation_ for `ConstraintLayout` is, as always, a key reference for best practices.
 
 Additionally, research papers on constraint solving are often available, but they tend to get a little mathematically detailed. The theoretical underpinnings behind how the solver works are interesting but not necessary for this. What is necessary is a proper understanding of the practical aspects of `ConstraintLayout` and how to avoid over constraining.
 

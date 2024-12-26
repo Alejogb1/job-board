@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-activityclassifiercreate-throwing-a-valueerror"
 ---
 
-Okay, let's unpack this `activity_classifier.create(...)` ValueError situation. I've seen this pattern a few times, usually stemming from subtle discrepancies in how we're feeding data into that method, especially when working with complex models and training pipelines. It’s seldom a straightforward “the code is broken” scenario, but more about preconditions and data compatibility.
+, let's unpack this `activity_classifier.create(...)` ValueError situation. I've seen this pattern a few times, usually stemming from subtle discrepancies in how we're feeding data into that method, especially when working with complex models and training pipelines. It’s seldom a straightforward “the code is broken” scenario, but more about preconditions and data compatibility.
 
 My experience, going back some years now, mostly involved time-series analysis for wearable sensors. One particularly memorable project involved building a real-time gait analysis system. We were using a similar kind of model creation flow, albeit a custom-built one, and frequently encountered similar `ValueError`s when we got the data pipeline wrong before feeding it into the training algorithm. The pain points were consistently around misaligned tensor shapes, missing labels, or improper data type casting.
 

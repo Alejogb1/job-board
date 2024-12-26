@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-having-trouble-processing-airship-deep-links-on-xamarinios"
 ---
 
-alright, let's talk about airship deep links and xamarin.ios. it’s a frustrating problem, i've been there myself, banging my head against the wall wondering why seemingly simple deep links refuse to play nice. it always feels like there's some gremlin lurking in the routing mechanism.
+, let's talk about airship deep links and xamarin.ios. it’s a frustrating problem, i've been there myself, banging my head against the wall wondering why seemingly simple deep links refuse to play nice. it always feels like there's some gremlin lurking in the routing mechanism.
 
 first off, let’s be clear: the core issue usually isn’t with airship itself, not directly anyway. it's almost always how xamarin.ios and the ios platform handle url schemes and universal links. airship is just a messenger, delivering the payload – the url. the real challenge is intercepting that url correctly in your xamarin.ios app.
 
@@ -32,7 +32,7 @@ the key here is the `cfbundleurlschemes` array. here’s a snippet showing what 
 </array>
 ```
 
-note: you need to replace `com.yourcompany.yourapp` with your bundle identifier, and `yourappscheme` with the custom url scheme you are using in airship. double check that they match perfectly. *that's usually a typo waiting to happen*, i almost launched a product with the wrong deep link scheme once.
+note: you need to replace `com.yourcompany.yourapp` with your bundle identifier, and `yourappscheme` with the custom url scheme you are using in airship. double check that they match perfectly. _that's usually a typo waiting to happen_, i almost launched a product with the wrong deep link scheme once.
 
 **2. handling the url in `openurl`:**
 
@@ -75,6 +75,7 @@ namespace yourappname
     }
 }
 ```
+
 notice the `return true`. this is crucial. if you don't signal that you have handled the url, ios might not be happy, and nothing might happen. i have seen that happen. the app will receive it but will not act on it.
 
 **3. universal links and associated domains:**
@@ -86,17 +87,17 @@ that file typically has content like this:
 ```json
 {
   "applinks": {
-        "details": [
-            {
-                "appids": [ "yourteamid.com.yourcompany.yourapp" ],
-                "components": [
-                 {
-                  "/": "*"
-                 }
-                ]
-            }
+    "details": [
+      {
+        "appids": ["yourteamid.com.yourcompany.yourapp"],
+        "components": [
+          {
+            "/": "*"
+          }
         ]
-    }
+      }
+    ]
+  }
 }
 ```
 
@@ -119,16 +120,16 @@ airship, as the messenger, needs to be set up correctly as well. ensure that you
 
 **5. debugging tips**
 
-*   **logging:** add as much logging to your `openurl` method as you can. log everything from the url itself to any parameters you're extracting. you need data to understand what's happening, because in mobile is a black box until is not. also check the logs in the console of your ios device (or simulator). search for your app logs and see if there are error messages from ios when you tap on the deep links. they may tell you something important.
-*   **breakpoints:** set a breakpoint at the start of your `openurl` method to step through the code and see if the method is even being invoked. if your breakpoint never hits, then the configuration is incorrect somewhere.
-*  **check ios logs:** ios console logging is your friend. you will find valuable hints there. the console is sometimes more informative than the debugger itself.
-*   **test thoroughly:** test with a real device, not just the simulator. the simulator can sometimes behave differently and it may mask some issues.
+- **logging:** add as much logging to your `openurl` method as you can. log everything from the url itself to any parameters you're extracting. you need data to understand what's happening, because in mobile is a black box until is not. also check the logs in the console of your ios device (or simulator). search for your app logs and see if there are error messages from ios when you tap on the deep links. they may tell you something important.
+- **breakpoints:** set a breakpoint at the start of your `openurl` method to step through the code and see if the method is even being invoked. if your breakpoint never hits, then the configuration is incorrect somewhere.
+- **check ios logs:** ios console logging is your friend. you will find valuable hints there. the console is sometimes more informative than the debugger itself.
+- **test thoroughly:** test with a real device, not just the simulator. the simulator can sometimes behave differently and it may mask some issues.
 
 **resources:**
 
-*   **ios documentation:** apple's documentation on url schemes and universal links is a must-read. it is not the most user-friendly resource, but it is the source of truth. search for "configuring your app to open custom url schemes" and "supporting universal links".
-*   **programming ios 16 (book):** this book gives you a good understanding of ios fundamentals. it's a solid reference if you want to go in deeper about this subject. there is not a specific section for deep links, but it gives you the foundational knowledge to understand them.
-*   **xamarin documentation:** if you find yourself with some specific xamarin binding issue check the xamarin official documentation. although it is not updated anymore is still useful in many cases.
+- **ios documentation:** apple's documentation on url schemes and universal links is a must-read. it is not the most user-friendly resource, but it is the source of truth. search for "configuring your app to open custom url schemes" and "supporting universal links".
+- **programming ios 16 (book):** this book gives you a good understanding of ios fundamentals. it's a solid reference if you want to go in deeper about this subject. there is not a specific section for deep links, but it gives you the foundational knowledge to understand them.
+- **xamarin documentation:** if you find yourself with some specific xamarin binding issue check the xamarin official documentation. although it is not updated anymore is still useful in many cases.
 
 **my final thought**
 

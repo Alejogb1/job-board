@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "when-should-type-classes-be-preferred-over-traits"
 ---
 
-Alright, let's talk about type classes versus traits. It's a discussion that comes up often, and it's understandable why there's a bit of head-scratching involved. I've certainly had my share of debates and late nights pondering this, especially back when we were building that distributed data processing engine at my previous company. We hit a point where choosing between traits and type classes significantly impacted not only the code's maintainability but its very flexibility, and that experience really solidified my thinking on the matter.
+, let's talk about type classes versus traits. It's a discussion that comes up often, and it's understandable why there's a bit of head-scratching involved. I've certainly had my share of debates and late nights pondering this, especially back when we were building that distributed data processing engine at my previous company. We hit a point where choosing between traits and type classes significantly impacted not only the code's maintainability but its very flexibility, and that experience really solidified my thinking on the matter.
 
-The core of the issue boils down to how each mechanism handles polymorphism—that is, the ability of code to operate on different types. Traits, at their heart, are about defining behavior that *objects* possess. Think of it as a contract: "if you're an object that implements this trait, you agree to provide these specific methods." This is great when you are adding behavior to objects you can directly modify, or where you have control over the inheritance structure.
+The core of the issue boils down to how each mechanism handles polymorphism—that is, the ability of code to operate on different types. Traits, at their heart, are about defining behavior that _objects_ possess. Think of it as a contract: "if you're an object that implements this trait, you agree to provide these specific methods." This is great when you are adding behavior to objects you can directly modify, or where you have control over the inheritance structure.
 
-Type classes, on the other hand, are more concerned with defining behavior for *types*, regardless of whether or not those types have explicit support for that behavior. It’s more about saying "if *any* type satisfies these constraints, then I can operate on it using this specific set of functions." This means you don't necessarily need to modify the original type to make it fit into your world; you can retroactively add behavior to existing types, even those you don't own.
+Type classes, on the other hand, are more concerned with defining behavior for _types_, regardless of whether or not those types have explicit support for that behavior. It’s more about saying "if _any_ type satisfies these constraints, then I can operate on it using this specific set of functions." This means you don't necessarily need to modify the original type to make it fit into your world; you can retroactively add behavior to existing types, even those you don't own.
 
 Let me illustrate with an example from that old data processing project. Initially, we had a trait called `Serializable` designed to handle serialization to various formats. The idea was that any data model we had needed to implement the `Serializable` trait. It seemed logical at the time, and for a while, it worked well. However, we introduced an external library that provided us with very useful data structures, and wouldn’t you know, they didn’t implement our `Serializable` trait. We were then forced to write adapter classes or wrapper methods, a classic case of object-oriented impedance mismatch. This is where a type class approach would have been more elegant.
 
-A type class would allow us to define functions that serialize *any type* that meets certain conditions, without requiring any modifications to that original type's code. This is the crucial distinction: with traits, you're modifying *objects*, while with type classes, you're defining *functions* that operate on *types*.
+A type class would allow us to define functions that serialize _any type_ that meets certain conditions, without requiring any modifications to that original type's code. This is the crucial distinction: with traits, you're modifying _objects_, while with type classes, you're defining _functions_ that operate on _types_.
 
 To make this clearer, consider a simple case of printing values of various types. Using traits, you might have something like this in a language that allows defining traits, like Rust, or similar behavior in other languages:
 
@@ -64,7 +64,7 @@ main = do
 
 ```
 
-Notice that we define `Printable` as a *constraint* on a type, and then we define *specific instances* of that constraint for `Int`, `String`, and `MyRecord`. Crucially, we did not need to modify the definition of `Int` or `String` itself. We were able to add this behavior later.
+Notice that we define `Printable` as a _constraint_ on a type, and then we define _specific instances_ of that constraint for `Int`, `String`, and `MyRecord`. Crucially, we did not need to modify the definition of `Int` or `String` itself. We were able to add this behavior later.
 
 The benefit becomes even more apparent when you think about more complex scenarios. Imagine you’re creating a general-purpose sorting algorithm. Using a trait-based approach, you might define a `Comparable` trait that your data types must implement. However, if you get an external data structure that doesn’t implement that trait, you’re back to square one with adapter classes. Using a type class, you can create an `Ordered` type class and define specific instances of that for any types that are orderable, again, without needing to modify the original data structures.
 
@@ -124,6 +124,6 @@ So, when should type classes be preferred over traits? In my experience, you sho
 2.  **You're building a general-purpose API:** Where the set of types you'll be dealing with can be open ended.
 3.  **You require greater flexibility:** When types are not neatly organized in an inheritance hierarchy.
 
-Traits are generally more suitable for cases where the behaviors are tightly coupled with the *object* and you have control over those object definitions. It's about defining what an *object* is *capable* of, while type classes define how a *type* behaves within a certain context.
+Traits are generally more suitable for cases where the behaviors are tightly coupled with the _object_ and you have control over those object definitions. It's about defining what an _object_ is _capable_ of, while type classes define how a _type_ behaves within a certain context.
 
 For those looking to dive deeper, I highly recommend exploring the concept of type classes in "Type Theory and Functional Programming" by Simon Thompson. Additionally, papers like "How to Make Ad-Hoc Polymorphism Less Ad Hoc" by Philip Wadler and Stephen Blott are excellent resources for understanding the theoretical underpinnings of type classes and the problems they address. Furthermore, the Haskell language documentation provides extensive examples that highlight type classes in practical contexts. These references will provide a more thorough foundation on this topic than I could detail here.

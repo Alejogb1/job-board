@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-efficient-bitwise-operations-in-minizinc"
 ---
 
-Okay, let's tackle this. I've spent my share of time optimizing constraint models, and efficient bitwise operations in MiniZinc are something that can really make or break the performance of certain types of problems. It's less about “magic” tricks and more about understanding how the underlying solver interacts with the model's structure. When I first encountered this, it was on a resource allocation problem involving complex hardware configurations, and inefficient bitwise manipulations nearly brought the whole thing to its knees.
+, let's tackle this. I've spent my share of time optimizing constraint models, and efficient bitwise operations in MiniZinc are something that can really make or break the performance of certain types of problems. It's less about “magic” tricks and more about understanding how the underlying solver interacts with the model's structure. When I first encountered this, it was on a resource allocation problem involving complex hardware configurations, and inefficient bitwise manipulations nearly brought the whole thing to its knees.
 
 So, let's unpack what we mean by "efficient." In the context of MiniZinc, efficiency isn't solely about writing the shortest, most concise code. It's primarily about how the solver interprets and processes those bitwise expressions, impacting both the search time and the memory usage. A solver generally operates at a higher level of abstraction; therefore, not all seemingly equivalent bitwise formulations are equal from a solver's perspective. The goal is to present constraints in a way that allows the solver to efficiently propagate information and prune the search space.
 
@@ -80,7 +80,9 @@ constraint extracted_bits = (source bsr start_bit) band (pow(2, num_bits_to_extr
 
 output ["Extracted bits: ",show(extracted_bits)];
 ```
+
 This is fairly concise, but if you are doing this very often with multiple start bits, and multiple extracted bit length, it will be recomputed every time which may lead to unecessary calculation. A common practice to address that is to break this constraint into components that might be reused or precalculated for optimization. If we're doing this operation many times, especially on different parts of a large input, we could break this into a series of steps that are less demanding for the solver.
+
 ```minizinc
 int: source = 250;
 int: start_bit = 2;
@@ -101,4 +103,4 @@ In this decomposed example, the bit shift is extracted and done once, stored as 
 
 In summary, efficiency with bitwise operations in MiniZinc isn't just about writing elegant code. It involves a deeper understanding of how solvers process constraints, focusing on minimizing the computational burden through simplification and careful variable domain management. Linear arithmetic when possible, boolean representations for very small numbers and bit-level operations, and using auxillary variables for decomposing the problem, are keys in optimizing performance. It's a subtle art, and often requires iterative refinement and experimentation specific to the solver you're using.
 
-For further reading, I recommend looking into *Handbook of Constraint Programming* edited by Francesca Rossi, Peter Van Beek, and Toby Walsh. It’s a comprehensive text that goes into depth about solver behavior. Also, for specific solver implementation details, examining publications of specific solvers, like Gecode or Chuffed, can provide invaluable insights. Don’t just assume what works; test and adapt your models according to the solver’s performance and the nature of your specific problem.
+For further reading, I recommend looking into _Handbook of Constraint Programming_ edited by Francesca Rossi, Peter Van Beek, and Toby Walsh. It’s a comprehensive text that goes into depth about solver behavior. Also, for specific solver implementation details, examining publications of specific solvers, like Gecode or Chuffed, can provide invaluable insights. Don’t just assume what works; test and adapt your models according to the solver’s performance and the nature of your specific problem.

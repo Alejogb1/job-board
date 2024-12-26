@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-save-a-pair-of-keys-from-strings-in-the-keystore-java"
 ---
 
-alright, so you're looking at how to securely store key pairs, derived from strings, in a java keystore. i've been there, and it's a surprisingly common need once you move beyond just generating keys inside the jvm. let's break this down, i'll share some code i actually use(d), and cover some of the pitfalls you may encounter along the way.
+, so you're looking at how to securely store key pairs, derived from strings, in a java keystore. i've been there, and it's a surprisingly common need once you move beyond just generating keys inside the jvm. let's break this down, i'll share some code i actually use(d), and cover some of the pitfalls you may encounter along the way.
 
 the basic idea is that you're starting with string representations of keys (likely private and public, or maybe just a shared secret), and not with the native java key objects themselves. the keystore api works with actual keys, so we need to perform a conversion. this means you're probably dealing with some kind of encoded string, think base64, or perhaps a hex string. before i get to the code, let me share some of my scars. my first time tackling this i naively assumed i could directly use the string and directly use it in the keystore. that was... a day of frustration debugging. the errors were not very helpful too. let me tell you about my first "failure".
 
@@ -53,7 +53,7 @@ public class KeyStoreUtil {
         }else{
             keyStore.load(null,keyStorePassword);
         }
-        
+
         keyStore.setKeyEntry(alias, keyPair.getPrivate(), keyStorePassword, new java.security.cert.Certificate[]{}); // use chain of certificates if necessary
         try (FileOutputStream fos = new FileOutputStream(keyStorePath)) {
             keyStore.store(fos, keyStorePassword);
@@ -108,6 +108,7 @@ public class KeyStoreUtil {
     }
 }
 ```
+
 this example uses rsa for the key generation. you might be dealing with a different algorithm (like ec). the key is the `keyfactory.getinstance` argument, if your keys are different, change it, and also check the specs, they must match the key type.
 
 a couple of things to note. first, ensure your strings are correctly base64 encoded. if they are in hex you will need to use a different encoder (google hex to byte array), this will become a problem when you're working with systems that generate keys in different formats. second, the key specifications i’m using (`pkcs8encodedkeyspec` and `x509encodedkeyspec`) are standard, but if your key encoding is different, you will have to adapt this to your specific case. for instance, some keys are wrapped in pkcs1 or other formats.
@@ -126,7 +127,7 @@ public static void saveKeyPairToKeyStore(KeyPair keyPair, String alias, String k
   }else{
       keyStore.load(null,keyStorePassword);
   }
-  
+
   keyStore.setKeyEntry(alias, keyPair.getPrivate(), keyStorePassword, new java.security.cert.Certificate[]{});
   try (FileOutputStream fos = new FileOutputStream(keyStorePath)) {
       keyStore.store(fos, keyStorePassword);
@@ -161,6 +162,7 @@ public static KeyPair loadKeyPairFromKeyStore(String alias, String keyStorePath,
     return new KeyPair(publicKey, privateKey);
 }
 ```
+
 this retrieves the keys using the alias we used for storage. the alias is what you'll use to manage keys in the keystore. notice that in the example `keypair` there is only one private key and not both. since the public key can be obtained from the certificate. this will also save you space in the key store if you happen to have a lot of keys to store.
 
 security advice: do not hard code the password in your code. you might use system properties or some secret vault.

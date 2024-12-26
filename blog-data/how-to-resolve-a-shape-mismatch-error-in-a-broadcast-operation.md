@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resolve-a-shape-mismatch-error-in-a-broadcast-operation"
 ---
 
-Okay, let's talk about shape mismatches in broadcast operations—something I've certainly bumped into more times than I care to remember. It’s a common headache, especially when dealing with numerical computations involving multi-dimensional arrays, often encountered in fields like scientific computing, machine learning, and data analysis. I've particularly seen this crop up during large matrix operations in custom signal processing libraries I was working on a while back.
+, let's talk about shape mismatches in broadcast operations—something I've certainly bumped into more times than I care to remember. It’s a common headache, especially when dealing with numerical computations involving multi-dimensional arrays, often encountered in fields like scientific computing, machine learning, and data analysis. I've particularly seen this crop up during large matrix operations in custom signal processing libraries I was working on a while back.
 
 The core issue, at its heart, arises from the way broadcasting is designed to work. It's a powerful technique that allows you to perform operations between arrays of different shapes under specific conditions. The basic idea is that when you're, say, adding two arrays, if they don't have matching dimensions, broadcasting attempts to "stretch" the smaller array to fit the larger one's shape, effectively avoiding the need to manually manipulate them to be the same size. But, this automatic stretching is not arbitrary. There are strict rules. The general rule is that shapes are compatible for broadcasting when they are either equal, or one of them is 1. Failing this compatibility, we get our dreaded shape mismatch error.
 
@@ -14,7 +14,7 @@ The most frequent reason I’ve found for this, personally, boils down to misund
 
 So, how do we fix this? Well, there are several techniques, and which one you choose will depend greatly on your specific scenario and desired result. We essentially have three main approaches I’ve found myself relying on.
 
-**1. Reshaping:** This involves explicitly changing the dimensions of one or more of the arrays involved using functions, to make them broadcasting-compatible. The critical thing to understand here is that *no data modification* occurs when you reshape, rather the shape itself is altered. This is probably my most commonly used approach. Consider the following python snippet using `numpy`:
+**1. Reshaping:** This involves explicitly changing the dimensions of one or more of the arrays involved using functions, to make them broadcasting-compatible. The critical thing to understand here is that _no data modification_ occurs when you reshape, rather the shape itself is altered. This is probably my most commonly used approach. Consider the following python snippet using `numpy`:
 
 ```python
 import numpy as np
@@ -33,6 +33,7 @@ except ValueError as e:
     print(f"Shape after reshaping (a): {a_reshaped.shape} , Result Shape: {result_ok.shape}")
 
 ```
+
 Here we see that by reshaping `a` from (3,) to (3,1) via `.reshape(3,1)` we've made it broadcastable with `b` which is shape (3,1). This avoids the error and gives the result we wanted. The important thing to remember here is you cannot reshape the data to an arbitrary dimension unless the total number of elements matches the number before reshaping.
 
 **2. Adding Dimensions (using `np.newaxis` or `None` ):** Sometimes, the issue is not that the arrays have the wrong number of dimensions, but that they're aligned incorrectly for broadcasting. Adding a "singleton" dimension (a dimension of size one) can address this. For me, a common instance where this surfaces is when applying a scalar value along a particular axis of a higher-dimension array. This often involves introducing a new axis using the `np.newaxis` object or simply the python `None`. Consider the below python code.
@@ -58,7 +59,7 @@ except ValueError as e:
 
 In this example, adding `np.newaxis` introduces a singleton dimension, making `c` a shape of (2,1) instead of (2,). This now allows broadcasting to operate correctly when it meets the shape of `d`, which is (2,3). A crucial insight I've found is understanding the semantics of `np.newaxis`; it's essentially an alias for `None` so we could rewrite the `c_newaxis` line as: `c_newaxis = c[:, None]` and it would yield the same results, highlighting the duality.
 
-**3. Transposing (Rearranging Axes):** Transposing, in essence, flips an array’s axes. Often the error I encountered was because I was trying to add two matrices but they required to be transposed first. Transposing makes an implicit assumption about how the data is stored in memory and the order the indices have; it changes how the array is *interpreted*, not the underlying data itself, much like reshaping. Here's an example:
+**3. Transposing (Rearranging Axes):** Transposing, in essence, flips an array’s axes. Often the error I encountered was because I was trying to add two matrices but they required to be transposed first. Transposing makes an implicit assumption about how the data is stored in memory and the order the indices have; it changes how the array is _interpreted_, not the underlying data itself, much like reshaping. Here's an example:
 
 ```python
 import numpy as np

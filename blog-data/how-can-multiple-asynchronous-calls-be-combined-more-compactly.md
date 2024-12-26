@@ -4,44 +4,42 @@ date: "2024-12-23"
 id: "how-can-multiple-asynchronous-calls-be-combined-more-compactly"
 ---
 
-Alright, let's tackle this. It's a common scenario I've bumped into countless times – the need to wrangle several asynchronous operations and consolidate their results. The code can quickly become a sprawling, callback-hell-esque mess if you're not deliberate about it. I remember back in the early days of node.js, before async/await was widely adopted, we had to rely heavily on libraries like 'async' to manage this, and even then it felt clunky at times. The core issue is straightforward: you initiate multiple tasks that run independently, usually involving i/o or network requests, and then need to bring their outputs back together in a manageable way. Fortunately, modern javascript and other languages offer much cleaner solutions.
+, let's tackle this. It's a common scenario I've bumped into countless times – the need to wrangle several asynchronous operations and consolidate their results. The code can quickly become a sprawling, callback-hell-esque mess if you're not deliberate about it. I remember back in the early days of node.js, before async/await was widely adopted, we had to rely heavily on libraries like 'async' to manage this, and even then it felt clunky at times. The core issue is straightforward: you initiate multiple tasks that run independently, usually involving i/o or network requests, and then need to bring their outputs back together in a manageable way. Fortunately, modern javascript and other languages offer much cleaner solutions.
 
 The basic problem we’re addressing lies in avoiding nested callbacks or excessive promise chaining when dealing with multiple asynchronous operations. This can greatly impair code readability, maintainability, and increases the chance of making mistakes with error handling. We need techniques that help us orchestrate these tasks more concisely and effectively.
 
-One primary approach is to use `promise.all()` (or its equivalent in other languages). This static method on the promise object allows you to pass an array of promises and returns a single promise that resolves when *all* of the input promises have resolved. If any of the promises reject, the resulting promise immediately rejects with the rejection reason of the first promise that rejected. This is incredibly useful when you need all the results.
+One primary approach is to use `promise.all()` (or its equivalent in other languages). This static method on the promise object allows you to pass an array of promises and returns a single promise that resolves when _all_ of the input promises have resolved. If any of the promises reject, the resulting promise immediately rejects with the rejection reason of the first promise that rejected. This is incredibly useful when you need all the results.
 
 Here's a basic javascript example demonstrating this:
 
 ```javascript
 async function fetchData(url) {
-  return fetch(url).then(response => {
-      if(!response.ok){
-          throw new Error(`HTTP error! status: ${response.status}`);
-      }
+  return fetch(url).then((response) => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     return response.json();
-    });
+  });
 }
 
 async function combineData() {
   const urls = [
-    'https://api.example.com/data1',
-    'https://api.example.com/data2',
-    'https://api.example.com/data3'
+    "https://api.example.com/data1",
+    "https://api.example.com/data2",
+    "https://api.example.com/data3",
   ];
 
   try {
-    const results = await Promise.all(urls.map(url => fetchData(url)));
+    const results = await Promise.all(urls.map((url) => fetchData(url)));
     console.log("Combined Data:", results);
     return results;
-  } catch (error){
+  } catch (error) {
     console.error("Error fetching data:", error);
     throw error;
   }
 }
 
-
 combineData();
-
 ```
 
 In this snippet, the `fetchData` function fetches data from a given url and returns a promise that resolves with the json response. The `combineData` function uses `promise.all` to send requests to three different urls concurrently and awaits on the results of these requests. This reduces the need for nested code, which would be necessary if you were to chain the promises together sequentially. Note the critical inclusion of the `try...catch` block. Asynchronous operations, especially those involving network requests, are inherently prone to failure. Properly handled errors are essential to prevent your application from crashing.
@@ -52,27 +50,33 @@ Here's an example demonstrating `promise.allSettled()` in javascript:
 
 ```javascript
 async function fetchData(url, fail) {
-  return fetch(url).then(response => {
-        if(!response.ok || fail){
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+  return fetch(url).then((response) => {
+    if (!response.ok || fail) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     return response.json();
-});
+  });
 }
 
 async function combineData() {
-    const urls = [
-        ['https://api.example.com/data1', false],
-        ['https://api.example.com/data2', true],
-        ['https://api.example.com/data3', false]
-      ];
-  const results = await Promise.allSettled(urls.map( ([url, fail]) => fetchData(url, fail)));
-    console.log("All Data:", results);
-    const successes = results.filter(r => r.status === 'fulfilled').map(r => r.value);
-    const failures = results.filter(r => r.status === 'rejected').map(r => r.reason);
+  const urls = [
+    ["https://api.example.com/data1", false],
+    ["https://api.example.com/data2", true],
+    ["https://api.example.com/data3", false],
+  ];
+  const results = await Promise.allSettled(
+    urls.map(([url, fail]) => fetchData(url, fail))
+  );
+  console.log("All Data:", results);
+  const successes = results
+    .filter((r) => r.status === "fulfilled")
+    .map((r) => r.value);
+  const failures = results
+    .filter((r) => r.status === "rejected")
+    .map((r) => r.reason);
   console.log("Successful Fetches", successes);
   console.log("Failed Fetches", failures);
-    return {successes, failures};
+  return { successes, failures };
 }
 
 combineData();
@@ -86,38 +90,39 @@ Here is a sample of how you might approach this using an async generator:
 
 ```javascript
 async function* fetchPaginatedData(baseUrl, pageSize = 2) {
-    let page = 1;
-    let hasMore = true;
-    while (hasMore) {
-        const url = `${baseUrl}?page=${page}&pageSize=${pageSize}`;
-        const response = await fetch(url);
-         if(!response.ok){
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        if (data.length === 0){
-            hasMore = false;
-        } else {
-        yield data;
-        page++;
-        }
+  let page = 1;
+  let hasMore = true;
+  while (hasMore) {
+    const url = `${baseUrl}?page=${page}&pageSize=${pageSize}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+    const data = await response.json();
+    if (data.length === 0) {
+      hasMore = false;
+    } else {
+      yield data;
+      page++;
+    }
+  }
 }
-
 
 async function consumePaginatedData() {
   try {
     const allData = [];
-    for await (const chunk of fetchPaginatedData("https://api.example.com/paged_data")) {
+    for await (const chunk of fetchPaginatedData(
+      "https://api.example.com/paged_data"
+    )) {
       allData.push(...chunk);
       console.log("Fetched and processed chunk:", chunk);
     }
-    console.log("All combined data:", allData)
-    return allData
-    } catch(error){
-        console.error("Error fetching paginated data:", error);
-        throw error
-    }
+    console.log("All combined data:", allData);
+    return allData;
+  } catch (error) {
+    console.error("Error fetching paginated data:", error);
+    throw error;
+  }
 }
 
 consumePaginatedData();

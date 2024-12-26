@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-does-my-code-using-featureengineselectiondrophighpsifeatures-not-work-when-a-pandas-dataframe-is-passed"
 ---
 
-Alright, let's tackle this one. I've definitely been down that road with `feature_engine` and dataframes. It's usually not a problem with the `DropHighPSIFeatures` class itself, but rather the way the input dataframe is structured or understood by the library. Let me walk you through it based on a few experiences I've had.
+, let's tackle this one. I've definitely been down that road with `feature_engine` and dataframes. It's usually not a problem with the `DropHighPSIFeatures` class itself, but rather the way the input dataframe is structured or understood by the library. Let me walk you through it based on a few experiences I've had.
 
 The core issue, in my experience, typically boils down to a mismatch in expectations concerning the format of the input data, specifically column types and how the feature engine library handles these. `DropHighPSIFeatures` calculates the population stability index (psi) across different datasets, and it expects numeric data for those calculations. If your dataframe contains non-numeric data, especially those with object datatypes—which is common when pandas automatically infers datatypes from a CSV or other sources—it’s very likely to stumble.
 
-Let's imagine a scenario from a previous project. I was building a credit risk model, and I was aiming to streamline my features using psi analysis with `DropHighPSIFeatures`. Initially, my dataframe included the loan applications, and the data initially seemed clean. However, the `DropHighPSIFeatures` class was throwing errors and failing to drop any columns as expected. It took me some time, but I realized a few categorical columns, namely *application_status* and *credit_score_category*, were interpreted as pandas ‘object’ type instead of the proper integer or numeric representation. Pandas often handles string data this way.
+Let's imagine a scenario from a previous project. I was building a credit risk model, and I was aiming to streamline my features using psi analysis with `DropHighPSIFeatures`. Initially, my dataframe included the loan applications, and the data initially seemed clean. However, the `DropHighPSIFeatures` class was throwing errors and failing to drop any columns as expected. It took me some time, but I realized a few categorical columns, namely _application_status_ and _credit_score_category_, were interpreted as pandas ‘object’ type instead of the proper integer or numeric representation. Pandas often handles string data this way.
 
 Now, let’s delve into why this is a problem and how to fix it.
 

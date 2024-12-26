@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "systemverilog-wait-statement"
 ---
 
-Okay so you’re asking about `wait` in SystemVerilog right Been there done that got the t-shirt literally I have a drawer full of vendor swag with subtle wait statement horror stories embroidered on them I kid you not
+you’re asking about `wait` in SystemVerilog right Been there done that got the t-shirt literally I have a drawer full of vendor swag with subtle wait statement horror stories embroidered on them I kid you not
 
 Let’s break it down no fluff just the technical bits `wait` is like the basic building block of synchronization in SystemVerilog a way to make sure your testbench or your verification environment doesn't go off the rails and start doing things out of order It's about telling a process to chill out for a bit until a specific condition becomes true
 
@@ -132,6 +132,7 @@ One common mistake I've seen is people using wait in place where they should be 
 Now a pro tip from my experience I find it helpful to put a timeout in a `wait` for that kind of situation That way your simulation does not get stuck in a infinite wait loop if something doesn't happen as planned. You can do this with a combination of delay and `wait`
 
 So instead of doing this `wait(some_condition);` you can do something like this
+
 ```systemverilog
 #timeout_value;
 if (!some_condition) begin
@@ -144,6 +145,6 @@ end
 
 This way if the timeout is reached the process will exit and the simulation can proceed. This is useful for catching errors in your testbench.
 
-If you want a more in depth understanding about SystemVerilog there are great books that I can recommend I am always learning more about it even after many years working with the language.  There's "SystemVerilog for Verification" by Chris Spear and Greg Tumbush It’s like the Bible for verification folks its a great book if you want to dive deep in the subject Also if you want to learn more about the language itself and also about assertions I would recommend you to check "Writing Testbenches using SystemVerilog" by Janick Bergeron it is also a very nice book.
+If you want a more in depth understanding about SystemVerilog there are great books that I can recommend I am always learning more about it even after many years working with the language. There's "SystemVerilog for Verification" by Chris Spear and Greg Tumbush It’s like the Bible for verification folks its a great book if you want to dive deep in the subject Also if you want to learn more about the language itself and also about assertions I would recommend you to check "Writing Testbenches using SystemVerilog" by Janick Bergeron it is also a very nice book.
 
 So to wrap it up `wait` is that workhorse of SystemVerilog synchronization but like any workhorse you need to know its limits and how to use it wisely its easy to learn but you have to master it to use it correctly so don't use it without fully understand its implication in your simulation process. Take your time learn from your mistakes and your simulations and you will be a pro using the `wait` statements before you even realize it. Just keep practicing and you will be a `wait` statement expert in no time.

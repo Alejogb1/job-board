@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-does-a-ctrl--click-on-a-function-name-not-navigate-to-the-declaration-or-usages-in-jetbrains-gateway"
 ---
 
-alright, so you’re having trouble with ctrl+click not working in jetbrains gateway, specifically with navigation to declarations or usages? yeah, i’ve been there, that’s a real pain when you’re trying to quickly jump around the codebase. it usually means something isn’t quite set up correctly with the remote environment or your client configuration. let me break it down based on what i’ve seen happening, and the common pitfalls.
+, so you’re having trouble with ctrl+click not working in jetbrains gateway, specifically with navigation to declarations or usages? yeah, i’ve been there, that’s a real pain when you’re trying to quickly jump around the codebase. it usually means something isn’t quite set up correctly with the remote environment or your client configuration. let me break it down based on what i’ve seen happening, and the common pitfalls.
 
 first off, let’s talk about the connection. the core of this problem lies in the fact that jetbrains gateway isn’t directly running the ide on your machine; it’s essentially acting as a thin client. the heavy lifting is happening on a remote server, where the full backend ide instance is executing, thus, the code indexing, which is key for ctrl+click functionality, is happening remotely as well.
 
@@ -18,7 +18,7 @@ let’s also talk about version compatibility. it’s critical that your gateway
 
 finally, sometimes it could be that the correct ide language server isnt set up correctly. for example, if you are working with a python project, you must have a valid interpreter in the remote backend, or if it’s a java application, you must have the jdk installed and the project configured with the right sdk. often people overlook these basic configurations in the remote server which can lead to the same behaviour as the lack of indexes. the gateway client is essentially a dumb client. it trusts that the server side is properly configured.
 
-okay so lets talk about some code to explain how you might want to verify that your remote ide has the correct indexes, language server configured, and project configuration are all set up.
+lets talk about some code to explain how you might want to verify that your remote ide has the correct indexes, language server configured, and project configuration are all set up.
 
 for example lets imagine you have a python project you want to work on. you can use the python api to see the project info. lets start with a simple script to display some general information to check that the server is indeed running correctly. this is a python script ran from the remote machine:
 
@@ -94,37 +94,37 @@ in this snippet, we are basically running maven through java to print its inform
 lastly, for javascript, if you are using nodejs and npm, you might want to run a script like the one below, from the remote machine:
 
 ```javascript
-const { exec } = require('child_process');
+const { exec } = require("child_process");
 
 function checkNodeEnvironment() {
-    console.log("node version and dependencies:");
-    exec('node -v', (err, stdout, stderr) => {
-        if (err) {
-            console.error(`error checking node version: ${err}`);
-            return;
-        }
-        console.log(`node version:\n${stdout}`);
-        exec('npm list --depth=0', (err, stdout, stderr) => {
-            if (err) {
-                console.error(`error listing npm dependencies: ${err}`);
-                return;
-            }
-            console.log(`npm dependencies:\n${stdout}`);
-        });
-    });
-    console.log("\nproject content");
-    exec('ls -la', (err,stdout,stderr)=>{
-        if (err) {
-            console.error(`error getting project content: ${err}`);
-            return;
-        }
-        console.log(`project content:\n${stdout}`);
-    })
-
-    console.log("\nenvironment variables:");
-    for( const env_var in process.env){
-        console.log(`${env_var} = ${process.env[env_var]}`)
+  console.log("node version and dependencies:");
+  exec("node -v", (err, stdout, stderr) => {
+    if (err) {
+      console.error(`error checking node version: ${err}`);
+      return;
     }
+    console.log(`node version:\n${stdout}`);
+    exec("npm list --depth=0", (err, stdout, stderr) => {
+      if (err) {
+        console.error(`error listing npm dependencies: ${err}`);
+        return;
+      }
+      console.log(`npm dependencies:\n${stdout}`);
+    });
+  });
+  console.log("\nproject content");
+  exec("ls -la", (err, stdout, stderr) => {
+    if (err) {
+      console.error(`error getting project content: ${err}`);
+      return;
+    }
+    console.log(`project content:\n${stdout}`);
+  });
+
+  console.log("\nenvironment variables:");
+  for (const env_var in process.env) {
+    console.log(`${env_var} = ${process.env[env_var]}`);
+  }
 }
 
 checkNodeEnvironment();

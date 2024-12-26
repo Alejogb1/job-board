@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "why-does-nunit-suspend-execution-after-a-test-thread-is-suspended"
 ---
 
-Alright, let's tackle this one. It’s a situation I’ve seen more than a few times, particularly back when I was heavily involved in building out our automated testing infrastructure at TechCorp – we had a fairly complex asynchronous system to wrangle. The frustration of seeing NUnit just seemingly… stop… after a test thread hits a suspension point is very real. Let me break down why this occurs and offer a few solutions based on how I've worked through this in the past.
+, let's tackle this one. It’s a situation I’ve seen more than a few times, particularly back when I was heavily involved in building out our automated testing infrastructure at TechCorp – we had a fairly complex asynchronous system to wrangle. The frustration of seeing NUnit just seemingly… stop… after a test thread hits a suspension point is very real. Let me break down why this occurs and offer a few solutions based on how I've worked through this in the past.
 
 The core issue stems from how NUnit, and in fact most testing frameworks, handle test executions and thread management. When you execute a test method, NUnit spawns a test runner. Each test method typically gets its own thread. However, unlike a long-running application server, a testing framework assumes tests are primarily synchronous. When you introduce asynchronous code, or any action that can result in a thread suspension, things get a little more complex.
 
-NUnit's primary goal is to execute your test, capture the results (pass/fail/error), and move on. If the test thread enters a suspended state, NUnit doesn't have a built-in mechanism to *wait* indefinitely for that thread to resume or explicitly manage it. Its test runner detects that a thread is not progressing; it’s not completed, nor errored - it's simply... suspended. This leads NUnit to believe the test execution has either hung or has encountered an unresolvable problem. Thus, it reports it as a failure (often a timeout or a non-deterministic execution result) and might halt further test executions.
+NUnit's primary goal is to execute your test, capture the results (pass/fail/error), and move on. If the test thread enters a suspended state, NUnit doesn't have a built-in mechanism to _wait_ indefinitely for that thread to resume or explicitly manage it. Its test runner detects that a thread is not progressing; it’s not completed, nor errored - it's simply... suspended. This leads NUnit to believe the test execution has either hung or has encountered an unresolvable problem. Thus, it reports it as a failure (often a timeout or a non-deterministic execution result) and might halt further test executions.
 
 This is not necessarily a bug; it’s a consequence of the design principles of test frameworks: deterministic execution, speed, and clear feedback. When a test thread suspends due to an asynchronous operation that never resolves, or a deadlock of some kind, NUnit is correct in not hanging indefinitely. However, this can be problematic for those of us working with asynchronous patterns regularly.
 
-The key is to understand *why* the thread is suspending in your test. Most often, it's due to:
+The key is to understand _why_ the thread is suspending in your test. Most often, it's due to:
 
 1.  **Unawaited asynchronous operations:** You might be starting an asynchronous task but not awaiting its completion within the test.
 2.  **Deadlocks or blocking operations:** The test thread might be waiting on a resource that's never released or is blocked by another thread.
@@ -95,6 +95,7 @@ public class Resource
 ```
 
 And a test to attempt to use it:
+
 ```csharp
 [Test]
 public void TestDeadlock()

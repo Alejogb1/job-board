@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-implement-and-use-wav2letter"
 ---
 
-Alright, let's get into wav2letter. It’s a powerful framework for end-to-end automatic speech recognition (asr), and I've certainly had my share of late nights debugging its nuances. My experience has mostly revolved around adapting it for specific in-house language datasets, and it can be a beast if you approach it without a solid foundation. So, let's break down how to actually implement and use it, focusing on the core components you'll encounter.
+, let's get into wav2letter. It’s a powerful framework for end-to-end automatic speech recognition (asr), and I've certainly had my share of late nights debugging its nuances. My experience has mostly revolved around adapting it for specific in-house language datasets, and it can be a beast if you approach it without a solid foundation. So, let's break down how to actually implement and use it, focusing on the core components you'll encounter.
 
 First and foremost, wav2letter isn't something you just ‘install and go.’ It’s a toolkit that requires thoughtful configuration and understanding of its modular architecture. Unlike some higher-level asr libraries, wav2letter gives you a lot of control, but that also means more complexity upfront. Essentially, you'll be dealing with three main phases: data preparation, model training, and inference.
 
@@ -103,10 +103,10 @@ This is a simplified version of the inference process. It demonstrates the core 
 
 Wav2letter is a sophisticated framework, and these snippets barely scratch the surface. To really understand and effectively use it, I highly recommend the following:
 
-*   **Facebook’s wav2letter paper:** This is essential reading, as it provides the theoretical underpinnings and the rationale behind the design choices. Look for the original research paper when you search for wav2letter, as that will be the primary source of information.
-*   **The official documentation and tutorials:** Although it can be detailed, diving into the documentation is critical. The maintainers keep this up to date, and it’s the most reliable source for troubleshooting and understanding specific features.
-*   **Papers on connectionist temporal classification (CTC):** If using ctc loss, which most models often do, be sure to read the original paper by Graves, et al. Understanding the workings of this loss will help you debug issues that arise from training with it.
-*   **Hands-on experience:** As with most things in technology, the best learning comes from actually implementing and experimenting. Start with a smaller, simpler dataset, and gradually scale up as you gain experience.
+- **Facebook’s wav2letter paper:** This is essential reading, as it provides the theoretical underpinnings and the rationale behind the design choices. Look for the original research paper when you search for wav2letter, as that will be the primary source of information.
+- **The official documentation and tutorials:** Although it can be detailed, diving into the documentation is critical. The maintainers keep this up to date, and it’s the most reliable source for troubleshooting and understanding specific features.
+- **Papers on connectionist temporal classification (CTC):** If using ctc loss, which most models often do, be sure to read the original paper by Graves, et al. Understanding the workings of this loss will help you debug issues that arise from training with it.
+- **Hands-on experience:** As with most things in technology, the best learning comes from actually implementing and experimenting. Start with a smaller, simpler dataset, and gradually scale up as you gain experience.
 
 **Final Thoughts**
 

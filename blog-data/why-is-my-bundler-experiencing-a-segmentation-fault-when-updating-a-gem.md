@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-bundler-experiencing-a-segmentation-fault-when-updating-a-gem"
 ---
 
-Okay, let's unpack this. Segmentation faults with bundler, particularly during gem updates, are notoriously frustrating because they’re often an indicator of problems far deeper than what the error message suggests. I remember encountering something similar back on a project involving a complex rails monolith a few years back—that experience is definitely shaping how i’ll approach this explanation. It’s rarely a fault directly within bundler’s core code; rather, it’s usually caused by interactions with native extensions within the gem, or by lower-level issues that bubble up.
+, let's unpack this. Segmentation faults with bundler, particularly during gem updates, are notoriously frustrating because they’re often an indicator of problems far deeper than what the error message suggests. I remember encountering something similar back on a project involving a complex rails monolith a few years back—that experience is definitely shaping how i’ll approach this explanation. It’s rarely a fault directly within bundler’s core code; rather, it’s usually caused by interactions with native extensions within the gem, or by lower-level issues that bubble up.
 
 A segmentation fault, in essence, is the operating system’s way of saying that a program has attempted to access a memory location that it is not allowed to access. When this occurs within the context of a gem update, several potential culprits can be at play. Let's break down the primary causes.
 
@@ -89,9 +89,9 @@ So, how do you approach resolving this? A systematic method is key.
 
 For further, in-depth understanding, I'd recommend the following resources:
 
-*   **"Advanced Programming in the UNIX Environment" by W. Richard Stevens and Stephen A. Rago**: This book delves into the nuances of operating system internals, covering topics like memory management and process control, which are fundamental for understanding segmentation faults.
-*   **"Linkers and Loaders" by John R. Levine:** This resource provides essential information about how native extensions are linked to libraries and loaded into the process, which is crucial for troubleshooting library compatibility problems.
-*   **"Professional CMake: A Practical Guide" by Craig Scott**: If you are consistently facing problems with building native extensions, especially for complex gems, learning how to understand the CMake files that are often used in the building process can be extremely useful.
-*   **The Ruby C API documentation**: Although more relevant for those writing native extensions, becoming familiar with the core C API of ruby provides a deeper understanding of how those extensions interact with the ruby interpreter.
+- **"Advanced Programming in the UNIX Environment" by W. Richard Stevens and Stephen A. Rago**: This book delves into the nuances of operating system internals, covering topics like memory management and process control, which are fundamental for understanding segmentation faults.
+- **"Linkers and Loaders" by John R. Levine:** This resource provides essential information about how native extensions are linked to libraries and loaded into the process, which is crucial for troubleshooting library compatibility problems.
+- **"Professional CMake: A Practical Guide" by Craig Scott**: If you are consistently facing problems with building native extensions, especially for complex gems, learning how to understand the CMake files that are often used in the building process can be extremely useful.
+- **The Ruby C API documentation**: Although more relevant for those writing native extensions, becoming familiar with the core C API of ruby provides a deeper understanding of how those extensions interact with the ruby interpreter.
 
 Dealing with segmentation faults, especially those arising from gem updates, requires patience and a methodical approach. It often signals issues at the lower level of the system, the compiler, or the gem itself. While these crashes can be very frustrating, a systematic method will more often than not allow you to diagnose the root cause and fix the issue. Understanding the underlying mechanics of native extensions, library interactions, and potential memory corruption will guide you towards solutions that not only fix the issue but also improve your knowledge of how these systems work.

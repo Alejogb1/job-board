@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-optimize-learning-rate-using-gridsearchcv-in-python"
 ---
 
-Okay, let's dive into this. I recall a particularly sticky project a few years back, where I was trying to fine-tune a complex convolutional neural network for image segmentation. The model architecture wasn't the issue; it was the training process, specifically, getting the learning rate dialed in. GridSearchCV felt like the natural tool, but using it naively led to some… shall we say, less-than-optimal results. We'll explore how to approach it effectively, but first, let’s establish the crucial concepts.
+, let's dive into this. I recall a particularly sticky project a few years back, where I was trying to fine-tune a complex convolutional neural network for image segmentation. The model architecture wasn't the issue; it was the training process, specifically, getting the learning rate dialed in. GridSearchCV felt like the natural tool, but using it naively led to some… shall we say, less-than-optimal results. We'll explore how to approach it effectively, but first, let’s establish the crucial concepts.
 
 The learning rate in any gradient-descent based optimization algorithm is that hyperparameter which dictates how large a step we take in the direction of the negative gradient. A too-large learning rate and your model might oscillate around the minimum, never converging to an optimal set of parameters. Too small, and you could be waiting an eternity to see results or get trapped in a suboptimal local minimum.
 
@@ -54,7 +54,7 @@ print("Best parameters:", grid_search.best_params_)
 print("Best cross-validation score:", grid_search.best_score_)
 ```
 
-Here, `np.logspace` is crucial; it generates values logarithmically spaced between the start and end values in powers of 10.  We're using `alpha` which serves as the learning rate in the `SGDClassifier` when using log loss, and `eta0` is the initial learning rate value, demonstrating the approach described earlier for parameter ranges. We look at this example with SGD and a linear model to be able to generalize easily to similar implementations.
+Here, `np.logspace` is crucial; it generates values logarithmically spaced between the start and end values in powers of 10. We're using `alpha` which serves as the learning rate in the `SGDClassifier` when using log loss, and `eta0` is the initial learning rate value, demonstrating the approach described earlier for parameter ranges. We look at this example with SGD and a linear model to be able to generalize easily to similar implementations.
 
 Now, let's look at an example using a Keras neural network using scikit-learn to implement the GridSearch which can also be done through Keras Tuner:
 
@@ -151,8 +151,9 @@ def tuned_grid_search(X_train, y_train, base_learning_rates):
 initial_rates = [0.1, 0.01, 0.001]
 tuned_grid_search(X_train, y_train, initial_rates)
 ```
+
 This example shows an iterative tuning approach where the ranges are adjusted in each pass, instead of exploring all ranges simultaneously. This approach can save significant computational time.
 
-To really master this, I’d suggest delving into *Deep Learning* by Goodfellow, Bengio, and Courville for a comprehensive understanding of optimization algorithms. Additionally, the scikit-learn documentation is your best friend when it comes to effectively using the GridSearchCV. Also, try taking a look at specific papers on the Adam and RMSprop optimizers if you intend to use those which explain their implementation, their performance characteristics and how to optimize the hyperparameters for those, including the learning rate.
+To really master this, I’d suggest delving into _Deep Learning_ by Goodfellow, Bengio, and Courville for a comprehensive understanding of optimization algorithms. Additionally, the scikit-learn documentation is your best friend when it comes to effectively using the GridSearchCV. Also, try taking a look at specific papers on the Adam and RMSprop optimizers if you intend to use those which explain their implementation, their performance characteristics and how to optimize the hyperparameters for those, including the learning rate.
 
 In practice, optimizing learning rate through GridSearchCV is about thoughtfully applying the brute-force capability within specific parameter ranges based on knowledge and previous observations from each round of parameter tuning. It's about being systematic, iterating, and constantly evaluating your choices. By adopting this approach, I believe you'll be able to tune your models effectively.

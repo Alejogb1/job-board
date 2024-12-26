@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-datasets-with-labels-be-loaded-in-parallel-from-two-separate-files"
 ---
 
-Alright, let's tackle this. I've seen this specific challenge crop up more often than one might expect, particularly when dealing with large datasets split across different storage mediums or systems for practical reasons. It’s not always a straightforward case of simply loading everything into memory; performance and resource management become critical. The task of loading labelled data in parallel from two files, which essentially boils down to coordinating the reading of feature data and associated labels, requires a bit more careful planning than sequential loading.
+, let's tackle this. I've seen this specific challenge crop up more often than one might expect, particularly when dealing with large datasets split across different storage mediums or systems for practical reasons. It’s not always a straightforward case of simply loading everything into memory; performance and resource management become critical. The task of loading labelled data in parallel from two files, which essentially boils down to coordinating the reading of feature data and associated labels, requires a bit more careful planning than sequential loading.
 
 The general approach involves asynchronous or multithreaded loading of data from both files simultaneously and then ensuring the correct pairing of data and labels. The core idea is to avoid the bottleneck that occurs when loading each file sequentially. Specifically, we'll need to use parallel processing libraries (or language-level constructs if available) to accomplish this, and the implementation will depend heavily on the specifics of the programming environment being used. Let me walk you through how I’ve previously approached this.
 
@@ -170,6 +170,7 @@ if __name__ == "__main__":
   for features, labels in paired_results:
       print(f"Features: {features}, Label: {labels}")
 ```
+
 The changes are in the `parallel_load_data_process` function using the `ProcessPoolExecutor`, which spawns processes instead of threads. This approach is preferred if the loading function is CPU-bound since it bypasses the limitations of the GIL, although in most file loading tasks, the majority of the time spent is waiting for i/o. The rest of the code follows the same logic as the initial example. This shows that the core concept can be utilized even if the underlying method for parallelism is different.
 
 To further delve into these concepts, I highly recommend delving into "Operating System Concepts" by Abraham Silberschatz, Peter Baer Galvin, and Greg Gagne, for a more in-depth understanding of thread and process management at the OS level. For python specifics, check the official `concurrent.futures` module documentation in python.org and any online materials related to memory mapped files via the `mmap` library. Finally, for understanding the intricacies of different parallel techniques, reading the book "Parallel Programming" by Thomas Rauber and Gudula Rünger is very informative.

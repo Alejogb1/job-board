@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-pass-input-parameters-to-a-custom-validation-function-in-ruby"
 ---
 
-Alright, let's talk about custom validation functions in Ruby and the nuances of parameter passing. I've seen this crop up quite a bit in projects, and there's often a need to go beyond the standard validations that Rails (or other frameworks) offer. The core idea is that you're creating a more specific rule, something that requires more than just checking for the presence of a value or its data type.
+, let's talk about custom validation functions in Ruby and the nuances of parameter passing. I've seen this crop up quite a bit in projects, and there's often a need to go beyond the standard validations that Rails (or other frameworks) offer. The core idea is that you're creating a more specific rule, something that requires more than just checking for the presence of a value or its data type.
 
 The primary challenge, as you've pointed out, is how to feed context or specific parameters into these custom validation checks. A simple method call won't cut it when you need to, for instance, validate a date against a user-defined range or compare a value with another field in the same record. My experience has taught me that relying solely on implicit context can lead to brittle and hard-to-debug code. You really want that explicit control.
 
@@ -46,6 +46,7 @@ class Project < ActiveRecord::Base
   end
 end
 ```
+
 While the above accomplishes a parameter via a variable within the method, it isn't ideal because it isn't configurable outside the method. Let’s look into using explicit parameter passing.
 
 **Example 2: Using a Block and Configuration**
@@ -80,6 +81,7 @@ end
 
 Project.set_min_start_date(Date.new(2024, 1, 1))
 ```
+
 Here, we are passing the method as an argument to the validate method, with the block specified in the `:with` option. We also introduced a class level configuration to provide flexibility on the minimum date, instead of hardcoding it. When the validate method is executed, we locate the correct validator and call its block with the instance of the object as well as the date as parameters.
 
 **Example 3: Parameterized Validator with a Custom Class**
@@ -111,6 +113,6 @@ In this case, the `DateRangeValidator` is reusable across multiple models. The `
 
 **Further Reading**
 
-For a deeper dive into these concepts, I’d recommend starting with the official Ruby on Rails documentation on Active Record validations. They provide a great baseline understanding of what’s possible out of the box. Additionally, *“Metaprogramming Ruby”* by Paolo Perrotta offers very good insights on the meta-programming involved in techniques like the second and third examples, focusing on building custom validations. Finally, while not directly focused on Ruby validations, *“Refactoring: Improving the Design of Existing Code”* by Martin Fowler can provide a better understanding of how to structure code like this for long-term maintainability.
+For a deeper dive into these concepts, I’d recommend starting with the official Ruby on Rails documentation on Active Record validations. They provide a great baseline understanding of what’s possible out of the box. Additionally, _“Metaprogramming Ruby”_ by Paolo Perrotta offers very good insights on the meta-programming involved in techniques like the second and third examples, focusing on building custom validations. Finally, while not directly focused on Ruby validations, _“Refactoring: Improving the Design of Existing Code”_ by Martin Fowler can provide a better understanding of how to structure code like this for long-term maintainability.
 
 In summary, passing parameters to custom validation functions in Ruby is achievable using a combination of passing in the record's context and using additional arguments, or more complex techniques using blocks, or dedicated classes. Choose the method that best fits the complexity of your project and your desired maintainability. The goal is to create expressive, testable, and reliable validations to ensure data consistency in your applications. From my experience, being thoughtful about these validation techniques pays off substantially in the long run.

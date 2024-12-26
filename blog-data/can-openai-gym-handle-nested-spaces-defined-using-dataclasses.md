@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "can-openai-gym-handle-nested-spaces-defined-using-dataclasses"
 ---
 
-Okay, let's tackle this. It's a good question, and it touches on a common stumbling block when moving beyond the simplest OpenAI Gym environments. I've definitely seen this rear its head, particularly when dealing with complex robotics simulations or multi-agent systems that necessitate more structured observation spaces.
+, let's tackle this. It's a good question, and it touches on a common stumbling block when moving beyond the simplest OpenAI Gym environments. I've definitely seen this rear its head, particularly when dealing with complex robotics simulations or multi-agent systems that necessitate more structured observation spaces.
 
-The direct answer is: OpenAI Gym, at its core, does not inherently ‘understand’ or directly support nested spaces defined *solely* using dataclasses. It relies heavily on `gym.spaces` objects to define the structure of observations and actions. Dataclasses, while excellent for data organization in Python, are not automatically interpreted by Gym as valid space specifications.
+The direct answer is: OpenAI Gym, at its core, does not inherently ‘understand’ or directly support nested spaces defined _solely_ using dataclasses. It relies heavily on `gym.spaces` objects to define the structure of observations and actions. Dataclasses, while excellent for data organization in Python, are not automatically interpreted by Gym as valid space specifications.
 
 However, don't despair – it’s entirely possible, and often desirable, to incorporate dataclass structures for representing your environment’s internal state while still adhering to Gym’s requirements for space definitions. This usually involves a conversion or mapping process. You can think of it as an impedance matching problem: dataclasses provide a convenient data structure, while Gym's spaces define the structure it needs to understand. The bridge between these is typically some form of mapping or flattening.
 
@@ -129,6 +129,7 @@ observation = {"objects": [
 print("Observation is inside space:", room_space.contains(observation))
 
 ```
+
 Here, we use `spaces.Dict` and `spaces.Tuple` to create a hierarchical structure that mirrors the structure of our dataclasses. Notice that the observation must now match the expected dictionary structure defined by the space.
 
 It’s crucial to note: **your data transformations must be consistent throughout your environment**. When you call `env.step()` or `env.reset()`, you must consistently convert your dataclass state into the defined space representations.

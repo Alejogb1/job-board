@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-mlnet-models-be-trained-from-multiple-folders"
 ---
 
-Alright, let's tackle this one. I've actually dealt with scenarios exactly like this in a past project involving image classification for a client's retail catalog, where data was neatly organized (or not so neatly at times) into different product categories, each stored in a separate folder. So, the question of training ML.NET models from multiple folders isn't just theoretical; it's a very real, practical challenge.
+, let's tackle this one. I've actually dealt with scenarios exactly like this in a past project involving image classification for a client's retail catalog, where data was neatly organized (or not so neatly at times) into different product categories, each stored in a separate folder. So, the question of training ML.NET models from multiple folders isn't just theoretical; it's a very real, practical challenge.
 
 The short answer is: yes, you absolutely can train ML.NET models from data spread across multiple folders, but it requires a bit more orchestration than simply pointing to a single data source. The key here is understanding how ML.NET manages data and the flexibility it offers through its data loading mechanisms. You're not confined to a single csv file or database connection. The system allows you to define data loading pipelines that can piece together data from disparate locations.
 
@@ -47,7 +47,7 @@ public class ImageClassification
               var images = Directory.GetFiles(imageFolderPath).Select(f => new ImageData() { ImagePath = f, Label = label }).ToList();
 
               IDataView dataView = mlContext.Data.LoadFromEnumerable(images);
-             
+
               var preprocessedData = mlContext.Transforms.Conversion.MapValue(outputColumnName:"LabelAsKey", inputColumnName: "Label", mapping: new[] { new KeyValuePair<string, uint>("cats", 0), new KeyValuePair<string, uint>("dogs", 1), new KeyValuePair<string, uint>("birds",2) })
                 .Append(mlContext.Transforms.LoadImages("ImageObject", imageFolderPath, "ImagePath"))
                 .Append(mlContext.Transforms.ResizeImages("ImageObjectResized", imageWidth: 224, imageHeight: 224, inputColumnName: "ImageObject"))
@@ -220,8 +220,8 @@ In each example, the key is that we load data from multiple sources and merge th
 
 For a deeper dive into the inner workings of ML.NET data loading and transforms, I'd highly recommend:
 
-*   **"Machine Learning with .NET" by Chris Ross and Luis Quintanilla:** This is a comprehensive guide that explains the various aspects of ML.NET, including data handling, in detail.
-*   **The official Microsoft ML.NET documentation:** It’s a solid resource, always kept up-to-date, and offers a wealth of information with specific details on all the transforms available. Specifically, look at the documentation regarding `IDataView`, different data loaders, and data transformations.
-*   **“Deep Learning with Python” by François Chollet:** While this book focuses on Keras and TensorFlow, the general concepts and challenges surrounding data loading and preprocessing are quite universal and applicable to ML.NET scenarios as well. Understanding the general principles of data handling can be very useful.
+- **"Machine Learning with .NET" by Chris Ross and Luis Quintanilla:** This is a comprehensive guide that explains the various aspects of ML.NET, including data handling, in detail.
+- **The official Microsoft ML.NET documentation:** It’s a solid resource, always kept up-to-date, and offers a wealth of information with specific details on all the transforms available. Specifically, look at the documentation regarding `IDataView`, different data loaders, and data transformations.
+- **“Deep Learning with Python” by François Chollet:** While this book focuses on Keras and TensorFlow, the general concepts and challenges surrounding data loading and preprocessing are quite universal and applicable to ML.NET scenarios as well. Understanding the general principles of data handling can be very useful.
 
 Remember, these examples are simplified and tailored to fit into this response. Real-world scenarios might require more complex error handling, data cleaning steps, and sophisticated preprocessing pipelines. However, the underlying principle – loading from multiple sources and combining into a single `IDataView` for training – remains consistent. I hope this is helpful.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-a-chaincode-docker-container-be-instantiated-due-to-a-missing-main-method"
 ---
 
-Alright, let's tackle this. It’s a situation I’ve encountered more than a few times, particularly when working with early adopters of hyperledger fabric, and it always comes down to a fundamental misunderstanding of how chaincode is structured and executed within that environment. It's not about a missing ‘main’ method in the traditional java or go sense, but rather how the chaincode lifecycle interfaces with the peer network.
+, let's tackle this. It’s a situation I’ve encountered more than a few times, particularly when working with early adopters of hyperledger fabric, and it always comes down to a fundamental misunderstanding of how chaincode is structured and executed within that environment. It's not about a missing ‘main’ method in the traditional java or go sense, but rather how the chaincode lifecycle interfaces with the peer network.
 
 The core issue isn't that a `main` method is literally missing in a compiled binary. When you say a chaincode docker container can’t be instantiated because of a missing main method, what's actually happening is that the peer node is failing to find the necessary entry point that the fabric runtime requires for executing your chaincode. Think of it less as a conventional application that starts with `public static void main(string[] args)` and more as an interface that fabric interacts with.
 
@@ -106,32 +106,29 @@ Here, again, there is a `main` method. The key part, however, is inheriting from
 In node.js, you typically use the `fabric-shim` module to create a class that extends `Chaincode` or implements its methods, particularly `init` and `invoke`.
 
 ```javascript
-'use strict';
+"use strict";
 
-const shim = require('fabric-shim');
-const util = require('util');
+const shim = require("fabric-shim");
+const util = require("util");
 
 let Chaincode = class {
+  async Init(stub) {
+    console.info("########### Init ###########");
+    return shim.success();
+  }
 
-    async Init(stub) {
-        console.info('########### Init ###########');
-        return shim.success();
+  async Invoke(stub) {
+    let functionName = stub.getFunction();
+
+    if (functionName === "myfunction") {
+      return this.myfunction(stub);
     }
+    return shim.error("Invalid invoke function");
+  }
 
-
-    async Invoke(stub) {
-         let functionName = stub.getFunction();
-
-        if (functionName === 'myfunction') {
-            return this.myfunction(stub);
-        }
-        return shim.error('Invalid invoke function');
-    }
-
-    async myfunction(stub) {
-       return shim.success(Buffer.from("function was called"));
-    }
-
+  async myfunction(stub) {
+    return shim.success(Buffer.from("function was called"));
+  }
 };
 
 shim.start(new Chaincode());
@@ -153,7 +150,7 @@ When faced with this, here's what I check:
 
 To solidify your understanding of these concepts, I strongly recommend the following resources:
 
-*   **Hyperledger Fabric documentation:** Specifically, delve into the chaincode developer documentation for your preferred language (go, java, node.js). This gives the most canonical information on writing fabric chaincode and what is expected.
-*   **"Programming Hyperledger Fabric" by Mark Anthony:** This provides a very comprehensive look into hyperledger fabric, covering chaincode development in depth with examples and clear explanations.
+- **Hyperledger Fabric documentation:** Specifically, delve into the chaincode developer documentation for your preferred language (go, java, node.js). This gives the most canonical information on writing fabric chaincode and what is expected.
+- **"Programming Hyperledger Fabric" by Mark Anthony:** This provides a very comprehensive look into hyperledger fabric, covering chaincode development in depth with examples and clear explanations.
 
 In essence, the "missing main method" error is a misnomer; it reflects a failure to properly implement and expose the necessary interfaces to the fabric peer network. By focusing on implementing the chaincode interfaces correctly, and verifying the chaincode's packaging, you can resolve this class of issues. It's all about understanding the architecture of the fabric chaincode runtime.

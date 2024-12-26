@@ -4,13 +4,13 @@ date: "2024-12-16"
 id: "why-is-airflow-failing-with-module-not-found-errors"
 ---
 
-Alright, let's tackle module not found errors in Airflow. I’ve certainly seen my fair share of those during my time architecting data pipelines. It's one of those seemingly simple issues that can quickly unravel complex workflows if not addressed carefully. Usually, it boils down to how Airflow manages its environment and the discrepancies between where your code lives and where it's executed.
+, let's tackle module not found errors in Airflow. I’ve certainly seen my fair share of those during my time architecting data pipelines. It's one of those seemingly simple issues that can quickly unravel complex workflows if not addressed carefully. Usually, it boils down to how Airflow manages its environment and the discrepancies between where your code lives and where it's executed.
 
 From my experience managing multiple production Airflow deployments, these errors typically fall into a few major categories: incorrect python paths, dependency mismatches within the environment, and improperly configured execution environments. Let's break each down.
 
-First, the python path. Think of this as your system's roadmap for finding packages and modules. When you write `from my_custom_module import my_function`, python needs to know *exactly* where `my_custom_module` lives. Airflow’s worker processes, the ones actually executing your tasks, might be operating under a different environment than the scheduler or the web server. The core issue here is that your worker doesn't know where to look for the custom code. This usually manifests when you're developing locally and then deploying to a cluster, where the local path you were using isn't valid anymore. This can be a subtle problem if you rely on relative paths during development.
+First, the python path. Think of this as your system's roadmap for finding packages and modules. When you write `from my_custom_module import my_function`, python needs to know _exactly_ where `my_custom_module` lives. Airflow’s worker processes, the ones actually executing your tasks, might be operating under a different environment than the scheduler or the web server. The core issue here is that your worker doesn't know where to look for the custom code. This usually manifests when you're developing locally and then deploying to a cluster, where the local path you were using isn't valid anymore. This can be a subtle problem if you rely on relative paths during development.
 
-The remedy? Always be explicit with your python paths within Airflow DAGs and custom operators. Instead of implicitly assuming the same path as your scheduler, configure them directly. I've found the most robust way is to add the directory containing your custom modules to the python path *within your dag definitions*.
+The remedy? Always be explicit with your python paths within Airflow DAGs and custom operators. Instead of implicitly assuming the same path as your scheduler, configure them directly. I've found the most robust way is to add the directory containing your custom modules to the python path _within your dag definitions_.
 
 Here’s an example of how I handle this. Suppose I have a structure like this:
 
@@ -67,7 +67,7 @@ In this snippet, `sys.path.insert(0, os.path.join(dag_dir, '../custom_modules'))
 
 Secondly, dependency mismatches. Airflow tasks are executed in python environments, which might not have the packages your custom code relies on. These can be either standard packages (e.g. requests, pandas) or custom modules. If your worker environment is missing some crucial dependency that your code relies on, the dreaded 'module not found' error will appear.
 
-The solution here is to ensure that your Airflow worker environment has *all* the necessary packages. While you *can* try adding requirements to each DAG, it’s far more efficient, robust, and scalable to manage dependencies at the environment level, typically by defining a `requirements.txt` or utilizing Docker images for containerized environments. Let's look at a simple example of handling a `requirements.txt`
+The solution here is to ensure that your Airflow worker environment has _all_ the necessary packages. While you _can_ try adding requirements to each DAG, it’s far more efficient, robust, and scalable to manage dependencies at the environment level, typically by defining a `requirements.txt` or utilizing Docker images for containerized environments. Let's look at a simple example of handling a `requirements.txt`
 
 Suppose your custom module needs `pandas`. Within your `requirements.txt` file located at the root of your project, you'd need:
 
@@ -97,6 +97,7 @@ Let’s imagine you’re using the Kubernetes executor, and you've deployed your
 [kubernetes_executor]
 pod_override_image=your_registry/your_airflow_image:latest
 ```
+
 In this example, `pod_override_image` within `airflow.cfg` ensures that your Kubernetes pods are launched with your image which contains both your custom code and the dependencies as set up in the dockerfile above.
 
 To further investigate, I highly recommend the official Airflow documentation – it has an excellent section on managing dependencies. For those using containerized setups, diving deep into Docker documentation and Kubernetes' resource management would be beneficial. For a more theoretical understanding, "Python Cookbook" by David Beazley and Brian K. Jones offers valuable insights into python path management and python's internals. Also, “Effective Python” by Brett Slatkin is excellent for advanced patterns in using python, especially when dealing with relative and absolute paths.

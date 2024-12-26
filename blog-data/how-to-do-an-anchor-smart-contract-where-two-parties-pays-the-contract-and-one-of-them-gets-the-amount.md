@@ -4,16 +4,16 @@ date: "2024-12-15"
 id: "how-to-do-an-anchor-smart-contract-where-two-parties-pays-the-contract-and-one-of-them-gets-the-amount"
 ---
 
-alright, so, you're looking at creating an anchor smart contract where two participants deposit funds, and then, under specific conditions, one of them receives the total deposited amount. i've definitely been down this road before, it's a pretty common pattern when setting up escrows or conditional payments on the blockchain. let me walk you through how i usually approach this, hopefully it will save you some headaches i've suffered.
+, so, you're looking at creating an anchor smart contract where two participants deposit funds, and then, under specific conditions, one of them receives the total deposited amount. i've definitely been down this road before, it's a pretty common pattern when setting up escrows or conditional payments on the blockchain. let me walk you through how i usually approach this, hopefully it will save you some headaches i've suffered.
 
 first, let's break down the core functionality, it's all about managing states and events on the blockchain:
 
-*   **initialization:** the contract starts with a state where no funds have been deposited.
-*   **funding:** two parties make deposits to the contract. we need to track these deposits, ensuring both parties participate.
-*   **trigger condition:** this is the heart of your logic, the condition that determines when the funds should be released. this could be anything: a flag set by one of the parties, the outcome of an external oracle, a time-based trigger, or any combination of these.
-*   **payout:** once the trigger condition is met, the designated recipient receives the total sum.
-*   **failure scenario:** what happens if the trigger condition isn't met within a reasonable timeframe? in some cases, the funds might need to be returned to the original depositors.
-*   **security:** of course, we need to consider all security implications such as reentrancy, overflow, underflow, all the blockchain usual suspects.
+- **initialization:** the contract starts with a state where no funds have been deposited.
+- **funding:** two parties make deposits to the contract. we need to track these deposits, ensuring both parties participate.
+- **trigger condition:** this is the heart of your logic, the condition that determines when the funds should be released. this could be anything: a flag set by one of the parties, the outcome of an external oracle, a time-based trigger, or any combination of these.
+- **payout:** once the trigger condition is met, the designated recipient receives the total sum.
+- **failure scenario:** what happens if the trigger condition isn't met within a reasonable timeframe? in some cases, the funds might need to be returned to the original depositors.
+- **security:** of course, we need to consider all security implications such as reentrancy, overflow, underflow, all the blockchain usual suspects.
 
 so, let's jump into some code examples to see how this can be implemented with solidity, which is what i usually use. this first example is simplified for clarity, and ignores some security and gas optimizations:
 
@@ -43,7 +43,7 @@ contract simpleanchor {
         require(msg.sender == partyA, "only party a can fund");
         depositA = msg.value;
     }
-    
+
 
     function triggerpayment() public {
         require(msg.sender == partyA, "only party a can trigger");
@@ -58,9 +58,9 @@ contract simpleanchor {
 
 here are a few important notes about this first simple example:
 
-*   this contract only allows party a to trigger the payment.
-*   there is no refund functionality in this example.
-*   it lacks several safety checks such as a way to prevent anyone to overwrite party b account or to prevent someone sending the ether before party b is set.
+- this contract only allows party a to trigger the payment.
+- there is no refund functionality in this example.
+- it lacks several safety checks such as a way to prevent anyone to overwrite party b account or to prevent someone sending the ether before party b is set.
 
 in this second example, we're adding some safeguards and a refund mechanism:
 
@@ -114,7 +114,7 @@ contract improvedanchor {
         triggered = true;
        emit paymentTriggered(total);
     }
-    
+
      function refund() public {
         require(block.timestamp > deadline, "too early for a refund");
         require(canRefund == true, "refund already claimed");
@@ -130,12 +130,12 @@ contract improvedanchor {
 
 key improvements in the second example:
 
-*   added a deadline, refund function to return funds if the trigger doesn't happen in time.
-*   added event emission for better traceability
-*   added a modifier to avoid both parties not sending any ether.
-*   added require message to better understand errors in function calls.
-*   added a way to cancel the refund function after it has been called.
-*   this is a more robust version but it is still not perfect and can be improved further.
+- added a deadline, refund function to return funds if the trigger doesn't happen in time.
+- added event emission for better traceability
+- added a modifier to avoid both parties not sending any ether.
+- added require message to better understand errors in function calls.
+- added a way to cancel the refund function after it has been called.
+- this is a more robust version but it is still not perfect and can be improved further.
 
 in the third example, we are taking a different approach with a timelock and a different logic:
 
@@ -187,8 +187,8 @@ contract timelockanchor {
 
 in this third example:
 
-*   funds are released to party a after a timelock
-*    there is no way to refund the funds before timelock
+- funds are released to party a after a timelock
+- there is no way to refund the funds before timelock
 
 a bit of advice, avoid using `transfer()` for sending ether, it has a limit of gas, which is not the best, use `call()` instead. i'm only using `transfer()` in this examples to make it simpler.
 

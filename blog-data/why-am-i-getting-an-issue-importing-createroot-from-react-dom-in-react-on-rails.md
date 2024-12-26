@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-an-issue-importing-createroot-from-react-dom-in-react-on-rails"
 ---
 
-Alright, let's unpack this. You're hitting a common snag when working with React in a Rails environment, specifically the `createRoot` import issue. It’s something I’ve tackled a good few times myself, particularly when migrating older Rails apps to modern React setups. The core of the problem lies in the version of `react-dom` you’re using relative to the React version, and how you’re attempting to render your React components. Let’s break it down into the key culprits and solutions.
+, let's unpack this. You're hitting a common snag when working with React in a Rails environment, specifically the `createRoot` import issue. It’s something I’ve tackled a good few times myself, particularly when migrating older Rails apps to modern React setups. The core of the problem lies in the version of `react-dom` you’re using relative to the React version, and how you’re attempting to render your React components. Let’s break it down into the key culprits and solutions.
 
 Essentially, `createRoot` is a new API introduced in React 18 for rendering components. Prior to React 18, we used `ReactDOM.render` which is now considered legacy. If your `react-dom` version is 18 or later, you must use `createRoot`, but if you're stuck on a pre-18 version, `createRoot` simply won’t be there, hence the import error. This is where a mismatch between `react` and `react-dom` versions in your `package.json` often throws a wrench into the works. It's also possible you have a mismatch between what’s in your `package.json` and what's actually installed within your `node_modules` directory, which can happen more often than one would like.
 
@@ -14,20 +14,17 @@ Let's explore that further with three distinct code snippets representing typica
 
 **Scenario 1: Legacy React (Pre-React 18) with `ReactDOM.render`**
 
-This first scenario represents an older setup that *doesn’t* use `createRoot`, and this is what you might encounter on an existing project not yet upgraded to React 18. Here, you wouldn't import `createRoot` at all.
+This first scenario represents an older setup that _doesn’t_ use `createRoot`, and this is what you might encounter on an existing project not yet upgraded to React 18. Here, you wouldn't import `createRoot` at all.
 
 ```javascript
 // app/javascript/packs/application.js (or similar entrypoint)
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from '../components/App'; // Assume your main component is here
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "../components/App"; // Assume your main component is here
 
-document.addEventListener('DOMContentLoaded', () => {
-    ReactDOM.render(
-        <App />,
-        document.getElementById('root'),
-    );
+document.addEventListener("DOMContentLoaded", () => {
+  ReactDOM.render(<App />, document.getElementById("root"));
 });
 ```
 
@@ -40,18 +37,17 @@ Now, let's examine the proper usage of `createRoot` for React 18 and beyond. Her
 ```javascript
 // app/javascript/packs/application.js (or similar entrypoint)
 
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import App from '../components/App'; // Assume your main component is here
+import React from "react";
+import { createRoot } from "react-dom/client";
+import App from "../components/App"; // Assume your main component is here
 
-document.addEventListener('DOMContentLoaded', () => {
-  const container = document.getElementById('root');
-  if(container){
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById("root");
+  if (container) {
     const root = createRoot(container); // Use createRoot
     root.render(<App />);
   }
 });
-
 ```
 
 Notice the difference: we import `createRoot` from `react-dom/client` and instead of `ReactDOM.render`, we call `createRoot()` with the container element. Then, we use the returned root object’s `render()` method. This is the proper way to render your application in React 18.
@@ -60,7 +56,7 @@ Notice the difference: we import `createRoot` from `react-dom/client` and instea
 
 The error is sometimes not in the code, but the versioning, as I mentioned before. It’s crucial to verify this. If you have React 18 dependencies declared in your `package.json`, but for some reason, `npm` or `yarn` isn’t using them (maybe due to cached packages or corrupted node modules), the issue will persist. Here's an example of a mismatched package.json and a way to enforce consistency.
 
-*package.json*
+_package.json_
 
 ```json
 {
@@ -73,7 +69,7 @@ The error is sometimes not in the code, but the versioning, as I mentioned befor
 
 If you have this kind of version mismatch, you will likely get the import error you're encountering. To resolve this, update the react-dom to also be version 18. Then, you must delete your `node_modules` folder and `package-lock.json` or `yarn.lock` file to make sure your installation uses only what is defined by package.json, and then run `npm install` or `yarn install` again.
 
-*corrected package.json*
+_corrected package.json_
 
 ```json
 {

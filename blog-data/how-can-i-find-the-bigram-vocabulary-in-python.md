@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-find-the-bigram-vocabulary-in-python"
 ---
 
-Alright, let's tackle this. It's a common task, and one I've bumped into more than a few times over the years, particularly when dealing with natural language processing pipelines. I recall working on a sentiment analysis project where understanding the context provided by bigrams was crucial for achieving acceptable accuracy. So, finding that bigram vocabulary in a Pythonic way? It's definitely achievable and straightforward with the right approach.
+, let's tackle this. It's a common task, and one I've bumped into more than a few times over the years, particularly when dealing with natural language processing pipelines. I recall working on a sentiment analysis project where understanding the context provided by bigrams was crucial for achieving acceptable accuracy. So, finding that bigram vocabulary in a Pythonic way? It's definitely achievable and straightforward with the right approach.
 
 Essentially, you're looking to identify all two-word sequences present in a given text corpus. These pairs are known as bigrams, and they form the basis for many text analysis techniques. Instead of just counting individual words, you get a feel for how often word combinations appear together, giving you more context-rich information. The trick is to efficiently process your text and extract these pairs.
 
@@ -52,6 +52,7 @@ bigram_list = find_bigrams_nltk(sample_text)
 print(bigram_list)
 
 ```
+
 In this second code snippet, we begin by importing the required modules from `nltk`: `word_tokenize`, used to split the text into tokens (usually words or punctuation marks), and `ngrams`, a more general function that we specify to make bigrams (2-grams). I also download the `punkt` resource if you do not have it already; it's required for the `word_tokenize` function to work correctly. The `find_bigrams_nltk` function first tokenizes the text using `word_tokenize`. Afterwards, `ngrams(tokens, 2)` creates an iterator yielding bigrams, which we then convert to a list. It includes the punctuation as tokens, which you might want to filter out later in your data analysis. This `nltk` approach makes it much easier to handle punctuation. You could further use `nltk` features like stemming or lemmatization to refine the vocabulary even more if needed. For our example sentence, the output is `[('The', 'quick'), ('quick', ','), (',', 'brown'), ('brown', 'fox'), ('fox', '.'), ('.', 'Jumps'), ('Jumps', 'over'), ('over', 'the'), ('the', 'lazy'), ('lazy', 'dog'), ('dog', '!')]`.
 
 **Frequency Analysis**
@@ -81,6 +82,6 @@ Here, I added the step to make the text lowercase (`text.lower()`) to reduce the
 
 **Further Reading and Considerations**
 
-For more in-depth knowledge of NLP, I'd strongly suggest checking out *Speech and Language Processing* by Daniel Jurafsky and James H. Martin. This textbook is a classic and provides a thorough understanding of the techniques and mathematics involved. Additionally, the documentation for `nltk` is excellent and a must-read if you plan to dive deep. For practical aspects, explore *Natural Language Processing with Python*, also by the `nltk` authors, which will guide you through implementation.
+For more in-depth knowledge of NLP, I'd strongly suggest checking out _Speech and Language Processing_ by Daniel Jurafsky and James H. Martin. This textbook is a classic and provides a thorough understanding of the techniques and mathematics involved. Additionally, the documentation for `nltk` is excellent and a must-read if you plan to dive deep. For practical aspects, explore _Natural Language Processing with Python_, also by the `nltk` authors, which will guide you through implementation.
 
 In real-world scenarios, you’d likely have much more text than these examples. The `nltk` approach generally scales better and is more robust when the text has multiple formats and nuances. Remember that preprocessing, such as removing stop words (common words like "the," "a," "is"), can enhance your bigram analysis by focusing on words that contribute more to the meaning of your text. You would typically iterate over a corpus of documents (instead of single sentences like in my examples) and add the counts from each document. Finally, remember, selecting the right technique depends on your specific application and how you plan to use this bigram vocabulary.

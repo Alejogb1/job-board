@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-pulling-the-latest-docker-tag"
 ---
 
-alright, so pulling the latest docker tag. that's a classic, something i've definitely spent more hours than i'd care to calculate on. it sounds straightforward, but as with most things in devops, there are a couple of wrinkles.
+, so pulling the latest docker tag. that's a classic, something i've definitely spent more hours than i'd care to calculate on. it sounds straightforward, but as with most things in devops, there are a couple of wrinkles.
 
 first off, the core issue is that "latest" is a moving target. it's not really a tag, it’s more like a symbolic link, it always points to the most recently pushed image for that repository when no specific tag was specified. this makes it really bad for production systems, or anywhere you need repeatable deployments. i learned that the hard way a few years back. i had this system that was updating daily based on the `latest` tag and one night my deployment broke at 3 am. it was like pulling teeth to get it working again. this happened because there was a new push to `latest` with an updated application, but it was different enough to cause a downstream crash on one of the systems that was using that image.
 

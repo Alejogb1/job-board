@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-prevent-form-data-from-clearing-on-a-get-request-in-rails-7"
 ---
 
-Okay, let's tackle this. I've seen this issue pop up more times than I care to remember – that frustrating scenario where you submit a form, expecting a filtered list or some other action via a get request, and boom, all your carefully inputted data vanishes into the ether. It's a classic gotcha, and thankfully, there are some effective strategies to prevent it.
+, let's tackle this. I've seen this issue pop up more times than I care to remember – that frustrating scenario where you submit a form, expecting a filtered list or some other action via a get request, and boom, all your carefully inputted data vanishes into the ether. It's a classic gotcha, and thankfully, there are some effective strategies to prevent it.
 
 The fundamental issue, as many of you may already know, lies in how http get requests are intended to function. They are designed to retrieve resources based on the url, with any parameters appended as part of the query string. Unlike post, put, or patch requests, they don’t inherently carry a payload (a body) in the same manner. Browsers, by default, don't retain form data when initiating a get request. When you navigate to a new url or refresh, that data isn’t sent along, leading to the form being reset.
 
@@ -74,12 +74,12 @@ Next the controller (`app/controllers/complex_forms_controller.rb`):
 class ComplexFormsController < ApplicationController
     def new
     end
-  
+
     def create
         session[:complex_form_data] = params.permit(:field1, :field2)
         redirect_to complex_forms_show_path(query_params: { field1: session[:complex_form_data][:field1], field2: session[:complex_form_data][:field2] })
     end
-  
+
     def show
       @form_data = { field1: params[:query_params][:field1], field2: params[:query_params][:field2] }
     end
@@ -87,6 +87,7 @@ end
 ```
 
 And finally the show view (`app/views/complex_forms/show.html.erb`):
+
 ```erb
 <p>Field 1: <%= @form_data[:field1] %></p>
 <p>Field 2: <%= @form_data[:field2] %></p>
@@ -124,7 +125,7 @@ And the accompanying controller (`app/controllers/ajax_forms_controller.rb`):
 class AjaxFormsController < ApplicationController
     def index
     end
-  
+
     def update
       render plain: "Updated content fetched via ajax"
     end

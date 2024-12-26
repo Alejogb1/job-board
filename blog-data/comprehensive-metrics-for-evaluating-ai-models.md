@@ -1,10 +1,10 @@
 ---
-title: 'Comprehensive metrics for evaluating AI models'
-date: '2024-11-15'
-id: 'comprehensive-metrics-for-evaluating-ai-models'
+title: "Comprehensive metrics for evaluating AI models"
+date: "2024-11-15"
+id: "comprehensive-metrics-for-evaluating-ai-models"
 ---
 
-Okay so like, evaluating AI models is a huge deal right Now you gotta know how good your model is, so you can trust its decisions. That means digging into lots of metrics, not just one or two. 
+like, evaluating AI models is a huge deal right Now you gotta know how good your model is, so you can trust its decisions. That means digging into lots of metrics, not just one or two.
 
 Think of it like this, you're comparing different kinds of cookies, you need more than just taste to decide which one's the best, right You gotta look at texture, ingredients, even the way they look.
 
@@ -34,8 +34,8 @@ This code shows you how to calculate basic metrics. You can find other, more spe
 
 But remember, it's not just about the numbers. You need to understand what they mean in the context of your problem and what they tell you about your model.
 
-And don't forget, bias and fairness are super important. You need to make sure your model isn't perpetuating any harmful stereotypes or making unfair decisions. 
+And don't forget, bias and fairness are super important. You need to make sure your model isn't perpetuating any harmful stereotypes or making unfair decisions.
 
-You can find tons of resources online about evaluating AI models. Just search for "AI model evaluation metrics" and you'll find a ton of articles, tutorials, and even research papers. 
+You can find tons of resources online about evaluating AI models. Just search for "AI model evaluation metrics" and you'll find a ton of articles, tutorials, and even research papers.
 
 So, basically, when it comes to AI models, don't just trust the hype, get in there and really understand what's going on. Use the right metrics, and your models will be ready to rock!

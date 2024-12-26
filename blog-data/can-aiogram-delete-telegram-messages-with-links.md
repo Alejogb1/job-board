@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-aiogram-delete-telegram-messages-with-links"
 ---
 
-Alright, let's talk about deleting Telegram messages with links using Aiogram. It’s a topic I’ve definitely had my hands dirty with in past projects, specifically around moderation bots. The short answer is yes, you absolutely can delete messages containing links using Aiogram, but there's more to it than just a single command. It requires careful handling of message data and a clear understanding of how Telegram's API interacts with bots.
+, let's talk about deleting Telegram messages with links using Aiogram. It’s a topic I’ve definitely had my hands dirty with in past projects, specifically around moderation bots. The short answer is yes, you absolutely can delete messages containing links using Aiogram, but there's more to it than just a single command. It requires careful handling of message data and a clear understanding of how Telegram's API interacts with bots.
 
 When we break it down, we’re essentially looking at a multi-stage process. First, the bot needs to receive messages. Second, it needs to inspect the content for links. Third, if a link is found, it needs to issue a delete command. Let's explore each of these stages, including potential pitfalls and practical code examples that I’ve found useful over the years.
 

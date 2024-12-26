@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-access-minikube-from-outside-the-cluster-to-manage-pods-etc"
 ---
 
-Okay, let's tackle this. It's a common challenge, wanting to interact with your minikube cluster from outside, and I've certainly bumped into this many times over the years, particularly back when I was heavily involved in setting up local dev environments. The straightforward way, as you probably suspect, isn’t usually the default configuration, as minikube is designed to be fairly isolated for local development purposes. But thankfully, it's quite manageable.
+, let's tackle this. It's a common challenge, wanting to interact with your minikube cluster from outside, and I've certainly bumped into this many times over the years, particularly back when I was heavily involved in setting up local dev environments. The straightforward way, as you probably suspect, isn’t usually the default configuration, as minikube is designed to be fairly isolated for local development purposes. But thankfully, it's quite manageable.
 
 Essentially, the problem revolves around network connectivity and how minikube exposes its services. By default, minikube sits behind a virtual network interface, and the api server’s listening address is usually local to the virtual machine. So, for direct access from your host machine, we need to bypass that limitation. There are a few avenues, but the most practical ones involve port forwarding and using `kubectl` with the right configuration. I'm going to focus primarily on the port-forwarding approach here and then touch on exposing services more broadly for more complex scenarios. I'll avoid options that might overly complicate your setup for a typical use-case like managing pods from your host machine.
 
@@ -28,7 +28,7 @@ kubectl --server=http://127.0.0.1:8080 get pods -n kube-system
 kubectl --context=minikube --server=http://127.0.0.1:8080 get pods -n kube-system
 ```
 
-Here's what's happening: The first command creates a local proxy that listens on port 8080 and forwards requests to your minikube cluster’s api server. The second command uses `kubectl` and explicitly points it to `http://127.0.0.1:8080`, which is now our entrypoint to the cluster.  The `-n kube-system` simply tells kubectl that we want to see the pods in that namespace as an example. This is perfect for quick tests and debugging. When the terminal session running `kubectl proxy` is closed the connection is dropped. Note that you need to explicitly mention the server address because kubectl would try to find the cluster credentials from your kubeconfig normally which will not work since we're proxying.
+Here's what's happening: The first command creates a local proxy that listens on port 8080 and forwards requests to your minikube cluster’s api server. The second command uses `kubectl` and explicitly points it to `http://127.0.0.1:8080`, which is now our entrypoint to the cluster. The `-n kube-system` simply tells kubectl that we want to see the pods in that namespace as an example. This is perfect for quick tests and debugging. When the terminal session running `kubectl proxy` is closed the connection is dropped. Note that you need to explicitly mention the server address because kubectl would try to find the cluster credentials from your kubeconfig normally which will not work since we're proxying.
 
 **Example 2: Port Forwarding With `minikube service`**
 
@@ -78,7 +78,8 @@ kubectl config set-cluster minikube --server=https://127.0.0.1:8443 --insecure-s
 kubectl get pods -n kube-system
 
 ```
-In this example, we use `socat` to directly forward traffic from your host machine’s port 8443 to your minikube vm’s port 8443. The fork option lets the connection be persistent over multiple concurrent requests. This is a much more flexible approach that can be easily automated via scripts, and gives more control over the specifics of the tunnel.  Again, we need to update the kubeconfig to point `kubectl` at our tunnel on 127.0.0.1:8443.
+
+In this example, we use `socat` to directly forward traffic from your host machine’s port 8443 to your minikube vm’s port 8443. The fork option lets the connection be persistent over multiple concurrent requests. This is a much more flexible approach that can be easily automated via scripts, and gives more control over the specifics of the tunnel. Again, we need to update the kubeconfig to point `kubectl` at our tunnel on 127.0.0.1:8443.
 
 For further reading and a deep dive into Kubernetes networking, I'd recommend two books: "Kubernetes in Action" by Marko Lukša, and "Programming Kubernetes" by Michael Hausenblas and Stefan Schimanski. "Kubernetes Networking" by Paul Czarkowski is also a fantastic resource specifically focusing on networking concerns. Additionally, the official Kubernetes documentation is, of course, invaluable. And while StackOverflow is useful for specific questions, reading those books will be invaluable for understanding underlying concepts.
 

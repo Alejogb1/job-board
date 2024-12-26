@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-are-rollify-gem-users-polls-roles-answerers-and-admins-related"
 ---
 
-Okay, let’s tackle this. From my experience architecting similar systems in the past, I’ve seen firsthand how these elements interrelate, often in ways that aren’t immediately apparent from a quick glance at the requirements. It’s rarely a simple linear relationship, but more like an interwoven graph of responsibilities and permissions. We're talking about a system, presumably within the context of the ‘Rollify Gem’ (which I'm inferring is a Ruby library or framework for managing polls or voting systems, or something similar), and how these different components contribute to its overall functionality. Let's break down each of those components and then examine their interactions.
+, let’s tackle this. From my experience architecting similar systems in the past, I’ve seen firsthand how these elements interrelate, often in ways that aren’t immediately apparent from a quick glance at the requirements. It’s rarely a simple linear relationship, but more like an interwoven graph of responsibilities and permissions. We're talking about a system, presumably within the context of the ‘Rollify Gem’ (which I'm inferring is a Ruby library or framework for managing polls or voting systems, or something similar), and how these different components contribute to its overall functionality. Let's break down each of those components and then examine their interactions.
 
 First, we have **Rollify Gem users**. These are the fundamental participants in the system. They are essentially entities that can initiate, participate, or administer the polls depending on their assigned roles. Think of them as the actors within our stage, each capable of playing different parts. A user might be a simple participant, a creator, or a high-level administrator. This classification leads us directly into the next concept: roles.
 
@@ -18,11 +18,11 @@ Finally, **admins** represent a distinct role, usually reserved for a small grou
 
 So, how do they all relate? Here's a breakdown of the key relationships in practice:
 
-*   **User-Role Relationship:** This is typically a many-to-many relationship. A user can have multiple roles, and a role can be assigned to multiple users. This needs a dedicated table that stores these assignments.
-*   **Poll-User Relationship (Creator):** This is typically one-to-many. One user creates a poll, but many users can create multiple polls.
-*   **Poll-Answerer Relationship:** As mentioned before, this is a many-to-many relationship; each poll can have multiple answerers, and a user can be an answerer across multiple polls.
-*   **Admin-User Relationship:** This might be a one-to-many or a many-to-many, depending on how granular the admin roles are set up. If there are multiple admin roles, each with different levels of access, this becomes a many-to-many.
-*   **Role-Permission Relationship:** The roles themselves must be associated with specific permissions. This is commonly expressed as a role-based access control model (RBAC)
+- **User-Role Relationship:** This is typically a many-to-many relationship. A user can have multiple roles, and a role can be assigned to multiple users. This needs a dedicated table that stores these assignments.
+- **Poll-User Relationship (Creator):** This is typically one-to-many. One user creates a poll, but many users can create multiple polls.
+- **Poll-Answerer Relationship:** As mentioned before, this is a many-to-many relationship; each poll can have multiple answerers, and a user can be an answerer across multiple polls.
+- **Admin-User Relationship:** This might be a one-to-many or a many-to-many, depending on how granular the admin roles are set up. If there are multiple admin roles, each with different levels of access, this becomes a many-to-many.
+- **Role-Permission Relationship:** The roles themselves must be associated with specific permissions. This is commonly expressed as a role-based access control model (RBAC)
 
 To illustrate, let’s look at some simplified code snippets using Ruby as a representative example.
 
@@ -132,4 +132,4 @@ This example illustrates the complexities of managing a many-to-many relationshi
 
 In summary, these elements are intricately linked within a system like Rollify Gem (as we are imagining it). Users are the central players, roles define their privileges, polls represent the core content, answerers interact with polls, and admins control the overall system. Understanding these relationships and implementing them using a well-designed database schema and access control system is crucial for building robust and scalable applications.
 
-For further learning, I'd recommend diving into papers related to RBAC (Role-Based Access Control) models, such as *“Role-based Access Control”* by David F. Ferraiolo and D. Richard Kuhn. For practical database implementation, *'Database Design for Mere Mortals'* by Michael J. Hernandez and John L. Viescas, though slightly older, provides a solid foundation. Furthermore, studying the source code of similar open-source frameworks will be incredibly insightful, especially those with good permission management systems, to see how these concepts are put into practice. Pay close attention to how such frameworks implement permission systems using database join tables.
+For further learning, I'd recommend diving into papers related to RBAC (Role-Based Access Control) models, such as _“Role-based Access Control”_ by David F. Ferraiolo and D. Richard Kuhn. For practical database implementation, _'Database Design for Mere Mortals'_ by Michael J. Hernandez and John L. Viescas, though slightly older, provides a solid foundation. Furthermore, studying the source code of similar open-source frameworks will be incredibly insightful, especially those with good permission management systems, to see how these concepts are put into practice. Pay close attention to how such frameworks implement permission systems using database join tables.

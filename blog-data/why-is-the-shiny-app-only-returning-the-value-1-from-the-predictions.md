@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-shiny-app-only-returning-the-value-1-from-the-predictions"
 ---
 
-Alright, let's unpack this. It's a frustrating situation, for sure, when your shiny app stubbornly sticks to "1" despite the predictive model working fine outside of it. I've definitely been there, staring at seemingly identical code, wondering where the gremlin hid. The issue rarely stems from the model itself being broken, but more often from the data pipeline between the user input in shiny and the model's prediction function. So, let's look at the common culprits and how I've tackled them in the past.
+, let's unpack this. It's a frustrating situation, for sure, when your shiny app stubbornly sticks to "1" despite the predictive model working fine outside of it. I've definitely been there, staring at seemingly identical code, wondering where the gremlin hid. The issue rarely stems from the model itself being broken, but more often from the data pipeline between the user input in shiny and the model's prediction function. So, let's look at the common culprits and how I've tackled them in the past.
 
 My first encounter with this was back when I was building a small customer churn predictor. The model was a gradient boosting machine, and locally, it was performing beautifully. However, deployed through shiny, it was consistently outputting "1," indicating a positive churn prediction, regardless of the user input. After several hours of head-scratching, I traced it back to data type inconsistencies. The model expected numeric data, but shiny was sending character strings obtained from `input$...`.
 

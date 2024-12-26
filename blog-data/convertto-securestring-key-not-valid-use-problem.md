@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "convertto-securestring-key-not-valid-use-problem"
 ---
 
-Okay so you’re wrestling with `ConvertTo-SecureString` puking about an invalid key right Been there done that got the t-shirt probably several actually It's a classic PowerShell gotcha a real head scratcher when you first encounter it
+you’re wrestling with `ConvertTo-SecureString` puking about an invalid key right Been there done that got the t-shirt probably several actually It's a classic PowerShell gotcha a real head scratcher when you first encounter it
 
 Let me break it down from my perspective and maybe it will help you. I remember vividly back in the day probably circa PowerShell v3 maybe v4 we were deploying these little automation scripts for our dev environments. One thing we needed to do was store database connection strings you know passwords the sensitive stuff.
 
 First thought was of course lets do `ConvertTo-SecureString` because you know security. Except it kept throwing this error "key not valid for use in specified state" right in my face. It was super frustrating. I mean the code looked right everything was perfect. I even re-typed the whole thing a couple times because sometimes I make typos you know we all do.
 
-So what’s the deal right? The issue isn't necessarily about the *key* you think you’re using for the encryption it's more about the underlying mechanism that `ConvertTo-SecureString` employs which in general terms is the Data Protection API or DPAPI for short. DPAPI on Windows is tied to the user account and machine on which the secure string is generated. It's not like a simple symmetric key you can just move around.
+So what’s the deal right? The issue isn't necessarily about the _key_ you think you’re using for the encryption it's more about the underlying mechanism that `ConvertTo-SecureString` employs which in general terms is the Data Protection API or DPAPI for short. DPAPI on Windows is tied to the user account and machine on which the secure string is generated. It's not like a simple symmetric key you can just move around.
 
 Essentially you’re trying to use a secure string created under a different context be it a different user account or a different machine entirely. If you try to use the secure string somewhere else that's where you get this error It doesn't like it.
 
@@ -75,7 +75,7 @@ Write-Output $decryptedPassword
 
 This approach is way more involved but also way more secure and flexible. And it also gives you a lot more control.
 
-Okay here is the thing I am sure you are thinking this is too much why not just put it in a configuration file and get over with it? Well there is this thing called secrets management where all these solutions end up being incorporated into a proper system. A proper secret management system is beyond the scope of the current question.
+here is the thing I am sure you are thinking this is too much why not just put it in a configuration file and get over with it? Well there is this thing called secrets management where all these solutions end up being incorporated into a proper system. A proper secret management system is beyond the scope of the current question.
 
 But there is also the question of "best practice" here and yes storing anything in plain text config files is generally frowned upon. So its good to practice the right way when you are learning new skills. This way you also get to understand how Windows works under the hood which will benefit you down the line.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "accessors-are-only-available-when-targeting-ecmascript-5-higher"
 ---
 
-Alright so this old chestnut right Been there done that got the t-shirt and probably a few compiler warnings too Let me tell you about the time I wrestled with this accessor thing back in the day It was the early days of JavaScript frameworks you know pre-React pre-Vue pre-everything It was a wild west of prototypes and weird behaviors I was tasked with building this data binding library it was gonna be the next big thing I swear but yeah that didnt quite pan out
+so this old chestnut right Been there done that got the t-shirt and probably a few compiler warnings too Let me tell you about the time I wrestled with this accessor thing back in the day It was the early days of JavaScript frameworks you know pre-React pre-Vue pre-everything It was a wild west of prototypes and weird behaviors I was tasked with building this data binding library it was gonna be the next big thing I swear but yeah that didnt quite pan out
 
 Anyway this data binding thingy needed to automatically update the UI when the data changed Sounds simple right ha Yeah it was everything but I started by simply using objects and properties You'd update it and things would update that was the whole goal But then I stumbled upon this little gem the world of get and set accessors and boy did things get complicated
 
@@ -20,27 +20,34 @@ Here's the basic concept of how I tackled it back then you need to use `Object.d
 function defineObservableProperty(obj, propertyName, initialValue) {
   let _value = initialValue;
   Object.defineProperty(obj, propertyName, {
-    get: function() {
-      console.log("Getting", propertyName, _value)
+    get: function () {
+      console.log("Getting", propertyName, _value);
       return _value;
     },
-    set: function(newValue) {
-      console.log("Setting", propertyName, "old value", _value, "new value", newValue)
+    set: function (newValue) {
+      console.log(
+        "Setting",
+        propertyName,
+        "old value",
+        _value,
+        "new value",
+        newValue
+      );
       _value = newValue;
-        // in reality you trigger some other stuff like updating the UI or whatever here
-        // for example lets say we have a callback function that we want to use here
-        if(obj.onChange){
-            obj.onChange(propertyName, newValue, _value);
-        }
+      // in reality you trigger some other stuff like updating the UI or whatever here
+      // for example lets say we have a callback function that we want to use here
+      if (obj.onChange) {
+        obj.onChange(propertyName, newValue, _value);
+      }
     },
-      enumerable: true,
-      configurable: true // this is important to allow redefinition later
+    enumerable: true,
+    configurable: true, // this is important to allow redefinition later
   });
 }
 // Example
 const myObj = {};
-defineObservableProperty(myObj, 'name', 'John');
-myObj.name = 'Jane'; // outputs set message in console
+defineObservableProperty(myObj, "name", "John");
+myObj.name = "Jane"; // outputs set message in console
 console.log(myObj.name); // outputs get message in console
 ```
 
@@ -61,22 +68,21 @@ Here's roughly what that detection and fallback logic looked like at the core of
 ```javascript
 function createObservable(obj) {
   if (Object.defineProperty) {
-      console.log("using Object.defineProperty")
+    console.log("using Object.defineProperty");
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
         defineObservableProperty(obj, key, obj[key]);
       }
     }
+  } else {
+    console.log("using a simple old fallback");
+    // very old browser here doing nothing much in reality
+    // i would implement a fallback here that did the most basic feature to make it somewhat work
   }
-    else {
-        console.log("using a simple old fallback")
-        // very old browser here doing nothing much in reality
-        // i would implement a fallback here that did the most basic feature to make it somewhat work
-    }
   return obj;
 }
 // Example
-const myObj2 = createObservable({name:'Bob',age:42});
+const myObj2 = createObservable({ name: "Bob", age: 42 });
 myObj2.name = "Robert";
 console.log(myObj2.name);
 ```
@@ -99,7 +105,7 @@ The solution number two which is using Babel is the most common solution nowaday
 
 And just so you know, even when you transpile, some features might not work exactly as intended. It's not a perfect process. For instance, you might lose some performance, debugging can be harder, or a tiny feature might just work a bit different in old browsers than in modern ones
 
-And one last tip for you. If you are working with a very old environment then be sure to test your code in that environment as much as possible because bugs do popup where you least expect them. I remember once I worked so much to try and get a feature working that I forgot to use the correct versions in my test browser and it didn't work as expected when I deployed it to production. Never again would I do that mistake again. We all learn one way or another right? *laughs sarcastically*. But for real testing is really important
+And one last tip for you. If you are working with a very old environment then be sure to test your code in that environment as much as possible because bugs do popup where you least expect them. I remember once I worked so much to try and get a feature working that I forgot to use the correct versions in my test browser and it didn't work as expected when I deployed it to production. Never again would I do that mistake again. We all learn one way or another right? _laughs sarcastically_. But for real testing is really important
 
 And for resources I wouldn't recommend any specific links because links die you know It's better to study books or standards instead. If you want to learn more about these kinds of stuff I recommend reading the ECMAScript specification directly. It's a bit dense but it's the definitive source of truth for JavaScript. I also recommend reading books like "JavaScript: The Definitive Guide" by David Flanagan it's a great resource to understand how JavaScript works in general and how these details like accessors work in practice If you are diving deep you should look for some old javascript books too. It's surprising how some of the details that are not as popular as they used to be but they still make sense in some situations
 

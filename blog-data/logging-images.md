@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "logging-images"
 ---
 
-Okay so logging images right I’ve been there done that got the t-shirt and a few gray hairs along the way It sounds simple but it quickly spirals into a data management and performance pit I remember this one time back in 2012 when I was messing around with some early computer vision stuff for a prototype automated sorting system We were using a prototype camera setup pushing frames at like 30fps and we thought hey let’s just log everything because why not Turns out why not was a really good question
+logging images right I’ve been there done that got the t-shirt and a few gray hairs along the way It sounds simple but it quickly spirals into a data management and performance pit I remember this one time back in 2012 when I was messing around with some early computer vision stuff for a prototype automated sorting system We were using a prototype camera setup pushing frames at like 30fps and we thought hey let’s just log everything because why not Turns out why not was a really good question
 
 First things first you’re going to need to figure out how you want to store these things Images are not text they're binary blobs And shoving binary data into a regular text log file is just asking for trouble it leads to corrupted files it takes a lot of resources to convert to strings and back and it's frankly a nightmare to debug
 
@@ -55,6 +55,7 @@ if __name__ == '__main__':
     else:
         print("Failed to log the image.")
 ```
+
 This approach separates the logs from the images The log file `image_log.log` would contain the path to where the images are stored along with a timestamp and other details The image is stored as `image_{timestamp}.png` on disk. Note that in this example I used a generated binary data for the image but it is obviously required that you replace the dummy image data with actual image data
 
 Now performance is a factor How fast you're generating images and how fast you need to log them is key Remember that disk I/O can be a bottleneck especially with high framerates and if the image is large So do not go for the most complex compression algorithm here I learned it the hard way back then

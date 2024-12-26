@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-do-i-test-airflow-api-tasks-with-parameters"
 ---
 
-Alright, let's tackle this. Testing Airflow API tasks, particularly when they involve parameters, can initially feel a bit like navigating a maze. I've definitely spent my share of late nights debugging these scenarios. The good news is, with the right approach, it's entirely manageable and, dare I say, even elegant. The trick lies in understanding how Airflow manages parameters and how best to simulate their behavior in a testing environment.
+, let's tackle this. Testing Airflow API tasks, particularly when they involve parameters, can initially feel a bit like navigating a maze. I've definitely spent my share of late nights debugging these scenarios. The good news is, with the right approach, it's entirely manageable and, dare I say, even elegant. The trick lies in understanding how Airflow manages parameters and how best to simulate their behavior in a testing environment.
 
 The core challenge stems from the fact that API tasks within Airflow often rely on a context populated during runtime. Parameters that define the behavior of these tasks are frequently injected through this context. So, directly instantiating your task within a unit test often leads to a 'missing context' error or similar frustrations. We need to bypass this by creating a controllable testing context.
 
-When I first encountered this, on a project migrating a series of legacy data pipelines to Airflow, the initial inclination was to try and force the full Airflow context in our tests. That turned into an incredibly brittle solution, highly dependent on the specific Airflow configuration of that environment, which as we all know, fluctuates. The breakthrough came when we realized that we should be focusing on testing the *logic* within our API tasks, not the Airflow framework itself.
+When I first encountered this, on a project migrating a series of legacy data pipelines to Airflow, the initial inclination was to try and force the full Airflow context in our tests. That turned into an incredibly brittle solution, highly dependent on the specific Airflow configuration of that environment, which as we all know, fluctuates. The breakthrough came when we realized that we should be focusing on testing the _logic_ within our API tasks, not the Airflow framework itself.
 
 The standard practice is to decouple the core logic that interacts with an external API from the Airflow task definition. You achieve this by encapsulating that API call logic into a separate, callable function. This gives you several advantages:
 

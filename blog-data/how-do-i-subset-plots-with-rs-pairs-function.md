@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-subset-plots-with-rs-pairs-function"
 ---
 
-Alright, let's tackle this. Subsetting plots created with R's `pairs` function isn't always immediately obvious, and I’ve definitely spent more time than I care to recall figuring out the exact combinations of arguments to get what I needed back in my early days building statistical models for ecological analysis. The `pairs` function itself is incredibly powerful for visualizing relationships between multiple variables, but sometimes you only need to focus on specific pairings, not the whole shebang. Here's how I’ve approached this over the years, along with some code examples to solidify the techniques.
+, let's tackle this. Subsetting plots created with R's `pairs` function isn't always immediately obvious, and I’ve definitely spent more time than I care to recall figuring out the exact combinations of arguments to get what I needed back in my early days building statistical models for ecological analysis. The `pairs` function itself is incredibly powerful for visualizing relationships between multiple variables, but sometimes you only need to focus on specific pairings, not the whole shebang. Here's how I’ve approached this over the years, along with some code examples to solidify the techniques.
 
 The core issue stems from the fact that `pairs` is designed to produce a matrix of scatterplots, using combinations of variables across your entire dataset if you provide it with a matrix or data frame. You don't have direct arguments within `pairs` itself to explicitly select which variable combinations to display; instead, you have to be a bit clever in how you supply the data and modify the call.
 
@@ -21,17 +21,17 @@ plant_data <- data.frame(
 )
 
 # Create a subsetted matrix plot
-pairs(plant_data[, c("height", "leaf_area", "diameter", "flower_count")], 
-      labels = c("Height", "Leaf Area", "Diameter", "Flower Count"), 
+pairs(plant_data[, c("height", "leaf_area", "diameter", "flower_count")],
+      labels = c("Height", "Leaf Area", "Diameter", "Flower Count"),
       main = "Subset Pair Plot 1: Specific Columns",
-      pch = 19, 
+      pch = 19,
       col = "royalblue")
 
 ```
 
 In this first example, notice I specifically chose which columns to include when calling `pairs` using `plant_data[, c("height", "leaf_area", "diameter", "flower_count")]`. This is a powerful, direct way to pick out the precise variables you are interested in. The `labels` argument lets me rename columns on the axes, and I've added some cosmetic options using `pch` for plotting symbols and `col` for color. If I only needed height vs leaf area and diameter vs flower count, I'd supply `plant_data[, c("height","leaf_area","diameter","flower_count")]` but manipulate the data to only show what I need, such as a modified data frame, a topic we will cover next.
 
-Now, let's say that the underlying dataset is large and contains a lot of potentially uninteresting variable pairings, and the approach of just selecting columns isn’t granular enough. Here’s where things get a little more interesting; we have to modify the data passed into the `pairs` function by manipulating the data itself, creating a modified dataframe to plot what we need. For instance, I encountered a case in network analysis of city transportation where many variables (population density, road network density, number of public transport stops, etc.) were available, but certain relationships between specific variables like population density vs public transport stops, and road density vs. number of public transport stops were crucial for a particular analysis, but the rest were irrelevant for that analysis. This requires constructing a new dataframe that *only* contains those combinations. Below is the code to demonstrate this:
+Now, let's say that the underlying dataset is large and contains a lot of potentially uninteresting variable pairings, and the approach of just selecting columns isn’t granular enough. Here’s where things get a little more interesting; we have to modify the data passed into the `pairs` function by manipulating the data itself, creating a modified dataframe to plot what we need. For instance, I encountered a case in network analysis of city transportation where many variables (population density, road network density, number of public transport stops, etc.) were available, but certain relationships between specific variables like population density vs public transport stops, and road density vs. number of public transport stops were crucial for a particular analysis, but the rest were irrelevant for that analysis. This requires constructing a new dataframe that _only_ contains those combinations. Below is the code to demonstrate this:
 
 ```r
 # Simulate data with many variables (similar to my transport network problem)
@@ -54,10 +54,10 @@ custom_transport_data <- data.frame(
 )
 
 # Plot the selected variable combinations using pairs
-pairs(custom_transport_data, 
+pairs(custom_transport_data,
       labels = c("Pop. Density", "Pub. Transport Stops", "Road Density", "Pub. Transport Stops"),
       main = "Subset Pair Plot 2: Custom Dataframe",
-      pch = 17, 
+      pch = 17,
       col = "darkgreen")
 ```
 
@@ -84,9 +84,10 @@ columns_of_interest <- names(gene_data) %in% c("gene_a", "gene_c", "gene_f")
 pairs(gene_data[, columns_of_interest],
       labels = c("Gene A", "Gene C", "Gene F"),
       main = "Subset Pair Plot 3: Logical Indexing",
-      pch = 15, 
+      pch = 15,
       col = "purple")
 ```
+
 Here, I use the `%in%` operator to select only specific column names that are of interest, then use the resulting logical vector `columns_of_interest` to index the dataframe in the `pairs` call. This approach is both concise and easily modified to include different combinations of variables.
 
 To further enhance your understanding, I highly recommend diving into “ggplot2: Elegant Graphics for Data Analysis” by Hadley Wickham; while not directly focusing on `pairs`, it offers a deeper understanding of data visualization principles, which can complement the usage of base R plotting. Also, exploring the various base plotting packages in the R manual is helpful for understanding how different arguments are used. Additionally, you might find “The R Graphics Book” by Paul Murrell invaluable for comprehensive coverage of the R graphics system. In summary, while `pairs` doesn't offer direct subsetting arguments, clever data manipulation and column selection allow you to produce exactly the plots you need for your analysis.

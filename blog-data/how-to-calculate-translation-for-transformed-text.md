@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-calculate-translation-for-transformed-text"
 ---
 
-alright, so you're tackling the classic transformed text translation problem. i've been there, spent more than a few late nights staring at screens trying to get this to work. it's not exactly a walk in the park but it's very doable if you understand the fundamentals. let's break it down, i'll give you my take based on some painful experiences i've had over the years, specifically focusing on a few different scenarios.
+, so you're tackling the classic transformed text translation problem. i've been there, spent more than a few late nights staring at screens trying to get this to work. it's not exactly a walk in the park but it's very doable if you understand the fundamentals. let's break it down, i'll give you my take based on some painful experiences i've had over the years, specifically focusing on a few different scenarios.
 
 first off, what do we mean by "transformed text"? well it could be anything from simple scaling and rotation to more complex perspective transformations or even non-linear warps. at its core, we need to figure out how to map points from the original text's coordinate space into the transformed text's coordinate space. and then, inversely, go back the other way. this mapping, for many transformations can be done via matrix algebra. i once thought it would be easier using polar coordinate system with radial distortion, after spending a weekend i realized that a normal matrix operation would have done the trick faster and better.
 
@@ -84,6 +84,7 @@ transformed_points = apply_perspective_transform(points, matrix)
 print(transformed_points)
 
 ```
+
 the code above shows a simple usage of perspective transforms. you should have the four points for the original image and four matching points for the transformed image, after that you can call `cv2.getPerspectiveTransform` which would give you the transformation matrix. using `cv2.perspectiveTransform` you can transform a set of points.
 
 now, let's dive into a case where the transformation is completely arbitrary and not easily represented by a matrix. this is where things can get really complex and you have to use interpolation. i once had to work with a text display that had this crazy non-linear distortion that looked like some sort of fisheye effect, but more complex. it wasn't a simple mathematical formula and i had to go through trial and error on getting a grid deformation map and it was quite a task, but i think it gave me a solid understanding of this process.

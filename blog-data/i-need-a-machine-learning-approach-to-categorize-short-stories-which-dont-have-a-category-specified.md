@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "i-need-a-machine-learning-approach-to-categorize-short-stories-which-dont-have-a-category-specified"
 ---
 
-alright, so you've got a bunch of short stories and no labels, right? been there, done that. it's a common scenario, especially when dealing with user-generated content or legacy datasets. let's break this down. it's not a walk in the park, but it's definitely solvable with a bit of ml elbow grease.
+, so you've got a bunch of short stories and no labels, right? been there, done that. it's a common scenario, especially when dealing with user-generated content or legacy datasets. let's break this down. it's not a walk in the park, but it's definitely solvable with a bit of ml elbow grease.
 
 first off, we are talking about unsupervised learning, because, well, no labels. supervised methods are out of the picture. we need the algorithm to find structure within the data itself. the usual suspect here is clustering, which aims to group similar data points together. specifically, we are going to focus on text clustering. there are some things to keep in mind:
 
@@ -63,23 +63,23 @@ years ago, i was working with a large dataset of product descriptions. no tags, 
 
 well, this is a tough one. unlike supervised learning, we don’t have ground truth labels to compare against. but there are some approaches:
 
-*   **silhouette score:** measures how similar an object is to its own cluster compared to other clusters. a value close to 1 indicates that the object is very well clustered, but it is also known that this metric doesn't always align with what you perceive as good clusters.
-*   **visualizations**: you can plot the reduced data using tsne or umap and check if the clusters look well separated.
-*   **manual analysis**: this is the most time-consuming but necessary. after clustering you need to take a look at the results by picking a few stories from every cluster and see what it is grouping. it might not be exactly what you expect, and you need to iterate on the algorithm steps to refine the output.
-*   **topic modeling:** some times, you could think of topic modeling as a complementary approach. lda (latent dirichlet allocation) can help you understand the topics in each cluster. although not exactly clustering, it can add some insights to what is happening in your dataset.
+- **silhouette score:** measures how similar an object is to its own cluster compared to other clusters. a value close to 1 indicates that the object is very well clustered, but it is also known that this metric doesn't always align with what you perceive as good clusters.
+- **visualizations**: you can plot the reduced data using tsne or umap and check if the clusters look well separated.
+- **manual analysis**: this is the most time-consuming but necessary. after clustering you need to take a look at the results by picking a few stories from every cluster and see what it is grouping. it might not be exactly what you expect, and you need to iterate on the algorithm steps to refine the output.
+- **topic modeling:** some times, you could think of topic modeling as a complementary approach. lda (latent dirichlet allocation) can help you understand the topics in each cluster. although not exactly clustering, it can add some insights to what is happening in your dataset.
 
 **what to read?**
 
-*   **"the elements of statistical learning" by hastie, tibshirani, and friedman:** this is the bible. a must-read for anyone seriously working in machine learning. it covers the theory behind many algorithms we talked about.
-*   **"natural language processing with python" by bird, klein, and loper:** a good practical book for everything related to nlp. it explains vectorization and many other things useful when working with text data.
-*   **"pattern recognition and machine learning" by christopher bishop:** this one focuses on a more theoretical point of view. it’s good for a deeper understanding of the ml process.
+- **"the elements of statistical learning" by hastie, tibshirani, and friedman:** this is the bible. a must-read for anyone seriously working in machine learning. it covers the theory behind many algorithms we talked about.
+- **"natural language processing with python" by bird, klein, and loper:** a good practical book for everything related to nlp. it explains vectorization and many other things useful when working with text data.
+- **"pattern recognition and machine learning" by christopher bishop:** this one focuses on a more theoretical point of view. it’s good for a deeper understanding of the ml process.
 
 **a few more tips:**
 
-*   always preprocess your text data. remove non-alphanumeric characters, convert to lowercase, lemmatize, and so on.
-*   try different vectorization methods: countvectorizer, word2vec, doc2vec. each one captures different kinds of text information and they might work better depending on the dataset.
-*   cluster quality strongly depends on the dataset and can vary quite a bit even with the same algorithms. the art is in tweaking the parameters and knowing what the model is giving.
-*   don't hesitate to experiment. machine learning is an iterative process. you will most likely do several iterations until you find something good.
+- always preprocess your text data. remove non-alphanumeric characters, convert to lowercase, lemmatize, and so on.
+- try different vectorization methods: countvectorizer, word2vec, doc2vec. each one captures different kinds of text information and they might work better depending on the dataset.
+- cluster quality strongly depends on the dataset and can vary quite a bit even with the same algorithms. the art is in tweaking the parameters and knowing what the model is giving.
+- don't hesitate to experiment. machine learning is an iterative process. you will most likely do several iterations until you find something good.
 
 i remember once working on some data and the silhouette score was amazing, like really amazing. but when i checked the clusters manually, they did not make a lot of sense. i looked closer at the matrix and all i could see is numbers… numbers everywhere… it was terrible… so, i just had a coffee. in the end, i discovered that the pca was not working well and that the data was too high-dimensional. this happens, do not be scared of the errors. just try to understand them. it's all part of the fun (or should i say, "fun").
 

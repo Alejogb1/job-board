@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "the-coordinator-is-not-aware-of-this-member-kafka-error"
 ---
 
-Okay so you've got a kafka issue a coordinator issue it looks like that's a common enough headache I've wrestled with this before many times and probably will again frankly Its one of those situations that always seems simple until it isn't Right so let's break this down you're saying a member is having issues and the coordinator isnt picking it up thats not cool it should be it should be detecting and handling that like that is its primary job That error is a silent killer in distributed systems if you dont address it quickly it can cascade out of control So lets go from the top down
+you've got a kafka issue a coordinator issue it looks like that's a common enough headache I've wrestled with this before many times and probably will again frankly Its one of those situations that always seems simple until it isn't Right so let's break this down you're saying a member is having issues and the coordinator isnt picking it up thats not cool it should be it should be detecting and handling that like that is its primary job That error is a silent killer in distributed systems if you dont address it quickly it can cascade out of control So lets go from the top down
 
 First off lets be super clear what we're even talking about In Kafka a coordinator is essentially a broker that is chosen to manage a group of consumers or producers in a group it tracks which members are part of the group assigns partitions to the consumers and generally handles group membership when a member of the group has an issue such as failure or disconnection the coordinator has a job to detect that fact and deal with it quickly its kind of like a conductor leading an orchestra if the first violin stops playing you expect the conductor to notice
 
@@ -12,19 +12,19 @@ Now you said the coordinator is not aware of the kafka error So we need to under
 
 **Common Errors and Misconfigurations:**
 
-*   **Heartbeat Issues:** The most likely cause its almost always heartbeats the members have an obligation to send hearbeats to the coordinator at a fixed interval if the heartbeat fails or is missed by the coordinator for a specified duration the coordinator should evict the consumer from the group. If the member does not send heartbeats thats the easiest issue to detect The coordinator monitors heartbeats to determine the liveliness of members in the group. If the heartbeats stops you will trigger a rebalance but if the member keeps sending heartbeats you will be in trouble even if the member is stuck doing nothing.
+- **Heartbeat Issues:** The most likely cause its almost always heartbeats the members have an obligation to send hearbeats to the coordinator at a fixed interval if the heartbeat fails or is missed by the coordinator for a specified duration the coordinator should evict the consumer from the group. If the member does not send heartbeats thats the easiest issue to detect The coordinator monitors heartbeats to determine the liveliness of members in the group. If the heartbeats stops you will trigger a rebalance but if the member keeps sending heartbeats you will be in trouble even if the member is stuck doing nothing.
 
-*   **Session Timeout:** Closely related to heartbeats is session timeouts. A session represents the duration a member can be inactive before the coordinator considers it dead. If a member fails to send heartbeats within that session timeout, the coordinator triggers a rebalance. However if the member is stuck but alive and sending heartbeats that wont trigger a rebalance at all If the session timeout is set too high the coordinator might take a long time to react to a dead consumer which could result in processing delays or worse.
+- **Session Timeout:** Closely related to heartbeats is session timeouts. A session represents the duration a member can be inactive before the coordinator considers it dead. If a member fails to send heartbeats within that session timeout, the coordinator triggers a rebalance. However if the member is stuck but alive and sending heartbeats that wont trigger a rebalance at all If the session timeout is set too high the coordinator might take a long time to react to a dead consumer which could result in processing delays or worse.
 
-*   **Network Problems:** Network blips are notorious. They can lead to dropped heartbeats or communication failures. The coordinator might not realize a member is experiencing network issues especially if those issues are intermittent. Its really hard to detect intermittent network issues You need to have observability in place to be able to catch that
+- **Network Problems:** Network blips are notorious. They can lead to dropped heartbeats or communication failures. The coordinator might not realize a member is experiencing network issues especially if those issues are intermittent. Its really hard to detect intermittent network issues You need to have observability in place to be able to catch that
 
-*   **Consumer Errors:** Sometimes the consumer app itself might get stuck or experience errors that prevent it from processing data but still sending heartbeats If a consumer is stuck in an infinite loop or gets into a bad state it might keep sending heartbeats to the coordinator but it cant process any data.
+- **Consumer Errors:** Sometimes the consumer app itself might get stuck or experience errors that prevent it from processing data but still sending heartbeats If a consumer is stuck in an infinite loop or gets into a bad state it might keep sending heartbeats to the coordinator but it cant process any data.
 
-*   **Broker Failures:** In very rare occasions the coordinator might have a bad day or even experience issues itself. While less common these can result in the coordinator not behaving correctly including not detecting issues with members. So its worth also checking if the coordinator is healthy.
+- **Broker Failures:** In very rare occasions the coordinator might have a bad day or even experience issues itself. While less common these can result in the coordinator not behaving correctly including not detecting issues with members. So its worth also checking if the coordinator is healthy.
 
 **Debugging Steps**
 
-Okay so what do you do? First, we have to confirm that what you see is indeed a real issue not just noise You need to really really check the logs and do that several times I cant emphasize that enough
+what do you do? First, we have to confirm that what you see is indeed a real issue not just noise You need to really really check the logs and do that several times I cant emphasize that enough
 
 1.  **Check Consumer Logs:** Start with the consumer logs. Look for exceptions or error messages related to processing messages, or failed consumer heartbeats. See if the consumer has messages related to connecting or disconneting to the coordinator or messages like that
 
@@ -96,6 +96,7 @@ finally:
     consumer.close()
 
 ```
+
 And finally, lets see an example that shows how to handle the rebalance and what to do after a rebalance occurs
 
 ```python

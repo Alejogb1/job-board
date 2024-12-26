@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-set-sendmailpath"
 ---
 
-Alright, let's talk about `sendmail_path`. It’s a configuration directive that I’ve bumped into quite a few times over the years, usually when dealing with php environments that needed to handle emails, and it often leads to some head-scratching moments if not set correctly. Essentially, `sendmail_path` is a php.ini setting that dictates the location of the executable php uses when it attempts to send emails through the `mail()` function. It's not something you’d fiddle with every day, but when you *do* need to configure it, it’s crucial to understand its implications.
+, let's talk about `sendmail_path`. It’s a configuration directive that I’ve bumped into quite a few times over the years, usually when dealing with php environments that needed to handle emails, and it often leads to some head-scratching moments if not set correctly. Essentially, `sendmail_path` is a php.ini setting that dictates the location of the executable php uses when it attempts to send emails through the `mail()` function. It's not something you’d fiddle with every day, but when you _do_ need to configure it, it’s crucial to understand its implications.
 
 The default behavior of PHP's `mail()` function, at least historically, involved attempting to pipe the email to a locally installed mail transport agent (MTA), commonly `sendmail`, though other MTAs such as `postfix` or `exim` may be utilized. When the php.ini setting `sendmail_path` isn't properly configured, or not set at all, php relies on either its default configuration, which is often incorrect, or the system's default settings, which sometimes leads to email sending failures or unexpected delivery behavior. The problem is that "default" is quite subjective. It varies across operating systems and even between different distributions of those operating systems. Therefore, explicitly defining this path is the best practice, especially when working within environments where you need predictable mail behavior.
 
@@ -25,6 +25,7 @@ Here is an example of how the `sendmail_path` should look in the php.ini file wh
 ; http://php.net/sendmail-path
 sendmail_path = /usr/sbin/sendmail -t -i
 ```
+
 In this example, we've uncommented the setting and configured it to use the `/usr/sbin/sendmail` executable. The `-t` argument specifies that the recipients should be read from the message headers, and `-i` indicates that the dot (`.`) on a line by itself should not terminate the message. These flags are standard with modern MTA usages.
 
 Here's an example if you were using postfix (often the preferred MTA for modern servers) with a sendmail wrapper:
@@ -40,6 +41,7 @@ Here's a modified example for a specific case if the `sendmail` binary was locat
 ```ini
 sendmail_path = /usr/local/bin/sendmail -t
 ```
+
 In this case, the path is modified to reflect a non-standard location. Always ensure the binary at this path is executable and configured as an MTA.
 
 After setting the `sendmail_path`, you must restart your web server for the changes to take effect. This step is essential; PHP does not dynamically reread its configuration on every request, it's cached at startup. For example, if you are using Apache2 with mod_php, you would typically do `sudo systemctl restart apache2`, and with php-fpm you would restart it with something like `sudo systemctl restart php<version>-fpm.service`.

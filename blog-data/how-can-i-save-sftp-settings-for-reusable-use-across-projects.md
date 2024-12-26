@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-save-sftp-settings-for-reusable-use-across-projects"
 ---
 
-Alright, let's talk about persisting sftp settings for streamlined project workflows. I've been down that rabbit hole many times, and trust me, juggling sftp credentials across different projects can quickly become a logistical nightmare. It's not just about remembering hostnames, ports, and usernames; it's also about managing private keys, dealing with different connection options, and ensuring security. Forget copy-pasting configurations; we need a more robust solution.
+, let's talk about persisting sftp settings for streamlined project workflows. I've been down that rabbit hole many times, and trust me, juggling sftp credentials across different projects can quickly become a logistical nightmare. It's not just about remembering hostnames, ports, and usernames; it's also about managing private keys, dealing with different connection options, and ensuring security. Forget copy-pasting configurations; we need a more robust solution.
 
 Over the years, I've found a multi-pronged approach works best. Firstly, centralize your configuration using dedicated configuration management tools. Second, embrace automation. Third, utilize your operating system's built-in tools effectively. We'll unpack these individually, and I'll show you some code that I've actually used and refined in past projects.
 
@@ -25,19 +25,19 @@ For instance, imagine a `sftp_configs.json` file structured like this:
     "private_key_path": "/home/user/.ssh/prod_key",
     "remote_base_path": "/var/www/html/app"
   },
-   "staging": {
+  "staging": {
     "host": "staging.example.com",
     "port": 22,
     "username": "stage_deployer",
     "private_key_path": "/home/user/.ssh/stage_key",
     "remote_base_path": "/var/www/staging"
   },
-   "development": {
+  "development": {
     "host": "dev.example.local",
     "port": 22,
     "username": "dev_user",
     "private_key_path": "/home/user/.ssh/dev_key",
-     "remote_base_path": "/var/www/dev"
+    "remote_base_path": "/var/www/dev"
   }
 }
 ```
@@ -166,12 +166,14 @@ This snippet extends the previous functionality to download remote files to a sp
 In addition to these tools, it's essential not to overlook the features provided by your operating system. For example, `ssh-agent` can cache decrypted private keys in memory so that they don’t need to be re-entered every time you connect. This not only simplifies connections but is also more secure than having keys saved in plain text. Similarly, you can configure ssh using a `~/.ssh/config` file to add specific host definitions.
 
 For instance, you could add a stanza similar to:
+
 ```
 Host prod.example.com
     User deployuser
     IdentityFile ~/.ssh/prod_key
     Port 22
 ```
+
 to your `~/.ssh/config` file.
 
 These settings can then be accessed simply by using `sftp prod.example.com` in your terminal. These operating system level settings are incredibly powerful because they are used by all tools that interact with ssh.
@@ -181,7 +183,7 @@ These settings can then be accessed simply by using `sftp prod.example.com` in y
 For a deeper dive, I’d recommend several resources:
 
 1.  **"High Performance Python" by Micha Gorelick and Ian Ozsvald:** This book is invaluable for understanding how to write performant python code, especially when it comes to tasks like file transfers and network communication.
-2. **The Paramiko documentation:** The official paramiko website provides comprehensive documentation and examples on how to use the library effectively.
-3. **"Infrastructure as Code" by Kief Morris:** This book will help you understand the overall principles of configuration management and automation, extending the concepts beyond just sftp.
+2.  **The Paramiko documentation:** The official paramiko website provides comprehensive documentation and examples on how to use the library effectively.
+3.  **"Infrastructure as Code" by Kief Morris:** This book will help you understand the overall principles of configuration management and automation, extending the concepts beyond just sftp.
 
 In conclusion, saving sftp settings for reusable use requires a structured and automated approach. Relying on configuration management, implementing automation with scripting languages, and utilising your operating system tools are fundamental to building consistent, efficient and secure deployment pipelines. It’s a continuous improvement process, and you'll constantly refine the steps that work best for your projects. The key takeaway is to move away from manual management and towards programmatic control of your sftp tasks, and never copy and paste connection information. Trust me, your future self will thank you for it.

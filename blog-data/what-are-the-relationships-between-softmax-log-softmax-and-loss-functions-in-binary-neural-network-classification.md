@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-relationships-between-softmax-log-softmax-and-loss-functions-in-binary-neural-network-classification"
 ---
 
-Okay, let's delve into the interplay between softmax, log-softmax, and loss functions within the context of binary neural network classification. This is a territory I've navigated quite a bit over the years, particularly during a project involving real-time medical image analysis where precision was paramount. We were initially struggling with instability in the training process until we refined our output layer strategy. The details of that experience will probably color my explanation, but that's usually how practical knowledge develops.
+, let's delve into the interplay between softmax, log-softmax, and loss functions within the context of binary neural network classification. This is a territory I've navigated quite a bit over the years, particularly during a project involving real-time medical image analysis where precision was paramount. We were initially struggling with instability in the training process until we refined our output layer strategy. The details of that experience will probably color my explanation, but that's usually how practical knowledge develops.
 
 It’s often not enough to just apply these functions without understanding their underlying mechanics and, crucially, their interdependencies. Let’s break this down:
 
@@ -16,9 +16,9 @@ First off, softmax. At its heart, softmax takes a vector of scores (often the ra
 softmax(z)_i = exp(z_i) / sum(exp(z_j)) for all j
 ```
 
-Where *z* is the input vector of scores and *z<sub>i</sub>* is the *i*-th element of that vector. Think of the exponential part as magnifying larger scores, making the selection clearer, while the denominator normalizes them into a valid probability.
+Where _z_ is the input vector of scores and _z<sub>i</sub>_ is the _i_-th element of that vector. Think of the exponential part as magnifying larger scores, making the selection clearer, while the denominator normalizes them into a valid probability.
 
-In binary classification, you often see two output nodes representing "class 0" and "class 1," and softmax translates their respective scores into probabilities. However, because it's binary, often, the network uses only *one* output node and implicitly models the probability of the target being class 1, inferring the probability of class 0 from *1 - p*.
+In binary classification, you often see two output nodes representing "class 0" and "class 1," and softmax translates their respective scores into probabilities. However, because it's binary, often, the network uses only _one_ output node and implicitly models the probability of the target being class 1, inferring the probability of class 0 from _1 - p_.
 
 **Log-Softmax: Numerical Stability Enhancement**
 
@@ -34,9 +34,9 @@ Furthermore, this logarithmic transformation is particularly helpful because it 
 
 **Loss Functions: Measuring Discrepancy**
 
-The loss function's job is to quantify the difference between the model's prediction and the actual target. In binary classification, common choices include binary cross-entropy (BCE) loss, which is often used in conjunction with a *sigmoid* activation for a *single* output node. But for a two-node output followed by softmax, combined with NLL loss, it is essentially BCE or, more properly, categorical cross-entropy.
+The loss function's job is to quantify the difference between the model's prediction and the actual target. In binary classification, common choices include binary cross-entropy (BCE) loss, which is often used in conjunction with a _sigmoid_ activation for a _single_ output node. But for a two-node output followed by softmax, combined with NLL loss, it is essentially BCE or, more properly, categorical cross-entropy.
 
-Here's a key point: often, you'll encounter the combination of *log-softmax* followed by NLL loss as a single unified step in frameworks like pytorch or tensorflow. This is not just a coding convenience. Log-softmax and NLL function *together* to give us what we conceptually consider to be the cross-entropy loss. The combined function effectively calculates the negative log-likelihood given the network's output (now a log probability). Because of properties of logarithms, the NLL loss becomes a sum of terms that reflect the log of probabilities assigned to the correct class. This gives a well-defined and numerically stable gradient with respect to the parameters during training.
+Here's a key point: often, you'll encounter the combination of _log-softmax_ followed by NLL loss as a single unified step in frameworks like pytorch or tensorflow. This is not just a coding convenience. Log-softmax and NLL function _together_ to give us what we conceptually consider to be the cross-entropy loss. The combined function effectively calculates the negative log-likelihood given the network's output (now a log probability). Because of properties of logarithms, the NLL loss becomes a sum of terms that reflect the log of probabilities assigned to the correct class. This gives a well-defined and numerically stable gradient with respect to the parameters during training.
 
 **Code Snippets: Illustrating Relationships**
 
@@ -77,6 +77,7 @@ loss.backward()
 optimizer.step()
 print(f"Loss: {loss.item():.4f}")
 ```
+
 Here, we directly get the probability for class 1 from the output node using a sigmoid and use that along with the BCE loss.
 
 **Snippet 2: Softmax with Log-softmax and NLLLoss (Two Output Nodes)**
@@ -114,6 +115,7 @@ loss_softmax.backward()
 optimizer_softmax.step()
 print(f"Loss (LogSoftmax+NLL): {loss_softmax.item():.4f}")
 ```
+
 This uses softmax followed by NLL loss to get what is effectively categorical cross-entropy loss. Note the integer class labels that are compatible with NLL loss.
 
 **Snippet 3: Combined Cross-Entropy Loss for Two Nodes (Alternative, more efficient way)**
@@ -158,8 +160,8 @@ In real applications, you’ll find that choosing between single output (with si
 
 For further study, I'd recommend looking at:
 
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book offers a thorough theoretical foundation of deep learning, including a very strong explanation of activation functions and loss functions. Specifically the sections on Maximum Likelihood Estimation and cross-entropy are highly relevant here.
-*   **"Neural Networks and Deep Learning" by Michael Nielsen:** An excellent online resource that covers the basics of neural networks with a focus on clear and concise explanations, particularly the chapter on backpropagation and gradient descent will put all these concepts into good context.
-*   **Papers on Numerical Stability in Neural Networks:** Searching academic databases like IEEE Xplore, or ACM Digital Library for papers on training instability and solutions involving softmax and log-softmax can help in understanding these issues at an advanced level.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book offers a thorough theoretical foundation of deep learning, including a very strong explanation of activation functions and loss functions. Specifically the sections on Maximum Likelihood Estimation and cross-entropy are highly relevant here.
+- **"Neural Networks and Deep Learning" by Michael Nielsen:** An excellent online resource that covers the basics of neural networks with a focus on clear and concise explanations, particularly the chapter on backpropagation and gradient descent will put all these concepts into good context.
+- **Papers on Numerical Stability in Neural Networks:** Searching academic databases like IEEE Xplore, or ACM Digital Library for papers on training instability and solutions involving softmax and log-softmax can help in understanding these issues at an advanced level.
 
 Ultimately, a solid grasp of the relationships between softmax, log-softmax, and loss functions will give you much greater control over your network's training process, and you will be able to debug and optimize your neural network in ways that wouldn't have been otherwise possible. I found this out through trial and error during development, and having a good foundation of the theory made all the difference.

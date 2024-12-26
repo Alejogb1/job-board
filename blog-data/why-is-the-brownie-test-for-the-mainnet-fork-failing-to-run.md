@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-brownie-test-for-the-mainnet-fork-failing-to-run"
 ---
 
-Alright, let's tackle this brownie test failure for the mainnet fork. I've seen this scenario play out more times than I care to count, often with frustratingly subtle causes. It's almost always a confluence of factors, rarely just one isolated problem. From my experience, dealing with mainnet forks in a testing environment can be a bit like navigating a minefield if you're not meticulous in your setup and understand the underlying mechanics at play.
+, let's tackle this brownie test failure for the mainnet fork. I've seen this scenario play out more times than I care to count, often with frustratingly subtle causes. It's almost always a confluence of factors, rarely just one isolated problem. From my experience, dealing with mainnet forks in a testing environment can be a bit like navigating a minefield if you're not meticulous in your setup and understand the underlying mechanics at play.
 
 Typically, a failing brownie test against a mainnet fork boils down to issues related to either the forking configuration, the environment setup within brownie, or the contract interaction itself, including any state-related dependencies. I'll break down these areas based on what I've personally run into, with some code snippets to illustrate.
 
@@ -18,7 +18,7 @@ networks:
     host: http://127.0.0.1:8545 # Or your preferred local node
     fork:
       url: "https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID"
-      block_number: 17456321  # Important, use a specific block
+      block_number: 17456321 # Important, use a specific block
 ```
 
 The important part here, and it’s where I’ve seen it go awry in practice, is that `block_number`. Always use a specific block number instead of relying on `latest`. If you use `latest`, you’re effectively chasing a moving target as transactions get confirmed. Your test environment isn’t frozen in time; the underlying state will change between runs causing these kinds of seemingly random failures. Also, verify your Infura (or equivalent) url is correct and working. Sometimes, project credentials change, or there’s a temporary outage, all causing the tests to halt.

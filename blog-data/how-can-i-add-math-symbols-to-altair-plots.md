@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-i-add-math-symbols-to-altair-plots"
 ---
 
-alright, so you're looking to get some math symbols into your altair plots, eh? i've been down that road myself. it's not always as straightforward as just typing symbols in, that's for sure. early in my career, i remember trying to label some charts for a physics simulation project and the usual text just didn't cut it. i ended up with these weird looking plots where the axis labels were just placeholder text and some unreadable character combinations that made no sense to anyone. looked pretty bad. learned the hard way that you need a bit of a workaround.
+, so you're looking to get some math symbols into your altair plots, eh? i've been down that road myself. it's not always as straightforward as just typing symbols in, that's for sure. early in my career, i remember trying to label some charts for a physics simulation project and the usual text just didn't cut it. i ended up with these weird looking plots where the axis labels were just placeholder text and some unreadable character combinations that made no sense to anyone. looked pretty bad. learned the hard way that you need a bit of a workaround.
 
 basically, altair itself doesn't directly render complex mathematical symbols using things like latex commands you would in a document. it leans heavily on vega-lite, which, at its core, treats text as, well, text. it's not equipped to interpret that stuff without some help. so the strategy is to use a mark type that interprets some kind of markup as math. in this case, we're talking about using the 'text' mark together with latex. not pure latex but a flavor of it.
 

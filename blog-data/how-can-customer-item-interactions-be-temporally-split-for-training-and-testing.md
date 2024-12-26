@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-customer-item-interactions-be-temporally-split-for-training-and-testing"
 ---
 
-Okay, let’s tackle this. I remember a project a few years back involving a large e-commerce platform where this exact problem of temporal splitting caused us a few headaches, initially at least. It’s surprisingly nuanced, and if not handled correctly, can completely skew your model's performance evaluation, leading to overly optimistic results during testing and poor real-world predictions when deployed. Simply put, if you don't respect the time component of your customer interaction data when splitting it into training and testing sets, you are essentially cheating. Your model is learning future patterns that it won't have access to during deployment.
+, let’s tackle this. I remember a project a few years back involving a large e-commerce platform where this exact problem of temporal splitting caused us a few headaches, initially at least. It’s surprisingly nuanced, and if not handled correctly, can completely skew your model's performance evaluation, leading to overly optimistic results during testing and poor real-world predictions when deployed. Simply put, if you don't respect the time component of your customer interaction data when splitting it into training and testing sets, you are essentially cheating. Your model is learning future patterns that it won't have access to during deployment.
 
 The crux of the issue lies in the fact that user-item interactions aren’t static. A customer's preferences evolve over time. What they clicked on or purchased last week might heavily influence what they purchase this week. Randomly shuffling all interactions and then splitting them into train/test sets violates this temporal dependency, essentially leaking future information into the training phase. This often creates an inflated performance score on your test set, because your model has effectively seen some of the future during its training, something it won't have when you push it to production.
 
-Therefore, a proper temporal split requires that your test data always represents interactions that occurred *after* the training data. This is conceptually straightforward but needs careful implementation. I've found that three specific temporal split techniques consistently work well: chronological splitting, user-based chronological splitting, and window-based splitting. Let's delve into each of those and I'll show you some code examples with Python, assuming a pandas DataFrame for our interaction data since that’s a common format in data science pipelines.
+Therefore, a proper temporal split requires that your test data always represents interactions that occurred _after_ the training data. This is conceptually straightforward but needs careful implementation. I've found that three specific temporal split techniques consistently work well: chronological splitting, user-based chronological splitting, and window-based splitting. Let's delve into each of those and I'll show you some code examples with Python, assuming a pandas DataFrame for our interaction data since that’s a common format in data science pipelines.
 
 **1. Chronological Splitting**
 
@@ -53,7 +53,7 @@ In this example, `chronological_split` function directly compares the timestamp 
 
 **2. User-Based Chronological Splitting**
 
-This approach is crucial when you're working with user-specific models or if you suspect that users' behavior patterns significantly differ. Here, we split the interactions on a *per-user* basis using a cutoff timestamp. This ensures that for any given user, the model is trained on data from the past and evaluated on data that occurred subsequently. This provides a much more reliable representation of your model's capacity to generalize to new user-item interactions.
+This approach is crucial when you're working with user-specific models or if you suspect that users' behavior patterns significantly differ. Here, we split the interactions on a _per-user_ basis using a cutoff timestamp. This ensures that for any given user, the model is trained on data from the past and evaluated on data that occurred subsequently. This provides a much more reliable representation of your model's capacity to generalize to new user-item interactions.
 
 ```python
 def user_based_chronological_split(df, timestamp_col, user_col, split_time):

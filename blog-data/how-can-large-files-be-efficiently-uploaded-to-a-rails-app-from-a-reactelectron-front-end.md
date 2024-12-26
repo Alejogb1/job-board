@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-large-files-be-efficiently-uploaded-to-a-rails-app-from-a-reactelectron-front-end"
 ---
 
-Alright, let's tackle this. I remember a project a few years back – a large-scale document management system – where we faced a similar challenge: efficiently uploading hefty files from our Electron-based desktop client to our Rails backend. Handling that efficiently involved a mix of techniques, each playing a crucial role. We definitely couldn’t just dump the entire file in a single request; that would've choked everything.
+, let's tackle this. I remember a project a few years back – a large-scale document management system – where we faced a similar challenge: efficiently uploading hefty files from our Electron-based desktop client to our Rails backend. Handling that efficiently involved a mix of techniques, each playing a crucial role. We definitely couldn’t just dump the entire file in a single request; that would've choked everything.
 
 The crux of the issue is that HTTP, by its nature, isn't designed for large, continuous data streams. We needed to slice these files into smaller, manageable pieces and transfer them sequentially, piecing them back together on the server. This is where the concept of "chunked uploads" or "multipart uploads" becomes essential.
 
@@ -20,13 +20,13 @@ Here’s how we implemented it. On the React/Electron side, we'd leverage the `F
 async function uploadChunk(file, start, end, uploadId) {
   const blob = file.slice(start, end);
   const formData = new FormData();
-  formData.append('chunk', blob, file.name);
-  formData.append('uploadId', uploadId);
-  formData.append('chunkIndex', Math.floor(start/CHUNK_SIZE))
+  formData.append("chunk", blob, file.name);
+  formData.append("uploadId", uploadId);
+  formData.append("chunkIndex", Math.floor(start / CHUNK_SIZE));
 
   try {
-    const response = await fetch('/api/upload-chunk', {
-      method: 'POST',
+    const response = await fetch("/api/upload-chunk", {
+      method: "POST",
       body: formData,
     });
 
@@ -34,56 +34,52 @@ async function uploadChunk(file, start, end, uploadId) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     return await response.json();
-
-  } catch(error) {
+  } catch (error) {
     console.error("Error uploading chunk:", error);
-      throw error;
+    throw error;
   }
 }
 
 async function initiateUpload(file) {
-  const response = await fetch('/api/initiate-upload', {method: 'POST'});
-  if (!response.ok) throw new Error('Failed to initiate upload');
+  const response = await fetch("/api/initiate-upload", { method: "POST" });
+  if (!response.ok) throw new Error("Failed to initiate upload");
   return response.json();
 }
 
-
 async function uploadFile(file) {
-    const CHUNK_SIZE = 1024 * 1024 * 2; // 2MB chunks
-    let start = 0;
-    let uploadId;
+  const CHUNK_SIZE = 1024 * 1024 * 2; // 2MB chunks
+  let start = 0;
+  let uploadId;
 
-    try {
-        const initData = await initiateUpload(file);
-        uploadId = initData.uploadId;
-        while(start < file.size) {
-            const end = Math.min(start + CHUNK_SIZE, file.size);
-            await uploadChunk(file, start, end, uploadId);
-            start = end;
-        }
-        //Call finaliseUpload
-        return finalizeUpload(uploadId, file.name);
-      }
-    catch (e) {
-        console.error("error:", e)
-        throw e;
+  try {
+    const initData = await initiateUpload(file);
+    uploadId = initData.uploadId;
+    while (start < file.size) {
+      const end = Math.min(start + CHUNK_SIZE, file.size);
+      await uploadChunk(file, start, end, uploadId);
+      start = end;
     }
+    //Call finaliseUpload
+    return finalizeUpload(uploadId, file.name);
+  } catch (e) {
+    console.error("error:", e);
+    throw e;
+  }
 }
 
-
 async function finalizeUpload(uploadId, filename) {
-    const response = await fetch('/api/finalize-upload', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-          },
-        body: JSON.stringify({uploadId: uploadId, filename: filename})
-    });
+  const response = await fetch("/api/finalize-upload", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ uploadId: uploadId, filename: filename }),
+  });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return await response.json();
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return await response.json();
 }
 ```
 

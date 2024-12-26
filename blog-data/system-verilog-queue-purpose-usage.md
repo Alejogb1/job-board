@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "system-verilog-queue-purpose-usage"
 ---
 
-Alright so you're asking about SystemVerilog queues right Yeah I've messed around with those things plenty of times Been there done that got the t-shirt I guess I can spill some details and maybe help you understand how to use them when to use them why to use them and well the quirks that sometimes come with them
+so you're asking about SystemVerilog queues right Yeah I've messed around with those things plenty of times Been there done that got the t-shirt I guess I can spill some details and maybe help you understand how to use them when to use them why to use them and well the quirks that sometimes come with them
 
 So basically a SystemVerilog queue is a dynamic data structure it's like a flexible array that automatically grows or shrinks as you add or remove elements It's not a static size like a normal array which I always find useful I mean who wants to manually allocate memory size for dynamic structures anyway not me
 
@@ -14,21 +14,21 @@ There are key things to know you can declare a queue using the `$` symbol before
 
 Now lets talk about the basic operations you can perform on them
 
--   `push_back` or `push_back(element)` adds a new element to the end of the queue it's like adding a car to the end of a train I use it a lot for adding incoming data
+- `push_back` or `push_back(element)` adds a new element to the end of the queue it's like adding a car to the end of a train I use it a lot for adding incoming data
 
--   `push_front(element)` adds a new element to the beginning of the queue this is like pushing a train car at the start it's less common but sometimes I need to prepend something
+- `push_front(element)` adds a new element to the beginning of the queue this is like pushing a train car at the start it's less common but sometimes I need to prepend something
 
--   `pop_front()` removes and returns the first element of the queue which is always the oldest one This is often used in consuming the incoming data
+- `pop_front()` removes and returns the first element of the queue which is always the oldest one This is often used in consuming the incoming data
 
--   `pop_back()` removes and returns the last element of the queue which is the most recent one This is used less often but still handy for some specific use cases
+- `pop_back()` removes and returns the last element of the queue which is the most recent one This is used less often but still handy for some specific use cases
 
--   `size()` returns the current number of elements stored in the queue that's useful for checking emptiness or fullness before you perform any operation
+- `size()` returns the current number of elements stored in the queue that's useful for checking emptiness or fullness before you perform any operation
 
--   `insert(index, element)` inserts an element at a specific index this is less common but sometimes necessary
+- `insert(index, element)` inserts an element at a specific index this is less common but sometimes necessary
 
--   `delete(index)` removes element from a specific index again less common
+- `delete(index)` removes element from a specific index again less common
 
--   `queue_name.randomize()` will randomize all the elements of a queue or if you randomize a queue of objects will randomize all of its fields
+- `queue_name.randomize()` will randomize all the elements of a queue or if you randomize a queue of objects will randomize all of its fields
 
 Now let’s get into some code examples to clear things up a bit
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-local-csv-files-be-read-into-a-containerized-airflow-environment"
 ---
 
-Okay, let's tackle this one. I remember facing this challenge myself a while back, during a project where we were migrating a legacy batch processing system to a containerized Airflow setup. The initial assumption that Airflow, running neatly in its docker container, could directly access files on the host machine—well, it turned out not to be that straightforward. We had to refine our approach to ensure a seamless and maintainable workflow.
+, let's tackle this one. I remember facing this challenge myself a while back, during a project where we were migrating a legacy batch processing system to a containerized Airflow setup. The initial assumption that Airflow, running neatly in its docker container, could directly access files on the host machine—well, it turned out not to be that straightforward. We had to refine our approach to ensure a seamless and maintainable workflow.
 
 Fundamentally, containers are designed for isolation. They don't inherently have access to the host filesystem. This is a core security and architectural principle. To get around this with Airflow reading local csv files, we need to establish some form of controlled data transfer. Three common methods came to the forefront in my experience, each with its trade-offs and suitability depending on the context.
 
@@ -57,7 +57,7 @@ with DAG(
 
 Volume mounting works efficiently for local development or when your data is relatively static. The big caveat is that you’re tightly coupling your data location on the host with the container. This can be a pain during deployments or when managing different environments.
 
-The second approach involves using an **Airflow connection and an appropriate transfer operator**.  This is generally a more production-ready solution. Airflow connections allow you to define how it interfaces with external systems, including local file systems, when you treat them as an external data source. In our case, I created a connection of type `File` and specified the directory containing the csv files. I found that by using this approach, it became easier to decouple where the data resides physically and how it’s referenced in the DAG.
+The second approach involves using an **Airflow connection and an appropriate transfer operator**. This is generally a more production-ready solution. Airflow connections allow you to define how it interfaces with external systems, including local file systems, when you treat them as an external data source. In our case, I created a connection of type `File` and specified the directory containing the csv files. I found that by using this approach, it became easier to decouple where the data resides physically and how it’s referenced in the DAG.
 
 For instance, create an Airflow connection named `local_csv_dir` with connection type `File` and set the `Host` to `/home/user/data/csvs` (or wherever your files are on the host). Note that this path should also be accessible within the container, so you might still require volume mounting or another method to make the host directory visible from the container.
 

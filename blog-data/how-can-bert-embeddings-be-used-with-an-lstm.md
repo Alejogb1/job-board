@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-bert-embeddings-be-used-with-an-lstm"
 ---
 
-Okay, let’s tackle this. I've seen this pairing crop up in various projects, particularly when dealing with sequential text data that demands both contextual understanding and the capacity to remember prior information. It's a powerful combination, but the ‘how’ isn't always immediately clear. I’ve personally grappled with the nuances of aligning these two models, and I’m happy to share what I’ve learned.
+, let’s tackle this. I've seen this pairing crop up in various projects, particularly when dealing with sequential text data that demands both contextual understanding and the capacity to remember prior information. It's a powerful combination, but the ‘how’ isn't always immediately clear. I’ve personally grappled with the nuances of aligning these two models, and I’m happy to share what I’ve learned.
 
 The core challenge lies in the fundamentally different nature of BERT and LSTMs. BERT, as a transformer-based model, excels at capturing bidirectional contextual relationships within a given text segment. It outputs fixed-length vector representations (embeddings) for each token in the input. An LSTM, on the other hand, is a recurrent neural network that processes sequences step-by-step, maintaining an internal hidden state that accumulates information from previous steps. So, we're essentially trying to feed these richly contextualized, but static, BERT representations into a sequence-processing network. It's about bridging that static-dynamic divide.
 
-The most common approach, and the one I've found to be most effective, is to use BERT embeddings as input to the LSTM. Rather than feeding raw text tokens directly into the LSTM, which it wouldn't understand, we feed in the pre-computed BERT embeddings. Think of it as pre-processing your text to a higher-level language, one the LSTM can readily interpret. This allows us to leverage BERT's deep contextual understanding *before* passing it into the LSTM for sequential analysis.
+The most common approach, and the one I've found to be most effective, is to use BERT embeddings as input to the LSTM. Rather than feeding raw text tokens directly into the LSTM, which it wouldn't understand, we feed in the pre-computed BERT embeddings. Think of it as pre-processing your text to a higher-level language, one the LSTM can readily interpret. This allows us to leverage BERT's deep contextual understanding _before_ passing it into the LSTM for sequential analysis.
 
 Specifically, the process usually looks something like this:
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-should-the-learning-rate-of-each-module-of-the-pre-training-model-be-set-appropriately"
 ---
 
-alright, so you're asking about how to fine-tune a pre-trained model and, specifically, how to handle learning rates for different parts of it. i've been down this rabbit hole a few times, and it's a classic problem, especially when you're dealing with something like, say, a large language model or a complex convolutional network. let's break it down.
+, so you're asking about how to fine-tune a pre-trained model and, specifically, how to handle learning rates for different parts of it. i've been down this rabbit hole a few times, and it's a classic problem, especially when you're dealing with something like, say, a large language model or a complex convolutional network. let's break it down.
 
 first off, think of a pre-trained model as something you've partially assembled, like a partially constructed lego castle. someone else built the base, the foundations, and maybe some of the basic towers. that's your pre-training on a huge dataset. now you have your specific task, like building a specific style of roof or adding a unique kind of decorative wall. you want to fine-tune the existing structure to match your specific needs. that's your fine-tuning on a smaller, task-specific dataset.
 
@@ -34,7 +34,7 @@ def get_parameter_groups(model, lr_mults):
   groups = []
   base_params = [] # parameters of the initial layers, the base lego castle
   specific_params = []  # parameters of the later layers, the specific roof
-  
+
   if hasattr(model,'base_model'):
       base = model.base_model
   elif hasattr(model,'bert'):
@@ -42,7 +42,7 @@ def get_parameter_groups(model, lr_mults):
   elif hasattr(model,'transformer'):
       base = model.transformer
   else:
-     raise Exception("no base or transformer part in the model") 
+     raise Exception("no base or transformer part in the model")
 
   for name, param in base.named_parameters():
     base_params.append(param)
@@ -85,7 +85,7 @@ if __name__ == '__main__':
       x = self.relu(self.fc1(x))
       x = self.fc2(x)
       return x
-  
+
   model.classifier = classifier(768, 2) # 768 is the output of bert-base-uncased and 2 the number of classes
 
   # define our custom learning rate multipliers. the lr for base_model (bert), extra_params (no exist in our case), classifier
@@ -115,7 +115,7 @@ in this snippet, `get_parameter_groups` divides the model’s parameters into gr
 
 i also use adamw optimizer because is frequently recommended for bert and similar models, although you can experiment with other options of course. notice, that i have removed the embedding layers of the bert model from the base parameters, and also the pooler (used for classification), they are kept in specific_params because the initial layers (like the embedding) can require even smaller learning rates than the rest of the base.
 
- another important technique to consider is gradual unfreezing, which is usually paired with differential learning rates. initially, you freeze most of the pre-trained model layers, training only the newly added ones (the custom task-specific layers), usually with a bigger lr. then you gradually unfreeze some of the pre-trained layers and apply differential learning rates. in the past, i've seen that this works like a charm. you can think about it as building your lego castle step by step, you do not start adding bricks at the top without any previous support. you build the base first and slowly add more elements to the top. i've read about this in the fastai library documentation and in several papers of fastai research group. i recommend checking them.
+another important technique to consider is gradual unfreezing, which is usually paired with differential learning rates. initially, you freeze most of the pre-trained model layers, training only the newly added ones (the custom task-specific layers), usually with a bigger lr. then you gradually unfreeze some of the pre-trained layers and apply differential learning rates. in the past, i've seen that this works like a charm. you can think about it as building your lego castle step by step, you do not start adding bricks at the top without any previous support. you build the base first and slowly add more elements to the top. i've read about this in the fastai library documentation and in several papers of fastai research group. i recommend checking them.
 
 here's the code implementing the 'gradual unfreezing' technique with the previous example.
 
@@ -140,7 +140,7 @@ def get_parameter_groups(model, lr_mults, freeze_layers):
     groups = []
     base_params = [] # parameters of the initial layers, the base lego castle
     specific_params = []  # parameters of the later layers, the specific roof
-    
+
     if hasattr(model,'base_model'):
         base = model.base_model
     elif hasattr(model,'bert'):
@@ -148,7 +148,7 @@ def get_parameter_groups(model, lr_mults, freeze_layers):
     elif hasattr(model,'transformer'):
         base = model.transformer
     else:
-        raise Exception("no base or transformer part in the model") 
+        raise Exception("no base or transformer part in the model")
 
     for name, param in base.named_parameters():
         if freeze_layers:
@@ -179,7 +179,7 @@ def get_parameter_groups(model, lr_mults, freeze_layers):
 
 if __name__ == '__main__':
     model = AutoModel.from_pretrained('bert-base-uncased')
-    
+
     # define the head, something that is specific to our task
     class classifier(nn.Module):
       def __init__(self, input_size, num_classes):
@@ -191,10 +191,10 @@ if __name__ == '__main__':
         x = self.relu(self.fc1(x))
         x = self.fc2(x)
         return x
-    
+
     model.classifier = classifier(768, 2) # 768 is the output of bert-base-uncased and 2 the number of classes
 
-    # first stage: train the last layers (head) only. 
+    # first stage: train the last layers (head) only.
     lr_mults = [0.0,0.0,1.0] # lr = 0 for base, 1 for classifier
     base_lr = 1e-5
     params_to_optimize = get_parameter_groups(model, [base_lr*mul for mul in lr_mults],freeze_layers=True)
@@ -232,7 +232,7 @@ if __name__ == '__main__':
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-    
+
     print("done training stage 2, finetuning all layers with differential learning rates")
 ```
 

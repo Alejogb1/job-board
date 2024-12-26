@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-the-tmp-directory-suitable-for-airflow-log-files"
 ---
 
-Alright, let’s tackle this one. The question about using `/tmp` for Airflow log files is something I've certainly encountered in the field, and it often sparks a discussion. It's not a straight 'yes' or 'no' answer, and honestly, it’s a nuanced issue with some key factors to consider. I’ll break down my perspective based on some past projects, touching on the practicalities and why relying on `/tmp` can be, well, less than ideal in a production setting.
+, let’s tackle this one. The question about using `/tmp` for Airflow log files is something I've certainly encountered in the field, and it often sparks a discussion. It's not a straight 'yes' or 'no' answer, and honestly, it’s a nuanced issue with some key factors to consider. I’ll break down my perspective based on some past projects, touching on the practicalities and why relying on `/tmp` can be, well, less than ideal in a production setting.
 
 The allure of `/tmp` is understandable, particularly in the early stages of setting up an Airflow instance. It's readily available across most unix-like systems, it’s writable by virtually anyone (which can actually be a problem!), and it seems like a convenient temporary storage location. In a proof-of-concept or a local development environment, dumping log files there can seem harmless and straightforward. I've been there. I recall a specific project – a fairly rapid prototyping phase – where we initially defaulted to `/tmp` for logs just to get the system up and running quickly. It seemed like the path of least resistance at the time. However, we quickly ran into some of the problems I'll outline.
 
@@ -47,6 +47,7 @@ executor = LocalExecutor # Or one of the distributed executors
 [secrets]
 backend = airflow.utils.secrets.metastore.secrets_metastore.MetastoreBackend
 ```
+
 This second example shows how to configure remote logging to AWS S3. The core of the configuration relies on `remote_logging=True` and `remote_base_log_folder` specifying an s3 bucket. The `remote_logging_handler` defines that you are using the s3 handler. Finally, `remote_conn_id` allows airflow to authenticate. Setting up the `aws_default` connection in airflow is a separate step that would need to be configured according to your credentials setup. This is more robust solution suitable for production environments where you have multiple workers and want a centralized location for logs. This can also allow you to use the S3 capabilities to maintain logs at very little cost over long periods.
 
 **Example 3: Using a custom logging handler (example - custom file handler)**
@@ -77,7 +78,7 @@ class CustomTaskHandler(FileTaskHandler):
 
 ```
 
-This is a more advanced example, showing how to define your own logging handler. Here, we keep the base logging to local directory, but define that our logging handler should be `airflow.utils.log.file_task_handler.FileTaskHandler`. The custom class, `CustomTaskHandler`, is defined in `custom_handler.py` and placed in the Airflow plugins folder.  This custom class would add a tag to the log message. Using a custom handler can be useful when needing to integrate logs into a system not natively supported by airflow.
+This is a more advanced example, showing how to define your own logging handler. Here, we keep the base logging to local directory, but define that our logging handler should be `airflow.utils.log.file_task_handler.FileTaskHandler`. The custom class, `CustomTaskHandler`, is defined in `custom_handler.py` and placed in the Airflow plugins folder. This custom class would add a tag to the log message. Using a custom handler can be useful when needing to integrate logs into a system not natively supported by airflow.
 
 For further study on best practices, I’d recommend looking into "Designing Data-Intensive Applications" by Martin Kleppmann, particularly the chapters on data storage, data systems, and reliability. Additionally, delving into the official Airflow documentation on logging, and exploring any cloud-specific documentation on logging solutions are valuable resources.
 

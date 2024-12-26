@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-rails-use-a-pin-selectize-from-cdnjs"
 ---
 
-Alright, let's get into this. The question of whether Rails can use a Pin Selectize from cdnjs is actually pretty straightforward, but like most things in web development, it requires a bit of careful configuration. I remember a particularly hairy project back in '17, a dashboard overhaul for a logistics company, where we leaned heavily on cdn-hosted libraries to speed up development. Selectize was a key component for us. So, from that experience, I can definitely walk you through how it’s done and some common pitfalls.
+, let's get into this. The question of whether Rails can use a Pin Selectize from cdnjs is actually pretty straightforward, but like most things in web development, it requires a bit of careful configuration. I remember a particularly hairy project back in '17, a dashboard overhaul for a logistics company, where we leaned heavily on cdn-hosted libraries to speed up development. Selectize was a key component for us. So, from that experience, I can definitely walk you through how it’s done and some common pitfalls.
 
 Essentially, yes, Rails can absolutely leverage Selectize (or any similar JavaScript library) hosted on a Content Delivery Network (CDN) like cdnjs. The crucial part is integrating it into your Rails application correctly, avoiding asset pipeline conflicts, and ensuring it plays nicely with the rest of your setup.
 
@@ -14,7 +14,7 @@ Here’s how I’ve approached it successfully in the past:
 
 **First, the HTML Integration:**
 
-In your Rails application, particularly in your layout file (typically `app/views/layouts/application.html.erb`), you'll need to include the Selectize CSS and JavaScript files from cdnjs. This is done using standard HTML `<link>` and `<script>` tags. Crucially, place these *before* any custom JavaScript you have that might rely on Selectize. This ensures that the Selectize library is loaded and available before your own code attempts to use it. Here’s an example snippet from what I recall using back then:
+In your Rails application, particularly in your layout file (typically `app/views/layouts/application.html.erb`), you'll need to include the Selectize CSS and JavaScript files from cdnjs. This is done using standard HTML `<link>` and `<script>` tags. Crucially, place these _before_ any custom JavaScript you have that might rely on Selectize. This ensures that the Selectize library is loaded and available before your own code attempts to use it. Here’s an example snippet from what I recall using back then:
 
 ```erb
 <!DOCTYPE html>
@@ -49,14 +49,14 @@ Notice the use of `integrity` and `crossorigin` attributes in the `<link>` and `
 Now that you have the Selectize library loaded, you'll need to initialize it on the specific HTML `<select>` elements you want to enhance. This usually happens in your application’s custom JavaScript. It can be in your `application.js` file, or within individual view files depending on your structure. Here's an example that initializes Selectize on a `<select>` element with the id "my-select-element". I usually employ this approach in the `application.js` but again, can be context-dependent:
 
 ```javascript
-document.addEventListener('DOMContentLoaded', function() {
-  $(document).ready(function(){
-     $('#my-select-element').selectize({
-       plugins: ['remove_button'],
-        create: true,
-        delimiter: ',',
-       persist: false,
-     });
+document.addEventListener("DOMContentLoaded", function () {
+  $(document).ready(function () {
+    $("#my-select-element").selectize({
+      plugins: ["remove_button"],
+      create: true,
+      delimiter: ",",
+      persist: false,
+    });
   });
 });
 ```
@@ -107,7 +107,7 @@ This ensures that the selected values are properly transferred into the `select_
 
 **Recommendations:**
 
-For a deeper understanding of asset management in Rails, I highly recommend consulting the official Rails documentation, particularly the sections on the asset pipeline (for Sprockets) or Webpacker if you're using that. Also, if you find yourself using complex CDN setups, the *HTTP/2* book by Ilya Grigorik is a great read to understand how CDNs work and optimize resource loading. For a more thorough approach to JavaScript integration in Rails, delve into “Agile Web Development with Rails 7”, by Sam Ruby, David Bryant, Dave Thomas and others; which will provide a comprehensive look at how modern JavaScript works with rails.
+For a deeper understanding of asset management in Rails, I highly recommend consulting the official Rails documentation, particularly the sections on the asset pipeline (for Sprockets) or Webpacker if you're using that. Also, if you find yourself using complex CDN setups, the _HTTP/2_ book by Ilya Grigorik is a great read to understand how CDNs work and optimize resource loading. For a more thorough approach to JavaScript integration in Rails, delve into “Agile Web Development with Rails 7”, by Sam Ruby, David Bryant, Dave Thomas and others; which will provide a comprehensive look at how modern JavaScript works with rails.
 
 **Conclusion:**
 

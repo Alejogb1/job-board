@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-does-callable-nnmodule-represent-in-python"
 ---
 
-Alright, let's unpack this notion of `Callable[..., nn.Module]` in Python. It’s a type hint leveraging the `typing` module, and understanding its implications is fairly crucial when working with frameworks like PyTorch. I've certainly encountered this pattern multiple times during my career, often while architecting complex model pipelines or working with dynamic model loading systems. Let's break down the components and see how they fit together.
+, let's unpack this notion of `Callable[..., nn.Module]` in Python. It’s a type hint leveraging the `typing` module, and understanding its implications is fairly crucial when working with frameworks like PyTorch. I've certainly encountered this pattern multiple times during my career, often while architecting complex model pipelines or working with dynamic model loading systems. Let's break down the components and see how they fit together.
 
 The core concept revolves around the `Callable` type hint. In the `typing` module, `Callable` is used to indicate that a variable or parameter should accept a callable object, essentially something you can execute like a function. The syntax is `Callable[[parameter_types], return_type]`. For instance, `Callable[[int, float], str]` signifies a callable that accepts an integer and a float as arguments and returns a string.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-directly-add-a-balance-to-a-users-account-on-a-website"
 ---
 
-Alright, let's tackle this. I’ve seen this exact scenario play out more than a few times, often with far more complexity than initially anticipated. Adding a balance to a user’s account directly might seem trivial on the surface, but properly implementing it requires careful consideration of data integrity, concurrency, and security. It's definitely not a place to cut corners. Here's my breakdown of how I've approached this in the past, along with some examples to illustrate key points.
+, let's tackle this. I’ve seen this exact scenario play out more than a few times, often with far more complexity than initially anticipated. Adding a balance to a user’s account directly might seem trivial on the surface, but properly implementing it requires careful consideration of data integrity, concurrency, and security. It's definitely not a place to cut corners. Here's my breakdown of how I've approached this in the past, along with some examples to illustrate key points.
 
 The core challenge lies in ensuring that the balance update is atomic. What does that mean? Well, think of it this way: if multiple transactions are happening for the same account at almost the same instant, we can't afford to have those transactions overwrite each other, leading to incorrect balances. We need a way to make sure each update is applied correctly and in sequence, as if only one thing was happening at that moment. This is where database transactions come into play.
 
@@ -17,7 +17,7 @@ function add_balance(user_id, amount):
     UPDATE user_accounts SET balance = new_balance WHERE user_id = user_id;
 ```
 
-This method is riddled with race conditions. If two concurrent `add_balance` operations are executed, both might read the *same* `current_balance`, compute their respective `new_balance` values, and then write back their values sequentially. The result? One of the balance additions will be lost. To avoid this, we need transactional control.
+This method is riddled with race conditions. If two concurrent `add_balance` operations are executed, both might read the _same_ `current_balance`, compute their respective `new_balance` values, and then write back their values sequentially. The result? One of the balance additions will be lost. To avoid this, we need transactional control.
 
 Here's how I'd actually approach it using a database transaction with explicit locking:
 
@@ -105,7 +105,8 @@ VALUES (<user_id>, <amount>, NOW(), @new_balance);
 UPDATE user_accounts SET balance = @new_balance WHERE user_id = <user_id>;
 COMMIT;
 ```
-This approach ensures that the balance update *and* transaction log are committed atomically, all or nothing. This prevents a scenario where the balance is updated, but the transaction log is not, or vice versa. This gives us a level of auditability that simply updating a single column doesn't provide.
+
+This approach ensures that the balance update _and_ transaction log are committed atomically, all or nothing. This prevents a scenario where the balance is updated, but the transaction log is not, or vice versa. This gives us a level of auditability that simply updating a single column doesn't provide.
 
 These code snippets should give you an idea of the necessary considerations. It's important to note that while using database transactions with row locking is a standard and robust method, other strategies might be necessary depending on the scale of the application and the choice of the database. For extremely high-concurrency applications, solutions involving message queues or dedicated distributed transaction management systems might become relevant, but those discussions would require significantly more detail than is appropriate here.
 

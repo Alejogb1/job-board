@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-are-my-training-and-validation-image-generators-producing-identical-images"
 ---
 
-Alright, let's tackle this. The issue of your training and validation image generators spitting out identical images is definitely a head-scratcher, and something I’ve personally debugged on more than one occasion – usually in the wee hours, fueled by lukewarm coffee. It's a classic symptom of a fundamental setup problem, and the fix, while often straightforward, requires a close examination of a few potential culprits. I've seen this pop up across diverse projects, from medical imaging segmentation to object recognition in autonomous systems, each time prompting a deep dive into the data pipeline.
+, let's tackle this. The issue of your training and validation image generators spitting out identical images is definitely a head-scratcher, and something I’ve personally debugged on more than one occasion – usually in the wee hours, fueled by lukewarm coffee. It's a classic symptom of a fundamental setup problem, and the fix, while often straightforward, requires a close examination of a few potential culprits. I've seen this pop up across diverse projects, from medical imaging segmentation to object recognition in autonomous systems, each time prompting a deep dive into the data pipeline.
 
-The core problem, in most instances, lies in the *randomness*, or rather, the *lack* thereof within the data augmentation process. When we build these generators, especially using frameworks like tensorflow or pytorch, a common approach is to apply random augmentations—rotations, flips, zooms, etc.—to each image on the fly. The intention is to increase the diversity of our training set and thus improve model generalization. However, if these random operations aren't truly random, or if the random seed is fixed or shared incorrectly, the same augmentations can get applied to both training and validation batches, leading to the identical image issue you're observing. It's critical to understand that data augmentation isn't about just creating "different" images; it's about generating variations that are both representative of the underlying distribution *and* decorrelated across the training and validation sets.
+The core problem, in most instances, lies in the _randomness_, or rather, the _lack_ thereof within the data augmentation process. When we build these generators, especially using frameworks like tensorflow or pytorch, a common approach is to apply random augmentations—rotations, flips, zooms, etc.—to each image on the fly. The intention is to increase the diversity of our training set and thus improve model generalization. However, if these random operations aren't truly random, or if the random seed is fixed or shared incorrectly, the same augmentations can get applied to both training and validation batches, leading to the identical image issue you're observing. It's critical to understand that data augmentation isn't about just creating "different" images; it's about generating variations that are both representative of the underlying distribution _and_ decorrelated across the training and validation sets.
 
 Let's break this down into a few common scenarios and provide concrete examples with code snippets, since seeing it in action often helps the most.
 
@@ -52,6 +52,7 @@ else:
     print("Training and validation images are different")
 
 ```
+
 In this example, `tf.random.set_seed(42)` locks the entire tensorflow rng state, creating the problem. The training and validation image will be exactly the same, because they are using the same random numbers.
 
 **Scenario 2: Shared Generator Objects or Augmentation Functions**
@@ -120,6 +121,7 @@ else:
     print("Training and validation images are different")
 
 ```
+
 In this snippet the shared `augmentation` class means both datasets will return the same transformation.
 
 **Scenario 3: Insufficient Data Preparation**
@@ -128,7 +130,7 @@ This one is slightly less likely but still possible: the images in your 'trainin
 
 **Solution and Best Practices**
 
-The most crucial aspect to fixing this is to *ensure* that the rng used for the training and validation generators operate independently. Here is the corrected code for scenario 1:
+The most crucial aspect to fixing this is to _ensure_ that the rng used for the training and validation generators operate independently. Here is the corrected code for scenario 1:
 
 ```python
 import tensorflow as tf
@@ -167,8 +169,10 @@ if tf.reduce_all(tf.equal(train_batch, val_batch)):
 else:
     print("Training and validation images are different")
 ```
+
 The important change here is creating a seed unique to each dataset, and passing it as an argument to the random functions.
 And the corrected code for scenario 2:
+
 ```python
 import torch
 import torchvision.transforms as transforms
@@ -232,14 +236,15 @@ if torch.equal(train_batch, val_batch):
 else:
     print("Training and validation images are different")
 ```
+
 Here, a new seed is generated for each class of augmentation.
 
-*   **Seed Management:** Initialize different random number generators, each with its own unique seed or state, for your training and validation pipelines. Avoid using a fixed, global seed shared between them.
+- **Seed Management:** Initialize different random number generators, each with its own unique seed or state, for your training and validation pipelines. Avoid using a fixed, global seed shared between them.
 
-*   **Generator Instances:** If you're using classes for generators, make sure each training and validation data loader uses its own unique instance. This is important if internal state is managed within your generator class.
+- **Generator Instances:** If you're using classes for generators, make sure each training and validation data loader uses its own unique instance. This is important if internal state is managed within your generator class.
 
-*  **Dataset Check:** Double-check to ensure your training and validation sets contain distinct images, and are properly prepared
+- **Dataset Check:** Double-check to ensure your training and validation sets contain distinct images, and are properly prepared
 
-*   **Library Documentation:** Refer to the official documentation of your chosen deep learning library (TensorFlow, PyTorch, etc.) regarding data loading and augmentation. They often provide best practices and tools for creating proper data pipelines. For more theoretical understanding, look into "Deep Learning" by Goodfellow, Bengio, and Courville; it provides an extensive mathematical framework for understanding these types of issues. Also, delving into papers on data augmentation strategies is beneficial for fine tuning the best approach (e.g., "ImageNet Classification with Deep Convolutional Neural Networks" by Krizhevsky, Sutskever, and Hinton provides some context).
+- **Library Documentation:** Refer to the official documentation of your chosen deep learning library (TensorFlow, PyTorch, etc.) regarding data loading and augmentation. They often provide best practices and tools for creating proper data pipelines. For more theoretical understanding, look into "Deep Learning" by Goodfellow, Bengio, and Courville; it provides an extensive mathematical framework for understanding these types of issues. Also, delving into papers on data augmentation strategies is beneficial for fine tuning the best approach (e.g., "ImageNet Classification with Deep Convolutional Neural Networks" by Krizhevsky, Sutskever, and Hinton provides some context).
 
 In conclusion, debugging data loading pipelines can be intricate, but with a systematic approach, you can identify the root cause of this particular problem. Pay special attention to how you are managing random seeds and ensuring that the rng is operating independently across your training and validation data sets. Invariably, the root cause is a failure in the correct management of randomness. Happy coding.

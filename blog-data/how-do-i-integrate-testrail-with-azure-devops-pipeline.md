@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-integrate-testrail-with-azure-devops-pipeline"
 ---
 
-Alright, let's talk about hooking TestRail up to your Azure DevOps pipelines. I've been through this rodeo a few times, and it’s not always as straightforward as the documentation might suggest. Integration at this level, while powerful, requires a solid understanding of both systems. Essentially, we're aiming for a pipeline that not only builds and deploys our software but also seamlessly updates TestRail with the results of our automated tests. Let's break down how we can accomplish this.
+, let's talk about hooking TestRail up to your Azure DevOps pipelines. I've been through this rodeo a few times, and it’s not always as straightforward as the documentation might suggest. Integration at this level, while powerful, requires a solid understanding of both systems. Essentially, we're aiming for a pipeline that not only builds and deploys our software but also seamlessly updates TestRail with the results of our automated tests. Let's break down how we can accomplish this.
 
 First, we'll need to establish a mechanism for communication between Azure DevOps and TestRail. The general strategy involves these steps:
 
@@ -76,24 +76,24 @@ Now, let's integrate this into an Azure DevOps pipeline. Here’s a sample YAML 
 
 ```yaml
 steps:
-- task: DotNetCoreCLI@2
-  displayName: 'Run tests'
-  inputs:
-    command: 'test'
-    projects: '**/*Test.csproj' # Adjust to your test project
-    arguments: '--configuration Release --logger:"junit;LogFilePath=results.xml"'
+  - task: DotNetCoreCLI@2
+    displayName: "Run tests"
+    inputs:
+      command: "test"
+      projects: "**/*Test.csproj" # Adjust to your test project
+      arguments: '--configuration Release --logger:"junit;LogFilePath=results.xml"'
 
-- task: PythonScript@0
-  displayName: 'Update TestRail'
-  inputs:
-    scriptSource: 'filepath'
-    scriptPath: 'path/to/your/testrail_update_script.py' # Path to the python script
-    arguments: 'results.xml' # Pass the jUnit report as an argument to the script
-  env:
-    TESTRAIL_URL: $(TestRailUrl) # Pass TestRail Url as pipeline variable
-    TESTRAIL_USER: $(TestRailUser) # Pass TestRail User as pipeline variable
-    TESTRAIL_PASSWORD: $(TestRailPassword) # Pass TestRail Password as pipeline variable
-    TESTRAIL_RUN_ID: $(TestRailRunId) # Pass TestRail Run Id as pipeline variable
+  - task: PythonScript@0
+    displayName: "Update TestRail"
+    inputs:
+      scriptSource: "filepath"
+      scriptPath: "path/to/your/testrail_update_script.py" # Path to the python script
+      arguments: "results.xml" # Pass the jUnit report as an argument to the script
+    env:
+      TESTRAIL_URL: $(TestRailUrl) # Pass TestRail Url as pipeline variable
+      TESTRAIL_USER: $(TestRailUser) # Pass TestRail User as pipeline variable
+      TESTRAIL_PASSWORD: $(TestRailPassword) # Pass TestRail Password as pipeline variable
+      TESTRAIL_RUN_ID: $(TestRailRunId) # Pass TestRail Run Id as pipeline variable
 ```
 
 This snippet demonstrates the typical pattern: first, we run our tests and generate a junit XML file using dotnet core tools. Then, we run our custom python script, passing required environment variables and the name of the test results. Notice that I'm using pipeline variables to store sensitive credentials rather than embedding them directly into the YAML file. This is crucial for security.
@@ -162,17 +162,17 @@ In this updated script, instead of extracting an id from a naming convention, we
 
 **Important Considerations:**
 
-*   **Security:** As you've seen, managing API keys and passwords securely is paramount. Azure DevOps provides mechanisms like variable groups and secret variables for secure handling of such sensitive information. *Never* commit sensitive information to your repository.
-*   **Error Handling:** Implement robust error handling in your scripts. The examples above have rudimentary error management, but you should log, report, and handle exceptions effectively.
-*   **Test Case Mapping:** How you map your test execution results to specific test cases in TestRail is crucial. The examples I gave assume a matching naming convention or custom id; however, this may not be ideal. Consider using a TestRail case custom field to directly map results to test cases if needed.
-*   **API Rate Limits:** Be mindful of TestRail API rate limits. Implement retry logic in your scripts to handle potential throttling.
-*   **Test Run Management:** Decide whether your pipeline will create new test runs for each build, or update existing ones. This depends on your workflow and testing strategy.
-*   **TestRail Project, Suite, and Section Mapping:** Consider how to create dynamic project mappings so that your automated tests are grouped effectively.
+- **Security:** As you've seen, managing API keys and passwords securely is paramount. Azure DevOps provides mechanisms like variable groups and secret variables for secure handling of such sensitive information. _Never_ commit sensitive information to your repository.
+- **Error Handling:** Implement robust error handling in your scripts. The examples above have rudimentary error management, but you should log, report, and handle exceptions effectively.
+- **Test Case Mapping:** How you map your test execution results to specific test cases in TestRail is crucial. The examples I gave assume a matching naming convention or custom id; however, this may not be ideal. Consider using a TestRail case custom field to directly map results to test cases if needed.
+- **API Rate Limits:** Be mindful of TestRail API rate limits. Implement retry logic in your scripts to handle potential throttling.
+- **Test Run Management:** Decide whether your pipeline will create new test runs for each build, or update existing ones. This depends on your workflow and testing strategy.
+- **TestRail Project, Suite, and Section Mapping:** Consider how to create dynamic project mappings so that your automated tests are grouped effectively.
 
 For further reading, I highly recommend:
 
-*   **The TestRail API Documentation:** The official TestRail API documentation is crucial, providing insights into every API call available and the specific parameters required.
-*   **"Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation" by Jez Humble and David Farley:** This book provides a great foundation for understanding and implementing robust continuous integration and continuous delivery pipelines, which is vital for smooth TestRail integration.
-*   **"Python for Data Analysis" by Wes McKinney:** For those newer to using Python for such tasks, this book will give you the knowledge of required to more effectively utilize the Python library.
+- **The TestRail API Documentation:** The official TestRail API documentation is crucial, providing insights into every API call available and the specific parameters required.
+- **"Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation" by Jez Humble and David Farley:** This book provides a great foundation for understanding and implementing robust continuous integration and continuous delivery pipelines, which is vital for smooth TestRail integration.
+- **"Python for Data Analysis" by Wes McKinney:** For those newer to using Python for such tasks, this book will give you the knowledge of required to more effectively utilize the Python library.
 
 Integrating TestRail with Azure DevOps pipelines takes some initial configuration but ultimately streamlines your QA process, providing better visibility into your test results. It’s a process I’ve refined over many projects, and hopefully, this gives you a solid starting point. Remember, always prioritize security, error handling, and proper case mapping when designing your solution.

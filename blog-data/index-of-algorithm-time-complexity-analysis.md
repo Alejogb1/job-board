@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "index-of-algorithm-time-complexity-analysis"
 ---
 
-Okay so you're asking about the index of algorithm time complexity analysis specifically like how to know what's up with that right I've been there man like knee deep in code trying to figure out why my stuff is running slower than molasses in January
+you're asking about the index of algorithm time complexity analysis specifically like how to know what's up with that right I've been there man like knee deep in code trying to figure out why my stuff is running slower than molasses in January
 
 So here's the lowdown first things first we're talking about how an algorithm's runtime scales with the input size That's what time complexity analysis is all about It's not about measuring the actual time in seconds or milliseconds that would depend on your hardware and a bunch of other stuff It's about how the runtime grows as your input gets bigger And we use Big O notation to express that stuff
 
@@ -18,6 +18,7 @@ O(1) is constant time no matter what the input size is the algorithm takes the s
 def access_array_element(arr, index):
     return arr[index]
 ```
+
 O(log n) is logarithmic time common in search algorithms where you keep halving the search space like binary search
 
 ```python
@@ -34,6 +35,7 @@ def binary_search(arr, target):
             high = mid - 1
     return -1
 ```
+
 O(n) is linear time the runtime grows proportionally to the input size this is when you loop through each element in a list or array once
 
 ```python
@@ -68,7 +70,8 @@ def has_duplicates_nested_loops(arr):
                  return True
     return False
 ```
-Okay so that code might work but this is O(n^2) right I bet you guys know why Two loops one inside another and it is iterating up to the size of the array that means we have to think of alternative approaches
+
+that code might work but this is O(n^2) right I bet you guys know why Two loops one inside another and it is iterating up to the size of the array that means we have to think of alternative approaches
 
 Now check this one out which uses a set
 

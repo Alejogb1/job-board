@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-you-make-an-erasing-tool-in-an-android-drawing-app"
 ---
 
-Alright, let's talk about implementing an eraser tool in an Android drawing application. I’ve dealt with this specific issue a few times over the years, and it’s more nuanced than it might initially appear. The core concept is quite straightforward: instead of drawing with a color, you're drawing with a ‘transparent’ brush, effectively removing existing content. However, the implementation details can greatly impact performance and user experience.
+, let's talk about implementing an eraser tool in an Android drawing application. I’ve dealt with this specific issue a few times over the years, and it’s more nuanced than it might initially appear. The core concept is quite straightforward: instead of drawing with a color, you're drawing with a ‘transparent’ brush, effectively removing existing content. However, the implementation details can greatly impact performance and user experience.
 
 First, let's break down the fundamental approaches. The common method involves using `PorterDuff.Mode.CLEAR` in your `Paint` object. This mode, when applied in conjunction with `Canvas.drawPath` or similar drawing operations, replaces any existing pixel with a transparent pixel. I find it's the workhorse method for most cases. It's generally efficient, leveraging hardware acceleration when available, and offers decent visual results. The primary gotcha to watch out for here is your drawing surface. Are you drawing directly onto a `Bitmap` managed by a `View`? Are you using layers? Or are you doing something more complex like using a multi-layer canvas structure? The way you manage your canvas heavily dictates how these operations will interact.
 
@@ -114,7 +114,7 @@ public class DrawingView extends View {
 In this example, I have included the basic touch event capture to handle motion events, a canvas creation in onSizeChanged, and a method called `useEraser()` to switch our tool to an eraser. The `PorterDuffXfermode` and `PorterDuff.Mode.CLEAR` is where the erasing happens. The `useBrush` method will reset the `paint` so we can start drawing again. You can call these methods when the user clicks a button to switch between the modes.
 This is the basic setup that most implementations follow, and it works pretty well for simple drawing.
 
-Now, let’s consider a more complex example where you might want to have a different eraser shape, or a smoother erase effect. You can achieve this by drawing a blurred circle, using it as a mask to affect transparency with  `PorterDuff.Mode.DST_OUT`. This offers a more natural, gradual edge:
+Now, let’s consider a more complex example where you might want to have a different eraser shape, or a smoother erase effect. You can achieve this by drawing a blurred circle, using it as a mask to affect transparency with `PorterDuff.Mode.DST_OUT`. This offers a more natural, gradual edge:
 
 ```java
 

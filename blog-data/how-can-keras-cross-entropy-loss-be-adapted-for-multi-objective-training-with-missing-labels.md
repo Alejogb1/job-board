@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-keras-cross-entropy-loss-be-adapted-for-multi-objective-training-with-missing-labels"
 ---
 
-Okay, let's unpack this one. It’s a problem I encountered a few years back while working on a multi-modal medical imaging analysis system. We had to juggle multiple diagnostic objectives – say, detecting both tumors *and* identifying specific tissue types – using a dataset that, let’s just say, was less than perfectly labelled. Some images had only the tumor location, others only the tissue type, and a good portion had both, or even none at all. It became a messy, real-world scenario, and standard Keras cross-entropy simply wouldn’t cut it.
+, let's unpack this one. It’s a problem I encountered a few years back while working on a multi-modal medical imaging analysis system. We had to juggle multiple diagnostic objectives – say, detecting both tumors _and_ identifying specific tissue types – using a dataset that, let’s just say, was less than perfectly labelled. Some images had only the tumor location, others only the tissue type, and a good portion had both, or even none at all. It became a messy, real-world scenario, and standard Keras cross-entropy simply wouldn’t cut it.
 
-The challenge with using standard cross-entropy when you've got missing labels is that it penalizes the model for predictions it *shouldn’t* be making based on the limited available information. For instance, if an image only has a tumor label, trying to apply cross-entropy on the tissue classification branch would be meaningless—the model would be penalized for an output that wasn't actually supervised.
+The challenge with using standard cross-entropy when you've got missing labels is that it penalizes the model for predictions it _shouldn’t_ be making based on the limited available information. For instance, if an image only has a tumor label, trying to apply cross-entropy on the tissue classification branch would be meaningless—the model would be penalized for an output that wasn't actually supervised.
 
 To address this, we need to adapt the loss function so that it ignores parts of the output, or the gradient, when there is no corresponding label. We need to make sure that only losses related to defined outputs impact backpropagation. Effectively, we're going to implement a masked loss, where the "mask" is determined by which labels are present for a given data point.
 
@@ -14,7 +14,7 @@ Here's the crux of the solution: we will define a custom loss function that does
 
 1. **Accepts Multiple Outputs:** The function must be able to handle predictions and ground truth labels for all the objectives we're interested in.
 2. **Detects Missing Labels:** We will need a means to indicate which labels are present for each example. Usually, this is done via a separate mask or indicator tensor.
-3. **Applies Loss Selectively:** We need to apply the standard cross-entropy loss *only* to the outputs for which labels are available.
+3. **Applies Loss Selectively:** We need to apply the standard cross-entropy loss _only_ to the outputs for which labels are available.
 
 Let me walk you through the code snippets and their rationale.
 
@@ -120,15 +120,15 @@ In this example, I’ve adapted the loss function to handle multi-label data usi
 
 A few crucial notes here, based on my experience:
 
-*   **Choice of Loss Function:** The correct type of cross-entropy (`categorical_crossentropy` vs. `binary_crossentropy`) will depend on whether you have single-label or multi-label classification for a given objective.
-*   **Careful Mask Creation:** The way you detect missing labels (-1 in these examples) needs to be consistent throughout your dataset and the data loading pipeline. Double check this when debugging, because an incorrect mask can easily lead to incorrect training.
-*   **Weighting Individual Objectives:** Often different objectives require different degrees of emphasis in training. I did not include it here but we could introduce a weight factor for each loss before summing the total. These weight factors can be tuned to achieve better performance for individual objectives.
-*   **Experimentation:** Don't be afraid to modify the custom loss function to suit your particular requirements. The key to real-world success is iterating and learning what works.
+- **Choice of Loss Function:** The correct type of cross-entropy (`categorical_crossentropy` vs. `binary_crossentropy`) will depend on whether you have single-label or multi-label classification for a given objective.
+- **Careful Mask Creation:** The way you detect missing labels (-1 in these examples) needs to be consistent throughout your dataset and the data loading pipeline. Double check this when debugging, because an incorrect mask can easily lead to incorrect training.
+- **Weighting Individual Objectives:** Often different objectives require different degrees of emphasis in training. I did not include it here but we could introduce a weight factor for each loss before summing the total. These weight factors can be tuned to achieve better performance for individual objectives.
+- **Experimentation:** Don't be afraid to modify the custom loss function to suit your particular requirements. The key to real-world success is iterating and learning what works.
 
 For further reading on these topics, I would suggest diving into the following resources:
 
 1.  **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville**: A comprehensive guide on the theory and practical aspects of deep learning, including a thorough explanation of loss functions and optimization techniques.
 2.  **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron**: A more practical guide to implementing deep learning models, covering techniques for handling data and building custom solutions. Pay special attention to the sections on building and handling custom loss functions.
-3. **The TensorFlow documentation, particularly the `tf.keras.losses` and `tf.keras.backend` modules**: The official documentation provides precise explanations of the available loss functions and backend operations, crucial for building custom implementations like the ones shown above.
+3.  **The TensorFlow documentation, particularly the `tf.keras.losses` and `tf.keras.backend` modules**: The official documentation provides precise explanations of the available loss functions and backend operations, crucial for building custom implementations like the ones shown above.
 
 In conclusion, adapting Keras cross-entropy for multi-objective training with missing labels requires creating a custom loss function that strategically masks the loss calculation using logical comparisons, ensuring the model is only trained on available labels, while still being able to learn from multiple objectives. The key is using TensorFlow's capabilities to handle tensors, masks, and custom loss functions to produce exactly the effect you need.

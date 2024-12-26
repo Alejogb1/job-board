@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-smartlisting-gem-123-checkbox-uncheck"
 ---
 
-Alright, let's talk about that persistent little checkbox gremlin in `smart_listing` version 1.2.3. It's a classic case, one I've bumped into a few times over the years. It almost always boils down to a few very specific culprits. I remember back at my previous position, we were implementing a complex administrative dashboard using a heavily customized version of `smart_listing`. Version 1.2.3, specifically, caused us quite a few headaches with this exact issue. It always manifested as checkboxes seemingly randomly unchecking after actions like pagination or sorting. At first, it felt entirely unpredictable, but as we dove deeper, patterns emerged.
+, let's talk about that persistent little checkbox gremlin in `smart_listing` version 1.2.3. It's a classic case, one I've bumped into a few times over the years. It almost always boils down to a few very specific culprits. I remember back at my previous position, we were implementing a complex administrative dashboard using a heavily customized version of `smart_listing`. Version 1.2.3, specifically, caused us quite a few headaches with this exact issue. It always manifested as checkboxes seemingly randomly unchecking after actions like pagination or sorting. At first, it felt entirely unpredictable, but as we dove deeper, patterns emerged.
 
 The core problem, and the one I suspect you're facing, often resides in how `smart_listing` manages state and how that state interacts with the underlying html and javascript on your page. In the older versions, particularly 1.2.3, the client-side state management for selected rows wasn't as robust as it became in later iterations. Essentially, the gem doesn't always preserve the checked state of a checkbox when the table is re-rendered due to a user action. This usually stems from these specific situations:
 
@@ -35,7 +35,8 @@ def index
 end
 ```
 
-**Problematic View Code (before fix - in partial "_list.html.erb"):**
+**Problematic View Code (before fix - in partial "\_list.html.erb"):**
+
 ```erb
 <% smart_listing_item :products, @products, :wrapper => :tr do |product| %>
   <td><%= check_box_tag "product_ids[]", product.id %></td>
@@ -61,6 +62,7 @@ end
 ```
 
 **Corrected View Code (after fix):**
+
 ```erb
 <% smart_listing_item :products, @products, :wrapper => :tr do |product| %>
   <td><%= check_box_tag "product_ids[]", product.id, checked: @selected_product_ids.include?(product.id) %></td>
@@ -101,7 +103,8 @@ def update_products
 end
 ```
 
-**Corrected View Code (after fix - in partial "_list.html.erb"):**
+**Corrected View Code (after fix - in partial "\_list.html.erb"):**
+
 ```erb
 <% smart_listing_item :products, @products, :wrapper => :tr do |product| %>
   <td><%= check_box_tag "product_ids[]", product.id, checked: locals[:selected_product_ids].include?(product.id) %></td>
@@ -117,6 +120,7 @@ Here, the selected product ids are persisted through the ajax update by passing 
 If you were hoping that checking the boxes would update model attribute states directly, which would obviously cause issues, the following example shows how this can go wrong.
 
 **Incorrect approach:**
+
 ```ruby
 # In this case, assume our model Product has an attribute called 'selected'.
 
@@ -126,6 +130,7 @@ If you were hoping that checking the boxes would update model attribute states d
   <td><%= product.price %></td>
 <% end %>
 ```
+
 Here, the issue is that `product.selected` is not updated when the checkbox is checked. It only reads from whatever state your database has for it, at the moment you render the view. To fix this, you must handle these states separately, like in the first two examples. The underlying problem, however, remains that the form state must be tracked on the backend and reflected back.
 
 **Resources and Recommendations:**

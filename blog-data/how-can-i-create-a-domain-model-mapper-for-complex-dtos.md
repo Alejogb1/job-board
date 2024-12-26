@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-domain-model-mapper-for-complex-dtos"
 ---
 
-Alright, let's dive into this. I remember a project, back in the early 2010s, where we were dealing with a particularly thorny legacy system. We had a database schema that was… let's just say “mature,” and our data transfer objects (DTOs) had grown quite complex trying to accommodate its quirks. Mapping those DTOs to our domain model felt less like programming and more like archaeology at times. What we needed was a robust, maintainable mapper, not a jumbled mess of ad-hoc code. So, let's unpack the options and best practices I've learned over the years.
+, let's dive into this. I remember a project, back in the early 2010s, where we were dealing with a particularly thorny legacy system. We had a database schema that was… let's just say “mature,” and our data transfer objects (DTOs) had grown quite complex trying to accommodate its quirks. Mapping those DTOs to our domain model felt less like programming and more like archaeology at times. What we needed was a robust, maintainable mapper, not a jumbled mess of ad-hoc code. So, let's unpack the options and best practices I've learned over the years.
 
 The core issue with complex DTOs and domain mapping lies in the impedance mismatch between your data representation (the DTO) and your application's internal model (domain entities). DTOs are often built around the requirements of data transport, serialization, or database schemas, while domain entities are designed to represent your business logic and rules. When DTOs become complex, hand-written mapping can quickly devolve into a maintenance nightmare. You end up with duplication, code that's difficult to understand, and a high likelihood of introducing bugs.
 
@@ -187,8 +187,8 @@ This example showcases the use of stream API to convert the product id comma sep
 
 For anyone looking to deepen their understanding of these topics, I highly recommend these resources:
 
-*   **"Patterns of Enterprise Application Architecture" by Martin Fowler:** This book is a classic and provides a comprehensive look at various architectural patterns, including those related to data access and mapping.
-*   **"Domain-Driven Design: Tackling Complexity in the Heart of Software" by Eric Evans:** This book is essential for understanding the principles of domain-driven design and how to create domain models that align with business needs. Pay particular attention to the chapters discussing aggregate roots and the bounded context.
-*   **"Clean Code: A Handbook of Agile Software Craftsmanship" by Robert C. Martin:** This book, while not directly about mapping, offers crucial guidance on writing maintainable and understandable code, which is paramount when dealing with complex data transformations.
+- **"Patterns of Enterprise Application Architecture" by Martin Fowler:** This book is a classic and provides a comprehensive look at various architectural patterns, including those related to data access and mapping.
+- **"Domain-Driven Design: Tackling Complexity in the Heart of Software" by Eric Evans:** This book is essential for understanding the principles of domain-driven design and how to create domain models that align with business needs. Pay particular attention to the chapters discussing aggregate roots and the bounded context.
+- **"Clean Code: A Handbook of Agile Software Craftsmanship" by Robert C. Martin:** This book, while not directly about mapping, offers crucial guidance on writing maintainable and understandable code, which is paramount when dealing with complex data transformations.
 
 The key takeaway here is that building a robust domain model mapper requires a thoughtful, disciplined approach. Avoid the temptation to take shortcuts, and instead focus on creating clear, explicit, and well-tested transformations. While libraries can help, understanding the core principles remains invaluable. By doing this, you'll save yourself a lot of headaches down the road and end up with a much more maintainable application.

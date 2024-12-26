@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "invalidargumentexception-view-layouts-app-not-found-larave-8-llivewire-2"
 ---
 
-Okay I see this InvalidArgumentException view layouts app not found in Laravel 8 with Livewire 2 situation a classic pain point I've definitely tangled with this beast before it's always something seemingly simple that trips you up
+I see this InvalidArgumentException view layouts app not found in Laravel 8 with Livewire 2 situation a classic pain point I've definitely tangled with this beast before it's always something seemingly simple that trips you up
 
 So here's the deal the error message itself `InvalidArgumentException view layouts app not found` it's pretty self explanatory right Laravel is basically screaming it can't find the `app` layout view that you're trying to use especially when Livewire comes into the picture it gets a little trickier sometimes since Livewire renders parts of your UI dynamically and that has a little to say about where it searches for your layouts
 
@@ -54,6 +54,7 @@ then you need to update the `paths` configuration this way
     resource_path('blade_templates'),
 ],
 ```
+
 or even you can also add multiple paths like this and Laravel will prioritize in the order they are set
 
 ```php
@@ -63,6 +64,7 @@ or even you can also add multiple paths like this and Laravel will prioritize in
     resource_path('views'),
 ],
 ```
+
 **2 Livewire Layout Is Incorrect**
 Now Livewire is a bit opinionated about where it looks for its layout in `app/Http/Livewire/YourComponent.php` you might need to specify the layout explicitly if it is not in the default folder specified in `config/view.php` or use a custom template
 
@@ -138,6 +140,7 @@ Let's say you have an `app.blade.php` in `resources/views/layouts` and it looks 
 </html>
 
 ```
+
 and your Livewire Component is like this
 
 ```php
@@ -152,13 +155,16 @@ class ExampleComponent extends Component
     }
 }
 ```
+
 and the corresponding `livewire/example-component.blade.php`
+
 ```blade
 // resources/views/livewire/example-component.blade.php
 <div>
     Hello world
 </div>
 ```
+
 This setup should work out of the box just fine assuming everything is well configured in `config/view.php` but if you happen to do something like
 
 ```blade
@@ -169,6 +175,7 @@ This setup should work out of the box just fine assuming everything is well conf
     </div>
 </x-layouts.app>
 ```
+
 or
 
 ```blade
@@ -178,6 +185,7 @@ or
     Hello world
 </div>
 ```
+
 then you would be in trouble the same goes for something like
 
 ```php

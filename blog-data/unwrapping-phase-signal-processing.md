@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "unwrapping-phase-signal-processing"
 ---
 
-Alright so you're wrestling with unwrapping phase I know that beast pretty well let me break down what I've learned over the years dealing with this stuff It's a common headache in signal processing especially if you're working with things like radar interferometry or magnetic resonance imaging
+so you're wrestling with unwrapping phase I know that beast pretty well let me break down what I've learned over the years dealing with this stuff It's a common headache in signal processing especially if you're working with things like radar interferometry or magnetic resonance imaging
 
 Essentially you're stuck with wrapped phase which is the output of functions like arctangent and that gives you a value between -π and +π the issue is that the actual underlying phase might have gone way beyond that range it's like having a clock that only shows hours between 1 and 12 but the day keeps rolling on You need to unwrap that thing to get the real continuous phase
 
@@ -134,6 +134,7 @@ def unwrap_phase_minimum_norm(wrapped_phase):
     unwrapped_phase = unwrapped_phase_flat.reshape(rows, cols)
     return unwrapped_phase
 ```
+
 I know that code looks ugly and you are probably thinking “what the heck is this guy doing with all those sparse matrices” well let me tell you it works just trust me on this one this is like the gold standard for unwrapping phase in the wild and there are even more complex ones and all of them involve heavy mathematical apparatus which in the end translates into lots of code and lots of headaches but that's part of the job I guess
 
 So there you have it three methods you can use for unwrapping phase the simple one that works only for very simple data the path following that works much better and the minimum norm one which is very robust and will handle even the worst datasets that you can throw at it I've been there I've done that

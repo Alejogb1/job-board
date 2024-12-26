@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-torchtext-vocab-be-used-with-torchscript"
 ---
 
-Alright, let's tackle the complexities of integrating `torchtext` vocabularies with `torchscript`. It’s a challenge I've encountered quite a few times, particularly when deploying natural language processing models in production environments where optimizing for speed and portability is critical. The friction often arises because `torchtext`'s `Vocab` objects aren't directly compatible with the static graph nature of `torchscript`. The standard `torchtext` workflow utilizes dynamic lookups which aren't scriptable. This is where a few workarounds come into play.
+, let's tackle the complexities of integrating `torchtext` vocabularies with `torchscript`. It’s a challenge I've encountered quite a few times, particularly when deploying natural language processing models in production environments where optimizing for speed and portability is critical. The friction often arises because `torchtext`'s `Vocab` objects aren't directly compatible with the static graph nature of `torchscript`. The standard `torchtext` workflow utilizes dynamic lookups which aren't scriptable. This is where a few workarounds come into play.
 
 My past project involved a real-time translation system; we were experiencing significant latency issues primarily due to the time spent on vocabulary lookups, which was exacerbated during inference as a result of using a traditional, dynamic `torchtext` vocabulary. It became imperative to find a method to transition this dynamic behavior into a static, scriptable form. We landed on a two-pronged approach: first, creating a static mapping of tokens to indices, and second, encapsulating the lookup within a `torch.nn.Module`. This ultimately facilitated efficient processing while remaining compatible with the torchscript ecosystem. Let’s explore the method in some detail.
 
@@ -215,6 +215,7 @@ assert torch.all(final_output == scripted_final_output)
 print("Success: Output match after torchscript")
 
 ```
+
 This comprehensive example showcases how to build both, a `TextToIndices` module to preprocess the text data into integers, and a `StaticLookup` to perform the index-to-index mapping required after that, showcasing that both components are torchscript compatible and produce the same result after torchscript.
 
 To further your understanding, I'd suggest reviewing the PyTorch documentation on `torch.jit`, specifically focusing on how it handles user-defined modules and parameters within the scripting process. The paper “TorchScript: A Static Compiler for PyTorch” by PyTorch developers details the philosophy and implementation of torchscript and should be highly informative. Another essential resource is the `torchtext` library documentation. Pay close attention to the sections on vocabulary creation and tokenization. The book "Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper, although slightly older, provides an excellent foundational understanding of text processing concepts that underpin these methods.

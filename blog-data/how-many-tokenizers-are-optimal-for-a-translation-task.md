@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-many-tokenizers-are-optimal-for-a-translation-task"
 ---
 
-Okay, let's tackle this. The question of optimal tokenizer count for translation—it’s not a trivial one, and honestly, I’ve spent a fair bit of time navigating its intricacies across various projects. I recall one particular instance, while working on a multi-lingual customer support chatbot system a few years back, where we initially opted for a single, shared tokenizer across all languages. Performance, to put it mildly, was subpar. We ended up significantly restructuring our approach and it became a valuable learning experience.
+, let's tackle this. The question of optimal tokenizer count for translation—it’s not a trivial one, and honestly, I’ve spent a fair bit of time navigating its intricacies across various projects. I recall one particular instance, while working on a multi-lingual customer support chatbot system a few years back, where we initially opted for a single, shared tokenizer across all languages. Performance, to put it mildly, was subpar. We ended up significantly restructuring our approach and it became a valuable learning experience.
 
 The short, perhaps unsatisfying answer, is that there isn't a magic number. The “optimal” count depends heavily on the specifics of the language pair(s), the volume of training data available, and the architectural choices in your machine translation model. A single, globally applicable tokenizer, while conceptually appealing for simplicity, often falls short. The nuances of different languages – their morphology, syntax, and character sets – typically necessitate more tailored solutions.
 
@@ -14,7 +14,7 @@ The crux of the problem is this: when a tokenizer’s vocabulary is insufficient
 
 Therefore, a key consideration is the "vocabulary size" created by your tokenizer. A shared vocabulary is good in theory, however, the resulting common vocabulary needs to cover the whole linguistic domain. This often results in either a very large vocabulary, leading to problems with memory usage during training, or very small sub-word units that do not align to semantic units of the languages being translated.
 
-So, what are the alternatives? One common approach is to use a *separate tokenizer per language*. This allows each tokenizer to be specifically optimized for its language's characteristics. For languages with complex morphology or agglutination, byte-pair encoding (bpe) or sentencepiece-based sub-word tokenization is often the superior choice. These tokenizers can effectively capture word variations without exploding the vocabulary size.
+So, what are the alternatives? One common approach is to use a _separate tokenizer per language_. This allows each tokenizer to be specifically optimized for its language's characteristics. For languages with complex morphology or agglutination, byte-pair encoding (bpe) or sentencepiece-based sub-word tokenization is often the superior choice. These tokenizers can effectively capture word variations without exploding the vocabulary size.
 
 Here's a python code example using the `transformers` library which demonstrates how to initialize a separate tokenizer for English and French. This requires the `transformers` library to be installed (e.g., `pip install transformers`).
 
@@ -42,7 +42,7 @@ print("French tokens:", fr_tokens)
 
 This simple code shows that we use a different tokenizer per language. The `from_pretrained` method loads configurations that are suitable for the respective languages. The underlying tokenization strategies and vocabularies of those models were chosen to fit the languages they represent.
 
-Another powerful approach is to use *multilingual tokenizers*, but not in the context of attempting to force one tokenizer for everything. Instead, consider models that have been trained using a shared vocabulary, like the mBART or XLM-R models. These models rely on tokenizers pre-trained on corpora containing multiple languages, often with specific sub-word strategies optimized for language encoding. Although it’s a shared vocabulary, it was created in a data-driven way by examining multiple languages. This provides benefits that are superior to attempting to manually "create" a shared vocabulary as we discussed earlier.
+Another powerful approach is to use _multilingual tokenizers_, but not in the context of attempting to force one tokenizer for everything. Instead, consider models that have been trained using a shared vocabulary, like the mBART or XLM-R models. These models rely on tokenizers pre-trained on corpora containing multiple languages, often with specific sub-word strategies optimized for language encoding. Although it’s a shared vocabulary, it was created in a data-driven way by examining multiple languages. This provides benefits that are superior to attempting to manually "create" a shared vocabulary as we discussed earlier.
 
 Here's an example of using the XLM-R tokenizer:
 
@@ -68,7 +68,7 @@ print("German tokens (XLM-R):", de_tokens)
 
 Here, we see how the XLM-R tokenizer handles text across different languages, providing a shared space, yet still adapting to the specifics of each language. This is very different to having a word-based English tokenizer attempting to tokenize French or German. While this tokenizer is intended for use with the xlm-roberta model, it could potentially be used as part of the tokenizer for other translation models.
 
-Finally, a more advanced method involves employing *adaptive tokenization*. Here, instead of using pre-trained tokenizers, we can fine-tune or train a custom tokenizer for our specific use-case by leveraging a custom dataset that closely matches the texts we intend to process. This method is valuable when dealing with very specific domains or datasets. It requires significant additional effort in terms of data preparation and computation. The next example builds upon the previous code by fine-tuning the english tokenizer on a domain-specific dataset. The result is a new tokenizer that can further reduce unknown tokens. This example requires a domain-specific dataset. For this example, we will create a dummy dataset for demonstration. The approach is similar when applied to a real dataset.
+Finally, a more advanced method involves employing _adaptive tokenization_. Here, instead of using pre-trained tokenizers, we can fine-tune or train a custom tokenizer for our specific use-case by leveraging a custom dataset that closely matches the texts we intend to process. This method is valuable when dealing with very specific domains or datasets. It requires significant additional effort in terms of data preparation and computation. The next example builds upon the previous code by fine-tuning the english tokenizer on a domain-specific dataset. The result is a new tokenizer that can further reduce unknown tokens. This example requires a domain-specific dataset. For this example, we will create a dummy dataset for demonstration. The approach is similar when applied to a real dataset.
 
 ```python
 from transformers import AutoTokenizer
@@ -113,12 +113,12 @@ print(tokenized_datasets)
 
 In this example we see that the initial English tokenizer can be fine-tuned by examining a new text dataset. This reduces the number of out-of-vocabulary tokens in domain specific texts, resulting in an improved performance.
 
-So, in summary, the best approach isn’t to impose a single, universal tokenizer but rather to *carefully consider the linguistic diversity within your translation tasks*. This may lead to multiple tokenizers, each tailored to a specific language or a shared multilingual tokenizer specifically pre-trained for that purpose. Multilingual models are more than capable of handling multiple languages simultaneously. Adaptive tokenization, with fine-tuned vocabulary creation, offers additional performance boosts when the resource budget allows. There is not a single, optimal number of tokenizers. It’s a balance of computational cost versus performance gains.
+So, in summary, the best approach isn’t to impose a single, universal tokenizer but rather to _carefully consider the linguistic diversity within your translation tasks_. This may lead to multiple tokenizers, each tailored to a specific language or a shared multilingual tokenizer specifically pre-trained for that purpose. Multilingual models are more than capable of handling multiple languages simultaneously. Adaptive tokenization, with fine-tuned vocabulary creation, offers additional performance boosts when the resource budget allows. There is not a single, optimal number of tokenizers. It’s a balance of computational cost versus performance gains.
 
 For further reading, I'd recommend looking into the following resources:
 
-*   *Neural Machine Translation* by Philipp Koehn: A detailed text covering all aspects of the topic, including a discussion of pre-processing issues, which are crucial when understanding tokenizers.
-*   The *SentencePiece* paper by Taku Kudo and John Richardson. This provides the details of a sub-word tokenization algorithm that is very widely used.
-*   The original *Byte Pair Encoding* paper from Philip Gage, which also provides the basis of many of the tokenization algorithms used for NLP.
+- _Neural Machine Translation_ by Philipp Koehn: A detailed text covering all aspects of the topic, including a discussion of pre-processing issues, which are crucial when understanding tokenizers.
+- The _SentencePiece_ paper by Taku Kudo and John Richardson. This provides the details of a sub-word tokenization algorithm that is very widely used.
+- The original _Byte Pair Encoding_ paper from Philip Gage, which also provides the basis of many of the tokenization algorithms used for NLP.
 
 Hopefully, this provides the sort of practical guidance I would have benefited from when I started working on these problems. It’s not always an easy task, and the best solution is often determined by the context of the project at hand.

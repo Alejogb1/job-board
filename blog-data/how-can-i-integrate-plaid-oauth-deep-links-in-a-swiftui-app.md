@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-integrate-plaid-oauth-deep-links-in-a-swiftui-app"
 ---
 
-Okay, let's tackle this Plaid OAuth deep linking challenge in SwiftUI. It's something I've navigated a few times, and while the initial setup can feel a bit tangled, it becomes pretty manageable once you understand the underlying flow and how SwiftUI handles deep links. I recall one project, specifically, where we were building a financial management app, and getting this precisely implemented was crucial for a smooth user experience. We had a significant amount of back-and-forth trying to get the redirect handling ironed out across various devices. Let me share some insights from that experience, and provide a structured approach to integrating Plaid's OAuth deep links.
+, let's tackle this Plaid OAuth deep linking challenge in SwiftUI. It's something I've navigated a few times, and while the initial setup can feel a bit tangled, it becomes pretty manageable once you understand the underlying flow and how SwiftUI handles deep links. I recall one project, specifically, where we were building a financial management app, and getting this precisely implemented was crucial for a smooth user experience. We had a significant amount of back-and-forth trying to get the redirect handling ironed out across various devices. Let me share some insights from that experience, and provide a structured approach to integrating Plaid's OAuth deep links.
 
 The core of the issue lies in seamlessly transitioning the user from Plaid's web-based Link flow back into your application after they've completed the authentication process. Plaid initiates the authentication in a web browser or a web view, and, upon completion, redirects the user to a predefined URL scheme specified during your Plaid application configuration. This redirection is handled by your application's deep linking mechanism.
 
@@ -41,7 +41,7 @@ struct ContentView: View {
 
             Text("Status: \(plaidPublicToken == nil ? "Pending" : "Connected")")
                 .padding()
-            
+
             .onOpenURL { url in
                 handlePlaidRedirect(url: url)
             }
@@ -94,6 +94,7 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 ```
+
 In this first snippet, we’ve defined a `ContentView` with a button to 'Open Plaid Link'. The `onOpenURL` modifier will capture the Plaid redirect URL. I've also added a mock version of the handlePlaidRedirect to simulate what happens after a successful Plaid link connection. This version of the code also stores the public_token. The actual Plaid Link flow would need to be implemented by you, typically involving a view containing a webview or using Plaid's SDK. The `handlePlaidRedirect` method parses the incoming url, extracting the public token and error handling. In practice, you would also use the oauth_state, for verification. The public token would then be exchanged for an access token which allows the application to make authorized requests to the Plaid API.
 
 Now, let’s address how you would typically present the Plaid Link screen, for example using a `SFSafariViewController`. Here's how you could modify the previous example to use a Safari View Controller and handle the callback within the view:
@@ -218,7 +219,7 @@ class PlaidManager: ObservableObject {
     @Published var connectionStatus: String = "Pending"
     @Published var hasError: Bool = false
     @Published var errorMessage: String = ""
-    
+
     func handlePlaidRedirect(url: URL) {
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
               let queryItems = components.queryItems else {

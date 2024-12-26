@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ftransform-glsl-120"
 ---
 
-Okay so ftransform glsl 120 right Been there done that Got my share of headaches with that specific version of the old school GLSL pipeline Let me tell you it's a journey a trip down memory lane of fixed function rendering and quirks You're asking about ftransform which basically is the built-in that transforms vertex positions from object space to clip space It was the workhorse back in the days when vertex shaders were optional a quaint memory if you ask me
+ftransform glsl 120 right Been there done that Got my share of headaches with that specific version of the old school GLSL pipeline Let me tell you it's a journey a trip down memory lane of fixed function rendering and quirks You're asking about ftransform which basically is the built-in that transforms vertex positions from object space to clip space It was the workhorse back in the days when vertex shaders were optional a quaint memory if you ask me
 
 Back then ftransform was how you did your basic modelview projection transformations It was all matrix multiplications and not much wiggle room It was part of the vertex program and was handled behind the scenes No access to modify or tweak the process outside of matrix manipulation That's why when vertex shaders became more mainstream and fully customizable ftransform slowly faded out We're way past those times now almost like dinosaurs
 
@@ -20,6 +20,7 @@ void main() {
   gl_FrontColor = gl_Color; // Pass through vertex color
 }
 ```
+
 See not much to it right It all happens behind the ftransform call The heavy lifting was all in setting up those matrices properly before submitting them to the shader That included modelview matrix projection matrix those had to be computed on the CPU and passed as uniform variables
 
 Later we moved on to more sophisticated projects where ftransform was a bottleneck We needed per-vertex lighting complex deformations and other advanced stuff that the fixed pipeline simply couldn't handle That’s where custom vertex shaders really shine we got to explicitly define those matrix multiplications and had greater control
@@ -55,6 +56,7 @@ void main() {
   gl_FrontColor = finalColor;
 }
 ```
+
 This code is a sort of emulation using matrix uniform to transform the vertex and perform color calculations Before calling ftransform you had to calculate the final position which was the key of ftransform as a black box
 
 The matrix setup on the CPU side was crucial The projection matrix usually was set up once at the start if you are not playing with the camera perspective which usually uses functions like `glOrtho` or `glFrustum` for orthographic and perspective projections respectively The modelview matrix on the other hand was updated every frame usually using `gluLookAt` or a custom camera class you may have coded
@@ -89,6 +91,6 @@ The best resources for understanding ftransform and the old fixed-function pipel
 
 I mean there are more modern solutions if you want to do transformations like this with vertex shaders now you can write it in the shader itself and have more power over the pipeline If you want something like ftransform in GLSL 120 it is actually just a mat4 multiplication with the MVP matrix like we did in the example So if you're stuck with GLSL 120 then you can emulate it with what i provided in the second example although it's not the exact same thing if you don't have the same fixed function behaviour
 
-Oh here's a joke to break things up Why did the programmer quit his job because he didn't get arrays hahahahaha okay okay back to work
+Oh here's a joke to break things up Why did the programmer quit his job because he didn't get arrays hahahahaha back to work
 
 Hope that helps clarify things You know always a trip to go back to that old stuff Feel free to hit me up if you've got more questions about dinosaurs I mean old GLSL pipelines

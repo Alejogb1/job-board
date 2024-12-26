@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "how-can-i-check-if-all-hidden-elements-contain-a-string-with-minitestcapybara"
 ---
 
-alright, so you're hitting that fun wall where you need to verify that hidden elements, specifically, contain a particular string, and you're doing this with minitest and capybara. i’ve been there, more times than i’d like to count. it’s one of those things that feels straightforward at first but then throws you a curveball the second you start dealing with anything but the most basic, visible dom elements.
+, so you're hitting that fun wall where you need to verify that hidden elements, specifically, contain a particular string, and you're doing this with minitest and capybara. i’ve been there, more times than i’d like to count. it’s one of those things that feels straightforward at first but then throws you a curveball the second you start dealing with anything but the most basic, visible dom elements.
 
 let's talk about why this is tricky, and then how to approach it with capybara's tools. when elements are hidden, capybara, by default, won’t 'see' them. its focus is user-centric, it tries to interact with the page as a user would. and a user, typically, doesn't interact with things they can't see. this is a good thing in general but annoying when you are testing.
 
-so, what's the approach? well, we need to tell capybara to look at *everything*, not just the visible stuff. we do this with capybara's `visible: :all` option. this tells capybara, "i don't care if it’s technically hidden, i want to know about it." without this, your tests will keep failing with frustrating message saying that it could not find element, etc etc.
+so, what's the approach? well, we need to tell capybara to look at _everything_, not just the visible stuff. we do this with capybara's `visible: :all` option. this tells capybara, "i don't care if it’s technically hidden, i want to know about it." without this, your tests will keep failing with frustrating message saying that it could not find element, etc etc.
 
 before we jump into the code snippets, let's talk a bit about how i stumbled upon this. early on in my career, i was working on a complex single-page app that had a lot of toggling elements, think dropdown menus, modal boxes, or expandable sections within a dashboard. these elements were often hidden until the user interacted with some UI element, which then made them visible. i was writing a suite of tests to verify that data within these hidden elements was loading properly. i tried basic `assert_text` assertions. these would fail consistently. it took me a while – more than i would like to say – that the default visibility setting in capybara was the culprit. it was one of those facepalm moments that i still sometimes remember when i encounter similar issues today. i spent a good afternoon feeling stupid and realized the importance of reading the capybara docs carefully. so, learn from my experience.
 
@@ -36,6 +36,7 @@ class MyTest < Minitest::Test
 
 end
 ```
+
 here we are using a basic `each` and a loop to go over the capybara response after making a selection to assert.
 
 this version is a good starting point, and it can work for basic scenarios. however, there are several points of improvement. for example, the error message isn’t very helpful, it is too generic. it should print more context. you don’t want to dig around to figure out why your test is failing. also what happens if your selector is incorrect? or if you don’t have hidden elements with that selector? it will not give much feedback and that is no good.

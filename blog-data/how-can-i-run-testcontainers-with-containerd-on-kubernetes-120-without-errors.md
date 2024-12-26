@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-run-testcontainers-with-containerd-on-kubernetes-120-without-errors"
 ---
 
-Alright, let's tackle this. It’s a situation I’ve bumped into more than a few times, especially when teams start migrating from docker to containerd on kubernetes clusters. The transition can be a bit bumpy if you’re not careful, and Testcontainers interacting with containerd directly can expose some of those bumps. I remember back in 2021, during a large-scale deployment overhaul, we faced similar issues. The usual docker-based Testcontainers setup just wasn't cutting it anymore, causing intermittent failures and generally making the integration tests flaky.
+, let's tackle this. It’s a situation I’ve bumped into more than a few times, especially when teams start migrating from docker to containerd on kubernetes clusters. The transition can be a bit bumpy if you’re not careful, and Testcontainers interacting with containerd directly can expose some of those bumps. I remember back in 2021, during a large-scale deployment overhaul, we faced similar issues. The usual docker-based Testcontainers setup just wasn't cutting it anymore, causing intermittent failures and generally making the integration tests flaky.
 
 The core problem isn't necessarily that Testcontainers "doesn't work" with containerd; it's more about how Testcontainers interacts with the underlying container runtime. Testcontainers by default often tries to connect to a docker socket. Containerd, on the other hand, uses a different architecture and doesn’t expose a docker-compatible socket directly. You can't just point Testcontainers at a containerd endpoint and expect it to work seamlessly.
 
@@ -101,18 +101,19 @@ public class ContainerdProgrammaticTest {
 }
 
 ```
+
 Here, we define `CustomContainerdProviderStrategy`, that forces `testcontainers-java` to use a specific connection to containerd, bypassing the discovery logic. This makes the connection to containerd very explicit.
 
 **Example 3: Addressing Kubernetes-Specific Issues**
 
 Now, a kubernetes environment throws in an extra layer of complexity. Testcontainers may try to interact with the docker socket on the host, which doesn’t exist if you’re running within a kubernetes pod. In many Kubernetes setup, Testcontainers cannot use the host’s container runtime directly for security and stability reasons. There are multiple strategies to solve this: using docker-in-docker or similar solutions, which are typically frowned upon. Using the kubernetes api server to spin up containers, or even use a remote docker daemon. This all adds substantial complexity, and are only required if the tests cannot be run directly on a host with access to the container runtime (e.g., not within kubernetes). The simplest approach to tackle this issue is to use a local kubernetes cluster with containerd (e.g. using `k3d`, or similar). The previous two examples would apply to this environment, as the test runner will have access to the underlying containerd runtime.
 
-In scenarios where you need the containers to run within Kubernetes, you can instead utilize tools like Skaffold or similar to manage the testing environment. These tools manage the build, deployment, and testing pipelines within Kubernetes clusters themselves. Testcontainers could still be used to create dependencies that live *outside* the kubernetes cluster itself, for example databases that can be accessed by your code deployed within the kubernetes cluster. The key idea is to make the distinction between containers managed by testcontainers and those managed by the Kubernetes environment. In this case, no direct containerd connection needs to be setup in the Testcontainers configuration since you're leveraging the Kubernetes environment for deploying your code under test.
+In scenarios where you need the containers to run within Kubernetes, you can instead utilize tools like Skaffold or similar to manage the testing environment. These tools manage the build, deployment, and testing pipelines within Kubernetes clusters themselves. Testcontainers could still be used to create dependencies that live _outside_ the kubernetes cluster itself, for example databases that can be accessed by your code deployed within the kubernetes cluster. The key idea is to make the distinction between containers managed by testcontainers and those managed by the Kubernetes environment. In this case, no direct containerd connection needs to be setup in the Testcontainers configuration since you're leveraging the Kubernetes environment for deploying your code under test.
 
 For further reference and more in-depth details, I highly recommend these resources:
 
-*   **Testcontainers documentation**: It’s your first stop. Pay close attention to the sections related to `DockerClientProviderStrategy` and custom client implementations.
-*   **Docker-java library documentation**: The underlying java library used by testcontainers provides low-level access and a much deeper understanding of how the underlying client is configured.
-*   **Kubernetes documentation**: In particular, the sections on containerd runtime configuration and container networking within Kubernetes are essential.
+- **Testcontainers documentation**: It’s your first stop. Pay close attention to the sections related to `DockerClientProviderStrategy` and custom client implementations.
+- **Docker-java library documentation**: The underlying java library used by testcontainers provides low-level access and a much deeper understanding of how the underlying client is configured.
+- **Kubernetes documentation**: In particular, the sections on containerd runtime configuration and container networking within Kubernetes are essential.
 
 Remember that troubleshooting these types of problems involves meticulous logging and understanding the underlying environment. Start simple, verify your connection and slowly increase complexity until you find the configuration that works best for you and your specific needs.

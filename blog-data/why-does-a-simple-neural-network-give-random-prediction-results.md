@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-a-simple-neural-network-give-random-prediction-results"
 ---
 
-Okay, let's tackle this. It’s not uncommon to encounter seemingly random predictions from a neural network, especially early on in the training process, and I’ve certainly seen my share of debugging sessions tracing back to this very issue during my time building machine learning models. The apparent randomness isn't typically due to the network truly being capricious, but rather a confluence of factors that can each contribute to such unpredictable behavior. It's more about the network not yet having learned anything meaningful, than it being an inherently stochastic system.
+, let's tackle this. It’s not uncommon to encounter seemingly random predictions from a neural network, especially early on in the training process, and I’ve certainly seen my share of debugging sessions tracing back to this very issue during my time building machine learning models. The apparent randomness isn't typically due to the network truly being capricious, but rather a confluence of factors that can each contribute to such unpredictable behavior. It's more about the network not yet having learned anything meaningful, than it being an inherently stochastic system.
 
 One of the primary reasons you might observe chaotic predictions stems from the initialization of the network's weights. When a neural network is instantiated, its weights are typically set to small random values. This randomness is essential for breaking symmetry during training— if all weights were initialized to the same value, neurons in the same layer would compute the same gradients and learn in an identical manner, limiting the network’s ability to capture intricate patterns. However, these randomly initialized weights represent a completely naive state for the network. Before training, it hasn’t learned any correlation between the input and output, so its initial predictions are effectively arbitrary noise. These can be anything at all given the activation functions and the nature of your inputs.
 
@@ -34,6 +34,7 @@ initial_predictions = model.predict(x_test)
 print("Initial Predictions (random):\n", initial_predictions)
 
 ```
+
 This demonstrates that with random weights, the predictions are effectively random as well. This is expected. It doesn’t mean that the network is broken, only that it is untrained.
 
 **Snippet 2: The Impact of Learning Rate**
@@ -156,6 +157,7 @@ loss_insufficient, accuracy_insufficient = model_insufficient.evaluate(x_test_in
 print(f"Model with sufficient data Test accuracy: {accuracy_sufficient*100:.2f}%")
 print(f"Model with insufficient data Test accuracy: {accuracy_insufficient*100:.2f}%")
 ```
+
 The code above illustrates that training with insufficient data yields significantly lower accuracy on the test set. This is indicative of the model not generalizing to unseen data and producing essentially random predictions.
 
-To further understand these concepts, I recommend exploring resources like *Deep Learning* by Ian Goodfellow, Yoshua Bengio, and Aaron Courville. It provides a rigorous mathematical treatment of neural networks and optimization techniques. Another great resource for practical model building and troubleshooting is the online documentation for libraries like TensorFlow and PyTorch. Specifically, focusing on sections about loss functions, optimizers, and data preprocessing will significantly increase understanding in these key areas. In essence, what appears random often stems from the network simply not having had sufficient exposure to data and optimal parameter tuning to establish a meaningful connection between inputs and outputs. Resolving these issues usually boils down to addressing these core aspects.
+To further understand these concepts, I recommend exploring resources like _Deep Learning_ by Ian Goodfellow, Yoshua Bengio, and Aaron Courville. It provides a rigorous mathematical treatment of neural networks and optimization techniques. Another great resource for practical model building and troubleshooting is the online documentation for libraries like TensorFlow and PyTorch. Specifically, focusing on sections about loss functions, optimizers, and data preprocessing will significantly increase understanding in these key areas. In essence, what appears random often stems from the network simply not having had sufficient exposure to data and optimal parameter tuning to establish a meaningful connection between inputs and outputs. Resolving these issues usually boils down to addressing these core aspects.

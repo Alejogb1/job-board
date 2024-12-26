@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-classcastexception-with-hashmaps-in-java"
 ---
 
-Okay, let's unpack this *ClassCastException* situation you're encountering with HashMaps in Java. I've definitely spent my share of late nights staring at stack traces like that, and it's usually rooted in a misunderstanding of how type erasure and generics interact, or sometimes, a bit of careless coding. It's not a particularly *rare* issue, but it's certainly frustrating until you pin down the exact cause.
+, let's unpack this _ClassCastException_ situation you're encountering with HashMaps in Java. I've definitely spent my share of late nights staring at stack traces like that, and it's usually rooted in a misunderstanding of how type erasure and generics interact, or sometimes, a bit of careless coding. It's not a particularly _rare_ issue, but it's certainly frustrating until you pin down the exact cause.
 
-Typically, a *ClassCastException* when dealing with HashMaps points to an attempt to treat an object of one type as if it were another. This happens during runtime because Java's generics are a compile-time construct – after compilation, generic type information is largely erased through a process known as *type erasure*. This means that the compiler enforces type safety *at compile time*, but at runtime, the JVM doesn't know that your `HashMap` was supposed to hold, say, `Integer` keys and `String` values specifically; it simply deals with raw objects.
+Typically, a _ClassCastException_ when dealing with HashMaps points to an attempt to treat an object of one type as if it were another. This happens during runtime because Java's generics are a compile-time construct – after compilation, generic type information is largely erased through a process known as _type erasure_. This means that the compiler enforces type safety _at compile time_, but at runtime, the JVM doesn't know that your `HashMap` was supposed to hold, say, `Integer` keys and `String` values specifically; it simply deals with raw objects.
 
 Let's delve into some common scenarios that trigger this. The first, and probably most frequent, occurs when there's an attempt to retrieve a value from a HashMap and directly cast it to a specific type without proper type checks. We often get into trouble when we’re dealing with legacy code, perhaps when generic type information wasn’t explicitly defined or when data is coming from a less strictly typed source, like a properties file or a serialized stream.
 
-Imagine, for example, a situation where we have a legacy configuration loader. It returns a raw `HashMap` (i.e., `HashMap` without type parameters) where we *believe* all the values are integers, but in fact, some values are still strings from the default configuration before any specific changes.
+Imagine, for example, a situation where we have a legacy configuration loader. It returns a raw `HashMap` (i.e., `HashMap` without type parameters) where we _believe_ all the values are integers, but in fact, some values are still strings from the default configuration before any specific changes.
 
 ```java
 // Example 1: Incorrect casting after retrieval from raw HashMap
@@ -40,7 +40,7 @@ public class ConfigLoader {
 }
 ```
 
-In this example, even if you *think* the "timeout" key is linked to an integer, the underlying data from the initial implementation is a `String`. Attempting to cast a `String` directly to `int` generates the *ClassCastException*. The compiler does not catch this error, due to the HashMap's erasure of the specific type of the values.
+In this example, even if you _think_ the "timeout" key is linked to an integer, the underlying data from the initial implementation is a `String`. Attempting to cast a `String` directly to `int` generates the _ClassCastException_. The compiler does not catch this error, due to the HashMap's erasure of the specific type of the values.
 
 A second scenario involves incorrectly mixing parameterized types with raw types during method invocation or assignments, leading to the introduction of objects of incompatible types. This is somewhat more subtle but very common in larger systems where you may have older code interacting with newer implementations. Suppose we have a utility class for storing application metadata, which started off with raw types then evolved to include generics:
 
@@ -165,8 +165,8 @@ public class SerializationExample {
 }
 ```
 
-Even though `originalMap` is of type `Map<String, Integer>`, during deserialization, `deserializedMap` is an unparameterized `HashMap` due to type erasure. A subsequent explicit typecast may result in ClassCastException. Note that in this specific example, the *ClassCastException* will not occur because the serialized data contains integer which will be autoboxed into `Integer`. If the serialized data contained String, the exception will be thrown.
+Even though `originalMap` is of type `Map<String, Integer>`, during deserialization, `deserializedMap` is an unparameterized `HashMap` due to type erasure. A subsequent explicit typecast may result in ClassCastException. Note that in this specific example, the _ClassCastException_ will not occur because the serialized data contains integer which will be autoboxed into `Integer`. If the serialized data contained String, the exception will be thrown.
 
 To avoid these issues, you need to carefully handle raw types, especially when dealing with legacy code or external data sources. Employ defensive programming by always checking the type of the retrieved values before attempting a cast. The most straightforward solution is to cast only if you know the type, use `instanceof` check before casting or use specialized methods like `Integer.parseInt()` that handle `String` to `int` conversion rather than a cast, to accommodate the variation of values. Furthermore, when working with serialization, consider using a serialization library that supports generic type information or using strongly typed DTO's.
 
-For a deeper understanding, I recommend delving into sections about generics and type erasure in the *Java Language Specification* – that’s the definitive resource. Also, *Effective Java* by Joshua Bloch provides invaluable best practices, especially chapter 5 on Generics, and chapter 7 on Serialization, and will help you avoid similar pitfalls in the future. These resources, along with plenty of practice, should solidify your understanding and significantly reduce the frequency of these frustrating *ClassCastExceptions*.
+For a deeper understanding, I recommend delving into sections about generics and type erasure in the _Java Language Specification_ – that’s the definitive resource. Also, _Effective Java_ by Joshua Bloch provides invaluable best practices, especially chapter 5 on Generics, and chapter 7 on Serialization, and will help you avoid similar pitfalls in the future. These resources, along with plenty of practice, should solidify your understanding and significantly reduce the frequency of these frustrating _ClassCastExceptions_.

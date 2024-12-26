@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-the-output-of-an-ann-model-with-a-different-dataset-as-an-input-to-another-ann-model-with-a-different-dataset"
 ---
 
-alright, so you're looking at chaining ann models, using the output of one as the input for another. i've been down this road, it gets interesting pretty fast. it's not just about passing variables around; there are a few subtle things you gotta keep an eye on to avoid a train wreck. let me share how i usually tackle this, based on some headaches i’ve personally gone through.
+, so you're looking at chaining ann models, using the output of one as the input for another. i've been down this road, it gets interesting pretty fast. it's not just about passing variables around; there are a few subtle things you gotta keep an eye on to avoid a train wreck. let me share how i usually tackle this, based on some headaches i’ve personally gone through.
 
 first off, the core concept is actually quite simple: train model a, grab its output for a new dataset, then feed that into model b. but the devil is, as usual, in the details. we need to think carefully about data compatibility, scaling, and how our models learn.
 
@@ -138,9 +138,9 @@ sometimes, you might encounter situations where `final_model`'s performance is s
 1.  fine-tuning `preprocessor_model`: train it a bit more using a loss function related to `final_model`'s output. this makes the preprocessor aware of downstream task requirements. it’s a little complex, but powerful.
 2.  using `preprocessor_model` as a feature extractor, then training `final_model` from scratch with these new features. this might produce a better performance than using pre-trained models.
 
-a common blunder i see is using the same dataset for both models when the objective is transfer learning. ensure data segregation.  another trap is forgetting to save and load the scaling parameters if they are needed for the inference.
+a common blunder i see is using the same dataset for both models when the objective is transfer learning. ensure data segregation. another trap is forgetting to save and load the scaling parameters if they are needed for the inference.
 
-another important aspect is dealing with categorical variables, if your `preprocessor_model` outputs categorical data transformed to numerical vectors via, let's say, one-hot-encoding, your `final_model` might have trouble learning from those categorical inputs as they might be sparse. in such cases, consider transforming the one hot encoding into a lower dimensional dense vector via an embedding or other methods like entity embeddings (see for example, the work of  cheng, h. t., k. chou, s. n. koh, and j. li: "entity embeddings of categorical variables," 2017). consider also other methods like feature hashing if the feature space is too big.
+another important aspect is dealing with categorical variables, if your `preprocessor_model` outputs categorical data transformed to numerical vectors via, let's say, one-hot-encoding, your `final_model` might have trouble learning from those categorical inputs as they might be sparse. in such cases, consider transforming the one hot encoding into a lower dimensional dense vector via an embedding or other methods like entity embeddings (see for example, the work of cheng, h. t., k. chou, s. n. koh, and j. li: "entity embeddings of categorical variables," 2017). consider also other methods like feature hashing if the feature space is too big.
 
 if, for example, you need to deal with variable length sequences, you would need to have a way to use them in the `final_model`, perhaps padding and/or masking, which depends on the requirements of your second model.
 

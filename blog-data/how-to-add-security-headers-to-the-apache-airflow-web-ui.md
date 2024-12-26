@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-add-security-headers-to-the-apache-airflow-web-ui"
 ---
 
-alright, so you're looking to beef up the security on your airflow web ui, right? i've been there, trust me. it's one of those things that you often overlook at the beginning when you're just trying to get things off the ground, but it becomes critically important once you actually start running stuff in production. it's like building a house and forgetting to put locks on the doors. you will eventually need it.
+, so you're looking to beef up the security on your airflow web ui, right? i've been there, trust me. it's one of those things that you often overlook at the beginning when you're just trying to get things off the ground, but it becomes critically important once you actually start running stuff in production. it's like building a house and forgetting to put locks on the doors. you will eventually need it.
 
 i remember when i was first setting up a data pipeline for a small startup, we were so focused on just getting the etl process working that security was an afterthought. airflow was just kinda humming along, happily displaying all of our dag configurations and variable values to, well, anyone who happened to stumble upon the web interface. i didn't have anything super sensitive, but it was still not something you want out in the open. it was quite a stressful situation. this was back in 2018, airflow was still in its early days. i was a young padawan with a lot to learn and had a long way to go. i was just trying to survive the data pipelines trenches at that point.
 
@@ -46,13 +46,13 @@ now here comes the meat of what we want: adding security headers. to do that, yo
 
 let me break down these headers really quick:
 
-*   `x-frame-options: deny;` this prevents clickjacking attacks by preventing your site from being embedded in an iframe.
-*   `x-content-type-options: nosniff;` this prevents browsers from trying to guess the content type of a resource, mitigating some forms of xss attacks.
-*   `x-xss-protection: 1; mode=block;` this enables the browser’s built-in cross-site scripting filter.
-*   `content-security-policy` this is a powerful header that lets you specify from which sources the browser is allowed to load resources. here i've set a fairly basic policy that allows everything from the same domain, but allows in-line javascript and styles for now. you can fine-tune this later.
-*   `referrer-policy: no-referrer;` this controls how much information is sent in the referrer header. setting it to `no-referrer` prevents sensitive data from leaking.
-*   `permissions-policy`: this header is used to control which browser features your site is allowed to use.
-*   `strict-transport-security`: this forces the browser to use https for all requests, even if they initially started over http. the `always` argument ensures this header is always included in the response, even for error pages.
+- `x-frame-options: deny;` this prevents clickjacking attacks by preventing your site from being embedded in an iframe.
+- `x-content-type-options: nosniff;` this prevents browsers from trying to guess the content type of a resource, mitigating some forms of xss attacks.
+- `x-xss-protection: 1; mode=block;` this enables the browser’s built-in cross-site scripting filter.
+- `content-security-policy` this is a powerful header that lets you specify from which sources the browser is allowed to load resources. here i've set a fairly basic policy that allows everything from the same domain, but allows in-line javascript and styles for now. you can fine-tune this later.
+- `referrer-policy: no-referrer;` this controls how much information is sent in the referrer header. setting it to `no-referrer` prevents sensitive data from leaking.
+- `permissions-policy`: this header is used to control which browser features your site is allowed to use.
+- `strict-transport-security`: this forces the browser to use https for all requests, even if they initially started over http. the `always` argument ensures this header is always included in the response, even for error pages.
 
 note that the `content-security-policy` header is complex, and may require some adjustments, depending on your specific airflow configuration and which resources you are using. you may find that some airflow plugins or custom code you might have introduced requires changes to this header. the main goal here is to start with something secure and less restrictive, and then you can progressively tighten it as you go on. a good way is to use reports on the browser console to check for csp violation and change the policy.
 
@@ -77,6 +77,7 @@ here is a simple example on how to integrate this on a nginx setup, inside the s
     #proxy pass and all headers from above goes here
     }
 ```
+
 replace `/etc/letsencrypt/live/your_airflow_domain.com/` with the actual path where your certificate files are. also, make sure the protocols used in `ssl_protocols` and `ssl_ciphers` are updated. there are online generators to help you with that. it’s not good to use older protocols and ciphers, so you should always go for the strongest ones. i did hear a joke a while ago that only the most secure protocols should be used, and that the weaker ones should just take a hike, but that's neither here nor there, we should focus on security.
 
 remember, this is just a starting point. you should consult with a security professional to do a proper risk assessment for your airflow instance. a good resource for more information on http security headers would be the owasp secure headers project. you can also dive deep into the internet engineering task force (ietf) standards and publications for even more specifics on http security headers. those papers contain a wealth of knowledge to fully understand them. there are also great books out there like “bulletproof ssl and tls”, by ivan ristić, if you want a more detailed and in depth look at the transport security level.

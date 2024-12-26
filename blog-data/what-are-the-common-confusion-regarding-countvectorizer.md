@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-are-the-common-confusion-regarding-countvectorizer"
 ---
 
-alright, so you're hitting some of the classic snags with `countvectorizer`, yeah? i've been there, trust me. it looks simple at first, but the devil's in the details, as they say. i remember back in my early days, i nearly pulled all my hair out dealing with this thing. let me break down some of the common pain points, and how i usually tackle them.
+, so you're hitting some of the classic snags with `countvectorizer`, yeah? i've been there, trust me. it looks simple at first, but the devil's in the details, as they say. i remember back in my early days, i nearly pulled all my hair out dealing with this thing. let me break down some of the common pain points, and how i usually tackle them.
 
 the main source of confusion often stems from how `countvectorizer` transforms text data into numerical features. people seem to think it's just a straightforward word-counting machine, and while it does count words, there's a whole bunch more going on under the hood. it's not magic, it's just clever engineering.
 

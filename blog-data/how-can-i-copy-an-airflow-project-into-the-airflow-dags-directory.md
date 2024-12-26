@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-copy-an-airflow-project-into-the-airflow-dags-directory"
 ---
 
-Okay, let's talk about moving an Airflow project into the dag directory. It’s a common task, and I've definitely had my fair share of battles with DAG deployment over the years. It's not always as simple as a drag-and-drop operation, and there are a few crucial points to consider for a seamless setup. The key is understanding how Airflow discovers and parses DAG files, and then aligning your deployment process with that mechanism.
+, let's talk about moving an Airflow project into the dag directory. It’s a common task, and I've definitely had my fair share of battles with DAG deployment over the years. It's not always as simple as a drag-and-drop operation, and there are a few crucial points to consider for a seamless setup. The key is understanding how Airflow discovers and parses DAG files, and then aligning your deployment process with that mechanism.
 
-First, let's break down what Airflow expects. Airflow essentially scans the designated dags folder (defined in your `airflow.cfg` or using environment variables like `AIRFLOW__CORE__DAGS_FOLDER`) for python files. These files are then imported and parsed to find DAG definitions. Crucially, any exceptions encountered during import will cause the DAG to fail to load, and this won’t always be obvious without careful logging. Therefore, the structure of your project *inside* that dags directory, and its interaction with the rest of your system, is critical.
+First, let's break down what Airflow expects. Airflow essentially scans the designated dags folder (defined in your `airflow.cfg` or using environment variables like `AIRFLOW__CORE__DAGS_FOLDER`) for python files. These files are then imported and parsed to find DAG definitions. Crucially, any exceptions encountered during import will cause the DAG to fail to load, and this won’t always be obvious without careful logging. Therefore, the structure of your project _inside_ that dags directory, and its interaction with the rest of your system, is critical.
 
 It’s not enough to simply copy your entire project directory into the dags folder. Instead, we typically want to keep the actual project’s source code separate for reasons of maintainability and version control. We then need to make sure that our DAG python files can correctly import components from that external project directory, usually achieved through manipulation of the python path or leveraging the power of python packages. My experience has taught me that attempting anything beyond this will lead to a chaotic setup. I remember one project that mixed DAGs with source code, and it was a debugging nightmare. We ended up refactoring to a more maintainable structure within a week.
 
@@ -165,9 +165,9 @@ The crucial part is that in our docker image, our virtual environment and packag
 
 For deeper understanding, I suggest looking into these resources:
 
-*   "Effective Python" by Brett Slatkin: For best practices with python, especially regarding packages and importing.
-*   The official Apache Airflow documentation: For comprehensive guides on configuration and DAG development.
-*   Python Packaging User Guide: For the nitty gritty on packaging.
-*  Docker documentation: To understand the fundamentals of containerisation.
+- "Effective Python" by Brett Slatkin: For best practices with python, especially regarding packages and importing.
+- The official Apache Airflow documentation: For comprehensive guides on configuration and DAG development.
+- Python Packaging User Guide: For the nitty gritty on packaging.
+- Docker documentation: To understand the fundamentals of containerisation.
 
 In conclusion, while directly dropping your project into the dags folder might seem tempting at first glance, it’s not a sustainable or maintainable approach. Leveraging Python packaging and virtual environments (Approach 2) is the preferred way to structure your Airflow projects for anything beyond simple experimentation. And for production, Docker (Approach 3) is the route I always take to ensure consistency and reliability. Each of the methods has strengths depending on the situation, but all are centered on the understanding that your dags file should be able to find and import your supporting modules. Choose wisely based on your project's scale and requirements.

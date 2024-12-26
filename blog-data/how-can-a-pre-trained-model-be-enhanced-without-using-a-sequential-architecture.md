@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-a-pre-trained-model-be-enhanced-without-using-a-sequential-architecture"
 ---
 
-Alright, let's tackle this. I've seen this challenge pop up quite a few times in projects, and it's a valid question when dealing with models where a purely sequential approach isn't the best fit. Thinking back to my work on a multi-modal sensor fusion project, we hit a wall with simple LSTM approaches – we needed more nuanced interactions than what a sequence could naturally capture.
+, let's tackle this. I've seen this challenge pop up quite a few times in projects, and it's a valid question when dealing with models where a purely sequential approach isn't the best fit. Thinking back to my work on a multi-modal sensor fusion project, we hit a wall with simple LSTM approaches – we needed more nuanced interactions than what a sequence could naturally capture.
 
-The question is about enhancing pre-trained models *without* relying on a sequential architecture. This usually implies a scenario where your data isn't inherently time-series-oriented, or that the inherent structure doesn't benefit from being processed in sequence. We're looking at models that operate on a set of features or representations rather than a temporally ordered input. And honestly, many real-world problems fall into this category.
+The question is about enhancing pre-trained models _without_ relying on a sequential architecture. This usually implies a scenario where your data isn't inherently time-series-oriented, or that the inherent structure doesn't benefit from being processed in sequence. We're looking at models that operate on a set of features or representations rather than a temporally ordered input. And honestly, many real-world problems fall into this category.
 
 The key here lies in manipulating the latent space or the feature space the pre-trained model produces. Instead of feeding this output into another layer designed for sequences, we can employ several strategies.
 
@@ -86,11 +86,13 @@ output = model(pretrained_features_batch)
 print(output.shape) # torch.Size([32, 5])
 
 ```
+
 Here, the model takes features, generates Q, K, V transforms, computes the attention, and uses the weighted average of value vectors. Note: this example uses simple mean pooling, but you could add another linear layer here, or other pooling approaches. Crucially, no sequential processing is happening between the feature vectors themselves.
 
 Finally, **graph-based approaches** can be very powerful, particularly if you can structure your problem as a graph. For instance, imagine you have features corresponding to individual nodes in a graph representing relationships between items in a dataset. The pre-trained model could output feature vectors per node, and these vectors can then be processed using graph neural networks (gnns). These networks aggregate information from neighboring nodes according to the graph’s topology, learning representations influenced by network structure – a concept inherently non-sequential. This strategy adds an relational aspect to the problem, allowing the model to exploit existing relationships to improve prediction accuracy.
 
 A simple graph example:
+
 ```python
 import torch
 import torch.nn as nn
@@ -127,14 +129,15 @@ data = Data(x=pretrained_features, edge_index=edge_index)
 outputs = model(data)
 print(outputs.shape)  # torch.Size([10,3])
 ```
+
 This code shows a basic graph convolutional network (gcn). the `edge_index` matrix specifies the relationships between the nodes in the graph, and the gcn convolution aggregates feature information based on these relationships. Once again, there is no sequential processing of features themselves.
 
 For a deep dive into the topics I've touched on, I'd recommend looking into the following:
 
-* **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book provides a comprehensive overview of deep learning fundamentals, including the theory and mathematics behind the techniques discussed. It's a fundamental resource.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book provides a comprehensive overview of deep learning fundamentals, including the theory and mathematics behind the techniques discussed. It's a fundamental resource.
 
-* **"Attention is All You Need" (Vaswani et al., 2017):** This is the seminal paper that introduced the transformer architecture and the core concept of attention. A must-read to understand self-attention in detail.
+- **"Attention is All You Need" (Vaswani et al., 2017):** This is the seminal paper that introduced the transformer architecture and the core concept of attention. A must-read to understand self-attention in detail.
 
-* **"Graph Representation Learning" by Hamilton:** This text covers various graph embedding and graph neural network architectures, providing a solid foundation for applying graph-based methods to model problems.
+- **"Graph Representation Learning" by Hamilton:** This text covers various graph embedding and graph neural network architectures, providing a solid foundation for applying graph-based methods to model problems.
 
 In conclusion, when you want to enhance pre-trained models without relying on sequential architectures, consider the flexibility in feature fusion and transformation, using attention mechanisms to emphasize important features, or representing the problem as a graph with node information generated by the model. Each of these techniques provides a path to more powerful models that don't have the architectural limitations of sequential approaches, and can be applied to an incredibly wide array of problems.

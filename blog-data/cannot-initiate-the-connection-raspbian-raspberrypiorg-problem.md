@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cannot-initiate-the-connection-raspbian-raspberrypiorg-problem"
 ---
 
-Okay so you're hitting that classic "can't connect to raspbian raspberrypi.org" wall right Been there done that got the t-shirt I've lost weekends to this exact issue and I bet I can guess at least half the things you've already tried
+you're hitting that classic "can't connect to raspbian raspberrypi.org" wall right Been there done that got the t-shirt I've lost weekends to this exact issue and I bet I can guess at least half the things you've already tried
 
 Let me tell you about the time I was setting up a cluster of these little guys for a distributed rendering project I was seriously pushing the limits of what a Pi could do and this connection hiccup almost made me chuck the whole thing out the window twice I swear the frustration level was like trying to debug a multithreaded kernel while hungover it was bad
 
@@ -26,7 +26,7 @@ If the basic ping test to a public IP works then the next thing is to try to see
 ping -c 3 104.20.7.110
 ```
 
-If *this* works but your previous ping to `raspberrypi.org` didn't then it’s very likely a DNS issue Your Pi isn't able to resolve the hostname into an IP address which is where the problem is You know the feeling when you forget someone’s number well it’s like that for your Pi but for internet resources
+If _this_ works but your previous ping to `raspberrypi.org` didn't then it’s very likely a DNS issue Your Pi isn't able to resolve the hostname into an IP address which is where the problem is You know the feeling when you forget someone’s number well it’s like that for your Pi but for internet resources
 
 You should check your `/etc/resolv.conf` file to verify if there are any configured DNS servers and if they are correct Usually, you'll see something like `nameserver 8.8.8.8` or similar there you might even see a local DNS server depending on your local setup If the configuration is missing or incorrect that could be the source of the headache Also don't forget about firewalls on your local network they could also be blocking DNS traffic so keep that in mind as well
 

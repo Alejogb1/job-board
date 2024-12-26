@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-manage-array-records-in-a-rails-api-database"
 ---
 
-Alright, let's tackle this. I've spent more time than I'd care to admit wrestling with the complexities of array data within Rails APIs. It's a situation that crops up more often than one might think, and getting it *just so* can significantly impact performance and maintainability. So, let's break down how I typically approach managing array records in a Rails API database, drawing on some hard-won lessons from past projects.
+, let's tackle this. I've spent more time than I'd care to admit wrestling with the complexities of array data within Rails APIs. It's a situation that crops up more often than one might think, and getting it _just so_ can significantly impact performance and maintainability. So, let's break down how I typically approach managing array records in a Rails API database, drawing on some hard-won lessons from past projects.
 
 The core issue revolves around the fact that relational databases, the workhorses of most Rails applications, aren't inherently designed to handle complex array structures. While most databases, including PostgreSQL (which I'll assume is the database in your setup), offer array data types, their usage requires careful consideration, particularly within the context of an API where data is often being filtered, searched, and manipulated on a per-request basis.
 
@@ -51,7 +51,7 @@ end
 
 In this example I included add, remove and has methods for the tags column which allow a more streamlined manipulation of the tags array. This approach is preferable to direct array manipulation on the records outside the model.
 
-Now consider a more nuanced case, how do you perform complex queries on an array? Let's suppose we need to retrieve all articles that contain a *specific* tag. The following shows how I would approach this:
+Now consider a more nuanced case, how do you perform complex queries on an array? Let's suppose we need to retrieve all articles that contain a _specific_ tag. The following shows how I would approach this:
 
 ```ruby
 class Article < ApplicationRecord

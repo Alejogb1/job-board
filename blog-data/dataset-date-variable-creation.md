@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "dataset-date-variable-creation"
 ---
 
-Alright so you're asking about creating date variables in a dataset I get it This is a bread and butter task for data manipulation and I've definitely been through this rodeo more times than I care to admit Let me break it down for you and give you some pointers based on my personal experience messing with this stuff over the years
+so you're asking about creating date variables in a dataset I get it This is a bread and butter task for data manipulation and I've definitely been through this rodeo more times than I care to admit Let me break it down for you and give you some pointers based on my personal experience messing with this stuff over the years
 
 First off the question is pretty broad like "dataset" what kind of dataset are we talking about Here is a point that I usually find out a lot of questions here are in that level of abstraction That is fine though because I can infer some info For the sake of this I'm going to assume you're dealing with something like a CSV file or a pandas DataFrame cause that's the most common scenario I’ve seen in my experience Now date variables can come in different shapes and sizes strings numbers Unix timestamps even Sometimes they’re already in a date format but are not ideal for what you want to do So it’s important to understand what you have first and what do you want to have afterwards
 
@@ -34,6 +34,7 @@ df['day'] = df['date'].dt.day
 print(df)
 
 ```
+
 This snippet does a few things First it creates a pandas DataFrame with a 'date_string' column Second it uses `pd.to_datetime` to transform the string format dates into actual datetime objects in the ‘date’ column Then using the `dt` accessor it grabs the year month and day into new columns Pretty standard I would say
 
 Now what if your date formats are a bit more diverse like I mentioned previously Pandas has you covered on that as well The `pd.to_datetime` function accepts a format parameter this allows you to handle specific date formats This is useful if your date strings are not standard like “27/10/2023”
@@ -90,6 +91,7 @@ I've also seen dates that were stored as integers in the format `YYYYMMDD` like 
 I once spent a whole afternoon debugging a seemingly small error with date formats it turned out I had missed a small detail of the original format The lesson is always check your data carefully and if you are working with data that you did not generate or that is in a real-world setting you have to be extra careful because there might be all kinds of inconsistencies
 
 So when you are dealing with date variables always keep this in mind
+
 1.  **Understand the input format:** Is it a string a timestamp or something else
 2.  **Use pandas' `pd.to_datetime`:** Its versatile for most things and has some advanced options that can help you in more complex situations.
 3.  **Use `strftime` format codes:** Those are what you need to know if you want to parse your string dates correctly

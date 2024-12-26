@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "keyword-objects-java-meaning-explanation"
 ---
 
-Alright so you're asking about keyword objects in Java right Yeah I get it that's a bit of a vague term but I've wrestled with this kind of thing plenty of times myself so let's break it down I've seen this come up in code reviews more than you'd think
+so you're asking about keyword objects in Java right Yeah I get it that's a bit of a vague term but I've wrestled with this kind of thing plenty of times myself so let's break it down I've seen this come up in code reviews more than you'd think
 
 First off when we say "keyword objects" we’re not talking about actual objects named "keyword" that’s kind of a misnomer What you're most likely referring to is the use of Java keywords like `this` `super` `new` and even `class` in a way that interacts with objects or defines them These are fundamental to how Java operates and understanding them is crucial
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-a-custom-user-agent-is-not-recognized-when-registering-a-new-selenium-driver-with-capybara"
 ---
 
-alright, let's talk about why your custom user agent might be getting ignored when you're setting up a selenium driver with capybara. it's a common head-scratcher, and i've definitely been down this rabbit hole myself more times than i care to remember.
+, let's talk about why your custom user agent might be getting ignored when you're setting up a selenium driver with capybara. it's a common head-scratcher, and i've definitely been down this rabbit hole myself more times than i care to remember.
 
 so, first off, capybara is a pretty slick abstraction layer over different web drivers. it's fantastic for making your integration tests cleaner, but sometimes that abstraction can hide the details of what's actually happening underneath the hood. when you're trying to set a custom user agent, you're essentially aiming to tweak how the browser identifies itself to a web server. this can be critical for simulating different devices or user scenarios, especially when you're dealing with mobile-first design or other types of specific client behavior.
 

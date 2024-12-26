@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-a-host-socket-appear-as-a-directory-in-docker-volumes"
 ---
 
-Alright, let’s unpack this. It's a question that's tripped up many a developer, myself included, early on in my docker journey. It’s not immediately intuitive why something representing a network endpoint – a socket – would manifest as a directory within a docker volume. I’ve had to debug my share of misconfigured containers because of this very thing, so I understand the head-scratching that comes with it.
+, let’s unpack this. It's a question that's tripped up many a developer, myself included, early on in my docker journey. It’s not immediately intuitive why something representing a network endpoint – a socket – would manifest as a directory within a docker volume. I’ve had to debug my share of misconfigured containers because of this very thing, so I understand the head-scratching that comes with it.
 
 The short answer is that Docker, and indeed the underlying Linux mechanisms it leverages, treat sockets, specifically Unix domain sockets, as file-system objects, specifically, special files. This "special file" is then represented, for usability, in a volume mounted into a container as a directory. It's a clever abstraction that simplifies inter-process communication (ipc) but can be confusing without understanding the plumbing. This isn't some arbitrary quirk; it's a fundamental design choice rooted in the way unix-like systems manage resources.
 
@@ -49,7 +49,7 @@ In this scenario, `/var/run/docker.sock` (or an equivalent location depending on
 
 Here, we will establish a shared socket for inter-process communication, where the socket file, and the directory that represents it when volume mounted to other processes (potentially in docker containers) becomes our communication portal.
 
-*server.py (run on host)*
+_server.py (run on host)_
 
 ```python
 import socket
@@ -86,7 +86,7 @@ finally:
     server_socket.close()
 ```
 
-*client.py (run in docker container)*
+_client.py (run in docker container)_
 
 ```python
 import socket
@@ -116,7 +116,7 @@ In this example, the `server.py` creates the socket on the host, and this is mad
 Finally, a brief practical snippet for how you'd mount the socket using docker-compose.
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   my_container:
     image: my_image

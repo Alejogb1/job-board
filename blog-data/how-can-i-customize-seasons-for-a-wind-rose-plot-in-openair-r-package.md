@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-customize-seasons-for-a-wind-rose-plot-in-openair-r-package"
 ---
 
-Alright, let’s talk about wind roses and seasonal adjustments in `openair`. It’s a common challenge, and frankly, one I've dealt with more than a few times across different air quality monitoring projects, so I'm happy to share my experience. Specifically, adjusting the ‘seasons’ in an `openair` wind rose is about tailoring the analysis to match specific environmental or operational patterns that might not adhere strictly to traditional meteorological seasons.
+, let’s talk about wind roses and seasonal adjustments in `openair`. It’s a common challenge, and frankly, one I've dealt with more than a few times across different air quality monitoring projects, so I'm happy to share my experience. Specifically, adjusting the ‘seasons’ in an `openair` wind rose is about tailoring the analysis to match specific environmental or operational patterns that might not adhere strictly to traditional meteorological seasons.
 
 The core issue here is that `openair`, by default, uses standard calendar-based seasons: winter, spring, summer, and autumn. However, real-world scenarios often require a more granular or custom approach. Perhaps you're interested in analyzing a period that encompasses a specific industrial operating period, or maybe you want to align with particular environmental conditions, like a monsoon season or a specific planting window. This customization fundamentally relies on manipulating the date data within your dataset to create new ‘seasonal’ categories that `openair` can use for plotting.
 

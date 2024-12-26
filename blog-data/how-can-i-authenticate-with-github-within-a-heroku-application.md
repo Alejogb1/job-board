@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-authenticate-with-github-within-a-heroku-application"
 ---
 
-Alright, let's tackle this. It's a problem I've certainly bumped into more times than I'd prefer, and it always boils down to a few key steps when dealing with Heroku and GitHub integration for authentication. I recall wrestling – oops, *encountering* – this specific challenge on a project where we were aiming for a seamless deployment pipeline tied directly to a private GitHub repository. The goal was to authenticate our users, who were collaborators on the repo, via their github identities for finer-grained access control within our application.
+, let's tackle this. It's a problem I've certainly bumped into more times than I'd prefer, and it always boils down to a few key steps when dealing with Heroku and GitHub integration for authentication. I recall wrestling – oops, _encountering_ – this specific challenge on a project where we were aiming for a seamless deployment pipeline tied directly to a private GitHub repository. The goal was to authenticate our users, who were collaborators on the repo, via their github identities for finer-grained access control within our application.
 
 Essentially, we're talking about enabling a web application hosted on Heroku to verify that a user is who they claim to be based on their github account. This usually involves leveraging OAuth 2.0, and it requires a careful dance between your app, github, and the user. Let’s break down the process.
 
@@ -60,7 +60,7 @@ if __name__ == '__main__':
 
 This snippet demonstrates the basic flow. The `/login` route constructs the authorization url and redirects the user to github. The `/callback` route retrieves the authorization code, uses it to get an access token from github, and then stores this token in the user session. Notice the usage of environment variables; in a heroku application, these will be securely set from the heroku dashboard or cli.
 
-Next, let's look at an example of how you can *use* that token to access github's api, for instance to get user email address:
+Next, let's look at an example of how you can _use_ that token to access github's api, for instance to get user email address:
 
 ```python
 @app.route('/email')

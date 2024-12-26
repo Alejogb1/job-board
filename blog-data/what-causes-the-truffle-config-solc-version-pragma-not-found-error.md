@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-the-truffle-config-solc-version-pragma-not-found-error"
 ---
 
-Alright, let's unpack this error. I remember wrestling with that specific "Truffle config solc version pragma not found" message a good few years back during a particularly complex migration of smart contracts across environments. It's not uncommon, especially when dealing with projects built over time or brought in from different developers using potentially varied tools. The root cause, as the error message hints, lies in a mismatch between how Truffle is configured to compile your Solidity code and the version specified within your smart contract files themselves.
+, let's unpack this error. I remember wrestling with that specific "Truffle config solc version pragma not found" message a good few years back during a particularly complex migration of smart contracts across environments. It's not uncommon, especially when dealing with projects built over time or brought in from different developers using potentially varied tools. The root cause, as the error message hints, lies in a mismatch between how Truffle is configured to compile your Solidity code and the version specified within your smart contract files themselves.
 
 Specifically, this error pops up when Truffle can’t determine which version of the Solidity compiler (solc) it should use. This determination is crucial because different solc versions can introduce breaking changes in the language syntax, bytecode output, and overall functionality. So, a contract written for, say, solc version `0.6.0` might not compile correctly (or even at all) using solc version `0.8.0`. The error arises primarily in two scenarios: first, if the specified `solc` version is not configured in the truffle configuration file (`truffle-config.js` or `truffle-config.ts`), and second, when your Solidity code doesn’t specify the correct version using a `pragma` directive. The `pragma` acts as an instruction within your contract, informing the compiler which version or range of versions is compatible.
 
@@ -24,11 +24,11 @@ module.exports = {
     development: {
       host: "127.0.0.1",
       port: 8545,
-      network_id: "*"
-    }
+      network_id: "*",
+    },
   },
-  contracts_directory: './contracts',
-  contracts_build_directory: './build',
+  contracts_directory: "./contracts",
+  contracts_build_directory: "./build",
 };
 ```
 
@@ -61,18 +61,19 @@ module.exports = {
     development: {
       host: "127.0.0.1",
       port: 8545,
-      network_id: "*"
-    }
+      network_id: "*",
+    },
   },
-  contracts_directory: './contracts',
-  contracts_build_directory: './build',
+  contracts_directory: "./contracts",
+  contracts_build_directory: "./build",
   compilers: {
     solc: {
-       version: "0.5.16", // Incorrect version
-    }
-  }
+      version: "0.5.16", // Incorrect version
+    },
+  },
 };
 ```
+
 And consider this solidity file, `AnotherContract.sol`:
 
 ```solidity
@@ -86,6 +87,7 @@ contract AnotherContract {
     }
 }
 ```
+
 Here, we've configured Truffle to use solc `0.5.16`, while the contract `AnotherContract.sol` specifies that it's designed for `0.8.0` or higher. This discrepancy will trigger the same type of error, either the "Truffle config solc version pragma not found" error, or an error that highlights the version mismatch.
 
 **Example 3: Correct Configuration**
@@ -98,24 +100,25 @@ module.exports = {
     development: {
       host: "127.0.0.1",
       port: 8545,
-      network_id: "*"
-    }
+      network_id: "*",
+    },
   },
-  contracts_directory: './contracts',
-  contracts_build_directory: './build',
+  contracts_directory: "./contracts",
+  contracts_build_directory: "./build",
   compilers: {
     solc: {
-        version: "0.8.19",
-        settings: {
-          optimizer: {
-            enabled: true,
-            runs: 200
-          },
+      version: "0.8.19",
+      settings: {
+        optimizer: {
+          enabled: true,
+          runs: 200,
         },
-    }
-  }
+      },
+    },
+  },
 };
 ```
+
 And a `ThirdContract.sol` file with the correct pragma:
 
 ```solidity

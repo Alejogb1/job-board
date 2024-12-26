@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-group-values-in-an-opta-dataframe"
 ---
 
-Alright, let's tackle this. Grouping values in an Opta dataframe – I've been down that road quite a few times, especially back when we were building that complex player tracking system for the semi-pro league. It’s not always as straightforward as the pandas equivalent, primarily because Opta data often arrives in a format that demands a bit more wrangling before you can effectively group it. We’re dealing with a hierarchical structure sometimes nested deep in json or xml, and simply applying a group by isn’t going to cut it.
+, let's tackle this. Grouping values in an Opta dataframe – I've been down that road quite a few times, especially back when we were building that complex player tracking system for the semi-pro league. It’s not always as straightforward as the pandas equivalent, primarily because Opta data often arrives in a format that demands a bit more wrangling before you can effectively group it. We’re dealing with a hierarchical structure sometimes nested deep in json or xml, and simply applying a group by isn’t going to cut it.
 
 Fundamentally, you need to first ensure your dataframe is structured in a way that makes grouping logically possible. This usually means extracting the relevant columns or features that you want to use for grouping from nested structures. I recall a particularly challenging case involving Opta's F24 format. We had events nested under game objects, each with its own unique identifiers and associated data points. We couldn't directly group based on event type; we first had to flatten that structure into a tabular format.
 
@@ -68,7 +68,7 @@ In this code snippet, we're grouping by `team_id` and calculating the average x 
 
 **Step 3: Handling Multiple Grouping Levels**
 
-Often, you’ll need to group by multiple columns. For instance, you might want to see how player activity varies *within* a team. This requires multiple grouping levels. Using the example data we had earlier, let's group by `team_id` first and then group by `player_id` to find the number of events per player for each team. This would require a nested grouping.
+Often, you’ll need to group by multiple columns. For instance, you might want to see how player activity varies _within_ a team. This requires multiple grouping levels. Using the example data we had earlier, let's group by `team_id` first and then group by `player_id` to find the number of events per player for each team. This would require a nested grouping.
 
 ```python
 def group_by_team_and_player_event_count(df):
@@ -84,9 +84,9 @@ Here we are grouping first by `team_id` and then within each group, we are group
 
 **Important Considerations:**
 
-* **Data Types:** Make sure that the columns you are using for grouping and aggregations have the correct data types. If you are dealing with numbers stored as strings, you might need to convert those using `astype()` before performing calculations.
-* **Missing Data:** Handle missing data appropriately. Opta data might have missing values, and you should decide whether to drop rows with missing values or fill them using methods like `fillna()` with appropriate strategies.
-* **Performance:** If you are dealing with very large datasets, be mindful of performance. You might want to explore optimizing your code using vectorized operations or alternative libraries like Dask, that allows processing datasets too large to fit into memory.
+- **Data Types:** Make sure that the columns you are using for grouping and aggregations have the correct data types. If you are dealing with numbers stored as strings, you might need to convert those using `astype()` before performing calculations.
+- **Missing Data:** Handle missing data appropriately. Opta data might have missing values, and you should decide whether to drop rows with missing values or fill them using methods like `fillna()` with appropriate strategies.
+- **Performance:** If you are dealing with very large datasets, be mindful of performance. You might want to explore optimizing your code using vectorized operations or alternative libraries like Dask, that allows processing datasets too large to fit into memory.
 
 **Recommended Resources:**
 

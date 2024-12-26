@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-segment-st-not-occur"
 ---
 
-Okay, let's tackle this. You're asking about a specific observation, or rather, a lack thereof: why you're not seeing a "segment st~" in certain contexts, which I’m assuming pertains to memory segmentation in low-level programming, likely within older x86 architectures or environments emulating such systems. I recall troubleshooting similar issues when working on a legacy embedded system project back in the late 2000s - a rather painful experience involving disassemblers, data sheets, and way too much caffeine. So, let's break down why you might not be seeing `segment st~`.
+, let's tackle this. You're asking about a specific observation, or rather, a lack thereof: why you're not seeing a "segment st~" in certain contexts, which I’m assuming pertains to memory segmentation in low-level programming, likely within older x86 architectures or environments emulating such systems. I recall troubleshooting similar issues when working on a legacy embedded system project back in the late 2000s - a rather painful experience involving disassemblers, data sheets, and way too much caffeine. So, let's break down why you might not be seeing `segment st~`.
 
 The fundamental point is that "segment st~" isn't a standard instruction or a common output you would typically encounter when examining memory segments directly. If your expectation was that segment registers (like `cs`, `ds`, `es`, `ss`, and indeed `st` which is not used for memory segments directly) were going to literally appear with a tilde, it’s a misunderstanding. The `st` register is part of the x87 Floating-Point Unit (FPU) stack, and it isn’t directly related to memory segmentation at all. It doesn't define where a memory segment starts or ends; that’s the domain of the segment registers and their base addresses, combined with the effective address calculations.
 
@@ -12,11 +12,11 @@ When you talk about "segment st~", it sounds like you might be trying to debug o
 
 Here's where the core concepts become relevant: Memory segmentation on architectures like the x86 (particularly in its real mode or protected mode operating contexts) operates on the principle of defining addressable regions using segment registers. These registers hold selectors which point into segment descriptor tables, defining the base address and limits of a given memory segment. Segment registers include:
 
-*   **cs (Code Segment):** Points to the memory location containing executable instructions.
-*   **ds (Data Segment):** Points to the memory location for global data.
-*   **ss (Stack Segment):** Points to the memory location where the stack resides.
-*   **es (Extra Segment):** An additional data segment, often used for string operations.
-*   **fs and gs (Additional Data Segments):** Used for thread local storage and other special purposes.
+- **cs (Code Segment):** Points to the memory location containing executable instructions.
+- **ds (Data Segment):** Points to the memory location for global data.
+- **ss (Stack Segment):** Points to the memory location where the stack resides.
+- **es (Extra Segment):** An additional data segment, often used for string operations.
+- **fs and gs (Additional Data Segments):** Used for thread local storage and other special purposes.
 
 The FPU stack register `st(0)` through `st(7)`, which you’re likely thinking of when considering "st~", do not have a segment-related functionality. `st` registers are registers in the FPU that form a register stack for floating-point operations. They temporarily hold floating-point values during computations, not defining base memory locations.
 
@@ -38,7 +38,7 @@ data_segment_selector  dw  0x0028    ; Dummy segment selector
 variable_offset      dw   0x0004    ; Offset of your variable within the data segment
 ```
 
-In this example, no floating-point operation is done, hence `st` is not involved, we're operating with general purpose registers `ax` and a segment register `ds`. Here, `ds` defines the segment base, and `variable_offset` is the offset *within* that segment. You would see something akin to *`ds:0x0004`* if inspecting memory. There's no 'segment `st~`' here because `st` isn’t used for memory segmentation. To actually see `st` in use, we'd need to perform floating point math operations, which takes us to the next example.
+In this example, no floating-point operation is done, hence `st` is not involved, we're operating with general purpose registers `ax` and a segment register `ds`. Here, `ds` defines the segment base, and `variable_offset` is the offset _within_ that segment. You would see something akin to _`ds:0x0004`_ if inspecting memory. There's no 'segment `st~`' here because `st` isn’t used for memory segmentation. To actually see `st` in use, we'd need to perform floating point math operations, which takes us to the next example.
 
 **Example 2: Floating Point Operation (Illustrating `st`, not memory segments)**
 
@@ -77,12 +77,13 @@ data_segment_selector  dw  0x0028
 float_variable   dd 2.5
 float_result      dd 0.0
 ```
+
 This shows both parts - how data segments are used for memory access, and how floating point values are worked on using `st` registers. What's important is that there is no direct link or relationship between the FPU register stack with the segment registers. A debugger might show you both the contents of the `st` stack and also the segment registers.
 
 To further understand these topics in detail, I recommend exploring resources such as:
 
-*   **Intel Architecture Manuals:** These are primary source documents and highly detailed. In particular, "Intel® 64 and IA-32 Architectures Software Developer’s Manuals," Volumes 1-4. You’ll find detailed information about segment registers, their use, and the x87 FPU.
-*   **"Modern Operating Systems" by Andrew S. Tanenbaum:** This textbook provides a thorough overview of operating system concepts, including memory management and segmentation, which will provide useful context.
-*   **"Programming from the Ground Up" by Jonathan Bartlett:** This is a really good book that dives into low-level programming, assembly, and understanding of program execution. The examples are very grounded and will solidify the concepts, even if the architecture it deals with isn't the x86 directly.
+- **Intel Architecture Manuals:** These are primary source documents and highly detailed. In particular, "Intel® 64 and IA-32 Architectures Software Developer’s Manuals," Volumes 1-4. You’ll find detailed information about segment registers, their use, and the x87 FPU.
+- **"Modern Operating Systems" by Andrew S. Tanenbaum:** This textbook provides a thorough overview of operating system concepts, including memory management and segmentation, which will provide useful context.
+- **"Programming from the Ground Up" by Jonathan Bartlett:** This is a really good book that dives into low-level programming, assembly, and understanding of program execution. The examples are very grounded and will solidify the concepts, even if the architecture it deals with isn't the x86 directly.
 
 In short, the “segment `st~`” you're not seeing is because it's not a standard entity. Your issue likely lies in a misunderstanding of the role of the `st` registers as part of the x87 Floating Point Unit stack in relation to the separate concept of memory segmentation. Instead of a single entity, you should consider them as different parts of the CPU. Debuggers can show information relating to the FPU and memory segmentation but these are not directly connected. If you can clarify where you saw this expected representation, we might be able to pinpoint the root of the issue more precisely.

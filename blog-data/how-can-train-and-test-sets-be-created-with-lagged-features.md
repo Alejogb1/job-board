@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-train-and-test-sets-be-created-with-lagged-features"
 ---
 
-Okay, let’s tackle lagged feature creation for training and testing sets. It's a common challenge, and I've certainly had my share of encounters with it over the years, particularly when dealing with time-series data, which, let’s face it, tends to be a large chunk of what we all deal with. Getting this process correct is fundamental for reliable predictive models. The key difficulty isn't just about adding a lag, but ensuring that the temporal ordering is maintained across the training and testing data, and that we avoid any 'data leakage'.
+, let’s tackle lagged feature creation for training and testing sets. It's a common challenge, and I've certainly had my share of encounters with it over the years, particularly when dealing with time-series data, which, let’s face it, tends to be a large chunk of what we all deal with. Getting this process correct is fundamental for reliable predictive models. The key difficulty isn't just about adding a lag, but ensuring that the temporal ordering is maintained across the training and testing data, and that we avoid any 'data leakage'.
 
 Essentially, the concept of a lagged feature revolves around using a value at a previous time point as an input for the model at the current time point. Imagine you're predicting sales for tomorrow; a lagged feature could be the sales from yesterday or the average sales from the past week. The tricky bit arrives when we need to maintain this lagged structure when splitting data into training and testing sets. Simply shuffling data or using a random sample split will obliterate the time dependency and make our evaluation useless. The temporal component must be respected and preserved.
 
@@ -84,15 +84,15 @@ def prepare_for_training(train_df, test_df, fill_method='ffill'):
     elif fill_method == 'median':
          train_df_filled.fillna(train_df_filled.median(), inplace=True)
          test_df_filled.fillna(test_df_filled.median(), inplace=True)
-    
+
     train_df_filled.dropna(inplace=True) # Drop remaining if using ffill, or from other issues
     test_df_filled.dropna(inplace=True)
-    
+
     X_train = train_df_filled.drop('sales', axis=1)
     y_train = train_df_filled['sales']
     X_test = test_df_filled.drop('sales', axis=1)
     y_test = test_df_filled['sales']
-    
+
     return X_train, y_train, X_test, y_test
 
 X_train, y_train, X_test, y_test = prepare_for_training(train_df, test_df, fill_method='ffill')
@@ -106,16 +106,16 @@ print("\ny_test:")
 print(y_test)
 ```
 
-The `prepare_for_training` function handles this, using `ffill` (forward fill) as the default. It is vital that we fill `NaN` values *within* each set only, to maintain the proper split. It will fill missing values based on previous values, zeros, or the mean of the values *within the same training or test set*. Once the missing data is dealt with, we're ready to use `X_train`, `y_train`, `X_test`, and `y_test` for model training and evaluation.
+The `prepare_for_training` function handles this, using `ffill` (forward fill) as the default. It is vital that we fill `NaN` values _within_ each set only, to maintain the proper split. It will fill missing values based on previous values, zeros, or the mean of the values _within the same training or test set_. Once the missing data is dealt with, we're ready to use `X_train`, `y_train`, `X_test`, and `y_test` for model training and evaluation.
 
 **Further Reading**
 
 For a more in-depth understanding, I would highly recommend the following resources:
 
-*   **"Forecasting: Principles and Practice" by Rob J Hyndman and George Athanasopoulos:** This is an excellent and freely available online book covering time series forecasting extensively. It goes into detail on many forecasting techniques, including the creation and use of lagged features, and explains the concepts of training and testing in a time-series context. It's an absolute must-read.
+- **"Forecasting: Principles and Practice" by Rob J Hyndman and George Athanasopoulos:** This is an excellent and freely available online book covering time series forecasting extensively. It goes into detail on many forecasting techniques, including the creation and use of lagged features, and explains the concepts of training and testing in a time-series context. It's an absolute must-read.
 
-*   **"Time Series Analysis" by James D. Hamilton:** A more mathematically oriented and rigorous treatment of time series analysis. It’s considered a standard textbook in econometrics and provides a comprehensive theoretical framework.
+- **"Time Series Analysis" by James D. Hamilton:** A more mathematically oriented and rigorous treatment of time series analysis. It’s considered a standard textbook in econometrics and provides a comprehensive theoretical framework.
 
-*   **"Python for Data Analysis" by Wes McKinney:** If you're working with Python, as I demonstrated in my examples, this book by the creator of pandas is a must-have. It is very thorough and provides a solid base for working with data using pandas.
+- **"Python for Data Analysis" by Wes McKinney:** If you're working with Python, as I demonstrated in my examples, this book by the creator of pandas is a must-have. It is very thorough and provides a solid base for working with data using pandas.
 
 The key takeaway here is that building robust predictive models with lagged features goes hand-in-hand with respecting the time-based nature of the data. By ensuring proper data splitting and avoiding any kind of information leakage, we build a foundation for trustworthy model evaluations and reliable predictions.

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-troubleshoot-browsersync-issues-when-using-laravel-sail-and-laravel-mix"
 ---
 
-Alright, let's tackle this. It’s a situation I've definitely found myself in more times than I’d like to recall, getting BrowserSync to play nice with Laravel Sail and Mix. It’s often less straightforward than you might hope, and the symptoms can vary, leading you down different troubleshooting paths. The core problem usually revolves around network configurations, file watching, and how these tools interact with Docker.
+, let's tackle this. It’s a situation I've definitely found myself in more times than I’d like to recall, getting BrowserSync to play nice with Laravel Sail and Mix. It’s often less straightforward than you might hope, and the symptoms can vary, leading you down different troubleshooting paths. The core problem usually revolves around network configurations, file watching, and how these tools interact with Docker.
 
 From my experience, the first thing to examine is how your containers are exposing ports, specifically the one BrowserSync uses (usually 3000 for the server and 3001 for the ui). Laravel Sail, being a wrapper around Docker Compose, relies heavily on correctly configured ports. If those aren’t aligned, the live reloading functionality simply won’t work. I remember a particularly frustrating debugging session where a coworker had inadvertently mapped the browser sync ports in a Dockerfile instead of Docker Compose, causing inconsistent behavior between local and containerized environments.
 
-Okay, let's break this down with some tangible examples and solutions.
+, let's break this down with some tangible examples and solutions.
 
 **The First Area: Port Mapping & Network Configuration**
 
@@ -16,9 +16,9 @@ The most common issue I see is mismatched port configurations. Remember, Browser
 
 ```yaml
 services:
-    laravel.test:
-        ports:
-            - '80:80'
+  laravel.test:
+    ports:
+      - "80:80"
 ```
 
 Now, ensure that your `webpack.mix.js` file is configured to match these port configurations if you’re overriding the default behavior. The default BrowserSync configuration in `webpack.mix.js` often works correctly out of the box with a sail setup if default ports are used. But if you've had a previous issue and attempted modification, it's a prime suspect. Here's a code example of what it might look like in `webpack.mix.js`:
@@ -26,26 +26,27 @@ Now, ensure that your `webpack.mix.js` file is configured to match these port co
 ```javascript
 // webpack.mix.js
 
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
-mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css')
-   .browserSync({
-       proxy: 'laravel.test',
-       port: 3000,
-        open: false, // This disables automatically opening a new browser. Helps with consistent debugging.
-       files: [
-            'app/**/*.php',
-           'resources/views/**/*.php',
-           'public/**/*.css',
-           'public/**/*.js',
-           'resources/js/**/*.js',
-           'resources/sass/**/*.scss',
-        ]
-    });
-
+mix
+  .js("resources/js/app.js", "public/js")
+  .sass("resources/sass/app.scss", "public/css")
+  .browserSync({
+    proxy: "laravel.test",
+    port: 3000,
+    open: false, // This disables automatically opening a new browser. Helps with consistent debugging.
+    files: [
+      "app/**/*.php",
+      "resources/views/**/*.php",
+      "public/**/*.css",
+      "public/**/*.js",
+      "resources/js/**/*.js",
+      "resources/sass/**/*.scss",
+    ],
+  });
 ```
-*Code Snippet 1: A standard `webpack.mix.js` configuration demonstrating BrowserSync setup.*
+
+_Code Snippet 1: A standard `webpack.mix.js` configuration demonstrating BrowserSync setup._
 
 The important part here is the `proxy` property and the file patterns in the `files` array. The `proxy` value, 'laravel.test' in this case, should match your sail container’s address and the port should align with what’s exposed within the container itself (usually port 80 on the container itself which is then forwarded). If you are using a custom host name, make sure to configure it correctly in the hosts file and update the `proxy` entry in your `webpack.mix.js` accordingly.
 
@@ -58,28 +59,29 @@ Here’s how to add all directories required, including resources directory for 
 ```javascript
 // webpack.mix.js
 
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
-mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css')
-   .browserSync({
-       proxy: 'laravel.test',
-        port: 3000,
-       files: [
-           'app/**/*.php',
-           'config/**/*.php',
-           'database/**/*.php',
-           'public/**/*.css',
-           'public/**/*.js',
-           'resources/js/**/*.js',
-           'resources/sass/**/*.scss',
-           'resources/views/**/*.php',
-           'resources/components/**/*.vue',
-        ]
-    });
-
+mix
+  .js("resources/js/app.js", "public/js")
+  .sass("resources/sass/app.scss", "public/css")
+  .browserSync({
+    proxy: "laravel.test",
+    port: 3000,
+    files: [
+      "app/**/*.php",
+      "config/**/*.php",
+      "database/**/*.php",
+      "public/**/*.css",
+      "public/**/*.js",
+      "resources/js/**/*.js",
+      "resources/sass/**/*.scss",
+      "resources/views/**/*.php",
+      "resources/components/**/*.vue",
+    ],
+  });
 ```
-*Code Snippet 2: Extended `webpack.mix.js` file watch patterns to include commonly edited resource files*
+
+_Code Snippet 2: Extended `webpack.mix.js` file watch patterns to include commonly edited resource files_
 
 Pay special attention to the use of globs like `**` which is important to capture subdirectories. A common oversight is to forget to include the file extensions in the file pattern, meaning changes in files with those extensions will not trigger updates.
 
@@ -94,10 +96,11 @@ Here’s an example of what a host file entry might look like:
 ```
 
 You'll need to open your host file as an administrator or root user and append your host mappings. The location of the host file is as follows:
+
 - **Linux/macOS:** `/etc/hosts`
 - **Windows:** `C:\Windows\System32\drivers\etc\hosts`
 
-*Code Snippet 3: Example host file entry for resolving the domain 'laravel.test'*
+_Code Snippet 3: Example host file entry for resolving the domain 'laravel.test'_
 
 Once you've added this, try accessing `laravel.test` in your browser and ensure it resolves correctly and your application is loaded. If you see that `laravel.test` does not resolve, double check that the container is up and running and the host mappings are correct.
 

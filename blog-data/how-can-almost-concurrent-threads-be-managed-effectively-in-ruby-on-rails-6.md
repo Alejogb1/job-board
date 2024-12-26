@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-almost-concurrent-threads-be-managed-effectively-in-ruby-on-rails-6"
 ---
 
-Okay, let's tackle this. Managing almost concurrent threads in Ruby on Rails 6 is, shall we say, not always straightforward. I've seen projects grind to a halt, become riddled with race conditions, or just plain exhibit unpredictable behavior because concurrency wasn't handled thoughtfully. I recall a particularly brutal project where we were processing large batches of user data; we went from snappy to sluggish in a matter of days. The root? Poor concurrency management. We were throwing threads at the problem without proper control. It taught me some harsh lessons, and I've learned to approach concurrent tasks with a more cautious, yet effective, toolkit since.
+, let's tackle this. Managing almost concurrent threads in Ruby on Rails 6 is, shall we say, not always straightforward. I've seen projects grind to a halt, become riddled with race conditions, or just plain exhibit unpredictable behavior because concurrency wasn't handled thoughtfully. I recall a particularly brutal project where we were processing large batches of user data; we went from snappy to sluggish in a matter of days. The root? Poor concurrency management. We were throwing threads at the problem without proper control. It taught me some harsh lessons, and I've learned to approach concurrent tasks with a more cautious, yet effective, toolkit since.
 
-The key here is that, while ruby has threads, they are not true os-level threads, but green threads managed by the Ruby VM (specifically in MRI). This means that you will not be able to have true parallel execution in MRI for things like pure ruby code, but you *can* effectively manage concurrent execution. This is different than say, Java, or Go, where the language runtimes themselves have built in OS threads, and can therefore parallelize operations. Because of these constraints, our primary tools aren't going to be aggressive attempts to force parallelism via ruby threads, but rather, strategies that make efficient use of concurrency and minimize contention.
+The key here is that, while ruby has threads, they are not true os-level threads, but green threads managed by the Ruby VM (specifically in MRI). This means that you will not be able to have true parallel execution in MRI for things like pure ruby code, but you _can_ effectively manage concurrent execution. This is different than say, Java, or Go, where the language runtimes themselves have built in OS threads, and can therefore parallelize operations. Because of these constraints, our primary tools aren't going to be aggressive attempts to force parallelism via ruby threads, but rather, strategies that make efficient use of concurrency and minimize contention.
 
 First, let's break down what "almost concurrent" might mean in the context of Rails. Most likely, we're talking about operations that are not inherently synchronous, meaning that they don't require the execution of one operation to finish entirely before the next one begins. This often involves i/o-bound tasks, such as API calls, database interactions, or other forms of external communication. Ruby's Global Interpreter Lock (GIL), or rather, its absence in JRuby and TruffleRuby, impacts how true parallelism may (or may not) occur. But our main focus is maximizing efficient use of available processing power through concurrency within Rails' operational constraints.
 
@@ -25,6 +25,7 @@ class EmailJob < ApplicationJob
   end
 end
 ```
+
 And then we'd call it within a controller or service object:
 
 ```ruby
@@ -40,9 +41,9 @@ def create
 end
 ```
 
-Here we aren't truly parallelizing, but we're making the user experience much better; we're offloading a relatively slow task to the background and making sure the page loads *now*. While our code does not parallelize across different threads, when these jobs are handled by sidekiq, they are handled in a different thread or process, that is separate from your webserver request handler.
+Here we aren't truly parallelizing, but we're making the user experience much better; we're offloading a relatively slow task to the background and making sure the page loads _now_. While our code does not parallelize across different threads, when these jobs are handled by sidekiq, they are handled in a different thread or process, that is separate from your webserver request handler.
 
-The second crucial element is managing resources appropriately. When dealing with concurrent processes, database access becomes a major potential bottleneck, and we *must* avoid using the same database connection across threads. In sidekiq (or other async queues), each worker thread has its own database connection pool, but you still need to handle database reads and updates carefully within your jobs. This prevents database contention and locks and ensures that all processes can be handled effectively. This is critical because most web frameworks are single-threaded in their request-handling. If the request handling threads start blocking on long I/O, then your site effectively becomes unavailable.
+The second crucial element is managing resources appropriately. When dealing with concurrent processes, database access becomes a major potential bottleneck, and we _must_ avoid using the same database connection across threads. In sidekiq (or other async queues), each worker thread has its own database connection pool, but you still need to handle database reads and updates carefully within your jobs. This prevents database contention and locks and ensures that all processes can be handled effectively. This is critical because most web frameworks are single-threaded in their request-handling. If the request handling threads start blocking on long I/O, then your site effectively becomes unavailable.
 
 Here's an example of how you might make more than one API call concurrently, using concurrent-ruby gem, and offload it to a background thread:
 
@@ -55,13 +56,13 @@ class ApiJob < ApplicationJob
     futures = []
     futures << Concurrent::Future.execute { make_api_call(endpoint1) }
     futures << Concurrent::Future.execute { make_api_call(endpoint2) }
-    
+
     results = futures.map(&:value)
     process_results(results)
   end
 
   private
-  
+
   def make_api_call(endpoint)
       #replace this with your actual api call.
     HTTParty.get(endpoint).body
@@ -89,4 +90,4 @@ Lastly, proper error handling is absolutely vital, and especially so in concurre
 
 For more in-depth reading on concurrency patterns, I would suggest reviewing the "Patterns of Enterprise Application Architecture" by Martin Fowler, as it provides foundational guidance on managing concurrency, transactions and related concepts in complex software systems, which is invaluable for real-world application development. For more specifics on concurrent Ruby itself, I would recommend exploring the documentation of the "concurrent-ruby" gem and also looking into the various articles detailing ruby's Global Interpreter Lock (GIL) behaviour.
 
-In summary, effective management of "almost concurrent" threads in Rails 6 isn’t about trying to force true parallelism with Ruby's threads, it's about architecting your application to leverage background jobs, manage database access wisely, and implement comprehensive error handling. By doing so, you move long running processes out of the main request thread, and maximize concurrency using appropriate tools. This strategy, honed through past project pains, has allowed me to build robust, scalable Rails applications. It's about using the *right* concurrency mechanisms in the right way, rather than merely trying to force concurrency in places where it's ill-suited.
+In summary, effective management of "almost concurrent" threads in Rails 6 isn’t about trying to force true parallelism with Ruby's threads, it's about architecting your application to leverage background jobs, manage database access wisely, and implement comprehensive error handling. By doing so, you move long running processes out of the main request thread, and maximize concurrency using appropriate tools. This strategy, honed through past project pains, has allowed me to build robust, scalable Rails applications. It's about using the _right_ concurrency mechanisms in the right way, rather than merely trying to force concurrency in places where it's ill-suited.

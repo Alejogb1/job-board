@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-a-template-function-query-a-typedef-alias"
 ---
 
-Alright, let's tackle this one. I remember a project, way back when, where we were building a rather complex data processing pipeline. We relied heavily on typedef aliases to provide semantic meaning to different data structures, which, admittedly, made things significantly easier to reason about. Then came the need to write generic, templated functions that had to work across all these types – things got a little hairy for a while until we found a good path forward. The question here, then, is how can a template function reliably query a typedef alias? The simple answer is, you generally don't query it *directly*. Instead, you're querying the underlying type, and the typedef is just a means to accessing that.
+, let's tackle this one. I remember a project, way back when, where we were building a rather complex data processing pipeline. We relied heavily on typedef aliases to provide semantic meaning to different data structures, which, admittedly, made things significantly easier to reason about. Then came the need to write generic, templated functions that had to work across all these types – things got a little hairy for a while until we found a good path forward. The question here, then, is how can a template function reliably query a typedef alias? The simple answer is, you generally don't query it _directly_. Instead, you're querying the underlying type, and the typedef is just a means to accessing that.
 
-The critical thing to understand is that a `typedef` (or a more modern `using` alias) creates a new name for an existing type. It doesn't create a new type altogether. Therefore, when you write a template function that needs to know information about the underlying type, you must query *that* type, not the alias itself. This query typically happens through type traits, which are a powerful mechanism in C++ designed for this exact purpose.
+The critical thing to understand is that a `typedef` (or a more modern `using` alias) creates a new name for an existing type. It doesn't create a new type altogether. Therefore, when you write a template function that needs to know information about the underlying type, you must query _that_ type, not the alias itself. This query typically happens through type traits, which are a powerful mechanism in C++ designed for this exact purpose.
 
 Let’s dive into how this works using a scenario. Imagine we have a couple of type definitions:
 
@@ -32,7 +32,7 @@ void process_value(T value) {
 }
 ```
 
-In this case, when we call `process_value(MyInteger(5))` or `process_value(FloatType(3.14))`, the template `T` will *not* be `MyInteger` or `FloatType` during compile-time. Instead, it will be `int` and `float` respectively. This is because the compiler substitutes the *underlying* type into the template. The type traits `std::is_integral` and `std::is_floating_point` operate directly on the concrete type, irrespective of aliases. This behavior is crucial, and it’s what allows us to use generic functions that operate uniformly on various type aliases.
+In this case, when we call `process_value(MyInteger(5))` or `process_value(FloatType(3.14))`, the template `T` will _not_ be `MyInteger` or `FloatType` during compile-time. Instead, it will be `int` and `float` respectively. This is because the compiler substitutes the _underlying_ type into the template. The type traits `std::is_integral` and `std::is_floating_point` operate directly on the concrete type, irrespective of aliases. This behavior is crucial, and it’s what allows us to use generic functions that operate uniformly on various type aliases.
 
 Now, let's get to a more complex scenario. Assume we have a custom container, say a `MyVector`, and we typedef a specific variant of it:
 
@@ -66,7 +66,7 @@ void process_container(Container& container) {
 }
 ```
 
-This code will fail because our simple `MyVector` doesn't define a `value_type`.  This is a design problem that we'll fix using `std::iterator_traits`. Let's suppose we add a iterator definition to our container:
+This code will fail because our simple `MyVector` doesn't define a `value_type`. This is a design problem that we'll fix using `std::iterator_traits`. Let's suppose we add a iterator definition to our container:
 
 ```cpp
 template <typename T>
@@ -132,4 +132,4 @@ Here, `decltype` infers the type of `object.inner` at compile time, which can be
 
 In summary, you rarely need to directly query a `typedef` or alias in a template function. Instead, you should work with the underlying concrete types by utilizing mechanisms such as type traits (`std::is_integral`, `std::is_floating_point`), iterator traits (`std::iterator_traits`), and `decltype`. These methods make your templates generic, adaptable, and robust to type aliasing.
 
-For further reading, I'd recommend looking into *Modern C++ Design* by Andrei Alexandrescu, which has an extensive discussion of type traits and policy-based design. Additionally, *Effective Modern C++* by Scott Meyers provides practical advice on how to use these features correctly within a modern C++ context. Understanding the fundamentals of the C++ type system and the standard library traits is crucial for writing effective generic code that is decoupled from specific type definitions and aliases.
+For further reading, I'd recommend looking into _Modern C++ Design_ by Andrei Alexandrescu, which has an extensive discussion of type traits and policy-based design. Additionally, _Effective Modern C++_ by Scott Meyers provides practical advice on how to use these features correctly within a modern C++ context. Understanding the fundamentals of the C++ type system and the standard library traits is crucial for writing effective generic code that is decoupled from specific type definitions and aliases.

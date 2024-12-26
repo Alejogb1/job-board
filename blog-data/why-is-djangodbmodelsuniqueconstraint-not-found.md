@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-djangodbmodelsuniqueconstraint-not-found"
 ---
 
-Alright, let's tackle this. I’ve certainly seen my share of unique constraint headaches while working with django over the years, so let’s get into the details of why you might be running into that `django.db.models.UniqueConstraint` error. It’s a bit more nuanced than just a missing package, and pinpointing the exact cause often requires some careful investigation.
+, let's tackle this. I’ve certainly seen my share of unique constraint headaches while working with django over the years, so let’s get into the details of why you might be running into that `django.db.models.UniqueConstraint` error. It’s a bit more nuanced than just a missing package, and pinpointing the exact cause often requires some careful investigation.
 
 The core issue you're facing, a "not found" error for `django.db.models.UniqueConstraint`, typically means your django project either hasn’t been updated far enough, or is simply configured to use an older database engine that doesn’t support this specific constraint definition natively. Let’s break down why, and then explore some solutions.
 
@@ -31,7 +31,7 @@ class UserProfile(models.Model):
     username = models.CharField(max_length=150)
     email = models.EmailField()
     department = models.CharField(max_length=100)
-    
+
     class Meta:
         unique_together = ('username', 'department') # This old approach
 
@@ -49,7 +49,7 @@ class UserProfile(models.Model):
     username = models.CharField(max_length=150)
     email = models.EmailField()
     department = models.CharField(max_length=100)
-    
+
     class Meta:
         constraints = [
             UniqueConstraint(fields=['username', 'department'], name='unique_user_dept'),
@@ -105,7 +105,7 @@ class UserProfile(models.Model):
     username = models.CharField(max_length=150)
     email = models.EmailField()
     department = models.CharField(max_length=100)
-    
+
     class Meta:
         constraints = [
             UniqueConstraint(fields=['username', 'department'], name='unique_user_dept'),

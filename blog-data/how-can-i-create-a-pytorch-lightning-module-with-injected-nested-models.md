@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-pytorch-lightning-module-with-injected-nested-models"
 ---
 
-Okay, let's talk about crafting PyTorch Lightning modules that incorporate injected, nested models. This isn't just theoretical; I’ve certainly faced this scenario multiple times in my past projects, particularly when working with complex architectures like multi-modal systems or hierarchical attention networks. Getting this structured correctly is crucial for both maintainability and effective training.
+, let's talk about crafting PyTorch Lightning modules that incorporate injected, nested models. This isn't just theoretical; I’ve certainly faced this scenario multiple times in my past projects, particularly when working with complex architectures like multi-modal systems or hierarchical attention networks. Getting this structured correctly is crucial for both maintainability and effective training.
 
 The challenge essentially boils down to cleanly separating the concerns within your LightningModule. You have the high-level logic—training loops, validation steps, optimization, etc.—and then the specific modeling components, which might themselves be composed of several layers. We need to make sure that our LightningModule isn't just one giant, monolithic block of code.
 
@@ -97,12 +97,13 @@ class ComplexTextDecoder(nn.Module):
         self.embedding = nn.Embedding(vocab_size, hidden_size)
         self.attention = AttentionMechanism(hidden_size)
         self.linear = nn.Linear(hidden_size, vocab_size)
-    
+
     def forward(self, encoded_image, text_input):
        embedded = self.embedding(text_input)
        attended = self.attention(encoded_image, encoded_image, encoded_image) # Dummy attention to demonstrate
        return self.linear(attended+embedded)
 ```
+
 Now, the `ComplexTextDecoder` encapsulates the `AttentionMechanism`. When injected, the lightning module would work the same way as the previous example, except the decoder has its own internal layers. Note how `AttentionMechanism` does not depend on Lightning, and it is a pure pytorch module.
 
 **Example 3: Handling Different Optimizer Configurations**

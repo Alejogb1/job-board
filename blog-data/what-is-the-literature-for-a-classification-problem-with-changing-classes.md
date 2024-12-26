@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-is-the-literature-for-a-classification-problem-with-changing-classes"
 ---
 
-alright, so, you're asking about classification problems where the classes themselves change over time, not just the distribution of examples within a fixed set of classes. i've been there, done that, got the t-shirt with the faded print of a confused neural network. it's a tricky area, and it took me a while to get my head around it properly. let me share my experiences.
+, so, you're asking about classification problems where the classes themselves change over time, not just the distribution of examples within a fixed set of classes. i've been there, done that, got the t-shirt with the faded print of a confused neural network. it's a tricky area, and it took me a while to get my head around it properly. let me share my experiences.
 
 this isn't your standard supervised learning gig, where you train a model on a static dataset and then throw it into the wild hoping it behaves. we're talking about a more dynamic, evolving landscape. we are dealing with what's generally referred to as concept drift or concept evolution. sometimes classes merge, sometimes they split, sometimes they just vanish and new ones appear, like a badly coded game of snake.
 

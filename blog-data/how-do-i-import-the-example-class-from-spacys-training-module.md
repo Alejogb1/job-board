@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-import-the-example-class-from-spacys-training-module"
 ---
 
-Alright, let's tackle this. I've certainly been down this road a few times, often encountering similar import challenges, especially when diving into the intricacies of spacy's training pipeline. Importing the `Example` class from spaCy's training module isn't always as straightforward as one might expect, primarily because it's not directly exposed at the top level of the `spacy` package. It lives within the training specific submodules. Understanding how spaCy structures its internal modules and the intended use case for `Example` objects helps clarify why the import path is as it is.
+, let's tackle this. I've certainly been down this road a few times, often encountering similar import challenges, especially when diving into the intricacies of spacy's training pipeline. Importing the `Example` class from spaCy's training module isn't always as straightforward as one might expect, primarily because it's not directly exposed at the top level of the `spacy` package. It lives within the training specific submodules. Understanding how spaCy structures its internal modules and the intended use case for `Example` objects helps clarify why the import path is as it is.
 
 In my experience, the main confusion usually stems from a misunderstanding of spaCy's architecture. We typically import functionalities like `nlp` or `Doc` from the root of the package (`import spacy`), which might lead one to expect the `Example` class to be accessible similarly. However, the training components, including `Example`, are kept separate to maintain a cleaner api for general usage. The `Example` class, as you likely know, is crucial for building custom training data and, consequently, for modifying spaCy models to fit domain-specific needs. It serves as the fundamental data structure that pairs a `Doc` object (the input text) with its corresponding annotations, facilitating the learning process.
 
@@ -45,6 +45,7 @@ print(example.predicted)  # prints the doc object that you passed.
 print(example.reference.ents) # Prints span of entities as defined in annotation
 
 ```
+
 Here, `Example.from_dict` facilitates constructing a training data point from a `Doc` and a dictionary containing the gold standard annotations. This demonstrates a common way `Example` objects get created.
 
 **Example 2: Using the Example for model update**
@@ -83,6 +84,7 @@ for i in range(10): # Run for a small number of epochs
     print(f"epoch: {i}, losses {losses}")
 
 ```
+
 This snippet shows how the `Example` object is the crucial input during the `nlp.update` phase, facilitating the backward pass and model parameter adjustments based on your training data. The `losses` object accumulates the errors produced during the model update.
 
 **Example 3: Loading and saving Examples in spacy's 'DocBin' format.**
@@ -123,6 +125,7 @@ for i, (text, annotations) in enumerate(train_data):
 
 print(len(examples)) # prints 3
 ```
+
 This example shows that for more complex tasks, and for more efficient reading/writing of documents, the `DocBin` class is handy. Notice that we save the reference doc of the `Example` objects to disk. This is a common pattern used.
 
 In conclusion, the `Example` class is essential when training or fine-tuning spaCy models with your own specific dataset. The key is to import it correctly from `spacy.training`. I find the official spaCy documentation particularly helpful for staying up-to-date with the most recent versions. I also recommend delving into "Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper for a broader understanding of NLP and data preparation techniques and "Speech and Language Processing" by Daniel Jurafsky and James H. Martin for a more theoretical understanding of NLP and machine learning as applied to NLP tasks. These resources provide the proper context required to use these classes efficiently.

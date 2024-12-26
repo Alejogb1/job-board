@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "is-it-possible-to-train-my-own-ocr-through-tesseract"
 ---
 
-alright, so, you're asking about training your own ocr model using tesseract, that’s a pretty interesting path to go down and it's not unusual that you’re looking into it. i've definitely been there. let’s break it down and i will share my experience, it’s going to be a bit of a journey, though.
+, so, you're asking about training your own ocr model using tesseract, that’s a pretty interesting path to go down and it's not unusual that you’re looking into it. i've definitely been there. let’s break it down and i will share my experience, it’s going to be a bit of a journey, though.
 
-first things first: yes, it is *absolutely* possible to train tesseract, but let's be very clear here, it's not a walk in the park. tesseract, as it comes out of the box, is already pretty good for a wide range of fonts and text styles. it has been trained for years on massive datasets, we are talking *years* of effort. it’s a beast in its own sense. but if you're dealing with, say, specific fonts, or a very particular text layout, low image quality, or maybe handwritten text (which is where things get really tricky), or the text has a lot of noise, it's understandable why you might want to tweak its brains, in our case train it, to understand your specific need.
+first things first: yes, it is _absolutely_ possible to train tesseract, but let's be very clear here, it's not a walk in the park. tesseract, as it comes out of the box, is already pretty good for a wide range of fonts and text styles. it has been trained for years on massive datasets, we are talking _years_ of effort. it’s a beast in its own sense. but if you're dealing with, say, specific fonts, or a very particular text layout, low image quality, or maybe handwritten text (which is where things get really tricky), or the text has a lot of noise, it's understandable why you might want to tweak its brains, in our case train it, to understand your specific need.
 
 when i started messing around with ocr years ago, i was working with old scanned documents, really poor quality scans, some of them were practically unreadable even by human eye without a proper magnifier. tesseract struggled, i mean, it really struggled. it would often spit out gibberish. i tried the usual image preprocessing tricks, the standard sharpening, noise reduction and binarization, they helped a little, but it was not enough. that's when i realized i needed to go further, much further. i needed tesseract to understand this specific old text, its unique quirks and deformities.
 
@@ -28,24 +28,30 @@ text2image --text=/my-dataset/my-custom-font.000.txt \
            --resolution 300
 unicharset_extractor /my-dataset/my-custom-font.box
 ```
+
 repeat this for all the images in the dataset.
 
 after that, you need to prepare the character set, or `unicharset` file. this defines the characters your model needs to understand. basically, this command extracts a list of all unique characters that are available in your box files, created in the last step:
+
 ```bash
 unicharset_extractor /my-dataset/my-custom-font.box
 ```
+
 then you need to define a font property file:
+
 ```bash
 echo "my-custom-font 0 0 0 0 0" > font_properties
 ```
 
 once you have the `unicharset`, and `font_properties` you are ready for the next step. you need to generate the tr files that tesseract will use for training, this will involve generating a `shapetable`, `inttemp` and `pffmtable` files that will be used for the training, those are the files that contain all the information of your data. the command is as follows:
+
 ```bash
 mftraining -F font_properties -U unicharset my-custom-font.box
 cntraining my-custom-font.tr
 ```
 
 the last step is the actual training, it will generate a trained data file for your specific font, and will use the files generated before to train tesseract.
+
 ```bash
 combine_tessdata my-custom-font.
 ```
@@ -58,6 +64,6 @@ a thing that is important to say is: the quality of the results will depend enti
 
 now, if you really want to get deep into this, i would recommend checking out the tesseract documentation on the github repository, it’s a gold mine of information. the tesseract wiki is also quite helpful. also check out the original paper of the system by google, it contains a ton of info on the specifics of the engine and how it works. it’s very helpful to understand what is happening behind the scenes.
 
-there are also great books about the topic. *text recognition: methods and applications* by shilman et. al. is a very good book to get familiar with the general concepts and it will also give you more theoretical background. or you might be interested in *image processing and analysis* by bhalerao et. al. which has a chapter specifically about text recognition that i found very helpful to my journey.
+there are also great books about the topic. _text recognition: methods and applications_ by shilman et. al. is a very good book to get familiar with the general concepts and it will also give you more theoretical background. or you might be interested in _image processing and analysis_ by bhalerao et. al. which has a chapter specifically about text recognition that i found very helpful to my journey.
 
 i am not going to lie, training your own ocr is hard, very hard. you have to be very patient and very meticulous, but it is definitely worth it if you have a specific application in mind. and remember, your experience will be unique, my journey is not yours, but if you manage to train your own model, let me know how it goes, i'm curious to see what results you get!

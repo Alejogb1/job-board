@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-handle-a-graph-neural-network-binary-classification"
 ---
 
-alright, so you're tackling graph neural network binary classification, right? i've been there, done that, got the t-shirt with the slightly faded graph logo on it. trust me, it can be a bit of a beast if you're not careful but once you get the hang of it, it's actually pretty straightforward, at least for most cases.
+, so you're tackling graph neural network binary classification, right? i've been there, done that, got the t-shirt with the slightly faded graph logo on it. trust me, it can be a bit of a beast if you're not careful but once you get the hang of it, it's actually pretty straightforward, at least for most cases.
 
 basically, what we're dealing with is a situation where you have some data represented as a graph—nodes connected by edges—and your goal is to predict whether each node belongs to one of two classes. this could be anything: identifying fraudulent accounts in a social network, predicting if a molecule is active, or even classifying user behavior in an online platform. i once used this technique to analyze server logs and identify potential intrusion attempts (it was a long time ago in a company far, far away with really questionable IT).
 
@@ -77,6 +77,7 @@ class SimpleGCN(nn.Module):
 # hidden channel to 16 and we are making a binary classification to 2
 model = SimpleGCN(num_node_features=2, hidden_channels=16, num_classes=2)
 ```
+
 now, the `forward` method simply defines the data flow, first a graph convolution, then a `relu` activation, followed by a final convolution, now the model is ready to be trained.
 
 **training**
@@ -112,6 +113,7 @@ with torch.no_grad():
     print(f'predicted labels: {predicted_labels}')
     print(f'actual labels   : {data.y}')
 ```
+
 notice that in the training loop, we do `optimizer.zero_grad()` first because otherwise the gradients will be accumulated. then we just train as normal by calculating the loss, backward and then step to optimize.
 
 when dealing with larger graphs, it's a good idea to experiment with different learning rates, batch sizes, and regularization techniques to see what works best. sometimes, the simplest models are the most effective but, it is always good to have a robust pipeline to test new things. remember when i mentioned the server log project? i spent almost a week just experimenting with different learning rates and early stopping strategies before i could even get a reasonable model. good times!
@@ -122,18 +124,18 @@ finally, after training, you need to evaluate how well your model performs. for 
 
 **tips and tricks**
 
-*   **data augmentation:** if you have a small dataset, consider using techniques like node masking, edge shuffling, or subgraph sampling to augment the data. i've seen these boost model performance significantly, especially in imbalanced datasets.
-*   **hyperparameter tuning:** the optimal gnn architecture, learning rate, number of layers, and hidden unit size can vary from dataset to dataset. use techniques like grid search or random search with cross-validation to find the best hyperparameters.
-*   **interpretability:** understanding why your gnn makes a certain prediction can be useful. explore techniques like attention visualization if you're using a graph attention network (gat) or saliency mapping. sometimes, just a visualization can help to debug the model.
-*   **gpu acceleration:** training gnns can be computationally intensive, so using a gpu can speed things up dramatically. trust me, your computer will thank you, and you won't have to stare at the training process for hours, you can finally have that coffee break you deserve.
-*   **be wary of overfitting:** since gnn's tend to have large number of parameters, watch out for overfitting the training data, try to use a validation set to perform early stopping if you start to see performance degradation in that validation set.
+- **data augmentation:** if you have a small dataset, consider using techniques like node masking, edge shuffling, or subgraph sampling to augment the data. i've seen these boost model performance significantly, especially in imbalanced datasets.
+- **hyperparameter tuning:** the optimal gnn architecture, learning rate, number of layers, and hidden unit size can vary from dataset to dataset. use techniques like grid search or random search with cross-validation to find the best hyperparameters.
+- **interpretability:** understanding why your gnn makes a certain prediction can be useful. explore techniques like attention visualization if you're using a graph attention network (gat) or saliency mapping. sometimes, just a visualization can help to debug the model.
+- **gpu acceleration:** training gnns can be computationally intensive, so using a gpu can speed things up dramatically. trust me, your computer will thank you, and you won't have to stare at the training process for hours, you can finally have that coffee break you deserve.
+- **be wary of overfitting:** since gnn's tend to have large number of parameters, watch out for overfitting the training data, try to use a validation set to perform early stopping if you start to see performance degradation in that validation set.
 
 **recommended resources**
 
-*   **"graph representation learning" by william hamilton:** this is a pretty comprehensive book on everything related to graph neural networks. it's a good place to start for a more in-depth understanding.
-*   **"deep learning on graphs" (arxiv paper):** this paper gives a solid survey of many different kinds of gnn architectures.
-*  **pytorch geometric documentation:** the official documentation and the examples are very helpful. they helped me a lot when i had to implement some more complex gnn's.
-*   **a stackoverflow search (of course):** i use it all the time, seriously, there are a lot of good information and help from users like me that can help.
-*   **online courses on coursera or edx:** there are a lot of online courses that are very good with the subject.
+- **"graph representation learning" by william hamilton:** this is a pretty comprehensive book on everything related to graph neural networks. it's a good place to start for a more in-depth understanding.
+- **"deep learning on graphs" (arxiv paper):** this paper gives a solid survey of many different kinds of gnn architectures.
+- **pytorch geometric documentation:** the official documentation and the examples are very helpful. they helped me a lot when i had to implement some more complex gnn's.
+- **a stackoverflow search (of course):** i use it all the time, seriously, there are a lot of good information and help from users like me that can help.
+- **online courses on coursera or edx:** there are a lot of online courses that are very good with the subject.
 
 it is a process that requires some effort to get it right. but i hope this explanation helps. keep at it and you'll get it eventually, i promise! it is all about practicing, and as the old programmer joke goes: "i'd tell you the joke about udp, but you might not get it".

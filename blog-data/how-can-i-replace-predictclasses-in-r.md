@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-replace-predictclasses-in-r"
 ---
 
-Alright, let's tackle this one. It's a common pain point when transitioning to newer versions of certain machine learning libraries in R, specifically around model prediction outputs. You're encountering the deprecation of `predict_classes()`, which was quite handy. I recall facing a similar issue a few years back when a large-scale sentiment analysis pipeline I was maintaining got hit with some breaking changes in the underlying TensorFlow backend. Let’s break down how to achieve the same functionality – getting class predictions – without relying on that old function.
+, let's tackle this one. It's a common pain point when transitioning to newer versions of certain machine learning libraries in R, specifically around model prediction outputs. You're encountering the deprecation of `predict_classes()`, which was quite handy. I recall facing a similar issue a few years back when a large-scale sentiment analysis pipeline I was maintaining got hit with some breaking changes in the underlying TensorFlow backend. Let’s break down how to achieve the same functionality – getting class predictions – without relying on that old function.
 
 The fundamental problem is that `predict_classes()` typically bypassed the raw output of a model's prediction layer, directly providing class indices (or labels, depending on context). Now, with the direction more towards explicit handling of probability distributions, we need to explicitly process the raw outputs to get our class predictions. This is generally more transparent and gives you greater control over the process.
 

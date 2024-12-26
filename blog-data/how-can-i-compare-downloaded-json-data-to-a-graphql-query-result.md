@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-compare-downloaded-json-data-to-a-graphql-query-result"
 ---
 
-Okay, let's tackle this. Funny enough, I remember back in '17, when we were migrating a legacy REST API to GraphQL, we faced a similar challenge daily. We had a suite of integration tests that relied on pre-existing json structures downloaded from the old endpoints, and suddenly we had this new graphql schema returning, well, graphql structured data. We needed a way to consistently validate that the data was semantically equivalent, even if the shape and format had shifted. Simply comparing strings wasn’t going to cut it; it was more nuanced than that. Here's how I approached the problem, and how you can too.
+, let's tackle this. Funny enough, I remember back in '17, when we were migrating a legacy REST API to GraphQL, we faced a similar challenge daily. We had a suite of integration tests that relied on pre-existing json structures downloaded from the old endpoints, and suddenly we had this new graphql schema returning, well, graphql structured data. We needed a way to consistently validate that the data was semantically equivalent, even if the shape and format had shifted. Simply comparing strings wasn’t going to cut it; it was more nuanced than that. Here's how I approached the problem, and how you can too.
 
-First, we need to acknowledge that comparing downloaded json and graphql results directly, as raw strings, is almost always a recipe for pain. GraphQL is designed to be flexible in response structure depending on the query; order of fields isn’t guaranteed. Also, JSON downloaded from an older REST API might be arbitrarily structured. We're essentially comparing apples to a potential fruit salad, with some of those fruits being slightly mislabeled! So what do we do? We need to normalize the data. Normalization here means transforming both datasets into a consistent, comparable structure *before* comparing the content.
+First, we need to acknowledge that comparing downloaded json and graphql results directly, as raw strings, is almost always a recipe for pain. GraphQL is designed to be flexible in response structure depending on the query; order of fields isn’t guaranteed. Also, JSON downloaded from an older REST API might be arbitrarily structured. We're essentially comparing apples to a potential fruit salad, with some of those fruits being slightly mislabeled! So what do we do? We need to normalize the data. Normalization here means transforming both datasets into a consistent, comparable structure _before_ comparing the content.
 
 The core principle revolves around reducing both the JSON and GraphQL responses into a canonical, sortable representation. I primarily utilize the following steps.
 
@@ -24,27 +24,32 @@ This first snippet focuses on creating a generic sort function that handles obje
 
 ```javascript
 function deepSort(obj) {
-    if (Array.isArray(obj)) {
-        //attempt to sort objects by unique identifier, else resort to string sort.
-        obj.sort((a, b) => {
-          if (typeof a === 'object' && a !== null && typeof b === 'object' && b !== null) {
-            if (a.id && b.id) {
-              return String(a.id).localeCompare(String(b.id));
-            }
-          }
-            return JSON.stringify(a).localeCompare(JSON.stringify(b));
-        });
+  if (Array.isArray(obj)) {
+    //attempt to sort objects by unique identifier, else resort to string sort.
+    obj.sort((a, b) => {
+      if (
+        typeof a === "object" &&
+        a !== null &&
+        typeof b === "object" &&
+        b !== null
+      ) {
+        if (a.id && b.id) {
+          return String(a.id).localeCompare(String(b.id));
+        }
+      }
+      return JSON.stringify(a).localeCompare(JSON.stringify(b));
+    });
 
-        return obj.map(deepSort);
-    } else if (typeof obj === 'object' && obj !== null) {
-        const sortedKeys = Object.keys(obj).sort();
-        const sortedObj = {};
-        sortedKeys.forEach(key => {
-            sortedObj[key] = deepSort(obj[key]);
-        });
-        return sortedObj;
-    }
-    return obj;
+    return obj.map(deepSort);
+  } else if (typeof obj === "object" && obj !== null) {
+    const sortedKeys = Object.keys(obj).sort();
+    const sortedObj = {};
+    sortedKeys.forEach((key) => {
+      sortedObj[key] = deepSort(obj[key]);
+    });
+    return sortedObj;
+  }
+  return obj;
 }
 ```
 
@@ -56,19 +61,19 @@ Here is a function to simulate selecting only a subset of the downloaded JSON ba
 
 ```javascript
 function filterJson(jsonData, fields) {
-    if (typeof jsonData !== 'object' || jsonData === null) {
-        return jsonData; // not a relevant object, return directly
+  if (typeof jsonData !== "object" || jsonData === null) {
+    return jsonData; // not a relevant object, return directly
+  }
+  if (Array.isArray(jsonData)) {
+    return jsonData.map((item) => filterJson(item, fields));
+  }
+  const filtered = {};
+  for (const key of fields) {
+    if (jsonData.hasOwnProperty(key)) {
+      filtered[key] = filterJson(jsonData[key], fields[key] || []);
     }
-    if (Array.isArray(jsonData)) {
-      return jsonData.map(item => filterJson(item, fields));
-    }
-    const filtered = {};
-    for (const key of fields) {
-        if (jsonData.hasOwnProperty(key)) {
-            filtered[key] = filterJson(jsonData[key], fields[key] || []);
-        }
-    }
-    return filtered;
+  }
+  return filtered;
 }
 ```
 
@@ -80,41 +85,44 @@ Finally, here is a function to perform a deep comparison, with a few basic type 
 
 ```javascript
 function deepCompare(obj1, obj2) {
-    if (typeof obj1 !== typeof obj2) {
-      return `Type mismatch: ${typeof obj1} vs ${typeof obj2}`;
+  if (typeof obj1 !== typeof obj2) {
+    return `Type mismatch: ${typeof obj1} vs ${typeof obj2}`;
+  }
+  if (typeof obj1 !== "object" || obj1 === null || obj2 === null) {
+    if (obj1 !== obj2) {
+      return `Value mismatch: ${String(obj1)} vs ${String(obj2)}`;
     }
-    if (typeof obj1 !== 'object' || obj1 === null || obj2 === null) {
-       if (obj1 !== obj2) {
-         return `Value mismatch: ${String(obj1)} vs ${String(obj2)}`;
-       }
-        return true;
-    }
-
-    if (Array.isArray(obj1) && Array.isArray(obj2)) {
-      if (obj1.length !== obj2.length) {
-        return `Array length mismatch: ${obj1.length} vs ${obj2.length}`;
-      }
-      for (let i = 0; i < obj1.length; i++) {
-        const result = deepCompare(obj1[i], obj2[i]);
-          if (result !== true) return `Array element mismatch at index ${i}: ${result}`;
-      }
-       return true;
-    }
-
-    const keys1 = Object.keys(obj1);
-    const keys2 = Object.keys(obj2);
-
-    if (keys1.length !== keys2.length) return `Object key length mismatch: ${keys1.length} vs ${keys2.length}`;
-
-    for (const key of keys1) {
-        if (!obj2.hasOwnProperty(key)) {
-            return `Key mismatch: ${key} missing in second object`;
-        }
-         const result = deepCompare(obj1[key], obj2[key]);
-         if (result !== true) return `Object value mismatch for key ${key}: ${result}`;
-    }
-
     return true;
+  }
+
+  if (Array.isArray(obj1) && Array.isArray(obj2)) {
+    if (obj1.length !== obj2.length) {
+      return `Array length mismatch: ${obj1.length} vs ${obj2.length}`;
+    }
+    for (let i = 0; i < obj1.length; i++) {
+      const result = deepCompare(obj1[i], obj2[i]);
+      if (result !== true)
+        return `Array element mismatch at index ${i}: ${result}`;
+    }
+    return true;
+  }
+
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  if (keys1.length !== keys2.length)
+    return `Object key length mismatch: ${keys1.length} vs ${keys2.length}`;
+
+  for (const key of keys1) {
+    if (!obj2.hasOwnProperty(key)) {
+      return `Key mismatch: ${key} missing in second object`;
+    }
+    const result = deepCompare(obj1[key], obj2[key]);
+    if (result !== true)
+      return `Object value mismatch for key ${key}: ${result}`;
+  }
+
+  return true;
 }
 ```
 

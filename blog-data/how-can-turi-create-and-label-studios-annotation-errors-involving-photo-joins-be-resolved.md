@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-turi-create-and-label-studios-annotation-errors-involving-photo-joins-be-resolved"
 ---
 
-Okay, let's tackle this. I remember a particularly thorny project a few years back, involving satellite imagery analysis for a conservation effort. We used Turi Create for initial model training and Label Studio for annotating various features – forest boundaries, deforestation patches, that sort of thing. The project quickly ran into problems when we started dealing with adjacent image tiles; the edges became a nightmare. It turned out we were suffering from precisely the issue you’ve described – annotation inconsistencies along photo joins, especially when different annotators were involved. These errors stemmed from the way Turi Create and Label Studio handle geospatial data and the human element involved in the annotation process.
+, let's tackle this. I remember a particularly thorny project a few years back, involving satellite imagery analysis for a conservation effort. We used Turi Create for initial model training and Label Studio for annotating various features – forest boundaries, deforestation patches, that sort of thing. The project quickly ran into problems when we started dealing with adjacent image tiles; the edges became a nightmare. It turned out we were suffering from precisely the issue you’ve described – annotation inconsistencies along photo joins, especially when different annotators were involved. These errors stemmed from the way Turi Create and Label Studio handle geospatial data and the human element involved in the annotation process.
 
 Here's the gist: Turi Create, when ingesting image data, doesn't intrinsically understand the geospatial relationship between adjacent images unless explicitly told to. It treats each image as a discrete entity. Consequently, when Label Studio presents those images for annotation, it often leads to inconsistencies where, for example, the same forest boundary is drawn slightly differently along the seam of two adjacent photos. This difference, though seemingly minor visually, can throw off model training significantly, leading to poor performance at those critical boundary regions.
 
@@ -62,45 +62,48 @@ Now, when we integrate the generated metadata with Label Studio, we can create a
 
 ```javascript
 // This JavaScript snippet would be part of a custom HTML template in Label Studio
-function setupAdjacentImageHighlight(metadata, imageElement){
-  const imageName = imageElement.src.split('/').pop();
+function setupAdjacentImageHighlight(metadata, imageElement) {
+  const imageName = imageElement.src.split("/").pop();
   const imageMeta = metadata[imageName];
-    if (!imageMeta){
-        return; //If the image is not found in the metadata, return
-    }
+  if (!imageMeta) {
+    return; //If the image is not found in the metadata, return
+  }
 
-    //example only, needs specific styling to look like a good border
+  //example only, needs specific styling to look like a good border
   imageElement.style.border = "2px solid red";
 
   //example of how to access the coordinates for debugging
-  console.log("Image Name:", imageName, "Bounding Box:", imageMeta.bounding_box);
+  console.log(
+    "Image Name:",
+    imageName,
+    "Bounding Box:",
+    imageMeta.bounding_box
+  );
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const metadata_url = "image_metadata.json"; // Replace this with where the json file is available
+document.addEventListener("DOMContentLoaded", function () {
+  const metadata_url = "image_metadata.json"; // Replace this with where the json file is available
 
-    fetch(metadata_url)
-        .then(response => response.json())
-        .then(data => {
+  fetch(metadata_url)
+    .then((response) => response.json())
+    .then((data) => {
+      // Select all the image elements currently in Label studio
+      document.querySelectorAll("img").forEach(function (image) {
+        setupAdjacentImageHighlight(data, image);
+      });
 
-            // Select all the image elements currently in Label studio
-            document.querySelectorAll('img').forEach(function(image) {
-                setupAdjacentImageHighlight(data, image);
-            });
-
-            // Add a mutation observer, so if images are added dynamically to the page they get the highlighting
-            const observer = new MutationObserver(mutations => {
-               mutations.forEach(mutation => {
-                mutation.addedNodes.forEach(node => {
-                    if (node.tagName === 'IMG') {
-                       setupAdjacentImageHighlight(data, node)
-                     }
-                    });
-                });
-            });
-          observer.observe(document.body, { childList: true, subtree: true });
-
+      // Add a mutation observer, so if images are added dynamically to the page they get the highlighting
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          mutation.addedNodes.forEach((node) => {
+            if (node.tagName === "IMG") {
+              setupAdjacentImageHighlight(data, node);
+            }
+          });
         });
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+    });
 });
 ```
 
@@ -108,6 +111,6 @@ This Javascript snippet fetches the previously created `json` metadata file and 
 
 Finally, for more complex cases involving significant overlap, consider using the spatial data within the metadata to create a combined view of adjacent images within Label Studio. This involves stitching them together into a single canvas and using the metadata to ensure the correct alignment. I won’t provide the specific code here as it’s more complex, but the basic principle would be that you load the multiple images into a javascript canvas using information from the metadata file created previously.
 
-While these Javascript examples aren’t ready for immediate plug-and-play, they should illustrate how you can create the visual information needed to address the issue. For a deeper understanding of these methods, I recommend consulting geospatial processing literature. Specifically, the *Handbook of Geographic Information Science* edited by Wilson & Fotheringham is a valuable resource for understanding the underlying spatial concepts and techniques. For details on raster manipulation within GDAL, the GDAL Cookbook is indispensable, though sometimes a bit technical, it offers a solid foundation. Additionally, the Label Studio documentation itself is excellent and explains how to customize its display.
+While these Javascript examples aren’t ready for immediate plug-and-play, they should illustrate how you can create the visual information needed to address the issue. For a deeper understanding of these methods, I recommend consulting geospatial processing literature. Specifically, the _Handbook of Geographic Information Science_ edited by Wilson & Fotheringham is a valuable resource for understanding the underlying spatial concepts and techniques. For details on raster manipulation within GDAL, the GDAL Cookbook is indispensable, though sometimes a bit technical, it offers a solid foundation. Additionally, the Label Studio documentation itself is excellent and explains how to customize its display.
 
 These methods are what we used to resolve our boundary annotation issues. The key takeaway here is that addressing annotation errors related to photo joins involves a combination of technical preprocessing and clear, consistent human practices. It’s a multidisciplinary effort that requires careful planning but will ultimately lead to improved model accuracy and better overall results.

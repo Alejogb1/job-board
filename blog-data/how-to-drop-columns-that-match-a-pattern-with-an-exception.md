@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "how-to-drop-columns-that-match-a-pattern-with-an-exception"
 ---
 
-alright, so you're looking to ditch some columns from a dataframe based on a pattern, but want to keep certain ones. i've been there, trust me. i remember back when i was first knee-deep in data analysis, i had this huge dataset from some sensor readings – think gigabytes of time series data. the columns were a mess, named like `sensor_1_temperature_raw`, `sensor_1_humidity_raw`, `sensor_2_temperature_raw`, and so on. i needed to get rid of all the `_raw` columns but hold on to the `sensor_id` one and other similar ones so i could make some calculations later. what a headache.
+, so you're looking to ditch some columns from a dataframe based on a pattern, but want to keep certain ones. i've been there, trust me. i remember back when i was first knee-deep in data analysis, i had this huge dataset from some sensor readings – think gigabytes of time series data. the columns were a mess, named like `sensor_1_temperature_raw`, `sensor_1_humidity_raw`, `sensor_2_temperature_raw`, and so on. i needed to get rid of all the `_raw` columns but hold on to the `sensor_id` one and other similar ones so i could make some calculations later. what a headache.
 
 anyway, to tackle this, i generally reach for pandas, it's a life saver for this kind of stuff. so lets start, i think the most straight forward approach involves a little bit of regular expression action combined with a list comprehension. it's pretty efficient and readable once you get the hang of it.
 
-here's the basic idea. we use `df.columns` to get a list of all the column names. then, we iterate through this list and apply a regex to check if a column name matches the pattern. if it does *and* it's not in our exception list, we drop it. simple right?
+here's the basic idea. we use `df.columns` to get a list of all the column names. then, we iterate through this list and apply a regex to check if a column name matches the pattern. if it does _and_ it's not in our exception list, we drop it. simple right?
 
 ```python
 import pandas as pd

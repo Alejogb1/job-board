@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-log-queries-from-multiple-connections-outside-laravels-eloquent"
 ---
 
-Okay, let's tackle this. I've faced this exact challenge a few times over the years, particularly when dealing with legacy systems or when needing to integrate with databases that aren't directly managed by Eloquent. The standard Laravel query log won't catch these external connections, so you need to employ a bit of a different approach. The key here is to understand that we're essentially hooking into the underlying database driver layer, irrespective of Eloquent.
+, let's tackle this. I've faced this exact challenge a few times over the years, particularly when dealing with legacy systems or when needing to integrate with databases that aren't directly managed by Eloquent. The standard Laravel query log won't catch these external connections, so you need to employ a bit of a different approach. The key here is to understand that we're essentially hooking into the underlying database driver layer, irrespective of Eloquent.
 
-My first major encounter with this was back when we were migrating a complex reporting application. It had its own custom data access layer, using a mix of direct PDO connections and some ODBC magic for connecting to an ancient mainframe. Laravel was being integrated piece by piece, and we needed visibility into *all* queries, not just the Eloquent-generated ones. The solution involved a combination of custom loggers and some clever wrapping.
+My first major encounter with this was back when we were migrating a complex reporting application. It had its own custom data access layer, using a mix of direct PDO connections and some ODBC magic for connecting to an ancient mainframe. Laravel was being integrated piece by piece, and we needed visibility into _all_ queries, not just the Eloquent-generated ones. The solution involved a combination of custom loggers and some clever wrapping.
 
 The core principle is to intercept the raw SQL execution before it hits the database. We can achieve this at different levels, but focusing on the PDO driver itself gives us the most comprehensive capture. The specific approach varies a little depending on how your external connections are implemented, but the underlying concept remains the same: we need a way to consistently log SQL statements and their associated binding parameters.
 
@@ -14,7 +14,7 @@ Here's a breakdown of how I usually approach this, along with illustrative code 
 
 **Approach 1: Wrapping PDO Statements**
 
-If you're using PDO directly (or a wrapper that allows access to the underlying PDO instance), you can implement a wrapper class. This class will intercept the `execute` method and log the SQL statement and parameters *before* passing it to the real PDO connection.
+If you're using PDO directly (or a wrapper that allows access to the underlying PDO instance), you can implement a wrapper class. This class will intercept the `execute` method and log the SQL statement and parameters _before_ passing it to the real PDO connection.
 
 ```php
 <?php
@@ -220,15 +220,16 @@ mysql_query("SELECT * FROM users", $conn);
 
 ?>
 ```
-This example shows how to override a very old function, which in most cases is not recommended as the `mysql` extension has been deprecated for years. It can serve as an example to how it could be done with other drivers if no other means of accessing the query exists. *However, this method should be approached with considerable care due to its potential for side effects and fragility.*
+
+This example shows how to override a very old function, which in most cases is not recommended as the `mysql` extension has been deprecated for years. It can serve as an example to how it could be done with other drivers if no other means of accessing the query exists. _However, this method should be approached with considerable care due to its potential for side effects and fragility._
 
 **Important Notes & Recommendations**
 
-* **PSR Logger:** Ensure you use a PSR-3 compatible logger. This allows you to easily switch between different logging mechanisms (e.g., Monolog, Syslog) without rewriting the logging logic.
-* **Performance Considerations:** Log only what’s necessary. Excessive logging, especially of large datasets, can impact performance. Consider using different logging levels to control the verbosity.
-* **Security:** Be careful not to log sensitive data (passwords, personal information, etc.). Use parameter binding, and take care in how you implement the logger.
-* **Error Handling:** Properly handle errors that might occur during logging. You don't want your logging mechanism to cause issues with the actual application.
-* **Documentation:** Make sure your wrapping or monkey patching code is well-documented and easy to understand.
+- **PSR Logger:** Ensure you use a PSR-3 compatible logger. This allows you to easily switch between different logging mechanisms (e.g., Monolog, Syslog) without rewriting the logging logic.
+- **Performance Considerations:** Log only what’s necessary. Excessive logging, especially of large datasets, can impact performance. Consider using different logging levels to control the verbosity.
+- **Security:** Be careful not to log sensitive data (passwords, personal information, etc.). Use parameter binding, and take care in how you implement the logger.
+- **Error Handling:** Properly handle errors that might occur during logging. You don't want your logging mechanism to cause issues with the actual application.
+- **Documentation:** Make sure your wrapping or monkey patching code is well-documented and easy to understand.
 
 **Further Reading and Resources**
 

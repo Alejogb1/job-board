@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-identify-the-gender-and-nationality-of-a-list-of-names"
 ---
 
-alright, so you've got a list of names and you need to figure out the gender and nationality for each, right? i've been down this rabbit hole before, and it's trickier than it first looks. it's not as simple as a quick database lookup, not by a long shot.
+, so you've got a list of names and you need to figure out the gender and nationality for each, right? i've been down this rabbit hole before, and it's trickier than it first looks. it's not as simple as a quick database lookup, not by a long shot.
 
 let me tell you about my experience. years ago, i was working on a project, a sort of global social media aggregator, and we needed to personalize user experiences. naturally, the first step was to figure out user demographics, and guess what? most of the data was just a name field. i quickly found out that rule-based systems fall flat on their face, even with the most extensive lists. the name "alex," for instance, could be male or female, and nationality is even more of a mess. trying to code that all in if-else statements is a journey to insanity, believe me.
 
@@ -15,6 +15,7 @@ first, gender prediction. you can't rely on hardcoded lists of names. names shif
 i started by using machine learning models. specifically, i found that using a classifier trained on a large dataset of names and their associated genders is the most reliable solution. the approach is to use features extracted from the name. things like the first and last few characters, character n-grams, and even looking at the overall structure of the name. these features are fed into the classifier.
 
 here’s an example in python, using scikit-learn and nltk, for feature extraction. nltk needs to be installed before running the code, also install sklearn and pandas. you can use pip:
+
 ```python
 import nltk
 import pandas as pd
@@ -36,10 +37,10 @@ def gender_features(name):
 def train_gender_classifier(names_df):
     # Extract features and labels
     features = [(gender_features(name), gender) for name, gender in zip(names_df['name'], names_df['gender'])]
-    
+
     # Split into training and testing sets
     train_set, test_set = train_test_split(features, test_size=0.2, random_state=42)
-    
+
     # Separate features and labels
     train_features = [feat for feat, _ in train_set]
     train_labels = [label for _, label in train_set]
@@ -51,11 +52,11 @@ def train_gender_classifier(names_df):
     vectorizer = nltk.DictVectorizer()
     train_vectors = vectorizer.fit_transform(train_features)
     test_vectors = vectorizer.transform(test_features)
-    
+
     # Train a Gaussian Naive Bayes classifier
     classifier = GaussianNB()
     classifier.fit(train_vectors.toarray(), train_labels)
-    
+
     # Evaluate accuracy
     predictions = classifier.predict(test_vectors.toarray())
     accuracy = accuracy_score(test_labels, predictions)
@@ -94,6 +95,7 @@ for this, i moved away from purely name-based analysis and started leveraging lo
 i started to look into using a combination of name frequency databases for different regions and machine learning again. the idea here is to see if a particular name is statistically more likely to appear in one country than another. there are publicly available databases that track name distributions by region but they are not always very accurate and most of them are paywalled.
 
 here’s a simplified example using python with pandas, where i’m using a small dataset for demonstration, for real use cases you would need a large and well maintained database:
+
 ```python
 import pandas as pd
 from collections import defaultdict
@@ -105,7 +107,7 @@ def train_nationality_classifier(names_df):
         name = row['name']
         nationality = row['nationality']
         name_counts[name][nationality] += 1
-    
+
     return name_counts
 
 def predict_nationality(name, classifier):
@@ -141,6 +143,7 @@ one very important thing to consider is the bias you can have in the training da
 so, while there isn't a perfect solution, you've got options and you can mix and match them according to your specific needs. when i first started working with this i thought i would be done in an afternoon. little did i know that i was stepping into the world of probabilistic analysis. it took me several tries to understand that it wasn't an exact science, but more of an informed estimation, after all we are talking about names and the world's naming conventions are as diverse as the world's population, and that is a big challenge.
 
 here's a final code snippet using a simple pretrained language model to give you a feel of how that might look. you need to have the transformers package installed before running it:
+
 ```python
 from transformers import pipeline
 

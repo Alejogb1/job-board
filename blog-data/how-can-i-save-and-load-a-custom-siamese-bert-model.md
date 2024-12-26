@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-save-and-load-a-custom-siamese-bert-model"
 ---
 
-Okay, let's tackle this. Saving and loading custom Siamese BERT models – I've been down that road a few times, and it's usually less straightforward than one might hope, especially when you're aiming for something production-ready. It's more than just using a standard `model.save()` and `tf.keras.models.load_model()`. You need to be aware of the nuances of handling custom components, especially when those components rely on the underlying workings of BERT.
+, let's tackle this. Saving and loading custom Siamese BERT models – I've been down that road a few times, and it's usually less straightforward than one might hope, especially when you're aiming for something production-ready. It's more than just using a standard `model.save()` and `tf.keras.models.load_model()`. You need to be aware of the nuances of handling custom components, especially when those components rely on the underlying workings of BERT.
 
 First, understand what we're working with. A Siamese BERT model, in essence, consists of two (or more) identical BERT encoders, often with custom layers stacked on top, and a loss function designed for measuring similarity between embeddings. The challenge comes when we move past basic serialization: the weights of the BERT layers themselves are typically tied to a specific pretrained model configuration and vocab, and your custom layers need to be correctly registered and loaded along with these.
 
@@ -139,7 +139,7 @@ loaded_model = tf.keras.Model.from_config(loaded_config, custom_objects={'Simila
 loaded_model.load_weights('model_weights.h5')
 ```
 
-**Key Insight:** Here we save two separate components: The 'model\_config.json' contains the description of model layers and parameters, while 'model\_weights.h5' holds the learned weights. Then when loading, you need to recreate the architecture using `tf.keras.Model.from_config` and *explicitly* provide the custom layer objects to the `custom_objects` parameter. Finally the previously saved weights are loaded.
+**Key Insight:** Here we save two separate components: The 'model_config.json' contains the description of model layers and parameters, while 'model_weights.h5' holds the learned weights. Then when loading, you need to recreate the architecture using `tf.keras.Model.from_config` and _explicitly_ provide the custom layer objects to the `custom_objects` parameter. Finally the previously saved weights are loaded.
 
 **Approach 3: Leveraging `transformers` Save/Load Mechanisms:**
 
@@ -177,15 +177,15 @@ model = build_siamese_model('bert-base-uncased', 64)
 model.load_weights("siamese_model_hf_saved/tf_model.h5") # You must do this after the model has been instantiated
 ```
 
-**Key Insights:** This example uses the `save_pretrained` method from the `transformers` library to save the model.  Note that the save format is specific to transformers and cannot be loaded using the standard methods. Also note that the model saved is not the model in full, but the encoder weights for the transformer, meaning you have to reconstruct your whole model and then copy in the saved transformer weights.
+**Key Insights:** This example uses the `save_pretrained` method from the `transformers` library to save the model. Note that the save format is specific to transformers and cannot be loaded using the standard methods. Also note that the model saved is not the model in full, but the encoder weights for the transformer, meaning you have to reconstruct your whole model and then copy in the saved transformer weights.
 
 **Resources:**
 
 For a deep dive into these techniques, I'd recommend the following:
 
-*   **TensorFlow documentation:** Pay close attention to the sections on saving and loading models, especially those dealing with custom layers. The guide on `tf.keras.Model.save` and `tf.keras.Model.from_config` will be particularly useful.
-*   **Hugging Face Transformers documentation:** The `transformers` library documentation is excellent. Look for sections explaining how to save and load different model types. You should understand how each model class handles this function.
-*   **"Deep Learning with Python" by François Chollet:** This book contains a good overview on building models and handling their persistence.
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This offers more practical insights, especially on integrating custom components into larger models.
+- **TensorFlow documentation:** Pay close attention to the sections on saving and loading models, especially those dealing with custom layers. The guide on `tf.keras.Model.save` and `tf.keras.Model.from_config` will be particularly useful.
+- **Hugging Face Transformers documentation:** The `transformers` library documentation is excellent. Look for sections explaining how to save and load different model types. You should understand how each model class handles this function.
+- **"Deep Learning with Python" by François Chollet:** This book contains a good overview on building models and handling their persistence.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This offers more practical insights, especially on integrating custom components into larger models.
 
 In practice, I usually lean towards the second or third approach for greater flexibility. The first method is great for simplicity but becomes less manageable as the complexity of the model increases. It's critical to be consistent in your approach and always keep your model's architecture and component dependencies clearly defined. These approaches and resources should get you started, remember to test your saved model's performance and always to save often.

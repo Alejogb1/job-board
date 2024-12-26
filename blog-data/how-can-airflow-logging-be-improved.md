@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-airflow-logging-be-improved"
 ---
 
-Alright, let's unpack the question of improving Airflow logging. It's a topic I've spent a fair amount of time grappling with, particularly during a stint working with a large-scale data pipeline at *Acme Corp.* a few years back. We were ingesting terabytes of data daily, and pinpointing issues amidst the sheer volume of task executions became a real challenge. The default Airflow logging, while functional, often left us wanting more granular control and easier analysis.
+, let's unpack the question of improving Airflow logging. It's a topic I've spent a fair amount of time grappling with, particularly during a stint working with a large-scale data pipeline at _Acme Corp._ a few years back. We were ingesting terabytes of data daily, and pinpointing issues amidst the sheer volume of task executions became a real challenge. The default Airflow logging, while functional, often left us wanting more granular control and easier analysis.
 
 So, what are the primary areas where we can make things better? I see three key aspects: granularity of logs, efficient log storage and retrieval, and finally, the ease of parsing and analysis.
 
-Firstly, **granularity**. The out-of-the-box Airflow logging often provides a somewhat generic view of task execution. We get start and end times, and generally, a summary of success or failure. But what about the nitty-gritty details happening *inside* the task? That’s where custom logging becomes paramount. Relying solely on Airflow's task logs limits visibility. I prefer implementing specific logging within the tasks themselves to gain a much more detailed insight into the process.
+Firstly, **granularity**. The out-of-the-box Airflow logging often provides a somewhat generic view of task execution. We get start and end times, and generally, a summary of success or failure. But what about the nitty-gritty details happening _inside_ the task? That’s where custom logging becomes paramount. Relying solely on Airflow's task logs limits visibility. I prefer implementing specific logging within the tasks themselves to gain a much more detailed insight into the process.
 
 For example, say we have a data transformation task. Instead of just seeing that the task succeeded or failed, we’d ideally want to log key information such as the number of rows processed, the values of specific parameters, or intermediate data checks.
 

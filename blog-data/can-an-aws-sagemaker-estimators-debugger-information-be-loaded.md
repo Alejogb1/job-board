@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-an-aws-sagemaker-estimators-debugger-information-be-loaded"
 ---
 
-Alright, let's talk about accessing debugger information from an aws sagemaker estimator, because frankly, it's not always as straightforward as the documentation might initially suggest. I've spent more than a few late nights trying to dissect what's happening inside those black-box training jobs, so I've got a few battle scars and solutions to share. The short answer is, yes, you absolutely *can* load that debugger information, but it requires a bit more than just a simple function call.
+, let's talk about accessing debugger information from an aws sagemaker estimator, because frankly, it's not always as straightforward as the documentation might initially suggest. I've spent more than a few late nights trying to dissect what's happening inside those black-box training jobs, so I've got a few battle scars and solutions to share. The short answer is, yes, you absolutely _can_ load that debugger information, but it requires a bit more than just a simple function call.
 
 Here's the deal: sagemaker's debugger isn't just dumping its data into a convenient csv. It operates at a lower level, capturing tensor data and potentially other metadata during the training process. This data is then stored in s3, and accessing it requires parsing the protobuf files that debugger generates. The estimator itself doesn't directly provide an easy "get_debugger_info()" function, sadly. Instead, we interact with the underlying s3 location where those files are stashed.
 

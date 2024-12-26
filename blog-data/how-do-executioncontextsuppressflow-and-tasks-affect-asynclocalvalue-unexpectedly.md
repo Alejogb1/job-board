@@ -4,19 +4,19 @@ date: "2024-12-23"
 id: "how-do-executioncontextsuppressflow-and-tasks-affect-asynclocalvalue-unexpectedly"
 ---
 
-Alright, let's tackle this. I remember back when we were migrating a complex legacy application to .net core, we hit a really confounding issue involving asynchronous operations and shared state. It took some time, a lot of debugging, and a deep dive into the inner workings of the framework to finally understand why our `AsyncLocal<T>` values were behaving erratically. The issue stemmed, specifically, from the interaction between `ExecutionContext.SuppressFlow` and tasks. Let me break it down for you.
+, let's tackle this. I remember back when we were migrating a complex legacy application to .net core, we hit a really confounding issue involving asynchronous operations and shared state. It took some time, a lot of debugging, and a deep dive into the inner workings of the framework to finally understand why our `AsyncLocal<T>` values were behaving erratically. The issue stemmed, specifically, from the interaction between `ExecutionContext.SuppressFlow` and tasks. Let me break it down for you.
 
-The core of the problem resides in how the .net framework manages the *execution context* across asynchronous operations. The execution context, in a nutshell, is like a snapshot of the current thread's environment. It includes things like security settings, impersonation tokens, and, crucially for our discussion, `AsyncLocal<T>` values. Normally, when an async operation is initiated, the framework captures the current execution context and flows it to the newly created task, ensuring that things like `AsyncLocal.Value` are preserved. This, for the most part, is exactly what you want.
+The core of the problem resides in how the .net framework manages the _execution context_ across asynchronous operations. The execution context, in a nutshell, is like a snapshot of the current thread's environment. It includes things like security settings, impersonation tokens, and, crucially for our discussion, `AsyncLocal<T>` values. Normally, when an async operation is initiated, the framework captures the current execution context and flows it to the newly created task, ensuring that things like `AsyncLocal.Value` are preserved. This, for the most part, is exactly what you want.
 
-However, there are situations where you might *not* want this flow to occur, and this is where `ExecutionContext.SuppressFlow` comes in. This static method allows you to temporarily prevent the capturing and flowing of the current execution context. The intended use cases are primarily performance optimization or situations where certain context data is not relevant to the child operation. The problem, however, comes in when you use this and try to rely on `AsyncLocal<T>` values within the context that’s suppressing flow.
+However, there are situations where you might _not_ want this flow to occur, and this is where `ExecutionContext.SuppressFlow` comes in. This static method allows you to temporarily prevent the capturing and flowing of the current execution context. The intended use cases are primarily performance optimization or situations where certain context data is not relevant to the child operation. The problem, however, comes in when you use this and try to rely on `AsyncLocal<T>` values within the context that’s suppressing flow.
 
-The key thing to understand is: when `ExecutionContext.SuppressFlow` is active, any `Task.Run`, `Task.StartNew`, or similar operations started inside its scope will *not* inherit the current `AsyncLocal<T>` values. The new task will essentially start with a blank slate. It's not that `AsyncLocal` is being mutated; the value isn’t being explicitly changed; it's simply not being propagated.
+The key thing to understand is: when `ExecutionContext.SuppressFlow` is active, any `Task.Run`, `Task.StartNew`, or similar operations started inside its scope will _not_ inherit the current `AsyncLocal<T>` values. The new task will essentially start with a blank slate. It's not that `AsyncLocal` is being mutated; the value isn’t being explicitly changed; it's simply not being propagated.
 
 Let's illustrate this with some code examples.
 
 **Example 1: The Naive Approach**
 
-This first snippet shows how you might *expect* `AsyncLocal` to work, assuming a naive understanding of asynchronous context flow:
+This first snippet shows how you might _expect_ `AsyncLocal` to work, assuming a naive understanding of asynchronous context flow:
 
 ```csharp
 using System;
@@ -101,7 +101,7 @@ Notice that within the `Task.Run`, the `CurrentUser.Value` is now `null`, or mor
 
 **Example 3: A Controlled Solution**
 
-The common way to handle this when `SuppressFlow` is necessary is to manually pass on the context data. This can be achieved by capturing the value *before* the context is suppressed and explicitly passing it to the task, like so:
+The common way to handle this when `SuppressFlow` is necessary is to manually pass on the context data. This can be achieved by capturing the value _before_ the context is suppressed and explicitly passing it to the task, like so:
 
 ```csharp
 using System;

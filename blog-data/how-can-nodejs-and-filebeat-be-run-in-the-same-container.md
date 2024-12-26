@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-nodejs-and-filebeat-be-run-in-the-same-container"
 ---
 
-Alright, let's talk about running Node.js and Filebeat within the same container. I've certainly dealt with this configuration before, and while it might seem a bit unconventional initially, there are very valid reasons why you’d choose this approach, and it's definitely achievable with a proper strategy. My experience stems from a project a few years back involving microservices that needed very streamlined deployments and log aggregation was crucial from day one.
+, let's talk about running Node.js and Filebeat within the same container. I've certainly dealt with this configuration before, and while it might seem a bit unconventional initially, there are very valid reasons why you’d choose this approach, and it's definitely achievable with a proper strategy. My experience stems from a project a few years back involving microservices that needed very streamlined deployments and log aggregation was crucial from day one.
 
 The key issue is that we're essentially packing two distinct processes with different responsibilities into a single container. Ordinarily, the principle of single responsibility within a container would have each one in its own box. But, that’s not always practical for smaller deployments or certain resource-constrained environments where the overhead of multiple containers simply isn't justifiable. In those scenarios, it becomes about finding the most efficient way to run them harmoniously.
 

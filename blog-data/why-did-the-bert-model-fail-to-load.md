@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-did-the-bert-model-fail-to-load"
 ---
 
-Alright, let's tackle this. I've encountered my fair share of BERT loading issues, and trust me, it's rarely as simple as a flipped switch. More often than not, it's a confluence of factors that require methodical troubleshooting.
+, let's tackle this. I've encountered my fair share of BERT loading issues, and trust me, it's rarely as simple as a flipped switch. More often than not, it's a confluence of factors that require methodical troubleshooting.
 
 First off, when a BERT model fails to load, the root cause typically falls within several well-defined categories. These can range from issues with the model's configuration itself to environmental problems impacting the loading process. Let's consider the most common culprits from my experience building NLP pipelines, specifically using a BERT-based classifier a while back.
 
@@ -35,6 +35,7 @@ except Exception as e:
     model = BertModel.from_pretrained(model_path, config=config)
 
 ```
+
 In this first code snippet, we see a common failure case. If the version of `transformers` used to save the `model_path` was different, the loading will fail. We are catching the exception in the `try... except` clause and attempting the load again, specifying the configuration directly by reading the `config.json` from the directory `model_path`.
 
 ```python

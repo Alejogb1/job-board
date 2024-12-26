@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "with-machine-learning-which-performance-metric-is-used-for-a-sequential-dataset"
 ---
 
-alright, so you're asking about performance metrics for sequential data in machine learning. that’s a pretty common question and it can get a little tricky because we aren't just dealing with individual data points. we’ve got time dependencies or order which throws a wrench in how we usually measure performance.
+, so you're asking about performance metrics for sequential data in machine learning. that’s a pretty common question and it can get a little tricky because we aren't just dealing with individual data points. we’ve got time dependencies or order which throws a wrench in how we usually measure performance.
 
 i’ve been there, believe me. a few years back, i was working on a project to predict network traffic patterns for a small isp. we had this massive stream of data – packets coming in, going out, the whole shebang, and the initial models i built using just regular metrics for classification just completely bombed. it felt like i was trying to use a screwdriver on a nail - wrong tool, wrong job. so, yeah, i had to really go back to the books and dive into what metrics actually made sense for the sequence of events, especially when the order was important.
 
@@ -115,10 +115,11 @@ seq1 = np.array([1, 2, 3, 4, 5])
 seq2 = np.array([1, 2, 4, 3, 5])
 print(f"dtw distance: {dtw_distance(seq1, seq2)}") # outputs 2.0
 ```
+
 that is not as sophisticated as a library implementation, but it shows the idea.
 
 now, one thing i learned the hard way was the importance of really understanding the underlying problem. it’s easy to get caught up in the models and metrics, but if you don’t really know what you’re trying to achieve, those numbers can be misleading at best, and completely useless at worst. you need to make the metrics work for you not the other way around. also, don't forget to look for error patterns and analyse your mistakes. error analysis is important too, not just metrics.
 
 regarding books, instead of pointing to specific libraries, i recommend taking a look at “elements of statistical learning” by hastie, tibshirani, and friedman. it’s a classic for a reason, and it covers most of the basics for understanding the statistics behind machine learning and performance metrics. another excellent book is "forecasting: principles and practice" by hyndman and athanasopoulos. it's a fantastic resource specifically for time series data and forecasting, which is one of the most common scenarios for sequence analysis. and of course, a ton of papers on the nips, icml, and acl venues. you really have to read the literature, and not just rely on blog posts - no offence meant to blog writers. these are just a few recommendations. there are many more to discover when you start searching for particular issues.
 
-it might be frustrating, but dealing with sequential data is a field where you have to try a few things before you really nail it. it’s like going to the gym - you wouldn’t expect to lift heavy weights the first day you walk into it. it takes time to build the muscles - and in our case, to choose the correct metric for your specific problem. and if i am not making sense, then maybe, my models need retraining, *ba dum tss*.
+it might be frustrating, but dealing with sequential data is a field where you have to try a few things before you really nail it. it’s like going to the gym - you wouldn’t expect to lift heavy weights the first day you walk into it. it takes time to build the muscles - and in our case, to choose the correct metric for your specific problem. and if i am not making sense, then maybe, my models need retraining, _ba dum tss_.

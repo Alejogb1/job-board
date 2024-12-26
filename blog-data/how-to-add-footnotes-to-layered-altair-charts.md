@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-add-footnotes-to-layered-altair-charts"
 ---
 
-Okay, let's talk about layering altair charts and footnotes – something that's come up more than a few times in my experience. I recall one project, specifically, where I was visualizing complex geospatial data, and simple labels weren't sufficient; we needed context, sources, and explanations. Altair, while excellent for declarative charting, doesn’t offer a direct, built-in footnote mechanism. So, we had to get a bit creative.
+, let's talk about layering altair charts and footnotes – something that's come up more than a few times in my experience. I recall one project, specifically, where I was visualizing complex geospatial data, and simple labels weren't sufficient; we needed context, sources, and explanations. Altair, while excellent for declarative charting, doesn’t offer a direct, built-in footnote mechanism. So, we had to get a bit creative.
 
 The core challenge, as you likely know, is that Altair focuses on declarative specification of visual encodings. Footnotes, in the conventional sense, fall outside this model. They're more annotation than core data visualization. What we're essentially trying to do is overlay a supplementary visual element that is tied to specific parts of the chart but is not part of the data being charted.
 
@@ -101,6 +101,7 @@ final_chart = alt.vconcat(chart, footnotes).resolve_scale(y='independent')
 final_chart
 
 ```
+
 Here, I've introduced a 'marker' column within the initial dataframe. I use this column to add text markers adjacent to points on the chart using a second mark_text layer. We then define `footnotes_data` and use the 'marker' and 'text' columns to produce the footnote text. Finally, the same `alt.vconcat` mechanism joins the chart and the reference texts.
 
 **Example 3: Dynamic Positioning of Footnotes**
@@ -151,6 +152,7 @@ final_chart = alt.vconcat(chart, footnote).resolve_scale(y='independent')
 final_chart
 
 ```
+
 In this final example, rather than relying on a fixed y-offset, we are setting the y value to '0' to have the footnote at the 'bottom', and x-coordinate is set to the minimum x-value of the data. The x value could be varied to accommodate more space for multiple foot notes. I’ve hard-coded the width to 500 for the purpose of example but it can be controlled by the overall figure dimensions, making the annotation more consistent across different chart sizes. While pixel locations can be used in simple cases, understanding how the scales work in Altair and Vega-lite can provide a more flexible annotation solution.
 
-In my experience, these techniques have proven useful for generating informative and context-rich visualizations. For further information, I recommend delving into the vega-lite documentation, as altair is a high-level python API over it and understanding vega-lite can provide a deeper understanding of how to customize it. Specifically, refer to the sections on *mark properties*, *layered charts*, and *concatenation*. Also, the "The Grammar of Graphics" by Leland Wilkinson provides the theoretical grounding for many of the concepts employed in Altair, and a deeper understanding of this material is invaluable. While I have not included any links here, these are the sources I would direct you to for deeper insight into crafting complex visualizations. You may also find the Altair documentation (which is often updated with examples) very useful in your research.
+In my experience, these techniques have proven useful for generating informative and context-rich visualizations. For further information, I recommend delving into the vega-lite documentation, as altair is a high-level python API over it and understanding vega-lite can provide a deeper understanding of how to customize it. Specifically, refer to the sections on _mark properties_, _layered charts_, and _concatenation_. Also, the "The Grammar of Graphics" by Leland Wilkinson provides the theoretical grounding for many of the concepts employed in Altair, and a deeper understanding of this material is invaluable. While I have not included any links here, these are the sources I would direct you to for deeper insight into crafting complex visualizations. You may also find the Altair documentation (which is often updated with examples) very useful in your research.

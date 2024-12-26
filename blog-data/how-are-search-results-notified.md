@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-are-search-results-notified"
 ---
 
-Alright, let's talk about search result notifications, something I've had to deal with more times than I care to count, particularly in scaling web applications. It’s a seemingly straightforward question that quickly spirals into a complex interplay of asynchronous operations, distributed systems, and data consistency. The core challenge is this: how do you inform a user that search results are available, or have been updated, especially when the actual search process takes non-trivial time?
+, let's talk about search result notifications, something I've had to deal with more times than I care to count, particularly in scaling web applications. It’s a seemingly straightforward question that quickly spirals into a complex interplay of asynchronous operations, distributed systems, and data consistency. The core challenge is this: how do you inform a user that search results are available, or have been updated, especially when the actual search process takes non-trivial time?
 
 The fundamental concept isn’t about a single, monolithic 'notification.' Instead, it's about orchestrating a flow of events across several layers. Think of it like this: a user initiates a search, and that action triggers a series of asynchronous processes. These processes are usually distinct, operating on their own clocks and potentially across different machines. The 'notification' the user ultimately receives is a culmination of these decoupled processes successfully finishing their tasks.
 
@@ -43,17 +43,17 @@ Here’s a conceptual example using JavaScript on the client-side, assuming your
 const eventSource = new EventSource("/events");
 
 eventSource.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-    if (data.type === "search_progress") {
-        console.log(`Search progress: ${data.progress}%`);
-    } else if (data.type === "search_results") {
-        console.log("Search results received:", data.results);
-        // Process and display results
-        eventSource.close(); // Close connection when done
-    } else if (data.type === "search_error") {
-        console.error("Search error:", data.error);
-        eventSource.close();
-    }
+  const data = JSON.parse(event.data);
+  if (data.type === "search_progress") {
+    console.log(`Search progress: ${data.progress}%`);
+  } else if (data.type === "search_results") {
+    console.log("Search results received:", data.results);
+    // Process and display results
+    eventSource.close(); // Close connection when done
+  } else if (data.type === "search_error") {
+    console.error("Search error:", data.error);
+    eventSource.close();
+  }
 };
 
 eventSource.onerror = (error) => {
@@ -74,34 +74,34 @@ Here's a basic illustration using JavaScript on the client and a hypothetical se
 const socket = new WebSocket("wss://your-websocket-server/ws");
 
 socket.onopen = () => {
-    console.log("WebSocket connection established.");
-    socket.send(JSON.stringify({ type: "subscribe_search", search_id: "123"}));
+  console.log("WebSocket connection established.");
+  socket.send(JSON.stringify({ type: "subscribe_search", search_id: "123" }));
 };
 
 socket.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-    if (data.type === "search_progress") {
-      console.log(`Search progress update: ${data.progress}%`)
-    } else if (data.type === "search_results"){
-        console.log("New search results received:", data.results);
-        // Process and display results
-        socket.close();
-    } else if (data.type === "search_error"){
-      console.error("Search error:", data.error);
-      socket.close()
-    }
+  const data = JSON.parse(event.data);
+  if (data.type === "search_progress") {
+    console.log(`Search progress update: ${data.progress}%`);
+  } else if (data.type === "search_results") {
+    console.log("New search results received:", data.results);
+    // Process and display results
+    socket.close();
+  } else if (data.type === "search_error") {
+    console.error("Search error:", data.error);
+    socket.close();
+  }
 };
 
 socket.onerror = (error) => {
   console.error("WebSocket error:", error);
   socket.close();
-}
-
-socket.onclose = () => {
-    console.log("WebSocket connection closed.");
 };
 
+socket.onclose = () => {
+  console.log("WebSocket connection closed.");
+};
 ```
+
 This code demonstrates the bi-directional communication capabilities of WebSockets, including how a client could send a message to subscribe to notifications related to a specific search id, and how it handles the different server message types.
 
 **Important Considerations:**

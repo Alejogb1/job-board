@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-count-words-in-a-sentence-without-punctuation-using-nltk-in-python"
 ---
 
-Alright, let's tackle this. I remember a project back in my early days, a content analysis tool for a now-defunct blog network. We needed accurate word counts, but the raw text was a mess, punctuation everywhere and no consistency. Figuring out how to do this efficiently with NLTK became crucial, and it's a common task even now.
+, let's tackle this. I remember a project back in my early days, a content analysis tool for a now-defunct blog network. We needed accurate word counts, but the raw text was a mess, punctuation everywhere and no consistency. Figuring out how to do this efficiently with NLTK became crucial, and it's a common task even now.
 
 The core problem lies in preprocessing text before you can reliably count words. Raw input often includes punctuation marks, which should not be counted as words. NLTK (Natural Language Toolkit) offers tools to help, but a direct word count isn't always the best approach. We need to tokenize the text into words, which includes handling these extraneous characters, or ensuring they are removed.
 
@@ -77,20 +77,21 @@ example_sentence = "Yet another, sentence! (with) more; punctuation..."
 word_count = count_words_string(example_sentence)
 print(f"Word count (string token): {word_count}") # Output: Word count (string token): 5
 ```
+
 The `wordpunct_tokenize` splits the sentence into tokens based on whitespaces and punctuation, and then we use `isalnum()` to filter to keep only alphanumeric characters, giving us the words without punctuation. This method offers flexibility.
 
 **Choosing the Right Approach:**
 
 Each approach has its trade-offs.
 
-*   **Filtering (Example 1):** Simpler, very readable. Might be slightly slower for large text because it needs to iterate through a full list of tokens, once for the filtering step.
-*   **Regular Expression (Example 2):** Potentially faster, especially on large datasets. Requires knowledge of regular expressions. More concise when dealing with specific tokenization requirements.
-*   **NLTK String-Based with `isalnum()` (Example 3):** A middle ground, provides more explicit control when you want to use NLTK tokenizer with string based features.
+- **Filtering (Example 1):** Simpler, very readable. Might be slightly slower for large text because it needs to iterate through a full list of tokens, once for the filtering step.
+- **Regular Expression (Example 2):** Potentially faster, especially on large datasets. Requires knowledge of regular expressions. More concise when dealing with specific tokenization requirements.
+- **NLTK String-Based with `isalnum()` (Example 3):** A middle ground, provides more explicit control when you want to use NLTK tokenizer with string based features.
 
 For smaller projects or simple analyses, the filtering method is often sufficient. For high-volume text analysis, the regular expression-based method might prove more efficient. The last option allows for fine grained control and can be customized as needed.
 
 **Further Reading:**
 
-If you're serious about text processing with NLTK, I highly recommend diving into the NLTK book ( *Natural Language Processing with Python* by Steven Bird, Ewan Klein, and Edward Loper). It's freely available online and provides a comprehensive guide to all NLTK's features. Also, for a deeper understanding of regular expressions, *Mastering Regular Expressions* by Jeffrey Friedl is an excellent choice. It will enhance your ability to work with text manipulation. Understanding tokenization and text processing techniques is crucial for any NLP based project and those are excellent resources for that.
+If you're serious about text processing with NLTK, I highly recommend diving into the NLTK book ( _Natural Language Processing with Python_ by Steven Bird, Ewan Klein, and Edward Loper). It's freely available online and provides a comprehensive guide to all NLTK's features. Also, for a deeper understanding of regular expressions, _Mastering Regular Expressions_ by Jeffrey Friedl is an excellent choice. It will enhance your ability to work with text manipulation. Understanding tokenization and text processing techniques is crucial for any NLP based project and those are excellent resources for that.
 
 Remember, the "best" way to do this often depends on the specific needs of your project and the characteristics of your data. These examples should give you a solid start, though. I hope this detailed explanation helps you move forward. Let me know if you have other questions, always happy to share my experience.

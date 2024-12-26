@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-fix-custom-csv-export-issues-in-active-admin"
 ---
 
-Alright, let's talk about custom csv exports in Active Admin. It’s something I’ve encountered more times than I care to remember, often when a client needs something just a little different than the default. The problem, as you likely know, isn’t usually with Active Admin’s core functionality, but with the quirks and inconsistencies that can creep into real-world data. I’ve spent my fair share of late nights tracing those issues, and have a few approaches that consistently resolve them.
+, let's talk about custom csv exports in Active Admin. It’s something I’ve encountered more times than I care to remember, often when a client needs something just a little different than the default. The problem, as you likely know, isn’t usually with Active Admin’s core functionality, but with the quirks and inconsistencies that can creep into real-world data. I’ve spent my fair share of late nights tracing those issues, and have a few approaches that consistently resolve them.
 
 The typical scenario begins with Active Admin’s default CSV export, which is generally fine for simple tables. However, once you start needing custom columns, relationships, or computed values, things can get complex pretty quickly. What usually happens is that the generated CSV either has incorrect data, missing headers, or worse, breaks the export process entirely. So, where do we start? Well, the key is understanding the render engine powering csv generation. It often involves customization using Active Admin's configurations to tailor the CSV content to the precise needs of your data.
 

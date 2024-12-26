@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "why-does-a-keras-bidirectional-lstm-seq2seq-inference-model-expect-3-inputs-but-only-receives-1-even-though-i-am-passing-in-3-inputs"
 ---
 
-alright, i’ve seen this dance a few times. the whole "keras bidirectional lstm seq2seq inference mismatch" thing… it's a classic head-scratcher. i get it, you're feeding it what seems like three inputs, and it's complaining like it’s only getting one. let's get this sorted.
+, i’ve seen this dance a few times. the whole "keras bidirectional lstm seq2seq inference mismatch" thing… it's a classic head-scratcher. i get it, you're feeding it what seems like three inputs, and it's complaining like it’s only getting one. let's get this sorted.
 
 first, let's break down what’s actually happening under the hood. a standard seq2seq model, especially when built with bidirectional lstms, has a distinct split between training and inference. during training, keras handles everything like a well-oiled machine, but inference is a different beast. it's where we have to be very explicit about the state management.
 
-the issue isn't that you’re not *trying* to send three inputs; it's that the inference model's setup doesn't match your input data structure. the three inputs a bidirectional lstm seq2seq inference model expects aren't just three random pieces of data. they’re very specific things: the input sequence, and then, crucially, the hidden and cell states from both the forward and backward lstm layers of your encoder part of the seq2seq model.
+the issue isn't that you’re not _trying_ to send three inputs; it's that the inference model's setup doesn't match your input data structure. the three inputs a bidirectional lstm seq2seq inference model expects aren't just three random pieces of data. they’re very specific things: the input sequence, and then, crucially, the hidden and cell states from both the forward and backward lstm layers of your encoder part of the seq2seq model.
 
 remember, the whole point of the lstm is maintaining context over the sequence. so, when we are doing inference, we need to take the encoder's final state and initialize the decoder with it. if you don't pass these states into the model's decoder it will not have that context and output garbage. the model will see just the beginning of the sequence, not the whole sequence it was trained on.
 
@@ -21,6 +21,7 @@ so, what's the fix? you need to create separate models for your encoder and deco
 here's a sample workflow using keras, i’m assuming you are using tf 2 or above since you are using keras and not tensorflow 1:
 
 first the training part of the seq2seq model:
+
 ```python
 import tensorflow as tf
 from tensorflow import keras
@@ -74,7 +75,9 @@ decoder_model = Model(
     [decoder_outputs] + decoder_states
 )
 ```
+
 finally for the decoding logic using the inference model:
+
 ```python
 def decode_sequence(input_seq, encoder_model, decoder_model, num_decoder_tokens, max_decoder_seq_length, decoder_input_data):
     states_value = encoder_model.predict(input_seq)
@@ -101,6 +104,7 @@ def decode_sequence(input_seq, encoder_model, decoder_model, num_decoder_tokens,
 
     return decoded_sentence
 ```
+
 this setup ensures that the initial hidden and cell states for the decoder are correctly initialized using the final states of the encoder.
 
 i know, that’s quite a lot to take in all at once, but bear with me. the key is the separation of concerns. you first train the big model end-to-end. after training, you need to then break it into a separate encoder and decoder, keeping the trained weights, and use the encoder to compute the initial state for the decoder. then, at each step of the decoding, you keep updating and passing the decoder states as input for the next time step. if you try to pass those states on your own to the original training model, the model won’t recognize them, since it doesn’t expect them as an input and it does not have an output for them, this is the reason you need to create a specific decoder and encoder inference model.

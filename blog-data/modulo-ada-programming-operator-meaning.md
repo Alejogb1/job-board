@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "modulo-ada-programming-operator-meaning"
 ---
 
-Okay so you're asking about the modulo operator in Ada right Been there done that probably with more spaghetti code than anyone cares to admit
+you're asking about the modulo operator in Ada right Been there done that probably with more spaghetti code than anyone cares to admit
 
-Alright let's break this down in tech terms no fluffy stuff I've wrestled with this Ada mod thing for longer than I care to remember. Ada is all about correctness which means you can't just wing it like with some other languages that shall remain nameless. The modulo operator in Ada it's about the remainder after integer division that’s the core of it. It's not some magical incantation it's basic arithmetic dressed up in a syntax you might find unfamiliar if you're used to the curly braces crowd.
+let's break this down in tech terms no fluffy stuff I've wrestled with this Ada mod thing for longer than I care to remember. Ada is all about correctness which means you can't just wing it like with some other languages that shall remain nameless. The modulo operator in Ada it's about the remainder after integer division that’s the core of it. It's not some magical incantation it's basic arithmetic dressed up in a syntax you might find unfamiliar if you're used to the curly braces crowd.
 
 I remember this one project back in the day oh man it was a control system for a laser device. Think really precise timing and power adjustments. We needed the mod operation all over the place for things like cyclic buffers calculating indexes for data streams and making sure certain events fire only every nth cycle. The first few implementations I wrote with manual calculations were a hot mess full of off-by-one errors and hard to follow logic. I mean imagine debugging that in real-time where miscalculations could melt something important not the ideal situation obviously. That experience was why I started to religiously rely on the built-in modulo for a lot of it. Learned my lesson the hard way a typical Tuesday for me I suppose.
 
@@ -31,6 +31,7 @@ begin
    -- output will be 4 because 25 / 7 = 3 remainder 4
 end Modulo_Example;
 ```
+
 This code snippet shows the most basic use of the modulo operation just taking two numbers and printing out the remainder after integer division. Simple and efficient exactly what you expect from Ada. No surprises here. I've seen similar code hundreds of times in various programs that needed to work with cyclic data.
 
 Now here's where things get a little more interesting. Imagine you are working with a circular buffer as I mentioned earlier a common use case. Let's say you need to wrap around an index after reaching the maximum size of the buffer:
@@ -49,7 +50,7 @@ begin
 end Circular_Buffer_Example;
 ```
 
-In this example the Current\_Index variable increases with each loop iteration and the mod operator will wrap it when it reaches the `Buffer_Size` ensuring that the index stays in range. This particular usage has saved me countless hours of debugging back then I could spend that time writing more code or perhaps watching paint dry both highly engaging activities.
+In this example the Current_Index variable increases with each loop iteration and the mod operator will wrap it when it reaches the `Buffer_Size` ensuring that the index stays in range. This particular usage has saved me countless hours of debugging back then I could spend that time writing more code or perhaps watching paint dry both highly engaging activities.
 
 And to show something slightly different a case where I used the modulo with types other than Integer lets dive into an example with a custom modular type that’s where the Ada strong typing really shines:
 
@@ -78,4 +79,4 @@ And here's the thing I learned if you're ever dealing with cyclic or wrapping be
 
 Now if you're looking to dive deeper than just simple examples I highly recommend getting your hands on “Programming in Ada 2012” by John Barnes or "Ada 2012 Rationale" it's packed with all the details about the ins and outs of the Ada language I have learned a lot through them when I was starting. They’ll cover the nuances that go beyond simple integer modulo like modular types and how they interact with other language features.
 
-So there you have it. The modulo operator in Ada is simple to use crucial to master and frankly once you get the hang of it you’ll be surprised where you find yourself using it. It's a staple tool in any Ada developer's toolkit. And sometimes when things get hard I just pretend I'm back debugging that old laser project and it motivates me to not write the same mistakes again you know kind of a masochistic motivation it works somehow. Alright that’s me done here happy coding and if you find yourself with an off-by-one error in your modulo logic I feel your pain been there done that too many times.
+So there you have it. The modulo operator in Ada is simple to use crucial to master and frankly once you get the hang of it you’ll be surprised where you find yourself using it. It's a staple tool in any Ada developer's toolkit. And sometimes when things get hard I just pretend I'm back debugging that old laser project and it motivates me to not write the same mistakes again you know kind of a masochistic motivation it works somehow. that’s me done here happy coding and if you find yourself with an off-by-one error in your modulo logic I feel your pain been there done that too many times.

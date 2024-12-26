@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-do-i-wanted-to-forward-airflow-application-logs-to-es-using-fluentd-in-kubernetes"
 ---
 
-alright, so you're looking to pipe your airflow logs from kubernetes over to elasticsearch using fluentd, yeah? i've been down that road a few times, and it's definitely got some nuances. let me walk you through what i've learned, and maybe you can avoid some of the pitfalls i stepped into.
+, so you're looking to pipe your airflow logs from kubernetes over to elasticsearch using fluentd, yeah? i've been down that road a few times, and it's definitely got some nuances. let me walk you through what i've learned, and maybe you can avoid some of the pitfalls i stepped into.
 
 first off, the basic idea is pretty straightforward. airflow, running inside kubernetes pods, spits out logs. fluentd, also running in kubernetes (likely as a daemonset), picks these up and sends them to elasticsearch. the trick, as usual, is in the details of configuration and getting all the pieces to play nicely together.
 
@@ -135,7 +135,7 @@ data:
     </match>
 ```
 
-you'll then mount this configmap into your fluentd daemonset, typically at `/fluentd/etc/fluentd.conf`.  make sure to create the `/var/log/fluentd-buffers` directory too, and give write permissions to the fluentd user. not doing that was another learning moment, a weekend was spent figuring out why logs were not getting to elasticsearch, and that was the only issue.
+you'll then mount this configmap into your fluentd daemonset, typically at `/fluentd/etc/fluentd.conf`. make sure to create the `/var/log/fluentd-buffers` directory too, and give write permissions to the fluentd user. not doing that was another learning moment, a weekend was spent figuring out why logs were not getting to elasticsearch, and that was the only issue.
 
 now for the daemonset. this is where you tell kubernetes to run a fluentd pod on each node. this is a very basic example, and you'll probably need to adjust the `resources` section and other settings to match your environment, and the role used to pull the images, i use a custom one so i will remove this part of the example.
 
@@ -156,48 +156,48 @@ spec:
         app: fluentd
     spec:
       containers:
-      - name: fluentd
-        image: fluent/fluentd-kubernetes-daemonset:v1-debian-elasticsearch7
-        env:
-        - name: FLUENT_ELASTICSEARCH_HOST
-          valueFrom:
-            secretKeyRef:
-              name: elasticsearch-secret
-              key: elasticsearch_host
-        - name: FLUENT_ELASTICSEARCH_PORT
-          valueFrom:
-            secretKeyRef:
-              name: elasticsearch-secret
-              key: elasticsearch_port
-        - name: FLUENT_ELASTICSEARCH_USER
-          valueFrom:
-            secretKeyRef:
-              name: elasticsearch-secret
-              key: elasticsearch_user
-        - name: FLUENT_ELASTICSEARCH_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: elasticsearch-secret
-              key: elasticsearch_password
-        volumeMounts:
-        - name: varlog
-          mountPath: /var/log
-        - name: varlibdockercontainers
-          mountPath: /var/lib/docker/containers
-          readOnly: true
-        - name: fluentd-config
-          mountPath: /fluentd/etc/
-          readOnly: true
+        - name: fluentd
+          image: fluent/fluentd-kubernetes-daemonset:v1-debian-elasticsearch7
+          env:
+            - name: FLUENT_ELASTICSEARCH_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: elasticsearch-secret
+                  key: elasticsearch_host
+            - name: FLUENT_ELASTICSEARCH_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: elasticsearch-secret
+                  key: elasticsearch_port
+            - name: FLUENT_ELASTICSEARCH_USER
+              valueFrom:
+                secretKeyRef:
+                  name: elasticsearch-secret
+                  key: elasticsearch_user
+            - name: FLUENT_ELASTICSEARCH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: elasticsearch-secret
+                  key: elasticsearch_password
+          volumeMounts:
+            - name: varlog
+              mountPath: /var/log
+            - name: varlibdockercontainers
+              mountPath: /var/lib/docker/containers
+              readOnly: true
+            - name: fluentd-config
+              mountPath: /fluentd/etc/
+              readOnly: true
       volumes:
-      - name: varlog
-        hostPath:
-          path: /var/log
-      - name: varlibdockercontainers
-        hostPath:
-          path: /var/lib/docker/containers
-      - name: fluentd-config
-        configMap:
-          name: fluentd-config
+        - name: varlog
+          hostPath:
+            path: /var/log
+        - name: varlibdockercontainers
+          hostPath:
+            path: /var/lib/docker/containers
+        - name: fluentd-config
+          configMap:
+            name: fluentd-config
 ```
 
 key points: the `/var/log` volume mount allows fluentd to access the container logs. `/var/lib/docker/containers` allows fluentd to access docker container metadata, it's important to set this as readOnly to increase security. the `fluentd-config` volume mount makes the configmap available inside the container. i use secrets to store the elasticsearch credentials, but you can also use env vars, it's up to you. the image used here `fluent/fluentd-kubernetes-daemonset:v1-debian-elasticsearch7` it's just the base image, you may need a custom one depending on the needs.

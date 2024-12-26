@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-wait-for-multiple-loading-elements-to-disappear-using-selenium"
 ---
 
-alright, so you're looking to handle multiple loading elements disappearing with selenium, i've definitely been there. it’s a common pain point when dealing with dynamic web applications, especially ones that love to throw up spinners or progress bars all over the place. basically you want your test to wait until all of those are gone before moving onto the next step, it's key for reliable automation.
+, so you're looking to handle multiple loading elements disappearing with selenium, i've definitely been there. it’s a common pain point when dealing with dynamic web applications, especially ones that love to throw up spinners or progress bars all over the place. basically you want your test to wait until all of those are gone before moving onto the next step, it's key for reliable automation.
 
 i've had some frustrating debugging sessions because of this. early on in my career, like, way back when selenium webdriver was still the cool new thing, i was working on an e-commerce site. it had this habit of showing not one but three loading icons when you added an item to the cart. and they weren’t consistent either; sometimes two would go away instantly, and sometimes the last one would linger for a couple of extra seconds. my initial test scripts were a hot mess, flaky as all hell because they weren't waiting properly. they would jump the gun, try to interact with elements that were still covered, and the result? failed tests, and unhappy project managers. fun times.
 
@@ -30,11 +30,11 @@ def wait_for_loading_elements_to_disappear(driver, timeout=10):
         timeout: maximum wait time in seconds (default 10).
     """
     loading_elements = driver.find_elements(By.CLASS_NAME, 'loading-spinner')
-    
+
     if not loading_elements:
       # no elements to wait for, so simply return.
       return
-    
+
     wait = WebDriverWait(driver, timeout)
 
     wait.until(lambda driver: all(ec.staleness_of(element)(driver) for element in loading_elements))
@@ -67,11 +67,11 @@ def wait_for_loading_elements_to_disappear_xpath(driver, timeout=10):
         timeout: maximum wait time in seconds (default 10).
     """
     loading_elements = driver.find_elements(By.XPATH, '//div[@class="loading-container"]//*[contains(@class,"loader")]')
-    
+
     if not loading_elements:
       # no elements to wait for, so simply return.
       return
-    
+
     wait = WebDriverWait(driver, timeout)
     wait.until(lambda driver: all(ec.staleness_of(element)(driver) for element in loading_elements))
 
@@ -82,6 +82,7 @@ wait_for_loading_elements_to_disappear_xpath(driver)
 
 # continue with the rest of your test logic
 ```
+
 this approach gives you more flexibility when the loading elements are not defined in a uniform manner, it's a lifesaver on complex pages, i can tell you.
 
 and what happens if some of your elements are not strictly 'stale', perhaps they simply become invisible or get their opacity set to zero, and they are still in the dom. in this case `staleness_of` won’t work, so we need to go with a slightly different approach. in this case you could implement a similar wait condition but instead of staleness you use the `invisibility_of` condition. this means you should be looking for the elements initially and then check until they are invisible.
@@ -99,11 +100,11 @@ def wait_for_loading_elements_to_become_invisible(driver, timeout=10):
         timeout: maximum wait time in seconds (default 10).
     """
     loading_elements = driver.find_elements(By.CSS_SELECTOR, '.loading-overlay,.loading-animation')
-    
+
     if not loading_elements:
       # no elements to wait for, so simply return.
       return
-    
+
     wait = WebDriverWait(driver, timeout)
     wait.until(lambda driver: all(ec.invisibility_of(element)(driver) for element in loading_elements))
 
@@ -115,6 +116,7 @@ wait_for_loading_elements_to_become_invisible(driver)
 # ... continue your testing ...
 
 ```
+
 the `invisibility_of` condition works like a charm in those scenarios. it’ll keep checking until the element's display is none or its opacity is zero, or something like that.
 
 the key is to understand the way in which your loaders are being handled by the front-end code, are they being removed completely or simply hidden? choose the `staleness_of` or `invisibility_of` condition accordingly.

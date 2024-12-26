@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-errors-arise-when-changing-solidity-compiler-version-from-08"
 ---
 
-Okay, let's tackle this one. I've spent my fair share of time navigating the intricacies of Solidity upgrades, and the transition away from the 0.8 series, while seemingly minor, often unveils a series of potential pitfalls. It's not simply a matter of swapping out compiler versions; significant changes in behavior and language semantics necessitate careful consideration. From my experience, the issues tend to fall into a few categories, and we can break them down systematically.
+, let's tackle this one. I've spent my fair share of time navigating the intricacies of Solidity upgrades, and the transition away from the 0.8 series, while seemingly minor, often unveils a series of potential pitfalls. It's not simply a matter of swapping out compiler versions; significant changes in behavior and language semantics necessitate careful consideration. From my experience, the issues tend to fall into a few categories, and we can break them down systematically.
 
 One of the primary areas where incompatibilities manifest is in the way the compiler handles arithmetic operations, particularly overflow and underflow. Prior to 0.8, these operations would silently wrap around, a behavior that could lead to serious, often undetectable, vulnerabilities. Solidity 0.8 and later versions introduced mandatory overflow and underflow checks by default. This is crucial for security, but it can break code written under the assumption of unchecked arithmetic. Imagine a scenario where a contract's balance is calculated by subtracting a large value, perhaps a transfer amount, from a smaller one: in older Solidity, you would obtain a large, wrapped positive number, whereas now it would revert because of underflow.
 
@@ -130,6 +130,7 @@ contract ChildContract is BaseContract {
     }
 }
 ```
+
 This works fine before 0.8. But the same version in 0.8+ will throw an error that says `Function "setValue" is not visible in contract "ChildContract"`. Now, this is why I had so much headache with my past project. Because an `internal` function in a superclass had to be redefined in all of the children classes, and they all required the `override` keyword. For example:
 
 ```solidity

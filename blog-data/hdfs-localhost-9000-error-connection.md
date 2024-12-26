@@ -4,19 +4,19 @@ date: "2024-12-13"
 id: "hdfs-localhost-9000-error-connection"
 ---
 
-Okay so you're banging your head against the wall with HDFS on localhost port 9000 and getting a connection error right I've been there believe me multiple times
+you're banging your head against the wall with HDFS on localhost port 9000 and getting a connection error right I've been there believe me multiple times
 
-This isn't some whimsical problem its a pretty standard gotcha in Hadoop land and typically its about misconfiguration or something not running that *should* be running Lets break it down like we're debugging some ancient C code or something because frankly sometimes working with Hadoop feels like that
+This isn't some whimsical problem its a pretty standard gotcha in Hadoop land and typically its about misconfiguration or something not running that _should_ be running Lets break it down like we're debugging some ancient C code or something because frankly sometimes working with Hadoop feels like that
 
 First off the error itself "hdfs localhost 9000 error connection" its a generic error message that basically says "Hey I tried to talk to HDFS on localhost at port 9000 and nothing answered" that's not great news but we can work with it Usually this means one of a few common issues
 
-* **HDFS isn't actually running:** This is the classic rookie mistake no offense I've done it myself more times than I'd like to admit You need to make sure the NameNode and DataNode processes are up and running I mean the whole shebang is that's HDFS for you its a complex beast with different pieces all needing to talk to one another And sometimes one of them is taking a nap or something
-* **Incorrect `hdfs-site.xml` configuration:** The `hdfs-site.xml` file this configuration is the backbone of how HDFS works if something is incorrectly set you might as well be speaking Klingon to it and this goes to NameNodes the DataNodes all of them
-* **Firewall is blocking connection:** It's 2024 firewalls are a thing and sometimes they like to block even connections to your own machine Its more common than you think
-* **Wrong hostname or IP:** If you're not on localhost or if your localhost isn't resolving correctly it's chaos but hey if you are working with multiple networks you need to know what's going on even at home
-* **Java version conflicts:** Yeah sometimes this is the thing you will not be expecting sometimes you're running the wrong version of java and your versions are just not compatible and that can be a real problem trust me on this one I had a crazy issue where the java versions were just not playing nice
+- **HDFS isn't actually running:** This is the classic rookie mistake no offense I've done it myself more times than I'd like to admit You need to make sure the NameNode and DataNode processes are up and running I mean the whole shebang is that's HDFS for you its a complex beast with different pieces all needing to talk to one another And sometimes one of them is taking a nap or something
+- **Incorrect `hdfs-site.xml` configuration:** The `hdfs-site.xml` file this configuration is the backbone of how HDFS works if something is incorrectly set you might as well be speaking Klingon to it and this goes to NameNodes the DataNodes all of them
+- **Firewall is blocking connection:** It's 2024 firewalls are a thing and sometimes they like to block even connections to your own machine Its more common than you think
+- **Wrong hostname or IP:** If you're not on localhost or if your localhost isn't resolving correctly it's chaos but hey if you are working with multiple networks you need to know what's going on even at home
+- **Java version conflicts:** Yeah sometimes this is the thing you will not be expecting sometimes you're running the wrong version of java and your versions are just not compatible and that can be a real problem trust me on this one I had a crazy issue where the java versions were just not playing nice
 
-Okay so lets dig in with the debugging
+lets dig in with the debugging
 
 **1 Check the status of the Hadoop processes**
 
@@ -85,7 +85,7 @@ Your localhost should be resolving to 127.0.0.1 if you are using it or to the re
 
 **5 Java Version Shenanigans**
 
-Okay so this is where it can get tricky sometimes you are using a version of java that is not compatible with your Hadoop version you need to double check that you are using the right version.
+this is where it can get tricky sometimes you are using a version of java that is not compatible with your Hadoop version you need to double check that you are using the right version.
 
 You can check your java version by doing
 
@@ -105,7 +105,7 @@ One time I was debugging this and it turned out the hadoop user didn't have writ
 
 And I mean like if you're setting up HDFS you're probably knee-deep in other stuff like MapReduce or Spark and that's when things get really wild but for HDFS alone these steps should get you started you need to take a look first at that error messages and go through the steps I indicated
 
-Oh by the way did you hear about the programmer who was afraid of using `hdfs dfs -rm`? I heard he had a *terabyte-fying* experience.
+Oh by the way did you hear about the programmer who was afraid of using `hdfs dfs -rm`? I heard he had a _terabyte-fying_ experience.
 
 Ok so back to being serious don't forget to check the official Hadoop documentation if you haven't already. It's a treasure trove of information. I've found the book "Hadoop: The Definitive Guide" by Tom White to be incredibly helpful over the years. Also the "Hadoop Operations" by Eric Sammer is great for learning how to set things up properly and is a great reference source.
 

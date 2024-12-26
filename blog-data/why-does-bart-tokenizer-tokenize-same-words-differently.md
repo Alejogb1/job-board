@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-does-bart-tokenizer-tokenize-same-words-differently"
 ---
 
-Okay, let’s tackle this. I’ve spent a decent amount of time knee-deep in NLP pipelines, and the behavior of the BART tokenizer, specifically its sometimes inconsistent treatment of identical words, is something I've bumped into more than once. It’s a situation that can initially seem baffling, but it boils down to a few core principles of how these tokenizers operate and, more specifically, how BART was trained.
+, let’s tackle this. I’ve spent a decent amount of time knee-deep in NLP pipelines, and the behavior of the BART tokenizer, specifically its sometimes inconsistent treatment of identical words, is something I've bumped into more than once. It’s a situation that can initially seem baffling, but it boils down to a few core principles of how these tokenizers operate and, more specifically, how BART was trained.
 
 My first real head-scratcher moment with this was, I recall, while working on a sentiment analysis project involving product reviews. I noticed the word "great" being tokenized differently depending on its context—sometimes as a single token, sometimes split into "gr" and "eat". At first, I assumed there was some bug in my pre-processing script or in the library itself. However, after some deeper investigation, it became clear that it wasn't a glitch, but rather a direct consequence of the underlying algorithmic decisions within the tokenizer’s training and design.
 
-The fundamental reason BART (and indeed many subword-based tokenizers like it) tokenize seemingly identical words differently is because they do not operate solely on the surface level of words. They leverage a learned vocabulary, which is created during the training of the tokenizer using a substantial corpus of text. This learned vocabulary is built around subword units—characters, character pairs, or even frequently occurring word segments, that are judged, algorithmically, to maximize the balance between covering the corpus and minimizing vocabulary size. Importantly, tokenization is *context-dependent* based on this learned vocabulary.
+The fundamental reason BART (and indeed many subword-based tokenizers like it) tokenize seemingly identical words differently is because they do not operate solely on the surface level of words. They leverage a learned vocabulary, which is created during the training of the tokenizer using a substantial corpus of text. This learned vocabulary is built around subword units—characters, character pairs, or even frequently occurring word segments, that are judged, algorithmically, to maximize the balance between covering the corpus and minimizing vocabulary size. Importantly, tokenization is _context-dependent_ based on this learned vocabulary.
 
 The key here is how these subwords are chosen. A frequently occurring sequence of characters might be part of one word in one context but be more naturally (and frequently) grouped into a smaller, overlapping sequence in another context. These differences in grouping result in different tokens. Furthermore, these subword units aren’t arbitrary; they often correlate with morphological aspects of words, helping the model deal with unseen words and variations of existing ones.
 
@@ -37,8 +37,8 @@ print(f"Tokens for '{text2}': {tokens2}")
 
 This code should show a difference in how "great" is tokenized. You might see something like:
 
-*Tokens for 'The great adventure began.': ['the', 'great', 'adventure', 'began', '.']*
-*Tokens for 'She was eating great cookies.': ['she', 'was', 'eat', 'ing', 'great', 'cookies', '.']*
+_Tokens for 'The great adventure began.': ['the', 'great', 'adventure', 'began', '.']_
+_Tokens for 'She was eating great cookies.': ['she', 'was', 'eat', 'ing', 'great', 'cookies', '.']_
 
 Here, "great" is tokenized differently in the two cases, showing context dependency.
 
@@ -54,9 +54,10 @@ tokens4 = tokenizer.tokenize(text4)
 print(f"Tokens for '{text3}': {tokens3}")
 print(f"Tokens for '{text4}': {tokens4}")
 ```
+
 This might yield:
-*Tokens for 'The number 1234 was great.': ['the', 'number', '1234', 'was', 'great', '.']*
-*Tokens for 'She had 1,234 great ideas.': ['she', 'had', '1', ',', '234', 'great', 'ideas', '.']*
+_Tokens for 'The number 1234 was great.': ['the', 'number', '1234', 'was', 'great', '.']_
+_Tokens for 'She had 1,234 great ideas.': ['she', 'had', '1', ',', '234', 'great', 'ideas', '.']_
 Notice how the number is treated differently due to the comma.
 
 **Example 3: Subtle Context Variations**
@@ -73,8 +74,8 @@ print(f"Tokens for '{text6}': {tokens6}")
 ```
 
 You might observe something like:
-*Tokens for 'He was quite great.': ['he', 'was', 'quite', 'great', '.']*
-*Tokens for 'Great is an adjective.': ['great', 'is', 'an', 'adjective', '.']*
+_Tokens for 'He was quite great.': ['he', 'was', 'quite', 'great', '.']_
+_Tokens for 'Great is an adjective.': ['great', 'is', 'an', 'adjective', '.']_
 
 These examples highlight how subtle differences in surrounding context can lead to disparate tokenizations, which is a consequence of the subword-based approach, rather than any errors in processing.
 

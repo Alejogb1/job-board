@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "matlab-mex-function-mexprintf-does-not-print-immediately"
 ---
 
-Okay so you're hitting that classic mexPrintf buffering problem eh I've been there I think every MATLAB mex dev has honestly Let me tell you my story with this thing it's a rite of passage honestly
+you're hitting that classic mexPrintf buffering problem eh I've been there I think every MATLAB mex dev has honestly Let me tell you my story with this thing it's a rite of passage honestly
 
 Back in the day I was working on this hardcore real-time audio processing thing with MATLAB we had to squeeze every last millisecond of performance out of the thing We had this custom algorithm running inside a mex function it was some heavy DSP stuff you know complex numbers FFTs filtering the whole shebang
 
-Naturally we had lots of debugging output with mexPrintf at that time but man did it drive us crazy The prints would appear only *after* the mex function finished executing or sometimes they wouldn’t appear at all and it was like yelling into the void
+Naturally we had lots of debugging output with mexPrintf at that time but man did it drive us crazy The prints would appear only _after_ the mex function finished executing or sometimes they wouldn’t appear at all and it was like yelling into the void
 
 So the thing is mexPrintf doesn't act like your standard printf function it's not directly writing to the console at that exact moment There’s a whole buffering thing happening under the hood MATLAB's I/O stream has some sort of internal buffer where mexPrintf output gets accumulated then when MATLAB decides to flush that buffer those prints finally show up in the command window or wherever you're expecting them. It's like being in a crowded stadium and trying to hear your friend shouting a message to you. Its there but you will hear it after some delays
 
@@ -82,6 +82,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 }
 ```
+
 This method is great when you want to do heavy debugging with some high frequency real time computation and the standard I/O calls are not enough for you and they slow you down . I also used this for logging the output for long experiments that can last hours so I can inspect the data after it has finished.
 
 Now a small joke about debugging: I once had a bug that was so persistent that I seriously considered starting a support group for other developers who had the same bug. But hey thats just software development for you.
@@ -89,8 +90,8 @@ Now a small joke about debugging: I once had a bug that was so persistent that I
 A couple more things to keep in mind that are always a pain for new people to MEX development
 
 1. **Be mindful of your data types**: When using mexPrintf pay extra attention to your format specifiers. For example using %f for a `double` and %d for an `int` or else you will just get garbage outputs and will confuse you more. It is like trying to use a screwdriver on a nail you will not get any good results and might destroy something
-2.  **String handling in C:** C strings and MATLAB strings are not the same. So when you try to print some data be very careful that you are not trying to print a mxArray pointer with mexPrintf as it will give you some garbage address that you don’t know where it came from. You must first convert the mxArray to a C type string for it to work this is always a good test to know how new someone is to C and MEX development
+2. **String handling in C:** C strings and MATLAB strings are not the same. So when you try to print some data be very careful that you are not trying to print a mxArray pointer with mexPrintf as it will give you some garbage address that you don’t know where it came from. You must first convert the mxArray to a C type string for it to work this is always a good test to know how new someone is to C and MEX development
 
 And finally some advice for good resources to read up on these topics. If you want to dig into the nitty gritty details of standard I/O you can check out the classic "Advanced Programming in the UNIX Environment" by W. Richard Stevens it has more than you ever need to know on the topic of system level I/O operations. Also some good reading materials about MEX API are in MATLAB documentation but they are a bit dry so be sure to find other tutorials and forum posts about MEX function development.
 
-Okay so to summarize you're hitting the buffered I/O issue of mexPrintf The standard solution is to use `fflush(stdout)` immediately after the `mexPrintf` calls if that is not enough use `mexEvalString` along with `drawnow` or as a last resource use your own debug logging system. Good luck and happy debugging its one of the hardest problems in programming but its also one of the most rewarding
+to summarize you're hitting the buffered I/O issue of mexPrintf The standard solution is to use `fflush(stdout)` immediately after the `mexPrintf` calls if that is not enough use `mexEvalString` along with `drawnow` or as a last resource use your own debug logging system. Good luck and happy debugging its one of the hardest problems in programming but its also one of the most rewarding

@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "how-to-implement-a-custom-action-on-clear-with-a-custom-airflow-operator"
 ---
 
-alright, so you're wanting to trigger a specific action when an airflow operator's `clear` method is called, and you want to do it in a custom operator. i've been down this road a couple of times, it’s a good question, and the first time i tackled this it took some trial and error. i remember working on a data pipeline about three years ago where we had this elaborate cleanup process that needed to run whenever a task was cleared, we couldn't rely on airflow's default behaviour alone and that was a mess.
+, so you're wanting to trigger a specific action when an airflow operator's `clear` method is called, and you want to do it in a custom operator. i've been down this road a couple of times, it’s a good question, and the first time i tackled this it took some trial and error. i remember working on a data pipeline about three years ago where we had this elaborate cleanup process that needed to run whenever a task was cleared, we couldn't rely on airflow's default behaviour alone and that was a mess.
 
-basically, airflow's clear method is designed to remove task instances from airflow's metadata database, usually it sets the state to 'removed'. you can clear them from the web interface or through the cli. what it *doesn't* do is provide a direct hook for custom code to execute as part of this clear operation. that's where subclassing and overriding some methods come in.
+basically, airflow's clear method is designed to remove task instances from airflow's metadata database, usually it sets the state to 'removed'. you can clear them from the web interface or through the cli. what it _doesn't_ do is provide a direct hook for custom code to execute as part of this clear operation. that's where subclassing and overriding some methods come in.
 
 the operator you need to tackle is the base `baseoperator`, that’s where the clear method lives. the problem is the base clear method does not have a pre or post hook, so you have to override the method. the trick is to implement the actual cleanup action within your operator.
 
@@ -36,13 +36,13 @@ class CustomClearOperator(BaseOperator):
               upstream=False, downstream=False,
               include_parentdag=False, include_subdags=False,
               dry_run=False):
-            
-      
-      
+
+
+
         with create_session() as session:
 
           if ti and isinstance(ti, TaskInstance):
-            
+
               super().clear(ti, session=session, dag=dag,
                                 start_date=start_date, end_date=end_date,
                                 upstream=upstream, downstream=downstream,
@@ -89,7 +89,7 @@ with DAG(
     schedule_interval=None,
     catchup=False
 ) as dag:
-    
+
     def my_task():
         print("task running")
 
@@ -119,7 +119,7 @@ from airflow.utils.state import State
 from datetime import datetime
 
 class AdvancedCustomClearOperator(BaseOperator):
-  
+
     def __init__(self, *args,  **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -129,13 +129,13 @@ class AdvancedCustomClearOperator(BaseOperator):
               upstream=False, downstream=False,
               include_parentdag=False, include_subdags=False,
               dry_run=False):
-            
-      
-      
+
+
+
         with create_session() as session:
 
           if ti and isinstance(ti, TaskInstance):
-            
+
               super().clear(ti, session=session, dag=dag,
                                 start_date=start_date, end_date=end_date,
                                 upstream=upstream, downstream=downstream,

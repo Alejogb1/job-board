@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "struct-in-verilog-declaration-code"
 ---
 
-Okay so you're asking about declaring structs in Verilog eh Been there done that seen the t-shirt and probably designed the circuit that prints the t-shirt yeah I've had my fair share of run-ins with Verilog and its quirks especially when it comes to organizing data into something more structured than a bunch of loose wires. You see in the real world we ain't dealing with just single bits or integers we're handling packets data streams and complex control signals you know the stuff that actually makes things tick. So yeah structs are pretty crucial.
+you're asking about declaring structs in Verilog eh Been there done that seen the t-shirt and probably designed the circuit that prints the t-shirt yeah I've had my fair share of run-ins with Verilog and its quirks especially when it comes to organizing data into something more structured than a bunch of loose wires. You see in the real world we ain't dealing with just single bits or integers we're handling packets data streams and complex control signals you know the stuff that actually makes things tick. So yeah structs are pretty crucial.
 
-Alright let's talk shop. In Verilog unlike in high level languages like C or Python you don't have a dedicated `struct` keyword per se. Instead you achieve a similar effect using `packed` arrays. Yes I know sounds weird right first time I encountered it I did a double take and wondered if I had accidentally downloaded a different language manual but no it's just how Verilog rolls.
+let's talk shop. In Verilog unlike in high level languages like C or Python you don't have a dedicated `struct` keyword per se. Instead you achieve a similar effect using `packed` arrays. Yes I know sounds weird right first time I encountered it I did a double take and wondered if I had accidentally downloaded a different language manual but no it's just how Verilog rolls.
 
 The concept here is to create a multi-bit signal where each part of the signal represents a member of your structure. You're essentially concatenating smaller bit fields to create a larger composite signal. The beauty or the curse of it depends on your mood is that you control the bits directly. No automatic padding or memory management here its all on you mate. That means you gotta be really careful with your bit widths and make sure you’re not stepping on any toes. Now you might be wondering why is it like that simple answer hardware control my man hardware control.
 
@@ -46,7 +46,7 @@ module packet_struct;
 endmodule
 ```
 
-Okay let's break this down. We start by defining some `parameter`s for the width of each field header payload checksum. This is good practice cause it makes your code more readable and easier to modify later. Then we create a `typedef` which is the crucial bit here with the name `packet_t` The `struct packed` syntax is used to group these fields together into a single datatype. And we use `logic` for our signals. Finally we create an instance of our packet struct called `my_packet` and assign values to each member using the dot operator. And well I'm using the display command to show that everything works and is accessible.
+let's break this down. We start by defining some `parameter`s for the width of each field header payload checksum. This is good practice cause it makes your code more readable and easier to modify later. Then we create a `typedef` which is the crucial bit here with the name `packet_t` The `struct packed` syntax is used to group these fields together into a single datatype. And we use `logic` for our signals. Finally we create an instance of our packet struct called `my_packet` and assign values to each member using the dot operator. And well I'm using the display command to show that everything works and is accessible.
 
 **Example 2: Nested Structs**
 
@@ -147,17 +147,17 @@ Now a few words of wisdom from someone who has spent way too many hours debuggin
 
 **Things to watch out for**
 
-*   **Bit width errors**: Make sure the total bit width of your packed array matches the total bit width of the signal you're assigning it to. Mismatches can lead to all sorts of weird bugs and head scratching moments trust me on this. And while Verilog might not complain to you about mismatches the hardware will.
-*   **Endianness**: Verilog is endianness agnostic meaning that its on you to make sure that the order of the bits in the struct is how the rest of your system expects it. This has been the source of many many many debugging sessions.
-*   **Debugging**: Debugging packed arrays can be tricky because you don’t see the individual fields in many waveform viewers as clear as you would see them in a high level programming language. I recommend spending time mastering your simulation tool and learning all its bells and whistles.
-*   **Readability**: As your structures get complex and deeply nested it can get difficult to read the code. So proper documentation and consistent formatting is very important.
-*   **Reusability**: You can make use of `typedef` to create reusable structs across your design. This is very important because otherwise you'll be defining structs everywhere in your project which is a big no-no.
+- **Bit width errors**: Make sure the total bit width of your packed array matches the total bit width of the signal you're assigning it to. Mismatches can lead to all sorts of weird bugs and head scratching moments trust me on this. And while Verilog might not complain to you about mismatches the hardware will.
+- **Endianness**: Verilog is endianness agnostic meaning that its on you to make sure that the order of the bits in the struct is how the rest of your system expects it. This has been the source of many many many debugging sessions.
+- **Debugging**: Debugging packed arrays can be tricky because you don’t see the individual fields in many waveform viewers as clear as you would see them in a high level programming language. I recommend spending time mastering your simulation tool and learning all its bells and whistles.
+- **Readability**: As your structures get complex and deeply nested it can get difficult to read the code. So proper documentation and consistent formatting is very important.
+- **Reusability**: You can make use of `typedef` to create reusable structs across your design. This is very important because otherwise you'll be defining structs everywhere in your project which is a big no-no.
 
 **Further Learning**
 
 If you want to get deeper I wouldn't really recommend going online and searching for random posts. If you want to seriously understand the topic then you should look for formal resources such as:
 
-*   **"SystemVerilog for Design Second Edition"** by Stuart Sutherland and David Doman it has many good examples and good explanations of the topic.
-*   **"Digital Design Principles and Practices"** by John F Wakerly. This is not specifically for Verilog but if you understand hardware you understand Verilog.
+- **"SystemVerilog for Design Second Edition"** by Stuart Sutherland and David Doman it has many good examples and good explanations of the topic.
+- **"Digital Design Principles and Practices"** by John F Wakerly. This is not specifically for Verilog but if you understand hardware you understand Verilog.
 
 Yeah so that’s pretty much it for structs in Verilog. It's not exactly the most elegant solution but it works and that's what matters in the end. As I always say when I am working on hardware "it just needs to work" and it doesn't have to be pretty. So go out there and create some cool circuits. Oh and one last thing never ever underestimate the power of a good cup of coffee and a clear head debugging hardware can be pain but it is very rewarding in the end.

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-save-the-best-model-with-trainstep-without-modelfit"
 ---
 
-alright, so you're looking to save the best model during training, but you're doing a custom training loop with `train_step` instead of the usual `model.fit()`. i get it, you want that granular control, and sometimes the built-in stuff isn't flexible enough. i've been there, trust me. i spent a good chunk of a summer back in '17 trying to optimize some reinforcement learning agent, and the `fit()` method was just too much of a black box.
+, so you're looking to save the best model during training, but you're doing a custom training loop with `train_step` instead of the usual `model.fit()`. i get it, you want that granular control, and sometimes the built-in stuff isn't flexible enough. i've been there, trust me. i spent a good chunk of a summer back in '17 trying to optimize some reinforcement learning agent, and the `fit()` method was just too much of a black box.
 
 the thing is, `model.fit()` does a bunch of behind-the-scenes magic, including keeping track of validation losses and saving the best model based on some metric. when you're rolling your own loop, you need to handle that logic yourself. it’s not that complicated though, just a couple of extra pieces you need to put together.
 

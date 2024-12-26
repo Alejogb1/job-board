@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-doesnt-dockerairflownginx-reverse-proxy-work"
 ---
 
-Okay, let's talk about why setting up a Dockerized Airflow environment behind an Nginx reverse proxy can sometimes feel like chasing a ghost. I’ve spent my share of late nights debugging exactly this scenario, and it usually boils down to a few key areas that are easy to overlook. It’s rarely a single, catastrophic error, but rather a confluence of configuration mishaps. Let's break it down.
+, let's talk about why setting up a Dockerized Airflow environment behind an Nginx reverse proxy can sometimes feel like chasing a ghost. I’ve spent my share of late nights debugging exactly this scenario, and it usually boils down to a few key areas that are easy to overlook. It’s rarely a single, catastrophic error, but rather a confluence of configuration mishaps. Let's break it down.
 
 First off, understand that this setup introduces complexity on several layers: the docker network, airflow's internal webserver, and the nginx proxy. Each one of these requires careful configuration, and when they don’t play nicely together, you'll likely end up with some variation of "connection refused" or "502 Bad Gateway" errors. It's not a fundamentally broken approach, far from it, but it requires meticulous attention to detail.
 
-The core issue often isn’t with any *one* component being faulty, but rather, miscommunication between them, specifically around network reachability and URL handling. When we set up Airflow in docker, it's typically configured to bind to an internal network port inside its container, typically 8080. Now, when Nginx enters the picture, we want it to act as a gateway to this port. The problem arises when Nginx can’t reach the internal Airflow port, or when Airflow isn’t aware of the external URL it's supposed to be accessed from.
+The core issue often isn’t with any _one_ component being faulty, but rather, miscommunication between them, specifically around network reachability and URL handling. When we set up Airflow in docker, it's typically configured to bind to an internal network port inside its container, typically 8080. Now, when Nginx enters the picture, we want it to act as a gateway to this port. The problem arises when Nginx can’t reach the internal Airflow port, or when Airflow isn’t aware of the external URL it's supposed to be accessed from.
 
 Let’s delve into the common culprits I’ve encountered and what I've done to address them.
 
@@ -21,7 +21,7 @@ Consider this scenario: you’ve spun up an Nginx container named `nginx-proxy` 
 Here’s a snippet of how you might define a user-defined bridge network and then attach the containers to it using Docker Compose:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   airflow-app:
     image: apache/airflow:2.7.3-python3.11 # adjust as necessary
@@ -46,13 +46,14 @@ services:
 networks:
   airflow_net:
     driver: bridge
-
 ```
+
 In this `docker-compose.yml` file, both the `airflow-app` and `nginx-proxy` containers are on the `airflow_net` network. Note how `AIRFLOW__WEBSERVER__BASE_URL` is now set to the internal name `airflow-app:8080`, which is used internally by Airflow to create links and handle redirects (more on this in point 3). With this, inside the `nginx-proxy` container, you can refer to the airflow app container by the service name `airflow-app`.
 
 **2. Nginx Configuration Errors**
 
 Next up, scrutinize your Nginx configuration. A misconfigured proxy_pass directive is a common source of frustration. You need to ensure that Nginx is correctly directing traffic to the correct internal port of your Airflow container. Specifically, be sure that the `proxy_set_header` directives are correctly configured so that the internal headers used by Airflow are not overwritten by the proxy. A minimal Nginx configuration might look something like this (stored in `nginx.conf`):
+
 ```nginx
 server {
     listen 80;
@@ -68,6 +69,7 @@ server {
     }
 }
 ```
+
 The key here is the `proxy_pass` directive: `http://airflow-app:8080`. Because both containers are on the same docker network, Nginx can use the service name of the airflow container to resolve the internal ip and port to route the traffic. The `proxy_set_header` directives are also crucial, as they forward the necessary information to the application behind the proxy. Omitting headers such as `Host` or `X-Forwarded-Proto` can cause Airflow to generate incorrect redirect links.
 
 **3. Airflow Webserver Configuration and Base URL:**
@@ -77,6 +79,7 @@ The last piece of the puzzle, and arguably the most critical, is configuring the
 Furthermore, if you have custom configurations in `airflow.cfg` that are not automatically getting picked up, that can introduce issues. I encountered such a scenario once when I was trying to implement custom authentication using a remote user provider. A seemingly unrelated setting in `airflow.cfg` that controlled the `SECRET_KEY` was not being applied correctly due to it being not properly formatted in the docker environment variable set up. This lead to the authentication mechanism failing silently. After inspecting the `airflow.cfg` that was being actively used by airflow, it became clear that all environment variables are converted to strings, and lists need to be converted from `['item1', 'item2']` to `'item1,item2'` to be correctly understood. This is particularly true when using settings where lists or tuples are expected.
 
 Here’s an example of how to set the base url correctly using an environment variable:
+
 ```bash
 docker run -d \
   -e AIRFLOW__WEBSERVER__BASE_URL=http://your-domain.com/airflow \

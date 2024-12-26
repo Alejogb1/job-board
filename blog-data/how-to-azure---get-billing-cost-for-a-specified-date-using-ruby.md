@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-azure---get-billing-cost-for-a-specified-date-using-ruby"
 ---
 
-alright, so you're after pulling azure billing costs for a particular date using ruby, eh? been there, done that. it's one of those things that sounds straightforward, but can have a few gotchas if you're not careful. i've banged my head against the wall on similar issues before, so let me give you the lowdown based on my experience.
+, so you're after pulling azure billing costs for a particular date using ruby, eh? been there, done that. it's one of those things that sounds straightforward, but can have a few gotchas if you're not careful. i've banged my head against the wall on similar issues before, so let me give you the lowdown based on my experience.
 
 first off, you'll need the azure sdk for ruby. if you haven't installed it already, you're gonna want to add these gems to your `gemfile`
 
@@ -22,10 +22,10 @@ i strongly advise against using your personal azure credentials directly in your
 
 for the ruby code, you’re going to need a few things:
 
-*   your tenant id
-*   your client id (the application id of your aad app)
-*   your client secret (a secret key for your aad app)
-*   your subscription id
+- your tenant id
+- your client id (the application id of your aad app)
+- your client secret (a secret key for your aad app)
+- your subscription id
 
 you can grab all of these from the azure portal under active directory and subscriptions.
 
@@ -131,6 +131,7 @@ else
     puts "Failed to get the cost for range from #{start_date} to #{end_date}"
 end
 ```
+
 in this example the key thing is to use ruby ranges and iterate over each day getting the total cost, summing it in each step of the loop. this is not performant and you could make a query with a time range, but i'm providing a simple solution with basic knowledge of programming for a clearer understanding of what is happening step by step.
 
 one more thing that i found out the hard way is that the billing data isn't always available immediately. there's usually some latency before it appears in the api. so, if you're querying for a date, make sure to allow some time for the data to be processed. depending on the resources you're using the latency could be as low as few minutes and as big as a couple of hours.
@@ -204,6 +205,7 @@ end
 
 
 ```
+
 this final example code, demonstrates how to access the more detailed usage data, this will be useful to investigate costs of each category and resources you might be using in the cloud.
 
 that should cover pretty much everything you need to get going. let me know if you're hitting any snags, and good luck!

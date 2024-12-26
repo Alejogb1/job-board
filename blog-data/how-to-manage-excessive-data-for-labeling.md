@@ -8,7 +8,7 @@ Right then, let's tackle this challenge of excessive data for labeling. I've cer
 
 The core issue isn't simply the amount of data. It's about how we can intelligently select the most informative data points for labeling, and then, how we can manage the process in a way that maintains data quality without requiring an army of annotators. This means going beyond a naive approach of simply labeling everything and instead, focusing on techniques that prioritize efficiency and effectiveness.
 
-A key concept here is *active learning*. Instead of blindly labeling data in the order it's presented, we leverage models to identify the instances where the model is least certain. These ambiguous data points are often the most valuable for improving the model's performance. Think about it: a model that's already highly confident about a particular image probably won't learn much from having that image labeled. It's the data where it hesitates or fails, the edge cases, where the biggest gains are made.
+A key concept here is _active learning_. Instead of blindly labeling data in the order it's presented, we leverage models to identify the instances where the model is least certain. These ambiguous data points are often the most valuable for improving the model's performance. Think about it: a model that's already highly confident about a particular image probably won't learn much from having that image labeled. It's the data where it hesitates or fails, the edge cases, where the biggest gains are made.
 
 Let’s get to it. One crucial step, pre-active learning, is proper data exploration and cleaning. If your data is riddled with inconsistencies, irrelevant artifacts, or is simply poorly formatted, labeling it is just going to compound those issues. This isn't a task to be skipped; meticulous data preparation is foundational.
 
@@ -49,6 +49,7 @@ print(f"Original Text: {text}")
 print(f"Preprocessed Text: {preprocessed_text}")
 
 ```
+
 This ensures we are starting with clean, standardized text data, a non-negotiable when dealing with vast quantities of data.
 
 Moving on to active learning, there are several strategies I’ve found effective. Uncertainty sampling is a classic choice. Here we use a model, pre-trained or even a rudimentary one initially, to predict labels for the unlabeled data. We then select the data points where the model is least confident (e.g., has the lowest probability for its predicted class, or where the difference between probabilities is smallest).
@@ -93,11 +94,12 @@ selected_images = select_uncertain_images(model, unlabeled_images, num_to_select
 print(f"Images selected for labeling: {selected_images}")
 
 ```
+
 This code snippet illustrates the core logic. You'd replace the `predict_probabilities` placeholder with an actual function using your trained model and image processing libraries.
 
-Now, managing the labeling *process* itself is critical. Data annotation platforms, both commercial and open-source, offer features like user management, annotation instructions, and quality control. Avoid using ad-hoc methods; a solid platform drastically reduces errors and increases labeling efficiency. I've found that detailed labeling guidelines and regular audits of annotation results by experienced annotators helps ensure consistency.
+Now, managing the labeling _process_ itself is critical. Data annotation platforms, both commercial and open-source, offer features like user management, annotation instructions, and quality control. Avoid using ad-hoc methods; a solid platform drastically reduces errors and increases labeling efficiency. I've found that detailed labeling guidelines and regular audits of annotation results by experienced annotators helps ensure consistency.
 
-Finally, another strategy that can prove helpful is *weak supervision*. This involves creating noisy labels using heuristics or other automated methods, then using these labels to train an initial model. The model trained using weakly supervised labels can then be used as the base for active learning. This can significantly reduce the number of manual labels needed, especially in the initial stages.
+Finally, another strategy that can prove helpful is _weak supervision_. This involves creating noisy labels using heuristics or other automated methods, then using these labels to train an initial model. The model trained using weakly supervised labels can then be used as the base for active learning. This can significantly reduce the number of manual labels needed, especially in the initial stages.
 
 Here is an example where we are generating weak labels for a sentiment analysis task based on the presence of specific keywords, an overly simplistic yet illustrative example:
 
@@ -115,7 +117,7 @@ def create_weak_labels(texts, positive_keywords, negative_keywords):
     return labels
 
 # Example usage:
-texts = ["I loved this product!", "This was awful.", "It was okay.", "The experience was very positive."]
+texts = ["I loved this product!", "This was awful.", "It was .", "The experience was very positive."]
 positive_keywords = ["love", "amazing", "great", "positive"]
 negative_keywords = ["awful", "terrible", "bad", "negative"]
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-predict-a-single-image-with-a-pre-trained-loadmodel-in-keras-and-how-to-get-the-label"
 ---
 
-alright, so you're looking at loading a keras model, feeding it a single image, and getting the predicted label. i've been there, done that, got the t-shirt (and probably a few debugging scars too). it sounds straightforward but there are a few places where you can stumble if you're not careful. i'll walk you through the process, share some things i learned the hard way, and offer some code examples.
+, so you're looking at loading a keras model, feeding it a single image, and getting the predicted label. i've been there, done that, got the t-shirt (and probably a few debugging scars too). it sounds straightforward but there are a few places where you can stumble if you're not careful. i'll walk you through the process, share some things i learned the hard way, and offer some code examples.
 
 first off, let's talk about the model itself. assuming you've got a keras model saved – either as a `.h5` file or using the savedmodel format – you'll use `keras.models.load_model()` to bring it back into memory. this is pretty standard, and hopefully, you’ve already got this part sorted. the important thing here is that the model you load is architecturally identical to the one you trained. if there are any differences in layers, or even their activation functions, things are gonna go south very quickly. i once spent a whole day debugging a model that wouldn't predict correctly and it turned out, i was loading the model from a different training run. it's a lesson i won't soon forget. double check your filenames and paths, seriously.
 
@@ -25,6 +25,7 @@ def preprocess_image(image_path, target_size):
     img_array = img_array / 255.0 #scaling
     return img_array
 ```
+
 in this code block, i am using `load_img` to load the image, `img_to_array` to convert it into a numpy array and finally, i am adding a batch dimension because keras expects the input to have it. it's a common pitfall to forget this batch dimension and the model will choke on it. the dividing by 255 is because most image pixel values are between 0 and 255 and most models are trained using values between 0 and 1.
 
 another tip, if the model was trained using image augmentations, don't apply these to your validation images. augmentation is there to help the model generalise better in training, but is not meant to be used in prediction.
@@ -43,6 +44,7 @@ def predict_image(image_path, target_size):
     predictions = model.predict(preprocessed_image)
     return predictions
 ```
+
 here, i'm simply passing the preprocessed image to the `predict` function. this function will return an array containing the probabilities (or logits if the model doesn't have a final activation).
 
 finally, for getting the label, this depends a lot on how the model was structured and trained. if your model is a standard classification model with a softmax activation in the final layer, then `predictions` will be a vector where each element is the probability of the image belonging to the respective class. the class with the highest probability is your prediction. you can use `np.argmax()` to find the index of the highest probability, which corresponds to your predicted label.
@@ -69,10 +71,11 @@ if __name__ == '__main__':
 the above code i’ve wrapped into a `get_predicted_label` function, and i’m also assuming you have the `class_names` array in the same order as the output layer in your model. it's a critical step that you keep your mappings in order so you know what class each output index represents. i’ve seen it happen so many times where someones label names get messed up. usually when someone saves the class names and index in different files, then it's very easy to mess it up. i recommend that, you use the class names only as an indexable list, as a best practice.
 
 in summary, here is the flow:
-* load the model with `load_model`.
-* load the image and preprocess it to be the same as the training images, this includes resizing and scaling.
-* perform a prediction using `model.predict()`.
-* use argmax to obtain the class index and if needed, obtain the label based on the class index.
+
+- load the model with `load_model`.
+- load the image and preprocess it to be the same as the training images, this includes resizing and scaling.
+- perform a prediction using `model.predict()`.
+- use argmax to obtain the class index and if needed, obtain the label based on the class index.
 
 a few things that you should watch out for, apart from all the things i've mentioned. keep in mind that the model might be expecting the input to be a single input or a batch. if you add the batch dimension to your input and the model is expecting a single input you are not going to have a good time. another point to keep in mind is the type of input it might be expecting for example, floating point or integer, make sure you match that. and one more thing, if your model does multiple predictions and you are expecting just one, you need to select the right output. also, if you have a complex pipeline, you might need to extract intermediate layers instead of using the output layers, this can help you debug if the model is predicting correctly in some parts, but not in the outputs.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "pitch-detection-python-audio"
 ---
 
-Alright so pitch detection in Python audio you say right been there done that got the t-shirt and probably a few extra gray hairs to boot Let me tell you this is not as straightforward as it might seem at first blush especially if you’re trying to get anything resembling accuracy and robustness That’s not to say it’s rocket science but it does require a bit of understanding of signal processing and the quirks of audio
+so pitch detection in Python audio you say right been there done that got the t-shirt and probably a few extra gray hairs to boot Let me tell you this is not as straightforward as it might seem at first blush especially if you’re trying to get anything resembling accuracy and robustness That’s not to say it’s rocket science but it does require a bit of understanding of signal processing and the quirks of audio
 
 I’ve wrestled with this problem a lot I recall this one time back in my college days I was working on this interactive music project think something akin to a really janky version of Guitar Hero and the pitch detection aspect nearly brought me to tears Seriously it was a nightmare of false positives and wildly inaccurate readings I tried everything from basic autocorrelation to some pretty convoluted fast Fourier transform FFT implementations I was even briefly considering using those weird hardware pitch trackers that some guitar effects pedal people use But my budget was limited back then and my stubbornness kept me going eventually leading me down a more pure software-based path
 
@@ -27,10 +27,11 @@ def autocorr_pitch_detection(audio_signal, sample_rate, min_freq=50, max_freq=10
 
     if lag == 0:
         return 0
-    
+
     pitch = sample_rate / lag
     return pitch
 ```
+
 This script computes the autocorrelation of a given audio signal and then locates the peak that corresponds to the pitch period it also takes min and max frequency as parameters to provide some sort of constraint and speed up the detection a bit. Its a start I will admit.
 
 Autocorrelation is great for simple pure tones and relatively noise-free audio but it can fall apart rapidly with more complex sounds for example human voice with lots of harmonics or polyphonic music The biggest issue is it tends to latch onto the loudest periodic element in the signal not necessarily the fundamental pitch we want It’s kind of like trying to find a specific grain of sand on the beach when a whole bunch of them are trying to look like the same grain and that leads us to the next more robust method
@@ -61,6 +62,7 @@ def amdf_pitch_detection(audio_signal, sample_rate, min_freq=50, max_freq=1000):
     pitch = sample_rate / lag
     return pitch
 ```
+
 It is important to be aware that the way the difference is calculated is very important This implementation calculates the absolute difference and summs those values and the final result is a minimum not a maximum as seen in the autocorrelation example That is because in AMDF we are interested in detecting the lag with minimum difference not maximum correlation Also like the last method this one can be improved with some preprocessing of the signal which we will explore later down this response
 
 Now for the gold standard at least in most situations FFTs which brings us to frequency domain techniques We use FFT to move our signal from the time domain to the frequency domain this means we will see what frequencies the audio signal is composed of This gives us more information to work with but also makes the detection more complex and resource intensive In this frequency domain we can then look for peaks that could correspond to pitches which usually the lowest one is our target
@@ -86,6 +88,7 @@ def fft_pitch_detection(audio_signal, sample_rate, min_freq=50, max_freq=1000):
   freq = freqs[min_freq_index+max_freq_index_sub]
   return np.abs(freq)
 ```
+
 This method uses the FFT function to analyze frequencies in our audio. It’s crucial to remember that FFT will return complex numbers and so we need the magnitude using np.abs before locating the biggest peak of frequency This method is very dependent on the quality of the signal and might require some additional signal preprocessing before being used effectively as the noise can easily overshadow the actual fundamental frequency.
 
 There are always more improvements that can be made to each of these detection methods like doing some data smoothing or calculating more robust peaks and frequencies but that is beyond the scope of this response

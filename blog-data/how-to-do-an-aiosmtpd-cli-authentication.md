@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-an-aiosmtpd-cli-authentication"
 ---
 
-alright, so you're looking at setting up authentication for your aiosmtpd server, and want to do it from the command line, right? i've been there, trust me. spent a good chunk of my early career neck-deep in email servers, and aiosmtpd wasn't always as straightforward as we'd like. back then, before a lot of the refined libraries, we were practically building the wheel for every single feature, authentication included. think raw socket programming, handling every single byte, good old days. not!
+, so you're looking at setting up authentication for your aiosmtpd server, and want to do it from the command line, right? i've been there, trust me. spent a good chunk of my early career neck-deep in email servers, and aiosmtpd wasn't always as straightforward as we'd like. back then, before a lot of the refined libraries, we were practically building the wheel for every single feature, authentication included. think raw socket programming, handling every single byte, good old days. not!
 
 it's a fair question. while aiosmtpd has made things way easier, sometimes the initial setup can seem like a hurdle, especially when you’re accustomed to more traditional smtp setups. let's cut to the chase, no need for fancy footwork, just the facts.
 
@@ -32,19 +32,19 @@ class CustomSMTP(SMTP):
         if not args:
             await server.push(b"334 " + b"VXNlcm5hbWU6")
             return None
-        
+
         username = args[0].decode()
-        
+
         await server.push(b"334 " + b"UGFzc3dvcmQ6")
         return ("auth_plain", username)
 
 
     async def auth_PLAIN(self, server, args):
-            
+
         if not args:
             await server.push(b"501 Syntax error")
             return False
-        
+
         auth_string = args[0].decode()
         try:
             auth_data = base64.b64decode(auth_string).decode().split('\x00')
@@ -53,10 +53,10 @@ class CustomSMTP(SMTP):
         except (IndexError, ValueError):
             await server.push(b"501 Syntax error")
             return False
-        
+
         if username in self.auth_users and self.auth_users[username] == password:
             return AuthResult(success=True, auth_ident=username)
-        
+
         await server.push(b"535 Authentication failed")
         return AuthResult(success=False)
 
@@ -76,7 +76,7 @@ async def amain(auth_users):
         controller.stop()
 
 if __name__ == '__main__':
-    
+
     # Example auth data
     auth_users = {
         "user1": "pass1",
@@ -220,11 +220,11 @@ class CustomSMTP(SMTP):
         if not args:
             await server.push(b"501 Syntax error")
             return False
-        
+
         if not server.auth_state or len(server.auth_state) !=3:
              await server.push(b"501 Syntax error")
              return False
-        
+
         _,username,domain = server.auth_state
 
         auth_string = args[0].decode()
@@ -235,18 +235,18 @@ class CustomSMTP(SMTP):
         except (IndexError, ValueError):
             await server.push(b"501 Syntax error")
             return False
-            
+
         if auth_username != username:
             await server.push(b"535 Authentication failed")
             return AuthResult(success=False)
-        
+
         auth_users = load_auth_data(domain)
         if username in auth_users and auth_users[username] == password:
             return AuthResult(success=True, auth_ident=username)
 
         await server.push(b"535 Authentication failed")
         return AuthResult(success=False)
-    
+
     async def auth_CRAM_MD5(self, server, args):
       await server.push(b"502 Authentication method not implemented")
       return AuthResult(success=False)

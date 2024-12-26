@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-an-expected-minndim-error-in-tensorflow"
 ---
 
-Okay, let's tackle this “expected min_ndim” error in tensorflow. I've seen this one pop up more times than I care to remember, usually when dealing with tensor manipulation. it’s a classic case of a shape mismatch that, while seemingly straightforward, can be surprisingly tricky to diagnose if you’re not aware of the underlying tensor dimensions.
+, let's tackle this “expected min_ndim” error in tensorflow. I've seen this one pop up more times than I care to remember, usually when dealing with tensor manipulation. it’s a classic case of a shape mismatch that, while seemingly straightforward, can be surprisingly tricky to diagnose if you’re not aware of the underlying tensor dimensions.
 
 Fundamentally, tensorflow operations are very particular about the shapes of the tensors they receive. The “expected min_ndim” error essentially means that a particular function or layer within your tensorflow model is expecting an input tensor to have at least a specific number of dimensions (indicated by `min_ndim`), but instead, it received a tensor with fewer dimensions. Think of it like trying to fit a 2d image into a function designed to process 3d videos; there’s simply not enough data in the required dimensionality.
 
@@ -104,6 +104,6 @@ In this scenario, `tf.reduce_sum` reduced the tensor's dimension from `(2, 10, 3
 
 Debugging this issue usually involves carefully examining the tensor shapes at each stage of your model. `tensor.shape` and `tf.shape(tensor)` are your best friends here. Use them extensively to verify the shape of tensors. It’s also crucial to understand the input requirements of each layer or function you are using in tensorflow. When errors occur, print out the shape of the problematic tensor and see if it aligns with the expected input of the function in question.
 
-For in-depth understanding of tensor manipulation in tensorflow, I highly recommend the official TensorFlow documentation on tensors. In addition, the book *Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow* by Aurélien Géron is another excellent resource, especially its sections on tensor manipulation and the nuances of working with tensorflow's core operations and layers. Finally, exploring tutorials by the tensorflow official team on specific tasks will give some additional insight as well.
+For in-depth understanding of tensor manipulation in tensorflow, I highly recommend the official TensorFlow documentation on tensors. In addition, the book _Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow_ by Aurélien Géron is another excellent resource, especially its sections on tensor manipulation and the nuances of working with tensorflow's core operations and layers. Finally, exploring tutorials by the tensorflow official team on specific tasks will give some additional insight as well.
 
 Remember, these errors are often a result of not paying close enough attention to the details of tensor dimensions. It’s a common challenge, and mastering it will enhance your ability to write stable and efficient tensorflow code. With the techniques and understanding presented here, along with the right resources, you’ll be well-equipped to confidently address those "expected min_ndim" errors.

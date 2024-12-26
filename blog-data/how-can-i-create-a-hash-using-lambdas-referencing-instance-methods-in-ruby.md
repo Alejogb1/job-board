@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-hash-using-lambdas-referencing-instance-methods-in-ruby"
 ---
 
-Alright, let's tackle this. It’s a surprisingly nuanced area, and I remember a project back in '09 where we heavily relied on dynamic configurations, which often involved precisely this: building hashes where the values were essentially method calls on an instance. The challenge, as always, lies in getting the binding correct and avoiding those nasty "undefined method" errors at runtime.
+, let's tackle this. It’s a surprisingly nuanced area, and I remember a project back in '09 where we heavily relied on dynamic configurations, which often involved precisely this: building hashes where the values were essentially method calls on an instance. The challenge, as always, lies in getting the binding correct and avoiding those nasty "undefined method" errors at runtime.
 
 The core concept here involves understanding that a lambda in Ruby is a closure; it captures its surrounding scope. When we want a lambda to call an instance method, we need to ensure that 'self' within that lambda refers to the correct instance. Simply creating a lambda and assigning it won't magically bind it to a particular object. That's where the trick lies.
 
@@ -42,11 +42,11 @@ puts method_hash[:add].call # Output: 15
 puts method_hash[:multiply].call # Output: 20
 ```
 
-In this example, `instance.method(:add_five)` returns a method object bound to the *instance*, and the lambda effectively says "call this method on that object". Crucially, the lambda is capturing the specific *instance*, so it will consistently operate on that specific object even if the value of the `instance` variable changes later.
+In this example, `instance.method(:add_five)` returns a method object bound to the _instance_, and the lambda effectively says "call this method on that object". Crucially, the lambda is capturing the specific _instance_, so it will consistently operate on that specific object even if the value of the `instance` variable changes later.
 
 **Technique 2: Leveraging `bind` for Context**
 
-Alternatively, you can use the `bind` method to explicitly set the object context for a method. `bind` will return a *bound* method object, which behaves in a way that always calls its corresponding method on the object you've bound it to. It's quite powerful, and in my experience, less prone to subtle errors when refactoring than the previous method.
+Alternatively, you can use the `bind` method to explicitly set the object context for a method. `bind` will return a _bound_ method object, which behaves in a way that always calls its corresponding method on the object you've bound it to. It's quite powerful, and in my experience, less prone to subtle errors when refactoring than the previous method.
 
 ```ruby
 class MyOtherClass
@@ -83,7 +83,7 @@ Notice the use of `bind(another_instance)` before calling `call`. This effective
 
 **Technique 3: Using `send` for Dynamism**
 
-Now let’s imagine needing more flexibility—perhaps you have a list of methods to execute dynamically based on external input or configuration. In this case, using `send` within the lambda might be preferable.  `send` allows you to dynamically invoke a method specified by a string or symbol on an object. This offers a great way to externalize method calls.
+Now let’s imagine needing more flexibility—perhaps you have a list of methods to execute dynamically based on external input or configuration. In this case, using `send` within the lambda might be preferable. `send` allows you to dynamically invoke a method specified by a string or symbol on an object. This offers a great way to externalize method calls.
 
 ```ruby
 class YetAnotherClass
@@ -119,14 +119,15 @@ puts dynamic_instance.setting_value # Output: 16
 dynamic_hash[:decrement_by_one].call
 puts dynamic_instance.setting_value # Output: 15
 ```
-Here, the `dynamic_hash` is constructed dynamically from the `methods_to_call` array. Each key in the hash becomes a method name, and its lambda value executes that method on the `dynamic_instance` using `send`.  This adds a layer of runtime configurability not available with the other approaches.
+
+Here, the `dynamic_hash` is constructed dynamically from the `methods_to_call` array. Each key in the hash becomes a method name, and its lambda value executes that method on the `dynamic_instance` using `send`. This adds a layer of runtime configurability not available with the other approaches.
 
 **Important Considerations**
 
-*   **Scope Capture:** Always double-check the scope in which you're creating the lambda. Subtle scope issues are common when dynamically creating these structures.
-*   **Error Handling:** It is good practice to incorporate proper error handling, particularly when using `send`, as it can raise exceptions if the method doesn't exist.
-*   **Readability:** While `send` is potent, prefer more explicit methods when appropriate for better code clarity.
-*   **Method Visibility:** Be mindful of method visibility. If you're using `send` or `method`, be sure the targeted method is accessible within your class definition.
+- **Scope Capture:** Always double-check the scope in which you're creating the lambda. Subtle scope issues are common when dynamically creating these structures.
+- **Error Handling:** It is good practice to incorporate proper error handling, particularly when using `send`, as it can raise exceptions if the method doesn't exist.
+- **Readability:** While `send` is potent, prefer more explicit methods when appropriate for better code clarity.
+- **Method Visibility:** Be mindful of method visibility. If you're using `send` or `method`, be sure the targeted method is accessible within your class definition.
 
 For further study, I highly recommend looking at the documentation on Ruby's `Method` class and the `Kernel#method`, `Method#bind` and `Object#send` methods in the official ruby-doc. Specifically, ‘The Well-Grounded Rubyist’ by David A. Black offers an incredibly detailed overview of Ruby internals, including a thorough discussion on method objects and closures. Also, the writings of Matz, the creator of Ruby, often provide the best insights into the language's design principles. Reading his work (available through various resources) can greatly improve your grasp of Ruby's more nuanced mechanics.
 

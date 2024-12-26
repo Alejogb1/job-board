@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-django-presave-signals-access-admin-user-passwords-during-creation"
 ---
 
-Alright, let's tackle this. I've run into this particular scenario a handful of times over the years, and it always requires a careful dance around security and best practices. The short answer is: accessing the raw, plaintext password directly in a `pre_save` signal for a Django admin user *during creation* is fundamentally impossible and intentionally so, for excellent security reasons. Django hashes passwords before they ever hit the database. However, there are ways to achieve what you likely need in an arguably better and far more secure way.
+, let's tackle this. I've run into this particular scenario a handful of times over the years, and it always requires a careful dance around security and best practices. The short answer is: accessing the raw, plaintext password directly in a `pre_save` signal for a Django admin user _during creation_ is fundamentally impossible and intentionally so, for excellent security reasons. Django hashes passwords before they ever hit the database. However, there are ways to achieve what you likely need in an arguably better and far more secure way.
 
-The challenge stems from how Django handles password storage. During the user creation process, specifically within `User.set_password()`, the password undergoes a one-way hashing algorithm before being saved to the `password` field in the database. The plaintext version is never exposed, even to the database itself. `pre_save` signals, triggered just before the model instance is committed to the database, will only ever see the *hashed* version of the password. Trying to reverse that process is both practically infeasible and, quite frankly, a security nightmare.
+The challenge stems from how Django handles password storage. During the user creation process, specifically within `User.set_password()`, the password undergoes a one-way hashing algorithm before being saved to the `password` field in the database. The plaintext version is never exposed, even to the database itself. `pre_save` signals, triggered just before the model instance is committed to the database, will only ever see the _hashed_ version of the password. Trying to reverse that process is both practically infeasible and, quite frankly, a security nightmare.
 
-Let's get into specifics. I vividly recall a project where we needed to automatically create corresponding entries in another table whenever a new admin user was created. It's a fairly common use case, and where I initially ran into the very problem you're describing. My initial thought was, "Okay, `pre_save` will work, I'll just grab the password..." I was quickly corrected by the reality of Django's secure password handling.
+Let's get into specifics. I vividly recall a project where we needed to automatically create corresponding entries in another table whenever a new admin user was created. It's a fairly common use case, and where I initially ran into the very problem you're describing. My initial thought was, ", `pre_save` will work, I'll just grab the password..." I was quickly corrected by the reality of Django's secure password handling.
 
-So, if you can't directly get the password itself, what can you do? Well, the solution lies in adjusting your approach. We don't *need* to know the password itself, we need to react to the *creation* of a user. The key is using a more appropriate signal: the `post_save` signal, specifically targeting newly created users. This allows you to reliably hook into the user creation process after the password hashing and user object creation have completed.
+So, if you can't directly get the password itself, what can you do? Well, the solution lies in adjusting your approach. We don't _need_ to know the password itself, we need to react to the _creation_ of a user. The key is using a more appropriate signal: the `post_save` signal, specifically targeting newly created users. This allows you to reliably hook into the user creation process after the password hashing and user object creation have completed.
 
 Here’s how you can accomplish this reliably and securely, with examples:
 
@@ -64,6 +64,7 @@ def send_welcome_email(sender, instance, created, **kwargs):
             fail_silently=False,
         )
 ```
+
 Here, we check for a newly created user, and then trigger the `send_mail` function, using the user's email address, username, and a welcome message. Remember to configure your email settings properly in your `settings.py` file.
 
 **Example 3: Initial User Setup Logic**
@@ -97,14 +98,14 @@ This demonstrates that after a new user is created, you can automatically add th
 
 **Why Not Pre-Save?**
 
-The main question here always boils down to "why not `pre_save`?" Simply put, `pre_save` is not ideal for this purpose. You cannot use it to access the raw password (which is the core requirement of this question), and attempting to do so indicates a misunderstanding of Django's security model. `pre_save` is primarily designed to allow you to modify model data *before* it is saved to the database, which is usually not necessary in scenarios that involve actions upon user creation itself. In fact, trying to modify a password value in `pre_save` can have unintended consequences and might lead to instability. You'll end up working against Django's built-in logic instead of with it.
+The main question here always boils down to "why not `pre_save`?" Simply put, `pre_save` is not ideal for this purpose. You cannot use it to access the raw password (which is the core requirement of this question), and attempting to do so indicates a misunderstanding of Django's security model. `pre_save` is primarily designed to allow you to modify model data _before_ it is saved to the database, which is usually not necessary in scenarios that involve actions upon user creation itself. In fact, trying to modify a password value in `pre_save` can have unintended consequences and might lead to instability. You'll end up working against Django's built-in logic instead of with it.
 
 **Key Takeaways and Recommendations**
 
-*   **Don't try to access raw passwords:** It's inherently insecure and unnecessary. Django's design makes it impossible (and that's good!).
-*   **Use `post_save` for actions after creation:** This is the right place to execute logic when a new user is created.
-*   **Always consider security:** Your implementation should avoid storing any sensitive information or attempting insecure practices such as re-hashing passwords based on the hashed version.
-*   **Understand the purpose of signals**: Signals such as `pre_save` and `post_save` are useful for handling model-related actions. It is important to understand the differences, so you can properly apply these signals.
+- **Don't try to access raw passwords:** It's inherently insecure and unnecessary. Django's design makes it impossible (and that's good!).
+- **Use `post_save` for actions after creation:** This is the right place to execute logic when a new user is created.
+- **Always consider security:** Your implementation should avoid storing any sensitive information or attempting insecure practices such as re-hashing passwords based on the hashed version.
+- **Understand the purpose of signals**: Signals such as `pre_save` and `post_save` are useful for handling model-related actions. It is important to understand the differences, so you can properly apply these signals.
 
 For a deeper dive, I would recommend looking into Django's official documentation regarding signals and user management. I'd also suggest reviewing "Two Scoops of Django: Best Practices for Django 3.x," as it provides practical guidance on handling complex scenarios while adhering to best practices. Also, for more conceptual understanding of hashing algorithms and secure storage, familiarize yourself with work by cryptographer Bruce Schneier. Specifically, check his books such as "Applied Cryptography". These resources will enhance both your theoretical knowledge and practical implementation abilities.
 

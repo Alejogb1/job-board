@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "what-are-the-different-classes-in-one-hot-encoders-and-what-are-their-implications"
 ---
 
-Okay, let's talk one-hot encoders. I've spent a fair bit of time working with these, and they're deceptively simple on the surface, but understanding the nuances is crucial for robust data processing. I remember back in '14, working on a large natural language processing project, we had a real mess with categorical data. The performance was all over the place, and it took a deep dive into encoding methods to resolve it. That’s where I really got hands-on with the implications of these seemingly basic transformations.
+, let's talk one-hot encoders. I've spent a fair bit of time working with these, and they're deceptively simple on the surface, but understanding the nuances is crucial for robust data processing. I remember back in '14, working on a large natural language processing project, we had a real mess with categorical data. The performance was all over the place, and it took a deep dive into encoding methods to resolve it. That’s where I really got hands-on with the implications of these seemingly basic transformations.
 
 So, fundamentally, a one-hot encoder's job is to convert categorical variables into a numerical format that machine learning algorithms can understand and work with effectively. Instead of trying to interpret text or labels directly, we’re translating them into binary vectors. The core idea involves representing each unique category as a column (or feature) and then, for each observation, placing a '1' in the column corresponding to the observed category and '0' in all other columns. This avoids imposing artificial ordinality on categorical data, a common pitfall when using methods like simple integer encoding.
 
-But, let's get to your question about classes. While most libraries present one-hot encoding as a single monolithic process, it's more accurate to think of different *implementations* rather than strict classes. These differences typically emerge from how the encoder handles particular edge cases or how it's designed for efficiency with certain types of data. I'll outline the ones I've found most relevant through my experiences.
+But, let's get to your question about classes. While most libraries present one-hot encoding as a single monolithic process, it's more accurate to think of different _implementations_ rather than strict classes. These differences typically emerge from how the encoder handles particular edge cases or how it's designed for efficiency with certain types of data. I'll outline the ones I've found most relevant through my experiences.
 
 **1. Standard One-Hot Encoders:**
 
@@ -38,7 +38,7 @@ Key here are a few aspects: First, `sparse_output=False` means we get dense nump
 
 **2. One-Hot Encoders with Limited Vocabulary:**
 
-This is less about a distinct *class* and more about a modification or configuration. Instead of including all unique categories in the training set, we might choose to only include a predefined set of categories. Anything not included gets treated as an "other" category. This approach is valuable for datasets where many less-frequent categories exist. Think of, say, geographical information with many very small towns; one-hot encoding every single small town would create massive feature vectors, and most of these would be irrelevant.
+This is less about a distinct _class_ and more about a modification or configuration. Instead of including all unique categories in the training set, we might choose to only include a predefined set of categories. Anything not included gets treated as an "other" category. This approach is valuable for datasets where many less-frequent categories exist. Think of, say, geographical information with many very small towns; one-hot encoding every single small town would create massive feature vectors, and most of these would be irrelevant.
 
 Let's see this concept in action with a modified snippet. We'll assume we know the top categories we care about in advance:
 
@@ -63,6 +63,7 @@ encoded_df = pd.DataFrame(encoded_data, columns = encoder.get_feature_names_out(
 
 print(encoded_df)
 ```
+
 With the parameter `categories = [vocabulary]`, we specified our known labels, and `handle_unknown='infrequent_if_exist'` will only add an "unknown" category if the labels are specified within parameter `categories`. If we had specified handle_unknown as 'ignore' or 'error', it would just be treated differently in case an unknown value is seen. This is particularly useful in situations where you know the primary categories and want to reduce dimensionality by grouping the less frequent ones.
 
 **3. Sparse One-Hot Encoders:**
@@ -96,10 +97,10 @@ As you can see in the output, the result `encoded_data` isn’t a dense array bu
 
 The implications of one-hot encoding go beyond just transforming data. Some critical aspects to consider include:
 
-*   **Dimensionality Explosion:** High cardinality features can lead to an explosion of the feature space (lots of columns), making your data large and potentially less effective. This is where the "limited vocabulary" approach and sparse representation become valuable. Techniques like dimensionality reduction (e.g., PCA) can also be used post-encoding, a practice we adopted regularly in our project to keep our memory and computational usage within limits.
-*   **Handling Unseen Categories:** One-hot encoders are trained on the categories observed in the *training* set. When you introduce new data in the *test* set, or when you use your model in production, it might contain categories your encoder has never seen before. Ignoring or erroring out on these (as the `handle_unknown` parameter allows) are the two common methods but may not always be ideal. You often have to plan around this when building robust data pipelines.
-*   **Interpreting Results:** When a single categorical feature is split into multiple binary columns, the interpretation changes. Now, you have to analyze how each one of these new features affects your predictions. This often makes interpretation harder.
-*   **Model Complexity:** One-hot encoding can increase model complexity, which can be beneficial in some scenarios but might lead to overfitting in others.
+- **Dimensionality Explosion:** High cardinality features can lead to an explosion of the feature space (lots of columns), making your data large and potentially less effective. This is where the "limited vocabulary" approach and sparse representation become valuable. Techniques like dimensionality reduction (e.g., PCA) can also be used post-encoding, a practice we adopted regularly in our project to keep our memory and computational usage within limits.
+- **Handling Unseen Categories:** One-hot encoders are trained on the categories observed in the _training_ set. When you introduce new data in the _test_ set, or when you use your model in production, it might contain categories your encoder has never seen before. Ignoring or erroring out on these (as the `handle_unknown` parameter allows) are the two common methods but may not always be ideal. You often have to plan around this when building robust data pipelines.
+- **Interpreting Results:** When a single categorical feature is split into multiple binary columns, the interpretation changes. Now, you have to analyze how each one of these new features affects your predictions. This often makes interpretation harder.
+- **Model Complexity:** One-hot encoding can increase model complexity, which can be beneficial in some scenarios but might lead to overfitting in others.
 
 For deeper reading, I recommend "Feature Engineering for Machine Learning" by Alice Zheng and Amanda Casari. It goes into great detail about various encoding methods and their implications. For further theoretical grounding, consider checking out "The Elements of Statistical Learning" by Hastie, Tibshirani, and Friedman. Also, examining documentation of libraries like scikit-learn is quite beneficial for getting to know the nuances of different methods of one-hot encoding.
 

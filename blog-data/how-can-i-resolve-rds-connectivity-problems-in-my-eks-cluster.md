@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-resolve-rds-connectivity-problems-in-my-eks-cluster"
 ---
 
-Okay, let's tackle this. I’ve seen this dance before, the one where your EKS pods can't seem to find their way to the RDS database. It's a common headache, and usually, there isn't just one smoking gun, but rather a confluence of factors that need careful examination. It's not a matter of magic; it's about methodically tracing the potential points of failure.
+, let's tackle this. I’ve seen this dance before, the one where your EKS pods can't seem to find their way to the RDS database. It's a common headache, and usually, there isn't just one smoking gun, but rather a confluence of factors that need careful examination. It's not a matter of magic; it's about methodically tracing the potential points of failure.
 
 First, understand that the connection path from a pod in your EKS cluster to an RDS instance involves several layers, each potentially harboring issues. Let's break them down, starting from the inside of the pod, working our way outwards.
 
@@ -75,6 +75,7 @@ Here’s a scenario I faced in the past: I discovered that while the security gr
    ]
 
 ```
+
 This JSON example represents an ingress configuration for a security group on an RDS instance, allowing TCP traffic on port 5432 (postgres), specifically from the security group identified by "sg-xxxxxxxxxxxxxxxxx" (representing EKS node security group). The egress rule, though wide-open, is also necessary for the response to be able to traverse back to the originating IP.
 
 Another area I have seen issues stem from is the network ACLs (NACLs). These act as stateless firewalls at the subnet level. They can sometimes conflict with security group configurations. Ensure that the NACLs associated with both your EKS worker node subnets and RDS instance subnets allow the necessary traffic in both directions on the relevant port.

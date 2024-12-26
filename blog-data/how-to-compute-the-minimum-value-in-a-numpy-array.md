@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-compute-the-minimum-value-in-a-numpy-array"
 ---
 
-Alright, let’s tackle this one. It seems straightforward on the surface, but there's more to it than just a simple `numpy.min()`. I’ve seen this trip up quite a few folks in projects, especially when dealing with large datasets or specific performance constraints. I’ll break down the most common ways to find the minimum value in a NumPy array, along with some performance considerations and specific use cases I've personally encountered over the years.
+, let’s tackle this one. It seems straightforward on the surface, but there's more to it than just a simple `numpy.min()`. I’ve seen this trip up quite a few folks in projects, especially when dealing with large datasets or specific performance constraints. I’ll break down the most common ways to find the minimum value in a NumPy array, along with some performance considerations and specific use cases I've personally encountered over the years.
 
 Essentially, we're looking for the smallest element within a NumPy array. NumPy, being a cornerstone of scientific computing in python, offers several methods to accomplish this, and the best method often depends on the context of your specific task.
 

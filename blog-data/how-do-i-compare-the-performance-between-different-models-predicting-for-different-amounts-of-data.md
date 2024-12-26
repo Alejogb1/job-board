@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-do-i-compare-the-performance-between-different-models-predicting-for-different-amounts-of-data"
 ---
 
-alright, so you're looking into how to evaluate model performance when the amount of training data varies, i've been down that road a few times, and it can get tricky. it’s not as straightforward as just comparing final accuracy scores. let's break it down, i'll share some things i've picked up along the way, and show some code examples.
+, so you're looking into how to evaluate model performance when the amount of training data varies, i've been down that road a few times, and it can get tricky. it’s not as straightforward as just comparing final accuracy scores. let's break it down, i'll share some things i've picked up along the way, and show some code examples.
 
 first off, the core issue is that the amount of data strongly influences a model's ability to learn. with very little data, the model might overfit and perform terribly on unseen data even though it looks pretty good on what little training data it has seen. with more data, it usually improves, up to a certain point. so, if one of your models has been trained on a lot more data than the other, a direct accuracy comparison isn't going to be very meaningful. it’s like comparing a student that only had one day to study with a student that had a whole year to prepare for the exam, unfair isn't it?
 
@@ -63,6 +63,7 @@ if __name__ == '__main__':
     plt.grid(True)
     plt.show()
 ```
+
 this script generates a basic learning curve, it uses `sklearn` for model and metrics, and `matplotlib` for plotting. the most important part is the `learning_curve` function that splits the data into different training sizes and then calculates the accuracy. you should adjust the `train_sizes`, `cv` (cross-validation splits), and the model according to your specific situation.
 
 another thing to consider is the variance in performance, which means that one specific train could be better or worse than another, that’s why the code above is doing `cv` folds (it trains the model with n different initializations and returns an average). this becomes particularly apparent when dealing with small training sets. a single train can produce huge fluctuations in performance and this may cause confusion while comparing two different models.
@@ -132,7 +133,7 @@ def nested_cross_validation(x, y, cv=5):
         best_model = grid_search.best_estimator_
         score = f1_score(y_test, best_model.predict(x_test))
         scores.append(score)
-    
+
     return np.mean(scores), np.std(scores)
 
 

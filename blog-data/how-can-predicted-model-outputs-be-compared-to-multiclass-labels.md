@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-can-predicted-model-outputs-be-compared-to-multiclass-labels"
 ---
 
-Alright, let's talk about something I've grappled with countless times in my career – evaluating model predictions against multiclass labels. It's a critical step, and frankly, it's where many projects either flourish or falter. I remember back in my early days, working on a classification problem for handwritten digit recognition, we spent days fine-tuning the model only to realize our evaluation metrics were completely misleading us. The model was incredibly confident in its *incorrect* classifications, which our naive approach didn't highlight. It was a painful but valuable lesson in the nuances of multiclass evaluation. So, how do we do this effectively?
+, let's talk about something I've grappled with countless times in my career – evaluating model predictions against multiclass labels. It's a critical step, and frankly, it's where many projects either flourish or falter. I remember back in my early days, working on a classification problem for handwritten digit recognition, we spent days fine-tuning the model only to realize our evaluation metrics were completely misleading us. The model was incredibly confident in its _incorrect_ classifications, which our naive approach didn't highlight. It was a painful but valuable lesson in the nuances of multiclass evaluation. So, how do we do this effectively?
 
-The fundamental challenge stems from the fact that in multiclass settings, we're dealing with multiple potential categories, not just a binary true/false situation. This means we need metrics that capture the model's performance across *all* classes, not just individual ones. Simply checking if a prediction matches the label isn't sufficient to give a holistic view. This is where things like confusion matrices and specific metrics tailored for multiclass scenarios come in.
+The fundamental challenge stems from the fact that in multiclass settings, we're dealing with multiple potential categories, not just a binary true/false situation. This means we need metrics that capture the model's performance across _all_ classes, not just individual ones. Simply checking if a prediction matches the label isn't sufficient to give a holistic view. This is where things like confusion matrices and specific metrics tailored for multiclass scenarios come in.
 
-Firstly, let’s start with the basics: the confusion matrix. This is a visualization that breaks down your predictions against the true labels. On one axis, you’ve got the actual class labels, and on the other, your predicted class labels. The cells within the matrix represent the counts where an actual class was predicted as a specific predicted class. The diagonals, as you might guess, show the correct classifications. Off-diagonal elements show errors, allowing us to see *where* the model is getting confused between different classes. It's exceptionally useful for understanding the types of mistakes your model is making, not just how often. This alone can give you a significant insight about your model's bias.
+Firstly, let’s start with the basics: the confusion matrix. This is a visualization that breaks down your predictions against the true labels. On one axis, you’ve got the actual class labels, and on the other, your predicted class labels. The cells within the matrix represent the counts where an actual class was predicted as a specific predicted class. The diagonals, as you might guess, show the correct classifications. Off-diagonal elements show errors, allowing us to see _where_ the model is getting confused between different classes. It's exceptionally useful for understanding the types of mistakes your model is making, not just how often. This alone can give you a significant insight about your model's bias.
 
 Now, let’s move to the metrics. A straightforward metric that’s often misused in multiclass scenarios is “accuracy." Accuracy is simply the ratio of correct predictions to the total number of predictions. Mathematically:
 
-*Accuracy = (Number of Correct Predictions) / (Total Number of Predictions)*
+_Accuracy = (Number of Correct Predictions) / (Total Number of Predictions)_
 
 While seemingly intuitive, accuracy can be misleading when your classes aren’t balanced. For instance, if you have a dataset where 90% of the samples belong to one class, a model that predicts that class every single time will have 90% accuracy, yet be fundamentally useless.
 
@@ -20,12 +20,12 @@ Instead, we need metrics that are more robust to class imbalances. Precision, re
 
 Let's define those for a single class first, so that we can expand them for multi-class cases:
 
-*   **Precision**: Of all predictions that were predicted as *this specific class*, what proportion was actually true? *Precision = True Positives / (True Positives + False Positives)*
-*   **Recall**: Of all actual samples that *belonged* to this class, what proportion did the model correctly predict? *Recall = True Positives / (True Positives + False Negatives)*
+- **Precision**: Of all predictions that were predicted as _this specific class_, what proportion was actually true? _Precision = True Positives / (True Positives + False Positives)_
+- **Recall**: Of all actual samples that _belonged_ to this class, what proportion did the model correctly predict? _Recall = True Positives / (True Positives + False Negatives)_
 
 In the binary case these are defined with no further interpretation. But, in a multi-class scenario, these values can be interpreted in a few ways.
 
-1.  **Micro-average**: Calculate the TP, FP, and FN across all classes *first*, and then calculate Precision, Recall, and F1 using these aggregate values. This is a global view, weighting every instance equally regardless of the class. The math works out to the global accuracy.
+1.  **Micro-average**: Calculate the TP, FP, and FN across all classes _first_, and then calculate Precision, Recall, and F1 using these aggregate values. This is a global view, weighting every instance equally regardless of the class. The math works out to the global accuracy.
 
 2.  **Macro-average**: For each class, calculate its Precision, Recall, and F1. Then, average these values to get the final Precision, Recall, and F1 score. This method weights each class equally and is helpful in imbalanced datasets.
 
@@ -33,7 +33,7 @@ In the binary case these are defined with no further interpretation. But, in a m
 
 The f1-score is the harmonic mean of precision and recall:
 
-*F1-score = 2 * (Precision * Recall) / (Precision + Recall)*
+_F1-score = 2 _ (Precision _ Recall) / (Precision + Recall)_
 
 F1 is a good way of balancing the two opposing values. Here's why that is important: you could easily build a model that has a perfect Recall score by simply predicting all data as a single class. Or, one with perfect Precision, by classifying a small set of data as the target class with great certainty.
 
@@ -114,6 +114,6 @@ print(report)
 
 Finally, the `classification_report` function wraps the calculations of several metrics, and outputs this information in a convenient text format. For each class it gives you the precision, recall, f1-score, and support (number of examples) and at the bottom the micro-average (which is equal to accuracy), the macro-average, and the weighted average scores. This is very helpful to quickly understand the performance of your model.
 
-As for further reading, I’d recommend: "Pattern Recognition and Machine Learning" by Christopher Bishop for a deep dive into foundational concepts; for more practical application, "Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron is an excellent guide. These texts don't just focus on the *how* but also on the *why*, which is essential for a solid understanding of these metrics. Specifically, look at the chapters that cover performance evaluation and classification. And finally, the documentation for sklearn itself is also exceptionally well-written and incredibly helpful when it comes to implementing these evaluations.
+As for further reading, I’d recommend: "Pattern Recognition and Machine Learning" by Christopher Bishop for a deep dive into foundational concepts; for more practical application, "Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron is an excellent guide. These texts don't just focus on the _how_ but also on the _why_, which is essential for a solid understanding of these metrics. Specifically, look at the chapters that cover performance evaluation and classification. And finally, the documentation for sklearn itself is also exceptionally well-written and incredibly helpful when it comes to implementing these evaluations.
 
-In closing, always remember that the right evaluation method is highly context-dependent. There's no one-size-fits-all answer; you need to understand the specific needs of your problem, your dataset, and your stakeholders. These metrics are tools in your arsenal; use them wisely. From my experience, focusing on precision, recall, f1 and using the confusion matrix frequently is critical when working with any kind of multiclass labels. It's not just about achieving a high score but about understanding *how* your model is performing. This understanding is key to building better, more reliable systems.
+In closing, always remember that the right evaluation method is highly context-dependent. There's no one-size-fits-all answer; you need to understand the specific needs of your problem, your dataset, and your stakeholders. These metrics are tools in your arsenal; use them wisely. From my experience, focusing on precision, recall, f1 and using the confusion matrix frequently is critical when working with any kind of multiclass labels. It's not just about achieving a high score but about understanding _how_ your model is performing. This understanding is key to building better, more reliable systems.

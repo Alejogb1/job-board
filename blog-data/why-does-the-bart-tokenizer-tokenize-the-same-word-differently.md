@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "why-does-the-bart-tokenizer-tokenize-the-same-word-differently"
 ---
 
-Alright, let's dive into the nuances of why a seemingly consistent tokenizer like BART's might exhibit variations when tokenizing the same word. This is a question I've encountered myself, particularly during my time building a multilingual text summarization system several years back. The inconsistent tokenization of certain words across different contexts was a recurring challenge that forced me to take a deeper look into the mechanics of subword tokenization, specifically how byte-pair encoding (BPE) — which BART leverages — operates in practice.
+, let's dive into the nuances of why a seemingly consistent tokenizer like BART's might exhibit variations when tokenizing the same word. This is a question I've encountered myself, particularly during my time building a multilingual text summarization system several years back. The inconsistent tokenization of certain words across different contexts was a recurring challenge that forced me to take a deeper look into the mechanics of subword tokenization, specifically how byte-pair encoding (BPE) — which BART leverages — operates in practice.
 
-Essentially, the variability you're observing isn't an indication of some underlying flaw, but rather a byproduct of the BPE algorithm and its interaction with the context in which the word appears. BPE works by initially treating each character as an individual token. Then, it iteratively merges the most frequently occurring pairs of tokens into a new, single token. This merging process is driven by statistical analysis of the training corpus. Crucially, the learned merge operations are heavily dependent on the *frequency* of character pairs appearing together within that corpus.
+Essentially, the variability you're observing isn't an indication of some underlying flaw, but rather a byproduct of the BPE algorithm and its interaction with the context in which the word appears. BPE works by initially treating each character as an individual token. Then, it iteratively merges the most frequently occurring pairs of tokens into a new, single token. This merging process is driven by statistical analysis of the training corpus. Crucially, the learned merge operations are heavily dependent on the _frequency_ of character pairs appearing together within that corpus.
 
-So, what happens when the same word appears in two different sentences? Well, the *context* — the surrounding words and the overall structure of the text — can significantly influence how the BPE merges tokens. Consider a scenario where the word "running" might appear in phrases like "fast running shoes" and "he was running late". The algorithm might have learned, based on the training data, that "running" is more frequently preceded by tokens associated with adjectives related to speed, and so might decide to tokenize "running" as one unit in "fast running shoes". Conversely, in "he was running late," "running" could be split since it is part of a verb phrase and the combination 'was run' may exist. The tokenizer does this not to confuse you, but rather to produce tokens that are efficient in representing text within the model's learned embedding space.
+So, what happens when the same word appears in two different sentences? Well, the _context_ — the surrounding words and the overall structure of the text — can significantly influence how the BPE merges tokens. Consider a scenario where the word "running" might appear in phrases like "fast running shoes" and "he was running late". The algorithm might have learned, based on the training data, that "running" is more frequently preceded by tokens associated with adjectives related to speed, and so might decide to tokenize "running" as one unit in "fast running shoes". Conversely, in "he was running late," "running" could be split since it is part of a verb phrase and the combination 'was run' may exist. The tokenizer does this not to confuse you, but rather to produce tokens that are efficient in representing text within the model's learned embedding space.
 
 To illustrate, let's delve into some Python examples using the `transformers` library which houses the BART implementation. We'll specifically examine the `BartTokenizer` from Hugging Face:
 
@@ -37,6 +37,7 @@ Tokens for 'The running shoes were new.': ['The', 'Ġrunning', 'Ġshoes', 'Ġwer
 Tokens for 'He was running fast.': ['He', 'Ġwas', 'Ġrunning', 'Ġfast', '.']
 Tokens for 'running is good exercise.': ['Ġrunning', 'Ġis', 'Ġgood', 'Ġexercise', '.']
 ```
+
 Notice how "running" is always one token, but contextually the white space is sometimes part of the token.
 
 Now, let's try an example where "running" might be split up differently:
@@ -47,7 +48,9 @@ tokens4 = tokenizer.tokenize(text4)
 print(f"Tokens for '{text4}': {tokens4}")
 
 ```
+
 This could produce:
+
 ```
 Tokens for 'The dog was run-ning very fast.': ['The', 'Ġdog', 'Ġwas', 'Ġrun', '-', 'ning', 'Ġvery', 'Ġfast', '.']
 ```

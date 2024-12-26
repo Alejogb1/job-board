@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "how-to-handle-laravel-localization-of-markdown-mail"
 ---
 
-alright, so you're hitting that classic wall with laravel and markdown emails – specifically getting the localization sorted, i’ve been there, done that, got the t-shirt, and probably a few coffee stains to prove it. it's one of those things that seems simple on paper, but when you dive in, you find the edges are a little rough. let me walk you through what i’ve learned, hopefully, it saves you a few late nights.
+, so you're hitting that classic wall with laravel and markdown emails – specifically getting the localization sorted, i’ve been there, done that, got the t-shirt, and probably a few coffee stains to prove it. it's one of those things that seems simple on paper, but when you dive in, you find the edges are a little rough. let me walk you through what i’ve learned, hopefully, it saves you a few late nights.
 
-first off, the core problem is that laravel’s mailables using markdown templates don't *automatically* pick up the locale the way views or blade components do. your application might be happily switching languages, but your markdown email is just sending out the default language. it's like it’s stuck in a time warp.
+first off, the core problem is that laravel’s mailables using markdown templates don't _automatically_ pick up the locale the way views or blade components do. your application might be happily switching languages, but your markdown email is just sending out the default language. it's like it’s stuck in a time warp.
 
 back in 2016, i ran into this exact same scenario on a project for a multinational e-commerce platform – think multiple languages for product descriptions, user interfaces, and naturally, emails. initially, we just hardcoded the language strings into the markdown. what a mess! it was an absolute headache to maintain, and it’s no surprise that any time we updated something we’d find a translation that we forgot, or worse a wrong translation and it all became very embarrassing to correct. the project lead even thought about sending a very angry email to the responsible person (it wasn't me, i'll have you know) and it quickly became clear that was not scalable. that project was not pretty (and frankly, a few beers helped at the time). let me show you the way we ended up solving it because it’s what i ended up using ever since and it's a clean way.
 
-so, here's the gist. the key is to set the locale *before* you generate the mail. we need to tell laravel what language to use in the email. this typically involves intercepting the mailable before it’s rendered and setting the application locale, it's important. so here is a example using a mailable class, assuming you have already setup your locales files correctly:
+so, here's the gist. the key is to set the locale _before_ you generate the mail. we need to tell laravel what language to use in the email. this typically involves intercepting the mailable before it’s rendered and setting the application locale, it's important. so here is a example using a mailable class, assuming you have already setup your locales files correctly:
 
 ```php
 <?php
@@ -88,7 +88,7 @@ class WelcomeEmail extends Mailable
 }
 ```
 
-notice the `build` method where i set the locale *before* rendering the markdown template. this is vital. the locale is stored in the mailable when you build it, so you pass it along when you instantiate it, like so:
+notice the `build` method where i set the locale _before_ rendering the markdown template. this is vital. the locale is stored in the mailable when you build it, so you pass it along when you instantiate it, like so:
 
 ```php
 <?php

@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "how-to-calibrate-a-binary-classification-model-with-logisticregressionwithlbfgs-in-scala"
 ---
 
-alright, so you're looking to calibrate a binary classification model, specifically one trained using `logisticregressionwithlbfgs` in scala. i've been down this road plenty of times, and it's a fairly common pitfall. a model giving probabilities that are way off from the actual likelihood is annoying, to say the least.
+, so you're looking to calibrate a binary classification model, specifically one trained using `logisticregressionwithlbfgs` in scala. i've been down this road plenty of times, and it's a fairly common pitfall. a model giving probabilities that are way off from the actual likelihood is annoying, to say the least.
 
-let’s break down why this happens and how we can fix it. the core issue usually isn’t the `logisticregressionwithlbfgs` itself; it's more about what we mean by "probability" and how models generate them. logistic regression spits out values that are *scores*. these scores, after being passed through a sigmoid function, are *interpreted* as probabilities but they’re not inherently calibrated. in other words, if your model outputs a probability of 0.7, it doesn’t necessarily mean that 70% of instances with that score will belong to the positive class.
+let’s break down why this happens and how we can fix it. the core issue usually isn’t the `logisticregressionwithlbfgs` itself; it's more about what we mean by "probability" and how models generate them. logistic regression spits out values that are _scores_. these scores, after being passed through a sigmoid function, are _interpreted_ as probabilities but they’re not inherently calibrated. in other words, if your model outputs a probability of 0.7, it doesn’t necessarily mean that 70% of instances with that score will belong to the positive class.
 
 over the years, i've seen this play out in various projects, one time i was building a spam classifier for email, and i had the accuracy metrics looking great, but it turned out the model was overly confident. it was giving me 0.99 probability for spam, but in practice, only about 80% of those emails would actually be spam. this meant any decision we made based on those probabilities would be way off. that was back in my early spark days, i ended up spending a good week looking at `isotonics` then.
 
-the solution usually involves applying a calibration technique *after* you’ve trained your model. there are a few ways to do this, but the most common are isotonic regression and platt scaling. both are methods to remap the probability scores to improve calibration.
+the solution usually involves applying a calibration technique _after_ you’ve trained your model. there are a few ways to do this, but the most common are isotonic regression and platt scaling. both are methods to remap the probability scores to improve calibration.
 
 isotonic regression, which is what i prefer, involves learning a piecewise monotonic function that maps the predicted probabilities to calibrated probabilities. it works really well in practice and has a nice mathematical basis. it can increase the accuracy in many cases. it's quite effective in scenarios where the original probability distribution might have inconsistencies that linear scaling methods can't address.
 
@@ -52,21 +52,21 @@ object CalibrateLogistic {
     val assembler = new VectorAssembler()
       .setInputCols(Array("probability"))
       .setOutputCol("features")
-      
+
     val assembledPredictions = assembler.transform(predictions)
-    
+
     // Isotonic regression model training
     val isotonic = new IsotonicRegression()
       .setLabelCol("label")
       .setFeaturesCol("features")
       .setOutputCol("calibratedProbability")
-    
+
     val model = isotonic.fit(assembledPredictions)
 
     val calibratedPredictions = model.transform(assembledPredictions)
-    
+
     calibratedPredictions.show()
-    
+
      spark.stop()
   }
 }
@@ -137,14 +137,14 @@ object PipelineCalibratedModel {
 
     // Make predictions on the test data
      val predictions = modelLr.transform(testData)
-    
+
     // Assemble prediction into a vector, like we did before
     val assembler = new VectorAssembler()
       .setInputCols(Array("probability"))
       .setOutputCol("assembledProbability")
 
     val assembledPredictions = assembler.transform(predictions)
-    
+
     val validationData = trainingData.select("features","label").withColumn("probability", $"features".cast("array<double>")(0))
 
     val assemblerValidation = new VectorAssembler()
@@ -152,14 +152,14 @@ object PipelineCalibratedModel {
       .setOutputCol("features")
 
     val assembledValidationData = assemblerValidation.transform(validationData)
-    
+
     val isotonic = new IsotonicRegression()
       .setLabelCol("label")
       .setFeaturesCol("features")
       .setOutputCol("calibratedProbability")
-    
+
     val isotonicModel = isotonic.fit(assembledValidationData)
-    
+
     val calibratedPredictions = isotonicModel.transform(assembledPredictions)
 
     calibratedPredictions.show()
@@ -201,47 +201,47 @@ object EnsembleCalibration {
       (Vectors.dense(2.0, 2.0), 1.0),
       (Vectors.dense(3.0, 1.0), 0.0)
     ).toDF("features", "label")
-    
+
         // Sample test data
     val testData = Seq(
       (Vectors.dense(2.5, 2.5)),
       (Vectors.dense(1.5, 1.5)),
       (Vectors.dense(3.0, 2.0))
     ).toDF("features")
-    
+
     // Train a random forest model
     val rf = new RandomForestClassifier()
       .setFeaturesCol("features")
       .setLabelCol("label")
       .setNumTrees(10)
       .setMaxDepth(5)
-      
+
     val modelRf = rf.fit(trainingData)
-    
+
     val predictions = modelRf.transform(testData)
-        
+
     // assemble the probabilities
     val assembler = new VectorAssembler()
       .setInputCols(Array("probability"))
       .setOutputCol("assembledProbability")
 
     val assembledPredictions = assembler.transform(predictions)
-    
+
     val validationData = trainingData.select("features","label").withColumn("probability", $"features".cast("array<double>")(0))
-    
+
     val assemblerValidation = new VectorAssembler()
       .setInputCols(Array("probability"))
       .setOutputCol("features")
 
     val assembledValidationData = assemblerValidation.transform(validationData)
-    
+
     val isotonic = new IsotonicRegression()
       .setLabelCol("label")
       .setFeaturesCol("features")
       .setOutputCol("calibratedProbability")
-    
+
     val isotonicModel = isotonic.fit(assembledValidationData)
-    
+
     val calibratedPredictions = isotonicModel.transform(assembledPredictions)
 
 

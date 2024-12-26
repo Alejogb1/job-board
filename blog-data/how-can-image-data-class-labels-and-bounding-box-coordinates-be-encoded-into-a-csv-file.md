@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-image-data-class-labels-and-bounding-box-coordinates-be-encoded-into-a-csv-file"
 ---
 
-Okay, let's tackle this. It's a common need when working with computer vision datasets, and I've definitely seen my share of messy CSV files trying to do exactly this. The core challenge is translating complex multi-dimensional data like images, classes, and bounding boxes into a format that's inherently flat—the comma-separated values. It's not always straightforward, but with a bit of planning, we can achieve a structured, usable result.
+, let's tackle this. It's a common need when working with computer vision datasets, and I've definitely seen my share of messy CSV files trying to do exactly this. The core challenge is translating complex multi-dimensional data like images, classes, and bounding boxes into a format that's inherently flat—the comma-separated values. It's not always straightforward, but with a bit of planning, we can achieve a structured, usable result.
 
 The fundamental idea is to represent each data point – typically, each image – as a single row in the CSV file. This row will contain the path to the image, its associated class label, and the bounding box coordinates for objects within that image, if applicable. The main hurdle is efficiently encoding the bounding box information, as an image might have zero, one, or multiple objects. We'll need to consider how to handle these variations effectively. Here’s how I usually approach it.
 
@@ -118,6 +118,7 @@ with open('data_with_json.csv', 'w', newline='') as csvfile:
 # image2.jpg,dog,"[[30, 40, 80, 90]]"
 # image3.jpg,bird,"[]"
 ```
+
 Here we have a json-like representation of the bounding boxes in a single column. This is convenient if you need to load data into a dataframe and you will be handling that part with libraries that understand json-formatted data.
 
 Choosing the "best" approach depends largely on what tools you'll use downstream. For example, if you're loading this into pandas or a deep learning framework, you want the format that is easiest to parse. While these are relatively small examples, I have encountered instances where these considerations scaled quite large.

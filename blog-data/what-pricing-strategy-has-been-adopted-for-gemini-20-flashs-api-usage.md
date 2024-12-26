@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-pricing-strategy-has-been-adopted-for-gemini-20-flashs-api-usage"
 ---
 
-Alright so pricing for Gemini 2.0 Flash API right interesting question that's like digging into the real guts of the thing not just the shiny facade We’re talking about the cost of wielding that AI power and its honestly super relevant if you're trying to build anything serious not just play around with fancy toys
+so pricing for Gemini 2.0 Flash API right interesting question that's like digging into the real guts of the thing not just the shiny facade We’re talking about the cost of wielding that AI power and its honestly super relevant if you're trying to build anything serious not just play around with fancy toys
 
 See the thing with these massive models especially ones like Gemini is they’re expensive to train and run It’s not like spinning up a little server for your personal blog this is heavy duty compute on a huge scale So naturally the folks building them have to figure out how to recoup costs and make it sustainable hence pricing strategies come into play
 
@@ -24,7 +24,7 @@ Now I don't have that specific pricing document from Google on hand because they
 
 But lets not just talk about the money let’s dive into some code to see how you might interact with something like this It’s all abstract without a bit of practical code
 
-Okay here's a Python example that imagines interacting with Gemini although it is very simplified. I mean you'd need to actually install some Python libraries. But I’m trying to get the point across
+here's a Python example that imagines interacting with Gemini although it is very simplified. I mean you'd need to actually install some Python libraries. But I’m trying to get the point across
 
 ```python
 import requests
@@ -62,45 +62,50 @@ In this code we're sending a text prompt to a fake API endpoint along with param
 Now let’s see a very basic example of how a user might do this in javascript using the fetch api that all browsers have
 
 ```javascript
-async function generateText(prompt, apiKey, model = "gemini-2-flash", maxTokens = 50) {
-    const url = "https://api.fake-gemini.com/v1/generate"; // fake url remember
-    const headers = {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${apiKey}`
-    };
-    const data = {
-        "model": model,
-        "prompt": prompt,
-        "max_tokens": maxTokens
-    };
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: headers,
-            body: JSON.stringify(data)
-        });
-        if (!response.ok) {
-            const message = await response.text()
-             throw new Error(`API Error: ${response.status} ${message}`);
-        }
-        const jsonResponse = await response.json();
-        return jsonResponse.generated_text;
-    } catch (error) {
-        throw error;
+async function generateText(
+  prompt,
+  apiKey,
+  model = "gemini-2-flash",
+  maxTokens = 50
+) {
+  const url = "https://api.fake-gemini.com/v1/generate"; // fake url remember
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${apiKey}`,
+  };
+  const data = {
+    model: model,
+    prompt: prompt,
+    max_tokens: maxTokens,
+  };
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      const message = await response.text();
+      throw new Error(`API Error: ${response.status} ${message}`);
     }
+    const jsonResponse = await response.json();
+    return jsonResponse.generated_text;
+  } catch (error) {
+    throw error;
+  }
 }
 
 // Example usage
 const apiKey = "your-actual-api-key-goes-here"; // replace this
 const prompt = "Write a short poem about the moon";
 generateText(prompt, apiKey)
-    .then(generatedText => console.log(`Gemini said: ${generatedText}`))
-    .catch(error => console.error(`Error occurred: ${error}`));
+  .then((generatedText) => console.log(`Gemini said: ${generatedText}`))
+  .catch((error) => console.error(`Error occurred: ${error}`));
 ```
 
 Very similar concept sending the same sort of data to a url getting back text after hopefully. Again very basic and very very fake API end point.
 
-Okay lets now try something a bit different and lets say we're dealing with streaming from the api. Because the api may not return the entire answer immediately. Its something that happens sometimes with large language models as the process is iterative.
+lets now try something a bit different and lets say we're dealing with streaming from the api. Because the api may not return the entire answer immediately. Its something that happens sometimes with large language models as the process is iterative.
 
 ```python
 import requests
@@ -141,9 +146,10 @@ except Exception as e:
     print(f"Error occurred: {e}")
 
 ```
+
 This streaming approach allows you to receive the response in chunks as it's being generated instead of waiting for the entire answer which can be more efficient for longer responses or when you want to show content as it is generated. You would use this by setting stream=True and then iterating through the json from the chunks. You can expect to have more complex error handling as well as chunk handling in the real world.
 
-Alright back to pricing in general. I cant stress enough how important reading the documentation from the API provider is. You gotta dig into the details not just the marketing fluff. Look for the terms of service documents and all of those.
+back to pricing in general. I cant stress enough how important reading the documentation from the API provider is. You gotta dig into the details not just the marketing fluff. Look for the terms of service documents and all of those.
 
 For resources beyond the specific API documentation books like "Cloud Native Patterns" by Cornelia Davis might help you see how these APIs fit into larger cloud architecture and you may understand the underlying cost considerations. Also researching papers from institutions or conferences on machine learning model serving or cloud service pricing might give you deeper theoretical background of these topics. The field changes constantly so the most up to date stuff will be in papers not in books that take time to write. I’d look out for papers from NeurIPS, ICML or similar conferences if you want cutting edge stuff.
 

@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "with-the-mailchimp-api-30-how-do-i-detect-if-already-unsubscribed"
 ---
 
-alright, so you're hitting a common snag with the mailchimp api v3, specifically figuring out if someone’s already unsubscribed. it's a frustrating situation, i've been there myself, staring at the documentation like it's a cryptic crossword puzzle.
+, so you're hitting a common snag with the mailchimp api v3, specifically figuring out if someone’s already unsubscribed. it's a frustrating situation, i've been there myself, staring at the documentation like it's a cryptic crossword puzzle.
 
 here's the thing, mailchimp's api doesn't have a single endpoint that shouts out "hey, this person is unsubscribed!". instead, we need to play a little detective and combine a couple of api calls to figure that out reliably.
 
 first, we absolutely need to talk about member status. when someone is unsubscribed, mailchimp updates their member status. the key thing to remember is that there are several statuses that aren't just 'subscribed' or 'unsubscribed'. these include ‘pending’, ‘cleaned’ and even ‘transactional’. we are interested on checking if is 'unsubscribed'.
 
-the main challenge is that directly hitting the `/lists/{list_id}/members/{subscriber_hash}` endpoint to get a specific member's details won’t tell you if they *were* ever subscribed and now are unsubscribed. if a member was never in the list, you’ll get a 404, which is unhelpful.
+the main challenge is that directly hitting the `/lists/{list_id}/members/{subscriber_hash}` endpoint to get a specific member's details won’t tell you if they _were_ ever subscribed and now are unsubscribed. if a member was never in the list, you’ll get a 404, which is unhelpful.
 
 so, my approach usually boils down to this:
 
@@ -44,7 +44,7 @@ def is_unsubscribed(api_key, list_id, email):
         response = requests.get(member_url, headers=headers)
         response.raise_for_status()  # raises exception for 4xx or 5xx errors
         member_data = response.json()
-        
+
         if member_data.get('status') == 'unsubscribed':
             return True
         else:
@@ -153,7 +153,7 @@ async def get_member_statuses_batch(api_key, list_id, emails):
         "path": member_url,
         "operation_id": email
     })
-    
+
   batch_url = f"{base_url}/batches"
 
   try:
@@ -161,7 +161,7 @@ async def get_member_statuses_batch(api_key, list_id, emails):
     response.raise_for_status()
     batch_data = response.json()
     batch_id = batch_data['id']
-  
+
     # poll for batch status until it's complete
     while True:
       batch_status_response = requests.get(f"{batch_url}/{batch_id}", headers=headers)
@@ -171,12 +171,12 @@ async def get_member_statuses_batch(api_key, list_id, emails):
       if batch_status['status'] == 'finished':
         break
       await asyncio.sleep(1) # wait one second before retrying
-    
+
     # retrieve the results of the batch request
     response = requests.get(f"{batch_url}/{batch_id}/responses", headers=headers)
     response.raise_for_status()
     response_data = response.json()
-    
+
     statuses = {}
     for resp in response_data:
         email = resp['operation_id']
@@ -194,7 +194,7 @@ async def get_member_statuses_batch(api_key, list_id, emails):
   except Exception as e:
     print(f"An exception occurred: {e}")
     return {'error':e}
-    
+
 
 async def main():
     api_key = "your_mailchimp_api_key" #replace

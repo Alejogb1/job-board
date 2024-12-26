@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-pydantic-basemodels-be-used-directly-in-fastapis-modelpredict"
 ---
 
-Alright, let's unpack this question about using Pydantic basemodels directly within FastAPI's `model.predict()` context. I've encountered this scenario a few times in my work, and it's a good area to clarify because there's a common misconception, especially for those newer to combining these powerful tools. To answer directly, yes, you *can* use Pydantic basemodels to represent the data you pass to a `predict()` function, but it's not a straight plug-and-play in how FastAPI's `model` handling usually works.
+, let's unpack this question about using Pydantic basemodels directly within FastAPI's `model.predict()` context. I've encountered this scenario a few times in my work, and it's a good area to clarify because there's a common misconception, especially for those newer to combining these powerful tools. To answer directly, yes, you _can_ use Pydantic basemodels to represent the data you pass to a `predict()` function, but it's not a straight plug-and-play in how FastAPI's `model` handling usually works.
 
 Here’s the nuance. FastAPI expects a function that it calls (typically the `predict()` method of an object) to receive its input data based on the types it expects and which are defined in the path or the request body of the api. Usually, when you define a request body using a pydantic basemodel, FastAPI automatically takes care of the serialization and deserialization of that data. However, the object you use as a predictor isn't usually going to directly work with that model, instead, it’s going to work directly with the model’s data in another manner than by directly consuming the Pydantic basemodel. Instead, you'll be extracting specific attributes or transforming them into a specific representation for model consumption.
 
@@ -95,6 +95,7 @@ async def predict_complex(input_data: InputData) -> dict[str, Any]:
     prediction = model.predict(input_data.features, input_data.other_data)
     return prediction
 ```
+
 Here, FastAPI validates the incoming data against the `InputData` model, then extracts `input_data.features` and `input_data.other_data` for the model `predict` function separately, passing them as individual variables. The important point is that the predict function is not working directly with the Pydantic object, but rather its fields.
 
 There’s also an edge case when dealing with models that take the data as a complete dictionary instead of specific parameters. Let's modify our `ComplexModel`'s `predict` method to accept a dictionary.
@@ -132,7 +133,7 @@ async def predict_complex_dict(input_data: InputDataDict) -> dict[str, Any]:
 
 Here, `input_data.model_dump(by_alias=True)` extracts all the values of the Pydantic model as a dictionary, including any field aliases we define as shown with the extra field, and then passes this to the predict function. The key point is that the predict function is working directly with the dictionary derived from the validated Pydantic model, and not the model itself, this shows the importance of using `model_dump()` to extract data.
 
-In essence, while you *define* your input data structures using Pydantic basemodels within FastAPI, the actual `predict` function will handle the extracted data from these validated models. This is a critical distinction.
+In essence, while you _define_ your input data structures using Pydantic basemodels within FastAPI, the actual `predict` function will handle the extracted data from these validated models. This is a critical distinction.
 
 For deeper understanding of data validation in FastAPI, and how pydantic integrates with it, I recommend thoroughly going through the official FastAPI documentation on request bodies. Additionally, for a complete understanding of the inner workings of pydantic models I would recommend the "Pydantic Documentation" directly. For broader context on modeling data for machine learning pipelines, "Feature Engineering for Machine Learning" by Alice Zheng and Amanda Casari provides excellent guidance on preparing data for various predictive models and is a good source to understand the relationship between data structure and model input. Finally, understanding the basic concepts about serialization of data for communication in an api can be found in "RESTful Web Services" by Leonard Richardson and Sam Ruby. These sources will give you the knowledge necessary to understand how your data moves between these tools and to understand the design patterns shown in these examples.
 

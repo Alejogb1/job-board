@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cositicpp-package-uninstall-error"
 ---
 
-Okay so you're getting that `co.sitic.pp` package uninstall error right Been there man let me tell you
+you're getting that `co.sitic.pp` package uninstall error right Been there man let me tell you
 
 It's one of those really specific things that usually pops up when you've been messing around with Android stuff or maybe some weird custom ROM or development setup. I remember the first time I hit something like this it was back when I was trying to root my old Nexus 5. I was probably around 20 and had zero clue what I was doing. I followed some random forum guide and got myself into a deep mess of permission errors and package conflicts. It was a nightmare but a good lesson honestly
 
@@ -37,6 +37,7 @@ First enable USB debugging on your Android device. Find this in the Developer op
 ```bash
 adb devices
 ```
+
 This should show your device listed. If not check your drivers and make sure your device is visible.
 
 Then use the following command
@@ -89,7 +90,7 @@ if(checkAdminStatus(this, componentName)){
 }
 ```
 
-In this example you need to replace the  `co.sitic.pp.YourAdminReceiver` with the specific admin receiver of your package. If you don't know where to look then try to inspect the android manifest file of the package which you can do with tools like APKTool. This is the main resource you should investigate to understand the Android framework in detail.
+In this example you need to replace the `co.sitic.pp.YourAdminReceiver` with the specific admin receiver of your package. If you don't know where to look then try to inspect the android manifest file of the package which you can do with tools like APKTool. This is the main resource you should investigate to understand the Android framework in detail.
 
 **3 Removing Data Manually**
 

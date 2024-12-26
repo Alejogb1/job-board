@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-keep-the-structure-of-text-when-using-it-for-ner-pipelines"
 ---
 
-Alright, let's talk about preserving text structure during named entity recognition (ner) pipelines. This is something I've encountered quite frequently across different projects, from extracting entities from legal documents to analyzing customer feedback. The challenge often isn't just identifying the entities themselves, but maintaining the contextual and structural integrity of the original text—because losing that context is akin to losing half the information. It's not just about the words, but their relationship to each other, their position within sentences, and the broader document architecture.
+, let's talk about preserving text structure during named entity recognition (ner) pipelines. This is something I've encountered quite frequently across different projects, from extracting entities from legal documents to analyzing customer feedback. The challenge often isn't just identifying the entities themselves, but maintaining the contextual and structural integrity of the original text—because losing that context is akin to losing half the information. It's not just about the words, but their relationship to each other, their position within sentences, and the broader document architecture.
 
 Now, you’ll often see folks dive straight into tokenization and model training without fully considering how that initial processing might mangle things, especially when dealing with complex, structured text formats like reports, emails, or even code snippets. I've learned the hard way that a careless pre-processing step can drastically reduce the effectiveness of any downstream ner model.
 
@@ -25,7 +25,7 @@ Let’s delve into a few examples:
 
 Let's say we're extracting information from technical documentation that often contains code snippets. Simply passing this through a standard tokenizer might lose the separation between text and code, which is crucial for understanding the context. Here's how I'd handle this with python:
 
-```python
+````python
 import re
 
 def preprocess_code_blocks(text):
@@ -55,16 +55,20 @@ This is an example text with some code.
 ```python
 print("Hello world")
 x = 10
-```
+````
+
 Some more explanation and another block.
+
 ```javascript
-console.log('JavaScript example');
+console.log("JavaScript example");
 ```
+
 """
 
 processed_text = preprocess_code_blocks(example_text)
 print(processed_text)
-```
+
+````
 In this example, I'm using regular expressions to identify code blocks and replace them with special tokens `<CODE_START>`, `<CODE_END>`, and the enclosed code itself. This preserves the demarcation between normal text and code, preventing them from being treated identically by the ner model.
 
 **Example 2: Preserving Line Breaks:**
@@ -88,7 +92,7 @@ Please find the following updates:
 
 processed_email = preprocess_line_breaks(email_text)
 print(processed_email)
-```
+````
 
 Here, I'm explicitly adding a `<LINE_BREAK>` token between each line to indicate that there's a division. This helps the model understand that distinct segments have been separated within the original text.
 
@@ -113,8 +117,9 @@ Peter,40,Paris
 processed_table = preprocess_table_like_structure(table_text)
 print(processed_table)
 ```
+
 Here, each row has been enclosed by special tokens `<ROW_START>` and `<ROW_END>` to retain the structure of each line and the values within each cell.
 
 These examples illustrate that careful, custom pre-processing, tailored to the characteristics of your text data, is absolutely essential for success in ner pipelines. There's no one-size-fits-all solution; it requires careful examination of the documents and identifying which aspects of structure are essential for your specific task.
 
-As for where to read more, I would highly recommend reviewing *Natural Language Processing with Python* by Steven Bird, Ewan Klein, and Edward Loper, as well as diving deeper into the documentation for libraries like spaCy and the Hugging Face Transformers. These resources provide a thorough understanding of tokenization, custom processing, and model construction. Furthermore, papers on specific ner tasks often detail specialized pre-processing techniques for the domain, so reviewing the research papers that are closest to your use case should be a helpful place to start. In conclusion, treating text thoughtfully, from the very first processing steps, is just as important as tuning your ner model parameters. It's an investment that pays off greatly in accuracy and robustness.
+As for where to read more, I would highly recommend reviewing _Natural Language Processing with Python_ by Steven Bird, Ewan Klein, and Edward Loper, as well as diving deeper into the documentation for libraries like spaCy and the Hugging Face Transformers. These resources provide a thorough understanding of tokenization, custom processing, and model construction. Furthermore, papers on specific ner tasks often detail specialized pre-processing techniques for the domain, so reviewing the research papers that are closest to your use case should be a helpful place to start. In conclusion, treating text thoughtfully, from the very first processing steps, is just as important as tuning your ner model parameters. It's an investment that pays off greatly in accuracy and robustness.

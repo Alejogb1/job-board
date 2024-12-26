@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "should-i-retrain-the-entire-model-with-additional-data-or-not"
 ---
 
-Okay, let's tackle this. I’ve been in situations like this more times than I care to count. The decision to retrain an entire model versus adopting a more incremental approach is far from trivial, and it’s one that requires careful consideration of several factors. It's not a simple yes or no answer; the optimal path often depends heavily on the specific context, the nature of the data, and the performance impact we’re trying to achieve. I’ve personally gone down both paths, and let me tell you, both have their pitfalls and advantages.
+, let's tackle this. I’ve been in situations like this more times than I care to count. The decision to retrain an entire model versus adopting a more incremental approach is far from trivial, and it’s one that requires careful consideration of several factors. It's not a simple yes or no answer; the optimal path often depends heavily on the specific context, the nature of the data, and the performance impact we’re trying to achieve. I’ve personally gone down both paths, and let me tell you, both have their pitfalls and advantages.
 
-The initial question we really need to unpack centers around the *impact* of the new data on the existing model. We're not just throwing data into the training pipeline and hoping for the best. We need a methodical approach. For instance, a few years ago I was working on a fraud detection model for a fintech startup. We had a solid model in place, trained on a few million transactions. Then, they expanded to a new market, with significantly different spending patterns and transaction behavior. Just dumping this data into the old model, without any careful thought, would have been a recipe for disaster. I’ve seen that happen – model collapse, false positives through the roof, and a lot of very unhappy customers.
+The initial question we really need to unpack centers around the _impact_ of the new data on the existing model. We're not just throwing data into the training pipeline and hoping for the best. We need a methodical approach. For instance, a few years ago I was working on a fraud detection model for a fintech startup. We had a solid model in place, trained on a few million transactions. Then, they expanded to a new market, with significantly different spending patterns and transaction behavior. Just dumping this data into the old model, without any careful thought, would have been a recipe for disaster. I’ve seen that happen – model collapse, false positives through the roof, and a lot of very unhappy customers.
 
 So, before even touching the training pipeline, consider the following. Firstly, **data distribution shift:** is the new data significantly different from the data the model was trained on? If the distributions are wildly different, you're almost certainly looking at a full retraining. Think of it as trying to teach a cat dog tricks—it's not going to be effective. Secondly, **the volume of new data:** is it just a trickle, or a flood? A small amount of new data, especially if it is similar to the training set, might be handled using incremental training techniques. On the flip side, substantial changes might necessitate a complete retraining process. Thirdly, **the computational resources available:** full retraining can be resource intensive and time consuming, particularly with complex models. Do you have the hardware and the time to do this? If the answer is no, then you might have to compromise. Fourthly, **model sensitivity:** how sensitive is your model to input perturbations? Some models like deep neural networks are quite robust, while others might not. Understanding your model's vulnerabilities is key.
 
@@ -43,6 +43,7 @@ new_labels = np.random.randint(0, 2, 100)
 # Fine-tune the model on the new data
 pretrained_model.fit(new_data, new_labels, epochs=10)
 ```
+
 This first snippet exemplifies the fine-tuning approach. We freeze the early layers, and then re-train only the final layer, which allows us to adapt the model without affecting too much of what it has learned already. The key here is the `layer.trainable = False`, which sets the layers to non-trainable, conserving the pre-trained weights.
 
 Next, let's demonstrate a somewhat simplified version of what might look like incremental learning. This focuses more on a smaller batch retraining or updating.
@@ -72,6 +73,7 @@ for i in range(5):  # Simulating 5 incremental learning steps
 This simplified incremental approach demonstrates one way to adapt a model in small steps with new batches of data. Keep in mind, truly robust incremental learning is an active research area and considerably more sophisticated than shown here. This, instead, is a sequence of smaller retraining iterations that mimic an "incremental" approach. We’re not retaining any old weights, just using mini-batch learning with the new data each time and the model starts with weights based on previous learning from new batches. The important part is that we are retraining in increments based on the new data and not the whole data at each step.
 
 Finally, let’s provide another example, showing what a more comprehensive retraining would look like, along with model evaluation on a holdout dataset after training.
+
 ```python
 # Full Retraining example
 

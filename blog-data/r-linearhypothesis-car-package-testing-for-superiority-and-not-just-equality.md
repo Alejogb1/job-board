@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "r-linearhypothesis-car-package-testing-for-superiority-and-not-just-equality"
 ---
 
-Alright so you're diving into `linearHypothesis` from the `car` package right a classic I've been down this rabbit hole more times than I care to admit Let's talk about testing for superiority with `linearHypothesis` because yeah it's not as straightforward as just checking for equality
+so you're diving into `linearHypothesis` from the `car` package right a classic I've been down this rabbit hole more times than I care to admit Let's talk about testing for superiority with `linearHypothesis` because yeah it's not as straightforward as just checking for equality
 
-Okay first off `linearHypothesis` it's a fantastic tool for testing linear hypotheses but it's built primarily to assess if a set of parameters or linear combinations of parameters are equal to some value usually zero Now that's super helpful for things like checking if a certain effect is significant which often boils down to if a coefficient is different from zero or if two coefficients are equal to each other but what about what you’re asking about that is if one coefficient is *greater* or *less* than another a one sided test not just a difference
+first off `linearHypothesis` it's a fantastic tool for testing linear hypotheses but it's built primarily to assess if a set of parameters or linear combinations of parameters are equal to some value usually zero Now that's super helpful for things like checking if a certain effect is significant which often boils down to if a coefficient is different from zero or if two coefficients are equal to each other but what about what you’re asking about that is if one coefficient is _greater_ or _less_ than another a one sided test not just a difference
 
-I remember early on in my career I thought `linearHypothesis` was the swiss army knife for all statistical tests I mean it handles contrasts and multi-way hypotheses so elegantly so I just assumed it did everything including one sided tests I was working on a longitudinal study comparing two different training interventions the plan was to see if the new approach was not just *different* but better I used `linearHypothesis` formulated my hypothesis as a difference test ran the `anova` and the resulting p-values were significant great but my boss came over asking "wait a minute where's the evidence of *superiority* not just difference" oh boy that's when I realized I had a problem I thought I could just get away with `p/2` trick but it turns out that's not quite right if it's not an intercept
+I remember early on in my career I thought `linearHypothesis` was the swiss army knife for all statistical tests I mean it handles contrasts and multi-way hypotheses so elegantly so I just assumed it did everything including one sided tests I was working on a longitudinal study comparing two different training interventions the plan was to see if the new approach was not just _different_ but better I used `linearHypothesis` formulated my hypothesis as a difference test ran the `anova` and the resulting p-values were significant great but my boss came over asking "wait a minute where's the evidence of _superiority_ not just difference" oh boy that's when I realized I had a problem I thought I could just get away with `p/2` trick but it turns out that's not quite right if it's not an intercept
 
-The default behavior of `linearHypothesis` focuses on equality which is essentially a two-sided test It calculates a test statistic based on the given linear hypothesis and then computes a p-value indicating the probability of observing such a test statistic (or a more extreme one) assuming the null hypothesis which is typically equality So it does not directly tell you if one condition is better than another just if there is evidence that they are *different*
+The default behavior of `linearHypothesis` focuses on equality which is essentially a two-sided test It calculates a test statistic based on the given linear hypothesis and then computes a p-value indicating the probability of observing such a test statistic (or a more extreme one) assuming the null hypothesis which is typically equality So it does not directly tell you if one condition is better than another just if there is evidence that they are _different_
 
 Here’s the thing you need to switch your mindset a bit Instead of asking `linearHypothesis` to test for inequality directly we'll use it to test for equality against a specific threshold then combine that with the direction of the estimate We will use one-tailed tests here and you can use `alternative=less` or `alternative=greater` within the basic `t.test` functions but you cant get this directly with `linearHypothesis` we need to make an extra step
 
@@ -58,6 +58,7 @@ print(paste("P-value for the one-sided superiority test:",p_value_superiority))
 print(paste("Estimate of B-A is",est_difference))
 
 ```
+
 Here what's happening The `contrastMatrix` sets up a linear hypothesis that corresponds to the difference between `treatment_B` and `treatment_A` When you call `linearHypothesis` it does a standard equality test which could show a significant difference but you would still need to check if `treatment_B` is better than `treatment_A` And the magic is to check the sign of the `est_difference` then if `est_difference` is greater than 0 the p-value is cut in half to simulate the one-sided test for superiority If `est_difference` is below 0 we can not say that `treatment_B` is superior
 
 Now lets go to another example where instead of two treatments you would be comparing one treatment with the average of other treatments:
@@ -145,7 +146,7 @@ The crucial point is that the contrast matrix of `treatment_B` against `treatmen
 
 In my case my mistake was thinking that `linearHypothesis` automatically knew that superiority tests are important so I forgot to check the direction of the effects and only considered the p-value which was pretty embarassing on a presentation
 
-Okay so to recap `linearHypothesis` is great for equality tests but when you need one-sided tests it’s a little more manual Work out your linear contrast then look at the direction of the effect and finally use one half of the p-value from the two sided test (assuming your null is centered in your selected distribution) to assess for superiority or inferiority
+to recap `linearHypothesis` is great for equality tests but when you need one-sided tests it’s a little more manual Work out your linear contrast then look at the direction of the effect and finally use one half of the p-value from the two sided test (assuming your null is centered in your selected distribution) to assess for superiority or inferiority
 
 Resources I'd point you towards aren't specific `car` package tutorials but are more foundational texts You'd benefit from:
 
@@ -153,7 +154,7 @@ Resources I'd point you towards aren't specific `car` package tutorials but are 
 
 2.  **"Extending the Linear Model with R Generalized Linear Mixed Effects and Nonparametric Regression Models" by Julian J. Faraway** This book is great for covering many of the nuances of applying linear models in R it does have a section on contrasts and hypothesis testing
 
-3. **"Statistical Inference" by George Casella and Roger L. Berger** This textbook is more theoretical but would clarify the ideas behind hypothesis testing and statistical inference If you are not very fond of math I would not recommend it
+3.  **"Statistical Inference" by George Casella and Roger L. Berger** This textbook is more theoretical but would clarify the ideas behind hypothesis testing and statistical inference If you are not very fond of math I would not recommend it
 
 These aren’t just `car` tutorials but they get at the very foundation of how these tests work and why you need to consider both sides of the problem (equality AND direction) If I have to be honest with you there are no real shortcuts You need to know what's under the hood and that includes understanding hypothesis tests
 

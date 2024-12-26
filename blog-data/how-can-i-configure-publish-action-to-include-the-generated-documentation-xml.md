@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-i-configure-publish-action-to-include-the-generated-documentation-xml"
 ---
 
-alright, let's tackle this. you're after getting your generated documentation xml files included when you hit 'publish', specifically when using a visual studio project, i'm assuming. this isn't uncommon, i've banged my head against this more than once. it's one of those things that's frustratingly simple once you get the hang of it, but feels like a brick wall when you're starting out.
+, let's tackle this. you're after getting your generated documentation xml files included when you hit 'publish', specifically when using a visual studio project, i'm assuming. this isn't uncommon, i've banged my head against this more than once. it's one of those things that's frustratingly simple once you get the hang of it, but feels like a brick wall when you're starting out.
 
 i’ve been doing this sort of development for close to two decades now, and i remember my first real encounter with this. it was back in the days of .net framework 2.0, i think. i was working on a rather large internal library and documentation was, well, let's say not a priority for the rest of the team. i wanted to make it easier for people to actually use it, and auto-generated xml docs were my weapon of choice. but hitting publish and not seeing them included, that was a problem. i spent a whole afternoon going through msbuild files before finally getting it to work. it was a good learning experience. you tend to remember these things.
 
@@ -32,10 +32,10 @@ here's a snippet of what you'd likely need to add inside the project tag:
 
 let's break this down a bit:
 
-*   `<GenerateDocumentationFile>true</GenerateDocumentationFile>`: this is more about enabling the xml doc generation in the first place, if you don’t already have it on. you must have this one otherwise there won't be documentation files generated.
-*   `<ItemGroup><Content Include="$(OutputPath)\*.xml">`: this tells msbuild: "hey, everything with a `.xml` extension in the output directory, i’m interested in it as content". output path variable normally resolves to `bin\debug` or `bin\release` depending on the build configuration.
-*   `<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>`: this copies the file only if its newer that the one in the destination path.
-*   `<Visible>true</Visible>` this makes sure this file is visible in the visual studio project explorer. useful for debug if needed.
+- `<GenerateDocumentationFile>true</GenerateDocumentationFile>`: this is more about enabling the xml doc generation in the first place, if you don’t already have it on. you must have this one otherwise there won't be documentation files generated.
+- `<ItemGroup><Content Include="$(OutputPath)\*.xml">`: this tells msbuild: "hey, everything with a `.xml` extension in the output directory, i’m interested in it as content". output path variable normally resolves to `bin\debug` or `bin\release` depending on the build configuration.
+- `<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>`: this copies the file only if its newer that the one in the destination path.
+- `<Visible>true</Visible>` this makes sure this file is visible in the visual studio project explorer. useful for debug if needed.
 
 this approach is pretty straight forward and has served me well many times. it simply tells msbuild to treat those xml files as "content" to be copied into the publish directory during the publish.
 
@@ -54,9 +54,9 @@ this is a bit more involved but gives you more control and keeps your csproj fil
 
 let's unpack this too:
 
-*   `<Target Name="IncludeDocumentationXml" AfterTargets="AfterBuild">`: this defines a new target called "includedocumentationxml" that runs after the standard "afterbuild" target. msbuild targets are the building blocks of the build process.
-*   `<ItemGroup><DocumentationXmlFiles Include="$(OutputPath)\*.xml" />`: creates a named itemgroup that selects every xml file present in the output directory.
-*  `<Copy SourceFiles="@(DocumentationXmlFiles)" DestinationFolder="$(PublishDir)" />`: copies all files selected by the "DocumentationXmlFiles" itemgroup into the publish output directory.
+- `<Target Name="IncludeDocumentationXml" AfterTargets="AfterBuild">`: this defines a new target called "includedocumentationxml" that runs after the standard "afterbuild" target. msbuild targets are the building blocks of the build process.
+- `<ItemGroup><DocumentationXmlFiles Include="$(OutputPath)\*.xml" />`: creates a named itemgroup that selects every xml file present in the output directory.
+- `<Copy SourceFiles="@(DocumentationXmlFiles)" DestinationFolder="$(PublishDir)" />`: copies all files selected by the "DocumentationXmlFiles" itemgroup into the publish output directory.
 
 the key difference is that this is explicit about copying the files only as part of the publishing process.
 

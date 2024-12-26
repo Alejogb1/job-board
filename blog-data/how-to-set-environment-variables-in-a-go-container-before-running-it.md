@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-set-environment-variables-in-a-go-container-before-running-it"
 ---
 
-Alright, let's tackle environment variables in go containers. This is a topic I’ve bumped into numerous times over the years, often during deployments where nuanced configurations were crucial. The goal, as always, is to ensure our go applications behave as expected across different environments, without recompiling or altering code.
+, let's tackle environment variables in go containers. This is a topic I’ve bumped into numerous times over the years, often during deployments where nuanced configurations were crucial. The goal, as always, is to ensure our go applications behave as expected across different environments, without recompiling or altering code.
 
 From my experience, there are several robust approaches to injecting environment variables into a go container before it launches, and I've learned firsthand that understanding these methods is crucial for smooth deployments, particularly in microservices architectures where each service often requires unique environmental settings.
 

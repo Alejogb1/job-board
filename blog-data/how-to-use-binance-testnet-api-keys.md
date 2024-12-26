@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-to-use-binance-testnet-api-keys"
 ---
 
-Okay, let's tackle this. It's a common stumbling block for anyone looking to integrate with Binance without risking real funds. I've been through this myself more times than I care to remember, and there are nuances that aren't always immediately apparent. The Binance TestNet is your friend, and getting comfortable with its api is essential for any serious bot or trading algorithm development.
+, let's tackle this. It's a common stumbling block for anyone looking to integrate with Binance without risking real funds. I've been through this myself more times than I care to remember, and there are nuances that aren't always immediately apparent. The Binance TestNet is your friend, and getting comfortable with its api is essential for any serious bot or trading algorithm development.
 
 So, the fundamental concept is this: the Binance TestNet provides an environment that mimics the live exchange, but operates with virtual funds. You get api keys specific to this test environment, which are completely separate from your live keys and therefore, safe for experimentation. Let's walk through how to actually use these.
 
-Firstly, you don’t obtain testnet keys the same way you do live keys. You generate them using the API itself, typically using your live credentials. This may sound counterintuitive but its designed for security. You *never* send actual live keys to interact with the testnet. Instead, you make an api call using your live credentials to *create* testnet api keys. Once obtained, treat these testnet keys like any other API keys in your application, but restrict their scope to testnet calls.
+Firstly, you don’t obtain testnet keys the same way you do live keys. You generate them using the API itself, typically using your live credentials. This may sound counterintuitive but its designed for security. You _never_ send actual live keys to interact with the testnet. Instead, you make an api call using your live credentials to _create_ testnet api keys. Once obtained, treat these testnet keys like any other API keys in your application, but restrict their scope to testnet calls.
 
 The first thing you'll notice is that the base url is different; the live api uses 'api.binance.com', while the testnet uses 'testnet.binance.vision'. This is absolutely crucial. Accidentally pointing a live key at the testnet (or vice versa) will result in errors. I can recall a rather frustrating day debugging an early bot where I mixed those up, causing a cascade of confusing issues - a learning experience to say the least.
 
@@ -65,7 +65,8 @@ def create_testnet_keys(api_key, secret_key):
 create_testnet_keys(api_key, secret_key)
 
 ```
-This script, when run, should output both your testnet api key and secret key which is specific for testnet. *Store these testnet keys in a safe place, just like your live keys*.
+
+This script, when run, should output both your testnet api key and secret key which is specific for testnet. _Store these testnet keys in a safe place, just like your live keys_.
 
 **Example 2: Getting Account Balance on Testnet**
 
@@ -121,7 +122,7 @@ def get_testnet_balances(api_key, secret_key):
 get_testnet_balances(api_key, secret_key)
 ```
 
-Notice the `base_url` is now set to `https://testnet.binance.vision`, and we are using our *testnet* keys this time. This example also handles filtering out zero balance assets for cleaner output.
+Notice the `base_url` is now set to `https://testnet.binance.vision`, and we are using our _testnet_ keys this time. This example also handles filtering out zero balance assets for cleaner output.
 
 **Example 3: Placing a Testnet Limit Order**
 

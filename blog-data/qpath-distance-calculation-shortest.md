@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "qpath-distance-calculation-shortest"
 ---
 
-Okay so shortest qpath distance calculation right I've been wrestling with this kind of thing for what feels like forever honestly my early days were rough I remember being at this startup where we were building a real-time recommendation engine it was a graph database based thing and we needed to find the shortest path between nodes like constantly the whole system would grind to a halt if we didn't get this right so yeah I've had my fair share of painful nights debugging shortest path algorithms
+shortest qpath distance calculation right I've been wrestling with this kind of thing for what feels like forever honestly my early days were rough I remember being at this startup where we were building a real-time recommendation engine it was a graph database based thing and we needed to find the shortest path between nodes like constantly the whole system would grind to a halt if we didn't get this right so yeah I've had my fair share of painful nights debugging shortest path algorithms
 
 So the question itself qpath distance implies that we are dealing with a graph problem a graph is fundamentally nodes and edges connecting them the q could stand for query which is not that relevant and distance is just a number which represents how far it is from node a to node b in the context of shortest distance we mean the minimum number of edges one must traverse or the minimum cumulative weight of edges one must traverse if they're weighted to get from one node to another we're not talking about Euclidean distance or anything like that this is pure graph theory territory
 
@@ -45,6 +45,7 @@ end = 'E'
 shortest_path = bfs_shortest_path(graph, start, end)
 print(f"Shortest path from {start} to {end}: {shortest_path}")
 ```
+
 This gives us the shortest path from A to E which is 'A' to 'C' to 'E'. Note that you are not checking edge weights here because this is BFS
 
 We keep track of the nodes we’ve visited and for unweighted paths the first path discovered is always the shortest path.
@@ -100,6 +101,7 @@ Here the graph is weighted each node is connected to other nodes with distances 
 You should note that Dijkstra's algorithm does not work well with negative weighted edges a different algorithm the Bellman-Ford should be used for that.
 
 Now A* algorithm is a more informed search algorithm than Dijkstra's it uses a heuristic to estimate the cost to reach the end node from a given current node. This can help to explore more promising paths and improve performance. If you want to find out more you should look into the book “Artificial Intelligence A Modern Approach” by Stuart Russell and Peter Norvig, is a good resource for A* search and general search algorithms
+
 ```python
 import heapq
 
@@ -146,7 +148,8 @@ end = 'E'
 shortest_path = a_star_shortest_path(graph, start, end, manhattan_distance)
 print(f"Shortest path from {start} to {end}: {shortest_path}")
 ```
-Note that the manhattan distance is arbitrary here since nodes are named using alphabet letters. I'm not going to show you the more in depth use-case for A* because it can get complicated you should also read papers and books on this subject there is many of them.
+
+Note that the manhattan distance is arbitrary here since nodes are named using alphabet letters. I'm not going to show you the more in depth use-case for A\* because it can get complicated you should also read papers and books on this subject there is many of them.
 
 A good resource for graph algorithms in general is "Introduction to Algorithms" by Thomas H. Cormen et al. That book is a classic for all algorithm related topics.
 

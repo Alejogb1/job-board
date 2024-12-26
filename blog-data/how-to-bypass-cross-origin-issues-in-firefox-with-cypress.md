@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-bypass-cross-origin-issues-in-firefox-with-cypress"
 ---
 
-Okay, let's tackle this. I've been down the cross-origin rabbit hole more times than I care to remember, particularly when trying to get Cypress to play nicely with applications that span multiple domains. Firefox, while generally a fantastic browser, sometimes throws an extra curveball in this arena compared to Chromium-based browsers. Here's how I've approached bypassing those pesky cross-origin restrictions, informed by some hard-won experience.
+, let's tackle this. I've been down the cross-origin rabbit hole more times than I care to remember, particularly when trying to get Cypress to play nicely with applications that span multiple domains. Firefox, while generally a fantastic browser, sometimes throws an extra curveball in this arena compared to Chromium-based browsers. Here's how I've approached bypassing those pesky cross-origin restrictions, informed by some hard-won experience.
 
 First, understand that the core issue stems from the same-origin policy – a fundamental security mechanism in web browsers. This policy prevents a script from accessing resources from a different origin (domain, protocol, or port) than the one from which it originated. Cypress, operating in an iframe and needing to interact with your application, frequently bumps up against this when your app makes calls to external resources or redirects to other domains.
 
@@ -19,50 +19,52 @@ Let's illustrate this with a simple code example. Assume that my application's d
 ```javascript
 // cypress/e2e/proxy_test.cy.js
 
-describe('Bypass cross-origin with proxy', () => {
-  it('should fetch data through a proxy', () => {
+describe("Bypass cross-origin with proxy", () => {
+  it("should fetch data through a proxy", () => {
+    cy.intercept("GET", "/api/proxy/data", (req) => {
+      req.reply({
+        statusCode: 200,
+        body: { message: "Data fetched via proxy" },
+      });
+    }).as("proxyData");
 
-    cy.intercept('GET', '/api/proxy/data', (req) => {
-        req.reply({
-            statusCode: 200,
-            body: { message: "Data fetched via proxy" }
-        });
-    }).as('proxyData');
-
-    cy.visit('http://localhost:3000/test_page.html')
-      .get('#fetchButton')
+    cy.visit("http://localhost:3000/test_page.html")
+      .get("#fetchButton")
       .click();
-      cy.wait('@proxyData');
-      cy.get('#dataDisplay').should('contain', 'Data fetched via proxy');
-
-
+    cy.wait("@proxyData");
+    cy.get("#dataDisplay").should("contain", "Data fetched via proxy");
   });
 });
 ```
 
 And a corresponding simple html test page at `http://localhost:3000/test_page.html` with javascript logic for making the proxy request to `/api/proxy/data` on the same domain:
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Test Page</title>
-</head>
-<body>
-  <button id="fetchButton">Fetch Data</button>
+  </head>
+  <body>
+    <button id="fetchButton">Fetch Data</button>
     <div id="dataDisplay"></div>
     <script>
-        document.getElementById('fetchButton').addEventListener('click', async () => {
-            try {
-                const response = await fetch('/api/proxy/data');
-                const data = await response.json();
-                document.getElementById('dataDisplay').textContent = data.message;
-            } catch(error) {
-               document.getElementById('dataDisplay').textContent = `Error: ${error.message}`;
-            }
+      document
+        .getElementById("fetchButton")
+        .addEventListener("click", async () => {
+          try {
+            const response = await fetch("/api/proxy/data");
+            const data = await response.json();
+            document.getElementById("dataDisplay").textContent = data.message;
+          } catch (error) {
+            document.getElementById(
+              "dataDisplay"
+            ).textContent = `Error: ${error.message}`;
+          }
         });
     </script>
-</body>
+  </body>
 </html>
 ```
 
@@ -75,20 +77,21 @@ Here is an example of manipulating request headers with `cy.intercept()`:
 ```javascript
 // cypress/e2e/intercept_headers_test.cy.js
 
-describe('Modify headers with intercept', () => {
-    it('should modify authorization header', () => {
+describe("Modify headers with intercept", () => {
+  it("should modify authorization header", () => {
+    cy.intercept("GET", "https://api.example.com/protected/resource", (req) => {
+      req.headers["Authorization"] = "Bearer mockedToken";
+      req.continue();
+    }).as("protectedResource");
 
-      cy.intercept('GET', 'https://api.example.com/protected/resource', (req) => {
-          req.headers['Authorization'] = 'Bearer mockedToken';
-          req.continue();
-        }).as('protectedResource');
-
-
-      cy.visit('http://localhost:3000/protected_page.html')
-      cy.get('#fetchButton').click();
-      cy.wait('@protectedResource');
-      cy.get('#resourceDisplay').should('contain', 'Data fetched with authorization');
-    });
+    cy.visit("http://localhost:3000/protected_page.html");
+    cy.get("#fetchButton").click();
+    cy.wait("@protectedResource");
+    cy.get("#resourceDisplay").should(
+      "contain",
+      "Data fetched with authorization"
+    );
+  });
 });
 ```
 
@@ -97,60 +100,69 @@ And the corresponding `http://localhost:3000/protected_page.html` with associate
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Protected Page</title>
-</head>
-<body>
-  <button id="fetchButton">Fetch Data</button>
+  </head>
+  <body>
+    <button id="fetchButton">Fetch Data</button>
     <div id="resourceDisplay"></div>
     <script>
-       document.getElementById('fetchButton').addEventListener('click', async () => {
-            try {
-                const response = await fetch('https://api.example.com/protected/resource',{
-                   headers: {
-                       'Authorization': 'Bearer realToken'
-                   }
-                });
-                if(!response.ok) {
-                  document.getElementById('resourceDisplay').textContent = `Error: ${response.status}`;
-                  return;
-                 }
-                const data = await response.json();
-                 document.getElementById('resourceDisplay').textContent = 'Data fetched with authorization';
-            } catch(error) {
-               document.getElementById('resourceDisplay').textContent = `Error: ${error.message}`;
+      document
+        .getElementById("fetchButton")
+        .addEventListener("click", async () => {
+          try {
+            const response = await fetch(
+              "https://api.example.com/protected/resource",
+              {
+                headers: {
+                  Authorization: "Bearer realToken",
+                },
+              }
+            );
+            if (!response.ok) {
+              document.getElementById(
+                "resourceDisplay"
+              ).textContent = `Error: ${response.status}`;
+              return;
             }
+            const data = await response.json();
+            document.getElementById("resourceDisplay").textContent =
+              "Data fetched with authorization";
+          } catch (error) {
+            document.getElementById(
+              "resourceDisplay"
+            ).textContent = `Error: ${error.message}`;
+          }
         });
     </script>
-</body>
+  </body>
 </html>
-
 ```
 
 Here, Cypress intercepts the `GET` request to `https://api.example.com/protected/resource` and modifies the 'Authorization' header before the request is made. This could be useful for bypassing authentication prompts during testing. In this particular case, the backend is mocked to return the required response, since that is not the main focus, but the important point is the manipulation of the request header before it is sent to the server.
 
 Finally, sometimes the issue isn't just about headers or request methods but the response itself. The same origin policy also applies to the responses. In some cases, a server may respond with an incorrect `Access-Control-Allow-Origin` header, which triggers the cross-origin block. When this happens, you may have to again leverage `cy.intercept` to mock the responses if you do not control the backend.
 Here's an example demonstrating how to mock a response using `cy.intercept()`:
+
 ```javascript
 // cypress/e2e/mock_response_test.cy.js
 
-describe('Mock response with intercept', () => {
-    it('should mock a cross-origin response', () => {
-      cy.intercept('GET', 'https://api.example.com/data', {
-        statusCode: 200,
-        body: { message: "Mocked data" },
-        headers: {
-          'access-control-allow-origin': '*' // Setting this header may be required
-        },
+describe("Mock response with intercept", () => {
+  it("should mock a cross-origin response", () => {
+    cy.intercept("GET", "https://api.example.com/data", {
+      statusCode: 200,
+      body: { message: "Mocked data" },
+      headers: {
+        "access-control-allow-origin": "*", // Setting this header may be required
+      },
+    }).as("mockedData");
 
-      }).as('mockedData');
-
-      cy.visit('http://localhost:3000/data_page.html')
-      cy.get('#fetchButton').click();
-      cy.wait('@mockedData');
-      cy.get('#dataDisplay').should('contain', 'Mocked data');
-    });
+    cy.visit("http://localhost:3000/data_page.html");
+    cy.get("#fetchButton").click();
+    cy.wait("@mockedData");
+    cy.get("#dataDisplay").should("contain", "Mocked data");
+  });
 });
 ```
 
@@ -159,25 +171,29 @@ And the corresponding `http://localhost:3000/data_page.html` with associated jav
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Data Page</title>
-</head>
-<body>
-  <button id="fetchButton">Fetch Data</button>
+  </head>
+  <body>
+    <button id="fetchButton">Fetch Data</button>
     <div id="dataDisplay"></div>
     <script>
-      document.getElementById('fetchButton').addEventListener('click', async () => {
-            try {
-                const response = await fetch('https://api.example.com/data');
-                const data = await response.json();
-                document.getElementById('dataDisplay').textContent = data.message;
-            } catch(error) {
-               document.getElementById('dataDisplay').textContent = `Error: ${error.message}`;
-            }
+      document
+        .getElementById("fetchButton")
+        .addEventListener("click", async () => {
+          try {
+            const response = await fetch("https://api.example.com/data");
+            const data = await response.json();
+            document.getElementById("dataDisplay").textContent = data.message;
+          } catch (error) {
+            document.getElementById(
+              "dataDisplay"
+            ).textContent = `Error: ${error.message}`;
+          }
         });
     </script>
-</body>
+  </body>
 </html>
 ```
 

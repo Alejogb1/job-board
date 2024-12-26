@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "how-to-handle-multiple-policy-claims-in-a-jwt-token-with-dotnet-core"
 ---
 
-alright, let's tackle this. multiple policy claims in jwt, right? i’ve been down this road a few times, and it can get a bit messy if you're not careful. dotnet core’s authentication system is pretty flexible but needs a bit of a nudge when dealing with complex jwt claims. 
+, let's tackle this. multiple policy claims in jwt, right? i’ve been down this road a few times, and it can get a bit messy if you're not careful. dotnet core’s authentication system is pretty flexible but needs a bit of a nudge when dealing with complex jwt claims.
 
 first off, the core issue is that the standard claims-based authorization in dotnet core often assumes a single value per claim type. when a jwt comes along and has, say, multiple `role` claims or a custom `permission` claim with an array of values, things can start to fail silently. that's the fun part, debugging those silent failures!
 
-i remember back in my early days working on this e-commerce platform, i had this really cool idea of a super user role that could, you know, basically do everything. we encoded it by adding a "superuser" value to the `role` claim in jwt. then, as the platform got more complex, other roles came into existence: "admin", "editor", "customer". so, we ended up needing multiple roles per user, not just one single role, and the existing dotnet core setup just choked. the middleware was only looking for *one* value, and it wasn’t picking up on the fact that a user could have multiple roles. we had to scramble quite a bit, and that’s when i got into understanding how claims work under the hood.
+i remember back in my early days working on this e-commerce platform, i had this really cool idea of a super user role that could, you know, basically do everything. we encoded it by adding a "superuser" value to the `role` claim in jwt. then, as the platform got more complex, other roles came into existence: "admin", "editor", "customer". so, we ended up needing multiple roles per user, not just one single role, and the existing dotnet core setup just choked. the middleware was only looking for _one_ value, and it wasn’t picking up on the fact that a user could have multiple roles. we had to scramble quite a bit, and that’s when i got into understanding how claims work under the hood.
 
 so, how do we get around this? the secret sauce is in how you configure your authentication handler and how you define your policies. here’s the lowdown.
 
@@ -30,6 +30,7 @@ services.AddAuthorization(options =>
     });
 });
 ```
+
 in this snippet, we're adding a policy named `"requireroles"`. it first checks if the `role` claim exists, then within the `requireassertion` part, we are manually reading the `role` claim, mapping it to value and checking if any of them exist either as `"admin"` or `"superuser"`.
 
 we're using `requireclaim` first as a simple pre-check to make sure that a basic claim exists, if not we skip the assertion, it's a performance trick i picked up years ago.

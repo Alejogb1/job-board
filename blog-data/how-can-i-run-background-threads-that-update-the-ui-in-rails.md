@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-can-i-run-background-threads-that-update-the-ui-in-rails"
 ---
 
-Okay, let's tackle this. I’ve seen this particular scenario play out countless times in various projects, and while the core concepts are fairly straightforward, the implementation details often trip people up. The fundamental problem lies in Rails’ single-threaded nature when handling requests, and the fact that UI updates in web applications are inherently synchronous. Attempting to perform lengthy operations directly in a request cycle blocks the user interface, leading to a poor user experience. So, we need to offload these processes to background threads or processes, ensuring that any interaction with the UI remains fluid.
+, let's tackle this. I’ve seen this particular scenario play out countless times in various projects, and while the core concepts are fairly straightforward, the implementation details often trip people up. The fundamental problem lies in Rails’ single-threaded nature when handling requests, and the fact that UI updates in web applications are inherently synchronous. Attempting to perform lengthy operations directly in a request cycle blocks the user interface, leading to a poor user experience. So, we need to offload these processes to background threads or processes, ensuring that any interaction with the UI remains fluid.
 
-The challenge, as you've probably guessed, is that these background threads or processes cannot directly manipulate the DOM or modify the UI elements in the user’s browser. That responsibility falls squarely on the main thread that is processing a given user request. Our goal then, isn't to have a background thread *directly* manipulate the UI, but rather to have it update data that the UI then reacts to via a refresh or some similar mechanism.
+The challenge, as you've probably guessed, is that these background threads or processes cannot directly manipulate the DOM or modify the UI elements in the user’s browser. That responsibility falls squarely on the main thread that is processing a given user request. Our goal then, isn't to have a background thread _directly_ manipulate the UI, but rather to have it update data that the UI then reacts to via a refresh or some similar mechanism.
 
 Over the years, I've explored different architectures to address this. Early on, in the "Wild West" days of Web 2.0, we'd rely heavily on client-side polling, which was inefficient and often overwhelmed the server. Today, we have far better options, leveraging techniques like websockets, server-sent events (SSE), or simply polling judiciously with well-structured server-side processes and proper caching. The key is to understand the specific requirements of your application when choosing a solution.
 
@@ -60,33 +60,42 @@ On the client side (JavaScript), you would subscribe to this channel and update 
 
 ```javascript
 // some_javascript_file.js
-const imageId = document.getElementById('image_id').value; // Get it from a hidden field
+const imageId = document.getElementById("image_id").value; // Get it from a hidden field
 
-consumer.subscriptions.create({ channel: "ImageProgressChannel", image_id: imageId }, {
-  connected() {
-    console.log("Connected to the ImageProgressChannel for image:", imageId);
-  },
+consumer.subscriptions.create(
+  { channel: "ImageProgressChannel", image_id: imageId },
+  {
+    connected() {
+      console.log("Connected to the ImageProgressChannel for image:", imageId);
+    },
 
-  disconnected() {
-    console.log("Disconnected from the ImageProgressChannel for image:", imageId);
-  },
-  received(data) {
-    console.log("Received Data:", data);
-     if (data.progress) {
-          document.getElementById("progress-bar").value = data.progress;
-          document.getElementById("progress-percentage").textContent = data.progress + '%';
+    disconnected() {
+      console.log(
+        "Disconnected from the ImageProgressChannel for image:",
+        imageId
+      );
+    },
+    received(data) {
+      console.log("Received Data:", data);
+      if (data.progress) {
+        document.getElementById("progress-bar").value = data.progress;
+        document.getElementById("progress-percentage").textContent =
+          data.progress + "%";
       } else if (data.status) {
-          document.getElementById("progress-status").textContent = data.status;
-          if (data.status === "completed") {
-              document.getElementById("progress-container").classList.add("completed");
-          }
-          if (data.status === "failed") {
-              document.getElementById("progress-container").classList.add("failed");
-              document.getElementById("progress-error").textContent = data.error;
-          }
+        document.getElementById("progress-status").textContent = data.status;
+        if (data.status === "completed") {
+          document
+            .getElementById("progress-container")
+            .classList.add("completed");
+        }
+        if (data.status === "failed") {
+          document.getElementById("progress-container").classList.add("failed");
+          document.getElementById("progress-error").textContent = data.error;
+        }
       }
+    },
   }
-});
+);
 ```
 
 This snippet demonstrates a basic mechanism where the backend actively pushes updates to the UI using websockets.
@@ -117,24 +126,25 @@ Then, on the UI side, you use Javascript to poll an endpoint to retrieve the dat
 ```javascript
 //  some_javascript_file.js
 function checkStatus() {
-    const dataItemId = document.getElementById('data_item_id').value; // get data id from hidden field
-    fetch(`/data_items/${dataItemId}/status`)
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById("status_indicator").textContent = `Status: ${data.status}`;
-             if (data.status === 'processed') {
-                  document.getElementById("result_indicator").textContent = data.result;
-                  clearInterval(pollInterval); //stop polling on completion
-             }
-             if (data.status === 'failed'){
-                 document.getElementById("result_indicator").textContent = data.result;
-                  clearInterval(pollInterval); //stop polling on failure
-             }
-
-        })
-        .catch(error => console.error("Error fetching status:", error));
+  const dataItemId = document.getElementById("data_item_id").value; // get data id from hidden field
+  fetch(`/data_items/${dataItemId}/status`)
+    .then((response) => response.json())
+    .then((data) => {
+      document.getElementById(
+        "status_indicator"
+      ).textContent = `Status: ${data.status}`;
+      if (data.status === "processed") {
+        document.getElementById("result_indicator").textContent = data.result;
+        clearInterval(pollInterval); //stop polling on completion
+      }
+      if (data.status === "failed") {
+        document.getElementById("result_indicator").textContent = data.result;
+        clearInterval(pollInterval); //stop polling on failure
+      }
+    })
+    .catch((error) => console.error("Error fetching status:", error));
 }
-const pollInterval = setInterval(checkStatus, 5000);  // Poll every 5 seconds, adjust as needed
+const pollInterval = setInterval(checkStatus, 5000); // Poll every 5 seconds, adjust as needed
 checkStatus(); // run checkStatus immediately to get first status
 ```
 
@@ -154,11 +164,12 @@ end
 #routes.rb
 get '/data_items/:id/status', to: 'data_items#status'
 ```
+
 This setup demonstrates basic polling; note you will need to build out full `CRUD` for `data_item` in a real application. This offers a less demanding mechanism for updating the user interface, though it does come with the caveats of server overload through excessive polling and delayed responses.
 
 **Example 3: Using Sidekiq and Server-Sent Events (SSE)**
 
-For more demanding and continuous processes where server-side push is beneficial but not as complex as web sockets, server-sent events can be a good compromise.  Let’s say you have a long reporting process. I have used this often to handle generation of large PDFs or CSV files. Sidekiq can handle the background processing, and SSE pushes results.
+For more demanding and continuous processes where server-side push is beneficial but not as complex as web sockets, server-sent events can be a good compromise. Let’s say you have a long reporting process. I have used this often to handle generation of large PDFs or CSV files. Sidekiq can handle the background processing, and SSE pushes results.
 
 Here is our worker:
 
@@ -193,41 +204,51 @@ Again, we use an `ActionCable` channel to broadcast the updates. The client-side
 ```javascript
 //some_javascript_file.js
 
-const reportId = document.getElementById('report_id').value; // Get it from a hidden field
+const reportId = document.getElementById("report_id").value; // Get it from a hidden field
 
-consumer.subscriptions.create({ channel: "ReportProgressChannel", report_id: reportId }, {
-  connected() {
-    console.log("Connected to the ReportProgressChannel for report:", reportId);
-  },
+consumer.subscriptions.create(
+  { channel: "ReportProgressChannel", report_id: reportId },
+  {
+    connected() {
+      console.log(
+        "Connected to the ReportProgressChannel for report:",
+        reportId
+      );
+    },
 
-  disconnected() {
-    console.log("Disconnected from the ReportProgressChannel for report:", reportId);
-  },
-  received(data) {
-    console.log("Received Data:", data);
-     if (data.progress) {
-          document.getElementById("progress-bar").value = data.progress;
-          document.getElementById("progress-percentage").textContent = data.progress + '%';
+    disconnected() {
+      console.log(
+        "Disconnected from the ReportProgressChannel for report:",
+        reportId
+      );
+    },
+    received(data) {
+      console.log("Received Data:", data);
+      if (data.progress) {
+        document.getElementById("progress-bar").value = data.progress;
+        document.getElementById("progress-percentage").textContent =
+          data.progress + "%";
       } else if (data.status) {
-          document.getElementById("progress-status").textContent = data.status;
-          if (data.status === "completed") {
-                document.getElementById("download-button").classList.remove("hidden");
-          }
-          if (data.status === "failed") {
-              document.getElementById("progress-container").classList.add("failed");
-              document.getElementById("progress-error").textContent = data.error;
-          }
+        document.getElementById("progress-status").textContent = data.status;
+        if (data.status === "completed") {
+          document.getElementById("download-button").classList.remove("hidden");
+        }
+        if (data.status === "failed") {
+          document.getElementById("progress-container").classList.add("failed");
+          document.getElementById("progress-error").textContent = data.error;
+        }
       }
+    },
   }
-});
+);
 ```
 
 In this example, Sidekiq processes the report generation, while Action Cable streams updates to the client.
 
 For further reading, I’d recommend exploring the following:
 
-*   **"Concurrent Programming in Erlang" by Joe Armstrong:** Though not Rails specific, this book offers excellent insights into concurrency and message passing paradigms.
-*   **"Designing Data-Intensive Applications" by Martin Kleppmann:** This book provides a strong foundation on distributed systems and real-time data processing, which helps in understanding the core challenges in background processing and UI updates.
-*   **The Rails documentation for Active Job and Action Cable:** This is essential for mastering the specific implementation within Rails.
+- **"Concurrent Programming in Erlang" by Joe Armstrong:** Though not Rails specific, this book offers excellent insights into concurrency and message passing paradigms.
+- **"Designing Data-Intensive Applications" by Martin Kleppmann:** This book provides a strong foundation on distributed systems and real-time data processing, which helps in understanding the core challenges in background processing and UI updates.
+- **The Rails documentation for Active Job and Action Cable:** This is essential for mastering the specific implementation within Rails.
 
 Remember that each scenario has its own trade-offs. Understanding your requirements for speed, response time, reliability, and server load is critical. There isn't a one-size-fits-all solution, but these techniques will equip you with practical solutions for the majority of situations.

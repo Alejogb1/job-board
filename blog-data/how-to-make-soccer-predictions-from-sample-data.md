@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-make-soccer-predictions-from-sample-data"
 ---
 
-Alright, let's talk about predicting soccer outcomes from data. It’s a challenge I've grappled with a few times, and honestly, it’s far more nuanced than just feeding numbers into a black box and expecting accurate predictions to pop out. In my experience, the key lies in a methodical approach that acknowledges the messy nature of real-world sports data.
+, let's talk about predicting soccer outcomes from data. It’s a challenge I've grappled with a few times, and honestly, it’s far more nuanced than just feeding numbers into a black box and expecting accurate predictions to pop out. In my experience, the key lies in a methodical approach that acknowledges the messy nature of real-world sports data.
 
 It's easy to get caught up in the allure of complex machine learning models, but I’ve learned that the foundation, the data itself, is paramount. The data you feed any model will directly impact its accuracy. For soccer, we’re talking about a diverse range of inputs – goals scored, shots on target, possession percentages, player statistics, team formations, and even contextual information like home/away advantage, match importance, and perhaps even weather conditions. A robust dataset should include historical match data spanning several seasons, with as much granular detail as possible. I've found that initially, the work is often more about data cleaning and wrangling than actual modeling; if the data's junk, the results are going to be, too.
 
@@ -53,7 +53,7 @@ def calculate_moving_average(data_frame, team_name, window=5):
     df_team['goals'] = np.where(df_team['home_team'] == team_name, df_team['home_goals'], df_team['away_goals'])
     df_team['moving_average_goals'] = df_team['goals'].rolling(window=window, min_periods=1).mean() # avoid NaN at the beginning
     return df_team
-    
+
 
 # Example usage:
 # data = {'date':['2023-01-01', '2023-01-08', '2023-01-15','2023-01-22','2023-01-29','2023-02-05',],

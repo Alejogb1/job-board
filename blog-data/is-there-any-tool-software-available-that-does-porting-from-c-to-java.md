@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "is-there-any-tool-software-available-that-does-porting-from-c-to-java"
 ---
 
-Okay so you're asking about tools for porting C code to Java right Been there done that a few times too many honestly It's a messy business but definitely something I've had to deal with in my past projects let me tell you I wouldn't wish it on my worst enemy well maybe just some of my former colleagues not saying names obviously
+you're asking about tools for porting C code to Java right Been there done that a few times too many honestly It's a messy business but definitely something I've had to deal with in my past projects let me tell you I wouldn't wish it on my worst enemy well maybe just some of my former colleagues not saying names obviously
 
 So the short answer is yes there are tools that attempt to do this but they aren't magic wands and the results aren't always pretty They mostly operate by analyzing the C code and try to construct equivalent Java code This isn’t like a compiler that just spits out bytecode it’s a translation process that's subject to a whole lot of interpretation and it's where it gets really complicated I've had some real head scratchers and "why is this even a thing" moments during my time playing with these tools.
 
@@ -121,9 +121,9 @@ So what should you do? Well if you have to go this route don’t expect a fully 
 
 If you’re looking for research and better understanding of this topic here's what I recommend:
 
-*   **"Compiler Construction: Principles and Practice" by Kenneth C. Louden:** This book is not specifically about C to Java translation but it gives you a solid foundation on how compilers and code transformations work. It will help you understand the limitations of any such tool. You will be aware what can or can't be easily translated from one language to another
-*   **"Refactoring: Improving the Design of Existing Code" by Martin Fowler:** This is essential because even with a perfect translator you’ll need to refactor the resulting code. The book gives you great tools and strategies for doing this efficiently and avoiding more headaches down the road.
-*   **Research papers on program transformations and compiler techniques:** There are a ton of these out there and you can find them on ACM or IEEE digital libraries look for terms like "source-to-source translation" "program analysis" or "code migration". These papers will show you different approaches and the challenges involved.
+- **"Compiler Construction: Principles and Practice" by Kenneth C. Louden:** This book is not specifically about C to Java translation but it gives you a solid foundation on how compilers and code transformations work. It will help you understand the limitations of any such tool. You will be aware what can or can't be easily translated from one language to another
+- **"Refactoring: Improving the Design of Existing Code" by Martin Fowler:** This is essential because even with a perfect translator you’ll need to refactor the resulting code. The book gives you great tools and strategies for doing this efficiently and avoiding more headaches down the road.
+- **Research papers on program transformations and compiler techniques:** There are a ton of these out there and you can find them on ACM or IEEE digital libraries look for terms like "source-to-source translation" "program analysis" or "code migration". These papers will show you different approaches and the challenges involved.
 
 In my experience the best approach is to only use these tools as a starting point and then dive in to hand-tune the code until you reach the level of quality you want. I'd also suggest not trying to port everything at once divide and conquer seems to work better on most cases. It's all about breaking down the problem and understanding that no magic tool will solve everything for you.
 

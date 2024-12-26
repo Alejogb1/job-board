@@ -4,20 +4,20 @@ date: "2024-12-23"
 id: "what-is-the-return-value-of-gcloud-ai-endpoints-create-in-gcp-vertex-ai"
 ---
 
-Alright, let's unpack the return value of `gcloud ai endpoints create`. I’ve spent a good chunk of my career deploying and managing models on Google Cloud Platform, and Vertex AI's endpoint creation has been a frequent point of interaction. It's not always as straightforward as a simple boolean or an integer. The `gcloud ai endpoints create` command, when successful, returns a json object containing a wealth of information about the newly created endpoint. Understanding this structure is essential for any robust deployment pipeline.
+, let's unpack the return value of `gcloud ai endpoints create`. I’ve spent a good chunk of my career deploying and managing models on Google Cloud Platform, and Vertex AI's endpoint creation has been a frequent point of interaction. It's not always as straightforward as a simple boolean or an integer. The `gcloud ai endpoints create` command, when successful, returns a json object containing a wealth of information about the newly created endpoint. Understanding this structure is essential for any robust deployment pipeline.
 
 From my experience working on a large-scale recommendation system, we heavily relied on automating Vertex AI deployments. We initially naively parsed the output, causing intermittent failures when properties we assumed would exist weren't present. This experience emphasized the importance of understanding the full return structure and being resilient to variations.
 
 The core of the return is the representation of the `endpoint` resource. Let me walk you through some key aspects. The json returned isn't just a single flat layer of key-value pairs. It’s a hierarchical structure, reflecting the complexities of an endpoint in Vertex AI. Here are some of the crucial properties you can expect:
 
-*   **`name`:** This is the fully qualified resource name of the endpoint, following the format `projects/{project}/locations/{location}/endpoints/{endpoint}`. This is crucial for referencing the endpoint in subsequent operations, like deploying models or updating configurations.
-*   **`displayName`:** The user-friendly name you assigned to the endpoint. While technically not used by the system directly, it helps with human readability and management.
-*   **`createTime`:** This timestamp records when the endpoint was created, following an ISO 8601 format, which is essential for audit and logging purposes.
-*   **`updateTime`:** This indicates when the endpoint configuration was last modified, useful for tracking changes over time.
-*   **`deployedModels`:** Here’s where things get interesting. This property is an array of json objects, each representing a model deployed to the endpoint. Initially, this will be empty as no model is deployed when the endpoint is initially created, but it becomes critical once you start deploying models. The entries in this array contain details like the model's resource name (`model`), the allocated traffic percentage for each model deployed (`trafficAllocation`), and the model's deployment configuration.
-*   **`network`:** If you're working with a private endpoint, this field will specify the VPC network it’s attached to.
-*   **`encryptionSpec`:** Details about the encryption configuration, typically concerning customer-managed encryption keys.
-*   **`labels`:** Any labels you have attached to the endpoint, useful for organization and filtering.
+- **`name`:** This is the fully qualified resource name of the endpoint, following the format `projects/{project}/locations/{location}/endpoints/{endpoint}`. This is crucial for referencing the endpoint in subsequent operations, like deploying models or updating configurations.
+- **`displayName`:** The user-friendly name you assigned to the endpoint. While technically not used by the system directly, it helps with human readability and management.
+- **`createTime`:** This timestamp records when the endpoint was created, following an ISO 8601 format, which is essential for audit and logging purposes.
+- **`updateTime`:** This indicates when the endpoint configuration was last modified, useful for tracking changes over time.
+- **`deployedModels`:** Here’s where things get interesting. This property is an array of json objects, each representing a model deployed to the endpoint. Initially, this will be empty as no model is deployed when the endpoint is initially created, but it becomes critical once you start deploying models. The entries in this array contain details like the model's resource name (`model`), the allocated traffic percentage for each model deployed (`trafficAllocation`), and the model's deployment configuration.
+- **`network`:** If you're working with a private endpoint, this field will specify the VPC network it’s attached to.
+- **`encryptionSpec`:** Details about the encryption configuration, typically concerning customer-managed encryption keys.
+- **`labels`:** Any labels you have attached to the endpoint, useful for organization and filtering.
 
 The presence and content of these properties might vary based on the flags and configurations you use when creating the endpoint. For instance, if you’re not using a private endpoint, you won’t see the `network` property set. It’s crucial not to make assumptions about what is always there.
 

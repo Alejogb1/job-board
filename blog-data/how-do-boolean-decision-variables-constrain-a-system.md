@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-boolean-decision-variables-constrain-a-system"
 ---
 
-Alright, let’s talk about boolean decision variables and how they act as constraints in a system. This is something I’ve grappled with extensively over my career, particularly during the development of resource allocation systems. I recall a specific project involving optimizing network traffic routing where improperly handled boolean constraints nearly brought the entire system to its knees. It's a potent concept, but its power lies in its simplicity, and it’s exactly that simplicity that can sometimes lead to unexpected complexities.
+, let’s talk about boolean decision variables and how they act as constraints in a system. This is something I’ve grappled with extensively over my career, particularly during the development of resource allocation systems. I recall a specific project involving optimizing network traffic routing where improperly handled boolean constraints nearly brought the entire system to its knees. It's a potent concept, but its power lies in its simplicity, and it’s exactly that simplicity that can sometimes lead to unexpected complexities.
 
 At its core, a boolean decision variable represents a choice: yes or no, true or false, 1 or 0. It’s a fundamental building block in computational logic and decision-making. The real constraining power of boolean variables arises from how they’re combined and employed within the larger system’s logic. They act as switches, effectively governing which branches of a process are active or inactive, which resources are utilized or remain idle, and which data paths are followed.
 
@@ -22,7 +22,7 @@ def simulate_task_scheduling():
     for task in range(num_tasks):
         for server in range(num_servers):
             assignments[(task, server)] = 0
-    
+
     # Example boolean assignments:
     assignments[(0, 1)] = 1 #Task 0 assigned to server 1
     assignments[(1, 0)] = 1 #Task 1 assigned to server 0
@@ -99,7 +99,7 @@ def simulate_feature_selection():
     # Adding a constraint that we require at least two features to be used.
     if np.sum(feature_selector) < 2:
         print("Error: At least 2 features must be selected")
-    
+
 simulate_feature_selection()
 ```
 

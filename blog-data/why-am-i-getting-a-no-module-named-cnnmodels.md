@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-a-no-module-named-cnnmodels"
 ---
 
-alright, let's unpack this 'no module named 'cnn_models'' situation. it's a classic python import headache, and i’ve spent way too many late nights staring at similar errors. i've been in the trenches with python and deep learning frameworks for a good while now, and this particular error is usually a symptom of a few common underlying issues.
+, let's unpack this 'no module named 'cnn_models'' situation. it's a classic python import headache, and i’ve spent way too many late nights staring at similar errors. i've been in the trenches with python and deep learning frameworks for a good while now, and this particular error is usually a symptom of a few common underlying issues.
 
 basically, python can’t find the `cnn_models` module you’re trying to use. that module could be a library you installed, or some custom code you wrote yourself. the 'no module' error means the interpreter went hunting and came back empty-handed. i remember one project, back when i was first learning tensorflow, i had a similar problem. i spent hours banging my head trying to figure out why the module named 'data_ingestion' that was placed in my custom utils folder was not found. it turned out i was running the scripts from the root folder and the interpreter could not access it without the explicit path in the import statement.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-predictproba-results-be-used-in-a-flask-api-front-end"
 ---
 
-Okay, let's tackle this. I’ve seen this scenario crop up quite a bit in my past projects, particularly when transitioning machine learning models from research environments to client-facing applications. Getting those `predict_proba` outputs into a usable format within a Flask API requires a thoughtful approach, and the devil, as they say, is in the details. We're not just slapping predictions on the screen; we're building an informative and robust experience for the user.
+, let's tackle this. I’ve seen this scenario crop up quite a bit in my past projects, particularly when transitioning machine learning models from research environments to client-facing applications. Getting those `predict_proba` outputs into a usable format within a Flask API requires a thoughtful approach, and the devil, as they say, is in the details. We're not just slapping predictions on the screen; we're building an informative and robust experience for the user.
 
 The core idea behind `predict_proba` is that it doesn't just offer a single classification but provides probabilities for each class. This is significantly more informative than just a predicted class label. We leverage this richness in our Flask front-end to convey the model's certainty (or uncertainty) about its predictions. Instead of just telling a user “this is a cat,” we can say “there’s a 92% probability this is a cat, and an 8% probability this is a dog.” This transparency is crucial, especially for complex models.
 
@@ -30,7 +30,7 @@ app = Flask(__name__)
 # Instead, we'll initialize dummy components.
 
 #Dummy data and model for the example
-texts = ["This is great", "This is terrible", "I feel okay", "Not good at all"]
+texts = ["This is great", "This is terrible", "I feel ", "Not good at all"]
 labels = [1,0,2,0] #1 = positive, 0 = negative, 2= neutral
 
 vectorizer = TfidfVectorizer()
@@ -68,9 +68,9 @@ In this example, I'm simulating a trained `LogisticRegression` sentiment model (
 {
   "probabilities": {
     "negative": 0.015,
-    "positive": 0.980,
+    "positive": 0.98,
     "neutral": 0.005
-   }
+  }
 }
 ```
 
@@ -131,12 +131,13 @@ if __name__ == '__main__':
 In this case, I'm demonstrating multi-label classification using `MultiLabelBinarizer`. Here, `predict_proba` returns probabilities for each category for the document. We process this inside the endpoint and structure the result, again using a dictionary for easy front-end handling.
 
 Here’s the response structure, assuming "This is about technology" was the input. Note the output gives the probabilities of each category that exists in the training labels:
+
 ```json
 {
-   "Finance": 0.01,
-   "Political": 0.02,
-   "Sport": 0.005,
-   "Technology": 0.85
+  "Finance": 0.01,
+  "Political": 0.02,
+  "Sport": 0.005,
+  "Technology": 0.85
 }
 ```
 
@@ -157,7 +158,7 @@ app = Flask(__name__)
 # Example: vectorizer = pickle.load(open('vectorizer.pkl', 'rb'))
 
 #Dummy data
-texts = ["This is great", "This is terrible", "I feel okay", "Not good at all", "neutral message"]
+texts = ["This is great", "This is terrible", "I feel ", "Not good at all", "neutral message"]
 labels = ["positive", "negative","neutral", "negative", "neutral"] #1 = positive, 0 = negative, 2= neutral
 
 vectorizer = TfidfVectorizer()
@@ -197,12 +198,12 @@ This example adds a try/catch to handle exceptions and provide detailed error me
 
 ```json
 {
-    "probabilities":{
-      "negative":0.05,
-      "neutral":0.05,
-       "positive":0.9
-     }
- }
+  "probabilities": {
+    "negative": 0.05,
+    "neutral": 0.05,
+    "positive": 0.9
+  }
+}
 ```
 
 On the front-end, you'll typically use JavaScript to parse this JSON. You can then display the probabilities using charts (bar charts work well), numerical values, or color-coded text to indicate the model's confidence. The `probabilities` key in the output json response is key to accessing all of the probability values for every class. You will use this to display whatever relevant info you want to show on the front end, as you would normally use JSON in a javascript application. The JSON makes the data easy to consume by javascript.

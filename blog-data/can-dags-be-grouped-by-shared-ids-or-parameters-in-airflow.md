@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "can-dags-be-grouped-by-shared-ids-or-parameters-in-airflow"
 ---
 
-Alright, let's talk about DAG grouping in airflow, a topic I’ve navigated extensively, especially back in my days managing a particularly unruly data pipeline. It’s something that might not seem obvious at first, but it's crucial for maintainability and clarity, especially as your workflow orchestration grows more complex. The short answer is: yes, you absolutely can group DAGs based on shared IDs or parameters. However, it's not a built-in, single-click feature; it requires a bit of planning and implementation strategy using Airflow’s flexible architecture.
+, let's talk about DAG grouping in airflow, a topic I’ve navigated extensively, especially back in my days managing a particularly unruly data pipeline. It’s something that might not seem obvious at first, but it's crucial for maintainability and clarity, especially as your workflow orchestration grows more complex. The short answer is: yes, you absolutely can group DAGs based on shared IDs or parameters. However, it's not a built-in, single-click feature; it requires a bit of planning and implementation strategy using Airflow’s flexible architecture.
 
 Before we dive deep, let me clarify what I mean by "grouping." We're not talking about physical folders or a hierarchical DAG structure within the Airflow UI. Instead, we aim to use logical relationships – typically established through common IDs or parameter patterns – to organize how we manage and monitor our workflows. This involves clever use of airflow's features like tags, custom variables, and, sometimes, programmatic DAG generation. This approach is quite different from relying on filenames or folder structures, which can quickly become unwieldy as you scale.
 
@@ -116,6 +116,7 @@ dag_b = create_ingestion_dag(source_id='b', schedule='0 12 * * *') # 12:00 UTC
 dag_c = create_ingestion_dag(source_id='c', schedule='0 18 * * *') # 18:00 UTC
 
 ```
+
 In this example, a function `create_ingestion_dag` encapsulates the DAG definition process, ensuring consistency and maintainability, and it allows the creation of multiple similar DAGs from a template. This makes it easier to manage similar workflows by generating DAGs programmatically with different schedules for various `source_id`’s and keeping the DAG definition concise.
 
 These approaches—using tags, custom variables, and programmatic generation—provide robust mechanisms for grouping DAGs in Airflow. However, it’s vital to choose the best method depending on the specific needs of your project.

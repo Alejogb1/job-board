@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-log-logicaldate-or-ds-in-an-airflow-task"
 ---
 
-Okay, let's talk about logging the 'logical_date' or 'ds' within an Airflow task. It's a frequent hurdle, and I've definitely been down that rabbit hole more times than I care to count. When you're debugging or trying to understand the context of a task's execution, having that specific execution date readily available in your logs is crucial.
+, let's talk about logging the 'logical_date' or 'ds' within an Airflow task. It's a frequent hurdle, and I've definitely been down that rabbit hole more times than I care to count. When you're debugging or trying to understand the context of a task's execution, having that specific execution date readily available in your logs is crucial.
 
 Here's the thing: 'logical_date' (or its string representation, 'ds') isn't inherently a globally available variable within the context of your task's execution. Airflow uses the concept of templating, and you need to leverage that to get the information you're after. Instead of imagining it's magically floating around, you have to actively request it.
 
@@ -12,7 +12,7 @@ I’ll recall a project from some years ago. We were processing daily financial 
 
 The key to accessing 'logical_date' is using Airflow's Jinja templating capabilities. Jinja is a powerful templating engine, which Airflow uses for parameterizing many things, including variables passed to your tasks, and task commands. Think of it as a mechanism to inject dynamic information into your task definitions.
 
-Here's how you approach it. The standard method is to use the `{{ ds }}` or `{{ dag_run.logical_date }}` template variables, where 'ds' is a string representation of the date in 'YYYY-MM-DD' format, and `dag_run.logical_date` is a datetime object. You can insert these directly into your Python code, inside the context of an Airflow operator. It's critical to understand that these aren't just regular python variables; they’re templates that Airflow evaluates *before* the task executes.
+Here's how you approach it. The standard method is to use the `{{ ds }}` or `{{ dag_run.logical_date }}` template variables, where 'ds' is a string representation of the date in 'YYYY-MM-DD' format, and `dag_run.logical_date` is a datetime object. You can insert these directly into your Python code, inside the context of an Airflow operator. It's critical to understand that these aren't just regular python variables; they’re templates that Airflow evaluates _before_ the task executes.
 
 Let's move on to some concrete examples to illustrate this.
 

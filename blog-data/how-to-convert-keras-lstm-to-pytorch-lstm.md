@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-convert-keras-lstm-to-pytorch-lstm"
 ---
 
-Alright, let's talk about transitioning a Keras LSTM model to its PyTorch counterpart. I've been down this road myself, and it's not always as straightforward as a simple library swap. The underlying principles are the same, sure, but the devil's in the details of how each framework implements things like parameter initialization, input formatting, and the precise operations performed within the LSTM cell. In my experience, it’s a process that requires careful attention to the architecture’s definition and how data is moved across the two. It’s not about finding a one-liner magical solution, but understanding the nuances.
+, let's talk about transitioning a Keras LSTM model to its PyTorch counterpart. I've been down this road myself, and it's not always as straightforward as a simple library swap. The underlying principles are the same, sure, but the devil's in the details of how each framework implements things like parameter initialization, input formatting, and the precise operations performed within the LSTM cell. In my experience, it’s a process that requires careful attention to the architecture’s definition and how data is moved across the two. It’s not about finding a one-liner magical solution, but understanding the nuances.
 
 Let me break down the key areas you’ll want to focus on: input data reshaping, the LSTM layer configuration itself, dealing with initial states, and lastly, the output layers that follow the LSTM. When migrating, you need to map what's happening in Keras, step-by-step, to PyTorch.
 

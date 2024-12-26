@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-do-i-test-a-presenter-with-minitest"
 ---
 
-alright, so you're looking to test your presenters with minitest, right? i've been down that rabbit hole more times than i care to remember. let me share some war stories and how i usually approach this.
+, so you're looking to test your presenters with minitest, right? i've been down that rabbit hole more times than i care to remember. let me share some war stories and how i usually approach this.
 
 first off, remember that presenters are basically view logic helpers. they’re taking data from your models, massaging it, and making it ready for your views. the goal with testing them isn't to replicate the view rendering process – that's the job of integration tests or view-specific tests. instead, we want to focus on whether the presenter is doing its data transformation and formatting correctly.
 
@@ -57,7 +57,7 @@ class UserPresenterTest < Minitest::Test
         @user = user.new(name: "john doe", email: "john@example.com", created_at: @created_at)
         @presenter = UserPresenter.new(@user)
     end
-  
+
   def test_formatted_creation_date
     assert_equal "2024-01-01", @presenter.formatted_creation_date
   end
@@ -71,12 +71,13 @@ class UserPresenterTest < Minitest::Test
     presenter = UserPresenter.new(user)
     assert_nil presenter.display_email
   end
-    
+
     def test_full_name
         assert_equal "John doe", @presenter.full_name
     end
 end
 ```
+
 a thing to note, try to make your test self explanatory, don't add test cases that do not provide any extra value.
 
 you might also have presenters that use helper methods or services. for instance, maybe the `userpresenter` needs to calculate the age of the user. you can use dependency injection and mock that service in the test:
@@ -101,6 +102,7 @@ class UserPresenter
 end
 
 ```
+
 the corresponding test case:
 
 ```ruby
@@ -114,7 +116,7 @@ class UserPresenterTest < Minitest::Test
         @age_calculator_mock = MiniTest::Mock.new
         @presenter = UserPresenter.new(@user, age_calculator: @age_calculator_mock)
     end
-  
+
   def test_age
     @age_calculator_mock.expect(:calculate_age, 34, [@birthdate])
     assert_equal 34, @presenter.age
@@ -180,6 +182,7 @@ class ProductsPresenterTest < Minitest::Test
   end
 end
 ```
+
 the tests are focused on checking that the formatting and transformation of each element is correct.
 
 now, a bit of advice from my experience. try to avoid testing your presenters based on very specific css classes or html structures, if you can, try to keep the tests only about the data transformation part. why? because the html structure or the css implementation might change based on design changes, and if you do this, your tests will become brittle. you want to test the business logic and data manipulation part. the display details should be left to higher level integration tests.

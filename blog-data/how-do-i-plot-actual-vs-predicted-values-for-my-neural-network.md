@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-plot-actual-vs-predicted-values-for-my-neural-network"
 ---
 
-Alright, let's dive into plotting actual versus predicted values for a neural network, a task I've tackled quite a few times over the years, both in academic settings and during my time at various tech firms. This isn't just about visualizing results; it's crucial for understanding model performance, identifying potential biases, and debugging training issues. We need to move beyond just loss values and get our hands dirty with the actual output data.
+, let's dive into plotting actual versus predicted values for a neural network, a task I've tackled quite a few times over the years, both in academic settings and during my time at various tech firms. This isn't just about visualizing results; it's crucial for understanding model performance, identifying potential biases, and debugging training issues. We need to move beyond just loss values and get our hands dirty with the actual output data.
 
 The process essentially boils down to taking your network’s predictions and juxtaposing them against the true, observed values from your dataset. This simple plot can illuminate a variety of issues: consistent over or under-prediction, areas of high variance, and the overall fit of your model to the data. It’s a fundamental diagnostic tool, much more informative than just aggregate statistics.
 
@@ -108,6 +108,7 @@ y_pred_sample_ts = y_true_sample_ts + np.random.normal(0, 0.3, 100)
 
 plot_timeseries_actual_vs_predicted(y_true_sample_ts, y_pred_sample_ts, time_index_sample, "Time Series Example")
 ```
+
 This snippet illustrates that we need to take care when plotting time series data. We use a date range for the x axis, and plot the actuals and predictions against this time index to accurately visualize model performance over time. This approach is invaluable when evaluating models trained on time-dependent data.
 
 In my experience, for further reading and a more rigorous understanding, I highly recommend consulting "Pattern Recognition and Machine Learning" by Christopher Bishop for its deep dives into machine learning concepts and "Deep Learning" by Goodfellow, Bengio, and Courville for a comprehensive overview of neural networks. Additionally, “Hands-On Machine Learning with Scikit-Learn, Keras & Tensorflow” by Aurélien Géron is a practical, hands-on reference that would be beneficial.

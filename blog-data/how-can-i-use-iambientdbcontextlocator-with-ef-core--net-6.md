@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "how-can-i-use-iambientdbcontextlocator-with-ef-core--net-6"
 ---
 
-alright, so you're diving into the world of ambient contexts with entity framework core and .net 6. i get it, i've been there, staring at the screen wondering why my db context isn't magically appearing where i need it. it's a common enough issue, and while ef core itself doesn't offer a direct `iambientdbcontextlocator` out of the box, we can absolutely whip up something that works nicely.
+, so you're diving into the world of ambient contexts with entity framework core and .net 6. i get it, i've been there, staring at the screen wondering why my db context isn't magically appearing where i need it. it's a common enough issue, and while ef core itself doesn't offer a direct `iambientdbcontextlocator` out of the box, we can absolutely whip up something that works nicely.
 
-first off, let’s talk about *why* you’d want this thing. the main problem it solves is the hassle of constantly passing around your db context instance, especially when you have nested services or operations that need access to the database. it makes your code less cluttered and more focused on the core logic, which is always a good thing. imagine a scenario with a transaction that spans multiple layers: without a locator, each method call would need to receive and pass on the context, making code feel more verbose.
+first off, let’s talk about _why_ you’d want this thing. the main problem it solves is the hassle of constantly passing around your db context instance, especially when you have nested services or operations that need access to the database. it makes your code less cluttered and more focused on the core logic, which is always a good thing. imagine a scenario with a transaction that spans multiple layers: without a locator, each method call would need to receive and pass on the context, making code feel more verbose.
 
 i remember this one project, a crud-heavy web app where every single request needed to touch the database. passing the `dbcontext` through layers was driving me bonkers – the constructor injection was getting out of control, it was a dependency injection spaghetti western. that's when i started hunting for a better way, and that journey led me to something similar to `iambientdbcontextlocator`.
 
@@ -32,7 +32,7 @@ public class ambientdbcontextlocator : iambientdbcontextlocator
 }
 ```
 
-this is the core mechanism: `asynclocal<mydbcontext?> context`. it holds our database context, and because it’s static, it’s shared throughout the application, but the *value* within it is tied to each individual async flow. it’s really nice and simple when you break it down.
+this is the core mechanism: `asynclocal<mydbcontext?> context`. it holds our database context, and because it’s static, it’s shared throughout the application, but the _value_ within it is tied to each individual async flow. it’s really nice and simple when you break it down.
 
 for `mydbcontext`, it’s nothing special, just your regular ef core context. let’s assume it's a context with some simple user and blog entities as example:
 

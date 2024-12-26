@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-follower-notifications-be-implemented-in-ruby-on-rails-using-the-noticed-gem"
 ---
 
-Alright, let's tackle this. I've definitely been down this road before, having built a fairly complex social feed system for a previous project that relied heavily on notifications. We opted for the `noticed` gem back then, and it proved to be a solid choice for managing those asynchronous updates. Let me walk you through the practicalities of implementing follower notifications, as we did.
+, let's tackle this. I've definitely been down this road before, having built a fairly complex social feed system for a previous project that relied heavily on notifications. We opted for the `noticed` gem back then, and it proved to be a solid choice for managing those asynchronous updates. Let me walk you through the practicalities of implementing follower notifications, as we did.
 
 First off, `noticed` is not a magic bullet. It's a powerful tool, but you'll still need to structure your models and logic accordingly. The core concept is that some action (say, a user following another user) triggers a notification which gets delivered to the appropriate recipient. In the context of follower notifications, the "recipient" is the user being followed, and the trigger is the act of a different user initiating the follow action.
 
@@ -32,7 +32,7 @@ end
 
 In this simple example, we specify that we'll deliver via the database (you could also add email delivery if desired), and we define a `param`, which is the `follower_id`, that allows passing of data. The `follower` method retrieves the `User` record based on this passed ID and the `message` constructs the notification text. It's crucial to keep these methods concise and specific to the notification type.
 
-Now, let's look at where we *trigger* the notification, which is typically in the `create` action of your follow relationship. Assume you have a `Follow` model that represents a user following another user:
+Now, let's look at where we _trigger_ the notification, which is typically in the `create` action of your follow relationship. Assume you have a `Follow` model that represents a user following another user:
 
 ```ruby
 # app/models/follow.rb
@@ -101,12 +101,12 @@ This view iterates through each notification and displays the message along with
 
 That's the core implementation. Keep in mind a few things, from my experience:
 
-*   **Batching and Throttling:** If you anticipate a large volume of notifications, consider batching them to reduce database load and optimize for efficient delivery. `noticed` provides mechanisms for this. You will want to read the documentation to make sure your notification process is running efficiently.
-*   **Customizing Delivery:** `noticed` also supports custom delivery mechanisms. If you have specific requirements, this is a good place to look, if sending emails via third-party platforms you can configure delivery to use your provider of choice.
-*   **Read/Unread Tracking:** Carefully design how you manage the "read" status. `noticed` will help you here, but you will need to create the logic for updating the notification statuses. Think about situations where a notification is read somewhere but needs to be updated elsewhere.
-*   **Security:** Always sanitize notification content. Especially if you are taking user inputs as part of generating the message.
-*   **Database Indexing:** Ensure that your `notifications` table has appropriate indexes for `recipient_id` and `created_at`. This is crucial for efficient querying as your user base grows.
-*   **Testing:** Thoroughly test your notification workflow. Make sure notifications are delivered correctly, that they are displayed appropriately in your views, and that the read status updating is working as expected. A test suite is essential in your development lifecycle, don't skip it.
+- **Batching and Throttling:** If you anticipate a large volume of notifications, consider batching them to reduce database load and optimize for efficient delivery. `noticed` provides mechanisms for this. You will want to read the documentation to make sure your notification process is running efficiently.
+- **Customizing Delivery:** `noticed` also supports custom delivery mechanisms. If you have specific requirements, this is a good place to look, if sending emails via third-party platforms you can configure delivery to use your provider of choice.
+- **Read/Unread Tracking:** Carefully design how you manage the "read" status. `noticed` will help you here, but you will need to create the logic for updating the notification statuses. Think about situations where a notification is read somewhere but needs to be updated elsewhere.
+- **Security:** Always sanitize notification content. Especially if you are taking user inputs as part of generating the message.
+- **Database Indexing:** Ensure that your `notifications` table has appropriate indexes for `recipient_id` and `created_at`. This is crucial for efficient querying as your user base grows.
+- **Testing:** Thoroughly test your notification workflow. Make sure notifications are delivered correctly, that they are displayed appropriately in your views, and that the read status updating is working as expected. A test suite is essential in your development lifecycle, don't skip it.
 
 For further reading on this subject, I highly recommend delving into "Agile Web Development with Rails 7" by Samuel J. Davis. The book has comprehensive material on working with models, controllers, and views and has a dedicated section on active job which is relevant to the asynchronous nature of notifications. Additionally, the official documentation of the `noticed` gem on GitHub should be a primary reference for specific details and features of the gem, and you'll find other excellent sources on asynchronous programming principles.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-inference-results-differ-between-java-and-swift-when-using-the-same-tensorflow-lite-model"
 ---
 
-Okay, let's get into it. The intricacies of cross-platform inference using TensorFlow Lite models are something I've had to navigate quite a bit over the years, specifically when bridging the worlds of Java (primarily Android) and Swift (mostly on iOS). And, yes, there *can* be noticeable discrepancies in the inference results, even when working with the same model, and I'm not just talking about minute floating-point differences. I've seen it myself, and it’s usually a confluence of subtle platform-specific behaviors rather than some inherent flaw in tflite itself.
+, let's get into it. The intricacies of cross-platform inference using TensorFlow Lite models are something I've had to navigate quite a bit over the years, specifically when bridging the worlds of Java (primarily Android) and Swift (mostly on iOS). And, yes, there _can_ be noticeable discrepancies in the inference results, even when working with the same model, and I'm not just talking about minute floating-point differences. I've seen it myself, and it’s usually a confluence of subtle platform-specific behaviors rather than some inherent flaw in tflite itself.
 
 The core challenge lies in how each language and its respective runtime environment interact with the underlying TensorFlow Lite C++ library and how they handle data preparation and post-processing. This is something I experienced directly back when we were implementing a custom object detection model for a cross-platform mobile app. We were seeing near-perfect results on our Android test devices and then, on iOS, the bounding boxes were just off, sometimes wildly. After a good amount of investigation, here’s what I’ve come to understand.
 
@@ -12,7 +12,7 @@ Firstly, data type handling differences often crop up. Java and Swift don’t al
 
 Secondly, the API usage differs. Though both wrap the underlying c++ library they are accessed differently. The Java TensorFlow Lite API is, while convenient, also wrapped in Java objects. This means there are sometimes conversions occurring implicitly. In Swift, the access patterns might appear more direct in that they expose a more c++-style API. It's not always transparent that a conversion layer is in play here as well. Even if you think your data is perfectly prepared, if there's a hidden layer of conversion happening under the hood, it can impact the accuracy of the final result, especially with floating-point computations where the precision and ordering of operations can have an effect.
 
-Thirdly, and this is sometimes overlooked, the underlying hardware and acceleration capabilities also differ. Android devices commonly support various hardware accelerators like GPUs and DSPs through the Android Neural Networks API (NNAPI). iOS, on the other hand, uses its own metal framework for GPU acceleration, along with the CoreML framework, which *can* impact the execution paths that tflite will actually take. These platform specific optimizations and execution paths can introduce minute differences that, over many operations, compound.
+Thirdly, and this is sometimes overlooked, the underlying hardware and acceleration capabilities also differ. Android devices commonly support various hardware accelerators like GPUs and DSPs through the Android Neural Networks API (NNAPI). iOS, on the other hand, uses its own metal framework for GPU acceleration, along with the CoreML framework, which _can_ impact the execution paths that tflite will actually take. These platform specific optimizations and execution paths can introduce minute differences that, over many operations, compound.
 
 Let's look at this with some code. Here’s a simplified Java example of loading a model and running inference, as one might do on an Android application:
 
@@ -133,6 +133,7 @@ class TFLiteInference {
 
 }
 ```
+
 Both these snippets highlight how the input data is handled and passed to the `Interpreter`, and how the output data is retrieved. It's in the details of these data conversions and transfers, along with nuances in the underlying library implementation, that slight variations in results can arise. Let's see a practical example to see where errors might occur in pre processing a simple image before inference. This is a simplified version for demonstrative purposes:
 
 ```java

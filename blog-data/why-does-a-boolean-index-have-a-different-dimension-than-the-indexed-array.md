@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-does-a-boolean-index-have-a-different-dimension-than-the-indexed-array"
 ---
 
-Alright, let's tackle this one. It's a common point of confusion, especially when you're first getting into vectorized operations with libraries like numpy or pandas. I've seen more than a few folks trip up on this, and I'll admit, it had me scratching my head a bit back in my early days with scientific computing. The short answer is that a boolean index isn't intended to represent the same dimensions as the indexed array; instead, it acts as a *selection mask*, telling the indexing operation *which* elements to extract. It's a conceptual difference that has deep practical implications.
+, let's tackle this one. It's a common point of confusion, especially when you're first getting into vectorized operations with libraries like numpy or pandas. I've seen more than a few folks trip up on this, and I'll admit, it had me scratching my head a bit back in my early days with scientific computing. The short answer is that a boolean index isn't intended to represent the same dimensions as the indexed array; instead, it acts as a _selection mask_, telling the indexing operation _which_ elements to extract. It's a conceptual difference that has deep practical implications.
 
-To understand this properly, imagine you have a dataset, say, sensor readings from a monitoring system. We’ll model this with a NumPy array. Think of each row as a set of readings at a specific time, and each column as a specific sensor. Now, maybe you want to extract only the readings from sensors where the voltage was above a certain threshold. That’s where the boolean index comes in. The boolean array you create will have a `True` value at the positions you want to *keep* and `False` elsewhere. The key insight is, the boolean array needs to be able to uniquely select an *element* within the target array, rather than having an inherent geometrical relationship of identical dimensionality.
+To understand this properly, imagine you have a dataset, say, sensor readings from a monitoring system. We’ll model this with a NumPy array. Think of each row as a set of readings at a specific time, and each column as a specific sensor. Now, maybe you want to extract only the readings from sensors where the voltage was above a certain threshold. That’s where the boolean index comes in. The boolean array you create will have a `True` value at the positions you want to _keep_ and `False` elsewhere. The key insight is, the boolean array needs to be able to uniquely select an _element_ within the target array, rather than having an inherent geometrical relationship of identical dimensionality.
 
 Essentially, a boolean index is a filter. It doesn’t have to mirror the dimensions of the target array because its job is to specify which parts of the array to select, not to define a sub-space. This difference is crucial, because it enables powerful operations with far less effort than explicitly looping through the array.
 
@@ -38,7 +38,7 @@ print("Dimensions of selected data:", selected_data.shape)
 
 ```
 
-Notice how the original array `data` has a shape of `(3, 3)`, and the boolean array `mask` also has the same shape of `(3,3)`. Crucially, however, the `selected_data` results in a 1D array with a shape of `(4,)`. It contains only the elements in `data` where the corresponding values in mask are `True`. The *shape of the boolean index*, in this case, directly relates to the shape of the *original* array because we are evaluating a condition on the entire array. But the result of applying the index does not always have identical dimensions to either of the preceding arrays.
+Notice how the original array `data` has a shape of `(3, 3)`, and the boolean array `mask` also has the same shape of `(3,3)`. Crucially, however, the `selected_data` results in a 1D array with a shape of `(4,)`. It contains only the elements in `data` where the corresponding values in mask are `True`. The _shape of the boolean index_, in this case, directly relates to the shape of the _original_ array because we are evaluating a condition on the entire array. But the result of applying the index does not always have identical dimensions to either of the preceding arrays.
 
 Let's take a slightly different scenario. Consider a time-series data structure, perhaps stored as a pandas series:
 
@@ -89,9 +89,10 @@ print("\nDimensions of original matrix:", matrix.shape)
 print("Dimensions of boolean mask:", row_mask.shape)
 print("Dimensions of selected rows:", selected_rows.shape)
 ```
-Here, `matrix` has shape `(4, 4)` while `row_mask` has the shape `(4,)`. Notice how the boolean index has only one dimension. When we apply `row_mask` to `matrix`, it filters *rows*, not elements. The selected rows result in an output array of dimensions `(2,4)`. The result of a boolean index application depends on the indexing mechanism of the data structure it is applied to.
 
-In essence, the boolean array acts as a kind of *instruction set*, telling the indexing mechanism which data elements to keep, based on the boolean values. Its shape does not dictate the shape of the selected data.
+Here, `matrix` has shape `(4, 4)` while `row_mask` has the shape `(4,)`. Notice how the boolean index has only one dimension. When we apply `row_mask` to `matrix`, it filters _rows_, not elements. The selected rows result in an output array of dimensions `(2,4)`. The result of a boolean index application depends on the indexing mechanism of the data structure it is applied to.
+
+In essence, the boolean array acts as a kind of _instruction set_, telling the indexing mechanism which data elements to keep, based on the boolean values. Its shape does not dictate the shape of the selected data.
 
 For further reading, I’d recommend delving into the documentation of NumPy itself. The sections on indexing are very thorough. Specifically, the "fancy indexing" section provides even more context. Additionally, "Python for Data Analysis" by Wes McKinney, the author of Pandas, provides excellent examples of practical applications of vectorized operations and boolean masking in data manipulation. You may also benefit from "Effective Computation in Physics" by Anthony Scopatz and Katy Huff for a deeper understanding of computational techniques, although it covers much more than just array indexing. There is also a paper called "NumPy Array Broadcasting" which specifically delves into the mechanisms behind implicit loops.
 

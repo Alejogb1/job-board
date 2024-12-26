@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "massaging-the-data-meaning-definition"
 ---
 
-Alright so you're asking about "massaging the data" right Seems like a pretty broad question but I get it We all been there staring at a pile of raw data wondering what the heck to do with it
+so you're asking about "massaging the data" right Seems like a pretty broad question but I get it We all been there staring at a pile of raw data wondering what the heck to do with it
 
 Basically when we say "massaging the data" we're talking about the process of taking raw or semi-raw data and transforming it into something more usable and meaningful It’s not some kind of mystical art form it’s just the reality of data work 90 percent of the time you're not training models you're doing this stuff
 
@@ -16,21 +16,21 @@ Then I had to do a bit of cleaning sometimes I would see data points that were p
 
 It can involve a bunch of operations like:
 
-*   **Cleaning:** Removing errors inconsistencies and outliers like that sensor data example
+- **Cleaning:** Removing errors inconsistencies and outliers like that sensor data example
 
-*   **Standardization/Normalization:** Transforming the data to a common range like scaling all the values to have a mean of zero and standard deviation of one this helps when you’re feeding data to machine learning models because otherwise those models might think the bigger the number the more important the feature is which is sometimes not true at all
+- **Standardization/Normalization:** Transforming the data to a common range like scaling all the values to have a mean of zero and standard deviation of one this helps when you’re feeding data to machine learning models because otherwise those models might think the bigger the number the more important the feature is which is sometimes not true at all
 
-*   **Transformation:** Applying mathematical or logical functions to the data like converting Celsius to Fahrenheit or logging some values that have a highly skewed distribution or even grouping category based columns
+- **Transformation:** Applying mathematical or logical functions to the data like converting Celsius to Fahrenheit or logging some values that have a highly skewed distribution or even grouping category based columns
 
-*   **Feature Engineering:** Creating new features from existing ones for instance in that sensor data case i extracted hourly averages daily averages standard deviations from the base reading which helped improve the predictive power of the later model that was made
+- **Feature Engineering:** Creating new features from existing ones for instance in that sensor data case i extracted hourly averages daily averages standard deviations from the base reading which helped improve the predictive power of the later model that was made
 
-*   **Imputation:** Filling in missing values in a variety of ways based on statistical techniques it might be a mean imputation a median imputation or even more sophisticated model-based imputation techniques
+- **Imputation:** Filling in missing values in a variety of ways based on statistical techniques it might be a mean imputation a median imputation or even more sophisticated model-based imputation techniques
 
-*   **Aggregation:** Combining multiple data points into single values for example grouping daily sales data into monthly totals
+- **Aggregation:** Combining multiple data points into single values for example grouping daily sales data into monthly totals
 
-*   **Encoding:** Converting categorical data into numerical data for machine learning models
+- **Encoding:** Converting categorical data into numerical data for machine learning models
 
-*   **Reshaping:** Rearranging the format of the data to be compatible with your analysis tools for example transposing a matrix or restructuring data from a long format to a wide format and vice versa
+- **Reshaping:** Rearranging the format of the data to be compatible with your analysis tools for example transposing a matrix or restructuring data from a long format to a wide format and vice versa
 
 It’s a process that takes time and it's often the part of data science or data engineering that takes the most time and it's often underestimated That’s because the raw data you get is rarely in the format you need and you always have to make sure you didn't just change the data or remove important parts by mistake because well otherwise you'd be introducing bias
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "is-there-an-easy-way-to-remove-blank-objects-from-a-has-many-association"
 ---
 
-alright, i see what you're getting at. dealing with blank objects in has-many associations, yeah, that's a classic pain. i've definitely been down that road more times than i'd like to remember. it’s usually a symptom of how data gets created and sometimes it just ends up leaving these empty shells hanging around and you want to clean it up.
+, i see what you're getting at. dealing with blank objects in has-many associations, yeah, that's a classic pain. i've definitely been down that road more times than i'd like to remember. it’s usually a symptom of how data gets created and sometimes it just ends up leaving these empty shells hanging around and you want to clean it up.
 
 it seems like you have a model, let’s call it `parent`, and it's got a has-many relationship with another model, maybe `child`. now, sometimes during the data lifecycle, you end up with `child` records that are effectively blank; maybe all the attributes are null or empty strings, or they might have some defaulted values that aren't really meaningful. it's not ideal, especially if you're trying to present a clean data set or have foreign key constraints making your database life a headache. you don't want them cluttering up things or causing problems when you query. i remember i once had a similar situation with a user profile and the user social media links, when the user didn't provide any links, it was still creating the entries in the table with all fields empty, that created a lot of database cleaning operations that could have been avoided easily.
 

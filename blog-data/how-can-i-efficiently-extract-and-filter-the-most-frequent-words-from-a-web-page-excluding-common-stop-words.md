@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-efficiently-extract-and-filter-the-most-frequent-words-from-a-web-page-excluding-common-stop-words"
 ---
 
-Okay, let’s tackle this. It's a task I’ve faced a fair bit in the past, particularly during a project involving large-scale text analysis for sentiment classification—a precursor to one of the earlier NLP pipelines I worked on. The challenge, as you’ve correctly identified, is effectively sifting through the text of a webpage to find the truly relevant terms, excluding those that contribute minimal semantic value (the stop words). Efficiency here is key, especially when dealing with numerous or large pages.
+, let’s tackle this. It's a task I’ve faced a fair bit in the past, particularly during a project involving large-scale text analysis for sentiment classification—a precursor to one of the earlier NLP pipelines I worked on. The challenge, as you’ve correctly identified, is effectively sifting through the text of a webpage to find the truly relevant terms, excluding those that contribute minimal semantic value (the stop words). Efficiency here is key, especially when dealing with numerous or large pages.
 
 First, we need to clearly define our process:
 
@@ -46,6 +46,7 @@ if __name__ == "__main__":
     if cleaned_text:
        print(cleaned_text[0:500] + '...') # Just to show the output, dont need to print all
 ```
+
 This snippet uses `requests` for fetching the content, `BeautifulSoup4` for parsing html, and `re` for basic text cleaning. Error handling is important here – I’ve included a `try…except` block to handle potential network issues. Note the inclusion of a `raise_for_status()` that raises HTTP errors if the request fails. This helps catch problems early in the process.
 
 **Example 2: Adding Stop Word Removal**
@@ -66,11 +67,13 @@ if __name__ == "__main__":
        filtered_text = remove_stopwords(cleaned_text, stop_words)
        print(filtered_text[0:500] + '...')
 ```
+
 I've hardcoded a small list here for simplicity. However, you should generally use a comprehensive list. The `nltk` library provides one and is recommended for more extensive projects. The logic is straightforward: split the text into words and then filter out those that are in our stop words list. This can also be done by a more efficient data structure, such as a `set` if the stop words list gets really large, which is something to keep in mind.
 
 **Example 3: Word Counting and Frequency Analysis**
 
 Finally, we tie it all together and count the word frequencies.
+
 ```python
 def count_word_frequencies(text):
   words = text.split()
@@ -90,7 +93,8 @@ if __name__ == "__main__":
        most_common = most_common_words(word_counts)
        print(f"The most common words are: {most_common}")
 ```
-This code uses `Counter` from the `collections` module to efficiently tally word frequencies. The `most_common()` method returns the *n* most frequent words along with their counts.
+
+This code uses `Counter` from the `collections` module to efficiently tally word frequencies. The `most_common()` method returns the _n_ most frequent words along with their counts.
 
 **Important Technical Considerations and Recommendations**
 
@@ -100,9 +104,9 @@ This code uses `Counter` from the `collections` module to efficiently tally word
 4.  **Text Preprocessing:** Sometimes there will be other types of noise. Consider regex to remove noise such as numbers if you do not intend to analyze them. Similarly, handling things like contractions can be beneficial (you might replace "can't" with "cannot" before tokenization.)
 5.  **Performance:** When working with larger datasets, pay attention to the performance of your code. Using generators, or chunking the text processing could improve the performance. Libraries such as `spaCy` can sometimes out-perform pure Python code due to their compiled components.
 6.  **Resource Recommendations:**
-    *   **"Natural Language Processing with Python"** by Steven Bird, Ewan Klein, and Edward Loper: This book is an excellent introduction to NLP with a practical focus using Python and `nltk`. It covers tokenization, stemming, lemmatization, stop words, and more.
-    *   **"Speech and Language Processing"** by Daniel Jurafsky and James H. Martin: A comprehensive textbook providing a deeper theoretical understanding of NLP topics.
-    *   **`spaCy`'s official documentation:** If you’re looking for performance improvements, `spaCy` is a great library, and their documentation is well-written and detailed.
-    *   **`nltk`'s official documentation:** A must-have when working with NLP tasks in Python, specifically for all kinds of tokenizers, stemming and lemmatization algorithms, and data sets.
+    - **"Natural Language Processing with Python"** by Steven Bird, Ewan Klein, and Edward Loper: This book is an excellent introduction to NLP with a practical focus using Python and `nltk`. It covers tokenization, stemming, lemmatization, stop words, and more.
+    - **"Speech and Language Processing"** by Daniel Jurafsky and James H. Martin: A comprehensive textbook providing a deeper theoretical understanding of NLP topics.
+    - **`spaCy`'s official documentation:** If you’re looking for performance improvements, `spaCy` is a great library, and their documentation is well-written and detailed.
+    - **`nltk`'s official documentation:** A must-have when working with NLP tasks in Python, specifically for all kinds of tokenizers, stemming and lemmatization algorithms, and data sets.
 
 In my experience, efficiency often comes down to pre-processing steps and the selection of appropriate algorithms. While basic tokenizing and stop-word removal can work well, for detailed insights you will need to consider more advanced approaches in text pre-processing. It all depends on your specific task needs. By understanding the process steps, you can tailor the solution to meet your performance and accuracy needs. This approach allows you to maintain a balance between theoretical underpinnings and real-world applications.

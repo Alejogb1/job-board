@@ -4,15 +4,15 @@ date: "2024-12-16"
 id: "why-do-transformer-summarizer-results-vary-with-a-fixed-seed"
 ---
 
-Okay, let’s unpack why transformer summarization results, even with a fixed seed, can exhibit variation. It’s a question I’ve certainly grappled with more than once, particularly during a past project involving large-scale document analysis for legal review. We were initially relying heavily on the deterministic nature of a fixed seed to ensure consistent, reproducible outcomes, but the reality proved a little more nuanced. This isn't a case of simple randomness; it's the interaction of several stochastic elements within the transformer architecture itself and during the training and inference pipelines.
+, let’s unpack why transformer summarization results, even with a fixed seed, can exhibit variation. It’s a question I’ve certainly grappled with more than once, particularly during a past project involving large-scale document analysis for legal review. We were initially relying heavily on the deterministic nature of a fixed seed to ensure consistent, reproducible outcomes, but the reality proved a little more nuanced. This isn't a case of simple randomness; it's the interaction of several stochastic elements within the transformer architecture itself and during the training and inference pipelines.
 
-At the core of a transformer, and indeed many deep learning models, lies the fact that many processes aren't entirely deterministic, even when we try to control them with a fixed random seed. We might think a fixed seed for numpy, torch, or tensorflow will fully reproduce a run, but this is only partially true, and often insufficient for completely identical results in complex pipelines. What we're really seeding is the initialization of weights, and the random number generation for processes like dropout, which operates during training and *sometimes* during inference, if that’s how it’s implemented by the library and your chosen model.
+At the core of a transformer, and indeed many deep learning models, lies the fact that many processes aren't entirely deterministic, even when we try to control them with a fixed random seed. We might think a fixed seed for numpy, torch, or tensorflow will fully reproduce a run, but this is only partially true, and often insufficient for completely identical results in complex pipelines. What we're really seeding is the initialization of weights, and the random number generation for processes like dropout, which operates during training and _sometimes_ during inference, if that’s how it’s implemented by the library and your chosen model.
 
 One of the most significant sources of variation, particularly in summarization, stems from the stochastic nature of training. Gradient descent is inherently an iterative process, where the model’s weights are adjusted based on gradients calculated on mini-batches of data. Now, even if the initial weights are the same, and the random numbers for dropout are identical, the order in which these batches are processed during training will generally not be identical (unless you are meticulously ensuring full determinism at every point). Differences in these sequences affect how the gradients are computed and applied, causing slight variations in the final learned weights. This is precisely where seemingly identical starting points can lead to different final model states, even with the same seed.
 
-Furthermore, the tokenization process introduces some variability. While the tokenization *algorithm* is deterministic, the exact vocabulary, which forms the numerical mappings, influences the representation and hence the training. Variations in how the vocabulary is built, especially from different training runs using slightly modified data or parameters, lead to different numerical inputs to the neural network itself.
+Furthermore, the tokenization process introduces some variability. While the tokenization _algorithm_ is deterministic, the exact vocabulary, which forms the numerical mappings, influences the representation and hence the training. Variations in how the vocabulary is built, especially from different training runs using slightly modified data or parameters, lead to different numerical inputs to the neural network itself.
 
-Inference, too, has sources of subtle randomness despite the fixed seed, unless additional steps for full determinism are taken. Some transformer models use dropout *during inference* for uncertainty estimation (which might be disabled in some inference pipelines). The order of input sequences and the specific device on which the inference runs (gpu vs cpu, different gpu models) can also introduce small variations. Numerical precision issues across different hardware can also contribute to these differences - although usually minor, these can amplify in complex models during the iterative nature of inference.
+Inference, too, has sources of subtle randomness despite the fixed seed, unless additional steps for full determinism are taken. Some transformer models use dropout _during inference_ for uncertainty estimation (which might be disabled in some inference pipelines). The order of input sequences and the specific device on which the inference runs (gpu vs cpu, different gpu models) can also introduce small variations. Numerical precision issues across different hardware can also contribute to these differences - although usually minor, these can amplify in complex models during the iterative nature of inference.
 
 Let's look at some practical coding snippets to illustrate these points.
 
@@ -96,10 +96,10 @@ def summarize_with_gpu(model_name, text, seed=42):
     set_seed(seed)
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
-    
+
     if torch.cuda.is_available():
         model = model.cuda()
-    
+
     inputs = tokenizer(text, return_tensors="pt", max_length=512, truncation=True)
     if torch.cuda.is_available():
        inputs = {k: v.cuda() for k, v in inputs.items()}
@@ -121,7 +121,7 @@ print("GPU1 summary: ", summary_gpu1)
 print("GPU2 summary: ", summary_gpu2)
 ```
 
-On different GPU models, even with the same model and seed, subtle differences in the floating point calculations may result in *very* slight differences in the outputs. This isn't always observable, and may be difficult to measure precisely, but it underlines the complexities involved in exact reproducibility.
+On different GPU models, even with the same model and seed, subtle differences in the floating point calculations may result in _very_ slight differences in the outputs. This isn't always observable, and may be difficult to measure precisely, but it underlines the complexities involved in exact reproducibility.
 
 **Example 3: Demonstrating influence of beam search**
 
@@ -168,8 +168,8 @@ for beams, summary in beam_results:
 
 ```
 
-Beam search, while a useful tool, is not fully deterministic, as it maintains *n* candidate sequences that it iteratively refines based on probabilities.  The exact branching and pruning process may vary slightly run to run, especially as beam size changes, leading to different generated text, even if the underlying model parameters are consistent.
+Beam search, while a useful tool, is not fully deterministic, as it maintains _n_ candidate sequences that it iteratively refines based on probabilities. The exact branching and pruning process may vary slightly run to run, especially as beam size changes, leading to different generated text, even if the underlying model parameters are consistent.
 
-For deeper understanding of these complexities, I'd recommend looking at the research literature on *non-convex optimization* as used in deep learning (e.g., "Deep Learning" by Ian Goodfellow et al., Chapter 8), specifically the sections on stochastic gradient descent. The *Transformer Architecture* paper (Vaswani et al., 2017) is also key for understanding the inherent mechanics of these models. Research papers on *dropout* and its impact on model training and inference (e.g., "Dropout: A Simple Way to Prevent Neural Networks from Overfitting" by Srivastava et al.) will further highlight where randomness is introduced. And, finally, to more fully ensure deterministic training, look into specific library options to *disable* all possible sources of non-determinism, if they are available. This is not trivial, though, and often comes with speed penalties, and may not always eliminate *all* non-determinism.
+For deeper understanding of these complexities, I'd recommend looking at the research literature on _non-convex optimization_ as used in deep learning (e.g., "Deep Learning" by Ian Goodfellow et al., Chapter 8), specifically the sections on stochastic gradient descent. The _Transformer Architecture_ paper (Vaswani et al., 2017) is also key for understanding the inherent mechanics of these models. Research papers on _dropout_ and its impact on model training and inference (e.g., "Dropout: A Simple Way to Prevent Neural Networks from Overfitting" by Srivastava et al.) will further highlight where randomness is introduced. And, finally, to more fully ensure deterministic training, look into specific library options to _disable_ all possible sources of non-determinism, if they are available. This is not trivial, though, and often comes with speed penalties, and may not always eliminate _all_ non-determinism.
 
-In summary, while a fixed seed provides *some* level of reproducibility, the interplay of stochastic processes during training, inference, hardware variances, and even the intricacies of the model itself mean that subtle variations are nearly always present. Truly deterministic results, while theoretically possible, requires a very high level of control and awareness of every potential source of non-determinism.
+In summary, while a fixed seed provides _some_ level of reproducibility, the interplay of stochastic processes during training, inference, hardware variances, and even the intricacies of the model itself mean that subtle variations are nearly always present. Truly deterministic results, while theoretically possible, requires a very high level of control and awareness of every potential source of non-determinism.

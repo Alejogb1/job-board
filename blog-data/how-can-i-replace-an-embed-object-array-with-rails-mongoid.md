@@ -4,14 +4,14 @@ date: "2024-12-15"
 id: "how-can-i-replace-an-embed-object-array-with-rails-mongoid"
 ---
 
-alright, so you're looking to swap out an embedded array for something more, let's say, mongoid-y, in your rails app? i've definitely been down that rabbit hole before. it's a fairly common transition, especially as projects grow and your data structures need more finesse. i get it, embedded arrays, while simple at first, can become a pain when you start needing to query or update them independently. let me give you the lowdown based on my personal experiences, no bs, no marketing fluff.
+, so you're looking to swap out an embedded array for something more, let's say, mongoid-y, in your rails app? i've definitely been down that rabbit hole before. it's a fairly common transition, especially as projects grow and your data structures need more finesse. i get it, embedded arrays, while simple at first, can become a pain when you start needing to query or update them independently. let me give you the lowdown based on my personal experiences, no bs, no marketing fluff.
 
-first off, let's talk about *why* you’d want to ditch the basic array. typically it starts with basic requirements that grow into full fledged needs, like:
+first off, let's talk about _why_ you’d want to ditch the basic array. typically it starts with basic requirements that grow into full fledged needs, like:
 
-*   **querying complexity:** you might be finding yourself writing convoluted map-reduce queries or similar mongo operations just to find a specific item within the embedded array, which is terribly inefficient.
-*   **updates and data manipulation:** updating a single embedded document within an array can become an exercise in frustration. think about having to fetch the entire parent document, modify the embedded array and then persist the entire thing back. it's ugly, prone to errors and not very performant.
-*   **data normalization:** often, the embedded array ends up duplicating data. for example if you are embedding user data in each record that uses it instead of a user collection you will soon find inconsistencies across your data.
-*   **scalability challenges:** this kind of setup doesn't scale well when the arrays get very large. the whole document needs to be read and updated every time even if you are changing the smallest thing.
+- **querying complexity:** you might be finding yourself writing convoluted map-reduce queries or similar mongo operations just to find a specific item within the embedded array, which is terribly inefficient.
+- **updates and data manipulation:** updating a single embedded document within an array can become an exercise in frustration. think about having to fetch the entire parent document, modify the embedded array and then persist the entire thing back. it's ugly, prone to errors and not very performant.
+- **data normalization:** often, the embedded array ends up duplicating data. for example if you are embedding user data in each record that uses it instead of a user collection you will soon find inconsistencies across your data.
+- **scalability challenges:** this kind of setup doesn't scale well when the arrays get very large. the whole document needs to be read and updated every time even if you are changing the smallest thing.
 
 so, yeah, it makes sense to move away from the basic array. but what are our options?
 
@@ -95,4 +95,4 @@ of course, after this is done you'll need to update the codebase to use the asso
 
 now, let me tell you a story. once i had a situation where i forgot to add the `inverse_of` clause to my model. it was hell to figure out why my data was not being updated properly. it took me an entire afternoon debugging to realize i had made this very very very basic mistake (it is always the basic mistakes that get you, isn't it?).
 
-anyhow, switching from embedded arrays to mongoid associations is a necessary step in the journey of building complex applications, it makes your life easier in the long run. hopefully, this should put you on the *right* track. it might not be a perfect recipe but hopefully it is enough for what you are looking for. definitely hit those mongoid docs though, they are quite comprehensive.
+anyhow, switching from embedded arrays to mongoid associations is a necessary step in the journey of building complex applications, it makes your life easier in the long run. hopefully, this should put you on the _right_ track. it might not be a perfect recipe but hopefully it is enough for what you are looking for. definitely hit those mongoid docs though, they are quite comprehensive.

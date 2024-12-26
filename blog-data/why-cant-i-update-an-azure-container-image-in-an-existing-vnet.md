@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "why-cant-i-update-an-azure-container-image-in-an-existing-vnet"
 ---
 
-Alright, let's talk about updating container images within an existing azure virtual network (vnet). It's a situation I've certainly run into before, more than once in fact, and it highlights some of the fundamental networking and isolation concepts at play within azure. The short answer is, you're not typically *directly* updating the container image within a vnet, but rather deploying *new* containers using an updated image that are then connected to that vnet. It's a subtle but critical difference. Let me elaborate.
+, let's talk about updating container images within an existing azure virtual network (vnet). It's a situation I've certainly run into before, more than once in fact, and it highlights some of the fundamental networking and isolation concepts at play within azure. The short answer is, you're not typically _directly_ updating the container image within a vnet, but rather deploying _new_ containers using an updated image that are then connected to that vnet. It's a subtle but critical difference. Let me elaborate.
 
-The core issue revolves around how containers in azure, specifically those orchestrated through services like azure container instances (aci) or azure kubernetes service (aks), are provisioned and managed. When you create a container instance or a pod in aks, you're specifying a *container image*. This image, typically stored in an azure container registry (acr) or a similar registry, is a static template for your application. It's not something you modify *in-place* once deployed within a vnet. The vnet itself is the network infrastructure; it's the highway system, not the cars themselves. What's happening when you initiate an "update" is more akin to bringing new cars onto that highway system, which have been built off a newer blueprint.
+The core issue revolves around how containers in azure, specifically those orchestrated through services like azure container instances (aci) or azure kubernetes service (aks), are provisioned and managed. When you create a container instance or a pod in aks, you're specifying a _container image_. This image, typically stored in an azure container registry (acr) or a similar registry, is a static template for your application. It's not something you modify _in-place_ once deployed within a vnet. The vnet itself is the network infrastructure; it's the highway system, not the cars themselves. What's happening when you initiate an "update" is more akin to bringing new cars onto that highway system, which have been built off a newer blueprint.
 
 Let's dive into why this is the case, specifically addressing the constraints imposed by network isolation and immutable image concepts:
 
 Firstly, consider the security and stability aspects of immutability. A container image, once built and pushed to a registry, is intended to be an immutable artifact. Altering it "in place" within a vnet would introduce significant complexity, risk, and make deployments far less reliable. Think of it like a package; once it's sealed, you don't open it and change the contents while it's being delivered. That would violate the whole concept of repeatability and version control, cornerstones of modern software deployment practices.
 
-Secondly, vnets provide network isolation. When a container instance or an aks pod is connected to a vnet, it receives a private ip address from that vnet's address space. It's isolated from the public internet by default (unless you configure it otherwise). Directly modifying a container within that isolated environment, while technically potentially possible at a low level (with significant security and operational concerns), isn't the way the azure ecosystem is designed to operate. Azure focuses on a declarative, repeatable model, where you specify the *desired state* and the platform brings the environment in line with that state. This inherently favors creating new resources with your new configuration.
+Secondly, vnets provide network isolation. When a container instance or an aks pod is connected to a vnet, it receives a private ip address from that vnet's address space. It's isolated from the public internet by default (unless you configure it otherwise). Directly modifying a container within that isolated environment, while technically potentially possible at a low level (with significant security and operational concerns), isn't the way the azure ecosystem is designed to operate. Azure focuses on a declarative, repeatable model, where you specify the _desired state_ and the platform brings the environment in line with that state. This inherently favors creating new resources with your new configuration.
 
 Let me clarify with some practical examples of how this process is normally managed:
 
@@ -42,7 +42,7 @@ az container create \
 # delete the older one by using `az container delete -g myresourcegroup -n mycontainergroup`
 ```
 
-Notice, we're creating a *new* container group, although typically you would name this the same thing as the original group, which is why I added the optional step to delete the old group (once the new one is working correctly). This replacement methodology ensures a clean transition and avoids potential conflicts. The existing vnet and subnet are used, but the deployment itself involves new resources.
+Notice, we're creating a _new_ container group, although typically you would name this the same thing as the original group, which is why I added the optional step to delete the old group (once the new one is working correctly). This replacement methodology ensures a clean transition and avoids potential conflicts. The existing vnet and subnet are used, but the deployment itself involves new resources.
 
 **Example 2: Azure Kubernetes Service (AKS) Deployment Update**
 
@@ -65,9 +65,8 @@ spec:
         app: myapp
     spec:
       containers:
-      - name: myapp-container
-        image: myacr.azurecr.io/myapp:v1 # Original image
-
+        - name: myapp-container
+          image: myacr.azurecr.io/myapp:v1 # Original image
 ```
 
 To perform an update:
@@ -109,14 +108,15 @@ resource "azurerm_container_group" "example" {
 
 }
 ```
+
 To update to a new image (e.g., `myacr.azurecr.io/myapp:v2`), you would change the `image` argument and then run `terraform apply`. Terraform creates the new resources and removes the old ones to align with your updated declaration.
 
-In summary, the inability to directly modify a container image in place within an azure vnet stems from the fundamental design principles of immutability, network isolation, and declarative infrastructure management. You’re not *updating* an image inside a vnet, but deploying new container instances or pods with the updated image, leveraging the existing network infrastructure.
+In summary, the inability to directly modify a container image in place within an azure vnet stems from the fundamental design principles of immutability, network isolation, and declarative infrastructure management. You’re not _updating_ an image inside a vnet, but deploying new container instances or pods with the updated image, leveraging the existing network infrastructure.
 
 For deeper understanding, I strongly recommend exploring the following resources:
 
-*   **“Kubernetes in Action” by Marko Luksa:** This provides an in-depth look into the inner workings of kubernetes, especially how rolling updates are managed.
-*   **Microsoft Azure Documentation:** The official documentation for aci, aks, and azure networking services is invaluable for practical implementation details and best practices.
-*   **"Terraform Up and Running: Writing Infrastructure as Code" by Yevgeniy Brikman:** This gives you an excellent foundation for understanding infrastructure as code concepts that are heavily employed in managing deployments.
+- **“Kubernetes in Action” by Marko Luksa:** This provides an in-depth look into the inner workings of kubernetes, especially how rolling updates are managed.
+- **Microsoft Azure Documentation:** The official documentation for aci, aks, and azure networking services is invaluable for practical implementation details and best practices.
+- **"Terraform Up and Running: Writing Infrastructure as Code" by Yevgeniy Brikman:** This gives you an excellent foundation for understanding infrastructure as code concepts that are heavily employed in managing deployments.
 
 These materials should equip you with a solid grasp on the underlying mechanisms and help you navigate your azure deployments effectively. Understanding the differences between resource creation and direct modification is a crucial component to effectively manage your azure resources.

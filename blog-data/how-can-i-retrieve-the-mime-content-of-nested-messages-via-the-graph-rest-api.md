@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-retrieve-the-mime-content-of-nested-messages-via-the-graph-rest-api"
 ---
 
-Alright, let's tackle this. I remember a particularly frustrating project back in my days at *Acme Corp* where we had to pull apart email threads with intricate nesting. We were migrating a colossal email archive, and the Graph API was our primary access point. Dealing with those nested MIME structures proved, let’s say, challenging initially. The key isn't just hitting the right endpoints; it’s understanding how the Graph API represents complex MIME data and the specific properties you need to query. Let's break it down.
+, let's tackle this. I remember a particularly frustrating project back in my days at _Acme Corp_ where we had to pull apart email threads with intricate nesting. We were migrating a colossal email archive, and the Graph API was our primary access point. Dealing with those nested MIME structures proved, let’s say, challenging initially. The key isn't just hitting the right endpoints; it’s understanding how the Graph API represents complex MIME data and the specific properties you need to query. Let's break it down.
 
 The Graph API, when dealing with messages, doesn't automatically expose every single part of a MIME structure in an immediately usable format. For a simple message, you can readily fetch the `body` property. However, when it comes to nested messages, which often appear as attachments of type `message/rfc822`, you won’t find a straightforward "nestedMIME" property. Instead, these nested messages are represented as attachments, and their content needs to be retrieved separately. The trick is iterative fetching and a good understanding of what properties are available and what they represent.
 
@@ -20,13 +20,13 @@ Now, let’s assume one of your attachments looks something like this in the res
 
 ```json
 {
-    "@odata.type": "#microsoft.graph.fileAttachment",
-    "id": "AAMkAGUyY2M0ODg2LTdkMzYtNDRjNS1hN2I3LWIwNTVkMzIxNWI2OAAuAAAAAABbT1qYx4q5Q479KxTqE4zSBwB70x0t517kQyR_I79q_v0YAAAAAAEGAAAACv7BwZt05SEh4cR5X-920AACXoE0wAAA=",
-    "lastModifiedDateTime": "2024-11-04T12:12:12Z",
-    "name": "ForwardedMessage.eml",
-    "contentType": "message/rfc822",
-    "size": 5678,
-    "isInline": false
+  "@odata.type": "#microsoft.graph.fileAttachment",
+  "id": "AAMkAGUyY2M0ODg2LTdkMzYtNDRjNS1hN2I3LWIwNTVkMzIxNWI2OAAuAAAAAABbT1qYx4q5Q479KxTqE4zSBwB70x0t517kQyR_I79q_v0YAAAAAAEGAAAACv7BwZt05SEh4cR5X-920AACXoE0wAAA=",
+  "lastModifiedDateTime": "2024-11-04T12:12:12Z",
+  "name": "ForwardedMessage.eml",
+  "contentType": "message/rfc822",
+  "size": 5678,
+  "isInline": false
 }
 ```
 
@@ -80,39 +80,45 @@ This script first gets the message details, and if attachments are present, it c
 Second, a JavaScript example (Node.js using `node-fetch`):
 
 ```javascript
-const fetch = require('node-fetch');
+const fetch = require("node-fetch");
 
 async function getNestedMime(messageId, accessToken) {
-    const headers = { 'Authorization': `Bearer ${accessToken}` };
-    let url = `https://graph.microsoft.com/v1.0/me/messages/${messageId}?$select=id,hasAttachments,attachments`;
+  const headers = { Authorization: `Bearer ${accessToken}` };
+  let url = `https://graph.microsoft.com/v1.0/me/messages/${messageId}?$select=id,hasAttachments,attachments`;
 
-    const response = await fetch(url, { headers });
-    response.ok ? null : console.error(`Failed to fetch message: ${response.status} ${response.statusText}`);
+  const response = await fetch(url, { headers });
+  response.ok
+    ? null
+    : console.error(
+        `Failed to fetch message: ${response.status} ${response.statusText}`
+      );
 
-    if(!response.ok) return;
-    const messageData = await response.json();
+  if (!response.ok) return;
+  const messageData = await response.json();
 
-    if (!messageData.hasAttachments) {
-      return null; // No attachments to process
+  if (!messageData.hasAttachments) {
+    return null; // No attachments to process
+  }
+
+  const nestedMimeContent = [];
+
+  for (let attachment of messageData.attachments) {
+    if (attachment.contentType === "message/rfc822") {
+      let attachmentUrl = `https://graph.microsoft.com/v1.0/me/messages/${messageId}/attachments/${attachment.id}/$value`;
+      let attachmentResponse = await fetch(attachmentUrl, { headers });
+
+      if (!attachmentResponse.ok) {
+        console.error(
+          `Failed to fetch attachment: ${attachmentResponse.status} ${attachmentResponse.statusText}`
+        );
+        continue;
+      }
+      const mimeContent = await attachmentResponse.text();
+      const decodedMime = Buffer.from(mimeContent, "base64").toString("utf-8");
+      nestedMimeContent.push(decodedMime);
     }
-    
-    const nestedMimeContent = [];
-
-    for(let attachment of messageData.attachments){
-        if(attachment.contentType === 'message/rfc822') {
-            let attachmentUrl = `https://graph.microsoft.com/v1.0/me/messages/${messageId}/attachments/${attachment.id}/$value`;
-            let attachmentResponse = await fetch(attachmentUrl, { headers });
-
-            if (!attachmentResponse.ok) {
-                console.error(`Failed to fetch attachment: ${attachmentResponse.status} ${attachmentResponse.statusText}`);
-                continue;
-            }
-            const mimeContent = await attachmentResponse.text();
-            const decodedMime = Buffer.from(mimeContent, 'base64').toString('utf-8');
-            nestedMimeContent.push(decodedMime);
-        }
-    }
-    return nestedMimeContent;
+  }
+  return nestedMimeContent;
 }
 // Example usage:
 // getNestedMime("YOUR_MESSAGE_ID", "YOUR_ACCESS_TOKEN")
@@ -120,6 +126,7 @@ async function getNestedMime(messageId, accessToken) {
 //    if(nested_content) console.log("Nested MIME Content:", nested_content);
 // });
 ```
+
 This JavaScript code follows a similar pattern but uses async/await and `node-fetch`. It's also important to note the use of Buffer here when decoding from base64.
 
 Finally, a C# snippet using the Microsoft.Graph SDK:

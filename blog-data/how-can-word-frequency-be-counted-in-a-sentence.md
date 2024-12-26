@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-can-word-frequency-be-counted-in-a-sentence"
 ---
 
-Okay, let's tackle this. I've seen variations of this problem countless times, often buried within more complex natural language processing pipelines. Counting word frequencies in a sentence sounds simple on the surface, but a few nuances need addressing for a robust and accurate implementation. From my experience working on large-scale text analysis projects, I've learned that how you handle preprocessing and edge cases is critical.
+, let's tackle this. I've seen variations of this problem countless times, often buried within more complex natural language processing pipelines. Counting word frequencies in a sentence sounds simple on the surface, but a few nuances need addressing for a robust and accurate implementation. From my experience working on large-scale text analysis projects, I've learned that how you handle preprocessing and edge cases is critical.
 
 Let’s break down the core aspects. The essential objective is to take a string of text, identify the individual words, and then tally how many times each unique word appears. This process involves several steps: tokenization, cleaning, and frequency calculation. We’ll look at each of these in detail and then go through some practical code examples.
 
-First, *tokenization* is the process of breaking the sentence down into individual units, or “tokens”, which, in this case, are typically words. This sounds straightforward enough until you confront issues like punctuation, contractions, and various forms of whitespace. Do you count "don't" as one word or two? What about hyphenated words like “state-of-the-art”? How do you handle multiple spaces or leading/trailing spaces?
+First, _tokenization_ is the process of breaking the sentence down into individual units, or “tokens”, which, in this case, are typically words. This sounds straightforward enough until you confront issues like punctuation, contractions, and various forms of whitespace. Do you count "don't" as one word or two? What about hyphenated words like “state-of-the-art”? How do you handle multiple spaces or leading/trailing spaces?
 
-The next crucial phase is *cleaning*. This usually involves lowercasing all text to ensure that "The" and "the" are counted as the same word. Punctuation removal is typically necessary too. Depending on the application, you might also need to handle more specialized cleaning tasks such as stemming or lemmatization. Stemming reduces words to their root form by removing prefixes and suffixes (e.g., "running" becomes "run"). Lemmatization is more sophisticated; it uses vocabulary and morphological analysis to determine a word's base form (e.g., "better" becomes "good"). For basic word frequency counting, you might not require stemming or lemmatization, but these steps are crucial if you're after more generalized insights.
+The next crucial phase is _cleaning_. This usually involves lowercasing all text to ensure that "The" and "the" are counted as the same word. Punctuation removal is typically necessary too. Depending on the application, you might also need to handle more specialized cleaning tasks such as stemming or lemmatization. Stemming reduces words to their root form by removing prefixes and suffixes (e.g., "running" becomes "run"). Lemmatization is more sophisticated; it uses vocabulary and morphological analysis to determine a word's base form (e.g., "better" becomes "good"). For basic word frequency counting, you might not require stemming or lemmatization, but these steps are crucial if you're after more generalized insights.
 
-Finally, you reach the *frequency calculation* step. Here you are simply building a data structure (typically a dictionary or hashmap) that maps each unique token to its count. This is fairly direct once you've got a clean list of tokens.
+Finally, you reach the _frequency calculation_ step. Here you are simply building a data structure (typically a dictionary or hashmap) that maps each unique token to its count. This is fairly direct once you've got a clean list of tokens.
 
 Now, let's get to the code examples. These are in python as it’s a very suitable language for this, but the core principles apply regardless of your language of choice.
 
@@ -36,6 +36,7 @@ test_sentence = "This is a test, this is a test."
 frequencies = basic_word_frequency(test_sentence)
 print(frequencies)  # Expected output: {'this': 2, 'is': 2, 'a': 2, 'test,': 2}
 ```
+
 This code snippet showcases simple tokenization using python's `.split()` and handles lowercase conversion. A crucial thing to note here is that, with the basic `.split()`, punctuation is still attached to the words (e.g., "test," is a distinct key). That's not ideal. Let's move towards a solution with more comprehensive cleanup.
 
 **Example 2: Word Counting with Punctuation Removal**

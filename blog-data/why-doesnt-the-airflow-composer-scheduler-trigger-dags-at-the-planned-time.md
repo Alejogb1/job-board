@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-doesnt-the-airflow-composer-scheduler-trigger-dags-at-the-planned-time"
 ---
 
-Alright, let’s talk about delayed dag runs in airflow composer, something i've had to troubleshoot more times than i care to remember. It’s frustrating, especially when you’ve carefully crafted your scheduling parameters, only to find your pipelines idling. The issue is rarely as simple as just a misconfigured cron schedule. It’s often a confluence of factors within the airflow environment, particularly when dealing with managed services like composer.
+, let’s talk about delayed dag runs in airflow composer, something i've had to troubleshoot more times than i care to remember. It’s frustrating, especially when you’ve carefully crafted your scheduling parameters, only to find your pipelines idling. The issue is rarely as simple as just a misconfigured cron schedule. It’s often a confluence of factors within the airflow environment, particularly when dealing with managed services like composer.
 
 Fundamentally, airflow's scheduler aims to execute dags at their scheduled intervals, but various internal and external constraints can prevent that ideal execution. Think of the scheduler not as a single, immediate-action trigger, but as a loop that constantly polls the dag definitions, comparing them against the current time and the last execution time of a dag, and then enqueues dag runs. This process introduces several potential bottlenecks.
 

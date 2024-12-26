@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-the-order-of-levels-for-a-binary-dependent-variable-affect-a-random-forest-models-performance"
 ---
 
-Okay, let's tackle this. I've seen this particular issue pop up more times than I can count, usually manifesting as unexpected results from a model that *should* be performing better. The short answer is: yes, the order of levels for a binary dependent variable *can* affect a random forest model, but not in the way many initially suspect. It's not a direct performance hit in terms of accuracy itself, but more related to how the model interprets probabilities and calculates specific metrics like precision, recall, and the areas under curves.
+, let's tackle this. I've seen this particular issue pop up more times than I can count, usually manifesting as unexpected results from a model that _should_ be performing better. The short answer is: yes, the order of levels for a binary dependent variable _can_ affect a random forest model, but not in the way many initially suspect. It's not a direct performance hit in terms of accuracy itself, but more related to how the model interprets probabilities and calculates specific metrics like precision, recall, and the areas under curves.
 
 To understand why, let’s move away from the 'black box' mentality and look under the hood of how random forests and, by extension, binary classification generally function. Random forests, at their core, are ensemble methods built on decision trees. Each tree, when trained on a binary variable, is essentially learning decision boundaries that separate observations into those predicted to belong to one class versus the other. However, in terms of implementation, this 'belonging' is quantified by a probability. The random forest itself typically uses the average probability across all the decision trees to make a final classification decision. Now, that's where the specific label order starts making a subtle but significant difference, especially when analyzing metrics beyond just simple accuracy.
 
@@ -76,7 +76,7 @@ print("\nClassification Report (Yes = 1, No = 0):")
 print(classification_report(y_test, y_pred))
 ```
 
-By simply swapping the numerical representation of the labels in the `churn` column, you’ll see how the confusion matrix and resulting metrics will be calculated for a positive and negative class that is switched. While the underlying model remains the same, the perspective on performance changes. This highlights that the performance *interpretation* is definitely impacted by the order of levels.
+By simply swapping the numerical representation of the labels in the `churn` column, you’ll see how the confusion matrix and resulting metrics will be calculated for a positive and negative class that is switched. While the underlying model remains the same, the perspective on performance changes. This highlights that the performance _interpretation_ is definitely impacted by the order of levels.
 
 **Example 3: Focusing on Probability Threshold Adjustment**
 
@@ -139,8 +139,9 @@ plt.legend(loc="lower right")
 plt.show()
 
 ```
-This example illustrates that the default threshold can be tuned to optimize for different metrics which can be influenced by label orders. By adjusting the probability threshold, you can improve your target metric. Note that the *order* did not affect the underlying model behavior but the *interpretation* of the model outputs as reflected by the metrics changed.
+
+This example illustrates that the default threshold can be tuned to optimize for different metrics which can be influenced by label orders. By adjusting the probability threshold, you can improve your target metric. Note that the _order_ did not affect the underlying model behavior but the _interpretation_ of the model outputs as reflected by the metrics changed.
 
 To dive deeper into this, I’d highly recommend looking at "The Elements of Statistical Learning" by Hastie, Tibshirani, and Friedman, which is a cornerstone text for understanding machine learning concepts. For specifically binary classification issues, I also recommend "Pattern Recognition and Machine Learning" by Christopher Bishop. These are comprehensive and will provide the necessary theoretical foundations. Also, researching the documentation of `sklearn.metrics` will reveal how metrics like precision and recall are calculated and the dependence they have on the order of the labels and the resulting confusion matrix. Pay close attention to how probabilities are utilized and interpreted in that documentation.
 
-In summary, while random forests aren’t directly *affected* in terms of internal decision boundary optimization by label order, the interpretation of performance, the metrics, and the probability thresholds that impact decision-making and other metrics such as ROC or PR curve analysis are indeed affected. Proper ordering, or threshold adjustment, based on the problem context is vital. A clear understanding of the metrics you are targeting is just as important as optimizing the model itself.
+In summary, while random forests aren’t directly _affected_ in terms of internal decision boundary optimization by label order, the interpretation of performance, the metrics, and the probability thresholds that impact decision-making and other metrics such as ROC or PR curve analysis are indeed affected. Proper ordering, or threshold adjustment, based on the problem context is vital. A clear understanding of the metrics you are targeting is just as important as optimizing the model itself.

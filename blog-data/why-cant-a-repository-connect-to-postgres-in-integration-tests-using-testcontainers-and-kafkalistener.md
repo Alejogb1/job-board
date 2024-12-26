@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-cant-a-repository-connect-to-postgres-in-integration-tests-using-testcontainers-and-kafkalistener"
 ---
 
-Okay, let's tackle this. I’ve seen this exact scenario play out a few times, and it usually stems from a combination of timing, network configurations within docker, and how your application context is managed within the integration testing framework. Let’s dissect the problem step-by-step.
+, let's tackle this. I’ve seen this exact scenario play out a few times, and it usually stems from a combination of timing, network configurations within docker, and how your application context is managed within the integration testing framework. Let’s dissect the problem step-by-step.
 
 From my experience, the heart of the matter often lies in the network bridge created by Docker and how your tests interact with it. When you use testcontainers, it essentially spins up containers in their isolated docker networks. These networks aren’t inherently aware of each other. This means that your application's test container, which usually runs your spring boot app or similar, needs explicit instruction on how to connect to the postgres container launched by testcontainers.
 
-The simplest, and perhaps most common, mistake is using `localhost` or `127.0.0.1` within your application configuration files or connection strings to connect to the database. While this works perfectly fine when running outside docker, within a dockerized test environment, `localhost` within your application container refers to *its own* localhost, not the host machine, and definitely not the docker network of the postgres container. The postgres container operates on its isolated network, which makes direct `localhost` access impossible.
+The simplest, and perhaps most common, mistake is using `localhost` or `127.0.0.1` within your application configuration files or connection strings to connect to the database. While this works perfectly fine when running outside docker, within a dockerized test environment, `localhost` within your application container refers to _its own_ localhost, not the host machine, and definitely not the docker network of the postgres container. The postgres container operates on its isolated network, which makes direct `localhost` access impossible.
 
 The second factor, often intertwined with the first, relates to the way spring boot and kafka listeners operate. A KafkaListener typically starts processing messages as soon as the application context is ready. However, your postgres container may not be fully initialized and available when your KafkaListener kicks in. This is particularly true if you haven’t properly managed container dependencies and start-up sequences within your test setup. If the listener tries to connect to the database before it’s reachable, you get connection refused errors, a common symptom of this problem.
 
@@ -51,9 +51,11 @@ public class DatabaseConfig {
     }
 }
 ```
+
 This snippet shows a naive configuration. Directly using `localhost` won't work within a docker network.
 
 **Snippet 2: The Correct Approach (Using Testcontainer host network)**
+
 ```java
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
@@ -75,7 +77,7 @@ public class DatabaseConfig {
 
     @Value("${spring.datasource.password}")
     private String password;
-    
+
     private static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15.3")
             .withDatabaseName("testdb")
             .withUsername("testuser")
@@ -94,6 +96,7 @@ public class DatabaseConfig {
     }
 }
 ```
+
 Here, we use the `getJdbcUrl()` method from the `PostgreSQLContainer` to get the appropriate connection URL. This method returns an address on the docker network, directly addressable by other containers in the same network or utilizing docker's networking features. This helps containers connect to each other on the correct internal addresses.
 
 **Snippet 3: Addressing KafkaListener Start-Up Timing**
@@ -126,6 +129,7 @@ public class MyKafkaListener {
 }
 
 ```
+
 This example shows how to control the listener from executing until application context is fully initialized to avoid attempting to execute a database operation before the connection can be established. You may add further checks to verify the db connection is established before beginning consumption.
 
 In practical test scenarios, you often use annotations in conjunction with testcontainer classes to start both the application container and the database container simultaneously and also set the system properties to pass in the database connection dynamically. This allows the test code to be completely unaware of the actual host and ports used for the containers. For example:

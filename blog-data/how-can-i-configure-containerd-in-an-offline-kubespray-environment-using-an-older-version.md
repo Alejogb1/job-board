@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-configure-containerd-in-an-offline-kubespray-environment-using-an-older-version"
 ---
 
-Okay, let's tackle this. It's a situation I've encountered more than once, particularly in those tightly controlled or air-gapped environments where pulling directly from public repositories just isn't an option. Setting up containerd within an offline kubespray deployment, especially when using an older version, requires careful planning and a bit of manual wrangling. It's not as straightforward as a standard online install, but it's definitely manageable. Let me walk you through the steps and some of the challenges I've faced.
+, let's tackle this. It's a situation I've encountered more than once, particularly in those tightly controlled or air-gapped environments where pulling directly from public repositories just isn't an option. Setting up containerd within an offline kubespray deployment, especially when using an older version, requires careful planning and a bit of manual wrangling. It's not as straightforward as a standard online install, but it's definitely manageable. Let me walk you through the steps and some of the challenges I've faced.
 
 The core issue here revolves around dependency management and ensuring that all the necessary components of containerd, along with its container images, are available locally. Kubespray, in its default configuration, expects to fetch these artifacts from remote sources. We need to circumvent this by pre-populating the required files and adjusting the kubespray configuration accordingly.
 
@@ -26,7 +26,7 @@ containerd_config_path: "/opt/local-repos/config.toml" #path to your config file
 containerd_image_pull_policy: "Never"
 containerd_custom_images:
   - image: k8s.gcr.io/pause:3.2
-    local_path: "/opt/local-repos/pause_3_2.tar"  # Path to locally saved image tar file
+    local_path: "/opt/local-repos/pause_3_2.tar" # Path to locally saved image tar file
   # Add more custom images as needed
 ```
 
@@ -35,36 +35,36 @@ Here, `containerd_version` specifies the exact version you intend to use. `conta
 The next challenge we face is that kubespray needs to ensure these files are copied to the target node locations before the containerd installation occurs. This often involves modifying the kubespray playbooks or using ansible commands to pre-deploy these files. Consider the following snippet, that might need to be modified within your ansible playbooks:
 
 ```yaml
-  - name: Copy containerd package
-    copy:
-      src: "{{ containerd_package_path }}"
-      dest: "/tmp/"
-      owner: root
-      group: root
-      mode: 0644
-    when: containerd_package_path is defined
+- name: Copy containerd package
+  copy:
+    src: "{{ containerd_package_path }}"
+    dest: "/tmp/"
+    owner: root
+    group: root
+    mode: 0644
+  when: containerd_package_path is defined
 
-  - name: Copy containerd config
-    copy:
-      src: "{{ containerd_config_path }}"
-      dest: "/tmp/"
-      owner: root
-      group: root
-      mode: 0644
-    when: containerd_config_path is defined
+- name: Copy containerd config
+  copy:
+    src: "{{ containerd_config_path }}"
+    dest: "/tmp/"
+    owner: root
+    group: root
+    mode: 0644
+  when: containerd_config_path is defined
 
-  - name: Copy local images
-    copy:
-      src: "{{ item.local_path }}"
-      dest: "/tmp/"
-      owner: root
-      group: root
-      mode: 0644
-    loop: "{{ containerd_custom_images | default([]) }}"
-    when: containerd_custom_images | default([]) | length > 0
+- name: Copy local images
+  copy:
+    src: "{{ item.local_path }}"
+    dest: "/tmp/"
+    owner: root
+    group: root
+    mode: 0644
+  loop: "{{ containerd_custom_images | default([]) }}"
+  when: containerd_custom_images | default([]) | length > 0
 ```
 
-This code snippet copies your containerd archive, configuration file, and pre-downloaded images to the `/tmp` directory on each target node. Depending on your specific ansible setup, the dest location may vary. This will require that this code snippet or something similar be run *before* containerd installation occurs.
+This code snippet copies your containerd archive, configuration file, and pre-downloaded images to the `/tmp` directory on each target node. Depending on your specific ansible setup, the dest location may vary. This will require that this code snippet or something similar be run _before_ containerd installation occurs.
 
 Once the files are in place, you’ll need to adjust the kubespray playbooks to unpack and use those resources. The specific tasks within kubespray that handle containerd installation will have to be modified to read the binaries and images from their local locations, instead of attempting to download them. Here is a sample of the type of change that you would be looking for within kubespray’s ansible tasks:
 
@@ -80,19 +80,18 @@ Once the files are in place, you’ll need to adjust the kubespray playbooks to 
 
 - name: install config
   copy:
-      src: "/tmp/{{ containerd_config_path | basename }}"
-      dest: "/etc/containerd/config.toml"
-      owner: root
-      group: root
-      mode: 0644
-      remote_src: yes
+    src: "/tmp/{{ containerd_config_path | basename }}"
+    dest: "/etc/containerd/config.toml"
+    owner: root
+    group: root
+    mode: 0644
+    remote_src: yes
   when: containerd_config_path is defined
 
 - name: Load images to containerd
   command: /usr/local/bin/ctr image import /tmp/{{ item.local_path | basename }}
   loop: "{{ containerd_custom_images | default([]) }}"
   when: containerd_custom_images | default([]) | length > 0
-
 ```
 
 In this snippet, we are extracting containerd directly from `/tmp` and then importing any required images into containerd directly using the containerd cli binary (`ctr`). This step is essential because containerd has no other mechanism to retrieve them once we've configured the `containerd_image_pull_policy` to "Never". Notice the use of `remote_src: yes`, this is important because we moved the files in a previous task.

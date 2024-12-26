@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-prediction-error-after-loading-saved-keras-model"
 ---
 
-Alright, let's tackle this. I’ve seen this scenario pop up more times than I can count – you meticulously train a Keras model, diligently save it, and then... the prediction results after reloading it are off. It’s a frustrating place to be, and the reasons behind this discrepancy aren't always immediately apparent. It usually stems from one, or a combination of, several factors, which I'll detail out here, drawing from past projects where I've bumped into similar issues.
+, let's tackle this. I’ve seen this scenario pop up more times than I can count – you meticulously train a Keras model, diligently save it, and then... the prediction results after reloading it are off. It’s a frustrating place to be, and the reasons behind this discrepancy aren't always immediately apparent. It usually stems from one, or a combination of, several factors, which I'll detail out here, drawing from past projects where I've bumped into similar issues.
 
 First, and perhaps most commonly, the state of the random number generator is a major culprit. When training models, especially those using stochastic processes like dropout or batch normalization, Keras relies heavily on random number generation. These random operations ensure diversity in training and often enhance the final model’s generalization capabilities. However, without proper handling, the random state isn't necessarily preserved when a model is saved and loaded. This means that the dropout layers, which randomly disable neurons during training, and the batch normalization layers, which normalize inputs using running statistics calculated during training, might behave differently after loading. The 'randomness' isn't the same, effectively giving you a new path through the layers. This leads to deviations in results compared to the predictions made immediately after training.
 
@@ -56,6 +56,7 @@ predictions_after_load = loaded_model.predict(X_test)
 print("Are predictions identical:", np.allclose(predictions_before_save, predictions_after_load))
 
 ```
+
 In this example, if the random seeds are not set, you’d likely see different results before and after reloading the model because those stochastic layers would operate with a new randomness. With the random seed fixed, the predictions would be very similar if not identical under most circumstances.
 
 Another aspect is related to the internal state of batch normalization layers. These layers have ‘training’ and ‘inference’ modes, where behavior differs particularly with regard to how the mean and variance are used. During training, batch norm calculates the mean and variance for each batch and uses these for normalization, while keeping a running estimate of the global population mean and variance. During inference, it primarily uses the running estimates. If a model is saved after training, but the saved model isn’t used under the ‘inference’ mode, you’ll encounter prediction discrepancies. The saved state might be inconsistent with what the layers would have produced during inference.
@@ -107,6 +108,7 @@ predictions_after_load = loaded_model.predict(X_test)
 
 print("Are predictions identical with inference mode:", np.allclose(predictions_before_save, predictions_after_load))
 ```
+
 In this revised script, we explicitly disable training for all batch normalization layers and force them to act using the stored population-based statistics by using `layer._per_input_call_tf_function = True`. In some older versions this used to be `layer.set_weights(layer.get_weights())` in the past, as the retraining would re-initialize the weights using a different random state.
 
 Another source of error can lie within the preprocessing steps. If data preprocessing (like standardization, one-hot encoding) is not exactly mirrored when making predictions with the reloaded model, the model will be fed input that's fundamentally different than what it saw during training, inevitably resulting in erroneous results. If the preprocessing steps used for training aren’t consistently applied to new input, it’s essentially feeding a different kind of data to the model, which isn't trained to process that form of data.
@@ -165,6 +167,7 @@ predictions_after_scale = loaded_model.predict(X_test_scaled_loaded)
 
 print("Are predictions identical with saved scaler:", np.allclose(predictions_before_scale, predictions_after_scale))
 ```
+
 This example emphasizes saving the preprocessor alongside the trained model to keep the full data transformation consistent.
 
 For more in-depth understanding, I’d strongly recommend checking “Deep Learning” by Ian Goodfellow, Yoshua Bengio, and Aaron Courville, particularly the chapters on training methodology, regularization, and batch normalization. The TensorFlow documentation itself also contains great resources on model saving and loading, along with common gotchas. Papers on batch normalization also provide insights into the underlying mechanics that can lead to errors of this nature.

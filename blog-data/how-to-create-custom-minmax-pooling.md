@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "how-to-create-custom-minmax-pooling"
 ---
 
-Okay, let’s unpack custom min-max pooling, something I've found myself needing more than a few times in the trenches. It's not always enough to rely on the standard implementations; sometimes, the specific contours of your problem demand a tailored approach. Instead of simply grabbing the highest or lowest values within a region, you might want to apply some more complex aggregation logic. Let me illustrate.
+, let’s unpack custom min-max pooling, something I've found myself needing more than a few times in the trenches. It's not always enough to rely on the standard implementations; sometimes, the specific contours of your problem demand a tailored approach. Instead of simply grabbing the highest or lowest values within a region, you might want to apply some more complex aggregation logic. Let me illustrate.
 
 I remember back at 'InnovateDynamics,' we were processing seismic data, and the signal-to-noise ratio was atrocious. Standard max pooling amplified noise along with signal peaks, while standard min pooling did the opposite. We needed a dynamic pool, one that could, based on surrounding context, effectively reduce both, while still preserving the crucial signal features. Thus began my deep dive into creating custom min-max pooling operations.
 
-The core idea is, frankly, pretty straightforward. You define a window or kernel, and you slide that window across your input data. The magic lies in what happens *inside* that window. Instead of simply taking the max or min, you compute an arbitrary function using all of the values within that window. This flexibility is where the real power lies.
+The core idea is, frankly, pretty straightforward. You define a window or kernel, and you slide that window across your input data. The magic lies in what happens _inside_ that window. Instead of simply taking the max or min, you compute an arbitrary function using all of the values within that window. This flexibility is where the real power lies.
 
 Let’s break down three examples using python and numpy, illustrating different use cases and techniques. In each, we’ll define a function that takes the window’s data and returns a single aggregated value.
 
@@ -110,7 +110,7 @@ Here, `kth_smallest_pool` takes an extra argument, `k`. We modify `custom_poolin
 
 **Example 3: Range-Based Pooling**
 
-Another useful approach is to pool based on the *range* (max – min) within the kernel. This is useful when identifying areas with high signal variability, something we used quite a lot when I was dealing with financial data where we wanted to pinpoint volatile regions.
+Another useful approach is to pool based on the _range_ (max – min) within the kernel. This is useful when identifying areas with high signal variability, something we used quite a lot when I was dealing with financial data where we wanted to pinpoint volatile regions.
 
 ```python
 import numpy as np

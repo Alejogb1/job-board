@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-similarity-functions-with-words-not-in-my-vocabulary"
 ---
 
-Alright, let's tackle this one. I’ve definitely seen this challenge play out in a number of projects over the years. The scenario of having to compute similarity between words, some of which your system hasn't encountered before, is surprisingly common, especially when dealing with user-generated text or rapidly evolving vocabularies. It's not a showstopper, though. There are several well-established techniques we can leverage to get around this limitation.
+, let's tackle this one. I’ve definitely seen this challenge play out in a number of projects over the years. The scenario of having to compute similarity between words, some of which your system hasn't encountered before, is surprisingly common, especially when dealing with user-generated text or rapidly evolving vocabularies. It's not a showstopper, though. There are several well-established techniques we can leverage to get around this limitation.
 
 The core problem, of course, stems from how we typically represent words in computational systems. If you're using a traditional vocabulary-based approach, such as one-hot encoding or even a simple integer index, an 'out-of-vocabulary' (oov) word simply doesn't have a vector representation. Therefore, a similarity computation becomes undefined. We need to move beyond this direct mapping approach and explore methods that offer more flexibility.
 
@@ -34,7 +34,7 @@ def get_word_embedding_character_level(word, char_embeddings, aggregation='avera
     char_vecs = [char_embeddings.get(char, np.zeros(2)) for char in word]  # Default to zeros for unknown chars
     if not char_vecs:
         return np.zeros(2)
-    
+
     if aggregation == 'average':
         return np.mean(char_vecs, axis=0)
     elif aggregation == 'sum':
@@ -97,7 +97,7 @@ def get_oov_word_embedding_contextual(sentence, oov_word_index, vocab_embeddings
     words = sentence.split()
     if oov_word_index >= len(words) or oov_word_index <0:
         return None
-    
+
     #This would be computed by a model in real scenario
     embedding = vocab_embeddings.get(words[oov_word_index], np.random.rand(10))  # hypothetical precomputed embeddings and random initialization for unknown words.
     return embedding
@@ -112,7 +112,7 @@ vocab = {
     "jumps": np.array([0.5, 0.6, 0.7, 0.8, 0.9, 0.1, 0.2, 0.3, 0.4, 0.5]),
     "lazy": np.array([0.6, 0.7, 0.8, 0.9, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6]),
     "dog": np.array([0.7, 0.8, 0.9, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7])
-    
+
 }
 
 sentence1 = "the quick brown fox jumps"
@@ -167,7 +167,7 @@ def wordnet_similarity(word1, word2):
     synsets2 = wordnet.synsets(word2)
     if not synsets1 or not synsets2:
         return 0 #No synsets found
-    
+
     max_sim = 0
     for syn1 in synsets1:
       for syn2 in synsets2:
@@ -198,8 +198,8 @@ In real world scenario the ontology mapping can be much more complex and require
 
 For anyone looking to dive deeper into the theory and implementation of these techniques, I recommend these resources:
 
-*   **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** A comprehensive textbook covering a broad range of natural language processing topics, including word embeddings, contextual models, and semantic analysis. This is practically essential reading for anyone working with NLP.
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book provides a deep dive into the theoretical foundations of deep learning, including the architectures that underpin most of the advanced word embedding techniques used today. Understanding these foundations will allow you to adapt these techniques to the specific constraints and needs of your project.
-*   **Research papers on specific contextual embedding models:** Search for the original papers on models such as bert, roberta, elmo on venues like arxiv or nips. Reading the original papers gives you an in-depth understanding of these models and how they are architected, which is very important when using them to solve problems.
+- **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** A comprehensive textbook covering a broad range of natural language processing topics, including word embeddings, contextual models, and semantic analysis. This is practically essential reading for anyone working with NLP.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book provides a deep dive into the theoretical foundations of deep learning, including the architectures that underpin most of the advanced word embedding techniques used today. Understanding these foundations will allow you to adapt these techniques to the specific constraints and needs of your project.
+- **Research papers on specific contextual embedding models:** Search for the original papers on models such as bert, roberta, elmo on venues like arxiv or nips. Reading the original papers gives you an in-depth understanding of these models and how they are architected, which is very important when using them to solve problems.
 
 Ultimately, the ‘best’ approach often depends on your specific application, the computational resources available, and the characteristics of your data. By experimenting with the methods described and understanding their underlying mechanisms, you’ll be well-equipped to handle the challenge of computing similarity with out-of-vocabulary words.

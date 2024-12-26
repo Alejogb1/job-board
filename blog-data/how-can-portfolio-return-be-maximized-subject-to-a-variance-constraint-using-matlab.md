@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-portfolio-return-be-maximized-subject-to-a-variance-constraint-using-matlab"
 ---
 
-Okay, let's unpack this. Maximizing portfolio return while adhering to a specific variance constraint is a classic problem in quantitative finance, and it’s one I’ve encountered multiple times over the years—most recently while optimizing a risk-managed trading strategy back at my previous firm. It's a fairly elegant demonstration of constrained optimization, and MATLAB, with its robust optimization toolbox, is well-suited for handling it.
+, let's unpack this. Maximizing portfolio return while adhering to a specific variance constraint is a classic problem in quantitative finance, and it’s one I’ve encountered multiple times over the years—most recently while optimizing a risk-managed trading strategy back at my previous firm. It's a fairly elegant demonstration of constrained optimization, and MATLAB, with its robust optimization toolbox, is well-suited for handling it.
 
 The core idea revolves around finding the portfolio weights that yield the highest expected return without exceeding a predetermined level of risk, represented by portfolio variance. We aren't just throwing darts here; it’s a structured approach. This isn't about seeking the absolutely highest return irrespective of volatility, but rather finding the optimal balance given your risk tolerance.
 
@@ -22,7 +22,7 @@ sigma = cov(returns_data); % Compute the covariance matrix
 
 Next, we set our variance constraint. This value will vary depending on your acceptable risk. Let's say we want to keep the annualised variance of the portfolio below a given level, for example `max_variance`.
 
-Now comes the crucial step: setting up the optimization problem. We'll employ MATLAB's `quadprog` function. `quadprog` is designed to solve quadratic programming problems, which fit our need precisely. Our objective function is to maximize the expected portfolio return, which translates to *minimizing* the negative of the expected return in the `quadprog` context. The variance constraint is formulated as an inequality constraint which must hold. Also, the weights of the portfolio must sum to one, and no asset can have a negative weight.
+Now comes the crucial step: setting up the optimization problem. We'll employ MATLAB's `quadprog` function. `quadprog` is designed to solve quadratic programming problems, which fit our need precisely. Our objective function is to maximize the expected portfolio return, which translates to _minimizing_ the negative of the expected return in the `quadprog` context. The variance constraint is formulated as an inequality constraint which must hold. Also, the weights of the portfolio must sum to one, and no asset can have a negative weight.
 
 ```matlab
 % Define the number of assets

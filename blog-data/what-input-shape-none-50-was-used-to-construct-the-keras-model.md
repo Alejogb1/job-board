@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-input-shape-none-50-was-used-to-construct-the-keras-model"
 ---
 
-Alright, let’s unpack this input shape question. It's something I've bumped into more times than I care to count, especially back when I was knee-deep in some anomaly detection projects for a financial institution. The `(None, 50)` input shape in Keras, or TensorFlow's Keras implementation, signals a very specific architectural design. Let's break it down bit by bit, since it's critical to understanding how data flows through your neural network.
+, let’s unpack this input shape question. It's something I've bumped into more times than I care to count, especially back when I was knee-deep in some anomaly detection projects for a financial institution. The `(None, 50)` input shape in Keras, or TensorFlow's Keras implementation, signals a very specific architectural design. Let's break it down bit by bit, since it's critical to understanding how data flows through your neural network.
 
 Essentially, this `(None, 50)` tuple is defining the shape of the expected input tensor. The first dimension, represented by `None`, denotes the batch size. When set to `None`, it means the model is designed to handle variable batch sizes. This is a common practice because you don't always want to be restricted to a fixed number of samples processed in a single iteration. Instead, the model dynamically adapts to whatever batch size your data loader provides during both training and inference. This is incredibly useful when dealing with varying datasets or when trying to optimize memory usage by adjusting batch sizes on the fly.
 
@@ -51,6 +51,7 @@ model = keras.Sequential([
 
 model.summary()
 ```
+
 Here, the `(None, 50)` input shape now tells the LSTM that each input instance consists of a sequence of length `None`, and that each element of that sequence has a dimensionality of 50. The shape is interpreted differently by different layers. The LSTM doesn't "flatten" the sequence; it processes each of the 50-dimensional feature vectors within the temporal context.
 
 **Example 3: Convolutional Layer Input**

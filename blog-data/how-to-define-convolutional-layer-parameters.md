@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-define-convolutional-layer-parameters"
 ---
 
-Alright, let's unpack convolutional layer parameter definition. I remember battling this years ago when building a real-time image processing system for a remote sensing project. It’s not as straightforward as setting a single value; there's a constellation of interrelated parameters that collectively define how a convolutional layer operates, each with a specific purpose and impact on the network’s learning capabilities.
+, let's unpack convolutional layer parameter definition. I remember battling this years ago when building a real-time image processing system for a remote sensing project. It’s not as straightforward as setting a single value; there's a constellation of interrelated parameters that collectively define how a convolutional layer operates, each with a specific purpose and impact on the network’s learning capabilities.
 
 At its core, a convolutional layer applies a filter (also known as a kernel) across an input volume. These filters are essentially sets of learnable weights that, through a convolution operation, extract spatial features from the input data. So, what are these parameters and how do we define them? I’ll break it down, focusing on the essential ones.
 

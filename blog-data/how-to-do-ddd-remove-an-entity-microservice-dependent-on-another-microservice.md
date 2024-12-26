@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-ddd-remove-an-entity-microservice-dependent-on-another-microservice"
 ---
 
-alright, so you're looking at the classic distributed systems headache, right? dealing with interdependent microservices, specifically removing one that's a dependency of another. i've been there, more times than i care to remember. it’s never as simple as just flipping a switch. you can't just yank out a component, especially not one that's acting as a dependency for another, without consequences. let’s talk about how to approach this using, what i understand as your preferred domain-driven design, ddd, methodology in mind.
+, so you're looking at the classic distributed systems headache, right? dealing with interdependent microservices, specifically removing one that's a dependency of another. i've been there, more times than i care to remember. it’s never as simple as just flipping a switch. you can't just yank out a component, especially not one that's acting as a dependency for another, without consequences. let’s talk about how to approach this using, what i understand as your preferred domain-driven design, ddd, methodology in mind.
 
 from my own experience, i had a project, oh, maybe seven years ago, where we built a system for processing financial transactions. we had a service for user accounts (user-service) and a separate one for handling payments (payment-service). payment-service, obviously, was heavily reliant on user-service for, well, user details. then, the business went through a restructuring, and suddenly, we needed to integrate with an external payment provider which handled the user creation by itself and we needed to get user-service out of the payment-service picture. it was a nightmare, i tell you.
 
@@ -12,9 +12,9 @@ so, here's the thing. ddd encourages us to think in terms of bounded contexts. e
 
 you basically have a few options, none of which are magic bullets. i'm going to try and give you the practical advice on how to approach this. first, we analyze and understand.
 
-*   **analysis and understanding:** you need to map out the exact nature of the dependency. what data does the dependent service need from the service you want to remove? what api calls are being made? start with a good analysis of your system to find those hard dependencies. get all the data needed to understand how the two services are talking to each other and what is the minimum information required for the payment-service to work. you want to achieve loose coupling. i bet you want to avoid a situation where you have to change the payment service again once the user service is removed. that also means you need to get a picture of where the data is needed and its requirements. do a proper discovery to really understand the data flow.
+- **analysis and understanding:** you need to map out the exact nature of the dependency. what data does the dependent service need from the service you want to remove? what api calls are being made? start with a good analysis of your system to find those hard dependencies. get all the data needed to understand how the two services are talking to each other and what is the minimum information required for the payment-service to work. you want to achieve loose coupling. i bet you want to avoid a situation where you have to change the payment service again once the user service is removed. that also means you need to get a picture of where the data is needed and its requirements. do a proper discovery to really understand the data flow.
 
-*   **identifying the domain:** i'd suggest looking at domain events that each service might be producing. understand what the aggregate roots are and what are their domain boundaries, and how the communication between them is being done. that is a good start for a good transition process. that way, you can start decoupling the components.
+- **identifying the domain:** i'd suggest looking at domain events that each service might be producing. understand what the aggregate roots are and what are their domain boundaries, and how the communication between them is being done. that is a good start for a good transition process. that way, you can start decoupling the components.
 
 once you have that clear, you can move on.
 
@@ -154,9 +154,9 @@ class PaymentService:
 
 **important considerations:**
 
-*   **database changes:** if the retiring service has a database that's being used as a source of truth by others, you'll need to migrate data or update the dependent microservices to use a new data source. this is a big task on its own. plan this well.
-*   **testing:** this is absolutely critical. you have to test each approach thoroughly. think about integration tests, contract tests, and performance tests. don't just go blindly changing things. test, test, test.
-*   **monitoring:** keep a very close watch on your system during this change. you'll need to monitor for errors, performance problems, and any unexpected behavior. this type of change is not always easy to monitor.
+- **database changes:** if the retiring service has a database that's being used as a source of truth by others, you'll need to migrate data or update the dependent microservices to use a new data source. this is a big task on its own. plan this well.
+- **testing:** this is absolutely critical. you have to test each approach thoroughly. think about integration tests, contract tests, and performance tests. don't just go blindly changing things. test, test, test.
+- **monitoring:** keep a very close watch on your system during this change. you'll need to monitor for errors, performance problems, and any unexpected behavior. this type of change is not always easy to monitor.
 
 **additional reading:**
 

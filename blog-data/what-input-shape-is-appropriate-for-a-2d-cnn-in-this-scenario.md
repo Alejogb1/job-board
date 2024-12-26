@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-input-shape-is-appropriate-for-a-2d-cnn-in-this-scenario"
 ---
 
-Okay, let's tackle this. Input shapes for 2d convolutional neural networks, especially when dealing with real-world scenarios, aren't always as straightforward as the textbook examples might suggest. I remember a project a few years back where we were classifying satellite imagery for urban planning – a classic 2d image processing problem – and getting the input shape *just so* was pivotal to the network performing well. We had to move past the usual RGB setup and consider a broader range of factors, and that’s what I'll discuss here.
+, let's tackle this. Input shapes for 2d convolutional neural networks, especially when dealing with real-world scenarios, aren't always as straightforward as the textbook examples might suggest. I remember a project a few years back where we were classifying satellite imagery for urban planning – a classic 2d image processing problem – and getting the input shape _just so_ was pivotal to the network performing well. We had to move past the usual RGB setup and consider a broader range of factors, and that’s what I'll discuss here.
 
 When we’re talking about 2d cnns, the input shape generally takes the form of (height, width, channels). This might seem simple enough, but the devil is, as always, in the details. The height and width represent the spatial dimensions of your input data – the image itself in many cases. The ‘channels’ dimension, however, holds slightly more nuance. For a color image, this is typically 3, representing red, green, and blue (rgb). But what if you have grayscale images? Or, as we did with the satellite data, multi-spectral data?
 
@@ -41,6 +41,7 @@ output_tensor_rgb = model_rgb(input_tensor_rgb)
 print(f"Output shape from RGB model: {output_tensor_rgb.shape}")
 
 ```
+
 In this first example, we define a simple cnn that expects an rgb image. Notice the `in_channels` is set to 3 to accommodate the three colour channels. The input tensor is shaped `(batch_size, channels, height, width)`, in this case, `(4, 3, 128, 128)`. This is the standard representation for image data in PyTorch and other similar libraries.
 
 Now let’s consider a scenario where we are working with grayscale images.
@@ -69,6 +70,7 @@ print(f"Output shape from grayscale model: {output_tensor_gray.shape}")
 Here, our input only has one channel; the `in_channels` is changed to `1`. This is a very common scenario when dealing with things like x-rays or depth maps.
 
 Finally, let's look at how we could handle the situation from my satellite imagery project:
+
 ```python
 # Example 3: multi-spectral image input
 

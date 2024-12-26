@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "syntaxerror-ambiguous-indirect-export-default-error-when-importing-my-own-clas"
 ---
 
-Okay so you're hitting that `SyntaxError: ambiguous indirect export default` right been there done that got the t-shirt let me tell you this one's a classic head scratcher especially when you're trying to import your own stuff its like your code's turning on you
+you're hitting that `SyntaxError: ambiguous indirect export default` right been there done that got the t-shirt let me tell you this one's a classic head scratcher especially when you're trying to import your own stuff its like your code's turning on you
 
 First things first let's break down what's probably going on see this error it means that somewhere in your module export chain something is going sideways Javascript module system it's a beast sometimes specifically when you're using `export default`
 
@@ -36,16 +36,16 @@ export default class MyClass {
 
 ```javascript
 // intermediate.js
-export { default } from './myClass.js';
+export { default } from "./myClass.js";
 ```
 
 `main.js`:
 
 ```javascript
 // main.js
-import MyClass from './intermediate.js'
+import MyClass from "./intermediate.js";
 
-const instance = new MyClass('hello');
+const instance = new MyClass("hello");
 console.log(instance.getValue());
 ```
 
@@ -63,16 +63,16 @@ Here are some fixes:
 
 ```javascript
 // intermediate.js
-export { default as MyClass } from './myClass.js';
+export { default as MyClass } from "./myClass.js";
 ```
 
 `main.js`: remains the same
 
 ```javascript
 // main.js
-import MyClass from './intermediate.js'
+import MyClass from "./intermediate.js";
 
-const instance = new MyClass('hello');
+const instance = new MyClass("hello");
 console.log(instance.getValue());
 ```
 
@@ -86,9 +86,9 @@ In this case we are explicitly naming what we are re-exporting in the `intermedi
 
 ```javascript
 // main.js
-import MyClass from './myClass.js'
+import MyClass from "./myClass.js";
 
-const instance = new MyClass('hello');
+const instance = new MyClass("hello");
 console.log(instance.getValue());
 ```
 
@@ -102,16 +102,16 @@ This one gets nasty I spent a week trying to figure this out you wouldn't believ
 
 ```javascript
 // moduleA.js
-import { moduleB } from './moduleB.js';
+import { moduleB } from "./moduleB.js";
 
 export default class ClassA {
-    constructor(){
-        this.value = "from class A";
-    }
+  constructor() {
+    this.value = "from class A";
+  }
 
-    getValueFromB(){
-        return moduleB.getValue();
-    }
+  getValueFromB() {
+    return moduleB.getValue();
+  }
 }
 ```
 
@@ -119,13 +119,13 @@ export default class ClassA {
 
 ```javascript
 // moduleB.js
-import ClassA from './moduleA.js';
-const value = "from module B"
+import ClassA from "./moduleA.js";
+const value = "from module B";
 export const moduleB = {
   getValue: () => {
-        const instance = new ClassA();
-        console.log("class A value", instance.value)
-        return value
+    const instance = new ClassA();
+    console.log("class A value", instance.value);
+    return value;
   },
 };
 ```
@@ -141,14 +141,14 @@ Here is how to fix it
 ```javascript
 // moduleA.js
 export default class ClassA {
-    constructor(moduleB){
-        this.value = "from class A";
-        this.moduleB = moduleB;
-    }
+  constructor(moduleB) {
+    this.value = "from class A";
+    this.moduleB = moduleB;
+  }
 
-    getValueFromB(){
-        return this.moduleB.getValue();
-    }
+  getValueFromB() {
+    return this.moduleB.getValue();
+  }
 }
 ```
 
@@ -156,21 +156,24 @@ export default class ClassA {
 
 ```javascript
 // moduleB.js
-const value = "from module B"
+const value = "from module B";
 export const moduleB = {
-    getValue: () => {
-        return value
+  getValue: () => {
+    return value;
   },
 };
 ```
+
 `main.js` after the fix
+
 ```javascript
 // main.js
-import ClassA from './moduleA.js'
-import { moduleB } from './moduleB.js'
+import ClassA from "./moduleA.js";
+import { moduleB } from "./moduleB.js";
 const instance = new ClassA(moduleB);
 console.log(instance.getValueFromB());
 ```
+
 In this fix we are injecting `moduleB` to the constructor of `ClassA` making it not needed to import the `moduleB.js` inside `moduleA.js`. We are essentially inverting the control of the dependencies
 
 **Debugging Strategies**
@@ -180,15 +183,15 @@ So what do we do when we are knee-deep in `SyntaxError: ambiguous indirect expor
 1.  **Trace Your Exports:** Start by meticulously tracing the flow of your `export default` statements. Follow the trail through each module involved. This will reveal any cases where you have indirect re-exports without proper aliasing. Use code editors like VSCode that allow to you easily navigate the import/exports
 2.  **Simplify Your Modules:** If your module structure is too complex like my previous web app attempt you might consider breaking it down into smaller more manageable modules. Or use an organizational pattern like feature modules to separate concerns so you dont mix different responsabilities in the same file.
 3.  **Check Circular Dependencies:** Always be on the lookout for circular imports. They're a source of pain as the above example shows and they can be tricky to spot. Try visualize your imports using a dependency graph tool
-4. **Console Logging:** A good old `console.log` can be very useful. I have printed variables in my modules to see how they are being exported and imported. It's like asking your code 'what are you doing' it never fails
+4.  **Console Logging:** A good old `console.log` can be very useful. I have printed variables in my modules to see how they are being exported and imported. It's like asking your code 'what are you doing' it never fails
 5.  **Use Module Bundler Debug Tools:** If you are using a bundler like webpack or rollup they usually have some debugging tool that can allow to see your code output after being bundled. This is a useful tool to debug issues.
 
 **Recommended Resources**
 
 Instead of links I recommend some classics that helped me through those dark times with js modules
 
-*   **"Understanding ECMAScript 6" by Nicholas C. Zakas**: This book has a really good chapter on modules that I read like 100 times and It gave me a fundamental understanding of how they work I totally recommend it
-*   **"Effective JavaScript" by David Herman**: This book covers Javascript best practices and patterns in general and has some relevant notes about module patterns that can help to avoid these problems in the future
-*   **The ECMAScript Specification**: Yes its hard to read but it contains all the rules for javascript so it can be a good reference when you need absolute precision
+- **"Understanding ECMAScript 6" by Nicholas C. Zakas**: This book has a really good chapter on modules that I read like 100 times and It gave me a fundamental understanding of how they work I totally recommend it
+- **"Effective JavaScript" by David Herman**: This book covers Javascript best practices and patterns in general and has some relevant notes about module patterns that can help to avoid these problems in the future
+- **The ECMAScript Specification**: Yes its hard to read but it contains all the rules for javascript so it can be a good reference when you need absolute precision
 
 Hope this helps dude remember you are not alone in this javascript module system it's a tricky beast and sometimes you gotta be a bit of a code detective to get to the bottom of it. And remember to always test your code i always forget that part. oh and i just remembered an old programming joke, why was the javascript developer sad? Because he didn't node how to express himself. (i know i know im not funny i'll stop here.) Anyway good luck and happy coding

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "with-rails-actioncable-is-there-a-way-to-skip-connection-authentication-for-specific-channels"
 ---
 
-alright, so you're looking to bypass actioncable connection authentication for certain channels, got it. i've been there, staring at that connection handshake wondering if there's a secret back door. i can tell you, it's not as straightforward as flipping a switch but it's doable. let me tell you about the time i spent battling this in a project and how i ended up working around it.
+, so you're looking to bypass actioncable connection authentication for certain channels, got it. i've been there, staring at that connection handshake wondering if there's a secret back door. i can tell you, it's not as straightforward as flipping a switch but it's doable. let me tell you about the time i spent battling this in a project and how i ended up working around it.
 
 i was building this real-time dashboard thingy back in my startup days. we had a public-facing status page and then internal dashboards for our support teams. the status page, obviously, shouldn't require any auth. it was meant to be public and display the current system status, while the internal dashboards needed full-blown user authentication. we decided to use actioncable for it cause it seemed logical at the time, real-time updates and all that jazz, but then i hit this wall of connection auth. it was like trying to get into a club with the wrong id – actioncable's default behavior insisted on verifying every connection.
 
@@ -84,21 +84,21 @@ here, within the `subscribed` method of your `public_status_channel`, you reassi
 
 ```javascript
 // js/channels/index.js
-import consumer from "../channels/consumer"
+import consumer from "../channels/consumer";
 
 consumer.subscriptions.create("PublicStatusChannel", {
   connected() {
-    console.log('connected to public status channel')
+    console.log("connected to public status channel");
     // Called when the subscription is ready for use on the server.
   },
   disconnected() {
     // Called when the subscription has been terminated by the server.
-    console.log('disconnected from public status channel')
+    console.log("disconnected from public status channel");
   },
   received(data) {
-      console.log(data);
+    console.log(data);
     // Called when there's incoming data on the websocket for this channel.
-  }
+  },
 });
 ```
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-mock-and-unit-test-asynchronous-swift-55-code-using-alamofire"
 ---
 
-Alright, let's tackle this. Been down this road more times than I can count, especially when dealing with network layers in Swift. Mocking and unit testing asynchronous code, particularly when Alamofire is involved, definitely has its nuances. It’s not as straightforward as synchronous code, but with the right approach, it’s entirely manageable. I’ve personally seen several projects bogged down by a lack of proper testing for their network interactions, so this is a topic I feel strongly about.
+, let's tackle this. Been down this road more times than I can count, especially when dealing with network layers in Swift. Mocking and unit testing asynchronous code, particularly when Alamofire is involved, definitely has its nuances. It’s not as straightforward as synchronous code, but with the right approach, it’s entirely manageable. I’ve personally seen several projects bogged down by a lack of proper testing for their network interactions, so this is a topic I feel strongly about.
 
 The core challenge, as you probably know, comes from the asynchronous nature of network requests. Alamofire operates on background threads, and your unit tests are typically run on the main thread. To properly test this, you've got to effectively control and observe the asynchronous behavior. Simply put, we need to isolate our network layer so we're not making actual API calls during tests, and we need to handle how the results are returned.
 
@@ -22,6 +22,7 @@ struct User: Codable {
 }
 
 ```
+
 This `NetworkService` protocol defines the contracts we’ll adhere to. Note, I’m using the Swift `Result` type for error handling; it's cleaner and more explicit. Now, your actual implementation using Alamofire would conform to this protocol.
 
 ```swift
@@ -52,7 +53,7 @@ class AlamofireNetworkService: NetworkService {
 }
 ```
 
-This example, while basic, shows the actual usage of Alamofire. However, remember *this is what we do not want to use during our unit tests*. Our tests should be fast, predictable, and not dependent on network connectivity. That's where mocking comes in.
+This example, while basic, shows the actual usage of Alamofire. However, remember _this is what we do not want to use during our unit tests_. Our tests should be fast, predictable, and not dependent on network connectivity. That's where mocking comes in.
 
 For mocking, we’ll create a test double that also conforms to `NetworkService`. This double won't make actual network requests; instead, it will return predefined data or simulate errors. Let’s create a basic mock:
 
@@ -166,8 +167,9 @@ class UserServiceTests: XCTestCase {
     }
 }
 ```
+
 I’ve used `XCTestExpectation` to handle the asynchronous nature of the tests, waiting for the callbacks to be executed before asserting the results. This pattern has served me incredibly well across multiple projects. This allows you to test the behavior of your code given various network outcomes (successes, failures, and different data) without actually relying on the network at all.
 
-For deeper insight into these kinds of testing practices, I would highly recommend checking out *Growing Object-Oriented Guided by Tests* by Steve Freeman and Nat Pryce. It's a classic on unit testing and testing concepts. Also, *Working Effectively with Legacy Code* by Michael Feathers has very useful tips on how to test code that hasn't been designed with testability in mind and is highly useful when dealing with existing network implementations. For a specific view on protocols and dependency injection in swift, I recommend you study the material on the Swift documentation, specifically articles related to Protocol-oriented programming.
+For deeper insight into these kinds of testing practices, I would highly recommend checking out _Growing Object-Oriented Guided by Tests_ by Steve Freeman and Nat Pryce. It's a classic on unit testing and testing concepts. Also, _Working Effectively with Legacy Code_ by Michael Feathers has very useful tips on how to test code that hasn't been designed with testability in mind and is highly useful when dealing with existing network implementations. For a specific view on protocols and dependency injection in swift, I recommend you study the material on the Swift documentation, specifically articles related to Protocol-oriented programming.
 
 The key takeaways here are: abstract your network layer behind a protocol, create mocks conforming to that protocol to simulate network responses in your tests, and utilize XCTestExpectations to handle asynchronous results in tests. Remember, your tests should be as reliable and fast as possible, and following this pattern can help achieve that.

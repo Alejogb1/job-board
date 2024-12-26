@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-an-icloud-key-value-storage-sign-in-error-after-changing-the-team-id"
 ---
 
-alright, so you've swapped your team id and now icloud key-value storage is throwing a tantrum. yeah, been there, messed that up myself more times than i care to count. it's a classic, really. let me unpack what's likely happening and what you can do about it.
+, so you've swapped your team id and now icloud key-value storage is throwing a tantrum. yeah, been there, messed that up myself more times than i care to count. it's a classic, really. let me unpack what's likely happening and what you can do about it.
 
 basically, icloud key-value storage, or kvstore as many of us call it, isn't just some magic bucket in the cloud. it's heavily tied to your app's identity, and that identity, among other things, includes the team id. when you change that team id, you’re essentially changing the fingerprint of your app in apple's eyes. think of it as moving your house to a new neighborhood. the mailman can't just deliver your mail if the address has changed. same principle here.
 
@@ -18,7 +18,7 @@ so, what’s the fix? well, there's no magic bullet, but here’s the common app
 
 **1. the brute force – container deletion:**
 
-this is the most direct way. we essentially force the system to recreate the container with the new team id. this means that all the data from the previous container will be gone. if you have crucial user data, *you absolutely must back it up first*, perhaps by syncing it somewhere else or letting the user know the issue. this method is more suitable if you are okay losing data stored in kvstore, and that might be the case. here’s how it could look like in code (assuming you are using swift here):
+this is the most direct way. we essentially force the system to recreate the container with the new team id. this means that all the data from the previous container will be gone. if you have crucial user data, _you absolutely must back it up first_, perhaps by syncing it somewhere else or letting the user know the issue. this method is more suitable if you are losing data stored in kvstore, and that might be the case. here’s how it could look like in code (assuming you are using swift here):
 
 ```swift
 import cloudkit
@@ -26,7 +26,7 @@ import cloudkit
 func resetkvstorecontainer() {
     let container = ckcontainer.default()
     let containerid = container.containeridentifier!
-    
+
     container.delete(withcompletionhandler: { (error) in
         if let error = error {
             print("error deleting container: \(error)")
@@ -34,7 +34,7 @@ func resetkvstorecontainer() {
             print("container deleted successfully")
         }
     })
-   
+
    // you should now access your kvstore again and should be fresh
    // but keep in mind that this approach deletes all the cloud data associated
    // with this app
@@ -44,15 +44,15 @@ func resetkvstorecontainer() {
 
 the code above does not do anything with the data stored, and the focus is to reset and make the app use the cloud service again. that's the core idea of this first suggestion. this is the "nuclear option" but it's usually the simplest to understand. i’ve used it a few times when starting over wasn't a problem. it’s quick and it works.
 
-**2. the surgical approach –  migrating data (best practice):**
+**2. the surgical approach – migrating data (best practice):**
 
 if you can't afford to lose data, this is the road to take. it involves moving data from the old container to a new one created with the new team id. this requires handling more details, and involves some extra work, but preserves user data which is key, no pun intended. here is the logic:
 
-   *   detect the team id change. you can do this by checking if a new icloud key-value store is available.
-   *   if the old container exists, fetch all the data from the old container.
-   *   create a new container using the new team id.
-   *   write the old data to the new container.
-   *   remove the old container.
+- detect the team id change. you can do this by checking if a new icloud key-value store is available.
+- if the old container exists, fetch all the data from the old container.
+- create a new container using the new team id.
+- write the old data to the new container.
+- remove the old container.
 
 here is a snippet on how the migration might look like:
 
@@ -63,11 +63,11 @@ func migratekvstoredata() {
     let oldcontainerid = "iCloud.\(oldbundleid)" // assuming you saved the old id when the change happened
     let oldcontainer = ckcontainer(identifier: oldcontainerid)
     let newcontainer = ckcontainer.default()
-    
+
     // fetch the old data
     let oldstore = nsuserdefaults(suiteName: oldcontainerid)
     let olddata = oldstore.dictionaryRepresentation()
-    
+
     // the data migration part now
     for (key, value) in olddata {
         newcontainer.performBackgroundTask(with: { (backgroundcontext) in
@@ -75,7 +75,7 @@ func migratekvstoredata() {
               try! backgroundcontext.save() // save migrated data
         })
     }
-    
+
     // after data is migrated, now let's clean up old container
     oldcontainer.delete(withcompletionhandler: { (error) in
         if let error = error {
@@ -84,7 +84,7 @@ func migratekvstoredata() {
             print("old container deleted successfully")
         }
     })
-    
+
     print("data migrated, old data deleted")
 }
 ```
@@ -102,8 +102,8 @@ func safelyaccesskvstore() {
     let container = ckcontainer.default()
     let backgroundcontext = ckmanagedobjectcontext(concurrencytype: .privatequeueconcurrencytype)
     backgroundcontext.parent = container.managedobjectcontext
-    
-    
+
+
    // make sure you have the proper error handling here always
     backgroundcontext.performBackgroundTask { (context) in
         do {

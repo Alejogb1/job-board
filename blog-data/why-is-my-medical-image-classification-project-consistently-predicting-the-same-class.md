@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "why-is-my-medical-image-classification-project-consistently-predicting-the-same-class"
 ---
 
-Okay, let's tackle this. It's a frustrating spot to be in, seeing your medical image classification model stubbornly stuck on a single prediction, especially after all the effort put into it. I've been there, back in my days working on early pathology image analysis; saw this exact scenario repeatedly. It's rarely one single issue causing it, but rather a confluence of factors all leading to this undesirable outcome. Let's break down the common culprits and how to approach them.
+, let's tackle this. It's a frustrating spot to be in, seeing your medical image classification model stubbornly stuck on a single prediction, especially after all the effort put into it. I've been there, back in my days working on early pathology image analysis; saw this exact scenario repeatedly. It's rarely one single issue causing it, but rather a confluence of factors all leading to this undesirable outcome. Let's break down the common culprits and how to approach them.
 
 The core problem, generally, is that your model has essentially learned to optimize for something other than the desired classification task. Instead of discerning the nuanced features within your medical images, it's become overly reliant on a skewed or biased aspect of your dataset, often finding a shortcut that guarantees high initial accuracy but fails catastrophically when faced with unseen data.
 
 First, data imbalance is a very common offender. Imagine a dataset where 90% of the images are of "healthy tissue" and only 10% are of "abnormal tissue." Your model will, more often than not, learn to classify everything as "healthy" because that leads to 90% accuracy immediately. It’s an easy win for the optimizer, even if it's utterly useless in real-world scenarios. We can address this using techniques such as:
 
-*   **Oversampling the minority class**: We duplicate or synthesize samples of the underrepresented class to increase their presence in the training set. This encourages the model to pay closer attention to them.
-*   **Undersampling the majority class**: We reduce the number of samples from the overrepresented class. It can be quicker to train but can lead to the loss of valuable information if not approached carefully.
-*   **Class weights**: We assign higher weights to the loss function when misclassifying the underrepresented classes, forcing the model to pay more attention to these samples during training.
+- **Oversampling the minority class**: We duplicate or synthesize samples of the underrepresented class to increase their presence in the training set. This encourages the model to pay closer attention to them.
+- **Undersampling the majority class**: We reduce the number of samples from the overrepresented class. It can be quicker to train but can lead to the loss of valuable information if not approached carefully.
+- **Class weights**: We assign higher weights to the loss function when misclassifying the underrepresented classes, forcing the model to pay more attention to these samples during training.
 
 Let’s illustrate this with a code snippet. Assume we're using pytorch. Here’s an example of how to use class weights during loss computation:
 
@@ -71,7 +71,7 @@ for epoch in range(num_epochs):
 
 In the snippet above, we calculated the weight of each class using `1.0 / class_counts.float()`. Then, we provide these weights directly to `CrossEntropyLoss` which adjusts its calculation.
 
-A second critical issue can arise from flaws within the data itself. This is not simply class imbalance, but rather, subtle biases within the *image characteristics*. For instance, if all images of one class were consistently taken with a slightly different brightness level or camera angle, the model may be learning to identify these spurious correlations instead of genuine pathology. This can be a real challenge to detect. Thorough data exploration is essential.
+A second critical issue can arise from flaws within the data itself. This is not simply class imbalance, but rather, subtle biases within the _image characteristics_. For instance, if all images of one class were consistently taken with a slightly different brightness level or camera angle, the model may be learning to identify these spurious correlations instead of genuine pathology. This can be a real challenge to detect. Thorough data exploration is essential.
 
 Here is how we can add basic data augmentation with pytorch to mitigate this:
 
@@ -143,7 +143,7 @@ for epoch in range(num_epochs):
 
 This snippet applies random rotations, flips, and color jittering to each image before training. This augmentation increases the variability in training and reduces spurious biases.
 
-Finally, the model architecture itself can also be the culprit. A model might be insufficiently complex to capture the subtle patterns in your medical images, causing it to oversimplify and regress to a single prediction. Conversely, a model that is *too* complex can overfit to your training data, leading to poor generalization on unseen data. Start with a simple but sensible architecture, then progressively increase its complexity while monitoring performance on your validation set. Using techniques like dropout and regularisation are essential for improving the generalization of these models. Here is an example of incorporating dropout to help with overfitting:
+Finally, the model architecture itself can also be the culprit. A model might be insufficiently complex to capture the subtle patterns in your medical images, causing it to oversimplify and regress to a single prediction. Conversely, a model that is _too_ complex can overfit to your training data, leading to poor generalization on unseen data. Start with a simple but sensible architecture, then progressively increase its complexity while monitoring performance on your validation set. Using techniques like dropout and regularisation are essential for improving the generalization of these models. Here is an example of incorporating dropout to help with overfitting:
 
 ```python
 import torch
@@ -192,6 +192,6 @@ for epoch in range(num_epochs):
 
 Here, we add a dropout layer after the flattening of the convolutional layers and before the fully connected layers.
 
-As for literature, I highly recommend delving into *Deep Learning* by Ian Goodfellow, Yoshua Bengio, and Aaron Courville. It provides the theoretical foundations for understanding these issues, and is an invaluable reference. Further, *Pattern Recognition and Machine Learning* by Christopher Bishop, is another fantastic resource to approach these issues from a statistical point of view. Specifically for image classification, review the numerous papers related to imagenet training and transfer learning, they often discuss practical problems in-depth.
+As for literature, I highly recommend delving into _Deep Learning_ by Ian Goodfellow, Yoshua Bengio, and Aaron Courville. It provides the theoretical foundations for understanding these issues, and is an invaluable reference. Further, _Pattern Recognition and Machine Learning_ by Christopher Bishop, is another fantastic resource to approach these issues from a statistical point of view. Specifically for image classification, review the numerous papers related to imagenet training and transfer learning, they often discuss practical problems in-depth.
 
 In summary, the issues of single-class prediction usually stem from a combination of data issues, imbalanced data, poor model architecture and hyper-parameter choices. Tackle each one step-by-step, experiment systematically, and rigorously evaluate your performance on a separate validation set; persistence is key, as it was in my case, in solving these problems.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-stringscontains-be-used-effectively-within-a-go-switch-statement"
 ---
 
-Okay, let's delve into this. I recall a particularly frustrating situation a few years back while building a log parsing tool in Go. The input logs had various structures, and I was struggling with efficiently identifying log entries based on the presence of certain keywords. This is where I honed my approach to using `strings.Contains` within `switch` statements, and it’s definitely more nuanced than it might first appear.
+, let's delve into this. I recall a particularly frustrating situation a few years back while building a log parsing tool in Go. The input logs had various structures, and I was struggling with efficiently identifying log entries based on the presence of certain keywords. This is where I honed my approach to using `strings.Contains` within `switch` statements, and it’s definitely more nuanced than it might first appear.
 
 The core issue revolves around the fact that a Go `switch` statement, by default, compares against explicit values. It's not inherently designed to handle the boolean results of functions like `strings.Contains` directly in its `case` statements. But this doesn't mean we can't use `strings.Contains` within a `switch`. The key is understanding how to leverage the `switch` statement’s more flexible form, particularly the form where the switch expression is absent.
 
@@ -34,7 +34,7 @@ default:
 }
 ```
 
-Here, each `case` must be a boolean expression. And *that’s* where `strings.Contains` fits perfectly. We use it to create conditions for the `case` blocks.
+Here, each `case` must be a boolean expression. And _that’s_ where `strings.Contains` fits perfectly. We use it to create conditions for the `case` blocks.
 
 Now, for clarity, let's illustrate with examples. Imagine I needed to triage log messages based on the presence of specific terms like "error", "warning", or "info." Here’s how I’d approach it:
 
@@ -76,7 +76,7 @@ This snippet demonstrates a basic severity-based triage using `strings.Contains`
 
 Now, while this is functional, you should be aware that order matters in this construct. If a log message contains both "error" and "warning", the first matching `case` will be executed, which, in this case, will be the "error" case, and the subsequent cases will be skipped. That might be exactly what you want, but make sure you're aware of it.
 
-Let's move to a slightly more complex scenario. Suppose I wanted to match a combination of terms, say, checking for the presence of "database" *and* "connection" within a log message. Here’s how you can combine `strings.Contains` with boolean logic:
+Let's move to a slightly more complex scenario. Suppose I wanted to match a combination of terms, say, checking for the presence of "database" _and_ "connection" within a log message. Here’s how you can combine `strings.Contains` with boolean logic:
 
 ```go
 package main

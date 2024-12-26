@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-log-logicaldate-or-ds-in-an-airflow-task"
 ---
 
-Okay, let's tackle this. I’ve definitely had my share of encounters with date handling in Airflow, particularly when trying to ensure consistency across my DAGs, so I think I can shed some light on this. The question of accessing ‘logical_date’ or ‘ds’ (the execution date) within your Airflow tasks is fundamental for most workflows, especially those dealing with time-series data. It’s not just about getting the date; it’s about getting *the* date, the one Airflow uses to define that particular execution.
+, let's tackle this. I’ve definitely had my share of encounters with date handling in Airflow, particularly when trying to ensure consistency across my DAGs, so I think I can shed some light on this. The question of accessing ‘logical_date’ or ‘ds’ (the execution date) within your Airflow tasks is fundamental for most workflows, especially those dealing with time-series data. It’s not just about getting the date; it’s about getting _the_ date, the one Airflow uses to define that particular execution.
 
 The magic here lies in Airflow's templating system. When you define a task within a DAG, Airflow makes certain context variables available to you through Jinja templating. The variables `ds` and `logical_date` are among these crucial context pieces.
 
@@ -94,7 +94,7 @@ A note of caution – when using `{{ logical_date }}` within Bash commands or si
 
 From experience, this templating functionality is incredibly powerful and becomes essential in any moderately complex pipeline. It allows for consistent data processing and naming conventions, thereby aiding greatly in the maintainability of your workflows.
 
-Beyond these basics, keep in mind that Airflow's backfill mechanism affects the behavior of these dates. When you backfill a DAG, each task run is associated with the date for which the data was *intended* to be processed, not the date when the task was actually executed. This is key to comprehend and test thoroughly.
+Beyond these basics, keep in mind that Airflow's backfill mechanism affects the behavior of these dates. When you backfill a DAG, each task run is associated with the date for which the data was _intended_ to be processed, not the date when the task was actually executed. This is key to comprehend and test thoroughly.
 
 For deepening your knowledge on Airflow's templating, I would highly recommend the official Airflow documentation; start with their section on "Jinja Templating" because it’s always the best resource. You could also look at the book “Data Pipelines with Apache Airflow” by Bas Harenslak and Julian Rutger and "Programming Apache Airflow" by Erik Romijn and Mark West. These are invaluable resources for understanding the intricacies of Airflow, including, of course, the powerful templating engine which is the key to the subject of this discussion. These materials will assist you not just with date handling, but with all of Airflow's major features. In addition to this you may also want to investigate how to use Macros in Airflow templates, which will give you further flexibility when generating strings based on dates.
 

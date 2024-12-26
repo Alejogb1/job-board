@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "is-triggering-async-functions-inside-a-vuejs-computed-property-suitable"
 ---
 
-Okay, let's unpack this. I've seen this particular scenario come up more than a few times, often with developers new to the reactive paradigm or those trying to squeeze every bit of performance out of their Vue applications. The short answer is: generally, no, it's not a good idea to directly trigger async functions inside a Vue computed property, and I’ll explain why with some specific examples. It's a pattern that tends to lead to complications that might not be immediately obvious.
+, let's unpack this. I've seen this particular scenario come up more than a few times, often with developers new to the reactive paradigm or those trying to squeeze every bit of performance out of their Vue applications. The short answer is: generally, no, it's not a good idea to directly trigger async functions inside a Vue computed property, and I’ll explain why with some specific examples. It's a pattern that tends to lead to complications that might not be immediately obvious.
 
-The core issue revolves around the intended purpose of computed properties. Computed properties in Vue are designed to be *synchronous* functions that return a derived value based on reactive data. They're intended to be pure functions – meaning that given the same inputs, they should always produce the same output, and they should have no side effects. Async operations, by their very nature, introduce side effects and temporal dependencies. They are not synchronous, and they don’t immediately return a value.
+The core issue revolves around the intended purpose of computed properties. Computed properties in Vue are designed to be _synchronous_ functions that return a derived value based on reactive data. They're intended to be pure functions – meaning that given the same inputs, they should always produce the same output, and they should have no side effects. Async operations, by their very nature, introduce side effects and temporal dependencies. They are not synchronous, and they don’t immediately return a value.
 
 Let’s consider a situation where I was tasked with building a user profile page some time ago. The profile had a list of user-created content, and that content count needed to be updated in real-time as the user interacted with the page. A junior colleague, in an attempt to simplify things, proposed this pattern:
 
@@ -18,31 +18,31 @@ Let’s consider a situation where I was tasked with building a user profile pag
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed } from "vue";
 
 export default {
   setup() {
     const userId = ref(123);
 
     const fetchContentCount = async (id) => {
-        // Assume this is some API call. For simplicity, we use a mock.
-        await new Promise(resolve => setTimeout(resolve, 200));
-        return id * 10;  // Mocking a count based on ID
+      // Assume this is some API call. For simplicity, we use a mock.
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      return id * 10; // Mocking a count based on ID
     };
 
     const totalContentCount = computed(async () => {
-        return await fetchContentCount(userId.value)
+      return await fetchContentCount(userId.value);
     });
 
     return {
-      totalContentCount
+      totalContentCount,
     };
-  }
+  },
 };
 </script>
 ```
 
-This looks almost reasonable at first glance, but here's where it falls apart. Vue's computed properties don't handle the promise returned by the async function directly. What this actually returns is a *promise* object, not the resolved value from the promise. That’s why in the template it would most likely display `[object Promise]` instead of the integer we expect. Moreover, it could lead to unpredictable behavior because the computed property's dependencies don't get updated correctly when the promise resolves and thus the value is not correctly reflected on the view.
+This looks almost reasonable at first glance, but here's where it falls apart. Vue's computed properties don't handle the promise returned by the async function directly. What this actually returns is a _promise_ object, not the resolved value from the promise. That’s why in the template it would most likely display `[object Promise]` instead of the integer we expect. Moreover, it could lead to unpredictable behavior because the computed property's dependencies don't get updated correctly when the promise resolves and thus the value is not correctly reflected on the view.
 
 A better approach involves using reactive variables and a `watch` effect or potentially a method that updates the count when it's needed. Here's how I refactored it:
 
@@ -54,7 +54,7 @@ A better approach involves using reactive variables and a `watch` effect or pote
 </template>
 
 <script>
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch, onMounted } from "vue";
 
 export default {
   setup() {
@@ -62,32 +62,33 @@ export default {
     const totalContentCount = ref(0);
 
     const fetchContentCount = async (id) => {
-        await new Promise(resolve => setTimeout(resolve, 200));
-        return id * 10;
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      return id * 10;
     };
 
-      const updateContentCount = async () => {
+    const updateContentCount = async () => {
       totalContentCount.value = await fetchContentCount(userId.value);
-    }
+    };
 
-
-    watch(userId, async () => {
-          updateContentCount();
-    }, { immediate: true });
-
-
+    watch(
+      userId,
+      async () => {
+        updateContentCount();
+      },
+      { immediate: true }
+    );
 
     return {
-        totalContentCount
+      totalContentCount,
     };
-  }
+  },
 };
 </script>
 ```
 
 In this refactored snippet, I've moved the asynchronous operation to a separate function and used `watch` to trigger the update function when the `userId` changes or on component initialization, ensuring that we have data ready at the start, by passing `{ immediate: true}` as the third argument of `watch`. The `totalContentCount` is now a ref that can correctly render its value in the view. This approach is cleaner and maintains the reactive data-flow.
 
-A further scenario that I've seen, where triggering an async function in computed *might* seem reasonable but really isn't, is where people try to use it for data caching. Suppose you have a list of items that you fetch from an API and you want to cache it to avoid redundant API calls. You might be tempted to do something like this:
+A further scenario that I've seen, where triggering an async function in computed _might_ seem reasonable but really isn't, is where people try to use it for data caching. Suppose you have a list of items that you fetch from an API and you want to cache it to avoid redundant API calls. You might be tempted to do something like this:
 
 ```vue
 <template>
@@ -97,7 +98,7 @@ A further scenario that I've seen, where triggering an async function in compute
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed } from "vue";
 
 export default {
   setup() {
@@ -105,56 +106,62 @@ export default {
 
     const fetchItems = async () => {
       // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 200));
-      return [{ id: 1, name: 'Item A' }, { id: 2, name: 'Item B' }];
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      return [
+        { id: 1, name: "Item A" },
+        { id: 2, name: "Item B" },
+      ];
     };
 
     const cachedItems = computed(async () => {
       if (!cachedData.value) {
-          cachedData.value = await fetchItems();
+        cachedData.value = await fetchItems();
       }
       return cachedData.value;
     });
 
     return {
-      cachedItems
+      cachedItems,
     };
-  }
+  },
 };
 </script>
 ```
+
 Again, this won’t work as intended. Similar to the first example, because computed properties are synchronous, `cachedItems` will return a promise, which is not what we need to display in the UI. Also, the computed value is not going to be cached correctly because the value of `cachedData` is going to be `null` when it's run the first time. In essence, every time the component rerenders, the async function would be called.
 A more reliable way to achieve caching with async operations is to fetch the data on component mounting and cache the result on a ref, as I would do here:
 
 ```vue
 <template>
-    <ul>
-        <li v-for="item in items" :key="item.id">{{ item.name }}</li>
-    </ul>
+  <ul>
+    <li v-for="item in items" :key="item.id">{{ item.name }}</li>
+  </ul>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from "vue";
 
 export default {
-    setup() {
-        const items = ref([]);
+  setup() {
+    const items = ref([]);
 
-        const fetchItems = async () => {
-            // Simulate API call delay
-            await new Promise(resolve => setTimeout(resolve, 200));
-            return [{ id: 1, name: 'Item A' }, { id: 2, name: 'Item B' }];
-        };
+    const fetchItems = async () => {
+      // Simulate API call delay
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      return [
+        { id: 1, name: "Item A" },
+        { id: 2, name: "Item B" },
+      ];
+    };
 
+    onMounted(async () => {
+      items.value = await fetchItems();
+    });
 
-        onMounted(async () => {
-           items.value =  await fetchItems();
-        });
-
-        return {
-            items,
-        };
-    },
+    return {
+      items,
+    };
+  },
 };
 </script>
 ```

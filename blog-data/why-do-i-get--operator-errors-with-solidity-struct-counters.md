@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-do-i-get--operator-errors-with-solidity-struct-counters"
 ---
 
-Alright, let's tackle this issue with solidity struct counters and those pesky `<=` operator errors. I’ve bumped into this more than once, especially during the initial development phases of decentralized applications where data structures become quite intricate. The problem typically arises not from a deficiency in the `<=` operator itself, but rather from how solidity handles struct members and their interactions within the EVM. It's a common pitfall for those starting with the language, and even seasoned developers can trip over it if not paying close attention to storage layouts and mutability.
+, let's tackle this issue with solidity struct counters and those pesky `<=` operator errors. I’ve bumped into this more than once, especially during the initial development phases of decentralized applications where data structures become quite intricate. The problem typically arises not from a deficiency in the `<=` operator itself, but rather from how solidity handles struct members and their interactions within the EVM. It's a common pitfall for those starting with the language, and even seasoned developers can trip over it if not paying close attention to storage layouts and mutability.
 
-The root of the problem often resides in the way solidity manages storage. When you define a `struct`, it's essentially a user-defined type composed of multiple members. These members can have various types (integers, addresses, other structs, arrays), and the way they're stored influences how you can manipulate them. The critical concept here is that *structs are value types in solidity*, meaning that when you assign one struct to another or pass a struct to a function, a copy is often created. This copying behaviour is fundamentally different from reference types, like arrays or mappings, which use pointers.
+The root of the problem often resides in the way solidity manages storage. When you define a `struct`, it's essentially a user-defined type composed of multiple members. These members can have various types (integers, addresses, other structs, arrays), and the way they're stored influences how you can manipulate them. The critical concept here is that _structs are value types in solidity_, meaning that when you assign one struct to another or pass a struct to a function, a copy is often created. This copying behaviour is fundamentally different from reference types, like arrays or mappings, which use pointers.
 
 Now, let’s think about your specific case with counters, often implemented as a simple struct:
 
@@ -131,7 +131,7 @@ contract AccountManagement {
 
 ```
 
-In this example, while we're working with a mapping of `Account` structs, the `checkBalance` function demonstrates the correct way to compare the `balance` member for different accounts. It illustrates that you're always comparing the *members*, not the struct itself.
+In this example, while we're working with a mapping of `Account` structs, the `checkBalance` function demonstrates the correct way to compare the `balance` member for different accounts. It illustrates that you're always comparing the _members_, not the struct itself.
 
 To further your understanding, I’d recommend looking into two resources. First, the official Solidity documentation is essential for understanding storage layouts and value types. You will find the most accurate and up-to-date information about how structs are handled in solidity. Pay special attention to the sections covering "Data Location" and "Value Types." Secondly, a deep dive into the EVM (Ethereum Virtual Machine) specifics concerning how structs are laid out in memory and storage can be very illuminating. Resources that cover the EVM in depth, for example, the book "Mastering Ethereum" by Andreas M. Antonopoulos and Gavin Wood, can provide this crucial backend information. Understanding the underlying mechanics greatly enhances the ability to write efficient and error-free smart contracts.
 

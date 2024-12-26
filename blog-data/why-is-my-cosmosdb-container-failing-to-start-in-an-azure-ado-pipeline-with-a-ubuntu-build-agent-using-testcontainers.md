@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-cosmosdb-container-failing-to-start-in-an-azure-ado-pipeline-with-a-ubuntu-build-agent-using-testcontainers"
 ---
 
-Alright, let's tackle this. Container initialization failures, especially in an Azure DevOps pipeline context using Testcontainers, can be a real head-scratcher at first glance. I've definitely seen my fair share of these, particularly when CosmosDB is in the mix. The fact that it's a Ubuntu build agent adds another layer we should carefully consider. Here’s a breakdown based on experiences I've had working on similar projects, which should provide some solid troubleshooting paths for your situation.
+, let's tackle this. Container initialization failures, especially in an Azure DevOps pipeline context using Testcontainers, can be a real head-scratcher at first glance. I've definitely seen my fair share of these, particularly when CosmosDB is in the mix. The fact that it's a Ubuntu build agent adds another layer we should carefully consider. Here’s a breakdown based on experiences I've had working on similar projects, which should provide some solid troubleshooting paths for your situation.
 
 First off, let's dissect the core components. We have a CosmosDB container being orchestrated through Testcontainers within an Azure DevOps pipeline running on a Ubuntu build agent. The fundamental problem is not necessarily with the CosmosDB itself, but rather the environment in which it’s trying to run. The key things that I would investigate from a systems perspective are connectivity, resource constraints, and specific container-related settings.
 
@@ -18,14 +18,14 @@ jobs:
     pool:
       vmImage: ubuntu-latest
     steps:
-    - bash: |
-        export DOCKER_DRIVER=bridge
-      displayName: 'Set Docker Driver to bridge'
-    - task: Maven@3
-      inputs:
-        mavenPomFile: 'pom.xml'
-        mavenOptions: '-Xmx3072m'
-        mavenGoals: 'test'
+      - bash: |
+          export DOCKER_DRIVER=bridge
+        displayName: "Set Docker Driver to bridge"
+      - task: Maven@3
+        inputs:
+          mavenPomFile: "pom.xml"
+          mavenOptions: "-Xmx3072m"
+          mavenGoals: "test"
 ```
 
 Notice that `export DOCKER_DRIVER=bridge` statement sets the required environment variable. This environment variable will then be picked up by testcontainers as it is configuring the Docker environment. This small change can resolve a large range of initialization problems. If the tests are written in a java environment, this can also be implemented via the Testcontainer configuration:
@@ -101,9 +101,9 @@ To recap, common issues with CosmosDB containers failing to start within a Testc
 
 For further reading and better understanding of the specific technologies that I've touched on, I would highly recommend:
 
-*   **"Docker in Action" by Jeff Nickoloff:** provides a solid foundation on how docker works and is great for getting a detailed overview of docker networking.
-*   **The official Testcontainers documentation:** This is crucial for understanding the API and its different options for configuring containers. I use the testcontainer docs often.
-*   **Microsoft's official documentation on CosmosDB:** Specifically the documentation for the emulator itself, as that will help clarify any errors that might be logged during startup.
-*   **Azure DevOps documentation on build agents:** This will help in understand resource constraints and configuration options.
+- **"Docker in Action" by Jeff Nickoloff:** provides a solid foundation on how docker works and is great for getting a detailed overview of docker networking.
+- **The official Testcontainers documentation:** This is crucial for understanding the API and its different options for configuring containers. I use the testcontainer docs often.
+- **Microsoft's official documentation on CosmosDB:** Specifically the documentation for the emulator itself, as that will help clarify any errors that might be logged during startup.
+- **Azure DevOps documentation on build agents:** This will help in understand resource constraints and configuration options.
 
 I've faced these problems more than once in my work, and by tackling each of the root cause points, you can make the container environment a much more stable and effective testing solution. Don’t hesitate to double check the basics, as they're often the key to solving these kinds of tricky scenarios.

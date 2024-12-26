@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-are-groovys-ast-transformations-applied-twice-for-methods-with-parameters"
 ---
 
-Alright, let's unpack this groovy behavior. It's a quirk that's tripped up quite a few developers, and I've certainly spent my fair share of time debugging its nuances. The apparent double application of abstract syntax tree (AST) transformations for methods with parameters in Groovy is not a bug, but rather an intended consequence of how the Groovy compiler handles method signatures and its internal phases of compilation. To understand this, we need to delve into Groovy's compilation pipeline and look closely at how method ASTs are initially constructed and subsequently modified.
+, let's unpack this groovy behavior. It's a quirk that's tripped up quite a few developers, and I've certainly spent my fair share of time debugging its nuances. The apparent double application of abstract syntax tree (AST) transformations for methods with parameters in Groovy is not a bug, but rather an intended consequence of how the Groovy compiler handles method signatures and its internal phases of compilation. To understand this, we need to delve into Groovy's compilation pipeline and look closely at how method ASTs are initially constructed and subsequently modified.
 
 In essence, when the Groovy compiler encounters a method definition with parameters, it generates a method AST that includes parameter information. This initial AST is, in a way, a placeholder. It contains the bare minimum structure needed to represent the method and its parameters. Crucially, at this stage, the parameter types might not have been fully resolved or processed. This is the first point of entry for AST transformations. Those transformations can then operate on this preliminary AST.
 
-After the initial AST transformation phase, Groovy then proceeds with further type resolution and bytecode generation. This phase requires a complete and accurate representation of the method’s signature, including fully resolved parameter types. Groovy handles this by essentially creating a *new* AST node, a more complete version of the initial one that incorporates this crucial type information. This new AST node is not a replacement but a refactoring or an augmented version of the initial node created in the first phase. Crucially, it is this refactored node that triggers the application of AST transformations a *second* time. This second pass ensures that AST transformations have access to the complete method signature, incorporating concrete parameter type information, enabling transforms that require fully resolved parameter types to operate correctly.
+After the initial AST transformation phase, Groovy then proceeds with further type resolution and bytecode generation. This phase requires a complete and accurate representation of the method’s signature, including fully resolved parameter types. Groovy handles this by essentially creating a _new_ AST node, a more complete version of the initial one that incorporates this crucial type information. This new AST node is not a replacement but a refactoring or an augmented version of the initial node created in the first phase. Crucially, it is this refactored node that triggers the application of AST transformations a _second_ time. This second pass ensures that AST transformations have access to the complete method signature, incorporating concrete parameter type information, enabling transforms that require fully resolved parameter types to operate correctly.
 
 To put it another way, think of the compilation in two parts: a setup phase to build the structure and then a refinement phase where the details are filled in. AST transformations might need to operate on different levels of detail within these phases.
 
@@ -41,7 +41,9 @@ class MySimpleTransformation implements ASTTransformation {
     }
 }
 ```
+
 Now, imagine this class:
+
 ```groovy
 @MySimpleTransformation
 class MyClass {
@@ -53,6 +55,7 @@ class MyClass {
     }
 }
 ```
+
 If you compile and run this code. myMethod will call the println once, before "doing something..", but `myMethodWithParam` will print the "Entering Method" twice, before printing the string "doing something with $name". The reason for this is because, this method with a parameter goes through two different versions of the method AST during compilation phase, each invoking the AST transformation.
 
 Now, let's look at a transformation example that attempts to analyze parameter types more deeply.
@@ -88,6 +91,7 @@ class MyParameterTypeTransformation implements ASTTransformation {
 ```
 
 Applying this transformation to the previous class:
+
 ```groovy
 @MyParameterTypeTransformation
 class MyClass {
@@ -100,6 +104,7 @@ class MyClass {
 }
 
 ```
+
 This will now correctly print out the parameter name and type within the method before "doing something with $name". However, for the second phase, the type information is now concrete instead of just the placeholder, meaning the transformation will correctly print out parameter information at the time when the type resolution is performed, but only for methods with parameters.
 
 Now, for a more advanced transformation that requires specific type information and shows how this is important for some more complex operations:
@@ -132,7 +137,9 @@ class MyTypeSpecificTransformation implements ASTTransformation {
     }
 }
 ```
+
 And running this with the class again:
+
 ```groovy
 @MyTypeSpecificTransformation
 class MyClass {
@@ -147,6 +154,7 @@ class MyClass {
     }
 }
 ```
+
 In this case, `myMethod` will not trigger the output. However, `myMethodWithParam` will, but only at the second execution when the String type has been fully processed by the compiler. While `myMethodWithOtherParam` will not trigger the output since it does not have a String parameter.
 
 The key takeaway here is that AST transformations are often designed to operate on a fully resolved AST. If you need to capture the initial state of a method AST with unresolved types, you would use earlier phases. If you need information about concrete types, then you should expect your transformations to happen on the refined AST.

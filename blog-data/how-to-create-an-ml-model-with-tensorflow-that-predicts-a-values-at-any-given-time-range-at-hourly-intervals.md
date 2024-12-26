@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "how-to-create-an-ml-model-with-tensorflow-that-predicts-a-values-at-any-given-time-range-at-hourly-intervals"
 ---
 
-alright, so you're looking to build a machine learning model using tensorflow that spits out predictions at hourly intervals, across a given time range. i've been down this road a few times, it's a pretty common scenario when dealing with time series data. i'll walk you through my approach, the challenges i've bumped into, and the general stuff you need to think about.
+, so you're looking to build a machine learning model using tensorflow that spits out predictions at hourly intervals, across a given time range. i've been down this road a few times, it's a pretty common scenario when dealing with time series data. i'll walk you through my approach, the challenges i've bumped into, and the general stuff you need to think about.
 
-first off, let's be clear: "predicting values at any given time range at hourly intervals" can mean a few things, but i'm assuming you want a model that, given some historical data, can predict values for *future* hours, not just interpolate between existing data points.
+first off, let's be clear: "predicting values at any given time range at hourly intervals" can mean a few things, but i'm assuming you want a model that, given some historical data, can predict values for _future_ hours, not just interpolate between existing data points.
 
 here's the core idea. you're dealing with a time series problem so recurrent neural networks, specifically lstms or grus, are your best bet. these networks are designed to handle sequential data like time series. they maintain internal states that capture temporal dependencies, allowing them to remember the past and predict the future. that's the crux of it.
 
@@ -174,7 +174,7 @@ loss = model.evaluate(x_test, y_test)
 print(f'Test loss: {loss}')
 ```
 
-notice how the input to the lstm is the original features of the data, plus the generated categorical time features.  i did a one hot encoding because it works better for categories rather than having just the integer representation. the data `data` must have a datetime index, if not you will have to convert it.
+notice how the input to the lstm is the original features of the data, plus the generated categorical time features. i did a one hot encoding because it works better for categories rather than having just the integer representation. the data `data` must have a datetime index, if not you will have to convert it.
 
 for more details on different time series models, the book "forecasting: principles and practice" is a great resource. also, you can explore the paper "long-term recurrent convolutional networks for time series prediction" if you want more advanced architectures, it's a paper about a variation of lstms that incorporate convolutional layers.
 

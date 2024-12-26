@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-i-selectively-display-specific-rows-in-a-recyclerview"
 ---
 
-Okay, let's tackle this. Displaying specific rows in a `RecyclerView` is a common task, but the implementation details can often feel a bit nuanced. From my experience, especially in the earlier days of Android development, handling dynamic data with `RecyclerViews` wasn't always straightforward, and this particular issue – selectively showing items – came up quite a bit. I recall one project where we were building a complex UI for a financial app; user actions needed to toggle the visibility of detailed transaction records based on filter selections. Initially, the naive approach of simply hiding or showing views inside the adapter directly led to all sorts of issues, mostly with animations and layout inconsistencies. We learned pretty quickly that there were much more effective methods.
+, let's tackle this. Displaying specific rows in a `RecyclerView` is a common task, but the implementation details can often feel a bit nuanced. From my experience, especially in the earlier days of Android development, handling dynamic data with `RecyclerViews` wasn't always straightforward, and this particular issue – selectively showing items – came up quite a bit. I recall one project where we were building a complex UI for a financial app; user actions needed to toggle the visibility of detailed transaction records based on filter selections. Initially, the naive approach of simply hiding or showing views inside the adapter directly led to all sorts of issues, mostly with animations and layout inconsistencies. We learned pretty quickly that there were much more effective methods.
 
 The key is to not try to force the `RecyclerView` to display fewer items by messing with view visibility directly. Instead, the proper approach involves working with your data source and then notifying the adapter that the data set has changed. This sounds simple, and it is, but the details of data management are where the actual work happens. Your adapter should always be a reflection of your data, not the other way around. Here's how I approach it, generally:
 
 **1. Maintain a Comprehensive Data Source:**
 
-First, you need to have a complete list of all possible items you *could* display. This is the ‘master’ dataset. In this master list, each item must have a property to indicate whether it should be displayed or not. I usually add a simple boolean like `isVisible`. This is where most developers get into trouble; they tend to modify the list itself to remove the item they want to hide. Don't do that. That approach makes it more difficult to restore the item to the view, and it leads to recalculating `position` indices, which becomes a maintenance headache. This master list shouldn’t be touched unless we’re adding new items or completely deleting something from the list, which has a different context in the application’s business logic.
+First, you need to have a complete list of all possible items you _could_ display. This is the ‘master’ dataset. In this master list, each item must have a property to indicate whether it should be displayed or not. I usually add a simple boolean like `isVisible`. This is where most developers get into trouble; they tend to modify the list itself to remove the item they want to hide. Don't do that. That approach makes it more difficult to restore the item to the view, and it leads to recalculating `position` indices, which becomes a maintenance headache. This master list shouldn’t be touched unless we’re adding new items or completely deleting something from the list, which has a different context in the application’s business logic.
 
 **2. Create a Filtered Display List:**
 
@@ -20,13 +20,13 @@ Second, you'll derive a separate list specifically for the `RecyclerView`. This 
 
 Once your visible list is updated, use one of the adapter's notify methods. You have options here like:
 
-*   `notifyDataSetChanged()`: the most straightforward, but not the most efficient because it updates the whole view and ignores the specifics. It is useful when you don’t have control over which item has changed.
+- `notifyDataSetChanged()`: the most straightforward, but not the most efficient because it updates the whole view and ignores the specifics. It is useful when you don’t have control over which item has changed.
 
-*   `notifyItemRangeRemoved(int startPosition, int itemCount)`: useful when you’re removing a range of items.
-*    `notifyItemRangeInserted(int startPosition, int itemCount)`: useful when you’re inserting a range of items.
-*   `notifyItemRemoved(int position)`: useful when you remove only one item.
-*   `notifyItemInserted(int position)`: useful when you add a new item.
-*   `notifyItemChanged(int position)` or `notifyItemRangeChanged(int positionStart, int itemCount)`: useful when the item’s content is modified and we need to reflect that in the `RecyclerView` item.
+- `notifyItemRangeRemoved(int startPosition, int itemCount)`: useful when you’re removing a range of items.
+- `notifyItemRangeInserted(int startPosition, int itemCount)`: useful when you’re inserting a range of items.
+- `notifyItemRemoved(int position)`: useful when you remove only one item.
+- `notifyItemInserted(int position)`: useful when you add a new item.
+- `notifyItemChanged(int position)` or `notifyItemRangeChanged(int positionStart, int itemCount)`: useful when the item’s content is modified and we need to reflect that in the `RecyclerView` item.
 
 Choose the most specific notify method that matches what happened to the data. This will significantly improve performance and ensure smoother animations.
 

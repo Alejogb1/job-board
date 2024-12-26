@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-azure-web-apps-use-cname-records-to-switch-domain-registrars"
 ---
 
-Okay, let's tackle this. I recall a project back in 2017, a migration actually, where we were moving a sizable e-commerce platform to Azure. We faced precisely this challenge: seamlessly switching domain registrars for our primary web app without downtime, and naturally, using CNAME records was a critical part of that strategy. It wasn't exactly straightforward, but we got it working reliably with a bit of careful planning and testing.
+, let's tackle this. I recall a project back in 2017, a migration actually, where we were moving a sizable e-commerce platform to Azure. We faced precisely this challenge: seamlessly switching domain registrars for our primary web app without downtime, and naturally, using CNAME records was a critical part of that strategy. It wasn't exactly straightforward, but we got it working reliably with a bit of careful planning and testing.
 
 The core issue, as you've likely already surmised, lies in the mechanics of DNS propagation and how Azure Web Apps validates domain ownership. When dealing with different registrars, the challenge isn't just about changing where the domain points; it's ensuring Azure recognizes the changes and can correctly service requests. Azure requires you to provide proof that you control a domain before you can use it with an app service. This validation usually happens by you inserting DNS records, typically A records or CNAMEs, that Azure can then verify. So, let's break it down.
 
-The fundamental idea is to initially configure a CNAME record with the original registrar, pointing your desired domain to the Azure Web App's default *.azurewebsites.net domain. This acts like a temporary bridge. Later, when migrating to the new registrar, you essentially change only where that CNAME points, making it seem like you're just changing where your site is hosted, but really just shifting the domain management.
+The fundamental idea is to initially configure a CNAME record with the original registrar, pointing your desired domain to the Azure Web App's default \*.azurewebsites.net domain. This acts like a temporary bridge. Later, when migrating to the new registrar, you essentially change only where that CNAME points, making it seem like you're just changing where your site is hosted, but really just shifting the domain management.
 
 Here's a typical sequence you might follow. Assume you have your domain, `example.com`, registered with registrar 'A', and you're moving it to registrar 'B':
 
@@ -16,9 +16,9 @@ Here's a typical sequence you might follow. Assume you have your domain, `exampl
 
 2. **Azure Web App Configuration:** In the Azure portal, for your web app, under "Custom Domains", add `www.example.com`. Azure will verify the CNAME record and confirm you own the domain, assuming the CNAME is correctly pointed to the web app's default hostname.
 
-3. **Migration to Registrar B:** Begin the transfer of the `example.com` domain to registrar B. Critically, *do not remove the CNAME record from registrar A just yet*. This is a safeguard.
+3. **Migration to Registrar B:** Begin the transfer of the `example.com` domain to registrar B. Critically, _do not remove the CNAME record from registrar A just yet_. This is a safeguard.
 
-4. **Post Transfer Configuration (at Registrar B):** Once the domain transfer to registrar B is complete, recreate *the identical CNAME record* at registrar B. So, `www.example.com` continues to point to `mywebapp.azurewebsites.net`. This process avoids any downtime during the registrar switch.
+4. **Post Transfer Configuration (at Registrar B):** Once the domain transfer to registrar B is complete, recreate _the identical CNAME record_ at registrar B. So, `www.example.com` continues to point to `mywebapp.azurewebsites.net`. This process avoids any downtime during the registrar switch.
 
 5. **Final Steps:** After verifying that the newly created CNAME at registrar B has propagated (again, use `dig` or `nslookup` to check), you can then remove the CNAME from registrar A. This is now an extra record and can be safely removed to consolidate the DNS management in registrar B.
 
@@ -37,6 +37,7 @@ www.example.com.  CNAME   mywebapp.azurewebsites.net.
 
 www.example.com.  CNAME   mywebapp.azurewebsites.net.
 ```
+
 In practice, you’d use the web interface provided by each registrar, or their specific APIs to make these records changes.
 
 **Snippet 2: Illustrating the Azure ARM Template (example of Web App Custom Domain Configuration)**
@@ -45,23 +46,21 @@ While not directly setting the CNAME record, the Azure Resource Manager template
 
 ```json
 {
-    "type": "Microsoft.Web/sites/hostNameBindings",
-    "apiVersion": "2022-03-01",
-    "name": "[concat(parameters('siteName'),'/', parameters('customDomain'))]",
-    "properties": {
-        "hostName": "[parameters('customDomain')]",
-        "sslState": "Disabled"
-     },
-     "dependsOn": [
-       "[resourceId('Microsoft.Web/sites', parameters('siteName'))]"
-      ]
+  "type": "Microsoft.Web/sites/hostNameBindings",
+  "apiVersion": "2022-03-01",
+  "name": "[concat(parameters('siteName'),'/', parameters('customDomain'))]",
+  "properties": {
+    "hostName": "[parameters('customDomain')]",
+    "sslState": "Disabled"
+  },
+  "dependsOn": ["[resourceId('Microsoft.Web/sites', parameters('siteName'))]"]
 }
 ```
 
 This snippet shows a simplified configuration where a `customDomain` parameter is used to bind a domain name to a web app. This process requires the CNAME verification to be successful first.
 
 **Snippet 3: Demonstrating DNS record lookup using `dig` command**
-    
+
 This example uses the `dig` command-line tool to show a typical lookup of the CNAME record. It's vital to understand this to confirm DNS propagation and record settings:
 
 ```bash

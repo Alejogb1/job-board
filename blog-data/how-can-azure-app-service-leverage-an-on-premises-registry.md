@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-azure-app-service-leverage-an-on-premises-registry"
 ---
 
-Alright, let's tackle this one. I've seen this scenario pop up more times than I can count, and it often involves a careful balancing act between cloud agility and established on-premises infrastructure. The short answer is, yes, Azure App Service can absolutely leverage an on-premises registry for container image deployments. The longer answer, of course, delves into the 'how' and the potential pitfalls.
+, let's tackle this one. I've seen this scenario pop up more times than I can count, and it often involves a careful balancing act between cloud agility and established on-premises infrastructure. The short answer is, yes, Azure App Service can absolutely leverage an on-premises registry for container image deployments. The longer answer, of course, delves into the 'how' and the potential pitfalls.
 
 My experience with this mostly comes from migrating legacy applications to a hybrid cloud architecture for a large financial institution. They had a very strict policy on not hosting sensitive container images in public registries. It's a fairly common requirement and often necessitates a customized approach.
 
@@ -141,22 +141,22 @@ Here's a breakdown of common approaches, focusing on network configurations and 
 
 **Important Considerations:**
 
-*   **Security:** Always use secure communication protocols (HTTPS) for the connection. Store your registry credentials securely. Avoid hardcoding them. Consider Azure Key Vault to manage sensitive information.
+- **Security:** Always use secure communication protocols (HTTPS) for the connection. Store your registry credentials securely. Avoid hardcoding them. Consider Azure Key Vault to manage sensitive information.
 
-*   **Networking:** Planning is key. Consider the impact on your network infrastructure and bandwidth requirements. Test thoroughly.
+- **Networking:** Planning is key. Consider the impact on your network infrastructure and bandwidth requirements. Test thoroughly.
 
-*   **DNS:** Proper DNS resolution is vital for both VNet integration and Hybrid Connections. Ensure the app service can resolve the registry's hostname.
+- **DNS:** Proper DNS resolution is vital for both VNet integration and Hybrid Connections. Ensure the app service can resolve the registry's hostname.
 
-*   **Performance:** VNet integration typically provides the lowest latency for container image pulls, which means faster deployments.
+- **Performance:** VNet integration typically provides the lowest latency for container image pulls, which means faster deployments.
 
-*   **Alternative Authentication:** While the examples used basic username/password authentication, more sophisticated methods such as service principals, certificates, or specific registry APIs might be required in larger production environments. You should reference each registry's documentation for proper authentication methods.
+- **Alternative Authentication:** While the examples used basic username/password authentication, more sophisticated methods such as service principals, certificates, or specific registry APIs might be required in larger production environments. You should reference each registry's documentation for proper authentication methods.
 
 **Recommended Reading:**
 
-*   "Programming Microsoft Azure" by Michael Collier and Robin Shahan: Provides a comprehensive overview of Azure networking and application services.
+- "Programming Microsoft Azure" by Michael Collier and Robin Shahan: Provides a comprehensive overview of Azure networking and application services.
 
-*   Official Azure documentation on App Service VNet integration, Azure Relay Hybrid Connections, and container registry authentication: The most up-to-date resource available directly from Microsoft.
+- Official Azure documentation on App Service VNet integration, Azure Relay Hybrid Connections, and container registry authentication: The most up-to-date resource available directly from Microsoft.
 
-*   "Kubernetes in Action" by Marko Luksa: While primarily focused on Kubernetes, the book covers fundamental container concepts and network models, which are relevant here.
+- "Kubernetes in Action" by Marko Luksa: While primarily focused on Kubernetes, the book covers fundamental container concepts and network models, which are relevant here.
 
 In conclusion, leveraging an on-premises registry with Azure App Service is achievable with the correct planning and implementation. The best approach depends on your organization's needs, resources, and security policies. In the scenarios I’ve faced, VNet integration has generally provided the best combination of security and performance, but other options like Hybrid Connections are perfectly viable. Just be sure to plan carefully, test thoroughly, and always prioritize security.

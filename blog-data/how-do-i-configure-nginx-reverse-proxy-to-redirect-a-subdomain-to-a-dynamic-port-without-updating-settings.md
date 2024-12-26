@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-configure-nginx-reverse-proxy-to-redirect-a-subdomain-to-a-dynamic-port-without-updating-settings"
 ---
 
-Alright, let's tackle this. It's a common scenario, one that I've bumped into several times over the years, particularly in environments where services spin up and down on dynamically allocated ports. Manually reconfiguring Nginx every time a port changes? Absolutely not. We need a robust and, more importantly, automated solution. So, how do we achieve this dynamic redirection of a subdomain to a port that shifts around without having to touch the Nginx config? The answer lies primarily in leveraging Nginx's capabilities alongside some intelligent scripting, often in the form of a companion process.
+, let's tackle this. It's a common scenario, one that I've bumped into several times over the years, particularly in environments where services spin up and down on dynamically allocated ports. Manually reconfiguring Nginx every time a port changes? Absolutely not. We need a robust and, more importantly, automated solution. So, how do we achieve this dynamic redirection of a subdomain to a port that shifts around without having to touch the Nginx config? The answer lies primarily in leveraging Nginx's capabilities alongside some intelligent scripting, often in the form of a companion process.
 
 The core problem stems from Nginx’s static configuration. Traditionally, you specify a `proxy_pass` directive pointing to a specific IP and port, like so: `proxy_pass http://127.0.0.1:8080;`. This works perfectly well when the backend service resides on a fixed port. But when ports are dynamically allocated, this static link becomes a point of failure and tedious maintenance.
 
@@ -69,12 +69,13 @@ server {
 ```
 
 Here's what's happening:
-*   We start with a standard `server` block that listens for traffic for `sub.example.com` on port 80.
-*   We initialize `$dynamic_port` to an empty string.
-*   We define the location of our port file.
-*   Using the `if` directive, we first check if file containing dynamic port exists, if it does, we load the port from a file using lua code. (more on that below)
-*   If the port is still not loaded for some reason, then we return 503 service unavailable
-*   If all goes well, we use the dynamic port in the `proxy_pass` directive and pass along the standard headers.
+
+- We start with a standard `server` block that listens for traffic for `sub.example.com` on port 80.
+- We initialize `$dynamic_port` to an empty string.
+- We define the location of our port file.
+- Using the `if` directive, we first check if file containing dynamic port exists, if it does, we load the port from a file using lua code. (more on that below)
+- If the port is still not loaded for some reason, then we return 503 service unavailable
+- If all goes well, we use the dynamic port in the `proxy_pass` directive and pass along the standard headers.
 
 The core here is the `set_by_lua_file` directive with the associated lua script. This is where Nginx dynamically loads the port. If you don't have lua, you can use another approach with `ngx_http_perl_module`, however lua is much more straight forward.
 
@@ -97,19 +98,19 @@ This Lua script simply reads the content of the provided file (in our case, `dyn
 
 **Important Considerations:**
 
-*   **Caching:** Nginx might cache results of variables which could lead to the wrong port being used. Lua provides a way to make sure we don't use the cached result. In production, use a short cache time within the `set_by_lua_file` call using `set_by_lua_file $dynamic_port "cache=off" /usr/local/nginx/lua/read_port.lua $dynamic_port_file;`.
-*   **Error Handling:** In the provided snippets, error handling is kept to a minimum. In a production deployment, you need to handle errors such as port file not found or invalid port numbers, or any error in the lua code.
-*   **Security:** ensure your port-tracking mechanism and the location of the port file are securely accessible and avoid unauthorized access.
-*   **Scalability:** For a single server setup, reading from a file is feasible. If you have many servers, this introduces a potential bottleneck. More scalable solutions involve using a shared memory segment, a database, or a service discovery system.
-*   **Service Discovery:** Consider using a proper service discovery mechanism like Consul, etcd, or ZooKeeper. These tools are specifically designed to handle dynamic service registration and discovery, and are far better for production environments as it allows multiple backend servers and a more robust management.
-*   **Atomic operations**: it is important to update the port value in an atomic way to avoid race conditions. Lua functions using shared memory are a good approach to achieving this.
-*   **Testing**: Always test this setup in a non-production environment to ensure you have handled all the cases correctly before going to production.
-*   **Performance:** While reading a small file is generally fast, for very high traffic, reading files every request can add overhead. Consider a shared memory method or caching to reduce the amount of file read operations.
+- **Caching:** Nginx might cache results of variables which could lead to the wrong port being used. Lua provides a way to make sure we don't use the cached result. In production, use a short cache time within the `set_by_lua_file` call using `set_by_lua_file $dynamic_port "cache=off" /usr/local/nginx/lua/read_port.lua $dynamic_port_file;`.
+- **Error Handling:** In the provided snippets, error handling is kept to a minimum. In a production deployment, you need to handle errors such as port file not found or invalid port numbers, or any error in the lua code.
+- **Security:** ensure your port-tracking mechanism and the location of the port file are securely accessible and avoid unauthorized access.
+- **Scalability:** For a single server setup, reading from a file is feasible. If you have many servers, this introduces a potential bottleneck. More scalable solutions involve using a shared memory segment, a database, or a service discovery system.
+- **Service Discovery:** Consider using a proper service discovery mechanism like Consul, etcd, or ZooKeeper. These tools are specifically designed to handle dynamic service registration and discovery, and are far better for production environments as it allows multiple backend servers and a more robust management.
+- **Atomic operations**: it is important to update the port value in an atomic way to avoid race conditions. Lua functions using shared memory are a good approach to achieving this.
+- **Testing**: Always test this setup in a non-production environment to ensure you have handled all the cases correctly before going to production.
+- **Performance:** While reading a small file is generally fast, for very high traffic, reading files every request can add overhead. Consider a shared memory method or caching to reduce the amount of file read operations.
 
 For further learning and detailed explanations of relevant concepts, I would recommend the following resources:
 
-*   **"Nginx HTTP Server" by Igor Sysoev (Official Nginx documentation):** This is the definitive guide to Nginx, covering all aspects of configuration and internals. You'll find everything you need about `proxy_pass`, variables, and modules.
-*   **"Programming in Lua" by Roberto Ierusalimschy:** This book will get you up to speed on writing Lua scripts. Lua is very simple and readable, making it easier to incorporate to load port in our nginx configuration.
-*   **"Distributed Systems: Concepts and Design" by George Coulouris et al.:** This textbook provides an in-depth understanding of distributed systems and will be useful for anyone who wants to move beyond the single server setup. Chapters focusing on service discovery and distributed coordination can be particularly relevant for developing robust, scalable solutions.
+- **"Nginx HTTP Server" by Igor Sysoev (Official Nginx documentation):** This is the definitive guide to Nginx, covering all aspects of configuration and internals. You'll find everything you need about `proxy_pass`, variables, and modules.
+- **"Programming in Lua" by Roberto Ierusalimschy:** This book will get you up to speed on writing Lua scripts. Lua is very simple and readable, making it easier to incorporate to load port in our nginx configuration.
+- **"Distributed Systems: Concepts and Design" by George Coulouris et al.:** This textbook provides an in-depth understanding of distributed systems and will be useful for anyone who wants to move beyond the single server setup. Chapters focusing on service discovery and distributed coordination can be particularly relevant for developing robust, scalable solutions.
 
 Implementing this method will allow you to handle dynamically assigned ports without constant manual reconfiguration. Remember to adjust it to your specific needs and to test thoroughly. I've used variations of this setup for years, and it’s proven reliable and efficient when done correctly. Good luck with your implementation!

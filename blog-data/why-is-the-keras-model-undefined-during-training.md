@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-is-the-keras-model-undefined-during-training"
 ---
 
-Alright, let's tackle this. I’ve seen this particular head-scratcher pop up countless times, especially when people are transitioning from a more traditional scripting mindset into the nuances of deep learning frameworks. Specifically, encountering a 'keras model undefined' error during training can stem from a few interrelated issues, and it's rarely as straightforward as a simple typo. I recall one particularly complex project involving time-series forecasting for a financial institution where we spent a whole morning tracing down this exact error. The debugging session was, let’s just say, educational.
+, let's tackle this. I’ve seen this particular head-scratcher pop up countless times, especially when people are transitioning from a more traditional scripting mindset into the nuances of deep learning frameworks. Specifically, encountering a 'keras model undefined' error during training can stem from a few interrelated issues, and it's rarely as straightforward as a simple typo. I recall one particularly complex project involving time-series forecasting for a financial institution where we spent a whole morning tracing down this exact error. The debugging session was, let’s just say, educational.
 
-The primary root cause often revolves around the lifecycle of the model object within the Keras/TensorFlow ecosystem. Keras, at its core, is an API simplification built on top of the more granular TensorFlow, and understanding how these layers interact is critical. In many cases, the "undefined" model emerges because you're trying to use the model *before* it has been properly instantiated and compiled. It's a common pitfall, especially if your code is split across multiple files or within complex class structures where the sequence of operations isn't immediately apparent. Another frequent offender is inadvertently redefining the model within a training loop or some other code block.
+The primary root cause often revolves around the lifecycle of the model object within the Keras/TensorFlow ecosystem. Keras, at its core, is an API simplification built on top of the more granular TensorFlow, and understanding how these layers interact is critical. In many cases, the "undefined" model emerges because you're trying to use the model _before_ it has been properly instantiated and compiled. It's a common pitfall, especially if your code is split across multiple files or within complex class structures where the sequence of operations isn't immediately apparent. Another frequent offender is inadvertently redefining the model within a training loop or some other code block.
 
 To be more specific, let’s break this down into a few potential scenarios and illustrate with code:
 
@@ -42,7 +42,7 @@ trained_model = train_model(model, x_train, y_train)
 print("Training complete") # This line is reached.
 ```
 
-In the first part of the code, we try to pass the undefined variable `model` into the `train_model` function. This is where you'll encounter the "model undefined" error. It's imperative that the `keras.Sequential` or other model instantiation code is executed *before* any training function that depends on it is invoked. The corrected code in the second part shows the proper initialization.
+In the first part of the code, we try to pass the undefined variable `model` into the `train_model` function. This is where you'll encounter the "model undefined" error. It's imperative that the `keras.Sequential` or other model instantiation code is executed _before_ any training function that depends on it is invoked. The corrected code in the second part shows the proper initialization.
 
 **Scenario 2: Accidental Model Redefinition in a Loop**
 
@@ -81,7 +81,7 @@ y_train = np.random.rand(100, 1)
 train_multiple_times(x_train, y_train)
 ```
 
-Here, within `train_multiple_times`, the first loop shows the error. Each loop iteration constructs a *new* model. The model effectively gets reinitialized every time, losing any learned progress. The second implementation, where `model_outer` is defined *outside* the loop, addresses this issue. The same `model_outer` is repeatedly trained, allowing the model to learn from each epoch.
+Here, within `train_multiple_times`, the first loop shows the error. Each loop iteration constructs a _new_ model. The model effectively gets reinitialized every time, losing any learned progress. The second implementation, where `model_outer` is defined _outside_ the loop, addresses this issue. The same `model_outer` is repeatedly trained, allowing the model to learn from each epoch.
 
 **Scenario 3: Incorrect Scoping within Classes or Functions**
 

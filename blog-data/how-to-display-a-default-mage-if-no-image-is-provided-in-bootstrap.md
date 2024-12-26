@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-display-a-default-mage-if-no-image-is-provided-in-bootstrap"
 ---
 
-Alright, let's tackle this one. It's a fairly common scenario when dealing with dynamic content in web applications – needing to gracefully handle missing images. I’ve bumped into this countless times during my career, often finding myself fine-tuning the approach for different project nuances. Handling missing images is more than just aesthetics; it's also about user experience. You don't want a broken image icon to detract from your otherwise polished interface. So, here’s how we can display a default image when none is explicitly provided, focusing on Bootstrap as the front-end framework, and offering three distinct methods with code examples.
+, let's tackle this one. It's a fairly common scenario when dealing with dynamic content in web applications – needing to gracefully handle missing images. I’ve bumped into this countless times during my career, often finding myself fine-tuning the approach for different project nuances. Handling missing images is more than just aesthetics; it's also about user experience. You don't want a broken image icon to detract from your otherwise polished interface. So, here’s how we can display a default image when none is explicitly provided, focusing on Bootstrap as the front-end framework, and offering three distinct methods with code examples.
 
 The primary goal here is to replace an `<img>` tag's source attribute when it fails to load with a fallback image. This can be achieved via several avenues, each with its own advantages and potential drawbacks. I'll detail three distinct approaches, leaning on common practices I’ve seen and implemented over the years.
 
@@ -15,10 +15,12 @@ The first, and arguably most straightforward, method is to utilize the `onerror`
 Here's a code snippet:
 
 ```html
-<img src="image-that-might-not-exist.jpg"
-     onerror="this.onerror=null; this.src='default-image.jpg';"
-     alt="Product Image"
-     class="img-fluid">
+<img
+  src="image-that-might-not-exist.jpg"
+  onerror="this.onerror=null; this.src='default-image.jpg';"
+  alt="Product Image"
+  class="img-fluid"
+/>
 ```
 
 In this snippet, "image-that-might-not-exist.jpg" is our initially attempted image source, and "default-image.jpg" is the fallback. The `this.onerror=null;` part prevents infinite loops should the default image itself fail to load. The `img-fluid` class is standard bootstrap, ensuring the image scales nicely within its container.
@@ -34,24 +36,28 @@ Here’s the javascript function:
 ```javascript
 function handleMissingImages() {
   const images = document.querySelectorAll('img[src]:not([src=""])');
-  images.forEach(img => {
-    img.addEventListener('error', function() {
+  images.forEach((img) => {
+    img.addEventListener("error", function () {
       this.onerror = null;
-      this.src = 'default-image.jpg';
-      console.warn('Image failed to load; replaced with default image:', this);
-      });
+      this.src = "default-image.jpg";
+      console.warn("Image failed to load; replaced with default image:", this);
+    });
   });
 }
 
-document.addEventListener('DOMContentLoaded', handleMissingImages);
+document.addEventListener("DOMContentLoaded", handleMissingImages);
 ```
 
 And here is how it would work in html:
 
 ```html
-<img src="another-possibly-broken-image.png" alt="Another Product" class="img-fluid">
-<img src="valid-image.jpg" alt="A Valid Image" class="img-fluid">
-<img src="" alt="Image with no Source Attribute" class="img-fluid">
+<img
+  src="another-possibly-broken-image.png"
+  alt="Another Product"
+  class="img-fluid"
+/>
+<img src="valid-image.jpg" alt="A Valid Image" class="img-fluid" />
+<img src="" alt="Image with no Source Attribute" class="img-fluid" />
 ```
 
 The javascript function `handleMissingImages()` selects all `img` elements with a non-empty source attribute via the `querySelectorAll` method, and then attaches an `error` event listener to each of them. The listener, much like in method 1, changes the image source to the fallback and sets the onerror to null to prevent looping. I've added a `console.warn` here for debugging – always a good habit. This approach has the benefit of allowing you to easily modify the logic later if needed, and the application of event listeners via javascript is often considered better practice. Note the `document.addEventListener('DOMContentLoaded', handleMissingImages);` line which ensures the function runs once the document object model is loaded, preventing errors if any images are initially not present.
@@ -64,40 +70,52 @@ Let’s look at a sample structure:
 
 ```html
 <figure class="figure">
-  <img src="yet-another-image.gif" class="figure-img img-fluid rounded" alt="Still another image">
+  <img
+    src="yet-another-image.gif"
+    class="figure-img img-fluid rounded"
+    alt="Still another image"
+  />
   <figcaption class="figure-caption"></figcaption>
 </figure>
 
 <figure class="figure">
-   <img src="valid-image2.jpg" class="figure-img img-fluid rounded" alt="Another Valid Image">
-   <figcaption class="figure-caption"></figcaption>
- </figure>
+  <img
+    src="valid-image2.jpg"
+    class="figure-img img-fluid rounded"
+    alt="Another Valid Image"
+  />
+  <figcaption class="figure-caption"></figcaption>
+</figure>
 ```
 
 Now, the corresponding javascript:
 
 ```javascript
 function handleMissingFigures() {
-   const figures = document.querySelectorAll('figure');
-   figures.forEach(figure => {
-      const img = figure.querySelector('img');
-      if (!img) return; // Skip if no image present within figure.
+  const figures = document.querySelectorAll("figure");
+  figures.forEach((figure) => {
+    const img = figure.querySelector("img");
+    if (!img) return; // Skip if no image present within figure.
 
-      img.addEventListener('error', function() {
-         this.onerror = null;
-         this.src = 'default-image.jpg';
-         const figCaption = figure.querySelector('figcaption');
-         if (figCaption) {
-             figCaption.textContent = 'Default Image Displayed';
-         }
-          console.warn('Image failed to load; replaced with default image in figure:', this);
-       });
+    img.addEventListener("error", function () {
+      this.onerror = null;
+      this.src = "default-image.jpg";
+      const figCaption = figure.querySelector("figcaption");
+      if (figCaption) {
+        figCaption.textContent = "Default Image Displayed";
+      }
+      console.warn(
+        "Image failed to load; replaced with default image in figure:",
+        this
+      );
+    });
   });
 }
 
-document.addEventListener('DOMContentLoaded', handleMissingFigures);
+document.addEventListener("DOMContentLoaded", handleMissingFigures);
 ```
-This approach operates similarly to method 2 but adds the `figcaption` capability.  This is quite useful if you want to provide context as to why the default image is being shown. The `handleMissingFigures()` function selects each `figure` element and then attaches an error listener to the image tag within it.  This provides a good, flexible way to display default images, and it also offers the ability to include an image caption that can be modified when the default image is displayed.  This also provides more control over the HTML structure of image elements.
+
+This approach operates similarly to method 2 but adds the `figcaption` capability. This is quite useful if you want to provide context as to why the default image is being shown. The `handleMissingFigures()` function selects each `figure` element and then attaches an error listener to the image tag within it. This provides a good, flexible way to display default images, and it also offers the ability to include an image caption that can be modified when the default image is displayed. This also provides more control over the HTML structure of image elements.
 
 **Recommendations for Further Exploration**
 

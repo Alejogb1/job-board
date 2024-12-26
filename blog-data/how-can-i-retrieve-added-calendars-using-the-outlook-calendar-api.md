@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-retrieve-added-calendars-using-the-outlook-calendar-api"
 ---
 
-Okay, let's tackle this one. Retrieving added calendars using the Outlook Calendar API, or Microsoft Graph as it’s now predominantly known, is a task I've encountered countless times. It's not always as straightforward as one might initially think, particularly when dealing with shared calendars, resource calendars, or calendars that have been added through various methods. I recall a particularly intricate project a few years back where we were integrating our scheduling system with a client’s Outlook setup, and this was a core hurdle. The experience forced me to really understand the nuances of the API and different user scenarios.
+, let's tackle this one. Retrieving added calendars using the Outlook Calendar API, or Microsoft Graph as it’s now predominantly known, is a task I've encountered countless times. It's not always as straightforward as one might initially think, particularly when dealing with shared calendars, resource calendars, or calendars that have been added through various methods. I recall a particularly intricate project a few years back where we were integrating our scheduling system with a client’s Outlook setup, and this was a core hurdle. The experience forced me to really understand the nuances of the API and different user scenarios.
 
-At its heart, retrieving calendars involves querying the Graph API endpoints using appropriate permissions. The fundamental endpoint you’ll be working with is `/users/{id | userPrincipalName}/calendars`. The user ID or principal name is crucial here, as you’re retrieving calendars associated with a *specific* user. A common mistake is assuming the authenticated user’s calendars will be returned without explicitly specifying them. We've definitely seen that cause some confusion in the past.
+At its heart, retrieving calendars involves querying the Graph API endpoints using appropriate permissions. The fundamental endpoint you’ll be working with is `/users/{id | userPrincipalName}/calendars`. The user ID or principal name is crucial here, as you’re retrieving calendars associated with a _specific_ user. A common mistake is assuming the authenticated user’s calendars will be returned without explicitly specifying them. We've definitely seen that cause some confusion in the past.
 
 Now, the 'added' part of the question implies not just the user’s primary calendar, but also any other calendars the user has subscribed to, or had shared with them. These calendars reside in different categories, and accessing them requires a careful understanding of the response structure and filters.
 
@@ -42,9 +42,9 @@ def get_user_calendars(user_id, client):
 
 This snippet queries for all calendars directly associated with the given `user_id`. Notice the error handling implemented using a `try...except` block; this is crucial for production environments. The function returns a list of calendar dictionaries, each containing details like the calendar name, ID, and other properties.
 
-However, simply querying `/users/{user_id}/calendars` might not return *every* calendar the user has access to. Shared calendars often require another approach. These calendars aren't directly owned by the user, but are accessible because they’ve been granted permissions. To get those, we generally need to utilize the `calendarView` or specific permission delegations that would enable the application to access events and calendars to which the user has access.
+However, simply querying `/users/{user_id}/calendars` might not return _every_ calendar the user has access to. Shared calendars often require another approach. These calendars aren't directly owned by the user, but are accessible because they’ve been granted permissions. To get those, we generally need to utilize the `calendarView` or specific permission delegations that would enable the application to access events and calendars to which the user has access.
 
-Here's a slightly more advanced snippet that attempts to retrieve *all* calendars visible to the user, including shared ones. To get the calendars for a user, you typically will need to use the `calendarView` of the user, which will also give the user access to shared calendars if they have delegated access:
+Here's a slightly more advanced snippet that attempts to retrieve _all_ calendars visible to the user, including shared ones. To get the calendars for a user, you typically will need to use the `calendarView` of the user, which will also give the user access to shared calendars if they have delegated access:
 
 ```python
 from msgraph import GraphServiceClient
@@ -98,6 +98,7 @@ In this revised snippet, we're retrieving all the events within a single day for
 Finally, consider delegated permissions. When an application needs to access calendar data on behalf of a user, it needs the appropriate permissions. These permissions typically involve a scope such as `Calendars.Read` or `Calendars.ReadWrite`. The way you authenticate with the API will depend on your application's specific requirements and the desired level of access.
 
 Here is a simplified example of how to add delegated permissions when authenticating:
+
 ```python
 from msal import ConfidentialClientApplication
 

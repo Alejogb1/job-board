@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-security-precautions-should-i-take-before-launching-my-website"
 ---
 
-Okay, let's talk website security. I’ve seen a few launches over the years, some smoother than others, and the one thing that consistently determines success is a solid security plan beforehand. It’s not just about slapping on some SSL certificates; there's quite a bit more to consider. Before getting into the code, I want to emphasize that security is a layered approach. Think of it like an onion – multiple protective layers work in concert.
+, let's talk website security. I’ve seen a few launches over the years, some smoother than others, and the one thing that consistently determines success is a solid security plan beforehand. It’s not just about slapping on some SSL certificates; there's quite a bit more to consider. Before getting into the code, I want to emphasize that security is a layered approach. Think of it like an onion – multiple protective layers work in concert.
 
 My approach here is going to cover three main areas: infrastructure, application, and user data. For me, these are the pillars of a secure website, and neglect in any one area can lead to significant problems.
 
@@ -35,13 +35,14 @@ user_submitted_data = "<script>alert('malicious')</script><p>Hello</p><a href='h
 sanitized_data = sanitize_input(user_submitted_data)
 print(sanitized_data) # Output: <p>Hello</p><a href="http://malicious.com" rel="nofollow noreferrer noopener">Link</a>
 ```
-*In this Python example using the `bleach` library, the `<script>` tag is removed, and the link is modified with a security attribute, showcasing a basic sanitization process. Always adapt this to your technology stack.*
+
+_In this Python example using the `bleach` library, the `<script>` tag is removed, and the link is modified with a security attribute, showcasing a basic sanitization process. Always adapt this to your technology stack._
 
 2.  **Authentication and Authorization:** Implement robust authentication and authorization mechanisms to control access to resources. Use strong password hashing algorithms (bcrypt, Argon2) and session management techniques to prevent unauthorized access and session hijacking. Consider using two-factor authentication (2FA) for critical parts of the site.
 
 ```javascript
 // Example of password hashing in JavaScript using bcrypt
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 async function hashPassword(password) {
   const saltRounds = 10;
@@ -50,22 +51,22 @@ async function hashPassword(password) {
 }
 
 async function verifyPassword(password, hashedPassword) {
-    return await bcrypt.compare(password, hashedPassword);
+  return await bcrypt.compare(password, hashedPassword);
 }
 
 // Example usage:
 async function main() {
-    const userPassword = "mysecretpassword";
-    const hashed = await hashPassword(userPassword);
-    console.log("Hashed password: ", hashed);
-    const result = await verifyPassword(userPassword, hashed);
-    console.log("Password matched?", result); // Will output true if passwords match
+  const userPassword = "mysecretpassword";
+  const hashed = await hashPassword(userPassword);
+  console.log("Hashed password: ", hashed);
+  const result = await verifyPassword(userPassword, hashed);
+  console.log("Password matched?", result); // Will output true if passwords match
 }
 
 main();
 ```
 
-*In this JavaScript example using `bcrypt`, we show how to hash and verify passwords, a critical part of handling user credentials. Note that you’d usually store the hashed password in your database.*
+_In this JavaScript example using `bcrypt`, we show how to hash and verify passwords, a critical part of handling user credentials. Note that you’d usually store the hashed password in your database._
 
 3.  **Secure Database Interactions:** Use parameterized queries or stored procedures to prevent SQL injection attacks. Never embed user input directly in database queries. Grant database users only the necessary permissions for their respective tasks.
 
@@ -114,7 +115,8 @@ public class EncryptionUtil {
     }
 }
 ```
-*In this Java example, we use AES encryption to demonstrate how to encrypt and decrypt a string. Remember, in a real-world scenario, the secret key needs to be handled much more securely, likely using environment variables or a secure secrets store.*
+
+_In this Java example, we use AES encryption to demonstrate how to encrypt and decrypt a string. Remember, in a real-world scenario, the secret key needs to be handled much more securely, likely using environment variables or a secure secrets store._
 
 2.  **Data Minimization:** Collect and store only the necessary user data. Avoid collecting sensitive data unless there's a compelling reason. Periodically purge or anonymize unnecessary data.
 
@@ -122,6 +124,6 @@ public class EncryptionUtil {
 
 4.  **Regular Security Audits:** Conduct regular security audits, either internally or by hiring external security professionals. These audits should include vulnerability assessments, penetration testing, and code reviews. These aren’t a one-off; they are an ongoing requirement.
 
-For further reading, I would recommend: *Web Application Security* by Andrew Hoffman, *The Tangled Web* by Michal Zalewski, and the OWASP (Open Web Application Security Project) resources, which provide a wealth of information on web application security best practices. You can find specific guides on their website on topics such as injection attacks, authentication, and session management. Also, if you’re working within a cloud environment, reviewing the security whitepapers offered by your cloud provider is essential.
+For further reading, I would recommend: _Web Application Security_ by Andrew Hoffman, _The Tangled Web_ by Michal Zalewski, and the OWASP (Open Web Application Security Project) resources, which provide a wealth of information on web application security best practices. You can find specific guides on their website on topics such as injection attacks, authentication, and session management. Also, if you’re working within a cloud environment, reviewing the security whitepapers offered by your cloud provider is essential.
 
 Launching a website without these precautions is akin to leaving the front door open – it’s a gamble you shouldn’t take. Securing your website is a continuous process, not a one-time task. It’s about diligence, planning, and staying updated on emerging threats and mitigation techniques.

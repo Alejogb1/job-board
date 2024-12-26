@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-flask-configuration-handling-from-an-external-file"
 ---
 
-alright, so you're looking to move your flask configuration out of your main app file and into something external, makes sense. i've been there, believe me. i've seen some pretty tangled up flask apps that had all their settings hardcoded into the python file. not pretty.
+, so you're looking to move your flask configuration out of your main app file and into something external, makes sense. i've been there, believe me. i've seen some pretty tangled up flask apps that had all their settings hardcoded into the python file. not pretty.
 
 first off, why do this? well, for starters, it cleans up your main `app.py` or whatever you've named it. keeps the logic separated from your settings. but even more importantly, it lets you configure your app differently for different environments - think development, testing, production. you might want debug mode on during development, but definitely not when it's live.
 
@@ -104,14 +104,14 @@ now, a bit of a joke i heard the other day in an office, a bug walked into a pro
 
 **some resources i recommend:**
 
-*   **"flask web development" by miguel grinberg:** this is an excellent book. it's very practical, easy to read, and gives you great patterns for structuring your app, and it covers configuration management in detail. it's a must-read if you're serious about flask development.
+- **"flask web development" by miguel grinberg:** this is an excellent book. it's very practical, easy to read, and gives you great patterns for structuring your app, and it covers configuration management in detail. it's a must-read if you're serious about flask development.
 
-*   **flask documentation:** as always, the official documentation is your friend. specifically, check out the configuration section. it lays out all the possible configuration options and methods for loading settings. it should have the `from_json`, and `from_mapping` options and ways to use command line arguments to influence configurations.
+- **flask documentation:** as always, the official documentation is your friend. specifically, check out the configuration section. it lays out all the possible configuration options and methods for loading settings. it should have the `from_json`, and `from_mapping` options and ways to use command line arguments to influence configurations.
 
-*   **the twelve-factor app methodology:** this isn’t flask-specific, but it’s an excellent set of practices for building web applications. one of the main points is configuring your application using environment variables, i've found this to be critical for any modern web development process.
+- **the twelve-factor app methodology:** this isn’t flask-specific, but it’s an excellent set of practices for building web applications. one of the main points is configuring your application using environment variables, i've found this to be critical for any modern web development process.
 
-*   **the dotenv library:** if you use the environment variable approach, consider using a dotenv file (`.env`) for development, the `dotenv` library will help you to load those variables in a simple way. it is a simpler approach than using a `config.py` file.
+- **the dotenv library:** if you use the environment variable approach, consider using a dotenv file (`.env`) for development, the `dotenv` library will help you to load those variables in a simple way. it is a simpler approach than using a `config.py` file.
 
-*   **various online tutorials:** websites like realpython, and digitalocean have some great flask guides. these are often more focused on specific tasks, so they may have even more specific examples related to your particular needs. you will find many examples of people dealing with configuration management there.
+- **various online tutorials:** websites like realpython, and digitalocean have some great flask guides. these are often more focused on specific tasks, so they may have even more specific examples related to your particular needs. you will find many examples of people dealing with configuration management there.
 
 remember, the goal is to keep your configuration separate from your code, make it flexible, and make it easy to deploy your flask apps in different environments without the need of manual changes. it's something you set once, and it will save you a lot of time and frustration in the long run. this approach with a mix of external files and environment variables has worked for me in production across many projects, and i really hope it helps you too. let me know if you get stuck or want more specifics.

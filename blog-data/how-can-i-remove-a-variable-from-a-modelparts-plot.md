@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-remove-a-variable-from-a-modelparts-plot"
 ---
 
-Alright, let's tackle this. Removing a variable from a `model_parts()` plot, especially when you're working with models that might have intricate structures, can sometimes feel like a bit of a puzzle. It's a scenario I’ve encountered a good number of times during model analysis and refinement. I’ve found that there isn’t a single, universally applicable solution. Rather, the approach really depends on how that `model_parts()` plot is being generated and the underlying library you're using. For this, I'll assume we're talking about libraries similar to `DALEX` in R or `shap` in Python, since these are commonly associated with model explanation and the type of plots you've described. The techniques generally revolve around preprocessing the data going into the plot generation or post-processing the plot object itself. Let me walk you through a few approaches I've used, along with some code examples.
+, let's tackle this. Removing a variable from a `model_parts()` plot, especially when you're working with models that might have intricate structures, can sometimes feel like a bit of a puzzle. It's a scenario I’ve encountered a good number of times during model analysis and refinement. I’ve found that there isn’t a single, universally applicable solution. Rather, the approach really depends on how that `model_parts()` plot is being generated and the underlying library you're using. For this, I'll assume we're talking about libraries similar to `DALEX` in R or `shap` in Python, since these are commonly associated with model explanation and the type of plots you've described. The techniques generally revolve around preprocessing the data going into the plot generation or post-processing the plot object itself. Let me walk you through a few approaches I've used, along with some code examples.
 
 **Understanding the Data Source**
 
-Before diving into the code, it's crucial to understand where the data is coming from. `model_parts()` functions, or similar implementations, often rely on a specific data matrix used to generate the feature importance or variable contribution. Often, these are derived from permutation importance or by using a similar strategy. If we manipulate *this* data before calling the plotting function, that's often the easiest route to excluding a particular variable. The underlying calculation would effectively consider all the variables except for the ones you wish to omit.
+Before diving into the code, it's crucial to understand where the data is coming from. `model_parts()` functions, or similar implementations, often rely on a specific data matrix used to generate the feature importance or variable contribution. Often, these are derived from permutation importance or by using a similar strategy. If we manipulate _this_ data before calling the plotting function, that's often the easiest route to excluding a particular variable. The underlying calculation would effectively consider all the variables except for the ones you wish to omit.
 
 **Approach 1: Preprocessing the Data**
 
@@ -47,6 +47,7 @@ plot(model_parts(explainer_iris_noPetal))
 
 
 ```
+
 In this R example, we’ve loaded the `DALEX` library and created a model and corresponding `explainer` object. Note the iris data set is also loaded for the purpose of this illustration. The key is in this line:
 `data_for_explanation <- iris[, !(names(iris) %in% c("Petal.Length"))]` This explicitly removes "Petal.Length" from the data before creating the second `explainer` object, effectively excluding it from the subsequent `model_parts` analysis.
 It's important to note here that you must re-generate the `explainer` object using the modified data. Failing to do this will result in a plot that still includes the variable we are intending to exclude. This approach can also be applied with other types of model libraries and datasets.
@@ -93,13 +94,15 @@ shap.summary_plot(shap_values_modified, X_test_modified)
 
 
 ```
+
 Here, the `shap` library is used, along with an example random forest classifier. Initially, we generate shap values and create a summary plot including all feature variables. Then, we modify our input data by removing ‘petal length (cm)’ before regenerating the shap values using the modified data and the same explainer. Finally, we call `shap.summary_plot` using modified data and values and we'll see that the variable no longer appears in the resulting plot. As with the `DALEX` example, it is crucial that we recalculate the shap values using the modified data for the changes to be apparent. This is one of the most reliable and common approaches when using `shap` or a similar library.
 
 **Approach 3: Post-Processing the Plot (Less Common, but Possible)**
 
-Occasionally, when direct data preprocessing isn't feasible (this is less common and I have personally not used this in a production setting), post-processing the plot object *might* be an option. However, this is typically more complex and varies significantly based on the plotting library used. Many libraries render plots as complex objects that are not easily manipulated directly. If you have direct access to the underlying data, it's always preferable to modify that rather than trying to 'edit' the plot object after it has been created.
+Occasionally, when direct data preprocessing isn't feasible (this is less common and I have personally not used this in a production setting), post-processing the plot object _might_ be an option. However, this is typically more complex and varies significantly based on the plotting library used. Many libraries render plots as complex objects that are not easily manipulated directly. If you have direct access to the underlying data, it's always preferable to modify that rather than trying to 'edit' the plot object after it has been created.
 
 For this, consider this example using `matplotlib`, which can be used to directly edit generated plot objects when an underlying plotting library makes it available. However, this is a highly fragile process, and I would advise against it for a real world solution.
+
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
@@ -139,12 +142,13 @@ ax.set_xlabel('Feature Importance')
 ax.set_ylabel('Feature')
 plt.show()
 ```
+
 Here, we're generating a simple bar plot using `matplotlib` and some random data, this mimics the kind of output from `model_parts()`, though we’ve created it manually. In this instance, we can identify the location of the feature we wish to omit and use it to delete it from the original plot object. You can see this can be a tricky and error prone process. Again, I emphasize this is not the preferred approach; I’d generally suggest looking to manipulate the data passed to the underlying plot generating function before attempting this.
 
 **Recommendations for further exploration:**
 
-*   **"Interpretable Machine Learning" by Christoph Molnar:** This book offers a comprehensive overview of model interpretation techniques, including permutation importance and SHAP values. It is an excellent resource for understanding the theory behind these plots, which informs how best to handle the data.
-*   **The documentation of the `DALEX` package (R)**: Explore the `explain` and `model_parts` functions in detail. Pay attention to the expected input data formats and parameters. This will help you understand why and how specific variables should be filtered or excluded.
-*   **The documentation of the `shap` package (Python):** The `shap` documentation is excellent for understanding the various explainer objects, calculation methods and plotting functions available, and is essential for this type of work.
+- **"Interpretable Machine Learning" by Christoph Molnar:** This book offers a comprehensive overview of model interpretation techniques, including permutation importance and SHAP values. It is an excellent resource for understanding the theory behind these plots, which informs how best to handle the data.
+- **The documentation of the `DALEX` package (R)**: Explore the `explain` and `model_parts` functions in detail. Pay attention to the expected input data formats and parameters. This will help you understand why and how specific variables should be filtered or excluded.
+- **The documentation of the `shap` package (Python):** The `shap` documentation is excellent for understanding the various explainer objects, calculation methods and plotting functions available, and is essential for this type of work.
 
 In closing, remember to first address the data before the plotting. It's almost always the cleaner and more reliable route. Post-processing is a complex and error prone task and not something I use often in real production environments. Let me know if you have more specific scenarios; I’d be happy to provide more tailored guidance.

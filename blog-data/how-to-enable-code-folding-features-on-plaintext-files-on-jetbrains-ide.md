@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "how-to-enable-code-folding-features-on-plaintext-files-on-jetbrains-ide"
 ---
 
-alright, so you're after code folding in plaintext files on a jetbrains ide, right? i’ve been there. it's one of those things that seems trivial until you’re staring at a 500-line config file, or a sprawling log, and your brain just wants to implode. the struggle is real. i remember back in the day when i was first starting out. i was working on a particularly gnarly project. some old mainframe system configuration i think it was, and these files… oh man, they were just walls of text. no structure, nothing. i was scrolling, scrolling and lost my context every two minutes. it was terrible. then one day, a colleague (she was a seasoned systems admin), showed me this feature, and it changed everything. it felt like moving from a cave to a penthouse. it’s amazing what a bit of folding can do.
+, so you're after code folding in plaintext files on a jetbrains ide, right? i’ve been there. it's one of those things that seems trivial until you’re staring at a 500-line config file, or a sprawling log, and your brain just wants to implode. the struggle is real. i remember back in the day when i was first starting out. i was working on a particularly gnarly project. some old mainframe system configuration i think it was, and these files… oh man, they were just walls of text. no structure, nothing. i was scrolling, scrolling and lost my context every two minutes. it was terrible. then one day, a colleague (she was a seasoned systems admin), showed me this feature, and it changed everything. it felt like moving from a cave to a penthouse. it’s amazing what a bit of folding can do.
 
-so, out of the box, jetbrains ide’s usually don’t have folding for plain text. they're optimized for code, naturally, where syntax helps determine the folding blocks. but we can definitely make it happen. the key is to define custom folding rules. think of it as telling the ide, "hey, when you see *this*, treat it as a collapsible section”. this relies on regular expressions, or regex, which many software developers either love or hate. i, personally, have a soft spot for them. they’re like tiny programming languages in themselves. if you don’t have familiarity with them consider taking some time to understand them better, i recommend the book "mastering regular expressions" by jeffrey friedl. this has been a lifesaver for me in several occasions.
+so, out of the box, jetbrains ide’s usually don’t have folding for plain text. they're optimized for code, naturally, where syntax helps determine the folding blocks. but we can definitely make it happen. the key is to define custom folding rules. think of it as telling the ide, "hey, when you see _this_, treat it as a collapsible section”. this relies on regular expressions, or regex, which many software developers either love or hate. i, personally, have a soft spot for them. they’re like tiny programming languages in themselves. if you don’t have familiarity with them consider taking some time to understand them better, i recommend the book "mastering regular expressions" by jeffrey friedl. this has been a lifesaver for me in several occasions.
 
 let’s get into it. you'll need to access the 'editor' settings in your jetbrains ide and then navigate to 'code folding' section, you can normally find this in ‘settings/preferences > editor > code folding’. there you’ll find a section named "custom folding regions". this is our playground. you'll be adding new rules that tell the ide where to start and end the folds. these rules consist of two parts; the start and end regex patterns.
 
@@ -50,12 +50,19 @@ you can really go nuts with this stuff. if you wanted to, you could set up foldi
 
 ```markdown
 # main title
+
 some paragraph
+
 ## subtitle
+
 another paragraph
+
 ### sub-subtitle
+
 and another paragraph
+
 # main title 2
+
 some more content
 ```
 

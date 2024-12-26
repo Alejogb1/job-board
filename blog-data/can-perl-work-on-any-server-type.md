@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "can-perl-work-on-any-server-type"
 ---
 
-Okay so you're asking if Perl can run anywhere right like on any server. I've been kicking around servers and coding in Perl since the late 90s and let me tell you it's a yes and a no kinda answer it's complicated but not that complicated. 
+you're asking if Perl can run anywhere right like on any server. I've been kicking around servers and coding in Perl since the late 90s and let me tell you it's a yes and a no kinda answer it's complicated but not that complicated.
 
 Short answer is yes perl can run on basically any server that matters even the weird ones but it's always "it depends". Let's unpack that.
 
@@ -16,13 +16,13 @@ So yeah Perl is platform agnostic kinda but it's not magical it needs a C compil
 
 Here's the deal though the vast majority of servers you'll run into today use operating systems like Linux and Windows. These are the two biggies in web servers cloud environments etc. Perl has super great support for both.
 
-* **Linux:** Linux is where Perl feels right at home you can install it easily using the system's package manager like apt or yum or dnf. There are usually precompiled versions available and you are set for a quick install. If you don't want the system version you can compile it from source no problem at all.
+- **Linux:** Linux is where Perl feels right at home you can install it easily using the system's package manager like apt or yum or dnf. There are usually precompiled versions available and you are set for a quick install. If you don't want the system version you can compile it from source no problem at all.
 
-* **Windows:** On windows it's a bit more clunky you usually end up using something like ActiveState Perl or Strawberry Perl which bundle the interpreter and a bunch of handy modules. I personally use Strawberry Perl on my Windows machines it works great for development and running small scripts. I had some issues with the command line interface working with long pathnames. But that was resolved with a proper installation. It can get tricky if you need to handle complex file IO with many special characters but that's more on windows than perl.
+- **Windows:** On windows it's a bit more clunky you usually end up using something like ActiveState Perl or Strawberry Perl which bundle the interpreter and a bunch of handy modules. I personally use Strawberry Perl on my Windows machines it works great for development and running small scripts. I had some issues with the command line interface working with long pathnames. But that was resolved with a proper installation. It can get tricky if you need to handle complex file IO with many special characters but that's more on windows than perl.
 
-* **macOS:** macOS is really like a cousin of Linux at a terminal level so it also is very easy to install and run perl code.
+- **macOS:** macOS is really like a cousin of Linux at a terminal level so it also is very easy to install and run perl code.
 
-Now let's talk about the "it depends" part. 
+Now let's talk about the "it depends" part.
 
 The core of Perl is very portable. You can write code that'll run mostly without changes across different operating systems. However when you start using external libraries or modules that depends on system calls or native libraries that's where you might run into problems.
 
@@ -43,6 +43,7 @@ for (my $i = 0; $i < $count; $i++) {
     print "Iteration: " . ($i+1) . "\n";
 }
 ```
+
 This very simple code will print a message and a loop in the console. No surprises here. It's what you expect it's going to do no matter the machine or system.
 
 However here is the other side of the coin something that might need tweaks or will just not work.
@@ -87,26 +88,27 @@ chomp $cpu;
 print "OS: $os\n";
 print "CPU: $cpu\n";
 ```
+
 This code will print the operating system and a model of the processor however since `cat /proc/cpuinfo` is not valid in windows that part will clearly not work.
 
 If you are targeting portability you should avoid such things.
 
 **So how can you deal with portability issues?**
 
-*   **Abstract your code:** Try to isolate system-specific parts into separate modules or functions. This makes it easier to make changes when you port to different operating systems.
+- **Abstract your code:** Try to isolate system-specific parts into separate modules or functions. This makes it easier to make changes when you port to different operating systems.
 
-*   **Use standard modules:** Whenever possible use modules that are portable like `File::Spec` for path manipulation instead of hard coding paths with forward or backslashes which are different depending on the OS. 
+- **Use standard modules:** Whenever possible use modules that are portable like `File::Spec` for path manipulation instead of hard coding paths with forward or backslashes which are different depending on the OS.
 
-*  **Test thoroughly:** Always test your code on different operating systems to find potential issues early.
+- **Test thoroughly:** Always test your code on different operating systems to find potential issues early.
 
-*   **Containerization:** Using containers like Docker you can package your Perl application and all its dependencies in an image. This will ensure it runs the same no matter the environment it is deployed to. There are also alternatives to containers like virtual machines that also can help to reproduce the environment in all machines.
+- **Containerization:** Using containers like Docker you can package your Perl application and all its dependencies in an image. This will ensure it runs the same no matter the environment it is deployed to. There are also alternatives to containers like virtual machines that also can help to reproduce the environment in all machines.
 
-*  **Modern Perl:** If possible use newer Perl versions. There have been many improvements in handling portability over the years. The older version of perl you use the more trouble you will have. I'm joking but really I've had to maintain some old perl code that only works on very specific perl versions and it's like pulling teeth every single time.
+- **Modern Perl:** If possible use newer Perl versions. There have been many improvements in handling portability over the years. The older version of perl you use the more trouble you will have. I'm joking but really I've had to maintain some old perl code that only works on very specific perl versions and it's like pulling teeth every single time.
 
 **Recommended Resources**
 
-*   *Programming Perl* by Larry Wall the author of Perl. This book is like the Bible of Perl.
-*   *Modern Perl* by chromatic. A more modern approach to Perl programming that emphasizes current best practices.
-*   Perl documentation at `perldoc.perl.org`. Always a great source of truth for the official Perl documentation.
+- _Programming Perl_ by Larry Wall the author of Perl. This book is like the Bible of Perl.
+- _Modern Perl_ by chromatic. A more modern approach to Perl programming that emphasizes current best practices.
+- Perl documentation at `perldoc.perl.org`. Always a great source of truth for the official Perl documentation.
 
 So to answer your question yes perl runs anywhere that matters but you have to be aware of the limitations of portability. You have to be smart and use the appropriate techniques. It's the same for any language that compiles for different operating systems. So go out there and write some awesome perl scripts.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-customize-a-shap-summary-plot"
 ---
 
-Okay, let's talk about customizing SHAP summary plots. It's a common need, and I've definitely spent my fair share of time tweaking them to get them just right. Honestly, the default outputs, while useful, often lack that extra bit of clarity you need when presenting findings, particularly to a non-technical audience. When I first encountered SHAP values, several years back working on a credit risk model, I vividly remember how the initial plots felt… well, a bit generic. I needed to pull out specific details, emphasize particular features, and generally tailor the presentation to the stakeholders. So, let me share what I’ve learned.
+, let's talk about customizing SHAP summary plots. It's a common need, and I've definitely spent my fair share of time tweaking them to get them just right. Honestly, the default outputs, while useful, often lack that extra bit of clarity you need when presenting findings, particularly to a non-technical audience. When I first encountered SHAP values, several years back working on a credit risk model, I vividly remember how the initial plots felt… well, a bit generic. I needed to pull out specific details, emphasize particular features, and generally tailor the presentation to the stakeholders. So, let me share what I’ve learned.
 
 The basic premise of a SHAP summary plot, for those unfamiliar, is to illustrate the feature importance and the distribution of impact each feature has on model output. It displays these impacts across your dataset, giving you a good visual sense of how changes in a specific feature affect the model’s prediction. The plot orders features based on their overall importance and plots the shap values for each sample. The ‘standard’ view is helpful but seldom meets all analytical goals.
 
@@ -47,9 +47,9 @@ plt.title("Custom Feature Order Summary Plot")
 plt.show()
 ```
 
-Here, we’ve explicitly specified the feature order using the list `feature_order` and then retrieved the corresponding column indices using `X.columns.get_loc()`. We then index the `shap_values` array and the `X` dataframe appropriately before passing it to the summary plot. This gives us control over the vertical axis. Remember, the SHAP values correspond to the original column order. You must reorder both the SHAP values *and* the input data *X* for consistency.
+Here, we’ve explicitly specified the feature order using the list `feature_order` and then retrieved the corresponding column indices using `X.columns.get_loc()`. We then index the `shap_values` array and the `X` dataframe appropriately before passing it to the summary plot. This gives us control over the vertical axis. Remember, the SHAP values correspond to the original column order. You must reorder both the SHAP values _and_ the input data _X_ for consistency.
 
-Another common modification is to limit the number of features displayed. With high-dimensional data, a plot with 50 or more features can become a real mess. We often want to focus on the top *n* influential factors. Let’s reduce our display to the top three:
+Another common modification is to limit the number of features displayed. With high-dimensional data, a plot with 50 or more features can become a real mess. We often want to focus on the top _n_ influential factors. Let’s reduce our display to the top three:
 
 ```python
 # Top N Features

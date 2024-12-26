@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-typeerror-cannot-read-properties-of-undefined-reading-then-error-when-using-react-asyncawait"
 ---
 
-Alright, let's tackle this `TypeError: Cannot read properties of undefined (reading 'then')` error in the context of React and async/await. This one pops up more often than one might think, and from what I've observed in my years developing, it almost always boils down to a specific pattern of misunderstanding how promises and their handling works, especially within React's lifecycle.
+, let's tackle this `TypeError: Cannot read properties of undefined (reading 'then')` error in the context of React and async/await. This one pops up more often than one might think, and from what I've observed in my years developing, it almost always boils down to a specific pattern of misunderstanding how promises and their handling works, especially within React's lifecycle.
 
 It's not uncommon; I've spent my share of late nights debugging this exact scenario in various applications. I recall one project in particular, an e-commerce platform where user data fetches were causing sporadic crashes—that's where I really learned the ins and outs of this error firsthand.
 
@@ -17,14 +17,14 @@ Let's break this down with some concrete examples and how I typically resolve th
 **Example 1: Incorrect Async Function in `useEffect`**
 
 ```javascript
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 function MyComponent() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch('https://api.example.com/data');
+      const response = await fetch("https://api.example.com/data");
       const json = await response.json();
       setData(json);
     }
@@ -47,21 +47,19 @@ This code, seemingly straightforward, is prone to this error. `useEffect` expect
 **Example 2: Correcting the Async Function Usage in `useEffect`**
 
 ```javascript
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 function MyComponent() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch('https://api.example.com/data');
+      const response = await fetch("https://api.example.com/data");
       const json = await response.json();
       setData(json);
     }
 
-     fetchData(); // Calling it inside, but still fine, as long as `useEffect` expects a cleanup function or nothing.
-
-
+    fetchData(); // Calling it inside, but still fine, as long as `useEffect` expects a cleanup function or nothing.
   }, []);
 
   if (!data) {
@@ -72,7 +70,6 @@ function MyComponent() {
 }
 
 export default MyComponent;
-
 ```
 
 In this corrected version, the `async function fetchData` is called, but the `useEffect` callback does not return anything. React then expects this to not be a promise, so no issue occurs. The key is that we are not returning from the `useEffect` callback a Promise, which would create the error. If you find yourself with a different situation, the fix is usually to do one of two things: either do not use an async function as the primary callback function, or return a Promise from the async function that the other code expects.
@@ -82,23 +79,22 @@ In this corrected version, the `async function fetchData` is called, but the `us
 Often, this situation arises in event handlers. Consider a button click that triggers a data fetch, where this error is more likely.
 
 ```javascript
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 function MyComponent() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
 
-
-    const handleClick = async () => {
-        setLoading(true);
-        const response = await fetch('https://api.example.com/data');
-        const json = await response.json();
-        setData(json);
-        setLoading(false)
-      };
+  const handleClick = async () => {
+    setLoading(true);
+    const response = await fetch("https://api.example.com/data");
+    const json = await response.json();
+    setData(json);
+    setLoading(false);
+  };
 
   if (loading) {
-    return <p>Loading...</p>
+    return <p>Loading...</p>;
   }
 
   if (!data) {
@@ -115,4 +111,4 @@ In this instance, `handleClick` is not used as a callback to `useEffect` but as 
 
 To summarise, the `TypeError: Cannot read properties of undefined (reading 'then')` in the context of React and async/await generally occurs when a function that doesn't return a promise is being treated as a promise (and therefore, is undefined where a promise is expected). This usually happens within a `useEffect` callback, event handlers, or other scenarios where React expects a promise to work with, but in actuality gets a value that resolves to undefined. Understanding how async functions implicitly return `undefined` when a promise isn't explicitly returned, and that React is doing its best to handle Promises, is essential for avoiding this common pitfall.
 
-For deepening your understanding on asynchronous JavaScript and promises, I'd highly recommend two resources: "JavaScript Promises" by Jake Archibald (available as an online article or in his talks), which offers great insights into the fundamentals of promises, and chapter 5, "Asynchronous JavaScript", in *Effective JavaScript* by David Herman; This chapter explains the nuances of asynchronous programming in javascript, and while not exclusively focused on React, the underlying JavaScript principles it explains are absolutely vital for debugging issues like this one. Mastering the nuances of Javascript Promises is crucial for using React correctly with Async/Await.
+For deepening your understanding on asynchronous JavaScript and promises, I'd highly recommend two resources: "JavaScript Promises" by Jake Archibald (available as an online article or in his talks), which offers great insights into the fundamentals of promises, and chapter 5, "Asynchronous JavaScript", in _Effective JavaScript_ by David Herman; This chapter explains the nuances of asynchronous programming in javascript, and while not exclusively focused on React, the underlying JavaScript principles it explains are absolutely vital for debugging issues like this one. Mastering the nuances of Javascript Promises is crucial for using React correctly with Async/Await.

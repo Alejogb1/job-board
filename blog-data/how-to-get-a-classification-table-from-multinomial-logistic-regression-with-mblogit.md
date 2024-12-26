@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-get-a-classification-table-from-multinomial-logistic-regression-with-mblogit"
 ---
 
-alright, so you're after a classification table from multinomial logistic regression using `mlogit`. i've been down this road a few times, and it's definitely one of those things that feels simpler in theory than it is in practice sometimes. no worries, it's pretty straightforward once you know the steps.
+, so you're after a classification table from multinomial logistic regression using `mlogit`. i've been down this road a few times, and it's definitely one of those things that feels simpler in theory than it is in practice sometimes. no worries, it's pretty straightforward once you know the steps.
 
 first off, `mlogit` itself is primarily focused on estimation of parameters. it gives you the coefficients, standard errors, p-values—all the usual statistical output you'd expect, related to the model's estimation process. it doesn't directly spit out a classification table like you'd get from, say, a confusion matrix, you will have to do that after you calculate the probabilities using the model. the basic idea is that you use the model parameters to calculate probabilities for each category, and then assign the observation to the category with the highest probability. from that you construct the table you are after.
 
@@ -21,23 +21,28 @@ let's assume you have a model `model_multinomial` fit with `mlogit`, and you hav
     ```
 
     this will give you a matrix of probabilities, where each row corresponds to a case in your data set, and each column gives the probability for each alternative, that is each unique category in your response variable.
+
 2.  **determine the predicted class:** now you need to find the class with the highest probability for each case. you can do this with `apply` function.
 
     ```r
     predicted_class <- apply(predicted_probs, 1, which.max)
     ```
+
     this gets you the index of the class with the highest probability, usually an integer for each observation in your data set, where each unique integer represents a category.
+
 3.  **convert predictions to factor:** you need to convert the indices to factors, so that you can match the categories and you can create the confusion matrix.
 
     ```r
     predicted_class_factor <- factor(colnames(predicted_probs)[predicted_class], levels = colnames(predicted_probs))
     ```
+
 4.  **create a contingency table or confusion matrix:** you’ll have to compare the actual responses with the predicted ones to build your classification table (confusion matrix).
 
     ```r
     actual_class_factor <- data_frame$your_response_variable # the observed response variable
     confusion_matrix <- table(actual_class_factor, predicted_class_factor)
     ```
+
     where `your_response_variable` should be replaced by the name of your actual response variable in your `data_frame`. this will give you the classification table. each cell `i, j` in the matrix will tell you the number of observations that were in class `i` according to the data, but were predicted as class `j` by the model. so the diagonal will give you all the correctly classified observations and the off diagonal the misclassifications.
 
 let's go a bit deeper and see an example where i work with simulated data. lets assume we are evaluating three hypothetical classes and build a simple model that attempts to predict them:

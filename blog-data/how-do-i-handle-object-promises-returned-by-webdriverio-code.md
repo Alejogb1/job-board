@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-handle-object-promises-returned-by-webdriverio-code"
 ---
 
-Okay, let's tackle this one. It's a common point of confusion when you're diving into asynchronous test automation with WebDriverIO, particularly if you're coming from a more synchronous programming background. I remember vividly a project a few years back, building a fairly complex UI test suite for a fintech platform. We initially stumbled hard on this very issue, ending up with tests that were flaky and hard to debug because we weren't properly handling those promises.
+, let's tackle this one. It's a common point of confusion when you're diving into asynchronous test automation with WebDriverIO, particularly if you're coming from a more synchronous programming background. I remember vividly a project a few years back, building a fairly complex UI test suite for a fintech platform. We initially stumbled hard on this very issue, ending up with tests that were flaky and hard to debug because we weren't properly handling those promises.
 
 The core challenge stems from the fact that WebDriverIO, like many modern automation libraries, relies heavily on asynchronous operations to interact with a browser. Every action, whether it's clicking a button, entering text, or getting an element's text, returns a promise. This means the operation isn't immediately completed; instead, the promise represents the eventual result of that operation, which might resolve with the desired value or reject with an error. Ignoring this asynchronous nature leads to code that executes out of order, causing unpredictable behavior.
 
@@ -18,7 +18,7 @@ Imagine we need to extract the text content from a heading element. We can’t s
 
 ```javascript
 //Incorrect approach
-const headingElement = await $('h1');
+const headingElement = await $("h1");
 const headingText = headingElement.getText();
 console.log(headingText);
 ```
@@ -27,10 +27,11 @@ This snippet will not function as anticipated because `getText()` itself returns
 
 ```javascript
 // Correct approach using .then()
-$('h1').getText().then((text) => {
+$("h1")
+  .getText()
+  .then((text) => {
     console.log(text); // Correctly logs the heading text
-});
-
+  });
 ```
 
 Alternatively, the cleaner, more modern `async/await` approach is:
@@ -38,7 +39,7 @@ Alternatively, the cleaner, more modern `async/await` approach is:
 ```javascript
 // Correct approach using async/await
 async function logHeadingText() {
-  const headingText = await $('h1').getText();
+  const headingText = await $("h1").getText();
   console.log(headingText); // Correctly logs the heading text
 }
 
@@ -54,11 +55,11 @@ Let's say we have a form where we need to enter some data, submit, and then veri
 ```javascript
 // Correctly chained asynchronous actions using async/await
 async function submitFormAndVerify() {
-    await $('#nameInput').setValue('John Doe');
-    await $('#emailInput').setValue('john.doe@example.com');
-    await $('#submitButton').click();
-    const successMessage = await $('#successMessage').getText();
-    expect(successMessage).toContain('Form submitted successfully');
+  await $("#nameInput").setValue("John Doe");
+  await $("#emailInput").setValue("john.doe@example.com");
+  await $("#submitButton").click();
+  const successMessage = await $("#successMessage").getText();
+  expect(successMessage).toContain("Form submitted successfully");
 }
 
 submitFormAndVerify();
@@ -73,7 +74,7 @@ Sometimes, we need to iterate over elements asynchronously. For example, getting
 ```javascript
 // Using Promise.all for asynchronous loop
 async function getAllListItemsText() {
-  const listItems = await $$('.listItem'); //$$ returns an array of elements.
+  const listItems = await $$(".listItem"); //$$ returns an array of elements.
   const textPromises = listItems.map(async (item) => {
     return await item.getText();
   });
@@ -90,7 +91,7 @@ In summary, the crucial aspect when dealing with WebDriverIO promises is to unde
 
 To deepen your understanding of asynchronous javascript and promises, I highly recommend exploring the following:
 
-*   **"You Don't Know JS: Async & Performance" by Kyle Simpson:** This book provides an in-depth look at asynchronous programming in Javascript. It is a thorough and detailed explanation that significantly helped me refine my asynchronous coding practices.
-*   **The Mozilla Developer Network (MDN) documentation on Promises:** The MDN website is an invaluable resource for developers. Their articles on Javascript Promises are comprehensive and extremely well written, providing clear practical examples and explanations. I often consult the MDN documentation whenever I am unsure about any Javascript behavior.
+- **"You Don't Know JS: Async & Performance" by Kyle Simpson:** This book provides an in-depth look at asynchronous programming in Javascript. It is a thorough and detailed explanation that significantly helped me refine my asynchronous coding practices.
+- **The Mozilla Developer Network (MDN) documentation on Promises:** The MDN website is an invaluable resource for developers. Their articles on Javascript Promises are comprehensive and extremely well written, providing clear practical examples and explanations. I often consult the MDN documentation whenever I am unsure about any Javascript behavior.
 
 These resources are foundational for solidifying your understanding of asynchronous operations and will greatly improve your ability to write reliable and effective WebDriverIO tests, or any Javascript automation scripts dealing with asynchronous operations.

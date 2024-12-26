@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-rspec-verify-activerecord-methods-are-called-through-class-methods"
 ---
 
-Alright, let's tackle this. Verifying ActiveRecord method calls, especially when they're invoked indirectly through class methods, is something I've dealt with extensively. It's a critical aspect of testing business logic and ensuring that interactions with the database are happening as expected. It's not just about whether *a* database interaction occurred, but *which* interaction and with *what* parameters. I remember debugging a particularly thorny issue involving a cascading update several years ago, which would have been infinitely easier had we employed this level of detailed mocking and verification from the start.
+, let's tackle this. Verifying ActiveRecord method calls, especially when they're invoked indirectly through class methods, is something I've dealt with extensively. It's a critical aspect of testing business logic and ensuring that interactions with the database are happening as expected. It's not just about whether _a_ database interaction occurred, but _which_ interaction and with _what_ parameters. I remember debugging a particularly thorny issue involving a cascading update several years ago, which would have been infinitely easier had we employed this level of detailed mocking and verification from the start.
 
-The core challenge lies in mocking. We need to intercept those calls to ActiveRecord methods, like `create`, `find`, `update`, and the like, within our class methods. The goal here isn't to test ActiveRecord itself – that's its responsibility – but rather to confirm that our code is *instructing* ActiveRecord correctly. And doing this properly means going beyond simply asserting the *result* of a method call; we need to dive into the method *interactions*.
+The core challenge lies in mocking. We need to intercept those calls to ActiveRecord methods, like `create`, `find`, `update`, and the like, within our class methods. The goal here isn't to test ActiveRecord itself – that's its responsibility – but rather to confirm that our code is _instructing_ ActiveRecord correctly. And doing this properly means going beyond simply asserting the _result_ of a method call; we need to dive into the method _interactions_.
 
 RSpec’s mocking capabilities, particularly with `receive` and `expect`, are perfect for this. Here’s how it usually breaks down.
 
@@ -87,6 +87,7 @@ RSpec.describe User, type: :model do
   end
 end
 ```
+
 Here, we use `.and_return` to specify a return value for the mocked `find_by` method. This allows us to control the path the method takes within the class method under test. Notice the second context checks that `create` is not called using `expect(User).not_to receive(:create)`. This pattern is essential when you have conditional logic within the methods you’re testing. I have found that this level of detailed testing prevents regressions that might slip through the cracks with less specific assertions.
 
 Finally, let’s say our class method performs a complex update.
@@ -123,6 +124,7 @@ RSpec.describe User, type: :model do
 end
 
 ```
+
 Here, we use RSpec mocks to verify each `update` method call, demonstrating how to test method calls on objects returned by class methods. This approach helps catch errors that could be missed if only overall changes in data were checked. This level of detailed testing, when done right, has saved me countless hours down the line by catching errors early.
 
 It's important to remember that over-reliance on mocking can sometimes make tests brittle. When methods change, or logic shifts dramatically, tests will frequently break. Strive for a good balance between precise testing of class method interactions and ensuring tests are not overly coupled to implementation details.

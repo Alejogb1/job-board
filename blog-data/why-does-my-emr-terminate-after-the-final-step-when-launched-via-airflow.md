@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-my-emr-terminate-after-the-final-step-when-launched-via-airflow"
 ---
 
-Okay, let's tackle this EMR termination puzzle after your final Airflow step. This is something I've seen, and debugged, more times than I care to count, and usually, it boils down to a combination of understanding how EMR lifecycles work and the specifics of your Airflow configuration. It's rarely a single 'aha!' moment, but rather a methodical process of elimination.
+, let's tackle this EMR termination puzzle after your final Airflow step. This is something I've seen, and debugged, more times than I care to count, and usually, it boils down to a combination of understanding how EMR lifecycles work and the specifics of your Airflow configuration. It's rarely a single 'aha!' moment, but rather a methodical process of elimination.
 
 From my experience, often when an EMR cluster launched via Airflow unexpectedly terminates immediately after its final step, it points to a problem with the cluster's perceived purpose or a lack of instruction for it to stick around. Let’s break it down: the core issue is that EMR, by design, is quite ephemeral. If it doesn't have a reason to stay active – a job to run or a directive to keep itself going – it will shut down to conserve resources. Airflow, as an orchestrator, needs to specifically instruct EMR on its desired state, and sometimes the interplay isn't as intuitive as we'd like.
 
@@ -60,7 +60,7 @@ In this code, I explicitly set `keep_alive_when_no_steps=True`. This tells the c
 
 **2. The absence of subsequent steps:**
 
-Sometimes the EMR cluster is configured to stay alive, but you aren't doing anything useful. Even with `keep_alive_when_no_steps = True`, the cluster can sometimes idle too long and eventually terminate by AWS’s internal mechanisms or because its resources are no longer needed. While not directly causing instant termination after the final *defined* step, this can be easily confused for it. We need to ensure something is keeping the cluster busy if long-term persistence is required. I experienced a situation where I had a transient cluster which had a single step and terminated, so I implemented some additional 'no-op' steps to keep it alive, which is a bad pattern, but does prove the point.
+Sometimes the EMR cluster is configured to stay alive, but you aren't doing anything useful. Even with `keep_alive_when_no_steps = True`, the cluster can sometimes idle too long and eventually terminate by AWS’s internal mechanisms or because its resources are no longer needed. While not directly causing instant termination after the final _defined_ step, this can be easily confused for it. We need to ensure something is keeping the cluster busy if long-term persistence is required. I experienced a situation where I had a transient cluster which had a single step and terminated, so I implemented some additional 'no-op' steps to keep it alive, which is a bad pattern, but does prove the point.
 
 ```python
 from airflow import DAG

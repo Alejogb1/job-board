@@ -4,15 +4,15 @@ date: "2024-12-16"
 id: "is-tfx-necessary-if-we-already-have-airflow-for-orchestration"
 ---
 
-Okay, let's unpack this. I've been down this road before, wrestling— *err*, navigating— the complexities of building and deploying machine learning systems. The question of whether TensorFlow Extended (tfx) is genuinely needed when you already have a robust orchestrator like Airflow is a valid one, and the answer, predictably, is nuanced.
+, let's unpack this. I've been down this road before, wrestling— _err_, navigating— the complexities of building and deploying machine learning systems. The question of whether TensorFlow Extended (tfx) is genuinely needed when you already have a robust orchestrator like Airflow is a valid one, and the answer, predictably, is nuanced.
 
 My experience, particularly with a prior project involving predicting anomalies in sensor data streams at scale, has given me some practical insights here. We initially relied solely on Airflow to manage our entire pipeline, from data ingestion to model deployment. It worked, up to a point, but we soon encountered limitations that pointed directly at the core strengths of something like tfx.
 
-Airflow, at its heart, is a fantastic workflow engine. It excels at scheduling, managing dependencies, and monitoring complex tasks, which is precisely what you need in any data-centric operation, including ml workflows. However, it’s inherently *agnostic* about the specific type of workflow it’s orchestrating. It's brilliant at executing arbitrary python scripts or bash commands, but it doesn’t understand the specific needs of a machine learning pipeline. It doesn't intrinsically offer functionality for things like data validation, schema management, model versioning, or sophisticated model evaluation beyond the simple execution of scripts.
+Airflow, at its heart, is a fantastic workflow engine. It excels at scheduling, managing dependencies, and monitoring complex tasks, which is precisely what you need in any data-centric operation, including ml workflows. However, it’s inherently _agnostic_ about the specific type of workflow it’s orchestrating. It's brilliant at executing arbitrary python scripts or bash commands, but it doesn’t understand the specific needs of a machine learning pipeline. It doesn't intrinsically offer functionality for things like data validation, schema management, model versioning, or sophisticated model evaluation beyond the simple execution of scripts.
 
-That's where tfx comes in. Tfx is not *just* an orchestrator; it’s a complete ml platform built on top of TensorFlow, which is specifically designed for handling all the nuances of an ml lifecycle. Its components are deeply aware of the data transformations, model training, and evaluation steps commonly found in ml workflows. It’s designed to make these complex processes more robust, reproducible, and scalable.
+That's where tfx comes in. Tfx is not _just_ an orchestrator; it’s a complete ml platform built on top of TensorFlow, which is specifically designed for handling all the nuances of an ml lifecycle. Its components are deeply aware of the data transformations, model training, and evaluation steps commonly found in ml workflows. It’s designed to make these complex processes more robust, reproducible, and scalable.
 
-The key difference lies in the level of abstraction and the specific functionality provided. Airflow provides the *how* of workflow execution, whereas tfx provides a standardized *what*, in the context of ml. Airflow can execute tfx pipelines (or vice versa), but Airflow alone won't provide the built-in validations or model analysis capabilities offered by tfx. Think of it as a choice between building your own ml-specific tooling on top of a general-purpose orchestrator or leveraging an established platform that encapsulates best practices.
+The key difference lies in the level of abstraction and the specific functionality provided. Airflow provides the _how_ of workflow execution, whereas tfx provides a standardized _what_, in the context of ml. Airflow can execute tfx pipelines (or vice versa), but Airflow alone won't provide the built-in validations or model analysis capabilities offered by tfx. Think of it as a choice between building your own ml-specific tooling on top of a general-purpose orchestrator or leveraging an established platform that encapsulates best practices.
 
 Let me illustrate this with some examples. Assume, for simplicity, we’re dealing with a common scenario: training a model and deploying it.
 
@@ -59,7 +59,7 @@ with DAG(
     load_data_task >> preprocess_data_task >> train_model_task >> evaluate_model_task >> deploy_model_task
 ```
 
-This simple Airflow example defines a sequential pipeline of python tasks. While it executes the different steps, it requires *you* to implement everything from data validation to model performance metrics, and it doesn’t inherently understand the data or the model.
+This simple Airflow example defines a sequential pipeline of python tasks. While it executes the different steps, it requires _you_ to implement everything from data validation to model performance metrics, and it doesn’t inherently understand the data or the model.
 
 **Example 2: tfx-centric pipeline (simplified)**
 

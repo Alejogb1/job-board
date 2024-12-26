@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-is-my-chainlink-node-job-failing-with-an-invalid-character--error-during-json-payload-interpolation"
 ---
 
-Alright, let's get into this. Seeing an "invalid character '_'" error during Chainlink job runs, specifically within JSON payload interpolation, generally points to a common but often overlooked nuance in how Chainlink handles variables within these templates. From my experience, having spent a few years wrestling with various integration challenges in decentralized applications, I've seen this issue pop up more than once, usually when transitioning from initial development to more complex, real-world usage. The underlying problem essentially boils down to misinterpretations or conflicts within the variable substitution process inside the `jsonparse` adapter or when constructing the JSON payload directly.
+, let's get into this. Seeing an "invalid character '\_'" error during Chainlink job runs, specifically within JSON payload interpolation, generally points to a common but often overlooked nuance in how Chainlink handles variables within these templates. From my experience, having spent a few years wrestling with various integration challenges in decentralized applications, I've seen this issue pop up more than once, usually when transitioning from initial development to more complex, real-world usage. The underlying problem essentially boils down to misinterpretations or conflicts within the variable substitution process inside the `jsonparse` adapter or when constructing the JSON payload directly.
 
-The core of the issue usually involves attempting to use variables with characters that aren't considered valid identifiers within a JSON context, especially when they appear *within* the string values of your json structures. Chainlink’s JSON processing logic for template interpolation expects these variables to be referenced within the Jinja2 templating system using the `{{variable_name}}` notation, but it’s quite sensitive to characters within variable names themselves and also where you are trying to insert the result of a variable evaluation. Often we will find that the problematic characters are not in the variable names itself, but in the result of that evaluation, which is not escaped to be compatible with json strings. The underscore character '_', while perfectly acceptable in many programming contexts, can become a source of trouble in json payloads specifically when they exist outside the Jinja2 placeholder but are still part of the result.
+The core of the issue usually involves attempting to use variables with characters that aren't considered valid identifiers within a JSON context, especially when they appear _within_ the string values of your json structures. Chainlink’s JSON processing logic for template interpolation expects these variables to be referenced within the Jinja2 templating system using the `{{variable_name}}` notation, but it’s quite sensitive to characters within variable names themselves and also where you are trying to insert the result of a variable evaluation. Often we will find that the problematic characters are not in the variable names itself, but in the result of that evaluation, which is not escaped to be compatible with json strings. The underscore character '\_', while perfectly acceptable in many programming contexts, can become a source of trouble in json payloads specifically when they exist outside the Jinja2 placeholder but are still part of the result.
 
 Here's what I mean. In a typical Chainlink job spec, you're using variables that are sourced either from your adapter results or directly from your contract calls, and these variables must be handled carefully. Let's consider that you're constructing the body of an http POST request as an example.
 
@@ -24,7 +24,7 @@ Let's imagine this specific scenario from a past project: I needed to pull some 
   resultPath: "success"
 ```
 
-Now, the variable being substituted `{{.result.address}}` might, for the sake of argument, resolve to something like `"0x123_456_789"`. The server on the other side, when receives this, will fail, because even if the json parsing is successful, the server will reject the address, because it has underscores, but in the context of this question it’s the chainlink job that will fail in the json interpolation step with an invalid character "_". This would be equivalent to manually trying to create json like so: `{"account": "0x123_456_789", "other_data": "some value"}`. This is an invalid json! Json allows underscores only in the key, but not in the values, unless it's escaped or part of a number.
+Now, the variable being substituted `{{.result.address}}` might, for the sake of argument, resolve to something like `"0x123_456_789"`. The server on the other side, when receives this, will fail, because even if the json parsing is successful, the server will reject the address, because it has underscores, but in the context of this question it’s the chainlink job that will fail in the json interpolation step with an invalid character "\_". This would be equivalent to manually trying to create json like so: `{"account": "0x123_456_789", "other_data": "some value"}`. This is an invalid json! Json allows underscores only in the key, but not in the values, unless it's escaped or part of a number.
 
 The fix here is not only to ensure that the variable that is inserted into the json document has no underscores, but that it is also correctly escaped according to json standards, making sure it's properly formatted. We can use a new template. This is how it would look with a preprocessor:
 
@@ -42,7 +42,7 @@ The fix here is not only to ensure that the variable that is inserted into the j
   name: json_escaper
   params:
     resultPath: "escaped_address"
-    input: '{{.result.address}}'
+    input: "{{.result.address}}"
     template: '"{{input | string | escape_json}}"'
 ```
 
@@ -65,7 +65,7 @@ In this case the json structure from the api might have the following structure:
 {
   "nested_data": {
     "address_with_underscore": {
-       "value": "0xabc_def_ghi"
+      "value": "0xabc_def_ghi"
     }
   }
 }
@@ -84,12 +84,12 @@ The problem here is not that the value contains underscores, but the `resultPath
   name: get_address_value
   params:
     resultPath: "address_value"
-    input: '{{.result.value}}'
+    input: "{{.result.value}}"
 ```
 
 In this case, we use a simpler result path to get the structure that has the underscored keys, and then another preprocessor to access the `value` field. The error, in this case, comes from trying to access a key with underscores in the `jsonparse` adapter, it does not come from the data itself containing underscores.
 
-Let’s consider another common issue: trying to build dynamic json with nested fields with variable keys, also using a template for it. Let's say we want to construct a JSON object where the keys themselves are dynamically determined, and these keys *might* include underscores:
+Let’s consider another common issue: trying to build dynamic json with nested fields with variable keys, also using a template for it. Let's say we want to construct a JSON object where the keys themselves are dynamically determined, and these keys _might_ include underscores:
 
 ```yaml
 # bad example with dynamic keys containing underscores
@@ -100,6 +100,7 @@ Let’s consider another common issue: trying to build dynamic json with nested 
     input: '{ "prefix_{{.result.key}}": "{{.result.value}}"}'
     template: '"{{input}}"'
 ```
+
 If the `{{.result.key}}` is resolved to "some_key", the json that is generated will be `{"prefix_some_key":"some_value"}` and everything will work as expected since the underscored key is inside a valid json document. The problem is if the result is not wrapped in quotes, since the resulting json would look like this: `{"prefix_some_key":some_value}`, which will result in a json error.
 
 The fix here again is to correctly escape the variable result.

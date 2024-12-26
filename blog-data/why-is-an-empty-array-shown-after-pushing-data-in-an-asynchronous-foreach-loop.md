@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-is-an-empty-array-shown-after-pushing-data-in-an-asynchronous-foreach-loop"
 ---
 
-Alright, let's tackle this. It’s a situation I've bumped into more than once, particularly when working with Node.js and dealing with asynchronous operations within array iterations. Seeing that empty array after pushing data in what seems like a straightforward loop can definitely throw you for a loop (no pun intended). The core issue stems from how javascript handles asynchrony, and how it interacts with the procedural nature of a `forEach` loop. Let’s break it down.
+, let's tackle this. It’s a situation I've bumped into more than once, particularly when working with Node.js and dealing with asynchronous operations within array iterations. Seeing that empty array after pushing data in what seems like a straightforward loop can definitely throw you for a loop (no pun intended). The core issue stems from how javascript handles asynchrony, and how it interacts with the procedural nature of a `forEach` loop. Let’s break it down.
 
-The fundamental problem lies in the fact that `forEach` is synchronous. While you can include asynchronous operations *within* the callback of a `forEach` loop, the loop itself will not wait for those asynchronous operations to complete. Think of it like this: the loop iterates through your array, and for each element, it fires off an asynchronous task. However, the loop doesn't pause to see those tasks through. It completes all iterations immediately, and then the asynchronous tasks execute whenever their time comes, not necessarily in the order of the loop's iterations, or necessarily before you look at the results.
+The fundamental problem lies in the fact that `forEach` is synchronous. While you can include asynchronous operations _within_ the callback of a `forEach` loop, the loop itself will not wait for those asynchronous operations to complete. Think of it like this: the loop iterates through your array, and for each element, it fires off an asynchronous task. However, the loop doesn't pause to see those tasks through. It completes all iterations immediately, and then the asynchronous tasks execute whenever their time comes, not necessarily in the order of the loop's iterations, or necessarily before you look at the results.
 
 This becomes a problem when you’re trying to modify an array inside the asynchronous callback of the `forEach` loop. The loop finishes, the array is returned/inspected before the callbacks have completed, and therefore, you see an empty array, or an array not yet populated with the data from those asynchronous actions.
 
@@ -25,22 +25,25 @@ async function fetchAndProcessData(ids) {
 }
 
 // example usage
-async function main(){
-    const ids = [1,2,3];
-    const finalResults = await fetchAndProcessData(ids);
-    console.log(finalResults); // often shows [] or partially populated
+async function main() {
+  const ids = [1, 2, 3];
+  const finalResults = await fetchAndProcessData(ids);
+  console.log(finalResults); // often shows [] or partially populated
 }
 
 main();
 
 async function fetchDataFromApi(id) {
-    return new Promise((resolve) => {
-        setTimeout(() => resolve({id:id, value:"data " + id}), Math.random()*100); //simulating an async call
-    })
+  return new Promise((resolve) => {
+    setTimeout(
+      () => resolve({ id: id, value: "data " + id }),
+      Math.random() * 100
+    ); //simulating an async call
+  });
 }
 ```
 
-The issue here isn’t that the `push` operation is faulty. The issue is that `fetchAndProcessData` returns the `results` array *before* all the asynchronous `fetchDataFromApi` calls have had a chance to finish and push data into that array.
+The issue here isn’t that the `push` operation is faulty. The issue is that `fetchAndProcessData` returns the `results` array _before_ all the asynchronous `fetchDataFromApi` calls have had a chance to finish and push data into that array.
 
 So, how do you solve this? The most straightforward approach is to switch from a `forEach` loop to something that respects the asynchronous nature of the operations you're performing. Several approaches work:
 
@@ -48,22 +51,21 @@ So, how do you solve this? The most straightforward approach is to switch from a
 
 ```javascript
 async function fetchAndProcessDataCorrectedForOf(ids) {
-    let results = [];
+  let results = [];
 
-    for (const id of ids) {
-      const data = await fetchDataFromApi(id);
-      results.push(data);
-    }
+  for (const id of ids) {
+    const data = await fetchDataFromApi(id);
+    results.push(data);
+  }
 
-    return results;
+  return results;
 }
 
-
 // example usage
-async function mainForOf(){
-    const ids = [1,2,3];
-    const finalResults = await fetchAndProcessDataCorrectedForOf(ids);
-    console.log(finalResults); // shows the populated array as expected
+async function mainForOf() {
+  const ids = [1, 2, 3];
+  const finalResults = await fetchAndProcessDataCorrectedForOf(ids);
+  console.log(finalResults); // shows the populated array as expected
 }
 
 mainForOf();
@@ -73,16 +75,16 @@ mainForOf();
 
 ```javascript
 async function fetchAndProcessDataCorrectedPromiseAll(ids) {
-    const promises = ids.map(id => fetchDataFromApi(id));
-    const results = await Promise.all(promises);
-    return results;
+  const promises = ids.map((id) => fetchDataFromApi(id));
+  const results = await Promise.all(promises);
+  return results;
 }
 
 // example usage
-async function mainPromiseAll(){
-    const ids = [1,2,3];
-    const finalResults = await fetchAndProcessDataCorrectedPromiseAll(ids);
-    console.log(finalResults); // shows the populated array as expected
+async function mainPromiseAll() {
+  const ids = [1, 2, 3];
+  const finalResults = await fetchAndProcessDataCorrectedPromiseAll(ids);
+  console.log(finalResults); // shows the populated array as expected
 }
 
 mainPromiseAll();
@@ -93,18 +95,18 @@ mainPromiseAll();
 ```javascript
 async function fetchAndProcessDataCorrectedReduce(ids) {
   return ids.reduce(async (accumulatorPromise, id) => {
-        const accumulator = await accumulatorPromise;
-        const data = await fetchDataFromApi(id);
-        accumulator.push(data);
-        return accumulator;
-    }, Promise.resolve([]))
+    const accumulator = await accumulatorPromise;
+    const data = await fetchDataFromApi(id);
+    accumulator.push(data);
+    return accumulator;
+  }, Promise.resolve([]));
 }
 
 // example usage
-async function mainReduce(){
-    const ids = [1,2,3];
-    const finalResults = await fetchAndProcessDataCorrectedReduce(ids);
-    console.log(finalResults); // shows the populated array as expected
+async function mainReduce() {
+  const ids = [1, 2, 3];
+  const finalResults = await fetchAndProcessDataCorrectedReduce(ids);
+  console.log(finalResults); // shows the populated array as expected
 }
 
 mainReduce();

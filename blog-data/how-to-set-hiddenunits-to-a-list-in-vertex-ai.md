@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-set-hiddenunits-to-a-list-in-vertex-ai"
 ---
 
-Okay, let's tackle this. I recall a rather stubborn model training pipeline I had to debug back in my days at "Synergy Solutions" – the issue centered precisely on feeding a list of `hidden_units` to Vertex AI. It wasn't immediately intuitive, and I spent a good chunk of an afternoon mapping the required input structures. The documentation, while comprehensive, didn't quite highlight this particular nuance as clearly as I would have liked. So, I get the question, and hopefully, I can illuminate the path for others.
+, let's tackle this. I recall a rather stubborn model training pipeline I had to debug back in my days at "Synergy Solutions" – the issue centered precisely on feeding a list of `hidden_units` to Vertex AI. It wasn't immediately intuitive, and I spent a good chunk of an afternoon mapping the required input structures. The documentation, while comprehensive, didn't quite highlight this particular nuance as clearly as I would have liked. So, I get the question, and hopefully, I can illuminate the path for others.
 
 The core challenge revolves around how Vertex AI expects structured data, particularly when defining configurations for models that use lists or arrays for hyperparameter tuning or architectural definitions, as `hidden_units` typically are. It’s not as simple as just passing a python list directly. Vertex AI, especially when employing custom training jobs or using its pre-built container functionality, requires a specific representation, often a nested dictionary structure or stringified representation that it can parse and interpret. Failing to provide the input in the expected format will generally lead to errors during training job submission or parameter interpretation, with the pipeline stalling before anything worthwhile can be accomplished.
 
@@ -81,6 +81,7 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
 This ensures you get back the list inside your training script from a string input.
 
 Let’s complicate things a little. Consider a case where you want to tune not only the size but also the activation of each layer via hyperparameter tuning in Vertex AI.
@@ -171,6 +172,7 @@ job = create_vertex_training_job(project_id, location, display_name, hidden_unit
 print(f"Training Job submitted: {job.resource_name}")
 
 ```
+
 This example demonstrates using the Vertex AI SDK with a custom training job and shows again that the `hidden_units_string` parameter has been passed as a string. Similarly, the training script should be prepared to load the list from this string.
 
 For further understanding of these concepts, I’d strongly recommend checking the Google Cloud Vertex AI documentation, particularly the sections on custom training jobs and hyperparameter tuning. Also, “Deep Learning with Python” by François Chollet is an excellent resource for understanding network architectures and their representations. Finally, I suggest exploring “Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow” by Aurélien Géron for practical insights on machine learning pipelines and architecture definitions, which will significantly aid in understanding the nuances of passing hyperparameters effectively to cloud-based training jobs such as those run on Vertex AI.

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-are-all-outputs-of-a-relu-neural-network-identical"
 ---
 
-Okay, let's tackle this one. I've seen this happen a few times during my tenure, usually when junior colleagues are diving into neural networks for the first time. It's a frustrating situation when you're expecting diverse outputs and instead get a sea of identical values. The culprit, when this happens with a ReLU network, almost always points to an issue with initialization or a specific architecture problem related to ReLU’s inherent characteristics.
+, let's tackle this one. I've seen this happen a few times during my tenure, usually when junior colleagues are diving into neural networks for the first time. It's a frustrating situation when you're expecting diverse outputs and instead get a sea of identical values. The culprit, when this happens with a ReLU network, almost always points to an issue with initialization or a specific architecture problem related to ReLU’s inherent characteristics.
 
-When all outputs from a ReLU network converge to the same value, it's a strong indicator that a significant portion of the neurons aren't learning effectively. ReLU, or Rectified Linear Unit, is an activation function defined as *f(x) = max(0, x)*. This function introduces non-linearity into the network, allowing it to learn complex patterns. However, its behavior also presents a specific pitfall: the ‘dying ReLU’ problem.
+When all outputs from a ReLU network converge to the same value, it's a strong indicator that a significant portion of the neurons aren't learning effectively. ReLU, or Rectified Linear Unit, is an activation function defined as _f(x) = max(0, x)_. This function introduces non-linearity into the network, allowing it to learn complex patterns. However, its behavior also presents a specific pitfall: the ‘dying ReLU’ problem.
 
 The heart of the issue lies in the fact that if the input to a ReLU neuron is negative during the forward pass, the neuron's output will be zero. During backpropagation, if the gradients become zero (which will happen if the input is zero, in effect for all negative inputs), that specific neuron essentially stops learning because its weights won't update. If many neurons in a given layer end up with all-negative inputs early on, their activation will remain zero forever. Consequently, the entire layer can become inactive, which, if widespread, results in all network outputs being the same—typically zero or a very small value close to zero, depending on later layers that might include bias terms. If you have a network with layers of relu and those output zeroes, the subsequent layers also receive zero input and then output zero. This cascades, leading to uniform output, often zero or very close to it.
 
@@ -39,7 +39,8 @@ input_data = np.random.randn(input_size)
 output = relu(np.dot(weights, input_data))
 print("Output with bad init:", output) # Mostly zero
 ```
-The problem?  All weights start at zero. Thus, the weighted sum before applying ReLU is also initially zero (or very close if there are small biases), thus, no neurons initially activate and, due to the 'dying ReLU' problem, they remain inactive.
+
+The problem? All weights start at zero. Thus, the weighted sum before applying ReLU is also initially zero (or very close if there are small biases), thus, no neurons initially activate and, due to the 'dying ReLU' problem, they remain inactive.
 
 The fix was to initialize weights using a method that provided a reasonable spread, such as Xavier or He initialization. The He initialization is especially well-suited for ReLU networks.
 
@@ -55,6 +56,7 @@ weights = initialize_weights_he(weights_shape)
 output = relu(np.dot(weights,input_data))
 print("Output with correct He init:", output) #Outputs vary more
 ```
+
 He initialization ensures the variance of the output of each layer is approximately the same as the variance of the input to that layer. It uses a scaled normal distribution based on the number of incoming connections, effectively preventing the network from starting in the inactive ReLU regime.
 
 **Scenario 2: Large Learning Rates and Unstable Gradients**
@@ -93,8 +95,8 @@ Here's a conceptual visualization, no code this time because this is a design pr
 
 To gain a more comprehensive understanding of these issues, I would recommend the following readings:
 
-*   **Deep Learning** by Ian Goodfellow, Yoshua Bengio, and Aaron Courville: This book provides an in-depth theoretical background on all these concepts, including activation functions, initialization, optimization, and network architectures. It is considered a bible of deep learning and is essential for understanding the underlying mechanics.
-*   **Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification** by Kaiming He et al.: This paper introduces the He initialization method, directly addressing the challenges associated with ReLU activation. Understanding the math behind it gives a much deeper insight into the inner workings of how activation functions and initialization methods interact.
-*   **Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift** by Sergey Ioffe and Christian Szegedy: This paper introduces Batch Normalization, and it is essential to comprehend the role batchnorm plays in stabilizing deep neural networks.
+- **Deep Learning** by Ian Goodfellow, Yoshua Bengio, and Aaron Courville: This book provides an in-depth theoretical background on all these concepts, including activation functions, initialization, optimization, and network architectures. It is considered a bible of deep learning and is essential for understanding the underlying mechanics.
+- **Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification** by Kaiming He et al.: This paper introduces the He initialization method, directly addressing the challenges associated with ReLU activation. Understanding the math behind it gives a much deeper insight into the inner workings of how activation functions and initialization methods interact.
+- **Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift** by Sergey Ioffe and Christian Szegedy: This paper introduces Batch Normalization, and it is essential to comprehend the role batchnorm plays in stabilizing deep neural networks.
 
 In summary, if you are facing the problem of identical outputs in a ReLU network, focus on the weight initialization, gradient issues, and suitability of your architecture. Start by implementing He initialization, consider adding batch normalization, adjust your learning rate, and consider skip connections, when necessary, and you should be able to get past this issue and start getting meaningful outputs.

@@ -4,21 +4,21 @@ date: "2024-12-11"
 id: "what-are-the-challenges-of-reverse-engineering-neural-networks-to-fully-understand-their-computations"
 ---
 
-Okay so you wanna crack open a neural network see whats ticking right  It's like trying to dissect a really really complex clockwork mechanism only instead of gears youve got layers of interconnected neurons firing away  and instead of a simple timekeeping function its doing things like recognizing cats in pictures or translating languages  Its wild
+you wanna crack open a neural network see whats ticking right It's like trying to dissect a really really complex clockwork mechanism only instead of gears youve got layers of interconnected neurons firing away and instead of a simple timekeeping function its doing things like recognizing cats in pictures or translating languages Its wild
 
-The biggest challenge is the sheer complexity  These things are huge  millions sometimes billions of parameters all interacting in non linear ways  Its not like you can just trace a single signal path and understand the whole thing  Its more like a massively parallel distributed system where information flows in unpredictable ways  Think about it  each neuron gets inputs from dozens maybe hundreds of other neurons each with its own weight  then it applies some non linear activation function  and the output gets fed into other neurons  repeating this process for many many layers  Its a chaotic beautiful mess
+The biggest challenge is the sheer complexity These things are huge millions sometimes billions of parameters all interacting in non linear ways Its not like you can just trace a single signal path and understand the whole thing Its more like a massively parallel distributed system where information flows in unpredictable ways Think about it each neuron gets inputs from dozens maybe hundreds of other neurons each with its own weight then it applies some non linear activation function and the output gets fed into other neurons repeating this process for many many layers Its a chaotic beautiful mess
 
-Another huge hurdle is the lack of interpretability  Most neural nets are what we call black boxes  you put data in you get an output but you dont really know *why* its producing that output  You can look at individual neuron activations but it doesn't give you a clear picture of the overall computation  Its like looking at the individual gears in that clockwork mechanism you still dont get the big picture of how time is kept
+Another huge hurdle is the lack of interpretability Most neural nets are what we call black boxes you put data in you get an output but you dont really know _why_ its producing that output You can look at individual neuron activations but it doesn't give you a clear picture of the overall computation Its like looking at the individual gears in that clockwork mechanism you still dont get the big picture of how time is kept
 
-One approach to tackling this is explainable AI or XAI  Its a whole field dedicated to making neural nets more transparent  but its tricky  theres no single magic bullet  Some techniques involve visualizing neuron activations or generating saliency maps that highlight the parts of the input that most influence the output  These can help give some insight but they are far from a complete understanding  think of it as getting a blurry picture of the inside of the clockwork  you can see some gears but the whole picture is still obscured
+One approach to tackling this is explainable AI or XAI Its a whole field dedicated to making neural nets more transparent but its tricky theres no single magic bullet Some techniques involve visualizing neuron activations or generating saliency maps that highlight the parts of the input that most influence the output These can help give some insight but they are far from a complete understanding think of it as getting a blurry picture of the inside of the clockwork you can see some gears but the whole picture is still obscured
 
-Gradient based methods are another tool  we can use gradients to backpropagate through the network and see how small changes in the input affect the output  This is useful for understanding the sensitivity of the model to various inputs but it still doesn't reveal the full computational process its like understanding the effect of slightly changing the gears but not how they interact as a whole
+Gradient based methods are another tool we can use gradients to backpropagate through the network and see how small changes in the input affect the output This is useful for understanding the sensitivity of the model to various inputs but it still doesn't reveal the full computational process its like understanding the effect of slightly changing the gears but not how they interact as a whole
 
-Then theres the problem of adversarial examples  these are carefully crafted inputs that cause the network to make incorrect predictions even though they look almost identical to normal inputs  This highlights the fragility of our understanding of these networks and how easily they can be fooled  its like adding a tiny imperceptible modification to one gear that throws off the entire timekeeping mechanism
+Then theres the problem of adversarial examples these are carefully crafted inputs that cause the network to make incorrect predictions even though they look almost identical to normal inputs This highlights the fragility of our understanding of these networks and how easily they can be fooled its like adding a tiny imperceptible modification to one gear that throws off the entire timekeeping mechanism
 
 Let's look at some code snippets to illustrate these challenges.
 
-**Snippet 1:  Simple Neural Network**
+**Snippet 1: Simple Neural Network**
 
 ```python
 import numpy as np
@@ -51,9 +51,9 @@ print(predictions)
 
 ```
 
-This is a toy example  a real world network would have many more layers and neurons making it far harder to interpret.  Even here though we can already see how the non linear activation functions  tanh and sigmoid  contribute to the complexity
+This is a toy example a real world network would have many more layers and neurons making it far harder to interpret. Even here though we can already see how the non linear activation functions tanh and sigmoid contribute to the complexity
 
-**Snippet 2:  Analyzing Activations**
+**Snippet 2: Analyzing Activations**
 
 ```python
 import matplotlib.pyplot as plt
@@ -79,7 +79,7 @@ for i, activation in enumerate(activations):
   plt.show()
 ```
 
-This shows how we might attempt to visualize the activations at different layers  but this only provides a limited understanding of how the network works as a whole.  Its like getting glimpses of what each gear is doing  but not the full mechanism
+This shows how we might attempt to visualize the activations at different layers but this only provides a limited understanding of how the network works as a whole. Its like getting glimpses of what each gear is doing but not the full mechanism
 
 **Snippet 3: Gradient Calculation**
 
@@ -115,9 +115,8 @@ W1, b1, W2, b2 = backprop(X,y,W1, b1, W2, b2)
 print(W1, b1, W2, b2)
 ```
 
-This shows a simplified version of backpropagation used for training  but the gradients themselves dont fully explain why the network makes the decisions it does. It's like knowing which way the gears turn but not knowing how those movements create time
+This shows a simplified version of backpropagation used for training but the gradients themselves dont fully explain why the network makes the decisions it does. It's like knowing which way the gears turn but not knowing how those movements create time
 
-To dig deeper into this fascinating and frustrating field  I suggest looking at some excellent resources  "Deep Learning" by Goodfellow Bengio and Courville is a comprehensive textbook covering all aspects of deep learning including interpretability  For a more focused look at explainable AI check out papers from the XAI workshops at leading conferences like NeurIPS and ICML  There are also several research papers exploring various techniques for understanding neural network computations  You will likely find yourself going down a rabbit hole of technical papers but its a rewarding journey believe me
+To dig deeper into this fascinating and frustrating field I suggest looking at some excellent resources "Deep Learning" by Goodfellow Bengio and Courville is a comprehensive textbook covering all aspects of deep learning including interpretability For a more focused look at explainable AI check out papers from the XAI workshops at leading conferences like NeurIPS and ICML There are also several research papers exploring various techniques for understanding neural network computations You will likely find yourself going down a rabbit hole of technical papers but its a rewarding journey believe me
 
-
-In short reverse engineering neural networks is a monumental task  there's no easy answer  but ongoing research is constantly pushing the boundaries of our understanding  Its a field ripe with challenges and opportunities  and honestly a little bit magical.
+In short reverse engineering neural networks is a monumental task there's no easy answer but ongoing research is constantly pushing the boundaries of our understanding Its a field ripe with challenges and opportunities and honestly a little bit magical.

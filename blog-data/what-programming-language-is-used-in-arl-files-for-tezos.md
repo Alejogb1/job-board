@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "what-programming-language-is-used-in-arl-files-for-tezos"
 ---
 
-Alright, let's dive into the specifics of .arl files within the Tezos ecosystem. I recall a rather challenging project involving optimizing smart contract deployments where I had to get intimately familiar with these files. The answer isn't a straightforward one, as .arl files aren’t associated with a specific, conventional programming language in the way that, say, python files are. Instead, they represent an intermediate format, typically stemming from *compilation outputs*. More precisely, they hold the *Micheline* representation of a Tezos smart contract's code.
+, let's dive into the specifics of .arl files within the Tezos ecosystem. I recall a rather challenging project involving optimizing smart contract deployments where I had to get intimately familiar with these files. The answer isn't a straightforward one, as .arl files aren’t associated with a specific, conventional programming language in the way that, say, python files are. Instead, they represent an intermediate format, typically stemming from _compilation outputs_. More precisely, they hold the _Micheline_ representation of a Tezos smart contract's code.
 
 Think of it like this: you write a smart contract using a high-level language (like SmartPy, Ligo, or Archetype). This code is then processed through a compiler—essentially, a translator—that transforms it into Michelson, the low-level instruction set that the Tezos virtual machine directly understands. This Michelson representation, however, isn’t always stored directly as raw text. Instead, it is often expressed in a structured, JSON-like format called Micheline. And that’s exactly what a .arl file houses—the Micheline representation of the compiled Michelson code.
 
-So, to answer the question explicitly, there isn't *a* programming language used directly in .arl files. The content is derived from the process of compiling contract code written in languages such as SmartPy, Ligo, or Archetype. .arl is essentially the intermediate format and it stores the result of this translation in Micheline form, which is not technically a programming language on its own. To get a feel for it, it might be helpful to consider it an assembly language representation of contract code for Tezos. It's the form that sits between the high-level code you write and the low-level bytecode that executes. This design approach is not unique to Tezos; it mirrors common patterns in compiler design where you often have intermediate representation (IR) before machine code.
+So, to answer the question explicitly, there isn't _a_ programming language used directly in .arl files. The content is derived from the process of compiling contract code written in languages such as SmartPy, Ligo, or Archetype. .arl is essentially the intermediate format and it stores the result of this translation in Micheline form, which is not technically a programming language on its own. To get a feel for it, it might be helpful to consider it an assembly language representation of contract code for Tezos. It's the form that sits between the high-level code you write and the low-level bytecode that executes. This design approach is not unique to Tezos; it mirrors common patterns in compiler design where you often have intermediate representation (IR) before machine code.
 
 Now, let’s get into some code to illustrate these points. Suppose we have a very simple contract written using the SmartPy language, a Python-based DSL for Tezos. Here’s a snippet:
 
@@ -31,48 +31,54 @@ if "main" == __name__:
     sp.add_compilation_target("simpleCounter", SimpleCounter())
 
 ```
+
 This straightforward example defines a simple counter contract with the ability to increment it. Now, when we compile this code using SmartPy's compiler, the output will generate multiple files; among them is the .arl file that will contain the Micheline representation of the compiled contract. The content of this .arl would be a text file in the Micheline format, something similar to this:
 
 ```json
 [
-   { "prim": "parameter",
-     "args":[ { "prim":"or",
-               "args":[
-                        { "prim":"unit", "annots":["%increment"] },
-                        { "prim":"unit", "annots":["%getCounter"]}
-                      ] }
-              ]
+  {
+    "prim": "parameter",
+    "args": [
+      {
+        "prim": "or",
+        "args": [
+          { "prim": "unit", "annots": ["%increment"] },
+          { "prim": "unit", "annots": ["%getCounter"] }
+        ]
+      }
+    ]
   },
   {
-   "prim":"storage",
-   "args":[ { "prim":"int" } ]
+    "prim": "storage",
+    "args": [{ "prim": "int" }]
   },
   {
-   "prim":"code",
-   "args":[
-    [
-      {"prim":"DUP"},
-      {"prim":"CAR"},
-      {"prim":"UNPAIR"},
-      {"prim":"IF_LEFT",
-         "args":[
+    "prim": "code",
+    "args": [
+      [
+        { "prim": "DUP" },
+        { "prim": "CAR" },
+        { "prim": "UNPAIR" },
+        {
+          "prim": "IF_LEFT",
+          "args": [
             [
-             {"prim":"PUSH", "args":[{"prim":"int"}, 1]},
-             {"prim":"ADD"},
-             {"prim":"NIL", "args":[{"prim":"operation"}]},
-             {"prim":"PAIR"}
+              { "prim": "PUSH", "args": [{ "prim": "int" }, 1] },
+              { "prim": "ADD" },
+              { "prim": "NIL", "args": [{ "prim": "operation" }] },
+              { "prim": "PAIR" }
             ],
             [
-              {"prim":"DUP"},
-              {"prim":"CAR"},
-              {"prim":"SWAP"},
-              {"prim":"DROP"},
-              {"prim":"NIL", "args":[{"prim":"operation"}]},
-              {"prim":"PAIR"}
+              { "prim": "DUP" },
+              { "prim": "CAR" },
+              { "prim": "SWAP" },
+              { "prim": "DROP" },
+              { "prim": "NIL", "args": [{ "prim": "operation" }] },
+              { "prim": "PAIR" }
             ]
           ]
-       }
-     ]
+        }
+      ]
     ]
   }
 ]
@@ -80,7 +86,7 @@ This straightforward example defines a simple counter contract with the ability 
 
 This example shows a simplified and slightly formatted version for readability. The actual .arl will contain this structure, although potentially more condensed without spaces or line breaks. The JSON-like notation you see here defines the Michelson code which was produced by the SmartPy compiler from the high-level Python code. Note the "prim" keywords: these are the primitive Michelson instructions and constructions like `parameter`, `storage`, `code`, `dup`, `car`, `pair` etc.. The first segment defines the parameter types for contract entrypoints (`increment` and `getCounter`). The second part defines the storage field (`int` for the counter), and the final section contains the actual instructions for the contract's logic.
 
-This format is *not* something you'd write directly. You'd instead use a high-level language (SmartPy in this instance) and then the compiler does the translation process, generating this .arl file. Now let's consider a contrasting example. If you were using Ligo, a different smart contract language also for Tezos (that's closer to OCaml), you would write the contract in Ligo language and then use the Ligo compiler which produces a similar structure in the .arl file after compilation; the Michelson instructions in Micheline form would have a slightly different layout than the one created by SmartPy, reflecting the Ligo contract's syntax and semantics.
+This format is _not_ something you'd write directly. You'd instead use a high-level language (SmartPy in this instance) and then the compiler does the translation process, generating this .arl file. Now let's consider a contrasting example. If you were using Ligo, a different smart contract language also for Tezos (that's closer to OCaml), you would write the contract in Ligo language and then use the Ligo compiler which produces a similar structure in the .arl file after compilation; the Michelson instructions in Micheline form would have a slightly different layout than the one created by SmartPy, reflecting the Ligo contract's syntax and semantics.
 
 Here’s a very simple Ligo smart contract:
 
@@ -99,7 +105,9 @@ let main (action,store:parameter * storage) : return =
    | GetCounter(_unit) ->
       (([] : list (operation)), store)
 ```
+
 When you compile this with the Ligo compiler, you'll also have a .arl file containing the Michelson code representation in Micheline form:
+
 ```json
 [
   { "prim": "parameter",

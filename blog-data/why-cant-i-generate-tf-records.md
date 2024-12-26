@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-cant-i-generate-tf-records"
 ---
 
-Okay, let's talk about generating tfrecords – I've certainly been down that road a few times, and it's not always as straightforward as the tutorials make it seem. The challenge usually isn't with the concept itself, but the myriad of subtle issues that can creep in and derail your progress. You're not alone in experiencing these frustrations; it's a common hurdle in the TensorFlow pipeline.
+, let's talk about generating tfrecords – I've certainly been down that road a few times, and it's not always as straightforward as the tutorials make it seem. The challenge usually isn't with the concept itself, but the myriad of subtle issues that can creep in and derail your progress. You're not alone in experiencing these frustrations; it's a common hurdle in the TensorFlow pipeline.
 
 My first experience with tfrecords was during a project where we were dealing with a large collection of high-resolution satellite imagery – hundreds of gigabytes, if memory serves. We were aiming for efficient data loading during model training. We had initially used simple image loading from disk, but it quickly became a bottleneck. We needed to serialize our data effectively, hence the dive into tfrecords. After a fair amount of initial stumbling blocks, we eventually ironed out the issues, and the performance gains were substantial.
 
-Now, why exactly *can't* you generate tfrecords? Let’s break this down. There isn’t usually one single reason, but a combination of potential culprits that commonly appear. I've encountered several, and I’ll walk you through the primary pain points I've seen and how to address them.
+Now, why exactly _can't_ you generate tfrecords? Let’s break this down. There isn’t usually one single reason, but a combination of potential culprits that commonly appear. I've encountered several, and I’ll walk you through the primary pain points I've seen and how to address them.
 
 Firstly, the most frequent issue revolves around the **data preparation and formatting mismatch**. Tensors need to be properly formatted and shaped before they are serialized into tf.train.example messages. This involves converting your raw data – be it images, text, or numerical arrays – into compatible numpy arrays and ensuring the shape and datatype align with what TensorFlow expects during reading from the tfrecords. For example, if you are working with images, make sure you are reading them in the appropriate colour space and converting them to a standardized format before including them in the feature dictionary. It’s easy to overlook a crucial step here, especially when the data originates from multiple sources.
 

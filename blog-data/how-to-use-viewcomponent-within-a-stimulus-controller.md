@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-to-use-viewcomponent-within-a-stimulus-controller"
 ---
 
-Alright, let's tackle this. I've spent a fair bit of time integrating `view_component` and Stimulus in some quite intricate applications, and it's a combination that, while initially feeling a bit like fitting square pegs in round holes, can become very powerful with the correct approach. It's not entirely straightforward, because the core philosophies of the two libraries are quite different. `view_component` focuses on encapsulated rendering logic and component composition, while Stimulus is primarily about DOM manipulation and behavior. Getting them to play nicely means understanding their distinct roles and where they overlap.
+, let's tackle this. I've spent a fair bit of time integrating `view_component` and Stimulus in some quite intricate applications, and it's a combination that, while initially feeling a bit like fitting square pegs in round holes, can become very powerful with the correct approach. It's not entirely straightforward, because the core philosophies of the two libraries are quite different. `view_component` focuses on encapsulated rendering logic and component composition, while Stimulus is primarily about DOM manipulation and behavior. Getting them to play nicely means understanding their distinct roles and where they overlap.
 
-The fundamental challenge arises from the fact that `view_component` renders HTML markup on the server-side (or potentially at build time, depending on your configuration), while Stimulus operates exclusively in the browser. Therefore, we can't directly instantiate a `view_component` *inside* a Stimulus controller. What we *can* do, and what is usually the most effective strategy, is to utilize Stimulus to control the behavior of a rendered `view_component` or update it through server responses. I’ll explain three common scenarios I’ve found myself in, with illustrative code examples.
+The fundamental challenge arises from the fact that `view_component` renders HTML markup on the server-side (or potentially at build time, depending on your configuration), while Stimulus operates exclusively in the browser. Therefore, we can't directly instantiate a `view_component` _inside_ a Stimulus controller. What we _can_ do, and what is usually the most effective strategy, is to utilize Stimulus to control the behavior of a rendered `view_component` or update it through server responses. I’ll explain three common scenarios I’ve found myself in, with illustrative code examples.
 
 **Scenario 1: Initializing a Component with Stimulus**
 
@@ -53,7 +53,7 @@ export default class extends Controller {
   static targets = ["tab", "content"];
 
   connect() {
-      this.showTab(0); // Show first tab on initial load
+    this.showTab(0); // Show first tab on initial load
   }
 
   selectTab(event) {
@@ -62,12 +62,17 @@ export default class extends Controller {
     this.showTab(tabIndex);
   }
 
-    showTab(index) {
-        this.tabTargets.forEach((tab, i) => tab.classList.toggle('active', i === index));
-        this.contentTargets.forEach((content, i) => content.classList.toggle('active', i === index));
-    }
+  showTab(index) {
+    this.tabTargets.forEach((tab, i) =>
+      tab.classList.toggle("active", i === index)
+    );
+    this.contentTargets.forEach((content, i) =>
+      content.classList.toggle("active", i === index)
+    );
+  }
 }
 ```
+
 Here, the `TabsComponent` is responsible for generating the structure and initial markup. The Stimulus `TabsController` then adds dynamic behavior, managing CSS classes to toggle active states. This demonstrates a clear separation of concerns: templating in `view_component`, and interactive behavior through Stimulus.
 
 **Scenario 2: Dynamically Updating Component Content**
@@ -95,6 +100,7 @@ end
 ```
 
 The Stimulus controller for this would be:
+
 ```javascript
 // app/javascript/controllers/user_profile_controller.js
 import { Controller } from "@hotwired/stimulus";
@@ -102,16 +108,17 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
   static targets = ["profileContent"];
 
-    refreshProfile() {
-      fetch('/profile') // Endpoint that returns the updated profile partial HTML.
-        .then(response => response.text())
-        .then(html => {
-          this.profileContentTarget.innerHTML = html;
+  refreshProfile() {
+    fetch("/profile") // Endpoint that returns the updated profile partial HTML.
+      .then((response) => response.text())
+      .then((html) => {
+        this.profileContentTarget.innerHTML = html;
       })
-      .catch(error => console.error("Error fetching updated profile", error));
-    }
+      .catch((error) => console.error("Error fetching updated profile", error));
+  }
 }
 ```
+
 In this example, the `UserProfileComponent` renders the initial user data. The `user-profile` stimulus controller uses a simple fetch request to grab the new content from the '/profile' path, and then inserts it into the profileContent target element, effectively refreshing the component on demand. The key here is that the server endpoint should return the complete updated content for the partial.
 
 **Scenario 3: Using Stimulus for Component-Specific Interactions**
@@ -147,21 +154,21 @@ And the Stimulus Controller:
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
+  static values = { id: String };
+  connect() {
+    this.element.id = this.idValue;
+  }
 
-    static values = { id : String }
-    connect() {
-       this.element.id = this.idValue;
-    }
+  open() {
+    this.element.style.display = "block";
+  }
 
-    open(){
-        this.element.style.display = "block";
-    }
-
-    close(){
-        this.element.style.display = "none";
-    }
+  close() {
+    this.element.style.display = "none";
+  }
 }
 ```
+
 In this scenario, a modal `view_component` renders the modal with a unique ID and initial content, initially hidden. A separate button will be needed to trigger the opening action, referencing that modal by its ID. The Stimulus `ModalController` only handles the visual logic.
 
 These three scenarios cover the vast majority of practical situations you'll encounter when using `view_component` and Stimulus together. The common thread is treating `view_component` as the rendering engine, providing static structure and content, and Stimulus as the behavioral layer, adding dynamism and interactivity.

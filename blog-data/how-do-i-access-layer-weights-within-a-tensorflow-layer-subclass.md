@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-do-i-access-layer-weights-within-a-tensorflow-layer-subclass"
 ---
 
-Alright, let's tackle this. It’s a frequent question, and one I've definitely stumbled over myself a few times in past projects. Getting at the internal weights of a TensorFlow layer subclass, especially when you’ve designed something custom, isn’t always immediately obvious. It essentially boils down to how TensorFlow manages trainable variables within the computational graph and how subclasses inherit that structure. I remember back during my work on a generative model for time series data, specifically, I needed to inspect the learnt feature transformation matrices. So, I had to dive into the mechanics of this myself, leading me to adopt some techniques that have served me well ever since.
+, let's tackle this. It’s a frequent question, and one I've definitely stumbled over myself a few times in past projects. Getting at the internal weights of a TensorFlow layer subclass, especially when you’ve designed something custom, isn’t always immediately obvious. It essentially boils down to how TensorFlow manages trainable variables within the computational graph and how subclasses inherit that structure. I remember back during my work on a generative model for time series data, specifically, I needed to inspect the learnt feature transformation matrices. So, I had to dive into the mechanics of this myself, leading me to adopt some techniques that have served me well ever since.
 
 The core challenge lies in the fact that when you build a custom layer by subclassing `tf.keras.layers.Layer`, TensorFlow needs to know which attributes you intend to be treated as trainable parameters (weights). The mechanism for this is that these parameters need to be explicitly created as `tf.Variable` objects, typically within the `build()` method of your subclass, or sometimes directly in the `__init__` if the layer's input shape is static. And it’s these `tf.Variable` instances that we later want to access.
 
 Here’s the breakdown of accessing them:
 
-Firstly, remember that a subclassed layer in TensorFlow does *not* automatically expose its weights as a simple dictionary or list of attributes. Instead, it uses a specific mechanism for managing trainable variables. These variables are stored as part of the layer's state. The `self.trainable_variables` (or `self.variables`, which includes both trainable and non-trainable) attributes give you access to this internal list of `tf.Variable` objects.
+Firstly, remember that a subclassed layer in TensorFlow does _not_ automatically expose its weights as a simple dictionary or list of attributes. Instead, it uses a specific mechanism for managing trainable variables. These variables are stored as part of the layer's state. The `self.trainable_variables` (or `self.variables`, which includes both trainable and non-trainable) attributes give you access to this internal list of `tf.Variable` objects.
 
 When you call the layer, these variables are used in computations as specified in the `call()` method. Now, to inspect these weights, we can iterate over the trainable variables. The most common approach I use, is to directly access the `trainable_variables` property and then, if needed, extract their values using the `.numpy()` method. Here is how it practically works.
 
@@ -147,7 +147,8 @@ for var in stats_layer.variables:
 
 
 ```
-Here, the `average` variable is created with `trainable=False`. Therefore, it will not be included in the `trainable_variables` list but *will* be in the `variables` list. This highlights that `trainable_variables` gives you only the weights you need for gradient updates during training, whereas `variables` give you all the state-related variables of the layer.
+
+Here, the `average` variable is created with `trainable=False`. Therefore, it will not be included in the `trainable_variables` list but _will_ be in the `variables` list. This highlights that `trainable_variables` gives you only the weights you need for gradient updates during training, whereas `variables` give you all the state-related variables of the layer.
 
 For deeper insights, I'd recommend exploring a few resources. First and foremost, the TensorFlow documentation itself. Dive deep into the sections on `tf.keras.layers.Layer`, specifically the `build()` method and the concept of trainable variables. Then, "Deep Learning with Python" by François Chollet is excellent for a more practical understanding of how layers function. For a more in-depth theoretical view of automatic differentiation, you can't go past "Numerical Optimization" by Jorge Nocedal and Stephen J. Wright, which, while not Tensorflow specific, gives you solid background on backpropagation. Finally, papers such as the original “Backpropagation Applied to Handwritten Zip Code Recognition” by LeCun et al can be useful for understanding where the concept of trainable variables originated from.
 

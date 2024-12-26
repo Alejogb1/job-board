@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-remotedataerror-unable-to-read-url-from-yahoo-and-pandas-datareader"
 ---
 
-Alright, let's dissect this `RemoteDataError: Unable to read URL` issue you're encountering with `pandas-datareader` and Yahoo. I’ve seen this particular error crop up more than a few times over the years, especially when relying on external data sources. It’s a frustratingly common problem, and the root cause isn't always immediately obvious. It generally stems from a breakdown in the communication pipeline between your code and Yahoo Finance's servers.
+, let's dissect this `RemoteDataError: Unable to read URL` issue you're encountering with `pandas-datareader` and Yahoo. I’ve seen this particular error crop up more than a few times over the years, especially when relying on external data sources. It’s a frustratingly common problem, and the root cause isn't always immediately obvious. It generally stems from a breakdown in the communication pipeline between your code and Yahoo Finance's servers.
 
 The `pandas-datareader` library is essentially a bridge—a convenient abstraction layer, if you will—that handles the complexities of fetching data from sources like Yahoo Finance. When you issue a request to, say, grab historical stock prices for a particular symbol, it constructs an appropriate URL, sends an http request, processes the response, and returns a pandas dataframe. The `RemoteDataError` typically indicates this handshake has failed.
 
@@ -33,7 +33,7 @@ except requests.exceptions.RequestException as e:
     print(f"Connection failed: {e}")
 ```
 
-This test bypasses the `pandas-datareader` layer and connects directly to Yahoo. If this fails, your network or the Yahoo endpoint is the problem. If this *succeeds*, then the issue lies specifically with how `pandas-datareader` interacts with the endpoint, suggesting there might be a configuration or library version problem. If the request fails, further tests can help to determine if there is something specifically blocking that url from your current network.
+This test bypasses the `pandas-datareader` layer and connects directly to Yahoo. If this fails, your network or the Yahoo endpoint is the problem. If this _succeeds_, then the issue lies specifically with how `pandas-datareader` interacts with the endpoint, suggesting there might be a configuration or library version problem. If the request fails, further tests can help to determine if there is something specifically blocking that url from your current network.
 
 **Step 2: Check `pandas-datareader` and API compatibility**
 
@@ -58,7 +58,7 @@ except pdr.base.RemoteDataError as e:
     print(f"Error with pandas-datareader: {e}")
 ```
 
-This example fetches data for Apple between a limited date range. If this *fails* when the `requests` query passed it is very likely your pandas-datareader syntax is incorrect. Compare the above code with the example provided in the libraries documentation. Make absolutely sure you are specifying the correct parameters for the desired outcome.
+This example fetches data for Apple between a limited date range. If this _fails_ when the `requests` query passed it is very likely your pandas-datareader syntax is incorrect. Compare the above code with the example provided in the libraries documentation. Make absolutely sure you are specifying the correct parameters for the desired outcome.
 
 **Step 4: Implement Error Handling and Retries**
 

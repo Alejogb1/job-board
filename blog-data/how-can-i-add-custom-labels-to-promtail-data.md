@@ -4,19 +4,19 @@ date: "2024-12-23"
 id: "how-can-i-add-custom-labels-to-promtail-data"
 ---
 
-Alright, let's tackle custom labels in Promtail. It's something I’ve definitely navigated before, and it can be surprisingly nuanced depending on your setup. Back in '18, we were moving a monolith to a microservices architecture and, predictably, the logs became a distributed mess. That's where a deep understanding of relabeling in Promtail became critical. The out-of-the-box log lines simply weren't cutting it for effective querying and alerting. So, here’s the approach I used and what I’ve learned since:
+, let's tackle custom labels in Promtail. It's something I’ve definitely navigated before, and it can be surprisingly nuanced depending on your setup. Back in '18, we were moving a monolith to a microservices architecture and, predictably, the logs became a distributed mess. That's where a deep understanding of relabeling in Promtail became critical. The out-of-the-box log lines simply weren't cutting it for effective querying and alerting. So, here’s the approach I used and what I’ve learned since:
 
-Fundamentally, Promtail's relabeling mechanism is how you add, modify, or drop labels before log data gets shipped to Loki. You aren't directly altering the *content* of the log, but rather enriching the associated metadata. This is incredibly powerful for filtering, aggregation, and ultimately, getting value out of your logs. The core idea is to use a series of rules within your Promtail configuration to extract information from the log stream and assign them as labels.
+Fundamentally, Promtail's relabeling mechanism is how you add, modify, or drop labels before log data gets shipped to Loki. You aren't directly altering the _content_ of the log, but rather enriching the associated metadata. This is incredibly powerful for filtering, aggregation, and ultimately, getting value out of your logs. The core idea is to use a series of rules within your Promtail configuration to extract information from the log stream and assign them as labels.
 
-At its most basic level, Promtail configuration files describe how it reads log files or streams. The `scrape_configs` section dictates *where* Promtail gets the logs, and the `relabel_configs` sections are where you specify the transformations. The rules are applied sequentially, so the order matters.
+At its most basic level, Promtail configuration files describe how it reads log files or streams. The `scrape_configs` section dictates _where_ Promtail gets the logs, and the `relabel_configs` sections are where you specify the transformations. The rules are applied sequentially, so the order matters.
 
 A typical `relabel_configs` block contains several key components: `source_labels`, `regex`, `target_label`, `replacement`, and `action`. Let’s break those down.
 
-*   `source_labels`: A list of labels whose values will be concatenated and used as the input string for the regex. If this is omitted, it defaults to the log line itself (`__line__`).
-*   `regex`: A regular expression pattern that is applied to the concatenated `source_labels` value.
-*   `target_label`: The name of the label that will be created or modified.
-*   `replacement`: The replacement string. Captured regex groups can be referenced using `"$1"`, `"$2"`, and so on. If the regex doesn't match anything, this is not applied, unless the `action` is `replace` (more on that in a bit).
-*   `action`: Specifies how to handle the regex match. Common values are `replace`, `keep`, `drop`, `hashmod`, `labelmap`, `lowercase`, `uppercase`, `keepequal`, `dropequal`.
+- `source_labels`: A list of labels whose values will be concatenated and used as the input string for the regex. If this is omitted, it defaults to the log line itself (`__line__`).
+- `regex`: A regular expression pattern that is applied to the concatenated `source_labels` value.
+- `target_label`: The name of the label that will be created or modified.
+- `replacement`: The replacement string. Captured regex groups can be referenced using `"$1"`, `"$2"`, and so on. If the regex doesn't match anything, this is not applied, unless the `action` is `replace` (more on that in a bit).
+- `action`: Specifies how to handle the regex match. Common values are `replace`, `keep`, `drop`, `hashmod`, `labelmap`, `lowercase`, `uppercase`, `keepequal`, `dropequal`.
 
 Now, let’s get to some practical examples.
 
@@ -34,10 +34,10 @@ scrape_configs:
           job: system
           __path__: /var/log/my_app.log
     relabel_configs:
-      - source_labels: ['__line__']
+      - source_labels: ["__line__"]
         regex: '\[(.*?)\](.*)'
-        target_label: 'service'
-        replacement: '$1'
+        target_label: "service"
+        replacement: "$1"
         action: replace
 ```
 
@@ -57,10 +57,10 @@ scrape_configs:
           job: access
           __path__: /var/log/*/*.log
     relabel_configs:
-      - source_labels: ['__path__']
+      - source_labels: ["__path__"]
         regex: '/var/log/(.*?)/.*\.log'
-        target_label: 'app'
-        replacement: '$1'
+        target_label: "app"
+        replacement: "$1"
         action: replace
 ```
 
@@ -74,10 +74,10 @@ Sometimes you have a label you don't want. Let's assume your logs have a `kubern
 scrape_configs:
   - job_name: kubernetes_logs
     kubernetes_sd_configs:
-        - role: pod
+      - role: pod
     relabel_configs:
-      - source_labels: ['kubernetes_namespace']
-        regex: '.*'
+      - source_labels: ["kubernetes_namespace"]
+        regex: ".*"
         action: drop
 ```
 

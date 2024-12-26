@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-connect-a-laravel-sail-instance-to-an-ssh-tunnel"
 ---
 
-Alright, let's talk about connecting a Laravel Sail instance through an ssh tunnel. This is something I've tackled more times than I care to count, particularly when dealing with databases hosted on a private network or legacy systems that refuse to play nice with direct connections. It's a common scenario in development environments, and getting it set up properly can save you a significant headache. So, let’s get into the specifics, aiming for a clear, technically grounded approach.
+, let's talk about connecting a Laravel Sail instance through an ssh tunnel. This is something I've tackled more times than I care to count, particularly when dealing with databases hosted on a private network or legacy systems that refuse to play nice with direct connections. It's a common scenario in development environments, and getting it set up properly can save you a significant headache. So, let’s get into the specifics, aiming for a clear, technically grounded approach.
 
 First, let’s clarify the core issue. Laravel Sail, using docker, isolates your application's environment. This is great for consistency but creates a barrier when you need to interact with resources outside of the docker network. An SSH tunnel essentially establishes a secure pathway between your local machine and a remote server, forwarding ports. This is what will allow your dockerized application, even one utilizing Laravel sail, to access services as if it were on the same network.
 
@@ -22,9 +22,9 @@ ssh -N -L local_port:remote_host:remote_port user@remote_server
 
 Let's dissect this command:
 
-*   `-N`: This tells `ssh` not to execute a remote command. We only want the port forwarding functionality.
-*   `-L local_port:remote_host:remote_port`: This specifies the port forwarding. `local_port` is the port on your local machine you will use to access the service. `remote_host` is the address of the server hosting the service as seen from the jump server, and `remote_port` is the service's port number on that machine.
-*   `user@remote_server`: This is your login information for the server hosting the tunnel. This is typically a jump server or an intermediary machine accessible from your local network, and also in direct communication with the machine with the resource you're targeting (in this example, the database).
+- `-N`: This tells `ssh` not to execute a remote command. We only want the port forwarding functionality.
+- `-L local_port:remote_host:remote_port`: This specifies the port forwarding. `local_port` is the port on your local machine you will use to access the service. `remote_host` is the address of the server hosting the service as seen from the jump server, and `remote_port` is the service's port number on that machine.
+- `user@remote_server`: This is your login information for the server hosting the tunnel. This is typically a jump server or an intermediary machine accessible from your local network, and also in direct communication with the machine with the resource you're targeting (in this example, the database).
 
 For example, imagine your database server is named `db.internal.example.com` running on port `5432`, the database server can be reached through a gateway server `gateway.example.com`, and you want to access it locally on port `6543`. Your command would look like this:
 
@@ -85,6 +85,7 @@ done;
 ```
 
 This script does the following:
+
 1. starts the tunnel process in the background
 2. stores the process id so the tunnel can be killed later
 3. pauses to allow the tunnel to spin up
@@ -96,12 +97,12 @@ You can make the script executable using `chmod +x startup.sh`. Then run the scr
 
 **Troubleshooting**
 
-*   **Connectivity issues:** If your application can't connect, double-check your `.env` settings, ensure the tunnel is active, and confirm that the ports are correctly configured on both ends. Use `lsof -i :6543` on your local machine to see if the tunnel is listening on the correct port.
-*   **Firewall interference:** Verify that your local firewall is not blocking the local port you are forwarding through the tunnel. On linux, use `iptables -L` or `ufw status` (if `ufw` is installed) to check for active rules.
-*   **Timeout issues:** Sometimes, the connection will take a while to establish on first connection. This can sometimes appear as a connection failure, but trying again may resolve the connection. This is especially common if the remote service is waking up from a period of inactivity or is under heavy load.
+- **Connectivity issues:** If your application can't connect, double-check your `.env` settings, ensure the tunnel is active, and confirm that the ports are correctly configured on both ends. Use `lsof -i :6543` on your local machine to see if the tunnel is listening on the correct port.
+- **Firewall interference:** Verify that your local firewall is not blocking the local port you are forwarding through the tunnel. On linux, use `iptables -L` or `ufw status` (if `ufw` is installed) to check for active rules.
+- **Timeout issues:** Sometimes, the connection will take a while to establish on first connection. This can sometimes appear as a connection failure, but trying again may resolve the connection. This is especially common if the remote service is waking up from a period of inactivity or is under heavy load.
 
 **Further Reading**
 
-For a deeper understanding of SSH, I highly recommend checking out “*SSH, The Secure Shell: The Definitive Guide*” by Daniel J. Barrett and Richard Silverman. It provides comprehensive insights into SSH functionality and configuration, covering advanced tunneling techniques as well. Additionally, exploring the documentation of `ssh` with the command `man ssh` in your terminal will provide detailed information on each flag and its functionality. For specific details on docker and its networking, I recommend diving into Docker's official documentation, found at [docs.docker.com](https://docs.docker.com/). This documentation provides extensive information on docker networking, which is crucial in understanding how Sail works under the hood.
+For a deeper understanding of SSH, I highly recommend checking out “_SSH, The Secure Shell: The Definitive Guide_” by Daniel J. Barrett and Richard Silverman. It provides comprehensive insights into SSH functionality and configuration, covering advanced tunneling techniques as well. Additionally, exploring the documentation of `ssh` with the command `man ssh` in your terminal will provide detailed information on each flag and its functionality. For specific details on docker and its networking, I recommend diving into Docker's official documentation, found at [docs.docker.com](https://docs.docker.com/). This documentation provides extensive information on docker networking, which is crucial in understanding how Sail works under the hood.
 
 Remember that, setting up an SSH tunnel isn't overly complicated, but requires precision. With these steps and examples, you should be able to connect your Laravel Sail application to those tricky internal services, and I'm confident you'll find it a useful skill. As always, thorough testing and careful attention to detail will be key to a smooth experience.

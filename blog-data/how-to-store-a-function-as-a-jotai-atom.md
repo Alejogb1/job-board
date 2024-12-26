@@ -4,35 +4,32 @@ date: "2024-12-15"
 id: "how-to-store-a-function-as-a-jotai-atom"
 ---
 
-alright, so you're looking at storing a function within a jotai atom, right? been there, done that, got the t-shirt (and the accompanying stack overflow post with a very low score). it's not as straightforward as shoving a primitive in there but it's definitely doable and i've spent my share of time figuring out the cleanest way to go about it.
+, so you're looking at storing a function within a jotai atom, right? been there, done that, got the t-shirt (and the accompanying stack overflow post with a very low score). it's not as straightforward as shoving a primitive in there but it's definitely doable and i've spent my share of time figuring out the cleanest way to go about it.
 
 first, let's clarify something fundamental: jotai atoms are primarily designed to hold _data_. they're essentially reactive containers for values. functions, while technically data (in javascript at least), often represent behavior or logic. storing a function directly might not be the ideal way in all cases, but there are scenarios where it's useful. i had to use this pattern in my past when i was making a simple crud app and needed to change how the data is filtered based on which component was actively showing. back then jotai was pretty new and i was fighting with state management for a week so i feel your pain.
 
 so here's a very simple example: let's say you have a function to add two numbers and you want to store that.
 
 ```javascript
-import { atom, useAtom } from 'jotai';
+import { atom, useAtom } from "jotai";
 
 // define function, this could be any function of course
 const add = (a, b) => a + b;
-
 
 const functionAtom = atom(add);
 
 function MyComponent() {
   const [func] = useAtom(functionAtom);
 
-    // use function
-    const result = func(2,3)
-
+  // use function
+  const result = func(2, 3);
 
   return (
-   <div>
-     <p>result is: {result}</p>
+    <div>
+      <p>result is: {result}</p>
     </div>
   );
 }
-
 
 export default MyComponent;
 ```
@@ -42,17 +39,15 @@ in this example, `functionAtom` holds the `add` function itself. inside `mycompo
 the above example might be to simple so lets dive deeper. now imagine you have a more complex scenario. perhaps you're developing a ui component and based on different interactions with a user you want to change the function that is run. consider this real world type scenario where you might change the filter of a list depending on which button is clicked:
 
 ```javascript
-import { atom, useAtom } from 'jotai';
-import { useCallback } from 'react';
+import { atom, useAtom } from "jotai";
+import { useCallback } from "react";
 
-const filterByEven = (data) => data.filter(item => item % 2 === 0);
-const filterByOdd = (data) => data.filter(item => item % 2 !== 0);
+const filterByEven = (data) => data.filter((item) => item % 2 === 0);
+const filterByOdd = (data) => data.filter((item) => item % 2 !== 0);
 
 const filterFunctionAtom = atom(filterByEven);
 
-
 function MyListComponent({ data }) {
-
   const [filterFunction, setFilterFunction] = useAtom(filterFunctionAtom);
   const filteredData = filterFunction(data);
 
@@ -60,15 +55,14 @@ function MyListComponent({ data }) {
     setFilterFunction(filterByEven);
   }, [setFilterFunction]);
 
-    const handleSetOddFilter = useCallback(() => {
-        setFilterFunction(filterByOdd);
-      }, [setFilterFunction]);
-
+  const handleSetOddFilter = useCallback(() => {
+    setFilterFunction(filterByOdd);
+  }, [setFilterFunction]);
 
   return (
     <div>
-        <button onClick={handleSetEvenFilter}>even</button>
-        <button onClick={handleSetOddFilter}>odd</button>
+      <button onClick={handleSetEvenFilter}>even</button>
+      <button onClick={handleSetOddFilter}>odd</button>
 
       <ul>
         {filteredData.map((item) => (
@@ -78,7 +72,6 @@ function MyListComponent({ data }) {
     </div>
   );
 }
-
 
 export default MyListComponent;
 ```
@@ -88,21 +81,25 @@ here, our `filterFunctionAtom` starts off holding `filterbyeven`, but we can swi
 let's tweak our previous example to add memoization. it's not always needed but it’s a practice i’ve found useful. imagine your filtering function is computationally intensive or involves external api calls. if it is recalculated at every render, you might see a performance problem. i have faced this issue more than once and it is annoying to figure it out the first time, especially with complex logic:
 
 ```javascript
-import { atom, useAtom } from 'jotai';
-import { useCallback } from 'react';
+import { atom, useAtom } from "jotai";
+import { useCallback } from "react";
 
-const filterByEven = useCallback((data) => data.filter(item => item % 2 === 0), []);
-const filterByOdd = useCallback((data) => data.filter(item => item % 2 !== 0), []);
-
+const filterByEven = useCallback(
+  (data) => data.filter((item) => item % 2 === 0),
+  []
+);
+const filterByOdd = useCallback(
+  (data) => data.filter((item) => item % 2 !== 0),
+  []
+);
 
 const filterFunctionAtom = atom(filterByEven);
 
 function MyListComponent({ data }) {
-
   const [filterFunction, setFilterFunction] = useAtom(filterFunctionAtom);
   const filteredData = filterFunction(data);
 
-   const handleSetEvenFilter = useCallback(() => {
+  const handleSetEvenFilter = useCallback(() => {
     setFilterFunction(filterByEven);
   }, [setFilterFunction]);
 
@@ -110,11 +107,10 @@ function MyListComponent({ data }) {
     setFilterFunction(filterByOdd);
   }, [setFilterFunction]);
 
-
   return (
     <div>
-         <button onClick={handleSetEvenFilter}>even</button>
-        <button onClick={handleSetOddFilter}>odd</button>
+      <button onClick={handleSetEvenFilter}>even</button>
+      <button onClick={handleSetOddFilter}>odd</button>
       <ul>
         {filteredData.map((item) => (
           <li key={item}>{item}</li>
@@ -123,7 +119,6 @@ function MyListComponent({ data }) {
     </div>
   );
 }
-
 
 export default MyListComponent;
 ```

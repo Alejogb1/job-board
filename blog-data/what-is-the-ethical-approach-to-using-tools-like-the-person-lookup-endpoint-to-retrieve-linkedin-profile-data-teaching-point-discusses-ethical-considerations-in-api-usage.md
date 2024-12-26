@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-is-the-ethical-approach-to-using-tools-like-the-person-lookup-endpoint-to-retrieve-linkedin-profile-data-teaching-point-discusses-ethical-considerations-in-api-usage"
 ---
 
-Yo alright lets talk about snagging LinkedIn data with those person lookup endpoints man its a can of worms for real
+Yo lets talk about snagging LinkedIn data with those person lookup endpoints man its a can of worms for real
 
 First thing is like are we even allowed to be doing this at all LinkedIn's terms of service that's the first hurdle always gotta peek at those usually tucked away in some corner of the internet they're basically the legal rulebook telling you what you can and cannot do and messing with that is like knowingly stepping on a landmine no bueno especially when we are dealing with personal data remember that at the core its about respecting people's privacy and if those terms say 'no unauthorized scraping' or whatever well that's a red flag a big one
 
@@ -99,4 +99,4 @@ and then there's like ongoing conversation around privacy you really want to kee
 
 so yeah ethically snagging linked in data its a tangled mess we need to think about legal rights data security potential biases and just basic respect for others privacy its not enough to just see if something is technically possible we gotta stop and consider if its actually the right thing to do because if we dont we are going to create more problems than we are fixing
 
-alright thats my brain dump on this topic peace out for now
+thats my brain dump on this topic peace out for now

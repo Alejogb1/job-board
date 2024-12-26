@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-arima-forecasts-be-constrained-to-an-interval-in-python"
 ---
 
-Alright, let's tackle constraining arima forecasts. This is something I’ve actually dealt with extensively, particularly during my time working on inventory management systems. Unconstrained forecasts, especially with volatile data, can lead to pretty impractical results. It's not uncommon to see a model, based on past data, predict negative inventory, which, of course, makes no sense. What we need is a way to enforce logical boundaries, and fortunately, it's achievable.
+, let's tackle constraining arima forecasts. This is something I’ve actually dealt with extensively, particularly during my time working on inventory management systems. Unconstrained forecasts, especially with volatile data, can lead to pretty impractical results. It's not uncommon to see a model, based on past data, predict negative inventory, which, of course, makes no sense. What we need is a way to enforce logical boundaries, and fortunately, it's achievable.
 
 The core issue with standard arima model predictions is that they are not inherently bounded. The algorithm, essentially, projects based on the learned patterns, without consideration for real-world limits. This can lead to forecasts that extend into negative territory or unrealistically high values. We need to modify the process to ensure our forecasts remain within a defined interval.
 
@@ -146,6 +146,7 @@ print("Lower:", lower_bound_result)
 print("Upper:", upper_bound_result)
 
 ```
+
 In this example, instead of applying constraints on the forecast space, we transform into a space that has the desired qualities, before clipping, if necessary.
 
 For deeper study on these techniques, I highly recommend consulting "Time Series Analysis and Its Applications: With R Examples" by Robert H. Shumway and David S. Stoffer. It provides an excellent theoretical foundation and practical examples of time series analysis. Also, “Forecasting: Principles and Practice” by Rob J Hyndman and George Athanasopoulos provides excellent material and is easily accessible online. For implementations and different types of bounds, you can find detailed discussions in the documentation for statsmodels, and specifically in the examples provided for the `ARIMA` class.

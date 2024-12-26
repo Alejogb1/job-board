@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "difference-among-always-ff-always-comb-always-latch-and-always"
 ---
 
-Okay so you're asking about Verilog's always blocks right Yeah I've been there done that burned my fingers more than a few times let me tell you This is one of those things that looks simple on the surface but can bite you hard if you're not careful Especially when you're dealing with timing and synthesis results ugh
+you're asking about Verilog's always blocks right Yeah I've been there done that burned my fingers more than a few times let me tell you This is one of those things that looks simple on the surface but can bite you hard if you're not careful Especially when you're dealing with timing and synthesis results ugh
 
 First thing first forget any notion of always being just "always" in a regular software sense It's not a loop that just runs continuously Instead it’s about how the hardware simulator interprets your logic and how it translates to physical circuits
 
@@ -12,7 +12,7 @@ Let’s break it down you've got four common types of always blocks always ff al
 
 **`always @(posedge clock)` or `always @(negedge clock)` or `always @(posedge clock or negedge reset)` for example is always ff**
 
-This one is your bread and butter for sequential logic the `ff` is short for flip flop You'll hear that term a lot in hardware design Flip flops are the fundamental building blocks for things like registers counters and state machines The posedge clock or negedge clock bit that's the key This means the code *inside* the always block only gets executed when the clock signal transitions either from low to high (posedge) or from high to low (negedge)
+This one is your bread and butter for sequential logic the `ff` is short for flip flop You'll hear that term a lot in hardware design Flip flops are the fundamental building blocks for things like registers counters and state machines The posedge clock or negedge clock bit that's the key This means the code _inside_ the always block only gets executed when the clock signal transitions either from low to high (posedge) or from high to low (negedge)
 
 If you’re not familiar with clock signals they are like a heartbeat for your digital circuit Everything that needs to happen synchronously is triggered by it It's a rhythmic tick-tock that keeps all the different parts of your circuit working together
 
@@ -40,9 +40,9 @@ See that `<=`? that's a non-blocking assignment in Verilog it says that on the n
 
 This is the second most common one after the previous one and it’s used for combinational logic `comb` is short for combinational which means logic that reacts instantly to input changes no clock involved This is things like multiplexers decoders encoders adders simple gates and many many other pieces of hardware that calculate based on inputs
 
-The `@(*)` means that the block is triggered by *any* change on any of the input signals used inside that block If you were to write down every signal that influences the output you will find they are included when you use `*` so you don't need to think much about it it does it for you
+The `@(*)` means that the block is triggered by _any_ change on any of the input signals used inside that block If you were to write down every signal that influences the output you will find they are included when you use `*` so you don't need to think much about it it does it for you
 
-Now here is a bit of a history lesson back in the old days we had to explicitly list *every* input signal in the sensitivity list of the `always @()` block It was like herding cats if you forgot one your simulator might show something different than your real hardware especially if you were testing it outside the simulator This `@(*)` notation is a lifesaver and a gift from the hardware gods if you ask me. A sanity savior if you will
+Now here is a bit of a history lesson back in the old days we had to explicitly list _every_ input signal in the sensitivity list of the `always @()` block It was like herding cats if you forgot one your simulator might show something different than your real hardware especially if you were testing it outside the simulator This `@(*)` notation is a lifesaver and a gift from the hardware gods if you ask me. A sanity savior if you will
 
 Here’s an example:
 
@@ -68,7 +68,7 @@ Here the output `out` changes immediately whenever either `a` `b` or `sel` chang
 
 **`always @(some_signal or some_other_signal)` with level sensitivity is always latch**
 
-Okay now we are getting into trickier territory The always latch or level sensitive always block This one is easy to misunderstand if you aren't careful You usually have a explicit sensitivity list as well and it can be triggered by level changes in the signal instead of edges like in flip flops
+now we are getting into trickier territory The always latch or level sensitive always block This one is easy to misunderstand if you aren't careful You usually have a explicit sensitivity list as well and it can be triggered by level changes in the signal instead of edges like in flip flops
 
 These are used for things like generating a clock gate where a change in level is used as control signal or latches for memory controllers but mostly used to create latches (a type of memory storage element similar to flip-flop). The level sensitivity means the code executes as long as the input signal is active (like a enable signal) and in most cases this is what defines a latch. Remember these latches are often inferred by mistake and in most cases this is considered bad design style
 
@@ -87,6 +87,7 @@ module gated_latch (
 
 endmodule
 ```
+
 In this case whenever enable goes high or goes low it updates the output with the value of d it basically stores that value. In most cases this is bad design because these types of logic are really not what you expect to be doing in a always block
 
 **The plain old `always` block**

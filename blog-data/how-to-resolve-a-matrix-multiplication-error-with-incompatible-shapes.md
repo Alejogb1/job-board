@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-to-resolve-a-matrix-multiplication-error-with-incompatible-shapes"
 ---
 
-Alright, let's tackle this matrix multiplication conundrum. I've seen this particular issue pop up more times than I care to count, especially back when I was heavily involved in developing a custom neural network library for a research project. Incompatible shapes during matrix multiplication are a classic problem, typically stemming from a misunderstanding or oversight in how matrix dimensions align. Essentially, for a matrix multiplication operation, say *C = A * B*, the number of columns in matrix *A* must precisely match the number of rows in matrix *B*. Failing to adhere to this fundamental rule results in precisely the kind of error you’re experiencing.
+, let's tackle this matrix multiplication conundrum. I've seen this particular issue pop up more times than I care to count, especially back when I was heavily involved in developing a custom neural network library for a research project. Incompatible shapes during matrix multiplication are a classic problem, typically stemming from a misunderstanding or oversight in how matrix dimensions align. Essentially, for a matrix multiplication operation, say _C = A _ B*, the number of columns in matrix *A* must precisely match the number of rows in matrix *B\*. Failing to adhere to this fundamental rule results in precisely the kind of error you’re experiencing.
 
-The core of the problem lies in the dimensions involved. If you have a matrix *A* of size *m x n* (meaning *m* rows and *n* columns), and a matrix *B* of size *p x q*, then the multiplication *A * B* is only defined if *n = p*. The resulting matrix *C* will then have dimensions *m x q*. When *n ≠ p*, the operation is fundamentally undefined in linear algebra, and this is what the error messages signal – the mathematical operation can’t be performed.
+The core of the problem lies in the dimensions involved. If you have a matrix _A_ of size _m x n_ (meaning _m_ rows and _n_ columns), and a matrix _B_ of size _p x q_, then the multiplication _A _ B* is only defined if *n = p*. The resulting matrix *C* will then have dimensions *m x q*. When *n ≠ p\*, the operation is fundamentally undefined in linear algebra, and this is what the error messages signal – the mathematical operation can’t be performed.
 
 Now, while the error is straightforward, the solutions can range from simple fixes to more involved restructuring of your data. Let me walk you through the common scenarios and how to resolve them, pulling from what I've encountered firsthand in my experience.
 
@@ -35,7 +35,7 @@ print(f"Fixed product: {C_fixed}")
 
 ```
 
-In the first block, we define two matrices *A* and *B*. If *A* represents two samples with three features each, and *B* contains weights connecting the input to an output, the multiplication *A* * *B* is an error as their shapes are 2x3 and 3x2 respectively. Transposing A correctly aligns dimensions, which will produce a meaningful calculation and resolve the error. The error message clearly indicates that the shapes are not compatible, prompting us to re-examine how the data was intended to be arranged.
+In the first block, we define two matrices _A_ and _B_. If _A_ represents two samples with three features each, and _B_ contains weights connecting the input to an output, the multiplication _A_ \* _B_ is an error as their shapes are 2x3 and 3x2 respectively. Transposing A correctly aligns dimensions, which will produce a meaningful calculation and resolve the error. The error message clearly indicates that the shapes are not compatible, prompting us to re-examine how the data was intended to be arranged.
 
 **Scenario 2: Mismatched Data Sizes**
 
@@ -63,7 +63,7 @@ print(f"Fixed product: {C_fixed}")
 
 ```
 
-Here, *A* is 3x2 and *B* is 3x3, making the multiplication invalid. The fix involves recognizing that *B* needs to be restructured. In this case, we are making the assumption based on external factors that *B* has redundant data (3 rows instead of the required 2 to be compatible with *A*).  Depending on the actual context, the proper fix may be to use only a relevant subset, aggregate data, or remove data. The solution is context-dependent, and only the user can determine the correct course of action.
+Here, _A_ is 3x2 and _B_ is 3x3, making the multiplication invalid. The fix involves recognizing that _B_ needs to be restructured. In this case, we are making the assumption based on external factors that _B_ has redundant data (3 rows instead of the required 2 to be compatible with _A_). Depending on the actual context, the proper fix may be to use only a relevant subset, aggregate data, or remove data. The solution is context-dependent, and only the user can determine the correct course of action.
 
 **Scenario 3: Using Vector Representation Instead of Matrices**
 
@@ -90,12 +90,12 @@ print(f"Fixed product: {C_fixed}")
 
 ```
 
-Here, *A* is a one-dimensional numpy array. When trying to multiply it by *B*, which is 3x2, the operation fails because numpy attempts to treat *A* as having a singular axis. The fix here involves explicitly reshaping *A* into a 1x3 matrix using the `.reshape()` function. Another approach would be to ensure *A* is defined as `np.array([[1, 2, 3]])` at the beginning instead.
+Here, _A_ is a one-dimensional numpy array. When trying to multiply it by _B_, which is 3x2, the operation fails because numpy attempts to treat _A_ as having a singular axis. The fix here involves explicitly reshaping _A_ into a 1x3 matrix using the `.reshape()` function. Another approach would be to ensure _A_ is defined as `np.array([[1, 2, 3]])` at the beginning instead.
 
 **Key Takeaways and Further Exploration**
 
 The most important thing is to always be aware of the shape of your data throughout your operations. Using techniques to explicitly check shapes before multiplication can prevent errors and makes debugging much easier. I’ve found it helpful to use print statements or debugging tools to visualize the shapes at various points in the code, especially during complex transformations.
 
-For deeper understanding, I highly recommend delving into fundamental linear algebra texts like *“Linear Algebra and Its Applications”* by Gilbert Strang; it builds solid theoretical knowledge essential for troubleshooting these types of issues and will give you the intuition behind the restrictions. The *NumPy* documentation, specifically the section on linear algebra, is also invaluable for understanding how numerical libraries handle matrix operations. Another excellent resource is the book *“Mathematics for Machine Learning”* by Marc Peter Deisenroth et al., which covers the necessary mathematical background with a focus on practical machine learning applications.
+For deeper understanding, I highly recommend delving into fundamental linear algebra texts like _“Linear Algebra and Its Applications”_ by Gilbert Strang; it builds solid theoretical knowledge essential for troubleshooting these types of issues and will give you the intuition behind the restrictions. The _NumPy_ documentation, specifically the section on linear algebra, is also invaluable for understanding how numerical libraries handle matrix operations. Another excellent resource is the book _“Mathematics for Machine Learning”_ by Marc Peter Deisenroth et al., which covers the necessary mathematical background with a focus on practical machine learning applications.
 
 In conclusion, these errors aren’t typically bugs, but indicators of data alignment problems that need resolving before successful computation. With practice and a careful approach to data shape management, these issues become easily managed and much less frequent. This has been my experience and approach over the years, and I’ve found this combination of theory and hands-on debugging to be the most effective path.

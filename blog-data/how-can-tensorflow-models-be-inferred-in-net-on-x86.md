@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-tensorflow-models-be-inferred-in-net-on-x86"
 ---
 
-Okay, let's unpack this. Inference of TensorFlow models within the .NET ecosystem on x86 architecture isn't a walk in the park, but it's definitely achievable. I've spent a decent chunk of my career navigating cross-platform compatibility issues, and this one's a recurring theme. The key lies in understanding the bridge between the Python-centric world of TensorFlow and the .NET environment, which is primarily built around C#. It's less about magic and more about careful planning and leveraging the right tools.
+, let's unpack this. Inference of TensorFlow models within the .NET ecosystem on x86 architecture isn't a walk in the park, but it's definitely achievable. I've spent a decent chunk of my career navigating cross-platform compatibility issues, and this one's a recurring theme. The key lies in understanding the bridge between the Python-centric world of TensorFlow and the .NET environment, which is primarily built around C#. It's less about magic and more about careful planning and leveraging the right tools.
 
 First, let's acknowledge the elephant in the room: TensorFlow itself isn't a native .NET library. It’s predominantly a Python framework. Thus, directly running a TensorFlow model (.pb or saved_model format) within a .NET application without some kind of intermediary is a no-go. The common strategy I’ve seen (and personally employed) involves using a TensorFlow C API wrapper – essentially a set of instructions that allow C# code to interact with the compiled TensorFlow C++ libraries.
 
@@ -55,10 +55,12 @@ public class TensorFlowInference
     }
 }
 ```
-*Notes:*
--  `modelPath` refers to the path to your tensorflow model's `.pb` or saved model directory.
--  Here I use `TFScalar` to create an array of `TFScalar` from the input float array.
--   The graph and tensor names (`input_tensor`, `output_tensor`) need to match your model's tensor names. These are obtainable using tensorboard during model development.
+
+_Notes:_
+
+- `modelPath` refers to the path to your tensorflow model's `.pb` or saved model directory.
+- Here I use `TFScalar` to create an array of `TFScalar` from the input float array.
+- The graph and tensor names (`input_tensor`, `output_tensor`) need to match your model's tensor names. These are obtainable using tensorboard during model development.
 
 This example demonstrates the core components: loading the model, creating a session, and feeding in the input data as a `TFTensor`. The `ToArray<float>()` method then translates the tensor output back into a readable float array.
 
@@ -120,9 +122,10 @@ public class TensorFlowInference
 
 ```
 
-*Notes:*
+_Notes:_
+
 - This code loads a saved model and its signature rather than a `.pb` file.
--  The `signatureName` argument refers to a saved model signature within the SavedModel, and this provides a more structured way of knowing input/output tensors. You can use the `saved_model_cli` command line tool to view these signatures for your model.
+- The `signatureName` argument refers to a saved model signature within the SavedModel, and this provides a more structured way of knowing input/output tensors. You can use the `saved_model_cli` command line tool to view these signatures for your model.
 - The retrieval of input and output tensor names has been improved using `metaGraph.GetSignatureDef()`.
 
 The benefit here is that the saved model handles the tensor name mapping internally, which is cleaner if your model is complex.
@@ -130,6 +133,7 @@ The benefit here is that the saved model handles the tensor name mapping interna
 Finally, let's tackle the problem of more complex inputs, such as images. You'll need to convert your image data into a format understandable by TensorFlow. Here is an example involving reading an image and passing it through inference:
 
 **Code Example 3: Image Loading and Inference**
+
 ```csharp
 using System;
 using System.Drawing;
@@ -180,11 +184,13 @@ public class TensorFlowInference
 }
 
 ```
-*Notes:*
+
+_Notes:_
+
 - In this example, we load a bitmap, resize it to a known size, and convert the pixel data into a byte array.
 - We assume that the model accepts an input with shape [1, Height, Width, 3] representing a single image of the specified height and width, with the RGB channels. You may need to adjust this based on your specific model's needs.
--  The bitmap image has been saved and loaded from memory for portability.
--  Image manipulation can be rather complex and depends heavily on what the model expects so you will probably need to perform more image-specific pre-processing using libraries such as ImageSharp, for instance, for better image support.
+- The bitmap image has been saved and loaded from memory for portability.
+- Image manipulation can be rather complex and depends heavily on what the model expects so you will probably need to perform more image-specific pre-processing using libraries such as ImageSharp, for instance, for better image support.
 
 In summary, inferring TensorFlow models within a .NET application on x86 requires using the TensorFlow C API (via bindings provided by a library such as Tensorflow.NET) to load and execute the model and performing necessary data marshaling between the .NET and TensorFlow data structures. The process involves understanding model signatures, creating tensors from .NET data structures, and extracting the results from the output tensors. Proper handling of different model formats (e.g., `.pb` or SavedModel) is essential.
 

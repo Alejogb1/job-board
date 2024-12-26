@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-round-column-values-to-two-decimal-places-in-an-h2o-data-frame"
 ---
 
-Okay, let's tackle this. The task of rounding numeric columns to a specific number of decimal places is a common one when working with data, especially for presentation or downstream analysis. I've bumped into this countless times, particularly when dealing with financial or scientific datasets where precision is critical but excessive decimal places can clutter the view. Let’s walk through how to do it effectively with H2O data frames.
+, let's tackle this. The task of rounding numeric columns to a specific number of decimal places is a common one when working with data, especially for presentation or downstream analysis. I've bumped into this countless times, particularly when dealing with financial or scientific datasets where precision is critical but excessive decimal places can clutter the view. Let’s walk through how to do it effectively with H2O data frames.
 
 H2O, being designed for scalable machine learning, provides several ways to manipulate data. We're not limited to simple, in-place modifications. We can create new columns, effectively working in a functional programming paradigm, which I generally find cleaner and safer when dealing with large datasets. This avoids any unexpected mutations of our original data.
 
@@ -45,7 +45,7 @@ rounded_df = round_numeric_columns(h2o_df, 2)
 print(rounded_df)
 ```
 
-Here, the `round_numeric_columns` function iterates through all columns, checks if each one is numeric using `isnumeric()`, and then rounds the numeric ones and appends the rounded result as a new column. While this function is convenient and scalable, there are some caveats to consider. We're still creating new columns with the "_rounded" suffix, which is necessary if you want to keep the original unrounded data. Also, while I've not included an example here, there might be cases where you have numeric-like data coded as a string or factor, and they will not be handled unless they are converted to numeric explicitly beforehand. I generally avoid in-place modification, but if that's what you need for your task, you could modify the code to write to the original column name instead.
+Here, the `round_numeric_columns` function iterates through all columns, checks if each one is numeric using `isnumeric()`, and then rounds the numeric ones and appends the rounded result as a new column. While this function is convenient and scalable, there are some caveats to consider. We're still creating new columns with the "\_rounded" suffix, which is necessary if you want to keep the original unrounded data. Also, while I've not included an example here, there might be cases where you have numeric-like data coded as a string or factor, and they will not be handled unless they are converted to numeric explicitly beforehand. I generally avoid in-place modification, but if that's what you need for your task, you could modify the code to write to the original column name instead.
 
 Finally, it's worthwhile exploring using `h2o.H2OFrame.apply()` for similar tasks. I find that a functional approach can sometimes result in more readable and maintainable code, particularly when dealing with more complex transformations. `apply` allows you to pass a lambda function or a pre-defined function that is executed on each row or column of the frame, with the flexibility to access and manipulate data at a finer grain than other more direct approaches.
 
@@ -68,7 +68,7 @@ def round_func(row, cols, decimal_places):
         if h2o_df[col].isnumeric():
             new_row[col_index] = round(row[col_index], decimal_places)
     return new_row
-    
+
 rounded_df = h2o_df.apply(round_func, axis=1, args=[cols_to_round, 2], column_names = h2o_df.names)
 print(rounded_df)
 ```

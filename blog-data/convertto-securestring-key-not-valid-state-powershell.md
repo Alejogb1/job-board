@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "convertto-securestring-key-not-valid-state-powershell"
 ---
 
-Okay so you're wrestling with `ConvertTo-SecureString` throwing a "key not valid state" error in PowerShell right been there done that got the t-shirt and probably several debugging scars to match Let me break this down from my trenches because this isn't some esoteric corner case this is a common pain point when you're diving into secure handling of credentials or sensitive data in PowerShell scripts Especially when moving things between machines or user contexts
+you're wrestling with `ConvertTo-SecureString` throwing a "key not valid state" error in PowerShell right been there done that got the t-shirt and probably several debugging scars to match Let me break this down from my trenches because this isn't some esoteric corner case this is a common pain point when you're diving into secure handling of credentials or sensitive data in PowerShell scripts Especially when moving things between machines or user contexts
 
 First off lets get this out of the way `ConvertTo-SecureString` uses data protection API (DPAPI) under the hood DPAPI keys are tied to the user account and the machine So if you're trying to decrypt a secure string created by another user or on a different computer that "key not valid state" error is exactly what you would expect It means the system can't use the existing key to decrypt the payload
 
 In my early days I stumbled into this headfirst when I was trying to automate database backups and password rotations across our infrastructure I was generating secure strings on my dev machine and then deploying scripts to our servers only to have them fail spectacularly Because the service accounts running those scripts had no clue what to do with the secure strings created in my user context Fun times not really
 
-Okay so the quick fix lets talk about what I've learned after a fair few hours of banging my head against the monitor
+the quick fix lets talk about what I've learned after a fair few hours of banging my head against the monitor
 
 **The Problem**
 
@@ -33,7 +33,7 @@ $plainText =  [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.
 Write-Host "This is how the decrypted output look like: $plainText"
 ```
 
-Okay lets be real printing passwords to console is a very bad practice but this code should give you the idea that it works and you can decrypt it with the same secure key on same or different machine with the right credentials This approach provides the portability you want you just have to handle the key secure as well as this code is a simplified example and should not be used in real production scenarios
+lets be real printing passwords to console is a very bad practice but this code should give you the idea that it works and you can decrypt it with the same secure key on same or different machine with the right credentials This approach provides the portability you want you just have to handle the key secure as well as this code is a simplified example and should not be used in real production scenarios
 
 2.  **Encryption at Rest Using Symmetric Keys** Another good option if you need a persistent solution is to encrypt the string to a file using a symmetric key This approach involves an encryption key and an initialization vector which you'd ideally store securely or retrieve via secret management system. Think of it like having a safe where the safe itself needs its key
 
@@ -75,23 +75,23 @@ Note that key and initialization vector are just an example and you should handl
 
 **Important Notes and Recommendations**
 
-*   **Never Hardcode Sensitive Data** Never ever put passwords or keys directly in the scripts. Use environment variables or secure configuration files which are managed by some secret management tool
-*   **Key Management is Crucial** If you use explicit key management, the keys themselves become sensitive data. Handle them with care This usually requires implementing a key management strategy.
-*   **Understand Security Contexts** Know the user account or service account that will be running the script and the permissions associated with it
-*   **Avoid Plaintext as Much as Possible** Always encrypt any sensitive data
-*   **Learn Your Tools** Spend some time understanding the security features of `ConvertTo-SecureString` and the underlying DPAPI
-*   **Avoid Global Variable** Global variable can lead to unpredictable issues
+- **Never Hardcode Sensitive Data** Never ever put passwords or keys directly in the scripts. Use environment variables or secure configuration files which are managed by some secret management tool
+- **Key Management is Crucial** If you use explicit key management, the keys themselves become sensitive data. Handle them with care This usually requires implementing a key management strategy.
+- **Understand Security Contexts** Know the user account or service account that will be running the script and the permissions associated with it
+- **Avoid Plaintext as Much as Possible** Always encrypt any sensitive data
+- **Learn Your Tools** Spend some time understanding the security features of `ConvertTo-SecureString` and the underlying DPAPI
+- **Avoid Global Variable** Global variable can lead to unpredictable issues
 
 **Resources**
 
 Here are some resources I found helpful when I was facing these issues These are not simple web pages but actual documents and books
 
-*   *"Cryptography and Network Security: Principles and Practice"* by William Stallings: This is a textbook but it has in-depth knowledge about encryption technologies which could be beneficial when you are deciding how to implement your solution.
-*   *"Secrets Management: Keep Hackers Out"* by  Jeremiah Grossman and Dave  Kennedy: While not specifically about PowerShell it is a good reading to learn about best practices in secure secrets management in larger organization or infrastructure
+- _"Cryptography and Network Security: Principles and Practice"_ by William Stallings: This is a textbook but it has in-depth knowledge about encryption technologies which could be beneficial when you are deciding how to implement your solution.
+- _"Secrets Management: Keep Hackers Out"_ by Jeremiah Grossman and Dave Kennedy: While not specifically about PowerShell it is a good reading to learn about best practices in secure secrets management in larger organization or infrastructure
 
 **A Little Bit of Humor**
 
-Okay I guess if I must crack a joke here you go I once spent 3 days debugging a script only to find out the password was being passed as "password" It was really enlightening I guess I have to thank the guy for making me feel so smart
+I guess if I must crack a joke here you go I once spent 3 days debugging a script only to find out the password was being passed as "password" It was really enlightening I guess I have to thank the guy for making me feel so smart
 
 **Conclusion**
 

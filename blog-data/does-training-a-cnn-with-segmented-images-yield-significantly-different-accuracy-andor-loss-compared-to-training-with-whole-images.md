@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "does-training-a-cnn-with-segmented-images-yield-significantly-different-accuracy-andor-loss-compared-to-training-with-whole-images"
 ---
 
-Alright, let’s tackle this. I’ve spent a fair bit of time on image analysis, particularly with convolutional neural networks (CNNs), and this question about segmented versus whole image training brings back memories of a challenging project from my days at a biomedical imaging firm. We were working on cell morphology analysis, and the choice of training data format made a substantial difference. So, let’s unpack this from a practical standpoint.
+, let’s tackle this. I’ve spent a fair bit of time on image analysis, particularly with convolutional neural networks (CNNs), and this question about segmented versus whole image training brings back memories of a challenging project from my days at a biomedical imaging firm. We were working on cell morphology analysis, and the choice of training data format made a substantial difference. So, let’s unpack this from a practical standpoint.
 
-The short answer is, yes, training a CNN with segmented images *can* yield significantly different accuracy and loss compared to training with whole images. However, the ‘significantly different’ part isn't a guarantee and depends heavily on the specifics of your task, the data, and the network architecture. The underlying reason is tied to how the network learns features and what it perceives as relevant.
+The short answer is, yes, training a CNN with segmented images _can_ yield significantly different accuracy and loss compared to training with whole images. However, the ‘significantly different’ part isn't a guarantee and depends heavily on the specifics of your task, the data, and the network architecture. The underlying reason is tied to how the network learns features and what it perceives as relevant.
 
 When you train with whole images, the CNN learns to extract features from the entire visual field. This includes not only the region of interest but also the background and other contextual elements. The network must discern which parts of the image are important for the classification or regression task at hand. It’s a more holistic view and can, in some cases, lead to a model that generalizes better if your input data is likely to have varying backgrounds in real-world deployments. However, there's also a drawback: the network might be learning features based on the background rather than the actual target object, especially if there's a strong correlation between background and class labels (a common issue we faced).
 
@@ -145,6 +145,7 @@ model_segmented.fit(
     validation_steps=validation_generator.samples // batch_size
 )
 ```
+
 I must emphasize that what you observe in practice will vary depending on the dataset, the task complexity and training parameters. I've observed cases where segmented images provided significant boost in accuracy while in other situations, training with whole images was better. It's crucial to evaluate the performance for your specific dataset using both approaches.
 
 For more in-depth understanding of these concepts, I recommend examining the work of Ronneberger et al. on U-Net architecture for biomedical image segmentation; they explored similar ideas of using fully convolutional networks with carefully segmented data. Also, delve into "Deep Learning" by Goodfellow, Bengio, and Courville; it provides an excellent theoretical foundation for these methods. A paper worth reviewing is “ImageNet Classification with Deep Convolutional Neural Networks” by Krizhevsky et al., which explains the impact of data pre-processing and dataset quality on performance, even using whole images, emphasizing how crucial pre-processing is when working with neural networks. These resources should offer a stronger theoretical understanding of why these differences exist and help you make informed decisions in your projects.

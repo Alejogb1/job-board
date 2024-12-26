@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-customize-app-wide-behaviors-when-running-a-rake-task-in-rails"
 ---
 
-alright, so you're looking at customizing app-wide behaviors when running rake tasks in rails. i've been there, done that, got the t-shirt – and probably a few scars from debugging. let's break it down.
+, so you're looking at customizing app-wide behaviors when running rake tasks in rails. i've been there, done that, got the t-shirt – and probably a few scars from debugging. let's break it down.
 
 the core issue you're hitting is that rake tasks often operate outside the normal rails application lifecycle. you're not dealing with a typical web request where the full stack is loaded and initialized. this means things like your app's configuration, active record connections, and even some initializers might not be behaving as you’d expect. sometimes, they're not even loaded at all.
 
@@ -105,10 +105,10 @@ in this setup, we use `defined?(Rake)` to determine if the application is being 
 
 now, some general tips from experience:
 
-* **start simple:** always begin with loading the full rails environment unless you have a compelling reason not to. it's the easiest way to avoid most common configuration loading issues.
-* **debug carefully:** when you encounter issues, use `puts` statements to print the values of important variables and configurations. `binding.pry` is also helpful if you use `pry-rails` gem, so you can inspect your configurations in more depth.
-* **be aware of side effects:** loading the environment might trigger things you don’t intend. always review your initializers to make sure there are no unintended side-effects when running outside the normal web application context.
-* **consider environment variables:** sometimes rake tasks need to have different behaviors depending on deployment environments. you can leverage environment variables to customize behavior inside your rake tasks or to configure the task behavior depending on the env.
-* **test your tasks:** please, for the love of all that's holy, test your rake tasks. writing unit tests around your rake tasks can seem daunting at first, but it will save you countless hours of debugging. i've seen a team of developers ship a task that wiped out important data because no one bothered to test it. they spent the whole weekend recovering the info from backups, and learned the value of testing the hard way. i heard them complaining that this kind of situation was even worse than spending time debugging javascript on internet explorer 7.
+- **start simple:** always begin with loading the full rails environment unless you have a compelling reason not to. it's the easiest way to avoid most common configuration loading issues.
+- **debug carefully:** when you encounter issues, use `puts` statements to print the values of important variables and configurations. `binding.pry` is also helpful if you use `pry-rails` gem, so you can inspect your configurations in more depth.
+- **be aware of side effects:** loading the environment might trigger things you don’t intend. always review your initializers to make sure there are no unintended side-effects when running outside the normal web application context.
+- **consider environment variables:** sometimes rake tasks need to have different behaviors depending on deployment environments. you can leverage environment variables to customize behavior inside your rake tasks or to configure the task behavior depending on the env.
+- **test your tasks:** please, for the love of all that's holy, test your rake tasks. writing unit tests around your rake tasks can seem daunting at first, but it will save you countless hours of debugging. i've seen a team of developers ship a task that wiped out important data because no one bothered to test it. they spent the whole weekend recovering the info from backups, and learned the value of testing the hard way. i heard them complaining that this kind of situation was even worse than spending time debugging javascript on internet explorer 7.
 
 finally for resources that helped me understand this a bit better, i can recommend two: the official rails documentation, and the book "eloquent ruby" it's a great reference for deeper understanding the inner workings of ruby and how rails leverages them. the book is a bit old, but the core principles still stand, and understanding the underlying mechanics is critical to writing solid rails code.

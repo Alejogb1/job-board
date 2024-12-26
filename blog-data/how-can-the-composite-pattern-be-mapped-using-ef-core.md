@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-the-composite-pattern-be-mapped-using-ef-core"
 ---
 
-Alright, let's talk about the composite pattern and how it plays with entity framework core (ef core). I've tangled with this particular challenge a few times, most memorably on a project involving a complex product catalog where items could be grouped into sets and sub-sets. The naive approach of separate entities for 'product' and 'set' quickly turned into a relational nightmare.
+, let's talk about the composite pattern and how it plays with entity framework core (ef core). I've tangled with this particular challenge a few times, most memorably on a project involving a complex product catalog where items could be grouped into sets and sub-sets. The naive approach of separate entities for 'product' and 'set' quickly turned into a relational nightmare.
 
 The composite pattern, for those needing a quick refresh, is a structural design pattern that lets you compose objects into tree structures and then treat individual objects and compositions uniformly. This is incredibly useful when you have a hierarchy of objects where some objects are simple (leaves) and others are composed of other objects (branches). The typical example is a file system; you have individual files (leaves) and directories (branches) that can contain both files and other directories.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-action-text-be-rendered-as-plain-text-including-attachments"
 ---
 
-Alright, let's tackle this. I've certainly found myself in the weeds with this exact issue more than a few times, particularly when dealing with systems transitioning from, say, bespoke notification schemes to something more standardized. Rendering action text as plain text, attachments and all, isn't always a straightforward 'one size fits all' solution. It often involves peeling back the layers of how these rich text formats are structured and then reassembling the pieces into a textual representation.
+, let's tackle this. I've certainly found myself in the weeds with this exact issue more than a few times, particularly when dealing with systems transitioning from, say, bespoke notification schemes to something more standardized. Rendering action text as plain text, attachments and all, isn't always a straightforward 'one size fits all' solution. It often involves peeling back the layers of how these rich text formats are structured and then reassembling the pieces into a textual representation.
 
 The core challenge lies in the fact that action text, typically based on the Trix editor or something similar, stores data in a structured format, usually HTML, that includes not only the text itself but also formatting information and references to attachments. Extracting just the text and those attachment references, while maintaining their logical order, is where the real work begins. We're essentially performing a controlled deconstruction of the structured data.
 
@@ -111,6 +111,7 @@ plain_text_output_base64 = action_text_to_plain_text_with_base64_attachments(act
 
 puts plain_text_output_base64
 ```
+
 In this example we've introduced base64 decoding and the creation of temporary files for the embedded data. We're using a `Digest::SHA256` to create a file hash to avoid filename collisions, ensuring each embedded file is saved correctly. This method assumes a temporary `tmp_attachments` folder, you'll want to adapt this as necessary.
 
 Sometimes, you might encounter more complicated attachment structures or special Trix formatting that requires a more granular approach. Here's an example showing extracting image tags to extract inline images without the `data-trix-attachment`:
@@ -149,6 +150,7 @@ plain_text_with_images = extract_plain_text_with_inline_images(action_text_with_
 
 puts plain_text_with_images
 ```
+
 This example demonstrates how to extract the `src` attribute of the `<img>` tags, which might be inline images inserted without using `data-trix-attachment` attribute.
 
 For further exploration, I highly recommend reading "Mastering Regular Expressions" by Jeffrey Friedl. It will greatly enhance your understanding of text parsing. Additionally, "HTML and CSS: Design and Build Websites" by Jon Duckett, while seemingly basic, offers valuable insight into HTML structure that is relevant for this task. Don't underestimate the need for understanding the document object model, therefore, "Eloquent JavaScript" by Marijn Haverbeke may help strengthen your foundations. Lastly, if you're interested in deep diving into ruby based parsing tools, look into `Nokogiri` and it's documentation, as it can handle a wide variety of edge cases and document structures.

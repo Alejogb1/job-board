@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-use-the-kaminari-gem"
 ---
 
-Alright, let's tackle this. It’s a situation I've definitely encountered more than once throughout my years working with Ruby on Rails—the dreaded "Kaminari gem won't work." Before we jump into troubleshooting, let’s understand that the inability to use Kaminari isn't usually because of some inherent flaw in the gem itself. More often than not, it points towards integration problems, incorrect configuration, or a mismatch between expectations and implementation. I’ve personally spent frustrating hours debugging this, so I can appreciate the situation.
+, let's tackle this. It’s a situation I've definitely encountered more than once throughout my years working with Ruby on Rails—the dreaded "Kaminari gem won't work." Before we jump into troubleshooting, let’s understand that the inability to use Kaminari isn't usually because of some inherent flaw in the gem itself. More often than not, it points towards integration problems, incorrect configuration, or a mismatch between expectations and implementation. I’ve personally spent frustrating hours debugging this, so I can appreciate the situation.
 
 Let's break this down from my experiences, aiming for practical insights rather than just theoretical explanations. The core issue often stems from the fact that Kaminari, as a pagination engine, expects your data retrieval to be done in a very specific way. It relies on methods to count total records and fetch subsets of data for display on different pages. If you're not adhering to these expectations, it's going to throw a wrench into your application. This isn’t a problem with Kaminari; it’s more often an issue with how the data is being retrieved.
 
@@ -70,6 +70,7 @@ end
 # View code, assuming you have helper methods defined:
 #<%= paginate @paginated_categories %>
 ```
+
 In this example, I am using `Kaminari.paginate_array` to paginate a plain array that is a result of the group operation. It's a necessary step when using a complex `group` clause and needing to paginate a results set that's not directly coming from a query. You’ll also notice I have added a `categories_count`, since that is no longer directly available within the pagination scope.
 
 Furthermore, improper use of joins, especially when using `left_joins` or outer joins can also lead to pagination issues. Kaminari relies on a consistent number of rows being returned to calculate pagination, so a `left_join` resulting in multiple records from the ‘joined’ table being returned for every row can throw off Kaminari’s calculations. Ensure you are using the proper join type. In my experience, a clear understanding of your SQL execution is critical when things get complex. If the raw SQL produces unexpected result sets, Kaminari will struggle to do its part.
@@ -80,8 +81,8 @@ In summary, the inability to use Kaminari generally stems from one of the follow
 
 For further understanding, I would recommend spending some time with these resources:
 
-*   **"Agile Web Development with Rails 7" by Sam Ruby, David Bryant Copeland, and David Thomas:** This book provides an excellent and practical guide to understanding how ActiveRecord works, especially its interaction with databases. The chapter on database interactions and active records should prove helpful.
-*   **The official Rails Documentation on ActiveRecord Querying:** The rails guides provide excellent detail on all aspects of querying data using Active Record. It's often overlooked but essential reading for any Rails developer.
-*   **The Kaminari Gem's official documentation:** Obviously, the most crucial place to fully grasp Kaminari’s intended use and configurations. Carefully go through it; it explains several use cases and best practices.
+- **"Agile Web Development with Rails 7" by Sam Ruby, David Bryant Copeland, and David Thomas:** This book provides an excellent and practical guide to understanding how ActiveRecord works, especially its interaction with databases. The chapter on database interactions and active records should prove helpful.
+- **The official Rails Documentation on ActiveRecord Querying:** The rails guides provide excellent detail on all aspects of querying data using Active Record. It's often overlooked but essential reading for any Rails developer.
+- **The Kaminari Gem's official documentation:** Obviously, the most crucial place to fully grasp Kaminari’s intended use and configurations. Carefully go through it; it explains several use cases and best practices.
 
 Remember, pagination problems can be frustrating. Always carefully inspect your queries, review your return types, and double check your gem setups. It’s less often an issue with Kaminari itself and more often a consequence of how it interacts with our application’s data. Happy coding.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-remove-surrogate-unicode-characters-from-a-c-string"
 ---
 
-Alright, let's tackle the rather thorny issue of removing surrogate unicode characters from c++ strings. I've run into this quite a few times over the years, particularly when dealing with data originating from less-than-perfect encoding situations. It's one of those problems that seems trivial on the surface, but can quickly become a frustrating detour if you don't have a solid plan.
+, let's tackle the rather thorny issue of removing surrogate unicode characters from c++ strings. I've run into this quite a few times over the years, particularly when dealing with data originating from less-than-perfect encoding situations. It's one of those problems that seems trivial on the surface, but can quickly become a frustrating detour if you don't have a solid plan.
 
 The fundamental problem, as you probably know, lies in the nature of surrogate pairs in utf-16 encoding. Unicode, to represent the vast array of characters across various languages and symbols, utilizes a system of codepoints. While most commonly used characters can fit into a single 16-bit unit, some require two, forming a surrogate pair. A lone surrogate, without its partner, is invalid unicode. It's essentially a broken piece of the puzzle, and it manifests as those often-unwanted symbols when displayed or processed incorrectly.
 
@@ -89,7 +89,7 @@ int main() {
 }
 ```
 
-This first example processes the string using a wide string intermediate representation.  It's a common strategy when dealing with variable-width character encodings.  The `std::wstring_convert` allows us to convert from utf-8 (represented by a `std::string`) to wide characters (represented by `std::wstring`). The code then iterates through the wide string, checks if a character falls within the surrogate range (0xd800-0xdfff), checks if a leading surrogate is followed by a trailing surrogate and, discards any lone surrogate characters. Valid pairs are retained as they represent valid code points.
+This first example processes the string using a wide string intermediate representation. It's a common strategy when dealing with variable-width character encodings. The `std::wstring_convert` allows us to convert from utf-8 (represented by a `std::string`) to wide characters (represented by `std::wstring`). The code then iterates through the wide string, checks if a character falls within the surrogate range (0xd800-0xdfff), checks if a leading surrogate is followed by a trailing surrogate and, discards any lone surrogate characters. Valid pairs are retained as they represent valid code points.
 
 This approach has served me well across many projects. It’s critical to understand the encoding that your input string uses; I usually start by inspecting the data source or API documentation very carefully.
 
@@ -271,8 +271,8 @@ int main() {
 }
 ```
 
-This iterator-based method uses a `std::remove_if` and a custom lambda expression to inspect and remove the lone surrogate characters from the wide string representation.  It relies on a predicate that is more involved, and it might be beneficial when dealing with complex processing logic, because lambda expressions can encapsulate complex algorithms more succinctly.
+This iterator-based method uses a `std::remove_if` and a custom lambda expression to inspect and remove the lone surrogate characters from the wide string representation. It relies on a predicate that is more involved, and it might be beneficial when dealing with complex processing logic, because lambda expressions can encapsulate complex algorithms more succinctly.
 
-For further study, the *Unicode Standard* published by the Unicode Consortium is the definitive source, particularly regarding encoding and surrogate pairs. Also, "Programming with Unicode" by Victor Stribjov is also an excellent reference, providing thorough coverage of the intricacies of character encodings and handling them programmatically.  Lastly, exploring the details of `std::codecvt`, `std::wstring`, and related functions on cppreference.com can solidify understanding the tools that C++ provides.
+For further study, the _Unicode Standard_ published by the Unicode Consortium is the definitive source, particularly regarding encoding and surrogate pairs. Also, "Programming with Unicode" by Victor Stribjov is also an excellent reference, providing thorough coverage of the intricacies of character encodings and handling them programmatically. Lastly, exploring the details of `std::codecvt`, `std::wstring`, and related functions on cppreference.com can solidify understanding the tools that C++ provides.
 
 In my experience, the best approach often depends on context. If it’s an isolated incident, a simple method is fine. But if performance is a bottleneck or complex encoding rules are involved, the time spent on crafting a more precise and optimized solution pays back dividends.

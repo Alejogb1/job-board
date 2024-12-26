@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-prevent-a-vecboxdyn-trait-from-prematurely-dropping-a-variable"
 ---
 
-Alright, let's tackle this. It's a common pitfall, and I've definitely seen my share of head-scratching moments when dealing with `Vec<Box<dyn Trait>>` and unexpected drops. The core issue stems from how rust manages ownership and lifetimes, especially when combined with trait objects and dynamic dispatch.
+, let's tackle this. It's a common pitfall, and I've definitely seen my share of head-scratching moments when dealing with `Vec<Box<dyn Trait>>` and unexpected drops. The core issue stems from how rust manages ownership and lifetimes, especially when combined with trait objects and dynamic dispatch.
 
-The immediate problem you're facing, I'd wager, isn't actually *dropping* per se, but rather the unexpected deallocation of resources pointed to by the boxed trait objects stored in your vector. Typically, when a `Vec` goes out of scope, it drops all of its contained elements. For primitive types, this means the memory is simply reclaimed. However, when you're dealing with `Box<dyn Trait>`, it's a little more nuanced because the `Box` manages a *heap allocation*, not merely a value on the stack, and dropping the `Box` also deallocates that memory.
+The immediate problem you're facing, I'd wager, isn't actually _dropping_ per se, but rather the unexpected deallocation of resources pointed to by the boxed trait objects stored in your vector. Typically, when a `Vec` goes out of scope, it drops all of its contained elements. For primitive types, this means the memory is simply reclaimed. However, when you're dealing with `Box<dyn Trait>`, it's a little more nuanced because the `Box` manages a _heap allocation_, not merely a value on the stack, and dropping the `Box` also deallocates that memory.
 
-Let's unpack this scenario. Suppose we create a few instances of a struct that implements a certain trait, put them in `Box`es, and then store them in a `Vec`. When the `Vec` itself goes out of scope, what happens? Rust automatically iterates over the vector and drops each `Box`, and as that `Box` gets dropped, it frees the heap allocated memory. The underlying concrete type is *gone*, so if you were trying to hold onto something outside of the `Vec`, you'll be accessing dangling memory, which of course, is undefined behavior.
+Let's unpack this scenario. Suppose we create a few instances of a struct that implements a certain trait, put them in `Box`es, and then store them in a `Vec`. When the `Vec` itself goes out of scope, what happens? Rust automatically iterates over the vector and drops each `Box`, and as that `Box` gets dropped, it frees the heap allocated memory. The underlying concrete type is _gone_, so if you were trying to hold onto something outside of the `Vec`, you'll be accessing dangling memory, which of course, is undefined behavior.
 
 The key to preventing premature dropping is understanding how to control ownership. Typically, we want to delay or prevent the automatic deallocation associated with a scope change. Here’s a few strategies I've found helpful in the past, with working code examples.
 
@@ -73,7 +73,7 @@ In this code, `drain_filter` will remove all the shapes that fulfill the conditi
 
 **2. Using References and Lifetime Annotations**
 
-Sometimes, you might not need to take ownership of the boxed trait object, but instead simply *borrow* them for a limited duration. This is where references and lifetimes come into play. In particular, if you can use references, then you aren't moving the object out of the vector at all, but only creating a temporary borrow of them. Here's a simple example illustrating this scenario:
+Sometimes, you might not need to take ownership of the boxed trait object, but instead simply _borrow_ them for a limited duration. This is where references and lifetimes come into play. In particular, if you can use references, then you aren't moving the object out of the vector at all, but only creating a temporary borrow of them. Here's a simple example illustrating this scenario:
 
 ```rust
 trait Printable {
@@ -171,8 +171,8 @@ In this example, we use `Rc<dyn Counter>`. Multiple copies of the `Rc` point to 
 
 To deepen your understanding, I highly recommend these resources:
 
-*   **"The Rust Programming Language"** (also known as "the book"). Specifically, the chapters on ownership, borrowing, and lifetimes. They are essential for understanding Rust's memory model.
-*   **"Rust by Example"**. It has a good section on trait objects and dynamic dispatch with practical examples.
-*   **"Programming Rust"** by Jim Blandy, Jason Orendorff, and Leonora Tindall. This provides a deeper insight into Rust's concepts, including low-level memory management and advanced uses of traits.
+- **"The Rust Programming Language"** (also known as "the book"). Specifically, the chapters on ownership, borrowing, and lifetimes. They are essential for understanding Rust's memory model.
+- **"Rust by Example"**. It has a good section on trait objects and dynamic dispatch with practical examples.
+- **"Programming Rust"** by Jim Blandy, Jason Orendorff, and Leonora Tindall. This provides a deeper insight into Rust's concepts, including low-level memory management and advanced uses of traits.
 
 In conclusion, controlling when objects are deallocated from a `Vec<Box<dyn Trait>>` hinges on how you manage ownership. Either you move the objects out via mechanisms such as `drain_filter` or you maintain references to them within the same scope as the vector, and in situations where ownership is shared, `Rc` or `Arc` may be necessary. Careful consideration of the lifetime and access requirements is paramount in designing robust code. I've personally found it beneficial to sketch out the ownership scenarios before writing code, a habit that has saved me many debugging hours.

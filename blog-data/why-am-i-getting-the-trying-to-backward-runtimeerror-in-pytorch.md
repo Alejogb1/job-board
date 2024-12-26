@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-the-trying-to-backward-runtimeerror-in-pytorch"
 ---
 
-Alright, let’s tackle this 'Trying to backward' RuntimeError in PyTorch. It’s a classic, and I’ve certainly seen it enough times to have a pretty solid understanding of its typical causes and solutions. Let me break it down from my experience, and then we'll get into some concrete code.
+, let’s tackle this 'Trying to backward' RuntimeError in PyTorch. It’s a classic, and I’ve certainly seen it enough times to have a pretty solid understanding of its typical causes and solutions. Let me break it down from my experience, and then we'll get into some concrete code.
 
 Essentially, this error arises when you attempt to compute gradients for a tensor that's not part of the computational graph, or has already had its computational graph detached or destroyed. Think of the computational graph as a directed acyclic graph tracking operations on tensors. During backpropagation (the `.backward()` call), pytorch traverses this graph backwards to compute gradients for all the tensors that require them. If a tensor isn't in this graph, or if the path back to it has been severed, the process breaks down and you get that dreaded 'Trying to backward' error.
 
@@ -12,11 +12,11 @@ My initial exposure to this error was back when I was working on a complex gener
 
 There are a few primary culprits for this specific error. The most common one, in my experience, involves improper use of `.detach()`, `.no_grad()`, or in-place tensor manipulations. Here’s why:
 
-*   **`.detach()`:** Calling `.detach()` on a tensor creates a new tensor that shares the underlying data, but it’s explicitly *removed* from the computational graph. Any subsequent operations involving this detached tensor will not contribute to gradients. If you then try to call `.backward()` on a loss computed using this detached tensor, you're in for a runtime error.
+- **`.detach()`:** Calling `.detach()` on a tensor creates a new tensor that shares the underlying data, but it’s explicitly _removed_ from the computational graph. Any subsequent operations involving this detached tensor will not contribute to gradients. If you then try to call `.backward()` on a loss computed using this detached tensor, you're in for a runtime error.
 
-*   **`torch.no_grad()`:** This context manager, when used, tells pytorch not to track operations or build a computational graph. If you compute a loss within a `with torch.no_grad():` block, it won't have a graph associated with it, and any subsequent `.backward()` on it will trigger the error. It’s often used for inference or evaluation but not during training when gradient calculation is essential.
+- **`torch.no_grad()`:** This context manager, when used, tells pytorch not to track operations or build a computational graph. If you compute a loss within a `with torch.no_grad():` block, it won't have a graph associated with it, and any subsequent `.backward()` on it will trigger the error. It’s often used for inference or evaluation but not during training when gradient calculation is essential.
 
-*   **In-place operations:** Operations such as `tensor.add_(value)` or `tensor[index] = value` modify the original tensor directly. While convenient, they can sometimes create issues with the graph, as the history of the tensor is effectively overwritten, which means that the backwards pass will fail if these operations are relied on for gradients. Using their non in-place counterparts, like `tensor = tensor + value`, creates a new tensor with an associated history.
+- **In-place operations:** Operations such as `tensor.add_(value)` or `tensor[index] = value` modify the original tensor directly. While convenient, they can sometimes create issues with the graph, as the history of the tensor is effectively overwritten, which means that the backwards pass will fail if these operations are relied on for gradients. Using their non in-place counterparts, like `tensor = tensor + value`, creates a new tensor with an associated history.
 
 Now, let's illustrate with code. Here's example one, showcasing the detached tensor issue:
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-register-service-workers-in-rails-7-with-importmaps"
 ---
 
-Alright, let’s tackle this. It's a question that's popped up a fair bit, especially since importmaps landed in Rails 7. The integration of service workers, while potent, does require a slightly different approach compared to older asset pipeline-driven methods. I remember a project back in 2022, a rather complex e-commerce application, where we needed to implement robust offline capabilities. We were early adopters of importmaps, and the service worker setup gave us a bit of a head-scratching moment initially. I've since refined my understanding, and hopefully, I can help clear up some confusion for you.
+, let’s tackle this. It's a question that's popped up a fair bit, especially since importmaps landed in Rails 7. The integration of service workers, while potent, does require a slightly different approach compared to older asset pipeline-driven methods. I remember a project back in 2022, a rather complex e-commerce application, where we needed to implement robust offline capabilities. We were early adopters of importmaps, and the service worker setup gave us a bit of a head-scratching moment initially. I've since refined my understanding, and hopefully, I can help clear up some confusion for you.
 
 The core challenge revolves around the way importmaps manage JavaScript dependencies. Unlike the asset pipeline, which bundled and processed assets, importmaps rely on the browser's native module system. This means you can't simply drop a service worker file into your `/public` directory and expect it to just work as before. We need to explicitly load and register the service worker via our application's JavaScript entry point, leveraging importmaps for dependency management.
 
@@ -13,32 +13,30 @@ Let's break it down into a practical workflow, accompanied by code examples. We'
 ```javascript
 // app/javascript/service_workers/my_service_worker.js
 
-const CACHE_NAME = 'my-site-cache-v1';
+const CACHE_NAME = "my-site-cache-v1";
 const urlsToCache = [
-  '/',
-  '/assets/application.css', // Example: replace with your actual assets
-  '/assets/application.js'  // Example: replace with your actual assets
+  "/",
+  "/assets/application.css", // Example: replace with your actual assets
+  "/assets/application.js", // Example: replace with your actual assets
 ];
 
-self.addEventListener('install', (event) => {
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then((cache) => {
-                return cache.addAll(urlsToCache);
-            })
-    );
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(urlsToCache);
+    })
+  );
 });
 
-self.addEventListener('fetch', (event) => {
-    event.respondWith(
-        caches.match(event.request)
-            .then((response) => {
-                if (response) {
-                    return response;
-                }
-                return fetch(event.request);
-            })
-    );
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      if (response) {
+        return response;
+      }
+      return fetch(event.request);
+    })
+  );
 });
 ```
 
@@ -47,26 +45,30 @@ This snippet is a basic service worker that caches common resources and serves t
 ```javascript
 // app/javascript/application.js
 
-import * as Turbo from "@hotwired/turbo"
-import "./controllers"
-import "./service_workers/my_service_worker" // Import our worker for side effects
+import * as Turbo from "@hotwired/turbo";
+import "./controllers";
+import "./service_workers/my_service_worker"; // Import our worker for side effects
 
-document.addEventListener("DOMContentLoaded", function() {
-   if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/my_service_worker.js')
-            .then(function(registration) {
-               console.log('Service Worker registered with scope:', registration.scope);
-            })
-            .catch(function(error) {
-                console.error('Service Worker registration failed:', error);
-            });
-   }
+document.addEventListener("DOMContentLoaded", function () {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker
+      .register("/my_service_worker.js")
+      .then(function (registration) {
+        console.log(
+          "Service Worker registered with scope:",
+          registration.scope
+        );
+      })
+      .catch(function (error) {
+        console.error("Service Worker registration failed:", error);
+      });
+  }
 });
 ```
 
 Notice how I import `./service_workers/my_service_worker` directly without assigning it to a variable. In this case, we don't need any specific functionality exported by the service worker javascript; instead, its loading will trigger it to be loaded, parsed and available to the browser. Then, within the `DOMContentLoaded` handler, I check if service workers are supported, and if so, register the service worker, whose file is now located at `/my_service_worker.js`.
 
-Now, here’s where some common points of confusion arise. That `/my_service_worker.js` path is critical. Because we’re using importmaps, the service worker needs to be reachable at a URL that the browser can load directly, without further preprocessing by Rails’ asset pipeline. You can't use relative paths here; the path *must* be absolute, relative to the root of your web server. There are multiple ways to handle this.
+Now, here’s where some common points of confusion arise. That `/my_service_worker.js` path is critical. Because we’re using importmaps, the service worker needs to be reachable at a URL that the browser can load directly, without further preprocessing by Rails’ asset pipeline. You can't use relative paths here; the path _must_ be absolute, relative to the root of your web server. There are multiple ways to handle this.
 
 The way I prefer to do it, and the method I used on that e-commerce project, is to use a custom routes mechanism to explicitly serve the worker. Here's the updated `config/routes.rb` file:
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-search-elements-of-string-array-within-a-column-of-a-table-in-sails-js"
 ---
 
-alright, so, you've got a table in sails.js and want to find rows where a column's value contains at least one of the strings from a given array, right? been there, done that. it's a pretty common scenario when you're dealing with tag filtering or something similar. let me walk you through how i've approached this in the past.
+, so, you've got a table in sails.js and want to find rows where a column's value contains at least one of the strings from a given array, right? been there, done that. it's a pretty common scenario when you're dealing with tag filtering or something similar. let me walk you through how i've approached this in the past.
 
 first off, forget trying to use some magical built-in function that directly does this. sails, or rather waterline (the underlying orm), isn't really set up for that kind of complex matching in a single query. it mostly focuses on basic equality and some limited comparisons, not arbitrary array inclusion checks within a string column. we need to craft a specific query using a where clause with a little extra logic.
 
@@ -18,12 +18,12 @@ async function findPostsByTags(tagsArray) {
     return []; // if there are no tags, return an empty array.
   }
 
-  const orConditions = tagsArray.map(tag => ({
-    tags: { contains: tag.trim() }
+  const orConditions = tagsArray.map((tag) => ({
+    tags: { contains: tag.trim() },
   }));
 
   const matchingPosts = await Posts.find({
-    where: { or: orConditions }
+    where: { or: orConditions },
   });
 
   return matchingPosts;
@@ -52,22 +52,23 @@ let's see how that would look:
 
 ```javascript
 async function findPostsByTagsWithFullMatch(tagsArray) {
-   if (!tagsArray || tagsArray.length === 0) {
+  if (!tagsArray || tagsArray.length === 0) {
     return [];
   }
-  const orConditions = tagsArray.map(tag => ({
-   tags: {
-    'like': `%${tag.trim()}%`
-   }
+  const orConditions = tagsArray.map((tag) => ({
+    tags: {
+      like: `%${tag.trim()}%`,
+    },
   }));
-  const matchingPosts = await Posts.getDatastore()
-       .sendNativeQuery(`select * from posts where ${orConditions.map(
-          condition => `tags like '${condition.tags.like}'` ).join(' or ')}`);
+  const matchingPosts = await Posts.getDatastore().sendNativeQuery(
+    `select * from posts where ${orConditions
+      .map((condition) => `tags like '${condition.tags.like}'`)
+      .join(" or ")}`
+  );
   return matchingPosts.rows;
 }
 //example of usage:
 //const postsWithTags = await findPostsByTagsWithFullMatch(["#javascript","#node","#react"]);
-
 ```
 
 this version is a bit more complex. we are now using `like` in the where clause, which allows us to use wildcards, the `%` character acts like a wildcard meaning that it will allow us to find if there is any matching of our input string anywhere in the column data. the real work is now delegated to a native query, using `getDatastore().sendNativeQuery` we can directly write a SQL string instead of relaying on the orm, which in the case of regexes or more advanced matching cases is a good choice.
@@ -80,24 +81,25 @@ for example:
 
 ```javascript
 async function findPostsByTagsUsingRelations(tagsArray) {
-    if (!tagsArray || tagsArray.length === 0) {
+  if (!tagsArray || tagsArray.length === 0) {
     return [];
-    }
-    const matchingPosts = await Posts.find({
-      where: {
-        tags: {
-          some: {
-             name: { in: tagsArray}
-             }
-        }
+  }
+  const matchingPosts = await Posts.find({
+    where: {
+      tags: {
+        some: {
+          name: { in: tagsArray },
+        },
       },
-      populate: ['tags']
-    });
-    return matchingPosts;
+    },
+    populate: ["tags"],
+  });
+  return matchingPosts;
 }
 //example of usage:
 //const postsWithTags = await findPostsByTagsUsingRelations(["javascript","node","react"]);
 ```
+
 in this latest case, we are assuming that we have two models, `Posts` and `Tags`. and that we have configured waterline to have a many to many relationship between them. now with the model structured correctly, we can use waterline's `some` function to check that the `Post` model has at least one `Tag` with a name inside the input `tagsArray`. this is much cleaner and performant solution and it avoids all kinds of matching problems with partial matches.
 
 i have used both approaches, the one where you check the string in the column and the one where you use relational tables, each one has its place and time. in my opinion, if you can use relational tables you should. the other cases are needed if the model is already set and can not be changed. in that case, i would prefer to use the native query example with the `like` clause, which is more flexible than the `contains` clause.

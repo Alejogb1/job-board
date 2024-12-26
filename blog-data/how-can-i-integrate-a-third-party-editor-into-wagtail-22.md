@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-can-i-integrate-a-third-party-editor-into-wagtail-22"
 ---
 
-Okay, let’s tackle this. Having spent considerable time working with Wagtail, particularly back in the 2.x days, integrating third-party editors was something I frequently dealt with. It's a common enough requirement, given the rich ecosystem of content editors out there, and Wagtail’s flexibility lets us adapt it nicely. It’s not always straightforward, though; a deep understanding of Wagtail’s architecture, especially its StreamField and widget system, is vital.
+, let’s tackle this. Having spent considerable time working with Wagtail, particularly back in the 2.x days, integrating third-party editors was something I frequently dealt with. It's a common enough requirement, given the rich ecosystem of content editors out there, and Wagtail’s flexibility lets us adapt it nicely. It’s not always straightforward, though; a deep understanding of Wagtail’s architecture, especially its StreamField and widget system, is vital.
 
 The core challenge is bridging the gap between the external editor's logic and Wagtail's data model. Essentially, we need to tell Wagtail how to render the editor interface and then how to serialize the data it generates back into something Wagtail understands, typically json for StreamFields. Let's delve into the particulars.
 
 First off, you need to decide where this editor will live. Wagtail offers a few different avenues, and this will influence your implementation:
 
-*   **StreamField Blocks:** This is the most common use-case. You want your editor to sit within the modular structure that StreamField provides. Each block acts as a container, defining the data structure and the widget representing it.
-*   **Custom Page Field:** If the editor represents a dedicated content area on a page and doesn’t fit within a StreamField's modular approach, it can be a custom field in a Wagtail model.
-*   **Standalone Custom Field:** Occasionally, you might even need the editor outside of a page model, perhaps integrated in a custom management view.
+- **StreamField Blocks:** This is the most common use-case. You want your editor to sit within the modular structure that StreamField provides. Each block acts as a container, defining the data structure and the widget representing it.
+- **Custom Page Field:** If the editor represents a dedicated content area on a page and doesn’t fit within a StreamField's modular approach, it can be a custom field in a Wagtail model.
+- **Standalone Custom Field:** Occasionally, you might even need the editor outside of a page model, perhaps integrated in a custom management view.
 
 My experience leans heavily toward StreamFields, so that's where we'll focus our examples. To make this concrete, imagine we’re incorporating a simplified markdown editor—something that isn’t natively supported by wagtail's rich text editor blocks.
 
@@ -174,9 +174,9 @@ Remember that the provided scripts in examples are conceptual, not production-re
 
 For deeper study into the particulars, I’d highly recommend reviewing:
 
-*   **The official Django documentation on forms and widgets:** Understanding Django's rendering logic is essential for working with Wagtail.
-*   **Wagtail’s documentation on StreamField and custom blocks:** The core concepts and available APIs are thoroughly documented here.
-*   **“Effective Django” by William S. Vincent:** This provides excellent strategies and best practices around forms.
-*    **“Two Scoops of Django” by Daniel Roy Greenfeld and Audrey Roy Greenfeld:** This book touches on advanced concepts that might assist in designing complex widget behaviours.
+- **The official Django documentation on forms and widgets:** Understanding Django's rendering logic is essential for working with Wagtail.
+- **Wagtail’s documentation on StreamField and custom blocks:** The core concepts and available APIs are thoroughly documented here.
+- **“Effective Django” by William S. Vincent:** This provides excellent strategies and best practices around forms.
+- **“Two Scoops of Django” by Daniel Roy Greenfeld and Audrey Roy Greenfeld:** This book touches on advanced concepts that might assist in designing complex widget behaviours.
 
 Integrating a third-party editor might seem daunting initially, but breaking it down into rendering and serialization tasks makes the process considerably more manageable. Remember that Wagtail's extensibility is a powerful asset, but it's crucial to understand its underlying architecture to use it effectively. This will ensure your integrations are clean, maintainable, and performant in the long term.

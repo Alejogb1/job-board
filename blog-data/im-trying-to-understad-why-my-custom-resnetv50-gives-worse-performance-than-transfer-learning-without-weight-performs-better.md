@@ -4,15 +4,15 @@ date: "2024-12-15"
 id: "im-trying-to-understad-why-my-custom-resnetv50-gives-worse-performance-than-transfer-learning-without-weight-performs-better"
 ---
 
-alright, so you're seeing your custom resnet50 underperform compared to a transfer-learned one, even when the transfer learning is starting with random weights. that's a classic head-scratcher, and i've absolutely been there. let me break down what i've learned from banging my head against this exact problem in several past projects. it's rarely a single thing, but usually a combination of factors at play.
+, so you're seeing your custom resnet50 underperform compared to a transfer-learned one, even when the transfer learning is starting with random weights. that's a classic head-scratcher, and i've absolutely been there. let me break down what i've learned from banging my head against this exact problem in several past projects. it's rarely a single thing, but usually a combination of factors at play.
 
-first off, the fact that a transfer-learned model, even with randomized weights, is beating your custom implementation is telling. it strongly suggests the issue isn't necessarily with the resnet50 architecture itself, as both are, well, resnet50s. more likely it's related to how you're training your custom one or your data pipeline. 
+first off, the fact that a transfer-learned model, even with randomized weights, is beating your custom implementation is telling. it strongly suggests the issue isn't necessarily with the resnet50 architecture itself, as both are, well, resnet50s. more likely it's related to how you're training your custom one or your data pipeline.
 
-let's start with the data side. i once spent a whole weekend debugging a model only to realize i'd accidentally flipped a preprocessing step. rookie mistake, sure, but it happens. are you sure that your input data is being preprocessed in *exactly* the same way for both models? this includes things like:
+let's start with the data side. i once spent a whole weekend debugging a model only to realize i'd accidentally flipped a preprocessing step. rookie mistake, sure, but it happens. are you sure that your input data is being preprocessed in _exactly_ the same way for both models? this includes things like:
 
-*   **normalization:** are you subtracting the same mean and dividing by the same standard deviation for your input images? if the transfer-learned model was pre-trained on imagenet, make sure your data preprocessing matches that specific normalization strategy. if not you will have an issue.
-*   **image resizing:** are the images resized to the same size? resnet50 expects a specific input size, usually 224x224, though other sizes work too. inconsistent resizing, even tiny differences, can significantly impact the results.
-*   **data augmentation:** if you’re using data augmentation (which you should be), are you applying the same transformations and the same magnitude to your custom and transfer models? things like random cropping, flipping, and rotations can play a big role.
+- **normalization:** are you subtracting the same mean and dividing by the same standard deviation for your input images? if the transfer-learned model was pre-trained on imagenet, make sure your data preprocessing matches that specific normalization strategy. if not you will have an issue.
+- **image resizing:** are the images resized to the same size? resnet50 expects a specific input size, usually 224x224, though other sizes work too. inconsistent resizing, even tiny differences, can significantly impact the results.
+- **data augmentation:** if you’re using data augmentation (which you should be), are you applying the same transformations and the same magnitude to your custom and transfer models? things like random cropping, flipping, and rotations can play a big role.
 
 a little code snippet, to verify this, might look like something like this, using pytorch as example
 
@@ -60,11 +60,11 @@ next, let's think about your training procedure. are you using the same hyperpar
 
 here’s a checklist:
 
-*   **batch size:** are you using the same batch size for both models? smaller batch sizes sometimes make training faster, but the generalization might be less good.
-*   **learning rate:** often the most sensitive hyperparameter. using a higher learning rate will cause issues very fast. if the custom model is not learning well, try a lower learning rate.
-*   **optimizer:** adam or sgd are usually good starting points. but the parameters of these matter too, like momentum for sgd.
-*   **learning rate schedule:** are you decaying the learning rate over time? if so, is the decay rate and strategy the same for both models. i recommend using a cosine or linear decay schedule.
-*   **regularization:** are you using dropout, weight decay, or other regularization methods? are these values the same between the two models?
+- **batch size:** are you using the same batch size for both models? smaller batch sizes sometimes make training faster, but the generalization might be less good.
+- **learning rate:** often the most sensitive hyperparameter. using a higher learning rate will cause issues very fast. if the custom model is not learning well, try a lower learning rate.
+- **optimizer:** adam or sgd are usually good starting points. but the parameters of these matter too, like momentum for sgd.
+- **learning rate schedule:** are you decaying the learning rate over time? if so, is the decay rate and strategy the same for both models. i recommend using a cosine or linear decay schedule.
+- **regularization:** are you using dropout, weight decay, or other regularization methods? are these values the same between the two models?
 
 let me give you a simple example how you could use the optimizer in pytorch and configure the lr scheduler.
 
@@ -108,6 +108,6 @@ also initialization matters. how did you initialize the weights for your custom 
 
 finally, consider your evaluation metrics. are you using the same metrics for both models? if it is image classification, you will use metrics like accuracy or f1-score, recall and precision. but, you can use different evaluation metrics that might differ in results.
 
-if i have to recommend you some reading about this subject, the original resnet paper, "deep residual learning for image recognition" by kaiming he and others is obviously a must. and the paper "adam: a method for stochastic optimization" by d. p. kingma and j. ba is a very solid resource about training. in general i would recommend reading more papers about best practices in training deep neural networks, to find strategies that apply for your particular problem. 
+if i have to recommend you some reading about this subject, the original resnet paper, "deep residual learning for image recognition" by kaiming he and others is obviously a must. and the paper "adam: a method for stochastic optimization" by d. p. kingma and j. ba is a very solid resource about training. in general i would recommend reading more papers about best practices in training deep neural networks, to find strategies that apply for your particular problem.
 
 in short, debugging deep learning performance can be frustrating but methodical approach is key. double-check your data preprocessing, training hyperparameters, model architecture, and evaluation metrics. that should clear a lot of confusion. good luck!

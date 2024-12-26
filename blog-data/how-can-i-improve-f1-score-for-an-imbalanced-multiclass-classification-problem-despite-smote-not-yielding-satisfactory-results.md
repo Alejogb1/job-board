@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-improve-f1-score-for-an-imbalanced-multiclass-classification-problem-despite-smote-not-yielding-satisfactory-results"
 ---
 
-Alright, let's unpack this. I've definitely been in that spot before, staring at an F1-score that's stubbornly low despite throwing a bunch of resampling techniques at it. It’s a common frustration, especially when dealing with imbalanced multiclass data where the minority classes are often the most critical. The fact that SMOTE isn't cutting it is definitely a signal that we need to adjust our approach rather than just keep cranking the same lever. Here's what I've learned through the years – it usually comes down to a multi-pronged strategy.
+, let's unpack this. I've definitely been in that spot before, staring at an F1-score that's stubbornly low despite throwing a bunch of resampling techniques at it. It’s a common frustration, especially when dealing with imbalanced multiclass data where the minority classes are often the most critical. The fact that SMOTE isn't cutting it is definitely a signal that we need to adjust our approach rather than just keep cranking the same lever. Here's what I've learned through the years – it usually comes down to a multi-pronged strategy.
 
-Firstly, let's talk about the core issue. The F1-score, while a fantastic harmonic mean of precision and recall, struggles when class imbalances are significant. Its sensitivity to the performance of minority classes, which you absolutely care about, means that if those classes perform poorly, the overall F1 will be dragged down regardless of how well your model does on the majority classes. Simply attempting to rebalance the dataset using oversampling methods like SMOTE isn't always the answer, as you've experienced. Often, it creates artificial samples that the model can overfit to. It doesn't add *new* information necessarily. So, what do we do?
+Firstly, let's talk about the core issue. The F1-score, while a fantastic harmonic mean of precision and recall, struggles when class imbalances are significant. Its sensitivity to the performance of minority classes, which you absolutely care about, means that if those classes perform poorly, the overall F1 will be dragged down regardless of how well your model does on the majority classes. Simply attempting to rebalance the dataset using oversampling methods like SMOTE isn't always the answer, as you've experienced. Often, it creates artificial samples that the model can overfit to. It doesn't add _new_ information necessarily. So, what do we do?
 
 **Strategy 1: Enhanced Class Weighting within the Algorithm**
 
@@ -106,10 +106,10 @@ Here, we’re creating multiple classifiers, each trained to recognize a single 
 
 This is not a finite list of approaches; it's merely the beginning of what you could explore when standard techniques for imbalance don’t work. I strongly recommend delving into research on:
 
-*   **Cost-Sensitive Learning:** This is a broad approach that looks beyond simple class weighting. See Elkan, C. (2001). "The foundations of cost-sensitive learning." *Proceedings of the Seventeenth International Joint Conference on Artificial intelligence.* Often these approaches will provide more customized loss functions for your classifiers.
+- **Cost-Sensitive Learning:** This is a broad approach that looks beyond simple class weighting. See Elkan, C. (2001). "The foundations of cost-sensitive learning." _Proceedings of the Seventeenth International Joint Conference on Artificial intelligence._ Often these approaches will provide more customized loss functions for your classifiers.
 
-*   **One-Class Classification:** If a specific minority class is very isolated, a one-class model might be useful to identify instances of that class while treating others as "outliers". Tax, D. M. J. (2001). "One-class classification: concept-learning in the absence of counter-examples." Ph.D. thesis, Delft University of Technology.
+- **One-Class Classification:** If a specific minority class is very isolated, a one-class model might be useful to identify instances of that class while treating others as "outliers". Tax, D. M. J. (2001). "One-class classification: concept-learning in the absence of counter-examples." Ph.D. thesis, Delft University of Technology.
 
-*   **Active Learning:** If the scarcity of data for a specific class is the main problem, then focus on strategies that guide your data collection. The canonical book on this is "Active Learning" by Burr Settles.
+- **Active Learning:** If the scarcity of data for a specific class is the main problem, then focus on strategies that guide your data collection. The canonical book on this is "Active Learning" by Burr Settles.
 
 Remember, there isn't a single "magic bullet." Improving F1-score for imbalanced multiclass classification is an iterative process that requires careful experimentation. Don’t be afraid to try different strategies, analyze the results thoroughly, and adjust your approach as needed. It’s a craft, not a science. Keep experimenting and thinking critically. Good luck.

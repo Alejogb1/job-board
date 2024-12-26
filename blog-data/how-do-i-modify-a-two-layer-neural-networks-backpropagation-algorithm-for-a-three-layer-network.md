@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-modify-a-two-layer-neural-networks-backpropagation-algorithm-for-a-three-layer-network"
 ---
 
-Alright, let's tackle this. I've been down that road of extending network architectures a few times myself, and I recall quite vividly the moment I had to move beyond a simple two-layer model. It's more about understanding the underlying mechanism than anything else; once you've got that, extending it feels almost natural. Backpropagation, at its core, is just the chain rule of calculus applied to the parameters of your network, so adding layers simply means extending that chain.
+, let's tackle this. I've been down that road of extending network architectures a few times myself, and I recall quite vividly the moment I had to move beyond a simple two-layer model. It's more about understanding the underlying mechanism than anything else; once you've got that, extending it feels almost natural. Backpropagation, at its core, is just the chain rule of calculus applied to the parameters of your network, so adding layers simply means extending that chain.
 
 The shift from two to three layers introduces an extra set of weights and biases, which also means an extra layer of gradients to calculate. The crucial change isn't in the fundamental backpropagation algorithm itself, but rather in how we recursively apply it from the output layer all the way back to the input layer. In a two-layer scenario, you're typically dealing with a single hidden layer and an output layer. When you introduce a third, it effectively becomes a sandwich – input, hidden layer 1, hidden layer 2, output.
 
@@ -41,6 +41,7 @@ def forward_propagation(input_data, weights1, biases1, weights2, biases2, weight
     layer3_output = sigmoid(np.dot(layer2_output, weights3) + biases3)
     return layer1_output, layer2_output, layer3_output
 ```
+
 This snippet shows how to take the dot product of inputs and weights and add biases, then pass it through the activation to get your layer output. It's straightforward and builds the layers up. We return these because these values are critical in the back propagation pass.
 
 **Code Example 2: Back Propagation**
@@ -67,6 +68,7 @@ def back_propagation(input_data, target, layer1_output, layer2_output, layer3_ou
     d_biases1 = np.sum(hidden1_error, axis=0, keepdims=True)
     return d_weights1, d_biases1, d_weights2, d_biases2, d_weights3, d_biases3
 ```
+
 Notice how the output error is calculated, and then this is used to propagate back to the layer before, and so on. The derivative of the activation is key here, this allows us to scale the back propagated error by the local gradient of the activation. The gradient for weights and biases are calculated using the error values.
 
 **Code Example 3: Putting it Together**
@@ -93,16 +95,16 @@ Here you can see a simple implementation of training that involves using the for
 
 **Important considerations:**
 
-*   **Initialization:** How you initialize your weights matters. A common approach is using random values from a normal distribution.
-*   **Activation Function Derivatives:** ensure you're using the correct derivative of your activation function.
-*   **Learning Rate:** Proper tuning of the learning rate is important for convergence.
-*   **Vectorization:** These examples use numpy for simplicity; efficient implementations will utilize vectorization for performance.
-*   **Numerical Stability:** Pay attention to numerical stability as it can make a substantial difference when training.
+- **Initialization:** How you initialize your weights matters. A common approach is using random values from a normal distribution.
+- **Activation Function Derivatives:** ensure you're using the correct derivative of your activation function.
+- **Learning Rate:** Proper tuning of the learning rate is important for convergence.
+- **Vectorization:** These examples use numpy for simplicity; efficient implementations will utilize vectorization for performance.
+- **Numerical Stability:** Pay attention to numerical stability as it can make a substantial difference when training.
 
 For deeper reading and a more comprehensive understanding, I recommend these resources:
 
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This is a classic textbook that covers all the fundamentals of neural networks, including detailed explanations of backpropagation. The section on multi-layer perceptrons and backpropagation is particularly relevant.
-*   **"Neural Networks and Deep Learning" by Michael Nielsen:** This is a free online book that offers a very clear and accessible explanation of neural networks. The chapter on backpropagation is fantastic.
-*   **Papers related to gradient optimization:** Explore literature related to Adam, SGD with momentum, and other optimization algorithms, to improve performance and stability of training.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This is a classic textbook that covers all the fundamentals of neural networks, including detailed explanations of backpropagation. The section on multi-layer perceptrons and backpropagation is particularly relevant.
+- **"Neural Networks and Deep Learning" by Michael Nielsen:** This is a free online book that offers a very clear and accessible explanation of neural networks. The chapter on backpropagation is fantastic.
+- **Papers related to gradient optimization:** Explore literature related to Adam, SGD with momentum, and other optimization algorithms, to improve performance and stability of training.
 
 Essentially, modifying backpropagation for an additional layer is about carefully propagating the error from the output layer back through each hidden layer, one at a time. It is very important to keep the error signal and their derivatives correct. If you get that, then the rest is just a matter of careful implementation. The code examples should give you a solid foundation, but don't hesitate to dig further into the cited resources. Good luck!

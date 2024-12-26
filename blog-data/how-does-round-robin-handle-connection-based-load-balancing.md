@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-does-round-robin-handle-connection-based-load-balancing"
 ---
 
-Alright, let’s talk about round-robin load balancing in the context of connection-based traffic. I’ve seen this implemented—and debugged it—more times than I care to remember. It’s one of those foundational concepts that everyone touches, but the nuances can trip up even seasoned developers. My experience, especially during my time at a company scaling out their microservices architecture, has given me a practical, rather than purely theoretical, understanding of how this works.
+, let’s talk about round-robin load balancing in the context of connection-based traffic. I’ve seen this implemented—and debugged it—more times than I care to remember. It’s one of those foundational concepts that everyone touches, but the nuances can trip up even seasoned developers. My experience, especially during my time at a company scaling out their microservices architecture, has given me a practical, rather than purely theoretical, understanding of how this works.
 
 Round-robin, at its core, is a deterministic algorithm. It doesn’t try to be particularly smart. It’s about simplicity and predictability. In essence, it distributes incoming connection requests sequentially across a list of available servers. Think of it like a rotating queue; each server gets its turn before the cycle repeats. This is in contrast to other load balancing methods, such as least connection or weighted round-robin, which consider server load or capacity.
 
@@ -93,9 +93,11 @@ public class RoundRobinBalancer {
 
 }
 ```
+
 This Java example introduces a crucial aspect: dynamically handling server removal. In real-world scenarios, servers can fail or be taken offline for maintenance. This example adds a `removeServer` method to remove a server from the list and adjust the index to ensure subsequent requests are directed to the remaining servers. The synchronized keyword prevents threading issues when removing or accessing the shared state.
 
 **Example 3: A Simple Illustration using Go Routines**
+
 ```go
 package main
 
@@ -146,6 +148,6 @@ This Go example utilizes goroutines to simulate concurrent requests. This demons
 
 Implementing these algorithms in real-world scenarios involves dealing with various network constraints, timeout policies, health checks, and more. The three examples here only focus on illustrating the core principle.
 
-For a deeper understanding of load balancing beyond round-robin, I recommend looking into *“High Performance Web Sites: Essential Knowledge for Frontend Engineers”* by Steve Souders for frontend performance strategies and the *“Site Reliability Engineering: How Google Runs Production Systems”* book, which provides broader context to the overall system architecture of which load balancing is part. *“TCP/IP Illustrated, Volume 1: The Protocols”* by W. Richard Stevens provides an excellent in-depth explanation of the network protocols and concepts that underly these systems, as well as for understanding the mechanics of connection-based communications. Understanding these fundamentals is crucial before delving into implementation details.
+For a deeper understanding of load balancing beyond round-robin, I recommend looking into _“High Performance Web Sites: Essential Knowledge for Frontend Engineers”_ by Steve Souders for frontend performance strategies and the _“Site Reliability Engineering: How Google Runs Production Systems”_ book, which provides broader context to the overall system architecture of which load balancing is part. _“TCP/IP Illustrated, Volume 1: The Protocols”_ by W. Richard Stevens provides an excellent in-depth explanation of the network protocols and concepts that underly these systems, as well as for understanding the mechanics of connection-based communications. Understanding these fundamentals is crucial before delving into implementation details.
 
 In summary, round-robin load balancing, while seemingly straightforward, presents its own set of trade-offs. Its simplicity and low overhead make it an attractive option, particularly when the backend servers have similar performance capabilities and consistent loads. However, it’s essential to be aware of its limitations and consider alternative techniques if you need more granular control or dynamic adjustments based on real-time load. It's never a “one-size-fits-all,” but one that can be a strong foundation for many applications.

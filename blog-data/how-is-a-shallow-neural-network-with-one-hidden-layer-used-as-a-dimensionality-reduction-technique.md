@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-is-a-shallow-neural-network-with-one-hidden-layer-used-as-a-dimensionality-reduction-technique"
 ---
 
-alright, let's talk about using a single-hidden-layer neural network for dimensionality reduction. it's a clever trick, and i've definitely spent some time tinkering with it myself back in the day, so i can share a few thoughts from my experience.
+, let's talk about using a single-hidden-layer neural network for dimensionality reduction. it's a clever trick, and i've definitely spent some time tinkering with it myself back in the day, so i can share a few thoughts from my experience.
 
 basically, the idea is to train a neural network to reconstruct the input data through a bottleneck layer. this bottleneck, our single hidden layer, has fewer neurons than the input layer. when the network is properly trained to perform this reconstruction task, the activations of that hidden layer effectively learn a lower dimensional representation of the original data. it's like forcing the network to squeeze the key information through a tiny pipe.
 
@@ -112,6 +112,7 @@ print("original data shape:", data.shape)
 print("reduced data shape:", reduced_data.shape)
 
 ```
+
 this snippet shows how to use scikit-learn to get a pca reduction, both svd and pca are powerful methods to reduce dimension without involving neural networks.
 
 in summary, using a shallow neural network with one hidden layer as a dimensionality reduction technique is an interesting approach with certain specific contexts where it shines but in general, you can explore other simpler techniques like svd or pca. the network learns a compact representation by forcing the data through a bottleneck, then the activations of that bottleneck can be used as reduced features. choosing the correct hidden layer size and training procedure is key to get a good and useful representation.

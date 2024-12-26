@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-test-dependence-between-x-and-y-with-annual-data"
 ---
 
-Alright, let’s tackle this. It’s a question I've grappled with numerous times in the past, especially when analyzing time series data like financial metrics or climatic variables. Directly assessing dependence between two annual datasets, let's call them X and Y, can be more nuanced than it first appears. The typical correlation coefficient isn’t always enough, and frankly, can be quite misleading without deeper consideration of underlying trends and temporal patterns. I've seen projects stumble precisely due to a naïve application of Pearson’s correlation, so we need to be careful.
+, let’s tackle this. It’s a question I've grappled with numerous times in the past, especially when analyzing time series data like financial metrics or climatic variables. Directly assessing dependence between two annual datasets, let's call them X and Y, can be more nuanced than it first appears. The typical correlation coefficient isn’t always enough, and frankly, can be quite misleading without deeper consideration of underlying trends and temporal patterns. I've seen projects stumble precisely due to a naïve application of Pearson’s correlation, so we need to be careful.
 
 Firstly, the very nature of ‘dependence’ is critical to define. Are we simply looking for a linear relationship? Or is the dependence more complex, possibly non-linear or lagged? Furthermore, are there auto-correlation effects within each variable individually that might be creating a spurious correlation between X and Y? These details impact which tools we employ. For annual data, which by its nature is relatively coarse, these considerations are amplified. You're operating with limited data points, making the choice of the appropriate statistical technique even more important.
 
@@ -33,11 +33,13 @@ print(f"Pearson Correlation: {pearson_corr:.3f}")
 spearman_corr, _ = spearmanr(X, Y)
 print(f"Spearman Correlation: {spearman_corr:.3f}")
 ```
+
 In this example, where there's a noisy linear relationship, both Pearson and Spearman will yield similar and reasonably strong correlations. However, if we introduce an outlier or a significant departure from linearity, this will not always be the case.
 
 Now, let’s think about that spurious correlation I alluded to earlier. Often in time series, you’ll see 'spurious' correlations caused by a common underlying trend. Both X and Y might be increasing over time, leading to a high correlation even if they aren’t causally linked. To combat this, you'll need to consider de-trending or differencing your data. For de-trending, you can try to fit a simple polynomial to the data and then calculate correlations on the residuals. Differencing means calculating the difference between successive values, effectively looking at changes rather than absolute levels. This technique is commonly seen in econometric modeling for time series.
 
 Here's a code example that shows a simple differencing operation before calculating Pearson's correlation:
+
 ```python
 import numpy as np
 from scipy.stats import pearsonr
@@ -61,6 +63,7 @@ print(f"Correlation on Differenced Series: {pearson_corr_diff:.3f}")
 You will notice a change in correlation from the initial correlation without differencing. This can be significant. Depending on the data, the choice of de-trending or differencing might be important. Also, look into 'Granger causality' methods from econometrics if you're investigating if the changes in one variable help predict changes in the other. While not strictly a dependence test, it's a useful tool in this context. The book, “Introductory Econometrics: A Modern Approach” by Jeffrey M. Wooldridge is an excellent place to learn more about these techniques.
 
 Finally, let's consider cases where a linear correlation is completely misleading. If you suspect a non-linear relationship, you’re not without options. A method like distance correlation, implemented in the 'dcor' package in Python, can be effective for discovering general dependencies, not just linear ones. Kernel-based methods, including Gaussian and polynomial kernels, may also be helpful. These are more advanced tools but can reveal relationships missed by Pearson or Spearman correlations.
+
 ```python
 import numpy as np
 from dcor import distance_correlation
@@ -82,6 +85,7 @@ print(f"Distance correlation: {dist_corr:.3f}")
 plt.scatter(X,Y)
 plt.show()
 ```
+
 You'll notice that Pearson yields a low value and is misleading due to the non-linear relationship, while the distance correlation provides a far more accurate reflection of the strong underlying relationship.
 
 So, to sum up: there isn't a single silver bullet test for dependence with annual data. It’s a process that includes visual inspection, consideration of the data distribution and its trends, and then selecting the proper technique. Pearson is a good starting point but often insufficient. Explore alternatives like Spearman’s correlation, de-trending, differencing, and distance correlations, as needed. Understanding the nuances of each method, and, most importantly, the assumptions upon which they are built, is key to a meaningful analysis. This is a frequent pitfall in data analysis; do not be afraid to review basic statistical theory. Remember that practical experience comes with a deep understanding of the fundamentals.

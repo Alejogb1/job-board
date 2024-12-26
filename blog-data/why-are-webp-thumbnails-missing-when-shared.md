@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-webp-thumbnails-missing-when-shared"
 ---
 
-Alright, let's tackle this. It’s a head-scratcher I’ve definitely encountered before, particularly back in my early days optimizing a photo-heavy social platform. The issue of missing webp thumbnails when sharing content isn't some random glitch; it's usually a confluence of specific technical factors. Fundamentally, it boils down to how different platforms interpret and handle image formats, specifically webp, when generating previews or metadata for shared links.
+, let's tackle this. It’s a head-scratcher I’ve definitely encountered before, particularly back in my early days optimizing a photo-heavy social platform. The issue of missing webp thumbnails when sharing content isn't some random glitch; it's usually a confluence of specific technical factors. Fundamentally, it boils down to how different platforms interpret and handle image formats, specifically webp, when generating previews or metadata for shared links.
 
 The first, and perhaps most common, culprit is the lack of proper metadata. When you share a link, social media platforms, messaging apps, and even some browsers don't just display the link. They actively fetch the page’s content and try to extract relevant information for a preview. This usually includes a thumbnail image. The primary mechanism for this is via open graph protocol (og:) tags within the html `head` section, notably the `og:image` property. If this tag either doesn't exist, doesn't point to a valid image, or points to a webp image, and that platform lacks webp support, you get… nothing. A blank square, a broken image icon, or just plain text.
 
@@ -15,17 +15,20 @@ To demonstrate this, imagine a basic html snippet:
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Awesome Page</title>
-    <meta property="og:title" content="Check out this page!">
-    <meta property="og:description" content="A brief description of the page.">
-    <meta property="og:image" content="thumbnail.webp">
-</head>
-<body>
-   <h1>Content goes here</h1>
-</body>
+    <meta property="og:title" content="Check out this page!" />
+    <meta
+      property="og:description"
+      content="A brief description of the page."
+    />
+    <meta property="og:image" content="thumbnail.webp" />
+  </head>
+  <body>
+    <h1>Content goes here</h1>
+  </body>
 </html>
 ```
 
@@ -38,21 +41,25 @@ Here’s an illustrative example of that:
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Awesome Page</title>
-    <meta property="og:title" content="Check out this page!">
-    <meta property="og:description" content="A brief description of the page.">
-    <meta property="og:image" content="thumbnail.jpg"> <!-- fall back image -->
-</head>
-<body>
+    <meta property="og:title" content="Check out this page!" />
+    <meta
+      property="og:description"
+      content="A brief description of the page."
+    />
+    <meta property="og:image" content="thumbnail.jpg" />
+    <!-- fall back image -->
+  </head>
+  <body>
     <h1>Content goes here</h1>
     <picture>
-        <source srcset="thumbnail.webp" type="image/webp">
-        <img src="thumbnail.jpg" alt="Thumbnail">
+      <source srcset="thumbnail.webp" type="image/webp" />
+      <img src="thumbnail.jpg" alt="Thumbnail" />
     </picture>
-</body>
+  </body>
 </html>
 ```
 
@@ -73,21 +80,25 @@ To illustrate a more robust approach, let’s consider this third example demons
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Awesome Page</title>
-    <meta property="og:title" content="Check out this page!">
-    <meta property="og:description" content="A brief description of the page.">
-    <meta property="og:image" content="/images/thumbnail.jpg"> <!-- fallback image for crawlers-->
-</head>
-<body>
+    <meta property="og:title" content="Check out this page!" />
+    <meta
+      property="og:description"
+      content="A brief description of the page."
+    />
+    <meta property="og:image" content="/images/thumbnail.jpg" />
+    <!-- fallback image for crawlers-->
+  </head>
+  <body>
     <h1>Content goes here</h1>
     <picture>
-      <source srcset="/images/thumbnail.webp" type="image/webp">
-      <img src="/images/thumbnail.jpg" alt="Thumbnail">
+      <source srcset="/images/thumbnail.webp" type="image/webp" />
+      <img src="/images/thumbnail.jpg" alt="Thumbnail" />
     </picture>
-</body>
+  </body>
 </html>
 ```
 

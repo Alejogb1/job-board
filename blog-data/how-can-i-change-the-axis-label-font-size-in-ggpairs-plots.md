@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-i-change-the-axis-label-font-size-in-ggpairs-plots"
 ---
 
-Alright, let’s tackle this. I remember a particularly frustrating project a few years back, involving genomic data visualization. We were using `ggpairs` quite heavily for exploratory analysis, and the default axis label sizes were just… inadequate, shall we say. The labels would overlap, making the plots practically unusable. So, believe me, I've been down this road, and it can be trickier than it seems at first glance.
+, let’s tackle this. I remember a particularly frustrating project a few years back, involving genomic data visualization. We were using `ggpairs` quite heavily for exploratory analysis, and the default axis label sizes were just… inadequate, shall we say. The labels would overlap, making the plots practically unusable. So, believe me, I've been down this road, and it can be trickier than it seems at first glance.
 
 The challenge with `ggpairs` isn't that you can't modify axis labels; it's that you need to understand the underlying structure to reach the correct levers. You're not directly modifying the axes of a single ggplot object, because `ggpairs` is generating a grid of them. Thus, the standard `theme` arguments you might instinctively reach for don't always apply directly. Instead, we need to tap into the `lower`, `upper`, and `diag` arguments, which control the subplots and their characteristics.
 
 To adjust the axis label font size, we need to use the `axis.text` theme element specifically within the context of these `ggpairs` components. There are several ways to approach this, each with slightly different implications. Let’s explore three common scenarios with code examples.
 
-First, let's consider a situation where you need to change the font size of *all* axis labels, both on the x and y axes, within your `ggpairs` plot. The code would look something like this:
+First, let's consider a situation where you need to change the font size of _all_ axis labels, both on the x and y axes, within your `ggpairs` plot. The code would look something like this:
 
 ```r
 library(GGally)
@@ -62,7 +62,7 @@ ggpairs(data,
 
 Here, the crucial difference is that instead of `axis.text`, I'm using `plot.diag`. This particular theme element doesn't directly impact the axis text by default, but rather the text within each diagonal subplot that was explicitly labelled using the `axisLabels='show'` parameter in the `ggpairs()` call. This helps isolate and change specific axis labels that you may want to stand out and be more readable.
 
-Finally, let's address a scenario where you want different font sizes for the x and y axis labels *only in lower and upper panels*. You might be thinking, “This is going to be complicated,” and while it’s slightly more involved, it’s manageable:
+Finally, let's address a scenario where you want different font sizes for the x and y axis labels _only in lower and upper panels_. You might be thinking, “This is going to be complicated,” and while it’s slightly more involved, it’s manageable:
 
 ```r
 library(GGally)

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "can-multiple-features-be-retrieved-from-feast-in-a-single-request"
 ---
 
-Okay, let’s tackle this one. I remember a project a few years back where we were building a real-time recommendation engine. Fetching features efficiently from our feature store, Feast, became absolutely critical, especially at peak load. We quickly discovered that naively querying one feature at a time was a performance bottleneck, leading to unacceptable latency. So, the short answer to your question is a resounding yes: feast absolutely supports retrieving multiple features in a single request, and you’d *really* want to be doing that for any kind of serious production workload.
+, let’s tackle this one. I remember a project a few years back where we were building a real-time recommendation engine. Fetching features efficiently from our feature store, Feast, became absolutely critical, especially at peak load. We quickly discovered that naively querying one feature at a time was a performance bottleneck, leading to unacceptable latency. So, the short answer to your question is a resounding yes: feast absolutely supports retrieving multiple features in a single request, and you’d _really_ want to be doing that for any kind of serious production workload.
 
-Let’s unpack this a bit, shall we? It's not just about *can* it, but *how* and *why* it's the preferred approach. When you’re dealing with real-time applications, especially machine learning inference, the latency of feature retrieval can significantly impact the end-to-end performance. Each request has an overhead: network latency, server processing time, and, within feast itself, the mechanics of retrieving data. Doing individual lookups multiplies this overhead. Think of it like fetching individual ingredients for a recipe one by one – much less efficient than grabbing a prepped basket with everything you need.
+Let’s unpack this a bit, shall we? It's not just about _can_ it, but _how_ and _why_ it's the preferred approach. When you’re dealing with real-time applications, especially machine learning inference, the latency of feature retrieval can significantly impact the end-to-end performance. Each request has an overhead: network latency, server processing time, and, within feast itself, the mechanics of retrieving data. Doing individual lookups multiplies this overhead. Think of it like fetching individual ingredients for a recipe one by one – much less efficient than grabbing a prepped basket with everything you need.
 
 Feast offers a streamlined way to request multiple features for a set of entities, effectively optimizing this process. The API allows you to specify the entities (e.g., user ids, product ids), and then the specific features you require across all of them, all within a single call. This dramatically reduces the overhead, making your inference pipeline much faster.
 
@@ -14,7 +14,7 @@ Now, let’s delve into some practical code examples. We’ll explore how this l
 
 **Example 1: Fetching Multiple Features for a Single Entity**
 
-First, consider the simplest case: requesting multiple features for a *single* entity. Suppose we have a user with id 'user_123' and we want to retrieve the ‘user_age’, ‘user_location’, and ‘user_account_creation_date’ features:
+First, consider the simplest case: requesting multiple features for a _single_ entity. Suppose we have a user with id 'user_123' and we want to retrieve the ‘user_age’, ‘user_location’, and ‘user_account_creation_date’ features:
 
 ```python
 from feast import FeatureStore
@@ -42,11 +42,12 @@ features = fs.get_online_features(
 print(features)
 
 ```
+
 This snippet shows that with a single `fs.get_online_features` call, we retrieve all the requested user features. The return result is organized by entity id, and within that, you have access to the feature values as a dictionary.
 
 **Example 2: Fetching Multiple Features for Multiple Entities**
 
-Now, let's move to a more realistic situation where you are fetching features for *multiple* entities simultaneously. This is really where the benefits of batch fetching become pronounced. Let’s say we need to get features for users ‘user_456’, ‘user_789’ and ‘user_101’:
+Now, let's move to a more realistic situation where you are fetching features for _multiple_ entities simultaneously. This is really where the benefits of batch fetching become pronounced. Let’s say we need to get features for users ‘user_456’, ‘user_789’ and ‘user_101’:
 
 ```python
 from feast import FeatureStore
@@ -79,7 +80,7 @@ features = fs.get_online_features(
 print(features)
 ```
 
-Here, the `entity_rows` list contains dictionaries, each representing a different entity and its associated id.  The rest of the code follows the same pattern as the previous example but now gives you results for each provided entity, all within the same single network request to Feast. The resulting `features` dictionary would contain all features for each user.
+Here, the `entity_rows` list contains dictionaries, each representing a different entity and its associated id. The rest of the code follows the same pattern as the previous example but now gives you results for each provided entity, all within the same single network request to Feast. The resulting `features` dictionary would contain all features for each user.
 
 **Example 3: Handling Missing Features and Entity Keys**
 

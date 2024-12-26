@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-screen-readers-automatically-detect-and-announce-elements-that-transition-from-displaynone-to-block"
 ---
 
-Alright, let's talk about the often-tricky subject of dynamic content and screen readers, specifically regarding elements transitioning between `display:none` and `display:block`. I've navigated this issue in quite a few projects over the years, and it always seems to present unique challenges. It's not as simple as just switching visibility; we need to ensure the content is also accessible. It’s a point where seemingly benign changes can create a seriously degraded user experience for those relying on assistive technology.
+, let's talk about the often-tricky subject of dynamic content and screen readers, specifically regarding elements transitioning between `display:none` and `display:block`. I've navigated this issue in quite a few projects over the years, and it always seems to present unique challenges. It's not as simple as just switching visibility; we need to ensure the content is also accessible. It’s a point where seemingly benign changes can create a seriously degraded user experience for those relying on assistive technology.
 
-The core problem arises because screen readers primarily operate off the Document Object Model (DOM). When an element goes from `display:none` to `display:block`, it’s not inherently a ‘change’ that a screen reader automatically recognizes as needing an announcement. The element technically *exists* in the DOM regardless of its display state. It's not like adding or removing a node, which would trigger DOM mutation events that screen readers typically observe. Instead, we are changing visual properties, something that doesn't inherently signal a crucial user experience change. Essentially, we are working with a semantic disconnect - visible to the eye doesn’t equal available to assistive tech, and the change in `display` is only cosmetic from the DOM perspective.
+The core problem arises because screen readers primarily operate off the Document Object Model (DOM). When an element goes from `display:none` to `display:block`, it’s not inherently a ‘change’ that a screen reader automatically recognizes as needing an announcement. The element technically _exists_ in the DOM regardless of its display state. It's not like adding or removing a node, which would trigger DOM mutation events that screen readers typically observe. Instead, we are changing visual properties, something that doesn't inherently signal a crucial user experience change. Essentially, we are working with a semantic disconnect - visible to the eye doesn’t equal available to assistive tech, and the change in `display` is only cosmetic from the DOM perspective.
 
 The typical naïve approach, relying only on the display property, often fails. Users who rely on screen readers might miss critical content updates because their assistive tech remains silent during these transitions. We need to find ways to explicitly communicate the change in state to the screen reader. There are a few techniques that I have found consistently effective, focusing on using ARIA attributes and JavaScript to bridge that semantic gap. Let's get into the approaches, along with some code examples.
 
@@ -21,13 +21,14 @@ function toggleElement(elementId) {
     console.error("Element not found with id:", elementId);
     return;
   }
-  const isCurrentlyHidden = element.style.display === 'none';
-  element.style.display = isCurrentlyHidden ? 'block' : 'none';
-    // Clear aria-live region before setting text
-    element.textContent = "";
-    // Update aria-live region after display update to trigger announcement.
-    element.textContent = isCurrentlyHidden ? 'The content is now visible.' : 'The content is now hidden.';
-
+  const isCurrentlyHidden = element.style.display === "none";
+  element.style.display = isCurrentlyHidden ? "block" : "none";
+  // Clear aria-live region before setting text
+  element.textContent = "";
+  // Update aria-live region after display update to trigger announcement.
+  element.textContent = isCurrentlyHidden
+    ? "The content is now visible."
+    : "The content is now hidden.";
 }
 ```
 
@@ -38,41 +39,45 @@ And here's the corresponding HTML:
 <div id="myContent" style="display: none;" aria-live="polite"></div>
 ```
 
-In this case, the JavaScript both toggles the display property and updates the text content within the div. That change of text is what triggers the screen reader to announce what's happening, which leverages the `aria-live` attribute. This pattern is robust and efficient when it’s appropriately scoped. By modifying the content, we are ensuring that screen readers are informed about the change. The key here is that just updating the `display` doesn't inform assistive technologies; we need an associated DOM manipulation they *do* react to.
+In this case, the JavaScript both toggles the display property and updates the text content within the div. That change of text is what triggers the screen reader to announce what's happening, which leverages the `aria-live` attribute. This pattern is robust and efficient when it’s appropriately scoped. By modifying the content, we are ensuring that screen readers are informed about the change. The key here is that just updating the `display` doesn't inform assistive technologies; we need an associated DOM manipulation they _do_ react to.
 
 Now, consider a slightly more complex scenario where the transitioned element contains more substantial content. In this case, we might want to use a combination of `aria-expanded` to indicate whether the content is visible and update the accessible name. Here’s the code:
 
 ```javascript
 function toggleSection(buttonId, contentId) {
-    const button = document.getElementById(buttonId);
-    const content = document.getElementById(contentId);
+  const button = document.getElementById(buttonId);
+  const content = document.getElementById(contentId);
 
-    if (!button || !content) {
-        console.error("Button or Content element not found.");
-        return;
-    }
+  if (!button || !content) {
+    console.error("Button or Content element not found.");
+    return;
+  }
 
-    const isExpanded = button.getAttribute('aria-expanded') === 'true';
-    button.setAttribute('aria-expanded', String(!isExpanded));
-    content.style.display = isExpanded ? 'none' : 'block';
+  const isExpanded = button.getAttribute("aria-expanded") === "true";
+  button.setAttribute("aria-expanded", String(!isExpanded));
+  content.style.display = isExpanded ? "none" : "block";
 
-    if (isExpanded) {
-       button.setAttribute('aria-label', 'Show ' + button.innerText) ;
-        } else {
-       button.setAttribute('aria-label', 'Hide ' + button.innerText) ;
-
-        }
-
-
+  if (isExpanded) {
+    button.setAttribute("aria-label", "Show " + button.innerText);
+  } else {
+    button.setAttribute("aria-label", "Hide " + button.innerText);
+  }
 }
 ```
 
 And the related HTML:
 
 ```html
-<button id="myButton" aria-expanded="false" aria-label="Show my section" onclick="toggleSection('myButton', 'mySection')">My Section</button>
+<button
+  id="myButton"
+  aria-expanded="false"
+  aria-label="Show my section"
+  onclick="toggleSection('myButton', 'mySection')"
+>
+  My Section
+</button>
 <div id="mySection" style="display: none;">
-    <p>This is the content within my section.</p>
+  <p>This is the content within my section.</p>
 </div>
 ```
 
@@ -84,17 +89,17 @@ Finally, let’s discuss a situation where you are loading content asynchronousl
 function loadAndDisplayContent(targetElementId) {
   const target = document.getElementById(targetElementId);
   if (!target) {
-      console.error("Element not found with id:", targetElementId);
+    console.error("Element not found with id:", targetElementId);
     return;
   }
 
-  target.setAttribute('aria-busy', 'true');
-  target.style.display = 'block';
+  target.setAttribute("aria-busy", "true");
+  target.style.display = "block";
 
   // Simulate an async content fetch
   setTimeout(() => {
     target.innerHTML = "<p>Content loaded asynchronously.</p>";
-    target.setAttribute('aria-busy', 'false');
+    target.setAttribute("aria-busy", "false");
   }, 1000); // Simulated delay
 }
 ```

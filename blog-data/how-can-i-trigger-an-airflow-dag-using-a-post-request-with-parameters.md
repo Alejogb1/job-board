@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-trigger-an-airflow-dag-using-a-post-request-with-parameters"
 ---
 
-Alright, let's tackle triggering airflow dags via post requests with parameters; it's a fairly common requirement, and I've certainly encountered it multiple times over the years. I recall a particularly tricky scenario during a project migrating data pipelines from a legacy system. We needed the ability to trigger specific data processing flows dynamically, based on events originating from various external applications. The standard Airflow web UI simply wouldn't cut it for that use case.
+, let's tackle triggering airflow dags via post requests with parameters; it's a fairly common requirement, and I've certainly encountered it multiple times over the years. I recall a particularly tricky scenario during a project migrating data pipelines from a legacy system. We needed the ability to trigger specific data processing flows dynamically, based on events originating from various external applications. The standard Airflow web UI simply wouldn't cut it for that use case.
 
 The core mechanism involves using Airflow's REST API, which thankfully is quite capable. The key lies in understanding how to structure your POST request, specifically the json payload, to effectively communicate with the Airflow scheduler. You’re essentially crafting a request to instruct Airflow to kick off a new dag run, passing along specific configurations as needed.
 
@@ -43,6 +43,7 @@ except requests.exceptions.RequestException as e:
     if hasattr(response, 'text'):
         print(f"Error response: {response.text}")
 ```
+
 In this example, we use the `requests` library to send a POST request to the specified airflow api endpoint. The `conf` field within the payload, initially an empty dictionary here, is where you’d pass any additional parameters. Note that we also handle potential request exceptions to make it more robust. The optional `run_id` field allows you to specify a custom ID for the dag run if needed. If left as `None`, Airflow generates one.
 
 **Code Snippet 2: Trigger with Parameters (Python)**
@@ -88,6 +89,7 @@ except requests.exceptions.RequestException as e:
     if hasattr(response, 'text'):
         print(f"Error response: {response.text}")
 ```
+
 Here, the primary change is within the `payload`. We now have a `params` dictionary which holds key-value pairs representing the desired configuration for our DAG run. These parameters are passed into the DAG using the `conf` argument. In your actual dag definition, you can then access these values through `dag_run.conf`. The custom `run_id` field shows how you would set a specific run id, instead of letting airflow autogenerate one.
 
 **Code Snippet 3: Practical example and validation (Python)**
@@ -152,8 +154,9 @@ In this snippet, before triggering the dag we make an additional request to `/ap
 **Recommended Resources**
 
 For a deeper understanding of the concepts involved, consider these materials:
-* **Apache Airflow Documentation:** This is the primary and most authoritative resource. It is always best to refer to the most up to date information available on the official website.
-* **"Programming Apache Airflow" by Bas Harenslak and Julian de Ruiter:** A comprehensive guide covering various aspects of Airflow, including the REST API and its utilization.
-* **"Designing Data-Intensive Applications" by Martin Kleppmann:** Although not solely focused on Airflow, this book provides essential knowledge on distributed systems and data pipelines, which is relevant in understanding the context of Airflow.
+
+- **Apache Airflow Documentation:** This is the primary and most authoritative resource. It is always best to refer to the most up to date information available on the official website.
+- **"Programming Apache Airflow" by Bas Harenslak and Julian de Ruiter:** A comprehensive guide covering various aspects of Airflow, including the REST API and its utilization.
+- **"Designing Data-Intensive Applications" by Martin Kleppmann:** Although not solely focused on Airflow, this book provides essential knowledge on distributed systems and data pipelines, which is relevant in understanding the context of Airflow.
 
 Implementing these strategies should empower you to flexibly trigger Airflow DAGs via POST requests with custom parameters. Remember to thoroughly test your implementation, and most importantly, to consult the official Airflow documentation for the latest information and best practices. I hope this practical and detailed explanation helps!

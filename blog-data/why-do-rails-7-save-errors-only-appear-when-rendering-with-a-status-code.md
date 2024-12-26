@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-do-rails-7-save-errors-only-appear-when-rendering-with-a-status-code"
 ---
 
-Alright, let's talk about Rails 7 save errors and their peculiar habit of only surfacing when you're rendering with a status code. It's a behavior I've definitely encountered – and frankly, tripped over – a few times in past projects, so I can speak to the practical realities of this. It's not magic, it's a nuanced interaction between how Rails handles validation errors and how it responds to different kinds of requests.
+, let's talk about Rails 7 save errors and their peculiar habit of only surfacing when you're rendering with a status code. It's a behavior I've definitely encountered – and frankly, tripped over – a few times in past projects, so I can speak to the practical realities of this. It's not magic, it's a nuanced interaction between how Rails handles validation errors and how it responds to different kinds of requests.
 
 The crux of the matter lies in the difference between rendering a response with a status code and rendering a response without explicitly defining one. When you render a view without specifying a status code (e.g., simply `render :new`), Rails infers that everything is going swimmingly and defaults to a `200 OK` status. In such situations, Rails often hides the errors that occur during model validation (prior to save) – those errors are there in the object, of course, accessible through `model.errors`, but they are not actively presented in the response unless you explicitly extract and utilize them. It’s a bit like having a detailed error log quietly available, but not printed out in big letters unless specifically asked for.
 
-However, when you explicitly set a status code, especially an error-related status like `422 Unprocessable Entity` or `400 Bad Request`, Rails alters its behavior. It implicitly assumes that if you’re sending a status code signifying an issue, you’ll also want to see the details of *why* that issue happened. Therefore, it will generally include those validation errors in the rendered output. This design choice serves a clear purpose: it provides immediate and actionable feedback to the client, often a browser, an API consumer, or even the frontend JavaScript consuming your JSON responses.
+However, when you explicitly set a status code, especially an error-related status like `422 Unprocessable Entity` or `400 Bad Request`, Rails alters its behavior. It implicitly assumes that if you’re sending a status code signifying an issue, you’ll also want to see the details of _why_ that issue happened. Therefore, it will generally include those validation errors in the rendered output. This design choice serves a clear purpose: it provides immediate and actionable feedback to the client, often a browser, an API consumer, or even the frontend JavaScript consuming your JSON responses.
 
 Let’s illustrate with some code examples. Imagine a simple Rails model called `User`, which includes a validation that the email must be unique:
 
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
 end
 ```
 
-If you send a `POST` request with a duplicate email, the user object *will* have validation errors (`@user.errors` will be populated), but they *won't* be presented in the rendered view unless you explicitly pull them out. You’ll get a 200 OK response and the errors will be subtly hidden, perhaps causing head-scratching moments if you are not carefully examining the object.
+If you send a `POST` request with a duplicate email, the user object _will_ have validation errors (`@user.errors` will be populated), but they _won't_ be presented in the rendered view unless you explicitly pull them out. You’ll get a 200 OK response and the errors will be subtly hidden, perhaps causing head-scratching moments if you are not carefully examining the object.
 
 Here’s the second example, demonstrating the errors being exposed when we return a different status:
 
@@ -78,7 +78,7 @@ class Api::V1::UsersController < ApplicationController
         render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
       end
     end
-  
+
     private
     def user_params
       params.require(:user).permit(:name, :email)

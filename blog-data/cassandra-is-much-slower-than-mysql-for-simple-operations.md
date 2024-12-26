@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cassandra-is-much-slower-than-mysql-for-simple-operations"
 ---
 
-Okay so I see your question and yeah I've been there man Cassandra versus MySQL for simple ops it's a classic head scratcher Right off the bat if you're seeing dramatically slower performance from Cassandra on what you consider simple operations it's usually not Cassandra just being slow but rather something about how you're using it or your data model that's causing problems Let's dive in because I've fought this dragon myself a few times
+I see your question and yeah I've been there man Cassandra versus MySQL for simple ops it's a classic head scratcher Right off the bat if you're seeing dramatically slower performance from Cassandra on what you consider simple operations it's usually not Cassandra just being slow but rather something about how you're using it or your data model that's causing problems Let's dive in because I've fought this dragon myself a few times
 
 First thing first the key difference Cassandra is built for scale and availability at the cost of some single-node write speed MySQL on the other hand is generally optimized for single-server performance with the ability to scale using replication and sharding but it's a different paradigm entirely A typical OLTP relational database like MySQL works by writing to a single disk location typically with ACID guarantees it's designed for things like transactional consistency and single row lookups which it does amazingly well Cassandra on the other hand writes to multiple locations in a distributed system for fault tolerance meaning that every write goes to multiple nodes and then there is a time for the data to get in sync so the trade-off is the single write speed for the ability to scale out
 
@@ -24,7 +24,7 @@ Easy enough Now imagine trying to do the same thing naively in Cassandra with th
 SELECT * FROM users WHERE user_id = 123; -- This will be slow
 ```
 
-The problem here is that Cassandra is not optimized for querying by non-primary key columns If the user\_id is not part of the primary key then Cassandra has to scan all the partitions which is a full table scan not good. Cassandra is fast when you know the partition key which is used to determine which node has the data
+The problem here is that Cassandra is not optimized for querying by non-primary key columns If the user_id is not part of the primary key then Cassandra has to scan all the partitions which is a full table scan not good. Cassandra is fast when you know the partition key which is used to determine which node has the data
 
 So a better approach in Cassandra would be to organize your data around your access patterns If you frequently need to look up users by ID then that should be part of your primary key You'd likely create a table like this:
 

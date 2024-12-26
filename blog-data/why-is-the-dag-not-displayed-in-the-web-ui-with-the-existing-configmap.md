@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-is-the-dag-not-displayed-in-the-web-ui-with-the-existing-configmap"
 ---
 
-Alright, let's tackle this. I've seen this particular issue pop up a few times throughout my years—and it’s almost always down to a handful of common culprits when a dag isn't showing up in the web ui, despite what appears to be a correctly configured configmap. I distinctly remember one project where we spent a frustrating afternoon tracking down the root cause, and it turned out to be an innocuous-looking configuration oversight. It’s usually not a single dramatic failure, but rather a combination of factors. Let’s get into the specifics.
+, let's tackle this. I've seen this particular issue pop up a few times throughout my years—and it’s almost always down to a handful of common culprits when a dag isn't showing up in the web ui, despite what appears to be a correctly configured configmap. I distinctly remember one project where we spent a frustrating afternoon tracking down the root cause, and it turned out to be an innocuous-looking configuration oversight. It’s usually not a single dramatic failure, but rather a combination of factors. Let’s get into the specifics.
 
 First off, remember that the web ui essentially ‘discovers’ dags through the airflow scheduler which, in turn, reads configuration data. If the scheduler isn’t picking up changes from the configmap, or is misinterpreting the configurations, no dags will appear in the user interface.
 
-The primary cause often revolves around how airflow is configured to find your dag files. While you might have meticulously set up a configmap with what *should* be the correct path, it’s crucial to verify the underlying environment variables airflow uses. Specifically, `airflow.cfg` (often mapped through configmaps), dictates the `dags_folder` location. This setting tells the scheduler where to look for dag definitions. A frequent pitfall is inconsistency. For example, the configmap may specify `/opt/airflow/dags`, but the docker container airflow is running in might be configured to look in `/usr/local/airflow/dags`, especially when running on Kubernetes. They need to align precisely.
+The primary cause often revolves around how airflow is configured to find your dag files. While you might have meticulously set up a configmap with what _should_ be the correct path, it’s crucial to verify the underlying environment variables airflow uses. Specifically, `airflow.cfg` (often mapped through configmaps), dictates the `dags_folder` location. This setting tells the scheduler where to look for dag definitions. A frequent pitfall is inconsistency. For example, the configmap may specify `/opt/airflow/dags`, but the docker container airflow is running in might be configured to look in `/usr/local/airflow/dags`, especially when running on Kubernetes. They need to align precisely.
 
-Let's look at a code example. Assume that we have a standard airflow setup, with dags deployed via a kubernetes environment. Here's a snippet showing how a common *incorrect* mapping might look in a kubernetes configmap:
+Let's look at a code example. Assume that we have a standard airflow setup, with dags deployed via a kubernetes environment. Here's a snippet showing how a common _incorrect_ mapping might look in a kubernetes configmap:
 
 ```yaml
 apiVersion: v1
@@ -23,10 +23,10 @@ data:
     dags_folder = /opt/airflow/dags  #Incorrect path
     executor = KubernetesExecutor
     sql_alchemy_conn = postgres://airflow:airflow@airflow-postgres/airflow
-    
 ```
 
 And here's how the airflow deployment might be configured, specifically for our scheduler:
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -36,26 +36,26 @@ spec:
   template:
     spec:
       containers:
-      - name: airflow-scheduler
-        image: apache/airflow:2.8.1
-        env:
-          - name: AIRFLOW__CORE__EXECUTOR
-            value: KubernetesExecutor
-        volumeMounts:
-        - name: airflow-config
-          mountPath: /opt/airflow/airflow.cfg #Mounted, but ignored if set by configmap
-          subPath: airflow.cfg
-        - name: dags-volume
-          mountPath: /usr/local/airflow/dags # Correct path for container
+        - name: airflow-scheduler
+          image: apache/airflow:2.8.1
+          env:
+            - name: AIRFLOW__CORE__EXECUTOR
+              value: KubernetesExecutor
+          volumeMounts:
+            - name: airflow-config
+              mountPath: /opt/airflow/airflow.cfg #Mounted, but ignored if set by configmap
+              subPath: airflow.cfg
+            - name: dags-volume
+              mountPath: /usr/local/airflow/dags # Correct path for container
       volumes:
-      - name: airflow-config
-        configMap:
-          name: airflow-config
-      - name: dags-volume
-        emptyDir: {}
+        - name: airflow-config
+          configMap:
+            name: airflow-config
+        - name: dags-volume
+          emptyDir: {}
 ```
 
-Notice how the *configmap specifies* `/opt/airflow/dags`, while our scheduler container's volume mount is targeting `/usr/local/airflow/dags`. If you've populated your DAGs in `/usr/local/airflow/dags`, the scheduler will never find them, since it's looking in the incorrect path as configured in the configmap. A common fix?
+Notice how the _configmap specifies_ `/opt/airflow/dags`, while our scheduler container's volume mount is targeting `/usr/local/airflow/dags`. If you've populated your DAGs in `/usr/local/airflow/dags`, the scheduler will never find them, since it's looking in the incorrect path as configured in the configmap. A common fix?
 
 ```yaml
 apiVersion: v1
@@ -70,7 +70,7 @@ data:
     sql_alchemy_conn = postgres://airflow:airflow@airflow-postgres/airflow
 ```
 
-This adjustment ensures the `dags_folder` matches the *actual* location where DAG files reside inside the container. It seems basic, but you’d be surprised how often this mismatch is the culprit.
+This adjustment ensures the `dags_folder` matches the _actual_ location where DAG files reside inside the container. It seems basic, but you’d be surprised how often this mismatch is the culprit.
 
 Another key point is file format and syntax. Airflow expects DAG definitions to be valid python files with a `.py` extension. Any other file extensions or syntax errors within these files can cause the scheduler to fail to load dags properly. These issues often manifest as cryptic errors in the scheduler logs. If even one dag fails to load, Airflow, by default, will not display any dags, even valid ones. So, checking the logs for "Failed to import dag" type messages is crucial. Ensure you're running `python -m compileall` on your dag directory.
 

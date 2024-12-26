@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "shared-and-gshared-keywords-in-d"
 ---
 
-Okay so you’re asking about `shared` and `gshared` in D right Been there wrestled with that beast a few times let me tell you It's not exactly the most intuitive thing in D but once it clicks it's pretty powerful stuff alright buckle up
+you’re asking about `shared` and `gshared` in D right Been there wrestled with that beast a few times let me tell you It's not exactly the most intuitive thing in D but once it clicks it's pretty powerful stuff buckle up
 
 Basically we're talking about managing data access in multi-threaded environments right D is awesome at concurrency and these keywords are how you tell the compiler what's safe and what might explode your app into a pile of segfaults and frustration
 
@@ -51,7 +51,7 @@ void worker(Data* sharedData) {
 void main() {
   Data sharedData;
   Thread[] threads;
-  
+
   foreach(i; 0.. 10) {
     threads ~= new Thread(() => worker(&sharedData));
   }
@@ -63,6 +63,7 @@ void main() {
   writeln("Final count: ", sharedData.count);
 }
 ```
+
 This code shows 10 threads incrementing a shared counter and using the `shared` keyword we prevent a race condition and guarantee that the count will be 10000. Without the keyword we might get any number that is less than 10000
 
 Now we get to `gshared` this one's a little different and to be honest it confused me for a long time So where `shared` is about data access within a thread `gshared` is about data access across threads or more precisely in the global scope. A `gshared` variable means a single instance of that data exists across all threads all threads get the exact same data
@@ -104,6 +105,7 @@ void main() {
     writeln("GShared Counter: ", gsharedCounter);
 }
 ```
+
 If you run this program you will see that normalCounter is only equal to 1000 and gsharedCounter will be 10000 it's because each thread increments its own version of `normalCounter` while they all increment a single instance of `gsharedCounter`
 
 Now for some personal experience I remember one time I was building this real-time data processing pipeline in D I had these data structures going through different stages in different threads and I made a real mess of it initially I was using shared everywhere because I was terrified of race conditions but the performance was terrible the locking overhead was killing me it was like trying to move a freight train with a bicycle Then I realized that most of my variables were only read in the first few stages and were never written by multiple threads so there wasn't actually any need for shared there at all I ended up isolating the critical data that needed shared and the rest was simple normal variables it was like a switch was flipped the whole thing was flying It was like the time I tried to make coffee with orange juice (don't ask) the result was not good then I realized my error and used water instead I feel like the story is relatable

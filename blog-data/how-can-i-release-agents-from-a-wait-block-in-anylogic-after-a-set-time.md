@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-release-agents-from-a-wait-block-in-anylogic-after-a-set-time"
 ---
 
-Alright, let’s tackle this one. It's a common scenario, and I've personally had to implement this precise mechanic in several past projects, including a large-scale port logistics simulation and a complex manufacturing assembly line analysis. The challenge usually isn’t the *concept* of releasing agents after a delay, but rather choosing the most appropriate method given the specific requirements of your AnyLogic model, particularly concerning scalability and flexibility. In AnyLogic, we're essentially dealing with event-driven programming, so we need to think in those terms.
+, let’s tackle this one. It's a common scenario, and I've personally had to implement this precise mechanic in several past projects, including a large-scale port logistics simulation and a complex manufacturing assembly line analysis. The challenge usually isn’t the _concept_ of releasing agents after a delay, but rather choosing the most appropriate method given the specific requirements of your AnyLogic model, particularly concerning scalability and flexibility. In AnyLogic, we're essentially dealing with event-driven programming, so we need to think in those terms.
 
 The core problem here revolves around controlling an agent’s flow through a process, specifically pausing them, and then re-initiating their movement after a defined period. There isn't a singular "magic bullet" block, but rather a few core methods we can leverage, and the right one depends on what you aim to achieve. Let's break these methods down, starting with the simplest and then moving toward more adaptable solutions.
 
-The most straightforward way to achieve this is, in my experience, the `delay` block combined with a timeout event. The `delay` block holds an agent for a specified time, and upon timeout, it automatically releases the agent to the next block. This works well when the delay duration is deterministic or calculated on an individual agent basis *at the moment it enters the delay block*. The simplicity is its strength.
+The most straightforward way to achieve this is, in my experience, the `delay` block combined with a timeout event. The `delay` block holds an agent for a specified time, and upon timeout, it automatically releases the agent to the next block. This works well when the delay duration is deterministic or calculated on an individual agent basis _at the moment it enters the delay block_. The simplicity is its strength.
 
 However, what happens if you need to dynamically adjust these wait times based on simulation conditions or agent attributes that could change during their stay in the wait block? This is where things start to need more granular control. You may wish to predefine the wait time in an agent parameter, or base it on a statistical distribution, or even base it on some environmental conditions in your model. Let me illustrate this point with a code snippet. Imagine a scenario where different agent types have different wait times.
 
@@ -19,7 +19,7 @@ double waitTime = this.getAgent().getWaitTime();  // Assuming your agent has a "
 delay(waitTime, SECOND);
 ```
 
-Here, I'm directly pulling `waitTime` from the agent's parameters. This is a clean and efficient solution when the delay is already present when the agent enters the delay block. This method works perfectly well in many use cases, but if you need to have *more* flexible control, like canceling the wait based on an external condition, a simpler `Delay` will not work.
+Here, I'm directly pulling `waitTime` from the agent's parameters. This is a clean and efficient solution when the delay is already present when the agent enters the delay block. This method works perfectly well in many use cases, but if you need to have _more_ flexible control, like canceling the wait based on an external condition, a simpler `Delay` will not work.
 
 Now, for greater control we move to a combination of the `hold` block, a `timeout` event, and some Java logic within the model. This approach is a bit more involved, but offers a far greater degree of flexibility. When using a `hold` block, agents will wait there indefinitely until they are explicitly released by your code. This requires the setting up of an event that triggers the release, and then the logic that connects it. You might use a timer, or some other trigger that fires once a predetermined time has passed. Here’s how it usually looks.
 
@@ -33,7 +33,7 @@ this.hold(false); // Initially hold the agent
 hold.release(this.agent);
 ```
 
-Here, the agent is initially held inside the `hold` block, immediately after entry. Then, a `timeout` event, specifically timed for the delay duration, is set to fire and release the agent. It’s crucial to ensure the ‘agent’ argument in the `release` method of the hold block refers to the *specific* agent being released.
+Here, the agent is initially held inside the `hold` block, immediately after entry. Then, a `timeout` event, specifically timed for the delay duration, is set to fire and release the agent. It’s crucial to ensure the ‘agent’ argument in the `release` method of the hold block refers to the _specific_ agent being released.
 
 One common mistake I’ve seen in my years is using global variables or other means to identify which agents to release. That approach will not scale well, it will be cumbersome, and it is not good modeling. Instead, use the built-in features.
 

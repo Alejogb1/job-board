@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-preserve-the-structure-of-text-for-a-ner-pipeline"
 ---
 
-Okay, let's talk about maintaining text structure when dealing with named entity recognition (ner). It’s a challenge I’ve definitely encountered before, particularly when processing documents where formatting, line breaks, and other layout elements carry semantic information. Ignoring this structural information can significantly degrade the performance of your ner pipeline. I recall a past project involving the analysis of legal contracts; ignoring the paragraph structure and bullet points would have rendered the extracted entities almost useless. The challenge isn’t just about correctly identifying the entities themselves, but also understanding the context surrounding them, which often is tied to the text's structural elements.
+, let's talk about maintaining text structure when dealing with named entity recognition (ner). It’s a challenge I’ve definitely encountered before, particularly when processing documents where formatting, line breaks, and other layout elements carry semantic information. Ignoring this structural information can significantly degrade the performance of your ner pipeline. I recall a past project involving the analysis of legal contracts; ignoring the paragraph structure and bullet points would have rendered the extracted entities almost useless. The challenge isn’t just about correctly identifying the entities themselves, but also understanding the context surrounding them, which often is tied to the text's structural elements.
 
 The core issue is that many standard ner models are trained on datasets where text is treated as a flat sequence of words, and any structural information beyond token separation is often lost during preprocessing. This approach can work fine for general text, but it falls short when we need to account for things like paragraph breaks, lists, tables, headings, or even special character formatting. So, the solution needs to consider how to inject that structural context into the data being fed to the model.
 
@@ -37,9 +37,11 @@ structured_json = create_structured_data(example_doc)
 print(structured_json)
 
 ```
+
 This code segment breaks a document into paragraphs and lines, and creates a json structure with paragraph and line indexes. While simple, it demonstrates the basic principle of creating metadata relating to text structure, that can be expanded upon. This structure can be further enhanced with formatting metadata such as headings, bold text indicators, or list markers, allowing your NER model to utilize more contextual cues. This approach isn't about changing the text itself, but rather about adding context to it.
 
 The second strategy revolves around using techniques that explicitly encode the structural features into the model’s input. Consider the concept of sequence encoding. Instead of treating the text simply as a bag-of-words, a common approach, we can encode sequences of words including their associated structure. Let's consider an example where we try to represent line and paragraph starts as special tokens:
+
 ```python
 def mark_structure(document):
     structured_text = []
@@ -61,6 +63,7 @@ This is another paragraph with just one line."""
 marked_text = mark_structure(example_doc)
 print(marked_text)
 ```
+
 This example introduces special tokens `"<paragraph_start>"`, `"<line_start>"`, and `"<paragraph_end>"` into the text which are later processed by the model as additional tokens alongside the text of the document itself. These added tokens carry implicit positional information, allowing the model to learn how to use them for context. Remember that any token added into the vocabulary needs to be handled carefully when it comes to training a new model or loading an existing pre-trained one. This type of approach works well with recurrent neural networks like lstms or transformer models.
 
 Thirdly, a more advanced technique is to directly integrate structural information into the architecture of the neural network itself. This approach is less common but more powerful. This might involve using hierarchical models that process text at different levels of granularity—for example, a model that first encodes sentences, then paragraphs, and finally the entire document. It can also include the addition of explicit modules for handling specific structural elements. I experimented with graph-based models that allowed me to capture the relationships between elements of text based on the document structure. The idea is that instead of just treating words sequentially, you create a graph representation of the text where nodes can be paragraphs, lines, or even specific formatting elements, and edges represent their relationships. This graph can then be fed to a graph neural network for processing. Let's try a simple example that shows how one could create a simple graph of the above documents:

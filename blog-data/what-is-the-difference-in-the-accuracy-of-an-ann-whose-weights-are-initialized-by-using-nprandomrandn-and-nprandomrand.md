@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-is-the-difference-in-the-accuracy-of-an-ann-whose-weights-are-initialized-by-using-nprandomrandn-and-nprandomrand"
 ---
 
-alright, let's break this down. it's a classic initialization problem, one i've bumped into more times than i care to remember, especially when starting out with neural nets. we're talking about the very first moments of a network's life, how those initial weights are set, and it turns out, that choice makes a surprising amount of difference.
+, let's break this down. it's a classic initialization problem, one i've bumped into more times than i care to remember, especially when starting out with neural nets. we're talking about the very first moments of a network's life, how those initial weights are set, and it turns out, that choice makes a surprising amount of difference.
 
 so, `np.random.randn` versus `np.random.rand`. they're both numpy functions, both used for generating random numbers, but they're not the same. `np.random.randn` gives you samples from a standard normal distribution (that's a gaussian with a mean of 0 and a standard deviation of 1). `np.random.rand`, on the other hand, spits out random numbers uniformly distributed between 0 and 1.
 
@@ -94,6 +94,7 @@ output_size = 5
 weights_scaled_randn = initialize_scaled_weights_randn(input_size, output_size)
 print("weights initialized with scaled random.randn:\n", weights_scaled_randn)
 ```
+
 here we control the initial weight magnitudes using a scale factor. this is very common practice. the usual heuristic is to use small weights for better training.
 
 now, sometimes things don't work, and the first step is usually to check your inputs. this is very important in deep learning. so you should look at the data, and the weights and biases if things are not working as expected. this, combined with debugging is almost half the work of any data science task.

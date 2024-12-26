@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "whats-causing-my-pythonfenics-installation-problems"
 ---
 
-Alright, let's tackle this. It’s a familiar story, I’ve seen many developers – myself included back in the day – hit a snag trying to get Fenics playing nicely with a Python environment. The fact that it's not as straightforward as `pip install fenics` is, well, a common headache. I remember a particularly frustrating project a few years ago where we were modelling multiphase flow using Fenics, and just getting the environment set up correctly took almost as long as developing the core solver. It was a painful reminder of the complex dependencies at play, so let me share some troubleshooting wisdom based on my personal experience and what I've learned along the way.
+, let's tackle this. It’s a familiar story, I’ve seen many developers – myself included back in the day – hit a snag trying to get Fenics playing nicely with a Python environment. The fact that it's not as straightforward as `pip install fenics` is, well, a common headache. I remember a particularly frustrating project a few years ago where we were modelling multiphase flow using Fenics, and just getting the environment set up correctly took almost as long as developing the core solver. It was a painful reminder of the complex dependencies at play, so let me share some troubleshooting wisdom based on my personal experience and what I've learned along the way.
 
 The core problem typically isn't a single, glaring error. It’s often a confluence of issues, primarily surrounding version conflicts and unmet dependencies. Let's break down the usual suspects. First, Fenics relies heavily on particular versions of crucial libraries; we're talking about things like numpy, scipy, mpi4py, and, of course, dolfin. If you already have these installed with versions that don’t align with what Fenics expects, you're going to run into trouble. This can manifest in a variety of ways, from import errors to segmentation faults, depending on how far the incompatibility goes.
 
@@ -25,7 +25,7 @@ except ImportError as e:
 
 This scenario suggests a problem with the location of the dolfin library or the installation process itself. Often, this isn't an issue with `fenics` proper, but with either `dolfin` not being installed at all, or not being in Python's search path. The `ImportError` is a common sign that the environment is not set up correctly.
 
-Now, let's say you *do* manage to import `fenics`, but you run into a segmentation fault later when running some simulations:
+Now, let's say you _do_ manage to import `fenics`, but you run into a segmentation fault later when running some simulations:
 
 ```python
 # Example 2: Segmentation fault caused by dependency issues
@@ -58,6 +58,7 @@ Finally, a less common, but still problematic, case is an error during the build
 # This error indicates that the Boost library, which is critical to Dolfin, isn't detected.
 print("The CMake error indicates that the build cannot continue without Boost. Please ensure boost is correctly installed and available to CMake.")
 ```
+
 This highlights that some system packages might be missing or that the build process might be misconfigured. You might see a different version of this depending on what package is missing, but the message will typically indicate that a package cannot be found or there is a version mismatch.
 
 So, how to address these problems? Here's my recommended approach:

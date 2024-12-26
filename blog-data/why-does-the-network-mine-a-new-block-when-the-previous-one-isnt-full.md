@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-does-the-network-mine-a-new-block-when-the-previous-one-isnt-full"
 ---
 
-Alright, let's tackle this one. I've seen this misconception pop up quite a few times, and it usually stems from a misunderstanding of how block creation and propagation are designed in blockchain systems, specifically within the proof-of-work mechanism used by many. It’s a good question because it challenges the intuitive notion that resources, in this case, block space, must be fully utilized before proceeding.
+, let's tackle this one. I've seen this misconception pop up quite a few times, and it usually stems from a misunderstanding of how block creation and propagation are designed in blockchain systems, specifically within the proof-of-work mechanism used by many. It’s a good question because it challenges the intuitive notion that resources, in this case, block space, must be fully utilized before proceeding.
 
 The short answer is that blocks aren't filled to capacity before being mined because the primary purpose isn’t achieving maximum utilization of the limited space in a block. Instead, it's about maintaining a consistent average time between blocks. This time, defined by the blockchain protocol, is crucial for network stability and security. If the focus was on filling blocks completely before mining new ones, the time between blocks would become unpredictable, fluctuating wildly based on transaction volume. Imagine a world where one block takes seconds and the next could take hours, that kind of instability is extremely problematic and is exactly what the design is meant to prevent.
 
 My experience goes back to my early involvement with a now-defunct blockchain project where we actually attempted something similar to what’s being suggested here – dynamically adjusting block creation times based on transaction volume. It was a terrible idea in practice. The inconsistency threw off almost all reliant downstream systems. Timestamps became unreliable; and, worse, we exposed the network to some very interesting and exploitable time-related vulnerabilities. That was a formative experience that made me appreciate the elegance of the fixed-time approach now prevalent in systems like Bitcoin and its many derivatives.
 
-Let's break down the core reasons. The mining process, particularly in proof-of-work systems, involves a computational puzzle. Miners compete to find a hash that satisfies the difficulty target. This difficulty target is dynamically adjusted to ensure the target average block time is maintained. If we waited for blocks to fill up, the mining difficulty would need to be adjusted on a per-block basis, dependent upon the transaction throughput. This adds unnecessary complexity and would not guarantee a regular block creation time. Instead, the difficulty is adjusted periodically based on the *actual* block generation times, a much more stable and reliable approach.
+Let's break down the core reasons. The mining process, particularly in proof-of-work systems, involves a computational puzzle. Miners compete to find a hash that satisfies the difficulty target. This difficulty target is dynamically adjusted to ensure the target average block time is maintained. If we waited for blocks to fill up, the mining difficulty would need to be adjusted on a per-block basis, dependent upon the transaction throughput. This adds unnecessary complexity and would not guarantee a regular block creation time. Instead, the difficulty is adjusted periodically based on the _actual_ block generation times, a much more stable and reliable approach.
 
 Consider also how transactions are broadcast across the network. They enter a memory pool (mempool), a staging area for unconfirmed transactions. Miners select transactions from this pool to include in a block they're attempting to mine. If we force-filled blocks, we'd create a situation where, during low transaction volume periods, the network would either stall, or we’d have to create a new block despite having a very minimal number of transactions to process, to maintain our time goals. At other times, the network would fall behind due to backlogs as the mempool becomes flooded and would also delay the processing of other transactions. Fixed block intervals ensure that transaction processing is somewhat predictable.
 
@@ -64,6 +64,7 @@ while True:
   time.sleep(target_block_time) #Simulating constant block creation intervals
 
 ```
+
 This example shows that even though we add a limited amount of transactions, the primary function is to ensure that the new block will be created roughly every 10 seconds and if that was not the case, the difficulty adjustment function would begin to do its work and change the parameters to ensure the desired block time.
 
 **Example 2: Transaction Pool (Mempool) Handling**
@@ -98,6 +99,7 @@ transactions_to_mine = mempool.get_transactions_for_block(max_block_size)
 print(f"Transactions for new block: {transactions_to_mine}") #Prints only the first two transactions, not all available
 print(f"Remaining transactions in the mempool: {mempool.transactions}") # Shows that a transaction is in the mempool.
 ```
+
 Here, the mempool holds a queue of transactions. Even if there are more transactions available, the miner will still take only a limited number of transactions, controlled by `max_block_size`, when forming a new block. The rest remain for later blocks. This is to illustrate that the block is not dependent on filling every available slot.
 
 **Example 3: Difficulty Adjustment (Simplified)**

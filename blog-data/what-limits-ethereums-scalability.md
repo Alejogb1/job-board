@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-limits-ethereums-scalability"
 ---
 
-Okay, let's tackle this. I’ve seen firsthand how Ethereum’s scalability challenges play out in various real-world applications, from early decentralized exchanges struggling under transaction load to more recent attempts at layer-2 solutions. It's not a single monolithic issue, but rather a confluence of factors deeply rooted in its foundational design.
+, let's tackle this. I’ve seen firsthand how Ethereum’s scalability challenges play out in various real-world applications, from early decentralized exchanges struggling under transaction load to more recent attempts at layer-2 solutions. It's not a single monolithic issue, but rather a confluence of factors deeply rooted in its foundational design.
 
 Ethereum's primary limitation stems from its consensus mechanism: proof-of-work (pow) initially, and now transitioning to proof-of-stake (pos). While pos is a major improvement, it doesn't magically eliminate all scalability bottlenecks. In a proof-of-work system, every node in the network processes every transaction. This ensures high security and decentralization but inherently limits throughput. With pos, a subset of validators (stakers) are responsible for proposing and validating blocks, reducing the computational burden on the network. However, the fundamental challenge remains the same: each node still needs to process and verify every transaction, regardless of how blocks are proposed and validated.
 
@@ -25,7 +25,7 @@ pragma solidity ^0.8.0;
 
 contract SimpleToken {
     mapping(address => uint256) public balances;
-    
+
     event Transfer(address indexed from, address indexed to, uint256 value);
 
     constructor(uint256 initialSupply) {
@@ -82,7 +82,7 @@ pragma solidity ^0.8.0;
 
 contract DataStorage {
     mapping(uint256 => string) public storedData;
-    
+
     function storeData(uint256 key, string memory value) public {
          storedData[key] = value;
     }

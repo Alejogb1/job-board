@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "manifest-typing-meaning-explanation-coding"
 ---
 
-Alright so manifest typing right I get you I've been there man fighting type systems is like a rite of passage in this coding game Let me break down what I know from my experience dealing with manifest typing the headaches and the wins trust me I’ve seen my fair share of compiler errors because of this topic.
+so manifest typing right I get you I've been there man fighting type systems is like a rite of passage in this coding game Let me break down what I know from my experience dealing with manifest typing the headaches and the wins trust me I’ve seen my fair share of compiler errors because of this topic.
 
 First off manifest typing also known as explicit typing is basically where you the programmer have to tell the compiler or interpreter the specific data type of a variable when you declare it Its like going to the DMV and having to fill out every single form field no assumptions just plain specification you declare a variable and boom you also declare its type a string an integer a float a custom class doesn’t matter you gotta say it out loud or rather write it out in your code.
 
@@ -59,29 +59,28 @@ Now a more advanced example in Typescript that's a slightly more sophisticated l
 
 ```typescript
 interface Person {
-    name: string;
-    age: number;
-    occupation: string;
+  name: string;
+  age: number;
+  occupation: string;
 }
 
 function greetPerson(person: Person): string {
-    return `Hello, ${person.name}! You are ${person.age} years old and work as a ${person.occupation}.`;
+  return `Hello, ${person.name}! You are ${person.age} years old and work as a ${person.occupation}.`;
 }
 
 const person1: Person = {
-    name: "Alice",
-    age: 28,
-    occupation: "Software Engineer",
+  name: "Alice",
+  age: 28,
+  occupation: "Software Engineer",
 };
 
 console.log(greetPerson(person1));
 
-
-const person2:Person = {
-    name: "Bob",
-    age: "32", //Intentional error to show it will fail compilation
-    occupation: "Data Scientist"
-}
+const person2: Person = {
+  name: "Bob",
+  age: "32", //Intentional error to show it will fail compilation
+  occupation: "Data Scientist",
+};
 //console.log(greetPerson(person2)); //Will cause a compilation error
 ```
 

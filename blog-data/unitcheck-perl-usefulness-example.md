@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "unitcheck-perl-usefulness-example"
 ---
 
-Alright so unitcheck perl right okay I’ve been around the block a few times with that one Let me tell you it’s a love hate relationship but mostly love now that I've wrestled it into submission
+so unitcheck perl right I’ve been around the block a few times with that one Let me tell you it’s a love hate relationship but mostly love now that I've wrestled it into submission
 
 First up for anyone landing here completely new unitcheck in Perl is basically your buddy for finding bugs in your code before they turn into a massive headache You know how it goes you write some code looks great on your machine then it crashes in production well unitcheck helps you avoid that It's all about static analysis which means it looks at your code without actually running it It tries to predict potential problems like undefined variables type mismatches and other common gotchas
 
@@ -21,7 +21,7 @@ So about my personal history with this thing way back when I was working on this
  my $table = 'table1';
  my $column = 'column1';
  my $variable_name = "\$${table}_${column}"; # Dynamic variable name generation
-  
+
  ${$variable_name} = 'some value'; # Assign to the dynamically created variable
 
  print ${$variable_name};
@@ -67,14 +67,16 @@ sub some_function {
 
 some_function();
 ```
- If I ran `unitcheck your_script.pl` on this code I would see output like this:
+
+If I ran `unitcheck your_script.pl` on this code I would see output like this:
 
 ```
 Use of uninitialized value $y in print at ./your_script.pl line 5.
 Type of scalar $z may change at ./your_script.pl line 8
 Possible typo in variable name $x at ./your_script.pl line 9
 ```
- As you can see its pretty helpful for spotting those little annoying errors
+
+As you can see its pretty helpful for spotting those little annoying errors
 
 And of course I'm not even covering all the fancy stuff it can do unitcheck also checks for things like unused variables dubious regular expressions and potential security issues If you get serious with this stuff you can even configure it to enforce specific coding styles making your whole team's code cleaner and consistent
 
@@ -92,18 +94,21 @@ sub process_data {
         print $data[$i] + "string value"; # Type coercion
       }
     }
-  
+
     return undef; # Returning undefined without a message
 }
 
 process_data(1, 2, 3);
 ```
+
 Here `unitcheck` might whine with some output like this:
+
 ```
 String found where numerical is expected at ./your_script.pl line 8.
 Possible return of undef at ./your_script.pl line 13.
 ```
- Again pretty self explanatory unitcheck is basically saying "hey you’re trying to do some weird stuff here are you sure about that?"
+
+Again pretty self explanatory unitcheck is basically saying "hey you’re trying to do some weird stuff here are you sure about that?"
 
 Now some folks might complain that unitcheck is just one more tool to learn and use and that it slows them down But honestly if you compare the time you spend fixing runtime errors caused by silly mistakes to the time you spend running a simple static analyzer well the analyzer wins every single time
 

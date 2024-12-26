@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-is-confmfccconf-missing-in-kaldis-makemfccsh-script"
 ---
 
-Okay, let's tackle this. It's a question that probably pops up more often than we'd like, especially for those starting their journey with Kaldi. You're looking at the `make_mfcc.sh` script and wondering where the expected `conf/mfcc.conf` file is, and that's perfectly understandable. I recall my initial foray into Kaldi, encountering precisely this "missing file" conundrum. So, let me break it down for you, based on that experience and what I've learned over the years.
+, let's tackle this. It's a question that probably pops up more often than we'd like, especially for those starting their journey with Kaldi. You're looking at the `make_mfcc.sh` script and wondering where the expected `conf/mfcc.conf` file is, and that's perfectly understandable. I recall my initial foray into Kaldi, encountering precisely this "missing file" conundrum. So, let me break it down for you, based on that experience and what I've learned over the years.
 
-The key here is not that the `conf/mfcc.conf` file is *missing* in the sense of being accidentally deleted or misplaced. Instead, it's simply not a mandatory configuration file that Kaldi's `make_mfcc.sh` script always expects to find in that specific location. The script is designed to be flexible, allowing for various feature extraction methods and parameters beyond just the default mel-frequency cepstral coefficients (mfcc). It’s also important to realize that modern Kaldi workflows often use the newer `steps/make_mfcc.sh` script which also doesn't require a `conf/mfcc.conf` file.
+The key here is not that the `conf/mfcc.conf` file is _missing_ in the sense of being accidentally deleted or misplaced. Instead, it's simply not a mandatory configuration file that Kaldi's `make_mfcc.sh` script always expects to find in that specific location. The script is designed to be flexible, allowing for various feature extraction methods and parameters beyond just the default mel-frequency cepstral coefficients (mfcc). It’s also important to realize that modern Kaldi workflows often use the newer `steps/make_mfcc.sh` script which also doesn't require a `conf/mfcc.conf` file.
 
-Instead of relying on a dedicated configuration file, the `make_mfcc.sh` script, and its more recent counterpart `steps/make_mfcc.sh`, usually define the configuration parameters *directly* within the script. They either use command-line arguments passed to the underlying executable, or, they define variables within the shell script itself. This approach offers several advantages. It's much more transparent and readily allows modifications, as the settings are right in front of you in the script file. It also avoids the overhead of needing to parse another configuration file, streamlining the process.
+Instead of relying on a dedicated configuration file, the `make_mfcc.sh` script, and its more recent counterpart `steps/make_mfcc.sh`, usually define the configuration parameters _directly_ within the script. They either use command-line arguments passed to the underlying executable, or, they define variables within the shell script itself. This approach offers several advantages. It's much more transparent and readily allows modifications, as the settings are right in front of you in the script file. It also avoids the overhead of needing to parse another configuration file, streamlining the process.
 
 However, that doesn’t mean there is no concept of configuration; parameters like frame length, frame shift, number of cepstral coefficients, the window function, and the pre-emphasis coefficient are all still very much there. They're simply embedded differently.
 
@@ -31,6 +31,7 @@ compute-mfcc-feats \
   --num-cepstral=$num_cepstral_coefficients \
   scp:input.scp ark:- | copy-feats ark:- output.ark
 ```
+
 In this snippet, we’ve defined key MFCC parameters as variables and passed them directly to the `compute-mfcc-feats` command using command-line flags. This is the typical approach within Kaldi. You can examine `steps/make_mfcc.sh` for similar setups.
 
 Now, consider a scenario where we want to use a different type of feature, like filterbank energies instead of MFCCs. Again, we won't be using `conf/mfcc.conf` file. Instead, we modify the script variables and use a different tool within kaldi, in this case `compute-fbank-feats`:
@@ -55,7 +56,7 @@ compute-fbank-feats \
 
 Here, we’ve adapted the script to generate filterbank features, changing the command used from `compute-mfcc-feats` to `compute-fbank-feats`, and also adjusting the parameters to be more relevant for this feature type. This further underscores that configuration is dynamically managed within the scripts rather than from an external file.
 
-Finally, it’s worth noting that it's entirely possible to *add* a `conf/mfcc.conf` file if you wanted to implement your own custom setup, but that would require significant modification of kaldi's existing scripts and infrastructure. If you absolutely needed a configuration file, you might implement it as follows:
+Finally, it’s worth noting that it's entirely possible to _add_ a `conf/mfcc.conf` file if you wanted to implement your own custom setup, but that would require significant modification of kaldi's existing scripts and infrastructure. If you absolutely needed a configuration file, you might implement it as follows:
 
 ```python
 import configparser

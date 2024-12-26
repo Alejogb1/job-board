@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resolve-activerecordreadonlyerror-in-ruby-on-rails-when-writing-to-a-multiple-database-environment"
 ---
 
-Alright, let's talk about `ActiveRecord::ReadOnlyError` in a multi-database rails environment. It’s a situation I've certainly encountered a few times, and it's usually not immediately obvious what’s happening. Back in my days scaling a platform handling both user-generated content and complex transactional data, we definitely ran into this. The short answer is that `ActiveRecord::ReadOnlyError` arises when you attempt to modify a database record via an active record model that is connected to a database configured as read-only. In a multiple database setup, this is fairly common and can be a pain to track down without a systematic approach.
+, let's talk about `ActiveRecord::ReadOnlyError` in a multi-database rails environment. It’s a situation I've certainly encountered a few times, and it's usually not immediately obvious what’s happening. Back in my days scaling a platform handling both user-generated content and complex transactional data, we definitely ran into this. The short answer is that `ActiveRecord::ReadOnlyError` arises when you attempt to modify a database record via an active record model that is connected to a database configured as read-only. In a multiple database setup, this is fairly common and can be a pain to track down without a systematic approach.
 
 Let's break down what’s happening. Rails, by default, assumes a single database. When you introduce multiple databases – perhaps for scalability or for segregating different types of data – you need to explicitly define which database should be used for each model. The error comes up when you accidentally configure a model to point to a read replica or a connection intended only for reading, and then you try to update or create data through that model. This often manifests in complex applications when data access logic gets interwoven, and a write operation happens on a model that unexpectedly points to the wrong connection.
 
@@ -21,7 +21,7 @@ Imagine you have a `User` model that is mistakenly configured to point to a read
 class User < ApplicationRecord
   # This is where the error originates, if this is a read-only replica
   # and not the main database:
-  establish_connection :read_only_replica 
+  establish_connection :read_only_replica
 end
 
 # Example of the attempted write operation which throws the error
@@ -77,7 +77,7 @@ end
 
 def update_user_and_audit_log(user_id, new_email)
   User.find(user_id).tap do |user|
-   
+
      AuditLog.connected_to(database: :audit_logs) do
        AuditLog.create!(message: "User id #{user_id} updated email to: #{new_email}")
      end

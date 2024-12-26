@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "hold-out-set-machine-learning-definition"
 ---
 
-Okay so you're asking about holdout sets in machine learning right Got it I’ve battled this beast a few times so let me break it down like I'm explaining it to a fellow coder at 3 AM after too much coffee
+you're asking about holdout sets in machine learning right Got it I’ve battled this beast a few times so let me break it down like I'm explaining it to a fellow coder at 3 AM after too much coffee
 
 First off a holdout set sometimes referred to as a validation set is a chunk of your data that you purposely keep away from your model during its training phase Think of it like this imagine you are teaching a kid multiplication tables you give them lots of examples to learn from then you give them a quiz using new problems they never saw during training the quiz is your holdout set. You don't use this holdout set to tweak model parameters instead you use it to get a feel for how the model will perform on unseen data. This lets you estimate the generalization ability of your model which is extremely important.
 
@@ -14,12 +14,12 @@ That was a classic example of overfitting. Its when your model becomes so specia
 
 Here's a more formal look at why you absolutely need a holdout set :
 
-*   **Generalization Assessment:** A holdout set gives you an unbiased estimate of your model's performance on new unseen data. It’s your crystal ball for predicting how well it's gonna perform when it's out in the wild.
-*   **Model Selection:** You will probably try many different machine learning models and even different hyper-parameter values for each. Holdout set performance can be used as a signal to guide the selection of the most promising model and parameters
-*   **Hyperparameter Tuning:** When using techniques like cross-validation using the validation set as the final touch point gives you the final estimation of the models performance
-*   **Avoiding Overfitting:** As I mentioned earlier holdout sets help to detect whether the model is simply memorizing the training data rather than learning actual patterns.
+- **Generalization Assessment:** A holdout set gives you an unbiased estimate of your model's performance on new unseen data. It’s your crystal ball for predicting how well it's gonna perform when it's out in the wild.
+- **Model Selection:** You will probably try many different machine learning models and even different hyper-parameter values for each. Holdout set performance can be used as a signal to guide the selection of the most promising model and parameters
+- **Hyperparameter Tuning:** When using techniques like cross-validation using the validation set as the final touch point gives you the final estimation of the models performance
+- **Avoiding Overfitting:** As I mentioned earlier holdout sets help to detect whether the model is simply memorizing the training data rather than learning actual patterns.
 
-**Okay let's get to some code. Here's how to split your data using Python and scikit-learn:**
+** let's get to some code. Here's how to split your data using Python and scikit-learn:**
 
 ```python
 from sklearn.model_selection import train_test_split
@@ -57,6 +57,7 @@ y_pred_holdout = model.predict(X_holdout)
 accuracy = accuracy_score(y_holdout, y_pred_holdout)
 print("Accuracy on the holdout set:", accuracy)
 ```
+
 This shows you how to train your model using the training data and then evaluate it using the hold out set. Its important to use the holdout data only for evaluation.
 
 **Here's a little more advanced example using cross-validation for tuning model parameters using train set and testing finally on hold out set**
@@ -98,15 +99,15 @@ So here we are doing hyperparameter tuning using GridSearchCV on the training da
 
 **A few key things to consider:**
 
-*   **Data Leakage:** Be extremely careful not to leak information from your holdout set into your training process. This can happen in data preprocessing steps for example. Make sure data scaling normalization and other transformations are done separately for training and holdout set. If not you would get an over optimistic performance value.
-*   **Size:** The size of your holdout set depends on the total data size. If you have a small dataset you might consider a smaller holdout like 10%. If your data is huge a larger dataset might be better. I usually start with 20% and tune accordingly.
-*   **Stratification:** In classification problems make sure you use stratified split if your classes are unbalanced. `train_test_split` function takes `stratify` argument. This makes sure that the class distributions in your training and holdout sets are roughly equal. This reduces the chances of your model being over-tuned for a particular class.
-*   **Time Series:** For time series data the split should consider the temporal aspect by splitting the data such that the holdout is after your training data. That way you will have a realistic time based assessment.
+- **Data Leakage:** Be extremely careful not to leak information from your holdout set into your training process. This can happen in data preprocessing steps for example. Make sure data scaling normalization and other transformations are done separately for training and holdout set. If not you would get an over optimistic performance value.
+- **Size:** The size of your holdout set depends on the total data size. If you have a small dataset you might consider a smaller holdout like 10%. If your data is huge a larger dataset might be better. I usually start with 20% and tune accordingly.
+- **Stratification:** In classification problems make sure you use stratified split if your classes are unbalanced. `train_test_split` function takes `stratify` argument. This makes sure that the class distributions in your training and holdout sets are roughly equal. This reduces the chances of your model being over-tuned for a particular class.
+- **Time Series:** For time series data the split should consider the temporal aspect by splitting the data such that the holdout is after your training data. That way you will have a realistic time based assessment.
 
 **For more in-depth reading here's some stuff I’ve found useful:**
 
-*   **The Elements of Statistical Learning by Hastie Tibshirani and Friedman** : A classic text that explains the concepts behind model validation very well.
-*  **Deep Learning by Ian Goodfellow Yoshua Bengio and Aaron Courville** : Covers some more advance concepts about validation specifically within Deep Learning framework
+- **The Elements of Statistical Learning by Hastie Tibshirani and Friedman** : A classic text that explains the concepts behind model validation very well.
+- **Deep Learning by Ian Goodfellow Yoshua Bengio and Aaron Courville** : Covers some more advance concepts about validation specifically within Deep Learning framework
 
 Also I heard someone said that if you are not using holdout set you are basically playing Russian roulette with your machine learning model I guess that is somewhat true.
 

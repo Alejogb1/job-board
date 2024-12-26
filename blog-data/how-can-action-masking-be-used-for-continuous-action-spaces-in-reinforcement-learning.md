@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-action-masking-be-used-for-continuous-action-spaces-in-reinforcement-learning"
 ---
 
-Alright, let's talk about action masking, particularly within the rather tricky domain of continuous action spaces in reinforcement learning. I've tackled this issue a few times across various projects, and trust me, it’s not always straightforward. The core challenge, as I’m sure you're aware, is that standard discrete action masking techniques don't directly translate to the continuous realm. We’re not dealing with choosing from a finite set of pre-defined actions here; we're navigating an infinite space, represented by real-valued vectors.
+, let's talk about action masking, particularly within the rather tricky domain of continuous action spaces in reinforcement learning. I've tackled this issue a few times across various projects, and trust me, it’s not always straightforward. The core challenge, as I’m sure you're aware, is that standard discrete action masking techniques don't directly translate to the continuous realm. We’re not dealing with choosing from a finite set of pre-defined actions here; we're navigating an infinite space, represented by real-valued vectors.
 
 For those unfamiliar, action masking, at its base, means restricting the available action space for an agent at any given state. This is immensely useful for injecting domain knowledge or ensuring safe exploration, preventing the agent from taking impossible or undesirable actions. Now, in discrete action spaces, it's conceptually simple: you just tell the agent that certain actions are illegal, so they are not chosen. However, in continuous spaces where actions are represented as, say, floating-point numbers between -1 and 1, you can't simply "mask out" a value. You need a different approach.
 
@@ -14,9 +14,9 @@ The most common and practical solution, which I've found consistently effective,
 
 This is where it starts getting interesting. When dealing with continuous control, it's very common to use Gaussian distributions to represent the probability of taking different actions. Each dimension of the action vector will have its mean, predicted by the agent's policy network, and standard deviation or variance, which may or may not also be predicted or just a hyperparameter. To mask, we need to modify these distributions. Instead of completely zeroing probabilities, which doesn't have much meaning in a continuous space, we can do two things:
 
-*   **Truncation:** Force the distribution to have a range within specific limits, effectively truncating it. For instance, if the standard deviation causes a predicted action to drift into an illegal range, we can simply truncate the sampling process to always keep it within the legal range. This approach keeps the sampling within known bounds.
+- **Truncation:** Force the distribution to have a range within specific limits, effectively truncating it. For instance, if the standard deviation causes a predicted action to drift into an illegal range, we can simply truncate the sampling process to always keep it within the legal range. This approach keeps the sampling within known bounds.
 
-*   **Adjusting Mean and Standard Deviation:** If an action in a certain region should be less favored, instead of truncating, we could shift the mean away from that forbidden region and decrease the variance. This way, the agent is less likely to sample actions within that region without hard enforcement.
+- **Adjusting Mean and Standard Deviation:** If an action in a certain region should be less favored, instead of truncating, we could shift the mean away from that forbidden region and decrease the variance. This way, the agent is less likely to sample actions within that region without hard enforcement.
 
 Let's illustrate this with a quick snippet in Python, using PyTorch. Assume `policy_net` is the neural network representing our policy, taking the current state as input, and outputting the mean and standard deviation for a 2D action space. Assume illegal action region is defined by one of dimensions less than 0.
 
@@ -39,7 +39,7 @@ def get_masked_action_gaussian(state, policy_net, mask):
     mean, log_std = policy_net(state)
     std = torch.exp(log_std)
     gaussian = dist.Normal(mean, std)
-    
+
     action = gaussian.rsample()
 
     masked_action = torch.where(mask, action, torch.zeros_like(action)) #Zero out masked actions
@@ -72,6 +72,7 @@ if __name__ == '__main__':
 
     print("Masked Action:", masked_action)
 ```
+
 In this example, we use a simple mock policy network, and the masking operation makes an attempt to zero out masked actions. A more robust version would apply clipping or truncation during sampling.
 
 **2. Action Clamping and Clipping**
@@ -104,7 +105,7 @@ def get_clipped_action(state, policy_net, mask, clip_low, clip_high):
     action = gaussian.rsample()
 
     clipped_action = torch.clamp(action, min=clip_low, max=clip_high)
-    
+
     masked_action = torch.where(mask, clipped_action, torch.zeros_like(clipped_action))
 
     return masked_action
@@ -171,7 +172,7 @@ def get_penalized_reward(state, policy_net, mask, reward, penalty_scale):
 
         if is_penalized:
             reward = reward - penalty_scale
-    
+
 
         return reward
 
@@ -208,6 +209,6 @@ It's simpler, but can introduce training instability because the agent could sti
 
 Each of these techniques has its pros and cons. Modifying the probability distribution is the most elegant but requires careful handling and deeper understanding of the optimization algorithms. Action clamping is usually a good starting point. Finally, reward penalties offer a quick solution but can make training less stable.
 
-For further reading, I strongly recommend delving into *Policy Gradient Methods for Reinforcement Learning with Function Approximation* by Sutton, McAllester, Singh and Mansour, and the classic *Reinforcement Learning: An Introduction* by Sutton and Barto. The chapter on continuous action spaces in both will give you a solid grounding. Also, check out research papers on TRPO (Trust Region Policy Optimization) and PPO (Proximal Policy Optimization), which often deal with continuous action spaces explicitly.
+For further reading, I strongly recommend delving into _Policy Gradient Methods for Reinforcement Learning with Function Approximation_ by Sutton, McAllester, Singh and Mansour, and the classic _Reinforcement Learning: An Introduction_ by Sutton and Barto. The chapter on continuous action spaces in both will give you a solid grounding. Also, check out research papers on TRPO (Trust Region Policy Optimization) and PPO (Proximal Policy Optimization), which often deal with continuous action spaces explicitly.
 
 In closing, action masking for continuous control is a subtle but incredibly powerful method for shaping an agent's behavior. Choosing the correct technique often comes down to a balance of practical ease and theoretical grounding, and the specific demands of your problem. I hope this explanation and these practical examples have been insightful.

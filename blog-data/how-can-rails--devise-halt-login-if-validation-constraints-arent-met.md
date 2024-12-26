@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-rails--devise-halt-login-if-validation-constraints-arent-met"
 ---
 
-Okay, let's tackle this. I remember a particular project, back in the rails 3.2 days, where we had a convoluted user onboarding process that involved not only email verification but also a profile completeness check before full access was granted. We ran into the exact issue you're describing: devise would happily log a user in, even if our custom validation logic indicated they weren't *quite* ready. This led to a confusing user experience, and we needed to fix it pronto. The core problem, as you've probably surmised, is that devise, by default, focuses on authentication, not authorization or detailed validation status.
+, let's tackle this. I remember a particular project, back in the rails 3.2 days, where we had a convoluted user onboarding process that involved not only email verification but also a profile completeness check before full access was granted. We ran into the exact issue you're describing: devise would happily log a user in, even if our custom validation logic indicated they weren't _quite_ ready. This led to a confusing user experience, and we needed to fix it pronto. The core problem, as you've probably surmised, is that devise, by default, focuses on authentication, not authorization or detailed validation status.
 
-The solution lies in intercepting the authentication process and adding our own checks before a user session is fully created. Devise provides several hooks and callbacks that we can leverage. The most crucial one is `after_database_authentication`, which is called *after* the user has been authenticated by devise but *before* the user is signed in.
+The solution lies in intercepting the authentication process and adding our own checks before a user session is fully created. Devise provides several hooks and callbacks that we can leverage. The most crucial one is `after_database_authentication`, which is called _after_ the user has been authenticated by devise but _before_ the user is signed in.
 
 Let’s break down how I'd approach this, starting with a common scenario: requiring a user to verify their email address before fully logging in.
 
@@ -159,13 +159,14 @@ class Users::SessionsController < Devise::SessionsController
 end
 
 ```
+
 And as above, the `SessionsController` handles the exception and redirects the user to the appropriate mfa config page.
 
 **Important Considerations**
 
-*   **Error Handling:** Always provide clear and specific error messages to the user. Blanket "login failed" messages are incredibly frustrating. As demonstrated above, use the `rescue` block in the sessions controller to catch these exceptions.
-*   **Custom Redirects:** The redirect paths will vary based on your application's routes. Ensure these paths are correct.
-*   **Testing:** Thoroughly test these scenarios with both unit and integration tests to guarantee that your validation logic and sign-in blocking are working as expected.
+- **Error Handling:** Always provide clear and specific error messages to the user. Blanket "login failed" messages are incredibly frustrating. As demonstrated above, use the `rescue` block in the sessions controller to catch these exceptions.
+- **Custom Redirects:** The redirect paths will vary based on your application's routes. Ensure these paths are correct.
+- **Testing:** Thoroughly test these scenarios with both unit and integration tests to guarantee that your validation logic and sign-in blocking are working as expected.
 
 **Further Reading:**
 

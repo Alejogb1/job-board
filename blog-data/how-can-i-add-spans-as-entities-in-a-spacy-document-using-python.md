@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-spans-as-entities-in-a-spacy-document-using-python"
 ---
 
-Okay, let’s tackle this. I've certainly encountered this situation before, particularly when dealing with specialized text corpora that require custom entity recognition. Adding spans as entities in a spaCy document programmatically is a fundamental task if you're aiming to go beyond spaCy’s pre-trained models or if you have unique domain-specific entities. It’s not just about annotation; it’s about enriching your document representation for downstream tasks.
+, let’s tackle this. I've certainly encountered this situation before, particularly when dealing with specialized text corpora that require custom entity recognition. Adding spans as entities in a spaCy document programmatically is a fundamental task if you're aiming to go beyond spaCy’s pre-trained models or if you have unique domain-specific entities. It’s not just about annotation; it’s about enriching your document representation for downstream tasks.
 
 The key lies in manipulating the `doc.ents` attribute and leveraging the `Span` object, not simply trying to inject raw text. The `doc.ents` attribute is where spaCy stores the recognized entities within a document, and it's a tuple of `Span` objects. Let me elaborate on how to create these spans and integrate them properly.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-apply-or-adapt-filters-from-one-activeadmin-model-to-another"
 ---
 
-Okay, let's tackle this. I've bumped into this exact scenario more times than i care to remember, usually when dealing with interconnected data structures across different administrative interfaces. The need to reuse filter logic from one ActiveAdmin model to another is surprisingly common, especially as projects grow and the relationships between your models become more complex. We're not just talking about simple copy-pasting here; we're aiming for a maintainable and efficient solution.
+, let's tackle this. I've bumped into this exact scenario more times than i care to remember, usually when dealing with interconnected data structures across different administrative interfaces. The need to reuse filter logic from one ActiveAdmin model to another is surprisingly common, especially as projects grow and the relationships between your models become more complex. We're not just talking about simple copy-pasting here; we're aiming for a maintainable and efficient solution.
 
 The core problem stems from ActiveAdmin's model-centric nature. Each `ActiveAdmin.register` block tends to be quite self-contained, creating a barrier to easy filter reuse. However, there are several effective patterns we can employ to overcome this. What’s key here is avoiding repetitive code and enforcing a single source of truth for our filtering logic.
 
@@ -83,6 +83,7 @@ ActiveAdmin.register Order do
     # other configurations
 end
 ```
+
 This way, we can move more complex logic into the model, allowing for conditional filter application based on the model itself. This makes your filters not just reusable, but more adaptable and closer to the data where they belong, which aids in maintainability and testability.
 
 Finally, consider creating a specialized class to encapsulate filter specifications if your filtering logic becomes very complex or involves multiple distinct sets of filters. This offers a high level of control and can improve the clarity of your code. Imagine we need multiple sets of filters that handle order date filtering, and also customer contact information, while the former could be useful to the `Order` model, the latter could also be useful to the `Customer` model as well. Let’s set up a class that takes care of this for us:
@@ -106,6 +107,7 @@ class AdminFilters
     end
 end
 ```
+
 Now, in our `ActiveAdmin` resource registration, we can apply the needed filters as such:
 
 ```ruby
@@ -116,6 +118,7 @@ ActiveAdmin.register Order do
    # other configurations
 end
 ```
+
 ```ruby
 # app/admin/customers.rb
 ActiveAdmin.register Customer do
@@ -123,6 +126,7 @@ ActiveAdmin.register Customer do
    # other configurations
 end
 ```
+
 This pattern offers a robust, object-oriented way to define and manage filters for multiple ActiveAdmin resources.
 
 For further exploration, i recommend looking into the "Rails AntiPatterns" book by Chad Pytel, which provides general software engineering practices that align with good design patterns. To dig deeper into ActiveAdmin’s internal workings and filter implementation you can review the [ActiveAdmin’s official documentation](https://activeadmin.info/), but for general programming design patterns the "Design Patterns: Elements of Reusable Object-Oriented Software" book by Erich Gamma et al. provides great foundations that are often forgotten these days.

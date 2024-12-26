@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "third-party-e-signature-library-js-code"
 ---
 
-Okay so you're asking about using a third party JavaScript library for e-signatures right Been there done that man Believe me I've sunk weeks maybe even months into this whole digital signature thing It's never as straightforward as it seems on the surface I mean you start thinking simple javascript easy breezy but then security and browser differences and different formats it gets gnarly real fast
+you're asking about using a third party JavaScript library for e-signatures right Been there done that man Believe me I've sunk weeks maybe even months into this whole digital signature thing It's never as straightforward as it seems on the surface I mean you start thinking simple javascript easy breezy but then security and browser differences and different formats it gets gnarly real fast
 
 So from what I gather you need a js library that handles electronic signatures not just like a drawing pad on the web page I’m talking about proper cryptographic signatures the kind that actually hold up in court you know the works You're not looking for some doodle thing you want something with proper backend support the type that produces verifiable digital fingerprints
 
@@ -23,33 +23,35 @@ Here’s a very simplified example of using a fictional library just for illustr
 ```javascript
 // Assume 'eSignatureLib' is a placeholder for a real library
 async function signPdf(pdfBlob, privateKey) {
-    try {
-      // First a hash is computed to be signed
-      const hash = await eSignatureLib.computeHash(pdfBlob, 'SHA-256')
-       //then we sign with private key
-       const signature = await eSignatureLib.sign(hash, privateKey)
+  try {
+    // First a hash is computed to be signed
+    const hash = await eSignatureLib.computeHash(pdfBlob, "SHA-256");
+    //then we sign with private key
+    const signature = await eSignatureLib.sign(hash, privateKey);
 
-       // Then add it to the pdf
-      const signedPdfBlob = await eSignatureLib.embedSignature(pdfBlob, signature,hash)
-      return signedPdfBlob
-    } catch (error) {
-      console.error("Error signing PDF:", error);
-      throw error;
-    }
+    // Then add it to the pdf
+    const signedPdfBlob = await eSignatureLib.embedSignature(
+      pdfBlob,
+      signature,
+      hash
+    );
+    return signedPdfBlob;
+  } catch (error) {
+    console.error("Error signing PDF:", error);
+    throw error;
   }
+}
 // Example usage
-async function exampleSignProcess(pdfFile , privateKey)
-{
-   const fileReader = new FileReader()
-   fileReader.onload = async (e)=> {
-      const arrayBuffer = e.target.result;
-       const pdfBlob = new Blob([arrayBuffer], { type: "application/pdf" });
-       const signedBlob = await signPdf(pdfBlob,privateKey)
-      // Do what you want with the signed blob
-       console.log("pdf was signed")
-   }
-   fileReader.readAsArrayBuffer(pdfFile)
-
+async function exampleSignProcess(pdfFile, privateKey) {
+  const fileReader = new FileReader();
+  fileReader.onload = async (e) => {
+    const arrayBuffer = e.target.result;
+    const pdfBlob = new Blob([arrayBuffer], { type: "application/pdf" });
+    const signedBlob = await signPdf(pdfBlob, privateKey);
+    // Do what you want with the signed blob
+    console.log("pdf was signed");
+  };
+  fileReader.readAsArrayBuffer(pdfFile);
 }
 
 // Now you could call it like so
@@ -66,10 +68,10 @@ async function signJson(jsonData, privateKey) {
     // Stringify the JSON data first
     const dataString = JSON.stringify(jsonData);
     //then hash the string
-    const hash = await eSignatureLib.computeHash(dataString, 'SHA-256');
+    const hash = await eSignatureLib.computeHash(dataString, "SHA-256");
     //and sign the hash
     const signature = await eSignatureLib.sign(hash, privateKey);
-      // Add it to the json
+    // Add it to the json
     const signedData = { ...jsonData, signature: signature };
     return signedData;
   } catch (error) {
@@ -79,14 +81,13 @@ async function signJson(jsonData, privateKey) {
 }
 
 // Example usage
-async function exampleJsonSigning(jsonPayload,privateKey){
-   const signedJson = await signJson(jsonPayload, privateKey)
+async function exampleJsonSigning(jsonPayload, privateKey) {
+  const signedJson = await signJson(jsonPayload, privateKey);
   // Do stuff with the signed json payload
-   console.log("json was signed")
+  console.log("json was signed");
 }
 
 // exampleJsonSigning({name:"John Doe",age:30} , privateKey)
-
 ```
 
 Again simplified but it shows the pattern of hashing and then signing and then attaching that to the document That's the core of what you need to do
@@ -99,29 +100,28 @@ So here’s an example of a client side call that requests signing from a server
 
 ```javascript
 async function requestSignature(dataToSign) {
-    try {
-      const response = await fetch('/api/sign', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ data: dataToSign }),
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const signedData = await response.json();
-      return signedData;
-    } catch (error) {
-      console.error("Error requesting signature:", error);
-      throw error;
+  try {
+    const response = await fetch("/api/sign", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ data: dataToSign }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+    const signedData = await response.json();
+    return signedData;
+  } catch (error) {
+    console.error("Error requesting signature:", error);
+    throw error;
   }
+}
 
-  // Example
-  // const dataToSign = {message : "hello world"}
- //  const signatureResponse = requestSignature(dataToSign)
-
+// Example
+// const dataToSign = {message : "hello world"}
+//  const signatureResponse = requestSignature(dataToSign)
 ```
 
 On the server side you would receive the hash sign it and send it back to the client Now please don't use that `fetch` directly in production consider a more robust API client I use `axios` for these kind of tasks
@@ -132,7 +132,7 @@ Oh and if you find some open source libraries that have been updated recently wi
 
 And always remember even with the best library you need to do some security considerations yourself Like always use HTTPS everywhere and for the love of everything don't store private keys in git or hardcode them in your code that’s what configuration files are for
 
-I once spent 3 days debugging an issue only to realize that a colleague had committed a private key to git We all make mistakes sometimes It was a learning experience to be honest but don’t do that okay
+I once spent 3 days debugging an issue only to realize that a colleague had committed a private key to git We all make mistakes sometimes It was a learning experience to be honest but don’t do that
 
 Ok I'm done now this should get you started now go forth and implement all of these new concepts that I just gave you and may your digital signature verification be always successful
 

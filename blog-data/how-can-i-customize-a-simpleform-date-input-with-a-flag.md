@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-customize-a-simpleform-date-input-with-a-flag"
 ---
 
-Okay, let's get into it. This isn't as straightforward as it initially seems, and i've certainly had my share of head-scratching moments working with simple_form and date inputs over the years. The challenge, as you've presented it, is to not just display a date input, but to also include a flag alongside it. It's a visual cue that's often needed for context or validation purposes, and simple_form itself doesn't directly provide this out of the box.
+, let's get into it. This isn't as straightforward as it initially seems, and i've certainly had my share of head-scratching moments working with simple_form and date inputs over the years. The challenge, as you've presented it, is to not just display a date input, but to also include a flag alongside it. It's a visual cue that's often needed for context or validation purposes, and simple_form itself doesn't directly provide this out of the box.
 
 The underlying issue, as I see it, stems from the fact that simple_form aims to simplify form creation by abstracting away a lot of the underlying html. When you need to incorporate something that isn't part of its standard set of features like this, you have to think about how to extend its functionality without breaking the abstractions it provides. In the projects where i've encountered similar situations, typically, the quickest solutions have been through some combination of custom wrappers, custom input classes, or in some cases, just going for raw html (but we want to avoid that last one as much as possible).
 
@@ -38,7 +38,8 @@ class FlagInput < SimpleForm::Inputs::Base
     end
   end
 ```
-In this setup, we define a new wrapper `:flagged_date` which encapsulates the date input, and inserts the flag after it, inside an `input-group-text` element.  The `flag` is defined in a custom input, `FlagInput`, that can inject custom html—in this case, the html markup for a flag based on a css class. I'm using `flag-icon-css` as the underlying css library to provide the base flag icons, something like 'flag-icon-gb' (which you'd obviously have to pull from a proper locale or model context in a real application). I added the `input-group-text` span as a bootstrap specific visual improvement in this example but it can be customized to fit your UI library. To use it in your form, you would write something like:
+
+In this setup, we define a new wrapper `:flagged_date` which encapsulates the date input, and inserts the flag after it, inside an `input-group-text` element. The `flag` is defined in a custom input, `FlagInput`, that can inject custom html—in this case, the html markup for a flag based on a css class. I'm using `flag-icon-css` as the underlying css library to provide the base flag icons, something like 'flag-icon-gb' (which you'd obviously have to pull from a proper locale or model context in a real application). I added the `input-group-text` span as a bootstrap specific visual improvement in this example but it can be customized to fit your UI library. To use it in your form, you would write something like:
 
 ```erb
 <%= simple_form_for @my_model do |f| %>
@@ -46,6 +47,7 @@ In this setup, we define a new wrapper `:flagged_date` which encapsulates the da
   <%# ... other fields %>
 <% end %>
 ```
+
 This approach has some notable advantages. It keeps the form code concise while being very flexible; you can modify the `FlagInput` class to include more complex logic or conditional flags. The wrapper approach also makes it reusable across the project for other date fields that need this functionality.
 
 Another technique, especially useful if you need more intricate control over the visual presentation, is to use a custom input class. This is especially useful for scenarios with more dynamic flag conditions or custom input specific logic. Here's a variation:
@@ -71,6 +73,7 @@ In this custom input, `FlaggedDateInput`, we are taking over the generation of t
   <%# ... other fields %>
 <% end %>
 ```
+
 This approach gives us more direct control over the html output; however, it also means we have to handle setting up all the `input_html` attributes that simple_form's normal inputs would manage for us. So there's some added complexity in keeping everything styled and functional, but it does offer the maximum control over layout and styling.
 
 Finally, let's consider a situation where you also want to validate the date based on the user's flag. It would be a bit more involved, but can be achieved using custom validators and some javascript to update the date format based on the selected flag or locale.
@@ -113,6 +116,7 @@ end
 # You would need to include a flag selector UI as well, omitted for brevity
 
 ```
+
 With this code, we can configure the model to validate date formats based on a locale. The validation is handled by the `FlaggedDateValidator`, and we'd use javascript to update the form's flag field so that the validation is performed as expected when the form is submitted. This javascript part is omitted for brevity as the example would get too large, but you can easily implement by using event handlers when changing the flag and updating hidden input fields or model attributes.
 
 For further reading, I'd highly recommend checking out the source code for the simple_form gem itself (it's on GitHub). It’s a great way to understand how its wrappers and inputs function. In addition, The “Ruby on Rails Guides” documentation is the best resource available for understanding how form helpers and custom validators work in general, it's a must-read.

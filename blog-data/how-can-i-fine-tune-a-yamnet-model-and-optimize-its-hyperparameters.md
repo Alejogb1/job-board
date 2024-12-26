@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-fine-tune-a-yamnet-model-and-optimize-its-hyperparameters"
 ---
 
-Alright, let's tackle this YAMNet fine-tuning and hyperparameter optimization challenge. I've actually been down this road a few times, most recently while working on a prototype for environmental sound classification – think identifying specific bird calls or machinery noises in recordings. Getting YAMNet, a pre-trained audio classifier, to adapt to these specialized domains isn't always straightforward, and it definitely calls for a considered approach.
+, let's tackle this YAMNet fine-tuning and hyperparameter optimization challenge. I've actually been down this road a few times, most recently while working on a prototype for environmental sound classification – think identifying specific bird calls or machinery noises in recordings. Getting YAMNet, a pre-trained audio classifier, to adapt to these specialized domains isn't always straightforward, and it definitely calls for a considered approach.
 
 First off, we need to understand that YAMNet, at its core, is a large model trained on a vast dataset of audio events. While it offers great general-purpose audio classification, it's rarely perfect for niche tasks. Fine-tuning is the key; this involves modifying its weights by exposing it to new training data that is specific to the problem we are trying to solve. We’re effectively guiding the model towards a more nuanced understanding of our specific sound space.
 
@@ -26,7 +26,7 @@ def get_yamnet_model(fine_tune=False):
     """Loads the YAMNet model from TF Hub and optionally fine-tunes its later layers."""
     model_url = "https://tfhub.dev/google/yamnet/1"
     yamnet_model = hub.KerasLayer(model_url, trainable=fine_tune) # Make it trainable here
-    
+
     # The trick is to make layers trainable or not, as per the fine_tune flag
 
     if fine_tune:
@@ -45,7 +45,7 @@ def build_fine_tuned_model(num_classes, yamnet_model):
 
     # YAMNet is already doing the processing of audio here
     embeddings, spectrogram = yamnet_model(inputs)
-    
+
     # Add some classifier layers to the processed output
     # Add dropout for regularization
     x = tf.keras.layers.Dropout(0.3)(embeddings)
@@ -103,7 +103,7 @@ def compile_and_train_model(model, train_data, val_data, epochs=10):
     print(f"Best learning rate: {best_lr} with val loss: {best_val_loss}")
 
     return model, best_lr
-        
+
 # Assume we have data loaders like train_dataset and val_dataset
 # data_shape, num_classes defined elsewhere
 

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-do-i-export-az-information-from-a-terraform-vpc-module"
 ---
 
-Okay, let's talk about extracting availability zone (AZ) information from a Terraform vpc module. It's a common requirement, and I've bumped into this more times than i'd care to recall, usually when cascading modules or when another team needs to build resources dependent on a specific subnet. It’s less straightforward than a simple output value, mostly because AZs can change and hardcoding them is a recipe for pain.
+, let's talk about extracting availability zone (AZ) information from a Terraform vpc module. It's a common requirement, and I've bumped into this more times than i'd care to recall, usually when cascading modules or when another team needs to build resources dependent on a specific subnet. It’s less straightforward than a simple output value, mostly because AZs can change and hardcoding them is a recipe for pain.
 
 The heart of the matter lies in how Terraform handles dynamic values. You can't just reach inside a VPC module and grab them directly because those values are often determined at apply time, and outputs only become available after the module has been successfully created. This is where thinking about indirect outputs and data sources come in. I've seen this trip up even experienced folks.
 
-When building a highly available application across AZs, dynamically figuring out which subnets exist in each AZ becomes critical. What you *don't* want is to have your infrastructure depend on specific AZ names, because these can change between AWS accounts or regions, and even within an account at times. Instead, we need a way to programmatically get the available AZs associated with the VPC created by the module.
+When building a highly available application across AZs, dynamically figuring out which subnets exist in each AZ becomes critical. What you _don't_ want is to have your infrastructure depend on specific AZ names, because these can change between AWS accounts or regions, and even within an account at times. Instead, we need a way to programmatically get the available AZs associated with the VPC created by the module.
 
 Let’s walk through a practical approach using a few code examples. The first, and probably the most basic, way is to use a `data` block to query all available AZs in a given region, then use the `cidrsubnet` function on each subnet within our vpc module, and make an output. The second approach is a bit more advanced and will involve utilizing `for_each` loops with `locals` to transform the data in a way that's more useful.
 
@@ -130,6 +130,7 @@ output "vpc_az_info" {
   value = local.az_map
 }
 ```
+
 Here, `local.az_map` uses a `for` loop to create a map using the az names as keys. It then filters the subnet ids list by checking the last character of their respective availability zones.
 
 Finally, let’s try a third approach, which uses the `tolist()` function on subnets to be more explicit about our data transformations. This might come in handy if you are handling complex lists. We are going to modify the output block in the first code example to use `tolist()`:

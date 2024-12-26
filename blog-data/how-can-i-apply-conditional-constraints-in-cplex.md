@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-apply-conditional-constraints-in-cplex"
 ---
 
-Alright, let’s tackle conditional constraints in cplex. It's a topic that's tripped up many, and frankly, I've spent a good number of late nights debugging models because of it. There are multiple ways to skin this cat, and your specific approach depends largely on the nature of your conditional and the structure of your model. I’m drawing here from experiences building optimization models for supply chain logistics and resource allocation; places where seemingly straightforward rules often turn into a labyrinth of logical conditions.
+, let’s tackle conditional constraints in cplex. It's a topic that's tripped up many, and frankly, I've spent a good number of late nights debugging models because of it. There are multiple ways to skin this cat, and your specific approach depends largely on the nature of your conditional and the structure of your model. I’m drawing here from experiences building optimization models for supply chain logistics and resource allocation; places where seemingly straightforward rules often turn into a labyrinth of logical conditions.
 
 Essentially, conditional constraints boil down to this: you want a constraint to only become active under certain conditions, usually depending on the values of other variables. The core issue is that cplex directly handles linear constraints. Logical if-then statements as they appear in programming languages aren’t directly supported, so we need to translate our conditional logic into equivalent linear forms. This transformation is often referred to as “big-m” modeling or using indicator variables. The key is to use binary variables and a very large constant (the 'big-m') to effectively switch constraints on and off.
 
@@ -67,6 +67,7 @@ try:
 except CplexError as exc:
   print(f"Cplex encountered an error: {exc}")
 ```
+
 In this example, the `indicator_constraints.add()` method creates an indicator constraint. If `y[t]` is 1, then `x[t]` must be greater than or equal to `min_production`. If `y[t]` is 0, then that constraint is essentially inactive. Note, the `complemented = 0` setting specifies that the indicator constraint is activated when `y[t] = 1`. If it was `1`, it would be activated when `y[t] = 0`. This is a much more readable and less error-prone way to handle these sorts of constraints than the big-m approach.
 
 **Method 2: The Big-M Method (the classic workhorse)**
@@ -119,6 +120,7 @@ try:
 except CplexError as exc:
   print(f"Cplex encountered an error: {exc}")
 ```
+
 The trick here is `rhs = c + big_M*(1-z)`. If `z` is 1, the right-hand side becomes `c`, and the constraint `a*x + b*y <= c` is active. If `z` is 0, the right-hand side becomes `c + big_M`, a very large number, effectively relaxing the constraint so it's no longer limiting the solution. The critical part is to pick a `big_M` that's large enough to dominate the problem context but not so large that it causes numerical instability.
 
 **Method 3: Using SOS Sets (Specific use cases)**
@@ -191,12 +193,13 @@ except CplexError as exc:
     print(f"Cplex encountered an error: {exc}")
 
 ```
+
 In this example, `my_prob.SOS.add(type = "1" ...)` creates an SOS1 set, ensuring that at most one `z_i` is equal to one, effectively choosing one production line. I often see this sort of structure in production planning problems where each production line has specific constraints.
 
 **Concluding Thoughts**
 
 The key takeaway is that there’s no single perfect approach, each has its strengths. Start with indicator constraints when they're directly applicable, especially if the condition is simply "if binary variable is 1, then constraint must hold." Move to the Big-M method for more complex, customized logical dependencies. Finally, utilize SOS sets when dealing with mutually exclusive options or ordered sets of variables.
 
-For further reading on these techniques, I'd recommend exploring the *Handbook of Optimization in Logistics and Supply Chain Management* by Carlos F. Daganzo, particularly the sections on mixed-integer programming. You might also find insights in *Integer Programming* by Laurence A. Wolsey, which gets into the details of formulations with binary variables. Finally, the cplex documentation itself is the most authoritative resource regarding usage of their specific features, such as indicator constraints, which often get updated in newer releases.
+For further reading on these techniques, I'd recommend exploring the _Handbook of Optimization in Logistics and Supply Chain Management_ by Carlos F. Daganzo, particularly the sections on mixed-integer programming. You might also find insights in _Integer Programming_ by Laurence A. Wolsey, which gets into the details of formulations with binary variables. Finally, the cplex documentation itself is the most authoritative resource regarding usage of their specific features, such as indicator constraints, which often get updated in newer releases.
 
 Remember, formulation is often as much an art as it is a science. Start simple, and incrementally increase complexity, keeping an eye on both model accuracy and computational performance. I've spent considerable time wrestling with these very same topics, so don't worry if there's a learning curve. Just iterate, test, and keep refining.

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-am-i-getting-an-error-when-accessing-a-method-inside-my-action-mailer"
 ---
 
-Okay, let's tackle this. I've seen this particular issue pop up more times than I care to count, and it's usually a head-scratcher until you get into the details. The error you're likely seeing when trying to call a method inside your Action Mailer, especially if it's a custom method you've defined, stems from how Action Mailer instances are instantiated and the lifecycle of their methods in the context of email processing within a rails application. It's rarely a problem with the method itself, but with the way you're trying to invoke it within that specific environment. I remember back in my early days working on a large-scale e-commerce platform, we had a very specific notification system that relied heavily on custom logic within mailers and I distinctly remember banging my head against this issue for quite a few hours.
+, let's tackle this. I've seen this particular issue pop up more times than I care to count, and it's usually a head-scratcher until you get into the details. The error you're likely seeing when trying to call a method inside your Action Mailer, especially if it's a custom method you've defined, stems from how Action Mailer instances are instantiated and the lifecycle of their methods in the context of email processing within a rails application. It's rarely a problem with the method itself, but with the way you're trying to invoke it within that specific environment. I remember back in my early days working on a large-scale e-commerce platform, we had a very specific notification system that relied heavily on custom logic within mailers and I distinctly remember banging my head against this issue for quite a few hours.
 
 The core issue boils down to the fact that Action Mailer methods are not directly accessible in the same way you might access methods in a regular class. Action Mailer instances are instantiated via `ActionMailer::Base.deliver`, which sets up a very specific context for email generation. They are not just regular Ruby objects where you can readily call public methods from anywhere. The "mail" method defined in your mailer class is the specific context within which to define mail configurations and call those helper methods. You’re probably trying to call your custom method directly, outside of that context, or within the `ActionMailer::Base` class itself, which is not how the class is designed to be used.
 
-To elaborate, `ActionMailer::Base` creates an instance of your custom mailer class, and within that context, the `mail` block establishes the environment for email composition. If your custom method isn't called as part of the `mail` configuration it is never accessed or even initiated for the process of preparing an email. Typically, custom methods serve as *helpers* to build the `mail` block – setting subject lines, formatting data, generating text, etc. They aren't independently executed outside of that specific email-building flow.
+To elaborate, `ActionMailer::Base` creates an instance of your custom mailer class, and within that context, the `mail` block establishes the environment for email composition. If your custom method isn't called as part of the `mail` configuration it is never accessed or even initiated for the process of preparing an email. Typically, custom methods serve as _helpers_ to build the `mail` block – setting subject lines, formatting data, generating text, etc. They aren't independently executed outside of that specific email-building flow.
 
 Let's get into some practical examples, illustrating scenarios and common pitfalls:
 
@@ -35,7 +35,7 @@ class UserMailer < ActionMailer::Base
 end
 ```
 
-Here, the intention was correct, but the implementation is flawed. The `format_greeting` method is called *before* the `mail` block is initiated. The mail method is the only method in `ActionMailer` which returns a `Mail` object that eventually gets delivered. You're attempting to call the method outside of the context of the mailer's execution. The error here, though it might be ambiguous, will likely point to this kind of mismatch. It also can indicate a misunderstanding of the mailer’s lifecycle, even if the error itself won't say that directly. The mail configuration should only happen within the `mail` block.
+Here, the intention was correct, but the implementation is flawed. The `format_greeting` method is called _before_ the `mail` block is initiated. The mail method is the only method in `ActionMailer` which returns a `Mail` object that eventually gets delivered. You're attempting to call the method outside of the context of the mailer's execution. The error here, though it might be ambiguous, will likely point to this kind of mismatch. It also can indicate a misunderstanding of the mailer’s lifecycle, even if the error itself won't say that directly. The mail configuration should only happen within the `mail` block.
 
 **Example 2: Correct Usage Inside the `mail` Block**
 
@@ -72,7 +72,7 @@ class UserMailer < ActionMailer::Base
     def product_details
         "The product name is #{@product.name} and costs #{@product.price}"
     end
-    
+
     def product_email(user, product)
         @user = user
         @product = product

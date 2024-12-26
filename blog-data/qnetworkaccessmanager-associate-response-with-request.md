@@ -4,15 +4,15 @@ date: "2024-12-13"
 id: "qnetworkaccessmanager-associate-response-with-request"
 ---
 
-Okay so you're asking about how `QNetworkAccessManager` in Qt associates responses with the requests that triggered them right This is a classic problem and it's something I've wrestled with a few times especially back in the day when I was still kinda figuring out asynchronous network programming in Qt
+you're asking about how `QNetworkAccessManager` in Qt associates responses with the requests that triggered them right This is a classic problem and it's something I've wrestled with a few times especially back in the day when I was still kinda figuring out asynchronous network programming in Qt
 
-Alright let's break it down I've seen people get caught up in this and it's not really a fault of the API it's more about understanding the flow of asynchronous operations
+let's break it down I've seen people get caught up in this and it's not really a fault of the API it's more about understanding the flow of asynchronous operations
 
 Basically `QNetworkAccessManager` doesn't directly give you a "response object is for THIS request object" type of association It gives you a `QNetworkReply` object as a signal and you have to infer the relationship
 
-The core issue is that when you call say `get` or `post` on the manager it doesn't block the thread and wait for the response Instead it sends the request off and immediately returns a `QNetworkReply` object which is more like a handle a way to track the ongoing request It's *not* the actual data yet
+The core issue is that when you call say `get` or `post` on the manager it doesn't block the thread and wait for the response Instead it sends the request off and immediately returns a `QNetworkReply` object which is more like a handle a way to track the ongoing request It's _not_ the actual data yet
 
-The key thing to realize is that you *don't* get the actual response or data as a direct return from these methods What you do is you connect to the `finished()` or `readyRead()` signals of the `QNetworkReply` object These signals fire once a response arrives
+The key thing to realize is that you _don't_ get the actual response or data as a direct return from these methods What you do is you connect to the `finished()` or `readyRead()` signals of the `QNetworkReply` object These signals fire once a response arrives
 
 The easiest way to solve this is by using closures with lambda functions or using `QObject::sender()` but I'm biased towards closures
 
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
 }
 ```
 
-Alright so in this example see how we use a lambda function as a slot to the `finished()` signal We capture the `reply` pointer and the `request` variable so within the lambda's body we now have a way to relate the current reply to the specific request you just made
+so in this example see how we use a lambda function as a slot to the `finished()` signal We capture the `reply` pointer and the `request` variable so within the lambda's body we now have a way to relate the current reply to the specific request you just made
 
 That's probably the simplest way of handling most cases But there are situations where you want some more advanced tracking
 

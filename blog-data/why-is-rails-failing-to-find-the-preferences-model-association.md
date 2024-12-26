@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-rails-failing-to-find-the-preferences-model-association"
 ---
 
-Okay, let's unpack this. I've seen this particular head-scratcher more times than i care to remember, and it usually boils down to a few common culprits. Rails, despite its elegance, can be rather particular about how it expects associations to be declared. The "Preferences model association not found" error, in my experience, seldom points to a genuine absence of the model itself, but rather a misconfiguration in how the association is defined or how its referenced across models. Think of it like a slightly misaligned cog in a very precise machine – everything *should* work, but it’s just not clicking.
+, let's unpack this. I've seen this particular head-scratcher more times than i care to remember, and it usually boils down to a few common culprits. Rails, despite its elegance, can be rather particular about how it expects associations to be declared. The "Preferences model association not found" error, in my experience, seldom points to a genuine absence of the model itself, but rather a misconfiguration in how the association is defined or how its referenced across models. Think of it like a slightly misaligned cog in a very precise machine – everything _should_ work, but it’s just not clicking.
 
 The core of the issue, more often than not, lies within these three broad areas: incorrect association declarations, issues with naming conventions (specifically singularization and pluralization), or potential problems with database migrations not fully applied. Let’s dive into each of these with some fictional, yet highly realistic, examples.
 
@@ -24,9 +24,9 @@ class Preferences < ApplicationRecord
 end
 ```
 
-On the surface, this seems perfectly reasonable, *however*, it was failing. The error messages were consistently throwing a "Preferences" association not found issue. The problem wasn’t that the `Preferences` model didn’t exist; it was that we had not declared a foreign key relationship that rails can correctly infer and manage. There's no explicit `user_id` in the `preferences` table as far as Rails' conventions were concerned, and therefore the association cannot be correctly built internally. We were missing the actual column, or hadn't migrated it properly.
+On the surface, this seems perfectly reasonable, _however_, it was failing. The error messages were consistently throwing a "Preferences" association not found issue. The problem wasn’t that the `Preferences` model didn’t exist; it was that we had not declared a foreign key relationship that rails can correctly infer and manage. There's no explicit `user_id` in the `preferences` table as far as Rails' conventions were concerned, and therefore the association cannot be correctly built internally. We were missing the actual column, or hadn't migrated it properly.
 
-Here's the *corrected* snippet from the migration file:
+Here's the _corrected_ snippet from the migration file:
 
 ```ruby
 class CreatePreferences < ActiveRecord::Migration[7.0]

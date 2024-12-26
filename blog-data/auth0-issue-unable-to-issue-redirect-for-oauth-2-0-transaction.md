@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "auth0-issue-unable-to-issue-redirect-for-oauth-2-0-transaction"
 ---
 
-Okay so you're banging your head against the wall with Auth0's OAuth 2.0 redirect issues I've been there man like seriously been there It's like you think it's all smooth sailing with their docs and boom you're stuck in redirect limbo let me tell you about my adventures with this specific flavor of hell
+you're banging your head against the wall with Auth0's OAuth 2.0 redirect issues I've been there man like seriously been there It's like you think it's all smooth sailing with their docs and boom you're stuck in redirect limbo let me tell you about my adventures with this specific flavor of hell
 
 First off let's get this straight auth0 redirect issues usually boil down to a few core problems it's not often magic or some bug in their system it's often a misconfiguration or a lack of understanding of how the oAuth 2.0 flow actually works specifically the redirect_uri and its nuances
 
@@ -56,50 +56,46 @@ In the function `get_token_data` double-check you are using the same `redirect_u
 Here is a basic Nodejs example using `express` and `auth0-js`
 
 ```javascript
-const express = require('express');
-const Auth0 = require('auth0-js');
-const dotenv = require('dotenv').config();
+const express = require("express");
+const Auth0 = require("auth0-js");
+const dotenv = require("dotenv").config();
 
 const app = express();
 const port = 3000;
-
 
 const auth0 = new Auth0.WebAuth({
   domain: process.env.AUTH0_DOMAIN,
   clientID: process.env.AUTH0_CLIENT_ID,
   redirectUri: process.env.AUTH0_REDIRECT_URI,
-  responseType: 'code',
-  scope: 'openid profile email'
+  responseType: "code",
+  scope: "openid profile email",
 });
 
-app.get('/login', (req, res) => {
-    const url = auth0.authorizeUrl()
-    res.redirect(url);
+app.get("/login", (req, res) => {
+  const url = auth0.authorizeUrl();
+  res.redirect(url);
+});
+
+app.get("/callback", (req, res) => {
+  auth0.parseHash(window.location.hash, (err, authResult) => {
+    if (authResult && authResult.accessToken && authResult.idToken) {
+      // Access token and Id Token will be available
+      // You can save them to browser local storage for future usage
+
+      console.log("Access Token:", authResult.accessToken);
+      console.log("Id Token:", authResult.idToken);
+
+      res.send("logged in");
+    } else if (err) {
+      console.log(err);
+      res.send("error");
+    }
   });
-
-
-app.get('/callback', (req, res) => {
-    auth0.parseHash(window.location.hash, (err, authResult) => {
-        if (authResult && authResult.accessToken && authResult.idToken) {
-            // Access token and Id Token will be available
-            // You can save them to browser local storage for future usage
-
-          console.log('Access Token:', authResult.accessToken);
-          console.log('Id Token:', authResult.idToken);
-
-          res.send('logged in');
-        } else if (err) {
-            console.log(err)
-            res.send('error');
-        }
-
-    });
 });
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-
 ```
 
 Again pay very close attention to `redirectUri` it must match what's on your Auth0 configuration. It's a common pitfall even for seasoned devs because these little pieces of configs are hard to track down
@@ -107,30 +103,25 @@ Again pay very close attention to `redirectUri` it must match what's on your Aut
 For a React frontend example assuming you use `auth0-react` the code should look like this:
 
 ```jsx
-import React from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
-import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
-import dotenv from 'dotenv'
+import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import dotenv from "dotenv";
 
-dotenv.config()
-
+dotenv.config();
 
 const Auth0ProviderWithHistory = ({ children }) => {
-    const config = {
-      domain: process.env.REACT_APP_AUTH0_DOMAIN,
-      clientId: process.env.REACT_APP_AUTH0_CLIENT_ID,
-      authorizationParams: {
-        redirect_uri: process.env.REACT_APP_AUTH0_REDIRECT_URI,
-        audience: process.env.REACT_APP_AUTH0_AUDIENCE,
-      }
-    }
+  const config = {
+    domain: process.env.REACT_APP_AUTH0_DOMAIN,
+    clientId: process.env.REACT_APP_AUTH0_CLIENT_ID,
+    authorizationParams: {
+      redirect_uri: process.env.REACT_APP_AUTH0_REDIRECT_URI,
+      audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+    },
+  };
 
-  return (
-      <Auth0Provider {...config}>
-          {children}
-      </Auth0Provider>
-    );
-}
+  return <Auth0Provider {...config}>{children}</Auth0Provider>;
+};
 
 function LoginButton() {
   const { loginWithRedirect } = useAuth0();
@@ -138,39 +129,37 @@ function LoginButton() {
 }
 
 function LogoutButton() {
-    const { logout } = useAuth0();
-    return <button onClick={() => logout()}>Log Out</button>;
-  }
+  const { logout } = useAuth0();
+  return <button onClick={() => logout()}>Log Out</button>;
+}
 
 function Profile() {
-    const { user, isAuthenticated } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
 
-    return (
-        isAuthenticated && (
-            <div>
-            {JSON.stringify(user)}
-            <LogoutButton/>
-          </div>)
+  return (
+    isAuthenticated && (
+      <div>
+        {JSON.stringify(user)}
+        <LogoutButton />
+      </div>
     )
+  );
 }
 
 function App() {
-
-    return (
-
-        <Router>
-            <Auth0ProviderWithHistory>
-            <nav>
-            <Link to="/profile">Profile</Link>
-            </nav>
-            <Routes>
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/" element={<LoginButton />} />
-            </Routes>
-            </Auth0ProviderWithHistory>
-        </Router>
-
-    );
+  return (
+    <Router>
+      <Auth0ProviderWithHistory>
+        <nav>
+          <Link to="/profile">Profile</Link>
+        </nav>
+        <Routes>
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/" element={<LoginButton />} />
+        </Routes>
+      </Auth0ProviderWithHistory>
+    </Router>
+  );
 }
 
 export default App;

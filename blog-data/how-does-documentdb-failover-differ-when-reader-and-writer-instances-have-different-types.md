@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-does-documentdb-failover-differ-when-reader-and-writer-instances-have-different-types"
 ---
 
-Okay, let's unpack this. The question touches on a critical area in distributed database systems, and specifically how failover behaves when the read and write endpoints (instances) in a DocumentDB setup aren’t homogenous. It's something I've encountered more than once in the field, and the devil, as they say, is often in the details.
+, let's unpack this. The question touches on a critical area in distributed database systems, and specifically how failover behaves when the read and write endpoints (instances) in a DocumentDB setup aren’t homogenous. It's something I've encountered more than once in the field, and the devil, as they say, is often in the details.
 
 Frankly, the ‘standard’ failover scenario – where all instances are identical – is relatively straightforward. We’re swapping out a failing instance with a healthy one of the same type, ensuring minimal service disruption and hopefully, data consistency. However, when reader and writer instances are architecturally disparate, things get… nuanced. We're no longer just replacing a component; we're potentially dealing with different capabilities, performance characteristics, and data access paths that impact failover procedures. Let's dive into how.
 
 First, consider a scenario I faced at a previous firm. We had a legacy DocumentDB system, where the 'writer' instance, responsible for all transactional writes, was a beefy server with significant memory and storage—optimized for heavy-duty write operations. Meanwhile, the ‘reader’ instances, deployed in a separate cluster, were scaled out to handle read-heavy workloads. These reader instances were optimized for query performance and had a somewhat reduced storage footprint. This type of architecture isn’t unusual; you often find this read-optimized setup to improve performance at scale.
 
-The key difference during a failover event here comes down to the *role* of the new ‘writer’ instance. If the primary writer fails, one of the reader instances might be promoted to take its place. This promotion isn't as simple as swapping labels. The reader instance is unlikely to have the same resources or optimal configuration as the original writer. This can lead to performance bottlenecks, specifically in transactional writes. Moreover, the failover mechanism has to adjust to the new architecture, which, due to initial architectural differences, may initially be poorly equipped to handle the primary write tasks. The failover mechanism now not only has to ensure service continuity, but also manage the functional differences.
+The key difference during a failover event here comes down to the _role_ of the new ‘writer’ instance. If the primary writer fails, one of the reader instances might be promoted to take its place. This promotion isn't as simple as swapping labels. The reader instance is unlikely to have the same resources or optimal configuration as the original writer. This can lead to performance bottlenecks, specifically in transactional writes. Moreover, the failover mechanism has to adjust to the new architecture, which, due to initial architectural differences, may initially be poorly equipped to handle the primary write tasks. The failover mechanism now not only has to ensure service continuity, but also manage the functional differences.
 
 Now, what does this look like in a more technical, code-oriented context? Let's imagine a simplified representation using pseudo-code (since actual DocumentDB failover logic is far more complex and proprietary) to illustrate the problem:
 
@@ -41,7 +41,7 @@ def failover_homogenous(instances, writer_id):
          return instance
 
     return None # No suitable instance found.
-    
+
 # Example usage
 instances = [
     DocumentDBInstance("instance_1", is_writer=True),
@@ -122,11 +122,12 @@ else:
     print("Failover failed")
 ```
 
-This snippet illustrates the key difference. We now have to check the instance *type* during failover. Ideally, we'd promote another `WriterInstance`. If that's not available, we have to use a `ReaderInstance` as a stopgap. This second example has logic to check for a healthy writer first, and if none exists, it promotes a reader to a writer. In a real world system, it’s imperative to log and alert on this promotion of a reader because this represents a reduction in service quality compared to the prior configuration.
+This snippet illustrates the key difference. We now have to check the instance _type_ during failover. Ideally, we'd promote another `WriterInstance`. If that's not available, we have to use a `ReaderInstance` as a stopgap. This second example has logic to check for a healthy writer first, and if none exists, it promotes a reader to a writer. In a real world system, it’s imperative to log and alert on this promotion of a reader because this represents a reduction in service quality compared to the prior configuration.
 
 Finally, we must consider the steps involved in reconfiguring a system with a reader instance as the new writer.
 
 **Snippet 3: Reader to Writer Reconfiguration**
+
 ```python
 class WriterInstance(DocumentDBInstance):
   def __init__(self, instance_id, is_writer=True, status="healthy", write_buffer_size=1000):
@@ -143,9 +144,9 @@ class ReaderInstance(DocumentDBInstance):
 def promote_reader_to_writer(reader_instance, desired_write_buffer_size=1000):
     if not isinstance(reader_instance, ReaderInstance):
         raise ValueError("Must be a ReaderInstance to promote.")
-    
+
     print(f"Starting reconfiguration for {reader_instance.instance_id}")
-    
+
     # Simulate the steps needed to reconfigure a reader to become a writer
     # This is a HIGHLY simplified version for illustrative purposes!
 
@@ -164,6 +165,7 @@ promote_reader_to_writer(reader, desired_write_buffer_size=1500)
 print(f"New write buffer size: {reader.read_buffer_size}")
 
 ```
+
 This third snippet demonstrates, in a simplified manner, the process by which a reader is reconfigured for writer capabilities during a failover event. This could include actions like reallocating system resources such as buffer sizes, updating access control rules and initiating replication.
 
 From my experiences, I'd advise the following:

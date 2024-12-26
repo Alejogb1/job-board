@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-correct-time-format-for-golang-jwtstandardclaims"
 ---
 
-Alright, let's tackle this one. It's a common sticking point, and I've certainly spent my share of late nights debugging subtle timezone issues lurking within jwt claims. The core of the problem lies not within the `jwt.StandardClaims` struct itself, but in how the underlying time fields are managed and serialized by the `go-jwt/jwt` library when you're working with json. The short answer is: **`jwt.StandardClaims` expects time values to be represented as numeric timestamps (Unix epoch seconds), usually as integers, and should be expressed in UTC**. Not strings, not formatted time outputs, and definitely not local times.
+, let's tackle this one. It's a common sticking point, and I've certainly spent my share of late nights debugging subtle timezone issues lurking within jwt claims. The core of the problem lies not within the `jwt.StandardClaims` struct itself, but in how the underlying time fields are managed and serialized by the `go-jwt/jwt` library when you're working with json. The short answer is: **`jwt.StandardClaims` expects time values to be represented as numeric timestamps (Unix epoch seconds), usually as integers, and should be expressed in UTC**. Not strings, not formatted time outputs, and definitely not local times.
 
 Let’s break this down and explore the details, drawing on a previous project involving a microservices architecture, where inconsistent time representations in tokens almost brought the entire thing crashing down.
 
@@ -12,7 +12,7 @@ First, the `jwt.StandardClaims` struct, as defined in the `go-jwt/jwt` package, 
 
 This encoding convention ensures that the json representation of your jwt is predictable and timezone-agnostic (since the timestamp is relative to the UTC epoch). Problems usually arise when developers attempt to populate these fields using local times or by creating `time.Time` values without considering the underlying timestamp representation. It's a common pitfall.
 
-Here’s how you should be doing it correctly. We need to make sure the `time.Time` values you set to `ExpiresAt`, `NotBefore`, and `IssuedAt` in your `StandardClaims` are *UTC* times and that they will be marshaled correctly to their corresponding timestamps when the json output is produced.
+Here’s how you should be doing it correctly. We need to make sure the `time.Time` values you set to `ExpiresAt`, `NotBefore`, and `IssuedAt` in your `StandardClaims` are _UTC_ times and that they will be marshaled correctly to their corresponding timestamps when the json output is produced.
 
 Here's a practical example. Let’s say you’re building a system that issues jwt tokens that expire in 1 hour.
 
@@ -47,7 +47,7 @@ func main() {
 	tokenParsed, _ := jwt.ParseWithClaims(ss, &parsedClaims, func(token *jwt.Token) (interface{}, error) {
 		return []byte("secret"), nil
 	})
-    
+
 	if tokenParsed.Valid {
         if exp, ok := parsedClaims["exp"].(float64); ok {
             fmt.Println("Parsed Expiry:", time.Unix(int64(exp), 0).UTC())
@@ -69,7 +69,7 @@ func main() {
 
 In the above code snippet, the key aspect is converting the `time.Time` objects to UTC and then getting their corresponding Unix timestamps using the `Unix()` method which returns a `int64`. When decoding, note that the time fields are coming back as `float64` types from the decoded claims. To convert them back to proper `time.Time` objects you must first convert to `int64` and then create the `time.Time` using `time.Unix(int64, 0).UTC()`.
 
-Now, here's what *not* to do. Directly using local times or formatted time strings will cause problems:
+Now, here's what _not_ to do. Directly using local times or formatted time strings will cause problems:
 
 ```go
 package main
@@ -96,12 +96,12 @@ func main() {
     }
 
     fmt.Println(ss)
-    
+
     parsedClaims := jwt.MapClaims{}
 	tokenParsed, _ := jwt.ParseWithClaims(ss, &parsedClaims, func(token *jwt.Token) (interface{}, error) {
 		return []byte("secret"), nil
 	})
-    
+
 	if tokenParsed.Valid {
         if exp, ok := parsedClaims["exp"].(float64); ok {
             fmt.Println("Parsed Expiry:", time.Unix(int64(exp), 0).UTC())
@@ -122,7 +122,7 @@ func main() {
 }
 ```
 
-This code will still produce a token, but the time fields will likely not be what you intended when you decode it. The json will not represent time as the library expects causing the token to become invalid. You might even see validation errors or incorrect comparisons in downstream services. It's crucial to *always* use Unix timestamps and ensure the source time is UTC before conversion.
+This code will still produce a token, but the time fields will likely not be what you intended when you decode it. The json will not represent time as the library expects causing the token to become invalid. You might even see validation errors or incorrect comparisons in downstream services. It's crucial to _always_ use Unix timestamps and ensure the source time is UTC before conversion.
 
 Finally, let's look at an example where we use `jwt.StandardClaims` for comparison.
 
@@ -162,7 +162,7 @@ func main() {
 	tokenParsed, _ := jwt.ParseWithClaims(ss, &parsedClaims, func(token *jwt.Token) (interface{}, error) {
 		return []byte("secret"), nil
 	})
-    
+
 	if tokenParsed.Valid {
         fmt.Println("Parsed Expiry:", parsedClaims.ExpiresAt.Time.UTC())
 		fmt.Println("Parsed Issued At:", parsedClaims.IssuedAt.Time.UTC())
@@ -179,4 +179,4 @@ Notice in the example above we can use the `jwt.NumericDate` type in combination
 
 In summary, when working with `jwt.StandardClaims`, the safest approach is to ensure your `time.Time` values are in UTC and convert them to Unix timestamps (int64) using `time.Time.Unix()`. When parsing, remember to extract the timestamp (float64 in our examples), convert it to an integer, and use the `time.Unix(int64, 0).UTC()` method to convert it back to a time object.
 
-For further study, I strongly recommend reading *“Programming in Go”* by Mark Summerfield, it's thorough and covers the time package well. Also, the official documentation for `go-jwt/jwt` on github is your go-to reference for specific details about how claims are handled. Furthermore, you may want to reference "RFC 7519" which is the official JWT specification, giving you the authoritative reference. Pay close attention to sections on claim types and timestamp representation in the specification. And always remember, timezone issues can be tricky, so stick to UTC and unix timestamps to avoid a lot of pain.
+For further study, I strongly recommend reading _“Programming in Go”_ by Mark Summerfield, it's thorough and covers the time package well. Also, the official documentation for `go-jwt/jwt` on github is your go-to reference for specific details about how claims are handled. Furthermore, you may want to reference "RFC 7519" which is the official JWT specification, giving you the authoritative reference. Pay close attention to sections on claim types and timestamp representation in the specification. And always remember, timezone issues can be tricky, so stick to UTC and unix timestamps to avoid a lot of pain.

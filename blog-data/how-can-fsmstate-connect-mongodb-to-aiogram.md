@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-fsmstate-connect-mongodb-to-aiogram"
 ---
 
-Okay, let's tackle this. It’s not uncommon to find yourself needing to bridge the gap between a Telegram bot, powered by Aiogram, and persistent data stored in MongoDB. I've certainly had my share of projects that demanded this very architecture. The trick, as with most things in software, lies in understanding the interplay between the asynchronous nature of Aiogram and the typical synchronous operations of many MongoDB drivers, and implementing a clear state management mechanism. The FSM (Finite State Machine) state in Aiogram, specifically, plays a crucial role here. Let's break it down practically, from my perspective, after having built several systems like this.
+, let's tackle this. It’s not uncommon to find yourself needing to bridge the gap between a Telegram bot, powered by Aiogram, and persistent data stored in MongoDB. I've certainly had my share of projects that demanded this very architecture. The trick, as with most things in software, lies in understanding the interplay between the asynchronous nature of Aiogram and the typical synchronous operations of many MongoDB drivers, and implementing a clear state management mechanism. The FSM (Finite State Machine) state in Aiogram, specifically, plays a crucial role here. Let's break it down practically, from my perspective, after having built several systems like this.
 
 The core idea is to use Aiogram’s FSM to track the conversation flow, with each state potentially needing or modifying data in our MongoDB database. This means every state, at some point, might involve a read from or write to the database. What makes this challenging is that standard blocking MongoDB calls within an async Aiogram handler will, well, block, which is very bad for a non-blocking event loop. We can’t afford that. Therefore, we need to make our MongoDB interactions play nicely with the async model. I generally use a client such as the pymongo library, since it offers a solid foundation for working with MongoDB in python, but keep in mind we need asynchronous wrappers around its functionality.
 
@@ -142,11 +142,13 @@ if __name__ == '__main__':
     asyncio.run(main())
 
 ```
+
 In this example, when the user sends `/details`, the `display_user_details` handler sets an FSM state, fetches the user data via the `MongoManager` and displays it (or a ‘not found’ message). Again, the key here is the asynchronous call to the `get_user_by_id` method using `asyncio.to_thread`.
 
 **Example 3: Updating Data Based on FSM State and User Input**
 
 Finally, let’s update a user’s record based on a specific FSM state.
+
 ```python
 import asyncio
 from aiogram import Bot, Dispatcher, types

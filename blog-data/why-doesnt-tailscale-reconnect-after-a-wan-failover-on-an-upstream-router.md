@@ -4,17 +4,17 @@ date: "2024-12-23"
 id: "why-doesnt-tailscale-reconnect-after-a-wan-failover-on-an-upstream-router"
 ---
 
-Okay, let's talk about Tailscale and those frustrating disconnects following a WAN failover. I've spent more late nights than I care to remember chasing similar issues in various network environments, so this feels familiar. In your scenario, the root of the problem likely isn't Tailscale itself, but rather the transient changes in network addressing and routing that occur during the failover on your upstream router. Tailscale, at its core, relies on establishing a stable connection to its control plane (the coordination server) and then to other peers, using mechanisms like NAT traversal and DERP relays when direct connections aren't possible.
+, let's talk about Tailscale and those frustrating disconnects following a WAN failover. I've spent more late nights than I care to remember chasing similar issues in various network environments, so this feels familiar. In your scenario, the root of the problem likely isn't Tailscale itself, but rather the transient changes in network addressing and routing that occur during the failover on your upstream router. Tailscale, at its core, relies on establishing a stable connection to its control plane (the coordination server) and then to other peers, using mechanisms like NAT traversal and DERP relays when direct connections aren't possible.
 
 The crux of the issue lies in the fact that a WAN failover often results in a new public IP address being assigned to your router. This change, while seemingly innocuous, significantly impacts the underlying networking that Tailscale depends upon. Here's a breakdown of why:
 
-*   **IP Address Change**: Tailscale initially establishes connections based on the original public IP address. When your upstream router switches to a backup WAN link, it likely receives a *new* public IP address from your internet service provider. This renders the previously established connection information stale. While Tailscale does have mechanisms for detecting network changes, these aren't always instantaneous, and can depend on the specifics of your network configuration and the timing of various events.
+- **IP Address Change**: Tailscale initially establishes connections based on the original public IP address. When your upstream router switches to a backup WAN link, it likely receives a _new_ public IP address from your internet service provider. This renders the previously established connection information stale. While Tailscale does have mechanisms for detecting network changes, these aren't always instantaneous, and can depend on the specifics of your network configuration and the timing of various events.
 
-*   **NAT Mappings**: Network Address Translation (NAT) on your router plays a crucial role. When a device within your local network initiates a connection, your router creates a NAT mapping, associating its local IP and port to a specific public IP and port. This mapping is crucial for return traffic to reach the correct device. When the failover happens and the public IP changes, these mappings become invalid. Tailscale needs to re-establish these mappings to maintain a connection.
+- **NAT Mappings**: Network Address Translation (NAT) on your router plays a crucial role. When a device within your local network initiates a connection, your router creates a NAT mapping, associating its local IP and port to a specific public IP and port. This mapping is crucial for return traffic to reach the correct device. When the failover happens and the public IP changes, these mappings become invalid. Tailscale needs to re-establish these mappings to maintain a connection.
 
-*   **DERP Relays**: If a direct connection isn't feasible, Tailscale uses DERP relays – servers that facilitate communication between peers. Even if the DERP relay connection is persistent after a change, it may still struggle if one peer has a stale NAT or IP address associated with its connection.
+- **DERP Relays**: If a direct connection isn't feasible, Tailscale uses DERP relays – servers that facilitate communication between peers. Even if the DERP relay connection is persistent after a change, it may still struggle if one peer has a stale NAT or IP address associated with its connection.
 
-*   **Keep-Alive Timers**: Although Tailscale utilizes keep-alive mechanisms, these timers can be insufficient to deal with the complete network reset implied by a WAN failover. The default interval might not be aggressive enough to trigger the full re-negotiation process needed. The system might still be operating under the presumption of a persistent, albeit temporarily interrupted, network path.
+- **Keep-Alive Timers**: Although Tailscale utilizes keep-alive mechanisms, these timers can be insufficient to deal with the complete network reset implied by a WAN failover. The default interval might not be aggressive enough to trigger the full re-negotiation process needed. The system might still be operating under the presumption of a persistent, albeit temporarily interrupted, network path.
 
 So, how do we go about addressing this? The solution typically involves strategies that facilitate quicker detection and adaptation to network changes. I’ll detail some concrete steps and illustrate with code examples.
 
@@ -51,7 +51,8 @@ So, how do we go about addressing this? The solution typically involves strategi
       set_keepalive(interface_name, keepalive_timeout)
 
     ```
-    *Note*: This python example changes network connection properties at the system level and does not directly modify tailscale. It is critical that you use the appropriate commands for your operating system. Consult your system documentation for more specific details. Lowering keep-alive intervals too much can create additional network traffic and stress, so start conservatively and monitor for stability issues. This helps the local system maintain established connections at a lower level, and therefore aids in tailscale working with a more stable network environment.
+
+    _Note_: This python example changes network connection properties at the system level and does not directly modify tailscale. It is critical that you use the appropriate commands for your operating system. Consult your system documentation for more specific details. Lowering keep-alive intervals too much can create additional network traffic and stress, so start conservatively and monitor for stability issues. This helps the local system maintain established connections at a lower level, and therefore aids in tailscale working with a more stable network environment.
 
 2.  **Using a Dynamic DNS (DDNS) Service:** Tailscale can be configured to use a hostname rather than a specific IP address for each device. By using a DDNS, your host will still be reachable even after the public ip changes on your router, provided your router supports updating the assigned ip with your DDNS provider. Your tailscale clients will still need to reconnect, but the process will be much more reliable as the address of your peers will remain constant, even as your public facing ip address changes.
 
@@ -102,7 +103,7 @@ So, how do we go about addressing this? The solution typically involves strategi
 
     ```
 
-    *Note:* This example illustrates a DDNS API interaction, which would require a service compatible with your specific needs and a script designed to run on either your router or within your network. The actual API calls will vary widely. You should consult the documentation of your chosen provider to tailor the script. If the router allows it, use its built-in DDNS functionality over running any external scripts.
+    _Note:_ This example illustrates a DDNS API interaction, which would require a service compatible with your specific needs and a script designed to run on either your router or within your network. The actual API calls will vary widely. You should consult the documentation of your chosen provider to tailor the script. If the router allows it, use its built-in DDNS functionality over running any external scripts.
 
 3.  **Explicitly Resetting Tailscale Client (As a Last Resort)**: While not ideal as a regular solution, sometimes, a complete restart of the Tailscale service on the affected device can be necessary. This forces the client to re-establish connections with updated network information.
 
@@ -126,16 +127,17 @@ So, how do we go about addressing this? The solution typically involves strategi
     # for windows you may use: Stop-Service -Name "Tailscale" ; Start-Service -Name "Tailscale"
 
     ```
-    *Note:* This is a bash example and would need to be adapted based on the operating system of your device, and run as an administrator or root user. Such a script could be set to run automatically upon detecting network changes, although doing so requires some system-specific knowledge for detection events, and should be treated with caution. Forcing restarts is not a preferred method, and should be done only in situations where it is necessary and is the most efficient solution.
+
+    _Note:_ This is a bash example and would need to be adapted based on the operating system of your device, and run as an administrator or root user. Such a script could be set to run automatically upon detecting network changes, although doing so requires some system-specific knowledge for detection events, and should be treated with caution. Forcing restarts is not a preferred method, and should be done only in situations where it is necessary and is the most efficient solution.
 
 **Recommendations for further reading:**
 
 To deepen your understanding, I recommend looking into these resources:
 
-*   **"TCP/IP Illustrated, Volume 1: The Protocols" by W. Richard Stevens:** This book is a classic for understanding the underlying network protocols, including TCP, IP, and NAT, which are essential for understanding why network failovers affect Tailscale.
+- **"TCP/IP Illustrated, Volume 1: The Protocols" by W. Richard Stevens:** This book is a classic for understanding the underlying network protocols, including TCP, IP, and NAT, which are essential for understanding why network failovers affect Tailscale.
 
-*   **RFC 3489: STUN - Simple Traversal of User Datagram Protocol (UDP) Through Network Address Translators (NATs):** Reading the RFC behind STUN (Session Traversal Utilities for NAT), the technique Tailscale often uses to punch holes in NAT, will help you understand limitations and why connection re-establishment is sometimes necessary.
+- **RFC 3489: STUN - Simple Traversal of User Datagram Protocol (UDP) Through Network Address Translators (NATs):** Reading the RFC behind STUN (Session Traversal Utilities for NAT), the technique Tailscale often uses to punch holes in NAT, will help you understand limitations and why connection re-establishment is sometimes necessary.
 
-*   **"Computer Networking: A Top-Down Approach" by James Kurose and Keith Ross:** This provides a comprehensive understanding of computer networks and will greatly benefit your broader understanding of these topics.
+- **"Computer Networking: A Top-Down Approach" by James Kurose and Keith Ross:** This provides a comprehensive understanding of computer networks and will greatly benefit your broader understanding of these topics.
 
 In summary, while Tailscale is designed to be robust, the fundamental nature of network address changes during a WAN failover requires some degree of mitigation. Implementing more aggressive keep-alive intervals and a good DDNS setup are usually sufficient. However, understanding these deeper underlying network mechanisms will enable you to tackle more complex situations.

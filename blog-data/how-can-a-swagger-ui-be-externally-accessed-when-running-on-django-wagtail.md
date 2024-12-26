@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-swagger-ui-be-externally-accessed-when-running-on-django-wagtail"
 ---
 
-Alright, let’s talk about exposing a Swagger UI for a Django Wagtail project. This is something I’ve bumped into more than once in my career, typically when dealing with internal APIs that need some level of documentation available to other teams or services, without necessarily opening up the entire admin panel. It's not always a straightforward setup, especially with the layered complexity of Wagtail sitting on top of Django. The good news is, there are several strategies we can employ to achieve this, and we’ll discuss them with working code snippets.
+, let’s talk about exposing a Swagger UI for a Django Wagtail project. This is something I’ve bumped into more than once in my career, typically when dealing with internal APIs that need some level of documentation available to other teams or services, without necessarily opening up the entire admin panel. It's not always a straightforward setup, especially with the layered complexity of Wagtail sitting on top of Django. The good news is, there are several strategies we can employ to achieve this, and we’ll discuss them with working code snippets.
 
 First off, understand that Wagtail itself doesn't inherently provide a Swagger/OpenAPI endpoint. You’ll need to integrate an external library capable of generating the OpenAPI schema and the accompanying Swagger UI. The approach I've found most reliable and manageable uses `drf-yasg`, a Django REST framework (DRF) extension. While your api may or may not use DRF directly, `drf-yasg` doesn't strictly require that, it just requires you to have a Django application that it can inspect to generate the schema.
 
@@ -120,20 +120,20 @@ The key point here is that by adding the `@api_view` decorator, `drf-yasg` is ab
 
 **Important Considerations:**
 
-1.  **URL Configuration:** Pay close attention to the order of your urlpatterns. Ensure that the Swagger UI endpoint (`api/swagger/`) is placed *before* the Wagtail URL include (`wagtail.urls`). This is because Django goes through the urls one at a time, in the order defined. If you put the Wagtail urls before your Swagger endpoints, Wagtail will catch the request and potentially return a 404.
+1.  **URL Configuration:** Pay close attention to the order of your urlpatterns. Ensure that the Swagger UI endpoint (`api/swagger/`) is placed _before_ the Wagtail URL include (`wagtail.urls`). This is because Django goes through the urls one at a time, in the order defined. If you put the Wagtail urls before your Swagger endpoints, Wagtail will catch the request and potentially return a 404.
 
 2.  **Authentication:** If your API endpoints require authentication, you will likely have to configure `drf-yasg` to handle the auth flow correctly, which will often involve updating your OpenAPI `securityDefinitions` in `get_schema_view`. This part of the setup is very application-specific, and I've encountered different methods of API authentication over the years. Some use simple token authentication, others use more robust OAuth2 flows, and each has its own slightly different implementation with Swagger.
 
 3.  **Customizations:** There are a myriad of options for customizing the output schema, how the views are displayed and how you wish to define additional information. `drf-yasg` is flexible in allowing you to further control the documentation output, this is done through a variety of settings.
 
-4. **Security:** Ensure your Swagger UI is not publicly accessible if it documents internal APIs. I have used nginx configuration, and or django-axes (which has been useful for brute force protection) in the past to restrict access to my endpoints.
+4.  **Security:** Ensure your Swagger UI is not publicly accessible if it documents internal APIs. I have used nginx configuration, and or django-axes (which has been useful for brute force protection) in the past to restrict access to my endpoints.
 
 **Further Reading and References:**
 
 For a comprehensive understanding of the libraries used, I highly recommend going through the official documentations:
 
-*   **drf-yasg Documentation:** The official documentation is located at the repository hosting the project, and is easily found through a standard google search. This is the place to start when trying to understand the different settings and customization that this library provides.
-*   **Django REST Framework (DRF) Documentation:** Although we aren’t strictly using DRF views for our Wagtail pages, understanding DRF fundamentals provides valuable context, particularly regarding serialization and view configurations. The DRF documentation is thorough and well-written.
-*   **Wagtail Documentation:** Wagtail’s official docs are crucial for understanding Wagtail’s specific architecture, especially the routing mechanism. These documents give you the necessary background to understand how to use wagtail together with other django based applications.
+- **drf-yasg Documentation:** The official documentation is located at the repository hosting the project, and is easily found through a standard google search. This is the place to start when trying to understand the different settings and customization that this library provides.
+- **Django REST Framework (DRF) Documentation:** Although we aren’t strictly using DRF views for our Wagtail pages, understanding DRF fundamentals provides valuable context, particularly regarding serialization and view configurations. The DRF documentation is thorough and well-written.
+- **Wagtail Documentation:** Wagtail’s official docs are crucial for understanding Wagtail’s specific architecture, especially the routing mechanism. These documents give you the necessary background to understand how to use wagtail together with other django based applications.
 
 In closing, exposing a Swagger UI with Django Wagtail requires a careful integration of `drf-yasg` alongside your Wagtail setup. It’s not complicated once you grasp the workflow and the importance of the URL ordering, but it’s a necessary step in providing valuable documentation for your APIs. This allows developers to interact with your api's in a consistent and understandable way. The approach I've outlined here has been battle-tested across multiple projects and should provide a solid foundation for your needs. Remember to prioritize good security practices, and always refer to the official documentation for the most up-to-date information.

@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "does-registernextstephandler-exist-in-aiogram"
 ---
 
-Let's tackle this head-on. I've spent quite a few years building Telegram bots with aiogram, and I've seen patterns emerge that often trip up newcomers, and sometimes even seasoned developers revisiting the framework after a break. The concept of "register_next_step_handler" as a single, direct function call in aiogram *as you might expect it from other frameworks* doesn't exist in the straightforward manner some might initially anticipate. This is often a point of confusion because the underlying paradigm is slightly different.
+Let's tackle this head-on. I've spent quite a few years building Telegram bots with aiogram, and I've seen patterns emerge that often trip up newcomers, and sometimes even seasoned developers revisiting the framework after a break. The concept of "register_next_step_handler" as a single, direct function call in aiogram _as you might expect it from other frameworks_ doesn't exist in the straightforward manner some might initially anticipate. This is often a point of confusion because the underlying paradigm is slightly different.
 
-Instead of having a singular function named `register_next_step_handler`, aiogram leverages its state management system along with message handlers to achieve the same functionality: managing multi-step conversations where the bot remembers context between user messages. In aiogram, the key tools for managing these multi-step interactions are state groups defined via the `StatesGroup` class and filters applied to message handlers. Think of it this way: instead of a function that registers a *next* step, you are defining *states* a user can be in and the handlers respond to messages according to the current state.
+Instead of having a singular function named `register_next_step_handler`, aiogram leverages its state management system along with message handlers to achieve the same functionality: managing multi-step conversations where the bot remembers context between user messages. In aiogram, the key tools for managing these multi-step interactions are state groups defined via the `StatesGroup` class and filters applied to message handlers. Think of it this way: instead of a function that registers a _next_ step, you are defining _states_ a user can be in and the handlers respond to messages according to the current state.
 
 My experience with a past project – a complex inventory management bot – drove this understanding home. Initially, my team attempted to replicate a `register_next_step_handler` style logic by chaining handlers, leading to cumbersome and hard-to-maintain code. It was only after refactoring our code to embrace aiogram's state groups did our bot become significantly easier to reason about and extend.
 
@@ -20,7 +20,7 @@ class RegistrationState(StatesGroup):
     GetEmail = State()
 ```
 
-Next, we need to set up handlers that will react to user messages when the bot is in each of those states. These handlers don’t explicitly *register* with a magical next step function, but instead respond according to the currently active state. We also use the `F.text` filter to get to the correct function. This function is used to check for a specific pattern for text, we could also use `F.photo` for photos, etc.
+Next, we need to set up handlers that will react to user messages when the bot is in each of those states. These handlers don’t explicitly _register_ with a magical next step function, but instead respond according to the currently active state. We also use the `F.text` filter to get to the correct function. This function is used to check for a specific pattern for text, we could also use `F.photo` for photos, etc.
 
 ```python
 from aiogram import Bot, Dispatcher, types
@@ -110,7 +110,7 @@ async def get_address_handler(message: types.Message, state: FSMContext):
   pizza = data.get('pizza_type')
   size = data.get('pizza_size')
   address = message.text
-  await message.answer(f"Okay, a {size} {pizza} will be delivered to {address}!")
+  await message.answer(f", a {size} {pizza} will be delivered to {address}!")
   await state.clear()
 
 async def main():
@@ -171,7 +171,7 @@ async def final_confirm(message: types.Message, state: FSMContext):
     category = data.get('category')
     product = data.get('product')
     if message.text == "yes":
-      await message.answer(f"Okay, you have ordered a {category} item: {product}")
+      await message.answer(f", you have ordered a {category} item: {product}")
     else:
        await message.answer("Order canceled")
     await state.clear()

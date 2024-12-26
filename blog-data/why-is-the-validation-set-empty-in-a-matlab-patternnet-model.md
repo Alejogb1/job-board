@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-validation-set-empty-in-a-matlab-patternnet-model"
 ---
 
-Alright, let's tackle this. An empty validation set during training with a `patternnet` in matlab can certainly be frustrating, and it's a problem I’ve encountered more than a few times in my work. I remember one particularly tricky project, a predictive maintenance model for complex machinery where data preparation and proper configuration were paramount. We were experiencing this exact issue, and it wasn't immediately clear why the validation set was consistently empty. It took some careful investigation to pinpoint the root cause and implement the right fix. Let me walk you through what commonly goes wrong and how to effectively address this issue, along with some practical examples.
+, let's tackle this. An empty validation set during training with a `patternnet` in matlab can certainly be frustrating, and it's a problem I’ve encountered more than a few times in my work. I remember one particularly tricky project, a predictive maintenance model for complex machinery where data preparation and proper configuration were paramount. We were experiencing this exact issue, and it wasn't immediately clear why the validation set was consistently empty. It took some careful investigation to pinpoint the root cause and implement the right fix. Let me walk you through what commonly goes wrong and how to effectively address this issue, along with some practical examples.
 
 The core problem stems from how you're structuring your data and defining the training parameters for your neural network. The `patternnet` function within matlab's deep learning toolbox automatically divides your input data into training, validation, and test sets. However, if not configured correctly, the default behavior can result in an empty validation set. Generally, the issue falls into one of these areas: either the data hasn't been prepared correctly, there isn't enough data for all three sets given your chosen split, or the parameters for the data division aren't specified as needed.
 
@@ -33,6 +33,7 @@ net = train(net,inputs,targets);
 numValidationSamples = length(net.divideFcn);
 disp(['Number of validation samples: ', num2str(length(net.divideInd.val))]);
 ```
+
 In this example, if you execute this, it would likely show that your validation set is empty, because 15% of 10 is 1.5, which rounds down to 0. This demonstrates a straightforward situation where default splits fail due to low sample count. The fix here is either to get more data or modify the split ratios using the next approach.
 
 **Example 2: Configuring data splitting with custom parameters:**
@@ -73,6 +74,7 @@ disp(['Number of validation samples: ', num2str(numValidationSamples)]);
 In this second example, we explicitly use the 'divideind' function to control the split ourselves. we calculate the indices to be used for training, validation and testing. You should see that in this case, validation has a valid number of samples.
 
 **Example 3: Incorrect data format:**
+
 ```matlab
 % Generate data with rows as features
 inputs_incorrect = rand(10, 5); % 10 samples as features instead of columns
@@ -99,8 +101,8 @@ numValidationSamples = length(net.divideInd.val);
 disp(['Number of validation samples: ', num2str(numValidationSamples)]);
 ```
 
-Here, we demonstrate what happens when the data is structured incorrectly with each *row* representing a feature. Attempting to train a network with that setup will usually result in an error, since the training algorithm expects features to be columns. We then correct the data and show that in that instance, the validation dataset is no longer empty.
+Here, we demonstrate what happens when the data is structured incorrectly with each _row_ representing a feature. Attempting to train a network with that setup will usually result in an error, since the training algorithm expects features to be columns. We then correct the data and show that in that instance, the validation dataset is no longer empty.
 
-To dive deeper into this subject, I strongly suggest focusing on resources covering data preparation and model configuration for neural networks. Specifically, the documentation that accompanies matlab’s deep learning toolbox is very valuable, especially concerning the `patternnet` function. Also, for a more general and foundational perspective on neural network design, *Deep Learning* by Ian Goodfellow, Yoshua Bengio, and Aaron Courville is an essential text. And for a mathematical treatment of machine learning algorithms including neural nets, *The Elements of Statistical Learning* by Hastie, Tibshirani, and Friedman will prove useful. These sources provide a robust theoretical framework and practical insights that go far beyond what I have summarized here.
+To dive deeper into this subject, I strongly suggest focusing on resources covering data preparation and model configuration for neural networks. Specifically, the documentation that accompanies matlab’s deep learning toolbox is very valuable, especially concerning the `patternnet` function. Also, for a more general and foundational perspective on neural network design, _Deep Learning_ by Ian Goodfellow, Yoshua Bengio, and Aaron Courville is an essential text. And for a mathematical treatment of machine learning algorithms including neural nets, _The Elements of Statistical Learning_ by Hastie, Tibshirani, and Friedman will prove useful. These sources provide a robust theoretical framework and practical insights that go far beyond what I have summarized here.
 
 In closing, an empty validation set in a `patternnet` model is generally a consequence of how your data is managed, configured and passed to the network. I have found that methodically evaluating data dimensions, explicit data split parameters and, naturally, double checking the data itself (making sure your features are columns and samples are rows), solves most of the issues. Careful configuration, coupled with understanding the documentation will allow you to train effective models.

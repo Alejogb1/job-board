@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-identify-the-address-that-approved-a-wbnb-spend-from-my-address"
 ---
 
-Alright, let's tackle this. I've seen this exact scenario pop up more times than I can count, and it always involves a little bit of detective work on the blockchain. Identifying which contract authorized a WBNB spend from your address isn't immediately obvious, primarily because of the way token approvals and transfers are structured within the ethereum virtual machine (evm). It’s not as straightforward as simply looking up a transaction; you need to understand the process behind ERC-20 approvals and the nuances of event logs. Let me walk you through it, drawing from a past project where we were auditing a DeFi protocol, which faced a similar issue.
+, let's tackle this. I've seen this exact scenario pop up more times than I can count, and it always involves a little bit of detective work on the blockchain. Identifying which contract authorized a WBNB spend from your address isn't immediately obvious, primarily because of the way token approvals and transfers are structured within the ethereum virtual machine (evm). It’s not as straightforward as simply looking up a transaction; you need to understand the process behind ERC-20 approvals and the nuances of event logs. Let me walk you through it, drawing from a past project where we were auditing a DeFi protocol, which faced a similar issue.
 
-The crux of the problem lies in the fact that when you "approve" a contract to spend your WBNB (or any ERC-20 token, really), it doesn't trigger a direct transfer of funds. Instead, you grant that contract permission to transfer a certain amount of your tokens at a later point. This 'permission' is an allowance, stored within the WBNB token's contract. When the approved contract eventually initiates a transfer, it's not directly *your* transaction; rather, it's *the contract's* transaction, drawing from your allowance. This is crucial because the ‘from’ address on the actual transfer transaction will be the contract address, not yours. Your initial approval transaction is the key to finding the authorized spender.
+The crux of the problem lies in the fact that when you "approve" a contract to spend your WBNB (or any ERC-20 token, really), it doesn't trigger a direct transfer of funds. Instead, you grant that contract permission to transfer a certain amount of your tokens at a later point. This 'permission' is an allowance, stored within the WBNB token's contract. When the approved contract eventually initiates a transfer, it's not directly _your_ transaction; rather, it's _the contract's_ transaction, drawing from your allowance. This is crucial because the ‘from’ address on the actual transfer transaction will be the contract address, not yours. Your initial approval transaction is the key to finding the authorized spender.
 
 Therefore, to find out which contract approved the spending, you need to examine the `Approval` events emitted by the WBNB contract. These events contain the spender address and the amount of the approval. Fortunately, these events are readily available in the blockchain's event logs. Here’s how we typically go about it, and I’ll give some working examples too.
 
@@ -76,7 +76,7 @@ else:
 
 This function retrieves the transaction receipt, iterates through the logs, and, if it finds the wbnb address among the logs, attempts to decode the log data as an `Approval` event. This method is more direct than using filters, focusing on a single transaction to verify the approval details within it.
 
-Finally, to tie all this together, let’s look at how you could use both approaches to specifically find which spender address *used* your approval:
+Finally, to tie all this together, let’s look at how you could use both approaches to specifically find which spender address _used_ your approval:
 
 ```python
 def find_spent_from_approval(owner_address, spender_address):
@@ -123,7 +123,7 @@ elif isinstance(spent_txs, str):
         print(spent_txs)
 ```
 
-Here, we filter `Approval` events for a specific owner and spender. Then for *each* such approval, we filter `Transfer` events where the `from` address is the contract that was previously approved and return those transactions. This ties the original allowance to any transfers made by that spender, which were authorized by you.
+Here, we filter `Approval` events for a specific owner and spender. Then for _each_ such approval, we filter `Transfer` events where the `from` address is the contract that was previously approved and return those transactions. This ties the original allowance to any transfers made by that spender, which were authorized by you.
 
 For more in-depth reading on the intricacies of the evm and smart contract interactions, I'd suggest delving into the ethereum yellow paper. It’s the most authoritative source. Additionally, “Mastering Ethereum” by Andreas Antonopoulos and Gavin Wood offers great, practical insights and would be helpful. While “Programming Ethereum” by Kai Hackbarth might also provide a useful perspective on the practical coding aspects of working with the evm. Also research the `EIP-20` standard, which defines the structure of ERC-20 tokens.
 

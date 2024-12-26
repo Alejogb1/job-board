@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-data-used-as-input-for-yolo"
 ---
 
-Alright, let's tackle this. It's a fundamental question when working with YOLO, and the subtleties are often overlooked. In my experience, and I've spent quite some time deploying these models in diverse scenarios, the input data to YOLO, at its core, is an image represented as a numerical tensor. But that barely scratches the surface of what's actually involved. The devil, as they say, is in the preprocessing.
+, let's tackle this. It's a fundamental question when working with YOLO, and the subtleties are often overlooked. In my experience, and I've spent quite some time deploying these models in diverse scenarios, the input data to YOLO, at its core, is an image represented as a numerical tensor. But that barely scratches the surface of what's actually involved. The devil, as they say, is in the preprocessing.
 
 Essentially, YOLO, like most deep learning vision models, expects input images as multi-dimensional arrays (tensors) of numbers. These numbers encode the pixel intensity values, and potentially information about the color channels. Crucially, these images must be prepared according to specific standards to ensure the network can interpret them correctly. It’s not just about shoving any old image in and hoping for the best.
 
@@ -18,7 +18,7 @@ Here's how it typically breaks down:
 
 4.  **Resizing:** YOLO, like many CNN-based models, expects inputs of a fixed size. Thus, the acquired images will almost always have to be resized to fit this requirement. The resizing is critical: it directly affects the spatial relationships within the image and thus, the detection capability. Common sizes used with YOLO versions include 416x416, 608x608, and more recently, 640x640. The resizing method also matters; bilinear or bicubic interpolation are typical choices, as they attempt to minimize artifacts and maintain some image quality during resizing. Simple nearest neighbor interpolation can lead to less ideal results, especially when scaling up.
 
-5. **Tensor Formation:** Finally, the processed image data needs to be arranged into a tensor. Typically, this will be of the format (batch\_size, height, width, channels). The batch\_size is the number of images processed together in a single forward pass. height and width correspond to the dimensions of the resized images, and channels will be 3 for RGB images. For grayscale images, channels would be 1. This tensor is then passed as input to the YOLO network.
+5.  **Tensor Formation:** Finally, the processed image data needs to be arranged into a tensor. Typically, this will be of the format (batch_size, height, width, channels). The batch_size is the number of images processed together in a single forward pass. height and width correspond to the dimensions of the resized images, and channels will be 3 for RGB images. For grayscale images, channels would be 1. This tensor is then passed as input to the YOLO network.
 
 Let me illustrate these with some practical Python code snippets using common libraries. I will use PyTorch for the tensor manipulation given its extensive use in deep learning.
 
@@ -112,8 +112,8 @@ When diving deeper into this, you'll encounter more sophisticated preprocessing 
 
 For further reading, I'd recommend looking into the following:
 
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book offers a comprehensive theoretical understanding of deep learning, including the principles behind CNNs and data preprocessing.
-*   **"Computer Vision: Algorithms and Applications" by Richard Szeliski:** This is an authoritative text on computer vision, covering all foundational aspects of vision processing including image representation and transformations.
-*   **PyTorch documentation:** The official documentation is the best resource for learning about the specifics of tensor operations and data transforms in PyTorch. You should especially focus on the `torchvision.transforms` modules, which provide a wide variety of image preprocessing utilities.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book offers a comprehensive theoretical understanding of deep learning, including the principles behind CNNs and data preprocessing.
+- **"Computer Vision: Algorithms and Applications" by Richard Szeliski:** This is an authoritative text on computer vision, covering all foundational aspects of vision processing including image representation and transformations.
+- **PyTorch documentation:** The official documentation is the best resource for learning about the specifics of tensor operations and data transforms in PyTorch. You should especially focus on the `torchvision.transforms` modules, which provide a wide variety of image preprocessing utilities.
 
 Understanding how the raw image data gets converted into the numerical tensors that YOLO actually consumes is not just a matter of following steps; it’s a matter of understanding the critical bridge between the physical world and the abstract world of deep learning. I hope that these examples and references help you in better tackling your YOLO-based projects.

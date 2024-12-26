@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-access-amsterdam-library-of-online-images"
 ---
 
-Alright, let's delve into accessing the Amsterdam Library of Online Images. Having spent a good portion of my career wrangling APIs and data sources, I've certainly tackled my fair share of image library integrations, not unlike the one you're aiming for. While there isn’t a single, monolithic "Amsterdam Library of Online Images" API universally available, my experience points towards a collection of potential access points, depending on the specific datasets you're targeting. Let me break down the common scenarios I've encountered and how I've navigated them, including the technical details that often get overlooked.
+, let's delve into accessing the Amsterdam Library of Online Images. Having spent a good portion of my career wrangling APIs and data sources, I've certainly tackled my fair share of image library integrations, not unlike the one you're aiming for. While there isn’t a single, monolithic "Amsterdam Library of Online Images" API universally available, my experience points towards a collection of potential access points, depending on the specific datasets you're targeting. Let me break down the common scenarios I've encountered and how I've navigated them, including the technical details that often get overlooked.
 
-First, understand this: "Amsterdam Library of Online Images" likely references collections housed across various institutions—museums, archives, universities, and even private entities. Each might offer different access methods, from dedicated APIs to static data dumps. The key is to identify *which* specific collection you need.
+First, understand this: "Amsterdam Library of Online Images" likely references collections housed across various institutions—museums, archives, universities, and even private entities. Each might offer different access methods, from dedicated APIs to static data dumps. The key is to identify _which_ specific collection you need.
 
 One common approach, particularly when dealing with digitized heritage collections, is the use of OAI-PMH (Open Archives Initiative Protocol for Metadata Harvesting). This protocol is designed for exposing metadata, which often includes links to image files. If you are after metadata related to images, this might be an ideal place to start.
 
@@ -63,30 +63,30 @@ for link in image_links[:5]:
 
 ```
 
-*Note*: This code snippet assumes the presence of a `oai-pmh` Python package. It also is a basic example, in a real world implementation you would want to use pagination to handle very large result sets, and potentially implement better error handling.
+_Note_: This code snippet assumes the presence of a `oai-pmh` Python package. It also is a basic example, in a real world implementation you would want to use pagination to handle very large result sets, and potentially implement better error handling.
 
 Another frequent pattern I have observed is the use of REST APIs, which may be custom designed by institutions. These APIs often provide JSON responses, making parsing easier in modern programming environments. Let’s imagine another hypothetical, where "Museum A" offers an API to access its digital collections, images included. The data response might look something like the following.
 
 ```json
 {
-  "items":[
+  "items": [
     {
-    "title": "Amsterdam Canal Scene",
-     "artist": "Various",
-     "imageUrl":"http://www.museum-a.com/images/12345.jpg",
-     "date": "1880",
-     "description": "Description of image",
-      "id":"12345"
-  },
-  {
-    "title": "Bridge Over the Amstel",
-    "artist": "Another artist",
-     "imageUrl":"http://www.museum-a.com/images/23456.jpg",
-     "date": "1920",
-     "description": "Description of another image",
-      "id":"23456"
-   }
-   ]
+      "title": "Amsterdam Canal Scene",
+      "artist": "Various",
+      "imageUrl": "http://www.museum-a.com/images/12345.jpg",
+      "date": "1880",
+      "description": "Description of image",
+      "id": "12345"
+    },
+    {
+      "title": "Bridge Over the Amstel",
+      "artist": "Another artist",
+      "imageUrl": "http://www.museum-a.com/images/23456.jpg",
+      "date": "1920",
+      "description": "Description of another image",
+      "id": "23456"
+    }
+  ]
 }
 ```
 
@@ -129,7 +129,7 @@ for link in image_links[:5]:
     print(link)
 ```
 
-*Note*: This code uses the `requests` library to access the api. The code snippet also includes error handling to gracefully handle http errors as well as problems decoding the json response. In a real-world application, you would implement more robust error handling, pagination, and perhaps authentication.
+_Note_: This code uses the `requests` library to access the api. The code snippet also includes error handling to gracefully handle http errors as well as problems decoding the json response. In a real-world application, you would implement more robust error handling, pagination, and perhaps authentication.
 
 Lastly, it is worth mentioning that some institutions may provide static data dumps available for direct download, rather than requiring API interactions. These data dumps might come in various formats (CSV, JSON, XML, etc.). This approach, while simpler in terms of real-time access, requires managing downloaded data and handling updates as they become available.
 
@@ -168,7 +168,7 @@ for link in image_links[:5]:
   print(link)
 ```
 
-*Note*: This code assumes a local file named `data.json` which is in the same folder as the code. Error handling is included to deal with invalid json files.
+_Note_: This code assumes a local file named `data.json` which is in the same folder as the code. Error handling is included to deal with invalid json files.
 
 To further your understanding, I recommend you investigate resources such as: "OAI-PMH: A Protocol for Metadata Harvesting" by Carl Lagoze and Herbert Van de Sompel, available via the Open Archives Initiative website, which explains OAI-PMH in detail. For REST API concepts, consider reading "RESTful Web APIs" by Leonard Richardson and Mike Amundsen which should provide some theoretical knowledge on how API's are designed. Additionally, familiarizing yourself with the documentation of specific APIs offered by relevant Amsterdam-based institutions is crucial.
 

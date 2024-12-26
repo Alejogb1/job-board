@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-convert-this-code-to-an-asynchronous-function"
 ---
 
-Alright, let's tackle asynchronous code conversion. I've seen this particular challenge come up more times than I care to count, often in legacy systems where synchronous operations are suddenly becoming performance bottlenecks. It's a common evolution: a system initially designed with synchronous calls slowly groans under the weight of increased data volume and user requests. The shift to asynchronous processing can indeed feel daunting, but the core principles are surprisingly straightforward once you understand the underlying mechanics.
+, let's tackle asynchronous code conversion. I've seen this particular challenge come up more times than I care to count, often in legacy systems where synchronous operations are suddenly becoming performance bottlenecks. It's a common evolution: a system initially designed with synchronous calls slowly groans under the weight of increased data volume and user requests. The shift to asynchronous processing can indeed feel daunting, but the core principles are surprisingly straightforward once you understand the underlying mechanics.
 
 My experience here comes from a previous project where we had a batch processing engine that was entirely synchronous. Data ingestion would grind to a halt when we hit peak usage, which prompted us to move to asynchronous task queues. It was a significant undertaking, but the performance gains were well worth the effort. This involved a lot of manual conversion, and I learned the nuances firsthand. The good news is that the process, while meticulous, can be broken down into manageable steps.
 
@@ -40,6 +40,7 @@ if __name__ == "__main__":
     main()
 
 ```
+
 This synchronous example blocks the main thread for a total of 4 seconds of simulated network latency, which is unacceptable in any real-world scenario.
 
 Here’s an equivalent conversion using `asyncio` in Python, which is a common and effective approach:
@@ -81,69 +82,66 @@ Let's now look at an analogous example in javascript using promises:
 
 ```javascript
 function synchronousNetworkRequest(url) {
-    console.log(`Initiating request to ${url}`);
-    // Simulate network latency
-    const start = Date.now();
-    while (Date.now() - start < 2000) { } // Synchronous wait
-    console.log(`Request to ${url} completed.`);
-    return `Data from ${url}`;
+  console.log(`Initiating request to ${url}`);
+  // Simulate network latency
+  const start = Date.now();
+  while (Date.now() - start < 2000) {} // Synchronous wait
+  console.log(`Request to ${url} completed.`);
+  return `Data from ${url}`;
 }
 
 function processData(data) {
-    console.log(`Processing: ${data}`);
-    return data.toUpperCase();
+  console.log(`Processing: ${data}`);
+  return data.toUpperCase();
 }
-
 
 function main() {
-    const url1 = "example.com/api/data1";
-    const url2 = "example.com/api/data2";
+  const url1 = "example.com/api/data1";
+  const url2 = "example.com/api/data2";
 
-    const data1 = synchronousNetworkRequest(url1);
-    const processedData1 = processData(data1);
-    const data2 = synchronousNetworkRequest(url2);
-    const processedData2 = processData(data2);
+  const data1 = synchronousNetworkRequest(url1);
+  const processedData1 = processData(data1);
+  const data2 = synchronousNetworkRequest(url2);
+  const processedData2 = processData(data2);
 
-    console.log(`Final Results: ${processedData1}, ${processedData2}`);
+  console.log(`Final Results: ${processedData1}, ${processedData2}`);
 }
-main()
+main();
 ```
 
 Again, you can see we perform each network request sequentially and block the main thread for two seconds each time. Now, here's the asynchronous version in Javascript, again using Promises:
 
 ```javascript
 function asynchronousNetworkRequest(url) {
-    return new Promise(resolve => {
-        console.log(`Initiating request to ${url}`);
-        setTimeout(() => {
-            console.log(`Request to ${url} completed.`);
-            resolve(`Data from ${url}`);
-        }, 2000); // Simulate network latency
-    });
+  return new Promise((resolve) => {
+    console.log(`Initiating request to ${url}`);
+    setTimeout(() => {
+      console.log(`Request to ${url} completed.`);
+      resolve(`Data from ${url}`);
+    }, 2000); // Simulate network latency
+  });
 }
 
 function processData(data) {
-    console.log(`Processing: ${data}`);
-    return data.toUpperCase();
+  console.log(`Processing: ${data}`);
+  return data.toUpperCase();
 }
-
 
 async function main() {
-    const url1 = "example.com/api/data1";
-    const url2 = "example.com/api/data2";
+  const url1 = "example.com/api/data1";
+  const url2 = "example.com/api/data2";
 
-    const data1Promise = asynchronousNetworkRequest(url1);
-    const data2Promise = asynchronousNetworkRequest(url2);
+  const data1Promise = asynchronousNetworkRequest(url1);
+  const data2Promise = asynchronousNetworkRequest(url2);
 
-    const data1 = await data1Promise;
-    const processedData1 = processData(data1);
-    const data2 = await data2Promise;
-    const processedData2 = processData(data2);
+  const data1 = await data1Promise;
+  const processedData1 = processData(data1);
+  const data2 = await data2Promise;
+  const processedData2 = processData(data2);
 
-
-    console.log(`Final Results: ${processedData1}, ${processedData2}`);
+  console.log(`Final Results: ${processedData1}, ${processedData2}`);
 }
-main()
+main();
 ```
 
 This Javascript example uses promises and the async/await syntax to manage asynchronous operations and the setTimeout function simulates the asynchronous operation. Notice how the network requests are effectively initiated almost concurrently and not one after the other, as in the synchronous version.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-did-the-git-clone-of-faiss-fail-on-the-master-tag"
 ---
 
-Alright, let's tackle this faiss cloning issue. It's a situation I've definitely encountered before, and it's almost never straightforward, especially when dealing with a specific tag like 'master'. Often, it's not a git problem *per se*, but a confluence of factors related to dependencies, submodules, and even the target system's environment. Let me recount a particularly memorable incident.
+, let's tackle this faiss cloning issue. It's a situation I've definitely encountered before, and it's almost never straightforward, especially when dealing with a specific tag like 'master'. Often, it's not a git problem _per se_, but a confluence of factors related to dependencies, submodules, and even the target system's environment. Let me recount a particularly memorable incident.
 
 I recall working on a large-scale recommendation system a couple of years back. We decided to leverage faiss for its efficiency in similarity search, and as best practice, we cloned it via the 'master' tag to get the latest stable version. The clone operation initially seemed successful, but during the build phase, all sorts of cryptic errors began appearing. Turns out, we'd fallen victim to a couple of common culprits that tend to surface when using a moving target like the ‘master’ tag, which points to the most recent commit on the main branch.
 
@@ -41,10 +41,10 @@ So, in summary, when a `git clone` of faiss fails on the `master` tag, especiall
 
 For deeper understanding, I recommend exploring these resources:
 
-*   **"Effective Modern C++" by Scott Meyers:** This book offers essential insights into modern C++ (relevant to understanding Faiss build processes and underlying code).
-*   **The Git documentation, specifically the section on submodules:** This is crucial for understanding how submodules work and how to use them effectively within Git.
-*   **Faiss’s official documentation:** Always start here. It contains the most accurate instructions on how to build and use the library, including dependency information.
-*   **The CMake documentation:** This will help in understanding the build process of Faiss, as it uses CMake.
-*   **The documentation for BLAS libraries like OpenBLAS:** If you're facing issues with numerical computations, these will help.
+- **"Effective Modern C++" by Scott Meyers:** This book offers essential insights into modern C++ (relevant to understanding Faiss build processes and underlying code).
+- **The Git documentation, specifically the section on submodules:** This is crucial for understanding how submodules work and how to use them effectively within Git.
+- **Faiss’s official documentation:** Always start here. It contains the most accurate instructions on how to build and use the library, including dependency information.
+- **The CMake documentation:** This will help in understanding the build process of Faiss, as it uses CMake.
+- **The documentation for BLAS libraries like OpenBLAS:** If you're facing issues with numerical computations, these will help.
 
 Remember, a ‘master’ tag failure isn't a git failure, rather, a process or environmental failure, so take a step back, analyze each component methodically, and you’ll get it working. It is often tedious, but in my experience, there is a solution available if you apply a little patience.

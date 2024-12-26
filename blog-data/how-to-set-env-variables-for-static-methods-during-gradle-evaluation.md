@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-set-env-variables-for-static-methods-during-gradle-evaluation"
 ---
 
-Alright, let’s dive into this. I recall vividly a project some years ago, a large multi-module Android application, where we faced this exact hurdle. Managing environment variables, especially for static methods accessed during Gradle’s configuration phase, isn’t as straightforward as it might initially seem. It requires careful consideration of Gradle’s lifecycle and how it executes build scripts. Let me break down my experience and offer some concrete examples.
+, let’s dive into this. I recall vividly a project some years ago, a large multi-module Android application, where we faced this exact hurdle. Managing environment variables, especially for static methods accessed during Gradle’s configuration phase, isn’t as straightforward as it might initially seem. It requires careful consideration of Gradle’s lifecycle and how it executes build scripts. Let me break down my experience and offer some concrete examples.
 
 The crucial thing to understand is that Gradle's evaluation phase, where your `build.gradle` scripts are parsed and executed, runs before the actual tasks. Any static methods called at this stage, particularly those attempting to access external configurations, will not have direct access to runtime environment variables in the typical way you might in a running application. Direct calls to `System.getenv()` within a static initializer of a Java class, for example, will not pick up variables Gradle might expose later.
 
@@ -64,7 +64,7 @@ android {
 
 ```
 
-Here, we fetch the `BUILD_VERSION` environment variable (or default to "1.0.0-default"). Importantly, we use the `afterEvaluate` block. This ensures that the static method `ConfigurationManager.setBuildVersion` is called *after* Gradle’s evaluation phase is completed, thereby avoiding any issues accessing the variable during Gradle’s startup. This pattern avoids direct static method access to environment variables.
+Here, we fetch the `BUILD_VERSION` environment variable (or default to "1.0.0-default"). Importantly, we use the `afterEvaluate` block. This ensures that the static method `ConfigurationManager.setBuildVersion` is called _after_ Gradle’s evaluation phase is completed, thereby avoiding any issues accessing the variable during Gradle’s startup. This pattern avoids direct static method access to environment variables.
 
 **Example 2: Using `gradle.startParameter` to pass Variables**
 
@@ -123,7 +123,7 @@ android {
 ```
 
 This time, we’re using `gradle.startParameter.projectProperties`. When you execute your build command, you can pass a property called `environment` like this:
-`./gradlew assembleRelease -Penvironment=staging` or `./gradlew assembleDebug -Penvironment=production`. Gradle will then set the URL according to the passed environment parameter. This method allows for dynamic environment configuration. The configuration manager's static method is called *after* evaluation during the `afterEvaluate` method.
+`./gradlew assembleRelease -Penvironment=staging` or `./gradlew assembleDebug -Penvironment=production`. Gradle will then set the URL according to the passed environment parameter. This method allows for dynamic environment configuration. The configuration manager's static method is called _after_ evaluation during the `afterEvaluate` method.
 
 **Example 3: Utilizing a Configuration Object**
 
@@ -195,6 +195,7 @@ android {
     }
 }
 ```
+
 Here, we build the entire config object and send it into the static method, and the static method stores the configuration. This is an even cleaner approach for more complex scenarios. It makes the configuration values explicit and improves readability.
 
 In summary, avoiding direct static access to environment variables during Gradle's evaluation phase is critical. These examples demonstrate how to properly inject configuration values into static methods using Gradle's `ext`, `startParameter`, and configuration object patterns, making the entire process more robust and maintainable.

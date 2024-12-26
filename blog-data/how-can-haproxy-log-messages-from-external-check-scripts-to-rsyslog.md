@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-haproxy-log-messages-from-external-check-scripts-to-rsyslog"
 ---
 
-Alright, let's tackle logging external check script messages through HAProxy to rsyslog. It's a topic I've spent a good chunk of time on, having dealt with some gnarly load balancing configurations myself over the years. Back in my days maintaining a large-scale application platform, we relied heavily on HAProxy for routing and health checks. However, we quickly realized that the default HAProxy logging was insufficient for detailed health check analysis. This led us down the path of integrating external check scripts and figuring out how to effectively capture their output within our existing logging infrastructure.
+, let's tackle logging external check script messages through HAProxy to rsyslog. It's a topic I've spent a good chunk of time on, having dealt with some gnarly load balancing configurations myself over the years. Back in my days maintaining a large-scale application platform, we relied heavily on HAProxy for routing and health checks. However, we quickly realized that the default HAProxy logging was insufficient for detailed health check analysis. This led us down the path of integrating external check scripts and figuring out how to effectively capture their output within our existing logging infrastructure.
 
 The core challenge lies in the fact that HAProxy, by default, doesn’t directly capture the standard output or standard error streams of external check scripts. These scripts, typically executed via `option httpchk`, run outside the HAProxy process context. Therefore, we need a mechanism to funnel this information back into HAProxy, which can then forward it to rsyslog. My solution, and the one I’ll explain here, involves a bit of a workaround using custom log formats and HAProxy's log-output capabilities. We’ll need to ensure the external scripts themselves are designed to communicate the information in a structured way. Let's dive into the practical steps and rationale behind them.
 
@@ -19,14 +19,14 @@ def main():
   healthy = True  # Example: check database connection or service availability
   if len(sys.argv) > 1 and sys.argv[1] == 'fail':
      healthy = False
-  
+
   status = "healthy" if healthy else "unhealthy"
   data = {
     "status": status,
     "latency_ms": 5, # Simulated latency, replace with actual
     "message": f"service health: {status}"
   }
-  
+
   print(json.dumps(data))
   sys.exit(0) # Exit with 0 on success, or another code on failure for HAProxy checks
 
@@ -65,6 +65,7 @@ backend my_backend
    log-format  "backend=%b,srv=%s,http_status=%H,check_result=%[var(req.healthcheck_result)],status=%[var(req.json_status)],latency_ms=%[var(req.json_latency)],message=%[var(req.json_message)],%t %T"
    log global
 ```
+
 In this configuration we define a `http-check` which runs the python script and use custom variables to capture the json output, status, latency and message from our script. We can then log these variables through a custom log format.
 
 Finally, we need to ensure HAProxy sends these logs to rsyslog. This is usually done in the global section of `haproxy.cfg`:
@@ -86,6 +87,7 @@ if $programname == 'haproxy' and $syslogfacility-text == 'local0' then {
   stop
 }
 ```
+
 This configuration directs all messages from `haproxy` using the facility `local0` to `/var/log/haproxy-healthchecks.log`. This will be specific to each individual set up.
 
 Now, a few crucial points to consider. First, the use of custom variables. These enable parsing the external output and making specific fields available in log statements. Second, error handling in external scripts is paramount. If your scripts throw an exception and exit abruptly, HAProxy might not log anything valuable. Implement robust error checking and logging within your scripts themselves. Third, performance is a concern. While custom logging formats are powerful, extensive processing can add overhead to HAProxy. It’s a balancing act between detailed logs and system resources. Always monitor the performance impact of your logging configurations. Fourth, always test your setup thoroughly before deploying to production. Start with basic cases and gradually add complexity. Log aggregation and monitoring is a critical component of production systems.

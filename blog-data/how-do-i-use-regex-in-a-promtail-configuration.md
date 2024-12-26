@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-regex-in-a-promtail-configuration"
 ---
 
-Alright, let's talk about regex within promtail configurations. I’ve spent a fair amount of time tweaking and debugging promtail over the years, particularly when handling logs with complex, non-uniform structures. It's one area where mastery can significantly improve your observability pipeline and reduce the headache of sifting through poorly parsed data. So, let me break down how I typically approach regex usage in this context, focusing on the practical side of things.
+, let's talk about regex within promtail configurations. I’ve spent a fair amount of time tweaking and debugging promtail over the years, particularly when handling logs with complex, non-uniform structures. It's one area where mastery can significantly improve your observability pipeline and reduce the headache of sifting through poorly parsed data. So, let me break down how I typically approach regex usage in this context, focusing on the practical side of things.
 
 The core concept revolves around leveraging regex within promtail's pipeline stages to extract meaningful data from log lines. These extractions are then used to create labels, which are crucial for effective querying and analysis in Loki. Simply ingesting raw log lines without proper labeling is akin to dumping data into a black hole. You can get it in, sure, but retrieving it with any precision is another matter entirely.
 
@@ -21,15 +21,15 @@ pipeline_stages:
   - match:
       selector: '{job="my-app"}' # your existing selector
       stages:
-      - regex:
-          expression: '^\\[(ERROR)\\]\\s+(.*)$'
-          source: message
-      - labels:
-          level: "error"
-          error_message: $2
+        - regex:
+            expression: '^\\[(ERROR)\\]\\s+(.*)$'
+            source: message
+        - labels:
+            level: "error"
+            error_message: $2
 ```
 
-In this configuration, logs from `my-app` that contain the string `[ERROR]` followed by a space are routed into the next processing stages. The regex `^\\[(ERROR)\\]\\s+(.*)$` is used for this filtering. Importantly, even though the capturing groups are defined in the regex stage *after* this filter, the filter implicitly requires a match of the entire expression against the message. Without it, nothing would be passed along.
+In this configuration, logs from `my-app` that contain the string `[ERROR]` followed by a space are routed into the next processing stages. The regex `^\\[(ERROR)\\]\\s+(.*)$` is used for this filtering. Importantly, even though the capturing groups are defined in the regex stage _after_ this filter, the filter implicitly requires a match of the entire expression against the message. Without it, nothing would be passed along.
 
 The core processing of extraction comes in the `regex` and `unpack` stages, which are fundamental in my experience. The `regex` stage is used to extract individual values from a log line based on specific patterns. Captured groups from your regex become accessible using `$1`, `$2`, etc., and can be assigned to labels. This is where the real power of regex in promtail comes into play, allowing you to transform unstructured logs into structured, queryable data.
 
@@ -51,7 +51,6 @@ pipeline_stages:
         value: "{{.component}}"
       message:
         value: "{{.message}}"
-
 ```
 
 Here, the named capture groups (using `(?P<name>...)`) are used to label the extracted parts. This approach is generally cleaner and easier to manage than positional captures, especially when the order of fields in your logs might vary. These named capture groups then get directly mapped to our labels.
@@ -71,7 +70,6 @@ pipeline_stages:
       level: "{{.level}}"
       component: "{{.component}}"
       message: "{{.message}}"
-
 ```
 
 Notice, we use the `json` stage to make sure the message is not being treated as a literal string. After which, we unpack the json structure. `unpack`, by default, expects a JSON object and then creates values that can be used as template variables in labels. The `json: true` configuration ensures that the source field is parsed as a JSON string.

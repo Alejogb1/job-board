@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-google-or-tools-manipulate-variables-before-solving-optimization-problems"
 ---
 
-Alright, let's talk about how Google or-tools handles variable manipulation, a topic I’ve encountered more than a few times during my years building optimization systems. It’s a crucial aspect, often underappreciated, that significantly impacts the solution process. From my experience, particularly when working on resource allocation problems for a large logistics company years back, the efficiency and effectiveness of our solutions were heavily dependent on how well we understood and leveraged or-tools' variable management capabilities. It’s not just about throwing a problem at the solver and hoping for the best; a solid grasp of variable handling is key to formulating models that are not only correct but also performant.
+, let's talk about how Google or-tools handles variable manipulation, a topic I’ve encountered more than a few times during my years building optimization systems. It’s a crucial aspect, often underappreciated, that significantly impacts the solution process. From my experience, particularly when working on resource allocation problems for a large logistics company years back, the efficiency and effectiveness of our solutions were heavily dependent on how well we understood and leveraged or-tools' variable management capabilities. It’s not just about throwing a problem at the solver and hoping for the best; a solid grasp of variable handling is key to formulating models that are not only correct but also performant.
 
 Fundamentally, or-tools provides a layer of abstraction over the mathematical representation of optimization problems. Before any solver kicks in, whether it's a linear, integer, or constraint programming solver, or-tools manipulates variables to set up the problem in a way that these solvers can understand and effectively handle. This isn’t magic; it involves defining the variables, setting their domains, and ensuring they're appropriately connected to the constraints of the model.
 
@@ -92,7 +92,7 @@ def create_interval_model():
 
     # Ensure the end is not smaller than the start + duration
     model.Add(end >= start+duration)
-    
+
     # add a constraint that the start time should be at least 2
     model.Add(start >= 2)
 
@@ -110,4 +110,4 @@ create_interval_model()
 
 Here, we create an `IntervalVar` which encapsulates start, duration, and end of a task. If the start time changes, the possible end time is automatically changed based on the fixed duration. These types of variable are useful for temporal models. or-tools internally utilizes these relationships to modify the search space. In fact, under the hood, `IntervalVar`s are linked through other integer variables and constraints, with or-tools managing these interconnections.
 
-In summary, or-tools doesn’t treat variables as inert placeholders. Rather, it intelligently manipulates them, manages their domains, and uses them with constraints to efficiently define and solve optimization problems. The key is understanding how the variables and constraints relate to one another and how or-tools internally adjusts these to improve solver performance. For those looking to gain a deeper technical understanding of these processes, I would highly recommend exploring the academic literature on constraint programming, such as *Principles and Practice of Constraint Programming* by Kenneth R. Apt or *Handbook of Constraint Programming* edited by Francesca Rossi, Peter Van Beek, and Toby Walsh. These resources provide valuable insights into the inner workings of solvers and how constraint propagation impacts problem-solving.
+In summary, or-tools doesn’t treat variables as inert placeholders. Rather, it intelligently manipulates them, manages their domains, and uses them with constraints to efficiently define and solve optimization problems. The key is understanding how the variables and constraints relate to one another and how or-tools internally adjusts these to improve solver performance. For those looking to gain a deeper technical understanding of these processes, I would highly recommend exploring the academic literature on constraint programming, such as _Principles and Practice of Constraint Programming_ by Kenneth R. Apt or _Handbook of Constraint Programming_ edited by Francesca Rossi, Peter Van Beek, and Toby Walsh. These resources provide valuable insights into the inner workings of solvers and how constraint propagation impacts problem-solving.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-cnn-models-input-layer-be-removed"
 ---
 
-Okay, let’s tackle this. I’ve certainly seen my share of convoluted model architectures over the years, and the need to surgically alter a cnn by removing its input layer isn’t as uncommon as one might think. I remember a project back at 'TechFlow Innovations' where we were dealing with a pre-trained model, meant for image classification, but we needed it to act as a feature extractor for an entirely different kind of data—specifically, time series. The input layer was completely unsuitable. Here’s how we approached the challenge, and some general methods I've used since:
+, let’s tackle this. I’ve certainly seen my share of convoluted model architectures over the years, and the need to surgically alter a cnn by removing its input layer isn’t as uncommon as one might think. I remember a project back at 'TechFlow Innovations' where we were dealing with a pre-trained model, meant for image classification, but we needed it to act as a feature extractor for an entirely different kind of data—specifically, time series. The input layer was completely unsuitable. Here’s how we approached the challenge, and some general methods I've used since:
 
 The core issue when wanting to remove a cnn's input layer lies in modifying the model's architecture to accept a tensor with different dimensions than the initial designed input shape. The input layer itself, typically a `tf.keras.layers.Input` layer in tensorflow/keras or an equivalent in other frameworks, serves to define the expected tensor shape that feeds into the network. To “remove” it, in essence, means bypassing this initial layer and directing input directly to a subsequent layer. It's less about deleting code and more about redefining connection points.
 
@@ -12,7 +12,7 @@ Here's how one might approach this depending on how your model is structured:
 
 **Scenario 1: Sequential Model**
 
-If the cnn is built using `tf.keras.models.Sequential`, it's typically straightforward. The input layer is essentially the first layer in the stack. You'd need to construct a new sequential model starting from the layer *after* the input.
+If the cnn is built using `tf.keras.models.Sequential`, it's typically straightforward. The input layer is essentially the first layer in the stack. You'd need to construct a new sequential model starting from the layer _after_ the input.
 
 Let’s assume we have a sequential model `original_model` and its structure is something like this (simplified for demonstration):
 
@@ -107,7 +107,9 @@ original_output = original_custom_model(sample_input)
 print(f"Original output shape: {original_output.shape}")
 
 ```
+
 To remove the input layer you will need to override the `call` method of this model to begin from the output of the `conv1` layer:
+
 ```python
 class ModifiedCustomCNN(tf.keras.Model):
   def __init__(self, original_model):
@@ -130,14 +132,15 @@ modified_output = modified_model(new_sample_input)
 print(f"Modified output shape: {modified_output.shape}")
 
 ```
+
 In this example, we are taking the original model and creating a new model which overrides the `call` method so that it begins from the desired layer by calling the `pool` layer of the original model. Effectively, this means we are bypassing the input tensor that would be implied in the custom model class in the original `original_custom_model` and we are directly passing in an input which would represent the output of the `conv1` layer.
 
 **Important Considerations:**
 
-*   **Input Shape Matching:** When removing the input layer, ensure that the input to the new model matches the expected tensor shape based on the structure of the layer you are starting from. Failure to do this will result in dimension mismatch errors.
-*   **Weight Transfers:** When you remove an input layer, you're generally retaining all weights, but you're changing the *input* expected to flow through the network. No weights are actually being deleted as a part of this.
-*   **Debugging:** Debugging this kind of manipulation can be challenging if your network is large. Using `model.summary()` or similar tools to inspect layers is very helpful to verify tensor shapes at various stages of a model’s flow.
-*   **Framework variations**: The actual syntax might differ slightly if you're using pytorch rather than tensorflow, but the basic principle remains the same: you're re-routing data flow to start at a later stage within your pre-existing model.
+- **Input Shape Matching:** When removing the input layer, ensure that the input to the new model matches the expected tensor shape based on the structure of the layer you are starting from. Failure to do this will result in dimension mismatch errors.
+- **Weight Transfers:** When you remove an input layer, you're generally retaining all weights, but you're changing the _input_ expected to flow through the network. No weights are actually being deleted as a part of this.
+- **Debugging:** Debugging this kind of manipulation can be challenging if your network is large. Using `model.summary()` or similar tools to inspect layers is very helpful to verify tensor shapes at various stages of a model’s flow.
+- **Framework variations**: The actual syntax might differ slightly if you're using pytorch rather than tensorflow, but the basic principle remains the same: you're re-routing data flow to start at a later stage within your pre-existing model.
 
 **Further Reading:**
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-reduce-a-pytorch-build-size-to-under-500mb"
 ---
 
-Alright, let's talk about shaving down a PyTorch build. I've tackled this problem more than a few times, especially when deploying models to resource-constrained environments. It’s a common headache, but definitely solvable. We're aiming for under 500MB, and that requires a multi-faceted approach. It's not just one magic bullet; it's a combination of careful configuration and an understanding of what’s bloating that build.
+, let's talk about shaving down a PyTorch build. I've tackled this problem more than a few times, especially when deploying models to resource-constrained environments. It’s a common headache, but definitely solvable. We're aiming for under 500MB, and that requires a multi-faceted approach. It's not just one magic bullet; it's a combination of careful configuration and an understanding of what’s bloating that build.
 
 First off, the sheer size of a standard PyTorch distribution comes from its comprehensive nature. It includes support for numerous hardware architectures, various CUDA versions, and a plethora of functionalities that you likely won't need for a specific deployment. The key is isolating and including only what's necessary.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-microsoft-teams-be-integrated-with-apache-airflow"
 ---
 
-Alright, let's talk about integrating Microsoft Teams with Apache Airflow. This is a topic I’ve tackled a few times in past projects, and it's surprisingly common when you're orchestrating complex data workflows that need visibility beyond the engineering team. It's not just about getting a notification that something failed; it’s about creating a seamless feedback loop within an organization.
+, let's talk about integrating Microsoft Teams with Apache Airflow. This is a topic I’ve tackled a few times in past projects, and it's surprisingly common when you're orchestrating complex data workflows that need visibility beyond the engineering team. It's not just about getting a notification that something failed; it’s about creating a seamless feedback loop within an organization.
 
 The core challenge, as I see it, revolves around two distinct systems that operate in very different spaces. Airflow, at its heart, is a batch processing orchestrator. Teams, meanwhile, is a real-time communications platform. Bridging that gap effectively takes a thoughtful approach, and it's more than just slapping together a basic notification.
 
@@ -175,6 +175,6 @@ with DAG(
 
 In this code, we've constructed an `AdaptiveCard`, adding a 'Rerun' action pointing to an Airflow Graph URL, which users can use to manually trigger the DAG.
 
-For further learning, I strongly recommend exploring the *Microsoft Graph API documentation* which is the foundation for building custom Teams integrations. Also, the Apache Airflow documentation offers an extensive explanation of how to create custom operators. Another good resource is *Fluent Python* by Luciano Ramalho for a detailed look at best practices in python which always helps when working on complex integrations. I would also suggest looking into the *'Effective Python: 90 Specific Ways to Write Better Python'*, by Brett Slatkin, for guidance on writing Pythonic code, as it is essential when dealing with the complex integrations like this.
+For further learning, I strongly recommend exploring the _Microsoft Graph API documentation_ which is the foundation for building custom Teams integrations. Also, the Apache Airflow documentation offers an extensive explanation of how to create custom operators. Another good resource is _Fluent Python_ by Luciano Ramalho for a detailed look at best practices in python which always helps when working on complex integrations. I would also suggest looking into the _'Effective Python: 90 Specific Ways to Write Better Python'_, by Brett Slatkin, for guidance on writing Pythonic code, as it is essential when dealing with the complex integrations like this.
 
 In summary, integrating Teams and Airflow can range from simple notification callbacks to complex interactive systems. Begin with a simple webhook and callback setup, progress to custom operators for more control, and then explore advanced elements such as adaptive cards for more interactive experience. The key is understanding the limitations and capabilities of both systems and using each for its strength.

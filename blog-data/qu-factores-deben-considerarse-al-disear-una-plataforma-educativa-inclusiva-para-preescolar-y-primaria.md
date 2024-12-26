@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "qu-factores-deben-considerarse-al-disear-una-plataforma-educativa-inclusiva-para-preescolar-y-primaria"
 ---
 
-okay so we're talking about building an educational platform for young kids pre-k and elementary level right it's a big deal to make it truly inclusive so here's a breakdown of what i think we should keep in mind it's not just about slapping some games together
+we're talking about building an educational platform for young kids pre-k and elementary level right it's a big deal to make it truly inclusive so here's a breakdown of what i think we should keep in mind it's not just about slapping some games together
 
 first thing accessibility is key seriously it's not optional think about kids with different needs screen readers are crucial text alternatives for every image video whatever it's not just captions it's alternative text that actually describes the content keyboard navigation has to be flawless no mouse-only traps for little fingers that might not have fine motor skills color contrast it needs to be high enough for kids with low vision and colorblindness avoid relying solely on color to convey meaning it's a subtle thing but massively impactful and we need to test all this rigorously there are tools to simulate colorblindness that we should be using constantly
 
@@ -38,6 +38,7 @@ function generateAlternativeText(imageObject) {
 }
 // This function ensures that images are accessible with or without explicit alt tags
 ```
+
 ```pseudocode
 // Example 2: Dynamic content adaptation based on user preferences
 
@@ -55,6 +56,7 @@ function adaptContent(userPreferences, lessonData) {
 }
 // This example shows how to customize content based on individual learning preferences
 ```
+
 ```pseudocode
 // Example 3: Simple progress tracking and reward system
 
@@ -75,6 +77,7 @@ function updateProgress(user, activity) {
 
 // This gives an idea of tracking and displaying a simple reward system
 ```
+
 in terms of further resources on this its not just a matter of looking at one specific paper there are whole fields of research on child development learning design human-computer interaction and accessibility so start by looking at textbooks on those areas these resources help you better understand the foundations of what's needed for good design and not just one off articles in the specific area of inclusive design you need to go to the foundations to understand the real problem at hand and then the solution
 
 look at papers from organizations like the web accessibility initiative (wai) they have tons of information on web accessibility standards the WCAG guidelines are your bible for accessible digital content its not just theory they are practical standards you implement when building

@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "how-does-linkedins-sales-navigator-protect-profile-data-through-authentication-mechanisms-teaching-point-explains-security-measures-for-data-access-in-linkedins-premium-tools"
 ---
 
-okay so LinkedIn Sales Navigator right its like the ninja of professional networking you know stealthy but powerful well thinking about how it guards profile data its all about locking the doors and checking ids before letting anyone in
+LinkedIn Sales Navigator right its like the ninja of professional networking you know stealthy but powerful well thinking about how it guards profile data its all about locking the doors and checking ids before letting anyone in
 
 first off we gotta talk authentication its basically the front line defense it's how LinkedIn knows you're you and not some random bot or worse a competitor trying to poach your sales leads its not just a password thing either even though that's the most basic level think about it like the bouncer at a club password or your fancy key to get inside but the club's got multiple levels of security right
 
@@ -44,6 +44,7 @@ profile_data = fetch_profile_data(api_key, profile_id)
 if profile_data:
     print(profile_data)
 ```
+
 in this example the api key acts as a access key to the data
 
 now lets look at a basic example of how permission roles can function imagine this like a basic access controll list
@@ -69,6 +70,7 @@ print(check_permission(user_role, sample_profile))
 user_role = "user"
 print(check_permission(user_role, sample_profile))
 ```
+
 this is a very basic example of a role based access control and finally here's an example of user behaviour detection with a hypothetical model
 
 ```python

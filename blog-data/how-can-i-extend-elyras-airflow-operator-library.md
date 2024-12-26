@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extend-elyras-airflow-operator-library"
 ---
 
-Okay, let's tackle this. Extending Elyra's Airflow operator library is something I’ve definitely spent some time on in the past, particularly when building custom machine learning pipelines that required very specific task execution logic. The default Airflow operators are excellent for general workflow management, but the real power comes in extending them to fit your specific needs. Let’s break it down into something more digestible, moving beyond the standard “it’s a class inheritance” response.
+, let's tackle this. Extending Elyra's Airflow operator library is something I’ve definitely spent some time on in the past, particularly when building custom machine learning pipelines that required very specific task execution logic. The default Airflow operators are excellent for general workflow management, but the real power comes in extending them to fit your specific needs. Let’s break it down into something more digestible, moving beyond the standard “it’s a class inheritance” response.
 
 Essentially, extending Elyra's Airflow operator library means you're creating new operators that inherit from, and therefore augment, the functionalities of existing Airflow operators. Elyra, being a layer on top of Airflow, will then be able to utilize these custom operators. This is critical when standard operators aren't sufficient, such as when dealing with complex data transformations, interfacing with custom apis, or specialized infrastructure components. Think of it as adding custom lego bricks to an existing lego set – you are not fundamentally changing the set, but extending its functionality by adding custom parts that interact seamlessly.
 
@@ -37,7 +37,7 @@ class LoggingBashOperator(BashOperator, LoggingMixin):
         return output
 ```
 
-In this example, we've created `LoggingBashOperator`, which inherits from `BashOperator` and `LoggingMixin`, allowing it to leverage Airflow’s logging capabilities.  The `execute` method has been overridden to log the command before execution and the total time taken after completion. I've included the `apply_defaults` decorator because in larger airflow setups, this is helpful for managing default values for parameters.
+In this example, we've created `LoggingBashOperator`, which inherits from `BashOperator` and `LoggingMixin`, allowing it to leverage Airflow’s logging capabilities. The `execute` method has been overridden to log the command before execution and the total time taken after completion. I've included the `apply_defaults` decorator because in larger airflow setups, this is helpful for managing default values for parameters.
 
 **Example 2: Custom Operator for External API Interaction**
 
@@ -117,8 +117,8 @@ I highly advise against directly modifying core airflow or elyra code itself. Al
 
 To truly master this, I suggest diving deeper into:
 
-*   **"Airflow Documentation":** This is the essential starting point for understanding Airflow concepts, especially the operator architecture. You'll find details on the base classes, hooks, and how to interact with Airflow’s core features.
-*   **"Effective Python" by Brett Slatkin:** This book is invaluable for writing clean, idiomatic python code, crucial when developing robust custom operators. The concepts on inheritance and decorators will be very beneficial.
-*   **"Python Cookbook" by David Beazley and Brian K. Jones:** It’s great for tackling more complex python programming requirements, often encountered when building custom operators. It covers techniques like metaclasses and advanced function usage, which can aid in creating flexible, high-quality operators.
+- **"Airflow Documentation":** This is the essential starting point for understanding Airflow concepts, especially the operator architecture. You'll find details on the base classes, hooks, and how to interact with Airflow’s core features.
+- **"Effective Python" by Brett Slatkin:** This book is invaluable for writing clean, idiomatic python code, crucial when developing robust custom operators. The concepts on inheritance and decorators will be very beneficial.
+- **"Python Cookbook" by David Beazley and Brian K. Jones:** It’s great for tackling more complex python programming requirements, often encountered when building custom operators. It covers techniques like metaclasses and advanced function usage, which can aid in creating flexible, high-quality operators.
 
 Remember, the key to extending Airflow and Elyra is understanding the foundational concepts of Airflow operators and python class inheritance, utilizing modularity and careful design principles. Don’t underestimate the debugging process, and always strive for robust, well-tested code. This will serve you well when dealing with complex workflow management.

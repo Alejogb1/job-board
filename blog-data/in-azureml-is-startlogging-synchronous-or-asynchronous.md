@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "in-azureml-is-startlogging-synchronous-or-asynchronous"
 ---
 
-Okay, let's tackle this. I've spent a fair bit of time wrestling with Azure Machine Learning, and specifically its logging mechanisms, so I can offer some firsthand insights. The question of whether `start_logging` in AzureML is synchronous or asynchronous is a critical one, because it affects how you design your training scripts and manage your experiment runs. It’s not always immediately obvious from the documentation, and it’s something I’ve had to debug myself during several larger scale model training projects.
+, let's tackle this. I've spent a fair bit of time wrestling with Azure Machine Learning, and specifically its logging mechanisms, so I can offer some firsthand insights. The question of whether `start_logging` in AzureML is synchronous or asynchronous is a critical one, because it affects how you design your training scripts and manage your experiment runs. It’s not always immediately obvious from the documentation, and it’s something I’ve had to debug myself during several larger scale model training projects.
 
 My experience has shown me that the core operation of `start_logging`, when initiating a run within the Azure Machine Learning environment, appears to function **synchronously** with respect to the execution flow of your script, at least initially, for the basic logging setup. That is, when you call it, it sets up the logging context within your script before moving to the next line of code. However, the crucial thing to remember is that the **actual writing of logs to the AzureML platform** is handled asynchronously. Let me clarify this apparent contradiction.
 
@@ -36,7 +36,7 @@ for i in range(5):
     metric_value = i * 2
     run.log("my_metric", metric_value)
     print(f"Logged metric {i}: {metric_value}")
-    
+
 print(f"Logging process completed in {time.time() - start_time} seconds.")
 
 run.complete()
@@ -78,6 +78,7 @@ run.complete()
 print("Run completed. Artifact upload and log propagation in progress.")
 os.remove(artifact_file)
 ```
+
 Here we demonstrate that parameter logging is also synchronous within the script's execution, and the `upload_file` function is initiated synchronously, but the file upload itself will be completed in an asynchronous process. The run.tag() call, which adds metadata, also executes synchronously. You can observe that the "Initiated upload" prints out immediately but doesn't actually mean the file is already in Azure; it will be uploaded sometime later on in the run.
 
 **Example 3: Large-Scale Logging with Periodic Flushing**
@@ -107,8 +108,8 @@ In summary, while `start_logging` sets up the logging environment synchronously,
 
 For anyone keen on delving deeper, I'd strongly recommend exploring these resources:
 
-*   **Azure Machine Learning SDK for Python Documentation:** The official Microsoft documentation is the most authoritative source. It covers the intricacies of the SDK in detail, and while specific details about the synchronous vs asynchronous behavior of log flushing are not explicitly documented in one single place, they are implied and require a thorough read through of the various documentation pages on logging, experiment runs, and metrics.
-*   **"Designing Data-Intensive Applications" by Martin Kleppmann:** This book provides a deep dive into the architecture of data systems, including aspects of asynchronous processing. Although not specific to AzureML, it offers crucial background on the design principles behind asynchronous systems and helps with an understanding of why Azure ML choses to have this kind of architecture.
-*   **"Distributed Systems: Concepts and Design" by George Coulouris et al.:** If you need a strong theoretical understanding of distributed systems, including concepts relevant to distributed logging and data transfer, this classic is invaluable. This book is particularly useful to comprehend the challenges associated with the asynchronous transmission of large amounts of data.
+- **Azure Machine Learning SDK for Python Documentation:** The official Microsoft documentation is the most authoritative source. It covers the intricacies of the SDK in detail, and while specific details about the synchronous vs asynchronous behavior of log flushing are not explicitly documented in one single place, they are implied and require a thorough read through of the various documentation pages on logging, experiment runs, and metrics.
+- **"Designing Data-Intensive Applications" by Martin Kleppmann:** This book provides a deep dive into the architecture of data systems, including aspects of asynchronous processing. Although not specific to AzureML, it offers crucial background on the design principles behind asynchronous systems and helps with an understanding of why Azure ML choses to have this kind of architecture.
+- **"Distributed Systems: Concepts and Design" by George Coulouris et al.:** If you need a strong theoretical understanding of distributed systems, including concepts relevant to distributed logging and data transfer, this classic is invaluable. This book is particularly useful to comprehend the challenges associated with the asynchronous transmission of large amounts of data.
 
 Understanding these nuances ensures you write efficient and reliable machine learning experiments. Asynchronous operations are not always easy to grasp, but it becomes a crucial skill to develop when building large scale ML systems.

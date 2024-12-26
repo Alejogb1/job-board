@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-a-google-bigquery-connection-be-created-from-airflow-ui"
 ---
 
-Alright, let’s unpack this one. I’ve been down this road a few times, especially when we were transitioning from a legacy ETL system to a more modern data orchestration setup back at Chronos Analytics. Connecting BigQuery from Airflow’s UI isn’t inherently complex, but getting it *robust* and *maintainable* requires a bit of care, particularly around authentication and configuration management. Let's break down the process and discuss the nuances.
+, let’s unpack this one. I’ve been down this road a few times, especially when we were transitioning from a legacy ETL system to a more modern data orchestration setup back at Chronos Analytics. Connecting BigQuery from Airflow’s UI isn’t inherently complex, but getting it _robust_ and _maintainable_ requires a bit of care, particularly around authentication and configuration management. Let's break down the process and discuss the nuances.
 
 The central concept here revolves around Airflow’s connection mechanisms. Essentially, Airflow needs credentials and connection details to interact with BigQuery. This isn’t simply about plugging in a username and password. We leverage Airflow's connection management system, often configured via environment variables or directly through the UI itself. I generally favor the former for production environments due to its benefits in security and version control, but let’s explore the UI path, as that's the focus here.
 

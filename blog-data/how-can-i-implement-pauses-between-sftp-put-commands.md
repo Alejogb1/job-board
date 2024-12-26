@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-implement-pauses-between-sftp-put-commands"
 ---
 
-Alright, let's tackle this. The need to pause between sftp `put` commands isn’t uncommon, and it usually surfaces when dealing with rate limiting, server resource constraints, or attempting to manage network congestion. I recall a particularly nasty incident a few years back when I was pushing large datasets to a legacy system. We were essentially hammering the server, causing it to reject subsequent connections. We needed to throttle back our transfer rate, and implementing pauses between `put` operations became critical.
+, let's tackle this. The need to pause between sftp `put` commands isn’t uncommon, and it usually surfaces when dealing with rate limiting, server resource constraints, or attempting to manage network congestion. I recall a particularly nasty incident a few years back when I was pushing large datasets to a legacy system. We were essentially hammering the server, causing it to reject subsequent connections. We needed to throttle back our transfer rate, and implementing pauses between `put` operations became critical.
 
 Essentially, `sftp` by itself doesn't have a built-in mechanism to automatically pause after each `put`. The shell, not `sftp`, controls the timing of command executions. Therefore, we need to use shell scripting capabilities or programming language integrations to introduce these delays. We’ll explore some pragmatic approaches.
 
@@ -51,6 +51,7 @@ EOF
 
 done
 ```
+
 In this script, `find` searches for files in the local directory. The loop reads each file path into the `file` variable and then executes the `sftp` command. The timestamps allow us to assess, in seconds, how long the transfer took. After each transfer, a fixed 1-second delay is introduced via the `sleep` command. This demonstrates how you can incorporate dynamic information, in this case upload time (though in this example it doesn’t change sleep time), into the control flow of your transfer process.
 
 Moving beyond shell scripting, programmatic solutions using languages like python offer even finer-grained control. The `paramiko` library, a commonly used library for secure connections, allows explicit control over the sftp process. This would be my preferred approach if the sftp interaction needed to be embedded into a larger application or needed more robust error handling. Here is an example:
@@ -100,6 +101,6 @@ if __name__ == '__main__':
 
 This python script utilizes `paramiko` to handle the sftp connection, it iterates over files in the specified local directory, uploads them and applies a defined delay after each file upload. This approach makes it easier to handle complex situations, such as catching errors and logging events associated with individual file transfers. In a real-world application, you could expand this to handle retries, adjust the delay dynamically based on file sizes, monitor upload rates, etc.
 
-For further learning on `paramiko`, the official documentation is invaluable, specifically the sections on SFTP. The "TCP/IP Illustrated, Volume 1" by W. Richard Stevens will provide an excellent foundation for understanding the underlying network protocols relevant to sftp. Also, the *OpenSSH* documentation will explain the underlying mechanics of sftp connections.
+For further learning on `paramiko`, the official documentation is invaluable, specifically the sections on SFTP. The "TCP/IP Illustrated, Volume 1" by W. Richard Stevens will provide an excellent foundation for understanding the underlying network protocols relevant to sftp. Also, the _OpenSSH_ documentation will explain the underlying mechanics of sftp connections.
 
 In summary, while `sftp` lacks inherent pausing mechanisms, incorporating `sleep` commands in shell scripts, or employing programming languages with libraries such as `paramiko`, allows you to effectively introduce pauses between `put` commands. The choice depends on the scale and complexity of your needs. These solutions have, in my experience, provided reliable throttling mechanisms for sftp transfers in various environments. Choose the method that best fits your situation and always prioritize good error handling.

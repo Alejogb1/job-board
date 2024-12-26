@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "can-an-r-function-create-a-scaleaxis-for-a-mosaic-plot"
 ---
 
-Okay, let's tackle this. The question of creating a custom scale or axis specifically *within* a mosaic plot, generated using R's base plotting system or packages like `vcd`, isn't as straightforward as, say, manipulating axis labels on a standard scatter plot. It's less about a dedicated axis-creation function directly modifying the plot itself, and more about how we massage the data and potentially augment the plot with additional elements to achieve the visual communication we desire. Having been on the receiving end of some pretty dense graphical communication in my days working with large datasets, I've certainly had to employ this type of strategic visualization.
+, let's tackle this. The question of creating a custom scale or axis specifically _within_ a mosaic plot, generated using R's base plotting system or packages like `vcd`, isn't as straightforward as, say, manipulating axis labels on a standard scatter plot. It's less about a dedicated axis-creation function directly modifying the plot itself, and more about how we massage the data and potentially augment the plot with additional elements to achieve the visual communication we desire. Having been on the receiving end of some pretty dense graphical communication in my days working with large datasets, I've certainly had to employ this type of strategic visualization.
 
 Firstly, it’s critical to understand the fundamental nature of a mosaic plot. It isn’t a conventional plot with continuous axes in the way we typically perceive them. Instead, mosaic plots visually represent the frequencies within contingency tables by partitioning space proportionally. Each rectangle's area corresponds to the frequency of a specific combination of categories. The “axes”, therefore, are implicitly defined by the categorical variables involved, not by a traditional scale. The labels along the edges aren't typically treated as a continuous scale where you can simply add intermediary points. This impacts our approach.
 
-What we’re effectively talking about then, is manipulating the *interpretation* of the plot, and possibly adding external elements to guide the viewer's understanding. We can certainly influence the labels, perhaps adding more descriptive or transformed versions, but manipulating a "scale" is indirect and often requires supplemental visual aids. Let me illustrate with a few scenarios, as I've faced similar challenges in past projects.
+What we’re effectively talking about then, is manipulating the _interpretation_ of the plot, and possibly adding external elements to guide the viewer's understanding. We can certainly influence the labels, perhaps adding more descriptive or transformed versions, but manipulating a "scale" is indirect and often requires supplemental visual aids. Let me illustrate with a few scenarios, as I've faced similar challenges in past projects.
 
 **Scenario 1: Modifying Category Labels**
 
-The simplest modification involves adjusting the category labels themselves. While it doesn't create a new "scale" *per se*, it alters how the existing categories are perceived. This is crucial for clarity when the default labels are cryptic or need additional context. The underlying structure of the mosaic remains, but it's far more interpretable with better labelling. For this we use the functions available in packages like `vcd`.
+The simplest modification involves adjusting the category labels themselves. While it doesn't create a new "scale" _per se_, it alters how the existing categories are perceived. This is crucial for clarity when the default labels are cryptic or need additional context. The underlying structure of the mosaic remains, but it's far more interpretable with better labelling. For this we use the functions available in packages like `vcd`.
 
 ```r
 library(vcd)
@@ -90,7 +90,7 @@ mosaic(tab4, main="Mosaic of Categories")
 
 
 # Parallel Scale Plot (Barplot here as a simple example)
-barplot(tapply(data3$Value, data3$Category, mean), 
+barplot(tapply(data3$Value, data3$Category, mean),
         main = "Mean Values per Category",
         ylab = "Mean Value")
 
@@ -100,6 +100,6 @@ par(mfrow=c(1,1))
 
 Here, we have a basic bar plot placed next to the mosaic plot that acts as a numerical scale related to the data. This setup allows one to interpret the sizes of the mosaic rectangles in relation to the underlying values. The mosaic shows the proportional breakdown, while the additional plot provides a concrete numerical scale.
 
-In summary, while you can’t directly create a “scale/axis” *within* a mosaic plot in the way you might for a scatter plot, you *can* manipulate the plot itself, its labels and add supplementary visualizations that help interpret the data, adding scale and context. This involves understanding the limitations of the plot type, and using R to achieve the visual communication you need through careful data manipulation, annotation, and supplementary visuals.
+In summary, while you can’t directly create a “scale/axis” _within_ a mosaic plot in the way you might for a scatter plot, you _can_ manipulate the plot itself, its labels and add supplementary visualizations that help interpret the data, adding scale and context. This involves understanding the limitations of the plot type, and using R to achieve the visual communication you need through careful data manipulation, annotation, and supplementary visuals.
 
 For deeper insight into statistical graphics and visualization principles, consider consulting "The Visual Display of Quantitative Information" by Edward Tufte. Further exploration of mosaic plots and categorical data analysis techniques can be found in "Categorical Data Analysis" by Alan Agresti. For practical examples and implementation in R, examining the documentation of packages like 'vcd' and 'ggplot2' will be useful.

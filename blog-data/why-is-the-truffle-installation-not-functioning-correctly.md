@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-truffle-installation-not-functioning-correctly"
 ---
 
-Okay, let's troubleshoot this truffle installation issue. I’ve spent enough time debugging quirky setups over the years to know that ‘not functioning correctly’ can mean a multitude of things. Often, the devil is in the detail, so let's unpack the common culprits and how to address them systematically. This isn’t about vague notions; we’re talking concrete steps, backed by my experience resolving similar predicaments in past projects.
+, let's troubleshoot this truffle installation issue. I’ve spent enough time debugging quirky setups over the years to know that ‘not functioning correctly’ can mean a multitude of things. Often, the devil is in the detail, so let's unpack the common culprits and how to address them systematically. This isn’t about vague notions; we’re talking concrete steps, backed by my experience resolving similar predicaments in past projects.
 
 One scenario I distinctly remember was during a particularly grueling migration to a newer version of node.js. The seemingly straightforward truffle install kept failing with bewildering error messages. The culprit? A version mismatch between truffle, its dependencies, and the node.js version itself. It highlighted a critical yet sometimes overlooked point: the interplay of these components is extremely sensitive.
 
@@ -63,6 +63,7 @@ npm install # or yarn install
 # 4. Verify truffle installation again.
 npx truffle version # run with npx if truffle is installed locally
 ```
+
 This snippet demonstrates a common strategy of clearing node modules and the lock file and then reinstalling. This approach is critical for addressing situations where dependencies might have been corrupted during installation or where versions are not compatible. The force clean of the cache can also sometimes resolve a few odd issues, which is always worth trying. I’ve had to use this exact process numerous times, specifically after upgrading a project’s node.js version or when transitioning across different teams where configurations might differ.
 
 Finally, let’s demonstrate a scenario where you're actively managing version dependencies explicitly within your project file.
@@ -73,9 +74,9 @@ Finally, let’s demonstrate a scenario where you're actively managing version d
 // package.json file (partial example):
 {
   "dependencies": {
-     "truffle": "5.5.0", // Pin truffle version
-     "@truffle/hdwallet-provider": "1.5.0", // Pin hdwallet-provider version
-     "solc": "0.8.10" // Pin solc version
+    "truffle": "5.5.0", // Pin truffle version
+    "@truffle/hdwallet-provider": "1.5.0", // Pin hdwallet-provider version
+    "solc": "0.8.10" // Pin solc version
   }
   //...other fields
 }

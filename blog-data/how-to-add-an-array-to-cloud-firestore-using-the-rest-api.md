@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-add-an-array-to-cloud-firestore-using-the-rest-api"
 ---
 
-Alright, let’s tackle this. Adding an array to a Firestore document via the REST API is something I've definitely navigated a few times, particularly during those early days when we were migrating from a different system and needed to seed a ton of data programmatically. I recall a specific project involving a collaborative content platform where user permissions were stored as arrays within each document. Manually creating or editing those through the console would've been a nightmare, so automating it via the REST API became crucial.
+, let’s tackle this. Adding an array to a Firestore document via the REST API is something I've definitely navigated a few times, particularly during those early days when we were migrating from a different system and needed to seed a ton of data programmatically. I recall a specific project involving a collaborative content platform where user permissions were stored as arrays within each document. Manually creating or editing those through the console would've been a nightmare, so automating it via the REST API became crucial.
 
 The core idea revolves around crafting a properly formatted json payload and then using the `PATCH` or `POST` method, depending on whether you're updating an existing document or creating a new one. The `PATCH` operation, as you'd expect, updates existing fields and can add new ones as needed, while `POST` is used for initial document creation. The key here is understanding how Firestore interprets array data structures within its json representation, and that’s where some specific syntax comes into play.
 

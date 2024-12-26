@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-giant-graphs-be-trained-with-gcns-using-torchgeometric"
 ---
 
-Okay, let's tackle this. I remember a particularly challenging project back in my early days working on recommendation systems. We were dealing with a user-item graph that was frankly, enormous. Training a graph convolutional network (gcn) on it with `torch_geometric` felt like trying to move a mountain with a spoon. That experience, coupled with others since then, has given me some solid insights on how to approach the problem of training gcn’s on massive graphs. It isn't a trivial undertaking, and there are multiple avenues we can explore, each with its own set of tradeoffs.
+, let's tackle this. I remember a particularly challenging project back in my early days working on recommendation systems. We were dealing with a user-item graph that was frankly, enormous. Training a graph convolutional network (gcn) on it with `torch_geometric` felt like trying to move a mountain with a spoon. That experience, coupled with others since then, has given me some solid insights on how to approach the problem of training gcn’s on massive graphs. It isn't a trivial undertaking, and there are multiple avenues we can explore, each with its own set of tradeoffs.
 
 The core challenge lies in the sheer size of the graph. A typical gcn operation requires propagating information across the graph, involving loading the entire adjacency matrix or neighbor information into memory. For massive graphs, this simply isn't feasible. We run into out-of-memory errors faster than you can blink. Therefore, we need strategies that allow us to work with only a subset of the graph at a time, leveraging techniques like sampling and batching.
 
@@ -139,14 +139,14 @@ for subgraph_data in [subgraph_1, subgraph_2]:
 
 ```
 
-This code illustrates how you would train a model on two separate partitions of the graph.  Real partitioners like Metis are used in practice, and those often require significant processing outside the graph training routine. You should refer to research papers on scalable gcn training for how best to implement this.
+This code illustrates how you would train a model on two separate partitions of the graph. Real partitioners like Metis are used in practice, and those often require significant processing outside the graph training routine. You should refer to research papers on scalable gcn training for how best to implement this.
 
 **Resources**
 
 For a deeper understanding of these techniques and more, I highly recommend checking out the following:
 
-*   **"Graph Representation Learning"** by William L. Hamilton. This book provides a comprehensive look at various graph learning methods, including those used in `torch_geometric`.
-*   The official `torch_geometric` documentation is invaluable. They have excellent examples and tutorials on using different loaders and other utilities. Pay particular attention to `torch_geometric.loader`.
-*   Research papers on **"Scalable Graph Neural Networks"**. Papers exploring techniques like cluster-gcn and graph-saging will be very informative.  Search for publications on the *arXiv* database.
+- **"Graph Representation Learning"** by William L. Hamilton. This book provides a comprehensive look at various graph learning methods, including those used in `torch_geometric`.
+- The official `torch_geometric` documentation is invaluable. They have excellent examples and tutorials on using different loaders and other utilities. Pay particular attention to `torch_geometric.loader`.
+- Research papers on **"Scalable Graph Neural Networks"**. Papers exploring techniques like cluster-gcn and graph-saging will be very informative. Search for publications on the _arXiv_ database.
 
 Working with large graphs is about intelligently reducing the computational burden without sacrificing the model's ability to learn from the global structure of the data. Using a combination of techniques like mini-batching, layer-wise sampling, and even graph partitioning, as well as understanding how the `torch_geometric` API handles those concepts, will allow you to successfully train gcn models on graphs that would have previously been intractable. It requires careful planning, optimization, and experimentation, but it is definitely within the realm of possibility.

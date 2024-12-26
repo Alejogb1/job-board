@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-a-cdn-caching-my-private-active-storage-assets-in-rails"
 ---
 
-Alright, let's unpack this. I've seen this specific headache rear its head more than a few times in my career, and it's almost always rooted in a subtle misunderstanding of how CDNs interact with Rails and, crucially, Active Storage. The short answer is: your CDN isn't *intentionally* caching your private assets; it's doing what it's designed to do—cache based on headers. The real culprit is often a misconfigured caching policy or an inadvertent exposure of your private asset URLs that we need to address.
+, let's unpack this. I've seen this specific headache rear its head more than a few times in my career, and it's almost always rooted in a subtle misunderstanding of how CDNs interact with Rails and, crucially, Active Storage. The short answer is: your CDN isn't _intentionally_ caching your private assets; it's doing what it's designed to do—cache based on headers. The real culprit is often a misconfigured caching policy or an inadvertent exposure of your private asset URLs that we need to address.
 
 First, let’s set the stage. Active Storage, by default, generates presigned URLs when you access private assets. These URLs are time-limited and should, theoretically, only grant access within their validity window. However, most CDNs, being content-agnostic, primarily operate on HTTP caching headers (like `Cache-Control` and `Expires`) and the `ETag`. If these headers are present, the CDN will happily cache the response, regardless of whether the URL is supposed to be temporary. Herein lies the issue. Let's explore the typical scenarios that lead to this.
 
@@ -36,6 +36,7 @@ def url_with_no_cache(expires_in: 5.minutes)
     "#{url}?cache_control=no-store" # a simple trick to bust cached versions.
 end
 ```
+
 and in our controller
 
 ```ruby
@@ -69,7 +70,7 @@ def show
 end
 ```
 
-The service layer was directly fetching the service url from the active storage blob. This, combined with client-side caching, was the cause. We found that the same url was being generated, even after permissions were changed. The correct way to approach this was to use a presigned url *each time* the controller action was hit. This method regenerates a valid presigned url:
+The service layer was directly fetching the service url from the active storage blob. This, combined with client-side caching, was the cause. We found that the same url was being generated, even after permissions were changed. The correct way to approach this was to use a presigned url _each time_ the controller action was hit. This method regenerates a valid presigned url:
 
 ```ruby
 def fetch_resource_url(resource)
@@ -87,10 +88,11 @@ def show
     redirect_to url
 end
 ```
+
 This approach ensures a new URL is generated every time. We also, as before, used a custom method that added a `cache_control=no-store` query parameter to further prevent CDN caching. This pattern is very common when it comes to private resources, where access can change frequently. We should also note that if the presigned url expires during download, that can cause an access error, so we need to set the expiration high enough for expected downloads.
 
-Finally, one less obvious case I recall was related to misconfigured CDN settings. In another instance, we had configured our CDN to ignore certain headers, *including* the `Cache-Control`, which was in place with the `no-store` parameter! This essentially told the CDN: "Hey, ignore what Rails is telling you about caching, and just use our default settings" which resulted in all private assets being cached aggressively! It goes without saying that checking your CDN's configuration alongside your application’s is an absolute must.
+Finally, one less obvious case I recall was related to misconfigured CDN settings. In another instance, we had configured our CDN to ignore certain headers, _including_ the `Cache-Control`, which was in place with the `no-store` parameter! This essentially told the CDN: "Hey, ignore what Rails is telling you about caching, and just use our default settings" which resulted in all private assets being cached aggressively! It goes without saying that checking your CDN's configuration alongside your application’s is an absolute must.
 
-For deeper reading, I would strongly recommend checking out *High Performance Browser Networking* by Ilya Grigorik. It provides a comprehensive overview of browser caching mechanisms and their interactions with proxies and CDNs. Also, for a solid understanding of HTTP caching and headers, the HTTP specification documents on the W3C website are invaluable. Finally, reviewing the Active Storage source code itself on Github can be beneficial. Pay particular attention to the implementations of `service_url` and `rails_blob_url` functions. This gives you an understanding at the source about the underlying mechanics.
+For deeper reading, I would strongly recommend checking out _High Performance Browser Networking_ by Ilya Grigorik. It provides a comprehensive overview of browser caching mechanisms and their interactions with proxies and CDNs. Also, for a solid understanding of HTTP caching and headers, the HTTP specification documents on the W3C website are invaluable. Finally, reviewing the Active Storage source code itself on Github can be beneficial. Pay particular attention to the implementations of `service_url` and `rails_blob_url` functions. This gives you an understanding at the source about the underlying mechanics.
 
 In summary, the caching of private Active Storage assets by your CDN is rarely a deliberate act of malice. It is generally a consequence of incorrect caching headers or a reliance on the `service_url` without realizing that it's not configured to actively disable caching. The key is to generate a fresh, presigned URL with a `Cache-Control: no-store` header or a cache busting parameter each time you need to serve a private asset. Always test with a staging environment to observe the behavior of your CDN in action. Remember, caching, while a powerful tool for performance, can be a double-edged sword when not managed correctly. So, keep those headers in check, and you'll avoid these frustrating episodes.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-wagtail-django-fields-are-causing-the-unknown-field-error"
 ---
 
-Alright, let's talk about those pesky "unknown field" errors in Wagtail, specifically when you're working within a Django project. I've definitely been down that rabbit hole a few times, and it almost always boils down to a mismatch between how your model fields are defined and how Wagtail expects to see them, especially within streamfield blocks or panel configurations. The error message itself is a bit generic, which can be frustrating, but let's break down the most common culprits and how to address them.
+, let's talk about those pesky "unknown field" errors in Wagtail, specifically when you're working within a Django project. I've definitely been down that rabbit hole a few times, and it almost always boils down to a mismatch between how your model fields are defined and how Wagtail expects to see them, especially within streamfield blocks or panel configurations. The error message itself is a bit generic, which can be frustrating, but let's break down the most common culprits and how to address them.
 
 The core issue usually arises from Wagtail’s abstraction over Django’s model fields. Wagtail’s `ModelAdmin`, `StreamField` and `panels` in page models need to interact seamlessly with the underlying Django model fields, and any discrepancy between them can result in this "Unknown field" error. We’re dealing with a form of reflection, where Wagtail dynamically constructs forms and interfaces based on the Django model's field definitions. If these aren’t perfectly aligned, boom – you get the dreaded error.
 
@@ -65,7 +65,7 @@ class MyPageWithStreamField(Page):
     ]
 ```
 
-This example should be fine, assuming that the `MyCustomBlock` fields align with your intended data. However, if you try referencing a non-existent field when working with these blocks in a template, for example, you'll see a "template does not exist" or a rendering issue, not the specific "Unknown field" error. The 'Unknown field' error in Streamfields usually occurs when you declare the block fields themselves *incorrectly* within the definition of the `StructBlock` itself. For example:
+This example should be fine, assuming that the `MyCustomBlock` fields align with your intended data. However, if you try referencing a non-existent field when working with these blocks in a template, for example, you'll see a "template does not exist" or a rendering issue, not the specific "Unknown field" error. The 'Unknown field' error in Streamfields usually occurs when you declare the block fields themselves _incorrectly_ within the definition of the `StructBlock` itself. For example:
 
 ```python
 from wagtail.blocks import StructBlock, CharBlock, DateBlock, IntegerBlock

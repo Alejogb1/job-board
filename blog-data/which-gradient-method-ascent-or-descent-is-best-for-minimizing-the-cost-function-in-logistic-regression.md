@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "which-gradient-method-ascent-or-descent-is-best-for-minimizing-the-cost-function-in-logistic-regression"
 ---
 
-Okay, let's tackle this. It’s a question that seems straightforward on the surface, but understanding the nuance is key to effective model training. I remember vividly a project I worked on several years back, involving predicting user churn for a subscription service – a classic logistic regression problem, where picking the wrong optimization approach early on set us back a good couple of days debugging. So, to directly answer your question: gradient *descent* is the method you should be using for minimizing the cost function in logistic regression.
+, let's tackle this. It’s a question that seems straightforward on the surface, but understanding the nuance is key to effective model training. I remember vividly a project I worked on several years back, involving predicting user churn for a subscription service – a classic logistic regression problem, where picking the wrong optimization approach early on set us back a good couple of days debugging. So, to directly answer your question: gradient _descent_ is the method you should be using for minimizing the cost function in logistic regression.
 
-Now, why descent and not ascent? Think about what the cost function in logistic regression represents. In most cases, particularly for binary classification, we’re using a cost or loss function – cross-entropy loss is a common one – which essentially measures how ‘wrong’ our model's predictions are compared to the actual labels. A higher cost indicates worse performance; the closer we get to zero (or the theoretical minimum), the better our model performs. Gradient descent’s goal is precisely to locate the lowest point of this ‘cost landscape’, much like a ball rolling downhill in a physical sense. Gradient *ascent*, conversely, would seek to maximize this function, which is fundamentally counterproductive in our case of wanting a minimal error.
+Now, why descent and not ascent? Think about what the cost function in logistic regression represents. In most cases, particularly for binary classification, we’re using a cost or loss function – cross-entropy loss is a common one – which essentially measures how ‘wrong’ our model's predictions are compared to the actual labels. A higher cost indicates worse performance; the closer we get to zero (or the theoretical minimum), the better our model performs. Gradient descent’s goal is precisely to locate the lowest point of this ‘cost landscape’, much like a ball rolling downhill in a physical sense. Gradient _ascent_, conversely, would seek to maximize this function, which is fundamentally counterproductive in our case of wanting a minimal error.
 
 The core idea behind gradient descent lies in iteratively updating the model's parameters (weights and biases) in the direction of the negative gradient of the cost function with respect to those parameters. The gradient, in essence, points towards the steepest increase of the cost function. By going in the opposite direction, we descend towards the minimum. This requires us to calculate the partial derivatives of the cost function with respect to each of our parameters, and then use those derivatives to update the parameters themselves.
 
-Let's break down how this process looks. Suppose we have a logistic regression model parameterized by weights *w* and bias *b*. Our goal is to find the *w* and *b* that minimize the cost function *J(w, b)*. A simplified representation using cross-entropy loss might look something like this:
+Let's break down how this process looks. Suppose we have a logistic regression model parameterized by weights _w_ and bias _b_. Our goal is to find the _w_ and _b_ that minimize the cost function _J(w, b)_. A simplified representation using cross-entropy loss might look something like this:
 
 ```python
 import numpy as np
@@ -71,6 +71,7 @@ print(f"Trained Bias: {trained_b}")
 print(f"Final Cost: {costs[-1]:.4f}")
 
 ```
+
 This function `gradient_descent` is iteratively adjusting our weights `w` and bias `b` by subtracting a small proportion (defined by the `learning_rate`) of the gradient, leading our model towards the minimum cost.
 
 And just for completeness, here's a little snippet showing how to use the updated model, with some new data:
@@ -88,10 +89,11 @@ y_pred, y_pred_binary = test_model(X_test, trained_w, trained_b)
 print("Predicted Probabilities:",y_pred)
 print("Binary Predictions:",y_pred_binary)
 ```
+
 Here, we can see our model performing on unseen data, using the final weights and bias obtained after our gradient descent procedure.
 
 It is crucial to note that while gradient descent is a very common algorithm, it does have its drawbacks. It can be slow to converge in some cases, especially when dealing with large datasets or very complex models. Also, it can get stuck in local minima, which are not the absolute lowest points in the cost function but still make the model less accurate. More advanced methods like stochastic gradient descent (sgd), or Adam, try to address these limitations.
 
 If you're looking for a deep dive, I'd highly recommend "Deep Learning" by Goodfellow, Bengio, and Courville. It covers the mathematical underpinnings of gradient descent and its variants in detail. Also, "Pattern Recognition and Machine Learning" by Christopher Bishop provides a more general treatment of machine learning algorithms, which can be very useful in understanding the broader context of logistic regression and optimization. For a more focused mathematical treatment of optimization itself, "Numerical Optimization" by Nocedal and Wright is an essential resource. Additionally, understanding the principles behind convexity of the cost function and conditions for convergence of gradient descent would be very useful. For that you might want to take a look at courses on convex optimization.
 
-In conclusion, gradient *descent* is absolutely the approach to take when minimizing the cost function in logistic regression. Understanding its mechanics and the practical concerns surrounding its use is essential for anyone working in this field, and it was certainly key to overcoming some of the challenges we faced when I was optimizing churn models all those years ago. It's not just about knowing the answer, but really grasping how the algorithm moves towards the solution.
+In conclusion, gradient _descent_ is absolutely the approach to take when minimizing the cost function in logistic regression. Understanding its mechanics and the practical concerns surrounding its use is essential for anyone working in this field, and it was certainly key to overcoming some of the challenges we faced when I was optimizing churn models all those years ago. It's not just about knowing the answer, but really grasping how the algorithm moves towards the solution.

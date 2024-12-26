@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-specify-features-for-a-richtextblock-in-wagtail"
 ---
 
-Alright, let's tackle this. It's a question I've seen pop up a fair bit, and I remember a rather messy project back in ‘18 where we initially stumbled with complex RichTextBlock configurations in Wagtail. The nuances of custom features can be surprisingly tricky, but once you grasp the core concepts, it becomes quite manageable. So, how do you actually specify features for a RichTextBlock? Let’s break it down.
+, let's tackle this. It's a question I've seen pop up a fair bit, and I remember a rather messy project back in ‘18 where we initially stumbled with complex RichTextBlock configurations in Wagtail. The nuances of custom features can be surprisingly tricky, but once you grasp the core concepts, it becomes quite manageable. So, how do you actually specify features for a RichTextBlock? Let’s break it down.
 
 At its heart, a Wagtail RichTextBlock leverages a library called Draftail, which itself is based on Facebook's Draft.js. Draft.js provides the underlying mechanism for creating and manipulating rich text, and Draftail acts as the integration layer with Wagtail. Think of it as a specialized wrapper that provides the specific UI and functionality we see within the Wagtail admin. This is critical to understanding because features aren't directly specified in some Wagtail-specific language, but rather through configuration parameters that Draftail understands.
 
@@ -43,34 +43,38 @@ Creating custom features usually involves writing JavaScript code that extends D
 ```javascript
 // custom_features.js
 
-import { DraftailEditor, DraftailConfig } from 'draftail';
+import { DraftailEditor, DraftailConfig } from "draftail";
 
 // Placeholder function to mimic a citation insertion; in reality this would include a React component.
 const citationPlugin = (options) => {
-    return {
-        type: 'CITATION',
-        button: {
-            label: 'Cite',
-            icon: 'fa-quote-right',
-            onClick: (editorState, setEditorState) => {
-              // Custom functionality for inserting a citation here
-              const contentState = editorState.getCurrentContent();
-              const selection = editorState.getSelection();
-              const newContentState = contentState.createEntity('CITATION', 'IMMUTABLE');
-              const entityKey = newContentState.getLastCreatedEntityKey();
-              const newEditorState = DraftailEditor.insertEntity(editorState, entityKey, ' ', selection.getStartOffset()); //Inserts a space so the citation can be clicked in draftail, change as needed
+  return {
+    type: "CITATION",
+    button: {
+      label: "Cite",
+      icon: "fa-quote-right",
+      onClick: (editorState, setEditorState) => {
+        // Custom functionality for inserting a citation here
+        const contentState = editorState.getCurrentContent();
+        const selection = editorState.getSelection();
+        const newContentState = contentState.createEntity(
+          "CITATION",
+          "IMMUTABLE"
+        );
+        const entityKey = newContentState.getLastCreatedEntityKey();
+        const newEditorState = DraftailEditor.insertEntity(
+          editorState,
+          entityKey,
+          " ",
+          selection.getStartOffset()
+        ); //Inserts a space so the citation can be clicked in draftail, change as needed
 
-              setEditorState(newEditorState);
-
-            },
-        },
-    };
+        setEditorState(newEditorState);
+      },
+    },
+  };
 };
 
-
-DraftailConfig.registerPlugin('citation', citationPlugin);
-
-
+DraftailConfig.registerPlugin("citation", citationPlugin);
 ```
 
 Then, within your Django settings, you need to add this file to your `WAGTAILADMIN_RICH_TEXT_EDITORS` settings as follows:
@@ -88,6 +92,7 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
     }
 }
 ```
+
 Finally, remember to include `'citation'` in your `features` list when defining your `RichTextBlock` in the models.py file like so:
 
 ```python

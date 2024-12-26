@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-identify-a-remote-computer-as-a-domain-controller"
 ---
 
-Alright, let's tackle this one. Identifying a remote computer acting as a domain controller isn't always straightforward, especially when direct access isn't an option. Over the years, I've encountered this specific challenge numerous times, ranging from initial network assessments to troubleshooting complex domain-related issues. It's a task that often requires a blend of network discovery techniques and active directory querying, avoiding actions that can trigger alerts, of course. Let's delve into some dependable methods and their implementations.
+, let's tackle this one. Identifying a remote computer acting as a domain controller isn't always straightforward, especially when direct access isn't an option. Over the years, I've encountered this specific challenge numerous times, ranging from initial network assessments to troubleshooting complex domain-related issues. It's a task that often requires a blend of network discovery techniques and active directory querying, avoiding actions that can trigger alerts, of course. Let's delve into some dependable methods and their implementations.
 
 The core principle here revolves around two fundamental concepts: identifying services unique to domain controllers and querying Active Directory directly using remote tools. Simply relying on a machine's name isn't enough; a server can be named "DC01" and not actually be a domain controller. We need concrete evidence.
 
@@ -84,6 +84,7 @@ try{
   Write-Host "Error connecting to AD: $_"
 }
 ```
+
 This script uses a reverse dns lookup to convert a given ip address into a hostname and then searches active directory for a matching computer object. After locating the computer object it obtains the domain using the distinguished name and then locates the active domain controller using the dc attribute of the domain object. The script ensures all steps are successful using try catch statements which provide robustness and helpful diagnostic information in the event of a failure.
 
 For those interested in delving deeper into active directory internals, i highly recommend reading "active directory" by bill english. It offers invaluable insights into the structure and functionalities of AD, which is useful for more advanced discovery methods. Another worthwhile read is "mastering active directory" by brian desmet. It covers advanced topics and operational considerations, specifically valuable for diagnosing domain controller roles and configurations. Lastly, understanding network protocols is fundamental, and "tcp/ip illustrated" by w. richard stevens is a classic in the field that greatly expands one's understanding.

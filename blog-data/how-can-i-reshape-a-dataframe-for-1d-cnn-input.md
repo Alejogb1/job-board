@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-reshape-a-dataframe-for-1d-cnn-input"
 ---
 
-Okay, let’s tackle this. I've spent a fair bit of time dealing with the nuances of preparing data for convolutional neural networks, and getting a dataframe prepped for 1D CNNs often involves a few crucial steps beyond your usual reshaping tasks. A common scenario I encountered was dealing with time-series data from sensor readings that were initially structured as tabular data but needed to be fed into a convolutional model. The devil's always in the details, and the exact approach depends on the specifics of your data and the model architecture you're targeting.
+, let’s tackle this. I've spent a fair bit of time dealing with the nuances of preparing data for convolutional neural networks, and getting a dataframe prepped for 1D CNNs often involves a few crucial steps beyond your usual reshaping tasks. A common scenario I encountered was dealing with time-series data from sensor readings that were initially structured as tabular data but needed to be fed into a convolutional model. The devil's always in the details, and the exact approach depends on the specifics of your data and the model architecture you're targeting.
 
 The fundamental challenge lies in the inherent dimensionality mismatch. DataFrames are naturally 2D structures, with rows and columns, while a 1D CNN expects input that's fundamentally 3D. These dimensions, for a typical 1D CNN, are: `(batch_size, timesteps, features)`. The `batch_size` is handled implicitly by the training process, we only worry about our individual data example. The `timesteps` refer to the sequential nature of the input – imagine this as the ‘length’ of your input sequences. The `features` represent the number of attributes or channels measured at each timestep. This might not seem obvious in the DataFrame representation, so let's go through how to transform it.
 
@@ -30,13 +30,13 @@ import numpy as np
 
 def create_sequences(df, sequence_length, features, stride=1):
     """Transforms a dataframe into sequences for 1D CNN input.
-    
+
     Args:
         df (pd.DataFrame): Input dataframe
         sequence_length (int): Length of each sequence
         features (list): List of column names representing the features to use.
         stride (int): The stride/step when sliding the window.
-        
+
     Returns:
         np.array: A numpy array of shape (n_sequences, sequence_length, n_features)
     """

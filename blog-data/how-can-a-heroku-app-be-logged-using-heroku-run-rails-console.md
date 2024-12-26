@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-a-heroku-app-be-logged-using-heroku-run-rails-console"
 ---
 
-Okay, let's talk about logging within the context of a Heroku application when interacting with `heroku run rails console`. This isn't always as straightforward as one might expect, and I’ve certainly had my share of troubleshooting sessions with this particular scenario back in my days working on several deployment pipelines. The challenge often stems from the nature of the `heroku run` command, particularly how it interacts with standard output streams and the way your Rails application handles logging under different execution environments.
+, let's talk about logging within the context of a Heroku application when interacting with `heroku run rails console`. This isn't always as straightforward as one might expect, and I’ve certainly had my share of troubleshooting sessions with this particular scenario back in my days working on several deployment pipelines. The challenge often stems from the nature of the `heroku run` command, particularly how it interacts with standard output streams and the way your Rails application handles logging under different execution environments.
 
 The core issue is that `heroku run rails console` spawns a one-off dyno, essentially a fresh isolated environment, to execute your console session. This new environment might not behave identically to your web dynos where the actual application runs. Specifically, standard output and standard error streams that your application might use for logging aren't automatically aggregated and made visible in your Heroku logs in the same way they are in persistent dynos. When you're using standard `Rails.logger` methods, you're typically relying on the configured Rails logger to redirect output – and, often, these logs are set to a particular file or a dedicated logging service in production. But this configuration isn't necessarily in play when running a console command.
 
 Here's a breakdown of the problems and practical solutions based on my experience:
 
-First, let’s acknowledge that the standard output of your `rails console` session is indeed visible on your terminal where you're running the `heroku run` command. The issue arises when you try to use standard Rails logging methods *within* that console session and expect those log messages to appear in your general Heroku logs, viewable with `heroku logs --tail`. They won't.
+First, let’s acknowledge that the standard output of your `rails console` session is indeed visible on your terminal where you're running the `heroku run` command. The issue arises when you try to use standard Rails logging methods _within_ that console session and expect those log messages to appear in your general Heroku logs, viewable with `heroku logs --tail`. They won't.
 
 **Problem 1: The Disconnect between Console Logs and Heroku's Log Aggregation:**
 
@@ -18,7 +18,7 @@ The logging infrastructure within your running web application and the detached 
 
 **Solution 1: Explicitly Directing Output to `STDOUT` in the Console:**
 
-One straightforward approach, especially for debugging, is to make sure your logger within the console is explicitly using `STDOUT`. While this doesn't solve the issue of seeing those logs *later* via `heroku logs --tail`, it makes them visible in the terminal where you're running the console, which can be invaluable. In production environment configurations, you might need to modify your logger's configuration dynamically within the console session. This would look something like this:
+One straightforward approach, especially for debugging, is to make sure your logger within the console is explicitly using `STDOUT`. While this doesn't solve the issue of seeing those logs _later_ via `heroku logs --tail`, it makes them visible in the terminal where you're running the console, which can be invaluable. In production environment configurations, you might need to modify your logger's configuration dynamically within the console session. This would look something like this:
 
 ```ruby
 # Within heroku run rails console:
@@ -79,8 +79,9 @@ end
 #Within heroku run RAILS_LOG_TO_STDOUT=true rails console:
 Rails.logger.info("Centralized logging initializer in action!")
 ```
+
 With this initializer in place, your logging will be consistent whether you are running web dynos or a one-off console session. The key aspect to note is the use of `ENV['RAILS_LOG_TO_STDOUT']`, which allows for a flexible logging configuration. If that variable is not set, then your logger will most likely be writing to a log file, or whatever the default behavior your application has set.
 
-It is good practice to review the excellent work of *Martin Fowler* and *Kent Beck* in "Refactoring: Improving the Design of Existing Code" to ensure your changes in your logging system do not introduce subtle problems. Another excellent resource that will help you understand logging, its intricacies and design choices is the book “Release It!: Design and Deploy Production-Ready Software” by *Michael T. Nygard*, it tackles best practices in software architecture.
+It is good practice to review the excellent work of _Martin Fowler_ and _Kent Beck_ in "Refactoring: Improving the Design of Existing Code" to ensure your changes in your logging system do not introduce subtle problems. Another excellent resource that will help you understand logging, its intricacies and design choices is the book “Release It!: Design and Deploy Production-Ready Software” by _Michael T. Nygard_, it tackles best practices in software architecture.
 
 In summary, debugging Heroku applications via console logging requires a good grasp of environment variables, the different execution contexts of dynos, and an awareness that console sessions do not automatically pipe their logs to Logplex. By explicitly routing your logger's output to standard out using environment variables and potentially configuring a consistent formatter through an initializer, you gain much better visibility into what's happening within your application, even during those one-off `heroku run` debugging sessions.

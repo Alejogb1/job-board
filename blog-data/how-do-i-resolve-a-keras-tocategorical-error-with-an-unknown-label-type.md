@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-resolve-a-keras-tocategorical-error-with-an-unknown-label-type"
 ---
 
-Okay, let's tackle this. I've definitely been down this road before – that particularly frustrating `to_categorical` error when your labels are behaving unexpectedly. It's usually not the function itself at fault, but rather something about how the input data is being interpreted. Let's break it down, focusing on the underlying issues and how to fix them, drawing from my past experiences.
+, let's tackle this. I've definitely been down this road before – that particularly frustrating `to_categorical` error when your labels are behaving unexpectedly. It's usually not the function itself at fault, but rather something about how the input data is being interpreted. Let's break it down, focusing on the underlying issues and how to fix them, drawing from my past experiences.
 
 The `keras.utils.to_categorical` function is designed to convert a vector of class integers into a binary class matrix, often referred to as one-hot encoding. This encoding is crucial for many classification tasks in machine learning. The typical scenario is that you provide an array-like object of integer labels, and it returns a matrix where each row corresponds to a sample, and the column corresponds to the class, with a 1 in the column representing the sample's class.
 
@@ -92,8 +92,8 @@ print("Categorical Labels:\n", categorical_labels)
 
 In the above example, I first ensure all labels are converted to integers. Then the same consecutive integer mapping applied previously. These steps make the input suitable for `to_categorical`.
 
-The key takeaway here is that before you use `to_categorical`, you should always ensure your input labels are *consecutive integers starting from zero*. This process may involve a combination of type conversions, remapping, and cleaning of your original labels. This approach generally resolves most issues I've seen in the field.
+The key takeaway here is that before you use `to_categorical`, you should always ensure your input labels are _consecutive integers starting from zero_. This process may involve a combination of type conversions, remapping, and cleaning of your original labels. This approach generally resolves most issues I've seen in the field.
 
-For further information regarding data preprocessing for neural networks, I'd recommend consulting the scikit-learn documentation, specifically covering `LabelEncoder` and data preprocessing tools in general. The book *Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow* by Aurélien Géron is also an excellent source, with a thorough section on categorical data preprocessing. Further details about Keras can be found on the official TensorFlow website which has a very thorough Keras section. These resources provide solid foundations for handling real-world machine-learning data effectively.
+For further information regarding data preprocessing for neural networks, I'd recommend consulting the scikit-learn documentation, specifically covering `LabelEncoder` and data preprocessing tools in general. The book _Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow_ by Aurélien Géron is also an excellent source, with a thorough section on categorical data preprocessing. Further details about Keras can be found on the official TensorFlow website which has a very thorough Keras section. These resources provide solid foundations for handling real-world machine-learning data effectively.
 
 In my experience, these strategies cover the majority of common `to_categorical` issues. Always inspect your labels, understand their format, and apply appropriate preprocessing steps, and you'll find these kinds of errors are relatively straightforward to address.

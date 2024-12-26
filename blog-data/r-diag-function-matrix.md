@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "r-diag-function-matrix"
 ---
 
-Okay I see the question its about the `diag` function in R and how it interacts with matrices Been there done that a million times it always catches people out especially when they are coming from other languages
+I see the question its about the `diag` function in R and how it interacts with matrices Been there done that a million times it always catches people out especially when they are coming from other languages
 
 So look its really straightforward but let's break it down and I will try to make it as foolproof as possible I've spent hours debugging this exact thing and trust me I get your pain First thing first lets get this out of the way the `diag` function is versatile but not super intuitive right off the bat
 
@@ -86,16 +86,16 @@ When youre working with transformations or eigenvalue decompositions or anything
 
 **Common Pitfalls**
 
-*   **Forgetting the Input Type:** The big one and usually the source of most mistakes if you have a vector and you expect it to extract a diagonal from it because you have a matrix in your head you are doing it wrong or vice versa you may try to create a matrix using `diag()` with another matrix and it extracts the diagonal instead
-*   **Modification in Place**: In my last example `diag(my_matrix_2) <- my_vector_2` modifies the original matrix this can be tricky when your debugging you might not realise your initial matrix is not the same anymore when you are expecting it to be in these cases you should create new matrices to be safe
-*   **Dimensions**: If the vector you provide is smaller than the matrix you get a weird behavior where it tries to recycle the vector's elements until it can fill the whole matrix diagonal that could create unexpected results if you have not worked with this function before or if the dimensions arent what you expect
-*   **Non-Square Matrices**: If you hand `diag` a non-square matrix it will extract the main diagonal up to the limit where either rows or columns runs out
+- **Forgetting the Input Type:** The big one and usually the source of most mistakes if you have a vector and you expect it to extract a diagonal from it because you have a matrix in your head you are doing it wrong or vice versa you may try to create a matrix using `diag()` with another matrix and it extracts the diagonal instead
+- **Modification in Place**: In my last example `diag(my_matrix_2) <- my_vector_2` modifies the original matrix this can be tricky when your debugging you might not realise your initial matrix is not the same anymore when you are expecting it to be in these cases you should create new matrices to be safe
+- **Dimensions**: If the vector you provide is smaller than the matrix you get a weird behavior where it tries to recycle the vector's elements until it can fill the whole matrix diagonal that could create unexpected results if you have not worked with this function before or if the dimensions arent what you expect
+- **Non-Square Matrices**: If you hand `diag` a non-square matrix it will extract the main diagonal up to the limit where either rows or columns runs out
 
 **Recommendations**
 
-*   **Read the Official Documentation** the best resource is always the official R documentation so `?diag` in your R console is your friend i cannot stress enough how much time it saves to read the docs
-*   **Linear Algebra Textbooks** While not specifically about R the concepts behind the operations are more important than just syntax and that can be found in books like "Linear Algebra and Its Applications" by Gilbert Strang that will be your bread and butter once you know what you are doing with matrices
-*   **Practice:** Play with it and experiment on different types of vectors and matrices you can create different types of matrices using for loops or other functions this can really solidify your grasp of `diag`
+- **Read the Official Documentation** the best resource is always the official R documentation so `?diag` in your R console is your friend i cannot stress enough how much time it saves to read the docs
+- **Linear Algebra Textbooks** While not specifically about R the concepts behind the operations are more important than just syntax and that can be found in books like "Linear Algebra and Its Applications" by Gilbert Strang that will be your bread and butter once you know what you are doing with matrices
+- **Practice:** Play with it and experiment on different types of vectors and matrices you can create different types of matrices using for loops or other functions this can really solidify your grasp of `diag`
 
 **Final Thoughts**
 

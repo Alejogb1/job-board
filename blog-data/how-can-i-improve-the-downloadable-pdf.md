@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-improve-the-downloadable-pdf"
 ---
 
-Okay, let's talk about optimizing downloadable PDFs; it's a topic I've encountered more times than I care to remember in my career. Initially, it seems straightforward, but like many things in technology, the devil is in the details. I recall one particularly challenging project years ago where we were generating thousands of reports daily, all as PDFs, and the poor user experience was primarily due to unoptimized files. It impacted everything from server load to user frustration. This experience led me down a path of deep exploration into best practices, and I've learned a few things along the way. Let me share what I’ve found to be most effective.
+, let's talk about optimizing downloadable PDFs; it's a topic I've encountered more times than I care to remember in my career. Initially, it seems straightforward, but like many things in technology, the devil is in the details. I recall one particularly challenging project years ago where we were generating thousands of reports daily, all as PDFs, and the poor user experience was primarily due to unoptimized files. It impacted everything from server load to user frustration. This experience led me down a path of deep exploration into best practices, and I've learned a few things along the way. Let me share what I’ve found to be most effective.
 
-The first area to tackle is file size. Large PDFs impact download times and can be a significant bandwidth hog, especially if you're dealing with high traffic. Consider what's inside these files – typically, you'll have text, images, and sometimes, embedded fonts. The most obvious culprit for excessive size is usually image data. If you are creating PDFs programmatically, ensure images are compressed and resized appropriately for their display within the PDF. There is no need for a 3000x2000 pixel image to display in a 200x150 pixel box. This resizing should happen *before* the image is embedded in the pdf generation process, so the pdf engine doesn't handle any work that could be done earlier.
+The first area to tackle is file size. Large PDFs impact download times and can be a significant bandwidth hog, especially if you're dealing with high traffic. Consider what's inside these files – typically, you'll have text, images, and sometimes, embedded fonts. The most obvious culprit for excessive size is usually image data. If you are creating PDFs programmatically, ensure images are compressed and resized appropriately for their display within the PDF. There is no need for a 3000x2000 pixel image to display in a 200x150 pixel box. This resizing should happen _before_ the image is embedded in the pdf generation process, so the pdf engine doesn't handle any work that could be done earlier.
 
 Let’s look at an example in Python, using the `Pillow` (PIL Fork) library for image manipulation before embedding it into a pdf using `reportlab`.
 
@@ -24,12 +24,12 @@ def create_optimized_pdf(image_path, output_path):
         # resize if required (keeping aspect ratio, this is crucial)
         max_size = (300, 200)  # Example: Max width 300, max height 200
         img.thumbnail(max_size)
-        
+
         #compress, ensure using JPEG if possible to get smaller size
         img_path_optimized = "temp_optimized.jpeg"
         img = img.convert('RGB') #ensure JPEG save works
         img.save(img_path_optimized, "jpeg", quality=75)  # adjust the quality as required
-    
+
         c = canvas.Canvas(output_path, pagesize=letter)
 
         # Place the image. Note we’re using the optimized version
@@ -79,7 +79,7 @@ def linearize_pdf(input_path, output_path):
     except Exception as e:
        print (f"Error in linearizing pdf {e}")
        return False
-    
+
 if __name__ == "__main__":
     input_pdf = "large_document.pdf" #replace with your own input path
     output_pdf = "linearized_document.pdf"

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-get-10000-random-numbers-from-chainlink-vrf-v2"
 ---
 
-Okay, let's talk about generating a large batch of random numbers using Chainlink VRF V2. It’s a problem I’ve faced before, particularly back in 2022 when working on a generative art project that required a substantial amount of entropy for unique creation variations. We quickly discovered that calling VRF directly for every single number was not only inefficient but would also have dramatically increased gas costs. The key here isn't just about getting random numbers; it's about doing so in a manner that's both economical and practical.
+, let's talk about generating a large batch of random numbers using Chainlink VRF V2. It’s a problem I’ve faced before, particularly back in 2022 when working on a generative art project that required a substantial amount of entropy for unique creation variations. We quickly discovered that calling VRF directly for every single number was not only inefficient but would also have dramatically increased gas costs. The key here isn't just about getting random numbers; it's about doing so in a manner that's both economical and practical.
 
 The fundamental limitation of VRF, or any on-chain randomness solution, is the cost of each request. Each call to the VRF contract, involving cryptographic operations and oracle interaction, is a fairly gas-intensive process. So, fetching 10,000 independent random values the straightforward way, i.e., issuing 10,000 separate requests, is almost certainly a bad approach. The approach needs to be optimized to make efficient use of the VRF mechanism.
 
@@ -17,7 +17,7 @@ Here's a high-level breakdown of the process:
 1.  **Request a Single Random Value:** Initiate a single VRF request to the Chainlink contract.
 2.  **Receive the Random Value:** In your fulfillment function, retrieve the random value provided by the VRF oracle.
 3.  **Generate Multiple Numbers:** Using this single value as a seed, apply a deterministic hashing or calculation method to generate your desired 10,000 numbers. This step is crucial to make it cost-effective.
-4. **Use the Numbers:** Then you can employ the generated random numbers within your application as needed.
+4.  **Use the Numbers:** Then you can employ the generated random numbers within your application as needed.
 
 Now, let's dive into some actual code examples in Solidity, illustrating different deterministic methods:
 
@@ -158,14 +158,14 @@ For added complexity or if you have more specific requirements, you might combin
 
 **Key Considerations and Further Reading:**
 
-*   **Gas Optimization:** Always be mindful of the gas consumption of your deterministic calculations. More complex calculations will increase gas usage. The LCG tends to be the most gas-efficient approach here.
-*   **Quality of Pseudorandomness:** The pseudorandom sequences derived via deterministic methods will have statistical properties that may not be perfect for all applications. For cryptographic applications, relying on deterministic output from a single seed is not sufficient.
-* **Seed Management:** While the VRF's output serves as a good seed, be mindful of managing it and avoid exposing the seed publicly until you’ve generated the full sequence you need.
+- **Gas Optimization:** Always be mindful of the gas consumption of your deterministic calculations. More complex calculations will increase gas usage. The LCG tends to be the most gas-efficient approach here.
+- **Quality of Pseudorandomness:** The pseudorandom sequences derived via deterministic methods will have statistical properties that may not be perfect for all applications. For cryptographic applications, relying on deterministic output from a single seed is not sufficient.
+- **Seed Management:** While the VRF's output serves as a good seed, be mindful of managing it and avoid exposing the seed publicly until you’ve generated the full sequence you need.
 
 For deeper understanding of pseudorandom number generation, consider the following:
 
-*   **"The Art of Computer Programming, Volume 2: Seminumerical Algorithms" by Donald E. Knuth:** This book is considered a cornerstone resource for algorithms, including pseudorandom number generators. It covers different methods, their properties, and the mathematical theory behind them.
-*   **"Handbook of Applied Cryptography" by Alfred J. Menezes, Paul C. van Oorschot, and Scott A. Vanstone:** A classic text in cryptography, provides insights into cryptographic randomness, hash functions and the limitations of pseudo randomness in high-security use cases.
-* **Research Papers on LCG:** There are extensive academic publications on the theory and implementation of LCG, which would provide a detailed understanding of the trade-offs in selecting specific parameters. Specifically look for papers focused on statistical testing and analysis of LCG generated sequences.
+- **"The Art of Computer Programming, Volume 2: Seminumerical Algorithms" by Donald E. Knuth:** This book is considered a cornerstone resource for algorithms, including pseudorandom number generators. It covers different methods, their properties, and the mathematical theory behind them.
+- **"Handbook of Applied Cryptography" by Alfred J. Menezes, Paul C. van Oorschot, and Scott A. Vanstone:** A classic text in cryptography, provides insights into cryptographic randomness, hash functions and the limitations of pseudo randomness in high-security use cases.
+- **Research Papers on LCG:** There are extensive academic publications on the theory and implementation of LCG, which would provide a detailed understanding of the trade-offs in selecting specific parameters. Specifically look for papers focused on statistical testing and analysis of LCG generated sequences.
 
 In conclusion, fetching 10,000 random numbers via direct VRF requests is impractical. Generating derived pseudo-random sequences from a single VRF seed, using methods like hashing or an LCG, is the appropriate approach for cost-effective, large-scale number generation within blockchain environments. Always evaluate your requirements concerning security and the necessity for “true” randomness before settling on a solution.

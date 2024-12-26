@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-is-the-bsc-token-price-fluctuating-on-pancakeswap"
 ---
 
-Alright, let's tackle this one. Fluctuations in token prices, particularly on decentralized exchanges like Pancakeswap, are a multifaceted issue, not attributable to a single cause. I've seen this play out more than a few times, and it often boils down to a confluence of factors, rather than a single smoking gun. Let’s dissect it.
+, let's tackle this one. Fluctuations in token prices, particularly on decentralized exchanges like Pancakeswap, are a multifaceted issue, not attributable to a single cause. I've seen this play out more than a few times, and it often boils down to a confluence of factors, rather than a single smoking gun. Let’s dissect it.
 
-The core dynamic at play is the automated market maker (AMM) mechanism that Pancakeswap employs. Instead of a traditional order book, AMMs use liquidity pools and algorithmic formulas to determine prices. Specifically, Pancakeswap utilizes the constant product formula, x * y = k, where x and y represent the quantities of two different tokens within the liquidity pool, and k is a constant. This formula ensures that the total liquidity stays relatively consistent. The price of a token is derived from the ratio of tokens in the pool. Crucially, any trade affects this ratio, and that’s where the fluctuations begin.
+The core dynamic at play is the automated market maker (AMM) mechanism that Pancakeswap employs. Instead of a traditional order book, AMMs use liquidity pools and algorithmic formulas to determine prices. Specifically, Pancakeswap utilizes the constant product formula, x \* y = k, where x and y represent the quantities of two different tokens within the liquidity pool, and k is a constant. This formula ensures that the total liquidity stays relatively consistent. The price of a token is derived from the ratio of tokens in the pool. Crucially, any trade affects this ratio, and that’s where the fluctuations begin.
 
 One of the primary drivers of price volatility is, quite simply, trading activity. High buy pressure will reduce the quantity of token x (the traded token) in the pool and increase the quantity of token y (typically BNB or another pairing token), thus, mathematically increasing the price of x. Conversely, high sell pressure will do the opposite, decreasing its price. This is a fundamental consequence of the AMM model. Think back to my work at ChronosCorp, a project using a novel token distribution; the sharp increase in trading volume on launch day immediately pushed our token price well beyond its intended initial value, simply due to high demand quickly changing the pool ratios. We had to implement a price stabilization strategy post-launch, as the rapid fluctuation was impacting user confidence.
 
@@ -37,6 +37,7 @@ impact = calculate_price_impact(initial_pool_token_a, initial_pool_token_b, trad
 print(f"Price change from trade: {impact * 100:.2f}%")
 # Price change will be significant here due to relatively low liquidity
 ```
+
 This illustrates how trading increases the price. The percentage change will increase with larger trade sizes.
 
 **Example 2: Impact of Liquidity Size**
@@ -57,6 +58,7 @@ print(f"Price change small pool: {impact_small_pool * 100:.2f}%")
 print(f"Price change large pool: {impact_large_pool * 100:.2f}%")
 # The price change in small pool is much larger than in a large pool.
 ```
+
 This demonstrates how price changes are minimized with higher pool liquidity.
 
 **Example 3: Simplified Arbitrage Simulation**

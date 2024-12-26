@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-docker-compose-be-used-to-debug-a-ruby-on-rails-server-with-byebug"
 ---
 
-Okay, let's tackle this. I’ve been through the 'rails-debugging-in-docker' rodeo more times than I care to count, and it’s definitely one of those areas where a little upfront configuration can save a world of headaches later on. Debugging a rails application running inside a Docker container with `byebug` using Docker Compose isn’t fundamentally complex, but there are a few key pieces we need to align to make the experience smooth. The core issue is getting the debugging session to actually interact with your terminal and the code inside the container. Let’s break it down.
+, let's tackle this. I’ve been through the 'rails-debugging-in-docker' rodeo more times than I care to count, and it’s definitely one of those areas where a little upfront configuration can save a world of headaches later on. Debugging a rails application running inside a Docker container with `byebug` using Docker Compose isn’t fundamentally complex, but there are a few key pieces we need to align to make the experience smooth. The core issue is getting the debugging session to actually interact with your terminal and the code inside the container. Let’s break it down.
 
-The primary challenge stems from the fact that your debugging session (where you type `next`, `step`, etc.) runs *inside* the container while your terminal (where you’re interacting with the debugger) is *outside* of it, on your host machine. Docker containers are designed to be isolated, which includes network and I/O. Therefore, we need a way to bridge this isolation specifically for debugging. It’s not a matter of running some magic command; it’s more about setting up a communication channel.
+The primary challenge stems from the fact that your debugging session (where you type `next`, `step`, etc.) runs _inside_ the container while your terminal (where you’re interacting with the debugger) is _outside_ of it, on your host machine. Docker containers are designed to be isolated, which includes network and I/O. Therefore, we need a way to bridge this isolation specifically for debugging. It’s not a matter of running some magic command; it’s more about setting up a communication channel.
 
 Essentially, `byebug` works by creating a server (a socket) that listens for debugging commands. Normally, when you're running rails locally, this socket is associated with your local machine's port. Inside docker though, this socket by default, is not directly reachable by the host unless we explicitly configure it.
 
@@ -56,7 +56,7 @@ services:
     environment:
       RAILS_ENV: development
       DATABASE_URL: postgres://postgres:password@db:5432/myapp_development
-      BYEBUG_HOST: 0.0.0.0  # Listen on all network interfaces inside the container
+      BYEBUG_HOST: 0.0.0.0 # Listen on all network interfaces inside the container
       BYEBUG_PORT: 8989 # Specific byebug port we will use.
   db:
     image: postgres:13
@@ -67,7 +67,7 @@ services:
       - "5432:5432"
 ```
 
-Notice the addition of `- "8989:8989"` in the `ports` mapping and the inclusion of `BYEBUG_HOST: 0.0.0.0` and `BYEBUG_PORT: 8989` inside the `web` service's `environment` settings. This mapping exposes port 8989 inside the container to port 8989 on your host machine. `BYEBUG_HOST: 0.0.0.0` instructs `byebug` to listen on *all* network interfaces within the container, including those exposed to your host machine. In a rails context, I usually include this in a `.env` file rather than directly in the compose file. Using environment variables keeps things cleaner.
+Notice the addition of `- "8989:8989"` in the `ports` mapping and the inclusion of `BYEBUG_HOST: 0.0.0.0` and `BYEBUG_PORT: 8989` inside the `web` service's `environment` settings. This mapping exposes port 8989 inside the container to port 8989 on your host machine. `BYEBUG_HOST: 0.0.0.0` instructs `byebug` to listen on _all_ network interfaces within the container, including those exposed to your host machine. In a rails context, I usually include this in a `.env` file rather than directly in the compose file. Using environment variables keeps things cleaner.
 
 You might need a small configuration change to your `config/environments/development.rb` file in rails to ensure `byebug` properly uses the set port.
 

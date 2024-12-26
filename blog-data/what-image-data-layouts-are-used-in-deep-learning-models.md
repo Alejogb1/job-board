@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-image-data-layouts-are-used-in-deep-learning-models"
 ---
 
-Alright, let's talk about image data layouts in deep learning; it’s a topic I’ve spent considerable time navigating, especially back when we were optimizing those early convolutional networks on custom hardware accelerators. It’s more complex than many realize initially, and understanding it deeply is crucial for efficient training and inference.
+, let's talk about image data layouts in deep learning; it’s a topic I’ve spent considerable time navigating, especially back when we were optimizing those early convolutional networks on custom hardware accelerators. It’s more complex than many realize initially, and understanding it deeply is crucial for efficient training and inference.
 
 When we discuss image data layouts, we're essentially talking about how the pixel data representing an image is arranged in memory. This seemingly simple concept has a significant impact on performance, memory usage, and the overall efficiency of our deep learning pipelines. In deep learning models, we commonly encounter a few dominant layouts, each with its trade-offs. Let's break them down, shall we?
 
@@ -36,6 +36,7 @@ image_back_to_hwc = np.transpose(image_chw, (1, 2, 0))
 print("\nConverted back to HWC shape:", image_back_to_hwc.shape)
 print("Image Data (HWC - restored):\n", image_back_to_hwc)
 ```
+
 In the code above, we start with a height-width-channels representation (`[3, 3, 3]`) and then use NumPy’s transpose function to change it to a channels-height-width layout (`[3, 3, 3]`). We can then transform it back, demonstrating the underlying data remains identical. This is a frequent operation when transitioning between libraries with different layout preferences.
 
 Here's another snippet that adds a batch dimension and also illustrates a data type consideration that is important when dealing with image data:

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-pull-a-private-docker-image-from-aws-ecr-and-use-it-with-testcontainers-in-javakotlin"
 ---
 
-Okay, let's tackle this. I remember dealing with this exact scenario a few years back while setting up an integration testing pipeline. We were moving away from monolithic application deployments to microservices, and private container registries like AWS ECR became essential. Pulling those images into a testing environment using Testcontainers, especially programmatically, had its nuances.
+, let's tackle this. I remember dealing with this exact scenario a few years back while setting up an integration testing pipeline. We were moving away from monolithic application deployments to microservices, and private container registries like AWS ECR became essential. Pulling those images into a testing environment using Testcontainers, especially programmatically, had its nuances.
 
 The core challenge lies in the authentication hurdle. AWS ECR, by design, requires authentication. We can't just grab an image like we would from Docker Hub. We need to inform Docker (and therefore, Testcontainers) about our AWS credentials. There are several ways to achieve this, each with its trade-offs.
 
@@ -90,6 +90,7 @@ public class ECRImageTestWithCredentials {
 }
 
 ```
+
 This example gets an authorization token from AWS, decodes it, and then uses the `DockerClientFactory` to create a docker authentication entry programatically for the image registry. This allows the Testcontainers engine to fetch the image. We are using the `DefaultCredentialsProvider` in the snippet which uses different providers to pick the AWS credentials, you can configure specific credentials providers using the AWS Java SDK. This is a more robust approach for continuous integration systems.
 
 Finally, another way to approach this is using docker login command from within the Testcontainers initialization. We can set up a docker login command using Testcontainers `withCreateContainerCmdModifier` and run the login process programmatically. The advantage of this approach is that we leverage the regular docker cli which makes this approach similar to how we manage docker manually. This makes it easier to troubleshoot if something doesn't work.
@@ -154,6 +155,7 @@ public class ECRImageTestWithDockerLogin {
     }
 }
 ```
+
 Here, we are retrieving the credentials, constructing the login command string, and then executing the docker login inside the container before starting the container. We are setting the entry point of the container to null by using `withCreateContainerCmdModifier` because we don't want to actually start the container with its default entry point at this time. This approach provides another viable way to configure docker login which can be convenient for debugging.
 
 For deeper understanding, I would recommend looking into the official documentation for AWS SDK for Java, particularly the sections on authentication and the ECR client. Furthermore, the Testcontainers documentation on docker image configuration is helpful. Also, the 'Docker Deep Dive' book by Nigel Poulton is an excellent resource for understanding the underlying docker mechanics at play here. These references are invaluable for gaining a solid, in-depth understanding of both Testcontainers and Docker itself.

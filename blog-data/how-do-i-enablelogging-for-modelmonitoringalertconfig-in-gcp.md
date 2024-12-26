@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "how-do-i-enablelogging-for-modelmonitoringalertconfig-in-gcp"
 ---
 
-alright, let's talk about enabling logging for `modelmonitoringalertconfig` in gcp. it's a common pain point and i've definitely been down this road more times than i'd like to recall. getting those alerts to actually log useful data can feel like pulling teeth sometimes, but it's doable. 
+, let's talk about enabling logging for `modelmonitoringalertconfig` in gcp. it's a common pain point and i've definitely been down this road more times than i'd like to recall. getting those alerts to actually log useful data can feel like pulling teeth sometimes, but it's doable.
 
-first off, understand that the `modelmonitoringalertconfig` itself doesn't directly handle logging. what it *does* do is set up conditions that, when met, *trigger* an alert. that alert, in turn, is what can be logged. the key is to ensure that the *alerting mechanism* is properly configured to send its output somewhere that you can actually look at it, which is usually cloud logging.
+first off, understand that the `modelmonitoringalertconfig` itself doesn't directly handle logging. what it _does_ do is set up conditions that, when met, _trigger_ an alert. that alert, in turn, is what can be logged. the key is to ensure that the _alerting mechanism_ is properly configured to send its output somewhere that you can actually look at it, which is usually cloud logging.
 
 i've personally messed this up a bunch of times, usually when trying to rush through a setup. in one particularly memorable incident a couple of years back, i was working on a real-time fraud detection model. we had `modelmonitoringalertconfig` configured to catch data drift, but when it triggered, we were getting absolutely no useful information about what went wrong. it took me a good part of a day just to realize that i had missed a tiny little setting in the notification channel setup that was causing the alert to be silently discarded. those kind of things are the most frustrating as the system works but it’s not what you expect. since then i always double, triple check these setups.
 
@@ -28,7 +28,7 @@ gcloud beta monitoring policies create \
     --condition-filter='resource.type = "aiplatform.googleapis.com/ModelDeploymentMonitoringJob" AND metric.type = "aiplatform.googleapis.com/model_deployment/online_prediction/feature_anomalies" AND metric.labels.feature_name = "some_feature" AND metric.labels.feature_anomalies_type = "drift"' \
     --combiner="OR" \
     --duration="300s" \
-    --notification-channels="projects/your-project-id/notificationChannels/your-notification-channel-id-here" 
+    --notification-channels="projects/your-project-id/notificationChannels/your-notification-channel-id-here"
 ```
 
 now, this example assumes that you already created a notification channel pointed to the previously created pubsub topic, you will need to get that `notification-channel-id` before running this, this is a bit more involved but here is the gcloud command that gets you the info you need to fill it up:
@@ -39,7 +39,7 @@ gcloud beta monitoring notification-channels list --format="table(name,displayNa
 
 the `condition-filter` bit is where you specify exactly what conditions will trigger the alert. in this case, it’s looking for data drift for a specific feature in a model deployment. you may need to adjust this for your specific scenario. the key part for our purposes is the `notification-channels` setting.
 
-note that we are not using the ui, it helps but can hide details and sometimes it's not reproducible. 
+note that we are not using the ui, it helps but can hide details and sometimes it's not reproducible.
 
 let's break that notification channel concept down a little more. when you create a notification channel, you can choose different destinations. you can send it to email, pagerduty, slack, or even your custom webhook. for logging, as mentioned, pub/sub is the way to go because of its flexibility and integration with cloud logging.
 

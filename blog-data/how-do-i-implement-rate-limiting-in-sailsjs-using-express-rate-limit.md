@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-implement-rate-limiting-in-sailsjs-using-express-rate-limit"
 ---
 
-Okay, let's tackle rate limiting in Sails.js with `express-rate-limit`. It’s a crucial aspect of securing any API, and I've certainly had my share of late nights debugging issues caused by rate limit vulnerabilities before implementing these strategies. I'm going to share my approach, focusing on practical steps and nuances I've learned along the way.
+, let's tackle rate limiting in Sails.js with `express-rate-limit`. It’s a crucial aspect of securing any API, and I've certainly had my share of late nights debugging issues caused by rate limit vulnerabilities before implementing these strategies. I'm going to share my approach, focusing on practical steps and nuances I've learned along the way.
 
 First, understand that Sails.js, being built on Express.js, readily integrates with standard Express middleware. This means we can leverage `express-rate-limit` directly without too much fuss. The core principle of rate limiting is simple: it restricts the number of requests a client can make within a specific timeframe. This helps prevent brute-force attacks, denial-of-service attempts, and mitigates the impact of misbehaving clients.
 
@@ -18,18 +18,19 @@ Now, let’s break down how I typically integrate this into a Sails application.
 
 ```javascript
 // api/policies/rateLimit.js
-const rateLimit = require('express-rate-limit');
+const rateLimit = require("express-rate-limit");
 
 module.exports = async function (req, res, proceed) {
   const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 100, // limit each ip to 100 requests per windowMs
-    message: 'Too many requests from this IP, please try again after 15 minutes',
+    message:
+      "Too many requests from this IP, please try again after 15 minutes",
     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
     handler: (req, res, next, options) => {
       res.status(429).send(options.message);
-    }
+    },
   });
 
   limiter(req, res, proceed);
@@ -43,7 +44,7 @@ Now that we have our policy, we need to apply it. I'd typically configure it in 
 ```javascript
 // config/policies.js
 module.exports.policies = {
-  '*': 'rateLimit', // Apply the rateLimit policy to all routes
+  "*": "rateLimit", // Apply the rateLimit policy to all routes
   // Other policies can be specified as necessary
 };
 ```
@@ -54,18 +55,19 @@ Let’s see how to customize it for specific routes. For example, let’s say we
 
 ```javascript
 // api/policies/authRateLimit.js
-const rateLimit = require('express-rate-limit');
+const rateLimit = require("express-rate-limit");
 
 module.exports = async function (req, res, proceed) {
   const authLimiter = rateLimit({
     windowMs: 60 * 60 * 1000, // 1 hour
     max: 5, // limit each ip to 5 requests per hour
-    message: 'Too many login attempts from this IP, please try again after 1 hour',
+    message:
+      "Too many login attempts from this IP, please try again after 1 hour",
     standardHeaders: true,
     legacyHeaders: false,
     handler: (req, res, next, options) => {
-       res.status(429).send(options.message);
-    }
+      res.status(429).send(options.message);
+    },
   });
 
   authLimiter(req, res, proceed);
@@ -77,10 +79,9 @@ Here, I've set a tighter limit of 5 requests per hour. To use this specifically 
 ```javascript
 // config/policies.js
 module.exports.policies = {
-   'auth/login': 'authRateLimit',
-   'auth/register': 'authRateLimit',
-  '*': 'rateLimit', // Apply default rate limiting to all other routes
-
+  "auth/login": "authRateLimit",
+  "auth/register": "authRateLimit",
+  "*": "rateLimit", // Apply default rate limiting to all other routes
 };
 ```
 

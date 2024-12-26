@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-the-nomethoderror-in-commentscontrollercreate-and-likescontrollercreate"
 ---
 
-Alright, let’s talk about those pesky `NoMethodError` exceptions popping up in your `CommentsController#create` and `LikesController#create` actions. I’ve seen this particular issue rear its head more times than I’d care to count, and usually, it boils down to a few very specific, common pitfalls. It’s less about some grand, mysterious bug and more about a straightforward misunderstanding of object relationships or misconfigured configurations within the Rails framework. The nature of the error, ‘NoMethodError,’ essentially screams that you’re attempting to invoke a method on an object that doesn’t actually have that method defined. It’s a runtime error that occurs because the method call doesn’t match any of the object’s available interface. In the context of Rails controllers, this almost always signifies a problem with the data you’re trying to use during creation or the way you’re interacting with model associations.
+, let’s talk about those pesky `NoMethodError` exceptions popping up in your `CommentsController#create` and `LikesController#create` actions. I’ve seen this particular issue rear its head more times than I’d care to count, and usually, it boils down to a few very specific, common pitfalls. It’s less about some grand, mysterious bug and more about a straightforward misunderstanding of object relationships or misconfigured configurations within the Rails framework. The nature of the error, ‘NoMethodError,’ essentially screams that you’re attempting to invoke a method on an object that doesn’t actually have that method defined. It’s a runtime error that occurs because the method call doesn’t match any of the object’s available interface. In the context of Rails controllers, this almost always signifies a problem with the data you’re trying to use during creation or the way you’re interacting with model associations.
 
 Let’s break it down. When we're dealing with `create` actions in controllers, the typical workflow usually involves: 1) Receiving parameters from a form or API call. 2) Instantiating a new model object. 3) Assigning the received parameters to the new object’s attributes. 4) Attempting to save this object to the database. And it’s within these steps that `NoMethodError` tends to lurk, particularly in step 3 or during the save operation in step 4, often involving related models.
 
@@ -32,7 +32,7 @@ def comment_params
 end
 ```
 
-And the form you use to submit comments *only* submits the `body` attribute. In this case, you have an issue. Let's say your `Comment` model *must* have a `post_id`. While the `Comment.new(comment_params)` works, when the time comes to save, Rails may be expecting an associated Post object already or a `post_id` value, but you didn't provide either. Thus, either validation issues can occur, or worse when trying to get the `redirect_to @comment.post`, the `@comment.post` is likely nil.
+And the form you use to submit comments _only_ submits the `body` attribute. In this case, you have an issue. Let's say your `Comment` model _must_ have a `post_id`. While the `Comment.new(comment_params)` works, when the time comes to save, Rails may be expecting an associated Post object already or a `post_id` value, but you didn't provide either. Thus, either validation issues can occur, or worse when trying to get the `redirect_to @comment.post`, the `@comment.post` is likely nil.
 
 Here’s the fixed version, which would prevent the `NoMethodError`, also incorporating basic validation check:
 
@@ -76,6 +76,7 @@ def like_params
 end
 
 ```
+
 The challenge here, as mentioned earlier, is that the `likable_id` and the `likable_type` needs to refer to existing records, otherwise you will get issues. If you send in params like `likable_id = 5` and `likable_type = "Post"` but there is no post record with `id = 5` , then saving will fail. Or if you call methods on the association later, such as `redirect_to @like.likable`, you'll face a `NoMethodError`. Here's the improved, and more resilient way of doing it:
 
 ```ruby

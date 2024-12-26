@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-extract-all-adjectives-from-a-string-and-store-them-in-an-array"
 ---
 
-Okay, let's tackle this. From my experience, working with natural language processing (NLP) often throws these kinds of parsing problems your way, and it’s rarely as straightforward as it first appears. A simple string of words needs to be deconstructed into its parts of speech, and identifying adjectives among them requires a more nuanced approach than just looking for words that "describe" something. I've actually been in a similar situation, developing a sentiment analysis tool for customer feedback, and the accuracy of adjective extraction was critical.
+, let's tackle this. From my experience, working with natural language processing (NLP) often throws these kinds of parsing problems your way, and it’s rarely as straightforward as it first appears. A simple string of words needs to be deconstructed into its parts of speech, and identifying adjectives among them requires a more nuanced approach than just looking for words that "describe" something. I've actually been in a similar situation, developing a sentiment analysis tool for customer feedback, and the accuracy of adjective extraction was critical.
 
-The challenge isn't just about identifying *any* word that might function as an adjective in isolation. Context matters immensely. The same word can be a noun, verb, or adjective depending on its usage. Therefore, a purely rule-based solution is usually brittle and fails in edge cases. Instead, the most reliable way involves leveraging part-of-speech (POS) tagging using existing NLP libraries. This process annotates each word with its grammatical category, allowing for precise adjective extraction.
+The challenge isn't just about identifying _any_ word that might function as an adjective in isolation. Context matters immensely. The same word can be a noun, verb, or adjective depending on its usage. Therefore, a purely rule-based solution is usually brittle and fails in edge cases. Instead, the most reliable way involves leveraging part-of-speech (POS) tagging using existing NLP libraries. This process annotates each word with its grammatical category, allowing for precise adjective extraction.
 
 So, to answer directly, the general steps would involve: text tokenization, pos tagging, and finally, the filtering to keep only adjectives. It's a multi-step process.
 
@@ -103,9 +103,9 @@ The solutions above are basic starting points. In real applications, you'll like
 
 For further reading, I recommend these resources:
 
-*   **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** This book is considered a bible in NLP. The chapters on part-of-speech tagging and parsing would be most relevant.
-*   **The SpaCy Documentation:** SpaCy’s official documentation is excellent, and i often refer to it. Dive deeper into its part-of-speech tagging, dependency parsing, and customization features.
-*   **NLTK Documentation:** Similarly, explore the documentation for NLTK, particularly its tagging modules.
-*   **Papers on Sequence Tagging:** Look for scholarly articles on Hidden Markov Models (HMMs) and Conditional Random Fields (CRFs) as they are fundamental to how some POS taggers work, although you usually don't need to implement these directly if using prebuilt libraries.
+- **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** This book is considered a bible in NLP. The chapters on part-of-speech tagging and parsing would be most relevant.
+- **The SpaCy Documentation:** SpaCy’s official documentation is excellent, and i often refer to it. Dive deeper into its part-of-speech tagging, dependency parsing, and customization features.
+- **NLTK Documentation:** Similarly, explore the documentation for NLTK, particularly its tagging modules.
+- **Papers on Sequence Tagging:** Look for scholarly articles on Hidden Markov Models (HMMs) and Conditional Random Fields (CRFs) as they are fundamental to how some POS taggers work, although you usually don't need to implement these directly if using prebuilt libraries.
 
 In summary, extracting adjectives is not about a simple find-and-replace task. It demands using the tools that part-of-speech tagging in robust NLP libraries like NLTK or spaCy offers. While I've provided some starter code, you should explore these libraries further, customize them to your specific needs, and always test your solutions with edge cases in mind. This process requires a blend of theoretical knowledge and a practical approach, informed by the nuances of the problem you're tackling.

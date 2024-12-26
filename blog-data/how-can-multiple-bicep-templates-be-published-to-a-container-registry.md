@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-multiple-bicep-templates-be-published-to-a-container-registry"
 ---
 
-Okay, let's unpack this. I've actually tackled this specific challenge quite a few times in the past, especially when architecting larger, more complex infrastructure deployments. It's not uncommon for projects to outgrow a single, monolithic bicep file, and that's where the need to manage and publish multiple bicep templates to a container registry becomes crucial.
+, let's unpack this. I've actually tackled this specific challenge quite a few times in the past, especially when architecting larger, more complex infrastructure deployments. It's not uncommon for projects to outgrow a single, monolithic bicep file, and that's where the need to manage and publish multiple bicep templates to a container registry becomes crucial.
 
 The core concept here is recognizing that bicep files, post-compilation, essentially become arm templates (json). These json files, along with any associated artifacts like parameters files, can be packaged into a container image. The container registry then serves as a repository for these images, allowing you to version and deploy your infrastructure as code with much more granularity. This is especially effective in scenarios where you want to have composable infrastructure modules that can be reused across various environments.
 
@@ -54,6 +54,7 @@ LABEL version=1.0.0
 # Setting a non executable entrypoint to allow us to easily see the container is not running.
 ENTRYPOINT ["/bin/sh", "-c", "echo 'template container'"]
 ```
+
 In this `Dockerfile`, we use a lightweight alpine image. Then, we copy our bicep file and its associated parameter file into the container’s `/app` directory. We also set metadata labels to identify the template type and version. The `entrypoint` here is not designed to execute anything, but serves more to quickly confirm that the container has started. Now, for each of these component folders, you have an equivalent `Dockerfile` tailored to the specific template it houses.
 
 With the `Dockerfiles` in place, we now can use docker to build the images and push them to a container registry. This process, ideally, is integrated into a CI/CD pipeline. Here's an example of a simple script that iterates through each template folder, builds its container, and pushes it to a specified registry.
@@ -79,7 +80,7 @@ find . -maxdepth 1 -type d -not -path "." -print | while read -r dir; do
     echo "Error building image for $TEMPLATE_NAME."
     continue
   fi
-  
+
    # Push the Docker image
    echo "Pushing Docker image for $TEMPLATE_NAME..."
   docker push "$REGISTRY/$TEMPLATE_NAME:$TAG"
@@ -89,7 +90,7 @@ find . -maxdepth 1 -type d -not -path "." -print | while read -r dir; do
     echo "Error pushing image for $TEMPLATE_NAME."
     continue
   fi
-  
+
   echo "Successfully pushed $REGISTRY/$TEMPLATE_NAME:$TAG"
 
 done

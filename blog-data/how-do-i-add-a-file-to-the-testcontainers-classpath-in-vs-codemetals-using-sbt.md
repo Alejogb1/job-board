@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-add-a-file-to-the-testcontainers-classpath-in-vs-codemetals-using-sbt"
 ---
 
-Alright, let’s tackle this. I've actually run into this exact scenario a few times, especially when dealing with integration testing that requires custom configurations or data files alongside Testcontainers. It’s a fairly common need, and the solution, while not always immediately obvious, is actually quite straightforward once you understand how classpaths are handled.
+, let’s tackle this. I've actually run into this exact scenario a few times, especially when dealing with integration testing that requires custom configurations or data files alongside Testcontainers. It’s a fairly common need, and the solution, while not always immediately obvious, is actually quite straightforward once you understand how classpaths are handled.
 
 The issue, fundamentally, stems from the fact that Testcontainers, when spinning up its Docker containers, needs access to any resource files you intend to use within your tests. If these files aren't properly included in the classpath that Testcontainers sees, you'll inevitably run into `FileNotFoundException` or similar errors when the code inside your container tries to access those resources. The default `sbt test` classpath doesn’t automatically grab extra, non-source files. That's where we need to intervene.
 
@@ -37,7 +37,7 @@ lazy val root = (project in file(".")).
   )
 ```
 
-In this setup, `unmanagedResourceDirectories in Compile` includes resources from your primary resource directory that might also be necessary during compilation. `unmanagedResourceDirectories in Test` is crucial; it specifically adds resources located in `src/test/resources` to the classpath *only when tests are run*. And most importantly for this question, we explicitly add `baseDirectory.value / "src" / "test" / "testdata"`. This means that anything under `src/test/testdata`, which I recommend as a specific location for your test resources, will be included in the classpath available when you run the tests, and therefore, available to your Testcontainers.
+In this setup, `unmanagedResourceDirectories in Compile` includes resources from your primary resource directory that might also be necessary during compilation. `unmanagedResourceDirectories in Test` is crucial; it specifically adds resources located in `src/test/resources` to the classpath _only when tests are run_. And most importantly for this question, we explicitly add `baseDirectory.value / "src" / "test" / "testdata"`. This means that anything under `src/test/testdata`, which I recommend as a specific location for your test resources, will be included in the classpath available when you run the tests, and therefore, available to your Testcontainers.
 
 Here's the core idea in action. Suppose you want to load a simple JSON file (`data.json`) into your container, which might be structured something like this:
 

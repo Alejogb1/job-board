@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-machine-learning-algorithms-be-used-to-paraphrase-sentences-effectively"
 ---
 
-Alright, let’s tackle this. The task of paraphrasing with machine learning, or really, getting a machine to understand and express the same idea in different words, isn’t just some academic exercise. I’ve seen it come up in various projects, from improving chatbot responses to trying to make technical documentation more accessible, and frankly, it’s often more nuanced than people initially expect.
+, let’s tackle this. The task of paraphrasing with machine learning, or really, getting a machine to understand and express the same idea in different words, isn’t just some academic exercise. I’ve seen it come up in various projects, from improving chatbot responses to trying to make technical documentation more accessible, and frankly, it’s often more nuanced than people initially expect.
 
-Essentially, when we talk about paraphrasing, we're aiming for semantic equivalence with lexical variation. Meaning, the core *meaning* remains consistent, but the *words* used to express it change. This can be achieved through several machine learning approaches, and I’ll break down a few that I’ve found particularly useful in my experience.
+Essentially, when we talk about paraphrasing, we're aiming for semantic equivalence with lexical variation. Meaning, the core _meaning_ remains consistent, but the _words_ used to express it change. This can be achieved through several machine learning approaches, and I’ll break down a few that I’ve found particularly useful in my experience.
 
 First, let’s discuss sequence-to-sequence (seq2seq) models, which, in my opinion, are the workhorses for this kind of task. You typically use an encoder-decoder architecture with recurrent neural networks (RNNs), like LSTMs (long short-term memory) or GRUs (gated recurrent units), or increasingly often now, transformers. Think of it as a translator, taking your input sentence and translating it into a new sentence with the same meaning.
 
@@ -103,6 +103,7 @@ This snippet showcases how a pre-trained T5 model can be used for paraphrasing w
 Finally, while less frequently used, another technique I’ve experimented with is using back-translation. The idea here is to first translate the input sentence to another language using a machine translation model and then translate it back to the original language. This process often produces a paraphrased version of the original sentence. The key is to use high-quality translation models, and the more different the second language is compared to the original, the higher the chance of a successful paraphrase. The variation is introduced during the language switch.
 
 Let’s demonstrate a very simplified version of this:
+
 ```python
 from transformers import MarianMTModel, MarianTokenizer
 
@@ -136,6 +137,7 @@ back_translated = back_translate(input_text)
 print("Original sentence:", input_text)
 print("Back-translated sentence:", back_translated)
 ```
+
 Again, like the T5 example, this is utilizing pre-trained language models. The 'Helsinki-NLP' models are openly available for different language pairs. In the code above, we're simply passing the input to a model that translates from English to French and then French back to English. The resulting text is a rephrased version of the original.
 
-These methods are a good starting point. I'd suggest exploring *Attention is All You Need* by Vaswani et al. for understanding transformer architectures, and *Neural Machine Translation by Jointly Learning to Align and Translate* by Bahdanau et al. for sequence to sequence fundamentals. *Speech and Language Processing* by Jurafsky and Martin provides a good overview of NLP in general. These papers and books, along with hands-on practice, would solidify a practical understanding of using ML to paraphrase effectively. Ultimately the most suitable approach will depend on the context, dataset and required performance.
+These methods are a good starting point. I'd suggest exploring _Attention is All You Need_ by Vaswani et al. for understanding transformer architectures, and _Neural Machine Translation by Jointly Learning to Align and Translate_ by Bahdanau et al. for sequence to sequence fundamentals. _Speech and Language Processing_ by Jurafsky and Martin provides a good overview of NLP in general. These papers and books, along with hands-on practice, would solidify a practical understanding of using ML to paraphrase effectively. Ultimately the most suitable approach will depend on the context, dataset and required performance.

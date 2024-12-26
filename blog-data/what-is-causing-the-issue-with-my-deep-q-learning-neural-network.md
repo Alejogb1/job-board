@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-causing-the-issue-with-my-deep-q-learning-neural-network"
 ---
 
-Alright, let's troubleshoot this deep q-learning (dql) network. I've spent more hours than I care to count debugging these things, and trust me, it's rarely a single, glaring error. More often, it's a subtle interplay of factors. In my experience, the most frequent culprits fall into a few broad categories. Let's go through those systematically, along with some concrete code snippets to help illustrate what I’m talking about.
+, let's troubleshoot this deep q-learning (dql) network. I've spent more hours than I care to count debugging these things, and trust me, it's rarely a single, glaring error. More often, it's a subtle interplay of factors. In my experience, the most frequent culprits fall into a few broad categories. Let's go through those systematically, along with some concrete code snippets to help illustrate what I’m talking about.
 
 First, let's address the core mechanics of q-learning. Remember, at its heart, dql is about approximating the optimal action-value function – the q-function – which estimates the cumulative reward you can expect by taking a particular action in a given state. The issue likely stems from how that approximation is being handled.
 
@@ -90,7 +90,7 @@ def dql_training_loop(env, state_size, action_size, num_episodes, update_interva
 
 **2. Insufficient Exploration vs. Exploitation**
 
-The exploration-exploitation trade-off is fundamental. If your agent is too greedy early on, it might get stuck in a suboptimal local maximum and fail to discover better strategies. Conversely, if it spends too much time exploring, it might never settle on a good policy. The *epsilon*-greedy strategy is commonly used: with a small probability (epsilon) you take a random action, and with 1-epsilon you take the best known action.
+The exploration-exploitation trade-off is fundamental. If your agent is too greedy early on, it might get stuck in a suboptimal local maximum and fail to discover better strategies. Conversely, if it spends too much time exploring, it might never settle on a good policy. The _epsilon_-greedy strategy is commonly used: with a small probability (epsilon) you take a random action, and with 1-epsilon you take the best known action.
 
 I've seen instances where an agent initially performed well but then plateaued; it had locked itself into a limited set of actions early in training. It had not explored the state space sufficiently. The epsilon value decayed too quickly. To solve this, you need a good exploration schedule – where epsilon starts high and slowly reduces over time as the agent learns.
 
@@ -203,6 +203,6 @@ def dql_training_loop_buffer(env, state_size, action_size, num_episodes, buffer_
                 optimizer.step()
 ```
 
-To really dive deeper into these, I'd recommend looking into *Reinforcement Learning: An Introduction* by Sutton and Barto— it's a foundational text. For a more practical treatment focusing on implementation details and practical tips, *Deep Reinforcement Learning Hands-On* by Maxim Lapan is excellent. Also, the original paper on Deep Q-Networks "Playing Atari with Deep Reinforcement Learning" by Mnih et al. (2013) is essential reading.
+To really dive deeper into these, I'd recommend looking into _Reinforcement Learning: An Introduction_ by Sutton and Barto— it's a foundational text. For a more practical treatment focusing on implementation details and practical tips, _Deep Reinforcement Learning Hands-On_ by Maxim Lapan is excellent. Also, the original paper on Deep Q-Networks "Playing Atari with Deep Reinforcement Learning" by Mnih et al. (2013) is essential reading.
 
 Diagnosing a dql network is a process of systematic elimination. Review your target network update mechanism, your exploration strategy, and your replay buffer. Adjust these parameters, observe the resulting behavior, and remember that achieving optimal learning is often a result of many iterative improvements based on specific observations. If it still doesn’t quite click, let me know where you're at and we can see if we can isolate more specifics.

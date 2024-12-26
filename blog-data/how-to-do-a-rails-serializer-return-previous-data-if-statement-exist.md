@@ -4,15 +4,15 @@ date: "2024-12-15"
 id: "how-to-do-a-rails-serializer-return-previous-data-if-statement-exist"
 ---
 
-Alright, so you're looking at how to handle a situation in your rails serializers where you want to include previous data if a certain attribute exists, right? I've been down this road myself, more times than i care to remember. It's a pretty common scenario, especially when dealing with audit trails, versions, or basically anything that has a history. let's break it down with some code examples and how i've tackled similar problems in the past.
+, so you're looking at how to handle a situation in your rails serializers where you want to include previous data if a certain attribute exists, right? I've been down this road myself, more times than i care to remember. It's a pretty common scenario, especially when dealing with audit trails, versions, or basically anything that has a history. let's break it down with some code examples and how i've tackled similar problems in the past.
 
-Basically, your serializer needs to know if the current object has a particular associated object, or an attribute, or some kind of conditional existence, and based on that, fetch data from the *previous* instance, or just return nothing, or return the default data, or something else. It all depends on the specific use case.
+Basically, your serializer needs to know if the current object has a particular associated object, or an attribute, or some kind of conditional existence, and based on that, fetch data from the _previous_ instance, or just return nothing, or return the default data, or something else. It all depends on the specific use case.
 
 I will try to give you a few solutions based on my past personal experience, focusing on what I think works.
 
 First off, let's assume we have a model called `widget` and we are keeping track of changes using something like `paper_trail` gem (other similar gems would work as well) this is pretty common. paper_trail is a good library and i recommend using it. We have a `widget_serializer` we are using in our api and want to show the previous `name` if this `name` exists on a previous version.
 
-The simplest case might be a plain attribute on the model, let’s use `name` like i mentioned. You want to include the *previous* `name` value if it exists. This assumes we're using `paper_trail` (or something equivalent).
+The simplest case might be a plain attribute on the model, let’s use `name` like i mentioned. You want to include the _previous_ `name` value if it exists. This assumes we're using `paper_trail` (or something equivalent).
 
 Here's a basic approach with paper_trail:
 
@@ -64,7 +64,7 @@ One other detail here is that `widget_configuration_name` now uses `object.widge
 
 But sometimes we need something even more complex.
 
-Let's say that we only want to display the previous configuration if the current widget actually *has* a configuration. You are now dealing with conditional existence of an association and the conditional display of previous version attribute.
+Let's say that we only want to display the previous configuration if the current widget actually _has_ a configuration. You are now dealing with conditional existence of an association and the conditional display of previous version attribute.
 
 ```ruby
 # app/serializers/widget_serializer.rb
@@ -95,7 +95,7 @@ end
 
 In the last example we added a `if` condition before returning the previous value. here `object.widget_configuration.present?` checks if there is a `widget_configuration`. if it exists, we return the previous version, otherwise we return nil. This is important in our case because we are trying to return previous data if the current data exists. if there is nothing there, we return nil, but you can return any default value if you want.
 
-In my experience, the trickiest part of this is often not the code itself, but understanding exactly *what* you want to return when that previous data doesn't exist or when a condition is not met. sometimes, you actually want to return an empty string, or a default value instead of `nil`, you have to be very precise about the specifications and business needs.
+In my experience, the trickiest part of this is often not the code itself, but understanding exactly _what_ you want to return when that previous data doesn't exist or when a condition is not met. sometimes, you actually want to return an empty string, or a default value instead of `nil`, you have to be very precise about the specifications and business needs.
 
 Also, when you're working with more complicated nested associations, things can quickly become quite messy and difficult to follow, so it's always a good idea to break down complex logic into smaller methods, which makes it easier to test and understand. it's easier to debug and easier to extend in the future. Also, it makes the serializers themselves look way cleaner, and not a huge chunk of unorganized code.
 

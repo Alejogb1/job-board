@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-access-keys-after-converting-to-json-in-ruby"
 ---
 
-Okay, let's tackle accessing keys after a JSON conversion in Ruby. I’ve been down this path more times than I can count, often dealing with external APIs and needing to massage their outputs into something usable for my applications. It's a common scenario, and there are a few nuances to be aware of that often trip people up, particularly when dealing with deeply nested structures.
+, let's tackle accessing keys after a JSON conversion in Ruby. I’ve been down this path more times than I can count, often dealing with external APIs and needing to massage their outputs into something usable for my applications. It's a common scenario, and there are a few nuances to be aware of that often trip people up, particularly when dealing with deeply nested structures.
 
 Essentially, when you convert JSON data into a Ruby data structure using a library like `json`, you typically end up with a hash or an array, or sometimes a combination of the two. The key thing to remember is that after conversion, the original JSON structure is no longer a string – it’s a fully-fledged ruby object. This means you interact with it using Ruby's standard hash and array access methods.
 
@@ -16,7 +16,7 @@ Let’s illustrate with a straightforward example. Imagine an API response gives
     "id": 123,
     "name": "Jane Doe",
     "email": "jane.doe@example.com",
-     "address": {
+    "address": {
       "street": "123 Main St",
       "city": "Anytown",
       "zip": "12345"
@@ -24,7 +24,6 @@ Let’s illustrate with a straightforward example. Imagine an API response gives
   },
   "status": "active"
 }
-
 ```
 
 Now, in Ruby, if we use the `json` library (`require 'json'`) to parse this, we can access the values using the associated keys. Here’s how:

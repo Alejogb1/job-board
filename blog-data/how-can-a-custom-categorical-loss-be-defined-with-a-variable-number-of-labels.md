@@ -4,13 +4,13 @@ date: "2024-12-16"
 id: "how-can-a-custom-categorical-loss-be-defined-with-a-variable-number-of-labels"
 ---
 
-Alright, let's tackle this. Variable label counts in custom categorical loss functions – it's a situation I’ve run into more than a few times. It usually surfaces in projects where you’re dealing with incomplete or dynamic datasets; think scenarios where an item might legitimately fall into one category, or several, or even none depending on the data source or acquisition process. The standard cross-entropy, which assumes a fixed number of mutually exclusive classes, simply breaks down. So, how do we make this work?
+, let's tackle this. Variable label counts in custom categorical loss functions – it's a situation I’ve run into more than a few times. It usually surfaces in projects where you’re dealing with incomplete or dynamic datasets; think scenarios where an item might legitimately fall into one category, or several, or even none depending on the data source or acquisition process. The standard cross-entropy, which assumes a fixed number of mutually exclusive classes, simply breaks down. So, how do we make this work?
 
 Fundamentally, the challenge lies in adapting the loss calculation to reflect the variable number of labels associated with each input sample. Rather than assuming a one-hot vector for the ground truth, we need a mechanism to handle potentially sparse or multi-label ground truth vectors, and then compute the error in a way that's meaningful.
 
 The core idea revolves around two modifications: first, how we represent our true labels, and second, how we calculate the loss given these representations.
 
-Instead of enforcing one-hot encoding or assuming a fixed dimension for a multi-label scenario, we need flexible ground truth representations. Consider, for each training sample, a corresponding list or a mask indicating the *presence* of labels rather than a forced assignment to a single label. This effectively allows for a variable number of active categories per sample. We are no longer limited to a single index within a vector representing our ground truth; instead, we operate on a more granular level, explicitly accounting for all valid categories for that specific sample.
+Instead of enforcing one-hot encoding or assuming a fixed dimension for a multi-label scenario, we need flexible ground truth representations. Consider, for each training sample, a corresponding list or a mask indicating the _presence_ of labels rather than a forced assignment to a single label. This effectively allows for a variable number of active categories per sample. We are no longer limited to a single index within a vector representing our ground truth; instead, we operate on a more granular level, explicitly accounting for all valid categories for that specific sample.
 
 Let's solidify this with some code examples in Python using PyTorch, which I find is a solid framework for this sort of thing. Let's say, as a hypothetical, that I was tasked with building a news classification model. Initially, I thought each article could only have one topic. However, it became clear articles could cover several topics simultaneously. That’s when I hit this exact problem.
 
@@ -54,7 +54,7 @@ loss = loss_func(predictions, labels)
 print(f"Loss: {loss}")
 ```
 
-Here, the `labels` tensor is no longer a single index indicating a single category, but a binary mask representing all present categories. We apply the binary cross-entropy separately to *each* of the label predictions. The `binary_cross_entropy_with_logits` function handles the sigmoid transformation of the `predictions` automatically, as is preferred in pytorch when using bce loss. I used `reduction='mean'` but other options like sum are viable as well.
+Here, the `labels` tensor is no longer a single index indicating a single category, but a binary mask representing all present categories. We apply the binary cross-entropy separately to _each_ of the label predictions. The `binary_cross_entropy_with_logits` function handles the sigmoid transformation of the `predictions` automatically, as is preferred in pytorch when using bce loss. I used `reduction='mean'` but other options like sum are viable as well.
 
 **Example 2: Weighted Loss based on Label Frequency**
 

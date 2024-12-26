@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-colorized-tabs-in-a-jetbrains-rider-plugin"
 ---
 
-Alright, let’s tackle this. Colorized tabs in Rider plugins are more than just eye candy; they can significantly enhance usability, especially when you're juggling numerous projects or dealing with different file types. From my experience, maintaining several large codebases simultaneously, this becomes crucial for quickly locating the context you need. The key lies in manipulating Rider’s UI components, specifically utilizing the `EditorTab` and the `EditorFileType` associated with it. It’s a bit more involved than just setting a background color property, though. We need to get into the internals of the editor view.
+, let’s tackle this. Colorized tabs in Rider plugins are more than just eye candy; they can significantly enhance usability, especially when you're juggling numerous projects or dealing with different file types. From my experience, maintaining several large codebases simultaneously, this becomes crucial for quickly locating the context you need. The key lies in manipulating Rider’s UI components, specifically utilizing the `EditorTab` and the `EditorFileType` associated with it. It’s a bit more involved than just setting a background color property, though. We need to get into the internals of the editor view.
 
 The challenge isn't about finding an API call to magically change the color. Rather, it’s about correctly hooking into Rider’s event system and appropriately modifying the appearance of these UI elements. This involves extending Rider's internal interfaces and leveraging its component model. Now, there isn't one single class you target, rather a series of hooks, and it’s important to get them in the correct order. It’s analogous to setting up a complex event pipeline; if you don’t have the correct wiring, nothing happens.
 
@@ -294,17 +294,18 @@ public class ProjectSpecificTabColorizer : IDisposable
   }
 }
 ```
+
 This snippet adds a `GetColorForProject` method that takes the project’s `Guid` and maps it to a specific color, using a simple `if-else` for illustrative purposes. This can be expanded using a more complex mapping such as a Dictionary. Remember to replace the dummy Guids with your actual project guids.
 
 **Key takeaways and recommendations:**
 
-*   **Performance:** Be careful not to perform too much work on the UI thread. Do your file type and project checking under a read lock, or in a non ui thread and only update the UI when needed with the dispatcher.
-*   **Event Handling:** Always make sure to properly dispose of subscriptions to ensure no memory leaks or performance issues. Use `Lifetime.Bracket` to ensure the clean disposal of event subscriptions.
-*   **Settings Integration:** For real-world plugins, always make color customization options available to the user via Rider's settings dialog.
-*   **Error Handling:** Handle edge cases such as null checks for document, source file, and project references.
-*   **Further Reading:** To deepen your understanding, I strongly recommend consulting the following resources:
-    *   **"JetBrains Platform SDK Documentation"**: This is the primary source for all things related to the IntelliJ platform development, including Rider plugin development.
-    *   **"Effective Java" by Joshua Bloch**: Though not specific to plugin development, this book will teach you best practices, especially around resource management and thread safety that applies to any software design including plugins.
-    *   **"Design Patterns: Elements of Reusable Object-Oriented Software" by Erich Gamma et al**: Understanding design patterns, particularly the observer pattern will help you structure your code better when subscribing to event streams of the rider framework, which the snippets above are using.
+- **Performance:** Be careful not to perform too much work on the UI thread. Do your file type and project checking under a read lock, or in a non ui thread and only update the UI when needed with the dispatcher.
+- **Event Handling:** Always make sure to properly dispose of subscriptions to ensure no memory leaks or performance issues. Use `Lifetime.Bracket` to ensure the clean disposal of event subscriptions.
+- **Settings Integration:** For real-world plugins, always make color customization options available to the user via Rider's settings dialog.
+- **Error Handling:** Handle edge cases such as null checks for document, source file, and project references.
+- **Further Reading:** To deepen your understanding, I strongly recommend consulting the following resources:
+  - **"JetBrains Platform SDK Documentation"**: This is the primary source for all things related to the IntelliJ platform development, including Rider plugin development.
+  - **"Effective Java" by Joshua Bloch**: Though not specific to plugin development, this book will teach you best practices, especially around resource management and thread safety that applies to any software design including plugins.
+  - **"Design Patterns: Elements of Reusable Object-Oriented Software" by Erich Gamma et al**: Understanding design patterns, particularly the observer pattern will help you structure your code better when subscribing to event streams of the rider framework, which the snippets above are using.
 
 Implementing colorized tabs adds a powerful visual cue to your Rider plugin, greatly improving user experience. It does take a bit of effort to understand the internals and correctly hook into the correct events, but the result is well worth the effort. You can enhance this approach further based on the project, file type and any other business logic you have, provided you have a firm understanding of how to interact with Rider's UI and events system.

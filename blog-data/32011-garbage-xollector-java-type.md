@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "32011-garbage-xollector-java-type"
 ---
 
-Okay so you're asking about Java's garbage collector and specifically something related to the 32011 build I'm assuming that's some internal build number or maybe a very very old version we're talking ancient history here right This is kind of like excavating a digital fossil I've been knee deep in JVM internals for what feels like forever so I think I can shed some light on this
+you're asking about Java's garbage collector and specifically something related to the 32011 build I'm assuming that's some internal build number or maybe a very very old version we're talking ancient history here right This is kind of like excavating a digital fossil I've been knee deep in JVM internals for what feels like forever so I think I can shed some light on this
 
 First things first there's no singular "32011 garbage collector type" in the way you might think of different GC algorithms like G1 or CMS We're talking about the implementation details of the garbage collection mechanism used in a specific build I doubt Oracle would even recognize this specific build from a support perspective Its probably not an official release or is a very very old one but I'll help you out as if its a real one and we are on the same page The core issue is likely about how that particular build might be handling memory reclamation which changes slightly from version to version and between different GCs
 
@@ -105,7 +105,7 @@ In this example we're creating a whole bunch of string objects that should quick
 
 Now the thing to keep in mind here is that garbage collection is not magic Its a complex process that depends on the JVM implementation and its configuration Its a bit like a very very advanced game of Tetris where the objects you are generating are pieces that have to fit in the available memory and sometimes when the stack is full it collapses and the JVM does a full gc cycle I hope you get the analogy I'm not making any other metaphors on this
 
-If you are trying to understand how Java garbage collectors work or need to diagnose garbage collector problems I would recommend you check out the *Java Performance Companion* or the *Java Performance Tuning* books those are great resources They will get you very detailed explanations of the different collectors their algorithms and practical examples on how to tune them
+If you are trying to understand how Java garbage collectors work or need to diagnose garbage collector problems I would recommend you check out the _Java Performance Companion_ or the _Java Performance Tuning_ books those are great resources They will get you very detailed explanations of the different collectors their algorithms and practical examples on how to tune them
 
 And finally a funny note when I was still working at that previous company and they used an obsolete library I actually had an issue that I found out a particular method was causing an object leak because the developer forgot to set the objects to null after they were used I remember that specific moment of panic after profiling and seeing the heap exploding. Then my boss at the time told me that at least the garbage collector was always working hard which was not exactly a good thing.
 

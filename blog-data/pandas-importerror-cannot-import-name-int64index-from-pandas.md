@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "pandas-importerror-cannot-import-name-int64index-from-pandas"
 ---
 
-Okay so you’re wrestling with that good old `ImportError: cannot import name 'Int64Index' from 'pandas'` right Been there done that got the t-shirt and probably spilled coffee on it too a few times This thing has bitten me more times than I care to admit let me break down what’s probably going on and how I’ve tackled it in the trenches
+you’re wrestling with that good old `ImportError: cannot import name 'Int64Index' from 'pandas'` right Been there done that got the t-shirt and probably spilled coffee on it too a few times This thing has bitten me more times than I care to admit let me break down what’s probably going on and how I’ve tackled it in the trenches
 
 First off this error screams version mismatch louder than a dial-up modem in a library So `Int64Index` it’s a pandas object it used to be directly importable from the top level `pandas` namespace in older versions We’re talking like pandas before 10 or something like that But then pandas devs did what devs do they refactored things and that’s good practice we agree right. Now it's tucked away inside `pandas.core.indexes.numeric`
 
@@ -25,7 +25,7 @@ If you’re seeing anything less than pandas 1.0 brace yourself because we are i
 
 **Step 2: Check Your Code and Refactor**
 
-Okay if you’re on an older pandas then we have a problem The old way of importing `Int64Index` directly like this:
+if you’re on an older pandas then we have a problem The old way of importing `Int64Index` directly like this:
 
 ```python
 from pandas import Int64Index #THIS IS THE BAD CODE NOT TO BE REPEATED
@@ -33,13 +33,14 @@ from pandas import Int64Index #THIS IS THE BAD CODE NOT TO BE REPEATED
 
 It’s ancient history you'll have to change that.
 
-Now this has bit me before in a project and I needed a quick fix because my deadline was looming I was working on a data science project back then and I had to create custom indexes and it threw that same error in my face so I spent like two hours debugging so yeah i am speaking from experience. And i had a very bad time. You should not be using older versions of anything if possible. 
+Now this has bit me before in a project and I needed a quick fix because my deadline was looming I was working on a data science project back then and I had to create custom indexes and it threw that same error in my face so I spent like two hours debugging so yeah i am speaking from experience. And i had a very bad time. You should not be using older versions of anything if possible.
 
 The correct way to import it nowadays if you need this particular object which in most cases you actually don't is:
 
 ```python
 from pandas.core.indexes.numeric import Int64Index # THIS IS THE CORRECT IMPORT
 ```
+
 Again if you need this particular object which in most cases you actually don't. You should try to work with pandas without this object directly and you probably can.
 
 Let me give you a simple example where I am using it to make a custom index
@@ -48,8 +49,8 @@ Let me give you a simple example where I am using it to make a custom index
 import pandas as pd
 from pandas.core.indexes.numeric import Int64Index
 
-# Create an Int64Index directly. 
-# Please dont do this unless you really really know what you are doing. 
+# Create an Int64Index directly.
+# Please dont do this unless you really really know what you are doing.
 # I am only showing you this for illustration purposes
 
 index_data = [1, 2, 3, 4, 5]
@@ -82,9 +83,9 @@ So before you even try importing `Int64Index` you should ask yourself “Do I re
 
 I Cannot stress this enough virtual environments are life savers In my case all the bad times were before I started to use virtual environments for my projects. You create a separate environment for each project and it’s one of the best practice you can learn when programming. It means that your libraries in one project don’t clash with your libraries in the other project. It's like having separate Lego boxes and not mixing them all in one box.
 
-If you are working on a team project it is also needed to make sure that all people have the same environment. Otherwise debugging will be a nightmare. 
+If you are working on a team project it is also needed to make sure that all people have the same environment. Otherwise debugging will be a nightmare.
 
- If you're managing multiple projects with different pandas needs, you NEED to use virtual environments tools like `virtualenv` or `conda`
+If you're managing multiple projects with different pandas needs, you NEED to use virtual environments tools like `virtualenv` or `conda`
 
 Here's how you might do it with `venv` a tool that comes with Python:
 
@@ -107,15 +108,15 @@ Sometimes this issue can happen not because you have the wrong pandas version it
 
 You might have an older version of numpy for example and numpy also had an upgrade that changed some stuff under the hood. And if you have an older pandas and a new numpy things may get ugly and they may not work as expected
 
- So you can also take a look and see if your other library dependencies are fine. When possible make sure you update all your dependencies in your virtual environment
+So you can also take a look and see if your other library dependencies are fine. When possible make sure you update all your dependencies in your virtual environment
 
 **Resources**
 
 Instead of links here's what I suggest because I like a good book in my shelf and a good paper to read
 
-* **"Python for Data Analysis" by Wes McKinney** This is basically the pandas bible written by the creator himself it will cover your needs on all aspects of the library. And it's worth every dollar
-* **The official Pandas documentation** This one it's a must. It’s where you will find all the info, examples, explanation about every aspect of the pandas library. You can find it on google with a simple search it is highly recommended.
-* **Academic Papers in Data Analysis with Pandas:** If you want to dive deeper into the implementation of data structures I would recommend reading papers about the specific area you are working on. You can find it in Google Scholar or your library database
+- **"Python for Data Analysis" by Wes McKinney** This is basically the pandas bible written by the creator himself it will cover your needs on all aspects of the library. And it's worth every dollar
+- **The official Pandas documentation** This one it's a must. It’s where you will find all the info, examples, explanation about every aspect of the pandas library. You can find it on google with a simple search it is highly recommended.
+- **Academic Papers in Data Analysis with Pandas:** If you want to dive deeper into the implementation of data structures I would recommend reading papers about the specific area you are working on. You can find it in Google Scholar or your library database
 
 **The bottom line**
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-draw-on-a-pyside6-pixmap"
 ---
 
-Alright, let's tackle drawing on a PySide6 pixmap. This isn't uncommon; I've had to do it myself plenty of times, particularly when building custom image manipulation tools. It’s a common requirement when you need to add overlays, annotations, or perform any kind of direct pixel modification within a graphical context. The straightforward approach is through `QPainter`, which allows you to interact with the pixmap's drawing surface. It’s less about "drawing on" a pixmap *per se*, and more about utilizing a painter to *render* onto its underlying buffer.
+, let's tackle drawing on a PySide6 pixmap. This isn't uncommon; I've had to do it myself plenty of times, particularly when building custom image manipulation tools. It’s a common requirement when you need to add overlays, annotations, or perform any kind of direct pixel modification within a graphical context. The straightforward approach is through `QPainter`, which allows you to interact with the pixmap's drawing surface. It’s less about "drawing on" a pixmap _per se_, and more about utilizing a painter to _render_ onto its underlying buffer.
 
 First, understand that a `QPixmap` in PySide6 is essentially a pixel-based representation of an image. It's a container for image data, not a drawing canvas itself. To draw on it, we’ll use a `QPainter`. This is crucial, because directly manipulating the pixmap's raw byte data is generally less efficient and significantly more complex. `QPainter` provides a high-level interface for drawing shapes, text, and even other images directly onto surfaces like a pixmap.
 
@@ -78,7 +78,7 @@ if __name__ == "__main__":
         label = QLabel()
         label.setPixmap(modified_pixmap)
         layout.addWidget(label)
-    
+
         window.setLayout(layout)
         window.show()
         app.exec()
@@ -87,7 +87,7 @@ if __name__ == "__main__":
 
 ```
 
-This example demonstrates the typical workflow. You load an image into a `QPixmap`, create a `QPainter` on it, set a green brush, and draw a circle using `drawEllipse`.  The important thing here is to make sure that the image has loaded successfully, which is why I’ve included the check for `pixmap.isNull()`.  If you fail to check if the image loaded, the entire painting operation would be operating on an empty pixmap, which is a frequent pitfall. Finally we display it with a `QLabel`. This kind of workflow would form the core of image manipulation apps.
+This example demonstrates the typical workflow. You load an image into a `QPixmap`, create a `QPainter` on it, set a green brush, and draw a circle using `drawEllipse`. The important thing here is to make sure that the image has loaded successfully, which is why I’ve included the check for `pixmap.isNull()`. If you fail to check if the image loaded, the entire painting operation would be operating on an empty pixmap, which is a frequent pitfall. Finally we display it with a `QLabel`. This kind of workflow would form the core of image manipulation apps.
 
 In terms of deepening your understanding, I strongly recommend checking out two resources. First, the official PySide6 documentation is paramount. Specifically, explore the documentation for `QPixmap`, `QPainter`, and `QPen`, `QFont` and `QBrush`. These will provide the most precise details on the capabilities of these classes and available options. Second, a general text on computer graphics, like "Computer Graphics: Principles and Practice" by Foley, van Dam, Feiner, and Hughes, provides a deep dive into the fundamental concepts of computer graphics that underpin many of these methods. While not directly focused on PySide6, understanding these fundamentals will greatly enhance your ability to use PySide6 effectively.
 

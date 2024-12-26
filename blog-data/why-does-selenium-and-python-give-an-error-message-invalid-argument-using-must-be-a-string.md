@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-does-selenium-and-python-give-an-error-message-invalid-argument-using-must-be-a-string"
 ---
 
-Okay, let's tackle this one. I’ve definitely seen my share of "invalid argument: 'using' must be a string" errors when working with selenium and python, and it usually boils down to a fairly straightforward misunderstanding of how locators are defined within the selenium framework, coupled with some common python usage patterns that can, unintentionally, lead you astray. It's a classic example of where the apparent simplicity of the library can mask some of the underlying mechanics if you aren't paying close enough attention.
+, let's tackle this one. I’ve definitely seen my share of "invalid argument: 'using' must be a string" errors when working with selenium and python, and it usually boils down to a fairly straightforward misunderstanding of how locators are defined within the selenium framework, coupled with some common python usage patterns that can, unintentionally, lead you astray. It's a classic example of where the apparent simplicity of the library can mask some of the underlying mechanics if you aren't paying close enough attention.
 
-The core of the issue lies within the selenium's `find_element` (or `find_elements`) method. These methods, which you use to interact with web elements, require you to provide two crucial pieces of information: the *locator strategy* and the *locator value*. The 'using' argument the error message references specifically corresponds to that locator strategy, which tells selenium *how* to find the element. We're talking about things like finding by `id`, `class name`, `xpath`, `css selector`, and so on. Importantly, the "using" parameter must always be a string that maps to a valid selenium locator strategy.
+The core of the issue lies within the selenium's `find_element` (or `find_elements`) method. These methods, which you use to interact with web elements, require you to provide two crucial pieces of information: the _locator strategy_ and the _locator value_. The 'using' argument the error message references specifically corresponds to that locator strategy, which tells selenium _how_ to find the element. We're talking about things like finding by `id`, `class name`, `xpath`, `css selector`, and so on. Importantly, the "using" parameter must always be a string that maps to a valid selenium locator strategy.
 
-Where things often go wrong, at least from my experience, is when a non-string type gets inadvertently passed as the 'using' argument. Python's dynamic typing can be incredibly convenient, but it can also be the root of these kinds of problems if not managed carefully. I remember, years back, leading a team that was migrating from an older testing framework to a selenium-based solution. One of the junior members, a bright individual but less familiar with selenium’s nuances, was passing a variable containing what he *thought* was the string "xpath" but it turned out to be a variable of type `locator.XpathStrategy` from a helper library they were also testing. The code looked fine at a glance, but the error popped up immediately during execution. This serves as an excellent lesson in the importance of scrutinizing variable types, especially when interfacing with third-party libraries.
+Where things often go wrong, at least from my experience, is when a non-string type gets inadvertently passed as the 'using' argument. Python's dynamic typing can be incredibly convenient, but it can also be the root of these kinds of problems if not managed carefully. I remember, years back, leading a team that was migrating from an older testing framework to a selenium-based solution. One of the junior members, a bright individual but less familiar with selenium’s nuances, was passing a variable containing what he _thought_ was the string "xpath" but it turned out to be a variable of type `locator.XpathStrategy` from a helper library they were also testing. The code looked fine at a glance, but the error popped up immediately during execution. This serves as an excellent lesson in the importance of scrutinizing variable types, especially when interfacing with third-party libraries.
 
 Let me illustrate with three code examples that showcase different scenarios which might lead to the error, along with corrected versions:
 
@@ -37,7 +37,7 @@ if __name__ == "__main__":
         driver.quit()
 ```
 
-In the above case, `locator_strategy` is a *member* of the `By` enum, not the string itself. The correct way to do this is as follows:
+In the above case, `locator_strategy` is a _member_ of the `By` enum, not the string itself. The correct way to do this is as follows:
 
 ```python
 # Corrected Code (example_1_correct.py)
@@ -120,11 +120,12 @@ if __name__ == "__main__":
         driver.quit()
 
 ```
+
 The corrected code makes sure the `get_locator_type` returns a `string` which can be used with the selenium function.
 
 **Example 3: Passing `None` or an Empty String**
 
-Lastly, while seemingly obvious, it’s worth mentioning that sometimes, the “using” parameter may be accidentally assigned `None` or an empty string (``""``). The result is always the same error.
+Lastly, while seemingly obvious, it’s worth mentioning that sometimes, the “using” parameter may be accidentally assigned `None` or an empty string (`""`). The result is always the same error.
 
 ```python
 # Incorrect code (example_3_incorrect.py)
@@ -149,7 +150,9 @@ if __name__ == "__main__":
     finally:
       driver.quit()
 ```
+
 The code will raise the error, as the value for 'using' is `None`. The fix in this case is to provide a valid locator type and locator value.
+
 ```python
 # Corrected Code (example_3_correct.py)
 from selenium import webdriver

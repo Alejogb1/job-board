@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "how-can-i-refresh-all-the-cookies-token-and-session-after-logout-calling-api-using-rails-hotwire"
 ---
 
-alright, so, you're hitting that classic problem with rails hotwire and needing to nuke all auth stuff on logout, right? been there, messed that up, got the t-shirt, like, several times. it's not always as straightforward as it looks. let's break down the how and the why, because understanding the moving parts here is key to actually fixing it cleanly.
+, so, you're hitting that classic problem with rails hotwire and needing to nuke all auth stuff on logout, right? been there, messed that up, got the t-shirt, like, several times. it's not always as straightforward as it looks. let's break down the how and the why, because understanding the moving parts here is key to actually fixing it cleanly.
 
-first off, i've found that the main issue isn't usually the hotwire part *per se*, but rather how we're handling the authentication state *and* how hotwire plays into that state. i remember once, early in my career i had this app that was like, 80% hotwire and 20% custom javascript (before i *really* learned stimulusjs. lol, what a mess). the logout button was a simple link_to that did a rails post request that cleared the cookies in the session, and rendered back with a 303 redirect, which worked sometimes! but then, users would try to hit the back button or the reload and would be "logged in" again. it felt like whack-a-mole. turns out, the browser was *really* eager to reuse cached pages. the session was empty in the backend, but the front end was completely unaware of it, because it still had the stale cookies and html. so frustrating.
+first off, i've found that the main issue isn't usually the hotwire part _per se_, but rather how we're handling the authentication state _and_ how hotwire plays into that state. i remember once, early in my career i had this app that was like, 80% hotwire and 20% custom javascript (before i _really_ learned stimulusjs. lol, what a mess). the logout button was a simple link_to that did a rails post request that cleared the cookies in the session, and rendered back with a 303 redirect, which worked sometimes! but then, users would try to hit the back button or the reload and would be "logged in" again. it felt like whack-a-mole. turns out, the browser was _really_ eager to reuse cached pages. the session was empty in the backend, but the front end was completely unaware of it, because it still had the stale cookies and html. so frustrating.
 
 anyway, the problem really comes from how hotwire intercepts turbo frames and streams. when you log out, and you are making a post to the backend, most probably you're clearing a cookie (or a session) on the server-side. hotwire, by default is not going to magically detect that the auth cookie changed. and your html might still show user details and stuff, cause it's cached or just rendered before the cookie was cleared.
 
@@ -26,7 +26,7 @@ here's a basic example of the rails controller action for logout:
   end
 ```
 
-the `reset_session` will invalidate the rails session on the backend, and we’re deleting the cookies in the response. setting the domain to `.yourdomain.com` will ensure that you remove it from all subdomains.  i use `:see_other` (http status 303) when i'm redirecting as it's the appropriate verb for this action. it's not very sexy, but it does what it needs to do.
+the `reset_session` will invalidate the rails session on the backend, and we’re deleting the cookies in the response. setting the domain to `.yourdomain.com` will ensure that you remove it from all subdomains. i use `:see_other` (http status 303) when i'm redirecting as it's the appropriate verb for this action. it's not very sexy, but it does what it needs to do.
 
 now, let’s think hotwire. you want to avoid the full page reload as much as you can. that’s the point, isn't it? so, instead of a redirect (at least not a full page reload), you can use a turbo stream to replace parts of your page with fresh content that’s not tied to the logged-in user state. you might use turbo frames or broadcast to all clients.
 
@@ -50,9 +50,9 @@ def destroy
 end
 ```
 
-here, we're responding with `turbo_stream` if the request comes with that specific format (`format.turbo_stream do` ).  we're targeting elements with ids `user-menu` and `main-content`, and replacing their content with partials specific to the logged out state. your `_logged_out_menu.html.erb` and `_logged_out_content.html.erb` will hold the html for when users are not logged in. the `format.html` block, will just redirect as before if it's not a turbo request. for example, if the user is doing a ctrl-shift-r, which forces a full page reload.
+here, we're responding with `turbo_stream` if the request comes with that specific format (`format.turbo_stream do` ). we're targeting elements with ids `user-menu` and `main-content`, and replacing their content with partials specific to the logged out state. your `_logged_out_menu.html.erb` and `_logged_out_content.html.erb` will hold the html for when users are not logged in. the `format.html` block, will just redirect as before if it's not a turbo request. for example, if the user is doing a ctrl-shift-r, which forces a full page reload.
 
-the key here is that *you control* exactly which parts of the page are updated and you do it *only* after you've cleared the user session. that will prevent any stale data.
+the key here is that _you control_ exactly which parts of the page are updated and you do it _only_ after you've cleared the user session. that will prevent any stale data.
 
 finally, let's think about js. sometimes, we might have some js state, or we might be doing some client-side caching (like using localstorage). i once had this horrible experience with a react app trying to sync the local state with the backend, and it turned out that i was caching a jwt token in the local storage. that was pain, and a lesson learned the hard way. we can handle this problem by adding a little bit of javascript to clear the client-side state upon logout. and that would help with those scenarios where users are hitting the back button in a really "aggressive" way.
 
@@ -60,12 +60,12 @@ you can attach a `turbo:before-stream-render` event listener in your `applicatio
 
 ```javascript
 document.addEventListener("turbo:before-stream-render", (event) => {
-    if(event.detail.newStream.includes("logged_out_menu")){
-        // clear all client side auth storage
-        localStorage.removeItem('user_token');
-        localStorage.removeItem('some_other_user_data');
-        sessionStorage.removeItem('session_token');
-    }
+  if (event.detail.newStream.includes("logged_out_menu")) {
+    // clear all client side auth storage
+    localStorage.removeItem("user_token");
+    localStorage.removeItem("some_other_user_data");
+    sessionStorage.removeItem("session_token");
+  }
 });
 ```
 

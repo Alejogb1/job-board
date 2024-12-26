@@ -17,7 +17,7 @@ here’s the essence: `past_key_values` represent the contextual information the
 so, the actual question is more specific: how do you ensure each time you feed data into the model that the `past_key_values` represents all the tokens you have generated so far.
 in a sense it is: how do you feed in the right `past_key_values` for the current inputs?
 
-to make this clearer, let's look at some simplified code snippets. these are for illustration, not production-ready, so keep that in mind. first, here's how you’d *incorrectly* use `past_key_values`, demonstrating the issue i had before:
+to make this clearer, let's look at some simplified code snippets. these are for illustration, not production-ready, so keep that in mind. first, here's how you’d _incorrectly_ use `past_key_values`, demonstrating the issue i had before:
 
 ```python
 import torch
@@ -107,4 +107,4 @@ when you are using libraries such as `transformers` all of this is done behind t
 
 to dive deeper, i'd recommend checking out the original transformer paper, “attention is all you need.” it describes the underlying mechanism and how attention weights are computed. also, the huggingface transformers library documentation for gpt2 is excellent. there’s a section on cached past_key_values that will be helpful if you plan on implementing the model on low level api. the pytorch documentation is also worth exploring to understand the low-level mechanism behind the attention calculations. there are some pretty awesome tutorials on youtube as well that you can look into. but, let me tell you one joke: why did the computer go to therapy? because it had too many bytes of emotional baggage.
 
-handling `past_key_values` might seem tricky at first, but with some practice, it becomes much clearer. it's all about understanding the iterative nature of these models and how context is maintained through those attention weights and hidden states. keep track of the length of the sequence, always pass the past key values, and you should be alright.
+handling `past_key_values` might seem tricky at first, but with some practice, it becomes much clearer. it's all about understanding the iterative nature of these models and how context is maintained through those attention weights and hidden states. keep track of the length of the sequence, always pass the past key values, and you should be .

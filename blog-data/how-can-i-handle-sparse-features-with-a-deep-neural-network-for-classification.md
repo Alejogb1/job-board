@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-i-handle-sparse-features-with-a-deep-neural-network-for-classification"
 ---
 
-alright, let's talk about sparse features and deep learning, it's a classic problem. i've been there, done that, got the t-shirt, probably a few faded ones at this point. i mean, we've all stared blankly at a matrix full of zeros wondering how to get a model to learn anything useful.
+, let's talk about sparse features and deep learning, it's a classic problem. i've been there, done that, got the t-shirt, probably a few faded ones at this point. i mean, we've all stared blankly at a matrix full of zeros wondering how to get a model to learn anything useful.
 
 so, the issue with sparse features, especially in the context of deep learning, is that a lot of those zero values don't carry any information. think of it like having a giant document where most of the words are just empty space. if you feed that directly into a dense neural network, you're basically forcing the network to learn meaningless weights for those empty spaces, which is a waste of time and resources, and it makes convergence a pain in the neck. what you need to do is somehow focus on the actual present words, or in our case, the relevant data.
 
@@ -12,7 +12,7 @@ one of the first things i tried when i ran into this a few years ago was feature
 
 the next approach was more technical and involved some changes in how the deep neural network itself was structured. we need to move from dense networks to sparse networks. the obvious move is using embeddings, its the most frequent solution you find out there in almost every recommendation or NLP task. and frankly, for good reason.
 
-embeddings are a way to represent categorical data (like user ids or item ids) as dense vectors of a lower dimensionality. instead of one-hot encoding each category into a gigantic space, you learn these dense representations for each category. these learned vectors, the embeddings, capture latent relationships between categories. the cool part is that the embeddings are learned during the training process as weights so the network actually figures out itself what the best representation is. 
+embeddings are a way to represent categorical data (like user ids or item ids) as dense vectors of a lower dimensionality. instead of one-hot encoding each category into a gigantic space, you learn these dense representations for each category. these learned vectors, the embeddings, capture latent relationships between categories. the cool part is that the embeddings are learned during the training process as weights so the network actually figures out itself what the best representation is.
 
 here's a python code snippet illustrating this with pytorch:
 
@@ -38,7 +38,7 @@ class SparseModel(nn.Module):
         x = self.relu(x)
         x = self.fc2(x)
         return x
-    
+
 # example usage:
 num_users = 1000
 num_items = 500
@@ -64,6 +64,7 @@ for epoch in range(epochs):
   optimizer.step()
   print(f"epoch {epoch+1}, loss {loss.item():.4f}")
 ```
+
 in this code we define a model, where the inputs are not the sparse data itself, but the indices of the data itself. the model contains a embedding layer for the user and another embedding layer for the item. then the embedding is concatenated and passed to dense layers. the point is that the embedding is not one-hot encoded. it's a low dimension representation.
 
 the idea with embeddings is that you are going from sparse input to dense representations. but there are other techniques that involve working on sparse spaces directly.
@@ -73,6 +74,7 @@ another approach is using feature hashing. this is particularly useful when you 
 it also makes the system less susceptible to "cold start" problems ( where a new user or item has not been seen at training time). since feature hashing is essentially mapping features to an existing space (the much smaller hash space) unseen categories can actually generate a vector representation, since it is hash with the same hash function applied to all other items.
 
 the code snippet would look like this using scikit-learn, using the hashing vectorizer:
+
 ```python
 from sklearn.feature_extraction import FeatureHasher
 from sklearn.linear_model import LogisticRegression
@@ -109,6 +111,7 @@ predictions = pipeline.predict(features_test)
 # test sample
 print(f"sample prediction: {predictions[0:5]}")
 ```
+
 notice that the user and item ids are converted to strings and then passed to the feature hasher, the output of the hashing will be a matrix, similar to the output of the vectorization in nlp.
 
 now, if you are dealing with text data, you would usually use something like tf-idf (term frequency-inverse document frequency) to represent documents in a sparse vector format. this approach basically tries to reduce the weight of words that are very frequent in the corpus, like "the" or "and", these don't carry much meaning in the classification task.

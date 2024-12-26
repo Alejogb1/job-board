@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-access-json-data-before-an-airflow-dag-runs"
 ---
 
-Okay, let's tackle this. I’ve definitely been down this road before, a few times actually, and it’s a surprisingly common challenge. The core issue is accessing json data *before* airflow even kicks off a dag, meaning before any tasks are scheduled and executed. This implies we need to think outside the box a bit, moving beyond the usual airflow operators. It's less about dag *execution* and more about dag *definition* and how we provide those definitions with the necessary data.
+, let's tackle this. I’ve definitely been down this road before, a few times actually, and it’s a surprisingly common challenge. The core issue is accessing json data _before_ airflow even kicks off a dag, meaning before any tasks are scheduled and executed. This implies we need to think outside the box a bit, moving beyond the usual airflow operators. It's less about dag _execution_ and more about dag _definition_ and how we provide those definitions with the necessary data.
 
-The fundamental problem is that airflow dags are, at their core, python scripts. They are parsed and translated into task graphs, but this all happens *before* the actual scheduling process. Therefore, if we want to inject json data into our dag before it's even scheduled, we have to intercept that process. Here’s how I've generally approached this, which has worked well in my experience, especially when dealing with dynamic configurations or parameters that frequently change.
+The fundamental problem is that airflow dags are, at their core, python scripts. They are parsed and translated into task graphs, but this all happens _before_ the actual scheduling process. Therefore, if we want to inject json data into our dag before it's even scheduled, we have to intercept that process. Here’s how I've generally approached this, which has worked well in my experience, especially when dealing with dynamic configurations or parameters that frequently change.
 
 The most effective solution typically involves decoupling your dag definition from the source of your json data. We want to avoid hardcoding json directly in the dag script for maintainability reasons. Instead, think about creating a pre-processing step that reads this json data and makes it available to the dag. There are essentially three methods i frequently fall back to, each with their own use cases.
 
@@ -72,7 +72,7 @@ In this approach, we use the `os` module to build the path to the `config.json` 
 
 **Method 2: Airflow Variables**
 
-For data that can be updated frequently but is not *massive* , Airflow Variables can be very effective. We can use the airflow cli or the airflow web interface to update them. This allows us to programmatically change the behaviour of dags.
+For data that can be updated frequently but is not _massive_ , Airflow Variables can be very effective. We can use the airflow cli or the airflow web interface to update them. This allows us to programmatically change the behaviour of dags.
 
 This method involves creating a separate process (outside the dag) that loads json data from external sources, and stores it as an airflow variable using the airflow cli or the api. Then, within the dag, you retrieve this variable. The key advantage here is that the json can be modified separately from the dag file, making dag logic independent of changing configurations.
 
@@ -127,7 +127,7 @@ In the above code, we fetch an airflow variable named `my_json_config_var`. Befo
 
 For larger datasets, or frequently changing data, consider a more robust approach involving a database or message queue. Your json data can be stored and updated in a database (such as postgresql) or retrieved from a message queue (such as redis). Your dag can query this source as part of its definition process.
 
-This involves creating a connection to your database or a consumer for your message queue *within* your dag's python file, retrieving the data, and subsequently parsing it.
+This involves creating a connection to your database or a consumer for your message queue _within_ your dag's python file, retrieving the data, and subsequently parsing it.
 
 ```python
 import json
@@ -188,9 +188,9 @@ The choice of method depends entirely on your use case. For static configuration
 
 For deeper insight, consider reading:
 
-*   *Effective Python* by Brett Slatkin: Especially helpful for understanding the nuances of using Python's standard library and designing robust data loading patterns.
-*   *Data Pipelines with Apache Airflow* by Bas Harenslak and Julian de Ruiter: For an in-depth exploration of airflow concepts and best practices, beyond the basics.
-*   Relevant sections on the apache airflow documentation about variables and hooks. This is the canonical source of truth on how these things work.
-*   Relevant sections in the psycopg2 or similar python drivers for interacting with databases, especially if you opt for method 3.
+- _Effective Python_ by Brett Slatkin: Especially helpful for understanding the nuances of using Python's standard library and designing robust data loading patterns.
+- _Data Pipelines with Apache Airflow_ by Bas Harenslak and Julian de Ruiter: For an in-depth exploration of airflow concepts and best practices, beyond the basics.
+- Relevant sections on the apache airflow documentation about variables and hooks. This is the canonical source of truth on how these things work.
+- Relevant sections in the psycopg2 or similar python drivers for interacting with databases, especially if you opt for method 3.
 
 Finally, remember that clean code and thoughtful separation of concerns are key here. Do not hardcode your configurations. Always choose the tool that makes your workflows more maintainable and easier to debug. These three methods should cover most situations and allow for fairly complex configurations when combined and thoughtfully applied.

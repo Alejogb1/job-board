@@ -4,15 +4,15 @@ date: "2024-12-13"
 id: "wix-embeddedchainer-examples"
 ---
 
-Okay so you're digging into Wix's EmbeddedChainer right I get it I've been there done that bought the t-shirt and probably accidentally deleted the source code a few times let's talk about that mess
+you're digging into Wix's EmbeddedChainer right I get it I've been there done that bought the t-shirt and probably accidentally deleted the source code a few times let's talk about that mess
 
-First off if you're asking for *examples* you're probably hitting a wall with the official documentation it's like a treasure map with half the landmarks missing Yeah the concept is pretty straightforward right you want to create a chain of actions within an installer usually related to custom actions or sequencing but actually doing it especially with Wix's EmbeddedChainer is like herding cats blindfolded
+First off if you're asking for _examples_ you're probably hitting a wall with the official documentation it's like a treasure map with half the landmarks missing Yeah the concept is pretty straightforward right you want to create a chain of actions within an installer usually related to custom actions or sequencing but actually doing it especially with Wix's EmbeddedChainer is like herding cats blindfolded
 
 My first tango with EmbeddedChainer was back in 2015 I think or was it 2016 time blurs when you spend too much time battling installer technologies I was tasked to build a custom installer for an internal tool that needed a very specific sequence of configurations to be done before the app itself installed and during uninstall the opposite dance We tried using just custom actions at first but that turned into spaghetti code real quick
 
 I remember one particularly dark afternoon with 8 or so failed builds because some custom action was firing out of order and corrupting some registry key We needed finer grained control we needed a chain we needed EmbeddedChainer and we needed more coffee I'm not sure which one helped the most to be honest
 
-The big catch with EmbeddedChainer is this it's about embedding a sequence of actions inside the main MSI not just triggering stuff it works off these *chained packages* which are just MSI files that are sequenced by the main installer it's a kind of nested installer situation
+The big catch with EmbeddedChainer is this it's about embedding a sequence of actions inside the main MSI not just triggering stuff it works off these _chained packages_ which are just MSI files that are sequenced by the main installer it's a kind of nested installer situation
 
 Let’s start simple here’s a minimal example of defining the embedded chainer in a wix project file you can see that i am using the heat harvested project for simplicity in a real world scenario this would need to be your existing project
 
@@ -54,7 +54,7 @@ here is an example of an example file to be used for compiling the project above
 I am an example file
 ```
 
-Now for the crucial part the chained packages themselves These aren't just random MSIs you need to be thinking about what *they* do in relation to the main package often these are the custom action parts that need careful sequencing
+Now for the crucial part the chained packages themselves These aren't just random MSIs you need to be thinking about what _they_ do in relation to the main package often these are the custom action parts that need careful sequencing
 
 So let's say you want to configure some settings or perform some tasks before the actual main app gets installed a good example is a third party dependency installer
 
@@ -84,6 +84,7 @@ Here's a very basic example of an MSI that is the chained package it does absolu
 	</Product>
 </Wix>
 ```
+
 And here is an example file for this chained msi package:
 
 ```
@@ -114,7 +115,7 @@ What is also important is how to debug it? Well the truth is the debugging proce
 Also you can enable verbose logging for the main installer and try to see what is going wrong in the chained packages installation process
 Keep in mind that sometimes a failing of a chained package installation is going to break the entire installation this is not a bad thing per se since it is important to correctly configure everything for an ideal install
 
-As for resources I didn't really use books that were specific to *Wix EmbeddedChainer* when I first started working with it to be honest It was more about combing through the WiX documentation which can be found in the official wix documentation site. There are also various blog posts and articles scattered around the web that go deeper into specific use cases and the wix mailing list is also a must to subscribe and follow for future changes in the tech landscape of wix and installer technologies.
+As for resources I didn't really use books that were specific to _Wix EmbeddedChainer_ when I first started working with it to be honest It was more about combing through the WiX documentation which can be found in the official wix documentation site. There are also various blog posts and articles scattered around the web that go deeper into specific use cases and the wix mailing list is also a must to subscribe and follow for future changes in the tech landscape of wix and installer technologies.
 
 One final tip avoid the temptation of using it as the solution to everything it might not be the right tool in some cases. Do not over use custom actions in the main msi and try to use the embedded chainer as the solution to complex workflows because it might also not be the correct tool. Sometimes a simple custom action with a sequence might be all that you need
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-an-elasticsearch-pipeline-doesnt-match-paths"
 ---
 
-alright, let's get into this. you’re seeing that an elasticsearch pipeline, specifically a processor within that pipeline, isn't matching paths as expected, and that can be a real head-scratcher. i've definitely been there, staring at the screen, wondering why the darn thing isn't doing what i told it to. been coding since i was a teenager and this situation is like a classic “the computer is doing exactly what i told it to do, not what i wanted it to do”. happens all the time.
+, let's get into this. you’re seeing that an elasticsearch pipeline, specifically a processor within that pipeline, isn't matching paths as expected, and that can be a real head-scratcher. i've definitely been there, staring at the screen, wondering why the darn thing isn't doing what i told it to. been coding since i was a teenager and this situation is like a classic “the computer is doing exactly what i told it to do, not what i wanted it to do”. happens all the time.
 
 so, the core issue usually boils down to how elasticsearch handles paths in a pipeline context and how those paths interact with the processor's configuration, particularly when you're dealing with processors like `script`, `set`, or even `gsub`. the key point is that the “path” isn’t always what you think it is. when you configure a pipeline, you're dealing with the document structure, not necessarily what you might think of as a file system path. it's all about fields and their values within the elasticsearch document.
 
@@ -19,7 +19,7 @@ let's say you have documents ingested into elasticsearch that have a structure l
 }
 ```
 
-you might think you can use a `gsub` processor directly on `"file_path"`, but it's not quite that simple. you're dealing with a field *inside* another field. if you’re trying to match `/path/to` or some specific path component, the match will fail if you are not accessing the full path to the field. let’s look at common errors:
+you might think you can use a `gsub` processor directly on `"file_path"`, but it's not quite that simple. you're dealing with a field _inside_ another field. if you’re trying to match `/path/to` or some specific path component, the match will fail if you are not accessing the full path to the field. let’s look at common errors:
 
 **common pitfall #1: incorrect path specification**
 
@@ -38,6 +38,7 @@ the most common reason for pipeline path matching failure is not correctly point
   ]
 }
 ```
+
 this will fail because it's looking for a top-level `file_path` field, which does not exist. in this case you have to properly access nested fields in your configuration. you need to specify the full path, meaning you need `metadata.file_path` not just `file_path`.
 
 **common pitfall #2: data type mismatches**
@@ -105,13 +106,13 @@ this example escapes all the special chars for regex, just in case. it is import
 ```json
 {
   "processors": [
-        {
-            "gsub": {
-              "field": "metadata.file_path",
-                "pattern": "/path\\.to\\/some\\/file\\.txt",
-                 "replacement": "/new/path/some/newfile.txt"
-            }
-        }
+    {
+      "gsub": {
+        "field": "metadata.file_path",
+        "pattern": "/path\\.to\\/some\\/file\\.txt",
+        "replacement": "/new/path/some/newfile.txt"
+      }
+    }
   ]
 }
 ```

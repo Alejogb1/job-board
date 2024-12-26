@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-batch-dataset-input-be-reshaped-for-a-trained-model"
 ---
 
-Okay, let's tackle this. I've seen this exact scenario play out countless times, especially when dealing with models trained on specific data structures and then encountering real-world inputs that don't quite match. The short answer is that you need to manipulate your batch data to fit the model’s expected input shape, and the specifics depend heavily on the original training data and the particular model architecture. It’s less about forcing data into arbitrary shapes, and more about making sure the *meaning* of the data is preserved after the transformation.
+, let's tackle this. I've seen this exact scenario play out countless times, especially when dealing with models trained on specific data structures and then encountering real-world inputs that don't quite match. The short answer is that you need to manipulate your batch data to fit the model’s expected input shape, and the specifics depend heavily on the original training data and the particular model architecture. It’s less about forcing data into arbitrary shapes, and more about making sure the _meaning_ of the data is preserved after the transformation.
 
 The challenge often arises when a model, during its training phase, was exposed to a very neatly structured dataset—think images always sized 256x256 pixels or sequences of a certain length, for instance. In practice, incoming data rarely behaves. You might be receiving variable-sized images, time series with inconsistent lengths, or tabular data with extra features or different orders.
 
@@ -42,13 +42,13 @@ def pad_batch(batch, target_height, target_width):
         pad_right = pad_w - pad_left
         padded_image = F.pad(image.unsqueeze(0), (pad_left, pad_right, pad_top, pad_bottom), 'constant', 0)
         padded_batch.append(padded_image)
-    
+
     return torch.cat(padded_batch, dim=0)
 
 # Example Usage:
 batch_size = 3
 num_channels = 3
-images = [torch.rand((num_channels, 20, 30)), 
+images = [torch.rand((num_channels, 20, 30)),
           torch.rand((num_channels, 25, 25)),
           torch.rand((num_channels, 30, 20))]
 batched_images = torch.stack(images)
@@ -136,4 +136,4 @@ print(reordered_df)
 
 This example leverages pandas to make reordering trivial. In practice, the data might not be in a DataFrame—it could be numpy arrays or tensors directly. The key concept remains the same: reorder the data along the correct dimension to match the model’s expectations.
 
-In all these cases, the critical aspect is maintaining the *semantic* relationship between data points, irrespective of any transformation. For further exploration, I'd highly recommend delving into resources like the following: *Deep Learning* by Ian Goodfellow, Yoshua Bengio, and Aaron Courville, which provides a very strong foundation in understanding model architecture and data manipulation, or papers focusing on specific techniques such as 'Sequence to Sequence Learning with Neural Networks’ (Sutskever et al., 2014) for sequential data handling, or ‘Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift’ (Ioffe & Szegedy, 2015) for how batching influences training and inference, or “ImageNet Classification with Deep Convolutional Neural Networks’ (Krizhevsky et al., 2012) for some insight on typical image input requirements. Understanding the 'why' behind these methods greatly improves implementation and avoids common pitfalls. The best solutions are typically informed by a deep understanding of both the data and the model's inherent assumptions.
+In all these cases, the critical aspect is maintaining the _semantic_ relationship between data points, irrespective of any transformation. For further exploration, I'd highly recommend delving into resources like the following: _Deep Learning_ by Ian Goodfellow, Yoshua Bengio, and Aaron Courville, which provides a very strong foundation in understanding model architecture and data manipulation, or papers focusing on specific techniques such as 'Sequence to Sequence Learning with Neural Networks’ (Sutskever et al., 2014) for sequential data handling, or ‘Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift’ (Ioffe & Szegedy, 2015) for how batching influences training and inference, or “ImageNet Classification with Deep Convolutional Neural Networks’ (Krizhevsky et al., 2012) for some insight on typical image input requirements. Understanding the 'why' behind these methods greatly improves implementation and avoids common pitfalls. The best solutions are typically informed by a deep understanding of both the data and the model's inherent assumptions.

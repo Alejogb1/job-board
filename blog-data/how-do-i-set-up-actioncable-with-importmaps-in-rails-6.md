@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-set-up-actioncable-with-importmaps-in-rails-6"
 ---
 
-Okay, let's unpack this. Setting up ActionCable with importmaps in Rails 6, while seemingly straightforward, can present a few interesting configuration nuances if you’re not entirely familiar with both systems. I recall facing this myself when migrating a legacy application; it involved some unexpected quirks, specifically around module loading and ensuring everything plays nicely within the asset pipeline. Let’s dive in.
+, let's unpack this. Setting up ActionCable with importmaps in Rails 6, while seemingly straightforward, can present a few interesting configuration nuances if you’re not entirely familiar with both systems. I recall facing this myself when migrating a legacy application; it involved some unexpected quirks, specifically around module loading and ensuring everything plays nicely within the asset pipeline. Let’s dive in.
 
 The core issue stems from the way importmaps fundamentally alter how JavaScript assets are handled in Rails. Instead of relying on the traditional asset pipeline concatenation and precompilation, importmaps leverage browser-native module loading. This means that ActionCable's JavaScript client, `actioncable.js`, and any associated code you might write, need to be correctly identified and loaded as modules. This differs significantly from Rails 5 and earlier, where everything was typically bundled into a large application.js file.
 
@@ -26,23 +26,26 @@ Next, let’s move on to our JavaScript code. Your application's primary JavaScr
 
 ```javascript
 // app/javascript/application.js
-import * as ActionCable from '@rails/actioncable'
+import * as ActionCable from "@rails/actioncable";
 
-document.addEventListener('DOMContentLoaded', () => {
-  const cable = ActionCable.createConsumer()
+document.addEventListener("DOMContentLoaded", () => {
+  const cable = ActionCable.createConsumer();
 
-  cable.subscriptions.create({ channel: 'ChatChannel', room: "public"}, {
-    connected() {
-      console.log('Connected to the chat channel!');
-    },
-    disconnected() {
-      console.log('Disconnected from the chat channel.');
-    },
-    received(data) {
-      console.log('Received data:', data);
-      // Here we would handle the messages being received and render to our UI
+  cable.subscriptions.create(
+    { channel: "ChatChannel", room: "public" },
+    {
+      connected() {
+        console.log("Connected to the chat channel!");
+      },
+      disconnected() {
+        console.log("Disconnected from the chat channel.");
+      },
+      received(data) {
+        console.log("Received data:", data);
+        // Here we would handle the messages being received and render to our UI
+      },
     }
-  });
+  );
 });
 ```
 
@@ -77,6 +80,6 @@ With these three snippets in place, your ActionCable setup using importmaps shou
 
 Debugging this setup can sometimes be a bit tricky. I've frequently encountered issues where the `actioncable` module wasn’t correctly loaded, resulting in a 'cannot find module' error. Checking your browser's developer console and network tab for module loading errors is a great first step in debugging. Another useful thing to check is that your ActionCable server is correctly configured in your environment files, specifically `config/environments/development.rb`. You should have `config.action_cable.mount_path = '/cable'`.
 
-For further reading, I recommend checking out the official Rails documentation on ActionCable and importmaps. It’s essential to thoroughly understand the interplay between them. You can find a deep dive into how Rails handles javascript assets in *Agile Web Development with Rails 7* by Sam Ruby et al; this provides a comprehensive overview of Rails' asset pipeline, which, although we aren't using it directly, provides much needed context. For understanding modern javascript concepts like modules, *Effective JavaScript* by David Herman will be a great resource. It will provide a good foundation for understanding modern javascript modularity, which is crucial when using importmaps.
+For further reading, I recommend checking out the official Rails documentation on ActionCable and importmaps. It’s essential to thoroughly understand the interplay between them. You can find a deep dive into how Rails handles javascript assets in _Agile Web Development with Rails 7_ by Sam Ruby et al; this provides a comprehensive overview of Rails' asset pipeline, which, although we aren't using it directly, provides much needed context. For understanding modern javascript concepts like modules, _Effective JavaScript_ by David Herman will be a great resource. It will provide a good foundation for understanding modern javascript modularity, which is crucial when using importmaps.
 
 In summary, integrating ActionCable with importmaps in Rails 6 requires careful attention to module loading and configuration. By ensuring your `importmap.rb` is correctly configured and that you are importing the module correctly in your javascript files, you should be able to use these features seamlessly. Remembering my previous experiences, following this approach makes for a much less complicated setup and reduces the probability of encountering hard-to-debug errors.

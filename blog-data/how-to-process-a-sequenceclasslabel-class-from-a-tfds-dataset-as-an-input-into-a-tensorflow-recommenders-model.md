@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-process-a-sequenceclasslabel-class-from-a-tfds-dataset-as-an-input-into-a-tensorflow-recommenders-model"
 ---
 
-alright, so you've got a tfds dataset, and it's spitting out a sequence of class labels, which you need to feed into a tensorflow recommenders model. this is pretty common, i've banged my head against this kind of thing more times than i care to recall, especially when you're trying to get a model to understand user behavior based on past interactions or choices. let me walk you through how i usually handle this, giving you some examples along the way that i hope you can find helpful.
+, so you've got a tfds dataset, and it's spitting out a sequence of class labels, which you need to feed into a tensorflow recommenders model. this is pretty common, i've banged my head against this kind of thing more times than i care to recall, especially when you're trying to get a model to understand user behavior based on past interactions or choices. let me walk you through how i usually handle this, giving you some examples along the way that i hope you can find helpful.
 
 first, understand that tfds typically gives you a `tf.data.dataset`, and you're dealing with features that can be varied in type and shape. when you have a sequence of `classlabel` features, it means you have a sequence of integers that have a semantic meaning, in your case is a class to which something belongs. tensorflow recommenders models, however, often expect a fixed shape of input. so the basic problem boils down to how to transform variable length sequence of class labels to a suitable fixed length or shape so it can be processed.
 
@@ -64,7 +64,7 @@ class MyModel(tfrs.Model):
         embedded_sequence = self.embedding(sequence)
 
         masked_sequence = embedded_sequence * tf.expand_dims(mask, axis=-1) # we apply the mask before lstm to remove padding impact.
-        
+
         lstm_output = self.lstm(masked_sequence)
         output = self.dense(lstm_output)
 
@@ -93,13 +93,14 @@ def aggregate_sequence(dataset):
       aggregated_feature = tf.reduce_mean(tf.cast(sequence,tf.float32), axis=0)
       features['classlabel_sequence'] = aggregated_feature
       return features
-    
+
     dataset = dataset.map(_aggregate)
     return dataset
 # example of usage
 # aggregated_dataset = aggregate_sequence(dataset)
 
 ```
+
 in this code we calculate the average of the sequence. of course, you can do the maximum or minimum, or other aggregation strategy. for example if you want the maximum values:
 
 ```python
@@ -111,7 +112,7 @@ def aggregate_max_sequence(dataset):
       aggregated_feature = tf.reduce_max(tf.cast(sequence,tf.float32), axis=0)
       features['classlabel_sequence'] = aggregated_feature
       return features
-    
+
     dataset = dataset.map(_aggregate)
     return dataset
 # aggregated_max_dataset = aggregate_max_sequence(dataset)
@@ -124,17 +125,17 @@ once i was trying to predict which items a user would purchase in a game. the pu
 
 some important tips:
 
-* **vocabulary size**: you will need to determine how many different class labels there are in your data, i call it vocab_size in my examples above. and use that number to create the embedding layer. if you do not do this your embedding layer will produce meaningless results, i have been there.
-* **embedding dimension**: the size of the vector that you want to represent each class label with. 32 or 64 are usually good values, however you should tune that parameter.
-* **consider pre-training**: if your class labels represent words, or products, or any other well know concept. you could pre train your embedding layer using publicly available models or datasets, this can make your model train faster and converge to a more stable final model.
-* **feature engineering**: sometimes, a single `classlabel` might not be enough. you might need to extract more features from it or combine it with other features of the same sample. i usually engineer features based on my domain understanding, this is a non-trivial part of the modelling.
-* **masking is key:** if you are using padding, never forget to mask the padded values. i cannot emphasize this enough.
+- **vocabulary size**: you will need to determine how many different class labels there are in your data, i call it vocab_size in my examples above. and use that number to create the embedding layer. if you do not do this your embedding layer will produce meaningless results, i have been there.
+- **embedding dimension**: the size of the vector that you want to represent each class label with. 32 or 64 are usually good values, however you should tune that parameter.
+- **consider pre-training**: if your class labels represent words, or products, or any other well know concept. you could pre train your embedding layer using publicly available models or datasets, this can make your model train faster and converge to a more stable final model.
+- **feature engineering**: sometimes, a single `classlabel` might not be enough. you might need to extract more features from it or combine it with other features of the same sample. i usually engineer features based on my domain understanding, this is a non-trivial part of the modelling.
+- **masking is key:** if you are using padding, never forget to mask the padded values. i cannot emphasize this enough.
 
 i have found the following resources extremely useful while dealing with these issues:
 
-*   "hands-on machine learning with scikit-learn, keras & tensorflow" by aurélien géron. a very practical book for machine learning in general and many chapters talk about sequence models in detail.
-*   the tensorflow documentation of the `tf.data` api has been a life saver for me, it is very detailed and has a lot of useful information, go through it thoroughly if you can.
-*   the tensorflow recommenders documentation is also very useful, they have many examples and also show you how to deal with sequences in some of their examples. you can see how they deal with sequence features there.
+- "hands-on machine learning with scikit-learn, keras & tensorflow" by aurélien géron. a very practical book for machine learning in general and many chapters talk about sequence models in detail.
+- the tensorflow documentation of the `tf.data` api has been a life saver for me, it is very detailed and has a lot of useful information, go through it thoroughly if you can.
+- the tensorflow recommenders documentation is also very useful, they have many examples and also show you how to deal with sequences in some of their examples. you can see how they deal with sequence features there.
 
 finally, a small joke: why did the neural network cross the road? to get to the other side of the activation function.
 

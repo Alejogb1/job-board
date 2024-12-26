@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-utilize-tfagents-replay-buffer-for-daily-contextual-bandit-training"
 ---
 
-Alright, let's talk about integrating `tf_agents`' replay buffer with daily contextual bandit training. I’ve tackled similar setups in a previous project involving personalized recommendations for a news platform, and it definitely brought some interesting challenges. It's not quite the typical reinforcement learning scenario, so we need to adapt the standard approach.
+, let's talk about integrating `tf_agents`' replay buffer with daily contextual bandit training. I’ve tackled similar setups in a previous project involving personalized recommendations for a news platform, and it definitely brought some interesting challenges. It's not quite the typical reinforcement learning scenario, so we need to adapt the standard approach.
 
 The core issue, as I see it, lies in the inherent differences between the episodic nature of traditional RL and the continuous, day-by-day context of a bandit. The `tf_agents` replay buffer, by design, is structured around storing and sampling transitions of the form `(state, action, reward, next_state)`. Contextual bandits, however, generally work with tuples of `(context, action, reward)` – there's no inherent notion of 'next state' because the agent's actions don't, in principle, influence future contexts. This difference necessitates some adjustments.
 
-The strategy I found most effective involves using the replay buffer as a *temporary* data storage for the day’s interactions. Instead of accumulating transitions across long periods, we essentially treat each day as an independent “episode”. At the start of each day, the replay buffer would be cleared. Then, as the bandit interacts and gathers data (context, action, reward), these interactions are added as if they were standard RL transitions. The key here is to realize that we're just using the data structure; the training process will be different. After the daily interactions, we sample mini-batches for training the bandit model, then discard the data. We repeat this for each day. It’s not persistent, which goes against traditional RL buffer usage, but aligns with the daily batch updates characteristic of contextual bandit algorithms.
+The strategy I found most effective involves using the replay buffer as a _temporary_ data storage for the day’s interactions. Instead of accumulating transitions across long periods, we essentially treat each day as an independent “episode”. At the start of each day, the replay buffer would be cleared. Then, as the bandit interacts and gathers data (context, action, reward), these interactions are added as if they were standard RL transitions. The key here is to realize that we're just using the data structure; the training process will be different. After the daily interactions, we sample mini-batches for training the bandit model, then discard the data. We repeat this for each day. It’s not persistent, which goes against traditional RL buffer usage, but aligns with the daily batch updates characteristic of contextual bandit algorithms.
 
 Let's examine this with code, broken into snippets for clarity. First, how we prepare to use the buffer:
 
@@ -24,7 +24,7 @@ def create_replay_buffer(context_dim, action_dim, batch_size):
     context_spec = tensor_spec.TensorSpec(shape=(context_dim,), dtype=tf.float32, name='context')
     action_spec = tensor_spec.TensorSpec(shape=(), dtype=tf.int32, name='action')
     reward_spec = tensor_spec.TensorSpec(shape=(), dtype=tf.float32, name='reward')
-    
+
     transition_spec = (context_spec, action_spec, reward_spec)
 
     buffer = tf_uniform_replay_buffer.TFUniformReplayBuffer(
@@ -32,7 +32,7 @@ def create_replay_buffer(context_dim, action_dim, batch_size):
         batch_size=batch_size,
         max_length=10000 # Adjust max length based on your daily interactions
     )
-    
+
     return buffer
 
 ```
@@ -90,7 +90,7 @@ def train_bandit_model(replay_buffer, bandit_model, batch_size):
             logits = bandit_model(contexts)
             loss = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=actions, logits=logits)
             loss = tf.reduce_mean(loss)
-        
+
         grads = tape.gradient(loss, bandit_model.trainable_variables)
         bandit_model.optimizer.apply_gradients(zip(grads, bandit_model.trainable_variables))
 
@@ -100,7 +100,7 @@ def train_bandit_model(replay_buffer, bandit_model, batch_size):
 
 # Example model initialization and training
 if __name__ == '__main__':
-  
+
     # Assume we have our bandit model defined:
     bandit_model = tf.keras.Sequential([
       tf.keras.layers.Dense(64, activation='relu', input_shape=(context_dim,)),

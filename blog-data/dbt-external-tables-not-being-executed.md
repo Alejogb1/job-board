@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "dbt-external-tables-not-being-executed"
 ---
 
-Okay so you're having trouble with dbt external tables not running that's a classic I’ve been there trust me It usually boils down to a few common culprits I've debugged this exact thing more times than I care to admit
+you're having trouble with dbt external tables not running that's a classic I’ve been there trust me It usually boils down to a few common culprits I've debugged this exact thing more times than I care to admit
 
 First things first lets talk about the basics of how dbt handles external tables Generally dbt uses a `schema.yml` file to describe your external tables The important part is the `external` config section in that file This tells dbt the file format where the data lives its location and crucially how to access it
 
@@ -23,7 +23,7 @@ models:
           - name: dt
             data_type: date
         options:
-           compression: snappy
+          compression: snappy
 ```
 
 Make sure you have this set correctly especially the `location` and `file_format` are paramount Obviously `s3://my-bucket/my-data/` should be your actual s3 location and `parquet` or whatever `csv` you have should match the data type you are working with And `partitions` if relevant is mandatory otherwise it won't work
@@ -32,7 +32,7 @@ Now if it's not the `schema.yml` which is usually the problem lets go deeper Her
 
 I remember back in 2019 working on a massive data migration project we were using Google Cloud Storage for our data lake and I spent two whole days because the service account we were using for dbt was missing `storage.object.get` permission on the bucket The error message was something cryptic like 'access denied' I mean who writes these error messages really right We wasted so much time because of that
 
-Okay so you've checked the yaml file and the permissions are sorted so where else could things go wrong? Ah right another frequent offender the infamous "data not found" error it’s almost always a location mismatch. dbt looks at the location in the `schema.yml` and if that location is wrong in any way even if a little bit then it fails without telling you the exact place it fails This means the location in `schema.yml` *must exactly match* where your data is stored. And it needs to be the correct bucket region too. It's so trivial but I can’t tell you how many times I've made this error in particular
+you've checked the yaml file and the permissions are sorted so where else could things go wrong? Ah right another frequent offender the infamous "data not found" error it’s almost always a location mismatch. dbt looks at the location in the `schema.yml` and if that location is wrong in any way even if a little bit then it fails without telling you the exact place it fails This means the location in `schema.yml` _must exactly match_ where your data is stored. And it needs to be the correct bucket region too. It's so trivial but I can’t tell you how many times I've made this error in particular
 
 ```sql
 -- A sample dbt model file using the external table
@@ -87,4 +87,4 @@ If you are still stuck debugging here are some other general things to verify.
 4.  **File Formats:** Make sure the file format of your external table matches what you have specified in the `schema.yml` file as some cloud providers are not flexible about the file types.
 5.  **Network Issues:** Check if there are any network issues preventing dbt from reaching your external storage.
 
-I would recommend reading *The Definitive Guide to dbt* by Fishtown Analytics it is a great starting point to dive into details of external tables and how they are constructed and used. Another good resource is the official dbt documentation which explains in depth every functionality of dbt including external tables. If you still cannot figure out the problem after looking at these two then you might want to go through your cloud providers documentation on external tables such as AWS documentation for Athena and S3 or Google BigQuery documentation on external data sources. And if after all these the errors still persist maybe it's time for a new job but hopefully not I hope this helps.
+I would recommend reading _The Definitive Guide to dbt_ by Fishtown Analytics it is a great starting point to dive into details of external tables and how they are constructed and used. Another good resource is the official dbt documentation which explains in depth every functionality of dbt including external tables. If you still cannot figure out the problem after looking at these two then you might want to go through your cloud providers documentation on external tables such as AWS documentation for Athena and S3 or Google BigQuery documentation on external data sources. And if after all these the errors still persist maybe it's time for a new job but hopefully not I hope this helps.

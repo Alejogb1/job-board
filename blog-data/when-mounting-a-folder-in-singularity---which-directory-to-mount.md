@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "when-mounting-a-folder-in-singularity---which-directory-to-mount"
 ---
 
-alright, so, mounting folders in singularity, it's a topic i've spent way too many late nights dealing with. let's break it down.
+, so, mounting folders in singularity, it's a topic i've spent way too many late nights dealing with. let's break it down.
 
 the core issue here is that singularity, or apptainer as it's becoming more known, is all about containerization. it's designed to isolate the environment inside the container from your host system. mounting a folder is how you poke a hole through that isolation, allowing the container to see and interact with specific parts of your host's filesystem.
 
 now, the "which directory" part is where things can get a bit tricky and often leads to head-scratching moments. there's no single, universal best answer because it completely hinges on what you're trying to achieve. but let me give you some scenarios based on my past experiences and the gotchas i’ve encountered.
 
-first off, let's talk about the most common mistake: mounting the *wrong* directory. i recall spending a whole friday night trying to run a data analysis pipeline inside a singularity container. i needed the container to access the massive dataset i had stored in `/mnt/data`. i figured i'd just mount `/mnt` and call it a day.
+first off, let's talk about the most common mistake: mounting the _wrong_ directory. i recall spending a whole friday night trying to run a data analysis pipeline inside a singularity container. i needed the container to access the massive dataset i had stored in `/mnt/data`. i figured i'd just mount `/mnt` and call it a day.
 
 the problem there was that `/mnt` on my local machine also contained other stuff i absolutely did not want inside the container like various network storage devices and backups. it introduced a lot of complexity, and potentially, security issues. my container was now potentially vulnerable by accident. it was like bringing the whole house to a small apartment you were renting. not ideal, not ideal at all.
 
@@ -44,7 +44,7 @@ singularity run -B /home/myusername/container_mounts/config:/config my_container
 
 and then link the files i need from the `.config` into `/home/myusername/container_mounts/config`. now, inside the container the config files will be inside `/config`.
 
-and i guess i can add that sometimes the problem with mounting can be that we don't really understand the directory structure of the image itself. some images have assumptions on where specific data resides, or where the entry point script expects the data to be. it always helps to spend some time exploring the container's filesystem *before* mounting things into it. `singularity shell` is your best friend in this process. for this case let's say my image expects data in `/mnt`. i can then mount `/home/myusername/container_mounts/data` to `/mnt` in the container.
+and i guess i can add that sometimes the problem with mounting can be that we don't really understand the directory structure of the image itself. some images have assumptions on where specific data resides, or where the entry point script expects the data to be. it always helps to spend some time exploring the container's filesystem _before_ mounting things into it. `singularity shell` is your best friend in this process. for this case let's say my image expects data in `/mnt`. i can then mount `/home/myusername/container_mounts/data` to `/mnt` in the container.
 
 let’s talk about mounting with read-only access. sometimes you just want the container to have a view of the data without the possibility of modifying the files in the host. that's where the `-ro` flag comes in handy. the command line changes slightly for this case like so:
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "large-pdf-sample-file-generation"
 ---
 
-Alright so you're asking about large PDF generation specifically sample files I've wrestled with this beast before it's a classic case of "sounds simple until you actually try it" believe me I know a thing or two
+so you're asking about large PDF generation specifically sample files I've wrestled with this beast before it's a classic case of "sounds simple until you actually try it" believe me I know a thing or two
 
 Let's get down to the gritty details here generating a PDF isn't inherently complex the problem comes when you're talking about large files either huge page counts or lots of complex content or a combination of both that's where things can get slow and memory intensive fast
 
@@ -92,6 +92,7 @@ public class StreamingPdfGenerator {
 
 }
 ```
+
 This approach was much better we could deal with larger files and we were not running out of memory as fast but the generation was still slow very slow specially when the document size increased and the content complexity was more than a simple paragraph so we needed something else to make it even faster.
 
 So we started diving more into the libraries and looking at how they structured the documents and one key insight was understanding that you don't need to create the objects for each element if they are very repetitive and similar like we were doing for those product catalog the main issue was that we were creating a paragraph object for every single entry and that was very wasteful
@@ -163,12 +164,12 @@ Notice that in this last approach we are using a table with headers and rows whi
 
 Beyond the code itself other things I learned that are key for generating large PDF's include:
 
-*   **Memory Management**: Be mindful of object creation and make sure you dispose of resources like images font handlers etc as soon as you're done with them this can be tricky specially when working with complex code so a good code review session can help.
-*   **Font Caching**: Preload your fonts its something that can save you time later if you keep reloading the fonts for each object creation this can add up to a big time penalty.
-*   **Image Optimization**: If you're dealing with a lot of images make sure they're properly resized and compressed you don't need a 5MB image when a 200kb version will do the job and nobody will notice the difference this also helps with network transfer times if you're fetching the images from somewhere.
-*   **Content Pre-processing**: Generate any text content you can beforehand avoid string manipulation inside the PDF generation loop and this also allows you to cache results.
-*   **Parallelization**: If you have the resources consider generating different pages or sections of the PDF in parallel and then merging them at the end if you can this is a common pattern in this area and will reduce time by processing faster.
-*   **Logging and monitoring**: Always log errors and performance and metrics and keep track of memory usage if you have a production setting for the generation this will help you identify bottlenecks and other problems in real time.
+- **Memory Management**: Be mindful of object creation and make sure you dispose of resources like images font handlers etc as soon as you're done with them this can be tricky specially when working with complex code so a good code review session can help.
+- **Font Caching**: Preload your fonts its something that can save you time later if you keep reloading the fonts for each object creation this can add up to a big time penalty.
+- **Image Optimization**: If you're dealing with a lot of images make sure they're properly resized and compressed you don't need a 5MB image when a 200kb version will do the job and nobody will notice the difference this also helps with network transfer times if you're fetching the images from somewhere.
+- **Content Pre-processing**: Generate any text content you can beforehand avoid string manipulation inside the PDF generation loop and this also allows you to cache results.
+- **Parallelization**: If you have the resources consider generating different pages or sections of the PDF in parallel and then merging them at the end if you can this is a common pattern in this area and will reduce time by processing faster.
+- **Logging and monitoring**: Always log errors and performance and metrics and keep track of memory usage if you have a production setting for the generation this will help you identify bottlenecks and other problems in real time.
 
 I should add that there's no silver bullet here you will need to experiment and profile and see what works best for your specific case you need to do your own profiling and testing to see where the main bottlenecks are for your case.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-add-a-permissions-policy-header-in-rails-6"
 ---
 
-Alright, let's get into the specifics of setting up a permissions policy header in a Rails 6 application. It’s a vital step in bolstering the security of your web applications, and I’ve certainly dealt with its complexities in various projects over the years. The concept itself isn't exceptionally difficult, but the specifics of implementation, especially with the subtle nuances of policy directives, deserve some close attention.
+, let's get into the specifics of setting up a permissions policy header in a Rails 6 application. It’s a vital step in bolstering the security of your web applications, and I’ve certainly dealt with its complexities in various projects over the years. The concept itself isn't exceptionally difficult, but the specifics of implementation, especially with the subtle nuances of policy directives, deserve some close attention.
 
 The permissions policy, often called the feature policy, is a response header that controls which browser features are available in your web application. It gives you fine-grained control over what functionalities your site can use, helping to prevent malicious scripts from exploiting sensitive browser APIs. Think of it as an access control list specifically for web browser features. I vividly recall a project where we had to implement a very strict permissions policy due to client security requirements. We had to disable numerous features, and ensuring compatibility across different browsers was a key consideration. This early experience really drove home the importance of granular control in this area.
 
@@ -59,9 +59,9 @@ end
 
 In this extended example, you’re now seeing the inclusion of `geolocation=()`. We've modified this directive to include `('self' 'https://location.example.com' 'https://maps.example.net')`. This means that:
 
-*   `'self'`: Allows geolocation for the application's origin itself
-*   `'https://location.example.com'`: Explicitly allows geolocation for scripts or iframes from `https://location.example.com`
-*   `'https://maps.example.net'`: Similarly, allows the use of geolocation for scripts or iframes from `https://maps.example.net`
+- `'self'`: Allows geolocation for the application's origin itself
+- `'https://location.example.com'`: Explicitly allows geolocation for scripts or iframes from `https://location.example.com`
+- `'https://maps.example.net'`: Similarly, allows the use of geolocation for scripts or iframes from `https://maps.example.net`
 
 This nuanced control is critical in many scenarios. It provides the capability to restrict browser features to only trusted sources. You might have an internal mapping service, for example, that you want to allow access to geolocation but strictly deny it from other third-party content.
 

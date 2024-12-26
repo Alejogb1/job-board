@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-verb-noun-pairs-be-extracted-effectively"
 ---
 
-Okay, let’s unpack this. Extraction of verb-noun pairs, something I've tackled more times than I care to count, especially back when I was knee-deep in natural language processing pipelines for text analytics in a previous role. It’s rarely as straightforward as it seems. The core challenge revolves around identifying these grammatical relationships accurately amidst the inherent complexity and ambiguity of natural language. Forget about brute-force pattern matching; it’s a fragile approach that will crumble under the slightest variation in sentence structure. Instead, we need a more nuanced understanding leveraging established techniques in computational linguistics.
+, let’s unpack this. Extraction of verb-noun pairs, something I've tackled more times than I care to count, especially back when I was knee-deep in natural language processing pipelines for text analytics in a previous role. It’s rarely as straightforward as it seems. The core challenge revolves around identifying these grammatical relationships accurately amidst the inherent complexity and ambiguity of natural language. Forget about brute-force pattern matching; it’s a fragile approach that will crumble under the slightest variation in sentence structure. Instead, we need a more nuanced understanding leveraging established techniques in computational linguistics.
 
 Fundamentally, we are dealing with two sub-problems: accurately identifying verbs and nouns, and then discerning the direct relationship between those pairs. This hinges on part-of-speech (pos) tagging, often utilizing probabilistic models like hidden markov models (hmms) or conditional random fields (crfs). These algorithms can analyze text and assign a specific tag to each word, such as 'noun', 'verb', 'adjective', etc. However, these taggers aren't perfect, and context plays a significant role, which is why a simple tagging approach might lead to incorrect pair extractions. For example, the word "run" can be a verb ('I run fast') or a noun ('The run was tiring').
 
@@ -29,6 +29,7 @@ extract_pos_tags(example_text)
 ```
 
 In this example, spaCy performs the tagging for us; it's a highly regarded tool for this task, and will output each word and its part of speech tag, making it the initial step. This would output something like this (though it might vary depending on the specific spacy model):
+
 ```
 The: DET
 cat: NOUN
@@ -61,13 +62,14 @@ extracted_pairs = extract_verb_noun_pairs(example_text)
 print(extracted_pairs)
 
 ```
+
 This example demonstrates the core logic: iterating through tokens, identifying verbs, then extracting direct noun children to form the pairs. This would output something akin to:
 
 ```
 [('barked', 'dog'), ('chased', 'squirrel')]
 ```
 
-However, note a potential issue. This example *only* extracts direct children nouns. More complicated sentences will require deeper analysis of dependency paths, which the next example addresses.
+However, note a potential issue. This example _only_ extracts direct children nouns. More complicated sentences will require deeper analysis of dependency paths, which the next example addresses.
 
 **Example 3: Improved Extraction with Dependency Path Traversal:**
 
@@ -106,6 +108,7 @@ This enhanced version goes beyond direct children, considering direct object ('d
 ```
 [('presented', 'information'), ('reviewed', 'plan'), ('presented', 'meeting'), ('reviewed', 'team')]
 ```
+
 As you can see the inclusion of prepositional phrases provides more meaningful pairs.
 
 These examples serve as a basic framework. To further improve accuracy, you might consider implementing named entity recognition (ner) to further refine which 'nouns' are relevant, especially for extracting subject-verb and object-verb pairs where named entities are involved. Also, the use of techniques like coreference resolution to handle cases where the nouns are pronouns instead, will greatly improve this basic extraction system, but goes beyond the scope of a basic extract-pair task.

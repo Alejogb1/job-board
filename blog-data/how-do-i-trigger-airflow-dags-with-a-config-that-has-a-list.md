@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-trigger-airflow-dags-with-a-config-that-has-a-list"
 ---
 
-Alright, let's dive into triggering Airflow DAGs with configurations that include lists. I’ve tackled this particular scenario quite a few times in past projects, and it usually crops up when dealing with dynamically generated workflows or situations where you need to parameterize processing steps. You're not alone in hitting this, and there are definitely some elegant approaches we can use.
+, let's dive into triggering Airflow DAGs with configurations that include lists. I’ve tackled this particular scenario quite a few times in past projects, and it usually crops up when dealing with dynamically generated workflows or situations where you need to parameterize processing steps. You're not alone in hitting this, and there are definitely some elegant approaches we can use.
 
 The core challenge is that Airflow, by default, prefers simple key-value pairs for configurations. Passing a list, while seemingly straightforward, requires a bit more finesse to ensure the values are correctly parsed and accessible within the DAG’s context. We need to think about how we're going to pass this data during the trigger process and, more importantly, how to handle it within the DAG’s Python code.
 
@@ -50,7 +50,7 @@ Notice the double escaping and the use of a string representation of the json. T
 
 The key takeaway here is the `json.loads()` function within your PythonOperator, responsible for converting the incoming string back to a Python list you can iterate over. This is pretty straightforward and doesn't have too much extra overhead.
 
-Now, let's look at the second approach: direct list encoding as DAG run confs when triggering. This requires a slightly more structured approach when you define your DAG. Airflow allows you to access DAG run configuration parameters through the `dag_run.conf` attribute.  While it doesn't directly handle list input, we can structure our conf slightly differently.
+Now, let's look at the second approach: direct list encoding as DAG run confs when triggering. This requires a slightly more structured approach when you define your DAG. Airflow allows you to access DAG run configuration parameters through the `dag_run.conf` attribute. While it doesn't directly handle list input, we can structure our conf slightly differently.
 
 ```python
 from airflow import DAG
@@ -82,7 +82,7 @@ Here, instead of directly passing the entire string as a JSON string, we're leve
 
 This approach avoids extra deserialization logic in your callable. It's generally more succinct and easier to read for simple list parameters, although it's important to note that the way Airflow handles templating does mean there may be limitations as to how complex the conf values you pass can be.
 
-Finally, there's a third approach worth exploring: using Airflow's templating capabilities in combination with a parameter that is serialized into a string for processing further in the DAG.  This involves a slightly different technique, more akin to how you might handle configuration values that need to be accessible across multiple operators.
+Finally, there's a third approach worth exploring: using Airflow's templating capabilities in combination with a parameter that is serialized into a string for processing further in the DAG. This involves a slightly different technique, more akin to how you might handle configuration values that need to be accessible across multiple operators.
 
 ```python
 from airflow import DAG

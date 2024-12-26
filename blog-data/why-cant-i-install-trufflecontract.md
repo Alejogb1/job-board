@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-cant-i-install-trufflecontract"
 ---
 
-Okay, let's tackle this. It’s a problem I’ve seen rear its head a few times, often leading developers down a rabbit hole they'd rather avoid. The inability to install `@truffle/contract` isn't typically a singular issue, but rather a confluence of factors that can sometimes be tricky to diagnose. Let’s break down the potential roadblocks.
+, let's tackle this. It’s a problem I’ve seen rear its head a few times, often leading developers down a rabbit hole they'd rather avoid. The inability to install `@truffle/contract` isn't typically a singular issue, but rather a confluence of factors that can sometimes be tricky to diagnose. Let’s break down the potential roadblocks.
 
 First off, let's establish what `@truffle/contract` actually is. It’s a core component of the Truffle suite, primarily designed to abstract away the complexities of interacting with deployed Ethereum smart contracts. It provides a convenient interface for creating JavaScript objects representing those contracts, handling encoding, decoding, and transaction management. If it fails to install, it directly hinders your ability to build or test anything that relies on contract interactions within your Truffle projects.
 
-Now, onto the 'why can't I' part. The most frequent culprit, in my experience, has to do with *dependency conflicts*. Node Package Manager (npm) and Yarn, the two primary package managers in the javascript ecosystem, have dependency resolution algorithms that, while robust, aren't foolproof. It's possible, and quite common, to encounter situations where different packages require different versions of a shared dependency. When this happens, package managers try their best to sort things out but can sometimes fail or produce an unstable setup, specifically when installing `@truffle/contract`, which tends to have quite a number of transitive dependencies itself.
+Now, onto the 'why can't I' part. The most frequent culprit, in my experience, has to do with _dependency conflicts_. Node Package Manager (npm) and Yarn, the two primary package managers in the javascript ecosystem, have dependency resolution algorithms that, while robust, aren't foolproof. It's possible, and quite common, to encounter situations where different packages require different versions of a shared dependency. When this happens, package managers try their best to sort things out but can sometimes fail or produce an unstable setup, specifically when installing `@truffle/contract`, which tends to have quite a number of transitive dependencies itself.
 
-For example, imagine your project has a package `package-a` that needs `library-x@1.0.0` and your `@truffle/contract` install is requesting `library-x@2.0.0`. The package manager now needs to resolve these conflicting requirements. It *should* ideally find a version that works for both but when not, it will usually pick one over the other, or worse, fail outright. It’s in these scenarios that you’ll find your installation attempting to complete but either erroring out, or producing unexpected results.
+For example, imagine your project has a package `package-a` that needs `library-x@1.0.0` and your `@truffle/contract` install is requesting `library-x@2.0.0`. The package manager now needs to resolve these conflicting requirements. It _should_ ideally find a version that works for both but when not, it will usually pick one over the other, or worse, fail outright. It’s in these scenarios that you’ll find your installation attempting to complete but either erroring out, or producing unexpected results.
 
 Another common issue stems from outdated package managers or Node.js versions. Older versions might not be able to properly handle certain dependency tree structures or newer features, or may contain bugs that have since been patched. It’s generally a good practice to keep these updated; specifically, nodejs versions are very important as changes happen between versions often that can make libraries not compatible.
 
@@ -44,7 +44,6 @@ Here, `@truffle/contract` wants `web3@1.3.0` but another package needs `web3@1.6
     "web3": "1.6.0"
   }
 }
-
 ```
 
 After adding the overrides property and saving the file, we would run `npm install` to apply those changes. npm will now install version `1.6.0` of `web3`, if everything goes according to plan.
@@ -53,7 +52,7 @@ After adding the overrides property and saving the file, we would run `npm insta
 
 Suppose npm's overrides approach isn’t working, and you prefer yarn. Yarn tends to handle conflicts slightly differently. If we suspect a problem with a specific sub-dependency, we can try explicitly removing only that sub-dependency and then reinstalling:
 
-First, inspect the dependency tree (you can use tools like `npm ls` or `yarn why` to see this more clearly). Let’s say the problematic package is something like `bn.js`.  Here's how to address it using `yarn`:
+First, inspect the dependency tree (you can use tools like `npm ls` or `yarn why` to see this more clearly). Let’s say the problematic package is something like `bn.js`. Here's how to address it using `yarn`:
 
 ```bash
 # Remove the problematic package using the --pattern option:

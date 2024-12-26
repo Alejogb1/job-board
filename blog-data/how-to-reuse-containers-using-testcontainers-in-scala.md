@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-reuse-containers-using-testcontainers-in-scala"
 ---
 
-alright, so you're asking about reusing containers with testcontainers in scala, eh? been there, done that, got the t-shirt (and a few sleepless nights debugging integration tests, ha!). it's a common challenge, and frankly, it's one of the things that can make your test suites run super slow if you don’t handle it properly. let's break it down.
+, so you're asking about reusing containers with testcontainers in scala, eh? been there, done that, got the t-shirt (and a few sleepless nights debugging integration tests, ha!). it's a common challenge, and frankly, it's one of the things that can make your test suites run super slow if you don’t handle it properly. let's break it down.
 
 the core issue is that by default, testcontainers will spin up a new container instance every single time your test runs. while this is great for isolation, it's just not practical for larger projects or environments where you have several tests needing the same service—like a database, a message queue, or even a custom app. imagine how long your pipeline would take if it had to start a postgres instance for every single test case. it's painful.
 

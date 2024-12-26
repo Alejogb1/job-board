@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "why-cant-a-swift-cli-apps-main-attribute-be-used-with-top-level-code"
 ---
 
-Okay, let's tackle this. I've seen this tripped up a few teams, so it's worth dissecting in detail. The issue with trying to directly use a CLI app’s `main` attribute with top-level code in Swift boils down to how Swift, particularly in the context of command-line tools, handles the application entry point and the module's structure. It isn't necessarily a 'can't' in the strictest sense, but rather a 'shouldn't' or 'isn't designed for' – and for very good architectural reasons.
+, let's tackle this. I've seen this tripped up a few teams, so it's worth dissecting in detail. The issue with trying to directly use a CLI app’s `main` attribute with top-level code in Swift boils down to how Swift, particularly in the context of command-line tools, handles the application entry point and the module's structure. It isn't necessarily a 'can't' in the strictest sense, but rather a 'shouldn't' or 'isn't designed for' – and for very good architectural reasons.
 
 The `main` attribute, when used, signals to the compiler that a particular type contains the entry point for the application. This is a highly specific directive that says, "this type (which often implements the `Runnable` protocol) will take over the execution once the program starts". In contrast, top-level code, which consists of code statements placed directly outside of any type or function declaration, within a Swift file, is meant to be executed sequentially within a particular scope. These are fundamentally different concepts.
 
-In essence, a `main` attribute is designed to define the *application's* entry point, acting as a gatekeeper for the entire execution flow. Top-level code, on the other hand, is confined to the *module’s* initialization phase, not the application's runtime. Think of it like this: `main` launches the program, and top-level code initializes the environment the program will run in. The former has the scope of the entire application life cycle, while the latter is limited to module setup. They're designed to operate at different levels of abstraction and have different lifecycles.
+In essence, a `main` attribute is designed to define the _application's_ entry point, acting as a gatekeeper for the entire execution flow. Top-level code, on the other hand, is confined to the _module’s_ initialization phase, not the application's runtime. Think of it like this: `main` launches the program, and top-level code initializes the environment the program will run in. The former has the scope of the entire application life cycle, while the latter is limited to module setup. They're designed to operate at different levels of abstraction and have different lifecycles.
 
-I recall one project where we tried circumventing this by placing a large amount of business logic directly in a Swift file that did not have a `main` attribute. It *appeared* to work initially for simple command-line arguments. However, as complexity grew, we noticed issues with asynchronous operations, global state, and even code execution order, particularly when introducing testing frameworks. This taught us, the hard way, that this was an anti-pattern. The compiler allowed it, but it resulted in a brittle and hard-to-manage codebase. What we needed was a formal `main` entry point to encapsulate the program's logic and a structured module organization.
+I recall one project where we tried circumventing this by placing a large amount of business logic directly in a Swift file that did not have a `main` attribute. It _appeared_ to work initially for simple command-line arguments. However, as complexity grew, we noticed issues with asynchronous operations, global state, and even code execution order, particularly when introducing testing frameworks. This taught us, the hard way, that this was an anti-pattern. The compiler allowed it, but it resulted in a brittle and hard-to-manage codebase. What we needed was a formal `main` entry point to encapsulate the program's logic and a structured module organization.
 
-The challenge primarily arises from the fact that when you use a `@main` attribute on a struct or class conforming to `Runnable`, that type’s `run()` method takes control. Top-level code that resides *outside* this structure is essentially treated as static initializer code and would be processed only once, during the program's loading phase. Trying to mix program-wide logic with this static initialization is just asking for trouble when your application requires anything more complicated than printing a simple string.
+The challenge primarily arises from the fact that when you use a `@main` attribute on a struct or class conforming to `Runnable`, that type’s `run()` method takes control. Top-level code that resides _outside_ this structure is essentially treated as static initializer code and would be processed only once, during the program's loading phase. Trying to mix program-wide logic with this static initialization is just asking for trouble when your application requires anything more complicated than printing a simple string.
 
 Here are some examples to make this clearer:
 
@@ -38,7 +38,7 @@ In this case, `MyApp` is the explicit application entry point. The top-level cod
 
 **Example 2: The Problem with Mixing `@main` and Top-level Code**
 
-This demonstrates what *not* to do. Here, we’ve defined `MyApp` as the application’s entry point, but we also have a seemingly harmless print statement at the top level.
+This demonstrates what _not_ to do. Here, we’ve defined `MyApp` as the application’s entry point, but we also have a seemingly harmless print statement at the top level.
 
 ```swift
 import Foundation
@@ -58,7 +58,7 @@ While the output might appear normal, printing "Top-level code execution." then 
 
 **Example 3: Incorrect Use Case With Intended Top-Level Interactions.**
 
-This example attempts to make top-level code interact with the application’s logic using global variables. It *appears* to work on the surface, but it is inherently problematic.
+This example attempts to make top-level code interact with the application’s logic using global variables. It _appears_ to work on the surface, but it is inherently problematic.
 
 ```swift
 import Foundation
@@ -84,10 +84,11 @@ This will print something similar to:
 Top-level global init: 0
 Global value in run(): 10
 ```
-Although not immediately wrong, this method of interaction is extremely hard to reason about, especially in larger projects.  The execution order can be very hard to debug as the initialization phase can get very complex and difficult to track, particularly when frameworks are being used in global state initializations.
+
+Although not immediately wrong, this method of interaction is extremely hard to reason about, especially in larger projects. The execution order can be very hard to debug as the initialization phase can get very complex and difficult to track, particularly when frameworks are being used in global state initializations.
 
 The key takeaway here is not that this won't work, but it shouldn’t be how we build applications. The clear separation of entry point logic and static module initializations is fundamental to scalable and maintainable application design.
 
-For a deeper understanding of Swift's compilation process and how the `@main` attribute and module initialization work, I would recommend reviewing the official Swift documentation, specifically the sections concerning *Program Structure and Control Flow*. A comprehensive book on modern Swift development practices, such as "Effective Swift" by Matt Galloway, is also extremely helpful. Furthermore, for a deeper understanding of module structure and linking, you could look into the Clang documentation, specifically around how linker scripts manage the application entry point, although this gets a bit lower-level. Finally, the Swift Evolution proposals offer insights into the design choices of new language features, so checking for those that relate to `@main` and the `Runnable` protocol could be useful.
+For a deeper understanding of Swift's compilation process and how the `@main` attribute and module initialization work, I would recommend reviewing the official Swift documentation, specifically the sections concerning _Program Structure and Control Flow_. A comprehensive book on modern Swift development practices, such as "Effective Swift" by Matt Galloway, is also extremely helpful. Furthermore, for a deeper understanding of module structure and linking, you could look into the Clang documentation, specifically around how linker scripts manage the application entry point, although this gets a bit lower-level. Finally, the Swift Evolution proposals offer insights into the design choices of new language features, so checking for those that relate to `@main` and the `Runnable` protocol could be useful.
 
 In short, while technically top-level code might run in conjunction with an application that utilizes the `@main` attribute, this approach mixes concepts that should remain separate. For any non-trivial application, a well-defined entry point via a struct or class that conforms to `Runnable`, as demonstrated in example one, is the correct and recommended approach. It ensures a consistent lifecycle and predictable execution order, leading to more robust and maintainable applications.

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-do-you-deal-with-randomness-when-evaluating-a-model"
 ---
 
-alright, so dealing with randomness when you're trying to figure out how well a model is doing, yeah, that’s a classic. i’ve been there, many times, believe me. it’s like trying to nail jelly to a wall sometimes, especially when you’re not quite sure where the unpredictability is coming from. let me break down how i usually approach this, based on what’s worked for me in the past, and some of the gotchas i've encountered.
+, so dealing with randomness when you're trying to figure out how well a model is doing, yeah, that’s a classic. i’ve been there, many times, believe me. it’s like trying to nail jelly to a wall sometimes, especially when you’re not quite sure where the unpredictability is coming from. let me break down how i usually approach this, based on what’s worked for me in the past, and some of the gotchas i've encountered.
 
 first off, the problem. you're training a model, could be anything – image classifier, text generator, regression model – it doesn't really matter. you split your data into training, validation and test sets, or maybe you are using cross-validation. each time you run it, even with the same settings, you get results that vary a little. not dramatically, hopefully, but enough to make you scratch your head and question how much trust you should put in the specific number it's spitting out.
 
@@ -38,6 +38,7 @@ def evaluate_model(X, y, n_runs=10):
 # mean_accuracy, std_accuracy = evaluate_model(X, y)
 # print(f"Mean Accuracy: {mean_accuracy:.4f}, Standard Deviation: {std_accuracy:.4f}")
 ```
+
 this is what i would consider a basic setup. but if, let’s say that the standard deviation is still too large after multiple runs, i start to suspect there's something wrong in the training process. it could mean that my model is very sensitive to initialization, which can be a sign of instability or that the model struggles to generalize. it could be a sign that i need more data or to do some feature engineering. it can be a multitude of things.
 
 then i start to pay attention to setting those random seeds, properly. to be able to reproduce results, and debug consistently. it is like trying to bake a cake using different ingredients each time. not good. the next snippet shows how i do this using some random state:
@@ -54,7 +55,7 @@ def set_seeds(seed):
     random.seed(seed)
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
-    
+
 # usage in code example
 set_seeds(42)
 
@@ -89,6 +90,7 @@ def evaluate_with_cross_validation(X, y, n_splits=5, random_state=42):
 # mean_accuracy_cv, std_accuracy_cv = evaluate_with_cross_validation(X, y)
 # print(f"Cross-Validation Mean Accuracy: {mean_accuracy_cv:.4f}, Standard Deviation: {std_accuracy_cv:.4f}")
 ```
+
 some times, even after all that, there is variability. that's just life. some times a model just performs better on some splits because of the data it receives in those splits, sometimes it is the model itself, some times it is a combination of both, the key thing to do is to be aware of that. its also important to analyze the results. this means looking at more than just aggregate scores. maybe it performs particularly bad in one specific class in a classification problem or specific subregions in a regression problem, and understanding what's causing those issues.
 
 one more thing, it’s important to pick the correct metric. for example, accuracy is easy to understand, but not always the right choice, sometimes you might want to look at f1 score, auc-roc or a mixture of multiple scores. if you don’t know what these mean, you should read about them. it is super important that you use the correct metric. that is a big subject in its own.

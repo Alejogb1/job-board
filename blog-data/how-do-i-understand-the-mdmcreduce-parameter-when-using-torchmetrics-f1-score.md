@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-understand-the-mdmcreduce-parameter-when-using-torchmetrics-f1-score"
 ---
 
-Alright, let's tackle this. I remember a project a few years back involving a particularly complex multi-label classification problem. I was banging my head against the wall trying to get the f1 score to behave as expected, and it turned out the `mdmc_reduce` parameter in torchmetrics' `F1Score` was the culprit—or rather, my lack of understanding of it. It's a crucial detail, especially when working with multi-dimensional data, so let's break it down in a way that hopefully makes sense.
+, let's tackle this. I remember a project a few years back involving a particularly complex multi-label classification problem. I was banging my head against the wall trying to get the f1 score to behave as expected, and it turned out the `mdmc_reduce` parameter in torchmetrics' `F1Score` was the culprit—or rather, my lack of understanding of it. It's a crucial detail, especially when working with multi-dimensional data, so let's break it down in a way that hopefully makes sense.
 
 The `mdmc_reduce` parameter, short for "multi-dimensional multi-class reduce," determines how the f1 score is computed when you have a situation where each sample can belong to multiple classes simultaneously (multi-label) and possibly across different dimensions (multi-dimensional). Think of it like this: you're not just classifying an image as either a cat or a dog; you could be classifying parts of an image (regions) and each of those regions can have multiple tags. This introduces complexity that the standard binary or even simple multi-class f1 scores can’t adequately address.
 
@@ -12,7 +12,7 @@ The crux lies in what happens when torchmetrics encounters multiple labels for a
 
 First, `'global'` computes the f1 score by considering all samples and all labels across all dimensions as one giant aggregate. This means that every true positive, false positive, and false negative across your entire dataset and all classes is counted in a single calculation. This can be a good choice if you are primarily interested in the overall performance and don’t care about class or per-sample performance.
 
-Then, we have `'samplewise'`. This calculates the f1 score *per sample* and then averages those sample-specific scores. In a multi-label scenario, for each sample, it determines the true positives, false positives, and false negatives for all its labels combined, computes the sample's f1 score, and finally averages these sample scores across the dataset. This is useful when performance varies significantly from sample to sample and you want to understand this diversity.
+Then, we have `'samplewise'`. This calculates the f1 score _per sample_ and then averages those sample-specific scores. In a multi-label scenario, for each sample, it determines the true positives, false positives, and false negatives for all its labels combined, computes the sample's f1 score, and finally averages these sample scores across the dataset. This is useful when performance varies significantly from sample to sample and you want to understand this diversity.
 
 Finally, `'macro'` computes the f1 score for each class across all samples and dimensions first, then averages these class-specific f1 scores. This means you are effectively treating each class independently and then looking at the average. This can be really beneficial when your classes are imbalanced, as the macro average doesn't give greater importance to common classes compared to rare ones.
 
@@ -33,7 +33,7 @@ print(f"Global F1 Score: {result}")
 
 In this case, everything is flattened. You are not looking at performance per sample or per class but as an aggregate. If you’re interested in getting more granularity, the other reduction options are the way to go.
 
-Now, let's consider the `samplewise` option. This focuses on how well each *sample* performs.
+Now, let's consider the `samplewise` option. This focuses on how well each _sample_ performs.
 
 ```python
 import torch

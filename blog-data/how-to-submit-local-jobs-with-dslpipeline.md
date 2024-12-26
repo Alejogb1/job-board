@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-to-submit-local-jobs-with-dslpipeline"
 ---
 
-Okay, let's tackle this. Submitting local jobs with `dsl.pipeline` can initially seem a bit… esoteric, perhaps, especially if you’re used to just firing off jobs to a remote kubernetes cluster. I've seen this trip up many developers, including myself back in the day, when I was working on a large-scale genomic analysis pipeline. We were initially building prototypes and running them locally to quickly validate algorithms before moving to our production environment. This is where `dsl.pipeline`, used with a local execution engine, shines. The trick is understanding how `kfp` handles this local invocation and how it differs from remote execution.
+, let's tackle this. Submitting local jobs with `dsl.pipeline` can initially seem a bit… esoteric, perhaps, especially if you’re used to just firing off jobs to a remote kubernetes cluster. I've seen this trip up many developers, including myself back in the day, when I was working on a large-scale genomic analysis pipeline. We were initially building prototypes and running them locally to quickly validate algorithms before moving to our production environment. This is where `dsl.pipeline`, used with a local execution engine, shines. The trick is understanding how `kfp` handles this local invocation and how it differs from remote execution.
 
-The core challenge stems from the fact that `dsl.pipeline` is designed to describe a workflow, *not* to execute it directly. Think of the `dsl.pipeline` definition more as a blueprint. It describes what tasks to run, in what order, and with what inputs and outputs. When we target a remote Kubernetes cluster, the kfp compiler takes this blueprint and translates it into a kubernetes-native representation (typically a yaml file) that the kubernetes cluster and its kfp operator can understand and execute. For local execution, we need a different interpretation of that blueprint. We're essentially asking kfp to interpret and run this workflow on the local machine.
+The core challenge stems from the fact that `dsl.pipeline` is designed to describe a workflow, _not_ to execute it directly. Think of the `dsl.pipeline` definition more as a blueprint. It describes what tasks to run, in what order, and with what inputs and outputs. When we target a remote Kubernetes cluster, the kfp compiler takes this blueprint and translates it into a kubernetes-native representation (typically a yaml file) that the kubernetes cluster and its kfp operator can understand and execute. For local execution, we need a different interpretation of that blueprint. We're essentially asking kfp to interpret and run this workflow on the local machine.
 
 The most important part of understanding this lies in the choice of `kfp.Client` instantiation and the runner configurations. You won't be specifying a kubernetes endpoint; instead, you’re opting for a local execution context. Typically you would use `kfp.Client()`, but in our case, this defaults to a kubeflow deployment, which we don't want. Here's where we deviate. Instead of a server endpoint, we don't provide any. Then, the compilation to yaml is still done using a compiler, however this is followed by an execution step performed within the local Python process, rather than passing it to a kubernetes cluster.
 
@@ -80,7 +80,9 @@ def string_manipulation_pipeline(input_text: str = "hello"):
     reversed_task = string_reverse(text=upper_task.output)
     print(f"Final Output: {reversed_task.output}")
 ```
+
 And the execution will remain the same as before, except now, with two steps.
+
 ```python
 if __name__ == '__main__':
    string_manipulation_pipeline_instance = string_manipulation_pipeline()
@@ -90,6 +92,7 @@ if __name__ == '__main__':
    # kfp.Client().create_run_from_pipeline_func(string_manipulation_pipeline)
 
 ```
+
 In this example, the `upper_task` executes, then the output (which is the uppercase string) is passed as the input to the `reversed_task`. The important aspect of this for local execution is that there's no serialization or deserialization happening as the outputs and inputs are passed through Python objects inside the same Python process. In a kubernetes cluster, those outputs would have to be passed in a different way by being serialized and stored somewhere. The same is not necessary locally.
 
 Another common practical question that comes up is how to specify different input parameters that need to be configurable for local runs. With a local run you need to instantiate a pipeline and pass the parameter in the pipeline call. You can modify the `main` function as follows:
@@ -103,6 +106,7 @@ if __name__ == '__main__':
                                    package_path="string_pipeline.yaml")
    # kfp.Client().create_run_from_pipeline_func(string_manipulation_pipeline, arguments={"input_text":input_value})
 ```
+
 Here, you directly pass `input_value` as an argument when instantiating the pipeline, which is then passed to the execution.
 
 For a deeper dive into the nuances of kubeflow pipelines and how local execution works under the hood, I highly recommend reviewing the official kubeflow pipelines documentation. Specifically, the sections detailing the compiler, the execution engine, and the client interface provide a wealth of information. The book “Kubeflow for Machine Learning” published by O'Reilly (authors: Holden Karau, et al) is a very good resource for learning about Kubeflow and its various components. The "Effective Kubernetes" book by Google’s very own team, also published by O'Reilly is also a great resource for understanding Kubernetes's internals. These should provide a far more detailed understanding than I could ever express here. Additionally, the code repository of kubeflow pipelines themselves often contains valuable examples and tests, that go into details beyond what’s documented.

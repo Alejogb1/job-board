@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-an-ner-model-be-used-to-extract-symptom-names"
 ---
 
-Alright, let's talk symptom extraction using NER models. It's something I've spent a fair amount of time tackling, especially during a project involving medical records several years ago. The challenges were very real, and the need for a robust and accurate solution was critical. So, rather than starting with the usual textbook definition, let's approach it from the practical angle of someone who's actually been in the trenches.
+, let's talk symptom extraction using NER models. It's something I've spent a fair amount of time tackling, especially during a project involving medical records several years ago. The challenges were very real, and the need for a robust and accurate solution was critical. So, rather than starting with the usual textbook definition, let's approach it from the practical angle of someone who's actually been in the trenches.
 
 First off, named entity recognition (ner) isn’t just about finding words that happen to be symptom names; it's about contextual understanding. It's the difference between identifying "headache" as a symptom and understanding when it's being used in a sentence like, "The patient complained of a severe headache". This requires the model to not just recognize the token "headache" but also to classify it within the appropriate category – a symptom in this case.
 
@@ -27,15 +27,15 @@ def extract_symptoms(text):
     with torch.no_grad():
         outputs = model(**inputs)
     predictions = torch.argmax(outputs.logits, dim=-1)
-    
+
     tokens = tokenizer.convert_ids_to_tokens(inputs['input_ids'][0])
-    
+
     ner_tags = [model.config.id2label[token] for token in predictions[0].tolist()]
-    
+
     symptoms = []
     current_symptom = ""
     for token, tag in zip(tokens, ner_tags):
-      if tag == 'B-LOC': # Replace 'B-LOC' with your symptom tag, i.e. 'B-SYMPT' or similiar 
+      if tag == 'B-LOC': # Replace 'B-LOC' with your symptom tag, i.e. 'B-SYMPT' or similiar
         if current_symptom:
           symptoms.append(current_symptom.strip())
         current_symptom = token
@@ -53,6 +53,7 @@ symptom_list = extract_symptoms(test_text)
 print(f"Extracted symptoms: {symptom_list}")
 
 ```
+
 Note: The example model here is a pre-trained general ner model, so you'll need to fine-tune it to get proper symptom extraction. In a real-world project, you would use something like 'B-SYMPT' instead of B-LOC and 'I-SYMPT' instead of I-LOC when labelling your training dataset, and would fine-tune that pre-trained model on the labeled data to recognize these tags. This code snippet uses a simple loop for identifying the beginnings (B-) and continuations (I-) of an entity, typical for BIO tagging schemes.
 
 Now, let's delve into fine-tuning for improved performance, because the code example above won't be very accurate unless you tweak it. Fine-tuning a model with our own dataset enables it to learn the nuances of medical language and symptom descriptions specific to our target domain. Here's how that process might look:
@@ -121,6 +122,7 @@ trainer.train()
 #Evaluate with the validation dataset.
 
 ```
+
 In this example, the dataset is loaded as a "json" dataset with 'tokens' and 'ner_tags' for each text sequence. Labels are handled through token alignment which is important when using wordpiece tokenization that bert employs. The model is then fine-tuned with the trainer and saved to the output folder. Remember that you would still need to use similar processing steps as the first example to make predictions with this fine-tuned model.
 
 Finally, let's touch on a critical aspect: post-processing. Often, ner models generate results that require additional steps to clean them or handle edge cases. For instance, you might need to combine tokens that form a multi-word symptom into a single entity like "chest pain". This involves a rule-based or statistical approach following the output of the model.
@@ -142,6 +144,7 @@ processed_symptoms = post_process_symptoms(test_symptoms)
 print(f"Processed symptoms {processed_symptoms}")
 
 ```
+
 Post-processing includes basic cleaning here, but this could also encompass standardization using synonym lists and fuzzy matching, and might involve other domain-specific transformations.
 
 To go deeper on the technical front, I recommend exploring the seminal papers on sequence labeling with crfs and the original bert paper to understand the foundations. For practical applications, "Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper is a great foundational text, and for more advanced deep learning based models, research articles on using transformers and fine-tuning techniques for ner tasks would be beneficial. Additionally, focusing on papers that cover techniques for handling variations in medical terminology would also be very helpful.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-retrieve-added-calendars-using-the-outlook-calendar-api"
 ---
 
-Okay, let's tackle this. I’ve spent a fair amount of time working with the Outlook Calendar API, particularly around the complexities of managing not just primary calendars, but those additional ones users often create or subscribe to. The initial assumption is usually, “get calendars, done,” but it's never quite that simple, is it? Let's break down how to reliably retrieve these added calendars, drawing from experiences where a straightforward approach simply didn't cut it.
+, let's tackle this. I’ve spent a fair amount of time working with the Outlook Calendar API, particularly around the complexities of managing not just primary calendars, but those additional ones users often create or subscribe to. The initial assumption is usually, “get calendars, done,” but it's never quite that simple, is it? Let's break down how to reliably retrieve these added calendars, drawing from experiences where a straightforward approach simply didn't cut it.
 
 Fundamentally, when you’re querying the Outlook Calendar API, it’s essential to understand the underlying data model. There's a distinct difference between a user's primary calendar and the collection of secondary, or added, calendars. These added calendars aren't just copies; they have their own unique properties and identifiers. The standard graph api endpoint `/me/calendars` often gets you the user's default calendar, but won't necessarily give the others without some additional care.
 
@@ -32,7 +32,7 @@ public class CalendarService
             .WithClientSecret(clientSecret)
             .WithAuthority(new Uri($"https://login.microsoftonline.com/{tenantId}"))
             .Build();
-          
+
         var authProvider = new ClientCredentialProvider(confidentialClientApplication, scopes);
         _graphClient = new GraphServiceClient(authProvider);
     }
@@ -68,55 +68,57 @@ This snippet shows how to fetch all calendars, both at the root user level and t
 Now, let's explore an equivalent example but this time in JavaScript with Node.js, which uses the Microsoft Graph SDK as well:
 
 ```javascript
-const { Client } = require('@microsoft/microsoft-graph-client');
-const { ConfidentialClientApplication } = require('@azure/msal-node');
+const { Client } = require("@microsoft/microsoft-graph-client");
+const { ConfidentialClientApplication } = require("@azure/msal-node");
 
 async function getCalendars(clientId, tenantId, clientSecret) {
-    const scopes = ["Calendars.Read"];
+  const scopes = ["Calendars.Read"];
 
-    const cca = new ConfidentialClientApplication({
-        auth: {
-            clientId: clientId,
-            authority: `https://login.microsoftonline.com/${tenantId}`,
-            clientSecret: clientSecret,
-        }
-    });
-    const tokenRequest = {
-        scopes: scopes,
-      };
-    const authProvider = {
-          getAccessToken: async () => {
-                const result = await cca.acquireTokenByClientCredential(tokenRequest);
-                 return result.accessToken;
-          }
-    };
-    const graphClient = Client.initWithMiddleware({
-      authProvider: authProvider
-    });
+  const cca = new ConfidentialClientApplication({
+    auth: {
+      clientId: clientId,
+      authority: `https://login.microsoftonline.com/${tenantId}`,
+      clientSecret: clientSecret,
+    },
+  });
+  const tokenRequest = {
+    scopes: scopes,
+  };
+  const authProvider = {
+    getAccessToken: async () => {
+      const result = await cca.acquireTokenByClientCredential(tokenRequest);
+      return result.accessToken;
+    },
+  };
+  const graphClient = Client.initWithMiddleware({
+    authProvider: authProvider,
+  });
 
-    let allCalendars = [];
+  let allCalendars = [];
 
-    try {
-         const userCalendars = await graphClient.api('/me/calendars').get();
-        if (userCalendars?.value) {
-            allCalendars = allCalendars.concat(userCalendars.value);
-        }
-
-         const calendarGroups = await graphClient.api('/me/calendarGroups').get();
-
-        if (calendarGroups?.value) {
-            for (const group of calendarGroups.value) {
-               const groupCalendars = await graphClient.api(`/me/calendarGroups/${group.id}/calendars`).get();
-                 if (groupCalendars?.value) {
-                  allCalendars = allCalendars.concat(groupCalendars.value);
-                }
-            }
-        }
-      return allCalendars;
-    } catch (error) {
-        console.error("Error fetching calendars:", error);
-        throw error;
+  try {
+    const userCalendars = await graphClient.api("/me/calendars").get();
+    if (userCalendars?.value) {
+      allCalendars = allCalendars.concat(userCalendars.value);
     }
+
+    const calendarGroups = await graphClient.api("/me/calendarGroups").get();
+
+    if (calendarGroups?.value) {
+      for (const group of calendarGroups.value) {
+        const groupCalendars = await graphClient
+          .api(`/me/calendarGroups/${group.id}/calendars`)
+          .get();
+        if (groupCalendars?.value) {
+          allCalendars = allCalendars.concat(groupCalendars.value);
+        }
+      }
+    }
+    return allCalendars;
+  } catch (error) {
+    console.error("Error fetching calendars:", error);
+    throw error;
+  }
 }
 ```
 
@@ -126,57 +128,66 @@ Finally, lets show how this can be done directly in a web application making API
 
 ```javascript
 async function getCalendars(accessToken) {
-  const graphAPIEndpoint = 'https://graph.microsoft.com/v1.0';
+  const graphAPIEndpoint = "https://graph.microsoft.com/v1.0";
   let allCalendars = [];
 
   try {
-        const rootCalendarsResponse = await fetch(`${graphAPIEndpoint}/me/calendars`, {
-        method: 'GET',
+    const rootCalendarsResponse = await fetch(
+      `${graphAPIEndpoint}/me/calendars`,
+      {
+        method: "GET",
         headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/json'
-        }
-    });
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-        const rootCalendarsData = await rootCalendarsResponse.json();
-        if(rootCalendarsData?.value) {
-          allCalendars = allCalendars.concat(rootCalendarsData.value);
-        }
-        
-        const groupsResponse = await fetch(`${graphAPIEndpoint}/me/calendarGroups`, {
-          method: 'GET',
-          headers: {
-              'Authorization': `Bearer ${accessToken}`,
-              'Content-Type': 'application/json'
-          }
-        });
-        const groupsData = await groupsResponse.json();
-        if(groupsData?.value) {
-            for (const group of groupsData.value) {
-               const groupCalendarsResponse = await fetch(`${graphAPIEndpoint}/me/calendarGroups/${group.id}/calendars`, {
-                  method: 'GET',
-                  headers: {
-                      'Authorization': `Bearer ${accessToken}`,
-                      'Content-Type': 'application/json'
-                    }
-                });
-                const groupCalendarsData = await groupCalendarsResponse.json();
-                  if (groupCalendarsData?.value) {
-                      allCalendars = allCalendars.concat(groupCalendarsData.value);
-                  }
-            }
-         }
-
-       return allCalendars;
-
-    } catch (error) {
-      console.error("Error getting Calendars", error);
-      throw error;
+    const rootCalendarsData = await rootCalendarsResponse.json();
+    if (rootCalendarsData?.value) {
+      allCalendars = allCalendars.concat(rootCalendarsData.value);
     }
+
+    const groupsResponse = await fetch(
+      `${graphAPIEndpoint}/me/calendarGroups`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const groupsData = await groupsResponse.json();
+    if (groupsData?.value) {
+      for (const group of groupsData.value) {
+        const groupCalendarsResponse = await fetch(
+          `${graphAPIEndpoint}/me/calendarGroups/${group.id}/calendars`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const groupCalendarsData = await groupCalendarsResponse.json();
+        if (groupCalendarsData?.value) {
+          allCalendars = allCalendars.concat(groupCalendarsData.value);
+        }
+      }
+    }
+
+    return allCalendars;
+  } catch (error) {
+    console.error("Error getting Calendars", error);
+    throw error;
+  }
 }
 ```
+
 This JavaScript snippet demonstrates making direct calls to the API, fetching root calendars, then calendar groups, and finally the calendars in the groups. It uses `fetch` and is suitable for browser environments, which is a very different context than the previous two examples, thus it requires manual authorization and error handling that is a bit different than using a SDK.
 
-To take this further, it’s crucial to delve deeper into the official documentation for the Microsoft Graph API. Specifically, I recommend the *Microsoft Graph documentation* itself (start with the section for calendars), along with any *training materials specific to the Graph SDKs*. Another worthwhile resource is the book *Programming Microsoft Graph* by Brian T. Jack, which offers more detailed examples. Don't ignore the example snippets provided within Microsoft's own documentation as well, as they often demonstrate the most up to date methods and approaches. These are crucial for understanding the nuances of API pagination, throttling, and change tracking – especially as your data needs grow more complex.
+To take this further, it’s crucial to delve deeper into the official documentation for the Microsoft Graph API. Specifically, I recommend the _Microsoft Graph documentation_ itself (start with the section for calendars), along with any _training materials specific to the Graph SDKs_. Another worthwhile resource is the book _Programming Microsoft Graph_ by Brian T. Jack, which offers more detailed examples. Don't ignore the example snippets provided within Microsoft's own documentation as well, as they often demonstrate the most up to date methods and approaches. These are crucial for understanding the nuances of API pagination, throttling, and change tracking – especially as your data needs grow more complex.
 
 The practical point I've stressed here is, and based on experience, is to ensure to inspect each level of object hierarchy provided by the API. Don’t assume that a simple `/me/calendars` is all you’ll need. By understanding the role of the `calendarGroups` relationship, you’ll be well on your way to reliably retrieve all added calendars, avoiding those frustrations we all sometimes stumble into with APIs. Also be wary of caching and keep an eye out for API change logs; the Graph API continues to evolve. Hope this helps.

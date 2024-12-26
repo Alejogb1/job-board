@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-do-i-tie-embeddings-between-torchnnembedding-and-torchnnembeddingbag"
 ---
 
-Okay, let's tackle this. I've actually encountered this specific embedding tie scenario a few times in my career, notably during a project building a large-scale recommendation system that utilized sparse categorical data. It involved a complex interplay of sequence modeling and individual item embeddings, pushing the limits of standard `torch.nn` modules. The crux of the problem lies in efficiently representing and sharing learned features across both individual items (using `Embedding`) and sequences of items (using `EmbeddingBag`), and we'll get into how this is done without duplicating weights, or worse, leading to inconsistent feature representations.
+, let's tackle this. I've actually encountered this specific embedding tie scenario a few times in my career, notably during a project building a large-scale recommendation system that utilized sparse categorical data. It involved a complex interplay of sequence modeling and individual item embeddings, pushing the limits of standard `torch.nn` modules. The crux of the problem lies in efficiently representing and sharing learned features across both individual items (using `Embedding`) and sequences of items (using `EmbeddingBag`), and we'll get into how this is done without duplicating weights, or worse, leading to inconsistent feature representations.
 
-The challenge, fundamentally, is that `torch.nn.Embedding` is designed to produce an embedding vector for each unique *index*, while `torch.nn.EmbeddingBag` produces an embedding vector which is an aggregated version of embeddings of a *sequence of indices*. If we attempt to naively pass the same embedding matrix to both, it will work, but we won’t actually get shared embeddings. The `EmbeddingBag` will still generate the same size of output, but the weights will not be tied/shared.
+The challenge, fundamentally, is that `torch.nn.Embedding` is designed to produce an embedding vector for each unique _index_, while `torch.nn.EmbeddingBag` produces an embedding vector which is an aggregated version of embeddings of a _sequence of indices_. If we attempt to naively pass the same embedding matrix to both, it will work, but we won’t actually get shared embeddings. The `EmbeddingBag` will still generate the same size of output, but the weights will not be tied/shared.
 
-The key to true weight tying lies in ensuring both modules use the *same underlying weight tensor*. This means that when an embedding for an index is updated via backpropagation, both modules reflect that change immediately. We achieve this by having `EmbeddingBag` share weights of the same `nn.Embedding` instance.
+The key to true weight tying lies in ensuring both modules use the _same underlying weight tensor_. This means that when an embedding for an index is updated via backpropagation, both modules reflect that change immediately. We achieve this by having `EmbeddingBag` share weights of the same `nn.Embedding` instance.
 
 Let me break it down with practical examples, illustrating different ways to achieve this in PyTorch.
 
@@ -43,6 +43,7 @@ print(f"Embedding for single index: {single_embedding.shape}")
 seq_embedding = embedding_bag(sequences, offsets)
 print(f"EmbeddingBag for sequences : {seq_embedding.shape}")
 ```
+
 In this example, `shared_embedding.weight` is the core tensor. We then create an `EmbeddingBag` using `from_pretrained`, where we pass this same weight tensor, and set `freeze=False` so it can be updated during backpropagation. The outputs of `shared_embedding` and `embedding_bag` can now be used, and any gradients flow correctly to update the underlying shared tensor. It is crucial to set `freeze=False` otherwise the weights within the `EmbeddingBag` will not be updated by gradient descent.
 
 **Example 2: Shared Weight with Custom Initialization**
@@ -122,19 +123,19 @@ This approach provides better code organization and encapsulates the logic of th
 
 **Key Considerations**
 
-*   **`freeze=False`**: This parameter is critical when using `from_pretrained`; otherwise, you will effectively disable gradient propagation to the underlying weight tensor in the `EmbeddingBag`.
-*   **Initialization**: As I showed in example two, you should perform your weight initialization directly on the `shared_embedding.weight` before it is used by `EmbeddingBag`. This guarantees both modules will benefit from the same weight initialization.
-*   **Vocabulary Size**: Ensure the `num_embeddings` is correct and is the same across all modules sharing the weight tensor. This avoids dimension errors during use.
-*  **Gradient Calculation**: During training, both the `Embedding` and `EmbeddingBag` loss calculations will contribute to the gradient calculation. This is because both are linked to the same underlying shared tensor, so gradients flow back through this shared tensor to update the weights.
+- **`freeze=False`**: This parameter is critical when using `from_pretrained`; otherwise, you will effectively disable gradient propagation to the underlying weight tensor in the `EmbeddingBag`.
+- **Initialization**: As I showed in example two, you should perform your weight initialization directly on the `shared_embedding.weight` before it is used by `EmbeddingBag`. This guarantees both modules will benefit from the same weight initialization.
+- **Vocabulary Size**: Ensure the `num_embeddings` is correct and is the same across all modules sharing the weight tensor. This avoids dimension errors during use.
+- **Gradient Calculation**: During training, both the `Embedding` and `EmbeddingBag` loss calculations will contribute to the gradient calculation. This is because both are linked to the same underlying shared tensor, so gradients flow back through this shared tensor to update the weights.
 
 **Recommended Resources**
 
 For a deeper dive into the theory and practical applications of embeddings, I recommend these resources:
 
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville**: This book provides a comprehensive theoretical foundation for many deep learning concepts, including embedding techniques. The sections on representation learning and word embeddings are particularly relevant.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville**: This book provides a comprehensive theoretical foundation for many deep learning concepts, including embedding techniques. The sections on representation learning and word embeddings are particularly relevant.
 
-*   **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin**: For anyone working with sequence data, especially text, this book offers invaluable insights into linguistic structure and representation. It includes good explanations of embedding concepts as well as practical applications in NLP.
+- **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin**: For anyone working with sequence data, especially text, this book offers invaluable insights into linguistic structure and representation. It includes good explanations of embedding concepts as well as practical applications in NLP.
 
-*   **PyTorch Documentation**: It's important to thoroughly understand the individual capabilities and expected inputs of each module. Referencing the official documentation is a key part of effective PyTorch development. Specifically, look at the documentation for `torch.nn.Embedding` and `torch.nn.EmbeddingBag`.
+- **PyTorch Documentation**: It's important to thoroughly understand the individual capabilities and expected inputs of each module. Referencing the official documentation is a key part of effective PyTorch development. Specifically, look at the documentation for `torch.nn.Embedding` and `torch.nn.EmbeddingBag`.
 
 In my experience, this shared weight technique is crucial for optimizing model parameters, particularly when dealing with a mixture of individual items and sequences within a larger architecture. It forces these different representations to learn in a unified and consistent way. Just be certain you implement this correctly, as it's easy to make mistakes like not unfreezing the `EmbeddingBag`. These examples should give you a solid base to proceed. Good luck with your models.

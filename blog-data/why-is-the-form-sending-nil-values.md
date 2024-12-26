@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-form-sending-nil-values"
 ---
 
-Alright, let's tackle this. I’ve seen this "form sends nil values" scenario play out more times than I care to remember, across different stacks and frameworks. It’s usually not a single root cause, but rather a constellation of subtle issues that can trip you up. The good news is, with a methodical approach, it's almost always solvable. So, let's unpack what’s likely happening and how to troubleshoot it.
+, let's tackle this. I’ve seen this "form sends nil values" scenario play out more times than I care to remember, across different stacks and frameworks. It’s usually not a single root cause, but rather a constellation of subtle issues that can trip you up. The good news is, with a methodical approach, it's almost always solvable. So, let's unpack what’s likely happening and how to troubleshoot it.
 
 The core problem, put plainly, is that the data you expect to be transmitted from your form isn’t reaching the server-side application correctly. This manifests as `nil`, `null`, or empty strings depending on your language and how you're parsing the request. The culprits typically fall into a few major categories: incorrect form markup, misconfigured data handling, or issues with request encoding.
 
@@ -38,17 +38,19 @@ This example shows how client-side javascript can inadvertently clear form data.
 
 ```html
 <form id="myform" action="/submit" method="post">
-  <input type="text" id="user_input" name="user_input" value="initial value"/>
+  <input type="text" id="user_input" name="user_input" value="initial value" />
   <button type="submit">Submit</button>
 </form>
 
 <script>
-    document.getElementById('myform').addEventListener('submit', function(event){
-        event.preventDefault();
-        // some validation logic here, let's say we find something wrong with the value
-        document.getElementById('user_input').value = "";
-        this.submit();
-    })
+  document
+    .getElementById("myform")
+    .addEventListener("submit", function (event) {
+      event.preventDefault();
+      // some validation logic here, let's say we find something wrong with the value
+      document.getElementById("user_input").value = "";
+      this.submit();
+    });
 </script>
 ```
 

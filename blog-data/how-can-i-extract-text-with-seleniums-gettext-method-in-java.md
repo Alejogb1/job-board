@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-text-with-seleniums-gettext-method-in-java"
 ---
 
-Alright, let's dive into the nuances of extracting text using selenium's `getText()` method within a java environment. It might seem straightforward initially, but like most things in software development, there's more beneath the surface than one might first perceive. I've personally encountered numerous scenarios where the expected text wasn't quite what i got, requiring me to adjust my approach. Over the years, i've fine-tuned my techniques to handle these variations effectively.
+, let's dive into the nuances of extracting text using selenium's `getText()` method within a java environment. It might seem straightforward initially, but like most things in software development, there's more beneath the surface than one might first perceive. I've personally encountered numerous scenarios where the expected text wasn't quite what i got, requiring me to adjust my approach. Over the years, i've fine-tuned my techniques to handle these variations effectively.
 
 The basic premise of `webElement.getText()` is, indeed, to retrieve the visible text content of an element. However, “visible” can be a bit of a moving target. For instance, consider an element that has nested children with their own text; `getText()` will typically return the combined text content of the element and all its descendants. This is generally what you want, but there are exceptions. Hidden content via css (e.g., `display: none;` or `visibility: hidden;`) or via javascript manipulations isn’t captured. It is the rendered text displayed on the browser that matters. This subtle distinction is often the root cause of confusion.
 
@@ -45,7 +45,7 @@ public class TextExtraction {
 }
 ```
 
-This first example is quite straightforward, demonstrating the basic usage of `getText()` on an `h1` element. Note the usage of `WebDriverWait` with `ExpectedConditions.visibilityOfElementLocated`, which waits until the element becomes both present *and* visible on the page before extracting text. This is a simple but important detail that ensures we won’t try to interact with an element prematurely. The output should display the `h1` text that is seen on the page.
+This first example is quite straightforward, demonstrating the basic usage of `getText()` on an `h1` element. Note the usage of `WebDriverWait` with `ExpectedConditions.visibilityOfElementLocated`, which waits until the element becomes both present _and_ visible on the page before extracting text. This is a simple but important detail that ensures we won’t try to interact with an element prematurely. The output should display the `h1` text that is seen on the page.
 
 **Example 2: Handling nested elements and whitespace**
 

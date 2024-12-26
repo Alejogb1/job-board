@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "conditional-mean-statement"
 ---
 
-Alright so you're asking about conditional mean statements right Been there done that a million times This is like bread and butter for anyone who's wrangled datasets with any real complexity I've seen it used in everything from optimizing ad spend to predicting server load spikes so let's dive in.
+so you're asking about conditional mean statements right Been there done that a million times This is like bread and butter for anyone who's wrangled datasets with any real complexity I've seen it used in everything from optimizing ad spend to predicting server load spikes so let's dive in.
 
-Basically when we talk about a conditional mean we're saying hey I don't just want the average of *all* my data I want the average of my data *given* some specific criteria This "given" part is the heart of the matter it lets us slice our data and get more nuanced insights It's like saying instead of knowing the average temperature for the entire year I want the average temperature only for the month of July or only on weekdays this level of granularity is super useful in any practical analysis.
+Basically when we talk about a conditional mean we're saying hey I don't just want the average of _all_ my data I want the average of my data _given_ some specific criteria This "given" part is the heart of the matter it lets us slice our data and get more nuanced insights It's like saying instead of knowing the average temperature for the entire year I want the average temperature only for the month of July or only on weekdays this level of granularity is super useful in any practical analysis.
 
 I remember back in my early days working at this startup they wanted to optimize their user onboarding flow We were collecting all sorts of data points like how long users spent on each step of the tutorial how many clicks they made before moving on and stuff like that The problem was the overall average was useless it was a big soup of numbers I needed to start differentiating between types of users.
 
-I realised then that we needed the conditional mean for instance we wanted the average time spent on step 3 of the tutorial *only for users who signed up through the mobile app* this gave us a much more actionable metric. And also we looked into the average number of clicks *only for first-time users* using a specific campaign that was a key data point to show us if the onboarding was too complicated for certain user segments
+I realised then that we needed the conditional mean for instance we wanted the average time spent on step 3 of the tutorial _only for users who signed up through the mobile app_ this gave us a much more actionable metric. And also we looked into the average number of clicks _only for first-time users_ using a specific campaign that was a key data point to show us if the onboarding was too complicated for certain user segments
 
 Without these conditional mean statements the data would just show some average results with no particular insights on different groups of users and that would not help us improve our app user experience.
 
@@ -42,6 +42,7 @@ mobile_users_first_clicks = df[df['user_type'] == 'mobile']['clicks_first_time']
 print(f"Average clicks by mobile users on first time: {mobile_users_first_clicks}")
 
 ```
+
 This first example filters the DataFrame based on the 'user_type' column equals to mobile and then calculates the mean of the 'time_spent_step3' column using `.mean()` it's basic but fundamental. And as a bonus I included the first time user clicks and the clicks from mobile users. That was easy right
 
 Now let's say you have more complex criteria. We can use multiple conditions to slice the data. For example maybe we want to find the average time on step 3 for users on mobile who spent less than 7 minutes total on the whole onboarding:

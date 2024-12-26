@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-i-determine-the-optimal-number-of-features-using-mrmr"
 ---
 
-Okay, let's tackle the feature selection quandary using mRMR. It's a process I've refined over quite a few projects, most notably on a rather complex signal processing initiative, where we had an initial feature set that was, frankly, bloated. It's not just about throwing features at a model and hoping something sticks, it's about efficiency and, ultimately, performance. mRMR, or Minimum Redundancy Maximum Relevance, provides a powerful framework for this.
+, let's tackle the feature selection quandary using mRMR. It's a process I've refined over quite a few projects, most notably on a rather complex signal processing initiative, where we had an initial feature set that was, frankly, bloated. It's not just about throwing features at a model and hoping something sticks, it's about efficiency and, ultimately, performance. mRMR, or Minimum Redundancy Maximum Relevance, provides a powerful framework for this.
 
 The crux of mRMR is its dual objective. We're not just seeking features that have a strong correlation with the target variable (that's the "maximum relevance" part); we're also aiming to select features that are minimally redundant with each other. Think of it like assembling a team; you want members who can individually contribute significantly, but also bring distinct skill sets. If all your team members have the exact same expertise, they're largely redundant, regardless of their individual competence.
 
-Determining the *optimal* number of features isn't usually a simple, deterministic calculation; it’s more about finding the sweet spot between model complexity and performance. The mRMR algorithm, in its essence, provides a ranking of features. It calculates relevance using a measure like mutual information between the features and the target, and it calculates redundancy by examining mutual information among the features themselves. Then, at each step, it selects the feature that maximizes the relevance while simultaneously minimizing redundancy with the features already selected.
+Determining the _optimal_ number of features isn't usually a simple, deterministic calculation; it’s more about finding the sweet spot between model complexity and performance. The mRMR algorithm, in its essence, provides a ranking of features. It calculates relevance using a measure like mutual information between the features and the target, and it calculates redundancy by examining mutual information among the features themselves. Then, at each step, it selects the feature that maximizes the relevance while simultaneously minimizing redundancy with the features already selected.
 
-So, how does this translate to finding the *optimal* number? There isn’t a single magic number, but several strategies exist. Typically, the idea involves testing model performance with different feature set sizes, using the mRMR ranking to build those subsets. This process, generally, reveals a diminishing returns pattern. Initially, adding features will dramatically improve performance, but eventually, you reach a point where adding more features barely improves (or even degrades) performance. The optimal number is usually near this inflection point.
+So, how does this translate to finding the _optimal_ number? There isn’t a single magic number, but several strategies exist. Typically, the idea involves testing model performance with different feature set sizes, using the mRMR ranking to build those subsets. This process, generally, reveals a diminishing returns pattern. Initially, adding features will dramatically improve performance, but eventually, you reach a point where adding more features barely improves (or even degrades) performance. The optimal number is usually near this inflection point.
 
 Let's illustrate this with a hypothetical. Imagine we have a dataset with 20 features and we've calculated the mRMR score for each one. Let’s assume, for now, we're using classification for the target.
 
@@ -73,9 +73,10 @@ selected_indices = mrmr_feature_selection(features, target, 10)
 print("Selected indices:", selected_indices)
 
 ```
-In this snippet, `mutual_info_classif` calculates the mutual information; we then iteratively select features, maximizing the information with the target while minimizing redundancy to previously selected features. The key here is, we provide `n_features_to_select`. This approach provides a *ranking*, not the single optimal number. We need to evaluate the model's performance with this selected subset.
 
-This leads us to the crucial next step: *evaluation*. We now need to train models with different numbers of features selected by the mRMR ranking. Let's say we are using a simple classification model, such as a logistic regression for example.
+In this snippet, `mutual_info_classif` calculates the mutual information; we then iteratively select features, maximizing the information with the target while minimizing redundancy to previously selected features. The key here is, we provide `n_features_to_select`. This approach provides a _ranking_, not the single optimal number. We need to evaluate the model's performance with this selected subset.
+
+This leads us to the crucial next step: _evaluation_. We now need to train models with different numbers of features selected by the mRMR ranking. Let's say we are using a simple classification model, such as a logistic regression for example.
 
 Here's some example code, building upon the previous selection:
 
@@ -204,8 +205,9 @@ plt.title("Model R^2 vs Number of mRMR Features")
 plt.show()
 
 ```
+
 This demonstrates the adaption of mRMR for regression problems; note that the core principle remains the same - iteratively selecting features that have maximum relevance and minimum redundancy. The model evaluation remains crucial.
 
-For a deeper dive into feature selection techniques, I recommend exploring *'Feature Engineering and Selection: A Practical Approach for Predictive Models'*, by Kuhn and Johnson and the more mathematically rigorous *'The Elements of Statistical Learning'*, by Hastie, Tibshirani, and Friedman. They provide an excellent theoretical and practical foundation on these topics. Additionally, papers on the specific implementations of mRMR, such as the original work by Peng et al., *'Feature Selection Based on Mutual Information: Criteria of Max-Dependency, Max-Relevance, and Min-Redundancy'* can be quite enlightening.
+For a deeper dive into feature selection techniques, I recommend exploring _'Feature Engineering and Selection: A Practical Approach for Predictive Models'_, by Kuhn and Johnson and the more mathematically rigorous _'The Elements of Statistical Learning'_, by Hastie, Tibshirani, and Friedman. They provide an excellent theoretical and practical foundation on these topics. Additionally, papers on the specific implementations of mRMR, such as the original work by Peng et al., _'Feature Selection Based on Mutual Information: Criteria of Max-Dependency, Max-Relevance, and Min-Redundancy'_ can be quite enlightening.
 
 In summary, while mRMR provides a ranking, the optimal number of features is determined by practical experimentation and analysis of model performance. It is a process, not a single calculation, and the plotting of performance curves aids greatly in this determination. Feature selection is not a one-size-fits-all solution, so it is essential to tailor the approach to the specific problem and data at hand.

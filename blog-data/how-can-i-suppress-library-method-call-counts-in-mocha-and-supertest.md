@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-suppress-library-method-call-counts-in-mocha-and-supertest"
 ---
 
-Okay, let's tackle this. I've definitely been in the weeds with Mocha and Supertest, especially when dealing with testing frameworks that involve heavy reliance on external libraries. Getting those method call counts out of your reporting can be quite beneficial. The noise from extensive library interactions can often make it difficult to focus on the specific behavior you're actually testing. It's a common problem, and luckily, there are strategies we can employ.
+, let's tackle this. I've definitely been in the weeds with Mocha and Supertest, especially when dealing with testing frameworks that involve heavy reliance on external libraries. Getting those method call counts out of your reporting can be quite beneficial. The noise from extensive library interactions can often make it difficult to focus on the specific behavior you're actually testing. It's a common problem, and luckily, there are strategies we can employ.
 
 My experience with this stems from a project where we were integrating a new payment gateway API. Our tests, while valid in terms of our application logic, were drowning in calls to the API client's methods—calls we weren't directly trying to assert behavior against. The sheer volume of these calls was obscuring any meaningful test failures, making debugging a nightmare. What we needed wasn't a way to ignore failures of those library calls, but rather, a way to selectively exclude them from the output. This approach allowed us to focus on the core application logic being tested and prevent noise in the console output.
 
@@ -23,11 +23,11 @@ Let's say you have a utility library with a method called `makeApiCall`, which g
 const makeApiCall = async (url, data) => {
   // Imagine this does something with an external api call
   console.log(`Called API at ${url} with ${JSON.stringify(data)}`);
-  return { status: 200, response: 'Success' };
+  return { status: 200, response: "Success" };
 };
 
 module.exports = {
-    makeApiCall
+  makeApiCall,
 };
 ```
 
@@ -35,27 +35,38 @@ And your test uses this method. To remove its calls from Mocha's output, you wou
 
 ```javascript
 // test.js
-const assert = require('assert');
-const sinon = require('sinon');
-const myUtility = require('./my-utility-library');
+const assert = require("assert");
+const sinon = require("sinon");
+const myUtility = require("./my-utility-library");
 
-describe('My Test Suite', () => {
-  it('should execute logic without making api calls', async () => {
-    const makeApiCallStub = sinon.stub(myUtility, 'makeApiCall').resolves({status: 200, response: 'Stubbed response'});
+describe("My Test Suite", () => {
+  it("should execute logic without making api calls", async () => {
+    const makeApiCallStub = sinon
+      .stub(myUtility, "makeApiCall")
+      .resolves({ status: 200, response: "Stubbed response" });
 
     // Now execute some test logic that uses the api call, but is not directly testing it.
-    const result = await myUtility.makeApiCall("test/url", {payload: "test"});
+    const result = await myUtility.makeApiCall("test/url", { payload: "test" });
 
     // Assertions on functionality unrelated to the stubbed call
-    assert.deepStrictEqual(result, { status: 200, response: 'Stubbed response'});
-    assert.strictEqual(makeApiCallStub.callCount, 1, "Api was not stubbed as expected");
+    assert.deepStrictEqual(result, {
+      status: 200,
+      response: "Stubbed response",
+    });
+    assert.strictEqual(
+      makeApiCallStub.callCount,
+      1,
+      "Api was not stubbed as expected"
+    );
 
     makeApiCallStub.restore(); // Important to cleanup stubs.
   });
 
   it("should execute logic with actual api calls if needed", async () => {
-    const result = await myUtility.makeApiCall("another/test/url", {anotherPayload: "test2"});
-    assert.deepStrictEqual(result, {status: 200, response: 'Success'});
+    const result = await myUtility.makeApiCall("another/test/url", {
+      anotherPayload: "test2",
+    });
+    assert.deepStrictEqual(result, { status: 200, response: "Success" });
   });
 });
 ```
@@ -70,15 +81,15 @@ Consider a service that uses `axios` to make HTTP requests:
 
 ```javascript
 // external-service.js
-const axios = require('axios');
+const axios = require("axios");
 
 const fetchExternalData = async (url) => {
-    const response = await axios.get(url);
-    return response.data;
+  const response = await axios.get(url);
+  return response.data;
 };
 
 module.exports = {
-    fetchExternalData
+  fetchExternalData,
 };
 ```
 
@@ -86,26 +97,28 @@ And a test case that needs to bypass the real `axios` calls. With `proxyquire`, 
 
 ```javascript
 // test.js
-const assert = require('assert');
-const proxyquire = require('proxyquire');
+const assert = require("assert");
+const proxyquire = require("proxyquire");
 
-describe('Service test using proxyquire', () => {
-  it('should use mock axios module', async () => {
-    const stubbedResponse = { data: { mock: 'data' } };
-    const externalService = proxyquire('./external-service', {
-      'axios': {
+describe("Service test using proxyquire", () => {
+  it("should use mock axios module", async () => {
+    const stubbedResponse = { data: { mock: "data" } };
+    const externalService = proxyquire("./external-service", {
+      axios: {
         get: async () => stubbedResponse,
       },
     });
 
-    const result = await externalService.fetchExternalData('/test-url');
+    const result = await externalService.fetchExternalData("/test-url");
     assert.deepStrictEqual(result, stubbedResponse.data);
   });
 
-  it('should use real axios when needed', async () => {
-     const externalService = require("./external-service");
-     const result = await externalService.fetchExternalData("https://api.publicapis.org/entries");
-     assert.ok(result);
+  it("should use real axios when needed", async () => {
+    const externalService = require("./external-service");
+    const result = await externalService.fetchExternalData(
+      "https://api.publicapis.org/entries"
+    );
+    assert.ok(result);
   });
 });
 ```
@@ -124,40 +137,46 @@ const someLogger = require("./logger");
 
 const makeApiCall = async (url, data) => {
   someLogger.log(`Called API at ${url} with ${JSON.stringify(data)}`);
-  return { status: 200, response: 'Success' };
+  return { status: 200, response: "Success" };
 };
 
 module.exports = {
-    makeApiCall
+  makeApiCall,
 };
 ```
 
 ```javascript
 // logger.js
 const log = (message) => {
-    console.log(`Logger Called: ${message}`);
-}
+  console.log(`Logger Called: ${message}`);
+};
 
 module.exports = {
-    log
-}
+  log,
+};
 ```
+
 Then, you can stub the logger but keep track of the calls using `sinon.spy`:
+
 ```javascript
 // test.js
-const assert = require('assert');
-const sinon = require('sinon');
-const myUtility = require('./my-utility-library');
+const assert = require("assert");
+const sinon = require("sinon");
+const myUtility = require("./my-utility-library");
 const someLogger = require("./logger");
 
-describe('My Test Suite', () => {
-  it('should execute logic without being overly verbose', async () => {
-     const loggerSpy = sinon.spy(someLogger, 'log');
-    
-    await myUtility.makeApiCall("test/url", {payload: "test"});
+describe("My Test Suite", () => {
+  it("should execute logic without being overly verbose", async () => {
+    const loggerSpy = sinon.spy(someLogger, "log");
 
-    assert.strictEqual(loggerSpy.callCount, 1, "logger.log was not called once.");
-     loggerSpy.restore();
+    await myUtility.makeApiCall("test/url", { payload: "test" });
+
+    assert.strictEqual(
+      loggerSpy.callCount,
+      1,
+      "logger.log was not called once."
+    );
+    loggerSpy.restore();
   });
 });
 ```
@@ -166,10 +185,10 @@ The `sinon.spy` wrapper captures calls to the method, allowing you to verify whe
 
 **Recommended Resources:**
 
-*   **"Test-Driven Development: By Example" by Kent Beck:** While not specific to Mocha, this provides the core principles of testing that lead to writing testable code. This book helps with understanding *why* you'd need to suppress certain calls.
-*   **Sinon.js Documentation:** The official documentation for Sinon.js is invaluable for understanding how to use stubs, spies, and mocks effectively.
-*   **"Working Effectively with Legacy Code" by Michael Feathers:** This book gives crucial context on how to apply these testing techniques to larger, more complex codebases, and provides some patterns to follow. Understanding the reasoning behind the tests is fundamental to making informed decisions about silencing specific calls.
-*  **Mocha Documentation:** The official documentation will always have the most up-to-date and accurate information on how the testing framework functions, and on how different frameworks can plug into it.
-* **Supertest Documentation:** Similar to Mocha, the official docs will tell you how Supertest's integration with Mocha works, and where your test setup is defined.
+- **"Test-Driven Development: By Example" by Kent Beck:** While not specific to Mocha, this provides the core principles of testing that lead to writing testable code. This book helps with understanding _why_ you'd need to suppress certain calls.
+- **Sinon.js Documentation:** The official documentation for Sinon.js is invaluable for understanding how to use stubs, spies, and mocks effectively.
+- **"Working Effectively with Legacy Code" by Michael Feathers:** This book gives crucial context on how to apply these testing techniques to larger, more complex codebases, and provides some patterns to follow. Understanding the reasoning behind the tests is fundamental to making informed decisions about silencing specific calls.
+- **Mocha Documentation:** The official documentation will always have the most up-to-date and accurate information on how the testing framework functions, and on how different frameworks can plug into it.
+- **Supertest Documentation:** Similar to Mocha, the official docs will tell you how Supertest's integration with Mocha works, and where your test setup is defined.
 
-Remember, the primary goal isn't just to suppress method calls; it's to write focused, maintainable tests that actually verify the logic of *your* application, not the implementation details of its dependencies. Choosing the correct technique for each situation will ensure your tests remain clear and helpful.
+Remember, the primary goal isn't just to suppress method calls; it's to write focused, maintainable tests that actually verify the logic of _your_ application, not the implementation details of its dependencies. Choosing the correct technique for each situation will ensure your tests remain clear and helpful.

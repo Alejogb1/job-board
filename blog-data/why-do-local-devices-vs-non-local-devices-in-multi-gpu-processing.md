@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "why-do-local-devices-vs-non-local-devices-in-multi-gpu-processing"
 ---
 
-alright, let's talk about local vs non-local devices in multi-gpu setups. it's a topic i've spent more hours than i care to count debugging, so hopefully, i can shed some light on why this distinction matters.
+, let's talk about local vs non-local devices in multi-gpu setups. it's a topic i've spent more hours than i care to count debugging, so hopefully, i can shed some light on why this distinction matters.
 
 when we're dealing with multiple gpus, we're inherently talking about parallel processing. instead of one gpu doing all the work, we're splitting it up. the way data is shuffled around between these gpus can have a huge impact on performance. the key difference lies in where the data sits in memory: either it's directly accessible by a gpu (local), or it has to be moved across the system (non-local).
 
-imagine you have a server with two gpus: gpu0 and gpu1. each gpu has its own dedicated high-bandwidth memory. if you're running a workload where all the data that gpu0 needs is already in its memory, it's accessing that data *locally*. this is the ideal scenario. the access is fast, usually at bus speeds, and there's minimal overhead.
+imagine you have a server with two gpus: gpu0 and gpu1. each gpu has its own dedicated high-bandwidth memory. if you're running a workload where all the data that gpu0 needs is already in its memory, it's accessing that data _locally_. this is the ideal scenario. the access is fast, usually at bus speeds, and there's minimal overhead.
 
 now, let's say gpu1 needs a chunk of data that's currently sitting in gpu0's memory, or even worse in the main system's ram (the cpu's memory). that's when we start talking about non-local access. accessing the memory of another gpu requires moving the data across the pcie bus, and even worse if it is in system memory. this is much slower than local access and introduces overhead.
 
@@ -43,11 +43,13 @@ if torch.cuda.is_available():
 else:
     print("no gpu available, the code will run in cpu.")
 ```
+
 this example shows how to allocate data in a gpu. if your machine has two gpus, the output will show two different devices assigned to each tensor.
 
 in that image processing project mentioned before, the bottleneck was the need to combine some features extracted from images that were being processed in different gpus. after a lot of experimentation, i discovered i could do some preliminary local processing on each gpu, combine results locally as much as possible, and only then transfer the minimum required data to one dedicated gpu to do the combination of features and final calculation. this made a huge difference.
 
 the way we move data around between gpus is important, it is a trade-off, it might be faster to compute some redundant work than move a lot of data around. for example, let's say i have this numpy operation:
+
 ```python
 import numpy as np
 import time
@@ -59,7 +61,7 @@ def do_some_numpy_work(data):
       data = np.dot(data, data.T)
   end_time = time.time()
   return data, end_time - start_time
-  
+
 def copy_numpy_data(data, n_copies):
   start_time = time.time()
   copies = [data.copy() for _ in range(n_copies)]
@@ -74,7 +76,7 @@ if __name__ == '__main__':
 
     print(f"time for numpy work: {numpy_work_time} seconds")
     print(f"time for copy of numpy array twice: {numpy_copies_time} seconds")
-    
+
 ```
 
 this code shows that copying the numpy array to a different location might take more time than doing the actual work on a single numpy array.
@@ -84,7 +86,7 @@ to get a better grasp of all this you need to understand the concept of memory h
 
 there are other books and papers specifically about multi-gpu programming, but if you are just starting i think it's fundamental to know the basics before advancing to the more complex stuff. a good place to look for papers would be the ieee xplore digital library. specifically search for papers related to "multi-gpu memory management" and "data locality". there's a ton of material out there, and it helps to have these concepts well established. it’s quite common to spend more time optimizing data movement than doing the actual computation. that's the joke, if you are wondering about the joke i told you earlier.
 
-another important concept to keep in mind is *asynchronous data transfer*. it means that the cpu doesn't have to sit idle waiting for the gpu to move data before starting the processing. if you can overlap the transfer of one batch with the processing of another batch, you can hide some of the latency overhead of the non-local access. here is a small example in pytorch to illustrate the idea:
+another important concept to keep in mind is _asynchronous data transfer_. it means that the cpu doesn't have to sit idle waiting for the gpu to move data before starting the processing. if you can overlap the transfer of one batch with the processing of another batch, you can hide some of the latency overhead of the non-local access. here is a small example in pytorch to illustrate the idea:
 
 ```python
 import torch
@@ -106,7 +108,7 @@ if torch.cuda.is_available():
         data_gpu1 = data_cpu.to(device1, non_blocking=True)
         # do some other work on cpu meanwhile
         time.sleep(0.01)
-        
+
         # sync gpu to check if transfers are done
         torch.cuda.synchronize(device0)
         torch.cuda.synchronize(device1)
@@ -119,6 +121,7 @@ if torch.cuda.is_available():
 else:
     print("no gpus are available.")
 ```
+
 this last example shows how to move data to different gpus in an asynchronous way. this is how you can overlap data transfers and computations and hide transfer latencies.
 
 in summary, the difference between local and non-local gpu access comes down to the cost of transferring data. local access is fast because the data is already available in the gpu's memory. non-local access implies moving data over the pcie bus which is slower. therefore, if possible, you should keep the data as local as possible to the gpu which will use it. thinking about your data placement is essential to get the most out of a multi-gpu system.

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-sailsjs-blueprints-be-updated-without-using-a-primary-key"
 ---
 
-Okay, let's tackle this. It’s a question that definitely surfaces once you start pushing Sails.js beyond its initial scaffolding. I've personally bumped into this situation during a project where we were migrating legacy data, where relationships were identified by unique combinations of fields rather than a conventional primary key, and frankly, relying solely on Sails.js’ default blueprint routes felt limiting.
+, let's tackle this. It’s a question that definitely surfaces once you start pushing Sails.js beyond its initial scaffolding. I've personally bumped into this situation during a project where we were migrating legacy data, where relationships were identified by unique combinations of fields rather than a conventional primary key, and frankly, relying solely on Sails.js’ default blueprint routes felt limiting.
 
-The core issue lies in the way Sails.js blueprints are structured – they inherently expect a primary key to uniquely identify a record for operations like update or delete. By default, this is an auto-incrementing integer id, often named `id`. When you deviate from this model, direct usage of `/model/id` routes won’t work. We need a way to tell Sails.js, "Hey, this set of attributes is *how* I identify this record."
+The core issue lies in the way Sails.js blueprints are structured – they inherently expect a primary key to uniquely identify a record for operations like update or delete. By default, this is an auto-incrementing integer id, often named `id`. When you deviate from this model, direct usage of `/model/id` routes won’t work. We need a way to tell Sails.js, "Hey, this set of attributes is _how_ I identify this record."
 
 The default blueprint update route, `PUT /:model/:id`, relies on the implicit assumption that you have a single, unambiguous primary key. If you try to use it with, say, a unique combination of fields like `productCode` and `versionNumber` as the key, you’ll encounter a failure or an update to an unintended record (depending on the database setup). This is because the `id` segment in the URL is treated by Sails.js as the single primary key to lookup on. So, how can we update records when our identification mechanism is not a single primary key?
 
@@ -22,27 +22,30 @@ Here's a code snippet that illustrates this approach:
 // api/controllers/ProductController.js
 
 module.exports = {
-
-  updateByProductCodeAndVersion: async function(req, res) {
-    const productCode = req.param('productCode');
-    const versionNumber = req.param('versionNumber');
+  updateByProductCodeAndVersion: async function (req, res) {
+    const productCode = req.param("productCode");
+    const versionNumber = req.param("versionNumber");
 
     if (!productCode || !versionNumber) {
-      return res.badRequest({ error: 'Both productCode and versionNumber are required.' });
+      return res.badRequest({
+        error: "Both productCode and versionNumber are required.",
+      });
     }
 
     try {
-       const updatedRecords = await Product.update({ productCode, versionNumber }, req.body).fetch();
+      const updatedRecords = await Product.update(
+        { productCode, versionNumber },
+        req.body
+      ).fetch();
 
-       if(updatedRecords.length === 0) {
-           return res.notFound({error: 'Product not found with given details'})
-       }
-       return res.ok(updatedRecords[0]);
+      if (updatedRecords.length === 0) {
+        return res.notFound({ error: "Product not found with given details" });
+      }
+      return res.ok(updatedRecords[0]);
+    } catch (err) {
+      return res.serverError(err);
     }
-    catch(err){
-         return res.serverError(err);
-    }
-  }
+  },
 };
 ```
 
@@ -54,7 +57,8 @@ Now, to access this route, you will have to create it in `config/routes.js`, lik
 // config/routes.js
 
 module.exports.routes = {
-  'PUT /product/:productCode/:versionNumber': 'ProductController.updateByProductCodeAndVersion'
+  "PUT /product/:productCode/:versionNumber":
+    "ProductController.updateByProductCodeAndVersion",
 };
 ```
 
@@ -68,37 +72,38 @@ Here's an example of updating records based on a combination of fields using `fi
 // api/controllers/ProductController.js
 
 module.exports = {
-
-  updateByComplexCriteria: async function(req, res) {
-    const { manufacturingDate, batchNumber,  ...updateData } = req.body;
-
+  updateByComplexCriteria: async function (req, res) {
+    const { manufacturingDate, batchNumber, ...updateData } = req.body;
 
     if (!manufacturingDate || !batchNumber) {
-      return res.badRequest({ error: 'Both manufacturingDate and batchNumber are required in the body.' });
+      return res.badRequest({
+        error:
+          "Both manufacturingDate and batchNumber are required in the body.",
+      });
     }
 
     try {
+      const recordToUpdate = await Product.findOne({
+        where: {
+          manufacturingDate: manufacturingDate,
+          batchNumber: batchNumber,
+        },
+      });
 
-       const recordToUpdate = await Product.findOne({
-            where: {
-                manufacturingDate: manufacturingDate,
-                batchNumber: batchNumber,
-                }
-            });
+      if (!recordToUpdate) {
+        return res.notFound({ error: "Product not found with given details" });
+      }
 
-       if (!recordToUpdate) {
-           return res.notFound({error: 'Product not found with given details'})
-        }
+      const updatedRecord = await Product.update(
+        { id: recordToUpdate.id },
+        updateData
+      ).fetch();
 
-        const updatedRecord = await Product.update({ id: recordToUpdate.id }, updateData ).fetch()
-
-       return res.ok(updatedRecord[0]);
-
-    }
-    catch (err) {
+      return res.ok(updatedRecord[0]);
+    } catch (err) {
       return res.serverError(err);
     }
-  }
+  },
 };
 ```
 
@@ -110,12 +115,11 @@ And as before, we define our route in `config/routes.js`:
 // config/routes.js
 
 module.exports.routes = {
-    'PUT /product/bycriteria': 'ProductController.updateByComplexCriteria'
+  "PUT /product/bycriteria": "ProductController.updateByComplexCriteria",
 };
-
 ```
 
-**3.  Using Query Builder:**
+**3. Using Query Builder:**
 
 For highly complex situations, the Query Builder offers a great way to define intricate update logic directly within your code. It bypasses the default Waterline/Sails.js model interaction to provide even lower-level control if needed. Be warned, though: this reduces the abstraction that Sails.js normally gives, and should be used judiciously.
 
@@ -125,31 +129,35 @@ Here’s how you could update a record using the query builder:
 // api/controllers/ProductController.js
 
 module.exports = {
-    updateViaQueryBuilder: async function(req, res) {
-       const { partNumber, revision, ...updateData } = req.body;
+  updateViaQueryBuilder: async function (req, res) {
+    const { partNumber, revision, ...updateData } = req.body;
 
-        if (!partNumber || !revision) {
-            return res.badRequest({ error: 'Both partNumber and revision are required in the request body.' });
-        }
+    if (!partNumber || !revision) {
+      return res.badRequest({
+        error: "Both partNumber and revision are required in the request body.",
+      });
+    }
 
     try {
+      const rawResult = await sails
+        .getDatastore()
+        .sendNativeQuery(
+          "UPDATE product SET ? WHERE partNumber = ? AND revision = ?",
+          [updateData, partNumber, revision]
+        );
+      if (rawResult.rowsAffected === 0) {
+        return res.notFound({ error: "Product not found with given details" });
+      }
 
-        const rawResult = await sails.getDatastore().sendNativeQuery(
-          'UPDATE product SET ? WHERE partNumber = ? AND revision = ?', [updateData, partNumber, revision]
-           )
-          if(rawResult.rowsAffected === 0)
-          {
-              return res.notFound({error: 'Product not found with given details'})
-          }
-
-         const updatedRecords = await Product.find({partNumber: partNumber, revision:revision})
-         return res.ok(updatedRecords[0]);
-
+      const updatedRecords = await Product.find({
+        partNumber: partNumber,
+        revision: revision,
+      });
+      return res.ok(updatedRecords[0]);
+    } catch (err) {
+      return res.serverError(err);
     }
-    catch(err){
-       return res.serverError(err);
-    }
-   }
+  },
 };
 ```
 
@@ -161,21 +169,21 @@ Here’s the relevant route in `config/routes.js`:
 // config/routes.js
 
 module.exports.routes = {
-    'PUT /product/querybuilder': 'ProductController.updateViaQueryBuilder'
+  "PUT /product/querybuilder": "ProductController.updateViaQueryBuilder",
 };
 ```
 
 **Key takeaways and recommendations:**
 
-*   **Prioritize Custom Actions:** For most non-primary key updates, a custom controller action with the Waterline ORM (using `update`, or `findOne` followed by an update), or the raw query builder will offer the best balance between readability, maintainability, and control.
-*   **Clear Route Definitions:** Make your routes explicit and understandable to avoid confusion with default Sails.js blueprint routes.
-*   **Error Handling:** Handle situations where records are not found with appropriate 404 responses. This ensures robust and clear API interactions.
-*   **Data Validation:** Always validate incoming data. Ensure the data types and formats match what your database expects and what you expect to receive.
+- **Prioritize Custom Actions:** For most non-primary key updates, a custom controller action with the Waterline ORM (using `update`, or `findOne` followed by an update), or the raw query builder will offer the best balance between readability, maintainability, and control.
+- **Clear Route Definitions:** Make your routes explicit and understandable to avoid confusion with default Sails.js blueprint routes.
+- **Error Handling:** Handle situations where records are not found with appropriate 404 responses. This ensures robust and clear API interactions.
+- **Data Validation:** Always validate incoming data. Ensure the data types and formats match what your database expects and what you expect to receive.
 
 **Resources:**
 
-*   For a deeper dive into Waterline, I highly recommend the [Waterline ORM documentation](https://sailsjs.com/documentation/concepts/models-and-orm/models).
-*   For advanced query scenarios, the book "SQL Antipatterns: Avoiding the Pitfalls of Database Programming" by Bill Karwin provides an in-depth understanding of SQL which is crucial for leveraging the query builder effectively.
-*  Additionally, "Database Internals: A Deep Dive into How Databases Work" by Alex Petrov provides a thorough understanding of various database functionalities which could be helpful when dealing with complex queries.
+- For a deeper dive into Waterline, I highly recommend the [Waterline ORM documentation](https://sailsjs.com/documentation/concepts/models-and-orm/models).
+- For advanced query scenarios, the book "SQL Antipatterns: Avoiding the Pitfalls of Database Programming" by Bill Karwin provides an in-depth understanding of SQL which is crucial for leveraging the query builder effectively.
+- Additionally, "Database Internals: A Deep Dive into How Databases Work" by Alex Petrov provides a thorough understanding of various database functionalities which could be helpful when dealing with complex queries.
 
 These approaches should provide a good starting point for handling updates with composite or non-traditional keys in Sails.js. The key is to remember that you have complete control over how your API operates and you should use the tools at your disposal to structure your code according to your specific needs. It’s about adapting the framework to your requirements rather than being confined by its defaults.

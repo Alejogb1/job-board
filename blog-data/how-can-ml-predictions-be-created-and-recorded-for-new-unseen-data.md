@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-ml-predictions-be-created-and-recorded-for-new-unseen-data"
 ---
 
-Alright, let's tackle this. I’ve certainly spent enough late nights facing the challenge of extending machine learning model predictions to completely new data. It’s one thing to train a model on a well-defined dataset; it's another to handle the real-world scenario where the model needs to make predictions on data it has never encountered during training. The process isn’t just a simple case of `model.predict()`; there are considerations of data handling, transformation consistency, and reliable recording practices.
+, let's tackle this. I’ve certainly spent enough late nights facing the challenge of extending machine learning model predictions to completely new data. It’s one thing to train a model on a well-defined dataset; it's another to handle the real-world scenario where the model needs to make predictions on data it has never encountered during training. The process isn’t just a simple case of `model.predict()`; there are considerations of data handling, transformation consistency, and reliable recording practices.
 
-The core principle here is to ensure consistency between the data preparation pipeline used during model training and the data preparation applied to new, unseen data. If your model was trained on normalized features, any new data must be normalized using the *same* parameters. Likewise for categorical encodings, imputation, and feature engineering; every step of the process must be mirrored precisely. Neglecting this aspect will undoubtedly lead to degraded prediction quality, regardless of how well the model performed during training.
+The core principle here is to ensure consistency between the data preparation pipeline used during model training and the data preparation applied to new, unseen data. If your model was trained on normalized features, any new data must be normalized using the _same_ parameters. Likewise for categorical encodings, imputation, and feature engineering; every step of the process must be mirrored precisely. Neglecting this aspect will undoubtedly lead to degraded prediction quality, regardless of how well the model performed during training.
 
 Let's consider a practical example, and how I approached it in the past. We were building a customer churn prediction system, and initial training data included a ‘customer_age’ feature. We used min-max scaling for this variable. When a new customer came along, our initial approach didn’t account for the scaling, resulting in predictions that were wildly off. The fix, of course, was to store the min and max values from the training set, and use those during prediction for new data points.
 
@@ -61,11 +61,13 @@ if __name__ == "__main__":
     predictions = pipeline.predict(new_data)
     pipeline.record_prediction(new_data, predictions)
 ```
+
 In this snippet, the `PredictionPipeline` class handles the transformation and prediction steps. The constructor saves a trained model, and the fitted scaler and keeps the feature names. The `preprocess` method uses the fitted scaler from training. The `predict` method makes the predictions. Lastly `record_prediction` adds the new data with its prediction and writes that to a csv file.
 
-Secondly, the *recording* aspect is critically important. It's not enough to just make predictions; you need to log and record them systematically. This provides valuable traceability and allows you to monitor model performance over time. Storing the original input data alongside the model predictions is absolutely essential for debugging and retrospective analysis. I’ve learned the hard way that not saving input features makes understanding prediction failures nearly impossible. I’d recommend saving this data into a database table, or a time-series data store if that fits your project. Don’t rely on console logging alone.
+Secondly, the _recording_ aspect is critically important. It's not enough to just make predictions; you need to log and record them systematically. This provides valuable traceability and allows you to monitor model performance over time. Storing the original input data alongside the model predictions is absolutely essential for debugging and retrospective analysis. I’ve learned the hard way that not saving input features makes understanding prediction failures nearly impossible. I’d recommend saving this data into a database table, or a time-series data store if that fits your project. Don’t rely on console logging alone.
 
 Building on that idea, here’s a slightly more refined version that integrates a simple data recording example that uses a timestamp:
+
 ```python
 import numpy as np
 from sklearn.preprocessing import StandardScaler
@@ -121,6 +123,7 @@ This implementation includes a timestamp for each prediction recorded into a CSV
 Third, consider handling model drift. In many real-world cases, the data distribution can change over time, causing a decrease in model performance. This phenomenon is called model drift. Monitoring prediction performance on new data over time and potentially retraining the model regularly will mitigate the impacts of drift. To identify drift, one needs a way to compare the distributions of features, a Kolmogorov-Smirnov test may help here, or the concept drift detectors described in "Adaptive Data Mining: Techniques and Applications" by Richard J. Butz. It’s essential to think about a system for model re-training and redeployment when new data are seen to no longer fit the current distribution. This also requires a robust strategy for versioning models so a past model can be used if the new one shows a degradation of performance.
 
 Finally, here's a snippet showcasing prediction recording for a batch of new data, incorporating error handling and model versioning using a simple version string:
+
 ```python
 import numpy as np
 from sklearn.preprocessing import PolynomialFeatures
@@ -190,6 +193,7 @@ if __name__ == "__main__":
     predictions_error = pipeline.predict(new_data_error)
     pipeline.record_predictions(new_data_error, predictions_error)
 ```
+
 Here, we introduced a version tag to the prediction pipeline, along with the recording of a null or ‘None’ prediction when an exception is found during prediction and an error stack trace is printed to the console.
 
 In summary, correctly predicting and recording new data involves a holistic approach that includes a well-defined pipeline, robust recording mechanisms, and continuous monitoring for potential model drift. This is less about using a single function, and much more about building a system that can reliably handle new information.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-group-imbalance-in-text-data-be-augmented-using-nlpaug-in-python"
 ---
 
-Alright, let's talk about tackling class imbalance in text data using `nlpaug`. It's a challenge I've faced more times than I care to remember, particularly back when I was working on that sentiment analysis project for e-commerce reviews. We had a deluge of positive feedback, with only a small fraction of negative or neutral opinions, which skewed the models considerably. Augmentation became essential.
+, let's talk about tackling class imbalance in text data using `nlpaug`. It's a challenge I've faced more times than I care to remember, particularly back when I was working on that sentiment analysis project for e-commerce reviews. We had a deluge of positive feedback, with only a small fraction of negative or neutral opinions, which skewed the models considerably. Augmentation became essential.
 
 The core idea behind using `nlpaug` for this purpose is to generate synthetic data points for your underrepresented classes. Instead of simply oversampling by duplicating existing examples (which can lead to overfitting), `nlpaug` employs various methods that slightly modify the original text, creating similar, yet novel, samples. This helps diversify the training data and push the model towards better generalization. We're not just adding noise; we're adding meaningful variations that reflect the semantic context.
 
@@ -12,7 +12,7 @@ The core idea behind using `nlpaug` for this purpose is to generate synthetic da
 
 1.  **Word-level augmentation:** These methods modify the text by altering, deleting, or swapping words. This includes things like synonym replacement, insertion, deletion, and swapping based on a pre-trained word embedding model.
 2.  **Character-level augmentation:** Here, the text is augmented by adding, replacing, or deleting individual characters. This is useful for simulating typos or other small variations.
-3. **Back Translation:** One of the stronger augmentation methods. Here a sentence is translated to another language and then back to the original. This introduces semantic variation while maintaining meaning, and often leads to the most impactful augmentations.
+3.  **Back Translation:** One of the stronger augmentation methods. Here a sentence is translated to another language and then back to the original. This introduces semantic variation while maintaining meaning, and often leads to the most impactful augmentations.
 
 Now, how do we actually implement this? I'll walk through three examples focusing on word-level augmentation, back translation, and then how to use them in a pipeline for a practical scenario.
 
@@ -100,7 +100,7 @@ data = pd.DataFrame({
         "This is a fantastic product!",
         "I love it so much.",
         "It works perfectly as expected.",
-        "Okay, it's fine I guess.",
+        ", it's fine I guess.",
         "It could be better.",
         "I'm not very impressed.",
         "It was a complete waste of money.",
@@ -156,6 +156,7 @@ augmented_df = pd.concat([train_df, pd.DataFrame(augmented_data)], ignore_index=
 print(augmented_df)
 
 ```
+
 Here, the code splits the original data into train and test sets, then calculates how many augmentations are required per class. Then the script loops through each class and for each example in the underrepresented class it performs an augmentation until the class size is the same as the majority class. It utilizes a combination of word synonym replacements for neutral examples and back translation for the negative sentiment examples, which ensures more meaningful augmentations. I used to have a similar setup, carefully choosing the method based on the specific characteristics of each class and the desired level of variation. This ensures no overfitting.
 
 **Resource Recommendations**

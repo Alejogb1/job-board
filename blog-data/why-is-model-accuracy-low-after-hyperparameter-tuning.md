@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-is-model-accuracy-low-after-hyperparameter-tuning"
 ---
 
-Okay, let's tackle this. I've seen this scenario play out more times than I care to count, usually right after thinking we’d cracked the code with a new architecture or training regime. The situation: you've meticulously crafted your model, you’ve chosen your loss function, you’ve even gone through the motions of hyperparameter tuning – perhaps even deploying some automated optimization algorithm – and yet, the performance still lags. It's frustrating, but it's a common stumbling block, and understanding the root causes can be the key to unlocking your model's true potential.
+, let's tackle this. I've seen this scenario play out more times than I care to count, usually right after thinking we’d cracked the code with a new architecture or training regime. The situation: you've meticulously crafted your model, you’ve chosen your loss function, you’ve even gone through the motions of hyperparameter tuning – perhaps even deploying some automated optimization algorithm – and yet, the performance still lags. It's frustrating, but it's a common stumbling block, and understanding the root causes can be the key to unlocking your model's true potential.
 
-Often, the issue isn't that the tuning process *failed* necessarily, but rather that it revealed a deeper systemic problem. We tend to think of hyperparameter tuning as some magical incantation that cures all ills, when in reality, it's just another tool. It’s incredibly helpful, sure, but if your underlying model structure or data pipeline has inherent flaws, no amount of parameter tweaking is going to fix it.
+Often, the issue isn't that the tuning process _failed_ necessarily, but rather that it revealed a deeper systemic problem. We tend to think of hyperparameter tuning as some magical incantation that cures all ills, when in reality, it's just another tool. It’s incredibly helpful, sure, but if your underlying model structure or data pipeline has inherent flaws, no amount of parameter tweaking is going to fix it.
 
 One of the first places I’d look, based on painful past experiences, is the quality of the training data. In a previous project involving predictive maintenance for industrial machinery, we spent weeks tuning parameters, only to realize the issue wasn't the model, it was the sensor data itself. We discovered several sensors were malfunctioning intermittently, injecting noise into the training set. The model, naturally, was trying to learn patterns from faulty input. This meant the optimal hyperparameter combination was leading the model to a “local minimum,” a best result considering the poor data. Once we cleaned up the data, accuracy took a leap even with the original, untuned hyperparameters.
 
@@ -107,6 +107,7 @@ for train_index, test_index in tscv.split(X_ts):
     print(f"Accuracy with time split: {accuracy_score(y_test_ts, y_pred_ts):.4f}")
     break # Break after first split so output is easy to follow
 ```
+
 You will see the random split approach might yield a very good score, which is not going to work for data where temporal dependencies are important because this approach gives you data from the future to learn the past and vice versa.
 
 **Snippet 3: Model Capacity**

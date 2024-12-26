@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-use-hugging-face-transformers-with-faiss-index-scores"
 ---
 
-Okay, let's get into this. I’ve certainly seen my share of challenges integrating neural network outputs with vector search, and Hugging Face Transformers coupled with FAISS indexes is a common scenario where things can get… interesting. I recall a particular project a few years back where we were building a semantic search engine for a large document repository. That experience highlighted some nuances that I think are useful to understand when working with these technologies together.
+, let's get into this. I’ve certainly seen my share of challenges integrating neural network outputs with vector search, and Hugging Face Transformers coupled with FAISS indexes is a common scenario where things can get… interesting. I recall a particular project a few years back where we were building a semantic search engine for a large document repository. That experience highlighted some nuances that I think are useful to understand when working with these technologies together.
 
 The core idea is to use a transformer model to encode your input text into vector embeddings, then use a FAISS index to quickly find the nearest neighbors (most similar embeddings) to a query vector. This combination allows you to perform semantic search, where you retrieve results based on meaning rather than just keyword matches.
 
@@ -88,9 +88,9 @@ This snippet uses `index.search` to find the top-k most similar vectors to the q
 
 A few pointers that proved invaluable in the past:
 
-*   **Choosing the Right Embedding Model:** Not all transformer models are created equal for semantic similarity tasks. Models like `sentence-transformers/all-mpnet-base-v2`, which I've used here, are specifically trained to produce high-quality sentence embeddings. Experiment with different models to see what gives you the best results based on your data.
-*   **FAISS Index Optimization:** For large datasets, consider using more advanced indexes, such as `faiss.IndexIVFFlat` or `faiss.IndexHNSWFlat`. They require tuning (e.g., number of clusters), but it significantly increases search speed. Also, you might want to explore product quantization (PQ) for reduced index size if memory becomes an issue.
-*   **Handling Large Datasets:** If your dataset is too big to fit into memory, you might need to process it in chunks and use FAISS’s ability to add to an existing index. This often requires careful management of IDs and mappings.
+- **Choosing the Right Embedding Model:** Not all transformer models are created equal for semantic similarity tasks. Models like `sentence-transformers/all-mpnet-base-v2`, which I've used here, are specifically trained to produce high-quality sentence embeddings. Experiment with different models to see what gives you the best results based on your data.
+- **FAISS Index Optimization:** For large datasets, consider using more advanced indexes, such as `faiss.IndexIVFFlat` or `faiss.IndexHNSWFlat`. They require tuning (e.g., number of clusters), but it significantly increases search speed. Also, you might want to explore product quantization (PQ) for reduced index size if memory becomes an issue.
+- **Handling Large Datasets:** If your dataset is too big to fit into memory, you might need to process it in chunks and use FAISS’s ability to add to an existing index. This often requires careful management of IDs and mappings.
 
 For a deeper dive, I’d recommend looking into these resources:
 

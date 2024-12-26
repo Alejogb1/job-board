@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "with-rspec-how-to-expect-to-receive-with-only-a-subset-of-key-value-pairs"
 ---
 
-alright, so you're hitting that classic rspec testing scenario, where you've got a complex object, maybe a hash or a response from some api, and you only care about asserting specific parts of it. been there, totally done that, probably more times than i can count.
+, so you're hitting that classic rspec testing scenario, where you've got a complex object, maybe a hash or a response from some api, and you only care about asserting specific parts of it. been there, totally done that, probably more times than i can count.
 
 i've seen this pop up a lot when dealing with integration tests where you're getting back a json payload, and the response has a bunch of fields that are frankly, noise for your current test case. you don’t want to assert on everything in case the backend team decides to add a new field (it's going to happen anyway, no doubt). you just need to make sure that the bits you care about are there and are what you expect.
 
@@ -62,9 +62,9 @@ if you need to do more complex checking of the values themselves, where just che
 
 in this example, we're making sure that:
 
-*   `id` matches a pattern.
-*   `status` has to have a value equals to "active"
-*   `metadata` itself includes a nested `version` field with a specific value.
+- `id` matches a pattern.
+- `status` has to have a value equals to "active"
+- `metadata` itself includes a nested `version` field with a specific value.
 
 this provides a lot more flexibility and allows you to do things like regex matches, type checks, etc.
 

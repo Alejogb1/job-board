@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "case-when-vhdl-syntax"
 ---
 
-Okay so you're asking about `CASE` statements in VHDL right Been there done that tons of times Let's break it down in a way that makes sense
+you're asking about `CASE` statements in VHDL right Been there done that tons of times Let's break it down in a way that makes sense
 
 Basically you're dealing with a construct that lets you pick different actions based on the value of some expression It's like a switch statement in C or Java but in the context of hardware design with all its nuances
 
@@ -89,13 +89,14 @@ begin
     end case;
 end process;
 ```
+
 In this instance I have used ranges to generate specific codes based on values this is particularly great when you have to do some calculations and those calculations could provide values that are close but not exact and you do need to handle those cases in a specific manner
 
 **Things to Keep in Mind**
 
-*   **Completeness:** Like I mentioned before you must cover all possibilities either explicitly or with an `others` clause Otherwise the synthesis tools might infer a latch that you did not want which can cause weird behaviour I had a design that worked fine in simulation and failed mysteriously on hardware because I forgot this rule It is very important to respect that
-*   **Selection Variable Type:** The type of the selection signal has to be compatible with the `CASE` statement For example using range with a std\_logic\_vector is possible but not as intuitive as using integer variables or enumerated types
-*   **Hardware Implications:** Remember that VHDL describes hardware so every statement you write translates into gates and flip-flops A badly implemented `CASE` can lead to inefficient hardware Remember that everything you write will be turned into real physical gates and wires and logic components
+- **Completeness:** Like I mentioned before you must cover all possibilities either explicitly or with an `others` clause Otherwise the synthesis tools might infer a latch that you did not want which can cause weird behaviour I had a design that worked fine in simulation and failed mysteriously on hardware because I forgot this rule It is very important to respect that
+- **Selection Variable Type:** The type of the selection signal has to be compatible with the `CASE` statement For example using range with a std_logic_vector is possible but not as intuitive as using integer variables or enumerated types
+- **Hardware Implications:** Remember that VHDL describes hardware so every statement you write translates into gates and flip-flops A badly implemented `CASE` can lead to inefficient hardware Remember that everything you write will be turned into real physical gates and wires and logic components
 
 **How it works under the hood**
 

@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-to-directly-update-user-balances-on-a-website"
 ---
 
-Okay, let's tackle this. The question of directly updating user balances on a website is deceptively simple on the surface, but it opens up a whole can of worms when you consider real-world application, concurrency, and data integrity. I’ve seen systems implode from poorly implemented balance updates, so let's break it down with the kind of detail that keeps those kinds of things from happening.
+, let's tackle this. The question of directly updating user balances on a website is deceptively simple on the surface, but it opens up a whole can of worms when you consider real-world application, concurrency, and data integrity. I’ve seen systems implode from poorly implemented balance updates, so let's break it down with the kind of detail that keeps those kinds of things from happening.
 
-I’ve worked on several e-commerce platforms and a couple of fintech projects where managing user balances was core functionality. One particular incident, involving a flash sale and a race condition on database updates, really hammered home the importance of robust balance update strategies. The errors were brief, but the support tickets… those were *not* brief. Lesson learned, and I'm happy to share some of those insights.
+I’ve worked on several e-commerce platforms and a couple of fintech projects where managing user balances was core functionality. One particular incident, involving a flash sale and a race condition on database updates, really hammered home the importance of robust balance update strategies. The errors were brief, but the support tickets… those were _not_ brief. Lesson learned, and I'm happy to share some of those insights.
 
 Firstly, understand that direct updates without careful consideration are a recipe for disaster. We need to think about the ‘why’ behind the balance change. Is it a purchase, a refund, a deposit, or something else? This context dictates how we approach the actual update. The naive approach might be to directly modify a user’s ‘balance’ column in a database after a transaction. However, such an approach ignores concurrency issues and the need for an audit trail. Imagine multiple users trying to complete purchases at precisely the same moment; you could easily end up with incorrect balances if multiple transactions attempt to modify the same record simultaneously.
 
@@ -22,6 +22,7 @@ VALUES (123, -15.00, 'purchase', CURRENT_TIMESTAMP);
 INSERT INTO transaction_ledger (user_id, amount, transaction_type, timestamp)
 VALUES (123, 50.00, 'deposit', CURRENT_TIMESTAMP);
 ```
+
 Here, we're adding two entries: one representing a purchase decreasing the balance by 15 and another for a deposit increasing the balance by 50 for user 123. Notice the usage of `CURRENT_TIMESTAMP`; this ensures accurate recording of the transaction time, crucial for audits and for correctly summing the balance when needed.
 
 Next, let’s see how to retrieve a user's balance from this ledger. We’ll use SQL again.
@@ -32,6 +33,7 @@ SELECT SUM(amount) AS current_balance
 FROM transaction_ledger
 WHERE user_id = 123;
 ```
+
 This query efficiently sums up all the amounts associated with `user_id` 123 to derive their current balance. Simple enough, but as I mentioned, doing this every single time you need a user’s balance can become resource intensive as the data grows.
 
 Now, for performance reasons and to reduce database load, we should implement a caching mechanism and potentially materialization strategies. We could use a key-value store like Redis or Memcached to cache the balance, updated after every transaction. The cache invalidation strategy becomes very important here. A common strategy is to invalidate the cache for the specific user affected by a transaction and then update it when a user’s balance is next requested. A simple implementation in Python with Redis might look like this:
@@ -71,7 +73,8 @@ def perform_sql_ledger_insert(user_id, amount, transaction_type):
 
 
 ```
-Here, we use Redis to cache the balance.  We attempt to retrieve the balance from the cache first. If a cache miss occurs, the balance is fetched from the database, cached, and then returned. Crucially, after we add a new transaction to the `transaction_ledger`, we delete the cached entry for that user. When next requested, the balance will then be recalculated.
+
+Here, we use Redis to cache the balance. We attempt to retrieve the balance from the cache first. If a cache miss occurs, the balance is fetched from the database, cached, and then returned. Crucially, after we add a new transaction to the `transaction_ledger`, we delete the cached entry for that user. When next requested, the balance will then be recalculated.
 
 For a more complex system, you might also consider materializing the balances periodically into a separate table, effectively creating a snapshot of user balances. This can optimize read performance if you're dealing with a very large ledger, and is commonly used in reporting and analytics. The materialized view should be updated regularly, perhaps through batch processing or triggered by a change data capture mechanism, but you need to accept that this materialized view will be slightly out of sync with the actual database.
 

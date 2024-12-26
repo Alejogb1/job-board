@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-prevent-deleteall-from-running-if-a-table-name-is-specified-in-ruby-on-rails"
 ---
 
-Okay, let's unpack this. I recall a particularly frustrating incident back in my early days at a fintech startup involving a rogue rake task, and it taught me a lot about the dangers of `delete_all`—especially when you're not explicitly calling it on a model. It’s a classic foot-gun scenario in Rails, and your concern about accidentally nuking data by specifying a table name is entirely valid.
+, let's unpack this. I recall a particularly frustrating incident back in my early days at a fintech startup involving a rogue rake task, and it taught me a lot about the dangers of `delete_all`—especially when you're not explicitly calling it on a model. It’s a classic foot-gun scenario in Rails, and your concern about accidentally nuking data by specifying a table name is entirely valid.
 
-The core issue stems from the fact that `delete_all`, when invoked on an active record relation (e.g., `User.where(active: false).delete_all`), respects the current scope. However, when you call `delete_all` directly with a string table name (e.g., `ActiveRecord::Base.connection.delete_all('users')`), *all bets are off*. You're bypassing the usual active record safeguards and essentially issuing raw SQL to the database. That’s where things get dicey, because, there's no model-specific logic being invoked, no before or after callbacks, and importantly, *no scoping*. This means you have the power to obliterate entire tables without much fanfare.
+The core issue stems from the fact that `delete_all`, when invoked on an active record relation (e.g., `User.where(active: false).delete_all`), respects the current scope. However, when you call `delete_all` directly with a string table name (e.g., `ActiveRecord::Base.connection.delete_all('users')`), _all bets are off_. You're bypassing the usual active record safeguards and essentially issuing raw SQL to the database. That’s where things get dicey, because, there's no model-specific logic being invoked, no before or after callbacks, and importantly, _no scoping_. This means you have the power to obliterate entire tables without much fanfare.
 
 So, to effectively address your concern, we need to employ strategies that either prevent this behavior or make it glaringly obvious when it’s happening. Here are a few approaches, along with code examples, that I’ve found reliable.
 
@@ -52,7 +52,7 @@ Instead of altering the built-in method directly, you can create a wrapper aroun
       model_name = table_name.classify.constantize
 
       raise ArgumentError, "Must provide an ActiveRecord relation object" unless model_name.is_a?(Class) && model_name < ActiveRecord::Base
-       
+
       model_name.delete_all
     rescue NameError => _
        raise ArgumentError, "Cannot determine the ActiveRecord Model. Provide an Active Record Model Relation"
@@ -62,7 +62,7 @@ Instead of altering the built-in method directly, you can create a wrapper aroun
 
 ```
 
-In the above, `safe_delete_all` accepts only a relation and raises an exception if anything else, such as a simple string, is passed. I've added a `safe_delete_by_table` option to allow model inference and use, but this method *still* requires usage through an ActiveRecord class. This setup adds a layer of safety because it forces developers to use `ActiveRecord` model and relations, thereby requiring awareness of which model is getting deleted.
+In the above, `safe_delete_all` accepts only a relation and raises an exception if anything else, such as a simple string, is passed. I've added a `safe_delete_by_table` option to allow model inference and use, but this method _still_ requires usage through an ActiveRecord class. This setup adds a layer of safety because it forces developers to use `ActiveRecord` model and relations, thereby requiring awareness of which model is getting deleted.
 
 **Approach 3: Code Auditing and Static Analysis**
 
@@ -74,11 +74,10 @@ Rails:
   Enabled: true
   DeleteAllUsage:
     Enabled: true
-    Message: 'Direct database table deletion using string based delete_all is not permitted. Use Model Relation based deletes'
+    Message: "Direct database table deletion using string based delete_all is not permitted. Use Model Relation based deletes"
     Include:
-      - 'ActiveRecord::Base.connection.delete_all'
+      - "ActiveRecord::Base.connection.delete_all"
     Severity: error
-
 ```
 
 The above configuration, when used with Rubocop will ensure that if a string based delete all statement is invoked with `ActiveRecord::Base.connection.delete_all` will throw an error.

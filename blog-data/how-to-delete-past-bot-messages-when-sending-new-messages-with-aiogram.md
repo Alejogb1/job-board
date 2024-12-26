@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-to-delete-past-bot-messages-when-sending-new-messages-with-aiogram"
 ---
 
-Okay, let's unpack this one. Handling bot message history, especially when you’re aiming for a cleaner user experience, is a common challenge. I've certainly been there, wrestling with aiogram's asynchronous nature and Telegram's API quirks when trying to keep bot chats streamlined. Back in my early days with a chatbot project for a local community group – before we even thought about sophisticated NLP – we ran into exactly this problem. The bot was just spitting out updates, one after another, and it quickly became a mess. We needed a way to replace, not just add to, the existing message thread.
+, let's unpack this one. Handling bot message history, especially when you’re aiming for a cleaner user experience, is a common challenge. I've certainly been there, wrestling with aiogram's asynchronous nature and Telegram's API quirks when trying to keep bot chats streamlined. Back in my early days with a chatbot project for a local community group – before we even thought about sophisticated NLP – we ran into exactly this problem. The bot was just spitting out updates, one after another, and it quickly became a mess. We needed a way to replace, not just add to, the existing message thread.
 
-The core issue here isn't a simple “delete all past messages” function; Telegram's API doesn't work that way. Instead, the most effective and practical approach is to identify *specific* past messages that you want to remove and then delete them, either individually or in controlled sequences. This hinges on storing message IDs, so you can refer back to them later. Let's break down how this typically works in aiogram and then I’ll share a few code examples.
+The core issue here isn't a simple “delete all past messages” function; Telegram's API doesn't work that way. Instead, the most effective and practical approach is to identify _specific_ past messages that you want to remove and then delete them, either individually or in controlled sequences. This hinges on storing message IDs, so you can refer back to them later. Let's break down how this typically works in aiogram and then I’ll share a few code examples.
 
 First, the fundamental principle: When you send a message with `bot.send_message()`, aiogram returns a `Message` object. This object includes a `message_id` property, which is crucial for subsequent operations like editing or deletion. The strategy here is always to save this `message_id` when you send something that you might want to replace later. It could be in memory (like a dictionary, suitable for short-lived sessions), or ideally in a database if you need persistence across bot restarts.
 
@@ -35,7 +35,7 @@ async def send_and_replace(chat_id, text):
             await bot.delete_message(chat_id=chat_id, message_id=last_message_id[chat_id])
         except Exception as e:
             print(f"Error deleting message: {e}")
-    
+
     sent_message = await bot.send_message(chat_id, text)
     last_message_id[chat_id] = sent_message.message_id
 
@@ -110,7 +110,7 @@ if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
 ```
 
-Here, we store message IDs in a json file (again, use a database in production!). `load_message_db()` and `save_message_db()` handle the file i/o. The `send_and_replace_multiple` function fetches previous IDs, deletes them, sends the new message and stores *only* the most recent message. This approach ensures data persistence between bot restarts and is more suitable for real-world applications. Notice how the structure allows storing multiple message ids for more complex use cases by not overwriting but rather appending to the list
+Here, we store message IDs in a json file (again, use a database in production!). `load_message_db()` and `save_message_db()` handle the file i/o. The `send_and_replace_multiple` function fetches previous IDs, deletes them, sends the new message and stores _only_ the most recent message. This approach ensures data persistence between bot restarts and is more suitable for real-world applications. Notice how the structure allows storing multiple message ids for more complex use cases by not overwriting but rather appending to the list
 
 **Example 3: Deleting specific past message based on message content.**
 
@@ -174,16 +174,16 @@ This example is slightly more complex because we store tuples of the message id 
 
 **Key Takeaways:**
 
-*   **Message IDs are fundamental:** You must store the `message_id` returned by `bot.send_message()` to manage messages programmatically.
-*   **Storage is crucial:** Decide whether in-memory is sufficient, or if a database (even a simple file-based one) is necessary for persistence.
-*   **Error Handling is essential:** Always wrap deletion attempts in a try-except block to avoid abrupt bot terminations if a message has already been deleted or is not found.
-*   **Telegram API Limitations:** Be mindful of the rate limits and other API constraints to avoid hitting issues when deleting messages.
+- **Message IDs are fundamental:** You must store the `message_id` returned by `bot.send_message()` to manage messages programmatically.
+- **Storage is crucial:** Decide whether in-memory is sufficient, or if a database (even a simple file-based one) is necessary for persistence.
+- **Error Handling is essential:** Always wrap deletion attempts in a try-except block to avoid abrupt bot terminations if a message has already been deleted or is not found.
+- **Telegram API Limitations:** Be mindful of the rate limits and other API constraints to avoid hitting issues when deleting messages.
 
 For further reading, I highly recommend diving deep into:
 
-*   **The official aiogram documentation:** This is the primary resource for anything aiogram-related. Pay close attention to the `types.Message` object and the `Bot` class's methods.
-*   **The Telegram Bot API documentation:** Knowing the underlying API is critical. Understand how messages are represented and the limitations for modifications and deletion.
-*   **Database fundamentals:** If you're unfamiliar, read up on basic database concepts. Start with something simple like sqlite if you are not familiar with SQL databases.
-*   **"Designing Data-Intensive Applications" by Martin Kleppmann**: While not directly specific to aiogram or Telegram, this book offers very important concepts on how to store and retrieve data reliably in modern applications, relevant for choosing and implementing storage solutions that will scale well with a growing bot.
+- **The official aiogram documentation:** This is the primary resource for anything aiogram-related. Pay close attention to the `types.Message` object and the `Bot` class's methods.
+- **The Telegram Bot API documentation:** Knowing the underlying API is critical. Understand how messages are represented and the limitations for modifications and deletion.
+- **Database fundamentals:** If you're unfamiliar, read up on basic database concepts. Start with something simple like sqlite if you are not familiar with SQL databases.
+- **"Designing Data-Intensive Applications" by Martin Kleppmann**: While not directly specific to aiogram or Telegram, this book offers very important concepts on how to store and retrieve data reliably in modern applications, relevant for choosing and implementing storage solutions that will scale well with a growing bot.
 
 Dealing with message deletion in aiogram involves a few considerations, but with these principles in mind, you can effectively manage your bot's chat history. Remember to always think about user experience and strive for clean, informative interactions.

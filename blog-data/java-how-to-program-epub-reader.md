@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "java-how-to-program-epub-reader"
 ---
 
-Okay so you wanna build an epub reader in Java right Been there done that let me tell ya It’s not exactly a walk in the park but it’s doable if you break it down and understand the core components I’ve spent way too many nights wrestling with this thing in my early days trust me
+you wanna build an epub reader in Java right Been there done that let me tell ya It’s not exactly a walk in the park but it’s doable if you break it down and understand the core components I’ve spent way too many nights wrestling with this thing in my early days trust me
 
 First off epubs are basically zipped up websites think of it that way They are collections of HTML CSS images and some metadata files It's not some magical format its just structured data so before you even start thinking about fancy rendering its critical you get good at handling zip archives and understand the directory structure of a standard epub
 
@@ -14,7 +14,7 @@ So you want to tackle this thing lets go step by step:
 
 **1 Reading the ZIP Archive**
 
-Okay first thing you gotta do is get that epub file open and read the contents of that zip into your code Java has libraries for this thankfully you don't have to mess around with low-level binary reading anymore which is kind of a miracle if you ask me
+first thing you gotta do is get that epub file open and read the contents of that zip into your code Java has libraries for this thankfully you don't have to mess around with low-level binary reading anymore which is kind of a miracle if you ask me
 
 ```java
 import java.io.File;
@@ -58,6 +58,7 @@ public class EpubExtractor {
     }
 }
 ```
+
 This snippet just lists the entries you can adjust it to save the extracted files to a directory somewhere
 
 I will warn you there are multiple types of epub versions but most are just the same structure really at the core just different schemas for the metadata which isn't relevant to display content so no worries for now on that Just make sure your library handles zip well its key
@@ -116,6 +117,7 @@ public class OpfParser {
 }
 
 ```
+
 This snippet is a basic implementation of parsing the item references from the opf file It gets you the order of the items of the book for rendering
 
 **3 Rendering the Content**
@@ -150,24 +152,25 @@ public class EpubRenderer extends Application {
     }
 }
 ```
+
 This is a minimal example of a JavaFX webview you would need to extract the HTML contents of your epub and load them into the webview in a loop It is not very difficult once you understand the file extraction part its mostly copy and paste type of code once you have the correct document structure
 
 **Important Notes**
 
-*   **Error Handling:**  Epubs can be messy Expect malformed HTML incorrect CSS or weird zip structures Always sanitize your inputs and add exception handling to avoid crashes
-*   **CSS Parsing:**  Pay close attention to the CSS make sure the style sheets are interpreted correctly this is a common pitfall
-*   **Pagination:** You will need to think about pagination or page display Most readers split the content into manageable page chunks based on screen size or user preference
-*   **Font Management**: Epub supports embedded fonts you will need to make sure they are loaded correctly and can be displayed on any given operating system
-* **Resource Management**: Don't try to load all your content in memory in one single operation use streams and lazy loading techniques to save performance especially if dealing with large epubs
-*   **Metadata Parsing**: I'd suggest using JAXB it's a powerful api for reading xml metadata its super useful here since xml is everywhere
+- **Error Handling:** Epubs can be messy Expect malformed HTML incorrect CSS or weird zip structures Always sanitize your inputs and add exception handling to avoid crashes
+- **CSS Parsing:** Pay close attention to the CSS make sure the style sheets are interpreted correctly this is a common pitfall
+- **Pagination:** You will need to think about pagination or page display Most readers split the content into manageable page chunks based on screen size or user preference
+- **Font Management**: Epub supports embedded fonts you will need to make sure they are loaded correctly and can be displayed on any given operating system
+- **Resource Management**: Don't try to load all your content in memory in one single operation use streams and lazy loading techniques to save performance especially if dealing with large epubs
+- **Metadata Parsing**: I'd suggest using JAXB it's a powerful api for reading xml metadata its super useful here since xml is everywhere
 
 **Resources**
 
-*   **"XML in a Nutshell"** by Elliotte Rusty Harold: A solid reference on XML basics that’ll come handy with epub metadata files.
-*   **"Core Java Vol I - Fundamentals"** by Cay S. Horstmann: This is your Java bible for the language basics and standard library.
-*   **"HTML5: Up and Running"** by Mark Pilgrim: I know its not directly related to epub reading but its good to keep in mind some basic concepts.
-*   **The official Epub specifications**: Read it carefully before even starting your code. This is the source of truth.
-    * http://idpf.org/epub/30
+- **"XML in a Nutshell"** by Elliotte Rusty Harold: A solid reference on XML basics that’ll come handy with epub metadata files.
+- **"Core Java Vol I - Fundamentals"** by Cay S. Horstmann: This is your Java bible for the language basics and standard library.
+- **"HTML5: Up and Running"** by Mark Pilgrim: I know its not directly related to epub reading but its good to keep in mind some basic concepts.
+- **The official Epub specifications**: Read it carefully before even starting your code. This is the source of truth.
+  - http://idpf.org/epub/30
 
 **Final Thoughts**
 

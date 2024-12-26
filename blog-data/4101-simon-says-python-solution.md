@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "4101-simon-says-python-solution"
 ---
 
-Alright so you're wrestling with a Simon Says implementation in Python right Been there done that multiple times let me tell you
+so you're wrestling with a Simon Says implementation in Python right Been there done that multiple times let me tell you
 
 First off let's get some things straight This isn't about intricate AI or complex game mechanics It's about basic sequence handling timing and user input validation Think of it like a bread and butter problem something you'd encounter in a beginner's class but sometimes it still trips you up if you're not careful I remember one time back in '08 when I was dabbling in embedded systems I had to implement a similar sequence matching logic on a ridiculously constrained microcontroller Talk about a challenge it was like squeezing an elephant into a matchbox and the debugging oh boy the debugging
 
-Okay so based on the question you are asking for a Python based solution for a sequence matching game probably Simon Says where there is a given sequence you have to match it and this involves generating a sequence comparing it with user input and having some sort of indication of win or lose I am going to give you some code examples showing you how this can be done in different ways and I will try to show some alternative ways to do the same thing to add to the learning experience
+based on the question you are asking for a Python based solution for a sequence matching game probably Simon Says where there is a given sequence you have to match it and this involves generating a sequence comparing it with user input and having some sort of indication of win or lose I am going to give you some code examples showing you how this can be done in different ways and I will try to show some alternative ways to do the same thing to add to the learning experience
 
 **The Core Logic**
 
@@ -66,10 +66,10 @@ This code snippet here shows a simple implementation it has functions to generat
 
 **Function Breakdown**
 
-*   `generate_sequence(length)`: This function takes an integer `length` and returns a list of random integers between 1 and 4 inclusive This simulates the sequence of buttons in our hypothetical Simon Says game
-*   `get_user_input(length)`: This gets the user input by iterating through the required length and making sure the input provided is actually an integer and between 1 and 4 if not it asks again to the user
-*  `compare_sequences(seq1 seq2)`: This compares both sequences passed as parameter and returns a boolean
-*   `simon_says_game()`: This function will run the game in an infinite loop unless the user provides the incorrect sequence it also manages the increase in difficulty by increasing sequence length
+- `generate_sequence(length)`: This function takes an integer `length` and returns a list of random integers between 1 and 4 inclusive This simulates the sequence of buttons in our hypothetical Simon Says game
+- `get_user_input(length)`: This gets the user input by iterating through the required length and making sure the input provided is actually an integer and between 1 and 4 if not it asks again to the user
+- `compare_sequences(seq1 seq2)`: This compares both sequences passed as parameter and returns a boolean
+- `simon_says_game()`: This function will run the game in an infinite loop unless the user provides the incorrect sequence it also manages the increase in difficulty by increasing sequence length
 
 **Alternative Implementation**
 
@@ -128,7 +128,7 @@ User input is notorious for causing headaches if you don't handle it properly Th
 
 **Timing is Everything**
 
-If you're going for a real Simon Says vibe timing is critical You'll want to display the sequence for a set period and then clear it before the user input that is why I have added `time.sleep()` to the examples and also have cleared the console by printing multiple new lines (`\n` *5) but you can take it further if you want to implement animations or specific timings for different levels
+If you're going for a real Simon Says vibe timing is critical You'll want to display the sequence for a set period and then clear it before the user input that is why I have added `time.sleep()` to the examples and also have cleared the console by printing multiple new lines (`\n` \*5) but you can take it further if you want to implement animations or specific timings for different levels
 
 **Resources**
 

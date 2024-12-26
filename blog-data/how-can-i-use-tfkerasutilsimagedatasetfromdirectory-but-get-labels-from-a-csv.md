@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-tfkerasutilsimagedatasetfromdirectory-but-get-labels-from-a-csv"
 ---
 
-Okay, let's tackle this. I’ve seen this scenario pop up quite a bit over the years, especially when dealing with datasets that aren't neatly organized into subdirectories reflecting their classes. You're wanting to leverage the convenience of `tf.keras.utils.image_dataset_from_directory` for image loading but need to pull your labels from a separate CSV file – perfectly reasonable. The direct usage of `image_dataset_from_directory` assumes labels are implicit in directory structure, which is limiting when dealing with datasets having complex annotations. Here’s how we can accomplish this by sidestepping that constraint and creating a custom data pipeline.
+, let's tackle this. I’ve seen this scenario pop up quite a bit over the years, especially when dealing with datasets that aren't neatly organized into subdirectories reflecting their classes. You're wanting to leverage the convenience of `tf.keras.utils.image_dataset_from_directory` for image loading but need to pull your labels from a separate CSV file – perfectly reasonable. The direct usage of `image_dataset_from_directory` assumes labels are implicit in directory structure, which is limiting when dealing with datasets having complex annotations. Here’s how we can accomplish this by sidestepping that constraint and creating a custom data pipeline.
 
 Instead of trying to force `image_dataset_from_directory` to do something it wasn’t designed for, we’ll use it to load the file paths and then augment that with label information from your CSV file using `tf.data`. Think of `image_dataset_from_directory` here primarily as a method for finding images, and we will handle labels separately.
 
@@ -48,7 +48,7 @@ def create_dataset_from_csv_simple(image_dir, csv_path, image_size=(256, 256), b
     # Correcting for common issue where relative path is used for matching csv entries to the initial_dataset
     # Assuming the last directory used in initial_dataset is the target for filename matching
     # This can also be improved using more complex filename parsing
-    
+
     corrected_labels = []
     for path in image_paths:
         try:
@@ -159,6 +159,7 @@ for images, labels in dataset.take(1):
     print(images.shape, labels)
 
 ```
+
 This version is very similar to the first, except we do not split the path before matching them to labels read from the csv.
 
 **Solution 3: Using a dictionary for fast lookups (full path or file name)**
@@ -186,7 +187,7 @@ def create_dataset_from_csv_dict(image_dir, csv_path, image_size=(256, 256), bat
     for batch in initial_dataset:
         for path in batch.numpy():
             image_paths.append(path.decode('utf-8'))
-    
+
     corrected_labels = []
     for path in image_paths:
        try:
@@ -229,18 +230,18 @@ This code is similar to the previous two approaches. It first loads the paths us
 
 **Key Considerations**
 
-*   **Performance:** For extremely large datasets, consider using `tf.data.AUTOTUNE` for performance optimization when mapping or shuffling.
-*   **Data Augmentation:** After building your dataset, integrate `tf.keras.layers` for data augmentation within the pipeline if needed.
-*   **Error Handling:** Include checks for missing files or labels to improve the resilience of your system.
-*   **File Types:** Adapt the image decoding step (e.g., `tf.io.decode_jpeg`, `tf.io.decode_png`) based on the image formats you are using.
+- **Performance:** For extremely large datasets, consider using `tf.data.AUTOTUNE` for performance optimization when mapping or shuffling.
+- **Data Augmentation:** After building your dataset, integrate `tf.keras.layers` for data augmentation within the pipeline if needed.
+- **Error Handling:** Include checks for missing files or labels to improve the resilience of your system.
+- **File Types:** Adapt the image decoding step (e.g., `tf.io.decode_jpeg`, `tf.io.decode_png`) based on the image formats you are using.
 
 **Recommended Resources**
 
 To dive deeper into data pipelines with TensorFlow, I recommend:
 
-*   **"TensorFlow 2.0 Quick Start Guide" by Mark Hodson:** This book provides a solid foundation in TensorFlow 2.0 concepts, including effective data handling.
-*   **The official TensorFlow documentation:** The 'tf.data' documentation provides a wealth of information and best practices. Pay special attention to the API details for `tf.data.Dataset`, `tf.data.Dataset.from_tensor_slices` and `tf.data.Dataset.map`.
-*   **The Keras API documentation:** For understanding `tf.keras.utils.image_dataset_from_directory` itself. Understanding the intention behind its design is important in avoiding misuse.
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book is an excellent resource for understanding the complete process of machine learning, including data preprocessing.
+- **"TensorFlow 2.0 Quick Start Guide" by Mark Hodson:** This book provides a solid foundation in TensorFlow 2.0 concepts, including effective data handling.
+- **The official TensorFlow documentation:** The 'tf.data' documentation provides a wealth of information and best practices. Pay special attention to the API details for `tf.data.Dataset`, `tf.data.Dataset.from_tensor_slices` and `tf.data.Dataset.map`.
+- **The Keras API documentation:** For understanding `tf.keras.utils.image_dataset_from_directory` itself. Understanding the intention behind its design is important in avoiding misuse.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book is an excellent resource for understanding the complete process of machine learning, including data preprocessing.
 
 I hope this helps. Let me know if you have further questions or more specific requirements. This approach should be a good starting point for most common scenarios.

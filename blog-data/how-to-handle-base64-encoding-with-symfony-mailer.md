@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-to-handle-base64-encoding-with-symfony-mailer"
 ---
 
-Alright, let’s tackle base64 encoding within the context of Symfony Mailer. I've definitely navigated this territory quite a few times over the years, particularly in projects dealing with dynamic content and, quite memorably, one involving high-resolution images embedded directly in emails (that was fun!). The crux of the matter, as we both know, is dealing with attachments and embedded assets when crafting emails, especially those that are richer than plain text. Symfony Mailer, out of the box, provides robust mechanisms, and understanding how to leverage them effectively is key to avoiding common pitfalls.
+, let’s tackle base64 encoding within the context of Symfony Mailer. I've definitely navigated this territory quite a few times over the years, particularly in projects dealing with dynamic content and, quite memorably, one involving high-resolution images embedded directly in emails (that was fun!). The crux of the matter, as we both know, is dealing with attachments and embedded assets when crafting emails, especially those that are richer than plain text. Symfony Mailer, out of the box, provides robust mechanisms, and understanding how to leverage them effectively is key to avoiding common pitfalls.
 
 The need for base64 encoding usually arises when you're working with binary data, like images or custom file attachments, within email messages. Email protocols are predominantly text-based, and hence, binary content has to be translated into a textual format that can traverse email servers without corruption. That's where base64 encoding comes in; it transforms binary data into an ASCII string representation.
 
-Symfony Mailer doesn't *explicitly* force you to do base64 encoding for attachments in most cases. It actually handles it under the hood, which is convenient. When you attach a file using the `attachFromPath()` or `attach()` methods, the library takes care of encoding the content appropriately before sending it via SMTP or whichever transport mechanism you've configured. However, when dealing with dynamically generated binary content – like an image created on-the-fly using a library like GD or Imagick, or if you have base64 encoded content already from some upstream process that you need to inline as an image– then you might need to delve deeper.
+Symfony Mailer doesn't _explicitly_ force you to do base64 encoding for attachments in most cases. It actually handles it under the hood, which is convenient. When you attach a file using the `attachFromPath()` or `attach()` methods, the library takes care of encoding the content appropriately before sending it via SMTP or whichever transport mechanism you've configured. However, when dealing with dynamically generated binary content – like an image created on-the-fly using a library like GD or Imagick, or if you have base64 encoded content already from some upstream process that you need to inline as an image– then you might need to delve deeper.
 
 Let's consider a couple of practical scenarios and how to tackle them with Symfony Mailer. Firstly, let's say you're creating an email with an embedded image generated dynamically. You might be tempted to base64 encode the image directly and embed it into the HTML using a `data:` URI. While this works, it often leads to larger email sizes and, in my past experience, can be problematic with certain email clients that don't fully support `data:` URIs. Here's a snippet showing the naive approach:
 
@@ -30,6 +30,7 @@ function sendEmailWithEmbeddedImageData(MailerInterface $mailer, string $imageBa
     $mailer->send($email);
 }
 ```
+
 This approach works, but it bloats the email size significantly if the image is substantial. As you can see, in a real-world system, you'll likely want to avoid this approach for large files, opting for Symfony's attach-and-embed method instead.
 
 Here’s a much better way. Let's consider you have the image file's path, or the raw image data, and you're using Symfony’s attachment mechanism. Symfony Mailer will handle the base64 encoding transparently, so you don't need to worry about it. This leads to significantly cleaner code and better performance:
@@ -56,6 +57,7 @@ function sendEmailWithAttachedAndEmbeddedImage(MailerInterface $mailer, string $
 
 }
 ```
+
 Note that `attachFromPath` is used to attach the file which gets encoded under the hood, while `embed` allows the image to be referenced within the HTML using a `cid:` (Content-ID) pseudo-protocol. The id ('my_image_cid') given to the embed method then used to reference that image in the html. In this way the image is embedded and accessible to the email, while not having to be explicitly base64 encoded manually.
 
 Now, let’s consider a situation where you have base64-encoded image data already and must handle it. You may have received it from an API, or an external process. The correct way to use it is with the `DataPart` class within `attach`, while taking care to define the correct mimetype:

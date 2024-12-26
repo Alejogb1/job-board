@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-nlp-extract-the-morphological-roots-of-words"
 ---
 
-Alright, let's talk about morphological root extraction in nlp. I've been around the block a few times with this, encountering various challenges along the way, especially during a particularly tricky project involving a multilingual sentiment analysis system. We were trying to go beyond simple keyword matching and capture the nuances in user reviews, which meant getting down to the core meaning of words, regardless of their surface variations. That's where effective root extraction became indispensable.
+, let's talk about morphological root extraction in nlp. I've been around the block a few times with this, encountering various challenges along the way, especially during a particularly tricky project involving a multilingual sentiment analysis system. We were trying to go beyond simple keyword matching and capture the nuances in user reviews, which meant getting down to the core meaning of words, regardless of their surface variations. That's where effective root extraction became indispensable.
 
 The core issue, as many of you know, lies in the fact that natural languages are incredibly complex. Words don't just appear in their dictionary form; they're modified through prefixes, suffixes, and inflections to convey tense, number, case, and other grammatical properties. To understand the true 'meaning' of a word and group similar words together (for, say, search or analysis), we need to strip these modifications to reveal the underlying root, or lemma. This process, often called stemming or lemmatization, is crucial for reducing the vocabulary size and improving the accuracy of various nlp tasks.
 
@@ -25,6 +25,7 @@ words = ["running", "runs", "ran", "easily", "cats", "cacti", "understanding", "
 for word in words:
     print(f"Original: {word}, Stemmed: {porter.stem(word)}")
 ```
+
 This snippet demonstrates the behaviour of the porter stemmer. It gets many right, but notice 'easily' being reduced to 'easili', which isn't an actual root word. This highlights the limitations of rule-based approaches.
 
 Statistical methods, on the other hand, utilize corpora to learn patterns in word formation. Techniques like n-gram models or hidden markov models can be used to infer relationships between words and their potential roots. This approach generally yields more accurate results than simple rule-based methods, but requires substantially more computational resources and time to train. They also need a significant amount of training data.
@@ -56,6 +57,7 @@ for word in words:
     pos = get_wordnet_pos(word)
     print(f"Original: {word}, Lemma: {lemmatizer.lemmatize(word, pos=pos)}")
 ```
+
 Here, you can see how 'better' is correctly lemmatized to 'good', 'running' to 'run' (when provided the verb part-of-speech), and plurals like 'mice' and 'geese' are reduced to their singular forms 'mouse' and 'goose'. The `get_wordnet_pos` function is crucial because lemmatization requires part of speech information for correct results.
 
 Hybrid methods, unsurprisingly, combine rule-based and statistical techniques. They can, for example, use a rule-based stemmer for an initial rough reduction followed by a statistical model to refine the root. This often provides the best compromise between speed and accuracy, but it involves a greater level of complexity to implement.
@@ -71,6 +73,7 @@ And lastly, the performance of any root extraction method will be greatly influe
 I’d suggest further reading into specific areas if you're interested. For general background on nlp, “speech and language processing” by Daniel Jurafsky and James H. Martin is an excellent resource. If you want to dig into specific lemmatization approaches, particularly those based on finite-state transducers, the "finite state morphology" chapter in "computational morphology" by George E. P. Antworth may be useful. And for the practical aspects, diving into the `nltk` and `spaCy` documentation is always a great idea.
 
 Finally, I want to share one last code snippet illustrating that the context and part-of-speech of the word can make a difference in the lemma.
+
 ```python
 import nltk
 from nltk.stem import WordNetLemmatizer
@@ -91,6 +94,7 @@ for sentence in sentences:
     print(f"Original: {sentence}, Lemmatized: {' '.join(lemmatized_words)}")
 
 ```
+
 Here, 'cars' is treated differently, depending if it's a plural noun ('car') or a verb ('car'). This illustrates an important aspect of more sophisticated lemmatization compared to basic stemming.
 
 It’s a complex area, no question. But with the right understanding and tools, effective morphological root extraction can be a game-changer for a variety of nlp applications. Hope this overview was helpful.

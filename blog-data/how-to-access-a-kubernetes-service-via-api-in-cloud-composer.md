@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-access-a-kubernetes-service-via-api-in-cloud-composer"
 ---
 
-alright, so accessing a kubernetes service from within a cloud composer environment, i've been there, done that, got the t-shirt, and probably even debugged the dag late into the night. it's not exactly straightforward, but definitely doable once you grasp a few core concepts.
+, so accessing a kubernetes service from within a cloud composer environment, i've been there, done that, got the t-shirt, and probably even debugged the dag late into the night. it's not exactly straightforward, but definitely doable once you grasp a few core concepts.
 
 the crux of the matter is that composer, while running in google kubernetes engine (gke), doesn't automatically expose the kubernetes cluster’s apiserver to your dags. it's all about security and isolation, which is honestly a good thing but it does make our lives a little more complicated.
 
@@ -15,6 +15,7 @@ when you create a composer environment, it automatically creates a google servic
 here's the basic process: first you create a kubernetes service account. second you create a role and rolebinding that links that service account to the kubernetes resources you intend to access. finally, you create the workload identity configuration. you will need to create a role with the necessary permissions to access the kubernetes resources. after that it is necessary to bind the kubernetes service account with the google service account.
 
 let's look at a python example. we'll use the official kubernetes python client, which is what i always reach for in this situation. i recommend having a look at the official documentation, it has really good examples.
+
 ```python
 from kubernetes import client, config
 from google.auth import credentials
@@ -30,10 +31,10 @@ def get_k8s_client():
     try:
 
         _, project_id = google.auth.default()
-        
+
         # load kubernetes configuration, this will leverage workload identity
         config.load_incluster_config()
-    
+
         k8s_client = client.CoreV1Api()
         return k8s_client
     except Exception as e:
@@ -66,6 +67,7 @@ this code assumes that your pod already has workload identity configured correct
 the `config.load_incluster_config()` function is important, it automatically detects it is running inside a kubernetes cluster and loads the correct configuration using the service account credentials. this works by picking up the service account token volume mounted by the kubernetes pod. when you use `google.auth.default()` it also figures out from the environment that it is running on gcp and it will provide the google project id.
 
 another thing i've frequently needed to do is to access service exposed via kubernetes services. suppose you have an app behind a service called `my-app-service` exposed on port 8080 and it is on the `my-namespace` namespace. for that we can use the python library `requests`.
+
 ```python
 import requests
 from kubernetes import client, config
@@ -93,7 +95,7 @@ def call_my_app(service_name, namespace):
     if not service_ip:
         print("failed to get service ip")
         return
-    
+
     try:
         url = f"http://{service_ip}:8080/health"
         response = requests.get(url)
@@ -117,6 +119,7 @@ in the example above, we first retrieve the service cluster ip, then use it to c
 there are situations where accessing services by their internal cluster ip is not enough. for instance, when the service exposed is a load balancer, you might need to use the external ip. but this goes outside the scope of the question. usually for accessing external services, it is recommended to go via a dedicated reverse proxy, so your application does not need to handle the authentication/authorization.
 
 sometimes you might need to interact with custom resource definitions, crds. the process for this is similar to the previous ones. the first step is making sure that the service account you are using has permissions to read or write to the crd. after that you can interact with the crds, you just need to use the `CustomObjectsApi` client and provide the group, version and plural name of the crd, which are normally defined on the yaml definition of crds.
+
 ```python
 from kubernetes import client, config
 
@@ -143,6 +146,7 @@ if __name__ == "__main__":
         for obj in objects['items']:
              print(f"name: {obj['metadata']['name']}")
 ```
+
 the important thing here is to make sure that the service account that the pod is running under has sufficient rbac access. otherwise you will get an `unauthorized` exception.
 
 i cannot say this enough. double and triple check that the kubernetes service account has the rbac permissions to do whatever operation you need on the kubernetes api. it is common for people to make a small mistake on the role or rolebindings, which makes the process look broken. another potential issue is network connectivity. make sure the service you are trying to access is actually available and exposed on the expected namespace. and also double check that you are using the correct namespaces. i once spent a good hour debugging a problem that turned out i was accessing the wrong namespace… i felt like i needed a vacation after that one.

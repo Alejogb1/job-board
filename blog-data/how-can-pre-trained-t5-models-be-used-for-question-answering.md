@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-pre-trained-t5-models-be-used-for-question-answering"
 ---
 
-Okay, let's tackle this one. I remember a particularly gnarly project back in '21 where we needed to build a robust internal Q&A system, and T5 was definitely in the mix. We weren’t dealing with the publicly available datasets; instead, we were focused on extracting information from a vast collection of technical documentation specific to our in-house tooling. It’s a bit different than just plugging in a pre-trained model, believe me.
+, let's tackle this one. I remember a particularly gnarly project back in '21 where we needed to build a robust internal Q&A system, and T5 was definitely in the mix. We weren’t dealing with the publicly available datasets; instead, we were focused on extracting information from a vast collection of technical documentation specific to our in-house tooling. It’s a bit different than just plugging in a pre-trained model, believe me.
 
 So, using a pre-trained T5 model for question answering isn't as straightforward as simply feeding it a question and hoping for a perfect answer. T5, which stands for Text-to-Text Transfer Transformer, is designed to convert any textual input into textual output. This flexibility is its strength. To make it work effectively for question answering, we need to frame the problem as a text-to-text task. This generally means structuring our input and output correctly, which, in my experience, largely revolves around how you phrase your training examples and apply inference.
 
@@ -112,6 +112,7 @@ output_ids = trained_model.generate(input_ids, max_length=50, num_beams=5)
 answer = tokenizer.decode(output_ids[0], skip_special_tokens=True)
 print(f"Answer: {answer}")
 ```
+
 This is a more intricate process, but often yields much better results, particularly with domain-specific vocabulary and structures. We iterate through the data, feed it to the model, and update the weights using backpropagation.
 
 **Example 3: Handling Long Contexts with Chunking**
@@ -147,6 +148,7 @@ question = "Where is the api key located?"
 answer = process_with_chunks(long_context, question, tokenizer, model)
 print(f"Answer from chunking : {answer}")
 ```
+
 This process of handling long contexts can get quite complex. In my experience, it's crucial to not only split the context but also to ensure the chunks still maintain enough semantic relevance to address the question adequately. Experiment with different chunking methods and how the answers are aggregated; it's definitely an area that can improve your QA system.
 
 For further reading, I recommend looking into the original T5 paper "Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer" by Colin Raffel et al. Additionally, "Natural Language Processing with Transformers" by Lewis Tunstall et al. provides an excellent deep dive into using transformers for NLP tasks. Also, the Hugging Face documentation for the `transformers` library is indispensable as a practical resource, and is often updated with best practices.

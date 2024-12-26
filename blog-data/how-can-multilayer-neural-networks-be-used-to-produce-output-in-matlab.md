@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-multilayer-neural-networks-be-used-to-produce-output-in-matlab"
 ---
 
-Alright, let’s talk multilayer neural networks in MATLAB. I've spent a good chunk of my career implementing these, from simple classifications to more complex time-series predictions. It's a powerful tool, but getting the output right requires understanding a few core concepts, and the specifics of MATLAB's neural network toolbox.
+, let’s talk multilayer neural networks in MATLAB. I've spent a good chunk of my career implementing these, from simple classifications to more complex time-series predictions. It's a powerful tool, but getting the output right requires understanding a few core concepts, and the specifics of MATLAB's neural network toolbox.
 
 So, how do we get output? Essentially, it boils down to constructing the network, training it with suitable data, and then feeding it new input to obtain the corresponding output. Let's break down each of these steps, including some code to illustrate the process.
 
@@ -72,7 +72,9 @@ net_class = patternnet(10); % 10 neurons in the hidden layer
 net_class.trainParam.showWindow = false;
 net_class = train(net_class, X', T); % Transpose X to match training parameters requirements
 ```
+
 After training, for using the network for future predications, we may apply this network to test data and examine the predicted labels:
+
 ```matlab
 test_cluster1 = 0.5 * randn(2, 50) + repmat([-2; -2], 1, 50);
 test_cluster2 = 0.5 * randn(2, 50) + repmat([2; 2], 1, 50);
@@ -92,6 +94,7 @@ ylabel('X2');
 title('Classification Result');
 
 ```
+
 This code will produce a figure that visually shows the classification done by the network for previously unseen data. The use of categorical output and converting back to numerical classes highlights how pattern recognition and classification tasks are approached.
 
 There’s no magic bullet, though. When your network performs poorly, it usually comes down to a few things. First, the architecture, how many layers and neurons there are, is critical. Experiment with different sizes. Also, consider the activation functions; by default, they’re usually `tansig` (hyperbolic tangent sigmoid) for hidden layers and `purelin` for the output layer, but other options like relu are available. Proper data preprocessing, such as normalization or standardization is vital; feeding unscaled data into a neural network can cause it to struggle. Furthermore, always be mindful of overfitting, where the network memorizes the training data instead of learning the underlying patterns, and address it with techniques like regularization or early stopping during training. The `net.trainParam` structure allows such adjustments.

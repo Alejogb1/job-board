@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-place-a-constraintlayout-on-top-of-android-compose-ui"
 ---
 
-Okay, let’s tackle this one. It's a scenario I've definitely encountered more times than I care to count, especially in projects transitioning to compose or integrating it incrementally within existing view-based UIs. The core challenge, as I see it, isn’t about making `ConstraintLayout` work within compose – that’s relatively straightforward once you understand the fundamentals. The real trick is ensuring you’re handling the interaction and layout correctly so they don't clash, and you maintain a cohesive visual experience.
+, let’s tackle this one. It's a scenario I've definitely encountered more times than I care to count, especially in projects transitioning to compose or integrating it incrementally within existing view-based UIs. The core challenge, as I see it, isn’t about making `ConstraintLayout` work within compose – that’s relatively straightforward once you understand the fundamentals. The real trick is ensuring you’re handling the interaction and layout correctly so they don't clash, and you maintain a cohesive visual experience.
 
 The primary thing to remember is that compose and the traditional view system, of which `ConstraintLayout` is a part, operate on fundamentally different drawing mechanisms. Compose paints everything using the `@Composable` functions, relying on a declarative approach. `ConstraintLayout`, on the other hand, still follows the imperative approach and relies on the older view system's drawing mechanics. Trying to force a direct overlay might not always yield the expected result without a proper strategy.
 
@@ -46,7 +46,8 @@ fun ConstraintLayoutOverlayExample(context: Context) {
     }
 }
 ```
-*Note:* I've used a placeholder `constraint_layout_overlay` layout in the example. It's assumed this is a simple constraint layout defined in your `res/layout/` folder that contains at least one TextView, referenced by `android.R.id.text1`.
+
+_Note:_ I've used a placeholder `constraint_layout_overlay` layout in the example. It's assumed this is a simple constraint layout defined in your `res/layout/` folder that contains at least one TextView, referenced by `android.R.id.text1`.
 
 This is very straightforward. We define a `Box` containing some sample composable UI and then an `AndroidView` containing our inflated `ConstraintLayout`. Using `align` lets us position the `ConstraintLayout` anywhere within the `Box` (TopStart in this case). Crucially, we are not making the ConstraintLayout interact with the Compose hierarchy beyond overlaying.
 
@@ -80,7 +81,8 @@ fun ConstraintLayoutSiblingExample(context: Context) {
    }
 }
 ```
-*Note:* Again, assuming `constraint_layout_sibling` is a simple constraint layout with a TextView, similar to the previous example.
+
+_Note:_ Again, assuming `constraint_layout_sibling` is a simple constraint layout with a TextView, similar to the previous example.
 
 Here, the `ConstraintLayout` participates as a regular element within the `Column` flow. Compose will treat it as a separate entity. The `ConstraintLayout` would be laid out vertically within the `Column` alongside other composable elements.
 
@@ -119,17 +121,18 @@ fun InteractiveConstraintLayoutExample(context: Context) {
 
 }
 ```
-*Note:* Similarly, assuming `constraint_layout_interactive` layout contains a button with id `android.R.id.button1`
+
+_Note:_ Similarly, assuming `constraint_layout_interactive` layout contains a button with id `android.R.id.button1`
 
 In this scenario, we maintain a `buttonText` state using compose’s `remember` and `mutableStateOf`. Within the `ConstraintLayout`, a button is configured to update this state when clicked. This illustrates a more complex bidirectional flow, enabling real-time interaction between your compose UI and legacy view components.
 
 **Important Considerations & Further Reading**
 
-*   **Layout Parameters**: Be aware of how layout parameters propagate down when using `AndroidView`. The example is basic, but more complex size and alignment parameters can be set on the `modifier`. You might need to tweak these for responsive layouts.
+- **Layout Parameters**: Be aware of how layout parameters propagate down when using `AndroidView`. The example is basic, but more complex size and alignment parameters can be set on the `modifier`. You might need to tweak these for responsive layouts.
 
-*   **Context and Lifecycle**: Android lifecycle events impact both compose and the underlying view system. Be mindful of how these are handled within the `AndroidView`.
+- **Context and Lifecycle**: Android lifecycle events impact both compose and the underlying view system. Be mindful of how these are handled within the `AndroidView`.
 
-*   **View Updates**: Any updates to the `ConstraintLayout` itself must be initiated from the main thread. For complex view hierarchy changes, it might be best to leverage the `update` lambda provided by `AndroidView`.
+- **View Updates**: Any updates to the `ConstraintLayout` itself must be initiated from the main thread. For complex view hierarchy changes, it might be best to leverage the `update` lambda provided by `AndroidView`.
 
 For a deep dive into these concepts, I'd recommend the following resources:
 

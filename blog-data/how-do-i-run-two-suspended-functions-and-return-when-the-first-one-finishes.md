@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-run-two-suspended-functions-and-return-when-the-first-one-finishes"
 ---
 
-Alright, let’s tackle this one. It’s a classic concurrency challenge, and I’ve certainly tripped over it a few times in my career—especially back when I was working on that distributed task processor a few years ago. We had similar requirements, needing to execute parallel routines but primarily interested in the result of the fastest completion.
+, let’s tackle this one. It’s a classic concurrency challenge, and I’ve certainly tripped over it a few times in my career—especially back when I was working on that distributed task processor a few years ago. We had similar requirements, needing to execute parallel routines but primarily interested in the result of the fastest completion.
 
 So, your question revolves around running two suspended functions, which I’m interpreting to mean coroutines in a language that supports them—like Kotlin’s coroutines, Python’s asyncio, or even Javascript's async/await. The specific task is to have the main operation return as soon as the first of these two suspended functions completes, essentially canceling the other if necessary, or ignoring its result if not.
 
@@ -98,27 +98,27 @@ For the JavaScript folks out there, the `Promise.race()` method is very handy fo
 
 ```javascript
 async function taskOne(delay, result) {
-    await new Promise(resolve => setTimeout(resolve, delay));
-    console.log(`Task One Completed with ${result}`);
-    return result;
+  await new Promise((resolve) => setTimeout(resolve, delay));
+  console.log(`Task One Completed with ${result}`);
+  return result;
 }
 
 async function taskTwo(delay, result) {
-    await new Promise(resolve => setTimeout(resolve, delay));
-    console.log(`Task Two Completed with ${result}`);
-    return result;
+  await new Promise((resolve) => setTimeout(resolve, delay));
+  console.log(`Task Two Completed with ${result}`);
+  return result;
 }
 
 async function main() {
-    try{
+  try {
     const firstResult = await Promise.race([
-        taskOne(700, "Result from Task One"),
-        taskTwo(200, "Result from Task Two")
+      taskOne(700, "Result from Task One"),
+      taskTwo(200, "Result from Task Two"),
     ]);
     console.log(`First result: ${firstResult}`);
-    } catch(error){
-        console.error("Error during execution: ", error);
-    }
+  } catch (error) {
+    console.error("Error during execution: ", error);
+  }
 }
 
 main();
@@ -132,9 +132,9 @@ When using these constructs, always think about error handling. While the exampl
 
 For a deeper understanding of concurrency and related patterns, I highly recommend these resources:
 
-*   **"Concurrent Programming in Java: Design Principles and Patterns" by Doug Lea:** While focused on Java, the principles and patterns discussed are broadly applicable to concurrent programming in any language.
-*   **"Programming in Lua" by Roberto Ierusalimschy:** Chapter 11, on coroutines, provides a solid, language-agnostic understanding of the concept. Lua is a good language to understand fundamental programming concepts because it's minimalistic.
-*   **Official language documentation for your specific language:** For example, the Kotlin documentation on coroutines, Python's asyncio documentation, and JavaScript's documentation for `Promise` are extremely helpful.
-*   **"Operating System Concepts" by Silberschatz, Galvin, and Gagne:** This text gives a deep theoretical understanding of concurrency and synchronization. Though it's operating system-focused, it’s beneficial for building robust applications.
+- **"Concurrent Programming in Java: Design Principles and Patterns" by Doug Lea:** While focused on Java, the principles and patterns discussed are broadly applicable to concurrent programming in any language.
+- **"Programming in Lua" by Roberto Ierusalimschy:** Chapter 11, on coroutines, provides a solid, language-agnostic understanding of the concept. Lua is a good language to understand fundamental programming concepts because it's minimalistic.
+- **Official language documentation for your specific language:** For example, the Kotlin documentation on coroutines, Python's asyncio documentation, and JavaScript's documentation for `Promise` are extremely helpful.
+- **"Operating System Concepts" by Silberschatz, Galvin, and Gagne:** This text gives a deep theoretical understanding of concurrency and synchronization. Though it's operating system-focused, it’s beneficial for building robust applications.
 
 In summary, waiting for the first of multiple suspended functions to complete can be elegantly handled with techniques like `withTimeoutOrNull` and `select` (kotlin), `asyncio.wait` with `FIRST_COMPLETED` (python), or `Promise.race()` (javascript). The chosen method will largely depend on your language's coroutine or async mechanisms, but the fundamental concept remains consistent across platforms: gracefully manage multiple tasks, and prioritize the outcome of the first one to complete. I hope this helps, and feel free to ask if you have any more specific scenarios in mind.

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-write-an-rgeo-active-record-query-to-find-all-records-that-are-within-x-radius-of-a-point"
 ---
 
-alright, so you're looking to snag records within a specific radius of a point using rgeo and activerecord. been there, done that, got the t-shirt – and a few scars from debugging those spatial queries in the wee hours. it's a fairly common scenario when you're working with location-based data.
+, so you're looking to snag records within a specific radius of a point using rgeo and activerecord. been there, done that, got the t-shirt – and a few scars from debugging those spatial queries in the wee hours. it's a fairly common scenario when you're working with location-based data.
 
 let me walk you through how i typically tackle this, using a straightforward, hopefully helpful approach. i'm going to assume you've already got rgeo and activerecord all set up and you have a spatial column defined on your model, using a geometry type. if not, that’s a whole different topic, maybe for another day, but i recommend the documentation of both.
 

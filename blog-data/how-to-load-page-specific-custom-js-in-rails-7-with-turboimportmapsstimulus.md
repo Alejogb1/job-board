@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-load-page-specific-custom-js-in-rails-7-with-turboimportmapsstimulus"
 ---
 
-Alright, let's tackle this. It’s a question I've spent more than a few late nights wrestling with, especially in the early days of transitioning legacy Rails apps to Turbo. The challenge of loading page-specific javascript in a modern rails 7 application using turbo, importmaps, and stimulus is definitely non-trivial, but it’s far from insurmountable. Instead of the old way with rails asset pipeline, we've now got importmaps for module resolution and stimulus for controller behavior, so we need to think differently about how to structure our javascript code.
+, let's tackle this. It’s a question I've spent more than a few late nights wrestling with, especially in the early days of transitioning legacy Rails apps to Turbo. The challenge of loading page-specific javascript in a modern rails 7 application using turbo, importmaps, and stimulus is definitely non-trivial, but it’s far from insurmountable. Instead of the old way with rails asset pipeline, we've now got importmaps for module resolution and stimulus for controller behavior, so we need to think differently about how to structure our javascript code.
 
 The traditional asset pipeline often relied on server-side logic to generate page-specific javascript includes. With Turbo and importmaps, we lean more towards a client-side approach for handling such scenarios. Importmaps centralize javascript module definitions, and Turbo enhances the application experience by delivering partial page updates, so our scripts now need to load dynamically. This means we have to be selective about what scripts we load and when they're executed.
 
@@ -39,7 +39,7 @@ export default class extends Controller {
   loadModules() {
     const pageScripts = this.element.dataset.pageScripts;
     if (pageScripts) {
-      pageScripts.split(' ').forEach(async (script) => {
+      pageScripts.split(" ").forEach(async (script) => {
         try {
           await import(`../controllers/${script}_controller`);
           console.log(`Loaded controller: ${script}`);
@@ -50,18 +50,28 @@ export default class extends Controller {
     }
 
     const pageStimulus = this.element.dataset.pageStimulus;
-      if(pageStimulus) {
-        pageStimulus.split(' ').forEach(controllerName => {
-            const controllerElement = document.querySelector(`[data-controller~="${controllerName}"]`);
+    if (pageStimulus) {
+      pageStimulus.split(" ").forEach((controllerName) => {
+        const controllerElement = document.querySelector(
+          `[data-controller~="${controllerName}"]`
+        );
 
-             if (controllerElement) {
-                if(this.application.getControllerForElementAndIdentifier(controllerElement, controllerName)) return;
+        if (controllerElement) {
+          if (
+            this.application.getControllerForElementAndIdentifier(
+              controllerElement,
+              controllerName
+            )
+          )
+            return;
 
-                this.application.register(controllerName, require(`../controllers/${controllerName}_controller`).default);
-                console.log(`Registered Controller: ${controllerName}`)
-            }
-
-        });
+          this.application.register(
+            controllerName,
+            require(`../controllers/${controllerName}_controller`).default
+          );
+          console.log(`Registered Controller: ${controllerName}`);
+        }
+      });
     }
   }
 }
@@ -83,20 +93,21 @@ And then create the javascript files:
 ```javascript
 // app/javascript/controllers/post_show_controller.js
 export default class extends Controller {
-    connect() {
-        console.log("Post Show controller connected");
-        // Add logic here for post specific behaviors
-    }
+  connect() {
+    console.log("Post Show controller connected");
+    // Add logic here for post specific behaviors
+  }
 }
 ```
+
 ```javascript
 // app/javascript/controllers/post_carousel_controller.js
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-    connect() {
-        console.log("Post Carousel controller connected")
-    }
+  connect() {
+    console.log("Post Carousel controller connected");
+  }
 }
 ```
 
@@ -113,16 +124,22 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
   connect() {
     document.addEventListener("turbo:load", this.loadModules.bind(this));
-    document.addEventListener("turbo:frame-load", this.handleFrameLoad.bind(this))
-      this.loadModules(); //initial load
+    document.addEventListener(
+      "turbo:frame-load",
+      this.handleFrameLoad.bind(this)
+    );
+    this.loadModules(); //initial load
   }
 
   disconnect() {
     document.removeEventListener("turbo:load", this.loadModules.bind(this));
-    document.removeEventListener("turbo:frame-load", this.handleFrameLoad.bind(this));
+    document.removeEventListener(
+      "turbo:frame-load",
+      this.handleFrameLoad.bind(this)
+    );
   }
 
-  handleFrameLoad(event){
+  handleFrameLoad(event) {
     const element = event.detail.element;
     this.loadModules(element);
   }
@@ -130,7 +147,7 @@ export default class extends Controller {
   loadModules(element = document) {
     const pageScripts = element.dataset?.pageScripts;
     if (pageScripts) {
-      pageScripts.split(' ').forEach(async (script) => {
+      pageScripts.split(" ").forEach(async (script) => {
         try {
           await import(`../controllers/${script}_controller`);
           console.log(`Loaded controller: ${script}`);
@@ -141,17 +158,28 @@ export default class extends Controller {
     }
 
     const pageStimulus = element.dataset?.pageStimulus;
-      if(pageStimulus) {
-        pageStimulus.split(' ').forEach(controllerName => {
-          const controllerElement = element.querySelector(`[data-controller~="${controllerName}"]`);
+    if (pageStimulus) {
+      pageStimulus.split(" ").forEach((controllerName) => {
+        const controllerElement = element.querySelector(
+          `[data-controller~="${controllerName}"]`
+        );
 
-             if (controllerElement) {
-              if(this.application.getControllerForElementAndIdentifier(controllerElement, controllerName)) return;
+        if (controllerElement) {
+          if (
+            this.application.getControllerForElementAndIdentifier(
+              controllerElement,
+              controllerName
+            )
+          )
+            return;
 
-                this.application.register(controllerName, require(`../controllers/${controllerName}_controller`).default);
-                console.log(`Registered Controller: ${controllerName}`)
-            }
-        });
+          this.application.register(
+            controllerName,
+            require(`../controllers/${controllerName}_controller`).default
+          );
+          console.log(`Registered Controller: ${controllerName}`);
+        }
+      });
     }
   }
 }
@@ -196,55 +224,71 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
   connect() {
     document.addEventListener("turbo:load", this.loadModules.bind(this));
-    document.addEventListener("turbo:frame-load", this.handleFrameLoad.bind(this));
+    document.addEventListener(
+      "turbo:frame-load",
+      this.handleFrameLoad.bind(this)
+    );
     this.loadModules(); // initial load
   }
 
   disconnect() {
     document.removeEventListener("turbo:load", this.loadModules.bind(this));
-    document.removeEventListener("turbo:frame-load", this.handleFrameLoad.bind(this));
+    document.removeEventListener(
+      "turbo:frame-load",
+      this.handleFrameLoad.bind(this)
+    );
   }
 
-
-  handleFrameLoad(event){
-      const element = event.detail.element;
-      this.loadModules(element);
-    }
+  handleFrameLoad(event) {
+    const element = event.detail.element;
+    this.loadModules(element);
+  }
 
   async loadModules(element = document) {
     const pageScripts = element.dataset?.pageScripts;
 
     if (pageScripts) {
-        const scripts = pageScripts.split(' ');
+      const scripts = pageScripts.split(" ");
       for (const script of scripts) {
         try {
-           await import(`../controllers/${script}_controller`);
-           console.log(`Loaded controller: ${script}`);
-        }
-        catch(e) {
+          await import(`../controllers/${script}_controller`);
+          console.log(`Loaded controller: ${script}`);
+        } catch (e) {
           console.error(`Error loading controller ${script}:`, e);
         }
       }
     }
 
     const pageStimulus = element.dataset?.pageStimulus;
-      if(pageStimulus) {
-        pageStimulus.split(' ').forEach(controllerName => {
-          const controllerElement = element.querySelector(`[data-controller~="${controllerName}"]`);
+    if (pageStimulus) {
+      pageStimulus.split(" ").forEach((controllerName) => {
+        const controllerElement = element.querySelector(
+          `[data-controller~="${controllerName}"]`
+        );
 
-             if (controllerElement) {
-              if(this.application.getControllerForElementAndIdentifier(controllerElement, controllerName)) return;
+        if (controllerElement) {
+          if (
+            this.application.getControllerForElementAndIdentifier(
+              controllerElement,
+              controllerName
+            )
+          )
+            return;
 
-                this.application.register(controllerName, require(`../controllers/${controllerName}_controller`).default);
-                console.log(`Registered Controller: ${controllerName}`)
-            }
-        });
+          this.application.register(
+            controllerName,
+            require(`../controllers/${controllerName}_controller`).default
+          );
+          console.log(`Registered Controller: ${controllerName}`);
+        }
+      });
     }
   }
 }
 ```
 
 And now in our layout or view:
+
 ```erb
 <div data-controller="dispatcher" data-page-scripts="<%= current_user.admin? ? 'admin_scripts' : 'user_scripts'%>" data-page-stimulus="default_stimulus">
   <%= yield %>
@@ -255,8 +299,8 @@ In this version, the `page-scripts` attribute is dynamically generated based on 
 
 **Key Takeaways and Further Reading**
 
-*   **Turbo Events:** Understanding `turbo:load` and `turbo:frame-load` is fundamental for this approach. The official Turbo documentation, especially the section on event handling, is a must-read.
-*   **Importmaps:** Familiarize yourself with how importmaps work for module resolution. Refer to the Rails Guides on asset pipelines and JavaScript bundlers for in-depth information about how this integrates with Rails 7.
-*   **Stimulus Fundamentals:** A strong grasp of how Stimulus controllers work is necessary. The official Stimulus documentation is indispensable for learning more about controllers, their lifecycle, and how to effectively use them.
+- **Turbo Events:** Understanding `turbo:load` and `turbo:frame-load` is fundamental for this approach. The official Turbo documentation, especially the section on event handling, is a must-read.
+- **Importmaps:** Familiarize yourself with how importmaps work for module resolution. Refer to the Rails Guides on asset pipelines and JavaScript bundlers for in-depth information about how this integrates with Rails 7.
+- **Stimulus Fundamentals:** A strong grasp of how Stimulus controllers work is necessary. The official Stimulus documentation is indispensable for learning more about controllers, their lifecycle, and how to effectively use them.
 
 The examples provided should provide a clear path forward. It involves understanding the interplay between Turbo, importmaps, and stimulus, and how these components can help load the proper javascript in a clean and maintainable way. Remember that every application's needs are unique, so you’ll need to adapt this approach to fit your specific requirements. By embracing this more dynamic client side loading approach, you'll find that modern javascript in a rails application is powerful and allows a significant gain in flexibility.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-taskgroup-in-airflow-be-made-dependent-on-the-completion-of-other-taskgroups"
 ---
 
-Okay, let’s dive into this. I recall a particular project a few years back where we wrestled—or rather, meticulously planned—a complex data pipeline that required multiple task groups to execute in specific sequences, much like you’re describing. The goal, as always, was to orchestrate a series of logically grouped tasks while maintaining a clear, dependency-driven flow. The key, I found, isn't about some hidden trick, but rather leveraging Airflow’s inherent dependency management capabilities with a bit of creative design.
+, let’s dive into this. I recall a particular project a few years back where we wrestled—or rather, meticulously planned—a complex data pipeline that required multiple task groups to execute in specific sequences, much like you’re describing. The goal, as always, was to orchestrate a series of logically grouped tasks while maintaining a clear, dependency-driven flow. The key, I found, isn't about some hidden trick, but rather leveraging Airflow’s inherent dependency management capabilities with a bit of creative design.
 
 Fundamentally, Airflow's core concept revolves around tasks and how they're connected via directed acyclic graphs (dags). While task groups provide logical grouping within a dag, they don’t inherently translate to explicit dependency relationships at a _group_ level. So, you can't directly say, "TaskGroup A needs to finish before TaskGroup B starts." Instead, we manipulate task dependencies _within_ and _between_ these groups to achieve the desired outcome. There are essentially three main approaches that I found most useful, and I'll illustrate each.
 
@@ -134,6 +134,7 @@ with DAG(
     end_a >> check_task >> [group_b_start, end_of_dag]
     group_b_start >> group_b
 ```
+
 In this scenario, we have a `check_task` that decides whether `group_b` should run or not. If the condition is met, then group_b is executed, else we just finish. This flexibility is invaluable when dealing with complex, dynamic workflows.
 
 In practice, I’ve found that for most straightforward dependencies, the first two approaches suffice. The third approach, involving dynamic task generation, is necessary when you have a conditional workflow.

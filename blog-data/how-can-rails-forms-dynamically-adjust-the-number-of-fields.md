@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-rails-forms-dynamically-adjust-the-number-of-fields"
 ---
 
-Alright, let's tackle this. The need for dynamically adjusting the number of fields in Rails forms pops up quite often, and I've certainly dealt with it a fair few times. I recall one particular project—a CRM overhaul for a medium-sized firm—where we needed to handle varying numbers of product options during lead creation. Static forms simply wouldn't cut it; we needed a flexible solution that allowed users to add or remove options as needed.
+, let's tackle this. The need for dynamically adjusting the number of fields in Rails forms pops up quite often, and I've certainly dealt with it a fair few times. I recall one particular project—a CRM overhaul for a medium-sized firm—where we needed to handle varying numbers of product options during lead creation. Static forms simply wouldn't cut it; we needed a flexible solution that allowed users to add or remove options as needed.
 
 The core challenge is managing both the visual update on the client side and the data persistence on the server side. Rails, being a server-side framework, needs a bit of help to handle the interactive nature of dynamic field manipulation. The key, generally, lies in employing a combination of JavaScript for the front-end dynamic updates and then processing the resulting structured data in our Rails controller. We can't rely solely on rails helpers for this; we need to step out a bit and bridge the client and server components.
 
@@ -59,39 +59,53 @@ The key element is `accepts_nested_attributes_for` and `fields_for`, allowing us
 Now, let's see the JavaScript for cloning and managing these fields, which, while being in the `app/assets/javascripts/leads.js` file, could also be refactored to use a javascript framework such as stimulus.js:
 
 ```javascript
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelector('#add-product-option-button').addEventListener('click', function(event) {
-        event.preventDefault();
-        const container = document.getElementById('product-options');
-        const originalField = container.querySelector('.product-option');
-        if (originalField) {
-            const newField = originalField.cloneNode(true);
-            const fieldCount = container.querySelectorAll('.product-option').length;
-            newField.querySelectorAll('input,select,textarea').forEach(function(el) {
-               let name = el.name.replace(/product_options\[\d+\]/, `product_options[${fieldCount}]`);
-               let id = el.id.replace(/product_options_\d+/, `product_options_${fieldCount}`);
-               el.name = name;
-               el.id = id;
-               if(el.value) el.value = ''
-            });
-           newField.querySelector('.destroy-product-option-field').value = 'false';
-            container.insertBefore(newField, document.getElementById('add-product-option-button'));
-        }
+document.addEventListener("DOMContentLoaded", function () {
+  document
+    .querySelector("#add-product-option-button")
+    .addEventListener("click", function (event) {
+      event.preventDefault();
+      const container = document.getElementById("product-options");
+      const originalField = container.querySelector(".product-option");
+      if (originalField) {
+        const newField = originalField.cloneNode(true);
+        const fieldCount = container.querySelectorAll(".product-option").length;
+        newField
+          .querySelectorAll("input,select,textarea")
+          .forEach(function (el) {
+            let name = el.name.replace(
+              /product_options\[\d+\]/,
+              `product_options[${fieldCount}]`
+            );
+            let id = el.id.replace(
+              /product_options_\d+/,
+              `product_options_${fieldCount}`
+            );
+            el.name = name;
+            el.id = id;
+            if (el.value) el.value = "";
+          });
+        newField.querySelector(".destroy-product-option-field").value = "false";
+        container.insertBefore(
+          newField,
+          document.getElementById("add-product-option-button")
+        );
+      }
     });
 
-
-  document.addEventListener('click', function(event){
-      if(event.target.matches('[data-action="remove-product-option"]')) {
-        event.preventDefault();
-          const productOption = event.target.closest('.product-option');
-          const hiddenDestroyField = productOption.querySelector('.destroy-product-option-field');
-          if (hiddenDestroyField) {
-              hiddenDestroyField.value = '1'
-              productOption.style.display = 'none';
-          } else {
-              productOption.remove();
-          }
+  document.addEventListener("click", function (event) {
+    if (event.target.matches('[data-action="remove-product-option"]')) {
+      event.preventDefault();
+      const productOption = event.target.closest(".product-option");
+      const hiddenDestroyField = productOption.querySelector(
+        ".destroy-product-option-field"
+      );
+      if (hiddenDestroyField) {
+        hiddenDestroyField.value = "1";
+        productOption.style.display = "none";
+      } else {
+        productOption.remove();
       }
+    }
   });
 });
 ```
@@ -108,54 +122,80 @@ In that scenario, you could store your form structure in a hidden template eleme
 <div style="display:none">
   <div id="product-option-template">
     <div class="product-option">
-        <input type="hidden" name="lead[product_options_attributes][__INDEX__][_destroy]" value="false" class="destroy-product-option-field">
-        <label for="lead_product_options_attributes___INDEX___name">Option Name</label><br>
-        <input type="text" name="lead[product_options_attributes][__INDEX__][name]" id="lead_product_options_attributes___INDEX___name"><br>
-        <label for="lead_product_options_attributes___INDEX___value">Option Value</label><br>
-        <input type="text" name="lead[product_options_attributes][__INDEX__][value]" id="lead_product_options_attributes___INDEX___value"><br>
-        <a href="#" data-action="remove-product-option">Remove</a>
+      <input
+        type="hidden"
+        name="lead[product_options_attributes][__INDEX__][_destroy]"
+        value="false"
+        class="destroy-product-option-field"
+      />
+      <label for="lead_product_options_attributes___INDEX___name"
+        >Option Name</label
+      ><br />
+      <input
+        type="text"
+        name="lead[product_options_attributes][__INDEX__][name]"
+        id="lead_product_options_attributes___INDEX___name"
+      /><br />
+      <label for="lead_product_options_attributes___INDEX___value"
+        >Option Value</label
+      ><br />
+      <input
+        type="text"
+        name="lead[product_options_attributes][__INDEX__][value]"
+        id="lead_product_options_attributes___INDEX___value"
+      /><br />
+      <a href="#" data-action="remove-product-option">Remove</a>
     </div>
   </div>
 </div>
 <div id="product-options">
-  <% if @lead.product_options.any? %>
-    <%= form.fields_for :product_options do |product_option_form| %>
-        <%= render 'product_option_fields', form: product_option_form %>
-    <% end %>
-  <% end %>
- <div id="add-product-option-button">
-     <%= link_to "Add Product Option", '#', data: { action: "add-product-option" } %>
- </div>
+  <% if @lead.product_options.any? %> <%= form.fields_for :product_options do
+  |product_option_form| %> <%= render 'product_option_fields', form:
+  product_option_form %> <% end %> <% end %>
+  <div id="add-product-option-button">
+    <%= link_to "Add Product Option", '#', data: { action: "add-product-option"
+    } %>
+  </div>
 </div>
 ```
 
 Here's the corresponding updated JavaScript snippet that manages the add and remove functionality:
 
 ```javascript
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelector('#add-product-option-button').addEventListener('click', function(event) {
-        event.preventDefault();
-       const container = document.getElementById('product-options');
-        const template = document.getElementById('product-option-template').innerHTML;
-        const fieldCount = container.querySelectorAll('.product-option').length;
-         const newField = template.replace(/__INDEX__/g, fieldCount);
-         const parsedField =  new DOMParser().parseFromString(newField, 'text/html').body.firstChild
-        container.insertBefore(parsedField, document.getElementById('add-product-option-button'));
+document.addEventListener("DOMContentLoaded", function () {
+  document
+    .querySelector("#add-product-option-button")
+    .addEventListener("click", function (event) {
+      event.preventDefault();
+      const container = document.getElementById("product-options");
+      const template = document.getElementById(
+        "product-option-template"
+      ).innerHTML;
+      const fieldCount = container.querySelectorAll(".product-option").length;
+      const newField = template.replace(/__INDEX__/g, fieldCount);
+      const parsedField = new DOMParser().parseFromString(newField, "text/html")
+        .body.firstChild;
+      container.insertBefore(
+        parsedField,
+        document.getElementById("add-product-option-button")
+      );
     });
 
-    document.addEventListener('click', function(event){
-        if(event.target.matches('[data-action="remove-product-option"]')) {
-            event.preventDefault();
-            const productOption = event.target.closest('.product-option');
-            const hiddenDestroyField = productOption.querySelector('.destroy-product-option-field');
-            if (hiddenDestroyField) {
-                hiddenDestroyField.value = '1'
-                productOption.style.display = 'none';
-            } else {
-                productOption.remove();
-            }
-        }
-    });
+  document.addEventListener("click", function (event) {
+    if (event.target.matches('[data-action="remove-product-option"]')) {
+      event.preventDefault();
+      const productOption = event.target.closest(".product-option");
+      const hiddenDestroyField = productOption.querySelector(
+        ".destroy-product-option-field"
+      );
+      if (hiddenDestroyField) {
+        hiddenDestroyField.value = "1";
+        productOption.style.display = "none";
+      } else {
+        productOption.remove();
+      }
+    }
+  });
 });
 ```
 

@@ -4,13 +4,13 @@ date: "2024-12-16"
 id: "how-is-activation-applied-in-a-neural-network-function-or-layer"
 ---
 
-Okay, let’s unpack this. It’s a question I’ve seen trip up folks new to neural networks, and honestly, even a few seasoned practitioners now and then. The ambiguity often stems from how libraries tend to abstract things away, but the core concept is fairly straightforward once you peel back the layers.
+, let’s unpack this. It’s a question I’ve seen trip up folks new to neural networks, and honestly, even a few seasoned practitioners now and then. The ambiguity often stems from how libraries tend to abstract things away, but the core concept is fairly straightforward once you peel back the layers.
 
-The short, technical answer is that activation functions are *functions*, not layers, although they’re often discussed and implemented in the context of layers. I've seen the misconception that they're a standalone 'layer' lead to some convoluted network designs early in my career. The best way to approach this is to understand their purpose first and then look at where they fit within the bigger picture of neural network computations.
+The short, technical answer is that activation functions are _functions_, not layers, although they’re often discussed and implemented in the context of layers. I've seen the misconception that they're a standalone 'layer' lead to some convoluted network designs early in my career. The best way to approach this is to understand their purpose first and then look at where they fit within the bigger picture of neural network computations.
 
-An activation function’s fundamental job is to introduce non-linearity into the neural network. Think about it: a neural network without activation functions is simply performing a series of linear transformations (weighted sums and biases), and multiple stacked linear transformations collapse into a single linear transformation. Not particularly useful if you are seeking to model anything beyond linear data relationships. We need these non-linearities to learn complex patterns – to model things that aren't simply straight lines or planes. The activation function is applied *after* the linear transformation within a given layer, thus injecting the necessary non-linearity.
+An activation function’s fundamental job is to introduce non-linearity into the neural network. Think about it: a neural network without activation functions is simply performing a series of linear transformations (weighted sums and biases), and multiple stacked linear transformations collapse into a single linear transformation. Not particularly useful if you are seeking to model anything beyond linear data relationships. We need these non-linearities to learn complex patterns – to model things that aren't simply straight lines or planes. The activation function is applied _after_ the linear transformation within a given layer, thus injecting the necessary non-linearity.
 
-Here’s how it typically plays out. Inside each neuron (in a layer), we perform a weighted sum of the inputs, add a bias, and then, *before* passing this result along to the next layer, we apply the activation function. This output of the activation function then becomes the input to the neurons in the next layer.
+Here’s how it typically plays out. Inside each neuron (in a layer), we perform a weighted sum of the inputs, add a bias, and then, _before_ passing this result along to the next layer, we apply the activation function. This output of the activation function then becomes the input to the neurons in the next layer.
 
 Now, let me give a few concrete examples using python-like pseudocode to solidify this.
 
@@ -35,6 +35,7 @@ neuron_output = neuron_calculation(input_values[0], input_values[1], input_value
 print(neuron_output)
 
 ```
+
 In this example `sigmoid` is clearly a function being used and not a separate layer.
 
 **Example 2: Activation within a simple layer**
@@ -84,9 +85,9 @@ output = convolution_output(input_patch, kernel, bias)
 print(output)
 ```
 
-Again, the pattern is consistent, the activation (in this case, `relu`) is applied as a final step within a particular processing unit within a layer. In each of these examples the activation function *modifies* the output of the linear transformation but is not itself a transformation that involves weights and biases or an independent layer.
+Again, the pattern is consistent, the activation (in this case, `relu`) is applied as a final step within a particular processing unit within a layer. In each of these examples the activation function _modifies_ the output of the linear transformation but is not itself a transformation that involves weights and biases or an independent layer.
 
-You’ll notice, especially in deep learning libraries, that activation functions are often specified as an argument *within* the layer definition or added as an operation following a layer (for example in TensorFlow's Keras) . This is mostly for convenient implementation, but it shouldn't obscure their conceptual nature; they are functions.
+You’ll notice, especially in deep learning libraries, that activation functions are often specified as an argument _within_ the layer definition or added as an operation following a layer (for example in TensorFlow's Keras) . This is mostly for convenient implementation, but it shouldn't obscure their conceptual nature; they are functions.
 
 I’ve observed over the years that thinking of activation functions as a layer creates unnecessary complexity. Instead, envision them as a processing step that introduces non-linearity within the computational pipeline of a neural network, operating element-wise on the output of a linear operation within a layer.
 

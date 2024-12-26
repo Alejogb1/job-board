@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-obtain-the-effective-learning-rate-in-pytorch"
 ---
 
-Okay, let's tackle this. I've spent a fair amount of time wrestling with optimization in various deep learning projects over the years, and extracting the effective learning rate is a crucial step for debugging and fine-tuning models. It's not always as straightforward as accessing a single variable. You might be surprised how often this surfaces as an issue. In my experience, I've noticed a pattern: people often assume the learning rate is static, set once at the beginning, but with adaptive optimizers like Adam or those using schedulers, the actual rate applied to the weights changes dynamically.
+, let's tackle this. I've spent a fair amount of time wrestling with optimization in various deep learning projects over the years, and extracting the effective learning rate is a crucial step for debugging and fine-tuning models. It's not always as straightforward as accessing a single variable. You might be surprised how often this surfaces as an issue. In my experience, I've noticed a pattern: people often assume the learning rate is static, set once at the beginning, but with adaptive optimizers like Adam or those using schedulers, the actual rate applied to the weights changes dynamically.
 
-So, what does 'effective' learning rate actually mean here? It's the actual value being used to update the weights *at a particular iteration*. This distinction is key, especially when using advanced optimization techniques. It's not just what you initialized the optimizer with; it's the value after any modifications by schedulers. Let's unpack how to obtain this in pytorch, considering both scenarios—optimizers with and without schedulers.
+So, what does 'effective' learning rate actually mean here? It's the actual value being used to update the weights _at a particular iteration_. This distinction is key, especially when using advanced optimization techniques. It's not just what you initialized the optimizer with; it's the value after any modifications by schedulers. Let's unpack how to obtain this in pytorch, considering both scenarios—optimizers with and without schedulers.
 
-First, the straightforward case: if you're *not* using a learning rate scheduler, the effective learning rate is simply the base learning rate assigned to the optimizer during its instantiation. You can access this through the optimizer's `param_groups`. Let me show you some quick code:
+First, the straightforward case: if you're _not_ using a learning rate scheduler, the effective learning rate is simply the base learning rate assigned to the optimizer during its instantiation. You can access this through the optimizer's `param_groups`. Let me show you some quick code:
 
 ```python
 import torch
@@ -25,9 +25,9 @@ learning_rate = optimizer.param_groups[0]['lr']
 print(f"Initial Learning Rate: {learning_rate}")
 ```
 
-In this example, the output would clearly print '0.01', which is our initial and effective learning rate if you are *not* using a scheduler. But here's where things get more involved. Most realistic deep learning setups include a scheduler which changes the learning rate according to some predefined logic, like reducing it during training or using cyclical methods. In these scenarios, the optimizer’s initial learning rate is no longer the *effective* rate, but we must take the scheduler modifications into account.
+In this example, the output would clearly print '0.01', which is our initial and effective learning rate if you are _not_ using a scheduler. But here's where things get more involved. Most realistic deep learning setups include a scheduler which changes the learning rate according to some predefined logic, like reducing it during training or using cyclical methods. In these scenarios, the optimizer’s initial learning rate is no longer the _effective_ rate, but we must take the scheduler modifications into account.
 
-Now let's examine a scenario where a learning rate scheduler *is* being utilized. We will use the commonly employed `torch.optim.lr_scheduler.StepLR` to showcase what I mean. This scheduler reduces the learning rate by a given factor at fixed intervals.
+Now let's examine a scenario where a learning rate scheduler _is_ being utilized. We will use the commonly employed `torch.optim.lr_scheduler.StepLR` to showcase what I mean. This scheduler reduces the learning rate by a given factor at fixed intervals.
 
 ```python
 import torch
@@ -47,7 +47,7 @@ scheduler = StepLR(optimizer, step_size=3, gamma=0.1)
 for i in range(10):
     # Step of optimization, just a placeholder
     optimizer.step()
-    
+
     # Current effective learning rate
     current_lr = optimizer.param_groups[0]['lr']
     print(f"Step {i+1}, Current Learning Rate: {current_lr}")
@@ -102,6 +102,6 @@ for i in range(5):
 
 In this final example, `custom_scheduler.get_lr()` is the correct method to obtain the effective learning rate as it internally looks into the optimizer's `param_groups`.
 
-In summary, to obtain the effective learning rate in PyTorch, access the `lr` key within the optimizer's `param_groups[0]`. If you're using a scheduler, do this *after* the scheduler's `step()` method is called (and, for clarity, the optimizer's `step()`, of course). The examples above cover the most common cases I’ve encountered over the years and should serve as a strong practical base for your own exploration of optimization.
+In summary, to obtain the effective learning rate in PyTorch, access the `lr` key within the optimizer's `param_groups[0]`. If you're using a scheduler, do this _after_ the scheduler's `step()` method is called (and, for clarity, the optimizer's `step()`, of course). The examples above cover the most common cases I’ve encountered over the years and should serve as a strong practical base for your own exploration of optimization.
 
 For deeper understanding of optimization techniques, I would highly recommend "Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville. Additionally, reading the original papers on specific optimizers like Adam or RMSProp will provide very valuable context. For a more practical look into applying these optimizers, the official PyTorch documentation itself is a treasure trove of useful examples. Understanding this underlying mechanism is essential for achieving stable and performant training. Good luck, and let me know if you have any other questions.

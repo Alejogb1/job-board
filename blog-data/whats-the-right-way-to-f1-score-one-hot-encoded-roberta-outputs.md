@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "whats-the-right-way-to-f1-score-one-hot-encoded-roberta-outputs"
 ---
 
-Okay, let's tackle this. I've seen my fair share of confusion around evaluating one-hot encoded outputs from models like Roberta, especially when the goal is a precise F1 score. It's a classic situation where the mechanics of evaluation can be as tricky as the model itself, and I've definitely spent some late nights debugging these things in the past.
+, let's tackle this. I've seen my fair share of confusion around evaluating one-hot encoded outputs from models like Roberta, especially when the goal is a precise F1 score. It's a classic situation where the mechanics of evaluation can be as tricky as the model itself, and I've definitely spent some late nights debugging these things in the past.
 
 The core issue, as you're likely experiencing, lies in the transformation from model outputs – typically probabilities or logits – to the discrete class predictions required for F1 calculation. Roberta, when used for multi-class classification tasks, often produces a tensor with dimensions like `[batch_size, num_classes]`, where each entry represents the likelihood of a particular class. But F1 score operates on actual, hard predictions, not probabilities. Let me walk you through how I usually handle this, including some code examples.
 
@@ -31,13 +31,13 @@ def calculate_f1_from_probabilities(probabilities, labels):
     """
     # Ensure probabilities are on CPU and converted to NumPy for sklearn
     probabilities_cpu = probabilities.cpu().detach().numpy()
-    
+
     # Convert probabilities to predictions by taking the argmax
     predicted_labels = np.argmax(probabilities_cpu, axis=1)
-    
+
     # Convert one-hot labels to simple indices
     true_labels = np.argmax(labels, axis=1)
-    
+
     # Calculate micro-averaged F1 score
     f1 = f1_score(true_labels, predicted_labels, average='micro')
     return f1
@@ -80,13 +80,13 @@ def calculate_f1_from_logits(logits, labels):
 
     # Convert logits to probabilities using softmax
     probabilities = F.softmax(torch.tensor(logits_cpu), dim=1)
-    
+
     # Convert probabilities to predictions by taking the argmax
     predicted_labels = np.argmax(probabilities.cpu().detach().numpy(), axis=1)
-    
+
     # Convert one-hot labels to simple indices
     true_labels = np.argmax(labels, axis=1)
-    
+
     # Calculate micro-averaged F1 score
     f1 = f1_score(true_labels, predicted_labels, average='micro')
     return f1
@@ -109,7 +109,7 @@ Now, there's another subtle, but often important detail: the `average` parameter
 
 Finally, it's good practice to validate on a dedicated dataset. If you're training a model and you do not want to measure F1 on training data. You should use a held-out validation dataset that your model has never seen.
 
-In terms of further reading, I'd recommend delving into the detailed explanation in *'Pattern Recognition and Machine Learning'* by Christopher Bishop. Specifically, look into the chapter on performance evaluation of classifiers. A good reference on evaluation metrics in general is also *'Data Mining: Practical Machine Learning Tools and Techniques'* by Ian H. Witten et al. These books will provide a solid statistical foundation to the practices described here.
+In terms of further reading, I'd recommend delving into the detailed explanation in _'Pattern Recognition and Machine Learning'_ by Christopher Bishop. Specifically, look into the chapter on performance evaluation of classifiers. A good reference on evaluation metrics in general is also _'Data Mining: Practical Machine Learning Tools and Techniques'_ by Ian H. Witten et al. These books will provide a solid statistical foundation to the practices described here.
 
 And if you want a detailed read on different averaging methods, have a look at the paper titled 'A Note on Precision and Recall' by David D. Lewis, which details how metrics should be averaged for multi class problems.
 
@@ -141,7 +141,7 @@ def evaluate_model(model, dataloader):
     with torch.no_grad():  # Disable gradient calculations during evaluation
         for inputs, labels in dataloader:
 
-          outputs = model(inputs) # Get the model output which can be logits or probabilities. 
+          outputs = model(inputs) # Get the model output which can be logits or probabilities.
 
           if hasattr(outputs, 'logits'):
             logits = outputs.logits
@@ -150,7 +150,7 @@ def evaluate_model(model, dataloader):
             predicted_batch = torch.argmax(outputs, dim=1).cpu().numpy() # Use softmax if it's raw logits
 
           true_batch = np.argmax(labels.cpu().numpy(), axis=1) # Assuming one-hot encoded labels
-            
+
           all_predicted_labels.extend(predicted_batch)
           all_true_labels.extend(true_batch)
 

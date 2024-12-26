@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-python-vifs-returning-infinity-for-dummy-variables"
 ---
 
-Alright, let's talk about infinite variance inflation factors (VIFs) when dealing with dummy variables in Python. This is a scenario I've encountered a few times, and it usually points to a specific, rather fundamental, issue with your model setup. It's not necessarily a bug in Python’s VIF calculation itself, but rather a symptom of multicollinearity—a problem you absolutely need to address in regression modeling. I recall one project, a predictive modeling task for a customer behavior dataset, where we faced this exact situation. It nearly derailed our entire timeline until we got to the root cause.
+, let's talk about infinite variance inflation factors (VIFs) when dealing with dummy variables in Python. This is a scenario I've encountered a few times, and it usually points to a specific, rather fundamental, issue with your model setup. It's not necessarily a bug in Python’s VIF calculation itself, but rather a symptom of multicollinearity—a problem you absolutely need to address in regression modeling. I recall one project, a predictive modeling task for a customer behavior dataset, where we faced this exact situation. It nearly derailed our entire timeline until we got to the root cause.
 
 The core problem isn't that Python miscalculates VIFs; it's that your dummy variables are perfectly predictable from each other. This results in the calculation of the R-squared in the VIF formula becoming exactly equal to 1, leading to division by zero—hence the infinity.
 

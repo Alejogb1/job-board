@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-do-i-save-azure-ml-pipelines-in-git-or-backup-somewhere"
 ---
 
-Alright, let's tackle this. Having wrestled (oops, sorry, slipped there for a second) with pipeline versioning and backup strategies in Azure Machine Learning more times than I care to count, I can certainly offer some insight. It’s a crucial aspect often overlooked in the initial excitement of model development, and neglecting it can lead to considerable headaches down the line. Think of it like this: your pipelines are more than just ephemeral scripts; they're the core recipes for your machine learning models, and keeping them safe and versioned is non-negotiable.
+, let's tackle this. Having wrestled (oops, sorry, slipped there for a second) with pipeline versioning and backup strategies in Azure Machine Learning more times than I care to count, I can certainly offer some insight. It’s a crucial aspect often overlooked in the initial excitement of model development, and neglecting it can lead to considerable headaches down the line. Think of it like this: your pipelines are more than just ephemeral scripts; they're the core recipes for your machine learning models, and keeping them safe and versioned is non-negotiable.
 
 The core challenge stems from the fact that Azure Machine Learning pipelines, as you define them through the SDK or portal, are metadata descriptions of compute workflows rather than actual code files. This distinction is critical. What you're building isn't inherently a static piece of text to be directly stored in git. Instead, you are constructing a sequence of operations, defining dependencies, and specifying compute resources within Azure's infrastructure. So, "saving" them isn't about grabbing a single file; it’s about capturing that entire configuration.
 
 My experience comes from a project involving time-series forecasting, where pipeline integrity was paramount for compliance reasons. We needed to reconstruct exact model training procedures months later, including data processing, feature engineering, and model selection. What we initially attempted – manually logging parameters and script locations – rapidly became a maintenance nightmare. We quickly learned the value of robust, automated methods.
 
-The primary approach for capturing these pipelines involves two distinct but complementary techniques: storing the pipeline *definition* and preserving the *supporting code*.
+The primary approach for capturing these pipelines involves two distinct but complementary techniques: storing the pipeline _definition_ and preserving the _supporting code_.
 
-The pipeline *definition* is basically the configuration that constructs the pipeline in Azure ML, which can be captured through the Azure Machine Learning SDK for Python. I've found the SDK to be exceptionally reliable here. You're essentially serializing the pipeline object into something you can store and reconstitute. The most effective method involves capturing a JSON representation of the pipeline. Here's a simplified example of how you might accomplish this:
+The pipeline _definition_ is basically the configuration that constructs the pipeline in Azure ML, which can be captured through the Azure Machine Learning SDK for Python. I've found the SDK to be exceptionally reliable here. You're essentially serializing the pipeline object into something you can store and reconstitute. The most effective method involves capturing a JSON representation of the pipeline. Here's a simplified example of how you might accomplish this:
 
 ```python
 import json
@@ -37,7 +37,7 @@ def load_pipeline_definition(filename="pipeline_definition.json"):
 
 This code snippet shows how you can serialize and deserialize a pipeline. The `save_pipeline_definition` function takes a pipeline object and serializes it to a JSON file. The `load_pipeline_definition` takes this JSON and reconstructs the pipeline. We stored this JSON file along with the Python scripts required for individual pipeline steps in the git repository. This is key – the definition itself doesn’t include the code executed in each step, just references to those scripts.
 
-Moving on, the second key element is managing your *supporting code*. This is where git really shines. All Python scripts, configuration files, and any other necessary code used in the pipeline should be version controlled in git. Moreover, you *must* ensure that the pipeline definition references specific commits of these code repositories. The pipeline definition should not be pointing to, say, the "latest" version of your code but to a particular commit hash. This offers reproducibility. Without this, reconstructing a past pipeline with a precise version is impossible.
+Moving on, the second key element is managing your _supporting code_. This is where git really shines. All Python scripts, configuration files, and any other necessary code used in the pipeline should be version controlled in git. Moreover, you _must_ ensure that the pipeline definition references specific commits of these code repositories. The pipeline definition should not be pointing to, say, the "latest" version of your code but to a particular commit hash. This offers reproducibility. Without this, reconstructing a past pipeline with a precise version is impossible.
 
 Here’s how to integrate code version control using Azure Machine Learning's `ScriptStep`. This example assumes you're running a Python script:
 

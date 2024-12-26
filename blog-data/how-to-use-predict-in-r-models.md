@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-use-predict-in-r-models"
 ---
 
-Okay so you wanna use `predict` in R models right Been there done that countless times let me tell you its not rocket science but it can be a bit fiddly if youre not careful I mean Ive been wrestling with R models since like R 2.15 days so you can trust me on this one
+you wanna use `predict` in R models right Been there done that countless times let me tell you its not rocket science but it can be a bit fiddly if youre not careful I mean Ive been wrestling with R models since like R 2.15 days so you can trust me on this one
 
 First things first `predict` is basically the universal translator for your trained model You feed it some data that looks like what the model was trained on and it spits out predictions So the most basic usage is incredibly simple
 
@@ -21,7 +21,7 @@ See super easy right But the devil is in the details Lets break down some common
 
 **Scenario 1: Different Column Names or Column Order**
 
-Okay this is a classic one You train a model on a dataset with column names like `feature_1 feature_2 target` and then you try to predict on data with `input_1 input_2 result` Guess what R throws a fit Not the model's fault you just gave it the wrong recipe It expects the exact same column names and order as the training data
+this is a classic one You train a model on a dataset with column names like `feature_1 feature_2 target` and then you try to predict on data with `input_1 input_2 result` Guess what R throws a fit Not the model's fault you just gave it the wrong recipe It expects the exact same column names and order as the training data
 
 ```r
 #Let's say your train data has columns "height" "weight" "age"
@@ -114,21 +114,21 @@ The point here is be consistent and make sure you have the same treatment for NA
 
 Now every model type might have its own nuances This applies to decision trees random forest and neural networks for example and they require different treatment of missing values and even different way to interpret the results of a `predict` function
 
-*   **Linear models (`lm`) and GLMs (`glm`):** These are pretty straightforward `predict` returns predicted values by default for regression models and predicted probabilities for classification models For GLMs remember the `type` argument It's what determines if you get probabilities or predictions on the original scale
-*   **Tree-based models (`rpart` `randomForest`):** These can give predictions of either class probabilities or the predicted class depending on the model configuration and also your needs Also they may or may not be able to work with NA values and should be imputed beforehand if needed
-*   **Support Vector Machines (`svm`):** SVMs can do both regression and classification so keep in mind what you are after when using `predict` For classification you need to decide if you want to get classification labels or predicted probabilities It is recommended to use predicted probabilities when possible to get a good idea of confidence and margins.
-*   **Neural Networks (`nnet` `keras` `torch`):** Neural networks require a different treatment on `predict` functions and it is important to understand the framework used for the particular neural network. For example in `keras` it is often required to explicitly specify the output layer that we are using for prediction. The outputs are very often probabilities and require a separate step to get the classification labels.
+- **Linear models (`lm`) and GLMs (`glm`):** These are pretty straightforward `predict` returns predicted values by default for regression models and predicted probabilities for classification models For GLMs remember the `type` argument It's what determines if you get probabilities or predictions on the original scale
+- **Tree-based models (`rpart` `randomForest`):** These can give predictions of either class probabilities or the predicted class depending on the model configuration and also your needs Also they may or may not be able to work with NA values and should be imputed beforehand if needed
+- **Support Vector Machines (`svm`):** SVMs can do both regression and classification so keep in mind what you are after when using `predict` For classification you need to decide if you want to get classification labels or predicted probabilities It is recommended to use predicted probabilities when possible to get a good idea of confidence and margins.
+- **Neural Networks (`nnet` `keras` `torch`):** Neural networks require a different treatment on `predict` functions and it is important to understand the framework used for the particular neural network. For example in `keras` it is often required to explicitly specify the output layer that we are using for prediction. The outputs are very often probabilities and require a separate step to get the classification labels.
 
 **Resources**
 
 Instead of throwing links at you try out these papers and books that are very helpful for understanding modeling and model predictions in R
 
-*   "An Introduction to Statistical Learning" by Gareth James Daniela Witten Trevor Hastie and Robert Tibshirani this one is a must-have if you are into statistics and machine learning the explanations are top tier and you can learn about all of these models and their nuances.
-*   "The R Book" by Michael J Crawley It is very helpful for learning R programming as a whole and how statistical methods are implemented in R.
-*   "Applied Regression Modeling" by Iain Pardoe This one goes in deep into the world of regressions and it can be very helpful if you are using linear models or GLMs in R
+- "An Introduction to Statistical Learning" by Gareth James Daniela Witten Trevor Hastie and Robert Tibshirani this one is a must-have if you are into statistics and machine learning the explanations are top tier and you can learn about all of these models and their nuances.
+- "The R Book" by Michael J Crawley It is very helpful for learning R programming as a whole and how statistical methods are implemented in R.
+- "Applied Regression Modeling" by Iain Pardoe This one goes in deep into the world of regressions and it can be very helpful if you are using linear models or GLMs in R
 
 **Final thoughts**
 
 `predict` seems simple on the surface but its all about consistency and attention to detail Make sure that your training data structure and the new prediction data are as close as possible this includes not only column names and order but also factors and levels as well as missing values That is my 10 cents after suffering through all of these issues many times over. Hope this helps and you get to predict stuff smoothly from now on.
 
-Oh and one last thing. Did you hear about the statistician who got lost in the woods? He found his way eventually he just kept calculating all the possible paths until one made sense. Okay I'm done now. Good luck and have fun with your R models.
+Oh and one last thing. Did you hear about the statistician who got lost in the woods? He found his way eventually he just kept calculating all the possible paths until one made sense. I'm done now. Good luck and have fun with your R models.

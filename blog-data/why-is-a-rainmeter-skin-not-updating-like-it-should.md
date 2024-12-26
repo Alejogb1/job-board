@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-a-rainmeter-skin-not-updating-like-it-should"
 ---
 
-alright, so, a rainmeter skin isn't updating, right? i've been there, more times than i care to remember. it’s one of those things that can make you feel like you're losing your mind because, on the surface, everything *looks* fine. let me walk you through some of the usual suspects from my own personal history with rainmeter. i'm speaking from experience here, not just regurgitating some manual.
+, so, a rainmeter skin isn't updating, right? i've been there, more times than i care to remember. it’s one of those things that can make you feel like you're losing your mind because, on the surface, everything _looks_ fine. let me walk you through some of the usual suspects from my own personal history with rainmeter. i'm speaking from experience here, not just regurgitating some manual.
 
 first off, let's talk about refresh rates. it seems obvious, but i can't tell you how many times i've chased my tail only to find it was this simple. each meter has a `update` setting (or a global one in the skin's ini file), which is in milliseconds. a lower number means it updates faster, of course. i had this one skin, a system monitor i built years ago when i was still wet behind the ears with lua, that had a global refresh set at 10000ms (10 seconds!). it worked, but the numbers were lagging so far behind reality it was almost useless. i had a fancy cpu meter and i was doing some intense coding and the meter kept saying that my cpu was at 30% when in fact it was at 80%. took me hours to see what the problem was.
 
@@ -37,7 +37,7 @@ UpdateDivider=1
 Update=1000
 ```
 
-again, `update=1000` means it refreshes every second. also note `updatedivider=1` this means that if the skin is updating every 500ms, this value won't be divided anymore, you will still get an update every second (1000ms). if it was set to `updateDivider=2`, then you would update this measure every 2 seconds (2 * 1000ms = 2000ms).
+again, `update=1000` means it refreshes every second. also note `updatedivider=1` this means that if the skin is updating every 500ms, this value won't be divided anymore, you will still get an update every second (1000ms). if it was set to `updateDivider=2`, then you would update this measure every 2 seconds (2 \* 1000ms = 2000ms).
 
 and don’t forget the `processor` setting in that example. you must select the correct core number, otherwise it will show the wrong data (or none at all). sometimes you need to make changes here when you install the same skin in other computers, it's something to keep in mind.
 

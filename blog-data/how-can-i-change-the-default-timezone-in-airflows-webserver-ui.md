@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-change-the-default-timezone-in-airflows-webserver-ui"
 ---
 
-Okay, let's tackle timezone configuration within the Airflow webserver. It’s a common point of friction, particularly when your pipeline orchestrates tasks across different geographical regions. I remember back in my days at AstroCorp, we had a distributed data processing pipeline spanning multiple continents. Ensuring that all scheduled jobs and logged times were aligned with the appropriate time zones became a significant hurdle. We found out that relying solely on the server's default timezone was a recipe for confusion, data integrity issues, and frustrated operators.
+, let's tackle timezone configuration within the Airflow webserver. It’s a common point of friction, particularly when your pipeline orchestrates tasks across different geographical regions. I remember back in my days at AstroCorp, we had a distributed data processing pipeline spanning multiple continents. Ensuring that all scheduled jobs and logged times were aligned with the appropriate time zones became a significant hurdle. We found out that relying solely on the server's default timezone was a recipe for confusion, data integrity issues, and frustrated operators.
 
 The core problem stems from the fact that Airflow, by default, uses the server's system timezone for the webserver. This timezone is inherited at the time the Airflow services are initialized. For example, if your server’s timezone is set to `UTC`, then all times in the webserver will display in `UTC`, regardless of your personal timezone preference or the timezone of the data being ingested. This can lead to a mismatch between the timestamps you observe in the UI and the actual wall-clock time in your location or of the source data.
 
@@ -85,6 +85,7 @@ def convert_timezone_from_string(**kwargs):
 
 convert_timezone_from_string()
 ```
+
 This demonstrates how to convert an external, timezone-unaware string timestamp into a timezone-aware datetime object and then into the desired time zone. It is often used for external data ingestion.
 
 Finally, remember that not all components of your system may utilize Airflow's internal timezone configuration. External processes such as databases or data warehouses might have their own timezone settings. Therefore, it’s extremely important to ensure consistency at each point. For deeper understanding I highly recommend ‘Time Zones and Calendar Systems’ by Michael Erlewine and ‘Programming with Time’ by David C. Martin. They delve into the complexities of time zones, historical quirks, and implementation issues that you might encounter, providing a better foundation for handling time-related issues. Also reading the official Python docs for the `datetime` and `pytz` libraries should be mandatory when dealing with the topic.

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-a-rails-navigation-partial-seeing-universal-variable-from-some-views-but-not-others"
 ---
 
-alright, so you've got this rails app, and a navigation partial, classic stuff. it's working fine in some views, pulling in this universal variable like it's supposed to, but then in other views, it's just...gone. feels like you're talking to a wall, right? i've been there, more times than i'd like to count. lets go step by step.
+, so you've got this rails app, and a navigation partial, classic stuff. it's working fine in some views, pulling in this universal variable like it's supposed to, but then in other views, it's just...gone. feels like you're talking to a wall, right? i've been there, more times than i'd like to count. lets go step by step.
 
 first, let's talk scope. in rails, variables are not globally available everywhere by default. it's not like javascript where things can sometimes end up hanging in the window scope. instead, variables have a defined scope. basically, where they were born decides if they can be seen in other places.
 
@@ -52,7 +52,7 @@ and this is how the partial would look.
 </nav>
 ```
 
-now imagine you are rendering the partial in a different view that doesn't set the `@user`. and that's exactly what the question is about.  that `@user` variable will be `nil` and the `if @user` logic will render the login link in the partial instead. so in a nutshell it is not there, hence the rendering is different.
+now imagine you are rendering the partial in a different view that doesn't set the `@user`. and that's exactly what the question is about. that `@user` variable will be `nil` and the `if @user` logic will render the login link in the partial instead. so in a nutshell it is not there, hence the rendering is different.
 
 another common mistake is when you are using layouts and you forget that you need to pass the variables to layouts too. layouts render before views, it's a classic source of these type of issues. your view may have a variable, but you layout may need it too, for example, if your navigation partial is rendered from a layout.
 
@@ -91,8 +91,9 @@ end
 see that `@user` is missing? that's the culprit. even if your layout renders the navigation, the `admin/dashboard/show` action is not setting `@user` to the layout, to then be available in the navigation partial.
 
 now, the way to solve this is fairly straightforward:
+
 1.  if the variable is a user specific thing, make sure every controller action that renders a view, sets the `@user` variable to whatever current user is logged in. or, you could use a before_action in the application controller that sets it. if your navigation depends on a user, you must have a user.
-2. if the variable is not a user specific, and it is an information common to the whole site, you can use an application helper.
+2.  if the variable is not a user specific, and it is an information common to the whole site, you can use an application helper.
 
 for example, to fix the example, a potential solution would be:
 

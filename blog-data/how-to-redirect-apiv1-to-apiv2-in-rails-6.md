@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-redirect-apiv1-to-apiv2-in-rails-6"
 ---
 
-Alright, let's talk about redirecting api endpoints, specifically moving from `/api/v1` to `/api/v2` in a Rails 6 application. This is a common scenario, especially when dealing with api versioning, and I’ve certainly tackled this kind of migration more than a few times over the years. It's a situation that can easily trip you up if not approached methodically.
+, let's talk about redirecting api endpoints, specifically moving from `/api/v1` to `/api/v2` in a Rails 6 application. This is a common scenario, especially when dealing with api versioning, and I’ve certainly tackled this kind of migration more than a few times over the years. It's a situation that can easily trip you up if not approached methodically.
 
 The key here is to maintain backwards compatibility as much as possible while clearly signaling the shift to the newer version. Ideally, you want a smooth transition for your client applications, minimizing any disruption. So, let's break down the core strategies, and I'll provide some concrete code examples based on my experiences.
 
@@ -116,8 +116,8 @@ A few points to keep in mind when implementing these solutions:
 
 For deepening your understanding of API versioning and related topics, I recommend diving into these resources:
 
-*   **"Building Microservices" by Sam Newman:** This book offers a comprehensive guide to designing and building microservices, with insightful discussions on versioning strategies.
-*   **"RESTful Web APIs" by Leonard Richardson and Mike Amundsen:** A classic resource for learning about REST principles and designing good api endpoints, which can be applied to api versioning and migration strategies.
-*   **RFC 7231 (Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content):** Understanding HTTP status codes is crucial, and this document is the authoritative source. Pay particular attention to status codes 301, 302, 303, 307 and 308.
+- **"Building Microservices" by Sam Newman:** This book offers a comprehensive guide to designing and building microservices, with insightful discussions on versioning strategies.
+- **"RESTful Web APIs" by Leonard Richardson and Mike Amundsen:** A classic resource for learning about REST principles and designing good api endpoints, which can be applied to api versioning and migration strategies.
+- **RFC 7231 (Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content):** Understanding HTTP status codes is crucial, and this document is the authoritative source. Pay particular attention to status codes 301, 302, 303, 307 and 308.
 
 Implementing a seamless redirect from `/api/v1` to `/api/v2` in Rails requires careful planning, detailed testing, and an understanding of the different redirect strategies available. By using the examples and best practices outlined above, you can effectively migrate your api to the new version while minimizing disruption to clients. Remember to document your changes, and communicate clearly with your api consumers. Good luck with your migration!

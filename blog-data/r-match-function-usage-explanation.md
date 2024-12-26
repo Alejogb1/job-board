@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "r-match-function-usage-explanation"
 ---
 
-Okay so you want to understand how the `r match` function works right I've been there believe me spent way too many nights wrestling with regular expressions and R's string manipulation quirks. It's one of those things that seems simple on the surface but can get pretty hairy pretty fast. Let's break it down.
+you want to understand how the `r match` function works right I've been there believe me spent way too many nights wrestling with regular expressions and R's string manipulation quirks. It's one of those things that seems simple on the surface but can get pretty hairy pretty fast. Let's break it down.
 
 First off `r match` isn't one single function it's more like a family of functions all related to finding matches within strings using regular expressions. The core functions you’ll encounter are `regexpr` `gregexpr` and `regexec`. Each has its own strengths and weaknesses and knowing when to use which is half the battle. Let's get into it with some examples I'll try keep it concise
 
 **The Basics: `regexpr`**
 
-`regexpr` is your go-to for finding the *first* match of a regular expression pattern in a given string. It's pretty straightforward. It returns the starting position of that match or `-1` if no match is found. Crucially it also includes an attribute which is the length of the match in characters. I had my fair share of debugging where I thought I found a match but the attribute was giving a `-1` that’s because I did not specify my string properly
+`regexpr` is your go-to for finding the _first_ match of a regular expression pattern in a given string. It's pretty straightforward. It returns the starting position of that match or `-1` if no match is found. Crucially it also includes an attribute which is the length of the match in characters. I had my fair share of debugging where I thought I found a match but the attribute was giving a `-1` that’s because I did not specify my string properly
 
 Let's see it in action:
 
@@ -39,7 +39,7 @@ Key point if you want the actual match use the start pos and length to extract f
 
 **Finding All Matches: `gregexpr`**
 
-Okay `regexpr` is great for finding a single match but what if you need all occurrences of a pattern in your string Well this is what `gregexpr` is for. It's similar to `regexpr` but returns a list of match results. I had a case where I needed to extract all the timestamps from a log file and that’s when I discovered how good `gregexpr` was. I tried doing a `for loop` to do this in `regexpr` and it was not pretty or efficient it was terrible.
+`regexpr` is great for finding a single match but what if you need all occurrences of a pattern in your string Well this is what `gregexpr` is for. It's similar to `regexpr` but returns a list of match results. I had a case where I needed to extract all the timestamps from a log file and that’s when I discovered how good `gregexpr` was. I tried doing a `for loop` to do this in `regexpr` and it was not pretty or efficient it was terrible.
 
 Let's say we want to find all the instances of the word "the" in the same sentence as above:
 
@@ -107,10 +107,10 @@ Now you can see why I had those debugging nights the indexing can be quite tedio
 
 **Things to Remember and Where to Learn More**
 
-*   **Regular Expression Syntax:** R uses Perl-compatible regular expressions (PCRE). If you're rusty on regular expressions that's where most of your problems with this function will come from. I’d highly recommend picking up a copy of "Mastering Regular Expressions" by Jeffrey Friedl it is an older book but it's still a great resource for understanding the core concepts. The book explains a lot of the theoretical concepts and they are still valid.
-*   **Vectorization:** Be aware of how these functions handle vectors of strings. `regexpr` and `regexec` return lists when you pass vectors as inputs. `gregexpr` is a list of list.
-*   **Error Handling:** Always check for `-1` results indicating no match. This will prevent a lot of errors in your code. This is a classic error that I have made a lot of times.
-* **Practice:** The more you practice using these functions the better you'll get. Try writing some functions that require you to do things like parse a comma separated file with different formats or try finding specific elements within html files. You will soon find patterns and get used to those. This might feel like a burden but there is no alternative way to master this.
-*   **Don’t overthink it:** It may be difficult at first but these functions are quite simple they are meant to do what they are made for. Regular expressions can become more complicated but these functions are meant to do what they are meant to do and that is to match elements of the strings using different methods as explained here. Don’t overcomplicate your thoughts. If the match does not work probably the regex is incorrect or the string is not what you thought it was.
+- **Regular Expression Syntax:** R uses Perl-compatible regular expressions (PCRE). If you're rusty on regular expressions that's where most of your problems with this function will come from. I’d highly recommend picking up a copy of "Mastering Regular Expressions" by Jeffrey Friedl it is an older book but it's still a great resource for understanding the core concepts. The book explains a lot of the theoretical concepts and they are still valid.
+- **Vectorization:** Be aware of how these functions handle vectors of strings. `regexpr` and `regexec` return lists when you pass vectors as inputs. `gregexpr` is a list of list.
+- **Error Handling:** Always check for `-1` results indicating no match. This will prevent a lot of errors in your code. This is a classic error that I have made a lot of times.
+- **Practice:** The more you practice using these functions the better you'll get. Try writing some functions that require you to do things like parse a comma separated file with different formats or try finding specific elements within html files. You will soon find patterns and get used to those. This might feel like a burden but there is no alternative way to master this.
+- **Don’t overthink it:** It may be difficult at first but these functions are quite simple they are meant to do what they are made for. Regular expressions can become more complicated but these functions are meant to do what they are meant to do and that is to match elements of the strings using different methods as explained here. Don’t overcomplicate your thoughts. If the match does not work probably the regex is incorrect or the string is not what you thought it was.
 
 So that's the gist of the `r match` family of functions. They’re powerful tools once you get the hang of them. Now go forth and parse all the strings you want. Just remember debugging is like trying to find a bug in the code, but the code is a bug, it’s a meta-bug, you have to debug your debugging process and then suddenly the solution appears. If you have any more questions feel free to ask.

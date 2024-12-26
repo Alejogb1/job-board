@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-get-logits-from-t5-without-using-labels"
 ---
 
-Okay, so you're looking to extract logits from a T5 model, specifically without providing labels during inference. This is a common need, especially when exploring model behavior or building custom loss functions outside the standard text generation paradigm. I recall one project where I had to do something similar to analyze the token probabilities in an adversarial setting, and the standard methods just weren't cutting it. Let me walk you through how it’s done, drawing from that experience and some other projects I've tackled.
+, so you're looking to extract logits from a T5 model, specifically without providing labels during inference. This is a common need, especially when exploring model behavior or building custom loss functions outside the standard text generation paradigm. I recall one project where I had to do something similar to analyze the token probabilities in an adversarial setting, and the standard methods just weren't cutting it. Let me walk you through how it’s done, drawing from that experience and some other projects I've tackled.
 
 At its core, T5 generates output by predicting the next token given a sequence, essentially assigning probabilities to a vocabulary of possible tokens. These probabilities are derived from logits, the raw, unnormalized scores from the model's final linear layer. By default, when we use transformers library or similar inference patterns, these logits are usually processed further via softmax or a similar function to get actual probability distribution and then the argmax is taken to get the prediction. What we need to do is tap into that raw output before the softmax is applied.
 
@@ -118,14 +118,14 @@ This snippet demonstrates how to generalize the method to work with multiple inp
 
 **Important Considerations and Recommended Resources**
 
-*   **Understanding the Underlying Model:** A foundational understanding of the transformer architecture, specifically the T5 model, is crucial. I highly recommend the original T5 paper, "Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer" by Colin Raffel et al. It provides the necessary conceptual background. It can help you understand the nuances of how the model works.
+- **Understanding the Underlying Model:** A foundational understanding of the transformer architecture, specifically the T5 model, is crucial. I highly recommend the original T5 paper, "Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer" by Colin Raffel et al. It provides the necessary conceptual background. It can help you understand the nuances of how the model works.
 
-*   **Tokenizer Specifics:** Each tokenizer has its own way of encoding text into tokens. It's beneficial to understand how your T5 tokenizer breaks down text to know which tokens you're getting logits for. The Hugging Face documentation is quite excellent at explaining the specifics of each tokenizer.
+- **Tokenizer Specifics:** Each tokenizer has its own way of encoding text into tokens. It's beneficial to understand how your T5 tokenizer breaks down text to know which tokens you're getting logits for. The Hugging Face documentation is quite excellent at explaining the specifics of each tokenizer.
 
-*   **Batching for Efficiency:** When working with large datasets, batching your input is very important. It is faster to pass multiple inputs to model in one go. The `transformers` library makes batching very easy and efficient.
+- **Batching for Efficiency:** When working with large datasets, batching your input is very important. It is faster to pass multiple inputs to model in one go. The `transformers` library makes batching very easy and efficient.
 
-*   **Computational Resources:** Working with large models like T5 can be computationally demanding. So make sure you have the hardware to handle the operations. The larger the model, the more memory is required to generate logits.
+- **Computational Resources:** Working with large models like T5 can be computationally demanding. So make sure you have the hardware to handle the operations. The larger the model, the more memory is required to generate logits.
 
-*   **Error Checking**: Always ensure to use `with torch.no_grad()` during inference to avoid unnecessary gradient computations, which will slow the processing down a lot. Make sure to check dimensions and shapes of your data, if they do not match the expected values, it is always a good indicator of some underlying error in the code.
+- **Error Checking**: Always ensure to use `with torch.no_grad()` during inference to avoid unnecessary gradient computations, which will slow the processing down a lot. Make sure to check dimensions and shapes of your data, if they do not match the expected values, it is always a good indicator of some underlying error in the code.
 
 In summary, obtaining logits from T5 without labels is a matter of accessing the model's raw output before the softmax layer. By utilizing the techniques above, you can effectively tap into this part of the model's behavior, enabling deeper analysis and the creation of new applications. Remember to thoroughly understand the underlying model and tokenizer to make the most out of your work.

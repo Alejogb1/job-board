@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-create-a-vector-containing-items-that-implement-two-traits"
 ---
 
-Alright, let's tackle this. I've bumped into this scenario a good number of times over the years, particularly when dealing with systems that require composable behaviors. The challenge, as you've presented it, is how to construct a `Vec` (or similar data structure) that holds items conforming to *two* distinct traits. It's not about concrete types; it’s about ensuring that the items we store can exhibit behaviors defined by multiple interfaces. This might seem straightforward at first glance but can become a bit nuanced.
+, let's tackle this. I've bumped into this scenario a good number of times over the years, particularly when dealing with systems that require composable behaviors. The challenge, as you've presented it, is how to construct a `Vec` (or similar data structure) that holds items conforming to _two_ distinct traits. It's not about concrete types; it’s about ensuring that the items we store can exhibit behaviors defined by multiple interfaces. This might seem straightforward at first glance but can become a bit nuanced.
 
 The core issue here is that rust doesn't support multiple inheritance in the way some object-oriented languages do. You can't just say "this type implements both trait a and trait b, and I want a `vec` of those" as a direct type declaration. We need to approach this problem with some careful consideration of rust's type system.
 
-My first experience with this was when building a plugin system. I had various plugins each needing to implement both `Loadable` (responsible for initializing) and `Renderable` (responsible for displaying on the screen). A `Vec` of simply either `Loadable` or `Renderable` wouldn't do, because what we really needed was the ability to manage things that can do *both*.
+My first experience with this was when building a plugin system. I had various plugins each needing to implement both `Loadable` (responsible for initializing) and `Renderable` (responsible for displaying on the screen). A `Vec` of simply either `Loadable` or `Renderable` wouldn't do, because what we really needed was the ability to manage things that can do _both_.
 
 Let's walk through the strategies I found effective, coupled with code snippets to illustrate the concepts.
 
@@ -56,7 +56,7 @@ fn main() {
 }
 ```
 
-In this example, `dyn Loadable + Renderable` specifies that the objects in the `Vec` must implement *both* `Loadable` and `Renderable`. Notice the `Box` is necessary for trait objects as they are dynamically sized. The code iterates through the `Vec`, calling methods defined on the traits. It's runtime polymorphism in action. This method is powerful and allows you to work with varied types. However, it incurs the cost of dynamic dispatch, which can have a performance impact in very hot loops.
+In this example, `dyn Loadable + Renderable` specifies that the objects in the `Vec` must implement _both_ `Loadable` and `Renderable`. Notice the `Box` is necessary for trait objects as they are dynamically sized. The code iterates through the `Vec`, calling methods defined on the traits. It's runtime polymorphism in action. This method is powerful and allows you to work with varied types. However, it incurs the cost of dynamic dispatch, which can have a performance impact in very hot loops.
 
 **Strategy 2: Enums with Associated Data**
 
@@ -180,7 +180,7 @@ fn main() {
 }
 ```
 
-Here `PluginManager` is parameterized by a generic type `T` which is constrained to implement both `Loadable` and `Renderable`. This means that `PluginManager` instances can hold any concrete struct which implements both those traits. This method is suitable when you need static dispatch and prefer type safety over dynamic flexibility. It's not about storing a `Vec` of different types. It’s about managing the logic around *one* concrete type that has those traits.
+Here `PluginManager` is parameterized by a generic type `T` which is constrained to implement both `Loadable` and `Renderable`. This means that `PluginManager` instances can hold any concrete struct which implements both those traits. This method is suitable when you need static dispatch and prefer type safety over dynamic flexibility. It's not about storing a `Vec` of different types. It’s about managing the logic around _one_ concrete type that has those traits.
 
 **Resources for further exploration:**
 

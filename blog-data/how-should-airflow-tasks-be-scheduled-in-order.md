@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-should-airflow-tasks-be-scheduled-in-order"
 ---
 
-Alright, let’s tackle this. Scheduling Airflow tasks, especially when dependencies are involved, isn't a one-size-fits-all scenario. I've seen more than a few pipelines come to grief because someone glossed over the nuances of task orchestration. From my experience building large data platforms, achieving predictable execution boils down to meticulous planning and a solid understanding of Airflow’s core scheduling mechanics.
+, let’s tackle this. Scheduling Airflow tasks, especially when dependencies are involved, isn't a one-size-fits-all scenario. I've seen more than a few pipelines come to grief because someone glossed over the nuances of task orchestration. From my experience building large data platforms, achieving predictable execution boils down to meticulous planning and a solid understanding of Airflow’s core scheduling mechanics.
 
-The fundamental challenge with task order lies in adhering to the directed acyclic graph (dag) you define. Airflow isn’t just randomly firing off tasks; it’s adhering to the dependencies you establish with `set_upstream` or `set_downstream`, and since Airflow 2.0, using bitshift operations like `>>` and `<<` is common practice. The scheduler reads this graph and ensures tasks only execute after their dependencies are met. However, that dependency declaration only handles explicit requirements—the *logical* order. You also have to consider timing which is a separate facet.
+The fundamental challenge with task order lies in adhering to the directed acyclic graph (dag) you define. Airflow isn’t just randomly firing off tasks; it’s adhering to the dependencies you establish with `set_upstream` or `set_downstream`, and since Airflow 2.0, using bitshift operations like `>>` and `<<` is common practice. The scheduler reads this graph and ensures tasks only execute after their dependencies are met. However, that dependency declaration only handles explicit requirements—the _logical_ order. You also have to consider timing which is a separate facet.
 
 The first and most straightforward ordering mechanism comes directly from your DAG definition. For instance, a basic extract-transform-load (etl) pipeline might look like this in simplified Python using the `airflow.decorators` available in modern Airflow:
 
@@ -38,6 +38,7 @@ def basic_etl():
 basic_etl_dag = basic_etl()
 
 ```
+
 Here, `extract_data` runs first, followed by `transform_data` after `extract_data` completes and its result is passed to the next task. `load_data` only executes once `transform_data` is finished, it takes the result and executes. Airflow implicitly infers the task execution order from how they are chained together inside the function. This explicit dependency definition ensures a deterministic, sequential execution flow. It’s the bedrock of most workflows and a solid starting point.
 
 However, it’s not always as simple as an ordered sequence. Sometimes, you have situations where tasks can be parallelized, or where you need dynamic branching of the pipeline. That’s where understanding task grouping and branching becomes critical.
@@ -110,6 +111,7 @@ def external_dependencies():
 
 external_dependencies_dag = external_dependencies()
 ```
+
 Here, the `TimeDeltaSensor` delays the execution of the subsequent task for 10 seconds. The `HttpSensor` polls a provided endpoint until a condition is met (e.g., a service becomes 'ready'). Only after both sensor conditions are satisfied will the `process_data` task be executed. The key here is that while you define the task order logically, sensors introduce runtime dependencies that can dynamically affect when and if a task proceeds.
 
 This is where mastering Airflow's advanced features comes in. Understanding concepts like pool sizes can limit concurrency. Also, when utilizing queues such as Celery, understanding how tasks are routed and prioritized is paramount. Finally, for those working with very large DAGs, using SubDAGs or TaskGroups can improve the management and ordering logic.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-assign-roles-to-many-objects-and-classes-in-rails-6"
 ---
 
-Okay, let's tackle the complexities of role assignment in Rails 6. I've certainly faced this challenge a few times over the years, most notably during a project involving a rather intricate e-learning platform. We had users with wildly varying permissions, and the initial, naive attempts quickly became unmaintainable. So, trust me, I've been there. The key isn’t just about *how* you assign roles, but how you do it in a way that remains flexible, testable, and doesn't become a tangled mess as your application grows.
+, let's tackle the complexities of role assignment in Rails 6. I've certainly faced this challenge a few times over the years, most notably during a project involving a rather intricate e-learning platform. We had users with wildly varying permissions, and the initial, naive attempts quickly became unmaintainable. So, trust me, I've been there. The key isn’t just about _how_ you assign roles, but how you do it in a way that remains flexible, testable, and doesn't become a tangled mess as your application grows.
 
 Fundamentally, when dealing with roles, you’re really handling authorization – determining what an entity, usually a user but potentially an object or class, is permitted to do within your system. Rails doesn't offer a baked-in role management system directly, so we need to build it ourselves or use a well-regarded library. Let's explore the core concepts and then dive into some practical examples, shall we?
 
@@ -38,6 +38,7 @@ Now, let’s create the basic roles:
 User.create!(email: "admin@example.com", password: "password", password_confirmation: "password").add_role :admin
 User.create!(email: "user1@example.com", password: "password", password_confirmation: "password").add_role :user
 ```
+
 Then run `rails db:seed`.
 
 Now you can query your user for their roles:
@@ -66,6 +67,7 @@ class BlogPost < ApplicationRecord
   resourcify
 end
 ```
+
 We also add `resourcify` to the `User` model.
 
 ```ruby
@@ -123,7 +125,9 @@ class User < ApplicationRecord
   end
 end
 ```
+
 Then assign roles as before:
+
 ```ruby
 admin_user = User.find_by(email: "admin@example.com")
 user1 = User.find_by(email: "user1@example.com")
@@ -132,6 +136,7 @@ blog_post1 = BlogPost.first
 user1.add_role :editor, blog_post1
 user1.add_role :user
 ```
+
 Now, use the `can?` method:
 
 ```ruby
@@ -143,8 +148,8 @@ puts "Can admin edit blog_post1?: #{admin_user.can?(:edit, blog_post1)}"      # 
 puts "Can admin publish blog_post1?: #{admin_user.can?(:publish, blog_post1)}" # Output: true
 ```
 
-The `can?` method centralizes your authorization logic. Notice how `admin` has all of the permissions.  This method offers clear, maintainable access checks that are easily testable. This is generally a better approach than directly scattering role checks throughout your controllers and views.
+The `can?` method centralizes your authorization logic. Notice how `admin` has all of the permissions. This method offers clear, maintainable access checks that are easily testable. This is generally a better approach than directly scattering role checks throughout your controllers and views.
 
-Regarding helpful resources, for a deeper dive into authorization principles, I’d recommend *'Practical Object-Oriented Design in Ruby'* by Sandi Metz. It provides a strong foundation for designing robust and maintainable systems, which directly translates to handling complex role assignments elegantly. For more advanced permission concepts and approaches, *'Patterns of Enterprise Application Architecture'* by Martin Fowler is incredibly valuable as well. Additionally, for a more thorough examination of role-based access control and related topics, the 'NIST Special Publication 800-53' is considered an authority within the security domain. While this is primarily a security document, understanding its foundations can be very beneficial.
+Regarding helpful resources, for a deeper dive into authorization principles, I’d recommend _'Practical Object-Oriented Design in Ruby'_ by Sandi Metz. It provides a strong foundation for designing robust and maintainable systems, which directly translates to handling complex role assignments elegantly. For more advanced permission concepts and approaches, _'Patterns of Enterprise Application Architecture'_ by Martin Fowler is incredibly valuable as well. Additionally, for a more thorough examination of role-based access control and related topics, the 'NIST Special Publication 800-53' is considered an authority within the security domain. While this is primarily a security document, understanding its foundations can be very beneficial.
 
 Remember, effective role management isn’t just about assigning roles, it’s about crafting a system that’s adaptable and easy to understand. Start simple, and as the needs of your application evolve, you can always refine and improve your approach. The three examples above should give you a robust starting point, and you'll find that implementing these techniques, as I did during that e-learning platform project, makes a huge difference in the overall maintainability of your codebase.

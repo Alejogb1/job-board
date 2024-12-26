@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-a-serialization-of-a-class-based-object-under-rails-model"
 ---
 
-alright, so you're hitting that classic object serialization problem within a rails model, right? i've been there, more times than i care to remember. it's one of those things that seems simple on the surface but can get complex pretty quickly when you actually dive in. i'm guessing you're trying to persist some structured data that doesn't directly map to your database columns, and that's totally normal.
+, so you're hitting that classic object serialization problem within a rails model, right? i've been there, more times than i care to remember. it's one of those things that seems simple on the surface but can get complex pretty quickly when you actually dive in. i'm guessing you're trying to persist some structured data that doesn't directly map to your database columns, and that's totally normal.
 
 let me share some experiences. years ago, when i was working on this e-commerce platform (it feels like ages ago!), we had to deal with storing complex product configuration data. each product could have multiple variations with different attributes, and these variations didn’t fit nicely into a traditional relational database table. initially, we tried shoving everything into a json string which, looking back now, was not the best idea. it worked, but querying the data or trying to do anything advanced with it was a major pain. we were essentially treating a structured object like a blob, not good.
 
@@ -47,7 +47,7 @@ with this setup rails automatically handles the serialization process. when you 
 
 2.  **querying:** you can't easily query based on the contents of this serialized data in a traditional sql manner, as it is just a string. you can write your queries, but performance will suffer considerably.
 
-3. **data type limitations:** although you can handle a lot of scenarios, the `yaml` format also has some limitations in terms of handling more complex ruby classes and it may not serialize them properly, it may result in errors. if you encounter strange errors, double-check this aspect.
+3.  **data type limitations:** although you can handle a lot of scenarios, the `yaml` format also has some limitations in terms of handling more complex ruby classes and it may not serialize them properly, it may result in errors. if you encounter strange errors, double-check this aspect.
 
 if `yaml` with `serialize` is not enough for you, consider using `json` instead, with a custom setter and getter for your attribute. this method gives you more control over the process and also has better compatibility with json, which is generally easier to deal with other systems outside your application. here is an example:
 
@@ -140,7 +140,7 @@ in this example `activerecord-serializers` lets you easily use the `json` serial
 
 so, what's the best approach for you? it really depends on your use case, you should take into account how complex your objects are, if you need custom serialization, and if you plan to query your data.
 
-for smaller projects using `serialize` with a plain ruby object will be sufficient, the trade-offs of using yaml might be okay. for bigger projects, or projects that are constantly changing and are more complex, it's probably better to write custom methods to handle `json` and have more flexibility. or use `activerecord-serializers` gem for more specific use cases.
+for smaller projects using `serialize` with a plain ruby object will be sufficient, the trade-offs of using yaml might be . for bigger projects, or projects that are constantly changing and are more complex, it's probably better to write custom methods to handle `json` and have more flexibility. or use `activerecord-serializers` gem for more specific use cases.
 
 before deciding you should also think about alternative database options. if you will need to query the data, maybe consider moving to a `jsonb` column in postgres or even move to a nosql database if this attribute is the main focus of your application.
 

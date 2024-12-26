@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-airflow-download-dataproc-logs-to-google-cloud-storage"
 ---
 
-Okay, let's tackle this. I've certainly seen my share of headaches around log management in distributed environments, and Dataproc is definitely one area where it's crucial to get this process nailed down correctly. In my past experience, especially with larger-scale pipelines, the ability to efficiently retrieve and store Dataproc logs for auditing and debugging has been absolutely vital. If the logging pipeline isn't working smoothly, troubleshooting becomes a nightmare. So, let's break down how to pull those logs from Dataproc and archive them into Google Cloud Storage (GCS) using Airflow.
+, let's tackle this. I've certainly seen my share of headaches around log management in distributed environments, and Dataproc is definitely one area where it's crucial to get this process nailed down correctly. In my past experience, especially with larger-scale pipelines, the ability to efficiently retrieve and store Dataproc logs for auditing and debugging has been absolutely vital. If the logging pipeline isn't working smoothly, troubleshooting becomes a nightmare. So, let's break down how to pull those logs from Dataproc and archive them into Google Cloud Storage (GCS) using Airflow.
 
 The core idea centers around using the Airflow's operators designed to interact with Google Cloud Platform, in particular the `dataproc_operator.DataprocWorkflowTemplateInstantiateOperator` or the `dataproc_operator.DataprocSubmitJobOperator` and subsequently employing Google Cloud Storage operators to fetch the logs. Specifically, it's about programmatically accessing the Cloud Logging API, identifying the logs associated with your specific Dataproc clusters and jobs, then downloading and staging them into GCS. This isn’t a direct, single-step operation, it’s more of a process which can be wrapped into an airflow pipeline.
 
@@ -80,6 +80,7 @@ with DAG(
     # Add dependency
     # start_dataproc >> log_upload_task
 ```
+
 In this Python Operator example, I've used `GoogleCloudLoggingHook` to retrieve the logs associated with the Dataproc cluster id, and `GoogleCloudStorageHook` to upload the serialized JSON representation of the logs to GCS. The `filter_` parameter of `list_entries()` is crucial because it allows you to pull logs just for your specific cluster. This helps keep our log retrieval targeted and reduces unnecessary fetching of logs. The uploaded log is formatted as a JSON string to ease readability and further analysis.
 
 Now, let's consider a slightly different approach where you're using `DataprocSubmitJobOperator`. This operator executes jobs within a running Dataproc cluster. Log retrieval here is similar, but you'd use the job ID instead of the cluster ID to identify specific log entries.
@@ -149,11 +150,12 @@ with DAG(
     # submit_dataproc_job >> log_upload_task
 
 ```
+
 Here, the key difference is the log query, targeting `cloud_dataproc_job` and the specific `job_id`. The rest of the logic, using the same hooks for log retrieval and GCS upload, remains largely the same. This highlights the versatility of this pattern.
 
-For a more complex use-case with multiple jobs submitted to multiple clusters, you might consider a more generalized custom operator that utilizes `XCom` to manage identifiers, but the core logic for log retrieval and GCS upload would remain the same.  Remember, all this uses the Google Cloud client libraries behind the scenes, so proper authentication is critical – your Airflow environment should have the necessary permissions to interact with Dataproc and GCS.
+For a more complex use-case with multiple jobs submitted to multiple clusters, you might consider a more generalized custom operator that utilizes `XCom` to manage identifiers, but the core logic for log retrieval and GCS upload would remain the same. Remember, all this uses the Google Cloud client libraries behind the scenes, so proper authentication is critical – your Airflow environment should have the necessary permissions to interact with Dataproc and GCS.
 
-Lastly, let's tackle log aggregation in a more realistic scenario, where multiple worker nodes generate log files on Dataproc clusters.  In this case, log aggregation on each node will send logs to Cloud Logging automatically and you don't need to move the log files out of the node file system.
+Lastly, let's tackle log aggregation in a more realistic scenario, where multiple worker nodes generate log files on Dataproc clusters. In this case, log aggregation on each node will send logs to Cloud Logging automatically and you don't need to move the log files out of the node file system.
 However, this scenario also assumes your cluster is set up to forward its logs to Cloud Logging.
 
 ```python
@@ -219,8 +221,8 @@ with DAG(
     # create_dataproc_cluster >> log_aggregator_task
 ```
 
-In this example, I'm aggregating logs from a full Dataproc cluster using the `cluster_name` to query the Cloud Logging api and saving all the logs for this cluster.  The timestamped file name ensures you have a history of log aggregations. The choice of JSON as the storage format ensures compatibility with other tools for analysis.
+In this example, I'm aggregating logs from a full Dataproc cluster using the `cluster_name` to query the Cloud Logging api and saving all the logs for this cluster. The timestamped file name ensures you have a history of log aggregations. The choice of JSON as the storage format ensures compatibility with other tools for analysis.
 
-For further study, I recommend focusing on the official Google Cloud documentation for both Cloud Logging and Dataproc, along with Airflow’s documentation specifically on the Google provider.  Additionally, "Designing Data-Intensive Applications" by Martin Kleppmann provides crucial background on managing distributed systems and data pipelines, and is a must-read for anyone working in this space. "Cloud Native Patterns" by Cornelia Davis is also very valuable to understanding and crafting repeatable solutions for cloud environments.
+For further study, I recommend focusing on the official Google Cloud documentation for both Cloud Logging and Dataproc, along with Airflow’s documentation specifically on the Google provider. Additionally, "Designing Data-Intensive Applications" by Martin Kleppmann provides crucial background on managing distributed systems and data pipelines, and is a must-read for anyone working in this space. "Cloud Native Patterns" by Cornelia Davis is also very valuable to understanding and crafting repeatable solutions for cloud environments.
 
 In essence, the mechanism for downloading Dataproc logs involves programmatic interaction with Cloud Logging via Airflow. This allows you to automate the crucial task of log collection, ensuring that you have the audit trails you need without the manual headache. The key lies in understanding how to use the Airflow hooks and operators to make the connection and automate the entire process.

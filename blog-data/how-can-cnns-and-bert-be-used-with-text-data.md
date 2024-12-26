@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-cnns-and-bert-be-used-with-text-data"
 ---
 
-Okay, let’s tackle this one. It’s a question I’ve grappled with extensively, particularly back when I was building a sentiment analysis engine for a large-scale social media platform. We initially leaned heavily on traditional nlp techniques, but the shift to deep learning, specifically cnn and bert, opened up possibilities we hadn't previously imagined.
+, let’s tackle this one. It’s a question I’ve grappled with extensively, particularly back when I was building a sentiment analysis engine for a large-scale social media platform. We initially leaned heavily on traditional nlp techniques, but the shift to deep learning, specifically cnn and bert, opened up possibilities we hadn't previously imagined.
 
 The core challenge when processing text with neural networks lies in transforming the symbolic nature of language into numerical representations that these models can effectively consume. Unlike images, where pixels provide inherent spatial structure, text requires a pre-processing stage that is both nuanced and crucial to model performance.
 

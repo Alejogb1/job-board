@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "xjavascript-browser-code-execution-usage"
 ---
 
-Okay so you're asking about JavaScript browser code execution basically how that whole thing works right? Been there done that probably more times than I care to admit I mean I practically lived in the browser dev tools back in the day.
+you're asking about JavaScript browser code execution basically how that whole thing works right? Been there done that probably more times than I care to admit I mean I practically lived in the browser dev tools back in the day.
 
-Alright so picture this it's like the early 2010s I'm working on this really ambitious web app think like a proto-social media platform where everything happens client-side. We're talking heavy AJAX dynamic content updates the whole nine yards and that's when I first really wrestled with the intricacies of browser JavaScript execution.
+so picture this it's like the early 2010s I'm working on this really ambitious web app think like a proto-social media platform where everything happens client-side. We're talking heavy AJAX dynamic content updates the whole nine yards and that's when I first really wrestled with the intricacies of browser JavaScript execution.
 
 The browser's a complex beast you know first it gets the HTML document from the server that's like the structural blueprint of the page. Then the browser parses that HTML creates a Document Object Model or DOM. Think of it as a tree structure representation of the HTML content. After the DOM is there that is when things start to get interesting.
 
@@ -21,10 +21,10 @@ Let’s take the simple example of basic interactions on a page. Say you've got 
 // <button id="myButton">Click Me</button>
 
 // JavaScript snippet
-document.getElementById('myButton').addEventListener('click', function() {
-  console.log('Button clicked!');
+document.getElementById("myButton").addEventListener("click", function () {
+  console.log("Button clicked!");
   // Here you can do things like updating the DOM
-  document.getElementById('myButton').textContent = "Clicked!";
+  document.getElementById("myButton").textContent = "Clicked!";
 });
 ```
 
@@ -38,19 +38,19 @@ Let's say you are making a request to fetch some data using fetch API in javascr
 
 ```javascript
 // Example using fetch API and Promises
-fetch('https://api.example.com/data')
-  .then(response => {
+fetch("https://api.example.com/data")
+  .then((response) => {
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      throw new Error("Network response was not ok");
     }
     return response.json();
   })
-  .then(data => {
-    console.log('Data received:', data);
+  .then((data) => {
+    console.log("Data received:", data);
     // Update the DOM here with the received data
   })
-  .catch(error => {
-    console.error('Error during fetch:', error);
+  .catch((error) => {
+    console.error("Error during fetch:", error);
   });
 ```
 
@@ -64,14 +64,14 @@ So async/await it did make a lot of difference as this allowed to write asynchro
 // Example using async/await
 async function fetchData() {
   try {
-    const response = await fetch('https://api.example.com/data');
+    const response = await fetch("https://api.example.com/data");
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      throw new Error("Network response was not ok");
     }
     const data = await response.json();
-    console.log('Data received:', data);
+    console.log("Data received:", data);
   } catch (error) {
-    console.error('Error during fetch:', error);
+    console.error("Error during fetch:", error);
   }
 }
 

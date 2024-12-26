@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-filter-the-rider-explorer-solution-view"
 ---
 
-Okay, so you're looking to wrangle that beast of a solution explorer in Rider. Been there, done that—numerous times, actually. It's a powerful tool, but when you’re dealing with large, complex projects, the unfiltered view can become, shall we say, a tad overwhelming. I recall one particularly memorable project, a sprawling microservices architecture, where navigating the solution explorer felt like navigating a labyrinth. Filtering, thankfully, is the key to regaining control and improving productivity. It’s not always obvious how to get it to behave *exactly* the way you want, so let's break it down.
+, so you're looking to wrangle that beast of a solution explorer in Rider. Been there, done that—numerous times, actually. It's a powerful tool, but when you’re dealing with large, complex projects, the unfiltered view can become, shall we say, a tad overwhelming. I recall one particularly memorable project, a sprawling microservices architecture, where navigating the solution explorer felt like navigating a labyrinth. Filtering, thankfully, is the key to regaining control and improving productivity. It’s not always obvious how to get it to behave _exactly_ the way you want, so let's break it down.
 
 The core idea behind filtering is to selectively display elements based on specific criteria. In Rider's solution explorer, this functionality is baked in, allowing you to hide or show files, folders, and even entire projects based on their name, type, or location, or even their status within your version control system. This saves you considerable time from manually scrolling through the list, and allows you to quickly access the specific parts of the solution you need. The interface exposes several ways to achieve this, but some approaches are more efficient and maintainable than others.
 
@@ -51,7 +51,7 @@ This is also a very common task for me, especially with microservices. In practi
 
 **Code Snippet Example 3: Excluding Certain Files**
 
-Sometimes, you need to *exclude* certain files or directories. Let's say we want to see all of our csharp files in the previous example, except those in a specific test directory. Modify the previous filtering method to utilize a negative lookahead.
+Sometimes, you need to _exclude_ certain files or directories. Let's say we want to see all of our csharp files in the previous example, except those in a specific test directory. Modify the previous filtering method to utilize a negative lookahead.
 
 1.  Open the filter “customize” dialogue.
 2.  Select 'By pattern' .

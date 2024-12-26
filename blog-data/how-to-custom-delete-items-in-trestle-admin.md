@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-custom-delete-items-in-trestle-admin"
 ---
 
-Alright, let's talk about custom deletion in Trestle Admin. I've encountered this challenge quite a few times throughout my career, especially when dealing with complex relational data models where a standard delete action simply wouldn't cut it. It’s not always straightforward, and relying on Trestle’s defaults can lead to orphaned records and data integrity issues. I recall one particular project, a content management system for a large media house, where the standard delete functionality would have wreaked havoc on their publishing pipeline. We absolutely had to implement customized deletion logic.
+, let's talk about custom deletion in Trestle Admin. I've encountered this challenge quite a few times throughout my career, especially when dealing with complex relational data models where a standard delete action simply wouldn't cut it. It’s not always straightforward, and relying on Trestle’s defaults can lead to orphaned records and data integrity issues. I recall one particular project, a content management system for a large media house, where the standard delete functionality would have wreaked havoc on their publishing pipeline. We absolutely had to implement customized deletion logic.
 
 Fundamentally, Trestle Admin, being built on top of ActiveAdmin, inherits a good portion of its underlying mechanics. However, it doesn't expose the full breadth of customization options immediately in the UI. Therefore, we typically need to dive into the underlying controller logic. The key here is understanding that Trestle gives you mechanisms to override its default actions. You’re not just stuck with what it gives you out of the box.
 
@@ -46,7 +46,7 @@ class Comment < ApplicationRecord
 end
 ```
 
-In this snippet, we redefine the `destroy` method in both `BlogPost` and `Comment`. Instead of direct deletion, we update the `deleted_at` column with the current timestamp. We also add a `default_scope` to filter out deleted records, ensuring that standard queries won’t return them, and a `with_deleted` scope for getting all results if needed.  The `dependent: :destroy` on the association still operates, but now it will trigger the modified destroy method on the `Comment` models.
+In this snippet, we redefine the `destroy` method in both `BlogPost` and `Comment`. Instead of direct deletion, we update the `deleted_at` column with the current timestamp. We also add a `default_scope` to filter out deleted records, ensuring that standard queries won’t return them, and a `with_deleted` scope for getting all results if needed. The `dependent: :destroy` on the association still operates, but now it will trigger the modified destroy method on the `Comment` models.
 
 **Example 2: Trestle Admin Action Overrides**
 

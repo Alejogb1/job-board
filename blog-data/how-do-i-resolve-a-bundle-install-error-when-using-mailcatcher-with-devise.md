@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-resolve-a-bundle-install-error-when-using-mailcatcher-with-devise"
 ---
 
-Okay, let’s tackle this. I remember a project back in 2018, a fairly complex rails application leveraging devise for user authentication and mailcatcher for local email testing, which hit this exact snag. The frustrating part wasn’t the error itself, but the lack of a clear, concise solution initially. It took some persistent investigation and experimentation to finally nail down the root cause and implement a robust fix. The issue typically arises from a conflict in gem dependencies, specifically those related to email handling and how they interact with both devise's configuration and mailcatcher's requirements, during `bundle install`.
+, let’s tackle this. I remember a project back in 2018, a fairly complex rails application leveraging devise for user authentication and mailcatcher for local email testing, which hit this exact snag. The frustrating part wasn’t the error itself, but the lack of a clear, concise solution initially. It took some persistent investigation and experimentation to finally nail down the root cause and implement a robust fix. The issue typically arises from a conflict in gem dependencies, specifically those related to email handling and how they interact with both devise's configuration and mailcatcher's requirements, during `bundle install`.
 
 The core problem isn't actually with either devise or mailcatcher in isolation, but rather how they play together alongside other email-related gems often included in rails projects. You will usually encounter this as a failure to install one or more specific gems which are required by either devise or mailcatcher – or even by another gem – but have conflicting version requirements with the other. The `bundler` is essentially indicating that it cannot reconcile the requested gem versions into a consistent and working dependency graph.
 
@@ -54,16 +54,18 @@ group :test do
   gem 'mail', '~> 2.8.0'
 end
 ```
+
 Or as appropriate for your case.
 
 **Step 3: Resolve the Conflict – Example 2: Updating Related Gems**
 
-Another approach is to see if updating *related* gems, particularly `actionmailer`, or if any other gem is pointing to an outdated version of the same dependency, resolves the conflict. In our initial example, instead of pinning ‘mail’, we could try to update `actionmailer` itself:
+Another approach is to see if updating _related_ gems, particularly `actionmailer`, or if any other gem is pointing to an outdated version of the same dependency, resolves the conflict. In our initial example, instead of pinning ‘mail’, we could try to update `actionmailer` itself:
 
 ```ruby
 # In Gemfile
 gem 'actionmailer', '~> 6.1'
 ```
+
 Then execute
 
 ```bash
@@ -94,9 +96,9 @@ After each change.
 
 **Important Considerations:**
 
-*   **Start Small:** Don't try to fix everything at once. Focus on resolving the immediate conflict identified by bundler.
-*   **Test Thoroughly:** After making changes, always run your tests. Verify that devise's mail delivery and mailcatcher are working as expected. In my experience, testing email functionalities is very important at this stage.
-*   **Documentation:** Keep your `gemfile` and related commit messages clear and concise to explain why certain versions are pinned or removed for future developers. This will save others (and your future self) a lot of headache.
+- **Start Small:** Don't try to fix everything at once. Focus on resolving the immediate conflict identified by bundler.
+- **Test Thoroughly:** After making changes, always run your tests. Verify that devise's mail delivery and mailcatcher are working as expected. In my experience, testing email functionalities is very important at this stage.
+- **Documentation:** Keep your `gemfile` and related commit messages clear and concise to explain why certain versions are pinned or removed for future developers. This will save others (and your future self) a lot of headache.
 
 **Recommended Resources:**
 

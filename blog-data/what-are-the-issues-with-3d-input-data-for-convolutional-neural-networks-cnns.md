@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-issues-with-3d-input-data-for-convolutional-neural-networks-cnns"
 ---
 
-Okay, let’s talk about feeding 3d data into convolutional neural networks. It's a topic I’ve tackled quite a few times across different projects, and it definitely has its particular set of challenges. I recall one instance where we were building an automated quality control system for 3d-printed parts; the sheer volume and complexity of the point cloud data almost brought the entire pipeline to a standstill. So, from that and other experiences, let's break down some of the prominent issues.
+, let’s talk about feeding 3d data into convolutional neural networks. It's a topic I’ve tackled quite a few times across different projects, and it definitely has its particular set of challenges. I recall one instance where we were building an automated quality control system for 3d-printed parts; the sheer volume and complexity of the point cloud data almost brought the entire pipeline to a standstill. So, from that and other experiences, let's break down some of the prominent issues.
 
 One of the first things you'll bump into is the computational cost. 3d data, be it voxel grids, point clouds, or meshes, inherently carries significantly more information than its 2d counterpart. This increase in dimensionality directly translates to a greater number of parameters in the neural network, especially when dealing with convolutional layers. Consider a typical 2d image—perhaps a 256x256 matrix—and compare that to a 3d voxel grid of, say, 64x64x64. The latter requires vastly more memory to store and process. When those volumes start getting bigger, the computational requirements grow rapidly. And this increased processing often means longer training times and more specialized hardware, such as high-performance GPUs or even TPUs, becoming practically essential. This is not just about the training phase; even inference time can suffer if the network isn't properly optimized. I’ve seen models take seconds, sometimes minutes, for a single prediction on complex 3d datasets without adequate pre-processing.
 
@@ -16,7 +16,7 @@ And finally, let's consider the issue of limited annotated 3D datasets. Compared
 
 Let’s look at some concrete examples in Python, specifically using pytorch and illustrating different 3d data representations.
 
-First, here's an example of how you might represent and process a *voxel grid* using `torch`:
+First, here's an example of how you might represent and process a _voxel grid_ using `torch`:
 
 ```python
 import torch
@@ -31,9 +31,10 @@ output = conv3d(voxel_grid)
 print(f"Voxel grid output shape: {output.shape}")
 
 ```
+
 Here we use `nn.Conv3d`, a standard layer used for processing 3d grids.
 
-Next, consider how you might use a *point cloud*. You will need to apply some kind of structure and processing to it for CNNs. Here's an example of using a simple k-nearest neighbours based approach in conjunction with a convolutional layer (assuming you have this precomputed) and assuming that each point has associated features:
+Next, consider how you might use a _point cloud_. You will need to apply some kind of structure and processing to it for CNNs. Here's an example of using a simple k-nearest neighbours based approach in conjunction with a convolutional layer (assuming you have this precomputed) and assuming that each point has associated features:
 
 ```python
 import torch
@@ -70,9 +71,11 @@ output = point_conv(features, knn_indices)
 print(f"Point cloud output shape: {output.shape}") # Output will be (1, 1024, 64)
 
 ```
+
 This shows how the knn neighborhood information is used to gather feature information in a way that standard convolutions can be applied. Note, the knn indices must be precomputed.
 
-Finally, a simple example to show processing *mesh data* using a mesh convolution approach can be done using a package like torch_geometric. Here we will assume the user has installed torch_geometric.
+Finally, a simple example to show processing _mesh data_ using a mesh convolution approach can be done using a package like torch_geometric. Here we will assume the user has installed torch_geometric.
+
 ```python
 import torch
 from torch_geometric.data import Data
@@ -96,8 +99,9 @@ conv = GCNConv(32, 64)
 output = conv(data.x, data.edge_index)
 print(f"Mesh output shape: {output.shape}")
 ```
+
 Here, the connectivity of the mesh (defined by `edges`) are used to perform graph convolutions which allows information to be passed between vertices as a function of connectivity as well as vertex features.
 
 In each of these examples, we're using a different approach to represent 3D data and a different kind of convolution layer. Each approach has its own considerations in terms of performance, robustness, and implementation complexity.
 
-In summary, building effective models that can process 3d input for CNNs require not just an understanding of the theoretical aspects of CNNs but also deep insights into the practical issues that arise with 3D representations, from the computational load to the challenges posed by sparsity, rotational invariance, and the scarcity of annotated datasets. It's a space where continuous experimentation and careful application of the correct tools and methods make a huge difference to the end results. For further study, I recommend delving into research papers on PointNet and its variations for point cloud processing, graph neural networks for mesh processing, and classic works on 3D object recognition. Textbooks on deep learning and computer vision, such as *Deep Learning* by Goodfellow et al. and *Computer Vision: Algorithms and Applications* by Richard Szeliski, also provide the necessary foundational knowledge.
+In summary, building effective models that can process 3d input for CNNs require not just an understanding of the theoretical aspects of CNNs but also deep insights into the practical issues that arise with 3D representations, from the computational load to the challenges posed by sparsity, rotational invariance, and the scarcity of annotated datasets. It's a space where continuous experimentation and careful application of the correct tools and methods make a huge difference to the end results. For further study, I recommend delving into research papers on PointNet and its variations for point cloud processing, graph neural networks for mesh processing, and classic works on 3D object recognition. Textbooks on deep learning and computer vision, such as _Deep Learning_ by Goodfellow et al. and _Computer Vision: Algorithms and Applications_ by Richard Szeliski, also provide the necessary foundational knowledge.

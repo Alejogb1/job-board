@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-kill-all-background-and-spawned-processes-in-a-bash-scripts-pre-exit-handler"
 ---
 
-Alright, let's tackle this. I've been through this particular rabbit hole more times than I care to count, especially when dealing with complex data processing pipelines and test harnesses that spawn a slew of processes. The challenge of ensuring a clean exit, especially when subprocesses are involved, is a common hurdle. Just relying on a simple `trap` statement for handling exits often falls short, mainly because bash doesn't automatically propagate signals down to child processes. So, let me break down the approaches that I’ve found consistently reliable over the years, along with concrete examples.
+, let's tackle this. I've been through this particular rabbit hole more times than I care to count, especially when dealing with complex data processing pipelines and test harnesses that spawn a slew of processes. The challenge of ensuring a clean exit, especially when subprocesses are involved, is a common hurdle. Just relying on a simple `trap` statement for handling exits often falls short, mainly because bash doesn't automatically propagate signals down to child processes. So, let me break down the approaches that I’ve found consistently reliable over the years, along with concrete examples.
 
 The core issue is that background processes and processes started within subshells are, by default, detached from the parent bash process. When the parent exits or receives a signal like `SIGINT` (Ctrl+C), these children keep running, often becoming zombie processes, which, while not actively consuming CPU, can clutter the system and be a nuisance. What's more problematic is that these orphaned processes can continue writing to log files or modifying files, leading to unexpected results later on.
 
@@ -135,8 +135,8 @@ In this example, we’re taking a more elaborate approach, especially when subsh
 
 To deepen your knowledge on this topic, I'd highly recommend reading the following sources:
 
-*   **"Advanced Programming in the UNIX Environment" by W. Richard Stevens and Stephen A. Rago:** This book is a cornerstone for understanding the intricacies of process management and signal handling in unix-like systems. The chapters on processes, process groups, and signals are particularly relevant to this issue.
-*   **The `bash` man page:** Particularly the sections on job control (`set -m`) and `trap`. The man page provides comprehensive details about `bash` functionality.
-*   **POSIX Specification of the `kill` command:** This is helpful when you want to understand precisely how the kill command handles process groups and process IDs.
+- **"Advanced Programming in the UNIX Environment" by W. Richard Stevens and Stephen A. Rago:** This book is a cornerstone for understanding the intricacies of process management and signal handling in unix-like systems. The chapters on processes, process groups, and signals are particularly relevant to this issue.
+- **The `bash` man page:** Particularly the sections on job control (`set -m`) and `trap`. The man page provides comprehensive details about `bash` functionality.
+- **POSIX Specification of the `kill` command:** This is helpful when you want to understand precisely how the kill command handles process groups and process IDs.
 
 These are not casual reads, but for anyone working with complex bash scripts that spawn child processes, they're invaluable. In practice, the choice of implementation (directly signalling job ids, process groups, or using dedicated cleanup scripts) depends on the complexity of your specific scenario. I’ve found, through many iterations, that process group signaling combined with error handling and timeout mechanisms provides a good balance of robustness and simplicity.

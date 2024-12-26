@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-python-remove-unknown-and-special-characters-from-text"
 ---
 
-Alright, let's tackle this. I've encountered this specific challenge more times than I care to count, usually when dealing with data scraped from various sources or when integrating systems that weren't exactly designed to play nicely together. The problem of "unknown and special characters" is, at its core, about character encoding and how different systems interpret the same byte sequences. In Python, we have a few effective strategies for handling this, and I’ll walk through the ones that have served me best.
+, let's tackle this. I've encountered this specific challenge more times than I care to count, usually when dealing with data scraped from various sources or when integrating systems that weren't exactly designed to play nicely together. The problem of "unknown and special characters" is, at its core, about character encoding and how different systems interpret the same byte sequences. In Python, we have a few effective strategies for handling this, and I’ll walk through the ones that have served me best.
 
 The first key concept is understanding that “unknown” or “special” is often in the eye of the beholder. Characters considered normal in one encoding (e.g., Latin-1) might be problematic in another (e.g., UTF-8), and vice-versa. Therefore, directly "removing" everything that appears non-standard can lead to data loss if we don't carefully consider the potential encodings. Instead, we usually aim to normalize the text into a commonly understood form, typically UTF-8, and then strip out anything that genuinely doesn't belong or is truly unrepresentable.
 
@@ -53,6 +53,7 @@ def remove_diacritics(text):
     stripped = "".join(c for c in normalized if not unicodedata.combining(c))
     return stripped
 ```
+
 The `unicodedata.normalize('NFKD', text)` part decomposes characters into their base and combining forms. Then, using a generator expression and `unicodedata.combining(c)` we filter out the combining characters. This process keeps the core letter while discarding the accent marks. This is critical when searching for a name, for example. “cafe” should return the same results as “café” when the goal is to remove diacritics.
 
 Finally, for characters that fall outside a certain range or simply don't match a particular pattern, I use regular expressions. Here, I’ll demonstrate a technique to remove everything that is not an alphanumeric character or basic punctuation. We can name this script "regex_filter.py":
@@ -65,7 +66,8 @@ def remove_unwanted_characters(text):
    cleaned_text = re.sub(r"[^a-zA-Z0-9\s.,!?]", "", text)
    return cleaned_text
 ```
-This function uses a regular expression `[^a-zA-Z0-9\s.,!?]` that specifies anything not an alphanumeric character (`a-zA-Z0-9`), whitespace `\s`, period, comma, question mark or exclamation mark. You can expand this character class to include whatever else you need to keep, such as hyphens or currency symbols, as necessary. I’ve found it is more efficient to include what I *do* want to keep as opposed to trying to specify what I *don't* want. This makes it much more maintainable in the long run.
+
+This function uses a regular expression `[^a-zA-Z0-9\s.,!?]` that specifies anything not an alphanumeric character (`a-zA-Z0-9`), whitespace `\s`, period, comma, question mark or exclamation mark. You can expand this character class to include whatever else you need to keep, such as hyphens or currency symbols, as necessary. I’ve found it is more efficient to include what I _do_ want to keep as opposed to trying to specify what I _don't_ want. This makes it much more maintainable in the long run.
 
 Putting it all together, a general workflow that I employ in most real-world scenarios looks like this:
 

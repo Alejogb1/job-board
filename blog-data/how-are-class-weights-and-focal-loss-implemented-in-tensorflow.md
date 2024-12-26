@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-are-class-weights-and-focal-loss-implemented-in-tensorflow"
 ---
 
-Alright, let's dive into the intricacies of class weights and focal loss in TensorFlow. I remember a particularly challenging project a few years back where we were dealing with highly imbalanced datasets – a classic scenario where these techniques become not just useful, but practically essential. We were training a model to detect rare anomalies in high-resolution medical imagery, and the scarcity of anomaly instances was causing our standard cross-entropy loss to completely falter, almost like it was exclusively learning to identify the background. It was a frustrating, yet ultimately enlightening, experience, one that cemented my understanding of these tools.
+, let's dive into the intricacies of class weights and focal loss in TensorFlow. I remember a particularly challenging project a few years back where we were dealing with highly imbalanced datasets – a classic scenario where these techniques become not just useful, but practically essential. We were training a model to detect rare anomalies in high-resolution medical imagery, and the scarcity of anomaly instances was causing our standard cross-entropy loss to completely falter, almost like it was exclusively learning to identify the background. It was a frustrating, yet ultimately enlightening, experience, one that cemented my understanding of these tools.
 
 So, how do we tackle this imbalance? The core issue is that models trained with standard loss functions are naturally biased towards the majority class. They achieve high accuracy simply by predicting that majority class all the time, and the relatively few minority class examples don't carry enough weight in the loss calculation to significantly influence the training process. Class weights and focal loss address this, albeit in different ways.
 
@@ -52,7 +52,7 @@ In this example, I use the `CategoricalCrossentropy` loss function with custom w
 
 **Focal Loss: Focusing on the Hard Cases**
 
-While class weights help balance the contribution of different classes, focal loss goes a step further by focusing on the *hard* examples. It's predicated on the idea that a model should spend more effort on examples it struggles with. This is particularly useful when there is a high degree of class imbalance, but also the majority of "easy" examples can overwhelm the training signal. Focal loss introduces a modulating factor that reduces the loss contribution of well-classified examples, effectively down-weighting them and shifting focus toward those with higher classification errors.
+While class weights help balance the contribution of different classes, focal loss goes a step further by focusing on the _hard_ examples. It's predicated on the idea that a model should spend more effort on examples it struggles with. This is particularly useful when there is a high degree of class imbalance, but also the majority of "easy" examples can overwhelm the training signal. Focal loss introduces a modulating factor that reduces the loss contribution of well-classified examples, effectively down-weighting them and shifting focus toward those with higher classification errors.
 
 The key parameter in focal loss is gamma (γ), the focusing parameter. When γ is 0, focal loss is the same as the standard cross-entropy loss. As gamma increases, the contribution of easy examples diminishes more rapidly. A typical range of gamma values is between 2 to 5. The intuition is that by focusing the loss on the difficult examples, the network better learns to differentiate between classes.
 
@@ -101,11 +101,11 @@ loss_crossentropy = loss_fn(y_true, y_pred)
 print("Binary Cross-Entropy Loss:", loss_crossentropy.numpy())
 ```
 
-Note here the `alpha` parameter is present – it is a class balancing term, similar to the weight factor mentioned earlier. Usually, an *alpha* parameter is added to focal loss that is either 0.25 or 0.75, depending on which of the classes is the majority class. However, it is worth experimentation to tune this hyperparameter.
+Note here the `alpha` parameter is present – it is a class balancing term, similar to the weight factor mentioned earlier. Usually, an _alpha_ parameter is added to focal loss that is either 0.25 or 0.75, depending on which of the classes is the majority class. However, it is worth experimentation to tune this hyperparameter.
 
 **Combining Class Weights and Focal Loss**
 
-While class weights and focal loss address class imbalance, they do so in distinct ways. Sometimes, it might be beneficial to employ *both* approaches. While there isn't a built-in mechanism to explicitly combine them within TensorFlow’s loss functions, it’s straightforward to apply class weights to a focal loss implementation by scaling the resulting loss per sample with the weights.
+While class weights and focal loss address class imbalance, they do so in distinct ways. Sometimes, it might be beneficial to employ _both_ approaches. While there isn't a built-in mechanism to explicitly combine them within TensorFlow’s loss functions, it’s straightforward to apply class weights to a focal loss implementation by scaling the resulting loss per sample with the weights.
 
 Here's a modified version of focal loss, incorporating class weights:
 

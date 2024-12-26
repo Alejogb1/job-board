@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-addforce-accumulating-on-navmeshagent-and-their-movement-gets-weird"
 ---
 
-alright, so you’re seeing some janky movement when applying `addforce` to a game object that also has a `navmeshagent` attached. i get it, i’ve been there, pulling my hair out at 3 am trying to figure out why my perfectly planned pathfinding is acting like a drunk teenager. this is a classic problem with a few interconnected causes, and honestly, it took me a couple of game jams to really nail down the nuances. i’ve probably wasted more hours than i care to think about on this issue, so let's break it down.
+, so you’re seeing some janky movement when applying `addforce` to a game object that also has a `navmeshagent` attached. i get it, i’ve been there, pulling my hair out at 3 am trying to figure out why my perfectly planned pathfinding is acting like a drunk teenager. this is a classic problem with a few interconnected causes, and honestly, it took me a couple of game jams to really nail down the nuances. i’ve probably wasted more hours than i care to think about on this issue, so let's break it down.
 
 the core problem is this: `navmeshagent` is built to control movement based on pathfinding calculations. it sets velocities and positions based on the navigation mesh, aiming for a specific destination. then you come in with `addforce`, which doesn't care about the navmesh agent and applies forces directly to the object's rigidbody component. so, you've got two separate systems trying to control the same object's movement at the same time. it's like having two drivers on one steering wheel, each trying to go a different direction. not ideal.
 
@@ -16,7 +16,7 @@ the `navmeshagent` tries to use its internal calculations to correct the new vel
 
 another thing is the mass and drag of the rigidbody attached to the agent. if you are applying a relatively small force to a really massive object it might not even budge. if you are applying a huge force to a very light object it might go flying away from its intended path, and again the `navmeshagent` will try to correct but the results might be less than ideal. the issue might also stem from the fact that you might be applying force every frame, this will accumulate and it will cause erratic movement. the `navmeshagent` expects more deterministic movement to function properly so it is important to apply force only when needed.
 
-now, i’m not saying you should never use `addforce` with a `navmeshagent`. sometimes, you *need* that physical reaction, especially for things like knockback or ragdoll effects. the key is to use them sparingly and with a clear strategy. also if you use it, understand how you should use it.
+now, i’m not saying you should never use `addforce` with a `navmeshagent`. sometimes, you _need_ that physical reaction, especially for things like knockback or ragdoll effects. the key is to use them sparingly and with a clear strategy. also if you use it, understand how you should use it.
 
 so here’s how i usually tackle this problem, based on my painful experiences, and some hard earned wisdom i got from reading through papers on robotics control (which are actually helpful even if it's a game!).
 
@@ -69,6 +69,7 @@ public class ForceAndNavMesh : MonoBehaviour
     }
 }
 ```
+
 this is a simple solution that i use a lot when the interaction is simple and involves just a push from an external force that i want to simulate. the important part is that the `navmeshagent` is disabled right before applying the force and then reenabled, this gives you a window of control, you can tweak the `disableTime` variable if the agent is re-enabled too soon.
 
 **2. using a 'velocity dampening' system:**
@@ -109,6 +110,7 @@ public class ForceAndNavMesh : MonoBehaviour
     }
 }
 ```
+
 in this code, i'm mixing the intended push direction and the direction the `navmeshagent` was going to achieve the final velocity. the `forceDamping` parameter is what allows you to mix those two vectors. a value closer to 0 will give more weight to the agent's desired velocity while a value closer to 1 will give more weight to the push direction. with this you will need to experiment to get the exact behaviour you desire.
 
 **3. using a custom movement controller:**
@@ -170,7 +172,7 @@ public class CustomMovement : MonoBehaviour
 
 in this code, i am updating the rigidbody forces using the `navmeshagent` target velocity and also injecting a push force when requested. the key element here is that i disabled the agent’s position and rotation updates ( `_navAgent.updatePosition = false;` `_navAgent.updateRotation = false;`), and i’m updating the agent’s position manually after doing all the physics calculations ( `_navAgent.nextPosition = _rb.position;`).
 
-a couple more things, to note is that i am moving the agent using forces and `forcemode.acceleration` since `forcemode.velocitychange` and `forcemode.impulse` also changes the mass of the object (something that you might or might not want), using acceleration is more deterministic, if you need other forces then you should calculate the force using f = m * a.
+a couple more things, to note is that i am moving the agent using forces and `forcemode.acceleration` since `forcemode.velocitychange` and `forcemode.impulse` also changes the mass of the object (something that you might or might not want), using acceleration is more deterministic, if you need other forces then you should calculate the force using f = m \* a.
 
 also, as a rule of thumb always use fixedupdate for physics, you will get a more deterministic result. also note that i am using the agent's `desiredvelocity` not its `velocity`, the `desiredvelocity` is the vector calculated by the pathfinding, so this way it will not be affected by the rigidbody.
 

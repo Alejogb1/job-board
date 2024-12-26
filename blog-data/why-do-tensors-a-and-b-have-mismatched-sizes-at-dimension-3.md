@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-tensors-a-and-b-have-mismatched-sizes-at-dimension-3"
 ---
 
-Okay, let's tackle this. I’ve certainly bumped into this exact headache more times than I care to recall, especially back during my time working on those complex image segmentation models. Debugging tensor shape mismatches can feel like chasing shadows initially, but it's almost always rooted in a straightforward logical error within the code. So, when tensors 'a' and 'b' exhibit a dimension 3 size discrepancy, it boils down to the operations attempting to be performed on them not aligning with their respective shapes.
+, let's tackle this. I’ve certainly bumped into this exact headache more times than I care to recall, especially back during my time working on those complex image segmentation models. Debugging tensor shape mismatches can feel like chasing shadows initially, but it's almost always rooted in a straightforward logical error within the code. So, when tensors 'a' and 'b' exhibit a dimension 3 size discrepancy, it boils down to the operations attempting to be performed on them not aligning with their respective shapes.
 
 Think of it this way: tensors, at their core, are just multi-dimensional arrays. Each dimension represents a different axis of the data. Dimension 0 might be the number of samples, dimension 1 the features, dimension 2 spatial height in an image, and so on. When dimension 3 has mismatched sizes between tensors 'a' and 'b', it indicates that either the inputs were not prepared correctly for a specific operation or there’s an incorrect expectation of the tensor shapes before an action occurs (like an element-wise operation or matrix multiplication that needs compatible dimensions).
 
@@ -99,12 +99,12 @@ From my experience, the best approach is to methodically go through your code an
 2.  **Reshape Operations**: Review all `.reshape()` or similar functions and confirm the target shape calculations are correct and keep the number of elements consistent. A simple mistake in these calculations can lead to unexpected shape issues.
 3.  **Slicing Operations**: Check all your slicing operations. Slicing and indexing can introduce errors that create differing dimensions between tensors.
 4.  **Broadcasting Expectations**: Understand how broadcasting works. Be clear about which dimensions should align or be singleton (equal to one) for operations.
-5. **Debugging Tools**: Leverage debugging tools effectively. PyTorch, for example, allows you to print shapes or use debuggers for step-by-step analysis.
+5.  **Debugging Tools**: Leverage debugging tools effectively. PyTorch, for example, allows you to print shapes or use debuggers for step-by-step analysis.
 
 In terms of further resources, I'd recommend taking a close look at:
 
-*   **"Deep Learning with Python" by François Chollet:** This provides a very good foundation on working with tensors and their shapes. This is a very practical guide that helped me early in my deep learning career.
-*   **"Pattern Recognition and Machine Learning" by Christopher Bishop:** A more theoretical approach, but the foundational math and concepts around array manipulations are explained clearly and in detail, offering insights for advanced debugging.
-*   **The PyTorch documentation itself:** The official documentation has excellent explanations of tensor operations, broadcasting rules, and reshaping functions with real-world examples.
+- **"Deep Learning with Python" by François Chollet:** This provides a very good foundation on working with tensors and their shapes. This is a very practical guide that helped me early in my deep learning career.
+- **"Pattern Recognition and Machine Learning" by Christopher Bishop:** A more theoretical approach, but the foundational math and concepts around array manipulations are explained clearly and in detail, offering insights for advanced debugging.
+- **The PyTorch documentation itself:** The official documentation has excellent explanations of tensor operations, broadcasting rules, and reshaping functions with real-world examples.
 
 The underlying principle is always the same: a mismatch in dimension 3 implies that the mathematical operations are trying to work on tensors that are fundamentally incompatible. Through rigorous analysis, careful calculation, and mindful code writing, those pesky shape errors can be efficiently resolved.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-xgboost-be-used-as-a-constraint-within-a-pyomo-model"
 ---
 
-Okay, let's delve into this. I’ve actually faced this exact challenge a few times, integrating machine learning predictions directly into optimization models, and it can get pretty interesting. The core issue isn't that xgboost is incompatible with pyomo; it's more about the fact that they operate on fundamentally different planes. XGBoost gives you a predictive model, while Pyomo is for mathematical optimization. So, we need a strategy to bridge that gap, to use XGBoost's predictions as part of the constraint structure within Pyomo. It's less about *making* them interact and more about carefully *representing* the xgboost output in a way that pyomo understands.
+, let's delve into this. I’ve actually faced this exact challenge a few times, integrating machine learning predictions directly into optimization models, and it can get pretty interesting. The core issue isn't that xgboost is incompatible with pyomo; it's more about the fact that they operate on fundamentally different planes. XGBoost gives you a predictive model, while Pyomo is for mathematical optimization. So, we need a strategy to bridge that gap, to use XGBoost's predictions as part of the constraint structure within Pyomo. It's less about _making_ them interact and more about carefully _representing_ the xgboost output in a way that pyomo understands.
 
 My approach typically revolves around a process that essentially goes like this: first, train your xgboost model. Secondly, extract the prediction results, or more specifically, the function that represents the model's output, in a manner suitable for inclusion in a pyomo constraint. This involves turning a black-box model into something transparent enough for optimization. Let’s break that down.
 
@@ -210,6 +210,6 @@ print("XGBoost output:", pyo.value(model.xgboost_output))
 
 Here the bounding value indicies determine, for a given x, which two points should be used to do linear interpolation. Once again this is included as part of a simple Pyomo constraint.
 
-In terms of resources, I'd highly recommend delving into *'Numerical Optimization'* by Nocedal and Wright for the mathematical foundations of optimization. Then for Pyomo-specific knowledge, the official Pyomo documentation is a goldmine. For the machine learning side of things, *'The Elements of Statistical Learning'* by Hastie, Tibshirani, and Friedman provides an excellent overview, and of course, the xgboost documentation itself is crucial.
+In terms of resources, I'd highly recommend delving into _'Numerical Optimization'_ by Nocedal and Wright for the mathematical foundations of optimization. Then for Pyomo-specific knowledge, the official Pyomo documentation is a goldmine. For the machine learning side of things, _'The Elements of Statistical Learning'_ by Hastie, Tibshirani, and Friedman provides an excellent overview, and of course, the xgboost documentation itself is crucial.
 
 Integrating machine learning models into optimization frameworks is definitely nuanced but these three approaches should provide you with a solid foundation. Remember, the right approach depends largely on the size and complexity of your xgboost model and your specific optimization problem constraints.

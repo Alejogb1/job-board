@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "jupyter-notebook-plot-multiple-graphs-cell"
 ---
 
-Okay so you're asking about plotting multiple graphs in a single Jupyter Notebook cell right Been there done that plenty of times Let me tell you it's a common thing people stumble on especially if you're moving from a single graph setup to needing to visualize more data at once
+you're asking about plotting multiple graphs in a single Jupyter Notebook cell right Been there done that plenty of times Let me tell you it's a common thing people stumble on especially if you're moving from a single graph setup to needing to visualize more data at once
 
 I remember back in my early days I was working on a project involving sensor data analysis and I had like five different sensor readings that I needed to compare simultaneously It was a real headache trying to figure out how to get all that onto one page using Matplotlib in Jupyter I started just chucking plot() after plot() and of course it was a complete mess They were either overlapping or just not appearing at all it was like a train wreck of a visualization
 
@@ -39,9 +39,9 @@ plt.tight_layout() # This is super important to prevent overlapping labels
 plt.show()
 ```
 
-Okay lets break this down The `plt.subplots(nrows=2, ncols=1, figsize=(8, 6))` is the important line here We're making a figure which is like the canvas and then we create a grid of subplots This case two rows and one column meaning two plots stacked vertically and then the figsize just sets the size of the overall figure `axes` now is not just a single thing it’s a 2d numpy array where each element in the array is a subplot in our case `axes[0]` is the first plot and `axes[1]` is the second plot then when we plot our data we're targeting each axes array element in the next step
+lets break this down The `plt.subplots(nrows=2, ncols=1, figsize=(8, 6))` is the important line here We're making a figure which is like the canvas and then we create a grid of subplots This case two rows and one column meaning two plots stacked vertically and then the figsize just sets the size of the overall figure `axes` now is not just a single thing it’s a 2d numpy array where each element in the array is a subplot in our case `axes[0]` is the first plot and `axes[1]` is the second plot then when we plot our data we're targeting each axes array element in the next step
 
-`axes[0].plot(x, y1)` is like plotting on the first axis the same as `axes[1].plot(x, y2)` on the second axis  It’s pretty straightforward once you get the hang of it Then those `set_title` methods are just setting the titles for each axis we add the legends and finally that `plt.tight_layout()` prevents axis overlapping issues because if you do not use this they tend to overlap and it's a mess
+`axes[0].plot(x, y1)` is like plotting on the first axis the same as `axes[1].plot(x, y2)` on the second axis It’s pretty straightforward once you get the hang of it Then those `set_title` methods are just setting the titles for each axis we add the legends and finally that `plt.tight_layout()` prevents axis overlapping issues because if you do not use this they tend to overlap and it's a mess
 
 Now what if you have multiple things to plot inside the same axes that was a problem for me too when I wanted to visualize different values of a single sensor say the current and voltage Here is how you do it
 
@@ -102,10 +102,10 @@ The cool thing is that if you have different column groups you can also specify 
 
 So to summarize a few key things to remember
 
-*   **`plt.subplots()` is your friend**: Use it to create a grid of subplots when you need multiple separate plots in one cell
-*   **`ax.plot()` vs `plt.plot()`**: Use axes objects if you are doing multiple subplots using subplots and plt.plot if you have a single axes and want to make multiple plot lines.
-*   **`plt.tight_layout()`**: Always use it to prevent label overlapping issues its a time saver and will save you hours of debugging in the long run
-*   **Pandas `df.plot()`**: It is an efficient way to plot data from Pandas DataFrames
+- **`plt.subplots()` is your friend**: Use it to create a grid of subplots when you need multiple separate plots in one cell
+- **`ax.plot()` vs `plt.plot()`**: Use axes objects if you are doing multiple subplots using subplots and plt.plot if you have a single axes and want to make multiple plot lines.
+- **`plt.tight_layout()`**: Always use it to prevent label overlapping issues its a time saver and will save you hours of debugging in the long run
+- **Pandas `df.plot()`**: It is an efficient way to plot data from Pandas DataFrames
 
 For learning more about the underlying mechanics I'd recommend diving into the Matplotlib documentation It’s a gold mine for plot customization Also look into some material regarding data visualization for principles of effective plotting if you are new to it A good book to start is "Fundamentals of Data Visualization" by Claus O. Wilke also some more advanced books on the topic would be "The Visual Display of Quantitative Information" by Edward R. Tufte
 

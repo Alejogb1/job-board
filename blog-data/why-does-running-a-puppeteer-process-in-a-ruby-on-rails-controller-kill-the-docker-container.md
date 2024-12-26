@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-running-a-puppeteer-process-in-a-ruby-on-rails-controller-kill-the-docker-container"
 ---
 
-Alright, let's talk about why a puppeteer process within a rails controller might be doing the unthinkable and taking down your entire docker container. I’ve seen this dance a few times, and it’s usually not pretty. It’s a complex issue rooted in resource management, process lifecycle, and a bit of Docker’s isolation magic.
+, let's talk about why a puppeteer process within a rails controller might be doing the unthinkable and taking down your entire docker container. I’ve seen this dance a few times, and it’s usually not pretty. It’s a complex issue rooted in resource management, process lifecycle, and a bit of Docker’s isolation magic.
 
 In my experience, the issue almost never comes down to a bug in puppeteer itself, but more to how we're weaving it into the fabric of our rails application and the underlying container environment. Years ago, I worked on a project that required dynamically generating screenshots of user dashboards for reporting. We integrated puppeteer directly into our rails backend, thinking it would be straightforward. Spoiler alert: it wasn't. We quickly ran into the container-killing scenario, and that’s when the real debugging began.
 
@@ -76,9 +76,9 @@ The key here is to understand that docker doesn't magically manage processes for
 
 Now, for some further reading that can help you deepen your understanding:
 
-*   **"Operating Systems Concepts" by Abraham Silberschatz, Peter Baer Galvin, and Greg Gagne:** This book provides an excellent foundation in process management, resource allocation, and operating system principles.
-*   **"Docker in Action" by Jeff Nickoloff:** Dive deep into Docker concepts, resource management, and best practices for building production-ready containers.
-*   **The official Docker documentation:** Always a great resource for the most up-to-date information on Docker features, commands, and configuration.
-*   **Puppeteer’s official documentation:** Contains specific instructions on how to run puppeteer in various environments, including considerations for headless mode and containerized environments.
+- **"Operating Systems Concepts" by Abraham Silberschatz, Peter Baer Galvin, and Greg Gagne:** This book provides an excellent foundation in process management, resource allocation, and operating system principles.
+- **"Docker in Action" by Jeff Nickoloff:** Dive deep into Docker concepts, resource management, and best practices for building production-ready containers.
+- **The official Docker documentation:** Always a great resource for the most up-to-date information on Docker features, commands, and configuration.
+- **Puppeteer’s official documentation:** Contains specific instructions on how to run puppeteer in various environments, including considerations for headless mode and containerized environments.
 
 In summary, the core issue isn't usually with puppeteer itself. It's about the environment you’re running it in. Direct execution in a web request cycle, without proper resource management or process isolation, almost always leads to container termination. By leveraging background workers and carefully considering container resource limits, you can create a stable and reliable system that uses puppeteer effectively. Always start small, monitor closely and scale resources as needed based on observation, not intuition. It will help avoid the dreaded container death.

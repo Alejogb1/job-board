@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-set-the-fqdn-for-an-azure-container-instance-resource-using-arm-templates"
 ---
 
-Okay, let's tackle this. Over the years, I've wrestled—*ahem*, I mean, *dealt with*—my fair share of Azure deployments, and setting up container instances with the correct FQDN using ARM templates is a common scenario. It's not immediately obvious, and it often requires a little understanding of how Azure manages DNS. Let me walk you through it.
+, let's tackle this. Over the years, I've wrestled—_ahem_, I mean, _dealt with_—my fair share of Azure deployments, and setting up container instances with the correct FQDN using ARM templates is a common scenario. It's not immediately obvious, and it often requires a little understanding of how Azure manages DNS. Let me walk you through it.
 
 The challenge isn’t in the core container instance configuration itself, but in how we expose the application running within that instance to the outside world, and how we map a user-friendly domain name to it. The core problem is this: an Azure Container Instance (ACI) by itself doesn't automatically get an FQDN. It gets an IP, or if configured as a private instance, a private IP within a vnet, and we need a way to associate a name with that IP. We achieve this using the combination of a public IP address, a DNS label (which creates a subdomain within `azurecontainer.io`), and optionally, by bringing your own custom domain.
 
@@ -57,14 +57,14 @@ However, the more robust and professional way is using a custom domain. This inv
   "name": "[parameters('publicIpName')]",
   "location": "[parameters('location')]",
   "sku": {
-      "name": "Basic"
+    "name": "Basic"
   },
   "properties": {
-      "publicIPAllocationMethod": "Dynamic",
-      "dnsSettings": {
-          "domainNameLabel": "[parameters('dnsNameLabel')]"
-      }
+    "publicIPAllocationMethod": "Dynamic",
+    "dnsSettings": {
+      "domainNameLabel": "[parameters('dnsNameLabel')]"
     }
+  }
 }
 ```
 

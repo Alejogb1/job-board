@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-fix-no-such-table-session-sqlalchemy-error-in-airflow"
 ---
 
-Alright, let's tackle this "no such table: session" error in Airflow, something I've certainly tripped over more than once in my career. It's one of those frustratingly common issues that often stem from subtle discrepancies in how database connections and schema initialization are handled. It's definitely not an 'easy fix,' but understanding the underlying mechanisms makes it quite manageable.
+, let's tackle this "no such table: session" error in Airflow, something I've certainly tripped over more than once in my career. It's one of those frustratingly common issues that often stem from subtle discrepancies in how database connections and schema initialization are handled. It's definitely not an 'easy fix,' but understanding the underlying mechanisms makes it quite manageable.
 
 Essentially, this error pops up when SQLAlchemy, the library Airflow utilizes for database interactions, can’t find the `session` table within the database it’s trying to connect to. This table is foundational for Airflow; it's where various metadata, especially regarding webserver session data, is stored. This usually means one of two main things, or sometimes, a combination of both: either the database hasn't been correctly initialized with the necessary schema, or Airflow is pointing towards the wrong database entirely. It might even be related to an inconsistent configuration between the webserver and the scheduler, but let's break it down.
 
@@ -25,7 +25,7 @@ sql_alchemy_conn = postgresql://airflow:airflow@my-postgres-host:5432/airflow
 
 Here, `airflow` is both the username and the database name, and `my-postgres-host` is the database host address. A simple typographical error here can cause Airflow to look for the `session` table in the incorrect location. So, double-check this configuration.
 
-Let me offer some further insight from my past experiences. A common mistake often overlooked is that *different* parts of your Airflow setup can potentially use different database configurations. For example, the webserver configuration may vary from that of your scheduler or workers. This can lead to scenarios where one component successfully connects and functions correctly, while another throws the "no such table" error. It’s not ideal for debugging, but it happens.
+Let me offer some further insight from my past experiences. A common mistake often overlooked is that _different_ parts of your Airflow setup can potentially use different database configurations. For example, the webserver configuration may vary from that of your scheduler or workers. This can lead to scenarios where one component successfully connects and functions correctly, while another throws the "no such table" error. It’s not ideal for debugging, but it happens.
 
 For example, let's say that the `airflow.cfg` file that the webserver is using has this:
 

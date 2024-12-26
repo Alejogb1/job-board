@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-is-deploying-a-java-jar-to-app-engine-flexible-failing-health-checks"
 ---
 
-Okay, let's tackle this one. I've seen this particular headache more times than I'd care to count, and it often boils down to a few common culprits when dealing with Java JARs on App Engine Flexible. Let's unpack the usual suspects and how to debug them, shall we?
+, let's tackle this one. I've seen this particular headache more times than I'd care to count, and it often boils down to a few common culprits when dealing with Java JARs on App Engine Flexible. Let's unpack the usual suspects and how to debug them, shall we?
 
 Firstly, health checks on App Engine Flexible are designed to ensure that instances are healthy and ready to serve traffic. If an instance fails these checks, App Engine will usually terminate and recreate it. The whole point is resilience, so we really need to pay attention to what these checks are actually testing. A failing health check typically means one of two things: the application isn’t starting correctly, or it's not responding to the requests made by the health checker. Let’s break these down.
 
 From my experience, a common scenario involves the startup phase. Your JAR might be loading correctly and outputting logs like there's no tomorrow, but it's still not considered healthy. This is because the health checker typically makes a simple http request to a designated endpoint to determine if your application is ready. This could be `/_ah/health` which is the default, but you might have a custom one set in your `app.yaml`. If this endpoint is not listening or returning a 200 ok, or is taking an unreasonable amount of time, the health check fails.
 
-Let's say you have a basic Spring Boot application, and your controller setup is seemingly perfect, but you keep getting health check fails. You might think, "but, I have the `/health` endpoint set up!". The health endpoint needs to *explicitly* listen for the http request, and be configured properly. Remember, app engine sends a HTTP request to your application’s configured health check path, and expects a timely response with a 200 status code. Anything else is an indication that the application is not ready to handle user requests.
+Let's say you have a basic Spring Boot application, and your controller setup is seemingly perfect, but you keep getting health check fails. You might think, "but, I have the `/health` endpoint set up!". The health endpoint needs to _explicitly_ listen for the http request, and be configured properly. Remember, app engine sends a HTTP request to your application’s configured health check path, and expects a timely response with a 200 status code. Anything else is an indication that the application is not ready to handle user requests.
 
 Here's an initial example of a spring boot controller with a basic health check endpoint. This might look fine on the surface, but there could be subtle problems with the configuration elsewhere, or this endpoint might not even be accessible based on your app settings:
 
@@ -35,8 +35,8 @@ runtime_config:
   jdk: "openjdk17"
 
 handlers:
-- url: /.*
-  script: this will never be used
+  - url: /.*
+    script: this will never be used
 
 health_check:
   enable_health_check: True

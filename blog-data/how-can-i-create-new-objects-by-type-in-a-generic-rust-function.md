@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-can-i-create-new-objects-by-type-in-a-generic-rust-function"
 ---
 
-Alright, let's tackle this. It's a common scenario, wanting to instantiate new objects generically within Rust. It’s something I've faced repeatedly, especially when building extensible systems or working with traits that need to produce specific types. You’re essentially asking how to circumvent the static nature of Rust's type system when you don't know at compile-time the concrete type you’ll be working with. The challenge stems from the fact that, unlike some other languages, Rust doesn't have a built-in mechanism for creating new objects based solely on a type variable `T`. The language favors explicit control and memory safety. However, there are a few robust patterns that we can use to achieve this functionality.
+, let's tackle this. It's a common scenario, wanting to instantiate new objects generically within Rust. It’s something I've faced repeatedly, especially when building extensible systems or working with traits that need to produce specific types. You’re essentially asking how to circumvent the static nature of Rust's type system when you don't know at compile-time the concrete type you’ll be working with. The challenge stems from the fact that, unlike some other languages, Rust doesn't have a built-in mechanism for creating new objects based solely on a type variable `T`. The language favors explicit control and memory safety. However, there are a few robust patterns that we can use to achieve this functionality.
 
-First, let's acknowledge the inherent problem: in a generic function, `T` is a placeholder for *any* type that satisfies the trait bounds imposed. Rust can't magically know how to create a `T` if `T` isn’t constrained by a trait that includes an appropriate constructor function. This means we need to bring a constructor mechanism into the picture, typically through the use of traits.
+First, let's acknowledge the inherent problem: in a generic function, `T` is a placeholder for _any_ type that satisfies the trait bounds imposed. Rust can't magically know how to create a `T` if `T` isn’t constrained by a trait that includes an appropriate constructor function. This means we need to bring a constructor mechanism into the picture, typically through the use of traits.
 
 A typical and, I’d argue, the most idiomatic solution, is to define a trait that offers a way to construct the target type. Think of it like a factory pattern.
 
@@ -116,10 +116,10 @@ Here, `ConstructableFunc` provides a function that returns the constructor funct
 
 Now, for some resources that I've found invaluable:
 
-*   **"Programming Rust" by Jim Blandy, Jason Orendorff, and Leonora F. S. Tindall**: A deep dive into Rust's core concepts, this book covers generics and traits thoroughly. It's a great comprehensive resource to build your understanding on rust programming concepts.
+- **"Programming Rust" by Jim Blandy, Jason Orendorff, and Leonora F. S. Tindall**: A deep dive into Rust's core concepts, this book covers generics and traits thoroughly. It's a great comprehensive resource to build your understanding on rust programming concepts.
 
-*   **The official Rust documentation**: Specifically, the sections on traits, generics, and associated types will be particularly useful. The official documentation is a good place to start as it provides the latest reference material and is updated frequently.
+- **The official Rust documentation**: Specifically, the sections on traits, generics, and associated types will be particularly useful. The official documentation is a good place to start as it provides the latest reference material and is updated frequently.
 
-*   **The "Rust by Example" website**: It has hands-on examples that help to see these concepts in practice. It is very easy to use and gives you practical insight without too much theory.
+- **The "Rust by Example" website**: It has hands-on examples that help to see these concepts in practice. It is very easy to use and gives you practical insight without too much theory.
 
 In my experience, using these approaches, I’ve been able to tackle a wide range of problems, from creating generic data structures to implementing flexible plugin systems. The key takeaway is to remember that Rust forces you to be explicit about how types are created. While this may seem limiting initially, it leads to more robust and predictable code in the long run. Always favor the most direct and type-safe approach that satisfies your requirements, which, in most cases, involves employing a trait with a constructor function or a similar mechanism. You don't always need the complexity of function pointers unless you need the dynamic nature they provide.

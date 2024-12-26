@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "whats-the-use-case-for-containerizing-azure-functions"
 ---
 
-Alright, let's talk about containerizing azure functions. I’ve spent a fair bit of time on this particular topic, and it’s definitely got its nuanced advantages that often get overlooked. It’s not just about ‘lifting and shifting’; there are strategic gains to be had. I’m going to walk you through some of those, drawing on my experience, and then we'll touch on code examples to illustrate the practical side.
+, let's talk about containerizing azure functions. I’ve spent a fair bit of time on this particular topic, and it’s definitely got its nuanced advantages that often get overlooked. It’s not just about ‘lifting and shifting’; there are strategic gains to be had. I’m going to walk you through some of those, drawing on my experience, and then we'll touch on code examples to illustrate the practical side.
 
 Initially, when serverless functions like Azure Functions started gaining traction, the allure was the simplicity. Drop your code, configure your trigger, and boom – instant scalability without the hassle of managing servers. But as projects grew in complexity, certain limitations became apparent, particularly around environment consistency, dependency management, and the need for specific OS features. This is where containerization enters the picture.
 
@@ -20,7 +20,7 @@ The core use case for containerizing azure functions fundamentally boils down to
 
 4.  **Enhanced Portability:** Once containerized, your azure function becomes more portable. You’re not locked into a specific cloud vendor's runtime. If needed, you could, with a reasonable amount of effort, deploy the same container elsewhere, be it another cloud provider, or even on-premise. This enhanced portability reduces vendor lock-in.
 
-5. **Isolation and Security**: In some highly regulated environments, you may require more fine-grained control over the container's runtime. Containerizing the function allows implementing specific security settings or isolation features that are more granular than available with the normal serverless deployments. Think of more restricted file system access or specific network configurations, which you control directly from within the container.
+5.  **Isolation and Security**: In some highly regulated environments, you may require more fine-grained control over the container's runtime. Containerizing the function allows implementing specific security settings or isolation features that are more granular than available with the normal serverless deployments. Think of more restricted file system access or specific network configurations, which you control directly from within the container.
 
 Let’s see some practical examples to illustrate these points.
 
@@ -50,6 +50,7 @@ def main(req):
     #some custom extension code, which might fail due to library version mismatch in default runtime.
     return { 'body': str(df)}
 ```
+
 In this example, the `Dockerfile` constructs an environment with the exact version of `pandas` required along with your `custom_pandas_extension`. The standard Azure Functions environment might not allow installing such specific dependencies without conflicts, resulting in the container option becoming necessary.
 
 **Example 2: Custom Runtime**
@@ -75,6 +76,7 @@ CMD ["/app/function_runner.sh"]
 # function_executable : Hypothetical compiled C++ code
 
 ```
+
 Here, the `Dockerfile` sets up a full ubuntu environment with a specific command line tool and C++ library, effectively embedding your custom tool into the docker image and using it as a custom runtime. The `function_runner.sh` executes your tool and then transforms the output to JSON. This setup wouldn’t work with the standard python/javascript runtimes in Azure Functions.
 
 **Example 3: Network Configuration**

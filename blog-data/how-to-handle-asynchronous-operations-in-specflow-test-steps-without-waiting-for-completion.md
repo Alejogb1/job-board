@@ -4,17 +4,17 @@ date: "2024-12-23"
 id: "how-to-handle-asynchronous-operations-in-specflow-test-steps-without-waiting-for-completion"
 ---
 
-Alright, let's talk asynchronous operations in SpecFlow. I've encountered this a few times, and it usually pops up when dealing with integrations that rely on external systems or even within the system itself where background processes are at play. It can become quite the bottleneck if not managed correctly. The challenge, as the question rightly points out, is handling these ops within test steps *without* explicitly waiting for completion. A synchronous wait will completely derail the purpose of the test, leading to brittle and slow test suites.
+, let's talk asynchronous operations in SpecFlow. I've encountered this a few times, and it usually pops up when dealing with integrations that rely on external systems or even within the system itself where background processes are at play. It can become quite the bottleneck if not managed correctly. The challenge, as the question rightly points out, is handling these ops within test steps _without_ explicitly waiting for completion. A synchronous wait will completely derail the purpose of the test, leading to brittle and slow test suites.
 
 The core problem here is that SpecFlow steps, by default, execute synchronously. We’re typically writing steps that translate into a single method call. If that method kicks off an asynchronous operation and we return immediately, the test step completes, and the subsequent step starts, regardless of whether the async operation has finished or not. This leads to false positives or, even worse, unpredictable test outcomes.
 
-Instead of using blocking waits (like `Task.Wait()` or `.Result`), we need to adopt techniques that allow us to verify the *eventual* outcome of our asynchronous operations. This means our tests need to move from asserting immediate states to asserting on asynchronous state changes. Here’s the approach I usually find most effective:
+Instead of using blocking waits (like `Task.Wait()` or `.Result`), we need to adopt techniques that allow us to verify the _eventual_ outcome of our asynchronous operations. This means our tests need to move from asserting immediate states to asserting on asynchronous state changes. Here’s the approach I usually find most effective:
 
 First, avoid direct waits like the plague. These introduce flakiness and make debugging challenging. Instead, we focus on checking the eventual state of the system or the outcome of the asynchronous process after it's had enough time to complete. It's important to define "enough time," and this should be based on real-world usage patterns, not some arbitrary guess. We can set up mechanisms to check for this eventual state change.
 
 **The Polling Approach**
 
-One approach, and perhaps the most common one, is *polling*. We execute our asynchronous operation, and instead of waiting, we start a timer or loop that periodically checks whether the condition we’re waiting for has been met. This means our test step is now a mechanism that actively observes the effects of the asynchronous code.
+One approach, and perhaps the most common one, is _polling_. We execute our asynchronous operation, and instead of waiting, we start a timer or loop that periodically checks whether the condition we’re waiting for has been met. This means our test step is now a mechanism that actively observes the effects of the asynchronous code.
 
 Let's assume, for instance, that we have a service that processes user registrations in the background. Our test scenario involves registering a user and verifying they’re eventually marked as "active" in the database. Here’s what that might look like in C# with SpecFlow:
 
@@ -50,7 +50,7 @@ Here, we avoid a hard wait in the `Given` step, and instead in the `Then` step, 
 
 **Event Handling and Subscriptions**
 
-In more complex systems, where polling might be too inefficient, we could switch to *event handling* or *subscription models*. Instead of constantly querying for a state change, we subscribe to an event that signals the completion of our asynchronous operation. This approach is generally preferred for performance reasons, as it avoids unnecessary database or service calls.
+In more complex systems, where polling might be too inefficient, we could switch to _event handling_ or _subscription models_. Instead of constantly querying for a state change, we subscribe to an event that signals the completion of our asynchronous operation. This approach is generally preferred for performance reasons, as it avoids unnecessary database or service calls.
 
 Let’s envision a different scenario. We have a background service that sends out email notifications. After triggering a process, we want our test to assert that a specific email notification was sent. We won't poll the email server, but instead subscribe to a notification service to wait for the event:
 
@@ -95,7 +95,7 @@ In this snippet, we're using a `TaskCompletionSource<bool>` to signal success. W
 
 **External Message Queues**
 
-Finally, a common pattern in distributed systems is asynchronous communication through *message queues*. Instead of direct calls, components interact through message brokers. In our tests, we might need to verify that a specific message was published to the queue or that the system reacted correctly to a message. Instead of waiting, our test will verify that specific messages were sent to, or received from the queues.
+Finally, a common pattern in distributed systems is asynchronous communication through _message queues_. Instead of direct calls, components interact through message brokers. In our tests, we might need to verify that a specific message was published to the queue or that the system reacted correctly to a message. Instead of waiting, our test will verify that specific messages were sent to, or received from the queues.
 
 Let’s take an example where the user interaction results in a message being posted to an external queue:
 

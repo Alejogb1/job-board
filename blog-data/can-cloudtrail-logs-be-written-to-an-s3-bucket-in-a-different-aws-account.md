@@ -4,78 +4,75 @@ date: "2024-12-23"
 id: "can-cloudtrail-logs-be-written-to-an-s3-bucket-in-a-different-aws-account"
 ---
 
-Alright, let’s tackle this. It’s a common scenario, and I’ve personally navigated it more than a few times, especially in multi-account aws setups where security and centralized logging are paramount. So, can cloudtrail logs be written to an s3 bucket in a different aws account? The short answer is, emphatically, yes. But there are important caveats and configurations to understand for a successful and secure implementation. It’s not just a matter of pointing cloudtrail to a different account's bucket; there’s more to the story.
+, let’s tackle this. It’s a common scenario, and I’ve personally navigated it more than a few times, especially in multi-account aws setups where security and centralized logging are paramount. So, can cloudtrail logs be written to an s3 bucket in a different aws account? The short answer is, emphatically, yes. But there are important caveats and configurations to understand for a successful and secure implementation. It’s not just a matter of pointing cloudtrail to a different account's bucket; there’s more to the story.
 
 The primary reason you'd want to do this is for centralized security and auditing. Instead of having numerous s3 buckets scattered across several aws accounts holding cloudtrail logs, it’s significantly easier to manage, monitor, and analyze logs from a single, designated “logging” account. This also strengthens security posture as logs become less accessible to potentially compromised accounts. Let's break down how this works practically and go through the permissions and configurations required.
 
-The core of this setup is establishing the correct permissions. We aren’t simply *copying* logs from one account to another; we are configuring cloudtrail to *directly deliver* logs to a bucket in a different account. This requires bucket policy adjustments on the destination bucket and the role or user that is configured in cloudtrail in the *source* account.
+The core of this setup is establishing the correct permissions. We aren’t simply _copying_ logs from one account to another; we are configuring cloudtrail to _directly deliver_ logs to a bucket in a different account. This requires bucket policy adjustments on the destination bucket and the role or user that is configured in cloudtrail in the _source_ account.
 
 Let's delve into the technical details with examples, demonstrating how this is achieved.
 
 **Example 1: The Destination Bucket Policy**
 
-First, let's look at the bucket policy on the destination s3 bucket, in what we’ll call the “logging account.” This policy *must* explicitly allow cloudtrail from other accounts to write to it. Crucially, the `aws:SourceArn` condition is used to restrict the writes to CloudTrail service principals only.
+First, let's look at the bucket policy on the destination s3 bucket, in what we’ll call the “logging account.” This policy _must_ explicitly allow cloudtrail from other accounts to write to it. Crucially, the `aws:SourceArn` condition is used to restrict the writes to CloudTrail service principals only.
 
 ```json
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "AWSCloudTrailAclCheck",
-            "Effect": "Allow",
-            "Principal": {
-                "Service": "cloudtrail.amazonaws.com"
-            },
-            "Action": "s3:GetBucketAcl",
-            "Resource": "arn:aws:s3:::your-logging-bucket-name"
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AWSCloudTrailAclCheck",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "cloudtrail.amazonaws.com"
+      },
+      "Action": "s3:GetBucketAcl",
+      "Resource": "arn:aws:s3:::your-logging-bucket-name"
+    },
+    {
+      "Sid": "AWSCloudTrailWrite",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "cloudtrail.amazonaws.com"
+      },
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::your-logging-bucket-name/AWSLogs/*",
+      "Condition": {
+        "StringEquals": {
+          "aws:SourceArn": [
+            "arn:aws:cloudtrail:us-east-1:111122223333:*", // account-id of source account 1
+            "arn:aws:cloudtrail:us-west-2:444455556666:*" // account-id of source account 2
+            // Add more as necessary. Always include the source region
+          ]
         },
-        {
-            "Sid": "AWSCloudTrailWrite",
-            "Effect": "Allow",
-            "Principal": {
-                "Service": "cloudtrail.amazonaws.com"
-            },
-            "Action": "s3:PutObject",
-            "Resource": "arn:aws:s3:::your-logging-bucket-name/AWSLogs/*",
-            "Condition": {
-                "StringEquals": {
-                    "aws:SourceArn": [
-                        "arn:aws:cloudtrail:us-east-1:111122223333:*",  // account-id of source account 1
-                         "arn:aws:cloudtrail:us-west-2:444455556666:*"  // account-id of source account 2
-                       // Add more as necessary. Always include the source region
-                    ]
-                },
-                 "StringEquals": {
-                        "s3:x-amz-acl": "bucket-owner-full-control"
-                  }
-            }
+        "StringEquals": {
+          "s3:x-amz-acl": "bucket-owner-full-control"
         }
-    ]
+      }
+    }
+  ]
 }
 ```
-In this example, the bucket named `your-logging-bucket-name` is explicitly allowing `cloudtrail.amazonaws.com` service principals from accounts with ids `111122223333` in region `us-east-1` and `444455556666` in `us-west-2`  to write objects (logs) into the `AWSLogs` subfolder. Important to note here, we specify an `s3:x-amz-acl` condition. CloudTrail requires this to allow it to grant full control to the bucket owner. Without this, CloudTrail will throw an error when attempting to deliver the logs.
+
+In this example, the bucket named `your-logging-bucket-name` is explicitly allowing `cloudtrail.amazonaws.com` service principals from accounts with ids `111122223333` in region `us-east-1` and `444455556666` in `us-west-2` to write objects (logs) into the `AWSLogs` subfolder. Important to note here, we specify an `s3:x-amz-acl` condition. CloudTrail requires this to allow it to grant full control to the bucket owner. Without this, CloudTrail will throw an error when attempting to deliver the logs.
 
 **Example 2: Cloudtrail Role or User Permissions**
 
-On the source accounts, the CloudTrail service itself doesn’t assume a role, but you might need to ensure the role/user that *creates* the trail has sufficient permissions. In the source account, you will either configure a CloudTrail role to write these logs, or you will need to ensure that the user configured to use CloudTrail has the necessary permissions to create a trail that delivers logs to a bucket in another account. It’s useful to assume a role to make this process much more controlled and secure. Here's an example of the policy that can be attached to such a role or the user configured to administer CloudTrail:
+On the source accounts, the CloudTrail service itself doesn’t assume a role, but you might need to ensure the role/user that _creates_ the trail has sufficient permissions. In the source account, you will either configure a CloudTrail role to write these logs, or you will need to ensure that the user configured to use CloudTrail has the necessary permissions to create a trail that delivers logs to a bucket in another account. It’s useful to assume a role to make this process much more controlled and secure. Here's an example of the policy that can be attached to such a role or the user configured to administer CloudTrail:
 
 ```json
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-               "s3:GetBucketAcl",
-               "s3:GetBucketLocation",
-               "s3:PutObject"
-            ],
-            "Resource": [
-              "arn:aws:s3:::your-logging-bucket-name",
-              "arn:aws:s3:::your-logging-bucket-name/AWSLogs/*"
-            ]
-        }
-     ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": ["s3:GetBucketAcl", "s3:GetBucketLocation", "s3:PutObject"],
+      "Resource": [
+        "arn:aws:s3:::your-logging-bucket-name",
+        "arn:aws:s3:::your-logging-bucket-name/AWSLogs/*"
+      ]
+    }
+  ]
 }
 ```
 
@@ -96,6 +93,7 @@ aws cloudtrail create-trail \
     --no-log-file-validation-enabled \
     --profile source-account-admin-profile
 ```
+
 This command demonstrates a basic aws cli command to create the trail to write to a logging account. The important part is the `--s3-bucket-name` parameter that provides the s3 arn. The `--profile source-account-admin-profile` is only there as an example of the configuration that is using a profile within the aws cli to assume the appropriate permissions to configure the trail.
 
 **Key Considerations and Best Practices:**
@@ -111,8 +109,8 @@ This command demonstrates a basic aws cli command to create the trail to write t
 
 For a deeper understanding of the concepts discussed, I recommend the following resources:
 
-*   *AWS CloudTrail User Guide*: The official AWS documentation for CloudTrail is invaluable. Pay particular attention to the section on “Configuring Logging Across AWS Accounts”
-*   *AWS Security Best Practices*: This AWS whitepaper covers a range of security practices that should form your security foundation, including centralized logging strategies.
-*   *Mastering AWS Security* by Chris Farris: This is a good practical text that covers CloudTrail, permissions, and the broader landscape of AWS security.
+- _AWS CloudTrail User Guide_: The official AWS documentation for CloudTrail is invaluable. Pay particular attention to the section on “Configuring Logging Across AWS Accounts”
+- _AWS Security Best Practices_: This AWS whitepaper covers a range of security practices that should form your security foundation, including centralized logging strategies.
+- _Mastering AWS Security_ by Chris Farris: This is a good practical text that covers CloudTrail, permissions, and the broader landscape of AWS security.
 
 In my experience, setting up cross-account logging takes careful planning and precise configurations. It's not uncommon to encounter permission issues or misconfigurations at first. However, by carefully considering the policy requirements and implementing best practices you’ll be able to configure cross-account logging effectively, which is key to achieving a more robust and manageable security posture. The key is to test your setup thoroughly and iterate. Hopefully, this provides a solid starting point and addresses the core of your question. Let me know if there's anything else you would like to discuss.

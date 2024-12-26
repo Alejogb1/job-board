@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-map-a-hostname-to-multiple-other-hostnames"
 ---
 
-Okay, let’s tackle this. It's a problem I encountered fairly frequently back when I was managing infrastructure for a large distributed system. The requirement to resolve a single “user-facing” hostname to multiple internal hostnames, typically for load balancing or service discovery, is surprisingly common. It’s not about some simple one-to-one DNS mapping; it’s more complex than that. We need to go beyond the typical A or CNAME records.
+, let’s tackle this. It's a problem I encountered fairly frequently back when I was managing infrastructure for a large distributed system. The requirement to resolve a single “user-facing” hostname to multiple internal hostnames, typically for load balancing or service discovery, is surprisingly common. It’s not about some simple one-to-one DNS mapping; it’s more complex than that. We need to go beyond the typical A or CNAME records.
 
 Essentially, what you're asking about boils down to achieving flexible routing at the network or application layer. We want a system where a request sent to `api.example.com` might be transparently forwarded to, say, `api-server-01.internal.example.com`, `api-server-02.internal.example.com`, and so on, with some kind of logic to determine which one gets the actual request. This is distinct from simple DNS round-robin, although that can be one component of a solution. Let's explore the options.
 
@@ -40,11 +40,13 @@ http {
     }
 }
 ```
-*Explanation:*
-*   We define an `upstream` block named `api_servers` listing our internal servers.
-*   The `server` block listens for requests to `api.example.com`.
-*   The `location /` block forwards all requests to the `api_servers` upstream block.
-*   The `proxy_set_header` lines ensure proper request forwarding.
+
+_Explanation:_
+
+- We define an `upstream` block named `api_servers` listing our internal servers.
+- The `server` block listens for requests to `api.example.com`.
+- The `location /` block forwards all requests to the `api_servers` upstream block.
+- The `proxy_set_header` lines ensure proper request forwarding.
 
 This configuration means any request going to `api.example.com` will be forwarded to one of the backend servers listed in the `api_servers` block. The balancing algorithm is the default round-robin, although you can specify different algorithms in the `upstream` configuration.
 
@@ -84,11 +86,13 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)
 
 ```
-*Explanation:*
-*  The `backend_servers` list contains the addresses of our internal servers.
-*  The `proxy` function picks one of the internal servers at random.
-*  The request is forwarded to the randomly selected internal server.
-*  We are using `requests` to make the backend server request, passing on the method, headers, and body of the client request.
+
+_Explanation:_
+
+- The `backend_servers` list contains the addresses of our internal servers.
+- The `proxy` function picks one of the internal servers at random.
+- The request is forwarded to the randomly selected internal server.
+- We are using `requests` to make the backend server request, passing on the method, headers, and body of the client request.
 
 This is a basic round-robin proxy. In a production setting, this logic would need to be significantly enhanced for things such as session handling and retries, potentially using a more robust service discovery mechanism.
 
@@ -111,28 +115,29 @@ metadata:
   name: api-virtual-service
 spec:
   hosts:
-  - "api.example.com" # The external facing host
+    - "api.example.com" # The external facing host
   http:
-  - route:
-    - destination:
-        host: api-server-01.internal.example.com
-        port:
-          number: 8081
-    - destination:
-        host: api-server-02.internal.example.com
-        port:
-          number: 8082
-    - destination:
-        host: api-server-03.internal.example.com
-        port:
-          number: 8083
-
+    - route:
+        - destination:
+            host: api-server-01.internal.example.com
+            port:
+              number: 8081
+        - destination:
+            host: api-server-02.internal.example.com
+            port:
+              number: 8082
+        - destination:
+            host: api-server-03.internal.example.com
+            port:
+              number: 8083
 ```
-*Explanation:*
-*   This `VirtualService` defines how traffic to `api.example.com` should be routed.
-*   The `http` block defines the routing rules.
-*   Each `destination` block specifies the internal server (identified by host and port).
-*   Istio would ensure traffic is properly balanced across the defined destinations.
+
+_Explanation:_
+
+- This `VirtualService` defines how traffic to `api.example.com` should be routed.
+- The `http` block defines the routing rules.
+- Each `destination` block specifies the internal server (identified by host and port).
+- Istio would ensure traffic is properly balanced across the defined destinations.
 
 Note that in a proper Istio setup, you would have other configurations like gateway definitions to connect the external world to the virtual service.
 
@@ -140,8 +145,8 @@ Note that in a proper Istio setup, you would have other configurations like gate
 
 To deepen your understanding, I recommend reading:
 
-*   **"TCP/IP Illustrated, Volume 1" by W. Richard Stevens**: A classic on network protocols, essential for understanding the fundamentals underlying all these approaches.
-*   **"Designing Data-Intensive Applications" by Martin Kleppmann**: Excellent coverage of distributed systems principles and architectures. The chapters on service discovery and load balancing are particularly relevant.
-*   The official documentation for **Nginx, HAProxy, Istio, and Linkerd**; these are your primary practical tools in this area and having the official documentation at hand is very valuable.
+- **"TCP/IP Illustrated, Volume 1" by W. Richard Stevens**: A classic on network protocols, essential for understanding the fundamentals underlying all these approaches.
+- **"Designing Data-Intensive Applications" by Martin Kleppmann**: Excellent coverage of distributed systems principles and architectures. The chapters on service discovery and load balancing are particularly relevant.
+- The official documentation for **Nginx, HAProxy, Istio, and Linkerd**; these are your primary practical tools in this area and having the official documentation at hand is very valuable.
 
 In summary, mapping one hostname to multiple others is a common challenge. However, the solution you choose depends heavily on your specific environment and requirements. I hope that this breakdown helps you in the development of your own system! Remember to consider the trade-offs of each method regarding complexity, performance, and flexibility.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-memory-exceptions-during-stanford-nlp-sentiment-analysis"
 ---
 
-Alright, let’s unpack memory exceptions during sentiment analysis with Stanford NLP. I've seen this issue rear its head enough times across different projects to have developed some pretty concrete insights. It's seldom a single culprit, but rather a confluence of factors, often related to how we handle resources – particularly memory – when processing complex linguistic data.
+, let’s unpack memory exceptions during sentiment analysis with Stanford NLP. I've seen this issue rear its head enough times across different projects to have developed some pretty concrete insights. It's seldom a single culprit, but rather a confluence of factors, often related to how we handle resources – particularly memory – when processing complex linguistic data.
 
 First, let's clarify that by "Stanford NLP," I'm assuming we're talking about the corenlp library or similar implementations. And by "memory exceptions," I'm referring to things like `OutOfMemoryError` (or equivalent in other languages) that signal the jvm or your runtime environment has exhausted the available memory.
 
@@ -39,6 +39,7 @@ public class BadSentimentAnalyzer {
 }
 
 ```
+
 In this simplistic example, we create a new `StanfordCoreNLP` pipeline for each loop iteration. This is incredibly inefficient. Each pipeline creation involves loading the models again, repeatedly allocating new memory. This approach, especially for a large input loop, will consume far more resources than is necessary. Also note how I have `text.repeat(10)` to simulate a longer text which will further exacerbate the issue. This leads us to the third factor: data volume.
 
 The third factor is high data volume. Naturally, the sheer volume of input data heavily influences the memory footprint. Analyzing a few short tweets requires a fraction of the resources needed to process hundreds of lengthy customer reviews. The amount of input data, along with the length and complexity of that data, has a direct impact on memory consumption, especially in combination with processing overheads, and inefficient practices. If the allocated memory can't accommodate the loaded models along with the data being processed, or the interim results, then the jvm will throw an exception.
@@ -65,7 +66,8 @@ public class GoodSentimentAnalyzer {
     }
 }
 ```
-Here, we load the pipeline *once* outside of the loop. This is a far more efficient usage pattern which will not cause redundant memory allocation or loading of the underlying models.
+
+Here, we load the pipeline _once_ outside of the loop. This is a far more efficient usage pattern which will not cause redundant memory allocation or loading of the underlying models.
 
 Finally, I'd suggest another code snippet demonstrating how to limit the amount of text which is analysed in any given call. This often involves chunking or splitting up longer documents and then aggregating the results.
 

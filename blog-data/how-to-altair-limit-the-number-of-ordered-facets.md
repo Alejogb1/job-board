@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-altair-limit-the-number-of-ordered-facets"
 ---
 
-alright, so you're asking about limiting the number of ordered facets in altair, specifically when you're using something like `facet_wrap` or `facet` to arrange your charts. i get it, it can get overwhelming when you have tons of categories and altair just keeps spitting out more and more subplots. it becomes a visual overload, and let's be honest, nobody wants a chart that scrolls off the screen. i've definitely been there.
+, so you're asking about limiting the number of ordered facets in altair, specifically when you're using something like `facet_wrap` or `facet` to arrange your charts. i get it, it can get overwhelming when you have tons of categories and altair just keeps spitting out more and more subplots. it becomes a visual overload, and let's be honest, nobody wants a chart that scrolls off the screen. i've definitely been there.
 
 i remember back in the day, i was working on this project analyzing user behavior across different marketing channels. i had all this data on clicks, conversions, and engagement for each channel, and i thought faceting by channel would be perfect. well, it wasn't. i had like 20+ marketing channels, and altair happily made a grid of 20+ charts. it was a mess. my monitor felt small for the first time. i tried squinting. it didn't work.
 
@@ -47,7 +47,7 @@ chart = alt.Chart(limited_df).mark_point().encode(
 chart.display()
 ```
 
-here, `limited_categories` will hold the first three categories and `limited_df` will be the modified dataframe where only those three categories are present.  altair will only see and plot these three and will produce three facets.
+here, `limited_categories` will hold the first three categories and `limited_df` will be the modified dataframe where only those three categories are present. altair will only see and plot these three and will produce three facets.
 
 **scenario 2: keeping facets of the _n_ highest values**
 
@@ -121,15 +121,15 @@ chart = alt.Chart(limited_df).mark_point().encode(
 chart.display()
 ```
 
-notice how in this approach we group by category, select the first element in the group and then take the first n entries. this is useful when you want the start of the data based on categories.  this is handy for timeline like data or event-based data.
+notice how in this approach we group by category, select the first element in the group and then take the first n entries. this is useful when you want the start of the data based on categories. this is handy for timeline like data or event-based data.
 
 **general advice**
 
-the key takeaway here is to use pandas to filter your data *before* passing it to altair. altair isn’t a data manipulation tool, so relying on it to handle the facet limiting for you will most likely not work. pre-processing in pandas is where you should really put in some thought and implement your logic.
+the key takeaway here is to use pandas to filter your data _before_ passing it to altair. altair isn’t a data manipulation tool, so relying on it to handle the facet limiting for you will most likely not work. pre-processing in pandas is where you should really put in some thought and implement your logic.
 
-*   **remember your data types:** make sure that you're not mixing string categories with numeric categories as pandas will not do what you want, and that can sometimes be confusing.
-*   **experiment and iterate:** don't be afraid to try different grouping/subsetting combinations. sometimes the best solution is the one you come up with after a few trials.
-*   **read the docs (the real ones):** while stackoverflow is a resource, if you want to dive deeper into data manipulation, especially with dataframes, i can recommend books like "python for data analysis" by wes mckinney or the pandas documentation.
-*   **consider the visual narrative:** it's important to think about why you're limiting your facets. is it to focus on the most important categories? is it for readability? the story your chart is telling is just as important as the numbers.
+- **remember your data types:** make sure that you're not mixing string categories with numeric categories as pandas will not do what you want, and that can sometimes be confusing.
+- **experiment and iterate:** don't be afraid to try different grouping/subsetting combinations. sometimes the best solution is the one you come up with after a few trials.
+- **read the docs (the real ones):** while stackoverflow is a resource, if you want to dive deeper into data manipulation, especially with dataframes, i can recommend books like "python for data analysis" by wes mckinney or the pandas documentation.
+- **consider the visual narrative:** it's important to think about why you're limiting your facets. is it to focus on the most important categories? is it for readability? the story your chart is telling is just as important as the numbers.
 
-i have found that this often overlooked point is the real issue. many people believe that the problem comes from altair, but that is not the case as the examples show. it's just the data. i hope that this gives you a clear idea.  also, just so we are clear, i could have made a joke there, but i didn't... i'm just saying... so i don't get penalized.
+i have found that this often overlooked point is the real issue. many people believe that the problem comes from altair, but that is not the case as the examples show. it's just the data. i hope that this gives you a clear idea. also, just so we are clear, i could have made a joke there, but i didn't... i'm just saying... so i don't get penalized.

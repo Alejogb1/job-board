@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "how-to-reference-external-files-using-bashoperator-in-airflow"
 ---
 
-Alright, let's tackle this. Referencing external files with `BashOperator` in Airflow is a fairly common scenario, and while it might seem straightforward initially, there are nuances that can trip you up if you're not careful. I've definitely seen my share of headaches debugging pipelines stemming from improperly handled file paths in bash commands.
+, let's tackle this. Referencing external files with `BashOperator` in Airflow is a fairly common scenario, and while it might seem straightforward initially, there are nuances that can trip you up if you're not careful. I've definitely seen my share of headaches debugging pipelines stemming from improperly handled file paths in bash commands.
 
 Essentially, the `BashOperator` executes shell commands within the context of the Airflow worker, and that execution context is key. Think of it as running a script in a detached, sandboxed environment. Therefore, we can't just assume a relative path will work the way it might on your local machine. We need to be explicit and strategic in how we specify the location of these external resources.
 
-The core issue is often about resolving the *where* in 'where is my file?' The Airflow worker processes operate in their own isolated file system context. So, a path like `./my_script.sh` which might work fine locally, would likely fail within the `BashOperator`. To illustrate this more effectively, let's break down how I've approached this problem in the past, particularly when dealing with dynamic configurations.
+The core issue is often about resolving the _where_ in 'where is my file?' The Airflow worker processes operate in their own isolated file system context. So, a path like `./my_script.sh` which might work fine locally, would likely fail within the `BashOperator`. To illustrate this more effectively, let's break down how I've approached this problem in the past, particularly when dealing with dynamic configurations.
 
 Firstly, avoid hardcoding file paths within your DAG definition as much as possible. It’s a recipe for disaster when moving between environments (dev, staging, prod, etc.). Environment variables are your friend here. You can pass environment variables to the `BashOperator`, and you should utilize those variables to define path prefixes. Let’s say you have a directory structure that looks like this:
 
@@ -80,7 +80,7 @@ with DAG(
         echo "Executing script with template"
         SCRIPT_PATH={{ params.script_path }}
         echo "Script path: $SCRIPT_PATH"
-        {{ params.script_path }} 
+        {{ params.script_path }}
         """,
         params={'script_path': '/opt/airflow/scripts/my_script_2.sh'}
     )

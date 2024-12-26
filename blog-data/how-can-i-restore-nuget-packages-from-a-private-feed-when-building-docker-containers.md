@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-restore-nuget-packages-from-a-private-feed-when-building-docker-containers"
 ---
 
-Okay, let's tackle this one. I've bumped into this exact scenario more times than I care to remember, especially when migrating legacy .net projects into containerized environments. The core issue, restoring nuget packages from a private feed within a docker build, isn’t inherently complex, but it does require careful orchestration to avoid common pitfalls. It’s about securely providing credentials and ensuring the build process has access to those feeds, all while maintaining a clean and efficient docker image. I'll walk you through my go-to methods, highlighting where things can often go sideways.
+, let's tackle this one. I've bumped into this exact scenario more times than I care to remember, especially when migrating legacy .net projects into containerized environments. The core issue, restoring nuget packages from a private feed within a docker build, isn’t inherently complex, but it does require careful orchestration to avoid common pitfalls. It’s about securely providing credentials and ensuring the build process has access to those feeds, all while maintaining a clean and efficient docker image. I'll walk you through my go-to methods, highlighting where things can often go sideways.
 
 Firstly, the challenge originates from the fact that docker builds typically occur in an isolated environment, where the containerization engine has limited access to your development machine or your corporate network's private nuget server. Directly referencing private feeds within a `.csproj` file will fail during a docker build if no authentication mechanism is in place or if your container’s network configurations are incorrect. You can’t simply assume the docker build context will magically inherit your development environment’s configuration.
 
@@ -40,11 +40,11 @@ docker build -t my-app --build-arg NUGET_USERNAME="my_username" --build-arg NUGE
 
 In this snippet, we’re:
 
-*   Using a multi-stage docker build, so the credentials are only present in the build stage. They do not contaminate the final image.
-*   Passing `NUGET_USERNAME` and `NUGET_PASSWORD` as build arguments.
-*   Using these arguments in the `dotnet restore` command within the build stage.
+- Using a multi-stage docker build, so the credentials are only present in the build stage. They do not contaminate the final image.
+- Passing `NUGET_USERNAME` and `NUGET_PASSWORD` as build arguments.
+- Using these arguments in the `dotnet restore` command within the build stage.
 
-This method is functional and relatively easy to implement, but *never* store credentials directly in your dockerfile. Additionally, it is not best practice to expose credentials directly on the command line. Instead, utilize an environment file, or a secrets manager. You must use build args only within your `FROM … AS build` stage and use `COPY --from=build` for any subsequent stage. This ensures security of your credentials.
+This method is functional and relatively easy to implement, but _never_ store credentials directly in your dockerfile. Additionally, it is not best practice to expose credentials directly on the command line. Instead, utilize an environment file, or a secrets manager. You must use build args only within your `FROM … AS build` stage and use `COPY --from=build` for any subsequent stage. This ensures security of your credentials.
 
 **2. Using a `nuget.config` File**
 
@@ -90,9 +90,9 @@ And your `nuget.config` file would look something like this:
 
 Key takeaways here:
 
-*   We copy the `nuget.config` file into the container at a well-known location before the `dotnet restore` command. The default location is at `.nuget/nuget.config` next to the solution or project file.
-*   The `nuget.config` file is typically excluded from version control and passed to the container build as a build arg, or copied via the build context or mounted volume.
-*   Note the use of `ClearTextPassword`. While this works, for production systems it’s far better to use encrypted credentials or another credential provider (e.g., Windows Credential Manager, Azure DevOps service connections), where available. You can then use the 'password' key instead.
+- We copy the `nuget.config` file into the container at a well-known location before the `dotnet restore` command. The default location is at `.nuget/nuget.config` next to the solution or project file.
+- The `nuget.config` file is typically excluded from version control and passed to the container build as a build arg, or copied via the build context or mounted volume.
+- Note the use of `ClearTextPassword`. While this works, for production systems it’s far better to use encrypted credentials or another credential provider (e.g., Windows Credential Manager, Azure DevOps service connections), where available. You can then use the 'password' key instead.
 
 This method is more flexible for managing multiple feeds and simplifies the dockerfile, but also needs careful credential management to avoid storing your credentials in source control.
 
@@ -129,10 +129,10 @@ docker build --build-arg NUGET_PRIVATE_FEED_URL="https://my-private-feed.example
 
 Key points:
 
-*   Here, we install the `Azure.Artifacts.CredentialProvider` .NET tool during the build phase.
-*   The `dotnet restore` command uses the provided feed url from the environment variable.
-*   The plugin automatically detects and uses managed identities or other configured credentials, depending on the environment.
-*   You'll need to ensure that the container's execution environment has the correct permissions and configuration to successfully authenticate using the plugin. This is typically achieved by deploying the container with a managed identity.
+- Here, we install the `Azure.Artifacts.CredentialProvider` .NET tool during the build phase.
+- The `dotnet restore` command uses the provided feed url from the environment variable.
+- The plugin automatically detects and uses managed identities or other configured credentials, depending on the environment.
+- You'll need to ensure that the container's execution environment has the correct permissions and configuration to successfully authenticate using the plugin. This is typically achieved by deploying the container with a managed identity.
 
 This is my preferred method for production builds. It minimizes credential exposure, provides more complex authentication solutions, and integrates nicely with modern cloud-based build pipelines.
 

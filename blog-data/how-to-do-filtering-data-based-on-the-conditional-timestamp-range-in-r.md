@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-filtering-data-based-on-the-conditional-timestamp-range-in-r"
 ---
 
-alright, so filtering data based on a conditional timestamp range in r, right? i've been there, trust me. it's one of those things that seems simple on the surface, but can quickly turn into a time sink if you're not careful. i recall back in my early days working with sensor data, i had a massive dataset of environmental readings, timestamps down to the millisecond. i needed to extract only data within specific time windows, not fixed windows, mind you, but windows defined by other events within the data. it was messy, to say the least. let's get into how i'd tackle this now.
+, so filtering data based on a conditional timestamp range in r, right? i've been there, trust me. it's one of those things that seems simple on the surface, but can quickly turn into a time sink if you're not careful. i recall back in my early days working with sensor data, i had a massive dataset of environmental readings, timestamps down to the millisecond. i needed to extract only data within specific time windows, not fixed windows, mind you, but windows defined by other events within the data. it was messy, to say the least. let's get into how i'd tackle this now.
 
 first things first, making sure your timestamps are actually timestamps. r has a few ways to handle dates and times, but i've found `lubridate` to be the most reliable and user friendly library. so, if you don’t have it already, `install.packages("lubridate")` is your friend. once installed, you'll want to load it: `library(lubridate)`.
 
@@ -52,6 +52,7 @@ filter_by_timestamp_range <- function(df) {
 
 filtered_data <- filter_by_timestamp_range(data)
 ```
+
 this function iterates each row, checks if `event_start` and `event_end` are not `na`. If not it checks the condition and gets the index of the rows that should be kept, returning only the data that matches.
 
 a few things are important here. first off, using a loop is not ideal for performance when dealing with massive datasets. for that, we can look at using the apply family, but in this instance, the for loop is more readable and for the purposes of this example, fine for the data we have at hand. another thing worth mentioning, the conditional evaluation using `&&`, this ensures that the time comparison happens only if both start and end dates are present.

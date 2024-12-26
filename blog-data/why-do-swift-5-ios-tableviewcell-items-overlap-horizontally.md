@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-do-swift-5-ios-tableviewcell-items-overlap-horizontally"
 ---
 
-Okay, let's tackle this persistent layout issue—horizontal overlap in `UITableViewCell` items on iOS with Swift 5. It's a common frustration, and I've spent more than a few late nights tracking down the root causes. I remember one particular project, an e-commerce app, where the product descriptions kept bleeding into the price labels—absolute chaos. So, let me share what I've learned, breaking it down into manageable chunks with some practical examples.
+, let's tackle this persistent layout issue—horizontal overlap in `UITableViewCell` items on iOS with Swift 5. It's a common frustration, and I've spent more than a few late nights tracking down the root causes. I remember one particular project, an e-commerce app, where the product descriptions kept bleeding into the price labels—absolute chaos. So, let me share what I've learned, breaking it down into manageable chunks with some practical examples.
 
 The core issue typically stems from how `UITableViewCell` manages its content and how we, as developers, configure its layout. Cells are essentially view containers, and like any view, they operate within constraints and frame dimensions. When elements overlap, it's almost always due to a misconfiguration of these aspects. Think of it as a carefully orchestrated ballet; one wrong move, and everything is out of sync.
 
-The first common culprit is neglecting to set proper constraints when using auto layout. If you're not pinning your subviews (labels, images, etc.) to the cell's content view or to each other with appropriate margins or spacing, they can easily overlap, especially when the cell needs to accommodate different text lengths or image sizes. If we fail to explicitly specify that the price label needs to be positioned *to the right of* and with some space *from* the product name label, they can quite literally pile on top of each other.
+The first common culprit is neglecting to set proper constraints when using auto layout. If you're not pinning your subviews (labels, images, etc.) to the cell's content view or to each other with appropriate margins or spacing, they can easily overlap, especially when the cell needs to accommodate different text lengths or image sizes. If we fail to explicitly specify that the price label needs to be positioned _to the right of_ and with some space _from_ the product name label, they can quite literally pile on top of each other.
 
 Here's a very simplified example in code to illustrate that point. Notice the absence of constraints.
 
@@ -136,7 +136,7 @@ class ConstraintBasedCell: UITableViewCell {
 //return cell
 ```
 
-Here, we've disabled `translatesAutoresizingMaskIntoConstraints` because we’re taking over with the modern auto layout system. We've used `NSLayoutConstraint.activate` to define constraints. Note how the `productNameLabel` is constrained to the leading and top edges, but importantly, its *trailing* edge is tied to the *leading* edge of the `priceLabel`, preventing it from overlapping. The `priceLabel` is right-aligned to the cell’s trailing edge. We’ve also told the `productNameLabel` to accommodate a variable number of lines (`numberOfLines = 0`), so that it can grow vertically without breaking the overall layout.
+Here, we've disabled `translatesAutoresizingMaskIntoConstraints` because we’re taking over with the modern auto layout system. We've used `NSLayoutConstraint.activate` to define constraints. Note how the `productNameLabel` is constrained to the leading and top edges, but importantly, its _trailing_ edge is tied to the _leading_ edge of the `priceLabel`, preventing it from overlapping. The `priceLabel` is right-aligned to the cell’s trailing edge. We’ve also told the `productNameLabel` to accommodate a variable number of lines (`numberOfLines = 0`), so that it can grow vertically without breaking the overall layout.
 
 Furthermore, if your cells are more complex, consider using a `UIStackView` to manage the layout of elements within a cell, especially for horizontally arranged components. Stack views handle the spacing and sizing efficiently, reducing the likelihood of overlap. Just remember to make sure the stack view itself is properly constrained to the cell's content view.
 

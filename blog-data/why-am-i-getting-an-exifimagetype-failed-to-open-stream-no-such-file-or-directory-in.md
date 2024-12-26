@@ -4,15 +4,15 @@ date: "2024-12-15"
 id: "why-am-i-getting-an-exifimagetype-failed-to-open-stream-no-such-file-or-directory-in"
 ---
 
-alright, so you're hitting that classic "exif_imagetype failed to open stream" error, right? i've seen this one pop up more times than i care to remember. it’s usually about paths, permissions, or files that just aren't what the exif functions expect. let's break it down, based on my years of banging my head against similar issues.
+, so you're hitting that classic "exif_imagetype failed to open stream" error, right? i've seen this one pop up more times than i care to remember. it’s usually about paths, permissions, or files that just aren't what the exif functions expect. let's break it down, based on my years of banging my head against similar issues.
 
-first, this error from `exif_imagetype()` in php screams one thing: the function can't find or access the file you're giving it. it's not about the *contents* of the file being wrong for an image (like a text file pretending to be a jpeg). it's about the function straight up not being able to get its hands on the file itself.
+first, this error from `exif_imagetype()` in php screams one thing: the function can't find or access the file you're giving it. it's not about the _contents_ of the file being wrong for an image (like a text file pretending to be a jpeg). it's about the function straight up not being able to get its hands on the file itself.
 
 let's look at some common culprits.
 
 **path problems are number one on the list, always.**
 
-think of it like this: you tell your friend "go grab that thing in the kitchen" but you actually meant “the thing in the *other* kitchen, on the second floor”. php, in this case, is your friend, and if the path you give it to the image file is not exactly the path it’s looking for, it's gonna throw a fit. we're not talking about a general 'where it might be’ but rather the full, concrete path. it absolutely has to match what the server understands.
+think of it like this: you tell your friend "go grab that thing in the kitchen" but you actually meant “the thing in the _other_ kitchen, on the second floor”. php, in this case, is your friend, and if the path you give it to the image file is not exactly the path it’s looking for, it's gonna throw a fit. we're not talking about a general 'where it might be’ but rather the full, concrete path. it absolutely has to match what the server understands.
 
 i remember back in 2012, when i was starting out building a small image processing server, i had this exact issue on repeat. i'd swear i had checked every path 5 times! i was doing local development, and was pulling my hair out. it turned out to be this: i was using absolute paths like `/home/myuser/images/image.jpg` locally, and then deploying my php to a completely different server with a user home path named like `/var/www/vhosts/mywebsite/images/`. of course, php would be like “i got nothing with that path”. i switched to relative paths to fix the issues with a simple `images/image.jpg` and it magically worked. and i felt really dumb.
 
@@ -66,6 +66,7 @@ if (is_readable($imagePath)) {
 }
 ?>
 ```
+
 this code checks if php has read permission. if it doesn’t, you'll see "file is not readable”.
 
 **file existence check, elementary but important.**

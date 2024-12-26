@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "difference-between-sif-and-img-file-types"
 ---
 
-Okay so you're asking about the difference between SIF and IMG file types right Straightforward question lets dive in I've spent way too much time wrestling with image formats so I can probably shed some light
+you're asking about the difference between SIF and IMG file types right Straightforward question lets dive in I've spent way too much time wrestling with image formats so I can probably shed some light
 
 First off lets break it down IMG and SIF are both raster image formats which means they store images as grids of pixels not like vector formats that use mathematical descriptions or paths So far so good right We're not dealing with any wild encoding stuff at this level
 
@@ -93,6 +93,7 @@ if sif_array is not None:
 
 
 ```
+
 And here is an example of how you would save a numpy array as an IMG assuming that the pixel values are uint8
 
 ```python
@@ -118,6 +119,7 @@ save_file_name = 'test_output.img'
 save_img_grayscale(save_file_name, test_image_array)
 
 ```
+
 Keep in mind though real SIF loading often is much more complicated than this and will depend on the specific file format you're working with I suggest looking at documentation specific to the tools and libraries you're using SIF parsing libraries are also quite common depending on the industry like for example for hyperspectral there are some specific ones that you can find
 
 So to summarize think of IMG as a raw unstandardized dump and SIF as a structured container with metadata commonly used in scientific domains I have seen both cause countless headaches believe me and I have lost countless hours dealing with these issues I hope I have explained the differences between them well enough

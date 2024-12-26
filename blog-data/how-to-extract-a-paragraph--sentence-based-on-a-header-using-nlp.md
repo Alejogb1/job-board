@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-extract-a-paragraph--sentence-based-on-a-header-using-nlp"
 ---
 
-alright, so you're looking to pull specific text blocks out of a document based on headers, and you're thinking nlp is the way to go. i've been there, spent more hours than i'd like to remember chasing down similar text extraction problems. it's a common need when dealing with unstructured data and it can be surprisingly tricky to get consistent results. let me tell you my story and hopefully help you out.
+, so you're looking to pull specific text blocks out of a document based on headers, and you're thinking nlp is the way to go. i've been there, spent more hours than i'd like to remember chasing down similar text extraction problems. it's a common need when dealing with unstructured data and it can be surprisingly tricky to get consistent results. let me tell you my story and hopefully help you out.
 
 years ago i worked on this project, a content management system for a legal firm. they had a huge collection of documents, mainly court filings, with various structures but they all mostly had header-paragraph pairs. and i was tasked to automate extracting information from them: cases, arguments, etc., all neatly tucked under specific headings. i initially went the route of pure regular expressions. it worked, kind of. for simple documents. but then variations would appear: a different font used for the header, a stray newline, an unexpected bullet point or an extra space. the regex pattern broke faster than a cheap usb cable.
 
@@ -100,6 +100,7 @@ if __name__ == '__main__':
    print(f"extracted text for header '{header_to_extract}':\n {extracted}")
 
 ```
+
 the key difference here is that we are relying on `spaCy` for tokenization, in particular we use the `.sents` property to get sentences. this also handles the stripping of the sentence better than manually doing it as it will only return the core text instead of extra spaces. `spaCy` models will also help you with more complicated tasks such as part-of-speech tagging and named entity recognition if you decide that in the future you need more features for your document processing pipeline.
 
 i remember a particular case where the documents had numerical headers, like "1.0 Introduction", "2.1 main body" and the implementation above was having problems identifying them. these were being tokenized in weird ways by `nltk`. after spending way too much time trying to tweak the tokenization i realized that a simple regex search for a header at the start of the sentence would suffice. sometimes you don't need advanced libraries to solve these things, keep it simple and you will thank yourself later. here's a snippet showing that idea:
@@ -142,6 +143,7 @@ if __name__ == '__main__':
     print(f"extracted text for regex header '{header_regex_to_extract}':\n {extracted}")
 
 ```
+
 here, instead of looking for an exact string match, we use a regular expression to find a pattern that identifies our header format which allows us to be more flexible to slight changes. this technique would have probably saved me a lot of time if i had thought of it earlier.
 
 for further reading i'd recommend "speech and language processing" by daniel jurafsky and james h. martin. it's a great resource for getting a solid foundation in nlp, it will help you understand the techniques involved in text processing, plus it will give you the theoretical background to really understand what you are doing. also, look at research papers on information extraction, you can find lots of them on google scholar. a book that could be useful is "natural language processing with python" by steven bird, ewan klein, and edward loper, as it focuses on using the nltk library for practical applications. this last one is very useful as a practical and hands on introduction to these topics.

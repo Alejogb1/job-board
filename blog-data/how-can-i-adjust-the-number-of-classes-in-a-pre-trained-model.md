@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-adjust-the-number-of-classes-in-a-pre-trained-model"
 ---
 
-Okay, let's tackle this. It’s a common challenge, and one I remember facing vividly a few years back when we were transitioning our image recognition pipeline from a very general pre-trained model to something tailored for a specific product category. The need to adjust the number of classes in a pre-trained model, especially in deep learning, usually arises when you want to fine-tune the model for a dataset that has a different number of output categories than the original model was trained on. Directly using a pre-trained model 'as is' often leads to poor performance because its final classification layer, which provides the output probabilities for each category, is not aligned with your specific task.
+, let's tackle this. It’s a common challenge, and one I remember facing vividly a few years back when we were transitioning our image recognition pipeline from a very general pre-trained model to something tailored for a specific product category. The need to adjust the number of classes in a pre-trained model, especially in deep learning, usually arises when you want to fine-tune the model for a dataset that has a different number of output categories than the original model was trained on. Directly using a pre-trained model 'as is' often leads to poor performance because its final classification layer, which provides the output probabilities for each category, is not aligned with your specific task.
 
 The fundamental approach involves replacing or modifying the final classification layer of the pre-trained model, which is typically a fully connected layer with a softmax activation. The key here is understanding that the pre-trained layers, especially the convolutional layers in convolutional neural networks (CNNs), have learned hierarchical feature representations from the original dataset which are still beneficial for your new task. We want to leverage those learned features, not throw them away.
 
@@ -94,6 +94,7 @@ model_bottleneck = BottleneckModel('resnet18', num_classes=10, bottleneck_dim=25
 print(model_bottleneck)
 
 ```
+
 This code shows how a 'BottleneckModel' class can be implemented, which involves passing the output of the base model to an extra linear layer, a relu, and then finally to the classification layer. This pattern can be extended to use more complex bottlenecks, like transformers or other kinds of dense layers.
 
 **3. Using a Custom Layer or Head:**
@@ -154,17 +155,17 @@ In this case, we create a separate class ‘CustomClassificationHead’ which ta
 
 **Important Considerations:**
 
-*   **Freezing Layers:** Start by freezing most of the pre-trained layers and train only the new classification layer. Gradually unfreeze and fine-tune the pre-trained layers with a low learning rate. This helps avoid catastrophic forgetting.
+- **Freezing Layers:** Start by freezing most of the pre-trained layers and train only the new classification layer. Gradually unfreeze and fine-tune the pre-trained layers with a low learning rate. This helps avoid catastrophic forgetting.
 
-*   **Learning Rate:** Employ a lower learning rate for the pre-trained layers than the new layer to prevent overfitting.
+- **Learning Rate:** Employ a lower learning rate for the pre-trained layers than the new layer to prevent overfitting.
 
-*   **Dataset Size:** If you have a small dataset, the more parameters you introduce in your custom layer, the more chance you will be to overfit. In this situation, it can be a good idea to reduce the dimensions of the custom layer and use more regularisation methods such as dropout.
-* **Choice of Pre-Trained Model:** The pre-trained model should be selected in a way that the dataset that you are training on is similar to the one the model was trained on. For example, using a classification model trained on imagenet to classify medical images could be not appropriate, unless extensive feature extraction and custom training is performed.
+- **Dataset Size:** If you have a small dataset, the more parameters you introduce in your custom layer, the more chance you will be to overfit. In this situation, it can be a good idea to reduce the dimensions of the custom layer and use more regularisation methods such as dropout.
+- **Choice of Pre-Trained Model:** The pre-trained model should be selected in a way that the dataset that you are training on is similar to the one the model was trained on. For example, using a classification model trained on imagenet to classify medical images could be not appropriate, unless extensive feature extraction and custom training is performed.
 
 For deeper understanding, I’d highly recommend delving into the following:
 
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** A comprehensive textbook that provides a solid theoretical foundation in deep learning concepts and practices.
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** A practical guide with examples for implementing deep learning models with the most popular libraries in Python.
-*   **Papers on transfer learning and fine-tuning techniques:** Many researchers publish their cutting-edge methods in places like *NeurIPS, ICML, ICLR*. Exploring those can be very beneficial.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** A comprehensive textbook that provides a solid theoretical foundation in deep learning concepts and practices.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** A practical guide with examples for implementing deep learning models with the most popular libraries in Python.
+- **Papers on transfer learning and fine-tuning techniques:** Many researchers publish their cutting-edge methods in places like _NeurIPS, ICML, ICLR_. Exploring those can be very beneficial.
 
 In summary, adjusting the number of classes in a pre-trained model is a standard procedure, but it requires a delicate balance between re-purposing the knowledge captured in pre-trained layers, and fine-tuning to your custom task. The strategies above, when implemented thoughtfully, can effectively navigate this challenge.

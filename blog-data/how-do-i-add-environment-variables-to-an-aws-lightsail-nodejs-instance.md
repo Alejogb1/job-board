@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-add-environment-variables-to-an-aws-lightsail-nodejs-instance"
 ---
 
-Okay, let's tackle this. I've certainly spent a fair amount of time navigating the intricacies of AWS Lightsail, and setting up environment variables for Node.js instances has been a common task. It’s one of those things that seems straightforward initially, but can quickly become a head-scratcher if not approached systematically. In my experience, particularly with a project that involved a complex microservices architecture deployed across Lightsail, proper environment variable management proved crucial for maintaining consistency and flexibility across different deployment stages (dev, staging, prod, and so on).
+, let's tackle this. I've certainly spent a fair amount of time navigating the intricacies of AWS Lightsail, and setting up environment variables for Node.js instances has been a common task. It’s one of those things that seems straightforward initially, but can quickly become a head-scratcher if not approached systematically. In my experience, particularly with a project that involved a complex microservices architecture deployed across Lightsail, proper environment variable management proved crucial for maintaining consistency and flexibility across different deployment stages (dev, staging, prod, and so on).
 
 Fundamentally, the challenge stems from the fact that Node.js applications don’t magically know what variables you want to use. You have to explicitly provide these variables to the runtime environment where your application executes. There are several avenues available to achieve this with Lightsail, but I’ve found a couple that are consistently reliable and relatively easy to maintain.
 
@@ -27,21 +27,27 @@ Within your Node.js application, you can access these variables using `process.e
 
 ```javascript
 // server.js
-const express = require('express');
+const express = require("express");
 const app = express();
 
 const databaseUrl = process.env.DATABASE_URL;
 const apiKey = process.env.API_KEY;
 const port = process.env.PORT || 3000; // Default to 3000 if PORT isn't defined
 
-app.get('/', (req, res) => {
-  res.send(`Database URL: ${databaseUrl}, API Key (masked): ${apiKey.substring(0, 5)}...`);
+app.get("/", (req, res) => {
+  res.send(
+    `Database URL: ${databaseUrl}, API Key (masked): ${apiKey.substring(
+      0,
+      5
+    )}...`
+  );
 });
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 ```
+
 This snippet illustrates how your Node.js application retrieves the variables set in your bash profile. Note the defensive default for the `PORT` variable, which is a good practice to implement.
 
 However, relying solely on `.bashrc` or similar for system-wide application settings can be problematic. It conflates user-specific environment settings with application configuration, and makes it difficult to manage changes without SSH access. For this reason, I prefer using systemd to manage my Node.js applications, and this approach lends itself more cleanly to proper environment variable segregation. Systemd units are configuration files that describe how a service should be run, including settings for things like start commands, restart policies, and, crucially for our purpose, environment variables.
@@ -64,6 +70,7 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 ```
+
 To set environment variables, you'd modify the `[Service]` section:
 
 ```ini

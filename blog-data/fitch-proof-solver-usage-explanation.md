@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "fitch-proof-solver-usage-explanation"
 ---
 
-Okay so you're asking about Fitch proof solvers right Been there done that more times than I care to admit Let's dive into this thing from a purely technical viewpoint
+you're asking about Fitch proof solvers right Been there done that more times than I care to admit Let's dive into this thing from a purely technical viewpoint
 
 Right off the bat a Fitch proof solver is basically a tool for validating logical arguments in propositional and predicate calculus You feed it some premises and a conclusion and it tells you if the conclusion logically follows from those premises using the rules of natural deduction Specifically Fitch systems are a particular flavor of natural deduction characterized by the use of nested subproofs indicated with vertical lines We are not going over the syntax details of propositional and predicate calculus because that would be an entire another post but we are going straight to how these solvers work and how to use them effectively
 
@@ -27,11 +27,13 @@ The solver then would construct a Fitch proof with something like this internal 
 2.  P            Premise
 3.  Q            Modus Ponens 1 2
 ```
+
 The key operation here is the rule of modus ponens on lines 1 and 2 to get to line 3 which is the conclusion
 
 Now some solvers allow you to actually guide the deduction process by telling it explicitly which rule to apply at each step This is useful when you have a complex proof but I would strongly suggest you let the solver do its job of proof finding because you could easily screw it up if you are not very familiar with proof theory. Usually you want to use the rule application hints to make a complex problem easier and not make a simple problem harder to solve.
 
 For something more complex let’s see another example including quantifiers:
+
 ```
 Premise 1: For all x if Fx then Gx
 Premise 2: Fa
@@ -39,12 +41,14 @@ Conclusion: Ga
 ```
 
 Here’s how a solver might tackle it:
+
 ```
 1. ∀x(Fx → Gx)      Premise
 2. Fa                 Premise
 3. Fa → Ga      Universal Elimination 1
 4. Ga                 Modus Ponens 3 2
 ```
+
 Here universal elimination is the process of turning a general statement for all x into a more concrete statement for a specific case a in this case
 
 Now let’s talk about some common pitfalls I have seen over my career a lot. One common error is not recognizing when a proof is not possible. Fitch solvers as logical checkers can’t just prove anything you want. If you ask it to show something that is invalid it's going to fail. And this is fine. The tool is doing its job.
@@ -57,11 +61,11 @@ Also it's important to remember that Fitch solvers themselves can sometimes have
 
 Regarding resources I would recommend delving into these:
 
-*   **"Logic in Computer Science: Modelling and Reasoning about Systems" by Michael Huth and Mark Ryan**: This is a classic textbook covering all kinds of logic as well as the computational side of things including proof theory and natural deduction. The book starts from propositional logic all the way up to temporal logic so it's a good place to start from if you are not yet familiar with the terminology of propositional and predicate calculus.
+- **"Logic in Computer Science: Modelling and Reasoning about Systems" by Michael Huth and Mark Ryan**: This is a classic textbook covering all kinds of logic as well as the computational side of things including proof theory and natural deduction. The book starts from propositional logic all the way up to temporal logic so it's a good place to start from if you are not yet familiar with the terminology of propositional and predicate calculus.
 
-*   **"A Concise Introduction to Logic" by Patrick Hurley**: While not computer science specific this is a solid text for understanding the underpinnings of logic. Specifically the part about natural deduction is very well explained and it has lots of exercises to practice.
+- **"A Concise Introduction to Logic" by Patrick Hurley**: While not computer science specific this is a solid text for understanding the underpinnings of logic. Specifically the part about natural deduction is very well explained and it has lots of exercises to practice.
 
-* **Papers on automated theorem proving:** Search for papers on topics like "tableau methods" "resolution" or "sequent calculus." While they are not exactly Fitch specific they offer a broader understanding of how automated reasoning works. (I am not joking about this you should actually search for research papers I know it sounds terrible but if you want to get good at this stuff that's the way to go).
+- **Papers on automated theorem proving:** Search for papers on topics like "tableau methods" "resolution" or "sequent calculus." While they are not exactly Fitch specific they offer a broader understanding of how automated reasoning works. (I am not joking about this you should actually search for research papers I know it sounds terrible but if you want to get good at this stuff that's the way to go).
 
 So to wrap it up: Fitch solvers are great tools but they aren't meant to be used blindly. They require you to understand logic and you have to understand how the solver works internally. Like with any tool if you understand it deeply you can use it effectively. It's one of those things that seems simple until you try to apply them to really hard problems so be careful out there
 
@@ -69,4 +73,4 @@ I have to say one more thing before I finish I hope this helps your debugging pr
 
 One more additional thing is to learn how to use the debugger of the logic solver some tools will allow you to use this to verify your assumptions and see how the solver is going through its process step by step this can be very helpful when trying to debug a complex proof.
 
-Okay I am out hope this helps!
+I am out hope this helps!

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "is-using-findeach-and-each-in-ruby-on-rails-a-performance-concern"
 ---
 
-Alright, let's tackle this. I've seen this question crop up time and time again in projects, and it's a good one, because the nuances between `#find_each` and `#each` on ActiveRecord relations in Rails can significantly impact your application's performance, especially when dealing with larger datasets. It’s not a simple “this one is always better than that one” situation; context is key.
+, let's tackle this. I've seen this question crop up time and time again in projects, and it's a good one, because the nuances between `#find_each` and `#each` on ActiveRecord relations in Rails can significantly impact your application's performance, especially when dealing with larger datasets. It’s not a simple “this one is always better than that one” situation; context is key.
 
-Let's start by dissecting what each method actually *does*. When you call `.each` directly on an ActiveRecord relation, you’re typically loading *all* the records from the database into memory at once. Think of it as a single, large query that grabs every record matching the conditions of your relation and then iterates through the collection in memory. Now, this works perfectly fine for smaller datasets; you’re unlikely to even notice any performance lag. However, the problems arise when you’re working with tables containing thousands, tens of thousands, or even millions of rows. Suddenly, you’re holding a huge chunk of data in memory, and that can quickly lead to memory exhaustion, slow response times, and an overall sluggish application.
+Let's start by dissecting what each method actually _does_. When you call `.each` directly on an ActiveRecord relation, you’re typically loading _all_ the records from the database into memory at once. Think of it as a single, large query that grabs every record matching the conditions of your relation and then iterates through the collection in memory. Now, this works perfectly fine for smaller datasets; you’re unlikely to even notice any performance lag. However, the problems arise when you’re working with tables containing thousands, tens of thousands, or even millions of rows. Suddenly, you’re holding a huge chunk of data in memory, and that can quickly lead to memory exhaustion, slow response times, and an overall sluggish application.
 
 On the other hand, `#find_each` is designed specifically to avoid this issue. It fetches records in batches, typically in chunks of 1000, by default, using a `LIMIT` clause in SQL. This means that instead of loading all the data into memory simultaneously, it retrieves and processes records in smaller, manageable groups. It iterates over each record within a batch, yields to the code in your block, and then proceeds to the next batch. This significantly reduces memory consumption and prevents your application from choking on large datasets.
 
@@ -25,7 +25,8 @@ products.each do |product|
   product.update(updated_at: Time.current)
 end
 ```
-In this first example, `Product.all` loads *all 10,000* product records into memory *at once*. Then, we iterate through them. The problem isn't that the update operation itself is slow, it's the loading of all those records before we even start processing. The server has to hold onto all that data.
+
+In this first example, `Product.all` loads _all 10,000_ product records into memory _at once_. Then, we iterate through them. The problem isn't that the update operation itself is slow, it's the loading of all those records before we even start processing. The server has to hold onto all that data.
 
 **Scenario 2: Correct Usage with `#find_each`**
 
@@ -53,10 +54,10 @@ Now, one caveat is that `#find_each` does have some limitations. It requires tha
 
 To deepen your understanding further, I strongly recommend looking into the following resources:
 
-* **"Rails AntiPatterns: Best Practices and Pitfalls" by Chad Pytel and Tammer Saleh**. This book offers very practical, real-world advice on writing efficient Rails code, including detailed information on optimizing database interactions, exactly the topic that we are talking about.
+- **"Rails AntiPatterns: Best Practices and Pitfalls" by Chad Pytel and Tammer Saleh**. This book offers very practical, real-world advice on writing efficient Rails code, including detailed information on optimizing database interactions, exactly the topic that we are talking about.
 
-* **"The Ruby Programming Language" by David Flanagan and Yukihiro Matsumoto**. Having a robust grasp of the underlying principles of the language, especially regarding Enumerable methods, is fundamental. This book provides exactly that foundational information.
+- **"The Ruby Programming Language" by David Flanagan and Yukihiro Matsumoto**. Having a robust grasp of the underlying principles of the language, especially regarding Enumerable methods, is fundamental. This book provides exactly that foundational information.
 
-* **The official Ruby on Rails guides, especially the Active Record Querying section**. This is your go-to resource for understanding the specifics of ActiveRecord and how to use methods like `#each`, `#find_each` and other tools effectively.
+- **The official Ruby on Rails guides, especially the Active Record Querying section**. This is your go-to resource for understanding the specifics of ActiveRecord and how to use methods like `#each`, `#find_each` and other tools effectively.
 
-In short, the core distinction is about *how* the data is loaded from the database. If you're dealing with smaller sets of records, `.each` isn't *inherently* problematic. However, as your datasets scale, you absolutely *need* to consider the performance impact. `#find_each` is specifically designed to address the issues of iterating through larger datasets by processing records in batches, preventing your application from getting bogged down. Ignoring this distinction will eventually lead to significant performance issues, which could easily be avoided by making the more efficient choice. It’s a simple change with potentially enormous gains.
+In short, the core distinction is about _how_ the data is loaded from the database. If you're dealing with smaller sets of records, `.each` isn't _inherently_ problematic. However, as your datasets scale, you absolutely _need_ to consider the performance impact. `#find_each` is specifically designed to address the issues of iterating through larger datasets by processing records in batches, preventing your application from getting bogged down. Ignoring this distinction will eventually lead to significant performance issues, which could easily be avoided by making the more efficient choice. It’s a simple change with potentially enormous gains.

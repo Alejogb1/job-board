@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-delete-a-telegram-bot-user-from-a-database-when-the-user-deletes-the-chat-with-the-bot"
 ---
 
-Alright, let’s unpack this. The scenario you've described—needing to manage user data based on chat deletions in Telegram—is a common challenge when building bot applications. I've definitely seen this crop up a few times in my past projects. The core problem isn’t that Telegram explicitly notifies your bot about a chat deletion; it doesn't. Instead, you have to implement a more nuanced approach based on the inherent limitations of the Telegram bot API and build your system to handle that absence of a direct event.
+, let’s unpack this. The scenario you've described—needing to manage user data based on chat deletions in Telegram—is a common challenge when building bot applications. I've definitely seen this crop up a few times in my past projects. The core problem isn’t that Telegram explicitly notifies your bot about a chat deletion; it doesn't. Instead, you have to implement a more nuanced approach based on the inherent limitations of the Telegram bot API and build your system to handle that absence of a direct event.
 
 The crucial concept here revolves around actively monitoring user activity rather than passively waiting for a "chat deleted" event. We essentially create a heartbeat mechanism. When a user interacts with your bot, that interaction validates their continued existence within your bot’s context. If that heartbeat is absent for a certain duration, we can reasonably assume they’ve either deleted the chat or are no longer active.
 
@@ -56,6 +56,7 @@ def create_tables():
     conn.close()
 create_tables()
 ```
+
 In the first code snippet, I am setting up the database schema with a user table, which stores `user_id` and `last_active` fields. The `record_user_activity()` function then either inserts a new record or updates the timestamp if the `user_id` exists already. This ensures that you are always updating the last activity time when the bot receives any form of input from the user.
 
 **Example 2: Identifying Inactive Users:**
@@ -100,13 +101,14 @@ inactive_users = find_inactive_users()
 delete_inactive_users(inactive_users)
 print(f"Deleted users: {inactive_users}")
 ```
+
 In the final snippet, we iterate through the list of inactive users found in the previous function and call the `delete_inactive_users` method, which deletes each user's record from the database. This final function effectively implements the desired effect of removing users who are no longer engaging with the bot after the timeout period. This should also include deleting any other related data you have stored for the user in other tables in your database, if relevant.
 
 Now, for resources, I'd recommend looking into:
 
-*   **"Database Internals" by Alex Petrov:** This book will help you understand how database systems function internally and how to write performant queries which can be crucial when dealing with a large number of bot users. Pay special attention to indexing strategies.
-*   **"Designing Data-Intensive Applications" by Martin Kleppmann:** A foundational text for building robust and scalable applications. It covers various aspects, such as data storage, reliability, and performance.
-*   **The Telegram Bot API Documentation:** It's crucial to stay up to date with the official API documentation. This will keep you informed about any updates or changes to the API that could impact your bot’s functionality and make it more efficient.
+- **"Database Internals" by Alex Petrov:** This book will help you understand how database systems function internally and how to write performant queries which can be crucial when dealing with a large number of bot users. Pay special attention to indexing strategies.
+- **"Designing Data-Intensive Applications" by Martin Kleppmann:** A foundational text for building robust and scalable applications. It covers various aspects, such as data storage, reliability, and performance.
+- **The Telegram Bot API Documentation:** It's crucial to stay up to date with the official API documentation. This will keep you informed about any updates or changes to the API that could impact your bot’s functionality and make it more efficient.
 
 Implementing this approach does not guarantee perfect accuracy; there will always be edge cases. For instance, users could be temporarily inactive. However, it provides a reasonable solution with a minimal set of assumptions. You need to tailor the time period based on the specific expected usage of your bot. Also ensure proper logging and error handling, as deletion is a destructive action and must be done carefully. And be aware of local data privacy laws, which can often be complex, so make sure your implementation remains compliant.
 

@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "broadwell-vs-skylake-cpu-architecture"
 ---
 
-Okay so you're asking about Broadwell versus Skylake CPU architectures right been there done that more times than I care to remember honestly These two Intel architectures they're like siblings who constantly argue over who's got the better toys It's a classic upgrade path debate and trust me I've been on both sides of this fence
+you're asking about Broadwell versus Skylake CPU architectures right been there done that more times than I care to remember honestly These two Intel architectures they're like siblings who constantly argue over who's got the better toys It's a classic upgrade path debate and trust me I've been on both sides of this fence
 
 Let's get the basics down first Broadwell that's the one that's a bit like the awkward middle child It was supposed to be the big leap to 14nm but it got delayed It kinda just existed for a short time and then Skylake just steamrolled its way in with a vengeance Skylake on the other hand that was the more planned out long term architecture It was a real shift after Haswell and even after Broadwell
 
-From what I recall first time I bumped into this issue it was back in my university days 2015 or so I was working on a project that needed some serious processing power I remember thinking alright I'm gonna get a sweet laptop setup and I had two choices Broadwell and Skylake I'd been hyped up about this new smaller 14 nm process and this efficiency but in reality performance differences were minimal for the most part
+From what I recall first time I bumped into this issue it was back in my university days 2015 or so I was working on a project that needed some serious processing power I remember thinking I'm gonna get a sweet laptop setup and I had two choices Broadwell and Skylake I'd been hyped up about this new smaller 14 nm process and this efficiency but in reality performance differences were minimal for the most part
 
 I ended up going with a Broadwell laptop initially because it was a bit cheaper then the Skylake option but man did it get hot under heavy loads I was crunching some complex numerical simulations for fluid dynamics and the thermal throttling made my life hell It felt like the whole machine was going to melt on me I started seeing performance drops way sooner than I expected Then I got to see my friend's Skylake machine and oh boy the difference was noticeable Skylake just handled thermal throttling better it’s weird honestly since the die sizes are kinda the same and everything else is almost the same
 
@@ -94,6 +94,7 @@ end_time = time.time()
 
 print(f"Matrix multiplication time: {end_time - start_time:.4f} seconds")
 ```
+
 Matrix math again a classic problem right? You’d probably think any modern CPU could handle it but no Skylake was able to make it run faster thanks to better memory bandwidth and faster execution of floating point operations. Broadwell struggled a bit more than its successor.
 
 So what’s the takeaway you're not asking about the specifics but the overall feel here for the general user and developer and in my experience Skylake was definitely the more mature and efficient architecture While Broadwell was important stepping stone it never really hit the sweet spot that Skylake did Skylake had a more refined process much better power efficiency and some meaningful architectural improvements over Broadwell That better architecture allowed it to reach higher clock speeds with better thermals and also improve memory performance.

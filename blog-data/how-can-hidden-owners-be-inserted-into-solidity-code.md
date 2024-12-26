@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-hidden-owners-be-inserted-into-solidity-code"
 ---
 
-Okay, let’s tackle this concept of embedding hidden owners within Solidity smart contracts. It’s a nuanced topic, and while there isn't a straightforward, one-size-fits-all method, there are several techniques, each with its own set of trade-offs. The core challenge, as I've encountered in several prior projects (and learned the hard way, let me tell you), is balancing the need for control—or backdoor access, as it might be termed less charitably—with the transparency and immutability that blockchain principles emphasize. It’s a tightrope walk, definitely.
+, let’s tackle this concept of embedding hidden owners within Solidity smart contracts. It’s a nuanced topic, and while there isn't a straightforward, one-size-fits-all method, there are several techniques, each with its own set of trade-offs. The core challenge, as I've encountered in several prior projects (and learned the hard way, let me tell you), is balancing the need for control—or backdoor access, as it might be termed less charitably—with the transparency and immutability that blockchain principles emphasize. It’s a tightrope walk, definitely.
 
 Now, what we’re really talking about here are mechanisms to introduce functionality that isn't readily apparent through the contract's exposed interfaces, usually for either privileged actions or some sort of fallback mechanism. These are often not about malicious intent (though that's always a risk to be mitigated) but about necessary maintenance, dispute resolution, or even emergency recovery scenarios. Let's consider three primary strategies I’ve personally employed, and the thinking behind each.
 
 **1. Delegatecall and Proxy Contracts:**
 
-This is probably the most elegant and, in my experience, the least intrusive way to insert a hidden owner. The idea is to use a proxy pattern, which decouples the contract's address from its logic. Instead of directly deploying your main contract, you deploy a minimal proxy contract. This proxy then `delegatecall`s to the logic contract where the real business logic resides. A crucial, and hidden detail, is that `delegatecall` executes the code *in the context of the proxy’s storage*. This means the logic contract can be upgraded without changing the address where user interactions occur. The magic (and potentially, our hidden owner capability) is that the proxy can include a separate owner variable, completely independent from the logic contract, controlling the ability to change the target of the `delegatecall`.
+This is probably the most elegant and, in my experience, the least intrusive way to insert a hidden owner. The idea is to use a proxy pattern, which decouples the contract's address from its logic. Instead of directly deploying your main contract, you deploy a minimal proxy contract. This proxy then `delegatecall`s to the logic contract where the real business logic resides. A crucial, and hidden detail, is that `delegatecall` executes the code _in the context of the proxy’s storage_. This means the logic contract can be upgraded without changing the address where user interactions occur. The magic (and potentially, our hidden owner capability) is that the proxy can include a separate owner variable, completely independent from the logic contract, controlling the ability to change the target of the `delegatecall`.
 
 Here's an illustrative snippet:
 
@@ -103,7 +103,7 @@ contract SecretControl {
 
 ```
 
-Here, the `owner` is set once during contract deployment and can never be changed due to the `immutable` keyword. Furthermore, `secretFunction` is accessible only through `triggerSecretFunction`. The `onlyOwner` modifier prevents users other than the deployment address to enter this code block, which in turn is responsible to trigger _doSomethingSpecial(), our hidden control functionality. In practice, _doSomethingSpecial() can contain privileged functionality. While it's not hidden from inspection (the code is publicly available), access to this functionality is implicitly controlled by the `owner` and not otherwise visible in the contract's public interfaces. The key is structuring the logic so that regular functions do not allow access to the hidden functionality. This is less flexible, of course, compared to the proxy approach.
+Here, the `owner` is set once during contract deployment and can never be changed due to the `immutable` keyword. Furthermore, `secretFunction` is accessible only through `triggerSecretFunction`. The `onlyOwner` modifier prevents users other than the deployment address to enter this code block, which in turn is responsible to trigger \_doSomethingSpecial(), our hidden control functionality. In practice, \_doSomethingSpecial() can contain privileged functionality. While it's not hidden from inspection (the code is publicly available), access to this functionality is implicitly controlled by the `owner` and not otherwise visible in the contract's public interfaces. The key is structuring the logic so that regular functions do not allow access to the hidden functionality. This is less flexible, of course, compared to the proxy approach.
 
 **3. Storing Key Information in IPFS and using Hashed Values**
 
@@ -165,9 +165,9 @@ It’s vital to understand that while these techniques can provide some level of
 
 For more in-depth coverage on these and related topics, I strongly recommend:
 
-*   **"Mastering Ethereum" by Andreas M. Antonopoulos and Gavin Wood:** This provides a foundational understanding of the EVM, contract design, and security implications, which is crucial before implementing techniques like these. The section on contract patterns is particularly valuable.
-*   **"Solidity Programming Essentials" by Radek Ostrowski:** This is a more hands-on guide focusing directly on Solidity and its nuances. It includes examples and discussions relevant to implementing the techniques we've explored.
-*   **The EIP standards documentation, particularly EIP-1967:** This standard provides specific ways on how to implement proxy patterns in solidity.
-*   **The Solidity Documentation itself:** The official solidity documentation is a constant companion, and it will provide deeper insights into specific technical aspects.
+- **"Mastering Ethereum" by Andreas M. Antonopoulos and Gavin Wood:** This provides a foundational understanding of the EVM, contract design, and security implications, which is crucial before implementing techniques like these. The section on contract patterns is particularly valuable.
+- **"Solidity Programming Essentials" by Radek Ostrowski:** This is a more hands-on guide focusing directly on Solidity and its nuances. It includes examples and discussions relevant to implementing the techniques we've explored.
+- **The EIP standards documentation, particularly EIP-1967:** This standard provides specific ways on how to implement proxy patterns in solidity.
+- **The Solidity Documentation itself:** The official solidity documentation is a constant companion, and it will provide deeper insights into specific technical aspects.
 
 Remember, security in smart contracts is a holistic process, involving good coding practices, meticulous testing, and careful consideration of the specific use case. There's no magic bullet; the goal is to balance flexibility with robustness, considering the specific needs of your project.

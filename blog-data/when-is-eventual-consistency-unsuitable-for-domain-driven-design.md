@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "when-is-eventual-consistency-unsuitable-for-domain-driven-design"
 ---
 
-Alright, let's tackle this. I've seen my share of distributed systems, and the eventual consistency vs. strong consistency debate is one I've been through multiple times, often with teams trying to fit a square peg into a round hole. Domain-Driven Design (DDD) adds another layer of complexity here. It isn't a one-size-fits-all scenario, and that’s what makes it interesting. So, let's dive into when eventual consistency is a poor choice within the DDD context, pulling from my experiences.
+, let's tackle this. I've seen my share of distributed systems, and the eventual consistency vs. strong consistency debate is one I've been through multiple times, often with teams trying to fit a square peg into a round hole. Domain-Driven Design (DDD) adds another layer of complexity here. It isn't a one-size-fits-all scenario, and that’s what makes it interesting. So, let's dive into when eventual consistency is a poor choice within the DDD context, pulling from my experiences.
 
-First off, it's crucial to understand that eventual consistency, at its core, means data will become consistent *eventually*, but not necessarily instantaneously. This delay, however short it may be in practice, introduces a window of inconsistency. Now, when we are talking about strategic design in DDD, specifically focusing on aggregates, this delay can become problematic if not handled carefully. An aggregate, in DDD, is the consistency boundary. All operations within an aggregate should happen transactionally, meaning they must all succeed or none should. Using eventual consistency *within* an aggregate's boundary is essentially an architectural anti-pattern, as the core idea of an aggregate is to enforce invariants and maintain consistency within it.
+First off, it's crucial to understand that eventual consistency, at its core, means data will become consistent _eventually_, but not necessarily instantaneously. This delay, however short it may be in practice, introduces a window of inconsistency. Now, when we are talking about strategic design in DDD, specifically focusing on aggregates, this delay can become problematic if not handled carefully. An aggregate, in DDD, is the consistency boundary. All operations within an aggregate should happen transactionally, meaning they must all succeed or none should. Using eventual consistency _within_ an aggregate's boundary is essentially an architectural anti-pattern, as the core idea of an aggregate is to enforce invariants and maintain consistency within it.
 
 I recall a project from years back, an e-commerce platform. We were naively trying to use a message queue to handle order updates. We'd have a user "place order," then throw a "order placed" message on the bus, which then asynchronously updated inventory. The problem, of course, was that we could potentially over-sell items if two orders came in almost simultaneously while inventory was still being updated based on the first order's message. The domain clearly required strong consistency on the inventory counts related to an order aggregate. We were trying to apply eventual consistency at the aggregate level, which led to many headaches and frantic bug fixes before we realized the mistake and refactored to maintain transactional operations within the order aggregate itself.
 
@@ -46,7 +46,7 @@ class InventoryService:
 
     def __init__(self):
         self.inventory = {}
-    
+
     def initialize_inventory(self, initial_inventory):
         self.inventory = initial_inventory
 
@@ -79,9 +79,10 @@ try:
 except Exception as e:
   print(f"Error placing orders: {e}")
 ```
+
 In this simplified example, if the `decrease_stock_async` method, is a message on a bus or asynchronous call and several orders for the same item are placed nearly simultaneously, one could bypass the checks within a given `InventoryItem` causing potential over-sales, which is a violation of aggregate consistency.
 
-Now, here's how it *should* look within an aggregate using an in-memory representation, assuming a singular process:
+Now, here's how it _should_ look within an aggregate using an in-memory representation, assuming a singular process:
 
 ```python
 # Example 2: Correct use of strong consistency inside an aggregate.
@@ -113,14 +114,14 @@ class InventoryService:
 
     def __init__(self):
         self.inventory = {}
-    
+
     def initialize_inventory(self, initial_inventory):
         self.inventory = initial_inventory
 
     def validate_and_decrease_stock(self, items):
         # Attempt to decrease inventory for all items transactionally
         # If any stock is insufficient, rollback
-      
+
         for item_data in items:
             sku = item_data['sku']
             quantity = item_data['quantity']
@@ -159,7 +160,7 @@ except Exception as e:
 
 This second example, when within a single process, makes sure that either all items for an order are decremented transactionally or, if one item lacks the required stock, none of the order items are decremented.
 
-Now, to really drive the point home, let’s consider another example, where we're using event sourcing in a bank application. Consider our aggregate is an account. Using eventual consistency *within* the account aggregate would be disastrous.
+Now, to really drive the point home, let’s consider another example, where we're using event sourcing in a bank application. Consider our aggregate is an account. Using eventual consistency _within_ the account aggregate would be disastrous.
 
 ```python
 # Example 3: Event sourcing without a transactional approach in place.
@@ -207,9 +208,9 @@ account2.deposit(100)
 
 In this example using event sourcing with in-memory representation, we have strong consistency within the `Account` aggregate. However, in a distributed system, it may be tempting to emit the `deposit` or `withdraw` events asynchronously to some database or message queue. If these writes aren’t atomic, we could lose an event, thus leading to a data inconsistency.
 
-So, when *is* eventual consistency suitable? It is perfectly fine, and often preferred, for situations *between* bounded contexts or aggregates. For instance, you might have a "read model" that updates based on events published from the core domain, often a view of the data optimized for a different context. The delay in updating these read models is typically acceptable, as they’re usually not directly involved in core business transactions.
+So, when _is_ eventual consistency suitable? It is perfectly fine, and often preferred, for situations _between_ bounded contexts or aggregates. For instance, you might have a "read model" that updates based on events published from the core domain, often a view of the data optimized for a different context. The delay in updating these read models is typically acceptable, as they’re usually not directly involved in core business transactions.
 
-In essence, think of eventual consistency as a tool best suited for looser, less critical data operations and *never* inside a consistency boundary within a DDD aggregate. Within a bounded context, where invariants need to be maintained, strong consistency is paramount.
+In essence, think of eventual consistency as a tool best suited for looser, less critical data operations and _never_ inside a consistency boundary within a DDD aggregate. Within a bounded context, where invariants need to be maintained, strong consistency is paramount.
 
 For further reading and a deeper technical understanding, I strongly recommend "Domain-Driven Design: Tackling Complexity in the Heart of Software" by Eric Evans as your starting point, followed by "Implementing Domain-Driven Design" by Vaughn Vernon for practical guidance. For a better understanding of consistency models in distributed systems, "Designing Data-Intensive Applications" by Martin Kleppmann provides an excellent in-depth exploration of various consistency models and their trade-offs.
 

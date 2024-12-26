@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-add-a-span-docab-as-an-entity-in-a-spacy-doc-python"
 ---
 
-Okay, let's tackle this. I’ve been down this road more times than I care to recall, and it usually involves custom entity recognition workflows, which can get tricky if you’re not careful about how you’re handling the span creation and integration into spaCy's doc object. I remember once, working on a legal text processing pipeline, we spent a whole sprint just refining how we were adding custom entities for specific clause types. It wasn't a pretty sight, but it taught me a few things that I’ll share.
+, let's tackle this. I’ve been down this road more times than I care to recall, and it usually involves custom entity recognition workflows, which can get tricky if you’re not careful about how you’re handling the span creation and integration into spaCy's doc object. I remember once, working on a legal text processing pipeline, we spent a whole sprint just refining how we were adding custom entities for specific clause types. It wasn't a pretty sight, but it taught me a few things that I’ll share.
 
 Fundamentally, the issue you're facing is how to represent a continuous sequence of tokens (a span) as a distinct entity within a `spaCy` `Doc` object. This is crucial because many NLP tasks, such as information extraction, relation extraction, and custom named entity recognition (ner), rely on this representation. `spaCy` has a fairly elegant way of handling this, but understanding the underlying mechanisms is key to avoiding common pitfalls.
 
@@ -35,7 +35,7 @@ for ent in doc.ents:
     print(ent.text, ent.label_)
 ```
 
-In this first example, I've created a simple span for "brown fox jumped". Notice that the `end_index` parameter is exclusive, meaning the span includes all tokens *up to* that index. Also, the `overwrite=True` parameter is important when you are adding new entities. It clears previously detected entities in order to add the new entity. This is useful when you are manually overriding entity recognizers. If you have other entities, that you do not want to override, you can take them from the `doc.ents` attribute.
+In this first example, I've created a simple span for "brown fox jumped". Notice that the `end_index` parameter is exclusive, meaning the span includes all tokens _up to_ that index. Also, the `overwrite=True` parameter is important when you are adding new entities. It clears previously detected entities in order to add the new entity. This is useful when you are manually overriding entity recognizers. If you have other entities, that you do not want to override, you can take them from the `doc.ents` attribute.
 
 Now, let's move on to a slightly more complex case: suppose you have a function that is responsible for generating spans based on some external analysis or pattern-matching rule.
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-add-a-channel-layer-for-a-3d-image-for-3d-cnn"
 ---
 
-alright, let's talk about getting a channel layer onto a 3d image for a 3d convolutional neural network (cnn). i've definitely been down this rabbit hole before, and it's pretty common when dealing with volumetric data, so no worries there.
+, let's talk about getting a channel layer onto a 3d image for a 3d convolutional neural network (cnn). i've definitely been down this rabbit hole before, and it's pretty common when dealing with volumetric data, so no worries there.
 
 so, the core of the issue is that most 3d images or volumes you work with, whether they come from mris, ct scans, or whatever, are often stored as grayscale or single-channel data. in contrast, 3d cnns expect input tensors with a shape like `(channels, depth, height, width)`. so, we need a way to add that 'channels' dimension. we are transforming the data from single channel to multi-channel. the easiest way is to repeat the data in a new channel dimension or create the channels from derived data. i will demonstrate both.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-it-possible-to-create-a-hotel-room-ticket-as-an-nft"
 ---
 
-Alright, let's dive into this. Thinking back to a project I tackled a few years ago involving a loyalty program for a small hotel chain, the idea of tokenizing hotel bookings as nfts is something I’ve considered extensively. The short answer is: yes, absolutely it's possible to create a hotel room ticket as an nft, and frankly, it opens up a lot of interesting possibilities.
+, let's dive into this. Thinking back to a project I tackled a few years ago involving a loyalty program for a small hotel chain, the idea of tokenizing hotel bookings as nfts is something I’ve considered extensively. The short answer is: yes, absolutely it's possible to create a hotel room ticket as an nft, and frankly, it opens up a lot of interesting possibilities.
 
 The core concept revolves around representing a digital asset – in this case, a hotel booking – as a non-fungible token on a blockchain. Unlike fungible tokens like cryptocurrencies where one token is interchangeable with another, an nft is unique. This makes it ideal for representing something with specific, non-replicable attributes, such as a confirmed reservation for a specific room on particular dates.
 
@@ -63,6 +63,7 @@ MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC0eYn69yP7...
 nft_data = create_hotel_nft_data("Grand Central Hotel", "Deluxe King", "2024-01-15", "2024-01-18", ["Alice", "Bob"], "GC12345", private_key_pem)
 print(nft_data)
 ```
+
 This python code snippet demonstrates the process of creating the nft data by hashing reservation details and signing it with a hotel's private key. In a real implementation, this would be paired with a smart contract for nft minting and a decentralized storage service to handle the associated metadata. This signature allows verification of the nft’s legitimacy without reliance on a central authority once the hotel’s public key is publicly available.
 
 Now, let's look at a simplified representation of how a smart contract might function for minting these tokens. Bear in mind this is a very stripped-down example and would need further complexity for a live system:
@@ -139,37 +140,35 @@ contract HotelNFT is ERC721 {
 }
 
 ```
+
 This Solidity code illustrates a simplified smart contract. It demonstrates the minting process for the nft, taking in the reservation data and a digital signature of its hash. It also provides a mechanism for verifying the validity of an nft against the hotel's public address. Again, this is a barebones example and a production-ready contract would need proper access control, error handling, and integration with a reliable oracle for data storage and retrieval.
 
 Finally, let's explore how we could fetch the metadata from a decentralized storage service, like ipfs. Here is an abridged example using JavaScript:
 
 ```javascript
-async function fetchMetadata(ipfsCid){
+async function fetchMetadata(ipfsCid) {
+  try {
+    const response = await fetch(`https://ipfs.io/ipfs/${ipfsCid}`);
 
-    try {
-      const response = await fetch(`https://ipfs.io/ipfs/${ipfsCid}`);
-
-        if(!response.ok)
-        {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const metadata = await response.json();
-        console.log("Metadata Fetched:",metadata)
-        return metadata;
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-    catch (error){
-        console.error("Error fetching metadata: ",error);
-        return null;
-    }
+    const metadata = await response.json();
+    console.log("Metadata Fetched:", metadata);
+    return metadata;
+  } catch (error) {
+    console.error("Error fetching metadata: ", error);
+    return null;
+  }
 }
 
 // Example usage (replace with a real IPFS CID):
 const cid = "QmUfL6W5j9624gqP81w6x87v9y253u02j9d6w971u82k9x";
 fetchMetadata(cid);
-
 ```
+
 This Javascript code provides an example of how to fetch metadata from a given ipfs cid, which would contain our reservation details, enabling off-chain verification and display of the booking information.
 
-For those interested in further research, I'd suggest exploring the concepts surrounding ERC-721 and ERC-1155 standards for nfts, delving into the cryptographic details behind digital signatures (check out "Applied Cryptography" by Bruce Schneier).  Also, look at resources explaining distributed storage solutions like IPFS and Filecoin. In terms of smart contract development for Ethereum,  OpenZeppelin's documentation is excellent. Understanding these fundamentals will clarify the path to implementing hotel ticket nfts successfully.
+For those interested in further research, I'd suggest exploring the concepts surrounding ERC-721 and ERC-1155 standards for nfts, delving into the cryptographic details behind digital signatures (check out "Applied Cryptography" by Bruce Schneier). Also, look at resources explaining distributed storage solutions like IPFS and Filecoin. In terms of smart contract development for Ethereum, OpenZeppelin's documentation is excellent. Understanding these fundamentals will clarify the path to implementing hotel ticket nfts successfully.
 
 To summarize: Yes, it's entirely feasible to create hotel room tickets as nfts. It offers enhanced security, improved transparency, and the potential for novel booking and reselling mechanisms. However, practical implementation necessitates a robust infrastructure and a deep understanding of both blockchain technology and its associated security implications. It's an exciting area, but definitely requires thoughtful design and meticulous development.

@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-do-i-render-information-about-the-logged-in-user"
 ---
 
-Okay, let's tackle user data rendering. It's a seemingly simple task, but, like most things in development, it carries nuances that can really impact application performance and security. I’ve seen this go south on a number of projects, so let's break down the correct approach.
+, let's tackle user data rendering. It's a seemingly simple task, but, like most things in development, it carries nuances that can really impact application performance and security. I’ve seen this go south on a number of projects, so let's break down the correct approach.
 
 The fundamental challenge revolves around securely and efficiently retrieving and displaying information about the currently logged-in user. We need to ensure this data is: 1) accessible only when authenticated, 2) not leaking sensitive details to unauthorized parties, and 3) delivered to the client-side in a way that doesn't bog down the user interface. In my experience, the 'naive' method of just throwing all user information at the client is a quick route to a security headache.
 
 Essentially, we need to carefully manage the flow of data: authentication, authorization, data retrieval, and finally, presentation. Let's look at these steps individually, and then I'll illustrate them with code examples.
 
-First, **authentication** ensures we know *who* the user is. This usually involves a login process that verifies credentials and generates a session, token, or similar mechanism. Once authenticated, the backend application can securely identify the user on subsequent requests.
+First, **authentication** ensures we know _who_ the user is. This usually involves a login process that verifies credentials and generates a session, token, or similar mechanism. Once authenticated, the backend application can securely identify the user on subsequent requests.
 
-Next, **authorization** defines *what* information a particular authenticated user is allowed to access. Not all user details should be public. For instance, a user's email address might be private and only available to them or administrators. I’ve spent significant time working with role-based access control (RBAC) and attribute-based access control (ABAC) frameworks to ensure this aspect was sound. If not handled meticulously, this can easily become the weak point in your application.
+Next, **authorization** defines _what_ information a particular authenticated user is allowed to access. Not all user details should be public. For instance, a user's email address might be private and only available to them or administrators. I’ve spent significant time working with role-based access control (RBAC) and attribute-based access control (ABAC) frameworks to ensure this aspect was sound. If not handled meticulously, this can easily become the weak point in your application.
 
 Then comes the step of **data retrieval**. Instead of just dumping the entire user object from a database into the response, we should be selective. I typically prefer creating a dedicated user data transfer object (DTO) on the server. This DTO defines precisely what user data is permitted for public consumption, containing only the necessary information. For example, a DTO might include only the user's display name and profile picture url, not their password hash or full address.
 
@@ -67,25 +67,25 @@ Here, `UserDTO` limits the data sent to the client. The endpoint `/api/user` req
 
 ```javascript
 async function fetchUserData() {
-    const token = 'validtoken123'; // Replace with your actual token management logic
-    try {
-        const response = await fetch('/api/user', {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        });
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const userData = await response.json();
-        // Now render this data into your UI elements
-        document.getElementById('displayName').textContent = userData.displayName;
-        document.getElementById('profilePicture').src = userData.profilePictureUrl;
-    } catch (error) {
-        console.error('Failed to fetch user data:', error);
-        // Handle error, possibly redirect to login or inform user.
+  const token = "validtoken123"; // Replace with your actual token management logic
+  try {
+    const response = await fetch("/api/user", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+    const userData = await response.json();
+    // Now render this data into your UI elements
+    document.getElementById("displayName").textContent = userData.displayName;
+    document.getElementById("profilePicture").src = userData.profilePictureUrl;
+  } catch (error) {
+    console.error("Failed to fetch user data:", error);
+    // Handle error, possibly redirect to login or inform user.
+  }
 }
 
 fetchUserData();
@@ -96,7 +96,7 @@ This demonstrates how to send the authentication token and process the user data
 **Example 3: Rendering with React (Conceptual)**
 
 ```javascript
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 function UserProfile() {
   const [userData, setUserData] = useState(null);
@@ -105,13 +105,13 @@ function UserProfile() {
 
   useEffect(() => {
     async function fetchData() {
-      const token = 'validtoken123'; // Replace with actual token source
+      const token = "validtoken123"; // Replace with actual token source
       try {
-        const response = await fetch('/api/user', {
+        const response = await fetch("/api/user", {
           headers: {
-             'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         });
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

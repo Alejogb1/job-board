@@ -4,17 +4,17 @@ date: "2024-12-23"
 id: "can-sberts-final-results-be-better-understood"
 ---
 
-Okay, let's tackle this. It's something I spent a good chunk of time on, back when I was optimizing a semantic search engine for a large, text-heavy knowledge base. The short answer, and I always prefer to start there, is: yes, sbert's final results can absolutely be understood better, but it requires going a level deeper than simply accepting the black box output.
+, let's tackle this. It's something I spent a good chunk of time on, back when I was optimizing a semantic search engine for a large, text-heavy knowledge base. The short answer, and I always prefer to start there, is: yes, sbert's final results can absolutely be understood better, but it requires going a level deeper than simply accepting the black box output.
 
 SBERT, or Sentence-BERT, is a powerful transformer-based model for creating sentence embeddings that are useful for semantic similarity tasks. At its heart, it utilizes a Siamese or triplet network architecture trained on sentence pairs or triplets. The goal is that sentences with similar meanings will map to embeddings that are close in the embedding space, typically through cosine similarity. However, the final output—these embeddings—while powerful, can feel abstract. The key to making them more understandable lies in dissecting the intermediate steps and interpreting the final embedding within the context of the training data and the task at hand.
 
-Often, we treat the final embedding vector as an opaque entity, when in reality, it's a compressed numerical representation of the semantic information that the model has learned from the training corpus. The problem isn't the embedding itself but our lack of insight into *what* aspects of the text it encodes and *how* that encoding happens. I’ve found that understanding this hinges on a multi-pronged approach.
+Often, we treat the final embedding vector as an opaque entity, when in reality, it's a compressed numerical representation of the semantic information that the model has learned from the training corpus. The problem isn't the embedding itself but our lack of insight into _what_ aspects of the text it encodes and _how_ that encoding happens. I’ve found that understanding this hinges on a multi-pronged approach.
 
-First, we need to consider the impact of the pre-training data. If the model was trained on a corpus with a particular bias or domain, it will inherently reflect this. For instance, an SBERT model trained primarily on medical literature will perform differently than one trained on general news articles when given a finance-related sentence. The pre-training corpus directly shapes the model's understanding of semantic similarity. Therefore, knowing *where* the model learned its 'understanding' is crucial. This isn’t about magic but about grounding the embeddings within the model's learning history.
+First, we need to consider the impact of the pre-training data. If the model was trained on a corpus with a particular bias or domain, it will inherently reflect this. For instance, an SBERT model trained primarily on medical literature will perform differently than one trained on general news articles when given a finance-related sentence. The pre-training corpus directly shapes the model's understanding of semantic similarity. Therefore, knowing _where_ the model learned its 'understanding' is crucial. This isn’t about magic but about grounding the embeddings within the model's learning history.
 
 Second, the specific fine-tuning method significantly impacts what the final embeddings capture. Whether you used a Siamese network with contrastive loss, or a triplet network with margin-based loss, it's essential to grasp which training signals guided the model. A contrastive loss pushes similar sentence pairs closer and dissimilar pairs further away, while triplet loss ensures an anchor sentence is closer to a positive match than a negative one. The chosen fine-tuning objective dictates what kind of 'similarity' the embeddings learn to encode.
 
-Lastly, while the vector itself can't be directly interpreted, we can use techniques to analyze the *space* the vectors inhabit. Techniques like dimensionality reduction (e.g., t-SNE, UMAP) allow us to visualize how sentences cluster together, revealing meaningful relationships. Additionally, comparing embeddings from different sentences, looking at the features that contribute most to similarity, can shed light on why two sentences are considered semantically similar by the model.
+Lastly, while the vector itself can't be directly interpreted, we can use techniques to analyze the _space_ the vectors inhabit. Techniques like dimensionality reduction (e.g., t-SNE, UMAP) allow us to visualize how sentences cluster together, revealing meaningful relationships. Additionally, comparing embeddings from different sentences, looking at the features that contribute most to similarity, can shed light on why two sentences are considered semantically similar by the model.
 
 Let's illustrate with some code examples, using python and assuming you have the `sentence-transformers` library installed:
 
@@ -82,7 +82,8 @@ print(f"\nFeature difference between sentence 1 and 2 (first 10 dimensions): {di
 print(f"Feature difference between sentence 1 and 3 (first 10 dimensions): {diff_1_3[:10]}")
 
 ```
-This shows how to calculate the cosine similarity between embeddings, confirming numerically that sentence 1 and 2 are more related than sentence 1 and 3. The feature difference provides a very limited view of the dimensional variances that lead to that similarity value. This highlights that while feature inspection is hard, it does indicate *some* difference.
+
+This shows how to calculate the cosine similarity between embeddings, confirming numerically that sentence 1 and 2 are more related than sentence 1 and 3. The feature difference provides a very limited view of the dimensional variances that lead to that similarity value. This highlights that while feature inspection is hard, it does indicate _some_ difference.
 
 **Example 3: Investigating embeddings with a known domain.**
 

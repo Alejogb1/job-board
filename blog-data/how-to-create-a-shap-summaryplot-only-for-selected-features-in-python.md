@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-to-create-a-shap-summaryplot-only-for-selected-features-in-python"
 ---
 
-Okay, let's tackle this. Having spent a fair chunk of my career knee-deep in model explainability, particularly with SHAP, I've encountered this specific need more times than I care to count. The default `shap.summary_plot` is powerful, but it can be overwhelming and sometimes, frankly, irrelevant when you’re focused on just a subset of your model's inputs. Filtering it down efficiently and correctly is a crucial skill for targeted analysis. Let me walk you through how I've typically approached this, with code examples and rationale.
+, let's tackle this. Having spent a fair chunk of my career knee-deep in model explainability, particularly with SHAP, I've encountered this specific need more times than I care to count. The default `shap.summary_plot` is powerful, but it can be overwhelming and sometimes, frankly, irrelevant when you’re focused on just a subset of your model's inputs. Filtering it down efficiently and correctly is a crucial skill for targeted analysis. Let me walk you through how I've typically approached this, with code examples and rationale.
 
-The core challenge with `shap.summary_plot` is that it's designed to present a holistic view of all features by default. When you only want to focus on, say, the top 3 most impactful features or features related to a specific business domain, the standard approach can be cumbersome. The key here is to manipulate the shap values *before* you hand them over to the `summary_plot` function, not trying to filter within the plotting function itself. We accomplish this by selective slicing of the underlying shap values matrix.
+The core challenge with `shap.summary_plot` is that it's designed to present a holistic view of all features by default. When you only want to focus on, say, the top 3 most impactful features or features related to a specific business domain, the standard approach can be cumbersome. The key here is to manipulate the shap values _before_ you hand them over to the `summary_plot` function, not trying to filter within the plotting function itself. We accomplish this by selective slicing of the underlying shap values matrix.
 
 Fundamentally, the `shap_values` obtained after calling `explainer.shap_values()` for a model, and subsequently fed to the `summary_plot`, is a numpy array representing feature contributions. When we have `n` instances and `m` features, the output will typically have shape `(n, m)`. If you are dealing with multi-class classification, this will be a list of such `(n, m)` arrays. Therefore, we are essentially subsetting the `m` dimension to select specific columns.
 
@@ -66,6 +66,7 @@ else:
                       feature_names=filtered_feature_names,
                       show=True)
 ```
+
 In the code above, we are first simulating some sample data, then we are training a simple Random Forest classifier on the data. After obtaining shap values from the trained model using TreeExplainer, we proceed to select columns using index based slicing. Then we utilize the resulting slice along with the corresponding feature names to plot a shap summary plot, limited to just our selected features.
 
 **Method 2: Feature Selection by Name**
@@ -122,6 +123,7 @@ else:
                       show=True)
 
 ```
+
 Here, rather than hardcoding the column indices, we use pandas' `get_loc` method on the feature columns to get the corresponding numerical indices. Everything else regarding the slicing and plotting stays consistent with the previous method, making it highly flexible.
 
 **Method 3: Using Feature Importance as a Filter**
@@ -184,6 +186,6 @@ else:
 
 ```
 
-Here, we first obtain feature importances from our model, we are using model.feature\_importances in the random forest case here, but you could similarly use permutation based importances or the average SHAP importance as a metric. After obtaining the top feature indices, we proceed with the normal filtering and visualization process. This makes the plot highly dynamic based on what the model thinks is important.
+Here, we first obtain feature importances from our model, we are using model.feature_importances in the random forest case here, but you could similarly use permutation based importances or the average SHAP importance as a metric. After obtaining the top feature indices, we proceed with the normal filtering and visualization process. This makes the plot highly dynamic based on what the model thinks is important.
 
 These techniques, when applied correctly, can significantly streamline your model analysis, making the SHAP plots much more informative and manageable. For a deeper understanding of SHAP and its underlying mathematics, I recommend consulting "Interpretable Machine Learning" by Christoph Molnar—a thorough resource. For hands-on experience with SHAP itself, the official documentation, which you can find easily online, is indispensable. Additionally, for detailed coverage of tree-based models and their feature importance, consider "The Elements of Statistical Learning" by Hastie, Tibshirani, and Friedman. Each of these sources provides in-depth knowledge necessary for understanding and applying SHAP and similar explainability methods effectively. Remember, focused analysis leads to clearer insights and better decisions.

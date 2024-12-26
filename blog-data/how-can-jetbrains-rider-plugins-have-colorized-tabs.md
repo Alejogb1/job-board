@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-jetbrains-rider-plugins-have-colorized-tabs"
 ---
 
-Alright, let's talk about colored tabs in JetBrains Rider plugins. It's a feature I've had to implement a few times, most notably during a rather complex project involving microservice orchestration, where having visually distinct tabs for each service configuration file was invaluable. The visual organization significantly reduced context switching overhead, so it's definitely a worthwhile feature to implement.
+, let's talk about colored tabs in JetBrains Rider plugins. It's a feature I've had to implement a few times, most notably during a rather complex project involving microservice orchestration, where having visually distinct tabs for each service configuration file was invaluable. The visual organization significantly reduced context switching overhead, so it's definitely a worthwhile feature to implement.
 
 The core concept revolves around the `EditorColorsScheme` and the `EditorFileTypeColorProvider` extension point within the Rider plugin architecture. Instead of modifying the base UI directly, which is generally not recommended and could break with future updates, we hook into the theming system to define how our custom file types should be rendered, including their tab colors.
 
@@ -113,6 +113,6 @@ And finally, you need to declare your component into the plugin xml file, in thi
 
 This declares the two classes from the code examples as Rider components and makes them available to the Rider engine.
 
-To reiterate, you can find more in-depth information about editor customization in JetBrains IDEs through the official documentation. For a broader understanding of the plugin development architecture, I'd highly recommend *Developing Plugins for JetBrains IDEs*, an official resource that goes into significant detail about the various facets of plugin creation. You can also benefit from exploring the ReSharper SDK samples, which often provide working examples of these mechanisms.
+To reiterate, you can find more in-depth information about editor customization in JetBrains IDEs through the official documentation. For a broader understanding of the plugin development architecture, I'd highly recommend _Developing Plugins for JetBrains IDEs_, an official resource that goes into significant detail about the various facets of plugin creation. You can also benefit from exploring the ReSharper SDK samples, which often provide working examples of these mechanisms.
 
 Implementing these changes, as I have demonstrated, provides you with a mechanism to not only differentiate different file types based on the kind of document they represent but also gives you the control to provide a more user-friendly IDE experience, in a way that integrates naturally within the existing JetBrains ecosystem. The above approach is a far more scalable and maintainable methodology, compared to direct UI manipulation, and something that I've come to rely on heavily over the years in my work with IDE extension development.

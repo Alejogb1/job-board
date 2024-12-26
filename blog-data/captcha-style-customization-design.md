@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "captcha-style-customization-design"
 ---
 
-Okay so you're asking about captcha style customization design right I've been down this rabbit hole more times than I care to admit like enough to make me swear off visual captcha's then go back and regret that decision then do it again you know the drill It's a pain point everyone hits sooner or later
+you're asking about captcha style customization design right I've been down this rabbit hole more times than I care to admit like enough to make me swear off visual captcha's then go back and regret that decision then do it again you know the drill It's a pain point everyone hits sooner or later
 
 Let's break it down from my scarred and frankly slightly jaded perspective I'm not gonna sugarcoat this there's no one-size-fits-all magic wand you just gotta pick your battles and pick them smart
 
@@ -24,8 +24,9 @@ Here's some stuff I would have loved to have known when I first started
 
 ```javascript
 function generateCaptcha(length = 6) {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let captcha = '';
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let captcha = "";
   for (let i = 0; i < length; i++) {
     captcha += characters.charAt(Math.floor(Math.random() * characters.length));
   }
@@ -36,23 +37,21 @@ function validateCaptcha(input, generated) {
   return input === generated;
 }
 
+let generatedCaptcha = generateCaptcha();
+document.getElementById("captcha-image").textContent = generatedCaptcha;
 
-let generatedCaptcha = generateCaptcha()
-document.getElementById('captcha-image').textContent = generatedCaptcha;
-
-document.getElementById('submit-button').addEventListener('click', function() {
-  const userInput = document.getElementById('captcha-input').value;
+document.getElementById("submit-button").addEventListener("click", function () {
+  const userInput = document.getElementById("captcha-input").value;
   if (validateCaptcha(userInput, generatedCaptcha)) {
-      alert('Captcha Validated!')
-      generatedCaptcha = generateCaptcha()
-      document.getElementById('captcha-image').textContent = generatedCaptcha;
+    alert("Captcha Validated!");
+    generatedCaptcha = generateCaptcha();
+    document.getElementById("captcha-image").textContent = generatedCaptcha;
   } else {
-      alert('Captcha Invalid. Try Again.')
-      generatedCaptcha = generateCaptcha()
-      document.getElementById('captcha-image').textContent = generatedCaptcha;
+    alert("Captcha Invalid. Try Again.");
+    generatedCaptcha = generateCaptcha();
+    document.getElementById("captcha-image").textContent = generatedCaptcha;
   }
-})
-
+});
 ```
 
 This is a barebones example do not even think about using this in production without serious hardening you can use the `Math.random` to introduce some rotation or distortion on the image using CSS or a library but make sure the user can actually still read it do not over complicate it for humans it should be simple for them but hard for a machine that's the goal
@@ -61,47 +60,52 @@ This is a barebones example do not even think about using this in production wit
 
 ```javascript
 function generateMathCaptcha() {
-    const num1 = Math.floor(Math.random() * 10);
-    const num2 = Math.floor(Math.random() * 10);
-    const operation = ['+', '-', '*'][Math.floor(Math.random() * 3)];
-    let answer;
+  const num1 = Math.floor(Math.random() * 10);
+  const num2 = Math.floor(Math.random() * 10);
+  const operation = ["+", "-", "*"][Math.floor(Math.random() * 3)];
+  let answer;
 
-    switch (operation) {
-        case '+':
-            answer = num1 + num2;
-            break;
-        case '-':
-            answer = num1 - num2;
-            break;
-        case '*':
-             answer = num1 * num2;
-             break;
-    }
-    return {
-        question: `${num1} ${operation} ${num2} = ?`,
-        answer: answer.toString()
-    };
+  switch (operation) {
+    case "+":
+      answer = num1 + num2;
+      break;
+    case "-":
+      answer = num1 - num2;
+      break;
+    case "*":
+      answer = num1 * num2;
+      break;
+  }
+  return {
+    question: `${num1} ${operation} ${num2} = ?`,
+    answer: answer.toString(),
+  };
 }
 
 function validateMathCaptcha(input, expectedAnswer) {
-    return input === expectedAnswer;
+  return input === expectedAnswer;
 }
 
-let mathCaptcha = generateMathCaptcha()
-document.getElementById('math-captcha-question').textContent = mathCaptcha.question;
+let mathCaptcha = generateMathCaptcha();
+document.getElementById("math-captcha-question").textContent =
+  mathCaptcha.question;
 
-document.getElementById('math-submit-button').addEventListener('click', function() {
-  const userInput = document.getElementById('math-captcha-input').value;
-  if(validateMathCaptcha(userInput, mathCaptcha.answer)) {
-    alert('Captcha Validated!')
-    mathCaptcha = generateMathCaptcha();
-    document.getElementById('math-captcha-question').textContent = mathCaptcha.question;
-  }else {
-    alert('Captcha Invalid. Try Again.')
-    mathCaptcha = generateMathCaptcha();
-    document.getElementById('math-captcha-question').textContent = mathCaptcha.question;
-  }
-})
+document
+  .getElementById("math-submit-button")
+  .addEventListener("click", function () {
+    const userInput = document.getElementById("math-captcha-input").value;
+    if (validateMathCaptcha(userInput, mathCaptcha.answer)) {
+      alert("Captcha Validated!");
+      mathCaptcha = generateMathCaptcha();
+      document.getElementById("math-captcha-question").textContent =
+        mathCaptcha.question;
+    } else {
+      alert("Captcha Invalid. Try Again.");
+      mathCaptcha = generateMathCaptcha();
+      document.getElementById("math-captcha-question").textContent =
+        mathCaptcha.question;
+    }
+  });
 ```
 
 I’ve always been a fan of this math based captcha because is simple to implement and it does a good job in filtering out the most simple bots but do not over use this because this might cause problems for users with different levels of education also make sure to not make the math problems to hard because people can get mad easily believe me
@@ -111,31 +115,31 @@ I’ve always been a fan of this math based captcha because is simple to impleme
 ```html
 <div style="display:none">
   <label for="honeypot-field">Do Not Fill this Field</label>
-  <input type="text" id="honeypot-field" name="honeypot">
+  <input type="text" id="honeypot-field" name="honeypot" />
 </div>
 
 <button type="submit" onclick="validateForm(event)">Submit</button>
 
 <script>
   function validateForm(event) {
-      const honeypotField = document.getElementById('honeypot-field')
-      if(honeypotField.value) {
-        event.preventDefault()
-        alert("You are a robot!")
-      } else {
-        alert("You are a human!")
-      }
+    const honeypotField = document.getElementById("honeypot-field");
+    if (honeypotField.value) {
+      event.preventDefault();
+      alert("You are a robot!");
+    } else {
+      alert("You are a human!");
+    }
   }
 </script>
 ```
 
-Alright I know that’s not a traditional captcha but honey pots are extremely underrated in the captcha world They are simple cheap and extremely effective a bot will always try to fill all fields while a human will never see it because it's visually hidden through css it’s a good first line of defense it’s like putting a locked gate in front of your front door it will stop the majority of the lazy robbers out there it’s also a great way to get rid of spam comment on your website
+I know that’s not a traditional captcha but honey pots are extremely underrated in the captcha world They are simple cheap and extremely effective a bot will always try to fill all fields while a human will never see it because it's visually hidden through css it’s a good first line of defense it’s like putting a locked gate in front of your front door it will stop the majority of the lazy robbers out there it’s also a great way to get rid of spam comment on your website
 
 Now resources for this stuff? Forget those outdated tutorials from 2012 that are still floating around You gotta level up your game.
 
-First I'd say dig into *Accessibility for Everyone* by Laura Kalbag its a book that should be mandatory for everyone that creates web interfaces no excuses really it goes deep into how to make things usable for people with disabilities it’s a must for captcha design
+First I'd say dig into _Accessibility for Everyone_ by Laura Kalbag its a book that should be mandatory for everyone that creates web interfaces no excuses really it goes deep into how to make things usable for people with disabilities it’s a must for captcha design
 
-Then get your head around *Web Security for Developers* by Malcolm McDonald it's a practical guide for security issues that you will face on the real world if you ignore the security part and focus just on the esthetics part you are going to be in a bad shape and the bad actors are going to have a field day with your design you do not want that believe me
+Then get your head around _Web Security for Developers_ by Malcolm McDonald it's a practical guide for security issues that you will face on the real world if you ignore the security part and focus just on the esthetics part you are going to be in a bad shape and the bad actors are going to have a field day with your design you do not want that believe me
 
 I also recommend researching recent academic papers on AI attacks on captchas it will show you the state of the art of captcha bypasses that should give you an edge on protecting your system there's no single silver bullet for captcha design so you always need to be learning and updating your methods
 

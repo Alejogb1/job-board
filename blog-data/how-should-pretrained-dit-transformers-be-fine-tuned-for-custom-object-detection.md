@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-should-pretrained-dit-transformers-be-fine-tuned-for-custom-object-detection"
 ---
 
-Okay, let's tackle this. I’ve spent a fair bit of time working with vision transformers, and the challenge of adapting a pretrained diffusion transformer (DiT) for object detection is indeed a fascinating one. It's not a straightforward process, but understanding the underlying mechanisms makes a huge difference. I remember working on a project a few years back, attempting to use a purely image classification model for a rather specific visual inspection task that unexpectedly required both localization and identification of defects – a similar problem, though with a different architecture, forced me to go deep. So, let’s get into it.
+, let's tackle this. I’ve spent a fair bit of time working with vision transformers, and the challenge of adapting a pretrained diffusion transformer (DiT) for object detection is indeed a fascinating one. It's not a straightforward process, but understanding the underlying mechanisms makes a huge difference. I remember working on a project a few years back, attempting to use a purely image classification model for a rather specific visual inspection task that unexpectedly required both localization and identification of defects – a similar problem, though with a different architecture, forced me to go deep. So, let’s get into it.
 
-The core issue is that pre-trained DiT models are inherently generative. They're trained to create images from noise, whereas object detection needs to pinpoint *where* objects are and *what* they are, which are tasks a generative model doesn't naturally perform. Hence, fine-tuning isn't just about tweaking weights; it’s about repurposing the existing DiT knowledge for a fundamentally different job. We can't simply throw object detection heads on top and expect stellar results.
+The core issue is that pre-trained DiT models are inherently generative. They're trained to create images from noise, whereas object detection needs to pinpoint _where_ objects are and _what_ they are, which are tasks a generative model doesn't naturally perform. Hence, fine-tuning isn't just about tweaking weights; it’s about repurposing the existing DiT knowledge for a fundamentally different job. We can't simply throw object detection heads on top and expect stellar results.
 
 First, understand that the pre-trained DiT model’s layers capture a hierarchical representation of image features. These features, learned through the diffusion training process, are powerful and generalizable. The key is to carefully leverage these features, not discard them. It's essentially feature transfer, but we’re doing it at the architectural level rather than simply using a pretrained embedding. The typical approach will involve "attaching" new task-specific layers which will enable detection based on the DiT's learned representations.
 
@@ -17,7 +17,7 @@ Here’s the process in a few steps:
 1.  **Feature Extraction:** Treat the DiT model as a feature extractor up to a specific layer (e.g., the last transformer encoder).
 2.  **Feature Transformation (Optional):** A simple projection layer might be added to transform the DiT outputs to match the input feature map dimensionality of your detection head, if needed, avoiding potential input size mismatches.
 3.  **Detection Head:** Attach an object detection head, which may be composed of convolutional layers or a transformer decoder. This will handle bounding box regression and class classification tasks.
-4. **Fine-Tuning**: Train the detection head along with the upper layers of the DiT, often with a lower learning rate applied to the frozen layers.
+4.  **Fine-Tuning**: Train the detection head along with the upper layers of the DiT, often with a lower learning rate applied to the frozen layers.
 
 Now, let's translate that into some code using PyTorch (though the concepts are applicable in other frameworks):
 
@@ -88,6 +88,7 @@ if __name__ == '__main__':
     output = detector(dummy_image)
     print(f"output shape:{output.shape}") # output shape torch.Size([1, 14, 64, 64]) if 10 classes
 ```
+
 Here I've added a basic projection to manage dimensionality followed by the detection head. Notice that the output shape of the detection head is [batch size, num_classes+4, h, w]. The +4 represents the four bounding box parameters, and output dimension is a grid of output feature maps for detection. A more complex detection head might be a transformer decoder.
 
 **Code Snippet 3: Basic training setup:**
@@ -155,8 +156,8 @@ if __name__ == '__main__':
     training_loop(model, data_loader, optimizer)
 ```
 
-This snippet shows how to set up a basic training loop. Crucially, the loss function must consider both the classification accuracy and the bounding box regression.  Notice the use of sigmoid and normalization on bounding box coordinates. This was a key technique I had to use back when I was first working on these kinds of problems.
+This snippet shows how to set up a basic training loop. Crucially, the loss function must consider both the classification accuracy and the bounding box regression. Notice the use of sigmoid and normalization on bounding box coordinates. This was a key technique I had to use back when I was first working on these kinds of problems.
 
-For deeper understanding of vision transformers, I highly recommend reading the original *Attention is All You Need* paper by Vaswani et al., which laid the foundation. For diffusion models, a good starting point would be *Denoising Diffusion Probabilistic Models* by Ho et al. Additionally, *Deep Learning with Python* by François Chollet provides a very practical take on applying these models, even though it does not focus specifically on DiTs it gives general background useful for this task. To fully grasp the concepts of object detection and loss functions, you should consider consulting *Computer Vision: Algorithms and Applications* by Richard Szeliski. These resources will fill in the theory that underlies these approaches and provide practical implementation guidance.
+For deeper understanding of vision transformers, I highly recommend reading the original _Attention is All You Need_ paper by Vaswani et al., which laid the foundation. For diffusion models, a good starting point would be _Denoising Diffusion Probabilistic Models_ by Ho et al. Additionally, _Deep Learning with Python_ by François Chollet provides a very practical take on applying these models, even though it does not focus specifically on DiTs it gives general background useful for this task. To fully grasp the concepts of object detection and loss functions, you should consider consulting _Computer Vision: Algorithms and Applications_ by Richard Szeliski. These resources will fill in the theory that underlies these approaches and provide practical implementation guidance.
 
 Adapting a pre-trained DiT for object detection is a complex task that benefits from an understanding of the underlying transformer mechanisms as well as the object detection strategies. It is not something I would call straightforward but through careful fine-tuning and architectural repurposing, it is indeed possible to repurpose these models for such tasks.

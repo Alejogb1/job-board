@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-handle-a-websocket-session"
 ---
 
-alright, so you're looking at managing websocket sessions, right? it's a pretty common situation when building real-time applications, and there are definitely some best practices i've picked up after doing this for a while. i've seen this go wrong more times than i'd like to remember, so i'm happy to share what i’ve learned.
+, so you're looking at managing websocket sessions, right? it's a pretty common situation when building real-time applications, and there are definitely some best practices i've picked up after doing this for a while. i've seen this go wrong more times than i'd like to remember, so i'm happy to share what i’ve learned.
 
 first off, think of a websocket session as a continuous, two-way communication pipe between your server and a client. unlike http requests that are quick in and out, a websocket connection stays open for the duration of the session, allowing data to flow back and forth immediately. this means you need to treat it differently.
 
@@ -60,37 +60,37 @@ this simple server code establishes a connection, stores the socket against a un
 on the client side it depends on the tech you are using. let’s imagine you’re in javascript on a web browser you could do something like this:
 
 ```javascript
-const websocket = new WebSocket('ws://localhost:8765');
+const websocket = new WebSocket("ws://localhost:8765");
 
 websocket.onopen = () => {
-    console.log('connected to websocket server');
-    // we can send initial messages if needed here
-    websocket.send(JSON.stringify({type: "chat", msg: "hello server"}))
+  console.log("connected to websocket server");
+  // we can send initial messages if needed here
+  websocket.send(JSON.stringify({ type: "chat", msg: "hello server" }));
 };
 
 websocket.onmessage = (event) => {
-    try{
-    const message = JSON.parse(event.data)
-    console.log('received message:', message);
+  try {
+    const message = JSON.parse(event.data);
+    console.log("received message:", message);
     // display the messages in a chat interface
-    } catch(e) {
-      console.log("error parsing message: ", e)
-    }
+  } catch (e) {
+    console.log("error parsing message: ", e);
+  }
 };
 
 websocket.onerror = (error) => {
-    console.error('websocket error:', error);
+  console.error("websocket error:", error);
 };
 
 websocket.onclose = () => {
-    console.log('disconnected from websocket server');
+  console.log("disconnected from websocket server");
 };
 
 function sendMessage(message) {
-  if(websocket.readyState === WebSocket.OPEN) {
-    websocket.send(JSON.stringify({type: "chat", msg: message}))
+  if (websocket.readyState === WebSocket.OPEN) {
+    websocket.send(JSON.stringify({ type: "chat", msg: message }));
   } else {
-     console.log("cannot send message: websocket closed")
+    console.log("cannot send message: websocket closed");
   }
 }
 ```
@@ -102,59 +102,59 @@ now, the real issues show when dealing with things like connection drops. your c
 here is a more robust client with reconnect logic:
 
 ```javascript
-const websocketUrl = 'ws://localhost:8765';
+const websocketUrl = "ws://localhost:8765";
 let websocket;
 let reconnectAttempts = 0;
 const maxReconnectAttempts = 5;
 const reconnectDelay = 2000; // initial delay in milliseconds
 
 function connectWebSocket() {
-    websocket = new WebSocket(websocketUrl);
+  websocket = new WebSocket(websocketUrl);
 
-    websocket.onopen = () => {
-        console.log('connected to websocket server');
-        reconnectAttempts = 0; // Reset attempts on successful connection
-        // Initial message or handshake here
-        websocket.send(JSON.stringify({type: "chat", msg: "hello server"}));
-    };
+  websocket.onopen = () => {
+    console.log("connected to websocket server");
+    reconnectAttempts = 0; // Reset attempts on successful connection
+    // Initial message or handshake here
+    websocket.send(JSON.stringify({ type: "chat", msg: "hello server" }));
+  };
 
-    websocket.onmessage = (event) => {
-        try {
-            const message = JSON.parse(event.data);
-            console.log('received message:', message);
-            // Handle incoming messages
-        } catch (e) {
-            console.error("error parsing message:", e);
-        }
-    };
+  websocket.onmessage = (event) => {
+    try {
+      const message = JSON.parse(event.data);
+      console.log("received message:", message);
+      // Handle incoming messages
+    } catch (e) {
+      console.error("error parsing message:", e);
+    }
+  };
 
-    websocket.onerror = (error) => {
-        console.error('websocket error:', error);
-        handleDisconnection();
-    };
+  websocket.onerror = (error) => {
+    console.error("websocket error:", error);
+    handleDisconnection();
+  };
 
-    websocket.onclose = () => {
-        console.log('websocket closed');
-        handleDisconnection();
-    };
+  websocket.onclose = () => {
+    console.log("websocket closed");
+    handleDisconnection();
+  };
 }
 
 function sendMessage(message) {
-    if (websocket && websocket.readyState === WebSocket.OPEN) {
-        websocket.send(JSON.stringify({type: "chat", msg: message}));
-    } else {
-        console.log("cannot send message: websocket not open");
-    }
+  if (websocket && websocket.readyState === WebSocket.OPEN) {
+    websocket.send(JSON.stringify({ type: "chat", msg: message }));
+  } else {
+    console.log("cannot send message: websocket not open");
+  }
 }
 function handleDisconnection() {
-     if(reconnectAttempts < maxReconnectAttempts) {
-        const delay = reconnectDelay * (2 ** reconnectAttempts); // exponential backoff
-        console.log(`attempting reconnection in ${delay} ms`);
-        setTimeout(connectWebSocket, delay);
-        reconnectAttempts++
-     } else {
-        console.log("max reconnection attempts reached, giving up")
-     }
+  if (reconnectAttempts < maxReconnectAttempts) {
+    const delay = reconnectDelay * 2 ** reconnectAttempts; // exponential backoff
+    console.log(`attempting reconnection in ${delay} ms`);
+    setTimeout(connectWebSocket, delay);
+    reconnectAttempts++;
+  } else {
+    console.log("max reconnection attempts reached, giving up");
+  }
 }
 
 // Initial connection attempt

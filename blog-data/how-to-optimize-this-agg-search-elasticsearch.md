@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-optimize-this-agg-search-elasticsearch"
 ---
 
-alright, so, optimizing an aggregate search in elasticsearch, eh? i’ve been down that rabbit hole more times than i care to count. it’s one of those things that seems simple on the surface, but can quickly spiral into a performance nightmare if not handled correctly. i'll walk you through some things i've learned, mostly from painful experience, and how to make those aggregations sing.
+, so, optimizing an aggregate search in elasticsearch, eh? i’ve been down that rabbit hole more times than i care to count. it’s one of those things that seems simple on the surface, but can quickly spiral into a performance nightmare if not handled correctly. i'll walk you through some things i've learned, mostly from painful experience, and how to make those aggregations sing.
 
 let’s start with the most common pitfalls. when people talk about slow elasticsearch queries, aggregations are often the culprit. it's not elasticsearch's fault per se, it’s usually how we're asking it to work. the biggest issue i see is asking for too much data in the aggregation process, meaning processing the whole index instead of a filtered selection and processing aggregations on fields that are not optimized for it.
 
@@ -39,12 +39,12 @@ you could do something like this:
             "session_start_time": {
               "gte": "now-30d/d",
               "lt": "now/d"
-             }
+            }
           }
         }
       ]
-     }
-   },
+    }
+  },
   "aggs": {
     "sessions_per_day": {
       "date_histogram": {
@@ -87,7 +87,7 @@ and then use the `user_name.keyword` field in your aggregation query instead of 
     "users_count": {
       "terms": {
         "field": "user_name.keyword",
-          "size":10
+        "size": 10
       }
     }
   }
@@ -123,14 +123,14 @@ and then you can perform the following aggregation directly on this index which 
 {
   "size": 0,
   "aggs": {
-    "total_sales_by_product":{
+    "total_sales_by_product": {
       "terms": {
         "field": "product_id",
         "size": 10
       },
-      "aggs":{
-        "total_sales_amount":{
-          "sum":{
+      "aggs": {
+        "total_sales_amount": {
+          "sum": {
             "field": "total_sales"
           }
         }

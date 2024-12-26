@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "whats-the-chain-id-for-connecting-an-aws-private-ethereum-blockchain-with-metamask"
 ---
 
-Alright, let's tackle this. Figuring out the correct chain id for a private ethereum network on aws, particularly when trying to connect it to metamask, is a common point of friction. I've personally spent a fair few evenings troubleshooting this particular issue while building out proof-of-concepts for clients. The core problem usually stems from the fact that private chains don’t automatically have a well-known id like the public ethereum mainnet or testnets.
+, let's tackle this. Figuring out the correct chain id for a private ethereum network on aws, particularly when trying to connect it to metamask, is a common point of friction. I've personally spent a fair few evenings troubleshooting this particular issue while building out proof-of-concepts for clients. The core problem usually stems from the fact that private chains don’t automatically have a well-known id like the public ethereum mainnet or testnets.
 
 The chain id, in essence, is a unique identifier for a particular ethereum network. It's an integer, and it serves as a critical parameter when interacting with any ethereum client, including Metamask. Metamask uses this id to differentiate between networks and ensure that transactions are routed to the correct blockchain. Incorrect chain id values will inevitably result in connection errors and failed transactions. It's not unlike trying to access a file server with the wrong address – it simply won't work.
 
@@ -29,13 +29,15 @@ Let's examine some practical examples, assuming you're using geth. First, let’
     "muirGlacierBlock": 0,
     "berlinBlock": 0,
     "londonBlock": 0,
-     "mergeForkBlock": 0
+    "mergeForkBlock": 0
   },
-    "difficulty": "1",
-    "gasLimit": "8000000",
-    "alloc": {
-    "0x0000000000000000000000000000000000000001": { "balance": "1000000000000000000000000" }
-   }
+  "difficulty": "1",
+  "gasLimit": "8000000",
+  "alloc": {
+    "0x0000000000000000000000000000000000000001": {
+      "balance": "1000000000000000000000000"
+    }
+  }
 }
 ```
 
@@ -46,7 +48,7 @@ Now, let’s suppose you want a custom chain id. I suggest you generate one that
 ```json
 {
   "config": {
-      "chainId": 98765,
+    "chainId": 98765,
     "homesteadBlock": 0,
     "eip150Block": 0,
     "eip155Block": 0,
@@ -57,45 +59,48 @@ Now, let’s suppose you want a custom chain id. I suggest you generate one that
     "istanbulBlock": 0,
     "muirGlacierBlock": 0,
     "berlinBlock": 0,
-     "londonBlock": 0,
-     "mergeForkBlock": 0
+    "londonBlock": 0,
+    "mergeForkBlock": 0
   },
-    "difficulty": "1",
-    "gasLimit": "8000000",
-   "alloc": {
-    "0x0000000000000000000000000000000000000001": { "balance": "1000000000000000000000000" }
-   }
+  "difficulty": "1",
+  "gasLimit": "8000000",
+  "alloc": {
+    "0x0000000000000000000000000000000000000001": {
+      "balance": "1000000000000000000000000"
+    }
+  }
 }
 ```
+
 Here, the `"chainId"` field has been updated to 98765. This means that when launching the geth node with this genesis file, Metamask must be configured to use 98765 for this custom network.
 
 Finally, when adding the custom network to Metamask, you will need to provide this chain id in addition to rpc url, a chain name, and (optionally) a currency symbol and block explorer URL. Let's examine the code for adding a network programmatically. Note that these parameters are typically provided through user interface interactions within Metamask, but the underlying logic is similar:
 
 ```javascript
 async function addCustomNetworkToMetamask() {
-    const networkData = {
-        chainId: '0x1816d', // Hexadecimal representation of 98765
-        chainName: "My Custom AWS Chain",
-        nativeCurrency: {
-            name: "Ether",
-            symbol: "ETH",
-            decimals: 18
-        },
-        rpcUrls: ["http://<your-node-ip>:8545"], // Replace with your actual rpc url
-        blockExplorerUrls: ["https://<your-custom-explorer-url>"] // Optional, if you have a block explorer
-    };
-    try {
-        await window.ethereum.request({
-            method: 'wallet_addEthereumChain',
-            params: [networkData]
-        });
-        console.log("Network added successfully to Metamask");
-    } catch (error) {
-        console.error("Error adding network:", error);
-    }
+  const networkData = {
+    chainId: "0x1816d", // Hexadecimal representation of 98765
+    chainName: "My Custom AWS Chain",
+    nativeCurrency: {
+      name: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    rpcUrls: ["http://<your-node-ip>:8545"], // Replace with your actual rpc url
+    blockExplorerUrls: ["https://<your-custom-explorer-url>"], // Optional, if you have a block explorer
+  };
+  try {
+    await window.ethereum.request({
+      method: "wallet_addEthereumChain",
+      params: [networkData],
+    });
+    console.log("Network added successfully to Metamask");
+  } catch (error) {
+    console.error("Error adding network:", error);
+  }
 }
 
-addCustomNetworkToMetamask()
+addCustomNetworkToMetamask();
 ```
 
 This Javascript code snippet demonstrates how one would use the `wallet_addEthereumChain` method from the Metamask api to add the custom network details to the wallet. The key part here is the `chainId: '0x1816d'` which is the hex representation of decimal 98765 and directly matches the genesis configuration from the previous snippet. In practical terms, a user would typically input the chain id in its decimal form into the Metamask interface when creating a custom network, and metamask handles the conversion automatically. However, understanding that Metamask itself expects hex is useful for debugging purposes.

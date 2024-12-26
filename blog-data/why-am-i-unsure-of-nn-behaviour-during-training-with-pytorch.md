@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-unsure-of-nn-behaviour-during-training-with-pytorch"
 ---
 
-alright, so you’re hitting that familiar wall where your neural network in pytorch seems to be doing its own thing during training, and you’re not quite sure why. i’ve been there, trust me. it’s a common spot for folks, especially when you’re moving past the basics. lets break down some of the usual suspects and how i’ve tackled them in the past.
+, so you’re hitting that familiar wall where your neural network in pytorch seems to be doing its own thing during training, and you’re not quite sure why. i’ve been there, trust me. it’s a common spot for folks, especially when you’re moving past the basics. lets break down some of the usual suspects and how i’ve tackled them in the past.
 
 first off, the feeling of uncertainty is totally normal. neural networks, even though we define them with lines of code, can be surprisingly opaque. they're complex systems, and it's not always easy to see exactly why they behave the way they do. but that doesn't mean we're flying blind. we can definitely get more visibility and control.
 
@@ -60,7 +60,7 @@ class SimpleCNN(nn.Module):
         return x
 ```
 
-this simple cnn is alright for simple problems, but might not do the job for more complex scenarios. too few parameters and you underfit, too many and you overfit or training takes ages. also the type of layers matter, for example, convolutional layers are good for images, recurrent layers for sequences, etc. pay close attention to the activation functions you are using. did you check the exploding/vanishing gradients issue? for that usually batch normalization is recommended as well. this is where a good understanding of the literature comes in very useful.
+this simple cnn is for simple problems, but might not do the job for more complex scenarios. too few parameters and you underfit, too many and you overfit or training takes ages. also the type of layers matter, for example, convolutional layers are good for images, recurrent layers for sequences, etc. pay close attention to the activation functions you are using. did you check the exploding/vanishing gradients issue? for that usually batch normalization is recommended as well. this is where a good understanding of the literature comes in very useful.
 
 **training process issues**
 
@@ -82,6 +82,7 @@ loss = criterion(outputs, labels)
 loss.backward()
 optimizer.step()
 ```
+
 adam is a good optimizer in most scenarios, but try different optimizers and see what gives better results. monitor your training and validation losses closely and if you notice too much difference, this suggests overfitting. also try different batch sizes, sometimes smaller batches can help the network escape local minima, and learning rate schedules can get you to converge faster. if the training goes bad, sometimes its a question of trial and error.
 
 **inherent stochasticity**

@@ -6,7 +6,7 @@ id: "why-is-one-of-the-dimensions-in-the-output--0-due-to-downsampling-in-conv2d
 
 here we go,
 
-alright, let's unpack this conv2d_71 downsampling issue. i've definitely seen this movie before, and trust me, it usually boils down to a few key culprits. you're getting a dimension of zero or less in your output, and that's a clear sign that your convolution operation is shrinking the spatial dimensions more than you intended. it’s not a happy path.
+, let's unpack this conv2d_71 downsampling issue. i've definitely seen this movie before, and trust me, it usually boils down to a few key culprits. you're getting a dimension of zero or less in your output, and that's a clear sign that your convolution operation is shrinking the spatial dimensions more than you intended. it’s not a happy path.
 
 first off, let’s talk about what's happening under the hood. in a `conv2d` layer, especially with downsampling (which is often achieved through strides greater than 1), the output size is determined by a formula that considers the input size, kernel size, padding, and stride. the usual formula for output dimension in one dimension (height or width) looks like this:
 

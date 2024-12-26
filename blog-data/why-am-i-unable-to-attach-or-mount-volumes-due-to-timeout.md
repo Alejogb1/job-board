@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-unable-to-attach-or-mount-volumes-due-to-timeout"
 ---
 
-Okay, let's tackle this volume mounting timeout issue. It's a frustration I've definitely bumped into a few times throughout my career, particularly during large-scale infrastructure deployments and cloud migrations. The reason it crops up isn’t usually a single, simple culprit; it’s often a constellation of factors interacting in less-than-ideal ways. Let's break down what’s likely happening and how you can effectively approach troubleshooting.
+, let's tackle this volume mounting timeout issue. It's a frustration I've definitely bumped into a few times throughout my career, particularly during large-scale infrastructure deployments and cloud migrations. The reason it crops up isn’t usually a single, simple culprit; it’s often a constellation of factors interacting in less-than-ideal ways. Let's break down what’s likely happening and how you can effectively approach troubleshooting.
 
 The core problem, as indicated by the timeout, is that the system attempting to mount the volume isn’t getting a response within the expected timeframe. This lack of timely communication can manifest at several different levels, from the low-level storage protocols to higher-level orchestration and operating system configurations. Essentially, it’s a communication breakdown, and tracing it requires a systematic approach.
 
@@ -17,7 +17,8 @@ Think back to when I was involved in migrating a large enterprise database to th
 ```bash
 mount -o timeout=600 /dev/sdX /mnt/mydisk
 ```
-In this example, `timeout=600` sets the timeout to 600 seconds (10 minutes), giving the system ample time to complete the operation, or fail with a specific error besides a generic timeout. *Important:* This is for testing and initial troubleshooting, not a long-term solution. You need to determine why the default timeouts are failing. The `man mount` command will detail all options, and I recommend exploring the available settings on your particular operating system or storage driver. For networking details, “TCP/IP Illustrated, Volume 1” by Stevens is still a very authoritative source.
+
+In this example, `timeout=600` sets the timeout to 600 seconds (10 minutes), giving the system ample time to complete the operation, or fail with a specific error besides a generic timeout. _Important:_ This is for testing and initial troubleshooting, not a long-term solution. You need to determine why the default timeouts are failing. The `man mount` command will detail all options, and I recommend exploring the available settings on your particular operating system or storage driver. For networking details, “TCP/IP Illustrated, Volume 1” by Stevens is still a very authoritative source.
 
 The second crucial area is **resource contention**. During times of peak activity or insufficient system capacity, the server or service responsible for managing the volumes may be under excessive load, delaying responses. This could be at the hypervisor level, at the storage controller, or even within the virtual machine itself. For instance, if there are many other I/O-intensive processes happening on the same machine as where you are trying to mount the volume, that can cause delays.
 

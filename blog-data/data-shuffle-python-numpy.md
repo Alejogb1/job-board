@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "data-shuffle-python-numpy"
 ---
 
-Alright so you're hitting that classic data shuffle wall with NumPy in Python I get it been there done that a million times feels like it
+so you're hitting that classic data shuffle wall with NumPy in Python I get it been there done that a million times feels like it
 
-Okay so let's break this down no nonsense straight to the point the way we like it around here I've been wrestling with data manipulation in Python since before NumPy was even cool so trust me on this one I've tripped over this particular hurdle more than a few times.
+let's break this down no nonsense straight to the point the way we like it around here I've been wrestling with data manipulation in Python since before NumPy was even cool so trust me on this one I've tripped over this particular hurdle more than a few times.
 
 The first thing to understand is that NumPy doesn't shuffle in place by default that's the gotcha most newbies stumble on they expect a direct mutation of their array like with list.shuffle in Python standard library but NOPE. NumPy prefers to operate on copies and return new arrays so your original array remains pristine if that makes sense.
 
@@ -95,6 +95,6 @@ One more thing about random seeds if you want your shuffle to be reproducible ma
 
 Now for more advanced topics that i usually see people ask about the best resource i would recommend are definitely the numpy official documentation it is not as intimidating as it might seem and it is an extremely valuable tool. Another great resource is "Python Data Science Handbook" by Jake VanderPlas it covers these topics in depth and with examples it is a great book to read if you want to improve your data handling skills with python.
 
-Here is a little tech humor for you: Why was the NumPy array always invited to parties? Because it had great *dimensions* . Now back to code.
+Here is a little tech humor for you: Why was the NumPy array always invited to parties? Because it had great _dimensions_ . Now back to code.
 
 So yeah that is it there are a couple of things to remember when dealing with shuffling in numpy. Whether you use shuffle or permutation all comes down to what are you trying to do and what you want to accomplish. I have seen junior developers get tripped by this simple detail so do not feel bad if you have struggled with it. It is a common issue and just make sure to double check your code. Happy coding and if you run into more issues I will be here.

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "when-do-i-need-to-use-mpi-barrier"
 ---
 
-Okay so you're asking about MPI barriers when to use them why use them all that jazz alright I've been there trust me I've debugged enough parallel code to know the frustration of forgetting a single barrier somewhere and spent days wondering why the hell it's not working like it should so let's break this down
+you're asking about MPI barriers when to use them why use them all that jazz I've been there trust me I've debugged enough parallel code to know the frustration of forgetting a single barrier somewhere and spent days wondering why the hell it's not working like it should so let's break this down
 
 First off what's an MPI barrier right simplest way to think about it its like a synchronization point in your parallel program imagine all your processes are little race cars on a track each doing their own thing a barrier is like a pit stop where they all have to wait until every single race car has reached that point before they are allowed to continue it makes sure that no process gets too far ahead before others catch up it’s a forced group hug of processes pretty much
 
@@ -92,6 +92,7 @@ int main(int argc, char** argv) {
     return 0;
 }
 ```
+
 In this code each process sends a value to all other processes then receives a value from all other processes. We use barrier because we want to make sure that all processes are done with sending and receiving before printing that value on standard output
 
 And here is a more high level example
@@ -122,6 +123,7 @@ if rank == 0:
     print("Final data",np.sum(global_result))
 
 ```
+
 This is python so you can see how the same principle applies to a high level language too
 
 Now there's also situations when you DON'T need barriers and it’s very important to understand it barriers are costly operations all processes have to wait and that takes time so if processes are totally independent doing different things not sharing any data you don't need a barrier everywhere if processes are doing separate computations that don’t affect each other put as few barriers as possible the whole idea behind parallel computing is to do as much computations in parallel as possible if you are using barriers too often you are slowing down the whole process it’s just like that line someone said “too much bureaucracy kills the business” that applies here too but for code so avoid adding it just because

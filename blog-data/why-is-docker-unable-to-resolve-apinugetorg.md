@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-docker-unable-to-resolve-apinugetorg"
 ---
 
-Alright, let's unpack this peculiar situation. It's not uncommon, and I recall encountering this exact issue during a particularly frustrating project involving containerizing a .net core application a few years back. It led me down several rabbit holes, eventually highlighting some key networking and configuration aspects often overlooked when spinning up docker containers. The question of why Docker, specifically, fails to resolve 'api.nuget.org' often points not to a docker issue per se, but rather to problems within the container's networking setup, the underlying host system, or sometimes even misconfigured DNS settings. It's rarely a 'docker is broken' scenario but rather an interplay of several things, which we will dissect.
+, let's unpack this peculiar situation. It's not uncommon, and I recall encountering this exact issue during a particularly frustrating project involving containerizing a .net core application a few years back. It led me down several rabbit holes, eventually highlighting some key networking and configuration aspects often overlooked when spinning up docker containers. The question of why Docker, specifically, fails to resolve 'api.nuget.org' often points not to a docker issue per se, but rather to problems within the container's networking setup, the underlying host system, or sometimes even misconfigured DNS settings. It's rarely a 'docker is broken' scenario but rather an interplay of several things, which we will dissect.
 
 First, understand that docker containers by default operate within their own isolated network namespace. This isolation is a cornerstone of docker's utility, allowing for repeatable environments. But this means that a container cannot simply inherit the host machine's network configuration. While docker containers do default to leveraging the host machine's dns resolver, this isn't always the case, and misconfigurations or custom setups can easily deviate from this default behavior.
 
@@ -50,7 +50,8 @@ docker run --rm --dns 8.8.8.8 alpine:latest sh -c "ping api.nuget.org"
 
 Another potential issue is an improperly configured `resolv.conf` file on the host machine. This file defines the dns resolvers that the host (and by default, the containers) use. If it points to non-functional or unreachable servers, this will cascade down to docker.
 
-To illustrate, let’s say we modify `/etc/resolv.conf` on our host (do *not* do this in a production environment, it's strictly for educational purposes). Let's pretend it only has a non-functional DNS resolver.
+To illustrate, let’s say we modify `/etc/resolv.conf` on our host (do _not_ do this in a production environment, it's strictly for educational purposes). Let's pretend it only has a non-functional DNS resolver.
+
 ```bash
 # let's pretend this is our host's resolv.conf
 # nameserver 192.168.1.100  (this is non-functional, let's assume)
@@ -66,7 +67,7 @@ A proper fix would involve correcting the `resolv.conf` file on the host system 
 
 **Scenario 3: Firewall Blocking Docker Network**
 
-Finally, let’s consider the firewall scenario. Assume that the host firewall is blocking outgoing traffic from docker's subnet (usually something like 172.17.0.0/16). In this case, name resolution *and* general traffic will likely be impacted.
+Finally, let’s consider the firewall scenario. Assume that the host firewall is blocking outgoing traffic from docker's subnet (usually something like 172.17.0.0/16). In this case, name resolution _and_ general traffic will likely be impacted.
 
 ```bash
 # first let's show the docker network information

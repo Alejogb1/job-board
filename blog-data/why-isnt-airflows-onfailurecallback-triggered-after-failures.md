@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-isnt-airflows-onfailurecallback-triggered-after-failures"
 ---
 
-Okay, let’s dive into why Airflow’s `on_failure_callback` sometimes seems to mysteriously ignore task failures. I've spent my fair share of late nights debugging this very issue, and it often boils down to a few common culprits. It’s certainly frustrating when you're relying on those callbacks for critical alerting or cleanup and they just don't fire. The problem is rarely a bug in Airflow itself; it's usually about nuanced understanding of how task states transition and when the callback logic is actually evaluated.
+, let’s dive into why Airflow’s `on_failure_callback` sometimes seems to mysteriously ignore task failures. I've spent my fair share of late nights debugging this very issue, and it often boils down to a few common culprits. It’s certainly frustrating when you're relying on those callbacks for critical alerting or cleanup and they just don't fire. The problem is rarely a bug in Airflow itself; it's usually about nuanced understanding of how task states transition and when the callback logic is actually evaluated.
 
 Specifically, the `on_failure_callback` in Airflow is designed to be triggered when a task transitions into a ‘failed’ state. Sounds straightforward, doesn't it? However, there are particular failure modes and configurations that can prevent this transition from occurring, causing the callback to be bypassed. Here's a breakdown of the key issues and how to approach them, drawing from my experiences in several production deployments.
 
@@ -47,7 +47,7 @@ with DAG(
     )
 ```
 
-In this case, the `on_failure_callback` will *only* trigger after three failed attempts of `failing_task_retry`. If you expect immediate alerts on the first failure, you'll be disappointed. The solution is either to reduce the retries, or redesign the alert mechanism to operate on ‘up_for_retry’ task states, if you wish. This can be done using Airflow's event listeners.
+In this case, the `on_failure_callback` will _only_ trigger after three failed attempts of `failing_task_retry`. If you expect immediate alerts on the first failure, you'll be disappointed. The solution is either to reduce the retries, or redesign the alert mechanism to operate on ‘up_for_retry’ task states, if you wish. This can be done using Airflow's event listeners.
 
 **Snippet 2: Dependency Blocking Failure Propagation**
 

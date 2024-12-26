@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-are-swift-table-view-cell-items-overlapping"
 ---
 
-Alright, let’s tackle this. Overlapping cell items in a `UITableView`—it's a classic, and honestly, I've spent more hours than I care to recall debugging precisely this issue. It's usually not a single, grand flaw, but rather a confluence of smaller, often subtle, problems that collectively manifest as this frustrating visual overlap. When I first started, I remember a particularly tricky case on a project where a client kept seeing elements bleed into adjacent cells on their older iPhones; it drove me nuts for a solid day before the pieces clicked. Let me break down the typical suspects and what to do about them.
+, let’s tackle this. Overlapping cell items in a `UITableView`—it's a classic, and honestly, I've spent more hours than I care to recall debugging precisely this issue. It's usually not a single, grand flaw, but rather a confluence of smaller, often subtle, problems that collectively manifest as this frustrating visual overlap. When I first started, I remember a particularly tricky case on a project where a client kept seeing elements bleed into adjacent cells on their older iPhones; it drove me nuts for a solid day before the pieces clicked. Let me break down the typical suspects and what to do about them.
 
 First, let’s address the fundamental concept: cell reuse. The `UITableView` doesn't create a fresh cell for every row; instead, it uses a pattern called cell reuse. When a cell scrolls off-screen, it’s placed into a reuse queue, ready to be reconfigured and displayed again. This drastically improves performance, especially for large datasets, because creating and destroying views is costly. The problem occurs when you either don't properly reset the state of a reusable cell or if you are unintentionally setting elements and layouts for a new row when the cell still has data from its previous display.
 
@@ -12,7 +12,7 @@ Now, common culprits. The most pervasive one is incorrect usage of auto layout o
 
 Another common issue stems from asynchronous operations within the cell configuration. Think of scenarios where you're fetching an image for a cell's image view, or you are attempting to modify the cell’s contents via a network request within the cellForRowAt method. If the image arrives after the cell has been placed back into the reuse pool and is subsequently repurposed, the previous asynchronous update might cause elements to overlap in the wrong cell or a previous cell state to overwrite the current one, before the new data is applied. These timing issues can be particularly vexing to debug, and more often than not, require careful state management.
 
-A third, often less noticed, area is when developers forget to clear temporary data within the cell preparation for reuse. Imagine your cell has some interactive elements that are stateful, such as a button that toggles. If you don’t reset this button’s state within `prepareForReuse()`, you could easily find that a button tapped in one cell appears to be tapped in a different, recycled cell. It isn't directly *overlapping*, but it gives the illusion of being so as these are visual elements in incorrect positions/states on the screen. Let’s look at some examples to clarify.
+A third, often less noticed, area is when developers forget to clear temporary data within the cell preparation for reuse. Imagine your cell has some interactive elements that are stateful, such as a button that toggles. If you don’t reset this button’s state within `prepareForReuse()`, you could easily find that a button tapped in one cell appears to be tapped in a different, recycled cell. It isn't directly _overlapping_, but it gives the illusion of being so as these are visual elements in incorrect positions/states on the screen. Let’s look at some examples to clarify.
 
 **Example 1: Incorrect Frame-based Positioning**
 
@@ -97,7 +97,8 @@ class CustomTableViewCell: UITableViewCell {
        }
 }
 ```
-In this second example, a `CustomTableViewCell` subclass is created that sets up the label and applies the necessary auto layout constraints. The constraints will ensure that the label stays within the boundaries of the cell. The key here is that cell subviews are created *once* in the cell’s initializers, instead of being re-created each time in the `tableView(_:cellForRowAt:)`.
+
+In this second example, a `CustomTableViewCell` subclass is created that sets up the label and applies the necessary auto layout constraints. The constraints will ensure that the label stays within the boundaries of the cell. The key here is that cell subviews are created _once_ in the cell’s initializers, instead of being re-created each time in the `tableView(_:cellForRowAt:)`.
 
 **Example 3: Proper Data Reset During Cell Reuse**
 
@@ -134,7 +135,7 @@ class AsyncImageCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
+
     var currentTask: URLSessionDataTask?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -181,4 +182,4 @@ class AsyncImageCell: UITableViewCell {
 
 Here, the cell's image view is cleared within `prepareForReuse()`, and any ongoing URL loading tasks are cancelled. Failing to do so would lead to cells displaying images meant for other rows as cells are reused while the asynchronous requests come in later. It's also important to note the use of a 'weak self' capture list to avoid retain cycles.
 
-In terms of resources, the official Apple documentation on `UITableView` and cell reuse is absolutely essential. Beyond that, delving into *Auto Layout by Tutorials* from raywenderlich.com can be invaluable. Also, for a deep dive into performance and asynchronous operations, the book *Concurrency by Tutorials* is extremely helpful. Understanding these concepts within the context of table views is key. It all comes down to meticulously crafting your view layout, diligently reusing cells while resetting their states, and handling asynchronous operations with care, especially in relation to cell re-use.
+In terms of resources, the official Apple documentation on `UITableView` and cell reuse is absolutely essential. Beyond that, delving into _Auto Layout by Tutorials_ from raywenderlich.com can be invaluable. Also, for a deep dive into performance and asynchronous operations, the book _Concurrency by Tutorials_ is extremely helpful. Understanding these concepts within the context of table views is key. It all comes down to meticulously crafting your view layout, diligently reusing cells while resetting their states, and handling asynchronous operations with care, especially in relation to cell re-use.

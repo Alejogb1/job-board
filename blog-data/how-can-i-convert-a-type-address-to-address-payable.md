@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-convert-a-type-address-to-address-payable"
 ---
 
-Alright, let's tackle this address conversion challenge. It's a common hiccup, especially when dealing with older smart contracts or bridging across different contract versions, and I've certainly been in the trenches with this one a few times. You’re working with Solidity, most likely, and the issue boils down to the nuanced distinction between `address` and `address payable`. In short, `address` is just that, an address, a location on the Ethereum blockchain, while `address payable` is specifically an address that *can* receive ether. The compiler enforces this distinction to maintain type safety and prevent accidental transfers to addresses not meant to receive funds. So, how do we gracefully move between these two types?
+, let's tackle this address conversion challenge. It's a common hiccup, especially when dealing with older smart contracts or bridging across different contract versions, and I've certainly been in the trenches with this one a few times. You’re working with Solidity, most likely, and the issue boils down to the nuanced distinction between `address` and `address payable`. In short, `address` is just that, an address, a location on the Ethereum blockchain, while `address payable` is specifically an address that _can_ receive ether. The compiler enforces this distinction to maintain type safety and prevent accidental transfers to addresses not meant to receive funds. So, how do we gracefully move between these two types?
 
 The straightforward conversion isn’t a direct cast. You can’t just write `address payable(my_address)` and expect the compiler to be happy. Instead, we use a type conversion process. Solidity doesn’t allow implicit conversions from `address` to `address payable` because that would break the strong typing system. However, there is a way.
 
@@ -98,10 +98,10 @@ Here, we first deploy a contract called `Receiver` which has a receive function 
 
 **Key Considerations:**
 
-*   **Security:** While these type conversions are technically straightforward, always verify that the address you are sending ether to is, in fact, an address that can receive it. This is especially crucial when interacting with external or untrusted contracts. A simple mistake in passing the incorrect address could mean you loose your funds with no recourse.
-*   **Gas Usage:** The gas cost is generally minimal as we are just doing a simple type conversion.
-*   **Error Handling:** The use of `require(success, "Transfer failed");` is essential to handle the case where transfers fail which will revert your transaction. Always use proper error handling and consider adding specific error messages.
-*   **Modern Solidity:** These days the concept of `payable` has been refined a bit to make it more specific to where it is required. You should aim to only use `address payable` where you have to.
+- **Security:** While these type conversions are technically straightforward, always verify that the address you are sending ether to is, in fact, an address that can receive it. This is especially crucial when interacting with external or untrusted contracts. A simple mistake in passing the incorrect address could mean you loose your funds with no recourse.
+- **Gas Usage:** The gas cost is generally minimal as we are just doing a simple type conversion.
+- **Error Handling:** The use of `require(success, "Transfer failed");` is essential to handle the case where transfers fail which will revert your transaction. Always use proper error handling and consider adding specific error messages.
+- **Modern Solidity:** These days the concept of `payable` has been refined a bit to make it more specific to where it is required. You should aim to only use `address payable` where you have to.
 
 **Further Learning:**
 

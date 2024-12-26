@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "why-am-i-getting-a-value-error-with-instance-norm"
 ---
 
-Okay, let's tackle this. It's not uncommon to run into `ValueError` issues when dealing with instance normalization, and having experienced this myself on a few occasions, I can offer some context and solutions based on those experiences. It's generally not a matter of instance norm being fundamentally flawed; more often, it stems from a mismatch in the expected tensor shapes or improper usage during implementation.
+, let's tackle this. It's not uncommon to run into `ValueError` issues when dealing with instance normalization, and having experienced this myself on a few occasions, I can offer some context and solutions based on those experiences. It's generally not a matter of instance norm being fundamentally flawed; more often, it stems from a mismatch in the expected tensor shapes or improper usage during implementation.
 
-Let's unpack what typically goes wrong, keeping in mind instance norm's mechanics. Unlike batch norm, which normalizes activations across a batch of samples, instance norm normalizes activations *within* each sample independently, across spatial dimensions. This makes it particularly useful in tasks like style transfer or image generation where we want to preserve individual style or instance-specific characteristics.
+Let's unpack what typically goes wrong, keeping in mind instance norm's mechanics. Unlike batch norm, which normalizes activations across a batch of samples, instance norm normalizes activations _within_ each sample independently, across spatial dimensions. This makes it particularly useful in tasks like style transfer or image generation where we want to preserve individual style or instance-specific characteristics.
 
 Now, when you're receiving a `ValueError`, it usually points to the following core issues:
 
@@ -94,12 +94,12 @@ print(f"Output shape: {output.shape}")
 
 Here, we show a case where setting the number of features incorrectly when using `affine=True` causes an error. Ensuring that `num_features` aligns with the number of channels in the input is critical.
 
-As a seasoned practitioner, my advice is always to double-check your input tensor shapes *before* applying any normalization layers, not after. Tools like `print(tensor.shape)` (or `tf.shape(tensor)` for TensorFlow) are your best friends here. Start by meticulously verifying that your input data has the expected shape and that your normalization layer is configured accordingly. Then, work your way through your data pipeline to see how those shapes transform.
+As a seasoned practitioner, my advice is always to double-check your input tensor shapes _before_ applying any normalization layers, not after. Tools like `print(tensor.shape)` (or `tf.shape(tensor)` for TensorFlow) are your best friends here. Start by meticulously verifying that your input data has the expected shape and that your normalization layer is configured accordingly. Then, work your way through your data pipeline to see how those shapes transform.
 
 For further reading and deep dives, I would highly recommend:
 
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** A comprehensive text covering all fundamental aspects of deep learning, including normalization techniques. This would provide an excellent theoretical backdrop.
-*   **Original Instance Normalization Paper (Ulyanov, Dmitry, et al. "Instance normalization: The missing ingredient for fast stylization." arXiv preprint arXiv:1607.08022 (2016)):** A worthwhile read for understanding the details behind instance normalization. Knowing its inner workings will better equip you to debug issues.
-*   **Official Documentation for PyTorch and TensorFlow:** Specifically regarding the respective implementations of normalization layers. Refer directly to these, as these represent the most accurate source of information.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** A comprehensive text covering all fundamental aspects of deep learning, including normalization techniques. This would provide an excellent theoretical backdrop.
+- **Original Instance Normalization Paper (Ulyanov, Dmitry, et al. "Instance normalization: The missing ingredient for fast stylization." arXiv preprint arXiv:1607.08022 (2016)):** A worthwhile read for understanding the details behind instance normalization. Knowing its inner workings will better equip you to debug issues.
+- **Official Documentation for PyTorch and TensorFlow:** Specifically regarding the respective implementations of normalization layers. Refer directly to these, as these represent the most accurate source of information.
 
 By applying these checks and using the resources mentioned, you will be in a good position to resolve `ValueError` issues relating to instance normalization with more confidence and efficiency. It's often the most seemingly straightforward issues that can be the trickiest, but by focusing on the details, you'll find your debug time decreasing considerably.

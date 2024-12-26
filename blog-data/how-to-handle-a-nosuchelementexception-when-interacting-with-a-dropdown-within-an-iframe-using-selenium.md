@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-handle-a-nosuchelementexception-when-interacting-with-a-dropdown-within-an-iframe-using-selenium"
 ---
 
-Okay, let's tackle this. I've definitely been down that rabbit hole a few times myself, particularly when dealing with nested iframes and dynamically loaded content. A `NoSuchElementException` when interacting with a dropdown within an iframe using Selenium is a common, and frankly, frustrating, occurrence. It usually boils down to Selenium not being able to locate the element within the current context, which in this case, is likely an iframe. It's not necessarily a problem with your selector, but more a matter of Selenium's context not being properly set. Here’s how I typically approach this, drawing from my experience over the years with various web automation projects.
+, let's tackle this. I've definitely been down that rabbit hole a few times myself, particularly when dealing with nested iframes and dynamically loaded content. A `NoSuchElementException` when interacting with a dropdown within an iframe using Selenium is a common, and frankly, frustrating, occurrence. It usually boils down to Selenium not being able to locate the element within the current context, which in this case, is likely an iframe. It's not necessarily a problem with your selector, but more a matter of Selenium's context not being properly set. Here’s how I typically approach this, drawing from my experience over the years with various web automation projects.
 
 First, the fundamental problem is that Selenium operates on the main document context by default. When an iframe is present, it creates a separate, isolated document. So, when you try to locate an element inside that iframe without first switching to the iframe's context, Selenium searches only within the main document and, naturally, won’t find your element, triggering the infamous `NoSuchElementException`. The solution involves properly switching to the iframe, interacting with elements within it, and then optionally switching back to the parent frame or default content.
 
@@ -26,15 +26,15 @@ And `iframe_content.html` contains:
 
 ```html
 <html>
-<head>
+  <head>
     <title>Iframe Content</title>
-</head>
-<body>
+  </head>
+  <body>
     <select id="myDropdown">
-        <option value="option1">Option 1</option>
-        <option value="option2">Option 2</option>
+      <option value="option1">Option 1</option>
+      <option value="option2">Option 2</option>
     </select>
-</body>
+  </body>
 </html>
 ```
 
@@ -93,10 +93,10 @@ Suppose our HTML now looks like this, where iframe itself has a class.
     <title>Iframe Example 2</title>
   </head>
   <body>
-      <div class="iframe-container">
-           <iframe class="embedded-frame" src="iframe_content.html"></iframe>
-      </div>
-      <p>Main content</p>
+    <div class="iframe-container">
+      <iframe class="embedded-frame" src="iframe_content.html"></iframe>
+    </div>
+    <p>Main content</p>
   </body>
 </html>
 ```
@@ -160,13 +160,13 @@ Let’s say our HTML structure is now:
 
 ```html
 <html>
-<head>
+  <head>
     <title>Nested Iframes Example</title>
-</head>
-<body>
+  </head>
+  <body>
     <iframe id="parentIframe" src="parent_iframe.html"></iframe>
     <p>Main Content</p>
-</body>
+  </body>
 </html>
 ```
 
@@ -174,12 +174,12 @@ Where `parent_iframe.html` contains:
 
 ```html
 <html>
-    <head>
-        <title>Parent Iframe</title>
-    </head>
-    <body>
-        <iframe id="childIframe" src="iframe_content.html"></iframe>
-    </body>
+  <head>
+    <title>Parent Iframe</title>
+  </head>
+  <body>
+    <iframe id="childIframe" src="iframe_content.html"></iframe>
+  </body>
 </html>
 ```
 

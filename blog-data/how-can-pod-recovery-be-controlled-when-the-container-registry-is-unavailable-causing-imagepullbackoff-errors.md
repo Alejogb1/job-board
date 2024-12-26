@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-pod-recovery-be-controlled-when-the-container-registry-is-unavailable-causing-imagepullbackoff-errors"
 ---
 
-Okay, let's tackle this. From a few past fire drills involving some rather temperamental Kubernetes clusters, I’ve definitely seen my share of `ImagePullBackOff` errors when the container registry decides to take a nap. It's a frustrating situation, but thankfully, there are several levers we can pull to mitigate the impact. The core issue, of course, is that the kubelet, the agent running on each node, cannot retrieve the container image defined in the pod specification from the configured registry, leading to the `ImagePullBackOff` state. This means our pods are failing to start or are being restarted incessantly, which is less than ideal.
+, let's tackle this. From a few past fire drills involving some rather temperamental Kubernetes clusters, I’ve definitely seen my share of `ImagePullBackOff` errors when the container registry decides to take a nap. It's a frustrating situation, but thankfully, there are several levers we can pull to mitigate the impact. The core issue, of course, is that the kubelet, the agent running on each node, cannot retrieve the container image defined in the pod specification from the configured registry, leading to the `ImagePullBackOff` state. This means our pods are failing to start or are being restarted incessantly, which is less than ideal.
 
-Firstly, it’s crucial to understand that while we cannot directly force the kubelet to magically pull an image when the registry is unreachable, we *can* influence its behavior and, more importantly, make our applications more resilient to such failures. The focus should be on proactive rather than reactive measures wherever possible. The “wait and hope” approach doesn’t cut it in production environments.
+Firstly, it’s crucial to understand that while we cannot directly force the kubelet to magically pull an image when the registry is unreachable, we _can_ influence its behavior and, more importantly, make our applications more resilient to such failures. The focus should be on proactive rather than reactive measures wherever possible. The “wait and hope” approach doesn’t cut it in production environments.
 
 One common, and frankly, often overlooked area is proper **readiness probe configuration**. Many tend to focus only on liveness probes, but a well-defined readiness probe is crucial for graceful handling of these situations. It helps Kubernetes understand when a pod is ready to accept traffic. If your application's readiness probe checks dependencies that might fail or timeout when the registry is unavailable, the kubelet won’t mark the pod as ready until these dependencies are available. Crucially, this also includes the image pull stage. This is particularly helpful in cases where there are internal dependencies that may be blocked due to registry issues.
 
@@ -30,28 +30,28 @@ spec:
         app: web-service
     spec:
       containers:
-      - name: web-service-container
-        image: my-registry/web-service:latest
-        ports:
-        - containerPort: 8080
-        readinessProbe:
-          httpGet:
-            path: /healthz
-            port: 8080
-          initialDelaySeconds: 5
-          periodSeconds: 10
-          failureThreshold: 3
-      - name: auth-service-container
-        image: my-registry/auth-service:latest
-        ports:
-          - containerPort: 8081
-        readinessProbe:
-           httpGet:
-             path: /healthz
-             port: 8081
-           initialDelaySeconds: 5
-           periodSeconds: 10
-           failureThreshold: 3
+        - name: web-service-container
+          image: my-registry/web-service:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 3
+        - name: auth-service-container
+          image: my-registry/auth-service:latest
+          ports:
+            - containerPort: 8081
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 3
 ```
 
 In the case the readiness probe on the 'auth-service-container' fails, the service will not receive traffic until the image is pulled. It is also very important to use `initialDelaySeconds`, `periodSeconds`, and `failureThreshold` appropriately to allow enough time for the service to start.
@@ -77,34 +77,34 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-      - name: my-app-container
-        image: my-registry/my-app:latest
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 8080
-        readinessProbe:
-          httpGet:
-            path: /healthz
-            port: 8080
-          initialDelaySeconds: 5
-          periodSeconds: 10
-        livenessProbe:
+        - name: my-app-container
+          image: my-registry/my-app:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
             httpGet:
               path: /healthz
               port: 8080
             initialDelaySeconds: 5
             periodSeconds: 10
             failureThreshold: 3
-        resources:
-          requests:
-            cpu: 100m
-            memory: 128Mi
-          limits:
-            cpu: 500m
-            memory: 512Mi
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
 ```
 
-Notice the addition of `imagePullPolicy: IfNotPresent` here. This policy instructs Kubernetes to pull the image *only if* it isn’t already present on the node. This can save considerable time and reduce unnecessary attempts to pull from the registry in situations where the image hasn't actually changed. While it does not directly avoid the initial failure, it can alleviate issues caused by a network blip. The more robust strategy is to build retry logic directly into our application, handling potential startup failures related to missing dependent services, by leveraging the readiness probe's role in determining readiness.
+Notice the addition of `imagePullPolicy: IfNotPresent` here. This policy instructs Kubernetes to pull the image _only if_ it isn’t already present on the node. This can save considerable time and reduce unnecessary attempts to pull from the registry in situations where the image hasn't actually changed. While it does not directly avoid the initial failure, it can alleviate issues caused by a network blip. The more robust strategy is to build retry logic directly into our application, handling potential startup failures related to missing dependent services, by leveraging the readiness probe's role in determining readiness.
 
 Finally, let’s talk about something a little more involved: **image mirroring**. In particularly critical applications and environments where the reliability of the upstream container registry might be questionable (I have seen enough network incidents to vouch for their unpredictability), creating a local, or private, mirror of commonly used images within our own infrastructure or environment can be a lifesaver. It creates a dependency buffer that doesn’t require internet access. This avoids the "single point of failure" scenario where our entire cluster goes down because the upstream registry is unavailable.
 
@@ -128,16 +128,16 @@ spec:
       imagePullSecrets:
         - name: my-registry-secret # ensure you have this secret configured
       containers:
-      - name: my-app-container
-        image: internal-mirror-registry/my-app:latest  # reference the mirrored image
-        ports:
-        - containerPort: 8080
-        readinessProbe:
-          httpGet:
-            path: /healthz
-            port: 8080
-          initialDelaySeconds: 5
-          periodSeconds: 10
+        - name: my-app-container
+          image: internal-mirror-registry/my-app:latest # reference the mirrored image
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
 ```
 
 Here the `image` field references the mirrored registry location instead of the main public or private registry, which helps to bypass the problematic upstream. The `imagePullSecrets` allows Kubernetes to authenticate against a potentially private registry.

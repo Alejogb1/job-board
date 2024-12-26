@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-let-devs-choose-docker-composeyml-file-in-devcontainerjson"
 ---
 
-Okay, let's tackle this. I've certainly been in the trenches with devcontainers and the nuances of customization, especially when it comes to managing different docker-compose setups for various development scenarios. The core issue, as you’ve framed it, is allowing developers to select a specific `docker-compose.yml` file directly through the `devcontainer.json` configuration. While there's no direct, built-in property to explicitly *choose* a file from a set of alternatives, there are several effective strategies we can implement to achieve this level of flexibility. I've used these, or variations of them, on projects ranging from small internal tools to complex microservices architectures.
+, let's tackle this. I've certainly been in the trenches with devcontainers and the nuances of customization, especially when it comes to managing different docker-compose setups for various development scenarios. The core issue, as you’ve framed it, is allowing developers to select a specific `docker-compose.yml` file directly through the `devcontainer.json` configuration. While there's no direct, built-in property to explicitly _choose_ a file from a set of alternatives, there are several effective strategies we can implement to achieve this level of flexibility. I've used these, or variations of them, on projects ranging from small internal tools to complex microservices architectures.
 
 The challenge arises from the fact that the `dockerComposeFile` property in `devcontainer.json` expects a direct file path or an array of file paths. It doesn't support, out of the box, something like a selection dropdown for different `docker-compose` files. However, we can use conditional logic, environment variables, and a clever bit of scripting to achieve the desired result.
 
@@ -22,13 +22,12 @@ First, we'll add an environment variable within our `devcontainer.json`, which w
   "dockerComposeFile": "${containerEnv:DEV_COMPOSE_FILE:-docker-compose.yml}",
   "service": "app",
   "workspaceFolder": "/workspace",
-   //other configuration details ...
+  //other configuration details ...
   "customizations": {
-        "vscode": {
-            // vscode customizations ..
-        }
+    "vscode": {
+      // vscode customizations ..
     }
-
+  }
 }
 ```
 
@@ -66,38 +65,40 @@ esac
 
 echo "Using docker-compose file: $DEV_COMPOSE_FILE"
 ```
+
 This script presents the developer with a numbered list of `docker-compose` files. Based on their choice, the script sets the `DEV_COMPOSE_FILE` environment variable before the devcontainer is built.
 
 **3. Integrating the Setup Script:**
 
-Finally, we need to tell the `devcontainer` to execute the setup script *before* the container creation. We do this using the `onCreateCommand` or `postCreateCommand` in our `devcontainer.json`. I would use `onCreateCommand` to ensure the environment is set before the docker-compose is started.
+Finally, we need to tell the `devcontainer` to execute the setup script _before_ the container creation. We do this using the `onCreateCommand` or `postCreateCommand` in our `devcontainer.json`. I would use `onCreateCommand` to ensure the environment is set before the docker-compose is started.
 
 ```json
 {
-    "name": "My Dev Container",
+  "name": "My Dev Container",
   "dockerComposeFile": "${containerEnv:DEV_COMPOSE_FILE:-docker-compose.yml}",
   "service": "app",
   "workspaceFolder": "/workspace",
   "onCreateCommand": "bash ./setup_env.sh",
-   //other configuration details ...
+  //other configuration details ...
   "customizations": {
-        "vscode": {
-            // vscode customizations ..
-        }
+    "vscode": {
+      // vscode customizations ..
     }
+  }
 }
 ```
+
 By adding `"onCreateCommand": "bash ./setup_env.sh"`, we instruct devcontainer to execute the script before the container is built. This will set our desired `DEV_COMPOSE_FILE` environment variable for the container creation process.
 
 **Practical Considerations and Further Reading:**
 
 This solution is robust for multiple environments and user preferences. Here's a breakdown of why I favor this, and some potential enhancements.
 
-*   **Flexibility:** Developers can choose their configuration with minimal effort. Adding more choices simply requires adding to the script and creating more `docker-compose.yml` files.
-*   **Maintainability:** The `devcontainer.json` remains clean and doesn't require changes when adding or removing a `docker-compose` configuration.
-*   **Extensibility:** This approach can be extended to support other configuration parameters, like a specific branch or other project-specific requirements.
+- **Flexibility:** Developers can choose their configuration with minimal effort. Adding more choices simply requires adding to the script and creating more `docker-compose.yml` files.
+- **Maintainability:** The `devcontainer.json` remains clean and doesn't require changes when adding or removing a `docker-compose` configuration.
+- **Extensibility:** This approach can be extended to support other configuration parameters, like a specific branch or other project-specific requirements.
 
-For further study on Docker Compose, I highly recommend “*Docker in Practice*” by Ian Miell and Aidan Hobson Sayers, It offers an in-depth practical view of using Docker and Docker Compose effectively. Furthermore, understanding the finer details of devcontainers is aided greatly by reading the official *Microsoft documentation on devcontainers*, which is comprehensive and regularly updated.
+For further study on Docker Compose, I highly recommend “_Docker in Practice_” by Ian Miell and Aidan Hobson Sayers, It offers an in-depth practical view of using Docker and Docker Compose effectively. Furthermore, understanding the finer details of devcontainers is aided greatly by reading the official _Microsoft documentation on devcontainers_, which is comprehensive and regularly updated.
 
 There are additional strategies you might explore. For instance, in large development teams, I’ve seen use of different profiles or command line arguments used to set environment variables programmatically, depending on the tooling already used by the team. Also, if developers are using a particular build system you could expose a custom property in `devcontainer.json` and pass it as an environment variable using the build system’s tooling.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "when-should-i-use-conv1d-conv2d-or-conv3d-in-a-cnn"
 ---
 
-Alright, let's unpack convolutional layers, a topic I've spent more than a few late nights grappling with. The decision between `Conv1D`, `Conv2D`, and `Conv3D` in a convolutional neural network (cnn) isn't arbitrary; it's fundamentally tied to the dimensionality of your input data and the kind of spatial or temporal relationships you want to capture. It's a choice that, in my experience, can drastically impact a model’s performance if not approached carefully.
+, let's unpack convolutional layers, a topic I've spent more than a few late nights grappling with. The decision between `Conv1D`, `Conv2D`, and `Conv3D` in a convolutional neural network (cnn) isn't arbitrary; it's fundamentally tied to the dimensionality of your input data and the kind of spatial or temporal relationships you want to capture. It's a choice that, in my experience, can drastically impact a model’s performance if not approached carefully.
 
 Thinking back to a project a few years ago, I was working on a system to analyze sensor readings from a complex industrial machine. We were receiving a time-series of data, with multiple sensors measuring various aspects of the machine’s performance, such as temperature, pressure, and vibration, over time. Initially, I made a mistake of throwing everything into a `Conv2D` layer, but soon realized I needed a more nuanced approach. Let me elaborate on what I learned then, and have refined since.
 
@@ -12,7 +12,7 @@ The core concept behind each convolutional layer type revolves around how the fi
 
 **`Conv1D`:**
 
-This layer is best suited for data that has one spatial or temporal dimension. Think of a time-series, like audio waveforms or that industrial sensor data I mentioned. Here, the data can be represented as a single sequence, and the kernel slides along this sequence, capturing local patterns. The kernel has the shape of *(kernel_size, input_channels)*, where `kernel_size` is the length of the filter in the single spatial dimension and `input_channels` is the number of feature maps the previous layer outputs, or the number of input features directly if this is the input layer.
+This layer is best suited for data that has one spatial or temporal dimension. Think of a time-series, like audio waveforms or that industrial sensor data I mentioned. Here, the data can be represented as a single sequence, and the kernel slides along this sequence, capturing local patterns. The kernel has the shape of _(kernel_size, input_channels)_, where `kernel_size` is the length of the filter in the single spatial dimension and `input_channels` is the number of feature maps the previous layer outputs, or the number of input features directly if this is the input layer.
 
 For instance, consider classifying different types of heartbeats based on electrocardiogram (ecg) data. Each ecg reading is essentially a 1D signal over time. A `Conv1D` layer here can be particularly effective, as it is tailored for this kind of input.
 
@@ -35,11 +35,12 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 
 model.summary()
 ```
+
 In this snippet, the `Conv1D` layer is configured with a kernel of size 10. It slides along the 1000 time steps of the ecg signal, looking for local patterns. The `MaxPool1D` layer further downsamples the feature maps, reducing the computational load, and focuses on the most significant features.
 
 **`Conv2D`:**
 
-Moving into two dimensions, we have the `Conv2D` layer. This is the workhorse for most image processing tasks. The filter, in this case, moves across both the width and the height of an image, attempting to capture spatial relationships between pixels. The shape of the kernel is *(kernel_height, kernel_width, input_channels)*. This method is suited for tasks where spatial relationships are critical, like identifying edges, shapes, and textures in a 2D space.
+Moving into two dimensions, we have the `Conv2D` layer. This is the workhorse for most image processing tasks. The filter, in this case, moves across both the width and the height of an image, attempting to capture spatial relationships between pixels. The shape of the kernel is _(kernel_height, kernel_width, input_channels)_. This method is suited for tasks where spatial relationships are critical, like identifying edges, shapes, and textures in a 2D space.
 
 Let’s consider the task of classifying images of handwritten digits. Here the input data is an image, naturally a two-dimensional structure.
 
@@ -67,7 +68,7 @@ In this example, the kernel is a 3x3 square that scans the image. `Conv2D` looks
 
 **`Conv3D`:**
 
-Finally, `Conv3D` takes us to three dimensions. This layer is useful when your input data possesses three spatial dimensions, such as video data (width, height, and time), or three-dimensional medical scans (like mri or ct scans). The kernel in `Conv3D` now has the shape *(kernel_depth, kernel_height, kernel_width, input_channels)*, and it moves in three dimensions throughout the input, capturing spatial patterns in all three dimensions.
+Finally, `Conv3D` takes us to three dimensions. This layer is useful when your input data possesses three spatial dimensions, such as video data (width, height, and time), or three-dimensional medical scans (like mri or ct scans). The kernel in `Conv3D` now has the shape _(kernel_depth, kernel_height, kernel_width, input_channels)_, and it moves in three dimensions throughout the input, capturing spatial patterns in all three dimensions.
 
 Consider analyzing a video sequence to identify actions. In this context, you're not just concerned with spatial patterns within a single frame but also how those patterns evolve across multiple frames.
 

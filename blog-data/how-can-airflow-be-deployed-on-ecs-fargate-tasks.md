@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-airflow-be-deployed-on-ecs-fargate-tasks"
 ---
 
-Alright, let’s tackle this one. Deploying Apache Airflow on ECS Fargate is a task I’ve seen crop up quite a few times in my experience, and it's definitely got its nuances. The traditional approach using EC2 instances for Airflow tends to become cumbersome, especially when scaling. Fargate offers a great alternative: it’s serverless, it scales well, and it fits nicely into a microservices architecture. But it's not always straightforward. Let's get into the details.
+, let’s tackle this one. Deploying Apache Airflow on ECS Fargate is a task I’ve seen crop up quite a few times in my experience, and it's definitely got its nuances. The traditional approach using EC2 instances for Airflow tends to become cumbersome, especially when scaling. Fargate offers a great alternative: it’s serverless, it scales well, and it fits nicely into a microservices architecture. But it's not always straightforward. Let's get into the details.
 
 The core challenge revolves around translating Airflow's multi-component architecture—the scheduler, webserver, worker(s), and database—into the Fargate paradigm, which is designed for stateless, single-container deployments. We need to decouple these components and ensure they can communicate effectively, even as Fargate scales them independently. In previous projects, I've found that failing to decouple components effectively leads to all sorts of problems, most notably bottlenecks, which render Fargate's scalability advantages pointless.
 
@@ -63,10 +63,19 @@ USER airflow
         }
       ],
       "environment": [
-        {"name":"AIRFLOW__DATABASE__SQL_ALCHEMY_CONN", "value": "postgresql+psycopg2://airflow:airflow@your_rds_endpoint:5432/airflow_db"},
-        {"name":"AIRFLOW__CORE__EXECUTOR", "value": "CeleryExecutor"},
-        {"name": "AIRFLOW__CELERY__BROKER_URL", "value": "redis://your_redis_endpoint:6379/0"},
-        {"name": "AIRFLOW__CELERY__RESULT_BACKEND", "value": "redis://your_redis_endpoint:6379/0"}
+        {
+          "name": "AIRFLOW__DATABASE__SQL_ALCHEMY_CONN",
+          "value": "postgresql+psycopg2://airflow:airflow@your_rds_endpoint:5432/airflow_db"
+        },
+        { "name": "AIRFLOW__CORE__EXECUTOR", "value": "CeleryExecutor" },
+        {
+          "name": "AIRFLOW__CELERY__BROKER_URL",
+          "value": "redis://your_redis_endpoint:6379/0"
+        },
+        {
+          "name": "AIRFLOW__CELERY__RESULT_BACKEND",
+          "value": "redis://your_redis_endpoint:6379/0"
+        }
       ],
       "mountPoints": [
         {
@@ -75,36 +84,35 @@ USER airflow
         }
       ],
       "logConfiguration": {
-          "logDriver": "awslogs",
-           "options": {
-               "awslogs-group": "/ecs/airflow-logs",
-               "awslogs-region": "your-region",
-               "awslogs-stream-prefix": "airflow-scheduler-web"
-             }
-       }
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/airflow-logs",
+          "awslogs-region": "your-region",
+          "awslogs-stream-prefix": "airflow-scheduler-web"
+        }
+      }
     }
   ],
-    "volumes": [
-        {
-           "name": "efs-volume",
-           "efsVolumeConfiguration": {
-              "fileSystemId": "fs-xxxxxxxxxxxxx",
-              "rootDirectory": "/airflow_dags"
-            }
-        }
-    ],
-    "requiresCompatibilities": [
-      "FARGATE"
-    ],
-    "networkMode": "awsvpc",
-    "cpu": "512",
-    "memory": "1024",
-    "executionRoleArn": "arn:aws:iam::your-account-id:role/ecsTaskExecutionRole",
-    "taskRoleArn": "arn:aws:iam::your-account-id:role/ecsTaskRole"
+  "volumes": [
+    {
+      "name": "efs-volume",
+      "efsVolumeConfiguration": {
+        "fileSystemId": "fs-xxxxxxxxxxxxx",
+        "rootDirectory": "/airflow_dags"
+      }
+    }
+  ],
+  "requiresCompatibilities": ["FARGATE"],
+  "networkMode": "awsvpc",
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::your-account-id:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::your-account-id:role/ecsTaskRole"
 }
 ```
 
 **Snippet 3: Task Definition JSON for Worker Fargate Task**
+
 ```json
 {
   "family": "airflow-worker",
@@ -115,44 +123,51 @@ USER airflow
       "cpu": 512,
       "memory": 1024,
       "environment": [
-          {"name":"AIRFLOW__DATABASE__SQL_ALCHEMY_CONN", "value": "postgresql+psycopg2://airflow:airflow@your_rds_endpoint:5432/airflow_db"},
-          {"name":"AIRFLOW__CORE__EXECUTOR", "value": "CeleryExecutor"},
-           {"name": "AIRFLOW__CELERY__BROKER_URL", "value": "redis://your_redis_endpoint:6379/0"},
-          {"name": "AIRFLOW__CELERY__RESULT_BACKEND", "value": "redis://your_redis_endpoint:6379/0"}
-         ],
-        "mountPoints": [
-         {
-            "sourceVolume": "efs-volume",
-             "containerPath": "/opt/airflow/dags"
-           }
-         ],
+        {
+          "name": "AIRFLOW__DATABASE__SQL_ALCHEMY_CONN",
+          "value": "postgresql+psycopg2://airflow:airflow@your_rds_endpoint:5432/airflow_db"
+        },
+        { "name": "AIRFLOW__CORE__EXECUTOR", "value": "CeleryExecutor" },
+        {
+          "name": "AIRFLOW__CELERY__BROKER_URL",
+          "value": "redis://your_redis_endpoint:6379/0"
+        },
+        {
+          "name": "AIRFLOW__CELERY__RESULT_BACKEND",
+          "value": "redis://your_redis_endpoint:6379/0"
+        }
+      ],
+      "mountPoints": [
+        {
+          "sourceVolume": "efs-volume",
+          "containerPath": "/opt/airflow/dags"
+        }
+      ],
       "logConfiguration": {
-          "logDriver": "awslogs",
-           "options": {
-               "awslogs-group": "/ecs/airflow-logs",
-               "awslogs-region": "your-region",
-               "awslogs-stream-prefix": "airflow-worker"
-             }
-       }
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/airflow-logs",
+          "awslogs-region": "your-region",
+          "awslogs-stream-prefix": "airflow-worker"
+        }
+      }
     }
   ],
-    "volumes": [
-        {
-           "name": "efs-volume",
-           "efsVolumeConfiguration": {
-              "fileSystemId": "fs-xxxxxxxxxxxxx",
-              "rootDirectory": "/airflow_dags"
-            }
-        }
-    ],
-    "requiresCompatibilities": [
-      "FARGATE"
-    ],
-    "networkMode": "awsvpc",
-    "cpu": "512",
-    "memory": "1024",
-    "executionRoleArn": "arn:aws:iam::your-account-id:role/ecsTaskExecutionRole",
-    "taskRoleArn": "arn:aws:iam::your-account-id:role/ecsTaskRole"
+  "volumes": [
+    {
+      "name": "efs-volume",
+      "efsVolumeConfiguration": {
+        "fileSystemId": "fs-xxxxxxxxxxxxx",
+        "rootDirectory": "/airflow_dags"
+      }
+    }
+  ],
+  "requiresCompatibilities": ["FARGATE"],
+  "networkMode": "awsvpc",
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::your-account-id:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::your-account-id:role/ecsTaskRole"
 }
 ```
 

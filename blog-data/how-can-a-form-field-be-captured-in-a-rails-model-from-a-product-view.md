@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-form-field-be-captured-in-a-rails-model-from-a-product-view"
 ---
 
-Alright, let's tackle this one. It's a common scenario, and I’ve certainly navigated this particular terrain more times than I care to count – often in projects where the data model wasn't quite as straightforward as we'd hoped. The essence of your question hinges on the interaction between your user interface (the product view, presumably rendered via erb or similar) and your application’s data layer (the rails model). Capturing form data involves a multi-step process, and I'll break it down with examples that should clarify each piece of the puzzle.
+, let's tackle this one. It's a common scenario, and I’ve certainly navigated this particular terrain more times than I care to count – often in projects where the data model wasn't quite as straightforward as we'd hoped. The essence of your question hinges on the interaction between your user interface (the product view, presumably rendered via erb or similar) and your application’s data layer (the rails model). Capturing form data involves a multi-step process, and I'll break it down with examples that should clarify each piece of the puzzle.
 
 Fundamentally, the process starts with the form itself in your product view, typically using rails form helpers, then it progresses to the controller, where data is received and processed, and finally lands within your model. It’s important to understand that these layers shouldn't directly interact without mediation.
 
@@ -47,10 +47,11 @@ Assume we have a `Product` model and we are adding the ability to create a `Revi
 ```
 
 Key things to notice here:
-  *   We're using `form_with`. This is the new standard and encourages best practices regarding security.
-  *   `model: @review` indicates the form is associated with a `Review` object.
-  *   `url: product_reviews_path(@product)` routes the form submission to a specific action in the `ReviewsController`.
-  *   The form fields, like `:rating` and `:comment`, correspond to attributes in the `Review` model.
+
+- We're using `form_with`. This is the new standard and encourages best practices regarding security.
+- `model: @review` indicates the form is associated with a `Review` object.
+- `url: product_reviews_path(@product)` routes the form submission to a specific action in the `ReviewsController`.
+- The form fields, like `:rating` and `:comment`, correspond to attributes in the `Review` model.
 
 And here's our controller action:
 
@@ -158,7 +159,7 @@ class Review < ApplicationRecord
 end
 ```
 
-In the controller example above, if the validation fails, `if @review.save`  will return false, and `render 'products/show', status: :unprocessable_entity` will be executed. The key here is that we are re-rendering the show page for the product, but passing the `@review` variable from the controller. This allows us to show errors back to the user using the form helpers:
+In the controller example above, if the validation fails, `if @review.save` will return false, and `render 'products/show', status: :unprocessable_entity` will be executed. The key here is that we are re-rendering the show page for the product, but passing the `@review` variable from the controller. This allows us to show errors back to the user using the form helpers:
 
 ```erb
 # app/views/products/show.html.erb

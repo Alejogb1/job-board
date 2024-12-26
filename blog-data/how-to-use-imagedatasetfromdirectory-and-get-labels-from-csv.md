@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-use-imagedatasetfromdirectory-and-get-labels-from-csv"
 ---
 
-Alright, let’s tackle this. I remember back in 2018, working on a large-scale image classification project for a medical diagnosis tool, we ran into a very similar challenge. We had thousands of medical images spread across directories, but the corresponding labels were meticulously recorded in a separate CSV file. Feeding those disparate datasets into our TensorFlow models directly wasn't an option; we needed to bridge that gap efficiently. `tf.keras.utils.image_dataset_from_directory` is fantastic for structured image folders, but its built-in labeling mechanism is filename based. When you've got an external label source like a CSV, you need a little extra finesse.
+, let’s tackle this. I remember back in 2018, working on a large-scale image classification project for a medical diagnosis tool, we ran into a very similar challenge. We had thousands of medical images spread across directories, but the corresponding labels were meticulously recorded in a separate CSV file. Feeding those disparate datasets into our TensorFlow models directly wasn't an option; we needed to bridge that gap efficiently. `tf.keras.utils.image_dataset_from_directory` is fantastic for structured image folders, but its built-in labeling mechanism is filename based. When you've got an external label source like a CSV, you need a little extra finesse.
 
 The crux of the issue revolves around the need to couple directory-based images with CSV-based labels. The standard workflow for `image_dataset_from_directory` assumes labels are derived from the subdirectory names. When your ground truth labels reside elsewhere, you have to craft a mechanism that allows TensorFlow to access and use those CSV entries correctly. My approach, and the one I've refined over the years, involves two primary steps: preprocessing the CSV and creating a custom data loader that ties the preprocessed labels to the images loaded through `image_dataset_from_directory`.
 
@@ -30,7 +30,7 @@ def preprocess_labels_csv(csv_path, image_directory):
     # Assume the CSV has a column named 'image_id' and 'label'
     filenames = df['image_id'].values
     labels = df['label'].values
-    
+
     # Ensure image paths are correct by prepending the directory path.
     # Assuming that image_id values are image names only without a parent folder
     filenames = np.array([os.path.join(image_directory, filename) for filename in filenames])
@@ -104,7 +104,7 @@ for images, labels in custom_dataset.take(1):
 
 ```
 
-In `create_custom_dataset`, `tf.lookup.StaticHashTable` forms a rapid look up mechanism connecting filepaths to labels.  The `load_image_and_label` function then uses this table to access the label corresponding to the image filepath. This method avoids unnecessary re-processing of the label data each time an image is fetched, ensuring efficiency.  The `tf.data.Dataset` API is employed here to make sure you can efficiently prefetch batches, so data loading becomes asynchronous.  Prefetching is non-negotiable in any serious model training setup.
+In `create_custom_dataset`, `tf.lookup.StaticHashTable` forms a rapid look up mechanism connecting filepaths to labels. The `load_image_and_label` function then uses this table to access the label corresponding to the image filepath. This method avoids unnecessary re-processing of the label data each time an image is fetched, ensuring efficiency. The `tf.data.Dataset` API is employed here to make sure you can efficiently prefetch batches, so data loading becomes asynchronous. Prefetching is non-negotiable in any serious model training setup.
 
 Lastly, for verification, I would always recommend inspecting a sample batch to ensure data shapes are correct. This helps prevent surprises down the line when your model training begins.
 
@@ -147,4 +147,4 @@ for images, labels in mock_dataset.take(1):
 
 This additional snippet uses a mock data generator to simulate the real-world scenario. This is incredibly helpful for testing and validation purposes. I always construct minimal versions of my pipelines to isolate the source of any issues. The mock data generation, the CSV creation, and the testing loop are essential parts of my workflow and I encourage you to do the same.
 
-For deepening your understanding, I highly recommend exploring the *TensorFlow Data API guide* on the TensorFlow website and also diving into chapter 3 of the *Deep Learning with Python* (2nd ed.) by François Chollet for excellent insights into data loading and preprocessing techniques. Both of these provide an invaluable conceptual understanding and practical guidance for effectively managing data. *Programming TensorFlow* by Ian Goodfellow is another great resource if you prefer a more hands-on approach.
+For deepening your understanding, I highly recommend exploring the _TensorFlow Data API guide_ on the TensorFlow website and also diving into chapter 3 of the _Deep Learning with Python_ (2nd ed.) by François Chollet for excellent insights into data loading and preprocessing techniques. Both of these provide an invaluable conceptual understanding and practical guidance for effectively managing data. _Programming TensorFlow_ by Ian Goodfellow is another great resource if you prefer a more hands-on approach.

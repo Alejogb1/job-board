@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cidb-service-decode-failure-problem"
 ---
 
-Alright so you've got a `cidb service decode failure problem` right Been there done that got the t-shirt. It usually means something's not playing nice when your system's trying to interpret data from the CIDB service. Let's break it down based on my past experiences.
+so you've got a `cidb service decode failure problem` right Been there done that got the t-shirt. It usually means something's not playing nice when your system's trying to interpret data from the CIDB service. Let's break it down based on my past experiences.
 
 First off I've wrestled with this beast a few times usually back when I was knee-deep in building distributed systems. This kind of thing crops up more often than you'd think. The core issue is almost always one of these three things: encoding mismatches data corruption or just plain wrong data being sent.
 
@@ -81,47 +81,45 @@ Here’s a quick example in Javascript with a bit of validation included. This e
 
 ```javascript
 const data = {
-    "user_id": 12345,
-    "username": "john_doe",
-    "email": "john.doe@example.com"
+  user_id: 12345,
+  username: "john_doe",
+  email: "john.doe@example.com",
 };
 
 // Check if email is valid
 function validateEmail(email) {
-    const re = /\S+@\S+\.\S+/;
-    return re.test(email);
+  const re = /\S+@\S+\.\S+/;
+  return re.test(email);
 }
 
 // Validate data
 function validateData(data) {
-    if (!data || typeof data !== 'object') {
-      throw new Error('Invalid data format');
-    }
+  if (!data || typeof data !== "object") {
+    throw new Error("Invalid data format");
+  }
 
-    if (typeof data.user_id !== 'number') {
-       throw new Error('user_id must be a number');
-    }
+  if (typeof data.user_id !== "number") {
+    throw new Error("user_id must be a number");
+  }
 
-    if (typeof data.username !== 'string' || data.username.trim() === '') {
-      throw new Error('username must be a non empty string');
-    }
+  if (typeof data.username !== "string" || data.username.trim() === "") {
+    throw new Error("username must be a non empty string");
+  }
 
-     if (typeof data.email !== 'string' || !validateEmail(data.email)) {
-      throw new Error('email is not a valid string format');
-    }
+  if (typeof data.email !== "string" || !validateEmail(data.email)) {
+    throw new Error("email is not a valid string format");
+  }
 
-    //All checks are ok
-     return true
+  //All checks are ok
+  return true;
 }
 
 try {
-    validateData(data)
-    console.log(data)
+  validateData(data);
+  console.log(data);
   // assume you're sending the data via some network mechanism
-}
-catch (error)
-{
-    console.error('error validating data: ', error)
+} catch (error) {
+  console.error("error validating data: ", error);
 }
 ```
 
@@ -130,7 +128,7 @@ If these checks don’t help its time to dive deeper. This might involve using n
 Here's a checklist based on my experiences that you can use:
 
 1. **Double-check encodings:** Explicitly use UTF-8 everywhere.
-2.  **Validate data:** Ensure data structure and types are correct
+2. **Validate data:** Ensure data structure and types are correct
 3. **Inspect raw data:** Use tools to check network packets
 4. **Check for network glitches:** Look for packet drops or corrupt data
 5. **Check CIDB API docs:** Make sure everything matches exactly the service spec

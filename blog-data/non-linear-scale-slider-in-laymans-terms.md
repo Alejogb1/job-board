@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "non-linear-scale-slider-in-laymans-terms"
 ---
 
-Okay so non linear sliders yeah I’ve wrestled with those beasts a few times lemme tell ya
+non linear sliders yeah I’ve wrestled with those beasts a few times lemme tell ya
 
 First off in layman's terms you’re dealing with a slider where the visual distance of the slider doesn’t directly correspond to the numerical change in the value it represents Imagine a regular slider where moving it half the way goes from 0 to 50 well a non linear one might go from 0 to 10 in the first half and then from 10 to 100 in the second half the further you go the bigger the number jump get it Its not a uniform progression
 
-Okay now why you'd want that and not just normal boring linear sliders well think about audio volume or say a zoom level for a map or even exposure on a camera Often these things don’t feel natural when represented linearly Small nudges at the low end should give you smaller changes while bigger nudges at the high end can give you bigger changes think about a logarithm its a classic example Youre covering more ground in a smaller travel distance
+now why you'd want that and not just normal boring linear sliders well think about audio volume or say a zoom level for a map or even exposure on a camera Often these things don’t feel natural when represented linearly Small nudges at the low end should give you smaller changes while bigger nudges at the high end can give you bigger changes think about a logarithm its a classic example Youre covering more ground in a smaller travel distance
 
 So the trick is in the math not necessarily the UI element its just a normal slider underneath You need to translate your visual slider position usually from 0 to 1 into a value on your desired non linear scale
 
@@ -27,7 +27,6 @@ function linearToLogarithmic(linearValue, minValue, maxValue) {
   // add a tiny offset to prevent problems
   const offsettedMin = minValue <= 0 ? 0.0001 : minValue;
 
-
   const logMinValue = Math.log10(offsettedMin);
   const logMaxValue = Math.log10(maxValue);
   const logValue = logMinValue + (logMaxValue - logMinValue) * clampedValue;
@@ -35,10 +34,14 @@ function linearToLogarithmic(linearValue, minValue, maxValue) {
 }
 
 //Example usage
-const linearPosition = 0.5 // slider position between 0 and 1
+const linearPosition = 0.5; // slider position between 0 and 1
 const minimumValue = 1; //minimum desired value
 const maximumValue = 100; //maximum desired value
-const logarithmicValue = linearToLogarithmic(linearPosition, minimumValue, maximumValue);
+const logarithmicValue = linearToLogarithmic(
+  linearPosition,
+  minimumValue,
+  maximumValue
+);
 console.log(logarithmicValue); //This will print a value between 1 and 100
 ```
 
@@ -61,12 +64,17 @@ function linearToPowerScale(linearValue, minValue, maxValue, exponent) {
 }
 
 //Example usage
-const sliderPosition = 0.8 // slider position between 0 and 1
+const sliderPosition = 0.8; // slider position between 0 and 1
 const minimum = 1; //minimum desired value
 const maximum = 1000; //maximum desired value
 const exponent = 2; //power of 2 makes changes more pronounced at the higher end of the slider
-const poweredValue = linearToPowerScale(sliderPosition, minimum, maximum, exponent);
-console.log(poweredValue)
+const poweredValue = linearToPowerScale(
+  sliderPosition,
+  minimum,
+  maximum,
+  exponent
+);
+console.log(poweredValue);
 ```
 
 This one is even simpler it basically applies the exponent to your slider position before scaling it to the output range The higher the exponent the bigger the difference between your low and high end
@@ -91,8 +99,11 @@ function linearToPolynomialScale(linearValue, coefficients) {
 //Example Usage
 const sliderPosition = 0.5;
 const polynomialCoefficients = [0, 10, -5]; // coefficients for 0th 1st and 2nd degree polynomial
-const polynomialResult = linearToPolynomialScale(sliderPosition, polynomialCoefficients);
-console.log(polynomialResult) // result will vary depending on the coefficients
+const polynomialResult = linearToPolynomialScale(
+  sliderPosition,
+  polynomialCoefficients
+);
+console.log(polynomialResult); // result will vary depending on the coefficients
 ```
 
 This is pretty flexible all you need to do is tune the coefficient array to create any arbitrary curve you desire The coefficients here go from lower to higher degree i e `[a, b, c]` for `a + bx + cx^2` This is much more complex than our previous examples but it allows you to create any non linear behavior you want

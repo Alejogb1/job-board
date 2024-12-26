@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-monitor-autogluon-neural-network-training-progress-on-tensorboard"
 ---
 
-Alright, let's talk about monitoring AutoGluon neural network training progress with TensorBoard. It's a crucial step for any serious model development, and while AutoGluon abstracts away much of the low-level details, it doesn’t preclude leveraging tools like TensorBoard to gain deeper insight into the training process. I've found myself relying on this approach often, especially when fine-tuning or debugging particularly complex models. There was this one project back in '21 where we had a massive multi-modal dataset, and without TensorBoard, interpreting the results would have been like navigating a maze blindfolded.
+, let's talk about monitoring AutoGluon neural network training progress with TensorBoard. It's a crucial step for any serious model development, and while AutoGluon abstracts away much of the low-level details, it doesn’t preclude leveraging tools like TensorBoard to gain deeper insight into the training process. I've found myself relying on this approach often, especially when fine-tuning or debugging particularly complex models. There was this one project back in '21 where we had a massive multi-modal dataset, and without TensorBoard, interpreting the results would have been like navigating a maze blindfolded.
 
 The key here isn't some secret sauce or undocumented feature; it's understanding how AutoGluon's `Trainer` class works in conjunction with PyTorch Lightning, which is often under the hood. TensorBoard logging, essentially, becomes a byproduct of this interaction. AutoGluon, in many cases, uses PyTorch Lightning internally. PyTorch Lightning, fortunately, provides a seamless integration with TensorBoard. So the path to making this work involves ensuring the underlying PyTorch Lightning trainer instance is set up to emit these logs. Let's get down to brass tacks.
 
@@ -69,6 +69,7 @@ Now, after you run this, you'd launch TensorBoard from the command line, somethi
 ```bash
 tensorboard --logdir=lightning_logs
 ```
+
 ... and you can then navigate to the visualization in your web browser.
 
 It's worth noting that AutoGluon uses multiple models during training. To isolate the neural network logging, we often need to be specific when setting parameters for the fit function, as well as when analyzing the results within TensorBoard itself. Typically, you’d look for the specific metric names associated with the neural network. Let's say you want to specifically see how the training loss changes only for the neural net. We'd achieve that by specifying which model to train when invoking the fit function:
@@ -103,7 +104,7 @@ if __name__ == '__main__':
     print("Training finished, check TensorBoard logs in lightning_logs.")
 ```
 
-Here, we've added `hyperparameters={'NN': {}}` to `predictor.fit`, which forces AutoGluon to use *only* the neural network model. As a consequence, you'll now only see logs from this specific model in your TensorBoard output. You'd then explore the graphs within the "lightning_logs" directory in tensorboard as above. The scalar graphs for loss and other metrics would provide the insight you're looking for.
+Here, we've added `hyperparameters={'NN': {}}` to `predictor.fit`, which forces AutoGluon to use _only_ the neural network model. As a consequence, you'll now only see logs from this specific model in your TensorBoard output. You'd then explore the graphs within the "lightning_logs" directory in tensorboard as above. The scalar graphs for loss and other metrics would provide the insight you're looking for.
 
 Furthermore, if we want to examine specific parts of the training, we can also add metrics to the logs. This might be useful if you are troubleshooting a peculiar issue or are trying to validate your own training logic. Here is an example where we log gradient norms from each layer:
 

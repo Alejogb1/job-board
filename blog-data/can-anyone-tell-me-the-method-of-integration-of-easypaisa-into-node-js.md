@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "can-anyone-tell-me-the-method-of-integration-of-easypaisa-into-node-js"
 ---
 
-alright, so you're looking to get easypaisa hooked into your node.js app, right? i've been down this road, and it's… a journey. not gonna lie, integrating payment gateways, especially the ones specific to regions, always throws a few curveballs. easypaisa, being a pakistan-specific thing, isn't exactly something you'll find a pre-baked npm package for, which is where the fun begins.
+, so you're looking to get easypaisa hooked into your node.js app, right? i've been down this road, and it's… a journey. not gonna lie, integrating payment gateways, especially the ones specific to regions, always throws a few curveballs. easypaisa, being a pakistan-specific thing, isn't exactly something you'll find a pre-baked npm package for, which is where the fun begins.
 
 first off, forget the plug-and-play notion of some generic payment library. you are mostly going to be dealing with their api directly. what you're looking at is basically a server-to-server interaction between your node.js backend and easypaisa's servers. there is no official node.js library, so we have to roll our own.
 
@@ -15,37 +15,47 @@ the core of it all is making http requests to their api endpoints. you are proba
 let's break it down to a common workflow. say we want to create a transaction for a specific amount of rupees. here's a possible approach, and keep in mind, i'm using mock endpoints and data since i don't have access to the actual easypaisa sandbox (or its current state). you'll have to consult their actual api docs for precise details. consider this a scaffolding on how to structure your code:
 
 ```javascript
-const axios = require('axios');
+const axios = require("axios");
 
 async function createEasypaisaTransaction(amount, orderId, customerId) {
-  const easypaisaApiUrl = 'https://easypaisa-api.example.com/create-transaction'; // <--- Replace this with actual endpoint
-  const merchantId = 'your_merchant_id_here'; // <--- Replace with your actual merchant id
-  const apiKey = 'your_api_key_here';  // <-- Replace with your actual api key
-  const signature = generateSignature(merchantId, apiKey, amount, orderId, customerId);
+  const easypaisaApiUrl =
+    "https://easypaisa-api.example.com/create-transaction"; // <--- Replace this with actual endpoint
+  const merchantId = "your_merchant_id_here"; // <--- Replace with your actual merchant id
+  const apiKey = "your_api_key_here"; // <-- Replace with your actual api key
+  const signature = generateSignature(
+    merchantId,
+    apiKey,
+    amount,
+    orderId,
+    customerId
+  );
 
   try {
-    const response = await axios.post(easypaisaApiUrl, {
-      amount: amount,
-      orderId: orderId,
-      customerId: customerId,
-      merchantId: merchantId,
-      signature: signature
-    },
-    {
+    const response = await axios.post(
+      easypaisaApiUrl,
+      {
+        amount: amount,
+        orderId: orderId,
+        customerId: customerId,
+        merchantId: merchantId,
+        signature: signature,
+      },
+      {
         headers: {
-            'content-type': 'application/json',
-        }
-    });
+          "content-type": "application/json",
+        },
+      }
+    );
 
     if (response.data && response.data.success) {
       return response.data.transaction_id; // or whatever identifier they use
     } else {
-      console.error('transaction creation failed:', response.data.message);
-      throw new Error('easypaisa transaction failed');
+      console.error("transaction creation failed:", response.data.message);
+      throw new Error("easypaisa transaction failed");
     }
   } catch (error) {
-     console.error("axios error: ", error.message)
-     throw new Error('error creating the transaction on the easypaisa side.')
+    console.error("axios error: ", error.message);
+    throw new Error("error creating the transaction on the easypaisa side.");
   }
 }
 ```
@@ -55,14 +65,13 @@ notice the `generateSignature` function? that's crucial for security. easypaisa,
 here's a potential, again, a pseudo implementation of the signature generation with sha-256, it's just an example, you might have to alter it to fit their actual requirements:
 
 ```javascript
-const crypto = require('crypto');
+const crypto = require("crypto");
 
 function generateSignature(merchantId, apiKey, amount, orderId, customerId) {
-    const dataString = `${merchantId}${amount}${orderId}${customerId}${apiKey}`;
-    const hash = crypto.createHash('sha256').update(dataString).digest('hex');
-    return hash;
+  const dataString = `${merchantId}${amount}${orderId}${customerId}${apiKey}`;
+  const hash = crypto.createHash("sha256").update(dataString).digest("hex");
+  return hash;
 }
-
 ```
 
 once you’ve initiated a transaction, easypaisa usually redirects the user to their payment page or presents a payment modal for user authorization. once the user completes the payment, easypaisa will typically either:
@@ -75,37 +84,39 @@ these callbacks are the most important parts of the integration. you need to han
 here's how i usually handle callbacks, assuming a webhook-like mechanism:
 
 ```javascript
-const express = require('express');
+const express = require("express");
 const app = express();
 
 app.use(express.json());
 
-app.post('/easypaisa-callback', (req, res) => {
-    const callbackData = req.body;
-    const merchantId = "your_merchant_id";  // <--- Replace with your actual merchant id
-    const apiKey = "your_api_key";  // <--- Replace with your actual api key
+app.post("/easypaisa-callback", (req, res) => {
+  const callbackData = req.body;
+  const merchantId = "your_merchant_id"; // <--- Replace with your actual merchant id
+  const apiKey = "your_api_key"; // <--- Replace with your actual api key
 
-    // 1. Validate the signature (you should implement this)
-    // const signature = req.headers['x-signature']; // Assuming the signature is passed in the header
-    // const isSignatureValid = validateCallbackSignature(signature, callbackData, merchantId, apiKey)
-    //if (!isSignatureValid) {
-    //    return res.status(401).send('invalid signature');
-    //}
+  // 1. Validate the signature (you should implement this)
+  // const signature = req.headers['x-signature']; // Assuming the signature is passed in the header
+  // const isSignatureValid = validateCallbackSignature(signature, callbackData, merchantId, apiKey)
+  //if (!isSignatureValid) {
+  //    return res.status(401).send('invalid signature');
+  //}
 
-    // 2. Process the payment outcome
-    if (callbackData.status === 'success') {
-        // update your database
-        console.log(`transaction with ID ${callbackData.transaction_id} has been confirmed successful`);
-    } else if (callbackData.status === 'failure') {
-        // handle payment failure
-       console.error(`transaction with ID ${callbackData.transaction_id} has failed: ${callbackData.message}`);
-    }
-    res.status(200).send('ok');
-
+  // 2. Process the payment outcome
+  if (callbackData.status === "success") {
+    // update your database
+    console.log(
+      `transaction with ID ${callbackData.transaction_id} has been confirmed successful`
+    );
+  } else if (callbackData.status === "failure") {
+    // handle payment failure
+    console.error(
+      `transaction with ID ${callbackData.transaction_id} has failed: ${callbackData.message}`
+    );
+  }
+  res.status(200).send("ok");
 });
 
-app.listen(3000, () => console.log('callback handler listening on 3000'));
-
+app.listen(3000, () => console.log("callback handler listening on 3000"));
 ```
 
 in the above example, i did not actually implement the signature validation, you must do this for production. this is extremely important and is a common mistake that developers overlook and end up with compromised data. please refer to their documentation for how exactly to implement this validation. if done incorrectly, this is a security problem that you should absolutely avoid.

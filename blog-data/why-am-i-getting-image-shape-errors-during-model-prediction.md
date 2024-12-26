@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-image-shape-errors-during-model-prediction"
 ---
 
-Okay, let's tackle this. It’s a scenario I’ve seen countless times, and frankly, it’s one of those persistent headaches when working with image-based machine learning. You're feeding your model data during prediction, and it's spitting out shape mismatch errors. Frustrating, definitely, but usually not insurmountable with some methodical debugging.
+, let's tackle this. It’s a scenario I’ve seen countless times, and frankly, it’s one of those persistent headaches when working with image-based machine learning. You're feeding your model data during prediction, and it's spitting out shape mismatch errors. Frustrating, definitely, but usually not insurmountable with some methodical debugging.
 
 The core issue, invariably, stems from a discrepancy between the expected input shape that your model was trained on, and the actual shape of the images you’re providing during prediction. This isn't always immediately obvious, especially when data pipelines become complex or when dealing with pre-trained models. Let’s break down the most common culprits and how to address them.
 
@@ -31,7 +31,7 @@ def preprocess_training_image(image_path):
     return image
 ```
 
-Now, during prediction, if you were to load an image and pass it directly into the model without resizing or scaling, you'd trigger a shape error. The error would likely indicate a shape discrepancy on dimensions related to height and width. Here’s how *not* to do it:
+Now, during prediction, if you were to load an image and pass it directly into the model without resizing or scaling, you'd trigger a shape error. The error would likely indicate a shape discrepancy on dimensions related to height and width. Here’s how _not_ to do it:
 
 ```python
 import tensorflow as tf
@@ -46,7 +46,7 @@ image = tf.image.decode_jpeg(image, channels=3) # Assumes JPEG
 prediction = model.predict(np.expand_dims(image, axis=0)) # WRONG!! No resize.
 ```
 
-The correct approach is to apply the *same* preprocessing:
+The correct approach is to apply the _same_ preprocessing:
 
 ```python
 import tensorflow as tf
@@ -101,7 +101,9 @@ def preprocess_prediction_image_rgb(image_path):
 image = preprocess_prediction_image_rgb(image_path)
 prediction = model.predict(np.expand_dims(image, axis=0))  # Correct approach
 ```
+
 If you are loading grayscale data, you will need to convert the image to a 3 channel image using the following technique in `preprocess_prediction_image_rgb`, or similar:
+
 ```python
 def preprocess_prediction_image_rgb(image_path):
     image = tf.io.read_file(image_path)
@@ -129,9 +131,9 @@ def preprocess_and_add_batch_dimension(image_path):
     image = tf.image.resize(image, [256, 256])
     image = tf.image.convert_image_dtype(image, dtype=tf.float32)
     return np.expand_dims(image, axis=0) # Add batch dimension.
-    
+
 processed_image = preprocess_and_add_batch_dimension(image_path)
 prediction = model.predict(processed_image) #Correct approach
 ```
 
-As you can see, these errors stem from a lack of consistency between training and prediction data pipelines. To avoid them, always explicitly document your preprocessing steps during training (resizing, normalization, channel ordering, batching) and replicate them exactly during inference. When using external datasets or models, understanding their preprocessing steps is crucial. For more in-depth understanding, refer to *Deep Learning with Python* by François Chollet and *Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow* by Aurélien Géron. Also, the documentation for any specific framework (TensorFlow, PyTorch, etc) contains detailed information on image processing requirements. If you are working with pre-trained models, such as resnet or inception, look for pre-processing documentation specific to those architectures.
+As you can see, these errors stem from a lack of consistency between training and prediction data pipelines. To avoid them, always explicitly document your preprocessing steps during training (resizing, normalization, channel ordering, batching) and replicate them exactly during inference. When using external datasets or models, understanding their preprocessing steps is crucial. For more in-depth understanding, refer to _Deep Learning with Python_ by François Chollet and _Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow_ by Aurélien Géron. Also, the documentation for any specific framework (TensorFlow, PyTorch, etc) contains detailed information on image processing requirements. If you are working with pre-trained models, such as resnet or inception, look for pre-processing documentation specific to those architectures.

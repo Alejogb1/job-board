@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-isnt-my-stimulus-change-event-firing-in-heroku-ci"
 ---
 
-Okay, let’s unpack this. It’s not uncommon to encounter these frustrating situations, and stimulus event firing within a heroku ci environment can indeed feel perplexing. I’ve definitely been there before, specifically during a rather complex project involving a substantial frontend overhaul that heavily relied on stimulus for dynamic interactions. We were deploying via heroku ci, and suddenly, a whole swath of these events simply stopped triggering in the test suite. The code looked fine locally, of course, which added another layer of head-scratching.
+, let’s unpack this. It’s not uncommon to encounter these frustrating situations, and stimulus event firing within a heroku ci environment can indeed feel perplexing. I’ve definitely been there before, specifically during a rather complex project involving a substantial frontend overhaul that heavily relied on stimulus for dynamic interactions. We were deploying via heroku ci, and suddenly, a whole swath of these events simply stopped triggering in the test suite. The code looked fine locally, of course, which added another layer of head-scratching.
 
 The core issue often boils down to differences in environment configurations between your local setup and the heroku ci environment, particularly around javascript execution and dom rendering within the testing context. Heroku CI utilizes a headless browser for testing. This is crucial because, unlike a regular browser, the headless environment might have different behaviors regarding how events are dispatched or how the browser’s dom interacts with javascript during tests. It’s less about a bug in stimulus and much more about the nuances of testing javascript interactions in such a context.
 
-First off, let's consider the asynchronous nature of stimulus actions. Stimulus often uses `requestAnimationFrame` or similar mechanisms under the hood to debounce or batch DOM manipulations. If your tests are not accounting for these asynchronous operations, the assertions might be running *before* the changes triggered by stimulus have actually taken effect on the DOM. A typical scenario where this would manifest is when a button click is supposed to toggle a CSS class, and your test checks for this class change too early.
+First off, let's consider the asynchronous nature of stimulus actions. Stimulus often uses `requestAnimationFrame` or similar mechanisms under the hood to debounce or batch DOM manipulations. If your tests are not accounting for these asynchronous operations, the assertions might be running _before_ the changes triggered by stimulus have actually taken effect on the DOM. A typical scenario where this would manifest is when a button click is supposed to toggle a CSS class, and your test checks for this class change too early.
 
 Second, and this is a less immediately obvious culprit, it's easy to misconfigure webpack in a manner that works fine locally but throws a wrench into the heroku CI. When it's building assets, it could be omitting required polyfills or certain modules critical for stimulus interactions, particularly if you are using newer javascript features. For example, if your code is relying on custom elements, which stimulus controllers can very effectively wrap, and these elements aren’t properly transpiled, you can find yourself in a spot. I had an almost identical incident where a seemingly harmless webpack optimization ended up breaking a bunch of custom elements within a heroku CI environment. It took a few hours of dedicated scrutiny of the webpack configuration to pinpoint the exact problem.
 
@@ -18,11 +18,11 @@ Here are some specific practical code examples to highlight these points and pro
 
 ```javascript
 // app/javascript/controllers/toggle_controller.js
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["target"]
-  static classes = ["active"]
+  static targets = ["target"];
+  static classes = ["active"];
 
   toggle() {
     this.targetTarget.classList.toggle(this.activeClass);
@@ -57,7 +57,7 @@ feature 'Toggle behavior' do
 end
 ```
 
-This test, might *randomly* fail in the CI environment because the `click` event dispatch by capybara is potentially happening asynchronously and the class update by the stimulus controller via `requestAnimationFrame` hasn't rendered in the browser DOM yet when the last expectation is checked. We might need to use something like `Capybara.using_wait_time(5)` or similar to explicitly wait to allow DOM updates to catch up.
+This test, might _randomly_ fail in the CI environment because the `click` event dispatch by capybara is potentially happening asynchronously and the class update by the stimulus controller via `requestAnimationFrame` hasn't rendered in the browser DOM yet when the last expectation is checked. We might need to use something like `Capybara.using_wait_time(5)` or similar to explicitly wait to allow DOM updates to catch up.
 
 Here's an example of how you could explicitly force the wait:
 

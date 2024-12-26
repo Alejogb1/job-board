@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-dangling-and-unreferenced-docker-resources-impact-system-health"
 ---
 
-Okay, let’s tackle this one. I recall a particularly hairy incident back in my days scaling a microservices architecture, where we first really felt the sting of neglected docker resources. It’s not always immediately apparent, but those orphaned containers, volumes, images, and networks can collectively cause more trouble than they're worth. We learned that lesson the hard way, and I’d like to share some practical insights on why managing these is critical for maintaining a healthy system.
+, let’s tackle this one. I recall a particularly hairy incident back in my days scaling a microservices architecture, where we first really felt the sting of neglected docker resources. It’s not always immediately apparent, but those orphaned containers, volumes, images, and networks can collectively cause more trouble than they're worth. We learned that lesson the hard way, and I’d like to share some practical insights on why managing these is critical for maintaining a healthy system.
 
 The core issue boils down to resource exhaustion. Docker, while fantastic for containerization, doesn't inherently clean up after itself. When you create a container, you’re often also pulling or building an image. These, along with any volumes or custom networks created alongside, consume space and potentially other system resources. If not actively managed, they become “dangling” (no associated running container) or “unreferenced” (no longer tagged, in the case of images). Over time, this accumulates and degrades performance.
 
@@ -30,7 +30,7 @@ docker image ls -f "dangling=true"
 docker image prune -a
 ```
 
-This first command filters to show only those images that are dangling. The second command then uses the prune functionality to remove these untagged images. Adding the `-a` flag to `prune` will remove *all* unused images and not just dangling ones, so exercise caution if you have some images that are still needed but not currently tagged.
+This first command filters to show only those images that are dangling. The second command then uses the prune functionality to remove these untagged images. Adding the `-a` flag to `prune` will remove _all_ unused images and not just dangling ones, so exercise caution if you have some images that are still needed but not currently tagged.
 
 **2. Removing Unused Volumes:**
 
@@ -57,7 +57,8 @@ docker network ls --filter "driver=bridge" --filter "name!=bridge" --format "{{.
 # You can then manually remove the networks with:
 docker network prune
 ```
-The first command will list all custom bridge networks that are created by the user. They may have been created automatically by a docker compose file, or manually by a user. Using `docker network prune` will clean up *all* unused networks, and not just bridge networks. Be mindful before you run the prune command that you don't accidentally remove useful networks.
+
+The first command will list all custom bridge networks that are created by the user. They may have been created automatically by a docker compose file, or manually by a user. Using `docker network prune` will clean up _all_ unused networks, and not just bridge networks. Be mindful before you run the prune command that you don't accidentally remove useful networks.
 
 These three examples should give a clear picture of how to identify and remove some commonly orphaned resources. However, relying on manual cleanup is never scalable. For larger deployments, you should aim to integrate this kind of cleanup directly into your CI/CD pipelines or utilize orchestration platforms with built-in garbage collection. Regularly scheduled cron jobs can also help.
 

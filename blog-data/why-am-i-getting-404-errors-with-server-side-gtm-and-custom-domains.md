@@ -4,13 +4,13 @@ date: "2024-12-16"
 id: "why-am-i-getting-404-errors-with-server-side-gtm-and-custom-domains"
 ---
 
-Okay, let's unpack this 404 situation with server-side google tag manager (sgtm) and custom domains. It's a surprisingly common hiccup, and over the years, I’ve debugged this scenario more times than I care to count. In my experience, these 404s aren't usually about the server actually missing files, but rather a misconfiguration that creates an impedance mismatch between your custom domain and the sGTM server container. Let's break it down into the key areas, focusing on practical troubleshooting and configurations I’ve found helpful.
+, let's unpack this 404 situation with server-side google tag manager (sgtm) and custom domains. It's a surprisingly common hiccup, and over the years, I’ve debugged this scenario more times than I care to count. In my experience, these 404s aren't usually about the server actually missing files, but rather a misconfiguration that creates an impedance mismatch between your custom domain and the sGTM server container. Let's break it down into the key areas, focusing on practical troubleshooting and configurations I’ve found helpful.
 
 The core issue often lies in how your custom domain's dns records, your reverse proxy configuration (if you have one), and your sGTM server container's settings interact. Remember, server-side tagging isn't just about firing tags server-side; it's also about correctly handling requests routed through your domain. Think of it as a pipeline where each component needs to be precisely aligned. The most frequent offenders, from what I've seen, tend to fall into these three categories:
 
 1. **dns and domain misconfiguration:** The very first step is always verifying that your dns records are set up perfectly. When you use a custom domain for your sGTM server container, you're essentially telling the world to direct traffic intended for that domain to the specific server where your container is running. If the dns a-record or cname isn't pointed correctly, the browser won’t be able to resolve your domain to the IP of the machine hosting the sgtm container, or the reverse proxy in front of it. If this happens, it will result in a 404.
 
-    It’s not always as simple as pointing an `a` record to an ip. Sometimes, you’re working with load balancers, which means you need to ensure the domain is properly configured in the load balancer’s configurations, and not just directly at the dns record level. I remember working on a complex setup involving an aws elastic load balancer, where the dns entries were perfect, but the load balancer itself wasn't routing the traffic to the correct instance, causing 404s.
+   It’s not always as simple as pointing an `a` record to an ip. Sometimes, you’re working with load balancers, which means you need to ensure the domain is properly configured in the load balancer’s configurations, and not just directly at the dns record level. I remember working on a complex setup involving an aws elastic load balancer, where the dns entries were perfect, but the load balancer itself wasn't routing the traffic to the correct instance, causing 404s.
 
 2. **server-side container url configuration within gtm:** this is where many of the gotchas happen. Within the sGTM container’s interface, you specify the “container url”. This url must exactly match the custom domain you're using (and also the `x-forwarded-host` headers, as explained later). I’ve found that a minor variation, even adding an extra forward slash at the end of a domain, can result in 404 errors. GTM, at its heart, is pretty literal. It's expecting the incoming requests to match the defined url perfectly. I’ve spent many frustrating hours tracking these differences down, sometimes just a missing "www". Subdomain issues fall into this category too, make sure there are no missing subdomains like `www.` if your setup requires it.
 
@@ -34,8 +34,8 @@ server {
       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
       proxy_set_header X-Forwarded-Proto $scheme;
       proxy_set_header X-Forwarded-Host $host;  # This is crucial for sgtm
-      
-      
+
+
       #optional if you are using websockets
       proxy_http_version 1.1;
       proxy_set_header Upgrade $http_upgrade;

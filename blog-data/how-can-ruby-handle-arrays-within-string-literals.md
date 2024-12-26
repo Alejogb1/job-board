@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-ruby-handle-arrays-within-string-literals"
 ---
 
-Alright, let’s tackle this. Handling arrays within Ruby string literals can seem straightforward at first glance, but as many of us have probably experienced, it quickly reveals subtleties and edge cases that require a nuanced understanding of Ruby's string interpolation mechanisms. I remember vividly a particular incident back at 'Project Chimera'—we had a logging system relying on dynamically generated SQL queries. Initially, we were concatenating strings and arrays manually; the result was a mess. It wasn’t just ugly, it was a major security risk, prone to errors and potential sql injection vulnerabilities. We needed a cleaner, more robust way of embedding array data into strings and that's when Ruby's string interpolation capabilities became central to solving the mess, but not without some important lessons along the way.
+, let’s tackle this. Handling arrays within Ruby string literals can seem straightforward at first glance, but as many of us have probably experienced, it quickly reveals subtleties and edge cases that require a nuanced understanding of Ruby's string interpolation mechanisms. I remember vividly a particular incident back at 'Project Chimera'—we had a logging system relying on dynamically generated SQL queries. Initially, we were concatenating strings and arrays manually; the result was a mess. It wasn’t just ugly, it was a major security risk, prone to errors and potential sql injection vulnerabilities. We needed a cleaner, more robust way of embedding array data into strings and that's when Ruby's string interpolation capabilities became central to solving the mess, but not without some important lessons along the way.
 
 Fundamentally, Ruby uses the `#{expression}` syntax for string interpolation. This means anything within the curly braces is evaluated as a Ruby expression, and the result is then converted into a string and inserted into the surrounding string literal. Now, when it comes to arrays, the default behavior isn't always what you might expect, particularly if you're assuming some sort of direct, element-wise insertion. The crucial part is that the default string conversion for an array, via `.to_s`, presents the entire array as a single string, formatted like `[element1, element2, ..., elementN]`.
 
@@ -27,6 +27,7 @@ values = [1, 2, 3, 4, 5]
 sql_query = "SELECT * FROM table WHERE id IN (#{values.join(', ')})"
 puts sql_query # Output: SELECT * FROM table WHERE id IN (1, 2, 3, 4, 5)
 ```
+
 Here, the `values.join(', ')` part generates a string "1, 2, 3, 4, 5" before interpolation. This example already starts to highlight why we were having problems back then without this approach. Note we also added spaces to improve readability, which is extremely important when debugging and maintaining queries.
 
 Finally, let's consider a more complex case where we need to manipulate each element before including it in the string. Let's assume we want to construct a CSV line where each numerical value in the array needs to be enclosed in double quotes. This is something we used when generating configuration files for various applications.

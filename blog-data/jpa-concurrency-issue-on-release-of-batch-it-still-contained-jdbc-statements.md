@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "jpa-concurrency-issue-on-release-of-batch-it-still-contained-jdbc-statements"
 ---
 
-Okay so you're dealing with a JPA concurrency problem right specifically around batch releases and lingering JDBC statements I've been there man trust me it's a classic head-scratcher This isn't some newbie issue this is where JPA and JDBC start showing their teeth and you realize that abstraction has its limits
+you're dealing with a JPA concurrency problem right specifically around batch releases and lingering JDBC statements I've been there man trust me it's a classic head-scratcher This isn't some newbie issue this is where JPA and JDBC start showing their teeth and you realize that abstraction has its limits
 
 Been doing this stuff for like 15 years now started back when Java was like well less mature you know And I swear I've chased down more race conditions and concurrency bugs than I've had hot dinners So I've seen this exact scenario play out before and I have a few ideas about what might be going on and how to debug it
 
@@ -20,7 +20,7 @@ Here are some things you definitely need to check and I say definitely because I
 
 **1 Transaction Management:**
 
-First make sure your transactions are properly demarcated If you're using container-managed transactions through lets say Spring then things should be handled by the framework if you're doing it programmatically then you really really really have to get it right Otherwise you get the situation where transactions are left open which means the underlying JDBC connection is still in use hence the lingering statements. So like if you were doing it manually you need to make sure the same *EntityManager* is used to *begin* the transaction *and commit* and or *rollback* if a transaction is not closed correctly that is likely the issue.
+First make sure your transactions are properly demarcated If you're using container-managed transactions through lets say Spring then things should be handled by the framework if you're doing it programmatically then you really really really have to get it right Otherwise you get the situation where transactions are left open which means the underlying JDBC connection is still in use hence the lingering statements. So like if you were doing it manually you need to make sure the same _EntityManager_ is used to _begin_ the transaction _and commit_ and or _rollback_ if a transaction is not closed correctly that is likely the issue.
 
 For instance an example would be something like this:
 
@@ -46,7 +46,7 @@ try {
 **2 Flushing and Closing:**
 
 JPA's behavior with flushing to the database is not always obvious You'd think if a transaction is commited then everything is sent to the DB right? Well it can be more granular than that JPA batches operations and can buffer changes within the persistence context before sending them down to JDBC for execution. If this flush doesn't happen at the correct time you might have statements still queued up waiting to be executed and are not part of a commited transaction If a connection is then released prematurely without a flush you get those dangling statements. You need to make sure to use the em.flush() before you close.
-And don't forget to close the *EntityManager* in a *finally* block because if you forget you'll be leaking resources. You think JPA is some magical machine well it's not.
+And don't forget to close the _EntityManager_ in a _finally_ block because if you forget you'll be leaking resources. You think JPA is some magical machine well it's not.
 
 ```java
 EntityManager em = emf.createEntityManager();
@@ -98,17 +98,17 @@ Another potential issue is how your connection pool is configured. Most applicat
 
 **Debugging:**
 
-Okay so these are the things I'd check initially and if it doesn't solve it then we need to start debugging deeper. Some things that might help are
+these are the things I'd check initially and if it doesn't solve it then we need to start debugging deeper. Some things that might help are
 
-*   **Enable SQL logging** JPA providers usually have options to log all SQL statements that are being executed. This gives you a clear view of what is going on and helps you to trace the exact point the statements are being executed this might help see the rogue statements.
-*   **Monitor the JDBC connection pool** Most connection pools provide tools to monitor their activity. Check to see how many connections are active idle how many have been acquired or released etc this can help diagnose resource leaks
-*   **Use a profiler** This is more advanced but you can use a profiler to observe when the connections are obtained or released This can pinpoint the exact code which is at fault.
+- **Enable SQL logging** JPA providers usually have options to log all SQL statements that are being executed. This gives you a clear view of what is going on and helps you to trace the exact point the statements are being executed this might help see the rogue statements.
+- **Monitor the JDBC connection pool** Most connection pools provide tools to monitor their activity. Check to see how many connections are active idle how many have been acquired or released etc this can help diagnose resource leaks
+- **Use a profiler** This is more advanced but you can use a profiler to observe when the connections are obtained or released This can pinpoint the exact code which is at fault.
 
 **Resources**
 
 I dont like giving links they get broken. You should be looking at papers and books.
 
-*   **Pro JPA 2**  by Mike Keith and Merrick Schincariol is a solid book that covers JPA topics from basics to more advanced areas. It goes into depth about the persistence context transactions and batching it's a good investment if you're going to be working with JPA extensively.
-*   **High-Performance Java Persistence** by Vlad Mihalcea if you really want to understand the nuances of performance with JPA then this is a must read it's great for understanding the inner workings of how JPA works with JDBC including batching connection pooling and other things relevant to your problem
+- **Pro JPA 2** by Mike Keith and Merrick Schincariol is a solid book that covers JPA topics from basics to more advanced areas. It goes into depth about the persistence context transactions and batching it's a good investment if you're going to be working with JPA extensively.
+- **High-Performance Java Persistence** by Vlad Mihalcea if you really want to understand the nuances of performance with JPA then this is a must read it's great for understanding the inner workings of how JPA works with JDBC including batching connection pooling and other things relevant to your problem
 
 The bottom line is this problem is usually a combination of these things mismanaged transactions incorrect flushing incomplete connection releasing bad configurations etc its a real gotcha. So systematically go through the checklist I suggested and make sure your code matches the examples. Good luck and let me know if you are still having issues!

@@ -31,7 +31,7 @@ public class BadController : Controller
 }
 ```
 
-In this extremely simplified example, `Thread.Sleep` simulates a blocking I/O operation. Under low traffic, it might seem okay, but if you bombard this endpoint with numerous requests, you'll quickly exhaust the thread pool and requests will begin to queue up. The key here is that `Thread.Sleep` is a synchronous blocking operation. The thread processing the request is completely blocked for 5 seconds. In real-world scenarios, this often manifests as blocking calls to filesystems, network resources, or databases.
+In this extremely simplified example, `Thread.Sleep` simulates a blocking I/O operation. Under low traffic, it might seem , but if you bombard this endpoint with numerous requests, you'll quickly exhaust the thread pool and requests will begin to queue up. The key here is that `Thread.Sleep` is a synchronous blocking operation. The thread processing the request is completely blocked for 5 seconds. In real-world scenarios, this often manifests as blocking calls to filesystems, network resources, or databases.
 
 **Example 2: Database query with poor performance**
 

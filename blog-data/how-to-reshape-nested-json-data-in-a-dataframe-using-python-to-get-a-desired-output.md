@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-reshape-nested-json-data-in-a-dataframe-using-python-to-get-a-desired-output"
 ---
 
-alright, so you've got some nested json, and you're trying to wrangle it into a dataframe. been there, done that, got the t-shirt, probably spilled coffee on it too. it's a classic data munging problem. i've spent way too many hours staring at json dumps that look like they were designed by a committee of squirrels before i figure out how to massage them into something usable. let's break this down into some practical steps.
+, so you've got some nested json, and you're trying to wrangle it into a dataframe. been there, done that, got the t-shirt, probably spilled coffee on it too. it's a classic data munging problem. i've spent way too many hours staring at json dumps that look like they were designed by a committee of squirrels before i figure out how to massage them into something usable. let's break this down into some practical steps.
 
 first thing's first, you gotta understand the shape of your json. is it a list of dicts? a single dict with nested dicts? something more horrific? the key is to visualise it in your head, think of it like a tree, the root of the json becomes your main data container, and the branches as the inner json objects you want to access. this is critical before we even touch the code. i've seen folks try to jump straight to pandas without really understanding their json, and it usually ends up a messy disaster. trust me on that one. a decade of experience staring into data messes teaches you a few lessons.
 

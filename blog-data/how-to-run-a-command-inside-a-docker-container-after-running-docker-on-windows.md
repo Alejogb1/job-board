@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-run-a-command-inside-a-docker-container-after-running-docker-on-windows"
 ---
 
-alright, so you want to execute a command inside a running docker container on windows, right? i've been there, trust me. it's one of those things that seems simple enough at first glance but can lead you down a rabbit hole if you're not careful. i remember back in my early days, i spun up a container, expected it to behave like a local process, and was utterly confused when `my_command` didn’t just work. it was quite humbling.
+, so you want to execute a command inside a running docker container on windows, right? i've been there, trust me. it's one of those things that seems simple enough at first glance but can lead you down a rabbit hole if you're not careful. i remember back in my early days, i spun up a container, expected it to behave like a local process, and was utterly confused when `my_command` didn’t just work. it was quite humbling.
 
 let’s cut to the chase though. the core idea is that you need to tell docker to target your specific running container and then pass the command to it. windows uses a cli (command-line interface), so this will be all about that. we aren’t talking gui apps here.
 
@@ -18,10 +18,10 @@ docker exec -it <container_name_or_id> <command_to_execute>
 
 let’s unpack that.
 
-*   `docker exec`: this is the docker command that lets you run commands inside a container.
-*   `-it`:  these are flags. `-i` means "interactive," which keeps standard input open even if it's not attached. `-t` allocates a pseudo-tty, enabling terminal features like proper formatting and colors, and generally making it feel like you're directly connected to the container’s shell. when both `-i` and `-t` are used together as `-it` it means “interactive tty session”. this makes your shell responsive so you see the commands you write and the output. without them you won’t see anything. without `i` you might not be able to send an input. always use it when you need to interact with the container shell.
-*   `<container_name_or_id>`: this is where you specify which container you want to target. you can either use the name you gave it when you created the container, or you can use the container’s id, which docker generates for you. the id is a long alphanumeric string. the name is shorter and easier to remember. you can find either using `docker ps`, that command lists all running containers.
-*   `<command_to_execute>`: this is the actual command you want to run within the container. it can be anything that the container's operating system can execute, such as `ls`, `bash`, `python your_script.py`, etc.
+- `docker exec`: this is the docker command that lets you run commands inside a container.
+- `-it`: these are flags. `-i` means "interactive," which keeps standard input open even if it's not attached. `-t` allocates a pseudo-tty, enabling terminal features like proper formatting and colors, and generally making it feel like you're directly connected to the container’s shell. when both `-i` and `-t` are used together as `-it` it means “interactive tty session”. this makes your shell responsive so you see the commands you write and the output. without them you won’t see anything. without `i` you might not be able to send an input. always use it when you need to interact with the container shell.
+- `<container_name_or_id>`: this is where you specify which container you want to target. you can either use the name you gave it when you created the container, or you can use the container’s id, which docker generates for you. the id is a long alphanumeric string. the name is shorter and easier to remember. you can find either using `docker ps`, that command lists all running containers.
+- `<command_to_execute>`: this is the actual command you want to run within the container. it can be anything that the container's operating system can execute, such as `ls`, `bash`, `python your_script.py`, etc.
 
 let's look at some realistic examples.
 

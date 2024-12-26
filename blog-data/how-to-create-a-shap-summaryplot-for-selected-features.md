@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-create-a-shap-summaryplot-for-selected-features"
 ---
 
-Alright, let's tackle this. I've spent a considerable amount of time elbow-deep in model interpretability, and the ability to focus a shap summary plot on specific features is, honestly, incredibly useful. Back in my days working on predictive maintenance models, we had a situation where the sheer volume of sensor data overwhelmed any attempts at focused analysis. We needed to zoom in, so to speak, and filter out the noise. That's where targeted shap summary plots became essential. It's not just about making pretty pictures, it's about extracting meaningful insights and action points from complex data.
+, let's tackle this. I've spent a considerable amount of time elbow-deep in model interpretability, and the ability to focus a shap summary plot on specific features is, honestly, incredibly useful. Back in my days working on predictive maintenance models, we had a situation where the sheer volume of sensor data overwhelmed any attempts at focused analysis. We needed to zoom in, so to speak, and filter out the noise. That's where targeted shap summary plots became essential. It's not just about making pretty pictures, it's about extracting meaningful insights and action points from complex data.
 
 The standard `shap.summary_plot` will display all features that contribute to a model's prediction, ranked by average absolute SHAP value. This can be overwhelming if your model incorporates hundreds or even thousands of features. Focusing on selected features allows for a much clearer and more insightful visual representation. We achieve this by manipulating the shap values and feature names directly, before plotting, rather than relying on a specific built-in functionality to filter the plot (though I wish there was one). Let me show you how it's done.
 
@@ -101,11 +101,11 @@ This approach leverages the original data structure and directly uses the datafr
 
 Important considerations when creating these plots:
 
-*   **Data Integrity:** Ensure the feature names in `selected_features` match those in your `shap_values.feature_names`. Typos can lead to empty plots or, worse, incorrect data interpretations.
+- **Data Integrity:** Ensure the feature names in `selected_features` match those in your `shap_values.feature_names`. Typos can lead to empty plots or, worse, incorrect data interpretations.
 
-*   **Large Datasets:** If your `shap_values` are very large, consider using memory-mapping or batch processing techniques to prevent memory overload. This is not addressed by this approach directly, but should be considered as the dataset and model complexity grows.
+- **Large Datasets:** If your `shap_values` are very large, consider using memory-mapping or batch processing techniques to prevent memory overload. This is not addressed by this approach directly, but should be considered as the dataset and model complexity grows.
 
-*   **Data Understanding:** The most crucial aspect is to understand what your selected features represent. A plot is only as useful as your understanding of the underlying data. Rely on domain knowledge to select features.
+- **Data Understanding:** The most crucial aspect is to understand what your selected features represent. A plot is only as useful as your understanding of the underlying data. Rely on domain knowledge to select features.
 
 To delve deeper into the inner workings of shap, I highly recommend reading the original SHAP paper by Lundberg and Lee (2017): "A Unified Approach to Interpreting Model Predictions." For practical applications, a solid book on machine learning interpretability, such as "Interpretable Machine Learning" by Christoph Molnar, is invaluable. It covers shap and many other techniques in considerable depth. Also, the official documentation for shap itself at its github page is a great reference point.
 

@@ -4,17 +4,17 @@ date: "2024-12-13"
 id: "mm-file-extension-meaning-c"
 ---
 
-Okay so this is about .mm files right You see these often when you’re digging around in older iOS or macOS projects and yeah it can be a bit confusing at first especially if you're more used to C++ or Swift only worlds I’ve spent more hours debugging code with .mm extensions than I care to admit trust me on this one
+this is about .mm files right You see these often when you’re digging around in older iOS or macOS projects and yeah it can be a bit confusing at first especially if you're more used to C++ or Swift only worlds I’ve spent more hours debugging code with .mm extensions than I care to admit trust me on this one
 
-Basically a .mm file isn't *just* C++ It’s C++ with Objective-C extensions This combo is often called Objective-C++ It’s like if C++ and Objective-C had a baby a sometimes messy but powerful baby
+Basically a .mm file isn't _just_ C++ It’s C++ with Objective-C extensions This combo is often called Objective-C++ It’s like if C++ and Objective-C had a baby a sometimes messy but powerful baby
 
 Now why does this matter you might ask Well in the olden days before Swift became the hip new kid Objective-C was the king of the Apple ecosystem Objective-C is an object-oriented language with its own syntax that's very different from C++ It uses message passing and a dynamic runtime which gives it a different flavor
 
-But let's say you needed to do some heavy-duty number crunching or interact with a C++ library directly you couldn't do that directly in pure Objective-C Well you *could* but it would be a pain and you would be doing all kinds of weird hacks
+But let's say you needed to do some heavy-duty number crunching or interact with a C++ library directly you couldn't do that directly in pure Objective-C Well you _could_ but it would be a pain and you would be doing all kinds of weird hacks
 
 That's where Objective-C++ comes in It allows you to mix Objective-C and C++ code in the same file You get to take advantage of the power of C++ when needed while still having easy access to the Objective-C classes and frameworks You can pass data back and forth between both realms relatively easily and efficiently
 
-When you have a .mm file the compiler knows “Okay this guy is mixing both so I need to handle it accordingly” It's not as simple as just compiling a C++ file You're compiling code with both Objective-C and C++ syntax and the compiler is smart enough to weave them together
+When you have a .mm file the compiler knows “ this guy is mixing both so I need to handle it accordingly” It's not as simple as just compiling a C++ file You're compiling code with both Objective-C and C++ syntax and the compiler is smart enough to weave them together
 
 Here's what you’ll see in a .mm file in terms of general patterns:
 
@@ -158,7 +158,7 @@ int main() {
     NSString* modifier = [NSString stringWithUTF8String:"Appended String"];
 
     [objcManager processCppData:cppHandler modifier:modifier];
-    
+
     delete cppHandler; // C++ memory deallocation
     [objcManager release]; // Objective-C memory management
     return 0;

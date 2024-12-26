@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-my-code-to-change-ownership-and-transfer-balance-working"
 ---
 
-Alright, let's tackle this. I've seen this problem crop up more times than I can count, and it’s usually a confluence of seemingly minor details. The frustration is real when your meticulously crafted transfer logic fails, particularly when dealing with ownership and balance changes. From experience, it's rarely a single glaring error but rather a series of interconnected assumptions that often lead to unexpected behavior.
+, let's tackle this. I've seen this problem crop up more times than I can count, and it’s usually a confluence of seemingly minor details. The frustration is real when your meticulously crafted transfer logic fails, particularly when dealing with ownership and balance changes. From experience, it's rarely a single glaring error but rather a series of interconnected assumptions that often lead to unexpected behavior.
 
 The crux of the problem typically boils down to one or more of the following areas: atomic operations, state management, access control, and event handling, each presenting its own specific challenges. I remember once, way back when I was working on a decentralized exchange, we had a similar issue, and it kept manifesting intermittently. It took us nearly a week of dedicated debugging to untangle it, so believe me, I understand the struggle. I'll try to be as comprehensive as possible here and guide you through the usual suspects.
 
@@ -80,7 +80,8 @@ contract ExampleContract {
 
 }
 ```
-While the above *appears* to perform the transfer and ownership change, a careful analysis reveals that the `balances` state has been modified after setting new owner. As the `msg.sender` is still the *old* owner in the `transferWithOwnershipChange` method, the balance deduction will be made against the old owner, and the newly minted owner will receive funds incorrectly.
+
+While the above _appears_ to perform the transfer and ownership change, a careful analysis reveals that the `balances` state has been modified after setting new owner. As the `msg.sender` is still the _old_ owner in the `transferWithOwnershipChange` method, the balance deduction will be made against the old owner, and the newly minted owner will receive funds incorrectly.
 
 Here’s the corrected method which uses a temporary variable to maintain a consistent update before assigning the new owner:
 
@@ -105,7 +106,7 @@ contract ExampleContract {
     function transferWithOwnershipChange(address _newOwner, address _to, uint256 _amount) public onlyOwner {
 
         require(balances[msg.sender] >= _amount, "Insufficient balance");
-        
+
         // Atomic implementation ( consistent state modification)
         uint256 senderBalance = balances[msg.sender] - _amount;
         uint256 newOwnerBalance = balances[_newOwner] + _amount;
@@ -123,6 +124,6 @@ Additionally, you need to meticulously verify your access control logic. Ensure 
 
 Lastly, always, and I mean always, double-check your event emissions. These provide an auditable log of changes that have occurred. If your events don't accurately reflect the changes made to balances or ownership, it's often a clear sign that something is going wrong behind the scenes. This is especially true when debugging complex systems that involve multiple interactions. The events are an often-overlooked debugging mechanism for distributed ledgers, so make sure that the event you are emitting after the transfer and ownership change is a true representation of that operation.
 
-For deeper understanding, I recommend looking into *“Concurrency: State Models & Java Programs”* by Jeff Magee and Jeff Kramer. This book offers a detailed explanation of concurrency concepts and state management, which is invaluable when designing robust systems. In addition, for the smart contract side of things, *“Mastering Ethereum”* by Andreas M. Antonopoulos and Gavin Wood gives a well-rounded understanding of smart contract design patterns and security best practices. Also, consult the official documentation of the specific programming language or platform you are working with, as they usually provide highly detailed explanations.
+For deeper understanding, I recommend looking into _“Concurrency: State Models & Java Programs”_ by Jeff Magee and Jeff Kramer. This book offers a detailed explanation of concurrency concepts and state management, which is invaluable when designing robust systems. In addition, for the smart contract side of things, _“Mastering Ethereum”_ by Andreas M. Antonopoulos and Gavin Wood gives a well-rounded understanding of smart contract design patterns and security best practices. Also, consult the official documentation of the specific programming language or platform you are working with, as they usually provide highly detailed explanations.
 
 In summary, debug your code meticulously, checking for atomicity, state update issues, access control flaws, and discrepancies in emitted events. The problem is rarely as simple as a single error, but rather a combination of these factors. Approaching it with a systematic debugging process, rather than just guessing, will save time and frustration in the long run. Good luck.

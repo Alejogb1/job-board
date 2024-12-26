@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-does-execution-mode-affect-intra-op-and-inter-op-thread-counts-in-onnxruntime-nodejs"
 ---
 
-Alright, let's talk about execution modes and their impact on thread counts within ONNXRuntime for Node.js. It's a topic I've tangled with extensively, especially back when I was optimizing inference pipelines for a large-scale image processing project using node.js, and believe me, it's more nuanced than it might initially appear. The execution mode fundamentally alters how ONNXRuntime leverages underlying hardware, directly influencing both intra-op and inter-op parallelism.
+, let's talk about execution modes and their impact on thread counts within ONNXRuntime for Node.js. It's a topic I've tangled with extensively, especially back when I was optimizing inference pipelines for a large-scale image processing project using node.js, and believe me, it's more nuanced than it might initially appear. The execution mode fundamentally alters how ONNXRuntime leverages underlying hardware, directly influencing both intra-op and inter-op parallelism.
 
-First off, let’s establish some definitions. Intra-op parallelism refers to the ability of ONNXRuntime to parallelize the execution of individual operators within an ONNX graph. Think of it as breaking down a single, computationally heavy node—like a large matrix multiplication—into smaller tasks that can be processed concurrently. Inter-op parallelism, on the other hand, is about running *different* operators or independent subgraphs at the same time. This effectively allows the framework to exploit multiple processors by pushing through the computation pipeline simultaneously, rather than serially.
+First off, let’s establish some definitions. Intra-op parallelism refers to the ability of ONNXRuntime to parallelize the execution of individual operators within an ONNX graph. Think of it as breaking down a single, computationally heavy node—like a large matrix multiplication—into smaller tasks that can be processed concurrently. Inter-op parallelism, on the other hand, is about running _different_ operators or independent subgraphs at the same time. This effectively allows the framework to exploit multiple processors by pushing through the computation pipeline simultaneously, rather than serially.
 
 Now, the magic (or rather, the controlled chaos) is how you configure ONNXRuntime's execution mode. In Node.js, this boils down to using the `InferenceSession` object and its `options` argument. The key here is the `executionMode` property. We've primarily got two paths: `SEQUENTIAL` and `PARALLEL`. The default behavior, if not explicitly specified, can vary across versions of the library, but it's common to find it defaults to sequential execution for simpler models on less performant machines.
 
@@ -18,19 +18,19 @@ On the other hand, the `PARALLEL` mode unlocks ONNXRuntime’s ability to use mu
 
 `interOpNumThreads` controls how many independent operators can run concurrently. If your model has several parallel branches or doesn't rely heavily on serial dependencies between the layers, this setting can bring significant performance benefits. However, if the model has a mostly serial structure, having an exceptionally large number of `interOpNumThreads` may not yield benefits. Instead, you may experience additional scheduling overheads. It's crucial to understand the architectural graph of your specific model to make an informed decision on `interOpNumThreads`.
 
-Here's where real-world considerations get tricky: the *optimal* thread counts are heavily model-dependent and vary with the underlying hardware. There's no simple formula. Therefore, careful profiling and experimentation are necessary. I've found myself frequently writing small test harnesses to cycle through different settings for both `intraOpNumThreads` and `interOpNumThreads` to determine what works most effectively for specific model and hardware combinations.
+Here's where real-world considerations get tricky: the _optimal_ thread counts are heavily model-dependent and vary with the underlying hardware. There's no simple formula. Therefore, careful profiling and experimentation are necessary. I've found myself frequently writing small test harnesses to cycle through different settings for both `intraOpNumThreads` and `interOpNumThreads` to determine what works most effectively for specific model and hardware combinations.
 
 Here are three code snippets to illustrate the point:
 
 **Snippet 1: Sequential Execution**
 
 ```javascript
-const ort = require('onnxruntime-node');
+const ort = require("onnxruntime-node");
 
 async function runSequentialInference(modelPath, inputData) {
   const session = await ort.InferenceSession.create(modelPath);
 
-  const feeds = { 'input': inputData };
+  const feeds = { input: inputData };
   const results = await session.run(feeds);
   return results;
 }
@@ -44,17 +44,22 @@ This snippet demonstrates the most basic form of execution using the default set
 **Snippet 2: Parallel Execution with Specified Thread Counts**
 
 ```javascript
-const ort = require('onnxruntime-node');
+const ort = require("onnxruntime-node");
 
-async function runParallelInference(modelPath, inputData, intraThreads, interThreads) {
+async function runParallelInference(
+  modelPath,
+  inputData,
+  intraThreads,
+  interThreads
+) {
   const options = {
-     executionMode: 'parallel',
-     intraOpNumThreads: intraThreads,
-     interOpNumThreads: interThreads
+    executionMode: "parallel",
+    intraOpNumThreads: intraThreads,
+    interOpNumThreads: interThreads,
   };
   const session = await ort.InferenceSession.create(modelPath, options);
 
-  const feeds = { 'input': inputData };
+  const feeds = { input: inputData };
   const results = await session.run(feeds);
   return results;
 }
@@ -68,18 +73,18 @@ This code illustrates how to set explicit thread counts for both intra-op and in
 **Snippet 3: Parallel Execution with Dynamically Determined Thread Counts**
 
 ```javascript
-const ort = require('onnxruntime-node');
-const os = require('os');
+const ort = require("onnxruntime-node");
+const os = require("os");
 
 async function runDynamicParallelInference(modelPath, inputData) {
   const numCpus = os.cpus().length;
   const options = {
-    executionMode: 'parallel',
+    executionMode: "parallel",
     intraOpNumThreads: Math.floor(numCpus * 0.75), // Example: Use 75% of cores
-    interOpNumThreads: Math.floor(numCpus / 2) // Example: Use half the cores for inter-op
+    interOpNumThreads: Math.floor(numCpus / 2), // Example: Use half the cores for inter-op
   };
   const session = await ort.InferenceSession.create(modelPath, options);
-  const feeds = { 'input': inputData };
+  const feeds = { input: inputData };
   const results = await session.run(feeds);
   return results;
 }
@@ -92,8 +97,8 @@ This example shows a more adaptive approach, where the thread counts are determi
 
 For further in-depth information, I highly recommend exploring these resources:
 
-*   **"Parallel Programming with OpenMP" by Michael McCool et al.:** This book provides a strong theoretical foundation for understanding parallel programming concepts, which is vital for optimizing thread management in ONNXRuntime.
-*   **Intel's documentation on threading and performance optimization:** Intel often publishes guides and white papers on how to optimize software for multi-core architectures. While not specific to ONNXRuntime, these are essential references for core optimization strategies.
-*   **The ONNXRuntime GitHub repository and its official documentation:** The best place to find detailed information about the current capabilities of the library, performance best practices, and information about potential changes across versions. The release notes often highlight specific changes to thread management.
+- **"Parallel Programming with OpenMP" by Michael McCool et al.:** This book provides a strong theoretical foundation for understanding parallel programming concepts, which is vital for optimizing thread management in ONNXRuntime.
+- **Intel's documentation on threading and performance optimization:** Intel often publishes guides and white papers on how to optimize software for multi-core architectures. While not specific to ONNXRuntime, these are essential references for core optimization strategies.
+- **The ONNXRuntime GitHub repository and its official documentation:** The best place to find detailed information about the current capabilities of the library, performance best practices, and information about potential changes across versions. The release notes often highlight specific changes to thread management.
 
 In summary, the execution mode significantly impacts how ONNXRuntime leverages parallelism in Node.js. The `SEQUENTIAL` mode provides predictable, single-threaded performance, while the `PARALLEL` mode allows for multi-threaded execution. Careful tuning of `intraOpNumThreads` and `interOpNumThreads` is critical for achieving optimal performance with a multi-threaded execution mode. A deep understanding of your model architecture and thorough experimentation are crucial. Don't rely on default settings. Use code like the examples provided to explore your options.

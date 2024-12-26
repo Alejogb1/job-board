@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "postgresql-round-real-number-implementation"
 ---
 
-Okay so you wanna talk about rounding real numbers in PostgreSQL right Been there done that Got the scars to prove it Seriously this is one of those things that sounds simple on paper but then you dive in and it's like finding a whole new level of SQL weirdness
+you wanna talk about rounding real numbers in PostgreSQL right Been there done that Got the scars to prove it Seriously this is one of those things that sounds simple on paper but then you dive in and it's like finding a whole new level of SQL weirdness
 
 I remember back when I was working on this high frequency trading system for a startup Yeah a startup those days were rough We had this insane amount of financial data pouring in and we needed to round prices to a specific number of decimal places before storing them in the database Why the rounding Because float arithmetic is a nightmare and you get those tiny little fractional discrepancies that can wreak havoc when you're dealing with thousands of transactions per second
 
@@ -60,6 +60,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 ```
+
 This is a custom implementation using plpgsql where we are taking the number we want to round and the number of decimal places to round to The approach is to multiply the number by a power of 10 then we truncate it then if the value is in the halfway we check if it's even if not round up and finally divide by the power of 10 to get the final rounded number
 
 Then to use it you call it like a normal function passing the value and the decimal places

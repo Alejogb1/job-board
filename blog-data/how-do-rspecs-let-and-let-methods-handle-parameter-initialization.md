@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-do-rspecs-let-and-let-methods-handle-parameter-initialization"
 ---
 
-Okay, let’s unpack how RSpec’s `let` and `let!` methods manage parameter initialization; I’ve seen my fair share of confusion around this topic, and it's a crucial understanding for effective testing. Instead of jumping straight into a definition, let's consider a scenario I encountered a few years back. We had a legacy codebase, sprawling and somewhat chaotic, and the test suite was riddled with what I like to call 'parameter collision incidents'. These were situations where a variable defined in one context unexpectedly influenced a test in a seemingly unrelated context, leading to some seriously frustrating debug sessions. It was that experience that ultimately reinforced the nuances of `let` and `let!` for me.
+, let’s unpack how RSpec’s `let` and `let!` methods manage parameter initialization; I’ve seen my fair share of confusion around this topic, and it's a crucial understanding for effective testing. Instead of jumping straight into a definition, let's consider a scenario I encountered a few years back. We had a legacy codebase, sprawling and somewhat chaotic, and the test suite was riddled with what I like to call 'parameter collision incidents'. These were situations where a variable defined in one context unexpectedly influenced a test in a seemingly unrelated context, leading to some seriously frustrating debug sessions. It was that experience that ultimately reinforced the nuances of `let` and `let!` for me.
 
 At their core, both `let` and `let!` are used within RSpec to define memoized helper methods that return a value. The critical distinction lies in when the value is actually evaluated and the helper method is invoked. This difference impacts how they handle initialization and is why understanding them is essential for creating reliable and maintainable tests.
 
 `let` provides what's called lazy evaluation. The expression within the `let` block is not executed until the helper method it defines is explicitly called for the first time within a given example (or a `describe`/`context` block, essentially the scope it lives in). Subsequent calls return the previously computed and memoized value. This lazy nature can be incredibly beneficial for optimizing tests. Consider a situation where you have a rather costly initialization process; with `let`, this process only occurs when that particular value is actually needed, saving time during test execution. If a particular example doesn't require a certain variable, the associated setup code within a corresponding `let` block is never even invoked.
 
-Conversely, `let!` provides eager evaluation. The expression within the `let!` block is executed *before* each example within the current scope, effectively forcing the helper method to be invoked each time. This behavior is useful when the side effects of initialization are necessary for the test to pass and ensuring a fresh instance is present. It ensures that your setup is always run, guaranteeing the state is as expected every single time.
+Conversely, `let!` provides eager evaluation. The expression within the `let!` block is executed _before_ each example within the current scope, effectively forcing the helper method to be invoked each time. This behavior is useful when the side effects of initialization are necessary for the test to pass and ensuring a fresh instance is present. It ensures that your setup is always run, guaranteeing the state is as expected every single time.
 
 Let's dive into some concrete examples, using fictional classes and situations for clarity. Consider this first snippet, which demonstrates the lazy evaluation of `let`:
 
@@ -52,7 +52,7 @@ RSpec.describe Calculator do
 end
 ```
 
-In this first example, you'll notice that the `Calculator`'s initialization message only appears *once*, when the `calculator` method is first invoked inside the *second* test (`it 'initializes when called'`), not in the first test. The *third* test reuses the memoized calculator instance. The lazy loading only occurs when the value is actually needed, in the `expect` statement of the second test.
+In this first example, you'll notice that the `Calculator`'s initialization message only appears _once_, when the `calculator` method is first invoked inside the _second_ test (`it 'initializes when called'`), not in the first test. The _third_ test reuses the memoized calculator instance. The lazy loading only occurs when the value is actually needed, in the `expect` statement of the second test.
 
 Now let's see `let!` in action:
 
@@ -83,7 +83,7 @@ RSpec.describe Counter do
 end
 ```
 
-Here, we use `let!`. The `Counter` initialization with a `tap(&:increment)` will happen before each `it` block is executed. This is why you will see the “Counter incremented to: 1” message printed twice, once before each of the *two* tests. Each test works with a fresh instance of the `Counter`, ensuring test isolation, a very important part of effective test suites.
+Here, we use `let!`. The `Counter` initialization with a `tap(&:increment)` will happen before each `it` block is executed. This is why you will see the “Counter incremented to: 1” message printed twice, once before each of the _two_ tests. Each test works with a fresh instance of the `Counter`, ensuring test isolation, a very important part of effective test suites.
 
 Finally, let's illustrate how this can help with common situations like setting up mocks:
 

@@ -4,13 +4,14 @@ date: "2024-12-23"
 id: "how-can-i-retrieve-a-csv-from-a-flaskform-input-using-airflow"
 ---
 
-Okay, let's tackle this. It's a scenario I’ve encountered more than a few times, usually involving a user uploading some structured data via a web interface and then needing to process it in our data pipeline. Pulling a CSV from a FlaskForm submitted via a web interface, then leveraging Airflow to handle the heavy lifting, isn’t exactly straightforward, but it’s certainly achievable with a bit of structured thinking.
+, let's tackle this. It's a scenario I’ve encountered more than a few times, usually involving a user uploading some structured data via a web interface and then needing to process it in our data pipeline. Pulling a CSV from a FlaskForm submitted via a web interface, then leveraging Airflow to handle the heavy lifting, isn’t exactly straightforward, but it’s certainly achievable with a bit of structured thinking.
 
 My experience stems from a project where we had a fairly rudimentary data ingestion process. Users would submit configuration parameters via a web form (Flask app, naturally) and sometimes also submit CSV files containing initialization data. We needed to move that data into our data lake, and Airflow was our tool of choice for scheduling and monitoring this pipeline. Initially, we had some real issues with correctly handling the file uploads, and it took some refining to get it into a robust and reliable state.
 
 First off, the challenge lies in bridging the asynchronous world of the Flask web application with Airflow’s task-oriented environment. The web request, including the file, is a synchronous operation typically handled by the Flask server, whereas Airflow executes tasks independently. We can't just pass the file object directly to an Airflow operator. Therefore, a middle ground—usually some form of persistent storage—becomes necessary.
 
 The workflow usually breaks down into these key steps:
+
 1.  **File Upload and Storage:** The Flask app receives the CSV file from the submitted form and saves it to a persistent location (like cloud storage, a shared network drive, or a database) that Airflow can access.
 2.  **Trigger Airflow DAG:** After storing the file, the Flask app triggers an Airflow DAG, providing the location of the uploaded file as a parameter.
 3.  **Airflow Processing:** The Airflow DAG picks up the file path, retrieves the CSV file from the location, and initiates processing.
@@ -143,17 +144,17 @@ Replace the placeholder "YOUR_BASIC_AUTH_TOKEN" with your actual Basic Auth toke
 
 **Key Considerations:**
 
-*   **Error Handling:** The provided code includes basic error handling, but in a production setup, you’d want more robust logging and error management at each stage: Flask file upload, Airflow execution, data processing, etc.
-*   **Security:** Use secure methods for file storage and sensitive parameter passing between Flask and Airflow.
-*   **Scalability:** If dealing with large files, you should investigate methods that are better suited to large file transfers than a basic POST, such as using presigned urls for cloud storage buckets. Also, consider leveraging more scalable compute resources within your Airflow environment, such as using Kubernetes executors.
-*   **Resource Management:** Ensure your Airflow cluster has sufficient resources for file processing to avoid bottlenecks.
-*   **File format validation**: The example code processes any uploaded file. You should implement logic that checks whether the file is actually a valid CSV file and contains the correct fields.
-*   **API Authorization:** The Airflow REST API requires authorization to access the API endpoints. You can achieve this using Airflow’s built in Basic Auth or more sophisticated methods such as OAuth.
+- **Error Handling:** The provided code includes basic error handling, but in a production setup, you’d want more robust logging and error management at each stage: Flask file upload, Airflow execution, data processing, etc.
+- **Security:** Use secure methods for file storage and sensitive parameter passing between Flask and Airflow.
+- **Scalability:** If dealing with large files, you should investigate methods that are better suited to large file transfers than a basic POST, such as using presigned urls for cloud storage buckets. Also, consider leveraging more scalable compute resources within your Airflow environment, such as using Kubernetes executors.
+- **Resource Management:** Ensure your Airflow cluster has sufficient resources for file processing to avoid bottlenecks.
+- **File format validation**: The example code processes any uploaded file. You should implement logic that checks whether the file is actually a valid CSV file and contains the correct fields.
+- **API Authorization:** The Airflow REST API requires authorization to access the API endpoints. You can achieve this using Airflow’s built in Basic Auth or more sophisticated methods such as OAuth.
 
 **Further Reading:**
 
-*   **“Flask Web Development: Developing Web Applications with Python”** by Miguel Grinberg: This book is a solid resource for Flask in general and contains helpful guidance on form handling and file uploads.
-*   **“Data Pipelines with Apache Airflow”** by Bas P. Harenslak, Julian Rutger de Ruiter: Good primer for setting up and understanding Airflow.
-*   **Apache Airflow Documentation:** Refer to the official documentation for detailed information about Airflow operators, DAG creation, and various integration possibilities.
+- **“Flask Web Development: Developing Web Applications with Python”** by Miguel Grinberg: This book is a solid resource for Flask in general and contains helpful guidance on form handling and file uploads.
+- **“Data Pipelines with Apache Airflow”** by Bas P. Harenslak, Julian Rutger de Ruiter: Good primer for setting up and understanding Airflow.
+- **Apache Airflow Documentation:** Refer to the official documentation for detailed information about Airflow operators, DAG creation, and various integration possibilities.
 
 In conclusion, retrieving a CSV file submitted through a Flask form and processing it via Airflow involves securely transferring the file to a location that Airflow can access, passing its location to the Airflow DAG as configuration parameters, then reading and processing the data within the DAG itself. This approach allows for a clear separation of concerns between the web application and the data processing engine, resulting in a more scalable and maintainable data pipeline. The examples provided are basic and require further implementation to handle complex use cases, but they provide a solid foundation for building this functionality.

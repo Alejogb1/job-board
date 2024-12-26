@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "can-an-estimators-debugger-information-be-loaded-in-sagemaker"
 ---
 
-Alright, let’s unpack this. The question of loading an estimator's debugger information in SageMaker is nuanced, and truthfully, it’s something I’ve had to grapple with more than a few times in past projects. The short answer is: yes, absolutely, you can load that data, but it’s not always a straightforward process, and understanding how SageMaker's debugger works under the hood makes a world of difference.
+, let’s unpack this. The question of loading an estimator's debugger information in SageMaker is nuanced, and truthfully, it’s something I’ve had to grapple with more than a few times in past projects. The short answer is: yes, absolutely, you can load that data, but it’s not always a straightforward process, and understanding how SageMaker's debugger works under the hood makes a world of difference.
 
 My experience stems from a project where we were fine-tuning a complex image classification model. The training process was taking far longer than anticipated, and frankly, I was starting to suspect overfitting, or perhaps even vanishing gradient issues. Just relying on the standard loss curves wasn’t cutting it. I needed a much deeper look at the internal tensors and gradients throughout training. That's when I had to get hands-on with the debugger, and I can tell you, it’s a lifesaver.
 

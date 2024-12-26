@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-data-adapter-supports-input-types-nonetype-and-nonetype"
 ---
 
-Alright, let’s talk about dealing with `NoneType` in data adapters—it’s a common headache, and I’ve certainly seen my share of it. My experience, particularly during a project a few years back involving extensive data cleaning and transformation for a legacy system, made me intimately familiar with these challenges. We were ingesting data from various sources, some extremely… let’s just say… inconsistent. The frequent appearance of `NoneType`, and the resulting issues when trying to process this with various data frameworks, became a recurring theme. The question you posed, specifically about a data adapter that supports *both* input types being `NoneType`, is really more about how adapters handle the *absence* of data than anything else.
+, let’s talk about dealing with `NoneType` in data adapters—it’s a common headache, and I’ve certainly seen my share of it. My experience, particularly during a project a few years back involving extensive data cleaning and transformation for a legacy system, made me intimately familiar with these challenges. We were ingesting data from various sources, some extremely… let’s just say… inconsistent. The frequent appearance of `NoneType`, and the resulting issues when trying to process this with various data frameworks, became a recurring theme. The question you posed, specifically about a data adapter that supports _both_ input types being `NoneType`, is really more about how adapters handle the _absence_ of data than anything else.
 
 In many frameworks, you wouldn’t typically encounter an adapter explicitly designed for “`NoneType` to `NoneType`,” as this implies the input and output are both… nothing. Instead, the focus shifts towards managing the presence of `NoneType` and how an adapter reacts to or transforms that absence of meaningful data. A well-designed data adapter should aim to either handle `None` values gracefully or provide a mechanism to convert them into something usable. Think of it less as “supporting” `NoneType` directly, and more about handling `None` values correctly in the expected input fields.
 
@@ -40,7 +40,7 @@ print(f"User email: {user_data2.email}") # Output: User email: jane@example.com
 
 ```
 
-In this first example, the adapter function `adapt_user_data` handles a `None` value for the email field. Instead of passing `None` directly to the `UserData` class, we assign a default value. This is common when the application expects a string even if no email exists. It does not mean the adapter *supports* `NoneType`, it means that it is written to gracefully *handle* a `NoneType` input by providing a sensible fallback.
+In this first example, the adapter function `adapt_user_data` handles a `None` value for the email field. Instead of passing `None` directly to the `UserData` class, we assign a default value. This is common when the application expects a string even if no email exists. It does not mean the adapter _supports_ `NoneType`, it means that it is written to gracefully _handle_ a `NoneType` input by providing a sensible fallback.
 
 Now, let's consider a second scenario. Sometimes, it's not always about just providing a default. You might want to entirely filter out records where critical information is missing.
 
@@ -65,7 +65,7 @@ for user in valid_users:
 
 ```
 
-In this case, the function `validate_user_record` checks if *any* field is `None`, and returns `False` if that’s the case. `adapt_and_filter_users` then utilizes this function to filter out invalid records before they are adapted. Again, this isn’t directly about adapting `NoneType`, it is about strategically using the presence of `None` to perform operations within the adapter framework.
+In this case, the function `validate_user_record` checks if _any_ field is `None`, and returns `False` if that’s the case. `adapt_and_filter_users` then utilizes this function to filter out invalid records before they are adapted. Again, this isn’t directly about adapting `NoneType`, it is about strategically using the presence of `None` to perform operations within the adapter framework.
 
 A more complex scenario could be transforming `None` into a special type of object to explicitly represent missing data:
 
@@ -96,6 +96,6 @@ Here, we define a `Missing` class to distinguish between an intentionally absent
 
 You'll find that the patterns I've shown are more important than any specific adapter built for `NoneType` to `NoneType` mappings. These examples show practical solutions to common situations, like providing default values, filtering records based on data integrity, or using specific sentinel values to represent missing data.
 
-For further exploration, I’d recommend diving into: *Data Structures and Algorithms in Python* by Michael T. Goodrich, Roberto Tamassia, and Michael H. Goldwasser, which covers general data handling principles. You should also look into *Refactoring: Improving the Design of Existing Code* by Martin Fowler, as it gives you essential guidance on building manageable and maintainable data transformation pipelines. As well as this, any documentation regarding the data handling and mapping features of specific frameworks like Apache Beam, Spark, Pandas or even standard database drivers are immensely beneficial since the approach for handling `None` might be subtly different across the board.
+For further exploration, I’d recommend diving into: _Data Structures and Algorithms in Python_ by Michael T. Goodrich, Roberto Tamassia, and Michael H. Goldwasser, which covers general data handling principles. You should also look into _Refactoring: Improving the Design of Existing Code_ by Martin Fowler, as it gives you essential guidance on building manageable and maintainable data transformation pipelines. As well as this, any documentation regarding the data handling and mapping features of specific frameworks like Apache Beam, Spark, Pandas or even standard database drivers are immensely beneficial since the approach for handling `None` might be subtly different across the board.
 
 In summary, the key is not to search for adapters that handle “`NoneType` to `NoneType`,” but to understand how to deal with missing data—represented by `None`—within your specific context. This involves considering default values, filtering techniques, sentinel values, or custom transformation to deal with them based on your specific project needs.

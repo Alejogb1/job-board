@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-is-solidity-08-throwing-a-parsererror-expecting-a-semicolon-instead-of-an-event"
 ---
 
-Okay, let's tackle this. It's not unusual to see that `ParserError: Expected semicolon instead of event` in Solidity 0.8. I’ve seen it crop up a few times, especially when new developers are getting their feet wet with event declarations. It usually comes down to a subtle misunderstanding of where events are valid and their basic syntax. Let me break down why this occurs, and I'll provide some illustrative examples.
+, let's tackle this. It's not unusual to see that `ParserError: Expected semicolon instead of event` in Solidity 0.8. I’ve seen it crop up a few times, especially when new developers are getting their feet wet with event declarations. It usually comes down to a subtle misunderstanding of where events are valid and their basic syntax. Let me break down why this occurs, and I'll provide some illustrative examples.
 
-The root of the issue lies within Solidity's grammar rules and the scope within which certain language constructs, like events, are permitted. Specifically, event declarations are *only* allowed directly within the contract scope, not inside function bodies or other blocks of code. The error "expecting a semicolon instead of event" essentially means that the compiler, while parsing your code, encountered an event declaration in a location where it was expecting to see a statement that ends with a semicolon, like a variable declaration or an expression.
+The root of the issue lies within Solidity's grammar rules and the scope within which certain language constructs, like events, are permitted. Specifically, event declarations are _only_ allowed directly within the contract scope, not inside function bodies or other blocks of code. The error "expecting a semicolon instead of event" essentially means that the compiler, while parsing your code, encountered an event declaration in a location where it was expecting to see a statement that ends with a semicolon, like a variable declaration or an expression.
 
 Think about it this way, the compiler is designed to interpret code structure hierarchically. It first parses the global context of your contract then analyzes what happens inside of functions. Event declarations are globally scoped within the context of a contract, alongside state variables. They essentially define what kind of events can be emitted by the contract.
 
-In my past experience, I recall a particular instance where a junior developer was trying to consolidate a lot of event emission logic directly inside a function. This included trying to *define* new events on the fly inside a function that was processing a complex data structure. The compiler flagged all of them with this semicolon error. The key misunderstanding was the developer treating event declarations like local variables that can be created wherever needed. That's not how Solidity is designed to work, however.
+In my past experience, I recall a particular instance where a junior developer was trying to consolidate a lot of event emission logic directly inside a function. This included trying to _define_ new events on the fly inside a function that was processing a complex data structure. The compiler flagged all of them with this semicolon error. The key misunderstanding was the developer treating event declarations like local variables that can be created wherever needed. That's not how Solidity is designed to work, however.
 
 Now, let's explore some concrete code examples.
 
@@ -91,7 +91,7 @@ contract ComplexEventPlacement {
 
         //Attempting to define inside of a function will lead to the same error.
          //event CustomEvent(uint256 value);
-       
+
     }
 
     // Helper function for example:

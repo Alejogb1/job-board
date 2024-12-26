@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-dimensions-252-and-256-unequal"
 ---
 
-Okay, let's tackle this. I recall a particular project back in '08; we were dealing with raw image processing on embedded systems. We noticed some rather peculiar discrepancies between allocated memory blocks and the intended image dimensions, especially around powers of two, and this problem, dimensions 252 and 256 specifically, was a recurring head-scratcher. The short, somewhat unsatisfying answer is they are unequal because, well, they *are* different numbers. But you’re asking for a deeper look into *why* that difference matters in computer systems, specifically in areas like memory alignment, data structures, and, to some degree, performance. Let’s break it down.
+, let's tackle this. I recall a particular project back in '08; we were dealing with raw image processing on embedded systems. We noticed some rather peculiar discrepancies between allocated memory blocks and the intended image dimensions, especially around powers of two, and this problem, dimensions 252 and 256 specifically, was a recurring head-scratcher. The short, somewhat unsatisfying answer is they are unequal because, well, they _are_ different numbers. But you’re asking for a deeper look into _why_ that difference matters in computer systems, specifically in areas like memory alignment, data structures, and, to some degree, performance. Let’s break it down.
 
 The apparent simplicity of 252 and 256 masks underlying complexities that can heavily influence how data is stored and accessed in computer memory. The number 256, being a power of two (2^8), often aligns very neatly with memory structures. This is no accident. Hardware is frequently designed to operate optimally on data organized in powers of two. This includes address buses, cache lines, and data transfers. When a processor retrieves data, it typically does so in blocks, often sizes that are power-of-two multiples (e.g. 4, 8, 16, 32 bytes, etc.) that correspond to its architecture. This facilitates faster and more efficient operations. Memory allocation routines on many systems (both high-level and embedded) prefer to allocate blocks that are multiples of power-of-two sizes. This minimizes fragmentation and enhances access speeds.
 
@@ -33,7 +33,7 @@ int main() {
 
     MyData_252 data252;
     MyData_256 data256;
-    
+
     std::cout << "Address of data252.data: " << static_cast<void*>(data252.data) << std::endl;
     std::cout << "Address of data256.data: " << static_cast<void*>(data256.data) << std::endl;
 
@@ -41,7 +41,8 @@ int main() {
     return 0;
 }
 ```
-If you run this you may see that on many systems, *sizeof(MyData_252)* would likely be 252, while *sizeof(MyData_256)* would be 256. However, observe the output addresses, specifically when allocating arrays dynamically. Depending on the allocator, you might find that it will often align memory blocks on boundaries that are power of two multiples. For instance, on systems with 64-bit memory addressing, aligned memory may allocate starting addresses that are aligned to multiples of 8 or 16 bytes. Thus an allocation of 252 bytes might get rounded up or result in padding to adhere to memory access rules. An allocation of 256 bytes, however, perfectly fits a power-of-two alignment. While this isn't always explicit in simple code, the underlying mechanisms are at play, and are much more apparent when dealing with custom allocators, memory mapping and DMA.
+
+If you run this you may see that on many systems, _sizeof(MyData_252)_ would likely be 252, while _sizeof(MyData_256)_ would be 256. However, observe the output addresses, specifically when allocating arrays dynamically. Depending on the allocator, you might find that it will often align memory blocks on boundaries that are power of two multiples. For instance, on systems with 64-bit memory addressing, aligned memory may allocate starting addresses that are aligned to multiples of 8 or 16 bytes. Thus an allocation of 252 bytes might get rounded up or result in padding to adhere to memory access rules. An allocation of 256 bytes, however, perfectly fits a power-of-two alignment. While this isn't always explicit in simple code, the underlying mechanisms are at play, and are much more apparent when dealing with custom allocators, memory mapping and DMA.
 
 **Example 2: Image Data and Memory Layout**
 
@@ -63,6 +64,7 @@ int main() {
     return 0;
 }
 ```
+
 While this doesn't directly showcase the issue, imagine you're reading and processing this image data with SIMD operations. These operations typically work on vectors of data of 16 bytes, 32 bytes, or even larger multiples. A width of 256 pixels fits much more naturally into this processing model. We could optimize that by using an image width of 256 to fill up those SIMD vectors for processing. 252, on the other hand, will leave unused slots and more overhead in such cases. This means extra logic is needed to handle partial vector loads, which can hurt efficiency and increase code complexity.
 
 **Example 3: Data Transfer and Caching**
@@ -86,7 +88,7 @@ int main() {
     uint8_t* dest252 = new uint8_t[size252];
     uint8_t* source256 = new uint8_t[size256];
     uint8_t* dest256 = new uint8_t[size256];
-    
+
     auto start252 = std::chrono::high_resolution_clock::now();
     copy_memory(source252, dest252, size252);
     auto end252 = std::chrono::high_resolution_clock::now();
@@ -98,7 +100,7 @@ int main() {
     auto end256 = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> duration256 = end256 - start256;
       std::cout << "Time for 256KB transfer: " << duration256.count() << " seconds" << std::endl;
-    
+
     delete[] source252;
     delete[] dest252;
     delete[] source256;
@@ -109,7 +111,7 @@ int main() {
 }
 ```
 
-This code snippet just simulates data transfer using *memcpy*. Although simplistic, even here you might observe slight timing differences depending on your system's architecture and bus operations. The performance difference is more obvious when dealing with hardware DMA controllers in embedded applications.
+This code snippet just simulates data transfer using _memcpy_. Although simplistic, even here you might observe slight timing differences depending on your system's architecture and bus operations. The performance difference is more obvious when dealing with hardware DMA controllers in embedded applications.
 
 To really solidify your understanding, I'd recommend exploring resources like "Computer Architecture: A Quantitative Approach" by Hennessy and Patterson; it provides an extensive deep dive into the hardware aspects. Furthermore, for practical memory allocation and efficiency topics, "Effective C++" by Scott Meyers has some really illuminating sections on how to use memory efficiently. For image processing specifics, you'll find "Digital Image Processing" by Gonzalez and Woods a very valuable resource.
 

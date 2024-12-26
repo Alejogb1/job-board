@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-a-trying-to-backward-runtime-error-in-pytorch"
 ---
 
-Alright, let's tackle this 'Trying to backward' error in PyTorch. I’ve bumped into this one a few times myself, and it often stems from a subtle misunderstanding of how PyTorch’s automatic differentiation engine works. It's not always immediately clear what’s going wrong because the error message, while precise, can be a bit cryptic without the right context. Let’s break it down.
+, let's tackle this 'Trying to backward' error in PyTorch. I’ve bumped into this one a few times myself, and it often stems from a subtle misunderstanding of how PyTorch’s automatic differentiation engine works. It's not always immediately clear what’s going wrong because the error message, while precise, can be a bit cryptic without the right context. Let’s break it down.
 
 The core issue revolves around attempting to compute gradients on tensors that are not part of the computational graph that PyTorch is tracking. In essence, PyTorch needs to know how each tensor was derived from others to compute gradients correctly. When you invoke `.backward()` on a loss tensor, it traces backward through the operations that led to that loss, calculating gradients with respect to the tensors that require them along the way. If it encounters a tensor that’s not part of this tracked lineage, you’re going to see this error.
 

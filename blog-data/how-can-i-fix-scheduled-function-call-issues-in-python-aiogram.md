@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-fix-scheduled-function-call-issues-in-python-aiogram"
 ---
 
-Okay, let's talk about those pesky scheduled function call issues you're encountering with aiogram in Python. I've certainly been down that rabbit hole a few times myself, and it's usually a combination of things that can trip you up. Often, it's not an aiogram-specific problem, but rather a misunderstanding of how asynchronous programming, the event loop, and task scheduling intertwine within the framework. Let’s unpack it.
+, let's talk about those pesky scheduled function call issues you're encountering with aiogram in Python. I've certainly been down that rabbit hole a few times myself, and it's usually a combination of things that can trip you up. Often, it's not an aiogram-specific problem, but rather a misunderstanding of how asynchronous programming, the event loop, and task scheduling intertwine within the framework. Let’s unpack it.
 
 First, it's vital to recognize that aiogram is built upon `asyncio`, and that everything within it revolves around the event loop. When you’re setting up scheduled tasks, you aren’t directly telling Python to execute code at a specific time; instead, you're requesting the event loop to do so. If this loop is blocked or not handled properly, your scheduled function calls will seem erratic, delayed, or might not even execute at all. I remember once troubleshooting a very frustrating situation where database updates were scheduled using `asyncio.sleep` and a regular `while True` loop— needless to say, the entire bot was essentially a single-threaded mess, and the schedules were all over the place. The problem? The sleep was blocking, and the bot became unresponsive.
 
@@ -78,6 +78,7 @@ async def main():
 if __name__ == '__main__':
     asyncio.run(main())
 ```
+
 Here, we use `AsyncIOScheduler` and add a job that executes `scheduled_task` every 10 seconds. The beauty of this approach is that apscheduler takes care of managing the schedule, handling cases where the task might take a longer time to execute. It prevents overlapping execution and allows for more complex schedules using triggers. You could, for example, schedule tasks to run only on certain days of the week, or at specific times.
 
 Finally, an essential point to address when using `apscheduler` with aiogram, and a point I've seen people struggle with frequently, is how to manage your tasks effectively. What if you want to add a scheduled job to run only once? Or if a certain event should cause a job to be added, removed, or changed dynamically?

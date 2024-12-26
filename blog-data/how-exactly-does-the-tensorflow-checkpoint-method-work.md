@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-exactly-does-the-tensorflow-checkpoint-method-work"
 ---
 
-well, alright, let’s talk about tensorflow checkpoints, because i’ve definitely spent way too much time staring at them. it’s one of those things that seems simple on the surface, but there’s a good bit going on under the hood, and i’ve had my fair share of headaches because of it, particularly back when i was messing around with custom training loops for a reinforcement learning agent using some bleeding edge tf version at the time. it was 2.1, i think? it caused all sorts of issues, anyway…
+well, , let’s talk about tensorflow checkpoints, because i’ve definitely spent way too much time staring at them. it’s one of those things that seems simple on the surface, but there’s a good bit going on under the hood, and i’ve had my fair share of headaches because of it, particularly back when i was messing around with custom training loops for a reinforcement learning agent using some bleeding edge tf version at the time. it was 2.1, i think? it caused all sorts of issues, anyway…
 
 basically, tensorflow checkpoints are the system’s way of saving the state of your model. and i don’t just mean the weights of your neural network, it’s more than that. it captures all the trainable variables associated with your model and any associated optimizers if you tell it to do so. think of it as a snapshot of your model’s brain, preserved at a certain point in its training. this is crucial for various reasons; think long training runs on beefy servers that could crash at any moment.
 

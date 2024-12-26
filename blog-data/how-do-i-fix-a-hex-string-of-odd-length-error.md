@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-do-i-fix-a-hex-string-of-odd-length-error"
 ---
 
-Alright, let’s tackle this. I remember encountering this exact issue back in my early days working on a system that dealt with raw sensor data. The culprit, more often than not, is a simple mismatch between expectations and reality when it comes to encoding and decoding hexadecimal strings. Specifically, a hex string—or rather, a string representation of hexadecimal values—requires each pair of characters to represent a single byte. That's why a string with an odd number of characters is problematic; there’s no way to correctly map each character to a binary representation without padding or ignoring a character, which almost invariably leads to data corruption.
+, let’s tackle this. I remember encountering this exact issue back in my early days working on a system that dealt with raw sensor data. The culprit, more often than not, is a simple mismatch between expectations and reality when it comes to encoding and decoding hexadecimal strings. Specifically, a hex string—or rather, a string representation of hexadecimal values—requires each pair of characters to represent a single byte. That's why a string with an odd number of characters is problematic; there’s no way to correctly map each character to a binary representation without padding or ignoring a character, which almost invariably leads to data corruption.
 
-When a library, or code you're executing, complains about an "odd-length hex string," it is essentially saying that it was expecting each hexadecimal digit to be in a pair to make up a byte. Consider the representation of a single byte; it ranges from `00` to `ff`. Each of these values is represented by *two* hexadecimal characters. When you encounter a string such as `abc`, that last `c` has no pair, which creates a parsing and encoding problem. Consequently, it's impossible to decode it correctly into the corresponding byte sequence.
+When a library, or code you're executing, complains about an "odd-length hex string," it is essentially saying that it was expecting each hexadecimal digit to be in a pair to make up a byte. Consider the representation of a single byte; it ranges from `00` to `ff`. Each of these values is represented by _two_ hexadecimal characters. When you encounter a string such as `abc`, that last `c` has no pair, which creates a parsing and encoding problem. Consequently, it's impossible to decode it correctly into the corresponding byte sequence.
 
-The core solution usually involves one of two approaches: either identify the error in data generation and rectify it at the source, or implement code to handle the odd-length string by padding or discarding data appropriately (although the latter should always be a last resort). Often, the error isn't in the encoding *per se* but in how the data was collected or handled beforehand. For instance, perhaps some initial conversion or processing steps are truncating, concatenating incorrectly, or in some other way altering the hex representation before you receive it.
+The core solution usually involves one of two approaches: either identify the error in data generation and rectify it at the source, or implement code to handle the odd-length string by padding or discarding data appropriately (although the latter should always be a last resort). Often, the error isn't in the encoding _per se_ but in how the data was collected or handled beforehand. For instance, perhaps some initial conversion or processing steps are truncating, concatenating incorrectly, or in some other way altering the hex representation before you receive it.
 
 Here are a few concrete examples, along with snippets using different programming languages for illustrative purposes:
 
@@ -52,29 +52,31 @@ In a web-based application, you might be handling hex strings received from a se
 
 ```javascript
 function decodeHexString(hexStr) {
-    if (hexStr.length % 2 !== 0) {
-        // Option A: Add a leading zero (be careful, should be part of the agreed format)
-        hexStr = "0" + hexStr;
-        //Option B: Discard (less advised as it's prone to data loss)
-        //console.warn(`Odd-length hex string encountered: ${hexStr.slice(0,-1)}. Discarding last character.`);
-        //hexStr = hexStr.slice(0,-1)
-    }
-    try {
-         // Using TextEncoder/Decoder for byte arrays (in browser or Node.js)
-         const byteArray = new Uint8Array(hexStr.match(/[\da-f]{2}/gi).map(h => parseInt(h, 16)));
-         return byteArray;
-    } catch(e) {
-         console.error(`Error during hex string decoding: ${e}`);
-         return null; //or throw a new error, as appropriate
-    }
+  if (hexStr.length % 2 !== 0) {
+    // Option A: Add a leading zero (be careful, should be part of the agreed format)
+    hexStr = "0" + hexStr;
+    //Option B: Discard (less advised as it's prone to data loss)
+    //console.warn(`Odd-length hex string encountered: ${hexStr.slice(0,-1)}. Discarding last character.`);
+    //hexStr = hexStr.slice(0,-1)
+  }
+  try {
+    // Using TextEncoder/Decoder for byte arrays (in browser or Node.js)
+    const byteArray = new Uint8Array(
+      hexStr.match(/[\da-f]{2}/gi).map((h) => parseInt(h, 16))
+    );
+    return byteArray;
+  } catch (e) {
+    console.error(`Error during hex string decoding: ${e}`);
+    return null; //or throw a new error, as appropriate
+  }
 }
 
 // Example usage
 const oddHexString = "414243e";
 const decodedArray = decodeHexString(oddHexString);
 
-if (decodedArray){
-   console.log('Decoded array (padding):', decodedArray); //outputs Uint8Array of [65,66,67,14]
+if (decodedArray) {
+  console.log("Decoded array (padding):", decodedArray); //outputs Uint8Array of [65,66,67,14]
 }
 
 const oddHexString2 = "414243e";
@@ -139,4 +141,4 @@ Here, we are using Go’s `encoding/hex` package to perform the decode. The func
 
 In summary, the error is indicative of a mismatch between what the decoding process expects, and what the input string contains. You are essentially facing an issue that arises from the inherent structure of hex encoding and its representation of bytes. It is important to tackle the issue by making sure that the source of the string generates correctly-formatted strings, but should this not be possible, or if you must deal with potentially malformed strings, then proper error handling, padding, or removal should be considered based on the situation.
 
-For further study, I'd recommend looking into *Applied Cryptography* by Bruce Schneier for a comprehensive understanding of data encoding and cryptographic protocols. Also, *Computer Organization and Design* by Patterson and Hennessy could provide background knowledge of computer representations of data. In terms of specific coding standards, always refer to official documentation on encoding/decoding for your particular programming language or library (for example, Python’s `binascii` library or Go’s `encoding/hex` package are great starting points). Understanding the source of the data and ensuring a clear contract regarding encoding expectations across systems and components remains the key to solving this type of error.
+For further study, I'd recommend looking into _Applied Cryptography_ by Bruce Schneier for a comprehensive understanding of data encoding and cryptographic protocols. Also, _Computer Organization and Design_ by Patterson and Hennessy could provide background knowledge of computer representations of data. In terms of specific coding standards, always refer to official documentation on encoding/decoding for your particular programming language or library (for example, Python’s `binascii` library or Go’s `encoding/hex` package are great starting points). Understanding the source of the data and ensuring a clear contract regarding encoding expectations across systems and components remains the key to solving this type of error.

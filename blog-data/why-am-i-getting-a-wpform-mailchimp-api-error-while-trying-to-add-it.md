@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-a-wpform-mailchimp-api-error-while-trying-to-add-it"
 ---
 
-alright, let's unpack this wpforms mailchimp api error situation. i've bumped into this sort of thing more times than i care to remember, and it's usually a pretty standard set of culprits. you're trying to integrate wpforms with mailchimp, and it's throwing an error, got it. before we get into the nitty-gritty, i want to say it can be frustrating, it can look like black magic but trust me there is a reason why, a very good one and that reason it's usually always something super simple that was missed, let's go for it.
+, let's unpack this wpforms mailchimp api error situation. i've bumped into this sort of thing more times than i care to remember, and it's usually a pretty standard set of culprits. you're trying to integrate wpforms with mailchimp, and it's throwing an error, got it. before we get into the nitty-gritty, i want to say it can be frustrating, it can look like black magic but trust me there is a reason why, a very good one and that reason it's usually always something super simple that was missed, let's go for it.
 
 first off, i'd double check the basics: are the api keys actually correct? i know it sounds silly, but i've wasted hours chasing phantom errors only to find out i copy-pasted a key with a trailing space. go into your mailchimp account, navigate to the 'extras' dropdown, then select 'api keys'. generate a new key if you are unsure, or if you want to play it safe, then carefully copy it and paste it into the wpforms settings, make sure there is no extra space character before or after.
 
@@ -17,7 +17,7 @@ now for the code part. in some very rare cases, like when using complex setups, 
 ```php
 <?php
   require_once 'path/to/your/wp-load.php'; // adjust the path
-  
+
   $api_key = 'your_mailchimp_api_key'; //put your api key here
   $list_id = 'your_mailchimp_list_id'; //put your list id here
 

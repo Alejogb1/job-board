@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-xml-annotations-to-train-a-cnn-image-classifier"
 ---
 
-Alright, let’s tackle this. I remember a project back in '18, working on defect detection in a manufacturing line. We were using computer vision, and training our convolutional neural networks (CNNs) initially felt like trying to herd cats. The challenge, of course, was labeling the data, and that's where xml annotations came into play. Specifically, they allowed us to provide precise bounding box coordinates for each defect within the images, rather than just relying on global labels. It made a considerable difference in the classifier's performance, and its ability to generalize. Let’s explore how you can achieve this.
+, let’s tackle this. I remember a project back in '18, working on defect detection in a manufacturing line. We were using computer vision, and training our convolutional neural networks (CNNs) initially felt like trying to herd cats. The challenge, of course, was labeling the data, and that's where xml annotations came into play. Specifically, they allowed us to provide precise bounding box coordinates for each defect within the images, rather than just relying on global labels. It made a considerable difference in the classifier's performance, and its ability to generalize. Let’s explore how you can achieve this.
 
 At its core, using xml annotations for CNN training boils down to converting the information contained within those xml files into a format that’s digestible by your model. These annotations, commonly found in formats like Pascal VOC or similar, typically provide bounding box coordinates (xmin, ymin, xmax, ymax), alongside the class label for each object within an image. The training pipeline has two primary components: parsing these XML files and transforming that information into a suitable format for your training framework (e.g., tensorflow, pytorch).
 
@@ -82,6 +82,7 @@ print(f"image shape: {image.shape}")
 print(f"bounding box coordinates: {bounding_boxes}")
 print(f"class ids: {class_labels}")
 ```
+
 This code snippet expands upon the previous parsing example. The `process_image_and_annotations` function takes image and annotation file paths as input. It loads the image, parses the xml, calculates the bounding boxes coordinates relative to image dimensions, and converts string labels into corresponding integer representations. A `class_mapping` dictionary is used to maintain a class string to int mapping. We return the image as a NumPy array, and bounding box and class id arrays. Notice how the bounding boxes are normalized between 0 and 1 based on image width and height.
 
 The critical thing here is, the output needs to match the input expected by your neural network. If you're using a predefined architecture through a library like TensorFlow's model garden or PyTorch's torchvision models, understanding their input format is essential for proper integration. Many of them expect tensors directly as the output of a custom `Dataset` or generator. Therefore, we must prepare that data appropriately for those frameworks' expectations.

@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-do-i-run-docker-images-in-gcp-compute-engine-with-apache-airflow"
 ---
 
-Okay, let’s talk about deploying docker images within google compute engine while orchestrating it all with apache airflow. It's a problem I’ve tackled a few times over the years, most notably when we migrated our data processing pipeline from an aging on-premise setup to a cloud-native architecture back in 2018. The initial attempt, frankly, was a bit of a mess. We quickly realized the manual deployment scripts weren't cutting it, and that's where the combined power of docker, gcp compute engine, and airflow really started to shine. The key is understanding how these pieces interoperate and choosing the appropriate airflow operators.
+, let’s talk about deploying docker images within google compute engine while orchestrating it all with apache airflow. It's a problem I’ve tackled a few times over the years, most notably when we migrated our data processing pipeline from an aging on-premise setup to a cloud-native architecture back in 2018. The initial attempt, frankly, was a bit of a mess. We quickly realized the manual deployment scripts weren't cutting it, and that's where the combined power of docker, gcp compute engine, and airflow really started to shine. The key is understanding how these pieces interoperate and choosing the appropriate airflow operators.
 
-First and foremost, you’re not directly running a docker container *inside* a compute engine instance (unless you’re using a container-optimized os, which is a slightly different beast). Rather, you’ll be using airflow to instruct a compute engine instance to pull and execute your docker image. This typically involves creating a compute engine instance, and then, within that instance, using commands to execute your docker image using the docker cli.
+First and foremost, you’re not directly running a docker container _inside_ a compute engine instance (unless you’re using a container-optimized os, which is a slightly different beast). Rather, you’ll be using airflow to instruct a compute engine instance to pull and execute your docker image. This typically involves creating a compute engine instance, and then, within that instance, using commands to execute your docker image using the docker cli.
 
 The general workflow, as I've found it, breaks down into a few steps. You need an image repository, typically google container registry (gcr). You need an airflow environment that can communicate with gcp. You need a compute engine instance configured correctly, ideally with docker already installed, or you need to use startup scripts to handle that automatically when the instance is created. Lastly, you need airflow dag definitions that utilize operators to trigger the necessary commands on your compute engine instance. Let's get into some specific code examples.
 
@@ -36,8 +36,8 @@ with DAG(
 
 In this first snippet, we have a basic dag, and the ssh operator with a single command. We are directly running the docker container and detaching it, so it runs as a service in the background. Here's the breakdown:
 
-*   `ssh_conn_id`: Specifies the pre-configured ssh connection within airflow. Make sure you've created it with the correct host and authentication method (ssh key is preferred).
-*   `command`: This is the series of commands that will be executed on the compute engine instance. In this case, the `docker run` command, where we're specifying our image from our gcr.
+- `ssh_conn_id`: Specifies the pre-configured ssh connection within airflow. Make sure you've created it with the correct host and authentication method (ssh key is preferred).
+- `command`: This is the series of commands that will be executed on the compute engine instance. In this case, the `docker run` command, where we're specifying our image from our gcr.
 
 A common issue I used to encounter with this was the `docker` executable not being available, usually due to PATH problems or missing installation. I always recommend adding the full path to the docker binary if you're unsure, and ensure that docker is installed.
 
@@ -71,10 +71,11 @@ with DAG(
 ```
 
 This snippet expands on the first example. We are now doing the following:
-* `docker stop my-container || true`: This command will stop a container named `my-container` if it exists. The `|| true` makes the command not error if the container is not running or doesn't exist.
-*   `docker rm my-container || true`: Similar to the stop command, this removes the container if it exists, preventing issues with already running containers.
-*   `-e MY_VAR1='my_value1' -e MY_VAR2='my_value2'`: we're passing through environment variables to be used by your container.
-*   `--name my-container`: we name the container so we can stop and remove it easily.
+
+- `docker stop my-container || true`: This command will stop a container named `my-container` if it exists. The `|| true` makes the command not error if the container is not running or doesn't exist.
+- `docker rm my-container || true`: Similar to the stop command, this removes the container if it exists, preventing issues with already running containers.
+- `-e MY_VAR1='my_value1' -e MY_VAR2='my_value2'`: we're passing through environment variables to be used by your container.
+- `--name my-container`: we name the container so we can stop and remove it easily.
 
 Sometimes, you might need to perform additional setup before running your container, such as pulling the latest image or building it. We can incorporate this into the `command` section, too. Also, it is essential to be aware of disk space issues. Always consider cleaning up after your containers when you stop/remove them.
 

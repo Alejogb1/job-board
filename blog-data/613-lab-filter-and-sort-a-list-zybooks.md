@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "613-lab-filter-and-sort-a-list-zybooks"
 ---
 
-Okay so you're looking at a Zybooks lab problem about filtering and sorting lists right been there done that probably have the t-shirt somewhere in my drawer. Specifically this 6.13 lab sounds like it involves working with data structures maybe a list of objects and applying some filtering criteria then sorting the resulting filtered list. Seems pretty standard in a lot of programming situations. I've banged my head against similar problems before believe me.
+you're looking at a Zybooks lab problem about filtering and sorting lists right been there done that probably have the t-shirt somewhere in my drawer. Specifically this 6.13 lab sounds like it involves working with data structures maybe a list of objects and applying some filtering criteria then sorting the resulting filtered list. Seems pretty standard in a lot of programming situations. I've banged my head against similar problems before believe me.
 
 Let me tell you about this one project I had back in the day. We were building this data analysis tool for sensor readings. Imagine thousands of sensors spitting out data every second. The initial data was just a jumbled mess a raw list of readings each reading represented as an object with fields like 'sensor_id' 'timestamp' and 'value'. The clients wanted to visualize this data but only for specific sensors and within a certain range of values. I had to implement something that filtered this massive list based on user selected criteria and then sort the results by timestamp before plotting it on a graph. Took me a few late nights fueled by bad coffee and even worse pizza to get it right.
 
@@ -75,9 +75,10 @@ filtered_sorted_data = filter_and_sort(data, "A12", 16, 23)
 print(filtered_sorted_data)
 # Expected Output: [{'sensor_id': 'A12', 'timestamp': 1678886420, 'value': 18}, {'sensor_id': 'A12', 'timestamp': 1678886480, 'value': 22}]
 ```
-I am guessing Zybooks wants you to implement similar logic to this for your problem. This example uses a list comprehension to create the filtered list a more concise way of doing the same as our first example.  Basically we iterate over each item and if it matches our criteria, we return it in the new list. Remember that python's `and` operator performs short-circuiting evaluation meaning if the first condition is false then it will not evaluate the others meaning if the `sensor_id` is different we do not check the value which optimizes the code.
 
-So if you’re tackling the 6.13 lab remember that you'll need to grab the list first then apply filtering and sorting sequentially.  The key is to understand the specific criteria that they want you to implement and translate that into code.
+I am guessing Zybooks wants you to implement similar logic to this for your problem. This example uses a list comprehension to create the filtered list a more concise way of doing the same as our first example. Basically we iterate over each item and if it matches our criteria, we return it in the new list. Remember that python's `and` operator performs short-circuiting evaluation meaning if the first condition is false then it will not evaluate the others meaning if the `sensor_id` is different we do not check the value which optimizes the code.
+
+So if you’re tackling the 6.13 lab remember that you'll need to grab the list first then apply filtering and sorting sequentially. The key is to understand the specific criteria that they want you to implement and translate that into code.
 
 As for resources I wouldn't necessarily recommend random websites because there's a lot of low quality information out there. For a solid understanding of data structures and algorithms I would recommend “Introduction to Algorithms” by Thomas H Cormen et al. This book is the Bible on algorithms it will teach you about the theoretical aspects of sorting and filtering and much much more if you are serious about learning. If you want something more geared toward python specifically look at “Fluent Python” by Luciano Ramalho. That one dives deep into the language features including how to work with lists effectively. It’s really good if you want to go further into the Python universe.
 

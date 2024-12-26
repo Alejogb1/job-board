@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-plot-confusion-matrices-using-wandb-with-pytorch"
 ---
 
-Okay, let’s tackle this. I've plotted my fair share of confusion matrices, and integrating them with Wandb (Weights & Biases) for Pytorch workflows is something I’ve refined over time. Let me walk you through it, drawing from my experiences and best practices.
+, let’s tackle this. I've plotted my fair share of confusion matrices, and integrating them with Wandb (Weights & Biases) for Pytorch workflows is something I’ve refined over time. Let me walk you through it, drawing from my experiences and best practices.
 
 Plotting confusion matrices is crucial for understanding the performance of a classification model, going beyond basic accuracy metrics. Wandb offers excellent tools to log and visualize these matrices, allowing for better error analysis and model improvement. The trick is in formatting your data correctly and then using Wandb's APIs effectively. Let me illustrate with code snippets and explanations, using a scenario based on my time working on a medical imaging project.
 
@@ -35,7 +35,7 @@ def collect_predictions_and_labels(model, dataloader, device):
 # predictions, labels = collect_predictions_and_labels(model, test_loader, device)
 ```
 
-In this function, we iterate through our dataloader, making sure to move everything to the correct device. I’ve added `torch.no_grad()` since we don't need gradients during inference. The crucial part is how we extract the predictions.  `torch.max(outputs, 1)` returns the maximum value in the `outputs` tensor along the dimension specified by the second argument (dimension 1 in this case), and the corresponding indices of where these max values occur, which represent the predicted class. Finally, we convert these to numpy arrays and extend our accumulating lists.
+In this function, we iterate through our dataloader, making sure to move everything to the correct device. I’ve added `torch.no_grad()` since we don't need gradients during inference. The crucial part is how we extract the predictions. `torch.max(outputs, 1)` returns the maximum value in the `outputs` tensor along the dimension specified by the second argument (dimension 1 in this case), and the corresponding indices of where these max values occur, which represent the predicted class. Finally, we convert these to numpy arrays and extend our accumulating lists.
 
 After collecting this data, we need to use Wandb to create a confusion matrix object. Wandb expects two specific formats: either `(true_labels, predicted_labels)` arrays, or a fully pre-computed matrix. In our case, I've found that creating a matrix directly from true and predicted labels provides better flexibility and control, and allows us to also visualize a normalized matrix.
 
@@ -110,8 +110,9 @@ def log_precomputed_confusion_matrix_to_wandb(matrix, class_names, step, wandb_r
 #log_precomputed_confusion_matrix_to_wandb(conf_matrix, class_names, current_step, wandb_run)
 #wandb_run.finish()
 ```
+
 This function, `collect_confusion_matrix_direct`, calculates the confusion matrix iteratively within the data loop, avoiding storage of all predictions and ground truths. We then pass the `matrix` directly into the plotting function.
 
-For further reading on the theory and application of confusion matrices, I highly recommend consulting the book *Pattern Recognition and Machine Learning* by Christopher M. Bishop. It’s a rigorous and comprehensive treatment of these concepts. Additionally, for a deeper dive into error analysis and model evaluation techniques, explore papers published by the NIPS (NeurIPS) and ICML conferences, as these venues often present the latest advancements in this domain. Wandb’s own documentation also has helpful examples for plotting different kinds of matrices and is regularly updated.
+For further reading on the theory and application of confusion matrices, I highly recommend consulting the book _Pattern Recognition and Machine Learning_ by Christopher M. Bishop. It’s a rigorous and comprehensive treatment of these concepts. Additionally, for a deeper dive into error analysis and model evaluation techniques, explore papers published by the NIPS (NeurIPS) and ICML conferences, as these venues often present the latest advancements in this domain. Wandb’s own documentation also has helpful examples for plotting different kinds of matrices and is regularly updated.
 
 In conclusion, while the process of plotting confusion matrices using Wandb and Pytorch might initially seem like a complex task, it’s fairly straightforward once you break it down. By accumulating your prediction data properly, using the appropriate Wandb functions, and perhaps incorporating sklearn’s `confusion_matrix` for flexibility, you can seamlessly integrate these powerful visualizations into your machine-learning workflow, which is essential for robust model development and debugging. I hope these insights and code snippets have been helpful; they reflect a few of the approaches I have used across numerous projects.

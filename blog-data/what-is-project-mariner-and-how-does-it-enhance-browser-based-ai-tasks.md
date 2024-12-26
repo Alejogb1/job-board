@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-is-project-mariner-and-how-does-it-enhance-browser-based-ai-tasks"
 ---
 
-okay so project mariner right thats actually a pretty cool name it definitely gives off some kinda space exploration vibe which is kinda fitting when you think about what its trying to do in the browser space basically mariner is all about turbocharging AI stuff that happens right there in your chrome or firefox or whatever you use instead of relying on some far off server
+project mariner right thats actually a pretty cool name it definitely gives off some kinda space exploration vibe which is kinda fitting when you think about what its trying to do in the browser space basically mariner is all about turbocharging AI stuff that happens right there in your chrome or firefox or whatever you use instead of relying on some far off server
 
 think about it most AI tasks especially the beefy ones like image generation or complex language processing usually happen somewhere else they get sent off to some giant data center and then results come back to your browser that means latency slowdowns plus theres the whole privacy angle its kinda like sending your thoughts out into the open
 
@@ -22,7 +22,7 @@ so it makes it so things that are usually slow on a browser especially AI stuff 
 
 the aim is to empower browsers and transform them from just viewing websites into powerful ai platforms so the benefits are speed definitely privacy no more sending sensitive data to some random server responsiveness actions feel more instant and its kind of the start of new kinds of browser applications that arent possible without this kinda power
 
-okay lets get into some examples to kind of solidify all of this we're going to keep it super simple since this is all kind of a high level chat but you can think about these scenarios
+lets get into some examples to kind of solidify all of this we're going to keep it super simple since this is all kind of a high level chat but you can think about these scenarios
 
 first lets say you want to process some text for example sentiment analysis or maybe even a simple grammar check using a natural language processing model before mariner your browser would likely have to send the text to a server the server processes it and sends back the results
 
@@ -30,62 +30,63 @@ with mariner you would load this kind of model into the browser and do all of th
 
 ```javascript
 async function processText(text) {
-    // Load the machine learning model
-    const model = await loadLocalModel("my_nlp_model.wasm");
+  // Load the machine learning model
+  const model = await loadLocalModel("my_nlp_model.wasm");
 
-    // Process the text with the loaded model
-    const result = model.process(text);
+  // Process the text with the loaded model
+  const result = model.process(text);
 
-    // Return the result to the user
-    return result;
+  // Return the result to the user
+  return result;
 }
 
 // Usage example
 const inputText = "This is a sentence with some grammar error.";
-processText(inputText).then(output => {
-  console.log("Processed Text Result:", output)
+processText(inputText).then((output) => {
+  console.log("Processed Text Result:", output);
 });
 ```
+
 this is just illustrative but it shows how instead of a server api call there is a local model being used
 
 second lets imagine an image manipulation application like you want to blur some image or apply some filter right now many websites do that on a server but mariner can allow these image changes to happen on your browser using some specific wasm code the actual code is going to be very complicated but the conceptual level is as follows
 
 ```javascript
 async function processImage(imageData) {
-    // Load the image processing model
-    const imageModel = await loadLocalModel("image_filter.wasm");
+  // Load the image processing model
+  const imageModel = await loadLocalModel("image_filter.wasm");
 
-    // Apply the filter to the image data
-    const filteredImage = imageModel.applyFilter(imageData, "blur");
+  // Apply the filter to the image data
+  const filteredImage = imageModel.applyFilter(imageData, "blur");
 
-    // Return the filtered image
-    return filteredImage;
+  // Return the filtered image
+  return filteredImage;
 }
 //some usage
 
 const image = getSomeImageData();
-processImage(image).then(filtered=>{
-    displayImage(filtered)
-})
+processImage(image).then((filtered) => {
+  displayImage(filtered);
+});
 ```
 
 and one more example lets take something thats a bit more complicated lets say you are using a personal AI assistant that can give you advice or help you generate text with mariner you can train a small personal language model to learn things about you and make its responses more relevant all without sending your info to a server the api is like this
 
 ```javascript
 async function respondToQuery(query) {
-     // Load the personal ai model
-    const personalAIModel = await loadLocalModel("personal_ai_model.wasm")
-    // Generate the response based on the query
-    const response = personalAIModel.generateResponse(query);
-    // Return the response
-    return response
+  // Load the personal ai model
+  const personalAIModel = await loadLocalModel("personal_ai_model.wasm");
+  // Generate the response based on the query
+  const response = personalAIModel.generateResponse(query);
+  // Return the response
+  return response;
 }
 
-respondToQuery("Whats my schedule like for today?")
-.then(response =>{
-    console.log(response)
-})
+respondToQuery("Whats my schedule like for today?").then((response) => {
+  console.log(response);
+});
 ```
+
 so you can see how we take various AI processes and move them to the browser locally
 
 so its not all sunshine and rainbows though there are always tradeoffs one big issue is model size those ai models can be really really big which means they take time to download and they also need space on your hard drive and the processing power needed might be more than older machines can handle

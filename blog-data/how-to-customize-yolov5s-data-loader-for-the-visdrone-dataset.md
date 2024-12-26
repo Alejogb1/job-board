@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-customize-yolov5s-data-loader-for-the-visdrone-dataset"
 ---
 
-Okay, let's talk about customizing the yolov5 data loader for the visdrone dataset. It's a challenge I’ve faced firsthand, having worked on a project involving drone-based surveillance a few years back. We ran into similar issues with the dataset's structure not quite fitting the default yolov5 input format. So, while it might seem daunting initially, breaking it down into manageable components makes the process quite straightforward. The core issue, as you likely know, isn’t with yolov5 itself; it's that the visdrone dataset uses its own unique annotation format, which differs significantly from the usual coco or pascal voc styles that yolov5 expects out-of-the-box.
+, let's talk about customizing the yolov5 data loader for the visdrone dataset. It's a challenge I’ve faced firsthand, having worked on a project involving drone-based surveillance a few years back. We ran into similar issues with the dataset's structure not quite fitting the default yolov5 input format. So, while it might seem daunting initially, breaking it down into manageable components makes the process quite straightforward. The core issue, as you likely know, isn’t with yolov5 itself; it's that the visdrone dataset uses its own unique annotation format, which differs significantly from the usual coco or pascal voc styles that yolov5 expects out-of-the-box.
 
 The standard yolov5 data loader assumes a specific directory structure, typically with image files alongside corresponding label files (usually `.txt` format) where each line contains class id and normalized bounding box coordinates (x_center, y_center, width, height). Visdrone, on the other hand, typically provides annotations in a single file per sequence, often in `.txt` format but with differing column arrangements, including things like object ids, visibility scores, and so on. That’s where the customization kicks in. The necessary step involves creating a custom dataset class in python that inherits from the `torch.utils.data.Dataset` class (a foundational part of pytorch's data loading infrastructure) and transforms the visdrone annotation format into something yolov5 can digest.
 
@@ -49,7 +49,7 @@ class VisDroneDataset(Dataset):
                      class_id = int(parts[5]) # assuming visdrone format
                      x_center = (x1 + w / 2)
                      y_center = (y1 + h / 2)
-                     
+
                      # Normalize coordinates
                      normalized_x_center = x_center
                      normalized_y_center = y_center
@@ -70,7 +70,7 @@ class VisDroneDataset(Dataset):
       image_file = self.image_files[idx]
       image_path = os.path.join(self.images_path, image_file)
       image = Image.open(image_path).convert("RGB")
-      
+
       labels = self.annotation_map.get(image_file, np.array([],dtype=np.float32))  # return empty array if no label
 
       if self.transform:
@@ -155,7 +155,7 @@ class VisDroneDataset(Dataset):
                      w = float(parts[2])
                      h = float(parts[3])
                      class_id = int(parts[5])
-                     
+
                      image_path = os.path.join(self.images_path, image_file)
                      with Image.open(image_path) as img:
                         img_width, img_height = img.size
@@ -187,7 +187,7 @@ class VisDroneDataset(Dataset):
       image_file = self.image_files[idx]
       image_path = os.path.join(self.images_path, image_file)
       image = Image.open(image_path).convert("RGB")
-      
+
       labels = self.annotation_map.get(image_file, np.array([],dtype=np.float32))  # return empty array if no label
 
 

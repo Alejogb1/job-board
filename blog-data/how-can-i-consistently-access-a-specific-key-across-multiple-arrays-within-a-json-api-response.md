@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-consistently-access-a-specific-key-across-multiple-arrays-within-a-json-api-response"
 ---
 
-Okay, let's tackle this. I've definitely been in the trenches with JSON APIs, particularly dealing with inconsistent structures. The challenge of reliably accessing a specific key across an array of varying JSON objects is not uncommon, and there are several strategies we can implement. Let me walk you through what I’ve found to be effective, based on experiences I’ve had working with different systems, including a particularly messy integration of a legacy content management system with a new front-end platform years back.
+, let's tackle this. I've definitely been in the trenches with JSON APIs, particularly dealing with inconsistent structures. The challenge of reliably accessing a specific key across an array of varying JSON objects is not uncommon, and there are several strategies we can implement. Let me walk you through what I’ve found to be effective, based on experiences I’ve had working with different systems, including a particularly messy integration of a legacy content management system with a new front-end platform years back.
 
-The core problem we’re addressing is data extraction uniformity from potentially heterogenous sources. When an API returns an array, and each element within that array *should* have a particular key, but doesn't always, we need robust handling to avoid runtime errors and ensure we're actually getting the data we need. This isn't just about graceful failure, it's about creating predictable data access patterns in your application logic.
+The core problem we’re addressing is data extraction uniformity from potentially heterogenous sources. When an API returns an array, and each element within that array _should_ have a particular key, but doesn't always, we need robust handling to avoid runtime errors and ensure we're actually getting the data we need. This isn't just about graceful failure, it's about creating predictable data access patterns in your application logic.
 
 My approach centers on a few key ideas: first, always check for the presence of the key; second, provide default values if the key isn’t present; and third, consider how to transform data structures that consistently lack the key to be compatible. These principles are vital for ensuring stability and maintainability in any system that relies on API data.
 
@@ -14,25 +14,24 @@ Here’s how I usually proceed. First, a basic check: We use conditional access 
 
 ```javascript
 function extractKeySafe(item, key, defaultValue = null) {
-    if (item && typeof item === 'object' && item.hasOwnProperty(key)) {
-        return item[key];
-    }
-    return defaultValue;
+  if (item && typeof item === "object" && item.hasOwnProperty(key)) {
+    return item[key];
+  }
+  return defaultValue;
 }
 
 const dataArray = [
-    { id: 1, name: 'Item A' },
-    { id: 2, details: { description: 'Some detail' } },
-    { id: 3, name: 'Item C', extra: 'something else' },
-    null,
-    undefined
+  { id: 1, name: "Item A" },
+  { id: 2, details: { description: "Some detail" } },
+  { id: 3, name: "Item C", extra: "something else" },
+  null,
+  undefined,
 ];
 
-dataArray.forEach(item => {
-    const itemName = extractKeySafe(item, 'name', 'Unknown Name');
-    console.log(itemName);
+dataArray.forEach((item) => {
+  const itemName = extractKeySafe(item, "name", "Unknown Name");
+  console.log(itemName);
 });
-
 ```
 
 In this JavaScript example, `extractKeySafe` encapsulates the conditional logic. It checks if the current item is truthy (not `null` or `undefined`), if it’s an object and also includes the required key using `hasOwnProperty`. If the key is found it returns its value, otherwise it returns a provided default. This prevents errors from accessing properties on non-objects and provides a fallback value if a key is missing from an object that is present. The output would be, in this case:

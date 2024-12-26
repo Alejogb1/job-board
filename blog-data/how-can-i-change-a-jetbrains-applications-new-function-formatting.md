@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-i-change-a-jetbrains-applications-new-function-formatting"
 ---
 
-alright, so you're looking to tweak how jetbrains ide's format your code when you're, say, creating a new function. i get it. the defaults are… well, they're defaults, and sometimes they just don't mesh with your personal style or your team's coding standards. i’ve been there, done that, got the t-shirt – and probably a few mental scars from battling with auto-formatting over the years. let me tell you, it's a pain when the machine thinks it knows better than you do about code aesthetics.
+, so you're looking to tweak how jetbrains ide's format your code when you're, say, creating a new function. i get it. the defaults are… well, they're defaults, and sometimes they just don't mesh with your personal style or your team's coding standards. i’ve been there, done that, got the t-shirt – and probably a few mental scars from battling with auto-formatting over the years. let me tell you, it's a pain when the machine thinks it knows better than you do about code aesthetics.
 
 when i first started messing around with intellij idea (and the rest of the jetbrains family), i had this exact issue. i was used to a very particular way of laying out my functions – specific indentation, where the curly braces went, the spacing around arguments, that sort of thing. after using visual studio for ages, i got really frustrated with how intellij took a go at formatting things i created with the new function assistant. my stuff always looked completely off, even if i created the function from scratch and tried to make it look like i wanted it to. it's like it was mocking my formatting attempts. back then, i was working on a fairly large java project, and consistency was key. it was just maddening to look at how intellij kept changing my function declarations. i ended up spending a ton of time manually reformatting code or turning off the autoformatter completely for a while and that's really not ideal, because it helps in the long run.
 
@@ -20,15 +20,15 @@ then, go to the “wrapping and braces” tab which is the real juicy part for f
 
 here's what you might be looking to adjust there:
 
-*   **'method/function declaration parameter/argument placement':** this is super important. it's how the ide will format the parameters/arguments of your functions. you can choose things like "do not wrap", "wrap if long", "one per line", or "chop if long". “one per line” is my personal preference for more readable code but if the arguments are few you can put them all in the same line. it really depends on your or your team´s coding style.
-*   **'braces placement':** this is where you decide if your opening curly brace goes on the same line as the function declaration or on a new line. i know it seems trivial but this is a very old war between programmers, it is the "one true brace style" or "k&r" vs "allman" brace styles. there's no single way to format code, it's whatever is consistent within your project and you want, but consistency is key for legibility and avoiding merge conflicts.
-*   **'space around parentheses':** it controls if the ide puts a space between the parentheses and the function name/arguments. some people prefer `function()` and some like `function ()`. you get the drill. you can also use "spaces within parentheses" or "spaces within method call parentheses" which refers to how to format the call of a function.
-*   **'keep when reformatting':** some sections are to control what formatting configurations can be changed or not, you should explore all of them and see what is helpful for your style.
+- **'method/function declaration parameter/argument placement':** this is super important. it's how the ide will format the parameters/arguments of your functions. you can choose things like "do not wrap", "wrap if long", "one per line", or "chop if long". “one per line” is my personal preference for more readable code but if the arguments are few you can put them all in the same line. it really depends on your or your team´s coding style.
+- **'braces placement':** this is where you decide if your opening curly brace goes on the same line as the function declaration or on a new line. i know it seems trivial but this is a very old war between programmers, it is the "one true brace style" or "k&r" vs "allman" brace styles. there's no single way to format code, it's whatever is consistent within your project and you want, but consistency is key for legibility and avoiding merge conflicts.
+- **'space around parentheses':** it controls if the ide puts a space between the parentheses and the function name/arguments. some people prefer `function()` and some like `function ()`. you get the drill. you can also use "spaces within parentheses" or "spaces within method call parentheses" which refers to how to format the call of a function.
+- **'keep when reformatting':** some sections are to control what formatting configurations can be changed or not, you should explore all of them and see what is helpful for your style.
 
 now, it's not just about the visual aspect, but also what the ide does when you add arguments, or if the function has a return type. here are a few configurations that help you control that:
 
-*   **'method/function declaration return type':** specifies how it should behave when the return type is a type variable or a complex type in general, in which line to put it for better legibility, or if you want it on the same line.
-*   **'method/function declaration modifiers':** this is a small detail, but really handy, here is how you can control the modifiers `public, static, final, abstract` and so on. if you want them in a separate line or not. if it's more than two modifiers it’s recommended to put them in separate lines in most cases but you can do whatever you find more readable.
+- **'method/function declaration return type':** specifies how it should behave when the return type is a type variable or a complex type in general, in which line to put it for better legibility, or if you want it on the same line.
+- **'method/function declaration modifiers':** this is a small detail, but really handy, here is how you can control the modifiers `public, static, final, abstract` and so on. if you want them in a separate line or not. if it's more than two modifiers it’s recommended to put them in separate lines in most cases but you can do whatever you find more readable.
 
 let's see how some code would look with different configurations, as a starting point for inspiration. here are some examples:
 
@@ -55,11 +55,8 @@ public String myfunction(
 example 3: using allman style braces and wrapped parameters:
 
 ```javascript
-function myfunction(
-    arg1, 
-    arg2
-) {
-  return `hello ${arg2} ${arg1}`
+function myfunction(arg1, arg2) {
+  return `hello ${arg2} ${arg1}`;
 }
 ```
 

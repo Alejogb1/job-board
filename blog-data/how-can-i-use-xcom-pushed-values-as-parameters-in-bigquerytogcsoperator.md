@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-xcom-pushed-values-as-parameters-in-bigquerytogcsoperator"
 ---
 
-Alright, let’s tackle this. The dance of passing values from XCOM to operators, especially to something like `BigQueryToGCSOperator`, can sometimes feel a bit like choreography, but with clear steps, it's quite manageable. I've definitely seen my share of these scenarios in data pipelines. In fact, just last year, I was working on a project where we were generating daily BigQuery tables based on dynamically calculated dates, and we needed to export these tables to GCS. We heavily relied on this pattern of pulling values from XCOM to feed parameters to downstream operators. It’s a common scenario, and there are several straightforward ways to handle it.
+, let’s tackle this. The dance of passing values from XCOM to operators, especially to something like `BigQueryToGCSOperator`, can sometimes feel a bit like choreography, but with clear steps, it's quite manageable. I've definitely seen my share of these scenarios in data pipelines. In fact, just last year, I was working on a project where we were generating daily BigQuery tables based on dynamically calculated dates, and we needed to export these tables to GCS. We heavily relied on this pattern of pulling values from XCOM to feed parameters to downstream operators. It’s a common scenario, and there are several straightforward ways to handle it.
 
 The challenge essentially boils down to correctly structuring your Airflow DAG so that the appropriate values are pushed to XCOM, and then subsequently retrieved and used as arguments for the `BigQueryToGCSOperator`. The key is to understand that XCOM is essentially a key-value store, and the push and pull operations need to be aligned between tasks. The core approach involves pushing the dynamic values from a task using the `xcom_push` method or task return values in a task function, followed by referencing these XCOM values in the downstream operator through Jinja templating.
 
@@ -114,11 +114,12 @@ with DAG(
     generate_table_name_task >> export_to_gcs
 ```
 
-Here, the `generate_table_name` task returns a dynamically created table name string. Airflow implicitly pushes this string to XCOM with the task id as the key. The `BigQueryToGCSOperator` then pulls the value using  `{{ ti.xcom_pull(task_ids='generate_table_name') }}` in the table name and GCS output filename. This is arguably a cleaner approach, especially if you are only dealing with single values.
+Here, the `generate_table_name` task returns a dynamically created table name string. Airflow implicitly pushes this string to XCOM with the task id as the key. The `BigQueryToGCSOperator` then pulls the value using `{{ ti.xcom_pull(task_ids='generate_table_name') }}` in the table name and GCS output filename. This is arguably a cleaner approach, especially if you are only dealing with single values.
 
 **Method 3: Using a Dictionary to structure XCOM values and Jinja Templating**
 
 Sometimes, you need to pass multiple values, this method is suitable. It is an extension of Method 2.
+
 1. PythonOperator returns a dictionary.
 2. Downstream tasks use dictionary keys within Jinja templates.
 
@@ -168,11 +169,11 @@ Here, the `generate_data_dict` returns a dictionary, including a table name and 
 
 **Important Considerations and Recommendations**
 
-*   **Error Handling:** Always ensure proper error handling and default values in your Jinja templates to prevent DAG failures if XCOM values are missing. Consider adding checks like `{{ ti.xcom_pull(task_ids='my_task', key='my_key', default='fallback_value') }}`.
-*   **Type Safety:** Be mindful of data types passed through XCOM, especially with JSON or other complex structures. Ensure data is serializable. If dealing with particularly complex values, you can explore custom XCOM backends.
-*   **Documentation:** Read and digest the official Airflow documentation thoroughly, especially regarding XCOM and Jinja templating. The official documentation is your friend here. There are also good resources on the topic available on the "Astronomer" website.
-*  **Code Clarity:** Prioritize code readability by using well-defined task names and keys for your XCOM values. This helps maintain a clear understanding of your DAG logic. I've had to debug some really convoluted pipelines in my time, and clear naming makes a world of difference.
+- **Error Handling:** Always ensure proper error handling and default values in your Jinja templates to prevent DAG failures if XCOM values are missing. Consider adding checks like `{{ ti.xcom_pull(task_ids='my_task', key='my_key', default='fallback_value') }}`.
+- **Type Safety:** Be mindful of data types passed through XCOM, especially with JSON or other complex structures. Ensure data is serializable. If dealing with particularly complex values, you can explore custom XCOM backends.
+- **Documentation:** Read and digest the official Airflow documentation thoroughly, especially regarding XCOM and Jinja templating. The official documentation is your friend here. There are also good resources on the topic available on the "Astronomer" website.
+- **Code Clarity:** Prioritize code readability by using well-defined task names and keys for your XCOM values. This helps maintain a clear understanding of your DAG logic. I've had to debug some really convoluted pipelines in my time, and clear naming makes a world of difference.
 
-To further expand your knowledge I recommend focusing on Airflow's documentation on templating and XCOM. It is important to get a solid understanding of these underlying concepts. I recommend reading up on *Effective Python* by Brett Slatkin for best practices on structuring your python code which is used heavily within the python operator.
+To further expand your knowledge I recommend focusing on Airflow's documentation on templating and XCOM. It is important to get a solid understanding of these underlying concepts. I recommend reading up on _Effective Python_ by Brett Slatkin for best practices on structuring your python code which is used heavily within the python operator.
 
 In summary, using XCOM pushed values as parameters in `BigQueryToGCSOperator` is all about understanding how to push and pull values using the correct keys and references within Airflow DAGs. Mastering Jinja templating in Airflow allows for flexible and dynamic DAGs. By utilizing one of the methods discussed and ensuring proper error handling, you can build robust and reliable data pipelines.

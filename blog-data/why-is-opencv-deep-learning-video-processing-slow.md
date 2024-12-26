@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-is-opencv-deep-learning-video-processing-slow"
 ---
 
-Alright, let's unpack this. The perceived slowness of OpenCV when handling deep learning models on video is a recurring issue, and it's rarely a single culprit. Over the years, I’ve encountered this exact problem on several projects, ranging from basic object detection in surveillance footage to more intricate pose estimation for motion analysis. I’ll share some insights based on what I’ve seen, along with some practical solutions.
+, let's unpack this. The perceived slowness of OpenCV when handling deep learning models on video is a recurring issue, and it's rarely a single culprit. Over the years, I’ve encountered this exact problem on several projects, ranging from basic object detection in surveillance footage to more intricate pose estimation for motion analysis. I’ll share some insights based on what I’ve seen, along with some practical solutions.
 
-Fundamentally, the delay often stems from a combination of bottlenecks across multiple layers of the processing pipeline, rather than OpenCV itself being inherently slow. It’s the way we use it – or more precisely, the way we *don't* use it optimally – that frequently leads to performance issues.
+Fundamentally, the delay often stems from a combination of bottlenecks across multiple layers of the processing pipeline, rather than OpenCV itself being inherently slow. It’s the way we use it – or more precisely, the way we _don't_ use it optimally – that frequently leads to performance issues.
 
 First off, let’s address the biggest performance hog: frame-by-frame processing. Most deep learning models, particularly convolutional neural networks (cnns), are computationally intensive. Each frame needs to be preprocessed (resizing, normalization, etc.), fed through the network, and then the output post-processed (drawing bounding boxes, etc.). Doing this serially, frame by frame, using a single CPU thread, is going to drag things to a crawl. I distinctly remember one early project where we were trying to do real-time object detection on 30fps video using just a standard desktop processor – it was abysmal. Frame rates dropped below 10fps, and the system felt unresponsive.
 
@@ -76,7 +76,7 @@ def process_frame(frame_queue, result_queue, model_path, config_path):
       frame = frame_queue.get()
       if frame is None:
          break
-      
+
       blob = cv2.dnn.blobFromImage(frame, 1/255.0, (300, 300), swapRB=True, crop=False)
       net.setInput(blob)
       detections = net.forward()
@@ -86,7 +86,7 @@ def process_frame(frame_queue, result_queue, model_path, config_path):
 if __name__ == '__main__':
   model_path = 'frozen_inference_graph.pb'
   config_path = 'config.pbtxt'
-  
+
   frame_queue = mp.Queue()
   result_queue = mp.Queue()
 
@@ -126,13 +126,13 @@ if __name__ == '__main__':
       start_time = time.time() #reset after display loop
     except queue.Empty:
        pass
-  
+
   for _ in processes:
       frame_queue.put(None)
 
   for p in processes:
       p.join()
-  
+
   cap.release()
   cv2.destroyAllWindows()
 ```

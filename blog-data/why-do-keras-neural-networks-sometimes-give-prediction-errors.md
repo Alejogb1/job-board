@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-do-keras-neural-networks-sometimes-give-prediction-errors"
 ---
 
-Okay, let's talk about prediction errors in keras neural networks. It's something I've spent quite a bit of time troubleshooting over the years, and it’s definitely not a one-size-fits-all explanation. My experience, particularly on a large-scale object recognition project involving a complex convolutional network several years ago, has taught me that these errors rarely boil down to a single cause. More often, it’s a combination of factors interacting in subtle ways. Instead of a simple on/off switch, think of it more like a complex machine where many parts need to be calibrated precisely for optimal output.
+, let's talk about prediction errors in keras neural networks. It's something I've spent quite a bit of time troubleshooting over the years, and it’s definitely not a one-size-fits-all explanation. My experience, particularly on a large-scale object recognition project involving a complex convolutional network several years ago, has taught me that these errors rarely boil down to a single cause. More often, it’s a combination of factors interacting in subtle ways. Instead of a simple on/off switch, think of it more like a complex machine where many parts need to be calibrated precisely for optimal output.
 
 The core problem generally revolves around discrepancies between the model’s internal representation of the data and the actual data itself, or its future instances. This can manifest as wildly incorrect predictions, slightly off estimations, or a generally inconsistent performance. Now, let's delve into some of the key culprits.
 
@@ -66,6 +66,7 @@ X_test_scaled = scaler.transform(X_test)
 # Now you can train a model with X_train_scaled
 print("Shape of the scaled training dataset: ", X_train_scaled.shape)
 ```
+
 This code shows how to scale features in data, a fundamental preprocessing step. Other techniques include normalization, and handling missing values. These must be adjusted based on specific datasets.
 
 **Snippet 3: Using Regularization and Dropout**
@@ -93,6 +94,7 @@ model = create_regularized_model(input_shape, num_classes)
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 print(model.summary())
 ```
+
 This snippet shows an example of regularization and dropout, which are crucial for combating overfitting. The `l2` regularizer adds a penalty to the loss function, and the dropout layer randomly drops nodes during training, forcing the network to learn more robust features.
 
 Beyond these points, other factors like batch size, the number of training epochs, and even numerical stability can affect prediction errors. The choice of a loss function also depends greatly on the problem you are addressing; binary cross-entropy for binary classification, categorical cross-entropy for multi-class classification, and mean squared error for regression, for example.

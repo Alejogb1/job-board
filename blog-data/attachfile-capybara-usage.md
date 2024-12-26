@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "attachfile-capybara-usage"
 ---
 
-Okay so you're asking about `attach_file` in Capybara right Been there done that a few times Let me tell you it can be a bit of a pain if you don't know its quirks
+you're asking about `attach_file` in Capybara right Been there done that a few times Let me tell you it can be a bit of a pain if you don't know its quirks
 
 First off for anyone just stumbling across this `attach_file` is a Capybara method designed to simulate a user selecting a file to upload via a standard HTML file input element think `<input type="file">` It's not magic it doesn't bypass the file selection it actually mimics the browser interaction
 
@@ -20,9 +20,9 @@ Simple right Wrong Oh so wrong What happened next is that it didn't work my test
 
 The biggest gotcha I learned and this is crucial is that Capybara and the underlying web drivers (like Selenium or Poltergeist or Webkit) don't interact with file system dialogues directly The browser doesn’t expose access to its internal file handling logic You're not actually selecting a file through a "browse" button click that shows a dialog you're basically just telling the browser "pretend you have this file path set in this file input"
 
-So what does this mean It means the file path you provide has to be accessible *by the browser* which is running within the driver's process not necessarily your own local environment This is especially true in headless mode with something like Chrome headless running in a Docker container for example the file path on your machine might be completely invalid inside the browser process So I had to figure out how to mount some volumes for the browser to see files this is basic docker stuff now but back then it was pretty wild west
+So what does this mean It means the file path you provide has to be accessible _by the browser_ which is running within the driver's process not necessarily your own local environment This is especially true in headless mode with something like Chrome headless running in a Docker container for example the file path on your machine might be completely invalid inside the browser process So I had to figure out how to mount some volumes for the browser to see files this is basic docker stuff now but back then it was pretty wild west
 
-Okay so let's say you've got that covered The next thing I encountered was making sure I have the correct selector It’s not as obvious as one might think Sometimes the id is dynamic or the name is shared across several elements and if this happens things will get really messy and frustrating. Let me give you an example of a slightly more robust approach that I use now
+let's say you've got that covered The next thing I encountered was making sure I have the correct selector It’s not as obvious as one might think Sometimes the id is dynamic or the name is shared across several elements and if this happens things will get really messy and frustrating. Let me give you an example of a slightly more robust approach that I use now
 
 ```ruby
 find("input[type='file'][name='image_upload']").attach_file('path/to/my/image.jpg')

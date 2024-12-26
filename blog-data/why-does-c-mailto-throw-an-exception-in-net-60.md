@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-c-mailto-throw-an-exception-in-net-60"
 ---
 
-Alright, let's delve into this particular corner case regarding `mailto:` handling in .NET 6.0, it’s something I’ve had to debug extensively on a rather peculiar project involving a custom business application that unfortunately relied heavily on legacy protocols for data interaction. Initially, the idea of using `mailto:` seemed simple enough for quick user feedback mechanisms. We quickly found that simplicity was a rather misleading facade.
+, let's delve into this particular corner case regarding `mailto:` handling in .NET 6.0, it’s something I’ve had to debug extensively on a rather peculiar project involving a custom business application that unfortunately relied heavily on legacy protocols for data interaction. Initially, the idea of using `mailto:` seemed simple enough for quick user feedback mechanisms. We quickly found that simplicity was a rather misleading facade.
 
 The exception you're encountering with `mailto:` in .NET 6.0 arises not from a flaw in the `mailto:` URI scheme itself, but from the way .NET's `Process.Start()` method, which is generally used to open such URIs, handles external applications and their associated protocols. Essentially, it's a matter of external dependencies and the security policies baked into operating systems rather than something intrinsically wrong within the C# code itself.
 
@@ -82,6 +82,7 @@ public class MailtoExampleCheck
 }
 
 ```
+
 Here, I’m delving into the Windows registry to see if a `mailto` handler is registered at the system level. If the `mailto\shell\open\command` key is missing, it indicates a likely reason why `Process.Start` would fail. This is a rudimentary check and isn't comprehensive, as permission issues or further complexities in system configuration might still hinder the process. It's also a Windows-specific solution and would require adjustments for other operating systems.
 
 **Example 3: More Robust Error Handling**
@@ -133,6 +134,7 @@ public class MailtoExampleRobust
     }
 }
 ```
+
 This example uses more specific exception handling, trying to catch a `Win32Exception`, which often has a `NativeErrorCode` of 1155 specifically indicating “No application is associated with the specified file for this operation”. This gives us slightly better insight into the problem and allows us to present more user-friendly error messages. Note that specific error codes can vary based on Windows versions. Furthermore, checking whether the process was started can offer additional clarity regarding the outcome of the `Process.Start` call.
 
 To further your understanding, I recommend studying the following resources:

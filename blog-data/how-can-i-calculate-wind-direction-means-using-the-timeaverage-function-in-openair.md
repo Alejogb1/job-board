@@ -4,20 +4,20 @@ date: "2024-12-23"
 id: "how-can-i-calculate-wind-direction-means-using-the-timeaverage-function-in-openair"
 ---
 
-Alright, let's tackle this. It's a common challenge, and I've seen this pop up multiple times over the years, especially when working with atmospheric data. Calculating mean wind directions can be a bit trickier than averaging, say, temperature, due to the cyclical nature of angles. Directly averaging degrees can lead to misleading results, like averaging 1 degree and 359 degrees to 180 degrees, which is obviously not the desired outcome. Openair's `timeAverage` function is powerful, but you need to handle wind direction carefully. The core issue is transforming angular data into cartesian components before averaging and then converting them back. Let me explain the process I typically follow, drawing from a project I worked on about five years back analyzing regional wind patterns across multiple weather stations.
+, let's tackle this. It's a common challenge, and I've seen this pop up multiple times over the years, especially when working with atmospheric data. Calculating mean wind directions can be a bit trickier than averaging, say, temperature, due to the cyclical nature of angles. Directly averaging degrees can lead to misleading results, like averaging 1 degree and 359 degrees to 180 degrees, which is obviously not the desired outcome. Openair's `timeAverage` function is powerful, but you need to handle wind direction carefully. The core issue is transforming angular data into cartesian components before averaging and then converting them back. Let me explain the process I typically follow, drawing from a project I worked on about five years back analyzing regional wind patterns across multiple weather stations.
 
-First, we aren't going to average the direction values directly. Instead, we’ll break each wind direction down into its *eastward (u)* and *northward (v)* components. This effectively moves us from polar coordinates to cartesian coordinates, where averaging makes perfect sense. You remember your trigonometry, I’m sure—if the wind direction is `θ` (in degrees), and we are considering it as blowing *from* that direction, then:
+First, we aren't going to average the direction values directly. Instead, we’ll break each wind direction down into its _eastward (u)_ and _northward (v)_ components. This effectively moves us from polar coordinates to cartesian coordinates, where averaging makes perfect sense. You remember your trigonometry, I’m sure—if the wind direction is `θ` (in degrees), and we are considering it as blowing _from_ that direction, then:
 
-*  `u = -sin(θ * π/180)`
-* `v = -cos(θ * π/180)`
+- `u = -sin(θ * π/180)`
+- `v = -cos(θ * π/180)`
 
-Notice the minus signs; we are converting a direction *from* to a direction *to*, which is necessary when working with wind vectors. Now, we can safely average these 'u' and 'v' components over our desired time interval. Once we have the mean eastward (`u_mean`) and mean northward (`v_mean`) components, we just need to reverse the process to get the average wind direction. This will involve using `atan2(u_mean, v_mean)` which handles quadrant issues properly (unlike `atan`). Finally, we convert this back from radians to degrees.
+Notice the minus signs; we are converting a direction _from_ to a direction _to_, which is necessary when working with wind vectors. Now, we can safely average these 'u' and 'v' components over our desired time interval. Once we have the mean eastward (`u_mean`) and mean northward (`v_mean`) components, we just need to reverse the process to get the average wind direction. This will involve using `atan2(u_mean, v_mean)` which handles quadrant issues properly (unlike `atan`). Finally, we convert this back from radians to degrees.
 
 The whole process is then:
 
-1.  Convert wind direction (degrees) to *u* and *v* components.
-2.  Average the *u* and *v* components over the desired time period using `timeAverage`.
-3.  Convert the average *u* and *v* components back to a mean wind direction (degrees).
+1.  Convert wind direction (degrees) to _u_ and _v_ components.
+2.  Average the _u_ and _v_ components over the desired time period using `timeAverage`.
+3.  Convert the average _u_ and _v_ components back to a mean wind direction (degrees).
 
 Here's the first code snippet illustrating this. Assume that my data is stored in `my_data`, with ‘ws’ representing wind speed and 'wd' representing wind direction.
 
@@ -65,9 +65,9 @@ mean_wind_data <- calculate_mean_wd(my_data)
 print(head(mean_wind_data))
 ```
 
-In this first example, we are defining a function, `calculate_mean_wd`, which does the heavy lifting. It takes your dataframe and calculates the mean wind direction for a specified time period. This function first adds columns ‘u’ and ‘v’ which represent the wind's cartesian components. Then, the `timeAverage` is used to average those components. Finally, the function converts the averaged *u* and *v* components back to a wind direction and calculates the mean wind speed, using atan2 and modulus operators to handle the wraparound nature of angles properly. I always prefer to separate functions for readability and reusability.
+In this first example, we are defining a function, `calculate_mean_wd`, which does the heavy lifting. It takes your dataframe and calculates the mean wind direction for a specified time period. This function first adds columns ‘u’ and ‘v’ which represent the wind's cartesian components. Then, the `timeAverage` is used to average those components. Finally, the function converts the averaged _u_ and _v_ components back to a wind direction and calculates the mean wind speed, using atan2 and modulus operators to handle the wraparound nature of angles properly. I always prefer to separate functions for readability and reusability.
 
-Now, if your aim is to calculate the mean direction daily, you can just change the `avg_period` argument within the function.  Here's the same code, except calculating average direction per day using the `avg_period` parameter.
+Now, if your aim is to calculate the mean direction daily, you can just change the `avg_period` argument within the function. Here's the same code, except calculating average direction per day using the `avg_period` parameter.
 
 ```R
 library(openair)
@@ -163,6 +163,6 @@ print(head(mean_wind_data))
 
 As you can see, the core logic remains the same, we simply omit the wind speed when calculating the 'u' and 'v' components. This approach is mathematically sound and suitable when dealing with wind direction only data.
 
-For a deeper dive into vector averaging, I would suggest reading *Statistical Analysis of Circular Data* by N.I. Fisher.  It's a comprehensive text that covers this topic in rigorous detail and provides a strong foundation for handling directional data in any context. Also, if you are interested in the mathematical aspect of wind data, *An Introduction to Atmospheric Radiation* by K.N. Liou is excellent and although not wholly focused on wind, it does a good job of putting wind data into the larger context of atmospheric sciences. For a purely statistical book, *Practical Statistics for Astronomers* by Michael C. Feast is a great place to get your feet wet with real-world examples.
+For a deeper dive into vector averaging, I would suggest reading _Statistical Analysis of Circular Data_ by N.I. Fisher. It's a comprehensive text that covers this topic in rigorous detail and provides a strong foundation for handling directional data in any context. Also, if you are interested in the mathematical aspect of wind data, _An Introduction to Atmospheric Radiation_ by K.N. Liou is excellent and although not wholly focused on wind, it does a good job of putting wind data into the larger context of atmospheric sciences. For a purely statistical book, _Practical Statistics for Astronomers_ by Michael C. Feast is a great place to get your feet wet with real-world examples.
 
 In summary, calculating mean wind directions isn't as straightforward as directly averaging angles. The critical step is to convert to cartesian components, average those, and convert back to angular values. `timeAverage` in `openair` works smoothly in this paradigm. These snippets should give you a solid base to work from, and the reference texts should help if you want to delve further into the methodology.

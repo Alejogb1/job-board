@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-i-resolve-kerastensor-issues-in-tensorflow-apis"
 ---
 
-Alright, let's tackle this. I've certainly stumbled into my share of `KerasTensor` quandaries over the years, particularly when mixing functional and imperative styles in TensorFlow. These errors, which often boil down to unexpected type mismatches, can be a real time sink, but once you understand the underlying mechanisms, they become quite manageable.
+, let's tackle this. I've certainly stumbled into my share of `KerasTensor` quandaries over the years, particularly when mixing functional and imperative styles in TensorFlow. These errors, which often boil down to unexpected type mismatches, can be a real time sink, but once you understand the underlying mechanisms, they become quite manageable.
 
-Essentially, the `KerasTensor` type is TensorFlow's way of representing a symbolic tensor within the context of Keras. Unlike an `EagerTensor`, which holds concrete numerical values, a `KerasTensor` describes the *shape and data type* of a tensor that will be computed later. These are predominantly used in the functional API, especially when defining models using the `tf.keras.layers` or when constructing custom model architectures. The problems usually arise when we inadvertently try to use `KerasTensor` objects in places where TensorFlow expects an `EagerTensor` (i.e., numerical computation context), or vice versa. This mismatch creates errors such as "Unsupported operand type(s) for +: 'KerasTensor' and 'int'" or similar type incompatibility exceptions.
+Essentially, the `KerasTensor` type is TensorFlow's way of representing a symbolic tensor within the context of Keras. Unlike an `EagerTensor`, which holds concrete numerical values, a `KerasTensor` describes the _shape and data type_ of a tensor that will be computed later. These are predominantly used in the functional API, especially when defining models using the `tf.keras.layers` or when constructing custom model architectures. The problems usually arise when we inadvertently try to use `KerasTensor` objects in places where TensorFlow expects an `EagerTensor` (i.e., numerical computation context), or vice versa. This mismatch creates errors such as "Unsupported operand type(s) for +: 'KerasTensor' and 'int'" or similar type incompatibility exceptions.
 
-The core issue lies in context: when a TensorFlow operation encounters a `KerasTensor`, it cannot immediately execute it. The graph hasn't been *built* yet, meaning the placeholders are there, but the computation hasn't been defined. Therefore, we need to be very careful when and where we use each type. The fix usually revolves around ensuring we are explicitly performing computation in the correct *context*. Let’s delve into three specific situations I’ve encountered, along with the solutions I've found most reliable.
+The core issue lies in context: when a TensorFlow operation encounters a `KerasTensor`, it cannot immediately execute it. The graph hasn't been _built_ yet, meaning the placeholders are there, but the computation hasn't been defined. Therefore, we need to be very careful when and where we use each type. The fix usually revolves around ensuring we are explicitly performing computation in the correct _context_. Let’s delve into three specific situations I’ve encountered, along with the solutions I've found most reliable.
 
-First, consider a scenario where you're trying to perform a direct arithmetic operation on the output of a Keras layer *before* the model is compiled and trained. Let's say you have something like this:
+First, consider a scenario where you're trying to perform a direct arithmetic operation on the output of a Keras layer _before_ the model is compiled and trained. Let's say you have something like this:
 
 ```python
 import tensorflow as tf
@@ -100,6 +100,7 @@ model.fit(x_train,y_train,epochs=1)
 
 
 ```
+
 In this case, trying to compare a tensor with a number directly fails because `>` is a standard python operation and is not tensor aware, hence you get errors with a `KerasTensor`. Again, the key is to use TensorFlow's functions, such as `tf.greater` in this case and `tf.where`. These operators are aware of tensor operations, both for `EagerTensor` and `KerasTensor`. In short, make sure that when designing custom layers, you only use TensorFlow functions, avoiding standard Python operators.
 
 To further solidify your understanding, I highly recommend working through the TensorFlow documentation on the Functional API and the explanation of eager execution vs. graph execution (look for sections on "tf.function"). For a deeper dive, the book "Deep Learning with Python" by François Chollet, the creator of Keras, gives a great perspective on how Keras integrates with TensorFlow's backend. Also, the original TensorFlow paper ("TensorFlow: A system for large-scale machine learning") provides the theoretical underpinnings, although it is quite technical and possibly not the best starting point for practical debugging.

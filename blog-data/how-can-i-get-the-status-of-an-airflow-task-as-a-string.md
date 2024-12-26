@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-get-the-status-of-an-airflow-task-as-a-string"
 ---
 
-Okay, so grabbing the status of an airflow task, eh? It’s something I’ve had to tackle multiple times, and it definitely has its nuances. Early on in my career, I remember struggling with this when we were migrating a rather sizable legacy system to an airflow-centric setup. We needed to programmatically monitor tasks, report on their success or failure, and this task status thing became surprisingly crucial. It wasn't as simple as just grabbing a single value; you had to consider various contexts and conditions.
+, so grabbing the status of an airflow task, eh? It’s something I’ve had to tackle multiple times, and it definitely has its nuances. Early on in my career, I remember struggling with this when we were migrating a rather sizable legacy system to an airflow-centric setup. We needed to programmatically monitor tasks, report on their success or failure, and this task status thing became surprisingly crucial. It wasn't as simple as just grabbing a single value; you had to consider various contexts and conditions.
 
 The core issue, as you've likely found, is that airflow's task status isn't directly exposed as a simple string by default. It's usually represented by an enum within the airflow metadata database, typically postgres, and then manipulated programmatically in airflow's codebase. So, what we need to do is bridge that gap, pulling information from airflow's internal structures and transforming it into a human-readable string, usable in logs, alerts, or other reporting systems.
 

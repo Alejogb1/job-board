@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-dynamically-adjust-image-annotations-to-match-photo-transformations-rotationcrop-in-python"
 ---
 
-Okay, let's delve into this. Image annotation adjustment based on transformations—it’s a challenge I've definitely faced, particularly during a project involving automated document processing years ago. We had to rotate scanned documents frequently, and keeping the bounding boxes of extracted text accurately aligned was a crucial, and sometimes frustrating, aspect. So, how can we tackle this dynamically using Python? The key is understanding matrix transformations and applying them appropriately to annotation coordinates.
+, let's delve into this. Image annotation adjustment based on transformations—it’s a challenge I've definitely faced, particularly during a project involving automated document processing years ago. We had to rotate scanned documents frequently, and keeping the bounding boxes of extracted text accurately aligned was a crucial, and sometimes frustrating, aspect. So, how can we tackle this dynamically using Python? The key is understanding matrix transformations and applying them appropriately to annotation coordinates.
 
 Fundamentally, when you rotate or crop an image, you're essentially applying geometric transformations. These transformations can be represented mathematically using matrices. For example, rotation around a center point and scaling operations can be combined into a single affine transformation matrix. We need to compute this matrix for each transformation applied to the image and then apply it inversely to the annotation coordinates. Let's break it down into steps.
 
@@ -114,6 +114,7 @@ cropped_image = image.crop(crop_region)
 adjusted_boxes = crop_annotations(original_annotations, crop_region, image.size)
 print("Cropped boxes:", adjusted_boxes)
 ```
+
 Here, `crop_annotations` is shown, which offsets and adjusts annotation coordinates based on the crop region's coordinates. It clamps coordinate values so they don't fall outside of the cropped boundaries. It avoids the complexities of matrices because the translation is straightforward.
 
 **Example 3: Combining Rotation and Cropping**

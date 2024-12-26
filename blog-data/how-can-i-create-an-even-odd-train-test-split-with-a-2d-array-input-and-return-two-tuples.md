@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-create-an-even-odd-train-test-split-with-a-2d-array-input-and-return-two-tuples"
 ---
 
-Alright, let's tackle this. Funny enough, I actually dealt with a similar problem quite a few years back while working on a rather peculiar sensor data project. We had this massive 2D array of readings, and for our model validation, it was crucial to ensure an even-odd split, not just some arbitrary shuffle. I quickly learned that a naive approach can quickly lead to biased splits, especially when temporal or spatial dependencies are involved. So, let's unpack exactly how to achieve a robust even-odd split for a 2D array, returning the results as two tuples.
+, let's tackle this. Funny enough, I actually dealt with a similar problem quite a few years back while working on a rather peculiar sensor data project. We had this massive 2D array of readings, and for our model validation, it was crucial to ensure an even-odd split, not just some arbitrary shuffle. I quickly learned that a naive approach can quickly lead to biased splits, especially when temporal or spatial dependencies are involved. So, let's unpack exactly how to achieve a robust even-odd split for a 2D array, returning the results as two tuples.
 
-The core idea here revolves around using the *index* of the array's first dimension – effectively, the row number – to decide whether a given row belongs to the 'even' set or the 'odd' set. This is a deterministic and straightforward method that avoids randomness, which, in this context, is highly desirable.
+The core idea here revolves around using the _index_ of the array's first dimension – effectively, the row number – to decide whether a given row belongs to the 'even' set or the 'odd' set. This is a deterministic and straightforward method that avoids randomness, which, in this context, is highly desirable.
 
 First, let’s define what I mean by ‘even’ and ‘odd’ sets. Rows with even indices (0, 2, 4, ...) will be grouped into one tuple (the ‘even’ tuple), and rows with odd indices (1, 3, 5, ...) will be grouped into another tuple (the ‘odd’ tuple). We want to preserve the original row structure within those tuples, so we're not changing the inherent data shape within the split.
 
@@ -99,14 +99,15 @@ even_np_noc, odd_np_noc = even_odd_split_numpy_no_conversion(data_ex_np)
 print(f"Even rows (numpy no conversion): {even_np_noc}")
 print(f"Odd rows (numpy no conversion): {odd_np_noc}")
 ```
+
 Here, instead of casting to a tuple, we maintain the numpy arrays in the return tuple, providing added flexibility for cases where those array types must be preserved for the next processing stage.
 
 **Key Considerations:**
 
-*   **Data Structure:** Ensure your input `data` is a 2D array or a list of lists before processing to avoid index-out-of-bounds or type errors.
-*   **Performance:** If working with large datasets, using numpy for its vectorized operations is highly recommended. The list comprehensions will often not scale as efficiently.
-*   **Tuples or ndarrays:** Depending on your application needs, you may want to keep the output as tuples, lists, or numpy ndarrays for further operations.
-*   **Maintainability:** While pure Python can be more readable for smaller cases, NumPy's approach is more concise and scalable for larger data.
+- **Data Structure:** Ensure your input `data` is a 2D array or a list of lists before processing to avoid index-out-of-bounds or type errors.
+- **Performance:** If working with large datasets, using numpy for its vectorized operations is highly recommended. The list comprehensions will often not scale as efficiently.
+- **Tuples or ndarrays:** Depending on your application needs, you may want to keep the output as tuples, lists, or numpy ndarrays for further operations.
+- **Maintainability:** While pure Python can be more readable for smaller cases, NumPy's approach is more concise and scalable for larger data.
 
 **Further Reading:**
 

@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-does-ddd-validate-related-entities-in-aggregate-roots"
 ---
 
-Okay, let's unpack how domain-driven design (DDD) handles validation for related entities within aggregate roots. This is an area I’ve spent considerable time navigating, both in theory and in the trenches of large-scale systems. It’s not uncommon to see teams struggle with the boundaries and validation rules within aggregate boundaries, and getting this part correct is crucial for maintaining data integrity and enforcing business rules.
+, let's unpack how domain-driven design (DDD) handles validation for related entities within aggregate roots. This is an area I’ve spent considerable time navigating, both in theory and in the trenches of large-scale systems. It’s not uncommon to see teams struggle with the boundaries and validation rules within aggregate boundaries, and getting this part correct is crucial for maintaining data integrity and enforcing business rules.
 
 My experience, particularly on a recent project involving a complex e-commerce platform, underscored the importance of a consistent approach. We had initially allowed direct modification of nested entities, which led to a tangled mess of inconsistent data. We had to backtrack, re-evaluate our aggregates, and firmly establish how validation should be handled—a very costly learning experience I don't recommend.
 
-Fundamentally, DDD posits that an aggregate root is the single entry point for modifying its associated entities. It acts as a transactional boundary, ensuring that all changes within the aggregate are done so in a consistent and valid manner. The crucial point here is that the aggregate root itself is responsible for validating *all* entities contained within its boundary. We're not aiming for some kind of distributed validation that bounces around between objects. Think of the aggregate root as the gatekeeper to its data.
+Fundamentally, DDD posits that an aggregate root is the single entry point for modifying its associated entities. It acts as a transactional boundary, ensuring that all changes within the aggregate are done so in a consistent and valid manner. The crucial point here is that the aggregate root itself is responsible for validating _all_ entities contained within its boundary. We're not aiming for some kind of distributed validation that bounces around between objects. Think of the aggregate root as the gatekeeper to its data.
 
-Now, how does this translate into actual validation practices? The first, and perhaps most vital point, is that *nested* entities should never be directly exposed to external clients or services. Instead, all changes should happen through methods on the aggregate root. This prevents clients from bypassing the root's validation logic, leading to potentially invalid states within the aggregate. This isn't just about 'not exposing' nested entities; it's about completely controling *how* those entities are changed. You will hear this as 'encapsulation'.
+Now, how does this translate into actual validation practices? The first, and perhaps most vital point, is that _nested_ entities should never be directly exposed to external clients or services. Instead, all changes should happen through methods on the aggregate root. This prevents clients from bypassing the root's validation logic, leading to potentially invalid states within the aggregate. This isn't just about 'not exposing' nested entities; it's about completely controling _how_ those entities are changed. You will hear this as 'encapsulation'.
 
-Consider a scenario where we have an `Order` aggregate root. Within an `Order`, we might have multiple `OrderItem` entities. Rather than allowing external clients to modify `OrderItem` directly, we would provide methods like `addOrderItem(product, quantity)` or `updateOrderItemQuantity(itemId, newQuantity)` on the `Order` aggregate. This pattern centralizes validation logic within the aggregate root. It also makes it easier to trace *where* the update is initiated, and allows us to encapsulate changes in the aggregate's behavior, not just its state.
+Consider a scenario where we have an `Order` aggregate root. Within an `Order`, we might have multiple `OrderItem` entities. Rather than allowing external clients to modify `OrderItem` directly, we would provide methods like `addOrderItem(product, quantity)` or `updateOrderItemQuantity(itemId, newQuantity)` on the `Order` aggregate. This pattern centralizes validation logic within the aggregate root. It also makes it easier to trace _where_ the update is initiated, and allows us to encapsulate changes in the aggregate's behavior, not just its state.
 
 Let's look at an initial code snippet to illustrate this point:
 
@@ -45,9 +45,9 @@ class OrderItem {
 
 Here we can clearly see the importance of encapsulating change within the aggregate. The getter, which returns a list, is removed entirely to ensure that changes can only be made through the exposed API of the aggregate.
 
-The second key aspect is that validation should be *contextual* to the aggregate's state. For example, an `OrderItem` quantity might only be valid in the context of the overall `Order`—perhaps there are inventory limitations on the aggregate level, or the total cost for a user has to be under a certain value. The validation rule isn't simply about an individual `OrderItem`; it's about the `Order` as a whole.
+The second key aspect is that validation should be _contextual_ to the aggregate's state. For example, an `OrderItem` quantity might only be valid in the context of the overall `Order`—perhaps there are inventory limitations on the aggregate level, or the total cost for a user has to be under a certain value. The validation rule isn't simply about an individual `OrderItem`; it's about the `Order` as a whole.
 
-In our example, if a new `OrderItem` exceeds inventory for a particular product, the aggregate root should check this, and throw an exception *before* allowing the new `OrderItem` to be added, rather than after. This implies that validation often occurs as a "pre-condition check" before performing any operation within an aggregate. Let's expand our `Order` class to illustrate:
+In our example, if a new `OrderItem` exceeds inventory for a particular product, the aggregate root should check this, and throw an exception _before_ allowing the new `OrderItem` to be added, rather than after. This implies that validation often occurs as a "pre-condition check" before performing any operation within an aggregate. Let's expand our `Order` class to illustrate:
 
 ```java
 class Order {
@@ -84,9 +84,9 @@ class Order {
 }
 ```
 
-Here the aggregate validates the quantity, verifies the availability in inventory *and* ensures that adding this item won't exceed the total allowed value. If any of these pre-condition checks fail, the aggregate will not progress. This guarantees that changes within the aggregate always maintain internal consistency.
+Here the aggregate validates the quantity, verifies the availability in inventory _and_ ensures that adding this item won't exceed the total allowed value. If any of these pre-condition checks fail, the aggregate will not progress. This guarantees that changes within the aggregate always maintain internal consistency.
 
-Third, complex validations should be pushed down to lower layers within the aggregate root's methods to manage complexity. While the root is in charge of validation, it doesn’t need to have *all* the validation logic directly implemented in its methods. Delegation can help to make these checks more readable and easier to maintain. This delegation could involve creating separate validator classes or utility functions to handle more complex validations and calculations for use within the aggregate methods.
+Third, complex validations should be pushed down to lower layers within the aggregate root's methods to manage complexity. While the root is in charge of validation, it doesn’t need to have _all_ the validation logic directly implemented in its methods. Delegation can help to make these checks more readable and easier to maintain. This delegation could involve creating separate validator classes or utility functions to handle more complex validations and calculations for use within the aggregate methods.
 
 Let’s introduce a small change to illustrate this:
 

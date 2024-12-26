@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-add-subscriptor-superscript-in-notion-block"
 ---
 
-Okay so you're banging your head against the Notion wall trying to get that sweet subscript and superscript action going right I feel your pain been there myself more times than I care to admit This is a weird quirk in Notion not a bug but a feature I guess lets call it an unpolished diamond
+you're banging your head against the Notion wall trying to get that sweet subscript and superscript action going right I feel your pain been there myself more times than I care to admit This is a weird quirk in Notion not a bug but a feature I guess lets call it an unpolished diamond
 
 So yeah you can't just hit some magic formatting button and boom subscript or superscript There isnt one There arent any shortcuts like Control plus Shift plus plus for superscript or similar Nothing like that
 
@@ -26,7 +26,7 @@ LaTeX is a typesetting system specifically designed for math and scientific docu
 
 Notion interprets code blocks with LaTeX syntax and renders them correctly as math if you select the right language code to be displayed
 
-Here's how it works you create a code block within Notion and then you write your LaTeX code In this case the syntax is simple for subscripts you use the underscore _ character and curly braces {} for superscripts you use the caret ^ character and curly braces {}
+Here's how it works you create a code block within Notion and then you write your LaTeX code In this case the syntax is simple for subscripts you use the underscore \_ character and curly braces {} for superscripts you use the caret ^ character and curly braces {}
 
 Let me show you a few examples using Notion's markdown style code blocks to illustrate the process:
 

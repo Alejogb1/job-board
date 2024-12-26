@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-a-devcontainerjson-for-vscode-using-an-existing-container"
 ---
 
-alright, so you're looking to hook up vscode with a devcontainer using an already running container, right? i've been down that road, more times than i care to recall, and trust me, it can be a little fiddly the first couple of tries. i’m assuming you're already comfortable with docker and have a container kicking around, maybe one you've been using for local development or some kind of personal project.
+, so you're looking to hook up vscode with a devcontainer using an already running container, right? i've been down that road, more times than i care to recall, and trust me, it can be a little fiddly the first couple of tries. i’m assuming you're already comfortable with docker and have a container kicking around, maybe one you've been using for local development or some kind of personal project.
 
 let's break it down. the goal here is to get vscode to connect to that existing container for its development environment rather than having it build a brand new one every time. you're bypassing that initial build process, which can be quite time-consuming, especially when dealing with more complex setups. the key piece is that `devcontainer.json` file. this little json guy tells vscode how to interact with your container.
 
@@ -16,18 +16,15 @@ let's see a basic example:
 
 ```json
 {
-    "name": "existing-container-dev",
-    "container": "my-existing-container",
-    "workspaceFolder": "/home/dev/myproject",
-    "customizations": {
-		"vscode": {
-			"extensions": [
-				"ms-python.python",
-                "esbenp.prettier-vscode"
-			]
-		}
-    },
-    "remoteUser": "dev"
+  "name": "existing-container-dev",
+  "container": "my-existing-container",
+  "workspaceFolder": "/home/dev/myproject",
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python", "esbenp.prettier-vscode"]
+    }
+  },
+  "remoteUser": "dev"
 }
 ```
 
@@ -43,22 +40,19 @@ moving on to another configuration example, this time we're using a container id
 
 ```json
 {
-    "name": "existing-container-dev",
-    "container": "d4567b679a87",
-    "workspaceFolder": "/app",
-    "customizations": {
-        "vscode": {
-            "settings": {
-                "python.pythonPath": "/usr/local/bin/python",
-                "terminal.integrated.defaultProfile.linux": "bash"
-            },
-            "extensions": [
-                "ms-python.python",
-                "ms-vscode.cmake-tools"
-            ]
-        }
-    },
-    "remoteUser": "myuser"
+  "name": "existing-container-dev",
+  "container": "d4567b679a87",
+  "workspaceFolder": "/app",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.pythonPath": "/usr/local/bin/python",
+        "terminal.integrated.defaultProfile.linux": "bash"
+      },
+      "extensions": ["ms-python.python", "ms-vscode.cmake-tools"]
+    }
+  },
+  "remoteUser": "myuser"
 }
 ```
 
@@ -68,18 +62,16 @@ now, let's tackle a slightly advanced scenario. say your container doesn’t hav
 
 ```json
 {
-    "name": "existing-container-dev",
-    "container": "my-preexisting-container",
-	"workspaceFolder": "/src",
-    "customizations": {
-		"vscode": {
-			"extensions": [
-				"ms-python.python"
-			]
-		}
-    },
-    "postCreateCommand": "pip3 install debugpy && apt-get update && apt-get install -y git",
-    "remoteUser": "vscodeuser"
+  "name": "existing-container-dev",
+  "container": "my-preexisting-container",
+  "workspaceFolder": "/src",
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python"]
+    }
+  },
+  "postCreateCommand": "pip3 install debugpy && apt-get update && apt-get install -y git",
+  "remoteUser": "vscodeuser"
 }
 ```
 
@@ -96,9 +88,10 @@ i’ve seen many developers tripped up by small permission issues or subtle cont
 in the end, creating a devcontainer for vscode with an existing container is not that difficult, it just needs you to get the basics down and pay attention to details, i'm pretty sure that with this setup you will see yourself saving some precious development time. now, what is the favorite type of container? the one you ship! (don't worry i'm not a comedian, i just wanted to get that one out of the way)
 
 now, if you want to explore this area even further, i’d suggest looking at these:
-*   **docker documentation:** the official documentation is always a good place to understand how docker works and get a better understanding of how containers work and the interactions between them.
-*   **vscode remote development documentation:** Microsoft has extensive documentation on vscode remote development and the workings of the `devcontainer.json` file, that's something that you should read, trust me.
-*   **advanced docker for developers:** this paper goes through the many docker functionalities like multi-stage builds, custom networks, and volume management, also it has a section about how to debug running containers which i think will be helpful.
-*   **container security:** reading about security is very important, so i recommend you to read about secure container practices, because containerizing your development has a lot of security implications to consider.
+
+- **docker documentation:** the official documentation is always a good place to understand how docker works and get a better understanding of how containers work and the interactions between them.
+- **vscode remote development documentation:** Microsoft has extensive documentation on vscode remote development and the workings of the `devcontainer.json` file, that's something that you should read, trust me.
+- **advanced docker for developers:** this paper goes through the many docker functionalities like multi-stage builds, custom networks, and volume management, also it has a section about how to debug running containers which i think will be helpful.
+- **container security:** reading about security is very important, so i recommend you to read about secure container practices, because containerizing your development has a lot of security implications to consider.
 
 i think that will do it for now. if you have any other questions or problems, feel free to ask, there is a whole community waiting to help you.

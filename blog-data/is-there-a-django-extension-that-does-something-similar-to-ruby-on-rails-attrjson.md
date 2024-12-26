@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "is-there-a-django-extension-that-does-something-similar-to-ruby-on-rails-attrjson"
 ---
 
-alright, so you're looking for a django equivalent to rails' `attr_json`, right? i've been down that road before, and it’s definitely a pain point. let me break down what i’ve learned over the years, and give you some concrete options rather than just abstract ideas.
+, so you're looking for a django equivalent to rails' `attr_json`, right? i've been down that road before, and it’s definitely a pain point. let me break down what i’ve learned over the years, and give you some concrete options rather than just abstract ideas.
 
 first off, if you’re unfamiliar with `attr_json` in rails, it basically lets you seamlessly treat json columns in your database like regular model attributes. behind the scenes it does the serialization and deserialization for you when accessing and updating those fields. it’s convenient because it allows structured data within the json and your code doesn't have to do the conversion, so you treat them as ordinary model attributes.
 
@@ -132,11 +132,11 @@ class MyModel(models.Model):
    data = JsonFieldWithAttributes(default=dict, blank=True, attributes=['favorite_color','weight', 'notifications'])
 ```
 
-here, `JsonAttributeField` handles the extraction and conversion from the json, while the  `JsonFieldWithAttributes` lets you specify the attributes you want to have accessible. this is a more general solution than the first one, that handles the boilerplate for you.
+here, `JsonAttributeField` handles the extraction and conversion from the json, while the `JsonFieldWithAttributes` lets you specify the attributes you want to have accessible. this is a more general solution than the first one, that handles the boilerplate for you.
 
 this approach allows for much more flexibility, especially when you are dealing with custom serialization logic, however it adds a higher level of complexity, specially if you are not very familiar with custom fields and descriptors in django. It is more code to maintain, but worth it in my experience. i had to debug custom fields like this on one project and was a pain at first, but it gives you much more control over the data.
 
-**3.  leveraging django-jsonfield and some metaprogramming:**
+**3. leveraging django-jsonfield and some metaprogramming:**
 
 if you don't want to write a custom field from scratch, you can use a third-party package like `django-jsonfield` combined with some metaprogramming to dynamically create the property accessors.
 for example:
@@ -169,9 +169,9 @@ here `django-jsonfield` provides a reliable `JSONField`, and then we are adding 
 
 **which approach to use?**
 
-*   if you have just a few fields and need it simple and explicit, the custom property approach (example 1) is a good start.
-*   if you want a more reusable approach or dealing with a more complex situation, the custom field approach (example 2) is more suitable. it’s a little bit more involved to implement, but the payoff is greater long-term, especially when you have more than a handful of attributes.
-*   if you need to quickly expose many fields and don’t mind some “magic”, the metaprogramming approach (example 3) using `django-jsonfield` might work for you. i'd suggest starting with this one only if you know what you are doing.
+- if you have just a few fields and need it simple and explicit, the custom property approach (example 1) is a good start.
+- if you want a more reusable approach or dealing with a more complex situation, the custom field approach (example 2) is more suitable. it’s a little bit more involved to implement, but the payoff is greater long-term, especially when you have more than a handful of attributes.
+- if you need to quickly expose many fields and don’t mind some “magic”, the metaprogramming approach (example 3) using `django-jsonfield` might work for you. i'd suggest starting with this one only if you know what you are doing.
 
 **resources:**
 

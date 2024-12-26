@@ -4,23 +4,23 @@ date: "2024-12-23"
 id: "what-azure-ml-workspace-connection-arguments-are-valid"
 ---
 
-Alright, let's talk Azure ML workspace connections. It’s a topic I’ve spent more time on than I care to recall, particularly during a large-scale migration project a few years back. We were stitching together a sprawling set of machine learning pipelines, each with its own requirements, and understanding the intricacies of workspace connections became paramount to avoid a logistical nightmare. It wasn't just about getting things to work; it was about ensuring maintainability and repeatability. So, I can share some practical, in-the-trenches perspectives on this.
+, let's talk Azure ML workspace connections. It’s a topic I’ve spent more time on than I care to recall, particularly during a large-scale migration project a few years back. We were stitching together a sprawling set of machine learning pipelines, each with its own requirements, and understanding the intricacies of workspace connections became paramount to avoid a logistical nightmare. It wasn't just about getting things to work; it was about ensuring maintainability and repeatability. So, I can share some practical, in-the-trenches perspectives on this.
 
-The core challenge, as I see it, isn’t just knowing *what* arguments are valid, but *why* they are and how they impact different use cases. When we talk about workspace connections in Azure ML, we're essentially discussing how we define the link between our compute resources, data stores, and the core Azure Machine Learning workspace. The workspace itself is the central hub, and these connections are the spokes that allow us to function. The validity of the arguments depends entirely on the context of the connection type you are establishing. Let's break down the commonly used connection types and the associated valid arguments.
+The core challenge, as I see it, isn’t just knowing _what_ arguments are valid, but _why_ they are and how they impact different use cases. When we talk about workspace connections in Azure ML, we're essentially discussing how we define the link between our compute resources, data stores, and the core Azure Machine Learning workspace. The workspace itself is the central hub, and these connections are the spokes that allow us to function. The validity of the arguments depends entirely on the context of the connection type you are establishing. Let's break down the commonly used connection types and the associated valid arguments.
 
 Firstly, let's consider the **compute target connections**. These involve linking your Azure ML workspace with various compute resources – virtual machines, Azure Kubernetes Service clusters, or even Databricks clusters. The typical arguments you’ll encounter here center on authentication and location:
 
-*   `name`: This is a self-explanatory but critical argument. It’s the user-defined identifier for the compute target you’re registering within your workspace. It needs to be unique within the workspace and is your primary way of referencing the compute later on.
+- `name`: This is a self-explanatory but critical argument. It’s the user-defined identifier for the compute target you’re registering within your workspace. It needs to be unique within the workspace and is your primary way of referencing the compute later on.
 
-*   `resource_id`: This is the Azure resource id of your compute resource. For instance, for an azure vm, this would be like `/subscriptions/{subid}/resourcegroups/{rg}/providers/microsoft.compute/virtualmachines/{vmname}`.
+- `resource_id`: This is the Azure resource id of your compute resource. For instance, for an azure vm, this would be like `/subscriptions/{subid}/resourcegroups/{rg}/providers/microsoft.compute/virtualmachines/{vmname}`.
 
-*   `type`: Specifies the type of compute. It is crucial for the Azure ML SDK to know how to manage and connect to it. Valid values here include `AmlCompute`, `VirtualMachine`, `AksCompute`, or `Databricks`.
+- `type`: Specifies the type of compute. It is crucial for the Azure ML SDK to know how to manage and connect to it. Valid values here include `AmlCompute`, `VirtualMachine`, `AksCompute`, or `Databricks`.
 
-*   `location`: Determines the geographic location of the compute resource. While not always strictly necessary (especially if defined by `resource_id`), it is good practice to specify it for clarity and consistency.
+- `location`: Determines the geographic location of the compute resource. While not always strictly necessary (especially if defined by `resource_id`), it is good practice to specify it for clarity and consistency.
 
-*   `ssh_public_key`: For VM based compute, used to enable secure remote access. This is a security best practice.
+- `ssh_public_key`: For VM based compute, used to enable secure remote access. This is a security best practice.
 
-*  `identity`: The identity to use to access the compute. This can either be a `UserAssignedIdentity` or `SystemAssignedIdentity`. It is especially useful for managed identities to avoid the use of passwords.
+- `identity`: The identity to use to access the compute. This can either be a `UserAssignedIdentity` or `SystemAssignedIdentity`. It is especially useful for managed identities to avoid the use of passwords.
 
 Let’s look at a code snippet showing how these work in Python using the Azure ML SDK:
 
@@ -61,17 +61,17 @@ Here, I am not directly using the arguments in the `Workspace.from_config` call 
 
 Next, let’s move to **datastore connections**. These are crucial for managing your data sources. Here the arguments focus on authentication, location of storage, and the kind of storage:
 
-*   `name`: Similar to compute targets, this is the user-defined identifier for the datastore.
+- `name`: Similar to compute targets, this is the user-defined identifier for the datastore.
 
-*   `datastore_type`: This argument specifies the underlying storage service. Common values include `AzureBlob`, `AzureFile`, or `AzureDataLakeGen2`.
+- `datastore_type`: This argument specifies the underlying storage service. Common values include `AzureBlob`, `AzureFile`, or `AzureDataLakeGen2`.
 
-*   `account_name`: The name of your storage account in Azure.
+- `account_name`: The name of your storage account in Azure.
 
-*   `container_name` / `share_name`: The name of the specific container in the blob storage or file share.
+- `container_name` / `share_name`: The name of the specific container in the blob storage or file share.
 
-*   `subscription_id` : The subscription identifier where your data resides.
+- `subscription_id` : The subscription identifier where your data resides.
 
-*  `client_id`, `client_secret` and `tenant_id`: These arguments are required when you need to specify the service principal authentication to access the storage account.
+- `client_id`, `client_secret` and `tenant_id`: These arguments are required when you need to specify the service principal authentication to access the storage account.
 
 Here is another example showing how a datastore connection can be created using Azure ML SDK:
 
@@ -123,10 +123,10 @@ In this example, we use the `Datastore.register_azure_blob_container` method to 
 
 Finally, let's briefly touch upon **linked service connections**. This often comes up when you are integrating other Azure services such as Azure Key Vault, Azure Container Registry, etc with your workspace. It has become a standard way of working now. Here are the usual arguments you'd see:
 
-*   `name`: Again, a unique identifier within your Azure ML workspace.
-*   `linked_service_resource_id`: The Azure resource ID of the service you are linking.
-*   `type`: Specifies the type of service being linked. Common examples include `AzureKeyVault`, `AzureContainerRegistry`.
-*   `identity`: For specifying an identity to access the linked services, often a managed identity, for secure access.
+- `name`: Again, a unique identifier within your Azure ML workspace.
+- `linked_service_resource_id`: The Azure resource ID of the service you are linking.
+- `type`: Specifies the type of service being linked. Common examples include `AzureKeyVault`, `AzureContainerRegistry`.
+- `identity`: For specifying an identity to access the linked services, often a managed identity, for secure access.
 
 Here's a code snippet showing an example of linking your workspace to Azure Key Vault:
 

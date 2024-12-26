@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-do-i-correctly-calculate-the-sigmoid-derivative"
 ---
 
-Alright, let's tackle this. I've seen more than a few developers stumble over the sigmoid derivative, and it’s often not because the calculus itself is inherently difficult but because of how it's applied within practical contexts, particularly in backpropagation algorithms. It's one of those foundational bits that, if you don’t grasp it cleanly, can lead to frustrating debugging sessions later on.
+, let's tackle this. I've seen more than a few developers stumble over the sigmoid derivative, and it’s often not because the calculus itself is inherently difficult but because of how it's applied within practical contexts, particularly in backpropagation algorithms. It's one of those foundational bits that, if you don’t grasp it cleanly, can lead to frustrating debugging sessions later on.
 
 The sigmoid function, typically represented as σ(x) = 1 / (1 + e^(-x)), is widely used in neural networks due to its smooth, differentiable nature and its ability to squash values between 0 and 1. However, when we're training a network, we don’t just need the sigmoid output; we need its derivative – the rate of change of the sigmoid output with respect to its input – to apply gradient descent and update the network's weights effectively.
 
 Calculating the derivative using first principles can be time-consuming, especially within code that needs to execute quickly. The beauty of the sigmoid function, though, lies in the fact that its derivative can be elegantly expressed in terms of the function itself. Mathematically, the derivative of σ(x), denoted as σ'(x), is given by:
 
-σ'(x) = σ(x) * (1 - σ(x)).
+σ'(x) = σ(x) \* (1 - σ(x)).
 
 This is the core of what we need to understand. We’re not relying on complicated calculations each time; we are reusing the sigmoid function’s output. This makes the computation both faster and simpler.
 
@@ -113,6 +113,6 @@ int main() {
 
 This C++ example utilizes the standard `<cmath>` library's `std::exp` function. We use `std::vector` for our data and `std::transform` to apply our functions. While potentially more verbose than the Python version, this approach offers a significant performance advantage when optimized and compiled appropriately, which is why it is often preferred for performance-critical components.
 
-The key takeaway here is not just the mechanics of the calculation but the *reasoning* behind it. Understanding that the derivative can be expressed in terms of the sigmoid's output not only simplifies the computation but also speeds things up considerably, avoids potential numeric instabilities and promotes code readability, regardless of the language choice.
+The key takeaway here is not just the mechanics of the calculation but the _reasoning_ behind it. Understanding that the derivative can be expressed in terms of the sigmoid's output not only simplifies the computation but also speeds things up considerably, avoids potential numeric instabilities and promotes code readability, regardless of the language choice.
 
-For a more thorough understanding of backpropagation and neural networks as a whole, I would highly recommend delving into *“Deep Learning”* by Ian Goodfellow, Yoshua Bengio, and Aaron Courville. It's an incredibly detailed and rigorous exploration of the concepts involved, including a thorough explanation of backpropagation. Additionally, for the underlying mathematics, *“Calculus”* by Michael Spivak is a classic that provides all the required foundations. Regarding numerical techniques for efficient code I highly recommend “Numerical Recipes” by William H. Press. These references should help solidify your understanding and prepare you for more complex scenarios.
+For a more thorough understanding of backpropagation and neural networks as a whole, I would highly recommend delving into _“Deep Learning”_ by Ian Goodfellow, Yoshua Bengio, and Aaron Courville. It's an incredibly detailed and rigorous exploration of the concepts involved, including a thorough explanation of backpropagation. Additionally, for the underlying mathematics, _“Calculus”_ by Michael Spivak is a classic that provides all the required foundations. Regarding numerical techniques for efficient code I highly recommend “Numerical Recipes” by William H. Press. These references should help solidify your understanding and prepare you for more complex scenarios.

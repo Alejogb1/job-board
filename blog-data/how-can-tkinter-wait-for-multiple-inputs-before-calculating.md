@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-can-tkinter-wait-for-multiple-inputs-before-calculating"
 ---
 
-Alright, let's tackle this. I remember a project back in the early 2010s, a data analysis tool with a clunky Tkinter front-end, where we faced this exact problem. Users needed to input several parameters across different entry fields, and the calculations shouldn't kick off until all fields had valid data. The naive approach, firing calculations on each input change, was a performance disaster, not to mention a usability nightmare. So, we had to get creative.
+, let's tackle this. I remember a project back in the early 2010s, a data analysis tool with a clunky Tkinter front-end, where we faced this exact problem. Users needed to input several parameters across different entry fields, and the calculations shouldn't kick off until all fields had valid data. The naive approach, firing calculations on each input change, was a performance disaster, not to mention a usability nightmare. So, we had to get creative.
 
-The core challenge here is that Tkinter, like many event-driven GUI frameworks, executes callbacks immediately when an event occurs. This means, by default, an event like typing into an entry box triggers an associated function right away. To defer calculations until multiple inputs are ready, we need a mechanism for managing and checking the state of these input fields and initiating processing *only* when specific criteria are met. Simply put, we need to implement a system that allows us to collect the necessary data prior to a calculation, not after or during each incremental entry.
+The core challenge here is that Tkinter, like many event-driven GUI frameworks, executes callbacks immediately when an event occurs. This means, by default, an event like typing into an entry box triggers an associated function right away. To defer calculations until multiple inputs are ready, we need a mechanism for managing and checking the state of these input fields and initiating processing _only_ when specific criteria are met. Simply put, we need to implement a system that allows us to collect the necessary data prior to a calculation, not after or during each incremental entry.
 
 The most common method involves leveraging Tkinter's built-in `StringVar` (or `IntVar`, `DoubleVar` etc.) for each input field and introducing a separate button or trigger that will only activate once all the input fields have been validated. Let me walk you through how I’d typically implement this.
 
@@ -86,7 +86,7 @@ tk.Entry(root, textvariable=salary_var).grid(row=2, column=1)
 root.mainloop()
 ```
 
-Here, each time the text in a variable changes, `validate_and_calculate` is executed. This provides a more dynamic and reactive way to trigger the calculation. It's still deferred because it only performs the calculations *after* all variables have been populated with valid data, not with each single character entered.
+Here, each time the text in a variable changes, `validate_and_calculate` is executed. This provides a more dynamic and reactive way to trigger the calculation. It's still deferred because it only performs the calculations _after_ all variables have been populated with valid data, not with each single character entered.
 
 Finally, if you have very complicated scenarios, consider a state-management pattern. This might involve a class or set of functions that explicitly track the status of each input, and only enable the calculation once all inputs have reached a ‘ready’ state. Here's a conceptual example:
 

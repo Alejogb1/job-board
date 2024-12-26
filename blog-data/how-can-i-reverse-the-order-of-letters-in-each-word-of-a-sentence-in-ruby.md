@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-reverse-the-order-of-letters-in-each-word-of-a-sentence-in-ruby"
 ---
 
-Alright, let's talk about reversing the order of letters within words in a sentence using Ruby. It’s a task that seems straightforward at first glance, but there are a few nuances to consider, especially when you're aiming for efficiency and robustness. I recall a project a few years back where I was working with text processing for a natural language interface. We needed to perform some manipulations on text strings, including this specific letter-reversal-within-words task. We couldn't just treat the entire sentence as a single string to reverse; the word boundaries were vital for our logic.
+, let's talk about reversing the order of letters within words in a sentence using Ruby. It’s a task that seems straightforward at first glance, but there are a few nuances to consider, especially when you're aiming for efficiency and robustness. I recall a project a few years back where I was working with text processing for a natural language interface. We needed to perform some manipulations on text strings, including this specific letter-reversal-within-words task. We couldn't just treat the entire sentence as a single string to reverse; the word boundaries were vital for our logic.
 
 The crux of the problem lies in breaking the sentence into individual words, reversing each of those words, and then reassembling them back into a cohesive sentence. Ruby provides a few handy methods that make this process reasonably clean and concise.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-hide-a-button-in-jetpack-compose"
 ---
 
-Alright, let's talk about button visibility in Jetpack Compose. It might seem straightforward at first glance, but there are nuances to consider, especially when building complex UIs with dynamic states. I've spent a fair amount of time dealing with this over the years, particularly when I was working on a mobile inventory management app – users had different access levels, and the UI needed to reflect that instantly. Hiding buttons was central to providing a cleaner and more personalized user experience.
+, let's talk about button visibility in Jetpack Compose. It might seem straightforward at first glance, but there are nuances to consider, especially when building complex UIs with dynamic states. I've spent a fair amount of time dealing with this over the years, particularly when I was working on a mobile inventory management app – users had different access levels, and the UI needed to reflect that instantly. Hiding buttons was central to providing a cleaner and more personalized user experience.
 
 The basic premise is that Compose operates declaratively; we describe the ui and its state, and Compose handles the rendering. When it comes to button visibility, this means we don’t directly “hide” a button like we might in an imperative UI framework. Instead, we conditionally include the button in the composition based on a boolean condition. This approach promotes a more reactive and predictable system.
 
@@ -51,7 +51,7 @@ fun MyStatefulButton() {
 
 In this example, `isButtonVisible` is a `State<Boolean>` which will cause recomposition when changed. The `LaunchedEffect` simulates a long-running operation (replace with your specific operation), and updates the state once it's complete, resulting in the button being shown.
 
-Now, you might encounter situations where the visibility condition is more complex or depends on multiple states. Let’s say that your inventory app needs to show an ‘edit’ button only if the user is an administrator *and* the selected item is not in a locked state. Here’s how we can approach this with a more elaborate conditional :
+Now, you might encounter situations where the visibility condition is more complex or depends on multiple states. Let’s say that your inventory app needs to show an ‘edit’ button only if the user is an administrator _and_ the selected item is not in a locked state. Here’s how we can approach this with a more elaborate conditional :
 
 ```kotlin
 import androidx.compose.runtime.*

@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "why-is-training-stopping-after-successfully-opening-libcudnnso7-in-colab"
 ---
 
-alright, so you're hitting a wall with your colab training, right? specifically, it seems like the process stalls right after libcudnn.so.7 loads successfully. i've been there, trust me. seeing that "libcudnn.so.7" confirmation message feels like a small victory, only to be followed by... nothing. it's infuriating, i get it. let's break this down because there is no single 'it's always this' answer, but more of a process of elimination.
+, so you're hitting a wall with your colab training, right? specifically, it seems like the process stalls right after libcudnn.so.7 loads successfully. i've been there, trust me. seeing that "libcudnn.so.7" confirmation message feels like a small victory, only to be followed by... nothing. it's infuriating, i get it. let's break this down because there is no single 'it's always this' answer, but more of a process of elimination.
 
 first off, the fact that libcudnn is loading points us away from a basic setup issue with cuda or driver incompatibilities. if that was the case, you'd probably see errors before that point. think of it like this: the libraries are the foundation, and we've laid a solid foundation now. we're not arguing about the cement mix anymore. the problem likely lies in what we’re trying to build on that foundation.
 
 most of the time when i've had this issue it was memory or more specifically lack thereof. colab offers decent gpu memory, but it isn't infinite. and, importantly, the gpu memory isn’t always readily available for the process. what happens is, we allocate the memory for the training, then, the process starts, and the libraries load and then boom… because the process is too aggressive with memory the system crashes. sometimes, colab’s process manager isn’t super verbose with its errors when it hits this point, leading to the "stall" we are seeing.
 
-it's common to overestimate how much your model needs. i've been guilty of it. i remember this time when i was doing image segmentation on some medical data, i created a beast of a network, thinking more is always better. let's just say that the model was too large for the available resources. my memory was constantly hitting the roof, and it was doing all sort of weird stuff, like stopping at points it was supposedly “okay” with, or the error messages would be all over the place. i learnt from that experience to be more mindful of the memory. the funny thing is, it did not occur to me that the model was too big for the ram, i was just checking for errors in my code.
+it's common to overestimate how much your model needs. i've been guilty of it. i remember this time when i was doing image segmentation on some medical data, i created a beast of a network, thinking more is always better. let's just say that the model was too large for the available resources. my memory was constantly hitting the roof, and it was doing all sort of weird stuff, like stopping at points it was supposedly “” with, or the error messages would be all over the place. i learnt from that experience to be more mindful of the memory. the funny thing is, it did not occur to me that the model was too big for the ram, i was just checking for errors in my code.
 
 so, first, let's think about your model architecture. a large batch size or complex layers can eat into memory very fast. a good practice is starting small, even if it sounds counterintuitive. if you have a monster batch size of 256 reduce it to 32 or 16. even 8 if you are feeling brave. if your model has a lot of layers, start with a simpler structure for debugging purposes, perhaps a small number of convolutional layers and a couple of fully connected ones. once your training is working then you can start pushing it to the limit.
 
@@ -39,6 +39,7 @@ def check_gpu_memory():
 if __name__ == '__main__':
   check_gpu_memory()
 ```
+
 this snippet gives you the current state of your gpu's memory. run this before you even start training. this can help you understand how much you’re actually using and if you're close to the limit from the beginning. i typically run this at the beginning of all my scripts. its a simple habit.
 
 another critical thing, make sure you are cleaning up allocated tensors after each epoch. if you are training on a loop and not cleaning the gpu memory this can also lead to memory fragmentation over time, even if your batch size is small, and consequently it can make your training process crash.

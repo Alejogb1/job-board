@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-make-a-shap-summaryplot-only-for-selected-features-from-a-list-in-python"
 ---
 
-Alright, let's tackle this. It's a common scenario, and I've certainly found myself needing to visualize only a subset of features from SHAP (SHapley Additive exPlanations) output, especially when dealing with datasets with numerous variables. It's inefficient and often visually overwhelming to plot everything. So, focusing on the problem of creating a `summary_plot` for specific features, we need to carefully slice the SHAP values. I'll share my past experiences and how I approached it.
+, let's tackle this. It's a common scenario, and I've certainly found myself needing to visualize only a subset of features from SHAP (SHapley Additive exPlanations) output, especially when dealing with datasets with numerous variables. It's inefficient and often visually overwhelming to plot everything. So, focusing on the problem of creating a `summary_plot` for specific features, we need to carefully slice the SHAP values. I'll share my past experiences and how I approached it.
 
 Early in my career, working on a churn prediction model, I encountered this directly. We had a model using over 100 features, and the default `shap.summary_plot()` was utterly unreadable. That’s when I had to develop this feature-selection technique with SHAP values. The core concept is to filter the SHAP values array itself before passing it to the plot function. Here's how I usually approach it.
 
@@ -73,7 +73,7 @@ plt.show()
 
 Here, `sliced_shap_values_df` will now contain only the SHAP values for the features listed in `feature_names_to_plot`. We used `.values` to convert the dataframe to a numpy array as that is what `summary_plot` expects. Additionally, the column names are passed as `features`.
 
-**Example 3:  Handling SHAP Object and Feature Names from the Model**
+**Example 3: Handling SHAP Object and Feature Names from the Model**
 
 Often, when you are doing model explanation, SHAP doesn’t only provide the SHAP values, it provides an object with these values. Also, feature names may be embedded in the model itself. This code example illustrates a typical workflow using the SHAP object. Here we will assume we are using the tree explainer and an XGBoost model.
 

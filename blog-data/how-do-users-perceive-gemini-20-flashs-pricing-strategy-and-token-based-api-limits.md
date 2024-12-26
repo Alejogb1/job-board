@@ -4,11 +4,11 @@ date: "2024-12-12"
 id: "how-do-users-perceive-gemini-20-flashs-pricing-strategy-and-token-based-api-limits"
 ---
 
-okay so like straight up talking about Gemini 2.0 Flash and how people feel about its pricing and those token limits its a bit of a mixed bag right it's not just one big happy consensus party there's definitely some friction points
+like straight up talking about Gemini 2.0 Flash and how people feel about its pricing and those token limits its a bit of a mixed bag right it's not just one big happy consensus party there's definitely some friction points
 
 first off let's tackle the pricing model its that whole token-based thing which on the surface seems simple enough you pay for how much you use that's usually a good thing right like you don't get charged for stuff you ain't using which is cool and less shady than subscription models that drain your wallet even when your app is just chilling. the whole pay-as-you-go thing with tokens generally appeals to developers and people who are more tech-savvy because they can generally track their usage. it resonates with this engineer mentality of optimizing resources and only paying for what you consume which is a core value in the tech world. it's also kind of like buying credits for a game you load up only for what you need. makes sense.
 
-but then the nitty-gritty sets in and you start thinking okay how much is a token worth exactly like its not a tangible thing its kind of abstract. figuring out how many tokens your prompt is going to require becomes this micro-optimization puzzle it kind of feels like you are calculating your grocery budget down to the penny every time before you go to the store. it is extra mental overhead for people who just want to build stuff and it requires a more technical understanding from the user. you kind of have to understand how the model is processing information. the more verbose your text is the more tokens. which is fair but it means the price varies massively depending on what you are putting in which can feel unpredictable. this lack of straightforward price predictability is one of the major gripes I keep seeing.
+but then the nitty-gritty sets in and you start thinking how much is a token worth exactly like its not a tangible thing its kind of abstract. figuring out how many tokens your prompt is going to require becomes this micro-optimization puzzle it kind of feels like you are calculating your grocery budget down to the penny every time before you go to the store. it is extra mental overhead for people who just want to build stuff and it requires a more technical understanding from the user. you kind of have to understand how the model is processing information. the more verbose your text is the more tokens. which is fair but it means the price varies massively depending on what you are putting in which can feel unpredictable. this lack of straightforward price predictability is one of the major gripes I keep seeing.
 
 then we get to the API limits those caps on how many tokens you can send and receive in a certain time frame that's another layer of the puzzle. this is where people start talking about rate limiting and stuff you start coding your apps to gracefully handle hitting these limits. but let's be real nobody likes getting throttled like you are trying to get stuff done and boom suddenly the API is like "nope you've had too much fun for now" so its a potential headache especially during peak times or if you have a lot of users. it forces you to optimize your code to minimize token use and implement things like caching to prevent unnecessary API calls. it's not a show-stopper necessarily but more an inconvenience and a forced optimization. this can be annoying when you are prototyping and just want a thing to work without getting throttled by obscure rate limits.
 
@@ -48,6 +48,7 @@ generated_text = generate_text_with_retries(prompt)
 if generated_text:
     print(generated_text)
 ```
+
 This snippet of code is a simple illustration of how you have to think of error handling when dealing with APIs that have rate limits. you have to check the response and specifically look for the "rate limit" or "quota" keywords and introduce a delay and implement a retry loop. this can be further improved by implementing an exponential backoff and other strategies. that introduces complexity for something that should be fairly simple.
 
 another practical thing is batch processing or chunking large text because it would cost a lot if you just sent big chunks to the api. say you have a big document and want to get a summary from it. the following example using python again illustrates this chunking approach.
@@ -75,6 +76,7 @@ YOUR LARGE DOCUMENT HERE
 summary = summarize_document(document,model)
 print(summary)
 ```
+
 This snippet divides the document into smaller parts and sends those to the API instead of sending one very large text. you have to think about your prompts in such a way so that the context does not get lost. This can be a complicated process and requires some experimentation. This kind of thing is pretty common when dealing with LLMs and is a direct result of these kinds of pricing and token-limit strategies.
 
 the third example will show how one might optimize the prompt for the API. you need to craft the request so that it does not require too many tokens.
@@ -88,6 +90,7 @@ optimized_prompt = optimized_query(query_keywords)
 response = model.generate_content(optimized_prompt)
 print(response.text)
 ```
+
 This shows how it is important to explicitly ask for short answers or concise answers. you are effectively teaching the LLM how to generate an optimized response. by crafting the prompt in a specific manner you are saving tokens on the response as well.
 
 so in short the general vibe is this: the Gemini Flash 2.0 token pricing thing is not universally loved. it attracts a certain type of dev but it also introduces overhead which you do not necessarily have with other models that may offer simpler or more predictable pricing.

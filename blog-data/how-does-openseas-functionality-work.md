@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-openseas-functionality-work"
 ---
 
-Alright, let's unpack the inner workings of OpenSea. I've spent a fair chunk of time poking around similar marketplaces, both in a professional capacity and as a curious enthusiast, so I think I can offer a reasonably clear breakdown.
+, let's unpack the inner workings of OpenSea. I've spent a fair chunk of time poking around similar marketplaces, both in a professional capacity and as a curious enthusiast, so I think I can offer a reasonably clear breakdown.
 
 Essentially, OpenSea operates as a decentralized marketplace for non-fungible tokens (NFTs). That's the core concept, but the implementation details are where things get interesting. Instead of holding the actual assets themselves, OpenSea provides a platform for users to discover, buy, and sell these tokens. The beauty, and complexity, lies in how they interact with the underlying blockchain.
 
@@ -48,6 +48,7 @@ listing_contract.list_nft(nft_address_example, token_id_example, price_example, 
 listing = listing_contract.get_listing(nft_address_example, token_id_example)
 print(listing)
 ```
+
 This snippet depicts a simplified smart contract that manages NFT listings. The `list_nft` function adds an NFT’s details to a list, and the `get_listing` function retrieves listing data. In a real contract, you’d see more sophisticated checks, including those for ownership of the NFT and the proper transaction initiation.
 
 **Snippet 2: Purchasing an NFT**
@@ -84,6 +85,7 @@ purchase_contract.purchase_nft(nft_address_example, token_id_example, buyer_addr
 listing = purchase_contract.get_listing(nft_address_example, token_id_example)
 print(listing)
 ```
+
 This second snippet builds upon the previous one by adding the `purchase_nft` function. This function checks that the NFT is listed, verifies that the payment is adequate, and then simulates the transfer of ownership and payment. A real contract would also need to execute the actual transfer on the underlying blockchain using the `transfer` function that comes standard in an ERC-721 (or ERC-1155) contract.
 
 **Snippet 3: Handling Royalties**

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-override-a-specific-tasks-argument-in-an-airflow-dag"
 ---
 
-Okay, let's tackle this. I’ve bumped into this scenario a few times over the years, usually when dealing with dynamic data pipelines where certain tasks needed a bit of custom tailoring mid-flow. You're asking about overriding a task's argument within an Airflow dag, and frankly, it's a common requirement when you need a bit more control than just static configurations. It's not something Airflow directly provides as a simple "override" function, but we can achieve this behavior through a few clever methods that rely on Airflow’s templating engine and task dependencies.
+, let's tackle this. I’ve bumped into this scenario a few times over the years, usually when dealing with dynamic data pipelines where certain tasks needed a bit of custom tailoring mid-flow. You're asking about overriding a task's argument within an Airflow dag, and frankly, it's a common requirement when you need a bit more control than just static configurations. It's not something Airflow directly provides as a simple "override" function, but we can achieve this behavior through a few clever methods that rely on Airflow’s templating engine and task dependencies.
 
-First, let's establish the challenge. Typically, a task is defined with arguments that are set during dag definition and are usually meant to be constant or at least derive from dag-level parameters. Sometimes you find yourself needing to tweak these arguments for *specific instances* of a task, based on preceding task outputs, xcom values, or even external triggers. Think of it as needing a targeted exception to your task's defined behavior.
+First, let's establish the challenge. Typically, a task is defined with arguments that are set during dag definition and are usually meant to be constant or at least derive from dag-level parameters. Sometimes you find yourself needing to tweak these arguments for _specific instances_ of a task, based on preceding task outputs, xcom values, or even external triggers. Think of it as needing a targeted exception to your task's defined behavior.
 
 The core of the solution lies in dynamically passing information from one task to another. The first technique, and probably the most prevalent, is using XComs combined with Jinja templating. Let’s say you have a python operator with an argument that needs to change based on some condition. Imagine a situation where an upstream task performs some file analysis and needs to pass the name of the processed file to a downstream task. The upstream task would push that file name to an XCom, and the downstream task would access that XCom using jinja templating in its arguments definition.
 
@@ -158,6 +158,7 @@ def create_dynamic_dag(dag_id):
 dynamic_dag = create_dynamic_dag("dynamic_dag")
 
 ```
+
 In this example, `get_config_task` pushes config data to XCom. The `create_dynamic_dag` function reads this config via `XCom.get_one` and generates tasks dynamically based on the content of that config. As you can see this is a much more involved approach than just changing a task parameter, it allows for total dag and task customizability, but requires more setup and management.
 
 These methods, while varied, share the common principle of using Airflow's features to defer argument resolution until runtime. This is crucial for dynamic pipelines where the needed parameters aren't known until prior tasks have executed.

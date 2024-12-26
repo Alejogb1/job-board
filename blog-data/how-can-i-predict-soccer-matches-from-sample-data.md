@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-predict-soccer-matches-from-sample-data"
 ---
 
-Okay, let's unpack the predictive modeling of soccer outcomes. It's a topic that initially seems straightforward, but the intricacies of data, model selection, and interpretation quickly reveal its complexity. I've spent quite a few late nights in the past wrestling (oops, nearly slipped into banned territory there!) with this, often starting from relatively sparse datasets and evolving toward more robust systems. It's certainly not as simple as just throwing some stats into an algorithm and expecting accurate results.
+, let's unpack the predictive modeling of soccer outcomes. It's a topic that initially seems straightforward, but the intricacies of data, model selection, and interpretation quickly reveal its complexity. I've spent quite a few late nights in the past wrestling (oops, nearly slipped into banned territory there!) with this, often starting from relatively sparse datasets and evolving toward more robust systems. It's certainly not as simple as just throwing some stats into an algorithm and expecting accurate results.
 
 The challenge with predicting soccer, or any sport for that matter, is that the outcomes aren't purely deterministic; chance and human factors play a considerable role. Our goal isn't to create an infallible oracle, but to build a probabilistic model that can assess the relative likelihood of different outcomes given available information.
 
@@ -96,6 +96,7 @@ y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 print(f"Random Forest Accuracy: {accuracy}")
 ```
+
 As you can see, this example incorporates more features into the model, illustrating how we can gradually add complexity.
 
 **3. Deep Learning with Recurrent Neural Networks (RNNs):**
@@ -160,8 +161,8 @@ Regardless of which approach is selected, it is essential to regularly evaluate 
 
 For more detailed understanding, I'd recommend diving into the following resources:
 
-*   **"Statistical Models for Sports Data" by Joseph Albert and Jim Albert:** This provides a thorough treatment of statistical modeling applied to sports, including soccer. The focus is less on machine learning, but it gives a great basis for understanding the underlying statistics.
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book is a fantastic resource for learning the practical aspects of machine learning, covering everything from data preprocessing to model building, including all the mentioned algorithms.
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This is the comprehensive textbook on deep learning; a necessary read if you are serious about applying RNNs.
+- **"Statistical Models for Sports Data" by Joseph Albert and Jim Albert:** This provides a thorough treatment of statistical modeling applied to sports, including soccer. The focus is less on machine learning, but it gives a great basis for understanding the underlying statistics.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book is a fantastic resource for learning the practical aspects of machine learning, covering everything from data preprocessing to model building, including all the mentioned algorithms.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This is the comprehensive textbook on deep learning; a necessary read if you are serious about applying RNNs.
 
 Predicting soccer outcomes is a continual learning process. Start with a simpler model, and incrementally increase complexity as you gain experience. It’s a rewarding area, blending sports enthusiasm with the rigor of data science and machine learning. Good luck!

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-cloud-composer-2-taking-so-long-to-synchronize-dags-to-gke"
 ---
 
-Alright, let's talk about DAG synchronization delays in Cloud Composer 2. It's a topic I've spent more than a few late nights troubleshooting, so I understand the frustration. While Composer 2 is generally a significant improvement over its predecessor, these synchronization delays can still surface, and they often boil down to a few core areas. It's rarely just one culprit, but a combination of factors interacting within the system. In my experience working on a large-scale financial platform that extensively used Airflow, these synchronization issues became quite apparent during periods of heavy development and deployment cycles. We had multiple teams pushing updates, and the DAGs sometimes felt like they were being delivered by carrier pigeon rather than a modern system.
+, let's talk about DAG synchronization delays in Cloud Composer 2. It's a topic I've spent more than a few late nights troubleshooting, so I understand the frustration. While Composer 2 is generally a significant improvement over its predecessor, these synchronization delays can still surface, and they often boil down to a few core areas. It's rarely just one culprit, but a combination of factors interacting within the system. In my experience working on a large-scale financial platform that extensively used Airflow, these synchronization issues became quite apparent during periods of heavy development and deployment cycles. We had multiple teams pushing updates, and the DAGs sometimes felt like they were being delivered by carrier pigeon rather than a modern system.
 
 The first area we need to examine is the underlying architecture of Composer 2. It relies on Kubernetes (GKE) for its execution environment. DAG files aren’t simply magically available to the Airflow scheduler and workers; they have to be moved into the GKE environment. This involves several steps: uploading the DAG to a cloud storage bucket, then the Airflow scheduler within the Kubernetes cluster, polling that bucket periodically, detecting changes, and finally, pulling those changes into the GKE worker nodes. Each of these steps contributes to the overall synchronization time.
 
@@ -21,7 +21,7 @@ Reducing this interval can help, but you must be mindful of not overburdening th
 
 Beyond the polling interval, the size and complexity of your DAGs also significantly affect synchronization speed. Large DAG files, or numerous DAGs residing in the same folder, will inevitably take longer to transfer and process. Consider that each DAG file requires parsing, a process that can be CPU-intensive, especially with extensive dependencies or complex logic. If your DAGs are bloated, this will directly extend the synchronization time. One approach here is to modularize your DAGs: break down monolithic DAGs into smaller, more manageable units. This often requires a shift in how your team organizes workflows. I remember an instance where simplifying a particularly massive DAG into multiple smaller components reduced our synchronization time by almost 70%. Let’s illustrate with a simplified Python DAG example before and after modularization:
 
-*   **Before (Monolithic DAG - Simplified Example):**
+- **Before (Monolithic DAG - Simplified Example):**
 
 ```python
 # monolithic_dag.py
@@ -36,7 +36,7 @@ with DAG('monolithic_dag', start_date=datetime(2023, 1, 1), schedule=None, catch
     task_a >> task_b >> task_c
 ```
 
-*   **After (Modular DAGs - Simplified Example):**
+- **After (Modular DAGs - Simplified Example):**
 
 ```python
 # dag_a.py
@@ -57,6 +57,7 @@ with DAG('dag_b', start_date=datetime(2023, 1, 1), schedule=None, catchup=False)
    task_c = BashOperator(task_id='task_c', bash_command='echo "Task C"')
    task_b >> task_c
 ```
+
 This separation into two distinct DAG files makes it easier for the scheduler to process each unit independently. The modularization also allows for more focused monitoring and troubleshooting of individual components.
 
 Furthermore, the performance of your Cloud Storage bucket where DAG files are stored plays a vital role. If your bucket is in a geographically distant region from your Composer environment, there will be higher latency in the transfer. Ensure your bucket and your Composer environment are in the same or a nearby region. Network issues, though less common, can also contribute to delays, particularly if there's throttling or packet loss involved. I once spent a few hours debugging what turned out to be a transient network problem between our Cloud Storage bucket and the Kubernetes cluster. Monitoring your GKE cluster's network performance is therefore crucial.
@@ -69,24 +70,23 @@ Here is an example of how one might modify the resource settings within your com
 # Example configuration within your cloud composer setup (not literal config file)
 
 environment_config:
-    node_config:
-        machine_type: "e2-standard-4"
-        disk_size_gb: 100
-    software_config_overrides:
-        airflow-config:
-           scheduler:
-              min_threads: 2
-              max_threads: 8
-        kubernetes:
-            scheduler:
-              resources:
-                  limits:
-                      cpu: 2
-                      memory: "4Gi"
-                  requests:
-                      cpu: 1
-                      memory: "2Gi"
-
+  node_config:
+    machine_type: "e2-standard-4"
+    disk_size_gb: 100
+  software_config_overrides:
+    airflow-config:
+      scheduler:
+        min_threads: 2
+        max_threads: 8
+    kubernetes:
+      scheduler:
+        resources:
+          limits:
+            cpu: 2
+            memory: "4Gi"
+          requests:
+            cpu: 1
+            memory: "2Gi"
 ```
 
 It's a delicate art of tweaking these parameters. Over-allocating resources is costly, but under-allocating will lead to performance issues. Hence, continuous monitoring and resource utilization analysis are crucial.

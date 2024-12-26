@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-does-a-rails-implementing-ransack-search---routing-configuration-work"
 ---
 
-alright, let's talk about how rails handles search routing when you're using ransack. i've spent a good chunk of time with this particular combo, and it can get a little hairy if you’re not careful. it's one of those things that seems simple on the surface but has some nuances you need to grok.
+, let's talk about how rails handles search routing when you're using ransack. i've spent a good chunk of time with this particular combo, and it can get a little hairy if you’re not careful. it's one of those things that seems simple on the surface but has some nuances you need to grok.
 
 i remember back in my early days, working on a project for a small online library, we used ransack to let users sift through the catalog. we started with a very basic setup, and everything was fine until the library started adding more categories and the filters were increasing in complexity. the routes got messy real quick. i started seeing patterns where i had to change the routes every time a search attribute was added. that's when i realised i needed to understand how this stuff actually works.
 
@@ -19,7 +19,7 @@ here's a simplified version of what our `routes.rb` might look like:
 resources :books, only: [:index]
 ```
 
-this sets up a basic route for our `index` action in the `books` controller. by default this would translate to a url of ` /books `. but we don't have search yet, ransack will send parameters in the url like `/books?q[title_cont]=some_title&q[author_cont]=some_author`, the key here is the `q` parameter. rails will parse that into a hash. the `_cont` is ransack's way of doing "contains" filtering.
+this sets up a basic route for our `index` action in the `books` controller. by default this would translate to a url of `/books`. but we don't have search yet, ransack will send parameters in the url like `/books?q[title_cont]=some_title&q[author_cont]=some_author`, the key here is the `q` parameter. rails will parse that into a hash. the `_cont` is ransack's way of doing "contains" filtering.
 
 now, in our `books_controller.rb`, we need to handle these parameters:
 

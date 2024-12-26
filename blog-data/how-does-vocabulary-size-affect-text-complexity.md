@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-does-vocabulary-size-affect-text-complexity"
 ---
 
-Okay, let's unpack this. I recall a particularly tricky project about seven years back, involving automated document summarization. We were consistently getting wildly different performance metrics across varying document types. Turns out, a significant factor wasn't just sentence length or syntactic variety—it was the sheer volume and distribution of unique words in the source text, or in simpler terms, vocabulary size. It's a cornerstone issue in natural language processing and understanding.
+, let's unpack this. I recall a particularly tricky project about seven years back, involving automated document summarization. We were consistently getting wildly different performance metrics across varying document types. Turns out, a significant factor wasn't just sentence length or syntactic variety—it was the sheer volume and distribution of unique words in the source text, or in simpler terms, vocabulary size. It's a cornerstone issue in natural language processing and understanding.
 
 The core relationship between vocabulary size and text complexity stems from a fairly straightforward principle: a larger, more diverse vocabulary generally indicates that a text deals with a wider range of concepts and ideas. This, naturally, increases the cognitive load for the reader. Texts using a limited set of words, while possibly longer in terms of overall word count, tend to have a lower degree of complexity because the underlying ideas are often repetitive or interconnected within a narrow conceptual space.
 
 Think about it like this: if a text frequently reuses a small number of terms, it's likely navigating a simpler landscape of thought. But if it's constantly introducing new terms, especially technical or specialized ones, the reader needs to continually engage with new conceptual ground.
 
-However, it's not just the sheer number of *unique* words that matters; it's their distribution. A text might have a large vocabulary, but if certain terms are used with excessive frequency, it can bring the effective complexity down. For example, a document peppered with the word "the" or other common stop words adds to the word count but contributes very little to the overall semantic depth. That's why, when assessing complexity, techniques like term frequency-inverse document frequency (tf-idf) are often used. These methods penalize frequently occurring terms, giving higher weights to rarer, more informative words.
+However, it's not just the sheer number of _unique_ words that matters; it's their distribution. A text might have a large vocabulary, but if certain terms are used with excessive frequency, it can bring the effective complexity down. For example, a document peppered with the word "the" or other common stop words adds to the word count but contributes very little to the overall semantic depth. That's why, when assessing complexity, techniques like term frequency-inverse document frequency (tf-idf) are often used. These methods penalize frequently occurring terms, giving higher weights to rarer, more informative words.
 
 The impact is observable on several aspects of text analysis. For machine learning tasks, a larger vocabulary size translates to a higher dimensionality of the feature space if, say, you're using bag-of-words or similar encoding. This can lead to problems of sparsity and increased computational cost. For readability scoring, like the Flesch-Kincaid or Gunning Fog index, although these aren’t solely based on vocabulary size, it's an influential factor. Texts with larger vocabularies typically rate as more complex on such metrics.
 
@@ -62,7 +62,7 @@ As observed, even a smaller vocabulary with uneven frequency (text3) can become 
 
 **Example 3: Simplified Readability Score using Vocabulary Size**
 
-This is a highly simplified example—not a fully fledged readability index but illustrative. It shows how we might *naively* incorporate vocabulary size in a score.
+This is a highly simplified example—not a fully fledged readability index but illustrative. It shows how we might _naively_ incorporate vocabulary size in a score.
 
 ```python
 def naive_readability(text):

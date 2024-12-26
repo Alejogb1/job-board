@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-global-variables-be-used-effectively-with-phpmailer"
 ---
 
-Alright, let's tackle this one. I've seen my share of codebases where PHPMailer and global variables ended up creating a real mess, so I understand the need for a thoughtful approach. It's not that globals are inherently evil—they just require careful management, especially when dealing with a potentially sensitive process like email delivery. In my experience working on a large e-commerce platform, we initially made a few regrettable choices involving globally defined PHPMailer instances. It led to some debugging nightmares and ultimately forced us to refactor everything. So let me share what I've learned, particularly about how to manage global variables *effectively* with PHPMailer.
+, let's tackle this one. I've seen my share of codebases where PHPMailer and global variables ended up creating a real mess, so I understand the need for a thoughtful approach. It's not that globals are inherently evil—they just require careful management, especially when dealing with a potentially sensitive process like email delivery. In my experience working on a large e-commerce platform, we initially made a few regrettable choices involving globally defined PHPMailer instances. It led to some debugging nightmares and ultimately forced us to refactor everything. So let me share what I've learned, particularly about how to manage global variables _effectively_ with PHPMailer.
 
 The core issue with global variables, particularly within a class-based, object-oriented paradigm, is that they can quickly violate encapsulation and introduce unintended side effects. This is exacerbated when you’re dealing with an object like PHPMailer, which often holds sensitive credentials and configuration information. Randomly accessing and modifying a global instance from various parts of your application can lead to unexpected behavior, making debugging a challenge and potentially exposing security vulnerabilities.
 
-However, there are times when the convenience of a global variable feels unavoidable, especially when you’re aiming for cleaner code by not re-instantiating the PHPMailer object for every single email sent. So, rather than avoiding them altogether, a judicious approach is required. A better strategy is to *centralize* the management of your PHPMailer instance, using a global scope but within a well-defined and controlled structure.
+However, there are times when the convenience of a global variable feels unavoidable, especially when you’re aiming for cleaner code by not re-instantiating the PHPMailer object for every single email sent. So, rather than avoiding them altogether, a judicious approach is required. A better strategy is to _centralize_ the management of your PHPMailer instance, using a global scope but within a well-defined and controlled structure.
 
 The first and arguably the best way is to use a Singleton pattern to manage the PHPMailer instance. The singleton ensures that only one instance exists throughout the application’s lifecycle, allowing you to configure it once and use it wherever necessary. Here's a basic example of how that would look in PHP:
 
@@ -73,6 +73,7 @@ class MailerService {
 }
 ?>
 ```
+
 In this snippet, the `MailerService` class uses the Singleton pattern. The `getInstance` method controls access to a single instance. The PHPMailer instance is created only once within the private constructor. The `sendEmail` method handles sending emails and is the primary method you would interact with. Notice the inclusion of the try/catch block for error management and the crucial `clearAddresses` call in the `finally` block to avoid email addresses accumulating on the PHPMailer object.
 
 The second approach is using a simple configuration file along with static functions. While not as robust as the Singleton pattern in terms of object management, this method does provide a controlled way to globally access a configured PHPMailer object.

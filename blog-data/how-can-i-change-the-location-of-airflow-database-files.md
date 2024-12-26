@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-change-the-location-of-airflow-database-files"
 ---
 
-Alright, let’s tackle this one. I've been there, elbow-deep in airflow configurations, wrestling… err, *dealing* with unexpected storage growth and the need to relocate those database files. It’s a situation that, surprisingly, comes up more often than one might expect, especially as your airflow setup matures.
+, let’s tackle this one. I've been there, elbow-deep in airflow configurations, wrestling… err, _dealing_ with unexpected storage growth and the need to relocate those database files. It’s a situation that, surprisingly, comes up more often than one might expect, especially as your airflow setup matures.
 
 The default location for Airflow's metadata database, often a sqlite file when you're starting out, isn’t always ideal for long-term use or production environments. It might be on the same disk as your airflow installation, potentially creating a bottleneck, or it might just be in a location that's difficult to manage or backup. So, let’s explore the how and why of relocating those files.
 
@@ -155,18 +155,18 @@ echo "Airflow database migrated to new MySQL server and services restarted."
 
 **Important Considerations**
 
-*   **Backups:** Always back up your database before attempting any move. It's an essential safety net.
-*   **Database User Privileges:** Ensure the database user has the necessary privileges to create and access tables and data.
-*   **Dependency Management:** As seen in the examples, having the right database driver installed for your chosen sql backend is vital. Usually, this involves the correct python `pip` installation.
-*   **Testing:** After changing the database location, thoroughly test your airflow setup to make sure everything works as expected.
-*   **Systemd Configuration:** Note that the above scripts are merely illustrative. In practice, it is vital to ensure your service definitions and dependencies work with a new database server location.
+- **Backups:** Always back up your database before attempting any move. It's an essential safety net.
+- **Database User Privileges:** Ensure the database user has the necessary privileges to create and access tables and data.
+- **Dependency Management:** As seen in the examples, having the right database driver installed for your chosen sql backend is vital. Usually, this involves the correct python `pip` installation.
+- **Testing:** After changing the database location, thoroughly test your airflow setup to make sure everything works as expected.
+- **Systemd Configuration:** Note that the above scripts are merely illustrative. In practice, it is vital to ensure your service definitions and dependencies work with a new database server location.
 
 **Resource Recommendations**
 
 For deeper understanding, I would recommend the following:
 
-*   *“SQLAlchemy Documentation”*. The SQLAlchemy documentation is your best friend when working with connection strings and database interactions in python based workflows like airflow. It provides a very clear, technical explanation of how these connections are configured.
-*   *Official Airflow documentation*. The official apache airflow documentation is comprehensive and the correct place to check on the most up to date recommended practices. The database section will be particularly useful.
-*    *Your database specific vendor documentation*. For instance, the postgresql or mysql official documentation has very specific guidance on authentication and configuration that is relevant in these types of scenarios.
+- _“SQLAlchemy Documentation”_. The SQLAlchemy documentation is your best friend when working with connection strings and database interactions in python based workflows like airflow. It provides a very clear, technical explanation of how these connections are configured.
+- _Official Airflow documentation_. The official apache airflow documentation is comprehensive and the correct place to check on the most up to date recommended practices. The database section will be particularly useful.
+- _Your database specific vendor documentation_. For instance, the postgresql or mysql official documentation has very specific guidance on authentication and configuration that is relevant in these types of scenarios.
 
 I've seen many instances where a proper database configuration can dramatically improve performance and reliability. Taking the time to configure this correctly can save a considerable amount of trouble down the line, especially if you're moving from a single node setup into a cluster. It's all about planning ahead and making sure you’re using the right tools for the job.

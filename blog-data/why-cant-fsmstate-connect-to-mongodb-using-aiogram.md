@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-cant-fsmstate-connect-to-mongodb-using-aiogram"
 ---
 
-Okay, let's tackle this. I remember a particularly frustrating project a couple of years back where I was building a Telegram bot with aiogram and trying to integrate MongoDB for state management. It was a beast initially, and I saw quite a few variations of the "can't connect" issue pop up. So, let me break down why connecting `FSMState` to MongoDB using aiogram directly is not a straightforward task and explain what's actually going on under the hood, along with some practical solutions based on that experience.
+, let's tackle this. I remember a particularly frustrating project a couple of years back where I was building a Telegram bot with aiogram and trying to integrate MongoDB for state management. It was a beast initially, and I saw quite a few variations of the "can't connect" issue pop up. So, let me break down why connecting `FSMState` to MongoDB using aiogram directly is not a straightforward task and explain what's actually going on under the hood, along with some practical solutions based on that experience.
 
-The core issue isn't that aiogram's `FSMState` is inherently incompatible with MongoDB. The problem is that `FSMState` doesn't natively *persist* to any external database, including MongoDB. `FSMState` itself is primarily an in-memory mechanism. Think of it as a sophisticated way of organizing conversations within the bot's runtime. When you define states and transition between them, aiogram manages these changes in memory. This is extremely efficient for short-lived interactions and basic bot functionality. However, if your bot restarts or your deployment environment cycles, all your active state information is lost. This is where a persistent data store like MongoDB becomes crucial.
+The core issue isn't that aiogram's `FSMState` is inherently incompatible with MongoDB. The problem is that `FSMState` doesn't natively _persist_ to any external database, including MongoDB. `FSMState` itself is primarily an in-memory mechanism. Think of it as a sophisticated way of organizing conversations within the bot's runtime. When you define states and transition between them, aiogram manages these changes in memory. This is extremely efficient for short-lived interactions and basic bot functionality. However, if your bot restarts or your deployment environment cycles, all your active state information is lost. This is where a persistent data store like MongoDB becomes crucial.
 
 The challenge stems from the fact that aiogram's `FSMContext` (which holds the state data) uses an abstraction that needs to be adapted to work with a database like MongoDB. We need to bridge the gap, essentially. We can't directly save the `FSMContext` object as-is. It requires careful serialization and deserialization to be stored and retrieved from MongoDB correctly.
 
@@ -153,9 +153,10 @@ if __name__ == '__main__':
     asyncio.run(dp.start_polling(bot))
 
 ```
+
 Here, we’ve created a `MongoStorage` class that extends `BaseStorage` and manages the serialization and deserialization of the state data. We use json to handle serialization and deserialization. This approach will make it possible to properly save and retrieve the bot states using mongoDB.
 
-**Example 3:  Dealing with Race Conditions (Conceptual)**
+**Example 3: Dealing with Race Conditions (Conceptual)**
 
 While this code wouldn't be trivial to implement directly, it conceptually shows how to add an extra layer of protection. Ideally, a more robust solution using MongoDB's locking capabilities would be used:
 

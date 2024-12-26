@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "what-python-function-is-equivalent-to-rs-unnesttokens"
 ---
 
-Okay, let's talk about replicating the functionality of R's `unnest_tokens()` in Python. I've bumped into this particular problem a few times during data analysis projects, especially when moving between languages or collaborating with teams using different stacks. The essence of `unnest_tokens()`, as I've experienced it, is to take text data—often stored as a single string within a data structure—and break it down into a more granular, tokenized form, usually with one token per row. Think of it as transforming a single, complex sentence into a collection of individual words, ready for further analysis.
+, let's talk about replicating the functionality of R's `unnest_tokens()` in Python. I've bumped into this particular problem a few times during data analysis projects, especially when moving between languages or collaborating with teams using different stacks. The essence of `unnest_tokens()`, as I've experienced it, is to take text data—often stored as a single string within a data structure—and break it down into a more granular, tokenized form, usually with one token per row. Think of it as transforming a single, complex sentence into a collection of individual words, ready for further analysis.
 
-Python doesn't have a single function that *exactly* mirrors `unnest_tokens()`, but we can certainly achieve the same results using combinations of existing libraries and techniques. The critical element is understanding that we need to both tokenize the text and then reshape the data structure to reflect this tokenization. Let's dive into that process, remembering that the specific approach can vary based on the complexity of tokenization you need and the structure of your input.
+Python doesn't have a single function that _exactly_ mirrors `unnest_tokens()`, but we can certainly achieve the same results using combinations of existing libraries and techniques. The critical element is understanding that we need to both tokenize the text and then reshape the data structure to reflect this tokenization. Let's dive into that process, remembering that the specific approach can vary based on the complexity of tokenization you need and the structure of your input.
 
 My past experience has involved projects where we had survey responses, articles, and even social media posts all stored in dataframe columns. For this, I found that using `pandas` and `nltk` (or `spaCy` depending on the case) works exceptionally well.
 
@@ -62,6 +62,7 @@ df_unnested_lemma = unnest_tokens_spacy(df, 'text', 'token_lemma', lemmatize=Tru
 print("\nWith lemmatization:\n", df_unnested_lemma)
 
 ```
+
 This `unnest_tokens_spacy` function is a bit more advanced. It loads a `spaCy` language model and uses it to process the text. It also includes an optional `lemmatize` parameter. When enabled, it outputs the lemmas rather than the raw tokens. This function demonstrates how to filter for punctuation and spaces effectively, showcasing another dimension of text processing control available with `spaCy`.
 
 Finally, let's explore a case where we need to handle n-grams, or sequences of tokens. We could still employ the techniques above, but it becomes slightly more involved. Here’s an approach incorporating the `nltk` library's `ngrams` function:

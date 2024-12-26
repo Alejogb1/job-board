@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-python-cron-jobs-be-managed-with-docker-compose-and-airflow"
 ---
 
-Alright, let's tackle this. I've seen my share of scheduled tasks go sideways over the years, especially when mixing containers, orchestration, and plain old cron. So, how do we effectively manage Python cron jobs using Docker Compose and Airflow? It's a multi-layered challenge, but definitely solvable with the right approach.
+, let's tackle this. I've seen my share of scheduled tasks go sideways over the years, especially when mixing containers, orchestration, and plain old cron. So, how do we effectively manage Python cron jobs using Docker Compose and Airflow? It's a multi-layered challenge, but definitely solvable with the right approach.
 
 First off, it's important to understand that we’re essentially orchestrating a combination of different scheduling mechanisms. Cron, while simple and pervasive, isn’t inherently built for the dynamism of containerized applications. Docker Compose, excellent for multi-container environments, isn't a scheduler in itself either. That’s where Airflow steps in, providing a much more robust framework for scheduling, monitoring, and managing complex workflows, including those involving Python tasks.
 
-The basic strategy involves migrating your cron jobs into Airflow *tasks*, where Airflow handles the scheduling, logging, retries, and dependencies. Docker Compose comes into play by managing the containers that Airflow and your task executors (usually Celery workers) run within. This separation of concerns—Docker for container management and Airflow for workflow scheduling—creates a more scalable and maintainable system.
+The basic strategy involves migrating your cron jobs into Airflow _tasks_, where Airflow handles the scheduling, logging, retries, and dependencies. Docker Compose comes into play by managing the containers that Airflow and your task executors (usually Celery workers) run within. This separation of concerns—Docker for container management and Airflow for workflow scheduling—creates a more scalable and maintainable system.
 
 Let me break this down further, referencing some things I’ve seen go wrong and how we got around them in the past. In an older project, we started with cron directly within a Docker container running a Python script. It worked, sort of, until we needed to scale up, track failures properly, and handle inter-task dependencies. That's a good use-case where introducing Airflow becomes a significant improvement.
 
@@ -32,7 +32,8 @@ if __name__ == "__main__":
     process_data()
 
 ```
-This is the sort of script we’d want to pull out of the container and put under Airflow’s management. Note, however, we do *not* want to run the script *inside* a docker container with a cron job. Instead, we will invoke this script using an Airflow operator.
+
+This is the sort of script we’d want to pull out of the container and put under Airflow’s management. Note, however, we do _not_ want to run the script _inside_ a docker container with a cron job. Instead, we will invoke this script using an Airflow operator.
 
 Next, we’ll need to set up Airflow with Docker Compose. Here's a simplified `docker-compose.yml` configuration I would use:
 
@@ -55,9 +56,9 @@ services:
       retries: 5
 
   redis:
-      image: "redis:latest"
-      ports:
-        - "6379:6379"
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
   airflow-webserver:
     image: apache/airflow:2.8.2-python3.10
     restart: always
@@ -65,7 +66,7 @@ services:
       postgres:
         condition: service_healthy
       redis:
-         condition: service_started
+        condition: service_started
     ports:
       - "8080:8080"
     environment:
@@ -80,38 +81,39 @@ services:
       - ./dags:/opt/airflow/dags
       - ./plugins:/opt/airflow/plugins
   airflow-scheduler:
-      image: apache/airflow:2.8.2-python3.10
-      restart: always
-      depends_on:
-          postgres:
-            condition: service_healthy
-          redis:
-            condition: service_started
-      environment:
-        AIRFLOW__CORE__EXECUTOR: CeleryExecutor
-        AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
-        AIRFLOW__CELERY__BROKER_URL: redis://redis:6379/0
-        AIRFLOW__CELERY__RESULT_BACKEND: redis://redis:6379/0
-      volumes:
-        - ./dags:/opt/airflow/dags
-        - ./plugins:/opt/airflow/plugins
+    image: apache/airflow:2.8.2-python3.10
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    environment:
+      AIRFLOW__CORE__EXECUTOR: CeleryExecutor
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+      AIRFLOW__CELERY__BROKER_URL: redis://redis:6379/0
+      AIRFLOW__CELERY__RESULT_BACKEND: redis://redis:6379/0
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./plugins:/opt/airflow/plugins
   airflow-worker:
     image: apache/airflow:2.8.2-python3.10
     restart: always
     depends_on:
-        postgres:
-          condition: service_healthy
-        redis:
-          condition: service_started
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
     environment:
-        AIRFLOW__CORE__EXECUTOR: CeleryExecutor
-        AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
-        AIRFLOW__CELERY__BROKER_URL: redis://redis:6379/0
-        AIRFLOW__CELERY__RESULT_BACKEND: redis://redis:6379/0
+      AIRFLOW__CORE__EXECUTOR: CeleryExecutor
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+      AIRFLOW__CELERY__BROKER_URL: redis://redis:6379/0
+      AIRFLOW__CELERY__RESULT_BACKEND: redis://redis:6379/0
     volumes:
-        - ./dags:/opt/airflow/dags
-        - ./plugins:/opt/airflow/plugins
+      - ./dags:/opt/airflow/dags
+      - ./plugins:/opt/airflow/plugins
 ```
+
 This compose file sets up the necessary services for Airflow: the webserver, the scheduler, a celery worker, a postgres database, and a redis message broker. The key pieces to note are the volumes mapping, which lets you put the python scripts into the `/dags` folder and have them be visible to the airflow components. We use the Celery Executor because it’s scalable and appropriate for this kind of asynchronous task execution.
 
 Finally, we need to define the Airflow DAG (Directed Acyclic Graph) that will execute our Python script. Let's create a file called `example_dag.py` inside the `dags` directory:
@@ -140,6 +142,7 @@ with DAG(
         python_callable=process_data_task
     )
 ```
+
 This DAG defines a single task, `process_data`, that executes the `process_data` function from our python script using the `PythonOperator`. The `schedule_interval` specifies the cron schedule – in this case, run it at the start of every hour. `catchup=False` prevents any runs that would have taken place before today’s date when you start this DAG.
 
 With these files in place, a `docker compose up -d` in the same directory will bring the services online, including the airflow webserver available at `localhost:8080`. After a brief setup period, and after you generate the Fernet key and paste it into `docker-compose.yml` the DAG will be visible. The DAG will then execute at the specified interval, and you'll be able to monitor its progress, logs, and any failures in the Airflow UI.

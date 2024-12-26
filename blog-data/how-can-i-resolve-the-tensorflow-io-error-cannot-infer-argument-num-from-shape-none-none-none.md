@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-resolve-the-tensorflow-io-error-cannot-infer-argument-num-from-shape-none-none-none"
 ---
 
-Alright, let's tackle this TensorFlow i/o error. I've personally encountered the "Cannot infer argument `num` from shape (None, None, None)" a handful of times, usually when dealing with variable-length sequences, and it can certainly throw a wrench in your workflow if you don’t understand its root cause. It’s not a bug in TensorFlow per se, but rather a consequence of how TensorFlow expects to receive data when it needs to perform operations that rely on a concrete, defined shape.
+, let's tackle this TensorFlow i/o error. I've personally encountered the "Cannot infer argument `num` from shape (None, None, None)" a handful of times, usually when dealing with variable-length sequences, and it can certainly throw a wrench in your workflow if you don’t understand its root cause. It’s not a bug in TensorFlow per se, but rather a consequence of how TensorFlow expects to receive data when it needs to perform operations that rely on a concrete, defined shape.
 
 Essentially, this error emerges when you are feeding TensorFlow data that has an undefined dimension (`None`) where an operation expects a specific numerical value. Think of it like this: you’re telling a machine to cut a piece of wood, but instead of giving it a specific length, you've said "some length". The machine can’t operate with that level of ambiguity. The specific error message you're seeing indicates that, somewhere, an operation is trying to use a value inferred from the shape of your input tensor, specifically the number of something represented by 'num', and that number cannot be extracted from the shape `(None, None, None)`.
 
@@ -119,6 +119,7 @@ batched_dataset = dataset.batch(2)
 for batch in batched_dataset:
     print(batch.shape)
 ```
+
 By using `tf.image.resize`, we’ve established a consistent shape for all elements, allowing the batch operation to proceed successfully, and the error disappears.
 
 **Key Takeaways and Recommended Reading**

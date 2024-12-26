@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-should-a-data-folder-be-structured-to-provide-x-train-y-train-x-test-y-test-inputs-for-a-cnn-model"
 ---
 
-Alright, let's delve into structuring data for convolutional neural networks. It’s a topic I've spent a considerable amount of time navigating, especially during my stint working with image recognition pipelines a few years back. We were constantly tweaking our data preparation strategies to optimize model training. There isn't a single, universally ‘correct’ approach, but there are established best practices that significantly ease development and prevent common data handling headaches. Let me walk you through a robust method that we refined and consistently used.
+, let's delve into structuring data for convolutional neural networks. It’s a topic I've spent a considerable amount of time navigating, especially during my stint working with image recognition pipelines a few years back. We were constantly tweaking our data preparation strategies to optimize model training. There isn't a single, universally ‘correct’ approach, but there are established best practices that significantly ease development and prevent common data handling headaches. Let me walk you through a robust method that we refined and consistently used.
 
 The primary goal here is to organize your data in a way that is efficient for batch processing, easy to iterate on, and minimizes errors from inconsistent loading. The key principle revolves around clear separation of training and testing sets, which directly mirrors the core concept of supervised learning. We need to ensure the CNN model learns from the training data without ever ‘seeing’ the test data during training. This guarantees an unbiased evaluation of model performance.
 
@@ -84,6 +84,7 @@ for images, labels in test_ds.take(1):
 class_names = train_ds.class_names
 print("Class names:", class_names)
 ```
+
 In this example, `image_dataset_from_directory` automatically infers labels from the directory structure, creating batches of image data and corresponding one-hot encoded labels. This directly provides us with appropriately structured `x_train` and `y_train` as well as `x_test` and `y_test` in batch form.
 
 **Example 2: Using PyTorch’s `torchvision.datasets.ImageFolder` and `DataLoader`**
@@ -128,6 +129,7 @@ for images, labels in test_loader:
 class_names = train_dataset.classes
 print("Class names:", class_names)
 ```
+
 Here, `ImageFolder` reads the data based on the directory structure, and `DataLoader` allows easy batching. The `transform` variable is where you define preprocessing steps like resizing and converting to tensors. Once again, this provides us with our `x_train`, `y_train`, `x_test`, and `y_test`.
 
 **Example 3: Using custom Python logic (for more flexible control)**

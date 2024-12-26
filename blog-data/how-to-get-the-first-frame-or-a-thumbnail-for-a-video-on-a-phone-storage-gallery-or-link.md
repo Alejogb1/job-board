@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "how-to-get-the-first-frame-or-a-thumbnail-for-a-video-on-a-phone-storage-gallery-or-link"
 ---
 
-alright, so you want to grab that initial frame, that very first image, from a video either sitting pretty in your phone’s storage, or some far-flung url? been there, done that, got the t-shirt – and several bug reports. dealing with videos, especially across different platforms, it's a classic tech headache. i've spent more hours than i care to count debugging video frame extraction, and trust me, the devil is always in the details. it's one of those things that seems simple on the surface, but unfolds into a surprisingly deep rabbit hole once you start actually implementing it.
+, so you want to grab that initial frame, that very first image, from a video either sitting pretty in your phone’s storage, or some far-flung url? been there, done that, got the t-shirt – and several bug reports. dealing with videos, especially across different platforms, it's a classic tech headache. i've spent more hours than i care to count debugging video frame extraction, and trust me, the devil is always in the details. it's one of those things that seems simple on the surface, but unfolds into a surprisingly deep rabbit hole once you start actually implementing it.
 
-my first encounter with this was back in the days of early android apps. i was building this picture-sharing app before instagram blew up. the idea was to allow short video posts and to show a relevant thumbnail in the feeds. i thought i could just pull the first frame from the file and done, like it would be a png or jpeg file. man, was i wrong. i quickly discovered that video files aren’t like static images. they are a container with compressed media data, not a single picture, and getting to a frame involved more than just reading from the beginning. i ended up having to use some horrible external libraries that were barely maintained. the problems i had with those libraries made me wish for the good old days of building windows forms apps. 
+my first encounter with this was back in the days of early android apps. i was building this picture-sharing app before instagram blew up. the idea was to allow short video posts and to show a relevant thumbnail in the feeds. i thought i could just pull the first frame from the file and done, like it would be a png or jpeg file. man, was i wrong. i quickly discovered that video files aren’t like static images. they are a container with compressed media data, not a single picture, and getting to a frame involved more than just reading from the beginning. i ended up having to use some horrible external libraries that were barely maintained. the problems i had with those libraries made me wish for the good old days of building windows forms apps.
 
 so, let's break down how we can tackle this, focusing on practical, working solutions. the approach varies depending on whether you’re dealing with a local file (phone gallery) or a remote url. we'll cover both scenarios.
 
@@ -60,11 +60,11 @@ func getThumbnail(videoUrl: url) -> uiimage? {
          // handle the error
           print("could not get thumbnail \(error)")
     }
-    
+
     guard let image = capturedimage else {
          return nil
     }
-    
+
     return uiimage(cgimage: image)
 }
 ```
@@ -134,11 +134,11 @@ func getThumbnail(videoUrl: url) async -> uiimage? {
          print("could not get thumbnail \(error)")
          return nil
     }
-    
+
     guard let image = capturedimage else {
          return nil
     }
-    
+
     return uiimage(cgimage: image)
 }
 ```
@@ -147,16 +147,16 @@ in this ios version the code now uses `async` await for asynchronous work. we ge
 
 **things to keep in mind**
 
-*   **performance:** always do the image extraction in a background thread. decoding frames can be a very computationally intensive process and should never block the main ui thread, or your app will feel sluggish.
-*   **error handling:** video files can be tricky. always prepare for exceptions: invalid urls, corrupted files, and unsupported video codecs. if you want a good laugh, try handling video errors on a monday morning, it feels like the videos deliberately try to break your code.
-*   **permissions:** on android, you need to request storage permission to access the local files.
-*   **caching:** if you’re extracting thumbnails repeatedly, consider caching them to avoid unnecessary processing.
-*   **video format:** the media framework supports several video formats. however, sometimes you need a fallback if the built-in framework fails to decode a particular video format.
+- **performance:** always do the image extraction in a background thread. decoding frames can be a very computationally intensive process and should never block the main ui thread, or your app will feel sluggish.
+- **error handling:** video files can be tricky. always prepare for exceptions: invalid urls, corrupted files, and unsupported video codecs. if you want a good laugh, try handling video errors on a monday morning, it feels like the videos deliberately try to break your code.
+- **permissions:** on android, you need to request storage permission to access the local files.
+- **caching:** if you’re extracting thumbnails repeatedly, consider caching them to avoid unnecessary processing.
+- **video format:** the media framework supports several video formats. however, sometimes you need a fallback if the built-in framework fails to decode a particular video format.
 
 **further resources:**
 
-*   **"understanding video: the essential guide to the technical and creative aspects of video production"** by peter utting – this book provides a good background on video codecs and how video data is structured.
-*   **the official android and ios developer documentations**: their documentation for `mediametadataRetriever` and `avassetimagegenerator` are essential.
-*   **ffmpeg**: if you need more power and cross-platform support, ffmpeg is your friend. it's a command-line tool, but there are libraries you can use in your apps. look up the `libavformat` and `libavcodec` libraries for the low-level processing. the complexity is high but this tool is extremely capable.
+- **"understanding video: the essential guide to the technical and creative aspects of video production"** by peter utting – this book provides a good background on video codecs and how video data is structured.
+- **the official android and ios developer documentations**: their documentation for `mediametadataRetriever` and `avassetimagegenerator` are essential.
+- **ffmpeg**: if you need more power and cross-platform support, ffmpeg is your friend. it's a command-line tool, but there are libraries you can use in your apps. look up the `libavformat` and `libavcodec` libraries for the low-level processing. the complexity is high but this tool is extremely capable.
 
 extracting video thumbnails might seem like a trivial task but getting it right involves a lot of different components. it depends a lot on your target platform, the context and the type of video data you need to handle. with the information here, you should be able to get started on the right track. good luck.

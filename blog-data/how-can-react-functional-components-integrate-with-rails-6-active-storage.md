@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-react-functional-components-integrate-with-rails-6-active-storage"
 ---
 
-Okay, let's unpack this. Integrating React functional components with Rails 6 Active Storage is a common challenge, and one I've certainly encountered a few times in projects past. It's not inherently difficult, but it requires a solid understanding of how both systems handle data, particularly file uploads. We need to bridge the gap between React's component-driven approach and Rails' backend file management with Active Storage. Let's break it down into practical steps.
+, let's unpack this. Integrating React functional components with Rails 6 Active Storage is a common challenge, and one I've certainly encountered a few times in projects past. It's not inherently difficult, but it requires a solid understanding of how both systems handle data, particularly file uploads. We need to bridge the gap between React's component-driven approach and Rails' backend file management with Active Storage. Let's break it down into practical steps.
 
 First off, remember that Active Storage in Rails 6 is designed to handle the server-side aspects of file uploads—storage, transformations, and metadata management. React, on the other hand, focuses on building interactive user interfaces. Our job is to orchestrate communication between the two. This typically involves making http requests from React to Rails, and correctly managing the data payload so Rails can process it with Active Storage. The trickiest part often lies in formatting the request with the correct multipart/form-data encoding, which is essential for transmitting file data.
 
@@ -13,55 +13,53 @@ One of the critical areas is the creation of a form within your React component.
 Here’s a barebones example of a React functional component handling file selection:
 
 ```jsx
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const FileUploader = ({ uploadUrl }) => {
-    const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
 
-    const handleFileChange = (event) => {
-        setSelectedFile(event.target.files[0]);
-    };
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
 
-    const handleUpload = async () => {
-        if (!selectedFile) {
-            console.error("No file selected.");
-            return;
-        }
+  const handleUpload = async () => {
+    if (!selectedFile) {
+      console.error("No file selected.");
+      return;
+    }
 
-        const formData = new FormData();
-        formData.append('file', selectedFile);
+    const formData = new FormData();
+    formData.append("file", selectedFile);
 
+    try {
+      const response = await fetch(uploadUrl, {
+        method: "POST",
+        body: formData,
+      });
 
-        try {
-            const response = await fetch(uploadUrl, {
-                method: 'POST',
-                body: formData,
-            });
+      if (response.ok) {
+        console.log("Upload successful!");
+        //Handle successful response, like updating state or UI
+        const responseData = await response.json();
+        console.log("server response:", responseData);
+      } else {
+        console.error("Upload failed:", response.status, await response.text());
+        // Handle error response from server
+      }
+    } catch (error) {
+      console.error("Error during upload:", error);
+      //Handle any network errors
+    }
+  };
 
-            if (response.ok) {
-               console.log('Upload successful!');
-               //Handle successful response, like updating state or UI
-               const responseData = await response.json();
-               console.log('server response:', responseData)
-             }
-            else {
-              console.error("Upload failed:", response.status, await response.text());
-              // Handle error response from server
-            }
-        } catch (error) {
-            console.error("Error during upload:", error);
-            //Handle any network errors
-        }
-    };
-
-
-
-    return (
-        <div>
-            <input type="file" onChange={handleFileChange} />
-            <button onClick={handleUpload} disabled={!selectedFile}>Upload</button>
-        </div>
-    );
+  return (
+    <div>
+      <input type="file" onChange={handleFileChange} />
+      <button onClick={handleUpload} disabled={!selectedFile}>
+        Upload
+      </button>
+    </div>
+  );
 };
 
 export default FileUploader;
@@ -105,67 +103,76 @@ Here, the critical line is `@attachable.files.attach(params[:file])`. It assumes
 Moving on, let's add a bit of complexity: let’s say we want to also send some metadata with the file. Let's extend our React code:
 
 ```jsx
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const FileUploaderWithMeta = ({ uploadUrl }) => {
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [description, setDescription] = useState('');
-    const [author, setAuthor] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [description, setDescription] = useState("");
+  const [author, setAuthor] = useState("");
 
-    const handleFileChange = (event) => {
-        setSelectedFile(event.target.files[0]);
-    };
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
 
-   const handleDescriptionChange = (event) => {
-      setDescription(event.target.value);
-   };
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+  };
 
-    const handleAuthorChange = (event) => {
-       setAuthor(event.target.value);
-    };
+  const handleAuthorChange = (event) => {
+    setAuthor(event.target.value);
+  };
 
+  const handleUpload = async () => {
+    if (!selectedFile) {
+      console.error("No file selected.");
+      return;
+    }
 
-    const handleUpload = async () => {
-         if (!selectedFile) {
-            console.error("No file selected.");
-            return;
-         }
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append("description", description);
+    formData.append("author", author);
 
-         const formData = new FormData();
-         formData.append('file', selectedFile);
-         formData.append('description', description);
-         formData.append('author', author);
+    try {
+      const response = await fetch(uploadUrl, {
+        method: "POST",
+        body: formData,
+      });
+      if (response.ok) {
+        console.log("Upload successful!");
+        //Handle successful response, like updating state or UI
+        const responseData = await response.json();
+        console.log("server response:", responseData);
+      } else {
+        console.error("Upload failed:", response.status, await response.text());
+        // Handle error response from server
+      }
+    } catch (error) {
+      console.error("Error during upload:", error);
+      //Handle any network errors
+    }
+  };
 
-
-        try {
-             const response = await fetch(uploadUrl, {
-                method: 'POST',
-                body: formData,
-             });
-             if (response.ok) {
-                console.log('Upload successful!');
-               //Handle successful response, like updating state or UI
-               const responseData = await response.json();
-               console.log('server response:', responseData)
-            }
-             else {
-                console.error("Upload failed:", response.status, await response.text());
-                // Handle error response from server
-             }
-        } catch (error) {
-            console.error("Error during upload:", error);
-           //Handle any network errors
-        }
-    };
-
-    return (
-      <div>
-           <input type="file" onChange={handleFileChange} />
-          <input type="text" placeholder="Description" value={description} onChange={handleDescriptionChange}/>
-          <input type="text" placeholder="Author" value={author} onChange={handleAuthorChange}/>
-            <button onClick={handleUpload} disabled={!selectedFile}>Upload</button>
-       </div>
-    );
+  return (
+    <div>
+      <input type="file" onChange={handleFileChange} />
+      <input
+        type="text"
+        placeholder="Description"
+        value={description}
+        onChange={handleDescriptionChange}
+      />
+      <input
+        type="text"
+        placeholder="Author"
+        value={author}
+        onChange={handleAuthorChange}
+      />
+      <button onClick={handleUpload} disabled={!selectedFile}>
+        Upload
+      </button>
+    </div>
+  );
 };
 
 export default FileUploaderWithMeta;

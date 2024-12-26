@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-images-not-displaying-in-pdfs-generated-by-an-action-controller"
 ---
 
-Alright, let's tackle this. I've seen this particular issue surface more times than I care to recall, and it’s rarely as straightforward as it initially appears. The problem of images not showing up in PDFs generated via an Action Controller is, in my experience, a confluence of factors rather than a singular culprit. We’re not talking about a binary “it works” or “it doesn’t,” but a spectrum of possible configurations and misconfigurations that can lead to this frustrating outcome.
+, let's tackle this. I've seen this particular issue surface more times than I care to recall, and it’s rarely as straightforward as it initially appears. The problem of images not showing up in PDFs generated via an Action Controller is, in my experience, a confluence of factors rather than a singular culprit. We’re not talking about a binary “it works” or “it doesn’t,” but a spectrum of possible configurations and misconfigurations that can lead to this frustrating outcome.
 
 The core of the issue usually lies in how the PDF generation library interacts with your Rails application's asset pipeline and how those assets are ultimately rendered within the PDF. Think of it like this: your Rails app is serving web pages perfectly, images and all, because it's using the asset pipeline to manage and serve those resources. Now, you’re asking a third-party library to take those html structures, and by extension those images, and reproduce them on a different medium - the pdf. It's not a simple copy and paste.
 
@@ -106,10 +106,10 @@ This layout has deliberately been stripped down to the bare minimum. The templat
 
 In terms of resources for deeper learning, for PDF generation using Ruby on Rails, I recommend investigating these resources:
 
-*   **“Agile Web Development with Rails 7” by David Heinemeier Hansson:** While this is a general Rails book, it covers the asset pipeline in detail and its integration with other Rails components, providing crucial knowledge for understanding how assets are handled in a typical Rails application.
+- **“Agile Web Development with Rails 7” by David Heinemeier Hansson:** While this is a general Rails book, it covers the asset pipeline in detail and its integration with other Rails components, providing crucial knowledge for understanding how assets are handled in a typical Rails application.
 
-*   **The Official documentation for whichever pdf generation library you're using:** Whether that's `wkhtmltopdf`, `pdfkit`, or `prawn`, their documentation is the best source for understanding how they access assets.
+- **The Official documentation for whichever pdf generation library you're using:** Whether that's `wkhtmltopdf`, `pdfkit`, or `prawn`, their documentation is the best source for understanding how they access assets.
 
-*   **The "Rails Asset Pipeline" Guide:** This official documentation is available on the Ruby on Rails guides and will provide you with specific insight into how assets are compiled, stored, and served.
+- **The "Rails Asset Pipeline" Guide:** This official documentation is available on the Ruby on Rails guides and will provide you with specific insight into how assets are compiled, stored, and served.
 
 In conclusion, when you face the challenge of images not appearing in PDFs generated through an Action Controller, it’s almost always down to how you're handling asset paths, access permissions or the complexity of your html layout. Taking a systematic approach, testing each potential issue and systematically addressing them, is crucial to pinpoint the cause and solve the problem efficiently. These are lessons I’ve picked up after many, many hours debugging, and I hope they help you get through this issue quickly and efficiently as well.

@@ -4,33 +4,33 @@ date: "2024-12-16"
 id: "when-should-i-use-preparedata-vs-setup-in-pytorch-lightning"
 ---
 
-Alright, let's tackle this. I’ve seen this confusion pop up more times than I can count, and it’s understandable. Both `prepare_data` and `setup` in PyTorch Lightning seem to deal with data, but they have distinctly different responsibilities. The key lies in understanding *when* each method is called and what resources they’re meant to handle. Think of `prepare_data` as your data *download and preprocessing stage*, while `setup` is where you *assign and instantiate* the processed data ready for training/evaluation. They're sequential, not interchangeable. I recall a particularly thorny project early in my career involving large image datasets where not understanding this distinction led to some… let’s call them *interesting* debugging sessions.
+, let's tackle this. I’ve seen this confusion pop up more times than I can count, and it’s understandable. Both `prepare_data` and `setup` in PyTorch Lightning seem to deal with data, but they have distinctly different responsibilities. The key lies in understanding _when_ each method is called and what resources they’re meant to handle. Think of `prepare_data` as your data _download and preprocessing stage_, while `setup` is where you _assign and instantiate_ the processed data ready for training/evaluation. They're sequential, not interchangeable. I recall a particularly thorny project early in my career involving large image datasets where not understanding this distinction led to some… let’s call them _interesting_ debugging sessions.
 
 Let’s break it down step-by-step, focusing on the practicalities and avoiding overly abstract explanations.
 
 **`prepare_data()`: The Download and Preprocessing Phase**
 
-The core function of `prepare_data()` is, as the name suggests, to get your data *ready*. Crucially, this method is executed *only on a single process* across your entire distributed training setup. This is incredibly important for avoiding redundant operations when using multiple GPUs or machines. Consider it a global preprocessing step.
+The core function of `prepare_data()` is, as the name suggests, to get your data _ready_. Crucially, this method is executed _only on a single process_ across your entire distributed training setup. This is incredibly important for avoiding redundant operations when using multiple GPUs or machines. Consider it a global preprocessing step.
 
 Here's what typically goes inside `prepare_data()`:
 
-*   **Downloading Data:** If your data isn't already present, this is where you'd programmatically download it (e.g., using `torchvision.datasets` with a download flag). This helps in reproducible experiments.
-*   **Data Unzipping/Extraction:** If your data comes in an archive, this is the place to unpack it.
-*   **Data Preparation (but not *instantiation*):** This might include things like converting to a specific format, generating necessary files, or downloading embeddings. Note that you're *not* yet creating your actual `torch.utils.data.Dataset` instance. You’re just prepping the data for later usage. Think of it as preparing your ingredients in the kitchen, not cooking the meal yet.
-*   **Saving Prepared Data to Disk:** Often, you'll want to cache the results of these potentially time-consuming operations to avoid re-running them every time you train.
+- **Downloading Data:** If your data isn't already present, this is where you'd programmatically download it (e.g., using `torchvision.datasets` with a download flag). This helps in reproducible experiments.
+- **Data Unzipping/Extraction:** If your data comes in an archive, this is the place to unpack it.
+- **Data Preparation (but not _instantiation_):** This might include things like converting to a specific format, generating necessary files, or downloading embeddings. Note that you're _not_ yet creating your actual `torch.utils.data.Dataset` instance. You’re just prepping the data for later usage. Think of it as preparing your ingredients in the kitchen, not cooking the meal yet.
+- **Saving Prepared Data to Disk:** Often, you'll want to cache the results of these potentially time-consuming operations to avoid re-running them every time you train.
 
-It's crucial that this function is deterministic based on the provided arguments, ensuring consistent results across runs. Avoid any operations involving random number generation in this method. If you need non-deterministic processes, these are better placed elsewhere, specifically within the `setup` method, or within the `Dataset` class itself. Also, keep data loading (creating `torch.utils.data.Dataset` instances) *out* of `prepare_data()`. This is a common mistake.
+It's crucial that this function is deterministic based on the provided arguments, ensuring consistent results across runs. Avoid any operations involving random number generation in this method. If you need non-deterministic processes, these are better placed elsewhere, specifically within the `setup` method, or within the `Dataset` class itself. Also, keep data loading (creating `torch.utils.data.Dataset` instances) _out_ of `prepare_data()`. This is a common mistake.
 
 **`setup()`: The Assignment and Instantiation Phase**
 
-`setup()`, on the other hand, is called on *every process* and is executed *after* `prepare_data()` has finished. This is where you now use the data prepared by `prepare_data()` and create your actual `torch.utils.data.Dataset` instances (and dataloaders if required). It's where data processing and assignment to specific training, validation, and test datasets occur.
+`setup()`, on the other hand, is called on _every process_ and is executed _after_ `prepare_data()` has finished. This is where you now use the data prepared by `prepare_data()` and create your actual `torch.utils.data.Dataset` instances (and dataloaders if required). It's where data processing and assignment to specific training, validation, and test datasets occur.
 
 Here’s what you'd expect to find inside `setup()`:
 
-*   **Dataset Instantiation:** You create your `torch.utils.data.Dataset` objects here, passing any necessary arguments including the preprocessed data paths. You will likely be using the paths you prepared in `prepare_data()`.
-*   **Splitting Data:** If you are using a pre-split dataset, or need to implement your own splits (train/validation/test), this is the place to assign the respective datasets.
-*   **Data Transforms:** Apply transformations specific to the training, validation, or testing data. This is where you can use augmentations for training, and apply the necessary normalization to all datasets.
-*   **Dataloader Creation (Optional):** In many cases, you'll also create your `torch.utils.data.DataLoader` instances inside `setup()`. While this isn't mandatory, it's a very standard and practical setup.
+- **Dataset Instantiation:** You create your `torch.utils.data.Dataset` objects here, passing any necessary arguments including the preprocessed data paths. You will likely be using the paths you prepared in `prepare_data()`.
+- **Splitting Data:** If you are using a pre-split dataset, or need to implement your own splits (train/validation/test), this is the place to assign the respective datasets.
+- **Data Transforms:** Apply transformations specific to the training, validation, or testing data. This is where you can use augmentations for training, and apply the necessary normalization to all datasets.
+- **Dataloader Creation (Optional):** In many cases, you'll also create your `torch.utils.data.DataLoader` instances inside `setup()`. While this isn't mandatory, it's a very standard and practical setup.
 
 Now, let’s look at some code examples to concretize these concepts:
 
@@ -212,12 +212,12 @@ In this streamlined example, `prepare_data()` does nothing, as the data is alrea
 
 **Key Takeaways and Resources**
 
-In essence, always aim to separate your *data acquisition/preparation* from your *dataset instantiations*. `prepare_data()` should be your single point of contact for making your data ready to use and should be run only once, while `setup()` is responsible for creating datasets and dataloaders.
+In essence, always aim to separate your _data acquisition/preparation_ from your _dataset instantiations_. `prepare_data()` should be your single point of contact for making your data ready to use and should be run only once, while `setup()` is responsible for creating datasets and dataloaders.
 
 For further information, I recommend:
 
-*   **The PyTorch Lightning Documentation**: The official documentation is your best resource for up-to-date information, especially the sections covering DataModules.
-*   **“Deep Learning with PyTorch” by Eli Stevens, Luca Antiga, and Thomas Viehmann**: This book offers a thorough and practical overview of PyTorch concepts, and its data section provides excellent guidance.
-*   **“Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow” by Aurélien Géron**: While not specifically PyTorch, the general machine learning data handling principles explained in this book are applicable across deep learning frameworks. Understanding how to preprocess data is a critical piece of understanding how to build robust ML systems.
+- **The PyTorch Lightning Documentation**: The official documentation is your best resource for up-to-date information, especially the sections covering DataModules.
+- **“Deep Learning with PyTorch” by Eli Stevens, Luca Antiga, and Thomas Viehmann**: This book offers a thorough and practical overview of PyTorch concepts, and its data section provides excellent guidance.
+- **“Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow” by Aurélien Géron**: While not specifically PyTorch, the general machine learning data handling principles explained in this book are applicable across deep learning frameworks. Understanding how to preprocess data is a critical piece of understanding how to build robust ML systems.
 
 By adhering to this separation of concerns, your code will be more maintainable, less prone to errors, and will scale properly when using distributed training. It will also help keep your research reproducible. I hope this clarification helps, and feel free to ask further questions if any other aspect remains unclear!

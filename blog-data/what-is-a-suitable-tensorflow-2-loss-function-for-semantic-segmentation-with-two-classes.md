@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-a-suitable-tensorflow-2-loss-function-for-semantic-segmentation-with-two-classes"
 ---
 
-Alright, let's tackle this. Thinking back to that project I worked on a few years ago involving satellite imagery analysis, where we had to isolate areas of deforestation, selecting the correct loss function for semantic segmentation was absolutely crucial. Two-class segmentation, while seemingly straightforward, actually presents a few nuances that can significantly impact model performance. The key is to carefully consider what each loss function penalizes and how it aligns with your dataset characteristics. Let's dive into it.
+, let's tackle this. Thinking back to that project I worked on a few years ago involving satellite imagery analysis, where we had to isolate areas of deforestation, selecting the correct loss function for semantic segmentation was absolutely crucial. Two-class segmentation, while seemingly straightforward, actually presents a few nuances that can significantly impact model performance. The key is to carefully consider what each loss function penalizes and how it aligns with your dataset characteristics. Let's dive into it.
 
 For a binary segmentation task, where you're distinguishing between two classes (e.g., forest and non-forest), you have a variety of loss functions available in TensorFlow 2, each with its own strengths and potential drawbacks. The most common choices revolve around variations of cross-entropy and, increasingly, distance-based losses.
 
@@ -67,6 +67,7 @@ def weighted_binary_crossentropy_loss(y_true, y_pred, class_weights):
 # Assuming y_true and y_pred are defined, and class_weights are like [0.1, 0.9]
 # loss = weighted_binary_crossentropy_loss(y_true, y_pred, [0.1, 0.9])
 ```
+
 In practice, figuring out the "correct" weights can be a bit of a dark art, often involving some degree of experimentation. Typically, one can use the inverse frequency of each class in the dataset to achieve a first approximation for these weights. For instance, if class 'A' appears 10% of the time, its weight could be approximately 10/100, and class 'B' the inverse, or 90/100, in a binary situation.
 **Dice Loss: Focusing on Overlap**
 
@@ -99,14 +100,15 @@ def dice_loss(y_true, y_pred, smooth = 1e-5):
 # Assuming y_true and y_pred are defined
 # loss = dice_loss(y_true, y_pred)
 ```
+
 Note that we are returning 1-dice. This is due to the convention that a loss function should be minimized. For many use cases, a combination of these losses can prove very effective, and it’s something I often consider as well when dealing with particularly tricky datasets. For instance, using the combined loss of BCE with the dice can produce results that surpass either of them alone.
 
 **Recommendations for further reading**
 
 For a deep dive into loss functions for image segmentation, I highly recommend checking out the following resources:
 
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This is a fantastic all-around deep learning textbook. The chapter on optimization covers loss functions, including cross-entropy in detail, providing mathematical foundations as well as practical considerations.
-*   **"Medical Image Segmentation using Deep Learning: A Review" by D. B. Ravishankar and K. Sudharsan:** This paper provides an in-depth look at various loss functions used in medical image segmentation, including a comparison of their effectiveness. Although focused on medical applications, the discussion is easily transferable to other areas of segmentation.
-*   **The official TensorFlow documentation on `tf.keras.losses`**: This is an invaluable resource for understanding the implementation details and available parameters for various loss functions within the TensorFlow ecosystem.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This is a fantastic all-around deep learning textbook. The chapter on optimization covers loss functions, including cross-entropy in detail, providing mathematical foundations as well as practical considerations.
+- **"Medical Image Segmentation using Deep Learning: A Review" by D. B. Ravishankar and K. Sudharsan:** This paper provides an in-depth look at various loss functions used in medical image segmentation, including a comparison of their effectiveness. Although focused on medical applications, the discussion is easily transferable to other areas of segmentation.
+- **The official TensorFlow documentation on `tf.keras.losses`**: This is an invaluable resource for understanding the implementation details and available parameters for various loss functions within the TensorFlow ecosystem.
 
 Choosing a loss function is not a one-size-fits-all decision. It's an iterative process that should be based on your specific problem domain and dataset characteristics. Start with the basics, like BCE, then experiment with weighted versions or more complex losses like dice, and critically evaluate the performance of your model on a validation set to determine the best choice.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-spacytraining-module-missing-in-google-colab"
 ---
 
-Alright, let's tackle this. It's a situation I’ve encountered a few times, and usually it’s a matter of understanding the environment specifics rather than a catastrophic error. The "spacy.training" module, specifically, isn't *missing* in the sense of being absent from the spaCy library itself. Rather, it's typically not accessible in the way some might initially expect within Google Colab's execution environment. Let me clarify this with some context based on past project hurdles.
+, let's tackle this. It's a situation I’ve encountered a few times, and usually it’s a matter of understanding the environment specifics rather than a catastrophic error. The "spacy.training" module, specifically, isn't _missing_ in the sense of being absent from the spaCy library itself. Rather, it's typically not accessible in the way some might initially expect within Google Colab's execution environment. Let me clarify this with some context based on past project hurdles.
 
 In my experience, this particular issue often arises from a combination of factors surrounding Colab's managed environment and the way spaCy modules are organized and imported. Colab runs on a pre-configured virtual machine with specific Python packages pre-installed. While spaCy itself is included in their general environment, the more nuanced parts – like the training module that handles custom model updates – might not be immediately available or fully configured for the user to directly access in the way a typical local environment might be.
 
@@ -121,6 +121,7 @@ for i in range(10):
 print ("Training Complete")
 
 ```
+
 This final example brings all the key steps together. It shows a typical training flow with a `Trainer` object, which you have to import from `spacy.training.trainer`. It shows the importance of understanding spaCy modules and correctly using `spacy.training` sub-modules. This is far away from an `import spacy.training`, emphasizing the nature of the problem.
 
 To further delve into spaCy’s training mechanics and structure, I highly recommend the official spaCy documentation – it is extensive and exceptionally detailed. Specifically, spend time with the sections on custom model training, pipelines, and the examples they provide. Also, the book "Natural Language Processing with spaCy" by Yuli Vasiliev provides excellent in-depth coverage of many of these concepts and provides a better context for understanding the training structure. For a deeper dive into the underlying machine learning concepts, I'd recommend "Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville, specifically regarding optimization algorithms and loss functions, as these directly influence your training setup.

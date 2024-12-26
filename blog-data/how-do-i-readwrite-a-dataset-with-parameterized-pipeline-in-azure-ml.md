@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-readwrite-a-dataset-with-parameterized-pipeline-in-azure-ml"
 ---
 
-Alright, let’s delve into parameterizing data pipelines in Azure machine learning. I recall a particularly gnarly project a few years back – a large-scale retail forecasting system. We had data coming from disparate sources, each requiring slightly different preprocessing steps before we could train our models. Hand-coding separate pipelines for each source quickly became unsustainable. That's when we really leaned into parameterized pipelines, and it drastically improved our workflow. So, let's break it down.
+, let’s delve into parameterizing data pipelines in Azure machine learning. I recall a particularly gnarly project a few years back – a large-scale retail forecasting system. We had data coming from disparate sources, each requiring slightly different preprocessing steps before we could train our models. Hand-coding separate pipelines for each source quickly became unsustainable. That's when we really leaned into parameterized pipelines, and it drastically improved our workflow. So, let's break it down.
 
 The key to effectively handling datasets with parameterized pipelines in azure ml revolves around understanding how to define parameters within your pipeline and how to dynamically apply them. Think of these parameters as configurable settings for your pipeline components – allowing you to reuse the same pipeline structure with variations in data input, processing logic, and destination. This is crucial when dealing with multiple data sources, each with its nuances, or when experimenting with different training configurations.
 
@@ -203,7 +203,9 @@ pipeline = Pipeline(workspace=ws, steps=[python_step])
 published_pipeline = pipeline.publish(name="parameterized_pipeline_example")
 print(f"Published pipeline id: {published_pipeline.id}")
 ```
+
 In this adjusted code snippet, we introduced `dataset_name_param` to parameterize the output dataset. We also configured `output_data` as an instance of `OutputFileDatasetConfig` and passed it to the python script, which will store the processed dataset in `processed/{dataset_name_param}` within the default azure storage container. And here's the adjusted `data_processing_with_output.py` script:
+
 ```python
 import argparse
 import pandas as pd

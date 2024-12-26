@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-the-nextrails-gem-for-dual-booting-on-heroku"
 ---
 
-alright, let's talk about getting next.js and rails playing nicely together on heroku, specifically with that next_rails gem. i've been down this rabbit hole before, and it can get a little hairy if you're not careful. it's not as straightforward as deploying a single rails or next app, but it's manageable once you understand the pieces involved.
+, let's talk about getting next.js and rails playing nicely together on heroku, specifically with that next_rails gem. i've been down this rabbit hole before, and it can get a little hairy if you're not careful. it's not as straightforward as deploying a single rails or next app, but it's manageable once you understand the pieces involved.
 
 basically, what next_rails does is it sets up a kind of hybrid system. you still have your main rails app handling all the backend stuff, like api endpoints and data persistence, but it also acts as a proxy for your next.js frontend. this is often called a monorepo or a hybrid app approach. the next_rails gem helps with the connection, setting up the routing and the build process.
 
@@ -78,9 +78,9 @@ so, assuming you've got all that, here's the basic rundown of how it usually goe
 
 now, for resources, rather than just dumping links, let me point you to some places that helped me along the way:
 
-*   **the official next.js documentation**: their docs are phenomenal, and it is essential to understand all the nuances of next. i recommend you read their build and deployment documentation carefully.
-*   **the rails guides**: the official rails guides are amazing. especially the ones about production deployment and how to handle assets. there is a specific guide for asset pipelines.
-*   **"designing data-intensive applications" by martin kleppmann**: although this book is not directly related to the issue at hand, it taught me that there is more that one path to solve a problem, and you need to carefully evaluate the trade-offs, it is an amazing book nonetheless.
+- **the official next.js documentation**: their docs are phenomenal, and it is essential to understand all the nuances of next. i recommend you read their build and deployment documentation carefully.
+- **the rails guides**: the official rails guides are amazing. especially the ones about production deployment and how to handle assets. there is a specific guide for asset pipelines.
+- **"designing data-intensive applications" by martin kleppmann**: although this book is not directly related to the issue at hand, it taught me that there is more that one path to solve a problem, and you need to carefully evaluate the trade-offs, it is an amazing book nonetheless.
 
 the last time i had a similar issue, it involved a complicated path configuration. it turns out, i was using the incorrect path on the next.config.js file. after some debugging with `console.log()` i was finally able to identify it. the lesson here is: always double check every line of code.
 i hope this gets you moving. it's a tricky setup, but once you get the hang of it, you'll be flying. let me know if you get stuck. it is always fun to find new issues to debug. good luck.

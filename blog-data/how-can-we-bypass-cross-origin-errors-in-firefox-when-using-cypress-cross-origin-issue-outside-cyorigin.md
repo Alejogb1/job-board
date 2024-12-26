@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-we-bypass-cross-origin-errors-in-firefox-when-using-cypress-cross-origin-issue-outside-cyorigin"
 ---
 
-Okay, let's tackle this cross-origin challenge, something I've certainly dealt with more than a few times during my years in web automation. It’s a common frustration, particularly when using Cypress in environments that involve multiple domains. Firefox, while generally excellent, can be a bit more stringent with its cross-origin security policies compared to, say, Chrome, which might lead to these hiccups during automated testing.
+, let's tackle this cross-origin challenge, something I've certainly dealt with more than a few times during my years in web automation. It’s a common frustration, particularly when using Cypress in environments that involve multiple domains. Firefox, while generally excellent, can be a bit more stringent with its cross-origin security policies compared to, say, Chrome, which might lead to these hiccups during automated testing.
 
 The core issue, of course, is the Same-Origin Policy. Browsers enforce this to prevent malicious scripts on one site from accessing data on another. When Cypress attempts to navigate or interact with a different origin, the browser rightly raises a cross-origin error, halting our test. Now, `cy.origin` is the intended tool from Cypress to handle this, allowing execution within a different origin’s context, but you're asking about scenarios outside of that. This often boils down to needing some more specific configuration or understanding of your testing setup. Let's explore how we can work around this, starting from a pragmatic perspective gained from past projects.
 
@@ -22,11 +22,11 @@ const { defineConfig } = require("cypress");
 module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      on('before:browser:launch', (browser, launchOptions) => {
-        if (browser.name === 'firefox') {
-          launchOptions.preferences['privacy.file_unique_origin'] = false;
+      on("before:browser:launch", (browser, launchOptions) => {
+        if (browser.name === "firefox") {
+          launchOptions.preferences["privacy.file_unique_origin"] = false;
         }
-         return launchOptions;
+        return launchOptions;
       });
     },
   },
@@ -44,30 +44,37 @@ The second experience I had involved a complex multi-tenanted application, where
 Here's an extremely simplified example of what that Node.js proxy server might look like:
 
 ```javascript
-const http = require('http');
-const httpProxy = require('http-proxy');
+const http = require("http");
+const httpProxy = require("http-proxy");
 
 const proxy = httpProxy.createProxyServer({});
 
 const proxyServer = http.createServer((req, res) => {
-    const target = req.headers.host === 'tenant1.localhost' ? 'http://server1.test.com' : 'http://server2.test.com';
+  const target =
+    req.headers.host === "tenant1.localhost"
+      ? "http://server1.test.com"
+      : "http://server2.test.com";
 
-    proxy.web(req, res, {
-        target: target,
-        changeOrigin: true,
-        headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        },
-      }, (error) => {
-        console.error("Proxy Error:", error)
-      });
-
+  proxy.web(
+    req,
+    res,
+    {
+      target: target,
+      changeOrigin: true,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
+    },
+    (error) => {
+      console.error("Proxy Error:", error);
+    }
+  );
 });
 
 proxyServer.listen(3000, () => {
-    console.log('Proxy listening on port 3000');
+  console.log("Proxy listening on port 3000");
 });
 ```
 
@@ -79,30 +86,30 @@ In the Cypress test configuration, you would then point Cypress to your proxy’
 
 Ultimately, the most robust and recommended solution is to configure correct Cross-Origin Resource Sharing (CORS) headers on your server. That is what I implemented in my most recent project, once the core team had the time to properly address the issues. In this project, we were dealing with a very complex microservice architecture. Once I had demonstrated the need, it was decided to properly fix the CORS issues at the server level.
 
-This involves adjusting server settings to allow specific origins. For instance, adding the `Access-Control-Allow-Origin` header with the appropriate value, or using a wildcard '*' (which should be used judiciously, ideally only in testing environments). You would also need to set other headers, such as `Access-Control-Allow-Methods` and `Access-Control-Allow-Headers`.
+This involves adjusting server settings to allow specific origins. For instance, adding the `Access-Control-Allow-Origin` header with the appropriate value, or using a wildcard '\*' (which should be used judiciously, ideally only in testing environments). You would also need to set other headers, such as `Access-Control-Allow-Methods` and `Access-Control-Allow-Headers`.
 
 For example, in a Node.js application using Express, this might look like:
 
 ```javascript
-const express = require('express');
+const express = require("express");
 const app = express();
-const cors = require('cors');
+const cors = require("cors");
 
-app.use(cors({
-  origin: '*',
-    methods: ['GET','PUT','POST','DELETE','PATCH','OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "PUT", "POST", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
-
-app.get('/api/data', (req, res) => {
-  res.json({ message: 'Hello from server' });
+app.get("/api/data", (req, res) => {
+  res.json({ message: "Hello from server" });
 });
 
 app.listen(3001, () => {
-  console.log('Server listening on port 3001');
+  console.log("Server listening on port 3001");
 });
-
 ```
 
 Here, the `cors` middleware handles the heavy lifting, configuring the necessary headers for all requests. This means that any request originating from any domain can make requests to this server. Again, it's imperative to restrict allowed origins in production environments to avoid security risks. The best practice here is to specify your allowed origins explicitly. This is a fundamental and robust solution.

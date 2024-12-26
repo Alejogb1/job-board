@@ -4,19 +4,19 @@ date: "2024-12-16"
 id: "why-am-i-getting-repeated-unexpected-token-exceptions-in-rails-6"
 ---
 
-Okay, let's tackle this. The dreaded "unexpected token" exception in Rails 6 – I've seen it haunt more projects than I care to remember. It's usually not a problem with the ruby code itself, but rather, a malformed javascript, or more often than not, an issue during asset compilation. Let's break down the common causes and some practical debugging strategies.
+, let's tackle this. The dreaded "unexpected token" exception in Rails 6 – I've seen it haunt more projects than I care to remember. It's usually not a problem with the ruby code itself, but rather, a malformed javascript, or more often than not, an issue during asset compilation. Let's break down the common causes and some practical debugging strategies.
 
 From my past work, I recall a large e-commerce platform I helped migrate from Rails 4 to Rails 6. We encountered this error repeatedly, particularly after introducing some new javascript components. It wasn't immediately obvious, and that's the nature of this beast; it pops up when the parser hits something it simply does not expect. The error doesn’t always pin point the exact line or file, and it's often misleading, pointing at a symptom rather than the root cause. I’ve found that the issue often stems from the asset pipeline, and it can be a mixture of a few contributing factors.
 
 **The Culprits: Common Causes of "Unexpected Token"**
 
-*   **Javascript Syntax Errors:** This is the most straightforward case. A simple typo or syntax error within your javascript code is often the culprit. The error could be in a `.js` file itself, or more sneaky, in a javascript template included in your ERB or HAML templates. The javascript parser will throw the error when it cannot interpret the script during the asset compilation phase. This can happen especially with ES6+ features if your babel setup is not configured correctly to transpile the newer syntax into ES5. Also, pay close attention to syntax specific to templating languages, as improperly escaped characters might be interpreted by the javascript parser instead.
+- **Javascript Syntax Errors:** This is the most straightforward case. A simple typo or syntax error within your javascript code is often the culprit. The error could be in a `.js` file itself, or more sneaky, in a javascript template included in your ERB or HAML templates. The javascript parser will throw the error when it cannot interpret the script during the asset compilation phase. This can happen especially with ES6+ features if your babel setup is not configured correctly to transpile the newer syntax into ES5. Also, pay close attention to syntax specific to templating languages, as improperly escaped characters might be interpreted by the javascript parser instead.
 
-*   **Asset Compilation Issues:** In Rails 6, the asset pipeline utilizes webpacker by default to manage and compile assets. Problems during this compilation process can also result in the "unexpected token" error. For example, if a particular dependency isn’t installed, or if there are conflicting versions of packages, webpack might fail to build the bundle correctly, resulting in javascript that has syntax errors. Or, the order in which files are loaded and processed can also create this issue; an incorrect import or required statement might result in a variable or function referenced before it's declared, causing the syntax error.
+- **Asset Compilation Issues:** In Rails 6, the asset pipeline utilizes webpacker by default to manage and compile assets. Problems during this compilation process can also result in the "unexpected token" error. For example, if a particular dependency isn’t installed, or if there are conflicting versions of packages, webpack might fail to build the bundle correctly, resulting in javascript that has syntax errors. Or, the order in which files are loaded and processed can also create this issue; an incorrect import or required statement might result in a variable or function referenced before it's declared, causing the syntax error.
 
-*   **Incorrectly Escaped Characters in Templates:** It's surprisingly common to find that the culprit isn’t a direct syntax error in the javascript, but an issue with the code that generates it. Embedded javascript within ERB/HAML files can be a hotbed for problems. If you’re dynamically rendering javascript using rails helper methods, like `escape_javascript` (or `j` alias), incorrectly escaping special characters (such as double quotes or backslashes) can cause the generated javascript to become invalid and fail parsing. This often happens with server-side generated json that's injected into javascript on the client side.
+- **Incorrectly Escaped Characters in Templates:** It's surprisingly common to find that the culprit isn’t a direct syntax error in the javascript, but an issue with the code that generates it. Embedded javascript within ERB/HAML files can be a hotbed for problems. If you’re dynamically rendering javascript using rails helper methods, like `escape_javascript` (or `j` alias), incorrectly escaping special characters (such as double quotes or backslashes) can cause the generated javascript to become invalid and fail parsing. This often happens with server-side generated json that's injected into javascript on the client side.
 
-*   **Incompatible Dependency Versions:** Another source of trouble involves incompatible versions of javascript libraries or framework plugins. One common problem can be with a poorly versioned npm package that introduces breaking changes that are not compatible with existing code, causing unexpected errors when webpack compiles assets. It's also worthwhile checking that the same version of your various javascript frameworks (e.g., react, vue) are used. Conflicting version across project modules might break the build process.
+- **Incompatible Dependency Versions:** Another source of trouble involves incompatible versions of javascript libraries or framework plugins. One common problem can be with a poorly versioned npm package that introduces breaking changes that are not compatible with existing code, causing unexpected errors when webpack compiles assets. It's also worthwhile checking that the same version of your various javascript frameworks (e.g., react, vue) are used. Conflicting version across project modules might break the build process.
 
 **Practical Debugging Strategies**
 
@@ -39,10 +39,10 @@ To better illustrate the common pitfalls, here are three examples.
 ```javascript
 // app/javascript/packs/example1.js
 function myFunction() {
-  let x = 10
-  return x + 5
+  let x = 10;
+  return x + 5;
 }
-console.log(myFunction())
+console.log(myFunction());
 ```
 
 This snippet will trigger an "unexpected token" error because the line `let x = 10` is missing a semicolon. While javascript does have automatic semicolon insertion, it does not work in every situation and can cause problems. Here’s how it should be:
@@ -82,7 +82,7 @@ Let’s assume you’re using a third-party npm package, lets call it “special
 
 ```javascript
 // app/javascript/packs/example3.js
-import { specialComponent } from 'special-ui';
+import { specialComponent } from "special-ui";
 
 specialComponent.newFeature(); // Syntax error if not compiled correctly
 ```
@@ -93,9 +93,9 @@ If your babel config isn’t up to date, or if your browser doesn’t support th
 
 For deeper understanding, I suggest the following resources:
 
-*   **"Eloquent Javascript" by Marijn Haverbeke:** A great book to enhance your understanding of javascript language itself. It covers nuances that often cause such errors.
-*   **"Webpack: A Gentle Introduction" by Ahmad Awais:** A helpful guide to understand how webpack works and how to debug webpack issues.
-*   **Babel's documentation:** For learning how to properly setup babel to transpile javascript.
-*   **Rails Guides on Assets:** Specifically the section on "The Asset Pipeline." It will give you a good foundation on the asset pipeline in Rails and its integration with webpacker.
+- **"Eloquent Javascript" by Marijn Haverbeke:** A great book to enhance your understanding of javascript language itself. It covers nuances that often cause such errors.
+- **"Webpack: A Gentle Introduction" by Ahmad Awais:** A helpful guide to understand how webpack works and how to debug webpack issues.
+- **Babel's documentation:** For learning how to properly setup babel to transpile javascript.
+- **Rails Guides on Assets:** Specifically the section on "The Asset Pipeline." It will give you a good foundation on the asset pipeline in Rails and its integration with webpacker.
 
 In conclusion, experiencing "unexpected token" exceptions in Rails 6 can be frustrating. However, systematically approaching the problem by isolating the error, examining the compiled assets, and ensuring proper configuration and dependency management can help you resolve these issues. Remember, the key to efficiently debugging such issues is patience and attention to detail. It’s often not the big, dramatic bugs that are hard to resolve, but the small, subtle things.

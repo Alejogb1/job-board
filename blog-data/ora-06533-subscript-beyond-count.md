@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "ora-06533-subscript-beyond-count"
 ---
 
-Okay so you're banging your head against the `ORA-06533 subscript beyond count` error right Been there done that got the t-shirt believe me This error pops up in Oracle PL/SQL when you're trying to access an element in a collection either a nested table or an array using an index that's out of bounds Basically the index you're using is either negative zero or bigger than the actual size of the collection
+you're banging your head against the `ORA-06533 subscript beyond count` error right Been there done that got the t-shirt believe me This error pops up in Oracle PL/SQL when you're trying to access an element in a collection either a nested table or an array using an index that's out of bounds Basically the index you're using is either negative zero or bigger than the actual size of the collection
 
 I've seen this thing rear its ugly head in various contexts and you’d think after 20 years I'd have it all figured out but nope it's a sneaky little devil Always crops up when you least expect it like when you're in the middle of a big deploy and all eyes are on you Yeah had that happen a few times It’s like when your code decides to throw a tantrum at 3 am on a sunday.
 
-Alright lets break this down First things first let's be clear about what a collection is in PL/SQL Think of it like a container holding multiple values of the same data type You can have nested tables which are dynamic meaning their size can change at runtime and you can have arrays which are fixed size So you'll hit this `ORA-06533` if you try to get at an element in a nested table or array that's not actually there
+lets break this down First things first let's be clear about what a collection is in PL/SQL Think of it like a container holding multiple values of the same data type You can have nested tables which are dynamic meaning their size can change at runtime and you can have arrays which are fixed size So you'll hit this `ORA-06533` if you try to get at an element in a nested table or array that's not actually there
 
 The most common culprit I’ve found is bad looping logic When you're looping through a collection and the loop's counter goes past the last valid index boom `ORA-06533` I’ve personally debugged so many for loops its not even funny.
 
@@ -47,7 +47,8 @@ BEGIN
 END;
 /
 ```
-Here I am looping up to the my\_table count so if someone adds more elements to the table the loop will adjust automatically. This prevents me from changing the loop logic when someone changes the table data later on.
+
+Here I am looping up to the my_table count so if someone adds more elements to the table the loop will adjust automatically. This prevents me from changing the loop logic when someone changes the table data later on.
 
 And here's one using `EXISTS` which is useful if you have a sparse collection some indices might be missing.
 

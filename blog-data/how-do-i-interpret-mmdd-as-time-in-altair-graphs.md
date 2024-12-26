@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-interpret-mmdd-as-time-in-altair-graphs"
 ---
 
-Okay, let's talk about interpreting dates in Altair, specifically when they're formatted as `MM_DD`. This is a situation I've encountered more than once, and frankly, it’s a common sticking point when data isn't initially in a more standard date format like `YYYY-MM-DD`. The core issue here isn’t with Altair itself but with how it, and by extension, vega-lite (the underlying library), understand date values. They need a data type that can be processed as a temporal entity, and a string like ‘01_25’ just isn’t going to cut it without some help.
+, let's talk about interpreting dates in Altair, specifically when they're formatted as `MM_DD`. This is a situation I've encountered more than once, and frankly, it’s a common sticking point when data isn't initially in a more standard date format like `YYYY-MM-DD`. The core issue here isn’t with Altair itself but with how it, and by extension, vega-lite (the underlying library), understand date values. They need a data type that can be processed as a temporal entity, and a string like ‘01_25’ just isn’t going to cut it without some help.
 
 My past experience on a project involving daily equipment readings highlighted this exactly. We were receiving data with date fields solely as month and day, with no year context. This made direct plotting problematic, and it required a careful transformation to properly interpret the data as time within Altair graphs. The core problem was that the chart library didn't 'understand' the data we were feeding it as representing the temporal domain that we knew. This meant, first and foremost, ensuring Altair received data that could be treated as a date.
 
@@ -60,7 +60,7 @@ In this snippet, I've added a new column called `date_temp`, creating datetime o
 
 Now, there are situations where you might need to handle datasets that span multiple years when you receive them like this. This is something that also happened with the equipment readings. The initial dataset would reset every year to ‘01_01’ with no year markers, this meant we had to apply the same principle, but with slight adjustments.
 
-If you have a dataset where each `MM_DD` might represent the same date but across different years, and you *need* that year differentiation, a different approach is needed. A 'relative day count' approach can prove valuable here.
+If you have a dataset where each `MM_DD` might represent the same date but across different years, and you _need_ that year differentiation, a different approach is needed. A 'relative day count' approach can prove valuable here.
 
 Let's assume our source dataset has an extra year column, this could be achieved by joining external data or pre-processing before plotting:
 

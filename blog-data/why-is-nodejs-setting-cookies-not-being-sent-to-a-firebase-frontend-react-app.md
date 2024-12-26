@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-nodejs-setting-cookies-not-being-sent-to-a-firebase-frontend-react-app"
 ---
 
-alright, let's talk about why your nodejs backend isn't playing nice with your react firebase frontend when it comes to cookies. it's a classic headache, and i've definitely been there more times than i'd care to count.
+, let's talk about why your nodejs backend isn't playing nice with your react firebase frontend when it comes to cookies. it's a classic headache, and i've definitely been there more times than i'd care to count.
 
 so, you're sending cookies from your nodejs server, expecting your react app running in firebase hosting to happily accept them, but nothing’s happening, the client side doesn't seem to receive it. sounds familiar, the first time i encountered this, i swear i aged about five years in the space of a single afternoon. i had a similar setup back then, nodejs for the api, angular for the front end, and it was hosted, i thought everything should work out of the box, or so the tutorials said. let me walk you through some of the common pitfalls and how i eventually managed to solve them.
 
@@ -13,32 +13,31 @@ first off, the core issue usually boils down to cross-origin resource sharing (c
 i’m assuming you're using something like express for your node server. let's start with the basics. if you haven't configured cors, there's a very high probability that it's the culprit. you should explicitly allow your firebase domain to access your api. here’s a simple example of how you would do this.
 
 ```javascript
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
 const app = express();
 
 const corsOptions = {
-    origin: 'https://your-firebase-app-id.firebaseapp.com',
-    credentials: true, // this is crucial for cookies
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: ['Content-Type', 'Authorization'],
+  origin: "https://your-firebase-app-id.firebaseapp.com",
+  credentials: true, // this is crucial for cookies
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 app.use(cors(corsOptions));
 
 // rest of your app here...
 
-app.get('/set-cookie', (req, res) => {
-    res.cookie('mycookie', 'somevalue', {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'none', // important
-    });
-    res.send('cookie set!');
+app.get("/set-cookie", (req, res) => {
+  res.cookie("mycookie", "somevalue", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none", // important
+  });
+  res.send("cookie set!");
 });
 
-app.listen(3000, () => console.log('server running on port 3000'));
-
+app.listen(3000, () => console.log("server running on port 3000"));
 ```
 
 now, let's break down this snippet. `cors(corsOptions)` is the main player here. the `origin` is the url of your firebase hosting application. the `credentials: true` flag is absolutely essential – it tells the browser that your server should be able to use cookies. without it, the cookies simply won’t be included in the request. i remember when i forgot this. i was banging my head against the wall for hours. that tiny little setting caused me so much grief. the `methods` field specifies what http verbs you will allow to your endpoints and `allowedHeaders` specifies what headers are accepted in the request, for example `Content-Type` or `Authorization` for example if you are passing a bearer token in the header.
@@ -48,16 +47,16 @@ another crucial point is the settings of the `res.cookie()`. first `httpOnly: tr
 moving to the client side, in your react app, you might also need to ensure that your requests are being sent with credentials as well. this is mostly relevant if you’re using something like `fetch` or `axios` directly, if you are using firebase authentication, then the cookies are handled by firebase itself. here’s a simple `fetch` request example.
 
 ```javascript
-fetch('http://your-nodejs-server:3000/set-cookie', {
-    method: 'GET',
-    credentials: 'include',
+fetch("http://your-nodejs-server:3000/set-cookie", {
+  method: "GET",
+  credentials: "include",
 })
-.then(response => {
-    console.log('response', response);
-})
-.catch(error => {
-    console.log('error', error);
-});
+  .then((response) => {
+    console.log("response", response);
+  })
+  .catch((error) => {
+    console.log("error", error);
+  });
 ```
 
 here, the `credentials: 'include'` option instructs the browser to send cookies with this request. sometimes, i used to forget this detail, and it just won't work. now i always check it when using fetch.
@@ -72,31 +71,32 @@ also if you're running your nodejs server on a different port during development
 
 so, in summary, make sure:
 
-*   you have correctly configured cors in your nodejs server, including the `credentials: true` setting.
-*   the `samesite` attribute of the cookie is set to `none`.
-*   the react client is sending requests with `credentials: 'include'` when using `fetch` or a similar method.
-*   you are calling the right url from your client.
-*   your backend url is accessible from your frontend app (firebase).
-*   you are not having some issue with subdomains and if you are, make sure the cors configuration considers the subdomains.
-*   if you have reverse proxy make sure it's configured to pass cookie headers.
+- you have correctly configured cors in your nodejs server, including the `credentials: true` setting.
+- the `samesite` attribute of the cookie is set to `none`.
+- the react client is sending requests with `credentials: 'include'` when using `fetch` or a similar method.
+- you are calling the right url from your client.
+- your backend url is accessible from your frontend app (firebase).
+- you are not having some issue with subdomains and if you are, make sure the cors configuration considers the subdomains.
+- if you have reverse proxy make sure it's configured to pass cookie headers.
 
 if you've done all of that, you should be golden.
 
 here’s another code snippet with the proxy example, in this case using `axios`.
 
 ```javascript
-import axios from 'axios';
+import axios from "axios";
 
 axios.defaults.withCredentials = true; // for cookies
 
 const fetchData = async () => {
-    try {
-    const response = await axios.get('http://your-nodejs-server:3000/set-cookie');
-    console.log('response', response);
-    }
-    catch (error) {
-    console.error('error', error);
-    }
+  try {
+    const response = await axios.get(
+      "http://your-nodejs-server:3000/set-cookie"
+    );
+    console.log("response", response);
+  } catch (error) {
+    console.error("error", error);
+  }
 };
 
 fetchData();
@@ -104,7 +104,7 @@ fetchData();
 
 this snippet shows how to use `axios`, if that is what you are using, to achieve the same result, i have used both methods in the past, both work. the difference with fetch and axios is that `axios.defaults.withCredentials = true` sets the `credentials` to include globally, so every call will carry the cookies.
 
-one thing that used to confuse me is that browser's developer tools can make you think that the cookies are set, but the browser won't send them. it's crucial to also check the *request* headers on the browser developer console, to verify if the cookies were actually sent with the request. usually, if you don't see it there, it won't work. check both the response and the request on your browser.
+one thing that used to confuse me is that browser's developer tools can make you think that the cookies are set, but the browser won't send them. it's crucial to also check the _request_ headers on the browser developer console, to verify if the cookies were actually sent with the request. usually, if you don't see it there, it won't work. check both the response and the request on your browser.
 
 for a deeper dive into the intricacies of cors and cookie handling, i would highly recommend looking at 'http: the definitive guide' by david gourley and brian totty. it's a bit of a hefty read, but it's the bible when it comes to understanding http. i had to study it back in the day.
 

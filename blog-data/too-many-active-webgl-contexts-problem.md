@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "too-many-active-webgl-contexts-problem"
 ---
 
-Okay so you've got the classic "too many active WebGL contexts" blues eh I've been there trust me I've seen the depths of that particular rabbit hole and come back with a few battle scars and a whole lot of wisdom to share This isn't a fun place to be it can make your app choke like it's trying to swallow a whole pizza whole and leave your users staring at a blank screen or worse a frozen one
+you've got the classic "too many active WebGL contexts" blues eh I've been there trust me I've seen the depths of that particular rabbit hole and come back with a few battle scars and a whole lot of wisdom to share This isn't a fun place to be it can make your app choke like it's trying to swallow a whole pizza whole and leave your users staring at a blank screen or worse a frozen one
 
 First off what's usually happening here is a simple case of overenthusiasm You're creating WebGL contexts like they're going out of style and you aren't properly cleaning up after yourself It's like leaving a pile of dirty dishes after every meal eventually the kitchen becomes unusable your browser is the kitchen and WebGL contexts are the dirty dishes it's a messy analogy but you get the point right
 
@@ -22,34 +22,33 @@ Here's a simplified example showing how you might approach context sharing:
 let gl; // Global variable to store the WebGL context
 
 function getWebGLContext(canvas) {
+  if (!gl) {
+    gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
     if (!gl) {
-        gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-        if (!gl) {
-          console.error("WebGL not supported");
-          return null
-        }
-      console.log("creating a context")
+      console.error("WebGL not supported");
+      return null;
     }
-  console.log("using an already created context")
-    return gl;
+    console.log("creating a context");
+  }
+  console.log("using an already created context");
+  return gl;
 }
 
-
 function renderScene(canvas) {
-  const context = getWebGLContext(canvas)
-    if (!context) return;
+  const context = getWebGLContext(canvas);
+  if (!context) return;
   // Now render here using the 'context'
-   context.clearColor(0.0, 0.0, 0.0, 1.0);
+  context.clearColor(0.0, 0.0, 0.0, 1.0);
   context.clear(context.COLOR_BUFFER_BIT);
 
   // Add your rendering logic here
 }
 
-const canvas1 = document.getElementById('canvas1');
-const canvas2 = document.getElementById('canvas2');
-if (canvas1 && canvas2){
-renderScene(canvas1);
-renderScene(canvas2)
+const canvas1 = document.getElementById("canvas1");
+const canvas2 = document.getElementById("canvas2");
+if (canvas1 && canvas2) {
+  renderScene(canvas1);
+  renderScene(canvas2);
 }
 ```
 
@@ -62,38 +61,47 @@ WebGL contexts are not invincible you know they can get lost especially when use
 Here's a basic way to handle context loss:
 
 ```javascript
-const canvas = document.getElementById('myCanvas');
-const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+const canvas = document.getElementById("myCanvas");
+const gl =
+  canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
 
 if (!gl) {
-    console.error("WebGL not supported");
+  console.error("WebGL not supported");
 }
 
-let rendering = true
+let rendering = true;
 
 function renderLoop() {
-    if (rendering) {
-        // Your rendering code here
-        gl.clearColor(0.0, 0.0, 0.0, 1.0);
-        gl.clear(gl.COLOR_BUFFER_BIT);
+  if (rendering) {
+    // Your rendering code here
+    gl.clearColor(0.0, 0.0, 0.0, 1.0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
 
-        requestAnimationFrame(renderLoop);
-    }
+    requestAnimationFrame(renderLoop);
+  }
 }
 
-renderLoop() // Initial call
+renderLoop(); // Initial call
 
-canvas.addEventListener('webglcontextlost', function(event) {
+canvas.addEventListener(
+  "webglcontextlost",
+  function (event) {
     event.preventDefault();
-    console.log('WebGL context lost');
-    rendering = false
-}, false);
+    console.log("WebGL context lost");
+    rendering = false;
+  },
+  false
+);
 
-canvas.addEventListener('webglcontextrestored', function() {
-    console.log('WebGL context restored');
-    rendering = true
-    renderLoop()
-}, false);
+canvas.addEventListener(
+  "webglcontextrestored",
+  function () {
+    console.log("WebGL context restored");
+    rendering = true;
+    renderLoop();
+  },
+  false
+);
 ```
 
 Here what I have done is adding an event listener for `webglcontextlost` which makes sure the render loop is stopped when the webgl context is lost which prevents our program from running into errors. The `webglcontextrestored` adds an event handler for when it has been restored which will then make the program continue to work. This is crucial and will save you from tons of headaches.
@@ -106,39 +114,37 @@ When you're absolutely sure you don't need a WebGL context anymore destroy it ex
 let gl;
 
 function createWebGLContext(canvas) {
-    gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-    if (!gl) {
-        console.error("WebGL not supported");
-        return null;
-    }
-    console.log("created a context")
-    return gl;
+  gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+  if (!gl) {
+    console.error("WebGL not supported");
+    return null;
+  }
+  console.log("created a context");
+  return gl;
 }
 
 function destroyWebGLContext(canvas) {
-    if (gl) {
-        const extension = gl.getExtension("WEBGL_lose_context");
-         if (extension)
-         {
-              extension.loseContext();
-              gl = null
-             console.log("destroyed the context")
-         }else {
-            console.error("could not get extension WEBGL_lose_context")
-         }
+  if (gl) {
+    const extension = gl.getExtension("WEBGL_lose_context");
+    if (extension) {
+      extension.loseContext();
+      gl = null;
+      console.log("destroyed the context");
+    } else {
+      console.error("could not get extension WEBGL_lose_context");
     }
+  }
 }
 
-const canvas3 = document.getElementById('canvas3');
-const context3 = createWebGLContext(canvas3)
+const canvas3 = document.getElementById("canvas3");
+const context3 = createWebGLContext(canvas3);
 
 if (context3) {
-    // do some rendering
-    context3.clearColor(0.5,0.5,0.5,1)
-    context3.clear(context3.COLOR_BUFFER_BIT)
-    // now destroy it
-     destroyWebGLContext(canvas3)
-
+  // do some rendering
+  context3.clearColor(0.5, 0.5, 0.5, 1);
+  context3.clear(context3.COLOR_BUFFER_BIT);
+  // now destroy it
+  destroyWebGLContext(canvas3);
 }
 ```
 

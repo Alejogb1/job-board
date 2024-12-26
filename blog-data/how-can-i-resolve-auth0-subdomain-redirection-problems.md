@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-can-i-resolve-auth0-subdomain-redirection-problems"
 ---
 
-Okay, let's tackle this. Subdomain redirection issues with Auth0, I've definitely seen my share of those. They can be particularly frustrating because they often stem from a combination of configuration complexities across different platforms. It’s usually not one single thing, but a confluence of settings that needs careful examination. I’ve even spent a few late nights chasing down rogue browser caching issues that ended up looking like Auth0 problems, but were ultimately caused by overly aggressive CDN setups.
+, let's tackle this. Subdomain redirection issues with Auth0, I've definitely seen my share of those. They can be particularly frustrating because they often stem from a combination of configuration complexities across different platforms. It’s usually not one single thing, but a confluence of settings that needs careful examination. I’ve even spent a few late nights chasing down rogue browser caching issues that ended up looking like Auth0 problems, but were ultimately caused by overly aggressive CDN setups.
 
 First and foremost, let's clarify what we mean by subdomain redirection problems. Typically, this manifests as users being redirected to the wrong subdomain (or not at all) after authentication, getting stuck in a redirect loop, or landing on an error page. This commonly happens when dealing with custom domains in Auth0, different environments (dev, staging, prod), or specific single-page application (SPA) setups. The culprits are often misconfigured callback URLs, allowed web origins, or incorrect configurations of rules or actions within Auth0.
 
-The initial step is rigorous verification of your Auth0 application settings. Navigate to your application in the Auth0 dashboard and scrutinize the following: *allowed callback urls*, *allowed web origins*, and *allowed logout urls*. These need to be absolutely precise. A trailing slash or missing `https://` can trigger redirect issues. I've personally witnessed cases where the production callback url was accidentally copied to the staging environment causing a redirect frenzy. I once dealt with an implementation where the staging environment was attempting to redirect to production post login, causing no end of problems. It was a tedious debugging session to uncover.
+The initial step is rigorous verification of your Auth0 application settings. Navigate to your application in the Auth0 dashboard and scrutinize the following: _allowed callback urls_, _allowed web origins_, and _allowed logout urls_. These need to be absolutely precise. A trailing slash or missing `https://` can trigger redirect issues. I've personally witnessed cases where the production callback url was accidentally copied to the staging environment causing a redirect frenzy. I once dealt with an implementation where the staging environment was attempting to redirect to production post login, causing no end of problems. It was a tedious debugging session to uncover.
 
 A common mistake, especially in SPA development, involves the allowed web origins not correctly specifying the subdomain you’re working with. For instance, if your application lives at `app.example.com`, ensure that `https://app.example.com` is present in the allowed web origins and allowed callback urls, and that the corresponding configuration in your application's Auth0 client is using the same subdomain. If you use `localhost` for local testing, that should be listed there separately and removed when deploying to production.
 
-Now, let’s move beyond the basics. Auth0’s *rules* or *actions* can also be a source of redirect problems, particularly when custom logic modifies the authentication process. Let’s say you want to add user roles to the tokens before redirection. You might introduce a rule or action to modify user metadata and redirect. However, if that rule or action is inadvertently misconfigured or introduces incorrect redirect logic, you might find yourself stuck in a redirect loop or being thrown onto a wrong subdomain. Careful debugging of these rules, ensuring correct conditional logic, and reviewing log outputs is critical when implementing complex flows.
+Now, let’s move beyond the basics. Auth0’s _rules_ or _actions_ can also be a source of redirect problems, particularly when custom logic modifies the authentication process. Let’s say you want to add user roles to the tokens before redirection. You might introduce a rule or action to modify user metadata and redirect. However, if that rule or action is inadvertently misconfigured or introduces incorrect redirect logic, you might find yourself stuck in a redirect loop or being thrown onto a wrong subdomain. Careful debugging of these rules, ensuring correct conditional logic, and reviewing log outputs is critical when implementing complex flows.
 
 To better illustrate these points, let's dive into some examples with hypothetical configurations.
 
@@ -22,12 +22,12 @@ Imagine you have an application running on the subdomain `app.example.com` with 
 
 ```javascript
 const auth0 = new auth0.WebAuth({
-    domain: 'your-domain.auth0.com',
-    clientID: 'your-client-id',
-    redirectUri: 'https://app.example.com/callback',
-    responseType: 'code',
-    scope: 'openid profile email',
-    audience: 'your-api-identifier'
+  domain: "your-domain.auth0.com",
+  clientID: "your-client-id",
+  redirectUri: "https://app.example.com/callback",
+  responseType: "code",
+  scope: "openid profile email",
+  audience: "your-api-identifier",
 });
 ```
 
@@ -40,15 +40,15 @@ Consider a slightly more intricate setup where you are using `localhost:3000` du
 ```javascript
 // Example using a SPA client with implicit flow (avoid this if possible)
 const auth0 = new auth0.WebAuth({
-    domain: 'your-domain.auth0.com',
-    clientID: 'your-client-id',
-    redirectUri: 'http://localhost:3000/callback', // For local testing
-    responseType: 'token id_token', // implicit flow
-    scope: 'openid profile email',
+  domain: "your-domain.auth0.com",
+  clientID: "your-client-id",
+  redirectUri: "http://localhost:3000/callback", // For local testing
+  responseType: "token id_token", // implicit flow
+  scope: "openid profile email",
 });
 ```
 
-Here’s another crucial point related to allowed web origins. If your authentication process is primarily API-based, not browser-based (using client-side js), then the allowed web origins may not be the problem, but rather the *allowed api identifiers* in your auth0 API configuration or the *allowed origins (cors)* settings if you are communicating with the api using cross domain requests.
+Here’s another crucial point related to allowed web origins. If your authentication process is primarily API-based, not browser-based (using client-side js), then the allowed web origins may not be the problem, but rather the _allowed api identifiers_ in your auth0 API configuration or the _allowed origins (cors)_ settings if you are communicating with the api using cross domain requests.
 
 **Example 3: Issues within Auth0 Rules/Actions**
 
@@ -59,10 +59,10 @@ Let’s examine a scenario where you have a rule or action that is meant to appe
 
 function myRule(user, context, callback) {
   user.customClaim = "some value";
-  context.idToken['customClaim'] = user.customClaim;
+  context.idToken["customClaim"] = user.customClaim;
 
   if (context.redirect) {
-     return callback(null, user, context); // no extra redirection logic
+    return callback(null, user, context); // no extra redirection logic
   }
 
   return callback(null, user, context);

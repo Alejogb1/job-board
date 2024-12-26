@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-does-docker-reusing-layersspace-by-containers"
 ---
 
-alright, let’s talk about docker and its layer caching mechanisms. it's a pretty fundamental concept, and if you’ve been working with docker for a while, it’s probably something you’ve taken for granted, but it’s worth breaking down. at its core, docker's image layering is all about efficiency, both in terms of storage and build speed. 
+, let’s talk about docker and its layer caching mechanisms. it's a pretty fundamental concept, and if you’ve been working with docker for a while, it’s probably something you’ve taken for granted, but it’s worth breaking down. at its core, docker's image layering is all about efficiency, both in terms of storage and build speed.
 
 let's start with the storage. think of a docker image not as a single monolithic file, but as a series of read-only layers stacked on top of each other. each layer represents a change, a step in the instructions from your `dockerfile`. so, if you start with a base image like ubuntu, that's your first layer. then, maybe you install some dependencies using `apt-get`. that install action will create a new layer. every `copy`, `add`, `run` command, all these guys result in a new layer. this is important, because each of these is cached.
 

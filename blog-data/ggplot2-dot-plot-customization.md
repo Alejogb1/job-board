@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ggplot2-dot-plot-customization"
 ---
 
-Okay so ggplot2 dot plot customization right I've been there done that got the t-shirt literally had a project a few years back where dot plots were my arch-nemesis so I feel your pain Let me break it down for ya
+ggplot2 dot plot customization right I've been there done that got the t-shirt literally had a project a few years back where dot plots were my arch-nemesis so I feel your pain Let me break it down for ya
 
 First things first ggplot2 dot plots are technically just a form of scatter plot They leverage `geom_point()` which is why tweaking them can sometimes feel a bit less intuitive than say a bar chart They aren't a dedicated function like `geom_dotplot()` exists I know confusing isn't it and that's why I spent like two days trying to debug a simple dot plot back in my early days
 
@@ -84,8 +84,8 @@ I'm telling you there's always some weird ggplot2 requirement I'm not even jokin
 
 For in-depth understanding of ggplot2 I would recommend:
 
-*   **"ggplot2 Elegant Graphics for Data Analysis" by Hadley Wickham:** This is the bible of ggplot2 and if you haven't read it you should probably do it you will save hours of your life
-*   **"R Graphics Cookbook" by Winston Chang:** This book provides practical recipes for common ggplot2 tasks and I really like its structured approach
+- **"ggplot2 Elegant Graphics for Data Analysis" by Hadley Wickham:** This is the bible of ggplot2 and if you haven't read it you should probably do it you will save hours of your life
+- **"R Graphics Cookbook" by Winston Chang:** This book provides practical recipes for common ggplot2 tasks and I really like its structured approach
 
 **A little tech joke for you:** Why was the computer cold? It left its Windows open
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-a-bash-variable-contain-a-specific-substring-on-each-line"
 ---
 
-Okay, let’s unpack this. The question of checking for a specific substring within a Bash variable, particularly when that variable might contain multiline content, isn't as straightforward as a simple string comparison. I've had to deal with this exact scenario more times than I care to count, often when processing log files or configuration data stored in Bash variables. We need to iterate through each line and perform the substring check independently. Let's dive into the techniques.
+, let’s unpack this. The question of checking for a specific substring within a Bash variable, particularly when that variable might contain multiline content, isn't as straightforward as a simple string comparison. I've had to deal with this exact scenario more times than I care to count, often when processing log files or configuration data stored in Bash variables. We need to iterate through each line and perform the substring check independently. Let's dive into the techniques.
 
 Fundamentally, we're talking about a combination of string manipulation and iteration. Bash provides a few powerful ways to accomplish this, primarily utilizing loops and string-matching operators. The core concept revolves around splitting the multi-line variable into individual lines, then using pattern matching (such as `[[ ... ]]` with the `=~` operator or `grep`) on each line.
 
@@ -93,9 +93,9 @@ This snippet uses `echo "$config_string"` to pipe the string to `grep`. The `-q`
 
 **Which method to use?**
 
-*   `readarray` with loop: Generally preferred for readability and compatibility, especially if you need to do more than just check for the substring, as it's easier to manipulate the individual lines. It’s very bash-centric.
-*   `while` loop with `IFS`: Useful when you want to avoid creating a large array in memory or are dealing with large strings that might not be suitable for array storage.
-*   `grep`: Best for quick checks for the presence of a string. It's generally very fast since it's a highly optimized binary program. However, it might be overkill if you don't have specific `grep`-related needs.
+- `readarray` with loop: Generally preferred for readability and compatibility, especially if you need to do more than just check for the substring, as it's easier to manipulate the individual lines. It’s very bash-centric.
+- `while` loop with `IFS`: Useful when you want to avoid creating a large array in memory or are dealing with large strings that might not be suitable for array storage.
+- `grep`: Best for quick checks for the presence of a string. It's generally very fast since it's a highly optimized binary program. However, it might be overkill if you don't have specific `grep`-related needs.
 
 For further exploration, I'd recommend checking out "Advanced Bash-Scripting Guide" by Mendel Cooper. It provides a very detailed breakdown of these and other Bash techniques. Another valuable resource is the "Bash Reference Manual", which is freely available and the single source of truth about Bash’s behaviour. Lastly, for understanding `grep` I recommend you study the POSIX documentation on `grep` and also read "Mastering Regular Expressions" by Jeffrey Friedl. It will greatly increase your regular expression skills, which are essential for working with text in almost any context.
 

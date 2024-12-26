@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-unknown-categories-exist-in-column-2-causing-a-valueerror-during-model-fitting"
 ---
 
-Alright, let's unpack this ValueError scenario. From experience, I've seen this particular issue crop up more frequently than one might think, especially when dealing with messy or incomplete datasets during model training. It sounds like you're facing a `ValueError` while fitting your model, specifically pointing to column 2. This generally indicates that the model encounters categorical values in that column during the fitting process that it hasn't seen during the initial preparation, often when the data has undergone transformations like one-hot encoding or label encoding. It suggests an inconsistency between the training data the model was built upon and the new data you're providing for prediction or evaluation. Let me elaborate.
+, let's unpack this ValueError scenario. From experience, I've seen this particular issue crop up more frequently than one might think, especially when dealing with messy or incomplete datasets during model training. It sounds like you're facing a `ValueError` while fitting your model, specifically pointing to column 2. This generally indicates that the model encounters categorical values in that column during the fitting process that it hasn't seen during the initial preparation, often when the data has undergone transformations like one-hot encoding or label encoding. It suggests an inconsistency between the training data the model was built upon and the new data you're providing for prediction or evaluation. Let me elaborate.
 
 Typically, this `ValueError` arises because we might be dealing with some form of encoded categorical data in column 2. Imagine you've trained a model on data where a column, let's say ‘city’, was encoded using one-hot encoding. In your training data, you may have encountered ‘New York’, ‘London’, and ‘Paris’. Now, if the model encounters an 'Amsterdam' in your test or prediction dataset, and 'Amsterdam' was never in your initial training data, your one-hot encoder, and therefore the model, will not know how to handle that. It’s effectively an unknown category for the model.
 
@@ -13,7 +13,7 @@ The problem is not necessarily that 'Amsterdam' is invalid; it’s just an insta
 So, what are the specific causes, technically? I've found these to be the most common offenders in my past projects:
 
 1.  **Incomplete Training Data:** As exemplified earlier, the most obvious cause is that the training dataset simply lacks certain categories that are present in the testing or prediction set. This is common with real-world data, especially when data is not uniformly distributed.
-2.  **Data Leakage in Pipeline:** Sometimes, we might inadvertently apply a transformation in our pipeline (e.g., using `fit_transform` on the training data but only `transform` on the new data) *before* properly accounting for all categories. If we build the transformer only on a small subset, it could miss categories that will surface later.
+2.  **Data Leakage in Pipeline:** Sometimes, we might inadvertently apply a transformation in our pipeline (e.g., using `fit_transform` on the training data but only `transform` on the new data) _before_ properly accounting for all categories. If we build the transformer only on a small subset, it could miss categories that will surface later.
 3.  **String Encoding Differences:** If column 2 consists of strings, variations in case sensitivity, whitespace, or subtle misspellings can make the data appear different to an encoder or model. For instance, "New York" could be different from "New york" or " New York ".
 4.  **Unintended Data Type Changes:** Sometimes, preprocessing steps or even data loading can cause changes to the data type of column 2, leading to inconsistent encoding and subsequent errors.
 
@@ -115,7 +115,7 @@ predictions = model.predict(X_predict_transformed)
 print(predictions)
 ```
 
-Here, we created a custom transformer within the pipeline to handle inconsistent string casing by converting everything to lowercase *before* the one-hot encoding. This prevents case-related errors and ensures that the model correctly identifies 'paris' and 'Paris' as the same category. Using the `ColumnTransformer` is useful when you have different preprocessing requirements for different columns and want a consistent process. The `remainder='passthrough'` is there to ensure we pass through any other columns which exist in `X_train` or `X_predict` which are not used in the `transformers`.
+Here, we created a custom transformer within the pipeline to handle inconsistent string casing by converting everything to lowercase _before_ the one-hot encoding. This prevents case-related errors and ensures that the model correctly identifies 'paris' and 'Paris' as the same category. Using the `ColumnTransformer` is useful when you have different preprocessing requirements for different columns and want a consistent process. The `remainder='passthrough'` is there to ensure we pass through any other columns which exist in `X_train` or `X_predict` which are not used in the `transformers`.
 
 **Example 3: Ensuring Data Type Consistency with a Type Conversion**
 

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-build-a-federated-system-with-a-csv-dataset-using-the-sparknl-library"
 ---
 
-Alright, let's tackle this. I've seen quite a few attempts at federated learning, and trust me, starting with a csv dataset and SparkNL is a pretty pragmatic place to be. It’s not as straightforward as point-and-click, but definitely manageable with a structured approach. I remember back in '21, we were tasked with building a distributed sentiment analysis model across three different hospital networks, all using their own locally stored csv data. It was a classic federated learning scenario before “federated” was a buzzword, and the csv format added a particular twist. So, let's break down how you might go about achieving that with SparkNL.
+, let's tackle this. I've seen quite a few attempts at federated learning, and trust me, starting with a csv dataset and SparkNL is a pretty pragmatic place to be. It’s not as straightforward as point-and-click, but definitely manageable with a structured approach. I remember back in '21, we were tasked with building a distributed sentiment analysis model across three different hospital networks, all using their own locally stored csv data. It was a classic federated learning scenario before “federated” was a buzzword, and the csv format added a particular twist. So, let's break down how you might go about achieving that with SparkNL.
 
-First things first, forget the idea of directly "federating" the csv files themselves. What we're federating here is the *model training process*. Each node (in our case, each logical partition of your data representing a federated client) keeps its own data locally. We'll then coordinate the training so that all nodes contribute to building a shared model without actually sharing the raw datasets. SparkNL, with its integration with Apache Spark, lends itself nicely to this pattern.
+First things first, forget the idea of directly "federating" the csv files themselves. What we're federating here is the _model training process_. Each node (in our case, each logical partition of your data representing a federated client) keeps its own data locally. We'll then coordinate the training so that all nodes contribute to building a shared model without actually sharing the raw datasets. SparkNL, with its integration with Apache Spark, lends itself nicely to this pattern.
 
 The core idea behind federated learning is to perform iterative model training, exchanging model updates rather than data. Here's a high-level breakdown of the steps:
 
@@ -106,7 +106,7 @@ def train_local_model(df, text_column, label_column, local_id):
     lr = LogisticRegression(featuresCol="features", labelCol=label_column, maxIter=10)
     pipeline = Pipeline(stages=[hashingTF, idf, lr])
     model = pipeline.fit(df)
-    
+
     # Extract model parameters to send to the server. We're keeping it simple for demonstration
     coefficients = model.stages[-1].coefficients.toArray().tolist()
     intercept = model.stages[-1].intercept
@@ -144,7 +144,7 @@ def aggregate_model_updates(updates):
   num_clients = len(updates)
   if num_clients == 0:
     return None
-  
+
   total_coefs = np.zeros(len(updates[0]["coefficients"]))
   total_intercept = 0.0
 

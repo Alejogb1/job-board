@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-obtain-predictions-from-an-onnx-model-in-python"
 ---
 
-Alright, let’s dive into the process of getting predictions from an ONNX model using Python. It's a task I've handled countless times, particularly during my stint building real-time object detection pipelines for autonomous vehicles, so I'm quite familiar with the nuances involved. We will steer clear of unnecessary jargon and get straight to the core of it.
+, let’s dive into the process of getting predictions from an ONNX model using Python. It's a task I've handled countless times, particularly during my stint building real-time object detection pipelines for autonomous vehicles, so I'm quite familiar with the nuances involved. We will steer clear of unnecessary jargon and get straight to the core of it.
 
 The Open Neural Network Exchange (ONNX) format is designed for interoperability, allowing models trained in different frameworks (like PyTorch or TensorFlow) to be deployed using various runtime environments. This makes it extremely versatile, but you still need a reliable mechanism to execute these models and obtain predictions in Python. This is where libraries like `onnxruntime` come into play.
 
@@ -128,7 +128,7 @@ def predict_with_variable_input(onnx_model_path, variable_length_data):
      # 2. Get input details
     input_name = ort_session.get_inputs()[0].name
     input_shape = ort_session.get_inputs()[0].shape
-    
+
     # 3. Prepare input data.
     # Assume that our data is 2D, but could have varied sequence length.
     input_data = np.array(variable_length_data).astype(np.float32)
@@ -143,7 +143,7 @@ def predict_with_variable_input(onnx_model_path, variable_length_data):
     # 5. Run Inference
     ort_inputs = {input_name: input_data}
     ort_outputs = ort_session.run(None, ort_inputs)
-    
+
     #6. Process output
     predictions = ort_outputs[0]
     return predictions
@@ -164,6 +164,6 @@ if __name__ == '__main__':
 
 Here, the core is that the batch dimension is inferred and added. Most ONNX models will take a fixed input size. However, using the approach described above can help with sequence data. The critical part is to understand whether the model is designed for such variability.
 
-For a deeper understanding of ONNX, I would recommend the official ONNX documentation, particularly the section on runtime environment and usage. Also, the book *Programming PyTorch for Deep Learning* by Ian Pointer is a great resource for understanding tensors, which are fundamental when working with model inputs and outputs. Finally, the *Tensorflow Guide* for model exportation also helps in understanding how data needs to be reshaped in order to properly work with models.
+For a deeper understanding of ONNX, I would recommend the official ONNX documentation, particularly the section on runtime environment and usage. Also, the book _Programming PyTorch for Deep Learning_ by Ian Pointer is a great resource for understanding tensors, which are fundamental when working with model inputs and outputs. Finally, the _Tensorflow Guide_ for model exportation also helps in understanding how data needs to be reshaped in order to properly work with models.
 
 These three examples offer a decent starting point. The details, as you will often find with real-world projects, often come down to the specific ONNX model you're working with. The crucial part is to always carefully inspect input and output shapes and names using `onnxruntime`'s methods before attempting inference. Remember, precision is paramount when dealing with machine learning models, and a thorough understanding of your data flow will help avoid common pitfalls.

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "can-reinforcement-learning-be-done-with-supervised-datasets"
 ---
 
-Alright, let's tackle this. It's a question that often comes up, and while the direct answer isn't a simple yes or no, it's definitely nuanced and worth exploring. The short version is that you *can* leverage supervised data to bootstrap or influence a reinforcement learning (rl) process, but it’s not rl in the purest sense. It's more about using supervised learning as a pre-training method or as a guiding force within the rl framework. Let's break that down.
+, let's tackle this. It's a question that often comes up, and while the direct answer isn't a simple yes or no, it's definitely nuanced and worth exploring. The short version is that you _can_ leverage supervised data to bootstrap or influence a reinforcement learning (rl) process, but it’s not rl in the purest sense. It's more about using supervised learning as a pre-training method or as a guiding force within the rl framework. Let's break that down.
 
-From my experience, particularly during that project involving robotics path planning back in '18, we were faced with a similar dilemma. We had a wealth of human-demonstrated paths, which essentially represented supervised learning data (input: initial state; output: action or sequence of actions). However, we needed the robot to learn to navigate even *beyond* those demonstrations, handle unforeseen circumstances, and optimize its path based on some reward function (like time taken or energy used). So, a direct supervised approach wouldn't cut it, but completely ignoring the demonstrations would have been wasteful.
+From my experience, particularly during that project involving robotics path planning back in '18, we were faced with a similar dilemma. We had a wealth of human-demonstrated paths, which essentially represented supervised learning data (input: initial state; output: action or sequence of actions). However, we needed the robot to learn to navigate even _beyond_ those demonstrations, handle unforeseen circumstances, and optimize its path based on some reward function (like time taken or energy used). So, a direct supervised approach wouldn't cut it, but completely ignoring the demonstrations would have been wasteful.
 
 The core distinction lies in the underlying mechanism. Supervised learning aims to map inputs to outputs based on given labeled data. There’s no concept of an agent interacting with an environment to maximize a cumulative reward. Reinforcement learning, in contrast, focuses entirely on this iterative interaction. An agent takes actions in an environment, receives feedback (rewards or penalties), and adjusts its behavior to accumulate higher future rewards.
 
@@ -107,6 +107,7 @@ print("Imitation learning training complete")
 # Now the 'imitation_policy' can be used to predict actions,
 # although it won't generalize beyond the training data well.
 ```
+
 This script creates and trains `ImitationPolicy` to mimic actions based on the given `states` and `actions`. It's a standard supervised learning setup, and hence suffers from its typical limitations.
 
 **Combining Supervised and Reinforcement Learning:**
@@ -256,14 +257,15 @@ for episode in range(NUM_EPISODES):
     if episode % 100 == 0:
       print(f'Episode: {episode}, Reward: {sum(rewards)}')
 ```
+
 This combined example demonstrates how supervised pre-training can improve the initial policy in an rl setting, while also allowing the agent to continue learning and improve performance further through environment interactions.
 
 **Further Exploration:**
 
 For deeper insights, I highly recommend exploring the following resources:
 
-*   **"Reinforcement Learning: An Introduction" by Richard S. Sutton and Andrew G. Barto**: This book is a cornerstone of reinforcement learning literature, providing a thorough theoretical and practical understanding.
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville**: While not solely focused on rl, this book delves into the foundational deep learning techniques, critical for many rl algorithms used today.
-*   **Research papers on imitation learning and reinforcement learning from top conferences such as NeurIPS, ICML, and ICLR**: Reading the latest research provides cutting-edge perspectives and techniques.
+- **"Reinforcement Learning: An Introduction" by Richard S. Sutton and Andrew G. Barto**: This book is a cornerstone of reinforcement learning literature, providing a thorough theoretical and practical understanding.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville**: While not solely focused on rl, this book delves into the foundational deep learning techniques, critical for many rl algorithms used today.
+- **Research papers on imitation learning and reinforcement learning from top conferences such as NeurIPS, ICML, and ICLR**: Reading the latest research provides cutting-edge perspectives and techniques.
 
 In essence, while you can't directly "do" pure reinforcement learning with solely supervised datasets, supervised techniques play a pivotal role in accelerating and guiding the learning process, often resulting in improved overall performance and practical solutions. It's about leveraging the best of both worlds, combining the efficiency of expert knowledge with the adaptability of reinforcement learning. The key takeaway is that supervised data provides a valuable starting point, but ultimately, interaction with the environment is fundamental for true rl.

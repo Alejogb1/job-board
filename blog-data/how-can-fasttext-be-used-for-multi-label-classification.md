@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-fasttext-be-used-for-multi-label-classification"
 ---
 
-Okay, let's talk about using FastText for multi-label classification. It's a challenge I've encountered a few times, particularly when working with large corpora that necessitate efficient processing. I remember a project involving social media sentiment analysis where we had posts tagged with multiple emotion categories – ‘joyful,’ ‘angry,’ ‘sarcastic’ – and the conventional single-label methods simply weren't cutting it. It needed something faster and scalable.
+, let's talk about using FastText for multi-label classification. It's a challenge I've encountered a few times, particularly when working with large corpora that necessitate efficient processing. I remember a project involving social media sentiment analysis where we had posts tagged with multiple emotion categories – ‘joyful,’ ‘angry,’ ‘sarcastic’ – and the conventional single-label methods simply weren't cutting it. It needed something faster and scalable.
 
 The inherent design of FastText, while excellent for single-label problems, requires some adjustment to handle situations where an instance can belong to more than one class simultaneously. Specifically, FastText's built-in classification model outputs a single probability distribution over the classes, making it unsuitable for true multi-label scenarios where multiple labels can coexist. This means we can't directly leverage the default `fasttext supervised` command and need to be a bit more creative.
 
-The most common approach is to transform the multi-label problem into a set of independent binary classification tasks. In essence, for *n* possible labels, we would train *n* separate FastText models. Each model would be trained to predict if a certain label is present or absent for a given input text. This ‘one-vs-all’ strategy works fairly well, especially since FastText's training speed allows us to scale. However, each model is trained separately, so relationships between labels are implicitly handled by the inputs but not directly modeled as would be in other techniques. The key is how we structure our training data and how we interpret the outputs.
+The most common approach is to transform the multi-label problem into a set of independent binary classification tasks. In essence, for _n_ possible labels, we would train _n_ separate FastText models. Each model would be trained to predict if a certain label is present or absent for a given input text. This ‘one-vs-all’ strategy works fairly well, especially since FastText's training speed allows us to scale. However, each model is trained separately, so relationships between labels are implicitly handled by the inputs but not directly modeled as would be in other techniques. The key is how we structure our training data and how we interpret the outputs.
 
 Let’s consider the data preparation. Instead of a single label per instance, we need to generate separate datasets where the positive examples are those carrying a specific label and the negative examples are all the other instances. This essentially transforms our problem into ‘Is label X present?’ for each label X. For instance, if we have a dataset of reviews tagged with ‘positive,’ ‘negative,’ and ‘sarcastic,’ and a review is tagged with both ‘positive’ and ‘sarcastic’, that review would appear in both the ‘positive’ training set and the ‘sarcastic’ training set, as positive examples. It would be included in the ‘negative’ dataset as a negative example.
 
@@ -21,14 +21,14 @@ def prepare_multilabel_data(df, text_col, label_col):
     unique_labels = set()
     for labels in df[label_col]:
         unique_labels.update(labels)
-    
+
     binary_datasets = {}
     for label in unique_labels:
         binary_df = df.copy()
         binary_df['target'] = binary_df[label_col].apply(lambda x: 1 if label in x else 0)
         binary_df = binary_df[[text_col, 'target']]
         binary_datasets[label] = binary_df
-    
+
     return binary_datasets
 
 # Example Usage
@@ -54,20 +54,20 @@ import pandas as pd
 def train_multilabel_models(binary_datasets, output_dir):
     models = {}
     for label, df in binary_datasets.items():
-        
+
         #Save the binary data to temporary training file
         train_file = f"{output_dir}/temp_train_{label}.txt"
         with open(train_file, 'w') as f:
             for index, row in df.iterrows():
                 f.write(f'{"__label__1" if row["target"] == 1 else "__label__0"} {row["text"]}\n')
-                
+
         model = fasttext.train_supervised(input=train_file)
         model_file = f"{output_dir}/model_{label}.bin"
         model.save_model(model_file)
         models[label] = model_file
-        
+
     return models
-    
+
 # Example usage (using the same data from before)
 data = {'text': ['this is awesome and funny', 'bad movie', 'totally sarcastic and great'],
         'labels': [['positive', 'funny'], ['negative'], ['sarcastic', 'positive']]}
@@ -100,12 +100,13 @@ def predict_multilabel(text, models, threshold=0.5):
         if probability >= threshold:
           predicted_labels.append(label)
     return predicted_labels
-    
+
 # Example using the trained models:
 text = "this was a hilarious and amazing movie"
 predicted_labels = predict_multilabel(text, trained_models, threshold=0.6)
 print(f"Predicted labels: {predicted_labels}")
 ```
+
 This illustrates the prediction process; we iterate through our trained models, and append labels for which the model predicts higher than the threshold. The threshold will likely need to be fine-tuned via a cross-validation process on a held-out dataset.
 
 There are limitations to this 'one-vs-all' approach. Firstly, it doesn't consider the correlations between the labels. For example, ‘joy’ and ‘happiness’ often co-occur, and separate binary models are not learning such patterns directly. Techniques that directly model inter-label dependencies might perform better, but at a cost of complexity and efficiency. However, FastText is chosen due to its simplicity and speed. Secondly, you may end up with a large number of models, which can become cumbersome to manage, though the speed benefits of FastText still make this a workable approach for many situations.

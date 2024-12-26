@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-do-i-get-subscriptable-errors-when-joining-datasets"
 ---
 
-Okay, let's talk about subscriptable errors when joining datasets. I've been down that rabbit hole more times than I care to count, so hopefully, I can shed some light on what's going on and how to fix it. It's a common problem, especially when you’re dealing with data from different sources or in formats you’re not entirely familiar with. The core issue really boils down to trying to treat something that isn't a collection (like a list or a dictionary) as if it were. In essence, you're attempting to access elements by index or key on a data structure that doesn't support that kind of access.
+, let's talk about subscriptable errors when joining datasets. I've been down that rabbit hole more times than I care to count, so hopefully, I can shed some light on what's going on and how to fix it. It's a common problem, especially when you’re dealing with data from different sources or in formats you’re not entirely familiar with. The core issue really boils down to trying to treat something that isn't a collection (like a list or a dictionary) as if it were. In essence, you're attempting to access elements by index or key on a data structure that doesn't support that kind of access.
 
 Usually, you encounter this sort of error when you're trying to join data, specifically when you're using a library like pandas in Python, or similar functionality in other languages. I remember a particularly painful instance back when I was working on a project to aggregate sales data from different regional databases. We had inconsistent naming conventions and data structures across the different regions, and that created this exact issue for us multiple times. The 'subscriptable' error kept popping up because our keys were getting tangled up, and we hadn't properly prepared the data for the join.
 
@@ -72,6 +72,7 @@ try:
 except TypeError as e:
     print(f"Error encountered: {e}")
 ```
+
 This example demonstrates the situation where a list (or non-dataframe) is incorrectly passed to a merge function. The merge function expects both inputs to be dataframes (or compatible objects), and if it finds a list, the internal logic will attempt to treat that list as a data structure it can process, such as by using a key to extract a column, which obviously fails.
 
 So, how do you typically fix this? The approach often requires a combination of careful data preparation and mindful use of joining functions. Here are some general steps I've found useful:
@@ -85,4 +86,4 @@ So, how do you typically fix this? The approach often requires a combination of 
 
 In essence, the 'object is not subscriptable' error is a signal that something fundamentally doesn't match up between what your joining function expects and the data it is actually processing. It almost always is a pointer to some incorrect assumption about the structure or content of your datasets.
 
-If you want to delve deeper into this, I suggest exploring the pandas documentation thoroughly (it’s very well written) or checking out books such as *Python for Data Analysis* by Wes McKinney, which covers data manipulation and joins in detail. Furthermore, some papers from the database community on relational algebra, although sometimes heavy on theory, often give insights into the basic principles of joins and data structures, which is quite relevant to these problems. Always remember to approach the problem systematically: examine your data, standardize as needed, validate assumptions, and handle any inconsistencies to prevent these types of errors. Good luck!
+If you want to delve deeper into this, I suggest exploring the pandas documentation thoroughly (it’s very well written) or checking out books such as _Python for Data Analysis_ by Wes McKinney, which covers data manipulation and joins in detail. Furthermore, some papers from the database community on relational algebra, although sometimes heavy on theory, often give insights into the basic principles of joins and data structures, which is quite relevant to these problems. Always remember to approach the problem systematically: examine your data, standardize as needed, validate assumptions, and handle any inconsistencies to prevent these types of errors. Good luck!

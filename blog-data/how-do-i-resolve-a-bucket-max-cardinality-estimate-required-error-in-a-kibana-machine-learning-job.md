@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-resolve-a-bucket-max-cardinality-estimate-required-error-in-a-kibana-machine-learning-job"
 ---
 
-Alright, let's tackle this. I've seen this "Bucket max cardinality estimate required" error pop up more times than I'd care to count, usually when dealing with machine learning jobs in Kibana that are looking at high-cardinality fields. It’s less about Kibana being outright broken, and more about it needing a helping hand to understand the scope of your data. You're essentially asking Kibana’s anomaly detection to consider a field that has too many unique values for it to track efficiently by default. Think of it like asking a small room to hold a stadium's worth of people; it just doesn't work unless you give it some guidance on how to handle the crowd.
+, let's tackle this. I've seen this "Bucket max cardinality estimate required" error pop up more times than I'd care to count, usually when dealing with machine learning jobs in Kibana that are looking at high-cardinality fields. It’s less about Kibana being outright broken, and more about it needing a helping hand to understand the scope of your data. You're essentially asking Kibana’s anomaly detection to consider a field that has too many unique values for it to track efficiently by default. Think of it like asking a small room to hold a stadium's worth of people; it just doesn't work unless you give it some guidance on how to handle the crowd.
 
 The root cause here typically stems from fields that act as identifiers or contain highly granular data like user ids, session ids, or very specific transaction details. Kibana’s machine learning, by default, tries to create a bucket for each unique value of the field you’re using for analysis. When the number of unique values, or cardinality, of that field is too high, it throws this error. It means that the underlying machine learning engine in Elasticsearch is hesitant to proceed because it anticipates an explosive increase in resource consumption, leading to potential instability or performance degradation. This is a safeguard, not an oversight. I recall a situation a while back where we were trying to monitor web traffic anomalies, and initially, I tried to use the ‘user_id’ field as the 'by' field in the detector, and we got exactly this error. It was a good lesson in needing a better strategy.
 
@@ -12,9 +12,9 @@ There isn’t a single magic bullet for this. The resolution depends heavily on 
 
 **Strategy 1: Pre-aggregation and Reduced Cardinality**
 
-Often, the best approach is to aggregate your data *before* feeding it to the machine learning job. Instead of analyzing each individual transaction or user event, you might want to group them. For example, instead of using ‘user_id’ directly, you could group by a field like ‘user_cohort,’ which has fewer unique values and still reveals useful anomaly patterns. This pre-aggregation can be achieved either at index time using ingest pipelines or during the data analysis phase in Kibana using data transforms.
+Often, the best approach is to aggregate your data _before_ feeding it to the machine learning job. Instead of analyzing each individual transaction or user event, you might want to group them. For example, instead of using ‘user_id’ directly, you could group by a field like ‘user_cohort,’ which has fewer unique values and still reveals useful anomaly patterns. This pre-aggregation can be achieved either at index time using ingest pipelines or during the data analysis phase in Kibana using data transforms.
 
-Consider this scenario, you have an index containing log data, where each log entry has a `user_id`, `timestamp`, and a numeric field `requests_per_minute`. We want to detect anomalies in requests per minute *per user*, but the user_id has high cardinality. Instead, we can pre-aggregate our data by hour and by user_group:
+Consider this scenario, you have an index containing log data, where each log entry has a `user_id`, `timestamp`, and a numeric field `requests_per_minute`. We want to detect anomalies in requests per minute _per user_, but the user_id has high cardinality. Instead, we can pre-aggregate our data by hour and by user_group:
 
 ```python
 from elasticsearch import Elasticsearch
@@ -73,7 +73,7 @@ Now, in the Kibana machine learning job, instead of using `user_id` directly as 
 
 **Strategy 2: Using the 'influencers' Field Instead of 'by'**
 
-When the `by` field is too high cardinality, you can look to the 'influencers' field instead. The difference here is that the 'by' field will *segment* the data to create different buckets of data to analyze for anomalies separately. By using the `influencers` field, we can identify whether the high-cardinality field is *related* to the anomaly, *without* the computational cost of creating a unique model for each value. The 'influencers' field *does not* bucket data, so the computation cost remains low.
+When the `by` field is too high cardinality, you can look to the 'influencers' field instead. The difference here is that the 'by' field will _segment_ the data to create different buckets of data to analyze for anomalies separately. By using the `influencers` field, we can identify whether the high-cardinality field is _related_ to the anomaly, _without_ the computational cost of creating a unique model for each value. The 'influencers' field _does not_ bucket data, so the computation cost remains low.
 
 Let's build on our example:
 
@@ -118,11 +118,11 @@ def setup_index_influencers():
 setup_index_influencers()
 ```
 
-Here, in Kibana, when defining the machine learning job we would *not* use 'user_id' as the `by` field. Instead, we would have a detector configured to analyze `requests_per_minute` over time *without* bucketing on `user_id`. Then, add `user_id` in the `influencers` field. This will allow us to identify if a specific user is related to a spike in traffic, but it won't cause the error as the anomaly analysis is done without bucketing. This approach is useful when you need to know *if* high cardinality is associated with anomalies, but don't need different analysis models per value.
+Here, in Kibana, when defining the machine learning job we would _not_ use 'user_id' as the `by` field. Instead, we would have a detector configured to analyze `requests_per_minute` over time _without_ bucketing on `user_id`. Then, add `user_id` in the `influencers` field. This will allow us to identify if a specific user is related to a spike in traffic, but it won't cause the error as the anomaly analysis is done without bucketing. This approach is useful when you need to know _if_ high cardinality is associated with anomalies, but don't need different analysis models per value.
 
 **Strategy 3: Configuring `model_memory_limit` or `max_bucket_cardinality` directly**
 
-This approach should be treated with caution. While you *can* directly adjust the `model_memory_limit` setting, or the `max_bucket_cardinality` setting, these adjustments are often a short-term fix that can lead to performance issues. The setting `max_bucket_cardinality` exists to prevent runaway processes, so raising this without proper justification can lead to resource depletion, and potential instability of Elasticsearch. If you’re dealing with very high cardinality, this is not recommended, however it’s worth knowing that these options exist for less critical cases.
+This approach should be treated with caution. While you _can_ directly adjust the `model_memory_limit` setting, or the `max_bucket_cardinality` setting, these adjustments are often a short-term fix that can lead to performance issues. The setting `max_bucket_cardinality` exists to prevent runaway processes, so raising this without proper justification can lead to resource depletion, and potential instability of Elasticsearch. If you’re dealing with very high cardinality, this is not recommended, however it’s worth knowing that these options exist for less critical cases.
 
 ```python
 #  This configuration approach should be performed in Kibana, not directly in Python,
@@ -158,15 +158,16 @@ job_configuration = {
 }
 
 ```
+
 While these settings seem like a quick fix, they bypass the error check and may cause performance problems. If you find yourself adjusting them frequently, you probably need to consider strategies 1 and 2 again.
 
 **Further Reading:**
 
 For a deeper dive, I highly recommend looking into the following:
 
-*   **"Elasticsearch: The Definitive Guide"** by Clinton Gormley and Zachary Tong: This book offers comprehensive insights into Elasticsearch, including the underlying mechanisms of machine learning features. Pay specific attention to the sections on data modeling and cardinality.
-*   **Elasticsearch documentation on Machine Learning:** The official Elasticsearch documentation is indispensable. Specifically, focus on the machine learning section, paying attention to anomaly detection configurations and data feed parameters.
-*   **The paper "An Empirical Evaluation of Techniques for Anomaly Detection in Time Series Data"** by Chandola, Banerjee, and Kumar: This paper provides background on anomaly detection methods and can help you understand the statistical processes behind it all, guiding better configurations and choices in your workflow.
-*  **Practical Elasticsearch Analytics: Real-Time Data Analysis and Monitoring** by José Manuel Rodriguez Pujadas: Offers several techniques for efficient analysis and aggregation of data.
+- **"Elasticsearch: The Definitive Guide"** by Clinton Gormley and Zachary Tong: This book offers comprehensive insights into Elasticsearch, including the underlying mechanisms of machine learning features. Pay specific attention to the sections on data modeling and cardinality.
+- **Elasticsearch documentation on Machine Learning:** The official Elasticsearch documentation is indispensable. Specifically, focus on the machine learning section, paying attention to anomaly detection configurations and data feed parameters.
+- **The paper "An Empirical Evaluation of Techniques for Anomaly Detection in Time Series Data"** by Chandola, Banerjee, and Kumar: This paper provides background on anomaly detection methods and can help you understand the statistical processes behind it all, guiding better configurations and choices in your workflow.
+- **Practical Elasticsearch Analytics: Real-Time Data Analysis and Monitoring** by José Manuel Rodriguez Pujadas: Offers several techniques for efficient analysis and aggregation of data.
 
 In summary, encountering the "Bucket max cardinality estimate required" error isn't a dead end; it's a signal to reassess your analysis approach. Often, a combination of pre-aggregation, judicious use of influencers, and an understanding of the underlying data characteristics will yield the best long-term solution, rather than relying on memory or cardinality workarounds. I hope this gives you the tools you need to resolve this issue efficiently. Remember, a little prep work goes a long way when dealing with high-cardinality data.

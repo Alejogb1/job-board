@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-implement-a-custom-lookup-field-for-rails-admin-associations-beyond-the-default-name-field"
 ---
 
-Alright, let's tackle this. It's a common situation, and one I've definitely found myself navigating more than once, particularly when dealing with intricate data models. The default `name` field lookup in Rails Admin associations is convenient, but it quickly becomes insufficient when you need a more nuanced search mechanism. I recall one project, a customer management system, where we needed to search for users not just by their name but also by their email address or even a unique identifier. Relying solely on `name` was just creating headaches for our users. So, how do you implement a custom lookup field for these associations in Rails Admin? It’s all about overriding the default behavior and plugging in our own search logic.
+, let's tackle this. It's a common situation, and one I've definitely found myself navigating more than once, particularly when dealing with intricate data models. The default `name` field lookup in Rails Admin associations is convenient, but it quickly becomes insufficient when you need a more nuanced search mechanism. I recall one project, a customer management system, where we needed to search for users not just by their name but also by their email address or even a unique identifier. Relying solely on `name` was just creating headaches for our users. So, how do you implement a custom lookup field for these associations in Rails Admin? It’s all about overriding the default behavior and plugging in our own search logic.
 
 The core issue lies in how Rails Admin generates the select dropdown or autocomplete fields for associations. It defaults to displaying and searching against the `name` method (or attribute) of the associated model. To go beyond this, we need to tell Rails Admin explicitly how to perform this lookup. This involves diving into Rails Admin's configuration and defining a custom label method and a custom search method.
 
@@ -77,9 +77,9 @@ In this example, we’re searching the `name` and `email` fields using a case-in
 
 **Further Considerations:**
 
-*   **Performance:** As your data grows, complex search queries can become slow. Indexing appropriate columns in your database is crucial, as is keeping your search queries efficient. Consider using database-specific search features like full-text indexing if your search requirements get more sophisticated.
-*   **Advanced Searching:** For more advanced filtering options, you might need to explore solutions like Ransack or custom search forms built outside of Rails Admin. While Rails Admin provides solid basic support, it might fall short for very complex use cases.
-*   **Security:** Always sanitize user input to prevent SQL injection vulnerabilities, especially when building custom search queries. Rails’s built-in sanitization mechanisms should be your first line of defense.
+- **Performance:** As your data grows, complex search queries can become slow. Indexing appropriate columns in your database is crucial, as is keeping your search queries efficient. Consider using database-specific search features like full-text indexing if your search requirements get more sophisticated.
+- **Advanced Searching:** For more advanced filtering options, you might need to explore solutions like Ransack or custom search forms built outside of Rails Admin. While Rails Admin provides solid basic support, it might fall short for very complex use cases.
+- **Security:** Always sanitize user input to prevent SQL injection vulnerabilities, especially when building custom search queries. Rails’s built-in sanitization mechanisms should be your first line of defense.
 
 **Example Using Different Data Types:**
 

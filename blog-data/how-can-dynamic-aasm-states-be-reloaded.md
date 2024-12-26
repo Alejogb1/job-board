@@ -4,18 +4,18 @@ date: "2024-12-23"
 id: "how-can-dynamic-aasm-states-be-reloaded"
 ---
 
-Okay, let's tackle this one. I’ve certainly navigated the choppy waters of dynamic state machine reloading before, and it’s not always a walk in the park. The ability to adjust AASM (Acts As State Machine) states on the fly, without completely restarting the application, is crucial for maintaining smooth operations and adaptability, especially in long-running processes or systems that need to respond to changing configurations. The simple solution would be to completely reload the application, but that's not always feasible or desirable and can cause disruptions to existing workflows.
+, let's tackle this one. I’ve certainly navigated the choppy waters of dynamic state machine reloading before, and it’s not always a walk in the park. The ability to adjust AASM (Acts As State Machine) states on the fly, without completely restarting the application, is crucial for maintaining smooth operations and adaptability, especially in long-running processes or systems that need to respond to changing configurations. The simple solution would be to completely reload the application, but that's not always feasible or desirable and can cause disruptions to existing workflows.
 
 When I first encountered this, it was in a large-scale financial trading system, where market conditions and trading strategies changed regularly. We had these complex state machines governing order execution, and a hard restart for every little adjustment was simply unacceptable. We needed a surgical approach, something more nuanced. The challenge lies in the fact that AASM, at its core, expects a fixed definition of states and transitions when the class is initially loaded. Dynamic alterations require more thought.
 
-So, how do we actually achieve this? Well, the core concept revolves around separating the *definition* of your state machine from its *execution* context. Instead of embedding the states and events directly within your model, we utilize an external data source—think a configuration file, a database table, or even a remote service—that defines them. This configuration can be updated independently and then applied to modify the behavior of our AASM instance.
+So, how do we actually achieve this? Well, the core concept revolves around separating the _definition_ of your state machine from its _execution_ context. Instead of embedding the states and events directly within your model, we utilize an external data source—think a configuration file, a database table, or even a remote service—that defines them. This configuration can be updated independently and then applied to modify the behavior of our AASM instance.
 
 The approach I’ve found most reliable involves these steps:
 
 1.  **Externalize State Definitions:** The first and most critical step is to not hardcode states and transitions directly within your model class. Instead, store your states, events, and their associated transitions in a persistent store of some kind. This could be a database table, a YAML file, a JSON structure fetched remotely, or something custom depending on the nature of your application.
 2.  **Load Configuration:** When the application (or relevant module) starts or when configuration changes are detected, you must load or reload these external definitions from their source.
 3.  **Rebuild State Machine:** Instead of directly altering the state machine within AASM which is not advisable, dynamically generate a new AASM definition (which often means using an intermediary object that mixes in AASM with our reloaded configuration). Then, instantiate a fresh version of this class with the new definitions. Copying over the state information of the original object to the new object, including the current state, is key to ensure the current process isn't disrupted, allowing us to carry on our processes smoothly.
-4. **Replace Original with the New Object:** The final step is to replace the old instance with the new object with the updated states and transitions within the relevant scope. It's essentially an object swap.
+4.  **Replace Original with the New Object:** The final step is to replace the old instance with the new object with the updated states and transitions within the relevant scope. It's essentially an object swap.
 
 Now, let's solidify this with some code examples using Ruby, since AASM is most commonly used with Ruby. Please be aware that these are simplified illustrations, but they demonstrate the core principles:
 
@@ -335,9 +335,9 @@ This approach allows for real-time state updates by leveraging a remote configur
 
 **Important Considerations:**
 
-*   **Error Handling:** Always include robust error handling when loading configuration data to prevent application crashes.
-*   **Concurrency:** When updating the AASM instance in multi-threaded environments, make sure the process is thread-safe and consider using techniques like mutex locks to avoid race conditions.
-*   **Testing:** Rigorous testing is absolutely essential whenever you're implementing dynamic state changes to ensure your application behaves as expected.
+- **Error Handling:** Always include robust error handling when loading configuration data to prevent application crashes.
+- **Concurrency:** When updating the AASM instance in multi-threaded environments, make sure the process is thread-safe and consider using techniques like mutex locks to avoid race conditions.
+- **Testing:** Rigorous testing is absolutely essential whenever you're implementing dynamic state changes to ensure your application behaves as expected.
 
 For further reading, I'd recommend diving into Martin Fowler's "Patterns of Enterprise Application Architecture" for a more in-depth discussion on state management patterns and their applications. Additionally, "Domain-Driven Design" by Eric Evans provides excellent perspectives on modeling your business logic through state machines and how they should interact with business rules. Specifically with regard to AASM I recommend the official AASM documentation for specifics.
 

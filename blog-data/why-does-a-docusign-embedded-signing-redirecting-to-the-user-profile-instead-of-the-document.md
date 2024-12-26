@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "why-does-a-docusign-embedded-signing-redirecting-to-the-user-profile-instead-of-the-document"
 ---
 
-alright, so you're hitting that classic docusign embedded signing redirect snag, where instead of landing back at the document, users are getting bounced to their profile page. i've definitely been there, and it's usually a few common culprits. let’s break it down.
+, so you're hitting that classic docusign embedded signing redirect snag, where instead of landing back at the document, users are getting bounced to their profile page. i've definitely been there, and it's usually a few common culprits. let’s break it down.
 
 first, let’s talk about my experience, this isn’t my first rodeo with docusign. way back, probably 2015 when i was just starting out at a small startup, we had this clunky integration. we were embedding signatures using the docusign api, and for the life of me, some users would finish signing and end up staring at their own account page instead of our beautiful "success" landing. it was… frustrating. i spent days tracking down the error. it made me consider switching careers a few times. the worst was, it was intermittent; not every user, not every time, made it infinitely more complex to pin down. after lots of trial and error, i realised the devil was in the details of the return url.
 
-the core problem is almost always tied to how you're configuring the `returnurl` parameter within your embedded signing request. docusign expects this parameter to point to the specific page where you want the user to land *after* they've completed the signing process. if it's incorrect, blank, or points to something unexpected, you’re going to have problems. the profile redirect is docusign's default behavior when this return url isn't properly configured or interpreted. think of it like a gps that lost its signal, instead of getting home you end up in the middle of nowhere.
+the core problem is almost always tied to how you're configuring the `returnurl` parameter within your embedded signing request. docusign expects this parameter to point to the specific page where you want the user to land _after_ they've completed the signing process. if it's incorrect, blank, or points to something unexpected, you’re going to have problems. the profile redirect is docusign's default behavior when this return url isn't properly configured or interpreted. think of it like a gps that lost its signal, instead of getting home you end up in the middle of nowhere.
 
 here’s how we can typically resolve this issue.
 
@@ -75,12 +75,12 @@ in this example, pay close attention to the `returnUrl`. if it points to your pr
 **example 2: handling the redirect on your application (simplified - javascript nodejs express)**
 
 ```javascript
-const express = require('express');
+const express = require("express");
 const app = express();
 
-app.get('/signing-success', (req, res) => {
+app.get("/signing-success", (req, res) => {
   // you can add custom logic here if required after a succesful docusign event
-  res.send('congratulations! signing completed successfully.');
+  res.send("congratulations! signing completed successfully.");
 });
 ```
 
@@ -109,9 +109,10 @@ const signingUrl = createEmbeddedSigningRequestWithLog(
 this example helps you to be sure that the `returnurl` is correct. if it's not as expected you need to go back and check example 1 to see what is generating the url. debugging is often about being methodical.
 
 some extra notes that can help you are:
-*   **check docusign api documentation:** the official docusign api documentation is a goldmine, even if it can feel like a maze sometimes.
-*   **look for community forums:** resources like stackoverflow or other docusign communities can offer insights from others who have faced similar challenges.
-*   **read about oauth flows:** docusign heavily relies on oauth for authentication. understanding how tokens and refresh tokens work can be crucial for maintaining a robust integration. "oauth 2 in action" by justin richer and antonio sanso is a pretty good reference if you need to deep dive.
-*   **be patient** the docusign api can sometimes behave in unexpected ways. take a deep breath, double check your setup and consider using a proper debugger to look into your code execution line by line, rather than relying on `console.log` alone. and, don't be afraid to ask for help!
+
+- **check docusign api documentation:** the official docusign api documentation is a goldmine, even if it can feel like a maze sometimes.
+- **look for community forums:** resources like stackoverflow or other docusign communities can offer insights from others who have faced similar challenges.
+- **read about oauth flows:** docusign heavily relies on oauth for authentication. understanding how tokens and refresh tokens work can be crucial for maintaining a robust integration. "oauth 2 in action" by justin richer and antonio sanso is a pretty good reference if you need to deep dive.
+- **be patient** the docusign api can sometimes behave in unexpected ways. take a deep breath, double check your setup and consider using a proper debugger to look into your code execution line by line, rather than relying on `console.log` alone. and, don't be afraid to ask for help!
 
 i hope this helps you with your docusign redirect problem. i am sure that with these details, you will be able to get your user back on your app after they sign. good luck!

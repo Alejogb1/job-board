@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-react-and-stimulus-be-used-together-in-a-rails-6-application"
 ---
 
-Okay, let's tackle this. I've seen a fair bit of frontend integration in my time, and the React-Stimulus combo within a Rails 6 environment is a pattern that, while initially seeming a little unusual, can actually become quite powerful when leveraged correctly. The key is understanding their distinct roles and how they can play off each other without stepping on each other’s toes. It's not about shoehorning them together, but rather about creating a harmonious balance.
+, let's tackle this. I've seen a fair bit of frontend integration in my time, and the React-Stimulus combo within a Rails 6 environment is a pattern that, while initially seeming a little unusual, can actually become quite powerful when leveraged correctly. The key is understanding their distinct roles and how they can play off each other without stepping on each other’s toes. It's not about shoehorning them together, but rather about creating a harmonious balance.
 
 My experience stems from a rather large project back in 2019 – a complex e-commerce platform where certain interactive components needed the full flexibility of React, but we weren't ready to completely abandon the Rails view rendering for the entire application, or commit entirely to a client-side rendering approach. We had legacy code using turbolinks and needed something more refined and manageable. This led us down this specific path of integration between the two.
 
@@ -18,26 +18,26 @@ Here is an example of how I did it:
 
 ```javascript
 // app/javascript/controllers/react_controller.js
-import { Controller } from "@hotwired/stimulus"
-import React from 'react';
-import ReactDOM from 'react-dom';
-import MyReactComponent from '../components/my_react_component'; //Assume this exists
+import { Controller } from "@hotwired/stimulus";
+import React from "react";
+import ReactDOM from "react-dom";
+import MyReactComponent from "../components/my_react_component"; //Assume this exists
 
 export default class extends Controller {
-  static targets = [ "reactRoot" ]
+  static targets = ["reactRoot"];
 
   connect() {
-    if(this.hasReactRootTarget){
+    if (this.hasReactRootTarget) {
       ReactDOM.render(<MyReactComponent />, this.reactRootTarget);
       // additional logic can go here, like setting up event listeners
     }
   }
 
-  disconnect(){
-      if(this.hasReactRootTarget) {
-         ReactDOM.unmountComponentAtNode(this.reactRootTarget);
-        // clean up event listeners
-     }
+  disconnect() {
+    if (this.hasReactRootTarget) {
+      ReactDOM.unmountComponentAtNode(this.reactRootTarget);
+      // clean up event listeners
+    }
   }
 }
 ```
@@ -60,27 +60,32 @@ Here is an example with data passing:
 
 ```javascript
 // app/javascript/controllers/react_controller.js
-import { Controller } from "@hotwired/stimulus"
-import React from 'react';
-import ReactDOM from 'react-dom';
-import MyReactComponent from '../components/my_react_component'; //Assume this exists
+import { Controller } from "@hotwired/stimulus";
+import React from "react";
+import ReactDOM from "react-dom";
+import MyReactComponent from "../components/my_react_component"; //Assume this exists
 
 export default class extends Controller {
-    static targets = [ "reactRoot" ]
+  static targets = ["reactRoot"];
 
-    connect() {
-      if (this.hasReactRootTarget) {
-          const initialData = this.element.dataset.initialData ? JSON.parse(this.element.dataset.initialData) : {};
+  connect() {
+    if (this.hasReactRootTarget) {
+      const initialData = this.element.dataset.initialData
+        ? JSON.parse(this.element.dataset.initialData)
+        : {};
 
-         ReactDOM.render(<MyReactComponent initialData={initialData} />, this.reactRootTarget);
-      }
+      ReactDOM.render(
+        <MyReactComponent initialData={initialData} />,
+        this.reactRootTarget
+      );
     }
+  }
 
-    disconnect(){
-         if(this.hasReactRootTarget) {
-              ReactDOM.unmountComponentAtNode(this.reactRootTarget);
-          }
+  disconnect() {
+    if (this.hasReactRootTarget) {
+      ReactDOM.unmountComponentAtNode(this.reactRootTarget);
     }
+  }
 }
 ```
 
@@ -100,46 +105,44 @@ Finally, dealing with more complex cases where you may have multiple react compo
 
 ```javascript
 // app/javascript/controllers/react_app_controller.js
-import { Controller } from "@hotwired/stimulus"
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { Controller } from "@hotwired/stimulus";
+import React from "react";
+import ReactDOM from "react-dom";
 
-import App1 from '../components/app1';
-import App2 from '../components/app2';
-
+import App1 from "../components/app1";
+import App2 from "../components/app2";
 
 export default class extends Controller {
   static values = { appConfig: Object };
   static targets = ["appRoot"];
 
-    connect() {
+  connect() {
     if (this.hasAppRootTarget) {
-        const {app, props} = this.appConfigValue;
+      const { app, props } = this.appConfigValue;
 
-        let reactApp;
-        switch(app){
-            case "app1":
-                reactApp = <App1 {...props}/>;
-                break;
-            case "app2":
-               reactApp = <App2 {...props}/>;
-                break;
-              default:
-                console.error(`Unknown react app type ${app}`);
-                return;
-        }
+      let reactApp;
+      switch (app) {
+        case "app1":
+          reactApp = <App1 {...props} />;
+          break;
+        case "app2":
+          reactApp = <App2 {...props} />;
+          break;
+        default:
+          console.error(`Unknown react app type ${app}`);
+          return;
+      }
 
       ReactDOM.render(reactApp, this.appRootTarget);
     }
   }
 
-  disconnect(){
-    if(this.hasAppRootTarget) {
+  disconnect() {
+    if (this.hasAppRootTarget) {
       ReactDOM.unmountComponentAtNode(this.appRootTarget);
     }
   }
 }
-
 ```
 
 And the corresponding view would look similar to this:

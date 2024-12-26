@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-validate-functions-in-a-hardhat-test"
 ---
 
-alright, so you're looking at how to validate functions within your hardhat tests, right? i've been there, and it's a pretty common spot to stumble. let me walk you through how i've handled this in the past. it's not about just calling the function and hoping it works; it's about making sure it does *exactly* what it's supposed to do, under various scenarios. think of it as creating little contracts within your tests to guarantee function behavior.
+, so you're looking at how to validate functions within your hardhat tests, right? i've been there, and it's a pretty common spot to stumble. let me walk you through how i've handled this in the past. it's not about just calling the function and hoping it works; it's about making sure it does _exactly_ what it's supposed to do, under various scenarios. think of it as creating little contracts within your tests to guarantee function behavior.
 
 first off, let's talk about the basic setup. assume you've got a hardhat project up and running. you have your smart contracts in the `contracts` folder, and your tests live in the `test` folder, typically using mocha and chai for your testing framework. if you are starting out, read 'testing javascript applications' by luciano ramalho or 'effective javascript' by david herman both have good explanations on creating robust javascript tests.
 
@@ -31,17 +31,16 @@ describe("TokenContract", function () {
   });
 
   it("should transfer tokens between accounts", async function () {
-      const initialBalanceOwner = await tokenContract.balanceOf(owner.address);
-      const initialBalanceAddr1 = await tokenContract.balanceOf(addr1.address);
+    const initialBalanceOwner = await tokenContract.balanceOf(owner.address);
+    const initialBalanceAddr1 = await tokenContract.balanceOf(addr1.address);
 
-      await tokenContract.transfer(addr1.address, 100);
+    await tokenContract.transfer(addr1.address, 100);
 
-      const finalBalanceOwner = await tokenContract.balanceOf(owner.address);
-      const finalBalanceAddr1 = await tokenContract.balanceOf(addr1.address);
+    const finalBalanceOwner = await tokenContract.balanceOf(owner.address);
+    const finalBalanceAddr1 = await tokenContract.balanceOf(addr1.address);
 
-      expect(finalBalanceOwner).to.equal(initialBalanceOwner - 100);
-      expect(finalBalanceAddr1).to.equal(initialBalanceAddr1 + 100);
-
+    expect(finalBalanceOwner).to.equal(initialBalanceOwner - 100);
+    expect(finalBalanceAddr1).to.equal(initialBalanceAddr1 + 100);
   });
 });
 ```
@@ -52,27 +51,34 @@ now, a frequent spot for issues to arise is when you're dealing with functions t
 
 ```javascript
 it("should revert if sender has insufficient balance", async function () {
-    await expect(
-      tokenContract.connect(addr1).transfer(addr2.address, 100)
-    ).to.be.revertedWith("ERC20: transfer amount exceeds balance");
-  });
+  await expect(
+    tokenContract.connect(addr1).transfer(addr2.address, 100)
+  ).to.be.revertedWith("ERC20: transfer amount exceeds balance");
+});
 ```
 
-here, we're specifically testing that the transfer function `reverts` when the sender (`addr1`) doesn't have the funds, as it is supposed to according to the erc20 standard.  the `.connect(addr1)` is crucial: we're telling hardhat to send the transaction as the `addr1` address, not as the contract owner.  the `revertedWith` matcher checks that the error thrown by the smart contract contains the specific error message. using such explicit and detailed checks helps you pinpoint the source of problems faster, that has been my experience from working with complex contracts.
+here, we're specifically testing that the transfer function `reverts` when the sender (`addr1`) doesn't have the funds, as it is supposed to according to the erc20 standard. the `.connect(addr1)` is crucial: we're telling hardhat to send the transaction as the `addr1` address, not as the contract owner. the `revertedWith` matcher checks that the error thrown by the smart contract contains the specific error message. using such explicit and detailed checks helps you pinpoint the source of problems faster, that has been my experience from working with complex contracts.
 
 moving on, functions might not always be just transferring data. a function could be calculating something, like a complicated interest formula or some cryptographic operation. when the return value is complex it can be hard to validate. you might need a specific precision comparison or check against a known value. here's an example of how to handle a function with a more complex return value:
 
 ```javascript
-  it("should correctly calculate interest", async function () {
-    const principal = ethers.utils.parseEther("100");
-    const rate = 5;
-    const duration = 12;
-    const expectedInterest = principal.mul(rate).mul(duration).div(100 * 12);
+it("should correctly calculate interest", async function () {
+  const principal = ethers.utils.parseEther("100");
+  const rate = 5;
+  const duration = 12;
+  const expectedInterest = principal
+    .mul(rate)
+    .mul(duration)
+    .div(100 * 12);
 
-    const calculatedInterest = await tokenContract.calculateInterest(principal, rate, duration);
+  const calculatedInterest = await tokenContract.calculateInterest(
+    principal,
+    rate,
+    duration
+  );
 
-    expect(calculatedInterest).to.equal(expectedInterest);
-  });
+  expect(calculatedInterest).to.equal(expectedInterest);
+});
 ```
 
 in this case, we have a `calculateInterest` function that returns the calculated interest. we compute the expected result on the test side, and then assert that the contract’s returned value matches our calculation. here we did not use a 'closeTo' matcher as we are not working with a real numbers context, but if you use floats or integers with a high range of values you should consider using the 'closeTo' matcher in chai for handling floating point or integer errors when dealing with very large values to avoid false negatives in your testing.

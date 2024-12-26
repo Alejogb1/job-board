@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-access-dagrunconf-values-and-pass-to-sshoperator"
 ---
 
-Okay, let's tackle this. I’ve definitely been down this road before, more than once, and it’s a common hurdle when you start building more dynamic airflow workflows. Getting those `dag_run.conf` values into an `SSHOperator`—or really, any operator that needs dynamic configuration—requires a bit of thought about templating and Airflow’s execution context.
+, let's tackle this. I’ve definitely been down this road before, more than once, and it’s a common hurdle when you start building more dynamic airflow workflows. Getting those `dag_run.conf` values into an `SSHOperator`—or really, any operator that needs dynamic configuration—requires a bit of thought about templating and Airflow’s execution context.
 
 The challenge, at its core, is that `dag_run.conf` isn't automatically available as simple variables within your tasks. It’s a dictionary, and you need to specifically extract and then pass its contents. The key thing here is utilizing Jinja templating, which Airflow natively supports. The `context` object, automatically available in Airflow templates, holds all sorts of useful information, including the `dag_run`. Let me explain with some specifics and some code examples based on patterns I've seen and used successfully.
 
@@ -36,7 +36,8 @@ with DAG(
         dag=dag
     )
 ```
-In this example, the crucial part is `{{ dag_run.conf.target_server }}` and `{{ dag_run.conf.script_path }}` in the command.  Airflow’s templating engine will process this before the operator executes, substituting the actual values from your `dag_run.conf`.  Note the direct access of `dag_run.conf` and nested access to get the respective dictionary values. For security considerations, it is not advised to pass secrets such as passwords through the command string itself. In a real world scenario, it would be preferable to use an ssh key or an Airflow variable for that. I have intentionally included this to showcase how a string can be interpolated.
+
+In this example, the crucial part is `{{ dag_run.conf.target_server }}` and `{{ dag_run.conf.script_path }}` in the command. Airflow’s templating engine will process this before the operator executes, substituting the actual values from your `dag_run.conf`. Note the direct access of `dag_run.conf` and nested access to get the respective dictionary values. For security considerations, it is not advised to pass secrets such as passwords through the command string itself. In a real world scenario, it would be preferable to use an ssh key or an Airflow variable for that. I have intentionally included this to showcase how a string can be interpolated.
 
 **Example 2: Handling Missing Keys (With a Default)**
 
@@ -59,7 +60,7 @@ with DAG(
         task_id='run_script_on_remote',
         ssh_conn_id='my_ssh_connection',
         command="""
-            bash {{ dag_run.conf.get("script_path", "/default/path/script.sh") }} 
+            bash {{ dag_run.conf.get("script_path", "/default/path/script.sh") }}
             && echo "Host is : {{ dag_run.conf.get("target_server", "default_server") }}"
         """,
         dag=dag
@@ -77,11 +78,11 @@ Let's imagine a more complex `dag_run.conf` like this:
   "deployment": {
     "target_env": "prod",
     "server_details": {
-        "host": "my-prod-server",
-        "path": "/opt/prod_deploy"
-      }
-   },
-   "app_name": "my_app_v2"
+      "host": "my-prod-server",
+      "path": "/opt/prod_deploy"
+    }
+  },
+  "app_name": "my_app_v2"
 }
 ```
 
@@ -104,13 +105,14 @@ with DAG(
         task_id='run_script_on_remote',
         ssh_conn_id='my_ssh_connection',
        command="""
-        echo "Deploying to {{ dag_run.conf.deployment.target_env }} environment" && 
+        echo "Deploying to {{ dag_run.conf.deployment.target_env }} environment" &&
         ssh -o StrictHostKeyChecking=no user@{{ dag_run.conf.deployment.server_details.host }} 'bash {{ dag_run.conf.deployment.server_details.path }}/deploy_script.sh --app-name {{ dag_run.conf.app_name }}'
         """,
         dag=dag
     )
 ```
-As we can see, it is quite straightforward to access these nested config values using the dot operator and jinja templates.  We’re just drilling down through the nested structure, `dag_run.conf.deployment.server_details.host` for instance, to get the actual value. This demonstrates the flexibility of using `dag_run.conf` with more complex configurations.
+
+As we can see, it is quite straightforward to access these nested config values using the dot operator and jinja templates. We’re just drilling down through the nested structure, `dag_run.conf.deployment.server_details.host` for instance, to get the actual value. This demonstrates the flexibility of using `dag_run.conf` with more complex configurations.
 
 **Things to Keep in Mind:**
 
@@ -126,9 +128,9 @@ As we can see, it is quite straightforward to access these nested config values 
 
 For a deeper understanding, I'd suggest exploring these resources:
 
-*   **"Programming Apache Airflow" by Jarek Potiuk and Marcin Ziemniak:** This book offers an in-depth look at Airflow’s core concepts, including templating and the context object. Pay special attention to the chapters on task execution and Jinja templating for a clear understanding of the concepts we have discussed.
-*   **Apache Airflow Documentation:** The official documentation is an invaluable resource. Specifically, focus on the sections about Jinja templating and the context variables available within task execution. The documentation will provide the authoritative source for all features that have been highlighted here.
-*   **Jinja Documentation:** While Airflow provides the context, understanding the Jinja template engine itself can help create more dynamic templates. I find diving deeper into the Jinja documentation very valuable in these types of cases.
-*   **"Effective Python" by Brett Slatkin:** While not strictly about Airflow, this book offers great insights into using Python in an effective and idiomatic way which can greatly help when you're writing your dag.
+- **"Programming Apache Airflow" by Jarek Potiuk and Marcin Ziemniak:** This book offers an in-depth look at Airflow’s core concepts, including templating and the context object. Pay special attention to the chapters on task execution and Jinja templating for a clear understanding of the concepts we have discussed.
+- **Apache Airflow Documentation:** The official documentation is an invaluable resource. Specifically, focus on the sections about Jinja templating and the context variables available within task execution. The documentation will provide the authoritative source for all features that have been highlighted here.
+- **Jinja Documentation:** While Airflow provides the context, understanding the Jinja template engine itself can help create more dynamic templates. I find diving deeper into the Jinja documentation very valuable in these types of cases.
+- **"Effective Python" by Brett Slatkin:** While not strictly about Airflow, this book offers great insights into using Python in an effective and idiomatic way which can greatly help when you're writing your dag.
 
 In my experience, mastering this interaction between `dag_run.conf` and templating is essential for building truly dynamic and reusable Airflow workflows. It enables you to handle a vast array of configuration scenarios and keep your pipelines flexible and robust. The most important thing is to always think about how Airflow’s templating engine processes your code and how context can be utilized in a secure and robust way.

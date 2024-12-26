@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-manage-concurrent-cloudfront-invalidation-requests-from-multiple-workers"
 ---
 
-Alright, let's tackle this head-on. I've definitely seen my share of headaches involving CloudFront invalidations, especially when scaling out systems that generate them concurrently. The core challenge, as you've likely discovered, is that aggressively firing off invalidations, particularly on the same distribution path, can lead to throttling and unexpected delays. It’s a bit like trying to push a large crowd through a narrow doorway – not very efficient. So, a more structured, thoughtful approach is essential to maintain optimal performance. I’ll outline some practical strategies I’ve used in the past, supported by a few code snippets to illustrate the concepts.
+, let's tackle this head-on. I've definitely seen my share of headaches involving CloudFront invalidations, especially when scaling out systems that generate them concurrently. The core challenge, as you've likely discovered, is that aggressively firing off invalidations, particularly on the same distribution path, can lead to throttling and unexpected delays. It’s a bit like trying to push a large crowd through a narrow doorway – not very efficient. So, a more structured, thoughtful approach is essential to maintain optimal performance. I’ll outline some practical strategies I’ve used in the past, supported by a few code snippets to illustrate the concepts.
 
 The crux of effective concurrent invalidation management lies in two primary areas: batching and throttling (often involving a queueing mechanism). It's about minimizing the number of individual API requests and controlling the rate at which they are sent to the CloudFront service. In a previous project—a large e-commerce platform dealing with frequent content updates—we faced a very similar problem. Hundreds of worker processes across multiple servers were simultaneously trying to invalidate the same image paths after processing user-uploaded content. The result? Inconsistent cache updates and frustrated users.
 
@@ -210,6 +210,7 @@ async def main():
 if __name__ == "__main__":
   asyncio.run(main())
 ```
+
 The above snippet demonstrates the basic usage of asynchronous python to manage a queue of invalidations. In this example I've used a fixed throttling based on the number of active async tasks to keep the code as simple as possible, it is however trivial to expand on this with more sophisticated approaches.
 
 For those looking to dive deeper into these topics, I would highly recommend reviewing the AWS documentation on CloudFront invalidations, especially paying close attention to the request rate limits. In addition, studying the theory of queuing systems as detailed in papers like "A Practical Guide to Queueing Systems" by Brian L. Meek or "Queueing Theory: A Problem Solving Approach" by Leonard Kleinrock can provide a solid theoretical foundation. Furthermore, exploring concurrency patterns as outlined in books like "Concurrency in Go" by Katherine Cox-Buday or "Java Concurrency in Practice" by Brian Goetz et al. can lead to a deeper appreciation of best practices and potential pitfalls.

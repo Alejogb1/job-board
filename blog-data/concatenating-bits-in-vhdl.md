@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "concatenating-bits-in-vhdl"
 ---
 
-Alright so you're asking about concatenating bits in VHDL right Been there done that a thousand times It's like the bread and butter of hardware design but I get it especially if you're just starting it can be a bit confusing So let's dive in shall we
+so you're asking about concatenating bits in VHDL right Been there done that a thousand times It's like the bread and butter of hardware design but I get it especially if you're just starting it can be a bit confusing So let's dive in shall we
 
 First off concatenation in VHDL is pretty straightforward but you gotta understand how the language treats bit vectors and arrays You see VHDL isn't just like your typical programming language where you're just throwing around data It’s hardware description language so everything you write translates to hardware connections Think of it like you're building circuits not just writing instructions
 
@@ -87,6 +87,7 @@ begin
     end process;
 end arch_data_mux;
 ```
+
 Here you see I am concatenating some literal values like "000" or "00" with the data signals. This is a common way to make different data widths match the output width. I know some guys like to use functions but sometimes a simple mux is easier to read and faster to implement if you are not using it in a loop or some other place where reuse is important.
 
 Ok here is one last use case that is useful to show you The thing about hardware is you are usually dealing with more complex data paths and structures so lets say you need to deal with data and metadata which in some of my past projects were necessary. This example also shows you how to use vector slices

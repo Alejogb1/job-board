@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "when-i-go-to-the-dashboard-route-how-do-i-show-my-hamburger-icon"
 ---
 
-Alright so you've got this hamburger icon problem on your dashboard route yeah I get it Been there done that more times than I care to admit It’s one of those deceptively simple things that can trip you up if you’re not thinking straight or you know having a bad day or something
+so you've got this hamburger icon problem on your dashboard route yeah I get it Been there done that more times than I care to admit It’s one of those deceptively simple things that can trip you up if you’re not thinking straight or you know having a bad day or something
 
 Let me tell you about this one time back in my early days I was working on this project a single page application a SPA thing right It was supposed to be super sleek and responsive You know the whole nine yards Anyway we had this navigation bar that used to just kinda sit there all static But then of course the design team the ones who have never coded a day in their life decided it needed to be a sliding drawer menu on mobile I’m sure you can see where this is going And I was all like sure no problem I’ll just slap a hamburger icon on that bad boy
 
@@ -17,31 +17,65 @@ First thing is first you need to understand your routing setup I'm assuming you 
 Here's a basic example using React Router to make this clear
 
 ```javascript
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch, useLocation } from 'react-router-dom';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useLocation,
+} from "react-router-dom";
 
 function HamburgerIcon() {
   return (
-    <div style={{ cursor: 'pointer' }}>
+    <div style={{ cursor: "pointer" }}>
       {/* Your hamburger icon elements go here svg or divs */}
-      <div style={{ height: '3px', width: '25px', backgroundColor: 'black', margin: '3px 0' }}></div>
-      <div style={{ height: '3px', width: '25px', backgroundColor: 'black', margin: '3px 0' }}></div>
-      <div style={{ height: '3px', width: '25px', backgroundColor: 'black', margin: '3px 0' }}></div>
+      <div
+        style={{
+          height: "3px",
+          width: "25px",
+          backgroundColor: "black",
+          margin: "3px 0",
+        }}
+      ></div>
+      <div
+        style={{
+          height: "3px",
+          width: "25px",
+          backgroundColor: "black",
+          margin: "3px 0",
+        }}
+      ></div>
+      <div
+        style={{
+          height: "3px",
+          width: "25px",
+          backgroundColor: "black",
+          margin: "3px 0",
+        }}
+      ></div>
     </div>
   );
 }
 
 function Dashboard() {
-  return <div><h1>Dashboard</h1></div>
+  return (
+    <div>
+      <h1>Dashboard</h1>
+    </div>
+  );
 }
 
 function Home() {
-  return <div><h1>Home</h1></div>
+  return (
+    <div>
+      <h1>Home</h1>
+    </div>
+  );
 }
 
 function App() {
   const location = useLocation();
-  const showHamburger = location.pathname === '/dashboard';
+  const showHamburger = location.pathname === "/dashboard";
 
   return (
     <Router>
@@ -59,7 +93,7 @@ function App() {
     </Router>
   );
 }
-export default App
+export default App;
 ```
 
 In this example see the `useLocation` hook? that's how we access the current path and then we have a boolean `showHamburger` which is true only when the pathname is `/dashboard` simple straightforward right
@@ -69,19 +103,25 @@ Now in the earlier problem I described earlier I got tripped by that because I w
 Ok what about an angular version right here is some equivalent code for Angular
 
 ```typescript
-import { Component } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { Component } from "@angular/core";
+import { Router, NavigationEnd } from "@angular/router";
+import { filter } from "rxjs/operators";
 
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   template: `
     <div *ngIf="showHamburger">
       <div style="cursor: pointer;">
-      <div style="height: 3px; width: 25px; background-color: black; margin: 3px 0;"></div>
-      <div style="height: 3px; width: 25px; background-color: black; margin: 3px 0;"></div>
-      <div style="height: 3px; width: 25px; background-color: black; margin: 3px 0;"></div>
-    </div>
+        <div
+          style="height: 3px; width: 25px; background-color: black; margin: 3px 0;"
+        ></div>
+        <div
+          style="height: 3px; width: 25px; background-color: black; margin: 3px 0;"
+        ></div>
+        <div
+          style="height: 3px; width: 25px; background-color: black; margin: 3px 0;"
+        ></div>
+      </div>
     </div>
     <router-outlet></router-outlet>
   `,
@@ -90,11 +130,11 @@ export class AppComponent {
   showHamburger: boolean = false;
 
   constructor(private router: Router) {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: any) => {
-      this.showHamburger = event.url === '/dashboard';
-    });
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        this.showHamburger = event.url === "/dashboard";
+      });
   }
 }
 ```
@@ -104,22 +144,22 @@ Here I am using Angular’s Router’s event system I'm listening for Navigation
 Consider this component I always use for displaying a common navigation
 
 ```javascript
-import React from 'react';
-import { useLocation } from 'react-router-dom';
+import React from "react";
+import { useLocation } from "react-router-dom";
 
 function Navigation({ children, routesWithHamburger }) {
-    const location = useLocation();
-    const showHamburger = routesWithHamburger.includes(location.pathname);
-  
-    return (
-      <nav>
-        {showHamburger && <HamburgerIcon />}
-        {children}
-      </nav>
-    );
-  }
-  
-  export default Navigation;
+  const location = useLocation();
+  const showHamburger = routesWithHamburger.includes(location.pathname);
+
+  return (
+    <nav>
+      {showHamburger && <HamburgerIcon />}
+      {children}
+    </nav>
+  );
+}
+
+export default Navigation;
 ```
 
 This is a versatile component you can use in multiple locations with different routes it takes an array of route paths and that's it all you need to do is to specify the routes that need a hamburger This approach makes your code more maintainable and easier to read.
@@ -136,4 +176,4 @@ Finally if you really want to solidify your knowledge of client-side routing in 
 
 And oh here’s a tech joke for ya why did the programmer quit his job because he didn't get arrays He always felt like a zero
 
-Okay bad joke I know but I had to get it out of the system Anyway make sure to use the concepts described in the code snippets above you will be fine you've got this If you have more questions feel free to ask and I'll be here and we all do our best to help each other
+bad joke I know but I had to get it out of the system Anyway make sure to use the concepts described in the code snippets above you will be fine you've got this If you have more questions feel free to ask and I'll be here and we all do our best to help each other

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-fix-nlpre-installation-issues-in-anaconda"
 ---
 
-Okay, let's talk about those often frustrating nlp libraries within anaconda environments. I’ve seen my fair share of these installation headaches, particularly when dealing with nlp-focused projects. It's not uncommon for newcomers and even seasoned developers to stumble upon inconsistencies across different setups, making package management a crucial, yet sometimes painful, part of the workflow. I remember one project, a sentiment analysis tool I was building for a client, where inconsistent versions across the team almost derailed the entire thing. We were tearing our hair out trying to figure out why the models trained on my machine were behaving so differently on theirs. We eventually isolated the problem to mismanaged dependency versions, specifically within the nlp domain. So, let me share what I've learned over the years about navigating these kinds of issues with anaconda, offering some techniques that have consistently worked for me.
+, let's talk about those often frustrating nlp libraries within anaconda environments. I’ve seen my fair share of these installation headaches, particularly when dealing with nlp-focused projects. It's not uncommon for newcomers and even seasoned developers to stumble upon inconsistencies across different setups, making package management a crucial, yet sometimes painful, part of the workflow. I remember one project, a sentiment analysis tool I was building for a client, where inconsistent versions across the team almost derailed the entire thing. We were tearing our hair out trying to figure out why the models trained on my machine were behaving so differently on theirs. We eventually isolated the problem to mismanaged dependency versions, specifically within the nlp domain. So, let me share what I've learned over the years about navigating these kinds of issues with anaconda, offering some techniques that have consistently worked for me.
 
 The core of the problem often boils down to environment isolation and dependency management. Anaconda, while generally great, sometimes encounters clashes between packages, especially those from different sources like `conda-forge` or `pip`. A common mistake is to blindly install things without paying attention to which channel is providing them and their version dependencies. The cascading effect of mismatched versions can be quite significant in nlp libraries like `nltk`, `spacy`, or `transformers`, given their intricate web of interrelated packages and sometimes binary dependencies.
 
@@ -42,7 +42,7 @@ This approach ensures we're pulling spacy and a small english model (core-web-sm
 
 **Step 3: Using `pip` as a Last Resort (and carefully)**
 
-Sometimes, a particular package, maybe something very bleeding-edge, isn't available on conda-forge. In those cases, `pip` comes into play. However, this should be done *after* conda packages have been installed, not before, and ideally with constraints to prevent it from overriding conda installed packages.
+Sometimes, a particular package, maybe something very bleeding-edge, isn't available on conda-forge. In those cases, `pip` comes into play. However, this should be done _after_ conda packages have been installed, not before, and ideally with constraints to prevent it from overriding conda installed packages.
 
 For instance, if I need the `transformers` library, which, for illustration’s sake, we’ll say isn’t available via conda-forge in a particular version, I might do:
 

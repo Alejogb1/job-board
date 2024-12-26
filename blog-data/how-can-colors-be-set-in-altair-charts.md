@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-colors-be-set-in-altair-charts"
 ---
 
-Alright, let’s talk about color in Altair. It’s more involved than simply slapping a name on something, though that’s certainly part of it. I’ve seen more than a few charts become practically unreadable because of poor color choices, so this is a topic I take seriously. From my experience, especially during that challenging data visualization project for the meteorological society (remember the mess with the hurricane track simulations?), I've learned that color is a crucial aspect of effective data communication.
+, let’s talk about color in Altair. It’s more involved than simply slapping a name on something, though that’s certainly part of it. I’ve seen more than a few charts become practically unreadable because of poor color choices, so this is a topic I take seriously. From my experience, especially during that challenging data visualization project for the meteorological society (remember the mess with the hurricane track simulations?), I've learned that color is a crucial aspect of effective data communication.
 
 Altair, being built on top of Vega-Lite, gives us a flexible system for defining colors, but it’s imperative to grasp its underlying logic to fully control the look of our visualizations. We primarily interact with color using encoding channels. Typically, these are `color`, but also `fill`, `stroke`, or even `background` for more specific control. The way you set a color depends entirely on what you intend the color to represent.
 
@@ -20,7 +20,7 @@ A more typical scenario is using color to distinguish between different categori
 
 **3. Color Encoding for Quantitative Data**
 
-When dealing with continuous quantitative data, using a color scale to indicate magnitude often yields the clearest results. Think of heat maps, geographic elevation maps, or even scatter plots where color intensity reflects a third variable. Here, we typically use a sequential color scheme (or diverging, if your data is centered around a mean) and encode the quantitative variable to the `color` channel. Altair will then interpolate between the colors of your chosen scheme based on the data range, resulting in a smooth color gradient. Picking the appropriate color scheme here is also important; for instance, `viridis` is a perceptually uniform colormap that is also colorblind-friendly. In fact, Edward Tufte’s work, notably *The Visual Display of Quantitative Information*, emphasizes the importance of well-chosen color palettes for precisely this purpose.
+When dealing with continuous quantitative data, using a color scale to indicate magnitude often yields the clearest results. Think of heat maps, geographic elevation maps, or even scatter plots where color intensity reflects a third variable. Here, we typically use a sequential color scheme (or diverging, if your data is centered around a mean) and encode the quantitative variable to the `color` channel. Altair will then interpolate between the colors of your chosen scheme based on the data range, resulting in a smooth color gradient. Picking the appropriate color scheme here is also important; for instance, `viridis` is a perceptually uniform colormap that is also colorblind-friendly. In fact, Edward Tufte’s work, notably _The Visual Display of Quantitative Information_, emphasizes the importance of well-chosen color palettes for precisely this purpose.
 
 Now, let’s solidify this with code examples. I’ve built these using the basic `pandas` and `altair` libraries, so you should be able to run them pretty easily. Remember to `pip install pandas altair vega vega-datasets` if you don’t have them.
 
@@ -40,6 +40,7 @@ chart = alt.Chart(data).mark_line(color="forestgreen", strokeWidth=3).encode(
 )
 chart.show()
 ```
+
 In this example, we set the line color to `"forestgreen"` directly using a text value and set its width. All lines in the plot will be this color. This is a common starting point when you know the exact style you desire, such as brand colors.
 
 **Example 2: Color Encoding for Categorical Data**
@@ -62,6 +63,7 @@ chart = alt.Chart(data).mark_bar().encode(
 )
 chart.show()
 ```
+
 Here, the `category` column is encoded to the `color` channel. `alt.Color()` tells Altair to use data values from 'category' to decide the bar colors. We specify a `category10` color scheme so that bars in each category get an easily distinguishable color. Had we wanted a different color scheme we would have swapped out `category10` for one of the other options, for example `tableau10`. This allows you to quickly communicate differences between categories by having each colored differently.
 
 **Example 3: Color Encoding for Quantitative Data**
@@ -87,6 +89,7 @@ chart = alt.Chart(data).mark_point().encode(
 chart.show()
 
 ```
+
 In this example, the `z` column, a random value between 0 and 1, dictates the color of the points. We encode it to the `color` channel with a quantitative type (`:Q`). A `viridis` scale is specified, so higher values will be yellow, and lower values will be blue with a smooth transition between the two. This type of visualization can be incredibly powerful in representing data with a hidden quantitative variable, or for displaying trends that might not be readily visible in a standard 2-dimensional scatter plot.
 
-In summary, Altair provides diverse methods to set colors, from direct specification to mapping to data using varied color schemes. Understanding how to leverage the encoding channels and choosing the proper color scales based on data types is vital for creating effective data visualizations. Choosing the proper color scheme is not just an aesthetic choice; it is a crucial step in enhancing readability and ensuring your visualization effectively communicates your message. Refer to the Altair documentation, particularly the sections on scales and encoding channels, as well as books such as *Fundamentals of Data Visualization* by Claus O. Wilke for a deeper dive into these topics, as they provide a broad and fundamental perspective on data visualization best practices, rather than just surface-level instructions. Ultimately, practice and careful attention to detail will significantly improve your ability to create impactful visualizations.
+In summary, Altair provides diverse methods to set colors, from direct specification to mapping to data using varied color schemes. Understanding how to leverage the encoding channels and choosing the proper color scales based on data types is vital for creating effective data visualizations. Choosing the proper color scheme is not just an aesthetic choice; it is a crucial step in enhancing readability and ensuring your visualization effectively communicates your message. Refer to the Altair documentation, particularly the sections on scales and encoding channels, as well as books such as _Fundamentals of Data Visualization_ by Claus O. Wilke for a deeper dive into these topics, as they provide a broad and fundamental perspective on data visualization best practices, rather than just surface-level instructions. Ultimately, practice and careful attention to detail will significantly improve your ability to create impactful visualizations.

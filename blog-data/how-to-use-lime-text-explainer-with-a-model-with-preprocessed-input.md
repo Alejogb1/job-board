@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-to-use-lime-text-explainer-with-a-model-with-preprocessed-input"
 ---
 
-Okay, let’s tackle this. It's a scenario I’ve actually run into more than a few times, usually when dealing with complex NLP pipelines where the input to the model is far removed from the raw text itself. The challenge is making sense of what the model is focusing on, particularly when the input has undergone significant transformations such as tokenization, vectorization, or the application of embeddings. LIME, or Local Interpretable Model-agnostic Explanations, is powerful for this, but requires a bit of careful setup.
+, let’s tackle this. It's a scenario I’ve actually run into more than a few times, usually when dealing with complex NLP pipelines where the input to the model is far removed from the raw text itself. The challenge is making sense of what the model is focusing on, particularly when the input has undergone significant transformations such as tokenization, vectorization, or the application of embeddings. LIME, or Local Interpretable Model-agnostic Explanations, is powerful for this, but requires a bit of careful setup.
 
-My team once worked on a system for sentiment analysis of customer reviews. We weren't feeding the raw reviews directly into our neural net. Instead, we had a sophisticated pre-processing pipeline: tokenization using subword units, followed by embedding lookup, a couple of lstm layers, and finally, a dense classification layer. Trying to apply LIME on the unprocessed text was essentially useless – the model wasn't "seeing" those words anymore. What the model consumed were sequences of numerical vectors. The key to applying LIME effectively in such a case lies in understanding how to bridge the gap between human-readable text and the model's input space, and in telling LIME how to generate perturbations that make sense within *that* space.
+My team once worked on a system for sentiment analysis of customer reviews. We weren't feeding the raw reviews directly into our neural net. Instead, we had a sophisticated pre-processing pipeline: tokenization using subword units, followed by embedding lookup, a couple of lstm layers, and finally, a dense classification layer. Trying to apply LIME on the unprocessed text was essentially useless – the model wasn't "seeing" those words anymore. What the model consumed were sequences of numerical vectors. The key to applying LIME effectively in such a case lies in understanding how to bridge the gap between human-readable text and the model's input space, and in telling LIME how to generate perturbations that make sense within _that_ space.
 
 The core idea behind LIME is that it perturbs the input data and observes how the model's output changes. LIME then builds a local linear model to approximate the original model's behavior in the neighborhood of the input point and uses the weights in the linear model to determine feature importance. When the input is raw text, the perturbations involve changing words or phrases. But when the input is preprocessed, this concept needs a translation.
 
@@ -14,7 +14,7 @@ Here’s the process broken down, focusing on the critical steps and including a
 
 **1. Defining the Prediction Function**
 
-LIME needs a prediction function, a function that receives an input and returns the model’s prediction. Crucially, this function must receive *the same input format* that the model itself uses. In our sentiment analysis example, this meant taking preprocessed input (specifically, a sequence of numerical vectors). You cannot feed a text string directly. This function should be carefully crafted and encapsulate all your preprocessing steps, or at least return the *identical* output as if these steps had been performed.
+LIME needs a prediction function, a function that receives an input and returns the model’s prediction. Crucially, this function must receive _the same input format_ that the model itself uses. In our sentiment analysis example, this meant taking preprocessed input (specifically, a sequence of numerical vectors). You cannot feed a text string directly. This function should be carefully crafted and encapsulate all your preprocessing steps, or at least return the _identical_ output as if these steps had been performed.
 
 Let's illustrate with some python code, using an example with simple text and a basic model with a tf-idf vectorizer as the preprocessing step:
 
@@ -45,7 +45,7 @@ def prediction_function(text_strings):
 explainer = LimeTextExplainer(class_names=[0, 1]) # 0: negative, 1: positive
 
 # Explain a sample prediction
-test_text = ["This movie was okay."]
+test_text = ["This movie was ."]
 explanation = explainer.explain_instance(
     test_text[0],
     prediction_function,
@@ -59,7 +59,7 @@ In this code, the `prediction_function` first transforms the input text using `v
 
 **2. Handling Perturbations**
 
-Here’s where things get trickier with preprocessed data. LIME assumes it can change individual words or tokens. We have to adapt it to understand our processed space. The `LimeTextExplainer` class has some inbuilt mechanisms to generate perturbations. When you give it raw text as input, it does the tokenization internally and generates perturbations like removing or adding a single word, or replacing with another. However, when your input is already preprocessed as numerical arrays, these perturbation techniques don't apply. Instead, we need to provide *our own* functions that generate perturbations that are meaningful in the preprocessed input space.
+Here’s where things get trickier with preprocessed data. LIME assumes it can change individual words or tokens. We have to adapt it to understand our processed space. The `LimeTextExplainer` class has some inbuilt mechanisms to generate perturbations. When you give it raw text as input, it does the tokenization internally and generates perturbations like removing or adding a single word, or replacing with another. However, when your input is already preprocessed as numerical arrays, these perturbation techniques don't apply. Instead, we need to provide _our own_ functions that generate perturbations that are meaningful in the preprocessed input space.
 
 Let's show that with a different example. We are going to use a sentence transformer that transforms text into a fixed-size vector. We can perturb that vector and we can reconstruct the closest text back via an inverse transformation
 
@@ -105,7 +105,7 @@ def custom_perturbation_function(data_point, num_samples):
 explainer = LimeTextExplainer(class_names=[0, 1]) # 0: negative, 1: positive
 
 # Explain a sample prediction
-test_text = ["This movie was okay."]
+test_text = ["This movie was ."]
 text_embedding = embedding_model.encode(test_text)
 explanation = explainer.explain_instance(
     text_embedding[0],
@@ -197,10 +197,10 @@ In this example, we use character-level n-grams as features for our model. LIME 
 
 **Key Takeaways**
 
-*   **Prediction Function:** The `prediction_function` must be precisely what the model consumes. It must encompass all of your input pipeline steps.
-*   **Perturbations:** When direct text manipulation doesn’t work, you have to define custom perturbation functions working on the input format consumed by the model.
-*   **Interpretability**: You need to find a way to map back the perturbed inputs to human-interpretable text space, or the output will not make any sense.
-*  **Distance Metrics**: Choosing a proper distance metric in the perturbed space is important. For instance, using 'cosine' for dense embedding vectors is much more meaningful that 'euclidean'.
+- **Prediction Function:** The `prediction_function` must be precisely what the model consumes. It must encompass all of your input pipeline steps.
+- **Perturbations:** When direct text manipulation doesn’t work, you have to define custom perturbation functions working on the input format consumed by the model.
+- **Interpretability**: You need to find a way to map back the perturbed inputs to human-interpretable text space, or the output will not make any sense.
+- **Distance Metrics**: Choosing a proper distance metric in the perturbed space is important. For instance, using 'cosine' for dense embedding vectors is much more meaningful that 'euclidean'.
 
 For deeper dives into LIME and other model interpretation techniques, I strongly recommend consulting "Interpretable Machine Learning" by Christoph Molnar; it's a comprehensive resource. For a stronger understanding of sentence embeddings, refer to research papers by Reimers and Gurevych on Sentence-BERT. These resources provide the necessary theoretical and practical background to handle complex scenarios, where the model input is anything but the original raw text. I've used these resources for a long time, and they have proven themselves incredibly useful.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-custom-shapes-in-qt-by-combining-multiple-basic-shapes"
 ---
 
-Okay, let’s tackle this. I've spent quite a bit of time, particularly in my early days building some rather complex medical imaging software, dealing with exactly this challenge: constructing custom shapes from Qt's primitives. It’s a foundational problem, and the good news is that Qt provides a very powerful mechanism to achieve this through `QPainterPath` and a few other related classes. It’s not as complicated as it initially seems, but there are some key concepts that are important to grasp to get the best results.
+, let’s tackle this. I've spent quite a bit of time, particularly in my early days building some rather complex medical imaging software, dealing with exactly this challenge: constructing custom shapes from Qt's primitives. It’s a foundational problem, and the good news is that Qt provides a very powerful mechanism to achieve this through `QPainterPath` and a few other related classes. It’s not as complicated as it initially seems, but there are some key concepts that are important to grasp to get the best results.
 
 Essentially, when we talk about creating custom shapes by combining basic shapes in Qt, we’re discussing a process of path construction. `QPainterPath` is your friend here; it's a container of graphical primitives like lines, rectangles, ellipses, and more complex curves (think Bézier curves). These primitives, when added to a path sequentially, form the outline of a potentially intricate shape. Once your path is fully defined, you can then use a `QPainter` instance to fill it, stroke its outline, or perform other manipulations.
 
@@ -53,6 +53,7 @@ protected:
 };
 
 ```
+
 In this snippet, we start by creating a rectangle. We then add an arc which fits into its top-left corner by specifying an enclosing rectangle for the arc, along with start and span angles. The `closeSubpath()` connects the last arc end to the start of the rectangle, defining a continuous path ready to fill with a solid red.
 
 **Example 2: Constructing a Complex Shape with Multiple Geometries**
@@ -95,6 +96,7 @@ protected:
     }
 };
 ```
+
 Here we use `addRoundedRect` to add the primary part of the bubble. Then, we use `moveTo()` and `lineTo()` commands to construct the triangle. By moving to the triangle’s starting point and drawing lines to other points, we define a separate subpath. These paths can be combined within the same `QPainterPath`, which then allows you to draw them as one compound shape.
 
 **Example 3: Using Cubic Bézier Curves**
@@ -134,16 +136,16 @@ This shows how you can add custom curves using `cubicTo()` by defining control p
 
 **Key Considerations:**
 
-*   **Coordinate System:** Remember that Qt’s painting coordinate system is with (0, 0) at the top-left.
-*   **Performance:** If you are going to re-use the same path frequently, cache the `QPainterPath` object. Recomputing it in every paint event can be costly if the paths are complex.
-*   **Path Modification:** `QPainterPath` provides methods to transform (translate, rotate, scale) the path after it has been constructed, which can be useful for animated or responsive shapes.
-*   **Shape Combining**: You can use methods like `united`, `intersected`, and `subtracted` on existing `QPainterPaths` to create even more complex shapes.
-*   **Complex Curves**: If you require more advanced curve manipulation, research Bézier curves and their properties further. The math behind them will help you achieve precise results.
-*   **Fill Rules**: Experiment with the different fill rules available via the `QPainter::setCompositionMode()` method. The default fill mode can sometimes not give the expected results when handling intersecting paths.
+- **Coordinate System:** Remember that Qt’s painting coordinate system is with (0, 0) at the top-left.
+- **Performance:** If you are going to re-use the same path frequently, cache the `QPainterPath` object. Recomputing it in every paint event can be costly if the paths are complex.
+- **Path Modification:** `QPainterPath` provides methods to transform (translate, rotate, scale) the path after it has been constructed, which can be useful for animated or responsive shapes.
+- **Shape Combining**: You can use methods like `united`, `intersected`, and `subtracted` on existing `QPainterPaths` to create even more complex shapes.
+- **Complex Curves**: If you require more advanced curve manipulation, research Bézier curves and their properties further. The math behind them will help you achieve precise results.
+- **Fill Rules**: Experiment with the different fill rules available via the `QPainter::setCompositionMode()` method. The default fill mode can sometimes not give the expected results when handling intersecting paths.
 
 **Recommended Resources:**
 
-*   **“Advanced Qt Programming” by Mark Summerfield:** This book provides an in-depth look at various Qt topics, including custom painting and graphics, and I've found it extremely helpful.
-*   **"Computer Graphics: Principles and Practice" by Foley, van Dam, Feiner, and Hughes:** While not specific to Qt, this book is an academic standard covering fundamental computer graphics concepts, including curve generation (Bézier and spline).
+- **“Advanced Qt Programming” by Mark Summerfield:** This book provides an in-depth look at various Qt topics, including custom painting and graphics, and I've found it extremely helpful.
+- **"Computer Graphics: Principles and Practice" by Foley, van Dam, Feiner, and Hughes:** While not specific to Qt, this book is an academic standard covering fundamental computer graphics concepts, including curve generation (Bézier and spline).
 
 In summary, creating custom shapes in Qt by combining primitives boils down to the effective use of `QPainterPath`. By understanding how to build paths from individual shapes and control their rendering, you can achieve quite sophisticated visual results. The examples provided show a progression of techniques from simple combined geometries to more complex ones with curves. Remember to use resources, experiment and practice. The more comfortable you are with `QPainterPath`, the more expressive your UI will be.

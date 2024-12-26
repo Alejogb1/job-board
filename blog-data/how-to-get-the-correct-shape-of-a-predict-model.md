@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-get-the-correct-shape-of-a-predict-model"
 ---
 
-well, alright then, let's talk about model shape. it's a common head-scratcher, i've been there, trust me. it's one of those things that feels simple until it's not. i'm assuming you're dealing with some kind of machine learning model here, and by "shape" you mean the dimensionality of the output, the number of predictions it spits out, and how that aligns with what you actually expect.
+well, then, let's talk about model shape. it's a common head-scratcher, i've been there, trust me. it's one of those things that feels simple until it's not. i'm assuming you're dealing with some kind of machine learning model here, and by "shape" you mean the dimensionality of the output, the number of predictions it spits out, and how that aligns with what you actually expect.
 
 it's not always about the model's architecture. sure, a convolutional neural net versus a recurrent one will have vastly different inner workings, but the output shape is a separate issue. often it’s a layer we add or a function we use at the very end of the prediction pipeline that determines the final outcome shape.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-use-the-same-docker-image-for-multiple-users-with-their-login"
 ---
 
-Okay, let's unpack this interesting challenge. I remember back at Stellar Dynamics Corp., we faced a very similar situation. We had multiple data scientists who needed isolated environments to run their experiments, but maintaining separate images for each user was proving a logistical nightmare. So, how do you effectively use a single docker image for multiple users while still keeping their data and sessions isolated? It’s achievable, and it largely hinges on understanding how docker, user management within containers, and volume mounting interact.
+, let's unpack this interesting challenge. I remember back at Stellar Dynamics Corp., we faced a very similar situation. We had multiple data scientists who needed isolated environments to run their experiments, but maintaining separate images for each user was proving a logistical nightmare. So, how do you effectively use a single docker image for multiple users while still keeping their data and sessions isolated? It’s achievable, and it largely hinges on understanding how docker, user management within containers, and volume mounting interact.
 
 The core issue is that a docker image, by its nature, is a read-only template. Once you instantiate a container from that image, it operates within a self-contained environment. However, each user should ideally have their own persistent data storage and configuration. Therefore, the challenge is not about modifying the image itself, but rather how to leverage volumes and user context within a container lifecycle.
 
@@ -25,6 +25,7 @@ COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 ```
+
 ```bash
 # entrypoint.sh
 #!/bin/bash
@@ -43,6 +44,7 @@ else
   exec "$@"
 fi
 ```
+
 ```bash
 # How to run the container
 docker run -d \
@@ -137,9 +139,10 @@ else
   exec "$@"
 fi
 ```
+
 ```yaml
 # docker-compose.yml
-version: '3.8'
+version: "3.8"
 services:
   user1_container:
     image: my_image
@@ -162,10 +165,10 @@ This approach allows you to define multiple user-specific configurations in a de
 
 **Important Considerations:**
 
-*   **Security:** Proper user isolation is key. Ensure users cannot gain access to each other's volumes and processes. Refer to “Docker Security Best Practices” by Liz Rice and “Container Security: Principles, Practices, and Examples” by Vincent Scavetta for thorough guidance.
-*   **User Management:** Depending on your environment, you might integrate with existing user management systems (LDAP, Active Directory) for authentication and authorization.  “Understanding Linux Kernel” by Daniel P. Bovet and Marco Cesati will be useful for understanding the low level details of Linux User management.
-*   **Resource Limits:** When running containers for multiple users, carefully consider resource limits to prevent any one user from monopolizing server resources. Docker allows you to manage CPU and memory usage using flags on startup.
-*   **Image Maintainability:** Keep the base image lean and well-maintained. Frequent updates help ensure security and stability.
-*  **Persistence:** Always ensure proper volume management. Incorrect volume configurations can potentially lead to data loss or security issues. Always follow the official Docker documentation for the most up to date and secure practices.
+- **Security:** Proper user isolation is key. Ensure users cannot gain access to each other's volumes and processes. Refer to “Docker Security Best Practices” by Liz Rice and “Container Security: Principles, Practices, and Examples” by Vincent Scavetta for thorough guidance.
+- **User Management:** Depending on your environment, you might integrate with existing user management systems (LDAP, Active Directory) for authentication and authorization. “Understanding Linux Kernel” by Daniel P. Bovet and Marco Cesati will be useful for understanding the low level details of Linux User management.
+- **Resource Limits:** When running containers for multiple users, carefully consider resource limits to prevent any one user from monopolizing server resources. Docker allows you to manage CPU and memory usage using flags on startup.
+- **Image Maintainability:** Keep the base image lean and well-maintained. Frequent updates help ensure security and stability.
+- **Persistence:** Always ensure proper volume management. Incorrect volume configurations can potentially lead to data loss or security issues. Always follow the official Docker documentation for the most up to date and secure practices.
 
 In closing, using a single docker image for multiple users is achievable through proper use of volumes, user context, and a well-defined container entrypoint. The chosen approach needs to align with your specific requirements and constraints. I've found that starting simple, like example 1, then building on that with environment variables or compose, like examples 2 and 3, allows for better management and extensibility of your container deployments as the requirements evolve. Always prioritize security and thorough testing.

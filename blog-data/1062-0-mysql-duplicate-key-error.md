@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "1062-0-mysql-duplicate-key-error"
 ---
 
-Okay so a 1062 MySQL duplicate key error right been there done that got the t-shirt well more like a stackoverflow badge I suppose. This error my friends is the bane of many a database developer’s existence especially when you're banging away at some critical data update and suddenly BAM that dreaded 1062 pops up. Let me tell you a story about how I first met this error I was working on this massive e-commerce platform years ago think early 2010s we were scaling like crazy but our database schema well lets just say it was a bit…organic. We had this order table and a user table both linked and we were doing a bulk import of historical order data. Everything was fine until the import script just keeled over I mean just refused to budge at all. That was the first taste of the 1062. So after an hour or two of head-scratching and copious amounts of coffee I finally traced the error to a duplicate order ID this was because for legacy reason our new import tool was having conflict with ids already in database so yeah.
+a 1062 MySQL duplicate key error right been there done that got the t-shirt well more like a stackoverflow badge I suppose. This error my friends is the bane of many a database developer’s existence especially when you're banging away at some critical data update and suddenly BAM that dreaded 1062 pops up. Let me tell you a story about how I first met this error I was working on this massive e-commerce platform years ago think early 2010s we were scaling like crazy but our database schema well lets just say it was a bit…organic. We had this order table and a user table both linked and we were doing a bulk import of historical order data. Everything was fine until the import script just keeled over I mean just refused to budge at all. That was the first taste of the 1062. So after an hour or two of head-scratching and copious amounts of coffee I finally traced the error to a duplicate order ID this was because for legacy reason our new import tool was having conflict with ids already in database so yeah.
 
 Basically the 1062 error screams at you because you’re trying to insert or update a row that violates a unique index or primary key constraint. MySQL is just not having it. It's saying “Hey I already have a row with that ID or combination of values so no go bud”. It’s a safety mechanism to ensure data integrity basically preventing data corruption and ensuring that your database stays consistent. You can think of your database like your digital closet where you have one shelf for each category like shirts socks pants and you cannot stuff your socks into shirts shelf.
 
-Okay let's get down to the nitty-gritty. The first thing you need to do is identify the culprit column or columns. Typically this error message will indicate which index is being violated. Look for that index in your table definition or schema I know I always tend to not see this until I spent hours banging on the keyboard.
+let's get down to the nitty-gritty. The first thing you need to do is identify the culprit column or columns. Typically this error message will indicate which index is being violated. Look for that index in your table definition or schema I know I always tend to not see this until I spent hours banging on the keyboard.
 
 ```sql
 SHOW INDEX FROM your_table_name;
@@ -16,11 +16,11 @@ SHOW INDEX FROM your_table_name;
 
 This will show you all indexes on the table including primary keys unique keys and any other index that you might have defined. It also shows you the column/s being used in that specific index. Once you’ve identified the index causing the issue then you need to figure out why you're getting a duplicate. Here are some common scenarios.
 
-*   **Duplicate Data in Import:** This was my initial problem like I explained before. You have data that you're trying to insert that has the same unique keys as the data in your table. This is why you should not import production data directly into other databases without checking duplicates first.
-*   **Application logic errors:** Your code has a flaw where it's creating duplicate records or trying to update records with the same identifier. Check your application layer code specifically in the data access layer or data writing part.
-*   **Race conditions:** Multiple processes or threads trying to insert the same data at the same time. This can happen especially in high traffic environments. This was also my problem later in my career when I was working on a cloud based microservice architecture.
-*   **Database Migration issues:** You’re migrating from an old database and forgot about some duplicate records along the way.
-*   **Data sanitization issues:** You are processing data and then there are duplicates as a result of the cleaning process. This means a data cleaning layer error.
+- **Duplicate Data in Import:** This was my initial problem like I explained before. You have data that you're trying to insert that has the same unique keys as the data in your table. This is why you should not import production data directly into other databases without checking duplicates first.
+- **Application logic errors:** Your code has a flaw where it's creating duplicate records or trying to update records with the same identifier. Check your application layer code specifically in the data access layer or data writing part.
+- **Race conditions:** Multiple processes or threads trying to insert the same data at the same time. This can happen especially in high traffic environments. This was also my problem later in my career when I was working on a cloud based microservice architecture.
+- **Database Migration issues:** You’re migrating from an old database and forgot about some duplicate records along the way.
+- **Data sanitization issues:** You are processing data and then there are duplicates as a result of the cleaning process. This means a data cleaning layer error.
 
 Here are some solutions you can try depending on the situation:
 
@@ -48,6 +48,7 @@ ON DUPLICATE KEY UPDATE
     column2 = VALUES(column2),
     column3 = VALUES(column3); -- Update existing row with the values in current insert.
 ```
+
 This will insert the first two rows normally and update the row that has same key as row three with values from the new row.
 
 **Scenario 2: Application-level errors**

@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-can-text-be-vectorized-using-tensors-with-multiple-label-columns"
 ---
 
-Okay, let’s tackle this. Thinking back, I recall working on a complex sentiment analysis project a few years ago. We weren't dealing with simple single-label classifications; we had a dataset with various nuanced sentiment dimensions – like ‘joy,’ ‘anger,’ ‘sadness,’ and ‘surprise,’ all present to varying degrees in a single text snippet. It quickly became apparent that treating these as independent binary labels was inadequate. We needed a more nuanced approach, and that involved effective text vectorization when paired with multi-label targets.
+, let’s tackle this. Thinking back, I recall working on a complex sentiment analysis project a few years ago. We weren't dealing with simple single-label classifications; we had a dataset with various nuanced sentiment dimensions – like ‘joy,’ ‘anger,’ ‘sadness,’ and ‘surprise,’ all present to varying degrees in a single text snippet. It quickly became apparent that treating these as independent binary labels was inadequate. We needed a more nuanced approach, and that involved effective text vectorization when paired with multi-label targets.
 
-The challenge lies in representing text data numerically in a way that's amenable to machine learning models when dealing with multiple labels. When you have multiple columns of labels, the vectorization process must consider not only the text itself but also how it relates to *all* labels simultaneously. The conventional approach of converting each text into a fixed-length vector, like what TF-IDF or basic word embeddings do, is just the initial step. You need that vector to be suitable to train or infer multiple columns at the same time.
+The challenge lies in representing text data numerically in a way that's amenable to machine learning models when dealing with multiple labels. When you have multiple columns of labels, the vectorization process must consider not only the text itself but also how it relates to _all_ labels simultaneously. The conventional approach of converting each text into a fixed-length vector, like what TF-IDF or basic word embeddings do, is just the initial step. You need that vector to be suitable to train or infer multiple columns at the same time.
 
-Let’s break this down. The initial stage of text vectorization is crucial and can be done using techniques like *tokenization* followed by embedding strategies. Tokenization involves dividing text into smaller units, such as words or sub-words. Then, these tokens can be converted into numerical representations (embeddings). These embeddings capture the semantic and syntactic relationships between words. Common choices here are techniques such as *TF-IDF* (term frequency-inverse document frequency), word embeddings like *Word2Vec* or *GloVe*, or contextualized embeddings such as *BERT*, *RoBERTa* or *Sentence-BERT*.
+Let’s break this down. The initial stage of text vectorization is crucial and can be done using techniques like _tokenization_ followed by embedding strategies. Tokenization involves dividing text into smaller units, such as words or sub-words. Then, these tokens can be converted into numerical representations (embeddings). These embeddings capture the semantic and syntactic relationships between words. Common choices here are techniques such as _TF-IDF_ (term frequency-inverse document frequency), word embeddings like _Word2Vec_ or _GloVe_, or contextualized embeddings such as _BERT_, _RoBERTa_ or _Sentence-BERT_.
 
 While these techniques produce feature vectors for text, they are independent of labels. The 'trick,' if you can call it that, comes in how we use these text vectors in training models capable of handling multiple target label columns. Essentially, we need a model architecture that can map from our fixed text vector to several independent predictions, one for each label. Here, we aren't changing how we vectorize, but how we use those vectors as an input.
 
-Let's illustrate the concept with some simplified code examples. These snippets utilize *PyTorch* because it’s quite prevalent in this domain and offers clarity in terms of tensors and operations. Remember, in production settings, we'd use libraries specialized for efficiency.
+Let's illustrate the concept with some simplified code examples. These snippets utilize _PyTorch_ because it’s quite prevalent in this domain and offers clarity in terms of tensors and operations. Remember, in production settings, we'd use libraries specialized for efficiency.
 
 First, imagine we have our pre-processed text data in a format where we have a column for text and several columns for our multiple labels.
 
@@ -212,7 +212,7 @@ print("Training Finished")
 
 This code illustrates that the vectors derived from text can be combined with numerical or categorical data, giving a more sophisticated representation. The main change here is that the input to the model now includes the `category` alongside the text, encoded as integers, which are then embedded.
 
-Finally, let's think about a more complex situation: We might want to use the outputs of the model as a set of embeddings (the second to last hidden layers). This is common in many applications where we want to represent each text, *with its associated labels*.
+Finally, let's think about a more complex situation: We might want to use the outputs of the model as a set of embeddings (the second to last hidden layers). This is common in many applications where we want to represent each text, _with its associated labels_.
 
 ```python
 import torch

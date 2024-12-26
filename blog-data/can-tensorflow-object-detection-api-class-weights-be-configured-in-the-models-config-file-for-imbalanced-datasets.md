@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-tensorflow-object-detection-api-class-weights-be-configured-in-the-models-config-file-for-imbalanced-datasets"
 ---
 
-Okay, let's dive into this. I remember a project back in 2018 where we were tasked with detecting rare defects on manufactured parts using a computer vision system. The dataset was highly imbalanced—good parts massively outnumbered defective ones—a common scenario in the real world. We initially used the default training settings of the TensorFlow Object Detection API, and predictably, performance was abysmal. The model was incredibly biased toward the majority class, missing almost all the defects. This pushed us to explore more advanced techniques, including class weighting. The short answer is, yes, you can influence the learning process for imbalanced datasets in the TensorFlow Object Detection API using techniques that are integrated with the training process, even though the direct, explicit configuration of class weights in the model's `pipeline.config` file isn't available as a single, ready-to-use parameter.
+, let's dive into this. I remember a project back in 2018 where we were tasked with detecting rare defects on manufactured parts using a computer vision system. The dataset was highly imbalanced—good parts massively outnumbered defective ones—a common scenario in the real world. We initially used the default training settings of the TensorFlow Object Detection API, and predictably, performance was abysmal. The model was incredibly biased toward the majority class, missing almost all the defects. This pushed us to explore more advanced techniques, including class weighting. The short answer is, yes, you can influence the learning process for imbalanced datasets in the TensorFlow Object Detection API using techniques that are integrated with the training process, even though the direct, explicit configuration of class weights in the model's `pipeline.config` file isn't available as a single, ready-to-use parameter.
 
 Instead, we achieve this through the loss function configuration. The API leverages weighted loss functions that effectively increase the loss associated with misclassifying the underrepresented class, thereby pushing the model to pay more attention to it during the training process. This approach, although not a direct “class weight” parameter, achieves similar results by manipulating the error calculation that guides the model's learning.
 
@@ -70,7 +70,7 @@ def create_input_fn(data_dir, batch_size, is_training):
 
             image = tf.io.decode_jpeg(parsed_example['image/encoded'], channels=3)
             image = tf.image.convert_image_dtype(image, tf.float32)
-            
+
             xmin = tf.sparse.to_dense(parsed_example['image/object/bbox/xmin'])
             ymin = tf.sparse.to_dense(parsed_example['image/object/bbox/ymin'])
             xmax = tf.sparse.to_dense(parsed_example['image/object/bbox/xmax'])
@@ -86,7 +86,7 @@ def create_input_fn(data_dir, batch_size, is_training):
                    'groundtruth_classes': tf.cast(labels, tf.int32),
                    'groundtruth_weights': tf.cast(weights, tf.float32) #Important part!
                   })
-        
+
         dataset = dataset.map(_parse_function)
         if is_training:
             dataset = dataset.shuffle(100)

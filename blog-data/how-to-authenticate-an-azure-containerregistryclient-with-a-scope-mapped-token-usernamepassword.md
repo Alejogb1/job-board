@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-authenticate-an-azure-containerregistryclient-with-a-scope-mapped-token-usernamepassword"
 ---
 
-alright, so you're hitting the classic problem of wanting to access an azure container registry (acr) using a service principal and a token that's scoped down to just what it needs, instead of using, say, the admin user or a full access key. been there, done that, got the t-shirt (and several all-nighters). let's unpack this.
+, so you're hitting the classic problem of wanting to access an azure container registry (acr) using a service principal and a token that's scoped down to just what it needs, instead of using, say, the admin user or a full access key. been there, done that, got the t-shirt (and several all-nighters). let's unpack this.
 
 the crux of it is that the azure container registry client library, specifically the `containerregistryclient` class, needs some form of authentication to know who's calling and whether they're allowed to do what they're asking. using a username and password combo with a scoped token is a pretty secure way to go, and it's absolutely what you should be doing in any kind of production environment. hardcoding keys is just asking for trouble (lessons learned the hard way, i assure you).
 
@@ -40,7 +40,7 @@ def get_acr_client_with_scoped_token(
     token = token_result.token
     username = "token"
     password = token
-    
+
     #finally we create the client with the username and password
     registry_uri = f"https://{acr_name}.azurecr.io"
     client = ContainerRegistryClient(
@@ -50,7 +50,7 @@ def get_acr_client_with_scoped_token(
         )
 
     return client
-    
+
 
 # how to use it
 if __name__ == "__main__":
@@ -78,7 +78,7 @@ if __name__ == "__main__":
 
 in this example, you will see i’m using `azure.identity` to handle the credential obtaining, it's a far superior way to manage credentials than hardcoding them anywhere. the `clientsecretcredential` class takes in your service principal's tenant id, client id, and secret. then, with the scope, i obtain a token that i can use to create an authentication tuple that is then used in the initialization of `containerregistryclient`. the scope is crucial. it specifies what resources this token has access to. for an acr, a good approach is to use the ".default" scope that targets the acr itself and grants access based on assigned roles. you then set the username to the string "token" and the password is the token you obtained from azure active directory (aad).
 
-now, if you're more a javascript person, the process is very similar.  here's a quick typescript example using the `azure-container-registry` library and the `@azure/identity` library:
+now, if you're more a javascript person, the process is very similar. here's a quick typescript example using the `azure-container-registry` library and the `@azure/identity` library:
 
 ```typescript
 import { ContainerRegistryClient } from "@azure/container-registry";
@@ -102,44 +102,37 @@ async function getAcrClientWithScopedToken(
   const password = token;
 
   const registryUri = `https://${acrName}.azurecr.io`;
-  const client = new ContainerRegistryClient(
-    registryUri,
-    username,
-    password
-  );
+  const client = new ContainerRegistryClient(registryUri, username, password);
 
   return client;
 }
 
-
 async function main() {
-    // i'm using environment variables here for security
-    const acrName = process.env.ACR_NAME as string;
-    const tenantId = process.env.AZURE_TENANT_ID as string;
-    const clientId = process.env.AZURE_CLIENT_ID as string;
-    const clientSecret = process.env.AZURE_CLIENT_SECRET as string;
-    const scope = `https://${acrName}.azurecr.io/.default`
+  // i'm using environment variables here for security
+  const acrName = process.env.ACR_NAME as string;
+  const tenantId = process.env.AZURE_TENANT_ID as string;
+  const clientId = process.env.AZURE_CLIENT_ID as string;
+  const clientSecret = process.env.AZURE_CLIENT_SECRET as string;
+  const scope = `https://${acrName}.azurecr.io/.default`;
 
-    const client = await getAcrClientWithScopedToken(
-        acrName,
-        tenantId,
-        clientId,
-        clientSecret,
-        scope
-    );
-    const repositoryNames = client.listRepositoryNames();
+  const client = await getAcrClientWithScopedToken(
+    acrName,
+    tenantId,
+    clientId,
+    clientSecret,
+    scope
+  );
+  const repositoryNames = client.listRepositoryNames();
 
-    for await (const name of repositoryNames){
-        console.log(name);
-    }
-
+  for await (const name of repositoryNames) {
+    console.log(name);
+  }
 }
-  
-main().catch((err) => {
-    console.error("An error occurred:", err);
-    process.exit(1);
-});
 
+main().catch((err) => {
+  console.error("An error occurred:", err);
+  process.exit(1);
+});
 ```
 
 this typescript code mirrors the python example. it uses `clientsecretcredential` to authenticate the service principal, fetches a scoped token, and then initializes the `containerregistryclient` using the token as the password with username set to "token". nothing too shocking, although the async/await is more prominent as we're dealing with promises and i'm a firm believer in the benefits of promises.
@@ -171,7 +164,7 @@ public class AcrClientExample {
         String token = credential.getToken(scope).getToken();
         String username = "token";
         String password = token;
-        
+
        String registryUri = String.format("https://%s.azurecr.io", acrName);
 
         ContainerRegistryClient client = new ContainerRegistryClientBuilder()
@@ -197,7 +190,7 @@ public class AcrClientExample {
                 clientId,
                 clientSecret,
                 scope);
-        
+
         client.listRepositoryNames().forEach(System.out::println);
     }
 }

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-text-from-multiple-pdf-files-and-save-it-as-individual-txt-files"
 ---
 
-Okay, let's get into this. I've tackled this very problem numerous times over the years, and it’s a surprisingly common requirement in various data processing pipelines. Extracting text from PDFs programmatically can seem straightforward initially, but the devil, as they say, is in the details. There’s a whole ecosystem of tools and approaches, and the “best” method often depends heavily on the nature of the PDF itself.
+, let's get into this. I've tackled this very problem numerous times over the years, and it’s a surprisingly common requirement in various data processing pipelines. Extracting text from PDFs programmatically can seem straightforward initially, but the devil, as they say, is in the details. There’s a whole ecosystem of tools and approaches, and the “best” method often depends heavily on the nature of the PDF itself.
 
 The core challenge lies in the structure of PDFs. Unlike plain text files, PDFs are designed for document presentation, containing not just textual content but also layout information, fonts, images, and potentially much more. This complexity means we need libraries designed specifically to interpret this structure and isolate the text we need. Overly simplistic approaches, like treating a PDF as a raw binary stream, will yield gibberish.
 
@@ -28,7 +28,7 @@ def extract_text_pypdf2(pdf_path, output_dir):
             for page_num in range(len(reader.pages)):
                 page = reader.pages[page_num]
                 text += page.extract_text()
-        
+
         file_name = os.path.basename(pdf_path).replace(".pdf", ".txt")
         output_path = os.path.join(output_dir, file_name)
         with open(output_path, 'w', encoding='utf-8') as output_file:
@@ -48,6 +48,7 @@ if __name__ == "__main__":
              extract_text_pypdf2(pdf_path, output_directory)
 
 ```
+
 This script iterates through the PDF files in a specified directory. For each file, it uses `PdfReader` to read each page, extracts the text using the `extract_text()` method, and concatenates it. The resulting text is then saved into a corresponding .txt file in the output directory.
 
 **Example 2: Using `pdfminer.six` (More Complex Cases)**
@@ -82,6 +83,7 @@ if __name__ == "__main__":
         pdf_path = os.path.join(pdf_directory, file)
         extract_text_pdfminer(pdf_path, output_directory)
 ```
+
 Here, we utilize the `extract_text` function from `pdfminer.high_level`. This is a much higher-level, easier way to approach `pdfminer.six`. It handles parsing the content of the pdf, and extracts all text with less effort than writing custom logic. This approach is quite effective for a broader range of PDFs.
 
 **Example 3: Error Handling and Improvements**

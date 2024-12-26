@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "why-do-azure-container-apps-restart-often-even-when-terminated"
 ---
 
-Okay, let's tackle this. I've personally spent more hours than I care to recall debugging container restarts, particularly within Azure Container Apps. It’s a beast of a problem, often presenting as a seemingly random issue. The frustrating part is that you can meticulously configure your liveness and readiness probes, and still see these restarts popping up, even when your app *appears* to have shut down cleanly. The key here is understanding that "terminated" isn't always as clear-cut as it seems, and it's a nuanced dance between kubernetes under the hood and the Azure-specific abstractions built on top of it.
+, let's tackle this. I've personally spent more hours than I care to recall debugging container restarts, particularly within Azure Container Apps. It’s a beast of a problem, often presenting as a seemingly random issue. The frustrating part is that you can meticulously configure your liveness and readiness probes, and still see these restarts popping up, even when your app _appears_ to have shut down cleanly. The key here is understanding that "terminated" isn't always as clear-cut as it seems, and it's a nuanced dance between kubernetes under the hood and the Azure-specific abstractions built on top of it.
 
 The primary reason behind these seemingly unprompted restarts isn’t usually because of a genuine application crash (although that certainly contributes). Rather, it’s a combination of factors, including scaling operations, platform maintenance, and, crucially, how the Container Apps environment perceives your application's lifecycle. This perceived lifecycle, especially in terms of container termination, can differ from what your application intends or reports.
 
-One significant element is the Kubernetes principle of desired state. The Container Apps service, built on top of Kubernetes, always strives to achieve the state defined in your resource configuration. If a container exits with a non-zero exit code – indicative of a failure – Kubernetes interprets this as a deviation from the desired state. Even if your application attempts a graceful shutdown by sending a SIGTERM and exiting with a zero code, there can be delays or subtle errors that might not be captured by your application's logic. For example, imagine a scenario where your application depends on a database and it takes a few seconds to close all connections and properly free up resources. If this operation exceeds a grace period configured within the container environment, kubernetes may not see the exit code as *successful* because it timed out, and will attempt a restart to enforce the configuration.
+One significant element is the Kubernetes principle of desired state. The Container Apps service, built on top of Kubernetes, always strives to achieve the state defined in your resource configuration. If a container exits with a non-zero exit code – indicative of a failure – Kubernetes interprets this as a deviation from the desired state. Even if your application attempts a graceful shutdown by sending a SIGTERM and exiting with a zero code, there can be delays or subtle errors that might not be captured by your application's logic. For example, imagine a scenario where your application depends on a database and it takes a few seconds to close all connections and properly free up resources. If this operation exceeds a grace period configured within the container environment, kubernetes may not see the exit code as _successful_ because it timed out, and will attempt a restart to enforce the configuration.
 
 Let's dive into how the platform can trigger restarts. Container Apps has inbuilt health checks: readiness and liveness probes. Liveness probes are designed to detect if the application is unhealthy and should be restarted, while readiness probes determine whether your app is ready to accept requests. If the liveness probe fails, the platform assumes the application is unhealthy regardless of whether you have initiated a graceful termination, and kubernetes will try to bring it back to the desired state, by restarting it. If, for instance, your liveness probe is set up to check an endpoint that becomes unavailable during the graceful shutdown, it will cause the app to fail the check and will restart the container.
 
@@ -22,30 +22,30 @@ Let's say you've got a simple Node.js application. It's supposed to gracefully s
 
 ```javascript
 // bad_graceful_shutdown.js
-const http = require('http');
+const http = require("http");
 
 const server = http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Hello World\n');
+  res.writeHead(200, { "Content-Type": "text/plain" });
+  res.end("Hello World\n");
 });
 
-server.listen(8080, '0.0.0.0', () => {
-  console.log('Server running');
+server.listen(8080, "0.0.0.0", () => {
+  console.log("Server running");
 });
 
-process.on('SIGTERM', () => {
-  console.log('Received SIGTERM');
+process.on("SIGTERM", () => {
+  console.log("Received SIGTERM");
   // Simulate a lengthy closing process, which may take longer than the configured grace period
   setTimeout(() => {
-      server.close(() => {
-         console.log('Server closed');
-        process.exit(0);
-      });
+    server.close(() => {
+      console.log("Server closed");
+      process.exit(0);
+    });
   }, 60000); // Delay of 60 seconds, usually more than a container's grace period.
 });
 ```
 
-In this snippet, the server *attempts* a graceful shutdown. However, the 60 second timeout is problematic. If the Kubernetes environment has a grace period (often around 30 seconds by default) shorter than this, kubernetes will forcefully terminate the container and mark the termination as a failure, prompting a restart.
+In this snippet, the server _attempts_ a graceful shutdown. However, the 60 second timeout is problematic. If the Kubernetes environment has a grace period (often around 30 seconds by default) shorter than this, kubernetes will forcefully terminate the container and mark the termination as a failure, prompting a restart.
 
 **Example 2: Inadequate Liveness/Readiness Probe Configuration**
 
@@ -113,8 +113,9 @@ Now, to address these issues in a real-world scenario, I would recommend a few s
 4. **Logging and Observation:** Thoroughly review application logs. Container Apps' logging features are incredibly valuable for troubleshooting. Utilize logging libraries to capture information before the container shuts down, especially during SIGTERM handling, and utilize observability platforms such as Azure Monitor.
 
 For deeper insights, I recommend exploring the following resources:
-   * **Kubernetes Documentation**: Specifically, the sections on liveness and readiness probes, pods lifecycle, and resource management. It’s essential for comprehending how kubernetes manages container lifecycles.
-    * **Container Patterns**: This resource details best practices on how to package, deploy, and manage containerized applications.
-   * **Production Kubernetes**: A book, rather than an online resource, this goes deeply into the practical aspects of running kubernetes in production environments, and it goes deeper on the topics of scaling, monitoring and resource management in Kubernetes.
+
+- **Kubernetes Documentation**: Specifically, the sections on liveness and readiness probes, pods lifecycle, and resource management. It’s essential for comprehending how kubernetes manages container lifecycles.
+- **Container Patterns**: This resource details best practices on how to package, deploy, and manage containerized applications.
+- **Production Kubernetes**: A book, rather than an online resource, this goes deeply into the practical aspects of running kubernetes in production environments, and it goes deeper on the topics of scaling, monitoring and resource management in Kubernetes.
 
 The recurring restarts in Azure Container Apps are rarely due to a single, easy-to-spot issue. They're typically a product of a nuanced interaction between application behavior, resource constraints, and the platform's underlying infrastructure and its resource management behaviors. A methodical approach, coupled with careful logging and a solid understanding of Kubernetes principles, will lead you to a more stable and predictable application environment. It's rarely "magic," but solid engineering practices will usually get the job done.

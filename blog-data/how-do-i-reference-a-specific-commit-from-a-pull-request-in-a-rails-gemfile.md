@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-reference-a-specific-commit-from-a-pull-request-in-a-rails-gemfile"
 ---
 
-Alright, let's tackle this one. It's a scenario I’ve bumped into more times than I care to recall, often in the throes of rapid prototyping or debugging those particularly stubborn dependencies. Referencing a specific commit from a pull request directly in a `Gemfile` is a technique that’s useful, but also one that requires a bit of understanding of how Bundler handles these sorts of situations. It's not about simply pointing at the pull request itself; instead, you're pointing at the commit hash within the repository where that pull request resides.
+, let's tackle this one. It's a scenario I’ve bumped into more times than I care to recall, often in the throes of rapid prototyping or debugging those particularly stubborn dependencies. Referencing a specific commit from a pull request directly in a `Gemfile` is a technique that’s useful, but also one that requires a bit of understanding of how Bundler handles these sorts of situations. It's not about simply pointing at the pull request itself; instead, you're pointing at the commit hash within the repository where that pull request resides.
 
 Essentially, when you want to pin to a particular commit, you are bypassing the typical versioning conventions that gems use. This bypass can be crucial for testing a bug fix or a feature that hasn't been formally released yet. I recall a project years back, where we absolutely needed a specific feature from a gem that was being actively developed. We couldn’t wait for the official release, and referencing the specific commit from the relevant pull request was the fastest path to unblocking our team.
 

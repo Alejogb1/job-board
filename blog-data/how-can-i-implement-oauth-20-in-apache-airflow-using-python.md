@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-implement-oauth-20-in-apache-airflow-using-python"
 ---
 
-Alright, let's talk about implementing OAuth 2.0 in Apache Airflow. It's a scenario I’ve faced several times, and while initially seeming complex, it breaks down into manageable steps once you understand the components and their interaction. From my experience, the key lies in separating authentication from authorization and ensuring your tokens are handled securely. Let's dive in.
+, let's talk about implementing OAuth 2.0 in Apache Airflow. It's a scenario I’ve faced several times, and while initially seeming complex, it breaks down into manageable steps once you understand the components and their interaction. From my experience, the key lies in separating authentication from authorization and ensuring your tokens are handled securely. Let's dive in.
 
 The challenge with Airflow, particularly when dealing with external APIs or services that require OAuth 2.0, boils down to credential management and token refreshing. Airflow itself doesn't inherently provide OAuth 2.0 support; rather, you need to craft that integration using hooks, connections, and possibly custom operators. I remember a project where we had to access a cloud-based data processing service; the authentication was exclusively OAuth 2.0, and the existing Airflow deployment had no native way to handle it. It was a bit of a deep dive at the time, but it gave me a very clear understanding of what works and what doesn't.
 
@@ -27,11 +27,11 @@ Airflow's connections are your friend here. Create a new connection in the Airfl
 }
 ```
 
-* **auth_type:** Identifies this connection for oauth2
-* **client_id & client_secret:** These are specific to your application registered with your OAuth provider.
-* **token_url:** The OAuth 2.0 token endpoint of your authorization server.
-* **scope:** The scope of permissions you’re requesting from the resource server.
-* **refresh_token:** If you already have a refresh token, include it here; if not, this will be empty initially.
+- **auth_type:** Identifies this connection for oauth2
+- **client_id & client_secret:** These are specific to your application registered with your OAuth provider.
+- **token_url:** The OAuth 2.0 token endpoint of your authorization server.
+- **scope:** The scope of permissions you’re requesting from the resource server.
+- **refresh_token:** If you already have a refresh token, include it here; if not, this will be empty initially.
 
 **Step 2: Build a Custom Airflow Hook**
 
@@ -133,15 +133,15 @@ Here, `fetch_data_with_oauth` creates an `OAuth2Hook` instance and calls `run` w
 
 **Key Considerations**
 
-*   **Token Storage:** This implementation stores the refresh token inside Airflow connection which provides a basic layer of protection. However, for higher security requirements, investigate external secret management solutions. Airflow supports backends like Hashicorp Vault or AWS Secrets Manager, which provide much better access control and encryption options.
-*   **Error Handling:** The examples above have basic error handling, but consider adding retries and logging to handle API outages or transient authentication issues. The `requests.raise_for_status` is useful for failing fast but you may want to handle some specific errors more gracefully.
-*   **Initial Token:** If you need to get the initial refresh token, consider a helper script or a manual process (since it's a one-time activity), that can use the authorization_code grant type or another flow. The implementation in the custom hook assumes you have an initial refresh token available in the connection.
-*   **Custom Headers:** The hook's `run` function is flexible and can accommodate other headers if your API requires them.
+- **Token Storage:** This implementation stores the refresh token inside Airflow connection which provides a basic layer of protection. However, for higher security requirements, investigate external secret management solutions. Airflow supports backends like Hashicorp Vault or AWS Secrets Manager, which provide much better access control and encryption options.
+- **Error Handling:** The examples above have basic error handling, but consider adding retries and logging to handle API outages or transient authentication issues. The `requests.raise_for_status` is useful for failing fast but you may want to handle some specific errors more gracefully.
+- **Initial Token:** If you need to get the initial refresh token, consider a helper script or a manual process (since it's a one-time activity), that can use the authorization_code grant type or another flow. The implementation in the custom hook assumes you have an initial refresh token available in the connection.
+- **Custom Headers:** The hook's `run` function is flexible and can accommodate other headers if your API requires them.
 
 **Recommended Resources**
 
-*   **OAuth 2.0 RFC 6749:** This is the canonical specification for OAuth 2.0 and an essential read for fully understanding the framework.
-*  **"OAuth 2.0 in Action" by Justin Richer and Antonio Sanso:** This book provides a practical and in-depth guide to implementing OAuth 2.0 in various scenarios and is an excellent resource for understanding the intricacies of the protocol.
-*   **Apache Airflow documentation:** Pay close attention to the documentation on connections, hooks, and custom operators. It is your best source of information for the Airflow ecosystem itself.
+- **OAuth 2.0 RFC 6749:** This is the canonical specification for OAuth 2.0 and an essential read for fully understanding the framework.
+- **"OAuth 2.0 in Action" by Justin Richer and Antonio Sanso:** This book provides a practical and in-depth guide to implementing OAuth 2.0 in various scenarios and is an excellent resource for understanding the intricacies of the protocol.
+- **Apache Airflow documentation:** Pay close attention to the documentation on connections, hooks, and custom operators. It is your best source of information for the Airflow ecosystem itself.
 
 In summary, implementing OAuth 2.0 in Airflow requires a structured approach involving secure credential storage, custom hook development, and careful handling of access and refresh tokens. It’s a bit of work to set up the first time, but the resulting flexibility and security is worth it, especially when dealing with any external API that uses OAuth 2.0. This method, while not necessarily perfect for every single situation, provides a robust and maintainable foundation.

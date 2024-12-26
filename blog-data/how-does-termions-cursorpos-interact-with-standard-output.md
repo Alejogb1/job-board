@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-does-termions-cursorpos-interact-with-standard-output"
 ---
 
-Alright, let's tackle this one. It's a question that seems straightforward but actually reveals some fascinating nuances about terminal interaction. I've personally spent a good chunk of time debugging terminal-based apps, and issues around cursor position tracking are common culprits. So, let's break down how termion's `cursor_pos()` functions in relation to standard output (stdout).
+, let's tackle this one. It's a question that seems straightforward but actually reveals some fascinating nuances about terminal interaction. I've personally spent a good chunk of time debugging terminal-based apps, and issues around cursor position tracking are common culprits. So, let's break down how termion's `cursor_pos()` functions in relation to standard output (stdout).
 
-Termion, for those unfamiliar, is a Rust crate that abstracts away the complexities of interacting with terminal input and output. Specifically, `cursor_pos()` is meant to provide the current cursor position within the terminal window. Now, the key thing to understand is that terminals maintain their own internal state regarding the cursor's location. This state is updated based on escape sequences received by the terminal emulator. So, termion's `cursor_pos()` doesn't magically "know" where the cursor is; rather, it sends specific escape sequences to the terminal to *ask* for that information.
+Termion, for those unfamiliar, is a Rust crate that abstracts away the complexities of interacting with terminal input and output. Specifically, `cursor_pos()` is meant to provide the current cursor position within the terminal window. Now, the key thing to understand is that terminals maintain their own internal state regarding the cursor's location. This state is updated based on escape sequences received by the terminal emulator. So, termion's `cursor_pos()` doesn't magically "know" where the cursor is; rather, it sends specific escape sequences to the terminal to _ask_ for that information.
 
-This is an important distinction. When we’re printing text via stdout using standard methods (like `println!`, or `io::stdout().write_all()`), we are explicitly controlling the cursor movement through the characters being sent. Each newline character moves the cursor down one line and to the beginning, for example. However, these actions *don't necessarily* update an external process (like a termion app) about the true state of the cursor – unless *it* also sends specific requests to query.
+This is an important distinction. When we’re printing text via stdout using standard methods (like `println!`, or `io::stdout().write_all()`), we are explicitly controlling the cursor movement through the characters being sent. Each newline character moves the cursor down one line and to the beginning, for example. However, these actions _don't necessarily_ update an external process (like a termion app) about the true state of the cursor – unless _it_ also sends specific requests to query.
 
 Here’s how `cursor_pos()` fundamentally works under the hood: When called, it writes a specific control sequence (usually the Device Status Report sequence `\x1b[6n`) to stdout. The terminal, upon receiving this, is supposed to respond with another sequence, a Cursor Position Report, formatted like `\x1b[line;columnR`, where 'line' and 'column' are decimal representations of the cursor's current line and column respectively. Termion’s implementation, on receiving this, parses these values out and returns the position as `(line: u16, column: u16)`.
 
-The critical interplay arises from the fact that the terminal's cursor position state is only influenced by two main sources: 1) control sequences (like those from `cursor_pos()` or others that manipulate the cursor directly) and 2) the characters written to standard output. Regular text output (letters, numbers, etc.) moves the cursor *as it's written*. The problem emerges when the application has lost track of the true cursor state, or the program assumes the terminal cursor state matches its own internal state, which often is not the case.
+The critical interplay arises from the fact that the terminal's cursor position state is only influenced by two main sources: 1) control sequences (like those from `cursor_pos()` or others that manipulate the cursor directly) and 2) the characters written to standard output. Regular text output (letters, numbers, etc.) moves the cursor _as it's written_. The problem emerges when the application has lost track of the true cursor state, or the program assumes the terminal cursor state matches its own internal state, which often is not the case.
 
 Now, let’s get into some examples to solidify this.
 
@@ -91,6 +91,7 @@ fn main() {
     write!(stdout, "\r\nFinal position is:{:?}\r\n", final_pos).unwrap();
 }
 ```
+
 Here, we use `cursor::Goto()` to set the cursor. When the text "More text...\r\n" is printed, standard output pushes the cursor down. The following `cursor::pos()` is needed to correctly understand the new position in the application. If you were to continue with operations that did not re-query `cursor::pos()`, termion's cursor management would fall out of sync with the terminal again. The final `Goto` then demonstrates it working independently of any stdio moves.
 
 **Example 3: The Importance of Refreshing After External Cursor Manipulations**
@@ -129,16 +130,16 @@ In this example, we simulate an external process by directly writing an escape s
 
 **Key Considerations and Best Practices:**
 
-*   **Explicit Cursor Tracking:** Relying solely on termion's `cursor::pos()` without actively tracking cursor movements based on your *own* outputs will lead to inconsistencies in many interactive applications.
+- **Explicit Cursor Tracking:** Relying solely on termion's `cursor::pos()` without actively tracking cursor movements based on your _own_ outputs will lead to inconsistencies in many interactive applications.
 
-*   **Avoid Assumptions:** Never assume the terminal's cursor position matches your application's internal state without explicit synchronization through `cursor::pos()`.
+- **Avoid Assumptions:** Never assume the terminal's cursor position matches your application's internal state without explicit synchronization through `cursor::pos()`.
 
-*   **Error Handling:** Remember that `cursor::pos()` can fail (e.g., if the terminal doesn’t respond correctly). You should implement proper error handling.
+- **Error Handling:** Remember that `cursor::pos()` can fail (e.g., if the terminal doesn’t respond correctly). You should implement proper error handling.
 
-*   **Terminal Emulators**: The behavior of `cursor_pos()` can also vary *slightly* between terminal emulators. While most modern emulators support the required escape sequences, it’s good practice to test across a few common ones to ensure consistent behavior in a production environment.
+- **Terminal Emulators**: The behavior of `cursor_pos()` can also vary _slightly_ between terminal emulators. While most modern emulators support the required escape sequences, it’s good practice to test across a few common ones to ensure consistent behavior in a production environment.
 
-*   **Performance Considerations:** Although often fast, querying `cursor::pos()` does involve I/O operations. Excessive querying within tight loops might introduce a performance penalty, so consider when and how frequently you really need to get cursor positions.
+- **Performance Considerations:** Although often fast, querying `cursor::pos()` does involve I/O operations. Excessive querying within tight loops might introduce a performance penalty, so consider when and how frequently you really need to get cursor positions.
 
 For a deep dive, I strongly recommend looking into the ECMA-48 standard, which describes the control codes used in terminal interactions. A good reference for escape sequences is the “ANSI Escape Codes” section in the xterm documentation. The specifics of how terminals handle cursor position reports can be found in these documents, which will reveal that many terminals may respond slightly differently and that there is no simple “standard” implementation. The book “The TTY demystified” by Peter H. Salus also provides historical context and technical detail that will help you better understand these complex systems.
 
-In conclusion, `termion::cursor_pos()` serves as a useful tool but remember it is only reflecting the terminals state. It works by sending a query, receiving the terminal’s response, and parsing it to expose the position. This interplay with standard output means you need to be very careful to reconcile what your program *believes* and what the terminal *actually* is doing. It's all about understanding and controlling that communication.
+In conclusion, `termion::cursor_pos()` serves as a useful tool but remember it is only reflecting the terminals state. It works by sending a query, receiving the terminal’s response, and parsing it to expose the position. This interplay with standard output means you need to be very careful to reconcile what your program _believes_ and what the terminal _actually_ is doing. It's all about understanding and controlling that communication.

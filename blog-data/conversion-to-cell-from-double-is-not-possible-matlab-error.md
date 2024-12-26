@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "conversion-to-cell-from-double-is-not-possible-matlab-error"
 ---
 
-Alright so you're getting that classic "conversion to cell from double is not possible" MATLAB error right Been there done that got the t-shirt believe me Its a real head scratcher when you first encounter it but its usually pretty straightforward once you've wrestled with it a bit Let me break down what's likely happening based on my past escapades and how to dodge this bullet
+so you're getting that classic "conversion to cell from double is not possible" MATLAB error right Been there done that got the t-shirt believe me Its a real head scratcher when you first encounter it but its usually pretty straightforward once you've wrestled with it a bit Let me break down what's likely happening based on my past escapades and how to dodge this bullet
 
 See the thing with MATLAB is that it's a stickler for data types especially when you're messing around with cells Cells in MATLAB are like these versatile containers they can hold all sorts of stuff numbers strings even other cells But they’re not automatically interchangeable with numerical arrays and that's where the 'conversion' issue pops up
 
@@ -28,7 +28,7 @@ for i = 1:10
 end
 ```
 
-Notice the curly braces `{}` when accessing the cell's content that is super key That tells MATLAB "hey I want to put this entire array into *this specific* cell location" And the original attempt was like "yo i want to change the location itself to be a numerical array" which is not possible
+Notice the curly braces `{}` when accessing the cell's content that is super key That tells MATLAB "hey I want to put this entire array into _this specific_ cell location" And the original attempt was like "yo i want to change the location itself to be a numerical array" which is not possible
 
 Another time when you run into this mess is when working with functions You might have a function that's supposed to return a cell but for some reason its spitting out a double In my early days I actually did that myself i was trying to write a function to process some data i thought i was returning a cell array and then i kept getting this error which drove me nuts i was convinced that somehow matlab was secretly messing with my code that day turns out my function was actually spitting out a simple matrix not a cell
 
@@ -64,6 +64,7 @@ data_array = [1 2 3; 4 5 6];
 cell_array = cell(size(data_array));
 cell_array{1,:} = num2cell(data_array(1,:)) ;
 ```
+
 This time it works cause we are not messing with the location or the cell itself but instead using `num2cell` to encapsulate the numerical array into the correct container before assignment
 
 I recall one instance i was building this incredibly complex simulation and this conversion error kept popping up in this obscure part of my code took me like two days to track it down just to realize i messed up how i defined a single variable it was a real face palm moment but thats programming i suppose You find a random error and you find a new way of making mistakes

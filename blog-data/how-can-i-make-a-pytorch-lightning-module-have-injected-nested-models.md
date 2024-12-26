@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-make-a-pytorch-lightning-module-have-injected-nested-models"
 ---
 
-Okay, let's tackle this one. It's something I've personally wrestled with on several projects, particularly those requiring complex, modular architectures. The challenge, as you're likely discovering, lies in properly integrating nested models into a pytorch lightning module while maintaining the framework's structure and benefits. It's not as straightforward as simply instantiating models and expecting lightning to magically handle everything.
+, let's tackle this one. It's something I've personally wrestled with on several projects, particularly those requiring complex, modular architectures. The challenge, as you're likely discovering, lies in properly integrating nested models into a pytorch lightning module while maintaining the framework's structure and benefits. It's not as straightforward as simply instantiating models and expecting lightning to magically handle everything.
 
 I've seen it go wrong in several ways: incorrect gradient tracking, unexpected parameter updates, and just plain chaos when trying to access and manipulate these nested components. The key here is to understand how pytorch lightning expects to interact with models, specifically the parameters and training flow. We need to leverage its mechanisms to ensure that the nested models are treated as legitimate, contributing parts of the overall module.
 
-The core of the issue revolves around parameter registration and module hierarchy. Pytorch lightning, as you probably know, manages training via the `parameters()` method of your module, using that method to gather all optimizable weights for training. If your injected, nested models aren’t properly registered as *part* of your lightning module’s structure, their parameters won’t be tracked, trained or included when you, say, save your checkpoint. This leads to incomplete models or models where some parts are frozen during training.
+The core of the issue revolves around parameter registration and module hierarchy. Pytorch lightning, as you probably know, manages training via the `parameters()` method of your module, using that method to gather all optimizable weights for training. If your injected, nested models aren’t properly registered as _part_ of your lightning module’s structure, their parameters won’t be tracked, trained or included when you, say, save your checkpoint. This leads to incomplete models or models where some parts are frozen during training.
 
 So how do you do it correctly? The solution is quite simple; use the appropriate `nn.Module` containment mechanism. We will make sure the nested models become attributes of our main lightning module through the `__init__` method. By doing so, they'll participate automatically in the module's parameter tracking and data flow.
 
@@ -154,7 +154,7 @@ Here, `NestedModel` dynamically builds a set of `Block` modules based on the pro
 
 **Example 3: External Modules and Parameter Sharing (Careful Use Needed)**
 
-Sometimes, you might want to inject modules that are created *outside* the main module and then inject them. This needs to be handled with a bit of extra care. For example, if you intend to share weights between different places in your overall architecture, you would need to create shared module and then inject it.
+Sometimes, you might want to inject modules that are created _outside_ the main module and then inject them. This needs to be handled with a bit of extra care. For example, if you intend to share weights between different places in your overall architecture, you would need to create shared module and then inject it.
 
 ```python
 import torch
@@ -207,12 +207,12 @@ if __name__ == '__main__':
     trainer.fit(model, dataloader)
 ```
 
-Here, `SharedBlock` is created as a completely separate module, then its *instance* is assigned to both `self.shared_module` to enable weight sharing. This works because module assignment in python is essentially a pointer. The parameters are kept tracked, and backpropagation works just fine. However, if you were to copy the `SharedBlock` multiple times using its class and `SharedBlock()`, the weight sharing would not occur, and they would be seen as separate instances within the model.
+Here, `SharedBlock` is created as a completely separate module, then its _instance_ is assigned to both `self.shared_module` to enable weight sharing. This works because module assignment in python is essentially a pointer. The parameters are kept tracked, and backpropagation works just fine. However, if you were to copy the `SharedBlock` multiple times using its class and `SharedBlock()`, the weight sharing would not occur, and they would be seen as separate instances within the model.
 
 **Important Considerations:**
 
-* **Parameter Freezing:** If you intend to freeze parameters of the nested modules, be very mindful. The `requires_grad` flag is crucial. Make sure that gradients are only computed on the parameters you intend to train.
-* **Complex Hierarchies:** For incredibly complex nesting, consider using a configuration file or dedicated object to describe your model’s structure. This promotes modularity and maintainability.
-* **Resource Recommendations:** For detailed understanding of module composition in pytorch, I would recommend reading the official pytorch documentation specifically around `torch.nn`. For best practices and more advanced implementations I would recommend reading through the code base of open source projects using `pytorch lightning`, paying attention to how they build their models. Additionally, papers on modular deep learning could also offer alternative approaches to thinking about modular model design.
+- **Parameter Freezing:** If you intend to freeze parameters of the nested modules, be very mindful. The `requires_grad` flag is crucial. Make sure that gradients are only computed on the parameters you intend to train.
+- **Complex Hierarchies:** For incredibly complex nesting, consider using a configuration file or dedicated object to describe your model’s structure. This promotes modularity and maintainability.
+- **Resource Recommendations:** For detailed understanding of module composition in pytorch, I would recommend reading the official pytorch documentation specifically around `torch.nn`. For best practices and more advanced implementations I would recommend reading through the code base of open source projects using `pytorch lightning`, paying attention to how they build their models. Additionally, papers on modular deep learning could also offer alternative approaches to thinking about modular model design.
 
 In essence, properly injecting nested models into a pytorch lightning module comes down to making sure pytorch lightning has access to all the parameters by properly making them an attribute of the lightning module, and using them in such a way that the underlying computational graph gets traced and gradients can flow correctly, either on a single instance or shared. While the technicalities may seem intimidating, the solution tends to be quite straightforward when following the basic principles of model containment within pytorch. This will allow for creating complex and highly modular models, without sacrificing pytorch lightning's powerful training features.

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-do-i-batch-batches-of-graphs-in-pytorch-geometric"
 ---
 
-Okay, so let's tackle the challenge of batching batches of graphs in PyTorch Geometric. This isn't an everyday occurrence, but it crops up when you’re dealing with nested data structures or hierarchical processing – I remember facing this exact issue when working on a project involving multi-scale graph analysis for a complex system simulation a while back. The key here is to understand how PyTorch Geometric (PyG) handles batching and then strategically apply it across different levels of your data.
+, so let's tackle the challenge of batching batches of graphs in PyTorch Geometric. This isn't an everyday occurrence, but it crops up when you’re dealing with nested data structures or hierarchical processing – I remember facing this exact issue when working on a project involving multi-scale graph analysis for a complex system simulation a while back. The key here is to understand how PyTorch Geometric (PyG) handles batching and then strategically apply it across different levels of your data.
 
-PyG primarily uses the `torch_geometric.data.Batch` class to efficiently batch individual graphs. It essentially stacks node features, edge indices, and edge attributes while maintaining the necessary structural information to treat the batch as a single, larger graph for computation. However, when you're dealing with batches *of* batches, it's not as straightforward as simply passing a list of `Batch` objects to another `Batch` constructor. You'll likely find yourself in a situation where you have multiple smaller batches of graphs, and you want to group them into a larger meta-batch, perhaps for parallel processing or hierarchical model application. The core difficulty lies in correctly managing the offsets and indices when consolidating these already batched graphs.
+PyG primarily uses the `torch_geometric.data.Batch` class to efficiently batch individual graphs. It essentially stacks node features, edge indices, and edge attributes while maintaining the necessary structural information to treat the batch as a single, larger graph for computation. However, when you're dealing with batches _of_ batches, it's not as straightforward as simply passing a list of `Batch` objects to another `Batch` constructor. You'll likely find yourself in a situation where you have multiple smaller batches of graphs, and you want to group them into a larger meta-batch, perhaps for parallel processing or hierarchical model application. The core difficulty lies in correctly managing the offsets and indices when consolidating these already batched graphs.
 
-Let’s illustrate this with a hypothetical scenario. Imagine you have several batches, each containing 5 graphs, and you now want to create a batch of these batches, resulting in a larger batch of, say, 25 total graphs effectively (5 batches * 5 graphs per batch = 25 total graphs). This can't be done by directly concatenating the existing batch objects or feeding a list of `Batch` objects into `torch_geometric.data.Batch`. You will have to manually combine the tensors, and then create a new batch object.
+Let’s illustrate this with a hypothetical scenario. Imagine you have several batches, each containing 5 graphs, and you now want to create a batch of these batches, resulting in a larger batch of, say, 25 total graphs effectively (5 batches \* 5 graphs per batch = 25 total graphs). This can't be done by directly concatenating the existing batch objects or feeding a list of `Batch` objects into `torch_geometric.data.Batch`. You will have to manually combine the tensors, and then create a new batch object.
 
 Here’s how we approach it:
 
@@ -35,12 +35,12 @@ def batch_of_batches(list_of_batches):
            edge_attr_list.append(batch.edge_attr)
         batch_list.append(torch.arange(batch_offsets, batch_offsets + len(batch.batch), dtype=torch.long))
         batch_offsets += len(batch.x)
-    
+
     combined_node_features = torch.cat(node_features_list, dim=0)
     combined_edge_index = torch.cat(edge_index_list, dim=1)
     combined_edge_attr = torch.cat(edge_attr_list, dim=0) if edge_attr_list else None
     combined_batch = torch.cat(batch_list, dim = 0)
-    
+
     new_batch = Batch(x=combined_node_features, edge_index=combined_edge_index, edge_attr = combined_edge_attr, batch = combined_batch)
     return new_batch, num_graphs_per_batch
 
@@ -72,7 +72,7 @@ In this first snippet, the `batch_of_batches` function does most of the work: It
 
 As you can see from the above example, the `edge_attr` isn't mandatory in `torch_geometric.data.Data`, and may not even be in a `Batch`. We need to ensure that our function handles this gracefully. In the code above, you can see the conditional appending and concatenating of the edge attributes. This is essential for maintaining compatibility with graphs that may or may not have edge features. In practice, I've seen inconsistencies in edge attribute presence cause downstream errors, so being careful about this step is important.
 
-**3.  Alternative Approach:  Tensor manipulation**
+**3. Alternative Approach: Tensor manipulation**
 
 If you're comfortable directly manipulating tensors, you can achieve a similar result with a slightly different, more low level approach. The following example does not use a loop, but directly performs the tensor operations, resulting in increased speed in most cases.
 
@@ -84,23 +84,23 @@ def batch_of_batches_tensor(list_of_batches):
     edge_index_list = [batch.edge_index for batch in list_of_batches]
     edge_attr_list = [batch.edge_attr for batch in list_of_batches if batch.edge_attr is not None]
     num_nodes_per_batch = [b.num_nodes for b in list_of_batches]
-    
+
     offset_tensor = torch.cumsum(torch.tensor([0] + num_nodes_per_batch[:-1], dtype=torch.long), dim = 0)
     edge_index_list = [edge + offset_tensor[i] for i, edge in enumerate(edge_index_list)]
     batch_list = []
     for i, num_nodes in enumerate(num_nodes_per_batch):
         batch_list.append(torch.full((num_nodes,), i, dtype=torch.long))
-    
-    
+
+
     combined_x = torch.cat(x_list, dim=0)
     combined_edge_index = torch.cat(edge_index_list, dim=1)
     combined_batch = torch.cat(batch_list, dim=0)
-    
+
     if edge_attr_list:
         combined_edge_attr = torch.cat(edge_attr_list, dim=0)
     else:
         combined_edge_attr = None
-    
+
     new_batch = Batch(x=combined_x, edge_index=combined_edge_index, edge_attr = combined_edge_attr, batch = combined_batch)
     return new_batch, num_nodes_per_batch
 

@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "which-addresses-in-the-serum-network-have-a-data-size-of-777"
 ---
 
-Okay, let's tackle this one. It’s not every day you encounter such a specific data size quirk on a network like Serum, but I recall a project back in '21 where we had some seriously perplexing address-related data issues. Specifically, we were dealing with custom PDA (Program Derived Addresses) which, as it turns out, can be the root of non-standard sizes. Understanding why some Serum addresses might yield a data size of exactly 777 bytes boils down to how Serum, and more generally Solana, stores and interacts with account data, particularly when programs are in the mix.
+, let's tackle this one. It’s not every day you encounter such a specific data size quirk on a network like Serum, but I recall a project back in '21 where we had some seriously perplexing address-related data issues. Specifically, we were dealing with custom PDA (Program Derived Addresses) which, as it turns out, can be the root of non-standard sizes. Understanding why some Serum addresses might yield a data size of exactly 777 bytes boils down to how Serum, and more generally Solana, stores and interacts with account data, particularly when programs are in the mix.
 
-Let's be clear upfront: standard Solana addresses, the public keys we all know, don't directly store data in this manner. They are identifiers. The 777-byte data size almost certainly refers to the data held within *account* structures associated with those addresses, specifically accounts owned by a program or perhaps a custom account created via a program’s instructions. In Solana, when a program needs to store state or data, it does so in accounts that it owns. This is where the 777 bytes comes into play.
+Let's be clear upfront: standard Solana addresses, the public keys we all know, don't directly store data in this manner. They are identifiers. The 777-byte data size almost certainly refers to the data held within _account_ structures associated with those addresses, specifically accounts owned by a program or perhaps a custom account created via a program’s instructions. In Solana, when a program needs to store state or data, it does so in accounts that it owns. This is where the 777 bytes comes into play.
 
 The size of the data associated with an account is determined at the time the account is created. A standard system-owned account, which simply holds lamports (Solana's native currency), will have a minimal data size, often just enough to hold the lamport balance and some other basic metadata. However, when a program owns an account, it dictates the structure of that account's data, including its size. Programs often use custom data structures defined within their smart contracts (or more accurately, their on-chain programs). These data structures, serialised using a mechanism like Borsh, are packed into the account's data space. A 777-byte data size, while specific, would indicate a well-defined data structure that was probably compiled to a size of 777 bytes during program development. This is not random; it was likely a conscious design choice.
 
-Furthermore, it's crucial to remember that programs can also modify the data within their accounts. This flexibility is what allows smart contracts to implement complex logic and store state changes persistently on-chain. It also creates scenarios where seemingly unrelated addresses are connected via the programs that control them, potentially with all accounts using that particular program storing account data that follows the program’s data structure. Thus, multiple seemingly unrelated addresses *could* all have associated accounts storing 777 bytes of data if a particular program created accounts with that structure.
+Furthermore, it's crucial to remember that programs can also modify the data within their accounts. This flexibility is what allows smart contracts to implement complex logic and store state changes persistently on-chain. It also creates scenarios where seemingly unrelated addresses are connected via the programs that control them, potentially with all accounts using that particular program storing account data that follows the program’s data structure. Thus, multiple seemingly unrelated addresses _could_ all have associated accounts storing 777 bytes of data if a particular program created accounts with that structure.
 
 To clarify, let's consider some simplified examples. These aren't Serum-specific, as demonstrating Serum's specifics requires quite a detailed setup, but they illustrate the concept. These are pseudo-code examples for educational clarity, not production ready implementations.
 
@@ -79,6 +79,7 @@ pda_address = derive_pda(program_id, seeds)
 
 #Now an account at this pda address could hold 777 bytes as explained in example 1.
 ```
+
 This illustrates how a PDA can be generated and will later hold the data for a program.
 
 **Example 3: Data Modification**
@@ -120,7 +121,7 @@ updated_encoded = update_account_data(encoded_initial, new_data)
 
 This shows that, even if we update the account’s state, we are not changing the fundamental 777-byte size that the account holds. This is the important consistency enforced by the Solana runtime.
 
-In practical terms, if you're encountering addresses with 777-byte data sizes on Serum (or Solana in general), you're most likely dealing with accounts owned by specific programs. To determine *which* addresses, you would need to analyse the on-chain data for accounts of programs involved in the operations you are investigating. This is done by querying the Solana RPC endpoints for account information with filters that may include the size and program id. You could then examine the programs' source code to figure out the structure, and thus decode the data.
+In practical terms, if you're encountering addresses with 777-byte data sizes on Serum (or Solana in general), you're most likely dealing with accounts owned by specific programs. To determine _which_ addresses, you would need to analyse the on-chain data for accounts of programs involved in the operations you are investigating. This is done by querying the Solana RPC endpoints for account information with filters that may include the size and program id. You could then examine the programs' source code to figure out the structure, and thus decode the data.
 
 For further learning, I'd strongly recommend looking at these resources:
 

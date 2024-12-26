@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "why-is-an-environmental-variable-is-causing-an-issue-when-using-singularity-to-run-a-docker-container-on-a-supercomputer"
 ---
 
-alright, let's break down why an environment variable might be causing headaches when you're running a docker container inside singularity on a supercomputer. it’s a pretty common pitfall, and i've definitely spent more time debugging this than i'd like to remember. it usually boils down to how environment variables are handled at different layers of this tech sandwich: the supercomputer's shell, singularity, and finally, the docker container.
+, let's break down why an environment variable might be causing headaches when you're running a docker container inside singularity on a supercomputer. it’s a pretty common pitfall, and i've definitely spent more time debugging this than i'd like to remember. it usually boils down to how environment variables are handled at different layers of this tech sandwich: the supercomputer's shell, singularity, and finally, the docker container.
 
-first off, think of environment variables like global settings for your system. when you log into a supercomputer, you're usually starting within a specific shell environment (like bash or zsh), which is configured with certain variables. these can point to crucial things, like where executables are located (`$PATH`), locations of libraries (`$LD_LIBRARY_PATH`), or specific preferences for tools. when you launch singularity, it creates an isolated space for your container to run. however, it doesn't automatically inherit *all* the environment variables from your shell. some, like `$PATH`, are usually passed through, but others, particularly those related to the cluster's specific setup, may not be. this is where problems start to bubble up.
+first off, think of environment variables like global settings for your system. when you log into a supercomputer, you're usually starting within a specific shell environment (like bash or zsh), which is configured with certain variables. these can point to crucial things, like where executables are located (`$PATH`), locations of libraries (`$LD_LIBRARY_PATH`), or specific preferences for tools. when you launch singularity, it creates an isolated space for your container to run. however, it doesn't automatically inherit _all_ the environment variables from your shell. some, like `$PATH`, are usually passed through, but others, particularly those related to the cluster's specific setup, may not be. this is where problems start to bubble up.
 
 the singularity container, by default, will try to use its own clean environment, sometimes it does try to inherit from the host, sometimes it does not it depends on the settings that were passed during the container build or the run. if a docker container relies on an env var that isn't set inside singularity it might act weirdly or fail. i saw this a lot back when i was working on a genomics pipeline, the container was crashing with an error complaining about a missing dependency but the dependency was present. after hours i realised that the variable pointing to the modules directory was not being passed to the container and it had to be passed manually.
 
@@ -54,7 +54,7 @@ MY_ANOTHER_VAR=some_other_value
 then you just execute the singularity container, remember that the `.env` file has to be visible from within the container. i.e you have to bind it to the container.
 
 ```bash
-singularity exec --bind /path/to/my/.env:/my/.env  docker://my-docker-image:latest my_script.sh  
+singularity exec --bind /path/to/my/.env:/my/.env  docker://my-docker-image:latest my_script.sh
 ```
 
 then within the `my_script.sh` you load the variables using the `source` command

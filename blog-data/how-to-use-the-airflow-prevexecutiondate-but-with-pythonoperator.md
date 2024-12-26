@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "how-to-use-the-airflow-prevexecutiondate-but-with-pythonoperator"
 ---
 
-alright, let’s get down to it. so you're looking to grab the `prev_execution_date` within a `pythonoperator` in airflow, right? i’ve been there, messed that up a couple of times myself, trust me. it's one of those things that looks straightforward at first glance but has a few gotchas lurking around.
+, let’s get down to it. so you're looking to grab the `prev_execution_date` within a `pythonoperator` in airflow, right? i’ve been there, messed that up a couple of times myself, trust me. it's one of those things that looks straightforward at first glance but has a few gotchas lurking around.
 
 first off, let’s be clear on what we’re talking about. the `prev_execution_date` in airflow is the datetime object representing the scheduled execution time of the previous dag run. this is super useful when you need to process data incrementally or do some kind of time-based partitioning. airflow provides a bunch of templating variables that you can use within your dag definitions, and `prev_execution_date` is one of them, accessible through the `{{ prev_execution_date }}` jjinja template string.
 
-the thing is, you can’t just magically use this template string *inside* the function that gets called by your `pythonoperator`. the templates are rendered at the dag parsing stage, not during the actual execution of the python code. so, to make use of it inside your operator you have to pass it as a dag parameter.
+the thing is, you can’t just magically use this template string _inside_ the function that gets called by your `pythonoperator`. the templates are rendered at the dag parsing stage, not during the actual execution of the python code. so, to make use of it inside your operator you have to pass it as a dag parameter.
 
 here's the basic idea on how to achieve this, with a few different ways to pull this off:
 
@@ -69,6 +69,7 @@ with DAG(
         op_kwargs={'prev_execution_date': '{{ prev_execution_date }}'}
     )
 ```
+
 notice how in this version we are passing the template string to the `op_kwargs` as opposed to relying on the `context`. airflow will pick this up and render it correctly, passing the rendered datetime object to our function.
 
 **method 3: using a custom parameter**
@@ -97,20 +98,21 @@ with DAG(
     )
 
 ```
+
 this can be quite handy if you need to keep your python functions agnostic to airflow parameters and allows your python functions to be more flexible and be reused elsewhere.
 
 **a couple of things to keep in mind**
 
-*   **jinja templating**: the key thing to understand is that the double curly braces (`{{ }}`) signal to airflow that you want it to render that string as a template using jinja. this happens before your python function executes.
+- **jinja templating**: the key thing to understand is that the double curly braces (`{{ }}`) signal to airflow that you want it to render that string as a template using jinja. this happens before your python function executes.
 
-*   **data type**: airflow will transform the rendered string into the proper data type. in the case of `prev_execution_date`, you will receive a datetime object. there's no need to worry about having to parse the string yourself.
+- **data type**: airflow will transform the rendered string into the proper data type. in the case of `prev_execution_date`, you will receive a datetime object. there's no need to worry about having to parse the string yourself.
 
-*   **first run**: on the first ever dag run, `prev_execution_date` will return `none`, since there won't be a previous run. make sure you handle this case in your function with a conditional statement if your logic depends on that. there are multiple ways to achieve this, you could default to a specific date, or trigger a different logic.
+- **first run**: on the first ever dag run, `prev_execution_date` will return `none`, since there won't be a previous run. make sure you handle this case in your function with a conditional statement if your logic depends on that. there are multiple ways to achieve this, you could default to a specific date, or trigger a different logic.
 
-*   **timezone**: be mindful of timezones. airflow stores datetimes in utc but your system might use a different one. make sure that you are doing time zone conversions if required. you can have a look at python `pytz` library which is included in most of the airflow distributions.
+- **timezone**: be mindful of timezones. airflow stores datetimes in utc but your system might use a different one. make sure that you are doing time zone conversions if required. you can have a look at python `pytz` library which is included in most of the airflow distributions.
 
-*   **type annotations**: this is a friendly reminder to properly use python type hints in your function, it will make your life easier in the long run and is a good practice for software maintainability.
-   
+- **type annotations**: this is a friendly reminder to properly use python type hints in your function, it will make your life easier in the long run and is a good practice for software maintainability.
+
 **my history with this**
 
 i remember a while back when i started with airflow i was building this processing pipeline that dealt with financial transactions. i needed to know the previous run to properly figure out the delta of new data that i was expecting. i totally missed the fact that you had to explicitly pass the date. i had the worst of both worlds, i was trying to parse the date in my code and also trying to do it in the wrong place, using `{{ prev_execution_date }}` inside the function. took me a while to figure out what i was doing wrong because at first glance everything seems to be working, but then when the execution happen the context was not correctly parsed.
@@ -121,10 +123,10 @@ i spent hours looking at logs and wondering why the dates did not match what i w
 
 i’m not going to give you a specific link because they might break. but i highly recommend looking into the following resources for more airflow info:
 
-*   the official airflow documentation is your best friend. look into their explanation of templates, context variables and `pythonoperator`.
+- the official airflow documentation is your best friend. look into their explanation of templates, context variables and `pythonoperator`.
 
-*   “data pipelines with apache airflow” by bas honig, and “airflow cookbook” by nathaniel taylor are both solid books that go deep into airflow concepts. i have them both and tend to refer to them regularly.
+- “data pipelines with apache airflow” by bas honig, and “airflow cookbook” by nathaniel taylor are both solid books that go deep into airflow concepts. i have them both and tend to refer to them regularly.
 
-*   airflow source code in github, this is probably the best place if you really need to get very deep. if you are curious about something it always is good to have a look at the actual code.
+- airflow source code in github, this is probably the best place if you really need to get very deep. if you are curious about something it always is good to have a look at the actual code.
 
 hopefully this clears things up for you. let me know if anything else arises. happy airflowing!

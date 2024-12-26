@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-does-a-ddd-value-object-composite-identifier-look-like"
 ---
 
-Alright, let’s tackle this. It's a question I've seen crop up numerous times in the trenches, especially when trying to hammer out a robust domain model using Domain-Driven Design (DDD). Specifically, the composite identifier for a value object often throws people for a loop. Let's break it down.
+, let’s tackle this. It's a question I've seen crop up numerous times in the trenches, especially when trying to hammer out a robust domain model using Domain-Driven Design (DDD). Specifically, the composite identifier for a value object often throws people for a loop. Let's break it down.
 
-First, it's essential to revisit what a value object *is* within DDD. Unlike entities, which possess identity and are tracked over time, value objects are immutable and are identified purely by their attributes. Think of it like this: two `Address` objects are considered equal if all their properties (street, city, zip) match, regardless of when or where they were created. They don’t have an intrinsic identity beyond their properties. Now, the 'composite' part kicks in when we need a combination of these properties to uniquely identify that value object within a specific context, particularly when embedding value objects within an entity.
+First, it's essential to revisit what a value object _is_ within DDD. Unlike entities, which possess identity and are tracked over time, value objects are immutable and are identified purely by their attributes. Think of it like this: two `Address` objects are considered equal if all their properties (street, city, zip) match, regardless of when or where they were created. They don’t have an intrinsic identity beyond their properties. Now, the 'composite' part kicks in when we need a combination of these properties to uniquely identify that value object within a specific context, particularly when embedding value objects within an entity.
 
 In my experience, I've frequently seen this pattern when modelling geographical data. Imagine an `Order` entity which has a `ShippingAddress` value object. Now, suppose that addresses themselves, in the real world, can have a variety of data points: street address, optional unit number, city, postal code, etc. If we simply hashed all these properties together as a composite identifier, we might not capture meaningful equivalency. We might consider two addresses as 'different' simply because of extra white space characters. Thus a composite identifier needs to combine only the relevant parts of an object that are considered equal in its domain.
 
@@ -110,7 +110,7 @@ public final class GeoLocationSimplified {
     public int hashCode() {
       return Objects.hash(latitude, longitude);
     }
-    
+
        @Override
     public String toString() {
       return "GeoLocation{" +
@@ -121,6 +121,7 @@ public final class GeoLocationSimplified {
     }
 }
 ```
+
 In this modified class `GeoLocationSimplified` the `equals` method only looks at latitude and longitude. So even if two `GeoLocationSimplified` objects differ in their `geohash` they are considered the same instance if their latitude and longitude are identical.
 
 Here’s a more complex example using a `Product` value object with several attributes that contribute to a composite identifier:

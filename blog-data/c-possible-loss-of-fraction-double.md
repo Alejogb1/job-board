@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "c-possible-loss-of-fraction-double"
 ---
 
-Alright so you're asking about potential loss of precision when dealing with doubles in C# specifically the fractional part yeah I've been there seen that had the t-shirt and the coffee stains to prove it lol. This isn't some arcane wizardry its basic floating point math but it bites you when you least expect it and makes you question your entire existence as a programmer.
+so you're asking about potential loss of precision when dealing with doubles in C# specifically the fractional part yeah I've been there seen that had the t-shirt and the coffee stains to prove it lol. This isn't some arcane wizardry its basic floating point math but it bites you when you least expect it and makes you question your entire existence as a programmer.
 
 Let's break it down doubles in C# like most languages are represented using the IEEE 754 standard its a binary format so inherently not all decimal numbers can be perfectly represented they are usually approximated a lot of numbers with simple decimal representation like 0.1 or even 0.3 will not be represented exactly in memory thats the crux of the issue a classic programming nightmare if you ask me.
 
@@ -49,6 +49,7 @@ double value2 = Math.Pow(value1 , 2);
 Console.WriteLine(value1 * value1 == value2) // false on most systems
 Console.WriteLine(value2); // will output something extremely close to but not exactly 2
 ```
+
 Ok so here we're doing square root then squaring the result if we did that in perfect decimal arithmetic we would get 2.0 but in our floating point land we get that tiny fractional difference we are seeing again thats why that equality comparison fails. This is a classic gotcha it is not unusual to see people trying to debug why `sqrt(x)^2 != x` and wasting hours. I have also spent those hours let me tell you.
 
 So now that you have seen the core issue what can you do? Well you cannot get rid of it completely its inherent to the system but there are techniques that we can use to at least minimize the effects and that really matters in a lot of production cases especially for financial apps for example.
@@ -63,6 +64,7 @@ So now that you have seen the core issue what can you do? Well you cannot get ri
         return Math.Abs(a - b) < epsilon;
     }
     ```
+
     This function allows you to check for approximate equality using that epsilon for comparison and lets you avoid the direct equality problem we saw above.
 
 2.  **Use Decimal:** In C# we have a different type called decimal which is based on decimal representation instead of the binary one and doesnt suffer the same approximation problems as double decimal has a higher precision and allows you to avoid those fractional errors. It comes at a cost because its slower and occupies more memory its a trade off you have to make when you need precise calculations. This helped me fix the finance related bugs in an app where I was working on.
@@ -84,8 +86,8 @@ So to summarize yeah you're right there's potential for loss of fractional part 
 
 **Recommended reading:**
 
-*   **"What Every Computer Scientist Should Know About Floating-Point Arithmetic"** by David Goldberg: A classic and very detailed paper on floating point representation and computation. A must read for any programmer dealing with numerical data.
-*   **"Numerical Recipes"** by William H. Press et al.: A book that covers many numerical methods and also discusses the problems associated with floating-point arithmetic it is very useful for implementation details in many fields.
-*   **IEEE 754 Standard:** A technical documentation explaining the low level details of how the floating point numbers are represented in memory I have found it useful in some extreme cases for debugging.
+- **"What Every Computer Scientist Should Know About Floating-Point Arithmetic"** by David Goldberg: A classic and very detailed paper on floating point representation and computation. A must read for any programmer dealing with numerical data.
+- **"Numerical Recipes"** by William H. Press et al.: A book that covers many numerical methods and also discusses the problems associated with floating-point arithmetic it is very useful for implementation details in many fields.
+- **IEEE 754 Standard:** A technical documentation explaining the low level details of how the floating point numbers are represented in memory I have found it useful in some extreme cases for debugging.
 
 These resources should give you the theory behind the problem and some practical ways to solve it. Good luck and may your floating point calculations be ever precise haha!

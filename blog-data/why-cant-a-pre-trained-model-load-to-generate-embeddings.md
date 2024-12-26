@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-cant-a-pre-trained-model-load-to-generate-embeddings"
 ---
 
-Alright, let’s unpack why a pre-trained model might stubbornly refuse to generate embeddings, a frustration I’ve encountered more times than I’d like to remember, especially when dealing with complex model architectures. It isn't necessarily that the model *can't* do it, but often that it's not set up correctly *to* do it, or that you're attempting something the model wasn't originally intended for.
+, let’s unpack why a pre-trained model might stubbornly refuse to generate embeddings, a frustration I’ve encountered more times than I’d like to remember, especially when dealing with complex model architectures. It isn't necessarily that the model _can't_ do it, but often that it's not set up correctly _to_ do it, or that you're attempting something the model wasn't originally intended for.
 
 In my past life, during a project involving semantic search on legal documents, we faced this exact situation. We'd meticulously pre-trained a custom transformer-based model on a massive corpus of text using a masked language modeling objective. The pre-training phase went smoothly, validating the model's learning capabilities. Yet, when we switched gears to fine-tuning for embedding generation, we kept hitting roadblocks. The core issue wasn't model corruption or a catastrophic programming flaw, but rather a misunderstanding of the intended use and the necessary adjustments.
 
-At its heart, a pre-trained model is essentially a function that takes an input (often text or sequences of tokens) and produces an output. This output isn't necessarily an embedding; it’s typically a distribution over the vocabulary (during pre-training for tasks like masked language modeling) or a classification decision. The key is how you choose to *interpret* and *use* the internal state of the model to generate your embedding vector.
+At its heart, a pre-trained model is essentially a function that takes an input (often text or sequences of tokens) and produces an output. This output isn't necessarily an embedding; it’s typically a distribution over the vocabulary (during pre-training for tasks like masked language modeling) or a classification decision. The key is how you choose to _interpret_ and _use_ the internal state of the model to generate your embedding vector.
 
 The model architecture, training objective, and even the libraries you're using can all influence this. For instance, if your pre-trained model was optimized for next-token prediction or classification, the final layer's activations, typically involving softmax or sigmoid operations, might not directly translate into meaningful vector representations. These outputs are structured for a probability distribution over a vocabulary space, not for encoding semantic information as you'd desire with an embedding.
 
@@ -68,7 +68,7 @@ print(token_embeddings.shape)
 
 Another critical aspect to consider involves the model’s architecture directly. Some models are specifically designed with an architecture that inherently lends itself to producing useful contextualized representations, such as those using attention mechanisms. However, some less sophisticated architectures don't provide that kind of meaningful latent representation; for example, a simple bag-of-words model won’t easily produce such embeddings.
 
-Finally, the way you tokenize your input is crucial. Ensure that the tokenizer used during the embedding generation is *identical* to the one used during the pre-training phase. Tokenization mismatches can severely degrade the quality of the embeddings. Different tokenizers will segment words into different tokens which will lead to completely different vectors being generated, and will invalidate the knowledge the model has accumulated during its training.
+Finally, the way you tokenize your input is crucial. Ensure that the tokenizer used during the embedding generation is _identical_ to the one used during the pre-training phase. Tokenization mismatches can severely degrade the quality of the embeddings. Different tokenizers will segment words into different tokens which will lead to completely different vectors being generated, and will invalidate the knowledge the model has accumulated during its training.
 
 Here's a final example showcasing what happens when you incorrectly configure a tokenizer. This is a contrived case, but it highlights the problem:
 

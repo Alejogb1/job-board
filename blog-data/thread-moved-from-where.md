@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "thread-moved-from-where"
 ---
 
-Okay so thread moved from where right I've seen this a few times usually means a few things and I'm gonna go through all the usual suspects I guess
+thread moved from where right I've seen this a few times usually means a few things and I'm gonna go through all the usual suspects I guess
 
 First off let’s talk about the most common situation you stumble on this which is the dreaded forum migration This happens a lot more than you'd think especially with smaller or older platforms They start out small maybe a basic phpBB forum or something but as traffic grows or the platform becomes a maintenance headache they gotta move it
 
@@ -52,33 +52,32 @@ def check_mapping_sqlite(old_id):
         return result[0]
     else:
       return "no mapping found"
-    
+
 old_thread_id = "old1234"
 new_thread_id = check_mapping_sqlite(old_thread_id)
 
 print(f"Old thread id {old_thread_id} maps to new thread id {new_thread_id}")
 ```
+
 That is a python example on how to do this in a database using sqlite3 if its a relational database it should be something similar and can help you finding mapping errors
 
 If it is an API check for thread relocation with an API response assuming that the API you are using uses json
 
 ```javascript
-async function checkThreadLocation(threadId){
-  const response = await fetch(`/api/thread/${threadId}`)
-  const data = await response.json()
+async function checkThreadLocation(threadId) {
+  const response = await fetch(`/api/thread/${threadId}`);
+  const data = await response.json();
 
-  if(data && data.new_location)
-  {
-     console.log(`thread ${threadId} moved to ${data.new_location}`)
-  }
-  else{
-    console.log(`Thread ${threadId} is in place or no new location was found`)
+  if (data && data.new_location) {
+    console.log(`thread ${threadId} moved to ${data.new_location}`);
+  } else {
+    console.log(`Thread ${threadId} is in place or no new location was found`);
   }
 }
 
-checkThreadLocation('1234')
-
+checkThreadLocation("1234");
 ```
+
 This small javascript example gets the json response from the api it expects that the json response of the api contains a new location field if there was a relocation if not it prints something else
 
 And if it is a message queue problem try tracking the message id and its position maybe it helps understanding how things were moved
@@ -101,6 +100,7 @@ print(' [*] Waiting for messages. To exit press CTRL+C')
 channel.start_consuming()
 
 ```
+
 This is a simple example of pika using rabbitmq that helps you to find any related message id if that helps you with your debugging if you find some messaged were moved from a queue to another place this helps track message id if they are present
 
 For resources on these subjects I highly recommend "Database Internals" by Alex Petrov for understanding database migration challenges and "Designing Data-Intensive Applications" by Martin Kleppmann for more about data consistency challenges across different microservices also for rabbitmq you can check the rabbitmq documentation for more details of the message broker

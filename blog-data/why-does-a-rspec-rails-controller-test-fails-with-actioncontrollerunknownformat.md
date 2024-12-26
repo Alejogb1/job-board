@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-does-a-rspec-rails-controller-test-fails-with-actioncontrollerunknownformat"
 ---
 
-alright, so you're bumping into that classic `actioncontroller::unknownformat` error in your rspec rails controller tests, right? i've been there, trust me. it's like hitting a brick wall with a feather duster, frustrating and not immediately obvious why it's happening. i've spent countless hours debugging these back in the day, probably more than i care to acknowledge.
+, so you're bumping into that classic `actioncontroller::unknownformat` error in your rspec rails controller tests, right? i've been there, trust me. it's like hitting a brick wall with a feather duster, frustrating and not immediately obvious why it's happening. i've spent countless hours debugging these back in the day, probably more than i care to acknowledge.
 
 let's break this down, this error basically means your controller action doesn't know how to handle the format your test is requesting. this often comes down to how your rspec test is setting up the request and how your rails controller is configured. it's a format mismatch, pure and simple.
 
@@ -102,7 +102,7 @@ sometimes the issue is not on the controller but on the way you set up your requ
 
 in your controller you might be using the `request.format` to decide how to respond, but sometimes that logic is broken, or gets more complex than it should and you start getting unexpected behaviours. debugging controllers with complicated conditional formatting logic can be tricky. my rule of thumb is keep the formatting as simple as possible and use the `respond_to` block as a single point of truth for the accepted formats.
 
-**4.  versioning issues**
+**4. versioning issues**
 
 one time i was banging my head against the wall with an endpoint that would only work from postman but not from my tests, this turned out that we were passing a custom header with the api version and i was not passing it in my tests, that gave me a nasty error because of the way the api version was configured to support different formats for different versions. we then spent half a day debugging and laughing at how stupid we were for not checking that first.
 
@@ -111,11 +111,12 @@ one time i was banging my head against the wall with an endpoint that would only
 sometimes the format is being passed in the params, and sometimes this happens for other reasons that might seem unrelated to the format but they are related to the test setup, so make sure your params hash is being passed correctly to the controller when needed. i know i have been in a situation where i had an incorrect hash format being passed to the controller so it resulted in not being able to match the format.
 
 so, before you pull all your hair out, double-check these things:
-* make sure your controller uses `respond_to` blocks and supports the formats you are requesting.
-* ensure your rspec tests specify the correct format using `format: :json` or the url suffix (like `:my_action.json`).
-* double check any custom headers, especially if your app supports versioning or different content types.
-* the params hash is being built and passed correctly.
-* try debugging your controller with `byebug` or `pry` inside the method to better understand the flow.
+
+- make sure your controller uses `respond_to` blocks and supports the formats you are requesting.
+- ensure your rspec tests specify the correct format using `format: :json` or the url suffix (like `:my_action.json`).
+- double check any custom headers, especially if your app supports versioning or different content types.
+- the params hash is being built and passed correctly.
+- try debugging your controller with `byebug` or `pry` inside the method to better understand the flow.
 
 that is the long short of it. debugging these issues can be frustrating, but if you take it one step at a time, you will find the root cause. these kind of errors are not really that hard to solve, but they can be hard to debug, because you often overlook the simplest things, that i believe is part of the fun in software engineering, or perhaps i am just biased. (i am aware that this is the most common software engineer joke).
 

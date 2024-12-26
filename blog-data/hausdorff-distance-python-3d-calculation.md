@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "hausdorff-distance-python-3d-calculation"
 ---
 
-Okay so you're asking about Hausdorff distance in 3D using Python right I get it Been there done that plenty of times it's a bit of a head-scratcher if you're not careful Especially in 3D where things get hairy fast So here’s the deal from my perspective someone who's wrestled with this monster more than a few times
+you're asking about Hausdorff distance in 3D using Python right I get it Been there done that plenty of times it's a bit of a head-scratcher if you're not careful Especially in 3D where things get hairy fast So here’s the deal from my perspective someone who's wrestled with this monster more than a few times
 
 First off why Hausdorff distance It's all about measuring how far apart two sets of points are from each other it’s not like calculating a distance between two points you are measuring distances between two sets of points A bit more involved than euclidean distance if you ask me In 3D this becomes crucial when you are dealing with point clouds or meshed objects and you need to know how similar or how different they are For example think of two slightly different scans of the same object the Hausdorff distance can tell you how much these differ It's a maximum of the minimum distances is how I try to remember it
 
@@ -38,7 +38,7 @@ def naive_hausdorff_distance(set1, set2):
             dist = np.linalg.norm(p1 - p2)
             min_dist = min(min_dist, dist)
         max_dist_set1_to_set2 = max(max_dist_set1_to_set2, min_dist)
-        
+
     max_dist_set2_to_set1 = 0.0
     for p2 in set2:
         min_dist = inf
@@ -46,7 +46,7 @@ def naive_hausdorff_distance(set1, set2):
             dist = np.linalg.norm(p1 - p2)
             min_dist = min(min_dist, dist)
         max_dist_set2_to_set1 = max(max_dist_set2_to_set1, min_dist)
-    
+
     return max(max_dist_set1_to_set2, max_dist_set2_to_set1)
 
 # Example
@@ -55,6 +55,7 @@ set2 = np.array([[1.1, 2.2, 3.1], [4.3, 5.1, 6.1], [7.2, 8.2, 9.2] , [10, 11, 12
 
 print(naive_hausdorff_distance(set1, set2)) #outputs 3.605551275463989
 ```
+
 That code is pretty much as straightforward as it gets but as I mentioned before it's not really the most efficient way to do it especially if those sets are large You are iterating a lot of times unnecessarily
 
 And you see those loops They are the ones that kill performance Especially if you're dealing with thousands or even millions of points and that’s very common So you need a much better approach than just that basic loop thing Numpy vectorized operations are your best friend for efficiency
@@ -78,11 +79,11 @@ def scipy_hausdorff_distance(set1, set2):
     Returns:
         float: The Hausdorff distance.
     """
-    
+
     dist1 = cdist(set1, set2)
     dist2 = cdist(set2, set1)
 
-    
+
     max_min_1 = np.max(np.min(dist1, axis=1))
     max_min_2 = np.max(np.min(dist2, axis=1))
 

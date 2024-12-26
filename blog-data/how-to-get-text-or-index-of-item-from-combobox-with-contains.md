@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-get-text-or-index-of-item-from-combobox-with-contains"
 ---
 
-alright, so you're dealing with comboboxes and trying to snag the text or index of an item when you don't have an exact match, but only a partial one. i've been there, many times. it's a classic ui challenge, and honestly, it’s often a little more involved than people anticipate. let me walk you through how i've tackled this in the past, and we can break down some approaches with code examples that should steer you in the proper direction.
+, so you're dealing with comboboxes and trying to snag the text or index of an item when you don't have an exact match, but only a partial one. i've been there, many times. it's a classic ui challenge, and honestly, it’s often a little more involved than people anticipate. let me walk you through how i've tackled this in the past, and we can break down some approaches with code examples that should steer you in the proper direction.
 
 the core problem, as i see it, is the inherent nature of comboboxes: they are designed for selecting a specific item from a predefined list. they aren’t really built for fuzzy searches where you look for an item by a piece of the text instead of the full name. so we need to roll our own logic for this "contains" type of behavior.
 

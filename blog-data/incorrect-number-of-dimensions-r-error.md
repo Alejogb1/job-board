@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "incorrect-number-of-dimensions-r-error"
 ---
 
-Okay so "incorrect number of dimensions r error" right I've seen this dance more times than I care to admit let's unpack this thing it's usually a dimensions mismatch between two arrays or tensors or whatever multi-dimensional data structure we're dealing with which is a typical issue
+"incorrect number of dimensions r error" right I've seen this dance more times than I care to admit let's unpack this thing it's usually a dimensions mismatch between two arrays or tensors or whatever multi-dimensional data structure we're dealing with which is a typical issue
 
 I've personally wrestled with this particular error back in my early days working on a deep learning project building a custom image recognition model man that was a mess at first I was trying to feed a batch of 3D image data into a fully connected layer which was expecting a 2D matrix of flattened pixel data the error was screaming at me as clear as day but back then I was still finding my bearings now I see this error I kind of chuckle a bit and think "ah the good old shape mismatch"
 
@@ -24,7 +24,7 @@ matrix_a = np.array([[1 2]
 print(f"Shape of matrix_a: {matrix_a.shape}") # Output Shape of matrix_a: (3, 2)
 
 
-# Creating a 1D numpy array 
+# Creating a 1D numpy array
 vector_b = np.array([7 8 9])
 print(f"Shape of vector_b: {vector_b.shape}") # Output Shape of vector_b: (3,)
 
@@ -50,7 +50,7 @@ print(f"Shape of image_batch: {image_batch.shape}") # Output Shape of image_batc
 
 
 #Creating a fully connected layer weights matrix
-fc_weights = torch.randn(10 64*64*3) # 10 outputs fully connected layer 
+fc_weights = torch.randn(10 64*64*3) # 10 outputs fully connected layer
 print(f"Shape of fc_weights: {fc_weights.shape}") # Output Shape of fc_weights: torch.Size([10, 12288])
 
 try:
@@ -90,7 +90,7 @@ try:
     result = array_a + array_b
 except ValueError as e:
     print(f"Error: {e}") # Output Error: operands could not be broadcast together with shapes (2,3) (2,)
-   
+
 #Solution is usually using reshape or using broadcasting rules
 array_b_reshaped= array_b.reshape(2,1)
 print(f"Shape of array_b_reshaped: {array_b_reshaped.shape}") # Output Shape of array_b_reshaped: (2, 1)

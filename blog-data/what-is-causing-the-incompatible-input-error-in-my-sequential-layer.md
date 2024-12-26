@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-causing-the-incompatible-input-error-in-my-sequential-layer"
 ---
 
-Okay, let’s tackle this. An "incompatible input" error in a sequential layer, especially when you’re working with neural networks, is one of those frustrating things that pops up and seems like it’s yelling at you from the console. Believe me, I’ve spent more than a few late nights debugging similar issues. It's rarely a single, glaring problem; more often it's a combination of factors related to how data flows through your model architecture. Let’s break down the most common culprits and how to approach debugging them.
+, let’s tackle this. An "incompatible input" error in a sequential layer, especially when you’re working with neural networks, is one of those frustrating things that pops up and seems like it’s yelling at you from the console. Believe me, I’ve spent more than a few late nights debugging similar issues. It's rarely a single, glaring problem; more often it's a combination of factors related to how data flows through your model architecture. Let’s break down the most common culprits and how to approach debugging them.
 
 The root of the issue lies in the shape and dimensionality of your input data versus what your sequential layers are expecting. Neural network layers, particularly in sequential models, rely on predictable input shapes. If these expectations aren’t met, the layer throws this incompatibility error, essentially saying, "Hey, I can't process this!" It's like trying to fit a square peg into a round hole.
 
@@ -133,8 +133,8 @@ My usual approach to tackling these errors goes something like this:
 
 To gain a deeper understanding of these concepts, I strongly suggest reviewing the following resources:
 
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book provides a comprehensive theoretical understanding of deep learning and explains in detail various aspects of neural networks including layer design and data shapes.
-*   **The official TensorFlow and Keras documentation:** The official documentation is a must for understanding the intricacies of each layer, their respective input and output specifications, and practical examples. The Keras API is particularly useful for building neural networks.
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book offers practical guidance on using deep learning frameworks, emphasizing hands-on implementation. It covers both the basic and advanced aspects of deep learning.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book provides a comprehensive theoretical understanding of deep learning and explains in detail various aspects of neural networks including layer design and data shapes.
+- **The official TensorFlow and Keras documentation:** The official documentation is a must for understanding the intricacies of each layer, their respective input and output specifications, and practical examples. The Keras API is particularly useful for building neural networks.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book offers practical guidance on using deep learning frameworks, emphasizing hands-on implementation. It covers both the basic and advanced aspects of deep learning.
 
 Solving this specific "incompatible input" error usually just requires careful attention to your data's shape and the architecture of your neural network. By meticulously tracing the flow of your data and comparing it to layer specifications, you can catch and correct the underlying issue. It's a common problem, but with a systematic approach, you can solve it every single time.

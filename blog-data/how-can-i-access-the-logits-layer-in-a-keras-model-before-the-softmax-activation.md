@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-access-the-logits-layer-in-a-keras-model-before-the-softmax-activation"
 ---
 
-Alright, let's tackle this. I remember a project back in '18, we were working on a custom object detection system and needed to fine-tune some intermediate layers. Getting pre-softmax activations—the logits—was absolutely crucial for our loss functions. So, yeah, I've been down this road. It’s a fairly common need when you’re manipulating model internals, not just using them as black boxes. Accessing logits in a Keras model, before that final softmax squashing, isn’t something Keras directly exposes as a simple attribute. You need a bit of surgical precision.
+, let's tackle this. I remember a project back in '18, we were working on a custom object detection system and needed to fine-tune some intermediate layers. Getting pre-softmax activations—the logits—was absolutely crucial for our loss functions. So, yeah, I've been down this road. It’s a fairly common need when you’re manipulating model internals, not just using them as black boxes. Accessing logits in a Keras model, before that final softmax squashing, isn’t something Keras directly exposes as a simple attribute. You need a bit of surgical precision.
 
 The core problem stems from the way Keras constructs models. Layers are chained, and each one typically outputs its transformed tensor, which is then immediately fed to the next layer. The softmax activation, usually bundled into the final dense layer, is part of this process. To capture the pre-softmax output, we effectively need to ‘tap’ into the model’s computational graph before that final activation. We do this using techniques that manipulate the model’s functional API or create a custom model that duplicates the layers up to the desired output.
 
@@ -27,7 +27,7 @@ model_seq = keras.Sequential([
 model_seq.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 ```
 
-Now, to extract the logits—the output from the second dense layer *before* the softmax activation in our third dense layer—we'd need to make a new model that copies all layers up to, but not including, the softmax layer:
+Now, to extract the logits—the output from the second dense layer _before_ the softmax activation in our third dense layer—we'd need to make a new model that copies all layers up to, but not including, the softmax layer:
 
 ```python
 # Extracting logits from Sequential Model
@@ -41,7 +41,7 @@ logits_seq_output = logits_model_seq.predict(random_input)
 print("Shape of logits from Sequential Model:", logits_seq_output.shape)
 ```
 
-Here, we created a new model `logits_model_seq` whose output is the output tensor of the *second last* layer, before the softmax function is applied. We effectively "snipped" the model. The key thing to recognize is that we are not modifying the original model. This approach works well, although slightly more verbose, and is necessary for sequential models.
+Here, we created a new model `logits_model_seq` whose output is the output tensor of the _second last_ layer, before the softmax function is applied. We effectively "snipped" the model. The key thing to recognize is that we are not modifying the original model. This approach works well, although slightly more verbose, and is necessary for sequential models.
 
 Now, if we have a functional model, things get a tad cleaner. Consider this functional model:
 
@@ -58,7 +58,7 @@ model_func.compile(optimizer='adam', loss='sparse_categorical_crossentropy', met
 
 ```
 
-To extract logits from *this* functional model, you follow a similar pattern but can directly choose which output you want.
+To extract logits from _this_ functional model, you follow a similar pattern but can directly choose which output you want.
 
 ```python
 # Extracting logits from Functional Model
@@ -106,8 +106,8 @@ print("Shape of logits from a Custom Model:", logits_custom_output.shape)
 
 Notice here, we have explicitly named the intermediate layer we're after, `logits_before_softmax`. This makes it very clear, even in more complex models, what we are doing.
 
-A critical point to consider is that when creating these new ‘logits’ models, they share the *same* weights as your original model. You are simply creating a way to access specific outputs. This avoids the need to copy weights or manually replicate model parts, thereby conserving memory and computation.
+A critical point to consider is that when creating these new ‘logits’ models, they share the _same_ weights as your original model. You are simply creating a way to access specific outputs. This avoids the need to copy weights or manually replicate model parts, thereby conserving memory and computation.
 
-Now, if you’re looking for a deeper dive into the mechanics of Keras and TensorFlow’s computational graphs, the TensorFlow documentation itself is a treasure trove, but specifically, I recommend delving into books that detail the functional API in detail. Additionally, research papers on *gradient-based explanation methods* often showcase these approaches of capturing intermediate outputs. For instance, anything touching on techniques like *Grad-CAM* or *SmoothGrad* will indirectly demonstrate accessing pre-activation layers.
+Now, if you’re looking for a deeper dive into the mechanics of Keras and TensorFlow’s computational graphs, the TensorFlow documentation itself is a treasure trove, but specifically, I recommend delving into books that detail the functional API in detail. Additionally, research papers on _gradient-based explanation methods_ often showcase these approaches of capturing intermediate outputs. For instance, anything touching on techniques like _Grad-CAM_ or _SmoothGrad_ will indirectly demonstrate accessing pre-activation layers.
 
 In summary, accessing the logits layer before the softmax in Keras is accomplished by creating a new model whose output is the tensor you desire. This new model shares weights with your original model, but simply provides a different output. The approach you use depends on if you are using the sequential or functional API, but understanding the Keras model object allows for straightforward extraction of any intermediate outputs. This is more of an approach rather than a feature, but is central to doing any advanced operations with deep learning models.

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-a-bidirectional-model-mixing-gru-and-lstm-layers"
 ---
 
-alright, so you're looking at mixing gru and lstm layers in a bidirectional model, right? i've been down that road a few times, and it’s definitely a place where things can get… interesting. let me share what i've learned, focusing on the practical bits and skipping the academic fluff for now.
+, so you're looking at mixing gru and lstm layers in a bidirectional model, right? i've been down that road a few times, and it’s definitely a place where things can get… interesting. let me share what i've learned, focusing on the practical bits and skipping the academic fluff for now.
 
 the core idea here is that you want to leverage the strengths of both lstms (long-term dependencies) and grus (computational efficiency), hopefully getting the best of both worlds. doing it bidirectionally just means you're processing the sequence data in both directions – forward and backward – which usually improves performance for sequence-to-sequence tasks and time-series analysis.
 
@@ -46,7 +46,7 @@ in the above code, the input shape is defined as a tuple, this example considers
 
 another option is that you can create multiple layers of the same cell type like two stacked bidirectional lstm layers and then a layer of bidirectional gru. you have to be aware that you have to make sure the number of units or features you return is consistent with the next layer.
 
-another thing that's worth noting here, that i found out the hard way, is the impact of the `go_backwards` flag. it’s crucial to understand that when set to true, it *really* does reverse the direction in which the sequence is processed. sometimes people think is like adding a second layer of the same recurrent cell type doing the same calculations twice, but that's not it. in essence what the bidirectional layer does is to process the sequence and then process the reversed version of it. when working with sequences that have temporal characteristics, doing this can be very useful. here is another example but with more stacked layers of recurrent cells, showing that they can be stacked even if they are of the same type:
+another thing that's worth noting here, that i found out the hard way, is the impact of the `go_backwards` flag. it’s crucial to understand that when set to true, it _really_ does reverse the direction in which the sequence is processed. sometimes people think is like adding a second layer of the same recurrent cell type doing the same calculations twice, but that's not it. in essence what the bidirectional layer does is to process the sequence and then process the reversed version of it. when working with sequences that have temporal characteristics, doing this can be very useful. here is another example but with more stacked layers of recurrent cells, showing that they can be stacked even if they are of the same type:
 
 ```python
 import torch
@@ -110,11 +110,12 @@ one thing i found very interesting when i had to debug my models is to look at t
 
 i found these resources quite useful when dealing with recurrent neural networks, especially with hybrid architectures:
 
-*   **understanding recurrent neural networks by christopher olah:** it’s a great introduction to the topic, not much code but a good conceptual overview.
-*   **deep learning with python by francois chollet:** it’s a very good book on neural networks with a very hands-on approach.
-*   **sequence modeling with recurrent neural networks by alex graves:** an in depth look at the theory and practical implementation of rnns
+- **understanding recurrent neural networks by christopher olah:** it’s a great introduction to the topic, not much code but a good conceptual overview.
+- **deep learning with python by francois chollet:** it’s a very good book on neural networks with a very hands-on approach.
+- **sequence modeling with recurrent neural networks by alex graves:** an in depth look at the theory and practical implementation of rnns
 
 lastly, don't be afraid to experiment with different combinations of layers and configurations. there's a lot of parameter tuning involved here, and it can be a bit of an art, but that’s part of the fun. also, do some sanity checks, check your input and output shapes, and don’t blindly trust the code snippets you find online, i mean, even this one.
+
 ```python
 
 ```

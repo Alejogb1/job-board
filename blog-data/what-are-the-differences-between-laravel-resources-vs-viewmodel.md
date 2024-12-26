@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-are-the-differences-between-laravel-resources-vs-viewmodel"
 ---
 
-Alright, let’s unpack the nuances between Laravel resources and view models. This is a topic I’ve had to navigate extensively, especially back in my days managing a rather complex e-commerce platform. We hit issues scaling the API and rendering views efficiently. That's where a solid understanding of these architectural patterns became crucial. It's less about one being universally "better" and more about choosing the appropriate tool for the job, and honestly, often about the subtle architectural decisions that impact performance.
+, let’s unpack the nuances between Laravel resources and view models. This is a topic I’ve had to navigate extensively, especially back in my days managing a rather complex e-commerce platform. We hit issues scaling the API and rendering views efficiently. That's where a solid understanding of these architectural patterns became crucial. It's less about one being universally "better" and more about choosing the appropriate tool for the job, and honestly, often about the subtle architectural decisions that impact performance.
 
 Let's start with Laravel resources. In their essence, they are primarily about transforming your eloquent models into a specific, often json-based, structure, typically for your API endpoints. Think of it as a well-defined contract: you hand a model instance, and it returns a data representation suitable for transmission. This is hugely beneficial when you want to control exactly what data your API is exposing and how it's formatted. Laravel resources handle serialization very effectively, offering options for including relations, conditional formatting, and custom logic within a resource class.
 

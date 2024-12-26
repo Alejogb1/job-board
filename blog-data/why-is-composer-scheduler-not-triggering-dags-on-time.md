@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-composer-scheduler-not-triggering-dags-on-time"
 ---
 
-Alright, let's talk about Composer scheduler delays. I've seen this particular headache crop up more times than I care to count, and it rarely boils down to a single, easy fix. It's almost always a combination of factors at play, and it requires a methodical approach to unravel. Let's dive into the typical culprits.
+, let's talk about Composer scheduler delays. I've seen this particular headache crop up more times than I care to count, and it rarely boils down to a single, easy fix. It's almost always a combination of factors at play, and it requires a methodical approach to unravel. Let's dive into the typical culprits.
 
 The core issue, as the question implies, revolves around why scheduled dags in airflow running on google cloud composer aren't executing when we expect them to. The underlying mechanism relies on a scheduler component that periodically scans the configured dag files, parses their schedule definitions, and enqueues dag runs for execution. When this process breaks down, we’ll see delays, and it's usually not a problem with the scheduler itself being "broken", but more about resource contention, configuration mismatches, or bottlenecks.
 
@@ -54,7 +54,7 @@ with DAG(
     init_task >> main_task
 ```
 
-This dag will not cause a direct delay in *execution* of the dag itself, but it will cause a delay in the time it takes to load into the scheduler, potentially missing its scheduled time. The solution here isn't really about changing airflow configuration, but rather optimizing the dags themselves by loading any data required into memory as needed, rather than during initialization.
+This dag will not cause a direct delay in _execution_ of the dag itself, but it will cause a delay in the time it takes to load into the scheduler, potentially missing its scheduled time. The solution here isn't really about changing airflow configuration, but rather optimizing the dags themselves by loading any data required into memory as needed, rather than during initialization.
 
 **Example 2: Scheduler Resource Issues**
 

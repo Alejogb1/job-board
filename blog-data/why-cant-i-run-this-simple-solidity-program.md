@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-cant-i-run-this-simple-solidity-program"
 ---
 
-Okay, let's get into this. I've definitely seen my share of head-scratchers when it comes to deploying smart contracts, especially those that seem like they *should* just work. You're facing the classic "it's not doing what I expect" scenario with a seemingly simple solidity program. There's a lot that can go wrong, even when the code itself looks spotless. Let's break down some of the common culprits, and I'll share some insights from my past experiences that might help you zero in on the root cause.
+, let's get into this. I've definitely seen my share of head-scratchers when it comes to deploying smart contracts, especially those that seem like they _should_ just work. You're facing the classic "it's not doing what I expect" scenario with a seemingly simple solidity program. There's a lot that can go wrong, even when the code itself looks spotless. Let's break down some of the common culprits, and I'll share some insights from my past experiences that might help you zero in on the root cause.
 
 First, let’s acknowledge that the beauty (and frustration) of working with solidity is its determinism. Everything needs to be perfectly set for execution. Any deviation can lead to the program not deploying, or, worse, deploying but behaving erratically. When you say "simple," I immediately think of a program that might lack error handling or be implicitly expecting certain conditions. This implicit expectation, often lurking subtly beneath the surface, is a common source of these headaches.
 
@@ -49,7 +49,7 @@ contract ParameterizedContract {
 
 Deploying this contract without providing an address parameter would fail. Your deployment script would then need to supply the `_owner` parameter. When using tools such as Hardhat or Truffle, you would need to set up a migration script to handle the deployment and provide the required addresses.
 
-Finally, and this is one I've seen countless times, make sure your contract is properly compiled *before* you deploy it. This might sound ridiculously basic, but it's an easily overlooked detail. I once wasted a half day debugging an "unexplainable" deployment error, only to realize the deployment script was pointing to an old build artifact! Make sure your deployment scripts are referencing the freshly compiled contracts. Your build folder should always reflect the latest updates in your contract code before deployment. It is easy to make a code change, forget to compile it, and then deploy the old version.
+Finally, and this is one I've seen countless times, make sure your contract is properly compiled _before_ you deploy it. This might sound ridiculously basic, but it's an easily overlooked detail. I once wasted a half day debugging an "unexplainable" deployment error, only to realize the deployment script was pointing to an old build artifact! Make sure your deployment scripts are referencing the freshly compiled contracts. Your build folder should always reflect the latest updates in your contract code before deployment. It is easy to make a code change, forget to compile it, and then deploy the old version.
 
 Let's add a third example that shows a common source of confusion around visibility of functions:
 
@@ -70,7 +70,7 @@ contract VisibilityExample {
     }
 
      function getSecretState() public view returns(uint) {
-        // return secretState; // This will not compile! 
+        // return secretState; // This will not compile!
         return getSecretStateInternal(); // This is OK, but this is not always the best approach
     }
 
@@ -86,8 +86,9 @@ contract VisibilityExample {
 }
 
 ```
+
 This example demonstrates a few things: public visibility is used when you want to expose a state variable or function publicly. A function marked as `internal` is only accessible within the contract and inherited contracts. A function or state variable marked as `private` is only accessible from within the contract, including the defined function. The key issue to remember is that you cannot call or access a private variable or function outside the scope of the contract, and directly attempting it will cause the code to not compile.
 
-If you're really serious about mastering solidity, I'd highly recommend *Mastering Ethereum* by Andreas M. Antonopoulos and Gavin Wood. That provides a comprehensive look into the workings of Ethereum and smart contracts in general. For staying up to date with language changes, I would go directly to the solidity documentation and the changelogs of the latest versions.
+If you're really serious about mastering solidity, I'd highly recommend _Mastering Ethereum_ by Andreas M. Antonopoulos and Gavin Wood. That provides a comprehensive look into the workings of Ethereum and smart contracts in general. For staying up to date with language changes, I would go directly to the solidity documentation and the changelogs of the latest versions.
 
 In summary, the seemingly "simple" solidity programs often have underlying issues relating to compiler compatibility, gas limitations, configuration errors, deployment script errors, parameter mismatches or something as simple as calling the wrong version of the compiled code or having issues with function visibility. Methodical debugging combined with a solid understanding of Solidity fundamentals will guide you to resolve most issues. Don't hesitate to examine your logs, your deployment scripts and your configurations. I hope that helped, and if you find something that does not fall under these categories, I'd love to discuss it further.

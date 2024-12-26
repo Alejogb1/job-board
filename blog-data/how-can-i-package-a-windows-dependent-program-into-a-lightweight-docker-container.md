@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "how-can-i-package-a-windows-dependent-program-into-a-lightweight-docker-container"
 ---
 
-alright, so you're looking to cram a windows-specific app into a docker container without it turning into a bloated monstrosity. i've been there, done that, got the t-shirt (and probably a few grey hairs in the process). it's definitely achievable, but it requires a shift in thinking and a few tricks.
+, so you're looking to cram a windows-specific app into a docker container without it turning into a bloated monstrosity. i've been there, done that, got the t-shirt (and probably a few grey hairs in the process). it's definitely achievable, but it requires a shift in thinking and a few tricks.
 
-first off, the biggest hurdle you're facing is that docker, in its native form, is primarily built for linux. windows containers, while available, aren't exactly lightweight out of the box. they tend to be hefty because they include a good chunk of the windows os. so, we’re not going to go that way. instead, the key is to focus on isolating only what your program *actually needs* from the windows world. forget about trying to bring the whole windows kitchen sink with us.
+first off, the biggest hurdle you're facing is that docker, in its native form, is primarily built for linux. windows containers, while available, aren't exactly lightweight out of the box. they tend to be hefty because they include a good chunk of the windows os. so, we’re not going to go that way. instead, the key is to focus on isolating only what your program _actually needs_ from the windows world. forget about trying to bring the whole windows kitchen sink with us.
 
 my first experience with this was a disaster, if i'm being honest. back in '18, i was working on a legacy c# application that relied on some specific windows apis for printing labels. we tried the standard windows container approach, and the resulting image was over 10 gigs! it was insane. moving that thing around our network felt like trying to upload a whole dvd. that experience taught me the hard way that less is more.
 
@@ -40,11 +40,11 @@ ENTRYPOINT ["dotnet", "YourApp.dll"]
 
 in this example:
 
-*   the first `from` line uses the dotnet sdk image to compile the code.
-*   we restore packages, copy the source and compile the project into the `out` folder.
-*   the second `from` line uses a very small .net runtime image, in this example we use the same base as in step 1 but the sdk will be heavier, so using two stages is a key optimization.
-*   we copy only the compiled files from the previous build container to the final image.
-*   and set the entry point to run our compiled app.
+- the first `from` line uses the dotnet sdk image to compile the code.
+- we restore packages, copy the source and compile the project into the `out` folder.
+- the second `from` line uses a very small .net runtime image, in this example we use the same base as in step 1 but the sdk will be heavier, so using two stages is a key optimization.
+- we copy only the compiled files from the previous build container to the final image.
+- and set the entry point to run our compiled app.
 
 **3. the dependencies: only what you need**
 
@@ -89,17 +89,17 @@ docker builds images in layers. each instruction in your dockerfile creates a ne
 
 **some extra tips and gotchas:**
 
-*   **dockerignore:** create a `.dockerignore` file and use it to exclude anything that doesn't need to be in the container. this includes source code if you are using a multi stage docker file as in the example, git folders, documentation, and so on. the more you exclude the better.
-*   **multi-stage builds:** embrace them. this is really a key feature to create small images, as it allows you to separate the build process from the runtime image, you keep your development sdk out of the final image and only ship what is needed.
-*   **image optimization tools:** there are tools that can help with reducing the size of an image after you have created it by analyzing the layers and removing unused data. these tools can become a bit too technical to use, but you should investigate them if size is absolutely critical.
-*   **be mindful of licenses:** be careful when you are copying windows dlls. make sure your license permits this. you'll not have problems when it comes to the .net dlls and dependencies, but native libraries might have limitations.
-*   **minimalist approach:** think only about what your software absolutely needs. any unneeded file will inflate the size of the image. when in doubt, leave it out.
+- **dockerignore:** create a `.dockerignore` file and use it to exclude anything that doesn't need to be in the container. this includes source code if you are using a multi stage docker file as in the example, git folders, documentation, and so on. the more you exclude the better.
+- **multi-stage builds:** embrace them. this is really a key feature to create small images, as it allows you to separate the build process from the runtime image, you keep your development sdk out of the final image and only ship what is needed.
+- **image optimization tools:** there are tools that can help with reducing the size of an image after you have created it by analyzing the layers and removing unused data. these tools can become a bit too technical to use, but you should investigate them if size is absolutely critical.
+- **be mindful of licenses:** be careful when you are copying windows dlls. make sure your license permits this. you'll not have problems when it comes to the .net dlls and dependencies, but native libraries might have limitations.
+- **minimalist approach:** think only about what your software absolutely needs. any unneeded file will inflate the size of the image. when in doubt, leave it out.
 
 **resources to check out:**
 
-*   *containerizing .net applications with docker* (microsoft documentation): it's a good starting point and will guide you step-by-step.
-*   *docker deep dive* by nigel poulton: a great book that explains the inner workings of docker. it's very thorough and will help you understand how layers work, which is crucial for optimizing image size.
-*   *microsoft docs: building minimal containers:* an excellent resource with the latest info and tricks from microsoft, particularly on the dotnet side.
+- _containerizing .net applications with docker_ (microsoft documentation): it's a good starting point and will guide you step-by-step.
+- _docker deep dive_ by nigel poulton: a great book that explains the inner workings of docker. it's very thorough and will help you understand how layers work, which is crucial for optimizing image size.
+- _microsoft docs: building minimal containers:_ an excellent resource with the latest info and tricks from microsoft, particularly on the dotnet side.
 
 it can be a bit annoying at the start, i once had an application where i had to use a custom font, and i had to copy the font manually to the image. it took a few hours to figure out why the font was not showing in the application, because the font folder was not part of the windows path, and it wasn't added automatically as i expected. a simple path environment update in the docker file, fixed the whole problem. but it is a process of trial and error.
 

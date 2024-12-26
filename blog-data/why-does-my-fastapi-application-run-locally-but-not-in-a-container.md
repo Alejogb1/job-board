@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "why-does-my-fastapi-application-run-locally-but-not-in-a-container"
 ---
 
-Okay, let's tackle this. It’s a scenario I’ve personally debugged more times than I care to remember. That feeling when your FastAPI app purrs like a kitten on your localhost but throws a tantrum when containerized? Yeah, been there. It usually boils down to a few core discrepancies between your development environment and the isolated world of a container. Let me break down the common culprits, drawing from experiences battling these issues in past projects, complete with some practical examples.
+, let's tackle this. It’s a scenario I’ve personally debugged more times than I care to remember. That feeling when your FastAPI app purrs like a kitten on your localhost but throws a tantrum when containerized? Yeah, been there. It usually boils down to a few core discrepancies between your development environment and the isolated world of a container. Let me break down the common culprits, drawing from experiences battling these issues in past projects, complete with some practical examples.
 
 The fundamental reason you’re experiencing this discrepancy lies in the differences between your local environment – where you likely have all sorts of implicit dependencies and configurations – and the container environment, which is by design, isolated and explicit. Think of it as the difference between a comfortable, well-worn workshop and a brand new, pristine construction site. The tools might be the same, but the set-up is radically different.
 
 **1. Network Binding & Address Conflicts:**
 
-First off, the most frequent issue I see centers around how your FastAPI app is bound to a network address. When you run `uvicorn main:app --reload` locally, your application probably binds to `127.0.0.1` (localhost) by default. This works because you're explicitly interacting with the server through that loopback address. However, within a Docker container, the application needs to listen on all available network interfaces, usually `0.0.0.0`. Why? Because the container itself has an internal network, and the port exposed by the container needs to be accessible *from outside* the container.
+First off, the most frequent issue I see centers around how your FastAPI app is bound to a network address. When you run `uvicorn main:app --reload` locally, your application probably binds to `127.0.0.1` (localhost) by default. This works because you're explicitly interacting with the server through that loopback address. However, within a Docker container, the application needs to listen on all available network interfaces, usually `0.0.0.0`. Why? Because the container itself has an internal network, and the port exposed by the container needs to be accessible _from outside_ the container.
 
-If your FastAPI app continues to be bound to `127.0.0.1` within the container, only processes *inside* the container can reach it. Your host machine’s attempt to access the mapped port will essentially send requests into a black hole. Let's see how to fix this, with a code example.
+If your FastAPI app continues to be bound to `127.0.0.1` within the container, only processes _inside_ the container can reach it. Your host machine’s attempt to access the mapped port will essentially send requests into a black hole. Let's see how to fix this, with a code example.
 
 ```python
 # main.py
@@ -59,7 +59,7 @@ pydantic
 # Add any other requirements necessary for your project
 ```
 
-Notice that I’m using `COPY requirements.txt .` and `RUN pip install` *before* copying the rest of the application code. This leverages Docker layer caching, so if your requirements haven’t changed, that step is skipped, making build times faster. It also ensures that the necessary packages are installed *before* the code tries to use them.
+Notice that I’m using `COPY requirements.txt .` and `RUN pip install` _before_ copying the rest of the application code. This leverages Docker layer caching, so if your requirements haven’t changed, that step is skipped, making build times faster. It also ensures that the necessary packages are installed _before_ the code tries to use them.
 
 **3. File System Paths and Configuration:**
 
@@ -114,7 +114,7 @@ By adding `COPY config.yaml .`, we ensure that the `config.yaml` file is accessi
 
 **Debugging Strategies and Helpful Resources**
 
-When encountering these issues, my first line of defense is usually to examine container logs. Use `docker logs <container_id>` to see error messages, which often point directly to the problem (missing dependency, wrong path, etc.). `docker exec -it <container_id> bash` lets you get a shell *inside* the container, allowing for investigation of the file system and execution environment directly.
+When encountering these issues, my first line of defense is usually to examine container logs. Use `docker logs <container_id>` to see error messages, which often point directly to the problem (missing dependency, wrong path, etc.). `docker exec -it <container_id> bash` lets you get a shell _inside_ the container, allowing for investigation of the file system and execution environment directly.
 
 For understanding networking intricacies in Docker, I've always found the official Docker documentation an invaluable resource. Specifically, the sections on networking and exposing ports are crucial. You can find these by searching for "Docker Networking" on the official Docker website. For deeper dives into Python dependency management, I strongly recommend checking out the official documentation for `poetry` or `pipenv`, depending on which tool you choose. For robust Dockerfile best practices and optimization I always recommend reading "Docker in Action" by Jeff Nickoloff, and "The Docker Book: Containerization is the New Virtualization" by James Turnbull.
 

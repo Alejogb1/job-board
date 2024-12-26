@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-does-quantedas-dfmweight-produce-relative-frequencies-exceeding-1"
 ---
 
-Alright, let’s tackle this. It's a question that's certainly tripped up a few people, and I recall encountering it firsthand during a particularly complex text analysis project a couple of years back. I was working on a large corpus of legal documents, and seeing those seemingly impossible relative frequencies pop up from `dfm_weight()` in `quanteda` threw me for a loop initially. Let's break down why this happens, avoiding some of the common misinterpretations, and get to the core mechanisms of how the weighting works.
+, let’s tackle this. It's a question that's certainly tripped up a few people, and I recall encountering it firsthand during a particularly complex text analysis project a couple of years back. I was working on a large corpus of legal documents, and seeing those seemingly impossible relative frequencies pop up from `dfm_weight()` in `quanteda` threw me for a loop initially. Let's break down why this happens, avoiding some of the common misinterpretations, and get to the core mechanisms of how the weighting works.
 
-The core confusion, as I’ve often seen, stems from a misunderstanding of how `dfm_weight()` with the `scheme = "relfreq"` parameter actually computes relative frequencies. People often assume it’s simply term frequency divided by the total number of *terms* in the document. This is not quite accurate. Instead, what `quanteda` does, is calculate term frequency divided by the *maximum* term frequency within that document. It's subtle but makes a critical difference. Let's clarify this with examples.
+The core confusion, as I’ve often seen, stems from a misunderstanding of how `dfm_weight()` with the `scheme = "relfreq"` parameter actually computes relative frequencies. People often assume it’s simply term frequency divided by the total number of _terms_ in the document. This is not quite accurate. Instead, what `quanteda` does, is calculate term frequency divided by the _maximum_ term frequency within that document. It's subtle but makes a critical difference. Let's clarify this with examples.
 
 First, consider that `dfm_weight(x, scheme = "relfreq")` is fundamentally designed to normalize the term frequencies within a document, making terms that appear more frequently within a specific document more prominent, but not directly making documents comparable. This normalization aims to counteract variations in document length, which can unduly influence term frequency counts. Let's dive into the mechanics with some code.
 
@@ -27,11 +27,12 @@ print(dfm_matrix)
 relfreq_matrix <- dfm_weight(dfm_matrix, scheme = "relfreq")
 print(relfreq_matrix)
 ```
+
 In this case, ‘banana’ in the second document, which appears twice while other terms appear once, will be weighted at 1, while ‘cherry’ will have a weight of 0.5. Similarly, ‘apple’ in the first document will have a weight of 1. This occurs because in each document, the term with the highest frequency is set as the basis for normalization. When there are ties in max frequencies, each corresponding term receives a 1.
 
 **Why not just divide by document length?**
 
-Dividing by the total terms in a document *would* give you the true relative frequency if the goal is to understand term proportion within a document. However, `dfm_weight(scheme = "relfreq")` is designed differently, and this approach emphasizes relative term importance within each document, by how prominent they are, rather than proportions. Consider, for example, two documents, one 1000 words long and another 10. A term occurring 10 times in the 1000-word document might have a low 'true' relative frequency (0.01), even if it's a crucial term within that document. The chosen approach by quanteda makes that term, despite a low absolute proportional frequency, have a significant relative weight (normalized to a max of 1 within that document). I've found this particularly useful when analysing texts with great length differences.
+Dividing by the total terms in a document _would_ give you the true relative frequency if the goal is to understand term proportion within a document. However, `dfm_weight(scheme = "relfreq")` is designed differently, and this approach emphasizes relative term importance within each document, by how prominent they are, rather than proportions. Consider, for example, two documents, one 1000 words long and another 10. A term occurring 10 times in the 1000-word document might have a low 'true' relative frequency (0.01), even if it's a crucial term within that document. The chosen approach by quanteda makes that term, despite a low absolute proportional frequency, have a significant relative weight (normalized to a max of 1 within that document). I've found this particularly useful when analysing texts with great length differences.
 
 **Example 2: The impact of different term frequencies**
 

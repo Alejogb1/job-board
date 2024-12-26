@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-a-redhat-ubi8-buildah-fails-with-error-unable-to-find-a-match-e2fsprogs"
 ---
 
-alright, let’s break down this redhat ubi8 and buildah `e2fsprogs` error. i’ve banged my head against similar walls more times than i care to count, so hopefully, i can save you some grief.
+, let’s break down this redhat ubi8 and buildah `e2fsprogs` error. i’ve banged my head against similar walls more times than i care to count, so hopefully, i can save you some grief.
 
 the core of the problem is that buildah, when it’s creating an image, needs to install packages. one of those packages, `e2fsprogs`, provides essential filesystem utilities, specifically for ext2/3/4 filesystems, which are pretty common. the ubi8 base image, being minimal, doesn’t include it by default and relies on a configured package manager, which is usually `dnf`. if buildah can't find `e2fsprogs` it's because the configured package sources aren't set up to supply it, or the package manager is not yet configured in your build instructions.
 

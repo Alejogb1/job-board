@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-get-rid-of-noisy-warning-no-suitable-checks-publisher-found"
 ---
 
-Alright so you're wrestling with that "no suitable checks publisher found" warning right Been there absolutely done that a few times myself its like a persistent mosquito buzzing in your code compilation process drives you nuts
+so you're wrestling with that "no suitable checks publisher found" warning right Been there absolutely done that a few times myself its like a persistent mosquito buzzing in your code compilation process drives you nuts
 
 First off let's be clear This warning is a byproduct of code signing and security protocols it pops up when your compiler or development environment can't verify the legitimacy or origin of certain components or libraries you're using It's not always a showstopper but ignoring it is definitely playing Russian roulette with your app's security and potentially user trust
 
@@ -14,9 +14,10 @@ Ok lets go through possible fixes lets talk about that as a starting point
 
 **The "Easy" but Not Recommended Way: Bypassing the Checks**
 
-Look I know you're probably itching to make the warning just vanish Sometimes you might think "oh just ignore it its fine" but no please for the love of God don't You *can* suppress these warnings using compiler flags or environment variables Its usually not the answer but i have been guilty of that in my past but learned the hard way to never do that again
+Look I know you're probably itching to make the warning just vanish Sometimes you might think "oh just ignore it its fine" but no please for the love of God don't You _can_ suppress these warnings using compiler flags or environment variables Its usually not the answer but i have been guilty of that in my past but learned the hard way to never do that again
 
 Example for gcc like C++ compilers something like this might work
+
 ```cpp
 #pragma warning (disable: 4190) // This will suppress warning code 4190
 //Or something like this if using clang
@@ -25,6 +26,7 @@ Example for gcc like C++ compilers something like this might work
 ```
 
 Or if we go to the python world you can try to silence the warning output while running a program or while installing a library
+
 ```python
 import warnings
 warnings.filterwarnings("ignore", message="No suitable checks publisher found.*")
@@ -67,6 +69,7 @@ Now that we covered the most basic scenario of the error i would like to talk ab
 
 Sometimes the "no suitable checks publisher found" arises with third party libraries That's when you will need to use dependency management tools or build systems with signing capabilities
 For maven for example you can enable signature validation in pom files by doing something like this
+
 ```xml
 <plugin>
   <groupId>org.apache.maven.plugins</groupId>
@@ -87,7 +90,8 @@ For maven for example you can enable signature validation in pom files by doing 
   </executions>
 </plugin>
 ```
- This configuration forces Maven to fail if signatures are missing or invalid for dependencies and it is very useful to use that while setting up CI environment to not use unsigned packages or binaries
+
+This configuration forces Maven to fail if signatures are missing or invalid for dependencies and it is very useful to use that while setting up CI environment to not use unsigned packages or binaries
 Or on a more low level scenario with cmake for example you need to configure a set of tools to check and sign the code on your build process
 
 Also when dealing with windows systems sometimes your computer doesn't have the proper certificate authority installed so you need to explicitly install them for your computer to be able to verify the code
@@ -98,12 +102,12 @@ And hey i know it is annoying to fix that problem i understand you its like havi
 
 Instead of giving you random links I’d recommend diving into these resources for a deeper understanding
 
-*   **"Cryptography Engineering" by Niels Ferguson and Bruce Schneier**: It's the bible of practical cryptography This will give you a strong understanding of how certificates work the security model and the code signing architecture
-*   **Official documentation of your operating system on code signing**: Like Microsoft's documentations on `signtool.exe` or Apple's documentation for `codesign` the official documentation gives you all the specific details about the parameters required and best practices
-*  **Security blogs from reputed companies like Google Project Zero and Microsoft security**: These blogs will keep you up to date on vulnerabilities and the most used attack vectors in our modern world this will give you a better understanding about the importance of code signing and how it protects you from malicious actors
+- **"Cryptography Engineering" by Niels Ferguson and Bruce Schneier**: It's the bible of practical cryptography This will give you a strong understanding of how certificates work the security model and the code signing architecture
+- **Official documentation of your operating system on code signing**: Like Microsoft's documentations on `signtool.exe` or Apple's documentation for `codesign` the official documentation gives you all the specific details about the parameters required and best practices
+- **Security blogs from reputed companies like Google Project Zero and Microsoft security**: These blogs will keep you up to date on vulnerabilities and the most used attack vectors in our modern world this will give you a better understanding about the importance of code signing and how it protects you from malicious actors
 
 **Final Thoughts**
- The "no suitable checks publisher found" warning might seem like a minor annoyance but is a security red flag If you ignore it you risk introducing vulnerabilities into your system or application Instead embrace code signing best practices and ensure that all the libraries and executable you use are properly signed
+The "no suitable checks publisher found" warning might seem like a minor annoyance but is a security red flag If you ignore it you risk introducing vulnerabilities into your system or application Instead embrace code signing best practices and ensure that all the libraries and executable you use are properly signed
 
 If you need more help please feel free to paste your specific use case with more details like which build system you are using which programming language or if you are using your OS specific tool i will do my best to assist you remember security is everyone's responsibility in this crazy software world but hey dont be like my old coworker who kept ignoring the warnings and said "it works on my machine" and then he got hacked you know what they say about those who live in glass houses dont throw stones... or debug their code in production
 

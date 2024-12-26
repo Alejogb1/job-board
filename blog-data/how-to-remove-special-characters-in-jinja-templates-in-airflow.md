@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-remove-special-characters-in-jinja-templates-in-airflow"
 ---
 
-Alright, let’s tackle this. Dealing with special characters in Jinja templates within Airflow is something I've encountered more times than I care to count, particularly when integrating with systems that have... let’s say, *less-than-ideal* data hygiene. It's a fairly common pain point, and the solution isn’t always immediately obvious. It often boils down to understanding the layers of processing involved—Airflow, Jinja, and whatever underlying data you’re pulling in.
+, let’s tackle this. Dealing with special characters in Jinja templates within Airflow is something I've encountered more times than I care to count, particularly when integrating with systems that have... let’s say, _less-than-ideal_ data hygiene. It's a fairly common pain point, and the solution isn’t always immediately obvious. It often boils down to understanding the layers of processing involved—Airflow, Jinja, and whatever underlying data you’re pulling in.
 
 The core issue, typically, arises from the fact that Jinja is designed to render strings, not sanitize or transform them. It will faithfully print what you give it, special characters and all. When you're piping data into a template, especially data coming from external APIs or databases, you’re bound to hit character encoding inconsistencies or other oddities that Jinja will happily render without protest.
 
@@ -125,7 +125,7 @@ with DAG(
 
 In this second example, instead of outright deletion, we utilize a dictionary (`char_mapping`) to specify character replacements, allowing for more nuanced modifications and handling of diacritics. While this implementation is straightforward using the replace function, one should consider a more efficient method for handling larger data sets or string data containing a lot of special character occurrences. For example, pre-compiling the regex or leveraging vectorized operations if working with pandas, if possible.
 
-Now, if you are dealing with internationalization or encoding problems, it's not about just removing special chars. It's more about converting into a consistent and acceptable encoding like utf-8.  Python provides excellent support for this:
+Now, if you are dealing with internationalization or encoding problems, it's not about just removing special chars. It's more about converting into a consistent and acceptable encoding like utf-8. Python provides excellent support for this:
 
 ```python
 from airflow import DAG

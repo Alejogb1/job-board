@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-docker-and-docker-compose-be-used-to-isolate-project-environments"
 ---
 
-Alright, let’s talk about Docker and Docker Compose for isolating project environments. I've spent considerable time with this duo, and I’ve seen firsthand how transformative they can be in managing the chaos of varying dependencies and version mismatches that inevitably crop up across projects. You're essentially creating portable, self-contained ecosystems for your applications.
+, let’s talk about Docker and Docker Compose for isolating project environments. I've spent considerable time with this duo, and I’ve seen firsthand how transformative they can be in managing the chaos of varying dependencies and version mismatches that inevitably crop up across projects. You're essentially creating portable, self-contained ecosystems for your applications.
 
 It’s not just about avoiding the classic “it works on my machine” scenario; it's about crafting repeatable, consistent setups, regardless of whether you're on your local development machine, a test server, or a production deployment. The underlying idea is straightforward: package an application and all its necessary components—runtime, libraries, configurations—into a container. Docker facilitates the creation and management of these containers, providing a consistent execution environment, while Docker Compose then allows you to define and run multi-container applications as a cohesive unit.
 
@@ -47,6 +47,7 @@ services:
 volumes:
   db_data:
 ```
+
 Here, the `docker-compose.yml` defines three services: `web`, `api`, and `db`. The `web` service uses a standard nginx image to serve static files from the `./html` directory. It depends on the `api` service, ensuring it starts only after the `api` is available. The `api` service is built from a `Dockerfile` in the `./api` directory (more on this later) and exposes port `5000`. The database service utilizes a postgres image and sets up a database with credentials defined in the `environment` variable. The `volumes` section ensures data persistence. The `depends_on` property establishes the correct startup order for each container.
 
 Now let’s take a look at the `Dockerfile` that would need to exist in the `./api` folder to build the corresponding image that is referenced in `docker-compose.yml`:

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-docker-compose-be-used-with-aws-ebextensions"
 ---
 
-Okay, let’s tackle this. I've spent quite a bit of time wrestling… well, *dealing* with the intricacies of integrating Docker Compose within AWS Elastic Beanstalk, particularly when .ebextensions come into play. It's a powerful combination, but it requires a clear understanding of how these two systems interact. It isn't always straightforward, and I've certainly learned some lessons along the way.
+, let’s tackle this. I've spent quite a bit of time wrestling… well, _dealing_ with the intricacies of integrating Docker Compose within AWS Elastic Beanstalk, particularly when .ebextensions come into play. It's a powerful combination, but it requires a clear understanding of how these two systems interact. It isn't always straightforward, and I've certainly learned some lessons along the way.
 
-The core challenge lies in the inherent architecture of Elastic Beanstalk. Ebextensions are essentially configuration files that Elastic Beanstalk interprets *before* the application deployment itself takes place. Docker Compose, on the other hand, is typically used to orchestrate containerized applications. So, the trick is getting Elastic Beanstalk to recognize and use your Docker Compose setup, rather than trying to force it into a conventional application deployment. The .ebextensions give us the hooks we need to make this happen.
+The core challenge lies in the inherent architecture of Elastic Beanstalk. Ebextensions are essentially configuration files that Elastic Beanstalk interprets _before_ the application deployment itself takes place. Docker Compose, on the other hand, is typically used to orchestrate containerized applications. So, the trick is getting Elastic Beanstalk to recognize and use your Docker Compose setup, rather than trying to force it into a conventional application deployment. The .ebextensions give us the hooks we need to make this happen.
 
 Here's the strategy: we're essentially using .ebextensions to provision the environment and then, importantly, to trigger docker compose commands to bring our application containers up after the base environment is ready. We aren't forcing Elastic Beanstalk to ‘understand’ our docker compose file; instead, we are just using it to execute the necessary docker commands.
 
@@ -32,7 +32,7 @@ services:
       context: ./api
       dockerfile: Dockerfile
     ports:
-     - "3000:3000"
+      - "3000:3000"
 ```
 
 Now, let's create the basic Dockerfiles for each service. In `app/web/Dockerfile`:
@@ -63,18 +63,19 @@ And finally, let’s say our `app/web/html/index.html` is just:
 And our `app/api/index.js` is:
 
 ```javascript
-const express = require('express');
+const express = require("express");
 const app = express();
 const port = 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello from the api service');
+app.get("/", (req, res) => {
+  res.send("Hello from the api service");
 });
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
 ```
+
 and its `package.json` is simply:
 
 ```json
@@ -111,6 +112,7 @@ container_commands:
   04_docker_compose_up:
     command: "docker-compose up -d"
 ```
+
 (Note: the order of these commands matters!)
 
 In this example, I'm installing docker using the `packages` block (though many eb environments come with docker installed already, but it is included here for clarity), then creating a folder for docker-compose, copying over the `docker-compose.yml` file from the application source (which is unzipped to `/var/app/current/` by Elastic Beanstalk), then navigating to that folder and finally running the `docker-compose up -d` command.
@@ -132,7 +134,7 @@ container_commands:
   02_copy_docker_compose:
     command: "cp /var/app/current/app/docker-compose.yml /opt/compose/"
   03_copy_env:
-      command: "cp /var/app/current/app/.env /opt/compose/"
+    command: "cp /var/app/current/app/.env /opt/compose/"
   04_inject_vars:
     command: 'echo "API_KEY=$API_KEY" >> /opt/compose/.env'
   05_change_directory:
@@ -143,7 +145,7 @@ container_commands:
 
 In this revised config, we first create an empty `.env` file in our compose folder. Then, crucially, we use `sed` to insert the environment variable `API_KEY` from the Elastic Beanstalk environment into the .env file, and then we pass that file into the `docker compose up` command. This ensures that secrets are not hardcoded into any files. The .env file can also be used in the dockerfiles (although I personally find that less transparent), using the ARG directive and ENV directives of the Dockerfile.
 
-Finally, let's consider a scenario where you need to do some pre-configuration of docker before running your compose file, perhaps to adjust resources.  Here's an example where we are increasing the docker memory allocation before running docker compose:
+Finally, let's consider a scenario where you need to do some pre-configuration of docker before running your compose file, perhaps to adjust resources. Here's an example where we are increasing the docker memory allocation before running docker compose:
 
 ```yaml
 packages:
@@ -178,8 +180,9 @@ container_commands:
   05_docker_compose_up:
     command: "docker-compose up -d"
 ```
+
 Here, we're using the `files` section to create a new `daemon.json` file that modifies the memory resources docker is allowed to use, before restarting the daemon using `systemctl`. The rest of the process is similar to the previous example.
 
-For a more thorough dive into this sort of deployment strategy, I highly recommend looking into the official Elastic Beanstalk documentation, of course.  Also, "Docker Deep Dive" by Nigel Poulton provides an excellent understanding of docker internals, and understanding docker well will make using it via Elastic Beanstalk much easier. For in-depth knowledge on cloud infrastructure, "Cloud Native Patterns" by Cornelia Davis is also valuable. You will also find great value in exploring the docker compose documentation directly on docker's site. These resources have personally been quite helpful in my understanding and use of these technologies.
+For a more thorough dive into this sort of deployment strategy, I highly recommend looking into the official Elastic Beanstalk documentation, of course. Also, "Docker Deep Dive" by Nigel Poulton provides an excellent understanding of docker internals, and understanding docker well will make using it via Elastic Beanstalk much easier. For in-depth knowledge on cloud infrastructure, "Cloud Native Patterns" by Cornelia Davis is also valuable. You will also find great value in exploring the docker compose documentation directly on docker's site. These resources have personally been quite helpful in my understanding and use of these technologies.
 
 In summary, integrating docker compose with .ebextensions involves using the container commands to provision your environment, copy your docker compose file into a working directory, and finally run the `docker-compose up` command. By effectively using `.ebextensions`, you can maintain your docker orchestration while still leveraging the managed services of Elastic Beanstalk. This provides a lot of flexibility and power for complex application deployments. It requires a bit more setup than standard EB deployments, but in the long run, this makes for much more manageable and scalable setups.

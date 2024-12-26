@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-prevent-booking-errors-that-revert-to-earlier-dates"
 ---
 
-Okay, let's tackle this. The issue of booking systems reverting to earlier dates is one I've seen crop up more than once, and believe me, it's a real pain. It usually boils down to a mix of concurrency issues, database transaction mismanagement, and sometimes even naive date handling. Over the years, I've refined a few approaches to mitigate this problem, and I'm happy to share them with you, focusing on practical solutions you can implement.
+, let's tackle this. The issue of booking systems reverting to earlier dates is one I've seen crop up more than once, and believe me, it's a real pain. It usually boils down to a mix of concurrency issues, database transaction mismanagement, and sometimes even naive date handling. Over the years, I've refined a few approaches to mitigate this problem, and I'm happy to share them with you, focusing on practical solutions you can implement.
 
-The core problem here isn't usually a matter of the system *choosing* an earlier date deliberately; it's almost always an accidental consequence of race conditions or transaction rollbacks. Think of it like two or more users simultaneously attempting to book the same slot. Without proper safeguards, the system might save the first request as a booking for a later date, but if the second request comes in, and due to some locking failure or a transaction going haywire, the second request reverts to an earlier date due to a faulty commit. That's when the trouble begins.
+The core problem here isn't usually a matter of the system _choosing_ an earlier date deliberately; it's almost always an accidental consequence of race conditions or transaction rollbacks. Think of it like two or more users simultaneously attempting to book the same slot. Without proper safeguards, the system might save the first request as a booking for a later date, but if the second request comes in, and due to some locking failure or a transaction going haywire, the second request reverts to an earlier date due to a faulty commit. That's when the trouble begins.
 
 My experience points towards a combination of strategies as the most effective way to handle this. The first, and probably the most crucial, is to rigorously enforce database transactions with appropriate isolation levels. Let's say, for example, we have a function that handles creating a booking entry. Here’s a hypothetical example in Python using SQLAlchemy:
 
@@ -65,6 +65,7 @@ try:
 except Exception as e:
         print(f"Double Booking Problem detected with error {e}")
 ```
+
 Here, the `with session.begin()` block ensures that either all changes within that block are committed together, or they all roll back as a single atomic unit. This prevents partial updates, which can sometimes leave records in inconsistent states. If an exception occurs, the changes are rolled back and the system does not record the bad booking.
 
 The use of appropriate database isolation levels is also critical. In this example the default level will likely avoid many problems, however, using `SERIALIZABLE` isolation will completely prevent the race condition by locking the rows involved in the transactions. This is an extreme level that can impact performance. It is key that one is aware of isolation levels as well as the trade-offs each isolation level presents. The default will very often be enough if the rest of the architecture around it is well-thought-out.
@@ -197,6 +198,7 @@ public class MainApplication implements CommandLineRunner {
 }
 
 ```
+
 Here, the `createBooking` and `updateBookingDate` methods include an explicit check to ensure that the incoming `bookingDate` is not in the past. If it is, an `IllegalArgumentException` is thrown, preventing the system from persisting a faulty booking. It’s crucial that this validation is done at the application level and, optionally, as constraints in the database itself for maximum safety. Also note that the `@Transactional` annotation here ensures all database operations happen in a transaction.
 
 Finally, the third point is something that can prevent some "near miss" bookings where dates are just slightly off due to local machine time issues: centralizing the date handling. Timezones, DST, and server-client clock discrepancies can all contribute to those slightly off dates. Storing all dates in UTC on your server reduces the chance of such discrepancies. You can convert to a user’s local time for display purposes. Also, using a proper date library like Luxon in Javascript, or Java's built-in time classes, is essential. Here's a basic JavaScript example with Luxon:
@@ -204,21 +206,19 @@ Finally, the third point is something that can prevent some "near miss" bookings
 ```javascript
 const { DateTime } = require("luxon");
 
-
 function createBooking(bookingDateStr) {
   try {
-
-    const bookingDateUtc = DateTime.fromISO(bookingDateStr, {zone: 'utc'});
+    const bookingDateUtc = DateTime.fromISO(bookingDateStr, { zone: "utc" });
 
     // Basic date validation: cannot book past dates, for example
     if (bookingDateUtc < DateTime.utc()) {
-        throw new Error("Booking date cannot be in the past.");
+      throw new Error("Booking date cannot be in the past.");
     }
     console.log("Saving booking for UTC:", bookingDateUtc.toISO());
     return bookingDateUtc;
   } catch (error) {
-      console.error("Booking error:", error.message);
-      return null
+    console.error("Booking error:", error.message);
+    return null;
   }
 }
 //Usage
@@ -230,8 +230,8 @@ console.log(`booking 2: ${bookingDate2.toISO()}`);
 
 let bookingDateError = createBooking("2024-10-26T10:00:00");
 console.log(`Booking error case returns ${bookingDateError}`);
-
 ```
-This JavaScript snippet demonstrates validating dates at the front-end/service level using the Luxon library, centralizing date operations around UTC time. If you’re curious to learn more, I recommend delving into *Database System Concepts* by Silberschatz, Korth, and Sudarshan for understanding database transaction management in depth, and *Domain-Driven Design* by Eric Evans for general architecture around designing a system with proper data validation. For date handling intricacies across different platforms, the documentation for libraries such as Luxon (Javascript), Joda-Time (older java alternative) and Java's native time classes are good starting points.
+
+This JavaScript snippet demonstrates validating dates at the front-end/service level using the Luxon library, centralizing date operations around UTC time. If you’re curious to learn more, I recommend delving into _Database System Concepts_ by Silberschatz, Korth, and Sudarshan for understanding database transaction management in depth, and _Domain-Driven Design_ by Eric Evans for general architecture around designing a system with proper data validation. For date handling intricacies across different platforms, the documentation for libraries such as Luxon (Javascript), Joda-Time (older java alternative) and Java's native time classes are good starting points.
 
 By focusing on these three areas—robust database transactions, comprehensive input validation, and standardized date handling—you can significantly minimize the risk of booking errors that revert to earlier dates and create a more reliable system. Good luck.

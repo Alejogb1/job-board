@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-does-react-js-wait-for-a-function-to-execute-before-continue"
 ---
 
-alright, so you're asking about how react handles asynchronous operations, specifically how it waits for a function to complete before moving on to the next thing, it's a pretty common question, and it's crucial for building functional react apps, it's not like react just halts everything until a function finishes, it's more subtle than that.
+, so you're asking about how react handles asynchronous operations, specifically how it waits for a function to complete before moving on to the next thing, it's a pretty common question, and it's crucial for building functional react apps, it's not like react just halts everything until a function finishes, it's more subtle than that.
 
 fundamentally, javascript itself is single-threaded, which means it can only do one thing at a time. but we frequently deal with things like network requests or timeouts that take some time, and we don't want our whole app to freeze while it's waiting, react builds upon this. it relies on javascript’s asynchronous mechanisms like promises and async/await, and react’s state management and rendering process to achieve this “waiting” behavior. it doesn’t really wait in the blocking sense, more like “observes”.
 
@@ -15,16 +15,12 @@ i've seen countless developers try to directly use the result of asynchronous fu
 let's get into a practical example, consider we have a function called `fetchdata` which retrieves data from an api, if we try to call `fetchdata` directly in a component we'll have a problem:
 
 ```javascript
-import React from 'react';
+import React from "react";
 
 function MyComponent() {
   const data = fetchData(); // <-- this is problematic
 
-  return (
-    <div>
-      {data && <p>Data: {data.message}</p>}
-    </div>
-  );
+  return <div>{data && <p>Data: {data.message}</p>}</div>;
 }
 
 export default MyComponent;
@@ -33,12 +29,12 @@ export default MyComponent;
 this is not going to work because `fetchdata` is asynchronous, we need to use some state to hold the results:
 
 ```javascript
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 async function fetchData() {
   // simulate a network request
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  return { message: 'data loaded!' };
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return { message: "data loaded!" };
 }
 
 function MyComponent() {
@@ -53,15 +49,12 @@ function MyComponent() {
     loadData();
   }, []);
 
-  return (
-    <div>
-      {data && <p>Data: {data.message}</p>}
-    </div>
-  );
+  return <div>{data && <p>Data: {data.message}</p>}</div>;
 }
 
 export default MyComponent;
 ```
+
 here's the breakdown:
 we use `usestate` to create a piece of state called data, which is initialized to null, then we use `useeffect` to call our asynchronous function `fetchdata` which is wrapped in another async function, `loaddata`, this ensures that `fetchdata` is executed only after the first component render (because of the empty dependency array `[]`), then when the promise from `fetchdata` resolves the `.then` part is executed and `setdata` is called, which updates the state and re-renders the component. this update of the state makes react re-render the component using the new state value, which will not be `null`. now the component will display the data.
 
@@ -70,11 +63,11 @@ notice the `async/await`, this makes working with promises much easier, instead 
 another example where handling state is crucial is with loading states:
 
 ```javascript
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 async function fetchData() {
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  return { message: 'data loaded!' };
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return { message: "data loaded!" };
 }
 
 function MyComponent() {
@@ -83,23 +76,24 @@ function MyComponent() {
 
   useEffect(() => {
     async function loadData() {
-        setIsLoading(true);
+      setIsLoading(true);
       const result = await fetchData();
       setData(result);
-        setIsLoading(false);
+      setIsLoading(false);
     }
     loadData();
   }, []);
 
   return (
-      <div>
-          {isLoading ? <p>loading data...</p> : data && <p>Data: {data.message}</p>}
-      </div>
+    <div>
+      {isLoading ? <p>loading data...</p> : data && <p>Data: {data.message}</p>}
+    </div>
   );
 }
 
 export default MyComponent;
 ```
+
 in this example we added another state to handle the loading, `isloading`, we set it to `true` when the loading starts and `false` when it’s done, and show a “loading data…” message when it’s true, providing immediate feedback to the user, these loading states are essential in real-world applications to prevent users from thinking that the app is broken. in my past job, at that company that made all the 'best of' lists on tech blogs, we had a case where the loading state was not properly used and users would think that the app crashed when they loaded a page with a lot of data to fetch, the fix was implementing a very simple loading screen which greatly improved the user experience.
 
 it's also common to use other hooks to manage asynchronous operations, `usecallback` and `usememo` are great for optimizing components with asynchronous operations to avoid unnecesary re-renders. for instance, if you have a slow calculation that you only want to perform when a specific input changes, `usememo` will memoize the result and only recalculate if the inputs change. if you have a function that's passed as a prop to a child component and you only want the function to change if the inputs change `usecallback` is the way to go.

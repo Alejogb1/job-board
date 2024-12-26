@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-debug-code-in-vs-code-when-using-an-azure-ml-workspace"
 ---
 
-Alright, let's talk about debugging within an Azure ML workspace using vscode. It’s a process I've become quite familiar with over the years, especially during a large-scale distributed training project I was involved in. We were pushing the boundaries with a deep learning model, and effective debugging became absolutely critical. It’s not always straightforward, but with the correct setup, you can drastically cut down on iteration time.
+, let's talk about debugging within an Azure ML workspace using vscode. It’s a process I've become quite familiar with over the years, especially during a large-scale distributed training project I was involved in. We were pushing the boundaries with a deep learning model, and effective debugging became absolutely critical. It’s not always straightforward, but with the correct setup, you can drastically cut down on iteration time.
 
-The core challenge, of course, is that your code isn't running locally; it's executing on a remote compute target within Azure. This means traditional breakpoints and local debuggers won’t just work out of the box. We need to bridge that gap, and VS Code provides the necessary tools. What's also crucial to acknowledge from the outset is that, depending on *where* you're running the code (i.e., a training job vs. an inference script vs. interactive notebook), there are slightly different approaches. I'll break down the most common scenarios.
+The core challenge, of course, is that your code isn't running locally; it's executing on a remote compute target within Azure. This means traditional breakpoints and local debuggers won’t just work out of the box. We need to bridge that gap, and VS Code provides the necessary tools. What's also crucial to acknowledge from the outset is that, depending on _where_ you're running the code (i.e., a training job vs. an inference script vs. interactive notebook), there are slightly different approaches. I'll break down the most common scenarios.
 
 The most frequent case you'll encounter is debugging a training script. In this situation, your code typically resides in your VS Code environment (either locally or connected remotely to a compute instance) but executes on a remote target such as a cluster or a VM. To achieve this, we lean on the VS Code remote debugging capabilities in tandem with Azure ML’s SDK and compute configuration.
 
@@ -19,31 +19,31 @@ Here’s an example of a `launch.json` configuration that you can tailor:
 
 ```json
 {
-    "version": "0.2.0",
-    "configurations": [
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Azure ML Remote Debug",
+      "type": "python",
+      "request": "attach",
+      "connect": {
+        "host": "your_compute_instance_ip_or_hostname",
+        "port": 5678 //ensure this is consistent
+      },
+      "pathMappings": [
         {
-            "name": "Azure ML Remote Debug",
-            "type": "python",
-            "request": "attach",
-            "connect": {
-                "host": "your_compute_instance_ip_or_hostname",
-                "port": 5678 //ensure this is consistent
-            },
-            "pathMappings": [
-                 {
-                    "localRoot": "${workspaceFolder}",
-                    "remoteRoot": "." // Assuming your project root is the same in both environments.
-                 }
-            ],
-            "justMyCode": false //important, otherwise it might step into library internals
+          "localRoot": "${workspaceFolder}",
+          "remoteRoot": "." // Assuming your project root is the same in both environments.
         }
-    ]
+      ],
+      "justMyCode": false //important, otherwise it might step into library internals
+    }
+  ]
 }
 ```
 
-*   **`your_compute_instance_ip_or_hostname`:** You need to replace this with the actual IP address or hostname of your compute instance. This isn't needed for compute instances connected directly through VSCode, where `localhost` can work instead. For compute clusters, the approach is a bit more involved, and I’ll discuss it shortly.
-*   **`port: 5678`:**  This is a default port that `debugpy` uses. You can change it, but keep it consistent with what's configured in the python script that you want to debug, described next.
-*   **`pathMappings`:** Crucial to avoid debuggers getting lost. You are telling the debugger where to find the corresponding local files when it's debugging remotely. It assumes that your folder structure is consistent between your local and remote environments.
+- **`your_compute_instance_ip_or_hostname`:** You need to replace this with the actual IP address or hostname of your compute instance. This isn't needed for compute instances connected directly through VSCode, where `localhost` can work instead. For compute clusters, the approach is a bit more involved, and I’ll discuss it shortly.
+- **`port: 5678`:** This is a default port that `debugpy` uses. You can change it, but keep it consistent with what's configured in the python script that you want to debug, described next.
+- **`pathMappings`:** Crucial to avoid debuggers getting lost. You are telling the debugger where to find the corresponding local files when it's debugging remotely. It assumes that your folder structure is consistent between your local and remote environments.
 
 3.  **Python Code Integration:** Before running your Azure ML job, you need to integrate the `debugpy` code into your python script. I usually do this conditionally, triggering the debugger only if an environment variable is set. This allows for production runs without the debugger enabled. I usually put this snippet at the very beginning of my python code:
 
@@ -63,7 +63,7 @@ if os.getenv("DEBUG_TRAINING") == "true":
 4.  **Job Submission with Debugging Flag:** Finally, you initiate your Azure ML training job, making sure to set the `DEBUG_TRAINING` environment variable to `true` within the environment configuration of your job definition. This ensures that your script will start the debugger.
 5.  **Connecting the Debugger:** Run the training job. Then, in VS Code, select the "Azure ML Remote Debug" configuration we created earlier and start the debugger using the “Run” button. If everything is set correctly, VS Code will attach to the remote debugging process, and you can step through the code by setting breakpoints, viewing variables, etc.
 
-Now, concerning debugging on a compute cluster, things get slightly trickier. Since a cluster involves multiple nodes and dynamic allocation, getting the specific ip addresses beforehand becomes impractical. My solution, after struggling with this several times, is to use the concept of *port forwarding*. The idea is that after the training starts on the compute cluster, the entry point will start debugging. Instead of manually trying to find the right ip addresses, we can configure the job to expose a single port of one of the nodes, and forward it to a local port in our vscode environment:
+Now, concerning debugging on a compute cluster, things get slightly trickier. Since a cluster involves multiple nodes and dynamic allocation, getting the specific ip addresses beforehand becomes impractical. My solution, after struggling with this several times, is to use the concept of _port forwarding_. The idea is that after the training starts on the compute cluster, the entry point will start debugging. Instead of manually trying to find the right ip addresses, we can configure the job to expose a single port of one of the nodes, and forward it to a local port in our vscode environment:
 
 ```python
 import os
@@ -137,25 +137,25 @@ The above snippets of python code would effectively dynamically allocate a port 
 
 ```json
 {
-    "version": "0.2.0",
-    "configurations": [
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Azure ML Remote Debug",
+      "type": "python",
+      "request": "attach",
+      "connect": {
+        "host": "localhost",
+        "port": "${command:azureml.getPort}" // dynamic port lookup
+      },
+      "pathMappings": [
         {
-            "name": "Azure ML Remote Debug",
-            "type": "python",
-            "request": "attach",
-            "connect": {
-                "host": "localhost",
-                "port": "${command:azureml.getPort}"  // dynamic port lookup
-            },
-            "pathMappings": [
-                 {
-                    "localRoot": "${workspaceFolder}",
-                    "remoteRoot": "." // Assuming your project root is the same in both environments.
-                 }
-            ],
-            "justMyCode": false //important, otherwise it might step into library internals
+          "localRoot": "${workspaceFolder}",
+          "remoteRoot": "." // Assuming your project root is the same in both environments.
         }
-    ]
+      ],
+      "justMyCode": false //important, otherwise it might step into library internals
+    }
+  ]
 }
 ```
 
@@ -163,7 +163,7 @@ Notice the `"${command:azureml.getPort}"` in the `port` field. The AzureML VSCod
 
 For deeper dives into distributed debugging strategies and practices I highly recommend:
 
-*   "Programming Machine Learning: From Coding to Deployable Products" by O'Reilly. It covers strategies for handling more complex debugging scenarios with distributed systems.
-*   The official debugpy documentation, which is available on the project’s GitHub repository, gives you a more thorough understanding of its functionalities.
+- "Programming Machine Learning: From Coding to Deployable Products" by O'Reilly. It covers strategies for handling more complex debugging scenarios with distributed systems.
+- The official debugpy documentation, which is available on the project’s GitHub repository, gives you a more thorough understanding of its functionalities.
 
 Keep in mind that successful debugging with remote compute targets demands a keen attention to detail. Make sure your network settings allow communication between your VS Code instance and the remote machine, and that your environment variable configurations are properly set. It might feel cumbersome initially but, as it becomes routine, it will drastically reduce the time it takes to iron out issues.

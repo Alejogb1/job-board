@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-limit-core-file-size-in-a-containerd-container-on-a-kubernetes-cluster"
 ---
 
-Alright, let's talk about core dumps and containing them – or, perhaps more accurately, limiting their size – within Kubernetes containers managed by containerd. This isn't something you stumble upon every day, but it's crucial for managing resource consumption and preventing runaway disk usage, especially in production environments. I remember encountering this very issue a few years back, debugging a particularly thorny memory leak in a microservice we were running on a somewhat constrained k8s cluster. Things escalated quickly when core files started filling up the disk, leading to unexpected service outages. That experience definitely etched the importance of proper core file management into my operational procedures.
+, let's talk about core dumps and containing them – or, perhaps more accurately, limiting their size – within Kubernetes containers managed by containerd. This isn't something you stumble upon every day, but it's crucial for managing resource consumption and preventing runaway disk usage, especially in production environments. I remember encountering this very issue a few years back, debugging a particularly thorny memory leak in a microservice we were running on a somewhat constrained k8s cluster. Things escalated quickly when core files started filling up the disk, leading to unexpected service outages. That experience definitely etched the importance of proper core file management into my operational procedures.
 
 Now, the challenge here lies in the layered nature of the stack. We've got the application itself, the container runtime (containerd in your case), the container’s operating system, and then finally the host OS – all potentially influencing how core dumps are generated and handled. By default, many Linux systems will generate full core dumps for crashing processes. In a containerized environment, however, those dumps can quickly become large and problematic, consuming disk space within the container's read-write layer or, worse, if not handled correctly, filling up storage on the underlying node.
 
@@ -14,7 +14,7 @@ The crucial thing to understand is that a container's `ulimit` settings are inhe
 
 **Method 1: Modifying containerd Configuration (less common, but worth understanding)**
 
-While less common for Kubernetes, understanding this approach provides a clear picture. Containderd is configured using the `config.toml` file, typically found at `/etc/containerd/config.toml`. You *can* set default `ulimit` parameters here that apply to all containers.
+While less common for Kubernetes, understanding this approach provides a clear picture. Containderd is configured using the `config.toml` file, typically found at `/etc/containerd/config.toml`. You _can_ set default `ulimit` parameters here that apply to all containers.
 
 Here’s an example snippet you might modify:
 
@@ -25,7 +25,7 @@ Here’s an example snippet you might modify:
     "core" = 0
 ```
 
-This section under `runc.options` defines default `ulimit` settings. By setting `core` to `0`, we're disabling core dumps by default for all containers that use this particular `runc` runtime. Alternatively, set it to a specific size using bytes (e.g., `10240` for 10KB). *Caution:* modifying containerd’s configuration requires a daemon restart and impacts *all* containers managed by that instance. It's usually not the preferred method for granular control in Kubernetes. It's also less commonly modified directly but more useful to illustrate the root cause.
+This section under `runc.options` defines default `ulimit` settings. By setting `core` to `0`, we're disabling core dumps by default for all containers that use this particular `runc` runtime. Alternatively, set it to a specific size using bytes (e.g., `10240` for 10KB). _Caution:_ modifying containerd’s configuration requires a daemon restart and impacts _all_ containers managed by that instance. It's usually not the preferred method for granular control in Kubernetes. It's also less commonly modified directly but more useful to illustrate the root cause.
 
 **Method 2: Using Kubernetes Pod Security Context (preferred for granular control)**
 
@@ -40,22 +40,22 @@ metadata:
   name: my-application-pod
 spec:
   containers:
-  - name: my-app-container
-    image: my-application-image:latest
-    securityContext:
-      capabilities:
-        drop:
-          - ALL
-      seccompProfile:
-        type: RuntimeDefault
-      allowPrivilegeEscalation: false
-      readOnlyRootFilesystem: true
-      runAsUser: 1000
-      runAsGroup: 1000
-      ulimits:
-      - name: core
-        hard: 0
-        soft: 0
+    - name: my-app-container
+      image: my-application-image:latest
+      securityContext:
+        capabilities:
+          drop:
+            - ALL
+        seccompProfile:
+          type: RuntimeDefault
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        ulimits:
+          - name: core
+            hard: 0
+            soft: 0
 ```
 
 In this example, we're setting the `core` ulimit to 0, both hard and soft, effectively disabling core dumps for this specific container (`my-app-container`). You can adjust the `hard` and `soft` limits as needed to control the size of core dumps. The other security context parameters are best practice for enhanced container security and are included here for completeness. The `capabilities.drop`, `seccompProfile`, `allowPrivilegeEscalation`, `readOnlyRootFilesystem`, `runAsUser` and `runAsGroup` parameters contribute to a more secure environment and are often seen when specifying ulimits.

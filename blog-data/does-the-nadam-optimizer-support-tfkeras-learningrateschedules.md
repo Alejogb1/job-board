@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-the-nadam-optimizer-support-tfkeras-learningrateschedules"
 ---
 
-Okay, let’s tackle this. I've spent a fair amount of time optimizing models, and the interplay between optimizers and learning rate schedules is something I’ve had to navigate pretty carefully. So, regarding whether the nadam optimizer in tensorflow's keras api supports `tf.keras.learningrateschedules`, the short answer is: absolutely, yes. It's not just supported, it's a very typical and often recommended approach. But let’s get into the details because “supported” doesn't fully capture the nuances and best practices here.
+, let’s tackle this. I've spent a fair amount of time optimizing models, and the interplay between optimizers and learning rate schedules is something I’ve had to navigate pretty carefully. So, regarding whether the nadam optimizer in tensorflow's keras api supports `tf.keras.learningrateschedules`, the short answer is: absolutely, yes. It's not just supported, it's a very typical and often recommended approach. But let’s get into the details because “supported” doesn't fully capture the nuances and best practices here.
 
 The nadam optimizer, an extension of adam that incorporates nesterov momentum, is itself an adaptive learning rate optimization algorithm. It adjusts learning rates for each parameter dynamically during training based on the gradient history. Now, while nadam has an inherent adaptive component, it doesn't mean you can't or shouldn't combine it with an external learning rate schedule. In fact, it's frequently a great idea to do so to further refine your training process and get potentially better convergence or avoid plateaus in your loss function.
 

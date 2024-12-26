@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-do-i-reference-binaries-from-packages-in-bazels-custom-toolchain"
 ---
 
-Okay, let’s talk about referencing binaries from packages within Bazel’s custom toolchains. This is a subject I've had to iron out a few times over the years, and it can initially feel a bit… roundabout, shall we say. It’s not always obvious how to navigate Bazel’s hermeticity while still accessing necessary tooling packaged within your project.
+, let’s talk about referencing binaries from packages within Bazel’s custom toolchains. This is a subject I've had to iron out a few times over the years, and it can initially feel a bit… roundabout, shall we say. It’s not always obvious how to navigate Bazel’s hermeticity while still accessing necessary tooling packaged within your project.
 
-First, let's be clear on the core problem: Bazel aims for hermeticity. This means that build actions shouldn't depend on anything outside of the specified inputs. This is great for reproducibility and reliability, but it creates a challenge when your custom toolchain needs to execute binaries you’ve defined in your build. You can't simply rely on absolute paths or things floating around on your system. You need a reliable way to tell Bazel where those binaries are *within* its build graph, so they can be tracked, cached, and handled correctly.
+First, let's be clear on the core problem: Bazel aims for hermeticity. This means that build actions shouldn't depend on anything outside of the specified inputs. This is great for reproducibility and reliability, but it creates a challenge when your custom toolchain needs to execute binaries you’ve defined in your build. You can't simply rely on absolute paths or things floating around on your system. You need a reliable way to tell Bazel where those binaries are _within_ its build graph, so they can be tracked, cached, and handled correctly.
 
-The approach hinges on two key concepts: defining *toolchains* and using the `ctx.executable` attribute (in starlark, the configuration language for Bazel rules) within your toolchain’s execution action.
+The approach hinges on two key concepts: defining _toolchains_ and using the `ctx.executable` attribute (in starlark, the configuration language for Bazel rules) within your toolchain’s execution action.
 
 I remember a particularly frustrating incident involving a custom processor I had to support. The processor’s toolchain was a mess of hardcoded paths, and rebuilding the toolchain, or moving it to another machine, resulted in complete build failure. I spent a good chunk of a weekend fixing it, and I've been a proponent of properly using Bazel's mechanisms ever since.
 
@@ -81,9 +81,9 @@ my_compile = rule(
 
 Let’s step through the most important lines:
 
-1.  `toolchain = ctx.toolchains["//:my_custom_toolchain_instance"]`: This fetches our toolchain instance. Note that `//:my_custom_toolchain_instance` refers to the *label* of the toolchain, not a file path.
-2. `executable = toolchain.compiler`: This is the crucial part. `toolchain.compiler` is not a string, but a Bazel `File` object, which represents the output of the target we previously defined (`//tools:my_compiler`). This is how Bazel ensures hermeticity; it has to track all the necessary files required to execute the build action.
-3. The action itself is configured using `.run()` to invoke our compiler with the correct inputs and outputs.
+1.  `toolchain = ctx.toolchains["//:my_custom_toolchain_instance"]`: This fetches our toolchain instance. Note that `//:my_custom_toolchain_instance` refers to the _label_ of the toolchain, not a file path.
+2.  `executable = toolchain.compiler`: This is the crucial part. `toolchain.compiler` is not a string, but a Bazel `File` object, which represents the output of the target we previously defined (`//tools:my_compiler`). This is how Bazel ensures hermeticity; it has to track all the necessary files required to execute the build action.
+3.  The action itself is configured using `.run()` to invoke our compiler with the correct inputs and outputs.
 
 This pattern is fundamental. By retrieving the toolchain using `ctx.toolchains` and accessing the executable files using the attributes of our toolchain's struct (in this case, `toolchain.compiler`), we are ensuring that Bazel knows about the dependencies and can schedule the actions correctly.
 
@@ -99,14 +99,15 @@ my_compile(
 )
 
 ```
+
 We've set up our custom compile rule to take `my_source.c`, execute our custom compiler defined in our toolchain instance, and finally output `my_source_obj.o`.
 
 A few key considerations to mention:
 
-*   **Toolchain registration**: While not directly part of this example, a `toolchain_type` should generally be used with a `target_compatible_with` attribute to ensure only rules that ask for it will actually use it. I've avoided that here to focus on the core mechanics. In a larger project, using toolchain types and constraints is highly recommended and adds additional layers of correctness.
-*   **Error handling:** My examples are streamlined for clarity, but in production, proper error handling, logging, and input validation are essential for any Starlark code you write.
-*   **Toolchain Selection:** When projects get complex, Bazel’s platform selection and toolchain resolution will come into play. You might have multiple toolchains for different architectures. The `toolchains` attribute on a rule indicates which toolchains it will use for compilation.
+- **Toolchain registration**: While not directly part of this example, a `toolchain_type` should generally be used with a `target_compatible_with` attribute to ensure only rules that ask for it will actually use it. I've avoided that here to focus on the core mechanics. In a larger project, using toolchain types and constraints is highly recommended and adds additional layers of correctness.
+- **Error handling:** My examples are streamlined for clarity, but in production, proper error handling, logging, and input validation are essential for any Starlark code you write.
+- **Toolchain Selection:** When projects get complex, Bazel’s platform selection and toolchain resolution will come into play. You might have multiple toolchains for different architectures. The `toolchains` attribute on a rule indicates which toolchains it will use for compilation.
 
-For further reading, I would recommend delving into Bazel's documentation for custom rules and toolchains. Specifically, review the concepts related to platform selection and toolchain resolution, which are crucial for large projects. I also suggest studying the source code for some of Bazel’s built-in rules to get a feel for how these are used in practice. Consider checking out *Bazel: Building Reliable Software Faster* by the Bazel team; it offers a comprehensive look at these concepts. Additionally, understanding how Bazel handles dependencies and its hermeticity principles, as outlined in papers detailing Bazel's underlying design philosophy, will give you a deeper appreciation for why these things are done a certain way. There’s a significant value in grasping the ‘why,’ not just the ‘how’.
+For further reading, I would recommend delving into Bazel's documentation for custom rules and toolchains. Specifically, review the concepts related to platform selection and toolchain resolution, which are crucial for large projects. I also suggest studying the source code for some of Bazel’s built-in rules to get a feel for how these are used in practice. Consider checking out _Bazel: Building Reliable Software Faster_ by the Bazel team; it offers a comprehensive look at these concepts. Additionally, understanding how Bazel handles dependencies and its hermeticity principles, as outlined in papers detailing Bazel's underlying design philosophy, will give you a deeper appreciation for why these things are done a certain way. There’s a significant value in grasping the ‘why,’ not just the ‘how’.
 
 In summary, referencing binaries in custom Bazel toolchains is all about aligning your needs with Bazel's model for dependency management and hermeticity. By correctly defining your toolchain, using the `ctx.toolchains` construct, and accessing the necessary files through `File` objects, you gain the full benefits of Bazel's build system, avoiding the pitfalls of relying on external environment configurations and increasing the reliability of your builds. Remember to always think in terms of build graph dependencies, and you’ll find these concepts much more straightforward.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-split-a-csv-file-7030-and-use-the-first-column-as-the-target-variable"
 ---
 
-Alright, let's tackle this CSV splitting problem. I've certainly seen my share of these, especially in the early days of machine learning projects when dealing with less-than-ideal data pipelines. It’s a common task, but getting it right – efficiently and robustly – is crucial. We're aiming for a 70/30 split, taking the first column as our target, which usually implies we're setting up a classification or regression task.
+, let's tackle this CSV splitting problem. I've certainly seen my share of these, especially in the early days of machine learning projects when dealing with less-than-ideal data pipelines. It’s a common task, but getting it right – efficiently and robustly – is crucial. We're aiming for a 70/30 split, taking the first column as our target, which usually implies we're setting up a classification or regression task.
 
 My experience with this often stems from scenarios where data is provided as a single, large CSV file, without pre-existing separation into training and validation sets. I recall a particular project where we were forecasting energy consumption based on various sensor readings, and the raw data was one enormous CSV, with timestamps as the first column. It was a fairly large file, forcing me to think carefully about memory usage and efficiency.
 
@@ -133,7 +133,7 @@ To further your knowledge, I would suggest delving into these resources:
 
 1.  **"Python for Data Analysis" by Wes McKinney:** This is the definitive guide to pandas by its creator, providing an in-depth understanding of the library.
 2.  **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** A practical book that covers the usage of scikit-learn, including dataset splitting, which we used in Method 2.
-3. **"Effective Computation in Physics" by Anthony Scopatz and Kathryn D. Huff:** This book contains information on data processing, including csv handling and more. It has a scientific lens, but many of its techniques are broadly applicable.
+3.  **"Effective Computation in Physics" by Anthony Scopatz and Kathryn D. Huff:** This book contains information on data processing, including csv handling and more. It has a scientific lens, but many of its techniques are broadly applicable.
 
 These resources should help solidify your understanding of practical CSV manipulation and related techniques for data science.
 

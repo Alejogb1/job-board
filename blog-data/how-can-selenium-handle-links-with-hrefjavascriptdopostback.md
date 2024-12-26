@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-selenium-handle-links-with-hrefjavascriptdopostback"
 ---
 
-Okay, let's tackle this one. `javascript:__doPostBack` links. These are a particular flavor of web development annoyance that I've bumped into more times than I care to remember, often involving older asp.net applications. The issue isn't that Selenium *can't* interact with them, but rather, how they work internally makes a direct click quite problematic. It's not your typical anchor tag interaction.
+, let's tackle this one. `javascript:__doPostBack` links. These are a particular flavor of web development annoyance that I've bumped into more times than I care to remember, often involving older asp.net applications. The issue isn't that Selenium _can't_ interact with them, but rather, how they work internally makes a direct click quite problematic. It's not your typical anchor tag interaction.
 
 The heart of the matter lies in how these links function. Rather than navigating to a new url, they trigger a server-side postback using javascript. This method often involves updating hidden form fields and then submitting the entire form. Directly clicking the anchor element using `selenium.click()` may not consistently trigger this javascript event, or might not provide the correct form data, leaving us in a dead end with no server processing occurring. It’s a frustrating experience if you're not prepared for it. In my experience, trying to treat them like regular links just leads to tests that are brittle and unreliable.
 
@@ -50,14 +50,17 @@ if __name__ == '__main__':
   driver.quit()
 ```
 
-In this first example, we grab the `href` value, check to ensure its a postback link, remove `javascript:` prefix, and pass it directly to `execute_script`. We wrap it within a function for reusability. It’s crucial to verify the `href` value *before* attempting the javascript execution to prevent unexpected errors, and to handle the case where the link is not in the expected format.
+In this first example, we grab the `href` value, check to ensure its a postback link, remove `javascript:` prefix, and pass it directly to `execute_script`. We wrap it within a function for reusability. It’s crucial to verify the `href` value _before_ attempting the javascript execution to prevent unexpected errors, and to handle the case where the link is not in the expected format.
 
 **Example 2: Handling links with event arguments**
 
 Now, let’s add a bit more complexity. Some `__doPostBack` calls have additional arguments:
 
 ```html
-<a href="javascript:__doPostBack('ctl00$MainContent$LinkButton2','arg1=value1&arg2=value2')">Click Me Again</a>
+<a
+  href="javascript:__doPostBack('ctl00$MainContent$LinkButton2','arg1=value1&arg2=value2')"
+  >Click Me Again</a
+>
 ```
 
 The arguments are comma-separated strings. In general, you should not need to parse these, but if more complex cases exist it may be helpful to. Here's the code to handle this:
@@ -97,8 +100,14 @@ Notice that the logic is identical. The arguments in the `href` are part of the 
 In some situations, the `__doPostBack` parameters may be dynamically generated, possibly with parts added by javascript events before the link is rendered. While this is less common, it does exist. Let's say you have a link similar to this:
 
 ```html
- <a id="dynamicLink" href="javascript:void(0);" onclick="generatePostBack(this,'ctl00$MainContent$DynamicButton','additionalArg')">Click Dynamic</a>
+<a
+  id="dynamicLink"
+  href="javascript:void(0);"
+  onclick="generatePostBack(this,'ctl00$MainContent$DynamicButton','additionalArg')"
+  >Click Dynamic</a
+>
 ```
+
 and the javascript `generatePostBack` function generates the actual `__doPostBack` call, and adds it to the link. To interact with this kind of dynamic link, you will need to extract this final postback call.
 
 ```python

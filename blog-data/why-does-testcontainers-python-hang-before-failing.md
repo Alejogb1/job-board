@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-testcontainers-python-hang-before-failing"
 ---
 
-Okay, let's tackle this. I’ve seen this exact scenario play out more times than I care to remember, typically in the wee hours when you’re racing against a deployment deadline. The frustration of testcontainers-python hanging, only to eventually fail, is indeed a common pain point. It's rarely a straightforward problem, so let's unpack it step-by-step with some practical context gleaned from my experiences.
+, let's tackle this. I’ve seen this exact scenario play out more times than I care to remember, typically in the wee hours when you’re racing against a deployment deadline. The frustration of testcontainers-python hanging, only to eventually fail, is indeed a common pain point. It's rarely a straightforward problem, so let's unpack it step-by-step with some practical context gleaned from my experiences.
 
 The crux of the issue isn't usually with testcontainers itself being inherently flawed. More often than not, the delays and subsequent failures are symptoms of underlying conditions concerning your environment, the container you're launching, or even misconfigurations on your end. The 'hang' you’re experiencing often precedes a failure because testcontainers is trying its best to establish a connection or verify the container’s readiness before giving up.
 
@@ -52,6 +52,7 @@ finally:
    container.stop()
 
 ```
+
 In this second snippet, the lack of resources isn't explicitly programmed in, but can still represent a real-world case where the lack of system resources slows down the startup process, mimicking a hang.
 
 Finally, issues can arise from improperly configured or conflicting Docker environments. For example, having multiple Docker daemons running simultaneously or encountering conflicts with previously running containers can lead to unexpected behavior, including the hanging you're observing.

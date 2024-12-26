@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-bert-inference-time-increase-after-conversion-to-onnx"
 ---
 
-Alright, let’s talk about the seemingly paradoxical issue of BERT inference slowing down after an ONNX conversion. I’ve personally encountered this several times, particularly back when we were initially deploying some large-scale NLP models for a client project involving semantic analysis. We were hoping to streamline the inference process, expecting a speed boost from ONNX, but instead, we were met with increased latency. This experience led me down a bit of a rabbit hole, and I can share some insights that might be useful.
+, let’s talk about the seemingly paradoxical issue of BERT inference slowing down after an ONNX conversion. I’ve personally encountered this several times, particularly back when we were initially deploying some large-scale NLP models for a client project involving semantic analysis. We were hoping to streamline the inference process, expecting a speed boost from ONNX, but instead, we were met with increased latency. This experience led me down a bit of a rabbit hole, and I can share some insights that might be useful.
 
 The core issue isn’t that ONNX is inherently slower; far from it. The problem arises from how ONNX optimizes (or sometimes, doesn't) a given model for specific hardware and execution environments. When we convert a model like BERT from, say, a PyTorch or TensorFlow representation to ONNX, we're essentially transforming its computation graph into a portable, intermediate format. This format, at its core, is designed to enable optimizations during runtime on various backends (like CPU, GPU, etc.). However, these optimizations aren’t magic; they need to be explicitly configured and, sometimes, we see bottlenecks instead.
 
@@ -14,7 +14,7 @@ Here's the breakdown of the most frequent culprits:
 
 2.  **Backend Inefficiencies:** Different ONNX runtime backends (e.g., ONNX Runtime, TensorRT, OpenVINO) vary greatly in their capabilities and optimizations. If the runtime used for inference isn't well-tuned to the target hardware or isn't fully optimized for the types of operations present in the BERT model, you might see poor performance. For example, a CPU-based backend might struggle with the sheer scale of matrix multiplications inherent in a BERT model. Even on GPUs, the degree to which the backend uses fused kernels, optimized memory access patterns, or tensor core capabilities can significantly affect performance.
 
-3. **Data Type and Layout:** The data type used in the model and the data layout can dramatically affect performance. By default, many ONNX converters utilize the same datatype present in the training model. Often, models are trained using float32, and the same type is maintained after conversion. Moving to float16 precision (if hardware supports it) or even quantized int8 implementations can greatly accelerate things. However, this requires adjustments on both the ONNX model and the runtime. Layout, for instance, is the order in which dimensions are arranged, and how the backend prefers to process that arrangement also plays a big factor. An incorrect layout can result in data transposes that add overhead.
+3.  **Data Type and Layout:** The data type used in the model and the data layout can dramatically affect performance. By default, many ONNX converters utilize the same datatype present in the training model. Often, models are trained using float32, and the same type is maintained after conversion. Moving to float16 precision (if hardware supports it) or even quantized int8 implementations can greatly accelerate things. However, this requires adjustments on both the ONNX model and the runtime. Layout, for instance, is the order in which dimensions are arranged, and how the backend prefers to process that arrangement also plays a big factor. An incorrect layout can result in data transposes that add overhead.
 
 To illustrate this, consider the following scenarios and code examples:
 
@@ -47,7 +47,7 @@ class FusedLayer(nn.Module):
 # The 'fused' operation is more efficient during computation within the pytorch framework
 ```
 
-Here, the *fused* operation would be performed as a single kernel for increased efficiency during PyTorch computation, while the separate operations post ONNX conversion adds extra overhead.
+Here, the _fused_ operation would be performed as a single kernel for increased efficiency during PyTorch computation, while the separate operations post ONNX conversion adds extra overhead.
 
 **Example 2: Backend Optimization and Data Type:** Imagine converting BERT and running it on two different ONNX runtimes.
 
@@ -88,7 +88,7 @@ print(f"Output fp16: {output_fp16[0].shape}")
 # even with the data type conversion included.
 ```
 
-In this second example, we illustrate that by switching to a lower precision like float16 using session options, we can achieve considerable speedup if the ONNX Runtime and the underlying hardware support this. The actual implementation might involve model conversion to FP16. Additionally, the use of *execution mode* influences how ONNXRuntime processes the computations.
+In this second example, we illustrate that by switching to a lower precision like float16 using session options, we can achieve considerable speedup if the ONNX Runtime and the underlying hardware support this. The actual implementation might involve model conversion to FP16. Additionally, the use of _execution mode_ influences how ONNXRuntime processes the computations.
 
 **Example 3: Layout Incompatibility:** Assume the model is laid out in channels-first format within a backend, but the inputs are provided in a channels-last order.
 

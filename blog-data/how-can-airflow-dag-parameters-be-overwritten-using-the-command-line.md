@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-airflow-dag-parameters-be-overwritten-using-the-command-line"
 ---
 
-Okay, let's talk about overriding airflow dag parameters from the command line. It’s a capability I’ve leaned on heavily, particularly during those messy migration projects where constants seem to shift daily. I’ve seen many folks initially stumble with this, so let's break it down systematically. The core idea, when you get past the documentation jargon, is straightforward: you're essentially leveraging Jinja templating in your DAG definition combined with command-line arguments that airflow then makes available to the rendering context.
+, let's talk about overriding airflow dag parameters from the command line. It’s a capability I’ve leaned on heavily, particularly during those messy migration projects where constants seem to shift daily. I’ve seen many folks initially stumble with this, so let's break it down systematically. The core idea, when you get past the documentation jargon, is straightforward: you're essentially leveraging Jinja templating in your DAG definition combined with command-line arguments that airflow then makes available to the rendering context.
 
 Think of airflow dag parameters, or configurations, as variables that can influence the behavior of your tasks. These parameters can be default values specified within your dag definition itself, but to inject flexibility, we want the ability to adjust these values externally, specifically from the command line when triggering the dag. This is where airflow's templating and command-line execution intertwine.
 
@@ -125,6 +125,7 @@ process_data = PythonOperator(
 Here, we have the `config` parameter that holds a dictionary as it's value. If the `config` dictionary exists in `dag_run.conf`, the PythonOperator will use that, otherwise, it will fall back to the dag's default args.
 
 To override this from command line:
+
 ```bash
 airflow dags trigger complex_param_dag -c '{"config": {"retries": 5, "timeout": 120}}'
 ```
@@ -133,4 +134,4 @@ The python task will print that retries are set to 5 and that the timeout is 120
 
 The important thing to always consider is: what is the data type of what you send through the command line? It will be a string when passed through the command line, even if that string represents a dictionary, a list, or a number. Airflow will interpret this string as a JSON, and will treat the structure as native python objects in `dag_run.conf` dictionary.
 
-For further depth, I highly recommend looking at the following material: *“Jinja2 Documentation”*, available online, which details the templating engine used by airflow; the official airflow documentation specifically the *‘dag_run’* and *’Command line interface’* sections; and for a broader understanding of system design patterns, *“Patterns of Enterprise Application Architecture”* by Martin Fowler can provide a useful background. This, combined with practical application, is how I’ve come to manage increasingly complex workflows. Being able to override these parameters has proven invaluable in maintaining agility in our deployment process.
+For further depth, I highly recommend looking at the following material: _“Jinja2 Documentation”_, available online, which details the templating engine used by airflow; the official airflow documentation specifically the _‘dag_run’_ and _’Command line interface’_ sections; and for a broader understanding of system design patterns, _“Patterns of Enterprise Application Architecture”_ by Martin Fowler can provide a useful background. This, combined with practical application, is how I’ve come to manage increasingly complex workflows. Being able to override these parameters has proven invaluable in maintaining agility in our deployment process.

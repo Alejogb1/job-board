@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-i-get-mat1-and-mat2-shapes-cannot-be-multiplied-errors"
 ---
 
-Okay, let's tackle this. The "mat1 and mat2 shapes cannot be multiplied" error, a frequent flyer in the realms of numerical computation, particularly within libraries like numpy in python or similar matrix manipulation tools in other languages. I’ve seen this one more times than I care to count, and each time it’s a reminder of the fundamental rules of matrix multiplication. This isn't just about Python; the underlying principle applies universally across scientific computing wherever you're performing matrix operations.
+, let's tackle this. The "mat1 and mat2 shapes cannot be multiplied" error, a frequent flyer in the realms of numerical computation, particularly within libraries like numpy in python or similar matrix manipulation tools in other languages. I’ve seen this one more times than I care to count, and each time it’s a reminder of the fundamental rules of matrix multiplication. This isn't just about Python; the underlying principle applies universally across scientific computing wherever you're performing matrix operations.
 
 The core of the problem is mismatched dimensions. To understand why, let’s revisit the concept of matrix multiplication itself. A matrix, fundamentally, is a two-dimensional array of numbers (or sometimes even higher-dimensional, but the 2D case is most relevant here). Matrix multiplication isn’t an element-by-element operation. Instead, it's a more structured process involving a weighted sum of elements from the input matrices.
 
@@ -51,7 +51,7 @@ except ValueError as e:
 
 This snippet will raise a `ValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 4 is different from 3)` when using `np.dot()`, or similar wording when using the `@` operator. This clearly indicates that the inner dimensions do not align. In the first example, the inner dimensions were both 3, while in the error example they were 3 and 2, respectively.
 
-Finally, a quick example of what happens when transposition might be required. Let's say we had the initial matrices `A` and `C` from the two examples and we wanted to multiply `C` * `A`. The dimensions would be incompatible. We can rectify this with the transpose of matrix `A`:
+Finally, a quick example of what happens when transposition might be required. Let's say we had the initial matrices `A` and `C` from the two examples and we wanted to multiply `C` \* `A`. The dimensions would be incompatible. We can rectify this with the transpose of matrix `A`:
 
 ```python
 import numpy as np

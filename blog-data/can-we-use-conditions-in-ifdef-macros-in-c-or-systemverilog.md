@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "can-we-use-conditions-in-ifdef-macros-in-c-or-systemverilog"
 ---
 
-Okay so you're asking if we can get jiggy with conditionals inside `ifdef` macros right Let me tell you this isn't your grandma's knitting circle This is C and SystemVerilog we're talking about and things can get hairy fast I've been wrestling with this beast for a while now so I've seen some stuff
+you're asking if we can get jiggy with conditionals inside `ifdef` macros right Let me tell you this isn't your grandma's knitting circle This is C and SystemVerilog we're talking about and things can get hairy fast I've been wrestling with this beast for a while now so I've seen some stuff
 
 Look the short answer is mostly no not like you might expect You can't just throw a full-blown `if` `else` block inside a `#ifdef` and call it a day That's like trying to fit a square peg in a round hole and you'll be left scratching your head wondering why your compiler is screaming at you with cryptic errors
 
@@ -43,7 +43,7 @@ SystemVerilog `#ifdef` works identically to C's preprocessor so there is no chan
 
 so yeah the preprocessor is a compile time tool it does not know values at runtime so if you want conditional checks and runtime logic its done within the language itself with if statements and logical operators this is where the beauty of the languages comes into play
 
-Now there's a workaround if you *really* want a conditional vibe but it involves clever macro usage and honestly it can get messy quick but here's an example of that
+Now there's a workaround if you _really_ want a conditional vibe but it involves clever macro usage and honestly it can get messy quick but here's an example of that
 
 ```c
 #define DEBUG_LEVEL 2

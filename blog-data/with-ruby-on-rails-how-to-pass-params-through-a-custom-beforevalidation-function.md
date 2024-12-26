@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "with-ruby-on-rails-how-to-pass-params-through-a-custom-beforevalidation-function"
 ---
 
-alright, so you're hitting that classic rails params puzzle with `before_validation`, right? i've been there, staring at the screen, wondering why my data isn't flowing the way i expected. seems like a simple enough thing, but it can get tangled up pretty quickly.
+, so you're hitting that classic rails params puzzle with `before_validation`, right? i've been there, staring at the screen, wondering why my data isn't flowing the way i expected. seems like a simple enough thing, but it can get tangled up pretty quickly.
 
-let me break it down based on how i've tackled this in the past. first off, the `before_validation` callback in rails runs *before* the model tries to validate its attributes. that's key. at this stage, you're working with the attribute data already set on the model instance, not the raw params hash from the request. the request's params get used to populate the model's attributes *before* `before_validation` is triggered. so, directly manipulating the params hash inside a `before_validation` isn't really how it's designed to work.
+let me break it down based on how i've tackled this in the past. first off, the `before_validation` callback in rails runs _before_ the model tries to validate its attributes. that's key. at this stage, you're working with the attribute data already set on the model instance, not the raw params hash from the request. the request's params get used to populate the model's attributes _before_ `before_validation` is triggered. so, directly manipulating the params hash inside a `before_validation` isn't really how it's designed to work.
 
-what you *can* do though is modify the model attributes inside the `before_validation` callback, and rails validation will act accordingly after these changes. you're essentially transforming the model's data before its validated.
+what you _can_ do though is modify the model attributes inside the `before_validation` callback, and rails validation will act accordingly after these changes. you're essentially transforming the model's data before its validated.
 
 let's imagine a scenario. say you have a user model, and you want to ensure that the email address is always lowercased before it's saved. you could try to hack away at the raw params which would be the wrong way. let's do it the proper rails way:
 
@@ -74,7 +74,7 @@ end
 
 in this example we generate the sku by sanitizing the name by removing special chars and appending a random hex string, this is a very simplified example for creating an sku but i've used similar methods in many of my projects. the random hex part is important to reduce the chances of collision. this method only runs if the `name` is present and the sku is blank. so, if someone is trying to set an sku manually on purpose, this method will not change it.
 
-now, about those params. while you shouldn't be directly altering params within `before_validation`, sometimes you *do* need to access the request parameters, say, to apply logic conditionally. you have a few routes for that. you could inject these params into the model before saving/validation by using a custom setter on the model, like this:
+now, about those params. while you shouldn't be directly altering params within `before_validation`, sometimes you _do_ need to access the request parameters, say, to apply logic conditionally. you have a few routes for that. you could inject these params into the model before saving/validation by using a custom setter on the model, like this:
 
 ```ruby
 class SomeModel < ApplicationRecord
@@ -93,9 +93,10 @@ class SomeModel < ApplicationRecord
   end
 end
 ```
+
 now, you can in the controller set the `some_param` by calling the setter method on the model instance like `model.some_param = params[:some_param]` right before saving or validating the model. and then your model can use it before the validation phase, this is something i've had to use before with some older rails api's. there are other ways, but this tends to be the less troublesome.
 
-it all boils down to understanding the rails request lifecycle: params come in, get used to populate the model's attributes, and *then* the `before_validation` callbacks fire. you can't change the params directly in those callbacks. your focus should be on manipulating the model's attributes within the `before_validation` callbacks or passing parameters by using a custom setter before saving/validating.
+it all boils down to understanding the rails request lifecycle: params come in, get used to populate the model's attributes, and _then_ the `before_validation` callbacks fire. you can't change the params directly in those callbacks. your focus should be on manipulating the model's attributes within the `before_validation` callbacks or passing parameters by using a custom setter before saving/validating.
 
 if you are looking for more in-depth stuff about the lifecycle of rails requests and their callbacks, i'd point you towards "agile web development with rails" by sam ruby. its a classic, and it still provides the best insights for the framework. also, if you ever find yourself needing to debug some weird behavior in the lifecycle of models on rails, i'd suggest reading the "rails internals" section of the "rails 5 way" by obie fernandez, sometimes you will need to get into the nitty-gritty of the framework to figure out what's happening.
 

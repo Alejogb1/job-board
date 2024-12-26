@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-aws-aurora-serverless-failovers-happening-with-wso2-api-manager"
 ---
 
-Okay, let's tackle this. I've seen this particular headache a few times, usually when the architecture seems solid on paper but real-world load throws things into disarray. The combination of WSO2 API Manager and AWS Aurora Serverless, especially when experiencing failovers, isn’t as straightforward as one might hope. The core issue often boils down to how connection pooling, resource scaling, and database configuration interact, or rather, *don’t* interact perfectly.
+, let's tackle this. I've seen this particular headache a few times, usually when the architecture seems solid on paper but real-world load throws things into disarray. The combination of WSO2 API Manager and AWS Aurora Serverless, especially when experiencing failovers, isn’t as straightforward as one might hope. The core issue often boils down to how connection pooling, resource scaling, and database configuration interact, or rather, _don’t_ interact perfectly.
 
 First, let’s unpack what’s likely happening. Aurora Serverless, by its nature, automatically scales resources based on demand, including the underlying compute capacity and memory. This is fantastic for cost optimization, but it introduces variability in the database endpoint itself as it adds or removes resources behind the scenes. While these transitions are designed to be transparent, WSO2 API Manager, particularly if not configured optimally, can be caught off guard.
 
@@ -42,13 +42,13 @@ We began by adjusting the connection pool settings within the WSO2 API Manager d
 
 Notice the critical settings:
 
-*   `maxActive`: The maximum number of active connections. We needed enough capacity for expected peak loads.
-*   `minIdle`: The minimum number of idle connections to maintain. This ensures faster response times by not constantly creating new connections.
-*   `maxIdle`: The maximum number of idle connections to retain. By lowering this from the default setting, we encouraged the pool to discard connections that were likely to be invalid after a scaling event, making room for new, valid connections.
-*   `testOnBorrow`: This instructs the pool to validate connections before use, catching broken connections.
-*   `validationQuery`: A simple query to validate the connection's integrity.
-*   `timeBetweenEvictionRunsMillis`: The interval at which the idle connection remover runs.
-*   `minEvictableIdleTimeMillis`: The minimum time a connection can sit idle before being evicted.
+- `maxActive`: The maximum number of active connections. We needed enough capacity for expected peak loads.
+- `minIdle`: The minimum number of idle connections to maintain. This ensures faster response times by not constantly creating new connections.
+- `maxIdle`: The maximum number of idle connections to retain. By lowering this from the default setting, we encouraged the pool to discard connections that were likely to be invalid after a scaling event, making room for new, valid connections.
+- `testOnBorrow`: This instructs the pool to validate connections before use, catching broken connections.
+- `validationQuery`: A simple query to validate the connection's integrity.
+- `timeBetweenEvictionRunsMillis`: The interval at which the idle connection remover runs.
+- `minEvictableIdleTimeMillis`: The minimum time a connection can sit idle before being evicted.
 
 **Step 2: Connection Timeout Adjustments**
 
@@ -58,11 +58,11 @@ Another critical step is adjusting connection timeouts at the JDBC driver level.
 jdbc:mysql://your-aurora-endpoint/your-database?connectTimeout=3000&socketTimeout=10000&autoReconnect=true&failOverReadOnly=false&serverTimezone=UTC
 ```
 
-*   `connectTimeout`: The maximum time (in milliseconds) to wait for a connection attempt.
-*   `socketTimeout`: The maximum time (in milliseconds) to wait for data from a socket.
-*   `autoReconnect`: This tells the driver to attempt a reconnection if the connection breaks. While it's debated, we found it crucial for mitigating issues.
-*   `failOverReadOnly`: We set this to `false` as we wanted WSO2 to have full read-write capabilities.
-*   `serverTimezone=UTC`: Setting timezones can eliminate timezone conflicts in your system.
+- `connectTimeout`: The maximum time (in milliseconds) to wait for a connection attempt.
+- `socketTimeout`: The maximum time (in milliseconds) to wait for data from a socket.
+- `autoReconnect`: This tells the driver to attempt a reconnection if the connection breaks. While it's debated, we found it crucial for mitigating issues.
+- `failOverReadOnly`: We set this to `false` as we wanted WSO2 to have full read-write capabilities.
+- `serverTimezone=UTC`: Setting timezones can eliminate timezone conflicts in your system.
 
 **Step 3: Implementing Exponential Backoff**
 

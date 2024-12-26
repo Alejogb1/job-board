@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-customize-a-data-loader-for-yolov5-to-train-on-visdrone"
 ---
 
-Okay, let’s tackle this. Customizing a data loader for yolov5 to work with visdrone’s specific format, is, in my experience, a process that requires careful attention to detail, but it's definitely doable. I remember back when I was working on a computer vision project for drone surveillance; we needed to get a model running on a dataset that wasn’t quite in the COCO format yolov5 expected. We ended up having to roll our own data loader, and while it was a learning curve, it became an essential part of our pipeline. Let me walk you through the core considerations and provide some code examples to illustrate how it’s done.
+, let’s tackle this. Customizing a data loader for yolov5 to work with visdrone’s specific format, is, in my experience, a process that requires careful attention to detail, but it's definitely doable. I remember back when I was working on a computer vision project for drone surveillance; we needed to get a model running on a dataset that wasn’t quite in the COCO format yolov5 expected. We ended up having to roll our own data loader, and while it was a learning curve, it became an essential part of our pipeline. Let me walk you through the core considerations and provide some code examples to illustrate how it’s done.
 
 Essentially, the challenge boils down to transforming the visdrone annotations and image files into a format that yolov5 can process natively. Yolov5, by default, expects a specific directory structure with image files and corresponding text files containing bounding box coordinates and class labels. Visdrone, in contrast, uses a different approach, often involving xml files or text files with a different layout. The objective is to bridge this gap by creating a custom pytorch dataset class. This class will handle the loading, processing, and formatting of your visdrone data, which will then be fed into the yolov5 training loop.
 
@@ -39,7 +39,7 @@ def parse_visdrone_annotation(annotation_path, image_size):
                 if len(parts) != 8: # Ensure the correct number of parts per line
                     continue # Skip problematic lines
                 bbox_x, bbox_y, bbox_width, bbox_height, _, _, _, class_label = map(int, parts)
-                
+
                 # Normalize bounding box coordinates for yolov5
                 dw = 1.0 / image_size[0]
                 dh = 1.0 / image_size[1]
@@ -133,7 +133,7 @@ def create_visdrone_transforms(image_size):
         ],
         bbox_params=A.BboxParams(format='yolo', label_fields=['class_labels'])
     )
-    
+
     return train_transform, val_transform
 ```
 

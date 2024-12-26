@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-blobs-be-stored-as-files"
 ---
 
-Okay, let’s unpack this. Having dealt with data persistence for a while, I’ve encountered the need to store blobs as files more times than I can comfortably count. The straightforward answer is yes, it's entirely feasible, and quite common. But the 'how' involves several considerations around efficiency, access patterns, and system constraints. Let's explore that in a bit more detail.
+, let’s unpack this. Having dealt with data persistence for a while, I’ve encountered the need to store blobs as files more times than I can comfortably count. The straightforward answer is yes, it's entirely feasible, and quite common. But the 'how' involves several considerations around efficiency, access patterns, and system constraints. Let's explore that in a bit more detail.
 
 Fundamentally, a blob, or binary large object, is just a sequence of bytes. When we think about files on a file system, they're also sequences of bytes – typically associated with metadata such as a filename, size, and access permissions. The magic, if you can call it that, lies in how we translate the abstract idea of a blob into a concrete file on disk. It's not some arcane process, though. It’s rather a matter of mapping the blob’s byte sequence directly to a file's contents.
 

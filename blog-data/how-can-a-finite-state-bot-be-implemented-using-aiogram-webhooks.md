@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-finite-state-bot-be-implemented-using-aiogram-webhooks"
 ---
 
-Alright, let's unpack this. Implementing a finite state machine (fsm) for a Telegram bot using aiogram webhooks is a fairly common requirement, and over the years I’ve seen it implemented… well, let’s just say there’s a spectrum of approaches out there. I’ve certainly had my share of learning experiences – that one project involving a multi-level onboarding process and a botched state transition still makes me shudder a little. But enough reminiscing; let's focus on a clean and robust implementation.
+, let's unpack this. Implementing a finite state machine (fsm) for a Telegram bot using aiogram webhooks is a fairly common requirement, and over the years I’ve seen it implemented… well, let’s just say there’s a spectrum of approaches out there. I’ve certainly had my share of learning experiences – that one project involving a multi-level onboarding process and a botched state transition still makes me shudder a little. But enough reminiscing; let's focus on a clean and robust implementation.
 
 The core idea is to manage the bot's conversational flow using defined states. Each state represents a particular point in the conversation, dictating which handlers are active and what kind of input the bot expects. Think of it like a flowchart, where each node is a state, and the arrows are the transitions triggered by user messages or other events. Aiogram, with its built-in support for state management, makes this relatively straightforward, especially when coupled with webhooks.
 
@@ -54,7 +54,7 @@ async def get_age_handler(message: types.Message, state: FSMContext):
        data['age'] = message.text
        name = data.get('name')
        age = data.get('age')
-   await message.answer(f"Okay {name}, you are {age} years old! Thank you")
+   await message.answer(f" {name}, you are {age} years old! Thank you")
    await state.finish()
 
 async def on_startup(dispatcher):
@@ -74,6 +74,7 @@ if __name__ == '__main__':
         port=8080,
     )
 ```
+
 In this code, `StatesGroup` defines our states. The `@dp.message_handler(state=UserData.GETTING_NAME)` decorator ensures that the `get_name_handler` is only called when the bot is in the `GETTING_NAME` state. The `state` parameter in handler functions gives access to the `FSMContext`. Using `state.proxy()` lets us store user information like name and age in the state. The `state.finish()` at the end of a conversation cleans up the storage and ends the state. The `start_webhook` method initiates the bot with webhook updates.
 
 **Example 2: Incorporating a custom dispatcher condition**
@@ -219,6 +220,7 @@ if __name__ == '__main__':
     )
 
 ```
+
 Here, we use `RedisStorage2` to store the bot's state in redis. This setup allows state persistence even if the bot is restarted or scaled to multiple instances, which is especially critical in webhook-based systems.
 
 **Recommended Resources:**

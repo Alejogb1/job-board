@@ -20,7 +20,7 @@ Here’s a breakdown of common pitfalls:
 
 4.  **Asset Pipeline Errors:** Sometimes, the asset pipeline itself might fail to properly compile or include the necessary javascript. This is less common with standard packages but possible with certain configurations or gem conflicts. These failures can be hard to identify but are normally obvious once you know where to look. Check your server logs or javascript console for more details.
 
-Okay, enough theory, let's move to some actionable solutions and code snippets. Here's how I've solved this in previous projects:
+, enough theory, let's move to some actionable solutions and code snippets. Here's how I've solved this in previous projects:
 
 **Example 1: Using importmaps (Rails 7 default approach)**
 
@@ -40,25 +40,24 @@ Now, in your `app/javascript/application.js` or relevant javascript file:
 
 ```javascript
 // app/javascript/application.js
-import "./controllers" // required if using Stimulus.js
-import 'nouislider';
+import "./controllers"; // required if using Stimulus.js
+import "nouislider";
 
-document.addEventListener('DOMContentLoaded', function(){
-    console.log('noUiSlider object:', noUiSlider);
-     if(typeof noUiSlider !== 'undefined'){
-            const sliderElement = document.getElementById('slider');
-            noUiSlider.create(sliderElement, {
-             start: [20, 80],
-            connect: true,
-             range: {
-                 'min': 0,
-                 'max': 100
-             }
-         });
-     } else {
-         console.error('noUiSlider is not defined. Check your imports.');
-     }
-
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("noUiSlider object:", noUiSlider);
+  if (typeof noUiSlider !== "undefined") {
+    const sliderElement = document.getElementById("slider");
+    noUiSlider.create(sliderElement, {
+      start: [20, 80],
+      connect: true,
+      range: {
+        min: 0,
+        max: 100,
+      },
+    });
+  } else {
+    console.error("noUiSlider is not defined. Check your imports.");
+  }
 });
 ```
 
@@ -72,23 +71,23 @@ In your `app/javascript/packs/application.js`:
 
 ```javascript
 // app/javascript/packs/application.js
-import 'nouislider'; // This makes it globally available, which is fine in most cases.
-document.addEventListener('DOMContentLoaded', function(){
-    console.log('noUiSlider object:', noUiSlider);
+import "nouislider"; // This makes it globally available, which is fine in most cases.
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("noUiSlider object:", noUiSlider);
 
-     if(typeof noUiSlider !== 'undefined'){
-            const sliderElement = document.getElementById('slider');
-            noUiSlider.create(sliderElement, {
-             start: [20, 80],
-            connect: true,
-             range: {
-                 'min': 0,
-                 'max': 100
-             }
-         });
-     } else {
-         console.error('noUiSlider is not defined. Check your imports.');
-     }
+  if (typeof noUiSlider !== "undefined") {
+    const sliderElement = document.getElementById("slider");
+    noUiSlider.create(sliderElement, {
+      start: [20, 80],
+      connect: true,
+      range: {
+        min: 0,
+        max: 100,
+      },
+    });
+  } else {
+    console.error("noUiSlider is not defined. Check your imports.");
+  }
 });
 ```
 
@@ -100,27 +99,26 @@ Sometimes, despite proper imports, you might still face the undefined error, esp
 
 ```javascript
 // app/javascript/application.js or similar
-import 'nouislider';
+import "nouislider";
 
-document.addEventListener('DOMContentLoaded', function(){
-   setTimeout(function() {
-        console.log('noUiSlider object:', noUiSlider);
+document.addEventListener("DOMContentLoaded", function () {
+  setTimeout(function () {
+    console.log("noUiSlider object:", noUiSlider);
 
-        if(typeof noUiSlider !== 'undefined'){
-            const sliderElement = document.getElementById('slider');
-           noUiSlider.create(sliderElement, {
-               start: [20, 80],
-               connect: true,
-               range: {
-                'min': 0,
-                'max': 100
-               }
-           });
-       } else {
-           console.error('noUiSlider is not defined after timeout.');
-       }
-    }, 100); // A short 100ms delay to let the libraries load.
-
+    if (typeof noUiSlider !== "undefined") {
+      const sliderElement = document.getElementById("slider");
+      noUiSlider.create(sliderElement, {
+        start: [20, 80],
+        connect: true,
+        range: {
+          min: 0,
+          max: 100,
+        },
+      });
+    } else {
+      console.error("noUiSlider is not defined after timeout.");
+    }
+  }, 100); // A short 100ms delay to let the libraries load.
 });
 ```
 
@@ -130,8 +128,8 @@ This approach adds a small delay before trying to use `noUiSlider`, which allows
 
 When debugging these kinds of problems, check your browser's javascript console for error messages first, as well as the server logs for pipeline-related errors. For further deep dives, I recommend checking these sources:
 
-*   **The Official Rails Guides:** They have sections dedicated to the asset pipeline, webpacker, and importmaps. Understand the nuances of each approach to better manage dependencies.
-*   **"Effective JavaScript" by David Herman:** This is a must-read for javascript developers, with lots of focus on patterns and debugging that can help avoid these sorts of problems.
-*   **The webpack documentation:** If using webpacker, the official webpack documentation is the ultimate source for configuring and troubleshooting compilation issues.
+- **The Official Rails Guides:** They have sections dedicated to the asset pipeline, webpacker, and importmaps. Understand the nuances of each approach to better manage dependencies.
+- **"Effective JavaScript" by David Herman:** This is a must-read for javascript developers, with lots of focus on patterns and debugging that can help avoid these sorts of problems.
+- **The webpack documentation:** If using webpacker, the official webpack documentation is the ultimate source for configuring and troubleshooting compilation issues.
 
 In summary, while frustrating, a `noUiSlider` undefined error in your Rails 7 app is usually a matter of correctly managing javascript dependencies, load order, or potential conflicts. By systematically troubleshooting, as outlined above, you should be able to resolve the issue and get your sliders working as intended. Remember to start with proper setup in your configuration files, ensure javascript is imported correctly and in the right order, and always check for errors in your console. These steps should resolve 99% of the `noUiSlider` related issues.

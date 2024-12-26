@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "why-does-ruby-regex-modify-user-input-in-regional-languages"
 ---
 
-Alright, let’s tackle this. I remember vividly an incident back in the early 2010s when I was working on a multi-lingual e-commerce platform, and we ran into some very peculiar issues with user input in Ruby. It felt like the regex engine had a mind of its own. The core problem wasn't necessarily a 'bug' in Ruby itself, but a confluence of factors related to character encodings, normalization, and how regular expressions are implemented. Let me break it down for you.
+, let’s tackle this. I remember vividly an incident back in the early 2010s when I was working on a multi-lingual e-commerce platform, and we ran into some very peculiar issues with user input in Ruby. It felt like the regex engine had a mind of its own. The core problem wasn't necessarily a 'bug' in Ruby itself, but a confluence of factors related to character encodings, normalization, and how regular expressions are implemented. Let me break it down for you.
 
 The primary reason Ruby regex sometimes seems to modify user input, especially in regional languages, stems from the complexities of handling text that isn't simple ASCII. When we're dealing with languages beyond basic English, we encounter a variety of challenges such as: different character sets (like utf-8, iso-8859, etc.), composite characters (like accented letters or ligatures), and the subtleties of character normalization.
 
-Ruby's `String` class and its regex engine are more than capable of handling these nuances, *if* they're configured correctly. Often, the issues arise from:
+Ruby's `String` class and its regex engine are more than capable of handling these nuances, _if_ they're configured correctly. Often, the issues arise from:
 
 1.  **Incorrect Character Encoding Specification:** The first hurdle is that a ruby program must be aware of the encoding of your data. When a string is read from a file, a web form, or a database, if it is not declared with the proper encoding the ruby string object will not treat the string as an ordered sequence of codepoints, but as a sequence of bytes. This can cause issues in the regex engine. If you work under the assumption that every character is always one byte, accented characters can be misinterpreted by the regex engine.
 
@@ -94,10 +94,10 @@ So, what's the takeaway? Here’s my advice based on years of debugging these is
 
 2.  **Normalize:** Normalize strings to NFC before comparing them, especially if you are handling user-provided text.
 
-3. **Be Explicit in Regex:** Avoid relying on shorthand notation like `\w`, `\d`. Instead use unicode properties like `\p{L}` and `\p{N}` when you are working with multiple languages. Also when creating ranges, be explicit about your intent.
+3.  **Be Explicit in Regex:** Avoid relying on shorthand notation like `\w`, `\d`. Instead use unicode properties like `\p{L}` and `\p{N}` when you are working with multiple languages. Also when creating ranges, be explicit about your intent.
 
 4.  **Test Extensively:** Always test your regular expressions with a wide range of inputs from different languages and scripts.
 
-5. **Consult Authoritative Sources:** For deep understanding, I strongly recommend diving into "Programming with Unicode" by Michael J. Fischer. It's a goldmine for grasping the subtleties of character encodings and normalization. For more on the ruby regex implementation, the "Regular Expression Pocket Reference" by Tony Stubblebine is a great source. You may also want to dive into the official unicode standard, which is maintained by the unicode consortium.
+5.  **Consult Authoritative Sources:** For deep understanding, I strongly recommend diving into "Programming with Unicode" by Michael J. Fischer. It's a goldmine for grasping the subtleties of character encodings and normalization. For more on the ruby regex implementation, the "Regular Expression Pocket Reference" by Tony Stubblebine is a great source. You may also want to dive into the official unicode standard, which is maintained by the unicode consortium.
 
 In short, what may seem like Ruby regex "modifying" user input is generally an issue stemming from insufficient handling of Unicode complexities. By being conscious of these encoding and normalization details, you can avoid a significant amount of frustration and build robust, multi-lingual applications. It's about understanding the details of text representation and being explicit in your handling of it.

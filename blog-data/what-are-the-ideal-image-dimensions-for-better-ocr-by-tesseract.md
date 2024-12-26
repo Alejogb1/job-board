@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-are-the-ideal-image-dimensions-for-better-ocr-by-tesseract"
 ---
 
-alright, let's talk about image dimensions for tesseract, it's a topic i've spent way too many hours on, believe me. i've seen it all, from barely-there text to massive scans that choked my poor little machine.
+, let's talk about image dimensions for tesseract, it's a topic i've spent way too many hours on, believe me. i've seen it all, from barely-there text to massive scans that choked my poor little machine.
 
 first off, there’s no single magic number. it’s more of a ‘it depends’ situation, but with some good guidelines that i've learned through my own painful experiences. what i've found is that you’re aiming for a sweet spot: not too small that the characters are unrecognizable, and not so big that tesseract wastes time processing a bunch of unnecessary pixels, or worse, introduces its own errors trying to make sense of the extra data.
 

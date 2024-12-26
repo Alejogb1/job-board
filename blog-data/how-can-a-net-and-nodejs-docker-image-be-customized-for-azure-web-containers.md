@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-net-and-nodejs-docker-image-be-customized-for-azure-web-containers"
 ---
 
-Alright, let's tackle this. Customizing Docker images for Azure Web Containers, particularly when dealing with both .NET and Node.js, is a topic I've spent quite a bit of time on, and it definitely has its nuances. I remember one particularly challenging project where we had a microservices architecture with some components running on .NET and others on Node.js. Orchestrating their deployments to Azure Web Containers required a very specific approach to image customization. So, let's break down what I've learned.
+, let's tackle this. Customizing Docker images for Azure Web Containers, particularly when dealing with both .NET and Node.js, is a topic I've spent quite a bit of time on, and it definitely has its nuances. I remember one particularly challenging project where we had a microservices architecture with some components running on .NET and others on Node.js. Orchestrating their deployments to Azure Web Containers required a very specific approach to image customization. So, let's break down what I've learned.
 
 Essentially, the customization boils down to tailoring the Docker images to fit Azure's expectations for Web Apps for Containers, and the individual requirements of each application. Azure, unlike running containers in a more general environment, has particular expectations for things like port binding, startup commands, and file system access. This is not insurmountable, but requires a deliberate, informed approach. The primary goal is ensuring that each containerized application is optimized for the Azure environment and follows best practices.
 
@@ -36,6 +36,7 @@ COPY --from=build-env /app/out .
 ENV DB_CONNECTION_STRING="YourConnectionString"
 ENTRYPOINT ["dotnet", "YourApplication.dll"]
 ```
+
 In this amended snippet, the `ENV` instruction sets the environment variable. These variables are available to your .NET application at runtime, allowing you to decouple configuration from code. You can manage these through Azure app settings instead, but it's a core option to understand.
 
 Next, let's switch gears to Node.js. The underlying concepts are similar, but the commands and base images are different. Here's an example for Node.js:
@@ -86,19 +87,22 @@ CMD ["node", "server.js"]
 ```
 
 Here, the `HEALTHCHECK` instruction is crucial. It defines a probe that makes an HTTP request to `/health` every 30 seconds, with a 10-second timeout and a maximum of 3 retries. If the request fails, the container is considered unhealthy. Your Node.js application will need to implement this /health endpoint. A simple Express.js health endpoint might look like this:
+
 ```javascript
-app.get('/health', (req, res) => {
-    res.status(200).send('OK');
-  });
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
 ```
+
 This endpoint simply returns a 200 response, which indicates that the application is running. This endpoint is used by the docker healthcheck command defined in the dockerfile.
 
 Beyond the dockerfile itself, consider these best practices for Azure Web Containers:
-*   **Use managed identity:** Avoid hard coding credentials. Use the managed identity feature of Azure to connect to other Azure resources like databases.
-*   **Leverage application settings:** Instead of baking environment variables into the image, manage them using application settings in the Azure portal.
-*   **Container logging:** Ensure your application is outputting logs to stdout and stderr. Azure automatically collects these logs for debugging.
-*   **Image size optimization:** Keep your images small. Use multi-stage builds, and minimize the amount of unnecessary files added to the final image.
-*   **Security scanning:** Use container scanning tools to detect vulnerabilities in your images.
+
+- **Use managed identity:** Avoid hard coding credentials. Use the managed identity feature of Azure to connect to other Azure resources like databases.
+- **Leverage application settings:** Instead of baking environment variables into the image, manage them using application settings in the Azure portal.
+- **Container logging:** Ensure your application is outputting logs to stdout and stderr. Azure automatically collects these logs for debugging.
+- **Image size optimization:** Keep your images small. Use multi-stage builds, and minimize the amount of unnecessary files added to the final image.
+- **Security scanning:** Use container scanning tools to detect vulnerabilities in your images.
 
 Regarding resources, for general Docker best practices, I highly recommend "Docker Deep Dive" by Nigel Poulton; it’s an excellent and in-depth book. Additionally, the official Microsoft documentation for Azure Web Apps for Containers is crucial, you'll find detailed information about all the nuances involved. Also, the book, "Kubernetes in Action" by Marko Luksa, provides a valuable understanding of container orchestration concepts, which greatly helps with debugging and optimization of containerized applications even if you are not deploying to Kubernetes. Reading up on Kubernetes will help you understand best practices for running containers in any environment.
 

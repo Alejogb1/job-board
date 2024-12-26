@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-yolov4-failing-on-azure-ml-with-a-no-such-file-or-directory-error"
 ---
 
-Okay, let's tackle this. I’ve seen this specific "No such file or directory" issue with YOLOv4 and Azure ML enough times that it's practically a familiar face at this point. It's a common head-scratcher, primarily stemming from subtle differences in how environments and dependencies are managed in the cloud compared to local setups. This isn't just about the model itself; it's often the infrastructure around it that throws a spanner in the works.
+, let's tackle this. I’ve seen this specific "No such file or directory" issue with YOLOv4 and Azure ML enough times that it's practically a familiar face at this point. It's a common head-scratcher, primarily stemming from subtle differences in how environments and dependencies are managed in the cloud compared to local setups. This isn't just about the model itself; it's often the infrastructure around it that throws a spanner in the works.
 
 The "no such file or directory" error, in this context, almost always points towards one of these core problems: an incorrect path reference, mismanaged dependencies, or issues with the containerization process itself during Azure ML execution. We need to look at each of these areas methodically.
 
@@ -51,6 +51,7 @@ cuda-python==12.2.0
 This very simple example shows a specific version of various libraries. Using concrete versions helps with reproducibility.
 
 Then, within your Azure ML script, especially if you have a customized setup, you'll want to force the job to use your specified requirements. The way you do this is through the `Environment` class in the AzureML SDK. When you create or update an environment, you can provide the path to a `requirements.txt` file or a Conda environment file to ensure that all your dependencies are installed. For example, if we are working with the Azure ML SDK v2 for defining environment parameters in `azure_environment.yml`:
+
 ```yaml
 $schema: https://azuremlschemas.azureedge.net/latest/environment.schema.json
 name: yolo-environment
@@ -58,12 +59,14 @@ version: 1.0.0
 description: environment for running yolo models
 image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu22.04
 conda:
-    dependencies:
-      - python=3.9
-      - pip:
+  dependencies:
+    - python=3.9
+    - pip:
         - -r requirements.txt
 ```
+
 And, when you run your training script in Azure ML, you ensure to reference the environment defined using yaml file, for instance:
+
 ```python
 # This code sample assumes that you already have your
 # AzureML environment and workspace configured.
@@ -94,6 +97,7 @@ job = command(
 # submit the job
 ml_client.jobs.create_or_update(job)
 ```
+
 This ensures that the script executes within the correct dependency setup, and the `No such file or directory` error is avoided.
 
 Finally, though it's less frequent, containerization problems can cause this issue. Azure ML uses Docker containers to encapsulate your training environment. If you are using a custom Dockerfile or have a very specific container configuration, there could be some subtle inconsistencies that lead to the “No such file or directory” issue. For example, if your Dockerfile includes a `COPY` instruction that’s meant to move a file to a specific location within the container, but then the python script uses an incorrect path to access it, then it will result in a path related issue. To debug this, it's often helpful to start with a simpler Dockerfile, or try the default AzureML docker image and then build from there if a specific use case is needed. Make sure you understand your image's filesystem and how that relates to the relative or absolute paths your script is using. For a concrete example, let's say the training data is provided via a volume mount in Docker, then you need to make sure your relative paths to the file are relative to that mounted volume point.

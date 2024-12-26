@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "geometricobject-cannot-instantiate-problem"
 ---
 
-Alright so geometricobject cannot instantiate right typical Friday afternoon stuff I've seen this a million times feels like
+so geometricobject cannot instantiate right typical Friday afternoon stuff I've seen this a million times feels like
 
 First off when you say "geometricobject" I'm assuming we're talking about some abstract base class or an interface designed to represent different types of geometric shapes like circles squares maybe even more complex stuff right This is pretty common in object oriented programming when we need a hierarchy of related classes that share a common interface
 
@@ -75,7 +75,9 @@ public class Square extends GeometricObject {
     }
 }
 ```
+
 Now you can do this
+
 ```java
 Circle myCircle = new Circle(0, 0, 5);
 Square mySquare = new Square(10, 10, 4);
@@ -98,6 +100,7 @@ public:
 ```
 
 And you try
+
 ```c++
 IGeometric* obj = new IGeometric(); // This will fail
 ```
@@ -107,6 +110,7 @@ You're going to run into the same "cannot instantiate" problem for the exact sam
 **Solution:**
 
 You need concrete class implementations again in this case for the area method. For example:
+
 ```c++
 #include <cmath>
 
@@ -132,12 +136,14 @@ public:
 ```
 
 Now you can create instances of `Circle` and `Square` like this
+
 ```c++
 Circle* circle = new Circle(5);
 Square* square = new Square(4);
 std::cout << circle->calculateArea() << std::endl; // Output: 78.5398
 std::cout << square->calculateArea() << std::endl; // Output 16
 ```
+
 **Scenario 3 Potential Constructor Error**
 
 Sometimes the issue isn’t with the interface or abstract class itself but rather with the constructor I had this a few years back I was using some c++ framework with custom memory allocation and I forgot to initialize one of the member variables for a class that inherited from the base class this caused it to throw some obscure error not related to instantiation in the first place

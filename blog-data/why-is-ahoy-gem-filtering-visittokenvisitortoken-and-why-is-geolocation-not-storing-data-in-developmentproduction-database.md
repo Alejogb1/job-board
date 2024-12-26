@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "why-is-ahoy-gem-filtering-visittokenvisitortoken-and-why-is-geolocation-not-storing-data-in-developmentproduction-database"
 ---
 
-alright, let's unpack this ahoy and geolocation situation, seems like you've hit a couple of common snags. i've been down these roads before, probably more times than i care to remember, and i've got a few thoughts on what's likely going on, along with how to get things humming.
+, let's unpack this ahoy and geolocation situation, seems like you've hit a couple of common snags. i've been down these roads before, probably more times than i care to remember, and i've got a few thoughts on what's likely going on, along with how to get things humming.
 
-first up, the ahoy gem filtering of `visit_token`/`visitor_token`. this is something i actually struggled with a few years back when building an early user analytics dashboard. i was pulling my hair out trying to figure out why certain visits weren't showing up. turns out, it's usually down to how ahoy is configured, or rather, how it's *not* configured to handle those tokens.
+first up, the ahoy gem filtering of `visit_token`/`visitor_token`. this is something i actually struggled with a few years back when building an early user analytics dashboard. i was pulling my hair out trying to figure out why certain visits weren't showing up. turns out, it's usually down to how ahoy is configured, or rather, how it's _not_ configured to handle those tokens.
 
 ahoy, by default, uses cookies to track visits and visitors. it saves these tokens, `visit_token` for each browsing session and `visitor_token` for each unique browser/device. however, it also filters out certain requests to avoid polluting your analytics with bot traffic, API calls, or things that generally don't represent genuine user activity. things that ahoy discards in development environment. that's pretty handy in production, but can be frustrating in development.
 
@@ -64,6 +64,7 @@ class ApplicationController < ActionController::Base
   end
 end
 ```
+
 this will guarantee the data will be updated once the request has occurred, and once the visit has been created.
 
 finally, another reason why this might not work, and i know this one because it bit me in the butt multiple times, is that your development and production environment might be configured to use different databases. or might be using different credentials to communicate to the same database. when i started, i used to use `rails db:migrate` and forgot to do the same in production or viceversa, leading to a situation where my development environment would have the latest schema and production would have a different one. you would get errors when updating your database and it's not something we always notice in time. make sure that the migrations have been applied in production also.

@@ -4,17 +4,17 @@ date: "2024-12-15"
 id: "with-hibernate-enver---how-to-listen-for-only-one-change-in-a-referenced-class"
 ---
 
-alright, i've been there, dealing with enver and wanting very specific change notifications, it's a surprisingly common ask, especially when you're not keen on getting spammed with events for every minor tweak in your database. the core issue, as i see it, is that enver, by default, is quite broad in its eventing – it fires up when *anything* related to an audited entity changes, even if the direct change wasn't to the entity you are particularly monitoring. we need to be more surgical.
+, i've been there, dealing with enver and wanting very specific change notifications, it's a surprisingly common ask, especially when you're not keen on getting spammed with events for every minor tweak in your database. the core issue, as i see it, is that enver, by default, is quite broad in its eventing – it fires up when _anything_ related to an audited entity changes, even if the direct change wasn't to the entity you are particularly monitoring. we need to be more surgical.
 
-let’s tackle this. the problem we're facing is that enver's out-of-the-box auditing process doesn’t give us a granular control of changes, like "i care about changes in *this* specific reference on *this* entity only". the standard audit mechanism tracks changes at the entity level. meaning if something changes inside a collection within an entity, or if a relationship changes to another audited class, you're going to get an audit entry for that top-level entity, even if your concern is specifically with the referenced entity's change.
+let’s tackle this. the problem we're facing is that enver's out-of-the-box auditing process doesn’t give us a granular control of changes, like "i care about changes in _this_ specific reference on _this_ entity only". the standard audit mechanism tracks changes at the entity level. meaning if something changes inside a collection within an entity, or if a relationship changes to another audited class, you're going to get an audit entry for that top-level entity, even if your concern is specifically with the referenced entity's change.
 
 i remember back in my early days, implementing a customer management system, we had a `customer` entity with an address reference and a collection of `orders`. initially, i was just blindly reacting to every `customer` audit event. our notification system went wild, every time an order was updated the customers list was receiving notifications. it took me some time to realize, i only wanted to know when the customer’s address was altered, not every time a random order was added or modified. that experience taught me a lot about fine-grained control with enver. it was quite a lesson and the notifications where a total mess at the start.
 
 so how to fix this? enver doesn't provide explicit "listen to this specific association change" kind of mechanism that we dream of. we are going to need to take advantage of hibernate lifecycle events and manual dirty checking techniques.
 
-the general idea is to add a hibernate event listener, specifically a `preupdate` and `preinsert` event, that lets us intercept database modifications *before* they are committed. this way, we can analyze the entity being updated or inserted and see, if the specific relationship we're interested in has changed. the trick here is to compare the current state to the previous state.
+the general idea is to add a hibernate event listener, specifically a `preupdate` and `preinsert` event, that lets us intercept database modifications _before_ they are committed. this way, we can analyze the entity being updated or inserted and see, if the specific relationship we're interested in has changed. the trick here is to compare the current state to the previous state.
 
-let's say we have two entities: `parententity` and `childentity`. and our goal is to react *only* when the `childentity` reference on `parententity` changes. here's how you could approach it with an example:
+let's say we have two entities: `parententity` and `childentity`. and our goal is to react _only_ when the `childentity` reference on `parententity` changes. here's how you could approach it with an example:
 
 ```java
 import org.hibernate.event.spi.PreUpdateEvent;
@@ -89,11 +89,11 @@ public class ParentEntityChangeEventListener implements PreUpdateEventListener, 
 
 notice a few things in the code above:
 
-*   we implement `preupdateeventlistener` and `preinserteventlistener`.
-*   inside `onpreupdate`, we first check if the entity is the one we're interested in.
-*   then, we get the old state and compare it to the current one, specifically, looking for the `childentity` index.
-*   we compare both to see if there is any change.
-*   the `handlechildentitychange` is where you inject your custom logic.
+- we implement `preupdateeventlistener` and `preinserteventlistener`.
+- inside `onpreupdate`, we first check if the entity is the one we're interested in.
+- then, we get the old state and compare it to the current one, specifically, looking for the `childentity` index.
+- we compare both to see if there is any change.
+- the `handlechildentitychange` is where you inject your custom logic.
 
 the same logic in `onpreinsert` the only difference is that we don't have an `oldstate` because we have a new instance.
 

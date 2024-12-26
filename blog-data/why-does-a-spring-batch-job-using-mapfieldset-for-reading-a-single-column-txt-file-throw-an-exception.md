@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-a-spring-batch-job-using-mapfieldset-for-reading-a-single-column-txt-file-throw-an-exception"
 ---
 
-Alright, let's tackle this. The issue of a spring batch job failing with an exception when using `mapFieldSet` to read a single-column txt file isn’t exactly uncommon. In my experience, I’ve seen this particular situation arise multiple times, often when a seemingly straightforward text file ends up presenting a subtle configuration challenge. It typically boils down to a mismatch between how `mapFieldSet` expects the input to be structured and the actual content of the file, specifically with field mapping expectations.
+, let's tackle this. The issue of a spring batch job failing with an exception when using `mapFieldSet` to read a single-column txt file isn’t exactly uncommon. In my experience, I’ve seen this particular situation arise multiple times, often when a seemingly straightforward text file ends up presenting a subtle configuration challenge. It typically boils down to a mismatch between how `mapFieldSet` expects the input to be structured and the actual content of the file, specifically with field mapping expectations.
 
 Let's break this down step by step. The `mapFieldSet` method, which is usually utilized within a `LineMapper` implementation (most often a `DefaultLineMapper`), relies on the concept of a `FieldSet`. This `FieldSet`, think of it as a container for data extracted from a single line, needs to understand what constitutes a 'field' based on some delimiter. When dealing with a single-column txt file, the core problem arises if the line mapper's configuration anticipates a delimiter (such as a comma, semicolon, or even whitespace) when none actually exist in the single column file. It's a bit like trying to split a single word based on a space that's not there – it won't work.
 
@@ -45,10 +45,12 @@ public ItemReader<User> userReader() {
         .build();
 }
 ```
+
 In this example, the default `DelimitedLineTokenizer` assumes that the input file is comma-delimited (or some other delimiter). However, we know the `users.txt` file has a single column. When `fieldSet.readString("userId")` is called, it doesn’t find a field named 'userId', the exception manifests. The problem here is a mismatch between how `DelimitedLineTokenizer` creates the `FieldSet` and how `FieldSetMapper` expects it to be. It's expecting "userId" to be a field name, and by default, the fieldset will simply name the field with an index.
 
 **Example 2: Solution using a Custom Line Tokenizer**
 A custom tokenizer that treats the entire line as a single field.
+
 ```java
 @Bean
 public ItemReader<User> userReader() {
@@ -73,6 +75,7 @@ public ItemReader<User> userReader() {
         .build();
 }
 ```
+
 Here, we've replaced the `DelimitedLineTokenizer` with a custom `LineTokenizer` implementation. This custom tokenizer takes each line and creates a `FieldSet` containing a single string, which is correctly mapped to the "userId" field name, resolving the mapping issues.
 
 **Example 3: Solution using a `PassThroughLineTokenizer`**

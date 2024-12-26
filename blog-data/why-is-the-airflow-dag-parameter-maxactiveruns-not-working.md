@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-is-the-airflow-dag-parameter-maxactiveruns-not-working"
 ---
 
-Okay, let's address this. The issue of `max_active_runs` in Apache Airflow seemingly not behaving as expected is a frequent point of confusion, and one I've certainly encountered on multiple projects. It's rarely as simple as a bug, but rather a nuanced interplay between configuration, scheduling, and the underlying operational mechanics of Airflow. Let’s break down why you might see this behavior and how to troubleshoot it.
+, let's address this. The issue of `max_active_runs` in Apache Airflow seemingly not behaving as expected is a frequent point of confusion, and one I've certainly encountered on multiple projects. It's rarely as simple as a bug, but rather a nuanced interplay between configuration, scheduling, and the underlying operational mechanics of Airflow. Let’s break down why you might see this behavior and how to troubleshoot it.
 
 In my experience, particularly on an old e-commerce platform’s data pipelines I worked on some years ago, we initially struggled with this. We'd set `max_active_runs` to what we thought was a conservative value, yet still saw multiple concurrent dag runs, leading to resource contention and occasional failures. The root cause, as is often the case, wasn’t immediately apparent, and figuring out the interaction between different Airflow components was crucial.
 
-First off, it's important to understand that `max_active_runs` is a property set at the *dag* level and primarily affects *scheduled* dag runs. It doesn’t inherently control the number of *manually triggered* dag runs. This was a crucial misunderstanding on our old platform. If you're triggering DAGs through the UI or API, those runs aren’t generally subject to the same restrictions applied to scheduled runs. This difference is crucial, and often catches people out. So, if you have an active schedule alongside manual triggers, you'll see additional runs past the limit.
+First off, it's important to understand that `max_active_runs` is a property set at the _dag_ level and primarily affects _scheduled_ dag runs. It doesn’t inherently control the number of _manually triggered_ dag runs. This was a crucial misunderstanding on our old platform. If you're triggering DAGs through the UI or API, those runs aren’t generally subject to the same restrictions applied to scheduled runs. This difference is crucial, and often catches people out. So, if you have an active schedule alongside manual triggers, you'll see additional runs past the limit.
 
 Secondly, consider the dag’s schedule definition. Specifically, the `schedule_interval`. If you have a very frequent schedule, say, every minute, and your DAG run duration approaches or exceeds that interval, you’re essentially creating a queue. While `max_active_runs` aims to limit concurrency, the scheduler itself is working to catch up and initiate runs. Imagine a situation where each run takes two minutes, and the DAG is set to run every minute. Without `max_active_runs`, you could easily have several runs simultaneously active. The scheduler will try to initiate runs as soon as the next schedule interval arrives, and if there aren’t sufficient resources to process the run, you may still encounter multiple concurrent runs past what you’d expect despite setting `max_active_runs`.
 
@@ -41,7 +41,7 @@ with DAG(
     )
 ```
 
-In this example, even though `max_active_runs` is set to 1, if `my_task` runs for two minutes (simulated with `time.sleep`), and the schedule is every minute, we'll find that after about two minutes there will be two instances running. The scheduler will attempt to initiate a run every minute because the schedule demands it, and `max_active_runs` only controls how many of those initiated runs can be active concurrently *at the scheduler's level*, not at the executor’s level after the scheduler initiates it. In this situation the run that has just started is not considered active yet at the scheduler level as the worker has yet to pick up the task, therefore this can bypass the `max_active_runs` constraint.
+In this example, even though `max_active_runs` is set to 1, if `my_task` runs for two minutes (simulated with `time.sleep`), and the schedule is every minute, we'll find that after about two minutes there will be two instances running. The scheduler will attempt to initiate a run every minute because the schedule demands it, and `max_active_runs` only controls how many of those initiated runs can be active concurrently _at the scheduler's level_, not at the executor’s level after the scheduler initiates it. In this situation the run that has just started is not considered active yet at the scheduler level as the worker has yet to pick up the task, therefore this can bypass the `max_active_runs` constraint.
 
 **Snippet 2: Correct `max_active_runs` with appropriate schedule**
 
@@ -69,7 +69,7 @@ with DAG(
     )
 ```
 
-Here, we've adjusted the `schedule_interval` to every 5 minutes. Now, since each run takes only 2 minutes, a new run won’t be scheduled until the previous one is complete, adhering to the `max_active_runs=1` setting. This highlights how crucial the relationship is between `schedule_interval` and the run duration, and is often a key oversight. This is how the `max_active_runs` is *intended* to work.
+Here, we've adjusted the `schedule_interval` to every 5 minutes. Now, since each run takes only 2 minutes, a new run won’t be scheduled until the previous one is complete, adhering to the `max_active_runs=1` setting. This highlights how crucial the relationship is between `schedule_interval` and the run duration, and is often a key oversight. This is how the `max_active_runs` is _intended_ to work.
 
 **Snippet 3: Illustrating executor nuances (conceptual)**
 
@@ -80,14 +80,15 @@ Here, we've adjusted the `schedule_interval` to every 5 minutes. Now, since each
 # Number of worker processes = 2
 # Concurrency per worker process = 4
 ```
+
 In this hypothetical scenario, if two tasks, each taking 5 minutes, start at almost exactly the same time while another two long running tasks have just completed at that very same moment, then our worker pool can suddenly become quite busy despite the scheduler only having one active run per DAG. The scheduler initiated one run, which then started several task instances in parallel (because of the DAG definition), and then a new run was scheduled. The scheduler only looks at the dag run level, it doesn't track task concurrency in the executor and its workers. Thus, understanding how your executor behaves, and in particular with Celery, how to configure your workers to prevent queue build-up, is very important in getting the desired effect of `max_active_runs`. A similar principle applies to the Kubernetes executor.
 
 For further study, I recommend reviewing the following:
 
-*   **"Data Pipelines with Apache Airflow" by Bas P. Harenslak and Julian Rutger de Ruiter.** This provides a comprehensive understanding of Airflow architecture and best practices, focusing on scheduler behavior.
+- **"Data Pipelines with Apache Airflow" by Bas P. Harenslak and Julian Rutger de Ruiter.** This provides a comprehensive understanding of Airflow architecture and best practices, focusing on scheduler behavior.
 
-*   The official **Apache Airflow documentation** is paramount for understanding the specifics of configurations, particularly the sections relating to scheduling, executors, and dag properties.
+- The official **Apache Airflow documentation** is paramount for understanding the specifics of configurations, particularly the sections relating to scheduling, executors, and dag properties.
 
-*   **Papers or articles on resource management in distributed systems**, as the scheduler and executor can be seen as a micro distributed system themselves. An understanding of how resource management interacts with task scheduling can be insightful here.
+- **Papers or articles on resource management in distributed systems**, as the scheduler and executor can be seen as a micro distributed system themselves. An understanding of how resource management interacts with task scheduling can be insightful here.
 
 In summary, `max_active_runs` isn’t a straightforward concurrency limiter. It’s tied to the dag’s scheduling, how many runs the scheduler sees as active and not just the task’s run state, manual triggers, and how your chosen executor handles task execution. To effectively control your workflow concurrency, meticulously manage your `schedule_interval`, understand the duration of your tasks, consider manual triggers, and thoroughly configure your chosen executor, especially for Celery or Kubernetes setups. It's this combination of factors that ultimately determines the success of correctly using `max_active_runs`.

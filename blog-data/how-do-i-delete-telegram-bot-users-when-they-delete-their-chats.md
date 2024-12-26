@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-delete-telegram-bot-users-when-they-delete-their-chats"
 ---
 
-Alright, let’s tackle the question of managing Telegram bot user data, specifically when users delete their chats. This isn't a built-in feature of the Telegram Bot API, and I've encountered this exact scenario more than once when developing various bot projects, requiring some careful architectural choices to handle it robustly.
+, let’s tackle the question of managing Telegram bot user data, specifically when users delete their chats. This isn't a built-in feature of the Telegram Bot API, and I've encountered this exact scenario more than once when developing various bot projects, requiring some careful architectural choices to handle it robustly.
 
 The core challenge is that Telegram doesn't directly notify bots when a user deletes a chat. The bot doesn’t get a ‘delete’ event. What we do receive are user interactions—commands, messages, or inline queries. When a user deletes their chat on their end, they disappear from the bot’s perspective unless they initiate a new interaction. This means we need to be proactive with our data management strategy rather than reacting to deletion events. The solution often requires a combination of strategies to ensure data integrity and efficient resource management. Here’s a breakdown of the method I've refined over multiple bot iterations:
 
@@ -44,10 +44,10 @@ while True:
 
 **Explanation:**
 
-*   We import the necessary `datetime` and `time` modules along with an abstract storage class to illustrate how data interaction might be handled.
-*   `inactive_threshold_days` specifies how long a user can be inactive before their data is pruned.
-*   `prune_inactive_users` retrieves all users, checks their last interaction timestamp against the cutoff, and then deletes user data from storage if the cutoff time is exceeded.
-*   The `while` loop runs periodically (every 24 hours in this case), so that pruning checks happen often. This allows for regularly data cleaning and an efficient response to users deleting chats.
+- We import the necessary `datetime` and `time` modules along with an abstract storage class to illustrate how data interaction might be handled.
+- `inactive_threshold_days` specifies how long a user can be inactive before their data is pruned.
+- `prune_inactive_users` retrieves all users, checks their last interaction timestamp against the cutoff, and then deletes user data from storage if the cutoff time is exceeded.
+- The `while` loop runs periodically (every 24 hours in this case), so that pruning checks happen often. This allows for regularly data cleaning and an efficient response to users deleting chats.
 
 **Strategy 2: Explicit User Opt-out Mechanism (Less Practical for Automating Chat Deletion):**
 
@@ -81,10 +81,10 @@ if __name__ == '__main__':
 
 **Explanation:**
 
-*   We import `telegram` and storage modules.
-*   The `remove_user_data` function takes the user's id, accesses the storage layer, deletes the user data, and notifies the user that their data has been removed.
-*   The `main` function initializes the bot and creates a command handler for `/removemydata`. When that command is triggered the defined `remove_user_data` function is called.
-*   This provides the user with explicit control over data removal, which is good from a privacy stance.
+- We import `telegram` and storage modules.
+- The `remove_user_data` function takes the user's id, accesses the storage layer, deletes the user data, and notifies the user that their data has been removed.
+- The `main` function initializes the bot and creates a command handler for `/removemydata`. When that command is triggered the defined `remove_user_data` function is called.
+- This provides the user with explicit control over data removal, which is good from a privacy stance.
 
 **Strategy 3: Combining Pruning and User-Initiated Removal**
 
@@ -140,8 +140,8 @@ if __name__ == '__main__':
 
 **Explanation:**
 
-*   This snippet combines the pruning functionality and the command handler functionality into a single script.
-*   The script initialises the telegram bot, sets up a command handler for /removemydata, and launches the polling loop that contains a regular data pruning call, combining the benefits of both strategies.
+- This snippet combines the pruning functionality and the command handler functionality into a single script.
+- The script initialises the telegram bot, sets up a command handler for /removemydata, and launches the polling loop that contains a regular data pruning call, combining the benefits of both strategies.
 
 **Recommended Resources:**
 

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-build-and-push-docker-images-without-specifying-a-registry-in-a-devops-pipeline"
 ---
 
-Alright, let’s tackle this challenge. I've seen this situation pop up more than a few times across different projects, and it's usually when teams are trying to avoid hardcoding registry URLs directly into their pipelines. There are some very valid reasons for that – flexibility, easier environment management, and improved security being the primary ones. Essentially, the core issue you're facing is how to decouple the image build and push processes from specific registry locations within your devops workflow.
+, let’s tackle this challenge. I've seen this situation pop up more than a few times across different projects, and it's usually when teams are trying to avoid hardcoding registry URLs directly into their pipelines. There are some very valid reasons for that – flexibility, easier environment management, and improved security being the primary ones. Essentially, the core issue you're facing is how to decouple the image build and push processes from specific registry locations within your devops workflow.
 
-The first thing to understand is that docker isn't inherently tied to a specific registry during a build. The `docker build` command focuses solely on constructing the image layers from your dockerfile and context. The registry comes into play only when you *tag* and *push* the resulting image. This gives us the leverage we need – we just need to handle the tagging and pushing operations carefully within our pipelines.
+The first thing to understand is that docker isn't inherently tied to a specific registry during a build. The `docker build` command focuses solely on constructing the image layers from your dockerfile and context. The registry comes into play only when you _tag_ and _push_ the resulting image. This gives us the leverage we need – we just need to handle the tagging and pushing operations carefully within our pipelines.
 
 Let’s start by focusing on a scenario where you’re using a simple gitops approach, leveraging something like GitHub Actions or GitLab CI. The primary concern revolves around defining your image name and tag in a way that isn’t fixed to a particular registry. My experience tells me that relying heavily on environment variables to determine the registry target usually provides the best balance between flexibility and control.
 
@@ -42,11 +42,11 @@ jobs:
 
       - name: Push Docker image
         run: |
-           IMAGE_NAME="my-base-image"
-           IMAGE_TAG=$(echo "${GITHUB_REF#refs/heads/}" | sed 's/\//-/g')-${GITHUB_SHA::8} #extract branch, replace slashes and truncate commit hash
-           REGISTRY_URL="${{ secrets.CR_SERVER }}" # using github secret to obtain registry url
-           docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}
-           docker push ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}
+          IMAGE_NAME="my-base-image"
+          IMAGE_TAG=$(echo "${GITHUB_REF#refs/heads/}" | sed 's/\//-/g')-${GITHUB_SHA::8} #extract branch, replace slashes and truncate commit hash
+          REGISTRY_URL="${{ secrets.CR_SERVER }}" # using github secret to obtain registry url
+          docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}
+          docker push ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}
 ```
 
 In this snippet, you'll see how the image tag is created from the branch name, commit sha, and the image name is fixed. The registry credentials and server url are obtained from github secrets, and these are only utilized during the `docker login` and `docker push` steps. The important concept is that we are dynamically assembling the full image path (registry url + image name + image tag) right before the push operation. This method makes your workflow reusable in different environments.
@@ -81,20 +81,20 @@ push-image:
     - docker:dind
   script:
     - |
-       if [[ "${CI_ENVIRONMENT_NAME}" == "production" ]]; then
-           export REGISTRY_URL=$PRODUCTION_REGISTRY_URL  #defined as a gitlab variable in the project settings.
-       elif [[ "${CI_ENVIRONMENT_NAME}" == "staging" ]]; then
-            export REGISTRY_URL=$STAGING_REGISTRY_URL # or use gitlab environment variables
-       else
-           export REGISTRY_URL=$DEV_REGISTRY_URL # or use gitlab environment variables
-       fi
+      if [[ "${CI_ENVIRONMENT_NAME}" == "production" ]]; then
+          export REGISTRY_URL=$PRODUCTION_REGISTRY_URL  #defined as a gitlab variable in the project settings.
+      elif [[ "${CI_ENVIRONMENT_NAME}" == "staging" ]]; then
+           export REGISTRY_URL=$STAGING_REGISTRY_URL # or use gitlab environment variables
+      else
+          export REGISTRY_URL=$DEV_REGISTRY_URL # or use gitlab environment variables
+      fi
     - export IMAGE_NAME="my-app"
     - export IMAGE_TAG=${CI_COMMIT_SHORT_SHA}
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}
     - docker push ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}
   dependencies:
-      - build-image
+    - build-image
 ```
 
 In this gitlab example, the `push-image` stage makes a conditional choice of the `REGISTRY_URL` based on the gitlab variable `CI_ENVIRONMENT_NAME`, demonstrating how dynamic registry assignment can be achieved based on runtime settings. The environment-specific registry URLs can be stored as gitlab variables, providing another layer of flexibility and keeping those settings out of the direct yaml file.
@@ -132,29 +132,29 @@ jobs:
 
       - name: Push Docker image for ${{ matrix.platform }}
         run: |
-            IMAGE_NAME="my-multi-arch-image"
-            IMAGE_TAG=$(echo "${GITHUB_REF#refs/heads/}" | sed 's/\//-/g')-${GITHUB_SHA::8}-${{ matrix.platform }}
-            REGISTRY_URL="${{ secrets.CR_SERVER }}"
-            docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}
-            docker push ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}
+          IMAGE_NAME="my-multi-arch-image"
+          IMAGE_TAG=$(echo "${GITHUB_REF#refs/heads/}" | sed 's/\//-/g')-${GITHUB_SHA::8}-${{ matrix.platform }}
+          REGISTRY_URL="${{ secrets.CR_SERVER }}"
+          docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}
+          docker push ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}
 
       - name: Create Manifest List
         if: matrix.platform == 'linux/amd64'
         run: |
-             IMAGE_NAME="my-multi-arch-image"
-             IMAGE_TAG=$(echo "${GITHUB_REF#refs/heads/}" | sed 's/\//-/g')-${GITHUB_SHA::8}
-             REGISTRY_URL="${{ secrets.CR_SERVER }}"
-             docker manifest create ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG} \
-              ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}-linux/amd64 \
-              ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}-linux/arm64
+          IMAGE_NAME="my-multi-arch-image"
+          IMAGE_TAG=$(echo "${GITHUB_REF#refs/heads/}" | sed 's/\//-/g')-${GITHUB_SHA::8}
+          REGISTRY_URL="${{ secrets.CR_SERVER }}"
+          docker manifest create ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG} \
+           ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}-linux/amd64 \
+           ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}-linux/arm64
 
       - name: Push Manifest List
         if: matrix.platform == 'linux/amd64'
         run: |
-            IMAGE_NAME="my-multi-arch-image"
-            IMAGE_TAG=$(echo "${GITHUB_REF#refs/heads/}" | sed 's/\//-/g')-${GITHUB_SHA::8}
-            REGISTRY_URL="${{ secrets.CR_SERVER }}"
-            docker manifest push ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}
+          IMAGE_NAME="my-multi-arch-image"
+          IMAGE_TAG=$(echo "${GITHUB_REF#refs/heads/}" | sed 's/\//-/g')-${GITHUB_SHA::8}
+          REGISTRY_URL="${{ secrets.CR_SERVER }}"
+          docker manifest push ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}
 ```
 
 This example demonstrates how to push multi-architecture images utilizing `docker buildx build` and then combines the images into a manifest list, demonstrating a more complex but extremely useful scenario for handling varied architectures.

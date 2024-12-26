@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-user-methods-in-a-pipeline"
 ---
 
-Alright, let's talk pipelines and user-defined methods – a combination I've tackled more than a few times, particularly during my stint building data processing workflows for a large-scale genomic analysis project. This isn't just about chaining operations; it's about seamlessly integrating your custom logic into an existing pipeline framework, which often requires careful planning and execution.
+, let's talk pipelines and user-defined methods – a combination I've tackled more than a few times, particularly during my stint building data processing workflows for a large-scale genomic analysis project. This isn't just about chaining operations; it's about seamlessly integrating your custom logic into an existing pipeline framework, which often requires careful planning and execution.
 
 The core concept here is functional composition: treating your custom functions as transformations within a data flow. Pipelines, whether they're implemented with libraries like Apache Beam, Pandas, or even custom built, usually involve a sequence of steps applied to a data stream. These steps often include data reading, cleaning, transformation, and storage. User methods extend these pipelines by allowing you to perform custom, domain-specific manipulations that the standard library operations can't handle. The trick lies in ensuring that your methods interact correctly with the pipeline's data structures and expected input/output formats.
 
@@ -95,15 +95,15 @@ print(enriched_data) # output: [{'user_id': 101, 'name': 'User_101_Name'}, {'use
 
 ```
 
-This final example demonstrates a method, `enrich_with_name`, which queries an external resource represented by `ExternalApiSimulator`, to retrieve data related to each user. While this example uses a simulated API call, in a real scenario, this would likely involve interacting with a database or a web service. Notably, the `ExternalApiSimulator` is *instantiated* before being used, highlighting the need for resource management in more complex scenarios. Moreover, I've added a small delay (`time.sleep(0.1)`) to exemplify typical network latency you can encounter. Careful consideration should be given to concurrency and efficiency when dealing with such methods in a real-world pipeline.
+This final example demonstrates a method, `enrich_with_name`, which queries an external resource represented by `ExternalApiSimulator`, to retrieve data related to each user. While this example uses a simulated API call, in a real scenario, this would likely involve interacting with a database or a web service. Notably, the `ExternalApiSimulator` is _instantiated_ before being used, highlighting the need for resource management in more complex scenarios. Moreover, I've added a small delay (`time.sleep(0.1)`) to exemplify typical network latency you can encounter. Careful consideration should be given to concurrency and efficiency when dealing with such methods in a real-world pipeline.
 
 **Recommendations for Further Learning**
 
 To deepen your understanding of integrating custom logic into pipeline frameworks, I recommend exploring the following resources:
 
-*   **“Designing Data-Intensive Applications” by Martin Kleppmann:** This book offers invaluable insights into building scalable and robust data systems, covering topics directly applicable to pipeline architectures and their challenges.
-*   **Apache Beam Documentation:** If you're using Apache Beam for your data processing, carefully studying its official documentation will be critical. Pay special attention to the sections on `ParDo`, `DoFn`, and custom transforms.
-*   **“Effective Python” by Brett Slatkin:** This book provides guidance on best practices for writing robust and maintainable Python code, which is essential when developing custom logic for pipelines. Focus on the sections discussing function design, resource management, and error handling.
-*   **The Pandas User Guide:** For any pipeline that interacts with data in tabular format, having a strong command of Pandas is critical. The user guide provides an extensive overview of all key functionality.
+- **“Designing Data-Intensive Applications” by Martin Kleppmann:** This book offers invaluable insights into building scalable and robust data systems, covering topics directly applicable to pipeline architectures and their challenges.
+- **Apache Beam Documentation:** If you're using Apache Beam for your data processing, carefully studying its official documentation will be critical. Pay special attention to the sections on `ParDo`, `DoFn`, and custom transforms.
+- **“Effective Python” by Brett Slatkin:** This book provides guidance on best practices for writing robust and maintainable Python code, which is essential when developing custom logic for pipelines. Focus on the sections discussing function design, resource management, and error handling.
+- **The Pandas User Guide:** For any pipeline that interacts with data in tabular format, having a strong command of Pandas is critical. The user guide provides an extensive overview of all key functionality.
 
 In my experience, incorporating user methods into a pipeline requires rigorous planning, clear method definitions, and an awareness of how methods interact within the specific environment. By following these guidelines, you can build efficient, maintainable, and powerful data pipelines that can tackle diverse and complex tasks. Remember to start small, thoroughly test each method in isolation, and iterate toward a robust pipeline architecture.

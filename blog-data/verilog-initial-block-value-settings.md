@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "verilog-initial-block-value-settings"
 ---
 
-Alright so you're asking about Verilog initial blocks and how values are set I get it been there done that more times than I care to remember its a classic gotcha spot for newcomers and honestly even for some of us who've been at it for years
+so you're asking about Verilog initial blocks and how values are set I get it been there done that more times than I care to remember its a classic gotcha spot for newcomers and honestly even for some of us who've been at it for years
 
-Okay so the deal with `initial` blocks in Verilog is that they execute only once at the very beginning of simulation Basically theyre used to set up initial conditions for your design or to perform some one-time initialization stuff Think of it like setting the stage before the main act starts The key thing to understand is that they're *not* synthesizable which means they only work for simulation not for actual hardware
+the deal with `initial` blocks in Verilog is that they execute only once at the very beginning of simulation Basically theyre used to set up initial conditions for your design or to perform some one-time initialization stuff Think of it like setting the stage before the main act starts The key thing to understand is that they're _not_ synthesizable which means they only work for simulation not for actual hardware
 
 Now lets dive into value settings within these blocks You can set register or reg type variables not wires which makes sense right because wires are connections not storage You can directly assign values using the `=` operator just like in C or Java or whatever other language you are familiar with
 
@@ -21,9 +21,10 @@ module test_initial;
   end
 endmodule
 ```
+
 This simple example is nothing fancy just like setting up the first step in a design. Here we declare an 8-bit register `my_reg` and inside the initial block we assign the value `8'hAA` to it which is just a hexadecimal representation of `10101010` if you were wondering.
 
-Okay lets talk about more complex cases Initial blocks can include multiple statements they all execute in the order they appear within the begin end block and this can be useful for setting different values across multiple registers This behavior is sequential within a single `initial` block.
+lets talk about more complex cases Initial blocks can include multiple statements they all execute in the order they appear within the begin end block and this can be useful for setting different values across multiple registers This behavior is sequential within a single `initial` block.
 
 Now here is an example that is more practical than the previous one
 
@@ -67,13 +68,16 @@ One thing to keep in mind is that the order of execution between multiple `initi
 Now if we move to the more complicated stuff like initial values from a file you would probably think "what is this guy talking about". Well it's more common than you might think. You often have to read in initialization data from a text file this can be done with the `$readmemh` system task and it is pretty useful when you need to set up large memories with complex data
 
 Here's how it works. Let's say you have a file called `init_data.txt` with hex values. It looks like this:
+
 ```
 AA
 BB
 CC
 DD
 ```
+
 And then your verilog code becomes something like this:
+
 ```verilog
 module test_initial_file;
   reg [7:0] mem [0:3];  // A memory with 4 locations each 8-bit wide
@@ -83,6 +87,7 @@ module test_initial_file;
   end
 endmodule
 ```
+
 This code will read the hex values from `init_data.txt` and load them into the `mem` array. Simple and elegant right.
 
 Now about resources. Forget those random blogs online those often lead you down the wrong path. I recommend you to start with good old books. The standard textbooks on Verilog and SystemVerilog usually cover this stuff in detail. Specifically I would recommend the book "SystemVerilog for Verification" by Chris Spear it's a bible for practical things including `initial` blocks especially for more complex scenarios. Also check out "Digital Design and Computer Architecture" by David Money Harris and Sarah L Harris. This book is not specifically for verilog but it is good for understanding the fundamentals in digital logic and how verilog helps model digital circuits. And of course the IEEE standard for Verilog and SystemVerilog are essential to keep in your arsenal. Always keep an eye on the source material.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-change-the-sender-of-a-mailkit-message"
 ---
 
-Alright, let's tackle this one. Changing the sender of an email using MailKit isn't as straightforward as setting a single property. It requires a bit of finesse, particularly when you’re concerned about things like proper email authentication and avoiding the dreaded spam folder. I’ve had my share of headaches with this over the years, specifically during a project where we needed to send notifications on behalf of different user accounts, not just a central service address.
+, let's tackle this one. Changing the sender of an email using MailKit isn't as straightforward as setting a single property. It requires a bit of finesse, particularly when you’re concerned about things like proper email authentication and avoiding the dreaded spam folder. I’ve had my share of headaches with this over the years, specifically during a project where we needed to send notifications on behalf of different user accounts, not just a central service address.
 
 So, the challenge isn't about directly modifying a ‘sender’ field, per se. Email headers work in a layered way. The primary fields are ‘From,’ ‘Sender,’ and ‘Reply-To,’ each serving a specific purpose. The ‘From’ field is what the recipient's email client displays as the sender. The ‘Sender’ field indicates the actual mailbox sending the message, and ‘Reply-To’ dictates where replies should be directed. For most practical scenarios, you manipulate the ‘From’ field, while the underlying SMTP session uses your authenticated user account.
 
@@ -69,7 +69,7 @@ public async Task SendEmailWithReplyToAsync(string recipientEmail, string userEm
 }
 ```
 
-Here, the `message.ReplyTo.Add` method is key. This tells the recipient’s email client where to direct responses. You still send *from* the user's email, but replies will go to the specified `replyToEmail` address. This keeps your workflow streamlined, as responses aren’t directed back to your authentication email address. This is especially useful if the 'From' email is a no-reply or service email that's not checked frequently, and you want responses to go somewhere useful.
+Here, the `message.ReplyTo.Add` method is key. This tells the recipient’s email client where to direct responses. You still send _from_ the user's email, but replies will go to the specified `replyToEmail` address. This keeps your workflow streamlined, as responses aren’t directed back to your authentication email address. This is especially useful if the 'From' email is a no-reply or service email that's not checked frequently, and you want responses to go somewhere useful.
 
 **Example 3: When Using a 3rd Party SMTP Provider**
 
@@ -107,6 +107,6 @@ This example demonstrates that the `From` address, `verifiedUserEmail`, should b
 3.  **Address Domain Authentication:** You may need to setup SPF, DKIM, and DMARC records for your domain, which is crucial for achieving deliverability and preventing your messages from being classified as spam. I strongly suggest familiarizing yourself with RFC 5321 for SMTP protocols and RFC 5322 for internet message formats. These are foundational when diving into email practices.
 4.  **Transactional Email Services:** If you are utilizing third-party services, be sure to thoroughly understand their security practices and authentication methods. Consult the specific documentation for the service, and avoid guessing at how things work, as email authentication is extremely sensitive.
 
-For a deeper dive, I recommend *'Internet Mail: Protocols, Standards, and Implementation' by Albitz and Liu*. It's an older resource, but it provides a strong foundation in understanding the inner workings of email. Additionally, *'High Performance Browser Networking' by Ilya Grigorik* while not directly email specific, provides some insightful context regarding network protocols that will help in understanding the underlying infrastructure that email relies on. Finally, you can find many RFCs at the IETF website. It is advisable to review these to understand the nuances of email message structure and how the different header fields interact.
+For a deeper dive, I recommend _'Internet Mail: Protocols, Standards, and Implementation' by Albitz and Liu_. It's an older resource, but it provides a strong foundation in understanding the inner workings of email. Additionally, _'High Performance Browser Networking' by Ilya Grigorik_ while not directly email specific, provides some insightful context regarding network protocols that will help in understanding the underlying infrastructure that email relies on. Finally, you can find many RFCs at the IETF website. It is advisable to review these to understand the nuances of email message structure and how the different header fields interact.
 
 Remember, the goal isn't just to change the displayed sender address. You must do so responsibly, with a focus on authentication and deliverability. This often means working within the limits and requirements of your mail server and following established email practices.

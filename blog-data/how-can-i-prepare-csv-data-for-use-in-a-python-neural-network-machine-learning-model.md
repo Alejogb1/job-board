@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-prepare-csv-data-for-use-in-a-python-neural-network-machine-learning-model"
 ---
 
-Alright, let's tackle this. I've spent a fair bit of time wrangling csv data for various machine learning projects, and it’s definitely a process that benefits from careful planning and execution. The key is ensuring your data is not just "present," but also *usable* and doesn't introduce biases or inefficiencies into your model. It's more than just loading the file; it's about turning raw information into a structured, model-ready input. Let me share my approach, which I’ve honed through several projects.
+, let's tackle this. I've spent a fair bit of time wrangling csv data for various machine learning projects, and it’s definitely a process that benefits from careful planning and execution. The key is ensuring your data is not just "present," but also _usable_ and doesn't introduce biases or inefficiencies into your model. It's more than just loading the file; it's about turning raw information into a structured, model-ready input. Let me share my approach, which I’ve honed through several projects.
 
 First off, we have to consider the stages, and they often aren't as straightforward as they initially seem. We're effectively talking about data preparation, and this really boils down to several critical steps: data loading, cleaning, preprocessing, and then finally, dataset preparation.
 
@@ -26,7 +26,7 @@ except Exception as e:
     print(f"An error occurred during file loading: {e}")
 ```
 
-This does a couple of essential things: loads the data, prints the first few rows to get a sense of the content, displays the `.info()` output to show column types and null counts, and `.describe()` provides basic statistics. The try/except block handles potential loading errors gracefully. These outputs are vital. I've seen more than one project derailed by overlooking data types that were incorrectly inferred, or by not noticing a large number of missing values early on. It's crucial to *know* your data intimately before moving forward.
+This does a couple of essential things: loads the data, prints the first few rows to get a sense of the content, displays the `.info()` output to show column types and null counts, and `.describe()` provides basic statistics. The try/except block handles potential loading errors gracefully. These outputs are vital. I've seen more than one project derailed by overlooking data types that were incorrectly inferred, or by not noticing a large number of missing values early on. It's crucial to _know_ your data intimately before moving forward.
 
 **2. Data Cleaning**
 
@@ -57,7 +57,7 @@ df_cleaned = handle_missing_values(df.copy()) #always copy to preserve original
 print("\nDataframe after cleaning missing values:\n", df_cleaned.info())
 ```
 
-This example iterates through all columns, checks for missing values, and performs median imputation for numerical columns, and mode imputation for string or categorical columns, while explicitly excluding other types from simple imputation. You have to be very careful with such choices – always analyze *why* you have missing data, not just *that* you have it. I've had cases where the missingness itself was a feature, and needed separate modeling.
+This example iterates through all columns, checks for missing values, and performs median imputation for numerical columns, and mode imputation for string or categorical columns, while explicitly excluding other types from simple imputation. You have to be very careful with such choices – always analyze _why_ you have missing data, not just _that_ you have it. I've had cases where the missingness itself was a feature, and needed separate modeling.
 
 Another thing to watch for is duplicate records. `df.drop_duplicates(inplace=True)` is your friend here. I've worked on datasets where duplicate entries were introduced by poorly configured data pipelines, which can significantly skew your model.
 
@@ -100,7 +100,7 @@ def split_and_prepare_data(dataframe, target_column, test_size=0.2, val_size=0.2
     val_size_in_train_val = val_size / (1-test_size)
 
     X_train, X_val, y_train, y_val = train_test_split(X_train_val, y_train_val, test_size=val_size_in_train_val, random_state=random_state, stratify=y_train_val)
-    
+
     print(f"Training set size: {X_train.shape}")
     print(f"Validation set size: {X_val.shape}")
     print(f"Test set size: {X_test.shape}")
@@ -110,10 +110,10 @@ target = 'target'
 X_train, X_val, X_test, y_train, y_val, y_test = split_and_prepare_data(df_processed.copy(), target)
 ```
 
-This function ensures we have our training, validation, and test splits, and the sizes of each are printed as information. When you do this, make sure you’re very careful about separating your data *before* you apply any transformations or any over/under sampling. Doing it the other way around can easily lead to data leakage from the validation data into the train data, leading to poor generalization in the real world.
+This function ensures we have our training, validation, and test splits, and the sizes of each are printed as information. When you do this, make sure you’re very careful about separating your data _before_ you apply any transformations or any over/under sampling. Doing it the other way around can easily lead to data leakage from the validation data into the train data, leading to poor generalization in the real world.
 
 **Recommended Resources:**
 
 To delve deeper into these concepts, I highly recommend a few texts. For a broad overview of data science, I suggest "Python for Data Analysis" by Wes McKinney (the creator of pandas); this book will really solidify your understanding of data manipulation with pandas. "Feature Engineering for Machine Learning" by Alice Zheng and Amanda Casari is a practical guide focused on transforming and creating features that will benefit the modelling process. Finally, for a rigorous understanding of statistical learning, look into "The Elements of Statistical Learning" by Hastie, Tibshirani, and Friedman; this is an advanced text, but contains foundational information on the underlying concepts.
 
-In my experience, the effort put into careful data preparation is *always* worthwhile. It’s the foundation for a reliable and accurate model, and cutting corners in this phase inevitably leads to problems further down the line. By thoroughly understanding your data and following a consistent process, you will increase the chances of success.
+In my experience, the effort put into careful data preparation is _always_ worthwhile. It’s the foundation for a reliable and accurate model, and cutting corners in this phase inevitably leads to problems further down the line. By thoroughly understanding your data and following a consistent process, you will increase the chances of success.

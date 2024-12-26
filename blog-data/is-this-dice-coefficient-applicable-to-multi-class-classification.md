@@ -4,17 +4,17 @@ date: "2024-12-23"
 id: "is-this-dice-coefficient-applicable-to-multi-class-classification"
 ---
 
-Alright, let’s talk about the Dice coefficient and its applicability to multi-class classification. It’s a topic that, frankly, I’ve spent more hours than I care to count both researching and debugging in various image segmentation projects, particularly with satellite imagery data which often requires multi-class handling. So, let me break this down from a practical perspective, based on lessons learned, rather than just reciting textbook definitions.
+, let’s talk about the Dice coefficient and its applicability to multi-class classification. It’s a topic that, frankly, I’ve spent more hours than I care to count both researching and debugging in various image segmentation projects, particularly with satellite imagery data which often requires multi-class handling. So, let me break this down from a practical perspective, based on lessons learned, rather than just reciting textbook definitions.
 
 The core concept of the Dice coefficient, also known as the F1 score when derived from the confusion matrix, is centered around measuring the overlap between two sets, typically the predicted segmentation and the ground truth segmentation. Mathematically, it’s calculated as `2 * |A ∩ B| / (|A| + |B|)`. Essentially, we’re doubling the size of the intersection and dividing it by the sum of the sizes of both sets. This works exceptionally well for binary classification problems, where you have a single class of interest (like identifying “tumors” vs. “not tumors”), because you're directly comparing the overlap of predicted and actual instances of that single class.
 
 However, the story gets more nuanced when you move to multi-class scenarios – like differentiating between ‘urban areas,’ ‘forest,’ and ‘agricultural land’ in satellite images. Now, we have multiple classes to consider. The standard, straightforward Dice coefficient calculation won’t suffice, and applying it directly could lead to misleading metrics. We need to think about how to generalize this for more than two classes.
 
-Here's the essential adaptation: we typically calculate a *per-class* Dice coefficient. This means that for each class, we treat it as the "positive" class and all the others as the "negative" class. We compute the Dice score for that class, and then we might average them to get a single global metric. Now, this average can be an arithmetic mean, weighted mean, or something else depending on your project's specific needs, and each choice will reveal different aspects of your model's performance. Let me elaborate on these practical nuances.
+Here's the essential adaptation: we typically calculate a _per-class_ Dice coefficient. This means that for each class, we treat it as the "positive" class and all the others as the "negative" class. We compute the Dice score for that class, and then we might average them to get a single global metric. Now, this average can be an arithmetic mean, weighted mean, or something else depending on your project's specific needs, and each choice will reveal different aspects of your model's performance. Let me elaborate on these practical nuances.
 
 Firstly, it's critical to understand how class imbalances affect the Dice coefficient in multi-class scenarios. If, say, you have way more instances of “forest” than “urban” or “agricultural land,” the Dice score for “forest” might be high simply because it has a larger number of potential correctly predicted pixels. This can mask significant underperformance in the other classes. In my experience, neglecting class imbalances here has often led me down the wrong path in tuning models, and led me to put more emphasis on overall numbers rather than the nuances of specific class performance. The unweighted arithmetic mean of per-class Dice scores can easily mask this issue.
 
-To counter this, we often use weighted averages or metrics that are more robust against class imbalance. The *macro average* (arithmetic mean of per class scores) is suitable if you value each class equally. However, if some classes are more critical, you may opt for a *weighted average*, where each class’s score contributes proportionally to its support in your dataset (number of pixels belonging to that class).
+To counter this, we often use weighted averages or metrics that are more robust against class imbalance. The _macro average_ (arithmetic mean of per class scores) is suitable if you value each class equally. However, if some classes are more critical, you may opt for a _weighted average_, where each class’s score contributes proportionally to its support in your dataset (number of pixels belonging to that class).
 
 Here are a few illustrative examples implemented in Python using `numpy`, because often, this is how one deals with these things at a low level:
 
@@ -113,7 +113,9 @@ weighted_avg = calculate_weighted_dice(y_true_example_2, y_pred_example_2, num_c
 print("Weighted Average Dice:", weighted_avg)
 
 ```
+
 **Example 3: Handling Edge Cases with Absent Classes**
+
 ```python
 import numpy as np
 
@@ -152,6 +154,6 @@ dice_scores_3b = calculate_dice_per_class_edge_case(y_true_example_3b, y_pred_ex
 print("Per-class Dice (case 3b - absent class 2 in true):", dice_scores_3b)
 ```
 
-In essence, using the Dice coefficient in multi-class classification requires careful consideration. You can't simply apply the binary version; you *must* adapt it to a per-class calculation and then consider how to aggregate them. Understanding the impact of class imbalance is crucial, and the choice between macro and weighted averaging depends on the specific objectives of your project. I have seen teams stumble upon inaccurate conclusions using the Dice scores because they glossed over these key details.
+In essence, using the Dice coefficient in multi-class classification requires careful consideration. You can't simply apply the binary version; you _must_ adapt it to a per-class calculation and then consider how to aggregate them. Understanding the impact of class imbalance is crucial, and the choice between macro and weighted averaging depends on the specific objectives of your project. I have seen teams stumble upon inaccurate conclusions using the Dice scores because they glossed over these key details.
 
 If you want to delve deeper into the theoretical aspects, I’d highly recommend exploring the paper “A review on evaluation metrics for multi-class classification focusing on imbalanced data” by Tharwat (2018) in Applied Computing and Informatics. For a solid foundation on classification metrics in general, "Pattern Classification" by Duda, Hart, and Stork is a classic. And for the practical implementation side, looking into the Scikit-learn documentation on metric calculation is always a worthwhile endeavor. Keep your mind on the nuances of each situation and remember there are no one-size fits all answers.

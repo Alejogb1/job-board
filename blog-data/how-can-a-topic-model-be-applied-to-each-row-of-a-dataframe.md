@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-a-topic-model-be-applied-to-each-row-of-a-dataframe"
 ---
 
-Alright, let's tackle this. I've seen this requirement pop up in a few projects over the years, usually when dealing with unstructured text data tied to specific entities or events. The need to apply topic modeling *per row* of a dataframe is actually quite common when your data is structured but the meaningful content lies within a text column. Let me break down how I've approached it and provide some practical examples.
+, let's tackle this. I've seen this requirement pop up in a few projects over the years, usually when dealing with unstructured text data tied to specific entities or events. The need to apply topic modeling _per row_ of a dataframe is actually quite common when your data is structured but the meaningful content lies within a text column. Let me break down how I've approached it and provide some practical examples.
 
-Fundamentally, the core challenge is that topic models like Latent Dirichlet Allocation (LDA) or Non-negative Matrix Factorization (NMF) typically operate on a corpus – a *collection* of documents – not individual data points. So, we need to adjust our perspective, effectively treating each row’s text entry as a self-contained "document" within the scope of that particular modeling process. Think of it like this: we're not trying to find topics that span across *all* rows; instead, we're interested in understanding the latent themes within the textual content of each record, independently.
+Fundamentally, the core challenge is that topic models like Latent Dirichlet Allocation (LDA) or Non-negative Matrix Factorization (NMF) typically operate on a corpus – a _collection_ of documents – not individual data points. So, we need to adjust our perspective, effectively treating each row’s text entry as a self-contained "document" within the scope of that particular modeling process. Think of it like this: we're not trying to find topics that span across _all_ rows; instead, we're interested in understanding the latent themes within the textual content of each record, independently.
 
 I've found that the process usually follows this general pattern: pre-processing, topic model application per row, and then, perhaps most importantly, joining back the results to the original dataframe. The key here is modularity, making each step manageable and auditable.
 
@@ -16,11 +16,12 @@ Here’s how I handle it:
 
 1.  **Data Loading and Preparation:** First, we load our dataframe and identify the column containing our text data. Standard text cleaning and pre-processing are crucial: lowercasing, removal of punctuation, stop words, and potentially stemming or lemmatization.
 
-2. **Iterative Topic Modeling:** Then, we will iterate through each row of the dataframe. For each row, we’ll:
-    *   Extract the text.
-    *   Create a document-term matrix (DTM), treating the text as a single "document".
-    *   Instantiate and fit our LDA model to that single document.
-    *   Extract the topic distributions from the fitted model.
+2.  **Iterative Topic Modeling:** Then, we will iterate through each row of the dataframe. For each row, we’ll:
+
+    - Extract the text.
+    - Create a document-term matrix (DTM), treating the text as a single "document".
+    - Instantiate and fit our LDA model to that single document.
+    - Extract the topic distributions from the fitted model.
 
 3.  **Result Integration:** Finally, we will integrate the extracted topic distributions back to the original dataframe as new columns.
 
@@ -123,10 +124,12 @@ df['topic_distributions'] = df['text_column'].apply(get_row_topics_robust)
 df_expanded = pd.concat([df, pd.DataFrame(df['topic_distributions'].to_list(), columns=[f'topic_{i}' for i in range(2)])], axis=1)
 print(df_expanded)
 ```
+
 Here, we’ve included checks for null values, short texts, and potential errors with LDA during fitting process and return `None` if they occur. This prevents the whole script from failing and provides a good base for any further data cleaning or handling.
 
 **Example 3: Custom Preprocessing and Model Parameter Tuning**
 Finally, let's assume you want to use custom preprocessing parameters for your text data and explore how a change in model parameter can impact the results.
+
 ```python
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -187,6 +190,7 @@ df_expanded = pd.concat([df, pd.DataFrame(df['topic_distributions'].to_list(), c
 
 print(df_expanded)
 ```
+
 Here, we've introduced `preprocess_text`, to show how you might incorporate custom text cleaning. Additionally, we use `TfidfVectorizer` with custom `min_df` and `max_df` values. The `TfidfVectorizer` weighs words by their term frequency inverse document frequency, and the new parameters influence the terms that are included in the document-term matrix. This example demonstrates that you can adjust preprocessing and modeling parameters depending on the specifics of your dataset.
 
 Regarding further learning, for a solid theoretical understanding of topic modeling, I always suggest "Probabilistic Topic Models" by David Blei, which is the seminal paper on LDA, though it can be a bit dense. For a more practical guide to topic modeling, especially using Python, I'd highly recommend the book "Text Analytics with Python" by Dipanjan Sarkar. It covers a wide variety of techniques, with excellent explanations and code examples. Finally, the scikit-learn documentation on `sklearn.decomposition.LatentDirichletAllocation` and `sklearn.feature_extraction.text.CountVectorizer` (or `TfidfVectorizer`) should always be at your fingertips.

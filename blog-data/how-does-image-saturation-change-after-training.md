@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-does-image-saturation-change-after-training"
 ---
 
-Okay, let's tackle image saturation changes post-training. It's not just a matter of things magically 'adjusting'; there are specific mechanisms at play, and I've seen this trip up more than a few models in my time. In fact, back when I was working on a medical imaging classification system, we ran into a particularly stubborn issue with saturation shifts after we implemented a novel training augmentation pipeline. It was driving us nuts for a few days until we pinned it down – hence, I'm quite familiar with the nuances here.
+, let's tackle image saturation changes post-training. It's not just a matter of things magically 'adjusting'; there are specific mechanisms at play, and I've seen this trip up more than a few models in my time. In fact, back when I was working on a medical imaging classification system, we ran into a particularly stubborn issue with saturation shifts after we implemented a novel training augmentation pipeline. It was driving us nuts for a few days until we pinned it down – hence, I'm quite familiar with the nuances here.
 
-Fundamentally, image saturation, which essentially refers to the intensity of colors in an image, is altered during neural network training through a couple of key processes: the training data itself, and the modifications imposed by the network's internal weights. It’s seldom a direct, intentional change controlled by the model *to* saturation per se, but rather, it’s an emergent property of the learning process. Let me elaborate.
+Fundamentally, image saturation, which essentially refers to the intensity of colors in an image, is altered during neural network training through a couple of key processes: the training data itself, and the modifications imposed by the network's internal weights. It’s seldom a direct, intentional change controlled by the model _to_ saturation per se, but rather, it’s an emergent property of the learning process. Let me elaborate.
 
 First, consider the inherent saturation characteristics of the dataset used for training. If the training data predominantly contains images with high or low saturation levels, the network will naturally bias towards representing those saturations. Think about it: if most training images are desaturated, the network might learn to filter out saturated components, as they may be perceived as noise or outliers. Conversely, a dataset of overly vibrant images might encourage the network to over-emphasize saturation. This isn’t explicitly programmed; it arises from the gradient descent process trying to minimize the loss function. If the model finds a lower loss with a particular color profile in its learned representation, it will tend to lean that way.
 
@@ -60,7 +60,8 @@ axs[2].set_title("Saturated")
 plt.show()
 
 ```
-In this snippet, we demonstrate the application of color jitter, and how we can programmatically increase or decrease the saturation of an image. If a model trains on data transformed by `desaturate_transform`, it would likely develop a different output color saturation than if trained on an unaltered image. Similarly, a model trained using `saturate_transform` would result in very different outcomes. The main idea here is that the training data *dictates* the 'expected' saturation.
+
+In this snippet, we demonstrate the application of color jitter, and how we can programmatically increase or decrease the saturation of an image. If a model trains on data transformed by `desaturate_transform`, it would likely develop a different output color saturation than if trained on an unaltered image. Similarly, a model trained using `saturate_transform` would result in very different outcomes. The main idea here is that the training data _dictates_ the 'expected' saturation.
 
 **Example 2: Convolutional Kernel Impact**
 
@@ -112,7 +113,7 @@ plt.show()
 
 In this simplified example, `filter_tensor` applies a convolution filter that significantly reduces the value of the red channel. This results in an overall lower saturation of the resulting image, although not through direct manipulation. The actual impact during training will be much more nuanced, and occur across many filters and layers. However, this illustrates the basic mechanism by which the filters learned during training alter the image's saturation.
 
-**Example 3:  Post-training Saturation Drift (Simulated)**
+**Example 3: Post-training Saturation Drift (Simulated)**
 
 This example will simulate a scenario where the weights have already been trained, and we are trying to pass a range of slightly different, mostly saturated inputs. Note: we are not retraining in this example. We'll see that even after training, the specific color properties of the input still impact the output.
 
@@ -138,7 +139,7 @@ image_tensor = transform(image).unsqueeze(0)
 
 # Let's create a dummy, pretrained 1 layer convolution network with random weights
 conv_layer_pretrained = nn.Conv2d(3, 3, kernel_size=3, padding=1)
-# The following weights would be learned during training in a real scenario. 
+# The following weights would be learned during training in a real scenario.
 with torch.no_grad():
    conv_layer_pretrained.weight = torch.nn.Parameter(torch.randn(3,3,3,3) * 0.1)
 

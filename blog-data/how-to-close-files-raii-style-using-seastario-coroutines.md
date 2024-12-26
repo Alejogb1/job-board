@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-close-files-raii-style-using-seastario-coroutines"
 ---
 
-Alright, let's talk about something that’s always near the top of my mind when juggling asynchronous I/O in a high-performance context: resource management, particularly file handles. In the context of Seastar, where performance is king and we're leaning heavily into coroutines, the need for deterministic resource cleanup—specifically closing files—becomes paramount. Trying to rely solely on garbage collection or similar mechanisms often introduces unpredictability, and that’s just something we can't afford when we're trying to eke out every ounce of performance. So, instead of hoping for the best, we should actively manage resources using RAII – resource acquisition is initialization – a fundamental C++ programming idiom.
+, let's talk about something that’s always near the top of my mind when juggling asynchronous I/O in a high-performance context: resource management, particularly file handles. In the context of Seastar, where performance is king and we're leaning heavily into coroutines, the need for deterministic resource cleanup—specifically closing files—becomes paramount. Trying to rely solely on garbage collection or similar mechanisms often introduces unpredictability, and that’s just something we can't afford when we're trying to eke out every ounce of performance. So, instead of hoping for the best, we should actively manage resources using RAII – resource acquisition is initialization – a fundamental C++ programming idiom.
 
 I’ve had my fair share of encounters with resource leaks back in the day, specifically in a distributed storage system I worked on. We were dealing with thousands of concurrent requests, each involving file operations. In the initial design, we weren't strictly enforcing RAII with our asynchronous file access patterns; we’d just open a file, pass the file descriptor around, and trust that eventually someone would remember to close it. Well, you can imagine how that ended. We were consistently hitting the limits on the number of open file descriptors, which brought the whole system down, sometimes quite dramatically, and diagnosing it was like trying to find a specific grain of sand on a beach after a storm. I can tell you firsthand that debugging resource leaks in asynchronous systems is far from ideal, which led to a lot of late nights.
 
@@ -30,7 +30,7 @@ public:
     }
 
     seastar::file& get() { return _file; }
-    
+
     scoped_file(const scoped_file& other) = delete;
     scoped_file& operator=(const scoped_file& other) = delete;
 
@@ -59,7 +59,7 @@ seastar::future<> process_file(const seastar::sstring& filename) {
 
   scoped_file sf(file_open_result.value());
   auto &file = sf.get();
-  
+
   //Perform operations on the file using 'file'
     char buffer[1024];
     auto read_result = co_await file.read_dma(0, seastar::temporary_buffer<char>(buffer, 1024));
@@ -110,7 +110,7 @@ public:
     }
 
     seastar::file& get() { return _file; }
-    
+
     scoped_file(const scoped_file& other) = delete;
     scoped_file& operator=(const scoped_file& other) = delete;
 
@@ -129,7 +129,7 @@ public:
         }
         return *this;
     }
-    
+
 
 private:
     seastar::file _file;
@@ -142,7 +142,7 @@ seastar::future<> process_file(const seastar::sstring& filename) {
       co_return;
     }
     scoped_file sf(file_open_result.value());
-  
+
     auto& file = sf.get();
     char buffer[1024];
     auto read_result = co_await file.read_dma(0, seastar::temporary_buffer<char>(buffer, 1024));
@@ -186,7 +186,7 @@ public:
 
 
     ~scoped_file() {
-       
+
         seastar::future<> cleanup_fut = seastar::make_ready_future<>();
         if (_file.is_valid()) {
             cleanup_fut = _cleanup_handler();
@@ -200,11 +200,11 @@ public:
         } catch(const std::exception& e){
                 std::cerr << "Exception during cleanup or close: " << e.what() << std::endl;
             }
-       
+
     }
-  
+
     seastar::file& get() { return _file; }
-    
+
     scoped_file(const scoped_file& other) = delete;
     scoped_file& operator=(const scoped_file& other) = delete;
 
@@ -215,17 +215,17 @@ public:
            if(_file.is_valid()){
               cleanup_fut = _cleanup_handler();
            }
-            
+
           try {
                 cleanup_fut.get();
                 if (_file.is_valid()){
                     _file.close().get();
                 }
-              
+
           } catch(const std::exception& e){
                 std::cerr << "Exception during cleanup or close in move assign: " << e.what() << std::endl;
             }
-          
+
            _file = std::move(other._file);
            _cleanup_handler = std::move(other._cleanup_handler);
 

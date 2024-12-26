@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-google-news-search-showing-one-row-of-news"
 ---
 
-alright, so, seeing just one row of news in google news search, yeah, that's definitely a head-scratcher, and i've been there, pulling my hair out trying to figure out what's going on. been dealing with this sort of thing for, oh, seems like forever, probably since the early days of rss feeds actually, you'd think by now we'd have this figured out.
+, so, seeing just one row of news in google news search, yeah, that's definitely a head-scratcher, and i've been there, pulling my hair out trying to figure out what's going on. been dealing with this sort of thing for, oh, seems like forever, probably since the early days of rss feeds actually, you'd think by now we'd have this figured out.
 
 it's not typically a straightforward "google broke" scenario, although hey, even giants stumble. usually, it points to something a little more nuanced in how google's news algorithm decides what to show and how. it's like trying to debug someone else’s heavily commented code except the comments are just vibes and the debugger is a magic 8 ball. let me break down how I've seen this sort of thing happen and how i've tackled it, and what we can check.
 
@@ -34,6 +34,7 @@ queries = generate_queries(base_terms, modifiers)
 for query in queries:
     print(query)
 ```
+
 this will help you create variations of the same query, helping find if the issue is with the keyword itself.
 
 **2. personalization gone wild:**

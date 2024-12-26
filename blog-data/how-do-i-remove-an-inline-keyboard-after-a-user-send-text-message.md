@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-remove-an-inline-keyboard-after-a-user-send-text-message"
 ---
 
-Alright, let’s tackle the challenge of dismissing inline keyboards after a user sends a text message. It's a common annoyance if not handled correctly, and I've certainly spent my share of late nights debugging this particular issue back when I was working on that chat application for 'GlobalConnect,' remember that? Good times…and the not-so-good times of dealing with unexpected keyboard behavior. The core issue here revolves around managing the focus state of your input fields and, subsequently, the visibility of the keyboard on mobile platforms. Let's break down the solution conceptually and then walk through some code.
+, let’s tackle the challenge of dismissing inline keyboards after a user sends a text message. It's a common annoyance if not handled correctly, and I've certainly spent my share of late nights debugging this particular issue back when I was working on that chat application for 'GlobalConnect,' remember that? Good times…and the not-so-good times of dealing with unexpected keyboard behavior. The core issue here revolves around managing the focus state of your input fields and, subsequently, the visibility of the keyboard on mobile platforms. Let's break down the solution conceptually and then walk through some code.
 
 The crux of the matter is that when you trigger a send action (usually associated with a button or an enter/return key press), you’re not merely sending the text data. You also need to explicitly tell the system to relinquish focus from the currently active input field. Failure to do so means the operating system will interpret that input field as still needing keyboard input, hence the stubborn persistence of the onscreen keyboard. There are a few ways to accomplish this, but essentially, you are interacting with the view hierarchy’s focus mechanism.
 
@@ -108,6 +108,7 @@ class ChatActivity : AppCompatActivity() {
 
 }
 ```
+
 In this Kotlin example, we use the InputMethodManager's `hideSoftInputFromWindow()` method to dismiss the keyboard. The `hideKeyboard` utility function makes the process reusable. Similar to the iOS example, the optional click listener on the root view allows for dismissing the keyboard by clicking elsewhere on the screen.
 
 **Example 3: React Native (JavaScript)**
@@ -115,40 +116,51 @@ In this Kotlin example, we use the InputMethodManager's `hideSoftInputFromWindow
 Let’s do a React Native example to cover a different framework.
 
 ```javascript
-import React, { useState, useRef } from 'react';
-import { View, TextInput, Button, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import React, { useState, useRef } from "react";
+import {
+  View,
+  TextInput,
+  Button,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
 
 const ChatScreen = () => {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const inputRef = useRef(null);
 
   const sendMessage = () => {
-    if (message.trim() !== '') {
-      console.log('Sending message:', message);
-      setMessage(''); // Clear the input
+    if (message.trim() !== "") {
+      console.log("Sending message:", message);
+      setMessage(""); // Clear the input
       Keyboard.dismiss(); // Dismiss the keyboard
     }
   };
 
-    const dismissKeyboard = () => {
-      Keyboard.dismiss();
-    };
+  const dismissKeyboard = () => {
+    Keyboard.dismiss();
+  };
 
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
       <View style={{ flex: 1, padding: 20 }}>
-          <TextInput
-              style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10 }}
-              onChangeText={text => setMessage(text)}
-              value={message}
-              placeholder="Enter message"
-              ref={inputRef}
-            />
+        <TextInput
+          style={{
+            height: 40,
+            borderColor: "gray",
+            borderWidth: 1,
+            marginBottom: 10,
+          }}
+          onChangeText={(text) => setMessage(text)}
+          value={message}
+          placeholder="Enter message"
+          ref={inputRef}
+        />
 
-          <Button title="Send Message" onPress={sendMessage} />
+        <Button title="Send Message" onPress={sendMessage} />
       </View>
-     </TouchableWithoutFeedback>
-   );
+    </TouchableWithoutFeedback>
+  );
 };
 
 export default ChatScreen;

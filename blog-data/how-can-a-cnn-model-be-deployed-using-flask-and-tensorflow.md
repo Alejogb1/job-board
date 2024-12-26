@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-cnn-model-be-deployed-using-flask-and-tensorflow"
 ---
 
-Alright, let's tackle this one. I’ve actually been down this path a few times, most memorably when we were pushing a real-time image classification system into production a few years back. Getting the model from a training environment to a functioning web service using Flask and TensorFlow can have a few gotchas, so let’s break down the process methodically.
+, let's tackle this one. I’ve actually been down this path a few times, most memorably when we were pushing a real-time image classification system into production a few years back. Getting the model from a training environment to a functioning web service using Flask and TensorFlow can have a few gotchas, so let’s break down the process methodically.
 
 The core idea revolves around leveraging Flask, a micro web framework in python, to serve as the interface between your model and the outside world via http requests. TensorFlow, of course, provides the machinery for running the model. It's essentially a case of creating a Flask application, loading your pre-trained TensorFlow model into memory, and then crafting endpoints that accept requests and pass data through the model for a prediction.
 
@@ -257,9 +257,9 @@ This example updates the `/predict` endpoint to accept a list of base64 encoded 
 
 For further study, I highly recommend looking into these resources:
 
-*   **"Deep Learning with Python" by François Chollet:** While focused on Keras, it provides excellent insights into model training, saving, and a solid foundation for deploying models.
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book covers practical machine learning implementation in detail, including deploying models.
-*   **TensorFlow documentation**: The official TensorFlow documentation is indispensable for detailed information on `tf.saved_model` and model serving. Pay close attention to `tf.saved_model.load`, `tf.train.Checkpoint`, and `tf.function`.
-*   **Flask documentation:** The Flask website offers comprehensive documentation on building and deploying Flask applications. It is recommended to start with the 'tutorial' section.
+- **"Deep Learning with Python" by François Chollet:** While focused on Keras, it provides excellent insights into model training, saving, and a solid foundation for deploying models.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book covers practical machine learning implementation in detail, including deploying models.
+- **TensorFlow documentation**: The official TensorFlow documentation is indispensable for detailed information on `tf.saved_model` and model serving. Pay close attention to `tf.saved_model.load`, `tf.train.Checkpoint`, and `tf.function`.
+- **Flask documentation:** The Flask website offers comprehensive documentation on building and deploying Flask applications. It is recommended to start with the 'tutorial' section.
 
 These practical examples and resources should give you a good starting point. Remember to thoroughly test each component and pay particular attention to matching the preprocessing steps used during training. Deployment is often the most overlooked part of machine learning, so having a robust and repeatable process is important for success.

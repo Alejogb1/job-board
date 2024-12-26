@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "are-the-current-and-previous-graphs-inconsistent"
 ---
 
-Alright, let’s tackle this. Inconsistency between current and previous graphs, especially in data visualization, is a problem I've personally run into a fair few times. It's less about one graph being ‘wrong’ per se, and more about whether the underlying data, its interpretation, and the methodology used to generate those graphs are in sync. It's a deceptively complex issue.
+, let’s tackle this. Inconsistency between current and previous graphs, especially in data visualization, is a problem I've personally run into a fair few times. It's less about one graph being ‘wrong’ per se, and more about whether the underlying data, its interpretation, and the methodology used to generate those graphs are in sync. It's a deceptively complex issue.
 
 From my experience, the inconsistency often stems from several key areas. Firstly, data changes—obviously. We might be comparing visualizations based on different datasets, perhaps acquired at different timestamps, with different selection criteria, or under different pre-processing steps. The most recent data might have undergone cleaning or feature engineering absent in the previous version. This alone can lead to quite noticeable discrepancies. Secondly, there are methodological changes. The very way we compute data transformations—think log scaling, outlier removal, moving averages, the specific type of algorithm applied—can shift the look of a graph substantially. Small tweaks, that in isolation might seem insignificant, can collectively produce graphs that appear completely disconnected if not carefully accounted for in the pipeline. Then, of course, there's the human element. Changes in data visualization libraries or tool settings, subtle alterations in color palettes, axis limits, or label formats can inadvertently give the impression of data inconsistencies when none exist fundamentally. It can be as simple as changing from a bar chart to a line chart for instance, without any real underlying data differences.
 
@@ -55,7 +55,7 @@ print("\nFiltered Current Week Data:")
 print(df_current_filtered)
 ```
 
-In this scenario, we implemented a filter that emulates bot traffic removal; in reality, we would apply the same bot identification process to both historical and current datasets. The key takeaway here is ensuring *identical* data pre-processing steps when comparing datasets. This might involve re-running pipelines against historical data if a bug or update in data pre-processing was identified.
+In this scenario, we implemented a filter that emulates bot traffic removal; in reality, we would apply the same bot identification process to both historical and current datasets. The key takeaway here is ensuring _identical_ data pre-processing steps when comparing datasets. This might involve re-running pipelines against historical data if a bug or update in data pre-processing was identified.
 
 **Scenario 2: Algorithm or Transformation Differences**
 
@@ -127,6 +127,7 @@ plt.title("Current Plot (Y-axis: 0-300ms)")
 plt.tight_layout()
 plt.show()
 ```
+
 Here, the change in the y-axis limits affects the apparent volatility. It’s vital to document and review the visualization parameters, alongside the data processing, to avoid misinterpretation.
 
 To effectively handle inconsistencies, thorough documentation of every step of the data processing, the algorithms used, and visualization settings is essential. Version control your data pre-processing pipelines, including visualization scripts. If you are serious about it, you should really be using something like DVC (Data Version Control). It will make such issues easier to diagnose and resolve. Furthermore, rigorously comparing the code and configuration that produced the previous and the current graphs will usually bring the discrepancies to light. For deep dive on graph data, I'd advise looking at 'Graph Theory and Its Applications' by Jonathan L. Gross and Jay Yellen. For best practices in data visualization, 'The Visual Display of Quantitative Information' by Edward Tufte is a must. Those are good reference points if you are getting deeper into the theory. I hope this detailed explanation helps you to systematically analyze and address such inconsistencies. It’s a complex problem that often requires a thorough and methodical approach.

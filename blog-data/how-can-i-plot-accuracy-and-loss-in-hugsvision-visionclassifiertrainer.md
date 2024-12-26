@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-i-plot-accuracy-and-loss-in-hugsvision-visionclassifiertrainer"
 ---
 
-alright, so you’re looking to visualize your training process in hugsvision, specifically the accuracy and loss curves when using `VisionClassifierTrainer`. it's a common need and a crucial step to understanding how your model's learning. i’ve definitely been there, staring at a wall of numbers and wishing for a nice plot. been through this particular struggle myself more times than i care to remember. let me break down how i usually tackle it.
+, so you’re looking to visualize your training process in hugsvision, specifically the accuracy and loss curves when using `VisionClassifierTrainer`. it's a common need and a crucial step to understanding how your model's learning. i’ve definitely been there, staring at a wall of numbers and wishing for a nice plot. been through this particular struggle myself more times than i care to remember. let me break down how i usually tackle it.
 
 the `VisionClassifierTrainer` doesn't, out of the box, give you plots directly like some libraries. it's more of an engine than a dashboard. the good news is, it does a great job at logging the metrics to things like tensorboard or wandb. if you are not using these, then it stores the data internally which we can access. so you gotta grab these values after training, and then use something like matplotlib to get your visuals.
 
@@ -116,6 +116,7 @@ def plot_kfold_metrics(kfold_histories, metric_key, eval_metric_key, title, ylab
 
 
 ```
+
 this function will go through the logs of each k-fold history, extract the metrics of every epoch, and then average them out, to have a plot of the average behaviour across all the folds. a little note of caution here, if different folds have different number of epochs. this function will pad the shorter ones with nan values. if you are using a different number of training epochs between folds, this can be a problem, but you can adjust the logic to match your data.
 
 a final thought. it’s always worth diving a bit deeper into the process. while `matplotlib` is fantastic for quick plots, for something more complex, consider using `seaborn`, especially for visualizing distributions of metrics. when you start to fine-tune hyperparameters, having better ways to visualize the results will save you time and headaches. always spend the time upfront to get your plots working right and you will save a lot of trouble when the model is not working as expected, you will avoid wasting time going back to the code and instead focus on the model itself. remember that a good plot can say more than many lines of code. and don't forget, when in doubt, read the docs.

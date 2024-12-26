@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-current-best-models-for-measuring-long-text-similarity"
 ---
 
-Okay, let's tackle this. I remember back in '09, working on a project for a large legal firm, we needed to compare hundreds of complex documents to identify potential duplicates and related cases. That was before a lot of the current models were readily available, and trust me, it was a headache. Back then, we cobbled together methods, relying heavily on TF-IDF and cosine similarity, which, while functional, definitely had its limitations with long texts. These days, we've come quite a way, and there's a much more refined toolkit to approach this challenge.
+, let's tackle this. I remember back in '09, working on a project for a large legal firm, we needed to compare hundreds of complex documents to identify potential duplicates and related cases. That was before a lot of the current models were readily available, and trust me, it was a headache. Back then, we cobbled together methods, relying heavily on TF-IDF and cosine similarity, which, while functional, definitely had its limitations with long texts. These days, we've come quite a way, and there's a much more refined toolkit to approach this challenge.
 
 The problem, at its core, is that long text similarity isn't simply about comparing word occurrences; it's about capturing the semantic meaning embedded within those words, across potentially numerous paragraphs and sections. The approaches used in traditional information retrieval, like the aforementioned TF-IDF, often falter when dealing with texts where the same concepts are expressed with different vocabulary, or where the context shifts subtly across a document.
 
@@ -111,21 +111,22 @@ print(f"Cosine Similarity with another document: {cosine_sim.item():.4f}")
 
 
 ```
+
 In this example, we split the document into sentences and encode them using SBERT. We then create a single document-level embedding by averaging the sentence embeddings. In reality, you might use more intelligent methods than the simple splitting shown here, such as the one I used with the legal document analysis. Depending on how large your chunks are, you may need to average more fine-grained text block embeddings, too. For instance, using paragraph-level embeddings.
 
 **Additional Considerations and Resources**
 
-*   **Fine-tuning:** While pre-trained models perform quite well out-of-the-box, fine-tuning on your own corpus of related documents can further improve accuracy for highly specialized tasks, particularly where specific language or concepts are prominent.
-*   **Computational Cost:** The transformer models, especially the larger ones, are computationally intensive. Careful consideration needs to be given to the required resources and computational efficiency. Consider techniques like model quantization to reduce model size and inference costs.
-*   **Chunking Strategy:** The optimal chunk size will vary depending on your specific data and the model being used. Experimentation is crucial. Overlapping chunks can help to capture relationships across chunk boundaries.
-*   **Beyond Cosine:** While cosine similarity is the most common metric to use on top of the embeddings, you could explore other measures or even train a classifier to directly determine if two documents are semantically related.
+- **Fine-tuning:** While pre-trained models perform quite well out-of-the-box, fine-tuning on your own corpus of related documents can further improve accuracy for highly specialized tasks, particularly where specific language or concepts are prominent.
+- **Computational Cost:** The transformer models, especially the larger ones, are computationally intensive. Careful consideration needs to be given to the required resources and computational efficiency. Consider techniques like model quantization to reduce model size and inference costs.
+- **Chunking Strategy:** The optimal chunk size will vary depending on your specific data and the model being used. Experimentation is crucial. Overlapping chunks can help to capture relationships across chunk boundaries.
+- **Beyond Cosine:** While cosine similarity is the most common metric to use on top of the embeddings, you could explore other measures or even train a classifier to directly determine if two documents are semantically related.
 
 For those who wish to delve deeper, I strongly recommend examining:
 
-*   **The original BERT paper:** *BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding* by Devlin et al. (2018). This establishes the foundation for much of the current work.
-*   **The Sentence-BERT paper:** *Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks* by Reimers and Gurevych (2019). This explains how to specifically train a transformer model for sentence embeddings.
-*   **The transformers documentation:** The Hugging Face transformers library documentation is extremely helpful for implementing these models. It's also a great place to find pre-trained models.
-*  **"Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper:**  A classic text offering a solid understanding of fundamental concepts in NLP, including topics such as semantic analysis.
-*   **Papers by Sebastian Ruder:** Sebastian Ruder's work, specifically on transfer learning and fine-tuning, is highly recommended for those interested in adapting pre-trained models for specific tasks. You'll find several influential papers on his website and via Google Scholar.
+- **The original BERT paper:** _BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding_ by Devlin et al. (2018). This establishes the foundation for much of the current work.
+- **The Sentence-BERT paper:** _Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks_ by Reimers and Gurevych (2019). This explains how to specifically train a transformer model for sentence embeddings.
+- **The transformers documentation:** The Hugging Face transformers library documentation is extremely helpful for implementing these models. It's also a great place to find pre-trained models.
+- **"Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper:** A classic text offering a solid understanding of fundamental concepts in NLP, including topics such as semantic analysis.
+- **Papers by Sebastian Ruder:** Sebastian Ruder's work, specifically on transfer learning and fine-tuning, is highly recommended for those interested in adapting pre-trained models for specific tasks. You'll find several influential papers on his website and via Google Scholar.
 
 In closing, while older methods like TF-IDF can be helpful in certain contexts, for measuring long-text similarity with a focus on semantic understanding, transformer-based models are the current standard. The key is to understand the trade-offs between different models, consider your specific task and available resources, and apply the techniques effectively. It's a continuous process of refinement and adapting the approaches to the demands of your situation.

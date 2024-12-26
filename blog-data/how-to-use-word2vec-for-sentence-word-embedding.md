@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-use-word2vec-for-sentence-word-embedding"
 ---
 
-Alright, let's talk about sentence word embeddings using Word2Vec. It’s a topic I've spent considerable time on, particularly during a project a few years back involving sentiment analysis of customer reviews, where we needed to go beyond individual word meanings and understand the context of full sentences. While Word2Vec primarily provides embeddings at the word level, we can leverage its output to create meaningful sentence representations.
+, let's talk about sentence word embeddings using Word2Vec. It’s a topic I've spent considerable time on, particularly during a project a few years back involving sentiment analysis of customer reviews, where we needed to go beyond individual word meanings and understand the context of full sentences. While Word2Vec primarily provides embeddings at the word level, we can leverage its output to create meaningful sentence representations.
 
 The core idea here is that a word's meaning isn’t isolated. It’s fundamentally shaped by its surrounding words. Word2Vec, whether you're using the Continuous Bag of Words (CBOW) or Skip-gram model, learns these relationships. This learning process is based on the distributional hypothesis: words that occur in similar contexts tend to have similar meanings.
 

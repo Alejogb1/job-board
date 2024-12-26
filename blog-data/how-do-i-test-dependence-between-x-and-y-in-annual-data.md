@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-do-i-test-dependence-between-x-and-y-in-annual-data"
 ---
 
-Alright, let's talk about testing dependence with annual data. I've tackled this sort of problem a fair bit, especially during a project back at my old research gig involving agricultural yields and climate data. Things weren't as straightforward as a simple correlation coefficient sometimes. So, let's break down a few ways to approach this, keeping it focused on practical implementations.
+, let's talk about testing dependence with annual data. I've tackled this sort of problem a fair bit, especially during a project back at my old research gig involving agricultural yields and climate data. Things weren't as straightforward as a simple correlation coefficient sometimes. So, let's break down a few ways to approach this, keeping it focused on practical implementations.
 
 When you're looking for dependence between two variables, X and Y, in annual data, the first thing that often jumps to mind is Pearson's correlation coefficient. That's a decent starting point, assuming a linear relationship. However, annual data can have complex relationships that aren't strictly linear, or they might be influenced by temporal patterns like trends or seasonality, even though it's annual data. The key word is 'dependence,' and not just 'linear correlation.' Dependence simply means if the value of X influences the value of Y, and vice-versa, whether linearly or not.
 
-Firstly, let’s consider situations where linear correlation may suffice. Pearson's correlation, represented by *r*, measures the strength and direction of a linear relationship between two variables. It's calculated by finding the covariance of *x* and *y* divided by the product of their standard deviations. In Python, we’d use `scipy.stats.pearsonr`:
+Firstly, let’s consider situations where linear correlation may suffice. Pearson's correlation, represented by _r_, measures the strength and direction of a linear relationship between two variables. It's calculated by finding the covariance of _x_ and _y_ divided by the product of their standard deviations. In Python, we’d use `scipy.stats.pearsonr`:
 
 ```python
 import numpy as np
@@ -25,7 +25,7 @@ print(f"Pearson Correlation: {correlation:.3f}")
 print(f"P-value: {p_value:.3f}")
 ```
 
-This code calculates Pearson’s *r* and the associated p-value. A high absolute value of *r* (close to +1 or -1) suggests a strong linear relationship, while a p-value below a chosen significance level (usually 0.05) indicates the correlation is statistically significant. However, note that a low *r* doesn't automatically mean there's *no* dependence, just no *linear* one.
+This code calculates Pearson’s _r_ and the associated p-value. A high absolute value of _r_ (close to +1 or -1) suggests a strong linear relationship, while a p-value below a chosen significance level (usually 0.05) indicates the correlation is statistically significant. However, note that a low _r_ doesn't automatically mean there's _no_ dependence, just no _linear_ one.
 
 Now, let’s say our data doesn't follow a straight line, or we suspect a non-linear relation. We could then move to a non-parametric approach such as Spearman's rank correlation. Instead of operating on the actual data values, it operates on the ranked values. This makes it more robust to outliers and capable of detecting monotonic relationships (meaning, X increases as Y increases or X decreases as Y decreases, though not necessarily in a linear way). We use `scipy.stats.spearmanr` for this:
 
@@ -43,9 +43,10 @@ print(f"Spearman Correlation: {correlation:.3f}")
 print(f"P-value: {p_value:.3f}")
 
 ```
+
 In the output, if the correlation is significantly non-zero, it hints at a monotonic relationship. The code’s result will provide the Spearman correlation value and the associated p-value for statistical significance.
 
-Beyond correlation coefficients, particularly when dealing with more complex dependence, we should consider techniques like mutual information or conditional independence tests. Mutual information measures the amount of information shared between two variables, without assumptions about linearity or monotonicity. It is calculated using concepts from information theory, and it generally requires a careful selection of binning and data preprocessing techniques. Conditional independence tests become relevant when we want to investigate dependence between *x* and *y* given a third variable *z*. This was super important for me when working with climate data since a particular variable could appear as a driver, when in fact, it was only correlated due to another, unaccounted for factor.
+Beyond correlation coefficients, particularly when dealing with more complex dependence, we should consider techniques like mutual information or conditional independence tests. Mutual information measures the amount of information shared between two variables, without assumptions about linearity or monotonicity. It is calculated using concepts from information theory, and it generally requires a careful selection of binning and data preprocessing techniques. Conditional independence tests become relevant when we want to investigate dependence between _x_ and _y_ given a third variable _z_. This was super important for me when working with climate data since a particular variable could appear as a driver, when in fact, it was only correlated due to another, unaccounted for factor.
 
 Here's a basic example of how you can calculate mutual information. For ease of demonstration, we'll use a package called 'sklearn.metrics':
 
@@ -62,7 +63,8 @@ mutual_info = mutual_info_score(x, y)
 
 print(f"Mutual Information: {mutual_info:.3f}")
 ```
-Here, the data is assumed to have already been discretized (or binned) into integers. The mutual information is non-negative and quantifies how much information is shared between *x* and *y*. A higher value means a greater dependence. For continuous annual data, discretizing into bins is often a necessary preprocessing step for using `mutual_info_score`.
+
+Here, the data is assumed to have already been discretized (or binned) into integers. The mutual information is non-negative and quantifies how much information is shared between _x_ and _y_. A higher value means a greater dependence. For continuous annual data, discretizing into bins is often a necessary preprocessing step for using `mutual_info_score`.
 
 Regarding resources, I'd recommend the following. For a good foundation in statistical concepts and hypothesis testing, “All of Statistics: A Concise Course in Statistical Inference” by Larry Wasserman is fantastic. For time series analysis techniques, including handling temporal dependence and autocorrelation which can affect the validity of dependence tests with annual data, consider “Time Series Analysis” by James D. Hamilton. Finally, for the theory behind mutual information and other information-theoretic measures of dependence, “Elements of Information Theory” by Thomas M. Cover and Joy A. Thomas is an excellent deep dive.
 

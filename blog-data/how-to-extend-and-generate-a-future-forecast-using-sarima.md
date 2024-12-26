@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "how-to-extend-and-generate-a-future-forecast-using-sarima"
 ---
 
-alright, so you're looking into extending a time series forecast using sarima, right? i've been down that road more times than i care to remember, and let me tell you, it can get pretty hairy if you don't watch your step. let's break this down, no bs.
+, so you're looking into extending a time series forecast using sarima, right? i've been down that road more times than i care to remember, and let me tell you, it can get pretty hairy if you don't watch your step. let's break this down, no bs.
 
 first off, sarima (seasonal autoregressive integrated moving average) is a pretty solid choice for forecasting when you've got that seasonality going on in your data. it's not magic, though. you still gotta know what you're doing. i've seen too many folks just throw a sarima model at data and pray it works. spoiler: it rarely does without a good bit of tweaking.
 
 when i first started messing with this, i remember banging my head against the wall with a sales forecasting project for a small online retailer. their sales data had a clear weekly pattern – weekends were bonkers, weekdays were chill. the simple arima models i tried were just plain awful because they couldn't handle the seasonal swing. that's when i got properly introduced to sarima and its glorious (and occasionally frustrating) ways.
 
-the core idea here is that sarima expands upon arima by including additional terms to account for the seasonality. where an arima model has p, d, and q parameters, which represent the autoregressive (ar) order, the differencing order, and the moving average (ma) order, respectively. a sarima model goes a step further and uses p, d, and q and then the parameters for the seasonality, usually called p_seasonal, d_seasonal, and q_seasonal and a seasonality period, usually called 's'. these are sometimes written like sarima(p,d,q)(p_seasonal,d_seasonal,q_seasonal)_s.
+the core idea here is that sarima expands upon arima by including additional terms to account for the seasonality. where an arima model has p, d, and q parameters, which represent the autoregressive (ar) order, the differencing order, and the moving average (ma) order, respectively. a sarima model goes a step further and uses p, d, and q and then the parameters for the seasonality, usually called p_seasonal, d_seasonal, and q_seasonal and a seasonality period, usually called 's'. these are sometimes written like sarima(p,d,q)(p_seasonal,d_seasonal,q_seasonal)\_s.
 
 basically, you model both the non-seasonal and seasonal parts of your time series data.
 
@@ -20,7 +20,7 @@ so, let's talk about how i usually tackle this. first, data prep is huge. clean 
 
 next up, figuring out the (p, d, q) and (p_seasonal, d_seasonal, q_seasonal, s) parameters. this is the part where things get a bit artful and it's why i call this part 'tuning the radio'. there are tools like auto arima functions, but i've found them not always be the best choice. they are useful to get a general sense of where to start, but never blindly accept their output. some resources, such as "time series analysis" by james d. hamilton and "forecasting: principles and practice" by hyndman and athanasopoulos, provide great insights into how to interpret autocorrelation and partial autocorrelation plots (acf and pacf) to estimate these parameters manually. it is an old school technique but its essential.
 
-once you have a model that seems alright, you need to actually generate the forecast. this involves feeding in your historical data, letting the model learn the patterns, and then using the learned parameters to predict into the future. the number of steps ahead you forecast is up to you, but be realistic about the uncertainty; long-term predictions are always less accurate. i’ve had some projects where i needed to predict just one week ahead and others where i needed to predict several months.
+once you have a model that seems , you need to actually generate the forecast. this involves feeding in your historical data, letting the model learn the patterns, and then using the learned parameters to predict into the future. the number of steps ahead you forecast is up to you, but be realistic about the uncertainty; long-term predictions are always less accurate. i’ve had some projects where i needed to predict just one week ahead and others where i needed to predict several months.
 
 let me give you a python example using the `statsmodels` library:
 

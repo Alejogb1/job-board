@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-client-program-access-a-high-availability-hdfs-cluster"
 ---
 
-Okay, let's tackle this. It's a question I've seen variations of countless times, and the solution, while seemingly straightforward, requires a careful understanding of the underlying architecture to avoid common pitfalls. I recall a particularly hair-raising incident back in my early days where a poorly configured client kept triggering failovers, not fun. Anyway, let's break down how to reliably access a high-availability hdfs cluster.
+, let's tackle this. It's a question I've seen variations of countless times, and the solution, while seemingly straightforward, requires a careful understanding of the underlying architecture to avoid common pitfalls. I recall a particularly hair-raising incident back in my early days where a poorly configured client kept triggering failovers, not fun. Anyway, let's break down how to reliably access a high-availability hdfs cluster.
 
 The core challenge here revolves around the fact that a high-availability (ha) hdfs cluster is built on redundancy. Unlike a single-namenode setup, ha uses two or more namenodes, only one of which is active at any given moment. This active namenode handles all client requests and manages the filesystem namespace. The standby namenodes exist to take over should the active one fail. Our clients, therefore, need to be able to discover and connect to the currently active namenode seamlessly without manual intervention. This process is handled using a mechanism known as "failover," managed by either zookeeper or using a simpler shared storage setup, although the latter is considerably less robust and less common for true ha clusters.
 
@@ -96,7 +96,7 @@ public class HDFSClientExample {
 }
 ```
 
-In this example, the `FileSystem.get(conf)` call is key. It leverages the configurations we set up to connect to the active namenode. Note that we're *not* specifying a specific address for namenode1 or namenode2; the failover mechanism takes care of this for us. If the active namenode fails, this connection transparently fails over to the new active node without the code needing any changes.
+In this example, the `FileSystem.get(conf)` call is key. It leverages the configurations we set up to connect to the active namenode. Note that we're _not_ specifying a specific address for namenode1 or namenode2; the failover mechanism takes care of this for us. If the active namenode fails, this connection transparently fails over to the new active node without the code needing any changes.
 
 **Example 3: Connecting as a Specific User**
 
@@ -137,6 +137,7 @@ public class SecureHDFSClientExample {
     }
 }
 ```
+
 This example shows how to create a `UserGroupInformation` object, which uses Kerberos tickets for authentication (assuming the cluster is secured). Using `doAs` ensures the hdfs client operates with the permissions of the specified user. This is crucial for accessing sensitive data on production clusters. If your hadoop cluster doesn't have Kerberos enabled, you'll still want to operate as the appropriate unix user.
 
 These examples outline the basic plumbing needed to connect to a ha hdfs cluster. The key takeaway is that proper configuration is essential. The `core-site.xml` and `hdfs-site.xml` files must be meticulously crafted to point to your namenodes, your zookeeper quorum (if used), and have the correct failover provider set. Additionally, ensure that these files are distributed to all client machines in your environment, or loaded within your application's resources. Always ensure your client library versions match or are compatible with your hdfs cluster version. Version mismatches are a common source of errors.

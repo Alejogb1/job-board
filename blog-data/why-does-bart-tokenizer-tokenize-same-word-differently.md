@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-bart-tokenizer-tokenize-same-word-differently"
 ---
 
-Alright, let's delve into why a BART tokenizer might tokenize the same word differently, something I've certainly encountered more than once in my work with natural language processing. It’s a question that, on the surface, seems counterintuitive – after all, shouldn't the same input always yield the same output? The reality, as is often the case in complex systems, is a bit more nuanced.
+, let's delve into why a BART tokenizer might tokenize the same word differently, something I've certainly encountered more than once in my work with natural language processing. It’s a question that, on the surface, seems counterintuitive – after all, shouldn't the same input always yield the same output? The reality, as is often the case in complex systems, is a bit more nuanced.
 
 The core reason lies in the context within which the tokenizer operates. BART, being a sequence-to-sequence model, uses a subword tokenization approach. This means that words are not treated as monolithic units; instead, they are broken down into smaller pieces – subwords – which could be character sequences, commonly occurring morphemes, or even entire words, depending on the training data and algorithm used. This flexibility allows the model to handle out-of-vocabulary words, and reduces the overall vocabulary size needed to cover a wide range of language. However, it also introduces potential variability in tokenization.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-infographic-displays-be-automatically-timed"
 ---
 
-Alright, let’s talk about timed infographic displays. This is a challenge I’ve bumped into several times, particularly during my tenure on a project visualizing real-time sensor data for a large-scale industrial operation. We were dealing with a firehose of information, and just throwing all of it onto a dashboard was clearly not going to work. The sheer volume would overwhelm any user, and without proper sequencing or timing, crucial anomalies might be missed. So, yes, automatically timed infographic displays are absolutely achievable, and they're often vital for effective communication of data, especially dynamic data.
+, let’s talk about timed infographic displays. This is a challenge I’ve bumped into several times, particularly during my tenure on a project visualizing real-time sensor data for a large-scale industrial operation. We were dealing with a firehose of information, and just throwing all of it onto a dashboard was clearly not going to work. The sheer volume would overwhelm any user, and without proper sequencing or timing, crucial anomalies might be missed. So, yes, automatically timed infographic displays are absolutely achievable, and they're often vital for effective communication of data, especially dynamic data.
 
 The core idea revolves around dynamically controlling what information is presented and when. The approach fundamentally shifts from a static display to a choreographed data presentation. This requires us to go beyond simple data binding and into the realm of state management, animation, and often, quite a bit of planning related to the pacing of the content. The complexity increases based on the diversity of data, the level of detail required, and the user's specific interaction needs.
 
@@ -15,38 +15,38 @@ Let's break this down with some examples. Suppose we’re dealing with a simplif
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Timed Infographic</title>
-</head>
-<body>
+  </head>
+  <body>
     <div id="infographic"></div>
     <script>
-        const infographic = document.getElementById('infographic');
-        const sensorData = {
-            A: [25, 26, 27, 28, 29],
-            B: [20, 21, 22, 23, 24],
-            C: [30, 31, 32, 33, 34],
-        };
-        let sensorIndex = 0;
-        let dataIndex = 0;
-        const sensors = Object.keys(sensorData);
-        function updateInfographic() {
-            const currentSensor = sensors[sensorIndex];
-            infographic.textContent = `Sensor: ${currentSensor}, Temperature: ${sensorData[currentSensor][dataIndex]}`;
-            dataIndex++;
-            if (dataIndex >= sensorData[currentSensor].length) {
-                dataIndex = 0;
-                sensorIndex = (sensorIndex + 1) % sensors.length;
-            }
+      const infographic = document.getElementById("infographic");
+      const sensorData = {
+        A: [25, 26, 27, 28, 29],
+        B: [20, 21, 22, 23, 24],
+        C: [30, 31, 32, 33, 34],
+      };
+      let sensorIndex = 0;
+      let dataIndex = 0;
+      const sensors = Object.keys(sensorData);
+      function updateInfographic() {
+        const currentSensor = sensors[sensorIndex];
+        infographic.textContent = `Sensor: ${currentSensor}, Temperature: ${sensorData[currentSensor][dataIndex]}`;
+        dataIndex++;
+        if (dataIndex >= sensorData[currentSensor].length) {
+          dataIndex = 0;
+          sensorIndex = (sensorIndex + 1) % sensors.length;
         }
-        setInterval(updateInfographic, 2000); // switch every 2 seconds within each sensor's data set
+      }
+      setInterval(updateInfographic, 2000); // switch every 2 seconds within each sensor's data set
     </script>
-</body>
+  </body>
 </html>
-
 ```
+
 This first example demonstrates the basic timing mechanism. We cycle through sensors, then cycle through values within each sensor. Each data point is displayed for 2 seconds before advancing. The modulo operator ensures we loop back to the first sensor after reaching the last.
 
 Now, let’s introduce a more intricate scenario where timing is not just sequential but also conditional. Imagine an infographic showing system resource utilization. We want to highlight the component with the highest load at each specific time. We can use conditional rendering and javascript to present this. This example includes dummy data, of course, but the fundamental concept is directly transferable to real-world data.
@@ -54,45 +54,52 @@ Now, let’s introduce a more intricate scenario where timing is not just sequen
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Conditional Infographic</title>
     <style>
-        .highlight {
-            font-weight: bold;
-            color: red;
-        }
+      .highlight {
+        font-weight: bold;
+        color: red;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="resource-display"></div>
     <script>
-        const resourceDisplay = document.getElementById('resource-display');
-        const resourceData = [
+      const resourceDisplay = document.getElementById("resource-display");
+      const resourceData = [
         { timestamp: 0, cpu: 30, memory: 60, disk: 20 },
         { timestamp: 2, cpu: 70, memory: 40, disk: 30 },
         { timestamp: 4, cpu: 20, memory: 80, disk: 50 },
         { timestamp: 6, cpu: 40, memory: 50, disk: 70 },
-        ];
-        let currentIndex = 0;
-        function updateResourceDisplay() {
-            const currentData = resourceData[currentIndex];
-            let maxResource = 'cpu';
-            if (currentData.memory > currentData[maxResource]) maxResource = 'memory';
-            if (currentData.disk > currentData[maxResource]) maxResource = 'disk';
+      ];
+      let currentIndex = 0;
+      function updateResourceDisplay() {
+        const currentData = resourceData[currentIndex];
+        let maxResource = "cpu";
+        if (currentData.memory > currentData[maxResource])
+          maxResource = "memory";
+        if (currentData.disk > currentData[maxResource]) maxResource = "disk";
 
-            resourceDisplay.innerHTML = `
+        resourceDisplay.innerHTML = `
             <p>Timestamp: ${currentData.timestamp}</p>
-            <p>CPU: <span class="${maxResource === 'cpu' ? 'highlight' : ''}">${currentData.cpu}%</span></p>
-            <p>Memory: <span class="${maxResource === 'memory' ? 'highlight' : ''}">${currentData.memory}%</span></p>
-            <p>Disk: <span class="${maxResource === 'disk' ? 'highlight' : ''}">${currentData.disk}%</span></p>
+            <p>CPU: <span class="${maxResource === "cpu" ? "highlight" : ""}">${
+          currentData.cpu
+        }%</span></p>
+            <p>Memory: <span class="${
+              maxResource === "memory" ? "highlight" : ""
+            }">${currentData.memory}%</span></p>
+            <p>Disk: <span class="${
+              maxResource === "disk" ? "highlight" : ""
+            }">${currentData.disk}%</span></p>
             `;
-            currentIndex = (currentIndex + 1) % resourceData.length;
-        }
-        setInterval(updateResourceDisplay, 2000);
+        currentIndex = (currentIndex + 1) % resourceData.length;
+      }
+      setInterval(updateResourceDisplay, 2000);
     </script>
-</body>
+  </body>
 </html>
 ```
 
@@ -103,52 +110,52 @@ Finally, let’s explore a scenario where external factors drive the infographic
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dynamic Infographic</title>
     <style>
-       .critical {
-           color: red;
-           font-weight: bold;
-       }
-        .warning{
-            color: orange;
-            font-style: italic;
-        }
+      .critical {
+        color: red;
+        font-weight: bold;
+      }
+      .warning {
+        color: orange;
+        font-style: italic;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="error-display"></div>
     <script>
-       const errorDisplay = document.getElementById('error-display');
-       const nodes = ['node1', 'node2', 'node3', 'node4'];
-        function generateErrorData() {
-            return nodes.reduce((acc, node) => {
-                acc[node] = Math.floor(Math.random() * 10); // Random error counts
-                return acc;
-            }, {});
-        }
-        function updateErrorDisplay() {
-           const errorCounts = generateErrorData();
-           let errorMessages = Object.entries(errorCounts).map(([node, count]) => {
-               let cssClass = '';
-               if(count > 5){
-                  cssClass = 'critical';
-               } else if (count > 2){
-                   cssClass = 'warning';
-               }
-               return `<p>Node: ${node}, Errors: <span class="${cssClass}">${count}</span></p>`;
-           }).join('');
+      const errorDisplay = document.getElementById("error-display");
+      const nodes = ["node1", "node2", "node3", "node4"];
+      function generateErrorData() {
+        return nodes.reduce((acc, node) => {
+          acc[node] = Math.floor(Math.random() * 10); // Random error counts
+          return acc;
+        }, {});
+      }
+      function updateErrorDisplay() {
+        const errorCounts = generateErrorData();
+        let errorMessages = Object.entries(errorCounts)
+          .map(([node, count]) => {
+            let cssClass = "";
+            if (count > 5) {
+              cssClass = "critical";
+            } else if (count > 2) {
+              cssClass = "warning";
+            }
+            return `<p>Node: ${node}, Errors: <span class="${cssClass}">${count}</span></p>`;
+          })
+          .join("");
 
-            errorDisplay.innerHTML = errorMessages;
-
-        }
-        setInterval(updateErrorDisplay, 3000); // Update every 3 seconds with new data
+        errorDisplay.innerHTML = errorMessages;
+      }
+      setInterval(updateErrorDisplay, 3000); // Update every 3 seconds with new data
     </script>
-</body>
+  </body>
 </html>
-
 ```
 
 This example is a step closer to real-world scenarios where the timing of the presentation is driven by fluctuating external conditions. This can be further expanded to handle data feeds, external sensors, or any system providing live metrics. The critical point is that each display update is not only timed, but also actively influenced by changes in the source data.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-two-keras-embedding-layers-be-concatenated"
 ---
 
-Okay, let's talk about concatenating embedding layers in Keras. I've tackled this particular problem multiple times, usually in scenarios involving complex input data where I needed to fuse different types of categorical information. It's a fairly common requirement, but there are nuanced ways to approach it for optimal results.
+, let's talk about concatenating embedding layers in Keras. I've tackled this particular problem multiple times, usually in scenarios involving complex input data where I needed to fuse different types of categorical information. It's a fairly common requirement, but there are nuanced ways to approach it for optimal results.
 
 The core idea, fundamentally, is to combine the vector representations produced by two separate embedding layers into a single, unified representation. This combined vector can then be fed into the subsequent layers of your neural network, enabling your model to learn relationships between different categorical inputs. Concatenation, in this context, simply means joining these vectors end-to-end, creating a larger vector.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-recommender-system-be-properly-evaluated"
 ---
 
-Okay, let’s talk about evaluating recommender systems. It's a crucial stage that, frankly, I’ve seen too many projects either gloss over or completely misunderstand. I remember a project back in my days at a fintech firm, where we spent months building this incredibly sophisticated collaborative filtering algorithm, only to realize our evaluation metrics were completely divorced from the actual user experience. It was a painful lesson, and it’s shaped how I approach evaluation ever since. The key takeaway is that evaluation isn't just about picking a single metric; it’s about crafting a holistic strategy that considers various aspects, each relevant to the specific goals of your system.
+, let’s talk about evaluating recommender systems. It's a crucial stage that, frankly, I’ve seen too many projects either gloss over or completely misunderstand. I remember a project back in my days at a fintech firm, where we spent months building this incredibly sophisticated collaborative filtering algorithm, only to realize our evaluation metrics were completely divorced from the actual user experience. It was a painful lesson, and it’s shaped how I approach evaluation ever since. The key takeaway is that evaluation isn't just about picking a single metric; it’s about crafting a holistic strategy that considers various aspects, each relevant to the specific goals of your system.
 
 To properly evaluate a recommender system, you can't just throw accuracy metrics at the problem and call it a day. We need a multi-faceted approach because recommendations have several characteristics you need to measure. We’re generally dealing with implicit feedback (user clicks, views, purchases) instead of explicit ratings which makes things more complex. And, let’s be honest, accuracy alone is almost never sufficient. Think of it this way: a system that always recommends the most popular items will likely score high on accuracy, but it offers little value to the user. It's boring and certainly doesn’t feel personalized.
 
@@ -74,7 +74,7 @@ This code provides a basic calculation for precision and recall. Keep in mind th
 
 **Example 2: Diversity (Intra-list similarity)**
 
-Now let’s see how to measure diversity within the recommendations we are producing, focusing on the *intra-list* similarity. A low intra-list similarity typically indicates higher diversity among recommendations. We measure similarity using a simple cosine distance of item vectors. In a practical scenario, those vectors could be extracted using techniques like item2vec or from user-item interactions or content.
+Now let’s see how to measure diversity within the recommendations we are producing, focusing on the _intra-list_ similarity. A low intra-list similarity typically indicates higher diversity among recommendations. We measure similarity using a simple cosine distance of item vectors. In a practical scenario, those vectors could be extracted using techniques like item2vec or from user-item interactions or content.
 
 ```python
 import numpy as np

@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-do-i-share-multiple-folders-in-pods-using-persistent-volumes"
 ---
 
-Alright, let's tackle this common Kubernetes challenge. Instead of jumping straight into code, I think it’s worth laying the groundwork first, based on some experience I've had scaling deployments. I recall one particularly memorable incident where a data pipeline was inexplicably failing because, well, the same data wasn't accessible across different pod replicas. A classic, if frustrating, illustration of the problem at hand. Sharing multiple folders across pods using persistent volumes (pvs) requires a solid understanding of how Kubernetes handles storage and how you can use its components to achieve specific sharing configurations. It's not as straightforward as simply mounting a volume and expecting the pods to magically see everything.
+, let's tackle this common Kubernetes challenge. Instead of jumping straight into code, I think it’s worth laying the groundwork first, based on some experience I've had scaling deployments. I recall one particularly memorable incident where a data pipeline was inexplicably failing because, well, the same data wasn't accessible across different pod replicas. A classic, if frustrating, illustration of the problem at hand. Sharing multiple folders across pods using persistent volumes (pvs) requires a solid understanding of how Kubernetes handles storage and how you can use its components to achieve specific sharing configurations. It's not as straightforward as simply mounting a volume and expecting the pods to magically see everything.
 
-The central concept here revolves around *persistent volume claims (pvcs)* which, in essence, are requests for storage by your pods. You, as the infrastructure engineer, declare persistent volumes (pvs) that represent the physical or logical storage available in the cluster. Then, your pvcs request space from the available pvs, and pods then mount these claimed volumes. Simple enough in theory, yet it often gets complex when multiple folders from the *same* pv need different access paths inside different pods. This usually arises when one wants to manage various distinct application components within the same infrastructure setup, where shared data is often part of the puzzle.
+The central concept here revolves around _persistent volume claims (pvcs)_ which, in essence, are requests for storage by your pods. You, as the infrastructure engineer, declare persistent volumes (pvs) that represent the physical or logical storage available in the cluster. Then, your pvcs request space from the available pvs, and pods then mount these claimed volumes. Simple enough in theory, yet it often gets complex when multiple folders from the _same_ pv need different access paths inside different pods. This usually arises when one wants to manage various distinct application components within the same infrastructure setup, where shared data is often part of the puzzle.
 
 One thing that’s easy to get tripped up on is the limitations of a direct one-to-one pvc-to-pod mapping when dealing with shared subdirectories from a larger volume. Directly mounting the entire pvc to multiple pods will make all pods see the root of the volume which may not be the desired behavior. So, a method that’s fairly efficient, and which I’ve found myself using time and again, involves mounting subpaths of your persistent volumes into your pods. This means instead of the entire volume, we specify particular subdirectories via `subPath` or equivalent methods, which essentially gives each pod a controlled "view" of the shared data, while retaining the shared volume beneath. Let's go through some code examples to concretize this.
 
@@ -27,14 +27,13 @@ spec:
       volumeMounts:
         - name: shared-volume
           mountPath: /data
-          subPath: data-processing  # Only data-processing dir is mounted here
+          subPath: data-processing # Only data-processing dir is mounted here
   volumes:
     - name: shared-volume
       persistentVolumeClaim:
         claimName: shared-data-pvc
 
 ---
-
 apiVersion: v1
 kind: Pod
 metadata:
@@ -47,7 +46,7 @@ spec:
       volumeMounts:
         - name: shared-volume
           mountPath: /logs
-          subPath: logs  # Only the logs dir is mounted here
+          subPath: logs # Only the logs dir is mounted here
   volumes:
     - name: shared-volume
       persistentVolumeClaim:
@@ -85,9 +84,9 @@ spec:
       image: busybox
       command: ["sh", "-c", "sleep 3600"]
       volumeMounts:
-          - name: shared-volume
-            mountPath: /app2
-            subPath: app2
+        - name: shared-volume
+          mountPath: /app2
+          subPath: app2
   volumes:
     - name: shared-volume
       persistentVolumeClaim:
@@ -127,17 +126,17 @@ metadata:
   name: dyn-pod-1
 spec:
   containers:
-  - name: dyn-pod-cont-1
-    image: busybox
-    command: ["sh", "-c", "sleep 3600"]
-    volumeMounts:
-      - name: shared-volume
-        mountPath: /data/pod1
-        subPath: pod1
+    - name: dyn-pod-cont-1
+      image: busybox
+      command: ["sh", "-c", "sleep 3600"]
+      volumeMounts:
+        - name: shared-volume
+          mountPath: /data/pod1
+          subPath: pod1
   volumes:
-  - name: shared-volume
-    persistentVolumeClaim:
-      claimName: dynamic-pvc
+    - name: shared-volume
+      persistentVolumeClaim:
+        claimName: dynamic-pvc
 
 ---
 apiVersion: v1
@@ -146,17 +145,17 @@ metadata:
   name: dyn-pod-2
 spec:
   containers:
-  - name: dyn-pod-cont-2
-    image: busybox
-    command: ["sh", "-c", "sleep 3600"]
-    volumeMounts:
-      - name: shared-volume
-        mountPath: /data/pod2
-        subPath: pod2
+    - name: dyn-pod-cont-2
+      image: busybox
+      command: ["sh", "-c", "sleep 3600"]
+      volumeMounts:
+        - name: shared-volume
+          mountPath: /data/pod2
+          subPath: pod2
   volumes:
-  - name: shared-volume
-    persistentVolumeClaim:
-      claimName: dynamic-pvc
+    - name: shared-volume
+      persistentVolumeClaim:
+        claimName: dynamic-pvc
 ```
 
 4.  **Automated Subdirectory Creation**: After the pvc gets created, an initContainer within our first pod can now create the `pod1` and `pod2` subdirectories within the dynamic pvc. Then, each subsequent pod with a similar setup can point to these subdirectories via the subpath mechanism.
@@ -165,4 +164,4 @@ These code snippets showcase core techniques. The choice of which technique to a
 
 For diving deeper, I would suggest looking into the Kubernetes documentation on persistent volumes and storage classes. The book "Kubernetes in Action" by Marko Luksa is also an excellent practical resource that delves into these topics. For more in-depth, architectural understanding, the Kubernetes design documents and proposals (KEPs) available at the Kubernetes GitHub repository are invaluable. Reading these helps provide the rationale behind the design decisions, particularly for complex features such as storage management.
 
-Finally, be careful with write permissions. If multiple pods are writing to the *same* folder, you could encounter race conditions and data loss if no locking mechanism is in place. Understanding the consistency model of your underlying storage solution, and designing for concurrency, is crucial in such a scenario. This might include utilizing specialized databases, message queues, or file locking protocols. These are common problems I've seen surface, so paying close attention to concurrent access patterns is essential for robust solutions. I hope this comprehensive explanation proves useful. Good luck with your deployments.
+Finally, be careful with write permissions. If multiple pods are writing to the _same_ folder, you could encounter race conditions and data loss if no locking mechanism is in place. Understanding the consistency model of your underlying storage solution, and designing for concurrency, is crucial in such a scenario. This might include utilizing specialized databases, message queues, or file locking protocols. These are common problems I've seen surface, so paying close attention to concurrent access patterns is essential for robust solutions. I hope this comprehensive explanation proves useful. Good luck with your deployments.

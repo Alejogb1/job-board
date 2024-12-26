@@ -1,26 +1,29 @@
 ---
 title: "Meta's Engineer guide to getting started with Databases"
-date: '2024-08-29'
-id: 'getting-started-databases'
+date: "2024-08-29"
+id: "getting-started-databases"
 ---
-	•too many keywords, not enough basics.
-	•	break it down.
-	•	focus on the fundamentals. 
-	(did you know the word “fundamentals” comes from the latin “fundamentum” 
-	meaning foundation? yeah, latin’s still lurking in our tech lingo.)
-	•	learn by doing.
-	•	start small, grow from there.
-	•	stick with simple stuff. 
-	(speaking of simple, did you know the first computer bug 
-	was literally a moth found in a computer? crazy, right?)
-	•	understand the trade-offs.
-	•	optimize when it makes sense.
-	•	pick the right tools.
-	•	keep the user in mind.
-	•	use the right data types. 
-	•	choose the right indexes.
-	•	write efficient queries.
+
+    •too many keywords, not enough basics.
+    •	break it down.
+    •	focus on the fundamentals.
+    (did you know the word “fundamentals” comes from the latin “fundamentum”
+    meaning foundation? yeah, latin’s still lurking in our tech lingo.)
+    •	learn by doing.
+    •	start small, grow from there.
+    •	stick with simple stuff.
+    (speaking of simple, did you know the first computer bug
+    was literally a moth found in a computer? crazy, right?)
+    •	understand the trade-offs.
+    •	optimize when it makes sense.
+    •	pick the right tools.
+    •	keep the user in mind.
+    •	use the right data types.
+    •	choose the right indexes.
+    •	write efficient queries.
+
 ---
+
 hey, it’s jiang wei from meta,
 
 so, where do we start? look, cramming all the cool buzzwords in isn’t gonna help much. you gotta get what’s going on at the core of database design and how it all fits together.
@@ -88,7 +91,7 @@ public class OperationQueue {
 }
 ```
 
-alright, what’s the game plan? think about what you’re really aiming for here. are you building a key-value store, a document store, or something else entirely? keep it simple to start, like maybe a basic key-value store, and then level up as you go. that’s kinda how we kicked things off at meta with our early database projects—focused on the core stuff first, then piled on the rest later.
+, what’s the game plan? think about what you’re really aiming for here. are you building a key-value store, a document store, or something else entirely? keep it simple to start, like maybe a basic key-value store, and then level up as you go. that’s kinda how we kicked things off at meta with our early database projects—focused on the core stuff first, then piled on the rest later.
 
 oh, and don’t forget about the boring stuff like operating systems. knowing how your database plays with the os is key. memory management, disk i/o, multitasking—all that stuff matters more than you think. if you get it right, your database will run smoother than a freshly waxed surfboard. check out [working with file systems](https://engineering.fb.com/2022/06/20/data-infrastructure/transparent-memory-offloading-more-memory-at-a-fraction-of-the-cost-and-power/) and [optimizing for SSDs](https://engineering.fb.com/2021/06/21/data-infrastructure/magma/) for some useful insights.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-prevent-swiftui-view-retain-cycles"
 ---
 
-Alright, let's talk about retain cycles in SwiftUI. It’s a topic I've unfortunately become intimately familiar with, having spent more than one late night tracking down memory leaks that felt like phantom gremlins in my apps. The inherent nature of SwiftUI’s declarative approach, while incredibly powerful, can subtly lead to retain cycles if we’re not careful. It’s not that SwiftUI is inherently broken, more that it requires a different mindset regarding memory management compared to older, imperative frameworks.
+, let's talk about retain cycles in SwiftUI. It’s a topic I've unfortunately become intimately familiar with, having spent more than one late night tracking down memory leaks that felt like phantom gremlins in my apps. The inherent nature of SwiftUI’s declarative approach, while incredibly powerful, can subtly lead to retain cycles if we’re not careful. It’s not that SwiftUI is inherently broken, more that it requires a different mindset regarding memory management compared to older, imperative frameworks.
 
 To tackle this problem effectively, we need to understand that retain cycles occur when two or more objects hold strong references to each other, creating a loop that prevents them from being deallocated by ARC (Automatic Reference Counting). In SwiftUI, this most commonly happens when closures capture self without proper handling. Think of it like two friends holding onto each other’s hands; neither can let go and move on unless one breaks the grip.
 
@@ -168,6 +168,7 @@ struct DataView: View {
     }
 }
 ```
+
 Again, we can resolve it with a weak self, such as below.
 
 ```swift

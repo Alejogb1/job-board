@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-does-rails-6611-serializer-attributes-with-regex-fails"
 ---
 
-alright, let's get into this rails serializer regex thing. it’s a bit of a gotcha that i've bumped into myself a couple of times, and i can totally see why you're scratching your head.
+, let's get into this rails serializer regex thing. it’s a bit of a gotcha that i've bumped into myself a couple of times, and i can totally see why you're scratching your head.
 
 so, you're on rails 6.1.6.1, which is not exactly ancient history but is certainly not the shiny new thing anymore. you're using serializers, presumably with active model serializers or something similar, and you're trying to use regex within the `attributes` method and it's just not working as you expect. it's like the regex is just being completely ignored or worse, throwing some weird error. i totally get that. been there.
 
@@ -15,11 +15,11 @@ when you do something like this:
 ```ruby
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :name, :email, :created_at
-  attributes /_at$/ 
+  attributes /_at$/
 end
 ```
 
-or similar you would intuitively expect that attributes ending with the pattern "_at" are going to be added too, but here is what is happening under the hood, the attributes method is expecting a list of symbols. the problem is that `/.../` is a ruby regular expression object, not a symbol. ruby parses this and tries to convert the regex object to a symbol, which results in a symbol like the `/_at$/`, and then it will try to find this symbol as a method in the object being serialized and it will obviously fail because it doesn't exist.
+or similar you would intuitively expect that attributes ending with the pattern "\_at" are going to be added too, but here is what is happening under the hood, the attributes method is expecting a list of symbols. the problem is that `/.../` is a ruby regular expression object, not a symbol. ruby parses this and tries to convert the regex object to a symbol, which results in a symbol like the `/_at$/`, and then it will try to find this symbol as a method in the object being serialized and it will obviously fail because it doesn't exist.
 
 in the early days, i spent way too much time trying to debug a similar issue with my internal user facing api. i even went as far as trying to patch the serializer, because i assumed it was a bug in the gem. i remember spending a whole weekend debugging it and only then realized i made a silly mistake and totally messed up the core idea of active model serializers. i had this api with lots of different attributes and i really needed to exclude lots of fields, but i only found the `attributes` method. then i created my regex and my code was not working. i felt so dumb.
 
@@ -30,10 +30,10 @@ here's an example of how i would handle this situation:
 ```ruby
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :name, :email
-  
+
   def attributes(*args)
       hash = super
-      
+
       instance_methods = object.methods.select{ |method| method.to_s =~ /_at$/ }
       instance_methods.each do |m|
         hash[m.to_s.to_sym] = object.send(m)
@@ -69,7 +69,7 @@ also if you want to be very explicit about the attributes you can also do:
 ```ruby
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :name, :email
-  
+
   def created_at
     object.created_at
   end

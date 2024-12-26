@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-set-a-cross-domain-when-using-an-activecampaign-form-pop-up-post-and-pass-utm-parameters-from-my-domain-to-a-new-domain"
 ---
 
-alright, let's unpack this activecampaign cross-domain form submission with utm parameters issue. it's a classic problem, i've bumped into this kind of headache more times than i care to remember. it's not pretty, but we can definitely get it sorted. basically, you have a form on your site (domain a) that pops up (probably using their javascript snippet) and it submits to activecampaign's servers (domain b). and, because marketing is a thing, you need to carry over those precious utm parameters.
+, let's unpack this activecampaign cross-domain form submission with utm parameters issue. it's a classic problem, i've bumped into this kind of headache more times than i care to remember. it's not pretty, but we can definitely get it sorted. basically, you have a form on your site (domain a) that pops up (probably using their javascript snippet) and it submits to activecampaign's servers (domain b). and, because marketing is a thing, you need to carry over those precious utm parameters.
 
 the core problem is the browser's same-origin policy. it's a security feature designed to prevent malicious scripts from messing with data on other websites. it's a good thing in general, but here, it makes our lives a little bit harder. because activecampaign’s form submits via a `post` method, we are going to deal with data submission that is not as trivial as a simple get method with parameters appended to the url.
 
@@ -18,14 +18,14 @@ we need to grab the utm parameters from the url when the user lands on your site
 
 ```javascript
 function getutmparameters() {
-    const params = new urlsearchparams(window.location.search);
-    const utmparams = {};
-    for (const [key, value] of params.entries()) {
-        if (key.startswith('utm_')) {
-            utmparams[key] = value;
-        }
+  const params = new urlsearchparams(window.location.search);
+  const utmparams = {};
+  for (const [key, value] of params.entries()) {
+    if (key.startswith("utm_")) {
+      utmparams[key] = value;
     }
-    return utmparams;
+  }
+  return utmparams;
 }
 ```
 
@@ -41,24 +41,24 @@ first we need to get the generated active campaign form id. the script injects t
 
 ```javascript
 function injectutmparams(formid) {
-    const utmparams = getutmparameters();
-    const form = document.getelementbyid(formid);
+  const utmparams = getutmparameters();
+  const form = document.getelementbyid(formid);
 
-    if (form) {
-        for (const key in utmparams) {
-            if (utmparams.hasownproperty(key)) {
-                const hiddeninput = document.createelement('input');
-                hiddeninput.type = 'hidden';
-                hiddeninput.name = key;
-                hiddeninput.value = utmparams[key];
-                form.appendchild(hiddeninput);
-            }
-        }
+  if (form) {
+    for (const key in utmparams) {
+      if (utmparams.hasownproperty(key)) {
+        const hiddeninput = document.createelement("input");
+        hiddeninput.type = "hidden";
+        hiddeninput.name = key;
+        hiddeninput.value = utmparams[key];
+        form.appendchild(hiddeninput);
+      }
     }
+  }
 }
 
 // you will call this function with your formid (e.g. ac-embedded-form-123) after the ac form script is loaded
-injectutmparams('ac-embedded-form-123');
+injectutmparams("ac-embedded-form-123");
 ```
 
 this javascript function will call the `getutmparameters` function and then append the hidden parameters to your active campaign's form.
@@ -79,9 +79,9 @@ this approach keeps things relatively clean, avoids using `get` request paramete
 
 if you are interested in delving deeper into this, i recommend you to read these books:
 
-*   "professional javascript for web developers" by nicholas c. zakas: this book contains a comprehensive overview of javascript features and techniques, including form handling and dom manipulation, essential for understanding the underlying mechanisms involved in the process we just covered.
-*   "http: the definitive guide" by david gourley and brian totty: this book is a deep dive into the http protocol, that will help you to understand the request/response cycle and the crucial details about the interaction between the client side and the server.
-*   “understanding the dom” by joshua d. davis: this book can provide the required knowledge about working with the dom and javascript in a browser, a perfect reading for a deeper undestanding of the js snippets i just wrote.
+- "professional javascript for web developers" by nicholas c. zakas: this book contains a comprehensive overview of javascript features and techniques, including form handling and dom manipulation, essential for understanding the underlying mechanisms involved in the process we just covered.
+- "http: the definitive guide" by david gourley and brian totty: this book is a deep dive into the http protocol, that will help you to understand the request/response cycle and the crucial details about the interaction between the client side and the server.
+- “understanding the dom” by joshua d. davis: this book can provide the required knowledge about working with the dom and javascript in a browser, a perfect reading for a deeper undestanding of the js snippets i just wrote.
 
 remember: always sanitize your input. this example just covers the basic implementation, always sanitize the url parameters if you are going to save it in your database.
 

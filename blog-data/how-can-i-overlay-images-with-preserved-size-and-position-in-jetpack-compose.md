@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-overlay-images-with-preserved-size-and-position-in-jetpack-compose"
 ---
 
-Okay, let's tackle this one. Image overlays, particularly maintaining precise size and position in Compose, are something I've dealt with extensively, especially in mobile game UI development a few years back. We needed to render character sprites over backgrounds without constant recalculations and weird scaling. It wasn't as straightforward as it initially seemed. Let's get into the details.
+, let's tackle this one. Image overlays, particularly maintaining precise size and position in Compose, are something I've dealt with extensively, especially in mobile game UI development a few years back. We needed to render character sprites over backgrounds without constant recalculations and weird scaling. It wasn't as straightforward as it initially seemed. Let's get into the details.
 
 The core challenge isn't just about layering; it's about ensuring the overlay maintains its intended dimensions and relative positioning despite varying screen sizes or parent layout constraints. Compose offers several tools to accomplish this, but understanding how they interact is key to avoiding common pitfalls. Fundamentally, we're going to be using `Box` to stack elements, and leveraging modifiers like `offset`, `size`, and potentially `layout` modifiers for more control. However, `Modifier.size` alone might not always give us the pixel-perfect control we need, especially when dealing with different device densities. So, let's break it down.
 
@@ -68,7 +68,7 @@ fun PercentageOverlay(backgroundRes: Int, overlayRes: Int, overlayWidth: Float =
                     }
                 }
         )
-       
+
         Image(
             bitmap = ImageBitmap.imageResource(overlayRes),
             contentDescription = "Overlay",
@@ -125,11 +125,11 @@ fun MultiLayeredOverlay(backgroundRes: Int, overlay1Res: Int, overlay2Res: Int) 
         )
         Box(modifier = Modifier
         .layout { measurable, constraints ->
-           
+
              val parentWidth = this.parentData?.layoutInfo?.width ?: constraints.maxWidth
              val parentHeight = this.parentData?.layoutInfo?.height ?: constraints.maxHeight
               val placeable = measurable.measure(constraints.copy(maxWidth = (parentWidth * 0.5f).toInt(), maxHeight = (parentHeight * 0.5f).toInt()))
-            
+
             layout(placeable.width, placeable.height) {
                  val x = (parentWidth * 0.25f).toInt()
                  val y = (parentHeight * 0.25f).toInt()
@@ -144,11 +144,11 @@ fun MultiLayeredOverlay(backgroundRes: Int, overlay1Res: Int, overlay2Res: Int) 
 
          Box(modifier = Modifier
         .layout { measurable, constraints ->
-           
+
              val parentWidth = this.parentData?.layoutInfo?.width ?: constraints.maxWidth
              val parentHeight = this.parentData?.layoutInfo?.height ?: constraints.maxHeight
               val placeable = measurable.measure(constraints.copy(maxWidth = (parentWidth * 0.3f).toInt(), maxHeight = (parentHeight * 0.3f).toInt()))
-            
+
             layout(placeable.width, placeable.height) {
                  val x = (parentWidth * 0.7f).toInt()
                  val y = (parentHeight * 0.7f).toInt()
@@ -164,7 +164,8 @@ fun MultiLayeredOverlay(backgroundRes: Int, overlay1Res: Int, overlay2Res: Int) 
     }
 }
 ```
-Here we have nested boxes, each containing an `Image` composable.  Each `Box` calculates its position and size relative to its immediate parent using the same logic as the previous example. This approach can be scaled up to as many layered images as you need by nesting `Box` composables and adjusting sizing and positioning calculations.
+
+Here we have nested boxes, each containing an `Image` composable. Each `Box` calculates its position and size relative to its immediate parent using the same logic as the previous example. This approach can be scaled up to as many layered images as you need by nesting `Box` composables and adjusting sizing and positioning calculations.
 
 For further reading, I strongly recommend delving into the “Jetpack Compose internals” documentation on the Android developer site. Specifically, the layout section is a must-read. Additionally, the "Compose Internals" series of blog posts can be valuable. Another resource I've found beneficial is the "Android UI Development with Jetpack Compose" book by Jorge Castillo. It dives deep into compose concepts and provides practical advice that you'd find useful when working with more complex layouts. These resources will help you solidify your understanding and give you the tools to approach future challenges more efficiently.
 

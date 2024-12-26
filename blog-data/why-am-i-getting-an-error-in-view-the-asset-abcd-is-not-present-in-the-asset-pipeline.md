@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "why-am-i-getting-an-error-in-view-the-asset-abcd-is-not-present-in-the-asset-pipeline"
 ---
 
-alright, let’s talk about this "asset not present" error you're seeing. it’s a classic, and i’ve definitely spent more late nights than i care to remember tracking down its roots. you're banging your head against the asset pipeline, and trust me, i've been there. the error message "the asset 'abcd' is not present in the asset pipeline" is pretty direct, but it doesn't always give you the *why*.
+, let’s talk about this "asset not present" error you're seeing. it’s a classic, and i’ve definitely spent more late nights than i care to remember tracking down its roots. you're banging your head against the asset pipeline, and trust me, i've been there. the error message "the asset 'abcd' is not present in the asset pipeline" is pretty direct, but it doesn't always give you the _why_.
 
-so, let's break it down like we're debugging a particularly stubborn piece of legacy code. the asset pipeline, at its core, is a process that takes your assets (images, stylesheets, javascript, fonts, the whole shebang), and prepares them for your application. when it throws this error, it’s saying "hey, i was looking for 'abcd' in my list of things to prepare, and it’s simply not there". 
+so, let's break it down like we're debugging a particularly stubborn piece of legacy code. the asset pipeline, at its core, is a process that takes your assets (images, stylesheets, javascript, fonts, the whole shebang), and prepares them for your application. when it throws this error, it’s saying "hey, i was looking for 'abcd' in my list of things to prepare, and it’s simply not there".
 
 the most common reason is a simple typo. i cannot stress this enough, double-triple check the name of the asset in your code. once, back when i was working on a large e-commerce project, i had a similar error. i was pulling my hair out for a good two hours before i found i'd misspelled "logo_alt.png" as "log_alt.png". i even wrote a shell script to find inconsistencies. we had something like 1000 images in the project. i should have written a proper unit test for the asset pipeline and the correct naming conventions. that was a learning curve. in our project we used the asset pipeline like this:
 

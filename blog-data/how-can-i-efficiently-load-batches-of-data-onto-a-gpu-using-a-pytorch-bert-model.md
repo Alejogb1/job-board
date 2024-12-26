@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-efficiently-load-batches-of-data-onto-a-gpu-using-a-pytorch-bert-model"
 ---
 
-Alright, let’s tackle this one. It’s a common challenge, especially when dealing with large datasets and resource-intensive models like BERT in pytorch. I remember a project back in my deep learning days where we were processing massive text corpora for a language model, and we hit this exact bottleneck. Getting data onto the GPU efficiently is absolutely critical for performance. So, let's break down the strategies, covering not only the how, but also the why behind them.
+, let’s tackle this one. It’s a common challenge, especially when dealing with large datasets and resource-intensive models like BERT in pytorch. I remember a project back in my deep learning days where we were processing massive text corpora for a language model, and we hit this exact bottleneck. Getting data onto the GPU efficiently is absolutely critical for performance. So, let's break down the strategies, covering not only the how, but also the why behind them.
 
 First off, the inherent problem: data loading and transfer between CPU and GPU can be a major performance bottleneck. Your GPU can crunch numbers like nobody’s business, but it's constantly waiting if it doesn't have the data it needs readily available. We're aiming to minimize that waiting time. This involves not only batching, but also smart data management on the cpu before it's transferred to the GPU. The standard, naive approach of loading each data point one by one and moving it over is, frankly, an exercise in inefficiency.
 
@@ -101,7 +101,7 @@ for input_ids, attention_mask in dataloader:
 
 ```
 
-Notice the changes here. We've added `device = torch.device("cuda" if torch.cuda.is_available() else "cpu")` to detect whether a GPU is available. Then, inside the loop, I'm using `.to(device)` to explicitly move the tensors to the GPU (if available), before they are passed to the model.  Without this step, the data processing will be done on the cpu which can bottleneck the entire process.
+Notice the changes here. We've added `device = torch.device("cuda" if torch.cuda.is_available() else "cpu")` to detect whether a GPU is available. Then, inside the loop, I'm using `.to(device)` to explicitly move the tensors to the GPU (if available), before they are passed to the model. Without this step, the data processing will be done on the cpu which can bottleneck the entire process.
 
 One more technique that improves performance significantly, especially with large datasets, is asynchronous data loading with multiple workers. By using `num_workers` in the `DataLoader`, you can leverage multiple cpu cores to prepare the next batch of data in parallel, while the GPU processes the current batch.
 

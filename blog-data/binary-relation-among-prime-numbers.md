@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "binary-relation-among-prime-numbers"
 ---
 
-Okay so you're asking about binary relations among prime numbers right Yeah I've been down this rabbit hole before more times than I care to admit let me tell you its a fun ride a frustrating one but a fun one
+you're asking about binary relations among prime numbers right Yeah I've been down this rabbit hole before more times than I care to admit let me tell you its a fun ride a frustrating one but a fun one
 
 Right off the bat when you say "binary relation" its pretty broad We're talking about sets of ordered pairs where each pair consists of two prime numbers Lets call that set R So R = {(p1 p2) | p1 p2 are prime numbers and some condition holds} The condition is the real meat of the problem
 
@@ -89,6 +89,7 @@ def sum_to_prime_relation(limit):
 
 print(sum_to_prime_relation(10))
 ```
+
 These are just examples using python you can do this in any programming language the logic is basically the same just different syntax. You can optimize these further especially the prime checking function with some clever tricks I remember using something called a Sieve of Eratosthenes it's a way faster for generating primes.
 
 The cool thing is that you can invent so many of these relations there's probably a new one you can invent right now and that's the beauty of maths. I remember when I was at University I thought that math was all figured out and there was nothing new I could discover but I was so wrong. It's still full of amazing ideas and open problems.
@@ -97,4 +98,4 @@ Now resources you should look at for more in depth math theory you should absolu
 
 I hope that was useful. If you need more stuff just ask away this is the kind of thing I get excited about. I actually have a whiteboard full of prime number related relations from about 3 years ago I need to finally clean up that mess one day.
 
-Oh and one more thing what do you call a prime number that is not willing to work with anyone? *A number with too much prime-ide*. Get it prime-ide prime-pride ah never mind. Just ignore me. I need more coffee.
+Oh and one more thing what do you call a prime number that is not willing to work with anyone? _A number with too much prime-ide_. Get it prime-ide prime-pride ah never mind. Just ignore me. I need more coffee.

@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "can-cuda-libraries-be-installed-in-a-container-without-a-gpu"
 ---
 
-Okay, let's talk about CUDA and containers. It’s a fairly common question, and I've definitely seen my share of headaches trying to sort this out over the years, particularly back when we were first adopting containerization at that old robotics startup.
+, let's talk about CUDA and containers. It’s a fairly common question, and I've definitely seen my share of headaches trying to sort this out over the years, particularly back when we were first adopting containerization at that old robotics startup.
 
-The short answer is, yes, you absolutely *can* install CUDA libraries within a container even if the host machine—the one running your container—lacks a physical GPU. Now, the *why* and *how* of that is where things get interesting. It's less about magically making GPU computation happen where there's none and more about preparing the environment for when a GPU *is* available. Think of it like building a Lego set; you can lay out all the pieces and instructions even if you don't have the final baseplate to build on.
+The short answer is, yes, you absolutely _can_ install CUDA libraries within a container even if the host machine—the one running your container—lacks a physical GPU. Now, the _why_ and _how_ of that is where things get interesting. It's less about magically making GPU computation happen where there's none and more about preparing the environment for when a GPU _is_ available. Think of it like building a Lego set; you can lay out all the pieces and instructions even if you don't have the final baseplate to build on.
 
-The key concept to understand here is the separation between compilation, linking, and runtime. CUDA libraries consist of two primary components: the *development libraries* (headers, static libraries) and the *runtime libraries* (dynamic shared libraries). During the build process inside the container, you need access to the development components to compile CUDA code. The runtime components are what the actual executables depend on when they're executed, ideally on a system with a GPU. If you are building docker images that will be used on both CPU and GPU environments, the separation is very important to consider.
+The key concept to understand here is the separation between compilation, linking, and runtime. CUDA libraries consist of two primary components: the _development libraries_ (headers, static libraries) and the _runtime libraries_ (dynamic shared libraries). During the build process inside the container, you need access to the development components to compile CUDA code. The runtime components are what the actual executables depend on when they're executed, ideally on a system with a GPU. If you are building docker images that will be used on both CPU and GPU environments, the separation is very important to consider.
 
-Here's a practical situation I ran into once: we were deploying an AI model training pipeline using containers. Our developers were building and testing on their local machines, which were often CPU-only, but the target deployment environment had beefy GPUs. We had to ensure our containers had all the CUDA dependencies *without* needing a GPU for initial setup. The goal was to enable seamless transitions and ensure that the images created on CPU based environments worked correctly when deployed on GPU environments.
+Here's a practical situation I ran into once: we were deploying an AI model training pipeline using containers. Our developers were building and testing on their local machines, which were often CPU-only, but the target deployment environment had beefy GPUs. We had to ensure our containers had all the CUDA dependencies _without_ needing a GPU for initial setup. The goal was to enable seamless transitions and ensure that the images created on CPU based environments worked correctly when deployed on GPU environments.
 
 Let's explore the "how" with a few concrete examples. I’ll demonstrate this using Dockerfiles, as it’s a fairly standard method for container image creation.
 
@@ -33,6 +33,7 @@ RUN cmake . -B build && cmake --build build
 
 CMD ["./build/your_cuda_executable"]
 ```
+
 This Dockerfile pulls the full CUDA development environment which includes the compiler, libraries, and drivers. This will build successfully on any environment, but it will result in a huge container image, as it's bundling a whole lot of stuff that you probably will not use if you don't have a GPU in the runtime. Also, it will expect that the drivers are installed in the environment that it runs on, which is not ideal, and might lead to conflicts with the system ones.
 
 **Example 2: Using a Multi-Stage Build and CPU-based Base image**
@@ -66,6 +67,7 @@ COPY --from=builder /usr/local/cuda/include /usr/local/cuda/include
 
 CMD ["/app/your_cuda_executable"]
 ```
+
 Here, we define the `builder` stage, using a CUDA image to compile. Then, we create a lean runtime image based on `ubuntu:22.04`. We copy the compiled executable and the CUDA runtime libraries only, as well as needed includes to be available at runtime, into the final image. This results in a much smaller image and we are reducing driver dependencies in the environment.
 
 **Example 3: Minimalistic Approach using Runtime dependencies**
@@ -114,9 +116,9 @@ Secondly, make sure you're familiar with the nuances of your chosen container ru
 
 For deeper learning, I'd highly recommend these resources:
 
-*   **NVIDIA's official CUDA Documentation:** This is the bible for all things CUDA. You can find details on library versions, installation procedures, and much more.
-*   **"Programming Massively Parallel Processors: A Hands-on Approach" by David B. Kirk and Wen-mei W. Hwu:** This book provides a very in-depth look into GPU architectures, CUDA programming model, and optimization techniques.
-*   **Docker Documentation on Multi-stage Builds and NVIDIA GPU support:** The official Docker docs are very clear about how multi-stage builds work and how to run GPU containers using the correct nvidia runtime flags.
-*   **NVIDIA Container Toolkit Documentation:** This contains very valuable information on how containers can interact with GPUs.
+- **NVIDIA's official CUDA Documentation:** This is the bible for all things CUDA. You can find details on library versions, installation procedures, and much more.
+- **"Programming Massively Parallel Processors: A Hands-on Approach" by David B. Kirk and Wen-mei W. Hwu:** This book provides a very in-depth look into GPU architectures, CUDA programming model, and optimization techniques.
+- **Docker Documentation on Multi-stage Builds and NVIDIA GPU support:** The official Docker docs are very clear about how multi-stage builds work and how to run GPU containers using the correct nvidia runtime flags.
+- **NVIDIA Container Toolkit Documentation:** This contains very valuable information on how containers can interact with GPUs.
 
-In conclusion, while you *can* indeed install CUDA libraries within a container without a GPU being present, it’s crucial to understand the distinction between build-time and runtime dependencies. By leveraging multi-stage builds and only including essential runtime libraries, you can build lightweight, portable containers that are ready to execute when the GPU finally comes into play. It's a practical approach that has saved us many headaches and made our deployment pipelines more efficient. Remember always to properly test your builds to catch any errors in the build or execution phase.
+In conclusion, while you _can_ indeed install CUDA libraries within a container without a GPU being present, it’s crucial to understand the distinction between build-time and runtime dependencies. By leveraging multi-stage builds and only including essential runtime libraries, you can build lightweight, portable containers that are ready to execute when the GPU finally comes into play. It's a practical approach that has saved us many headaches and made our deployment pipelines more efficient. Remember always to properly test your builds to catch any errors in the build or execution phase.

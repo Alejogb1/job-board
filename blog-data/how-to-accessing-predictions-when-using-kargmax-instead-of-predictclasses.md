@@ -4,17 +4,17 @@ date: "2024-12-15"
 id: "how-to-accessing-predictions-when-using-kargmax-instead-of-predictclasses"
 ---
 
-alright, so you're running into the classic k_argmax() vs. predict_classes() situation, i’ve been there, trust me. it's one of those things that trips up a lot of folks coming into more nuanced ml modeling. let's break down why you're seeing what you're seeing and how to get those predictions when using `k_argmax()`.
+, so you're running into the classic k_argmax() vs. predict_classes() situation, i’ve been there, trust me. it's one of those things that trips up a lot of folks coming into more nuanced ml modeling. let's break down why you're seeing what you're seeing and how to get those predictions when using `k_argmax()`.
 
-first off, `predict_classes()` is basically a convenience function, especially if you’re just doing standard classification problems, it makes life easier, it hides a lot of the complexity underneath. what it does is, it takes the raw output of your model (usually probabilities or logits) and then it applies an argmax to each set of predictions, giving you the *index* of the class with the highest score for each input. that’s neat, clean, simple, and convenient.
+first off, `predict_classes()` is basically a convenience function, especially if you’re just doing standard classification problems, it makes life easier, it hides a lot of the complexity underneath. what it does is, it takes the raw output of your model (usually probabilities or logits) and then it applies an argmax to each set of predictions, giving you the _index_ of the class with the highest score for each input. that’s neat, clean, simple, and convenient.
 
-`k_argmax()`, on the other hand, is a bit more low-level. it’s designed for cases where you need more fine-grained control, like when you want to get the top-k predictions, or maybe you want to compute a custom metric, or even for cases like multi-label classification. using it with a k of 1 is *similar* to the way that `predict_classes()` behaves but not the same. this function won't directly give you the classes. it returns, for each input, a tensor or array of the *indices* of the k highest scoring classes. this is extremely important and what makes it different. this can be an absolute killer if you expect to get class labels, believe me, i've spent a few late nights staring at misbehaving metrics, thanks to that issue.
+`k_argmax()`, on the other hand, is a bit more low-level. it’s designed for cases where you need more fine-grained control, like when you want to get the top-k predictions, or maybe you want to compute a custom metric, or even for cases like multi-label classification. using it with a k of 1 is _similar_ to the way that `predict_classes()` behaves but not the same. this function won't directly give you the classes. it returns, for each input, a tensor or array of the _indices_ of the k highest scoring classes. this is extremely important and what makes it different. this can be an absolute killer if you expect to get class labels, believe me, i've spent a few late nights staring at misbehaving metrics, thanks to that issue.
 
 so, why not just stick with `predict_classes()`? good question. well, in older versions of keras, `predict_classes()` was the thing. but now, it’s kinda being nudged aside. `predict_classes()` was part of the keras api but it is not now part of the keras api that is part of tensorflow. so if you try to use it in more modern setups it may give you deprecation warnings or just be unavailable. also, you might be interested in cases when you want more complex behavior or to deal with multi-label or multi-output problems, where `predict_classes()` simply doesn't cut it and also there is no such thing.
 
 let's talk about accessing the predictions in your use case now, this is the crux of it, and where i had my fair share of headaches (the good kind, of course, after all this is a learning experience).
 
-if you’re using `k_argmax()` with `k=1`, what you get back are *indices*. to get the actual class labels, you need to have a mapping between the numerical indices and the corresponding label. this is typically stored in something like a dictionary or a list when doing data preprocessing or when generating your model. here’s a quick code snippet to make this concrete, it assumes that you’ve stored your model's output in a variable called model_output.
+if you’re using `k_argmax()` with `k=1`, what you get back are _indices_. to get the actual class labels, you need to have a mapping between the numerical indices and the corresponding label. this is typically stored in something like a dictionary or a list when doing data preprocessing or when generating your model. here’s a quick code snippet to make this concrete, it assumes that you’ve stored your model's output in a variable called model_output.
 
 ```python
 import tensorflow as tf
@@ -39,6 +39,7 @@ print("raw output:\n",model_output.numpy())
 print("predicted indices:\n", predicted_indices)
 print("predicted labels:\n",predicted_labels)
 ```
+
 in this code block, i’ve shown how to use the `top_k()` function, it gives you the index of the max class in that result. then we use it to index into a predefined array to get the label out, we then have the labels and the raw output. simple enough. this works when k=1.
 
 what if you want to explore the top-k predictions? this is where k_argmax shines, because that's exactly what it can do. let’s imagine that we want the top three predictions per input:

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-a-quadratic-constraint-with-the-roi-package"
 ---
 
-alright, so you're looking to wrangle quadratic constraints within the roi package, right? i've been there, trust me. roi, for all its strengths, can feel a bit… particular… when it comes to anything beyond linear stuff. i remember back when i first started working with optimization problems, it was all nice and tidy linear objective functions and constraints. then, bam, real-world hits, and you get these wonderfully nonlinear things that the standard solvers just choke on. quadratic constraints are exactly that kind of beast.
+, so you're looking to wrangle quadratic constraints within the roi package, right? i've been there, trust me. roi, for all its strengths, can feel a bit… particular… when it comes to anything beyond linear stuff. i remember back when i first started working with optimization problems, it was all nice and tidy linear objective functions and constraints. then, bam, real-world hits, and you get these wonderfully nonlinear things that the standard solvers just choke on. quadratic constraints are exactly that kind of beast.
 
 so, the short answer, roi, the 'optimization infrastructure' package in r, doesn't directly handle quadratic constraints in its traditional function interfaces like `roi_solve` or `lpsolve`. this is not really surprising, honestly. it's designed for linear programming problems primarily.
 
@@ -16,10 +16,10 @@ let’s start with the core idea. a quadratic constraint essentially has this fo
 
 where:
 
-*   `x` is your vector of decision variables.
-*   `q` is a symmetric matrix, that forms the quadratic part.
-*   `a` is a vector representing the linear part.
-*   `b` is a scalar defining the constraint limit.
+- `x` is your vector of decision variables.
+- `q` is a symmetric matrix, that forms the quadratic part.
+- `a` is a vector representing the linear part.
+- `b` is a scalar defining the constraint limit.
 
 now, the trick with roi is that it’s structured around a linear, that is a sum of the variables times the weights paradigm. you can’t just plug in this general quadratic form directly. but, and here's the good stuff, we can transform some instances of quadratic constraints into equivalent linear ones, at least approximately. this will work for some limited number of quadratic constraints but the result will be that it will approximate the solution, it wont be exact. for example you can approximate `x^2` with a set of linear constraints, but that will not be a general solution.
 

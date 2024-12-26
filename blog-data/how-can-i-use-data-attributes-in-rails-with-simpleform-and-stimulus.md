@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-data-attributes-in-rails-with-simpleform-and-stimulus"
 ---
 
-Alright, let's tackle this one. It's a common challenge, and one I recall facing a few years back while working on an internal platform. The need to bridge the gap between form interactions, front-end dynamism, and clean Rails conventions using simple_form and stimulus is a really pertinent example of modern web development.
+, let's tackle this one. It's a common challenge, and one I recall facing a few years back while working on an internal platform. The need to bridge the gap between form interactions, front-end dynamism, and clean Rails conventions using simple_form and stimulus is a really pertinent example of modern web development.
 
 The core idea is to use data attributes as a conduit for transferring information between your Rails server-side components (like simple_form), and your client-side stimulus controllers. Instead of relying heavily on brittle class names or complex DOM traversal, data attributes offer a more structured and reliable approach. They allow you to attach custom metadata directly to HTML elements, which can then be easily accessed and manipulated by your JavaScript code.
 
@@ -30,25 +30,27 @@ On the stimulus side, the javascript would look something like this:
 ```javascript
 // app/javascript/controllers/character_counter_controller.js
 
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["input"]
-  static values = { maxLength: Number }
+  static targets = ["input"];
+  static values = { maxLength: Number };
 
   connect() {
-    this.updateCounter()
+    this.updateCounter();
   }
 
   updateCounter() {
     const currentLength = this.inputTarget.value.length;
-    console.log(`Current character count: ${currentLength} / ${this.maxLengthValue}`)
+    console.log(
+      `Current character count: ${currentLength} / ${this.maxLengthValue}`
+    );
 
     //Update the ui here, perhaps with a character count message somewhere on the page.
   }
 
-  input(){
-      this.updateCounter();
+  input() {
+    this.updateCounter();
   }
 }
 ```
@@ -87,52 +89,53 @@ The corresponding stimulus controller would look like this:
 ```javascript
 // app/javascript/controllers/state_selector_controller.js
 
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-    static targets = ["countrySelect", "stateSelect"]
-    static values = { url: String }
+  static targets = ["countrySelect", "stateSelect"];
+  static values = { url: String };
 
-    connect(){
-      this.countrySelectTarget.addEventListener('change', this.fetchStates.bind(this));
+  connect() {
+    this.countrySelectTarget.addEventListener(
+      "change",
+      this.fetchStates.bind(this)
+    );
+  }
+
+  async fetchStates() {
+    const countryId = this.countrySelectTarget.value;
+    if (!countryId) {
+      this.stateSelectTarget.disabled = true;
+      this.stateSelectTarget.innerHTML = ""; // Remove existing options
+      return;
     }
 
-    async fetchStates() {
-        const countryId = this.countrySelectTarget.value;
-        if (!countryId) {
-            this.stateSelectTarget.disabled = true;
-            this.stateSelectTarget.innerHTML = "" // Remove existing options
-            return;
-        }
-
-        const url = `${this.urlValue}?country_id=${countryId}`;
-        try {
-            const response = await fetch(url);
-            const states = await response.json();
-            this.populateStates(states);
-            this.stateSelectTarget.disabled = false;
-
-        } catch (error) {
-            console.error("Error fetching states:", error)
-        }
+    const url = `${this.urlValue}?country_id=${countryId}`;
+    try {
+      const response = await fetch(url);
+      const states = await response.json();
+      this.populateStates(states);
+      this.stateSelectTarget.disabled = false;
+    } catch (error) {
+      console.error("Error fetching states:", error);
     }
+  }
 
-    populateStates(states){
-        this.stateSelectTarget.innerHTML = "";
-        states.forEach(state => {
-            const option = document.createElement('option');
-            option.value = state.id;
-            option.text = state.name;
-            this.stateSelectTarget.appendChild(option);
-        });
-
-    }
+  populateStates(states) {
+    this.stateSelectTarget.innerHTML = "";
+    states.forEach((state) => {
+      const option = document.createElement("option");
+      option.value = state.id;
+      option.text = state.name;
+      this.stateSelectTarget.appendChild(option);
+    });
+  }
 }
 ```
 
 Here, we’re leveraging the power of the `targets` and `values` api once again. When the controller connects to the DOM, we register a change listener on the country select element to execute our `fetchStates` function. This function will disable the state field when no country has been selected. When a country has been selected, we use the `url` value we attached via the data attributes, and the selected `country_id` to make an ajax request to a server endpoint. This request should return a list of states for a particular country, in json format. We iterate over the array of state objects and add them to the state `select` field, and then enable the element.
 
-These examples illustrate how data attributes, coupled with simple_form and stimulus, create a robust and organized mechanism for data transfer. It’s worth mentioning that while you *could* use Stimulus without the data attribute approach, you'd find yourself having to create more complex selectors, which are more fragile and harder to maintain. Using `data-attributes` creates a clear and more self documenting system.
+These examples illustrate how data attributes, coupled with simple_form and stimulus, create a robust and organized mechanism for data transfer. It’s worth mentioning that while you _could_ use Stimulus without the data attribute approach, you'd find yourself having to create more complex selectors, which are more fragile and harder to maintain. Using `data-attributes` creates a clear and more self documenting system.
 
 For further exploration of these concepts, I recommend a few key resources. Firstly, the official Stimulus documentation is indispensable; it details the nuances of connecting controllers and managing data attributes. Second, consider reading “Agile Web Development with Rails” by Sam Ruby, Dave Thomas, and David Heinemeier Hansson. While not solely focused on this particular topic, it gives a broad view of Rails development that helps you grasp the wider context. For a deeper dive into front-end architecture, specifically relating to concepts like componentisation and data handling, the book “Eloquent JavaScript” by Marijn Haverbeke is a fantastic resource. It will enhance your understanding of the underlying JavaScript principles which is essential for Stimulus. Finally, don't underestimate the power of reviewing source code of robust open-source rails applications on github, to see how experienced developers manage to orchestrate systems like this in practice.
 

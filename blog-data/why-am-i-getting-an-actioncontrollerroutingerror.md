@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-an-actioncontrollerroutingerror"
 ---
 
-Okay, let's tackle this. I've spent a fair amount of time debugging routing errors across various rails projects, and that `ActionController::RoutingError` can be a persistent little beast. It's generally screaming at you because rails can't figure out where to send a request based on the URL you've typed or the links it's been asked to navigate. It essentially means the incoming request doesn’t match any of the defined routes in your application’s configuration. So, let's break down the common culprits and then we'll look at some practical examples.
+, let's tackle this. I've spent a fair amount of time debugging routing errors across various rails projects, and that `ActionController::RoutingError` can be a persistent little beast. It's generally screaming at you because rails can't figure out where to send a request based on the URL you've typed or the links it's been asked to navigate. It essentially means the incoming request doesn’t match any of the defined routes in your application’s configuration. So, let's break down the common culprits and then we'll look at some practical examples.
 
 The core concept to grasp here is that rails uses a route matching process to connect an incoming request (specified by its method and URL path) to a particular controller action. It does this by systematically comparing the request to your application’s defined routes, usually specified in `config/routes.rb`. If none of these routes match, you get the `ActionController::RoutingError`.
 
@@ -16,7 +16,7 @@ Let's get practical and look at some examples and how to avoid similar issues.
 
 **Example 1: Basic Resource Routing & Typos**
 
-Let's say we're defining routes for managing blog posts. Here’s what we’d *typically* have in our `routes.rb`:
+Let's say we're defining routes for managing blog posts. Here’s what we’d _typically_ have in our `routes.rb`:
 
 ```ruby
 # config/routes.rb

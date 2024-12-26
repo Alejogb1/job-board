@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-dags-be-grouped-by-common-parameters-or-ids"
 ---
 
-Alright, let's tackle this one. I've spent a fair amount of time in the trenches with directed acyclic graphs (DAGs), and the question of how to group them based on shared parameters or identifiers is a recurring theme. It's rarely a one-size-fits-all solution, and the optimal method often hinges on the specific context of the problem you're addressing. In the past, I recall a system I was working on involved complex data processing pipelines where DAGs representing different processing workflows were being dynamically generated. Keeping track of these DAGs, and more importantly, efficiently managing and updating them, became quite the challenge without an effective grouping strategy.
+, let's tackle this one. I've spent a fair amount of time in the trenches with directed acyclic graphs (DAGs), and the question of how to group them based on shared parameters or identifiers is a recurring theme. It's rarely a one-size-fits-all solution, and the optimal method often hinges on the specific context of the problem you're addressing. In the past, I recall a system I was working on involved complex data processing pipelines where DAGs representing different processing workflows were being dynamically generated. Keeping track of these DAGs, and more importantly, efficiently managing and updating them, became quite the challenge without an effective grouping strategy.
 
 Let's break this down. When we talk about grouping DAGs, we’re essentially aiming to organize these computational workflows based on specific attributes or metadata they share. This isn't merely about aesthetics; it’s about enhancing manageability, enabling targeted updates, facilitating debugging, and allowing for more granular resource allocation. The specific method we choose should, ideally, reflect the purpose and structure of our DAGs.
 
-One of the most fundamental ways to group DAGs is by their *purpose* or *intent*. In our past project, for instance, we had DAGs associated with different types of data transformations—say, one for customer data cleansing and another for product data enrichment. A simple yet effective way to achieve this is by using a naming convention that embeds these high-level identifiers. We might name our DAGs something like “customer_cleansing_v1”, “product_enrichment_v2,” or "ml_training_v3.” This isn't a sophisticated grouping mechanism in itself, but it does lay the groundwork for more structured approaches.
+One of the most fundamental ways to group DAGs is by their _purpose_ or _intent_. In our past project, for instance, we had DAGs associated with different types of data transformations—say, one for customer data cleansing and another for product data enrichment. A simple yet effective way to achieve this is by using a naming convention that embeds these high-level identifiers. We might name our DAGs something like “customer_cleansing_v1”, “product_enrichment_v2,” or "ml_training_v3.” This isn't a sophisticated grouping mechanism in itself, but it does lay the groundwork for more structured approaches.
 
 A more robust method involves leveraging **metadata**. Most DAG orchestration tools allow you to attach key-value pairs to your DAGs. These metadata tags provide an ideal way to categorise DAGs based on parameters, identifiers, or any other contextual information you find useful. These can include things like data source identifiers, processing engine types, execution environments, or even the specific responsible team for a particular DAG. For example, if multiple DAGs process data from the same source, you can tag them with the source id, enabling us to easily query and identify all affected workflows when that source changes.
 
@@ -75,7 +75,7 @@ from collections import defaultdict
 dag_groups = defaultdict(list)
 
 def register_dynamic_dag(dag_id, value_date, metadata):
-    
+
     group_key = value_date # This is a variable, and we expect the date to change as a parameter.
     dag_groups[group_key].append({"dag_id": dag_id, "metadata": metadata})
     print(f"Registered DAG: {dag_id} with group key: {group_key}")

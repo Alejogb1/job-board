@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-tf20s-gradienttape-return-none-for-gradients-in-an-rnn-model"
 ---
 
-Okay, let's tackle this one. It’s a classic headache, and I've certainly spent my fair share of late nights chasing down 'None' gradients in TensorFlow's `GradientTape`, especially when working with recurrent neural networks. It’s frustrating, but often, the culprit isn’t as elusive as it initially seems. Having debugged this specific issue in a project involving sentiment analysis using LSTMs back in '21, I’ve developed a pretty good handle on the common causes, which we can explore methodically.
+, let's tackle this one. It’s a classic headache, and I've certainly spent my fair share of late nights chasing down 'None' gradients in TensorFlow's `GradientTape`, especially when working with recurrent neural networks. It’s frustrating, but often, the culprit isn’t as elusive as it initially seems. Having debugged this specific issue in a project involving sentiment analysis using LSTMs back in '21, I’ve developed a pretty good handle on the common causes, which we can explore methodically.
 
 The primary reason you might encounter `None` gradients with a `tf.GradientTape` and RNNs (or, more generally, any sequential model) is related to how TensorFlow handles operations involving non-differentiable tensors or variables within the computational graph. The `GradientTape` tracks differentiable operations, meaning it only records actions that can have their derivatives calculated. If the gradient for a particular variable becomes detached or if the operation that uses a given tensor isn’t differentiable, the gradient for it effectively vanishes and results in a `None` value when calculated by `tape.gradient()`.
 
@@ -43,7 +43,7 @@ for grad in gradients:
         print("Gradient is None due to detached tensor (cast to integer)")
 ```
 
-Here, even though `output` does contribute to the loss, casting it to an integer type and then back to float *detaches* it. The `tape` doesn’t track operations involving integer data types in the context of differentiation.
+Here, even though `output` does contribute to the loss, casting it to an integer type and then back to float _detaches_ it. The `tape` doesn’t track operations involving integer data types in the context of differentiation.
 
 Now, here’s an example showing how improper state initialization affects gradients:
 
@@ -103,6 +103,7 @@ for grad in gradients:
         print("Gradient is None due to improperly defined trainable variables.")
 
 ```
+
 In this last example, the variables are created in the `__init__` method, but these are not the right way to do it in Keras. Proper Keras layer management would create these in the `build` method and the code will not properly track these variables.
 
 These are common pitfalls, and they serve to highlight a core principle with `GradientTape`: be very meticulous with differentiable ops. Proper understanding of how `GradientTape` tracks computations is crucial. For a more thorough study, I’d suggest delving into the TensorFlow documentation itself, specifically the sections on automatic differentiation and custom layers. Additionally, research papers on backpropagation and computational graphs will provide a deeper theoretical understanding. Specifically, look for the seminal paper 'Learning representations by back-propagating errors' by Rumelhart, Hinton, and Williams, it offers foundational insights. There's also 'Deep Learning' by Goodfellow, Bengio, and Courville, a comprehensive textbook that covers this topic in great depth. Mastering these aspects will greatly improve your debugging and development with TensorFlow and RNNs. Remember, the 'None' gradients aren't arbitrary; they’re symptoms of a specific issue, and with the correct understanding, they can always be resolved.

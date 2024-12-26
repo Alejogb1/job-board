@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-is-the-mailchimp-webhook-payload-for-an-abuse-or-spam-unsubscribe"
 ---
 
-alright, so you're diving into mailchimp webhook payloads, specifically for abuse or spam unsubscribes. i've been there, trust me. i remember back in '13, when i was knee-deep in a startup's email marketing, we had a similar issue. we needed to react *fast* to those abuse reports to keep our sending reputation clean. it's not just about knowing *if* someone unsubscribed; it's about the *why*, specifically when mailchimp flags it as abuse or spam. let's break down what that payload looks like.
+, so you're diving into mailchimp webhook payloads, specifically for abuse or spam unsubscribes. i've been there, trust me. i remember back in '13, when i was knee-deep in a startup's email marketing, we had a similar issue. we needed to react _fast_ to those abuse reports to keep our sending reputation clean. it's not just about knowing _if_ someone unsubscribed; it's about the _why_, specifically when mailchimp flags it as abuse or spam. let's break down what that payload looks like.
 
 mailchimp's webhooks are json, and when someone marks an email as spam or reports abuse, the payload you receive is going to follow a similar structure. it'll include quite a bit of data, but the key here is pinpointing exactly where that unsubscribe originated: was it voluntary, or triggered by abuse actions?
 
@@ -29,7 +29,6 @@ here’s an example of what the payload might look like. remember mailchimp's ap
     "campaign_id": "campaign_id_1234",
     "ip_opt": "192.168.1.1",
     "ip_signup": "192.168.1.1"
-    
   }
 }
 ```
@@ -73,7 +72,7 @@ test_payload = """
      "campaign_id": "campaign_id_1234",
      "ip_opt": "192.168.1.1",
      "ip_signup": "192.168.1.1"
-    
+
   }
 }
 """
@@ -96,12 +95,13 @@ test_payload2 = """
      "campaign_id": "campaign_id_1234",
      "ip_opt": "192.168.1.1",
      "ip_signup": "192.168.1.1"
-    
+
   }
 }
 """
 handle_mailchimp_webhook(test_payload2)
 ```
+
 this python snippet will help you extract the email and list id, and prints to console if an abuse report is detected, it handles json decoding errors, also i added a second example with other reason, so you can see how the function works in standard unsubscribe too, not abuse. in your actual usage, you'd probably be storing that data in a database or queue for some follow up processing.
 
 sometimes mailchimp might provide extra data. for example, if the user marks it as spam, there will be a flag that distinguishes it from abuse report, or there might be additional metadata related to the campaign that triggered this action. this is not always there and is a good practice to log all fields if possible.
@@ -116,23 +116,24 @@ here's a possible scenario that mailchimp might send when the user marks it as s
     "email": "user@example.com",
     "email_type": "html",
     "web_id": 123456,
-     "merges": {
+    "merges": {
       "FNAME": "John",
       "LNAME": "Doe"
     },
     "reason": "spam",
-     "campaign_id": "campaign_id_1234",
-      "ip_opt": "192.168.1.1",
-      "ip_signup": "192.168.1.1"
+    "campaign_id": "campaign_id_1234",
+    "ip_opt": "192.168.1.1",
+    "ip_signup": "192.168.1.1"
   }
 }
-
 ```
+
 in this example the "reason" field is set to "spam", this is useful to filter and understand the type of unsubscribe that was triggered.
 
 dealing with webhooks can sometimes feel like a detective job, tracking down those little nuances in the data. once i spent a week trying to debug why my unsubscribe processor wasn't catching abuse reports only to find out that a specific filter in the mailchimp configuration was not configured correctly. i've seen developers spending a whole weekend trying to find if an email was sent or not with a wrong configured mailchimp account.
 
 a good approach is to use a more generic handler, which is the one i would recommend. so you can log any type of unsubscribe event, this will make your life easier to debug.
+
 ```python
 import json
 
@@ -169,7 +170,7 @@ test_payload = """
      "campaign_id": "campaign_id_1234",
      "ip_opt": "192.168.1.1",
      "ip_signup": "192.168.1.1"
-    
+
   }
 }
 """
@@ -192,7 +193,7 @@ test_payload2 = """
      "campaign_id": "campaign_id_1234",
      "ip_opt": "192.168.1.1",
      "ip_signup": "192.168.1.1"
-    
+
   }
 }
 """

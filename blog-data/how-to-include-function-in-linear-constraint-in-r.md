@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-include-function-in-linear-constraint-in-r"
 ---
 
-alright, so you're looking to incorporate a function's output directly within a linear constraint when doing linear programming or optimization in r. i get it, i've been there, and it's not always immediately obvious how to structure things. this isn't just about plugging any old function in; we have to be mindful of the linearity we're supposed to maintain in these kinds of problems.
+, so you're looking to incorporate a function's output directly within a linear constraint when doing linear programming or optimization in r. i get it, i've been there, and it's not always immediately obvious how to structure things. this isn't just about plugging any old function in; we have to be mindful of the linearity we're supposed to maintain in these kinds of problems.
 
 first, let's unpack what makes this tricky. standard linear programming solvers expect constraints in the form of inequalities or equalities involving linear combinations of variables. we can usually represent these as matrices and vectors. for example a constraint `2*x1 + 3*x2 <= 10` is a linear constraint. but if we introduce a function that calculates the output say `f(x1)`, and we have the constraint `f(x1) + 3*x2 <= 10` is now not linear if f(x1) itself is non linear.
 
@@ -25,7 +25,7 @@ my_function <- function(x) {
 }
 
 # range of x and the number of segments
-x_values <- seq(0, 5, length.out = 10) 
+x_values <- seq(0, 5, length.out = 10)
 y_values <- sapply(x_values, my_function) #output for x values
 
 # create an approximation to the non linear function
@@ -44,7 +44,7 @@ print(test_results_approx)
 library(lpSolve)
 # define our linear optimization problem
 objective_coefficients <- c(1, 1) # example coefficients
-constraint_matrix <- matrix(c(1, 2, 
+constraint_matrix <- matrix(c(1, 2,
                             2, 1), nrow = 2, byrow = TRUE)
 
 constraint_rhs <- c(10, 10) # example constraints
@@ -149,7 +149,7 @@ print(paste("the approximate y value from lookup table for x=", target_x, " is: 
 # use it with lpSolve
 library(lpSolve)
 objective_coefficients <- c(1, 1) # example coefficients
-constraint_matrix <- matrix(c(1, 2, 
+constraint_matrix <- matrix(c(1, 2,
                             2, 1), nrow = 2, byrow = TRUE)
 constraint_rhs <- c(10, 10) # example constraints
 constraint_direction <- c("<=", "<=")

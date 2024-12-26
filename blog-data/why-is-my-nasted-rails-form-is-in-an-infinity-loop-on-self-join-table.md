@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "why-is-my-nasted-rails-form-is-in-an-infinity-loop-on-self-join-table"
 ---
 
-alright, i've seen this movie before. nested forms with self-joins in rails? yeah, that's a classic setup for infinite loops if you're not careful. let me break down what's probably happening and how to fix it, based on some personal, let's say "learning experiences", over the years. i'm sure many developers have encountered this.
+, i've seen this movie before. nested forms with self-joins in rails? yeah, that's a classic setup for infinite loops if you're not careful. let me break down what's probably happening and how to fix it, based on some personal, let's say "learning experiences", over the years. i'm sure many developers have encountered this.
 
-the root of the problem, typically, lies in how rails handles form submissions and object creation when you've got a self-join association. essentially, you're telling rails to create or update a record, and then as part of that, to create or update related records *of the same type*, which in turn, might also trigger the same process. if your logic isn't explicitly preventing it, that can cause a cascading creation loop. i remember one time i was building a category system for a blog, with categories that could have parent categories. my code started creating categories like a toddler playing with blocks that just never stopped. it was, uh, a *memorable* debugging session to put it mildly, probably involved more caffeine than advisable.
+the root of the problem, typically, lies in how rails handles form submissions and object creation when you've got a self-join association. essentially, you're telling rails to create or update a record, and then as part of that, to create or update related records _of the same type_, which in turn, might also trigger the same process. if your logic isn't explicitly preventing it, that can cause a cascading creation loop. i remember one time i was building a category system for a blog, with categories that could have parent categories. my code started creating categories like a toddler playing with blocks that just never stopped. it was, uh, a _memorable_ debugging session to put it mildly, probably involved more caffeine than advisable.
 
 the most common scenario is when your form is submitted, the parameters hit your controller's create/update action, and within that action you're using `accepts_nested_attributes_for` without proper safeguards or understanding of the data being passed.
 
@@ -39,7 +39,7 @@ and then your form might look like this (erb example):
 <% end %>
 ```
 
-now, the critical piece is the controller. the default approach with `accepts_nested_attributes_for` can easily cause the loop. let me demonstrate what i mean. a *bad* controller action might look like this:
+now, the critical piece is the controller. the default approach with `accepts_nested_attributes_for` can easily cause the loop. let me demonstrate what i mean. a _bad_ controller action might look like this:
 
 ```ruby
 class categoriescontroller < applicationcontroller
@@ -52,7 +52,7 @@ class categoriescontroller < applicationcontroller
       render :new
     end
   end
-  
+
   private
 
   def category_params
@@ -61,7 +61,7 @@ class categoriescontroller < applicationcontroller
 end
 ```
 
-here’s what’s happening: if you submit the form to create or edit a category including nested children, rails will try to create new children or update existing ones, just as you'd expect. *however*, since there is no logic to prevent a new child category from setting another child category, and so on, it may create an infinite loop. imagine a situation where you accidentally include a new child category in the parameters that are identical to the current category. rails will treat that as a new creation when it is technically a self-reference. and it will just keep going, creating children of children of children... you get the idea.
+here’s what’s happening: if you submit the form to create or edit a category including nested children, rails will try to create new children or update existing ones, just as you'd expect. _however_, since there is no logic to prevent a new child category from setting another child category, and so on, it may create an infinite loop. imagine a situation where you accidentally include a new child category in the parameters that are identical to the current category. rails will treat that as a new creation when it is technically a self-reference. and it will just keep going, creating children of children of children... you get the idea.
 
 here are ways to prevent it:
 
@@ -108,7 +108,7 @@ class categoriescontroller < applicationcontroller
     params.require(:category).permit(:name, children_attributes: [:id, :name, :_destroy]).tap do |whitelisted|
         if whitelisted[:children_attributes].present?
             whitelisted[:children_attributes].reject! do |_index, child_attributes|
-            child_attributes[:name].blank? 
+            child_attributes[:name].blank?
             end
         end
     end
@@ -122,6 +122,6 @@ also it is useful to understand what the `accepts_nested_attributes_for` is actu
 
 avoid assumptions, always inspect the params. especially in a form with nested data. printing your params is a very useful way to debug issues like this, so make sure you use `rails server` and its printing capabilities.
 
-oh, and just to add a bit of humor: it's not a bug, it's a feature... *it just happens to be an unintentional feature* and we all have done it at some point.
+oh, and just to add a bit of humor: it's not a bug, it's a feature... _it just happens to be an unintentional feature_ and we all have done it at some point.
 
 in summary, prevent the possibility of self-reference on the model, add limitations on the depth of the nested params that are being created, and filter out blank data before sending it to the model. be mindful of what you are creating or updating, and you should have a well-behaved nested form without it trying to create the entire universe. if you are still having issues, you need to closely inspect your params, and i am 99% sure you will figure it out, always the details are what matters in the end. good luck!

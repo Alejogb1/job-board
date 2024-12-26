@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "what-is-causing-the-brownie-solidity-compilation-error"
 ---
 
-Okay, let's tackle this. I remember a project a few years back where I was migrating a significant chunk of our Solidity codebase to a new version, and Brownie suddenly started throwing errors left and right. It was a headache, but it taught me a lot about how these compilation issues can manifest. The error isn't always as straightforward as the error message might suggest, so let’s unpack some common reasons.
+, let's tackle this. I remember a project a few years back where I was migrating a significant chunk of our Solidity codebase to a new version, and Brownie suddenly started throwing errors left and right. It was a headache, but it taught me a lot about how these compilation issues can manifest. The error isn't always as straightforward as the error message might suggest, so let’s unpack some common reasons.
 
 Brownie uses solc, the Solidity compiler, under the hood. The “Brownie compilation error,” often a catch-all, generally indicates a problem with how solc processes your Solidity code, or sometimes with how Brownie interacts with it. We can break the primary causes into a few buckets, each with distinct resolutions.
 
-Firstly, and this is the most frequent culprit in my experience, is *incompatibility between Solidity compiler versions and specific language features*. Solidity's language is evolving, and each compiler version can introduce or deprecate functionality. For instance, a contract written using features only available in solidity version `0.8.10` might fail to compile using a version `0.8.7`. Brownie tries to manage this, but it’s possible to misconfigure or have project dependencies that bring conflicting solidity version requirements. The error might not directly indicate a version conflict, instead throwing a seemingly unrelated syntax or type error.
+Firstly, and this is the most frequent culprit in my experience, is _incompatibility between Solidity compiler versions and specific language features_. Solidity's language is evolving, and each compiler version can introduce or deprecate functionality. For instance, a contract written using features only available in solidity version `0.8.10` might fail to compile using a version `0.8.7`. Brownie tries to manage this, but it’s possible to misconfigure or have project dependencies that bring conflicting solidity version requirements. The error might not directly indicate a version conflict, instead throwing a seemingly unrelated syntax or type error.
 
 To address this, you need to explicitly define the compiler version you're targeting in your contracts and configure Brownie correctly. This is done with the pragma directive.
 
@@ -32,7 +32,7 @@ compiler:
 
 This specifies to brownie which solc version should be used for compilation purposes. The compiler version specified in the config and the one in your solidity file must be aligned, otherwise there will be errors. A tool like `py-solc-x` (installable via `pip`) can also greatly help manage multiple solc versions if you’re working on different projects. I've found that `py-solc-x` is invaluable for avoiding these sorts of version issues when having multiple projects on the same machine.
 
-Another typical source of the error is *incorrect contract structure or syntax errors*. Solidity is meticulous about syntax, and even a seemingly minor mistake, like an unclosed parenthesis or a misplaced semicolon, can cause the compiler to stop dead in its tracks. For example, forgetting to specify the visibility of a function (like `public` or `internal`) can lead to compilation failure. Sometimes, the error will point directly at the syntax issue, other times it can throw an error at seemingly unrelated places, making debugging more difficult.
+Another typical source of the error is _incorrect contract structure or syntax errors_. Solidity is meticulous about syntax, and even a seemingly minor mistake, like an unclosed parenthesis or a misplaced semicolon, can cause the compiler to stop dead in its tracks. For example, forgetting to specify the visibility of a function (like `public` or `internal`) can lead to compilation failure. Sometimes, the error will point directly at the syntax issue, other times it can throw an error at seemingly unrelated places, making debugging more difficult.
 
 Let's look at an example of a common syntax issue that would cause such an error.
 
@@ -64,7 +64,7 @@ contract CorrectContract {
 
 Here the error was fixed by adding `public` after the parameters. These kinds of issues are common, especially when moving quickly or working on complex codebases. In these situations it's wise to carefully review the specific line indicated by the compiler, and nearby code.
 
-The third major area where I've seen compilation fail is *dependency management, particularly when dealing with libraries or other contracts*. If you're using external libraries (OpenZeppelin, for example) or importing other contracts within your project, any inconsistencies in how those dependencies are specified or installed can result in a failed compilation. This can range from incorrect import paths, to version conflicts between your project and the dependency.
+The third major area where I've seen compilation fail is _dependency management, particularly when dealing with libraries or other contracts_. If you're using external libraries (OpenZeppelin, for example) or importing other contracts within your project, any inconsistencies in how those dependencies are specified or installed can result in a failed compilation. This can range from incorrect import paths, to version conflicts between your project and the dependency.
 
 For example, if you were to utilize the `ERC20` library from openzeppelin, you would need to import that within your contract and have the library installed in your brownie project.
 

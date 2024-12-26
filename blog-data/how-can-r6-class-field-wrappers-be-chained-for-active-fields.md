@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-r6-class-field-wrappers-be-chained-for-active-fields"
 ---
 
-Alright, let’s dive into this. Chaining field wrappers for active fields in R6 classes—it’s something I’ve actually had to contend with quite a bit, especially when building complex systems that require intricate data validation and transformation logic. It’s a powerful technique, but it also introduces some nuances that you need to understand thoroughly to avoid headaches down the road.
+, let’s dive into this. Chaining field wrappers for active fields in R6 classes—it’s something I’ve actually had to contend with quite a bit, especially when building complex systems that require intricate data validation and transformation logic. It’s a powerful technique, but it also introduces some nuances that you need to understand thoroughly to avoid headaches down the road.
 
 Essentially, we’re talking about composing multiple operations on a field’s value, performed both when the field is accessed (get) and when it’s modified (set). R6’s active fields provide a great mechanism for this, letting you define custom getter and setter functions. When you chain wrappers, you're layering these functions, creating a pipeline of transformations. The challenge arises in ensuring that each step in that pipeline executes correctly and in the intended order, particularly since R6 doesn't explicitly offer a built-in mechanism for straightforward chaining. The way we go about solving this is by meticulously composing the getter and setter methods.
 
@@ -74,6 +74,7 @@ LoggingWrapper <- R6Class(
     )
 )
 ```
+
 Now, let's see how we apply these in the R6 class. Here’s a class that makes use of these wrappers:
 
 ```r
@@ -108,18 +109,18 @@ UserProfile <- R6Class(
 
          } else {
               setter <- function(value) { self$set_age(value)}
-             
+
             wrapped_setter <- setter
-           
+
             # Order matters: first validate, then cap, then log
            wrapper1 <- NonNegativeValidator$new()
            wrapper1_result <- wrapper1$wrap(self$get_age, wrapped_setter)
            wrapped_setter <- wrapper1_result$setter
-            
+
            wrapper2 <- MaxAgeValidator$new(max_value = 120)
            wrapper2_result <- wrapper2$wrap(self$get_age, wrapped_setter)
            wrapped_setter <- wrapper2_result$setter
-           
+
            wrapper3 <- LoggingWrapper$new()
            wrapper3_result <- wrapper3$wrap(self$get_age, wrapped_setter)
            wrapped_setter <- wrapper3_result$setter
@@ -145,22 +146,22 @@ In this example, the `age` active field uses our wrapper classes in the setter. 
 
 **Explanation:**
 
-*   **NonNegativeValidator**: Ensures that the value passed is a non-negative numeric value. If the value is not a valid number, an error is thrown and no value is set.
-*   **MaxAgeValidator**: Caps the incoming value at 120, ensuring that the age doesn't go over a reasonable limit.
-*   **LoggingWrapper**: Prints a message to the console whenever the `age` field is modified, making it clear how these are executed in sequence.
-*   **UserProfile**: The R6 class that utilizes the wrappers. When the `age` field is set, it iterates through the wrappers, applying each one in the defined order.
+- **NonNegativeValidator**: Ensures that the value passed is a non-negative numeric value. If the value is not a valid number, an error is thrown and no value is set.
+- **MaxAgeValidator**: Caps the incoming value at 120, ensuring that the age doesn't go over a reasonable limit.
+- **LoggingWrapper**: Prints a message to the console whenever the `age` field is modified, making it clear how these are executed in sequence.
+- **UserProfile**: The R6 class that utilizes the wrappers. When the `age` field is set, it iterates through the wrappers, applying each one in the defined order.
 
 **Key Considerations:**
 
-*   **Order Matters**: The order in which you apply the wrappers is crucial, as the result of one wrapper might influence the behavior of the next one in the chain.
-*   **Wrapper Design**: The `wrap` method, which returns a list containing the wrapped getter and setter, is a key part of the design. This approach allows you to chain the function calls while preserving the proper context.
-*   **Error Handling**: When a validator fails, it's crucial to throw an exception or otherwise handle the error appropriately, preventing invalid data from being stored within the class.
-*   **Debugging**: When dealing with chains of wrappers, debugging can become more challenging. Carefully stepping through the execution is key to identifying issues.
+- **Order Matters**: The order in which you apply the wrappers is crucial, as the result of one wrapper might influence the behavior of the next one in the chain.
+- **Wrapper Design**: The `wrap` method, which returns a list containing the wrapped getter and setter, is a key part of the design. This approach allows you to chain the function calls while preserving the proper context.
+- **Error Handling**: When a validator fails, it's crucial to throw an exception or otherwise handle the error appropriately, preventing invalid data from being stored within the class.
+- **Debugging**: When dealing with chains of wrappers, debugging can become more challenging. Carefully stepping through the execution is key to identifying issues.
 
 **Additional Resources:**
 
-*   **"Advanced R" by Hadley Wickham:** This book is an excellent resource for understanding the underlying mechanics of R objects and classes, particularly for more advanced topics that deal with meta-programming and object-oriented paradigms in R. It's essential for mastering R's inner workings and getting the most out of it.
-*   **R6 Package Documentation:** The official documentation for the R6 package is crucial. You’ll find detailed explanations of R6 class mechanics, including active fields and how they work in conjunction with standard fields. This documentation will provide a firm foundation for your R6 programming.
-*  **"Object-Oriented Programming in R: A Practical Approach" by Thomas W. Dinsmore** - This is an older text, but it provides very helpful context for object oriented programming paradigms as they exist within the R language. The explanations for how the S3 and S4 systems work can shed light on R6's design.
+- **"Advanced R" by Hadley Wickham:** This book is an excellent resource for understanding the underlying mechanics of R objects and classes, particularly for more advanced topics that deal with meta-programming and object-oriented paradigms in R. It's essential for mastering R's inner workings and getting the most out of it.
+- **R6 Package Documentation:** The official documentation for the R6 package is crucial. You’ll find detailed explanations of R6 class mechanics, including active fields and how they work in conjunction with standard fields. This documentation will provide a firm foundation for your R6 programming.
+- **"Object-Oriented Programming in R: A Practical Approach" by Thomas W. Dinsmore** - This is an older text, but it provides very helpful context for object oriented programming paradigms as they exist within the R language. The explanations for how the S3 and S4 systems work can shed light on R6's design.
 
 By applying this pattern, you can create highly modular and flexible classes, where each wrapper performs a specific task, promoting maintainability and reusability. It's not always the simplest solution, and one should evaluate the tradeoffs, but for cases where multiple layers of processing are needed this is a robust, though sometimes verbose, approach.

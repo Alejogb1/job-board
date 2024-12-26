@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-can-a-near-contract-in-rust-call-another-contract"
 ---
 
-Alright, let’s tackle this. Been there, done that – more times than I care to recall. Cross-contract calls in near can be a little… intricate, to put it mildly. It's certainly not a simple function invocation, but it’s absolutely crucial for building complex, modular applications. We’re basically orchestrating communication between separate, independent smart contracts, and that introduces both opportunities and challenges.
+, let’s tackle this. Been there, done that – more times than I care to recall. Cross-contract calls in near can be a little… intricate, to put it mildly. It's certainly not a simple function invocation, but it’s absolutely crucial for building complex, modular applications. We’re basically orchestrating communication between separate, independent smart contracts, and that introduces both opportunities and challenges.
 
 The core mechanism for this is asynchronous callbacks. Instead of a direct synchronous call, a contract initiates a promise to another contract, and the result of that promise is delivered via a callback function. It’s this asynchronous nature that differentiates cross-contract calls from regular function calls within the same contract. The NEAR runtime, being what it is, demands this promise-based paradigm for security and atomicity.
 
-Here’s the breakdown of the process: first, you define an interface for the external contract you want to interact with. This interface describes the functions you intend to call. Next, you use the `near_sdk::Promise` to generate the call to the other contract. Importantly, you also need to register a callback function that near will execute *after* the external contract’s function completes. This callback receives the result from the external contract, and you can then process it within the original contract. It's crucial to handle potential errors during the external call within the callback.
+Here’s the breakdown of the process: first, you define an interface for the external contract you want to interact with. This interface describes the functions you intend to call. Next, you use the `near_sdk::Promise` to generate the call to the other contract. Importantly, you also need to register a callback function that near will execute _after_ the external contract’s function completes. This callback receives the result from the external contract, and you can then process it within the original contract. It's crucial to handle potential errors during the external call within the callback.
 
-Now, for some specifics. We will see this all in action with the following examples. In our case, we have two example contracts, 'caller\_contract' which makes a call and 'callee\_contract' which will receive and process it.
+Now, for some specifics. We will see this all in action with the following examples. In our case, we have two example contracts, 'caller_contract' which makes a call and 'callee_contract' which will receive and process it.
 
-Let’s dive into some code examples. First, the 'callee\_contract':
+Let’s dive into some code examples. First, the 'callee_contract':
 
 ```rust
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
@@ -48,9 +48,9 @@ impl CalleeContract {
 }
 ```
 
-This 'callee\_contract' is straightforward. It has basic get, set and increment methods, and serves as the recipient of the cross-contract call.
+This 'callee_contract' is straightforward. It has basic get, set and increment methods, and serves as the recipient of the cross-contract call.
 
-Now, let’s look at the 'caller\_contract' that will invoke functions on the `callee\_contract`:
+Now, let’s look at the 'caller_contract' that will invoke functions on the `callee\_contract`:
 
 ```rust
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};

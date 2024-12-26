@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-new-object-of-any-type-passed-to-a-rust-function"
 ---
 
-Alright, let's tackle this. It's a question that surfaces quite frequently, and for good reason, because Rust's ownership system and static typing make it a bit more nuanced than, say, dynamic languages. I've encountered similar challenges in various projects, particularly when dealing with serialization and generic data processing. I recall one specific instance involving a plugin system where I needed a way to instantiate various types of plugin components based on configuration data at runtime. This wasn't something that Rust would let me do implicitly, of course.
+, let's tackle this. It's a question that surfaces quite frequently, and for good reason, because Rust's ownership system and static typing make it a bit more nuanced than, say, dynamic languages. I've encountered similar challenges in various projects, particularly when dealing with serialization and generic data processing. I recall one specific instance involving a plugin system where I needed a way to instantiate various types of plugin components based on configuration data at runtime. This wasn't something that Rust would let me do implicitly, of course.
 
 The core issue is that Rust requires concrete types at compile time. We can't directly tell a function to "create an object of whatever type comes my way," because the compiler must know the size and layout of the type to allocate memory and perform necessary operations. However, all is not lost. There are several ways we can achieve the desired outcome with various trade-offs.
 
@@ -99,6 +99,7 @@ fn main() {
 }
 
 ```
+
 Notice how the usage of `.as_any().downcast_ref::<>()` lets us actually use the inner types.
 
 This approach uses `Box<dyn Creatable>` to erase the concrete type at the function level. While more flexible, it does incur a performance overhead due to dynamic dispatch, and you need to use `as_any()` and `downcast_ref` if you wish to access the fields of the actual types, adding verbosity. However, this does allows us to create a new object without knowing at compile time what type it will be.
@@ -135,6 +136,7 @@ impl ObjectType {
 ```
 
 And its usage:
+
 ```rust
 fn create_and_process(object_type: ObjectType) {
     let new_object = object_type.create_object();
@@ -155,8 +157,9 @@ fn main() {
 }
 
 ```
+
 This strategy neatly avoids the dynamic dispatch overhead, while still providing flexibility in that, we can now create any of the enum's variants using a `create_object()` function and pattern matching, without generic function arguments. We do still need to use the `downcast_ref()` method which can be considered verbose.
 
-For further study on these topics, I'd highly recommend looking into the *Rust Programming Language* book by Steve Klabnik and Carol Nichols. Also, exploring the Rust documentation on traits and generics is key. For more in-depth understanding of dynamic dispatch, I would recommend looking into academic work on type systems and object-oriented programming with dynamic dispatch.
+For further study on these topics, I'd highly recommend looking into the _Rust Programming Language_ book by Steve Klabnik and Carol Nichols. Also, exploring the Rust documentation on traits and generics is key. For more in-depth understanding of dynamic dispatch, I would recommend looking into academic work on type systems and object-oriented programming with dynamic dispatch.
 
 In summary, the best approach depends greatly on the specifics of your project and the kinds of types you expect to handle. The trait approach with generics is excellent if you know your types at compile time, the trait object solution is good if you need runtime flexibility with some performance trade-offs, and the enum approach if you have a set number of object types you wish to instantiate. Each approach is a viable solution, each with its own particularities. It's about choosing the right tool for the job, weighing flexibility against performance.

@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-to-test-a-solidity-function-returning-a-struct-using-chai-in-hardhat"
 ---
 
-Alright, let's tackle this one. It's not uncommon to find yourself needing to thoroughly test Solidity functions that return structs, especially when dealing with complex data structures in your smart contracts. I've certainly been in that position countless times, often having to unravel some rather intricate test scenarios. The core of the challenge, as I see it, isn't simply *calling* the function; it's about effectively asserting that the returned struct contains the values you expect after your logic has executed.
+, let's tackle this one. It's not uncommon to find yourself needing to thoroughly test Solidity functions that return structs, especially when dealing with complex data structures in your smart contracts. I've certainly been in that position countless times, often having to unravel some rather intricate test scenarios. The core of the challenge, as I see it, isn't simply _calling_ the function; it's about effectively asserting that the returned struct contains the values you expect after your logic has executed.
 
 Using Chai within Hardhat's testing environment provides a powerful and relatively straightforward mechanism to achieve this. The typical stumbling block for many developers tends to be how to access the individual fields within the returned struct for assertion purposes, since the returned value is essentially a complex object. This is where a clear understanding of how Solidity and Javascript (the language used within Hardhat's test files) interact is critical.
 
 Let's dive into the practicalities. First and foremost, you must ensure your Hardhat test environment is set up correctly, and that your smart contract is compiled. I'll assume these foundational steps have been completed, and we'll focus on the testing specifics.
 
-The key idea, and where I've seen teams go wrong, is understanding that Hardhat and ethers.js, which is the library commonly used in conjunction with Hardhat, will often return structs as Javascript objects with numerical indices by default. While this *can* be used, it's far less readable and more prone to errors than accessing struct fields by name. Therefore, our first step is to ensure we’re handling the returned struct gracefully by destructuring the data based on field names. This approach provides clarity, reduces the risk of misinterpreting the returned values, and ensures your test code remains maintainable.
+The key idea, and where I've seen teams go wrong, is understanding that Hardhat and ethers.js, which is the library commonly used in conjunction with Hardhat, will often return structs as Javascript objects with numerical indices by default. While this _can_ be used, it's far less readable and more prone to errors than accessing struct fields by name. Therefore, our first step is to ensure we’re handling the returned struct gracefully by destructuring the data based on field names. This approach provides clarity, reduces the risk of misinterpreting the returned values, and ensures your test code remains maintainable.
 
 Let’s illustrate this with an example. Imagine a simple Solidity contract with a function that returns a struct representing a user’s data:
 
@@ -45,26 +45,24 @@ const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
 describe("UserData", function () {
-    it("Should return the correct user data", async function () {
-      const UserData = await ethers.getContractFactory("UserData");
-      const userDataContract = await UserData.deploy();
-      await userDataContract.deployed();
+  it("Should return the correct user data", async function () {
+    const UserData = await ethers.getContractFactory("UserData");
+    const userDataContract = await UserData.deploy();
+    await userDataContract.deployed();
 
-      const userId = 1;
-      const userName = "Alice";
-      const userBalance = 100;
+    const userId = 1;
+    const userName = "Alice";
+    const userBalance = 100;
 
-      await userDataContract.createUser(userId, userName, userBalance);
+    await userDataContract.createUser(userId, userName, userBalance);
 
-      const returnedUser = await userDataContract.getUser(userId);
+    const returnedUser = await userDataContract.getUser(userId);
 
-      expect(returnedUser.id).to.equal(userId);
-      expect(returnedUser.name).to.equal(userName);
-      expect(returnedUser.balance).to.equal(userBalance);
-
-    });
+    expect(returnedUser.id).to.equal(userId);
+    expect(returnedUser.name).to.equal(userName);
+    expect(returnedUser.balance).to.equal(userBalance);
+  });
 });
-
 ```
 
 Notice how I can directly access `.id`, `.name`, and `.balance` within the returned `returnedUser` variable? That’s because ethers.js, in this case, when interacting with the smart contract function will return the struct in such a way that we can access its properties directly by name using dot notation. This is the most common and easiest way to access data returned from smart contracts.
@@ -124,11 +122,8 @@ describe("ComplexData", function () {
     expect(returnedPerson.name).to.equal(personName);
     expect(returnedPerson.address.street).to.equal(street);
     expect(returnedPerson.address.city).to.equal(city);
-
-
   });
 });
-
 ```
 
 Again, you will see that properties from the nested struct are also returned as Javascript properties that we can directly assert against using dot notation. This makes tests highly readable and understandable.
@@ -145,22 +140,21 @@ const { ethers } = require("hardhat");
 
 describe("UserData - deep.equal example", function () {
   it("Should return the correct user data using deep.equal", async function () {
-      const UserData = await ethers.getContractFactory("UserData");
-      const userDataContract = await UserData.deploy();
-      await userDataContract.deployed();
+    const UserData = await ethers.getContractFactory("UserData");
+    const userDataContract = await UserData.deploy();
+    await userDataContract.deployed();
 
-      const userId = 1;
-      const userName = "Charlie";
-      const userBalance = 200;
+    const userId = 1;
+    const userName = "Charlie";
+    const userBalance = 200;
 
-      await userDataContract.createUser(userId, userName, userBalance);
+    await userDataContract.createUser(userId, userName, userBalance);
 
-      const expectedUser = { id: userId, name: userName, balance: userBalance };
-      const returnedUser = await userDataContract.getUser(userId);
-      expect(returnedUser).to.deep.equal(expectedUser);
-    });
+    const expectedUser = { id: userId, name: userName, balance: userBalance };
+    const returnedUser = await userDataContract.getUser(userId);
+    expect(returnedUser).to.deep.equal(expectedUser);
+  });
 });
-
 ```
 
 This shows that we can construct an expected object, and use the `deep.equal` assertion to verify that all the fields in the returned struct from the smart contract match this expected object. This can be a much more concise approach when testing structs with many fields, or when testing multiple properties simultaneously.

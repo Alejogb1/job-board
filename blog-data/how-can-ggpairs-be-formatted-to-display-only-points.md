@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-ggpairs-be-formatted-to-display-only-points"
 ---
 
-Okay, let's tackle this. I've spent a fair bit of time working with `ggpairs` in different contexts, mostly during exploratory data analysis phases on large datasets where visualizing pairwise relationships is crucial. One frequent need, precisely as you've pointed out, is to have `ggpairs` render only the scatter plots—just the points—without the additional bells and whistles like the correlation values, histograms, or density plots on the diagonals or upper triangle. It's a common customization, and fortunately, it's quite achievable with the tool's flexibility.
+, . I've spent a fair bit of time working with `ggpairs` in different contexts, mostly during exploratory data analysis phases on large datasets where visualizing pairwise relationships is crucial. One frequent need, precisely as you've pointed out, is to have `ggpairs` render only the scatter plots—just the points—without the additional bells and whistles like the correlation values, histograms, or density plots on the diagonals or upper triangle. It's a common customization, and fortunately, it's quite achievable with the tool's flexibility.
 
 My experience stems from numerous data science projects where visual clarity was paramount. I remember one particular project involving sensor data; the sheer volume of data points meant that anything other than a straightforward scatter plot would quickly become visually cluttered and difficult to interpret. We had to tweak `ggpairs` significantly to make any sense of it.
 
@@ -68,9 +68,9 @@ In this case, instead of just the string "points," I've used `wrap("points", siz
 
 When working with very large datasets, generating these pairwise plots, even with just points, can be resource-intensive. For such scenarios, consider:
 
-*   **Sampling:** Instead of using the entire dataset, work with a random sample. This can speed up plot generation and still give a good sense of the relationships.
-*   **Data Reduction Techniques:** If the number of variables is very large, consider using dimensionality reduction techniques, such as principal component analysis (PCA), to reduce the number of variables you need to visualize.
-*   **Interactive Visualizations:** For extensive exploratory analyses, consider using interactive visualization tools which may allow you to explore pairwise relationships dynamically.
+- **Sampling:** Instead of using the entire dataset, work with a random sample. This can speed up plot generation and still give a good sense of the relationships.
+- **Data Reduction Techniques:** If the number of variables is very large, consider using dimensionality reduction techniques, such as principal component analysis (PCA), to reduce the number of variables you need to visualize.
+- **Interactive Visualizations:** For extensive exploratory analyses, consider using interactive visualization tools which may allow you to explore pairwise relationships dynamically.
 
 **Further Learning**
 

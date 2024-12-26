@@ -4,13 +4,13 @@ date: "2024-12-16"
 id: "how-do-i-remove-special-characters-in-jinja-templates-in-airflow"
 ---
 
-Alright, let's tackle this. I've seen this particular problem crop up more times than I care to count, usually when ingesting data from external systems where the character encoding isn't exactly as clean as we’d hope. Dealing with special characters in jinja templates, particularly within the context of airflow, can become a real pain point if not handled correctly. It's not just about aesthetics; those stray characters can break downstream processes, cause data integrity issues, and generally throw a wrench in things. The issue primarily arises because Jinja2 itself is designed to process text; it doesn’t automatically sanitize data. When airflow pulls in variables, especially from external sources, they often come with unexpected baggage.
+, let's tackle this. I've seen this particular problem crop up more times than I care to count, usually when ingesting data from external systems where the character encoding isn't exactly as clean as we’d hope. Dealing with special characters in jinja templates, particularly within the context of airflow, can become a real pain point if not handled correctly. It's not just about aesthetics; those stray characters can break downstream processes, cause data integrity issues, and generally throw a wrench in things. The issue primarily arises because Jinja2 itself is designed to process text; it doesn’t automatically sanitize data. When airflow pulls in variables, especially from external sources, they often come with unexpected baggage.
 
 The core problem is that jinja templates typically render the provided context variables "as is". If those variables contain characters that are not standard, or if the output system's character encoding is different, then we get those dreaded garbled symbols, or even worse, errors. The solution fundamentally lies in implementing a sanitization process before the variable is injected into the jinja template. We can approach this through a few different angles, and the best one usually depends on the specific nature of the characters causing problems and how much control I have over the data source.
 
 I recall a project I worked on a few years back, involving scraping data from various APIs. We were pulling in textual data that would eventually populate report templates. The API responses, without any form of pre-processing on our part, often included rogue characters such as smart quotes, em dashes, and a whole bunch of other non-ascii characters that looked fine in the original source, but caused major issues in the final PDFs we produced. We initially tried quick fixes directly in the templates using the `replace` filter and string manipulation, but that turned out to be brittle and far from ideal because we ended up chasing down different combinations of bad characters and the jinja templates became harder to read and debug. A cleaner, more manageable solution came from pre-processing the data before it was even passed to the template.
 
-Here’s how I'd handle this, using strategies I've successfully employed in the past. Primarily, you'll be focusing on the data *before* it hits the Jinja template.
+Here’s how I'd handle this, using strategies I've successfully employed in the past. Primarily, you'll be focusing on the data _before_ it hits the Jinja template.
 
 **Approach 1: Using Python's `encode` and `decode` with error handling**
 
@@ -26,7 +26,7 @@ def sanitize_string_encode_decode(input_string):
         return "" #or some other default
 ```
 
-In this snippet, `input_string.encode('ascii', errors='ignore')` attempts to convert the string into ascii. The `'errors='ignore'` flag tells the function to just skip any characters it cannot encode, essentially removing them. Then we decode back into a string. I've added a try/except block here. In real life, you might prefer to log the error and use a placeholder, like an empty string or a simple message indicating that data was sanitized. This is important because you don’t want a single malformed string to crash your whole dag. I'd usually apply this function *before* I’d push the values into the template context, for instance during a data transformation stage in my DAG. I could extend this to include a more comprehensive replacement strategy, e.g., replace with an underscore.
+In this snippet, `input_string.encode('ascii', errors='ignore')` attempts to convert the string into ascii. The `'errors='ignore'` flag tells the function to just skip any characters it cannot encode, essentially removing them. Then we decode back into a string. I've added a try/except block here. In real life, you might prefer to log the error and use a placeholder, like an empty string or a simple message indicating that data was sanitized. This is important because you don’t want a single malformed string to crash your whole dag. I'd usually apply this function _before_ I’d push the values into the template context, for instance during a data transformation stage in my DAG. I could extend this to include a more comprehensive replacement strategy, e.g., replace with an underscore.
 
 **Approach 2: Leveraging Regular Expressions for Targeted Removal**
 
@@ -68,7 +68,7 @@ Here we are using `unicodedata.normalize('NFKD', input_string)` to transform the
 
 **Implementation in Airflow**
 
-In a typical Airflow DAG, these sanitization functions will be part of your transformation process, usually placed in a python callable that you use in your tasks. For example, if you have a variable called `my_variable` that needs sanitization, you’d apply these functions to it *before* you pass it to your template. You should avoid modifying the data directly in the template. A good pattern is to create a python operator that performs the sanitization, and then creates a new variable in the context, that is then passed to the templated task.
+In a typical Airflow DAG, these sanitization functions will be part of your transformation process, usually placed in a python callable that you use in your tasks. For example, if you have a variable called `my_variable` that needs sanitization, you’d apply these functions to it _before_ you pass it to your template. You should avoid modifying the data directly in the template. A good pattern is to create a python operator that performs the sanitization, and then creates a new variable in the context, that is then passed to the templated task.
 
 **Recommendations for Further Learning**
 

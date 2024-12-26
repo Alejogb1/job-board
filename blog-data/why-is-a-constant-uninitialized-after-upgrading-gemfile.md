@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-a-constant-uninitialized-after-upgrading-gemfile"
 ---
 
-Okay, let’s delve into this interesting issue. It’s something I’ve certainly encountered more than once over the years, especially when managing complex Ruby on Rails applications. It's frustrating, definitely, and while a constant uninitialized error after a `bundle update` might seem a bit magical at first glance, there’s a fairly logical explanation once you understand the dynamics of how Ruby, gems, and autoloading interact.
+, let’s delve into this interesting issue. It’s something I’ve certainly encountered more than once over the years, especially when managing complex Ruby on Rails applications. It's frustrating, definitely, and while a constant uninitialized error after a `bundle update` might seem a bit magical at first glance, there’s a fairly logical explanation once you understand the dynamics of how Ruby, gems, and autoloading interact.
 
 The core issue typically revolves around the interplay of Ruby’s constant resolution mechanism, the gem loading process, and the intricacies of autoloading. When you upgrade gems, especially those that are responsible for providing constants that your application uses (think classes, modules, etc.), it can disrupt the expected order in which Ruby finds and loads these definitions. Let me explain using a typical scenario I faced back when we were migrating a rather large Rails application from Rails 5 to Rails 6.
 
@@ -69,6 +69,6 @@ To further understand these nuances of Ruby's constant resolution and gem loadin
 
 1.  **"The Ruby Programming Language" by David Flanagan and Yukihiro Matsumoto:** This book offers a deep understanding of Ruby's core mechanics, including how constants are resolved. Specifically look into chapters pertaining to classes, modules and constants.
 2.  **"Metaprogramming Ruby 2" by Paolo Perrotta:** This book offers a more advanced perspective on how Ruby's object model works and how gems and libraries are loaded into it. This has a chapter on autoloading which may be helpful to understanding why these issues occur.
-3. **Ruby on Rails Guides**: Specifically review the section on booting Rails and initialization. This guide, maintained by the Rails core team, explains in detail how and when different parts of a Rails app are loaded.
+3.  **Ruby on Rails Guides**: Specifically review the section on booting Rails and initialization. This guide, maintained by the Rails core team, explains in detail how and when different parts of a Rails app are loaded.
 
 These resources provide a robust foundation for understanding the underlying mechanisms that cause issues like uninitialized constants after gem updates. While a straightforward `bundle update` should ideally not lead to such headaches, understanding these concepts can save valuable debugging time when those inevitable issues arise. Remember that debugging, especially in a complex system, is often as much about understanding the underlying systems as it is about fixing the specific error.

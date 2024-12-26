@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-use-a-filesystemwatcher-in-a-layered-architecture"
 ---
 
-Okay, let's tackle this. I've seen this pattern—using `FileSystemWatcher` in a layered architecture—go sideways more times than I care to count, often leading to tightly coupled messes and maintenance nightmares. It’s not that a `FileSystemWatcher` is inherently problematic; it's how you integrate it that matters. The key is proper abstraction and adherence to the principles of separation of concerns.
+, let's tackle this. I've seen this pattern—using `FileSystemWatcher` in a layered architecture—go sideways more times than I care to count, often leading to tightly coupled messes and maintenance nightmares. It’s not that a `FileSystemWatcher` is inherently problematic; it's how you integrate it that matters. The key is proper abstraction and adherence to the principles of separation of concerns.
 
 When dealing with a layered architecture, which usually consists of layers like presentation, application, and data access, you need to ask where the responsibility of monitoring the filesystem truly lies. The filesystem isn’t an application-level concern in most scenarios; it's closer to a data source or an infrastructure detail. Therefore, embedding the `FileSystemWatcher` directly into the presentation layer or the core application logic is generally a bad idea, primarily due to tight coupling. Changes in how the filesystem is monitored should not ripple through your entire application.
 
@@ -87,7 +87,7 @@ public class MyApplicationService
 }
 ```
 
-Here I introduce the `IFileSystemMonitor` interface. Now, `MyApplicationService` doesn't care *how* filesystem changes are monitored; it only relies on the interface. The `FileSystemChangeMonitor` from before would implement the `IFileSystemMonitor` interface allowing for inversion of control. This approach is critical; it allows you to switch out your file monitoring implementation without modifying the application logic. It’s decoupling at its finest and crucial for maintainability and testability.
+Here I introduce the `IFileSystemMonitor` interface. Now, `MyApplicationService` doesn't care _how_ filesystem changes are monitored; it only relies on the interface. The `FileSystemChangeMonitor` from before would implement the `IFileSystemMonitor` interface allowing for inversion of control. This approach is critical; it allows you to switch out your file monitoring implementation without modifying the application logic. It’s decoupling at its finest and crucial for maintainability and testability.
 
 **Dependency Injection:**
 
@@ -119,17 +119,17 @@ In a real application, a DI framework like Microsoft's built-in DI or Autofac, w
 
 This approach ensures:
 
-*   **Loose Coupling:** The application layer is not directly tied to the `FileSystemWatcher`. You can switch to a different monitoring mechanism, or a simulated one during testing, without breaking other layers.
-*   **Testability:** The application service can be easily tested by mocking the `IFileSystemMonitor` interface to simulate different file system events.
-*   **Maintainability:** Changes to file monitoring logic are isolated within the data access/infrastructure layer, reducing the risk of unexpected ripple effects.
-*   **Reusability:** The monitoring component can be reused in different parts of the system or in other applications.
+- **Loose Coupling:** The application layer is not directly tied to the `FileSystemWatcher`. You can switch to a different monitoring mechanism, or a simulated one during testing, without breaking other layers.
+- **Testability:** The application service can be easily tested by mocking the `IFileSystemMonitor` interface to simulate different file system events.
+- **Maintainability:** Changes to file monitoring logic are isolated within the data access/infrastructure layer, reducing the risk of unexpected ripple effects.
+- **Reusability:** The monitoring component can be reused in different parts of the system or in other applications.
 
 **Further Reading:**
 
 If you want a deeper dive, I recommend these resources:
 
-*   **_Domain-Driven Design: Tackling Complexity in the Heart of Software_ by Eric Evans:** Though it does not focus explicitly on `FileSystemWatcher`, it explains clearly how to organize a system based on bounded context, which this layering approach follows.
-*   **_Patterns of Enterprise Application Architecture_ by Martin Fowler:** A must-read if you are interested in general layering, patterns for applications and separation of concern. This will help you better understand the "why" behind these architectures.
-*   **Microsoft's Official Documentation on Dependency Injection:** For specifics on implementing dependency injection in C#. You’ll find great resources under the .net documentation.
+- **_Domain-Driven Design: Tackling Complexity in the Heart of Software_ by Eric Evans:** Though it does not focus explicitly on `FileSystemWatcher`, it explains clearly how to organize a system based on bounded context, which this layering approach follows.
+- **_Patterns of Enterprise Application Architecture_ by Martin Fowler:** A must-read if you are interested in general layering, patterns for applications and separation of concern. This will help you better understand the "why" behind these architectures.
+- **Microsoft's Official Documentation on Dependency Injection:** For specifics on implementing dependency injection in C#. You’ll find great resources under the .net documentation.
 
 In conclusion, while `FileSystemWatcher` can be powerful, it's crucial to integrate it judiciously, particularly within a layered architecture. The approach of encapsulating the `FileSystemWatcher` within a dedicated infrastructure/data access layer and decoupling it with an interface for use by the application layer will provide a far more robust and maintainable solution than integrating it directly into any other part of the application. Remember, the goal is to manage complexity, and layering, done well, is one of our strongest tools.

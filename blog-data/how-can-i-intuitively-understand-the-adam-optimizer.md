@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-intuitively-understand-the-adam-optimizer"
 ---
 
-Okay, let's delve into the Adam optimizer. I remember dealing with this quite a bit back in my early days tackling image recognition problems. It can feel a bit like magic at first, seeing how quickly and consistently it converges. But the underlying mechanics are, thankfully, not that opaque. Forget the overly-complicated mathematical derivations; we'll dissect it to its core intuition and then show some practical code.
+, let's delve into the Adam optimizer. I remember dealing with this quite a bit back in my early days tackling image recognition problems. It can feel a bit like magic at first, seeing how quickly and consistently it converges. But the underlying mechanics are, thankfully, not that opaque. Forget the overly-complicated mathematical derivations; we'll dissect it to its core intuition and then show some practical code.
 
 At its heart, Adam, short for Adaptive Moment Estimation, is a gradient-based optimization algorithm, like its predecessor, stochastic gradient descent (SGD). What differentiates Adam is that it calculates adaptive learning rates for each parameter. That "adaptive" part is key. Instead of one global learning rate, it maintains individual learning rates, which are tailored for each parameter, allowing for more efficient learning in complex neural network architectures. This is crucial when we deal with landscapes that have very different curvatures or gradient magnitudes for different weights.
 

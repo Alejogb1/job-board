@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-testcontainers-reusing-existing-containers"
 ---
 
-Okay, let's tackle this one. It’s a question that surfaces frequently enough, and frankly, it’s often more nuanced than it might initially seem. Over the years, I've bumped into this exact scenario multiple times – specifically during CI/CD pipeline optimizations, where every second shaved off builds was a big win. The question at hand is: why doesn't testcontainers, a brilliant library designed to spin up temporary containers for integration tests, always reuse existing containers? It's not due to some oversight or architectural flaw, but rather a careful balancing act between test integrity, isolation, and practical limitations.
+, one. It’s a question that surfaces frequently enough, and frankly, it’s often more nuanced than it might initially seem. Over the years, I've bumped into this exact scenario multiple times – specifically during CI/CD pipeline optimizations, where every second shaved off builds was a big win. The question at hand is: why doesn't testcontainers, a brilliant library designed to spin up temporary containers for integration tests, always reuse existing containers? It's not due to some oversight or architectural flaw, but rather a careful balancing act between test integrity, isolation, and practical limitations.
 
 The heart of the matter lies in the intended use case of testcontainers. It's engineered to create ephemeral environments. Each test execution, ideally, should start with a fresh, known state to guarantee the validity and reproducibility of results. Reusing containers would inherently introduce stateful behavior between tests, creating the very flakiness we strive to eliminate with automated testing. Imagine two tests that both rely on writing to the same database within a container. If the second test ran and was expecting a blank slate, the data left over from the first test would lead to spurious failures and a lot of debugging headaches.
 
@@ -14,7 +14,7 @@ Second, container reuse introduces complexities around lifecycle management. If 
 
 Third, practical considerations. Docker itself, while efficient, has overhead. Spinning up containers takes time, which is the primary performance concern when running integration tests. However, it's often quicker to simply create a new container from an existing image, than it is to thoroughly reset the container to a blank state, especially when more complex or customized image configurations are in play. It’s about trading off between potential reuse benefits against the complexity it creates and the risks of inconsistent state between tests. The time to tear down a container and create a new one from its image is often less than what it would take to programmatically reset an existing container, and this process is more predictable.
 
-Now, having stated all of that, there are situations where some level of ‘reuse’ might seem feasible, or at least, a performance optimization could be explored. Instead of reusing the *container*, we could reuse the *image*. Testcontainers provides configuration options to help here. Docker images are immutable, and the layer caching mechanisms within docker make fetching existing layers of an image significantly faster if the image is already present on the host machine. Thus, testcontainers does take advantage of docker’s caching when creating new containers. You won't always get exactly identical performance when running a test the first time vs multiple times locally, but subsequent runs after a first one should be much faster. The creation of the container still occurs, however, reusing layers of a Docker image still provides considerable optimization.
+Now, having stated all of that, there are situations where some level of ‘reuse’ might seem feasible, or at least, a performance optimization could be explored. Instead of reusing the _container_, we could reuse the _image_. Testcontainers provides configuration options to help here. Docker images are immutable, and the layer caching mechanisms within docker make fetching existing layers of an image significantly faster if the image is already present on the host machine. Thus, testcontainers does take advantage of docker’s caching when creating new containers. You won't always get exactly identical performance when running a test the first time vs multiple times locally, but subsequent runs after a first one should be much faster. The creation of the container still occurs, however, reusing layers of a Docker image still provides considerable optimization.
 
 To illustrate these points, let’s walk through some examples.
 
@@ -86,6 +86,7 @@ public class ExampleTestWithImplicitReuse {
     }
 }
 ```
+
 Here, when running each of these tests sequentially, the second one will generally spin up faster since docker is able to reuse image layers. Although each instance is fresh, the performance is improved using docker's caching mechanism, with testcontainers benefiting from it.
 
 **Example 3: Explicit Network Reuse (Limited form of Reuse)**

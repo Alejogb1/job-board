@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-deep-learning-through-the-python-weka-wrapper3"
 ---
 
-alright, let's talk about hooking up deep learning with weka using the python wrapper. i've been down this road a few times, and it can get a little hairy, but it's definitely doable. i remember back in '18, i was trying to get a convolutional neural network to classify some satellite imagery using weka—talk about a learning curve. i ended up having to build a custom wrapper because what was available was not really cut for what i needed.
+, let's talk about hooking up deep learning with weka using the python wrapper. i've been down this road a few times, and it can get a little hairy, but it's definitely doable. i remember back in '18, i was trying to get a convolutional neural network to classify some satellite imagery using weka—talk about a learning curve. i ended up having to build a custom wrapper because what was available was not really cut for what i needed.
 
 first things first, we need to understand that weka itself isn't natively a deep learning powerhouse. it's more of a general-purpose machine learning toolkit. but, thankfully, the python wrapper allows us to leverage external libraries like tensorflow or pytorch, which are absolute workhorses in the deep learning field.
 
@@ -154,6 +154,7 @@ if __name__ == '__main__':
   predictions_from_instance = predict_single_instance(weka_instance)
   print(predictions_from_instance)
 ```
+
 in this last example i am assuming that you already have the deep learning model trained and saved to disk, and you are using this python script to perform single instance predictions. weka will pass one instance at a time to the python script, this instance will be an instance object, which can be converted to a list of float values. then the model will predict the single instance and return a probability list, that weka will use to predict the instance class.
 
 now, about resources, instead of giving you direct links that can become stale quickly, i'd recommend diving into some solid books and papers. for a solid grounding in deep learning, grab 'deep learning' by goodfellow, bengio, and courville—that's pretty much the bible on the subject. then, for specifics on using tensorflow, i recommend 'hands-on machine learning with scikit-learn, keras & tensorflow' by aurélien géron. if you're into pytorch instead, check out 'deep learning with pytorch' by eli stevens, lucas antiga, and thomas viehmann. and for understanding weka's internals better, its official documentation, while not a page turner, is indispensable.

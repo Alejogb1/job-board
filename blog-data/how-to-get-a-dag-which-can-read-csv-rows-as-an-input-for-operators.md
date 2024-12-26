@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-get-a-dag-which-can-read-csv-rows-as-an-input-for-operators"
 ---
 
-alright, so you're looking at building a directed acyclic graph, a dag, that can take csv data, row by row, and feed it into your processing units, or operators. i've been there, done that, got the t-shirt, and probably debugged it way past 3 am a couple of times. let me tell you how i tackled this kind of thing in the past, and what patterns work best in my experience.
+, so you're looking at building a directed acyclic graph, a dag, that can take csv data, row by row, and feed it into your processing units, or operators. i've been there, done that, got the t-shirt, and probably debugged it way past 3 am a couple of times. let me tell you how i tackled this kind of thing in the past, and what patterns work best in my experience.
 
 first off, let's break this down. a dag, at its core, represents a series of tasks and their dependencies. in your case, we have this flow: read csv row -> perform operation -> maybe write somewhere else. and this needs to happen for every row of your file. so the first part we need to address is how we can ingest our data, i personally found that working with generator functions helps a lot here, they are memory friendly and allow processing as needed instead of loading all the csv into memory.
 

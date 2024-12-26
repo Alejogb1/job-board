@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "is-there-a-way-to-set-a-specific-collection-to-use-for-a-documentchooserblock"
 ---
 
-alright, so, yeah, i've definitely bumped into this one before. wanting a documentchooserblock to only pull from a specific collection? absolutely doable, and honestly, it's one of those things that feels like it *should* be built-in, but well, sometimes you gotta get your hands dirty. i remember battling with this back when i was helping that non-profit set up their new website. they had this massive media library, but wanted their blog posts to only pick from a curated set of images, not the whole shebang. talk about a ui nightmare waiting to happen.
+, so, yeah, i've definitely bumped into this one before. wanting a documentchooserblock to only pull from a specific collection? absolutely doable, and honestly, it's one of those things that feels like it _should_ be built-in, but well, sometimes you gotta get your hands dirty. i remember battling with this back when i was helping that non-profit set up their new website. they had this massive media library, but wanted their blog posts to only pick from a curated set of images, not the whole shebang. talk about a ui nightmare waiting to happen.
 
 anyway, the core problem is that the documentchooserblock, by default, just lets users browse all the documents of a specific type. it doesn’t really care about collections. so, we have to tell it otherwise. the way to do this is to subclass the documentchooserblock and override its `get_queryset` method, filtering down the documents before they even hit the ui. think of it as a gatekeeper.
 

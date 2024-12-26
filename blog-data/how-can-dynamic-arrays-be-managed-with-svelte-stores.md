@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-dynamic-arrays-be-managed-with-svelte-stores"
 ---
 
-Alright, let's tackle this one. I've seen this come up a few times in different guises over the years, and it always boils down to a good understanding of reactivity and how Svelte stores operate. It’s not complicated, but there are nuances, particularly when you're dealing with mutable structures like arrays.
+, let's tackle this one. I've seen this come up a few times in different guises over the years, and it always boils down to a good understanding of reactivity and how Svelte stores operate. It’s not complicated, but there are nuances, particularly when you're dealing with mutable structures like arrays.
 
 The core challenge lies in Svelte's reactivity system relying on object identity changes for triggering updates. Simply pushing or popping elements within an array won't necessarily signal to Svelte that something's changed because the array instance itself hasn't been replaced. To effectively manage dynamic arrays with Svelte stores, you need to create a new array instance whenever the data within the array is modified. This allows Svelte to detect the change and update the relevant components.
 
@@ -18,21 +18,21 @@ Let's say you have a store holding a list of strings representing tasks:
 
 ```javascript
 // store.js
-import { writable } from 'svelte/store';
+import { writable } from "svelte/store";
 
-export const tasks = writable(['Buy groceries', 'Walk the dog']);
+export const tasks = writable(["Buy groceries", "Walk the dog"]);
 ```
 
 To add a new task, you might be tempted to use `tasks.update(arr => arr.push(newTask))`, but this would cause reactivity issues. The proper approach is to create a new array. Here’s how you should do it:
 
 ```javascript
 // store.js (modified)
-import { writable } from 'svelte/store';
+import { writable } from "svelte/store";
 
-export const tasks = writable(['Buy groceries', 'Walk the dog']);
+export const tasks = writable(["Buy groceries", "Walk the dog"]);
 
 export function addTask(newTask) {
-  tasks.update(arr => [...arr, newTask]);
+  tasks.update((arr) => [...arr, newTask]);
 }
 ```
 
@@ -68,20 +68,20 @@ Similarly, removing an element directly through its index will not trigger a Sve
 
 ```javascript
 // store.js (modified further)
-import { writable } from 'svelte/store';
+import { writable } from "svelte/store";
 
-export const tasks = writable(['Buy groceries', 'Walk the dog']);
+export const tasks = writable(["Buy groceries", "Walk the dog"]);
 
 export function addTask(newTask) {
-  tasks.update(arr => [...arr, newTask]);
+  tasks.update((arr) => [...arr, newTask]);
 }
 
 export function removeTask(index) {
-    tasks.update(arr => arr.filter((_, i) => i !== index));
+  tasks.update((arr) => arr.filter((_, i) => i !== index));
 }
 ```
 
-Here, we are using the `filter` method to create a new array containing all elements except the one at the specified index. This new array is then used to update the store.  Again, the important point is a new array identity, not a mutation. Here is an example of how to use this from a Svelte component:
+Here, we are using the `filter` method to create a new array containing all elements except the one at the specified index. This new array is then used to update the store. Again, the important point is a new array identity, not a mutation. Here is an example of how to use this from a Svelte component:
 
 ```svelte
 // MyComponent.svelte (modified)
@@ -111,35 +111,35 @@ Here, we are using the `filter` method to create a new array containing all elem
 
 **Example 3: Updating elements in the array**
 
-Updating an element at a specific index requires a little bit of extra care.  You'll need to create a new array where the desired element has been updated:
+Updating an element at a specific index requires a little bit of extra care. You'll need to create a new array where the desired element has been updated:
 
 ```javascript
 // store.js (modified further)
-import { writable } from 'svelte/store';
+import { writable } from "svelte/store";
 
-export const tasks = writable(['Buy groceries', 'Walk the dog']);
+export const tasks = writable(["Buy groceries", "Walk the dog"]);
 
 export function addTask(newTask) {
-  tasks.update(arr => [...arr, newTask]);
+  tasks.update((arr) => [...arr, newTask]);
 }
 
 export function removeTask(index) {
-    tasks.update(arr => arr.filter((_, i) => i !== index));
+  tasks.update((arr) => arr.filter((_, i) => i !== index));
 }
 
 export function updateTask(index, updatedTask) {
-    tasks.update(arr => {
-      return arr.map((task, i) => {
-         if(i === index) {
-            return updatedTask;
-         }
-        return task;
-      });
+  tasks.update((arr) => {
+    return arr.map((task, i) => {
+      if (i === index) {
+        return updatedTask;
+      }
+      return task;
     });
+  });
 }
 ```
 
-In this example, we're using `map` to create a new array.  If the index matches the target, we return the `updatedTask`, otherwise we just return the existing task. This ensures we have a new array and the reactivity within Svelte is maintained.  An example of how this could be used in a component is provided below:
+In this example, we're using `map` to create a new array. If the index matches the target, we return the `updatedTask`, otherwise we just return the existing task. This ensures we have a new array and the reactivity within Svelte is maintained. An example of how this could be used in a component is provided below:
 
 ```svelte
 // MyComponent.svelte (modified further)

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-does-a-given-argument-still-result-in-a-missing-argument-error"
 ---
 
-Alright, let's tackle this one. I’ve seen this scenario play out a good few times, and it’s often more nuanced than it initially appears. The frustrating "missing argument" error, even when you’re seemingly passing what should be all the necessary parameters, is a common head-scratcher. Let’s break down the potential culprits and how to address them. I'll sprinkle in some code snippets to make the explanation concrete, drawing from some experiences I've had with systems that weren't playing nicely.
+, let's tackle this one. I’ve seen this scenario play out a good few times, and it’s often more nuanced than it initially appears. The frustrating "missing argument" error, even when you’re seemingly passing what should be all the necessary parameters, is a common head-scratcher. Let’s break down the potential culprits and how to address them. I'll sprinkle in some code snippets to make the explanation concrete, drawing from some experiences I've had with systems that weren't playing nicely.
 
-The core problem usually lies not with the *explicit* absence of an argument, but with its *effective* absence as far as the receiving function or method is concerned. This can stem from a variety of sources. Let me outline the most common ones, and then we'll get into the code.
+The core problem usually lies not with the _explicit_ absence of an argument, but with its _effective_ absence as far as the receiving function or method is concerned. This can stem from a variety of sources. Let me outline the most common ones, and then we'll get into the code.
 
-First, argument *order* is crucial, particularly in languages that rely on positional arguments. If you are passing values in the wrong order, the function will interpret them incorrectly, possibly leaving required parameters without an assigned value.
+First, argument _order_ is crucial, particularly in languages that rely on positional arguments. If you are passing values in the wrong order, the function will interpret them incorrectly, possibly leaving required parameters without an assigned value.
 
 Second, type mismatches can lead to apparent missing arguments. For instance, if a function expects an integer and you pass a string that fails to convert, it might default to a null or empty value, triggering the “missing argument” behavior. This often happens silently, particularly in dynamically typed languages.
 
@@ -35,6 +35,7 @@ except TypeError as e:
 # Correct order
 process_data("data.txt", "csv")
 ```
+
 In this first example, the function `process_data` was expecting the filename and data format in a specific order. If these are reversed, while the function will not throw an error in Python by default, you will effectively have a misinterpretation of the arguments that could lead to other problems. In other languages, it might cause a type error or an argument mismatch leading to something like an ArgumentMissingError or InvalidArgumentException.
 
 **Scenario 2: Type Mismatch and Implicit Default Values**
@@ -61,7 +62,7 @@ calculate_area(10, 5, "feet")
 
 ```
 
-Here, the `calculate_area` function *expects* the length and width to be convertible to integers, and has a default unit value. Passing them as strings will, in this case, result in correct calculation of the area, since `int("10")` will result in 10, but a more complex calculation involving more intricate conversion could result in an error. If an argument is not what is expected, such as the implicit default unit argument being an integer, this may result in unexpected behavior and/or type errors.
+Here, the `calculate_area` function _expects_ the length and width to be convertible to integers, and has a default unit value. Passing them as strings will, in this case, result in correct calculation of the area, since `int("10")` will result in 10, but a more complex calculation involving more intricate conversion could result in an error. If an argument is not what is expected, such as the implicit default unit argument being an integer, this may result in unexpected behavior and/or type errors.
 
 **Scenario 3: Scope and Visibility Issues**
 
@@ -87,6 +88,7 @@ calc.calculate(length_val, width_val) #Correct
 calc.calculate(length, width) # Incorrect: length and width are not defined in this scope
 
 ```
+
 In this example, while it looks like `length` and `width` were assigned values, these values were only assigned to `length_val` and `width_val`, and thus are not in scope when calling `calc.calculate(length, width)`. This will likely trigger a "NameError" but in other situations this could manifest as an unassigned variable or, again, an argument missing error.
 
 These examples illustrate that the "missing argument" error isn’t always as simple as a parameter being forgotten. It often involves subtle issues of type, order, default value interactions, or scoping problems. When facing this error, it pays to carefully scrutinize your function call in light of these common scenarios.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-kerasclassifier-be-used-to-train-a-neural-network"
 ---
 
-Alright, let's unpack how to utilize `KerasClassifier` for training a neural network. I recall a project back in '18 involving multi-class text categorization where we moved from hand-crafted feature extraction to deep learning, and `KerasClassifier` was instrumental in streamlining that transition. It’s a fascinating bridge between scikit-learn's API and Keras’ flexibility. It essentially wraps a Keras model, enabling you to treat it almost like any other scikit-learn estimator. This allows seamless integration with various tools like cross-validation, grid searching, and the broader scikit-learn ecosystem.
+, let's unpack how to utilize `KerasClassifier` for training a neural network. I recall a project back in '18 involving multi-class text categorization where we moved from hand-crafted feature extraction to deep learning, and `KerasClassifier` was instrumental in streamlining that transition. It’s a fascinating bridge between scikit-learn's API and Keras’ flexibility. It essentially wraps a Keras model, enabling you to treat it almost like any other scikit-learn estimator. This allows seamless integration with various tools like cross-validation, grid searching, and the broader scikit-learn ecosystem.
 
 The key benefit of using `KerasClassifier` stems from its role as a wrapper. It eliminates the need to write custom training loops and evaluation procedures, which often involves meticulous management of mini-batches, callbacks, and learning rate schedules. Instead, you can build your Keras model as usual, then wrap it within a `KerasClassifier` and use standard scikit-learn methods such as `fit`, `predict`, and `score`.
 

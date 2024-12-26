@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "why-is-rendertostring-unavailable-for-the-updateservice-object"
 ---
 
-Alright, let's tackle this. I’ve definitely tripped over this particular issue a few times myself, especially when dealing with complex service objects and wanting a quick way to get a template rendered into a string. The unavailability of `render_to_string` directly on an `UpdateService` object, or similar service layer components, usually isn’t arbitrary; it’s fundamentally about architectural separation and the responsibility of different components within a typical application design.
+, let's tackle this. I’ve definitely tripped over this particular issue a few times myself, especially when dealing with complex service objects and wanting a quick way to get a template rendered into a string. The unavailability of `render_to_string` directly on an `UpdateService` object, or similar service layer components, usually isn’t arbitrary; it’s fundamentally about architectural separation and the responsibility of different components within a typical application design.
 
 In my experience, `UpdateService` objects, whether they're Django-based or from another framework, are usually meant to handle business logic related to updating entities or resources. Think of tasks like validating data, applying transformations, interacting with data persistence layers, and so on. The role of generating HTML, which is what `render_to_string` effectively does, falls under the purview of the presentation layer, typically handled by views, controllers, or specialized rendering utilities. Blurring these lines often leads to a codebase that is difficult to maintain, test, and evolve.
 
-To put it another way, coupling service logic too closely with how you display things makes it harder to reuse or modify either component. If I embed HTML rendering within my `UpdateService`, I am now stuck having that service always generating *that* specific HTML. If the client application suddenly needs JSON, I have to either rewrite the service logic or, worse, add logic to the service object that is unrelated to its primary purpose.
+To put it another way, coupling service logic too closely with how you display things makes it harder to reuse or modify either component. If I embed HTML rendering within my `UpdateService`, I am now stuck having that service always generating _that_ specific HTML. If the client application suddenly needs JSON, I have to either rewrite the service logic or, worse, add logic to the service object that is unrelated to its primary purpose.
 
-The core principle at play here is the Separation of Concerns (SoC). Services should primarily focus on *what* to do (business logic), not *how* it is presented. Render engines, on the other hand, are concerned with *how* the data is displayed.
+The core principle at play here is the Separation of Concerns (SoC). Services should primarily focus on _what_ to do (business logic), not _how_ it is presented. Render engines, on the other hand, are concerned with _how_ the data is displayed.
 
-So, why not just add the capability? From a technical standpoint, it *could* be done. But it would be an anti-pattern that would introduce significant technical debt over time. The more a service does, the harder it gets to change one thing without affecting other parts of the system.
+So, why not just add the capability? From a technical standpoint, it _could_ be done. But it would be an anti-pattern that would introduce significant technical debt over time. The more a service does, the harder it gets to change one thing without affecting other parts of the system.
 
 Let’s illustrate this with some examples. Imagine we have a simple data object representing a user:
 
@@ -50,7 +50,7 @@ class UpdateUserService:
         return None
 ```
 
-Now, If I wanted to render this user data as HTML, my `UpdateUserService` *should not* do it directly using something similar to Django’s `render_to_string` (I am making the assumption here, that if you are asking this question you have an understanding of Django's rendering engine). Instead, it should pass the data to a view or rendering utility.
+Now, If I wanted to render this user data as HTML, my `UpdateUserService` _should not_ do it directly using something similar to Django’s `render_to_string` (I am making the assumption here, that if you are asking this question you have an understanding of Django's rendering engine). Instead, it should pass the data to a view or rendering utility.
 
 ```python
 from jinja2 import Environment, FileSystemLoader
@@ -75,6 +75,7 @@ And this is an example of a simplified `user_card.html` template (Jinja2):
   <p>Status: {{ user.status }}</p>
 </div>
 ```
+
 Now, if you are using Django, you would usually render it in a view:
 
 ```python

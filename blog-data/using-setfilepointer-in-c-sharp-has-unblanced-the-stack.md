@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "using-setfilepointer-in-c-sharp-has-unblanced-the-stack"
 ---
 
-Alright so you're asking about `SetFilePointer` in C# and whether it's messed up your stack specifically the stack in memory no the physical stack of papers on your desk I get it been there done that a few times actually more than a few times. You think you're doing some simple file manipulation and suddenly BOOM unexplained crashes or weird behavior. Let me break down what might be happening based on my painful personal experiences.
+so you're asking about `SetFilePointer` in C# and whether it's messed up your stack specifically the stack in memory no the physical stack of papers on your desk I get it been there done that a few times actually more than a few times. You think you're doing some simple file manipulation and suddenly BOOM unexplained crashes or weird behavior. Let me break down what might be happening based on my painful personal experiences.
 
 First off `SetFilePointer` itself isn't directly going to stomp on the stack. Think of it like this the stack is a place where your program stores things it needs temporarily function call return addresses local variables you know the drill. `SetFilePointer` on the other hand is a Windows API call specifically a low-level function dealing directly with files and file handles. Its job is to move the position within a file from where you're reading and writing it's a file cursor mover basically. It's a fine tool. Just as a hammer is a good tool but not for cutting a steak so let us leave the metaphors out ok.
 
@@ -51,9 +51,9 @@ public static class BadFileOperation
         byte[] buffer = new byte[bytesToRead];  // Allocate on stack bad idea if user chooses a large number
         IntPtr bufferPtr = Marshal.AllocHGlobal(bytesToRead); //allocate on unmanaged heap good solution
         Marshal.Copy(buffer, 0, bufferPtr, bytesToRead); //copy the stack allocated buffer to the unmanaged heap
-        
+
         uint bytesReadFromFile;
-        
+
         SetFilePointer(fileHandle, 1024, IntPtr.Zero, FILE_BEGIN); //Move file cursor position
 
         if(!ReadFile(fileHandle, bufferPtr, (uint)bytesToRead, out bytesReadFromFile, IntPtr.Zero)){
@@ -65,8 +65,8 @@ public static class BadFileOperation
         Marshal.Copy(bufferPtr, buffer, 0, bytesToRead); // copy back to managed buffer
         Marshal.FreeHGlobal(bufferPtr); //remember to free unmanaged allocated mem
 
-         
-        
+
+
          Console.WriteLine($"Read {bytesReadFromFile} bytes from file");
         CloseHandle(fileHandle);
 
@@ -77,9 +77,10 @@ public static class BadFileOperation
 // Usage
 // BadFileOperation.ReadFileBadly("some_file.txt", 1024*1024*2);
 ```
+
 In this code you would think that allocating a large `byte[]` array on the stack might cause problems but in reality it is allocated in the managed heap. So actually this code does not show the problem I was talking about. The issue is that allocating too much in the stack in a program can lead to stack overflow or corrupt stack memory which leads to unpredictable behavior.
 
-This was where I initially tripped up. Another issue occurs when you deal with native handles or pointers. When you use functions that return native pointer like `Marshal.AllocHGlobal` to allocate unmanaged memory you *have to* free that memory. If you don't call `Marshal.FreeHGlobal` or `CloseHandle` if you are opening file handles or any resources allocated in Windows API then you are going to have resource leaks which will lead to problems with your application. So the next code I am going to present will actually have a stack overflow due to too much memory allocation in stack and also will have a resource leak due to not releasing the allocated unmanaged memory.
+This was where I initially tripped up. Another issue occurs when you deal with native handles or pointers. When you use functions that return native pointer like `Marshal.AllocHGlobal` to allocate unmanaged memory you _have to_ free that memory. If you don't call `Marshal.FreeHGlobal` or `CloseHandle` if you are opening file handles or any resources allocated in Windows API then you are going to have resource leaks which will lead to problems with your application. So the next code I am going to present will actually have a stack overflow due to too much memory allocation in stack and also will have a resource leak due to not releasing the allocated unmanaged memory.
 
 ```csharp
 using System;
@@ -125,9 +126,9 @@ public static class BadFileOperation
                 return;
             }
             Console.WriteLine($"Read {bytesRead} bytes from file");
-            
+
         }
-        
+
         CloseHandle(fileHandle); // the resource is being freed here
 
     }
@@ -136,9 +137,11 @@ public static class BadFileOperation
 // Usage
 // BadFileOperation.ReadFileBadly("some_file.txt");
 ```
+
 This code is going to crash with StackOverflowException. Stack space is very limited compared to heap and cannot handle the allocation size specified by the const `STACK_ALLOCATION_SIZE`
 
 Now, the correct way to deal with this would be to allocate our buffers on the heap using `Marshal.AllocHGlobal` like we did in the first example or using managed buffers. Here's a corrected code that will not result in stack overflow and it won't have resource leaks
+
 ```csharp
 using System;
 using System.IO;

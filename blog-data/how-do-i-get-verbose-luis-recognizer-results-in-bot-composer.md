@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-get-verbose-luis-recognizer-results-in-bot-composer"
 ---
 
-Alright, let's talk about getting those verbose LUIS recognizer results in Bot Composer – something I've definitely spent time wrestling with in past projects, so I understand the need for granular control. It’s less a matter of wrestling with settings and more about understanding how the underlying LUIS query is formed and how to access its full response structure, rather than just what composer exposes by default.
+, let's talk about getting those verbose LUIS recognizer results in Bot Composer – something I've definitely spent time wrestling with in past projects, so I understand the need for granular control. It’s less a matter of wrestling with settings and more about understanding how the underlying LUIS query is formed and how to access its full response structure, rather than just what composer exposes by default.
 
 By default, Bot Composer simplifies the LUIS response to provide what's often needed for conversational flow: the top intent and its entities. But, quite frequently, you need the entire JSON payload returned by LUIS – the scored intents, all entities with their various resolutions, and other metadata that can be incredibly useful for fine-grained control or advanced logic. The challenge, as I’ve seen repeatedly, is that Bot Composer provides an abstraction, making it necessary to dive a bit deeper to extract this richer data.
 
@@ -26,7 +26,7 @@ The core idea here is to bypass the standard Composer variables for intent and e
 }
 ```
 
-The snippet above, when placed within a Bot Composer dialog step as a *Set property* action, will store the complete JSON from the LUIS API into the `luisFullResult` memory variable. You can then access it in further steps.
+The snippet above, when placed within a Bot Composer dialog step as a _Set property_ action, will store the complete JSON from the LUIS API into the `luisFullResult` memory variable. You can then access it in further steps.
 
 **Step 2: Parsing the JSON Response:**
 
@@ -63,15 +63,15 @@ Here we are checking if the `datetimeEntities` variable is empty and if so, we s
 
 **Practical Considerations:**
 
-*   **Error Handling:** It's essential to add robust error handling to your expressions. For example, checking if the `luisFullResult` is actually available before trying to parse it, or adding a try-catch using the `try()` and `catch()` functions in the adaptive expression language. `null` is usually the result when data is not present, and relying on this might introduce issues later.
-*   **Understanding the LUIS Schema:** Having a firm grasp on the schema of the LUIS response JSON is crucial. You’ll want to examine your LUIS app's JSON response examples (visible on your LUIS portal) to craft precise expressions. Understanding your LUIS response is the single most important thing when trying to use this technique.
-*   **Adaptive Expressions:** Familiarize yourself with the adaptive expressions documentation. They can perform more complex operations than just navigating JSON, like formatting strings, conditional logic, working with collections, and so forth. The entire flexibility of accessing the LUIS result in this way hinges on mastering this tool.
-*   **Debugging:** When debugging, I found it useful to temporarily display the `luisFullResult` variable in the bot output using the *Send a response* action to see what LUIS is actually returning. This can greatly assist in debugging your adaptive expressions.
+- **Error Handling:** It's essential to add robust error handling to your expressions. For example, checking if the `luisFullResult` is actually available before trying to parse it, or adding a try-catch using the `try()` and `catch()` functions in the adaptive expression language. `null` is usually the result when data is not present, and relying on this might introduce issues later.
+- **Understanding the LUIS Schema:** Having a firm grasp on the schema of the LUIS response JSON is crucial. You’ll want to examine your LUIS app's JSON response examples (visible on your LUIS portal) to craft precise expressions. Understanding your LUIS response is the single most important thing when trying to use this technique.
+- **Adaptive Expressions:** Familiarize yourself with the adaptive expressions documentation. They can perform more complex operations than just navigating JSON, like formatting strings, conditional logic, working with collections, and so forth. The entire flexibility of accessing the LUIS result in this way hinges on mastering this tool.
+- **Debugging:** When debugging, I found it useful to temporarily display the `luisFullResult` variable in the bot output using the _Send a response_ action to see what LUIS is actually returning. This can greatly assist in debugging your adaptive expressions.
 
 **Recommended Resources:**
 
-*   **Microsoft's Adaptive Expressions Documentation:** The official documentation for adaptive expressions is the absolute best place to start. It covers all the functions, syntax, and capabilities.
-*   **"Building Conversational Bots" by Microsoft:** This book provides in-depth knowledge of bot development concepts, including working with the bot framework and related technologies, specifically how the LUIS recognizer is used in a broader setting, and therefore offers a context to this issue.
-*   **Microsoft LUIS documentation:** It's important to fully understand how the LUIS service returns data. Review the official documentation which is available online, this documentation includes examples of the entire payload of responses and how to utilize them.
+- **Microsoft's Adaptive Expressions Documentation:** The official documentation for adaptive expressions is the absolute best place to start. It covers all the functions, syntax, and capabilities.
+- **"Building Conversational Bots" by Microsoft:** This book provides in-depth knowledge of bot development concepts, including working with the bot framework and related technologies, specifically how the LUIS recognizer is used in a broader setting, and therefore offers a context to this issue.
+- **Microsoft LUIS documentation:** It's important to fully understand how the LUIS service returns data. Review the official documentation which is available online, this documentation includes examples of the entire payload of responses and how to utilize them.
 
 In closing, while Bot Composer is great for rapid bot development, getting verbose LUIS results requires a bit of a deeper dive. Understanding adaptive expressions and how to navigate JSON is key. By accessing the underlying `turn.recognized.luisResult.result`, parsing the JSON, and using the extracted data in your bot logic, you can take full advantage of the rich information available from LUIS and create more sophisticated and accurate conversational experiences. This methodology was essential in several of my past projects, providing the level of control needed to deliver high-quality solutions. And, as with any technical challenge, a solid understanding of the underlying system, and consistent testing will be crucial in achieving your goals.

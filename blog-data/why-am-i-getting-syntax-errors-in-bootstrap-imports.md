@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-syntax-errors-in-bootstrap-imports"
 ---
 
-Alright, let's address those bootstrap import syntax errors. I've seen this one pop up quite a few times, and it usually boils down to a few common culprits, often less about bootstrap itself and more about how it's integrated into the project's build system. We'll get into the details, and I'll give you some code examples based on experiences I’ve had on past projects.
+, let's address those bootstrap import syntax errors. I've seen this one pop up quite a few times, and it usually boils down to a few common culprits, often less about bootstrap itself and more about how it's integrated into the project's build system. We'll get into the details, and I'll give you some code examples based on experiences I’ve had on past projects.
 
 Frankly, getting syntax errors with imports, especially when it involves well-established libraries like bootstrap, isn't a reflection of your skills as a developer, rather it often points to a misconfiguration or an oversight in the development environment. The problem isn’t usually about bootstrap being buggy. It’s frequently about how your bundler or module loader, like webpack, parcel, or esbuild, is interpreting the import statements.
 
@@ -20,7 +20,7 @@ The most obvious, but sometimes overlooked, issue is the file path in your impor
 
 ```javascript
 // Incorrect: Assuming 'node_modules' is in the same directory as the script.
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 ```
 
 This would throw an error if the script is executed from a different directory, or if `node_modules` is not directly beside the javascript file in question.
@@ -29,8 +29,8 @@ A correct import, assuming `node_modules` is in the project root, would typicall
 
 ```javascript
 // Correct: Typically used in a context where module resolution is set up.
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 ```
 
 This assumes that the module resolution is correctly configured in your bundler. Usually the bundler knows where `node_modules` is by default, assuming it's a standard project setup. If you’re using a custom build system or a non-standard setup, you might need to adjust that path accordingly. This means explicitly stating the path when configuring module aliases.
@@ -43,39 +43,40 @@ Here’s an example using Webpack which shows a minimal configuration. Note that
 
 ```javascript
 // webpack.config.js
-const path = require('path');
+const path = require("path");
 
 module.exports = {
-  entry: './src/index.js',
+  entry: "./src/index.js",
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "dist"),
   },
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'], // Loaders for CSS
+        use: ["style-loader", "css-loader"], // Loaders for CSS
       },
       {
-            test: /\.js$/,
-            exclude: /node_modules/,
-            use: {
-              loader: 'babel-loader'
-            }
-       }
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+        },
+      },
     ],
   },
   resolve: {
-    extensions: ['.js', '.css'], // Allow resolving these extensions without explicit specification
-  }
+    extensions: [".js", ".css"], // Allow resolving these extensions without explicit specification
+  },
 };
 ```
 
 In this config:
-* The `test` property uses a regular expression to match css and javascript files.
-* `use` specifies the loader to use for that file type.
-* The resolve extensions property tells webpack what file extensions should be considered as modules.
+
+- The `test` property uses a regular expression to match css and javascript files.
+- `use` specifies the loader to use for that file type.
+- The resolve extensions property tells webpack what file extensions should be considered as modules.
 
 If the `css-loader` and `style-loader` weren't configured for processing `.css` imports, or if babel wasn't configured for javascript, a syntax error might occur during build time. The error would indicate that the bundler doesn't know how to interpret the file.
 
@@ -85,14 +86,14 @@ Sometimes, though less frequently, a simple typo in the file extension can cause
 
 ```javascript
 // Incorrect: Using a .js extension for a css file.
-import 'bootstrap/dist/css/bootstrap.min.js';
+import "bootstrap/dist/css/bootstrap.min.js";
 ```
 
 This would be an incorrect import. The bundler will be expecting a javascript file when it encounters that import statement. This can sometimes throw syntax errors or type errors, depending on the file contents and bundler configuration. A correct import statement would be:
 
 ```javascript
 // Correct: Using the .css extension
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 ```
 
 While this example might seem simplistic, I've seen these sort of errors occur because of copy-pasting file paths or due to lack of attention, especially in more complex projects.

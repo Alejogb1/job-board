@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-features-of-deepfm"
 ---
 
-Okay, let’s unpack DeepFM. I recall wrestling with recommendation systems a few years back, and DeepFM was a game-changer in how we approached feature interactions. It’s not just another neural network; it elegantly combines the strengths of factorization machines (FM) with deep learning, addressing key limitations present in older techniques. The core idea behind DeepFM is to learn both low-order and high-order feature interactions simultaneously, without needing manual feature engineering. Here's how it achieves that, broken down into its principal components:
+, let’s unpack DeepFM. I recall wrestling with recommendation systems a few years back, and DeepFM was a game-changer in how we approached feature interactions. It’s not just another neural network; it elegantly combines the strengths of factorization machines (FM) with deep learning, addressing key limitations present in older techniques. The core idea behind DeepFM is to learn both low-order and high-order feature interactions simultaneously, without needing manual feature engineering. Here's how it achieves that, broken down into its principal components:
 
 Firstly, the 'FM' part, which stands for Factorization Machine. This is crucial because it captures low-order interactions—mostly second-order interactions, meaning relationships between two features. Unlike traditional linear models, which treat each feature independently, FM explicitly models interactions between features using latent vectors. Think of it like this: if you have features like 'user_age' and 'movie_genre,' a basic linear model might not capture that a user of a certain age has a preference for a specific genre. An FM, however, learns latent representations (vectors) for each feature and interacts them using dot products. This captures subtle relationships that a linear model could miss. The mathematical underpinning is essentially modeling interaction coefficients as the dot product of latent factor vectors, effectively reducing the number of parameters. This is a much more efficient approach than attempting to learn each feature interaction coefficient independently. These learned vectors capture feature dependencies.
 
@@ -26,7 +26,7 @@ class FactorizationMachine:
         self.embeddings = np.random.randn(num_features, embedding_dim) # Initialize embeddings
 
     def predict(self, feature_indices):
-      # feature indices represent the non-zero features that are activated. 
+      # feature indices represent the non-zero features that are activated.
         feature_embeddings = self.embeddings[feature_indices] # Lookup embeddings.
         sum_of_embeddings = np.sum(feature_embeddings, axis=0)
         squared_sum = np.dot(sum_of_embeddings, sum_of_embeddings)
@@ -63,7 +63,7 @@ class DeepNetwork:
         self.weights = []
         self.biases = []
         # We do not show initialization here for brevity, but it is usually random initialization
-        
+
         layers = [embedding_dim * num_features] + hidden_units_per_layer + [1] # Input size = total embeddings and hidden layer and output of 1 node
         for i in range(len(layers)-1):
             #Weights are randomly initialized but omitted for brevity
@@ -71,18 +71,18 @@ class DeepNetwork:
             b = np.random.randn(layers[i+1])
             self.weights.append(w)
             self.biases.append(b)
-        
+
     def forward(self, feature_embeddings):
         #Flatten the feature embeddings
         x = np.flatten(feature_embeddings)
-        
+
         for i, w in enumerate(self.weights):
            x = np.dot(x,w) + self.biases[i] # Linear transformation
            if i < len(self.weights) - 1: # Not in the final layer. Apply activation function
                 x = self.activation_fn(x)
 
         return x
-        
+
 # Example Usage
 num_features = 10
 embedding_dim = 5
@@ -109,7 +109,7 @@ class DeepFM:
         self.deep_network = DeepNetwork(num_features, embedding_dim, hidden_units_per_layer)
 
     def predict(self, feature_indices):
-      
+
         feature_embeddings = self.embeddings[feature_indices] # Shared embeddings layer
         fm_prediction = self.fm.predict(feature_indices)
         deep_output = self.deep_network.forward(feature_embeddings)

@@ -4,13 +4,13 @@ date: "2024-12-16"
 id: "how-can-i-find-the-similarity-between-rows-in-a-data-frame-in-python"
 ---
 
-Okay, let's tackle this. Finding similarity between rows in a dataframe is a common task, and it’s something I’ve dealt with quite a few times, often in the context of user behavior analysis or anomaly detection. The approach you take really depends on what you mean by "similarity," and that can significantly change the techniques you'll employ. I'll break down some common methods I’ve used, focusing on practicality and code examples.
+, let's tackle this. Finding similarity between rows in a dataframe is a common task, and it’s something I’ve dealt with quite a few times, often in the context of user behavior analysis or anomaly detection. The approach you take really depends on what you mean by "similarity," and that can significantly change the techniques you'll employ. I'll break down some common methods I’ve used, focusing on practicality and code examples.
 
 Essentially, you’re dealing with calculating distances (or, conversely, similarities) between vectors where each row represents a vector in a multi-dimensional space. The features in your data become the dimensions. Let's talk about a few options.
 
-Firstly, if you’re working with numerical data, the cosine similarity is a solid contender. It measures the angle between two vectors, effectively ignoring differences in magnitude. This is particularly useful when your raw feature values might differ in scale but the relative ratios between features are more important. Think of it like this: one user might watch a lot of content *overall*, while another watches less; cosine similarity cares about whether they *prefer* similar *types* of content, not just the total amount they consume.
+Firstly, if you’re working with numerical data, the cosine similarity is a solid contender. It measures the angle between two vectors, effectively ignoring differences in magnitude. This is particularly useful when your raw feature values might differ in scale but the relative ratios between features are more important. Think of it like this: one user might watch a lot of content _overall_, while another watches less; cosine similarity cares about whether they _prefer_ similar _types_ of content, not just the total amount they consume.
 
-I remember a project where I was analyzing sensor readings from industrial equipment. Raw voltage readings varied dramatically between devices but the *patterns* of changes were far more useful. The cosine similarity became invaluable in that instance, because it let me quickly cluster machines that were behaving similarly, regardless of the absolute voltage measurements.
+I remember a project where I was analyzing sensor readings from industrial equipment. Raw voltage readings varied dramatically between devices but the _patterns_ of changes were far more useful. The cosine similarity became invaluable in that instance, because it let me quickly cluster machines that were behaving similarly, regardless of the absolute voltage measurements.
 
 Here's how you'd typically implement it with pandas and scikit-learn:
 
@@ -44,7 +44,7 @@ print(cosine_sim_df)
 
 This code snippet calculates the cosine similarity between every pair of rows in your dataframe and returns a square matrix, where each cell (i, j) represents the cosine similarity between row i and row j. Notice that the diagonal elements will always be 1, because the cosine similarity between a vector and itself is 1.
 
-Now, let's move onto another common scenario. If your data includes categorical features, the Euclidean distance might not be the best choice. Instead, you'll want to consider distance measures that work well with categorical data. One popular approach here is to first convert categorical variables to numerical representations using techniques like one-hot encoding, and *then* apply your chosen distance calculation. However, we also can look at overlap between the categories to directly compare them. This can be useful when high numbers of features are present.
+Now, let's move onto another common scenario. If your data includes categorical features, the Euclidean distance might not be the best choice. Instead, you'll want to consider distance measures that work well with categorical data. One popular approach here is to first convert categorical variables to numerical representations using techniques like one-hot encoding, and _then_ apply your chosen distance calculation. However, we also can look at overlap between the categories to directly compare them. This can be useful when high numbers of features are present.
 
 For example, let’s say you’re dealing with user profiles with features like "favorite genre" (which might be categories like "action," "comedy," "drama"). Here's how you might encode these and then calculate similarity:
 
@@ -64,7 +64,7 @@ def calculate_jaccard_similarity(df):
     """
     encoder = OneHotEncoder(handle_unknown='ignore')
     encoded_features = encoder.fit_transform(df).toarray()
-    
+
     similarity_matrix = []
     for i in range(len(encoded_features)):
         row_sims = []
@@ -121,9 +121,9 @@ In this final code example, the gower distance is used to assess the similarity 
 
 For more in-depth information on these approaches, I’d recommend delving into these resources:
 
-*   **"Pattern Recognition and Machine Learning" by Christopher M. Bishop:** This is a comprehensive book on machine learning that goes into the mathematics behind many distance and similarity metrics. The sections on clustering and dimensionality reduction are particularly relevant.
-*   **"The Elements of Statistical Learning" by Hastie, Tibshirani, and Friedman:** This is another standard text that provides a very solid statistical perspective on distance-based methods. It’s more theoretical than Bishop, but equally valuable.
-*   **Scikit-learn documentation:** The scikit-learn documentation for `sklearn.metrics.pairwise` (for cosine similarity) and `sklearn.preprocessing` (for one-hot encoding) provides practical information on usage and underlying details.
-*   **Research papers on Gower distance:** You can find several papers detailing how Gower distance works. A good search query on Google Scholar would be “gower distance mixed data types”.
+- **"Pattern Recognition and Machine Learning" by Christopher M. Bishop:** This is a comprehensive book on machine learning that goes into the mathematics behind many distance and similarity metrics. The sections on clustering and dimensionality reduction are particularly relevant.
+- **"The Elements of Statistical Learning" by Hastie, Tibshirani, and Friedman:** This is another standard text that provides a very solid statistical perspective on distance-based methods. It’s more theoretical than Bishop, but equally valuable.
+- **Scikit-learn documentation:** The scikit-learn documentation for `sklearn.metrics.pairwise` (for cosine similarity) and `sklearn.preprocessing` (for one-hot encoding) provides practical information on usage and underlying details.
+- **Research papers on Gower distance:** You can find several papers detailing how Gower distance works. A good search query on Google Scholar would be “gower distance mixed data types”.
 
 Remember, choosing the right similarity metric is not just about syntax; it's about understanding your data and what "similarity" truly means in your particular context. Carefully consider the nature of your features when making your selection. It may take some experimentation to find the best solution, so don’t be afraid to iterate and adjust your approach based on the results you’re getting. This is the crux of building a strong machine learning foundation and it’s something I’ve come to appreciate over time.

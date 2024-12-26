@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-there-extra-session-generating-with-rails-52-jruby-9340-268"
 ---
 
-alright, so you're seeing extra sessions popping up with rails 5.2 and jruby 9.3.4.0 (that’s basically ruby 2.6.8 compat), right? yeah, i've been there, battled with that beast myself a while back. it’s not exactly a straightforward problem, and it took me a fair amount of head scratching to get to the bottom of it. let me lay out what i learned and maybe it will save you some time.
+, so you're seeing extra sessions popping up with rails 5.2 and jruby 9.3.4.0 (that’s basically ruby 2.6.8 compat), right? yeah, i've been there, battled with that beast myself a while back. it’s not exactly a straightforward problem, and it took me a fair amount of head scratching to get to the bottom of it. let me lay out what i learned and maybe it will save you some time.
 
 first off, it’s not typically a rails core issue, especially if you're not seeing this behavior with standard ruby. the problem usually stems from how jruby interacts with rack and the underlying java servlet container, things that are often different than normal ruby. you end up with subtle differences in session handling that manifest as these ghost sessions.
 
@@ -51,6 +51,7 @@ Rails.application.config.session_store :active_record_store,
                                        secure: true, # if https is used
                                        httponly: true # prevent javascript access
 ```
+
 this snippet is important. being explicit with `expire_after`, `same_site`, `secure`, `httponly` can help with some inconsistencies. also, make sure to have a `session_domain` set correctly. if you are using subdomains for example, this will save you some headache. i forgot to set the `session_domain` once, and spent 2 days on a wild goose chase until i figured it out. i wasn't a happy bunny, and my hairline is still recovering from it.
 
 now, about those http headers. often the webserver you’re running in jruby may have its own settings that override rails. for example if you are running inside a tomcat server, there are configuration files (like `context.xml` or the `server.xml`) that control session management. i strongly suggest you to review that too. look for anything related to session timeout, session cookie attributes and how the server handles persistent http connections and make sure they are aligned with what rails expects. you should also look at your loadbalancer and reverse proxy configuration too, sometimes they mess up the headers without you even knowing it. it has happened to me.
@@ -85,15 +86,10 @@ end
 # config/application.rb
 config.middleware.use SessionDebugger
 ```
+
 this middleware simply outputs the session id and headers for every request, so it’s easier to see what’s going on, and find those subtle edge cases that are creating those extra sessions. remember to add the middeware in the rails `application.rb` config.
 
-so to summarize, when you’re seeing phantom sessions with rails, jruby, and a java webserver, focus on the following:
-    1. ensure your rails session configuration is explicit and complete, specifically the expiration, domain, `secure`, and `same_site` flags.
-    2. examine web server configuration for session management settings and http header manipulation.
-    3. be sure to check your loadbalancer headers
-    4. check your application middleware stack
-    5. double-check your gems to be compatible with jruby version.
-    6. test, test and test, with specific scenarios that are causing the session problems.
+so to summarize, when you’re seeing phantom sessions with rails, jruby, and a java webserver, focus on the following: 1. ensure your rails session configuration is explicit and complete, specifically the expiration, domain, `secure`, and `same_site` flags. 2. examine web server configuration for session management settings and http header manipulation. 3. be sure to check your loadbalancer headers 4. check your application middleware stack 5. double-check your gems to be compatible with jruby version. 6. test, test and test, with specific scenarios that are causing the session problems.
 
 as for more in-depth reading about rack and session management, i would recommend looking into “rack: a ruby web server interface” by christian neukirchen and “understanding the session middleware” by rack. those are more on the low-level side, but they helped me understand the process behind the scenes. also i recommend reading the jruby documentation about rack and session handling. sometimes, it is just a matter of looking at the documentation again (and again, and again), i know it is boring, but that's how you find these things.
 

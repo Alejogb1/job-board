@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-am-i-getting-error-when-saving-a-keras-model-with-custom-functions-and-loading-it-to-a-new-notebook"
 ---
 
-Okay, let's tackle this. The "keras model saving error with custom functions" problem—I've seen that one pop up enough times in the field, it feels almost like an old friend, albeit a rather irritating one. It's a classic symptom of how keras handles serialization and deserialization of models, especially when you introduce user-defined components like custom layers, loss functions, or metrics. The core issue revolves around the fact that when you save a keras model to disk, it essentially serializes the architecture and trained weights. However, it doesn't automatically serialize the *definitions* of your custom functions.
+, let's tackle this. The "keras model saving error with custom functions" problem—I've seen that one pop up enough times in the field, it feels almost like an old friend, albeit a rather irritating one. It's a classic symptom of how keras handles serialization and deserialization of models, especially when you introduce user-defined components like custom layers, loss functions, or metrics. The core issue revolves around the fact that when you save a keras model to disk, it essentially serializes the architecture and trained weights. However, it doesn't automatically serialize the _definitions_ of your custom functions.
 
-Imagine, if you will, a scenario from a past project: we were developing a time-series anomaly detection system using a recurrent neural network. We had crafted a very specific, custom loss function incorporating a weighted combination of reconstruction error and a temporal smoothness penalty. Everything was running smoothly in the training notebook. But when I tried to load the saved model in a separate notebook for prediction, boom—errors. I realized the model file was essentially saying, "I know this loss function *should* exist, but I have no idea *what it is*."
+Imagine, if you will, a scenario from a past project: we were developing a time-series anomaly detection system using a recurrent neural network. We had crafted a very specific, custom loss function incorporating a weighted combination of reconstruction error and a temporal smoothness penalty. Everything was running smoothly in the training notebook. But when I tried to load the saved model in a separate notebook for prediction, boom—errors. I realized the model file was essentially saying, "I know this loss function _should_ exist, but I have no idea _what it is_."
 
 Here's the technical breakdown: keras relies on Python's `pickle` or `hdf5` serialization (depending on the saving method). These tools can serialize data structures and object states, but they don’t automatically capture the code behind custom functions or classes. Consequently, when you load the model, it has no way to reconstruct your custom components, resulting in errors. Usually, these are `ValueError`s, `TypeError`s, or `NameError`s indicating that your custom function or class is not defined.
 
@@ -145,20 +145,20 @@ print("Custom Layer Prediction success:", predictions.shape)
 
 ```
 
-The crucial part here is the `get_config()` method within the custom layer. This method is crucial for serialization and ensures that during the loading process, Keras can reconstruct the custom layer by specifying the units and activation function. You *must* define `get_config` for your custom layer to handle serialization.
+The crucial part here is the `get_config()` method within the custom layer. This method is crucial for serialization and ensures that during the loading process, Keras can reconstruct the custom layer by specifying the units and activation function. You _must_ define `get_config` for your custom layer to handle serialization.
 
 **Key Takeaways and Further Study:**
 
-*   **`custom_objects` is essential:** Always use `custom_objects` when loading a model that uses custom functions or layers.
-*   **`get_config` for custom layers:** Ensure your custom layers implement `get_config` correctly for proper serialization and deserialization.
-*   **Consider alternative serialization:** Instead of HDF5, you may want to explore saving the entire keras model in SavedModel format. This format often is more robust in handling complex model structures, though it still relies on `custom_objects` for loading custom functions, and may require extra caution when dealing with environments that may not have the exact code structure available.
-*   **Explicitly define components:** Do not assume the environment you load the model into will have access to the same function or class definitions present in your training environment.
+- **`custom_objects` is essential:** Always use `custom_objects` when loading a model that uses custom functions or layers.
+- **`get_config` for custom layers:** Ensure your custom layers implement `get_config` correctly for proper serialization and deserialization.
+- **Consider alternative serialization:** Instead of HDF5, you may want to explore saving the entire keras model in SavedModel format. This format often is more robust in handling complex model structures, though it still relies on `custom_objects` for loading custom functions, and may require extra caution when dealing with environments that may not have the exact code structure available.
+- **Explicitly define components:** Do not assume the environment you load the model into will have access to the same function or class definitions present in your training environment.
 
 For deeper insights, I recommend exploring the following resources:
 
 1.  **The TensorFlow API Documentation for `tf.keras.models.save_model` and `tf.keras.models.load_model`:** This provides the most accurate details about model saving and loading capabilities.
 2.  **"Deep Learning with Python" by François Chollet:** This book provides a comprehensive understanding of Keras, including detailed explanations on model serialization and custom layers (particularly chapter 8 focusing on Keras layers).
-3. **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:**  This book includes detailed explanations of the workings of keras models and their serialization mechanisms, particularly in the context of defining and saving custom layers.
-4. **The "Custom Layers" tutorial on the TensorFlow website:** This is especially useful when working with more complicated custom model components.
+3.  **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book includes detailed explanations of the workings of keras models and their serialization mechanisms, particularly in the context of defining and saving custom layers.
+4.  **The "Custom Layers" tutorial on the TensorFlow website:** This is especially useful when working with more complicated custom model components.
 
 These resources should provide a more complete understanding of how keras model loading and saving work. Dealing with custom components does require a little extra attention to detail, but it’s a hurdle that’s easily cleared with the right techniques.

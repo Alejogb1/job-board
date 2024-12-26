@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "does-amazon-fargate-require-high-availability"
 ---
 
-Okay, let's unpack this. I've certainly dealt with my fair share of container orchestration scenarios over the years, and the question of high availability with Fargate always comes up. It's not a simple yes or no, but rather a matter of understanding how Fargate functions and how you’re architecting your application around it. Let's dive into the specifics from a practical, experience-driven perspective.
+, let's unpack this. I've certainly dealt with my fair share of container orchestration scenarios over the years, and the question of high availability with Fargate always comes up. It's not a simple yes or no, but rather a matter of understanding how Fargate functions and how you’re architecting your application around it. Let's dive into the specifics from a practical, experience-driven perspective.
 
-When you consider 'high availability', the underlying premise typically revolves around minimizing downtime and ensuring continuous service for your end-users. Fargate itself, being a serverless compute engine, takes a significant load off your shoulders by handling the underlying infrastructure. However, it doesn't magically guarantee high availability out of the box; it simply provides the *building blocks*. The responsibility of architecting for resilience and availability still primarily rests with you.
+When you consider 'high availability', the underlying premise typically revolves around minimizing downtime and ensuring continuous service for your end-users. Fargate itself, being a serverless compute engine, takes a significant load off your shoulders by handling the underlying infrastructure. However, it doesn't magically guarantee high availability out of the box; it simply provides the _building blocks_. The responsibility of architecting for resilience and availability still primarily rests with you.
 
 Here's where my experience comes into play. Years ago, I was working on a microservices-based platform for a financial trading application. We initially deployed everything on EC2 instances, manually managing scaling and patching. It was a maintenance nightmare. The move to Fargate was liberating, but it also forced us to rethink our approach to availability. We couldn't just assume Fargate would fix everything.
 
@@ -16,7 +16,7 @@ Let's break down some practical aspects using examples.
 
 **Example 1: Load Balancing and Multi-Availability Zones**
 
-The first crucial element is proper load balancing across multiple availability zones. This ensures that if one zone experiences issues, traffic is redirected to healthy instances in another zone. This is something Fargate *enables* but doesn't inherently *enforce*.
+The first crucial element is proper load balancing across multiple availability zones. This ensures that if one zone experiences issues, traffic is redirected to healthy instances in another zone. This is something Fargate _enables_ but doesn't inherently _enforce_.
 
 Imagine a basic web application deployed across two Fargate services (let's call them `web-service-a` and `web-service-b`), each in different availability zones within the same region. I'm providing an illustrative example to make it easier to follow:
 
@@ -59,7 +59,7 @@ service_b_config = {
 
 ```
 
-In this example, `service_a_config` and `service_b_config` each point to different subnets across at least two availability zones, and both use the same target group of your load balancer (e.g. application load balancer) . This isn't actual executable code, but it represents how you'd *configure* your services. Note the critical aspect: multiple subnets in *different availability zones* for `awsvpc_configuration`. When using ECS, you use these configurations to register the service.
+In this example, `service_a_config` and `service_b_config` each point to different subnets across at least two availability zones, and both use the same target group of your load balancer (e.g. application load balancer) . This isn't actual executable code, but it represents how you'd _configure_ your services. Note the critical aspect: multiple subnets in _different availability zones_ for `awsvpc_configuration`. When using ECS, you use these configurations to register the service.
 
 **Example 2: Database Connectivity and Resilience**
 
@@ -143,6 +143,6 @@ if __name__ == "__main__":
 
 In a real-world environment, you would use something like AWS Cloud Map or Consul. The service health checks would be more complex than this, but the fundamental idea is to monitor the health of your services dynamically and route traffic away from unhealthy instances, and it's something your application should use to manage inter-service traffic.
 
-So, to directly answer the initial question, does Amazon Fargate require high availability? No, Fargate *doesn't* *require* it in the sense that it’s not automatically enforced. Fargate's service allows you to achieve high availability, but it's *your* responsibility to configure it correctly by addressing multiple aspects such as load balancing, data access and resilience, and service discovery mechanisms. You need to design and deploy your application and its services to take advantage of Fargate’s features and AWS services to implement the level of availability you need.
+So, to directly answer the initial question, does Amazon Fargate require high availability? No, Fargate _doesn't_ _require_ it in the sense that it’s not automatically enforced. Fargate's service allows you to achieve high availability, but it's _your_ responsibility to configure it correctly by addressing multiple aspects such as load balancing, data access and resilience, and service discovery mechanisms. You need to design and deploy your application and its services to take advantage of Fargate’s features and AWS services to implement the level of availability you need.
 
 For deeper reading, I'd recommend exploring "Building Microservices" by Sam Newman for design patterns related to resilient architectures and the AWS documentation on the well-architected framework, focusing particularly on the reliability pillar. Additionally, “Site Reliability Engineering” by Betsy Beyer et al. provides valuable insight into practical applications of these principles. Lastly, look at "Release It!: Design and Deploy Production-Ready Software" by Michael T. Nygard for architectural approaches in distributed systems. These resources provide the necessary theoretical and practical background to fully grasp and implement high availability within a Fargate-based environment.

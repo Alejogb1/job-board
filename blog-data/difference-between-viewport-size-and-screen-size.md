@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "difference-between-viewport-size-and-screen-size"
 ---
 
-Okay so you’re asking about viewport size versus screen size right Been there done that probably a million times Let me break it down for you with a little bit of my history thrown in
+you’re asking about viewport size versus screen size right Been there done that probably a million times Let me break it down for you with a little bit of my history thrown in
 
 See I’ve been neck deep in web dev since dial-up was a thing Remember waiting minutes for a single image to load Yeah that was my jam Back then we had less to worry about the complexities that come with modern responsive design viewport vs screen size was way simpler We had screens and we had a browser window that was mostly the same size So it was a breeze
 
@@ -36,8 +36,14 @@ function getScreenSize() {
 
 // Get the viewport size
 function getViewportSize() {
-  const viewportWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-    const viewportHeight = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+  const viewportWidth = Math.max(
+    document.documentElement.clientWidth || 0,
+    window.innerWidth || 0
+  );
+  const viewportHeight = Math.max(
+    document.documentElement.clientHeight || 0,
+    window.innerHeight || 0
+  );
   console.log(`Viewport width: ${viewportWidth}px`);
   console.log(`Viewport height: ${viewportHeight}px`);
   return { width: viewportWidth, height: viewportHeight };
@@ -59,14 +65,14 @@ Here’s an example:
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Viewport Example</title>
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Viewport Example</title>
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 
@@ -82,10 +88,20 @@ Now let me give you a real case example I was working on a web app and I needed 
 function calculateAvailableSpace() {
   const screenWidth = window.screen.width;
   const screenHeight = window.screen.height;
-  const viewportWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-  const viewportHeight = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-  const headerHeight = document.querySelector("header") ? document.querySelector("header").offsetHeight : 0
-  const footerHeight = document.querySelector("footer") ? document.querySelector("footer").offsetHeight : 0;
+  const viewportWidth = Math.max(
+    document.documentElement.clientWidth || 0,
+    window.innerWidth || 0
+  );
+  const viewportHeight = Math.max(
+    document.documentElement.clientHeight || 0,
+    window.innerHeight || 0
+  );
+  const headerHeight = document.querySelector("header")
+    ? document.querySelector("header").offsetHeight
+    : 0;
+  const footerHeight = document.querySelector("footer")
+    ? document.querySelector("footer").offsetHeight
+    : 0;
 
   const availableWidth = viewportWidth; // We only consider width in this example
   const availableHeight = viewportHeight - headerHeight - footerHeight;
@@ -96,15 +112,14 @@ function calculateAvailableSpace() {
   return { width: availableWidth, height: availableHeight };
 }
 
-
 // Example usage
 calculateAvailableSpace();
-
 ```
+
 So this last code snippet show you how to calculate the available space inside the viewport taking into account headers and footers if there's any this makes the user experience seamless This is real problem solving with code
 
 To sum it all up screen size is your hardware and viewport size is the area you're working with in your browser understanding the difference is vital to becoming a great front end dev These two are always at play with each other and you have to know how to use them so you can create perfect rendering experiences for your users
 
 As for resources I recommend "Responsive Web Design with HTML5 and CSS" by Ben Frain it's a classic that will teach you all the concepts It is a must have for anyone in front end web development. Also read the W3C specifications documentation for the "Viewport meta tag" you will always find updated info there and that's the source of truth. Avoid random blogs there's too much noise and misinformation
 
-Oh and one last thing you know why browsers can be so confusing sometimes Because they have way too much chrome! *ba dum tss* Okay I am out.
+Oh and one last thing you know why browsers can be so confusing sometimes Because they have way too much chrome! _ba dum tss_ I am out.

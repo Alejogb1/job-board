@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-to-pass-values-from-airflows-dagrunconf-to-sshoperator"
 ---
 
-Okay, let’s talk about passing values from Airflow’s `dag_run.conf` to the `SSHOperator`. It's a situation I’ve encountered countless times, particularly when dealing with dynamically generated configurations or orchestrating tasks that require parameters at runtime. It’s not as straightforward as simply passing a variable, but the mechanics are fairly logical once you understand how Airflow context works. This is a critical ability for building robust, data-driven workflows.
+, let’s talk about passing values from Airflow’s `dag_run.conf` to the `SSHOperator`. It's a situation I’ve encountered countless times, particularly when dealing with dynamically generated configurations or orchestrating tasks that require parameters at runtime. It’s not as straightforward as simply passing a variable, but the mechanics are fairly logical once you understand how Airflow context works. This is a critical ability for building robust, data-driven workflows.
 
-The heart of the matter lies in understanding that Airflow templates its arguments. These templates use Jinja2 templating engine and can access the execution context of the task. The `dag_run.conf` dictionary, which is what you get when you trigger a DAG with a configuration, is part of this context. So, instead of thinking about passing a variable *directly*, we actually construct strings that, when evaluated, contain the values we need.
+The heart of the matter lies in understanding that Airflow templates its arguments. These templates use Jinja2 templating engine and can access the execution context of the task. The `dag_run.conf` dictionary, which is what you get when you trigger a DAG with a configuration, is part of this context. So, instead of thinking about passing a variable _directly_, we actually construct strings that, when evaluated, contain the values we need.
 
 From past experience, I recall working on a project involving nightly data processing on a remote cluster. We used a single DAG to trigger various processing pipelines based on the configuration passed at dag trigger time. For instance, we'd use the `dag_run.conf` to specify the location of input data, processing parameters, and output paths. Without the ability to dynamically use these configurations, our workflow would have been far less flexible and maintainable.
 
@@ -68,6 +68,7 @@ with DAG(
         """,
     )
 ```
+
 Here, if ‘data_path’ is not specified in `dag_run.conf`, `/default/path` will be used, similarly ‘today’ would be used if ‘processing_date’ is absent. This adds an important element of stability.
 
 **Example 3: Passing Multiple Parameters & Formatted Commands**
@@ -104,11 +105,11 @@ This demonstrates the passing of multiple parameters that are used in an actual 
 
 **Important Considerations:**
 
-*   **Security:** Be cautious about directly passing sensitive information through `dag_run.conf`. Consider using Airflow variables for sensitive information, and retrieve those variables within your task using Jinja templates, or use secure secrets management systems.
-*   **Complex Data Structures:** If your `dag_run.conf` contains complex data structures like nested dictionaries or lists, you might want to serialise them (e.g., using `json.dumps`) when setting the `dag_run.conf` before using `json.loads` within your Jinja template. This is more suited to situations where complex configurations need to be processed within the remote task, rather than simply passed as arguments. You’d want to avoid that when simpler solutions will do.
-*   **Command Structure:** Ensure the command you build through Jinja templating is properly escaped for the shell environment. Misplaced quotes or other special characters can break your commands.
-*   **Error Handling:** If your command depends on the existence of specific parameters, utilize the defaults or use other mechanism to prevent the `SSHOperator` failing with errors. I've found it useful to add validation within the remote script itself, not just the Airflow DAG. This allows you to handle any issues directly on the remote server and provides more robust logging.
-*   **Testing**: Thoroughly test with different `dag_run.conf` values to ensure your templates behave as intended and handle unexpected input.
+- **Security:** Be cautious about directly passing sensitive information through `dag_run.conf`. Consider using Airflow variables for sensitive information, and retrieve those variables within your task using Jinja templates, or use secure secrets management systems.
+- **Complex Data Structures:** If your `dag_run.conf` contains complex data structures like nested dictionaries or lists, you might want to serialise them (e.g., using `json.dumps`) when setting the `dag_run.conf` before using `json.loads` within your Jinja template. This is more suited to situations where complex configurations need to be processed within the remote task, rather than simply passed as arguments. You’d want to avoid that when simpler solutions will do.
+- **Command Structure:** Ensure the command you build through Jinja templating is properly escaped for the shell environment. Misplaced quotes or other special characters can break your commands.
+- **Error Handling:** If your command depends on the existence of specific parameters, utilize the defaults or use other mechanism to prevent the `SSHOperator` failing with errors. I've found it useful to add validation within the remote script itself, not just the Airflow DAG. This allows you to handle any issues directly on the remote server and provides more robust logging.
+- **Testing**: Thoroughly test with different `dag_run.conf` values to ensure your templates behave as intended and handle unexpected input.
 
 **Further Resources:**
 

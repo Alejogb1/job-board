@@ -4,20 +4,20 @@ date: "2024-12-23"
 id: "how-do-i-calculate-pytorch-layer-input-and-output-shapes"
 ---
 
-Alright, let's tackle this. I've spent a fair bit of time in the trenches debugging neural network architectures, and I can tell you firsthand that getting layer dimensions correct is absolutely foundational. A shape mismatch can derail your entire training process, resulting in everything from subtle bugs to blatant error explosions. Let’s break down how to accurately calculate input and output shapes in PyTorch, and I'll share a few hard-earned lessons from the past.
+, let's tackle this. I've spent a fair bit of time in the trenches debugging neural network architectures, and I can tell you firsthand that getting layer dimensions correct is absolutely foundational. A shape mismatch can derail your entire training process, resulting in everything from subtle bugs to blatant error explosions. Let’s break down how to accurately calculate input and output shapes in PyTorch, and I'll share a few hard-earned lessons from the past.
 
 The fundamental principle is that each PyTorch layer, whether it's a convolutional layer, a fully connected layer, a pooling layer, or anything else, operates on its input tensor to produce an output tensor. Understanding this transformation is key. The dimensions of the input tensor determine the size of the computation, and the parameters of the layer, such as filters, kernel size, stride, padding, and more, dictate the shape of the output.
 
 Let’s start with the most frequently encountered layer type: the convolutional layer ( `nn.Conv2d`). The formula for calculating output height and width for a 2d convolution is this:
 
-Output Height = (Input Height + 2 * Padding - Kernel Height) / Stride + 1
+Output Height = (Input Height + 2 \* Padding - Kernel Height) / Stride + 1
 
-Output Width = (Input Width + 2 * Padding - Kernel Width) / Stride + 1
+Output Width = (Input Width + 2 \* Padding - Kernel Width) / Stride + 1
 
-*   **Input Height/Width:** These are the spatial dimensions of the input feature map.
-*   **Kernel Height/Width:** These are the spatial dimensions of the convolutional filter (also called kernel).
-*   **Padding:** Amount of padding added to each edge of the input.
-*   **Stride:** The number of pixels the kernel moves in each direction during the convolution.
+- **Input Height/Width:** These are the spatial dimensions of the input feature map.
+- **Kernel Height/Width:** These are the spatial dimensions of the convolutional filter (also called kernel).
+- **Padding:** Amount of padding added to each edge of the input.
+- **Stride:** The number of pixels the kernel moves in each direction during the convolution.
 
 It’s very important to note that integer division is used here, and any remainder is discarded. Pay particular attention to the padding values; using "same" padding, which can be tempting, doesn't always lead to the output size matching the input size, especially with strided convolutions or odd kernel sizes, unless you're meticulous with how you are calculating the amount of padding that is actually required.
 
@@ -97,7 +97,7 @@ print(f"Output from linear layer shape: {output_linear.shape}")
 
 ```
 
-In this example, we have an initial convolution layer which reduces the input dimension using a stride of 2, changing spatial dimensions to 13x13, and channels to 32. We then flatten this output starting from the channel dimension into a 1 dimensional tensor of length 32 * 13 * 13 = 5408, which is then fed into a linear layer outputting a 1x10 tensor which could be suitable for a classification task with 10 classes.
+In this example, we have an initial convolution layer which reduces the input dimension using a stride of 2, changing spatial dimensions to 13x13, and channels to 32. We then flatten this output starting from the channel dimension into a 1 dimensional tensor of length 32 _ 13 _ 13 = 5408, which is then fed into a linear layer outputting a 1x10 tensor which could be suitable for a classification task with 10 classes.
 
 Finally, let's consider pooling layers, such as `nn.MaxPool2d` and `nn.AvgPool2d`. These layers primarily reduce the spatial dimensions of a feature map, leaving the channel dimension unchanged. The formulas are similar to those of convolutions:
 

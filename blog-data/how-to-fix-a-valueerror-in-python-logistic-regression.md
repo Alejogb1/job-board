@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-fix-a-valueerror-in-python-logistic-regression"
 ---
 
-Alright, let's tackle this. It's not uncommon to stumble upon a `ValueError` when working with logistic regression in Python, particularly when using libraries like scikit-learn. I've seen this countless times across various projects, from straightforward classification problems to more complex ones involving extensive feature engineering. The core issue typically boils down to data mismatches between what the logistic regression model expects and what it receives. Here's how I approach debugging these problems, focusing on the underlying causes and practical solutions.
+, let's tackle this. It's not uncommon to stumble upon a `ValueError` when working with logistic regression in Python, particularly when using libraries like scikit-learn. I've seen this countless times across various projects, from straightforward classification problems to more complex ones involving extensive feature engineering. The core issue typically boils down to data mismatches between what the logistic regression model expects and what it receives. Here's how I approach debugging these problems, focusing on the underlying causes and practical solutions.
 
 First off, let's understand the fundamental expectations of a logistic regression model. It essentially needs numerical input features, typically in the form of a numpy array or a pandas DataFrame, and a target variable that it can understand, usually binary (0 or 1) or multi-class labels encoded as integers. The `ValueError` generally surfaces when these expectations aren’t met.
 
@@ -41,6 +41,7 @@ except ValueError as e:
 
 
 ```
+
 Here, the first attempt fails with a `ValueError` because `X_train_incorrect` has 110 samples while `y_train_incorrect` has 100 samples. The second attempt, with correctly matched sample sizes, succeeds.
 
 Another frequent culprit is having non-numerical data within your feature set. Logistic regression, at its core, is a mathematical model operating on numbers. If, for example, you have a column representing categorical data like color names (e.g., "red," "blue," "green"), you’ll certainly face a `ValueError`. This happened during a sentiment analysis task where, I accidentally mixed textual reviews with numerical features, which obviously resulted in issues. To tackle this, you need to encode these categorical variables into numerical representations using techniques like one-hot encoding or label encoding. Pandas provides easy functions for doing just this. Let's look at a case with non-numerical features and how to correct it using pandas.

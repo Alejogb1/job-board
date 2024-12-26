@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-does-a-tensor-object-lack-the-assign-attribute"
 ---
 
-Okay, let's address the question of why tensor objects, in typical deep learning frameworks, don’t possess an `assign` attribute directly. It's a good one, and one that I've encountered firsthand several times, particularly when transitioning between different coding paradigms, such as going from a more traditional imperative style to one utilizing frameworks built around computation graphs.
+, let's address the question of why tensor objects, in typical deep learning frameworks, don’t possess an `assign` attribute directly. It's a good one, and one that I've encountered firsthand several times, particularly when transitioning between different coding paradigms, such as going from a more traditional imperative style to one utilizing frameworks built around computation graphs.
 
-The core reason lies in the fundamental design principle of many tensor manipulation libraries – especially those designed for deep learning – which heavily rely on the concept of *immutability* and the use of a *computational graph*. Think of tensors, in this context, not as mutable containers of data that you freely adjust in place, but rather as nodes in a graph representing mathematical operations.
+The core reason lies in the fundamental design principle of many tensor manipulation libraries – especially those designed for deep learning – which heavily rely on the concept of _immutability_ and the use of a _computational graph_. Think of tensors, in this context, not as mutable containers of data that you freely adjust in place, but rather as nodes in a graph representing mathematical operations.
 
-In the early days, I remember working on a project involving recurrent neural networks where I constantly tried to update the weight tensors directly, similar to how you might modify a normal array. It resulted in a complete mess of unexpected behavior and gradients not flowing correctly during backpropagation. It was an excellent, albeit frustrating, lesson in understanding that these libraries prioritize the construction and execution of the entire computation graph before updating any actual tensor values. Trying to modify a tensor *in place* breaks this fundamental assumption.
+In the early days, I remember working on a project involving recurrent neural networks where I constantly tried to update the weight tensors directly, similar to how you might modify a normal array. It resulted in a complete mess of unexpected behavior and gradients not flowing correctly during backpropagation. It was an excellent, albeit frustrating, lesson in understanding that these libraries prioritize the construction and execution of the entire computation graph before updating any actual tensor values. Trying to modify a tensor _in place_ breaks this fundamental assumption.
 
-A computation graph, in simple terms, represents the sequence of operations you perform. Each tensor is not just data; it's a result of some previous operation, or an input. When you try to *assign* a new value directly using something like `tensor.assign(...)`, you're trying to bypass this carefully constructed graph. This leads to problems like:
+A computation graph, in simple terms, represents the sequence of operations you perform. Each tensor is not just data; it's a result of some previous operation, or an input. When you try to _assign_ a new value directly using something like `tensor.assign(...)`, you're trying to bypass this carefully constructed graph. This leads to problems like:
 
 1.  **Broken Backpropagation:** The automatic differentiation engine needs to trace back through the graph to calculate gradients. If you arbitrarily change a tensor's value outside this graph, the chain of operations becomes invalid, and gradient calculation becomes meaningless.
 
@@ -68,7 +68,7 @@ class Tensor:
     @staticmethod
     def zeros(shape, requires_grad=False):
         return Tensor(np.zeros(shape), requires_grad=requires_grad)
-    
+
     @staticmethod
     def ones(shape, requires_grad=False):
         return Tensor(np.ones(shape), requires_grad=requires_grad)
@@ -85,6 +85,7 @@ bias = Tensor.zeros((10,), requires_grad=True)
 print("Initial weights:", weight)
 print("Initial biases:", bias)
 ```
+
 Here, `Tensor.zeros()`, `Tensor.ones()`, and `Tensor.rand()` are the equivalents of generating initial data. The crucial aspect is that these functions return new `Tensor` objects within the context of the library's handling, respecting immutability.
 
 **Example 2: Updating a Tensor During Optimization**
@@ -117,7 +118,7 @@ print("Updated weights:", weight)
 print("Updated biases:", bias)
 ```
 
-Here, after the backward pass computes the gradients, we *modify the `data` attribute directly*, which is not the actual tensor, but the numerical representation underneath that we are adjusting as part of the optimizer behavior. The actual tensor remains unchanged as a node in the graph. In more sophisticated cases, this would typically be handled by an optimizer object, managing the updates. Note that we are accessing the numerical representation directly since this is simply a simulation, a proper optimizer would typically use a separate mechanism to update the actual tensors.
+Here, after the backward pass computes the gradients, we _modify the `data` attribute directly_, which is not the actual tensor, but the numerical representation underneath that we are adjusting as part of the optimizer behavior. The actual tensor remains unchanged as a node in the graph. In more sophisticated cases, this would typically be handled by an optimizer object, managing the updates. Note that we are accessing the numerical representation directly since this is simply a simulation, a proper optimizer would typically use a separate mechanism to update the actual tensors.
 
 **Example 3: Modifying a Tensor Based on Computation**
 
@@ -149,8 +150,8 @@ Essentially, the absence of a direct `assign` method is a deliberate design deci
 
 To delve deeper into these concepts, I highly recommend consulting resources like:
 
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book provides a comprehensive theoretical foundation for deep learning, including a thorough treatment of computational graphs and automatic differentiation.
-*   **"Mathematics for Machine Learning" by Marc Peter Deisenroth, A. Aldo Faisal, and Cheng Soon Ong:** For those looking for the underlying mathematical concepts, this is an excellent reference to grasp gradient computations and optimization techniques in detail.
-*   **The documentation of your specific deep learning framework:** Read the documentation of TensorFlow, PyTorch, or whichever you are using. They all have excellent explanations on tensors, graphs, and optimization routines.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book provides a comprehensive theoretical foundation for deep learning, including a thorough treatment of computational graphs and automatic differentiation.
+- **"Mathematics for Machine Learning" by Marc Peter Deisenroth, A. Aldo Faisal, and Cheng Soon Ong:** For those looking for the underlying mathematical concepts, this is an excellent reference to grasp gradient computations and optimization techniques in detail.
+- **The documentation of your specific deep learning framework:** Read the documentation of TensorFlow, PyTorch, or whichever you are using. They all have excellent explanations on tensors, graphs, and optimization routines.
 
 The absence of an `assign` attribute might seem limiting initially, but it’s a cornerstone feature that facilitates efficient and correct computations in deep learning environments. Understanding the immutability of tensor objects and their role in computational graphs is fundamental to using these libraries effectively. It's an experience I learned the hard way, but one that's made me a much more effective deep learning engineer.

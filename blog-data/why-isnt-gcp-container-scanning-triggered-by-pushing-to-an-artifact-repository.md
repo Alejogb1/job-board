@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-isnt-gcp-container-scanning-triggered-by-pushing-to-an-artifact-repository"
 ---
 
-Okay, let's tackle this one. It's a common point of confusion, and I remember dealing with this specific scenario back when I was leading the deployment automation team at 'TechCorp' — quite the learning experience, that was. The expectation, naturally, is that pushing a container image to Artifact Registry (or any similar registry, really) would automatically trigger a vulnerability scan. However, that's not how google cloud platform's (gcp) container scanning system is designed to function out of the box. The reason boils down to a crucial distinction between image storage and the scanning process itself: they're intentionally decoupled for flexibility and performance.
+, let's tackle this one. It's a common point of confusion, and I remember dealing with this specific scenario back when I was leading the deployment automation team at 'TechCorp' — quite the learning experience, that was. The expectation, naturally, is that pushing a container image to Artifact Registry (or any similar registry, really) would automatically trigger a vulnerability scan. However, that's not how google cloud platform's (gcp) container scanning system is designed to function out of the box. The reason boils down to a crucial distinction between image storage and the scanning process itself: they're intentionally decoupled for flexibility and performance.
 
 In short, a push event to artifact registry is a passive storage operation; it merely makes the image available. The container scanning mechanism, powered by container analysis, is an independent system that operates on a pull basis. it doesn't constantly monitor registry push events waiting for something to scan; instead, you need to explicitly initiate a scan request or use a scanning policy configuration. This decoupling serves several purposes:
 
-firstly, it allows you control over *when* and *how* scans occur. think of it; not every image push is intended for immediate production deployment. some might be experimental, in development, or perhaps even temporary. triggering a scan on *every* push would be incredibly wasteful on compute resources and could introduce unnecessary delays in CI/CD pipelines. This is especially true at scale where dozens of pushes may occur during short intervals. decoupling the process enables us to focus scanning efforts where they’re really needed.
+firstly, it allows you control over _when_ and _how_ scans occur. think of it; not every image push is intended for immediate production deployment. some might be experimental, in development, or perhaps even temporary. triggering a scan on _every_ push would be incredibly wasteful on compute resources and could introduce unnecessary delays in CI/CD pipelines. This is especially true at scale where dozens of pushes may occur during short intervals. decoupling the process enables us to focus scanning efforts where they’re really needed.
 
 Secondly, this design facilitates the use of scanning policies. you can configure container analysis to scan images based on criteria like project, registry location, or even metadata tags. if the system automatically scanned everything, the control offered by policy based scan management would be severely hampered, making it challenging to implement tailored scanning strategies for different deployment environments.
 
@@ -28,9 +28,9 @@ gcloud container analysis occurrences create \
 
 here's a breakdown:
 
-*   `gcloud container analysis occurrences create`: this is the command itself, telling gcloud to create a new occurrence. an occurrence, in this context, represents a specific instance of an analysis result.
-*   `--resource-uri`: this is the unique identifier of the container image you want to scan. it includes the registry location, the image repository, the image name, and the digest, which ensures you're scanning the exact image you pushed. you can obtain this digest value from the output of a successful `docker push` command, or from inspecting the artifact registry UI.
-*   `--note`: this parameter specifies the type of analysis you want to perform. by specifying the "vulnerability" note, you're requesting a vulnerability scan. this particular note name (`projects/your-project/notes/vulnerability`) is the standard note for vulnerability scanning.
+- `gcloud container analysis occurrences create`: this is the command itself, telling gcloud to create a new occurrence. an occurrence, in this context, represents a specific instance of an analysis result.
+- `--resource-uri`: this is the unique identifier of the container image you want to scan. it includes the registry location, the image repository, the image name, and the digest, which ensures you're scanning the exact image you pushed. you can obtain this digest value from the output of a successful `docker push` command, or from inspecting the artifact registry UI.
+- `--note`: this parameter specifies the type of analysis you want to perform. by specifying the "vulnerability" note, you're requesting a vulnerability scan. this particular note name (`projects/your-project/notes/vulnerability`) is the standard note for vulnerability scanning.
 
 this command will kick off a scan, and you can subsequently use other `gcloud container analysis` commands to retrieve the results.
 
@@ -90,8 +90,8 @@ finally, there's gcp's vulnerability scanning policy. you configure this through
 
 for further study, i strongly recommend these resources:
 
-*   **the official google cloud documentation for container analysis:** always start there. it's comprehensive and kept up-to-date.
-*   **"kubernetes in action" by marko luksa:** while not solely focused on container scanning, it provides valuable insights into containerization and security, helping to frame the context. the principles there are applicable to gcp environments.
-*   **the cis benchmark for kubernetes:** it offers a lot of best practices around hardening kubernetes systems, some principles could apply to securing your container images.
+- **the official google cloud documentation for container analysis:** always start there. it's comprehensive and kept up-to-date.
+- **"kubernetes in action" by marko luksa:** while not solely focused on container scanning, it provides valuable insights into containerization and security, helping to frame the context. the principles there are applicable to gcp environments.
+- **the cis benchmark for kubernetes:** it offers a lot of best practices around hardening kubernetes systems, some principles could apply to securing your container images.
 
 to conclude, the fact that gcp container scanning isn't directly tied to pushes isn't a limitation but a design choice that affords flexibility, control, and optimized resource usage. it requires a slight adjustment in mindset, moving from an expectation of implicit scans to explicit or policy-driven scans. this understanding allows you to choose the scanning methodology that best suits your development and security needs.

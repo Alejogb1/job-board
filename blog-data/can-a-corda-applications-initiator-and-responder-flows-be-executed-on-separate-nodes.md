@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-a-corda-applications-initiator-and-responder-flows-be-executed-on-separate-nodes"
 ---
 
-Alright, let's unpack this interesting question about Corda flows and their execution across nodes. From my past experiences building distributed ledger applications, I’ve seen firsthand how crucial understanding flow execution patterns is. It's not a straightforward "yes" or "no" – it's more nuanced. To be clear, a Corda application, or 'CorDapp,' absolutely can have its initiator and responder flows executed on separate nodes, and in fact, that’s often the intended and more common deployment configuration. The whole point of Corda is distributed consensus across a network.
+, let's unpack this interesting question about Corda flows and their execution across nodes. From my past experiences building distributed ledger applications, I’ve seen firsthand how crucial understanding flow execution patterns is. It's not a straightforward "yes" or "no" – it's more nuanced. To be clear, a Corda application, or 'CorDapp,' absolutely can have its initiator and responder flows executed on separate nodes, and in fact, that’s often the intended and more common deployment configuration. The whole point of Corda is distributed consensus across a network.
 
 However, let's dive into the mechanisms that enable this, and the constraints we face, rather than just treating it as an assumed capability. The core idea is that initiator flows, typically started by a client interacting with one node, set the business logic in motion. Then, via messaging on the Corda network, responder flows are triggered on one or more peer nodes.
 
@@ -166,7 +166,7 @@ public class RespondPriceFlow extends FlowLogic<Void> {
 }
 ```
 
-In this example the initiator (`RequestPriceFlow`) sends the product identifier and then *waits* for the price. The responder (`RespondPriceFlow`) is on a different node, computes the price, and sends the result back. This bi-directional communication is perfectly valid in Corda, as the `FlowSession` facilitates the exchange of data between the two flows running on separate nodes.
+In this example the initiator (`RequestPriceFlow`) sends the product identifier and then _waits_ for the price. The responder (`RespondPriceFlow`) is on a different node, computes the price, and sends the result back. This bi-directional communication is perfectly valid in Corda, as the `FlowSession` facilitates the exchange of data between the two flows running on separate nodes.
 
 This pattern is essential in distributed ledger systems where the data needed for a particular action might exist on another node.
 

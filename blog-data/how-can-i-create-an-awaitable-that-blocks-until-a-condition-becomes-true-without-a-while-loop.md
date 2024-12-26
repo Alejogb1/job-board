@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-create-an-awaitable-that-blocks-until-a-condition-becomes-true-without-a-while-loop"
 ---
 
-Alright, let's tackle this. Instead of starting with the usual 'first things first', let me share a particular project from my past that vividly highlights why avoiding busy-waiting with a `while` loop is crucial. Years back, I was working on a distributed system where one service needed to wait for another to reach a specific state before proceeding. Initially, we naively used a `while` loop with a polling mechanism, constantly checking the status. The performance implications were, shall we say, *less than ideal*. This led to high cpu utilization and unnecessary network traffic – essentially, our system was spending more time asking "are we there yet?" than actually doing any work. So, the core problem, as you've astutely identified, is how to create an awaitable that intelligently yields control until a condition is met, without resorting to that kind of wasteful polling.
+, let's tackle this. Instead of starting with the usual 'first things first', let me share a particular project from my past that vividly highlights why avoiding busy-waiting with a `while` loop is crucial. Years back, I was working on a distributed system where one service needed to wait for another to reach a specific state before proceeding. Initially, we naively used a `while` loop with a polling mechanism, constantly checking the status. The performance implications were, shall we say, _less than ideal_. This led to high cpu utilization and unnecessary network traffic – essentially, our system was spending more time asking "are we there yet?" than actually doing any work. So, the core problem, as you've astutely identified, is how to create an awaitable that intelligently yields control until a condition is met, without resorting to that kind of wasteful polling.
 
-The key here revolves around understanding asynchronous programming patterns and leveraging the underlying mechanisms that allow us to suspend and resume execution. We aren't looking for a 'wait' command in the traditional sense; rather, we need to construct an awaitable that *reacts* to a change in state. Think of it more as setting up a callback or notification system than actively checking a value in a loop.
+The key here revolves around understanding asynchronous programming patterns and leveraging the underlying mechanisms that allow us to suspend and resume execution. We aren't looking for a 'wait' command in the traditional sense; rather, we need to construct an awaitable that _reacts_ to a change in state. Think of it more as setting up a callback or notification system than actively checking a value in a loop.
 
 Let’s explore a few ways this can be achieved, each varying in complexity and suitability depending on your specific circumstances. I’ll provide code examples in python for clarity, but the concepts are transferable across various asynchronous environments.
 
@@ -23,7 +23,7 @@ async def condition_waiter(event, condition_check):
 
   print("Condition met, proceeding!")
   event.set() # signal that condition is met
-  
+
 async def some_async_task(event, condition_check):
   print("Waiting for the condition...")
   await event.wait()

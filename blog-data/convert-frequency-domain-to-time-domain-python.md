@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "convert-frequency-domain-to-time-domain-python"
 ---
 
-Alright so you wanna go from frequency to time domain right I've been there done that trust me It's a classic signal processing problem and it's not always straightforward especially if you're just starting out But let me break it down for you based on my own experience over the years
+so you wanna go from frequency to time domain right I've been there done that trust me It's a classic signal processing problem and it's not always straightforward especially if you're just starting out But let me break it down for you based on my own experience over the years
 
-See I remember this one project I was working on years back for a small startup we were trying to build this real time audio processing gizmo and we had this cool frequency analysis code all set up outputting beautiful spectrograms and whatnot But the higher ups wanted to actually *hear* the manipulated audio in real time Not just stare at pretty pictures so yeah that was my introduction to the inverse Fourier transform This wasn’t my first rodeo with DSP but it was the first time I had to do real time stuff and that changes everything. It was a wild time.
+See I remember this one project I was working on years back for a small startup we were trying to build this real time audio processing gizmo and we had this cool frequency analysis code all set up outputting beautiful spectrograms and whatnot But the higher ups wanted to actually _hear_ the manipulated audio in real time Not just stare at pretty pictures so yeah that was my introduction to the inverse Fourier transform This wasn’t my first rodeo with DSP but it was the first time I had to do real time stuff and that changes everything. It was a wild time.
 
 Anyway the core of this conversion lies in the Inverse Fast Fourier Transform or IFFT It's the mathematical counterpart to the FFT which you likely used to get to the frequency domain in the first place The FFT decomposes your time-domain signal into its constituent frequencies and the IFFT does the opposite it takes your frequency components and puts them back together into a time signal.
 
@@ -59,7 +59,7 @@ plt.show()
 
 ```
 
-Alright so here we're generating a simple sine wave Then we use `fft.fft()` to get the frequency data and `fft.ifft()` to go back to the time domain.  Notice I'm using `np.real()` for the `ifft()` result this is because the IFFT may return complex numbers due to floating-point errors and we're only interested in the real part in most audio processing scenarios
+so here we're generating a simple sine wave Then we use `fft.fft()` to get the frequency data and `fft.ifft()` to go back to the time domain. Notice I'm using `np.real()` for the `ifft()` result this is because the IFFT may return complex numbers due to floating-point errors and we're only interested in the real part in most audio processing scenarios
 
 Now you might be thinking that's too simple and you are absolutely right. Real world signals are far more complex We don't usually have a nice clean single frequency sine wave. Let's look at an example using a more diverse signal with multiple frequencies.
 
@@ -162,6 +162,6 @@ plt.show()
 
 Here we are creating a time domain signal and converting it to the frequency domain. Then we pad the frequency data with zeros and compute the IFFT again. Note that the resulting time-domain signal is now larger than before because of the padding which also increased the number of frequency bins so the time resolution in the time domain increased. This process is called up-sampling because you are increasing the sampling rate of the signal. I have a joke about Fourier transforms but its too complex to explain.
 
-Now as for further learning I recommend "Digital Signal Processing" by Alan V Oppenheim and Ronald W Schafer it's an absolute classic.  Also "Understanding Digital Signal Processing" by Richard G Lyons is a great practical guide And for the more mathematical deep dive I recommend "Signals and Systems" by Alan V Oppenheim and Alan S. Willsky. These are all excellent for solidifying your fundamental understanding in this field.
+Now as for further learning I recommend "Digital Signal Processing" by Alan V Oppenheim and Ronald W Schafer it's an absolute classic. Also "Understanding Digital Signal Processing" by Richard G Lyons is a great practical guide And for the more mathematical deep dive I recommend "Signals and Systems" by Alan V Oppenheim and Alan S. Willsky. These are all excellent for solidifying your fundamental understanding in this field.
 
 So yeah that's the gist of it From my own painful experiences you shouldn’t be scared of the IFFT it’s just the inverse of the FFT a lot of the problems you may encounter are related to the fact that the IFFT is a very precise and sensitive process. Double check your spectral data before the conversion check your frequencies you might also need to adjust or scale your frequencies according to your sampling rate. If you are getting weird results double check that and if all else fails go through the math yourself it's always a good practice. Good luck and remember DSP can be a bit tricky sometimes but with practice you'll get the hang of it and you can always come back here if you hit a snag.

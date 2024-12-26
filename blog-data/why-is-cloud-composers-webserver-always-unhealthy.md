@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-cloud-composers-webserver-always-unhealthy"
 ---
 
-Alright, let's tackle this. I've definitely seen this "always unhealthy" webserver issue pop up a few times with Cloud Composer, and it can be frustrating. It's rarely a single smoking gun, more like a confluence of factors. It's important to approach this systematically, examining each potential culprit before getting too deep into the weeds. My experience has taught me that the most common reasons revolve around resource constraints, network configurations, or specific settings within the Composer environment itself.
+, let's tackle this. I've definitely seen this "always unhealthy" webserver issue pop up a few times with Cloud Composer, and it can be frustrating. It's rarely a single smoking gun, more like a confluence of factors. It's important to approach this systematically, examining each potential culprit before getting too deep into the weeds. My experience has taught me that the most common reasons revolve around resource constraints, network configurations, or specific settings within the Composer environment itself.
 
 First off, the "unhealthy" status isn’t always indicative of complete webserver failure. Often, it means the health checks performed by Google’s monitoring systems are failing. These checks aren't particularly complex; they’re essentially just pings to the webserver’s health endpoint. If that endpoint doesn’t respond correctly within the defined timeframe, it flags the server as unhealthy. Let's break down the usual suspects:
 
@@ -27,7 +27,7 @@ gcloud composer environments update your-environment-name \
     --update-web-server-resource-requests cpu=1,memory=4Gi
 ```
 
-This command updates your Composer environment, increasing both the resource limits and requests for the webserver pod. The `--update-web-server-resource-limits` specifies the *maximum* resources the pod can use (CPU of 2 cores and memory of 8 GiB in this case), and the `--update-web-server-resource-requests` specify the *minimum* resources guaranteed to be allocated (CPU of 1 core and memory of 4 GiB here). Adjust these to fit your workload.
+This command updates your Composer environment, increasing both the resource limits and requests for the webserver pod. The `--update-web-server-resource-limits` specifies the _maximum_ resources the pod can use (CPU of 2 cores and memory of 8 GiB in this case), and the `--update-web-server-resource-requests` specify the _minimum_ resources guaranteed to be allocated (CPU of 1 core and memory of 4 GiB here). Adjust these to fit your workload.
 
 **Snippet 2: Verifying Network Configuration**
 
@@ -37,7 +37,7 @@ While I can't give you a complete networking configuration snippet (that's highl
 gcloud compute firewall-rules list --filter="name~'composer'"
 ```
 
-This command lists firewall rules that *might* be impacting the composer environment. Look for any that seem overly restrictive, particularly in the ingress or egress direction of your cluster and ensure that the webserver's required network communication is allowed. Then check for VPC connectors.
+This command lists firewall rules that _might_ be impacting the composer environment. Look for any that seem overly restrictive, particularly in the ingress or egress direction of your cluster and ensure that the webserver's required network communication is allowed. Then check for VPC connectors.
 
 ```bash
 gcloud compute network-connectors list --filter="name~'composer'"

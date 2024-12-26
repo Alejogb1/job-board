@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-a-mail-ids-with-the-word-admin-on-mailinator-giving-an-invalid-input-query-error"
 ---
 
-alright, so you're hitting an issue with mailinator and email addresses containing "admin", specifically getting an invalid input query error. i've bumped into similar things before, and it usually boils down to how mailinator (or any system really) handles reserved words or special character sequences in input fields. let's break down why this is likely happening and what you can do about it.
+, so you're hitting an issue with mailinator and email addresses containing "admin", specifically getting an invalid input query error. i've bumped into similar things before, and it usually boils down to how mailinator (or any system really) handles reserved words or special character sequences in input fields. let's break down why this is likely happening and what you can do about it.
 
 first off, mailinator, as a free, public email testing service, has to have some rules and restrictions. they can't just let anyone create absolutely any address they want. "admin" is a very common string, often associated with administrative accounts, and this is the exact reason why they flag it. think of it like a variable name in coding; you can't call your variable 'if' or 'while' because those words are already used by the programming language, and that would cause ambiguity. systems flag this kind of input to prevent accidental collisions or other issues.
 
@@ -42,7 +42,6 @@ console.log(validateEmail("support@example.com")); // false
 console.log(validateEmail("testuser@example.com")); // false
 console.log(validateEmail("test@example.com")); // false
 console.log(validateEmail("normalUser@example.com")); //true
-
 ```
 
 this javascript function checks if the email (case insensitive), contains any of the forbidden strings (admin, support, test). if it does, it immediately returns false, otherwise it continues to check if the email contains the "@" character, to at least have some validity. this kind of simple string check is very common in input validation.
@@ -56,13 +55,13 @@ def validate_email_with_regex(email):
     forbidden_pattern = re.compile(r"(admin|support|test)", re.IGNORECASE)
     if forbidden_pattern.search(email):
         return False
-    
+
     # basic email check, looking for an @ symbol
     if "@" not in email:
         return False
-    
+
     return True
-    
+
 #test
 print(validate_email_with_regex("user@example.com")) #true
 print(validate_email_with_regex("admin@example.com")) #false
@@ -86,17 +85,17 @@ public class EmailValidator {
     public static boolean validateEmail(String email) {
         List<String> forbiddenStrings = Arrays.asList("admin", "support", "test");
         String emailLower = email.toLowerCase();
-    
+
         for (String str : forbiddenStrings) {
             if (emailLower.contains(str)) {
                 return false;
             }
         }
-    
+
         if (!emailLower.contains("@")) {
            return false;
         }
-        
+
         return true;
     }
 
@@ -112,6 +111,7 @@ public class EmailValidator {
     }
 }
 ```
+
 this java code is very similar to the javascript one, it checks for the forbidden words (admin,support,test) in the email input, if any of those words match it return 'false' and it also checks if the email has an "@" symbol. the 'main' method provides some examples.
 
 these code examples show how these validation patterns can be implemented in code, and this is the type of thing that's going on in mailinator’s backend. these code examples also simulate the problem in a controlled environment. there is nothing that would allow anyone to use this to gain access to mailinator's system, they are all just demonstrations of the problem.

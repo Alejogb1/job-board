@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "is-activation-a-function-or-layer-in-neural-networks"
 ---
 
-Okay, let's tackle this one. I've spent a good chunk of my career elbows-deep in neural network architectures, and the distinction between activation functions and layers is a common point of confusion, even for folks who’ve been at it for a while. It’s not a binary thing; it depends on how we define “layer” in a given context.
+, let's tackle this one. I've spent a good chunk of my career elbows-deep in neural network architectures, and the distinction between activation functions and layers is a common point of confusion, even for folks who’ve been at it for a while. It’s not a binary thing; it depends on how we define “layer” in a given context.
 
 From my experience, working on projects ranging from image recognition to natural language processing, I’ve encountered both perspectives. Sometimes, the activation function is treated as an integral part of a layer, a sort of “post-processing” step applied immediately after the linear transformation. Other times, it's viewed as a separate, independent entity, a modular component that can be plugged into different places in the network.
 
@@ -12,7 +12,7 @@ Here's how I see it and how I usually explain it: the core operation of a neural
 
 Activation functions introduce non-linearity. Without this non-linearity, the neural network would essentially be a linear model, incapable of modeling complex functions, and could be reduced to a single linear operation. This non-linearity is vital for learning complex patterns. Functions such as sigmoid, tanh, relu, and leaky relu are common examples.
 
-So, is it a function or a layer? The most accurate answer is that it’s a function, *but* it’s often considered a *functional* part of a layer and not a layer *itself*. Think of it this way: you wouldn't call a filter operation in image processing a layer, even though it is crucial for processing image data; it is instead an *operation* that applies to the image data. The activation function has a similar relationship to the linear transformation within a neural network layer. It is an operation, not a transformation itself.
+So, is it a function or a layer? The most accurate answer is that it’s a function, _but_ it’s often considered a _functional_ part of a layer and not a layer _itself_. Think of it this way: you wouldn't call a filter operation in image processing a layer, even though it is crucial for processing image data; it is instead an _operation_ that applies to the image data. The activation function has a similar relationship to the linear transformation within a neural network layer. It is an operation, not a transformation itself.
 
 However, this isn't a universally consistent viewpoint, particularly as frameworks evolve. Some frameworks might even abstract layers in such a way that activation is a configurable parameter of the layer object, blurring the lines even further. This abstraction does not make the activation function a layer.
 
@@ -20,7 +20,7 @@ To solidify this, I'll illustrate it with some code snippets. We'll keep things 
 
 **Example 1: Activation as part of a layer construction**
 
-In this example, we are using PyTorch's `nn.Linear` module to construct a fully connected layer. Observe how the activation (`relu` in this case) is applied as an operation *after* the linear transformation within the layer.
+In this example, we are using PyTorch's `nn.Linear` module to construct a fully connected layer. Observe how the activation (`relu` in this case) is applied as an operation _after_ the linear transformation within the layer.
 
 ```python
 import torch
@@ -71,7 +71,7 @@ output_tensor = model_modular(input_tensor)
 print(output_tensor) # Show the output after linear transformation and activation
 ```
 
-In this case, `nn.ReLU()` creates an object that behaves like a layer for abstraction purposes, but internally the module only implements the activation function as an operation. The forward pass still involves a linear operation followed by the non-linear operation. We are now treating `relu` as a module object that can be placed in a sequential structure. While it appears more layer-like, it is still functioning as an activation function, a *functional* part of a layer.
+In this case, `nn.ReLU()` creates an object that behaves like a layer for abstraction purposes, but internally the module only implements the activation function as an operation. The forward pass still involves a linear operation followed by the non-linear operation. We are now treating `relu` as a module object that can be placed in a sequential structure. While it appears more layer-like, it is still functioning as an activation function, a _functional_ part of a layer.
 
 **Example 3: Combined layer and activation**
 
@@ -98,7 +98,7 @@ output_tensor = model_integrated(input_tensor)
 print(output_tensor) # show output after linear transformation and activation
 ```
 
-While this can blur the line even further, it still is an *operation* that happens after the linear transformation.
+While this can blur the line even further, it still is an _operation_ that happens after the linear transformation.
 
 So, in conclusion, activation functions are not layers. They are functions, but they're typically considered to be part of the overall operation of a neural network layer. The key distinction is that a layer performs a transformation (often linear), while an activation function introduces non-linearity after that transformation. The examples show different ways the concept can be implemented, either as standalone function, as module or integrated with a layer definition.
 

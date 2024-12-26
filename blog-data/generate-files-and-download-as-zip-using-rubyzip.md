@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "generate-files-and-download-as-zip-using-rubyzip"
 ---
 
-Okay so you want to generate files dynamically and then zip them up and offer that as a download to the user right I've been there trust me it's a common task especially when you're building web applications that need to deliver a bunch of generated stuff at once let me tell you about the dark days before I really figured this out oh the things I tried
+you want to generate files dynamically and then zip them up and offer that as a download to the user right I've been there trust me it's a common task especially when you're building web applications that need to deliver a bunch of generated stuff at once let me tell you about the dark days before I really figured this out oh the things I tried
 
 Basically the core issue here is you have some data you want to represent as files maybe text maybe JSON maybe images doesnt matter much for the zip part You could write these to disk first sure then bundle them up but that's slow and clutters your filesystem especially if it's all temporary stuff that the user needs to download once and then its gone So a more efficient approach is to create these files in memory and then add them to a zip archive that you then stream to the user
 
@@ -40,7 +40,7 @@ puts "Zip file generated: #{output_zip_filename}"
 # At this point you will use the zip file and pass to the browser as download
 ```
 
-This code creates a zip file in the current directory called my\_download.zip and contains the files with the contents specified in the data\_to\_zip hash. However, this isn't very useful if you're trying to serve this to a user through a web framework like Rails or Sinatra because it writes it directly to the filesystem which is often not what you want.
+This code creates a zip file in the current directory called my_download.zip and contains the files with the contents specified in the data_to_zip hash. However, this isn't very useful if you're trying to serve this to a user through a web framework like Rails or Sinatra because it writes it directly to the filesystem which is often not what you want.
 
 So if you're running on something like a Rails application this is how it looks like, a better approach is to stream the zip data directly to the response that way you dont need to create a temporary file on disk here's an example of how to do that in a Rails controller method and also it should apply on other similar frameworks
 

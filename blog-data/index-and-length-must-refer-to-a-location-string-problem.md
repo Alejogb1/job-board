@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "index-and-length-must-refer-to-a-location-string-problem"
 ---
 
-Okay so you're wrestling with index and length issues when it comes to strings right Been there done that countless times Let me tell you string manipulation especially when you're dealing with indexes and lengths can be a total minefield I've personally lost entire afternoons debugging seemingly simple string operations Turns out a seemingly innocent `+1` or `-1` in the wrong place can lead to bizarre behaviour out of bounds exceptions and a whole lot of head scratching Let me walk you through what I understand from your question and how I've tackled these problems in the past
+you're wrestling with index and length issues when it comes to strings right Been there done that countless times Let me tell you string manipulation especially when you're dealing with indexes and lengths can be a total minefield I've personally lost entire afternoons debugging seemingly simple string operations Turns out a seemingly innocent `+1` or `-1` in the wrong place can lead to bizarre behaviour out of bounds exceptions and a whole lot of head scratching Let me walk you through what I understand from your question and how I've tackled these problems in the past
 
 First off when you say "index and length must refer to a location string problem" I'm assuming you're hitting scenarios where you're using an index or a length value that either goes beyond the bounds of the string or maybe you're not interpreting the meaning of index and length consistently Let's break it down a bit index generally refers to the position of a character within the string we usually start counting from 0 in most programming languages that is the first character is at index 0 the second at 1 and so on The length on the other hand is the total number of characters within the string If you have a string "hello" its length would be 5 but the valid indices are 0 1 2 3 and 4 trying to access `string[5]` is a big no no and it’ll probably throw you an error
 
@@ -24,13 +24,14 @@ def extract_field_fixed_width(line, start_index, field_length):
 
 # Example usage
 line = "JohnDoe   30   NewYork"
-name = extract_field_fixed_width(line, 0, 10) # get the name JohnDoe 
+name = extract_field_fixed_width(line, 0, 10) # get the name JohnDoe
 age  = extract_field_fixed_width(line, 10, 5) # get the age 30
 location = extract_field_fixed_width(line, 15, 10) # get NewYork
 print(f"Name: {name.strip()}") # clean up white space from the string by stripping it
 print(f"Age: {age.strip()}")
 print(f"Location: {location.strip()}")
 ```
+
 I've had instances where my length calculation was off by one leading to missing characters or extra whitespace and it took me hours to realize I had accidentally added 1 to the expected length of the fixed width field I am never adding one to expected length after this incident I have learnt my lesson that is for sure
 
 Another common spot where index/length issues bite is when you're working with substrings suppose you have a string and you want to extract a specific portion of it based on some criteria
@@ -48,6 +49,7 @@ full_string = "apple,banana,cherry"
 first_item = extract_substring_before_delimiter(full_string, ",")
 print(f"First item: {first_item}")
 ```
+
 Notice in the example I use `text[:delimiter_index]` which means it includes everything from the start of the string upto `delimiter_index` but not including `delimiter_index` itself that is because the substring does not need to include the delimiter When I was a noob a long time ago I used to accidentally include `delimiter_index` that was a bad idea because my data included an unwanted character
 
 I mean the number of times I have had off-by-one errors I swear it would be more efficient to teach a snail the tango that is how I think about it

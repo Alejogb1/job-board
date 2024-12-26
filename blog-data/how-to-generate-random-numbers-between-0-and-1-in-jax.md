@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-generate-random-numbers-between-0-and-1-in-jax"
 ---
 
-Okay so you're asking about generating random numbers between 0 and 1 in Jax right Been there done that let me tell you This is a pretty common thing when you're doing anything with simulations or machine learning in Jax It's not as simple as just calling `random()` like in basic Python though Jax is a bit more explicit and that's a good thing in the long run it makes your code more predictable and reproducible
+you're asking about generating random numbers between 0 and 1 in Jax right Been there done that let me tell you This is a pretty common thing when you're doing anything with simulations or machine learning in Jax It's not as simple as just calling `random()` like in basic Python though Jax is a bit more explicit and that's a good thing in the long run it makes your code more predictable and reproducible
 
 First off you need to know about `jax.random` It's where all the randomness magic happens in Jax Unlike regular Python where `random()` is like a global shared resource Jax uses what we call pseudo-random number generators or PRNGs these PRNGs take a key and output a sequence of random numbers given the same key you'll always get the same sequence of numbers This is super useful for debugging and ensuring your results are reproducible Now if that doesnt make sense imagine you had a broken dice that always gave 3 given a specific push yeah thats that.
 
@@ -52,6 +52,7 @@ random_array = jax.random.uniform(key, shape=(5, 5))
 print(random_array)
 
 ```
+
 This example creates a 5x5 matrix filled with random numbers between 0 and 1. Notice that you get different random numbers each time you get a new key from `jax.random.split`.
 
 Now for those who like to control things more specifically you can also control the datatype of the result for example if you want it to be `float32` instead of the default `float64` you can add `dtype=jnp.float32` I do this from time to time when the precision doesnt matter to much and I want to optimize my calculations
@@ -66,6 +67,7 @@ random_array_float32 = jax.random.uniform(key, shape=(5, 5), dtype=jnp.float32)
 print(random_array_float32)
 print(random_array_float32.dtype)
 ```
+
 You see how simple is to generate a `float32` now?
 
 Now a word of caution while using randomness in Jax especially if you're using jitted functions which is like a compile optimization that allows for greater efficiency when you want to make things faster you should never initialize random keys inside the jitted functions they should be parameters instead otherwise the function will produce the same random numbers every time since `jax.jit` only compiles the function once not for each execution which makes sense right It can be very frustrating if you dont know that since your jitted function will work fine and then you just notice it is not random at all, I have spent several hours doing that mistake haha.

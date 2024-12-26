@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-pytorch-dataloader-for-data-in-a-complex-directory-structure"
 ---
 
-Okay, let's tackle this. I recall a project back in '18 where we had a rather…*ambitious* data pipeline for some geospatial analysis. The dataset wasn't neatly packaged; rather, it was spread across numerous directories, each with varying levels of nested subdirectories. Building a performant `DataLoader` in PyTorch for that was, to put it mildly, a learning experience. So, let's break down how you'd approach a complex directory structure like that, avoiding the common pitfalls I encountered.
+, let's tackle this. I recall a project back in '18 where we had a rather…_ambitious_ data pipeline for some geospatial analysis. The dataset wasn't neatly packaged; rather, it was spread across numerous directories, each with varying levels of nested subdirectories. Building a performant `DataLoader` in PyTorch for that was, to put it mildly, a learning experience. So, let's break down how you'd approach a complex directory structure like that, avoiding the common pitfalls I encountered.
 
 The core issue is that `torch.utils.data.Dataset` and by extension, `DataLoader`, expects a somewhat flattened representation of your data. A simple list of file paths, essentially. When you've got a complex directory tree, it's on you to provide a mechanism for the `Dataset` to locate and load your samples. The simplest and least scalable thing to do is to just write a script to flatten it all, but that has its own problems. Instead, we want to keep the structure intact and write some code that is scalable and maintainable.
 
@@ -117,7 +117,7 @@ class GroupedDataset(Dataset):
                 subject_dir = os.path.join(exp_dir, subject_name)
                 if not os.path.isdir(subject_dir):
                     continue
-                
+
                 files_for_group = sorted([os.path.join(subject_dir, fn) for fn in os.listdir(subject_dir) if os.path.isfile(os.path.join(subject_dir,fn))])
                 self.filepaths.append(files_for_group)
                 self.labels.append((exp_name, subject_name)) # Example of label
@@ -147,7 +147,7 @@ if __name__ == '__main__':
 
 ```
 
-In this scenario, each index corresponds to a *group* of files.  We’re concatenating the numpy files that belong to the group. This method allows for each data point to be generated from multiple files. This illustrates how your `__getitem__` method may become more complex depending on how each example is generated from your data.
+In this scenario, each index corresponds to a _group_ of files. We’re concatenating the numpy files that belong to the group. This method allows for each data point to be generated from multiple files. This illustrates how your `__getitem__` method may become more complex depending on how each example is generated from your data.
 
 **Scenario 3: Data with Explicit Metadata**
 
@@ -174,7 +174,7 @@ class MetadataDataset(Dataset):
         self.data_dir = data_dir
         self.metadata = pd.read_csv(metadata_file)
         self.metadata['filepaths'] = self.metadata['filename'].apply(lambda fn: os.path.join(self.data_dir, fn)) # Assumes the 'filename' column exists
-        
+
 
     def __len__(self):
         return len(self.metadata)
@@ -201,16 +201,16 @@ In this situation, we load the metadata into a pandas dataframe and use it to de
 
 **Important Considerations**
 
-*   **Efficiency:**  Avoid filesystem access within the `__getitem__` method if possible. Pre-compute and store file paths and other necessary data during initialization of your `Dataset`.
-*   **Transformations:** Integrate any data transformations within the `__getitem__` method. Use `torchvision.transforms` (if appropriate) for image manipulation and the like.
-*   **Scalability:** If your dataset is very large and reading from disk is too slow, consider using tools for memory-mapped datasets or loading only chunks at a time as needed.
-*   **Debugging:** Start with a small subset of your data to test your `Dataset`. It can be hard to find bugs when your dataset is very large.
-*   **Data Validation:** Before training, it can be useful to implement a step for validating the dataset before any training. This can be done in a simple loop in the python environment, outside of the training pipeline.
+- **Efficiency:** Avoid filesystem access within the `__getitem__` method if possible. Pre-compute and store file paths and other necessary data during initialization of your `Dataset`.
+- **Transformations:** Integrate any data transformations within the `__getitem__` method. Use `torchvision.transforms` (if appropriate) for image manipulation and the like.
+- **Scalability:** If your dataset is very large and reading from disk is too slow, consider using tools for memory-mapped datasets or loading only chunks at a time as needed.
+- **Debugging:** Start with a small subset of your data to test your `Dataset`. It can be hard to find bugs when your dataset is very large.
+- **Data Validation:** Before training, it can be useful to implement a step for validating the dataset before any training. This can be done in a simple loop in the python environment, outside of the training pipeline.
 
 **Recommended Resources**
 
-*   **PyTorch documentation:** The official PyTorch documentation offers comprehensive information about `torch.utils.data.Dataset` and `DataLoader`.
-*   **"Deep Learning with PyTorch" by Eli Stevens et al.:** A good resource that includes detailed chapters on building custom datasets, and can be considered the PyTorch 'bible' for many researchers.
-*   **"Python for Data Analysis" by Wes McKinney:** If you're working with metadata, understanding pandas is crucial. This is the standard text for pandas.
+- **PyTorch documentation:** The official PyTorch documentation offers comprehensive information about `torch.utils.data.Dataset` and `DataLoader`.
+- **"Deep Learning with PyTorch" by Eli Stevens et al.:** A good resource that includes detailed chapters on building custom datasets, and can be considered the PyTorch 'bible' for many researchers.
+- **"Python for Data Analysis" by Wes McKinney:** If you're working with metadata, understanding pandas is crucial. This is the standard text for pandas.
 
 These examples should give you a strong starting point. Building custom datasets is not always intuitive initially, but understanding the principles of `__len__` and `__getitem__`, and the importance of caching/precomputing data paths and other metadata will make the process far smoother and more scalable. There's no one-size-fits-all solution; it's usually a combination of carefully mapping your data, and some careful programming.

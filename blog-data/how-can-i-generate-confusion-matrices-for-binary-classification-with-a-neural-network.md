@@ -4,16 +4,16 @@ date: "2024-12-16"
 id: "how-can-i-generate-confusion-matrices-for-binary-classification-with-a-neural-network"
 ---
 
-Okay, let’s unpack this. Confusion matrices, especially in the context of binary classification with neural networks, are absolutely foundational. I've personally spent more hours than I care to count staring at these, tweaking hyperparameters, and trying to squeeze that last bit of performance out of a model. It's not just about getting the numbers; it’s about understanding *where* your model is making mistakes, and that’s where the confusion matrix shines.
+, let’s unpack this. Confusion matrices, especially in the context of binary classification with neural networks, are absolutely foundational. I've personally spent more hours than I care to count staring at these, tweaking hyperparameters, and trying to squeeze that last bit of performance out of a model. It's not just about getting the numbers; it’s about understanding _where_ your model is making mistakes, and that’s where the confusion matrix shines.
 
-At its core, a confusion matrix provides a tabular representation of a model's performance. For a binary classification task—predicting either a positive or a negative outcome—you'll have a 2x2 matrix. The rows usually represent the actual classes (what the data *really* is), and the columns represent the predicted classes (what your model thinks it is). The cells then count how many instances fall into each of those categories.
+At its core, a confusion matrix provides a tabular representation of a model's performance. For a binary classification task—predicting either a positive or a negative outcome—you'll have a 2x2 matrix. The rows usually represent the actual classes (what the data _really_ is), and the columns represent the predicted classes (what your model thinks it is). The cells then count how many instances fall into each of those categories.
 
 The four key metrics you derive from this matrix are:
 
-*   **True Positives (TP):** The number of cases where the model correctly predicted a positive class.
-*   **True Negatives (TN):** The number of cases where the model correctly predicted a negative class.
-*   **False Positives (FP):** The number of cases where the model incorrectly predicted a positive class (also known as a Type I error).
-*   **False Negatives (FN):** The number of cases where the model incorrectly predicted a negative class (also known as a Type II error).
+- **True Positives (TP):** The number of cases where the model correctly predicted a positive class.
+- **True Negatives (TN):** The number of cases where the model correctly predicted a negative class.
+- **False Positives (FP):** The number of cases where the model incorrectly predicted a positive class (also known as a Type I error).
+- **False Negatives (FN):** The number of cases where the model incorrectly predicted a negative class (also known as a Type II error).
 
 With those counts in place, you can compute a range of other metrics crucial for model evaluation, including accuracy, precision, recall, and the f1-score. Accuracy alone, for example, can be misleading when you have imbalanced datasets, making metrics like precision and recall particularly useful in those scenarios.
 
@@ -58,9 +58,11 @@ cm = confusion_matrix(y_test, y_pred)
 print("Confusion Matrix:")
 print(cm)
 ```
+
 In this tensorflow example, I first generate a random dataset and a basic neural network model that predicts a single value via sigmoid activation. Then, I generate probabilities, threshold them to get actual predicted class labels, and then utilize sklearn's excellent `confusion_matrix` function to generate our matrix. Remember to replace the example data, model definition, and training setup with your own.
 
 Now, let's look at how we would do something similar using pytorch:
+
 ```python
 import torch
 import torch.nn as nn

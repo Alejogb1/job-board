@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-push-a-lando-image-to-a-github-container-repository"
 ---
 
-alright, so you're looking to push a lando-built docker image to a github container registry. yeah, i’ve been there, done that, got the t-shirt – and probably a few error messages along the way. it's a pretty common workflow these days, and honestly, it can feel a little convoluted the first couple of times. let's break it down, though. i’ve had my fair share of head-scratching moments with this, so i hope my experience helps smooth things out for you.
+, so you're looking to push a lando-built docker image to a github container registry. yeah, i’ve been there, done that, got the t-shirt – and probably a few error messages along the way. it's a pretty common workflow these days, and honestly, it can feel a little convoluted the first couple of times. let's break it down, though. i’ve had my fair share of head-scratching moments with this, so i hope my experience helps smooth things out for you.
 
 first things first, lando makes building your docker images pretty straightforward, right? but the 'pushing' part, that's where the github container registry comes into play, and it's got its own quirks. before jumping into the nitty-gritty, let's make sure our foundations are solid.
 
@@ -39,10 +39,10 @@ i remember, the first time i did this, i forgot to set the `LANDO_APP_NAME` vari
 
 let's break down what's happening in this script:
 
-*   `lando info | grep -oP 'appserver: \K(.*)'`: this line is extracting the docker image name that lando has built. it looks for the line starting with `appserver:` in the output of `lando info`, and then extracts everything after it, using grep with perl regex, `oP` flags are powerful.
-*   `ghcr_image_tag="ghcr.io/your_github_username/your_repo_name:${LANDO_APP_NAME}-$(date +%Y%m%d%H%M%S)"`: this is where you craft the full ghcr image tag. you absolutely must replace `your_github_username` and `your_repo_name` with your actual github username and repository name.  the `$(date +%Y%m%d%H%M%S)` is simply adding a timestamp for keeping a history of pushed images, which is quite handy in a team environment, believe me.
-*   `docker tag "$image_name" "$ghcr_image_tag"`: this tags your existing lando built image with the correct ghcr tag. remember docker tagging does not copy the image. it adds an alias.
-*   `docker push "$ghcr_image_tag"`: finally, this pushes the tagged image to the github container registry.
+- `lando info | grep -oP 'appserver: \K(.*)'`: this line is extracting the docker image name that lando has built. it looks for the line starting with `appserver:` in the output of `lando info`, and then extracts everything after it, using grep with perl regex, `oP` flags are powerful.
+- `ghcr_image_tag="ghcr.io/your_github_username/your_repo_name:${LANDO_APP_NAME}-$(date +%Y%m%d%H%M%S)"`: this is where you craft the full ghcr image tag. you absolutely must replace `your_github_username` and `your_repo_name` with your actual github username and repository name. the `$(date +%Y%m%d%H%M%S)` is simply adding a timestamp for keeping a history of pushed images, which is quite handy in a team environment, believe me.
+- `docker tag "$image_name" "$ghcr_image_tag"`: this tags your existing lando built image with the correct ghcr tag. remember docker tagging does not copy the image. it adds an alias.
+- `docker push "$ghcr_image_tag"`: finally, this pushes the tagged image to the github container registry.
 
 now, another problem i had was dealing with a specific lando setup which had a multi-stage docker build, it wasn't as simple as grabbing the first image id. if this is your case then you will need to modify the script to use a different container name or a container from a stage within the build. i'll give you another little snippet. imagine you have a `builder` stage and an `app` stage in your dockerfile, you'd probably want the latter, not the former. in that case, you might need to use `docker inspect` to get the image id, let's say the dockerfile has the final stage named `app`, and you are interested on getting the image id from that:
 

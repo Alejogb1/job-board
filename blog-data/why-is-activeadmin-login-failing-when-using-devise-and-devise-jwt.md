@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-activeadmin-login-failing-when-using-devise-and-devise-jwt"
 ---
 
-Okay, let's unpack this. I've bumped into this precise scenario more times than I care to remember, each time a subtle variation on a theme, it seems. Getting ActiveAdmin, Devise, and Devise JWT to play nicely together often feels like threading a needle in a hurricane. The root of the problem, more often than not, lies in the interplay between how Devise manages sessions and how Devise JWT handles token authentication. ActiveAdmin, by default, leans heavily on session-based authentication, whereas Devise JWT is, fundamentally, stateless, relying on the presence and validity of a jwt in the request header. This mismatch frequently leads to login failures.
+, let's unpack this. I've bumped into this precise scenario more times than I care to remember, each time a subtle variation on a theme, it seems. Getting ActiveAdmin, Devise, and Devise JWT to play nicely together often feels like threading a needle in a hurricane. The root of the problem, more often than not, lies in the interplay between how Devise manages sessions and how Devise JWT handles token authentication. ActiveAdmin, by default, leans heavily on session-based authentication, whereas Devise JWT is, fundamentally, stateless, relying on the presence and validity of a jwt in the request header. This mismatch frequently leads to login failures.
 
 The core issue is that when you log in via a route intended for json responses and the subsequent jwt generation, ActiveAdmin remains oblivious to this. It's still expecting a session cookie, not a jwt in a request header. Consequently, it directs you back to the login screen, unable to find the necessary authentication context to establish a valid session. I recall a particularly frustrating project where we had built a complex internal dashboard with ActiveAdmin, only to introduce a public-facing api using Devise JWT. The integration nightmare took days to resolve, and it highlighted the need to distinctly configure authentication mechanisms.
 
@@ -105,7 +105,7 @@ Finally, if the above is too convoluted for your case, this demonstrates how to 
          if auth.env['warden'].authenticated?(:admin_user) && (auth.env['PATH_INFO'].include?("/admin") ) # check jwt exists AND its an admin route
            return
          end
-        
+
         jwt_cookie = auth.request.cookies["jwt_token"]
            if jwt_cookie.present?
              decoded_token = JWT.decode(jwt_cookie, Rails.application.credentials.fetch(:jwt_secret), true, { algorithm: 'HS256' })

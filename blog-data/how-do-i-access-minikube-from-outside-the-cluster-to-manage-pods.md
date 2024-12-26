@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-access-minikube-from-outside-the-cluster-to-manage-pods"
 ---
 
-Okay, let’s talk about accessing Minikube from outside the cluster to manage pods. It's a common hurdle, and I've certainly spent my share of evenings troubleshooting similar setups. I recall one particular project where we had a tight deadline and absolutely needed to automate deployments directly from our CI/CD pipeline, which, of course, was outside the local minikube environment. It was quite the learning experience, and that's where I picked up some of these approaches.
+, let’s talk about accessing Minikube from outside the cluster to manage pods. It's a common hurdle, and I've certainly spent my share of evenings troubleshooting similar setups. I recall one particular project where we had a tight deadline and absolutely needed to automate deployments directly from our CI/CD pipeline, which, of course, was outside the local minikube environment. It was quite the learning experience, and that's where I picked up some of these approaches.
 
 The challenge, at its core, lies in the fact that minikube, by default, is designed to be isolated. It typically runs within its own virtual machine (vm) or container environment. This means that tools and processes on your host machine—outside of that environment—can’t directly reach the Kubernetes api server inside of Minikube without some specific configuration. Trying to connect from outside the cluster is like trying to get a remote control to operate a device without first configuring the correct signal path.
 
@@ -17,11 +17,13 @@ The most straightforward method, and usually the first one I try, involves using
 Here's a concise way to use it:
 
 First, start your minikube cluster (assuming it's not running already):
+
 ```bash
 minikube start
 ```
 
 Then, run the `tunnel` command in a separate terminal window or background process. Make sure to leave it running:
+
 ```bash
 minikube tunnel
 ```
@@ -59,36 +61,38 @@ ssh -L 8080:192.168.49.2:8443 -N -i $(minikube ssh-key) docker@$(minikube ip)
 ```
 
 Here's a breakdown of what's happening:
-*   `-L 8080:192.168.49.2:8443`: Forwards your local port 8080 to port 8443 on the vm.
-*   `-N`: Prevents the remote command execution. This means it will just set up the tunnel, but won’t run a terminal.
-*   `-i $(minikube ssh-key)`: Tells ssh which private key to use for authentication.
-*    `docker@$(minikube ip)`: Specifies user and the IP address of the VM.
+
+- `-L 8080:192.168.49.2:8443`: Forwards your local port 8080 to port 8443 on the vm.
+- `-N`: Prevents the remote command execution. This means it will just set up the tunnel, but won’t run a terminal.
+- `-i $(minikube ssh-key)`: Tells ssh which private key to use for authentication.
+- `docker@$(minikube ip)`: Specifies user and the IP address of the VM.
 
 After this ssh tunnel is created and kept running, you can configure `kubectl` to use this local port by overriding the default server address. In your `~/.kube/config` file, modify the `server` address inside the minikube context, usually called "minikube". Change the server address to `https://localhost:8080`. Your context in config file may look something like this:
 
 ```yaml
 apiVersion: v1
 clusters:
-- cluster:
-    certificate-authority-data: <certificate_data>
-    server: https://192.168.49.2:8443  # original line, you will override it
-  name: minikube
+  - cluster:
+      certificate-authority-data: <certificate_data>
+      server: https://192.168.49.2:8443 # original line, you will override it
+    name: minikube
 contexts:
-- context:
-    cluster: minikube
-    user: minikube
-  name: minikube
+  - context:
+      cluster: minikube
+      user: minikube
+    name: minikube
 current-context: minikube
 kind: Config
 preferences: {}
 users:
-- name: minikube
-  user:
-    client-certificate-data: <certificate_data>
-    client-key-data: <key_data>
+  - name: minikube
+    user:
+      client-certificate-data: <certificate_data>
+      client-key-data: <key_data>
 ```
 
 Replace the line `server: https://192.168.49.2:8443` to `server: https://localhost:8080`. Save it and now you should be able to execute:
+
 ```bash
 kubectl get pods
 ```
@@ -123,10 +127,10 @@ spec:
         app: my-app
     spec:
       containers:
-      - name: my-app
-        image: nginx:latest
-        ports:
-        - containerPort: 80
+        - name: my-app
+          image: nginx:latest
+          ports:
+            - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -136,9 +140,9 @@ spec:
   selector:
     app: my-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 80
+    - protocol: TCP
+      port: 80
+      targetPort: 80
 ```
 
 Save this as `app.yaml` and apply:
@@ -158,22 +162,24 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: myapp.local
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: my-app-service
-            port:
-              number: 80
+    - host: myapp.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: my-app-service
+                port:
+                  number: 80
 ```
 
 And apply it:
+
 ```bash
 kubectl apply -f ingress.yaml
 ```
+
 To make the `myapp.local` hostname resolve to the ingress controller, add this line to your `/etc/hosts` file on your host machine:
 
 ```

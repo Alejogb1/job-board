@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-do-i-get-0-passing-in-my-hardhat-tests"
 ---
 
-Okay, let's get into it. It seems you're encountering the dreaded `0 passing` result in your hardhat tests, and I've certainly been there myself. In my experience, debugging this kind of issue can be a bit like peeling an onion – multiple layers to get through. More often than not, it's not some deeply hidden compiler bug, but rather a misunderstanding in how Hardhat discovers and executes tests.
+, let's get into it. It seems you're encountering the dreaded `0 passing` result in your hardhat tests, and I've certainly been there myself. In my experience, debugging this kind of issue can be a bit like peeling an onion – multiple layers to get through. More often than not, it's not some deeply hidden compiler bug, but rather a misunderstanding in how Hardhat discovers and executes tests.
 
 From my time spent troubleshooting these scenarios, the first place I typically investigate is the test file discovery mechanism. Hardhat relies on pattern matching to identify your test files, and a simple misconfiguration can easily lead to it overlooking them entirely. By default, Hardhat looks for files with the `.test.js`, `.test.ts`, `.spec.js`, or `.spec.ts` suffixes within the `test/` directory. If your test files don't adhere to this convention, that's an immediate red flag.
 
@@ -39,15 +39,14 @@ describe("ExampleContract", function () {
     expect(exampleContract.address).to.not.equal(ethers.constants.AddressZero);
   });
 
-  it("Should retrieve a value", async function() {
-      const ExampleContract = await ethers.getContractFactory("Example");
-      const exampleContract = await ExampleContract.deploy();
-      await exampleContract.deployed();
-      await exampleContract.setValue(42);
-      const retrievedValue = await exampleContract.getValue();
-      expect(retrievedValue).to.equal(42);
+  it("Should retrieve a value", async function () {
+    const ExampleContract = await ethers.getContractFactory("Example");
+    const exampleContract = await ExampleContract.deploy();
+    await exampleContract.deployed();
+    await exampleContract.setValue(42);
+    const retrievedValue = await exampleContract.getValue();
+    expect(retrievedValue).to.equal(42);
   });
-
 });
 ```
 
@@ -65,25 +64,25 @@ describe("Async Setup Issue", function () {
   let exampleContract;
 
   beforeEach(function () {
-   // Note: Missing "await"
+    // Note: Missing "await"
     const ExampleContract = ethers.getContractFactory("Example");
-    ExampleContract.deploy().then(function(contract){
+    ExampleContract.deploy().then(function (contract) {
       exampleContract = contract;
     });
   });
 
   it("Should perform an action with contract", async function () {
-      // At this point, exampleContract may not be set yet
-     if(exampleContract){
-       await exampleContract.deployed();
-       expect(exampleContract.address).to.not.equal(ethers.constants.AddressZero);
+    // At this point, exampleContract may not be set yet
+    if (exampleContract) {
+      await exampleContract.deployed();
+      expect(exampleContract.address).to.not.equal(
+        ethers.constants.AddressZero
+      );
     } else {
-     expect(false).to.be.true; // Will trigger failure
-   }
-
+      expect(false).to.be.true; // Will trigger failure
+    }
   });
 });
-
 ```
 
 The issue here is that the deployment inside `beforeEach` uses `then` and does not `await`. The `it` block may run before the contract has actually been deployed, leading to unpredictable or failed tests. Correcting this is straightforward by using `async/await`:
@@ -97,15 +96,15 @@ const { ethers } = require("hardhat");
 describe("Async Setup Issue", function () {
   let exampleContract;
 
-  beforeEach(async function () { // Added 'async' and 'await'
+  beforeEach(async function () {
+    // Added 'async' and 'await'
     const ExampleContract = await ethers.getContractFactory("Example");
     exampleContract = await ExampleContract.deploy();
     await exampleContract.deployed();
-
   });
 
   it("Should perform an action with contract", async function () {
-       expect(exampleContract.address).to.not.equal(ethers.constants.AddressZero);
+    expect(exampleContract.address).to.not.equal(ethers.constants.AddressZero);
   });
 });
 ```

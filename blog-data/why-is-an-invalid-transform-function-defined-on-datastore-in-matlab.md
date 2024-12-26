@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "why-is-an-invalid-transform-function-defined-on-datastore-in-matlab"
 ---
 
-alright, so you're hitting the classic "invalid transform function" error with matlab's datastore, right? i’ve been there, trust me. feels like you’re banging your head against a wall when it should just... work. i remember this one time, back in my early days, i was trying to process some seriously wonky sensor data. i thought i had everything lined up perfectly, the datastore was set, the transform function was... well, it was supposed to be, but matlab had other plans.
+, so you're hitting the classic "invalid transform function" error with matlab's datastore, right? i’ve been there, trust me. feels like you’re banging your head against a wall when it should just... work. i remember this one time, back in my early days, i was trying to process some seriously wonky sensor data. i thought i had everything lined up perfectly, the datastore was set, the transform function was... well, it was supposed to be, but matlab had other plans.
 
 first, let's break down what this error usually means. it’s matlab’s way of saying, "hey, the function you gave me to modify the data as it comes out of the datastore isn’t playing nice”. it generally boils down to a few key things: the function is taking the wrong input, returning the wrong output, or is messing up the data types in some fundamental way. think of it like this: you have a conveyor belt (the datastore) feeding you items, and your transform function is supposed to pick up each item, change it slightly, and place it onto a new conveyor belt. if the function is trying to pick up a square when the conveyor belt is giving it a circle, that’s where things go south and matlab throws the 'invalid transform' fit.
 
 from what i’ve seen, the most frequent culprit is issues with data types. matlab datastores can hand you various data types depending on the source (tables, images, text etc) and the transform function must be written to accommodate it. for instance, a common mistake is assuming everything’s coming as a double when it's a single, or sometimes it can be strings or cells. i had a project with some historical financial data, a mix of numbers and text fields. my initial transform function just assumed numeric values, and chaos ensued until i sorted out the expected data.
 
-let's get down to the code. here’s an example of how *not* to do it, followed by a working snippet.
+let's get down to the code. here’s an example of how _not_ to do it, followed by a working snippet.
 
 ```matlab
 % example 1: bad transform function
@@ -27,6 +27,7 @@ transformed_datastore_bad = transform(my_datastore, transform_function_bad);
 % will likely throw an error on the first read.
 read(transformed_datastore_bad)
 ```
+
 the above code snippet showcases the pitfall of making blind assumptions regarding data type. the problem is the `transform_function_bad` assumes data to be numeric. it will error out if the `imageDatastore` produces `uint8` data type for example.
 
 now, let’s look at a safer and correct way to handle the same scenario.
@@ -41,6 +42,7 @@ transformed_datastore_good = transform(my_datastore, transform_function_good);
 % should work
 read(transformed_datastore_good)
 ```
+
 in example 2 the transformation is more robust and reliable as `double(data)` explicitly converts the input data to double. even if the image data is in `uint8` it will work properly.
 
 another gotcha is when your transform function doesn’t output the data type you were expecting. the datastore expects specific output types, and if you mismatch those, errors will occur. i once spent a good portion of a day troubleshooting a transform function that was returning a logical array when the datastore expected a numeric array. it was one of those moments where you’re just staring at the code, wondering what exactly you’ve done to offend the matlab gods.
@@ -57,17 +59,18 @@ transformed_datastore_very_good = transform(my_datastore, transform_function_ver
 % should work
 read(transformed_datastore_very_good)
 ```
+
 example 3 `transform_function_very_good` ensures the robust transformation of the output data when it comes from a text-based data.
 
-debugging these can be annoying, because the error is often thrown *after* you set up the datastore. it’s thrown when the datastore attempts to read from your source using the provided function.  a good trick is to test your transform function separately on sample data before hooking it up to the datastore.  this helps isolating the source of the problem quicker.
+debugging these can be annoying, because the error is often thrown _after_ you set up the datastore. it’s thrown when the datastore attempts to read from your source using the provided function. a good trick is to test your transform function separately on sample data before hooking it up to the datastore. this helps isolating the source of the problem quicker.
 
 when i was dealing with my sensor data issue, i ended up printing the `class()` of data inside of the transform function, which revealed it was a `single` when i was expecting a `double`. sometimes the best solution is to use old-school debugging techniques. it can feel like you are walking in the dark but after doing a few of these you will know where to look for.
 
 as for resources, rather than giving you generic links to matlab documentation (which i assume you’ve already checked), i’d suggest looking into the following:
 
-*   **"digital signal processing using matlab"** by vinay k. ingle and john g. proakis: though it's focused on dsp, the book has excellent sections on how matlab handles various datatypes which is useful when thinking about transform functions. this book helped me when i was working on my sensor data project.
-*   **"mastering matlab"** by duane hanselman and bruce littlefield: a solid general purpose book for matlab and the section on data handling can be quite helpful for understanding data types, conversion and other underlying details. it helped me understand that transform function need to be robust and not brittle.
-*   any books relating to image processing in matlab, they usually demonstrate good and bad examples of transform functions when working with image data and how to extract specific channel from the images. if you want to understand how to work with image data this is the place to start.
+- **"digital signal processing using matlab"** by vinay k. ingle and john g. proakis: though it's focused on dsp, the book has excellent sections on how matlab handles various datatypes which is useful when thinking about transform functions. this book helped me when i was working on my sensor data project.
+- **"mastering matlab"** by duane hanselman and bruce littlefield: a solid general purpose book for matlab and the section on data handling can be quite helpful for understanding data types, conversion and other underlying details. it helped me understand that transform function need to be robust and not brittle.
+- any books relating to image processing in matlab, they usually demonstrate good and bad examples of transform functions when working with image data and how to extract specific channel from the images. if you want to understand how to work with image data this is the place to start.
 
 oh, and on a lighter note, after wrestling with one particularly difficult transform function, i thought maybe i should just ask the datastore nicely to do what i wanted. i didn't, of course, that is not how computers work.
 

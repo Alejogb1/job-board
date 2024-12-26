@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "if-my-dag-fails-for-some-reason-is-it-possible-to-re-run-the-dag-without-losing-the-progress"
 ---
 
-alright, so you're having dags hiccup and want to pick up where things left off, right? i’ve been there, more times than i’d like to count. it’s a pain, especially when you're dealing with long-running processes. let me walk you through how i usually handle this sort of situation. it's all about setting things up properly from the start to make this process smoother.
+, so you're having dags hiccup and want to pick up where things left off, right? i’ve been there, more times than i’d like to count. it’s a pain, especially when you're dealing with long-running processes. let me walk you through how i usually handle this sort of situation. it's all about setting things up properly from the start to make this process smoother.
 
 first off, it's crucial to understand why your dags are failing. are we talking about transient network issues, some faulty logic in your tasks, or resource constraints? knowing that will help tailor the solution. but regardless, assuming you've at least got a grip on the root cause, let's talk about recovery.
 
@@ -12,10 +12,10 @@ the core principle here is idempotency. each task in your dag should be able to 
 
 so, how do you achieve this? well, it depends on the type of work each task does. but here are some common strategies:
 
-*   **transactional operations:** if your task involves database updates, try to wrap them in transactions. that way, if the task fails in the middle of an update, the transaction will be rolled back and you’re safe to retry. this also avoids dirty reads and other issues.
-*   **checkpointing:** for longer tasks, consider writing checkpoint information periodically. this way, if the task restarts, it can load the checkpoint and continue from the last known state instead of starting from scratch. this could be as easy as storing a processed flag or a file position.
-*   **idempotent APIs:** if you're calling external APIs, make sure they are idempotent. many apis will have features to handle exactly-once semantics, that means that calling them multiple times will only have an effect on the first one, but if that's not the case, you might need to keep a track of what you've already processed.
-*   **conditional task executions:** we’ll see this in the code samples. based on the task output from the last run we can skip processing already processed parts.
+- **transactional operations:** if your task involves database updates, try to wrap them in transactions. that way, if the task fails in the middle of an update, the transaction will be rolled back and you’re safe to retry. this also avoids dirty reads and other issues.
+- **checkpointing:** for longer tasks, consider writing checkpoint information periodically. this way, if the task restarts, it can load the checkpoint and continue from the last known state instead of starting from scratch. this could be as easy as storing a processed flag or a file position.
+- **idempotent APIs:** if you're calling external APIs, make sure they are idempotent. many apis will have features to handle exactly-once semantics, that means that calling them multiple times will only have an effect on the first one, but if that's not the case, you might need to keep a track of what you've already processed.
+- **conditional task executions:** we’ll see this in the code samples. based on the task output from the last run we can skip processing already processed parts.
 
 now, let’s talk about how to make the dag re-run itself. most modern dag schedulers have some sort of “catchup” or “retry” mechanism. for example, with apache airflow, you can configure tasks to retry on failure automatically. also, with airflow you can “clear” a dag run and it will restart from the first failed task. this is a super handy feature when things go south. i had a big migration project a few years back, and the underlying infrastructure was a bit unstable. we relied on airflow’s retry feature pretty heavily. the scheduler made all the difference between a stable execution and manual interventions every few hours.
 
@@ -32,7 +32,7 @@ def process_data_chunk(chunk_id, output_dir):
     if os.path.exists(output_file):
         print(f"chunk {chunk_id} already processed")
         return
-    
+
     data = {"id": chunk_id, "data": f"some data for chunk {chunk_id}"}
     with open(output_file, 'w') as f:
         json.dump(data, f)
@@ -54,7 +54,7 @@ with DAG(
         )
 ```
 
-in this snippet, each `process_chunk_task` checks if the output file already exists. if it does, it skips the processing part, showing idempotency in action. it will print 'chunk * already processed', but if it does not, it will actually process the chunk. this makes retries safe. the `exist_ok=true` on the `os.makedirs` is a small thing, but it avoids errors when executing the dag multiple times.
+in this snippet, each `process_chunk_task` checks if the output file already exists. if it does, it skips the processing part, showing idempotency in action. it will print 'chunk \* already processed', but if it does not, it will actually process the chunk. this makes retries safe. the `exist_ok=true` on the `os.makedirs` is a small thing, but it avoids errors when executing the dag multiple times.
 
 now, what if the task involves more complex processing and we need to keep track of where we left off in a file, instead of just processing chunks? here's another example. it is a python script that processes a large input file and uses a json file to keep the line count (a poor man's database). the same principles apply as in the previous example, but we will add some logic to deal with lines already processed before:
 
@@ -152,6 +152,7 @@ with DAG(
       op_kwargs={'input_file':input_filename, 'output_dir': output_directory}
   )
 ```
+
 here we read a json file with a list of items. we loop through each item, and process only the ones that have not been processed, using the same principle as the other examples.
 
 the key takeaway is that you have to think about task design from the beginning. these examples should show you the general direction. i highly suggest reading some academic papers or books on distributed computing patterns. a good starting point is "designing data intensive applications" by martin kleppmann. it talks about idempotency, transactions, and other key concepts needed for these kinds of scenarios. another great reference is "distributed systems" by tanenbaum, which is more theoretical but very insightful.

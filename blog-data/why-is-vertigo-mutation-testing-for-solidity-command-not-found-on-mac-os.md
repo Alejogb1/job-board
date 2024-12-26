@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-vertigo-mutation-testing-for-solidity-command-not-found-on-mac-os"
 ---
 
-alright, so you're having trouble with the `vertigo` command not being found on your macos, right? i've been down that rabbit hole more times than i care to remember, and it usually boils down to a few common culprits. let's troubleshoot this like we're debugging a tricky smart contract.
+, so you're having trouble with the `vertigo` command not being found on your macos, right? i've been down that rabbit hole more times than i care to remember, and it usually boils down to a few common culprits. let's troubleshoot this like we're debugging a tricky smart contract.
 
 first off, `vertigo` isn't a command that magically appears. it's a tool for mutation testing solidity smart contracts, which implies it needs to be installed first. think of it like a library you need to import into your python script, except in this case, it's a tool available on the command line. the most common way to get it is via `npm`, the node package manager. assuming you already have nodejs and npm installed, here's the first thing you should be checking:
 
@@ -18,7 +18,7 @@ open your terminal and try this:
 npm list -g --depth=0
 ```
 
-this command lists all globally installed npm packages, but only at the top level of the dependency tree. look for `@ethereum-ts/vertigo` in that list. if it's not there, then you've got your answer, it's not installed globally. it's like trying to use a function that doesn't exist within a module you are importing. the computer has no idea what you are talking about. the `vertigo` command is missing. 
+this command lists all globally installed npm packages, but only at the top level of the dependency tree. look for `@ethereum-ts/vertigo` in that list. if it's not there, then you've got your answer, it's not installed globally. it's like trying to use a function that doesn't exist within a module you are importing. the computer has no idea what you are talking about. the `vertigo` command is missing.
 
 if it's missing, install it globally with this command:
 
@@ -46,10 +46,10 @@ echo $path
 
 this will output a colon-separated list of directories. look for a directory that contains npm's global executables. the exact location varies depending on your setup, but common paths are something like:
 
-*   `/usr/local/bin`
-*   `/usr/bin`
-*   `/usr/local/lib/node_modules/bin`
-*   `~/.npm-global/bin`
+- `/usr/local/bin`
+- `/usr/bin`
+- `/usr/local/lib/node_modules/bin`
+- `~/.npm-global/bin`
 
 if the directory where `vertigo` was installed is not in your path, you need to add it. usually, npm tells you where it installs things. when you install something using npm -g.
 
@@ -156,8 +156,8 @@ sometimes when you are having problems, just uninstall and install again to forc
 
 i'd strongly recommend diving into the following resources to better grasp the underlying concepts and tools:
 
-*   "effective modern c++" by scott meyers for the principles of modern c++, although it's not the same as solidity, some principles apply in regards to how dependencies and libraries interact on a project.
-*   "understanding operating systems" by ida m. flynn and ann mclver mcwhoe to get a clearer picture of operating system structures and processes, especially regarding the file system and path variables. the file system structure on unix and linux, and even macos, is key to understand how the computer searches for executables.
-*   "javascript: the definitive guide" by david flanagan for a deep dive into javascript and node.js ecosystem, as that's the base of how npm works under the hood.
+- "effective modern c++" by scott meyers for the principles of modern c++, although it's not the same as solidity, some principles apply in regards to how dependencies and libraries interact on a project.
+- "understanding operating systems" by ida m. flynn and ann mclver mcwhoe to get a clearer picture of operating system structures and processes, especially regarding the file system and path variables. the file system structure on unix and linux, and even macos, is key to understand how the computer searches for executables.
+- "javascript: the definitive guide" by david flanagan for a deep dive into javascript and node.js ecosystem, as that's the base of how npm works under the hood.
 
 i hope this helps, getting those path variables sorted always feels like getting a tricky state machine right. if i had a dollar for every time i had to deal with path variables, i'd have like, 20 dollars. anyway, let me know if you have any more questions, or if you solve it, i'd also like to know so we can update this knowledge.

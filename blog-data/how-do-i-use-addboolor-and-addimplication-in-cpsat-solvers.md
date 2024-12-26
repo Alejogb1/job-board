@@ -4,17 +4,17 @@ date: "2024-12-16"
 id: "how-do-i-use-addboolor-and-addimplication-in-cpsat-solvers"
 ---
 
-Alright, let’s tackle this. It's been a while since I’ve directly implemented constraint programming at this level, but the intricacies of `AddBoolOr` and `AddImplication` in cp-sat solvers are definitely something I’ve spent considerable time with in past projects—specifically, a scheduling system for a high-throughput manufacturing line where optimizing for both resource allocation and task dependencies was crucial. It wasn't pretty at times, and I certainly learned a few things the hard way, so hopefully this helps.
+, let’s tackle this. It's been a while since I’ve directly implemented constraint programming at this level, but the intricacies of `AddBoolOr` and `AddImplication` in cp-sat solvers are definitely something I’ve spent considerable time with in past projects—specifically, a scheduling system for a high-throughput manufacturing line where optimizing for both resource allocation and task dependencies was crucial. It wasn't pretty at times, and I certainly learned a few things the hard way, so hopefully this helps.
 
 Essentially, these two methods are your bread and butter when expressing logical relationships between boolean variables within the constraint programming domain, allowing you to construct fairly complex constraints. Let's break them down individually before looking at code.
 
-`AddBoolOr` constructs a constraint that ensures at least one boolean variable within a given list is true. Think of it as a logical "or" operation, extended to handle multiple variables. If you have a set of conditions, any of which can trigger an event, you'd use `AddBoolOr` to model this relationship. For example, if either machine *a*, machine *b*, or machine *c* being available implies that production can proceed, this would be a prime candidate for a `AddBoolOr` constraint.
+`AddBoolOr` constructs a constraint that ensures at least one boolean variable within a given list is true. Think of it as a logical "or" operation, extended to handle multiple variables. If you have a set of conditions, any of which can trigger an event, you'd use `AddBoolOr` to model this relationship. For example, if either machine _a_, machine _b_, or machine _c_ being available implies that production can proceed, this would be a prime candidate for a `AddBoolOr` constraint.
 
-Now, `AddImplication` is slightly different. It models a conditional statement: "if *variable x* is true, then *variable y* must be true." This is the classic logical implication. Crucially, the solver interprets this relationship correctly, including what happens when the *if* condition (variable *x*) is false; in that case, the *then* condition (variable *y*) is free to be either true or false. It’s important to remember it’s not the same as a bi-implication (an if and only if relationship). In practice, I often used `AddImplication` to model dependencies between activities, such as "if task A has started, then task B can start," or as part of more complex conditional constraint constructions where certain constraints were only active if a certain condition held. This often showed up in resource allocation logic; for example, "if the maintenance window is scheduled, then the specific resource used must be unavailable".
+Now, `AddImplication` is slightly different. It models a conditional statement: "if _variable x_ is true, then _variable y_ must be true." This is the classic logical implication. Crucially, the solver interprets this relationship correctly, including what happens when the _if_ condition (variable _x_) is false; in that case, the _then_ condition (variable _y_) is free to be either true or false. It’s important to remember it’s not the same as a bi-implication (an if and only if relationship). In practice, I often used `AddImplication` to model dependencies between activities, such as "if task A has started, then task B can start," or as part of more complex conditional constraint constructions where certain constraints were only active if a certain condition held. This often showed up in resource allocation logic; for example, "if the maintenance window is scheduled, then the specific resource used must be unavailable".
 
 The real power of these constructs comes from combining them within a larger model. It allows you to express fairly intricate logical dependencies that go far beyond basic linear constraints, something that the manufacturing scheduling project relied on heavily.
 
-Okay, let's dive into some code examples, each using a different context to illustrate a practical use case. These examples assume you're working with a constraint solver library like Google OR-Tools, which is pretty common, but the principles will apply across most similar libraries.
+, let's dive into some code examples, each using a different context to illustrate a practical use case. These examples assume you're working with a constraint solver library like Google OR-Tools, which is pretty common, but the principles will apply across most similar libraries.
 
 **Example 1: Machine Selection**
 
@@ -89,6 +89,7 @@ if __name__ == '__main__':
     else:
         print("No solution found.")
 ```
+
 Here, the `AddImplication` is used with the negation of the `maintenance_scheduled` boolean variable, achieving a scenario where we need to assert conditional availability based on an inverted state. This is a common scenario when working with schedule exclusions. Note also how we are using another implication, this time to say if we use the resource, it needs to be available. This illustrates how these can be combined to model more nuanced conditions
 
 **Example 3: Job Dependencies**

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-to-get-a-status-bar-and-constrain-its-bottom-correctly"
 ---
 
-Okay, let’s tackle this status bar constraint challenge. I've certainly danced this dance more times than I care to count, and it’s one of those seemingly simple things that can get unexpectedly fiddly. The core problem revolves around how a status bar, which typically sits at the very top of a screen, should interact with the rest of your user interface elements, especially when you need to control its positioning from the bottom. You want it to be there and stay there, respecting the device’s safe areas, especially on devices with notches or rounded corners. Let's break down the best approaches, building from my past experiences, specifically with mobile development on both iOS and Android.
+, let’s tackle this status bar constraint challenge. I've certainly danced this dance more times than I care to count, and it’s one of those seemingly simple things that can get unexpectedly fiddly. The core problem revolves around how a status bar, which typically sits at the very top of a screen, should interact with the rest of your user interface elements, especially when you need to control its positioning from the bottom. You want it to be there and stay there, respecting the device’s safe areas, especially on devices with notches or rounded corners. Let's break down the best approaches, building from my past experiences, specifically with mobile development on both iOS and Android.
 
 My personal experience, going back about ten years, involved an early project where I was tasked with implementing a custom status bar. The design team, in their infinite wisdom, wanted a status bar that wasn't just a plain black bar, but rather a themed element that dynamically changed color depending on the application's context. Initially, I thought it would be a simple matter of setting a few constraints. However, I soon found out that the interplay between the status bar, safe area, and various operating system behaviors resulted in some… let’s call them “interesting” edge cases.
 
-The core challenge you face is this: the status bar is inherently top-aligned, typically managed by the operating system itself. Yet, you want to constrain its *bottom* edge in a reliable way. The key isn't to directly constrain its bottom but to constrain a containing view, and then let the status bar fit within that container. Here’s how I typically tackle it.
+The core challenge you face is this: the status bar is inherently top-aligned, typically managed by the operating system itself. Yet, you want to constrain its _bottom_ edge in a reliable way. The key isn't to directly constrain its bottom but to constrain a containing view, and then let the status bar fit within that container. Here’s how I typically tackle it.
 
 First, conceptually, I treat the status bar as a ‘given’, meaning that the OS handles most of the positioning of the status bar itself at the top. Instead of trying to force its bottom, you work with its container, often a custom view, and constrain the bottom edge of that container. This container view acts as an intermediary. We won't be moving or manipulating the status bar directly. We’ll set our constraints against our container, and the status bar will naturally align to it due to OS behavior.
 
@@ -57,16 +57,16 @@ class ViewController: UIViewController {
 }
 ```
 
-In this swift snippet: We create a custom view (`statusBarContainer`). We constrain its *top* edge to the safe area's top, and its height according to the system determined status bar height plus an added 20 points in this example. Its other constraints are fixed to the left and right edges. The `viewDidLayoutSubviews` updates height after the system determines the status bar size.
+In this swift snippet: We create a custom view (`statusBarContainer`). We constrain its _top_ edge to the safe area's top, and its height according to the system determined status bar height plus an added 20 points in this example. Its other constraints are fixed to the left and right edges. The `viewDidLayoutSubviews` updates height after the system determines the status bar size.
 
 **Example 2: React Native with SafeAreaView**
 
 React Native provides a `SafeAreaView` component that handles safe area constraints. Here’s how you’d achieve a similar result:
 
 ```javascript
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const App = () => {
   return (
@@ -74,7 +74,7 @@ const App = () => {
       <View style={styles.statusBarContainer}>
         <Text style={styles.statusText}>Status Bar Content</Text>
       </View>
-        <View style={{flex:1, backgroundColor: 'white'}}/>
+      <View style={{ flex: 1, backgroundColor: "white" }} />
     </SafeAreaView>
   );
 };
@@ -82,24 +82,24 @@ const App = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-      backgroundColor: 'lightgrey'
+    backgroundColor: "lightgrey",
   },
   statusBarContainer: {
-    backgroundColor: 'orange',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "orange",
+    justifyContent: "center",
+    alignItems: "center",
     height: 60, // Fixed height for example, adjust as desired
   },
-    statusText: {
-        color: 'white',
-        fontSize: 18
-    }
+  statusText: {
+    color: "white",
+    fontSize: 18,
+  },
 });
 
 export default App;
 ```
 
-Here, the `SafeAreaView` takes care of the safe area handling, and we place a `View` (our container) inside it. Its height is set manually for illustration, and the OS takes care of positioning the status bar accordingly inside our styled container. We are *not* using any constraints explicitly on the status bar, letting the OS handle the rest.
+Here, the `SafeAreaView` takes care of the safe area handling, and we place a `View` (our container) inside it. Its height is set manually for illustration, and the OS takes care of positioning the status bar accordingly inside our styled container. We are _not_ using any constraints explicitly on the status bar, letting the OS handle the rest.
 
 **Example 3: Android (XML Layout) with ConstraintLayout**
 
@@ -153,10 +153,10 @@ Here, we use a `View` (our container) with `constraintTop_toTopOf="parent"`, thi
 
 When working with status bars:
 
-*   **Safe Areas:** Always respect the safe areas. These are crucial for preventing UI overlap on devices with notches or rounded corners.
-*   **Platform Differences:** Each platform (iOS, Android, Web) has its quirks. Be mindful of platform-specific APIs and behaviors.
-*   **Dynamic Height:** Status bar height can vary (e.g. when a call or recording is ongoing on ios). Be prepared for this in your layout.
-*   **Theming:** Be aware of theme constraints. Dark and light modes can affect the status bar's appearance.
+- **Safe Areas:** Always respect the safe areas. These are crucial for preventing UI overlap on devices with notches or rounded corners.
+- **Platform Differences:** Each platform (iOS, Android, Web) has its quirks. Be mindful of platform-specific APIs and behaviors.
+- **Dynamic Height:** Status bar height can vary (e.g. when a call or recording is ongoing on ios). Be prepared for this in your layout.
+- **Theming:** Be aware of theme constraints. Dark and light modes can affect the status bar's appearance.
 
 For further depth, I'd suggest looking into the official platform documentation (Apple’s Human Interface Guidelines for iOS and the Android UI/UX guides). For more theoretical understanding of layout management, a good text to review would be “Effective UI: The Art of Building Great User Interfaces”, as well as, a thorough review of Apple’s developer documentation regarding auto layout concepts. These resources will greatly enhance your grasp of these concepts beyond the snippets provided here.
 

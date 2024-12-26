@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "rhome-must-be-set-environment-registry-error"
 ---
 
-Okay so this 'r\_home must be set environment registry error' thing yeah I’ve seen that one too many times trust me I’ve wrestled with this beast since like well before some of you were even thinking about coding. It’s a classic head scratcher but it's not voodoo it's usually a straightforward config problem.
+this 'r_home must be set environment registry error' thing yeah I’ve seen that one too many times trust me I’ve wrestled with this beast since like well before some of you were even thinking about coding. It’s a classic head scratcher but it's not voodoo it's usually a straightforward config problem.
 
-Let's break it down first the error message itself 'r\_home must be set' pretty much screams that your R installation or more specifically the system can't find where R is actually located. R uses this `R_HOME` environment variable to know where its core files are located think of it as a GPS for your R installation. If the GPS is missing or has the wrong address R is lost and throws this error.
+Let's break it down first the error message itself 'r_home must be set' pretty much screams that your R installation or more specifically the system can't find where R is actually located. R uses this `R_HOME` environment variable to know where its core files are located think of it as a GPS for your R installation. If the GPS is missing or has the wrong address R is lost and throws this error.
 
 Now 'registry error' part that's Windows specific. Windows stores environment variables in the registry and if something’s off in there boom you get this registry error. So it's a two-pronged issue R can’t find its home and Windows is having a registry related hiccup in helping it find its way.
 
@@ -16,13 +16,13 @@ First thing’s first let’s figure out how to even diagnose this problem
 
 **How to Check the R_HOME**
 
-Okay before we start trying to fix things let's confirm the issue. On Windows the best way to do this is via command prompt not some GUI tool that hides everything under pretty icons. Open up a cmd or Powershell window it's the black box that every developer learns to love or hate. Type the following command:
+before we start trying to fix things let's confirm the issue. On Windows the best way to do this is via command prompt not some GUI tool that hides everything under pretty icons. Open up a cmd or Powershell window it's the black box that every developer learns to love or hate. Type the following command:
 
 ```shell
 echo %R_HOME%
 ```
 
-If nothing is returned or you get some weird placeholder text that means the R\_HOME variable isn’t set simple as that. You can also try:
+If nothing is returned or you get some weird placeholder text that means the R_HOME variable isn’t set simple as that. You can also try:
 
 ```shell
 set R_HOME
@@ -79,9 +79,9 @@ Now close terminal and open it again.
 
 Now if you tried all this and you are still getting the error especially the registry part things might be a bit more complex.
 
-*   **Multiple R installations:** Sometimes I’ve seen people have multiple R installations and the variables are pointing to the wrong version or the installer messed something up. Clean install or removing older versions using the official uninstaller can solve the issue.
-*   **Corrupted registry:** Windows registry can get messed up and its rare but it can happen. Run system file checker `sfc /scannow` in command prompt as admin sometimes does the trick.
-*   **Conflicting Environment Variables:** If you have other environment variables interfering it could cause issues. Double check all system and user variables and if you are unsure remove any related R environment variable temporarily to rule out conflicts.
+- **Multiple R installations:** Sometimes I’ve seen people have multiple R installations and the variables are pointing to the wrong version or the installer messed something up. Clean install or removing older versions using the official uninstaller can solve the issue.
+- **Corrupted registry:** Windows registry can get messed up and its rare but it can happen. Run system file checker `sfc /scannow` in command prompt as admin sometimes does the trick.
+- **Conflicting Environment Variables:** If you have other environment variables interfering it could cause issues. Double check all system and user variables and if you are unsure remove any related R environment variable temporarily to rule out conflicts.
 
 **Beyond environment variables**
 
@@ -89,8 +89,8 @@ Once R can find its home next check the 'path' variable which tells Windows wher
 
 **Some Helpful Resources**
 
-*   **R Installation and Administration Manual:** This is the canonical R manual its technical but a great source for understanding R install process details. It's an official R documentation not a random blog or a stackoverflow answer.
-*   **Microsoft’s official documentation on environment variables:** If you are on Windows Microsoft's documentation is your friend.
-*   **The shell manual of your shell (bash zsh):** It might not be about R but its great to understand the concepts of environment variables in Linux and macOS
+- **R Installation and Administration Manual:** This is the canonical R manual its technical but a great source for understanding R install process details. It's an official R documentation not a random blog or a stackoverflow answer.
+- **Microsoft’s official documentation on environment variables:** If you are on Windows Microsoft's documentation is your friend.
+- **The shell manual of your shell (bash zsh):** It might not be about R but its great to understand the concepts of environment variables in Linux and macOS
 
 So yeah that’s pretty much it I've spent way too much time debugging this particular error so feel free to ask if something remains unclear but usually its as simple as setting the correct path in the environment variables. Good luck it is what I do for fun after all haha

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-a-tailwind-ui-modal-with-long-content-goes-off-screen"
 ---
 
-alright, so you're hitting that classic issue where your tailwind ui modal, packed with more content than a thanksgiving turkey, decides to play hide-and-seek off the edge of the viewport. i've been there, trust me. this isn't some exotic edge case, it's a common pain point, and it usually boils down to how css handles overflow and viewport constraints when you throw lots of stuff into a relatively small container like a modal.
+, so you're hitting that classic issue where your tailwind ui modal, packed with more content than a thanksgiving turkey, decides to play hide-and-seek off the edge of the viewport. i've been there, trust me. this isn't some exotic edge case, it's a common pain point, and it usually boils down to how css handles overflow and viewport constraints when you throw lots of stuff into a relatively small container like a modal.
 
 let's break it down like we're debugging a particularly stubborn piece of javascript. first, the default behavior of html containers is to try and fit the content inside, even if that means the content spills over. modals, often being fixed or absolute positioned elements, are especially prone to this since their parent container isn't always the immediate viewport. it could be something further up the dom tree which has fixed sizes that is causing the issue.
 
@@ -15,16 +15,49 @@ i've spent hours staring at my screen, convinced i was going insane, only to fin
 so how do we fix it? well, there are a few things we can look at. the most straightforward solution is usually related to setting the right overflow behavior on the modal or its containing elements. here's a basic example of how you might structure your modal in tailwind and apply that overflow setting to it:
 
 ```html
-<div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-  <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md h-auto max-h-[90vh] overflow-y-auto">
+<div
+  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+>
+  <div
+    class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md h-auto max-h-[90vh] overflow-y-auto"
+  >
     <!-- modal content here -->
     <h2 class="text-xl font-bold mb-4">this is the title of the modal</h2>
-    <p class="mb-4">a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture.a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture.</p>
-    <p class="mb-4">a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture.a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture.</p>
-    <p class="mb-4">a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture.a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture.</p>
-    <p class="mb-4">a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture.a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture.</p>
-    <p class="mb-4">a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture.a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture.</p>
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">close</button>
+    <p class="mb-4">
+      a lot of text here. i am sure you are getting the picture. a lot of text
+      here. i am sure you are getting the picture.a lot of text here. i am sure
+      you are getting the picture. a lot of text here. i am sure you are getting
+      the picture. a lot of text here. i am sure you are getting the picture.
+    </p>
+    <p class="mb-4">
+      a lot of text here. i am sure you are getting the picture. a lot of text
+      here. i am sure you are getting the picture.a lot of text here. i am sure
+      you are getting the picture. a lot of text here. i am sure you are getting
+      the picture. a lot of text here. i am sure you are getting the picture.
+    </p>
+    <p class="mb-4">
+      a lot of text here. i am sure you are getting the picture. a lot of text
+      here. i am sure you are getting the picture.a lot of text here. i am sure
+      you are getting the picture. a lot of text here. i am sure you are getting
+      the picture. a lot of text here. i am sure you are getting the picture.
+    </p>
+    <p class="mb-4">
+      a lot of text here. i am sure you are getting the picture. a lot of text
+      here. i am sure you are getting the picture.a lot of text here. i am sure
+      you are getting the picture. a lot of text here. i am sure you are getting
+      the picture. a lot of text here. i am sure you are getting the picture.
+    </p>
+    <p class="mb-4">
+      a lot of text here. i am sure you are getting the picture. a lot of text
+      here. i am sure you are getting the picture.a lot of text here. i am sure
+      you are getting the picture. a lot of text here. i am sure you are getting
+      the picture. a lot of text here. i am sure you are getting the picture.
+    </p>
+    <button
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+    >
+      close
+    </button>
   </div>
 </div>
 ```
@@ -37,27 +70,60 @@ here is another example where a parent container that is not the modal itself is
 
 ```html
 <div class="w-full h-screen overflow-hidden">
-    <div class="relative p-4 h-full flex flex-col">
-      <div class="flex-1 h-full overflow-y-auto">
-        <p>main content here which is long long long and could cause modal issues.</p>
-        <p>main content here which is long long long and could cause modal issues.</p>
-        <p>main content here which is long long long and could cause modal issues.</p>
-         <p>main content here which is long long long and could cause modal issues.</p>
-         <p>main content here which is long long long and could cause modal issues.</p>
-          <p>main content here which is long long long and could cause modal issues.</p>
-           <p>main content here which is long long long and could cause modal issues.</p>
-      </div>
-         <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md h-auto max-h-[90vh] overflow-y-auto">
-              <h2 class="text-xl font-bold mb-4">this is the title of the modal</h2>
-              <p class="mb-4">a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture.a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture.</p>
-              <p class="mb-4">a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture.a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture.</p>
-              <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">close</button>
-            </div>
-          </div>
+  <div class="relative p-4 h-full flex flex-col">
+    <div class="flex-1 h-full overflow-y-auto">
+      <p>
+        main content here which is long long long and could cause modal issues.
+      </p>
+      <p>
+        main content here which is long long long and could cause modal issues.
+      </p>
+      <p>
+        main content here which is long long long and could cause modal issues.
+      </p>
+      <p>
+        main content here which is long long long and could cause modal issues.
+      </p>
+      <p>
+        main content here which is long long long and could cause modal issues.
+      </p>
+      <p>
+        main content here which is long long long and could cause modal issues.
+      </p>
+      <p>
+        main content here which is long long long and could cause modal issues.
+      </p>
     </div>
+    <div
+      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+    >
+      <div
+        class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md h-auto max-h-[90vh] overflow-y-auto"
+      >
+        <h2 class="text-xl font-bold mb-4">this is the title of the modal</h2>
+        <p class="mb-4">
+          a lot of text here. i am sure you are getting the picture. a lot of
+          text here. i am sure you are getting the picture.a lot of text here. i
+          am sure you are getting the picture. a lot of text here. i am sure you
+          are getting the picture. a lot of text here. i am sure you are getting
+          the picture.
+        </p>
+        <p class="mb-4">
+          a lot of text here. i am sure you are getting the picture. a lot of
+          text here. i am sure you are getting the picture.a lot of text here. i
+          am sure you are getting the picture. a lot of text here. i am sure you
+          are getting the picture. a lot of text here. i am sure you are getting
+          the picture.
+        </p>
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          close
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
-
 ```
 
 here, see how the container of the modal has `overflow-hidden`? that's what can cause issues. so when your modal is not behaving, inspect that dom tree in the browser and search for those kinds of css rules on parent components, and also if the parent container is also absolute positioned, that could also be an issue. the `h-screen` on the main container and the `h-full` on its immediate children is also an important thing to have, especially when you are using flexbox and trying to have the modal take up most of the screen.
@@ -69,25 +135,45 @@ and while we are talking about scrolling, sometimes the issue is that you want t
 let's look at another common case that i've seen where a modal is embedded into a component with absolute positioning, and the modal container is not correctly inheriting the right size of its viewport:
 
 ```html
- <div class="relative">
-     <div class="absolute top-0 left-0 right-0 w-full">
-        <div class="flex flex-col w-full h-full">
-             <p>content here</p>
-             <p>content here</p>
-             <p>content here</p>
-             <p>content here</p>
-            <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md h-auto max-h-[90vh] overflow-y-auto">
-                  <!-- modal content here -->
-                  <h2 class="text-xl font-bold mb-4">this is the title of the modal</h2>
-                  <p class="mb-4">a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture.a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture.</p>
-                  <p class="mb-4">a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture.a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture. a lot of text here. i am sure you are getting the picture.</p>
-                  <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">close</button>
-                </div>
-            </div>
+<div class="relative">
+  <div class="absolute top-0 left-0 right-0 w-full">
+    <div class="flex flex-col w-full h-full">
+      <p>content here</p>
+      <p>content here</p>
+      <p>content here</p>
+      <p>content here</p>
+      <div
+        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+      >
+        <div
+          class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md h-auto max-h-[90vh] overflow-y-auto"
+        >
+          <!-- modal content here -->
+          <h2 class="text-xl font-bold mb-4">this is the title of the modal</h2>
+          <p class="mb-4">
+            a lot of text here. i am sure you are getting the picture. a lot of
+            text here. i am sure you are getting the picture.a lot of text here.
+            i am sure you are getting the picture. a lot of text here. i am sure
+            you are getting the picture. a lot of text here. i am sure you are
+            getting the picture.
+          </p>
+          <p class="mb-4">
+            a lot of text here. i am sure you are getting the picture. a lot of
+            text here. i am sure you are getting the picture.a lot of text here.
+            i am sure you are getting the picture. a lot of text here. i am sure
+            you are getting the picture. a lot of text here. i am sure you are
+            getting the picture.
+          </p>
+          <button
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            close
+          </button>
         </div>
-     </div>
- </div>
+      </div>
+    </div>
+  </div>
+</div>
 ```
 
 here, `absolute` positioning on the second `div` could also cause some issues, as you can see that the parent of the modal has all that `absolute` and `top-0 left-0 right-0` positioning, which makes the modal more difficult to reason about, this is yet another case where inspecting the dom can help.

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-connect-a-salesforce-einstein-enhanced-bot-with-facebook-over-a-messaging-channel"
 ---
 
-alright, so you're looking to get your salesforce einstein enhanced bot chatting with folks on facebook messenger, right? i've been down this road, and let me tell you, it's not always a walk in the park, but totally doable. i've built a few of these integrations in my time, mostly for startups trying to handle customer support with a little more automation, and it's generally a pretty interesting setup. the biggest problem is always the initial configuration.
+, so you're looking to get your salesforce einstein enhanced bot chatting with folks on facebook messenger, right? i've been down this road, and let me tell you, it's not always a walk in the park, but totally doable. i've built a few of these integrations in my time, mostly for startups trying to handle customer support with a little more automation, and it's generally a pretty interesting setup. the biggest problem is always the initial configuration.
 
 first off, let's talk about the pieces you need. you've got your einstein bot, obviously, which you've hopefully already set up inside your salesforce org. this is where all your chatbot logic lives, the intents, the entities, and the dialog flows. it handles the natural language processing and decides how to respond to user input. then, you've got the facebook side of things, meaning your facebook page and the developer tools it comes with. that's where you'll get your page access token, which is essentially the key to let your bot talk to facebook messenger.
 
@@ -17,80 +17,83 @@ a common mistake i see folks make is trying to directly connect facebook to sale
 now, let’s look at some code examples. this first snippet shows a basic express.js setup (node) for handling a webhook from facebook:
 
 ```javascript
-const express = require('express');
-const bodyParser = require('body-parser');
-const axios = require('axios');
+const express = require("express");
+const bodyParser = require("body-parser");
+const axios = require("axios");
 
 const app = express();
 app.use(bodyParser.json());
 
-const facebookPageToken = 'your_facebook_page_access_token';
-const salesforceBotEndpoint = 'your_salesforce_bot_endpoint';
+const facebookPageToken = "your_facebook_page_access_token";
+const salesforceBotEndpoint = "your_salesforce_bot_endpoint";
 
-app.post('/webhook', (req, res) => {
-    const body = req.body;
+app.post("/webhook", (req, res) => {
+  const body = req.body;
 
-    if (body.object === 'page') {
-        body.entry.forEach(entry => {
-            entry.messaging.forEach(event => {
-                if (event.message && event.message.text) {
-                    const messageText = event.message.text;
-                    const senderId = event.sender.id;
+  if (body.object === "page") {
+    body.entry.forEach((entry) => {
+      entry.messaging.forEach((event) => {
+        if (event.message && event.message.text) {
+          const messageText = event.message.text;
+          const senderId = event.sender.id;
 
-                    // prepare payload for salesforce
-                    const salesforcePayload = {
-                        text: messageText,
-                        userId: senderId,
-                        channel: 'facebook'
-                    };
+          // prepare payload for salesforce
+          const salesforcePayload = {
+            text: messageText,
+            userId: senderId,
+            channel: "facebook",
+          };
 
-                    axios.post(salesforceBotEndpoint, salesforcePayload)
-                        .then(salesforceResponse => {
-                            const botResponseText = salesforceResponse.data.text;
-                            // send the response back to facebook
-                            sendFacebookMessage(senderId, botResponseText);
-                        })
-                        .catch(error => {
-                            console.error('error sending to salesforce', error);
-                        });
-
-                }
+          axios
+            .post(salesforceBotEndpoint, salesforcePayload)
+            .then((salesforceResponse) => {
+              const botResponseText = salesforceResponse.data.text;
+              // send the response back to facebook
+              sendFacebookMessage(senderId, botResponseText);
+            })
+            .catch((error) => {
+              console.error("error sending to salesforce", error);
             });
-        });
-        res.status(200).send('event received');
-    } else {
-      res.status(404).send();
-    }
+        }
+      });
+    });
+    res.status(200).send("event received");
+  } else {
+    res.status(404).send();
+  }
 });
 
-
-function sendFacebookMessage(recipientId, text){
-
-    axios.post('https://graph.facebook.com/v18.0/me/messages', {
+function sendFacebookMessage(recipientId, text) {
+  axios
+    .post(
+      "https://graph.facebook.com/v18.0/me/messages",
+      {
         recipient: { id: recipientId },
-        message: { text: text }
-    }, {
-        params: {access_token: facebookPageToken}
-    })
-      .catch(error => {
-            console.error('error sending to facebook', error);
-        });
+        message: { text: text },
+      },
+      {
+        params: { access_token: facebookPageToken },
+      }
+    )
+    .catch((error) => {
+      console.error("error sending to facebook", error);
+    });
 }
 // this is just for webhook verification during setup
-app.get('/webhook', (req, res) => {
-  const verifyToken = 'your_verify_token';
-    const mode = req.query['hub.mode'];
-    const token = req.query['hub.verify_token'];
-    const challenge = req.query['hub.challenge'];
+app.get("/webhook", (req, res) => {
+  const verifyToken = "your_verify_token";
+  const mode = req.query["hub.mode"];
+  const token = req.query["hub.verify_token"];
+  const challenge = req.query["hub.challenge"];
 
-    if (mode === 'subscribe' && token === verifyToken) {
-      res.status(200).send(challenge);
-    } else {
-       res.status(403).send();
-    }
+  if (mode === "subscribe" && token === verifyToken) {
+    res.status(200).send(challenge);
+  } else {
+    res.status(403).send();
+  }
 });
 
-app.listen(3000, () => console.log('server running'));
+app.listen(3000, () => console.log("server running"));
 ```
 
 this is a very basic node.js express server example. remember to install dependencies with: `npm install express body-parser axios`. you'd need to replace `'your_facebook_page_access_token'`, `'your_salesforce_bot_endpoint'`, and `'your_verify_token'` with your actual credentials. the `sendFacebookMessage` function sends the bot’s reply back to the user. also, note the webhook verification handler for setup from facebook.

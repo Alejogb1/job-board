@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ruby-remove-nils-from-array-implementation"
 ---
 
-Okay so you're asking about removing nils from a Ruby array right yeah I've been there done that many times in my career It's a pretty common task actually especially when you're dealing with data that might have missing or incomplete values Lets just jump right in
+you're asking about removing nils from a Ruby array right yeah I've been there done that many times in my career It's a pretty common task actually especially when you're dealing with data that might have missing or incomplete values Lets just jump right in
 
 I remember this one project back in my early days building this inventory management system you know classic crud stuff. We were getting data from various sources some APIs some from csv files and some god knows where. The problem was that the data wasn't always clean. Sometimes we'd get fields that were supposed to be numbers or strings but they'd come as nil. Which is a common occurrence I know right It was messing up our calculations and views causing all sorts of UI headaches.
 
@@ -23,6 +23,7 @@ my_array = [1, nil, 2, nil, 3]
 clean_array = remove_nils_loop(my_array)
 puts clean_array.inspect # Output: [1, 2, 3]
 ```
+
 It works right but it felt kinda clunky even then and I thought to myself there's gotta be a more Ruby way to do this. You know Ruby is famous for its concise and elegant syntax
 
 So I looked it up on the internet back then and I found that Ruby has this fantastic method built-in that does exactly that for you the `compact` method. It’s like they knew we would have this exact problem and it's pretty straightforward. So instead of a loop we could write the same thing like this
@@ -44,6 +45,7 @@ But I was working on this other project it was for parsing configuration files a
 So I had to figure out another way to do this but without creating a new copy of the array. Luckily Ruby provides a `compact!` method which modifies the array in-place. The bang operator the exclamation mark in the method name is the convention for methods which change the original object. It's a bit like using `git push --force` but for arrays I guess you can say that
 
 Here is how I used it that time
+
 ```ruby
 def remove_nils_compact_inplace(arr)
   arr.compact!
@@ -55,9 +57,11 @@ clean_array = remove_nils_compact_inplace(my_array)
 puts clean_array.inspect # Output: [1, 2, 3]
 puts my_array.inspect # Output: [1, 2, 3]
 ```
+
 Notice how the original array `my_array` is also changed. Now that's important to remember. If you don't want to modify the original you should make a copy before using `compact!`. I have been bitten by this several times in the past always forgetting to make a copy it's like a rite of passage for Ruby developers haha.
 
 So that's basically it. When you need to remove nils from a Ruby array you've got a couple of options:
+
 - Use `compact` if you want a new array without the nils
 - Use `compact!` if you want to modify the original array in place which is useful when you are in high performance applications with limited resources.
 

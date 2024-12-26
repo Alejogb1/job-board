@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-can-i-disable-keras-metrics-computation-during-training"
 ---
 
-Alright, let's tackle this. Disabling metric computation during keras training isn't always the first thing that comes to mind, but it's a surprisingly useful technique, especially when you're chasing performance gains or dealing with very large datasets. I remember a project years back where we were training a ridiculously large image recognition model – the default metrics calculation was adding a substantial overhead, slowing our epochs significantly. Finding a way to sidestep that proved crucial for getting the project delivered on time.
+, let's tackle this. Disabling metric computation during keras training isn't always the first thing that comes to mind, but it's a surprisingly useful technique, especially when you're chasing performance gains or dealing with very large datasets. I remember a project years back where we were training a ridiculously large image recognition model – the default metrics calculation was adding a substantial overhead, slowing our epochs significantly. Finding a way to sidestep that proved crucial for getting the project delivered on time.
 
-The core issue is that Keras, by default, computes and reports metrics *for each batch* during training. This is great for real-time monitoring and debugging but comes at a cost. The calculation of these metrics, especially for complex ones like f1-score or AUC, requires additional operations beyond just the forward and backward passes of the model. If you’re confident in your model architecture and training setup, and particularly if you're aiming for raw speed, disabling these metrics can offer a noticeable performance boost. Now, how do we actually do this?
+The core issue is that Keras, by default, computes and reports metrics _for each batch_ during training. This is great for real-time monitoring and debugging but comes at a cost. The calculation of these metrics, especially for complex ones like f1-score or AUC, requires additional operations beyond just the forward and backward passes of the model. If you’re confident in your model architecture and training setup, and particularly if you're aiming for raw speed, disabling these metrics can offer a noticeable performance boost. Now, how do we actually do this?
 
 Keras doesn't have a simple 'disable metrics' switch at the top level. Instead, you have to approach it with a little more granularity, primarily by controlling what you pass to the `model.compile()` method. Specifically, the `metrics` argument within `compile()` is where we’ll be focusing our attention. If you pass an empty list or `None` to this argument, keras will not compute any metrics during training. Instead, it will only track the training loss, which is always computed as part of the optimization process. Let’s look at some examples to understand this better:
 
 **Example 1: Training Without Metrics**
 
-Here’s a basic snippet of how to create a model and train it *without* any metrics calculated during training:
+Here’s a basic snippet of how to create a model and train it _without_ any metrics calculated during training:
 
 ```python
 import tensorflow as tf
@@ -42,7 +42,7 @@ loss = model.evaluate(X_train, y_train, verbose=0)
 print(f"Final Loss: {loss}")
 ```
 
-In this snippet, notice the `model.compile()` line: there’s no `metrics` argument specified. By omitting it, keras defaults to calculating only the loss. As you can see, the model still trains, but you don't get the usual per-batch metrics output during the training progress. Importantly, the `model.evaluate()` method can still be used *after* training to assess the model performance with specified metrics.
+In this snippet, notice the `model.compile()` line: there’s no `metrics` argument specified. By omitting it, keras defaults to calculating only the loss. As you can see, the model still trains, but you don't get the usual per-batch metrics output during the training progress. Importantly, the `model.evaluate()` method can still be used _after_ training to assess the model performance with specified metrics.
 
 **Example 2: Selective Metric Computation**
 
@@ -75,7 +75,7 @@ X_val = np.random.rand(200, 10)
 y_val = np.random.randint(0, 2, 200)
 
 # Train the model with validation data and specified metrics on validation
-model.fit(X_train, y_train, epochs=10, batch_size=32, 
+model.fit(X_train, y_train, epochs=10, batch_size=32,
           validation_data=(X_val,y_val),
           validation_metrics=[metrics.Accuracy()])
 

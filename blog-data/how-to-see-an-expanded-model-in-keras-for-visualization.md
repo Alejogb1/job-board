@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-see-an-expanded-model-in-keras-for-visualization"
 ---
 
-alright, so you’re hitting that wall where you've got a keras model, and you wanna peek under the hood, see all the layers laid out, not just the summary version? yeah, i’ve been there, many times. it’s one of those things that seems simple on the surface, but the devil’s in the details.
+, so you’re hitting that wall where you've got a keras model, and you wanna peek under the hood, see all the layers laid out, not just the summary version? yeah, i’ve been there, many times. it’s one of those things that seems simple on the surface, but the devil’s in the details.
 
 my first run-in with this was ages ago, back when i was trying to build a convoluted convolutional network for image recognition. i had this behemoth of a model, layers stacked like pancakes at a sunday brunch, and the model.summary() output was just not cutting it. i needed to see the actual connections, the data flow, everything. i was basically coding in the dark, and debugging was a nightmare. so, i understand where you’re coming from. you really need that visualization to make sense of things sometimes.
 
@@ -57,6 +57,7 @@ plot_model(model, to_file='multi_input_model.png', show_shapes=True, show_layer_
 plot_model(model, to_file='multi_input_model_lr.png', show_shapes=True, show_layer_names=True, rankdir='LR')
 
 ```
+
 the parameter `rankdir = 'TB'` arranges the layers from top to bottom, it is the default, and `rankdir = 'LR'` arranges the layers from left to right, which sometimes produces a better visualization for models with multiple branches. if you just want to see the connections and the order, i would choose 'LR' as the diagram becomes smaller and easier to read.
 
 another thing that’s useful, especially with really complex models, is saving a separate version of the diagram where the layers are numbered, because the labels can overlap. let’s create a visualization of a residual network block:
@@ -86,6 +87,7 @@ model = keras.Model(inputs=input_tensor, outputs=x, name='residual_model')
 plot_model(model, to_file='residual_model.png', show_shapes=True, show_layer_names=True, rankdir='LR')
 plot_model(model, to_file='residual_model_numbered.png', show_shapes=True, show_layer_names=False, rankdir='LR')
 ```
+
 notice how in the second plot there are no names, but rather the order number. this also helps for readability.
 
 one last thing, it might be useful to understand some of the common limitations of this technique. while this visualization function is really helpful, there are a few things it doesn’t show directly. for example, it doesn’t illustrate the activation functions within the layers, or the specific weights or biases. it’s a high-level view of the connections and shapes. for the specifics inside each layer, you still need to inspect the layer object directly. think of it like having the blueprints of a building, they show you what connects to what, but you don’t see the color of the wall paint. also, the visualization can get messy with extremely large networks, as mentioned before, so there's a limit of readability for some extreme cases.

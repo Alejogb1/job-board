@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "an-image-does-not-exist-locally-with-the-tag-docker-error"
 ---
 
-Alright I've seen this one pop up a million times it's the classic docker image not found locally error and it usually hits when you're trying to spin up a container and docker just can't find the image you told it to use I mean seriously its like the simplest thing sometimes gets you
+I've seen this one pop up a million times it's the classic docker image not found locally error and it usually hits when you're trying to spin up a container and docker just can't find the image you told it to use I mean seriously its like the simplest thing sometimes gets you
 
-Okay lets break it down and get this thing working
+lets break it down and get this thing working
 
 First things first you gotta understand how docker looks for images it has a local cache where it stores all the images it has downloaded when you run docker run or a docker compose up command it tries to find the image there locally before even thinking about going to a registry like docker hub or your private registry if you have one thats the key thing
 
@@ -28,7 +28,7 @@ First verify that you've actually pulled the image you should be doing this befo
 docker pull your_image_name:your_tag
 ```
 
-replace your\_image\_name with the name of the image and your\_tag with the tag you're trying to use if no tag is specified it will assume latest which you should probably avoid for production
+replace your_image_name with the name of the image and your_tag with the tag you're trying to use if no tag is specified it will assume latest which you should probably avoid for production
 
 If that doesnt work double-check that you typed everything right when you tried to run the image double check you image names tags and spelling
 

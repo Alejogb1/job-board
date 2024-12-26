@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-does-tkinter-code-after-mainloop-not-run-when-the-window-closes"
 ---
 
-Alright, let's tackle this one. I remember a particular project, back when I was first getting deep into GUI development with Python and Tkinter. We were building a simple data visualization tool, and I had some post-processing code that stubbornly refused to execute after the main window was closed. It was frustrating, but it forced me to really understand the nuances of `mainloop()`. So, let's break down why this happens and how to manage it effectively.
+, let's tackle this one. I remember a particular project, back when I was first getting deep into GUI development with Python and Tkinter. We were building a simple data visualization tool, and I had some post-processing code that stubbornly refused to execute after the main window was closed. It was frustrating, but it forced me to really understand the nuances of `mainloop()`. So, let's break down why this happens and how to manage it effectively.
 
 The core issue stems from how Tkinter’s `mainloop()` function operates. It’s not just a call to display a window; it’s essentially a blocking loop that manages the entire lifecycle of the application's graphical user interface. Think of it as the central nervous system of your Tkinter app. When you call `root.mainloop()` (assuming `root` is your main Tkinter window), the program enters an event loop, constantly listening for and processing user interactions such as clicks, key presses, and window resizing events.
 
-This loop is crucial because it's what allows your GUI to be interactive. While this loop is running, your main thread is essentially “stuck” inside this process, actively handling these UI events. Any code written after the `mainloop()` call will not be executed until this loop terminates. And that's the crux of the problem: when the Tkinter window is closed (typically by the user clicking the ‘X’ button), the `mainloop()` function exits. It's only *then* that the program's execution will continue sequentially from the line immediately after the call to `mainloop()`.
+This loop is crucial because it's what allows your GUI to be interactive. While this loop is running, your main thread is essentially “stuck” inside this process, actively handling these UI events. Any code written after the `mainloop()` call will not be executed until this loop terminates. And that's the crux of the problem: when the Tkinter window is closed (typically by the user clicking the ‘X’ button), the `mainloop()` function exits. It's only _then_ that the program's execution will continue sequentially from the line immediately after the call to `mainloop()`.
 
-So, if you're hoping that some cleanup or post-processing code will execute *during* the time that the window is displayed, you're likely going to be disappointed. Tkinter’s event-driven nature dictates that code must be integrated within this event loop, typically through callback functions bound to specific events, or scheduled for later execution within the mainloop’s context. Direct sequential execution after `mainloop()` only happens *after* the UI window has ceased to exist.
+So, if you're hoping that some cleanup or post-processing code will execute _during_ the time that the window is displayed, you're likely going to be disappointed. Tkinter’s event-driven nature dictates that code must be integrated within this event loop, typically through callback functions bound to specific events, or scheduled for later execution within the mainloop’s context. Direct sequential execution after `mainloop()` only happens _after_ the UI window has ceased to exist.
 
 Let's examine this with some illustrative code snippets. First, a basic example that demonstrates the problem:
 
@@ -31,7 +31,7 @@ root.mainloop()
 print("This line appears after the window closes.")
 ```
 
-In this snippet, the function `on_window_close` is called right *before* the `mainloop` terminates because it is bound to the `WM_DELETE_WINDOW` protocol, which is the event that happens when the window is being closed. Importantly, though, the line `print("This line appears after the window closes.")` only executes *after* `mainloop()` has exited, meaning the window is already closed.
+In this snippet, the function `on_window_close` is called right _before_ the `mainloop` terminates because it is bound to the `WM_DELETE_WINDOW` protocol, which is the event that happens when the window is being closed. Importantly, though, the line `print("This line appears after the window closes.")` only executes _after_ `mainloop()` has exited, meaning the window is already closed.
 
 Now, let’s imagine you want something to execute when a button is pressed, perhaps to save data before closing, here’s an example of that which uses a callback inside the main loop context:
 
@@ -81,7 +81,7 @@ root.mainloop()
 print("This line is unreachable.")
 ```
 
-Here, `on_close()` is called when the window’s close button is pressed, but *inside* the tkinter mainloop. Within `on_close()`, we are using `root.after()` to schedule the `run_post_processing()` method to run *later* after a 1000ms delay, this is a method for allowing some of the GUI to stay responsive while work is being completed. `run_post_processing()` is responsible for completing the “post-processing” work before ultimately calling `root.destroy()` which closes the application and the `mainloop` context. Again, this is all executed before `root.mainloop()` will terminate and the subsequent line of code is completely unreachable.
+Here, `on_close()` is called when the window’s close button is pressed, but _inside_ the tkinter mainloop. Within `on_close()`, we are using `root.after()` to schedule the `run_post_processing()` method to run _later_ after a 1000ms delay, this is a method for allowing some of the GUI to stay responsive while work is being completed. `run_post_processing()` is responsible for completing the “post-processing” work before ultimately calling `root.destroy()` which closes the application and the `mainloop` context. Again, this is all executed before `root.mainloop()` will terminate and the subsequent line of code is completely unreachable.
 
 As you can see, the key takeaway is that to affect the behavior of your Tkinter application, you almost always need to operate within the mainloop's event handling system. Direct code execution after the `mainloop()` is for the clean-up of the application after termination, and is unlikely to be used in most typical UI application setups.
 

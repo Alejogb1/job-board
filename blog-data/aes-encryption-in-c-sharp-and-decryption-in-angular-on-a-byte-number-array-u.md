@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "aes-encryption-in-c-sharp-and-decryption-in-angular-on-a-byte-number-array-u"
 ---
 
-Alright so you're hitting that classic cross-platform AES encryption headache aren't you C# doing the heavy lifting with byte arrays and Angular trying to make sense of it all Yeah I've been there done that got the t-shirt more than a few times Let me tell you it's a common pitfall and it's usually down to a couple of things either the key handling is wonky or the encoding is messing with the data Or maybe even both So let's break this down I'm going to talk from my experience because I've spent way too many late nights debugging this specific scenario
+so you're hitting that classic cross-platform AES encryption headache aren't you C# doing the heavy lifting with byte arrays and Angular trying to make sense of it all Yeah I've been there done that got the t-shirt more than a few times Let me tell you it's a common pitfall and it's usually down to a couple of things either the key handling is wonky or the encoding is messing with the data Or maybe even both So let's break this down I'm going to talk from my experience because I've spent way too many late nights debugging this specific scenario
 
 First thing first C# AES using byte arrays is pretty straightforward but you need to be meticulous about the details I remember one time I was working on a secure data transfer project We had these sensor nodes pushing data up to a server and of course we needed to encrypt it The C# backend was generating the encrypted byte arrays and we thought we were golden I swear I spent three days staring at a seemingly random pile of garbage in the frontend until I realized we hadn't properly agreed on the IV initialization vector it was just random chaos
 
@@ -53,23 +53,26 @@ One thing I noticed is that Base64 is a usual suspect in this kind of cross plat
 Here's some Angular TypeScript code using `crypto-js` which is a very common library I've used it so many times I’ve lost count
 
 ```typescript
-import * as CryptoJS from 'crypto-js';
+import * as CryptoJS from "crypto-js";
 
 export class CryptoHelper {
+  static decrypt(encryptedData: number[], key: number[], iv: number[]): string {
+    const keyBytes = CryptoJS.lib.WordArray.create(key);
+    const ivBytes = CryptoJS.lib.WordArray.create(iv);
+    const encryptedBytes = CryptoJS.lib.WordArray.create(encryptedData);
 
-    static decrypt(encryptedData: number[], key: number[], iv: number[]): string {
-        const keyBytes = CryptoJS.lib.WordArray.create(key);
-        const ivBytes = CryptoJS.lib.WordArray.create(iv);
-        const encryptedBytes = CryptoJS.lib.WordArray.create(encryptedData);
+    const decrypted = CryptoJS.AES.decrypt(
+      { ciphertext: encryptedBytes },
+      keyBytes,
+      {
+        iv: ivBytes,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7,
+      }
+    );
 
-        const decrypted = CryptoJS.AES.decrypt({ ciphertext: encryptedBytes }, keyBytes, {
-            iv: ivBytes,
-            mode: CryptoJS.mode.CBC,
-            padding: CryptoJS.pad.Pkcs7
-        });
-
-        return decrypted.toString(CryptoJS.enc.Utf8);
-    }
+    return decrypted.toString(CryptoJS.enc.Utf8);
+  }
 }
 
 // Example usage:

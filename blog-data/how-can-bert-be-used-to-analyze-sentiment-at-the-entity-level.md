@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-bert-be-used-to-analyze-sentiment-at-the-entity-level"
 ---
 
-Alright, let's talk about entity-level sentiment analysis using BERT. This is something I've tackled quite a few times in the past, and it's definitely a step up from basic document or sentence-level sentiment analysis. You're moving beyond just 'this is positive' or 'this is negative,' and into dissecting *who* is feeling *what* towards *whom* or *what*. It adds a layer of complexity but gives much richer insights.
+, let's talk about entity-level sentiment analysis using BERT. This is something I've tackled quite a few times in the past, and it's definitely a step up from basic document or sentence-level sentiment analysis. You're moving beyond just 'this is positive' or 'this is negative,' and into dissecting _who_ is feeling _what_ towards _whom_ or _what_. It adds a layer of complexity but gives much richer insights.
 
 The core challenge, as I've often found, is that BERT, by itself, doesn't natively understand entities and their relationships. It's a language model focused on contextual word embeddings. You feed it a sentence, and it generates rich vector representations of those words, incorporating context. But it doesn’t inherently know that "Apple" in "Apple's new phone is great" is an entity to be considered separately from "great," which could be a sentiment. This is where specific techniques built on top of BERT become essential.
 
@@ -34,7 +34,7 @@ print(entities)
 
 Here, spaCy quickly identifies "iPhone" as an organization. This gives us the entity and its type. This is typically a first step and is crucial for the next stage, associating sentiments with this entity.
 
-**Example 2:  Sentiment Classification with Pre-Trained Model (conceptual)**
+**Example 2: Sentiment Classification with Pre-Trained Model (conceptual)**
 
 To avoid overcomplicating this illustration, we’ll assume the existence of a separate fine-tuned BERT model designed for sentiment classification, capable of providing a sentiment score between -1 and 1 (negative to positive), where 0 represents neutral. We can use this model to determine the sentiment associated with each entity in the sentence. This model was previously trained on a dataset containing entity-sentiment pairs. In practice, implementing this would involve a few steps, including encoding the input, running it through the model, and extracting the predicted sentiment score. The code below simplifies this:
 
@@ -65,9 +65,10 @@ for entity, label, start, end in entities:
 print(entity_sentiments)
 # Output: [{'entity': 'iPhone', 'label': 'ORG', 'sentiment': 0.9}]
 ```
-Notice, this is a basic, illustrative example of how you'd *use* a model. In a real-world scenario, `predict_entity_sentiment` would contain the code that interfaces with a PyTorch or TensorFlow model, using the appropriate functions for tokenization and prediction. The key here is that we are passing entity-specific context, not just the whole sentence, to this sentiment classifier. I've also included the span start and end of the entity, to allow for contextual extraction.
 
-**Example 3:  Building a Combined Pipeline**
+Notice, this is a basic, illustrative example of how you'd _use_ a model. In a real-world scenario, `predict_entity_sentiment` would contain the code that interfaces with a PyTorch or TensorFlow model, using the appropriate functions for tokenization and prediction. The key here is that we are passing entity-specific context, not just the whole sentence, to this sentiment classifier. I've also included the span start and end of the entity, to allow for contextual extraction.
+
+**Example 3: Building a Combined Pipeline**
 
 Now, let's look at a more integrated workflow where we have the NER and sentiment analysis combined. In reality, you might have specific classes to encapsulate these components and improve modularity.
 
@@ -100,6 +101,7 @@ entity_sentiment_analysis_result_2 = get_entity_sentiment(text_2, nlp, sentiment
 print(entity_sentiment_analysis_result_2)
 # Output: [{'entity': 'Samsung', 'label': 'ORG', 'sentiment_score': 0.964, 'sentiment_label': 'positive'}]
 ```
+
 In this example, we are using a pre-trained sentiment analysis model from HuggingFace and integrated the NER from spaCy, all within the `get_entity_sentiment` function. As you can see, the output gives us sentiment alongside the extracted entity. There are limitations with these approach since the context of the "Samsung phone" is not necessarily the same in both texts.
 
 There are, of course, more sophisticated ways to approach this. For example, you might want to consider using attention mechanisms to pinpoint which parts of the text are most closely related to each entity's sentiment. Graph-based methods, where you represent entities and their relationships as a graph, can also be beneficial. It really depends on how granular and accurate you need the analysis to be, and the context of the application.

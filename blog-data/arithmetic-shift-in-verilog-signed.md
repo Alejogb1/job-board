@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "arithmetic-shift-in-verilog-signed"
 ---
 
-Alright so you're wrestling with arithmetic shifts in Verilog specifically when dealing with signed numbers I feel you I’ve been there trust me It’s one of those things that seems simple on the surface but can bite you in the butt if you don't understand the nitty-gritty
+so you're wrestling with arithmetic shifts in Verilog specifically when dealing with signed numbers I feel you I’ve been there trust me It’s one of those things that seems simple on the surface but can bite you in the butt if you don't understand the nitty-gritty
 
 I remember back when I was working on a custom DSP block for some image processing thing I needed to do some seriously fast and precise calculations and yeah you guessed it I messed up my signed shifts and the whole system started spewing out garbage results It took me a good solid day of debugging to figure it out it was a real head scratcher let me tell you
 
@@ -113,6 +113,7 @@ module signed_unsigned_shift;
 endmodule
 
 ```
+
 This example shows the differences between the two kind of shifts when you have signed and unsigned numbers doing an arithmetic or logical shift
 
 Now one of the things I had trouble with early on is I forgot the signed and unsigned definitions of data which results in incorrect results as the hardware synthesizers default the data type to unsigned if you do not specify and you get the logical shift instead of the arithmetic one even if you expect one This can lead to very difficult to debug errors that you will never find I always use signed type to make my data type and intent clear especially if dealing with signals that need a sign

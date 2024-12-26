@@ -4,17 +4,17 @@ date: "2024-12-23"
 id: "how-can-tensorflow-keras-batchnormalization-be-applied-to-tensors-with-more-than-4-dimensions-eg-video-input"
 ---
 
-Alright, let's unpack this one. It's a scenario I've encountered more than a few times, actually, particularly back when I was neck-deep in research projects involving complex spatiotemporal data. The notion that `BatchNormalization` in TensorFlow Keras is inherently limited to 4D tensors (batch size, height, width, channels) is a common misconception, and it stems from the typical usage seen in image processing. But its underlying mechanics are far more flexible than that, and with a little understanding, you can easily extend it to higher-dimensional tensors like those from video or other multi-dimensional sources.
+, let's unpack this one. It's a scenario I've encountered more than a few times, actually, particularly back when I was neck-deep in research projects involving complex spatiotemporal data. The notion that `BatchNormalization` in TensorFlow Keras is inherently limited to 4D tensors (batch size, height, width, channels) is a common misconception, and it stems from the typical usage seen in image processing. But its underlying mechanics are far more flexible than that, and with a little understanding, you can easily extend it to higher-dimensional tensors like those from video or other multi-dimensional sources.
 
-The core idea behind `BatchNormalization`, or `Batchnorm` as many of us affectionately call it, isn't about the spatial arrangement of the data, but rather about normalizing the activations of a layer *within* each mini-batch during training. Think of it as attempting to maintain a consistent distribution of values at different depths in a network. By normalizing the input to each layer, we alleviate the internal covariate shift problem, which essentially means that subsequent layers are less impacted by changes in the input distribution of earlier layers. This allows for higher learning rates, and faster, more stable training.
+The core idea behind `BatchNormalization`, or `Batchnorm` as many of us affectionately call it, isn't about the spatial arrangement of the data, but rather about normalizing the activations of a layer _within_ each mini-batch during training. Think of it as attempting to maintain a consistent distribution of values at different depths in a network. By normalizing the input to each layer, we alleviate the internal covariate shift problem, which essentially means that subsequent layers are less impacted by changes in the input distribution of earlier layers. This allows for higher learning rates, and faster, more stable training.
 
-Now, if we dissect the implementation of `BatchNormalization`, we see it calculates the mean and variance for each feature channel across the *batch* dimension (dimension 0 in most cases). The crucial point is that these statistics are aggregated *only* over the batch dimension, regardless of the number of other dimensions present. Thus, if you carefully consider how to shape your tensors, you can easily extend it to tensors with an arbitrary number of dimensions.
+Now, if we dissect the implementation of `BatchNormalization`, we see it calculates the mean and variance for each feature channel across the _batch_ dimension (dimension 0 in most cases). The crucial point is that these statistics are aggregated _only_ over the batch dimension, regardless of the number of other dimensions present. Thus, if you carefully consider how to shape your tensors, you can easily extend it to tensors with an arbitrary number of dimensions.
 
 The key is to think about the "channel" dimension correctly. In a typical image example, this is the final dimension, and it usually corresponds to red, green, blue, or feature maps produced by convolutional layers. When you have video input, or any multi-dimensional data, you must decide which dimension(s) represent the features that you want to independently normalize.
 
-Let's consider video data. A common format is (batch, frames, height, width, channels). If you apply `BatchNormalization` out of the box with this shape, TensorFlow will treat the frames, height, and width dimensions as individual features rather than different spatial/temporal locations in the same feature channel. That isn't usually what we want. Instead, you'd likely want to apply it *per channel* across all spatial and temporal dimensions, for a given item in the batch.
+Let's consider video data. A common format is (batch, frames, height, width, channels). If you apply `BatchNormalization` out of the box with this shape, TensorFlow will treat the frames, height, and width dimensions as individual features rather than different spatial/temporal locations in the same feature channel. That isn't usually what we want. Instead, you'd likely want to apply it _per channel_ across all spatial and temporal dimensions, for a given item in the batch.
 
-Here's where `tf.keras.layers.Reshape` and some careful thought come into play. We effectively want to collapse all the dimensions that *aren't* batch or channel into a single dimension, thereby tricking `BatchNormalization` into calculating statistics correctly. We then re-shape it back to its original shape afterwards.
+Here's where `tf.keras.layers.Reshape` and some careful thought come into play. We effectively want to collapse all the dimensions that _aren't_ batch or channel into a single dimension, thereby tricking `BatchNormalization` into calculating statistics correctly. We then re-shape it back to its original shape afterwards.
 
 Let me illustrate with a few code snippets:
 
@@ -31,7 +31,7 @@ def batchnorm_for_video(input_tensor):
     batch_size, time_frames, height, width, channels = input_tensor.shape.as_list()
     # Collapse spatial and temporal dimensions into a single dimension, for normalization
     reshaped_tensor = tf.reshape(input_tensor, [batch_size, time_frames*height*width, channels])
-    
+
     # Now batchnorm using the collapsed dimension
     bn_output = layers.BatchNormalization()(reshaped_tensor)
 
@@ -75,6 +75,7 @@ dummy_feature_maps = tf.random.normal(shape=(16, 3, 32, 32, 16)) # Batch size 16
 normalized_feature_maps = batchnorm_for_3d_conv(dummy_feature_maps)
 print(f"Normalized feature map shape: {normalized_feature_maps.shape}") # Output: (16, 3, 32, 32, 16)
 ```
+
 Here, the logic is the same, just applied to different dimensions. Note how the `channels` dimension is never included in the reshaped dimensions, meaning that each channel's normalization will be independent of all the other channels.
 
 **Example 3: Arbitrary Dimensions with tf.einsum**

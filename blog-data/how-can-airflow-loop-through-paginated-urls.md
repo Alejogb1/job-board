@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-airflow-loop-through-paginated-urls"
 ---
 
-Alright, let's talk about paginated urls and Airflow. I've dealt with this thorny problem more times than I care to recall, often late on a Friday, and it's something that requires a bit of forethought to get functioning correctly. The challenge, of course, lies in how to dynamically generate the necessary url calls based on what the API returns indicating there’s more data available. It's not something Airflow handles natively, we need to orchestrate a solution.
+, let's talk about paginated urls and Airflow. I've dealt with this thorny problem more times than I care to recall, often late on a Friday, and it's something that requires a bit of forethought to get functioning correctly. The challenge, of course, lies in how to dynamically generate the necessary url calls based on what the API returns indicating there’s more data available. It's not something Airflow handles natively, we need to orchestrate a solution.
 
 The fundamental issue is that Airflow tasks, by design, are generally static in their definition. They execute a fixed piece of code or command. With paginated urls, we need to iteratively alter the parameters of our url calls based on the response data, typically a "next page" indicator. We can't predict in advance how many pages there might be. Thus, we’re dealing with a process requiring a loop and this is where a blend of Airflow's task structure and specific Python logic comes into play.
 
@@ -89,6 +89,7 @@ with DAG(
     fetch_tasks = create_tasks_for_pages(dag, api_key_variable, start_url)
 
 ```
+
 In this Dag definition, I'm dynamically generating `PythonOperator` tasks using the `create_tasks_for_pages` function, continuing the loop until `next_page_url` is None. We use the jinja templating feature to dynamically pull the next page url from the xcoms.
 
 Finally, the last part of the puzzle is to aggregate our data. After retrieving all of the pages, we likely need to do some sort of further processing. A simple example, would involve simply collecting the data from all the xcoms into a list.

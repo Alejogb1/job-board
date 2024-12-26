@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-do-airflow-dags-run-successfully-but-tasks-fail"
 ---
 
-Alright, let's tackle this common headache. It's frustrating, isn't it, when the orchestration appears flawless, yet the actual work units stumble. I’ve spent more hours than I care to count troubleshooting these situations, and I've learned that a successful DAG run doesn’t guarantee successful tasks. Think of it like a perfectly planned road trip – the itinerary might be spot on, but flat tires or wrong turns can still derail individual legs of the journey.
+, let's tackle this common headache. It's frustrating, isn't it, when the orchestration appears flawless, yet the actual work units stumble. I’ve spent more hours than I care to count troubleshooting these situations, and I've learned that a successful DAG run doesn’t guarantee successful tasks. Think of it like a perfectly planned road trip – the itinerary might be spot on, but flat tires or wrong turns can still derail individual legs of the journey.
 
-Essentially, the DAG (Directed Acyclic Graph) represents the *blueprint* of your workflow. Airflow manages the scheduling and dependencies defined in that blueprint, ensuring that tasks are initiated in the correct order at the designated time. A successful DAG run merely indicates that Airflow has correctly interpreted and executed this orchestration plan. However, the *execution* of each individual task is a separate concern, happening at a lower level. Numerous factors can lead to a task failure despite a flawless DAG run.
+Essentially, the DAG (Directed Acyclic Graph) represents the _blueprint_ of your workflow. Airflow manages the scheduling and dependencies defined in that blueprint, ensuring that tasks are initiated in the correct order at the designated time. A successful DAG run merely indicates that Airflow has correctly interpreted and executed this orchestration plan. However, the _execution_ of each individual task is a separate concern, happening at a lower level. Numerous factors can lead to a task failure despite a flawless DAG run.
 
 The most frequent culprit, in my experience, boils down to issues within the task itself. A task in Airflow is essentially a wrapper around a unit of work – it could be running a shell command, executing a python function, or interacting with an external API. If that unit of work encounters an error, the task will fail, even if the broader DAG is healthy. Resource constraints, coding errors within the task logic, or issues with external systems (database connection issues, API downtimes, etc.) are all prime candidates.
 
@@ -48,7 +48,7 @@ with DAG(
     )
 ```
 
-In this simple DAG, the `count_lines_task` runs a Python function to count lines. However, if the file at `/path/to/large_file.txt` is extremely large, the task might fail due to memory exhaustion. The DAG would have run successfully, initiating the task, but the task itself would fail due to lack of resources.  The Airflow scheduler did its job in starting the task, but the hardware or configuration at the execution level was insufficient. To fix this, I’d typically consider using a more memory-efficient method of reading the file or using a cluster for the computation.
+In this simple DAG, the `count_lines_task` runs a Python function to count lines. However, if the file at `/path/to/large_file.txt` is extremely large, the task might fail due to memory exhaustion. The DAG would have run successfully, initiating the task, but the task itself would fail due to lack of resources. The Airflow scheduler did its job in starting the task, but the hardware or configuration at the execution level was insufficient. To fix this, I’d typically consider using a more memory-efficient method of reading the file or using a cluster for the computation.
 
 **Example 2: Coding Error**
 

@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "why-is-tensorflows-output-not-changing-despite-input-changes"
 ---
 
-Okay, let’s unpack this. I’ve seen this situation countless times, and it's usually not some deep, hidden flaw in TensorFlow, but rather a subtle configuration or implementation oversight. The frustration is real, I get it. You're feeding different data into your model, expecting a corresponding change in the output, yet the model stubbornly produces the same result. There are several usual suspects here. I've personally debugged this scenario in various contexts, from complex convolutional neural networks for image analysis to simpler recurrent models for time series forecasting, so I'm speaking from direct, hands-on experience.
+, let’s unpack this. I’ve seen this situation countless times, and it's usually not some deep, hidden flaw in TensorFlow, but rather a subtle configuration or implementation oversight. The frustration is real, I get it. You're feeding different data into your model, expecting a corresponding change in the output, yet the model stubbornly produces the same result. There are several usual suspects here. I've personally debugged this scenario in various contexts, from complex convolutional neural networks for image analysis to simpler recurrent models for time series forecasting, so I'm speaking from direct, hands-on experience.
 
 The first and most prevalent reason, in my experience, is simply that your model is not actually training. This can stem from a few key areas, such as not properly setting up the optimizer, having a learning rate that is effectively zero, or encountering a scenario where your gradients aren’t being computed or propagated correctly. To be clear, when I say "not training", it implies the weights of your neural network are failing to adjust in response to the input data and loss calculations.
 
-Let’s assume for a moment you’re using a standard sequential model for a straightforward classification problem. If your loss isn't decreasing, that is a *major* red flag, and probably why your output remains static. Here's a very basic example in TensorFlow using Keras:
+Let’s assume for a moment you’re using a standard sequential model for a straightforward classification problem. If your loss isn't decreasing, that is a _major_ red flag, and probably why your output remains static. Here's a very basic example in TensorFlow using Keras:
 
 ```python
 import tensorflow as tf
@@ -47,6 +47,7 @@ for i in range(100):
   loss_value = train_step(X, y)
   print(f"Epoch {i}: loss = {loss_value.numpy()}")
 ```
+
 In this simple code, if your loss isn't decreasing and remains around some initial high value (e.g., around 0.69 for binary cross-entropy) it means the gradients are either not being properly computed, or they're extremely small, which points to potential issues with optimizer settings. Double-check that `learning_rate` value is appropriate for the architecture and dataset you're working with. Using a very small `learning_rate` could cause slow learning, or, worse, no learning at all.
 
 Another common mistake I have seen people make is not correctly feeding data into the model. We often assume that the data we’re passing into the `model.predict()` method matches the expected input structure based on how the model was trained. If your input data, after preprocessing, does not have the precise expected shape from the trained model, then it can lead to this behavior. For instance, if the model expects a batch of 100 images that are 28x28x3 and you are sending a single image that is 28x28x3, or, even worse, an image flattened into a single vector, the model, although it still produces an output, will generally not be what you expect.
@@ -82,9 +83,10 @@ for example in X:
     print(predictions)
 
 ```
-In this case, without the loop, we're incorrectly feeding the entire batch during prediction which will generally result in each example being processed via the layers differently from how it was trained. As you can observe, the shape of your data matters *significantly.* When working with more complex data pipelines, pre-processing such as reshaping, padding, and normalization must be handled correctly.
 
-Finally, there's the possibility that your model has simply *memorized* the training data. If your training set is small and not representative of the variability in your dataset, the model might effectively learn the training examples by heart, especially if you’ve allowed it to overfit by training for too many epochs. In these scenarios, it fails to generalize well, causing the output to remain largely consistent. This is especially true if the dataset has high levels of noise or low levels of variation. Data augmentation can be one method to alleviate this. Also consider adding regularization techniques, like dropout or l2 regularization, to prevent your model from overfitting.
+In this case, without the loop, we're incorrectly feeding the entire batch during prediction which will generally result in each example being processed via the layers differently from how it was trained. As you can observe, the shape of your data matters _significantly._ When working with more complex data pipelines, pre-processing such as reshaping, padding, and normalization must be handled correctly.
+
+Finally, there's the possibility that your model has simply _memorized_ the training data. If your training set is small and not representative of the variability in your dataset, the model might effectively learn the training examples by heart, especially if you’ve allowed it to overfit by training for too many epochs. In these scenarios, it fails to generalize well, causing the output to remain largely consistent. This is especially true if the dataset has high levels of noise or low levels of variation. Data augmentation can be one method to alleviate this. Also consider adding regularization techniques, like dropout or l2 regularization, to prevent your model from overfitting.
 
 Here’s a slightly more complex example demonstrating over-fitting with a tiny dataset. This example does not use real images to avoid complexity; it’s still illustrative.
 

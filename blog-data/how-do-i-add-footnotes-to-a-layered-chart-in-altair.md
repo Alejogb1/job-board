@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-add-footnotes-to-a-layered-chart-in-altair"
 ---
 
-Alright, let’s tackle this one. I’ve spent more hours than I’d like to recall wrestling with Altair visualizations, and layering charts with custom annotations, including footnotes, definitely brings its own set of unique challenges. It’s not a direct built-in feature, and that's often the case with the more nuanced aspects of visualization libraries. But don't despair; we can achieve the desired outcome with a bit of creative layering and understanding of Altair's encoding system. It’s less about a dedicated footnote function, and more about cleverly repurposing what is readily available.
+, let’s tackle this one. I’ve spent more hours than I’d like to recall wrestling with Altair visualizations, and layering charts with custom annotations, including footnotes, definitely brings its own set of unique challenges. It’s not a direct built-in feature, and that's often the case with the more nuanced aspects of visualization libraries. But don't despair; we can achieve the desired outcome with a bit of creative layering and understanding of Altair's encoding system. It’s less about a dedicated footnote function, and more about cleverly repurposing what is readily available.
 
 My experience with this came from a project a few years back involving complex financial data. We needed to display several time series on the same plot, and to ensure clarity, certain data points required associated explanations. These weren’t simple labels; they needed to feel distinct from the main chart elements and were best placed as classic footnotes. Now, Altair doesn’t offer a `footnote` parameter, so we have to build our own mechanism.
 
@@ -56,7 +56,7 @@ footnote_layer = alt.Chart(footnote_data).mark_text(
     baseline='top',
     fontSize=10,
     color='gray',
-    
+
 ).encode(
     x=alt.X('x_coord:T', axis=None),  # Hide the axis
     y=alt.Y('y_coord:Q', axis=None),  # Hide the axis
@@ -65,6 +65,7 @@ footnote_layer = alt.Chart(footnote_data).mark_text(
 
 footnote_layer
 ```
+
 Here, we're creating a data frame where `x_coord` represents a location along the horizontal axis which aligns with the left edge of our primary chart by selecting the minimum date, and `y_coord` sets the vertical positioning; we deliberately place this at the bottom using some logic to ensure its clear separation. The `text` column holds the note we intend to display. We're also creating a `mark_text` layer to render text strings from our created dataframe at each corresponding x,y coordinate, specifying font size, alignment and color. We explicitly remove the axes to avoid them cluttering the display. It's important to note that the vertical position of footnotes may need adjustment based on the ranges of your data, but we've added a margin which should help.
 
 Finally, we’ll layer these elements. Altair makes this easy through the `+` operator to combine chart layers:

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-geth-interact-with-other-blockchain-mainnets-besides-ethereum"
 ---
 
-Okay, let's tackle this. It's a question I've seen come up in various forms over the years, and it's understandable why there might be confusion. While 'geth,' short for go-ethereum, is fundamentally built to interact with the ethereum blockchain (and its various testnets), the core architecture doesn't inherently prevent it from interacting with other blockchain networks entirely. The key word here, though, is *'inherently'*.
+, let's tackle this. It's a question I've seen come up in various forms over the years, and it's understandable why there might be confusion. While 'geth,' short for go-ethereum, is fundamentally built to interact with the ethereum blockchain (and its various testnets), the core architecture doesn't inherently prevent it from interacting with other blockchain networks entirely. The key word here, though, is _'inherently'_.
 
 My experience with working on custom blockchain solutions for a supply chain project a few years back provided a solid lesson on this. We needed to integrate a proof-of-stake sidechain with our main ethereum-based system, and that's where the limitations of using geth directly for non-ethereum mainnets became crystal clear.
 
@@ -14,16 +14,16 @@ Now, that doesn't mean interaction is impossible – it simply requires a signif
 
 This translation typically involves several layers:
 
-*   **Transaction Format Conversion:** Ethereum transactions have specific fields (nonce, gas price, etc.). A translator would need to understand the equivalent fields in the target blockchain and map them appropriately.
-*   **Data Format Conversion:** Different blockchains may store data using varying data structures and encoding methods. The translator needs to handle this conversion.
-*   **Consensus Algorithm Handling:** Geth's native consensus handling mechanisms are tailored to ethereum's pow or pos. The adapter would need its own mechanisms to handle consensus requirements from other blockchains.
-*   **Node Communication:** Different blockchains might have different peer-to-peer networking protocols. The translator needs to establish connections with nodes from the target network.
+- **Transaction Format Conversion:** Ethereum transactions have specific fields (nonce, gas price, etc.). A translator would need to understand the equivalent fields in the target blockchain and map them appropriately.
+- **Data Format Conversion:** Different blockchains may store data using varying data structures and encoding methods. The translator needs to handle this conversion.
+- **Consensus Algorithm Handling:** Geth's native consensus handling mechanisms are tailored to ethereum's pow or pos. The adapter would need its own mechanisms to handle consensus requirements from other blockchains.
+- **Node Communication:** Different blockchains might have different peer-to-peer networking protocols. The translator needs to establish connections with nodes from the target network.
 
 So, if you try and point a vanilla geth instance at a bitcoin node, you'll find it completely unresponsive. Let's look at some conceptual code examples (these are conceptual and simplified; production code would be far more involved).
 
 **Example 1: Conceptual Transaction Translation**
 
-This illustrates how a middleware *could* work, converting a simplified ethereum transaction to something another fictional blockchain might understand:
+This illustrates how a middleware _could_ work, converting a simplified ethereum transaction to something another fictional blockchain might understand:
 
 ```python
 class TransactionTranslator:
@@ -129,4 +129,4 @@ These examples are highly simplified, of course, but they highlight the complexi
 
 For further exploration, i'd recommend delving into research papers on blockchain interoperability such as those presented at the IEEE International Conference on Blockchain and Cryptocurrency (ICBC) and similar conferences, to understand more thoroughly the various approaches to cross-chain communication. In addition, "Mastering Bitcoin" by Andreas Antonopoulos is still a great resource on the architectural nuances of a non-evm blockchain.
 
-In summary, while geth is not directly capable of interacting with non-ethereum mainnets, a carefully constructed middleware layer *can* enable such interaction. However, this layer must account for the fundamental differences in data structures, transaction formats, and consensus mechanisms between blockchains. It's a non-trivial task, requiring a deep understanding of both geth and the target blockchain.
+In summary, while geth is not directly capable of interacting with non-ethereum mainnets, a carefully constructed middleware layer _can_ enable such interaction. However, this layer must account for the fundamental differences in data structures, transaction formats, and consensus mechanisms between blockchains. It's a non-trivial task, requiring a deep understanding of both geth and the target blockchain.

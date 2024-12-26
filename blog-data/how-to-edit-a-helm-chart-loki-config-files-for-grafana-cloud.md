@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "how-to-edit-a-helm-chart-loki-config-files-for-grafana-cloud"
 ---
 
-alright, so you're looking to tweak a loki helm chart's configuration for grafana cloud, eh? been there, done that, got the t-shirt. or rather, got the sleepless nights and countless yaml file revisions to show for it. i've spent more time staring at indented blocks than i care to remember.
+, so you're looking to tweak a loki helm chart's configuration for grafana cloud, eh? been there, done that, got the t-shirt. or rather, got the sleepless nights and countless yaml file revisions to show for it. i've spent more time staring at indented blocks than i care to remember.
 
-first off, let's be clear: you're not directly editing the loki chart that's running in grafana cloud's infrastructure. that's locked down. what you *are* doing is modifying the chart's values that *you* use when deploying loki *to* grafana cloud's managed loki offering. think of it like providing grafana cloud with your personal recipe for how it should set up loki.
+first off, let's be clear: you're not directly editing the loki chart that's running in grafana cloud's infrastructure. that's locked down. what you _are_ doing is modifying the chart's values that _you_ use when deploying loki _to_ grafana cloud's managed loki offering. think of it like providing grafana cloud with your personal recipe for how it should set up loki.
 
 most often, the way you do this is by using a `values.yaml` file, that’s passed when you actually install the helm chart. this file lets you specify configurations that override the defaults defined in the helm chart. when grafana cloud deploys loki, it uses these values. think of `values.yaml` as your instruction manual to the grafana cloud loki deployment.
 
@@ -14,13 +14,13 @@ the specific parameters you can tweak depend heavily on the version of the loki 
 
 typically, you'll find configuration sections for things like:
 
-*   **loki:**  this is the main section. you'll usually see sub-sections within for things like ingesters, distributors, queriers, compactor, and table manager. those sub-sections have their own further sub-sections for parameters like storage config, chunk sizes, retention periods, and limits.
-*   **storage:** specifies the location where loki will store its data. for grafana cloud, this will usually point to a specific bucket provided to you. you rarely touch these settings since grafana cloud will mostly manage this for you, but in some oddball cases you might need to modify them.
-*   **limits:** sets limits on things like ingestion rate, query concurrency, and so on. these are crucial for preventing loki from crashing when it's under heavy load, which will happen, eventually. this is one of the main places you will be touching settings in `values.yaml`.
-*   **compactor:** configuration related to how loki compacts its log data, basically the time where loki will merge small chunks into bigger chunks for better performance. you can fine tune its settings, but you don’t usually need to.
-*   **query-frontend:** it handles the query load. this configuration can help to improve how fast your queries get their results.
-*   **ingester:** settings about how loki ingest data, the main parameters are chunk size and time before flushing to storage.
-*   **promtail:** in case you also install promtail as a daemonset in your cluster, this section would be relevant.
+- **loki:** this is the main section. you'll usually see sub-sections within for things like ingesters, distributors, queriers, compactor, and table manager. those sub-sections have their own further sub-sections for parameters like storage config, chunk sizes, retention periods, and limits.
+- **storage:** specifies the location where loki will store its data. for grafana cloud, this will usually point to a specific bucket provided to you. you rarely touch these settings since grafana cloud will mostly manage this for you, but in some oddball cases you might need to modify them.
+- **limits:** sets limits on things like ingestion rate, query concurrency, and so on. these are crucial for preventing loki from crashing when it's under heavy load, which will happen, eventually. this is one of the main places you will be touching settings in `values.yaml`.
+- **compactor:** configuration related to how loki compacts its log data, basically the time where loki will merge small chunks into bigger chunks for better performance. you can fine tune its settings, but you don’t usually need to.
+- **query-frontend:** it handles the query load. this configuration can help to improve how fast your queries get their results.
+- **ingester:** settings about how loki ingest data, the main parameters are chunk size and time before flushing to storage.
+- **promtail:** in case you also install promtail as a daemonset in your cluster, this section would be relevant.
 
 now, let's get to some concrete examples. assuming we are working with a fairly modern loki chart, here's a `values.yaml` example where i'm showing you a few parameters to edit to tune ingestion:
 
@@ -72,7 +72,7 @@ when you've made the changes to your `values.yaml`, you apply these values when 
 
 a tip: keep a close eye on the helm chart version and corresponding documentation. i’ve spent many hours troubleshooting weird issues only to discover they were due to a documentation error or subtle chart change. this is a frequent case for these charts since they tend to change often. one thing that works on one version might not work in another, it is maddening at times. it’s like they change stuff just for the sake of changing it! (but i’m sure they have good reason)
 
-also, keep in mind that grafana cloud has its own internal configurations and limitations. you won't be able to tweak *everything*, and sometimes the changes you make might not produce the effect you expect if grafana cloud has some internal configurations that clash with yours. that’s something to consider when troubleshooting.
+also, keep in mind that grafana cloud has its own internal configurations and limitations. you won't be able to tweak _everything_, and sometimes the changes you make might not produce the effect you expect if grafana cloud has some internal configurations that clash with yours. that’s something to consider when troubleshooting.
 
 as for resources, i'd recommend checking the official helm chart documentation on the helm repository directly, and the loki documentation itself, usually found on grafana labs’ website. that’s the source of truth. there are also some great books on kubernetes and helm if you want to get deeper into how all of this works, and i'd recommend learning more about the theory of how loki works internally, that might also help you to understand why certain parameters do what they do. “kubernetes in action” by marko luksa is a great book to learn more about k8s in general. and the official grafana documentation and the official loki website are very useful for loki specific details.
 

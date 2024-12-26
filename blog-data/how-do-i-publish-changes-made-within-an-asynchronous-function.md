@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-publish-changes-made-within-an-asynchronous-function"
 ---
 
-Okay, let's tackle this. I’ve certainly been down this road a few times, and it’s a common stumbling block when working with asynchronous operations. The core issue revolves around the non-blocking nature of async functions and ensuring that changes made within them are properly reflected in the broader program state. It’s not as straightforward as a simple variable assignment in a synchronous context, but it's entirely manageable with the right approach.
+, let's tackle this. I’ve certainly been down this road a few times, and it’s a common stumbling block when working with asynchronous operations. The core issue revolves around the non-blocking nature of async functions and ensuring that changes made within them are properly reflected in the broader program state. It’s not as straightforward as a simple variable assignment in a synchronous context, but it's entirely manageable with the right approach.
 
 Fundamentally, an asynchronous function, denoted using `async` in many languages (like javascript/typescript, python, c#), doesn't immediately execute. Instead, it returns a promise (or a similar construct like a future in other languages). This promise represents the eventual result of the asynchronous operation. The tricky part is that this result might not be available right away, especially if it involves waiting for i/o operations like network requests or disk reads. Thus, directly modifying external state within the async function without proper handling can lead to race conditions, where the changes might not occur in the order expected, or might get lost altogether.
 
@@ -26,7 +26,7 @@ class UserComponent extends React.Component {
   async fetchUserData() {
     this.setState({ loading: true });
     try {
-      const response = await fetch('/api/user'); // Imagine this is an actual api call
+      const response = await fetch("/api/user"); // Imagine this is an actual api call
       const data = await response.json();
       this.setState({ userData: data, loading: false });
     } catch (error) {
@@ -40,12 +40,12 @@ class UserComponent extends React.Component {
   }
 
   render() {
-   if (this.state.loading) return <p>Loading...</p>
+    if (this.state.loading) return <p>Loading...</p>;
     if (this.state.error) return <p>Error: {this.state.error.message}</p>;
     if (!this.state.userData) return <p>No user data</p>;
     return (
       <div>
-          <p>Username: {this.state.userData.username}</p>
+        <p>Username: {this.state.userData.username}</p>
       </div>
     );
   }
@@ -60,17 +60,17 @@ Sometimes, the primary purpose of an async function is to compute or retrieve a 
 
 ```javascript
 async function calculateSumAsync(a, b) {
-    return new Promise(resolve => {
-      setTimeout(() => {
-          const sum = a + b;
-          resolve(sum);
-      }, 1000); // Simulating a delay of 1 second.
-    });
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const sum = a + b;
+      resolve(sum);
+    }, 1000); // Simulating a delay of 1 second.
+  });
 }
 
 async function main() {
-    const result = await calculateSumAsync(5, 3);
-    console.log("The sum is:", result);
+  const result = await calculateSumAsync(5, 3);
+  console.log("The sum is:", result);
 }
 
 main();
@@ -88,7 +88,6 @@ function fetchUserDataWithCallback(url, callback) {
     const data = { username: "testuser" }; // Simulated data from an api request
     callback(null, data); // First argument for error, second for success
   }, 1000); // Simulated API call taking 1 second
-
 }
 
 function processUserData(error, userData) {
@@ -99,8 +98,7 @@ function processUserData(error, userData) {
   }
 }
 
-
-fetchUserDataWithCallback('/api/user', processUserData);
+fetchUserDataWithCallback("/api/user", processUserData);
 ```
 
 In this older pattern, the async function `fetchUserDataWithCallback` doesn't directly return anything; instead, it invokes a callback function provided as an argument when the asynchronous operation is complete. We provide `processUserData` as the callback, and it is then executed with either the error or the result. Callbacks are, to some degree, considered less readable and harder to manage in complex applications. The "callback hell," which is essentially nested callbacks, was a big motivator to adopt promises and `async/await`.
@@ -109,8 +107,8 @@ In all three scenarios, we see the consistent pattern: the async function itself
 
 For further exploration, I highly recommend the following resources:
 
-*   **"You Don't Know JS: Async & Performance" by Kyle Simpson:** This book provides a deep dive into asynchronous JavaScript, including promises, async/await, and various performance considerations.
-*  **"Effective JavaScript" by David Herman:** While not solely focused on async, this book offers valuable insights into modern JavaScript practices, including working with asynchronous patterns.
-*   **"Programming in Lua, Fourth Edition" by Roberto Ierusalimschy:** While lua has coroutines, which are similar but slightly different, it will give you a theoretical view into the fundamentals of how asynchronous patterns work.
+- **"You Don't Know JS: Async & Performance" by Kyle Simpson:** This book provides a deep dive into asynchronous JavaScript, including promises, async/await, and various performance considerations.
+- **"Effective JavaScript" by David Herman:** While not solely focused on async, this book offers valuable insights into modern JavaScript practices, including working with asynchronous patterns.
+- **"Programming in Lua, Fourth Edition" by Roberto Ierusalimschy:** While lua has coroutines, which are similar but slightly different, it will give you a theoretical view into the fundamentals of how asynchronous patterns work.
 
 Understanding how to manage the asynchronous flow is essential for any modern developer. With experience, you will naturally gravitate toward the specific patterns that work best in your specific context. The key is to understand the core concepts of promises, callbacks, and the `async/await` syntax, so that you are equipped to adapt these principles to new and different situations. I hope this explanation helps. Let me know if you have any further questions.

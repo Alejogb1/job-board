@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "can-androids-main-thread-handle-complex-ui-rendering-in-a-fragment-efficiently"
 ---
 
-Alright, let's talk about Android main thread performance with respect to complex fragment UI rendering. This isn't a theoretical exercise for me; I’ve spent more than my fair share of late nights staring at traces trying to squeeze every last millisecond out of rendering pipelines. And no, the main thread, while essential, isn't inherently optimized for handling heavy lifting. Specifically, it’s the single-threaded nature of the main looper that's both its strength for UI manipulation and its Achilles' heel when complex rendering comes into play.
+, let's talk about Android main thread performance with respect to complex fragment UI rendering. This isn't a theoretical exercise for me; I’ve spent more than my fair share of late nights staring at traces trying to squeeze every last millisecond out of rendering pipelines. And no, the main thread, while essential, isn't inherently optimized for handling heavy lifting. Specifically, it’s the single-threaded nature of the main looper that's both its strength for UI manipulation and its Achilles' heel when complex rendering comes into play.
 
 The challenge stems from how Android works. The main thread is where all UI updates, user input processing, and lifecycle events are handled. If you throw a bunch of resource-intensive tasks, like complex view hierarchies, high-resolution image processing, or intricate animation computations directly onto it, you're going to get jank. And "jank," in Android terms, translates to skipped frames and a choppy user experience. The system might even throw an application not responding (ANR) error if it gets too choked.
 
-So, can it *handle* it? Yes, technically. But *efficiently*? Almost certainly not. When I worked on that navigation app a few years back, we had a fragment that displayed detailed route information, overlaid with live traffic updates, and several custom visual elements. Initially, everything was running smoothly on high-end devices during testing, but we noticed the app struggled significantly on mid-range and lower-end devices. That's when the performance bottlenecks became glaringly obvious, and the bulk of the work we were doing was on the main thread.
+So, can it _handle_ it? Yes, technically. But _efficiently_? Almost certainly not. When I worked on that navigation app a few years back, we had a fragment that displayed detailed route information, overlaid with live traffic updates, and several custom visual elements. Initially, everything was running smoothly on high-end devices during testing, but we noticed the app struggled significantly on mid-range and lower-end devices. That's when the performance bottlenecks became glaringly obvious, and the bulk of the work we were doing was on the main thread.
 
-The problem wasn't necessarily the *complexity* of the view itself, but rather the time it took to draw each frame of that complexity. And that's where the importance of offloading becomes critical.
+The problem wasn't necessarily the _complexity_ of the view itself, but rather the time it took to draw each frame of that complexity. And that's where the importance of offloading becomes critical.
 
 Let me give you some concrete examples with snippets.
 
@@ -54,6 +54,7 @@ This snippet might look innocuous at first glance. But, the `inflater.inflate` a
         return view;
     }
 ```
+
 In this refined version, we're using a placeholder layout and asynchronously inflating the complex layout on a background thread. Once done, the `runOnUiThread` method ensures the UI update happens on the main thread, preventing crashes while avoiding blocking it with resource intensive operations.
 
 **Scenario 2: Complex Data Transformation for Display**
@@ -76,7 +77,7 @@ private void fetchDataAndUpdateUI(){
 
 ```
 
-Again, the issue isn't the view creation but rather what's happening *before* we populate the view. `fetchUserFromApi` which could take significant time depending on network quality and server load. Also, `formatUserData` which is assumed here to have data manipulations might also take considerable amounts of time. These long running operations will block the UI thread, causing jank.
+Again, the issue isn't the view creation but rather what's happening _before_ we populate the view. `fetchUserFromApi` which could take significant time depending on network quality and server load. Also, `formatUserData` which is assumed here to have data manipulations might also take considerable amounts of time. These long running operations will block the UI thread, causing jank.
 
 **Solution: Asynchronous Data Fetching and Processing**
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-error-dpy-3011-with-python-oracledb-and-oracle-121"
 ---
 
-Okay, let's unpack this error. DPY-3011 with `python-oracledb` and Oracle 12.1 is something I've personally encountered a few times, and it’s usually related to a mismatch in the client libraries or the way `python-oracledb` is interacting with the Oracle client. It's frustrating, I know, especially when things were seemingly working fine before. This isn't some exotic corner case, rather a fairly common hiccup stemming from how the Oracle client interacts with the driver and the database server.
+, let's unpack this error. DPY-3011 with `python-oracledb` and Oracle 12.1 is something I've personally encountered a few times, and it’s usually related to a mismatch in the client libraries or the way `python-oracledb` is interacting with the Oracle client. It's frustrating, I know, especially when things were seemingly working fine before. This isn't some exotic corner case, rather a fairly common hiccup stemming from how the Oracle client interacts with the driver and the database server.
 
 The core issue revolves around the fact that `python-oracledb` relies heavily on the Oracle Instant Client libraries. These libraries are essential for the python driver to connect to the database. Error DPY-3011 specifically indicates that `python-oracledb` can’t find or properly load these client libraries. It’s not usually a problem with Oracle itself, but the glue that makes Python talk to Oracle, and more often than not, the environment variables or paths are not correctly configured or are inconsistent with the driver's expectations. In my experience, this can happen even after what seems like a standard setup because the library path for the Oracle client is not set for the python process or because it is pointing to an older version of the libraries. It's about consistency and ensuring the right version of the libraries are accessible to the python interpreter running the `python-oracledb` module.
 
@@ -57,9 +57,11 @@ except oracledb.Error as error:
     print(f"Error connecting to database: {error}")
 
 ```
+
 **Example 2: Windows Environment with Incorrect PATH**
 
 On a Windows machine, similar issues would arise due to the `PATH` variable. Here’s a hypothetical script that simulates this scenario, checking the `PATH` environment variable and attempting to set it. In practice, the `os.environ` modification is just for demonstration purposes, while you’d permanently adjust the system's or the virtual environment's `PATH` variable.
+
 ```python
 import os
 import oracledb

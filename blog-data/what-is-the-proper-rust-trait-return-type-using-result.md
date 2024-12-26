@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "what-is-the-proper-rust-trait-return-type-using-result"
 ---
 
-Alright, let's unpack this `Result` return type situation in Rust, focusing on traits. It's a topic that, in my experience, seems simple at first glance, but can get surprisingly nuanced, especially when you're dealing with evolving APIs or complex error handling scenarios. I've seen projects where a mishandled `Result` return in a trait led to cascading maintenance nightmares, so let’s delve into the details.
+, let's unpack this `Result` return type situation in Rust, focusing on traits. It's a topic that, in my experience, seems simple at first glance, but can get surprisingly nuanced, especially when you're dealing with evolving APIs or complex error handling scenarios. I've seen projects where a mishandled `Result` return in a trait led to cascading maintenance nightmares, so let’s delve into the details.
 
-The core of the matter lies in how we define a trait method that might fail and the ramifications that follow. You'll frequently encounter situations where you need to define an interface for an operation that could return a value *or* an error. `Result<T, E>` in Rust is the perfect vehicle for this: `T` represents the successful outcome, and `E` holds the error. Now, how do we integrate this into a trait definition?
+The core of the matter lies in how we define a trait method that might fail and the ramifications that follow. You'll frequently encounter situations where you need to define an interface for an operation that could return a value _or_ an error. `Result<T, E>` in Rust is the perfect vehicle for this: `T` represents the successful outcome, and `E` holds the error. Now, how do we integrate this into a trait definition?
 
 The most straightforward approach, and often the correct one, is to simply declare the trait method with a `Result` return type where the error type is a concrete, known type. For example, let's say you have a data access trait. Your database, file system, or other storage mechanism might return an error:
 
@@ -59,7 +59,7 @@ fn main() {
 
 Here, `DataProvider` defines a single method `get_data`, which returns `Result<String, DataAccessError>`. The concrete implementation, `ConcreteProvider`, can then return `Ok` with a string or `Err` with the specific `DataAccessError`. In this context, the error type is known and concrete which makes things easy. However, if you want to have different providers that return different kinds of errors, or have some generic error context, this can get limiting.
 
-The primary challenge surfaces when you want flexibility in your error types. What if one data provider uses `std::io::Error` for its underlying storage issues, while another uses some custom error enum? You certainly don’t want to be stuck with just `DataAccessError` in your trait definition. This is where generics come into play. You’d typically want to define your trait method such that it can return a `Result` with *any* type that implements the `std::error::Error` trait. Here’s how you would modify the above example.
+The primary challenge surfaces when you want flexibility in your error types. What if one data provider uses `std::io::Error` for its underlying storage issues, while another uses some custom error enum? You certainly don’t want to be stuck with just `DataAccessError` in your trait definition. This is where generics come into play. You’d typically want to define your trait method such that it can return a `Result` with _any_ type that implements the `std::error::Error` trait. Here’s how you would modify the above example.
 
 ```rust
 use std::fmt;
@@ -135,7 +135,7 @@ fn main() {
 }
 ```
 
-Here, we've introduced an associated type `ErrorType` in the `GenericDataProvider` trait. This type is constrained to implement `std::error::Error`, allowing concrete implementations to choose their specific error type.  `ConcreteProviderA` specifies `DataAccessError` as its `ErrorType` and `ConcreteProviderB` specifies `io::Error`, demonstrating the flexibility of this pattern. This allows for great flexibility while retaining type safety.
+Here, we've introduced an associated type `ErrorType` in the `GenericDataProvider` trait. This type is constrained to implement `std::error::Error`, allowing concrete implementations to choose their specific error type. `ConcreteProviderA` specifies `DataAccessError` as its `ErrorType` and `ConcreteProviderB` specifies `io::Error`, demonstrating the flexibility of this pattern. This allows for great flexibility while retaining type safety.
 
 A slightly more nuanced scenario arises if you want to potentially wrap errors from different providers under a common error type. This is a common pattern when building higher level applications that pull data from various data sources and you need a way to consolidate error reporting. Here’s a modified example where the `ErrorType` is an enum that encapsulates different possible error sources:
 

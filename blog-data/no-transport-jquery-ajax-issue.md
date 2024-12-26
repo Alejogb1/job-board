@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "no-transport-jquery-ajax-issue"
 ---
 
-Alright so you're seeing a "no transport" issue with jQuery AJAX right Been there done that got the t-shirt feels like a rite of passage for any web dev really Especially if you've been around the block like I have
+so you're seeing a "no transport" issue with jQuery AJAX right Been there done that got the t-shirt feels like a rite of passage for any web dev really Especially if you've been around the block like I have
 
-Okay first off let's get the basic assumptions out of the way you're trying to make an AJAX request using jQuery specifically the `$.ajax` `$.get` `$.post` methods or some variant of them and your browser console is throwing a "no transport" error It's not exactly a pretty sight I know believe me
+first off let's get the basic assumptions out of the way you're trying to make an AJAX request using jQuery specifically the `$.ajax` `$.get` `$.post` methods or some variant of them and your browser console is throwing a "no transport" error It's not exactly a pretty sight I know believe me
 
 Now this "no transport" message is basically jQuery's way of telling you "dude I don't know how to send this request" It means none of jQuery's pre-defined transport methods like XMLHttpRequest or JSONP or whatever else it's got in its arsenal is applicable to the type of request you're trying to make It's like you're trying to put a square peg in a round hole jQuery’s a clever fella but it does need a compatible transport mechanism to actually send data over the network
 
@@ -14,7 +14,7 @@ Let's break down common reasons why you'd get this
 
 1 **Cross-Origin Requests CORs Gone Wrong**: This is probably the most common culprit The most basic request is a request made from let's say `domainA.com` to another endpoint at `domainA.com` Let's say now you want to make an API call to `domainB.com` This is a cross-origin request browsers by default try to prevent this because of security concerns hence the CORS policy thingy You see browsers by default will refuse to go along with the shenanigans to get to an endpoint in `domainB.com` This is to prevent a situation when a malicious website (like `domainA.com`) could make a sneaky call on your behalf to `domainB.com` which you might not have wanted to do
 
-You need a specific header on the server (the one serving from `domainB.com`)  `Access-Control-Allow-Origin` to explicitly allow the request from your origin to go through This header needs to match your origin domain or a `*` (wildcard) for any origin
+You need a specific header on the server (the one serving from `domainB.com`) `Access-Control-Allow-Origin` to explicitly allow the request from your origin to go through This header needs to match your origin domain or a `*` (wildcard) for any origin
 
 I've had so many debugging sessions spent chasing this CORS dragon. In the early days I was working on a very simple web app that was doing exactly this trying to fetch data from an API that didn't have any CORS configuration on it The headache was real. Now I just start troubleshooting by checking for this problem first it saves time
 
@@ -37,34 +37,35 @@ if __name__ == '__main__':
 ```
 
 And here is a corresponding client side request using jQuery. It has to be on port 5000 so that it makes a CORS request
+
 ```html
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>CORS AJAX Demo</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <button id="fetchData">Fetch Data</button>
     <div id="dataContainer"></div>
 
     <script>
-    $(document).ready(function() {
-        $("#fetchData").click(function() {
-           $.ajax({
-              url: "http://localhost:5001/data",
-              type: "GET",
-              success: function(data) {
-                  $("#dataContainer").text(JSON.stringify(data))
+      $(document).ready(function() {
+          $("#fetchData").click(function() {
+             $.ajax({
+                url: "http://localhost:5001/data",
+                type: "GET",
+                success: function(data) {
+                    $("#dataContainer").text(JSON.stringify(data))
+                  }
+                error: function(jqXHR, textStatus, errorThrown) {
+                  $("#dataContainer").text("Error " + errorThrown);
                 }
-              error: function(jqXHR, textStatus, errorThrown) {
-                $("#dataContainer").text("Error " + errorThrown);
-              }
+              });
             });
-          });
-      });
+        });
     </script>
-</body>
+  </body>
 </html>
 ```
 
@@ -92,31 +93,31 @@ Here's a jQuery example of how to correctly send a json and get json back when e
 
 ```javascript
 $.ajax({
-    url: "http://localhost:5001/data",
-    type: "GET",
-    dataType: "json",
-    success: function(data) {
-        console.log("Data received:", data);
-        $("#dataContainer").text(JSON.stringify(data));
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-        console.error("Error:", textStatus, errorThrown);
-    }
+  url: "http://localhost:5001/data",
+  type: "GET",
+  dataType: "json",
+  success: function (data) {
+    console.log("Data received:", data);
+    $("#dataContainer").text(JSON.stringify(data));
+  },
+  error: function (jqXHR, textStatus, errorThrown) {
+    console.error("Error:", textStatus, errorThrown);
+  },
 });
 ```
+
 Here's another simple example using the simpler `$.getJSON` variant which does the same thing if you intend to make JSON calls only which is good for most APIs and is slightly shorter and easier to read
 
 ```javascript
-$.getJSON("http://localhost:5001/data", function(data) {
+$.getJSON("http://localhost:5001/data", function (data) {
   console.log("Data received:", data);
-    $("#dataContainer").text(JSON.stringify(data));
-})
-.fail(function(jqXHR, textStatus, errorThrown) {
-   console.error("Error:", textStatus, errorThrown);
+  $("#dataContainer").text(JSON.stringify(data));
+}).fail(function (jqXHR, textStatus, errorThrown) {
+  console.error("Error:", textStatus, errorThrown);
 });
 ```
 
 For more reading you can refer to "HTTP: The Definitive Guide" by David Gourley and Brian Totty it goes deep into the technical details behind HTTP including CORS You may also want to read up on the official jQuery API documentation specifically the $.ajax function is a great source of truth and you get to keep up with the changes as they update the library you might be surprised how often they do and you might need to update your code occasionally
 
 This is not a definitive solution for any situation but this checklist is how I usually tackle this particular problem it's a standard debugging procedure for a standard web app issue and it usually works if you follow the steps
-Alright hope that helps I've got to go now time for me to write some more code you know the drill
+hope that helps I've got to go now time for me to write some more code you know the drill

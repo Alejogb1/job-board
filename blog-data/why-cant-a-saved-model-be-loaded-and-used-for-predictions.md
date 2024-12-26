@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-a-saved-model-be-loaded-and-used-for-predictions"
 ---
 
-Alright, let's get into this. I've seen this issue pop up more times than I care to count, usually during that late-night debugging session when deadlines are looming. The frustration is real, so let's break down why loading a saved model for predictions can sometimes just… not work. It’s almost never a fault of the *saving* itself, but rather inconsistencies between the environment where the model was trained and where you’re trying to use it. It’s a complex interplay of data, architecture, and environment that we need to unpack.
+, let's get into this. I've seen this issue pop up more times than I care to count, usually during that late-night debugging session when deadlines are looming. The frustration is real, so let's break down why loading a saved model for predictions can sometimes just… not work. It’s almost never a fault of the _saving_ itself, but rather inconsistencies between the environment where the model was trained and where you’re trying to use it. It’s a complex interplay of data, architecture, and environment that we need to unpack.
 
 First, let’s acknowledge that "saved model" is a broad term. We're generally talking about models serialized in some format—be it a simple pickle file for scikit-learn models, tensorflow's SavedModel format, or a PyTorch checkpoint. Each has its own peculiarities, but they share a common goal: to persist the model's learned parameters and architecture for later use. The issues arise not in the saving, but in the assumptions made about the loading environment.
 
@@ -39,9 +39,9 @@ predictions = loaded_model.predict(new_data)
 print(f"Predictions: {predictions}")
 ```
 
-Now, the *failure* case arises when, let's say, you used `scikit-learn` version `1.0` to train and save the model but you now use version `1.3` to load the model. While such a simple example is often robust, things can quickly fail in more complex situations with custom transformers and model pipelines. If the version mismatch is significant, the pickle may be incompatible or throw a cryptic `AttributeError` or a `TypeError`.
+Now, the _failure_ case arises when, let's say, you used `scikit-learn` version `1.0` to train and save the model but you now use version `1.3` to load the model. While such a simple example is often robust, things can quickly fail in more complex situations with custom transformers and model pipelines. If the version mismatch is significant, the pickle may be incompatible or throw a cryptic `AttributeError` or a `TypeError`.
 
-Secondly, **data preprocessing mismatches** can be equally problematic. Many machine learning pipelines involve preprocessing steps like scaling, encoding, or imputation. If these same steps aren't applied to the input data *before* feeding it to the loaded model, the predictions will be garbage. For example, if the model was trained on scaled data but you give it raw input, the model would be looking at values it has never encountered before during training. It would then return incorrect, or at best, very low performance predictions. I’ve seen entire pipelines fail because of an overlooked `MinMaxScaler` being applied in the training script but not replicated in the inference code.
+Secondly, **data preprocessing mismatches** can be equally problematic. Many machine learning pipelines involve preprocessing steps like scaling, encoding, or imputation. If these same steps aren't applied to the input data _before_ feeding it to the loaded model, the predictions will be garbage. For example, if the model was trained on scaled data but you give it raw input, the model would be looking at values it has never encountered before during training. It would then return incorrect, or at best, very low performance predictions. I’ve seen entire pipelines fail because of an overlooked `MinMaxScaler` being applied in the training script but not replicated in the inference code.
 
 Here's another example to demonstrate the preprocessing issue with scikit-learn and scaling:
 
@@ -84,7 +84,8 @@ predictions_fail = loaded_model.predict(X_new_raw)  #Incorrect Scaling
 print(f"Unscaled predictions: {predictions_fail}") #Results in very poor prediction
 
 ```
-This snippet shows the crucial need to load the *scaler object along with the model* to achieve the correct results during prediction. The unscaled predictions will be likely be very bad as the model was trained on scaled inputs.
+
+This snippet shows the crucial need to load the _scaler object along with the model_ to achieve the correct results during prediction. The unscaled predictions will be likely be very bad as the model was trained on scaled inputs.
 
 Finally, **architecture mismatches** come into play, especially when dealing with deep learning models. The saved model usually captures the graph structure of the neural network, but differences in the underlying framework, particularly if you try to load a tensorflow model with PyTorch or vice-versa, would create an insurmountable barrier. Even seemingly insignificant alterations to the model architecture can lead to loading failures. I once spent hours trying to get a seemingly identical model to load, only to find out the activation function of a single layer was different, and tensorflow refused to load the corrupted graph.
 

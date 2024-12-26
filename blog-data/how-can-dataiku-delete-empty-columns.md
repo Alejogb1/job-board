@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-dataiku-delete-empty-columns"
 ---
 
-Alright, let's talk about dealing with those pesky empty columns in Dataiku. I've certainly spent my fair share of time battling those, especially during larger data migrations a few years back when we inherited a particularly... *robust* dataset. The sheer volume of empty columns—present but entirely devoid of meaningful data—was staggering. It was like archaeology, sifting through layers of potentially useful data only to find vast stretches of nothingness.
+, let's talk about dealing with those pesky empty columns in Dataiku. I've certainly spent my fair share of time battling those, especially during larger data migrations a few years back when we inherited a particularly... _robust_ dataset. The sheer volume of empty columns—present but entirely devoid of meaningful data—was staggering. It was like archaeology, sifting through layers of potentially useful data only to find vast stretches of nothingness.
 
 There isn't a single, magic-bullet 'delete empty columns' button in Dataiku, and frankly, that's a good thing. We need a bit more control to ensure we aren’t inadvertently nuking something valuable. Instead, we leverage Dataiku's flexible data manipulation tools, primarily using Python recipes for this sort of task. It offers the most granular approach to filtering these columns based on our specific needs.
 
-The core challenge isn't just identifying empty columns (that’s relatively straightforward); it’s defining what *empty* actually means in the context of your data. Are we talking purely null values (`None` in Python/Pandas terms, or SQL `NULL`)? Or do we also consider columns that contain just empty strings, or perhaps whitespace-only strings? These are nuances that can have big implications.
+The core challenge isn't just identifying empty columns (that’s relatively straightforward); it’s defining what _empty_ actually means in the context of your data. Are we talking purely null values (`None` in Python/Pandas terms, or SQL `NULL`)? Or do we also consider columns that contain just empty strings, or perhaps whitespace-only strings? These are nuances that can have big implications.
 
-So, in practice, I found the most reliable method is to construct a small Python recipe that handles these different scenarios elegantly. First, let's look at the basic case, where we're dealing with columns that are *strictly* full of null values. This leverages pandas, which is already available in a Dataiku python recipe environment.
+So, in practice, I found the most reliable method is to construct a small Python recipe that handles these different scenarios elegantly. First, let's look at the basic case, where we're dealing with columns that are _strictly_ full of null values. This leverages pandas, which is already available in a Dataiku python recipe environment.
 
 ```python
 import pandas as pd
@@ -31,7 +31,7 @@ output_dataset = dataiku.Dataset("your_output_dataset_name")
 output_dataset.write_dataframe(df_cleaned)
 ```
 
-In this first example, `df.isnull().all()` produces a boolean series that is `True` if all values in a column are `null`, and `False` otherwise. We use this boolean mask to filter out only the columns that have null for every row. We then retrieve those column names with `.tolist()`. This list is used to drop the identified columns. This is the most conservative version – it will only remove columns that are *completely* empty of any data. This is a good place to start.
+In this first example, `df.isnull().all()` produces a boolean series that is `True` if all values in a column are `null`, and `False` otherwise. We use this boolean mask to filter out only the columns that have null for every row. We then retrieve those column names with `.tolist()`. This list is used to drop the identified columns. This is the most conservative version – it will only remove columns that are _completely_ empty of any data. This is a good place to start.
 
 However, let's say we also want to handle columns containing only empty strings, or even strings containing whitespace. We need a slightly more nuanced approach. Here's a refined version to accommodate those cases:
 
@@ -58,7 +58,7 @@ output_dataset = dataiku.Dataset("your_output_dataset_name")
 output_dataset.write_dataframe(df_cleaned)
 ```
 
-Here, we've created a helper function, `is_empty`. This function first checks if all the values are null. If that fails, then it casts the column to strings, removes leading and trailing whitespace, and then tests if all the elements are empty strings.  The `apply()` method then applies this function to every column in our dataset, and we only select those columns where our `is_empty` function returns `True`. This handles the cases where you might have a column containing `""`, `" "`, or similar.
+Here, we've created a helper function, `is_empty`. This function first checks if all the values are null. If that fails, then it casts the column to strings, removes leading and trailing whitespace, and then tests if all the elements are empty strings. The `apply()` method then applies this function to every column in our dataset, and we only select those columns where our `is_empty` function returns `True`. This handles the cases where you might have a column containing `""`, `" "`, or similar.
 
 Now, this is usually sufficient, but sometimes, one may want to refine that logic even further. Perhaps, you might need to exclude specific columns from removal, or have a more complex criterion for what constitutes “empty”. Imagine a situation where, in addition to the prior case, you want to keep the `id` or `record_number` column, even if it's currently full of `null` values. In some cases these IDs are generated before we have values.
 

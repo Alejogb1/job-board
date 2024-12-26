@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-write-pytorch-like-code-in-jax-flax"
 ---
 
-Alright, let's tackle this. I've seen this exact challenge pop up in various projects – transitioning from the familiar landscape of PyTorch to the more functional paradigm of JAX Flax. It's definitely a shift, but certainly not an insurmountable one. The core difference lies in how we approach state and computation. PyTorch, at its heart, is quite mutable; you can directly modify tensors and model parameters during training. Flax, on the other hand, favors immutable state. This means you're working with pure functions and transformations, where the state is explicitly passed and updated, which can initially feel restrictive but provides immense benefits in terms of composability and parallelization when you become comfortable with the idiom.
+, let's tackle this. I've seen this exact challenge pop up in various projects – transitioning from the familiar landscape of PyTorch to the more functional paradigm of JAX Flax. It's definitely a shift, but certainly not an insurmountable one. The core difference lies in how we approach state and computation. PyTorch, at its heart, is quite mutable; you can directly modify tensors and model parameters during training. Flax, on the other hand, favors immutable state. This means you're working with pure functions and transformations, where the state is explicitly passed and updated, which can initially feel restrictive but provides immense benefits in terms of composability and parallelization when you become comfortable with the idiom.
 
 The primary conceptual bridge you need to build centers around understanding that in Flax, the model's state (parameters, batch norm stats, etc.) is separate from the model definition itself. You define your model as a pure function that takes parameters as an input and outputs the prediction. Updating the parameters involves transforming this state using Jax's functional update mechanisms, notably `jax.grad` for gradient computation and other optimizers provided in JAX. This contrasts sharply with PyTorch's in-place updates. I distinctly recall struggling with this during a project involving complex neural architecture, moving away from PyTorch's implicit parameter updates was initially disorienting. However, by the end, it streamlined debugging significantly and improved the scalability of our training loop.
 
-To put it another way, you’re not ‘updating’ your model ‘in place’; instead, you’re creating a *new* model state by applying an update based on the gradient of your loss function. You then pass this new model state to the next iteration. The beauty of this approach emerges when you consider JAX's automatic differentiation and vectorization capabilities, making everything scalable by design.
+To put it another way, you’re not ‘updating’ your model ‘in place’; instead, you’re creating a _new_ model state by applying an update based on the gradient of your loss function. You then pass this new model state to the next iteration. The beauty of this approach emerges when you consider JAX's automatic differentiation and vectorization capabilities, making everything scalable by design.
 
 Now let’s illustrate with some code. Let’s start with a simple example of how a basic linear layer might look in PyTorch and how we’d replicate it in Flax.
 
@@ -35,6 +35,7 @@ output_tensor = model(input_tensor)
 print(output_tensor)
 
 ```
+
 In this PyTorch example, the parameters (`weight`, `bias`) are mutable, are part of the model itself, and get updated behind the scenes during the training process using optimizers.
 
 **Flax Equivalent (First Draft)**
@@ -69,6 +70,7 @@ Here's where we begin to see the difference. In this first draft of the Flax ver
 However, this is still just the forward pass, we need to make changes to simulate a training loop. The update step in Flax requires an explicit loop to handle param updates, which is done using jax.grad and an optimizer, very different from PyTorch’s in-place optimizer.
 
 **Flax Example (Complete Training Loop)**
+
 ```python
 import jax
 import jax.numpy as jnp
@@ -116,7 +118,8 @@ for epoch in range(epochs):
       state, loss = train_step(state, x, y)
   print(f'Epoch: {epoch}, Loss: {loss}')
 ```
-In this complete example, we use `flax.training.train_state` to encapsulate our state.  We also define a `loss_fn` and use `jax.value_and_grad` to perform auto-differentiation.  We use `optax` to create an Adam optimizer and the train_step makes use of the functional update method of the train_state to update the parameters. The important takeaway is the lack of in-place update and the explicit updating of the `state`. Every gradient descent step produces a *new* model state, which we then use in the next iteration. You can start to see the flexibility that this brings, especially when working with parallel computation.
+
+In this complete example, we use `flax.training.train_state` to encapsulate our state. We also define a `loss_fn` and use `jax.value_and_grad` to perform auto-differentiation. We use `optax` to create an Adam optimizer and the train_step makes use of the functional update method of the train_state to update the parameters. The important takeaway is the lack of in-place update and the explicit updating of the `state`. Every gradient descent step produces a _new_ model state, which we then use in the next iteration. You can start to see the flexibility that this brings, especially when working with parallel computation.
 
 Transitioning to Flax also requires familiarity with JAX's array handling and indexing, which is slightly different from NumPy’s conventions or PyTorch’s tensors; but once you understand these differences and how to leverage `jax.jit`, `jax.vmap`, you'll realize the true power of this functional paradigm. For a deep understanding, I'd recommend looking at the JAX documentation itself and the "JAX: composable transformations of Python+NumPy programs" paper by Frostig et al. Also, for an excellent in-depth resource on functional programming and its applications, I highly recommend "Structure and Interpretation of Computer Programs" (SICP) by Abelson and Sussman, which while not specific to JAX, will give you the foundational understanding to excel with Flax and other functional frameworks. Finally, the Flax documentation is also comprehensive and invaluable when getting started.
 

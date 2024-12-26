@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-the-tflite-library-be-used-with-mediapipe-in-ios"
 ---
 
-Alright, let's delve into integrating tflite with mediapipe on ios. It's a combination I've tackled in past projects—specifically, a real-time pose estimation system where efficiency on mobile devices was paramount. Rather than solely relying on mediapipe's built-in models, leveraging custom tflite models gave us significantly better performance and control.
+, let's delve into integrating tflite with mediapipe on ios. It's a combination I've tackled in past projects—specifically, a real-time pose estimation system where efficiency on mobile devices was paramount. Rather than solely relying on mediapipe's built-in models, leveraging custom tflite models gave us significantly better performance and control.
 
 The key here is understanding that mediapipe acts primarily as a framework for processing multimedia data, and tflite provides the inference engine for neural network models. Think of mediapipe as the plumbing, handling camera input, video decoding, and data organization, and tflite as the processor, doing the heavy lifting of the neural network computation. Getting them to work together requires bridging these two worlds carefully.
 
@@ -89,7 +89,7 @@ REGISTER_CALCULATOR(TFLiteInferenceCalculator);
 } // namespace mediapipe
 ```
 
-This snippet outlines the basic structure of a custom mediapipe calculator. It loads the tflite model, pre-processes the image, feeds it into the interpreter, and then packages the output into a `std::vector<float>`. Crucially, pay close attention to the preprocessing steps. These *must* match how your model was trained to ensure valid inference. This is a common pitfall, and I have debugged this specific issue more times than I care to remember.
+This snippet outlines the basic structure of a custom mediapipe calculator. It loads the tflite model, pre-processes the image, feeds it into the interpreter, and then packages the output into a `std::vector<float>`. Crucially, pay close attention to the preprocessing steps. These _must_ match how your model was trained to ensure valid inference. This is a common pitfall, and I have debugged this specific issue more times than I care to remember.
 
 Next, let's consider a simplified example of how to integrate this calculator into a mediapipe graph proto file (`.pbtxt`).
 

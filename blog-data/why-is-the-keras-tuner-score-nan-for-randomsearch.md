@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-keras-tuner-score-nan-for-randomsearch"
 ---
 
-Okay, let's dive into this. I've seen this specific NaN issue with Keras Tuner's RandomSearch pop up more than a few times, and it's rarely a straightforward problem. It usually signals an underlying issue with how your model is being trained or evaluated within the tuner's search process. It's less about the tuner itself having a bug and more about the interaction between the tuner, the model, and the data.
+, let's dive into this. I've seen this specific NaN issue with Keras Tuner's RandomSearch pop up more than a few times, and it's rarely a straightforward problem. It usually signals an underlying issue with how your model is being trained or evaluated within the tuner's search process. It's less about the tuner itself having a bug and more about the interaction between the tuner, the model, and the data.
 
 The core problem, put simply, is that a NaN (Not a Number) score indicates an invalid or undefined numerical result during the evaluation phase of the hyperparameter search. This almost always stems from a computation that results in something mathematically undefined – like division by zero or the logarithm of a negative number. In the context of model training, the most frequent culprit is a loss function or metric producing NaN, which in turn propagates to the tuner’s score.
 
@@ -54,6 +54,7 @@ y_val = np.random.randint(0, 2, size=(200, 1))
 tuner.search(x_train, y_train, epochs=2, validation_data=(x_val, y_val))
 
 ```
+
 If you run this as is, it will likely work without NaN. However, it only takes a minor alteration to the model weights, which can happen randomly within the `RandomSearch` procedure, for the model to give us the problematic values.
 
 **2. Issues With Metric Computation**
@@ -151,6 +152,6 @@ tuner.search(x_train, y_train, epochs=2, validation_data=(x_val, y_val))
 
 The solution involves careful checking of several areas. Start by examining your loss function and metrics, carefully checking all the operations you perform on the output. Implement clipping operations or add a small epsilon to avoid zero-division errors, where appropriate. Evaluate your model outside of the tuner context, using the exact same data and settings, to isolate any issues with model stability. Validate your data itself for NaNs and infs before even sending it to the tuner. If necessary, add data cleaning or manipulation to avoid these issues.
 
-For further learning, I'd recommend exploring resources on numerical stability in neural networks. Specific chapters in *Deep Learning* by Goodfellow, Bengio, and Courville go into detail about these kinds of issues. Another valuable source is *Neural Network Design* by Hagan, Demuth, and Beale. These resources delve deeper into the math of neural networks, which is crucial for understanding why and how numerical instabilities occur, along with strategies to handle these challenges.
+For further learning, I'd recommend exploring resources on numerical stability in neural networks. Specific chapters in _Deep Learning_ by Goodfellow, Bengio, and Courville go into detail about these kinds of issues. Another valuable source is _Neural Network Design_ by Hagan, Demuth, and Beale. These resources delve deeper into the math of neural networks, which is crucial for understanding why and how numerical instabilities occur, along with strategies to handle these challenges.
 
 In summary, a NaN score from Keras Tuner’s RandomSearch is almost always due to a problem with the computation within the model training process, usually during the calculation of loss or evaluation metrics. Identifying and fixing these problems typically requires a methodical approach, going through each step in your training process and checking for possible sources of NaN values. I hope this explanation helps you diagnose and resolve these issues more effectively.

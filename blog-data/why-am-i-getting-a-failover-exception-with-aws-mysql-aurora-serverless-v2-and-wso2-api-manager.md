@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-failover-exception-with-aws-mysql-aurora-serverless-v2-and-wso2-api-manager"
 ---
 
-Alright, let's unpack this failover exception situation you're encountering with AWS Aurora Serverless v2 and WSO2 API Manager. I've seen this pattern emerge a few times in my years working with distributed systems, and it often boils down to a subtle interplay between how these two technologies handle transient connection disruptions.
+, let's unpack this failover exception situation you're encountering with AWS Aurora Serverless v2 and WSO2 API Manager. I've seen this pattern emerge a few times in my years working with distributed systems, and it often boils down to a subtle interplay between how these two technologies handle transient connection disruptions.
 
 Initially, when aurora serverless v2 was relatively new, we ran into similar issues integrating it with our middleware services, including a specific iteration of our api gateway, which had a similar underlying connection management model to wso2 apim. These weren't straightforward database errors; it wasn't as simple as bad credentials. Instead, it manifested as these persistent failover exceptions, leading to downstream application instability, especially under load. The core problem, as we eventually discovered, was a combination of two main factors: improper connection pool configuration on the api manager side and a misunderstanding of how aurora serverless v2 handles scaling and failover events.
 
@@ -38,9 +38,11 @@ Here’s a basic example of a connection pool configuration, typical of what you
     </definition>
 </datasource>
 ```
+
 This demonstrates the issue, the `validationQuery` is just a simple 'select 1', which doesn't really check the connection's validity in the serverless context when a connection is terminated by Aurora.
 
 To address this, you need a more robust query. Here's how we adapted ours, ensuring it checks both the connection state and some minimal level of functionality, which reduces false positive. This snippet demonstrates a simple improvement to use a more robust connection validation query:
+
 ```xml
 <datasource>
     <name>apim_db</name>
@@ -68,9 +70,10 @@ To address this, you need a more robust query. Here's how we adapted ours, ensur
 
 This adjusted `validationQuery` using `select connection_id();` forces a check of the underlying database connection, and if it is closed, the validation will fail. Also, `testOnBorrow=true` and `testWhileIdle=true` ensures that validation is performed both before a connection is borrowed and while connections are idle in the pool, preventing stale connections from being returned. This significantly reduces the chances of encountering the failover exception.
 
-The second critical element involves properly configuring the *connection retry strategy*. While connection validation is effective, some interruptions may still momentarily occur. Implementing a robust retry mechanism at the application level (within the wso2 apim in this case) can smooth over these transient errors. A simple retry strategy with exponential backoff can make the difference, and if the apim uses a framework which supports it, should be implemented at the connection level.
+The second critical element involves properly configuring the _connection retry strategy_. While connection validation is effective, some interruptions may still momentarily occur. Implementing a robust retry mechanism at the application level (within the wso2 apim in this case) can smooth over these transient errors. A simple retry strategy with exponential backoff can make the difference, and if the apim uses a framework which supports it, should be implemented at the connection level.
 
 Let’s look at an example of how a java-based retry mechanism with the popular `com.github.rholder:guava-retrying` library might be configured around a database operation:
+
 ```java
 import com.github.rholder.retry.*;
 import java.sql.Connection;
@@ -135,6 +138,7 @@ public class RetryDatabaseOperation {
     }
 }
 ```
+
 This snippet shows that even in the case of a failure (SQLException), the database connection operation will be retried up to 5 times, with exponential backoff between retries. This demonstrates a retry mechanism, which does not directly relate to apim but showcases what needs to be implemented within the apim context or framework where database connection is used. This, when properly applied, can mitigate the impact of temporary connection interruptions.
 
 For further learning, I'd highly recommend delving into the documentation of your connection pool library (e.g., HikariCP, DBCP), the official aws documentation on aurora serverless v2, specifically the best practices for connection management, and “Release It!: Design and Deploy Production-Ready Software” by Michael T. Nygard. Additionally, “Patterns of Enterprise Application Architecture” by Martin Fowler, specifically the sections on connection pooling and retry logic, can provide valuable insights.

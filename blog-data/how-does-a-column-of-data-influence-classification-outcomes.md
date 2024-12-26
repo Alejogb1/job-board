@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-a-column-of-data-influence-classification-outcomes"
 ---
 
-Okay, let’s tackle this. The question of how a single column of data influences classification is something I’ve grappled with quite a bit over the years, having worked on various projects ranging from predictive maintenance to customer churn analysis. It's a deceptively simple question because while the concept is straightforward—a single feature changing the final classification—the actual mechanisms and implications can be quite nuanced and, sometimes, frankly, frustrating.
+, let’s tackle this. The question of how a single column of data influences classification is something I’ve grappled with quite a bit over the years, having worked on various projects ranging from predictive maintenance to customer churn analysis. It's a deceptively simple question because while the concept is straightforward—a single feature changing the final classification—the actual mechanisms and implications can be quite nuanced and, sometimes, frankly, frustrating.
 
 Essentially, each column in your dataset represents a feature. This feature, depending on its nature and how it interacts with the other features, will contribute to the final classification decision made by the chosen algorithm. Think of it like assembling a jigsaw puzzle. Each piece, i.e., feature, is unique, and its position and shape (its data and relationship with other pieces) influence the overall picture.
 
@@ -69,9 +69,10 @@ df['days_since_last_login'] = (today - df['last_login']).dt.days
 # display the first few rows of dataframe with newly engineered column
 print(df.head())
 ```
+
 Here, we take the 'last_login' and calculate how many days have passed since that event, creating a new column called 'days_since_last_login'. This newly engineered feature is generally more impactful because it directly measures the period of inactivity, which is directly related to churning, a very common thing I used in my previous assignments.
 
-Finally, the scale and distribution of your column can heavily influence classification outcomes, particularly with distance-based algorithms like k-nearest neighbors (knn) or support vector machines (svm). If one column has values in the hundreds while another has values between 0 and 1, the column with the higher values will dominate during distance calculations and bias the algorithm. This is a scenario where it's not really the *content* of the data but rather its numerical representation that’s impacting the outcome. We can avoid this by scaling and normalizing the data before feeding it into the algorithm. I remember having to spend hours once resolving such an issue during a credit fraud detection model.
+Finally, the scale and distribution of your column can heavily influence classification outcomes, particularly with distance-based algorithms like k-nearest neighbors (knn) or support vector machines (svm). If one column has values in the hundreds while another has values between 0 and 1, the column with the higher values will dominate during distance calculations and bias the algorithm. This is a scenario where it's not really the _content_ of the data but rather its numerical representation that’s impacting the outcome. We can avoid this by scaling and normalizing the data before feeding it into the algorithm. I remember having to spend hours once resolving such an issue during a credit fraud detection model.
 
 Consider this code where we use StandardScaler for column scaling and normalisation:
 
@@ -104,6 +105,7 @@ model = SVC()
 model.fit(X_train_scaled, y_train)
 # Evaluate using the scaled data, we skip the evalutaion here for brevity.
 ```
+
 Here, the StandardScaler ensures that both 'feature_a' and 'feature_b' have a mean of 0 and standard deviation of 1, preventing the feature with the larger magnitude from dominating. This step is essential for models that rely on distance metrics.
 
 In conclusion, the impact of a single column of data on classification outcomes is multifaceted. It’s not simply about the raw data itself, but also how it’s represented, how it’s related to other features, how the classification model uses that feature, and, of course, how you prepare the data.

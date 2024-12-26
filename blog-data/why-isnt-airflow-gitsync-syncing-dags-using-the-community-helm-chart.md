@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-airflow-gitsync-syncing-dags-using-the-community-helm-chart"
 ---
 
-Okay, let's talk about Airflow's gitsync with the community Helm chart. It's a scenario I've debugged more times than I care to remember, and it often boils down to a few common gotchas rather than fundamental flaws. It's frustrating when you expect those DAGs to just magically appear, and they…don’t. Let's unpack this.
+, let's talk about Airflow's gitsync with the community Helm chart. It's a scenario I've debugged more times than I care to remember, and it often boils down to a few common gotchas rather than fundamental flaws. It's frustrating when you expect those DAGs to just magically appear, and they…don’t. Let's unpack this.
 
 Firstly, it’s important to understand that the gitsync mechanism, when deployed via the community Helm chart, relies heavily on proper configuration within the chart's `values.yaml` file and the related environment variables passed to the airflow scheduler and webserver pods. Misconfigurations are frequently the root cause. I’ve seen countless examples where the settings look correct at a glance, but closer inspection reveals discrepancies. This is typically where my troubleshooting starts.
 
@@ -26,7 +26,7 @@ airflow:
     GIT_SYNC_ROOT: "/opt/airflow/dags"
 ```
 
-Here, `GIT_SYNC_REPO` must be the complete and correct URL to your git repository. Make sure that https or ssh authentication is setup correctly for the environment. `GIT_SYNC_BRANCH` specifies the branch to pull, and `GIT_SYNC_ROOT` indicates the path within the container where the DAGs will be located. It *must* match the path where Airflow looks for DAG files. This is commonly `/opt/airflow/dags`.
+Here, `GIT_SYNC_REPO` must be the complete and correct URL to your git repository. Make sure that https or ssh authentication is setup correctly for the environment. `GIT_SYNC_BRANCH` specifies the branch to pull, and `GIT_SYNC_ROOT` indicates the path within the container where the DAGs will be located. It _must_ match the path where Airflow looks for DAG files. This is commonly `/opt/airflow/dags`.
 
 **Code Snippet 1 (Bash script to verify the settings once deployed):**
 
@@ -67,6 +67,7 @@ Here, `GIT_SYNC_SSH_KEY_PATH` should point to the location inside the container 
 ```bash
 kubectl exec -it <scheduler-pod-name> -n <your-namespace> -- sh -c "chmod 600 /home/.ssh/id_rsa && ssh -T git@github.com"
 ```
+
 After the scheduler is running, this snippet will attempt a connection to github using your configured ssh key. If that connection works, you should see a message saying that you have successfully authenticated with github via ssh and that this is not a shell. Otherwise, you will get an error message, indicating something is wrong with the provided private key, permissions, or configuration. Replace `git@github.com` with your specific git server.
 
 **Scenario 3: Incorrect DAG Sync Interval**
@@ -89,6 +90,7 @@ Here `GIT_SYNC_WAIT` controls the sync frequency. Setting it lower will make cha
 ```bash
 kubectl logs -f <scheduler-pod-name> -n <your-namespace> | grep "Successfully synced"
 ```
+
 This snippet will tail the logs of the scheduler and look for the "Successfully synced" message. This is a simple way of verifying the sync process. If you don't see this output after applying the new configuration, something might be wrong with the settings (e.g. authentication).
 
 **Recommendations and Conclusion**
@@ -97,8 +99,8 @@ Debugging gitsync with the Airflow community Helm chart often involves carefully
 
 For further reading, I recommend:
 
-*   **"Kubernetes in Action" by Marko Luksa:** This provides a strong foundation for understanding Kubernetes concepts, especially how volumes and secrets work, which is crucial for this type of configuration. It is very good at explaining concepts such as mounting volumes.
-*   **The official Apache Airflow documentation:** It contains detailed guides on configuring gitsync, which are very informative. You might have to check specific charts documentation for custom or added parameters.
-*   **The Helm chart repository’s documentation:** Specifically, the README and `values.yaml` file, as they detail all available configuration options. Always a good place to start your journey.
+- **"Kubernetes in Action" by Marko Luksa:** This provides a strong foundation for understanding Kubernetes concepts, especially how volumes and secrets work, which is crucial for this type of configuration. It is very good at explaining concepts such as mounting volumes.
+- **The official Apache Airflow documentation:** It contains detailed guides on configuring gitsync, which are very informative. You might have to check specific charts documentation for custom or added parameters.
+- **The Helm chart repository’s documentation:** Specifically, the README and `values.yaml` file, as they detail all available configuration options. Always a good place to start your journey.
 
 Remember, a systematic approach to debugging is crucial. Start with the most basic settings (repository url, branch) and work your way up to more complex aspects like authentication and sync intervals. It might seem daunting at first, but with patience and a methodical process, these issues are usually resolvable. Hopefully this sheds some light on your problem. Good luck.

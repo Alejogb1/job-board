@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-animate-a-view-to-hide-behind-the-navigation-bar"
 ---
 
-Alright, let's tackle this. You're looking to create an animation that smoothly transitions a view off-screen, specifically making it appear to slide behind the navigation bar. I've dealt with this exact scenario quite a few times in my career, and it often involves a combination of careful layout management and animation techniques. It's not always a straightforward process, especially when you're dealing with complex view hierarchies or custom navigation implementations.
+, let's tackle this. You're looking to create an animation that smoothly transitions a view off-screen, specifically making it appear to slide behind the navigation bar. I've dealt with this exact scenario quite a few times in my career, and it often involves a combination of careful layout management and animation techniques. It's not always a straightforward process, especially when you're dealing with complex view hierarchies or custom navigation implementations.
 
 The core challenge lies in ensuring that the view you're animating doesn't just disappear abruptly but rather gracefully moves beneath the navigation bar, respecting its z-order. The typical approach involves manipulating the view's frame or transform properties while carefully managing the view hierarchy and clipping. Let’s break down the techniques and their implications, and then look at some practical code examples.
 
@@ -46,7 +46,7 @@ class Example1ViewController: UIViewController {
             self.animatingView.isHidden = true;
         }
     }
-    
+
      func showFromNavBar(){
         self.animatingView.isHidden = false
           UIView.animate(withDuration: 0.3, animations: {
@@ -60,7 +60,7 @@ class Example1ViewController: UIViewController {
           } else {
             hideBehindNavBar()
           }
-       
+
     }
 }
 ```
@@ -96,7 +96,7 @@ class Example2ViewController: UIViewController {
             self.animatingView.isHidden = true
         }
     }
-  
+
     func showFromNavBar() {
         self.animatingView.isHidden = false
           UIView.animate(withDuration: 0.3, animations: {
@@ -150,7 +150,7 @@ class Example3ViewController: UIViewController {
             self.animatingView.isHidden = true;
         }
     }
-    
+
     func showFromNavBar(){
         self.animatingView.isHidden = false
           UIView.animate(withDuration: 0.3, animations: {
@@ -158,7 +158,7 @@ class Example3ViewController: UIViewController {
               self.animatingView.frame = self.originalFrame
         })
     }
-    
+
     @IBAction func startAnimation(_ sender: Any) {
         if self.animatingView.isHidden {
              showFromNavBar()
@@ -172,10 +172,10 @@ class Example3ViewController: UIViewController {
 
 **Considerations and Recommendations:**
 
-*   **Constraints:** Be cautious when combining frame manipulation with auto layout. Conflicts between constraint-based layouts and direct frame changes can lead to unexpected behavior. In such cases, the best approach might be to either disable or update constraints during the animation, but be sure to properly update layout at the end of it.
-*   **Performance:** While the techniques above are generally performant for most cases, complex transformations or many views can impact frame rate. Use instruments profiling to see if there is any performance issue.
-*   **Custom Navigation Bars:** If you've implemented a custom navigation bar, you'll need to adjust the calculations, specifically, the y-offset needed to fully hide the view behind the navigation bar, which is also the case if the navigation bar is in large title mode.
-*   **Layer-Based Animation:** For more complex scenarios involving complex paths or effects, consider using `Core Animation` directly. The `CABasicAnimation` class can provide fine-grained control over animations that would be challenging to replicate with `UIView.animate()`. For information about `Core Animation`, I suggest you check “iOS Animations by Tutorials”.
-*   **View Debugger:** The View Debugger is your best friend here. It helps you visualize your view hierarchy and understand the effect of your transforms or frame adjustments.
+- **Constraints:** Be cautious when combining frame manipulation with auto layout. Conflicts between constraint-based layouts and direct frame changes can lead to unexpected behavior. In such cases, the best approach might be to either disable or update constraints during the animation, but be sure to properly update layout at the end of it.
+- **Performance:** While the techniques above are generally performant for most cases, complex transformations or many views can impact frame rate. Use instruments profiling to see if there is any performance issue.
+- **Custom Navigation Bars:** If you've implemented a custom navigation bar, you'll need to adjust the calculations, specifically, the y-offset needed to fully hide the view behind the navigation bar, which is also the case if the navigation bar is in large title mode.
+- **Layer-Based Animation:** For more complex scenarios involving complex paths or effects, consider using `Core Animation` directly. The `CABasicAnimation` class can provide fine-grained control over animations that would be challenging to replicate with `UIView.animate()`. For information about `Core Animation`, I suggest you check “iOS Animations by Tutorials”.
+- **View Debugger:** The View Debugger is your best friend here. It helps you visualize your view hierarchy and understand the effect of your transforms or frame adjustments.
 
 To deepen your understanding, I highly recommend exploring Apple's documentation on `UIView` animation methods, `CGAffineTransform`, and the `CALayer` class. Additionally, the book "Advanced iOS App Architecture" by Ben Scheirman provides invaluable insights into view controller architecture and animation management. As mentioned before, "iOS Animations by Tutorials" by Ray Wenderlich’s team provides a lot of information with real example. Mastering these foundational concepts will allow you to craft even the most intricate animations effectively. Remember to always test your animations thoroughly across different devices and iOS versions to ensure a seamless user experience.

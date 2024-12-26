@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-impact-does-googles-integration-of-gemini-20-flash-into-its-ecosystem-have-on-market-competition"
 ---
 
-Okay so lets talk about Gemini 20 Flash kinda a big deal right Its google throwing down the gauntlet again and this time its personal feels different than just another model update feels like a strategic play a real flex
+lets talk about Gemini 20 Flash kinda a big deal right Its google throwing down the gauntlet again and this time its personal feels different than just another model update feels like a strategic play a real flex
 
 First off the integration part thats key Its not just some standalone thing sitting in a corner its baked into everything you know everything that means search ads workspace cloud everything and that immediately changes the game you see its not just about performance numbers its about accessibility its about everyone suddenly having a piece of this tech right there in their daily tools its like giving everyone a turbocharged brain boost
 
@@ -40,7 +40,7 @@ print(description)
 
 ```
 
-That simple right?  No need to be a coding ninja to get it going now this level of simplicity means more folks are going to start playing with ai more folks are going to get inspired and that in turn boosts adoption overall
+That simple right? No need to be a coding ninja to get it going now this level of simplicity means more folks are going to start playing with ai more folks are going to get inspired and that in turn boosts adoption overall
 
 **Shifting Competitive Landscape**
 
@@ -69,11 +69,10 @@ function searchWithGemini(query) {
 
 // some placeholder for display results
 function displayResults(results) {
-   console.log(results); // in actual case it render to web
+  console.log(results); // in actual case it render to web
 }
 
 searchWithGemini("what is quantum computing");
-
 ```
 
 See how seamlessly the ai is woven into the search workflow it enhances results rather than just providing them This creates a more personalized richer user experience that’s hard to match unless you have the same kind of deep integration into your tools
@@ -86,7 +85,7 @@ We need diversity in this space we need a thriving ecosystem of various models a
 
 **The Need for Ethical Consideration**
 
-This much ai power in everyone’s hands requires serious ethical consideration are we ready for that? What about bias in the model? What about deepfakes?  What about privacy? These questions need to be answered before we just go full speed ahead we need some serious responsible ai frameworks in place this cant just be about fast and easy it also needs to be about right and good for everyone
+This much ai power in everyone’s hands requires serious ethical consideration are we ready for that? What about bias in the model? What about deepfakes? What about privacy? These questions need to be answered before we just go full speed ahead we need some serious responsible ai frameworks in place this cant just be about fast and easy it also needs to be about right and good for everyone
 
 **Final Code example this one is more abstract it shows a hypothetical workflow for workspace tools**
 

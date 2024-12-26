@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-mochachai-tests-read-and-process-data-line-by-line"
 ---
 
-Okay, let's tackle this. It's not an uncommon requirement, and I've certainly found myself in a similar position before—specifically, while building a data processing pipeline that required meticulous verification at each stage. In that project, I needed to validate transformed CSV data, line by line, against expected values after different transformations. This meant my tests had to be able to read input files as streams and process each row. Here’s how to achieve this with Mocha and Chai, leveraging Node.js's file system capabilities.
+, let's tackle this. It's not an uncommon requirement, and I've certainly found myself in a similar position before—specifically, while building a data processing pipeline that required meticulous verification at each stage. In that project, I needed to validate transformed CSV data, line by line, against expected values after different transformations. This meant my tests had to be able to read input files as streams and process each row. Here’s how to achieve this with Mocha and Chai, leveraging Node.js's file system capabilities.
 
 The core challenge here is asynchronous behavior. Node's file operations are inherently asynchronous, and so our tests need to manage this while ensuring that Mocha's test runner doesn't prematurely conclude before the file is fully processed. We'll use Node's `readline` module, which is ideal for reading files line by line without loading the entire file into memory at once—crucial for larger files.
 
@@ -24,33 +24,45 @@ Suppose we have a data file named `test_data.txt` containing simple numerical da
 Here's how our Mocha/Chai test might look:
 
 ```javascript
-const fs = require('fs');
-const readline = require('readline');
-const { expect } = require('chai');
+const fs = require("fs");
+const readline = require("readline");
+const { expect } = require("chai");
 
-describe('Line-by-Line Data Processing Test', () => {
-  it('should read and validate each line', async () => {
-    const expectedValues = ['1', '2', '3', '4']; // Strings for strict comparison
+describe("Line-by-Line Data Processing Test", () => {
+  it("should read and validate each line", async () => {
+    const expectedValues = ["1", "2", "3", "4"]; // Strings for strict comparison
     let lineIndex = 0;
 
-    const processLineByLine = () => new Promise((resolve, reject) => {
-      const readStream = fs.createReadStream('test_data.txt', { encoding: 'utf8' });
-      const rl = readline.createInterface({ input: readStream, crlfDelay: Infinity });
+    const processLineByLine = () =>
+      new Promise((resolve, reject) => {
+        const readStream = fs.createReadStream("test_data.txt", {
+          encoding: "utf8",
+        });
+        const rl = readline.createInterface({
+          input: readStream,
+          crlfDelay: Infinity,
+        });
 
-      rl.on('line', (line) => {
-        expect(line).to.equal(expectedValues[lineIndex], `Line ${lineIndex + 1} failed to match`);
-        lineIndex++;
-      });
+        rl.on("line", (line) => {
+          expect(line).to.equal(
+            expectedValues[lineIndex],
+            `Line ${lineIndex + 1} failed to match`
+          );
+          lineIndex++;
+        });
 
-      rl.on('close', () => {
-        expect(lineIndex).to.equal(expectedValues.length, 'Not all lines were processed');
-        resolve();
-      });
+        rl.on("close", () => {
+          expect(lineIndex).to.equal(
+            expectedValues.length,
+            "Not all lines were processed"
+          );
+          resolve();
+        });
 
-      rl.on('error', (err) => {
+        rl.on("error", (err) => {
           reject(err);
+        });
       });
-    });
 
     await processLineByLine();
   });
@@ -74,36 +86,59 @@ Imagine a file called `data.csv` containing:
 Here's an example using Mocha and Chai with processing:
 
 ```javascript
-const fs = require('fs');
-const readline = require('readline');
-const { expect } = require('chai');
+const fs = require("fs");
+const readline = require("readline");
+const { expect } = require("chai");
 
-describe('Line-by-Line Processing with Type Conversion', () => {
-  it('should read, process, and validate each line of CSV', async () => {
-    const processLineByLine = () => new Promise((resolve, reject) => {
-      const readStream = fs.createReadStream('data.csv', { encoding: 'utf8' });
-      const rl = readline.createInterface({ input: readStream, crlfDelay: Infinity });
-      let lineCount = 0;
-        
-      rl.on('line', (line) => {
-        const values = line.split(',').map(Number);
-        expect(values).to.have.lengthOf(2, `Line ${lineCount + 1}: Expected two values`);
-        expect(values[0]).to.be.a('number', `Line ${lineCount + 1}: First value is not a number`);
-        expect(values[1]).to.be.a('number', `Line ${lineCount + 1}: Second value is not a number`);
-        expect(values[0]).to.be.within(0, 100, `Line ${lineCount + 1}: First value out of range`);
-        expect(values[1]).to.be.within(0, 100, `Line ${lineCount + 1}: Second value out of range`);
-        lineCount++;
-      });
+describe("Line-by-Line Processing with Type Conversion", () => {
+  it("should read, process, and validate each line of CSV", async () => {
+    const processLineByLine = () =>
+      new Promise((resolve, reject) => {
+        const readStream = fs.createReadStream("data.csv", {
+          encoding: "utf8",
+        });
+        const rl = readline.createInterface({
+          input: readStream,
+          crlfDelay: Infinity,
+        });
+        let lineCount = 0;
 
-      rl.on('close', () => {
-        expect(lineCount).to.be.greaterThan(0, 'No lines processed');
-        resolve();
-      });
+        rl.on("line", (line) => {
+          const values = line.split(",").map(Number);
+          expect(values).to.have.lengthOf(
+            2,
+            `Line ${lineCount + 1}: Expected two values`
+          );
+          expect(values[0]).to.be.a(
+            "number",
+            `Line ${lineCount + 1}: First value is not a number`
+          );
+          expect(values[1]).to.be.a(
+            "number",
+            `Line ${lineCount + 1}: Second value is not a number`
+          );
+          expect(values[0]).to.be.within(
+            0,
+            100,
+            `Line ${lineCount + 1}: First value out of range`
+          );
+          expect(values[1]).to.be.within(
+            0,
+            100,
+            `Line ${lineCount + 1}: Second value out of range`
+          );
+          lineCount++;
+        });
 
-      rl.on('error', (err) => {
+        rl.on("close", () => {
+          expect(lineCount).to.be.greaterThan(0, "No lines processed");
+          resolve();
+        });
+
+        rl.on("error", (err) => {
           reject(err);
+        });
       });
-    });
     await processLineByLine();
   });
 });
@@ -116,46 +151,56 @@ This example demonstrates a common data processing pattern. We split the CSV str
 Finally, let's consider a more advanced example where the processing of each line itself involves an asynchronous operation. Perhaps you might need to call an API for each line or perform a database lookup, for instance. In this made-up example, let’s imagine a fictional asynchronous function `processLineAsync` that mocks an API request. Note how we can handle this within the `on('line')` event handler.
 
 ```javascript
-const fs = require('fs');
-const readline = require('readline');
-const { expect } = require('chai');
+const fs = require("fs");
+const readline = require("readline");
+const { expect } = require("chai");
 
 // A fictional async function to simulate async operation on each line
 async function processLineAsync(line, lineNumber) {
-    // Simulate an asynchronous call
-    await new Promise(resolve => setTimeout(resolve, 50));
-    const value = parseInt(line, 10);
-    return value + 1; // some simple operation
+  // Simulate an asynchronous call
+  await new Promise((resolve) => setTimeout(resolve, 50));
+  const value = parseInt(line, 10);
+  return value + 1; // some simple operation
 }
 
+describe("Async Line-by-Line Processing", () => {
+  it("should process each line asynchronously", async () => {
+    const expectedValues = [2, 3, 4, 5];
+    let lineIndex = 0;
 
-describe('Async Line-by-Line Processing', () => {
-    it('should process each line asynchronously', async () => {
-        const expectedValues = [2, 3, 4, 5];
-        let lineIndex = 0;
-
-        const processLineByLine = () => new Promise(async (resolve, reject) => {
-            const readStream = fs.createReadStream('test_data.txt', { encoding: 'utf8' });
-            const rl = readline.createInterface({ input: readStream, crlfDelay: Infinity });
-
-
-            rl.on('line', async (line) => {
-                const result = await processLineAsync(line, lineIndex + 1);
-                expect(result).to.equal(expectedValues[lineIndex], `Line ${lineIndex + 1} processed value mismatch`);
-                lineIndex++;
-            });
-
-            rl.on('close', () => {
-                expect(lineIndex).to.equal(expectedValues.length, 'Not all lines were processed');
-                resolve();
-            });
-
-            rl.on('error', (err) => {
-                reject(err);
-            });
+    const processLineByLine = () =>
+      new Promise(async (resolve, reject) => {
+        const readStream = fs.createReadStream("test_data.txt", {
+          encoding: "utf8",
         });
-        await processLineByLine();
-    });
+        const rl = readline.createInterface({
+          input: readStream,
+          crlfDelay: Infinity,
+        });
+
+        rl.on("line", async (line) => {
+          const result = await processLineAsync(line, lineIndex + 1);
+          expect(result).to.equal(
+            expectedValues[lineIndex],
+            `Line ${lineIndex + 1} processed value mismatch`
+          );
+          lineIndex++;
+        });
+
+        rl.on("close", () => {
+          expect(lineIndex).to.equal(
+            expectedValues.length,
+            "Not all lines were processed"
+          );
+          resolve();
+        });
+
+        rl.on("error", (err) => {
+          reject(err);
+        });
+      });
+    await processLineByLine();
+  });
 });
 ```
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-keep-the-structure-of-text-after-feeding-it-to-a-ner-pipeline"
 ---
 
-Alright, let's tackle this. Preserving the original text structure while applying Named Entity Recognition (NER) can be a bit of a balancing act, but it's absolutely crucial for many downstream tasks. I recall a project a few years back, involving automated analysis of legal contracts. We needed to extract entities like names, dates, and locations but, crucially, the position and context of these entities within the document were just as important as the entities themselves. So, we faced this exact challenge of keeping the structure intact post-NER.
+, let's tackle this. Preserving the original text structure while applying Named Entity Recognition (NER) can be a bit of a balancing act, but it's absolutely crucial for many downstream tasks. I recall a project a few years back, involving automated analysis of legal contracts. We needed to extract entities like names, dates, and locations but, crucially, the position and context of these entities within the document were just as important as the entities themselves. So, we faced this exact challenge of keeping the structure intact post-NER.
 
 The fundamental issue is that most NER pipelines, at their core, operate on sequences of tokens. They don't inherently maintain a direct link to the original text's structure, such as line breaks, paragraphs, or even specific formatting. The tokenization process often strips away these nuances, treating the input as a flat stream of words or sub-word units.
 
@@ -49,7 +49,7 @@ def ner_with_structural_markers(text):
     nlp = spacy.load("en_core_web_sm")
     structured_tokens = []
     structural_elements = []
-    
+
     #Split by line breaks to identify paragraph structure and add markers
     lines = text.splitlines()
     current_char = 0
@@ -98,7 +98,7 @@ def structured_ner_intermediate_rep(text):
     nlp = spacy.load("en_core_web_sm")
     doc = nlp(text)
     intermediate_rep = []
-    
+
     for token in doc:
         token_info = {
             "text": token.text,
@@ -112,7 +112,7 @@ def structured_ner_intermediate_rep(text):
         for token_info in intermediate_rep:
             if token_info["start"] >= ent.start_char and token_info["end"] <= ent.end_char:
                  token_info["entity"] = {"text": ent.text, "type": ent.label_}
-    
+
     return { "original_text": text, "intermediate_representation": intermediate_rep}
 
 
@@ -130,9 +130,9 @@ The output of each of these examples represents a structured version of the orig
 
 For further reading and more detailed exploration of these techniques, I strongly recommend looking into these resources:
 
-*   **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** This is a comprehensive textbook that provides a deep dive into various aspects of natural language processing, including tokenization, NER, and general document processing. The chapters on text analysis and information extraction are particularly relevant.
-*   **spaCy's Official Documentation:** The spaCy documentation is a well-structured and practical resource for anyone working with spaCy. The documentation includes many useful examples and provides insight into the inner workings of the library. Focus on the API reference and examples related to tokenization and entity extraction.
-*   **Papers on Information Extraction:** Specifically, search for papers related to ‘token classification’ and 'sequential tagging’ . Some research papers delve into strategies for maintaining context during entity recognition and techniques for handling complex structural information.
-*   **The transformers library documentation**: The Transformers library from Huggingface includes an impressive array of tools and techniques for tokenization, especially sub-word tokenization, as well as many well-regarded NER model implementations.
+- **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** This is a comprehensive textbook that provides a deep dive into various aspects of natural language processing, including tokenization, NER, and general document processing. The chapters on text analysis and information extraction are particularly relevant.
+- **spaCy's Official Documentation:** The spaCy documentation is a well-structured and practical resource for anyone working with spaCy. The documentation includes many useful examples and provides insight into the inner workings of the library. Focus on the API reference and examples related to tokenization and entity extraction.
+- **Papers on Information Extraction:** Specifically, search for papers related to ‘token classification’ and 'sequential tagging’ . Some research papers delve into strategies for maintaining context during entity recognition and techniques for handling complex structural information.
+- **The transformers library documentation**: The Transformers library from Huggingface includes an impressive array of tools and techniques for tokenization, especially sub-word tokenization, as well as many well-regarded NER model implementations.
 
 In summary, maintaining the structure of your text during NER is not impossible. By carefully tracking token indices and leveraging intermediate representations, you can bridge the gap between structured text and sequence-based processing of NER pipelines. The approaches above provide a solid foundation for most scenarios, and you can iterate further from here. Remember that the "best" approach will likely vary depending on the precise structure of your input data and the level of structural preservation you require.

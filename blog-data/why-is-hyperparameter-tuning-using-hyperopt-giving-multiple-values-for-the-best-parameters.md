@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-is-hyperparameter-tuning-using-hyperopt-giving-multiple-values-for-the-best-parameters"
 ---
 
-Okay, let's tackle this. It's a common head-scratcher, and one I've encountered multiple times during my time building predictive models. The issue of hyperopt, or similar optimization libraries, seemingly spitting out multiple "best" parameter sets is rooted in a few key aspects of how these algorithms operate and the nature of the optimization landscapes they navigate. It's rarely about a bug; more often, it's a characteristic behavior you need to understand.
+, let's tackle this. It's a common head-scratcher, and one I've encountered multiple times during my time building predictive models. The issue of hyperopt, or similar optimization libraries, seemingly spitting out multiple "best" parameter sets is rooted in a few key aspects of how these algorithms operate and the nature of the optimization landscapes they navigate. It's rarely about a bug; more often, it's a characteristic behavior you need to understand.
 
-The core issue often revolves around the very definition of "best" within the context of optimization. Think about this—most real-world optimization problems aren’t neat, convex bowls with a single global minimum. They're often rugged landscapes filled with local minima. Hyperopt, which typically uses Tree-structured Parzen Estimator (TPE) algorithms or variations thereof, aims to find *a* good solution, not necessarily the *absolute best*, because pinpointing the global optimum is, in many cases, computationally intractable. And, sometimes, that good solution isn’t unique. You’ll find similar performance metrics for distinct parameter sets.
+The core issue often revolves around the very definition of "best" within the context of optimization. Think about this—most real-world optimization problems aren’t neat, convex bowls with a single global minimum. They're often rugged landscapes filled with local minima. Hyperopt, which typically uses Tree-structured Parzen Estimator (TPE) algorithms or variations thereof, aims to find _a_ good solution, not necessarily the _absolute best_, because pinpointing the global optimum is, in many cases, computationally intractable. And, sometimes, that good solution isn’t unique. You’ll find similar performance metrics for distinct parameter sets.
 
-Let me break it down further. When hyperopt completes its search, it retains a history of all the parameter combinations it evaluated and their corresponding loss (or gain) values. When you query for the `best` parameters, what hyperopt typically returns is the set of parameters that produced the *best loss* observed during the *entire search process*. Because that search process can be influenced by several things, including random exploration, it's highly probable to find several equally-performing parameter sets, especially when dealing with complex loss functions.
+Let me break it down further. When hyperopt completes its search, it retains a history of all the parameter combinations it evaluated and their corresponding loss (or gain) values. When you query for the `best` parameters, what hyperopt typically returns is the set of parameters that produced the _best loss_ observed during the _entire search process_. Because that search process can be influenced by several things, including random exploration, it's highly probable to find several equally-performing parameter sets, especially when dealing with complex loss functions.
 
 Another thing that significantly contributes to this is the evaluation noise that's inherent in many machine learning tasks. Think about cross-validation, for instance. While it’s designed to give you a more robust performance estimate, each fold of cross-validation is effectively a different evaluation of the model. The results can fluctuate. Therefore, a tiny difference in observed performance between two parameter sets could very well just be noise rather than a genuine indication of one set being truly superior to another. These small variances can often mean that different parameter sets happen to result in effectively equivalent performance, even if they are technically not exactly the same loss.
 
@@ -45,6 +45,7 @@ for t in trials.trials:
      print (t['misc']['vals'], t['result']['loss'])
 
 ```
+
 In this first code example, the objective function we're minimizing is (x-3)^2 + (y-4)^2, which has an optimum at x=3, y=4. However, I've added a bit of gaussian noise in the objective and we use a max_evals of 50. If you run this code multiple times, you will probably get multiple very similar parameter sets for x and y that have slightly differing loss values, all relatively close to the optimum, demonstrating the point about random noise and algorithm non-determinism.
 
 **Example 2: Multiple Local Minima**
@@ -110,8 +111,8 @@ The key takeaway here is not to assume a single, definitive set of "best" hyperp
 
 For deeper understanding, I recommend exploring these resources:
 
-*   **“Algorithms for Hyper-Parameter Optimization”** by James Bergstra, Rémi Bardenet, Yoshua Bengio, and Balázs Kégl. This paper is a great starting point for the theory behind these algorithms.
-*   **“Making a Science of Model Search: Hyperparameter Optimization in Hundreds of Dimensions for Vision Tasks”** by Matthias W. Seeger, Andreas Krause, and Christopher J. Burges. This paper discusses a lot of these real-world issues and how they affect optimization.
-*   **"Probabilistic Machine Learning: An Introduction"** by Kevin Patrick Murphy. This is a great general resource which can clarify the theoretical foundations of these type of algorithms.
+- **“Algorithms for Hyper-Parameter Optimization”** by James Bergstra, Rémi Bardenet, Yoshua Bengio, and Balázs Kégl. This paper is a great starting point for the theory behind these algorithms.
+- **“Making a Science of Model Search: Hyperparameter Optimization in Hundreds of Dimensions for Vision Tasks”** by Matthias W. Seeger, Andreas Krause, and Christopher J. Burges. This paper discusses a lot of these real-world issues and how they affect optimization.
+- **"Probabilistic Machine Learning: An Introduction"** by Kevin Patrick Murphy. This is a great general resource which can clarify the theoretical foundations of these type of algorithms.
 
 In my experience, the best strategy is to understand the limitations of hyperparameter tuning algorithms, understand that the process is not going to provide you with a unique 'best' parameters set, and incorporate careful evaluation practices that account for noise and randomness.

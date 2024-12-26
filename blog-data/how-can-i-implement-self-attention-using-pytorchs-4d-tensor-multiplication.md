@@ -4,13 +4,14 @@ date: "2024-12-23"
 id: "how-can-i-implement-self-attention-using-pytorchs-4d-tensor-multiplication"
 ---
 
-Alright, let's tackle this. Implementing self-attention using PyTorch’s 4D tensor multiplication might initially seem daunting, especially when you're transitioning from the more intuitive 2D matrix operations. I’ve had my share of head-scratching moments debugging tensor shapes while building custom transformer models, and that experience has given me a solid understanding of how to approach this precisely. It’s crucial to grasp the underlying mechanics; otherwise, you’ll be debugging shapes and indices for days. Let’s break it down and illustrate the process with some concrete code examples.
+, let's tackle this. Implementing self-attention using PyTorch’s 4D tensor multiplication might initially seem daunting, especially when you're transitioning from the more intuitive 2D matrix operations. I’ve had my share of head-scratching moments debugging tensor shapes while building custom transformer models, and that experience has given me a solid understanding of how to approach this precisely. It’s crucial to grasp the underlying mechanics; otherwise, you’ll be debugging shapes and indices for days. Let’s break it down and illustrate the process with some concrete code examples.
 
 First off, the core concept of self-attention revolves around calculating attention weights and then using these weights to compute a weighted sum of input embeddings. The input to the attention mechanism is typically a 3D tensor with the shape `(batch_size, sequence_length, embedding_dimension)`. However, for the actual computation, we transform this 3D tensor into specific 4D tensors to enable element-wise multiplication for attention weight calculation. This is where the perceived complexity arises.
 
 The key lies in understanding the purpose of the different dimensions after these transformations. We essentially create queries, keys, and values, usually derived via linear transformations of the input. These q, k, and v tensors typically share the same dimensions with the last dimension representing the hidden size of the attention head, but the batch size remains untouched. The trick is manipulating the dimensions to prepare them for the attention formula, which relies heavily on matrix multiplication.
 
 The general self-attention mechanism is built upon the following sequence of operations:
+
 1. **Linear Transformations:** The input tensor goes through three different linear transformations to produce queries (q), keys (k), and values (v). These can be implemented by applying a learnable weight matrix for each transformation. Each of these tensors now has shape `(batch_size, sequence_length, head_dimension)`. Note that for multi-head attention, the `head_dimension` is often the `embedding_dimension / num_heads`.
 2. **Reshaping and Transposing:** We reshape the q and k tensors and transpose the k tensor for efficient matrix multiplication. The reshaping can change the view of data in memory but shouldn't change the data itself.
 3. **Attention Weight Calculation:** The attention weights are calculated by performing a dot product (matrix multiplication) between q and the transposed k. The result is divided by the square root of the head dimension to prevent the softmax from saturating. This results in a tensor of shape `(batch_size, sequence_length, sequence_length)`. Each element (i, j) of this tensor indicates how much attention node `i` should pay to node `j`.
@@ -40,7 +41,7 @@ class SelfAttention(nn.Module):
         q = self.query_linear(x) # (batch_size, sequence_length, head_dim)
         k = self.key_linear(x) # (batch_size, sequence_length, head_dim)
         v = self.value_linear(x) # (batch_size, sequence_length, head_dim)
-        
+
         return q, k, v
 ```
 
@@ -70,7 +71,7 @@ Next, let's look at the core calculation with 4D tensor multiplication:
 
         weighted_sum = torch.matmul(attention_weights, v) # (batch_size, 1, seq_length, head_dim)
         weighted_sum = weighted_sum.squeeze(1) # (batch_size, seq_length, head_dim)
-        
+
         return weighted_sum
 ```
 
@@ -94,9 +95,10 @@ if __name__ == '__main__':
     print(f"Output shape: {output.shape}")
 
     assert output.shape == (batch_size, seq_length, head_dim), f"Output shape mismatch, got {output.shape}, expected {(batch_size, seq_length, head_dim)}"
-    
+
     print("Attention output shape check passed.")
 ```
+
 This example creates a `SelfAttention` object and generates a random input tensor. The output shape is then checked to ensure it matches the expected dimensions, helping you debug the implementation.
 
 For resources, I recommend consulting the original paper "Attention is All You Need" by Vaswani et al., it goes into incredible depth on the architecture. Also, “Natural Language Processing with Transformers” by Lewis Tunstall, Leandro von Werra, and Thomas Wolf offers excellent practical insights, especially on implementation details. Lastly, for a deeper dive into tensor operations, I find the official PyTorch documentation to be indispensable. They present a very detailed, and continuously updated, guide for each function.

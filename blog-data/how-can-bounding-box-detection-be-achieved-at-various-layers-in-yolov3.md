@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-bounding-box-detection-be-achieved-at-various-layers-in-yolov3"
 ---
 
-Alright, let's talk bounding box detection in YOLOv3 across its network layers. I've personally spent a significant amount of time fine-tuning and dissecting this architecture, and it’s a fascinating topic when you delve into the specifics. The magic, as many of you are probably aware, isn't just in the final prediction; it's the cascade of feature extraction and the way those features are progressively refined across different scales.
+, let's talk bounding box detection in YOLOv3 across its network layers. I've personally spent a significant amount of time fine-tuning and dissecting this architecture, and it’s a fascinating topic when you delve into the specifics. The magic, as many of you are probably aware, isn't just in the final prediction; it's the cascade of feature extraction and the way those features are progressively refined across different scales.
 
 YOLOv3, unlike some of its predecessors and contemporaries, smartly leverages multiple detection heads, each operating at a different layer. This architecture is intentional, designed to tackle objects of varying sizes, from small, almost pixel-level anomalies to larger, dominant structures in an image. The core idea is that earlier layers of the network, with their smaller receptive fields and higher resolution feature maps, are well-suited for locating smaller objects. Conversely, the later layers, having processed the information through multiple convolutions and downsampling operations, develop a more global view of the image and excel at identifying larger objects.
 
-Now, how *exactly* does this happen? Let’s break it down.
+Now, how _exactly_ does this happen? Let’s break it down.
 
 YOLOv3 incorporates three separate detection layers, all stemming from different depths within the network. Instead of a single-output prediction like in, say, YOLOv1, we have three independent outputs. Each of these outputs is responsible for predicting bounding boxes at different scales. These predictions aren't just a location; they contain coordinates, objectness scores, and class probabilities.
 
@@ -32,10 +32,10 @@ def detection_layer(feature_map, num_anchors, num_classes):
 
     # Convolutional layers to process the feature map
     processed_feature_map = convolution_operations(feature_map, output_channels)
-    
+
     # Reshape for anchor separation
     reshaped_predictions = reshape(processed_feature_map, [-1, num_anchors, 5+num_classes]) #[-1, num_anchors, 5+num_classes]
-    
+
     return reshaped_predictions
 ```
 
@@ -47,37 +47,37 @@ In this snippet, the `detection_layer` function receives a feature map, the numb
 def apply_anchors(predictions, anchors):
   # predictions is a tensor with shape [batch_size, grid_height, grid_width, num_anchors, 5+num_classes]
   # anchors is a tensor with shape [num_anchors, 2], representing the width and height of anchors.
-  
+
     batch_size = predictions.shape[0]
     grid_h = predictions.shape[1]
     grid_w = predictions.shape[2]
     num_anchors = predictions.shape[3]
-    
+
     # Extract bounding box parameters and objectness score
     tx = predictions[..., 0:1]
     ty = predictions[..., 1:2]
     tw = predictions[..., 2:3]
     th = predictions[..., 3:4]
     obj_score = predictions[..., 4:5]
-    
+
     # Generate grid cell offset
     grid_x = np.arange(grid_w).reshape(1, 1, grid_w, 1) # [1,1, grid_w,1]
     grid_y = np.arange(grid_h).reshape(1, grid_h, 1, 1) # [1, grid_h, 1, 1]
-    
+
     # Calculate bounding box center coordinates
     bx = sigmoid(tx) + grid_x
     by = sigmoid(ty) + grid_y
-    
+
     # Calculate bounding box dimensions
     bw = anchors[:, 0] * np.exp(tw) # [num_anchors]
     bh = anchors[:, 1] * np.exp(th) # [num_anchors]
-    
+
     # Normalize by dividing by grid width and height
     bx_norm = bx / grid_w
     by_norm = by / grid_h
     bw_norm = bw / grid_w
     bh_norm = bh / grid_h
-    
+
     # Return normalized bounding box coordinates along with objectness score and class probabilities.
     return concat(bx_norm, by_norm, bw_norm, bh_norm, obj_score, predictions[..., 5:])
 ```
@@ -89,29 +89,29 @@ This snippet, `apply_anchors`, shows how predictions from a detection layer are 
 ```python
 def yolo_v3_detection(input_image):
     # Input image is a 3D tensor [batch_size, height, width, channels]
-    
+
     # Extract feature maps at different scales
     feature_map_1 = backbone_network_layer_1(input_image) # high resolution (earliest)
     feature_map_2 = backbone_network_layer_2(feature_map_1) # intermediate resolution
     feature_map_3 = backbone_network_layer_3(feature_map_2) # low resolution (deepest)
-    
+
     # Define anchor boxes
     anchors_1 = [[10,13], [16,30], [33,23]]
     anchors_2 = [[30,61], [62,45], [59,119]]
     anchors_3 = [[116,90], [156,198], [373,326]]
-    
+
     num_classes = 80 # Assuming COCO dataset
-    
+
     # Apply detection layers
     predictions_1 = detection_layer(feature_map_1, len(anchors_1), num_classes)
     predictions_2 = detection_layer(feature_map_2, len(anchors_2), num_classes)
     predictions_3 = detection_layer(feature_map_3, len(anchors_3), num_classes)
-    
+
     # Apply anchor boxes to get final bounding box predictions
     bboxes_1 = apply_anchors(predictions_1, anchors_1)
     bboxes_2 = apply_anchors(predictions_2, anchors_2)
     bboxes_3 = apply_anchors(predictions_3, anchors_3)
-    
+
     # Combine predictions from different scales
     all_predictions = concatenate([bboxes_1, bboxes_2, bboxes_3], axis=1) # assuming batch size is the first axis
 

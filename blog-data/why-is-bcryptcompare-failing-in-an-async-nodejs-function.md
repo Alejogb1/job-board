@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-is-bcryptcompare-failing-in-an-async-nodejs-function"
 ---
 
-Okay, let's tackle this. I’ve seen this exact issue pop up more times than I care to count, typically involving subtle timing issues and a misunderstanding of how asynchronous JavaScript behaves, particularly when dealing with bcrypt. Specifically, the question targets why `bcrypt.compare()` might seem to fail in an asynchronous Node.js function, despite seemingly correct inputs. The core problem usually isn't bcrypt itself, but rather how the asynchronous nature of Node.js interacts with bcrypt's operations, and how we, as developers, handle the results.
+, let's tackle this. I’ve seen this exact issue pop up more times than I care to count, typically involving subtle timing issues and a misunderstanding of how asynchronous JavaScript behaves, particularly when dealing with bcrypt. Specifically, the question targets why `bcrypt.compare()` might seem to fail in an asynchronous Node.js function, despite seemingly correct inputs. The core problem usually isn't bcrypt itself, but rather how the asynchronous nature of Node.js interacts with bcrypt's operations, and how we, as developers, handle the results.
 
-The initial mistake often lies in not properly awaiting promises or handling callbacks correctly, thus introducing race conditions. When I first encountered this, it was in a user authentication system. We were storing hashed passwords, of course, and during the login process, `bcrypt.compare()` would sometimes return false even though the password *was* technically correct. Frustration, to put it mildly, was high. After a fair amount of debugging, the source became clear. The underlying issue was related to our database access code and the way it interacted with the bcrypt comparison.
+The initial mistake often lies in not properly awaiting promises or handling callbacks correctly, thus introducing race conditions. When I first encountered this, it was in a user authentication system. We were storing hashed passwords, of course, and during the login process, `bcrypt.compare()` would sometimes return false even though the password _was_ technically correct. Frustration, to put it mildly, was high. After a fair amount of debugging, the source became clear. The underlying issue was related to our database access code and the way it interacted with the bcrypt comparison.
 
 Let’s break down why this happens and how to properly avoid it, starting with the fundamental characteristic of `bcrypt.compare()` itself. This function is fundamentally asynchronous because it's computationally intensive. Hashing algorithms are designed to be slow to prevent brute force attacks; hence, they are typically non-blocking. This means it doesn't return a value directly; instead, it signals completion through a callback or, more commonly now, a promise.
 
@@ -18,22 +18,22 @@ Let me illustrate with a simplified example. Let’s say we’re trying to authe
 
 ```javascript
 async function authenticateUser_problematic(username, password) {
-    // Imagine db.getUser returns a promise that resolves with the user data.
-    const user = await db.getUser(username);
-    if (!user) {
-        return false; // User not found.
-    }
-    
-    const isMatch = bcrypt.compare(password, user.hashedPassword); // Missing AWAIT here
+  // Imagine db.getUser returns a promise that resolves with the user data.
+  const user = await db.getUser(username);
+  if (!user) {
+    return false; // User not found.
+  }
 
-    // At this point, isMatch might not have the result we need, and it can lead to incorrect logic.
-    if (isMatch) {
-        console.log('Authentication successful');
-        return true; // Incorrect, might not be the true comparison result.
-    } else {
-        console.log('Authentication failed');
-        return false; // Incorrect, might not be the true comparison result.
-    }
+  const isMatch = bcrypt.compare(password, user.hashedPassword); // Missing AWAIT here
+
+  // At this point, isMatch might not have the result we need, and it can lead to incorrect logic.
+  if (isMatch) {
+    console.log("Authentication successful");
+    return true; // Incorrect, might not be the true comparison result.
+  } else {
+    console.log("Authentication failed");
+    return false; // Incorrect, might not be the true comparison result.
+  }
 }
 ```
 
@@ -43,25 +43,25 @@ Here is a corrected version using promises and `await` correctly:
 
 ```javascript
 async function authenticateUser_corrected(username, password) {
-    const user = await db.getUser(username);
-    if (!user) {
+  const user = await db.getUser(username);
+  if (!user) {
+    return false;
+  }
+
+  try {
+    const isMatch = await bcrypt.compare(password, user.hashedPassword); // AWAITING THE RESULT!
+
+    if (isMatch) {
+      console.log("Authentication successful");
+      return true;
+    } else {
+      console.log("Authentication failed");
       return false;
     }
-
-    try {
-        const isMatch = await bcrypt.compare(password, user.hashedPassword); // AWAITING THE RESULT!
-
-        if (isMatch) {
-          console.log('Authentication successful');
-          return true;
-        } else {
-          console.log('Authentication failed');
-          return false;
-        }
-    } catch (error) {
-      console.error("bcrypt compare error", error);
-      return false; // Handle potential errors from bcrypt.
-    }
+  } catch (error) {
+    console.error("bcrypt compare error", error);
+    return false; // Handle potential errors from bcrypt.
+  }
 }
 ```
 
@@ -70,7 +70,10 @@ In this corrected snippet, I’ve included a try-catch block for error handling.
 The second scenario where I’ve seen these issues arise involves dealing with large datasets or asynchronous calls happening in loops, particularly when you're checking a list of passwords. Consider the following naive, looping example that can potentially fail with incorrect or unexpected results:
 
 ```javascript
-async function validateMultiplePasswords_problematic(passwords, hashedPassword) {
+async function validateMultiplePasswords_problematic(
+  passwords,
+  hashedPassword
+) {
   const results = [];
   for (const password of passwords) {
     const isMatch = bcrypt.compare(password, hashedPassword); // Missing AWAIT.
@@ -86,17 +89,17 @@ Here is a corrected version that resolves all of the promises and then returns t
 
 ```javascript
 async function validateMultiplePasswords_corrected(passwords, hashedPassword) {
-    const results = [];
-    for (const password of passwords) {
-        try {
-            const isMatch = await bcrypt.compare(password, hashedPassword);
-            results.push(isMatch);
-         } catch (error){
-            console.error("bcrypt error during multi password validation", error);
-            results.push(false); //Handle the error properly, log and return some value
-         }
+  const results = [];
+  for (const password of passwords) {
+    try {
+      const isMatch = await bcrypt.compare(password, hashedPassword);
+      results.push(isMatch);
+    } catch (error) {
+      console.error("bcrypt error during multi password validation", error);
+      results.push(false); //Handle the error properly, log and return some value
     }
-    return results;
+  }
+  return results;
 }
 ```
 

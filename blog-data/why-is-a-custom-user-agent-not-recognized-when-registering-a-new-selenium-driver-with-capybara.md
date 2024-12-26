@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-a-custom-user-agent-not-recognized-when-registering-a-new-selenium-driver-with-capybara"
 ---
 
-alright, so you're hitting a wall with capybara and custom user agents, i get it. been there, done that, bought the t-shirt, had it mysteriously disappear in the laundry. it's one of those things that looks straightforward on the surface, but the devil's always lurking in the details, especially when dealing with browser automation.
+, so you're hitting a wall with capybara and custom user agents, i get it. been there, done that, bought the t-shirt, had it mysteriously disappear in the laundry. it's one of those things that looks straightforward on the surface, but the devil's always lurking in the details, especially when dealing with browser automation.
 
 let's unpack this. when you're firing up a selenium driver with capybara, the user agent string, that little piece of text that identifies your browser to web servers, sometimes decides to go its own way. you think you've set it, but the server sees something else, and the world becomes a bit frustrating. that’s because you're not controlling the browser directly, you're talking to a proxy and browser, and that can add layers of complexity.
 
@@ -38,7 +38,7 @@ Capybara.default_driver = :custom_headless_chrome
 
 ```
 
-this *looks* like it should work, but the user agent is probably not set. why? well selenium doesn't receive the information correctly from this approach. the correct way is to tell selenium how to set the user agent, not the chrome executable directly using an argument.
+this _looks_ like it should work, but the user agent is probably not set. why? well selenium doesn't receive the information correctly from this approach. the correct way is to tell selenium how to set the user agent, not the chrome executable directly using an argument.
 
 **the correct way, through selenium:**
 
@@ -66,7 +66,7 @@ end
 Capybara.default_driver = :custom_headless_chrome
 ```
 
-notice the change? we're now using `desired_capabilities` and setting `user-agent` *inside* the browser-specific capabilities structure. this is how selenium intends to receive these options, and capybara happily passes them along.
+notice the change? we're now using `desired_capabilities` and setting `user-agent` _inside_ the browser-specific capabilities structure. this is how selenium intends to receive these options, and capybara happily passes them along.
 
 a similar approach can be used for firefox, or other browser drivers as well. the trick here is that these are different capabilities and different syntax.
 
@@ -92,19 +92,19 @@ notice how the `prefs` key is used for firefox? that's because firefox doesn't h
 
 **common pitfalls to watch out for:**
 
-*   **double-setting:** sometimes, user agents are set in multiple places in your configuration and might override each other. i've done this, it's not pretty. review your setup to make sure that only one place is setting the user agent. sometimes it's not even your fault, other gems might be interfering with your configuration too.
-*   **driver version mismatch:** always verify the compatibility between your browser, browser driver (chromedriver, geckodriver) and selenium version. outdated or mismatched versions can cause bizarre behaviors. upgrading the driver version and selenium fixed the strangest bugs ever.
-*   **headless vs. headed:** if you're using a headless setup, sometimes the user agent behaves a little bit different than in a headed one. but most of the times the problem is configuration, just worth noting that there might be subtle differences.
-*   **debugging:** use the developer tools and javascript inside the automated browser to verify the user agent. this was the way i managed to fix most of my headaches, just by printing `navigator.userAgent` on the console inside the browser.
+- **double-setting:** sometimes, user agents are set in multiple places in your configuration and might override each other. i've done this, it's not pretty. review your setup to make sure that only one place is setting the user agent. sometimes it's not even your fault, other gems might be interfering with your configuration too.
+- **driver version mismatch:** always verify the compatibility between your browser, browser driver (chromedriver, geckodriver) and selenium version. outdated or mismatched versions can cause bizarre behaviors. upgrading the driver version and selenium fixed the strangest bugs ever.
+- **headless vs. headed:** if you're using a headless setup, sometimes the user agent behaves a little bit different than in a headed one. but most of the times the problem is configuration, just worth noting that there might be subtle differences.
+- **debugging:** use the developer tools and javascript inside the automated browser to verify the user agent. this was the way i managed to fix most of my headaches, just by printing `navigator.userAgent` on the console inside the browser.
 
 **resources that helped me:**
 
 there are many online resources that you can check. but there are some key documents:
 
-*   **the official selenium documentation:** this is your bible. it has details on capabilities, driver options and pretty much anything you might need regarding selenium. it's a must read: seleniumhq.org
-*   **browser driver documentation:** if you are using chrome, check the chromedriver documentation. for firefox, check the geckodriver documentation. and so on. the documentation is usually very detailed and helps understanding all the quirks of that specific driver.
-*   **"software testing automation" by mark fewster and dorothy graham:** although this book is more general, i found it extremely useful for understanding the core concepts of automation. this helps you understand the underlying principles of web automation and that can save you hours of frustration with the small details.
-*   **"the art of software testing" by glenford j. myers:** even if it's an old book, it's a must read, it gives you the fundamental concepts of testing and automation and helps your development in general.
+- **the official selenium documentation:** this is your bible. it has details on capabilities, driver options and pretty much anything you might need regarding selenium. it's a must read: seleniumhq.org
+- **browser driver documentation:** if you are using chrome, check the chromedriver documentation. for firefox, check the geckodriver documentation. and so on. the documentation is usually very detailed and helps understanding all the quirks of that specific driver.
+- **"software testing automation" by mark fewster and dorothy graham:** although this book is more general, i found it extremely useful for understanding the core concepts of automation. this helps you understand the underlying principles of web automation and that can save you hours of frustration with the small details.
+- **"the art of software testing" by glenford j. myers:** even if it's an old book, it's a must read, it gives you the fundamental concepts of testing and automation and helps your development in general.
 
 in general, i always prefer to start reading documentation and books than go straight to forums and online articles. it gives you a deeper understanding of things, which is fundamental. sometimes a small, overlooked detail, or some obscure configuration setting can be the one thing that’s messing up the whole setup.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-pin-a-plane-to-specific-altitude-using-maplibre-gl-js"
 ---
 
-Okay, let's tackle this. I recall working on a flight simulation project a few years back where we needed precisely this functionality – keeping a plane icon locked to a specific altitude within a MapLibre GL JS environment. It’s a bit more involved than simply setting the lat/long, as you're dealing with the 3D space implications.
+, let's tackle this. I recall working on a flight simulation project a few years back where we needed precisely this functionality – keeping a plane icon locked to a specific altitude within a MapLibre GL JS environment. It’s a bit more involved than simply setting the lat/long, as you're dealing with the 3D space implications.
 
 The challenge stems from how MapLibre GL JS handles positioning of features, particularly when you introduce elevation data. By default, a feature's coordinates are treated as 2D unless explicitly told otherwise. To accurately represent the plane's altitude, we need to manipulate the `translate` and, potentially, the `pitch` of the layer. We will need to use the `transformRequest` callback effectively to intercept the loading of terrain tiles to figure out the terrain altitude at a specific point.
 
@@ -25,51 +25,51 @@ Let's walk through some code examples. Note that these examples assume you have 
 This first snippet will keep the plane icon at a desired altitude, assuming the camera is looking at the map from straight above. The plane icon will move up or down as the terrain elevation changes, always at the same offset altitude from the terrain:
 
 ```javascript
-  const map = new maplibregl.Map({
-    container: 'map',
-    style: 'your-map-style.json', // Replace with your style
-    center: [longitude, latitude], // Replace with plane's initial coordinates
-    zoom: 10,
+const map = new maplibregl.Map({
+  container: "map",
+  style: "your-map-style.json", // Replace with your style
+  center: [longitude, latitude], // Replace with plane's initial coordinates
+  zoom: 10,
+});
+
+const desiredAltitude = 1000; // Example altitude, in meters
+let currentTerrainAltitude = 0;
+
+map.on("load", () => {
+  map.addSource("plane-source", {
+    type: "geojson",
+    data: {
+      type: "Feature",
+      geometry: {
+        type: "Point",
+        coordinates: [longitude, latitude], // Replace
+      },
+    },
   });
 
-    const desiredAltitude = 1000; // Example altitude, in meters
-    let currentTerrainAltitude = 0;
-  
-  map.on('load', () => {
-    map.addSource('plane-source', {
-        type: 'geojson',
-        data: {
-            type: 'Feature',
-            geometry: {
-                type: 'Point',
-                coordinates: [longitude, latitude], // Replace
-            },
-        },
-    });
-
-    map.addLayer({
-        id: 'plane-layer',
-        type: 'symbol',
-        source: 'plane-source',
-        layout: {
-            'icon-image': 'your-plane-icon', // Replace with your icon name
-            'icon-size': 0.1,
-            'icon-allow-overlap': true,
-        },
-    });
-
-     map.on('render', () => {
-         const terrainData = map.queryTerrainElevation(
-                [longitude, latitude]
-            );
-           if (terrainData) {
-              currentTerrainAltitude = terrainData.altitude
-               let verticalOffset = (desiredAltitude - currentTerrainAltitude);
-                 map.setPaintProperty('plane-layer', 'icon-translate', [0, verticalOffset]);
-
-            }
-    });
+  map.addLayer({
+    id: "plane-layer",
+    type: "symbol",
+    source: "plane-source",
+    layout: {
+      "icon-image": "your-plane-icon", // Replace with your icon name
+      "icon-size": 0.1,
+      "icon-allow-overlap": true,
+    },
   });
+
+  map.on("render", () => {
+    const terrainData = map.queryTerrainElevation([longitude, latitude]);
+    if (terrainData) {
+      currentTerrainAltitude = terrainData.altitude;
+      let verticalOffset = desiredAltitude - currentTerrainAltitude;
+      map.setPaintProperty("plane-layer", "icon-translate", [
+        0,
+        verticalOffset,
+      ]);
+    }
+  });
+});
 ```
 
 In this code, we are using `queryTerrainElevation` to find the elevation of the ground and use that to vertically offset the plane. This won't account for the view pitch, but it’s good start.
@@ -80,60 +80,62 @@ This snippet demonstrates a more sophisticated way to handle camera pitch. It in
 
 ```javascript
 const map = new maplibregl.Map({
-      container: 'map',
-      style: 'your-map-style.json',
-      center: [longitude, latitude],
-      zoom: 10,
-    });
+  container: "map",
+  style: "your-map-style.json",
+  center: [longitude, latitude],
+  zoom: 10,
+});
 
-    const desiredAltitude = 1000; // Example altitude, in meters
-     let currentTerrainAltitude = 0;
-     let cameraPitch = 0
-     let cameraBearing = 0
-     
-     map.on('load', () => {
-        map.addSource('plane-source', {
-            type: 'geojson',
-            data: {
-              type: 'Feature',
-              geometry: {
-                  type: 'Point',
-                  coordinates: [longitude, latitude],
-                  },
-              },
-          });
-         map.addLayer({
-            id: 'plane-layer',
-            type: 'symbol',
-            source: 'plane-source',
-            layout: {
-              'icon-image': 'your-plane-icon',
-              'icon-size': 0.1,
-              'icon-allow-overlap': true,
-             },
-         });
+const desiredAltitude = 1000; // Example altitude, in meters
+let currentTerrainAltitude = 0;
+let cameraPitch = 0;
+let cameraBearing = 0;
 
-        map.on('render', () => {
-            const terrainData = map.queryTerrainElevation(
-                [longitude, latitude]
-             );
-           if (terrainData) {
-              currentTerrainAltitude = terrainData.altitude
-                let verticalOffset = (desiredAltitude - currentTerrainAltitude);
+map.on("load", () => {
+  map.addSource("plane-source", {
+    type: "geojson",
+    data: {
+      type: "Feature",
+      geometry: {
+        type: "Point",
+        coordinates: [longitude, latitude],
+      },
+    },
+  });
+  map.addLayer({
+    id: "plane-layer",
+    type: "symbol",
+    source: "plane-source",
+    layout: {
+      "icon-image": "your-plane-icon",
+      "icon-size": 0.1,
+      "icon-allow-overlap": true,
+    },
+  });
 
-                cameraPitch = map.getPitch()
-                cameraBearing = map.getBearing()
+  map.on("render", () => {
+    const terrainData = map.queryTerrainElevation([longitude, latitude]);
+    if (terrainData) {
+      currentTerrainAltitude = terrainData.altitude;
+      let verticalOffset = desiredAltitude - currentTerrainAltitude;
 
-                const pitchRadians = (cameraPitch * Math.PI) / 180
-                const bearingRadians = (cameraBearing * Math.PI) / 180
-             
-              const xTranslate = verticalOffset * Math.sin(pitchRadians) * Math.sin(bearingRadians)
-              const yTranslate = verticalOffset * Math.cos(pitchRadians)
+      cameraPitch = map.getPitch();
+      cameraBearing = map.getBearing();
 
-            map.setPaintProperty('plane-layer', 'icon-translate', [xTranslate, yTranslate]);
-           }
-        });
-     });
+      const pitchRadians = (cameraPitch * Math.PI) / 180;
+      const bearingRadians = (cameraBearing * Math.PI) / 180;
+
+      const xTranslate =
+        verticalOffset * Math.sin(pitchRadians) * Math.sin(bearingRadians);
+      const yTranslate = verticalOffset * Math.cos(pitchRadians);
+
+      map.setPaintProperty("plane-layer", "icon-translate", [
+        xTranslate,
+        yTranslate,
+      ]);
+    }
+  });
+});
 ```
 
 Here, we get both pitch and bearing and calculate horizontal and vertical offsets, to make the plane stay above ground even with a rotated camera. This is a more robust solution for cases where your view isn't always straight down. This approach, while more complex, is crucial for a realistic 3D presentation.
@@ -144,69 +146,70 @@ This code will demonstrate how to dynamically change the desired altitude and up
 
 ```javascript
 const map = new maplibregl.Map({
-        container: 'map',
-        style: 'your-map-style.json',
-        center: [longitude, latitude],
-        zoom: 10,
-    });
+  container: "map",
+  style: "your-map-style.json",
+  center: [longitude, latitude],
+  zoom: 10,
+});
 
-    let desiredAltitude = 1000; // Initial altitude
-    let currentTerrainAltitude = 0;
-    let cameraPitch = 0;
-    let cameraBearing = 0;
-    let planeSource = null;
+let desiredAltitude = 1000; // Initial altitude
+let currentTerrainAltitude = 0;
+let cameraPitch = 0;
+let cameraBearing = 0;
+let planeSource = null;
 
-    map.on('load', () => {
-        planeSource = map.addSource('plane-source', {
-            type: 'geojson',
-            data: {
-                type: 'Feature',
-                geometry: {
-                    type: 'Point',
-                    coordinates: [longitude, latitude],
-                },
-            },
-        });
-        
-        map.addLayer({
-            id: 'plane-layer',
-            type: 'symbol',
-            source: 'plane-source',
-            layout: {
-                'icon-image': 'your-plane-icon',
-                'icon-size': 0.1,
-                'icon-allow-overlap': true,
-            },
-        });
-       map.on('render', () => {
-            const terrainData = map.queryTerrainElevation(
-                [longitude, latitude]
-            );
-           if (terrainData) {
-               currentTerrainAltitude = terrainData.altitude;
-               let verticalOffset = (desiredAltitude - currentTerrainAltitude);
+map.on("load", () => {
+  planeSource = map.addSource("plane-source", {
+    type: "geojson",
+    data: {
+      type: "Feature",
+      geometry: {
+        type: "Point",
+        coordinates: [longitude, latitude],
+      },
+    },
+  });
 
-                cameraPitch = map.getPitch();
-                cameraBearing = map.getBearing();
-                const pitchRadians = (cameraPitch * Math.PI) / 180;
-                const bearingRadians = (cameraBearing * Math.PI) / 180;
-            
-                const xTranslate = verticalOffset * Math.sin(pitchRadians) * Math.sin(bearingRadians)
-               const yTranslate = verticalOffset * Math.cos(pitchRadians)
+  map.addLayer({
+    id: "plane-layer",
+    type: "symbol",
+    source: "plane-source",
+    layout: {
+      "icon-image": "your-plane-icon",
+      "icon-size": 0.1,
+      "icon-allow-overlap": true,
+    },
+  });
+  map.on("render", () => {
+    const terrainData = map.queryTerrainElevation([longitude, latitude]);
+    if (terrainData) {
+      currentTerrainAltitude = terrainData.altitude;
+      let verticalOffset = desiredAltitude - currentTerrainAltitude;
 
-               map.setPaintProperty('plane-layer', 'icon-translate', [xTranslate, yTranslate]);
-            }
-         });
+      cameraPitch = map.getPitch();
+      cameraBearing = map.getBearing();
+      const pitchRadians = (cameraPitch * Math.PI) / 180;
+      const bearingRadians = (cameraBearing * Math.PI) / 180;
 
-    const altitudeSlider = document.getElementById('altitude-slider');
+      const xTranslate =
+        verticalOffset * Math.sin(pitchRadians) * Math.sin(bearingRadians);
+      const yTranslate = verticalOffset * Math.cos(pitchRadians);
 
-      altitudeSlider.addEventListener('input', (event) => {
-        desiredAltitude = parseFloat(event.target.value);
+      map.setPaintProperty("plane-layer", "icon-translate", [
+        xTranslate,
+        yTranslate,
+      ]);
+    }
+  });
 
-        // Optionally update the position of the plane with planeSource.setData() if you plan on moving it in 2D
-        });
-    });
+  const altitudeSlider = document.getElementById("altitude-slider");
 
+  altitudeSlider.addEventListener("input", (event) => {
+    desiredAltitude = parseFloat(event.target.value);
+
+    // Optionally update the position of the plane with planeSource.setData() if you plan on moving it in 2D
+  });
+});
 ```
 
 This snippet introduces the use of an HTML slider to dynamically control altitude. Ensure you have an HTML input element with `id="altitude-slider"` in your page to make this code work. This example shows you how to keep the plane at the desired altitude even when the altitude changes dynamically.

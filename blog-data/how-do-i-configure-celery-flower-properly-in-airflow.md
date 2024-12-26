@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-configure-celery-flower-properly-in-airflow"
 ---
 
-Alright, let's tackle this. Configuring celery flower within an airflow environment is a problem I've seen more than a few times, and it's often not as straightforward as one might initially hope. The gotcha lies in how Airflow orchestrates its various components, specifically concerning the celery executor. We need to ensure flower has access to the correct celery broker and results backend to monitor the tasks effectively. I remember one particularly challenging deployment; it took a solid afternoon of debugging to get it singing, but I learned some valuable lessons that I’m happy to share.
+, let's tackle this. Configuring celery flower within an airflow environment is a problem I've seen more than a few times, and it's often not as straightforward as one might initially hope. The gotcha lies in how Airflow orchestrates its various components, specifically concerning the celery executor. We need to ensure flower has access to the correct celery broker and results backend to monitor the tasks effectively. I remember one particularly challenging deployment; it took a solid afternoon of debugging to get it singing, but I learned some valuable lessons that I’m happy to share.
 
 The crux of the issue is that celery flower needs to connect to the same message broker and result backend that your celery workers are using. Airflow's configuration, by default, might not directly expose these settings in a manner that flower can readily consume. Thus, we often need to explicitly pass these details through environment variables or command-line arguments when starting flower.
 
@@ -66,13 +66,20 @@ services:
     depends_on:
       - redis
     ports:
-        - "5555:5555"
+      - "5555:5555"
     environment:
-        - CELERY_BROKER_URL=redis://redis:6379/0
-        - CELERY_RESULT_BACKEND=redis://redis:6379/1
-    command:  ['celery', 'flower', '--port=5555', '--address=0.0.0.0', '--basic-auth=user:password']
-
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/1
+    command:
+      [
+        "celery",
+        "flower",
+        "--port=5555",
+        "--address=0.0.0.0",
+        "--basic-auth=user:password",
+      ]
 ```
+
 **Code Snippet 3: Example Docker Compose File**
 
 This docker-compose file sets up a basic airflow environment with redis as the broker, and a separate container running flower. Notice the `depends_on` directive. It ensures services start in the correct order, and how environment variables are utilized for the connection parameters. Note that the `redis` container exposes port `6379`, and `airflow` and `flower` can connect to it by the hostname `redis` within this docker network. This illustrates the practical use of environment variables and service dependencies.

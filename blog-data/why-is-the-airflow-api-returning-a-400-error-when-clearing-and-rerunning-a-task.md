@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-airflow-api-returning-a-400-error-when-clearing-and-rerunning-a-task"
 ---
 
-Alright, let's unpack this peculiar 400 error when you're trying to clear and rerun a task in Airflow. It's a situation I've seen pop up more than a few times in my career, and it's usually not as straightforward as it initially appears. The 400, or "Bad Request," error from the Airflow API typically points to an issue with the data you're sending in your request, rather than a problem with the Airflow server itself. It's a message saying, "Hey, I received your request, but something about it isn't right," which can be quite broad.
+, let's unpack this peculiar 400 error when you're trying to clear and rerun a task in Airflow. It's a situation I've seen pop up more than a few times in my career, and it's usually not as straightforward as it initially appears. The 400, or "Bad Request," error from the Airflow API typically points to an issue with the data you're sending in your request, rather than a problem with the Airflow server itself. It's a message saying, "Hey, I received your request, but something about it isn't right," which can be quite broad.
 
 Specifically, when you're clearing and rerunning a task, you're essentially interacting with the airflow’s `/api/v1/dags/{dag_id}/dagRuns/{dag_run_id}/taskInstances/{task_id}` endpoint, often through the CLI command or a custom script. The issue almost always resides in the payload of this request. Think of this payload as the specific instructions you're giving the api. It must contain the right data structure and valid parameters.
 
@@ -12,10 +12,10 @@ I remember troubleshooting this exact error on a high-throughput data pipeline a
 
 First, let’s consider the parameters needed. You're going to be sending a JSON payload for this request. Commonly, the following parameters are relevant when clearing and rerunning:
 
-* `include_upstream`: Boolean; whether to include upstream tasks in the operation.
-* `include_downstream`: Boolean; whether to include downstream tasks in the operation.
-* `include_future`: Boolean; whether to include future tasks in the operation.
-* `execution_date`: String; this is usually not included, as the dag_run_id in the URL should suffice, but can cause trouble if there is a mismatch, particularly if you're trying to trigger the action on a historic run.
+- `include_upstream`: Boolean; whether to include upstream tasks in the operation.
+- `include_downstream`: Boolean; whether to include downstream tasks in the operation.
+- `include_future`: Boolean; whether to include future tasks in the operation.
+- `execution_date`: String; this is usually not included, as the dag_run_id in the URL should suffice, but can cause trouble if there is a mismatch, particularly if you're trying to trigger the action on a historic run.
 
 The most common error, from my experience, happens when there's either a syntax error in the JSON itself, the parameters are incorrectly formatted (e.g. sending a string when a boolean is expected), or a required parameter is missing entirely. Another frequently seen cause is the inclusion of additional, unexpected parameters. The API is very strict about the shape of the payload.
 

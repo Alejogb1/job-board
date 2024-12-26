@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "how-to-implement-dataframe-type-action-in-dqnagent"
 ---
 
-alright, so you're looking at how to get a dataframe-like structure into your dqn agent, specifically for actions. i’ve been down this road myself, and it can get a little hairy if you're not careful. let's unpack it.
+, so you're looking at how to get a dataframe-like structure into your dqn agent, specifically for actions. i’ve been down this road myself, and it can get a little hairy if you're not careful. let's unpack it.
 
 first off, the core issue is that a standard dqn agent expects actions to be discrete, often represented as a single integer indicating which action to take from a set of possibilities. but a dataframe is a different beast, it’s about structured, multi-dimensional data. you’re essentially wanting actions with features, right? think columns in a table, each with its own possible values. this means we need to adapt the way the dqn outputs actions and how we interpret those outputs in our environment.
 
-the main challenge is that the typical q-network outputs a q-value for *each* discrete action. with a dataframe style action space, your “action” now has multiple components. let’s say your dataframe has columns like `speed`, `steering_angle`, and `gear`. each of these has its own range of possibilities. so, the q-network output isn't simply mapping to one action, it has to map to a combination of values within these ranges.
+the main challenge is that the typical q-network outputs a q-value for _each_ discrete action. with a dataframe style action space, your “action” now has multiple components. let’s say your dataframe has columns like `speed`, `steering_angle`, and `gear`. each of these has its own range of possibilities. so, the q-network output isn't simply mapping to one action, it has to map to a combination of values within these ranges.
 
 how do we do this? well, there isn't one magical perfect answer because it depends heavily on the specific nature of your problem. however, here are the main strategies i have used over the years and their tradeoffs.
 
@@ -16,11 +16,11 @@ strategy 1: discretize each column and use a multi-dimensional action space
 
 this is the most straightforward approach and the one i started with when tackling a similar problem for a simulation of a robotic arm that had to manipulate several joints at once. we discretize each column of your "dataframe action" into a set of possible values. let's say, for instance:
 
-*   `speed`: 0, 1, 2, 3 (4 levels)
-*   `steering_angle`: -1, 0, 1 (3 levels)
-*   `gear`: 1, 2, 3, 4, 5 (5 levels)
+- `speed`: 0, 1, 2, 3 (4 levels)
+- `steering_angle`: -1, 0, 1 (3 levels)
+- `gear`: 1, 2, 3, 4, 5 (5 levels)
 
-the total number of actions is then just the product of these different levels: 4 * 3 * 5 = 60.  your neural net now outputs 60 q-values, and you select the action with the highest q-value. but how do we convert this action integer back to our speed, steering angle, and gear? here is a snippet:
+the total number of actions is then just the product of these different levels: 4 _ 3 _ 5 = 60. your neural net now outputs 60 q-values, and you select the action with the highest q-value. but how do we convert this action integer back to our speed, steering angle, and gear? here is a snippet:
 
 ```python
 import numpy as np
@@ -44,7 +44,7 @@ class DiscretizedActionSpace:
                                 for i3 in range(self.action_sizes[3]):
                                    self.action_to_index[index] = (i0,i1,i2,i3)
                                    index += 1
-                                 
+
                             else:
                                 self.action_to_index[index] = (i0,i1,i2)
                                 index += 1
@@ -55,7 +55,7 @@ class DiscretizedActionSpace:
             else:
                 self.action_to_index[index] = (i0,)
                 index +=1
-   
+
     def action_index_to_values(self, action_index):
          indices = self.action_to_index[action_index]
          values = []
@@ -82,7 +82,7 @@ this works well enough for relatively low dimensions and is easy to implement. t
 
 strategy 2: independent output heads for each column
 
-instead of one output with the total actions, we have *n* output heads, where *n* is the number of columns in our “dataframe”. each head outputs values corresponding to the possible choices for that particular column. my experience implementing this for an inventory management bot, each action was a tuple of discrete items the bot can add or remove from the shelf. here is an example:
+instead of one output with the total actions, we have _n_ output heads, where _n_ is the number of columns in our “dataframe”. each head outputs values corresponding to the possible choices for that particular column. my experience implementing this for an inventory management bot, each action was a tuple of discrete items the bot can add or remove from the shelf. here is an example:
 
 ```python
 import torch
@@ -128,7 +128,7 @@ print(f"Selected action indices: {action_indices}")
 
 ```
 
-here, the `MultiHeadDQN` has separate linear layers (the `heads`) for each column.  we now have n output vectors for each head each predicting the q-values for a given component of the action. the key here is that you independently choose the best action for each column based on the corresponding output head. the total dataframe action is just the combination of the individual component actions. this can be more efficient than approach 1, since the action space doesnt explode as quickly. the trade-off is that there is no consideration of dependencies between action features.
+here, the `MultiHeadDQN` has separate linear layers (the `heads`) for each column. we now have n output vectors for each head each predicting the q-values for a given component of the action. the key here is that you independently choose the best action for each column based on the corresponding output head. the total dataframe action is just the combination of the individual component actions. this can be more efficient than approach 1, since the action space doesnt explode as quickly. the trade-off is that there is no consideration of dependencies between action features.
 
 strategy 3: continuous action spaces with a policy gradient method
 
@@ -174,10 +174,10 @@ the key to choosing which approach to go with largely depends on the data types 
 
 books and resources:
 
-*   "reinforcement learning: an introduction" by sutton and barto: the classic text. mandatory reading if you are serious about reinforcement learning. provides a solid theoretical background.
-*   "deep reinforcement learning hands-on" by maxim lapin: great for practical implementations and more current algos. includes many examples in pytorch
-*   "spinning up in deep rl" from openai, this one is a free online resource, very practical to understand and implement algos.
-*   research papers: check papers on deep reinforcement learning, especially those that involve more complex action spaces. pay attention to those papers that include examples of real world control.
+- "reinforcement learning: an introduction" by sutton and barto: the classic text. mandatory reading if you are serious about reinforcement learning. provides a solid theoretical background.
+- "deep reinforcement learning hands-on" by maxim lapin: great for practical implementations and more current algos. includes many examples in pytorch
+- "spinning up in deep rl" from openai, this one is a free online resource, very practical to understand and implement algos.
+- research papers: check papers on deep reinforcement learning, especially those that involve more complex action spaces. pay attention to those papers that include examples of real world control.
 
 lastly, a word of caution: implementing these kinds of action spaces isn’t as simple as just swapping a few lines of code. debugging is harder, and getting them to train properly takes a lot of tuning of hyper parameters. it can be tricky getting the hyperparameters to the correct values, and sometimes one wrong parameter and your training goes to the trash. also, don't be surprised if the first iteration does not work, there might be some bugs that you will only see when the agent starts training. it's frustrating i know, but if your machine learning agent starts moving a bit, that's a great sign.
 

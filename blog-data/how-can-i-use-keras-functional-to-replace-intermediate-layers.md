@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-use-keras-functional-to-replace-intermediate-layers"
 ---
 
-Okay, let's tackle this. It's something I've had to do a fair bit over the years, specifically in some older projects where models were constructed more organically and then required surgical alterations later. It's a common scenario, and Keras's functional API is, thankfully, up to the task.
+, let's tackle this. It's something I've had to do a fair bit over the years, specifically in some older projects where models were constructed more organically and then required surgical alterations later. It's a common scenario, and Keras's functional API is, thankfully, up to the task.
 
 The core idea when using the Keras functional api to replace intermediate layers is that you aren't directly manipulating the layers within an existing `keras.Model` instance. Instead, you're rebuilding parts of the computational graph, while reusing the weights from the original model. This is particularly useful when you want to maintain the learned parameters of certain portions of your network while substituting a different architecture for others. It’s more of a graph manipulation rather than a layer-by-layer edit.
 
-Let's establish a fundamental concept: in a functional model, each layer is a *callable object* that takes a tensor as input and produces another tensor as output. This output tensor can then be used as input to the next layer, creating a directed acyclic graph. This graph structure is what makes it possible to re-route tensors and integrate alternative layer configurations, or even entire sub-networks.
+Let's establish a fundamental concept: in a functional model, each layer is a _callable object_ that takes a tensor as input and produces another tensor as output. This output tensor can then be used as input to the next layer, creating a directed acyclic graph. This graph structure is what makes it possible to re-route tensors and integrate alternative layer configurations, or even entire sub-networks.
 
 Now, consider a hypothetical scenario from a few years back. I was working on a project involving image classification using a model that, due to some initial limitations, ended up with a series of dense layers that were suboptimal. The performance was lackluster, and what we really needed was a more convolutional approach in those early stages. Simply put, we had to tear out some dense layers and inject a small convnet.
 

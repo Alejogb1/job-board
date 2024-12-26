@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "what-causes-the-nullpointerexception-in-imagelabeler"
 ---
 
-Okay, let's talk about `NullPointerException` in the context of an `ImageLabeler`. I've certainly seen my fair share of these over the years, especially when dealing with image processing pipelines, and they can be particularly frustrating given how often the root cause isn't immediately obvious.
+, let's talk about `NullPointerException` in the context of an `ImageLabeler`. I've certainly seen my fair share of these over the years, especially when dealing with image processing pipelines, and they can be particularly frustrating given how often the root cause isn't immediately obvious.
 
 The fundamental issue, of course, is that a `NullPointerException` means you're attempting to perform an operation on a reference that points to absolutely nothing – it's null. This is akin to trying to access a book on a shelf that isn't there; it simply doesn’t exist. In the specific scenario of an `ImageLabeler`, this often stems from a few common culprits. I’ll break down what I've encountered, and, importantly, how to address them.
 
 First off, the most frequent cause, from my experience, is a failure in the image loading process. Imagine a scenario where your `ImageLabeler` expects an image to be available, perhaps from a file path or a network request. If this loading process fails, and the resulting data structure or object representing that image isn't properly initialized (or an error handler doesn't set it to an appropriate default), you’ll end up with a null reference. When the `ImageLabeler` later attempts to access data within that image, boom: `NullPointerException`.
 
-Another common place where these pop up is within the data structures themselves. Consider, for example, a class used to represent an image, perhaps holding metadata or a pointer to pixel data. If the metadata isn’t properly initialized or an inner attribute of that object is null, such as the actual pixel array, your attempt to access those within the `ImageLabeler` is, again, going to trigger that dreaded exception. It’s not necessarily the *image* loading that's failed, but the *image object itself*.
+Another common place where these pop up is within the data structures themselves. Consider, for example, a class used to represent an image, perhaps holding metadata or a pointer to pixel data. If the metadata isn’t properly initialized or an inner attribute of that object is null, such as the actual pixel array, your attempt to access those within the `ImageLabeler` is, again, going to trigger that dreaded exception. It’s not necessarily the _image_ loading that's failed, but the _image object itself_.
 
 Finally, we can’t ignore the possibility of incorrect integration. This covers a lot, but often it involves improper handling of asynchronous tasks or dependencies. For instance, if the `ImageLabeler` relies on a different module that’s supposed to populate image labels, and this module hasn't completed yet or encounters an issue and returns null, the `ImageLabeler` will, you guessed it, encounter a `NullPointerException` when trying to access the labels that aren't there.
 
@@ -56,7 +56,7 @@ public class Main {
 }
 ```
 
-In this scenario, the `ImageLoader.loadImage` method simulates a failure when the provided path is "invalid\_path.jpg," returning `null`. Subsequently, when the `ImageLabeler` attempts to call `image.getPixelData()`, a `NullPointerException` is thrown because the image variable references null. This is a common pattern in improperly implemented error handling. We need to ensure that the return value of `ImageLoader.loadImage` is checked before attempting to access data from it.
+In this scenario, the `ImageLoader.loadImage` method simulates a failure when the provided path is "invalid_path.jpg," returning `null`. Subsequently, when the `ImageLabeler` attempts to call `image.getPixelData()`, a `NullPointerException` is thrown because the image variable references null. This is a common pattern in improperly implemented error handling. We need to ensure that the return value of `ImageLoader.loadImage` is checked before attempting to access data from it.
 
 **Example 2: Improperly Initialized Image Object**
 

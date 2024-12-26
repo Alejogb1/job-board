@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-install-fastai-on-macos-with-an-m1-chip"
 ---
 
-Okay, let's tackle this. Been there, done that, a few times now actually, especially after those M1 chips started popping up. Getting fastai working seamlessly on macOS with an M1 processor does introduce some nuances, but it's certainly achievable. It's less about a simple install command and more about understanding the underlying dependency landscape and working around some potential architecture clashes.
+, let's tackle this. Been there, done that, a few times now actually, especially after those M1 chips started popping up. Getting fastai working seamlessly on macOS with an M1 processor does introduce some nuances, but it's certainly achievable. It's less about a simple install command and more about understanding the underlying dependency landscape and working around some potential architecture clashes.
 
 The core issue you'll run into stems from the fact that many scientific computing libraries, especially those relying heavily on compiled extensions, might not have been initially built with arm64 (Apple Silicon) architectures in mind. While Rosetta 2 emulation can alleviate some of the problems, it's not the most performant solution and can sometimes lead to unexpected behavior. So, the first step is to aim for native arm64 compatibility whenever possible.
 
@@ -36,6 +36,7 @@ Now we're at a point where we can install fastai. The installation itself, in th
 ```bash
 pip install fastai
 ```
+
 This should download all the necessary fastai dependencies. However, you might want to verify that all required dependencies are correctly installed. I have had instances where some additional libraries are missed and I would recommend installing them via pip using:
 
 ```bash
@@ -48,13 +49,13 @@ That usually gets me a working fastai setup. However, the actual details can var
 
 As for resources for a deeper understanding, beyond the official documentation, I would recommend exploring the following:
 
-*   **"Deep Learning with PyTorch" by Eli Stevens, Luca Antiga, and Thomas Viehmann:** This book dives deep into the inner workings of PyTorch, providing a solid foundation for understanding how fastai utilizes it. Understanding the underlying mechanisms of tensor operations and auto-differentiation can be extremely helpful.
+- **"Deep Learning with PyTorch" by Eli Stevens, Luca Antiga, and Thomas Viehmann:** This book dives deep into the inner workings of PyTorch, providing a solid foundation for understanding how fastai utilizes it. Understanding the underlying mechanisms of tensor operations and auto-differentiation can be extremely helpful.
 
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** While not specific to fastai, this book provides excellent background knowledge of general machine learning concepts, including data preprocessing, model evaluation, and optimization, all essential for effectively using fastai. A solid background here gives an understanding of what fastai does behind the scenes.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** While not specific to fastai, this book provides excellent background knowledge of general machine learning concepts, including data preprocessing, model evaluation, and optimization, all essential for effectively using fastai. A solid background here gives an understanding of what fastai does behind the scenes.
 
-*   **"Numerical Recipes" by William H. Press et al.:** This isn’t directly related to fastai, but it provides valuable information about numerical algorithms commonly used in deep learning frameworks. Having an understanding of the implementation details, especially with regards to gradient descent methods and numerical stability, can be of great help with problem solving.
+- **"Numerical Recipes" by William H. Press et al.:** This isn’t directly related to fastai, but it provides valuable information about numerical algorithms commonly used in deep learning frameworks. Having an understanding of the implementation details, especially with regards to gradient descent methods and numerical stability, can be of great help with problem solving.
 
-*   **The official PyTorch and fastai documentation:** Keep the official documentation open! It might seem overwhelming, but familiarize yourself with the structure of the documentation for both libraries. It is often the fastest way to get information about specific functions, classes or modules.
+- **The official PyTorch and fastai documentation:** Keep the official documentation open! It might seem overwhelming, but familiarize yourself with the structure of the documentation for both libraries. It is often the fastest way to get information about specific functions, classes or modules.
 
 My final bit of advice would be to keep your environment clean and organized. Avoid installing packages globally, especially when experimenting with different setups. Conda environments are a good way of limiting problems, and they also make it very easy to roll back to previously working state. If you encounter issues, don't hesitate to look for existing issues on the fastai GitHub repository or ask for help on the forums. The community is usually very active and willing to provide assistance. It is also very important to document your actions as you go along. These notes will likely prove very helpful when you need to perform similar tasks in the future.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-send-mail-using-mdaemon-on-behalf-of-a-mailing-list"
 ---
 
-Okay, let’s tackle this. Having spent a significant chunk of my career dealing with mail servers, specifically a few instances involving MDaemon and mailing lists, I’ve seen a fair share of the quirks and nuances involved. Sending mail on behalf of a mailing list isn't always straightforward, and there are several approaches one can take, each with its own considerations. The core challenge is ensuring that the emails are sent correctly, that they're properly attributed to the list, and that they comply with email authentication standards to avoid landing in spam folders.
+, let’s tackle this. Having spent a significant chunk of my career dealing with mail servers, specifically a few instances involving MDaemon and mailing lists, I’ve seen a fair share of the quirks and nuances involved. Sending mail on behalf of a mailing list isn't always straightforward, and there are several approaches one can take, each with its own considerations. The core challenge is ensuring that the emails are sent correctly, that they're properly attributed to the list, and that they comply with email authentication standards to avoid landing in spam folders.
 
 First, let's clarify what we mean by "on behalf of." Typically, when an email is sent directly from a user, the 'from' address is that user’s email. However, when sending an email through a mailing list, we want the 'from' address, or at least a display name, to reflect the list itself, not the individual poster. This involves configuring MDaemon to handle this routing and address manipulation.
 
@@ -60,9 +60,9 @@ MDaemon has native mailing list functionalities. The most effective approach is 
 
 1.  **Create the list:** Using MDaemon's mailing list management features, create your mailing list, specifying a list address.
 2.  **Configure list settings:** MDaemon allows configuration of various settings for mailing lists, including who can post, how messages are formatted, etc. The important thing here is that MDaemon inherently handles the ‘from’ field for emails sent through it. You don’t have to manually configure an SMTP account. When users email the list address, MDaemon processes the email, correctly setting the headers to reflect that it's coming from the list.
-3. **Optional Sender Masking:** Within MDaemon, you can specify a "mask" that modifies the `From:` address. For example, even if a member sends from `user@theirdomain.com`, you can set MDaemon to replace the display name portion to show the list name, with the actual address remaining unchanged `user@theirdomain.com`. This allows replies to go back to the original sender while still presenting the message as originating from the list to the recipient.
+3.  **Optional Sender Masking:** Within MDaemon, you can specify a "mask" that modifies the `From:` address. For example, even if a member sends from `user@theirdomain.com`, you can set MDaemon to replace the display name portion to show the list name, with the actual address remaining unchanged `user@theirdomain.com`. This allows replies to go back to the original sender while still presenting the message as originating from the list to the recipient.
 
-Here's a simplified Python script showing how one would *send an email to the list* (not *through* the list using a custom SMTP account):
+Here's a simplified Python script showing how one would _send an email to the list_ (not _through_ the list using a custom SMTP account):
 
 ```python
 import smtplib
@@ -98,7 +98,7 @@ if __name__ == '__main__':
     send_email_to_list(subject, body, to_email, from_email, smtp_server, smtp_user, smtp_password)
 ```
 
-Notice that this time, the `from_email` is the sender’s individual email address. The email is sent *to* the mailing list address, and MDaemon’s native list processing takes care of distributing the mail to members *and* adjusting the headers. This method relies on MDaemon itself to process messages that are sent to the mailing list address.
+Notice that this time, the `from_email` is the sender’s individual email address. The email is sent _to_ the mailing list address, and MDaemon’s native list processing takes care of distributing the mail to members _and_ adjusting the headers. This method relies on MDaemon itself to process messages that are sent to the mailing list address.
 
 **Method 3: Email Header Manipulation via Scripts**
 
@@ -135,4 +135,4 @@ In this example, we are checking if an email is sent to the mailing list address
 
 These are just three of the many strategies for sending email on behalf of a mailing list using MDaemon. Each approach has its benefits and drawbacks. In many cases using MDaemon’s internal list functionality combined with some mild scripting will provide an optimal solution. Choosing the best approach will come down to the complexity of your setup, the nature of your mailing list, and your comfort level with scripting.
 
-For more in-depth understanding of these topics I would recommend a few resources, namely: *"Postfix: The Definitive Guide"* by Kyle Dent, which, despite being about Postfix, gives a very good background on SMTP configuration and best practices which is transferable to MDaemon. Also, *"Internet Messaging"* by Marshall T. Rose can give a deeper dive on standards. Finally, the official MDaemon documentation is indispensable, as it will describe the specific features and scripting environment. Understanding SMTP protocol and email authentication standards (SPF, DKIM, DMARC) is critical when configuring mail servers, especially when dealing with sending on behalf of someone else. Take the time to study them, and you’ll be well-equipped to tackle complex email routing scenarios.
+For more in-depth understanding of these topics I would recommend a few resources, namely: _"Postfix: The Definitive Guide"_ by Kyle Dent, which, despite being about Postfix, gives a very good background on SMTP configuration and best practices which is transferable to MDaemon. Also, _"Internet Messaging"_ by Marshall T. Rose can give a deeper dive on standards. Finally, the official MDaemon documentation is indispensable, as it will describe the specific features and scripting environment. Understanding SMTP protocol and email authentication standards (SPF, DKIM, DMARC) is critical when configuring mail servers, especially when dealing with sending on behalf of someone else. Take the time to study them, and you’ll be well-equipped to tackle complex email routing scenarios.

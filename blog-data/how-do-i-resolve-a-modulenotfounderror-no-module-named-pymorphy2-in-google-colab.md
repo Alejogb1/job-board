@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-resolve-a-modulenotfounderror-no-module-named-pymorphy2-in-google-colab"
 ---
 
-Alright, let's tackle this common issue. I’ve seen this particular error pop up more times than I care to recall, particularly when moving between local environments and cloud platforms like Google Colab. The `ModuleNotFoundError: No module named 'pymorphy2'` simply means that the Python interpreter can't locate the 'pymorphy2' library that your code is trying to import. Think of it like trying to borrow a specific tool from a toolbox that isn't present or properly labeled. It's a library that’s often used for morphological analysis of Russian words, and its absence throws a wrench in the works if your script relies on it.
+, let's tackle this common issue. I’ve seen this particular error pop up more times than I care to recall, particularly when moving between local environments and cloud platforms like Google Colab. The `ModuleNotFoundError: No module named 'pymorphy2'` simply means that the Python interpreter can't locate the 'pymorphy2' library that your code is trying to import. Think of it like trying to borrow a specific tool from a toolbox that isn't present or properly labeled. It's a library that’s often used for morphological analysis of Russian words, and its absence throws a wrench in the works if your script relies on it.
 
 The good news is this is almost always resolvable with a few common steps. It generally boils down to the fact that Colab, while providing a robust environment, doesn’t pre-install every package imaginable. You need to explicitly tell it to install the ones you need, just like configuring a new virtual environment on your local machine. Let's break it down and look at several solutions, each with practical application.
 
@@ -22,7 +22,7 @@ Sometimes though, the base install may not be enough. On one project I did invol
 !pip install pymorphy2==0.9.1
 ```
 
-The `==` specifier makes sure that *only* that version is installed. There are other specifiers to use in `pip` which are useful, such as `>=` to install the newest version greater than or equal to a particular version, or `<` to specify less than, and so on. This granularity in dependency management can be crucial in complex projects where interdependencies between packages can get tricky. The choice depends on your project requirements and if you have a known dependency on a particular version. Generally, starting with the plain install without specifying versions first is best, and then pin a version down when you encounter specific issues.
+The `==` specifier makes sure that _only_ that version is installed. There are other specifiers to use in `pip` which are useful, such as `>=` to install the newest version greater than or equal to a particular version, or `<` to specify less than, and so on. This granularity in dependency management can be crucial in complex projects where interdependencies between packages can get tricky. The choice depends on your project requirements and if you have a known dependency on a particular version. Generally, starting with the plain install without specifying versions first is best, and then pin a version down when you encounter specific issues.
 
 Now, once the installation is out of the way, to verify that the library has actually been installed, we can perform a simple import and test it using the following Python code:
 
@@ -40,7 +40,7 @@ except ImportError as e:
 
 This script attempts to import `pymorphy2`, initializes the analyzer, then analyses the word "кошка" (cat), and prints the normal form (lemma). This is a typical use case that ensures not only is the import is working, but basic functionality is also intact. The `try...except` block is crucial because it provides a graceful error message if, for some unforeseen reason, the module is still not available. It's a good habit to include such checks whenever handling external dependencies in your code. This script also acts as a good, quick test whenever a similar issue occurs elsewhere in the code.
 
-Often I see that issues can arise with Colab if packages conflict with already existing packages, or if there is some cached state that is causing issues. Sometimes a fresh install is required. If you run the install commands and it appears successful, but you *still* get the `ModuleNotFoundError`, a forced reinstall with pip and restarting the runtime can be beneficial. To force a reinstall you can add the `--force-reinstall` flag to your pip command, like so:
+Often I see that issues can arise with Colab if packages conflict with already existing packages, or if there is some cached state that is causing issues. Sometimes a fresh install is required. If you run the install commands and it appears successful, but you _still_ get the `ModuleNotFoundError`, a forced reinstall with pip and restarting the runtime can be beneficial. To force a reinstall you can add the `--force-reinstall` flag to your pip command, like so:
 
 ```python
 !pip install --force-reinstall pymorphy2

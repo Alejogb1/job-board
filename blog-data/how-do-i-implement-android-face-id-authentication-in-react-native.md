@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-implement-android-face-id-authentication-in-react-native"
 ---
 
-Okay, let's tackle this. I've navigated the intricacies of biometrics in mobile apps quite a few times now, and implementing face id authentication in react-native presents its own set of interesting challenges. It's not a straightforward plug-and-play affair, unfortunately. We'll need to bridge the gap between javascript and the native android layer, using a combination of native modules and some clever react-native components.
+, let's tackle this. I've navigated the intricacies of biometrics in mobile apps quite a few times now, and implementing face id authentication in react-native presents its own set of interesting challenges. It's not a straightforward plug-and-play affair, unfortunately. We'll need to bridge the gap between javascript and the native android layer, using a combination of native modules and some clever react-native components.
 
 When I first dealt with this, back in my fintech days, we had a very specific requirement for high-security login. The client insisted on biometric authentication as the primary method, so understanding the underlying mechanisms became crucial. We discovered that relying solely on generic third-party packages wasn't sufficient; custom solutions were required for reliable error handling and seamless user experience. Let’s go through the steps involved and what I've found most useful based on experience.
 
@@ -120,32 +120,38 @@ Next, you would need to bridge this to javascript. We create a typescript file t
 
 ```typescript
 // BiometricModule.ts
-import { NativeModules, Platform } from 'react-native';
+import { NativeModules, Platform } from "react-native";
 
 const { BiometricModule } = NativeModules;
 
 interface Biometric {
   canAuthenticate(): Promise<boolean>;
-  authenticate(title: string, subtitle: string, description: string): Promise<boolean>;
+  authenticate(
+    title: string,
+    subtitle: string,
+    description: string
+  ): Promise<boolean>;
 }
-
 
 const biometric: Biometric = {
   canAuthenticate: async (): Promise<boolean> => {
-      if (Platform.OS !== 'android') {
-          return Promise.resolve(false);
-      }
-
-      return BiometricModule.canAuthenticate();
-    },
-
-  authenticate: async (title: string, subtitle: string, description:string): Promise<boolean> => {
-      if (Platform.OS !== 'android') {
-          return Promise.reject("not supported");
-      }
-    return BiometricModule.authenticate(title, subtitle, description)
+    if (Platform.OS !== "android") {
+      return Promise.resolve(false);
     }
 
+    return BiometricModule.canAuthenticate();
+  },
+
+  authenticate: async (
+    title: string,
+    subtitle: string,
+    description: string
+  ): Promise<boolean> => {
+    if (Platform.OS !== "android") {
+      return Promise.reject("not supported");
+    }
+    return BiometricModule.authenticate(title, subtitle, description);
+  },
 };
 
 export default biometric;
@@ -155,9 +161,9 @@ Finally, here's how you might use it in a react-native component:
 
 ```tsx
 // MyComponent.tsx
-import React, { useState, useEffect } from 'react';
-import { View, Text, Button, Alert } from 'react-native';
-import biometric from './BiometricModule';
+import React, { useState, useEffect } from "react";
+import { View, Text, Button, Alert } from "react-native";
+import biometric from "./BiometricModule";
 
 const MyComponent: React.FC = () => {
   const [biometricAvailable, setBiometricAvailable] = useState(false);
@@ -171,34 +177,32 @@ const MyComponent: React.FC = () => {
     checkBiometricAvailability();
   }, []);
 
-
   const handleBiometricAuth = async () => {
-      try{
-          const success = await biometric.authenticate(
-              'Authenticate',
-              'Confirm your identity',
-              'Please authenticate to continue',
-          );
-          if(success){
-              Alert.alert('Success','User Authenticated!');
-          }
+    try {
+      const success = await biometric.authenticate(
+        "Authenticate",
+        "Confirm your identity",
+        "Please authenticate to continue"
+      );
+      if (success) {
+        Alert.alert("Success", "User Authenticated!");
       }
-       catch(e){
-          if(e instanceof Error){
-              Alert.alert('Error', `Authentication Failed: ${e.message}`);
-          }
-           else{
-               Alert.alert('Error', `Authentication Failed`);
-           }
-
-        }
+    } catch (e) {
+      if (e instanceof Error) {
+        Alert.alert("Error", `Authentication Failed: ${e.message}`);
+      } else {
+        Alert.alert("Error", `Authentication Failed`);
+      }
+    }
   };
-
 
   return (
     <View>
       {biometricAvailable ? (
-        <Button title="Authenticate with Biometrics" onPress={handleBiometricAuth} />
+        <Button
+          title="Authenticate with Biometrics"
+          onPress={handleBiometricAuth}
+        />
       ) : (
         <Text>Biometrics not available</Text>
       )}
@@ -221,10 +225,10 @@ export default MyComponent;
 
 To deepen your knowledge further, i'd strongly advise consulting:
 
-*   **Android Developer Documentation:** Pay close attention to the official documentation on the androidx biometric library, the keystore system, and security best practices. The android developer website is comprehensive, and there's a lot of useful information there.
-*   **"Android Security Internals" by Nikolay Elenkov:** A fantastic book for really understanding the security aspects and intricacies of the android operating system, from the kernel level up to the application frameworks.
-*   **"Pro Android Security" by David Chandler et al.:** This text is quite a comprehensive guide, covering topics from general application security, threat modeling, to detailed implementations, particularly useful if you're working on applications that deal with sensitive data.
-*   **OWASP Mobile Security Project (MASVS):** The Open Web Application Security Project (OWASP) has great resources and guidelines for mobile app security best practices.
-*  **Source code:** looking at the source code of various open source apps that use similar technologies could really give you a sense of best practice.
+- **Android Developer Documentation:** Pay close attention to the official documentation on the androidx biometric library, the keystore system, and security best practices. The android developer website is comprehensive, and there's a lot of useful information there.
+- **"Android Security Internals" by Nikolay Elenkov:** A fantastic book for really understanding the security aspects and intricacies of the android operating system, from the kernel level up to the application frameworks.
+- **"Pro Android Security" by David Chandler et al.:** This text is quite a comprehensive guide, covering topics from general application security, threat modeling, to detailed implementations, particularly useful if you're working on applications that deal with sensitive data.
+- **OWASP Mobile Security Project (MASVS):** The Open Web Application Security Project (OWASP) has great resources and guidelines for mobile app security best practices.
+- **Source code:** looking at the source code of various open source apps that use similar technologies could really give you a sense of best practice.
 
 Implementing biometric authentication, particularly face id, on android in react-native is a multi-faceted task. This example gives a foundation to begin, but understand that this is a journey of learning and evolving with the platforms, and being well read is a must. You will need to adapt this to the specific needs of your application. Focus on security, error handling, and providing a smooth, user-friendly authentication experience. Good luck with your project.

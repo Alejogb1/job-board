@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "c-to-c-translator-available"
 ---
 
-Okay so you're asking about a c to c++ translator a real classic I've been in this game for a while and trust me this is a rabbit hole I've been down more than once
+you're asking about a c to c++ translator a real classic I've been in this game for a while and trust me this is a rabbit hole I've been down more than once
 
 First things first there's no magic button that flawlessly converts C to C++ and that's the long and short of it If someone tells you otherwise they're probably selling you snake oil or a really really buggy piece of software I've tried a bunch of these "automatic" converters back in the day let's just say I spent more time fixing the mess they created than I would have spent just rewriting the code myself
 
@@ -71,7 +71,7 @@ The converter tool did attempt to wrap the C functions into classes but it did i
 
 The converter also attempted to change some basic c memory allocation methods to use C++ like new and delete it resulted in many memory leaks as well and other issues The experience was a nightmare. Let's just say that I ended up manually rewriting most of the critical parts of the system that took me quite some time and a few days working overtime with my team. This was when I understood that code migration is an art not an automated task
 
-**What you *can* do**
+**What you _can_ do**
 
 So since there's no magic solution here's a more realistic approach It's a mix of automation and manual work and it is a mix of different techniques depending on what we want to achieve
 
@@ -151,23 +151,23 @@ So since there's no magic solution here's a more realistic approach It's a mix o
 
 While there isnt a magic tool that can do it all there are tools that can help a lot with code refactoring or static analysis for example
 
-*   **Clang Tooling:** Clang is a powerful C++ compiler frontend that comes with a rich set of tools. There are libraries built on top of clang that can help you analyse and transform code This is particularly useful if you need to do a lot of changes to the AST (Abstract Syntax Tree). These tools are not converters in the traditional sense, but can be helpful in analyzing and refactoring code and finding patterns
+- **Clang Tooling:** Clang is a powerful C++ compiler frontend that comes with a rich set of tools. There are libraries built on top of clang that can help you analyse and transform code This is particularly useful if you need to do a lot of changes to the AST (Abstract Syntax Tree). These tools are not converters in the traditional sense, but can be helpful in analyzing and refactoring code and finding patterns
 
-*   **Cppcheck:** This is a static analysis tool that can help identify potential bugs and security issues. It can often find memory leaks and null pointer dereferences that can occur in C code as well as some C++ specific issues.
+- **Cppcheck:** This is a static analysis tool that can help identify potential bugs and security issues. It can often find memory leaks and null pointer dereferences that can occur in C code as well as some C++ specific issues.
 
 **Important things to keep in mind**
 
-*   **Testing:** Make sure you have a robust suite of tests before you start any refactoring. Testing is even more important when you are doing refactoring of such type. This makes sure you don't break anything important
-*   **Profiling:** Before starting optimization focus on the correctness of the code. Profile the code and then optimize after
-*   **Learning:** This process is a great learning opportunity to dive deeper into C++ If you are going to code C++ then you should study it deeply
+- **Testing:** Make sure you have a robust suite of tests before you start any refactoring. Testing is even more important when you are doing refactoring of such type. This makes sure you don't break anything important
+- **Profiling:** Before starting optimization focus on the correctness of the code. Profile the code and then optimize after
+- **Learning:** This process is a great learning opportunity to dive deeper into C++ If you are going to code C++ then you should study it deeply
 
 **Resources**
 
 Instead of providing links here I would recommend some very good books
 
-*   **Effective C++ by Scott Meyers**: This book is a must read if you want to know more about modern C++ It teaches you how to use the language well and teaches common pitfalls
-*   **C++ Primer by Stanley B. Lippman:** This is a great introduction to C++ and is a very good book if you want a general overview of all the language features
-*   **The C++ Programming Language by Bjarne Stroustrup:** If you want to go to the source this is the book written by the creator of C++ This is a more advanced book but is great to learn the details of the language
+- **Effective C++ by Scott Meyers**: This book is a must read if you want to know more about modern C++ It teaches you how to use the language well and teaches common pitfalls
+- **C++ Primer by Stanley B. Lippman:** This is a great introduction to C++ and is a very good book if you want a general overview of all the language features
+- **The C++ Programming Language by Bjarne Stroustrup:** If you want to go to the source this is the book written by the creator of C++ This is a more advanced book but is great to learn the details of the language
 
 **Final Thoughts**
 

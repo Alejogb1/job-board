@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-do-i-customize-wagtail-fieldpanels-to-show-results-by-locale"
 ---
 
-Alright, let's talk about customizing Wagtail's `FieldPanel` to handle localized content; it's a nuanced topic, and I've certainly been down that rabbit hole more than a few times in past projects. Specifically, getting `FieldPanel` to dynamically display content based on the currently selected locale isn't a built-in feature, and attempting to do it the wrong way can quickly become a maintenance headache.
+, let's talk about customizing Wagtail's `FieldPanel` to handle localized content; it's a nuanced topic, and I've certainly been down that rabbit hole more than a few times in past projects. Specifically, getting `FieldPanel` to dynamically display content based on the currently selected locale isn't a built-in feature, and attempting to do it the wrong way can quickly become a maintenance headache.
 
-From experience, I recall a project several years back—we were building a multilingual news platform for a client. The standard Wagtail approach, where fields are displayed regardless of the active locale, quickly became unworkable. Editors needed to see *only* the content relevant to the locale they were editing at any given time, not a hodgepodge of content from other locales. The key to addressing this was not by attempting to directly manipulate `FieldPanel` but instead, by crafting a custom *panel type* using a bit of Django model magic combined with Wagtail's panel infrastructure.
+From experience, I recall a project several years back—we were building a multilingual news platform for a client. The standard Wagtail approach, where fields are displayed regardless of the active locale, quickly became unworkable. Editors needed to see _only_ the content relevant to the locale they were editing at any given time, not a hodgepodge of content from other locales. The key to addressing this was not by attempting to directly manipulate `FieldPanel` but instead, by crafting a custom _panel type_ using a bit of Django model magic combined with Wagtail's panel infrastructure.
 
-The fundamental challenge here is that Wagtail's `FieldPanel` is designed to render form fields associated with specific *model* fields. It isn't inherently locale-aware, meaning it will always display data based on the database field configuration, regardless of the current locale. Wagtail provides the mechanism to *store* translated content – through model translation fields or separate localized page models – but the presentation of that content in the edit interface isn't automatically localized.
+The fundamental challenge here is that Wagtail's `FieldPanel` is designed to render form fields associated with specific _model_ fields. It isn't inherently locale-aware, meaning it will always display data based on the database field configuration, regardless of the current locale. Wagtail provides the mechanism to _store_ translated content – through model translation fields or separate localized page models – but the presentation of that content in the edit interface isn't automatically localized.
 
 To solve this, we need to go a level deeper and create a custom panel that specifically reads the locale context and uses that to drive the display logic. The steps typically involve:
 
@@ -113,6 +113,7 @@ class NewsPage(Page):
         LocaleFilteredFieldPanel('body'),
     ]
 ```
+
 In this updated code, `FieldPanel` has been replaced with `LocaleFilteredFieldPanel` specifying the base field name. The `LocaleFilteredFieldPanel` will automatically display fields with `_en`, `_fr`, and so on. You can register it in your `wagtail_hooks.py` file.
 
 This is a simplified example. In real-world applications, you'd also want to handle cases where a translation doesn't exist, perhaps using fallback languages, or a mechanism to copy content from the primary language if none is available. You might also need to handle other field types differently, like `StreamFields`. The principle, however, remains consistent: fetch the current locale and display the correct fields.

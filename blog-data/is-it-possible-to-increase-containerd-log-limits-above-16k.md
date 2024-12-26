@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-it-possible-to-increase-containerd-log-limits-above-16k"
 ---
 
-Alright, let's delve into the nuances of container logging with containerd. It’s a topic I’ve had to grapple with more than once, especially when dealing with microservices that seem to enjoy verbose output. The 16k limit, which you've rightly identified, is a common pain point and, thankfully, it's not as immutable as it might first appear. It stems from how containerd buffers logs, and while it's not a configuration option you can directly tweak, the path to effectively increasing that limit isn't as complex as one might initially assume.
+, let's delve into the nuances of container logging with containerd. It’s a topic I’ve had to grapple with more than once, especially when dealing with microservices that seem to enjoy verbose output. The 16k limit, which you've rightly identified, is a common pain point and, thankfully, it's not as immutable as it might first appear. It stems from how containerd buffers logs, and while it's not a configuration option you can directly tweak, the path to effectively increasing that limit isn't as complex as one might initially assume.
 
 The core issue revolves around the `stdio` stream processing within containerd. When a container writes to stdout or stderr, containerd captures this output. By default, it buffers a relatively small amount of data before passing it on. This buffering is crucial for efficient handling, preventing one noisy container from overwhelming the system, but it can lead to truncation issues when dealing with large log messages. What we’re essentially discussing is the buffer size and the mechanisms for handing log processing, not a specific hard-coded limit that’s unchangeable.
 
@@ -124,15 +124,16 @@ while true; do
   sleep 10 # Check every 10 seconds
 done
 ```
+
 This script would be within a container along with the primary application. It simply checks the size of `app.log` every 10 seconds, and, if its size exceeds 10K, it rotates it by renaming the file with a timestamp before creating a new empty file. This approach is still limited to the size of 10K chunks that are individually sent to the stdout stream, but can be used in cases when you need to rotate logs directly within the container.
 
 In all these approaches, the fundamental principle remains the same: shifting the responsibility for handling potentially large log messages away from the basic containerd buffering mechanism. Instead of trying to directly adjust that intrinsic limitation, we opt for better logging strategies.
 
 For deeper understanding, I highly recommend diving into:
 
-*   **The containerd documentation**: especially the sections on logging drivers.
-*   **The fluentd documentation** to understand how to set up a robust logging pipeline.
-*   **"The Practice of System and Network Administration" by Thomas A. Limoncelli, Christina J. Hogan, and Strata R. Chalup**: Provides strong guidelines on the importance of robust logging strategies.
-*   **"Designing Data-Intensive Applications" by Martin Kleppmann**: This is very helpful for structuring logging data, not just for log streaming but for overall system design.
+- **The containerd documentation**: especially the sections on logging drivers.
+- **The fluentd documentation** to understand how to set up a robust logging pipeline.
+- **"The Practice of System and Network Administration" by Thomas A. Limoncelli, Christina J. Hogan, and Strata R. Chalup**: Provides strong guidelines on the importance of robust logging strategies.
+- **"Designing Data-Intensive Applications" by Martin Kleppmann**: This is very helpful for structuring logging data, not just for log streaming but for overall system design.
 
 In my experience, adopting one or a combination of these strategies effectively circumvents the 16k limit issue, leading to more reliable and understandable logs and easier debugging in production environments. It's not about 'increasing' a limit, but, rather, about being smarter with how logs are handled in the first place.

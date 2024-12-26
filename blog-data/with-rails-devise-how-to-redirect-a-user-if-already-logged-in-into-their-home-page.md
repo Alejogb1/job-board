@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "with-rails-devise-how-to-redirect-a-user-if-already-logged-in-into-their-home-page"
 ---
 
-alright, so you're having that classic devise redirect dance, where a user, already logged in, tries to hit the sign-in page and instead of being bumped to their actual home page, they're stuck looking at the login form again. i've definitely been there, spent a few late nights staring at rails logs chasing this one down. it's a pretty common issue when getting started with devise, and honestly even later when you've got more complex setups.
+, so you're having that classic devise redirect dance, where a user, already logged in, tries to hit the sign-in page and instead of being bumped to their actual home page, they're stuck looking at the login form again. i've definitely been there, spent a few late nights staring at rails logs chasing this one down. it's a pretty common issue when getting started with devise, and honestly even later when you've got more complex setups.
 
 the core problem here is that devise, by default, assumes if a user is visiting the sign-in path, they want to sign in. it doesn't inherently know, "hey, this person is already good to go, send them elsewhere". so, we need to inject some logic to tell devise to be a bit more clever.
 

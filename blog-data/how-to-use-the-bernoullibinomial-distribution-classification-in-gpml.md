@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-the-bernoullibinomial-distribution-classification-in-gpml"
 ---
 
-alright, so you’re looking at using bernoulli or binomial distributions for classification within gaussian process machine learning (gpml), right? been there, done that, got the t-shirt (and several debugging scars). it's not exactly a walk in the park, but it's definitely doable. let me break it down from my experience, hopefully it'll save you some of the headaches i went through.
+, so you’re looking at using bernoulli or binomial distributions for classification within gaussian process machine learning (gpml), right? been there, done that, got the t-shirt (and several debugging scars). it's not exactly a walk in the park, but it's definitely doable. let me break it down from my experience, hopefully it'll save you some of the headaches i went through.
 
 first off, the crux of the matter is that standard gaussian processes output a continuous value, not probabilities directly. we need to link that output to a probability, which is where the bernoulli or binomial distribution comes into play. the choice between the two mostly depends on your data. if you have binary outcomes (like 'yes' or 'no', 'spam' or 'not spam'), a bernoulli distribution is your best friend. if your outcomes are counts (like number of successes in a fixed number of trials), then you lean towards the binomial.
 
@@ -129,6 +129,7 @@ for i in range(n_iter):
   gp.noise_variance -= lr * noise_grad # update noise
   params[1] -= lr * lengthscale_grad # update lengthscale
 ```
+
 in this example i've shown a loglikelihood that takes binary data and the probabilities, and an example of how to use the negative loglikelihood for optimization with a crude gradient descent, in a real implementation you would use a better optimizer like l-bfgs.
 
 **step 4: handling binomial (if counts, not binary)**
@@ -137,18 +138,18 @@ if you’re dealing with counts, instead of the bernoulli you would use the bino
 
 **important points & gotchas:**
 
-*   **optimization:** the key here is optimizing the parameters of the gp (kernel parameters, noise variance) using a method that maximizes the likelihood of the data given the probabilistic output, with methods like gradient descent, l-bfgs or adam. i just showed you a dummy one for the example.
-*   **numerical stability:** the sigmoid can cause numerical instability, you have to be careful to avoid logs of zero and other numerical issues, i used a clip function to avoid that.
-*   **computational cost:** gpl can be computationally heavy, especially with many datapoints so make sure to test with a small dataset, start with very few training points and then scale up.
-*   **prior selection:** choosing a good kernel and kernel parameters is as important as ever, i used the radial basis function in the examples, but there are others like the matern family, it may be worthwhile to try multiple kernels and parameter choices.
-*   **sparse approximation:** if you're working with very large datasets, consider sparse approximations to speed things up. there are several alternatives like sparse gaussian processes (sgp) and variational gaussian processes (vgp).
+- **optimization:** the key here is optimizing the parameters of the gp (kernel parameters, noise variance) using a method that maximizes the likelihood of the data given the probabilistic output, with methods like gradient descent, l-bfgs or adam. i just showed you a dummy one for the example.
+- **numerical stability:** the sigmoid can cause numerical instability, you have to be careful to avoid logs of zero and other numerical issues, i used a clip function to avoid that.
+- **computational cost:** gpl can be computationally heavy, especially with many datapoints so make sure to test with a small dataset, start with very few training points and then scale up.
+- **prior selection:** choosing a good kernel and kernel parameters is as important as ever, i used the radial basis function in the examples, but there are others like the matern family, it may be worthwhile to try multiple kernels and parameter choices.
+- **sparse approximation:** if you're working with very large datasets, consider sparse approximations to speed things up. there are several alternatives like sparse gaussian processes (sgp) and variational gaussian processes (vgp).
 
 **resources:**
 
 for some further reading, i would recommend the following:
 
-*   "gaussian processes for machine learning" by carl edward rasmussen and christopher k. i. williams. this is *the* bible on gpl. it explains everything in detail, from basic concepts to advanced topics. this book is very well written and you should give it a serious look.
-*   "pattern recognition and machine learning" by christopher bishop. this book gives a good overview of the bernoulli, binomial and gaussian distributions and the general concept of machine learning.
-*   for a more hands-on approach, looking at the implementation details of libraries like `gpflow` or `scikit-learn` can also be educational, but i would recommend you to first understand the theory, otherwise it will be difficult to follow and will increase the learning curve.
+- "gaussian processes for machine learning" by carl edward rasmussen and christopher k. i. williams. this is _the_ bible on gpl. it explains everything in detail, from basic concepts to advanced topics. this book is very well written and you should give it a serious look.
+- "pattern recognition and machine learning" by christopher bishop. this book gives a good overview of the bernoulli, binomial and gaussian distributions and the general concept of machine learning.
+- for a more hands-on approach, looking at the implementation details of libraries like `gpflow` or `scikit-learn` can also be educational, but i would recommend you to first understand the theory, otherwise it will be difficult to follow and will increase the learning curve.
 
 i know it's a lot to take in, but hopefully, this helps clarify things a little. just remember that this is an iterative process, start with something simple, and then build on it. don’t be afraid to experiment and get your hands dirty and don’t be frustrated if you get errors, all errors means more experience. let me know if anything is unclear and i can try to help.

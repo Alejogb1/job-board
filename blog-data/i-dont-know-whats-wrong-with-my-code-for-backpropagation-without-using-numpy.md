@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "i-dont-know-whats-wrong-with-my-code-for-backpropagation-without-using-numpy"
 ---
 
-alright, so you’re having trouble with backpropagation when you’re avoiding numpy, right? i get it. it's a classic situation. been there, done that, got the t-shirt and the battle scars to prove it. let me walk you through my experience and some approaches that might get you unstuck.
+, so you’re having trouble with backpropagation when you’re avoiding numpy, right? i get it. it's a classic situation. been there, done that, got the t-shirt and the battle scars to prove it. let me walk you through my experience and some approaches that might get you unstuck.
 
 i remember when i first tried to implement backprop from scratch. this was way back, before everyone and their cat were using pytorch or tensorflow. i was working on a tiny project, a simple neural network to classify handwritten digits – yeah, the good old mnist dataset. i thought, "how hard can it be?" famous last words. i decided against using any high level libraries, because the point of the project was precisely to grasp the inner workings, so no numpy for me either.
 
@@ -77,13 +77,13 @@ this is a simplified version, and it would need to be generalized for different 
 
 now, common issues i've noticed with this:
 
-*   **incorrect indexing:** this one is huge. as you can see from the example, i've been extremely explicit with my indexing variables. it’s easy to mix up layer indices, node indices, and weight indices when not careful. that was one of my major struggles.
+- **incorrect indexing:** this one is huge. as you can see from the example, i've been extremely explicit with my indexing variables. it’s easy to mix up layer indices, node indices, and weight indices when not careful. that was one of my major struggles.
 
-*   **error calculation:** the way you calculate the output error needs to match your chosen loss function, i.e. cross-entropy loss or mean squared error (mse), or whatever. usually, using mean squared error loss (mse) might seem intuitive and easy, but in reality, when you want to classify things with more than two categories, you'd better use cross-entropy loss instead. also the derivative of your chosen activation function must be correct. if you're using a sigmoid, the derivative needs to be `sigmoid(x) * (1 - sigmoid(x))`.
+- **error calculation:** the way you calculate the output error needs to match your chosen loss function, i.e. cross-entropy loss or mean squared error (mse), or whatever. usually, using mean squared error loss (mse) might seem intuitive and easy, but in reality, when you want to classify things with more than two categories, you'd better use cross-entropy loss instead. also the derivative of your chosen activation function must be correct. if you're using a sigmoid, the derivative needs to be `sigmoid(x) * (1 - sigmoid(x))`.
 
-*   **updating weights:** the weight update rule must consider the learning rate and the calculated gradients. missing a minus sign in the update step will, for example, make the model learn the opposite of what it should. yeah, been there.
+- **updating weights:** the weight update rule must consider the learning rate and the calculated gradients. missing a minus sign in the update step will, for example, make the model learn the opposite of what it should. yeah, been there.
 
-*   **numerical instability:** if you're using sigmoid as an activation function, you might encounter problems when the values get too big or too small (you may start seeing gradients becoming almost zero, causing learning to stall). this can be handled by using a different activation function or normalization techniques. relu is an option here, you should be able to implement it fairly easily.
+- **numerical instability:** if you're using sigmoid as an activation function, you might encounter problems when the values get too big or too small (you may start seeing gradients becoming almost zero, causing learning to stall). this can be handled by using a different activation function or normalization techniques. relu is an option here, you should be able to implement it fairly easily.
 
 let's move to another common issue people have. batch processing. the above code works with a single sample. in practice you want to pass more than one example to reduce noise and accelerate your training. that involves more than just doing everything inside a bigger for loop. you usually want to use vectorization, even without numpy. let me show you how to use the code above with batches:
 
@@ -133,6 +133,7 @@ def batch_backward_pass(batch_layers_output, weights, biases, y_true_batch, lear
     return updated_weights, updated_biases
 
 ```
+
 notice how i am now going through each sample, then accumulating the weights for each sample at each iteration. i am not going to explain that in more detail because the main intention of this response is not to solve the issue for you but to show you how to approach it and give you insights into the common mistakes.
 
 and just to be clear, i am not using vectorization in the above example, just batch processing. true vectorization without numpy involves implementing matrix operations and data structures with custom loops. which might get painful and the benefits are not as high as one might think. python is slow for the job, c++ or rust would be better.
@@ -141,8 +142,8 @@ i'll be honest, implementing backprop from scratch without numpy is a valuable l
 
 if you really want to deepen your understanding, instead of following a tutorial or some github gist (please don't!), i would recommend these resources:
 
-*   **"deep learning" by ian goodfellow, yoshua bengio, and aaron courville.** this book is a comprehensive overview of deep learning, covering all aspects, including the mathematical foundations of backpropagation.
-*   **"neural networks and deep learning" by michael nielsen.** this is an online book that provides a more accessible introduction to neural networks and backpropagation. it includes interactive visualizations to help you understand the concepts.
+- **"deep learning" by ian goodfellow, yoshua bengio, and aaron courville.** this book is a comprehensive overview of deep learning, covering all aspects, including the mathematical foundations of backpropagation.
+- **"neural networks and deep learning" by michael nielsen.** this is an online book that provides a more accessible introduction to neural networks and backpropagation. it includes interactive visualizations to help you understand the concepts.
 
 they might seem a bit daunting at first, but diving deep into these resources is the best way to get the knowledge and insights you need. reading the mathematics behind the operations will give you a much deeper understanding than just copying code and modifying parameters. also, make sure you go slowly and understand each step, even the most basic ones. understanding the math behind backpropagation is key to making sure you implement it correctly.
 

@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-to-resolve-a-unique-constraint-violation-in-spring-boot-h2-tests-using-sql"
 ---
 
-Okay, let's dive into this. I've certainly had my fair share of encounters with those pesky unique constraint violations during Spring Boot testing, particularly when using `@Sql` to manage test data. It's one of those situations that seems straightforward on paper, but can quickly become a debugging expedition if not handled carefully. The crux of the problem, as you likely know, is that your `@Sql` scripts are attempting to insert data that conflicts with an existing unique constraint in your h2 database. Typically, this occurs when the script tries to insert a row with a value for a column marked as `unique` that already exists.
+, let's dive into this. I've certainly had my fair share of encounters with those pesky unique constraint violations during Spring Boot testing, particularly when using `@Sql` to manage test data. It's one of those situations that seems straightforward on paper, but can quickly become a debugging expedition if not handled carefully. The crux of the problem, as you likely know, is that your `@Sql` scripts are attempting to insert data that conflicts with an existing unique constraint in your h2 database. Typically, this occurs when the script tries to insert a row with a value for a column marked as `unique` that already exists.
 
 Let me break down how I've approached this, drawing from past projects where this exact situation arose. I remember one application in particular, a user management system, where we heavily relied on `@Sql` to seed data for various integration tests. We had a `users` table with a unique constraint on the `email` column. Initially, we simply created a separate sql script for each test, assuming independence. However, as more tests and more data got added, we ran into situations where the same email address appeared in multiple scripts, causing constraint violations.
 
 The key to solving this isn't about trying to outsmart the database, but rather understanding what's causing the conflict and taking a systematic approach to data management within your tests. There are a few primary strategies I've found to be effective, and they largely revolve around controlling the lifecycle of data inserted via `@Sql` and employing strategies to ensure uniqueness.
 
-First, let's talk about the obvious solution, but one that can become cumbersome if not done cautiously: using a dedicated script per test. This method works best when you have very few, relatively independent tests and small datasets. In our example, if every test case in user management had its *own* sql script ensuring unique email addresses, the constraint issue would not surface. This is simple in concept, but it rapidly degrades in maintainability with more tests.
+First, let's talk about the obvious solution, but one that can become cumbersome if not done cautiously: using a dedicated script per test. This method works best when you have very few, relatively independent tests and small datasets. In our example, if every test case in user management had its _own_ sql script ensuring unique email addresses, the constraint issue would not surface. This is simple in concept, but it rapidly degrades in maintainability with more tests.
 
 Second, the more scalable approach relies on a more intelligent design of your sql scripts by leveraging delete operations and using more deterministic insert data. Before any data is inserted, I would typically add a `delete` or `truncate` operation to clear out the table. This ensures a clean slate. For example:
 
@@ -56,6 +56,7 @@ public class UniqueConstraintTest {
     }
 }
 ```
+
 Here, each test run will generate a new uuid that gets used in the email and username, ensuring uniqueness across multiple runs. Note the annotation `@AutoConfigureTestDatabase` is used here to avoid issues with the tests and any real database you may be connected to. It is important when testing to make sure you don't inadvertently manipulate your real data.
 
 Here is a modified version of the test above, that is actually using `@Sql` and demonstrating how to combine the dynamic value generation with your data setup.
@@ -96,6 +97,7 @@ public class UniqueConstraintTest {
     }
 }
 ```
+
 With this setup, the sql file `setup-data.sql` will look something like this, pulling the value from the helper class (injected as `dataGenerator`):
 
 ```sql

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-scan-a-docker-images-file-paths-using-blackduck"
 ---
 
-Alright, let’s tackle this. I’ve spent considerable time working with Black Duck and container security, so I can shed some light on how to effectively scan Docker image file paths. It's not as straightforward as, say, scanning a source code repository, but it's entirely achievable and crucial for maintaining a secure application environment.
+, let’s tackle this. I’ve spent considerable time working with Black Duck and container security, so I can shed some light on how to effectively scan Docker image file paths. It's not as straightforward as, say, scanning a source code repository, but it's entirely achievable and crucial for maintaining a secure application environment.
 
 The fundamental idea when working with container images in Black Duck is that you're not directly looking at the filesystem as you would on a running system. Instead, you’re analyzing the image layers and their content. Black Duck, when performing its scan, breaks down the image into these layers and identifies the components present within. The 'file path' information you’re after, therefore, comes as a byproduct of this analysis, not as a primary input.
 
@@ -98,8 +98,8 @@ Here, we're using `--detect.docker.image` to specify the location in the registr
 
 For additional information, I’d recommend consulting the following:
 
-*   **Synopsys Detect documentation:** Specifically, the section covering Docker image scanning parameters is essential. The documentation is typically found in their help center or support portal.
-*   **The Black Duck API documentation:** It’s indispensable for programmatically accessing and manipulating scan data. Also available via Synopsys support channels.
-*   **"Continuous Security in Practice: Automating DevOps Security"** by Jennifer Davis and Matthew Duft. While not Black Duck specific, it covers the principles and practices of integrating security into pipelines, which is very relevant.
+- **Synopsys Detect documentation:** Specifically, the section covering Docker image scanning parameters is essential. The documentation is typically found in their help center or support portal.
+- **The Black Duck API documentation:** It’s indispensable for programmatically accessing and manipulating scan data. Also available via Synopsys support channels.
+- **"Continuous Security in Practice: Automating DevOps Security"** by Jennifer Davis and Matthew Duft. While not Black Duck specific, it covers the principles and practices of integrating security into pipelines, which is very relevant.
 
 In short, while Black Duck doesn't directly expose filesystem browsing, its component analysis process indirectly provides this via the 'path' information associated with detected components. Leveraging the right tools like `synopsys-detect` and the API makes this information easily accessible and applicable to real-world security analysis and automated workflows. The key is to understand the underlying process and how to access the information effectively after scans have completed. I hope this clarifies the process.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-filter-statuses-using-rails-ransack"
 ---
 
-Okay, let's tackle this. It's something I’ve certainly found myself grappling with more than once, particularly back when I was working on that large social media aggregation project a few years ago. We needed extremely fine-grained control over status filtering, and simply relying on basic database queries wasn't going to cut it. Ransack became our go-to solution, and with good reason. It provides a beautiful way to turn user-facing inputs into complex database queries, all without writing a ton of custom SQL. Let’s break down how to effectively filter statuses with Ransack in Rails.
+, let's tackle this. It's something I’ve certainly found myself grappling with more than once, particularly back when I was working on that large social media aggregation project a few years ago. We needed extremely fine-grained control over status filtering, and simply relying on basic database queries wasn't going to cut it. Ransack became our go-to solution, and with good reason. It provides a beautiful way to turn user-facing inputs into complex database queries, all without writing a ton of custom SQL. Let’s break down how to effectively filter statuses with Ransack in Rails.
 
 The core concept with Ransack revolves around ‘search attributes’. These attributes are defined on your model and tell Ransack which fields and associations can be used for filtering. For instance, let's imagine we have a `Status` model with attributes like `content`, `user_id`, `created_at`, and a relation to `User` model via `belongs_to :user`.
 
@@ -59,7 +59,7 @@ The beauty of this approach is that you can build complex queries from simple fo
 <% end %>
 ```
 
-Here, the `content_cont`, `user_id_eq`, `created_at_date_eq`, and `user_name_cont` are called "predicates".  Ransack offers a range of these for performing different types of comparison such as `eq` (equals), `cont` (contains), `lt` (less than), and many others. This means you don’t have to write custom SQL to handle these varied conditions. It also allows you to search through association attributes such as the `user_name` if you have set up the association correctly in the model. For instance, to search for all statuses from users with a name that contains “john”, Ransack automatically translates `user_name_cont` in the url params to join the status table with the users table on the user_id and applies the like clause.
+Here, the `content_cont`, `user_id_eq`, `created_at_date_eq`, and `user_name_cont` are called "predicates". Ransack offers a range of these for performing different types of comparison such as `eq` (equals), `cont` (contains), `lt` (less than), and many others. This means you don’t have to write custom SQL to handle these varied conditions. It also allows you to search through association attributes such as the `user_name` if you have set up the association correctly in the model. For instance, to search for all statuses from users with a name that contains “john”, Ransack automatically translates `user_name_cont` in the url params to join the status table with the users table on the user_id and applies the like clause.
 
 Let's say I wanted to demonstrate a more complex scenario. What if I wanted to filter status content by a phrase that's case-insensitive and also wanted to filter by a range of created dates? With a few adjustments in our form and in the `ransacker` in the model, we can achieve this with ease. Let's add another search attribute to the `Status` model:
 
@@ -80,6 +80,7 @@ class Status < ApplicationRecord
 end
 
 ```
+
 Here, we use a different approach with `Arel::Nodes::NamedFunction` to achieve case-insenstive search. This ensures that regardless of capitalization in the user input or the stored value, they match during the search. The `i_cont` part means 'case insensitive contains'.
 
 Now we will update the form to include this new filter, alongside an additional date range field:
@@ -94,7 +95,7 @@ Now we will update the form to include this new filter, alongside an additional 
 
   <%= f.label :created_at_date_lteq, 'Created Before Date' %>
   <%= f.date_field :created_at_date_lteq %>
-  
+
    <%= f.label :user_name_cont, 'User name contains' %>
     <%= f.search_field :user_name_cont %>
 

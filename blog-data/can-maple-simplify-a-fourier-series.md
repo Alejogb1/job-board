@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "can-maple-simplify-a-fourier-series"
 ---
 
-okay so you're asking if Maple can simplify a Fourier series right yeah ive been down that rabbit hole more times than i care to remember its a pretty common question and the answer well it’s complicated but mostly yes with caveats lots of them
+you're asking if Maple can simplify a Fourier series right yeah ive been down that rabbit hole more times than i care to remember its a pretty common question and the answer well it’s complicated but mostly yes with caveats lots of them
 
 look ive spent years wrestling with this stuff back in my uni days i was obsessed with signal processing and that meant dealing with Fourier series non stop in my masters project i was trying to reconstruct some crazy audio signals from a bunch of sensors and believe me maple was a crucial tool but it wasn't always smooth sailing
 
-at its core Maple *can* absolutely simplify a Fourier series it has built in functions specifically for that job specifically `fourier` and `simplify` are your bread and butter the `fourier` command will compute the coefficients and the `simplify` command will as you would expect simplify the result if possible
+at its core Maple _can_ absolutely simplify a Fourier series it has built in functions specifically for that job specifically `fourier` and `simplify` are your bread and butter the `fourier` command will compute the coefficients and the `simplify` command will as you would expect simplify the result if possible
 
 but here's the thing unlike some textbook perfect scenarios real world fourier series often involve messy functions trigonometric functions that aren’t neatly integrated functions with piecewise definitions that makes things tricky so Maple’s success heavily relies on the form of your function
 

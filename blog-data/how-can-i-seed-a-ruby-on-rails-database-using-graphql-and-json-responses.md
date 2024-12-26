@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-seed-a-ruby-on-rails-database-using-graphql-and-json-responses"
 ---
 
-Okay, let's talk database seeding with GraphQL and JSON responses in a Rails application. This is a problem I've encountered a few times, often when setting up demos or needing more realistic test data. The typical Rails `seeds.rb` file just doesn't cut it when you have a complex data model and want to leverage the existing GraphQL API for data creation. Directly creating records via ActiveRecord isn’t as robust because it bypasses all validations, business logic, and can cause inconsistencies with your application’s data. So, using the GraphQL API is crucial for fidelity.
+, let's talk database seeding with GraphQL and JSON responses in a Rails application. This is a problem I've encountered a few times, often when setting up demos or needing more realistic test data. The typical Rails `seeds.rb` file just doesn't cut it when you have a complex data model and want to leverage the existing GraphQL API for data creation. Directly creating records via ActiveRecord isn’t as robust because it bypasses all validations, business logic, and can cause inconsistencies with your application’s data. So, using the GraphQL API is crucial for fidelity.
 
 My past experiences taught me that a straightforward approach is best: query the GraphQL endpoint with crafted JSON payloads for mutations, parse the response, and handle any errors gracefully. I’ll show you a few methods to approach this, each with a specific use case. I’ll also include specific code examples so you can see how it translates to a real project. The goal isn’t just to inject data; it’s to mimic the actual application workflow as much as possible to ensure consistency with the production setup.
 

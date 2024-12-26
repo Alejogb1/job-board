@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-a-socketio-server-side-implementation-in-sails-js"
 ---
 
-alright, so you're looking to get socket.io running smoothly within a sails.js application. i've been there, trust me, it's a common stumbling block for folks new to sails and real-time stuff. i remember my first time, i was building this collaborative whiteboard app back in '16, or was it '17? anyway, things got real messy trying to shoehorn socket.io in without a proper setup. sails kinda handles some of the low-level http stuff, and figuring out where to inject the socket.io magic can be a bit confusing at first. but, let me break it down for you based on my past experience.
+, so you're looking to get socket.io running smoothly within a sails.js application. i've been there, trust me, it's a common stumbling block for folks new to sails and real-time stuff. i remember my first time, i was building this collaborative whiteboard app back in '16, or was it '17? anyway, things got real messy trying to shoehorn socket.io in without a proper setup. sails kinda handles some of the low-level http stuff, and figuring out where to inject the socket.io magic can be a bit confusing at first. but, let me break it down for you based on my past experience.
 
 basically, sails doesn't automatically come with socket.io baked in. you’ve got to bring it in yourself. that's not a bad thing, it keeps the framework lightweight. you’ll first need to install the necessary package. it’s pretty standard node stuff. fire up your terminal, and within your sails project directory run:
 
@@ -19,30 +19,29 @@ that will add socket.io to your project's dependencies. once that’s done, the 
 module.exports.http = {
   middleware: {
     order: [
-      'cookieParser',
-      'session',
-      'bodyParser',
-      'compress',
-      'poweredBy',
-      '$custom',
-      'router',
-      'www',
-      'favicon',
+      "cookieParser",
+      "session",
+      "bodyParser",
+      "compress",
+      "poweredBy",
+      "$custom",
+      "router",
+      "www",
+      "favicon",
     ],
     $custom: (function () {
       return function (req, res, next) {
-
-       //the following part is crucial, we access the main server
+        //the following part is crucial, we access the main server
         if (sails.hooks.http && sails.hooks.http.server) {
-            if(!sails.io){
-              sails.io = require('socket.io')(sails.hooks.http.server);
-              sails.io.on('connection', function(socket) {
-                console.log('a user connected');
-                socket.on('disconnect', function(){
-                   console.log('user disconnected');
-                });
-              //we can add more handlers here
+          if (!sails.io) {
+            sails.io = require("socket.io")(sails.hooks.http.server);
+            sails.io.on("connection", function (socket) {
+              console.log("a user connected");
+              socket.on("disconnect", function () {
+                console.log("user disconnected");
               });
+              //we can add more handlers here
+            });
           }
         }
 
@@ -62,22 +61,22 @@ now that the server-side is set up, you can integrate it to your javascript code
 ```html
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Socket.IO Test Client</title>
-</head>
-<body>
-  <h1>Socket.io test</h1>
-  <script src="/socket.io/socket.io.js"></script>
-  <script>
-   const socket = io();
-   socket.on('connect', function(){
-        console.log("connected to server")
-   });
-   socket.on('disconnect', function(){
-      console.log("disconnected to server")
-  });
- </script>
-</body>
+  </head>
+  <body>
+    <h1>Socket.io test</h1>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+      socket.on("connect", function () {
+        console.log("connected to server");
+      });
+      socket.on("disconnect", function () {
+        console.log("disconnected to server");
+      });
+    </script>
+  </body>
 </html>
 ```
 
@@ -90,10 +89,10 @@ one of the common places where i find myself using sockets in sails is within co
 
 module.exports = {
   newMessage: async function (req, res) {
-    const message = req.param('message');
-    sails.io.sockets.emit('newMessage', {
+    const message = req.param("message");
+    sails.io.sockets.emit("newMessage", {
       message: message,
-      sender: req.session.userId
+      sender: req.session.userId,
     });
     return res.ok();
   },
@@ -106,11 +105,11 @@ as you can see, there are some caveats when integrating socket.io with sails but
 
 now, a few points i’ve learned the hard way:
 
-*   **namespacing:** if your app grows, don't cram everything into the default namespace. socket.io's namespaces are your friends, use them. it’s much easier to manage different streams of data when you have it all separated logically.
-*   **error handling:** socket.io connection/disconnection issues, lost messages, handle those gracefully, client and server side. never assume the network is going to be perfect.
-*   **authentication:** if you're dealing with user-specific data over websockets, secure those connections. use something like jwt to identify users and use it on socket.io connection.
-*   **scaling:** if you are expecting a lot of concurrent users you will have to scale your socket.io server, for this you need a message broker for example, rabbitmq or redis.
-*   **debugging:** i remember once spending a whole night figuring out a websocket issue. check your browser's dev tools, check your server logs, it is tedious, i know, but it is the only way.
+- **namespacing:** if your app grows, don't cram everything into the default namespace. socket.io's namespaces are your friends, use them. it’s much easier to manage different streams of data when you have it all separated logically.
+- **error handling:** socket.io connection/disconnection issues, lost messages, handle those gracefully, client and server side. never assume the network is going to be perfect.
+- **authentication:** if you're dealing with user-specific data over websockets, secure those connections. use something like jwt to identify users and use it on socket.io connection.
+- **scaling:** if you are expecting a lot of concurrent users you will have to scale your socket.io server, for this you need a message broker for example, rabbitmq or redis.
+- **debugging:** i remember once spending a whole night figuring out a websocket issue. check your browser's dev tools, check your server logs, it is tedious, i know, but it is the only way.
 
 also, i recommend a book called 'realtime web' from ashley davis, a really good resource that was used back in the days when websockets started getting popular. it is a great resource and goes beyond socket.io. also, the official documentation of socket.io is great. it has examples and explanations of every part of the library. i also would recommend the book 'node.js design patterns' by mario casciaro and luciano mammino, which, although it does not focus specifically on websockets, will give you a general great view of backend patterns in node.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-optimal-input-dimension-for-a-conv2d-lstm-implementation"
 ---
 
-Okay, let's unpack this. Thinking back to the project I tackled a few years back involving video analysis for anomaly detection, I spent quite a bit of time fine-tuning the input dimension for a conv2D-LSTM hybrid. It wasn’t a straightforward matter, and the 'optimal' dimension isn't a magical number; it's highly contextual. The best choice depends on several factors, including the nature of your input data, the depth and architecture of your convolutional layers, and the complexity your LSTM needs to handle.
+, let's unpack this. Thinking back to the project I tackled a few years back involving video analysis for anomaly detection, I spent quite a bit of time fine-tuning the input dimension for a conv2D-LSTM hybrid. It wasn’t a straightforward matter, and the 'optimal' dimension isn't a magical number; it's highly contextual. The best choice depends on several factors, including the nature of your input data, the depth and architecture of your convolutional layers, and the complexity your LSTM needs to handle.
 
 The challenge with combining conv2d and LSTM lies in the fact that they operate on fundamentally different types of data. Conv2d layers excel at extracting spatial features from 2d arrays (like images or frames in a video), while LSTMs are designed to model sequential dependencies in 1d time-series data. The transition from conv2d's output to lstm's input requires careful consideration of how the spatial features extracted from the convolutional layers should be structured and fed into the temporal model.
 
@@ -14,9 +14,9 @@ Here’s the breakdown as I see it:
 
 First, let's start with a typical sequence. You have a series of image frames, which, in the context of video, are 3D tensors: (height, width, channels). A conv2d layer processes each of these frames individually, and produces feature maps as output, resulting in tensors of the form (height', width', channels') where height' and width' are often reduced due to pooling or stride. This feature map is still related to a single frame at this stage. We're not in a temporal format, yet.
 
-Here’s where the magic, or the potential bottleneck, happens. Before passing the data to an LSTM, we need to reshape the conv2d's output to meet the expectations of the LSTM layer. An LSTM expects a 3d input of the form (batch\_size, time\_steps, features). Batch size refers to the number of sequences processed in parallel, time\_steps to the length of the sequence, and features to the individual dimensions describing each time step. We therefore need to flatten the spatial dimensions of the conv2d outputs and treat each output from each time step as a feature.
+Here’s where the magic, or the potential bottleneck, happens. Before passing the data to an LSTM, we need to reshape the conv2d's output to meet the expectations of the LSTM layer. An LSTM expects a 3d input of the form (batch_size, time_steps, features). Batch size refers to the number of sequences processed in parallel, time_steps to the length of the sequence, and features to the individual dimensions describing each time step. We therefore need to flatten the spatial dimensions of the conv2d outputs and treat each output from each time step as a feature.
 
-The question of optimal input dimension to the LSTM thus boils down to the 'feature' dimension – that is, the number of features you will pass to each time step in the LSTM. We're not trying to optimize the conv2d output dimensions but rather the number of input features to the LSTM *after* all the convolutional transformations. In other words: the channel dimension from the conv2d outputs after flattening.
+The question of optimal input dimension to the LSTM thus boils down to the 'feature' dimension – that is, the number of features you will pass to each time step in the LSTM. We're not trying to optimize the conv2d output dimensions but rather the number of input features to the LSTM _after_ all the convolutional transformations. In other words: the channel dimension from the conv2d outputs after flattening.
 
 The core concept to understand is that this flattened representation becomes the input feature vector for each time step. Here, each feature value represents a different area of the processed image, a different feature map after the convolutions. The optimal size of this feature vector has a direct impact on model complexity and its ability to capture temporal dependencies,
 
@@ -53,10 +53,10 @@ class SimpleConvLSTM(nn.Module):
         # reshape batch and sequence so that convolutional layers are applied per frame.
         x = x.view(-1, channels, height, width) # batch_size * seq_length, channels, height, width
         x = torch.relu(self.conv(x)) # batch_size * seq_length, conv_out_channels, height, width
-        
+
         # Reshape for LSTM: (batch_size, seq_length, conv_out_channels*height*width)
         x = x.view(batch_size, seq_length, -1) #  batch_size, seq_length, channels * height * width
-        
+
         lstm_out, _ = self.lstm(x)
         output = self.fc(lstm_out[:, -1, :])  # Take output of the last time step and apply linear layer
         return output
@@ -72,7 +72,7 @@ output = model(dummy_input)
 print(output.shape)
 ```
 
-In this snippet, the input dimension to the LSTM is *`conv_out_channels`* \* *height* \* *width*. We're assuming 64x64 height/width output from the convolutional layer. It's important to note that the height and width are not fixed and depends on the convolutional layer parameters, stride, padding, kernel size, etc..
+In this snippet, the input dimension to the LSTM is _`conv_out_channels`_ \* _height_ \* _width_. We're assuming 64x64 height/width output from the convolutional layer. It's important to note that the height and width are not fixed and depends on the convolutional layer parameters, stride, padding, kernel size, etc..
 
 **Example 2: Adding a Max Pooling Layer**
 
@@ -107,7 +107,7 @@ output = model(dummy_input)
 print(output.shape)
 ```
 
-Here, by adding a max pooling layer with 2x2 window, we have halved the height and width, so the input dimension to the LSTM is reduced to *`conv_out_channels`* \* 32 \* 32, even with the same `conv_out_channels`.
+Here, by adding a max pooling layer with 2x2 window, we have halved the height and width, so the input dimension to the LSTM is reduced to _`conv_out_channels`_ \* 32 \* 32, even with the same `conv_out_channels`.
 
 **Example 3: Using multiple conv2d layers**
 

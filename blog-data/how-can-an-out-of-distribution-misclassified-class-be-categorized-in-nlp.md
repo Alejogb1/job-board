@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-an-out-of-distribution-misclassified-class-be-categorized-in-nlp"
 ---
 
-Alright, let’s tackle this. It’s a problem I've encountered more times than I care to count, and frankly, it's one of those issues that separates the theoretical understanding of NLP from the pragmatic realities. Dealing with out-of-distribution (ood) misclassifications, especially those that end up in the wrong class despite their fundamental divergence from that class’s characteristics, is a very common headache. Here’s how I’ve typically approached it, and the strategies that have been most effective in my experience.
+, let’s tackle this. It’s a problem I've encountered more times than I care to count, and frankly, it's one of those issues that separates the theoretical understanding of NLP from the pragmatic realities. Dealing with out-of-distribution (ood) misclassifications, especially those that end up in the wrong class despite their fundamental divergence from that class’s characteristics, is a very common headache. Here’s how I’ve typically approached it, and the strategies that have been most effective in my experience.
 
-First, let’s acknowledge that a basic, run-of-the-mill classification model isn't equipped to handle OOD inputs gracefully. It's trained on a specific distribution, and when presented with data that significantly deviates, it’ll do its best, often resulting in a confident, yet *incorrect*, classification. We need to step outside of the model’s original intent and incorporate strategies that explicitly acknowledge the limitations of its training data.
+First, let’s acknowledge that a basic, run-of-the-mill classification model isn't equipped to handle OOD inputs gracefully. It's trained on a specific distribution, and when presented with data that significantly deviates, it’ll do its best, often resulting in a confident, yet _incorrect_, classification. We need to step outside of the model’s original intent and incorporate strategies that explicitly acknowledge the limitations of its training data.
 
-Fundamentally, tackling this involves two primary steps: *detection* and then, potentially, *adaptation*. Detection is about identifying that the input is indeed out-of-distribution. Adaptation, which may or may not always be feasible, aims to either bring the input back into the model’s known distribution or refine the model to accommodate this novel information. Let's start with detection.
+Fundamentally, tackling this involves two primary steps: _detection_ and then, potentially, _adaptation_. Detection is about identifying that the input is indeed out-of-distribution. Adaptation, which may or may not always be feasible, aims to either bring the input back into the model’s known distribution or refine the model to accommodate this novel information. Let's start with detection.
 
-One of the most straightforward methods for detection involves examining the model's predictive probabilities or scores. A model trained on a dataset will typically exhibit high confidence when predicting in-distribution examples, and lower, or perhaps more scattered probabilities for out-of-distribution data. If our model’s predicted probability for a particular class is consistently lower than some predefined threshold *and* that input is assigned to that class nonetheless, it strongly signals an out-of-distribution misclassification.
+One of the most straightforward methods for detection involves examining the model's predictive probabilities or scores. A model trained on a dataset will typically exhibit high confidence when predicting in-distribution examples, and lower, or perhaps more scattered probabilities for out-of-distribution data. If our model’s predicted probability for a particular class is consistently lower than some predefined threshold _and_ that input is assigned to that class nonetheless, it strongly signals an out-of-distribution misclassification.
 
 Let's illustrate this with a simple python example using `scikit-learn`. Imagine we've trained a basic text classifier.
 
@@ -91,9 +91,9 @@ if max(avg_sim_0, avg_sim_1) < threshold :
     print("Likely OOD sample.")
 ```
 
-In this snippet, we’re comparing the cosine similarity of the OOD sample's embedding with the average embedding of each class. A low similarity to *all* classes suggests it's outside our training distribution. Again, the `threshold` here is something you would typically tune empirically.
+In this snippet, we’re comparing the cosine similarity of the OOD sample's embedding with the average embedding of each class. A low similarity to _all_ classes suggests it's outside our training distribution. Again, the `threshold` here is something you would typically tune empirically.
 
-Finally, you can incorporate uncertainty quantification into your model. Bayesian Neural Networks, or approaches like Monte Carlo Dropout, can provide a measure of predictive uncertainty. If the model's uncertainty is high *and* its classification is confident (as indicated by high predicted probabilities but low confidence in the specific classification), it can point to an out-of-distribution input.
+Finally, you can incorporate uncertainty quantification into your model. Bayesian Neural Networks, or approaches like Monte Carlo Dropout, can provide a measure of predictive uncertainty. If the model's uncertainty is high _and_ its classification is confident (as indicated by high predicted probabilities but low confidence in the specific classification), it can point to an out-of-distribution input.
 
 Here’s a simplified example using Monte Carlo dropout in `tensorflow`.
 
@@ -159,7 +159,7 @@ if uncertainty > uncertainty_threshold:
     print("Possible OOD based on model uncertainty.")
 ```
 
-By running the model multiple times with dropout layers activated, we generate an array of predictions. High variance among these predictions indicates high uncertainty, which is a hallmark of out-of-distribution input, and *especially* when coupled with high confidence of a single, possibly incorrect, class, it reinforces the need for further investigation.
+By running the model multiple times with dropout layers activated, we generate an array of predictions. High variance among these predictions indicates high uncertainty, which is a hallmark of out-of-distribution input, and _especially_ when coupled with high confidence of a single, possibly incorrect, class, it reinforces the need for further investigation.
 
 After detection, adaptation becomes important. Retraining your model with the misclassified samples can reduce the chance of these errors in the future; however, you need to be careful to ensure that these samples are indeed relevant, and are not data quality errors. Another approach is to use methods such as self-training to generate pseudo-labels for the OOD data and then retrain the model using these. If this is difficult to do then having a catch-all class is useful. However, you need to be sure that when a sample is classified into this class, that it is actually an out-of-distribution sample and not an in-distribution but hard-to-classify sample.
 

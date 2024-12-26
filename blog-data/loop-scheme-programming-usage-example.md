@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "loop-scheme-programming-usage-example"
 ---
 
-Okay so loop scheme usage you're asking about right Let's dive in I've seen this question pop up enough times to know where you're probably coming from and where you might get tripped up I've been wrestling with loops across various programming languages and believe me the concept while seemingly straightforward has a way of throwing curveballs especially when you're trying to nail down performance and elegance
+loop scheme usage you're asking about right Let's dive in I've seen this question pop up enough times to know where you're probably coming from and where you might get tripped up I've been wrestling with loops across various programming languages and believe me the concept while seemingly straightforward has a way of throwing curveballs especially when you're trying to nail down performance and elegance
 
 First things first when we talk about loop schemes we're generally thinking about ways to iterate over collections or repeat blocks of code multiple times right Its basic stuff but the devil is always in the details In a lot of languages you see three fundamental patterns the `for` loop the `while` loop and the less common `do while` or its variants Each one has its strengths and when they're the right hammer for the nail the codebase tends to feel a lot cleaner
 
@@ -72,14 +72,14 @@ import numpy as np
 def apply_filter_numpy(image, filter_kernel):
     image_np = np.array(image)
     filter_np = np.array(filter_kernel)
-    
+
     height, width = image_np.shape
     kernel_size = filter_np.shape[0]
 
     padded_image = np.pad(image_np, kernel_size // 2, mode='constant')
-    
+
     new_image_np = np.zeros_like(image_np, dtype=float)
-    
+
     for y in range(height):
         for x in range(width):
             new_image_np[y, x] = np.sum(padded_image[y:y + kernel_size, x:x+kernel_size] * filter_np)

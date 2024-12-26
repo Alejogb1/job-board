@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resolve-a-no-space-left-on-device-error-in-dockerized-airflow"
 ---
 
-Okay, let's tackle this. I've definitely seen my share of “no space left on device” errors, especially with Dockerized Airflow deployments. It’s a classic scenario that tends to manifest unexpectedly, usually at the least convenient moment. The good news is, it’s almost always resolvable with a methodical approach. It typically isn't one single cause, rather an accumulation of factors that we need to methodically break down. Let me walk you through my troubleshooting process based on past experiences – it's a combination of Docker fundamentals, Airflow's peculiarities, and some real-world gotchas.
+, let's tackle this. I've definitely seen my share of “no space left on device” errors, especially with Dockerized Airflow deployments. It’s a classic scenario that tends to manifest unexpectedly, usually at the least convenient moment. The good news is, it’s almost always resolvable with a methodical approach. It typically isn't one single cause, rather an accumulation of factors that we need to methodically break down. Let me walk you through my troubleshooting process based on past experiences – it's a combination of Docker fundamentals, Airflow's peculiarities, and some real-world gotchas.
 
 Firstly, understand the core issue isn't just about "no space." It's more precise to say, "a particular storage location managed by Docker has exhausted its allotted space," or that a disk in the container itself has run dry. Docker, as many are aware, utilizes a storage driver. This driver manages how image layers and container data are stored. When this storage fills up, operations begin to fail.
 
@@ -28,28 +28,28 @@ services:
     volumes:
       - ./logs:/opt/airflow/logs
     environment:
-       _AIRFLOW__LOGGING__LOG_FILENAME_TEMPLATE: "{{ ti.dag_id }}/{{ ti.task_id }}/{{ run_id }}/{{ try_number }}.log"
-       _AIRFLOW__LOGGING__LOGGING_LEVEL: INFO
-       _AIRFLOW__LOGGING__TASK_LOG_READER: airflow.providers.cncf.kubernetes.log.KubernetesLogReader
+      _AIRFLOW__LOGGING__LOG_FILENAME_TEMPLATE: "{{ ti.dag_id }}/{{ ti.task_id }}/{{ run_id }}/{{ try_number }}.log"
+      _AIRFLOW__LOGGING__LOGGING_LEVEL: INFO
+      _AIRFLOW__LOGGING__TASK_LOG_READER: airflow.providers.cncf.kubernetes.log.KubernetesLogReader
     command: webserver
   airflow-scheduler:
     image: apache/airflow:2.6.3-python3.10
     volumes:
       - ./logs:/opt/airflow/logs
     environment:
-        _AIRFLOW__LOGGING__LOG_FILENAME_TEMPLATE: "{{ ti.dag_id }}/{{ ti.task_id }}/{{ run_id }}/{{ try_number }}.log"
-        _AIRFLOW__LOGGING__LOGGING_LEVEL: INFO
-        _AIRFLOW__LOGGING__TASK_LOG_READER: airflow.providers.cncf.kubernetes.log.KubernetesLogReader
+      _AIRFLOW__LOGGING__LOG_FILENAME_TEMPLATE: "{{ ti.dag_id }}/{{ ti.task_id }}/{{ run_id }}/{{ try_number }}.log"
+      _AIRFLOW__LOGGING__LOGGING_LEVEL: INFO
+      _AIRFLOW__LOGGING__TASK_LOG_READER: airflow.providers.cncf.kubernetes.log.KubernetesLogReader
     command: scheduler
 
   airflow-worker:
     image: apache/airflow:2.6.3-python3.10
     volumes:
-     - ./logs:/opt/airflow/logs
+      - ./logs:/opt/airflow/logs
     environment:
-         _AIRFLOW__LOGGING__LOG_FILENAME_TEMPLATE: "{{ ti.dag_id }}/{{ ti.task_id }}/{{ run_id }}/{{ try_number }}.log"
-         _AIRFLOW__LOGGING__LOGGING_LEVEL: INFO
-         _AIRFLOW__LOGGING__TASK_LOG_READER: airflow.providers.cncf.kubernetes.log.KubernetesLogReader
+      _AIRFLOW__LOGGING__LOG_FILENAME_TEMPLATE: "{{ ti.dag_id }}/{{ ti.task_id }}/{{ run_id }}/{{ try_number }}.log"
+      _AIRFLOW__LOGGING__LOGGING_LEVEL: INFO
+      _AIRFLOW__LOGGING__TASK_LOG_READER: airflow.providers.cncf.kubernetes.log.KubernetesLogReader
     command: worker
 ```
 
@@ -67,10 +67,10 @@ docker system prune -a
 
 This single command will remove:
 
-*   All stopped containers
-*   All networks not used by at least one container
-*   All dangling images
-*   All build cache
+- All stopped containers
+- All networks not used by at least one container
+- All dangling images
+- All build cache
 
 While effective, use this command cautiously as it will permanently remove data. Specifically, consider the `-a` flag, which removes all unused images and not just dangling ones. It’s best practice to schedule this via cron or a similar mechanism outside of operational hours. It's also worth ensuring that you use `.dockerignore` files when building your images. This prevents unintended files from getting added to the build context and thus bloating the resulting image.
 
@@ -90,18 +90,18 @@ This command, while simple, will tell you what storage driver your docker daemon
 
 Beyond these points, here's some additional advice:
 
-*   **Monitoring:** Implement robust disk space monitoring for your host machine and Docker storage. I've always relied on tools like Prometheus and Grafana to set up alerts for low disk space. It prevents surprises.
-*   **Regular Maintenance:** Make docker pruning a regular part of your system maintenance. Automation is crucial.
-*   **Image Optimization:** Pay attention to how you construct your Docker images, only add packages that are actually required.
-*   **Configuration Management:** Use a configuration management tool to ensure consistent deployments. Avoid the risk of manually deployed images and potentially forgetting to add crucial configurations.
-*   **Documentation:** Maintain thorough documentation for your Docker setup, including how you manage logs, images, and host storage. It is far easier to troubleshoot if documented well.
+- **Monitoring:** Implement robust disk space monitoring for your host machine and Docker storage. I've always relied on tools like Prometheus and Grafana to set up alerts for low disk space. It prevents surprises.
+- **Regular Maintenance:** Make docker pruning a regular part of your system maintenance. Automation is crucial.
+- **Image Optimization:** Pay attention to how you construct your Docker images, only add packages that are actually required.
+- **Configuration Management:** Use a configuration management tool to ensure consistent deployments. Avoid the risk of manually deployed images and potentially forgetting to add crucial configurations.
+- **Documentation:** Maintain thorough documentation for your Docker setup, including how you manage logs, images, and host storage. It is far easier to troubleshoot if documented well.
 
 For further learning I recommend diving deep into the following materials:
 
-*   **Docker documentation**: Docker’s official documentation is the best place to start. Focus on the sections about storage drivers, image layering, and general system maintenance.
-*   **"The Docker Book" by James Turnbull**: A comprehensive introduction to Docker that covers topics from the basics to more complex setups.
-*   **"Kubernetes in Action" by Marko Luksa**: If you plan to scale your Airflow deployment using Kubernetes, this is invaluable. It covers Docker concepts extensively within the Kubernetes ecosystem.
-*   **"Site Reliability Engineering" by Betsy Beyer, Chris Jones, Jennifer Petoff and Niall Richard Murphy**: This book from Google provides invaluable insights into monitoring and maintaining large-scale systems, which is quite helpful for keeping a complex system like dockerized airflow running smoothly.
-*   The documentation for your *specific storage driver*: Understanding how docker's storage drivers work is key to preventing issues down the road.
+- **Docker documentation**: Docker’s official documentation is the best place to start. Focus on the sections about storage drivers, image layering, and general system maintenance.
+- **"The Docker Book" by James Turnbull**: A comprehensive introduction to Docker that covers topics from the basics to more complex setups.
+- **"Kubernetes in Action" by Marko Luksa**: If you plan to scale your Airflow deployment using Kubernetes, this is invaluable. It covers Docker concepts extensively within the Kubernetes ecosystem.
+- **"Site Reliability Engineering" by Betsy Beyer, Chris Jones, Jennifer Petoff and Niall Richard Murphy**: This book from Google provides invaluable insights into monitoring and maintaining large-scale systems, which is quite helpful for keeping a complex system like dockerized airflow running smoothly.
+- The documentation for your _specific storage driver_: Understanding how docker's storage drivers work is key to preventing issues down the road.
 
 Dealing with "no space left on device" errors can be frustrating, but a systematic, knowledge-driven approach will almost certainly lead you to the root cause. It's a good opportunity to examine your setup and implement robust management. Remember: proactive maintenance is easier than reactive firefighting.

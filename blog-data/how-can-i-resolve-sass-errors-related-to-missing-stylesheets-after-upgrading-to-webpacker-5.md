@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-resolve-sass-errors-related-to-missing-stylesheets-after-upgrading-to-webpacker-5"
 ---
 
-Okay, let's dive into this. I’ve seen this exact situation countless times, particularly after a major upgrade like moving to Webpacker 5. The core issue almost always boils down to how Webpacker handles its asset pipeline, specifically its interaction with Sass loaders and the paths they use to locate stylesheets. It’s not that Webpacker 5 *broke* things exactly, but rather that the assumptions you might have had about how paths were resolved in older versions need a refresh.
+, let's dive into this. I’ve seen this exact situation countless times, particularly after a major upgrade like moving to Webpacker 5. The core issue almost always boils down to how Webpacker handles its asset pipeline, specifically its interaction with Sass loaders and the paths they use to locate stylesheets. It’s not that Webpacker 5 _broke_ things exactly, but rather that the assumptions you might have had about how paths were resolved in older versions need a refresh.
 
 From my experience, these errors manifest most often as either "file not found" messages during the Webpack compilation process, or style inconsistencies that occur in your application because styles intended to be included are simply not. I’ve debugged my fair share of these headaches, and usually, the problem lies in misconfigured `sass-loader` paths, changes in default behavior within Webpacker 5 itself, or a combination of both.
 
@@ -20,17 +20,16 @@ For example, instead of:
 
 ```scss
 // Before - might work with older webpacker
-@import 'variables';
-@import '../mixins';
-
+@import "variables";
+@import "../mixins";
 ```
 
 You might need to be more explicit and rely on webpack's resolution mechanism:
 
 ```scss
 // After - more robust in Webpacker 5
-@import '~stylesheets/variables';
-@import '~stylesheets/mixins';
+@import "~stylesheets/variables";
+@import "~stylesheets/mixins";
 ```
 
 Here, the `~` acts as an alias that tells Webpack to search from your specified `sass-loader` include paths. Now, that `stylesheets` directory, if added to the include paths, becomes your source root for resolving sass imports. This is a critical change.
@@ -60,24 +59,26 @@ Now, consider the following example of how you'd extend the sass-loader configur
 ```javascript
 // config/webpack/environment.js
 
-const { environment } = require('@rails/webpacker')
+const { environment } = require("@rails/webpacker");
 
-const sassLoader = environment.loaders.get('sass');
+const sassLoader = environment.loaders.get("sass");
 
 if (sassLoader) {
-  sassLoader.use.find(item => item.loader === 'sass-loader').options.sassOptions = {
-    includePaths: ['app/assets/stylesheets'],
+  sassLoader.use.find(
+    (item) => item.loader === "sass-loader"
+  ).options.sassOptions = {
+    includePaths: ["app/assets/stylesheets"],
   };
 }
 
-
-module.exports = environment
+module.exports = environment;
 ```
+
 This ensures that when the Sass loader encounters `@import '~stylesheets/variables'`, it knows to look within your `app/assets/stylesheets` directory. The `~` syntax with the loader is critical here and is part of webpack resolution. You can think of it as "look for this string from where `includePaths` are defined". Without this, it has no idea how to resolve `~stylesheets/variables`.
 
 **Problem Area 3: Webpacker Configuration Conflicts**
 
-Sometimes the issues are more subtle. Perhaps you've got multiple copies of `sass-loader` in your `package.json` or conflicting versions, which can lead to unexpected behavior. Also, if you migrated and the settings aren't consistent, that can cause the problem. Webpacker relies on explicit configuration, so even *slightly* off settings will surface as an issue. Double-checking your `webpacker.yml` and `package.json` for consistency is key here.
+Sometimes the issues are more subtle. Perhaps you've got multiple copies of `sass-loader` in your `package.json` or conflicting versions, which can lead to unexpected behavior. Also, if you migrated and the settings aren't consistent, that can cause the problem. Webpacker relies on explicit configuration, so even _slightly_ off settings will surface as an issue. Double-checking your `webpacker.yml` and `package.json` for consistency is key here.
 
 Here’s an example of how the change can be applied to the `webpacker.yml` file (although I prefer the `environment.js` file for greater flexibility, this is also a valid solution):
 

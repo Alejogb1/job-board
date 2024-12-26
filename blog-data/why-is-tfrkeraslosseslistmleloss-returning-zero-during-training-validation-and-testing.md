@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-tfrkeraslosseslistmleloss-returning-zero-during-training-validation-and-testing"
 ---
 
-Okay, let's tackle this. I've seen this particular behavior with `tfr.keras.losses.ListMLELoss` before, and it can be a bit perplexing at first. I recall a project back in '19, where we were attempting to fine-tune a ranking model for an internal search engine. We used ListMLE, expecting significant improvement over pointwise losses, and ran straight into this issue: all zeroes for loss. It wasn't the model's fault directly, and it's definitely not some mystical bug, but rather how ListMLE is formulated and how it interacts with common data preparation practices.
+, let's tackle this. I've seen this particular behavior with `tfr.keras.losses.ListMLELoss` before, and it can be a bit perplexing at first. I recall a project back in '19, where we were attempting to fine-tune a ranking model for an internal search engine. We used ListMLE, expecting significant improvement over pointwise losses, and ran straight into this issue: all zeroes for loss. It wasn't the model's fault directly, and it's definitely not some mystical bug, but rather how ListMLE is formulated and how it interacts with common data preparation practices.
 
 The core reason why you're likely encountering zero loss with `tfr.keras.losses.ListMLELoss` lies in the way it calculates probabilities and subsequent loss values. ListMLE, as detailed by Cao et al. in their paper "Learning to Rank: From Pairwise Approach to Listwise Approach," relies heavily on the proper construction of the permutation probabilities. Specifically, it calculates the probability of the true ranking, given all possible permutations of the input list. If, at the beginning of training, the model predicts identical scores (or scores extremely close to one another) for all items in a list, then the probability distribution across all permutations approaches uniformity; and the negative logarithm of that uniform distribution is zero, or very close to zero, resulting in a zero loss for the entire batch. This isn’t a bug; it's a natural consequence of the softmax operation within the ListMLE framework.
 
@@ -16,11 +16,11 @@ Now, how do you correct this? It often boils down to a few things: proper score 
 
 The inputs that your ranking model uses need to be varied enough such that the model produces at least some differences in the predicted scores in the initial iterations. Poorly normalized data and features that are too similar across the items within a ranking list can contribute to uniform predictions. If, for example, your input features were all nearly identical, even with a well-initialized model, you would likely see very similar scores initially, leading directly to our problem.
 
-*Solution:* Ensure your input data is well-normalized (e.g., using min-max scaling or standardization). Thorough feature engineering to capture nuances that can be used for ranking will help. Check that the data truly allows the model to make distinctions.
+_Solution:_ Ensure your input data is well-normalized (e.g., using min-max scaling or standardization). Thorough feature engineering to capture nuances that can be used for ranking will help. Check that the data truly allows the model to make distinctions.
 
 **2. Adjusting Predicted Scores for Initial Variance:**
 
- Sometimes, even with scaled inputs, the model may output uniform scores during the beginning of the learning process due to poor initialization. One effective workaround is to add a small, random variance to the initial scores. This will make the permutations probabilities non-uniform even if the predictions are initially very similar. This perturbation nudges the model to differentiate between items. This nudge will allow it to start differentiating between different permutations and gradients will become non-zero, allowing the learning process to progress. This is not ideal from a purely mathematical perspective but quite practical in real-world implementations. Let's look at a practical implementation:
+Sometimes, even with scaled inputs, the model may output uniform scores during the beginning of the learning process due to poor initialization. One effective workaround is to add a small, random variance to the initial scores. This will make the permutations probabilities non-uniform even if the predictions are initially very similar. This perturbation nudges the model to differentiate between items. This nudge will allow it to start differentiating between different permutations and gradients will become non-zero, allowing the learning process to progress. This is not ideal from a purely mathematical perspective but quite practical in real-world implementations. Let's look at a practical implementation:
 
 ```python
 import tensorflow as tf
@@ -100,6 +100,7 @@ optimizer = Adam(learning_rate=0.001, clipnorm=1.0) # Added clipnorm
 # model.compile(optimizer=optimizer, loss=tfr.keras.losses.ListMLELoss())
 
 ```
+
 The `clipnorm` parameter specifies the maximum norm of the gradient. Adjust this value based on the behavior of your loss during training.
 
 **Recommended Resources:**

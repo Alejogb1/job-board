@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-create-custom-multi-agent-environments-for-drl-and-maddpg"
 ---
 
-Alright, let’s tackle this. Creating custom multi-agent environments for deep reinforcement learning (DRL), especially with algorithms like multi-agent deep deterministic policy gradient (MADDPG), isn’t a trivial task, but it's absolutely achievable with a systematic approach. I've been down this road a few times, particularly when working on simulated logistics systems a few years ago – trying to get a fleet of virtual vehicles to coordinate was… instructive.
+, let’s tackle this. Creating custom multi-agent environments for deep reinforcement learning (DRL), especially with algorithms like multi-agent deep deterministic policy gradient (MADDPG), isn’t a trivial task, but it's absolutely achievable with a systematic approach. I've been down this road a few times, particularly when working on simulated logistics systems a few years ago – trying to get a fleet of virtual vehicles to coordinate was… instructive.
 
 The first thing to understand is that you're essentially designing a simulation. This means you need to define the environment's rules, agent interactions, state spaces, action spaces, and reward mechanisms. It's a bit like crafting a mini-universe; if something's off in the design, the learning process will be skewed.
 
@@ -206,6 +206,7 @@ if __name__ == '__main__':
     print("Rewards:\n", rewards)
     print("Done:", done)
 ```
+
 In this snippet, agents no longer observe the full environment, but have a limited 'sensor range'. This often occurs in realistic environments. The `get_state()` method now returns a list of agent-specific states. This is crucial for dealing with situations where agents do not have complete information.
 
 These snippets are illustrative. When building real systems, it is vital to adhere to good practices. I recommend the book "Reinforcement Learning: An Introduction" by Sutton and Barto for a strong theoretical foundation and insights into different reward structures. Additionally, exploring "Multi-Agent Reinforcement Learning: A Comprehensive Survey" by Yang and Wang can help understand the various challenges and solutions in the multi-agent context. Also, read into "Deep Reinforcement Learning Hands-On" by Maxim Lapan for practical guides and implementations. Finally, the OpenAI gym library code is a great reference for well-written and robust environment implementations.

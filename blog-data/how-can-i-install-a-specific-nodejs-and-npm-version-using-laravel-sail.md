@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-install-a-specific-nodejs-and-npm-version-using-laravel-sail"
 ---
 
-Alright, let's tackle this. This isn’t an uncommon scenario, and it’s definitely something I’ve bumped into a few times over the years, especially when dealing with legacy projects or wanting to ensure a consistent development environment across a team. You're asking about how to specify exact node and npm versions within your Laravel Sail setup. Sail, by default, uses the versions bundled within the official docker image, but we can definitely customize this. I'll walk you through it, explain the why, and provide some working examples.
+, let's tackle this. This isn’t an uncommon scenario, and it’s definitely something I’ve bumped into a few times over the years, especially when dealing with legacy projects or wanting to ensure a consistent development environment across a team. You're asking about how to specify exact node and npm versions within your Laravel Sail setup. Sail, by default, uses the versions bundled within the official docker image, but we can definitely customize this. I'll walk you through it, explain the why, and provide some working examples.
 
 The core idea is to modify the `Dockerfile` used by Laravel Sail. The default one pulls a general image, but we’re going to use that as a base and add our version-specific instructions. I’ve found this to be the most reliable approach, as it’s tightly coupled to the environment's definition.
 
@@ -110,22 +110,22 @@ ENV PATH="/usr/local/bin:${PATH}"
 1.  We start with `node:16.15.1` as the base for a layer named `node-base`, where we install the target version of `npm`.
 2.  Next, we switch to the `laravelsail/php82-composer:latest` image for the next stage.
 3.  Using `COPY --from=node-base`, we copy `node` and `npm` binaries along with the node modules from the `node-base` layer to this image, ensuring the correct versions are available.
-4. Finally, we set up the `PATH` to include the location of these copied binaries.
+4.  Finally, we set up the `PATH` to include the location of these copied binaries.
 
 **Considerations:**
 
-*   **Caching:** Docker image builds are cached. When changing the Dockerfile, make sure to use `sail build --no-cache` to rebuild the image with your changes. This helps to avoid issues where your changes are not reflected.
-*   **Consistency:** Using a specific version of Node.js and npm ensures consistent behaviour across different environments (development, staging, production).
-*   **Maintenance:** Be aware of security updates and potential incompatibilities, so it's good practice to periodically review your chosen versions.
-*   **Image Size:** While the node base image approach is elegant, the copying of layers from the node stage results in larger images. Weigh this factor against the benefits of clearer version control.
+- **Caching:** Docker image builds are cached. When changing the Dockerfile, make sure to use `sail build --no-cache` to rebuild the image with your changes. This helps to avoid issues where your changes are not reflected.
+- **Consistency:** Using a specific version of Node.js and npm ensures consistent behaviour across different environments (development, staging, production).
+- **Maintenance:** Be aware of security updates and potential incompatibilities, so it's good practice to periodically review your chosen versions.
+- **Image Size:** While the node base image approach is elegant, the copying of layers from the node stage results in larger images. Weigh this factor against the benefits of clearer version control.
 
 **Recommended Resources:**
 
 For deeper understanding, I highly recommend these resources:
 
-*   **"Docker in Action" by Jeff Nickoloff and Stephen Kuenzli:** This book provides an in-depth look at Docker and its various concepts, which are essential for understanding the modifications here.
-*   **The official Node.js documentation:** It's always good practice to stay abreast of official updates and version changes directly from the source.
-*   **The official `nvm` repository on GitHub:** Provides detailed documentation on using the node version manager which is important to fully comprehend scenario 1.
-*   **The Docker Documentation:** Provides the details you need to understand how `Dockerfile`s work and how builds are structured.
+- **"Docker in Action" by Jeff Nickoloff and Stephen Kuenzli:** This book provides an in-depth look at Docker and its various concepts, which are essential for understanding the modifications here.
+- **The official Node.js documentation:** It's always good practice to stay abreast of official updates and version changes directly from the source.
+- **The official `nvm` repository on GitHub:** Provides detailed documentation on using the node version manager which is important to fully comprehend scenario 1.
+- **The Docker Documentation:** Provides the details you need to understand how `Dockerfile`s work and how builds are structured.
 
 This comprehensive breakdown should provide a solid starting point for customising Node and npm versions within your Laravel Sail environment. The approach you chose depends on your comfort level with Docker, and your specific project needs. I've personally used all of these methods and each has its own set of tradeoffs and advantages. I hope this helps!

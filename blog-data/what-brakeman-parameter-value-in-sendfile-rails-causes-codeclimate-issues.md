@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "what-brakeman-parameter-value-in-sendfile-rails-causes-codeclimate-issues"
 ---
 
-Alright, let's unpack this. It's been a while since I've actively worked with a Rails monolith that uses `send_file` so extensively it started triggering CodeClimate alerts related to Brakeman, but the memory’s still there. The specific issue we're likely hitting revolves around the `disposition` parameter when it's used improperly. I recall a particularly hairy incident back in '17 at a startup where a carelessly handled download feature nearly exposed sensitive data through a misconfigured header. It was a learning experience, to say the least.
+, let's unpack this. It's been a while since I've actively worked with a Rails monolith that uses `send_file` so extensively it started triggering CodeClimate alerts related to Brakeman, but the memory’s still there. The specific issue we're likely hitting revolves around the `disposition` parameter when it's used improperly. I recall a particularly hairy incident back in '17 at a startup where a carelessly handled download feature nearly exposed sensitive data through a misconfigured header. It was a learning experience, to say the least.
 
 The `send_file` method in Rails is generally used to stream file contents as a response. The `disposition` parameter dictates how a browser should handle the file. If left unspecified, the default, typically ‘inline,’ attempts to display the file within the browser if possible. However, when dealing with non-viewable files, or when the user explicitly needs to download the file, setting the `disposition` to `attachment` is the standard practice. The problem isn’t necessarily using `attachment`, it’s what happens when you couple it with user-supplied parameters, making it vulnerable.
 
 Brakeman flags this scenario because, without careful sanitization, an attacker could manipulate the filename included in the Content-Disposition header through the `filename` option of the `disposition` parameter. This isn't a direct code execution risk. Instead, it's more related to potential information disclosure and, in specific scenarios, to denial of service if the generated filename is long or contains special characters which could confuse the browser. Consider that most browser implementations interpret filenames with a limited set of characters so anything outside that set may have unintended consequences.
 
-Let’s look at some code examples. First, a typical example that *doesn't* cause issues:
+Let’s look at some code examples. First, a typical example that _doesn't_ cause issues:
 
 ```ruby
 def download_report
@@ -61,8 +61,8 @@ The core takeaway from the Brakeman warning isn’t just to avoid using `params`
 
 For further reading on secure file handling practices and web application security in general, I'd recommend starting with the following:
 
-*   **"The Web Application Hacker's Handbook: Finding and Exploiting Security Flaws" by Dafydd Stuttard and Marcus Pinto:** This book provides a comprehensive guide to understanding web vulnerabilities, including header manipulation and file handling issues, and how to exploit them. It’s not specific to Rails but fundamental concepts it exposes still apply to any web framework.
-*   **OWASP (Open Web Application Security Project) documentation:** Specifically, the section on input validation and encoding. OWASP provides resources and guides for secure coding practices. The Cheat Sheet Series is a good starting point, especially the Input Validation Cheat Sheet.
-*   **"Secure Programming with Static Analysis" by Brian Chess and Jacob West:** This one delves into static analysis tools and how to use them effectively to find vulnerabilities, which is the very problem Brakeman is trying to address in Rails applications. Although it’s not specific to web applications, it covers the static analysis concepts that apply to Brakeman.
+- **"The Web Application Hacker's Handbook: Finding and Exploiting Security Flaws" by Dafydd Stuttard and Marcus Pinto:** This book provides a comprehensive guide to understanding web vulnerabilities, including header manipulation and file handling issues, and how to exploit them. It’s not specific to Rails but fundamental concepts it exposes still apply to any web framework.
+- **OWASP (Open Web Application Security Project) documentation:** Specifically, the section on input validation and encoding. OWASP provides resources and guides for secure coding practices. The Cheat Sheet Series is a good starting point, especially the Input Validation Cheat Sheet.
+- **"Secure Programming with Static Analysis" by Brian Chess and Jacob West:** This one delves into static analysis tools and how to use them effectively to find vulnerabilities, which is the very problem Brakeman is trying to address in Rails applications. Although it’s not specific to web applications, it covers the static analysis concepts that apply to Brakeman.
 
 Understanding that Brakeman is trying to highlight security concerns, not just stylistic problems, is key. The `send_file` method is very useful, but as with any feature that touches the file system and headers, it needs to be handled cautiously with a strong focus on sanitization. I hope this helps clarify the issue. Let me know if you have more questions.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-plot-a-learning-curve-using-the-neuralnet-package-in-r"
 ---
 
-Alright, let’s dive into plotting learning curves with the `neuralnet` package in R. I've been through this particular process quite a few times, and it’s something that often comes up when you’re trying to refine a neural network model. It's less about straightforward plotting functions within `neuralnet` itself and more about extracting and visualizing the training progress, often involving a bit of manual setup. Specifically, `neuralnet` doesn't inherently output a learning curve object like some other libraries might. So, we have to craft our own.
+, let’s dive into plotting learning curves with the `neuralnet` package in R. I've been through this particular process quite a few times, and it’s something that often comes up when you’re trying to refine a neural network model. It's less about straightforward plotting functions within `neuralnet` itself and more about extracting and visualizing the training progress, often involving a bit of manual setup. Specifically, `neuralnet` doesn't inherently output a learning curve object like some other libraries might. So, we have to craft our own.
 
 My experience typically stems from scenarios where I'm tuning a model, perhaps for a time-series prediction or a classification problem. I might initially start with a fairly simple network and then observe its performance during training. The visual representation of this learning process, the learning curve, allows for quick insights into underfitting, overfitting, and how different parameters affect model training. We're going to focus on methods that allow you to get this information out of the neural network training process.
 
@@ -79,9 +79,9 @@ epochs <- 100
 for (i in 1:epochs) {
     nn <- neuralnet(formula, data = train_data, hidden = c(5,3),
                  linear.output = TRUE, lifesign = 'none', stepmax = 1, startweights = nn$weights)
-    
+
     train_errors[[i]] <- nn$result.matrix[1,1] # Track training error
-    
+
     val_pred <- compute(nn, val_data[, c("x1", "x2")])$net.result # Use the same network to validate
     val_error <- sum((val_data$y - val_pred)^2) # Calc SSE on validation data
     val_errors[[i]] <- val_error
@@ -131,7 +131,7 @@ epochs <- 100
 for (i in 1:epochs) {
   nn <- neuralnet(formula, data = data, hidden = c(5,3),
                 linear.output = TRUE, lifesign = 'none', stepmax = 1, startweights = nn$weights)
-  
+
   predictions <- compute(nn, data[, c("x1", "x2")])$net.result
   current_mae <- mae(data$y, predictions)
   epoch_maes[[i]] <- current_mae
@@ -150,10 +150,10 @@ In this instance, we calculate the MAE after each epoch, demonstrating the flexi
 
 For gaining a deeper understanding, I'd recommend looking into these resources:
 
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This is the go-to text for comprehensive deep learning concepts. Understanding the mathematical underpinnings of neural networks enhances interpretation of learning curves significantly.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This is the go-to text for comprehensive deep learning concepts. Understanding the mathematical underpinnings of neural networks enhances interpretation of learning curves significantly.
 
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** While focusing on Python libraries, the book contains an excellent discussion on evaluating models using various metrics and provides many practical examples, which helps understand error evaluations and training dynamics.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** While focusing on Python libraries, the book contains an excellent discussion on evaluating models using various metrics and provides many practical examples, which helps understand error evaluations and training dynamics.
 
-*   **Statistical Learning with Sparsity: The Lasso and Generalizations by Trevor Hastie, Robert Tibshirani, and Martin Wainwright:** This book delves deep into model tuning and regularization, which is extremely valuable when analyzing learning curves and dealing with over or underfitting.
+- **Statistical Learning with Sparsity: The Lasso and Generalizations by Trevor Hastie, Robert Tibshirani, and Martin Wainwright:** This book delves deep into model tuning and regularization, which is extremely valuable when analyzing learning curves and dealing with over or underfitting.
 
 In conclusion, plotting learning curves with `neuralnet` requires a more hands-on approach. You must collect the relevant performance metrics and then use your preferred plotting tool to visualize the training progress. By applying the concepts and code examples I’ve laid out, you will gain a better understanding of your models behavior and learn how to refine neural networks more effectively. This practical, iterative method has always proven to be essential throughout my work with neural networks.

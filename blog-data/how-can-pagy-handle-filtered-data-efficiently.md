@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-pagy-handle-filtered-data-efficiently"
 ---
 
-Alright, let’s delve into this. I’ve seen this exact scenario pop up more times than I can count, particularly when building data-heavy applications. The challenge of efficiently handling filtered data with pagination is a common one, and *Pagy*, as a gem, provides some robust tools to address it. It’s not just about slapping a pagination bar on a page; it's about ensuring the queries remain performant even when filters get complex. My experience with this has led me to a few go-to strategies, and I'll walk you through them, showing you some code snippets along the way.
+, let’s delve into this. I’ve seen this exact scenario pop up more times than I can count, particularly when building data-heavy applications. The challenge of efficiently handling filtered data with pagination is a common one, and _Pagy_, as a gem, provides some robust tools to address it. It’s not just about slapping a pagination bar on a page; it's about ensuring the queries remain performant even when filters get complex. My experience with this has led me to a few go-to strategies, and I'll walk you through them, showing you some code snippets along the way.
 
-The core problem here is that without careful handling, each page request could trigger a database query that re-applies all the filters *again*. This is inefficient and can quickly bog down an application when dealing with large datasets. The trick is to leverage the capabilities of your database system, specifically with techniques like scope chaining in rails, to effectively manage the filtering *before* paginating.
+The core problem here is that without careful handling, each page request could trigger a database query that re-applies all the filters _again_. This is inefficient and can quickly bog down an application when dealing with large datasets. The trick is to leverage the capabilities of your database system, specifically with techniques like scope chaining in rails, to effectively manage the filtering _before_ paginating.
 
 Let’s start with an example. Assume we have a model called `Product` and users can filter these products by `category` and `price_range`. Without any optimization, a naive implementation might look like this within a controller action, which is really where the majority of these issues appear.
 
@@ -49,7 +49,7 @@ end
 
 Notice how the controller action is considerably cleaner and focuses solely on data retrieval and pagy integration. The filtering responsibilities reside in the `Product` model where they belong. This chaining approach not only improves readability and organization but also takes advantage of ActiveRecord’s lazy evaluation. Queries are constructed efficiently and are only executed when `pagy()` method initiates the database retrieval. This approach enhances performance, as only the necessary conditions are used to build the specific query, and it's not re-applying or recreating the conditions each time a page is requested.
 
-The *next level* of efficiency comes when integrating this with indexed database columns. If the columns used for filtering (`category`, `price`) are appropriately indexed, queries become much faster. If you are not familiar with database indexing, "Database Internals: A Deep Dive Into How Databases Work" by Alex Petrov is an excellent reference for understanding these concepts.
+The _next level_ of efficiency comes when integrating this with indexed database columns. If the columns used for filtering (`category`, `price`) are appropriately indexed, queries become much faster. If you are not familiar with database indexing, "Database Internals: A Deep Dive Into How Databases Work" by Alex Petrov is an excellent reference for understanding these concepts.
 
 Now, there are cases where filters aren’t just simple equality conditions or ranges. You might need more elaborate filtering such as searching across multiple fields or doing full-text searches. In such scenarios, it's crucial to leverage database-specific search features. Here's an example using a simple text search using a scope:
 
@@ -67,6 +67,7 @@ class Product < ApplicationRecord
 end
 
 ```
+
 And our controller action:
 
 ```ruby
@@ -78,7 +79,7 @@ end
 
 This particular example utilizes simple `LIKE` queries. In a real-world application, I’d strongly advise to use database features like full-text indexes (such as PostgreSQL’s full text search capabilities) for such requirements. Books like “PostgreSQL Query Optimization” by Deborah L. Wilson provide thorough understanding of such techniques.
 
-Another point that's frequently missed is the count optimization provided by *Pagy*. When `pagy` is called, it performs two database queries: one to retrieve the paginated records and another to determine the total record count for rendering pagination links. Sometimes this count query might have performance overhead particularly if your filtering involves subqueries. *Pagy* has an optional count parameter to address that issue when the total count of records is available via other means, such as with `count()` on a cached association if your conditions permit.
+Another point that's frequently missed is the count optimization provided by _Pagy_. When `pagy` is called, it performs two database queries: one to retrieve the paginated records and another to determine the total record count for rendering pagination links. Sometimes this count query might have performance overhead particularly if your filtering involves subqueries. _Pagy_ has an optional count parameter to address that issue when the total count of records is available via other means, such as with `count()` on a cached association if your conditions permit.
 
 Let’s consider a scenario where we are applying several filters on an associated model. Retrieving the total count by simply running `count` on the resulting scope could be slow. If we assume we are filtering `Order` records which have `line_items`, and we are filtering by a product attribute on the `line_items`:
 
@@ -114,6 +115,6 @@ def index
 end
 ```
 
-Here, the `count: count` tells *Pagy* to use our precalculated count instead of performing a second query. This optimization is particularly crucial when dealing with complex joins or subqueries within the filter.
+Here, the `count: count` tells _Pagy_ to use our precalculated count instead of performing a second query. This optimization is particularly crucial when dealing with complex joins or subqueries within the filter.
 
-In summary, handling filtered data efficiently with *Pagy* involves more than just paginating an ActiveRecord collection. The key is leveraging database features and optimizing your query construction, especially by using scopes in your models. Remember the importance of database indexing and using the optional `count` argument of the `pagy` method to reduce the number of queries when possible. By combining these techniques, you can ensure a smooth user experience with performant pagination even under complex filtering scenarios. And that, fundamentally, is what keeps any application humming.
+In summary, handling filtered data efficiently with _Pagy_ involves more than just paginating an ActiveRecord collection. The key is leveraging database features and optimizing your query construction, especially by using scopes in your models. Remember the importance of database indexing and using the optional `count` argument of the `pagy` method to reduce the number of queries when possible. By combining these techniques, you can ensure a smooth user experience with performant pagination even under complex filtering scenarios. And that, fundamentally, is what keeps any application humming.

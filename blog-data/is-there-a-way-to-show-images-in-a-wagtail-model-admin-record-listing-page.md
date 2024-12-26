@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "is-there-a-way-to-show-images-in-a-wagtail-model-admin-record-listing-page"
 ---
 
-alright, so, you're looking to get images showing up in the wagtail model admin record listings, right? yeah, i've been down that rabbit hole before. it's not as straightforward as it probably should be, but totally doable. let me share some stuff i've picked up over the years.
+, so, you're looking to get images showing up in the wagtail model admin record listings, right? yeah, i've been down that rabbit hole before. it's not as straightforward as it probably should be, but totally doable. let me share some stuff i've picked up over the years.
 
 first thing, wagtail's admin is built on django's admin, so a lot of the concepts are pretty similar, but with a wagtail-specific twist. the basic list view you see, that's just rendering stuff based on the model's fields. directly dropping images in there...not gonna work. django admin, and by extension wagtail admin, isn't designed to render full html snippets by default within the list display columns. it expects simple text or a reference to a display function. it's all about the database.
 
 my first encounter with this problem was way back when i was building an internal tool for managing our product images. the client wanted to be able to quickly see thumbnails of the products in the admin, instead of just file names. i mean, who can keep track of all those `product_123_v3_final.jpg` names without losing their minds. the default admin listing was…painful.
 
-anyway, here’s the core of the approach: we need to create a custom method in our model that constructs the html tag for the image and then tell wagtail to use it for the list view column. we'll take advantage of `format_html` from django to avoid any xss issues. that's pretty essential, you *really* don't want to be messing with raw html strings and user input especially in the admin.
+anyway, here’s the core of the approach: we need to create a custom method in our model that constructs the html tag for the image and then tell wagtail to use it for the list view column. we'll take advantage of `format_html` from django to avoid any xss issues. that's pretty essential, you _really_ don't want to be messing with raw html strings and user input especially in the admin.
 
 let’s imagine you’ve got a model called, say, `product`, and it has an image field, let's call it `main_image`. here's what your `models.py` would start looking like:
 
@@ -67,7 +67,7 @@ modeladmin_register(ProductAdmin)
 
 the key part here is `list_display = ('title', 'image_preview')`. this tells wagtail to show both the title of the product and the returned string from `image_preview` method in the list view. and boom. images should now be displaying as thumbnails.
 
-now, don't get me wrong, it's tempting to bypass the `rendition` process and just throw the original url in there. you *could*, but you *really* shouldn't unless you plan on showing huge unoptimized images in your admin listing. not good. always, always use renditions for thumbnails. or your admin will load slower than a dial-up modem during a solar flare and no one will thank you for that.
+now, don't get me wrong, it's tempting to bypass the `rendition` process and just throw the original url in there. you _could_, but you _really_ shouldn't unless you plan on showing huge unoptimized images in your admin listing. not good. always, always use renditions for thumbnails. or your admin will load slower than a dial-up modem during a solar flare and no one will thank you for that.
 
 i’ve had experiences where i was pulling in images from external sources. and that needs a totally different approach, since you won't be able to use the `wagtailimages.Image` model. if you are storing just the urls instead of an actual wagtail image instance, you would modify the `image_preview` method in a similar way, like so. imagine you have `image_url` as a CharField that stores the full url instead of foreign key.
 
@@ -87,7 +87,7 @@ one thing i learned the hard way - and it’s a bit unrelated to this, but relev
 
 now, for more complex stuff like having custom display logic or custom html for different model types, you'd probably need to look into writing custom template tags or inclusion tags and referencing those on the list_display field, but that's another topic for another time. for this you can refer to the django's template tags documentation it has some pretty cool examples for more advanced user interfaces in lists and more. this can make the admin panel much more dynamic, but if we're being honest, you will rarely need it if you just need to show thumbnail representations.
 
-also, if you are dealing with massive amounts of data, you might want to think about the performance impact of fetching the rendition for *each* item in the list. for large tables, it could slow down the rendering. it's not too common but if you are dealing with thousands of records it might be something you should take into account. maybe look at the documentation of django-select2, that is sometimes recommended on these cases, and allows you to lazy load the data in the admin pages. for the majority of cases this is not a concern at all, but i wanted to note it as a possibility.
+also, if you are dealing with massive amounts of data, you might want to think about the performance impact of fetching the rendition for _each_ item in the list. for large tables, it could slow down the rendering. it's not too common but if you are dealing with thousands of records it might be something you should take into account. maybe look at the documentation of django-select2, that is sometimes recommended on these cases, and allows you to lazy load the data in the admin pages. for the majority of cases this is not a concern at all, but i wanted to note it as a possibility.
 
 i hope this helps. honestly, displaying images in the admin might seem daunting at first, but once you get the basic flow, it becomes quite easy, and opens lots of different possibilities for making your wagtail admin more intuitive.
 one more thing before i go, if you want to dive deeper into django's admin, have a look at "two scoops of django". it's not wagtail-specific, but it covers a lot of the core concepts really well, and some things overlap with wagtail's admin, it helped me a lot when i started out. and of course the official django documentation is a must read. they always have great examples and details of almost all the issues you might encounter.

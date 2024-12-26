@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-solve-a-timeout-error-in-laravel-5"
 ---
 
-Okay so timeout errors in Laravel 5 eh I've been there more times than I'd like to admit let's break this down real simple and avoid all the fluffy stuff
+timeout errors in Laravel 5 eh I've been there more times than I'd like to admit let's break this down real simple and avoid all the fluffy stuff
 
 First off timeouts they're basically your web server or php script saying "yo I'm done waiting I'm out" and it can stem from a bunch of things mostly boils down to your code taking too long to execute or the server not being patient enough either way we need to fix it
 
@@ -18,7 +18,7 @@ Yeah this one's usually the main offender You have a query that's doing too much
 
 **2 External API Calls**
 
-Okay imagine this you're pulling data from a third-party api and that api is slow unresponsive or just plain broken your application is stuck there waiting and waiting for that response and again if it takes too long timeout city
+imagine this you're pulling data from a third-party api and that api is slow unresponsive or just plain broken your application is stuck there waiting and waiting for that response and again if it takes too long timeout city
 
 **3 Resource-Intensive Tasks**
 
@@ -52,6 +52,7 @@ User::where('role','admin')->where('created_at','<','2020-01-01')->where('status
 dd(DB::getQueryLog());
 // the output will show you time taken by each query
 ```
+
 Another thing I've seen people not consider is eager loading it can reduce number of queries significantly so in laravel whenever you are accessing relationship and if you do it in a loop you'll end up with an N+1 problem eager loading tries to solve that issue
 
 **Solution 2: Handling API Call Timeouts**
@@ -147,14 +148,15 @@ class ProcessImage implements ShouldQueue
     }
 }
 ```
+
 Now here is a random joke just because: Why was the database always invited to parties? Because it could bring all the tables.
 
 And also very important consider optimizing webserver timeout configurations too increase time limit on php fpm or webserver if you can not do code based optimizations however increasing this timeout limits should only be a last resort
 
 **Resources:**
 
-*   **"High Performance MySQL" by Baron Schwartz, Peter Zaitsev, and Vadim Tkachenko:** A great book for understanding database performance. It will help you write better queries.
-*   **"Patterns of Enterprise Application Architecture" by Martin Fowler:** This one goes a lot into architectural things it can help you understand queues and batch processing.
-*   **Laravel Official Documentation:** The best place for getting to know the latest version and core concepts about framework.
+- **"High Performance MySQL" by Baron Schwartz, Peter Zaitsev, and Vadim Tkachenko:** A great book for understanding database performance. It will help you write better queries.
+- **"Patterns of Enterprise Application Architecture" by Martin Fowler:** This one goes a lot into architectural things it can help you understand queues and batch processing.
+- **Laravel Official Documentation:** The best place for getting to know the latest version and core concepts about framework.
 
 And there you have it pretty much every timeout I've ever dealt with has fallen into one of these categories and honestly the fixes are fairly consistent once you learn how to tackle each problem Remember to profile your code regularly monitor your application and keep learning because it is the key in this field. Let me know if you have a specific situation or another issue we can address that.

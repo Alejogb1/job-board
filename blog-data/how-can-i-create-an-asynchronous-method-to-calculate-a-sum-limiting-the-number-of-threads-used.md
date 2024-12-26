@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-an-asynchronous-method-to-calculate-a-sum-limiting-the-number-of-threads-used"
 ---
 
-Okay, let's tackle this. I've seen this scenario more times than I can count, particularly when dealing with batch processing or intensive computation. The core challenge is how to perform calculations concurrently without overwhelming the system by spawning too many threads. I’ll walk you through the nuances of creating an asynchronous method to calculate a sum while actively managing the thread pool. It's a classic problem, and there are several ways to approach it, but the key is finding the balance between concurrency and resource consumption.
+, let's tackle this. I've seen this scenario more times than I can count, particularly when dealing with batch processing or intensive computation. The core challenge is how to perform calculations concurrently without overwhelming the system by spawning too many threads. I’ll walk you through the nuances of creating an asynchronous method to calculate a sum while actively managing the thread pool. It's a classic problem, and there are several ways to approach it, but the key is finding the balance between concurrency and resource consumption.
 
 My experience with a past project involving large-scale data aggregation comes to mind. We had to compute aggregates from millions of data points coming in from various sources, and doing this serially would have taken days. The initial naive approach was to launch a thread for every data point, which unsurprisingly led to performance bottlenecks and resource exhaustion. We quickly learned the importance of thread pooling and asynchronous execution.
 
@@ -84,6 +84,7 @@ if __name__ == '__main__':
     print(f"Total sum: {total_sum}")
     print(f"Time taken: {end_time - start_time:.4f} seconds")
 ```
+
 Here, we're explicitly creating `threading.Thread` objects, starting them, and then using `join` to wait for their completion. The partial sums are communicated back via a queue. This approach gives you more control over individual threads but requires manual management of threading creation and synchronization mechanisms (like this queue), making it less streamlined than the previous `concurrent.futures` example but more flexible if needed.
 
 Another important thing I’ve seen often overlooked is the overhead related to creating threads. While threading is efficient, creation and destruction of threads can still have its impact. This is why thread pooling is paramount in production environments. The `ThreadPoolExecutor` internally reuses threads, reducing the overhead.

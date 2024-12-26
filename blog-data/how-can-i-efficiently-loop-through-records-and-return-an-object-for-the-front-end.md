@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-efficiently-loop-through-records-and-return-an-object-for-the-front-end"
 ---
 
-Alright, let's tackle this. Over the years, I've seen countless variations of this scenario. It’s a very common problem – getting data from a backend system, often in a list or record format, and transforming it into something the front end can easily consume. Efficiently looping and restructuring that data is critical to good performance. I recall a particularly taxing project back in 2015 involving a real-time financial data feed. We had hundreds of thousands of records streaming in, and the front end needed a specific object structure to render charts and tables. That taught me some hard lessons about efficiency that I want to share.
+, let's tackle this. Over the years, I've seen countless variations of this scenario. It’s a very common problem – getting data from a backend system, often in a list or record format, and transforming it into something the front end can easily consume. Efficiently looping and restructuring that data is critical to good performance. I recall a particularly taxing project back in 2015 involving a real-time financial data feed. We had hundreds of thousands of records streaming in, and the front end needed a specific object structure to render charts and tables. That taught me some hard lessons about efficiency that I want to share.
 
 Essentially, the challenge lies in avoiding common performance pitfalls while ensuring the output is exactly what your front-end framework needs. There’s no single perfect answer, as the 'best' approach depends on several factors including the data volume, complexity of transformation, and specific programming language. I’ll try to shed light on core techniques that have served me well across diverse projects.
 
@@ -39,20 +39,20 @@ This code is functional, but we can do better. While the performance impact of t
 function transformUsers_optimized(users) {
   const result = {};
 
-  users.forEach(user => {
-      const initial = user.firstName[0].toUpperCase();
-      const formattedUser = {
-         id: user.userId,
-         name: user.firstName + ' ' + user.lastName,
-         email: user.email
-      }
+  users.forEach((user) => {
+    const initial = user.firstName[0].toUpperCase();
+    const formattedUser = {
+      id: user.userId,
+      name: user.firstName + " " + user.lastName,
+      email: user.email,
+    };
 
-      if(result[initial]) {
-         result[initial].push(formattedUser);
-      } else {
-        result[initial] = [formattedUser];
-      }
-    });
+    if (result[initial]) {
+      result[initial].push(formattedUser);
+    } else {
+      result[initial] = [formattedUser];
+    }
+  });
 
   return result;
 }
@@ -79,7 +79,8 @@ def transform_users_python(users):
 
     return result
 ```
-Here we can see Python's way of doing similar transformation.  Using dictionaries for output, and built in formatting methods. Python's built in comprehension methods can also make this sort of operation easier, but it is good to understand these manual implementations too.
+
+Here we can see Python's way of doing similar transformation. Using dictionaries for output, and built in formatting methods. Python's built in comprehension methods can also make this sort of operation easier, but it is good to understand these manual implementations too.
 
 For dealing with very large datasets or complex transformations, you might want to investigate functional programming constructs and concepts like map, filter, and reduce. Some languages offer parallel processing capabilities, which can significantly speed up data transformation. But, as with all things, there is a trade off. While it can make processing much faster, the complexity of implementation may also increase.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-trained-model-be-passed-to-another-function-within-airflow"
 ---
 
-Alright, let's tackle the challenge of passing a trained model between tasks in Apache Airflow. This is a scenario I’ve encountered multiple times in my projects, particularly when working with machine learning pipelines where model training is a separate stage from model deployment or evaluation. The key is understanding how Airflow manages task dependencies and data persistence, and selecting a robust method that doesn't break down under load.
+, let's tackle the challenge of passing a trained model between tasks in Apache Airflow. This is a scenario I’ve encountered multiple times in my projects, particularly when working with machine learning pipelines where model training is a separate stage from model deployment or evaluation. The key is understanding how Airflow manages task dependencies and data persistence, and selecting a robust method that doesn't break down under load.
 
 The naive approach, passing a model directly as a function argument, usually won’t work. Airflow tasks are typically executed in isolated environments, potentially on different machines, so direct in-memory sharing of large objects like trained models isn’t feasible. Instead, we need a mechanism to serialize the model and store it in a shared location accessible to subsequent tasks. The typical patterns involve using a temporary file system or, better yet, object storage.
 
@@ -121,9 +121,10 @@ with DAG(
     train_and_upload_model >> download_and_use_model
 
 ```
+
 Here, we upload the serialized model to object storage using a client library. The upload key is then passed to the downstream task via XCom. The downstream task downloads the model back into memory and uses it. This approach scales better because object storage is designed for high throughput. Remember to configure your cloud provider credentials within Airflow or the underlying execution environment.
 
-**Method 3:  Using Airflow's built-in Variables (For simpler models and configuration)**
+**Method 3: Using Airflow's built-in Variables (For simpler models and configuration)**
 
 Airflow's variables can be a helpful mechanism for sharing smaller objects. While not suitable for large model files, they can be beneficial for storing configuration parameters or even simplified, lightweight model representations, though I rarely recommend this for anything but small configuration objects.
 
@@ -170,6 +171,6 @@ In this snippet, we store our model’s configuration as a JSON string in an Air
 
 **Recommendations and Further Reading**
 
-For a deeper dive, I strongly recommend exploring the following resources. First, the official Apache Airflow documentation, particularly the section on XComs. Second, you should read the documentation provided by your preferred object storage provider, such as S3 or Google Cloud Storage, and familiarize yourself with the best practices for cloud storage. For those new to serialization, a deeper understanding of Python's pickle library and other alternatives is needed. A book such as *Effective Python* by Brett Slatkin offers valuable tips on using built-in Python functionalities more efficiently. Additionally, if you are heavily into machine learning, check resources provided by model serving frameworks like TensorFlow Serving or MLflow which often integrate directly with cloud object storage.
+For a deeper dive, I strongly recommend exploring the following resources. First, the official Apache Airflow documentation, particularly the section on XComs. Second, you should read the documentation provided by your preferred object storage provider, such as S3 or Google Cloud Storage, and familiarize yourself with the best practices for cloud storage. For those new to serialization, a deeper understanding of Python's pickle library and other alternatives is needed. A book such as _Effective Python_ by Brett Slatkin offers valuable tips on using built-in Python functionalities more efficiently. Additionally, if you are heavily into machine learning, check resources provided by model serving frameworks like TensorFlow Serving or MLflow which often integrate directly with cloud object storage.
 
 In conclusion, passing trained models between Airflow tasks requires a careful approach to serialization and storage. While shared file systems can work for simple cases, object storage offers better scalability and reliability. Airflow variables are suitable for much smaller objects such as simple configurations. Always tailor your solution to the specific needs of your environment and the scale of your data.

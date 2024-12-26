@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-does-errconnectionrefused-occur-when-connecting-to-a-public-ec2-ip-address"
 ---
 
-Okay, let's unpack this. I've spent my fair share of late nights troubleshooting connection issues, and `ERR_CONNECTION_REFUSED` when dealing with a public EC2 IP is a classic scenario. It's often a multi-layered problem, and just blaming the network rarely cuts it. Instead of jumping to conclusions, we need a systematic approach, focusing on a few key areas.
+, let's unpack this. I've spent my fair share of late nights troubleshooting connection issues, and `ERR_CONNECTION_REFUSED` when dealing with a public EC2 IP is a classic scenario. It's often a multi-layered problem, and just blaming the network rarely cuts it. Instead of jumping to conclusions, we need a systematic approach, focusing on a few key areas.
 
-Fundamentally, `ERR_CONNECTION_REFUSED` means that a connection request was sent to a specific port on the target IP address, but the receiving machine actively refused it. It wasn't a timeout, or a routing issue – the server *rejected* the connection. This rejection typically happens for a few reasons, and they usually boil down to something not being set up as expected on the ec2 instance.
+Fundamentally, `ERR_CONNECTION_REFUSED` means that a connection request was sent to a specific port on the target IP address, but the receiving machine actively refused it. It wasn't a timeout, or a routing issue – the server _rejected_ the connection. This rejection typically happens for a few reasons, and they usually boil down to something not being set up as expected on the ec2 instance.
 
 Let’s explore the most common culprits, drawing from past experiences:
 
@@ -49,7 +49,7 @@ If this server binds to `"127.0.0.1"` (the localhost), it’ll be inaccessible f
 
 **Example 2: Firewall (Security Group) misconfiguration:**
 
-Let's assume you have an EC2 instance setup with a security group. If that security group contains the following inbound rule, you will *not* be able to connect via HTTP:
+Let's assume you have an EC2 instance setup with a security group. If that security group contains the following inbound rule, you will _not_ be able to connect via HTTP:
 
 `Inbound rules:
 Type:  SSH; Port: 22; Source: 0.0.0.0/0`
@@ -82,9 +82,9 @@ This command will show if there is a service listening on the port and the speci
 
 For a deeper understanding of networking concepts and troubleshooting, I recommend the following:
 
-*   **"Computer Networking: A Top-Down Approach" by James Kurose and Keith Ross:** This book provides a comprehensive look at networking protocols and concepts, crucial for understanding how traffic flows between machines.
-*   **"TCP/IP Illustrated, Volume 1: The Protocols" by W. Richard Stevens:** A classic for understanding the TCP/IP stack, and is an essential resource for anyone serious about networking.
-*   **AWS Documentation on Security Groups and Network ACLs:** Amazon’s official documentation provides the most accurate information about these specific services and is always kept up to date.
-*   **"Linux Networking Cookbook" by Carla Schroder:** Practical guides on configuring and debugging Linux networking.
+- **"Computer Networking: A Top-Down Approach" by James Kurose and Keith Ross:** This book provides a comprehensive look at networking protocols and concepts, crucial for understanding how traffic flows between machines.
+- **"TCP/IP Illustrated, Volume 1: The Protocols" by W. Richard Stevens:** A classic for understanding the TCP/IP stack, and is an essential resource for anyone serious about networking.
+- **AWS Documentation on Security Groups and Network ACLs:** Amazon’s official documentation provides the most accurate information about these specific services and is always kept up to date.
+- **"Linux Networking Cookbook" by Carla Schroder:** Practical guides on configuring and debugging Linux networking.
 
 In my experience, a methodical approach, starting with the application itself, then moving to firewalls, and finally checking network configurations is almost always the best way to track down the root cause of `ERR_CONNECTION_REFUSED`. The tools I've outlined and the resources mentioned should be invaluable in debugging those pesky network issues that frequently come up in cloud environments.

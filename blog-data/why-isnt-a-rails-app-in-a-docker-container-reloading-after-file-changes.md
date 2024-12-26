@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "why-isnt-a-rails-app-in-a-docker-container-reloading-after-file-changes"
 ---
 
-Alright, let's tackle this. I’ve definitely been in the weeds with this exact issue more than once, and it usually boils down to a few common culprits when dealing with rails in docker. It's a frustration shared by many, and understanding the nuances can save a significant amount of debugging time. I remember this one project back in '18, a relatively complex ecommerce platform, where we wrestled with this reload issue for what felt like an eternity. It was a classic case of misconfigured volume mounts and how they interact with the development environment.
+, let's tackle this. I’ve definitely been in the weeds with this exact issue more than once, and it usually boils down to a few common culprits when dealing with rails in docker. It's a frustration shared by many, and understanding the nuances can save a significant amount of debugging time. I remember this one project back in '18, a relatively complex ecommerce platform, where we wrestled with this reload issue for what felt like an eternity. It was a classic case of misconfigured volume mounts and how they interact with the development environment.
 
-The core problem stems from the way Docker containers and host filesystems interact when you’re setting up a development environment. When you make changes to your files on your host machine, those changes are only reflected within the docker container if you have properly configured volume mounts. However, it's not just about *having* a mount – it's about how those changes are being observed within the container, particularly concerning rails.
+The core problem stems from the way Docker containers and host filesystems interact when you’re setting up a development environment. When you make changes to your files on your host machine, those changes are only reflected within the docker container if you have properly configured volume mounts. However, it's not just about _having_ a mount – it's about how those changes are being observed within the container, particularly concerning rails.
 
 Rails, by default, relies on a process called “polling” to detect changes in your files when running in development mode. Polling works by periodically checking the modification time of files. This works reasonably well on a local file system, but it can be problematic inside a docker container, especially with mounted volumes. Docker mounts, particularly those using virtualized filesystems on platforms like macOS or Windows, can exhibit subtle discrepancies in the timing information (like modification times) between the host and the container. The polling mechanism used by rails might simply miss the changes or fail to pick them up fast enough.
 
 This inconsistency can lead to your frustration: you modify a file, save it, and yet the application running in the docker container doesn't pick up these changes. It's not that the changes aren’t there, it's that rails is not being notified about them properly. Moreover, the container file system is not the same as the host, creating another potential source of delay.
 
-Here's the crux: the problem isn’t always about the volume mount being *missing*, but about the *timing* and *perception* of file changes inside the container. Rails isn't broken, docker isn't broken, they just need a bit of help to talk to each other effectively.
+Here's the crux: the problem isn’t always about the volume mount being _missing_, but about the _timing_ and _perception_ of file changes inside the container. Rails isn't broken, docker isn't broken, they just need a bit of help to talk to each other effectively.
 
 To address this, we typically have three primary strategies at our disposal: modifying polling behavior, leveraging tools like `listen`, and using optimized volume mounts where available. Let’s explore each with practical examples.
 
@@ -59,7 +59,7 @@ Rails.application.configure do
 end
 ```
 
-In this example, we are essentially just ensuring `ActiveSupport::FileUpdateChecker` or `ActiveSupport::EventedFileUpdateChecker` are used.  Note that `listen` works underneath these abstractions. `listen` will then try to use native operating system specific tools that are much faster and don't have the same timing issues present in a standard polling system.
+In this example, we are essentially just ensuring `ActiveSupport::FileUpdateChecker` or `ActiveSupport::EventedFileUpdateChecker` are used. Note that `listen` works underneath these abstractions. `listen` will then try to use native operating system specific tools that are much faster and don't have the same timing issues present in a standard polling system.
 
 It's also important to mention here that sometimes, even with `listen`, you might need to install the `fswatch` binary inside the docker image itself, depending on your specific `listen` version and setup. `fswatch` is a prerequisite for some system specific watchers and is quite small, so it shouldn’t add significant size to your container image, usually.
 
@@ -72,7 +72,7 @@ Here’s a breakdown, in docker-compose format, of how you would typically struc
 ```yaml
 # docker-compose.yml
 
-version: '3.8'
+version: "3.8"
 services:
   web:
     build: .
@@ -83,7 +83,7 @@ services:
       - bundle_cache:/usr/local/bundle # mounts the bundle cache for performance
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0"
 volumes:
-    bundle_cache:
+  bundle_cache:
 ```
 
 In this snippet, we map the directory from the host to the container under the path `/app` in the container. Any change made on the host should also be available in the docker container, but the file watching system inside the container needs to pick those up as shown above. It is also a good practice to mount the bundle cache so that gem installation doesn't need to occur every build, increasing the speed of any rebuild.

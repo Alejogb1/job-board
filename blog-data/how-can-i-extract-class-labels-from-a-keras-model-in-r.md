@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-class-labels-from-a-keras-model-in-r"
 ---
 
-Okay, let’s tackle this. It's a scenario I’ve encountered a number of times, particularly when dealing with model interpretability or needing to debug complex classification pipelines. Extracting class labels from a Keras model in R, at first glance, may seem like a straightforward task, but the process requires a detailed understanding of how Keras models are structured and how R interacts with them via the `keras` package. Here’s how I’ve approached it in the past, keeping practical considerations at the forefront.
+, let’s tackle this. It's a scenario I’ve encountered a number of times, particularly when dealing with model interpretability or needing to debug complex classification pipelines. Extracting class labels from a Keras model in R, at first glance, may seem like a straightforward task, but the process requires a detailed understanding of how Keras models are structured and how R interacts with them via the `keras` package. Here’s how I’ve approached it in the past, keeping practical considerations at the forefront.
 
 The initial challenge often stems from the fact that Keras models, when trained, typically output either probabilities (for multi-class problems with softmax activation) or a single probability score (for binary classification with sigmoid). These outputs don’t directly provide the class labels. Instead, the model returns numerical predictions which must then be mapped to their corresponding classes.
 
@@ -35,6 +35,7 @@ predicted_labels <- class_names[predicted_class_indices + 1] # add 1 as R uses 1
 print(predicted_labels)
 
 ```
+
 In this first snippet, I simulated a Keras model's output with random numbers representing probabilities. The core step here lies in using `apply` with `which.max` to identify the index of the highest probability within each prediction. We subtract 1 because Keras uses a zero-based indexing system, and we compensate later by adding it when selecting the labels. We use `class_names`, an example of a known, explicitly-defined mapping between indices and actual class names. This example demonstrates the basic idea, which assumes that the numerical indices 0, 1, 2, 3 etc, each map to one of the desired labels in the order the labels were assigned in the training process.
 
 However, sometimes the mapping isn't so straightforward. In a previous project, for example, I worked with a model that had a more complex label structure. Rather than a simple integer sequence, it had a set of string labels that needed to be inferred from the training data. Let's illustrate a method to infer these based on the training set structure.
@@ -64,9 +65,11 @@ print(predicted_labels_complex)
 
 
 ```
-Here, the label names are obtained from the actual string data used to train the model by extracting unique labels from `y_train_raw` using `as.factor()`.  This code snippet emphasizes the need for understanding the preprocessing pipeline. If you didn’t use one-hot encoding directly using `keras::to_categorical()`, and for example used another library or function, you’d need to adapt the `class_names_complex` inference part accordingly.
+
+Here, the label names are obtained from the actual string data used to train the model by extracting unique labels from `y_train_raw` using `as.factor()`. This code snippet emphasizes the need for understanding the preprocessing pipeline. If you didn’t use one-hot encoding directly using `keras::to_categorical()`, and for example used another library or function, you’d need to adapt the `class_names_complex` inference part accordingly.
 
 Finally, let’s say you are working with a binary classification problem. Typically, in this scenario, you'd get a single probability representing the likelihood of the positive class. Extracting labels is simple here, but it’s worth illustrating.
+
 ```r
 # Example for binary classification
 
@@ -86,7 +89,8 @@ predicted_class_binary <- ifelse(predictions_binary > threshold, 1, 0)
 predicted_labels_binary <- class_names_binary[predicted_class_binary + 1]
 print(predicted_labels_binary)
 ```
-In the binary example, instead of using `which.max`, we use a threshold to classify predictions.  The key part here is that the index `0` corresponds to the "Negative" class, and `1` to the "Positive" class based on the order given in `class_names_binary`. The threshold could vary, of course, depending on the specific problem at hand.
+
+In the binary example, instead of using `which.max`, we use a threshold to classify predictions. The key part here is that the index `0` corresponds to the "Negative" class, and `1` to the "Positive" class based on the order given in `class_names_binary`. The threshold could vary, of course, depending on the specific problem at hand.
 
 In short, extracting class labels from a Keras model in R is fundamentally about understanding the transformations performed on your data before training. You need to bridge the gap between the raw numerical outputs of the model and the meaningful categories they represent.
 

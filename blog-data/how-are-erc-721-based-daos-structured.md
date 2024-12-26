@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-are-erc-721-based-daos-structured"
 ---
 
-Okay, let's dive into the intricacies of how erc-721-based daos are structured. I recall tackling a similar architecture back in my early days working on a platform for digital collectibles—it involved a fascinating intersection of token mechanics and governance. We needed a robust, yet flexible system, which led us to explore these very principles.
+, let's dive into the intricacies of how erc-721-based daos are structured. I recall tackling a similar architecture back in my early days working on a platform for digital collectibles—it involved a fascinating intersection of token mechanics and governance. We needed a robust, yet flexible system, which led us to explore these very principles.
 
 At their core, erc-721-based daos leverage the unique properties of non-fungible tokens (nfts) to facilitate governance. Unlike erc-20 tokens, where each token is identical and represents a proportional share, erc-721 tokens represent unique assets. In this context, an erc-721 token might represent a single voting right, membership to the dao, or even a specific level of influence, depending on the implementation. This difference is not merely semantic; it fundamentally alters how governance mechanisms are designed. The inherent individuality of each token allows for more complex and nuanced voting and membership structures.
 
@@ -31,7 +31,7 @@ contract BasicNftDao {
     IERC721 public membershipNft;
     mapping(uint256 => Proposal) public proposals;
     mapping(uint256 => mapping(address => bool)) public hasVoted;
-    
+
     struct Proposal {
         string description;
         uint256 yesVotes;
@@ -75,6 +75,7 @@ contract BasicNftDao {
 
 }
 ```
+
 In this snippet, each nft owner has one vote. The code defines basic functionality for creating proposals, casting a vote (yes or no), and executing successful proposals. This provides an elementary structure.
 
 **Snippet 2: Tiered Access Voting**
@@ -128,7 +129,7 @@ contract TieredNftDao {
         if (voteWeight == 0) {
             voteWeight = 1; // Default to 1 vote if no other weight specified
         }
-      
+
       if (_vote) {
           proposals[_proposalId].yesVotes += voteWeight;
         } else {
@@ -147,6 +148,7 @@ contract TieredNftDao {
 
 }
 ```
+
 This modification introduces a `tokenVoteWeight` mapping, allowing the dao to assign different vote weights to different nfts. A specific token, such as the `founderTokenId` is initially assigned more voting power.
 
 **Snippet 3: Minimal Voting with Erc-721 metadata**
@@ -165,7 +167,7 @@ contract MetadataBasedDao {
     IERC721 public membershipNft;
     mapping(uint256 => Proposal) public proposals;
     mapping(uint256 => mapping(address => bool)) public hasVoted;
-    
+
     struct Proposal {
         string description;
         uint256 yesVotes;

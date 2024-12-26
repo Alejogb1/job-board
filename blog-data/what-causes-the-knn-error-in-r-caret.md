@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-the-knn-error-in-r-caret"
 ---
 
-Alright, let's talk about knn errors in caret, specifically what might be causing them. Over the years, I've seen my fair share of unexpected behaviors with k-nearest neighbors (knn), especially when using caret, and it almost always boils down to a few core issues. It’s less a singular bug and more about how we set up the process and interpret the results.
+, let's talk about knn errors in caret, specifically what might be causing them. Over the years, I've seen my fair share of unexpected behaviors with k-nearest neighbors (knn), especially when using caret, and it almost always boils down to a few core issues. It’s less a singular bug and more about how we set up the process and interpret the results.
 
 One of the most common pitfalls i’ve encountered stems from the inherent nature of knn; it’s incredibly sensitive to the scale of your input features. I remember back at my previous firm, we were building a predictive model for customer churn, using a dataset with some features like 'age' ranging from 18 to 70 and others like 'revenue' spanning from 0 to hundreds of thousands. We ran the knn model using caret right away, and the initial accuracy was, to put it mildly, suboptimal. Turns out, the vastly different scales meant the algorithm was effectively being dominated by the revenue feature, completely overshadowing the information held within the age.
 

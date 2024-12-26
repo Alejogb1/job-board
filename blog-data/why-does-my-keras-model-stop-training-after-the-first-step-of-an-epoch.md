@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-my-keras-model-stop-training-after-the-first-step-of-an-epoch"
 ---
 
-Okay, let's tackle this. I've seen this specific issue crop up more often than one might expect, especially when moving between different Keras versions or when working with custom training loops. It's a maddening experience, particularly when everything appears to be set up correctly. The frustration is understandable. So, let's break down why your Keras model might be stalling after just a single training step within an epoch and, importantly, how to troubleshoot it.
+, let's tackle this. I've seen this specific issue crop up more often than one might expect, especially when moving between different Keras versions or when working with custom training loops. It's a maddening experience, particularly when everything appears to be set up correctly. The frustration is understandable. So, let's break down why your Keras model might be stalling after just a single training step within an epoch and, importantly, how to troubleshoot it.
 
 From my experience, this problem usually stems from one of a few core issues – incorrect batching, improperly configured generators, problems with gradient updates, or subtle tensor shape mismatches. It's rarely ever the model architecture itself (although we'll touch on that), but rather how the data flows to it and how updates are applied. It's not as complex as it might initially feel; more often than not, it’s a tiny configuration detail that's causing the problem.
 
@@ -89,7 +89,7 @@ model.fit(gen_correct, epochs=2, steps_per_epoch = len(np.random.rand(100, 10))/
 
 The `data_generator` function, as written, will only provide the first batch of data. Then it terminates, causing the model to believe it’s done with the epoch. The corrected generator yields the expected batches and does not cause the model to stop early. You may notice I use `steps_per_epoch` to control how many batches per epoch we expect, this is crucial for generators.
 
-Thirdly, look into **gradient updates**. The issue might be that gradient updates are somehow getting 'stuck', either from a problem with the optimizer, or some other error in the gradient calculations. Although less common, I have seen situations where an extremely large learning rate, or a custom training step was implemented incorrectly and resulted in a failure to update weights. It may not be the update *failing* per se, but rather that the loss is nan, which prevents updates and can cause the program to stop or output a warning.
+Thirdly, look into **gradient updates**. The issue might be that gradient updates are somehow getting 'stuck', either from a problem with the optimizer, or some other error in the gradient calculations. Although less common, I have seen situations where an extremely large learning rate, or a custom training step was implemented incorrectly and resulted in a failure to update weights. It may not be the update _failing_ per se, but rather that the loss is nan, which prevents updates and can cause the program to stop or output a warning.
 
 Here's a contrived example where a custom training step might fail:
 
@@ -144,8 +144,8 @@ Finally, always double-check your **tensor shapes**. An incorrect input shape to
 
 If you're running into this, I suggest checking the following references for a deeper understanding:
 
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This foundational text has excellent coverage of training techniques, dataset handling, and optimization.
-*   **TensorFlow documentation**: The official TensorFlow documentation contains detailed information about Keras, `tf.data.Dataset` and custom training loops.
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron**: Provides practical guidance and examples for using TensorFlow and Keras.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This foundational text has excellent coverage of training techniques, dataset handling, and optimization.
+- **TensorFlow documentation**: The official TensorFlow documentation contains detailed information about Keras, `tf.data.Dataset` and custom training loops.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron**: Provides practical guidance and examples for using TensorFlow and Keras.
 
 These resources will help you identify your specific cause of training stalling at the first step, so you can resolve it effectively. Remember, it's often a matter of meticulous debugging and careful configuration. This issue isn't unique to you, and with a methodical approach, you will get through it.

@@ -4,17 +4,17 @@ date: "2024-12-23"
 id: "how-can-convolutional-kernel-gradients-be-calculated-manually"
 ---
 
-Alright, let’s tackle this. I've spent a fair bit of time over the years elbow-deep in convolutional neural networks, often debugging and fine-tuning implementations from the ground up. The manual calculation of convolutional kernel gradients is something that, while typically handled by deep learning libraries, is fundamental to truly understanding backpropagation. It's not just an academic exercise; it can be incredibly useful when you're dealing with custom architectures or trying to diagnose performance issues. Essentially, it boils down to a careful application of the chain rule, tracing the error signal backwards through the convolution operation.
+, let’s tackle this. I've spent a fair bit of time over the years elbow-deep in convolutional neural networks, often debugging and fine-tuning implementations from the ground up. The manual calculation of convolutional kernel gradients is something that, while typically handled by deep learning libraries, is fundamental to truly understanding backpropagation. It's not just an academic exercise; it can be incredibly useful when you're dealing with custom architectures or trying to diagnose performance issues. Essentially, it boils down to a careful application of the chain rule, tracing the error signal backwards through the convolution operation.
 
 First, let's clarify what we’re working with. A convolutional layer involves sliding a kernel (or filter) across an input feature map, performing element-wise multiplication and summation at each location. This process generates an output feature map. The core challenge here is how changes in the kernel weights impact the loss function – the heart of gradient descent.
 
 Imagine I'm working on a project, maybe a custom image recognition system for a small drone that needs extremely efficient computation. I ran into a situation where I needed to optimize the network on an embedded platform with severely limited resources. Relying on massive libraries was not going to cut it. I had to hand-calculate gradients and implement the training process with bare minimum dependencies. That's where understanding this stuff on an atomic level really came into play.
 
-Let's approach this systematically. The key is understanding the relationship between the output of the convolution layer (let's call it *z*), the input feature map (let's call it *x*), and the kernel itself (let's call it *w*). Mathematically, at a given location (i, j), the output is given by:
+Let's approach this systematically. The key is understanding the relationship between the output of the convolution layer (let's call it _z_), the input feature map (let's call it _x_), and the kernel itself (let's call it _w_). Mathematically, at a given location (i, j), the output is given by:
 
-*z<sub>ij</sub>* = Σ<sub>m</sub>Σ<sub>n</sub> *x<sub>(i+m)(j+n)</sub>* *w<sub>mn</sub>*
+_z<sub>ij</sub>_ = Σ<sub>m</sub>Σ<sub>n</sub> _x<sub>(i+m)(j+n)</sub>_ _w<sub>mn</sub>_
 
-where the summations are over the dimensions of the kernel *w*. I am assuming here no stride or padding for simplicity, but these could be included with very small changes in indexes. The gradient we are interested in is ∂*L*/∂*w<sub>mn</sub>*, where *L* represents our overall loss function.
+where the summations are over the dimensions of the kernel _w_. I am assuming here no stride or padding for simplicity, but these could be included with very small changes in indexes. The gradient we are interested in is ∂*L*/∂*w<sub>mn</sub>*, where _L_ represents our overall loss function.
 
 Using the chain rule, we get:
 
@@ -22,13 +22,13 @@ Using the chain rule, we get:
 
 Let's dissect this. (∂*L*/∂*z<sub>ij</sub>*) is the gradient of the loss with respect to each element in the output feature map. These gradients, often called "backpropagated errors," are passed down from subsequent layers. (∂*z<sub>ij</sub>*/∂*w<sub>mn</sub>*) is the crucial part we need to compute explicitly. If you refer back to the convolution equation, it becomes very clear that:
 
-∂*z<sub>ij</sub>*/∂*w<sub>mn</sub>* = *x<sub>(i+m)(j+n)</sub>*
+∂*z<sub>ij</sub>*/∂*w<sub>mn</sub>* = _x<sub>(i+m)(j+n)</sub>_
 
-This means that the gradient of the output *z<sub>ij</sub>* with respect to a specific kernel weight *w<sub>mn</sub>* is simply the corresponding value of the input feature map at the location where the kernel element *w<sub>mn</sub>* is applied during the convolution.
+This means that the gradient of the output _z<sub>ij</sub>_ with respect to a specific kernel weight _w<sub>mn</sub>_ is simply the corresponding value of the input feature map at the location where the kernel element _w<sub>mn</sub>_ is applied during the convolution.
 
 Therefore, assembling everything we get:
 
-∂*L*/∂*w<sub>mn</sub>* = Σ<sub>i</sub>Σ<sub>j</sub> (∂*L*/∂*z<sub>ij</sub>*) *x<sub>(i+m)(j+n)</sub>*
+∂*L*/∂*w<sub>mn</sub>* = Σ<sub>i</sub>Σ<sub>j</sub> (∂*L*/∂*z<sub>ij</sub>*) _x<sub>(i+m)(j+n)</sub>_
 
 This provides a practical way to compute the gradient of the loss function with respect to each kernel element. It’s essentially a "backwards convolution" of the input map with the error gradients.
 

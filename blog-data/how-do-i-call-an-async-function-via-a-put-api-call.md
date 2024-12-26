@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-call-an-async-function-via-a-put-api-call"
 ---
 
-Alright, let's unpack this, because async operations and http methods can sometimes intertwine in... *interesting* ways. I’ve certainly had my share of encounters with this sort of challenge. It’s more common than many might initially think, especially as applications become increasingly dependent on asynchronous behavior. The core issue, when you boil it down, isn't about *if* you can call an async function via a put request, but *how* to manage the asynchronous nature of that function within the context of a synchronous http request/response cycle. Let me explain what I mean, and then we’ll go through some code examples.
+, let's unpack this, because async operations and http methods can sometimes intertwine in... _interesting_ ways. I’ve certainly had my share of encounters with this sort of challenge. It’s more common than many might initially think, especially as applications become increasingly dependent on asynchronous behavior. The core issue, when you boil it down, isn't about _if_ you can call an async function via a put request, but _how_ to manage the asynchronous nature of that function within the context of a synchronous http request/response cycle. Let me explain what I mean, and then we’ll go through some code examples.
 
 The problem isn't specific to PUT requests; it's fundamental to any http method attempting to interact with asynchronous processes. The http protocol is essentially a request-response paradigm that operates on a synchronous model. When your server receives a PUT request, it expects to either succeed, fail, or respond within a reasonable timeframe. Asynchronous functions, by design, don't guarantee immediate completion. They initiate a process that may take time, and that's where the challenge arises. You can't simply invoke an asynchronous function within a synchronous handler and expect it to behave according to the standard http cycle.
 
@@ -19,43 +19,42 @@ Imagine you're updating user data with a PUT request to an api route. The update
 ```javascript
 // Simplified Express.js example (no actual database interaction included)
 async function updateUserAsync(userId, updatedData) {
-    // Simulate an async database update
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            //  Assume this operation was successful (replace with actual db calls)
-            if (userId && updatedData) {
-                console.log(`Updated user ${userId} with:`, updatedData);
-                resolve({ success: true, userId: userId, data: updatedData});
-            } else {
-                reject(new Error("Invalid user id or data."));
-            }
-        }, 200);  // Simulate latency
-    });
-
+  // Simulate an async database update
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      //  Assume this operation was successful (replace with actual db calls)
+      if (userId && updatedData) {
+        console.log(`Updated user ${userId} with:`, updatedData);
+        resolve({ success: true, userId: userId, data: updatedData });
+      } else {
+        reject(new Error("Invalid user id or data."));
+      }
+    }, 200); // Simulate latency
+  });
 }
 
 // Request handler
 async function putUserHandler(req, res) {
-    const userId = req.params.id;
-    const updatedData = req.body;
+  const userId = req.params.id;
+  const updatedData = req.body;
 
-    try {
-        const result = await updateUserAsync(userId, updatedData);
-        res.status(200).json(result);
-    } catch (error) {
-        console.error('Error updating user:', error);
-        res.status(500).json({ error: 'Failed to update user' });
-    }
+  try {
+    const result = await updateUserAsync(userId, updatedData);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ error: "Failed to update user" });
+  }
 }
 
 //  Example usage of a very basic express setup
-const express = require('express');
+const express = require("express");
 const app = express();
 app.use(express.json());
 
-app.put('/users/:id', putUserHandler);
+app.put("/users/:id", putUserHandler);
 
-app.listen(3000, () => console.log('Server running on port 3000'));
+app.listen(3000, () => console.log("Server running on port 3000"));
 ```
 
 In this example, the `putUserHandler` function is marked as `async`, so it can utilize `await` within it. It calls `updateUserAsync`, which is designed to simulate an asynchronous database call. The `await` keyword ensures that the request handler pauses until `updateUserAsync` either resolves or rejects. The final response is sent only once `updateUserAsync` has finished. The try catch block makes sure that errors in the async function are handled properly.
@@ -93,6 +92,7 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 ```
+
 This python example uses asyncio and is also asynchronous and behaves like the javascript version, waiting for the asynchronous operation to complete before returning a response, and has basic error handling. Note the `async` keyword used to define the async function and the use of await when calling the async function.
 
 **Example 3: Proper use of background tasks**
@@ -129,9 +129,10 @@ def put_user_handler(user_id):
 if __name__ == '__main__':
     app.run(debug=True)
 ```
+
 In this example, instead of awaiting, we simply put the task to be done, on a queue, and immediately acknowledge the request. The `update_user_async_task` is then executed asynchronously by a worker process managed by whatever task queueing system you use.
 
-For further reading, I'd recommend resources like “Node.js Design Patterns, 3rd edition” for JavaScript, which has excellent chapters on async and event-based patterns, and for Python, “Fluent Python” by Luciano Ramalho provides a very thorough explanation of async IO and concurrency. Also, for a detailed explanation of asyncio I would recommend reading Python's asyncio documentation directly. These resources dive into not just the *how* of using async, but also the *why*, helping build more robust and resilient applications.
+For further reading, I'd recommend resources like “Node.js Design Patterns, 3rd edition” for JavaScript, which has excellent chapters on async and event-based patterns, and for Python, “Fluent Python” by Luciano Ramalho provides a very thorough explanation of async IO and concurrency. Also, for a detailed explanation of asyncio I would recommend reading Python's asyncio documentation directly. These resources dive into not just the _how_ of using async, but also the _why_, helping build more robust and resilient applications.
 
 Keep in mind that choosing between synchronous awaiting and task queues depends heavily on the nature of your task and its implications. If your application needs to wait to finalize the update process, await is a good solution, but if it can be deferred without a negative user experience, then task queues are probably better.
 

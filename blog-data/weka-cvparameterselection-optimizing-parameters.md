@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "weka-cvparameterselection-optimizing-parameters"
 ---
 
-Okay I get it You're wrestling with Weka's parameter optimization using `CVParameterSelection` right Been there done that countless times Let me break it down for you based on my own experiences and how I've typically handled this beast
+I get it You're wrestling with Weka's parameter optimization using `CVParameterSelection` right Been there done that countless times Let me break it down for you based on my own experiences and how I've typically handled this beast
 
 First off `CVParameterSelection` is indeed your go-to for this kinda stuff It's a Weka class designed to find the best parameters for a classifier using cross-validation That's cool and all but it can be a pain to configure correctly especially if you are new to machine learning
 
@@ -149,6 +149,7 @@ public class CVParamSelectionComplexExample {
     }
 }
 ```
+
 This example expands on the previous one by including different kernels Now the parameter search space also includes the type of kernel that is either `PolyKernel` or `RBFKernel`. This is powerful because you are now searching for the optimal parameter of each kernel AND the kernel to use all at once. You should also see the `kernel.exponent` and `kernel.gamma` parameters. These are specific to each kernel and `CVParameterSelection` will only apply them when their respective kernel is being used
 
 One trick I always use I learnt in my early days is to start with smaller parameter ranges or fewer parameter combinations to check if the setup itself is correct Once I verify that everything is ok and the search space is being traversed I expand the range to have a more exhaustive search If not it will take way too long and I won't know if it's the script or just the search space

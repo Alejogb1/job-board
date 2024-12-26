@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-generate-non-repeating-numbers-in-solidity"
 ---
 
-alright, so you're looking at generating non-repeating numbers in solidity, yeah? i've been down this road a few times myself, it's a common thing when you're dealing with stuff like unique ids, shuffling, or even some specific game mechanics on-chain. it's not as straightforward as just calling a random function and hoping for the best, because solidity, being what it is, gives us some interesting constraints to work around.
+, so you're looking at generating non-repeating numbers in solidity, yeah? i've been down this road a few times myself, it's a common thing when you're dealing with stuff like unique ids, shuffling, or even some specific game mechanics on-chain. it's not as straightforward as just calling a random function and hoping for the best, because solidity, being what it is, gives us some interesting constraints to work around.
 
 let's talk about why simple random number generation isn't enough. if you use something like `block.timestamp` or `blockhash()` as a seed for your random numbers, you'll run into two main issues. first, these sources are predictable, especially with tools designed for blockchain analysis. that means your supposedly random numbers are not random at all, and any smart contract depending on them is vulnerable to manipulation. secondly, and more specific to this case, you'll often get repeating numbers, which completely defeats the purpose of generating unique sequences.
 
@@ -65,7 +65,7 @@ contract MappingUniqueNumbers {
 }
 ```
 
-this approach is okay if you just need to generate and check for unique numbers, and you do not need an ordered list of the previously generated numbers. but again, the way of generating new random numbers could be better, but this is an example, remember.
+this approach is if you just need to generate and check for unique numbers, and you do not need an ordered list of the previously generated numbers. but again, the way of generating new random numbers could be better, but this is an example, remember.
 
 both approaches have the potential of getting stuck. and that's no good.
 

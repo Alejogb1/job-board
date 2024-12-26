@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-concat-laserembeddings-with-huggingface-funnel-transformers-simple-cls-output-for-an-nlp-sequence-classification-task"
 ---
 
-alright, so you're trying to fuse laser embeddings with the cls output from a funnel transformer for a sequence classification task. i’ve been down this road, believe me. it's a pretty common scenario when you're chasing those extra few points in performance, trying to squeeze every drop of juice from the model.
+, so you're trying to fuse laser embeddings with the cls output from a funnel transformer for a sequence classification task. i’ve been down this road, believe me. it's a pretty common scenario when you're chasing those extra few points in performance, trying to squeeze every drop of juice from the model.
 
 let’s break it down. basically, you have two different types of contextual representations. laser embeddings are, as i recall, meant to capture multilingual semantics quite effectively and they’re static, computed once, pre-training. the funnel transformer’s cls output, on the other hand, is dynamic and fine-tuned to your specific task. it represents the entire sequence within the learned representation space. so, the idea is to combine the best of both worlds. here's what i typically do, and things i learned through pain.
 
@@ -63,7 +63,7 @@ def process_batch(batch_sentences, batch_labels, laser_embeddings):
     concatenated_features = torch.cat((batch_laser_embeddings, cls_output), dim=-1)
 
     return concatenated_features, torch.tensor(batch_labels)
-   
+
 
 # example of processing data in batches
 batched_sentences = [sentences[i:i+2] for i in range(0, len(sentences), 2)]
@@ -132,7 +132,7 @@ def process_batch(batch_sentences, batch_labels, laser_embeddings):
     concatenated_features = torch.cat((batch_laser_embeddings, cls_output), dim=-1)
 
     return concatenated_features, torch.tensor(batch_labels)
-   
+
 
 # example of processing data in batches
 batched_sentences = [sentences[i:i+2] for i in range(0, len(sentences), 2)]
@@ -212,7 +212,7 @@ def process_batch(batch_sentences, batch_labels, laser_embeddings):
     batch_laser_embeddings = torch.stack([laser_embeddings[sent] for sent in batch_sentences])
 
     return batch_laser_embeddings, cls_output, torch.tensor(batch_labels)
-   
+
 
 # example of processing data in batches
 batched_sentences = [sentences[i:i+2] for i in range(0, len(sentences), 2)]

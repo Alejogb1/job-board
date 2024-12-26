@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-meaning-of-one-hot-encoder-classes"
 ---
 
-Okay, let’s tackle this. I remember a particularly frustrating project involving time series analysis for predicting network traffic patterns back in 2015. We had all sorts of categorical data describing different types of network events – "login," "file transfer," "dns lookup," you name it. We initially fed these raw categorical strings directly into our models; needless to say, performance was abysmal. This is where the real-world need for one-hot encoding crystallized for me, and it’s a subject I've revisited frequently since. So, let's break down what exactly one-hot encoder classes are and why they're so fundamental.
+, let’s tackle this. I remember a particularly frustrating project involving time series analysis for predicting network traffic patterns back in 2015. We had all sorts of categorical data describing different types of network events – "login," "file transfer," "dns lookup," you name it. We initially fed these raw categorical strings directly into our models; needless to say, performance was abysmal. This is where the real-world need for one-hot encoding crystallized for me, and it’s a subject I've revisited frequently since. So, let's break down what exactly one-hot encoder classes are and why they're so fundamental.
 
 At their core, one-hot encoder classes facilitate the transformation of categorical variables into a numerical format suitable for machine learning algorithms. Machine learning models, especially those based on linear algebra, inherently operate on numeric data. Categorical variables, being symbolic representations of groups or categories (like our network event types), are non-numeric and thus cannot be directly processed by these models. The problem arises when attempting to treat these categorical values as continuous or ordinal – we are imposing a distance relationship where none necessarily exists. Consider the numerical sequence “1, 2, 3”; the difference between 1 and 2 is the same as between 2 and 3. With categories, treating "login" as 1 and "file transfer" as 2 might incorrectly imply a numerical or ordering relationship between the two.
 
@@ -12,9 +12,9 @@ The one-hot encoding method provides a way to represent these discrete categorie
 
 For instance, consider our network event types: "login," "file transfer," and "dns lookup". With one-hot encoding, these might be represented as follows:
 
-*   "login": `[1, 0, 0]`
-*   "file transfer": `[0, 1, 0]`
-*   "dns lookup": `[0, 0, 1]`
+- "login": `[1, 0, 0]`
+- "file transfer": `[0, 1, 0]`
+- "dns lookup": `[0, 0, 1]`
 
 Each position within the vector corresponds to a specific category, and only the position representing the current instance's category is set to ‘1’; all others are set to ‘0’. The classes themselves, in this context, are each of these positions within the vector. Each column in the output represents a specific distinct category and can be seen as a class. This transformation enables the algorithm to properly discern the differences between these distinct categories and avoids imposing false numerical relationships among them.
 
@@ -113,8 +113,8 @@ This specific implementation, and the others before it, shows how each category 
 
 For further study, I’d highly recommend diving into the following:
 
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron**: This book provides a strong practical foundation in machine learning, and covers one-hot encoding and other preprocessing techniques with great clarity.
-*   **"Python for Data Analysis" by Wes McKinney**: This is a must-read for anyone working with pandas, and it includes a good section on categorical data handling and dummy variable creation which provides another way of viewing the process.
-*   **"The Elements of Statistical Learning" by Hastie, Tibshirani, and Friedman**: While more advanced, this provides a solid theoretical understanding of the machine learning models used after feature encoding, giving a clearer context for why encoding is so important.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron**: This book provides a strong practical foundation in machine learning, and covers one-hot encoding and other preprocessing techniques with great clarity.
+- **"Python for Data Analysis" by Wes McKinney**: This is a must-read for anyone working with pandas, and it includes a good section on categorical data handling and dummy variable creation which provides another way of viewing the process.
+- **"The Elements of Statistical Learning" by Hastie, Tibshirani, and Friedman**: While more advanced, this provides a solid theoretical understanding of the machine learning models used after feature encoding, giving a clearer context for why encoding is so important.
 
-Understanding one-hot encoding classes goes beyond just applying a library function. It’s about knowing *why* this transformation is necessary and how it enables models to effectively leverage categorical data. When dealing with categorical data, as I learned firsthand years ago, one-hot encoding is often a crucial first step towards building accurate and robust machine learning models.
+Understanding one-hot encoding classes goes beyond just applying a library function. It’s about knowing _why_ this transformation is necessary and how it enables models to effectively leverage categorical data. When dealing with categorical data, as I learned firsthand years ago, one-hot encoding is often a crucial first step towards building accurate and robust machine learning models.

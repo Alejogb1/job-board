@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-dropzone-rails-active-storage-and-autoprocessqueue-true-facilitate-direct-uploads"
 ---
 
-Okay, let's tackle this. Direct uploads are a powerful feature, and getting them to work smoothly requires understanding the interplay between the front-end, back-end, and storage service. I've implemented this pattern a few times, and I can share some insights based on those experiences. Let's look at how Dropzone, Rails Active Storage, and `autoProcessQueue: true` contribute to this process.
+, let's tackle this. Direct uploads are a powerful feature, and getting them to work smoothly requires understanding the interplay between the front-end, back-end, and storage service. I've implemented this pattern a few times, and I can share some insights based on those experiences. Let's look at how Dropzone, Rails Active Storage, and `autoProcessQueue: true` contribute to this process.
 
 The core challenge with direct uploads is that we want to bypass our application server as much as possible when transferring large files. This avoids bottlenecks and reduces server load. Traditionally, a browser would send a file to the application server, which would then relay it to the cloud storage. With direct uploads, the browser transmits the file directly to the cloud storage, and the application server is only involved in generating the necessary authorization for that transfer and handling any post-upload actions.
 
@@ -28,40 +28,41 @@ Dropzone.options.myAwesomeDropzone = {
   acceptedFiles: "image/*",
   dictDefaultMessage: "Drop files here to upload",
   headers: {
-    'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-   },
-  init: function() {
-    this.on("addedfile", function(file) {
-        // no processing logic here yet since autoProcessQueue is true
-        //  this.processFile(file); // Not needed, as it auto-processes
-        console.log("File added:", file.name);
-      });
-    this.on("sending", function(file, xhr, formData) {
+    "X-CSRF-Token": document
+      .querySelector('meta[name="csrf-token"]')
+      .getAttribute("content"),
+  },
+  init: function () {
+    this.on("addedfile", function (file) {
+      // no processing logic here yet since autoProcessQueue is true
+      //  this.processFile(file); // Not needed, as it auto-processes
+      console.log("File added:", file.name);
+    });
+    this.on("sending", function (file, xhr, formData) {
       // Called before file upload - we could add the signed url as a header here
     });
-     this.on("success", function(file, response) {
-      console.log('Upload Success: ', response);
+    this.on("success", function (file, response) {
+      console.log("Upload Success: ", response);
       // Handle the response from your server
     });
-    this.on("error", function(file, response) {
-      console.error('Upload Error: ', response);
-        });
+    this.on("error", function (file, response) {
+      console.error("Upload Error: ", response);
+    });
   },
-  url: function(files) {
-       // The endpoint that will return the signed url
-      return  '/direct_uploads/create';
-  },
-
-  success: function(file, response) {
-          // Here, we can store the id of the blob.
-          console.log(response);
-           file.previewElement.classList.add('dz-success')
+  url: function (files) {
+    // The endpoint that will return the signed url
+    return "/direct_uploads/create";
   },
 
-}
+  success: function (file, response) {
+    // Here, we can store the id of the blob.
+    console.log(response);
+    file.previewElement.classList.add("dz-success");
+  },
+};
 ```
 
-Key here is the `autoProcessQueue: true`. Also, the `url` function is crucial as it allows you to call your server to get the pre-signed upload url *before* the upload starts. Note that you need to handle the CSRF token in a Rails context. This code provides an excellent base upon which the file upload starts automatically after a user selects a file.
+Key here is the `autoProcessQueue: true`. Also, the `url` function is crucial as it allows you to call your server to get the pre-signed upload url _before_ the upload starts. Note that you need to handle the CSRF token in a Rails context. This code provides an excellent base upon which the file upload starts automatically after a user selects a file.
 
 Now, let’s jump to the Rails side. Here’s how you might implement a controller to generate signed URLs and handle the response:
 
@@ -97,26 +98,31 @@ Dropzone.options.myAwesomeDropzone = {
   acceptedFiles: "image/*",
   dictDefaultMessage: "Drop files here to upload",
   headers: {
-    'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-   },
-  init: function() {
-     // ... previous initialisation here
-     this.on("success", function(file, response) {
-          console.log(response);
-           file.previewElement.classList.add('dz-success')
-           const signed_id=response.signed_id
-            const imageInput=document.getElementById("image_input");
-            if(imageInput){
-              imageInput.value= signed_id
-             } else {
-              console.warn("Image input field not found in your form.  Please add one with the id image_input");
-            }
-      });
-      // ... previous error logic here
-   }
-   // ... other previous options here
-}
+    "X-CSRF-Token": document
+      .querySelector('meta[name="csrf-token"]')
+      .getAttribute("content"),
+  },
+  init: function () {
+    // ... previous initialisation here
+    this.on("success", function (file, response) {
+      console.log(response);
+      file.previewElement.classList.add("dz-success");
+      const signed_id = response.signed_id;
+      const imageInput = document.getElementById("image_input");
+      if (imageInput) {
+        imageInput.value = signed_id;
+      } else {
+        console.warn(
+          "Image input field not found in your form.  Please add one with the id image_input"
+        );
+      }
+    });
+    // ... previous error logic here
+  },
+  // ... other previous options here
+};
 ```
+
 This code adds a listener to the `success` callback in Dropzone which extracts the `signed_id` from the response from the server after successful upload. This is then stored in the relevant input field on the form. You can then use the signed_id to then attach to a record as part of your update on the server. You can then attach the blob to your ActiveRecord model using Active Storage:
 
 ```ruby
@@ -140,6 +146,7 @@ def image_params
   params.require(:image).permit(:image)
 end
 ```
+
 This code would then attach the blob to the `image` attribute on the `Image` model. Crucially, the record will already exist in your database with the appropriate key to the blob that has already been uploaded to cloud storage via your signed_id.
 
 To gain a deeper understanding, I'd recommend exploring "Working with Rails 7" by Stefan Wintermeyer for more practical insights on Active Storage. Additionally, the official Active Storage documentation is invaluable. For a more in-depth look at client-side file handling with JavaScript, “JavaScript and JQuery: Interactive Front-End Web Development” by Jon Duckett offers a detailed overview of related techniques. Finally, for a comprehensive understanding of how to deal with file uploads at a low level, the official documentation for your chosen storage provider (S3, GCP, Azure) would be essential.

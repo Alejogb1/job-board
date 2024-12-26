@@ -4,17 +4,17 @@ date: "2024-12-23"
 id: "can-the-chainlink-keepers-checkupkeep-function-be-called-externally"
 ---
 
-Alright, let's unpack this Chainlink Keeper query – specifically the external invocation of `checkUpkeep()`. It's a crucial point when thinking about the security model and the practical usage of Chainlink Keepers, and it's one I've grappled with firsthand back when I was setting up a high-throughput data aggregation system leveraging Chainlink for a decentralized trading platform.
+, let's unpack this Chainlink Keeper query – specifically the external invocation of `checkUpkeep()`. It's a crucial point when thinking about the security model and the practical usage of Chainlink Keepers, and it's one I've grappled with firsthand back when I was setting up a high-throughput data aggregation system leveraging Chainlink for a decentralized trading platform.
 
-The short answer, if you're just after the headline, is: *no, you cannot directly call `checkUpkeep()` externally, at least not in the way you might initially think*. It isn't designed to be a public function that anyone can trigger. The design specifically prohibits this for security and economic reasons. However, the underlying mechanism for upkeep triggers *can* be influenced indirectly. That's where things get interesting, and where a deeper understanding is essential to building robust decentralized automation.
+The short answer, if you're just after the headline, is: _no, you cannot directly call `checkUpkeep()` externally, at least not in the way you might initially think_. It isn't designed to be a public function that anyone can trigger. The design specifically prohibits this for security and economic reasons. However, the underlying mechanism for upkeep triggers _can_ be influenced indirectly. That's where things get interesting, and where a deeper understanding is essential to building robust decentralized automation.
 
 Let me elaborate, pulling from my past experience. During that trading platform implementation, we needed precise and timely rebalancing triggers for our collateralized positions. Initially, we thought of just pinging `checkUpkeep()` from some external script whenever we considered that a rebalance might be required. This approach would have essentially transformed Chainlink Keepers into an on-demand service, which is not what they are intended to be. This misunderstanding is fairly common.
 
-The core of the issue lies within the structure of the `KeeperCompatible` interface and the mechanics of how Chainlink Keeper nodes operate. `checkUpkeep()` is an *internal* check mechanism for Keepers. It's their automated process. This function is invoked by registered Keepers during their regular check intervals. It returns a boolean indicating whether a job should be performed and, more importantly, a byte array `performData` needed to carry out that job. It's *not* meant for an external caller to use directly to trigger updates.
+The core of the issue lies within the structure of the `KeeperCompatible` interface and the mechanics of how Chainlink Keeper nodes operate. `checkUpkeep()` is an _internal_ check mechanism for Keepers. It's their automated process. This function is invoked by registered Keepers during their regular check intervals. It returns a boolean indicating whether a job should be performed and, more importantly, a byte array `performData` needed to carry out that job. It's _not_ meant for an external caller to use directly to trigger updates.
 
 The security model is designed this way to prevent malicious actors from forcing unnecessary job executions, potentially draining gas and disrupting the system. An external call directly triggering `checkUpkeep()` would break the economic incentive alignment the entire system is built upon. Keepers are incentivized to perform legitimate jobs when conditions are met, and allowing external calls would break this.
 
-So, while you can’t call it directly, you can *influence* the outcome by modifying the *state* that `checkUpkeep()` uses to make its decision. It's the state change within your contract that *then* triggers the `checkUpkeep()` function to return `true` on one of the Keeper’s regular checks. It's an indirect control mechanism rather than direct access.
+So, while you can’t call it directly, you can _influence_ the outcome by modifying the _state_ that `checkUpkeep()` uses to make its decision. It's the state change within your contract that _then_ triggers the `checkUpkeep()` function to return `true` on one of the Keeper’s regular checks. It's an indirect control mechanism rather than direct access.
 
 Here's a look at how this all plays out through some example code snippets, and these are simplified versions similar to ones I’ve implemented in the past, designed for demonstration:
 
@@ -47,7 +47,7 @@ contract ExampleKeeper is KeeperCompatibleInterface {
 }
 ```
 
-In the snippet above, `checkUpkeep()` evaluates the difference between the current block timestamp and the stored `lastUpdated`. It returns `true` if that difference exceeds `updateInterval`. Crucially, this calculation is *internal* to the contract. An external call can't force `checkUpkeep()` to return `true`; it relies entirely on the state of `lastUpdated`.
+In the snippet above, `checkUpkeep()` evaluates the difference between the current block timestamp and the stored `lastUpdated`. It returns `true` if that difference exceeds `updateInterval`. Crucially, this calculation is _internal_ to the contract. An external call can't force `checkUpkeep()` to return `true`; it relies entirely on the state of `lastUpdated`.
 
 **Snippet 2: A State Modifier (External influence)**
 
@@ -89,7 +89,7 @@ contract ConditionalStateModifier {
     function updateThreshold(uint256 _threshold) external {
         threshold = _threshold;
     }
-    
+
     function modifyState() external {
       if(block.number % threshold == 0){
            keeper.updateInterval = 1; // Trigger upkeep sooner
@@ -99,10 +99,11 @@ contract ConditionalStateModifier {
     }
 }
 ```
+
 In this example, the `ConditionalStateModifier` makes decisions based on `block.number` and the internally set `threshold`. This allows for a dynamic adjustment to `updateInterval` that's based on external events but doesn't directly manipulate `checkUpkeep()`.
 
-Therefore, when working with Chainlink Keepers, the focus needs to shift from *triggering* `checkUpkeep()` directly to *strategically managing the state* that it evaluates. You're effectively setting the conditions for when an upkeep is triggered. In my experience with the trading platform, we had to design our contracts with this indirect control model in mind, ensuring that the state modifications that *we* made aligned with the triggers that *we* needed.
+Therefore, when working with Chainlink Keepers, the focus needs to shift from _triggering_ `checkUpkeep()` directly to _strategically managing the state_ that it evaluates. You're effectively setting the conditions for when an upkeep is triggered. In my experience with the trading platform, we had to design our contracts with this indirect control model in mind, ensuring that the state modifications that _we_ made aligned with the triggers that _we_ needed.
 
-For further study, I'd highly recommend reviewing the official Chainlink documentation, particularly the sections on Keepers and the `KeeperCompatible` interface. Additionally, I suggest diving into *Mastering Ethereum* by Andreas M. Antonopoulos, which although not focused directly on Chainlink, covers the deeper aspects of smart contract design which are essential for building robust systems with Chainlink. Reading the whitepaper "Chainlink: A Decentralized Oracle Network" will also provide useful insights on the design rationale behind the service. The work by Ari Juels "Hawk: Transaction-Efficient Smart Contracts on Public Blockchains" is also valuable to understand the different methods of on-chain interaction.
+For further study, I'd highly recommend reviewing the official Chainlink documentation, particularly the sections on Keepers and the `KeeperCompatible` interface. Additionally, I suggest diving into _Mastering Ethereum_ by Andreas M. Antonopoulos, which although not focused directly on Chainlink, covers the deeper aspects of smart contract design which are essential for building robust systems with Chainlink. Reading the whitepaper "Chainlink: A Decentralized Oracle Network" will also provide useful insights on the design rationale behind the service. The work by Ari Juels "Hawk: Transaction-Efficient Smart Contracts on Public Blockchains" is also valuable to understand the different methods of on-chain interaction.
 
-In summary, while the `checkUpkeep()` function isn't externally callable, understanding *how* state changes influence its return value allows you to build sophisticated and secure decentralized automation. The key is indirect influence, not direct command, and designing your contracts with that principle at the forefront.
+In summary, while the `checkUpkeep()` function isn't externally callable, understanding _how_ state changes influence its return value allows you to build sophisticated and secure decentralized automation. The key is indirect influence, not direct command, and designing your contracts with that principle at the forefront.

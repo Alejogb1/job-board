@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-handle-rails-6--route-for-custom-post--action-for-a-nested-resource--form"
 ---
 
-alright, so you've got this nested resource situation in rails 6, and you need a custom action for a post request, plus a form to go with it. i've been there, trust me. it's one of those things that seems simple on the surface but can get hairy real quick. i remember back in the rails 4 days, dealing with similar stuff, and let me tell you, the learning curve was... steep. took me a solid week once to fix a routing issue that looked like it was caused by a ghost. just a misconfigured route with a spelling error that i could not see, funny enough after i slept for 8 hours i spot it right away, it is like my brain had to compile the code without my consciousness.
+, so you've got this nested resource situation in rails 6, and you need a custom action for a post request, plus a form to go with it. i've been there, trust me. it's one of those things that seems simple on the surface but can get hairy real quick. i remember back in the rails 4 days, dealing with similar stuff, and let me tell you, the learning curve was... steep. took me a solid week once to fix a routing issue that looked like it was caused by a ghost. just a misconfigured route with a spelling error that i could not see, funny enough after i slept for 8 hours i spot it right away, it is like my brain had to compile the code without my consciousness.
 
 anyway, let's break this down. it's all about the routes, controllers, and form setup. so, first routes.rb. you need to make sure you're explicitly declaring that custom post route within the nested resource. rails isn't always magic, you need to be precise. we need to move past default resourceful routes for this special case.
 
@@ -18,7 +18,7 @@ anyway, let's break this down. it's all about the routes, controllers, and form 
 
 ```
 
-see how we use 'post 'custom\_action', on: :member'? that's key. `on: :member` means it applies to an individual book under author, not a collection. if you use `on: :collection` it would make the url /authors/1/books/custom\_action without an id for the book which is not what you want. the action is also a `post` not a get, since this action is going to mutate data. there are some cases you may use a `get` for a custom action but i digress.
+see how we use 'post 'custom_action', on: :member'? that's key. `on: :member` means it applies to an individual book under author, not a collection. if you use `on: :collection` it would make the url /authors/1/books/custom_action without an id for the book which is not what you want. the action is also a `post` not a get, since this action is going to mutate data. there are some cases you may use a `get` for a custom action but i digress.
 
 now, the controller part, you need a corresponding method in your `books_controller.rb`. think of it like the receiving end of that route:
 
@@ -52,7 +52,7 @@ now, the controller part, you need a corresponding method in your `books_control
   end
 ```
 
-notice the `before_action`. that helps to set up the `@author` and `@book` objects so you don't have to repeat that in every action. it's about keeping your controller actions lean. that custom\_params method is crucial; it's your permit list of allowed parameters, always good to prevent mass assignments. you need to have the form parameters be nested under the book object. If it does not match your form parameters, rails won't pass it as params[:book] or whatever your named object is so keep an eye on that, it is a common rookie error. also, i'm redirecting back to the book show action after, assuming you have that view available. and if something goes wrong the error messages of the model will automatically be displayed.
+notice the `before_action`. that helps to set up the `@author` and `@book` objects so you don't have to repeat that in every action. it's about keeping your controller actions lean. that custom_params method is crucial; it's your permit list of allowed parameters, always good to prevent mass assignments. you need to have the form parameters be nested under the book object. If it does not match your form parameters, rails won't pass it as params[:book] or whatever your named object is so keep an eye on that, it is a common rookie error. also, i'm redirecting back to the book show action after, assuming you have that view available. and if something goes wrong the error messages of the model will automatically be displayed.
 
 next is the view form setup. this is where the form comes in, it needs to point towards the route we just made. think of it as the input side of the route we defined earlier. here is where it gets a little tricky, you need to use the url helper method that rails provide for nested actions.
 

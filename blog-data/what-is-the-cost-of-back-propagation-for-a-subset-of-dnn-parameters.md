@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "what-is-the-cost-of-back-propagation-for-a-subset-of-dnn-parameters"
 ---
 
-alright, let's tackle this. the cost of backpropagation for a subset of dnn parameters, right? that's a question that brings back memories of some late nights debugging. i've definitely been there, staring at a loss curve that just refused to cooperate.
+, let's tackle this. the cost of backpropagation for a subset of dnn parameters, right? that's a question that brings back memories of some late nights debugging. i've definitely been there, staring at a loss curve that just refused to cooperate.
 
-basically, what we're talking about is how much computation it takes to update only a *portion* of the weights in a deep neural network, instead of all of them. it’s a common trick, especially if you have a large model and only want to tweak a small part of it – think fine-tuning a pre-trained model, or maybe you're experimenting with a new layer and don’t want to touch the rest.
+basically, what we're talking about is how much computation it takes to update only a _portion_ of the weights in a deep neural network, instead of all of them. it’s a common trick, especially if you have a large model and only want to tweak a small part of it – think fine-tuning a pre-trained model, or maybe you're experimenting with a new layer and don’t want to touch the rest.
 
-so, the usual backpropagation process, you probably already have it in your mind. gradients are calculated layer by layer, from output back to the input. these gradients tell us how to adjust the weights to minimize the loss function. the magic here is the chain rule. the total cost, if i may say, in terms of computation, involves calculating gradients for *every* single parameter.
+so, the usual backpropagation process, you probably already have it in your mind. gradients are calculated layer by layer, from output back to the input. these gradients tell us how to adjust the weights to minimize the loss function. the magic here is the chain rule. the total cost, if i may say, in terms of computation, involves calculating gradients for _every_ single parameter.
 
 now, when we talk about a subset, things get interesting. it's not like we magically skip calculations. backpropagation inherently relies on computing gradients from layer to layer. even if we're only going to update a few parameters, the underlying machinery still needs to push the gradients back through the full network – until we get to that specific layer we intend to update.
 
@@ -20,7 +20,7 @@ i recall one time, working on a sentiment analysis model, i had this massive tra
 
 another time, while working with a custom cnn for image segmentation, i tried to debug a network that was not performing well. initially i thought it was a bug somewhere, so i wrote several checks to see the shapes and values of the intermediate tensors. to check if it was not a problem of the input data, i did checks with more and more data and still could not find the issue. later, i realized that my network was too deep for my limited dataset. i tried to fine-tune only the parameters of the last layers, instead of updating all of them, to avoid overfitting.
 
-here's the thing: backpropagation's cost is essentially proportional to the *number of operations* needed during both the forward and backward pass, not necessarily to the *number of parameters* that we will eventually update. calculating gradients is what's computationally intensive, especially with modern deep nets.
+here's the thing: backpropagation's cost is essentially proportional to the _number of operations_ needed during both the forward and backward pass, not necessarily to the _number of parameters_ that we will eventually update. calculating gradients is what's computationally intensive, especially with modern deep nets.
 
 now, let's get to some code examples, i think these examples make it clear what i'm talking about:
 
@@ -192,8 +192,8 @@ in this example, instead of updating a subset, we update all the parameters. jus
 
 some resources you may find helpful in further understanding this topic:
 
-*   *deep learning* by ian goodfellow, yoshua bengio, and aaron courville. a classic text that covers backpropagation in great detail, including its computational aspects. i think it’s the go to book for a solid foundation.
-*   *neural networks and deep learning* by michael nielsen, it’s available online. it explains the concepts in a very clear way, and is a great source for learning the foundations of backpropagation.
-*   for more advanced stuff, look into papers on topics like *efficient backpropagation algorithms*, you may find a lot of recent advances in this area, for instance related to memory management during the backpropagation. you can use the search engines like semantic scholar or google scholar to look for them.
+- _deep learning_ by ian goodfellow, yoshua bengio, and aaron courville. a classic text that covers backpropagation in great detail, including its computational aspects. i think it’s the go to book for a solid foundation.
+- _neural networks and deep learning_ by michael nielsen, it’s available online. it explains the concepts in a very clear way, and is a great source for learning the foundations of backpropagation.
+- for more advanced stuff, look into papers on topics like _efficient backpropagation algorithms_, you may find a lot of recent advances in this area, for instance related to memory management during the backpropagation. you can use the search engines like semantic scholar or google scholar to look for them.
 
 to wrap it up, while updating only a subset of parameters doesn’t save you from computing all gradients, it helps you fine-tune specific parts of the network without affecting the rest. and, sometimes, that’s the only thing that will save your sanity while debugging. if not, you might need to go for a long walk, or maybe a second coffee, or a third... don't judge me.

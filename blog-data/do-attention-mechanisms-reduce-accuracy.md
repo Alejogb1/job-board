@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "do-attention-mechanisms-reduce-accuracy"
 ---
 
-Alright, let's tackle this. It's a question I've pondered quite a bit over the years, especially back when I was knee-deep in building a conversational AI for a telecom company – a real trial by fire, I can tell you. The initial naive implementation, of course, utilized a sequential model, which, despite its simplicity, showed its limits rapidly. We started playing with attention mechanisms to get over the information bottleneck, but then began to see some unexpected behaviour, making me question this very topic: do attention mechanisms *actually* reduce accuracy sometimes? The short answer is: yes, they *can*. But it's rarely that straightforward.
+, let's tackle this. It's a question I've pondered quite a bit over the years, especially back when I was knee-deep in building a conversational AI for a telecom company – a real trial by fire, I can tell you. The initial naive implementation, of course, utilized a sequential model, which, despite its simplicity, showed its limits rapidly. We started playing with attention mechanisms to get over the information bottleneck, but then began to see some unexpected behaviour, making me question this very topic: do attention mechanisms _actually_ reduce accuracy sometimes? The short answer is: yes, they _can_. But it's rarely that straightforward.
 
 It's crucial to understand that attention mechanisms aren’t a magic bullet. They add significant complexity to a model, and that complexity isn't always beneficial. They are, in essence, ways for the model to focus on relevant parts of the input when generating an output. At their core, they calculate weights or scores, determining how important each input element is concerning the current output element. This added "focus" is incredibly useful, but it also introduces several potential failure points that, if not addressed correctly, might reduce overall accuracy. Think of it like this: a highly precise lens can improve vision when used correctly, but it can just as easily distort if improperly calibrated or used in the wrong circumstances.
 
-One prime reason attention can diminish accuracy is *overfitting*. These mechanisms introduce many more parameters than simpler models. If the training dataset isn't sufficiently large or diverse, the attention layer might learn to map to the training data rather than capture the underlying patterns. We encountered this with the conversational AI; we had a small, highly structured dataset of call transcripts and, initially, the attention models overfitted *badly*, to specific patterns of user interaction rather than true intent or meaning. This led to high performance on the training set but very poor results on new, unseen data.
+One prime reason attention can diminish accuracy is _overfitting_. These mechanisms introduce many more parameters than simpler models. If the training dataset isn't sufficiently large or diverse, the attention layer might learn to map to the training data rather than capture the underlying patterns. We encountered this with the conversational AI; we had a small, highly structured dataset of call transcripts and, initially, the attention models overfitted _badly_, to specific patterns of user interaction rather than true intent or meaning. This led to high performance on the training set but very poor results on new, unseen data.
 
 Another cause is what I call “attention drift” or misdirection. Attention is fundamentally about assigning importance, but it’s not always clear what constitutes importance. If the attention mechanism is not well-trained or not appropriate for the specific task, it can latch onto irrelevant input features. We once had an issue in a machine translation project where the attention was focusing on common stop words rather than the essential nouns and verbs, completely botching the translations. The model had, in a sense, developed a bias, learning to pay attention to information it shouldn't.
 
-Finally, *computational overhead* can also contribute indirectly to reduced accuracy. Attention mechanisms, particularly self-attention, are computationally expensive. They require significant resources to train and operate. If you’re working with limited resources, you might have to compromise on model size, training time, or hyperparameter optimization, ultimately leading to lower performance. It's like building a racecar, but lacking the budget to fine-tune the suspension system - the speed isn't useful if the handling is terrible.
+Finally, _computational overhead_ can also contribute indirectly to reduced accuracy. Attention mechanisms, particularly self-attention, are computationally expensive. They require significant resources to train and operate. If you’re working with limited resources, you might have to compromise on model size, training time, or hyperparameter optimization, ultimately leading to lower performance. It's like building a racecar, but lacking the budget to fine-tune the suspension system - the speed isn't useful if the handling is terrible.
 
 Let’s look at some practical examples. The code snippets below will be using Python with PyTorch, for simplicity, although this applies similarly in other frameworks too.
 
@@ -40,13 +40,13 @@ class BasicAttention(nn.Module):
         # Calculate attention scores
         attention_scores = torch.tanh(projected_query + projected_keys)
         attention_scores = self.attention_scores(attention_scores).squeeze(-1) #(batch_size, seq_length)
-        
+
         # softmax to get weights between 0 and 1
         attention_weights = torch.softmax(attention_scores, dim=-1) # (batch_size, seq_length)
-        
+
         # Weighted combination
         weighted_values = torch.matmul(attention_weights.unsqueeze(1), values) # (batch_size, 1, hidden_size)
-        
+
         return weighted_values.squeeze(1) #(batch_size, hidden_size)
 
 # Example usage

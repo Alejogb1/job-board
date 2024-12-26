@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-integrate-new-relic-and-sidekiq-metrics"
 ---
 
-Alright, let's talk about integrating New Relic with Sidekiq. It's a common requirement, and I’ve certainly spent my fair share of time fine-tuning it across various projects. Over the years, I've seen firsthand how crucial it is to have clear visibility into background job performance, especially when dealing with systems scaling. It's not just about knowing if Sidekiq is running; it's about understanding the nuances, like job processing times, queue backlogs, and error rates, which directly impact application responsiveness.
+, let's talk about integrating New Relic with Sidekiq. It's a common requirement, and I’ve certainly spent my fair share of time fine-tuning it across various projects. Over the years, I've seen firsthand how crucial it is to have clear visibility into background job performance, especially when dealing with systems scaling. It's not just about knowing if Sidekiq is running; it's about understanding the nuances, like job processing times, queue backlogs, and error rates, which directly impact application responsiveness.
 
 Essentially, we want New Relic to act as our comprehensive monitoring hub for everything happening inside our Sidekiq processes. The good news is that New Relic’s Ruby agent and Sidekiq play quite nicely together, provided you know the correct techniques. I'm going to focus on how to extract and send detailed, meaningful metrics from Sidekiq into New Relic. This isn’t just about the default metrics you get out of the box; we'll dive a bit deeper.
 
@@ -90,7 +90,7 @@ Sidekiq.configure_server do |config|
 end
 ```
 
-In this middleware, `NewRelicSidekiqPerformanceMiddleware`, I'm using `Process.clock_gettime` for more accurate timing measurements than the standard ruby Time library provides.  Then, I’m calling `NewRelic::Agent.record_metric` to send the job processing time as a metric. I’m naming the metric with a dynamic component representing the worker class. I also record a custom event ‘SidekiqJobCompleted’. This gives us both aggregate performance data (through the metric) and allows more detailed filtering in New Relic's event explorer (through custom events). Again error handling ensures issues don’t go unnoticed.
+In this middleware, `NewRelicSidekiqPerformanceMiddleware`, I'm using `Process.clock_gettime` for more accurate timing measurements than the standard ruby Time library provides. Then, I’m calling `NewRelic::Agent.record_metric` to send the job processing time as a metric. I’m naming the metric with a dynamic component representing the worker class. I also record a custom event ‘SidekiqJobCompleted’. This gives us both aggregate performance data (through the metric) and allows more detailed filtering in New Relic's event explorer (through custom events). Again error handling ensures issues don’t go unnoticed.
 
 Finally, it's vital to track failures. Errors in background jobs can be silent killers if left unmonitored, so ensuring New Relic picks them up is important.
 

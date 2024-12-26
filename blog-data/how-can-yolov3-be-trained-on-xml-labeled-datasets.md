@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-yolov3-be-trained-on-xml-labeled-datasets"
 ---
 
-Alright, let's dive into training YOLOv3 with those sometimes-pesky xml-labeled datasets. This isn't quite as straightforward as using annotation formats directly supported by darknet, the framework on which yolov3 is based. I recall a project back in '19 where we were dealing with satellite imagery and the data was, shall we say, a *hodgepodge* of annotations. We had bounding boxes galore, but all in these xml files, and darknet expects a text file per image, in a specific format. It's a process of conversion, manipulation, and verification.
+, let's dive into training YOLOv3 with those sometimes-pesky xml-labeled datasets. This isn't quite as straightforward as using annotation formats directly supported by darknet, the framework on which yolov3 is based. I recall a project back in '19 where we were dealing with satellite imagery and the data was, shall we say, a _hodgepodge_ of annotations. We had bounding boxes galore, but all in these xml files, and darknet expects a text file per image, in a specific format. It's a process of conversion, manipulation, and verification.
 
 First off, understand that the core challenge is translating the xml bounding box data into the text format required by darknet’s training procedure. This typically involves having one text file for each image, where each line in the text file represents one bounding box. A line will generally follow the format: `<class_id> <x_center> <y_center> <width> <height>`. The coordinates are normalized to range between 0 and 1, with the image's width and height serving as the maximum extents.
 
-Now, before we get into specific code examples, let's talk about some of the common hurdles you might encounter. First, differing coordinate systems. Many xml annotation tools use the top-left corner of a box as the origin (x1, y1) with the bottom-right corner specifying the dimensions (x2, y2). YOLOv3, on the other hand, uses the box’s *center* coordinates and width/height. We’ll need to convert between these coordinate systems. Second, class labels. Ensure the class labels defined in your xml match the class ids in your `.data` file for darknet. Class mapping errors here are frequent and cause unexpected outcomes. Finally, it is important to verify the generated training text files. I typically do a manual visual inspection for a few representative images.
+Now, before we get into specific code examples, let's talk about some of the common hurdles you might encounter. First, differing coordinate systems. Many xml annotation tools use the top-left corner of a box as the origin (x1, y1) with the bottom-right corner specifying the dimensions (x2, y2). YOLOv3, on the other hand, uses the box’s _center_ coordinates and width/height. We’ll need to convert between these coordinate systems. Second, class labels. Ensure the class labels defined in your xml match the class ids in your `.data` file for darknet. Class mapping errors here are frequent and cause unexpected outcomes. Finally, it is important to verify the generated training text files. I typically do a manual visual inspection for a few representative images.
 
 Let’s get to the code, which is where things usually get interesting. Let's assume the xml files follow the Pascal VOC format – this is fairly standard. I'll use Python for demonstration, as it is generally effective for this type of task, and I will use `lxml` library for XML parsing since it's robust and fast. This is a good library to familiarize yourself with if you are working with xml often.
 
@@ -30,10 +30,10 @@ def parse_xml_annotation(xml_path):
     """
     tree = etree.parse(xml_path)
     root = tree.getroot()
-    
+
     image_width = int(root.find("size").find("width").text)
     image_height = int(root.find("size").find("height").text)
-    
+
     bounding_boxes = []
     for obj in root.findall("object"):
         class_label = obj.find("name").text
@@ -48,14 +48,16 @@ def parse_xml_annotation(xml_path):
         y_center = ((ymin + ymax) / 2) / image_height
         width = (xmax - xmin) / image_width
         height = (ymax - ymin) / image_height
-        
+
         bounding_boxes.append((class_label, x_center, y_center, width, height))
 
     return bounding_boxes
 ```
+
 This first snippet demonstrates parsing the xml file, locating the bounding box information, and converting the xmin, ymin, xmax, ymax information to a normalized center representation required for yolov3. It isolates the core logic. Now that we have bounding box coordinates extracted, the next step is converting the class labels into the numerical representation required by darknet.
 
 **Snippet 2: Mapping Class Names to IDs**
+
 ```python
 def create_label_map(labels):
     """Creates a dictionary mapping class names to class ids.
@@ -88,6 +90,7 @@ def write_darknet_label_file(image_path, output_dir, bboxes, label_map):
         class_id = label_map[class_label]
         f.write(f"{class_id} {x_center} {y_center} {width} {height}\n")
 ```
+
 The class mapping function creates a dictionary with unique id per class label found in the xml files. The `write_darknet_label_file` takes bounding box coordinates and writes them to file in darknet format. It also includes a simple warning when a class label is encountered that is not in our map.
 
 **Snippet 3: Orchestrating the Conversion**
@@ -118,7 +121,7 @@ def convert_xml_to_darknet(xml_dir, image_dir, output_dir, class_labels):
       if not os.path.exists(image_file):
           print(f"Warning: Image not found for annotation: {xml_file}")
           continue
-      
+
       bounding_boxes = parse_xml_annotation(xml_file)
       write_darknet_label_file(image_file, output_dir, bounding_boxes, label_map)
 
@@ -129,11 +132,12 @@ if __name__ == '__main__':
     image_directory = "path/to/your/image/files"
     darknet_output_directory = "path/to/your/darknet/labels"
     class_labels = ["car", "truck", "pedestrian"] # Example class labels - replace with your own.
-    
+
     convert_xml_to_darknet(xml_directory, image_directory, darknet_output_directory, class_labels)
 
     print("Conversion complete.")
 ```
+
 The orchestration snippet finds all `.xml` files in the specified directory, calls the relevant functions to parse the annotations, and write to the darknet format text files. This is how the entire process comes together. In a real scenario, I would typically add some validation for various errors such as image/xml mismatch, invalid bounding box data etc, but that is generally application specific.
 
 The important thing to note is that the `class_labels` must align with the classes in your darknet `.data` file. I recommend having a consistent file for defining the labels.

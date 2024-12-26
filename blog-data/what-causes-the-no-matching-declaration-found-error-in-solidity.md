@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-the-no-matching-declaration-found-error-in-solidity"
 ---
 
-Okay, let's tackle this. I’ve definitely seen my share of "No matching declaration found" errors in Solidity, and they’re usually not as cryptic as they initially seem. In essence, this error arises when the Solidity compiler can't find a function, variable, event, or struct that you’re referencing within your contract. It’s a compilation-time error, which is actually a good thing because it means the problem is caught early, before you’ve deployed anything potentially problematic to the blockchain. It’s essentially the compiler telling you, "Hey, I have no clue what you're talking about!" Let’s break down the typical scenarios and how to resolve them.
+, let's tackle this. I’ve definitely seen my share of "No matching declaration found" errors in Solidity, and they’re usually not as cryptic as they initially seem. In essence, this error arises when the Solidity compiler can't find a function, variable, event, or struct that you’re referencing within your contract. It’s a compilation-time error, which is actually a good thing because it means the problem is caught early, before you’ve deployed anything potentially problematic to the blockchain. It’s essentially the compiler telling you, "Hey, I have no clue what you're talking about!" Let’s break down the typical scenarios and how to resolve them.
 
 My first significant encounter with this problem dates back to my early days building a decentralized exchange contract. We were rapidly iterating, and I made a classic mistake: I renamed a function in one file, but forgot to update all references to it in other parts of the project. The compiler immediately threw this error. From then on, I learned to be meticulous with my dependencies and naming conventions.
 
@@ -40,6 +40,7 @@ contract ContractB {
     }
 }
 ```
+
 In the example above, attempting to directly access `myContract._myNumber` from `ContractB` results in the error because `_myNumber` is declared as private within `ContractA`. The solution is to use the public function `getNumber()` to access the number. You need to be aware of the scope of identifiers and access them only where they're visible.
 
 **3. Incomplete Import Statements:** In larger projects, you’ll likely be splitting your contracts into multiple files. If you attempt to use a contract, library, struct, or enum that’s defined in another file, you must import that file. For example, if `ContractB` uses a type defined in `ContractA` but you don't include `import "./ContractA.sol";` at the top of `ContractB.sol`, you'll get the error. Similarly, if you're using a struct defined in a different file, like a struct `Order` in `Order.sol`, and you attempt to use `Order` in `ContractB`, the correct import statement is essential to ensure the compiler is aware of the declaration.
@@ -53,7 +54,9 @@ interface IToken {
   function balanceOf(address account) external view returns (uint256);
 }
 ```
+
 And then, you try to make a contract that implements this interface:
+
 ```solidity
 // MyToken.sol
 contract MyToken is IToken{
@@ -67,15 +70,19 @@ contract MyToken is IToken{
     // missing balanceOf function
 }
 ```
-This code snippet, while seeming complete, will cause a "No matching declaration found" error, because `MyToken` must implement *all* the functions specified in the `IToken` interface.  The solution is to implement the missing `balanceOf` function within `MyToken`:
+
+This code snippet, while seeming complete, will cause a "No matching declaration found" error, because `MyToken` must implement _all_ the functions specified in the `IToken` interface. The solution is to implement the missing `balanceOf` function within `MyToken`:
+
 ```solidity
     function balanceOf(address account) external view override returns (uint256){
         return _balances[account];
     }
 ```
+
 Failing to fully implement abstract contracts or interfaces, or having a typo in an interface's function name, will lead to the same error.
 
 **5. Library Usage Errors:** Libraries in Solidity are often used for shared functionality. Libraries must be called using the correct pattern, specifically, functions in libraries called using `LibraryName.functionName()`. A typical cause of this error is using functions from a library incorrectly. See this scenario:
+
 ```solidity
 //MathLib.sol
 library MathLib {
@@ -84,7 +91,9 @@ library MathLib {
     }
 }
 ```
+
 And then, a contract attempts to use it:
+
 ```solidity
 // ContractC.sol
 import "./MathLib.sol";
@@ -102,6 +111,7 @@ contract ContractC {
     }
 }
 ```
+
 The solution is to correctly call the library function with `MathLib.add(a, b)` or, if you've used `using MathLib for uint256;`, you can use `a.add(b)`.
 
 **6. Incorrect Contract Instantiation**: This error can arise when you are attempting to instantiate a contract using an incorrect address or when the address is pointing to a contract that doesn't match the declared type. For example, when you declare a variable such as `ContractA myContract;`, and then you try to set its value like `myContract = ContractA(someAddress);`, where `someAddress` points to a different type of contract or is not deployed. This mismatch will lead to the error. Ensure the address is correct and that it corresponds to the contract type you are instantiating.

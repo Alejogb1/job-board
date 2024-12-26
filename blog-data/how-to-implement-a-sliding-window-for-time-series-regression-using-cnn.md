@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-implement-a-sliding-window-for-time-series-regression-using-cnn"
 ---
 
-alright, so you're looking at implementing a sliding window for time series regression with cnns, that's a pretty common task and i’ve definitely spent some time on this myself. let's break down what i've learned over the years.
+, so you're looking at implementing a sliding window for time series regression with cnns, that's a pretty common task and i’ve definitely spent some time on this myself. let's break down what i've learned over the years.
 
 first off, the core idea is to transform your time series data into a format that a cnn can actually understand. a cnn, as you probably know, excels at processing spatial data, like images. it doesn’t inherently ‘get’ the temporal nature of a time series. that's where the sliding window comes in. it essentially creates a series of ‘snapshots’ from your time series that act like mini-images for the cnn.
 

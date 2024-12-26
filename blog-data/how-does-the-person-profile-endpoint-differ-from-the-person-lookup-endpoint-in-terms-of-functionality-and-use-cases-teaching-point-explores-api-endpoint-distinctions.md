@@ -5,10 +5,10 @@ id: "how-does-the-person-profile-endpoint-differ-from-the-person-lookup-endpoint
 ---
 
 Second suggestion: Could you elaborate on the process of handling rate limits when interacting with an API? (Teaching point: Focuses on API best practices.)
-Third suggestion:  What are some strategies to optimize the performance of API requests when retrieving large datasets? (Teaching point: Highlights performance optimization techniques.)
+Third suggestion: What are some strategies to optimize the performance of API requests when retrieving large datasets? (Teaching point: Highlights performance optimization techniques.)
 Fourth Suggestion: In what scenarios might you employ caching when working with APIs, and what considerations are involved? (Teaching point: Discusses caching strategies.)
 Fifth Suggestion: How would you approach debugging issues when an API call returns unexpected results? (Teaching point: Covers debugging techniques.)
-Okay so lets break down these questions about apis seems pretty straightforward stuff we deal with everyday i guess
+lets break down these questions about apis seems pretty straightforward stuff we deal with everyday i guess
 
 first up the difference between a profile endpoint and a lookup endpoint its like asking whats different between my full profile and just finding me by id right the profile endpoint usually dumps everything a lot of fields details about me my connections my recent stuff everything you can think of related to a specific user think of it like a full user resource object complete with all the bells and whistles you would want for a dedicated user page or view its designed to give you a comprehensive snapshot of a single user all at once
 
@@ -55,7 +55,8 @@ data = make_api_request(url, headers)
 if data:
   print(data.json())
 ```
-okay onto optimizing api requests for large datasets this one gets tricky because often apis will just return huge amounts of data if you dont ask right the easiest one is pagination and filtering api's support these two things all the time they are standard practice
+
+onto optimizing api requests for large datasets this one gets tricky because often apis will just return huge amounts of data if you dont ask right the easiest one is pagination and filtering api's support these two things all the time they are standard practice
 
 pagination is the concept of requesting data in smaller chunks its about sending an offset or page number and a limit and the api returns that segment of data instead of the entire dataset this way you dont load everything into memory and slow down everything also its efficient if you need all the data you can just repeatedly page through until there is nothing left filtering is about being specific you tell the api what kind of information you want to get using query parameters or specific filter options the api then only returns records matching your criteria rather than everything again reduces bandwidth usage and server processing time
 
@@ -78,23 +79,23 @@ in-memory caches work well when data is used frequently and not too big if you h
 when using a cache you need to think about cache invalidation thats a fancy word for saying when does cached data become incorrect or expired strategies vary you can use time based invalidation where the data is cached only for a specific time or you can use event based invalidation where the data is purged whenever the origin data source changes in certain apis servers will give you etags or last-modified headers you can store these values in your cache and you can use this etag on a next request and if the server respond with `304 Not Modified` it means the cached version is valid if you have these you can use this for conditional GET requests reducing bandwidth use and processing time. also consider cache consistency making sure your cached data matches the source.
 
 ```javascript
-const cache= {}
-async function fetchData(url){
-   if(cache[url]){
-      console.log("returning cached value")
-      return cache[url]
-   }
-  try{
-      const response = await fetch(url)
-      if(response.ok){
-         const data = await response.json()
-         cache[url]=data;
-         console.log("returning fetched data")
-         return data
-       }
-  } catch(error){
-     console.error("Error fetching data:",error)
-     throw error
+const cache = {};
+async function fetchData(url) {
+  if (cache[url]) {
+    console.log("returning cached value");
+    return cache[url];
+  }
+  try {
+    const response = await fetch(url);
+    if (response.ok) {
+      const data = await response.json();
+      cache[url] = data;
+      console.log("returning fetched data");
+      return data;
+    }
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
   }
 }
 ```

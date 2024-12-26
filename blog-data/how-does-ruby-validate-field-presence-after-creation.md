@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-ruby-validate-field-presence-after-creation"
 ---
 
-Okay, let's dissect this. Field validation in Ruby, specifically after object creation, isn't a singular process. It's more about applying a set of techniques and choices tailored to the specific needs of your application and the lifecycle of your model objects. I've dealt with this countless times, from simple blog platforms to complex enterprise systems, and it’s never a one-size-fits-all. The crucial point is understanding *when* and *how* you want to validate that a field is present.
+, let's dissect this. Field validation in Ruby, specifically after object creation, isn't a singular process. It's more about applying a set of techniques and choices tailored to the specific needs of your application and the lifecycle of your model objects. I've dealt with this countless times, from simple blog platforms to complex enterprise systems, and it’s never a one-size-fits-all. The crucial point is understanding _when_ and _how_ you want to validate that a field is present.
 
 At its core, "presence" usually means a field isn't `nil` or, in the case of strings, that it's not an empty string or just whitespace. But it can get more nuanced. For instance, you might consider a zero value for an integer to be 'present,' or you might have a boolean where `false` is considered a legitimate value.
 
@@ -130,6 +130,7 @@ order.save # => Order validation failed, errors: ["Order number can't be blank",
 order2 = Order.new(order_number: 'ORD-200', customer_id: 456, order_date: Date.today, total_amount: 120)
 order2.save # => Order saved successfully!
 ```
+
 In this example, I’ve used `ActiveModel::Validations` to mimic Rails-like model behavior. The `validates` method simplifies the validation rules, checking presence and even numerical constraints. This is commonly used when you want to keep validation logic declarative, where validations are specified as rules on properties, and you don't need to manually specify the validations in a dedicated method. In this context, `valid?` checks if all validations pass, providing a familiar API for folks used to Rails. Usually, in a Rails application you would not implement the validation logic inside `save`, but this example makes it more explicit for demonstration purposes.
 
 For further in-depth understanding of validation within a Rails environment, check out the "Agile Web Development with Rails" book, it covers all of this in meticulous detail. If you’re interested in exploring more about general object-oriented programming patterns in ruby, including validation, then “Practical Object-Oriented Design in Ruby: An Agile Primer” by Sandi Metz is highly recommended. Furthermore, understanding ruby metaprogramming techniques can also enable a deeper level of customization to fit your needs, for which the “Metaprogramming Ruby” book by Paolo Perrotta is worth looking into.

@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-to-change-azureml-run-display-names"
 ---
 
-Okay, let’s tackle this. I’ve personally stumbled upon this particular nuance of Azure Machine Learning more times than I care to remember, and it’s a common frustration point for many practitioners. You're facing the issue of AzureML run names not being as informative as you'd like them to be in the portal, often defaulting to generic ids. It's not a deal-breaker, but it certainly impacts workflow efficiency, especially when trying to sift through multiple experiments.
+, let’s tackle this. I’ve personally stumbled upon this particular nuance of Azure Machine Learning more times than I care to remember, and it’s a common frustration point for many practitioners. You're facing the issue of AzureML run names not being as informative as you'd like them to be in the portal, often defaulting to generic ids. It's not a deal-breaker, but it certainly impacts workflow efficiency, especially when trying to sift through multiple experiments.
 
-Essentially, AzureML assigns default names to runs which are typically auto-generated identifiers, not human-friendly. These names are created when you initialize an `azureml.core.Run` object via `experiment.start_logging()` or similar functions. Fortunately, there's a straightforward way to override these defaults and establish more descriptive names. The crucial element here is the `display_name` property of the `Run` object, which is set *before* you submit your run. This can be achieved through the `start_logging()` method’s `display_name` parameter or by setting it directly on the created run object. Let’s explore the practical aspects with some code examples.
+Essentially, AzureML assigns default names to runs which are typically auto-generated identifiers, not human-friendly. These names are created when you initialize an `azureml.core.Run` object via `experiment.start_logging()` or similar functions. Fortunately, there's a straightforward way to override these defaults and establish more descriptive names. The crucial element here is the `display_name` property of the `Run` object, which is set _before_ you submit your run. This can be achieved through the `start_logging()` method’s `display_name` parameter or by setting it directly on the created run object. Let’s explore the practical aspects with some code examples.
 
 Let's start with a scenario I encountered while training a convolutional neural network for image classification. I was running multiple experiments with varying hyperparameters. Initially, my run dashboard was a jumble of cryptic run ids; not particularly conducive to effective analysis. I needed a better way to distinguish between experiments based on, say, the learning rate and batch size.
 
@@ -47,9 +47,9 @@ run.complete()
 print(f"Run '{run.id}' completed with display name: {display_name_str}")
 ```
 
-In this code, I craft a `display_name_str` incorporating relevant experimental parameters, resulting in a more informative label in the AzureML portal. This approach is especially useful when the parameter values are known *before* you initiate the run. The run id remains a unique identifier but, the display name is significantly more helpful for navigation.
+In this code, I craft a `display_name_str` incorporating relevant experimental parameters, resulting in a more informative label in the AzureML portal. This approach is especially useful when the parameter values are known _before_ you initiate the run. The run id remains a unique identifier but, the display name is significantly more helpful for navigation.
 
-Now, let’s consider a slightly different circumstance. Imagine you have a complex hyperparameter tuning loop where you don’t know the optimal parameters in advance but derive them during the experiment. You might use a hyperparameter search method like random or Bayesian search within your training script. In such cases, we'd adjust the display name *after* the optimal parameters are found, during the run itself.
+Now, let’s consider a slightly different circumstance. Imagine you have a complex hyperparameter tuning loop where you don’t know the optimal parameters in advance but derive them during the experiment. You might use a hyperparameter search method like random or Bayesian search within your training script. In such cases, we'd adjust the display name _after_ the optimal parameters are found, during the run itself.
 
 **Example 2: Setting Display Name Mid-Run**
 
@@ -131,6 +131,7 @@ for run in runs:
         except Exception as e:
             print(f"Error updating run {run.id}: {e}")
 ```
+
 In this example, I loop through existing runs, check if they’re completed, and, if so, try to read metrics, construct a new display name and then update it. It adds an extra layer of complexity but provides a practical method to retrospectively fix the naming if needed. It’s not ideal to be doing this as standard practice, but it's a practical solution when things haven’t gone as planned. It also emphasizes the need to use try/except blocks when working with existing runs as you might face cases of missing metrics.
 
 For a deeper understanding, I’d recommend referring to the official Azure Machine Learning documentation, particularly the sections on `azureml.core.Run` and `azureml.core.Experiment`. Specifically, reading the class definitions for `azureml.core.Run` and `azureml.core.Experiment` will clarify the available properties and functions. Additionally, the "Machine Learning with Python" by Tarek A. El-Gaaly is a comprehensive guide that would provide more context about how to work with this AzureML.

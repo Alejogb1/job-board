@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-i-get-span-index-out-of-range-errors-with-sentence-transformers"
 ---
 
-Alright, let's unpack this `span index out of range` issue you're encountering with Sentence Transformers. It's a common head-scratcher, and I’ve definitely been down that road before, wrestling (oops, nearly slipped!) with it during a large-scale text embedding project a few years back. I was batching hundreds of thousands of documents, and suddenly, this error started popping up seemingly at random. It took a fair bit of investigation to nail down the root causes, so I'm glad to share the insights.
+, let's unpack this `span index out of range` issue you're encountering with Sentence Transformers. It's a common head-scratcher, and I’ve definitely been down that road before, wrestling (oops, nearly slipped!) with it during a large-scale text embedding project a few years back. I was batching hundreds of thousands of documents, and suddenly, this error started popping up seemingly at random. It took a fair bit of investigation to nail down the root causes, so I'm glad to share the insights.
 
 Essentially, this error indicates that the model’s attempt to access a specific position within an input sequence—be it tokens, words, or characters—has gone beyond the boundaries of that sequence. In the context of Sentence Transformers, which rely heavily on the Transformer architecture, several factors can contribute to this.
 
@@ -45,7 +45,7 @@ input_ids = torch.tensor([tokens])
 
 ```
 
-The error here, `IndexError: list index out of range`, arises not *directly* from Sentence Transformers, but from improper handling of the tokenizer's output. The core issue isn't the model but how we're treating the tokenized sequence. You might get a similar `span index out of range` from the model if you're doing anything similar while generating attention masks or embeddings after tokenization because the sequence will not match the underlying shape of the attention mask or embedding output. This example underscores the importance of not working directly with the raw token IDs without proper padding, attention masks, and sequence length consideration.
+The error here, `IndexError: list index out of range`, arises not _directly_ from Sentence Transformers, but from improper handling of the tokenizer's output. The core issue isn't the model but how we're treating the tokenized sequence. You might get a similar `span index out of range` from the model if you're doing anything similar while generating attention masks or embeddings after tokenization because the sequence will not match the underlying shape of the attention mask or embedding output. This example underscores the importance of not working directly with the raw token IDs without proper padding, attention masks, and sequence length consideration.
 
 **Example 2: Mismatched Input Lengths in Batching (A Common Trigger)**
 
@@ -135,10 +135,10 @@ In this case, removing the `[CLS]` token and the associated attention mask cause
 So, how do you effectively tackle these `span index out of range` errors? Here's what I've learned over the years:
 
 1.  **Use Built-in Tokenizer Features**: Always rely on the tokenizer's built-in padding and truncation (`padding=True`, `truncation=True`) with `return_tensors="pt"` when preparing input for Sentence Transformers.
-2.  **Avoid Raw Token Manipulation**: Minimize direct manipulation of token IDs. If you absolutely need to, perform these operations *before* passing the sequences to the tokenizer with padding/truncation or perform it at a later stage with padding considerations. Be extra careful with the special tokens!
+2.  **Avoid Raw Token Manipulation**: Minimize direct manipulation of token IDs. If you absolutely need to, perform these operations _before_ passing the sequences to the tokenizer with padding/truncation or perform it at a later stage with padding considerations. Be extra careful with the special tokens!
 3.  **Understand Padding and Attention Masks**: Grasp how padding affects sequence lengths and attention mechanisms. The attention mask indicates which tokens should be attended to and which should be ignored. Ensuring they align with your sequences after manipulation is essential.
-4. **Be Aware of Sequence Length Limitations**: Each model has a maximum sequence length. Check the model's documentation (or look it up on Hugging Face's model cards) and either truncate longer sequences or employ techniques such as sequence chunking (a much more complex topic beyond the scope of this response).
-5. **Use the provided utilities**: Hugging Face's libraries come with robust collating utilities (`DataCollatorWithPadding`), which should be used when batching and not trying to roll your own from scratch.
+4.  **Be Aware of Sequence Length Limitations**: Each model has a maximum sequence length. Check the model's documentation (or look it up on Hugging Face's model cards) and either truncate longer sequences or employ techniques such as sequence chunking (a much more complex topic beyond the scope of this response).
+5.  **Use the provided utilities**: Hugging Face's libraries come with robust collating utilities (`DataCollatorWithPadding`), which should be used when batching and not trying to roll your own from scratch.
 
 For deeper understanding, I recommend digging into the original Transformer paper, "Attention is All You Need" by Vaswani et al. Also, "Natural Language Processing with Transformers" by Tunstall et al., provides excellent practical insights into how to effectively use these models and their tokenizers and is a strong resource. Finally, always check the documentation for the specific Sentence Transformer model you are utilizing, because there may be nuances specific to that model and underlying tokenizer.
 

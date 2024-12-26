@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-there-a-web-based-gui-tool-for-annotating-sentencesentities-that-supports-rasa-nlu-yaml-importexport"
 ---
 
-Okay, let's talk about annotating sentences and entities for RASA NLU, specifically the practical aspects of finding a web-based gui tool that handles YAML import/export, something I've spent a good chunk of time wrestling with in previous projects, particularly when scaling up our conversational AI pipeline. I've personally encountered situations where annotation teams, without suitable tooling, can become a bottleneck, so this is a problem that hits close to home.
+, let's talk about annotating sentences and entities for RASA NLU, specifically the practical aspects of finding a web-based gui tool that handles YAML import/export, something I've spent a good chunk of time wrestling with in previous projects, particularly when scaling up our conversational AI pipeline. I've personally encountered situations where annotation teams, without suitable tooling, can become a bottleneck, so this is a problem that hits close to home.
 
 It’s definitely the case that you need efficient tools to handle this. Without something reliable, you can quickly get bogged down in manual file manipulation, leading to inconsistencies and significantly impacting your development velocity. The reality is, while many tools offer text annotation capabilities, not all of them seamlessly handle RASA's specific YAML format for NLU data. That requirement of direct yaml handling, as you probably also know, is key for easy integration into your RASA training pipeline.
 
@@ -115,15 +115,16 @@ def convert_to_rasa_yaml(annotated_data):
     return yaml_data
 
 ```
+
 This python code snippet shows how the data, once annotated (either directly or as the example above) gets converted back into RASA yaml format. This is a non trivial process, especially if you’re dealing with multiple rounds of annotation. The offset calculations are important to keep the correct positioning of the entities, given the insertion of the annotation markers. The key is that the tool you select has to do this all correctly and reliably.
 
 **Recommended Resources:**
 
 Instead of specific tools (since the landscape is always evolving), I suggest focusing on understanding the core concepts and methodologies related to NLP annotation and data management. Here are some areas and associated literature:
 
-*   **Annotation Guidelines & Best Practices:** Consider the “Annotation Guidelines for Dialogue Act Tagging” by Stolcke et al. (1998), which while focusing on dialogue act annotation provides fundamental principles that can be applied to entity annotation. Also, research annotation schemes like CoNLL, which, even though a little older now, give a solid foundation on best practice for text annotation.
-*   **Human-in-the-loop NLP:** Read “Human-in-the-loop Machine Learning” by Robert (2022) which covers all the different aspects of building practical systems which include human feedback.
-*   **Data Management and Version Control:** Look into books on Data Engineering practices, specifically addressing DataOps, as this is key to managing your annotated data. "Designing Data-Intensive Applications" by Martin Kleppmann is a great reference for this.
-*   **RASA Documentation:** Of course, the official RASA documentation is the most critical for understanding how RASA expects its data and how it should be structured for training. Always refer to the most recent documentation for the version of RASA you are working with.
+- **Annotation Guidelines & Best Practices:** Consider the “Annotation Guidelines for Dialogue Act Tagging” by Stolcke et al. (1998), which while focusing on dialogue act annotation provides fundamental principles that can be applied to entity annotation. Also, research annotation schemes like CoNLL, which, even though a little older now, give a solid foundation on best practice for text annotation.
+- **Human-in-the-loop NLP:** Read “Human-in-the-loop Machine Learning” by Robert (2022) which covers all the different aspects of building practical systems which include human feedback.
+- **Data Management and Version Control:** Look into books on Data Engineering practices, specifically addressing DataOps, as this is key to managing your annotated data. "Designing Data-Intensive Applications" by Martin Kleppmann is a great reference for this.
+- **RASA Documentation:** Of course, the official RASA documentation is the most critical for understanding how RASA expects its data and how it should be structured for training. Always refer to the most recent documentation for the version of RASA you are working with.
 
 In summary, finding a web-based gui tool with native RASA yaml import/export is definitely achievable, but I've found it requires a careful assessment of the tool's specific features and how well it aligns with RASA's data format. You might need to perform some data pre and post processing. Focus on tools that prioritize data integrity and interoperability, rather than just the ease of visual annotation. The key is ensuring that the tool, whatever it is, will streamline your annotation workflow and reduce friction between the annotation stage and RASA’s training pipeline.

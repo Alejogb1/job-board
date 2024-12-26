@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "verilog-localparam-parameter-definition"
 ---
 
-Okay so Verilog localparam parameter definitions right Been there done that got the t-shirt several times actually Let's dive in because this is a rabbit hole many have fallen into and I've clawed my way out more than once
+Verilog localparam parameter definitions right Been there done that got the t-shirt several times actually Let's dive in because this is a rabbit hole many have fallen into and I've clawed my way out more than once
 
 First things first when we talk about `localparam` and `parameter` in Verilog we're essentially talking about constants We're setting up fixed values that can be used throughout our design Think of them as named magic numbers that make your code way more readable and maintainable The key difference is scope and how they can be overridden
 
@@ -101,8 +101,8 @@ You can add initial values later or through a different file or configuration It
 
 Where to learn more? Well you can always read the official Verilog standard its dense but useful and a good thing to read at least once but I would recommend:
 
-*   **"Digital Design and Computer Architecture" by David Harris and Sarah Harris:** This book explains the principles of digital design and how hardware description languages fit in it's not verilog specific but it explains the concepts in a way that will help you use `parameter` and `localparam` more effectively.
-*   **"FPGA Prototyping by Verilog Examples" by Pong P. Chu:** This is a practical guide that focuses on Verilog and provides real-world examples so you will understand how to use these concepts in actual implementations It's more hands-on.
-* **"SystemVerilog for Verification: A Guide to Learning the Testbench Language" by Chris Spear:** This one is more specific to verification but it explains parameters and local params in SystemVerilog very well which has many of the concepts of verilog so it can help to understand the concepts well
+- **"Digital Design and Computer Architecture" by David Harris and Sarah Harris:** This book explains the principles of digital design and how hardware description languages fit in it's not verilog specific but it explains the concepts in a way that will help you use `parameter` and `localparam` more effectively.
+- **"FPGA Prototyping by Verilog Examples" by Pong P. Chu:** This is a practical guide that focuses on Verilog and provides real-world examples so you will understand how to use these concepts in actual implementations It's more hands-on.
+- **"SystemVerilog for Verification: A Guide to Learning the Testbench Language" by Chris Spear:** This one is more specific to verification but it explains parameters and local params in SystemVerilog very well which has many of the concepts of verilog so it can help to understand the concepts well
 
 Remember use `parameter` for configurable constants and `localparam` for internal private constants It's about controlling what can be changed and how so keep these rules in mind and you will be all set

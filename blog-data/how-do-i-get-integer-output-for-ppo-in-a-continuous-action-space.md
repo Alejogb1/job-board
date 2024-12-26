@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-get-integer-output-for-ppo-in-a-continuous-action-space"
 ---
 
-Okay, let's tackle this. I remember back in '18, I was working on a reinforcement learning project involving robotic arm control. We were using Proximal Policy Optimization (PPO) with a continuous action space—think joint angles and velocities—and, like you, we needed to translate those continuous actions into discrete, executable commands for the actual hardware. It's a common challenge, and while PPO itself operates on continuous outputs, the real world often demands integers. Here’s how we approached it, and some thoughts based on that experience.
+, let's tackle this. I remember back in '18, I was working on a reinforcement learning project involving robotic arm control. We were using Proximal Policy Optimization (PPO) with a continuous action space—think joint angles and velocities—and, like you, we needed to translate those continuous actions into discrete, executable commands for the actual hardware. It's a common challenge, and while PPO itself operates on continuous outputs, the real world often demands integers. Here’s how we approached it, and some thoughts based on that experience.
 
 The core issue, as you've recognized, isn't inherent to PPO itself. PPO outputs a probability distribution over a continuous action space, typically parameterized by means and standard deviations for each action dimension. The problem arises when you need to interpret those values as discrete choices. Simply rounding the output is often inadequate because it ignores the uncertainty expressed by the distribution, leading to jerky, suboptimal behavior.
 
@@ -58,7 +58,7 @@ In this example, we draw a single sample from the Gaussian defined by `mu` and `
 
 **2. Softmax over Discretized Actions:**
 
-This method is particularly useful when you can explicitly define the discrete actions you'd like to consider. Instead of mapping sampled values, you modify the policy network to produce a probability distribution *directly* over these discrete actions. The continuous PPO policy network is still used as feature extractor, but a subsequent linear layer (or MLP) is used to create a probability distribution over the defined bins/discrete action space. You then use `torch.multinomial` to sample from that distribution.
+This method is particularly useful when you can explicitly define the discrete actions you'd like to consider. Instead of mapping sampled values, you modify the policy network to produce a probability distribution _directly_ over these discrete actions. The continuous PPO policy network is still used as feature extractor, but a subsequent linear layer (or MLP) is used to create a probability distribution over the defined bins/discrete action space. You then use `torch.multinomial` to sample from that distribution.
 
 Here’s a code snippet to illustrate this:
 
@@ -188,6 +188,6 @@ For further exploration into these concepts, I strongly recommend these sources:
 1.  **"Reinforcement Learning: An Introduction" by Richard S. Sutton and Andrew G. Barto:** This is the foundational textbook for reinforcement learning. It offers a clear, comprehensive overview of the field. I would particularly refer you to the chapters on policy gradient methods.
 2.  **"Deep Reinforcement Learning Hands-On" by Maxim Lapan:** This book provides a more practical, implementation-focused view of deep reinforcement learning, which is very helpful if you're new to the implementations of various methods.
 3.  **The original PPO paper:** "Proximal Policy Optimization Algorithms" by Schulman et al. (2017). This paper will solidify your understanding of the algorithm and its behavior, as well as any assumptions it makes about outputs.
-4.  **Papers on Gumbel Softmax and related techniques:** Search specifically for the original work on the Gumbel trick, including the 'Categorical Reparameterization with Gumbel-Softmax,'  which would deepen your understanding.
+4.  **Papers on Gumbel Softmax and related techniques:** Search specifically for the original work on the Gumbel trick, including the 'Categorical Reparameterization with Gumbel-Softmax,' which would deepen your understanding.
 
 In practice, I found the combination of method 1 (discretization with Gaussian sampling and binning) and method 2 (Softmax over discretized actions) to be most effective in most cases. The Gumbel Softmax is beneficial if you are aiming to further develop a highly custom learning pipeline. Choosing the “best” method ultimately depends on the specifics of your control system and what degree of probabilistic actions or differentiability is required by the application. Hopefully, this breakdown gives you a much clearer path forward. Let me know if you have any follow up questions.

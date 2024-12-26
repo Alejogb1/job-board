@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-python-selenium-handle-webpage-loading"
 ---
 
-Okay, let's talk about managing webpage loading with Python Selenium. I've spent a good chunk of time navigating the nuances of asynchronous web interactions, and it's definitely a topic with layers. It’s not simply about firing up a browser and expecting everything to magically appear. A lot hinges on understanding how webpages actually load, especially when dealing with dynamic content.
+, let's talk about managing webpage loading with Python Selenium. I've spent a good chunk of time navigating the nuances of asynchronous web interactions, and it's definitely a topic with layers. It’s not simply about firing up a browser and expecting everything to magically appear. A lot hinges on understanding how webpages actually load, especially when dealing with dynamic content.
 
-From my experience, the core issue revolves around timing. Selenium is a fantastic tool for automating browser actions, but it's operating in a world where network speeds, server responsiveness, and complex javascript are all in play. If you instruct Selenium to find an element *before* it's loaded, you're going to run into the dreaded `NoSuchElementException` or similar errors. This is the most common pitfall, and it highlights why understanding loading strategies is essential.
+From my experience, the core issue revolves around timing. Selenium is a fantastic tool for automating browser actions, but it's operating in a world where network speeds, server responsiveness, and complex javascript are all in play. If you instruct Selenium to find an element _before_ it's loaded, you're going to run into the dreaded `NoSuchElementException` or similar errors. This is the most common pitfall, and it highlights why understanding loading strategies is essential.
 
 To handle this, Selenium offers a variety of strategies, but it’s not just a matter of picking one and hoping for the best. It requires careful selection and adaptation based on the specific page behavior. I generally find myself using explicit waits the most – which are, in my view, the most reliable. But let's delve deeper into the specific mechanics.
 
@@ -39,7 +39,7 @@ finally:
     driver.quit()
 ```
 
-In the above snippet, we instantiate a `WebDriverWait` instance with a timeout (10 seconds here), and then use the `.until()` method with the `ec.element_to_be_clickable()` condition. This means that the `button` variable will only be assigned *after* the button element with the id "my-button-id" becomes clickable. The timeout error will be thrown if the condition is not met within the given time period. I’ve used this framework across different projects involving complex web applications and it’s remarkably effective.
+In the above snippet, we instantiate a `WebDriverWait` instance with a timeout (10 seconds here), and then use the `.until()` method with the `ec.element_to_be_clickable()` condition. This means that the `button` variable will only be assigned _after_ the button element with the id "my-button-id" becomes clickable. The timeout error will be thrown if the condition is not met within the given time period. I’ve used this framework across different projects involving complex web applications and it’s remarkably effective.
 
 Another common scenario arises when dealing with single-page applications (SPAs), where content is dynamically loaded through javascript without full page reloads. In this case, sometimes you need to wait for the presence of a certain element, and then, based on that, an additional step. Let's examine an example that includes waiting for the element to appear and then confirming that it is visible to ensure it’s fully loaded.
 
@@ -57,7 +57,7 @@ try:
     element = WebDriverWait(driver, 10).until(
       ec.presence_of_element_located((By.ID, "dynamic-content"))
     )
-    
+
     # Then, wait for the element to be visible
     element = WebDriverWait(driver, 10).until(
       ec.visibility_of(element)
@@ -95,7 +95,7 @@ finally:
   driver.quit()
 ```
 
-While the code is shorter, the lack of specific condition testing makes the implicit wait less predictable. I prefer the deterministic nature of explicit waits where I can clearly define what I'm waiting *for*, not just *how long*.
+While the code is shorter, the lack of specific condition testing makes the implicit wait less predictable. I prefer the deterministic nature of explicit waits where I can clearly define what I'm waiting _for_, not just _how long_.
 
 For those wanting to delve deeper, the "Selenium with Python" documentation, is always a good starting point. More theoretically-focused resources include, "Thinking in Systems: A Primer" by Donella H. Meadows. This book can help with understanding systems thinking that can benefit your approach to tackling dynamic websites. Specifically, Chapter 3, which discusses delays in systems, provides insight on the nature of waiting, which can assist in understanding the role of explicit waits and dynamic website behaviour. Additionally, for those interested in the underlying technologies, exploring web performance optimization techniques from books like "High Performance Web Sites" by Steve Souders can offer more context on why specific loading times might be experienced and, thus, how to address them more efficiently.
 

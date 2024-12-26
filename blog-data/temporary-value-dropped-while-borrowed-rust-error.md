@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "temporary-value-dropped-while-borrowed-rust-error"
 ---
 
-Alright so you're hitting that classic "temporary value dropped while borrowed" error in Rust right I've been there more times than I care to admit it's a rite of passage really it's like the compiler's way of saying "hey you're not thinking about ownership and lifetimes quite right" and it is actually a good thing in the long run I've spent hours debugging this kind of stuff so let me try to explain this in the simplest and straightforward manner
+so you're hitting that classic "temporary value dropped while borrowed" error in Rust right I've been there more times than I care to admit it's a rite of passage really it's like the compiler's way of saying "hey you're not thinking about ownership and lifetimes quite right" and it is actually a good thing in the long run I've spent hours debugging this kind of stuff so let me try to explain this in the simplest and straightforward manner
 
 Essentially the Rust compiler is a stickler for the rules about memory management and specifically how borrowing works It's trying to keep you from doing something dangerous and that involves a very specific rule about temporaries and borrows You see when you create a value let's say inside a function or part of a line of code but you don't assign it to a variable with an explicit lifetime its going to be a "temporary value" Now if you try to create a reference to that temporary value the compiler will complain because the temporary value's lifetime might not be long enough to outlive the borrow so its like trying to put a fire out with a fire hose its never good
 
@@ -45,6 +45,7 @@ fn main() {
     println!("Sum: {}", result);
 }
 ```
+
 This is a super basic example but it illustrates one of the core reasons this "dropped while borrowed" error pops up and I've seen this pattern over and over again in different contexts
 
 **Example 2: Method Chaining Issues**
@@ -149,6 +150,7 @@ fn main() {
 }
 
 ```
+
 This code is fine as it is but lets say I was trying to modify this value at the same time something like this:
 
 ```rust
@@ -185,6 +187,7 @@ fn main() {
 }
 
 ```
+
 Now it breaks and the reason is that I am borrowing the value of index one and then mutating that same value which is not allowed in rust because you cannot modify something you are borrowing
 
 Now I have the borrowing and mutation problem which is a common problem in Rust.
@@ -197,9 +200,9 @@ And now to the part where I drop my one and only joke: why do rust programmers a
 
 Here are some places I recommend you to check out if you want to deepen your understanding of this concept:
 
-*   **The Rust Programming Language (aka "The Book"):** This is the bible for Rust it has dedicated chapters to ownership borrowing and lifetimes go there and read it slowly multiple times if necessary this is really fundamental stuff
-*   **"Programming in Rust" by Jim Blandy, Jason Orendorff, and Leonora F.S. Tindall:** Another excellent resource I like to keep on my desk this one is a great book to have as a reference too it goes really deep in how borrowing is implemented in Rust and gives practical real world cases
-*   **Papers on Linear Type Systems and Region-Based Memory Management:** If you are feeling adventurous and you want to understand the deeper theory behind all of this go for it these are more for theoretical analysis but I think reading a few of them helped me with my thinking
+- **The Rust Programming Language (aka "The Book"):** This is the bible for Rust it has dedicated chapters to ownership borrowing and lifetimes go there and read it slowly multiple times if necessary this is really fundamental stuff
+- **"Programming in Rust" by Jim Blandy, Jason Orendorff, and Leonora F.S. Tindall:** Another excellent resource I like to keep on my desk this one is a great book to have as a reference too it goes really deep in how borrowing is implemented in Rust and gives practical real world cases
+- **Papers on Linear Type Systems and Region-Based Memory Management:** If you are feeling adventurous and you want to understand the deeper theory behind all of this go for it these are more for theoretical analysis but I think reading a few of them helped me with my thinking
 
 Remember this error is there to help you write safer and more robust code embrace it and the compiler it is your friend even if it feels like your enemy right now with enough practice you will get this problem and it will become second nature I have been there trust me this took me a long time to really master so do not feel discouraged this takes time and practice
 

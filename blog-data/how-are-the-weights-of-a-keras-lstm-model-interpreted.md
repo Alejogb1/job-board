@@ -4,24 +4,24 @@ date: "2024-12-23"
 id: "how-are-the-weights-of-a-keras-lstm-model-interpreted"
 ---
 
-Okay, let’s tackle this one. I've actually spent a fair bit of time troubleshooting some rather… peculiar behavior in LSTM networks, and it often boiled down to a deeper understanding of those weights. It's not always a straight path to intuition, but let’s break down how Keras, specifically, represents these weights and how we can begin to interpret their meaning.
+, let’s tackle this one. I've actually spent a fair bit of time troubleshooting some rather… peculiar behavior in LSTM networks, and it often boiled down to a deeper understanding of those weights. It's not always a straight path to intuition, but let’s break down how Keras, specifically, represents these weights and how we can begin to interpret their meaning.
 
 At its core, an LSTM (Long Short-Term Memory) network, as implemented in Keras, doesn’t use a single weight matrix per layer. Instead, it manages multiple weight matrices and bias vectors, meticulously orchestrated to perform the core operations that enable it to capture sequential dependencies. These are not just simple multipliers; they are transformation matrices that, in conjunction with the various activation functions, drive the entire process of remembering and forgetting information in a sequence. Specifically, the weights can be grouped as follows, considering a single LSTM layer:
 
-1.  **Input Weights (W):** These weights act upon the input *x<sub>t</sub>* at each time step. These are separated into matrices for the input gate, forget gate, cell state candidate, and the output gate. For instance, if the input dimension is 'n' and the hidden state dimension is 'm', then there are four such matrices of dimensions m x n. We often denote these as *W<sub>i</sub>*, *W<sub>f</sub>*, *W<sub>c</sub>*, and *W<sub>o</sub>* respectively for each of the gates.
+1.  **Input Weights (W):** These weights act upon the input _x<sub>t</sub>_ at each time step. These are separated into matrices for the input gate, forget gate, cell state candidate, and the output gate. For instance, if the input dimension is 'n' and the hidden state dimension is 'm', then there are four such matrices of dimensions m x n. We often denote these as _W<sub>i</sub>_, _W<sub>f</sub>_, _W<sub>c</sub>_, and _W<sub>o</sub>_ respectively for each of the gates.
 
-2.  **Recurrent Weights (U):** These weights transform the hidden state *h<sub>t-1</sub>* from the previous time step. Similar to input weights, there are four corresponding recurrent weight matrices, namely *U<sub>i</sub>*, *U<sub>f</sub>*, *U<sub>c</sub>*, and *U<sub>o</sub>*. They each have dimensions of m x m (hidden dimension). These control how much previous hidden states impact current calculations.
+2.  **Recurrent Weights (U):** These weights transform the hidden state _h<sub>t-1</sub>_ from the previous time step. Similar to input weights, there are four corresponding recurrent weight matrices, namely _U<sub>i</sub>_, _U<sub>f</sub>_, _U<sub>c</sub>_, and _U<sub>o</sub>_. They each have dimensions of m x m (hidden dimension). These control how much previous hidden states impact current calculations.
 
-3.  **Bias Vectors (b):** Each gate and the cell state candidate also have biases associated with them. They are denoted as *b<sub>i</sub>*, *b<sub>f</sub>*, *b<sub>c</sub>*, and *b<sub>o</sub>*. All of these are of length 'm'.
+3.  **Bias Vectors (b):** Each gate and the cell state candidate also have biases associated with them. They are denoted as _b<sub>i</sub>_, _b<sub>f</sub>_, _b<sub>c</sub>_, and _b<sub>o</sub>_. All of these are of length 'm'.
 
 Now, how do these weights get used? It's the complex interaction between these matrices that makes the LSTM so powerful. At each time step, the following happens:
 
-*   **Forget gate:** *f<sub>t</sub> = σ(W<sub>f</sub>x<sub>t</sub> + U<sub>f</sub>h<sub>t-1</sub> + b<sub>f</sub>)*
-*   **Input gate:** *i<sub>t</sub> = σ(W<sub>i</sub>x<sub>t</sub> + U<sub>i</sub>h<sub>t-1</sub> + b<sub>i</sub>)*
-*   **Cell state candidate:** *c̃<sub>t</sub> = tanh(W<sub>c</sub>x<sub>t</sub> + U<sub>c</sub>h<sub>t-1</sub> + b<sub>c</sub>)*
-*   **Cell state:** *c<sub>t</sub> = f<sub>t</sub> ⊙ c<sub>t-1</sub> + i<sub>t</sub> ⊙ c̃<sub>t</sub>*
-*   **Output gate:** *o<sub>t</sub> = σ(W<sub>o</sub>x<sub>t</sub> + U<sub>o</sub>h<sub>t-1</sub> + b<sub>o</sub>)*
-*   **Hidden state:** *h<sub>t</sub> = o<sub>t</sub> ⊙ tanh(c<sub>t</sub>)*
+- **Forget gate:** _f<sub>t</sub> = σ(W<sub>f</sub>x<sub>t</sub> + U<sub>f</sub>h<sub>t-1</sub> + b<sub>f</sub>)_
+- **Input gate:** _i<sub>t</sub> = σ(W<sub>i</sub>x<sub>t</sub> + U<sub>i</sub>h<sub>t-1</sub> + b<sub>i</sub>)_
+- **Cell state candidate:** _c̃<sub>t</sub> = tanh(W<sub>c</sub>x<sub>t</sub> + U<sub>c</sub>h<sub>t-1</sub> + b<sub>c</sub>)_
+- **Cell state:** _c<sub>t</sub> = f<sub>t</sub> ⊙ c<sub>t-1</sub> + i<sub>t</sub> ⊙ c̃<sub>t</sub>_
+- **Output gate:** _o<sub>t</sub> = σ(W<sub>o</sub>x<sub>t</sub> + U<sub>o</sub>h<sub>t-1</sub> + b<sub>o</sub>)_
+- **Hidden state:** _h<sub>t</sub> = o<sub>t</sub> ⊙ tanh(c<sub>t</sub>)_
 
 Where σ represents the sigmoid function and ⊙ represents element-wise multiplication.
 
@@ -98,7 +98,8 @@ plt.xlabel("Input Dimension")
 plt.ylabel("Hidden Dimension")
 plt.show()
 ```
-This code snippet will generate a heatmap visualization of the *W<sub>i</sub>* matrix. While specific values are hard to map directly, such visualization can help sometimes in understanding the structure and potential groupings of connections. You can try this for the others as well.
+
+This code snippet will generate a heatmap visualization of the _W<sub>i</sub>_ matrix. While specific values are hard to map directly, such visualization can help sometimes in understanding the structure and potential groupings of connections. You can try this for the others as well.
 
 **Code Example 3: Examining Weight Norms**
 
@@ -133,14 +134,15 @@ print(f"Norm of b_c: {bc_norm}")
 print(f"Norm of b_o: {bo_norm}")
 
 ```
+
 This gives us a rough quantitative comparison of the magnitude of different weight matrices. Again, interpreting these needs to be done in the context of the task and the overall network behavior.
 
 **Caveats and Resources:**
 
 While these examples offer an initial approach, understanding LSTM weights is a complex and still evolving field. Here are some resources to deep-dive:
 
-*   **"Understanding LSTM Networks" by Christopher Olah:** This is a must-read blog post explaining the inner workings of LSTMs, including visualizations and math. Its readily available with a quick online search.
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** An essential textbook for understanding not just LSTMs, but neural networks in general, offering a comprehensive mathematical treatment.
-*   **Research Papers on LSTM interpretation:** Look for specific papers focusing on interpretability of recurrent neural networks, using keyword searches such as "interpretable lstm," "lstm attention mechanisms," and "lstm visualization techniques," via google scholar or similar platforms. You will be able to find cutting edge research in the field.
+- **"Understanding LSTM Networks" by Christopher Olah:** This is a must-read blog post explaining the inner workings of LSTMs, including visualizations and math. Its readily available with a quick online search.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** An essential textbook for understanding not just LSTMs, but neural networks in general, offering a comprehensive mathematical treatment.
+- **Research Papers on LSTM interpretation:** Look for specific papers focusing on interpretability of recurrent neural networks, using keyword searches such as "interpretable lstm," "lstm attention mechanisms," and "lstm visualization techniques," via google scholar or similar platforms. You will be able to find cutting edge research in the field.
 
 In conclusion, the interpretation of LSTM weights is an involved endeavor, and direct mapping to individual feature importance is often not straightforward. Analyzing norms, visualizing weight matrices, and focusing on the mathematical equations are steps towards a better understanding. It’s important to acknowledge that the field of deep learning interpretability is actively being researched, and there are no silver bullets.

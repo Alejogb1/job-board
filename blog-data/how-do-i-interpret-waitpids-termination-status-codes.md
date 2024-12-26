@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-interpret-waitpids-termination-status-codes"
 ---
 
-Alright, let's get into `waitpid` and those sometimes perplexing termination status codes. I remember wrestling – no, wait, *encountering* – this issue a good while back while working on a distributed system. We had processes spawning other processes, and proper error handling became utterly crucial. Without a solid grasp of what `waitpid` was returning, we were basically flying blind. So, I’ve walked the path on this one and I can give you some practical insights.
+, let's get into `waitpid` and those sometimes perplexing termination status codes. I remember wrestling – no, wait, _encountering_ – this issue a good while back while working on a distributed system. We had processes spawning other processes, and proper error handling became utterly crucial. Without a solid grasp of what `waitpid` was returning, we were basically flying blind. So, I’ve walked the path on this one and I can give you some practical insights.
 
 The `waitpid` system call, in essence, allows a parent process to obtain status information about one of its child processes. Specifically, it retrieves the status of a child that has terminated. The key part we’re interested in here is the `status` argument that is returned – it's an integer packed with information using bitwise flags and shifts, which can feel a bit cryptic at first glance. Understanding how to unpack that integer is crucial for robust application development.
 

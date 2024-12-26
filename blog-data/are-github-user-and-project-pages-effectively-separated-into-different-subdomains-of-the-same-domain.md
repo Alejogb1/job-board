@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "are-github-user-and-project-pages-effectively-separated-into-different-subdomains-of-the-same-domain"
 ---
 
-Alright, let's unpack this query about GitHub's subdomain structure. Over the years, I've spent a fair amount of time poking around various platforms, both as a contributor and administrator, and GitHub's approach to user and project pages is something I've had to analyze on multiple occasions, especially during a period when we were migrating our internal tooling to a git-based workflow. The answer isn't a simple yes or no; it's more nuanced than that.
+, let's unpack this query about GitHub's subdomain structure. Over the years, I've spent a fair amount of time poking around various platforms, both as a contributor and administrator, and GitHub's approach to user and project pages is something I've had to analyze on multiple occasions, especially during a period when we were migrating our internal tooling to a git-based workflow. The answer isn't a simple yes or no; it's more nuanced than that.
 
 Essentially, the question boils down to whether github.com's user profiles and project pages reside on distinct subdomains, which would allow for more flexibility and potentially better performance management. GitHub, in its current implementation, doesn't use traditional subdomains in the way you might expect with separate entities like `users.github.com` and `projects.github.com`. Instead, they use a path-based system within the primary domain, `github.com`. User profiles are accessed at `github.com/<username>`, and project pages at `github.com/<username>/<repository-name>`. This is different from the separation you might find with, say, Google's approach to `mail.google.com` and `drive.google.com`.
 

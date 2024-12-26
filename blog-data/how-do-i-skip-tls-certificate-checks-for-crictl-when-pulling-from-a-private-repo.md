@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-skip-tls-certificate-checks-for-crictl-when-pulling-from-a-private-repo"
 ---
 
-Okay, let's tackle this. I recall a particularly frustrating incident back in my early cloud-native days. We had a small, isolated development cluster with a private image registry. The goal was simplicity: quick iterations, minimal overhead. We initially opted for self-signed certificates, and boy, did that introduce complications, especially with `crictl`. Ignoring TLS verification seemed like a quick fix initially, but, as you'll see, it's not always the best approach. There’s a proper way to navigate this, and I’d rather avoid the usual advice that glosses over the underlying mechanics.
+, let's tackle this. I recall a particularly frustrating incident back in my early cloud-native days. We had a small, isolated development cluster with a private image registry. The goal was simplicity: quick iterations, minimal overhead. We initially opted for self-signed certificates, and boy, did that introduce complications, especially with `crictl`. Ignoring TLS verification seemed like a quick fix initially, but, as you'll see, it's not always the best approach. There’s a proper way to navigate this, and I’d rather avoid the usual advice that glosses over the underlying mechanics.
 
 The core issue stems from the secure nature of TLS. `crictl`, a command-line interface for container runtimes that follow the CRI (Container Runtime Interface) standard, inherently validates the certificates presented by the remote registry. When using self-signed or certificates issued by an untrusted authority, the validation process fails, preventing image pulls. Just disabling this check globally can introduce security risks. Hence, the need for more nuanced solutions.
 
@@ -14,10 +14,10 @@ Let me break down the common approaches, starting with the least recommended and
 
    Here's how it might be implemented (avoid it if you can):
 
-    ```bash
-    export CRI_CONTAINERD_INSECURE_REGISTRY="my-private-registry.local:5000"
-    crictl pull my-private-registry.local:5000/my-image:latest
-    ```
+   ```bash
+   export CRI_CONTAINERD_INSECURE_REGISTRY="my-private-registry.local:5000"
+   crictl pull my-private-registry.local:5000/my-image:latest
+   ```
 
    This sets the insecure flag for that specific registry. Though it might initially seem straightforward, understand that it weakens the overall security model by neglecting certificate verification. This approach should ideally be temporary.
 
@@ -25,10 +25,10 @@ Let me break down the common approaches, starting with the least recommended and
 
    Typically, you would:
 
-   * Obtain the certificate (`.crt` or `.pem`).
-   * Place it into `/etc/containerd/certs.d/my-private-registry.local:5000/`. Note, the directory name corresponds to the full registry address.
-   * The certificate file must have a `.crt` extension, for instance `ca.crt`.
-   * Restart `containerd` or send a signal to reload its config.
+   - Obtain the certificate (`.crt` or `.pem`).
+   - Place it into `/etc/containerd/certs.d/my-private-registry.local:5000/`. Note, the directory name corresponds to the full registry address.
+   - The certificate file must have a `.crt` extension, for instance `ca.crt`.
+   - Restart `containerd` or send a signal to reload its config.
 
    The configuration looks like this:
 
@@ -45,19 +45,20 @@ Let me break down the common approaches, starting with the least recommended and
 
    Here’s what a snippet in your `/etc/crictl.yaml` file might look like. Note that this assumes you have the correct `ca.crt` available, but you don’t want to manipulate the `containerd` directories directly.
 
-    ```yaml
-    runtime-endpoint: unix:///run/containerd/containerd.sock
-    image-endpoint: unix:///run/containerd/containerd.sock
-    timeout: 2
-    debug: false
-    pull-image-on-create: true
-    registries:
-      'my-private-registry.local:5000':
-        insecure_skip_verify: false
-        tls_config:
-           ca_file: /path/to/your/ca.crt
-    ```
-  Then, when running `crictl`, you should specify this config:
+   ```yaml
+   runtime-endpoint: unix:///run/containerd/containerd.sock
+   image-endpoint: unix:///run/containerd/containerd.sock
+   timeout: 2
+   debug: false
+   pull-image-on-create: true
+   registries:
+     "my-private-registry.local:5000":
+       insecure_skip_verify: false
+       tls_config:
+         ca_file: /path/to/your/ca.crt
+   ```
+
+   Then, when running `crictl`, you should specify this config:
 
    ```bash
    crictl --config /etc/crictl.yaml pull my-private-registry.local:5000/my-image:latest
@@ -65,6 +66,6 @@ Let me break down the common approaches, starting with the least recommended and
 
    This method centralizes the registry configuration and is cleaner to maintain, especially in environments with a high volume of registry interactions. This also allows for more dynamic registry configurations as you can provide different certificates for multiple registries without making direct file system changes.
 
-It's critical to understand that these methods interact differently with the various layers of container infrastructure. Bypassing TLS validation introduces risks and is generally advised against except for very controlled development environments. The preferred strategy involves ensuring that `containerd` (or your container runtime) trusts the certificate of the registry. If you want to go further in depth into registry configurations and the different ways they can be handled in `containerd`, you should be sure to check the `containerd` documentation itself. Additionally, the Container Runtime Interface (CRI) spec documents how configuration is supposed to work. You can also find excellent information on TLS and certificate management in the excellent *Network Security with OpenSSL* by Dr. John Viega, and *Cryptography Engineering* by Niels Ferguson, Bruce Schneier, and Tadayoshi Kohno.
+It's critical to understand that these methods interact differently with the various layers of container infrastructure. Bypassing TLS validation introduces risks and is generally advised against except for very controlled development environments. The preferred strategy involves ensuring that `containerd` (or your container runtime) trusts the certificate of the registry. If you want to go further in depth into registry configurations and the different ways they can be handled in `containerd`, you should be sure to check the `containerd` documentation itself. Additionally, the Container Runtime Interface (CRI) spec documents how configuration is supposed to work. You can also find excellent information on TLS and certificate management in the excellent _Network Security with OpenSSL_ by Dr. John Viega, and _Cryptography Engineering_ by Niels Ferguson, Bruce Schneier, and Tadayoshi Kohno.
 
 In conclusion, when dealing with TLS certificate issues when pulling images with `crictl`, avoid resorting to insecure workarounds like `CRI_CONTAINERD_INSECURE_REGISTRY`. Opt for either placing your certificate within `containerd`'s certificate directory or configuring your CRI config correctly. These secure methods ensure your deployments remain robust and your images are validated against trusted registries. Each method provides a different trade off, and it is important to select the one best for your specific circumstances and long-term needs.

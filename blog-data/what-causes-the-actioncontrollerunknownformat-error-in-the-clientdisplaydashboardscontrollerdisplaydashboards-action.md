@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "what-causes-the-actioncontrollerunknownformat-error-in-the-clientdisplaydashboardscontrollerdisplaydashboards-action"
 ---
 
-Alright, let's tackle this. I've seen this `ActionController::UnknownFormat` error pop up more times than I care to count, especially when dealing with `ClientDisplayDashboardsController#display_dashboards` or similar situations involving diverse client needs. It's not usually a complex issue at its core, but the troubleshooting can become a frustrating goose chase if you don't know exactly where to look.
+, let's tackle this. I've seen this `ActionController::UnknownFormat` error pop up more times than I care to count, especially when dealing with `ClientDisplayDashboardsController#display_dashboards` or similar situations involving diverse client needs. It's not usually a complex issue at its core, but the troubleshooting can become a frustrating goose chase if you don't know exactly where to look.
 
 The fundamental reason you encounter `ActionController::UnknownFormat` boils down to a mismatch between the format your client is requesting and the formats your Rails application is configured to handle for a specific controller action. Essentially, Rails’ action dispatch mechanism attempts to determine how to render a response based on the `Accept` header sent in the HTTP request. If Rails can’t map that header to a registered response format (like `json`, `html`, `xml`, etc.), this exception is thrown.
 
 From my past experiences, I remember working on a project with a legacy client API that was being transitioned to use a more RESTful approach. The legacy system sent requests without any explicit `Accept` header, relying on the server to return a default HTML response. As we progressively integrated it with the newer, format-aware client, we began receiving these `ActionController::UnknownFormat` errors in places we weren't expecting, specifically in our dashboard controller where different clients could request different data representations.
 
-The default behavior in Rails for web browsers, which usually send 'Accept: text/html' , isn't always consistent. An API client without an explicit `Accept` header will have rails attempt to find a suitable default format. This often works well until your client base expands. As you add a mobile client, for instance, they would typically want `application/json` whereas your legacy web interface might be perfectly content with `text/html`. When a request arrives without the `Accept` header *and* Rails has not defined a suitable default for the particular action, you’ll inevitably encounter the error.
+The default behavior in Rails for web browsers, which usually send 'Accept: text/html' , isn't always consistent. An API client without an explicit `Accept` header will have rails attempt to find a suitable default format. This often works well until your client base expands. As you add a mobile client, for instance, they would typically want `application/json` whereas your legacy web interface might be perfectly content with `text/html`. When a request arrives without the `Accept` header _and_ Rails has not defined a suitable default for the particular action, you’ll inevitably encounter the error.
 
 It's crucial to understand that Rails’ `respond_to` block and the routes configuration heavily influence this error. Let me show you.
 
@@ -68,6 +68,7 @@ class ClientDisplayDashboardsController < ApplicationController
   end
 end
 ```
+
 In this example, if a request arrives with an unknown format, or no `Accept` header is included and it doesn't fit any of the defined format blocks, then the default block will be executed, returning a 406 code along with a JSON payload. This allows you to be explicit about what will be returned.
 
 In terms of practical solutions, here’s how I’ve tackled similar problems:

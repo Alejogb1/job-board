@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-create-a-multiple-branched-model--how-to-elementwise-forward-propagate-a-model-and-update-a-counter-token"
 ---
 
-alright, so you're asking about building a model with multiple branches and how to push data through it element-wise while keeping track of something, like a counter. i've definitely been down this road before, it's a common pattern when dealing with sequence-to-sequence tasks, or anything that requires a bit more intricate processing flow than a standard feedforward net. let me break down how i usually approach this kind of thing, based on my experience.
+, so you're asking about building a model with multiple branches and how to push data through it element-wise while keeping track of something, like a counter. i've definitely been down this road before, it's a common pattern when dealing with sequence-to-sequence tasks, or anything that requires a bit more intricate processing flow than a standard feedforward net. let me break down how i usually approach this kind of thing, based on my experience.
 
 first, let's talk about the multi-branch part. it’s really just a matter of composing different model modules within your overall structure. instead of one linear flow, you split it at some point, apply different operations, and maybe recombine them later. think of it as a directed acyclic graph where the nodes are operations or models and the edges are data flow.
 

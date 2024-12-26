@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-difference-between-fastrp-vs-scaleproperties"
 ---
 
-Okay, let’s unpack the difference between `FastRP` and `scaleProperties`, because it's a distinction that, while often glossed over, can have significant performance and memory implications in large-scale machine learning, especially when dealing with high-dimensional data. I’ve grappled with this directly during my time working on a recommendation system for a large e-commerce platform – we had hundreds of millions of user interaction events, and optimizing our feature pipelines was critical to keeping latency in check.
+, let’s unpack the difference between `FastRP` and `scaleProperties`, because it's a distinction that, while often glossed over, can have significant performance and memory implications in large-scale machine learning, especially when dealing with high-dimensional data. I’ve grappled with this directly during my time working on a recommendation system for a large e-commerce platform – we had hundreds of millions of user interaction events, and optimizing our feature pipelines was critical to keeping latency in check.
 
 The core issue boils down to how you’re handling the transformation of your input data before feeding it into your model, specifically for categorical or high-cardinality features. Both `FastRP` and the concept of 'scaling properties' address this, but they do so with different strategies and, crucially, different trade-offs.
 
@@ -107,4 +107,4 @@ print(combined_data)
 
 In this combined example, we separate our numerical and categorical features. We then apply `FastRP` to the categorical features, and `scaleProperties` to the numerical features. Finally, we concatenate them back together to form the complete set of preprocessed features.
 
-For a deeper dive into these topics, I would recommend exploring *“Pattern Recognition and Machine Learning”* by Christopher Bishop for a comprehensive understanding of dimensionality reduction techniques. For details on feature scaling and its impact on gradient descent, papers detailing optimization methods for machine learning models would be very insightful; specifically those detailing the importance of normalising inputs. Understanding the practical implications of these methods in the context of large-scale systems requires practical experimentation.
+For a deeper dive into these topics, I would recommend exploring _“Pattern Recognition and Machine Learning”_ by Christopher Bishop for a comprehensive understanding of dimensionality reduction techniques. For details on feature scaling and its impact on gradient descent, papers detailing optimization methods for machine learning models would be very insightful; specifically those detailing the importance of normalising inputs. Understanding the practical implications of these methods in the context of large-scale systems requires practical experimentation.

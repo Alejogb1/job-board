@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-are-there-repeated-unexpected-token-exceptions-in-rails-6"
 ---
 
-Okay, let's talk about those persistent 'unexpected token' exceptions in Rails 6. I've certainly seen my fair share of them over the years, and they can feel like whack-a-mole if you're not looking in the right places. It's less about a single, glaring flaw in Rails 6 itself, and more about how various pieces interact, particularly around javascript and asset compilation. I've spent quite a few late nights troubleshooting these, so I can break it down based on my experiences and give you a pragmatic view of why they happen, along with some concrete examples.
+, let's talk about those persistent 'unexpected token' exceptions in Rails 6. I've certainly seen my fair share of them over the years, and they can feel like whack-a-mole if you're not looking in the right places. It's less about a single, glaring flaw in Rails 6 itself, and more about how various pieces interact, particularly around javascript and asset compilation. I've spent quite a few late nights troubleshooting these, so I can break it down based on my experiences and give you a pragmatic view of why they happen, along with some concrete examples.
 
-Firstly, the core issue typically boils down to parsing failures, specifically when the javascript ecosystem in a Rails application encounters code it doesn’t understand, or code it *thinks* is something else. These aren’t just errors – they're the parser saying "I was expecting something different here, and I don't know what to do with this." Remember, the rails asset pipeline, when properly configured, handles a lot of magic – transpiling, minifying, and bundling your javascript. But this very magic is the source of many potential pitfalls.
+Firstly, the core issue typically boils down to parsing failures, specifically when the javascript ecosystem in a Rails application encounters code it doesn’t understand, or code it _thinks_ is something else. These aren’t just errors – they're the parser saying "I was expecting something different here, and I don't know what to do with this." Remember, the rails asset pipeline, when properly configured, handles a lot of magic – transpiling, minifying, and bundling your javascript. But this very magic is the source of many potential pitfalls.
 
 The common culprit? Misaligned expectations between your code and the javascript processing pipeline, typically manifesting in three scenarios that I frequently encountered:
 
@@ -22,14 +22,14 @@ Here's a simple example illustrating how this can occur:
 const myObject = {
   name: "example",
   details: {
-    ...{ attribute1: "value1", attribute2: "value2" }
-  }
+    ...{ attribute1: "value1", attribute2: "value2" },
+  },
 };
 
-console.log(myObject.details)
+console.log(myObject.details);
 ```
 
-If your babel or webpack configuration in Rails isn't configured properly, specifically if the spread syntax is not being correctly handled, you may get an “unexpected token” error when the compiled file attempts to execute in the browser. To remedy this, you should ensure your `.babelrc` file (or the equivalent if you're using webpacker) is configured to transpile the spread syntax using the appropriate babel plugins. This is a common issue, and the problem is that the *compiled* asset will throw the error, not the *source* file, which can be confusing initially.
+If your babel or webpack configuration in Rails isn't configured properly, specifically if the spread syntax is not being correctly handled, you may get an “unexpected token” error when the compiled file attempts to execute in the browser. To remedy this, you should ensure your `.babelrc` file (or the equivalent if you're using webpacker) is configured to transpile the spread syntax using the appropriate babel plugins. This is a common issue, and the problem is that the _compiled_ asset will throw the error, not the _source_ file, which can be confusing initially.
 
 **Scenario 2: Issues with Asset Compilation and Precompilation**
 
@@ -45,10 +45,11 @@ Here is an example: Imagine your `application.js` file incorrectly includes anot
 
 // my_bad_javascript.js
 
-function doSomthing(){
-   console.log("this is bad") // missing ending ;
+function doSomthing() {
+  console.log("this is bad"); // missing ending ;
 }
 ```
+
 In this situation, if the `my_bad_javascript.js` doesn’t have a semicolon at the end, or other syntax errors in other dependencies, the precompilation process could choke on it, leading to an ‘unexpected token’ error during run-time. The problem, again, isn’t the immediate source file. Rather, it’s the compiled and sometimes concatenated version that has an issue. One strategy to solve this is to use `RAILS_ENV=development bin/rails assets:precompile --trace` which can provide more detail about what’s going on during compilation. It's also vital to review your dependency tree and the specific files that are included in your `manifest.js` or `application.js` files to pinpoint the culprit.
 
 **Scenario 3: External Libraries and Version Conflicts**
@@ -69,8 +70,8 @@ If `my_third_party_lib.js` utilizes syntax not supported by your current configu
 
 **Debugging and Mitigation Strategies**
 
-Okay, you’ve seen examples. What are practical approaches to fix this? First, always check the browser's developer console. The error itself will tell you the specific file and line where the parser encountered the problem. Start there. Sometimes it is enough to see the specific line to know what is wrong. Second, isolate. Use the browser’s network tab to determine which file is throwing the error. If it’s a combined asset, then narrow down the individual components through elimination. Third, carefully examine your `.babelrc`, `webpack.config.js`, or your equivalent asset pipeline configuration to ensure that your transpilations and other compilation steps are correctly configured. Ensure babel plugins such as `@babel/plugin-proposal-object-rest-spread` are present, as well as any other plugins that your selected language versions need. Fourth, always clear your caches – sometimes browsers or even the rails asset pipeline have cached older versions. Fifth, use the `--trace` flag when precompiling your assets, as I mentioned earlier, this will give you detailed information about what is going on during compilation.
+, you’ve seen examples. What are practical approaches to fix this? First, always check the browser's developer console. The error itself will tell you the specific file and line where the parser encountered the problem. Start there. Sometimes it is enough to see the specific line to know what is wrong. Second, isolate. Use the browser’s network tab to determine which file is throwing the error. If it’s a combined asset, then narrow down the individual components through elimination. Third, carefully examine your `.babelrc`, `webpack.config.js`, or your equivalent asset pipeline configuration to ensure that your transpilations and other compilation steps are correctly configured. Ensure babel plugins such as `@babel/plugin-proposal-object-rest-spread` are present, as well as any other plugins that your selected language versions need. Fourth, always clear your caches – sometimes browsers or even the rails asset pipeline have cached older versions. Fifth, use the `--trace` flag when precompiling your assets, as I mentioned earlier, this will give you detailed information about what is going on during compilation.
 
-In terms of resources, I’d strongly recommend reading through *Effective Javascript* by David Herman for a solid understanding of Javascript fundamentals. For configuration around webpack and transpilation, the official documentation from babel and webpack is invaluable, especially around configuring plugins and loaders properly. Also, digging into the official Rails asset pipeline guides, particularly the details on manifest files, sprockets, and how assets are precompiled is fundamental. Understanding your development environment deeply is crucial to solving these problems.
+In terms of resources, I’d strongly recommend reading through _Effective Javascript_ by David Herman for a solid understanding of Javascript fundamentals. For configuration around webpack and transpilation, the official documentation from babel and webpack is invaluable, especially around configuring plugins and loaders properly. Also, digging into the official Rails asset pipeline guides, particularly the details on manifest files, sprockets, and how assets are precompiled is fundamental. Understanding your development environment deeply is crucial to solving these problems.
 
 In closing, ‘unexpected token’ errors in Rails 6 are rarely the product of a singular issue. Instead, they are a symptom of an interaction problem within the javascript asset pipeline. Thorough understanding, careful debugging and a solid grasp of configuration are the best tools to have at your disposal to solve these issues.

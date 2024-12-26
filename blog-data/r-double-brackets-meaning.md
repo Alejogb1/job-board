@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "r-double-brackets-meaning"
 ---
 
-Okay so you're asking about `[[ ]]` in programming right It's not as scary as it looks I've seen this pop up a lot and frankly I've wrestled with it myself in the past let me share my experience and what I've learned
+you're asking about `[[ ]]` in programming right It's not as scary as it looks I've seen this pop up a lot and frankly I've wrestled with it myself in the past let me share my experience and what I've learned
 
 First off let's clear the air This `[[ ]]` thing its meaning isn't universal it really depends on the specific programming language or environment youre dealing with That’s why it’s super important to nail down the context when you see it popping up Otherwise it's like trying to debug with blindfolds
 
@@ -25,6 +25,7 @@ double_dimension = [[1 2 3] [4 5 6] [7 8 9]]
 print(double_dimension) # output [[1 2 3] [4 5 6] [7 8 9]]
 print(type(double_dimension)) # output <class 'list'> which is a list of lists
 ```
+
 Now what is the difference well a list only stores values in sequence or by index access while a list of lists or multidimensional array stores it as an array of rows and inside each row another array so to access a specific number in the double dimension you need the index of the row first and the index of the column
 
 `double_dimension[0][1]` would access the second number `2` in the first row

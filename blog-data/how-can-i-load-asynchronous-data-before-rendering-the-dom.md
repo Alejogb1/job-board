@@ -4,14 +4,14 @@ date: "2024-12-23"
 id: "how-can-i-load-asynchronous-data-before-rendering-the-dom"
 ---
 
-Okay, let's tackle this. Loading asynchronous data before the dom renders is a common challenge, and i've certainly been down that road a few times in my career, particularly during my stint building data-heavy web applications. It’s a crucial aspect of creating responsive and user-friendly interfaces. If you're just slapping content onto the page as it arrives, the user experience tends to be pretty jarring, with content shifting and layouts jumping around, which isn’t ideal. We need to pre-load data efficiently, so the initial rendering has everything it needs. Let’s dive into some techniques i’ve found particularly effective.
+, let's tackle this. Loading asynchronous data before the dom renders is a common challenge, and i've certainly been down that road a few times in my career, particularly during my stint building data-heavy web applications. It’s a crucial aspect of creating responsive and user-friendly interfaces. If you're just slapping content onto the page as it arrives, the user experience tends to be pretty jarring, with content shifting and layouts jumping around, which isn’t ideal. We need to pre-load data efficiently, so the initial rendering has everything it needs. Let’s dive into some techniques i’ve found particularly effective.
 
 Fundamentally, the problem boils down to the browser's rendering cycle. The dom is constructed before, during, and after resource loading, and we need to intercept this process, ensuring our asynchronous data resolves before the relevant components are fully rendered. Ignoring this can lead to flickering, broken layouts, and poor perceived performance, even if the data loads reasonably quickly in the background. It's more than just about speed; it’s about the smoothness and stability of the application’s appearance to the user.
 
 One of the earliest and still frequently used techniques i’ve encountered involves using promises and react’s state management in a controlled way. In essence, when the component is mounted we initiate the fetch operation, store the promise in the component’s state, and update the component’s state when that promise resolves. This ensures the dom only updates when the data is available. Here’s a practical example, demonstrating this approach with react hooks:
 
 ```javascript
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 function DataComponent() {
   const [data, setData] = useState(null);
@@ -21,9 +21,9 @@ function DataComponent() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://api.example.com/data');
+        const response = await fetch("https://api.example.com/data");
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
         const json = await response.json();
         setData(json);
@@ -37,27 +37,24 @@ function DataComponent() {
     fetchData();
   }, []); // Empty dependency array ensures this runs once on mount
 
-
   if (loading) {
     return <p>Loading data...</p>;
   }
 
-    if (error) {
-        return <p>Error: {error.message}</p>;
-    }
-
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
 
   if (!data) {
     return <p>No data loaded.</p>; // Handle case where data is still null, even if not loading
-
   }
   return (
     <div>
       {/* Render data here */}
-      {data.map(item => (
+      {data.map((item) => (
         <div key={item.id}>
-            <p>{item.name}</p>
-            <p>{item.value}</p>
+          <p>{item.name}</p>
+          <p>{item.value}</p>
         </div>
       ))}
     </div>
@@ -160,42 +157,39 @@ In this redux-based example, the action creator `fetchData` uses `redux-thunk` t
 Finally, for cases where data loading is tightly coupled with server-side rendering (ssr) or if you are looking for optimized data loading and better control over data fetching, using specific data-fetching libraries like `react-query` or `swr` is a viable option. These libraries provide advanced caching, data synchronization, and more declarative ways to handle asynchronous data. Here’s how a simple scenario might look using `react-query`:
 
 ```javascript
-import React from 'react';
-import { useQuery } from 'react-query';
+import React from "react";
+import { useQuery } from "react-query";
 
 const fetchData = async () => {
-    const response = await fetch('https://api.example.com/data');
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+  const response = await fetch("https://api.example.com/data");
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
   return await response.json();
 };
 
-
 function DataComponent() {
-  const { data, isLoading, error } = useQuery('myData', fetchData);
+  const { data, isLoading, error } = useQuery("myData", fetchData);
 
   if (isLoading) {
     return <p>Loading data...</p>;
   }
 
-   if (error) {
-        return <p>Error: {error.message}</p>;
-    }
-
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
 
   if (!data) {
     return <p>No data loaded.</p>;
   }
 
-
   return (
     <div>
       {/* Render data here */}
-      {data.map(item => (
+      {data.map((item) => (
         <div key={item.id}>
-            <p>{item.name}</p>
-            <p>{item.value}</p>
+          <p>{item.name}</p>
+          <p>{item.value}</p>
         </div>
       ))}
     </div>

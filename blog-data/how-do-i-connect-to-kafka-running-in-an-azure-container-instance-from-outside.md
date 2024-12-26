@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-connect-to-kafka-running-in-an-azure-container-instance-from-outside"
 ---
 
-Okay, let's tackle this. From my experience, wrestling (oops, slipped into forbidden territory, let’s rephrase that) *managing* Kafka deployments, especially when bridging the gap between cloud container instances and external clients, can feel a bit like navigating a labyrinth at first. Connecting to a kafka instance residing within an Azure Container Instance (ACI) from outside your Azure environment isn’t just about having the right IP; there are nuances we have to consider, especially around network configurations and security. I’ve had my fair share of debugging late nights chasing elusive connectivity issues, so I can offer some practical insight based on real-world troubleshooting.
+, let's tackle this. From my experience, wrestling (oops, slipped into forbidden territory, let’s rephrase that) _managing_ Kafka deployments, especially when bridging the gap between cloud container instances and external clients, can feel a bit like navigating a labyrinth at first. Connecting to a kafka instance residing within an Azure Container Instance (ACI) from outside your Azure environment isn’t just about having the right IP; there are nuances we have to consider, especially around network configurations and security. I’ve had my fair share of debugging late nights chasing elusive connectivity issues, so I can offer some practical insight based on real-world troubleshooting.
 
 The fundamental challenge stems from the nature of ACI: it's designed to be an isolated, ephemeral environment. By default, it doesn't expose its services directly to the outside world. To enable external access, we need to explicitly define how the traffic is routed, and this typically involves a combination of public IPs, port mappings, and potentially, networking virtual appliances if you need advanced routing or security features.
 
@@ -23,53 +23,52 @@ Here’s what it looks like in an ARM template snippet (or a similar declaration
   "location": "[resourceGroup().location]",
   "name": "kafka-container",
   "properties": {
-      "osType": "Linux",
-      "ipAddress": {
-          "type": "Public",
-          "ports": [
-              {
-                  "protocol": "TCP",
-                  "port": 9092
-              }
-          ]
-      },
-      "containers": [
-          {
-              "name": "kafka",
-              "properties": {
-                  "image": "bitnami/kafka:latest",
-                  "resources": {
-                      "requests": {
-                          "memoryInGB": 2,
-                          "cpu": 2
-                      }
-                  },
-                    "ports": [
-                      {
-                        "protocol": "TCP",
-                        "port": 9092
-                      }
-                   ]
-                  ,
-                  "environmentVariables": [
-                      {
-                          "name": "KAFKA_CFG_LISTENERS",
-                          "value": "PLAINTEXT://0.0.0.0:9092"
-                      },
-                      {
-                         "name": "KAFKA_CFG_ADVERTISED_LISTENERS",
-                          "value": "PLAINTEXT://<your_aci_public_ip>:9092"
-                      }
-                      // Additional env variables
-                  ]
-              }
-          }
+    "osType": "Linux",
+    "ipAddress": {
+      "type": "Public",
+      "ports": [
+        {
+          "protocol": "TCP",
+          "port": 9092
+        }
       ]
+    },
+    "containers": [
+      {
+        "name": "kafka",
+        "properties": {
+          "image": "bitnami/kafka:latest",
+          "resources": {
+            "requests": {
+              "memoryInGB": 2,
+              "cpu": 2
+            }
+          },
+          "ports": [
+            {
+              "protocol": "TCP",
+              "port": 9092
+            }
+          ],
+          "environmentVariables": [
+            {
+              "name": "KAFKA_CFG_LISTENERS",
+              "value": "PLAINTEXT://0.0.0.0:9092"
+            },
+            {
+              "name": "KAFKA_CFG_ADVERTISED_LISTENERS",
+              "value": "PLAINTEXT://<your_aci_public_ip>:9092"
+            }
+            // Additional env variables
+          ]
+        }
+      }
+    ]
   }
 }
 ```
 
-Key aspects here are the `ipAddress` section where we specify `Public` and map the port 9092 for kafka. Note the critical environment variable setting `KAFKA_CFG_ADVERTISED_LISTENERS`. This tells the Kafka broker the address it should advertise to clients, which *must* be the public ip you expose. Without it, your clients will most likely fail to connect. Replace `<your_aci_public_ip>` with the actual public ip. Be sure to get that right.
+Key aspects here are the `ipAddress` section where we specify `Public` and map the port 9092 for kafka. Note the critical environment variable setting `KAFKA_CFG_ADVERTISED_LISTENERS`. This tells the Kafka broker the address it should advertise to clients, which _must_ be the public ip you expose. Without it, your clients will most likely fail to connect. Replace `<your_aci_public_ip>` with the actual public ip. Be sure to get that right.
 
 **Option 2: Utilizing a Load Balancer with Network Address Translation (NAT)**
 
@@ -79,11 +78,12 @@ A much safer and more scalable approach is to place a load balancer (like an Azu
 2.  **Internal Load Balancer:** An internal load balancer will front the ACI and map a private IP and port.
 3.  **Network Address Translation (NAT):** If needed, you can configure NAT to map this private address to a public address.
 4.  **External Load Balancer:** If the NAT setup is not preferred for your situation, the internal load balancer can be used in tandem with an external load balancer to be directly exposed to the internet.
-5. **DNS:** Finally, it's a good practice to assign a friendly DNS to the exposed public IP.
+5.  **DNS:** Finally, it's a good practice to assign a friendly DNS to the exposed public IP.
 
 The following is a simplified JSON configuration for the ACI in a VNet along with internal load balancer setup using Azure CLI commands. In reality, you would do that using Infrastructure as Code(IaC) tools like Bicep or Terraform, but I think that's beyond the scope of this response, so I'm giving you the code snippet using CLI:
 
 First, you create the virtual network:
+
 ```bash
 az network vnet create \
     --resource-group <your_resource_group> \
@@ -94,6 +94,7 @@ az network vnet create \
 ```
 
 Then, create the container instance in the virtual network:
+
 ```bash
 az container create \
     --resource-group <your_resource_group> \
@@ -107,6 +108,7 @@ az container create \
 ```
 
 The last step is to create the internal load balancer and configure the associated backend pool:
+
 ```bash
   az network lb create \
   --resource-group <your_resource_group> \
@@ -132,10 +134,10 @@ Finally, you may expose your Kafka instance using an API gateway or a reverse pr
 
 **Important Considerations:**
 
-*   **Security:** Regardless of your chosen approach, ensure you implement proper security measures. Utilize Network Security Groups (NSGs) to control traffic flow, and enable TLS encryption for your Kafka brokers, especially in a production setting.
-*   **Firewalls:** Verify that any firewall configurations along the path between your client and the ACI are allowing the required ports for communication.
-*   **Resource Allocation:** ACI is designed for containers, not dedicated VMs. So, resources for Kafka needs to be carefully configured, especially CPU and memory. Monitor your performance and scale up as needed.
-*   **Monitoring:** Proper monitoring is crucial for maintaining the health of the system. Use Azure Monitor to keep tabs on your Kafka cluster and the underlying resources.
+- **Security:** Regardless of your chosen approach, ensure you implement proper security measures. Utilize Network Security Groups (NSGs) to control traffic flow, and enable TLS encryption for your Kafka brokers, especially in a production setting.
+- **Firewalls:** Verify that any firewall configurations along the path between your client and the ACI are allowing the required ports for communication.
+- **Resource Allocation:** ACI is designed for containers, not dedicated VMs. So, resources for Kafka needs to be carefully configured, especially CPU and memory. Monitor your performance and scale up as needed.
+- **Monitoring:** Proper monitoring is crucial for maintaining the health of the system. Use Azure Monitor to keep tabs on your Kafka cluster and the underlying resources.
 
 **Further Reading:**
 

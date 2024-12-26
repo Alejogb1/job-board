@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-return-a-class-instance-from-a-trait"
 ---
 
-Alright, let's tackle this. Instead of diving straight into code, let's first contextualize why this can be a bit of a nuanced area in programming. I remember back in my early days with Scala, specifically dealing with some rather intricate actor systems, I faced this exact conundrum. I needed to define some common behaviors using traits but needed those behaviors to ultimately produce a concrete instance of a specific class when invoked. The typical trait definition won't give you a direct path for returning a class instance; it’s more about providing functionalities than concrete objects. Now, the trick lies in how we strategically employ abstract types and type members within the trait.
+, let's tackle this. Instead of diving straight into code, let's first contextualize why this can be a bit of a nuanced area in programming. I remember back in my early days with Scala, specifically dealing with some rather intricate actor systems, I faced this exact conundrum. I needed to define some common behaviors using traits but needed those behaviors to ultimately produce a concrete instance of a specific class when invoked. The typical trait definition won't give you a direct path for returning a class instance; it’s more about providing functionalities than concrete objects. Now, the trick lies in how we strategically employ abstract types and type members within the trait.
 
-The core issue stems from the nature of traits themselves. Traits, in languages like Scala, Kotlin, and even more indirectly in Python through mixin classes, are fundamentally blueprints for behavior. They aren't meant to dictate the exact *type* of the concrete object being created. We want that flexibility. If we were to force a trait to return a specific concrete class directly, we’d essentially lose much of the benefit of using traits in the first place. The solution involves making the type returned by a method an abstract type member or an associated type in the trait. This pushes the responsibility of defining the *concrete* class to the classes that implement or inherit from the trait.
+The core issue stems from the nature of traits themselves. Traits, in languages like Scala, Kotlin, and even more indirectly in Python through mixin classes, are fundamentally blueprints for behavior. They aren't meant to dictate the exact _type_ of the concrete object being created. We want that flexibility. If we were to force a trait to return a specific concrete class directly, we’d essentially lose much of the benefit of using traits in the first place. The solution involves making the type returned by a method an abstract type member or an associated type in the trait. This pushes the responsibility of defining the _concrete_ class to the classes that implement or inherit from the trait.
 
 Let’s get into some code examples, illustrating this point step-by-step.
 
@@ -34,7 +34,7 @@ object Example1 {
 }
 ```
 
-In this snippet, `Creatable` has an abstract type member `CreatedType` and an abstract `create()` method that returns an instance of `CreatedType`. The class `ConcreteCreator` then provides the concrete implementation by setting `type CreatedType = String`, and then the `create()` method returns a string. This is the core concept: the trait only declares *what* can be returned, not *which concrete class* is returned.
+In this snippet, `Creatable` has an abstract type member `CreatedType` and an abstract `create()` method that returns an instance of `CreatedType`. The class `ConcreteCreator` then provides the concrete implementation by setting `type CreatedType = String`, and then the `create()` method returns a string. This is the core concept: the trait only declares _what_ can be returned, not _which concrete class_ is returned.
 
 **Example 2: Trait with Type Parameter and Higher-Kinded Types**
 

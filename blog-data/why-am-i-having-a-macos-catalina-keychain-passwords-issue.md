@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-having-a-macos-catalina-keychain-passwords-issue"
 ---
 
-alright, let's talk about keychain woes on catalina. it’s a pain point, i’ve been there, seen that t-shirt, and even had a few custom ones printed. dealing with keychain issues is like trying to untangle a christmas light string while blindfolded. not fun.
+, let's talk about keychain woes on catalina. it’s a pain point, i’ve been there, seen that t-shirt, and even had a few custom ones printed. dealing with keychain issues is like trying to untangle a christmas light string while blindfolded. not fun.
 
 first off, you're not alone. macos catalina introduced some changes that, shall we say, weren't always the smoothest for keychain. the move to a more sandboxed environment and tightened security meant that some older workflows and apps that used to play nice with the keychain suddenly found themselves on the outside looking in.
 

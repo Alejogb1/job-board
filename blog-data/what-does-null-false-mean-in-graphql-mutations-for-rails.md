@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "what-does-null-false-mean-in-graphql-mutations-for-rails"
 ---
 
-Okay, let's tackle this one. It’s a question that often surfaces, especially when you're moving beyond the basics of GraphQL with Rails. I've encountered this scenario multiple times, notably during a project where we were building a complex data management API for a large e-commerce platform. The interplay of `null` and `false` in GraphQL mutations can be a bit nuanced, and it's crucial to understand their distinct effects to avoid unintended consequences in your data layer. Let me break it down.
+, let's tackle this one. It’s a question that often surfaces, especially when you're moving beyond the basics of GraphQL with Rails. I've encountered this scenario multiple times, notably during a project where we were building a complex data management API for a large e-commerce platform. The interplay of `null` and `false` in GraphQL mutations can be a bit nuanced, and it's crucial to understand their distinct effects to avoid unintended consequences in your data layer. Let me break it down.
 
 Fundamentally, in the context of a GraphQL mutation within a Rails application, `null` and `false` have specific meanings when you are dealing with input types. While both represent a lack of value or a negative boolean outcome, they are treated quite differently by the GraphQL engine and your ActiveRecord models. Let's consider their specific impacts.
 
-**`null`:** In GraphQL mutations, specifying `null` for a field essentially communicates that the field *should be explicitly set to null*, or, more accurately, *unset* if it previously had a value. It's not an oversight or a missing value; it’s a conscious command to the underlying system. When you pass `null` in a mutation, assuming your schema allows nullable fields (and generally it should), the GraphQL resolver and Rails will interpret this as an instruction to remove any value stored in that particular field in the database for the targeted record. This is incredibly useful for optional fields. For example, imagine a user profile with an optional `description` field. Setting it to `null` explicitly clears out the field. ActiveRecord's assignment mechanism would interpret this as needing to set the corresponding database column to `NULL`.
+**`null`:** In GraphQL mutations, specifying `null` for a field essentially communicates that the field _should be explicitly set to null_, or, more accurately, _unset_ if it previously had a value. It's not an oversight or a missing value; it’s a conscious command to the underlying system. When you pass `null` in a mutation, assuming your schema allows nullable fields (and generally it should), the GraphQL resolver and Rails will interpret this as an instruction to remove any value stored in that particular field in the database for the targeted record. This is incredibly useful for optional fields. For example, imagine a user profile with an optional `description` field. Setting it to `null` explicitly clears out the field. ActiveRecord's assignment mechanism would interpret this as needing to set the corresponding database column to `NULL`.
 
 **`false`:** Conversely, passing `false` into a boolean field in a GraphQL mutation communicates a specific boolean state. The server will treat it as exactly that: the boolean value `false`. When you use `false`, it’s not about removing a field’s value; it’s about asserting the field’s status is `false`. So, if your mutation were to update a field named `isActive`, passing `false` means you intend to deactivate that feature or status, changing the record's boolean state to false. ActiveRecord will assign that false boolean value in its own way, which in Postgres would map to a database `false` value, `0`, or even an explicit NULL value if the field allows nulls, though the last one is less common when we are explicitly setting it to `false`.
 
@@ -20,7 +20,7 @@ Let’s delve into some examples to illustrate this.
 
 Imagine a `UserProfile` type, with an optional `description` field.
 
-*Schema:*
+_Schema:_
 
 ```graphql
 type UserProfile {
@@ -34,7 +34,7 @@ type Mutation {
 }
 ```
 
-*Mutation (GraphQL):*
+_Mutation (GraphQL):_
 
 ```graphql
 mutation UpdateProfile {
@@ -45,13 +45,13 @@ mutation UpdateProfile {
 }
 ```
 
-*Rails Resolver:*
+_Rails Resolver:_
 
 ```ruby
 class Mutations::UpdateUserProfile < GraphQL::Schema::Mutation
     argument :id, ID, required: true
     argument :description, String, required: false
-    
+
     field :user_profile, Types::UserProfileType, null: false
 
     def resolve(id:, description:)
@@ -68,7 +68,7 @@ In this example, passing `null` to the `description` field in the mutation will 
 
 Let’s now consider a boolean field named `is_active`.
 
-*Schema:*
+_Schema:_
 
 ```graphql
 type User {
@@ -82,7 +82,7 @@ type Mutation {
 }
 ```
 
-*Mutation (GraphQL):*
+_Mutation (GraphQL):_
 
 ```graphql
 mutation UpdateUserStatus {
@@ -93,13 +93,13 @@ mutation UpdateUserStatus {
 }
 ```
 
-*Rails Resolver:*
+_Rails Resolver:_
 
 ```ruby
 class Mutations::UpdateUser < GraphQL::Schema::Mutation
     argument :id, ID, required: true
     argument :is_active, Boolean, required: false
-    
+
     field :user, Types::UserType, null: false
 
     def resolve(id:, is_active:)
@@ -116,21 +116,21 @@ In this case, the mutation will explicitly set the `is_active` column to the boo
 
 Here’s how it might look with optional null parameters and a default value on Rails ActiveRecord side:
 
-*Schema:*
+_Schema:_
 
 ```graphql
 type Post {
-    id: ID!
-    title: String!
-    published_at: String
+  id: ID!
+  title: String!
+  published_at: String
 }
 type Mutation {
-    createPost(title: String!, published_at: String): Post
+  createPost(title: String!, published_at: String): Post
 }
-
 ```
 
-*Mutation (GraphQL)*
+_Mutation (GraphQL)_
+
 ```graphql
 mutation CreatePost {
   createPost(title: "My new post") {
@@ -139,14 +139,15 @@ mutation CreatePost {
     published_at
   }
 }
-
 ```
-*Rails Resolver:*
+
+_Rails Resolver:_
+
 ```ruby
 class Mutations::CreatePost < GraphQL::Schema::Mutation
     argument :title, String, required: true
     argument :published_at, String, required: false
-    
+
     field :post, Types::PostType, null: false
 
     def resolve(title:, published_at: nil)

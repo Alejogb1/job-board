@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-to-remove-double-square-brackets-in-ruby-on-rails"
 ---
 
-Okay, let's tackle this one. I've definitely seen my fair share of double bracket issues over the years, particularly when dealing with data that’s come from less-than-ideal sources or when transitioning between different data formats in rails. It’s a seemingly small nuisance, but it can really throw a wrench into your parsing logic if you're not careful. The problem often crops up when you're expecting a simple string or array, and instead get nested data structures.
+, let's tackle this one. I've definitely seen my fair share of double bracket issues over the years, particularly when dealing with data that’s come from less-than-ideal sources or when transitioning between different data formats in rails. It’s a seemingly small nuisance, but it can really throw a wrench into your parsing logic if you're not careful. The problem often crops up when you're expecting a simple string or array, and instead get nested data structures.
 
 Specifically, what we're talking about here, removing double square brackets, usually indicates that you've somehow ended up with a string representation of an array within another array. For instance, instead of `['item1', 'item2']` you might be dealing with something like `[['item1', 'item2']]` after a data retrieval process. Rails' handling of parameters or database interactions can sometimes lead to this kind of nested structure if it's not handled correctly. The trick is to flatten the structure appropriately and reliably.
 
-There isn't a single, universally best method, as it often depends on the context of *how* those brackets were introduced. I'll outline three common scenarios and their respective solutions, drawing on what I've learned through different projects. The goal is always to get a clean array of strings, as that's often the use case after removing this kind of double-nesting.
+There isn't a single, universally best method, as it often depends on the context of _how_ those brackets were introduced. I'll outline three common scenarios and their respective solutions, drawing on what I've learned through different projects. The goal is always to get a clean array of strings, as that's often the use case after removing this kind of double-nesting.
 
 **Scenario 1: Stringified Array from JSON Parameters**
 

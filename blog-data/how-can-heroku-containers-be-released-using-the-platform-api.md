@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-heroku-containers-be-released-using-the-platform-api"
 ---
 
-Alright, let’s talk about deploying to Heroku using their Platform API; it's a process I've dealt with extensively over the years, often automating complex deployment workflows for various applications. Instead of relying solely on the Heroku CLI, leveraging the Platform API offers much finer control and integrates beautifully into CI/CD pipelines. It's a powerful tool, but it does require a solid understanding of its mechanics. So, let's dive in.
+, let’s talk about deploying to Heroku using their Platform API; it's a process I've dealt with extensively over the years, often automating complex deployment workflows for various applications. Instead of relying solely on the Heroku CLI, leveraging the Platform API offers much finer control and integrates beautifully into CI/CD pipelines. It's a powerful tool, but it does require a solid understanding of its mechanics. So, let's dive in.
 
-Essentially, the Heroku Platform API allows you to programmatically interact with your Heroku applications. This includes creating apps, managing resources, and, crucially for this discussion, releasing new code versions—or *slugs*, as Heroku calls them—to your containers, referred to as dynos. Doing this effectively involves several distinct steps, each corresponding to different API endpoints. My experience has taught me that a methodical approach, breaking down the process into manageable chunks, makes the complexity quite approachable.
+Essentially, the Heroku Platform API allows you to programmatically interact with your Heroku applications. This includes creating apps, managing resources, and, crucially for this discussion, releasing new code versions—or _slugs_, as Heroku calls them—to your containers, referred to as dynos. Doing this effectively involves several distinct steps, each corresponding to different API endpoints. My experience has taught me that a methodical approach, breaking down the process into manageable chunks, makes the complexity quite approachable.
 
 The first step, and frequently overlooked, is ensuring you have proper authentication set up. This means you'll need an API key, obtainable from your Heroku account settings, and proper configuration within your environment. I've seen countless projects stumble right here, often due to misplaced credentials. After that, the deployment flow can generally be broken down into three core parts: preparing your code for upload, creating a release using a slug, and finally monitoring the release to ensure it completes successfully.
 
-Let’s start with preparing the code for upload. Heroku doesn’t accept raw code directly; it needs a *slug*. A slug is essentially a compressed archive containing your application’s code and dependencies, bundled with a runtime environment suitable for Heroku. While Heroku's buildpack system often handles this process for you, when we're working directly with the Platform API, you're responsible for preparing this yourself. I typically use tools like `tar` and `gzip` for this. You must create a gzipped tar archive of your project, ensuring that the archive's root level contains your application's source code, usually the main folder that contains files like your `requirements.txt`, `package.json` or other dependency specification files.
+Let’s start with preparing the code for upload. Heroku doesn’t accept raw code directly; it needs a _slug_. A slug is essentially a compressed archive containing your application’s code and dependencies, bundled with a runtime environment suitable for Heroku. While Heroku's buildpack system often handles this process for you, when we're working directly with the Platform API, you're responsible for preparing this yourself. I typically use tools like `tar` and `gzip` for this. You must create a gzipped tar archive of your project, ensuring that the archive's root level contains your application's source code, usually the main folder that contains files like your `requirements.txt`, `package.json` or other dependency specification files.
 
 Here’s a conceptual code example of creating that archive, using `bash`:
 
@@ -24,7 +24,7 @@ echo "Slug archive created at: $TAR_FILE"
 
 This script, which I’ve used countless times with only minor variations, assumes you are already in your project's root directory and that it will bundle everything. For complex projects, a more selective inclusion using include and exclude patterns in the tar command is often necessary. I recommend looking into the `tar` manual page using `man tar` for specific filtering options.
 
-Next, you’ll need to create a new *source* resource via the Platform API; this is where you upload the generated slug archive, making it available to Heroku. The following snippet demonstrates uploading the slug to the source endpoint. This uses `curl` and assumes that you have your Heroku API key stored in an environment variable named `HEROKU_API_KEY`. You'll also need your Heroku application id, or your app's name, in an env var `HEROKU_APP_ID` or `HEROKU_APP_NAME` respectively. I’ve often used these shell scripts in conjunction with CI/CD pipelines for automatic releases.
+Next, you’ll need to create a new _source_ resource via the Platform API; this is where you upload the generated slug archive, making it available to Heroku. The following snippet demonstrates uploading the slug to the source endpoint. This uses `curl` and assumes that you have your Heroku API key stored in an environment variable named `HEROKU_API_KEY`. You'll also need your Heroku application id, or your app's name, in an env var `HEROKU_APP_ID` or `HEROKU_APP_NAME` respectively. I’ve often used these shell scripts in conjunction with CI/CD pipelines for automatic releases.
 
 ```bash
 #!/bin/bash
@@ -50,7 +50,7 @@ source_id=$(curl -s -n -X GET \
 echo "Source id: $source_id"
 ```
 
-Note that we need to extract the *put_url* returned by the `POST` request, which is where our archive will be uploaded. After a successful upload, we also get a *get_url* with the slug ID which we’ll need for the next step. The `jq` tool is invaluable here, providing a simple way to parse the JSON responses from the API; if you are not familiar with it, I recommend learning how to use it.
+Note that we need to extract the _put_url_ returned by the `POST` request, which is where our archive will be uploaded. After a successful upload, we also get a _get_url_ with the slug ID which we’ll need for the next step. The `jq` tool is invaluable here, providing a simple way to parse the JSON responses from the API; if you are not familiar with it, I recommend learning how to use it.
 
 Finally, the last piece is creating the actual release. This involves submitting a `POST` request to the releases endpoint with the source id we obtained in the previous step. Here’s an example:
 

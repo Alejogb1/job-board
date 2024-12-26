@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-messagemediaunsupported-returned-instead-of-messagemediapoll-with-telethon"
 ---
 
-Alright, let's unpack this Telethon puzzle. I've certainly been down this road more than a few times, and it's usually not a case of outright failure but rather a misalignment in expectations, specifically about how Telegram handles media and how Telethon interfaces with it.
+, let's unpack this Telethon puzzle. I've certainly been down this road more than a few times, and it's usually not a case of outright failure but rather a misalignment in expectations, specifically about how Telegram handles media and how Telethon interfaces with it.
 
 The core issue often revolves around timing and availability. The `MessageMediaUnsupported()` object isn’t actually a 'failure' state; rather, it indicates that the media content associated with a message isn't immediately accessible through the standard polling methods. This typically happens when the media is large, encrypted, or for whatever reason, hasn't fully materialized for direct retrieval during the initial message processing. It's a signal that Telegram intends for us to use a different pathway to obtain the media, instead of a quick, efficient `MessageMediaPoll()` response.
 
@@ -88,7 +88,7 @@ if __name__ == '__main__':
     asyncio.run(main())
 ```
 
-In this refined version, we detect `MessageMediaUnsupported`, and *then* proceed to download the media using `client.download_media()` after checking if it is indeed a photo. This approach ensures we don't prematurely try to extract media information when Telegram indicates we must fetch it. Also, I added a basic folder creation to make sure everything is saved correctly.
+In this refined version, we detect `MessageMediaUnsupported`, and _then_ proceed to download the media using `client.download_media()` after checking if it is indeed a photo. This approach ensures we don't prematurely try to extract media information when Telegram indicates we must fetch it. Also, I added a basic folder creation to make sure everything is saved correctly.
 
 **Scenario 2: Handling Documents (Files) instead of polls**
 
@@ -166,6 +166,7 @@ if __name__ == '__main__':
     import asyncio
     asyncio.run(main())
 ```
+
 The modified code demonstrates a similar pattern as above but applies it to the scenario with document type media.
 
 **Key takeaway:** `MessageMediaUnsupported()` is not an error. It’s a pointer telling us, "Hey, this media is not immediately available, use the download procedures". Don’t expect all media to be immediately accessible as `MessageMediaPoll()`. Look for specific media types like `MessageMediaPhoto`, `MessageMediaVideo`, `MessageMediaDocument`, and implement the appropriate download procedures when the API signals using `MessageMediaUnsupported`.

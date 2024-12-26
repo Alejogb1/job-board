@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-custom-claims-be-added-from-a-database"
 ---
 
-Alright, let's tackle this one. Having worked on various identity and access management (iam) systems over the years, adding custom claims sourced from a database is a recurring need, and one that often warrants careful planning. The basic concept involves fetching data from your database—usually based on some user identifier—and packaging it into claims that are then included in the user's access token. This approach allows for fine-grained authorization and can avoid constant trips back to the database for authorization purposes.
+, let's tackle this one. Having worked on various identity and access management (iam) systems over the years, adding custom claims sourced from a database is a recurring need, and one that often warrants careful planning. The basic concept involves fetching data from your database—usually based on some user identifier—and packaging it into claims that are then included in the user's access token. This approach allows for fine-grained authorization and can avoid constant trips back to the database for authorization purposes.
 
 The primary challenge often lies in how you integrate this database lookup into your authentication workflow. You have to consider performance, security, and maintainability. Ideally, you want the claim insertion process to be as seamless as possible without introducing significant latency or vulnerabilities. I’ve personally seen implementations where poorly handled database lookups crippled authentication services under heavy load, so this is not a trivial matter.
 
@@ -63,22 +63,24 @@ In this example, we're listening to `AuthenticationSuccessEvent`. When a user su
 Moving over to the javascript world, suppose you are using passport.js for authentication. The implementation looks different, but the logic remains the same.
 
 ```javascript
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const db = require('./db'); // Assume a db connection module
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const db = require("./db"); // Assume a db connection module
 
-passport.use(new LocalStrategy(
-    {usernameField: 'email'}, // if your username field is not 'username'
+passport.use(
+  new LocalStrategy(
+    { usernameField: "email" }, // if your username field is not 'username'
 
-    async function(email, password, done) {
-    try {
+    async function (email, password, done) {
+      try {
         const user = await db.getUserByEmail(email);
 
         if (!user) {
-            return done(null, false, { message: 'Incorrect email.' });
+          return done(null, false, { message: "Incorrect email." });
         }
-        if (user.password !== password) { //simple password check here
-            return done(null, false, { message: 'Incorrect password.' });
+        if (user.password !== password) {
+          //simple password check here
+          return done(null, false, { message: "Incorrect password." });
         }
 
         //at this point user is authenticated
@@ -87,42 +89,33 @@ passport.use(new LocalStrategy(
         const enrichedUser = { ...user, claims: customClaims }; // add user claims as a field
 
         return done(null, enrichedUser);
-
-
-    } catch (error) {
+      } catch (error) {
         return done(error);
+      }
     }
+  )
+);
 
-
-    }
-
-));
-
-
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
+passport.serializeUser(function (user, done) {
+  done(null, user.id);
 });
 
-passport.deserializeUser(async function(id, done) {
-   try {
-       const user = await db.getUserById(id);
-       const customClaims = await fetchUserClaims(id) //Fetch claims based on user ID
-       const enrichedUser = { ...user, claims: customClaims };
-       done(null, enrichedUser);
-
-   } catch (error){
-       done(error);
-   }
-
+passport.deserializeUser(async function (id, done) {
+  try {
+    const user = await db.getUserById(id);
+    const customClaims = await fetchUserClaims(id); //Fetch claims based on user ID
+    const enrichedUser = { ...user, claims: customClaims };
+    done(null, enrichedUser);
+  } catch (error) {
+    done(error);
+  }
 });
 
 // this function is responsible for fetching custom claims.
-async function fetchUserClaims(userId){
-
-        const userClaims = await db.fetchCustomClaims(userId);
-         return userClaims
-    }
-
+async function fetchUserClaims(userId) {
+  const userClaims = await db.fetchCustomClaims(userId);
+  return userClaims;
+}
 ```
 
 In this passport.js example, the `LocalStrategy` is modified. We're fetching user details, and importantly, calling `fetchUserClaims` to pull the custom claims from the database. Then the claims are added as part of a new user object that is returned after authentication. We also need to make sure to deserialize the claims after successful authentication. Passport manages session and these claims are also persisted in the session.
@@ -164,18 +157,18 @@ Dedicated iam solutions such as auth0 usually provide a more high-level interfac
     }
 ```
 
-In this example, we are using an auth0 rule to fetch custom claims from a custom api endpoint. After fetching the claims, we assign them to the `idToken` and `accessToken`.  Note that the rule is an async function. Here the custom claims are namespaced to prevent clashes with existing claims. The claims are obtained via an api and not directly from the database, which means you'll need an api that can query the database.
+In this example, we are using an auth0 rule to fetch custom claims from a custom api endpoint. After fetching the claims, we assign them to the `idToken` and `accessToken`. Note that the rule is an async function. Here the custom claims are namespaced to prevent clashes with existing claims. The claims are obtained via an api and not directly from the database, which means you'll need an api that can query the database.
 
 **Key Considerations and Recommendations**
 
 When implementing database-sourced claims, remember these crucial aspects:
 
-*   **Performance**: Database lookups during authentication can introduce latency, especially under high load. Consider caching mechanisms and optimize your database queries.
-*   **Security**: Be meticulous about data sanitization when querying the database and make sure only the necessary claims are added to the tokens. Avoid leaking sensitive data.
-*   **Error Handling**: Gracefully handle database errors and avoid exposing too much information in error responses.
-*   **Claims Management**: Develop a clear strategy for managing and updating claims as your application evolves. You should also have a way to invalidate the token if claim related information changes.
-*   **Token size:** Be aware of limitations imposed by token sizes, such as those found in json web tokens (jwt). Avoid overly large claim sets to prevent token size exceeding limits.
-*   **Data Consistency**: Ensure that changes in user attributes that impact claims are properly propagated and updated.
+- **Performance**: Database lookups during authentication can introduce latency, especially under high load. Consider caching mechanisms and optimize your database queries.
+- **Security**: Be meticulous about data sanitization when querying the database and make sure only the necessary claims are added to the tokens. Avoid leaking sensitive data.
+- **Error Handling**: Gracefully handle database errors and avoid exposing too much information in error responses.
+- **Claims Management**: Develop a clear strategy for managing and updating claims as your application evolves. You should also have a way to invalidate the token if claim related information changes.
+- **Token size:** Be aware of limitations imposed by token sizes, such as those found in json web tokens (jwt). Avoid overly large claim sets to prevent token size exceeding limits.
+- **Data Consistency**: Ensure that changes in user attributes that impact claims are properly propagated and updated.
 
 For further reading, I would strongly recommend the "OAuth 2 in Action" book by Justin Richer and Antonio Sanso, for a comprehensive overview of OAuth 2.0, which is often the backbone for identity management systems and claims management. Furthermore, if you're using java, familiarize yourself with the Spring Security documentation, especially regarding custom authentication providers. For javascript, understanding the inner workings of passport.js, and, for specific implementations, the documentation for your IAM provider like Auth0 or Okta is essential. For general understanding of identity and access management, "Designing Identity Management Solutions" by Jay Heiser, John Kindervag and Daniel Lewin is also a great resource to look into.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-create-partial-dependence-plots-in-tensorflow"
 ---
 
-Okay, let's tackle partial dependence plots in TensorFlow. If my experience over the years has taught me anything, it's that model interpretability is just as crucial as model accuracy. We've all seen models perform fantastically on test sets only to fall apart in production, and often a contributing factor is a lack of understanding about how the model actually works. Partial dependence plots (PDPs) are fantastic tools for this, allowing us to visualize the marginal effect one or two features have on the predicted outcome of a model, holding all other features constant. It's like isolating a single variable and seeing how the model's prediction reacts to it.
+, let's tackle partial dependence plots in TensorFlow. If my experience over the years has taught me anything, it's that model interpretability is just as crucial as model accuracy. We've all seen models perform fantastically on test sets only to fall apart in production, and often a contributing factor is a lack of understanding about how the model actually works. Partial dependence plots (PDPs) are fantastic tools for this, allowing us to visualize the marginal effect one or two features have on the predicted outcome of a model, holding all other features constant. It's like isolating a single variable and seeing how the model's prediction reacts to it.
 
 Now, TensorFlow itself doesn't have a built-in, dedicated function for creating PDPs. It's not a model-building block, but rather an analysis tool. Therefore, we need to implement the core logic, leveraging TensorFlow's capabilities for computation and its access to the trained model. I remember one project, years back, where we were building a complex fraud detection system. The model was a deep neural net, a black box for all intents and purposes. Without PDPs, we wouldn’t have discovered that the model was excessively relying on one feature which was actually a proxy for a seasonal effect, not actual fraud, which led us to retrain and incorporate better features. That experience really cemented the need for this kind of model inspection.
 
@@ -66,6 +66,7 @@ plt.title('Partial Dependence Plot')
 plt.show()
 
 ```
+
 This first code snippet demonstrates the core logic: the `partial_dependence` function systematically replaces the chosen feature with values from the provided range, then averages the predictions, and the result is plotted using `matplotlib`.
 
 **Code Snippet 2: Handling Categorical Features (One-hot Encoding Approach)**
@@ -113,11 +114,13 @@ plt.xticks(x_values_cat)
 plt.show()
 
 ```
+
 Here, instead of varying a continuous range, we iterate through each categorical value, constructing a corresponding one-hot encoded version, then we follow the same prediction and averaging procedure.
 
 **Code Snippet 3: 2D Partial Dependence Plots (Interaction Effect)**
 
-We can also create PDPs for two features simultaneously, which helps visualize interaction effects. This involves systematically varying values for *both* features, keeping others constant. Here's a snippet for that:
+We can also create PDPs for two features simultaneously, which helps visualize interaction effects. This involves systematically varying values for _both_ features, keeping others constant. Here's a snippet for that:
+
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -173,6 +176,6 @@ plt.show()
 
 This snippet generates a 3D surface plot illustrating how the prediction changes based on the interplay of two features. This can reveal more complex relationships and hidden interactions within the model.
 
-For further reading, I would highly recommend looking into *The Elements of Statistical Learning* by Hastie, Tibshirani, and Friedman – it's a classic that goes into depth about PDPs. Also, *Interpretable Machine Learning* by Christoph Molnar is an excellent resource dedicated to model interpretation techniques, including partial dependence. And keep an eye on recent papers in machine learning explainability.
+For further reading, I would highly recommend looking into _The Elements of Statistical Learning_ by Hastie, Tibshirani, and Friedman – it's a classic that goes into depth about PDPs. Also, _Interpretable Machine Learning_ by Christoph Molnar is an excellent resource dedicated to model interpretation techniques, including partial dependence. And keep an eye on recent papers in machine learning explainability.
 
 Implementing PDPs within TensorFlow requires a bit more work than just calling a single function, but it’s incredibly rewarding for understanding your model's behavior. Hopefully these examples and explanations provide a good starting point. Remember that model interpretability is not an afterthought, but rather an integral part of creating robust and trustworthy systems.

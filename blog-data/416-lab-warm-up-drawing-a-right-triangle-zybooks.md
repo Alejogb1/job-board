@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "416-lab-warm-up-drawing-a-right-triangle-zybooks"
 ---
 
-Okay so you're struggling with that zybooks 416 lab right triangle drawing thing yeah I get it Been there done that bought the t-shirt multiple times honestly Lets just dive in I've seen this problem crop up with a bunch of new coders and even some people who thought they were hot stuff but turned out their code was just a pile of random variables thrown at the wall
+you're struggling with that zybooks 416 lab right triangle drawing thing yeah I get it Been there done that bought the t-shirt multiple times honestly Lets just dive in I've seen this problem crop up with a bunch of new coders and even some people who thought they were hot stuff but turned out their code was just a pile of random variables thrown at the wall
 
 So what we're talking about is essentially how to use loops and basic output to draw a right triangle using characters usually asterisks or maybe hash symbols in your terminal or console It seems super simple but there are little gotchas that can mess with your head if you haven't seen it a hundred times
 
@@ -19,6 +19,7 @@ def draw_right_triangle(height):
 
 draw_right_triangle(5)
 ```
+
 This is the basic approach The outer loop controlled by variable `i` will run from zero to the provided `height` in the provided example 5 The inner loop controlled by variable `j` will run from zero to `i` + 1 What this achieves is that the first row it draws a single asterisk the second draws 2 and so on That's the key concept behind this drawing algorithm The crucial part is the `end=""` in the inner `print` function this stops print from automatically outputting a newline character and allow us to string asterisks horizontally in each row after the inner loop completes we use a simple `print()` to move the cursor to the next line which results in the new row
 
 Here's a slight variation in JavaScript using the console log
@@ -33,7 +34,7 @@ function drawRightTriangle(height) {
     console.log(row);
   }
 }
-drawRightTriangle(5)
+drawRightTriangle(5);
 ```
 
 The JavaScript example takes a different approach here instead of the print function handling the individual character placement we build the string manually using a simple string concatenation and the `+=` operator This string is the row itself and then we use console log to print the row as a whole unit this is a more explicit way of dealing with string construction but the overall loop logic remains the same

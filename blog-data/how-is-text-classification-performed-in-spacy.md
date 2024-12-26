@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-is-text-classification-performed-in-spacy"
 ---
 
-Alright, let's talk about text classification in spaCy. It's something I’ve tackled extensively over the years, often as part of larger projects dealing with unstructured data. Back when I was working on a system to automatically categorize customer feedback emails, this became a very practical skill – a lot more than just theoretical knowledge.
+, let's talk about text classification in spaCy. It's something I’ve tackled extensively over the years, often as part of larger projects dealing with unstructured data. Back when I was working on a system to automatically categorize customer feedback emails, this became a very practical skill – a lot more than just theoretical knowledge.
 
 SpaCy, at its core, isn’t primarily a machine learning library. It’s an industrial-strength natural language processing toolkit. Its power in text classification stems from its robust preprocessing capabilities and how well it integrates with other machine learning libraries, primarily scikit-learn or TensorFlow/Keras. It doesn't provide classification algorithms directly but offers the crucial foundation for feature engineering and preparing data that we feed into those machine learning models.
 
@@ -161,6 +161,7 @@ model.fit(X_train, y_train, epochs = 10)
 loss, accuracy = model.evaluate(X_test, y_test)
 print(f"Accuracy: {accuracy}")
 ```
+
 In this conceptual neural network example we're utilizing a basic neural network. We are tokenizing our input and passing that through an embedding layer before averaging it in the global pooling layer. This model is far more flexible for complex tasks, especially with the right architectural choices. Note that a more robust solution would include additional steps and layers such as regularization and hyperparameter tuning.
 
 For further learning and a deeper understanding of the techniques, I would strongly recommend delving into Jurafsky and Martin's "Speech and Language Processing," a definitive guide to the field. Also, "Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron is incredibly helpful for the practical side of model building. These resources, combined with your own hands-on practice, will equip you with the necessary skills to tackle a wide range of text classification tasks using spaCy and related technologies. The key takeaway is that spaCy acts as a powerful preprocessing engine, not the machine learning algorithm itself, and when used in conjunction with machine learning libraries it can achieve robust results.

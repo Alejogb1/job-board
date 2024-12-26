@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-obtain-the-quanteda-packages-fcm-to-a-sub-matrix-in-r"
 ---
 
-alright, so you're trying to get a sub-matrix from a quanteda `fcm` object, i've been there, done that. it's not always super intuitive, especially when you first get into the package. i remember pulling my hair out over this a few years back. i was working on a project trying to analyze political discourse on twitter, and i had this massive term co-occurrence matrix. i needed to isolate the relationships between specific hashtags and mentions. what i thought would be a quick slice and dice operation turned into a full-blown troubleshooting session.
+, so you're trying to get a sub-matrix from a quanteda `fcm` object, i've been there, done that. it's not always super intuitive, especially when you first get into the package. i remember pulling my hair out over this a few years back. i was working on a project trying to analyze political discourse on twitter, and i had this massive term co-occurrence matrix. i needed to isolate the relationships between specific hashtags and mentions. what i thought would be a quick slice and dice operation turned into a full-blown troubleshooting session.
 
 the `fcm` object in `quanteda` isn't just a standard matrix. it’s a specialized structure, which is great for what it’s designed for, but it means you can't always just use regular matrix indexing methods to extract exactly what you want. this makes sense, given how quanteda optimizes its workflow, but can be a bit annoying at first.
 
@@ -120,6 +120,6 @@ one thing to keep in mind, performance can become an issue if you are working wi
 
 to further improve the performance when calculating the sub-matrix, always try to filter before the `fcm` operation. for example, if you know which terms you are going to use for your matrix in advance, then filter out all other tokens. this will reduce the matrix size from the start, which is always a good idea. this was a useful trick i learned from a forum user when i had a particular bad implementation in one of my early projects.
 
-for further reading about this i strongly recommend reading “quantitative text analysis” by  stefan müller and kenneth benoit, it helped me a lot with the theoretical and practical approaches. also, the quanteda documentation is quite good so definitely have it at hand when working with this package. there's a lot more you can do with fcm objects. for example, you can use them in network analysis and other cool text mining techniques. just experiment.
+for further reading about this i strongly recommend reading “quantitative text analysis” by stefan müller and kenneth benoit, it helped me a lot with the theoretical and practical approaches. also, the quanteda documentation is quite good so definitely have it at hand when working with this package. there's a lot more you can do with fcm objects. for example, you can use them in network analysis and other cool text mining techniques. just experiment.
 
 one last thing before i go. why did the programmer quit his job? because he didn't get arrays.

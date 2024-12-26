@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "trace-session-in-oracle-events-10046"
 ---
 
-Okay so you wanna dive into trace session in Oracle using event 10046 right Been there done that a million times it feels like Let's break it down without any fluff or confusing metaphors
+you wanna dive into trace session in Oracle using event 10046 right Been there done that a million times it feels like Let's break it down without any fluff or confusing metaphors
 
 Look event 10046 is your go-to buddy when you need to see what's happening at the Oracle engine level It's all about tracing SQL statements and database activity I've used this countless times to debug slow queries find locking issues and generally figure out why my app is crawling at a snails pace Trust me understanding this event will save you a lot of late nights banging your head against the wall
 
@@ -27,6 +27,7 @@ ALTER SESSION SET EVENTS '10046 trace name context forever, level 12';
 -- Disabling trace for current session
 ALTER SESSION SET EVENTS '10046 trace name context off';
 ```
+
 Level 12 is the most detailed trace level and its probably not what you want all the time I use 4 or 8 for most cases but if you're desperate and really need to dig then 12 is where its at Its gonna be noisy so be prepared
 
 Now theres the other method that many beginners have trouble figuring out and its to trace another user session this is extremely valuable when you have other applications or different users that cause problems you have to trace from another session
@@ -45,7 +46,8 @@ EXECUTE DBMS_SYSTEM.SET_EV(10046, 'trace name context forever, level 12', &sid, 
 EXECUTE DBMS_SYSTEM.SET_EV(10046, 'trace name context off', &sid, &serial#);
 
 ```
-Make sure you replace YOUR\_TARGET\_USER with the actual username you're tracing and copy the sid and serial value from the query result and paste into the last 2 commands This took me forever to understand when I started out I kept trying to use the wrong session and trace nothing it was really frustrating It's amazing that you only have to do it once to get it etched into your brain but man is it tedious the first time
+
+Make sure you replace YOUR_TARGET_USER with the actual username you're tracing and copy the sid and serial value from the query result and paste into the last 2 commands This took me forever to understand when I started out I kept trying to use the wrong session and trace nothing it was really frustrating It's amazing that you only have to do it once to get it etched into your brain but man is it tedious the first time
 
 You can also enable trace at the statement level using the `DBMS_MONITOR` package this is great when you only need to capture the execution of a certain statement and nothing more
 
@@ -77,7 +79,7 @@ END;
 
 This method adds a filter for service module and action so its very useful for targeted tracing Again you need to replace the placeholder with the right values and those values will depend on your application how you're setting things up It's not an Oracle thing its your application thing
 
-After running your trace you will have a trace file generated in the user\_dump\_dest directory that is defined in your Oracle instance That file needs to be analyzed this where tkprof comes in
+After running your trace you will have a trace file generated in the user_dump_dest directory that is defined in your Oracle instance That file needs to be analyzed this where tkprof comes in
 
 To format trace file you can simply type
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "license-plate-perspectives-opencv-computer-vision"
 ---
 
-Okay so license plate perspectives OpenCV right I've been wrestling with that beast for what feels like ages honestly You wouldn't believe the head scratching I went through back in the day trying to make sense of those skewed rectangles
+license plate perspectives OpenCV right I've been wrestling with that beast for what feels like ages honestly You wouldn't believe the head scratching I went through back in the day trying to make sense of those skewed rectangles
 
 I mean everyone thinks image recognition is some magical click-and-boom thing but let me tell you the real world is a messy place Especially when you're dealing with license plates at weird angles It’s like the universe is actively trying to sabotage your computer vision algorithms
 
@@ -38,7 +38,7 @@ def find_license_plate(image_path):
             aspect_ratio = float(w) / h
             if 2 <= aspect_ratio <= 6 and w * h > 1000:
                 potential_plates.append(approx)
-    
+
     # Here we would have a function to choose the best from potential plates but for
     # this example we assume the first found is the correct one
     if len(potential_plates) > 0 :
@@ -66,18 +66,18 @@ Here's that part I wrote around the same time I had to deal with different plate
 ```python
 def correct_perspective(image_path, plate_corners):
     img = cv2.imread(image_path)
-    
+
     # Check if a plate was found if not we don't do anything
     if plate_corners is None:
         return None
-    
+
     # Reshape the plate_corners into a numpy array format suitable for the functions to work with
     plate_corners_reshaped = plate_corners.reshape((4, 2)).astype(np.float32)
 
     #Calculate the width and height of the plate.
     width = max( np.linalg.norm( plate_corners_reshaped[0] - plate_corners_reshaped[1] ) ,
                 np.linalg.norm( plate_corners_reshaped[2] - plate_corners_reshaped[3] ) )
-    
+
     height = max( np.linalg.norm( plate_corners_reshaped[0] - plate_corners_reshaped[3] ) ,
                  np.linalg.norm( plate_corners_reshaped[1] - plate_corners_reshaped[2] ) )
 

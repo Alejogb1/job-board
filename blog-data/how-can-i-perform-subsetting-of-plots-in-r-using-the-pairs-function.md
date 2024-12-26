@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-perform-subsetting-of-plots-in-r-using-the-pairs-function"
 ---
 
-Alright, let's tackle subsetting within the `pairs` function in R. I've encountered this challenge more than a few times, particularly when dealing with datasets that have a plethora of variables. Generating a complete pairs plot can quickly become overwhelming and, frankly, computationally expensive. Subsetting becomes crucial for clarity and efficiency. Instead of visualizing all possible variable combinations at once, we can focus on the relationships that are truly pertinent to our analysis.
+, let's tackle subsetting within the `pairs` function in R. I've encountered this challenge more than a few times, particularly when dealing with datasets that have a plethora of variables. Generating a complete pairs plot can quickly become overwhelming and, frankly, computationally expensive. Subsetting becomes crucial for clarity and efficiency. Instead of visualizing all possible variable combinations at once, we can focus on the relationships that are truly pertinent to our analysis.
 
-The `pairs` function in its basic form doesn't inherently offer explicit subsetting parameters like a filter function might. However, the flexibility of R allows us to approach this in several practical ways. The crux of it lies in manipulating the input data *before* it's passed to `pairs`. Let's walk through a few methods, each with slightly different use cases.
+The `pairs` function in its basic form doesn't inherently offer explicit subsetting parameters like a filter function might. However, the flexibility of R allows us to approach this in several practical ways. The crux of it lies in manipulating the input data _before_ it's passed to `pairs`. Let's walk through a few methods, each with slightly different use cases.
 
 First, and possibly most straightforward, is selecting columns using standard indexing techniques. This is ideal when you know exactly which variables you're interested in, either by their position or name. For instance, say we have a dataframe called `my_data` with columns 'a', 'b', 'c', 'd', and 'e', and I only want to examine the relationships between 'a', 'c', and 'e'. Here’s how I'd do it:
 

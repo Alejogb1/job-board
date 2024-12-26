@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-parameterize-azure-ml-pipeline-endpoint-names"
 ---
 
-Alright, let's tackle this. Parameterizing Azure ML pipeline endpoint names, it's a detail that can easily become a pain point, especially as your projects scale and require different deployment environments or frequent updates. I've certainly been down this road; I recall a project some time back involving a complex model deployment process where hardcoding endpoint names quickly spiraled into an unmanageable mess. The key is to understand that these endpoints aren’t just static strings; they're essentially service identifiers that need to adapt to the dynamics of your development and deployment workflows.
+, let's tackle this. Parameterizing Azure ML pipeline endpoint names, it's a detail that can easily become a pain point, especially as your projects scale and require different deployment environments or frequent updates. I've certainly been down this road; I recall a project some time back involving a complex model deployment process where hardcoding endpoint names quickly spiraled into an unmanageable mess. The key is to understand that these endpoints aren’t just static strings; they're essentially service identifiers that need to adapt to the dynamics of your development and deployment workflows.
 
 The straightforward approach, that many begin with, is simply to embed the endpoint name directly in your pipeline definition or deployment scripts. This works fine initially, but it's brittle. If you need to switch to a staging environment, or if a naming convention changes, you’ll be editing code in multiple places, making it error-prone. So, let’s look at a more robust way, leveraging Azure ML's inherent capabilities and a bit of scripting.
 
@@ -143,14 +143,13 @@ if __name__ == "__main__":
 ```json
 {
   "defaults": {
-     "subscription_id": "<your-subscription-id>",
+    "subscription_id": "<your-subscription-id>",
     "resource_group": "<your-resource-group>",
     "workspace_name": "<your-workspace-name>",
     "input_data": "https://azureopendatastorage.blob.core.windows.net/mnist/mnist.pkl",
     "output_path": "azureml://datastores/workspaceblobstore/outputs/",
     "compute_target": "cpu-cluster",
     "pipeline_name": "my_training_pipeline"
-
   },
   "environments": {
     "dev": {
@@ -158,12 +157,12 @@ if __name__ == "__main__":
       "deployment_name": "dev-deployment"
     },
     "staging": {
-        "endpoint_name": "staging-endpoint",
-        "deployment_name": "staging-deployment"
+      "endpoint_name": "staging-endpoint",
+      "deployment_name": "staging-deployment"
     },
     "prod": {
-        "endpoint_name": "prod-endpoint",
-        "deployment_name": "prod-deployment"
+      "endpoint_name": "prod-endpoint",
+      "deployment_name": "prod-deployment"
     }
   }
 }

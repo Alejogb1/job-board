@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "does-google-ca-accept-ip-addresses-as-subjectaltnames-and-how-can-i-go-about-this"
 ---
 
-alright, so you’re asking about google ca and using ip addresses in subject alternative names, eh? i've been around the block a few times with certificates, and this particular issue is one that's popped up quite a bit in my career.
+, so you’re asking about google ca and using ip addresses in subject alternative names, eh? i've been around the block a few times with certificates, and this particular issue is one that's popped up quite a bit in my career.
 
-first off, the short answer is, yeah, google certificate authority *does* accept ip addresses as subject alternative names (sans). it's a pretty standard thing in x.509 certificates nowadays, especially if you're dealing with internal services or devices that might not have a fqdn. but, and it's a big but, there are some gotchas you need to watch out for.
+first off, the short answer is, yeah, google certificate authority _does_ accept ip addresses as subject alternative names (sans). it's a pretty standard thing in x.509 certificates nowadays, especially if you're dealing with internal services or devices that might not have a fqdn. but, and it's a big but, there are some gotchas you need to watch out for.
 
 now, let me tell you a bit about where i first ran into this problem. it was back in 2015 i think, i was working on this large iot project - think thousands of sensors scattered around, each communicating back to central servers. at the time, we were trying to set up secure communications with mutual tls. we initially went down the route of only using domain names, but we soon realized that many devices didn’t have a consistent resolvable hostname, especially when they were deployed in varied network environments, we had to resort to ip addresses.
 
@@ -49,7 +49,7 @@ and then the request command becomes
 openssl req -new -newkey rsa:2048 -nodes -keyout my.key -out my.csr -config my.cnf
 ```
 
-that generated the csr with the ip sans correctly formatted.  finally, the google ca issued us a certificate that worked as intended. so the key takeaway here is: use a configuration file instead of the command line, it makes things more flexible and less error prone.
+that generated the csr with the ip sans correctly formatted. finally, the google ca issued us a certificate that worked as intended. so the key takeaway here is: use a configuration file instead of the command line, it makes things more flexible and less error prone.
 
 another thing i learned is that different ca’s have different validation policies, this is something to consider also. it’s a bit funny, but i remember an old colleague once jokingly said he thought ca’s used to check the ip addresses by actually pinging them. which is obviously not true. but i digress. google ca, from what i’ve seen, doesn't do anything crazy, they just check that the request is formatted correctly. however, remember that the ips that you put inside the san needs to be owned by you.
 
@@ -98,6 +98,7 @@ if __name__ == '__main__':
     print("-----key-----")
     print(key.decode('utf-8'))
 ```
+
 the code example above generates a csr and a private key with a defined list of ip sans. you would then need to take the csr and send it to the ca to obtain your certificates.
 
 a few things to keep in mind when working with google ca. first, their pricing model, it can get expensive, especially if you are issuing tons of certificates, so if you’re doing this at a large scale, keep an eye on that. second, make sure that your environment is configured properly to obtain the certificates automatically. we’ve seen too often people using manual processes which is not ideal in real life. and lastly, always always, check your certificates. the easiest way is to use `openssl x509 -text -noout -in my.crt`, and verify that everything you requested, such as subject alternative names, are actually there.

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-are-my-azure-container-apps-restarting-multiple-times"
 ---
 
-Okay, let's tackle this. From my experience, dealing with perpetually restarting Azure Container Apps is a classic head-scratcher, and there isn't one singular culprit; it's usually a combination of factors. I've personally spent quite a few late nights debugging similar issues in production, so I can certainly walk you through the usual suspects and how to approach them systematically.
+, let's tackle this. From my experience, dealing with perpetually restarting Azure Container Apps is a classic head-scratcher, and there isn't one singular culprit; it's usually a combination of factors. I've personally spent quite a few late nights debugging similar issues in production, so I can certainly walk you through the usual suspects and how to approach them systematically.
 
 Often, when you're seeing multiple restarts, the issue lies within the app’s resource allocation or configuration. It's rarely an issue with Azure itself; more often, it's about how the app is behaving within its environment. We can explore some common causes and what I've done in the past to rectify them.
 
@@ -102,6 +102,6 @@ If `DATABASE_CONNECTION` isn't defined when this code is deployed, it would lead
 
 To effectively diagnose restarts, always check your logs first, both container app logs and your application's logs if applicable. Correlate those log entries with your monitoring metrics to identify potential resource bottlenecks. I’ve found that the Azure Monitor Log Analytics Workspace can be particularly powerful for deeper analysis if needed.
 
-For further study, consider *“Containerization with Docker and Kubernetes”* by Nigel Poulton, it offers a solid foundation on containers. For Azure-specific details, I'd recommend the official Microsoft documentation and the *“Azure Architecture Guide”*, which has detailed sections on containerized solutions. Additionally, the Google SRE book gives valuable insight into designing and operating robust and reliable systems, which, given the nature of the problem, is incredibly relevant. Lastly, I recommend reviewing material on "Twelve-Factor App" methodologies; it’s a great place to start to create systems that scale well.
+For further study, consider _“Containerization with Docker and Kubernetes”_ by Nigel Poulton, it offers a solid foundation on containers. For Azure-specific details, I'd recommend the official Microsoft documentation and the _“Azure Architecture Guide”_, which has detailed sections on containerized solutions. Additionally, the Google SRE book gives valuable insight into designing and operating robust and reliable systems, which, given the nature of the problem, is incredibly relevant. Lastly, I recommend reviewing material on "Twelve-Factor App" methodologies; it’s a great place to start to create systems that scale well.
 
 In summary, recurring container app restarts are typically rooted in resource constraints, health probe failures, or image/configuration problems. By systematically analyzing logs, metrics, and configuration, you can methodically isolate and resolve the underlying issues. This is not always a fast or simple process, but a patient, step-by-step approach is almost always effective.

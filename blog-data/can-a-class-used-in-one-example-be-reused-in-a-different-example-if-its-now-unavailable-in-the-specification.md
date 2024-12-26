@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-a-class-used-in-one-example-be-reused-in-a-different-example-if-its-now-unavailable-in-the-specification"
 ---
 
-Alright, let's tackle this. It’s a situation I've definitely encountered a few times in my career, and it always sparks a fascinating discussion around decoupling, design patterns, and the often-unpredictable evolution of specifications. So, the question is: can a class, initially used in one example, be repurposed in a new context where it's no longer explicitly defined or available in the *current* specification? The short, very technically-oriented answer is: it *depends*. And the reasons why are significantly more intricate than a simple yes or no.
+, let's tackle this. It’s a situation I've definitely encountered a few times in my career, and it always sparks a fascinating discussion around decoupling, design patterns, and the often-unpredictable evolution of specifications. So, the question is: can a class, initially used in one example, be repurposed in a new context where it's no longer explicitly defined or available in the _current_ specification? The short, very technically-oriented answer is: it _depends_. And the reasons why are significantly more intricate than a simple yes or no.
 
 From a purely formal, specification-driven perspective, if a class is not present in the current specification or it's been explicitly removed, then its direct usage as if it were part of that specification is generally discouraged, and in many cases, technically impossible without some form of intervention. Think of specifications as contracts. If the contract (the specification) doesn't mention a particular service or resource (the class), you can’t reasonably expect to use it as part of fulfilling that contract without violating its rules. This applies, for example, to situations where a deprecated API is removed and it is not available in a new specification, because the interface has changed. However, in practice, software development often involves situations that are less rigid than pure theory would suggest. Real-world projects evolve, specifications change, and developers are frequently tasked with adapting existing code to new requirements or modified environments.
 
@@ -14,7 +14,7 @@ This brings me to the three practical scenarios, along with code snippets, that 
 
 **Scenario 1: The Adapter Pattern Approach**
 
-The first and arguably the most elegant approach is to use the *adapter pattern*. Here, you create a new class (the adapter) that acts as an intermediary between your existing code, which expects the `SensorData` class, and the raw byte interfaces provided by the new specification. The adapter class translates calls from the old interface to calls to the new one.
+The first and arguably the most elegant approach is to use the _adapter pattern_. Here, you create a new class (the adapter) that acts as an intermediary between your existing code, which expects the `SensorData` class, and the raw byte interfaces provided by the new specification. The adapter class translates calls from the old interface to calls to the new one.
 
 ```python
 # Old system's SensorData class (hypothetical)
@@ -60,7 +60,7 @@ In this example, `SensorDataAdapter` inherits from the original `SensorData` cla
 
 **Scenario 2: The Facade Pattern Approach**
 
-Another option is to use a *facade pattern*. Unlike the adapter, a facade provides a simplified, high-level interface to a more complex underlying system. In our scenario, the facade class would encapsulate the logic of interacting with the new raw data interface and expose higher-level methods that mirror the functionality of the old `SensorData` class.
+Another option is to use a _facade pattern_. Unlike the adapter, a facade provides a simplified, high-level interface to a more complex underlying system. In our scenario, the facade class would encapsulate the logic of interacting with the new raw data interface and expose higher-level methods that mirror the functionality of the old `SensorData` class.
 
 ```python
 # Facade class
@@ -92,9 +92,9 @@ With a facade, you're not trying to directly replace the `SensorData` class, but
 
 **Scenario 3: The Direct Modification Approach (Use with Caution)**
 
-Finally, in some very limited cases, you *might* be able to directly modify or 'patch' the unavailable class. This approach is generally *not* recommended unless it is absolutely necessary and is under full control. It can lead to compatibility problems, and code which is brittle to changes in the system. Let me be clear though, I've had to do this at times, and that should be a warning in itself. This is when you have no way around it because the existing software framework is tightly coupled to the old class, and modifying it to use adapter or facade is an extremely large effort. This is, by no means, a desired scenario.
+Finally, in some very limited cases, you _might_ be able to directly modify or 'patch' the unavailable class. This approach is generally _not_ recommended unless it is absolutely necessary and is under full control. It can lead to compatibility problems, and code which is brittle to changes in the system. Let me be clear though, I've had to do this at times, and that should be a warning in itself. This is when you have no way around it because the existing software framework is tightly coupled to the old class, and modifying it to use adapter or facade is an extremely large effort. This is, by no means, a desired scenario.
 
-Let's assume, for a hypothetical example, we can extend our previous class using *monkey patching*, a technique common in dynamic languages like Python:
+Let's assume, for a hypothetical example, we can extend our previous class using _monkey patching_, a technique common in dynamic languages like Python:
 
 ```python
 class SensorData:  # Assume this exists but is limited
@@ -124,20 +124,21 @@ sensor_data = SensorData()
 print(sensor_data.get_temperature())
 print(sensor_data.get_humidity())
 ```
+
 Here, we directly add a new functionality to the already existing class, in order to avoid rewriting or adapter/facade classes. While this might seem to make the old code work directly, and we have "reused" the class, this approach should be used as a last resort due to the potential side effects and lack of control over the behavior of the monkey patched class.
 
 **Key Takeaways and Recommendations:**
 
-* **Specification Compliance:** Always prioritize adhering to the current specifications. Deviating can lead to long-term maintenance issues.
+- **Specification Compliance:** Always prioritize adhering to the current specifications. Deviating can lead to long-term maintenance issues.
 
-* **Design Patterns:** The adapter and facade patterns are powerful tools for managing changes in interfaces and are widely applicable.
+- **Design Patterns:** The adapter and facade patterns are powerful tools for managing changes in interfaces and are widely applicable.
 
-* **Avoid Direct Modification:** Direct modification or patching, while sometimes tempting, should generally be avoided due to its potential for destabilization.
+- **Avoid Direct Modification:** Direct modification or patching, while sometimes tempting, should generally be avoided due to its potential for destabilization.
 
-* **Testing:** Comprehensive testing is critical whenever you introduce changes like these, regardless of the method used.
+- **Testing:** Comprehensive testing is critical whenever you introduce changes like these, regardless of the method used.
 
-* **Documentation:** Document any deviations from the specification and the reasons behind them, using clear, concise, and technical language.
+- **Documentation:** Document any deviations from the specification and the reasons behind them, using clear, concise, and technical language.
 
-To further delve into these topics, I'd recommend studying the *Design Patterns: Elements of Reusable Object-Oriented Software* by Erich Gamma et al. This is a classic text that extensively covers the adapter and facade patterns. Additionally, the book *Refactoring: Improving the Design of Existing Code* by Martin Fowler offers valuable insights into restructuring code for maintainability and flexibility. Finally, papers or materials on API design from authors like Joshua Bloch and Steve Souders might also be beneficial as they can guide how to design your interfaces with flexibility in mind and not tie tightly to an specific class.
+To further delve into these topics, I'd recommend studying the _Design Patterns: Elements of Reusable Object-Oriented Software_ by Erich Gamma et al. This is a classic text that extensively covers the adapter and facade patterns. Additionally, the book _Refactoring: Improving the Design of Existing Code_ by Martin Fowler offers valuable insights into restructuring code for maintainability and flexibility. Finally, papers or materials on API design from authors like Joshua Bloch and Steve Souders might also be beneficial as they can guide how to design your interfaces with flexibility in mind and not tie tightly to an specific class.
 
-In closing, while reusing an unavailable class *is* possible in some specific situations, it's crucial to approach it thoughtfully, following best practices and understanding the implications. The long-term health of a project depends on making informed decisions and not just getting things working, as tempting as it might be.
+In closing, while reusing an unavailable class _is_ possible in some specific situations, it's crucial to approach it thoughtfully, following best practices and understanding the implications. The long-term health of a project depends on making informed decisions and not just getting things working, as tempting as it might be.

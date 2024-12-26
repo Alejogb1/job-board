@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-the-graphviz-executable-not-found-in-azureml"
 ---
 
-Okay, let's address this. I’ve run into the "graphviz executable not found" issue more times than I'd care to recall, particularly in cloud environments like AzureML. It’s a classic example of a dependency management problem, further compounded by the somewhat isolated nature of cloud-hosted environments. Usually, it stems from the fact that graphviz, while a very useful tool for visualizing graphs and networks, isn't a default package included in many base machine learning environments. The AzureML managed compute instances, for example, provide a relatively clean slate, which is great for consistency, but means you'll need to explicitly install any non-standard dependencies yourself.
+, let's address this. I’ve run into the "graphviz executable not found" issue more times than I'd care to recall, particularly in cloud environments like AzureML. It’s a classic example of a dependency management problem, further compounded by the somewhat isolated nature of cloud-hosted environments. Usually, it stems from the fact that graphviz, while a very useful tool for visualizing graphs and networks, isn't a default package included in many base machine learning environments. The AzureML managed compute instances, for example, provide a relatively clean slate, which is great for consistency, but means you'll need to explicitly install any non-standard dependencies yourself.
 
 Specifically, the error you’re seeing translates to the system’s inability to locate the `dot` executable, which is the core binary of the graphviz suite responsible for actually rendering graph descriptions into visual formats (like png, svg, etc.). It’s not enough that you might have the python `graphviz` library installed; that library essentially acts as a wrapper for the underlying graphviz executable. So, if the executable isn't present or is not in the system's `PATH`, python can’t invoke it.
 
@@ -95,7 +95,7 @@ Here, we utilize the `shutil.which` function, which is a standard python library
 
 **Code Snippet 3: Custom installation with `pip` and explicit Path configuration**
 
-While `pip` is not ideal for system wide installs, this snippet demonstrates how to install the graphviz *python* bindings, and how you might configure the system in a *specific* and controlled setting.
+While `pip` is not ideal for system wide installs, this snippet demonstrates how to install the graphviz _python_ bindings, and how you might configure the system in a _specific_ and controlled setting.
 
 ```python
 import subprocess
@@ -126,7 +126,7 @@ def install_python_graphviz_and_configure_path(graphviz_bin_path='/usr/bin/'): #
 install_python_graphviz_and_configure_path()
 ```
 
-This snippet focuses on explicitly managing the location of the binary. Note the `graphviz_bin_path` parameter, it’s essential to set that correctly to the actual directory where the `dot` executable is located. You will need to verify the correct path based on how graphviz was installed. This script install the python bindings then checks if the `dot` executable exists in the hardcoded bin path and updates the system's path *only if* the `dot` executable exists in that path.
+This snippet focuses on explicitly managing the location of the binary. Note the `graphviz_bin_path` parameter, it’s essential to set that correctly to the actual directory where the `dot` executable is located. You will need to verify the correct path based on how graphviz was installed. This script install the python bindings then checks if the `dot` executable exists in the hardcoded bin path and updates the system's path _only if_ the `dot` executable exists in that path.
 
 **Recommendations for Further Reading:**
 

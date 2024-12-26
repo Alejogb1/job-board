@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-docker-images-be-built-from-gcp-vertex-ai-workbench-managed-notebook-cells"
 ---
 
-Alright, let’s get into this. The question of building Docker images directly from GCP Vertex AI Workbench managed notebook cells is one that I’ve encountered before, though not always in the most straightforward manner. It’s a question that pushes the boundaries a bit on how those notebook environments are typically conceived and used, and it definitely requires a considered approach. The short answer is: it's *possible*, but not in the way you might initially expect, or through any built-in functionality. There's no magical command you run within a cell that directly crafts and pushes a Docker image to a registry.
+, let’s get into this. The question of building Docker images directly from GCP Vertex AI Workbench managed notebook cells is one that I’ve encountered before, though not always in the most straightforward manner. It’s a question that pushes the boundaries a bit on how those notebook environments are typically conceived and used, and it definitely requires a considered approach. The short answer is: it's _possible_, but not in the way you might initially expect, or through any built-in functionality. There's no magical command you run within a cell that directly crafts and pushes a Docker image to a registry.
 
 Let's unpack why and then explore how we can achieve something akin to this. The crux of it lies in the fact that Vertex AI Workbench notebooks, when managed, aren't designed to be general-purpose compute environments where you'd be performing heavy-duty Docker operations. They're designed primarily for interactive data analysis, machine learning model development, and experimentation. The managed nature of these instances, including the control and restrictions placed on them, limits direct Docker interaction. The underlying compute engine instances, while powerful, are primarily orchestrated to keep the notebook environment consistent and reliable.
 
@@ -83,11 +83,11 @@ print ("Files staged to GCS bucket.")
 
 ```
 
-At this point, you would *externally* (outside the notebook cell) trigger a cloud build. This isn't something we can do directly *within* the managed notebook environment in a way that is efficient or advised.
+At this point, you would _externally_ (outside the notebook cell) trigger a cloud build. This isn't something we can do directly _within_ the managed notebook environment in a way that is efficient or advised.
 
 **Example 2: Triggering the build process using Cloud Build API**
 
-Here’s a *simplified* Python code demonstrating how to use the Cloud Build API to kick-off the building process. Note this script may require adjustments depending on your setup. You may want to trigger this from another service.
+Here’s a _simplified_ Python code demonstrating how to use the Cloud Build API to kick-off the building process. Note this script may require adjustments depending on your setup. You may want to trigger this from another service.
 
 ```python
 from google.cloud import cloudbuild_v1 as cloudbuild
@@ -126,7 +126,7 @@ bucket_name = "your-storage-bucket-name" #Replace with a valid bucket name
 trigger_cloudbuild(project_id, bucket_name, docker_image_name)
 ```
 
-**Example 3:  A slightly more complex example, illustrating additional requirements.**
+**Example 3: A slightly more complex example, illustrating additional requirements.**
 
 Suppose your application required a particular system dependency (beyond standard pip). You would update the `Dockerfile` and requirements file accordingly:
 
@@ -158,15 +158,16 @@ with open("Dockerfile", "w") as f:
     f.write(dockerfile)
 
 ```
+
 In this case, in addition to pip dependencies, you've included installation of `vim` which may be needed for some of your application's tooling. The staging code would remain the same as in Example 1. The cloud build configuration might also need slight modifications to account for the new requirements (this example still works as is).
 
 **Key Takeaways and Further Reading**
 
-*   **Separation of Concerns:** The crucial element here is recognizing that managed notebook instances are not ideal environments for building Docker images directly. Instead, use them for development, code creation, and staging.
-*   **Orchestration is Key:** Services like Cloud Build, Cloud Functions (triggered by GCS events), or dedicated orchestration tools are typically needed to automate the full build-and-deploy lifecycle.
-*   **Security:** Always handle credentials appropriately, using service accounts with the least-privilege access. Don't embed secrets directly in notebook cells.
-*   **Cloud Build Documentation:** Familiarize yourself with Google Cloud Build; it’s your workhorse for actually building the Docker images: [https://cloud.google.com/build/docs](https://cloud.google.com/build/docs).
-*   **Docker Documentation**: It may be fundamental to go to the source. I’d recommend [https://docs.docker.com/](https://docs.docker.com/) for getting a deep understanding of building dockerfiles, layers, and related topics.
-*   **Effective DevOps with GCP**: This is a broad area, and I recommend a practical book like "Effective DevOps with Google Cloud Platform" by Jennifer Davis and Katherine Stanley.
+- **Separation of Concerns:** The crucial element here is recognizing that managed notebook instances are not ideal environments for building Docker images directly. Instead, use them for development, code creation, and staging.
+- **Orchestration is Key:** Services like Cloud Build, Cloud Functions (triggered by GCS events), or dedicated orchestration tools are typically needed to automate the full build-and-deploy lifecycle.
+- **Security:** Always handle credentials appropriately, using service accounts with the least-privilege access. Don't embed secrets directly in notebook cells.
+- **Cloud Build Documentation:** Familiarize yourself with Google Cloud Build; it’s your workhorse for actually building the Docker images: [https://cloud.google.com/build/docs](https://cloud.google.com/build/docs).
+- **Docker Documentation**: It may be fundamental to go to the source. I’d recommend [https://docs.docker.com/](https://docs.docker.com/) for getting a deep understanding of building dockerfiles, layers, and related topics.
+- **Effective DevOps with GCP**: This is a broad area, and I recommend a practical book like "Effective DevOps with Google Cloud Platform" by Jennifer Davis and Katherine Stanley.
 
 The patterns I described here will definitely address the need to containerize code developed within those environments. This is how I’ve handled the situation in multiple projects where the need to rapidly iterate on ML models and their deployment pipelines was a crucial requirement. Building container images directly inside the managed notebook is not optimal. Instead, we utilize a process based on code staging and cloud build orchestration, which allows a more secure, robust and scalable solution. Always prefer this approach over a more direct, but ultimately unsustainable, approach.

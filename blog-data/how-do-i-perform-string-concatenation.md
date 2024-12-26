@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-perform-string-concatenation"
 ---
 
-Alright, let’s unpack string concatenation. It’s a fundamental operation, yet it's one that can lead to performance pitfalls if not handled thoughtfully, especially in resource-constrained or high-performance environments. I’ve seen it cause some rather…interesting issues over the years, from database slowdowns to unexpected memory spikes, so let me share some insights from past experiences.
+, let’s unpack string concatenation. It’s a fundamental operation, yet it's one that can lead to performance pitfalls if not handled thoughtfully, especially in resource-constrained or high-performance environments. I’ve seen it cause some rather…interesting issues over the years, from database slowdowns to unexpected memory spikes, so let me share some insights from past experiences.
 
 The core concept of string concatenation involves combining two or more strings into a single, new string. Seems simple enough, and in many scenarios, the built-in operators in languages handle it reasonably well. However, the “how” behind this simple operation can vary drastically, and its implications on execution time and memory allocation can be significant. I recall debugging a particularly stubborn issue in a distributed logging system, where seemingly innocent string concatenations were eating up processor cycles and causing significant latency. That's when the subtleties of implementation became acutely clear.
 

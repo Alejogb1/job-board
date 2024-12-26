@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-run-onnx-models-using-python"
 ---
 
-Alright, let’s tackle this. I’ve spent a considerable amount of time deploying and optimizing models, and ONNX has become a cornerstone in many of those workflows, particularly when dealing with model portability and performance across different hardware. It's a topic I've encountered in various forms, and I can share some insights based on my experiences.
+, let’s tackle this. I’ve spent a considerable amount of time deploying and optimizing models, and ONNX has become a cornerstone in many of those workflows, particularly when dealing with model portability and performance across different hardware. It's a topic I've encountered in various forms, and I can share some insights based on my experiences.
 
 Fundamentally, running an ONNX model in Python revolves around using an ONNX runtime environment. This runtime is responsible for taking the ONNX graph—which is effectively a serialized representation of your model’s architecture and trained weights—and executing it. We're not talking about training a model from scratch here, but rather taking a pre-trained model, serialized in the ONNX format, and making predictions (or inferences) with it.
 
@@ -86,11 +86,13 @@ outputs = session.run([output_name], {input_name: preprocessed_data})
 # Output the predictions
 print(outputs[0])
 ```
+
 In this example, I’ve introduced the concept of a ‘preprocessing’ step. Often, raw input data isn't directly compatible with the model. You'll need to reshape, normalize, or apply specific transformations. The key is to carefully align your preprocessing with what the model was trained on. The snippet here shows a basic normalization example, which is very common. We also handle the possibility of a batch dimension in the ONNX model's defined input shape - it might be a constant dimension or it might be defined as `None` (dynamic batch size), and we adjust our processing accordingly.
 
 Now, consider scenarios where you're dealing with models that may have varying input shapes, which might be specified as dynamic batch sizes within the model's definition. Here's how we can handle that using `onnxruntime`:
 
 **Example 3: Handling Dynamic Input Shapes**
+
 ```python
 import onnxruntime
 import numpy as np
@@ -122,6 +124,6 @@ for batch_size in batch_sizes:
 
 In this third snippet, I demonstrate how to handle models with flexible input dimensions. `onnxruntime` is pretty robust when it comes to managing these dynamic inputs, making it versatile. We detect if the first element of the input shape is `None` which means dynamic, and accordingly use batch_size to construct the input. I've found this incredibly useful with models designed for variable sequence lengths or other types of batch processing.
 
-For further reading, I'd highly recommend looking into the official ONNX documentation, especially the section on ‘runtimes’—it’s meticulously detailed. Also, a good resource is the *Deep Learning with Python* book by François Chollet, which although doesn't delve into the specifics of ONNX runtime, offers an excellent overview of general model deployment strategies that will make it easier to understand how ONNX fits in the bigger picture.  For in-depth understanding of the optimization techniques used by onnxruntime, look at academic papers related to computational graphs, graph partitioning, and code generation for efficient inference, often published in conference proceedings of NeurIPS or ICML. Understanding these fundamental principles will make using and optimizing ONNX models much more intuitive.
+For further reading, I'd highly recommend looking into the official ONNX documentation, especially the section on ‘runtimes’—it’s meticulously detailed. Also, a good resource is the _Deep Learning with Python_ book by François Chollet, which although doesn't delve into the specifics of ONNX runtime, offers an excellent overview of general model deployment strategies that will make it easier to understand how ONNX fits in the bigger picture. For in-depth understanding of the optimization techniques used by onnxruntime, look at academic papers related to computational graphs, graph partitioning, and code generation for efficient inference, often published in conference proceedings of NeurIPS or ICML. Understanding these fundamental principles will make using and optimizing ONNX models much more intuitive.
 
 In conclusion, running ONNX models with Python is relatively straightforward with the help of `onnxruntime`. The key steps are loading the model, preparing your input data according to the model's expectation, and executing the inference. Keep an eye on data preprocessing and dynamic shapes, and you’ll be well-equipped to use ONNX for efficient model deployment. These examples, based on real cases I’ve encountered, should provide a solid foundation. If any more specific questions arise, feel free to ask and I'll gladly share what I’ve learned.

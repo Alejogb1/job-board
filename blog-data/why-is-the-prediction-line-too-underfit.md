@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-the-prediction-line-too-underfit"
 ---
 
-alright, so you've got a model that's underfitting, the prediction line isn't quite following the data, yeah i've been there more times than i'd like to recall, it's a common headscratcher when you're in the thick of machine learning. let me break down why this happens, and what you can do about it from my past experiences.
+, so you've got a model that's underfitting, the prediction line isn't quite following the data, yeah i've been there more times than i'd like to recall, it's a common headscratcher when you're in the thick of machine learning. let me break down why this happens, and what you can do about it from my past experiences.
 
 underfitting, at its core, means your model is too simplistic to capture the underlying patterns in the data. it's like trying to draw a detailed portrait using just a couple of straight lines. the model isn't complex enough, it's not learning enough from the data to make accurate predictions, which is why your prediction line is looking all lazy and detached from your data points.
 
@@ -12,7 +12,7 @@ it typically shows up when:
 
 1. **the model is not flexible enough:** imagine you're trying to fit a curve to a scatterplot, but you're only using a linear regression model. linear regression is great for straight lines, but if your data has curves and wiggles, a straight line is never going to follow the data points. it's a classic case of using a model that's too simple for the task. i ran into this years back when trying to predict stock prices, i started with a basic linear model and the results were… well let's just say my portfolio did not appreciate that initial attempt.
 
-2.  **you're dealing with a lack of features:** sometimes the issue isn't the model itself, but the data it's working with. if you’re missing important information, the model has no way of learning how that information influences your outcome. imagine you’re trying to predict house prices without considering the square footage or the number of bedrooms. the model simply doesn’t have the pieces of the puzzle to fit together. i did some work with medical imaging where we overlooked certain patient history features at first, and the model performed abysmally and there we were, tweaking the code every other day.
+2. **you're dealing with a lack of features:** sometimes the issue isn't the model itself, but the data it's working with. if you’re missing important information, the model has no way of learning how that information influences your outcome. imagine you’re trying to predict house prices without considering the square footage or the number of bedrooms. the model simply doesn’t have the pieces of the puzzle to fit together. i did some work with medical imaging where we overlooked certain patient history features at first, and the model performed abysmally and there we were, tweaking the code every other day.
 
 3. **you are overly regularizing:** regularization is a technique to prevent overfitting but if you crank it up too high, you might accidentally make your model too simple, and you’d be underfitting. think of it like putting a very tight leash on the model, it can't move as freely to learn the data's intricacies. i did a project where i was trying to prevent overfitting using an l2 regularization and i went a little too far on it, the loss was high enough i thought i broke the library i was using.
 
@@ -81,7 +81,7 @@ df['feature2_squared'] = df['feature2'] ** 2
 print(df.head())
 ```
 
-here, we add some new features such as 'sum\_features', 'feature1\_squared', and 'feature2\_squared'. these new features could help your model learn more effectively. i've found that it is more effective when the original features are not linear, this creates a sort of polynomial behavior when doing feature expansion.
+here, we add some new features such as 'sum_features', 'feature1_squared', and 'feature2_squared'. these new features could help your model learn more effectively. i've found that it is more effective when the original features are not linear, this creates a sort of polynomial behavior when doing feature expansion.
 
 **3. reduce regularization:**
 

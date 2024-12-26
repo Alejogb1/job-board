@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-handle-tokens-with-multiple-roles-in-aspnet"
 ---
 
-Alright, let's tackle this. Handling tokens with multiple roles in ASP.NET, especially when you're aiming for something beyond the basic out-of-the-box solution, can indeed present some interesting challenges. I recall a particularly memorable project a few years back, building a multi-tenant SaaS platform where users could have various roles within multiple organizations. The standard single-role approach wouldn’t cut it; we needed something far more flexible and robust.
+, let's tackle this. Handling tokens with multiple roles in ASP.NET, especially when you're aiming for something beyond the basic out-of-the-box solution, can indeed present some interesting challenges. I recall a particularly memorable project a few years back, building a multi-tenant SaaS platform where users could have various roles within multiple organizations. The standard single-role approach wouldn’t cut it; we needed something far more flexible and robust.
 
 The crux of the issue lies in how ASP.NET typically manages claims-based authorization. By default, it often assumes a single 'role' claim, which is a very limited perspective when you have a diverse user base. So, let’s delve into how we can move beyond that limitation and create a system that handles multiple roles efficiently.
 
@@ -103,7 +103,7 @@ services.AddAuthorization(options =>
 });
 ```
 
-The key is to utilize `RequireClaim` appropriately. Notice the `RequireAdminOrEditor`, which allows access if the token contains *either* role. Conversely `RequireSalesAndBilling` allows access only if both roles are present on the user’s token.
+The key is to utilize `RequireClaim` appropriately. Notice the `RequireAdminOrEditor`, which allows access if the token contains _either_ role. Conversely `RequireSalesAndBilling` allows access only if both roles are present on the user’s token.
 
 You'd then apply these policies to your controllers or Razor Pages using the `[Authorize]` attribute, like this:
 
@@ -163,15 +163,16 @@ public class DynamicRoleController : ControllerBase
 }
 
 ```
+
 Here we are using `User.HasClaim()` to check if a specific role exists. This provides full control and allows you to decide at a very fine-grained level what logic should be executed based on the user’s roles. While it provides flexibility, this approach can quickly become more complex and less maintainable if you are not careful. It is generally better to use Authorization policies where possible.
 
 **Further Technical Resources**
 
 To go further with this, I recommend looking into the following:
 
-*   **Microsoft’s Official ASP.NET Core Documentation**: Search for articles on Claims-Based Authorization and Identity Management. The documentation is comprehensive and frequently updated.
-*   **"Programming Microsoft ASP.NET Core" by Dino Esposito**: This book provides a deep dive into ASP.NET Core, covering authentication and authorization in detail, with practical guidance on customization.
-*   **"OAuth 2 in Action" by Justin Richer and Antonio Sanso**: If you are using OAuth 2.0, this book explains the standard thoroughly and can aid in understanding how tokens are constructed and what claims they should contain.
-*   **OpenID Connect specification**: If you’re using OpenID Connect, the specification itself (available at [openid.net](https://openid.net/)) is an authoritative resource for how claims should be formatted and handled.
+- **Microsoft’s Official ASP.NET Core Documentation**: Search for articles on Claims-Based Authorization and Identity Management. The documentation is comprehensive and frequently updated.
+- **"Programming Microsoft ASP.NET Core" by Dino Esposito**: This book provides a deep dive into ASP.NET Core, covering authentication and authorization in detail, with practical guidance on customization.
+- **"OAuth 2 in Action" by Justin Richer and Antonio Sanso**: If you are using OAuth 2.0, this book explains the standard thoroughly and can aid in understanding how tokens are constructed and what claims they should contain.
+- **OpenID Connect specification**: If you’re using OpenID Connect, the specification itself (available at [openid.net](https://openid.net/)) is an authoritative resource for how claims should be formatted and handled.
 
 In conclusion, while ASP.NET might not naturally handle multiple roles, it provides the tools to tailor its authentication and authorization pipeline to meet the demands of more complex scenarios. By using custom claims transformation, creating tailored authorization policies, or dynamically checking roles, you can build robust, secure systems that accommodate the diverse roles of your user base. Be thoughtful about your choices; a well-structured solution can significantly improve the maintainability and scalability of your application.

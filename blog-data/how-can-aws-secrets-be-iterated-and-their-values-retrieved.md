@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-aws-secrets-be-iterated-and-their-values-retrieved"
 ---
 
-Alright, let's delve into this. I've seen my share of projects where properly managing secrets in AWS became a bottleneck, especially when dealing with a large number of them. Iterating through those secrets and fetching their values is a pretty common need, and thankfully, aws offers a few good pathways to do it. It isn't always a straightforward process, and it often involves understanding the nuances of the aws sdk and appropriate permissions.
+, let's delve into this. I've seen my share of projects where properly managing secrets in AWS became a bottleneck, especially when dealing with a large number of them. Iterating through those secrets and fetching their values is a pretty common need, and thankfully, aws offers a few good pathways to do it. It isn't always a straightforward process, and it often involves understanding the nuances of the aws sdk and appropriate permissions.
 
 The core challenge here lies in the fact that secrets manager isn't designed for easy, broad sweeps of every secret. It's geared towards retrieving specific secrets you know exist. Consequently, the methods for iterating require a different approach than simply asking for "all the secrets". Primarily, we use a paginated approach, combined with filtering, if needed, to locate our targets.
 
@@ -86,7 +86,7 @@ def get_secrets_by_tag(tag_key, tag_value):
                     filtered_secrets[secret_name] = secret_value_response.get('SecretString') or secret_value_response.get('SecretBinary')
                 except Exception as e:
                     print(f"Error retrieving secret {secret_name}: {e}")
-            
+
         next_token = response.get('NextToken')
         if not next_token:
             break

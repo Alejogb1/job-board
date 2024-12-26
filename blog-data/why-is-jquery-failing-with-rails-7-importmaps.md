@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-jquery-failing-with-rails-7-importmaps"
 ---
 
-Alright, let’s talk about this. It’s a scenario I've encountered more than a few times, and it highlights a significant shift in how we approach front-end JavaScript in Rails. The short answer is: jQuery’s failure with Rails 7 and importmaps typically stems from a clash of fundamental approaches to module loading and dependency management. Importmaps, introduced in Rails 7, aim for a more modern, browser-centric way of handling JavaScript modules, eschewing the bundlers and complex node_modules structures we've grown accustomed to. jQuery, on the other hand, wasn't built with this paradigm in mind. Let me break it down.
+, let’s talk about this. It’s a scenario I've encountered more than a few times, and it highlights a significant shift in how we approach front-end JavaScript in Rails. The short answer is: jQuery’s failure with Rails 7 and importmaps typically stems from a clash of fundamental approaches to module loading and dependency management. Importmaps, introduced in Rails 7, aim for a more modern, browser-centric way of handling JavaScript modules, eschewing the bundlers and complex node_modules structures we've grown accustomed to. jQuery, on the other hand, wasn't built with this paradigm in mind. Let me break it down.
 
 Importmaps work by defining explicit mappings between module specifiers (like `"jquery"`) and the corresponding URLs where the browser can fetch the actual JavaScript code. This relies on the browser's native module loading mechanism via `<script type="module">`. Crucially, the browser directly executes this module code. jQuery, however, wasn't authored with explicit module exports or a standardized module format in mind until much later versions, generally pre-dating widespread ES Module adoption. Instead, its reliance on a globally exposed `$` or `jQuery` object made it simple to use in older JavaScript environments.
 
@@ -21,16 +21,16 @@ And then, in our main JavaScript file (let's call it `application.js`):
 
 ```javascript
 // app/javascript/application.js
-import $ from 'jquery';
+import $ from "jquery";
 
-$(document).ready(function() {
+$(document).ready(function () {
   console.log("jQuery is loaded!");
 });
-
 ```
+
 This resulted in a "cannot resolve module specifier 'jquery'" error. The browser downloaded jQuery just fine, but because jQuery doesn't explicitly `export` anything, the `import` statement in our JavaScript wasn't finding a module. It expected jQuery to be behaving like a modern module, which it wasn't.
 
-A common misconception is that simply including jQuery before any other code would solve the problem. While this *can* work, relying on a global object to be available everywhere is considered bad practice now. It's implicit, can cause dependency management headaches, and doesn't scale well. I've seen countless teams stumble upon similar issues.
+A common misconception is that simply including jQuery before any other code would solve the problem. While this _can_ work, relying on a global object to be available everywhere is considered bad practice now. It's implicit, can cause dependency management headaches, and doesn't scale well. I've seen countless teams stumble upon similar issues.
 
 So, how do you actually fix this? There are a few strategies, and the best choice depends on your project's complexity and long-term goals. The most straightforward approach involves modifying jQuery to behave as an ES module. This can be accomplished by creating a small wrapper around jQuery. Here’s a practical example using a custom local file. First, we’ll pull a copy of jQuery and save it to our project:
 
@@ -40,9 +40,8 @@ So, how do you actually fix this? There are a few strategies, and the best choic
 
 ```javascript
 // app/javascript/vendor/jquery_shim.js
-import $ from './jquery.min.js';
+import $ from "./jquery.min.js";
 export default $;
-
 ```
 
 Now we’re creating a file that loads the jquery, captures the global `$`, and then exports it as a default export.
@@ -58,9 +57,9 @@ This tells the importmap system to find the module defined in `jquery_shim.js`. 
 
 ```javascript
 // app/javascript/application.js
-import $ from 'jquery';
+import $ from "jquery";
 
-$(document).ready(function() {
+$(document).ready(function () {
   console.log("jQuery is loaded!");
 });
 ```
@@ -78,7 +77,7 @@ pin "lodash", to: "https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js", p
 
 ```javascript
 // app/javascript/application.js
-import _ from 'lodash';
+import _ from "lodash";
 
 console.log(_.isArray([1, 2, 3])); // outputs true
 ```

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-implement-devise-jwt-authentication"
 ---
 
-Alright, let's talk about securing an application with Devise and JSON Web Tokens (JWTs). I've spent a fair amount of time on this specific configuration over the years, and I've seen various pitfalls that can arise, so let me share my perspective. Specifically, implementing Devise with JWT authentication involves shifting away from Devise’s standard session-based approach to a token-based one, and it introduces its own set of considerations. The core idea here is to authenticate users via Devise, then upon successful authentication, issue a JWT that the client will use for subsequent requests.
+, let's talk about securing an application with Devise and JSON Web Tokens (JWTs). I've spent a fair amount of time on this specific configuration over the years, and I've seen various pitfalls that can arise, so let me share my perspective. Specifically, implementing Devise with JWT authentication involves shifting away from Devise’s standard session-based approach to a token-based one, and it introduces its own set of considerations. The core idea here is to authenticate users via Devise, then upon successful authentication, issue a JWT that the client will use for subsequent requests.
 
 The foundational shift from sessions to JWTs requires a different mental model. You're no longer relying on server-side storage of session data; rather, the client stores the token, and the server verifies it. I'll break it down into the steps and provide code examples, focusing on Ruby on Rails since that's where I've primarily used Devise.
 
@@ -45,7 +45,7 @@ Devise.setup do |config|
 end
 ```
 
-Here we define the jwt configuration block. `jwt.secret` is the most important part; it must be kept secret (of course) and should be derived from some secure variable like `secret_key_base`. The `dispatch_requests` specifies routes where we intend to generate tokens and the `revocation_requests` sets up the endpoints where tokens are invalidated.  I’ve found `expiration_time` to be quite important; generally I set a short expiration time, and then implement some mechanism for refreshing, but let's leave that out for now for simplicity. Note the token response body: this specifies the data to be returned to the client upon successful authentication. The lambda will then return the auth_token (which will be the JWT), user ID and email. Lastly, the warden configuration ensures that authentication is handled by `jwt_auth` first and in case of failures, sends back a structured error message.
+Here we define the jwt configuration block. `jwt.secret` is the most important part; it must be kept secret (of course) and should be derived from some secure variable like `secret_key_base`. The `dispatch_requests` specifies routes where we intend to generate tokens and the `revocation_requests` sets up the endpoints where tokens are invalidated. I’ve found `expiration_time` to be quite important; generally I set a short expiration time, and then implement some mechanism for refreshing, but let's leave that out for now for simplicity. Note the token response body: this specifies the data to be returned to the client upon successful authentication. The lambda will then return the auth_token (which will be the JWT), user ID and email. Lastly, the warden configuration ensures that authentication is handled by `jwt_auth` first and in case of failures, sends back a structured error message.
 
 Now, the most important part of this setup, where the user model generates the actual JWT:
 
@@ -98,15 +98,16 @@ Now, let's say, for example, you are implementing an API. Your client applicatio
 
 ```json
 {
-    "auth_token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2OTkxNzAxMDksImp0aSI6IjQ4MGU4YzU5LWFkODUtNGI1Mi05YjQ0LWI2ODUwMjcyNzI0YiJ9.MvO2G40T2iYtF_G0gI5q_m4R0dJ5j2WnU5g0d5L0d",
-    "user_id": 1,
-    "email": "test@example.com"
+  "auth_token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2OTkxNzAxMDksImp0aSI6IjQ4MGU4YzU5LWFkODUtNGI1Mi05YjQ0LWI2ODUwMjcyNzI0YiJ9.MvO2G40T2iYtF_G0gI5q_m4R0dJ5j2WnU5g0d5L0d",
+  "user_id": 1,
+  "email": "test@example.com"
 }
 ```
+
 The client should then store the `auth_token` and send it in the header `Authorization: Bearer {auth_token}` for subsequent requests. On the server side, Devise will automatically intercept the header, extract the token, and then look it up. If it is valid and the token isn’t in the `jwt_denylist` table, the server will allow the request to proceed.
 
 Now, let's talk about considerations. First, expiration times. Short token expiration periods are crucial to mitigate the risk of stolen tokens being used. Consider implementing a refresh token mechanism where the main token has a short expiration time, and a separate, longer-lived refresh token is used to get new authentication tokens. Additionally, store your secret key properly and securely – `Rails.application.credentials.secret_key_base` is usually a solid approach for Rails. You might consider rotation of the secret key periodically, but with care and planning as this would invalidate all existing tokens. Finally, the `JwtDenylist` approach allows for sign-out functionality, but this will grow quickly with more logins and sign-outs. I’ve often considered moving this to a Redis cache or similar for performance, especially in high-traffic situations.
 
-As far as further reading, I would highly recommend “Programming Phoenix” by Chris McCord, Bruce Tate, and José Valim (though its not about Ruby, its excellent in the general topic of JWT and authentication).  For a deeper dive into JWTs themselves, explore the original RFC 7519. And of course, the Devise documentation itself is an essential resource. For deeper understanding of warden, the Rack Middleware stack (which warden uses) can be beneficial. Understanding the underlying mechanism will allow you to reason about the code above much more effectively.
+As far as further reading, I would highly recommend “Programming Phoenix” by Chris McCord, Bruce Tate, and José Valim (though its not about Ruby, its excellent in the general topic of JWT and authentication). For a deeper dive into JWTs themselves, explore the original RFC 7519. And of course, the Devise documentation itself is an essential resource. For deeper understanding of warden, the Rack Middleware stack (which warden uses) can be beneficial. Understanding the underlying mechanism will allow you to reason about the code above much more effectively.
 
 This setup, while appearing quite straightforward, involves several critical components. Pay close attention to the security implications, especially the secret key management and token expiration. Proper implementation of JWT authentication with Devise gives you a robust, scalable, and secure mechanism for securing your web applications. Hope this helped.

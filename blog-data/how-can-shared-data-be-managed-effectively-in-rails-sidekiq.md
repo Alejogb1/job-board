@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-shared-data-be-managed-effectively-in-rails-sidekiq"
 ---
 
-Alright, let's tackle this one. Sidekiq, while incredibly powerful for background processing in Rails, does present some interesting challenges when it comes to managing shared data, especially across multiple worker instances or threads. I've seen a fair share of situations where naively handling shared state within Sidekiq led to data inconsistencies, race conditions, and some pretty head-scratching debugging sessions.
+, let's tackle this one. Sidekiq, while incredibly powerful for background processing in Rails, does present some interesting challenges when it comes to managing shared data, especially across multiple worker instances or threads. I've seen a fair share of situations where naively handling shared state within Sidekiq led to data inconsistencies, race conditions, and some pretty head-scratching debugging sessions.
 
 The crux of the issue lies in understanding how Sidekiq workers operate. Each worker instance, and often multiple threads within a single instance, operates independently. They aren't directly aware of what other workers are doing unless explicitly coordinated. Simply relying on global variables or in-memory data structures for shared information is almost guaranteed to create problems.
 
@@ -86,7 +86,7 @@ end
 
 ```
 
-This snippet leverages the `redis` gem and utilizes its atomic `incrby` operation to increment the counter.  `REDIS.get(key)` returns a string value and thus needs to be converted to integer if it isn't `nil`. This is generally faster and less demanding on the main database when data access is frequent.
+This snippet leverages the `redis` gem and utilizes its atomic `incrby` operation to increment the counter. `REDIS.get(key)` returns a string value and thus needs to be converted to integer if it isn't `nil`. This is generally faster and less demanding on the main database when data access is frequent.
 
 Lastly, for more complex situations involving distributed locking or transactional workflows across multiple services, a message queue with specific transactional support might be required. RabbitMQ, for instance, allows for message acknowledgements and transactional exchanges that, combined with techniques like optimistic locking using a database or Redis, can lead to consistent shared data management across a very wide scale of application, including multiple separate applications.
 

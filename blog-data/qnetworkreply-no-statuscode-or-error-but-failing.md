@@ -4,19 +4,19 @@ date: "2024-12-13"
 id: "qnetworkreply-no-statuscode-or-error-but-failing"
 ---
 
-Okay so you're hitting that classic qnetworkreply black hole right No status code no error just *poof* Your request went into the void I've seen this movie so many times it's practically a documentary at this point Let me walk you through what's likely going on and how I've tackled this gremlin in the past
+you're hitting that classic qnetworkreply black hole right No status code no error just _poof_ Your request went into the void I've seen this movie so many times it's practically a documentary at this point Let me walk you through what's likely going on and how I've tackled this gremlin in the past
 
-First off the fact that you're not getting a status code or an error is actually pretty informative It means the lower-level networking stuff is likely okay The TCP handshake probably completed the connection was established and data was at least partially transmitted before things went haywire It's not a DNS issue or a firewall actively blocking you those usually throw explicit errors
+First off the fact that you're not getting a status code or an error is actually pretty informative It means the lower-level networking stuff is likely The TCP handshake probably completed the connection was established and data was at least partially transmitted before things went haywire It's not a DNS issue or a firewall actively blocking you those usually throw explicit errors
 
 So what's left Lets dive in
 
 **Likely Culprits and How to Hunt Them Down**
 
-1 Server-Side Issues: Okay this is the most frequent and most frustrating one The server you're talking to might be having a mental breakdown It could be crashing in the middle of handling your request It could be throwing an unhandled exception and then just dropping the connection Or even worse it could be taking so long to process it that the QNetworkReply times out without a proper error response
+1 Server-Side Issues: this is the most frequent and most frustrating one The server you're talking to might be having a mental breakdown It could be crashing in the middle of handling your request It could be throwing an unhandled exception and then just dropping the connection Or even worse it could be taking so long to process it that the QNetworkReply times out without a proper error response
 
 In my experience dealing with flaky APIs this is usually the first thing I check I used to work at a place where we had a backend service written in some framework with very little monitoring One day we noticed these phantom failures requests just vanishing into thin air Turned out a memory leak was causing the backend to slowly die It took us like two days to track down because the logs were almost completely useless Moral of the story check server logs like you're searching for buried treasure
 
-2 Incorrect HTTP Headers: Okay sometimes its your fault not the server's Your request might be missing some crucial HTTP headers The server might expect an `Accept` header with a specific format or maybe a content type that you are failing to provide If the server cant figure out what you're sending it might just silently bail out
+2 Incorrect HTTP Headers: metimes its your fault not the server's Your request might be missing some crucial HTTP headers The server might expect an `Accept` header with a specific format or maybe a content type that you are failing to provide If the server cant figure out what you're sending it might just silently bail out
 
 I remember debugging a bizarre API where a missing `User-Agent` header was causing requests to silently fail The API provider had a weird rate-limiting mechanism that relied on that header I mean who does that right? So double-check those headers every single one of them
 
@@ -28,9 +28,10 @@ I once spent a whole afternoon wrestling with an API that expected UTF-8 encoded
 
 **How to Debug This Mess**
 
-Okay lets get to the actual code here's what I do
+lets get to the actual code here's what I do
 
-1 Inspect your headers and request data:  I use a simple function to debug to print the headers and request body using qDebug and also a simple wrapper to log the reply data and error
+1 Inspect your headers and request data: I use a simple function to debug to print the headers and request body using qDebug and also a simple wrapper to log the reply data and error
+
 ```cpp
 #include <QNetworkRequest>
 #include <QDebug>
@@ -57,6 +58,7 @@ void logReply(QNetworkReply* reply){
        }
 }
 ```
+
 Use that before you execute to understand if your request looks right
 
 ```cpp
@@ -98,15 +100,16 @@ QTimer::singleShot(5000, [=](){
     }
 });
 ```
+
 **Additional Tools and Resources**
 
-*   **Wireshark:**  If you're getting desperate Wireshark is the best tool for capturing raw network traffic It allows you to see exactly what's being sent and received at a low level It's like reading the minds of your network packets
-*   **RFC 7230-7235 (HTTP/1.1):** These are the official specifications of the HTTP protocol Understanding the fundamentals can be incredibly helpful when you're dealing with network problems (yes its old but its gold)
-*   **"TCP/IP Guide" by Charles M Kozierok:** This is a great deep dive into networking in general it has every concept explained in very simple terms
-*   **Your Server-Side Logging System:** Again if you have access use it You are almost always guaranteed to find valuable info from there
+- **Wireshark:** If you're getting desperate Wireshark is the best tool for capturing raw network traffic It allows you to see exactly what's being sent and received at a low level It's like reading the minds of your network packets
+- **RFC 7230-7235 (HTTP/1.1):** These are the official specifications of the HTTP protocol Understanding the fundamentals can be incredibly helpful when you're dealing with network problems (yes its old but its gold)
+- **"TCP/IP Guide" by Charles M Kozierok:** This is a great deep dive into networking in general it has every concept explained in very simple terms
+- **Your Server-Side Logging System:** Again if you have access use it You are almost always guaranteed to find valuable info from there
 
 **A Funny Thing Happened Once**
 
 Once I was battling a similar issue for three days straight Turns out a colleague had deployed a version of the backend that was just returning empty responses for all requests This was not documented anywhere and he just straight up forgot to tell anyone about it We ended up creating a Slack channel dedicated just for these kinds of "unexpected updates" So that's how I lost three days and got a slack channel haha
 
-Okay hope this was helpful. It's frustrating to hit silent failures so I do understand your pain But systematically going through all the potential issues and checking the logs and the request will hopefully help you get to the root of the problem If you have any further questions let me know and please include the server response if you get any error details on that
+hope this was helpful. It's frustrating to hit silent failures so I do understand your pain But systematically going through all the potential issues and checking the logs and the request will hopefully help you get to the root of the problem If you have any further questions let me know and please include the server response if you get any error details on that

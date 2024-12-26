@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-create-a-model-in-a-new-rails-application"
 ---
 
-Alright, let's unpack this. Starting from scratch with a fresh Rails application and immediately running into issues creating a model isn't unheard of, and frankly, it often boils down to a handful of common culprits. I've seen this exact scenario play out more times than I care to count, spanning various Rails versions and project setups. Let me walk you through the usual suspects and how to troubleshoot them based on my experiences. It’s almost never magic – it’s typically a configuration hiccup, a dependency mismatch, or a simple oversight.
+, let's unpack this. Starting from scratch with a fresh Rails application and immediately running into issues creating a model isn't unheard of, and frankly, it often boils down to a handful of common culprits. I've seen this exact scenario play out more times than I care to count, spanning various Rails versions and project setups. Let me walk you through the usual suspects and how to troubleshoot them based on my experiences. It’s almost never magic – it’s typically a configuration hiccup, a dependency mismatch, or a simple oversight.
 
 First off, let's clarify what “can't create a model” actually means. Are you getting errors when running `rails generate model`, or is it that the model file is created, but you cannot interact with it via your application? These are distinctly different issues that require different approaches.
 
@@ -37,12 +37,11 @@ test:
 production:
   <<: *default
   database: my_production_db
-
 ```
 
 If the gem 'pg' is not included in your `Gemfile` and installed via `bundle install`, executing `rails generate model User` would likely trigger an error. This is a straightforward case, but it highlights how a missing dependency breaks the whole process.
 
-Now, let's say the generation process *succeeds*, but you can't interact with the model via your application. This usually points to issues with the Rails environment loading properly, often stemming from problems within your application’s initialization process or issues with autoload paths. For example, a misconfigured autoload path might mean Rails doesn't know where to find your model class. This could be a result of manual modifications or errors during refactoring.
+Now, let's say the generation process _succeeds_, but you can't interact with the model via your application. This usually points to issues with the Rails environment loading properly, often stemming from problems within your application’s initialization process or issues with autoload paths. For example, a misconfigured autoload path might mean Rails doesn't know where to find your model class. This could be a result of manual modifications or errors during refactoring.
 
 I once had a complex system where we were using custom directory structures for organizing models. We had forgotten to update Rails' autoload paths accordingly. Therefore, while the model files were present, Rails simply didn't know where to look for them. The application would crash with class-not-found errors when we attempted to use these models within controllers or other parts of the app.
 
@@ -114,4 +113,4 @@ So, to sum it up, the inability to create or use a model in a new Rails app typi
 
 In the end, thorough debugging involves careful examination of these components and not just blindly executing commands.
 
-As for further reading, I’d suggest going through the official Ruby on Rails guides on ActiveRecord. It is a goldmine of information that can clarify any doubts you may have and serves as an essential reference. Also, for database related issues, *Database Internals* by Alex Petrov is invaluable for understanding how the inner mechanisms of databases work, which can aid in debugging problems at the database level. Reading through these will provide you with the conceptual understanding needed to approach issues with a solid foundation.
+As for further reading, I’d suggest going through the official Ruby on Rails guides on ActiveRecord. It is a goldmine of information that can clarify any doubts you may have and serves as an essential reference. Also, for database related issues, _Database Internals_ by Alex Petrov is invaluable for understanding how the inner mechanisms of databases work, which can aid in debugging problems at the database level. Reading through these will provide you with the conceptual understanding needed to approach issues with a solid foundation.

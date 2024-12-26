@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-does-my-model-show-647-epochs-with-a-23000-dataset-2300-validation-a-32-batch-size-and-5-epochs"
 ---
 
-Alright, let's break down this somewhat perplexing epoch count discrepancy. It seems you're observing a situation where your model is reporting 647 epochs, despite you explicitly specifying only 5 epochs for training. That's not unusual when dealing with complex deep learning workflows, and I've definitely seen similar situations myself. I remember back in my early days of training convolutional nets for image recognition – specifically, one model for classifying microscopic images – I got tripped up by this exact issue, and it took me a while to understand what was truly happening behind the scenes.
+, let's break down this somewhat perplexing epoch count discrepancy. It seems you're observing a situation where your model is reporting 647 epochs, despite you explicitly specifying only 5 epochs for training. That's not unusual when dealing with complex deep learning workflows, and I've definitely seen similar situations myself. I remember back in my early days of training convolutional nets for image recognition – specifically, one model for classifying microscopic images – I got tripped up by this exact issue, and it took me a while to understand what was truly happening behind the scenes.
 
-The root of the problem, and what you are likely experiencing, lies in the subtle differences between how we define epochs and how the training loop actually progresses through your data, especially when using specific tools like data loaders or similar abstractions. The number of 'epochs' you specify is often a high-level instruction, whereas the internal mechanism might iterate based on 'steps' or 'batches'. An *epoch*, in theory, represents one full pass through the entire training dataset, while a *step* or a *batch* is one iteration where a subset of the data is processed for gradient calculation and model update.
+The root of the problem, and what you are likely experiencing, lies in the subtle differences between how we define epochs and how the training loop actually progresses through your data, especially when using specific tools like data loaders or similar abstractions. The number of 'epochs' you specify is often a high-level instruction, whereas the internal mechanism might iterate based on 'steps' or 'batches'. An _epoch_, in theory, represents one full pass through the entire training dataset, while a _step_ or a _batch_ is one iteration where a subset of the data is processed for gradient calculation and model update.
 
-Here's the breakdown. With a dataset of 23,000 samples and a batch size of 32, one 'epoch' will be completed after the entire dataset is fed through the network in batches. More precisely, it requires (23000 / 32) = 718.75 steps to complete a single epoch. Since steps must be whole numbers, this typically gets rounded up to 719 steps per epoch. This number signifies the *number of iterations per epoch*. Similarly, your validation set with 2300 samples and batch size of 32 requires (2300/32) = 71.875 which is generally rounded up to 72 steps for full validation.
+Here's the breakdown. With a dataset of 23,000 samples and a batch size of 32, one 'epoch' will be completed after the entire dataset is fed through the network in batches. More precisely, it requires (23000 / 32) = 718.75 steps to complete a single epoch. Since steps must be whole numbers, this typically gets rounded up to 719 steps per epoch. This number signifies the _number of iterations per epoch_. Similarly, your validation set with 2300 samples and batch size of 32 requires (2300/32) = 71.875 which is generally rounded up to 72 steps for full validation.
 
-Now, if you intend for your model to train for 5 epochs, the total steps performed should be approximately 719 * 5 = 3595, give or take some minor rounding variations. What you're seeing (647 epochs), however, suggests your training code likely isn’t interpreting your 'epoch' value at the high level you expect. Instead, it's probably configured to track training iterations at the batch level, where the loop is likely counting up each iteration and confusing 'iterations' with 'epochs' at this level. This is quite common when working with custom or improperly configured training loops or when certain libraries implicitly manage iteration counts. Let me illustrate with examples using Python.
+Now, if you intend for your model to train for 5 epochs, the total steps performed should be approximately 719 \* 5 = 3595, give or take some minor rounding variations. What you're seeing (647 epochs), however, suggests your training code likely isn’t interpreting your 'epoch' value at the high level you expect. Instead, it's probably configured to track training iterations at the batch level, where the loop is likely counting up each iteration and confusing 'iterations' with 'epochs' at this level. This is quite common when working with custom or improperly configured training loops or when certain libraries implicitly manage iteration counts. Let me illustrate with examples using Python.
 
 **Example 1: Incorrect Tracking (Potential Source of Issue)**
 
@@ -85,6 +85,7 @@ for epoch in range(epochs):
 
 
 ```
+
 Here, the 'epoch' is now correctly defined. The outer loop represents a full traversal of the training data, and the inner loop iterates over batches within that epoch. We've now correctly separated the concept of batch steps and epochs, ensuring proper training.
 
 **Example 3: Using Callbacks for Tracking**
@@ -131,6 +132,7 @@ for epoch in range(epochs):
 writer.close() #Close the Tensorboard writer, can be omitted
 
 ```
+
 Here we can see an example of how one might calculate average losses per epoch and log them using an external logger like Tensorboard. Additionally, we add an example of how to implement a learning rate scheduler to reduce the learning rate at a set interval, allowing us to control convergence.
 
 **Recommendations for Resources:**

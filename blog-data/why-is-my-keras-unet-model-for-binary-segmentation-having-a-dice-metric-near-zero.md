@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-keras-unet-model-for-binary-segmentation-having-a-dice-metric-near-zero"
 ---
 
-Okay, let’s address this dice score near zero with your keras unet. I've seen this pattern more often than i’d like, and it usually boils down to a few core issues, rather than some deep, mysterious bug. It's frustrating, i understand, but let's break down the potential causes methodically. It’s rarely the model architecture itself, unless you have some catastrophic implementation error, which is unlikely with keras. Let’s delve into why your dice score is tanking and then i'll share some code snippets from past debugging sessions.
+, let’s address this dice score near zero with your keras unet. I've seen this pattern more often than i’d like, and it usually boils down to a few core issues, rather than some deep, mysterious bug. It's frustrating, i understand, but let's break down the potential causes methodically. It’s rarely the model architecture itself, unless you have some catastrophic implementation error, which is unlikely with keras. Let’s delve into why your dice score is tanking and then i'll share some code snippets from past debugging sessions.
 
 First, it's critical to understand what a dice score near zero implies: it basically means your model is predicting almost no overlap between the predicted segmentation mask and the ground truth. This suggests a major disconnect. The first thing to verify, before even looking at code, is the data itself. Have you visually confirmed that both input images and their corresponding masks are correctly aligned? This may sound basic, but it's a surprisingly common culprit. I’ve spent hours on “bugs” that turned out to be misaligned datasets. Make absolutely certain that the pixel-level correspondence between your images and masks is perfect. Even a small shift will cause massive performance degradation.
 
@@ -20,7 +20,7 @@ The fix here isn't to try and tweak the optimizer; instead, consider using a los
 
 Data preprocessing steps, while seemingly harmless, can introduce errors if not done correctly. Check these particularly carefully. Are you normalizing or scaling both your images and masks consistently? I have encountered cases where one was normalized and not the other, leading to a model learning meaningless features. Consider standard scaling (mean 0, std 1) for images and ensure your masks are either binary (0 or 1) or scaled within a relevant range, depending on your chosen loss. Ensure also that the values are within the expected data type. For example, if you convert to int8 format by clipping to [0,255], then dividing by 255 to scale to [0,1], the values might be slightly different than what your model is expecting.
 
-Also, any data augmentations such as rotations, shears, or flips must be consistently and synchronously applied to *both* the input images and their corresponding masks. An image rotated without rotating the mask will throw the network into a confusing state. I have personally spent a long time tracking a bug where the augmentation logic was applied inconsistently between images and masks.
+Also, any data augmentations such as rotations, shears, or flips must be consistently and synchronously applied to _both_ the input images and their corresponding masks. An image rotated without rotating the mask will throw the network into a confusing state. I have personally spent a long time tracking a bug where the augmentation logic was applied inconsistently between images and masks.
 
 **3. Model Initialization and Training Settings:**
 
@@ -49,7 +49,7 @@ def dice_loss(y_true, y_pred):
 model.compile(optimizer='adam', loss=dice_loss, metrics=[dice_coef])
 ```
 
-*Explanation:* Here, we're defining a `dice_coef` and `dice_loss` function, using tensorflow's backend functionalities. This directly computes the dice coefficient and loss, which works by maximizing the overlap between prediction and truth, especially helpful for imbalanced datasets. The `smooth` parameter avoids division by zero and makes the loss more stable.
+_Explanation:_ Here, we're defining a `dice_coef` and `dice_loss` function, using tensorflow's backend functionalities. This directly computes the dice coefficient and loss, which works by maximizing the overlap between prediction and truth, especially helpful for imbalanced datasets. The `smooth` parameter avoids division by zero and makes the loss more stable.
 
 **Snippet 2: Data Normalization and Augmentation (Tensorflow/Keras Example)**
 
@@ -111,7 +111,8 @@ dataset = dataset.map(load_and_preprocess)
 dataset = dataset.batch(16).prefetch(tf.data.AUTOTUNE)
 
 ```
-*Explanation:* This snippet demonstrates the preprocessing and data augmentation pipeline. We normalize images to have zero mean and unit variance, and we apply augmentations such as rotation and zoom. Importantly, we apply these operations *identically* to both the image and the mask. It also shows how this is done with the tf.data.Dataset. The `preprocess` function is the normalization, and the `augment` function contains examples of random transforms, which should be adapted to your specific task. The `load_and_preprocess` function reads the files and applies the transforms to both files synchronously.
+
+_Explanation:_ This snippet demonstrates the preprocessing and data augmentation pipeline. We normalize images to have zero mean and unit variance, and we apply augmentations such as rotation and zoom. Importantly, we apply these operations _identically_ to both the image and the mask. It also shows how this is done with the tf.data.Dataset. The `preprocess` function is the normalization, and the `augment` function contains examples of random transforms, which should be adapted to your specific task. The `load_and_preprocess` function reads the files and applies the transforms to both files synchronously.
 
 **Snippet 3: Checking data format/type**
 
@@ -131,13 +132,14 @@ mask = tf.image.convert_image_dtype(mask, tf.float32)
 print(f"Image range after conversion: {tf.reduce_min(image)}, {tf.reduce_max(image)}")
 print(f"Mask range after conversion: {tf.reduce_min(mask)}, {tf.reduce_max(mask)}")
 ```
-*Explanation:* This final snippet demonstrates a quick and easy way to check your data. It can be easy to miss the specific format/data type of the image or mask, and so this simple snippet can help you catch issues quickly.
+
+_Explanation:_ This final snippet demonstrates a quick and easy way to check your data. It can be easy to miss the specific format/data type of the image or mask, and so this simple snippet can help you catch issues quickly.
 
 For further study, I highly recommend:
 
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book provides a comprehensive understanding of deep learning foundations, including loss functions and network architectures. It's a must-read for serious practitioners.
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book offers a practical and hands-on approach to building and training deep learning models using keras and tensorflow. It's a great resource for code examples and best practices.
-*   **The original UNet paper by Ronneberger et al. ("U-Net: Convolutional Networks for Biomedical Image Segmentation")** which provides a detailed overview of the network architecture and provides useful insights.
-*   **"Understanding the Dice Loss for Medical Image Segmentation" by Sudre et al.:** This provides a great explanation for the dice loss metric and function.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book provides a comprehensive understanding of deep learning foundations, including loss functions and network architectures. It's a must-read for serious practitioners.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book offers a practical and hands-on approach to building and training deep learning models using keras and tensorflow. It's a great resource for code examples and best practices.
+- **The original UNet paper by Ronneberger et al. ("U-Net: Convolutional Networks for Biomedical Image Segmentation")** which provides a detailed overview of the network architecture and provides useful insights.
+- **"Understanding the Dice Loss for Medical Image Segmentation" by Sudre et al.:** This provides a great explanation for the dice loss metric and function.
 
 These resources provide the theoretical and practical background needed to understand why you’re getting near-zero dice scores, and how to resolve these issues. Remember that debugging deep learning problems is often iterative. Start with the fundamentals – data, loss function, preprocessing – and systematically work your way toward more complex causes. Good luck.

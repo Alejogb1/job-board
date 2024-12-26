@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-reference-an-external-file-in-a-shell-script-using-bashoperator"
 ---
 
-Alright, let's tackle this. Referencing external files within a shell script executed by Airflow's BashOperator is something I've often found myself doing, particularly when dealing with configuration management or complex workflows. It's not always straightforward, especially if you’re transitioning from simpler scripts or if you're not particularly familiar with how Airflow manages task execution contexts.
+, let's tackle this. Referencing external files within a shell script executed by Airflow's BashOperator is something I've often found myself doing, particularly when dealing with configuration management or complex workflows. It's not always straightforward, especially if you’re transitioning from simpler scripts or if you're not particularly familiar with how Airflow manages task execution contexts.
 
 The core challenge here lies in understanding the environment in which your shell script is being executed. BashOperator executes scripts within the context of the Airflow worker, which might be quite different from your local machine or development environment. Consequently, relying on relative paths or assumptions about the current working directory will almost always lead to frustration.
 
@@ -34,7 +34,7 @@ with DAG(
 
 Here, `/path/to/your/config.ini` and `/path/to/your/processing_script.py` are the full paths to your external file and the script itself. This eliminates any ambiguity about location and ensures that the BashOperator will find the files. This approach is great for stability, but it introduces an inflexibility. Every time you move the script, you will also need to update this path within the DAG definition.
 
-A second solution, particularly useful when you want to keep your DAG definitions somewhat independent from the server path configuration, involves storing the external file in a location accessible to both your webserver and the workers, such as the `plugins` or a custom directory. In your DAG, you can use a relative path *from the location you agreed on*. For example, consider a project where all configurations are inside a `configurations` directory accessible to both the scheduler and the worker. Then you would have a DAG like this:
+A second solution, particularly useful when you want to keep your DAG definitions somewhat independent from the server path configuration, involves storing the external file in a location accessible to both your webserver and the workers, such as the `plugins` or a custom directory. In your DAG, you can use a relative path _from the location you agreed on_. For example, consider a project where all configurations are inside a `configurations` directory accessible to both the scheduler and the worker. Then you would have a DAG like this:
 
 ```python
 from airflow.models import DAG

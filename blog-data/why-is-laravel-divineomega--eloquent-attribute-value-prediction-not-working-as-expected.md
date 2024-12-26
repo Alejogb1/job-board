@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "why-is-laravel-divineomega--eloquent-attribute-value-prediction-not-working-as-expected"
 ---
 
-alright, let's talk about this eloquent-attribute-value-prediction issue in laravel. i've been there, more times than i'd care to count. it's one of those things that seems straightforward but can quickly devolve into a head-scratcher. i've personally debugged similar scenarios for what felt like an eternity. it usually boils down to a few common pitfalls, and i'll walk you through those with some code examples.
+, let's talk about this eloquent-attribute-value-prediction issue in laravel. i've been there, more times than i'd care to count. it's one of those things that seems straightforward but can quickly devolve into a head-scratcher. i've personally debugged similar scenarios for what felt like an eternity. it usually boils down to a few common pitfalls, and i'll walk you through those with some code examples.
 
-first off, the core of what `eloquent-attribute-value-prediction` *should* do is allow you to generate or predefine attribute values before they are stored in your database. this is typically used for computed values, hashes, or anything that needs a little processing before insertion. think of it as a pre-save hook specifically for attribute values. when it works, it is beautiful, but when it doesn't, well, that is when i spend half the night in the dark room lit by the glow of my monitor.
+first off, the core of what `eloquent-attribute-value-prediction` _should_ do is allow you to generate or predefine attribute values before they are stored in your database. this is typically used for computed values, hashes, or anything that needs a little processing before insertion. think of it as a pre-save hook specifically for attribute values. when it works, it is beautiful, but when it doesn't, well, that is when i spend half the night in the dark room lit by the glow of my monitor.
 
 the most common reason it fails is an incorrect setup or misunderstanding of how the package is intended to work. in my early days, i thought i could just sprinkle the trait on my model and it would magically handle everything. i learned that hard way this is far from reality.
 
@@ -134,6 +134,7 @@ class Order extends Model
     }
 }
 ```
+
 in this example, we have a `createWithTotal` static method that creates the model and calculates the total amount. yes, it is more manual work, but it is better to be predictable. as a colleague of mine once said, "debugging is like an archeological dig, except you're looking for bugs instead of artifacts". (i don't know if i find it funny, but i tried).
 
 another important aspect to keep in mind is the order in which things happen, with eloquent model events, things like the `creating` and `updating` events can also cause problems. the `eloquent-attribute-value-prediction` operates before these events are fired, so if you are trying to set the values using events as well, you will most probably have conflicting results.

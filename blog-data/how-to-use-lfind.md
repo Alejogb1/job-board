@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-use-lfind"
 ---
 
-Okay so you wanna know about lfind right alright I’ve been there believe me lfind can be a bit of a pain if you're not careful
+you wanna know about lfind right I’ve been there believe me lfind can be a bit of a pain if you're not careful
 
 I remember way back when I was still a junior dev fresh out of university I had this huge project dealing with tons of raw data It was before everyone was obsessed with JSON and we were using these weird custom binary formats and I had to implement some fast search algorithms well not fast like super duper fast but fast enough that it wouldn’t take forever to find some data so the issue came down to basically looking through a massive array of stuff not knowing the actual type or size in advance because that was the genius idea of my older colleague oh man I ended up having to scour through some old C documentation and even some dusty textbooks to figure out how to effectively use lfind that’s when I really started understanding pointer arithmetic too a rite of passage for us low level guys
 
@@ -17,13 +17,13 @@ void *lfind(const void *key, const void *base, size_t *nelp, size_t width,
             int (*compar)(const void *, const void *));
 ```
 
-Alright let’s break that down:
+let’s break that down:
 
-*   `const void *key` This is a pointer to the value you’re searching for
-*   `const void *base` This is a pointer to the base of the array you’re searching in
-*   `size_t *nelp` This is a pointer to a size_t variable which represents the number of elements in your array the trick is that if the element is not found the function will return null and increase the value pointed by `nelp` by 1 at the end this means that after the execution of this function the number of elements in your data structure will have increased because the element was added as a last element
-*   `size_t width` This is the size in bytes of each element in the array
-*   `int (*compar)(const void *, const void *)` This is a function pointer to a comparison function This function takes two pointers as arguments and should return an integer less than zero if the first element is less than the second zero if they are equal and greater than zero if the first element is greater than the second
+- `const void *key` This is a pointer to the value you’re searching for
+- `const void *base` This is a pointer to the base of the array you’re searching in
+- `size_t *nelp` This is a pointer to a size_t variable which represents the number of elements in your array the trick is that if the element is not found the function will return null and increase the value pointed by `nelp` by 1 at the end this means that after the execution of this function the number of elements in your data structure will have increased because the element was added as a last element
+- `size_t width` This is the size in bytes of each element in the array
+- `int (*compar)(const void *, const void *)` This is a function pointer to a comparison function This function takes two pointers as arguments and should return an integer less than zero if the first element is less than the second zero if they are equal and greater than zero if the first element is greater than the second
 
 It is very important to write this comparison function correctly this is where most of the mistakes happen
 
@@ -51,7 +51,7 @@ int main() {
     if (found != NULL) {
         printf("Found the element: %d\n", *found);
     } else {
-       
+
         printf("Element not found adding it to the array\n");
          numbers[num_elements++] = key;
         found = &numbers[num_elements - 1];
@@ -116,7 +116,7 @@ int main() {
     for(int i =0; i< num_users; i++) {
         printf("ID %d Name: %s \n", users[i].id, users[i].name);
     }
-   
+
 
     return 0;
 }

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-keras-layers-be-reused-to-process-a-sequence-of-input-vectors-similar-to-recurrent-models"
 ---
 
-Okay, let’s tackle this. I’ve been down this road more than a few times, particularly when dealing with structured data where recurrent neural networks felt a bit too heavy-handed for what I was trying to achieve. The essence of the question is: can we effectively apply Keras layers designed for single inputs to process sequences, like a recurrent model does, but without the inherent complexity of recurrent units? The answer is a resounding yes, and it’s a technique that proves invaluable in a variety of situations.
+, let’s tackle this. I’ve been down this road more than a few times, particularly when dealing with structured data where recurrent neural networks felt a bit too heavy-handed for what I was trying to achieve. The essence of the question is: can we effectively apply Keras layers designed for single inputs to process sequences, like a recurrent model does, but without the inherent complexity of recurrent units? The answer is a resounding yes, and it’s a technique that proves invaluable in a variety of situations.
 
 The trick is to leverage Keras' `TimeDistributed` layer or simply using python loops in combination with reshaping. At its core, this allows us to apply the same layer to each element in a sequence. Let's first consider `TimeDistributed`. The premise is that rather than treating the input sequence as a single entity, we process each time step individually through the same layer instance. Think of it as applying the same transformation repeatedly, sequentially, to each part of the input. This is conceptually similar to how a recurrent layer processes data but without the internal statefulness that defines RNNs, LSTMs, or GRUs. It's worth noting that this approach presumes the input data is structured such that each element within the sequence is of uniform dimension and suitable for the layer you're about to reuse.
 
@@ -37,7 +37,7 @@ model.summary()
 
 In the above example, `layers.Dense(units=16, activation='relu')` is our layer to be reused. The `TimeDistributed` layer takes `dense_layer` and applies it to each of the 10 time steps individually. The output dimension will then be of the form `(None, 10, 16)` where the batch size is still unspecified. Following this, we used `GlobalAveragePooling1D()` to compress the time steps and obtain a single vector which can be used in our classification layer. The critical piece here is the preservation of the time dimension, which `TimeDistributed` handles elegantly. This is particularly useful for feature extraction where you want to compute representations of the input at each time step.
 
-However, it isn’t *always* the right choice. `TimeDistributed` has certain limitations, primarily that it requires the layer it wraps to handle inputs with the same shape at every time step. This might not be the case. For example, consider scenarios where your input structure varies within the sequence. Then we can process it using traditional Python loops. Let me showcase an example involving variable length sequences:
+However, it isn’t _always_ the right choice. `TimeDistributed` has certain limitations, primarily that it requires the layer it wraps to handle inputs with the same shape at every time step. This might not be the case. For example, consider scenarios where your input structure varies within the sequence. Then we can process it using traditional Python loops. Let me showcase an example involving variable length sequences:
 
 ```python
 import tensorflow as tf
@@ -72,7 +72,7 @@ model = keras.Model(inputs=inputs, outputs=outputs)
 model.summary()
 ```
 
-In this modified example, we're using a function `process_sequence` to apply the `dense_layer` to each time step and we are using a `Lambda` layer to apply the function as a layer in Keras.  Here, our input is a ragged tensor, meaning our sequences can have different lengths. The shape `(None, 5)` in the input signature means we expect a sequence with any number of timesteps, where each timestep has 5 features. The `process_sequence` will iterate through each timestep of each sequence, apply the dense layer, collect, and finally stack the processed timesteps into a sequence of shape `(batch, variable_time_steps, 10)`.
+In this modified example, we're using a function `process_sequence` to apply the `dense_layer` to each time step and we are using a `Lambda` layer to apply the function as a layer in Keras. Here, our input is a ragged tensor, meaning our sequences can have different lengths. The shape `(None, 5)` in the input signature means we expect a sequence with any number of timesteps, where each timestep has 5 features. The `process_sequence` will iterate through each timestep of each sequence, apply the dense layer, collect, and finally stack the processed timesteps into a sequence of shape `(batch, variable_time_steps, 10)`.
 
 Finally, and this method is typically my go-to when the input has consistent shape and `TimeDistributed` feels too cumbersome, one can also just use reshape operations in Keras itself. Here is an example where we process each feature across a sequence independently:
 
@@ -106,7 +106,7 @@ model = keras.Model(inputs=inputs, outputs=outputs)
 model.summary()
 ```
 
-In this example, our input shape is `(10, 3)` representing 10 timesteps of 3 features. We wish to apply `conv_1d` across each feature channel of shape 10.  Using reshape operations, we reshape the input to `(3, 10)` effectively swapping the sequence and feature dimensions. We can then apply `conv_1d`, treating the sequence as a time dimension. Finally we can reshape back and continue our forward pass. This is an extremely effective technique when dealing with data that needs to be processed across a specific dimension.
+In this example, our input shape is `(10, 3)` representing 10 timesteps of 3 features. We wish to apply `conv_1d` across each feature channel of shape 10. Using reshape operations, we reshape the input to `(3, 10)` effectively swapping the sequence and feature dimensions. We can then apply `conv_1d`, treating the sequence as a time dimension. Finally we can reshape back and continue our forward pass. This is an extremely effective technique when dealing with data that needs to be processed across a specific dimension.
 
 It is important to emphasize that the choice between these methods depends heavily on the characteristics of your data and the task you are trying to solve. `TimeDistributed` is fantastic for uniformly shaped sequences, Python loops are necessary for variable length sequences, and simple reshaping can solve various problems.
 

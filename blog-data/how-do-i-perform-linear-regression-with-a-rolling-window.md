@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-perform-linear-regression-with-a-rolling-window"
 ---
 
-Okay, let's tackle this. I've actually had to implement rolling window linear regression more times than I care to remember, usually in situations involving time-series data where the underlying relationships shift over time. There isn’t one magic bullet, but understanding the core concepts and variations is key to getting it working reliably.
+, let's tackle this. I've actually had to implement rolling window linear regression more times than I care to remember, usually in situations involving time-series data where the underlying relationships shift over time. There isn’t one magic bullet, but understanding the core concepts and variations is key to getting it working reliably.
 
 Essentially, what we're aiming for is to apply linear regression repeatedly, but each time on a subset of the data defined by a sliding or rolling window. This allows us to capture localized trends rather than assuming a single, static relationship across the entire dataset. A standard linear regression assumes a constant relationship, but a time-series could have different relationships at different times.
 
@@ -196,8 +196,8 @@ else:
   print("Invalid input provided.")
 ```
 
-This third example utilizes the Pandas library and explicitly uses time stamps.  We're now using a `pd.Timedelta` for window size definition, which gives us more flexibility compared to a fixed window size based on index. This is vital when dealing with irregularly sampled data.
+This third example utilizes the Pandas library and explicitly uses time stamps. We're now using a `pd.Timedelta` for window size definition, which gives us more flexibility compared to a fixed window size based on index. This is vital when dealing with irregularly sampled data.
 
-For a deep dive into these topics, I'd recommend exploring these resources: *“Time Series Analysis”* by James D. Hamilton, a comprehensive reference that delves into the theoretical underpinnings of time series. For a practical approach using Python, “*Python for Data Analysis*” by Wes McKinney, the creator of Pandas, is also highly valuable. And finally, for regression specifically, *“The Elements of Statistical Learning*” by Hastie, Tibshirani, and Friedman covers the mathematical and practical components of regression extensively.
+For a deep dive into these topics, I'd recommend exploring these resources: _“Time Series Analysis”_ by James D. Hamilton, a comprehensive reference that delves into the theoretical underpinnings of time series. For a practical approach using Python, “_Python for Data Analysis_” by Wes McKinney, the creator of Pandas, is also highly valuable. And finally, for regression specifically, _“The Elements of Statistical Learning_” by Hastie, Tibshirani, and Friedman covers the mathematical and practical components of regression extensively.
 
 Remember to always validate results with appropriate metrics specific to your problem domain, and thoroughly test your implementations with realistic datasets, rather than synthetic datasets. These implementations I showed you are just starting points. You'll likely need to adjust these approaches to fit your own unique requirements.

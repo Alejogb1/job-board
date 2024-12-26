@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-run-az-acr-check-health-on-macos"
 ---
 
-Okay, let's tackle this. You're running into an issue I've seen a few times now, specifically with the `az acr check-health` command on macOS. It's not immediately obvious why it fails sometimes, especially if you're used to things working smoothly on other platforms. The core of the problem often boils down to how the Azure CLI interacts with the local environment on macOS, particularly regarding its reliance on certain command-line utilities and network configurations.
+, let's tackle this. You're running into an issue I've seen a few times now, specifically with the `az acr check-health` command on macOS. It's not immediately obvious why it fails sometimes, especially if you're used to things working smoothly on other platforms. The core of the problem often boils down to how the Azure CLI interacts with the local environment on macOS, particularly regarding its reliance on certain command-line utilities and network configurations.
 
 From my experience, I recall working on a CI/CD pipeline a couple of years back. We were migrating from Jenkins to Azure DevOps, and, of course, we leveraged Azure Container Registry (ACR) for our Docker images. When I started replicating the health checks on my Macbook (local development), I encountered the same roadblock you’re facing now. I spent a day or so debugging, and here’s what I found.
 
@@ -15,9 +15,9 @@ One of the primary reasons for failure is a discrepancy between the Docker CLI�
 Here's a basic breakdown of the problem:
 
 1.  **Docker Daemon Issues:** The `az acr check-health` command depends on an accessible and operational Docker daemon. If your Docker Desktop is not running, if it’s in a crashed state, or if its socket is not properly exposed, the check will fail.
-2. **Network Configuration:** The command also checks network connectivity to your ACR. Any DNS resolution issues, firewalls blocking access, or other network problems can also trigger failures, though usually these manifest differently than the common 'docker' communication issues.
-3. **Incorrect Permissions:** Occasionally, issues related to the permissions of the socket file or the docker configuration may prevent the az cli from correctly communicating. This is rarer, but something to keep an eye on.
-4. **CLI Version Issues:** Sometimes, a stale version of the Azure CLI or specific extensions might introduce bugs that affect the check. Ensuring you have the latest version of the `az` cli and the `acr` extension helps here.
+2.  **Network Configuration:** The command also checks network connectivity to your ACR. Any DNS resolution issues, firewalls blocking access, or other network problems can also trigger failures, though usually these manifest differently than the common 'docker' communication issues.
+3.  **Incorrect Permissions:** Occasionally, issues related to the permissions of the socket file or the docker configuration may prevent the az cli from correctly communicating. This is rarer, but something to keep an eye on.
+4.  **CLI Version Issues:** Sometimes, a stale version of the Azure CLI or specific extensions might introduce bugs that affect the check. Ensuring you have the latest version of the `az` cli and the `acr` extension helps here.
 
 Now let’s get to some concrete examples and solutions, drawing from past scenarios:
 
@@ -40,9 +40,10 @@ else:
   print("Start your Docker environment and retry your check-health command.")
 ```
 
-*   **Explanation:** This example isn't runnable code for `az acr check-health`, but it demonstrates the problem. If your Docker environment isn't running, the `az` command will likely give you an error about being unable to connect to the docker daemon. This is the first step, ensure your docker environment is up and responsive.
+- **Explanation:** This example isn't runnable code for `az acr check-health`, but it demonstrates the problem. If your Docker environment isn't running, the `az` command will likely give you an error about being unable to connect to the docker daemon. This is the first step, ensure your docker environment is up and responsive.
 
 **Solution:**
+
 1.  Ensure Docker Desktop is running and is fully initialized. Check for any errors reported by Docker Desktop.
 2.  Attempt running `docker ps` in a separate terminal. If it fails, the docker daemon itself is the problem, not the `az` cli.
 
@@ -71,12 +72,9 @@ else:
     print("If you use an alternative docker socket location, ensure the environment variable DOCKER_HOST is set accordingly.")
 ```
 
-*   **Explanation:** This snippet attempts to list the contents and permissions of the default docker socket. If the socket is not present, then this is likely the root of the issue. If an alternate socket location is configured, the `DOCKER_HOST` environment variable might need to be set.
-*   **Solution:**
-    1. Examine the output of this python snippet to determine if the socket exists. If not, you may need to re-initialize the docker environment.
-    2. If you have a custom docker configuration and an alternate socket location, ensure the `DOCKER_HOST` environment variable is set correctly within your terminal session.
-    3. For instance: `export DOCKER_HOST=unix:///custom/path/docker.sock`.
-**Example 3: Incorrect Azure CLI Version or Extension Issue**
+- **Explanation:** This snippet attempts to list the contents and permissions of the default docker socket. If the socket is not present, then this is likely the root of the issue. If an alternate socket location is configured, the `DOCKER_HOST` environment variable might need to be set.
+- **Solution:** 1. Examine the output of this python snippet to determine if the socket exists. If not, you may need to re-initialize the docker environment. 2. If you have a custom docker configuration and an alternate socket location, ensure the `DOCKER_HOST` environment variable is set correctly within your terminal session. 3. For instance: `export DOCKER_HOST=unix:///custom/path/docker.sock`.
+  **Example 3: Incorrect Azure CLI Version or Extension Issue**
 
 It might not be the Docker environment directly, but instead an older version of the cli itself, or an outdated extension. This has caught me out more than once.
 
@@ -104,10 +102,10 @@ def check_az_cli_version():
 check_az_cli_version()
 ```
 
-*   **Explanation:** This example checks the currently installed version of the Azure CLI and the installed extensions. Ensure that the 'acr' extension is correctly installed and up-to-date. If not, updating or installing the extension may fix the problem.
-*   **Solution:**
-    1. Update your Azure CLI using `az upgrade`.
-    2. Ensure the ACR extension is installed: `az extension add --name acr`.
-    3. Update the extension if needed: `az extension update --name acr`.
+- **Explanation:** This example checks the currently installed version of the Azure CLI and the installed extensions. Ensure that the 'acr' extension is correctly installed and up-to-date. If not, updating or installing the extension may fix the problem.
+- **Solution:**
+  1. Update your Azure CLI using `az upgrade`.
+  2. Ensure the ACR extension is installed: `az extension add --name acr`.
+  3. Update the extension if needed: `az extension update --name acr`.
 
 In conclusion, while the error you're encountering might seem vague, it usually boils down to Docker daemon accessibility, proper socket configuration, or issues with the Azure CLI. This is one of those scenarios where diving into the lower level details (the socket, the cli execution, etc.) is needed to isolate the problem. I would also suggest referring to the official Docker documentation for Docker Desktop and the Azure CLI documentation. Specifically, look into the section on 'Docker daemon configuration' and the troubleshooting guide for 'az acr'. These resources will provide a much deeper understanding of these systems. 'Docker in Practice' by Ian Miell and Aidan Hobson-Sayers is a good general resource for Docker issues, and the Azure documentation is very useful if you have the time to fully absorb it. I hope that helps narrow down your troubleshooting.

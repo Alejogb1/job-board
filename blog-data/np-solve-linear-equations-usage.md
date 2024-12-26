@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "np-solve-linear-equations-usage"
 ---
 
-Alright so you're asking about `np.linalg.solve` usage right Okay I've been down that rabbit hole more times than I care to admit. Linear equations are a staple in like basically everything in the tech world so yeah lets get to it I'm gonna try and break it down in a way that's not going to make your head spin or at least I'll try
+so you're asking about `np.linalg.solve` usage right I've been down that rabbit hole more times than I care to admit. Linear equations are a staple in like basically everything in the tech world so yeah lets get to it I'm gonna try and break it down in a way that's not going to make your head spin or at least I'll try
 
 First off `np.linalg.solve` is your go-to for solving systems of linear equations using NumPy. It's like the workhorse of this kind of stuff. It's basically taking a system of equations that look like this Ax = b where A is the matrix of coefficients x is the vector of unknowns you're solving for and b is the vector of constants. `np.linalg.solve` figures out x for you. Pretty neat right
 
 I remember back in the day when I was first getting into computational science my professor was all about this linear algebra stuff I thought it was going to be just some math fluff. I was so wrong. I was doing a project that involved simulating particle interactions. It was a total mess trying to manually code the solution for the system of equations we had it was slow it was buggy it was a total disaster. It took me days and days to get anywhere. Then I stumbled upon `np.linalg.solve` and it was like the heavens opened up. It was like it took 100 lines of clunky code and turned it into one function call.
 
-So okay now let's get into the nitty-gritty here's a super basic example of how it works:
+So now let's get into the nitty-gritty here's a super basic example of how it works:
 
 ```python
 import numpy as np
@@ -29,8 +29,8 @@ print(x) # Output: [2. 3.]
 
 See it's like magic right? In this example we have a system of two equations:
 
-* 3x + y = 9
-* x + 2y = 8
+- 3x + y = 9
+- x + 2y = 8
 
 `np.linalg.solve` crunches those numbers for you and spits out the solution which is x=2 and y=3. We all love the simple stuff right
 
@@ -55,6 +55,7 @@ x = np.linalg.solve(A, b)
 
 print(x) # Output: [ 2.  3. -1.]
 ```
+
 Here we're solving a 3x3 system which is a little more realistic for real world problems. Again `np.linalg.solve` works perfectly fine. The answer in this example is x=2 y=3 and z=-1. Again all the heavy lifting was done behind the scenes by the function. We just feed it the right values and its good to go.
 
 Now you might be thinking what if I have a huge matrix like the kind that can come up in like image processing or fluid dynamics or some other high performance computing tasks and I am using all that computing power to calculate just one system of equation? Well that’s where performance comes in. NumPy is usually optimized for this stuff it usually links against optimized linear algebra libraries like BLAS and LAPACK for a speed boost. When possible it uses multithreading too making your life much better. Still its really important to pay attention to the specifics of what kind of matrix you have.
@@ -79,9 +80,9 @@ except np.linalg.LinAlgError as e:
     print(f"Error solving the system: {e}") #Output error message
 ```
 
-Here the system doesn’t have a unique solution. `np.linalg.solve` usually does not throw errors if the system doesn’t have a solution that’s why I added the try except block. A singular matrix indicates that the equations are linearly dependent meaning one equation provides no new information that is not in another equation or they are not independent to say it better. `np.linalg.solve` by default is designed for systems that are uniquely solvable that have a unique solution. In case you are wondering why I have added the try except block in the code well I’ve spent hours debugging some code only to realize that the solve function had returned an exception and I did not catch it. So that’s why I always try to have an exception block at hand. That’s how I roll. Just to clarify I haven't spent *literally* hours debugging singular matrices but hey a little exaggeration never hurt anyone right?
+Here the system doesn’t have a unique solution. `np.linalg.solve` usually does not throw errors if the system doesn’t have a solution that’s why I added the try except block. A singular matrix indicates that the equations are linearly dependent meaning one equation provides no new information that is not in another equation or they are not independent to say it better. `np.linalg.solve` by default is designed for systems that are uniquely solvable that have a unique solution. In case you are wondering why I have added the try except block in the code well I’ve spent hours debugging some code only to realize that the solve function had returned an exception and I did not catch it. So that’s why I always try to have an exception block at hand. That’s how I roll. Just to clarify I haven't spent _literally_ hours debugging singular matrices but hey a little exaggeration never hurt anyone right?
 
-Okay so you got the basic idea of `np.linalg.solve` right? It’s not rocket science but it's definitely a powerful tool for linear equations. When you start dealing with complex simulations or real world problems it's absolutely essential. Remember to always check your matrices for singularity and think about efficiency when you have really big data.
+you got the basic idea of `np.linalg.solve` right? It’s not rocket science but it's definitely a powerful tool for linear equations. When you start dealing with complex simulations or real world problems it's absolutely essential. Remember to always check your matrices for singularity and think about efficiency when you have really big data.
 
 If you wanna dive deeper into the mathematical underpinnings I’d suggest checking out “Numerical Linear Algebra” by Trefethen and Bau that's like the bible of numerical linear algebra. For a more hands-on approach “Python for Data Analysis” by McKinney has some great stuff on NumPy and its related linear algebra. Also try out "Applied Numerical Linear Algebra" by James W Demmel. Those resources have been my rock for a long long time now. I don't really use websites as a serious source of knowledge but its better to keep reading the research papers and the books rather than rely on websites.
 

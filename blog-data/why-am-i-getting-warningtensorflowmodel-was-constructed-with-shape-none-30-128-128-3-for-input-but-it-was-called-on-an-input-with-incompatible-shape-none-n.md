@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-warningtensorflowmodel-was-constructed-with-shape-none-30-128-128-3-for-input-but-it-was-called-on-an-input-with-incompatible-shape-none-n"
 ---
 
-Okay, let's unpack this. I've seen this type of tensorflow shape mismatch pop up more times than I care to remember, and it's almost always traceable back to a fundamental disconnect in how the model expects its input versus what's actually being fed to it. It's a bit like trying to plug a three-prong plug into a two-prong socket – it's just not going to work, no matter how hard you try.
+, let's unpack this. I've seen this type of tensorflow shape mismatch pop up more times than I care to remember, and it's almost always traceable back to a fundamental disconnect in how the model expects its input versus what's actually being fed to it. It's a bit like trying to plug a three-prong plug into a two-prong socket – it's just not going to work, no matter how hard you try.
 
 The core of your issue lies in the discrepancy between the shape defined during the model construction `(None, 30, 128, 128, 3)` and the shape of the actual input at runtime `(None, N)`. Let’s break this down.
 
@@ -18,7 +18,7 @@ Here are three concrete scenarios with examples illustrating common reasons for 
 
 **Scenario 1: Flattened Image Data Instead of Original Shape**
 
-Imagine I once worked on a project where we were trying to do object tracking in a video stream. We initially loaded our frames correctly (30 frames of 128x128x3 images), but then someone, in a well-intentioned attempt to speed up preprocessing, flattened each image before passing it to the model. So instead of a (30, 128, 128, 3) tensor, we were passing a single flattened vector of size (30 * 128 * 128 * 3), which comes out to (1474560). So, here is a code snippet that simulates this, along with the correction:
+Imagine I once worked on a project where we were trying to do object tracking in a video stream. We initially loaded our frames correctly (30 frames of 128x128x3 images), but then someone, in a well-intentioned attempt to speed up preprocessing, flattened each image before passing it to the model. So instead of a (30, 128, 128, 3) tensor, we were passing a single flattened vector of size (30 _ 128 _ 128 \* 3), which comes out to (1474560). So, here is a code snippet that simulates this, along with the correction:
 
 ```python
 import tensorflow as tf

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-a-span-as-an-entity-in-a-spacy-document-using-python"
 ---
 
-Alright, let's tackle this. I recall a project back in '18 involving large-scale text annotation for a legal document processing system where this specific task became quite central. We needed to tag specific phrases as entities, not just single words, and spaCy's flexibility allowed us to achieve this quite elegantly.
+, let's tackle this. I recall a project back in '18 involving large-scale text annotation for a legal document processing system where this specific task became quite central. We needed to tag specific phrases as entities, not just single words, and spaCy's flexibility allowed us to achieve this quite elegantly.
 
 You're asking about adding spans as entities in a spaCy document, which essentially means taking a portion of the text and labeling it as a recognized entity. It's crucial for things like named entity recognition (ner) pipelines and more complex information extraction processes where understanding contiguous phrases as units is vital. Let's delve into how you can do this in Python using spaCy.
 
@@ -44,7 +44,7 @@ for ent in doc.ents:
     print(ent.text, ent.label_)
 ```
 
-In this example, we've manually identified "quick brown fox" as an animal, based on its tokens (indices 1 through 3, not inclusive of index 4), and added it as an entity with the label 'ANIMAL'. We use `doc.char_span` to create a new span, and add it to `doc.ents` *after* checking if `span_ent` exists (char-based spans can return None if the given parameters are invalid). This is particularly important, you can’t just assign the span directly; the object needs to be part of the `ents` collection within the `Doc`.
+In this example, we've manually identified "quick brown fox" as an animal, based on its tokens (indices 1 through 3, not inclusive of index 4), and added it as an entity with the label 'ANIMAL'. We use `doc.char_span` to create a new span, and add it to `doc.ents` _after_ checking if `span_ent` exists (char-based spans can return None if the given parameters are invalid). This is particularly important, you can’t just assign the span directly; the object needs to be part of the `ents` collection within the `Doc`.
 
 Now, let's consider a slightly more complex case. What if you want to create multiple entities in the document? It's more efficient to use a function to handle the span creation and addition.
 

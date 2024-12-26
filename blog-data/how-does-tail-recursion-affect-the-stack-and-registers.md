@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-tail-recursion-affect-the-stack-and-registers"
 ---
 
-Alright, let’s talk about tail recursion and its impact on the stack and registers. It's something I've spent a considerable amount of time grappling with, particularly when optimizing performance-sensitive algorithms back in my days working on high-frequency trading systems. Let's cut through the jargon and get down to the mechanics.
+, let’s talk about tail recursion and its impact on the stack and registers. It's something I've spent a considerable amount of time grappling with, particularly when optimizing performance-sensitive algorithms back in my days working on high-frequency trading systems. Let's cut through the jargon and get down to the mechanics.
 
 First, consider a standard recursive function. Each time the function calls itself, a new frame is pushed onto the call stack. This frame holds the function's local variables, the return address, and other associated housekeeping data. Think of it as a pile of plates; each call adds a new plate, and we must eventually work our way back down the pile. This can quickly lead to a stack overflow error if the recursion goes too deep, especially in languages with relatively small default stack sizes.
 
@@ -26,7 +26,7 @@ function factorial_non_tail(n, acc)
 end
 ```
 
-This function, while recursive, is *not* tail recursive. The multiplication `n * acc` happens *after* the recursive call to `factorial_non_tail`. Thus, the function must maintain its state on the stack until the recursive call returns. Each call adds a new frame.
+This function, while recursive, is _not_ tail recursive. The multiplication `n * acc` happens _after_ the recursive call to `factorial_non_tail`. Thus, the function must maintain its state on the stack until the recursive call returns. Each call adds a new frame.
 
 Next, let’s look at a properly tail recursive factorial function:
 
@@ -40,7 +40,7 @@ function factorial_tail(n, acc)
 end
 ```
 
-In this tail-recursive version, the multiplication of `acc * n` happens *before* the recursive call. Therefore, the result of the computation can be passed directly to the next call as an argument, allowing tail call optimization. The compiler, upon recognizing this tail call, can discard the current stack frame instead of pushing a new one.
+In this tail-recursive version, the multiplication of `acc * n` happens _before_ the recursive call. Therefore, the result of the computation can be passed directly to the next call as an argument, allowing tail call optimization. The compiler, upon recognizing this tail call, can discard the current stack frame instead of pushing a new one.
 
 To see the impact in real code, consider this example in Python. Python does not automatically perform tail call optimization but we can simulate with a simple decorator as an example.
 
@@ -72,6 +72,7 @@ def factorial_tail(n, acc):
 
 print(factorial_tail(5, 1))
 ```
+
 In this snippet the `@tail_recursive` decorator effectively simulates tco, allowing our function to be treated iteratively rather than recursively. This demonstrates how to handle the function parameters and call the next function in a iterative rather than recursive way, avoiding the stack issues typically present with recursion.
 
 Finally, let’s compare this with a similar, non-tail recursive version.

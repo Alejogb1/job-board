@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-run-a-thread-in-the-background-when-a-controller-returns-to-ui-with-full-results"
 ---
 
-Okay, let's tackle this. I've encountered this specific problem quite a few times in my career, especially when dealing with longer-running processes that need to execute without blocking the main thread and, consequently, the user interface. It's a common scenario in applications handling, say, complex data analysis or integrations with external services. The challenge is ensuring your UI returns promptly with the initial results while a separate process continues its work in the background, subsequently updating the UI (if needed) or logging the final outcome.
+, let's tackle this. I've encountered this specific problem quite a few times in my career, especially when dealing with longer-running processes that need to execute without blocking the main thread and, consequently, the user interface. It's a common scenario in applications handling, say, complex data analysis or integrations with external services. The challenge is ensuring your UI returns promptly with the initial results while a separate process continues its work in the background, subsequently updating the UI (if needed) or logging the final outcome.
 
 The key here lies in asynchronous programming paradigms. Returning a response from a controller shouldn't directly trigger or await the completion of computationally intensive tasks. Instead, it should initiate those tasks and then continue immediately, relinquishing the thread to the UI. The UI can then respond without delay and, if needed, be updated later once the background task is complete.
 
@@ -100,44 +100,42 @@ The `.NET` example is structured similarly; when the `/data` endpoint is hit, it
 While not typically a 'controller' scenario in the same sense as backend frameworks, this pattern applies equally to Node.js applications. We can use async functions and Promises to accomplish the same idea. This often comes into play when responding to client requests in API server endpoints:
 
 ```javascript
-const express = require('express');
+const express = require("express");
 const app = express();
 
-app.get('/data', async (req, res) => {
-    res.send("Initial data available. Processing more in the background.");
+app.get("/data", async (req, res) => {
+  res.send("Initial data available. Processing more in the background.");
 
-    // Simulate a long-running task
-    (async function backgroundTask() {
-        await new Promise(resolve => setTimeout(resolve, 5000));
-        // Here is where you would do the long running operation
-        // e.g. complete the complex calculation, or
-        // call to a data service or other business logic.
-        const result = "Complete result generated.";
-        // Handle the full result; potentially update the UI via websockets, callbacks etc
-        // In this case just logging the result.
-        console.log(result);
-    })();
-
+  // Simulate a long-running task
+  (async function backgroundTask() {
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+    // Here is where you would do the long running operation
+    // e.g. complete the complex calculation, or
+    // call to a data service or other business logic.
+    const result = "Complete result generated.";
+    // Handle the full result; potentially update the UI via websockets, callbacks etc
+    // In this case just logging the result.
+    console.log(result);
+  })();
 });
 
 const port = 3000;
 app.listen(port, () => console.log(`App listening on port ${port}`));
-
 ```
 
 In the Node.js example, a request to `/data` immediately sends back an initial response. Then an immediately-invoked async function is used to simulate a delayed task that does not hold onto the calling request. The important take away is that we are not awaiting the background task's completion. This allows us to keep the Node.js single threaded event loop running efficiently while completing long running tasks.
 
 **Key Considerations and Further Reading**
 
-*   **Thread Pool Management:** Carefully configure your thread pool size. Overly large pools can lead to resource exhaustion. It is useful to review the underlying operating system and database performance characteristics as these are often the bottlenecks.
+- **Thread Pool Management:** Carefully configure your thread pool size. Overly large pools can lead to resource exhaustion. It is useful to review the underlying operating system and database performance characteristics as these are often the bottlenecks.
 
-*   **Context Passing:** When moving the processing off the main thread, be mindful of any shared resources. Ensure that you pass the correct data to the thread, and that resource access is thread-safe. This is where more advanced concurrency techniques like thread-safe data structures or message queues can come in handy.
+- **Context Passing:** When moving the processing off the main thread, be mindful of any shared resources. Ensure that you pass the correct data to the thread, and that resource access is thread-safe. This is where more advanced concurrency techniques like thread-safe data structures or message queues can come in handy.
 
-*   **Error Handling:** Incorporate proper error handling within the background tasks to prevent unhandled exceptions and ensure that errors are appropriately logged and managed. Using a try-catch within the `Task.Run` or `ExecutorService` task blocks, along with logging, is good practice.
+- **Error Handling:** Incorporate proper error handling within the background tasks to prevent unhandled exceptions and ensure that errors are appropriately logged and managed. Using a try-catch within the `Task.Run` or `ExecutorService` task blocks, along with logging, is good practice.
 
-*   **UI Updates:** If your background task needs to update the UI, you will require a mechanism to communicate with the UI. Websockets or signalR is excellent when you need to push data to the client. Otherwise, consider using polling if push is not an option.
+- **UI Updates:** If your background task needs to update the UI, you will require a mechanism to communicate with the UI. Websockets or signalR is excellent when you need to push data to the client. Otherwise, consider using polling if push is not an option.
 
-*   **Observability:** When dealing with asynchronous operations, tracing and logging become essential. Make sure that the system can be properly observed to help with diagnostics in production and debugging of development issues.
+- **Observability:** When dealing with asynchronous operations, tracing and logging become essential. Make sure that the system can be properly observed to help with diagnostics in production and debugging of development issues.
 
 For deep dives into these concepts, I’d suggest looking at "Concurrent Programming in Java: Design Principles and Patterns" by Doug Lea for Java. For .NET, "Concurrency in C# Cookbook" by Stephen Cleary is a great choice. And for the Node.js/Javascript ecosystem, "Effective JavaScript" by David Herman will help in writing well performing and maintainable asynchronous code.
 

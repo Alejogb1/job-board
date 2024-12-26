@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-implement-the-azure-ad-authorization-code-flow"
 ---
 
-Alright, let's tackle this. I’ve spent a fair bit of time wrestling with authentication flows, especially the authorization code flow with Azure AD, which, trust me, has its nuances. I remember back when we were transitioning from our legacy authentication system to a more robust, cloud-centric one—it wasn't smooth sailing at first, but we got there. Let's break down how to implement that flow, covering the key steps and considerations.
+, let's tackle this. I’ve spent a fair bit of time wrestling with authentication flows, especially the authorization code flow with Azure AD, which, trust me, has its nuances. I remember back when we were transitioning from our legacy authentication system to a more robust, cloud-centric one—it wasn't smooth sailing at first, but we got there. Let's break down how to implement that flow, covering the key steps and considerations.
 
 The authorization code flow is designed for secure delegation of user identity to your application without directly exposing their credentials. It's a crucial aspect of modern application security, particularly when dealing with sensitive resources. The core idea revolves around a two-step process involving an intermediary authorization server—in this case, Azure AD.
 
@@ -137,15 +137,16 @@ if tokens:
     print(f"Refresh Token: {tokens.get('refresh_token')}")
 
 ```
+
 In the above, `exchange_code_for_tokens` makes a POST request to the token endpoint. If the exchange is successful, the response will contain an access token and a refresh token. I've included a basic error check using `response.raise_for_status()` to surface any potential errors during the request.
 
 **Important Considerations**
 
-*   **Token Storage:** Securely store your tokens, especially the refresh token. Avoid storing them in the browser's local storage or session storage. Consider more secure methods like HTTP-only cookies or server-side storage.
-*   **Refresh Tokens:** Use the refresh token to obtain new access tokens when they expire, so you don't need to redirect the user every hour.
-*   **Scopes:** Understand the different scopes available and request only the necessary permissions for your application. Over-requesting permissions is bad practice.
-*   **Security:** Be very careful with your application's client secret. Avoid embedding it in the source code, especially if the application is a client-side one. Use secure secret management tools when working with server applications.
-*   **Error Handling:** Implement robust error handling at each step of this process. Logging errors is crucial to identify issues early in development.
+- **Token Storage:** Securely store your tokens, especially the refresh token. Avoid storing them in the browser's local storage or session storage. Consider more secure methods like HTTP-only cookies or server-side storage.
+- **Refresh Tokens:** Use the refresh token to obtain new access tokens when they expire, so you don't need to redirect the user every hour.
+- **Scopes:** Understand the different scopes available and request only the necessary permissions for your application. Over-requesting permissions is bad practice.
+- **Security:** Be very careful with your application's client secret. Avoid embedding it in the source code, especially if the application is a client-side one. Use secure secret management tools when working with server applications.
+- **Error Handling:** Implement robust error handling at each step of this process. Logging errors is crucial to identify issues early in development.
 
 **Resources:**
 

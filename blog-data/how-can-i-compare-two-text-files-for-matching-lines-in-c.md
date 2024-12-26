@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-compare-two-text-files-for-matching-lines-in-c"
 ---
 
-Alright, let’s tackle this. I've certainly seen my share of text file comparisons over the years, often in situations where configuration drift or log analysis were the order of the day. Comparing text files line-by-line in C# isn't overly complex, but there are nuances to consider depending on what you're after: exact matches, case-insensitive comparisons, or even fuzzy matches. For the sake of clarity, I’ll focus on exact matches and provide code for that first. I recall one particularly grueling project where we had to synchronize configuration files across a distributed system – comparing the current version with the source of truth was crucial, and the techniques we used then still serve well today.
+, let’s tackle this. I've certainly seen my share of text file comparisons over the years, often in situations where configuration drift or log analysis were the order of the day. Comparing text files line-by-line in C# isn't overly complex, but there are nuances to consider depending on what you're after: exact matches, case-insensitive comparisons, or even fuzzy matches. For the sake of clarity, I’ll focus on exact matches and provide code for that first. I recall one particularly grueling project where we had to synchronize configuration files across a distributed system – comparing the current version with the source of truth was crucial, and the techniques we used then still serve well today.
 
 The core principle here involves reading both files line by line and comparing the lines as strings. Let's get straight to the code.
 
@@ -89,9 +89,10 @@ public class FileComparer
     }
 }
 ```
-*Code explanation:*
 
-The `File.ReadAllLines` method efficiently loads all lines from the specified files into string arrays.  The `Intersect` method from linq identifies the lines that are common to both. Likewise the `Except` method is used to identify lines that exist only in one file or the other. This approach is performant and easy to read. Note that the file paths "file1.txt" and "file2.txt" are hardcoded here for illustration, you would obviously need to use the file paths as provided by your user interface or other logic.
+_Code explanation:_
+
+The `File.ReadAllLines` method efficiently loads all lines from the specified files into string arrays. The `Intersect` method from linq identifies the lines that are common to both. Likewise the `Except` method is used to identify lines that exist only in one file or the other. This approach is performant and easy to read. Note that the file paths "file1.txt" and "file2.txt" are hardcoded here for illustration, you would obviously need to use the file paths as provided by your user interface or other logic.
 
 **Example 2: Case-Insensitive Comparison**
 
@@ -176,7 +177,8 @@ public class CaseInsensitiveFileComparer
     }
 }
 ```
-*Code explanation:*
+
+_Code explanation:_
 
 The key difference here is the use of `.Select(line => line.ToLowerInvariant())`. Before comparison, every line from both files is converted to lowercase using `ToLowerInvariant`, this ensures consistent case-insensitive matching. It's generally good practice to use the invariant culture for this kind of comparison, avoiding unexpected behavior caused by regional settings.
 
@@ -282,7 +284,7 @@ public class LargeFileComparer
 }
 ```
 
-*Code explanation:*
+_Code explanation:_
 
 Here, we employ `StreamReader` to read the files line by line, only holding the current line in memory. We use `HashSet` structures to improve performance when checking for contains operations. This is a classic pattern for processing big files because it avoids the risk of loading huge files into memory at once, and ensures that you don't run into memory issues.
 
@@ -290,8 +292,8 @@ Here, we employ `StreamReader` to read the files line by line, only holding the 
 
 For deeper understanding on the topics, I’d recommend a few resources:
 
-*   **"Effective C#" by Bill Wagner:** This book is a gold standard for learning best practices in C#. While it might not directly address file comparison, the principles of efficient coding and memory management are invaluable. The third edition provides the most up-to-date insights for the modern C# ecosystem.
-*   **"CLR via C#" by Jeffrey Richter:** Though quite a dense book, this delves deeply into the internals of the .NET framework, and provides knowledge about memory management, which is crucial when handling big files, and when considering performance optimization. It helps understand how file I/O functions work under the hood.
-* **.NET documentation on `System.IO` namespace:** The official Microsoft documentation is a great place to find detailed information about classes such as `File` and `StreamReader`. It is frequently updated and always the first point of reference for the API.
+- **"Effective C#" by Bill Wagner:** This book is a gold standard for learning best practices in C#. While it might not directly address file comparison, the principles of efficient coding and memory management are invaluable. The third edition provides the most up-to-date insights for the modern C# ecosystem.
+- **"CLR via C#" by Jeffrey Richter:** Though quite a dense book, this delves deeply into the internals of the .NET framework, and provides knowledge about memory management, which is crucial when handling big files, and when considering performance optimization. It helps understand how file I/O functions work under the hood.
+- **.NET documentation on `System.IO` namespace:** The official Microsoft documentation is a great place to find detailed information about classes such as `File` and `StreamReader`. It is frequently updated and always the first point of reference for the API.
 
 These resources have been essential throughout my career, and have guided my understanding in tackling a wide array of technical challenges. The approaches provided above are practical solutions to common problems I've seen repeatedly over my many years of work. Remember that performance is critical, especially with large data, so always consider the most efficient approach to the task.

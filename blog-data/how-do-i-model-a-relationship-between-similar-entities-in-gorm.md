@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-model-a-relationship-between-similar-entities-in-gorm"
 ---
 
-Alright, let’s delve into the nuances of modelling relationships between similar entities using GORM. It's a topic I’ve spent considerable time tackling in various projects, and it’s definitely something where getting it ‘just so’ can have a massive impact on application performance and maintainability. I’ve personally experienced the headaches of poorly implemented relationships leading to convoluted queries and unexpected database load, so I'm coming at this from a place of practical, hard-earned understanding.
+, let’s delve into the nuances of modelling relationships between similar entities using GORM. It's a topic I’ve spent considerable time tackling in various projects, and it’s definitely something where getting it ‘just so’ can have a massive impact on application performance and maintainability. I’ve personally experienced the headaches of poorly implemented relationships leading to convoluted queries and unexpected database load, so I'm coming at this from a place of practical, hard-earned understanding.
 
 The core challenge, when you talk about similar entities, often boils down to self-referential relationships. This could be a hierarchical structure – think categories within categories, or employee reporting lines. Or perhaps it’s a network-based relationship, like followers or friends in a social media context. GORM, thankfully, provides different ways to represent these structures, each with its own trade-offs. Choosing the best fit largely depends on the nature of your relationship and the types of operations you expect to perform frequently.
 
@@ -64,7 +64,7 @@ In this snippet, `ParentID` is a foreign key that references the `Category` tabl
 
 **Scenario 2: Follower/Following Relationships**
 
-Now, consider a scenario where users can follow other users – a common feature in social networks. Here, a many-to-many relationship is the most suitable model. This isn’t strictly self-referential *within* the model structure itself, but the underlying relation connects entities of the same type.
+Now, consider a scenario where users can follow other users – a common feature in social networks. Here, a many-to-many relationship is the most suitable model. This isn’t strictly self-referential _within_ the model structure itself, but the underlying relation connects entities of the same type.
 
 Here's an implementation I've used when creating social media-like applications:
 
@@ -100,7 +100,7 @@ func main() {
     db.Create(&user1)
     db.Create(&user2)
     db.Create(&user3)
-    
+
     // User 1 follows user 2
     db.Model(&user1).Association("Following").Append(&user2)
 	// User 3 follows user 1

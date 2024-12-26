@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-an-error-when-importing-file-in-jupyter-notebook"
 ---
 
-alright, so you're hitting an import error in your jupyter notebook, that's a classic. i've been there, trust me. this situation has probably given me more gray hairs than actual coding problems. let's break down the likely culprits.
+, so you're hitting an import error in your jupyter notebook, that's a classic. i've been there, trust me. this situation has probably given me more gray hairs than actual coding problems. let's break down the likely culprits.
 
 first off, when a notebook can't find a file during an import, it usually boils down to one of a few things: the file isn't where the notebook expects it to be, the notebook's environment is messed up, or there's some kind of name conflict. sometimes it can be a combination of these, which makes debugging that much more thrilling.
 
@@ -61,7 +61,7 @@ this code gives you the exact python executable your notebook is using and what 
 
 5.  **file format**: not common in notebooks, but in other scripts and environments can be the issue. maybe you named a file as `.txt` but it is not really a text file. python cannot import other formats apart from python scripts.
 
-6. **permissions**: occasionally there might be an issue with the read permissions to the files. make sure that your current user has access rights to the files.
+6.  **permissions**: occasionally there might be an issue with the read permissions to the files. make sure that your current user has access rights to the files.
 
 now, a quick anecdote. i remember debugging this import error in a notebook once. after hours of troubleshooting, i discovered that i had accidentally named a folder `numpy` and put all my numpy data files inside. every time i tried to import numpy it was looking for a folder instead of the standard library. it turns out, not following conventions can lead to these bizarre errors. it was so obvious in hindsight, but during debugging, it was a real head-scratcher.
 

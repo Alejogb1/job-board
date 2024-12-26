@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "why-is-the-airflow-onsuccesscallback-not-giving-task-information"
 ---
 
-Okay, let's address this. It’s a scenario I've seen surface more than a few times, especially when teams start scaling their Airflow deployments. You’re expecting task context in your `on_success_callback`, but all you’re getting is a rather generic callback without the specific details you need. This isn’t a bug, per se, but rather a consequence of how Airflow structures its callbacks and the information it makes available in different contexts. Let me break down what’s happening and how we can effectively resolve it, drawing from past projects where we’ve battled through the same issue.
+, let's address this. It’s a scenario I've seen surface more than a few times, especially when teams start scaling their Airflow deployments. You’re expecting task context in your `on_success_callback`, but all you’re getting is a rather generic callback without the specific details you need. This isn’t a bug, per se, but rather a consequence of how Airflow structures its callbacks and the information it makes available in different contexts. Let me break down what’s happening and how we can effectively resolve it, drawing from past projects where we’ve battled through the same issue.
 
-First, we need to clarify that the `on_success_callback` (and similarly, the `on_failure_callback` and others) at the DAG level are designed to trigger on the successful completion (or failure) of an *entire* DAG run, not a particular task within that run. The context provided to these DAG-level callbacks, therefore, isn't task-specific. The `ti` (TaskInstance) object you are typically expecting, which holds task details like execution_date, task_id, etc., isn't directly passed to these callbacks. The framework’s architecture aims to keep DAG-level callbacks lightweight and decoupled from the intricacies of specific task runs.
+First, we need to clarify that the `on_success_callback` (and similarly, the `on_failure_callback` and others) at the DAG level are designed to trigger on the successful completion (or failure) of an _entire_ DAG run, not a particular task within that run. The context provided to these DAG-level callbacks, therefore, isn't task-specific. The `ti` (TaskInstance) object you are typically expecting, which holds task details like execution_date, task_id, etc., isn't directly passed to these callbacks. The framework’s architecture aims to keep DAG-level callbacks lightweight and decoupled from the intricacies of specific task runs.
 
 The default callback payload primarily provides information about the DAG run, such as the `dag_id`, `run_id`, start time, and execution date. This is useful if you're triggering alerts based on the overall success or failure of the pipeline. However, if you require information about the individual tasks within that DAG, you'll need to implement a different approach.
 
 Historically, I remember one project where we had a complex ETL pipeline with hundreds of tasks. We initially attempted to rely on the DAG-level `on_success_callback` for detailed logging of task execution outcomes. What we found, of course, is that it provided very little granular information. We tried accessing the `ti` object, but to no avail; it’s simply not available at that stage. We realized we needed task-specific callbacks to get the task-level details we needed.
 
-So, how do we get that juicy task information? The solution lies in leveraging callbacks at the task level within the DAG definition. Instead of using the DAG's `on_success_callback`, we define our callbacks directly on specific task definitions. These task-level callbacks *do* receive the `ti` object, granting us access to the specific task’s context.
+So, how do we get that juicy task information? The solution lies in leveraging callbacks at the task level within the DAG definition. Instead of using the DAG's `on_success_callback`, we define our callbacks directly on specific task definitions. These task-level callbacks _do_ receive the `ti` object, granting us access to the specific task’s context.
 
 Here’s how this works. We can pass functions or callables to the `on_success_callback` parameter of a `BaseOperator` or one of its subclasses like `PythonOperator`, `BashOperator`, etc. within a dag. This is where task context becomes available.
 
@@ -122,6 +122,7 @@ with DAG(
     )
 
 ```
+
 This example demonstrates a more practical usage of task callbacks, pushing success information to an external API upon the task’s completion, which could be part of a larger system monitoring solution. The `update_api_with_task_success` callback sends information about the finished task to the external service, including the execution date and the successful status. This can enable integration into an external monitoring system which may be beyond Airflow. We included basic exception handling here, as this is a real-world use case where network requests may fail.
 
 These examples illustrate the critical difference: task-level callbacks provide specific task context via the `ti` object, while DAG-level callbacks provide general information about the DAG's overall execution.

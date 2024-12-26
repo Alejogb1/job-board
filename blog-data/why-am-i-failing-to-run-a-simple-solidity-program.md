@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-failing-to-run-a-simple-solidity-program"
 ---
 
-Alright, let’s tackle this. I've certainly been there—staring at a seemingly innocuous Solidity contract that refuses to cooperate. It’s often the subtle details that trip us up, and the error messages, while sometimes helpful, aren't always straightforward. The frustration is understandable, but let's break down some common culprits preventing your Solidity program from running correctly. Based on my experience, these are usually the usual suspects:
+, let’s tackle this. I've certainly been there—staring at a seemingly innocuous Solidity contract that refuses to cooperate. It’s often the subtle details that trip us up, and the error messages, while sometimes helpful, aren't always straightforward. The frustration is understandable, but let's break down some common culprits preventing your Solidity program from running correctly. Based on my experience, these are usually the usual suspects:
 
 First off, the "simple" part of the equation is relative. A beginner’s simple program can easily become a troubleshooting exercise if the fundamental environment isn’t set up correctly. Before we dive into the code itself, ensure you have a complete development environment. This includes a few critical components. You should have Node.js installed, which you will need to run npm, used to install necessary libraries. Also, you need a dedicated ethereum development framework like Truffle or Hardhat. Personally, I've found Hardhat's configuration and debugging capabilities to be particularly useful in my previous projects, but either will do. It is important to have the solidity compiler installed, so ensure the correct compiler version is specified in your environment configuration for compatibility between your code and the toolchain. I remember a time when version mismatches caused me to debug a contract for hours when the error was simply that the specified compiler didn't match the version I installed locally.
 
@@ -16,7 +16,8 @@ Solidity is under active development, which means each version has specific feat
 
 Here's a working example of a simple contract along with its deployment script that uses Hardhat:
 
-*SimpleStorage.sol*:
+_SimpleStorage.sol_:
+
 ```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
@@ -33,14 +34,16 @@ contract SimpleStorage {
     }
 }
 ```
-*deploy.js*:
+
+_deploy.js_:
+
 ```javascript
 async function main() {
-    const SimpleStorage = await ethers.getContractFactory("SimpleStorage");
-    const simpleStorage = await SimpleStorage.deploy();
+  const SimpleStorage = await ethers.getContractFactory("SimpleStorage");
+  const simpleStorage = await SimpleStorage.deploy();
 
-    await simpleStorage.deployed();
-    console.log("SimpleStorage deployed to:", simpleStorage.address);
+  await simpleStorage.deployed();
+  console.log("SimpleStorage deployed to:", simpleStorage.address);
 }
 
 main()
@@ -59,7 +62,8 @@ Even a perfectly written contract can fail to deploy if the accompanying deploym
 
 Here's an example of a basic contract interaction that might go wrong:
 
-*interaction.js*:
+_interaction.js_:
+
 ```javascript
 const { ethers } = require("hardhat");
 async function main() {
@@ -74,8 +78,8 @@ async function main() {
     console.log("Transaction confirmed");
     const value = await simpleStorage.get();
     console.log("Stored value: " + value);
-  } catch(error) {
-    console.log("Error interacting with the contract:", error)
+  } catch (error) {
+    console.log("Error interacting with the contract:", error);
   }
 }
 
@@ -86,6 +90,7 @@ main()
     process.exit(1);
   });
 ```
+
 If you misspell `SimpleStorage` or paste the wrong contract address, the script won't find the contract and throw an error. Always double-check your addresses and contract names. Also, make sure your private keys or test networks in your environment settings are correct. A common mistake I’ve seen before is using the wrong network identifier in your configuration file.
 
 **3. Gas Limits and Transaction Issues:**
@@ -94,7 +99,8 @@ Every transaction on the Ethereum network requires gas to execute. If you don’
 
 Here’s an example showing how to configure the gas limit for contract deployment:
 
-*hardhat.config.js (partial)*:
+_hardhat.config.js (partial)_:
+
 ```javascript
 module.exports = {
   solidity: "0.8.19",
@@ -107,6 +113,7 @@ module.exports = {
   }
 };
 ```
+
 In this example, the `gas` variable sets the gas limit for the Hardhat network. When using other networks, especially those in the test environment, you may need to explicitly set gas limits depending on the gas requirements of the transactions. Ensure that you aren’t running into this situation.
 
-To summarize, if your Solidity code isn't running, start by verifying your development setup and compiler version. Look for any errors in your deployment scripts, particularly contract names, addresses, and network configurations. Always ensure you allocate sufficient gas for your transactions. I'd recommend delving into *“Mastering Ethereum”* by Andreas M. Antonopoulos and Gavin Wood for an in-depth look at the underlying mechanisms. Also, reviewing the *Solidity Documentation* is vital for understanding version-specific nuances. Additionally, the *Ethereum Yellow Paper* is a great resource for getting a deep dive into Ethereum's inner workings. These resources, together with a methodical debugging approach, should help you resolve the issues. Don't feel discouraged; these initial hiccups are very much a part of the development process.
+To summarize, if your Solidity code isn't running, start by verifying your development setup and compiler version. Look for any errors in your deployment scripts, particularly contract names, addresses, and network configurations. Always ensure you allocate sufficient gas for your transactions. I'd recommend delving into _“Mastering Ethereum”_ by Andreas M. Antonopoulos and Gavin Wood for an in-depth look at the underlying mechanisms. Also, reviewing the _Solidity Documentation_ is vital for understanding version-specific nuances. Additionally, the _Ethereum Yellow Paper_ is a great resource for getting a deep dive into Ethereum's inner workings. These resources, together with a methodical debugging approach, should help you resolve the issues. Don't feel discouraged; these initial hiccups are very much a part of the development process.

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-do-puma-and-rails-both-using-the-same-puma-version-produce-different-results"
 ---
 
-Okay, let’s unpack this puzzle, because it's a situation I’ve definitely encountered before. Years back, I was troubleshooting a staging environment where Puma was acting decidedly… *distinct* from our production setup, even though the version numbers were identical. The head scratching was real, and what it boiled down to was far more nuanced than just the version itself. Let’s delve into the specifics.
+, let’s unpack this puzzle, because it's a situation I’ve definitely encountered before. Years back, I was troubleshooting a staging environment where Puma was acting decidedly… _distinct_ from our production setup, even though the version numbers were identical. The head scratching was real, and what it boiled down to was far more nuanced than just the version itself. Let’s delve into the specifics.
 
-The core issue isn't that Puma, as a binary, is behaving differently across environments. The problem usually stems from the *context* in which Puma operates. Think of it like this: you might have the same model of car, but if one is being driven on a smooth highway and the other on a rocky trail, their performances will vary significantly.
+The core issue isn't that Puma, as a binary, is behaving differently across environments. The problem usually stems from the _context_ in which Puma operates. Think of it like this: you might have the same model of car, but if one is being driven on a smooth highway and the other on a rocky trail, their performances will vary significantly.
 
 Essentially, a web server like Puma is heavily influenced by its surrounding ecosystem. Here's what contributes to these discrepancies when comparing two Rails applications:
 
@@ -14,7 +14,7 @@ Essentially, a web server like Puma is heavily influenced by its surrounding eco
 
 2.  **Ruby Version and Implementation:** Ruby's behavior can differ depending on the specific implementation (e.g., MRI, JRuby, TruffleRuby) and patch level. A minor patch release can introduce subtle changes, especially in areas like garbage collection or thread scheduling that can indirectly impact Puma's performance. If the Ruby version is wildly different, you should expect variations. These versions can have vastly different behavior with respect to threading.
 
-3.  **Gem Dependencies:** Even within the Rails application itself, the specific versions of *other* gems that it relies on, and any gem-related configurations, can alter behavior in a non-obvious manner. A seemingly unrelated gem might have a patch that affects multi-threading or the way data is processed, consequently affecting how Puma operates.
+3.  **Gem Dependencies:** Even within the Rails application itself, the specific versions of _other_ gems that it relies on, and any gem-related configurations, can alter behavior in a non-obvious manner. A seemingly unrelated gem might have a patch that affects multi-threading or the way data is processed, consequently affecting how Puma operates.
 
 4.  **Operating System and Environment:** The underlying operating system, kernel, and even installed libraries can cause disparities. One system might have specific security modules or resource limitations in place that are not present in another. Operating systems also manage resource allocation differently. One system may have higher thread priority, which affects context switching.
 
@@ -105,8 +105,8 @@ When faced with these discrepancies, here’s my suggested approach:
 
 For further reading, I recommend:
 
-*   **"The Ruby Programming Language" by David Flanagan and Yukihiro Matsumoto:** A thorough reference on Ruby itself, covering core behavior and nuances. This book will shed light on threading and the garbage collector.
-*   **"Operating System Concepts" by Abraham Silberschatz, Peter Baer Galvin, and Greg Gagne:** This is a general purpose system level book that will explain how the kernel and the OS operates.
-*   **The official Puma documentation:** This will help you gain a deeper understanding of each configuration setting.
+- **"The Ruby Programming Language" by David Flanagan and Yukihiro Matsumoto:** A thorough reference on Ruby itself, covering core behavior and nuances. This book will shed light on threading and the garbage collector.
+- **"Operating System Concepts" by Abraham Silberschatz, Peter Baer Galvin, and Greg Gagne:** This is a general purpose system level book that will explain how the kernel and the OS operates.
+- **The official Puma documentation:** This will help you gain a deeper understanding of each configuration setting.
 
 In short, while the same Puma version might appear like a straightforward case, the underlying causes are often systemic, requiring a holistic approach to discover the subtle discrepancies. The issue is not the binary itself, but the ecosystem. I’ve seen it all before, and with a systematic approach, you'll find the answer.

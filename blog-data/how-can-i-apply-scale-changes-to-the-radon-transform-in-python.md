@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-apply-scale-changes-to-the-radon-transform-in-python"
 ---
 
-Alright, let's tackle this. Scaling the radon transform—it’s a common need that pops up more often than you might think, especially when working with images of varying resolutions or when you need to analyze structures at different granularities. I've seen this come up frequently, particularly when I was involved in a project dealing with medical imaging a few years back. We were tasked with extracting features from CT scans, and manipulating the scale of the radon transform was crucial for identifying patterns at different structural levels.
+, let's tackle this. Scaling the radon transform—it’s a common need that pops up more often than you might think, especially when working with images of varying resolutions or when you need to analyze structures at different granularities. I've seen this come up frequently, particularly when I was involved in a project dealing with medical imaging a few years back. We were tasked with extracting features from CT scans, and manipulating the scale of the radon transform was crucial for identifying patterns at different structural levels.
 
 Essentially, what you're looking to do is modify the input space to the radon transform before the projections are computed. The core idea is to preprocess your image to fit the scale you are targeting. There isn’t a single built-in parameter within most standard radon transform implementations (like in `scikit-image`) that directly handles scaling within the transform itself. The scaling needs to be done pre-transformation.
 
@@ -41,6 +41,7 @@ image = io.imread('your_image.png', as_gray=True)
 scaled_sinogram = scaled_radon_resize(image, 0.5) # Example resizing to half the size
 print(f"Sinogram shape after resize: {scaled_sinogram.shape}")
 ```
+
 In this snippet, the `scaled_radon_resize` function takes an image and a scale factor, resizes the image with `skimage.transform.resize` which also manages anti-aliasing, then calculates and returns the sinogram. This approach is convenient and can be applied across arbitrary scaling factors, but remember that significant changes in size might blur some details of your input.
 
 **Method 2: Padding and Cropping**

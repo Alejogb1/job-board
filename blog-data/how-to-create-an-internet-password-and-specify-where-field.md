@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-create-an-internet-password-and-specify-where-field"
 ---
 
-alright, so you're asking about creating a password field on a webpage, and how to make sure that it's actually doing its job, yeah? i've been there, seen that, got the t-shirt, and probably a few scars too from dealing with user input. let me break it down based on how i’ve tackled this over the years, some lessons learned from the trenches, if you will.
+, so you're asking about creating a password field on a webpage, and how to make sure that it's actually doing its job, yeah? i've been there, seen that, got the t-shirt, and probably a few scars too from dealing with user input. let me break it down based on how i’ve tackled this over the years, some lessons learned from the trenches, if you will.
 
 first off, when we’re talking about password fields, we're mostly referring to `<input type="password">` in html. simple, but holds a lot of responsibility. it automatically masks the characters that the user types, which is a basic, but vital, security measure. it’s not foolproof but it’s a starting point. i remember when i first started, i’d seen a few “homegrown” implementations using javascript to mask letters, and they were… disaster areas. those early days made me very cautious about anything that wasn't a standard, browser-provided feature. the browsers generally handle password masking and auto-fill decently so it is best to rely on them, unless specific requirements override their behaviours.
 
@@ -14,11 +14,11 @@ here's a quick html example for the password and user fields:
 
 ```html
 <form id="loginForm" action="/login" method="post">
-    <label for="username">username:</label>
-    <input type="text" id="username" name="username" required><br><br>
-    <label for="password">password:</label>
-    <input type="password" id="password" name="password" required><br><br>
-    <input type="submit" value="login">
+  <label for="username">username:</label>
+  <input type="text" id="username" name="username" required /><br /><br />
+  <label for="password">password:</label>
+  <input type="password" id="password" name="password" required /><br /><br />
+  <input type="submit" value="login" />
 </form>
 ```
 
@@ -26,7 +26,7 @@ note the `type="password"` attribute for the password. this tells the browser to
 
 this form will then be sent via the 'post' method to the `/login` url which it should be an endpoint in our backend.
 
-when the form is submitted, it's our backend's responsibility to take care of the password securely. never, and i mean *never*, store passwords in plain text. i saw that once on an old system i inherited, and… well, let’s just say i had a rather long night. instead, use a proper hashing algorithm. bcrypt, argon2, or scrypt are solid choices. these algorithms add a 'salt' to the password and create a one-way hash. if someone steals your password database, they won't see the actual passwords, only the hashes, which are incredibly hard to reverse. think of it like this, it’s like trying to put toothpaste back into the tube; it will be messy and it would never go back completely the same.
+when the form is submitted, it's our backend's responsibility to take care of the password securely. never, and i mean _never_, store passwords in plain text. i saw that once on an old system i inherited, and… well, let’s just say i had a rather long night. instead, use a proper hashing algorithm. bcrypt, argon2, or scrypt are solid choices. these algorithms add a 'salt' to the password and create a one-way hash. if someone steals your password database, they won't see the actual passwords, only the hashes, which are incredibly hard to reverse. think of it like this, it’s like trying to put toothpaste back into the tube; it will be messy and it would never go back completely the same.
 
 here is a quick python example, using bcrypt, that you can adapt to your own backend framework, i will not add much context because every backend is different.
 
@@ -66,51 +66,53 @@ here is a little javascript example for basic password validation you can apply 
 
 ```javascript
 function validatePassword() {
-    const passwordInput = document.getElementById('password');
-    const password = passwordInput.value;
-    const passwordStrengthMessage = document.getElementById('passwordStrength');
+  const passwordInput = document.getElementById("password");
+  const password = passwordInput.value;
+  const passwordStrengthMessage = document.getElementById("passwordStrength");
 
-    // basic check for min 8 characters
-    if(password.length < 8){
-         passwordStrengthMessage.textContent = 'password is too short, needs at least 8 characters';
-         return false;
-    }
+  // basic check for min 8 characters
+  if (password.length < 8) {
+    passwordStrengthMessage.textContent =
+      "password is too short, needs at least 8 characters";
+    return false;
+  }
 
-     //check for at least one number
-    if(!/\d/.test(password)){
-        passwordStrengthMessage.textContent = 'password needs at least one number';
-         return false;
-    }
-    // check for uppercase
-     if(!/[A-Z]/.test(password)){
-        passwordStrengthMessage.textContent = 'password needs at least one uppercase letter';
-         return false;
-    }
+  //check for at least one number
+  if (!/\d/.test(password)) {
+    passwordStrengthMessage.textContent = "password needs at least one number";
+    return false;
+  }
+  // check for uppercase
+  if (!/[A-Z]/.test(password)) {
+    passwordStrengthMessage.textContent =
+      "password needs at least one uppercase letter";
+    return false;
+  }
 
-    // check for lower case
-    if(!/[a-z]/.test(password)){
-        passwordStrengthMessage.textContent = 'password needs at least one lowercase letter';
-         return false;
-    }
+  // check for lower case
+  if (!/[a-z]/.test(password)) {
+    passwordStrengthMessage.textContent =
+      "password needs at least one lowercase letter";
+    return false;
+  }
 
-    // check for symbols
-    if(!/[^a-zA-Z0-9]/.test(password)){
-       passwordStrengthMessage.textContent = 'password needs at least one symbol';
-       return false;
-    }
+  // check for symbols
+  if (!/[^a-zA-Z0-9]/.test(password)) {
+    passwordStrengthMessage.textContent = "password needs at least one symbol";
+    return false;
+  }
 
-
-    passwordStrengthMessage.textContent = 'password is strong';
-    return true;
-
+  passwordStrengthMessage.textContent = "password is strong";
+  return true;
 }
-const loginForm = document.getElementById('loginForm');
-loginForm.addEventListener('submit', function(event){
-    if(!validatePassword()){
-        event.preventDefault();
-    }
-})
+const loginForm = document.getElementById("loginForm");
+loginForm.addEventListener("submit", function (event) {
+  if (!validatePassword()) {
+    event.preventDefault();
+  }
+});
 ```
+
 this piece of javascript will run on submit, and will check the strength of the password before allowing the form to submit, it will also show the specific error on the passwordStrength html element. note that you can modify this password checker to fit your own requirements.
 
 now, a word of caution. client-side validation is nice, but it's not a replacement for server-side validation. never trust data coming from the user’s computer, it is easily modifiable. always validate again at the backend to make sure no malicious data makes it to your database.

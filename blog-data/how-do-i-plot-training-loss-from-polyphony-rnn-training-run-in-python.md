@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-plot-training-loss-from-polyphony-rnn-training-run-in-python"
 ---
 
-Okay, let's talk about extracting and visualizing that training loss from your Polyphony RNN. It’s a common sticking point, and I've certainly spent my fair share of time debugging similar scenarios back when I was deep in a music generation project a few years ago. The core challenge often isn't in running the model, but in making sense of its internal states and, more specifically, its progress during training.
+, let's talk about extracting and visualizing that training loss from your Polyphony RNN. It’s a common sticking point, and I've certainly spent my fair share of time debugging similar scenarios back when I was deep in a music generation project a few years ago. The core challenge often isn't in running the model, but in making sense of its internal states and, more specifically, its progress during training.
 
 The process revolves around three main stages: data collection, data processing, and finally, visualization. I’ve seen folks stumble at each one of these, so let’s break it down systematically.
 
@@ -188,6 +188,6 @@ plt.show()
 
 This final example illustrates a simple moving average filter, which can be really useful to get a clearer picture of the trends, especially when the training loss fluctuates a lot.
 
-For further reading, I recommend delving into *Deep Learning* by Goodfellow, Bengio, and Courville, particularly the sections that cover training and optimization. For more specifics on RNNs, *Sequence to Sequence Learning with Neural Networks* by Sutskever et al. is foundational. The official documentation of your specific deep learning framework, whether that's PyTorch or TensorFlow, also provides detailed examples and best practices.
+For further reading, I recommend delving into _Deep Learning_ by Goodfellow, Bengio, and Courville, particularly the sections that cover training and optimization. For more specifics on RNNs, _Sequence to Sequence Learning with Neural Networks_ by Sutskever et al. is foundational. The official documentation of your specific deep learning framework, whether that's PyTorch or TensorFlow, also provides detailed examples and best practices.
 
 From my experience, a systematic approach to data logging and visualization pays dividends in debugging and understanding the training behavior of neural networks. It’s a vital step to go beyond just running the model to actually understanding how it learns.

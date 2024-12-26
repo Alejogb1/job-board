@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-disable-seqeval-label-formatting-for-pos-tagging"
 ---
 
-Alright, let’s tackle this. I recall a particularly frustrating project a few years back where we were using seqeval for sequence labeling, specifically for part-of-speech (POS) tagging. We ran into the exact issue you're describing: seqeval's default formatting wasn't playing nice with the output format from our POS tagger. It took some careful maneuvering, and frankly, a bit more diving into the library than I initially expected. The key takeaway here is understanding that seqeval assumes a specific label formatting structure—typically, BIO (Beginning, Inside, Outside) or similar—which can clash when dealing with simple, flat tags such as what you usually get from a POS tagger.
+, let’s tackle this. I recall a particularly frustrating project a few years back where we were using seqeval for sequence labeling, specifically for part-of-speech (POS) tagging. We ran into the exact issue you're describing: seqeval's default formatting wasn't playing nice with the output format from our POS tagger. It took some careful maneuvering, and frankly, a bit more diving into the library than I initially expected. The key takeaway here is understanding that seqeval assumes a specific label formatting structure—typically, BIO (Beginning, Inside, Outside) or similar—which can clash when dealing with simple, flat tags such as what you usually get from a POS tagger.
 
 The core issue, as I experienced it, is that seqeval wants to interpret the tags based on patterns it expects. When you feed it plain POS tags like 'NOUN,' 'VERB,' 'ADJ,' without any segmentation markers (like B-NOUN, I-NOUN, O), seqeval either misinterprets them or simply throws an error because it can't match what it expects. We need to effectively tell seqeval to treat our tags as atomic labels rather than segmented chunks within a sequence. There isn't a single switch to flip and disable all this, but instead, it requires modifying how we handle the input data and, potentially, how we use the evaluation metrics.
 
@@ -39,7 +39,7 @@ print(report)
 
 In this first example, if your data already uses a simple label format for single tokens, seqeval will not attempt to apply sequence-based assumptions. Here, seqeval is not misinterpreting any label because there is no label sequence to interpret, and it accurately computes the classification report with an f1 score of 1.0 for each label when both the predicted and true tags are the same.
 
-Now, let's consider an example where we *do* have more complex labels, perhaps from an intermediate output stage. Seqeval expects such labels to follow a schema. If we don't adhere to a schema, it will struggle:
+Now, let's consider an example where we _do_ have more complex labels, perhaps from an intermediate output stage. Seqeval expects such labels to follow a schema. If we don't adhere to a schema, it will struggle:
 
 ```python
 from seqeval.metrics import classification_report, accuracy_score
@@ -100,6 +100,6 @@ Again, this shows the same example as the first one. Seqeval is happy, because n
 
 The key, therefore, is not about disabling any specific functionality in seqeval but ensuring that you provide labels that fit what seqeval interprets. If your labels are single tags like POS tags, you won't need to alter seqeval itself, but instead, ensure that the input to seqeval is properly formatted.
 
-For further understanding of sequence labeling and evaluation, I'd strongly recommend checking out some foundational resources. Start with the original paper on the CoNLL-2000 shared task, which introduced the IOB scheme that seqeval often utilizes. The chapter on sequence labeling in *Speech and Language Processing* by Jurafsky and Martin is another indispensable resource for diving deeper into the theoretical underpinnings and algorithms. Finally, for practical aspects, particularly regarding seqeval, the *Natural Language Processing with Python* book by Bird, Klein, and Loper can be incredibly valuable.
+For further understanding of sequence labeling and evaluation, I'd strongly recommend checking out some foundational resources. Start with the original paper on the CoNLL-2000 shared task, which introduced the IOB scheme that seqeval often utilizes. The chapter on sequence labeling in _Speech and Language Processing_ by Jurafsky and Martin is another indispensable resource for diving deeper into the theoretical underpinnings and algorithms. Finally, for practical aspects, particularly regarding seqeval, the _Natural Language Processing with Python_ book by Bird, Klein, and Loper can be incredibly valuable.
 
 I hope these examples and my experience prove useful to you. It's a common problem when working with different output formats, but with these adjustments, you should be able to integrate seqeval with your POS tagging outputs effectively.

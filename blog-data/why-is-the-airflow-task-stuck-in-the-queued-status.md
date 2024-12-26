@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-airflow-task-stuck-in-the-queued-status"
 ---
 
-Alright, let's tackle this. Seeing an Airflow task perpetually stuck in the 'queued' state is a fairly common headache, and trust me, I've spent more than a few evenings debugging exactly this scenario. It’s rarely a single, straightforward issue, and pinpointing the root cause usually requires a methodical approach. So, let’s break down the typical suspects and how to investigate them.
+, let's tackle this. Seeing an Airflow task perpetually stuck in the 'queued' state is a fairly common headache, and trust me, I've spent more than a few evenings debugging exactly this scenario. It’s rarely a single, straightforward issue, and pinpointing the root cause usually requires a methodical approach. So, let’s break down the typical suspects and how to investigate them.
 
 Firstly, understanding the Airflow scheduler's role is paramount. The scheduler’s primary function is to monitor dags, parse them, and then submit tasks for execution based on their dependencies and available resources. When a task enters the 'queued' state, it signifies that the scheduler has acknowledged the task's readiness to run but hasn't yet assigned it to a worker for processing. Hence, the problem isn't usually with the task’s logic itself but rather with the system's ability to handle it.
 
@@ -12,7 +12,7 @@ One of the most frequent culprits is resource starvation. This typically manifes
 
 **1. Insufficient Worker Slots:**
 
-Airflow workers operate within worker pools, which have a limited number of slots defined in their configuration. If all slots within a worker pool are occupied by other running tasks, any new task requesting that pool will remain queued until a slot becomes available. This often happens during peak hours or when dealing with high-concurrency workflows. The first check should be to inspect the Airflow UI under *Browse > Pools*. This page shows current utilization and task assignments per pool. Overly saturated pools are a common indicator of this issue.
+Airflow workers operate within worker pools, which have a limited number of slots defined in their configuration. If all slots within a worker pool are occupied by other running tasks, any new task requesting that pool will remain queued until a slot becomes available. This often happens during peak hours or when dealing with high-concurrency workflows. The first check should be to inspect the Airflow UI under _Browse > Pools_. This page shows current utilization and task assignments per pool. Overly saturated pools are a common indicator of this issue.
 
 We can examine the airflow configurations from the `airflow.cfg` file. Key parameters such as `worker_concurrency` under the `[core]` section and the pool definitions from `airflow.cfg` or via the UI should be thoroughly inspected. If necessary, increase worker concurrency or create more pools to distribute the load.
 

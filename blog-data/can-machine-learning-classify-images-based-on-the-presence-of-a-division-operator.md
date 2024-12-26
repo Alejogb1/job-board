@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-machine-learning-classify-images-based-on-the-presence-of-a-division-operator"
 ---
 
-Okay, let’s tackle this. The question of whether machine learning can discern the presence of a division operator in images isn’t as straightforward as it might initially seem. It's less about optical character recognition (OCR) of a symbol and more about a deep dive into pattern recognition at a granular level. I've encountered scenarios similar to this in the past, specifically during a project aimed at automatically identifying handwritten mathematical equations. The goal was not just to recognize characters, but to understand the structure and semantics of the expressions. The division operator, being a critical part of that structure, presented its own unique challenges.
+, let’s tackle this. The question of whether machine learning can discern the presence of a division operator in images isn’t as straightforward as it might initially seem. It's less about optical character recognition (OCR) of a symbol and more about a deep dive into pattern recognition at a granular level. I've encountered scenarios similar to this in the past, specifically during a project aimed at automatically identifying handwritten mathematical equations. The goal was not just to recognize characters, but to understand the structure and semantics of the expressions. The division operator, being a critical part of that structure, presented its own unique challenges.
 
 At its core, a standard image classification model, such as a convolutional neural network (cnn), would struggle if simply provided with images containing or not containing the division symbol. The pixel-level differences between these images might not be statistically distinct enough to train a reliably accurate classifier without a great deal of very specific training data, which is inefficient. However, the problem becomes more tractable if approached with appropriate pre-processing and careful network design.
 
@@ -26,13 +26,13 @@ def preprocess_image(image_path):
     img = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
     if img is None:
         return None  # Handle the case when image cannot be opened
-    
+
     # Apply Gaussian blur to reduce noise
     blurred_img = cv2.GaussianBlur(img, (5, 5), 0)
-    
+
     # Edge detection using Canny
     edges = cv2.Canny(blurred_img, 50, 150)
-    
+
     # Optional: Invert the binary image if needed (depends on how you train your model)
     # edges = cv2.bitwise_not(edges)
 
@@ -84,6 +84,7 @@ model.summary() # Provides details of the network architecture and its parameter
 # You would then train the model with data and test its performance
 
 ```
+
 This second example code snippet creates a very simple convolutional neural network, it takes an input shape as parameter, the rest of the network is hardcoded but it uses the most common layers used for image recognition. In addition to this, it has a binary cross entropy output as this is a yes/no question: Does the image contain a division operator?
 
 Finally, we also need to consider how to handle variations in size and rotation. Augmentation is very useful here. We would introduce these as transformations to the input images during training. This enhances the generalization of the model and avoids it overfitting to the training data. For a proper training regime the image generator from Keras would be a good starting point. Here we will do it manually:
@@ -135,4 +136,4 @@ This final code snippet demonstrates manual image rotation and scaling augmentat
 
 In summary, classifying images based on the presence of a division operator is definitely feasible with machine learning. It involves a careful combination of pre-processing to make sure that the features we wish to detect are highlighted, an appropriate neural network model architecture, and effective data augmentation to handle the variation. Although a common image classification task, this specific problem requires attention to the details and an awareness that out-of-the-box approaches may fail. The key is always to start by understanding the visual elements involved and designing a solution around those characteristics.
 
-If you want to explore this further, I recommend reading *Deep Learning* by Ian Goodfellow, Yoshua Bengio, and Aaron Courville; it covers the theoretical foundations in great detail. Also, for practical implementations with OpenCV and Keras, *Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow* by Aurélien Géron is an excellent resource. Finally, for a deeper dive into more advanced data augmentation techniques, search for papers from the *IEEE Transactions on Pattern Analysis and Machine Intelligence* journal, where there is lots of in-depth research on this kind of topic.
+If you want to explore this further, I recommend reading _Deep Learning_ by Ian Goodfellow, Yoshua Bengio, and Aaron Courville; it covers the theoretical foundations in great detail. Also, for practical implementations with OpenCV and Keras, _Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow_ by Aurélien Géron is an excellent resource. Finally, for a deeper dive into more advanced data augmentation techniques, search for papers from the _IEEE Transactions on Pattern Analysis and Machine Intelligence_ journal, where there is lots of in-depth research on this kind of topic.

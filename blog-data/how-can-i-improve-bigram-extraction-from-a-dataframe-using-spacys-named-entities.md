@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-improve-bigram-extraction-from-a-dataframe-using-spacys-named-entities"
 ---
 
-Okay, let's tackle this. I’ve seen this particular challenge pop up quite a few times over the years, usually when someone is moving from basic text analysis to more nuanced feature engineering, specifically for natural language processing tasks. Bigram extraction, in isolation, isn't particularly complex, but incorporating named entity recognition (NER) from spaCy adds a dimension that requires careful consideration. My experiences have shown me that naively applying bigram extraction after spaCy's processing often doesn’t yield the most insightful results. The typical problem arises because straightforward token-based bigrams might break up named entities, losing contextual meaning. We need a solution that’s aware of these entities.
+, let's tackle this. I’ve seen this particular challenge pop up quite a few times over the years, usually when someone is moving from basic text analysis to more nuanced feature engineering, specifically for natural language processing tasks. Bigram extraction, in isolation, isn't particularly complex, but incorporating named entity recognition (NER) from spaCy adds a dimension that requires careful consideration. My experiences have shown me that naively applying bigram extraction after spaCy's processing often doesn’t yield the most insightful results. The typical problem arises because straightforward token-based bigrams might break up named entities, losing contextual meaning. We need a solution that’s aware of these entities.
 
 The core issue is that standard bigram approaches operate on tokenized text, treating individual words as the fundamental unit. SpaCy’s NER, on the other hand, groups tokens into named entities such as people, organizations, or locations. If we blindly generate bigrams from the token stream, we can split meaningful entities, thereby introducing noise and reducing the informational value of our features. For example, "New York City" might be split into "New York" and "York City," discarding the key notion that "New York City" represents a single entity.
 
@@ -32,12 +32,12 @@ def entity_aware_bigrams(text):
     bigrams = []
     entities = [ent.text for ent in doc.ents]
     tokens = [token.text for token in doc]
-    
+
     i = 0
     while i < len(tokens) - 1:
         current_token = tokens[i]
         next_token = tokens[i+1]
-        
+
         # Check if current token or next is part of an entity
         current_in_entity = any(current_token in entity for entity in entities)
         next_in_entity = any(next_token in entity for entity in entities)
@@ -46,7 +46,7 @@ def entity_aware_bigrams(text):
         if not current_in_entity:
             bigrams.append((current_token, next_token))
             i += 1
-        
+
         else:
             # Find and advance past the entity, creating entity-aware bigram
             for entity in entities:
@@ -54,15 +54,15 @@ def entity_aware_bigrams(text):
                   entity_tokens = entity.split(' ')
                   if entity_tokens[0] == current_token:
                     if i + len(entity_tokens) <= len(tokens) :
-                        
+
                       if i + len(entity_tokens)  < len(tokens):
                            bigrams.append((entity, tokens[i + len(entity_tokens)]))
                       else:
                         bigrams.append((entity, 'END'))
-                        
+
                       i += len(entity_tokens)
                     break
-                  
+
             else: i+=1
 
     return bigrams
@@ -104,12 +104,12 @@ def preprocess_text(text):
 def entity_aware_bigrams_v2(tokens, entities):
     bigrams = []
     entity_spans = [(start, end) for start, end, _ in entities]
-    
+
     i = 0
     while i < len(tokens) - 1:
         current_token_start = sum(len(t) + 1 for t in tokens[:i])
         current_token_end = current_token_start + len(tokens[i])
-        
+
         next_token_start = sum(len(t) + 1 for t in tokens[:i+1])
         next_token_end = next_token_start + len(tokens[i+1])
 
@@ -118,7 +118,7 @@ def entity_aware_bigrams_v2(tokens, entities):
 
         next_is_entity = False
         next_entity_text = None
-        
+
         # Check if current token is part of an entity
         for start, end, entity in entities:
             if start <= current_token_start < end:
@@ -132,7 +132,7 @@ def entity_aware_bigrams_v2(tokens, entities):
               next_is_entity = True
               next_entity_text = entity
               break
-          
+
         if not current_is_entity:
           bigrams.append((tokens[i], tokens[i+1]))
           i+=1
@@ -142,13 +142,13 @@ def entity_aware_bigrams_v2(tokens, entities):
              bigrams.append((current_entity_text, tokens[i+1]))
              i += len(current_entity_text.split(" "))
            else:
-             
-             
+
+
              if next_token_start > current_token_end:
                  bigrams.append((current_entity_text,next_entity_text))
                  i += len(current_entity_text.split(" "))
              else:
-              
+
                i+=1
 
     return bigrams
@@ -172,7 +172,7 @@ Here, `preprocess_text` handles spaCy processing once, and returns tokens and en
 
 **Example 3: Using a dedicated library for n-gram with pre-processing**.
 
-While the custom implementation is useful to understand the mechanics, you can also use existing libraries designed to handle entity awareness better, or preprocess the text accordingly and then apply n-gram functions in libraries like Scikit Learn. For example, modifying the text to insert an undercore (_) to create a single token out of the entities.
+While the custom implementation is useful to understand the mechanics, you can also use existing libraries designed to handle entity awareness better, or preprocess the text accordingly and then apply n-gram functions in libraries like Scikit Learn. For example, modifying the text to insert an undercore (\_) to create a single token out of the entities.
 
 ```python
 import pandas as pd
@@ -185,7 +185,7 @@ nlp = spacy.load("en_core_web_sm")
 def preprocess_text_v2(text):
   doc = nlp(text)
   new_tokens = []
-  
+
   i=0
   while i < len(doc):
       ent_start_char = None
@@ -228,8 +228,9 @@ In the code, `preprocess_text_v2` replaces spaces within named entities with und
 **Further Reading**
 
 For a deeper understanding of NER and text processing:
-* **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** This book provides an in-depth look at fundamental concepts of natural language processing including text processing and named entity recognition.
-* **"Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper:** This book offers a more hands-on approach to NLP, covering practical techniques in Python with code examples using NLTK, but the general ideas can be applied in similar libraries.
+
+- **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin:** This book provides an in-depth look at fundamental concepts of natural language processing including text processing and named entity recognition.
+- **"Natural Language Processing with Python" by Steven Bird, Ewan Klein, and Edward Loper:** This book offers a more hands-on approach to NLP, covering practical techniques in Python with code examples using NLTK, but the general ideas can be applied in similar libraries.
 
 **Final Thoughts**
 

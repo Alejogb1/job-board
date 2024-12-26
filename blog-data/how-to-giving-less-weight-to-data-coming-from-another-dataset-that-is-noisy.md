@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-giving-less-weight-to-data-coming-from-another-dataset-that-is-noisy"
 ---
 
-alright, so you're dealing with the classic problem of blending data from different sources, and one of those sources is, let's say, less than pristine. it’s a tale as old as time in data science. i’ve been there, trust me, i've seen my fair share of dodgy datasets.
+, so you're dealing with the classic problem of blending data from different sources, and one of those sources is, let's say, less than pristine. it’s a tale as old as time in data science. i’ve been there, trust me, i've seen my fair share of dodgy datasets.
 
 i remember this one project i had back in the early 2010s, working on a system to predict stock prices. i was using two datasets, one from a well-established financial data provider, the kind that charges an arm and a leg, and another from a public api, more freely available but also, predictably, much noisier. the public dataset was essentially a gold mine of social media sentiment, and it was full of typos and random emoji's in place of numbers. the first dataset, the paid one, was rock solid but lacked the "real-time" aspect we were looking for, the social sentiment was great but it would just tank the predictions in our model, it was all over the place. the model wasn't taking into account the different qualities of the inputs, which made the whole thing useless.
 
@@ -47,6 +47,7 @@ import numpy as np
 def mse_loss(y_true, y_pred):
     return np.mean((y_true - y_pred)**2)
 ```
+
 now, let’s add data weights into the mse to adjust the cost, and take into account the origin of the data.
 
 ```python
@@ -109,12 +110,12 @@ this method is more advanced and requires more data and computational power. it 
 
 **some things to consider:**
 
-*   **data exploration**: before implementing any of the above, look at your data, really *look* at it. understanding the nature of the noise is crucial. is it random? is it biased? what are the most common types of errors? that can also give you a better insight on which approach would fit better for your situation.
+- **data exploration**: before implementing any of the above, look at your data, really _look_ at it. understanding the nature of the noise is crucial. is it random? is it biased? what are the most common types of errors? that can also give you a better insight on which approach would fit better for your situation.
 
-*   **validation**: always validate your results. it’s very easy to introduce bugs or end up with a model that's just fitting the noise. cross-validation and hold-out sets are your best friends.
+- **validation**: always validate your results. it’s very easy to introduce bugs or end up with a model that's just fitting the noise. cross-validation and hold-out sets are your best friends.
 
-*   **iterative approach**: start with the simple weighting scheme, if it works, great. if not, try the loss modification. if you want to go full-on, then go data-driven. don’t jump to the most complex solution first; i’ve seen too many people get lost in complexity. also, do not try all at the same time, try one, and when you think it is optimal you go to the next one. it is an iterative process.
+- **iterative approach**: start with the simple weighting scheme, if it works, great. if not, try the loss modification. if you want to go full-on, then go data-driven. don’t jump to the most complex solution first; i’ve seen too many people get lost in complexity. also, do not try all at the same time, try one, and when you think it is optimal you go to the next one. it is an iterative process.
 
-*   **resources**: i highly recommend looking into papers and books related to ensemble learning and multi-source data integration. “the elements of statistical learning” by hastie, tibshirani, and friedman is always a great source. also, searching for methods on handling noisy data specifically in your domain can reveal even more specific and advanced approaches. there's plenty out there once you start looking in the academic side of things.
+- **resources**: i highly recommend looking into papers and books related to ensemble learning and multi-source data integration. “the elements of statistical learning” by hastie, tibshirani, and friedman is always a great source. also, searching for methods on handling noisy data specifically in your domain can reveal even more specific and advanced approaches. there's plenty out there once you start looking in the academic side of things.
 
-and finally, never underestimate the power of data cleaning and preprocessing, sometimes, a simple fix for your noisy data goes a long way and makes it equally good as your other datasets. now, i have to get back to code, it is never a dull moment, *at least* not for me… i once made a typo and sent a cat meme to the entire dev team, *that's* what i call *a purrfect* bug.
+and finally, never underestimate the power of data cleaning and preprocessing, sometimes, a simple fix for your noisy data goes a long way and makes it equally good as your other datasets. now, i have to get back to code, it is never a dull moment, _at least_ not for me… i once made a typo and sent a cat meme to the entire dev team, _that's_ what i call _a purrfect_ bug.

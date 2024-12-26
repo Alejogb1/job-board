@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-i-query-tag-manager-data"
 ---
 
-Alright, let's tackle this. Querying Tag Manager data, eh? It's something I've spent a fair bit of time on over the years, particularly when trying to nail down the specifics of data layer pushes or debugging complex tracking setups. It's definitely not always as straightforward as one might initially hope.
+, let's tackle this. Querying Tag Manager data, eh? It's something I've spent a fair bit of time on over the years, particularly when trying to nail down the specifics of data layer pushes or debugging complex tracking setups. It's definitely not always as straightforward as one might initially hope.
 
-The primary challenge, I've found, isn't so much about the *what*—we're essentially trying to extract information about how our tags and triggers are behaving—but rather the *how*. Google Tag Manager, in its native environment, doesn't offer a direct querying interface like, say, a database. Instead, we’re largely working through its user interface, developer tools, and, for more sophisticated needs, leveraging the Tag Manager API. So, let me break down a few approaches that I've used successfully and some nuances you'll probably encounter.
+The primary challenge, I've found, isn't so much about the _what_—we're essentially trying to extract information about how our tags and triggers are behaving—but rather the _how_. Google Tag Manager, in its native environment, doesn't offer a direct querying interface like, say, a database. Instead, we’re largely working through its user interface, developer tools, and, for more sophisticated needs, leveraging the Tag Manager API. So, let me break down a few approaches that I've used successfully and some nuances you'll probably encounter.
 
 Firstly, a common need is to inspect the data layer itself. In most real-world situations, the data layer is the foundational element upon which your Tag Manager configurations are built. It holds the information that triggers events and populates tag parameters. Within your browser, the developer console is your best friend here. Open the console (usually through F12 or right-click -> Inspect -> Console) and type `dataLayer`. The browser will then show you the current state of your data layer as a Javascript array of objects. As events are pushed into the dataLayer, they'll become visible here.
 
-Now, the *real* challenge begins when you need to analyze data over time, or when you're dealing with a complicated system. The console is great for live debugging, but it’s not so useful when you're trying to understand historical behavior. That’s where custom javascript in Tag Manager itself comes in handy.
+Now, the _real_ challenge begins when you need to analyze data over time, or when you're dealing with a complicated system. The console is great for live debugging, but it’s not so useful when you're trying to understand historical behavior. That’s where custom javascript in Tag Manager itself comes in handy.
 
 Here's a first snippet, specifically for capturing data layer pushes as they happen. I used this extensively during a particularly complex e-commerce tracking setup I worked on a few years back. We were dealing with several asynchronous calls, making standard debugging near impossible:
 
@@ -60,37 +60,35 @@ Here is an example of code using a Node.js and the Google APIs client library:
 
 ```javascript
 //Node.js example
-const {google} = require('googleapis');
-const tagmanager = google.tagmanager('v2');
+const { google } = require("googleapis");
+const tagmanager = google.tagmanager("v2");
 
 async function listTags(accountId, containerId) {
-    const authClient = new google.auth.GoogleAuth({
-        keyFile: 'path/to/your/credentials.json', // Replace with path to your json key
-        scopes: ['https://www.googleapis.com/auth/tagmanager.readonly'],
-      });
-   const auth = await authClient.getClient();
+  const authClient = new google.auth.GoogleAuth({
+    keyFile: "path/to/your/credentials.json", // Replace with path to your json key
+    scopes: ["https://www.googleapis.com/auth/tagmanager.readonly"],
+  });
+  const auth = await authClient.getClient();
 
   const res = await tagmanager.accounts.containers.workspaces.tags.list({
     auth: auth,
-      parent: `accounts/${accountId}/containers/${containerId}/workspaces/live`
+    parent: `accounts/${accountId}/containers/${containerId}/workspaces/live`,
   });
 
   if (res.data.tag) {
-      console.log('Tags:');
-    res.data.tag.forEach(tag => {
+    console.log("Tags:");
+    res.data.tag.forEach((tag) => {
       console.log(` - ${tag.name}:  Type ${tag.type} `);
-        });
-      } else {
-         console.log('No tags found.');
-      }
-
-
+    });
+  } else {
+    console.log("No tags found.");
+  }
 }
 
 // Replace with your account and container ID
-const accountId = 'YOUR_ACCOUNT_ID';
-const containerId = 'YOUR_CONTAINER_ID';
-listTags(accountId,containerId);
+const accountId = "YOUR_ACCOUNT_ID";
+const containerId = "YOUR_CONTAINER_ID";
+listTags(accountId, containerId);
 ```
 
 This node.js example lists all tags within the specified workspace using the `tagmanager.accounts.containers.workspaces.tags.list` API method and your service account authorization. You will need to have already enabled the API in your Google Cloud project and created your service account credentials. This is only a small snippet of the power of the API. You can filter using certain tag properties, update configurations and so on, which is highly useful in deployments and reporting.

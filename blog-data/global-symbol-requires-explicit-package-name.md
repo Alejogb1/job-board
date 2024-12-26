@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "global-symbol-requires-explicit-package-name"
 ---
 
-Alright so you're seeing that "global symbol requires explicit package name" error right Classic Perl move been there done that got the t-shirt and probably a few scars too Let me tell you this isn't some rare unicorn bug it's a bread and butter issue when you're messing around with Perl's scoping rules and package system
+so you're seeing that "global symbol requires explicit package name" error right Classic Perl move been there done that got the t-shirt and probably a few scars too Let me tell you this isn't some rare unicorn bug it's a bread and butter issue when you're messing around with Perl's scoping rules and package system
 
 Basically what's happening is that you're trying to use a variable or subroutine a sub without telling Perl exactly where it lives You've probably got some code that's doing something like this
 
@@ -85,21 +85,22 @@ Let's talk debugging you can use the Perl debugger which you can invoke by doing
 Another method that I use all the time is putting `use Data::Dumper` at the top of the program and then `print Dumper(\@myvariable)` or something like that to understand what the program is doing at runtime. You'd be surprised at how many bugs you can spot just by seeing a dump of the data.
 
 As for resources I highly recommend these books and materials if you really want to get your Perl skills on point:
- * "Programming Perl" by Larry Wall et al which is the classic for any Perl beginner
- * "Effective Perl Programming" by Joseph N. Hall this one focuses on idioms best practices and some advanced topics
- * the perldoc documentation perldoc perlmod perldoc perlsub and perldoc perlsyn those are very important
- * "Modern Perl" by chromatic this a more recent work and helps you with more up to date material and practices
 
-Alright so to summarize here's what we've learned:
+- "Programming Perl" by Larry Wall et al which is the classic for any Perl beginner
+- "Effective Perl Programming" by Joseph N. Hall this one focuses on idioms best practices and some advanced topics
+- the perldoc documentation perldoc perlmod perldoc perlsub and perldoc perlsyn those are very important
+- "Modern Perl" by chromatic this a more recent work and helps you with more up to date material and practices
 
-* "global symbol requires explicit package name" means Perl doesn't know where a variable or sub is defined
-* Packages organize your code and create namespaces
-* Use `package` to define packages
-* `our` keyword makes variables visible within the package but only if you use it.
-* `use` is the way to import modules and symbols while `require` is just for file inclusion.
-* `Exporter` module is very important to understand how modules should behave.
-* You should use the debugger `perl -d` to debug your problems.
-* `Data::Dumper` is your friend for inspecting the values of variables
-* And there's a lot of material that will greatly help you learn Perl
+so to summarize here's what we've learned:
+
+- "global symbol requires explicit package name" means Perl doesn't know where a variable or sub is defined
+- Packages organize your code and create namespaces
+- Use `package` to define packages
+- `our` keyword makes variables visible within the package but only if you use it.
+- `use` is the way to import modules and symbols while `require` is just for file inclusion.
+- `Exporter` module is very important to understand how modules should behave.
+- You should use the debugger `perl -d` to debug your problems.
+- `Data::Dumper` is your friend for inspecting the values of variables
+- And there's a lot of material that will greatly help you learn Perl
 
 Now go forth and may your code be error-free and as the old programmers say "If it works don't touch it and also remember to use git". And that is my take on your issue hope this helps and you manage to learn some Perl stuff

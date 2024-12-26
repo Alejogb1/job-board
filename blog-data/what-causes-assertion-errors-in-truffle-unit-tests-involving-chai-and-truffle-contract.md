@@ -4,63 +4,63 @@ date: "2024-12-23"
 id: "what-causes-assertion-errors-in-truffle-unit-tests-involving-chai-and-truffle-contract"
 ---
 
-Okay, let's tackle this. I've seen my fair share of assertion errors in Truffle tests, especially when combining Chai with `truffle-contract`, so I can definitely shed some light on this. It’s often not a single thing, but a combination of factors that can trip you up. Fundamentally, these errors boil down to a mismatch between what your tests *expect* and what the actual smart contract code delivers. This mismatch manifests itself in a few common ways.
+, let's tackle this. I've seen my fair share of assertion errors in Truffle tests, especially when combining Chai with `truffle-contract`, so I can definitely shed some light on this. It’s often not a single thing, but a combination of factors that can trip you up. Fundamentally, these errors boil down to a mismatch between what your tests _expect_ and what the actual smart contract code delivers. This mismatch manifests itself in a few common ways.
 
-One frequent culprit, in my experience, stems from misunderstandings around asynchronous operations. Truffle, at its core, interacts with a blockchain, and these interactions are inherently asynchronous. We send transactions, wait for them to be mined into blocks, and *then* we can check their outcomes. Chai's assertions, however, are synchronous. This means we can't directly assert on a pending promise – it simply hasn't resolved yet. When I first started working with truffle, I remember countless hours wasted because I wasn't correctly handling promises. I was trying to check a value before the transaction had even finalized!
+One frequent culprit, in my experience, stems from misunderstandings around asynchronous operations. Truffle, at its core, interacts with a blockchain, and these interactions are inherently asynchronous. We send transactions, wait for them to be mined into blocks, and _then_ we can check their outcomes. Chai's assertions, however, are synchronous. This means we can't directly assert on a pending promise – it simply hasn't resolved yet. When I first started working with truffle, I remember countless hours wasted because I wasn't correctly handling promises. I was trying to check a value before the transaction had even finalized!
 
 The first place you'll usually encounter this is when dealing with methods that modify the blockchain's state (those non-`view` or `pure` methods). These return transaction receipts. We need to first wait for the receipt, then interact with that to get the logs that we want to assert against. A typical mistake looks something like this (and believe me, I've seen it far too many times):
 
 ```javascript
-    it("should fail because it asserts before the transaction completes", async () => {
-        const myContractInstance = await MyContract.deployed();
-        const result = myContractInstance.mySetterFunction(42);
-        // this will fail because result is a pending promise.
-        expect(result).to.equal(42); // this is incorrect and *will* throw
-    });
+it("should fail because it asserts before the transaction completes", async () => {
+  const myContractInstance = await MyContract.deployed();
+  const result = myContractInstance.mySetterFunction(42);
+  // this will fail because result is a pending promise.
+  expect(result).to.equal(42); // this is incorrect and *will* throw
+});
 ```
 
-This test above attempts to assert a value returned directly from calling `mySetterFunction`, before the transaction has completed and its state has been reflected on chain. *result* is a pending promise, not the number 42.
+This test above attempts to assert a value returned directly from calling `mySetterFunction`, before the transaction has completed and its state has been reflected on chain. _result_ is a pending promise, not the number 42.
 
 The correct approach is to await the promise returned by the transaction and use the returned transaction receipt to assert the result. Here's a working snippet that demonstrates this principle:
 
 ```javascript
-    it("should pass, awaiting the transaction before assertion", async () => {
-       const myContractInstance = await MyContract.deployed();
-       const transaction = await myContractInstance.mySetterFunction(42);
-       expect(transaction).to.have.property('receipt');
-       // now that we have waited, we can assert on the receipt or relevant data it returns
-       expect(transaction.logs[0].args._value).to.eq(42);
-     });
+it("should pass, awaiting the transaction before assertion", async () => {
+  const myContractInstance = await MyContract.deployed();
+  const transaction = await myContractInstance.mySetterFunction(42);
+  expect(transaction).to.have.property("receipt");
+  // now that we have waited, we can assert on the receipt or relevant data it returns
+  expect(transaction.logs[0].args._value).to.eq(42);
+});
 ```
 
-Here, the `await` keyword ensures that the test pauses until the transaction is processed. We're then checking that we received a transaction *receipt*, a structure with information about the transaction including the log data. This example assumes your contract emits an event with the value set. If it doesn't emit an event, you'd need to check the contract state directly after the transaction. This introduces the next major source of issues with assertion errors.
+Here, the `await` keyword ensures that the test pauses until the transaction is processed. We're then checking that we received a transaction _receipt_, a structure with information about the transaction including the log data. This example assumes your contract emits an event with the value set. If it doesn't emit an event, you'd need to check the contract state directly after the transaction. This introduces the next major source of issues with assertion errors.
 
-Secondly, incorrect assertions against contract state is a very frequent issue. `truffle-contract` abstracts the underlying details of web3 interactions, but this abstraction can sometimes obscure the exact behavior of the contract. Specifically, values returned by functions marked as `view` or `pure` *do not* involve a transaction; they are read directly from the node. However, when we want to check if the blockchain's *state* has been modified after a transaction, we *must* fetch this state separately, as it does not appear in transaction receipts directly. This means calling the state reading functions after the transaction and asserting on those. Here’s an example of a typical error:
+Secondly, incorrect assertions against contract state is a very frequent issue. `truffle-contract` abstracts the underlying details of web3 interactions, but this abstraction can sometimes obscure the exact behavior of the contract. Specifically, values returned by functions marked as `view` or `pure` _do not_ involve a transaction; they are read directly from the node. However, when we want to check if the blockchain's _state_ has been modified after a transaction, we _must_ fetch this state separately, as it does not appear in transaction receipts directly. This means calling the state reading functions after the transaction and asserting on those. Here’s an example of a typical error:
 
 ```javascript
-   it("should fail due to not fetching updated state", async () => {
-        const myContractInstance = await MyContract.deployed();
-        await myContractInstance.mySetterFunction(100);
-        const currentValue = myContractInstance.myGetterFunction();
-       // incorrect assertion: tries to check the return of the *initial* getter
-        expect(currentValue).to.equal(100);  // this will almost certainly fail
-    });
+it("should fail due to not fetching updated state", async () => {
+  const myContractInstance = await MyContract.deployed();
+  await myContractInstance.mySetterFunction(100);
+  const currentValue = myContractInstance.myGetterFunction();
+  // incorrect assertion: tries to check the return of the *initial* getter
+  expect(currentValue).to.equal(100); // this will almost certainly fail
+});
 ```
 
-Here, the test is fetching the state *before* the transaction has been mined. We need to call the getter *after* waiting for the transaction and confirming it was processed and mined into a block.
+Here, the test is fetching the state _before_ the transaction has been mined. We need to call the getter _after_ waiting for the transaction and confirming it was processed and mined into a block.
 
 Here’s a corrected implementation:
 
 ```javascript
-   it("should correctly fetch updated state after a transaction", async () => {
-       const myContractInstance = await MyContract.deployed();
-       await myContractInstance.mySetterFunction(100);
-       const currentValue = await myContractInstance.myGetterFunction();
-       expect(currentValue).to.eq(100); // will now pass as the state has been updated
-  });
+it("should correctly fetch updated state after a transaction", async () => {
+  const myContractInstance = await MyContract.deployed();
+  await myContractInstance.mySetterFunction(100);
+  const currentValue = await myContractInstance.myGetterFunction();
+  expect(currentValue).to.eq(100); // will now pass as the state has been updated
+});
 ```
 
-Note the crucial `await` before `myContractInstance.myGetterFunction()`. This ensures that we fetch the current value *after* the state-altering transaction has been processed.
+Note the crucial `await` before `myContractInstance.myGetterFunction()`. This ensures that we fetch the current value _after_ the state-altering transaction has been processed.
 
 Lastly, it's essential to be mindful of the types of data you're comparing and asserting against. Blockchain data often arrives as `BigNumber` objects from the `web3` library rather than simple JavaScript numbers. Attempting to compare a `BigNumber` with a JavaScript number directly will almost always lead to an assertion error. The `chai` library has special matchers for handling `BigNumber` objects. Make sure to use the appropriate ones when dealing with values returned from smart contracts. Also remember that event logs are strings so make sure you convert them if you expect numbers.
 

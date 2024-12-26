@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-qts-paintevent-refresh-multiple-widgets-simultaneously"
 ---
 
-Alright, let's dive into this. I've definitely been down that rabbit hole before—managing updates across multiple widgets in Qt can get a little complex, especially when you’re aiming for smooth, concurrent refreshes. Forget those awkward, staggered updates that make your application feel sluggish; what we want is a clean, almost instantaneous visual update.
+, let's dive into this. I've definitely been down that rabbit hole before—managing updates across multiple widgets in Qt can get a little complex, especially when you’re aiming for smooth, concurrent refreshes. Forget those awkward, staggered updates that make your application feel sluggish; what we want is a clean, almost instantaneous visual update.
 
 The core issue centers around how `paintEvent` is called and how Qt manages the repaint process. By default, Qt calls `paintEvent` on a widget when it needs to be redrawn. This can happen because the widget's window was exposed, resized, or explicitly marked for an update via `update()` or `repaint()`. Now, if you're working with several widgets that need to refresh together, calling `update()` or `repaint()` on each one independently can cause those staggered updates we’re trying to avoid. The key lies in understanding how to trigger these updates in a way that minimizes visual artifacts and maximizes performance.
 
@@ -151,11 +151,12 @@ int main(int argc, char *argv[]) {
 #include "main.moc"
 
 ```
+
 Here, the `DataModel` manages the data and emits a signal when an update occurs. Each `CustomWidget` is connected to this signal, and when the model emits, each widget request update on itself. This approach usually gives significantly better synchronization without resorting to complex manual painting logic.
 
 For very complex scenes, you might find yourself needing an entirely different approach. In some scenarios, you could render to an offscreen buffer once and then use that buffer to update all your widgets. In this approach, you draw all content onto an image and then use `QPainter` to render this image to various widgets. In such a situation, one might employ techniques more aligned with graphics programming, as you’re effectively orchestrating an image buffer refresh and not relying on the standard `paintEvent` calls.
 
-Here’s an outline of that process. Note, I have not included a working example in the text, due to its complexity: you would create a `QImage`, draw on it with `QPainter`, and then in your widgets’ `paintEvent`, you would draw this `QImage` to screen using `QPainter::drawImage`. The key aspect is to *ensure your image update is done just once per frame*. Each widget would then render the shared image within its paint event. If you have very different widget shapes, you would need to clip the image before rendering to the widget to maintain proper visualization.
+Here’s an outline of that process. Note, I have not included a working example in the text, due to its complexity: you would create a `QImage`, draw on it with `QPainter`, and then in your widgets’ `paintEvent`, you would draw this `QImage` to screen using `QPainter::drawImage`. The key aspect is to _ensure your image update is done just once per frame_. Each widget would then render the shared image within its paint event. If you have very different widget shapes, you would need to clip the image before rendering to the widget to maintain proper visualization.
 
 These methods aren't mutually exclusive. Depending on the complexity and synchronization requirements of your user interface, you can combine these approaches. For example, for a main graph widget that updates a complex scene, use the off-screen render approach. For smaller preview widgets, you could use the shared model approach. This allows for a more targeted optimization process.
 

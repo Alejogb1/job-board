@@ -4,19 +4,19 @@ date: "2024-12-16"
 id: "whats-the-issue-with-detaching-aks-clusters-through-azure-ml-sdk"
 ---
 
-Alright, let’s talk about detaching Azure Kubernetes Service (AKS) clusters from Azure Machine Learning workspaces using the Azure ML SDK, because that’s a situation that can get, let's say, *interesting*. It's not a simple “unplug and go” operation, and I’ve seen more than one team stumble into pitfalls here, including one of my own early projects. I recall a specific scenario where we were attempting to migrate compute resources between subscriptions, a relatively common task in larger enterprise environments. The initial assumption, naturally, was that detaching and then re-attaching in the new subscription would be clean. It wasn't.
+, let’s talk about detaching Azure Kubernetes Service (AKS) clusters from Azure Machine Learning workspaces using the Azure ML SDK, because that’s a situation that can get, let's say, _interesting_. It's not a simple “unplug and go” operation, and I’ve seen more than one team stumble into pitfalls here, including one of my own early projects. I recall a specific scenario where we were attempting to migrate compute resources between subscriptions, a relatively common task in larger enterprise environments. The initial assumption, naturally, was that detaching and then re-attaching in the new subscription would be clean. It wasn't.
 
 The core issue stems from the fact that the connection between the Azure ML workspace and an attached AKS cluster isn't just a simple reference. It's a deep integration where Azure ML installs agents and other necessary components onto the AKS cluster to facilitate job submission and management. When you attempt to detach an AKS cluster through the SDK, you're essentially severing this established link, but the underlying infrastructure remnants are not always cleanly removed, and therein lies the problem.
 
-More specifically, let's consider what actually happens when you call `compute.detach()` from the Azure ML SDK. It attempts to remove the association of the AKS cluster from the workspace. However, it does not uninstall the *azureml-extension*, nor does it revert changes made within the AKS cluster itself, such as the creation of namespaces or deployment of those agents and supporting services used by Azure ML. The compute target is simply marked as detached within the workspace's metadata. This leads to several potential headaches:
+More specifically, let's consider what actually happens when you call `compute.detach()` from the Azure ML SDK. It attempts to remove the association of the AKS cluster from the workspace. However, it does not uninstall the _azureml-extension_, nor does it revert changes made within the AKS cluster itself, such as the creation of namespaces or deployment of those agents and supporting services used by Azure ML. The compute target is simply marked as detached within the workspace's metadata. This leads to several potential headaches:
 
 1.  **Resource Clutter:** The actual agents and associated deployment on the AKS cluster remain active. This isn't generally detrimental if you intend to re-attach the cluster to an Azure ML workspace later; however, it does mean you have a cluster with orphaned resources. If not handled properly, these resources can become ghost deployments, consuming resources and potentially causing unexpected behavior should you attempt a fresh attach in the same or a different workspace, especially without proper cleanup.
 
 2.  **Incomplete Cleanup:** If you are deleting or planning on deleting the AKS cluster after detachment, you may want those resources purged. Relying solely on the detach operation from the Azure ML SDK will not remove them. You’ll need to perform manual cleanup operations within the AKS cluster itself after detaching to ensure a clean slate, which adds additional complexity and potential for mistakes.
 
-3. **Unexpected Attach Issues:** If you attempt to re-attach an AKS cluster that was previously detached without proper cleanup, the Azure ML agent installation process may encounter conflicts. Existing deployments can interfere with the new installation, leading to errors, and potentially resulting in a non-functioning compute target. These errors aren't always transparent, and troubleshooting can be time-consuming. I remember one situation where the compute target would appear as attached, yet jobs wouldn't run on the cluster. It took a bit of careful investigation to find residual agents that were creating issues.
+3.  **Unexpected Attach Issues:** If you attempt to re-attach an AKS cluster that was previously detached without proper cleanup, the Azure ML agent installation process may encounter conflicts. Existing deployments can interfere with the new installation, leading to errors, and potentially resulting in a non-functioning compute target. These errors aren't always transparent, and troubleshooting can be time-consuming. I remember one situation where the compute target would appear as attached, yet jobs wouldn't run on the cluster. It took a bit of careful investigation to find residual agents that were creating issues.
 
-So, how do we mitigate these issues? Well, you need to be meticulous. Detaching from the SDK should *always* be followed by a manual verification step and, likely, cleanup. You cannot rely on the detach command alone to fully release the connection.
+So, how do we mitigate these issues? Well, you need to be meticulous. Detaching from the SDK should _always_ be followed by a manual verification step and, likely, cleanup. You cannot rely on the detach command alone to fully release the connection.
 
 Let’s look at some practical examples. Here's how the detach process usually looks in Python using the Azure ML SDK:
 
@@ -34,7 +34,7 @@ except Exception as e:
     print(f"Error detaching AKS compute target '{aks_name}': {e}")
 ```
 
-This code *detaches* the compute resource as far as the AzureML workspace's perspective is concerned. It does not remove any deployments or agents within the AKS cluster itself. This is the crux of the issue.
+This code _detaches_ the compute resource as far as the AzureML workspace's perspective is concerned. It does not remove any deployments or agents within the AKS cluster itself. This is the crux of the issue.
 
 Now, let’s demonstrate what you'd ideally do next. The following snippet outlines the process of cleaning up the `azureml` namespace within your AKS cluster using the Azure CLI after you've done the above detach step:
 

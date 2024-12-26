@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-build-a-multi-output-cnn-in-pytorch-using-a-manually-created-traintest-dictionary"
 ---
 
-Alright, let's talk multi-output convolutional neural networks (CNNs) in PyTorch, specifically when you're juggling a custom train/test dictionary. It's a scenario I've encountered more than a few times, and believe me, the devil is often in the details when moving beyond basic tutorials. I remember one project involving multi-modal medical imaging, where I had to predict multiple disease markers from a single scan. The data wasn't structured in your typical folder-based image layout, leading to a similar setup. It was a learning experience, to say the least, and it prompted the necessity for a manually constructed dataset representation and associated training structure.
+, let's talk multi-output convolutional neural networks (CNNs) in PyTorch, specifically when you're juggling a custom train/test dictionary. It's a scenario I've encountered more than a few times, and believe me, the devil is often in the details when moving beyond basic tutorials. I remember one project involving multi-modal medical imaging, where I had to predict multiple disease markers from a single scan. The data wasn't structured in your typical folder-based image layout, leading to a similar setup. It was a learning experience, to say the least, and it prompted the necessity for a manually constructed dataset representation and associated training structure.
 
 The core challenge with your request revolves around properly feeding diverse output labels to your model and handling them effectively during backpropagation. The standard PyTorch image datasets, like `ImageFolder`, are great for one-to-one mapping. But you have a dictionary, which is much more flexible, yet requires a bit more scaffolding.
 
@@ -89,10 +89,11 @@ def train_model(model, train_loader, optimizer, criterion, num_epochs, device):
             optimizer.step()
         print(f'Epoch: {epoch+1}, Loss: {loss.item()}')
 ```
+
 This training function receives the model, the train dataloader, the optimizier, the loss function, number of training epochs, and the target device for training. It iterates over the training dataloader, and performs a standard backpropagation loop. The essential piece here is the loss computation. We iterate through each output layer generated in `model(images)` and calculate loss on it by comparing it to the corresponding column within the labels. Then the accumulated loss is used for backpropagation.
 
 In summary, the process involves building a custom dataset, designing a model with multiple output layers (the exact nature of these layers depends on your target task - classification vs regression), then defining your loss criterion.
 
-For those interested in delving deeper, I'd strongly recommend checking out *Deep Learning* by Ian Goodfellow, Yoshua Bengio, and Aaron Courville for a solid theoretical grounding. Also, for PyTorch specifics, I'd suggest going through the official PyTorch tutorials, particularly those on creating custom datasets. Look into research papers dealing with multi-output learning, specifically papers that address various approaches to multi-task learning. These resources should provide a very good foundation.
+For those interested in delving deeper, I'd strongly recommend checking out _Deep Learning_ by Ian Goodfellow, Yoshua Bengio, and Aaron Courville for a solid theoretical grounding. Also, for PyTorch specifics, I'd suggest going through the official PyTorch tutorials, particularly those on creating custom datasets. Look into research papers dealing with multi-output learning, specifically papers that address various approaches to multi-task learning. These resources should provide a very good foundation.
 
 The key takeaway here is that while PyTorch provides many conveniences, understanding how to adapt its fundamental structures to your needs—like using custom datasets with variable outputs—is crucial. The examples presented here are a starting point; adapt them to your precise specifications and target task.

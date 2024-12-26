@@ -4,15 +4,15 @@ date: "2024-12-16"
 id: "how-should-ddd-handle-distributed-status-across-domains"
 ---
 
-Okay, let's tackle this. I've been in the trenches with distributed systems for what feels like an eternity, and handling status across domain boundaries within a distributed domain-driven design (ddd) architecture is definitely a recurring challenge, one that I've seen go sideways many times. We're essentially dealing with the inherent tension between domain autonomy and the need for coordination. Let me walk you through how I typically approach this, drawing on my experiences.
+, let's tackle this. I've been in the trenches with distributed systems for what feels like an eternity, and handling status across domain boundaries within a distributed domain-driven design (ddd) architecture is definitely a recurring challenge, one that I've seen go sideways many times. We're essentially dealing with the inherent tension between domain autonomy and the need for coordination. Let me walk you through how I typically approach this, drawing on my experiences.
 
 The crux of the problem, as i see it, is that we can't let one domain reach into another to directly interrogate its state. That violates the fundamental principle of domain encapsulation. But the reality is that domains often need to react to changes in other domains, which brings us to the crux of distributed status. It's not about having one central authority that dictates the "true" status, but rather, allowing each domain to maintain its own consistent view of the world, often in relation to other domains.
 
-My preferred approach revolves around the concept of *eventual consistency*, achieved through asynchronous communication, typically using message brokers. Specifically, we would utilize domain events to broadcast relevant status changes. This means when a domain undergoes a state transition that might be of interest to others, it emits a domain event. These events are descriptive, immutable records of "something that happened" within that domain. Another domain, subscribed to these events, can then independently update its local data to reflect these changes, according to its own domain logic. Crucially, we are not asking the emitting domain for its current status; rather, we are reacting to its past state changes.
+My preferred approach revolves around the concept of _eventual consistency_, achieved through asynchronous communication, typically using message brokers. Specifically, we would utilize domain events to broadcast relevant status changes. This means when a domain undergoes a state transition that might be of interest to others, it emits a domain event. These events are descriptive, immutable records of "something that happened" within that domain. Another domain, subscribed to these events, can then independently update its local data to reflect these changes, according to its own domain logic. Crucially, we are not asking the emitting domain for its current status; rather, we are reacting to its past state changes.
 
 It is absolutely vital to understand that this model does not guarantee instantaneous consistency. there is a propagation delay inherent in this asynchronous mechanism. This is acceptable – in fact, it's desired – in most DDD contexts, particularly when we're dealing with multiple services.
 
-Let's make this concrete. Consider an e-commerce system with two domains: `order` and `inventory`. When an order is placed in the `order` domain, we would *not* directly query the `inventory` domain to check stock. Instead, the `order` domain emits an `orderplaced` event. The `inventory` domain, subscribed to this event, receives it and, based on its logic, updates its stock levels and may emit further events like `stockreserved` or `stockdepleted`. Here is a rough example in a python-like syntax of what this could look like:
+Let's make this concrete. Consider an e-commerce system with two domains: `order` and `inventory`. When an order is placed in the `order` domain, we would _not_ directly query the `inventory` domain to check stock. Instead, the `order` domain emits an `orderplaced` event. The `inventory` domain, subscribed to this event, receives it and, based on its logic, updates its stock levels and may emit further events like `stockreserved` or `stockdepleted`. Here is a rough example in a python-like syntax of what this could look like:
 
 ```python
 # inside the 'order' domain
@@ -35,6 +35,7 @@ class OrderPlaced:
        self.order_id = order_id
        self.items = items
 ```
+
 And then in the `inventory` domain
 
 ```python
@@ -74,6 +75,7 @@ class OrderFailed:
         self.reason = reason
 
 ```
+
 You can see how the `order` domain doesn't directly know or care about the inventory level. it simply emits an `orderplaced` event. This allows for loose coupling and independent deployments of the two domains. the `inventory` domain, using the handler `handle_order_placed` has received the event and then acts on the data. Crucially note that the `order` domain never directly queries the `inventory` domain; everything happens asynchronously through the event bus.
 
 Another practical example involves a user management domain and a notification service domain. When a user changes their email preference in the user domain, it should not directly trigger an update in the notification service. Instead, the user domain would emit a `useremailpreferenceschanged` event. The notification service would then receive the event and update its internal representation of user preferences, allowing it to send notifications according to the user's settings. Here is a snippet:
@@ -136,6 +138,6 @@ event_bus.subscribe('ArticlePublished', handle_article_published)
 
 These examples illustrate a core pattern: domains communicate their status changes via events, not by directly exposing their current state. the consuming domain is then responsible for maintaining its consistency, often by creating a local projection of the data relevant to its domain.
 
-Now, where do you go to dive deeper into this? I strongly recommend reading *domain-driven design: tackling complexity in the heart of software* by eric evans, which lays out all these core principles. For more practical insights into distributed systems patterns, *building microservices* by sam newman is a great resource. *designing data-intensive applications* by martin kleppmann will also provide context on the challenges inherent in distributed architectures and strategies for managing data consistency and integrity.
+Now, where do you go to dive deeper into this? I strongly recommend reading _domain-driven design: tackling complexity in the heart of software_ by eric evans, which lays out all these core principles. For more practical insights into distributed systems patterns, _building microservices_ by sam newman is a great resource. _designing data-intensive applications_ by martin kleppmann will also provide context on the challenges inherent in distributed architectures and strategies for managing data consistency and integrity.
 
-One important note; there isn't *one* correct way to manage distributed status – context is king. The optimal solution will often depend on the level of consistency required by the business, the complexity of the system, and the trade-offs that teams are comfortable with making. My personal experiences suggest that adopting a pattern of event-driven architecture, along with careful domain boundary definition, is one of the most pragmatic ways to tame the complexities of managing status across domains in a distributed system.
+One important note; there isn't _one_ correct way to manage distributed status – context is king. The optimal solution will often depend on the level of consistency required by the business, the complexity of the system, and the trade-offs that teams are comfortable with making. My personal experiences suggest that adopting a pattern of event-driven architecture, along with careful domain boundary definition, is one of the most pragmatic ways to tame the complexities of managing status across domains in a distributed system.

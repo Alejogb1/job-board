@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "sparql-compare-versions-data"
 ---
 
-Okay so you're asking about comparing versions of data in SPARQL it's not the most straightforward thing but yeah I've dealt with this a bunch of times myself lets break it down
+you're asking about comparing versions of data in SPARQL it's not the most straightforward thing but yeah I've dealt with this a bunch of times myself lets break it down
 
-First things first you need a way to actually *have* versions right raw triple data doesn't magically keep track of its own history you've got to put that in there manually think of it like your git commits for data instead of code
+First things first you need a way to actually _have_ versions right raw triple data doesn't magically keep track of its own history you've got to put that in there manually think of it like your git commits for data instead of code
 
 I remember my early days hacking on a knowledge graph project I was so busy building the thing I just blasted updates directly into the triple store and oh boy did I regret that later when a colleague came to me asking for diffs between versions It was a whole mess of manual queries and comparisons we ended up building a custom ingestion pipeline that included versioning because lesson learned the hard way always think about versioning up front it saves you a lot of headaches later
 
-Okay so lets say you're a bit smarter than my younger self and have a system that tracks versions how do you actually query that using SPARQL
+lets say you're a bit smarter than my younger self and have a system that tracks versions how do you actually query that using SPARQL
 
 The core idea is to add timestamps or version ids to your triples so you can query for specific states of the data It’s not enough to just say what is the current state you need to specify the context in which that state existed
 
@@ -115,7 +115,7 @@ WHERE {
 }
 ```
 
-Okay this one is a little more involved It uses a `MINUS` operator to subtract the triples present at an earlier timestamp from the ones existing at a later timestamp it identifies the difference between two snapshots I had a huge fight with this query when starting to code in SPARQL the first time because I always struggled with the `MINUS` operator but after you get it then you are able to write much more sophisticated code
+this one is a little more involved It uses a `MINUS` operator to subtract the triples present at an earlier timestamp from the ones existing at a later timestamp it identifies the difference between two snapshots I had a huge fight with this query when starting to code in SPARQL the first time because I always struggled with the `MINUS` operator but after you get it then you are able to write much more sophisticated code
 
 A side note about the `MINUS` operation be really careful with it because it can perform sub-optimally if not used correctly you might need to use different patterns for very large datasets and maybe you would be better off performing the query in two steps
 
@@ -129,13 +129,13 @@ Also pre-calculating common diffs or materialized views can be a lifesaver For e
 
 About resources yeah I’m not a fan of just throwing random links and honestly I don't even remember the last time I clicked one here's what I would recommend
 
-*   **"Foundations of Semantic Web Technologies" by Pascal Hitzler et al:** This book is your general semantic web bible if you want to delve into the foundations of SPARQL and RDF and it is my favorite one.
+- **"Foundations of Semantic Web Technologies" by Pascal Hitzler et al:** This book is your general semantic web bible if you want to delve into the foundations of SPARQL and RDF and it is my favorite one.
 
-*   **"Linked Data: Evolving the Web into a Global Data Space" by Tom Heath and Christian Bizer:** This one is much more pragmatic if you really want to see the actual use cases of the technologies.
+- **"Linked Data: Evolving the Web into a Global Data Space" by Tom Heath and Christian Bizer:** This one is much more pragmatic if you really want to see the actual use cases of the technologies.
 
-*   **Research papers on temporal graph databases:** Look for stuff from the ACM SIGMOD or VLDB conferences This is where you’ll find all the cutting-edge stuff
+- **Research papers on temporal graph databases:** Look for stuff from the ACM SIGMOD or VLDB conferences This is where you’ll find all the cutting-edge stuff
 
-*   **Your triple store's documentation:** Seriously. Spend time reading it. You’d be surprised how much you can learn by deeply going into documentation
+- **Your triple store's documentation:** Seriously. Spend time reading it. You’d be surprised how much you can learn by deeply going into documentation
 
 To finalize this I’ll leave one last tip if you’re going to deal with a massive amount of data try not to use SPARQL for everything. Maybe it is much easier to process data in batches before adding to the triple store or it might be worth it to just dump the whole data to a different kind of database if that is what you are trying to achieve and if it matches better your use case SPARQL is amazing but it’s not the only tool out there It’s important to choose the right tool for the right job and that's why we have so many languages and databases today.
 

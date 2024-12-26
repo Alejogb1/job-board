@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-rank-rows-in-a-dataset-based-on-similar-text-content-using-python"
 ---
 
-Okay, let's talk about ranking rows based on textual similarity. I’ve been down this road a few times, most notably when I was building a content recommendation engine for an e-learning platform years back. We needed to surface courses that had similar learning objectives, but the course descriptions varied wildly in length and wording. Let me walk you through the approach we took, it should give you a solid foundation for your own implementation.
+, let's talk about ranking rows based on textual similarity. I’ve been down this road a few times, most notably when I was building a content recommendation engine for an e-learning platform years back. We needed to surface courses that had similar learning objectives, but the course descriptions varied wildly in length and wording. Let me walk you through the approach we took, it should give you a solid foundation for your own implementation.
 
 The core challenge here is to quantify similarity between text strings, which aren't naturally numbers. We need to transform that text into a numerical representation that a computer can understand and compare. We typically achieve this by using techniques from natural language processing (nlp). And when it comes to ranking, we're really talking about sorting rows based on these calculated similarity scores.
 
@@ -16,7 +16,7 @@ The general process is this: first, we preprocess our text data to clean it up a
 
 **Similarity Calculation and Ranking:** Finally, we calculate the similarity between the text vectors, most often using cosine similarity. Cosine similarity measures the angle between two vectors; the smaller the angle (cosine closer to 1), the more similar the text is. This will provide a value between 0 and 1 for each comparison and allows you to build a ranked list, ordering rows based on how much each row is similar to a selected reference row.
 
-Okay, let me show you some practical examples in Python using the `scikit-learn` and `nltk` libraries for tf-idf and spaCy for embeddings:
+, let me show you some practical examples in Python using the `scikit-learn` and `nltk` libraries for tf-idf and spaCy for embeddings:
 
 ```python
 import pandas as pd
@@ -53,7 +53,7 @@ def rank_rows_tfidf(df, reference_row, text_column):
     ranked_df = ranked_df.sort_values('similarity_score', ascending=False)
 
     return ranked_df
-    
+
 # Sample Usage
 data = {'text': ["This is an introduction to Python programming.",
             "Python is a versatile programming language.",
@@ -85,7 +85,7 @@ def get_embedding(text):
 def rank_rows_embeddings(df, reference_row, text_column):
     df['embeddings'] = df[text_column].apply(get_embedding)
     reference_embedding = df['embeddings'].iloc[reference_row].reshape(1, -1)
-    
+
     embeddings_matrix = [emb.reshape(1, -1) for emb in df['embeddings']]
 
     similarity_scores = [cosine_similarity(reference_embedding, emb).flatten()[0] for emb in embeddings_matrix]
@@ -101,6 +101,7 @@ ranked_df = rank_rows_embeddings(df, 0, 'text')
 print("\nRanking with embeddings:\n", ranked_df)
 
 ```
+
 Here, I'm using spaCy to get embeddings for the text. The pre-trained model `en_core_web_md` provides decent quality embeddings without the need to train our own from scratch. As you can see, the approach remains similar; we get vectors, calculate the cosine similarity, and rank the rows.
 For larger datasets or more precise analysis, you might also need to consider more advanced techniques, like sentence transformers. Sentence transformers are capable of generating more nuanced sentence-level embeddings, capturing context better than standard word embeddings:
 
@@ -118,7 +119,7 @@ def get_sentence_embedding(text):
 def rank_rows_sentence_embeddings(df, reference_row, text_column):
     df['sentence_embeddings'] = df[text_column].apply(get_sentence_embedding)
     reference_embedding = df['sentence_embeddings'].iloc[reference_row].reshape(1, -1)
-    
+
     embeddings_matrix = [emb.reshape(1, -1) for emb in df['sentence_embeddings']]
     similarity_scores = [cosine_similarity(reference_embedding, emb).flatten()[0] for emb in embeddings_matrix]
 
@@ -127,12 +128,13 @@ def rank_rows_sentence_embeddings(df, reference_row, text_column):
     ranked_df = ranked_df.sort_values('similarity_score', ascending=False)
 
     return ranked_df
-    
+
 # Sample Usage (same df)
 ranked_df = rank_rows_sentence_embeddings(df, 0, 'text')
 print("\nRanking with sentence embeddings:\n", ranked_df)
 
 ```
+
 As you can see, the main difference here is how we get the vector embeddings. We are now using the sentence transformer library which is optimized to get embeddings that better represent the meaning of a text, even when it is a whole sentence.
 
 **Resources:**

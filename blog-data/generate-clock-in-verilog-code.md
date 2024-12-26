@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "generate-clock-in-verilog-code"
 ---
 
-Okay so you want a clock generator in Verilog right I've been there man I mean everyone's been there if you've ever touched an FPGA or ASIC for more than five minutes It's like the hello world of hardware description languages
+you want a clock generator in Verilog right I've been there man I mean everyone's been there if you've ever touched an FPGA or ASIC for more than five minutes It's like the hello world of hardware description languages
 
 So first off let's get this straight a clock isn't just some magical thing that happens it's a signal a very specific oscillating signal that we use to synchronize operations in digital circuits. Think of it as the heartbeat of your system Without it everything's just a bunch of logic gates doing their thing randomly and that's not useful at all. You need that rhythm to make things happen in the correct sequence.
 
@@ -53,7 +53,7 @@ module clock_divider #(parameter DIVISOR = 2) (input clk_in, output reg clk_out)
 endmodule
 ```
 
-This `clock_divider` module takes an input clock `clk_in` and generates a new clock `clk_out` at a lower frequency specified by the `DIVISOR` parameter.  The `counter` register counts the positive clock edges of the incoming `clk_in` clock until it reaches `DIVISOR - 1` when it toggles the output `clk_out` and resets the counter back to zero.
+This `clock_divider` module takes an input clock `clk_in` and generates a new clock `clk_out` at a lower frequency specified by the `DIVISOR` parameter. The `counter` register counts the positive clock edges of the incoming `clk_in` clock until it reaches `DIVISOR - 1` when it toggles the output `clk_out` and resets the counter back to zero.
 
 Let's say your incoming clock is 100 MHz and you want a 50 MHz clock out you’d use a `DIVISOR` of 2. For 25 MHz use 4 and so on. It’s just simple division. Just be aware that this type of divider can’t create arbitrary frequencies you’re limited by the divisor you use and you can only go lower never higher this is a very important aspect of clock dividers also this approach will introduce jitter.
 
@@ -90,6 +90,7 @@ module clock_management_unit #(parameter FREQ1 = 10, parameter FREQ2 = 20) (outp
 
 endmodule
 ```
+
 This `clock_management_unit` module creates two clocks `clk1` and `clk2` with different frequencies specified by the parameters `FREQ1` and `FREQ2`. This approach is a bit different than the divider but in the end achieves a similar result. Note that these parameters are used as a threshold counter when it is reached the counters are reset and the clock output is toggled. This way we can emulate two different clocks with different periods.
 
 I've used a bunch of ways to generate clocks but honestly these three examples will get you through the majority of the situations. Again real life you use those special clock modules that take care of PLLs and skew but for simulation purposes this is good enough.

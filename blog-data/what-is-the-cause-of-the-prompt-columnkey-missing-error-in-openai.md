@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-cause-of-the-prompt-columnkey-missing-error-in-openai"
 ---
 
-Alright, let's tackle this. I've seen this particular gremlin pop up more times than I'd care to count, especially during my time developing automated chatbot interfaces for various platforms. The "prompt" key or column missing error with OpenAI's API is generally an indication that the data being sent to the API isn't structured in the way the model expects for the given endpoint being used. It's not usually a fault within OpenAI’s systems themselves; it's primarily a data formatting issue on the client-side.
+, let's tackle this. I've seen this particular gremlin pop up more times than I'd care to count, especially during my time developing automated chatbot interfaces for various platforms. The "prompt" key or column missing error with OpenAI's API is generally an indication that the data being sent to the API isn't structured in the way the model expects for the given endpoint being used. It's not usually a fault within OpenAI’s systems themselves; it's primarily a data formatting issue on the client-side.
 
 The crux of the matter lies in the format of the JSON request you’re sending to the OpenAI API. Different endpoints require different structures. For instance, the most common case where this error shows up is when you're attempting to use the ‘completions’ endpoint but send data formatted for the ‘chat’ endpoint, or vice-versa. It’s a common pitfall. I recall spending a good chunk of a week debugging an automated content generation pipeline because a junior engineer inadvertently switched the endpoint and overlooked the JSON payload requirements. Those were fun times… not.
 
@@ -76,7 +76,7 @@ except requests.exceptions.RequestException as e:
 
 In this case, we have a list called `messages`, where each dictionary is either a system instruction, user input, or assistant response. The `content` field holds the actual text. Sending the above structure to the `completions` endpoint, or even more subtly sending a singular `prompt` key to this `chat/completions` endpoint will trigger the error you're encountering. The API expects the list of structured messages, and a singular `prompt` is insufficient.
 
-Thirdly, another scenario I’ve encountered, less frequent, but frustrating nonetheless, involves using batch requests. Some OpenAI API endpoints allow processing multiple prompts at once. However, each prompt *within* the batch must adhere to the endpoint's expected input format. If you're attempting to send a list of strings as prompts to the completion endpoint in the wrong format, or if even one prompt lacks the necessary `prompt` key, the API will flag the entire batch. A correct batched structure for completions may look like:
+Thirdly, another scenario I’ve encountered, less frequent, but frustrating nonetheless, involves using batch requests. Some OpenAI API endpoints allow processing multiple prompts at once. However, each prompt _within_ the batch must adhere to the endpoint's expected input format. If you're attempting to send a list of strings as prompts to the completion endpoint in the wrong format, or if even one prompt lacks the necessary `prompt` key, the API will flag the entire batch. A correct batched structure for completions may look like:
 
 ```python
 import requests

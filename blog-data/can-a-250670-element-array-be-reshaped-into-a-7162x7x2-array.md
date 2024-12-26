@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "can-a-250670-element-array-be-reshaped-into-a-7162x7x2-array"
 ---
 
-Alright, let’s tackle this array reshaping question. It's the sort of thing I’ve bumped into more than a few times over the years, often when dealing with large datasets that need to be prepped for specific algorithms. When you're reshaping arrays, the underlying logic is quite precise, and getting it wrong can lead to some rather baffling bugs further down the processing pipeline.
+, let’s tackle this array reshaping question. It's the sort of thing I’ve bumped into more than a few times over the years, often when dealing with large datasets that need to be prepped for specific algorithms. When you're reshaping arrays, the underlying logic is quite precise, and getting it wrong can lead to some rather baffling bugs further down the processing pipeline.
 
 The core issue here is whether a 250,670-element array, which we can initially consider a flat, one-dimensional structure, can be rearranged into a three-dimensional array of shape 7,162 x 7 x 2. The rule of thumb, which I've found incredibly reliable throughout my career, is that the total number of elements must be conserved during reshaping. Essentially, the product of the dimensions in the original array must equal the product of the dimensions in the reshaped array. If they don't match, the operation is mathematically impossible.
 
-So, let’s do the calculation: a 7,162 x 7 x 2 array has 7,162 * 7 * 2 = 100,268 elements. Our initial array has 250,670 elements. Since 250,670 does not equal 100,268, the answer to your question is a firm no. A 250,670-element array cannot be reshaped into a 7,162 x 7 x 2 array. You simply cannot transform an object into another object that has a different volume, at least when it comes to arrays, where size dictates the memory they occupy.
+So, let’s do the calculation: a 7,162 x 7 x 2 array has 7,162 _ 7 _ 2 = 100,268 elements. Our initial array has 250,670 elements. Since 250,670 does not equal 100,268, the answer to your question is a firm no. A 250,670-element array cannot be reshaped into a 7,162 x 7 x 2 array. You simply cannot transform an object into another object that has a different volume, at least when it comes to arrays, where size dictates the memory they occupy.
 
 This mismatch often occurs when data is loaded from different sources or when you’re in the middle of a complex transformation pipeline. For example, I once had to deal with seismic data where the initial format was a large single vector, and our physics model demanded a very specific three-dimensional grid. A miscalculation like the one we are discussing was actually the source of a particularly perplexing output.
 
-To reinforce this idea of dimensionality and reshaping, let’s explore a few practical scenarios in code, assuming we had an array of a size that *could* be reshaped. In these examples, we will use the NumPy library in Python as it is a widely adopted numerical computation library.
+To reinforce this idea of dimensionality and reshaping, let’s explore a few practical scenarios in code, assuming we had an array of a size that _could_ be reshaped. In these examples, we will use the NumPy library in Python as it is a widely adopted numerical computation library.
 
 **Example 1: Reshaping a Simple Array**
 
@@ -32,7 +32,7 @@ print("\nReshaped Array:\n", reshaped_arr)
 print("Shape of Reshaped Array:", reshaped_arr.shape)
 ```
 
-This code will produce a 3x4 matrix, preserving all the original elements. The original shape was (12,), a single dimension, and we successfully changed it to a (3,4) or two-dimensional array. Critically, 12 (our starting number of elements) is equal to 3 * 4 (the dimensions of the new array) illustrating correct reshaping.
+This code will produce a 3x4 matrix, preserving all the original elements. The original shape was (12,), a single dimension, and we successfully changed it to a (3,4) or two-dimensional array. Critically, 12 (our starting number of elements) is equal to 3 \* 4 (the dimensions of the new array) illustrating correct reshaping.
 
 **Example 2: Reshaping to a 3D array**
 
@@ -51,6 +51,7 @@ reshaped_arr = arr.reshape(2, 3, 4)
 print("\nReshaped Array:\n", reshaped_arr)
 print("Shape of Reshaped Array:", reshaped_arr.shape)
 ```
+
 This example shows how the flat array is restructured into a 3D format, which has 2x3x4=24 elements; once again, demonstrating the element conservation principle. This is a common process in transforming images or voxels of volumetric data, for example.
 
 **Example 3: The Reshape Error**

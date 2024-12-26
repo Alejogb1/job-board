@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-pickle-a-model-in-pycharm"
 ---
 
-alright, let's talk about pickling models in pycharm, something i've definitely spent my fair share of time on. it's a pretty common task when you're building machine learning things, and getting it smooth is key.
+, let's talk about pickling models in pycharm, something i've definitely spent my fair share of time on. it's a pretty common task when you're building machine learning things, and getting it smooth is key.
 
 first off, pickling is basically python’s way of serializing objects. think of it like turning your complex model, which is living in memory, into a bunch of bytes that can be written to a file. then, later, you can read those bytes back and reconstitute your model as if nothing happened. this is super handy when you don't want to train the model every time you use it.
 

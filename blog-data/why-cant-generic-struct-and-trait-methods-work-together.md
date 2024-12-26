@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-cant-generic-struct-and-trait-methods-work-together"
 ---
 
-Alright, let’s tackle this one. The interplay—or rather, the lack thereof—between generic structs and trait methods can be a real head-scratcher if you haven’t navigated its intricacies. I've spent more than a few late nights debugging this very issue, so let's break it down.
+, let’s tackle this one. The interplay—or rather, the lack thereof—between generic structs and trait methods can be a real head-scratcher if you haven’t navigated its intricacies. I've spent more than a few late nights debugging this very issue, so let's break it down.
 
 The fundamental problem stems from the way Rust, and many similar languages, resolve method calls at compile time, combined with the inherent flexibility of generics and traits. Specifically, the crux lies in the fact that a generic struct might not always have complete information about the concrete type it will be used with, and therefore, which specific implementation of a trait method to call. This lack of compile-time certainty is the primary culprit.
 
@@ -43,7 +43,8 @@ impl DataSource for NetworkSource {
     }
 }
 ```
-Okay, now let’s try defining our `DataProcessor`:
+
+, now let’s try defining our `DataProcessor`:
 
 ```rust
 struct DataProcessor<T: DataSource> {
@@ -58,7 +59,7 @@ impl<T: DataSource> DataProcessor<T> {
 }
 ```
 
-As you can see, we have a `DataSource` trait with two concrete implementations: `FileSystemSource` and `NetworkSource`. We have also defined a `DataProcessor` struct which has a generic type parameter `T`, constrained by the `DataSource` trait. When attempting to implement `process_data()`, the compiler will fail because it doesn't know *which* `read_data()` implementation to call. It only knows that `T` implements *some* `DataSource` but doesn't know the specific type.
+As you can see, we have a `DataSource` trait with two concrete implementations: `FileSystemSource` and `NetworkSource`. We have also defined a `DataProcessor` struct which has a generic type parameter `T`, constrained by the `DataSource` trait. When attempting to implement `process_data()`, the compiler will fail because it doesn't know _which_ `read_data()` implementation to call. It only knows that `T` implements _some_ `DataSource` but doesn't know the specific type.
 
 There are several strategies to solve this issue. The most straightforward approach is to utilize the trait object approach, that is, using `dyn DataSource`. The `dyn` keyword indicates a type whose size might not be known at compile time and implies a dynamic dispatch – a mechanism where the method to call is determined at runtime based on the actual type of the object. We can modify our `DataProcessor` like so:
 

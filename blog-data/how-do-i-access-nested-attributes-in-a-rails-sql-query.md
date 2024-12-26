@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-access-nested-attributes-in-a-rails-sql-query"
 ---
 
-Okay, let's talk about accessing nested attributes in Rails SQL queries. It's something I've seen trip up many developers, and frankly, I've had my share of head-scratching moments with it over the years. It’s rarely as straightforward as we’d like. When we talk about nested attributes, we usually mean data linked through associations, right? And ActiveRecord doesn't directly map through those associations within a single sql query in the same way we might expect within our Ruby objects.
+, let's talk about accessing nested attributes in Rails SQL queries. It's something I've seen trip up many developers, and frankly, I've had my share of head-scratching moments with it over the years. It’s rarely as straightforward as we’d like. When we talk about nested attributes, we usually mean data linked through associations, right? And ActiveRecord doesn't directly map through those associations within a single sql query in the same way we might expect within our Ruby objects.
 
 Early in my career, working on an e-commerce platform, I recall a particularly frustrating incident. We were tasked with generating a report of all users who had ordered a specific product, including some details about the product's category. Initially, I tried to handle this by pulling all users and then iterating through them, fetching order details, and finally grabbing the category, resulting in the dreaded n+1 query problem. The performance was abysmal, taking almost a minute to generate a relatively small report. It was a stark lesson in the limitations of simple object traversal versus optimized database interactions. After that debacle, I dedicated significant time to understanding how ActiveRecord facilitates joins and how we can leverage them effectively.
 
@@ -12,10 +12,10 @@ The key here lies in understanding that ActiveRecord's query interface needs to 
 
 Let's break this down with some working examples to illustrate the point. Imagine we have three models: `User`, `Order`, and `Product`, with the following associations:
 
-*   `User` has_many :orders
-*   `Order` belongs_to :user
-*   `Order` belongs_to :product
-*   `Product` has_one :category
+- `User` has_many :orders
+- `Order` belongs_to :user
+- `Order` belongs_to :product
+- `Product` has_one :category
 
 **Example 1: Selecting User data with associated product names**
 
@@ -29,6 +29,7 @@ users_with_products.each do |user|
    puts "#{user.name} ordered: #{user.product_name}"
 end
 ```
+
 In this example, the `joins(orders: :product)` clause tells ActiveRecord to join the `users`, `orders`, and `products` tables together, based on the associations defined within the models. The `select` clause lets us pull specific columns from each table and create aliases for them (in this case, `product_name`). The crucial detail here is specifying the nested association with the `orders: :product` syntax. We are going from user, through order, to product in the database join operation, and the result is not merely `user.orders.first.product.name`, it is specifically the output of columns selected through `select` after joining the tables.
 
 **Example 2: Filtering based on nested product category**
@@ -62,7 +63,8 @@ users_with_orders_and_products.each do |user|
   end
 end
 ```
-Unlike joins, `includes` performs eager loading. This means it fetches the associated data in a separate query, but it does so *before* the loop begins. This is why we can use `user.orders.each` without encountering an N+1 query scenario. The `where` clause here could be anything in the `orders` table, so this might be date ranges, etc. Note that we can’t select from it directly using `select` here as it’s not a single sql result; it’s a compound result of multiple queries and therefore not directly accessible in the same way as the `joins` example.
+
+Unlike joins, `includes` performs eager loading. This means it fetches the associated data in a separate query, but it does so _before_ the loop begins. This is why we can use `user.orders.each` without encountering an N+1 query scenario. The `where` clause here could be anything in the `orders` table, so this might be date ranges, etc. Note that we can’t select from it directly using `select` here as it’s not a single sql result; it’s a compound result of multiple queries and therefore not directly accessible in the same way as the `joins` example.
 
 Understanding these distinctions and nuances of joins versus includes is critical for building scalable and performant Rails applications. The key is knowing when to utilize `joins` for efficient column selection and filtering in a single query, and when to opt for `includes` for eager loading of associations, especially when the associated data is needed later in code that’s iterative.
 

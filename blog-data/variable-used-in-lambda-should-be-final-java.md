@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "variable-used-in-lambda-should-be-final-java"
 ---
 
-Okay so you're asking about why variables used inside a Java lambda need to be effectively final right I've been there seen that and debugged that a few times it’s a common gotcha for people new to lambdas or closures in general
+you're asking about why variables used inside a Java lambda need to be effectively final right I've been there seen that and debugged that a few times it’s a common gotcha for people new to lambdas or closures in general
 
-Alright let's break this down like we're debugging a nasty NullPointerException at 3 am
+let's break this down like we're debugging a nasty NullPointerException at 3 am
 
-First off "effectively final" isn't some weird made-up Java term it just means a variable's value isn't changed after it's initialized If it's never reassigned it's effectively final Java doesn’t force you to use the `final` keyword for this but it *behaves* like it's `final` inside the lambda
+First off "effectively final" isn't some weird made-up Java term it just means a variable's value isn't changed after it's initialized If it's never reassigned it's effectively final Java doesn’t force you to use the `final` keyword for this but it _behaves_ like it's `final` inside the lambda
 
 Think of it this way when you create a lambda you're essentially creating an anonymous inner class under the hood Java needs to capture the environment at the point where the lambda is defined If it allowed you to modify variables in that outer scope the lambda could operate on a value inconsistent with the rest of the program It would be a mess of race conditions and headache inducing concurrency bugs that would even make the most experienced dev question their coding life choices
 
@@ -20,7 +20,7 @@ To avoid issues like that Java decided to make variables inside a lambda effecti
 
 Now why not just use the original variable directly inside the lambda Well remember that the lambda can execute much later possibly even on a different thread than where it was created If the original variable was still in the outer scope it could be modified by the main code while the lambda is still using it this is again a race condition you never want to be part of
 
-Okay let’s look at some examples
+let’s look at some examples
 
 **Example 1 The Bad Case**
 
@@ -63,15 +63,15 @@ public class LambdaCaptureGood {
            counter.incrementAndGet();
            System.out.println("counter: " + counter.get());
         };
-        
+
         goodRunnable.run();
         goodRunnable.run();
-       
+
     }
 }
 ```
 
-Notice we're using an `AtomicInteger` here This lets us modify the *value* inside the object which is captured by the lambda while the reference to the `AtomicInteger` itself remains effectively final. If you’re dealing with multi-threaded code this is the way to go
+Notice we're using an `AtomicInteger` here This lets us modify the _value_ inside the object which is captured by the lambda while the reference to the `AtomicInteger` itself remains effectively final. If you’re dealing with multi-threaded code this is the way to go
 
 **Example 3 Local Variables within Lambda**
 
@@ -85,7 +85,7 @@ public class LambdaLocalVar {
            localCounter++;
            System.out.println("Local counter: " + localCounter);
         };
-        
+
         localVarRunnable.run();
         localVarRunnable.run();
     }

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-perform-tokenization-with-spacy"
 ---
 
-Alright, let’s talk about tokenization in spaCy. I've spent a fair bit of time working with natural language processing, and tokenization is always the initial, crucial step. Getting it wrong can snowball into all sorts of downstream issues. I recall a project a few years back where the client's sentiment analysis was consistently off – turns out we were missing edge cases in how the text was initially broken down into tokens, specifically concerning emoticons mixed with punctuation. So, let’s delve into how spaCy handles this, and what makes it work.
+, let’s talk about tokenization in spaCy. I've spent a fair bit of time working with natural language processing, and tokenization is always the initial, crucial step. Getting it wrong can snowball into all sorts of downstream issues. I recall a project a few years back where the client's sentiment analysis was consistently off – turns out we were missing edge cases in how the text was initially broken down into tokens, specifically concerning emoticons mixed with punctuation. So, let’s delve into how spaCy handles this, and what makes it work.
 
 Fundamentally, tokenization is the process of segmenting text into its constituent units, often words, punctuation marks, or even sub-word units. These units are called tokens. spaCy offers a sophisticated and highly configurable approach to tokenization that goes beyond simple whitespace splitting, which, as I'm sure you appreciate, has limited utility with real-world text.
 
@@ -29,6 +29,7 @@ doc = nlp(text)
 for token in doc:
     print(token.text, token.idx)
 ```
+
 In this example, we load a smaller English language model. We then feed our example text into the model. The `nlp()` function applies the entire processing pipeline, including the tokenizer, and returns a `Doc` object. We can then iterate through this `Doc` object and access each token’s text representation (`token.text`) and its starting character index in the original string (`token.idx`). This output clearly demonstrates how even though our input text includes various sentence types and punctuation, spaCy handles these seamlessly.
 
 **Example 2: Handling Special Cases and Rules**

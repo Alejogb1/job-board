@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-dictionary-of-contextual-words-excluding-stop-words"
 ---
 
-Okay, let's tackle this. I’ve spent a fair amount of time refining text processing pipelines, and generating contextual word dictionaries while excluding stop words is a fairly common requirement. I’ve seen this used in everything from building basic search indexes to more complex text analysis tasks, so I'm happy to share some of the methodologies I've found most effective.
+, let's tackle this. I’ve spent a fair amount of time refining text processing pipelines, and generating contextual word dictionaries while excluding stop words is a fairly common requirement. I’ve seen this used in everything from building basic search indexes to more complex text analysis tasks, so I'm happy to share some of the methodologies I've found most effective.
 
 The core challenge, as I see it, involves two main steps: first, tokenizing the text into individual words, and second, filtering out the “stop words” – common words that usually don’t carry significant meaning in the context of the document (like 'the', 'is', 'a', and so on). Here’s a breakdown of how I usually approach this, along with some concrete code examples.
 
@@ -128,6 +128,6 @@ print(result)
 
 In this example, we use `re.sub()` to remove punctuation. The text is split on spaces, filtered with a list comprehension against `custom_stop_words` and `Counter` from the collections module is used to efficiently compute counts.
 
-These examples provide a solid foundation. For further refinement and more advanced concepts, I strongly recommend exploring resources like *Speech and Language Processing* by Daniel Jurafsky and James H. Martin, which offers comprehensive explanations of natural language processing techniques. In addition, for those interested in the statistical underpinnings, a book like *Information Retrieval: Algorithms and Heuristics* by David A. Grossman and Ophir Frieder will provide more insights. Also, familiarize yourself with library-specific documentation for tools like NLTK and spaCy, as these will give more specific details about these libraries' features.
+These examples provide a solid foundation. For further refinement and more advanced concepts, I strongly recommend exploring resources like _Speech and Language Processing_ by Daniel Jurafsky and James H. Martin, which offers comprehensive explanations of natural language processing techniques. In addition, for those interested in the statistical underpinnings, a book like _Information Retrieval: Algorithms and Heuristics_ by David A. Grossman and Ophir Frieder will provide more insights. Also, familiarize yourself with library-specific documentation for tools like NLTK and spaCy, as these will give more specific details about these libraries' features.
 
 Remember, the specifics of your implementation will depend on your project's requirements, the type of text you're working with, and the level of processing necessary. Consider experimenting with these ideas to find the most appropriate solution for your specific needs. I've found that iterative refinement, with careful consideration of the use case, always leads to the best results.

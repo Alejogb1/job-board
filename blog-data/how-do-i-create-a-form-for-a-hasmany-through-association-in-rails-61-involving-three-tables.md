@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-create-a-form-for-a-hasmany-through-association-in-rails-61-involving-three-tables"
 ---
 
-Alright, let’s tackle this. I’ve certainly been down this road before, and it’s a common scenario when you’re dealing with relational databases in Rails, especially when introducing that `has_many :through` association. The trick is understanding how Rails handles nested attributes and then translating that into a workable form.
+, let’s tackle this. I’ve certainly been down this road before, and it’s a common scenario when you’re dealing with relational databases in Rails, especially when introducing that `has_many :through` association. The trick is understanding how Rails handles nested attributes and then translating that into a workable form.
 
 Let's assume for a moment you’re building a system for a university and you have three tables. First, `students`. Second, `courses`. And third, an intermediary `enrollments` table that links students to courses, indicating which student is enrolled in which course. Here, `enrollments` is your joining table, crucial for the `has_many :through` relationship.
 
@@ -33,7 +33,7 @@ This structure clearly defines how the tables relate: a student can have many co
 
 **The Form Challenge**
 
-The aim here isn’t just to edit a student or course directly, but to manage the *association* between them. We want a form, typically on the student’s editing interface, where we can select which courses a particular student is enrolled in. This means we need to construct a form capable of handling nested attributes, specifically nested attributes for our `enrollments` table.
+The aim here isn’t just to edit a student or course directly, but to manage the _association_ between them. We want a form, typically on the student’s editing interface, where we can select which courses a particular student is enrolled in. This means we need to construct a form capable of handling nested attributes, specifically nested attributes for our `enrollments` table.
 
 **Nested Attributes & `accepts_nested_attributes_for`**
 
@@ -105,10 +105,10 @@ Here’s a detailed breakdown:
 
 1.  **`form_with model: @student`**: This is a standard Rails form for our `Student` object.
 2.  **`form.fields_for :enrollments`**: This creates a set of nested fields for our `enrollments`. Notice that each `enrollment_form` iterates through existing enrollments. This is key because we need to handle the existing ones.
-3.  **Checkboxes:** In both the existing and new `enrollment` fields, we provide a checkbox for each course.  The logic for whether a student is enrolled in a course is handled by the checkbox’s `checked` state, which corresponds to existing enrollments or creating new enrollments. We must send all enrollment details every time we update a student so Rails can create, modify, or destroy as needed.
+3.  **Checkboxes:** In both the existing and new `enrollment` fields, we provide a checkbox for each course. The logic for whether a student is enrolled in a course is handled by the checkbox’s `checked` state, which corresponds to existing enrollments or creating new enrollments. We must send all enrollment details every time we update a student so Rails can create, modify, or destroy as needed.
 4.  **Hidden Fields:** Crucially, we’re including `hidden_field_tag`s for the `id` and the `_destroy` parameters to both update existing enrollments or destroy them. The JavaScript function `toggleEnrollment` toggles the `_destroy` value, from `0` (keep) to `1` (destroy). Additionally, the `toggleNewEnrollment` removes the new enrollment rows when unchecked.
 5.  **New Enrollment Options:** Here we have an additional set of checkboxes that loops through all available courses. These allow us to create new enrollments when the form is submitted. Since we are creating a new enrollment rather than modifying an existing, we do not need the `id` or `_destroy` hidden fields.
-6. **SecurityRandom UUID:** Since there is no `index` to use when creating new enrollments, we generate a random uuid when creating new checkboxes. This is so that Rails can discern which records are new versus existing.
+6.  **SecurityRandom UUID:** Since there is no `index` to use when creating new enrollments, we generate a random uuid when creating new checkboxes. This is so that Rails can discern which records are new versus existing.
 
 **The Controller**
 

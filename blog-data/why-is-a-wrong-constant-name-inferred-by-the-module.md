@@ -4,13 +4,13 @@ date: "2024-12-16"
 id: "why-is-a-wrong-constant-name-inferred-by-the-module"
 ---
 
-Alright, let’s tackle this. It’s a situation I've certainly encountered a few times throughout my career—a module seemingly misinterpreting the intended constant name. The issue, at its core, often isn't that the module is *wrong* per se, but rather that it’s operating within a specific context governed by its scope and name resolution rules, which might not align perfectly with how we, as developers, *intend* to use the constant. I've spent long evenings troubleshooting similar issues, tracing back through import statements and namespace boundaries. Let's unpack the common causes.
+, let’s tackle this. It’s a situation I've certainly encountered a few times throughout my career—a module seemingly misinterpreting the intended constant name. The issue, at its core, often isn't that the module is _wrong_ per se, but rather that it’s operating within a specific context governed by its scope and name resolution rules, which might not align perfectly with how we, as developers, _intend_ to use the constant. I've spent long evenings troubleshooting similar issues, tracing back through import statements and namespace boundaries. Let's unpack the common causes.
 
 The first and most frequent culprit arises from scoping problems, often due to how modules are loaded and how identifiers are resolved within different parts of your application. A constant, let's say `MAX_USERS`, might be defined in one module (perhaps `config.py`) and expected to be used in another (say, `user_management.py`). However, if `user_management.py` doesn't explicitly import `MAX_USERS` from `config.py` or if it accidentally defines a local constant of the same name within its own scope, then the module will naturally use the local definition rather than the one you expected. It's not that the module is misinterpreting anything – it’s simply following the rules of variable lookup, starting within its own scope, and then searching up the chain to outer scopes.
 
 Another, related issue occurs when you use star imports, something I've learned to avoid like the plague after too many debugging sessions. For instance, if you have `from config import *` in `user_management.py` and another imported module has a variable of the same name, there's a good chance your intended `MAX_USERS` will get overwritten, or the import order could cause surprising behavior that leads to the ‘wrong’ constant being inferred. The module isn't confused; it's simply following the order in which names are defined and reassigned within its execution context. Implicit imports, like relying on a module to inherit constants from a base class when inheritance isn't directly related to the constant's function, are yet another variation on this theme.
 
-Finally, type systems and dynamic language behavior can play a role. While seemingly not directly related to names, if the value assigned to what you *believe* is a constant is mutated, the module will operate on the new value. Consider a global variable, acting as a ‘constant’, initialized with a mutable value (like a list or dictionary). If you unintentionally modify this ‘constant’ from within the module, the next time the module uses that name it will be working with the updated value, not what you initially set as a 'constant'. The module isn't misinterpreting the name, but rather the value it is pointing to.
+Finally, type systems and dynamic language behavior can play a role. While seemingly not directly related to names, if the value assigned to what you _believe_ is a constant is mutated, the module will operate on the new value. Consider a global variable, acting as a ‘constant’, initialized with a mutable value (like a list or dictionary). If you unintentionally modify this ‘constant’ from within the module, the next time the module uses that name it will be working with the updated value, not what you initially set as a 'constant'. The module isn't misinterpreting the name, but rather the value it is pointing to.
 
 Let’s examine a few scenarios with code examples, using Python given it's fairly common:
 
@@ -35,6 +35,7 @@ def check_user_limit(current_user_count):
 check_user_limit(75)
 check_user_limit(120)
 ```
+
 In this case, the `user_management.py` module has both its locally declared `MAX_USERS` (which shadows the imported one) and the explicitly imported `CONFIG_MAX_USERS`. The module will use the local one when `MAX_USERS` is accessed directly, which will cause confusion when the user intends to refer to the one in `config.py`. It's not that `user_management.py` can’t find `MAX_USERS`; it’s using the first occurrence within its own scope.
 
 **Example 2: Star Imports and Namespace Collision**
@@ -75,7 +76,7 @@ set_debug_mode(True)
 print(get_log_level())
 ```
 
-Here, even though we might *think* of `GLOBAL_SETTINGS` as a constant, its value, being a dictionary, is mutable. When `set_debug_mode` modifies the dictionary, the changes are reflected wherever `GLOBAL_SETTINGS` is accessed which might lead to the wrong behaviour. The 'constant's' value is being modified in place. If you wanted to maintain the intention of a constant you would create a read only object from the dictionary, or consider using a class instead.
+Here, even though we might _think_ of `GLOBAL_SETTINGS` as a constant, its value, being a dictionary, is mutable. When `set_debug_mode` modifies the dictionary, the changes are reflected wherever `GLOBAL_SETTINGS` is accessed which might lead to the wrong behaviour. The 'constant's' value is being modified in place. If you wanted to maintain the intention of a constant you would create a read only object from the dictionary, or consider using a class instead.
 
 To avoid these situations, I always strive for explicit imports using aliases if there's a chance of name collision and defining constants as constants whenever possible (using immutable values and classes when necessary). I avoid `from module import *` religiously. I also prefer using configuration files or dedicated settings modules to clearly separate configuration from code, making it clearer where different constants originate. Finally, employing static analysis tools and linters can catch potential issues related to name shadowing or mutable constants early in development.
 

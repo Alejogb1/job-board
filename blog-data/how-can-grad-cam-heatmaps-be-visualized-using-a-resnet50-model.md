@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-grad-cam-heatmaps-be-visualized-using-a-resnet50-model"
 ---
 
-Alright, let’s tackle visualizing Grad-CAM heatmaps with a ResNet50 model. It's something I've implemented several times across different projects, and it's always a crucial step in understanding why a convolutional network made a specific prediction. It's never just about the output, but understanding *what* contributed to that output. I think that's a fundamental tenet for anyone working with deep learning.
+, let’s tackle visualizing Grad-CAM heatmaps with a ResNet50 model. It's something I've implemented several times across different projects, and it's always a crucial step in understanding why a convolutional network made a specific prediction. It's never just about the output, but understanding _what_ contributed to that output. I think that's a fundamental tenet for anyone working with deep learning.
 
 So, the core idea behind Grad-CAM (Gradient-weighted Class Activation Mapping) is that we leverage the gradients flowing back through the network to highlight the most salient regions of the input image with respect to a particular class. We're not just arbitrarily highlighting areas; we're highlighting where the network 'focused' during classification. ResNet50, with its skip connections and deep architecture, makes this a slightly more involved process than with simpler networks, but the principle remains the same.
 
@@ -55,7 +55,7 @@ def generate_grad_cam(model, image, target_class, target_layer):
       if name == target_layer:
             target_layer_output = module(image_tensor)
             break
-    
+
     gradients = target_layer_output.grad.detach()
     weights = torch.mean(gradients, dim=(2, 3), keepdim=True)
     cam = torch.sum(weights * target_layer_output, dim=1, keepdim=True)
@@ -68,7 +68,7 @@ def generate_grad_cam(model, image, target_class, target_layer):
     heatmap = cv2.applyColorMap(np.uint8(255 * cam), cv2.COLORMAP_JET)
     heatmap = np.float32(heatmap) / 255
     heatmap = heatmap[...,::-1]
-    
+
     output_image = heatmap * 0.5 + np.float32(image) * 0.5
 
     return output_image
@@ -76,7 +76,7 @@ def generate_grad_cam(model, image, target_class, target_layer):
 
 This snippet illustrates the general process. Let me elaborate on some important points. First, you see the image transformations before feeding it into the model, this includes normalization using ImageNet statistics, which is necessary for pre-trained ResNet models. Crucially, the `image_tensor` requires gradient tracking. I’ve explicitly extracted `target_layer_output` based on the `target_layer` using named modules. This will give a specific output in the model that we need to get the gradients from. Note that `target_layer_output.grad.detach()` is used to extract gradients from our desired target layer, which is then averaged, to get our weights. Interpolation is done to resize the CAM to match the input image. Remember, this output image is the heatmap overlayed on top of the original image, giving us a visualization.
 
-Next, I want to illustrate specifically how to select the target layer in the ResNet model. Since ResNet models are organized in groups of residual blocks, the output from the *last convolutional layer within the last group of residual blocks* makes the most sense. It's usually `layer4.2.conv3` in PyTorch's ResNet50. In the next code snippet, I'll show you how to fetch the specific target layer dynamically:
+Next, I want to illustrate specifically how to select the target layer in the ResNet model. Since ResNet models are organized in groups of residual blocks, the output from the _last convolutional layer within the last group of residual blocks_ makes the most sense. It's usually `layer4.2.conv3` in PyTorch's ResNet50. In the next code snippet, I'll show you how to fetch the specific target layer dynamically:
 
 ```python
 def get_target_layer(model):

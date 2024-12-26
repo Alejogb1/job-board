@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-convert-an-xcompull-list-in-the-in-clause-of-an-sql-query"
 ---
 
-alright, so you're looking at pulling a list from xcom in airflow and using that list to filter results in an sql query, sounds familiar. been there, done that, got the t-shirt, and probably a few grey hairs. let me break down how i usually tackle this, and some pitfalls i've stumbled into along the way.
+, so you're looking at pulling a list from xcom in airflow and using that list to filter results in an sql query, sounds familiar. been there, done that, got the t-shirt, and probably a few grey hairs. let me break down how i usually tackle this, and some pitfalls i've stumbled into along the way.
 
 first off, xcom, for those not deeply ingrained in airflow, is essentially a message passing system within your dags. it lets tasks communicate data, and in our case, we're talking about a list of something you need in your sql. a common scenario for me was pulling a list of customer ids after some initial data processing and then using that to query specific customer details in a subsequent task. initially, i made some mistakes assuming that xcom_pull just hands me a perfectly formatted sql-ready string, oh boy was i wrong.
 
@@ -27,22 +27,23 @@ def xcom_to_sql_example():
 
     @task()
     def query_database(ids):
-       
+
         postgres_hook = PostgresHook(postgres_conn_id="your_postgres_connection")
-        
+
         # transform list into a string suitable for the sql in clause
         sql_values = ", ".join(str(id) for id in ids)
         sql_query = f"SELECT * FROM your_table WHERE id IN ({sql_values})"
-        
+
         records = postgres_hook.get_records(sql_query)
         print(f"query results are: {records}")
 
     id_list = generate_ids()
     query_database(id_list)
-    
+
 xcom_sql_dag = xcom_to_sql_example()
 
 ```
+
 that's the basic approach when dealing with integers. the key part is `", ".join(str(id) for id in ids)`. this converts each integer to a string and joins them together with a comma, creating our sql-ready list.
 
 but what if you're working with strings, for instance, customer names or product codes? strings require special handling because you need to wrap each value in single quotes in the sql query. if not, you'll get sql errors, i had that problem quite often, it's like the sql server is trying to say 'i know you are not sending me the right stuff'.
@@ -64,7 +65,7 @@ def xcom_to_sql_example_strings():
 
     @task()
     def query_database_strings(names):
-       
+
         postgres_hook = PostgresHook(postgres_conn_id="your_postgres_connection")
 
         # transform strings to sql format
@@ -76,9 +77,10 @@ def xcom_to_sql_example_strings():
 
     name_list = generate_names()
     query_database_strings(name_list)
-    
+
 xcom_sql_string_dag = xcom_to_sql_example_strings()
 ```
+
 the only change is in the line `sql_values = ", ".join(f"'{name}'" for name in names)`. the `f"'{name}'"` part encloses each name in single quotes, making the sql happy, i had issues on the past with those kind of details.
 
 one thing to absolutely watch out for is sql injection. if your xcom values come from an untrusted source, directly injecting them into your sql queries like this is a huge security risk, please be aware. never assume that data is clean, always sanitize your inputs. if you deal with user-submitted values, consider using parameterized queries or prepared statements.
@@ -101,14 +103,14 @@ def xcom_to_sql_parameterized():
 
     @task()
     def query_database_parameterized(items):
-        
+
         postgres_hook = PostgresHook(postgres_conn_id="your_postgres_connection")
         conn = postgres_hook.get_conn()
         cur = conn.cursor()
-        
+
         placeholders = ','.join('%s' for _ in items)
         sql_query = f"SELECT * FROM your_table WHERE item_name IN ({placeholders})"
-        
+
         cur.execute(sql_query, items)
         records = cur.fetchall()
         print(f"query results are: {records}")
@@ -117,9 +119,10 @@ def xcom_to_sql_parameterized():
 
     items_list = generate_items()
     query_database_parameterized(items_list)
-    
+
 xcom_sql_parameterized_dag = xcom_to_sql_parameterized()
 ```
+
 in this case, i generate placeholders '%s' for each item in the list, then execute the query with the items as parameters using the cursor execute method. this prevents any malicious sql from being injected. this is the way to go specially if the values come from a user, or an external application where you don't fully have the control.
 
 now, for more advanced scenarios, you might find your xcom values are not simple lists, maybe you have nested json structures, or complex datatypes. in that case, you'll need to parse them appropriately before passing it to the sql query. the specific methods you need will depend completely on your data structures. usually for complex json structure the library json in python works like a charm to extract the desired values.

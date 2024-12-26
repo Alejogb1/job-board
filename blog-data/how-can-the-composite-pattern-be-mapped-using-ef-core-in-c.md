@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-the-composite-pattern-be-mapped-using-ef-core-in-c"
 ---
 
-Okay, let's unpack this. I've had my fair share of encounters with complex object hierarchies in data modeling, and mapping the composite pattern with Entity Framework Core definitely falls into that category. It's not always straightforward, but it's certainly achievable with a sound understanding of EF Core's capabilities. The challenge, fundamentally, lies in representing a tree-like structure, where components can contain other components, within a relational database, which is inherently flat.
+, let's unpack this. I've had my fair share of encounters with complex object hierarchies in data modeling, and mapping the composite pattern with Entity Framework Core definitely falls into that category. It's not always straightforward, but it's certainly achievable with a sound understanding of EF Core's capabilities. The challenge, fundamentally, lies in representing a tree-like structure, where components can contain other components, within a relational database, which is inherently flat.
 
 My past experience on a project involving complex hierarchical product catalogs really hammered home the nuances. We had nested categories, each potentially containing other subcategories and individual products. Attempting to simply map this using naive, one-to-many relationships quickly turned into a performance nightmare and became incredibly cumbersome to query. That's where understanding and properly implementing the composite pattern's mapping became crucial for us.
 
-First, let's address what the composite pattern is at its core. It allows us to treat individual objects and compositions of objects uniformly. In database terms, this means we want to treat both a single *leaf* component and a *composite* component that contains other components the same way, especially when it comes to querying and persisting data. In the context of EF Core, this typically translates to having a single entity table represent both types, with additional columns and configuration to delineate the composite nature.
+First, let's address what the composite pattern is at its core. It allows us to treat individual objects and compositions of objects uniformly. In database terms, this means we want to treat both a single _leaf_ component and a _composite_ component that contains other components the same way, especially when it comes to querying and persisting data. In the context of EF Core, this typically translates to having a single entity table represent both types, with additional columns and configuration to delineate the composite nature.
 
 Now, let’s get into how we achieve that in practice. The key is the judicious use of a single table with a discriminator column and a self-referencing foreign key, which essentially links components to their parents. This way, EF Core can understand the hierarchical relationships and map the data correctly. We accomplish the discriminator behavior using inheritance and EF Core's table per hierarchy (TPH) strategy.
 
@@ -187,6 +187,7 @@ public class UIContext : DbContext
     }
 }
 ```
+
 In this case, we're building components for a UI tree. `Button` and `Panel` inherit from `UIComponent`, and a new property `Order` allows for a linear layout within the UI component’s siblings. Again, `ParentId` establishes the hierarchical relationship through a self-referencing foreign key.
 
 Important considerations beyond these snippets: indexing, especially on `ParentId`, is critical for performance. Caching is beneficial to avoid repeatedly fetching the same hierarchy. Moreover, always carefully consider the implications of cascading deletes; you often won't want to delete an entire branch of the composite when one component is removed, so disabling cascade delete or handling deletions carefully in your business logic is crucial.

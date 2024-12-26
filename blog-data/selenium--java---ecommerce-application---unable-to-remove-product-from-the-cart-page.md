@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "selenium--java---ecommerce-application---unable-to-remove-product-from-the-cart-page"
 ---
 
-alright, so, i see you're having trouble with selenium and java, specifically removing items from a cart page on an ecommerce site. i've been there, staring at a test failing wondering what i messed up, it happens more often than i'd like to remember. let me share some things i've learned the hard way, maybe it can steer you in the correct direction.
+, so, i see you're having trouble with selenium and java, specifically removing items from a cart page on an ecommerce site. i've been there, staring at a test failing wondering what i messed up, it happens more often than i'd like to remember. let me share some things i've learned the hard way, maybe it can steer you in the correct direction.
 
 first thing i always do when encountering this sort of issue is to double, triple check the locators. i mean really scrutinize them. it's super common to think you have the correct xpath or css selector only to find out there's a subtle difference in the dom. there could be dynamic ids, class names that change on page updates, or an element nested in another one that you overlooked. i recall one time working on a massive project, i was positive my xpath was correct, spent two hours debugging the test only to discover that the actual remove button had an aria-label that i had ignored. spent the afternoon trying to write a new function just to discover that the button was there all along.
 

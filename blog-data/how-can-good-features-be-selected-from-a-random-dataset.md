@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-good-features-be-selected-from-a-random-dataset"
 ---
 
-Alright, let’s tackle this. I remember a project a few years back, a rather messy one dealing with sensor data from a fleet of autonomous vehicles. The initial dataset was a beast— hundreds of potentially relevant features, many of which turned out to be pure noise. Selecting the “good” ones was crucial, not just for performance but also for the computational efficiency of our models. It's a common problem, and the approach isn’t as simple as grabbing the biggest or smallest values.
+, let’s tackle this. I remember a project a few years back, a rather messy one dealing with sensor data from a fleet of autonomous vehicles. The initial dataset was a beast— hundreds of potentially relevant features, many of which turned out to be pure noise. Selecting the “good” ones was crucial, not just for performance but also for the computational efficiency of our models. It's a common problem, and the approach isn’t as simple as grabbing the biggest or smallest values.
 
 Feature selection isn't just about reducing dimensionality; it's about identifying the features that truly contribute to the predictive power of your model. A random dataset, by its nature, presents a unique challenge as it’s highly unlikely that all attributes are useful. We need methodical approaches to separate signal from noise. Broadly speaking, we can categorize feature selection methods into three major groups: filter methods, wrapper methods, and embedded methods. Let’s break them down and see how each one could address this specific problem.
 
@@ -116,7 +116,7 @@ def embedded_feature_selection(df, target_column, alpha_value=0.1):
             df[col] = pd.to_numeric(df[col], errors='coerce')
 
     df = df.dropna() # remove rows with NaN values
-    
+
     # Separate features and target
     X = df.drop(columns=[target_column]).values
     y = df[target_column].values

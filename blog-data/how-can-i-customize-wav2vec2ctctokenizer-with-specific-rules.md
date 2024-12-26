@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-customize-wav2vec2ctctokenizer-with-specific-rules"
 ---
 
-Alright, let's tackle this. Customizing `Wav2Vec2CTCTokenizer` is definitely something I’ve spent some time on, particularly when building systems dealing with specialized audio datasets. It’s not always a straightforward “plug-and-play” scenario, and getting the tokenizer to behave exactly as needed often requires some deliberate crafting. The core challenge, as I’ve observed, comes from the tokenizer’s initial training on a more generic speech dataset. When you shift to a specialized domain (think medical jargon or highly technical language), those pre-trained token mappings might not be optimal.
+, let's tackle this. Customizing `Wav2Vec2CTCTokenizer` is definitely something I’ve spent some time on, particularly when building systems dealing with specialized audio datasets. It’s not always a straightforward “plug-and-play” scenario, and getting the tokenizer to behave exactly as needed often requires some deliberate crafting. The core challenge, as I’ve observed, comes from the tokenizer’s initial training on a more generic speech dataset. When you shift to a specialized domain (think medical jargon or highly technical language), those pre-trained token mappings might not be optimal.
 
-The fundamental idea behind customizing the tokenizer revolves around adjusting its vocabulary and tokenization rules. Specifically, we're focusing on the *vocabulary* (the set of valid tokens the model understands) and how the tokenizer maps input text into these tokens, and vice-versa. The crucial part is understanding that `Wav2Vec2CTCTokenizer` is designed to work well with the Connectionist Temporal Classification (CTC) loss, which means it outputs a sequence of tokens that don’t directly correspond to individual text characters necessarily, but rather represent possible phoneme or subword units.
+The fundamental idea behind customizing the tokenizer revolves around adjusting its vocabulary and tokenization rules. Specifically, we're focusing on the _vocabulary_ (the set of valid tokens the model understands) and how the tokenizer maps input text into these tokens, and vice-versa. The crucial part is understanding that `Wav2Vec2CTCTokenizer` is designed to work well with the Connectionist Temporal Classification (CTC) loss, which means it outputs a sequence of tokens that don’t directly correspond to individual text characters necessarily, but rather represent possible phoneme or subword units.
 
 The primary levers we have to play with include: adding new tokens, updating the mapping of existing tokens if the pre-existing subword segmentation is suboptimal for our specific data, and finally, adjusting how certain input sequences are tokenized. I've learned through trial and error that there's no single 'best' approach; the specific method depends heavily on the nuances of your use case and dataset.
 
@@ -105,7 +105,7 @@ This snippet shows how we load the `vocab.json` file and modify the token to id 
 
 **Example 3: Using `word_delimiter_token`**
 
-Sometimes, it may be helpful to add specific delimiters in your text data. Let's suppose that we have input text like 'sample\_one sample\_two'. By adding a custom delimiter, we can better control how we tokenize compound words or sequences.
+Sometimes, it may be helpful to add specific delimiters in your text data. Let's suppose that we have input text like 'sample_one sample_two'. By adding a custom delimiter, we can better control how we tokenize compound words or sequences.
 
 ```python
 from transformers import Wav2Vec2CTCTokenizer, Wav2Vec2Processor
@@ -130,6 +130,7 @@ tokenized_dataset = dataset.map(tokenize_function, batched=True)
 print(f"Tokenized text : {tokenized_dataset['input_ids']}")
 print(f"Tokenizer id to text : {tokenizer.convert_ids_to_tokens(tokenized_dataset['input_ids'][0].tolist())}")
 ```
+
 This demonstrates the `word_delimiter_token` property. If your input text involves specific delimiter, this property allows the tokenizer to handle this better.
 
 **Important Considerations and Resources**
@@ -138,8 +139,8 @@ A crucial aspect of these manipulations is thorough evaluation. I often run exte
 
 For further learning, I recommend the following:
 
-*   **The original Wav2Vec 2.0 paper by Baevski et al.** (2020). This provides the foundational understanding of the model architecture and how the tokenization fits into the overall picture.
-*   **The `transformers` library documentation** on tokenizers, especially the sections related to `PreTrainedTokenizerBase` and `Wav2Vec2CTCTokenizer`. Reading through the relevant source code can also be invaluable to grasp implementation details.
-*   **Speech and Language Processing by Daniel Jurafsky and James H. Martin**. While not specific to transformers or wav2vec, this book offers a robust theoretical foundation for understanding natural language processing and tokenization methodologies.
+- **The original Wav2Vec 2.0 paper by Baevski et al.** (2020). This provides the foundational understanding of the model architecture and how the tokenization fits into the overall picture.
+- **The `transformers` library documentation** on tokenizers, especially the sections related to `PreTrainedTokenizerBase` and `Wav2Vec2CTCTokenizer`. Reading through the relevant source code can also be invaluable to grasp implementation details.
+- **Speech and Language Processing by Daniel Jurafsky and James H. Martin**. While not specific to transformers or wav2vec, this book offers a robust theoretical foundation for understanding natural language processing and tokenization methodologies.
 
 In summary, customizing `Wav2Vec2CTCTokenizer` with specific rules is a process of iterative refinement. Start by assessing your dataset, identifying the most pressing challenges, and then implement targeted modifications. Monitoring the impact of each change is critical to maintaining and enhancing performance. This, as I’ve found, is often the best path to creating a robust speech recognition system.

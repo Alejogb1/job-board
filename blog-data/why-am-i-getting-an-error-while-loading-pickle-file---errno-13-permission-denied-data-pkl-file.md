@@ -12,7 +12,7 @@ first, the error "permission denied" tells you the program doesn’t have the ne
 
 now, about the 'data.pkl' file. pickle is a python module that allows you to serialize and de-serialize python objects. in a nutshell, it takes python variables, objects, lists, whatever, and turns them into a stream of bytes, which can then be saved into a file. when you load that file later, it turns the bytes back into python objects. it's super handy. the extension .pkl is the widely-used convention for files created with the pickle module, it is just a way of telling the user or even the operating system that a file is created with pickle. it makes it recognizable, even though it’s not mandatory.
 
-i’ve personally encountered this error multiple times over the years. one instance, early in my career, had me working on a machine learning project. i had trained a model and pickled it, all good, seemed perfect locally, everything worked and seemed alright. then when i deployed it onto a server and the data folder was owned by a different user group, the server process couldn't read the file, and boom, permission denied. i spent hours scratching my head. the classic, right? after that, i always made it a point to check file permissions before any deployment. its such a simple thing, but so easy to overlook. it’s like forgetting your keys, you’d think you would never do it again, but it happens. you should start making it a habit.
+i’ve personally encountered this error multiple times over the years. one instance, early in my career, had me working on a machine learning project. i had trained a model and pickled it, all good, seemed perfect locally, everything worked and seemed . then when i deployed it onto a server and the data folder was owned by a different user group, the server process couldn't read the file, and boom, permission denied. i spent hours scratching my head. the classic, right? after that, i always made it a point to check file permissions before any deployment. its such a simple thing, but so easy to overlook. it’s like forgetting your keys, you’d think you would never do it again, but it happens. you should start making it a habit.
 
 so, let’s get to solutions. the issue is with the process running your python script. it does not have read permission to that particular file. you can take a few paths for fixing this, starting with the easiest ones:
 
@@ -30,7 +30,7 @@ this will output something like `-rw-r--r-- 1 user group 1234 ...` . the first p
 chmod a+r data.pkl
 ```
 
-`a+r` grants read permissions to everyone, which might be okay if it’s a personal project. if this is for a server or a shared environment, you may want to adjust group or user access more carefully using `chown` and `chmod`.
+`a+r` grants read permissions to everyone, which might be if it’s a personal project. if this is for a server or a shared environment, you may want to adjust group or user access more carefully using `chown` and `chmod`.
 
 for example, to change the ownership to the current user and group that is executing the command, you can use:
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ambiguous-vip-c-code-problem"
 ---
 
-Okay I see the "ambiguous vip c++ code problem" question yeah I've been there done that got the t-shirt multiple times let's break this down you're probably dealing with some kind of virtual inheritance mess or maybe a funky mix of template classes with multiple inheritance it's usually one of those situations they tend to cause these specific problems I've got a scar or two from similar fights believe me
+I see the "ambiguous vip c++ code problem" question yeah I've been there done that got the t-shirt multiple times let's break this down you're probably dealing with some kind of virtual inheritance mess or maybe a funky mix of template classes with multiple inheritance it's usually one of those situations they tend to cause these specific problems I've got a scar or two from similar fights believe me
 
 So you've got this ambiguous member access right the compiler's basically throwing its hands up saying "hey which one am I supposed to use" it’s like it doesn’t know where to look it happens when you have multiple base classes and those classes share members with the same name and without proper disambiguation the compiler just gets confused it's understandable honestly but still frustrating when you're trying to build something and it just keeps giving you the same errors repeatedly.
 
@@ -48,7 +48,7 @@ class PhysicsRendererComponent : public RenderComponent, public PhysicsComponent
 
 int main(){
     PhysicsRendererComponent prComponent;
-    prComponent.initialize(); // this was giving an ambiguous call compilation error 
+    prComponent.initialize(); // this was giving an ambiguous call compilation error
     return 0;
 }
 ```
@@ -102,6 +102,7 @@ int main(){
 }
 
 ```
+
 This way you are explicitly calling `RenderComponent::initialize()` and `PhysicsComponent::initialize()` so the compiler now knows what you actually mean it is a simple fix but can get messy if you have too many inheritance levels. It works but isn't always the best way specifically if you have multiple layers of complex hierarchies.
 
 The real solution and the one that really made sense in my case is to use virtual inheritance virtual inheritance makes the base class `IComponent` only exist once in the object’s memory layout so there is no ambiguity on the method calls

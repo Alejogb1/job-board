@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "fitted-probabilities-numerically-0-or-1-occurred-warning"
 ---
 
-Okay so you're getting those annoying "fitted probabilities numerically 0 or 1 occurred" warnings right Been there done that a thousand times it's like a rite of passage for anyone messing around with machine learning models particularly when you're dealing with classification problems and probabilities My guess is you're working with some sort of logistic regression or something similar that outputs probabilities between 0 and 1 and when the model is super confident and its predictions for classes it assigns values very close to 0 or 1 not *exactly* 0 or 1 but so close that some libraries throw a fit
+you're getting those annoying "fitted probabilities numerically 0 or 1 occurred" warnings right Been there done that a thousand times it's like a rite of passage for anyone messing around with machine learning models particularly when you're dealing with classification problems and probabilities My guess is you're working with some sort of logistic regression or something similar that outputs probabilities between 0 and 1 and when the model is super confident and its predictions for classes it assigns values very close to 0 or 1 not _exactly_ 0 or 1 but so close that some libraries throw a fit
 
 First off let me tell you my story When I first stumbled upon this I was working on a project where we had to predict customer churn a classic I know I trained a logistic regression model on this dataset which was actually pretty clean I thought I'd nailed it everything was running great during training validation scores were looking beautiful Then during actual deployment when we started feeding the model real unseen data BAM This warning pops up everywhere fitted probabilities numerically 0 or 1 occurred and it's throwing a wrench in the works not exactly what I needed that day It felt like my well-crafted model was trying to break out of the cage of acceptable mathematical ranges
 
-Basically this warning signals potential issues with your model's confidence and the mathematical computations underlying the process It means that at some points the probability estimates are converging so close to the boundaries 0 or 1 that it's like the model is shouting "I'M ABSOLUTELY CERTAIN" even when its rarely that clear cut in real life This is not necessarily *wrong* but can cause computational instability and issues further down the line for some methods You will see this problem in gradient descent during training it may mess up the loss computations or give you problems later on during prediction with the same issue
+Basically this warning signals potential issues with your model's confidence and the mathematical computations underlying the process It means that at some points the probability estimates are converging so close to the boundaries 0 or 1 that it's like the model is shouting "I'M ABSOLUTELY CERTAIN" even when its rarely that clear cut in real life This is not necessarily _wrong_ but can cause computational instability and issues further down the line for some methods You will see this problem in gradient descent during training it may mess up the loss computations or give you problems later on during prediction with the same issue
 
 The problem is usually with what we call numerical precision Computers don't represent numbers with infinite precision they have a limited number of bits to represent floating point numbers So when you get probabilities that are say 0000000000000000001 or 09999999999999999999 it's practically 0 or 1 from a mathematical and practical point of view This means your model is probably overconfident or your dataset might have a specific problem that is causing this The common culprit tends to be class imbalance or features that are too predictive which can make the model over-fit and go "all-in" with its predictions We don't want the AI version of a bad poker player.
 
@@ -91,9 +91,9 @@ print(f"Accuracy is {accuracy}")
 
 **Other considerations:**
 
-*   **Different Models:** Sometimes the issue is inherent to the type of model you're using maybe the model is just too simple or too complex for the task. Consider trying other types of classification algorithms like decision trees random forests gradient boosting machines or neural networks sometimes this will not fix the problem but it may improve prediction performance a lot
-*   **Increase the numerical precision:** While this is more difficult because it may involve changing fundamental settings in libraries or in languages you could see if there is a way to increase the precision of your floating point numbers for some numerical computations though I will be honest it is a last resort method and not usually practical to change the numerical precision that much.
-*   **Clipping:** Sometimes a crude but effective method is just to clip probabilities to a reasonable range like between 0.01 and 0.99 basically if your predicted probability goes to 0000000000001 then you make it 001 and the same with 0999999999999 make it 099 it is simple but can work well for deployment
+- **Different Models:** Sometimes the issue is inherent to the type of model you're using maybe the model is just too simple or too complex for the task. Consider trying other types of classification algorithms like decision trees random forests gradient boosting machines or neural networks sometimes this will not fix the problem but it may improve prediction performance a lot
+- **Increase the numerical precision:** While this is more difficult because it may involve changing fundamental settings in libraries or in languages you could see if there is a way to increase the precision of your floating point numbers for some numerical computations though I will be honest it is a last resort method and not usually practical to change the numerical precision that much.
+- **Clipping:** Sometimes a crude but effective method is just to clip probabilities to a reasonable range like between 0.01 and 0.99 basically if your predicted probability goes to 0000000000001 then you make it 001 and the same with 0999999999999 make it 099 it is simple but can work well for deployment
 
 **Important Notes**
 
@@ -105,9 +105,9 @@ And you should always keep up to date with the current literature on machine lea
 
 **Recommended resources**
 
-*   **"The Elements of Statistical Learning"** by Hastie Tibshirani and Friedman this is a textbook on machine learning fundamentals you need this if you want a deep understanding of the subject
-*   **"Pattern Recognition and Machine Learning"** by Christopher Bishop this is another classic great book very rigorous and will help you a lot
-*   **Scikit-learn's documentation** and other related libraries documentation is your best friend for everything machine learning read it all and know it
+- **"The Elements of Statistical Learning"** by Hastie Tibshirani and Friedman this is a textbook on machine learning fundamentals you need this if you want a deep understanding of the subject
+- **"Pattern Recognition and Machine Learning"** by Christopher Bishop this is another classic great book very rigorous and will help you a lot
+- **Scikit-learn's documentation** and other related libraries documentation is your best friend for everything machine learning read it all and know it
 
 I hope that helps you out and that you manage to get rid of these annoying warnings trust me I've been where you are and I know it can be frustrating if you have other issues feel free to ask I am always around.
 

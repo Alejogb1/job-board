@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "how-to-collect-inputs-that-are-not-in-training-phrases"
 ---
 
-alright, so you're facing the classic "how do i handle stuff my model hasn't seen before" problem. i've been down this road more times than i care to remember. it's like, you meticulously train this fantastic natural language processing (nlp) model, feeding it gigabytes of perfectly crafted data, and then it encounters a totally new phrase and just stares back blankly. it's frustrating, i get it.
+, so you're facing the classic "how do i handle stuff my model hasn't seen before" problem. i've been down this road more times than i care to remember. it's like, you meticulously train this fantastic natural language processing (nlp) model, feeding it gigabytes of perfectly crafted data, and then it encounters a totally new phrase and just stares back blankly. it's frustrating, i get it.
 
 let's break down how i typically approach this, keeping it simple and, as much as possible, away from the mystical black box side of machine learning.
 
-first off, let's be clear: no model, no matter how advanced, will perfectly understand *everything*. that’s not how these things work. we're talking about statistical approximations, pattern recognition, not some form of actual comprehension. therefore, a key concept is understanding we need ways to handle the *unknown*, gracefully.
+first off, let's be clear: no model, no matter how advanced, will perfectly understand _everything_. that’s not how these things work. we're talking about statistical approximations, pattern recognition, not some form of actual comprehension. therefore, a key concept is understanding we need ways to handle the _unknown_, gracefully.
 
 my first instinct is not to throw more data at it right away, that's usually the knee-jerk reaction, instead, let's evaluate how our pipeline is dealing with out-of-vocabulary (oov) inputs. usually, this involves a few techniques i've found effective in my past escapades in building conversational interfaces.
 
@@ -37,7 +37,9 @@ print(f"tokenized text 2: {output2}")
 
 
 ```
+
 output could be something like
+
 ```
 tokenized text 1: ['this', 'is', 'a', 'new', 'phrase', '.']
 tokenized text 2: ['this', 'is', 'an', 'un', '##se', '##en', '##phrase']
@@ -70,10 +72,13 @@ most_similar_index = np.argmax(similarities)
 print(f"closest phrase : {known_phrases[most_similar_index]}")
 
 ```
+
 the output here is
+
 ```
 closest phrase : how do i get a refund
 ```
+
 it means that the model considers that the phrase: "i want to be reimburse of my money" is similar to "how do i get a refund" so we can redirect the user to this action.
 
 now, after we do the first matching process, another approach is to incorporate a feedback loop, or a user in the loop system. when a user enters a phrase the model doesn't understand, don’t simply return an "i don't understand" message. instead, ask the user to clarify, or provide a list of possible options based on the fuzzy matching (that we discussed before). this not only helps resolve the immediate issue but also gives us data to add to the training set later. think of it as a learning opportunity. we actually want this to happen. the best is to create an entire system, that logs the unknown queries, ask the user to choose from a list of most closest queries, then review the data, create more data and re-train, so that this new data is incorporated in the system.
@@ -100,6 +105,7 @@ print("Did you mean any of these:")
 for i,index in enumerate(most_similar_indices):
   print(f"{i+1}. {known_phrases[index]}")
 ```
+
 output example
 
 ```

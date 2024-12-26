@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "extends-uml-relationship-explanation"
 ---
 
-Okay so you're asking about UML extends relationships right I've been wrestling with those things since the dawn of time practically ok maybe not the dawn but close enough Let me tell you a bit about my journey with UML and especially this pesky "extends" thing you know like back in the day when I was coding up some insane data processing system using C++ and Object Oriented Design I'm talking early 2000's stuff before everyone had all these fancy frameworks and tools we had to build everything from the ground up manually
+you're asking about UML extends relationships right I've been wrestling with those things since the dawn of time practically ok maybe not the dawn but close enough Let me tell you a bit about my journey with UML and especially this pesky "extends" thing you know like back in the day when I was coding up some insane data processing system using C++ and Object Oriented Design I'm talking early 2000's stuff before everyone had all these fancy frameworks and tools we had to build everything from the ground up manually
 
 First things first and this is crucial extends in UML isn't about inheritance it's not like you see in your class definitions in code like with classes or interfaces It's a use case relationship specifically use cases in UML are those bubbles with descriptive names like "Process Order" or "Generate Report" you know the ones The extends relationship however is about optional variations on that main process or action. Think of it this way you have a base use case and the "extends" use case is something that may or may not happen depending on certain conditions or user actions during the execution of the main process or base use case.
 
 So let's say we have a "Checkout" use case the primary action here is to handle customer payments and finalise the order. Now within that there might be special cases things that only happen if the customer is for example using a gift card I've seen some implementations of systems that handled gift cards terribly its a pain believe me. So here a "Use Gift Card" use case would be attached to the "Checkout" use case with an extends arrow.
 
-The "extends" relationship indicates that the "Use Gift Card" use case *extends* or *adds to* the core functionality of checkout but it's not always performed. It only activates under the right conditions. This is different from inclusion where you would want a use case to always occur.
+The "extends" relationship indicates that the "Use Gift Card" use case _extends_ or _adds to_ the core functionality of checkout but it's not always performed. It only activates under the right conditions. This is different from inclusion where you would want a use case to always occur.
 
 Let's move a little deeper and see some examples that can make it less abstract. Now this is obviously not in code this is a conceptual UML thing but it can help.
 
@@ -84,8 +84,8 @@ I often see people overuse extends that can lead to use cases that are unnecessa
 
 If you want to dig deeper into the topic then there are a few sources that have helped me throughout my career I recommend these:
 
-*   **"Applying UML and Patterns" by Craig Larman:** This book is a classic and covers UML extensively including use case relationships. It goes deeper than most introductory materials I have ever come across.
-*  **"UML Distilled" by Martin Fowler:** A great concise guide to UML and a must have for every developer
-*   **The OMG UML Specification:** This is the official specification that is a bit dense so you should approach it carefully if you are a beginner in the field.
+- **"Applying UML and Patterns" by Craig Larman:** This book is a classic and covers UML extensively including use case relationships. It goes deeper than most introductory materials I have ever come across.
+- **"UML Distilled" by Martin Fowler:** A great concise guide to UML and a must have for every developer
+- **The OMG UML Specification:** This is the official specification that is a bit dense so you should approach it carefully if you are a beginner in the field.
 
 Anyways that’s it from my experience with UML extends relationships. Its something I have used for a long time and it's a fundamental part of system design. Remember it’s about optional variations on your core use cases and its all about system design at a high level not code. If you get this right from the beginning you'll have a solid foundation for your project. I hope this helps and let me know if you have more questions.

@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-does-uniswap-upgrade-its-smart-contracts-after-deployment"
 ---
 
-Okay, let’s tackle this. It’s a question I've personally navigated several times, particularly back when we were scaling a DeFi platform that leveraged heavily on AMM technology—similar challenges, similar solutions. Upgrading smart contracts, especially after deployment, is a complex issue in the blockchain world, primarily because of the immutable nature of these contracts once they're on the chain. Uniswap, like many decentralized protocols, doesn't directly *change* the deployed code, but rather, it deploys *new* contracts and establishes a migration strategy to move users and liquidity over. It's not a simple replacement. This needs a structured, secure, and very deliberate approach.
+, let’s tackle this. It’s a question I've personally navigated several times, particularly back when we were scaling a DeFi platform that leveraged heavily on AMM technology—similar challenges, similar solutions. Upgrading smart contracts, especially after deployment, is a complex issue in the blockchain world, primarily because of the immutable nature of these contracts once they're on the chain. Uniswap, like many decentralized protocols, doesn't directly _change_ the deployed code, but rather, it deploys _new_ contracts and establishes a migration strategy to move users and liquidity over. It's not a simple replacement. This needs a structured, secure, and very deliberate approach.
 
-The core concept is built around the idea of *proxy contracts*. The proxy contract serves as a sort of intermediary, a front-facing contract that users interact with. This proxy contract doesn't house the core logic itself. Instead, it delegates all function calls to an *implementation* contract, often referred to as the "logic" contract. The beauty of this setup is that you can swap the implementation contract while the proxy contract remains at the same address. This preserves the persistent address that users rely on, without breaking existing integrations. Think of it as changing the engine of a car while keeping the chassis and its known registration unchanged.
+The core concept is built around the idea of _proxy contracts_. The proxy contract serves as a sort of intermediary, a front-facing contract that users interact with. This proxy contract doesn't house the core logic itself. Instead, it delegates all function calls to an _implementation_ contract, often referred to as the "logic" contract. The beauty of this setup is that you can swap the implementation contract while the proxy contract remains at the same address. This preserves the persistent address that users rely on, without breaking existing integrations. Think of it as changing the engine of a car while keeping the chassis and its known registration unchanged.
 
 The upgrade process typically involves these key steps:
 
@@ -14,7 +14,7 @@ The upgrade process typically involves these key steps:
 
 2. **Deployment of the New Implementation Contract:** Once the new implementation contract is deemed secure and functional, it’s deployed on the blockchain. This is where having a sound deployment pipeline becomes paramount. We would use CI/CD tools like GitHub Actions to ensure each deployment was reproducible and auditable. However, at this point, it's still inactive because the proxy contract is still pointing to the old logic. This careful, two-step deployment is key for managing a clean transition.
 
-3. **Proxy Contract Update:** The proxy contract’s administrative functions—usually accessible only to the contract’s owner or designated multisig—are used to point to the *new* deployed implementation contract. This step is pivotal and carefully executed. The proxy contract stores the address of the implementation contract, and updating it with the new address routes function calls to the latest version.
+3. **Proxy Contract Update:** The proxy contract’s administrative functions—usually accessible only to the contract’s owner or designated multisig—are used to point to the _new_ deployed implementation contract. This step is pivotal and carefully executed. The proxy contract stores the address of the implementation contract, and updating it with the new address routes function calls to the latest version.
 
 4. **User Migration (If Needed):** In some instances, such as when significant data structures or storage layouts change, users may need to initiate an action to transition their data or liquidity to the new contract. This might involve a specific migration function to allow users to withdraw from the older contract and deposit to the new one. This phase requires clear communication with the user base to facilitate a smooth and understandable migration. The whole purpose is to make this transition as seamless and straightforward as possible.
 
@@ -122,9 +122,9 @@ The sequence of a typical upgrade is thus:
 
 For further reading, I highly recommend diving into the following resources:
 
-*   **"Mastering Ethereum" by Andreas M. Antonopoulos and Gavin Wood**: A comprehensive book that provides an in-depth understanding of Ethereum, including detailed explanations of smart contracts, proxy patterns, and upgrade strategies.
-*   **"Solidity Programming Essentials" by Ritesh Modi**: This is a great resource to get into solidity and the best practices when coding with it.
-*   **EIP-1967:** This is a great place to read more about the standard proxy storage slot.
-*   **The ZeppelinOS project**: It contains lots of open-source code that shows how upgradable contracts are implemented in practice.
+- **"Mastering Ethereum" by Andreas M. Antonopoulos and Gavin Wood**: A comprehensive book that provides an in-depth understanding of Ethereum, including detailed explanations of smart contracts, proxy patterns, and upgrade strategies.
+- **"Solidity Programming Essentials" by Ritesh Modi**: This is a great resource to get into solidity and the best practices when coding with it.
+- **EIP-1967:** This is a great place to read more about the standard proxy storage slot.
+- **The ZeppelinOS project**: It contains lots of open-source code that shows how upgradable contracts are implemented in practice.
 
 It's important to understand that there’s no one-size-fits-all approach to upgrades. The complexity depends heavily on the protocol, the degree of changes, and risk appetite. You have to carefully weigh different design patterns. I hope this breakdown offers some clarity. It's a challenging area, but understanding the principles behind it is key to building scalable and robust decentralized applications.

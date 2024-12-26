@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "why-does-a-devcontainerjson-postcreatecommand-warn-running-pip-as-the-root-user"
 ---
 
-alright, so you've stumbled upon that familiar warning in your devcontainer setup, "running pip as the 'root' user". i've seen this pop up more times than i care to remember, and it's a good heads-up, something you should pay attention to. it's not the end of the world but it points to a less than ideal practice within your devcontainer configuration. i’ll walk you through why this happens, and how to fix it.
+, so you've stumbled upon that familiar warning in your devcontainer setup, "running pip as the 'root' user". i've seen this pop up more times than i care to remember, and it's a good heads-up, something you should pay attention to. it's not the end of the world but it points to a less than ideal practice within your devcontainer configuration. i’ll walk you through why this happens, and how to fix it.
 
-basically, when you use `postCreateCommand` in your `devcontainer.json`, it executes commands *after* the container is built. that's cool, it's designed for setting up your development environment, installing dependencies, and similar stuff. the issue arises because, by default, these commands run within the container as the root user. now, pip, python's package installer, will often complain if run as root. it doesn't like that. it's designed to operate within a user context, and it throws that warning to encourage you to change things and operate in a more secure way for your development workflow, avoiding any problems that this might cause.
+basically, when you use `postCreateCommand` in your `devcontainer.json`, it executes commands _after_ the container is built. that's cool, it's designed for setting up your development environment, installing dependencies, and similar stuff. the issue arises because, by default, these commands run within the container as the root user. now, pip, python's package installer, will often complain if run as root. it doesn't like that. it's designed to operate within a user context, and it throws that warning to encourage you to change things and operate in a more secure way for your development workflow, avoiding any problems that this might cause.
 
 i encountered this personally a few years back when setting up a new python project that had some complicated dependencies. i was in a rush to get things going, and quickly wrote a `postCreateCommand` that looked something like this:
 
@@ -16,7 +16,7 @@ i encountered this personally a few years back when setting up a new python proj
 }
 ```
 
-this worked, technically. the container spun up, and all packages were installed. but then i started noticing this warning every time and decided to ignore it. later down the line, i had to make a change that relied on some specific permissions, and i realised that running as root had created some really strange and difficult to diagnose side effects. i had to spend half a day unravelling that tangled mess. it was tedious. i learned my lesson: it's *always* better to do it properly the first time.
+this worked, technically. the container spun up, and all packages were installed. but then i started noticing this warning every time and decided to ignore it. later down the line, i had to make a change that relied on some specific permissions, and i realised that running as root had created some really strange and difficult to diagnose side effects. i had to spend half a day unravelling that tangled mess. it was tedious. i learned my lesson: it's _always_ better to do it properly the first time.
 
 the core issue with running pip as root is about security and how unix like systems manage permissions. running as root gives the command complete control of the system, which should only be necessary in very few cases when you need to change configurations of a very critical nature. if a package you install with root permissions has malicious code, it can potentially do serious damage, something you don’t want. it's not something you want to worry about during everyday development, is it?
 
@@ -30,8 +30,8 @@ first, make sure you have a user that is non-root in your `devcontainer.json` th
 
 ```json
 {
-    "remoteUser": "vscode",
-    "containerUser": "vscode"
+  "remoteUser": "vscode",
+  "containerUser": "vscode"
 }
 ```
 
@@ -52,10 +52,10 @@ in some cases, you might want to install some system dependencies using `apt`. t
 ```json
 {
   "postCreateCommand": [
-      "apt-get update",
-      "apt-get install -y --no-install-recommends libpq-dev",
-      "sudo -u vscode pip install -r requirements.txt"
-    ]
+    "apt-get update",
+    "apt-get install -y --no-install-recommends libpq-dev",
+    "sudo -u vscode pip install -r requirements.txt"
+  ]
 }
 ```
 

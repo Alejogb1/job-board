@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-does-the-spacy-inconsistent-with-smaller-texts"
 ---
 
-alright, so you're hitting a classic wall with spaCy, specifically its behavior on smaller text chunks. i've been down this road myself, and it can be pretty frustrating when things don't behave as expected. it's not that spaCy is broken or anything, it's just tuned, like a high-performance car, for a certain kind of road. and when you try to take it off-roading on these tiny paths, it starts to skid a bit.
+, so you're hitting a classic wall with spaCy, specifically its behavior on smaller text chunks. i've been down this road myself, and it can be pretty frustrating when things don't behave as expected. it's not that spaCy is broken or anything, it's just tuned, like a high-performance car, for a certain kind of road. and when you try to take it off-roading on these tiny paths, it starts to skid a bit.
 
 let’s break it down, from the ground up. the core issue isn’t really inconsistency, but rather how spaCy, and most nlp models for that matter, are trained. they thrive on context, specifically lots of it. think about how humans understand language: we don't decipher words in isolation, we rely on surrounding sentences and paragraphs to get the full picture, this the same for nlp algorithms that is usually trained in big datasets that contain a lot of context.
 
@@ -25,6 +25,7 @@ doc1 = nlp("code is fun")
 for token in doc1:
     print(token.text, token.pos_)
 ```
+
 This output is going to be like:
 
 ```
@@ -46,6 +47,7 @@ doc2 = nlp("i went to paris and london")
 for ent in doc2.ents:
     print(ent.text, ent.label_)
 ```
+
 This outputs:
 
 ```
@@ -68,7 +70,9 @@ for token in doc3:
     print(token.text, token.dep_, token.head.text)
 
 ```
+
 This outputs:
+
 ```
 the det fox
 quick amod fox
@@ -80,6 +84,7 @@ the det dog
 lazy amod dog
 dog pobj over
 ```
+
 here you can see that each word has a dependency role in relation to other word. all of this is made by the model based on the training set, and it is way harder to do when you have just few words, because each word role changes depending on the context. The more context the more accurate it gets.
 
 so, what's the solution? well, there isn't a magic bullet. it's more about understanding the limitations and adapting your approach. if you're consistently working with short texts, consider these techniques:
@@ -89,7 +94,7 @@ so, what's the solution? well, there isn't a magic bullet. it's more about under
 3.  **use bigger models:** spaCy offers different model sizes (sm, md, lg). bigger models (lg) can be useful in cases where you need more accuracy, or in very short sentences. but they are bigger and require more resources, so it's a trade-off.
 4.  **alternative libraries:** for short text specific tasks, there might be specialized libraries or models that are trained differently. explore those for specific use cases, you never know.
 
-the important thing to internalize is that these inconsistencies aren't bugs, but rather a consequence of how these models work under the hood. they require context, and when that's lacking, their performance can suffer. like that time i tried to fix a bug in a code only to realize that was me being stupid in the first place, *sigh*.
+the important thing to internalize is that these inconsistencies aren't bugs, but rather a consequence of how these models work under the hood. they require context, and when that's lacking, their performance can suffer. like that time i tried to fix a bug in a code only to realize that was me being stupid in the first place, _sigh_.
 
 to understand more, i highly recommend diving into the nlp literature. look into papers on transformer models (like the ones behind spaCy’s models) like "attention is all you need" it will give you a deep understanding of how these models operate. also a good book on nlp foundations would be extremely useful, something like "speech and language processing" from jurafsky and martin, or the "natural language processing with python" book can teach you more. these resources will give you a more in-depth overview of the inner workings of nlp algorithms. also you can check the spacy documentation, it has a lot of details about this kinds of issues and how they are built.
 

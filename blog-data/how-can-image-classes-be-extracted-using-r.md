@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-image-classes-be-extracted-using-r"
 ---
 
-Okay, let's tackle this. The extraction of image classes using R is something I’ve dealt with quite a bit, particularly during my time working on automated medical image analysis projects a few years back. It's not always straightforward, primarily because 'image class' can mean different things depending on context. We're essentially talking about grouping pixels or regions of pixels based on some criteria, and thankfully, R has a solid toolkit to handle this.
+, let's tackle this. The extraction of image classes using R is something I’ve dealt with quite a bit, particularly during my time working on automated medical image analysis projects a few years back. It's not always straightforward, primarily because 'image class' can mean different things depending on context. We're essentially talking about grouping pixels or regions of pixels based on some criteria, and thankfully, R has a solid toolkit to handle this.
 
 Essentially, the process hinges on transforming raw image data into a format we can analyze, followed by leveraging clustering algorithms or supervised learning methods to assign those pixels or regions to distinct classes. We're moving from pixel data to semantically meaningful classifications. Now, the particular techniques can change depending on if we have labeled data, or if we're embarking on the unsupervised classification journey.
 
@@ -46,11 +46,11 @@ clustered_raster <- raster::raster(clustered_img)
 plot(clustered_raster)
 ```
 
-Here, the `raster` package reads our image. We then convert this into a matrix, which is easier for k-means to handle. The `kmeans()` function does the heavy lifting, and we assign each pixel to a cluster based on its value. The `nstart` argument controls how many times the algorithm iterates using a different initial random center, increasing the chance of finding a better solution (within reason). The result is a raster where each pixel is labeled by its cluster id, which now represents our image classes. Experimentation with `num_clusters` is critical; the number you select affects the way the algorithm groups your pixels, and too few or too many can cause issues. For a better understanding of the theoretical underpinnings, I would recommend the *Elements of Statistical Learning* by Hastie, Tibshirani, and Friedman.
+Here, the `raster` package reads our image. We then convert this into a matrix, which is easier for k-means to handle. The `kmeans()` function does the heavy lifting, and we assign each pixel to a cluster based on its value. The `nstart` argument controls how many times the algorithm iterates using a different initial random center, increasing the chance of finding a better solution (within reason). The result is a raster where each pixel is labeled by its cluster id, which now represents our image classes. Experimentation with `num_clusters` is critical; the number you select affects the way the algorithm groups your pixels, and too few or too many can cause issues. For a better understanding of the theoretical underpinnings, I would recommend the _Elements of Statistical Learning_ by Hastie, Tibshirani, and Friedman.
 
 **Scenario 2: Supervised Classification with Random Forest**
 
-Now, let's say we *do* have labeled data—perhaps a subset of our image where we manually identified different regions or objects. This is where supervised learning shines. One algorithm that consistently works well in practice for image classification tasks is the Random Forest (implemented in the `randomForest` package). I've used this successfully with various satellite imagery datasets, classifying land cover based on spectral signatures.
+Now, let's say we _do_ have labeled data—perhaps a subset of our image where we manually identified different regions or objects. This is where supervised learning shines. One algorithm that consistently works well in practice for image classification tasks is the Random Forest (implemented in the `randomForest` package). I've used this successfully with various satellite imagery datasets, classifying land cover based on spectral signatures.
 
 Here's an illustration using `randomForest`:
 
@@ -87,7 +87,7 @@ plot(predicted_classes)
 ```
 
 In this snippet, we load a multi-spectral image stack. We read in training data from a csv, which should contain x and y coordinates along with class label. The data needs to be arranged so that the coordinates match pixels in the raster data so that the pixels can be extracted, and then combined with class labels to create a training data frame.
-Crucially, we handle missing data. The `randomForest` function trains the model, and `raster::predict` allows us to map the learned classes onto the entirety of the image. The resulting raster contains pixel classifications. A great reference on random forests would be Leo Breiman's original paper, *Random Forests*, published in *Machine Learning*.
+Crucially, we handle missing data. The `randomForest` function trains the model, and `raster::predict` allows us to map the learned classes onto the entirety of the image. The resulting raster contains pixel classifications. A great reference on random forests would be Leo Breiman's original paper, _Random Forests_, published in _Machine Learning_.
 
 **Scenario 3: Region-Based Classification Using Connected Components**
 
@@ -132,7 +132,7 @@ print(regions_summary)
 
 ```
 
-In this example, we first perform some sort of segmentation – in this case, using a simple mean threshold as a proxy for something more complex like watershed or a morphological operation. The `EBImage::bwlabel()` function then identifies spatially connected regions. Each resulting label corresponds to a particular region, and this can be analyzed using raster::zonal. These regions can be considered ‘classes’ as they have been defined by some segmentation criteria. For a deep dive into segmentation techniques, *Digital Image Processing* by Rafael C. Gonzalez and Richard E. Woods is incredibly comprehensive.
+In this example, we first perform some sort of segmentation – in this case, using a simple mean threshold as a proxy for something more complex like watershed or a morphological operation. The `EBImage::bwlabel()` function then identifies spatially connected regions. Each resulting label corresponds to a particular region, and this can be analyzed using raster::zonal. These regions can be considered ‘classes’ as they have been defined by some segmentation criteria. For a deep dive into segmentation techniques, _Digital Image Processing_ by Rafael C. Gonzalez and Richard E. Woods is incredibly comprehensive.
 
 In each of these examples, the exact code will vary depending on the nature of the image data, the objective of the analysis, and whether we're performing unsupervised or supervised analysis. It's crucial to validate the results of any classification process against a holdout or test set, especially in the supervised scenario, to ensure robustness.
 

@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "eigen-dot-product-calculation-vector"
 ---
 
-Okay so you're asking about calculating the dot product involving eigenvectors right I've been there man more times than I care to remember trust me this isn’t some theoretical math problem it's bread and butter when you’re dealing with stuff like dimensionality reduction principal component analysis even some image processing routines where you're trying to find the dominant features yeah I’ve seen it all
+you're asking about calculating the dot product involving eigenvectors right I've been there man more times than I care to remember trust me this isn’t some theoretical math problem it's bread and butter when you’re dealing with stuff like dimensionality reduction principal component analysis even some image processing routines where you're trying to find the dominant features yeah I’ve seen it all
 
 Let’s break it down from a practical perspective the core of this question hinges on a fundamental misunderstanding or maybe just a slip up in how we're using these things. Eigenvectors by their definition are vectors that when a linear transformation is applied to them they only change by a scalar factor that's the eigenvalue. They don't rotate or shear they only scale. Now when we start talking about dot products well that’s a measure of how similar two vectors are or more accurately how much they project onto each other
 
 So what's the catch here the gotcha usually happens when you are working with a matrix that has been derived from data that’s not already orthonormal when the eigenvectors are not orthonormal and then you do the dot product this can lead to some unexpected results the eigenvectors themselves even though they are each unique for each eigenvalue are not necessarily orthogonal to one another unless the matrix we are dealing with is a special type for example symmetric or hermitian in that case you are in luck otherwise you might have to make them orthonormal yourself but that is a separate question here we will focus on calculating the dot product.
 
-The dot product is straightforward if you have two vectors *a* and *b* they are represented as two sequences of numbers lets say like this: *a* = [a1 a2 a3…an] and *b* = [b1 b2 b3…bn] it’s the sum of the multiplication of each element of vector *a* with the corresponding element of vector *b* so *a* dot *b* = a1*b1 + a2*b2 + a3*b3 … + an*bn this gives a single number a scalar that's the essence of it
+The dot product is straightforward if you have two vectors _a_ and _b_ they are represented as two sequences of numbers lets say like this: _a_ = [a1 a2 a3…an] and _b_ = [b1 b2 b3…bn] it’s the sum of the multiplication of each element of vector _a_ with the corresponding element of vector _b_ so _a_ dot _b_ = a1*b1 + a2*b2 + a3*b3 … + an*bn this gives a single number a scalar that's the essence of it
 
 Now lets talk code I am gonna give you three ways to do this with python and numpy cause its kind of the industry standard for that thing.
 

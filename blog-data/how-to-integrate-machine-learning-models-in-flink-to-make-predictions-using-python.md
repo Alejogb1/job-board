@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-integrate-machine-learning-models-in-flink-to-make-predictions-using-python"
 ---
 
-alright, so you're looking to get your machine learning models, trained probably with python, running inside apache flink for real-time predictions. i’ve been down this road a few times, and it’s definitely got some quirks, so let's break it down.
+, so you're looking to get your machine learning models, trained probably with python, running inside apache flink for real-time predictions. i’ve been down this road a few times, and it’s definitely got some quirks, so let's break it down.
 
 first off, the core problem here is that flink is a java/scala environment, and your models, typically, are python. they’re not speaking the same language. we need a bridge, something that allows flink to talk to your python model. the best way, in my experience, is through a remote procedure call (rpc) setup. basically, you run a python server that hosts your model, and flink sends requests to it. think of it like a microservice your flink job interacts with.
 

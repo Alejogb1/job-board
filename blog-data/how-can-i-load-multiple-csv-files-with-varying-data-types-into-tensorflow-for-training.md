@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-i-load-multiple-csv-files-with-varying-data-types-into-tensorflow-for-training"
 ---
 
-Alright, let's tackle this. I've had my share of encounters with varied csv datasets over the years, and trust me, it’s a common headache. Getting all that heterogeneous data into a format TensorFlow can digest, especially for training, requires some careful handling. It’s not as straightforward as a simple load command. The trick lies in understanding both TensorFlow's data pipeline and the nuances of your specific data. Let me walk you through the process.
+, let's tackle this. I've had my share of encounters with varied csv datasets over the years, and trust me, it’s a common headache. Getting all that heterogeneous data into a format TensorFlow can digest, especially for training, requires some careful handling. It’s not as straightforward as a simple load command. The trick lies in understanding both TensorFlow's data pipeline and the nuances of your specific data. Let me walk you through the process.
 
 The core challenge, as you've probably figured out, is that csv files don't usually come neatly packaged with information about data types. You might have integers in one column, floats in another, strings mixed with timestamps, maybe some categorical values, and so on. TensorFlow, on the other hand, expects tensors with well-defined data types. So, we need a mechanism to interpret, parse, and transform those diverse formats into something it can work with.
 
-The process, in essence, involves several key steps: *inferring data types*, *defining column specifications*, *parsing the csv files*, and finally, *creating a TensorFlow dataset*. While TensorFlow's `tf.data` API is the go-to tool for creating efficient data pipelines, it needs to be instructed on what your specific data looks like.
+The process, in essence, involves several key steps: _inferring data types_, _defining column specifications_, _parsing the csv files_, and finally, _creating a TensorFlow dataset_. While TensorFlow's `tf.data` API is the go-to tool for creating efficient data pipelines, it needs to be instructed on what your specific data looks like.
 
-The first hurdle is figuring out the data types present in your csv files. While you could manually inspect each file, it quickly becomes cumbersome when dealing with numerous files or large datasets. I've found it helpful to use Python libraries like `pandas` for initial exploration. Pandas' data type inference capabilities are pretty good for a quick analysis. You can load a small sample of each file and examine the `dtypes` property. This gives you a reasonable indication of what’s going on. However, *don't blindly trust pandas' inference*. Sometimes, what pandas identifies as, say, `int64`, might actually need to be a `float64` if there’s potential for missing values which are represented by `NaN` that pandas handles as floats. It is important to understand how *NaN* values are represented in different datasets and if explicit casting is needed. Be thorough. This initial scrutiny prevents unexpected errors down the line.
+The first hurdle is figuring out the data types present in your csv files. While you could manually inspect each file, it quickly becomes cumbersome when dealing with numerous files or large datasets. I've found it helpful to use Python libraries like `pandas` for initial exploration. Pandas' data type inference capabilities are pretty good for a quick analysis. You can load a small sample of each file and examine the `dtypes` property. This gives you a reasonable indication of what’s going on. However, _don't blindly trust pandas' inference_. Sometimes, what pandas identifies as, say, `int64`, might actually need to be a `float64` if there’s potential for missing values which are represented by `NaN` that pandas handles as floats. It is important to understand how _NaN_ values are represented in different datasets and if explicit casting is needed. Be thorough. This initial scrutiny prevents unexpected errors down the line.
 
 Once you have a clear idea of data types, we need to define column specifications for TensorFlow. This is usually done through `tf.io.decode_csv` which requires column defaults. These default values tell TensorFlow how to interpret each column's content. You specify the column's `dtype` and a default value, which is used in case any values are missing in the csv row. It is here we also state the specific format of strings to interpret as numeric or date objects.
 
@@ -26,7 +26,7 @@ def create_tf_dataset(file_paths):
     sample_df = pd.read_csv(file_paths[0], nrows=5)
     column_names = sample_df.columns.tolist()
     column_types = sample_df.dtypes.tolist()
-    
+
     # Create default values based on inferred pandas dtype and some general cases
     default_values = []
     for dtype in column_types:
@@ -84,7 +84,7 @@ def create_tf_dataset_with_dates(file_paths, date_column):
     sample_df = pd.read_csv(file_paths[0], nrows=5)
     column_names = sample_df.columns.tolist()
     column_types = sample_df.dtypes.tolist()
-        
+
     # Default values
     default_values = []
     for dtype in column_types:
@@ -107,22 +107,22 @@ def create_tf_dataset_with_dates(file_paths, date_column):
             na_value=''
         )
         features = dict(zip(column_names,decoded_data))
-        
+
         # If there's a date column, convert it
         if date_column in features:
             date_str = features[date_column]
             try:
               date_tensor = tf.strings.to_number(
                   tf.strings.split(date_str, sep="-").values, out_type=tf.int32)
-              
+
               date_tensor = tf.cast(tf.timestamp(tf.stack([date_tensor[0],date_tensor[1],date_tensor[2],0,0,0]) ) , tf.int64) # year,month,day,0,0,0
               features[date_column] = date_tensor # or use a float
             except Exception as e:
               print(f"Error converting date for {date_str}: {e}")
               features[date_column]= 0 #handle conversion errors for a wrong date format
-             
+
         return features
-    
+
 
     dataset = tf.data.Dataset.from_tensor_slices(file_paths)
     dataset = dataset.interleave(
@@ -157,7 +157,7 @@ def create_tf_dataset_with_categories(file_paths, category_column):
     sample_df = pd.read_csv(file_paths[0], nrows=5)
     column_names = sample_df.columns.tolist()
     column_types = sample_df.dtypes.tolist()
-    
+
     # Default values
     default_values = []
     for dtype in column_types:
@@ -175,7 +175,7 @@ def create_tf_dataset_with_categories(file_paths, category_column):
     for file_path in file_paths:
         df = pd.read_csv(file_path)
         categories.update(df[category_column].unique().tolist())
-    
+
     # Create a lookup table
     vocabulary = tf.constant(list(categories))
     lookup_table = tf.lookup.StaticHashTable(
@@ -196,7 +196,7 @@ def create_tf_dataset_with_categories(file_paths, category_column):
         # Convert category to integer representation
         if category_column in features:
             category_str = features[category_column]
-            features[category_column] = lookup_table.lookup(category_str) 
+            features[category_column] = lookup_table.lookup(category_str)
 
         return features
 

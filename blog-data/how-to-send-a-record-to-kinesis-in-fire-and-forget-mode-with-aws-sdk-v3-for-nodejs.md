@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-send-a-record-to-kinesis-in-fire-and-forget-mode-with-aws-sdk-v3-for-nodejs"
 ---
 
-alright, so you're looking to fire data into kinesis using the aws sdk v3 for nodejs without waiting for a response, basically a fire-and-forget approach. i've been there, done that, got the t-shirt, and several support tickets to prove it. trust me, i've seen kinesis streams behave in more ways than i care to remember.
+, so you're looking to fire data into kinesis using the aws sdk v3 for nodejs without waiting for a response, basically a fire-and-forget approach. i've been there, done that, got the t-shirt, and several support tickets to prove it. trust me, i've seen kinesis streams behave in more ways than i care to remember.
 
 first off, let's break down what 'fire-and-forget' actually means in this context. it implies that after sending a record to kinesis, your application won't wait for a confirmation that the record was successfully processed. you basically send the record and move on. the benefit is that you can achieve higher throughput as your app isn't blocked waiting for i/o. the trade-off is the lack of immediate feedback, which means you need to have other mechanisms for monitoring and error handling if necessary.
 
@@ -26,27 +26,30 @@ const kinesisClient = new KinesisClient({
 
 // function to send a record in a fire-and-forget way
 async function sendToKinesisFireAndForget(streamName, partitionKey, data) {
-    const params = {
-        Data: Buffer.from(data), // kinesis wants a buffer not plain text
-        PartitionKey: partitionKey,
-        StreamName: streamName,
-    };
+  const params = {
+    Data: Buffer.from(data), // kinesis wants a buffer not plain text
+    PartitionKey: partitionKey,
+    StreamName: streamName,
+  };
 
-    const command = new PutRecordCommand(params);
+  const command = new PutRecordCommand(params);
 
-    // send the command without awaiting the response
-    kinesisClient.send(command).catch(error => {
-        console.error("error sending to kinesis, it is a fire-and-forget so beware:", error);
-        // here you can implement logging, or implement error mechanism
-        // the important is you do not block
-        // for example:  send this error to an sqs or other system.
-    });
-    // we are not awaiting the response, the client will send and resolve the promise
-    // in the background, no blocking our application thread
+  // send the command without awaiting the response
+  kinesisClient.send(command).catch((error) => {
+    console.error(
+      "error sending to kinesis, it is a fire-and-forget so beware:",
+      error
+    );
+    // here you can implement logging, or implement error mechanism
+    // the important is you do not block
+    // for example:  send this error to an sqs or other system.
+  });
+  // we are not awaiting the response, the client will send and resolve the promise
+  // in the background, no blocking our application thread
 
-    // you might think you can return something like 'sent' but actually this is
-    // misleading because the command is not even resolved yet. if you need to
-    // confirm then do not use fire-and-forget method
+  // you might think you can return something like 'sent' but actually this is
+  // misleading because the command is not even resolved yet. if you need to
+  // confirm then do not use fire-and-forget method
 }
 
 // example usage
@@ -73,45 +76,46 @@ const kinesisClient = new KinesisClient({
 });
 
 async function sendBatchToKinesisFireAndForget(streamName, records) {
-    const params = {
-        Records: records.map(record => ({
-          Data: Buffer.from(record.data),
-          PartitionKey: record.partitionKey
-        })),
-        StreamName: streamName,
-    };
+  const params = {
+    Records: records.map((record) => ({
+      Data: Buffer.from(record.data),
+      PartitionKey: record.partitionKey,
+    })),
+    StreamName: streamName,
+  };
 
-    const command = new PutRecordsCommand(params);
+  const command = new PutRecordsCommand(params);
 
-    // send the command without awaiting the response
-    kinesisClient.send(command).catch(error => {
-        console.error("error sending batch to kinesis, it is a fire-and-forget so beware:", error);
-        // here you can implement logging, or implement error mechanism
-        // the important is you do not block
-    });
+  // send the command without awaiting the response
+  kinesisClient.send(command).catch((error) => {
+    console.error(
+      "error sending batch to kinesis, it is a fire-and-forget so beware:",
+      error
+    );
+    // here you can implement logging, or implement error mechanism
+    // the important is you do not block
+  });
 
-    // same as above you can not return any information, because the action is
-    // happening in the background
+  // same as above you can not return any information, because the action is
+  // happening in the background
 }
-
 
 // example usage
 const streamName = "your-kinesis-stream-name"; // replace with your kinesis stream name
 const records = [
   { partitionKey: "my-partition-key-1", data: "data 1" },
   { partitionKey: "my-partition-key-2", data: "data 2" },
-  { partitionKey: "my-partition-key-1", data: "data 3" }
+  { partitionKey: "my-partition-key-1", data: "data 3" },
 ];
 
 sendBatchToKinesisFireAndForget(streamName, records);
 
 console.log("sent batch record in fire and forget mode");
-
 ```
 
 now, remember that with batching, you need to keep in mind the kinesis limits regarding the size of the records and the batch size. if you exceed those limits, the send operation will fail, or you might receive a throttling exception. the error handling in the catch block will catch the error, but the fire-and-forget approach will not allow you to resend those messages. you need to implement proper mechanisms for this. think of implementing an exponential backoff retry strategy. or moving the messages to a dead letter queue.
 
-one more point to consider, is that even though it's fire-and-forget, it's essential to have some kind of monitoring in place. kinesis has built-in cloudwatch metrics which are quite useful. you want to check things like `putrecordssuccess` or `putrecordsfailed` metrics. also setting up alarms is a good idea.  if you are not monitoring, you could be losing data without knowing it. believe me i have had situations like that, i was losing important data for several hours, and it went unnoticed because the monitoring was not configured.
+one more point to consider, is that even though it's fire-and-forget, it's essential to have some kind of monitoring in place. kinesis has built-in cloudwatch metrics which are quite useful. you want to check things like `putrecordssuccess` or `putrecordsfailed` metrics. also setting up alarms is a good idea. if you are not monitoring, you could be losing data without knowing it. believe me i have had situations like that, i was losing important data for several hours, and it went unnoticed because the monitoring was not configured.
 
 and this is where my experience tells me to be extra careful. you do not want to lose the messages, so in a fire-and-forget scenario you need to implement proper error handling.
 
@@ -132,31 +136,43 @@ const kinesisClient = new KinesisClient({
 const maxRetries = 3; // maximum number of retries
 const baseDelay = 100; // initial delay in milliseconds
 
-async function sendToKinesisFireAndForgetWithRetry(streamName, partitionKey, data, retryCount = 0) {
+async function sendToKinesisFireAndForgetWithRetry(
+  streamName,
+  partitionKey,
+  data,
+  retryCount = 0
+) {
   const params = {
-      Data: Buffer.from(data),
-      PartitionKey: partitionKey,
-      StreamName: streamName,
+    Data: Buffer.from(data),
+    PartitionKey: partitionKey,
+    StreamName: streamName,
   };
 
   const command = new PutRecordCommand(params);
 
-  kinesisClient.send(command)
-      .catch(async error => {
-          console.error("error sending to kinesis, it is a fire-and-forget but we will retry:", error);
+  kinesisClient.send(command).catch(async (error) => {
+    console.error(
+      "error sending to kinesis, it is a fire-and-forget but we will retry:",
+      error
+    );
 
-          if (retryCount < maxRetries) {
-              const delay = baseDelay * Math.pow(2, retryCount); // exponential backoff
-              console.log(`retrying in ${delay} ms, attempt: ${retryCount + 1}`);
-              await new Promise(resolve => setTimeout(resolve, delay));
-              return sendToKinesisFireAndForgetWithRetry(streamName, partitionKey, data, retryCount + 1);
-          } else {
-            console.error("max retries reached for kinesis send, logging error:");
-            // implementation for dead letter queue
-            // here you can implement logging, or implement error mechanism
-            // the important is you do not block
-          }
-      });
+    if (retryCount < maxRetries) {
+      const delay = baseDelay * Math.pow(2, retryCount); // exponential backoff
+      console.log(`retrying in ${delay} ms, attempt: ${retryCount + 1}`);
+      await new Promise((resolve) => setTimeout(resolve, delay));
+      return sendToKinesisFireAndForgetWithRetry(
+        streamName,
+        partitionKey,
+        data,
+        retryCount + 1
+      );
+    } else {
+      console.error("max retries reached for kinesis send, logging error:");
+      // implementation for dead letter queue
+      // here you can implement logging, or implement error mechanism
+      // the important is you do not block
+    }
+  });
 }
 
 // example usage
@@ -166,7 +182,6 @@ const data = "my sample data";
 
 sendToKinesisFireAndForgetWithRetry(streamName, partitionKey, data);
 console.log("sent record in fire and forget mode with retry mechanism");
-
 ```
 
 now about useful resources. forget about googling too much. go to the source. the official aws documentation for kinesis is very comprehensive, and the aws sdk v3 documentation is getting better each day. also, the "aws certified developer official study guide" book, is a good resource with examples and practical knowledge that can save you a lot of headaches. if you want more in depth theory, i suggest looking at the book "designing data intensive applications", it's a classic and goes in depth about the data streaming theory.

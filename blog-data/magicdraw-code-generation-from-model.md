@@ -4,15 +4,15 @@ date: "2024-12-13"
 id: "magicdraw-code-generation-from-model"
 ---
 
-Alright so you're asking about generating code from MagicDraw models yeah I’ve been there done that got the t-shirt and probably a few stress-induced grey hairs along the way Let’s just say MagicDraw and code generation it’s a journey not a destination okay
+so you're asking about generating code from MagicDraw models yeah I’ve been there done that got the t-shirt and probably a few stress-induced grey hairs along the way Let’s just say MagicDraw and code generation it’s a journey not a destination
 
 So first off I understand you're probably thinking "hey I've got this beautiful model in MagicDraw surely there's a button that just spits out perfect code" Yeah no not really That's the dream but reality is usually a little more hands-on more like a full blown coding project in itself actually
 
 From what I understand you are looking to auto generate code and I bet your model includes classes attributes methods relationships all that good stuff You're hoping to get that model magically transformed into working code probably Java C++ Python or something right I'm just guessing here no mind reading involved
 
-Okay so back in my early days circa late 2000s I had this client this big corporation type place they had a ridiculously huge MagicDraw model Like seriously the thing was a monstrosity I mean nested packages dependencies all over the place It looked more like a bowl of spaghetti than a well-structured system They needed code generated from it you know for a project I guess and my team was tasked with figuring it out the hard way We were young we were naive and we thought we could just click a button and get gold we were wrong oh so wrong
+back in my early days circa late 2000s I had this client this big corporation type place they had a ridiculously huge MagicDraw model Like seriously the thing was a monstrosity I mean nested packages dependencies all over the place It looked more like a bowl of spaghetti than a well-structured system They needed code generated from it you know for a project I guess and my team was tasked with figuring it out the hard way We were young we were naive and we thought we could just click a button and get gold we were wrong oh so wrong
 
-Our first mistake was thinking MagicDraw's built-in code generation was the answer We tried it oh boy did we try it It spat out code yeah but it was garbage like literally uncompilable garbage It was like someone had taken the model and randomly rearranged it and sprinkled it with syntax errors It was basically unusable I still have nightmares about the compile errors I had to fix by hand I remember one day spent debugging curly braces mismatches It was a character counting exercise I was having a bad day okay
+Our first mistake was thinking MagicDraw's built-in code generation was the answer We tried it oh boy did we try it It spat out code yeah but it was garbage like literally uncompilable garbage It was like someone had taken the model and randomly rearranged it and sprinkled it with syntax errors It was basically unusable I still have nightmares about the compile errors I had to fix by hand I remember one day spent debugging curly braces mismatches It was a character counting exercise I was having a bad day
 
 So after much weeping and gnashing of teeth we realized the out-of-the-box solution wasn't going to cut it We had to go full custom so we moved to magicdraw apis and had to write some code for code generation
 
@@ -68,6 +68,7 @@ public class MagicDrawClassExtractor {
     }
 }
 ```
+
 **Note**: You’ll need the MagicDraw API libraries in your classpath to get this to run. Don't try to run this without doing the proper setup first.
 
 The second option more practical for simple model structures involves using templates MagicDraw allows you to define templates using some kind of templating language like Apache Velocity This is generally easier to get started with than the API approach because you don't have to be so knee deep in Java programming Instead you write templates that get populated with data from the model It's kind of like a mail merge but for code.
@@ -115,7 +116,7 @@ import xml.etree.ElementTree as ET
 def parse_xmi_file(file_path):
     tree = ET.parse(file_path)
     root = tree.getroot()
-    
+
     # Define XML namespace (if needed)
     ns = {'xmi': 'http://www.omg.org/XMI'} # Example namespace, adjust if needed
 
@@ -124,7 +125,7 @@ def parse_xmi_file(file_path):
         class_name = class_element.get("name")
         if class_name:
             print("Class Name:", class_name)
-        
+
         for attribute_element in class_element.findall(".//{"+ns['xmi']+"}Property"):
             attr_name = attribute_element.get("name")
             attr_type = attribute_element.get('type') # this may require more advanced logic to resolve

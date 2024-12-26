@@ -4,24 +4,24 @@ date: "2024-12-23"
 id: "why-isnt-my-turbo-frame-inline-edit-response-working"
 ---
 
-Okay, let’s tackle this. I've seen this exact scenario play out more times than I care to count, and it usually boils down to a few key areas. The 'why isn't my turbo-frame inline edit response working' lament is a classic, and while it can feel perplexing initially, understanding the underlying mechanics of Turbo Frames usually reveals the culprit. I’ll walk you through the common pitfalls and, more importantly, offer some concrete solutions, including code examples, that have worked for me in the past.
+, let’s tackle this. I've seen this exact scenario play out more times than I care to count, and it usually boils down to a few key areas. The 'why isn't my turbo-frame inline edit response working' lament is a classic, and while it can feel perplexing initially, understanding the underlying mechanics of Turbo Frames usually reveals the culprit. I’ll walk you through the common pitfalls and, more importantly, offer some concrete solutions, including code examples, that have worked for me in the past.
 
-From my experience, most issues stem from a mismatch between expectations and what’s actually happening within the server-side response or the client-side handling. Turbo Frames, despite their seeming simplicity, rely on a precise dance between the server and the browser. It's not just about returning HTML; it's about returning the *correct* HTML within the *correct* context.
+From my experience, most issues stem from a mismatch between expectations and what’s actually happening within the server-side response or the client-side handling. Turbo Frames, despite their seeming simplicity, rely on a precise dance between the server and the browser. It's not just about returning HTML; it's about returning the _correct_ HTML within the _correct_ context.
 
-Let's start with the most common gotcha: missing or incorrect frame identifiers. Remember, Turbo Frames operates within specific frame elements denoted by the `id` attribute. The server-side response, when editing a frame inline, *must* contain a frame with the same id as the frame that triggered the request. Otherwise, turbo won't know where to place the incoming HTML. This is probably the single biggest reason why an inline edit fails. It's almost always a case of a server-side rendering issue.
+Let's start with the most common gotcha: missing or incorrect frame identifiers. Remember, Turbo Frames operates within specific frame elements denoted by the `id` attribute. The server-side response, when editing a frame inline, _must_ contain a frame with the same id as the frame that triggered the request. Otherwise, turbo won't know where to place the incoming HTML. This is probably the single biggest reason why an inline edit fails. It's almost always a case of a server-side rendering issue.
 
 For instance, imagine we have a form inside a turbo-frame, like this (in a view template):
 
 ```html
 <turbo-frame id="item_123">
   <form action="/items/123" method="post">
-    <input type="text" name="item[name]" value="Original Name">
+    <input type="text" name="item[name]" value="Original Name" />
     <button type="submit">Update</button>
   </form>
 </turbo-frame>
 ```
 
-Now, let’s say the user submits this form. The server-side code needs to respond with *the same frame id*, usually enclosing updated content. This might be something like (server-side, conceptual rails example):
+Now, let’s say the user submits this form. The server-side code needs to respond with _the same frame id_, usually enclosing updated content. This might be something like (server-side, conceptual rails example):
 
 ```ruby
 # app/controllers/items_controller.rb
@@ -87,6 +87,7 @@ if __name__ == '__main__':
     <a href="/items/{{ item.id }}/edit">Edit</a>
 </turbo-frame>
 ```
+
 In this example, if you were to accidentally change the return value in `/items/<int:item_id>` to something like `return render_template('index.html', items = items)` this would not work because the response would include an entire HTML document rather than only the content for the turbo frame. Similarly, it is also common to have an error when the frame id generated in `item.html` and `edit_item.html` is different. These two must be exactly the same for the update to work.
 
 Another potential snag is when you’re using form helpers or custom components that might be subtly interfering with Turbo's request lifecycle. If, for instance, you have JavaScript that's hijacking the form submission process or modifying the `turbo-frame` tag in a way that conflicts with Turbo's expectations, you're likely to run into issues. It's critical that if you are using any javascript that you understand the turbo lifecycle and the events that turbo uses to do its work. This is not a typical ajax request, but more of a frame-based exchange, which needs to be followed closely. In my earlier projects, a complex javascript component that was manipulating forms dynamically would interfere with turbo, and I would have to explicitly call `turbo:submit-end` event to trigger turbo to work correctly.
@@ -95,27 +96,27 @@ Here's a basic example of a custom javascript that you might want to avoid or re
 
 ```javascript
 // this will not work correctly with turbo
-document.addEventListener('DOMContentLoaded', function() {
-    const forms = document.querySelectorAll('form');
-    forms.forEach(form => {
-        form.addEventListener('submit', function(event) {
-            event.preventDefault(); // prevent default behavior
-            const formData = new FormData(form);
-            fetch(form.action, {
-                method: 'POST',
-                body: formData
-            }).then(response => response.text())
-                .then(data => {
-                    const frameId = form.closest('turbo-frame').id;
-                    document.getElementById(frameId).innerHTML = data;
-                });
+document.addEventListener("DOMContentLoaded", function () {
+  const forms = document.querySelectorAll("form");
+  forms.forEach((form) => {
+    form.addEventListener("submit", function (event) {
+      event.preventDefault(); // prevent default behavior
+      const formData = new FormData(form);
+      fetch(form.action, {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          const frameId = form.closest("turbo-frame").id;
+          document.getElementById(frameId).innerHTML = data;
         });
     });
+  });
 });
-
 ```
 
-This code captures all forms, prevents the default browser submission, and does its own `fetch`, which is correct in general but not with Turbo. Turbo's own submit handler needs to be utilized. This is a common misconception; Turbo *is* already handling the fetch for turbo-frames, and this is essentially causing double fetches in practice. If you have your own javascript that does fetch requests, you must make sure that they don't overlap with turbo’s functionality or you will have a conflict. Turbo uses form events, in particular,  `turbo:before-submit` and `turbo:submit-end`. You must work within these rather than your own `submit` events.
+This code captures all forms, prevents the default browser submission, and does its own `fetch`, which is correct in general but not with Turbo. Turbo's own submit handler needs to be utilized. This is a common misconception; Turbo _is_ already handling the fetch for turbo-frames, and this is essentially causing double fetches in practice. If you have your own javascript that does fetch requests, you must make sure that they don't overlap with turbo’s functionality or you will have a conflict. Turbo uses form events, in particular, `turbo:before-submit` and `turbo:submit-end`. You must work within these rather than your own `submit` events.
 
 Finally, make sure the response’s `Content-Type` header is correctly set to `text/html`. I've seen situations where the server was returning the response with `application/json` or some other content type, causing Turbo to not process the response properly, especially when mixing different API types. If you are using a JSON API to respond to some request, then you must use turbo streams rather than turbo-frames. Using the browser tools (network tab) to inspect the Content-Type header is helpful when debugging the server’s response.
 

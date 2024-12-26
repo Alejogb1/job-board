@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-label-images-for-image-classification-efficiently"
 ---
 
-Alright so you're asking about efficient image labeling for image classification yeah I get it Been there done that got the t-shirt And by t-shirt I mean a thousand labeled images and some seriously tired fingers It’s like a right of passage in this field isn’t it I guess if you're serious about training a decent image classifier you know you gotta label your data properly and fast Now fast is relative right but I’m talking about avoiding the soul-crushing task of manually clicking through millions of images one by one That’s not living that’s just existing so let’s get to it
+so you're asking about efficient image labeling for image classification yeah I get it Been there done that got the t-shirt And by t-shirt I mean a thousand labeled images and some seriously tired fingers It’s like a right of passage in this field isn’t it I guess if you're serious about training a decent image classifier you know you gotta label your data properly and fast Now fast is relative right but I’m talking about avoiding the soul-crushing task of manually clicking through millions of images one by one That’s not living that’s just existing so let’s get to it
 
 First off let’s talk basics you're gonna need to get organized like seriously organized You're not doing this haphazardly I tried that once ended up with a confusing mess of folders and labels that no one could understand not even me I swear I thought I was good at organizing things but I was very very wrong Lesson learned the hard way
 
@@ -24,6 +24,7 @@ data/
         image_5.png
         ...
 ```
+
 See how simple it is That’s like the most important first step no joke I mean seriously it’s crucial
 
 Now you've got your folders sorted that's like half the battle If I'm being honest and I usually am labeling at its core is tedious I mean yeah we can talk about AI assisted labeling but you'll still need to oversee its labeling so it doesn't go crazy and label a dog as a car I mean we are not there yet Now for your labeling tools there are many out there I've had some success using LabelImg it’s not the fanciest thing out there but it's a good basic annotation tool that works on Linux Windows and Mac and that's all you need you don't need the latest cutting edge AI powered tool that costs an arm and a leg trust me I've used the super expensive ones and for the most part they are just hype for labeling a small image classification dataset you just don't need them And if you are into more web-based solutions I've tried CVAT it can be a bit more complicated to set up but it's robust especially if you are collaborating with others
@@ -71,6 +72,7 @@ print (f"labels shape : {labels.shape}")
 print (f"label map {label_map}")
 
 ```
+
 That script is very simple but it will give you the gist of how data loading should be done with minimal code and dependencies This approach is scalable even if you have thousands of image classes
 
 Here's the deal even with good tools labeling can be repetitive. That's where active learning comes in Active learning? Its when you train a classifier with small amounts of labeled data then you give it unlabeled data and it will predict the class Then you inspect the predictions and only label the data that the algorithm was unsure about or it predicted wrong you save so much time doing it this way trust me it’s amazing! This helps focus your energy on the most ambiguous images rather than labeling everything which is frankly a waste of resources and time especially if you have a large dataset I've been using this technique in many of my projects and it has saved me an insane amount of time. I'm not going to lie that stuff can be complicated so I am going to focus on basic manual labeling
@@ -122,8 +124,9 @@ split_dataset(data_dir)
 print ("dataset splitting is done")
 
 ```
+
 That script creates the folder "train" "val" and "test" and it moves the images based on the ratios provided by you
 
 If you want to dive deeper into image classification and stuff like active learning or weakly supervised learning check out "Deep Learning with Python" by François Chollet and the "Pattern Recognition and Machine Learning" book by Christopher Bishop those are the textbooks that have been my bible for the last few years those books will give you a very solid ground on the field. Also if you are into more advanced topics like active learning research papers are your best friend no really there is some amazing stuff out there.
 
-Alright that's about it I think I've covered the main points on labeling images for classification efficiently remember organization is key automation can help and if you get tired just take a break its important you don’t want to label a dog as a cat or worse a cat as a dog. Data labeling can be a very tedious task but it is a necessary one if you want to train a decent machine learning algorithm
+that's about it I think I've covered the main points on labeling images for classification efficiently remember organization is key automation can help and if you get tired just take a break its important you don’t want to label a dog as a cat or worse a cat as a dog. Data labeling can be a very tedious task but it is a necessary one if you want to train a decent machine learning algorithm

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-i-edit-the-airflowcfg-file-in-azure"
 ---
 
-Alright, let's tackle this. I've been around the block a few times with Apache Airflow, particularly when it comes to deploying it in cloud environments like Azure. Editing the `airflow.cfg` file, while seemingly straightforward, can present a unique set of challenges when you're operating within the confines of a managed service or cloud deployment model. I’ve certainly had my share of moments trying to get a configuration tweak working as intended within Azure’s infrastructure.
+, let's tackle this. I've been around the block a few times with Apache Airflow, particularly when it comes to deploying it in cloud environments like Azure. Editing the `airflow.cfg` file, while seemingly straightforward, can present a unique set of challenges when you're operating within the confines of a managed service or cloud deployment model. I’ve certainly had my share of moments trying to get a configuration tweak working as intended within Azure’s infrastructure.
 
-The most crucial thing to understand is that *how* you edit `airflow.cfg` depends heavily on *where* and *how* you've deployed Airflow in Azure. It’s not always as simple as navigating to a server and modifying a file. Often, it's more about utilizing configuration management tools or environment-specific settings. Let's explore some common scenarios and how to address them.
+The most crucial thing to understand is that _how_ you edit `airflow.cfg` depends heavily on _where_ and _how_ you've deployed Airflow in Azure. It’s not always as simple as navigating to a server and modifying a file. Often, it's more about utilizing configuration management tools or environment-specific settings. Let's explore some common scenarios and how to address them.
 
 First, if you're using a more traditional setup, perhaps a Virtual Machine scale set hosting your Airflow installation, directly modifying the `airflow.cfg` file via ssh is possible. You'd typically need to locate the file, often found within the Airflow home directory (the default is usually `~/airflow`). However, even in this scenario, you should strongly consider using a configuration management tool, like Ansible, Chef, or Puppet. This ensures your changes are repeatable, auditable, and less prone to manual error, especially if you’re working with multiple nodes. I’ve personally had a situation where making manual changes across multiple servers became a headache to track and maintain. Automating this process saved considerable time and frustration in the long run.
 
@@ -55,7 +55,7 @@ Airflow provides an environment variable substitution mechanism for several conf
 Here is an example of how this can be done, specifically showing how you would do it in a docker-compose file:
 
 ```yaml
-version: '3.7'
+version: "3.7"
 services:
   airflow-webserver:
     image: apache/airflow:2.7.1
@@ -79,13 +79,13 @@ services:
     ports:
       - "6379:6379"
   postgres:
-      image: postgres:13
-      environment:
-        - POSTGRES_USER=airflow
-        - POSTGRES_PASSWORD=airflow
-        - POSTGRES_DB=airflow
-      ports:
-        - "5432:5432"
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=airflow
+      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_DB=airflow
+    ports:
+      - "5432:5432"
 ```
 
 This docker-compose file shows the correct way to set these values. You'll notice that the relevant variables are set under the `environment` key.
@@ -101,12 +101,12 @@ metadata:
   name: airflow-config
 data:
   airflow.cfg: |
-      [core]
-      sql_alchemy_conn = postgresql://user:password@host:5432/database
-      executor = CeleryExecutor
-      [celery]
-      broker_url=redis://redis:6379/0
-      result_backend=redis://redis:6379/0
+    [core]
+    sql_alchemy_conn = postgresql://user:password@host:5432/database
+    executor = CeleryExecutor
+    [celery]
+    broker_url=redis://redis:6379/0
+    result_backend=redis://redis:6379/0
 ```
 
 This demonstrates how the vendor will often abstract this from you, but the underlying principle of setting this variable still needs to be followed.
@@ -115,9 +115,9 @@ In summary, avoid direct manipulation of `airflow.cfg` as much as you can. Favor
 
 For further reading, I’d recommend exploring:
 
-*   **"Programming Apache Airflow" by Bas P. Harenslak and Julian J. van de Loo** – This book provides a very comprehensive guide to airflow, focusing a lot on best practices and configuration management.
-*   **The official Apache Airflow documentation**, particularly the sections on configuration and environment variables. This is the most reliable and updated source of truth regarding the project.
-*   **"Kubernetes in Action" by Marko Lukša** – While not strictly about Airflow, a sound grasp of Kubernetes is invaluable when using it for container orchestration alongside Airflow. Pay close attention to config maps and secret management.
-*   **Azure documentation** regarding the specific method used to deploy Airflow.
+- **"Programming Apache Airflow" by Bas P. Harenslak and Julian J. van de Loo** – This book provides a very comprehensive guide to airflow, focusing a lot on best practices and configuration management.
+- **The official Apache Airflow documentation**, particularly the sections on configuration and environment variables. This is the most reliable and updated source of truth regarding the project.
+- **"Kubernetes in Action" by Marko Lukša** – While not strictly about Airflow, a sound grasp of Kubernetes is invaluable when using it for container orchestration alongside Airflow. Pay close attention to config maps and secret management.
+- **Azure documentation** regarding the specific method used to deploy Airflow.
 
 Understanding these resources will certainly be beneficial as you continue to work with Airflow in Azure. I've found that a solid grasp of these concepts makes dealing with Airflow configuration issues a far smoother experience. Remember to test changes incrementally to avoid unintended consequences and, as always, keep your configurations under version control. This approach will serve you well.

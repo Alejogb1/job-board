@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "does-az-acr-login-raise-dockercommanderror-with-message-docker-daemon-not-running"
 ---
 
-Alright so you're hitting that classic Docker daemon not running error when trying to use `az acr login` gotcha I've wrestled with this gremlin more times than I care to admit Let's break it down and get you sorted
+so you're hitting that classic Docker daemon not running error when trying to use `az acr login` gotcha I've wrestled with this gremlin more times than I care to admit Let's break it down and get you sorted
 
 First off yeah it absolutely can happen `az acr login` itself doesn't directly interact with the Docker daemon it kind of expects it to be humming along in the background like a well-oiled machine It’s a bit like ordering food and expecting the kitchen to be open if the kitchen aka the Docker daemon is closed you ain't getting your meal aka a successful login
 
@@ -18,51 +18,51 @@ Let me walk you through some common fixes and some checks we can do because lets
 
 **First things first let’s check the Docker Daemon**
 
-Okay I know it seems obvious but really double triple check it's running this looks a bit different depending on your OS so here is a quick checklist for the most common ones
+I know it seems obvious but really double triple check it's running this looks a bit different depending on your OS so here is a quick checklist for the most common ones
 
-*   **Windows/macOS**: Make sure Docker Desktop is running. Check the system tray icon to make sure it's active. If you can see a whale you are likely good to go If not click on it and launch it
+- **Windows/macOS**: Make sure Docker Desktop is running. Check the system tray icon to make sure it's active. If you can see a whale you are likely good to go If not click on it and launch it
 
-*   **Linux**: You might need to start the Docker daemon using systemd. You'd probably know if it was manually installed by now in this case `sudo systemctl start docker` is your friend after that check its status `sudo systemctl status docker` to be really sure.
+- **Linux**: You might need to start the Docker daemon using systemd. You'd probably know if it was manually installed by now in this case `sudo systemctl start docker` is your friend after that check its status `sudo systemctl status docker` to be really sure.
 
-*  **Linux (other)** check the docker service running using command `service docker status` if it is not then the command `service docker start` will do the trick and to double check use again `service docker status`
+- **Linux (other)** check the docker service running using command `service docker status` if it is not then the command `service docker start` will do the trick and to double check use again `service docker status`
 
 After doing the steps make sure to try your `az acr login` command again if that was the problem that should be good to go hopefully
 
 Now it might be that Docker is running but it still isn't working. This can happen and is really annoying but trust me I went through that. Docker being running and responding means nothing if it's doing so in a wrong way.
 
-**Okay Docker's running but I still get errors what now**
+** Docker's running but I still get errors what now**
 
-Alright sometimes the daemon is up but it isn't behaving as it should and its the dreaded "it works on my machine" scenario This is where I go and check what is actually happening within docker
+sometimes the daemon is up but it isn't behaving as it should and its the dreaded "it works on my machine" scenario This is where I go and check what is actually happening within docker
 
-*   **Check Docker's logs**: Check Docker logs for any errors or warnings this one is very helpful to see what Docker itself is complaining about
+- **Check Docker's logs**: Check Docker logs for any errors or warnings this one is very helpful to see what Docker itself is complaining about
 
-    `docker logs --since 1h`
+  `docker logs --since 1h`
 
-    This command will show you logs from the past hour for all running docker containers I usually run it when I see something is up with my Docker. It is quite handy to see where is the problem
+  This command will show you logs from the past hour for all running docker containers I usually run it when I see something is up with my Docker. It is quite handy to see where is the problem
 
-*   **Docker context issues**: Sometimes the Docker context gets messed up and it is not obvious.
+- **Docker context issues**: Sometimes the Docker context gets messed up and it is not obvious.
 
-    `docker context ls`
+  `docker context ls`
 
-    This will show all available docker contexts I use it often to check whether docker knows where it is working from and how to do the connection. Make sure the current context is correctly configured and your user has permissions to work with the docker.
+  This will show all available docker contexts I use it often to check whether docker knows where it is working from and how to do the connection. Make sure the current context is correctly configured and your user has permissions to work with the docker.
 
-*  **User permissions on docker**:  It is not uncommon to start Docker as sudo and forget about the proper user and its permissions. Sometimes if you run docker as sudo you need to do everything as sudo. But its best not to go into those types of situations and check user groups and their docker access. I tend to use the command below
+- **User permissions on docker**: It is not uncommon to start Docker as sudo and forget about the proper user and its permissions. Sometimes if you run docker as sudo you need to do everything as sudo. But its best not to go into those types of situations and check user groups and their docker access. I tend to use the command below
 
-    `sudo usermod -aG docker $USER`
+  `sudo usermod -aG docker $USER`
 
-    This will add the user to the docker group allowing it to run docker commands without needing sudo every time.
-    After doing this you'll probably need to logout and login or run `newgrp docker` to apply changes.
+  This will add the user to the docker group allowing it to run docker commands without needing sudo every time.
+  After doing this you'll probably need to logout and login or run `newgrp docker` to apply changes.
 
 **And a little more complex problem**
 
-Alright so I've seen my share of weird issues and sometimes the problem might not be just the docker daemon being off but actually something more nasty. One of the times the problem was a corrupted docker installation. Now that is some fun I can tell you that. Lets see what you can do:
+so I've seen my share of weird issues and sometimes the problem might not be just the docker daemon being off but actually something more nasty. One of the times the problem was a corrupted docker installation. Now that is some fun I can tell you that. Lets see what you can do:
 
-*   **Restart Docker**
-Sometimes it’s just a bad day for the docker. Simply restarting the docker application from your system tray should solve it. It has solved it for me countless times. But if it fails go to the next step
-*  **Restart the computer**
-I know I know sometimes its just better to restart and see whether it goes away. Computers do have their own logic and restarting does help sometimes
-*   **Reinstall Docker**
-If all else fails it might be an installation problem and you might need to reinstall docker. Make sure you have your current docker configurations backuped just in case but usually it’s just reinstall and it is good to go. Reinstall is also an option that can solve weird permissions problems
+- **Restart Docker**
+  Sometimes it’s just a bad day for the docker. Simply restarting the docker application from your system tray should solve it. It has solved it for me countless times. But if it fails go to the next step
+- **Restart the computer**
+  I know I know sometimes its just better to restart and see whether it goes away. Computers do have their own logic and restarting does help sometimes
+- **Reinstall Docker**
+  If all else fails it might be an installation problem and you might need to reinstall docker. Make sure you have your current docker configurations backuped just in case but usually it’s just reinstall and it is good to go. Reinstall is also an option that can solve weird permissions problems
 
 **Code examples to illustrate common problems**
 
@@ -96,9 +96,9 @@ If this command works you should see all available images on your local machine.
 
 So for in-depth knowledge I strongly recommend the following
 
-*   **"Docker Deep Dive" by Nigel Poulton**: This is a great book for understanding Docker from the ground up it goes really deep into the mechanics of Docker its inner workings and nuances. Its almost a must read for someone working with Docker
-*   **The official Docker documentation:** The official Docker site documentation is very helpful for any specific thing or problem. Sometimes I just search there when I'm stuck and there is always something helpful in there.
-*   **The Azure Container Registry documentation:** Microsoft also has excellent documentation for their tools and ACR is no exception you should always consult it if you have a problem with it
+- **"Docker Deep Dive" by Nigel Poulton**: This is a great book for understanding Docker from the ground up it goes really deep into the mechanics of Docker its inner workings and nuances. Its almost a must read for someone working with Docker
+- **The official Docker documentation:** The official Docker site documentation is very helpful for any specific thing or problem. Sometimes I just search there when I'm stuck and there is always something helpful in there.
+- **The Azure Container Registry documentation:** Microsoft also has excellent documentation for their tools and ACR is no exception you should always consult it if you have a problem with it
 
 **Final notes**
 

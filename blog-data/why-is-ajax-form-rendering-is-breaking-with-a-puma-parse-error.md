@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-ajax-form-rendering-is-breaking-with-a-puma-parse-error"
 ---
 
-alright, so you're hitting a puma parse error when ajax form submissions happen. that's a classic, and i've been there, done that, got the t-shirt (and probably a few debugging-induced sleepless nights). let's break it down.
+, so you're hitting a puma parse error when ajax form submissions happen. that's a classic, and i've been there, done that, got the t-shirt (and probably a few debugging-induced sleepless nights). let's break it down.
 
 basically, puma, as a web server, is fairly strict about what it accepts as valid http requests. when ajax forms are involved, especially in conjunction with complex javascript manipulation of forms, things can go south quickly if you're not careful about the content type and data format.
 
@@ -16,20 +16,20 @@ let's look at some common scenarios where this goes sideways, and what can be do
 
 **scenario 1: incorrect content-type header:**
 
-this is probably the most frequent culprit. if you're sending json, your content type *must* be `application/json`. if it is form data, it must be `application/x-www-form-urlencoded` or `multipart/form-data` (for files). here's how to do that using fetch api, a common javascript approach nowadays.
+this is probably the most frequent culprit. if you're sending json, your content type _must_ be `application/json`. if it is form data, it must be `application/x-www-form-urlencoded` or `multipart/form-data` (for files). here's how to do that using fetch api, a common javascript approach nowadays.
 
 ```javascript
 // sending json data
-fetch('/your/form/endpoint', {
-  method: 'post',
+fetch("/your/form/endpoint", {
+  method: "post",
   headers: {
-    'content-type': 'application/json'
+    "content-type": "application/json",
   },
-  body: JSON.stringify({ name: 'user', email: 'user@example.com'})
+  body: JSON.stringify({ name: "user", email: "user@example.com" }),
 })
-.then(response => response.json())
-.then(data => console.log('success', data))
-.catch(error => console.error('error', error));
+  .then((response) => response.json())
+  .then((data) => console.log("success", data))
+  .catch((error) => console.error("error", error));
 ```
 
 notice the `'content-type': 'application/json'` header. this tells puma to expect a json encoded body and it is essential. if you omitted the header, puma would default to some content type and could fail spectacularly, like we have in our case.
@@ -39,19 +39,19 @@ if instead, you are sending form data, like if you submit a real html form direc
 ```javascript
 // sending form data (x-www-form-urlencoded)
 const formData = new URLSearchParams();
-formData.append('name', 'user');
-formData.append('email', 'user@example.com');
+formData.append("name", "user");
+formData.append("email", "user@example.com");
 
-fetch('/your/form/endpoint', {
-    method: 'post',
-    headers: {
-        'content-type': 'application/x-www-form-urlencoded'
-    },
-    body: formData.toString()
+fetch("/your/form/endpoint", {
+  method: "post",
+  headers: {
+    "content-type": "application/x-www-form-urlencoded",
+  },
+  body: formData.toString(),
 })
-.then(response => response.json())
-.then(data => console.log('success', data))
-.catch(error => console.error('error', error));
+  .then((response) => response.json())
+  .then((data) => console.log("success", data))
+  .catch((error) => console.error("error", error));
 ```
 
 or if sending files.
@@ -59,17 +59,17 @@ or if sending files.
 ```javascript
 // sending multipart form data (files)
 const formData = new FormData();
-formData.append('name', 'user');
-formData.append('email', 'user@example.com');
-formData.append('file', document.getElementById('file-input').files[0]);
+formData.append("name", "user");
+formData.append("email", "user@example.com");
+formData.append("file", document.getElementById("file-input").files[0]);
 
-fetch('/your/form/endpoint', {
-    method: 'post',
-    body: formData
+fetch("/your/form/endpoint", {
+  method: "post",
+  body: formData,
 })
-.then(response => response.json())
-.then(data => console.log('success', data))
-.catch(error => console.error('error', error));
+  .then((response) => response.json())
+  .then((data) => console.log("success", data))
+  .catch((error) => console.error("error", error));
 ```
 
 if you're using jquery, then it's quite similar. but remember, jQuery's `$.ajax` can often figure out the content type itself based on the `data` attribute, it is still very advisable to set it manually, to be sure you are actually sending what you intend to send, it is good practice and prevents unexpected behaviours.

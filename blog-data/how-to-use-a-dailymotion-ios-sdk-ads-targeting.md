@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-a-dailymotion-ios-sdk-ads-targeting"
 ---
 
-alright, so you're looking at dailymotion's ios sdk and trying to get a handle on ad targeting, eh? i've been there, man, more times than i care to remember. it’s one of those things that seems straightforward on paper but can get hairy pretty fast when you start playing around with real-world scenarios. let me walk you through what i've learned, and hopefully, it will save you some head-scratching.
+, so you're looking at dailymotion's ios sdk and trying to get a handle on ad targeting, eh? i've been there, man, more times than i care to remember. it’s one of those things that seems straightforward on paper but can get hairy pretty fast when you start playing around with real-world scenarios. let me walk you through what i've learned, and hopefully, it will save you some head-scratching.
 
 first off, let's talk about the basics. dailymotion's sdk doesn't expose a direct, simple 'setTargeting' function where you can just dump in a dictionary of key-values and be done. instead, it relies on ad parameters that are usually built into the ad request itself. these parameters might be sent along the video player’s initialization, or through a different mechanism provided by dailymotion’s ad server. this means, as a developer, you are not exactly directly "targeting," but more like "influencing" the selection of ads. so how do we actually influence this process? it's about understanding the context and adding the relevant information that dailymotion's ad server will then use to try and show the most relevant ads.
 

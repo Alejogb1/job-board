@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-does-capybara--rspec-fail-in-the-first-test"
 ---
 
-alright, so you’re seeing capybara and rspec failing on the very first test, right? yeah, that’s a classic. been there, done that, got the t-shirt (and the stack traces to prove it). let's unpack this.
+, so you’re seeing capybara and rspec failing on the very first test, right? yeah, that’s a classic. been there, done that, got the t-shirt (and the stack traces to prove it). let's unpack this.
 
 first off, it's almost never capybara or rspec themselves being fundamentally broken. these tools are pretty solid. the problem usually stems from how they’re set up, or what they’re interacting with. it is very important to understand the context of these interactions.
 
@@ -16,7 +16,7 @@ the common causes typically revolve around timing issues, environment setup, or 
 
 this is probably the most frequent reason why that first test goes belly up. capybara needs the application server to be fully booted and ready to serve requests before it can start interacting with the page. if capybara races ahead and tries to load the page before the server is ready, it will fail every time. and since you will likely be testing a feature, like the login page for example, if it fails it makes the whole suite fail for the same problem since the other tests will try to access some element in the page and there will be no connection.
 
-in rspec, you could use a `before(:all)` block to explicitly start the server, making sure it’s ready *before* any tests begin. or sometimes you do not have much control over this, as in my first experience when the server would start, but it was still not ready to handle requests, so i had to create a sleep function to wait for it before running the tests.
+in rspec, you could use a `before(:all)` block to explicitly start the server, making sure it’s ready _before_ any tests begin. or sometimes you do not have much control over this, as in my first experience when the server would start, but it was still not ready to handle requests, so i had to create a sleep function to wait for it before running the tests.
 
 here’s what i did back then (this is a simplified version, of course):
 
@@ -64,6 +64,7 @@ RSpec.configure do |config|
 end
 
 ```
+
 you will probably need to install the `database_cleaner` gem to do this. there are other options like using a transaction, but sometimes it is not enough, database state is a common cause of errors in integration tests. remember that depending on your tech stack you might need to use a different approach.
 
 **3. javascript issues**:
@@ -89,6 +90,7 @@ here is an example on how to deal with this:
 
   end
 ```
+
 note that i added a `wait: 10` option when trying to find the `welcome-message` which is probably rendered after an ajax call. if this was not there, it would probably fail because the element will not be there yet. you can change the wait time to fit your needs and also use `wait_for_ajax` or similar custom methods that can help on this scenario, you can usually find those solutions in forums and blogs, but the basic idea is to ensure things are rendered before you try to interact with them. there are many other ways you can achieve that.
 
 **4. application state and side effects:**

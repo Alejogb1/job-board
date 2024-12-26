@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-do-i-resolve-initiallr-not-specified-errors-when-resuming-an-optimizer-with-a-scheduler"
 ---
 
-Alright, let’s address that "initial_lr not specified" error you've encountered when resuming an optimizer with a scheduler. I've seen this pop up more times than I care to remember, especially when dealing with complex training pipelines. It usually stems from a misunderstanding of how learning rate schedulers and optimizers interact during a save-and-restore cycle. Let me break down the mechanics and how to prevent it from derailing your model training.
+, let’s address that "initial_lr not specified" error you've encountered when resuming an optimizer with a scheduler. I've seen this pop up more times than I care to remember, especially when dealing with complex training pipelines. It usually stems from a misunderstanding of how learning rate schedulers and optimizers interact during a save-and-restore cycle. Let me break down the mechanics and how to prevent it from derailing your model training.
 
-The error message itself, "initial_lr not specified," is fairly straightforward. When you initialize an optimizer in, say, PyTorch, you pass it a learning rate. That's usually represented as `lr` in the optimizer's constructor. Schedulers, on the other hand, often manage this learning rate dynamically during training. When you load a model and its associated optimizer from a checkpoint, the optimizer, by itself, doesn't store a direct handle to the original learning rate used during its initialization. It relies on its internal states and the scheduler’s current state to determine its learning rate. The problem occurs when the scheduler's state doesn't include the *initial* learning rate – the base `lr` that was initially passed when the optimizer was created.
+The error message itself, "initial_lr not specified," is fairly straightforward. When you initialize an optimizer in, say, PyTorch, you pass it a learning rate. That's usually represented as `lr` in the optimizer's constructor. Schedulers, on the other hand, often manage this learning rate dynamically during training. When you load a model and its associated optimizer from a checkpoint, the optimizer, by itself, doesn't store a direct handle to the original learning rate used during its initialization. It relies on its internal states and the scheduler’s current state to determine its learning rate. The problem occurs when the scheduler's state doesn't include the _initial_ learning rate – the base `lr` that was initially passed when the optimizer was created.
 
-This becomes tricky when you save a checkpoint. You are generally saving the optimizer's *current* state which might include the *modified* learning rate, not the initial learning rate. When you load the optimizer for resumption of training, the optimizer's methods that require the original value of the learning rate such as `step()` or methods for other functionalities (depending on what scheduler you used) find it missing and throws an exception. Many scheduler types need this information for certain calculations, especially step-based schedulers that rely on total steps taken from the start of training. Think of a learning rate decaying by a factor every n steps. To work properly from a checkpoint, it needs both, the modified lr of the checkpoint and also the base `lr` to calculate future lr updates correctly.
+This becomes tricky when you save a checkpoint. You are generally saving the optimizer's _current_ state which might include the _modified_ learning rate, not the initial learning rate. When you load the optimizer for resumption of training, the optimizer's methods that require the original value of the learning rate such as `step()` or methods for other functionalities (depending on what scheduler you used) find it missing and throws an exception. Many scheduler types need this information for certain calculations, especially step-based schedulers that rely on total steps taken from the start of training. Think of a learning rate decaying by a factor every n steps. To work properly from a checkpoint, it needs both, the modified lr of the checkpoint and also the base `lr` to calculate future lr updates correctly.
 
-Now, how do we fix this? There are a few approaches, each with its nuances. The key is to ensure that the *initial* learning rate is preserved and restored correctly upon checkpoint resumption.
+Now, how do we fix this? There are a few approaches, each with its nuances. The key is to ensure that the _initial_ learning rate is preserved and restored correctly upon checkpoint resumption.
 
 **Solution 1: Explicitly Storing and Loading the Initial Learning Rate**
 
@@ -86,7 +86,7 @@ In this example, we save the `initial_lr` along with other necessary states. Whe
 
 **Solution 2: Using a Scheduler that Handles Initialization**
 
-Some schedulers, by their design, are less prone to this issue. For instance, schedulers that use a multiplier for each parameter group like `torch.optim.lr_scheduler.MultiplicativeLR` or those based on a custom function that explicitly does not need `initial_lr`. These do not necessarily rely on the *initial* lr. It is always good to double check the docs of the used scheduler to see what it needs internally. However, this solution might be restrictive because it limits you to a specific subset of schedulers.
+Some schedulers, by their design, are less prone to this issue. For instance, schedulers that use a multiplier for each parameter group like `torch.optim.lr_scheduler.MultiplicativeLR` or those based on a custom function that explicitly does not need `initial_lr`. These do not necessarily rely on the _initial_ lr. It is always good to double check the docs of the used scheduler to see what it needs internally. However, this solution might be restrictive because it limits you to a specific subset of schedulers.
 
 ```python
 import torch
@@ -229,12 +229,13 @@ for epoch in range(50,100):
   loaded_scheduler.step()
   print(f"Epoch: {epoch}, Learning Rate: {loaded_optimizer.param_groups[0]['lr']}")
 ```
+
 In this third approach, our custom scheduler needs the `initial_lr` during initialization. Therefore, we must save and load this value the same way we did with Solution 1. I find creating a custom class more robust and gives you full control over the scheduler's functionality.
 
 **Recommendations for further learning:**
 
-*   **Deep Learning with PyTorch** by Eli Stevens, Luca Antiga, and Thomas Viehmann, specifically the sections on optimizers and schedulers for a deeper understanding of their inner workings.
-*   The **PyTorch documentation** on `torch.optim` and `torch.optim.lr_scheduler` is essential. Pay close attention to the details of each scheduler's constructor and the expected behavior during state loading and saving.
-*   Papers related to **learning rate schedules** such as “Cyclical Learning Rates for Training Neural Networks” by Leslie N. Smith or "SGDR: Stochastic Gradient Descent with Warm Restarts" by Ilya Loshchilov and Frank Hutter. Understanding the motivation behind various schedulers can help choose and implement them better.
+- **Deep Learning with PyTorch** by Eli Stevens, Luca Antiga, and Thomas Viehmann, specifically the sections on optimizers and schedulers for a deeper understanding of their inner workings.
+- The **PyTorch documentation** on `torch.optim` and `torch.optim.lr_scheduler` is essential. Pay close attention to the details of each scheduler's constructor and the expected behavior during state loading and saving.
+- Papers related to **learning rate schedules** such as “Cyclical Learning Rates for Training Neural Networks” by Leslie N. Smith or "SGDR: Stochastic Gradient Descent with Warm Restarts" by Ilya Loshchilov and Frank Hutter. Understanding the motivation behind various schedulers can help choose and implement them better.
 
 In summary, to resolve the "initial_lr not specified" error, either save the initial learning rate explicitly and reload it upon checkpoint recovery or ensure the scheduler you use handles the initialization correctly, or use a custom scheduler with the same capabilities. From experience, the first solution is often the most reliable and least error-prone approach. I'd highly recommend you go with it if you have any doubts. This error, while somewhat frustrating, presents a good learning opportunity to understand how the interplay between optimizers and schedulers is critical in building robust deep learning pipelines.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-fine-tune-an-object-detection-model-for-custom-data-and-classes-using-detectron2"
 ---
 
-Alright, let's talk about fine-tuning object detection models with Detectron2 – something I've certainly spent my fair share of time on. This isn't a plug-and-play affair; getting it *just so* requires a nuanced understanding of the framework and your dataset. It’s something I had to grapple with years ago when I was working on a project involving anomaly detection in industrial production lines; the pre-trained models just didn't cut it for the specific kinds of defects we were encountering.
+, let's talk about fine-tuning object detection models with Detectron2 – something I've certainly spent my fair share of time on. This isn't a plug-and-play affair; getting it _just so_ requires a nuanced understanding of the framework and your dataset. It’s something I had to grapple with years ago when I was working on a project involving anomaly detection in industrial production lines; the pre-trained models just didn't cut it for the specific kinds of defects we were encountering.
 
 First, and perhaps most crucially, let’s acknowledge that a pre-trained model, while offering a great starting point, is rarely going to be perfect for your specific task. The core principle of transfer learning, which underpins fine-tuning, is that a model trained on a large dataset like COCO or ImageNet has learned features that are broadly useful. We're essentially adapting these pre-existing features to our custom classes and dataset. In Detectron2, this adaptation is done primarily by modifying the final layers of the network, while retaining most of the weights learned in the pre-training process.
 
@@ -54,6 +54,7 @@ cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-Detection/faster_rcnn_R_5
 ```
 
 In this snippet, we:
+
 - Load a pre-existing configuration file (I've shown a Faster R-CNN example; you could choose another such as Mask R-CNN, etc.)
 - Set the training and validation datasets to the ones registered earlier.
 - Tweak several key parameters, including batch size, number of workers, learning rate, and the total number of training iterations. Experimenting with these is often key to good performance.
@@ -84,6 +85,7 @@ inference_on_dataset(trainer.model, val_loader, evaluator)
 ```
 
 This code snippet shows:
+
 - Creating the output directory if it doesn't already exist.
 - Instantiating the `DefaultTrainer`.
 - Training the model.
@@ -92,11 +94,12 @@ This code snippet shows:
 Remember, these code snippets provide a basic template. Fine-tuning is an iterative process. You’ll likely need to revisit parameters, possibly even collect more data, depending on the performance of your model.
 
 A few extra points to keep in mind:
-*   **Learning rate:** Don't overdo it, especially with small datasets. A lower learning rate often works best. In my experience, I've found reducing it by a factor of 10 compared to the original setting can be a useful starting point for fine tuning.
-*   **Batch size:** This depends on your GPU's memory. If you run out of memory, reduce it.
-*   **Augmentation:** Augmenting the training data (using methods like random crops, flips, etc.) can often improve model generalization, but be cautious not to introduce unrealistic transformations into your data.
-*   **Model Selection:** Choosing the right backbone is important; models with larger feature extractor networks, such as ResNet101 or ResNext, can sometimes yield better results when fine-tuned, albeit at the cost of more computational resources and longer training times.
-*   **Regularization:** It’s often a good practice to implement forms of regularization techniques to avoid overfitting. This can include techniques like weight decay which is readily available within Detectron2's config.
+
+- **Learning rate:** Don't overdo it, especially with small datasets. A lower learning rate often works best. In my experience, I've found reducing it by a factor of 10 compared to the original setting can be a useful starting point for fine tuning.
+- **Batch size:** This depends on your GPU's memory. If you run out of memory, reduce it.
+- **Augmentation:** Augmenting the training data (using methods like random crops, flips, etc.) can often improve model generalization, but be cautious not to introduce unrealistic transformations into your data.
+- **Model Selection:** Choosing the right backbone is important; models with larger feature extractor networks, such as ResNet101 or ResNext, can sometimes yield better results when fine-tuned, albeit at the cost of more computational resources and longer training times.
+- **Regularization:** It’s often a good practice to implement forms of regularization techniques to avoid overfitting. This can include techniques like weight decay which is readily available within Detectron2's config.
 
 For further reading, I highly recommend “Deep Learning” by Ian Goodfellow, Yoshua Bengio, and Aaron Courville for a comprehensive understanding of deep learning concepts. Also, reading the original Detectron2 papers and the official documentation thoroughly will provide more in-depth knowledge of the framework's capabilities. If you are looking for more specific information on data augmentation for object detection, I suggest exploring resources that focus on image processing and computer vision techniques.
 

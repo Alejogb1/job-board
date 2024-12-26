@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-external-chaincode-be-implemented-in-hyperledger-fabric"
 ---
 
-Okay, let's unpack this. I've had my share of encounters with complex distributed systems, and implementing external chaincode in Hyperledger Fabric definitely sits firmly in that category. It's not a simple point-and-click affair, but once you understand the underlying mechanisms, it becomes quite manageable. In essence, external chaincode, often referred to as "chaincode as a service," lets you execute your smart contract logic outside the Fabric peer process. This decoupling can bring substantial benefits in terms of resource isolation, language flexibility, and even improved security in some use cases.
+, let's unpack this. I've had my share of encounters with complex distributed systems, and implementing external chaincode in Hyperledger Fabric definitely sits firmly in that category. It's not a simple point-and-click affair, but once you understand the underlying mechanisms, it becomes quite manageable. In essence, external chaincode, often referred to as "chaincode as a service," lets you execute your smart contract logic outside the Fabric peer process. This decoupling can bring substantial benefits in terms of resource isolation, language flexibility, and even improved security in some use cases.
 
 The standard Fabric chaincode model has its limitations. Everything runs within the peer's environment, constrained by the available resources and the limited set of programming languages. External chaincode addresses this head-on, permitting you to implement your smart contract in any language and even run it on specialized hardware. I remember one particularly challenging project years ago, where we had to integrate legacy C++ code with our blockchain network; external chaincode saved our project’s timeline, and I want to share that approach.
 
@@ -14,7 +14,7 @@ Here’s where it gets practical, and I’ll illustrate my points with some simp
 
 **Example 1: Defining the gRPC Service (in Python, external chaincode)**
 
-Firstly, we define the gRPC service for our chaincode using the protobuf definition provided by the Hyperledger Fabric project (`chaincode.proto`).  While the exact setup might require some digging into the Fabric documentation (I'd recommend the Fabric SDK documentation and especially the `chaincode.proto` file for a precise definition), here’s a simplified version of what your Python service would look like:
+Firstly, we define the gRPC service for our chaincode using the protobuf definition provided by the Hyperledger Fabric project (`chaincode.proto`). While the exact setup might require some digging into the Fabric documentation (I'd recommend the Fabric SDK documentation and especially the `chaincode.proto` file for a precise definition), here’s a simplified version of what your Python service would look like:
 
 ```python
 from concurrent import futures
@@ -81,7 +81,7 @@ chaincode:
         keepalive_timeout: 20s
 ```
 
-In this configuration, `address` points to the gRPC endpoint where your Python process is listening (127.0.0.1:7052 in this case).  The `name` is a reference that needs to be set in the channel config, which will match chaincode that utilizes this builder. You also see parameters such as `dial_timeout`, `tls_required`, `keepalive_time`, and `keepalive_timeout`, which manage how the Fabric peer communicates with your external service. The value for path isn't directly important; it's used only when the builder is in tree. Here we are setting proprietary to false which indicates that it is not and the `path` parameter is not applicable.
+In this configuration, `address` points to the gRPC endpoint where your Python process is listening (127.0.0.1:7052 in this case). The `name` is a reference that needs to be set in the channel config, which will match chaincode that utilizes this builder. You also see parameters such as `dial_timeout`, `tls_required`, `keepalive_time`, and `keepalive_timeout`, which manage how the Fabric peer communicates with your external service. The value for path isn't directly important; it's used only when the builder is in tree. Here we are setting proprietary to false which indicates that it is not and the `path` parameter is not applicable.
 
 **Example 3: Deploying and Invoking the External Chaincode (Fabric CLI)**
 

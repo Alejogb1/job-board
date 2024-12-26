@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-tensorflow-28-and-python-310-install-tensorflow-addons"
 ---
 
-Alright, let's talk about TensorFlow Addons compatibility, specifically concerning TensorFlow 2.8 and Python 3.10. I've had my fair share of head-scratching moments battling dependency hell during my time working with deep learning projects, so I can certainly relate to the intricacies of this setup.
+, let's talk about TensorFlow Addons compatibility, specifically concerning TensorFlow 2.8 and Python 3.10. I've had my fair share of head-scratching moments battling dependency hell during my time working with deep learning projects, so I can certainly relate to the intricacies of this setup.
 
 The short answer is: it's nuanced, but generally speaking, yes, TensorFlow Addons can be installed alongside TensorFlow 2.8 and Python 3.10. However, it's not as straightforward as a simple `pip install`. We have to pay attention to the specific version of TensorFlow Addons itself, as compatibility is very tightly coupled to the TensorFlow core version.
 
@@ -83,14 +83,15 @@ print("Model output:", output)
 
 # You'd see a model output without errors.
 ```
+
 This example shows that if the correct versions of both tensorflow and tensorflow-addons are chosen, the code will execute normally, and any of the features can be used reliably. This is the typical workflow when dealing with real-world projects, which requires testing and proper debugging skills to choose and specify the right set of library dependencies.
 
 Regarding reliable resources, beyond meticulously reading the release notes for both TensorFlow and TensorFlow Addons, I would suggest exploring these:
 
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville**: While not specific to TensorFlow Addons, this book is fundamental for understanding the underlying concepts of deep learning, which is crucial for effectively using TensorFlow and Addons. Especially useful are the sections on optimization and network architectures, which will further deepen your understanding on the need of using tools like Addons.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville**: While not specific to TensorFlow Addons, this book is fundamental for understanding the underlying concepts of deep learning, which is crucial for effectively using TensorFlow and Addons. Especially useful are the sections on optimization and network architectures, which will further deepen your understanding on the need of using tools like Addons.
 
-*   **The official TensorFlow website and API documentation:** This is the ultimate source of truth. I am constantly referring to the api docs to understand the intended usage of any feature, and it’s always the first place I look at when an issue arises. Always refer to the source.
+- **The official TensorFlow website and API documentation:** This is the ultimate source of truth. I am constantly referring to the api docs to understand the intended usage of any feature, and it’s always the first place I look at when an issue arises. Always refer to the source.
 
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book provides a practical guide to using TensorFlow and includes sections that cover extensions. It will help you bridge the gap between the theory and the practical aspect of working with deep learning libraries.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This book provides a practical guide to using TensorFlow and includes sections that cover extensions. It will help you bridge the gap between the theory and the practical aspect of working with deep learning libraries.
 
 In conclusion, while the combination of TensorFlow 2.8 and Python 3.10 can work with TensorFlow Addons, the devil is in the details. You need to choose the right version of Addons to avoid compatibility issues. I have seen too many projects struggle with this, and following the release notes is, in my experience, the most effective way to handle it. When you approach this problem from a thorough and documented position, it will turn out to be just another day at the office, a rather common task of specifying the right dependencies.

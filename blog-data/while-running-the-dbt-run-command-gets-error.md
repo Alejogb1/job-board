@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "while-running-the-dbt-run-command-gets-error"
 ---
 
-Okay so you're hitting a snag with `dbt run` right? I've been there man. The dreaded "dbt run threw an error" message its like a rite of passage for any dbt user. Let's dig in cause this can be a total rabbit hole but its usually something pretty straightforward if you've seen it before.
+you're hitting a snag with `dbt run` right? I've been there man. The dreaded "dbt run threw an error" message its like a rite of passage for any dbt user. Let's dig in cause this can be a total rabbit hole but its usually something pretty straightforward if you've seen it before.
 
 First things first what kind of error are we talking about? Is it a syntax error? a connection problem? Is the model compiling at all? The more specific the better but lets work our way from the basics here.
 
 Ive seen this go down in many ways. Back in my early dbt days I remember I kept getting some super obtuse error like "relation does not exist". This is probably my most embarrassing dbt story to be honest. Turns out I had some super messed up macro logic that was generating a model name that was completely different from what the target data warehouse expected so the compiled code was literally looking for a table that didnt exist. I still feel dumb when I think of it and my manager was not happy that I took so long to fix it. I was using a bunch of jinja that I didnt understand and that caused lots of problems. I learned the hard way to test macros incrementally and not in a big complicated one step commit. It was a bad time. I spent like 3 days on this one issue and learned a lot by failing.
 
-Okay so lets break down some potential culprits and what I've seen usually cause them.
+lets break down some potential culprits and what I've seen usually cause them.
 
 **1. Syntax Errors in your SQL or Jinja**
 
@@ -18,10 +18,10 @@ This is probably the most common reason your `dbt run` is failing. dbt relies he
 
 Look at your model files closely. Check for:
 
-*   Mismatched parentheses or brackets
-*   Missing commas in `SELECT` or `WHERE` clauses
-*   Typos in column or table names
-*   Incorrect or missing Jinja tags like `{{ ref(...) }}` or `{{ config(...) }}`
+- Mismatched parentheses or brackets
+- Missing commas in `SELECT` or `WHERE` clauses
+- Typos in column or table names
+- Incorrect or missing Jinja tags like `{{ ref(...) }}` or `{{ config(...) }}`
 
 A quick tip here use a linter or a SQL formatter. Makes life a whole lot easier trust me. Something like `sqlfluff` can catch a lot of these common errors before you even run dbt. They arent foolproof but they catch a lot of the low hanging fruit.
 
@@ -81,9 +81,9 @@ from {{ ref('stg_customers') }}
 
 If dbt cannot connect to your data warehouse obviously everything will fall apart. This can stem from several things:
 
-*   Incorrect connection details in your `profiles.yml` file
-*   Firewall issues blocking access to your warehouse
-*   Authentication problems (expired credentials wrong username or password)
+- Incorrect connection details in your `profiles.yml` file
+- Firewall issues blocking access to your warehouse
+- Authentication problems (expired credentials wrong username or password)
 
 Verify your `profiles.yml` carefully. I would suggest to double-check with a colleague if you can to make sure there is no simple typo. I swear it's like a law of nature that the most obvious things are the ones you can't spot on your own.
 

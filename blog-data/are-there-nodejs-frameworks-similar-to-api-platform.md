@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "are-there-nodejs-frameworks-similar-to-api-platform"
 ---
 
-Alright, let's talk about Node.js frameworks and their relationship to something like API Platform, which, if you’re familiar, leans heavily into providing a comprehensive API-centric development experience—something I've certainly spent considerable time navigating in various projects. The short answer is, no, there isn't a direct, like-for-like equivalent in the Node.js ecosystem that packages up everything API Platform does into a single framework. But that’s not the end of the story. We *do* have a robust collection of tools and libraries that, when strategically assembled, can achieve a very similar, and sometimes even more tailored result.
+, let's talk about Node.js frameworks and their relationship to something like API Platform, which, if you’re familiar, leans heavily into providing a comprehensive API-centric development experience—something I've certainly spent considerable time navigating in various projects. The short answer is, no, there isn't a direct, like-for-like equivalent in the Node.js ecosystem that packages up everything API Platform does into a single framework. But that’s not the end of the story. We _do_ have a robust collection of tools and libraries that, when strategically assembled, can achieve a very similar, and sometimes even more tailored result.
 
 In my past work with high-throughput data management systems, I often found myself needing the granular control that Node.js offers. API Platform, while powerful for rapid development, sometimes felt a bit too opinionated for certain nuances. So, I had to architect solutions using the modularity of the Node.js ecosystem. I won't bore you with the gory details, but it involved a lot of thoughtful integration.
 
@@ -17,27 +17,27 @@ When people look for "API Platform for Node.js," what they're generally seeking 
 5.  **Authentication & Authorization:** Handling access control and user management.
 6.  **Pagination & Filtering:** Implementing these common API features efficiently.
 
-Now, no single Node.js framework does *all* of this out of the box in the same way as API Platform, but frameworks like NestJS, combined with specific libraries, can get us remarkably close. Let’s break this down, focusing on the equivalent tools and methodologies you can adopt.
+Now, no single Node.js framework does _all_ of this out of the box in the same way as API Platform, but frameworks like NestJS, combined with specific libraries, can get us remarkably close. Let’s break this down, focusing on the equivalent tools and methodologies you can adopt.
 
 First, let's explore how NestJS can form the core. NestJS provides an opinionated and structured approach to building server-side applications using TypeScript and the latest JavaScript features. It provides modules, services, controllers, and more, making code maintainability and scalability much easier. Think of it as the structural scaffolding, rather than the complete toolkit.
 
 ```typescript
 // Example NestJS controller with data transformation.
-import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
-import { UserService } from './user.service';
+import { Controller, Get, Param, ParseIntPipe } from "@nestjs/common";
+import { UserService } from "./user.service";
 
-@Controller('users')
+@Controller("users")
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get(':id')
-  async getUser(@Param('id', ParseIntPipe) id: number): Promise<any> {
+  @Get(":id")
+  async getUser(@Param("id", ParseIntPipe) id: number): Promise<any> {
     const user = await this.userService.getUserById(id);
     // Example transformation before sending
     return {
-        userId: user.id,
-        userName: user.name,
-        userEmail: user.email
+      userId: user.id,
+      userName: user.name,
+      userEmail: user.email,
     };
   }
 }
@@ -49,16 +49,15 @@ To move closer to complete API solutions, consider additional libraries. For dat
 
 ```typescript
 // Example using class-transformer for data transformation.
-import { Expose, Transform } from 'class-transformer';
+import { Expose, Transform } from "class-transformer";
 
 export class UserDto {
   @Expose()
   userId: number;
 
   @Expose()
-  @Transform(({ obj }) => obj.firstName + ' ' + obj.lastName) // Complex transformation
+  @Transform(({ obj }) => obj.firstName + " " + obj.lastName) // Complex transformation
   userName: string;
-
 
   @Expose()
   userEmail: string;
@@ -68,27 +67,28 @@ export class UserDto {
   }
 }
 ```
+
 In this simple example, the DTO (Data Transfer Object) uses class-transformer's decorators to map properties from an incoming user object into a specific structure before returning via the API endpoint. We also showcase a slightly more complex transformation utilizing the `Transform` decorator.
 
 For API documentation, `nestjs/swagger` or the more broadly used `swagger-ui-express` integrate well with NestJS and other express-based applications. They automatically generate OpenAPI specifications from your route definitions, making your API discoverable and easy to use.
 
 ```typescript
 // Example of Swagger configuration in a NestJS application.
-import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { AppModule } from './app.module';
+import { NestFactory } from "@nestjs/core";
+import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
+import { AppModule } from "./app.module";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('User API')
-    .setDescription('API for managing users')
-    .setVersion('1.0')
-    .addTag('users')
+    .setTitle("User API")
+    .setDescription("API for managing users")
+    .setVersion("1.0")
+    .addTag("users")
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup("api", app, document);
 
   await app.listen(3000);
 }

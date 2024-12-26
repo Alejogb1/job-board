@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "why-do-solidity-dynamic-multi-swaps-fail-with-transferfromfailed"
 ---
 
-Alright, let's tackle this one. Having spent more time than I care to remember debugging smart contracts, especially those involving complex token interactions, i've definitely encountered the dreaded `TRANSFER_FROM_FAILED` error during dynamic multi swaps in Solidity. It's a frustrating situation, but it's usually traceable back to a few core issues with how approvals, allowances, and the ERC-20 token standard interact, especially in multi-hop scenarios. Let's break down why this happens, what I've seen in the field, and how to fix it.
+, let's tackle this one. Having spent more time than I care to remember debugging smart contracts, especially those involving complex token interactions, i've definitely encountered the dreaded `TRANSFER_FROM_FAILED` error during dynamic multi swaps in Solidity. It's a frustrating situation, but it's usually traceable back to a few core issues with how approvals, allowances, and the ERC-20 token standard interact, especially in multi-hop scenarios. Let's break down why this happens, what I've seen in the field, and how to fix it.
 
-The primary cause, at its heart, involves a misalignment between what a smart contract *thinks* it’s allowed to do versus what the token contract *actually* permits. When you're talking about multi-swaps involving multiple tokens in a single transaction, you’re essentially chaining together multiple `transferFrom` calls. If any of these calls fails due to inadequate allowance, then the whole transaction will revert, typically with the `TRANSFER_FROM_FAILED` error.
+The primary cause, at its heart, involves a misalignment between what a smart contract _thinks_ it’s allowed to do versus what the token contract _actually_ permits. When you're talking about multi-swaps involving multiple tokens in a single transaction, you’re essentially chaining together multiple `transferFrom` calls. If any of these calls fails due to inadequate allowance, then the whole transaction will revert, typically with the `TRANSFER_FROM_FAILED` error.
 
 Now, let's get a bit more specific. The ERC-20 standard utilizes an `approve()` function, which, in theory, grants a spender (usually a smart contract) permission to move tokens from the approved account. However, this approval is not indefinite. It's an allowance amount that the spender can utilize. And this is where the problems start arising. If the amount of tokens being `transferFrom`-ed exceeds the current allowance, bam, you get `TRANSFER_FROM_FAILED`.
 
@@ -54,7 +54,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 contract SingleSwapContract {
   IERC20 public tokenA;
   IERC20 public tokenB;
-  
+
   constructor(address _tokenA, address _tokenB) {
     tokenA = IERC20(_tokenA);
     tokenB = IERC20(_tokenB);
@@ -85,7 +85,7 @@ contract MultiSwapRouter {
 }
 ```
 
-In this `MultiSwapRouter`, the `msg.sender` needs to *separately* approve the `SingleSwapContract` at `swap1`'s address and the `SingleSwapContract` at `swap2`'s address in order for this to work. This is often a source of confusion because users sometimes mistakenly approve the `MultiSwapRouter` to spend their tokens rather than the individual swap contracts. Each call in this flow that uses `transferFrom` needs proper authorization. Failing to do so would cause the `TRANSFER_FROM_FAILED` error on the second swap call if the second swap contract is not explicitly granted an allowance.
+In this `MultiSwapRouter`, the `msg.sender` needs to _separately_ approve the `SingleSwapContract` at `swap1`'s address and the `SingleSwapContract` at `swap2`'s address in order for this to work. This is often a source of confusion because users sometimes mistakenly approve the `MultiSwapRouter` to spend their tokens rather than the individual swap contracts. Each call in this flow that uses `transferFrom` needs proper authorization. Failing to do so would cause the `TRANSFER_FROM_FAILED` error on the second swap call if the second swap contract is not explicitly granted an allowance.
 
 **Example 3: Handling Reverted `transferFrom` Gracefully:**
 
@@ -119,16 +119,16 @@ Here, we are using the openzeppelin SafeERC20 library and the `safeTransferFrom`
 
 **Recommendations for Preventing `TRANSFER_FROM_FAILED` Errors**
 
-*   **Explicit Allowance Management:** Ensure that allowances are set *explicitly* for each token and each interacting contract. The user must approve each contract to transfer specific amounts from their account. Use precise and descriptive naming for approval functions to improve readability when setting allowances.
-*   **Increase Allowance First:** It's a best practice to always increase an allowance before a multi-swap, instead of setting a specific limit, to avoid front-running and making allowances more robust.
-*   **Utilize SafeERC20:** The openzeppelin's SafeERC20 library provides safe wrappers around standard ERC-20 functions, ensuring that transactions revert correctly if a token does not adhere strictly to the ERC-20 specification.
-*   **Gas Considerations:** Consider the gas costs associated with setting allowances. Batch operations or methods that reduce the number of required approvals could be more efficient.
-*   **User Education:** The users of these systems need to be instructed clearly about the need to set allowances to the multiple contracts. A proper front end with clear notifications is an essential part of making multi swaps usable.
-*   **Event Logging:** It’s beneficial to log allowance updates in your contracts for debuggability.
-*   **Consider alternatives:** When working with complex multi swaps, it is sometimes best to avoid `transferFrom` calls and use methods like native ETH swaps instead.
+- **Explicit Allowance Management:** Ensure that allowances are set _explicitly_ for each token and each interacting contract. The user must approve each contract to transfer specific amounts from their account. Use precise and descriptive naming for approval functions to improve readability when setting allowances.
+- **Increase Allowance First:** It's a best practice to always increase an allowance before a multi-swap, instead of setting a specific limit, to avoid front-running and making allowances more robust.
+- **Utilize SafeERC20:** The openzeppelin's SafeERC20 library provides safe wrappers around standard ERC-20 functions, ensuring that transactions revert correctly if a token does not adhere strictly to the ERC-20 specification.
+- **Gas Considerations:** Consider the gas costs associated with setting allowances. Batch operations or methods that reduce the number of required approvals could be more efficient.
+- **User Education:** The users of these systems need to be instructed clearly about the need to set allowances to the multiple contracts. A proper front end with clear notifications is an essential part of making multi swaps usable.
+- **Event Logging:** It’s beneficial to log allowance updates in your contracts for debuggability.
+- **Consider alternatives:** When working with complex multi swaps, it is sometimes best to avoid `transferFrom` calls and use methods like native ETH swaps instead.
 
 **Further Resources**
 
-For a deeper understanding of the ERC-20 standard and related vulnerabilities, I highly recommend reading the *EIP-20 specification* itself, and any accompanying materials from the Ethereum Foundation. Also, familiarize yourself with the OpenZeppelin Contracts library, particularly the `ERC20` and `SafeERC20` modules. In addition, I recommend reading *Mastering Ethereum* by Andreas M. Antonopoulos and Gavin Wood; it provides an extensive treatment of smart contracts and token mechanics. Finally, research articles on front-running and MEV on the Ethereum network can help explain some less intuitive behaviors when working with token approvals and swaps.
+For a deeper understanding of the ERC-20 standard and related vulnerabilities, I highly recommend reading the _EIP-20 specification_ itself, and any accompanying materials from the Ethereum Foundation. Also, familiarize yourself with the OpenZeppelin Contracts library, particularly the `ERC20` and `SafeERC20` modules. In addition, I recommend reading _Mastering Ethereum_ by Andreas M. Antonopoulos and Gavin Wood; it provides an extensive treatment of smart contracts and token mechanics. Finally, research articles on front-running and MEV on the Ethereum network can help explain some less intuitive behaviors when working with token approvals and swaps.
 
 In my experience, the `TRANSFER_FROM_FAILED` error in multi-swaps often isn't caused by fundamental flaws in the logic but rather from nuanced interactions between token approvals and dynamic transaction flow. By meticulously managing allowances and error handling, this error is entirely preventable. I hope this helps you avoid this pitfall in your own development, and helps you create reliable swap applications.

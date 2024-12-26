@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ingress-yaml-template-returns-error-in-renderring-nil-pointer-evaluating-int"
 ---
 
-Okay so you're hitting the classic "nil pointer evaluating int" snag in your Kubernetes ingress YAML template rendering sounds familiar let me tell you
+you're hitting the classic "nil pointer evaluating int" snag in your Kubernetes ingress YAML template rendering sounds familiar let me tell you
 
 I've been wrestling with YAML for way too long I swear its like its always plotting against us just waiting for one little mistake it seems like it's specifically designed to give programmers existential dread when something like this shows up so here's the breakdown from someone who's been in the trenches with this and yes I've seen this exact error way too many times its the kind of error that wakes you up at 3 am
 
@@ -23,9 +23,9 @@ Here's a general way you can check what's going on:
 ```yaml
 # Example snippet of Helm chart values.yaml
 someConfig:
-  myPort: 8080  # This could be coming from anywhere in reality
+  myPort: 8080 # This could be coming from anywhere in reality
 someOtherConfig:
-    debug: false # debugging flag
+  debug: false # debugging flag
 ```
 
 ```yaml
@@ -54,13 +54,12 @@ Another common problem is when you use list elements to index values like this a
 ```yaml
 # Example snippet of Helm chart values.yaml
 servicePorts:
- - 8080
- - 8081
- - 8082
+  - 8080
+  - 8081
+  - 8082
 
 someOtherConfig:
-    debug: false
-
+  debug: false
 ```
 
 ```yaml
@@ -94,7 +93,7 @@ serviceConfig:
       http: 80
       https: 443
 someOtherConfig:
-    debug: false
+  debug: false
 ```
 
 ```yaml

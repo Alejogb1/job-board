@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-a-rails-sandbox-be-built-using-a-replica-database-instead-of-the-primary-database"
 ---
 
-Okay, let's tackle this. I've actually been down this road before, more times than I'd care to count. Building a proper development sandbox is critical, and using a replica database rather than the primary is not just possible, it's often the *better* way to go. It really comes down to understanding the implications and setting things up correctly.
+, let's tackle this. I've actually been down this road before, more times than I'd care to count. Building a proper development sandbox is critical, and using a replica database rather than the primary is not just possible, it's often the _better_ way to go. It really comes down to understanding the implications and setting things up correctly.
 
 From my experience, the core problem is that developers working in a sandbox environment—especially when multiple developers are involved—can easily make changes that could have disastrous consequences on the live production data if they accidentally targeted the primary database. A replica, being a read-only copy (or nearly read-only, depending on your setup) offers a crucial layer of safety. It allows the sandbox environment to operate with real-world data characteristics, while insulating the primary database from unintended modifications. We're talking about preventing accidental `drop table`, errant updates, or any other database misadventures, which can happen even to the most seasoned developers under pressure.
 
@@ -42,7 +42,8 @@ sandbox:
   host: replica_db_host # Replace with your actual replica host
   read_only: true
 ```
-In this snippet, the `sandbox` section uses a different database (`my_app_production_replica`) and connects to a different host (`replica_db_host`). Also, note the `read_only: true`. While this doesn’t directly *enforce* read-only at the database connection level for all databases, it helps us by encouraging only read-type queries (using `find`, `all`, etc.). For example, Active Record would throw errors for update or create methods if you use this in conjunction with the next example. You should also be enforcing database read-only access at the database level for optimal security.
+
+In this snippet, the `sandbox` section uses a different database (`my_app_production_replica`) and connects to a different host (`replica_db_host`). Also, note the `read_only: true`. While this doesn’t directly _enforce_ read-only at the database connection level for all databases, it helps us by encouraging only read-type queries (using `find`, `all`, etc.). For example, Active Record would throw errors for update or create methods if you use this in conjunction with the next example. You should also be enforcing database read-only access at the database level for optimal security.
 
 Next, we need to tell rails to use this configuration when the environment is `sandbox`. This can be easily accomplished by setting the `RAILS_ENV` environment variable when starting your rails server in the sandbox environment:
 
@@ -69,11 +70,12 @@ class ApplicationRecord < ActiveRecord::Base
   end
 end
 ```
+
 In the code above, we add `before_create`, `before_update`, and `before_destroy` hooks on the base `ApplicationRecord` class, which all our models inherit from. The code will check if we are in the sandbox environment and check if `read_only` configuration is true for the current connection, and it will throw an exception if we try to do any changes in the database, preventing most accidental writes. This is a safeguard measure implemented at the application layer which compliments the database level access rules.
 
 Finally, you need to make sure that your database setup allows for replication from the primary to the replica. This usually involves configuration within your database system (PostgreSQL, MySQL, etc.). The specifics are going to vary but generally involves creating a replication user, defining replication slots, and ensuring that changes from the primary are propagated to the replica. This is a broader topic than a quick overview can allow, and for this, I would recommend consulting the documentation for your specific database system and "Database Internals" by Alex Petrov for a deep understanding of replication architectures.
 
-Now, let’s talk about the limitations. While using a replica provides isolation, it's not perfect. There’s replication lag to consider—the replica is never *perfectly* in sync with the primary. Changes made to the primary might not be immediately reflected in the replica, leading to some subtle differences in behavior. This is a core tradeoff to be mindful of. Also, depending on your needs and data sizes, the resource requirements of maintaining an additional replica can be an important factor when considering cost.
+Now, let’s talk about the limitations. While using a replica provides isolation, it's not perfect. There’s replication lag to consider—the replica is never _perfectly_ in sync with the primary. Changes made to the primary might not be immediately reflected in the replica, leading to some subtle differences in behavior. This is a core tradeoff to be mindful of. Also, depending on your needs and data sizes, the resource requirements of maintaining an additional replica can be an important factor when considering cost.
 
 Another potential issue is seeding the sandbox database if it is created from scratch. If you are using a completely new database, you will have to add initial data to it, which can be a tedious task. It may make more sense to restore from the latest database snapshot of production, which would give the added benefit of better real-world test scenarios.
 

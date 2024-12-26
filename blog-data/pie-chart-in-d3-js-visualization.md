@@ -4,15 +4,15 @@ date: "2024-12-13"
 id: "pie-chart-in-d3-js-visualization"
 ---
 
-Okay so you want to build a pie chart in d3js right been there done that a million times its a classic visualization task nothing too fancy but yeah there are some gotchas if you are not careful lets get into it
+you want to build a pie chart in d3js right been there done that a million times its a classic visualization task nothing too fancy but yeah there are some gotchas if you are not careful lets get into it
 
 First off let's address the data format you'll need to have your data in a usable format for d3 usually an array of objects where each object has a key representing the label and a key representing the value something like this:
 
 ```javascript
 const data = [
-    {label: "Apples", value: 30},
-    {label: "Bananas", value: 50},
-    {label: "Cherries", value: 20}
+  { label: "Apples", value: 30 },
+  { label: "Bananas", value: 50 },
+  { label: "Cherries", value: 20 },
 ];
 ```
 
@@ -21,17 +21,17 @@ This is what d3 likes for most charts if your data is different lets say its in 
 Now the crucial part of any pie chart is the `d3.pie()` function this is what transform the array of objects into something that is ready for a pie shape the function needs to tell the pie what the value part of the object you want to create a pie from looks like it uses an accessor function like this
 
 ```javascript
-const pie = d3.pie()
-  .value(d => d.value); // specify the value accessor
+const pie = d3.pie().value((d) => d.value); // specify the value accessor
 ```
 
 This `pie` is a layout function it is not really d3s drawing function it takes the data and it returns an array of objects but those objects have a startAngle endAngle data and others its the main part of how d3 knows what to draw as an arc and its crucial to get it right
 
-After you create the `pie` layout it's time to create the arc generator its d3's way of saying okay now lets transform the angles from the layout into a path a `d` attribute in an SVG which is what it will be rendered as think of it as the final step to getting the arc path strings we will use `d3.arc()` and we will configure its inner and outer radius like this:
+After you create the `pie` layout it's time to create the arc generator its d3's way of saying now lets transform the angles from the layout into a path a `d` attribute in an SVG which is what it will be rendered as think of it as the final step to getting the arc path strings we will use `d3.arc()` and we will configure its inner and outer radius like this:
 
 ```javascript
-const arc = d3.arc()
-  .innerRadius(0)    // change if you want a donut chart
+const arc = d3
+  .arc()
+  .innerRadius(0) // change if you want a donut chart
   .outerRadius(100); // adjust the radius to your needs
 ```
 
@@ -40,7 +40,8 @@ The `innerRadius` will give you a donut chart if you set it to something else th
 Now lets create a svg element or find the existing one in your html code and select it via d3 like this:
 
 ```javascript
-const svg = d3.select("body") // or wherever your svg is
+const svg = d3
+  .select("body") // or wherever your svg is
   .append("svg")
   .attr("width", 250)
   .attr("height", 250);
@@ -50,15 +51,16 @@ this creates a svg element inside of the body tag with a width and height of 250
 
 ```javascript
 // center the pie
-const g = svg.append("g")
-    .attr("transform", `translate(${250/2}, ${250/2})`); // centering via translate
+const g = svg
+  .append("g")
+  .attr("transform", `translate(${250 / 2}, ${250 / 2})`); // centering via translate
 
 // this next code makes the magic happen
 g.selectAll("path")
-  .data(pie(data))     // this passes the data array to the pie function and links them via d3
+  .data(pie(data)) // this passes the data array to the pie function and links them via d3
   .enter()
-  .append("path")      // each part of the pie gets a path element
-  .attr("d", arc)      // the arc function generates the final path
+  .append("path") // each part of the pie gets a path element
+  .attr("d", arc) // the arc function generates the final path
   .attr("fill", (d, i) => d3.schemeCategory10[i]); // assigning a color based on the index to each pie part using schemeCategory10 its colors that already look good
 ```
 
@@ -75,15 +77,16 @@ Another problem that people tend to face is the labeling part a pie without a la
 The solution is again quite straightforward but there are a few tricks you might want to use let's create a function that places labels around the pie for you:
 
 ```javascript
-function placeLabels(selection){
-  selection.append("text")
-      .attr("transform", function(d) {
-          const centroid = arc.centroid(d);
-          return `translate(${centroid})`;
-        })
-      .attr("dy", ".35em")
-      .style("text-anchor", "middle")
-      .text(d => d.data.label);
+function placeLabels(selection) {
+  selection
+    .append("text")
+    .attr("transform", function (d) {
+      const centroid = arc.centroid(d);
+      return `translate(${centroid})`;
+    })
+    .attr("dy", ".35em")
+    .style("text-anchor", "middle")
+    .text((d) => d.data.label);
 }
 ```
 
@@ -96,11 +99,11 @@ g.selectAll("g.slice")
   .data(pie(data)) // binds data
   .enter()
   .append("g")
-    .attr("class", "slice") // classes
-    .call(placeLabels)  // here is where the magic happens
-    .append("path") // here is the path
-    .attr("d", arc)
-    .attr("fill", (d, i) => d3.schemeCategory10[i]);
+  .attr("class", "slice") // classes
+  .call(placeLabels) // here is where the magic happens
+  .append("path") // here is the path
+  .attr("d", arc)
+  .attr("fill", (d, i) => d3.schemeCategory10[i]);
 ```
 
 As you see we created a group element `g` for each of the pie parts and assigned a class and then called the function to do the label placing inside that group and as you see we put the label group before the path element so they are placed on the correct z index layer in the svg document
@@ -108,36 +111,40 @@ As you see we created a group element `g` for each of the pie parts and assigned
 Finally if your data changes you will need to rebind the data to the chart in this case you can create a function to update the visualization:
 
 ```javascript
-function updatePieChart(newData){
+function updatePieChart(newData) {
   g.selectAll(".slice")
-      .data(pie(newData))
+    .data(pie(newData))
     .join(
-    function(enter){
-      const gEnter = enter.append("g").attr("class", "slice")
-            .call(placeLabels)
+      function (enter) {
+        const gEnter = enter
+          .append("g")
+          .attr("class", "slice")
+          .call(placeLabels);
 
-      gEnter.append("path")
+        gEnter
+          .append("path")
           .attr("fill", (d, i) => d3.schemeCategory10[i])
           .attr("d", arc);
-      return gEnter;
+        return gEnter;
       },
-    function(update){
-      update.selectAll("path")
-        .transition()
-        .duration(300)
-        .attr("d", arc)
-        .attr("fill", (d, i) => d3.schemeCategory10[i]);
+      function (update) {
+        update
+          .selectAll("path")
+          .transition()
+          .duration(300)
+          .attr("d", arc)
+          .attr("fill", (d, i) => d3.schemeCategory10[i]);
 
-      update.selectAll("text")
-           .text(d => d.data.label)
-           .attr("transform", d => `translate(${arc.centroid(d)})`);
-      return update
-    }
-    ,
-    function(exit){
-      exit.transition().duration(300).remove();
-    }
-  )
+        update
+          .selectAll("text")
+          .text((d) => d.data.label)
+          .attr("transform", (d) => `translate(${arc.centroid(d)})`);
+        return update;
+      },
+      function (exit) {
+        exit.transition().duration(300).remove();
+      }
+    );
 }
 ```
 

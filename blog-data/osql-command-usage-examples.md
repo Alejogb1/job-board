@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "osql-command-usage-examples"
 ---
 
-Okay so you need osql examples right Been there done that let me tell you
+you need osql examples right Been there done that let me tell you
 
-Alright lets dive right in osql man I've wrestled with that command line beast more times than I care to remember back in the day we're talking early 2000s when GUIs were still considered optional yeah that's how far back I go I was managing some massive SQL servers you know the kind that would make your laptop cry just thinking about them and osql was my main tool It was like my Swiss army knife but less stylish and way more command-liney
+lets dive right in osql man I've wrestled with that command line beast more times than I care to remember back in the day we're talking early 2000s when GUIs were still considered optional yeah that's how far back I go I was managing some massive SQL servers you know the kind that would make your laptop cry just thinking about them and osql was my main tool It was like my Swiss army knife but less stylish and way more command-liney
 
 So the thing with osql is it's direct it's brutal it doesn't sugarcoat anything you give it a query it runs it you see the result no fluff no pretty icons just raw data thats why it was and for some is the go to for automation and scripting
 
@@ -72,11 +72,11 @@ This will read the SQL statements in your script and run them on the specified d
 
 **Tips and Gotchas**
 
-Alright I've spilled enough coffee over the command line to know some quirks of osql lets be real
+I've spilled enough coffee over the command line to know some quirks of osql lets be real
 
-*   **Quoting:** If your query has double quotes or apostrophes things can get tricky. Make sure to escape them correctly especially when using the `-q` parameter its better to use apostrophes in SQL and double quotes when you are using your OS
-*   **Error Handling:** osql doesn't always give the most user-friendly error messages. Sometimes you might have to dig deeper into the SQL Server error logs to see what went wrong. I remember spending hours troubleshooting a script only to realize a small syntax error I hadn’t seen it’s a humbling experience trust me.
-*   **Output:** By default osql’s output is not the prettiest It includes lots of headers and stuff if you need a more clean output you need to use other tools like `sqlcmd` which in general is superior to `osql`
+- **Quoting:** If your query has double quotes or apostrophes things can get tricky. Make sure to escape them correctly especially when using the `-q` parameter its better to use apostrophes in SQL and double quotes when you are using your OS
+- **Error Handling:** osql doesn't always give the most user-friendly error messages. Sometimes you might have to dig deeper into the SQL Server error logs to see what went wrong. I remember spending hours troubleshooting a script only to realize a small syntax error I hadn’t seen it’s a humbling experience trust me.
+- **Output:** By default osql’s output is not the prettiest It includes lots of headers and stuff if you need a more clean output you need to use other tools like `sqlcmd` which in general is superior to `osql`
 
 Let me add a little humor here: why did the SQL server break up with the database? because they had too many relationships and not enough schema ha! I know its corny.
 
@@ -86,11 +86,11 @@ While osql documentation exists Microsoft hasn't put much effort to it over the 
 
 If you’re serious about mastering command-line SQL tools like this I recommend the following resources.
 
-*   **"SQL Server 2019 Administration Inside Out" by William R. Stanek**: Its a good general resource for SQL Server administration and you can find useful information on how the different command line utilities work.
+- **"SQL Server 2019 Administration Inside Out" by William R. Stanek**: Its a good general resource for SQL Server administration and you can find useful information on how the different command line utilities work.
 
-*   **"Microsoft SQL Server 2019 Query Performance Tuning" by Grant Fritchey**: While this book focuses on query tuning it does cover a lot of server level settings that help in server administration and it gives you a good technical perspective.
+- **"Microsoft SQL Server 2019 Query Performance Tuning" by Grant Fritchey**: While this book focuses on query tuning it does cover a lot of server level settings that help in server administration and it gives you a good technical perspective.
 
-*   **Microsoft Official Documentation**: You should always refer to official Microsoft documentation for the latest updates it's more of a reference but it’s necessary
+- **Microsoft Official Documentation**: You should always refer to official Microsoft documentation for the latest updates it's more of a reference but it’s necessary
 
 Osql is kind of old school but it is useful to know if you are a database administrator or if you're working in environments where graphical tools are not available It can save your life you'll see. I've been there and it’s true sometimes simple tools are better than complicated ones.
 

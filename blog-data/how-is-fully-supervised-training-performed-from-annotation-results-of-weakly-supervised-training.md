@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "how-is-fully-supervised-training-performed-from-annotation-results-of-weakly-supervised-training"
 ---
 
-alright, let's talk about this. it's a common situation, actually. you start with weak supervision, get some initial results, and then, hopefully, you want to leverage those results for fully supervised training. i've been down this road more times than i care to count, and it's always a bit of a dance.
+, let's talk about this. it's a common situation, actually. you start with weak supervision, get some initial results, and then, hopefully, you want to leverage those results for fully supervised training. i've been down this road more times than i care to count, and it's always a bit of a dance.
 
 basically, what we're doing is taking the noisy, imperfect labels produced by our weakly supervised approach and using them to guide a more robust, fully supervised training process. it's like trying to learn how to build a house using a set of instructions written by someone who wasn't quite sure what they were doing but, at least they gave you an idea of how to begin. you get the basic frame up and then go back with the real blueprint to add more structure and details.
 
-so, the core idea is to treat the weak labels as *pseudo-labels*. these pseudo-labels are then used to train a model in the same way you would train it if you had actual ground truth labels, the main difference here is you'll probably want to take precautions when you do.
+so, the core idea is to treat the weak labels as _pseudo-labels_. these pseudo-labels are then used to train a model in the same way you would train it if you had actual ground truth labels, the main difference here is you'll probably want to take precautions when you do.
 
 let's say, for instance, you were building a text classifier, like identifying the sentiment of a tweet. with weak supervision, you might have used hashtags as a proxy for sentiment. a tweet with #happy might be considered positive and one with #sad, negative. pretty straightforward. this is fast, easy to implement, requires little effort and is usually good enough for a first try, but it's definitely not perfect. there might be ironic uses of hashtags, or maybe the tweet is only partially related to the hashtag's general sentiment. those are things you need to think about and take into account.
 
@@ -77,7 +77,7 @@ def train_step(model, optimizer, inputs, labels):
 
 what we are doing here is, for every batch, apply augmentation to the inputs and calculate the loss both from the augmented and normal input. the augmentation we are doing is minor rotation, slight translation and minor color changes. this helps on making the model not overfit the specifics of the original image, and more robust to image transformations, improving generalization on unseen images.
 
-the process is iterative. you could use those better labels to train a new better model, and then do it again. it's like bootstrapping yourself to a better result. just keep in mind, if your starting weakly supervised labels are garbage, you are going to end up training your model to be equally as garbage. and that's not a good place to be. it's like trying to teach a dog to play the piano if it can barely sit, you first need to teach it how to sit. and even then, the piano part could be challenging, or maybe not so much if the dog is *that* good.
+the process is iterative. you could use those better labels to train a new better model, and then do it again. it's like bootstrapping yourself to a better result. just keep in mind, if your starting weakly supervised labels are garbage, you are going to end up training your model to be equally as garbage. and that's not a good place to be. it's like trying to teach a dog to play the piano if it can barely sit, you first need to teach it how to sit. and even then, the piano part could be challenging, or maybe not so much if the dog is _that_ good.
 
 the success of this process relies on two critical things. first, the quality of your initial weak labels (even if they're noisy, they need to point in the general direction of the correct answers), and second, your ability to handle the noise present in these pseudo-labels. it's about mitigating the risk of the model simply learning the biases of the initial (weak) model.
 

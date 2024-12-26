@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-display-image-previews-on-thumbnail-clicks-in-android"
 ---
 
-Okay, let's tackle this. I recall a project back in '18, a social media app, where we had precisely this requirement: displaying larger previews when users tapped on image thumbnails. It sounds simple on paper, but the devil, as they say, is in the details – especially when you want it smooth and performant, even with hundreds of images. This isn't a trivial "copy-paste" situation, and it warrants a considered, multi-faceted approach.
+, let's tackle this. I recall a project back in '18, a social media app, where we had precisely this requirement: displaying larger previews when users tapped on image thumbnails. It sounds simple on paper, but the devil, as they say, is in the details – especially when you want it smooth and performant, even with hundreds of images. This isn't a trivial "copy-paste" situation, and it warrants a considered, multi-faceted approach.
 
 The core challenge revolves around efficiency and memory management. Loading full-resolution images directly into an activity or fragment is a surefire recipe for out-of-memory errors, especially on lower-end devices or when dealing with a large number of images. Therefore, we need to be smart about how we handle this. The basic pattern generally involves:
 
@@ -200,8 +200,8 @@ This `BitmapCache` class allows us to store bitmaps efficiently. Before loading 
 
 For deeper understanding, I’d suggest researching the following resources:
 
-*   **"Efficient Android Threading"** by Doug Sillars (although a bit dated now, the principles remain relevant). It delves deeply into `AsyncTask` and other threading strategies for Android.
-*   **Android Developer Documentation:** Specifically, the sections on "Managing Bitmaps", “Displaying Bitmaps Efficiently” and the `LruCache` class. These are critical for grasping the best practices for memory management with images.
-*   **"High Performance Android Apps"** by Doug Sillars (Again, it’s an older book, but concepts discussed about image handling are still crucial.) This book will provide more context to performance optimization for mobile applications, including a discussion on managing memory consumption with images and using caching properly.
+- **"Efficient Android Threading"** by Doug Sillars (although a bit dated now, the principles remain relevant). It delves deeply into `AsyncTask` and other threading strategies for Android.
+- **Android Developer Documentation:** Specifically, the sections on "Managing Bitmaps", “Displaying Bitmaps Efficiently” and the `LruCache` class. These are critical for grasping the best practices for memory management with images.
+- **"High Performance Android Apps"** by Doug Sillars (Again, it’s an older book, but concepts discussed about image handling are still crucial.) This book will provide more context to performance optimization for mobile applications, including a discussion on managing memory consumption with images and using caching properly.
 
 Implementing this layered approach (thumbnail generation, lazy loading, and efficient caching) ensures that your application handles image previews smoothly, even with large numbers of images and varying device capabilities. Remember that these examples are starting points; production code will likely require additional error handling and more robust caching mechanisms, but these should get you well on the way to a working solution.

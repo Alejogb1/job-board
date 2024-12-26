@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-challenges-of-concatenating-two-layers-in-a-neural-network"
 ---
 
-Okay, let’s tackle this. Having spent considerable time architecting and debugging various neural network models over the years, I’ve certainly encountered the complexities inherent in concatenating layers. It’s seemingly simple on the surface, but the devil is, as always, in the details. It's less a ‘plug and play’ operation and more a careful consideration of the ramifications.
+, let’s tackle this. Having spent considerable time architecting and debugging various neural network models over the years, I’ve certainly encountered the complexities inherent in concatenating layers. It’s seemingly simple on the surface, but the devil is, as always, in the details. It's less a ‘plug and play’ operation and more a careful consideration of the ramifications.
 
 Fundamentally, concatenation in neural networks involves combining the output tensors from two or more layers along a specific axis, typically the feature dimension or channel axis. This allows the network to integrate diverse information streams, which can significantly enhance performance. However, this seemingly innocuous process introduces a set of challenges, primarily centering around dimensionality mismatches, vanishing gradients, and semantic incoherence.
 

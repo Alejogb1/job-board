@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-do-i-log-logicaldate-or-ds-in-airflow-tasks"
 ---
 
-Alright, let's tackle this common question regarding logging the `logical_date` (or `ds`) within Airflow tasks. I’ve certainly tripped over this myself back in the day, trying to debug complex pipelines where the operational context was paramount. You see, the `logical_date`, or `ds`, as it's often represented in templated fields, isn't always immediately obvious when a task actually executes, especially if you’re dealing with backfills or complex DAG scheduling. It's essential for accurate data processing and debugging, and getting it right can save a lot of headaches. The challenge typically lies in ensuring that you capture the *specific* logical date a given task instance is associated with, not just the current system time.
+, let's tackle this common question regarding logging the `logical_date` (or `ds`) within Airflow tasks. I’ve certainly tripped over this myself back in the day, trying to debug complex pipelines where the operational context was paramount. You see, the `logical_date`, or `ds`, as it's often represented in templated fields, isn't always immediately obvious when a task actually executes, especially if you’re dealing with backfills or complex DAG scheduling. It's essential for accurate data processing and debugging, and getting it right can save a lot of headaches. The challenge typically lies in ensuring that you capture the _specific_ logical date a given task instance is associated with, not just the current system time.
 
-The crux of the matter is understanding that Airflow tasks are executed within a specific context, and the `logical_date` is one element of that context. It's the date/time the DAG run *should* have run based on the schedule, not necessarily when it *actually* runs. This subtle distinction is crucial.
+The crux of the matter is understanding that Airflow tasks are executed within a specific context, and the `logical_date` is one element of that context. It's the date/time the DAG run _should_ have run based on the schedule, not necessarily when it _actually_ runs. This subtle distinction is crucial.
 
 Let’s break down a few practical methods I've used to capture this information effectively.
 

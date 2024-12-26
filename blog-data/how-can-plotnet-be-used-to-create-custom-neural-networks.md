@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-plotnet-be-used-to-create-custom-neural-networks"
 ---
 
-Okay, let's talk PlotNet. I remember back in '18, working on a particularly challenging time series forecasting project, I stumbled upon the limitations of off-the-shelf neural network architectures. That's when I started experimenting more deeply with tools that allowed for greater flexibility in network design, and PlotNet was one of the more interesting ones. It's not your run-of-the-mill framework, and while it can be a bit more involved initially, the control it gives you over your network's structure is powerful.
+, let's talk PlotNet. I remember back in '18, working on a particularly challenging time series forecasting project, I stumbled upon the limitations of off-the-shelf neural network architectures. That's when I started experimenting more deeply with tools that allowed for greater flexibility in network design, and PlotNet was one of the more interesting ones. It's not your run-of-the-mill framework, and while it can be a bit more involved initially, the control it gives you over your network's structure is powerful.
 
 PlotNet, at its core, isn't a single library but a methodology, a way of conceptualizing and implementing neural networks using computational graphs. It treats the network as a flow of operations, where each node represents a specific mathematical function, and edges define the dependencies and data flow. This approach allows you to visually map out your neural network and then execute it as a computational graph. The most notable advantage here is the ability to define custom operations and network architectures that aren't readily available in high-level libraries like TensorFlow or PyTorch. This is particularly handy when your problem domain pushes the boundaries of standard architectures. Think beyond convolutional and recurrent layers - we’re venturing into custom activation functions, unusual layer interconnections, or specialized normalization techniques, all easily integrated within PlotNet's graph-based framework.
 
@@ -43,9 +43,9 @@ def execute_graph(graph):
 
     if not incoming_edges:  # Skip nodes without incoming edges, typically input nodes
       continue
-    
+
     input_data = graph.nodes[list(incoming_edges)[0][0]]["data"]
-    
+
     if "alpha" in graph.nodes[node]:
         graph.nodes[node]["data"] = graph.nodes[node]["operation"](input_data, graph.nodes[node]["alpha"])
     else:
@@ -89,10 +89,10 @@ def execute_graph_v2(graph):
             continue
 
         incoming_edges = list(graph.in_edges(node, data=True))
-    
+
         if not incoming_edges:  # Skip nodes without incoming edges, typically input nodes
             continue
-        
+
         input_data = [graph.nodes[prev_node]["data"] for prev_node, _, _ in incoming_edges ]
 
         if "scale" in graph.nodes[node]:

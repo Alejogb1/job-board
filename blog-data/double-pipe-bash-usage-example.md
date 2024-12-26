@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "double-pipe-bash-usage-example"
 ---
 
-Okay so you wanna know about double pipe `||` in bash right Yeah I've been there done that messed it up a few times too Trust me you are not alone lets dive into the nitty gritty of this thing
+you wanna know about double pipe `||` in bash right Yeah I've been there done that messed it up a few times too Trust me you are not alone lets dive into the nitty gritty of this thing
 
 So `||` in bash it's like the "or" operator but for commands not variables it's all about exit codes basically A command when it runs spits out an exit code zero if it's successful something not zero if it went kaput
 
@@ -37,6 +37,7 @@ Let's show you another more useful example Say you're trying to create a directo
 ```bash
 mkdir my-directory
 ```
+
 but what happens if it exists You'd get an error right Not ideal
 
 Now lets see the beauty of `||`:

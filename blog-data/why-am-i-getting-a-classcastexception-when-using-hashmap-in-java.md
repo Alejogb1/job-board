@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "why-am-i-getting-a-classcastexception-when-using-hashmap-in-java"
 ---
 
-Alright, let's tackle this. ClassCastException with a HashMap in Java – it's a fairly common stumbling block, and I've personally chased down a few of these over the years, usually in the wee hours after deploying some seemingly innocuous change. The core issue, generally speaking, isn't with HashMap itself being inherently faulty, but rather with a mismatch in the types you're attempting to use or extract from it, particularly in scenarios where generics aren't handled rigorously. Let's unpack that.
+, let's tackle this. ClassCastException with a HashMap in Java – it's a fairly common stumbling block, and I've personally chased down a few of these over the years, usually in the wee hours after deploying some seemingly innocuous change. The core issue, generally speaking, isn't with HashMap itself being inherently faulty, but rather with a mismatch in the types you're attempting to use or extract from it, particularly in scenarios where generics aren't handled rigorously. Let's unpack that.
 
-The `HashMap` in Java is a versatile data structure, but it fundamentally stores key-value pairs as *Objects*. This means that at runtime, Java doesn't inherently remember the specific types you intended to store if those types haven't been properly defined, or if you're circumventing type safety somehow. The beauty of generics is that they provide compile-time type checks, avoiding potential `ClassCastException` issues before your code even runs. However, if you are working with raw types or performing casting operations that are incompatible with the actual object type within the `HashMap`, that's where the trouble starts.
+The `HashMap` in Java is a versatile data structure, but it fundamentally stores key-value pairs as _Objects_. This means that at runtime, Java doesn't inherently remember the specific types you intended to store if those types haven't been properly defined, or if you're circumventing type safety somehow. The beauty of generics is that they provide compile-time type checks, avoiding potential `ClassCastException` issues before your code even runs. However, if you are working with raw types or performing casting operations that are incompatible with the actual object type within the `HashMap`, that's where the trouble starts.
 
 Consider a classic scenario. Imagine I was working on a data processing application a few years back, and for reasons (mostly legacy code we inherited), I encountered a portion that loaded data from a file, placing it into a HashMap without specifying generic types. I recall the structure ended up looking something like this:
 
@@ -19,7 +19,7 @@ public class LegacyDataProcessor {
         HashMap dataMap = new HashMap();  // Raw type, no generic info
         dataMap.put("count", 100);      // Integer value added
         dataMap.put("name", "System A"); // String value added
-        
+
         // Later on, attempted to retrieve an entry thinking they were all strings
         String countStr = (String) dataMap.get("count"); // Boom, ClassCastException!
         System.out.println(countStr);
@@ -83,7 +83,7 @@ public class InheritanceIssue {
     public static void main(String[] args) {
         ArrayList<Printer> printers = new ArrayList<>();
         printers.add(new Printer());
-        
+
         HashMap<String, Object> deviceMap = new HashMap<>();
         deviceMap.put("printers", printers);
 
@@ -94,7 +94,8 @@ public class InheritanceIssue {
 }
 
 ```
-Here, the problem is that even though `Printer` implements `Device`, an `ArrayList<Printer>` is *not* a subtype of `ArrayList<Device>`. Java's generics are not covariant, meaning `ArrayList<Printer>` cannot be used where `ArrayList<Device>` is expected. Attempting a direct cast results in a `ClassCastException`. This type of error is particularly difficult to detect if you are not careful with your inheritance hierarchies and the use of collections.
+
+Here, the problem is that even though `Printer` implements `Device`, an `ArrayList<Printer>` is _not_ a subtype of `ArrayList<Device>`. Java's generics are not covariant, meaning `ArrayList<Printer>` cannot be used where `ArrayList<Device>` is expected. Attempting a direct cast results in a `ClassCastException`. This type of error is particularly difficult to detect if you are not careful with your inheritance hierarchies and the use of collections.
 
 To rectify this we'd need a more explicit approach, like creating an `ArrayList<Device>` and adding all the `Printer` instances to it, which would look like this:
 
@@ -125,7 +126,7 @@ public class InheritanceFixed {
     public static void main(String[] args) {
          ArrayList<Printer> printers = new ArrayList<>();
         printers.add(new Printer());
-        
+
         HashMap<String, Object> deviceMap = new HashMap<>();
         deviceMap.put("printers", printers);
 
@@ -146,6 +147,7 @@ public class InheritanceFixed {
 }
 
 ```
+
 In this corrected version, we retrieve the object and check if it is an ArrayList, then we iterate through that list, ensure that each item is indeed a device, and then add that device to `retrievedDevices` list. This ensures the types are correct, avoiding a `ClassCastException`. This approach adds additional complexity but is necessary in mixed type situations.
 
 In summary, while `HashMap` itself isn't the root of the issue, the way you utilize it without proper type handling is the real challenge. To deepen your understanding, I highly recommend reviewing "Effective Java" by Joshua Bloch, specifically the chapters related to generics, type safety and object casting. Also, the Java Language Specification provides a detailed breakdown of how generics work at the bytecode level which provides additional depth of insight if needed. Always remember, compile-time safety is your friend. Explicitly defining your types, using generics whenever feasible, and careful use of inheritance hierarchies will substantially reduce the number of `ClassCastExceptions` and help in building more robust and maintainable software systems. I hope that clarifies the issue; these experiences have been pretty useful in helping me understand this problem thoroughly.

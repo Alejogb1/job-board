@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-create-a-custom-weight-regularization-in-keras"
 ---
 
-Alright, let's tackle custom weight regularization in Keras. I've spent considerable time in the trenches with this, particularly back in my neural style transfer days where over-fitting was the bane of my existence. It's not just about slapping on a standard l1 or l2 penalty; sometimes, your network needs a more nuanced approach. So, let’s unpack how to do this, and I’ll throw in some code to make it concrete.
+, let's tackle custom weight regularization in Keras. I've spent considerable time in the trenches with this, particularly back in my neural style transfer days where over-fitting was the bane of my existence. It's not just about slapping on a standard l1 or l2 penalty; sometimes, your network needs a more nuanced approach. So, let’s unpack how to do this, and I’ll throw in some code to make it concrete.
 
 The core idea behind regularization is to add a penalty term to the loss function that discourages overly complex or specific solutions. Standard regularizers, like l1 or l2, act uniformly on all weights. Custom regularizations allow you to exert finer control, focusing on particular patterns or areas within your weight matrices. This is invaluable when you have prior knowledge of what weights are more prone to causing instability or simply need to encourage certain kinds of solutions. In Keras, you achieve this by creating your own custom regularizer class, which gets incorporated during the training process.
 
@@ -38,7 +38,7 @@ class SelectiveL1Regularizer(regularizers.Regularizer):
         return {"indices": self.indices, "l1": self.l1}
 ```
 
-In this code, `SelectiveL1Regularizer` selectively applies an l1 penalty based on `indices`.  The `__call__` method flattens the input weight matrix, uses `tf.gather` to select the weights at our specified `indices`, and then applies the l1 norm. The `get_config` method helps the serialization, and it’s important not to forget it. To use this, you would need to determine, through a preliminary analysis (or prior knowledge), which weight indices are causing problems in your specific application. You could compute gradient norms of individual weights on specific examples or use an algorithm to identify the critical indices for a certain pattern.
+In this code, `SelectiveL1Regularizer` selectively applies an l1 penalty based on `indices`. The `__call__` method flattens the input weight matrix, uses `tf.gather` to select the weights at our specified `indices`, and then applies the l1 norm. The `get_config` method helps the serialization, and it’s important not to forget it. To use this, you would need to determine, through a preliminary analysis (or prior knowledge), which weight indices are causing problems in your specific application. You could compute gradient norms of individual weights on specific examples or use an algorithm to identify the critical indices for a certain pattern.
 
 Moving on, let's say you want a regularizer that discourages differences between weights at neighboring indices. This kind of regularizer is particularly useful for scenarios where you expect some smoothness or gradual change across the network weights. For example, I once used a variation of this to create more coherent features maps in a convolutional layer. Here's how we would construct that:
 
@@ -86,7 +86,7 @@ class LaplacianWeightRegularizer(regularizers.Regularizer):
       return {"loc": self.loc, "scale": self.scale, "penalty_factor": self.penalty_factor}
 ```
 
-In this example, I’ve leveraged `tensorflow_probability` to utilize the laplacian distribution. In the `__call__` method, we are calculating the negative log-likelihood of the weight matrix `x` under the defined laplacian distribution.  This encourages weights that are more aligned with that particular distribution.
+In this example, I’ve leveraged `tensorflow_probability` to utilize the laplacian distribution. In the `__call__` method, we are calculating the negative log-likelihood of the weight matrix `x` under the defined laplacian distribution. This encourages weights that are more aligned with that particular distribution.
 
 Now, let's talk about integrating these regularizers into your Keras model. You'll pass them to the relevant layer as a part of the `kernel_regularizer` argument during the layer instantiation. Here's a simplified way to show this in action:
 
@@ -98,7 +98,7 @@ model = keras.Sequential([
 # Later you'd compile and fit your model...
 ```
 
-In the example above, we used `SelectiveL1Regularizer` on the first dense layer with some selected indices (10 to 20) and `SmoothnessRegularizer` for the second dense layer, both with relatively small regularization factors.  The critical part is that `kernel_regularizer` can take *any* instance of your `keras.regularizers.Regularizer` custom class, which we just created.
+In the example above, we used `SelectiveL1Regularizer` on the first dense layer with some selected indices (10 to 20) and `SmoothnessRegularizer` for the second dense layer, both with relatively small regularization factors. The critical part is that `kernel_regularizer` can take _any_ instance of your `keras.regularizers.Regularizer` custom class, which we just created.
 
 One thing to note is that for convolutional layers you can also regularize the bias terms using `bias_regularizer`. In some cases, this can improve performance, depending on the task. While you cannot regularize input or output, other types of constraints could be defined in custom layers, if necessary.
 

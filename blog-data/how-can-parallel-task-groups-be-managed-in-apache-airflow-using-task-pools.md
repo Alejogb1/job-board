@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-parallel-task-groups-be-managed-in-apache-airflow-using-task-pools"
 ---
 
-Okay, let's get into this. It's interesting how often the seemingly straightforward concept of parallel execution in workflow orchestration quickly devolves into a tangled mess if not managed properly. I remember back at my previous gig, we had a data ingestion pipeline that would occasionally choke, not due to sheer volume, but because certain resource-intensive tasks were bottlenecking everything else. That's when I really started diving deep into task pools in Airflow, and trust me, they’re a lifesaver when used correctly.
+, let's get into this. It's interesting how often the seemingly straightforward concept of parallel execution in workflow orchestration quickly devolves into a tangled mess if not managed properly. I remember back at my previous gig, we had a data ingestion pipeline that would occasionally choke, not due to sheer volume, but because certain resource-intensive tasks were bottlenecking everything else. That's when I really started diving deep into task pools in Airflow, and trust me, they’re a lifesaver when used correctly.
 
 At its core, Apache Airflow allows you to define dependencies between tasks, but simply specifying that task ‘b’ should follow task ‘a’ doesn't always guarantee smooth execution, especially when multiple tasks can run concurrently. This is where task pools become essential. Pools essentially act as a resource management mechanism, letting you limit the number of concurrent executions for tasks that share a pool, thereby preventing resource exhaustion and ensuring fairer distribution of processing power. It’s a control mechanism, pure and simple, and you definitely need to master it if you’re handling anything beyond basic pipelines.
 
@@ -70,6 +70,7 @@ with DAG(
         )
 
 ```
+
 In this second example, the tasks sharing the `api_limit_pool` are now making API calls to different endpoints. We’re still managing concurrency, this time to adhere to API rate limits rather than our own internal resource constraints. If, for instance, your API documentation states you can make a maximum of three requests concurrently, you would set the pool size to ‘3’. It's critical to review API limitations carefully.
 
 And finally, let’s consider a scenario where you might want to prioritize certain tasks. Imagine that you have regular data updates alongside some less frequent, but potentially more important, reporting tasks. You could leverage different pools for these task types to control their overall execution.

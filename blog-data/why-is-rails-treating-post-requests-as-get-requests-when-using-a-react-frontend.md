@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-rails-treating-post-requests-as-get-requests-when-using-a-react-frontend"
 ---
 
-Okay, let's tackle this. I've seen this particular head-scratcher surface quite a few times, usually with a developer new to integrating a React frontend with a Rails backend. The scenario you’ve described – Rails interpreting POST requests from a React application as GET requests – is almost always indicative of a problem with how the data is being submitted, particularly concerning the content-type header. Let me walk you through what’s likely happening, based on my experience fixing this exact issue on a previous project where we were migrating a legacy system to a more modern stack.
+, let's tackle this. I've seen this particular head-scratcher surface quite a few times, usually with a developer new to integrating a React frontend with a Rails backend. The scenario you’ve described – Rails interpreting POST requests from a React application as GET requests – is almost always indicative of a problem with how the data is being submitted, particularly concerning the content-type header. Let me walk you through what’s likely happening, based on my experience fixing this exact issue on a previous project where we were migrating a legacy system to a more modern stack.
 
 It boils down to this: Rails, by default, expects POST data to be submitted with a specific encoding— typically `application/x-www-form-urlencoded`. If React (or more accurately, the browser, instructed by your React code) is sending data with a different content type, such as `application/json`, and without the correct Rails CSRF token, Rails might, and often does, treat it as a GET request because it doesn't recognize the incoming request format properly and fails CSRF checks. This happens behind the scenes due to Rails not being able to parse the POST data using its usual methods for url-encoded data, causing it to default to GET.
 
@@ -15,33 +15,43 @@ The crucial aspect here is the content-type header in your HTTP request. When yo
 Suppose you have the following React component intending to create a user:
 
 ```jsx
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 function CreateUserForm() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('/users', {
-        method: 'POST',
+      const response = await fetch("/users", {
+        method: "POST",
         body: JSON.stringify({ name, email }),
       });
       if (response.ok) {
-        console.log('User created successfully');
+        console.log("User created successfully");
       } else {
-        console.error('Error creating user');
+        console.error("Error creating user");
       }
     } catch (error) {
-      console.error('Network error', error);
+      console.error("Network error", error);
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-      <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+      <input
+        type="text"
+        placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
       <button type="submit">Create User</button>
     </form>
   );
@@ -56,39 +66,49 @@ In this example, there's no content-type header explicitly set, so the browser m
 Here's how you'd fix the previous example to ensure Rails handles the POST request correctly:
 
 ```jsx
-import React, { useState } from 'react';
-import { getCSRFToken } from '../utils/csrf'; // assuming csrf token extraction utility.
+import React, { useState } from "react";
+import { getCSRFToken } from "../utils/csrf"; // assuming csrf token extraction utility.
 
 function CreateUserForm() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const csrfToken = getCSRFToken();
-      const response = await fetch('/users', {
-        method: 'POST',
+      const response = await fetch("/users", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-Token': csrfToken,
+          "Content-Type": "application/json",
+          "X-CSRF-Token": csrfToken,
         },
         body: JSON.stringify({ name, email }),
       });
-       if (response.ok) {
-        console.log('User created successfully');
+      if (response.ok) {
+        console.log("User created successfully");
       } else {
-        console.error('Error creating user');
+        console.error("Error creating user");
       }
     } catch (error) {
-      console.error('Network error', error);
+      console.error("Network error", error);
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-      <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+      <input
+        type="text"
+        placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
       <button type="submit">Create User</button>
     </form>
   );
@@ -99,9 +119,9 @@ export default CreateUserForm;
 
 ```javascript
 // example of a utils/csrf.js
-export function getCSRFToken(){
+export function getCSRFToken() {
   const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
-  return csrfToken || '';
+  return csrfToken || "";
 }
 ```
 
@@ -112,44 +132,54 @@ Here, we explicitly set the `Content-Type` to `application/json`, matching the f
 If for some reason you need to submit form data encoded as url parameters rather than json, you can do that as follows:
 
 ```jsx
-import React, { useState } from 'react';
-import { getCSRFToken } from '../utils/csrf'; // assuming csrf token extraction utility.
-import { URLSearchParams } from 'url';
+import React, { useState } from "react";
+import { getCSRFToken } from "../utils/csrf"; // assuming csrf token extraction utility.
+import { URLSearchParams } from "url";
 
 function CreateUserForm() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const csrfToken = getCSRFToken();
       const params = new URLSearchParams();
-      params.append('name', name);
-      params.append('email', email);
+      params.append("name", name);
+      params.append("email", email);
 
-      const response = await fetch('/users', {
-        method: 'POST',
+      const response = await fetch("/users", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'X-CSRF-Token': csrfToken,
+          "Content-Type": "application/x-www-form-urlencoded",
+          "X-CSRF-Token": csrfToken,
         },
         body: params.toString(),
       });
-       if (response.ok) {
-        console.log('User created successfully');
+      if (response.ok) {
+        console.log("User created successfully");
       } else {
-        console.error('Error creating user');
+        console.error("Error creating user");
       }
     } catch (error) {
-      console.error('Network error', error);
+      console.error("Network error", error);
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-      <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+      <input
+        type="text"
+        placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
       <button type="submit">Create User</button>
     </form>
   );

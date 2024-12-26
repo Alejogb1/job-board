@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-do-i-resolve-a-tensor-size-mismatch-error-when-dimensions-dont-align"
 ---
 
-Okay, let's tackle this. I've encountered tensor size mismatches more times than I care to remember, particularly when working on complex neural network architectures involving variable-length sequences. The frustration is real, but it’s usually a sign of a problem with your data pre-processing or how you’re structuring your operations. It’s rarely a problem with the library itself. We need to get specific on how dimensions misalign, and then, how to address it.
+, let's tackle this. I've encountered tensor size mismatches more times than I care to remember, particularly when working on complex neural network architectures involving variable-length sequences. The frustration is real, but it’s usually a sign of a problem with your data pre-processing or how you’re structuring your operations. It’s rarely a problem with the library itself. We need to get specific on how dimensions misalign, and then, how to address it.
 
-Essentially, a tensor size mismatch arises when you attempt an operation, be it addition, multiplication, concatenation, or something more complex, between two or more tensors that have incompatible shapes. These operations often have strict rules regarding the dimensional alignment. For example, you can’t element-wise multiply a 3x4 matrix with a 4x3 matrix, but you *can* matrix-multiply them (assuming the other rules of matrix multiplication are met). The errors often manifest in your preferred deep learning framework, such as TensorFlow or PyTorch, with cryptic, yet informative, error messages indicating the expected and received shapes. The key is understanding *why* the dimensions are misaligned and then using appropriate tools or operations to reconcile them.
+Essentially, a tensor size mismatch arises when you attempt an operation, be it addition, multiplication, concatenation, or something more complex, between two or more tensors that have incompatible shapes. These operations often have strict rules regarding the dimensional alignment. For example, you can’t element-wise multiply a 3x4 matrix with a 4x3 matrix, but you _can_ matrix-multiply them (assuming the other rules of matrix multiplication are met). The errors often manifest in your preferred deep learning framework, such as TensorFlow or PyTorch, with cryptic, yet informative, error messages indicating the expected and received shapes. The key is understanding _why_ the dimensions are misaligned and then using appropriate tools or operations to reconcile them.
 
 Now, let's break down some typical scenarios and how to address them, coupled with working code examples.
 
@@ -86,7 +86,7 @@ print(f"Shape of the batched padded sequences: {padded_batched_sequences.shape}"
 
 ```
 
-Here, the code demonstrates the correct way to pad sequences using `tf.keras.preprocessing.sequence.pad_sequences`. The crucial point is ensuring that the sequences are padded *before* attempting to batch them. This guarantees all sequences within a batch have identical length and avoids subsequent size mismatch issues within the RNN. If the error happens after padding, check that batch dimensions are consistent, as `pad_sequences` adds a new dimension, and this has to be accounted for. I often find that it is beneficial to double-check my batch dimensions against the expected output size of every operation.
+Here, the code demonstrates the correct way to pad sequences using `tf.keras.preprocessing.sequence.pad_sequences`. The crucial point is ensuring that the sequences are padded _before_ attempting to batch them. This guarantees all sequences within a batch have identical length and avoids subsequent size mismatch issues within the RNN. If the error happens after padding, check that batch dimensions are consistent, as `pad_sequences` adds a new dimension, and this has to be accounted for. I often find that it is beneficial to double-check my batch dimensions against the expected output size of every operation.
 
 **Scenario 3: Issues with Custom Layers or Operations**
 

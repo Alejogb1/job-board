@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-are-sequences-indexed-without-a-colon-operator-if-only-positive-single-step-sequences-are-allowed"
 ---
 
-Alright, let’s tackle this. Indexing sequences without a colon operator, limiting ourselves to positive, single-step progressions, it's a scenario that might initially feel a bit restrictive, but it forces a deeper understanding of the underlying mechanics at play. I've actually encountered this in a past project involving custom data processing pipelines where memory was extremely constrained, and using the conventional colon operator with its implied dynamic allocation was simply not viable. Instead of directly slicing using `a[start:end:step]`, we have to think about it as a combination of individual positional lookups.
+, let’s tackle this. Indexing sequences without a colon operator, limiting ourselves to positive, single-step progressions, it's a scenario that might initially feel a bit restrictive, but it forces a deeper understanding of the underlying mechanics at play. I've actually encountered this in a past project involving custom data processing pipelines where memory was extremely constrained, and using the conventional colon operator with its implied dynamic allocation was simply not viable. Instead of directly slicing using `a[start:end:step]`, we have to think about it as a combination of individual positional lookups.
 
 The core idea is to emulate the behavior of a colon-based slice using only a single index lookup per element and, fundamentally, employing iteration to achieve the desired sequence. It all boils down to calculating indices manually, based on your desired starting point and single-step increments.
 
@@ -93,7 +93,7 @@ int main() {
 }
 ```
 
-The C++ example `singleStepSliceCpp` performs a similar operation to the Python `single_step_slice_1`.  It loops through the index range, from start to end, and adds the corresponding element from the input vector to a new vector, which is then returned. This C++ code explicitly uses indices in the loop to accomplish the indexing. The crucial point here is that in the absence of the direct `vector[start:end]` operation, the underlying index access becomes more evident.
+The C++ example `singleStepSliceCpp` performs a similar operation to the Python `single_step_slice_1`. It loops through the index range, from start to end, and adds the corresponding element from the input vector to a new vector, which is then returned. This C++ code explicitly uses indices in the loop to accomplish the indexing. The crucial point here is that in the absence of the direct `vector[start:end]` operation, the underlying index access becomes more evident.
 
 In short, while we're not using the colon, we are still adhering to positional access. This method involves explicit index calculations and leveraging iteration. If you’re curious to go deeper, consider exploring resources on efficient data structure implementations or compiler design which details how these low level operations are performed under the hood for higher level operators like the colon operator, these resources will cover the foundational concepts that this logic is built upon. For example, “Introduction to Algorithms” by Thomas H. Cormen et al. would give very good theoretical understanding and “Modern Compiler Implementation in C” by Andrew Appel for practical applications. “Effective Modern C++” by Scott Meyers is an excellent source for understanding the nuances of modern C++, which may be helpful if you choose to extend or adapt the C++ example given above.
 

@@ -4,17 +4,17 @@ date: "2024-12-23"
 id: "what-phrases-are-used-in-the-better-specs-example"
 ---
 
-Okay, let's tackle this. It's a valid query, and it highlights a critical aspect of writing effective software specifications: understanding the language we use and its implications. I’ve spent years working through complex systems, and the language we adopt in specs has always been a cornerstone of smooth collaboration and successful deployments.
+, let's tackle this. It's a valid query, and it highlights a critical aspect of writing effective software specifications: understanding the language we use and its implications. I’ve spent years working through complex systems, and the language we adopt in specs has always been a cornerstone of smooth collaboration and successful deployments.
 
 From what I've observed, the so-called "Better Specs" approach usually doesn't involve inventing entirely new language; rather, it refines how we use existing phrases and structures. It's about clarity, precision, and avoiding ambiguity. You won't find magic bullet phrases, but rather a collection of conventions, combined thoughtfully to create something much more useful. Let’s consider some of the common categories and then I'll dive into some examples.
 
-First, you will see an emphasis on *active* voice. Instead of “the data will be processed,” we often state, “the system shall process the data.” The active voice places the action more clearly, and it also makes it easier to assign the action to an explicit entity, removing a lot of guesswork down the line.
+First, you will see an emphasis on _active_ voice. Instead of “the data will be processed,” we often state, “the system shall process the data.” The active voice places the action more clearly, and it also makes it easier to assign the action to an explicit entity, removing a lot of guesswork down the line.
 
-Second, there’s the use of modal verbs. *Shall*, *should*, *may*, and *will* are incredibly important. Each signifies a different level of requirement:
-    *   **Shall:** Indicates a mandatory requirement. “The system *shall* authenticate the user.”
-    *   **Should:** Indicates a recommendation, a best practice. “The system *should* log all failed authentication attempts.”
-    *   **May:** Indicates optionality. “The system *may* provide a summary report.”
-    *   **Will:** Indicates a declaration or promise. "The system *will* be deployed to a staging environment.”
+Second, there’s the use of modal verbs. _Shall_, _should_, _may_, and _will_ are incredibly important. Each signifies a different level of requirement:
+* **Shall:** Indicates a mandatory requirement. “The system *shall* authenticate the user.”
+* **Should:** Indicates a recommendation, a best practice. “The system _should_ log all failed authentication attempts.”
+* **May:** Indicates optionality. “The system *may* provide a summary report.”
+* **Will:** Indicates a declaration or promise. "The system _will_ be deployed to a staging environment.”
 
 Third, we have conditional statements, which use “if,” “when,” “then,” or “where.” These delineate specific conditions or triggers that initiate specific actions or outcomes.
 
@@ -87,9 +87,9 @@ if auth_result:
 
 Here, an ideal specification might contain phrases like:
 
-*   "The system *shall* authenticate users with valid credentials." This is enforced in the `Authenticator.authenticate` method.
-*   "The system *should* log all failed authentication attempts." (This isn't implemented in the simplified example but would ideally be present.)
-*   "The system *shall* prevent unauthorized access to restricted endpoints based on user roles.” This is enforced by the `AuthorizationManager`.
+- "The system _shall_ authenticate users with valid credentials." This is enforced in the `Authenticator.authenticate` method.
+- "The system _should_ log all failed authentication attempts." (This isn't implemented in the simplified example but would ideally be present.)
+- "The system _shall_ prevent unauthorized access to restricted endpoints based on user roles.” This is enforced by the `AuthorizationManager`.
 
 **Example 2: Data Processing**
 
@@ -127,9 +127,10 @@ process_transaction(transaction_2, valid_currencies) # Triggers non-fatal case i
 ```
 
 An example specification might include:
-*   “The system *shall* process financial transactions."
-*   “*If* a transaction's currency is not in the list of valid currencies, *then* the transaction *shall* be marked as invalid and processing *shall* stop.”
-*   "The system *should* log all processed transactions, including success and failure cases."
+
+- “The system _shall_ process financial transactions."
+- “_If_ a transaction's currency is not in the list of valid currencies, _then_ the transaction _shall_ be marked as invalid and processing _shall_ stop.”
+- "The system _should_ log all processed transactions, including success and failure cases."
 
 **Example 3: Reporting Module**
 
@@ -162,13 +163,14 @@ except ValueError as e:
 ```
 
 Here, a corresponding specification may include phrases like:
-*   “The system *shall* generate reports based on the provided data."
-*   “*If* the report type is ‘summary,’ *then* the report *shall* display a count of the data items.”
-*   “*If* the report type is ‘detailed’, *then* the report *shall* list each data item individually.”
-*   "The system *may* support additional report types."
+
+- “The system _shall_ generate reports based on the provided data."
+- “_If_ the report type is ‘summary,’ _then_ the report _shall_ display a count of the data items.”
+- “_If_ the report type is ‘detailed’, _then_ the report _shall_ list each data item individually.”
+- "The system _may_ support additional report types."
 
 These snippets, of course, simplify the real-world challenges, but I think they do show how the phrasing in the specifications translates into code implementation. These examples highlight how “better specs” don't rely on magic words, but rather, on the consistent and precise application of structured language.
 
-For further reading, I highly recommend *Software Requirements* by Karl Wiegers and Joy Beatty; and *Writing Effective Use Cases* by Alistair Cockburn. These resources dive deep into the science and art of requirements elicitation and specification, and offer a great foundation for moving beyond simple sentences to well-crafted documentation. Also, ISO/IEC/IEEE 29148:2018, the standard for systems and software engineering, is an essential reference.
+For further reading, I highly recommend _Software Requirements_ by Karl Wiegers and Joy Beatty; and _Writing Effective Use Cases_ by Alistair Cockburn. These resources dive deep into the science and art of requirements elicitation and specification, and offer a great foundation for moving beyond simple sentences to well-crafted documentation. Also, ISO/IEC/IEEE 29148:2018, the standard for systems and software engineering, is an essential reference.
 
 The most effective specifications come from combining those elements in a way that is easy to follow, unambiguous, and allows for precise coding. In my experience, the result is always a more accurate and robust system built with less friction and fewer surprises along the way.

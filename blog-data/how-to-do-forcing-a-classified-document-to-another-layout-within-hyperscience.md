@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-forcing-a-classified-document-to-another-layout-within-hyperscience"
 ---
 
-alright, so forcing a classified document to another layout in hyperscience, yeah, i’ve been down that rabbit hole a few times. it’s not always as straightforward as we’d like, is it? especially when you've got hyperscience’s auto-classification doing its thing, which, let’s be real, sometimes has its own idea of what layout a document should be.
+, so forcing a classified document to another layout in hyperscience, yeah, i’ve been down that rabbit hole a few times. it’s not always as straightforward as we’d like, is it? especially when you've got hyperscience’s auto-classification doing its thing, which, let’s be real, sometimes has its own idea of what layout a document should be.
 
 first thing, understand that hyperscience’s document classification is designed to be robust. it learns from the data you feed it. this means it is constantly trying to find the best-matching layout based on what it already knows about your documents. forcing a different layout requires us to intervene, but with finesse. we don't want to break the system.
 
@@ -12,7 +12,7 @@ my early experiences with hyperscience involved a project with tons of invoices.
 
 so, how do we avoid that headache? we need to leverage the system's configuration tools to get the intended layout.
 
-one common approach is using the *layout id* parameter. during processing, you can specifically instruct hyperscience to use a certain layout if you know the desired one ahead of time. you can do that in the classification part of the workflow. here's how i've done that in the past:
+one common approach is using the _layout id_ parameter. during processing, you can specifically instruct hyperscience to use a certain layout if you know the desired one ahead of time. you can do that in the classification part of the workflow. here's how i've done that in the past:
 
 ```python
 from hyperscience_sdk import Document

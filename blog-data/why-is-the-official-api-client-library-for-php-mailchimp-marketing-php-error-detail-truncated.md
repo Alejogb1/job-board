@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-the-official-api-client-library-for-php-mailchimp-marketing-php-error-detail-truncated"
 ---
 
-alright, so you're hitting the classic mailchimp api truncation issue with their php client, right? been there, definitely done that. it's frustrating when you're expecting a full error message and you get back something that looks like it went through a shredder. believe me, i’ve spent hours staring at those abbreviated error responses, muttering to myself.
+, so you're hitting the classic mailchimp api truncation issue with their php client, right? been there, definitely done that. it's frustrating when you're expecting a full error message and you get back something that looks like it went through a shredder. believe me, i’ve spent hours staring at those abbreviated error responses, muttering to myself.
 
 let's unpack this. the root cause isn’t actually a bug in the mailchimp-marketing-php client itself, but rather how the underlying mailchimp api structures its error responses and how the client is programmed to deal with it, particularly with the json parsing and output. i’ve debugged this problem several times in different projects, i'm going to tell you about a particular one and the journey we went through to solve it, and that helped me in many situations after that as well.
 
@@ -14,17 +14,17 @@ we dove deep. we started by turning on full logging of the api requests and resp
 
 ```json
 {
-    "type": "https://mailchimp.com/developer/marketing/docs/errors/#member-exists",
-    "title": "Member Exists",
-    "status": 400,
-    "detail": "someone is already subscribed with the email address: test@example.com",
-    "instance": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-    "errors": [
-        {
-            "field": "email_address",
-            "message": "member exists"
-        }
-    ]
+  "type": "https://mailchimp.com/developer/marketing/docs/errors/#member-exists",
+  "title": "Member Exists",
+  "status": 400,
+  "detail": "someone is already subscribed with the email address: test@example.com",
+  "instance": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+  "errors": [
+    {
+      "field": "email_address",
+      "message": "member exists"
+    }
+  ]
 }
 ```
 

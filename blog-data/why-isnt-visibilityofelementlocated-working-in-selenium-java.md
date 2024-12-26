@@ -4,17 +4,17 @@ date: "2024-12-23"
 id: "why-isnt-visibilityofelementlocated-working-in-selenium-java"
 ---
 
-Okay, let's tackle this. The scenario of `visibilityOfElementLocated()` not behaving as expected in Selenium Java is something I've certainly encountered a few times during my work on web automation projects. It often stems from a confluence of factors, rather than a single, easily identifiable issue. It's rarely a case of the method being fundamentally broken. Instead, it usually boils down to a misunderstanding of its mechanics and the often nuanced ways in which web applications render content.
+, let's tackle this. The scenario of `visibilityOfElementLocated()` not behaving as expected in Selenium Java is something I've certainly encountered a few times during my work on web automation projects. It often stems from a confluence of factors, rather than a single, easily identifiable issue. It's rarely a case of the method being fundamentally broken. Instead, it usually boils down to a misunderstanding of its mechanics and the often nuanced ways in which web applications render content.
 
 I’ve seen this specific situation crop up on multiple occasions. Once, while automating a particularly intricate financial application, the login form wouldn’t quite present itself correctly for `visibilityOfElementLocated()`, even though it appeared visually on screen. We spent a good portion of that sprint troubleshooting. That experience, and others like it, have provided some solid insights into why this method sometimes misbehaves.
 
-Fundamentally, `visibilityOfElementLocated()` is an explicit wait condition within Selenium that checks for both the presence *and* visibility of an element. The 'located' aspect ensures the element is present in the dom, and 'visibility' adds the constraint that its css property 'display' is not 'none', it has a non-zero height and width, and has non-zero opacity. It's designed to prevent you from trying to interact with an element that is either not yet loaded or is obscured. However, several common pitfalls can lead to it failing to achieve its goal.
+Fundamentally, `visibilityOfElementLocated()` is an explicit wait condition within Selenium that checks for both the presence _and_ visibility of an element. The 'located' aspect ensures the element is present in the dom, and 'visibility' adds the constraint that its css property 'display' is not 'none', it has a non-zero height and width, and has non-zero opacity. It's designed to prevent you from trying to interact with an element that is either not yet loaded or is obscured. However, several common pitfalls can lead to it failing to achieve its goal.
 
-One major issue is the timing with respect to dynamic page loads. Many web applications use asynchronous JavaScript to update the page content, leading to a situation where the dom structure, or element styling may change *after* the initial page load. The element might be present in the dom initially, but its visibility might be dynamically set later. If your `visibilityOfElementLocated()` call is initiated too early, the element might be technically found but not yet visible, causing the wait to time out.
+One major issue is the timing with respect to dynamic page loads. Many web applications use asynchronous JavaScript to update the page content, leading to a situation where the dom structure, or element styling may change _after_ the initial page load. The element might be present in the dom initially, but its visibility might be dynamically set later. If your `visibilityOfElementLocated()` call is initiated too early, the element might be technically found but not yet visible, causing the wait to time out.
 
 Another common culprit is incorrect locator selection. While it may seem straightforward, selecting a locator that isn't specific enough can cause Selenium to pick up a different element than intended, or, worse, find an element in the dom before another element is rendered, resulting in a race condition. The element might technically match the locator, be present and 'visible' in the dom, but it may not be the interactive element you are expecting. For example, finding a container div that becomes visible might prevent you from finding the child element you really want to interact with.
 
-Third, the application may use transitions or animations. Elements can transition from an initial state to a visible state with delays or fade in/out animations. The `visibilityOfElementLocated()` checks only for a 'visible' element *at that point in time*. It doesn't wait for transitions to finish, and will return if it does not find an element in the correct state.
+Third, the application may use transitions or animations. Elements can transition from an initial state to a visible state with delays or fade in/out animations. The `visibilityOfElementLocated()` checks only for a 'visible' element _at that point in time_. It doesn't wait for transitions to finish, and will return if it does not find an element in the correct state.
 
 Let's break this down with some code examples.
 
@@ -79,7 +79,8 @@ public class VisibilityExample2 {
     }
 }
 ```
-In this example, by using an overly generic xpath, the wait condition may find *a* list element that is present, but not the one we want, or, it might find an element in the dom before the correct list is rendered. By specifying a more detailed locator, we can specify the container then a child element.
+
+In this example, by using an overly generic xpath, the wait condition may find _a_ list element that is present, but not the one we want, or, it might find an element in the dom before the correct list is rendered. By specifying a more detailed locator, we can specify the container then a child element.
 
 **Example 3: Element Transitions:**
 
@@ -119,14 +120,14 @@ To mitigate these problems, consider the following:
 1.  **Increase Wait Times:** Experiment with increasing the wait duration, but use this as a last resort. A better solution is to use more explicit waits.
 2.  **Use More Precise Locators:** Ensure you are targeting the correct element with the most specific locator possible. The ‘developer tools’ in your browser are very useful to check locators, or you can make use of relative xpaths that are more flexible.
 3.  **Wait for a precursor Element:** Instead of waiting directly for the target element, first, wait for a container or another element that is rendered before the desired target element. This can establish a good ‘anchor’ point.
-4. **Check for 'stale elements':** If an element appears to be visible on the page, but selenium cannot locate it using visibilityOfElementLocated() consider if the element has become 'stale' (the element reference has been invalidated). A try catch block that tries to re-locate the element might assist in this process.
+4.  **Check for 'stale elements':** If an element appears to be visible on the page, but selenium cannot locate it using visibilityOfElementLocated() consider if the element has become 'stale' (the element reference has been invalidated). A try catch block that tries to re-locate the element might assist in this process.
 5.  **Explore Alternative Conditions:** If `visibilityOfElementLocated()` still fails, you might use other explicit wait conditions, such as `elementToBeClickable()` or even a combination of `presenceOfElementLocated()` followed by a check for visibility. You may also choose to use 'fluent waits' where polling intervals, timeout times, and exceptions can be better managed.
 
 For those interested in further in-depth study, I strongly recommend delving into:
 
-*   **"Selenium WebDriver Practical Guide" by David Burns:** This book offers a thorough understanding of Selenium, its architecture, and the various wait strategies.
-*   **"Test Automation Patterns" by Dorothy Graham and Mark Fewster:** This book explores various design patterns for effective test automation that includes dealing with web application specific issues.
-*   **The official Selenium documentation:** The Selenium website's documentation is a treasure trove of information. Pay particular attention to the sections on explicit and implicit waits.
-*   **Google's ‘Testing on the Toilet’ blog**: Many entries in this blog discuss browser/web specific issues that you may encounter when using any type of automation tool.
+- **"Selenium WebDriver Practical Guide" by David Burns:** This book offers a thorough understanding of Selenium, its architecture, and the various wait strategies.
+- **"Test Automation Patterns" by Dorothy Graham and Mark Fewster:** This book explores various design patterns for effective test automation that includes dealing with web application specific issues.
+- **The official Selenium documentation:** The Selenium website's documentation is a treasure trove of information. Pay particular attention to the sections on explicit and implicit waits.
+- **Google's ‘Testing on the Toilet’ blog**: Many entries in this blog discuss browser/web specific issues that you may encounter when using any type of automation tool.
 
 In conclusion, `visibilityOfElementLocated()` is a powerful tool, but it's also nuanced. Understanding the dynamics of web applications, the correct ways to select locators, and the behavior of your tests will improve the reliability and maintainability of your test suites. It's rarely an issue with the method, and usually an issue with how the method is used. Keep these points in mind, and you will be well on your way to resolving this common, but often confusing issue.

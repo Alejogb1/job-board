@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-pango-does-not-give-the-location-for-certain-graphemes"
 ---
 
-alright, so you're hitting a pretty classic pango issue, and i've definitely been there. it's frustrating when you expect a location for a glyph and pango just shrugs. let's unpack this.
+, so you're hitting a pretty classic pango issue, and i've definitely been there. it's frustrating when you expect a location for a glyph and pango just shrugs. let's unpack this.
 
 the core problem is that pango's glyph positioning isn't always a one-to-one mapping from input characters to rendered glyphs, especially when you're dealing with complex text layouts. think about it: pango has to handle all sorts of unicode weirdness, including combining characters, ligatures, bidirectional text, and shaping. when these come into play, the internal logic gets a bit less straightforward. pango doesn't necessarily represent all graphemes with explicitly bounded rectangles.
 
@@ -28,7 +28,7 @@ int main() {
   PangoFontDescription *font_desc;
   PangoRectangle logical_rect, visual_rect;
   const char *text = "café";
-  
+
   pango_init();
 
   context = pango_context_new();
@@ -39,16 +39,16 @@ int main() {
 
   layout = pango_layout_new(context);
   pango_layout_set_text(layout, text, -1);
-  
+
   // Get logical extents for the entire layout
   pango_layout_get_extents(layout, NULL, &logical_rect);
-  printf("Logical Rect: x=%d, y=%d, width=%d, height=%d\n", 
+  printf("Logical Rect: x=%d, y=%d, width=%d, height=%d\n",
          logical_rect.x / PANGO_SCALE, logical_rect.y / PANGO_SCALE,
          logical_rect.width / PANGO_SCALE, logical_rect.height / PANGO_SCALE);
 
   //get the visual area of the text
   pango_layout_get_pixel_extents(layout,NULL, &visual_rect);
-  printf("Visual Rect: x=%d, y=%d, width=%d, height=%d\n", 
+  printf("Visual Rect: x=%d, y=%d, width=%d, height=%d\n",
          visual_rect.x, visual_rect.y,
          visual_rect.width, visual_rect.height);
 
@@ -97,10 +97,10 @@ void print_glyph_info(PangoLayout *layout) {
                 PangoRectangle glyph_rect;
                 pango_layout_line_index_to_x(line, glyph_index, TRUE, &glyph_rect.x);
                 glyph_rect.y = 0; // the baseline is always at y=0
-                
+
                 printf("Glyph %d: Index=%u, X=%d, Y=%d, Width=%d, Height=%d\n",
-                       i, 
-                       glyph_info.index, 
+                       i,
+                       glyph_info.index,
                        glyph_rect.x / PANGO_SCALE,
                        glyph_rect.y,
                        glyph_info.geometry.width / PANGO_SCALE,
@@ -109,7 +109,7 @@ void print_glyph_info(PangoLayout *layout) {
               }
               pango_glyph_string_free(glyphs);
           }
-      
+
     }
   } while (pango_layout_iter_next_line(iter));
   pango_layout_iter_free(iter);
@@ -161,7 +161,7 @@ one trick I used sometimes was to break up the string into smaller chunks and me
 if you are dealing with a lot of text that has complex text layout you could consider leveraging libraries such as harfbuzz, this library handles the shaping of text, or freetype which handles the low level drawing of text. pango delegates the shaping and drawing of text to other libraries under the hood.
 
 for good resources on this, i suggest "unicode explained" by markus kuhn and also "text rendering with harfbuzz" by behdad eslami. these go deep into the complexities of unicode and the challenges of text layout, a must read if you are going to implement text rendering.
- i think i remember seeing that there is also a very in depth section about pango in the gtk documentation, i recommend checking it out.
+i think i remember seeing that there is also a very in depth section about pango in the gtk documentation, i recommend checking it out.
 
 one thing i will always tell you, make sure you are handling text correctly when you render on screen, you don't want to be responsible for a "the text is in the wrong place" bug, they are the worst!
 

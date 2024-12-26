@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-spring-security-5-programmatically-validate-a-username-and-password"
 ---
 
-Alright, let's talk about programmatically validating usernames and passwords with Spring Security 5. It's something I’ve tackled quite a bit over the years, especially back when I was building a distributed authentication service for a microservices architecture. We needed fine-grained control, bypassing the more convention-based approaches, and it involved some interesting custom implementations.
+, let's talk about programmatically validating usernames and passwords with Spring Security 5. It's something I’ve tackled quite a bit over the years, especially back when I was building a distributed authentication service for a microservices architecture. We needed fine-grained control, bypassing the more convention-based approaches, and it involved some interesting custom implementations.
 
 Essentially, you're moving away from relying solely on Spring Security’s default mechanisms—like parsing properties files or using database-backed authentication—and taking direct control over the validation logic. This is incredibly useful when you need to integrate with bespoke authentication systems, apply unique validation rules beyond simple equality checks, or interact with external services before granting access.
 
@@ -229,10 +229,10 @@ Again, this would need to be registered in the security config.
 
 **Key takeaways:**
 
-*   **Customization:** The primary advantage is total control. You aren't bound by convention.
-*   **Integration:** Easily plug into legacy or external authentication systems.
-*   **Complex Validation:** Implement intricate logic (e.g., multi-factor, time-based checks).
-*   **Error Handling:** Tailor the specific authentication exception types you want to throw.
+- **Customization:** The primary advantage is total control. You aren't bound by convention.
+- **Integration:** Easily plug into legacy or external authentication systems.
+- **Complex Validation:** Implement intricate logic (e.g., multi-factor, time-based checks).
+- **Error Handling:** Tailor the specific authentication exception types you want to throw.
 
 **Further Reading:**
 

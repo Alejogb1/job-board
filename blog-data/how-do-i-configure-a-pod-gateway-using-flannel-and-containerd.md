@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-configure-a-pod-gateway-using-flannel-and-containerd"
 ---
 
-Alright, let's talk about pod gateways with Flannel and containerd. I’ve tackled this setup a few times in the past, most notably while orchestrating a multi-node cluster for a distributed analytics platform where network performance was absolutely critical. It’s a bit more involved than just slapping together a quick demo, so let’s break it down piece by piece.
+, let's talk about pod gateways with Flannel and containerd. I’ve tackled this setup a few times in the past, most notably while orchestrating a multi-node cluster for a distributed analytics platform where network performance was absolutely critical. It’s a bit more involved than just slapping together a quick demo, so let’s break it down piece by piece.
 
 At its core, what we’re trying to achieve is a way for pods running on different nodes to communicate with each other, even though they’re in different network namespaces. Flannel, a rather prevalent CNI (Container Network Interface) plugin, handles that by creating a virtual overlay network. Think of it as a separate, abstract network that runs on top of your physical infrastructure, allowing containers to have their own unique IP addresses, irrespective of their host's IPs. Containerd, on the other hand, is our underlying container runtime. It's responsible for actually running those containers and interfacing with the kernel.
 
@@ -42,8 +42,8 @@ Now, you’ll need a configuration file for Flannel in `/etc/cni/net.d`. Let's c
       }
     },
     {
-        "type": "portmap",
-        "capabilities": {"portMappings": true}
+      "type": "portmap",
+      "capabilities": { "portMappings": true }
     }
   ]
 }
@@ -54,9 +54,9 @@ Let's break this down:
 - `"cniVersion"`: Specifies the version of the CNI specification used.
 - `"name"`: The name of the network.
 - `"plugins"`: This is an array of plugins that are executed in order to configure the network. The first plugin is of type `"flannel"`.
-   -  `"hairpinMode": true`: Enables communication between pods on the same node using the loopback interface. This was crucial in some of my past deployments where service discovery required same-node pod interactions.
-   - `"isDefaultGateway": true`: This makes Flannel the default gateway for pods, directing traffic appropriately across the overlay network.
-   - `"ipMasq": true`: Enables masquerading, which allows the pods to communicate with external networks (like the internet) using the node's IP address.
+  - `"hairpinMode": true`: Enables communication between pods on the same node using the loopback interface. This was crucial in some of my past deployments where service discovery required same-node pod interactions.
+  - `"isDefaultGateway": true`: This makes Flannel the default gateway for pods, directing traffic appropriately across the overlay network.
+  - `"ipMasq": true`: Enables masquerading, which allows the pods to communicate with external networks (like the internet) using the node's IP address.
 - The second plugin is of type `"portmap"`, which is a standard CNI plugin used to handle port forwarding.
 
 These files alone don’t make the system work. Flannel relies on a configuration backend, usually etcd, to distribute network configuration across all nodes. You'll need to ensure that each node in the cluster can access your etcd instance. After that, Flannel will write network configuration based on the cluster's node and pod CIDR.
@@ -66,6 +66,7 @@ Finally, we come to actually installing the software. You'll need to install the
 ```bash
 systemctl restart containerd
 ```
+
 This is important to ensure containerd picks up the configuration changes related to the CNI.
 
 Now, to verify this is all working, you'll need to create some pods. Ensure that the pod configuration includes annotations that point to the correct CNI configuration (in our case, "flannel"). You could do this using kubernetes deployment yaml or other tools such as docker compose. The easiest way to test connectivity will be to start two pods, on different nodes if you have them, and try to `ping` each other using the pod ip addresses. You should see those pings succeed if everything is working as intended. You could also use `kubectl exec` command to debug pod networking with common tools such as `ping`, `traceroute`, and `tcpdump`. I also found that a good tool to use during development is `cnitool`, which can be used to test CNI configurations outside of the context of containerd or kubernetes.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-find-similarity-between-rows-of-a-dataframe-in-python"
 ---
 
-Okay, let’s tackle this. I recall a project from back in my fintech days where we needed to identify similar trading patterns within historical market data, which, at its core, was just a massively wide dataframe. Figuring out row similarity wasn’t straightforward, but it's a problem I’ve tackled multiple times since. Essentially, what you’re looking for are methods to quantify how alike two or more rows are, and this boils down to selecting the appropriate distance or similarity metric and understanding its implications for your data. There isn't a single 'best' approach; it largely depends on the nature of your data and what ‘similarity’ means in your context.
+, let’s tackle this. I recall a project from back in my fintech days where we needed to identify similar trading patterns within historical market data, which, at its core, was just a massively wide dataframe. Figuring out row similarity wasn’t straightforward, but it's a problem I’ve tackled multiple times since. Essentially, what you’re looking for are methods to quantify how alike two or more rows are, and this boils down to selecting the appropriate distance or similarity metric and understanding its implications for your data. There isn't a single 'best' approach; it largely depends on the nature of your data and what ‘similarity’ means in your context.
 
 Firstly, let's acknowledge that before even thinking about similarity calculations, data preprocessing is crucial. Are your features numerical, categorical, or a mix? Are they on similar scales? If not, you'll need to address issues like missing values, handle categorical features via one-hot encoding, and potentially normalize or standardize your numerical features. Ignoring this step can lead to skewed results and less meaningful similarity measures. For scaling, I've found the `sklearn.preprocessing` module invaluable. Standard scaling, using `StandardScaler`, is often a good starting point when you are working with features that are normally distributed. This ensures that all features contribute equally, irrespective of their original magnitude.
 
@@ -112,9 +112,9 @@ In this example, I’ve created a simple function, `jaccard_distance`, because `
 
 The choice between these (and many others not discussed here, such as manhattan distance or correlation based metrics) comes down to your specific dataset.
 
-*   **Euclidean Distance:** Good for numerical data with similar scales where absolute differences matter. Requires normalization of features.
-*   **Cosine Similarity:** Suitable for high-dimensional numerical data or when you're concerned with relative proportions of features, not their magnitudes. Scaling can still improve results in some cases.
-*   **Jaccard Index:** Ideal for binary or one-hot encoded categorical data, focusing on the presence or absence of features.
+- **Euclidean Distance:** Good for numerical data with similar scales where absolute differences matter. Requires normalization of features.
+- **Cosine Similarity:** Suitable for high-dimensional numerical data or when you're concerned with relative proportions of features, not their magnitudes. Scaling can still improve results in some cases.
+- **Jaccard Index:** Ideal for binary or one-hot encoded categorical data, focusing on the presence or absence of features.
 
 For a more in-depth understanding of distance metrics and their implications, I recommend delving into "The Elements of Statistical Learning" by Hastie, Tibshirani, and Friedman. It provides a rigorous treatment of these concepts. Another excellent resource is "Pattern Recognition and Machine Learning" by Christopher Bishop. These books offer a mathematical perspective while also making the information accessible to practitioners. And for practical implementation with scikit-learn, the official documentation is of course, indispensable.
 

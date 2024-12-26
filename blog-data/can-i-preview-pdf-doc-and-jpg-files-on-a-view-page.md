@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-i-preview-pdf-doc-and-jpg-files-on-a-view-page"
 ---
 
-Okay, let’s address this. Previewing various file formats directly on a web page – specifically pdf, doc(x), and jpg – is a common requirement, and the approaches differ significantly depending on the format and the level of fidelity you’re aiming for. Over the years, I’ve tackled this challenge multiple times, and the solutions often involved a blend of client-side and server-side strategies, each with its own trade-offs. Let’s break it down.
+, let’s address this. Previewing various file formats directly on a web page – specifically pdf, doc(x), and jpg – is a common requirement, and the approaches differ significantly depending on the format and the level of fidelity you’re aiming for. Over the years, I’ve tackled this challenge multiple times, and the solutions often involved a blend of client-side and server-side strategies, each with its own trade-offs. Let’s break it down.
 
 From the get-go, understand that providing a “true” live preview, especially for complex formats like doc(x), is not trivial using client-side javascript alone. We often need to lean on browser capabilities or utilize server-side conversion processes. For pdfs, browsers have made strides, but word documents remain quite challenging client-side. And of course, images are straightforward, but sometimes require specific handling.
 
@@ -13,16 +13,20 @@ First, let's tackle the most straightforward one: JPG files. For images, the bro
 ```html
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Image Preview</title>
-</head>
-<body>
-  <img src="path/to/your/image.jpg" alt="Preview of the image" style="max-width: 500px; max-height: 500px;">
-</body>
+  <head>
+    <title>Image Preview</title>
+  </head>
+  <body>
+    <img
+      src="path/to/your/image.jpg"
+      alt="Preview of the image"
+      style="max-width: 500px; max-height: 500px;"
+    />
+  </body>
 </html>
 ```
 
-This snippet is very simple: we use the `<img>` tag with a source attribute pointing to the location of the image. The `alt` attribute provides alternative text for accessibility and cases where the image cannot be displayed. I've included basic styling to cap the image size. The key here is that the browser does all the heavy lifting for jpgs. This just illustrates how to embed one. It's really about the *path/to/your/image.jpg* pointing to a valid and accessible image file. I’d suggest, for production environments, that you always ensure adequate error handling (e.g., the image not found) and consider resizing if necessary.
+This snippet is very simple: we use the `<img>` tag with a source attribute pointing to the location of the image. The `alt` attribute provides alternative text for accessibility and cases where the image cannot be displayed. I've included basic styling to cap the image size. The key here is that the browser does all the heavy lifting for jpgs. This just illustrates how to embed one. It's really about the _path/to/your/image.jpg_ pointing to a valid and accessible image file. I’d suggest, for production environments, that you always ensure adequate error handling (e.g., the image not found) and consider resizing if necessary.
 
 Next, let's look at PDF files. Modern browsers often support embedding pdfs using the `<embed>` tag or the `<iframe>` tag. I’ve found that the `<embed>` tag is usually the more straightforward choice for in-browser pdf viewing.
 
@@ -31,12 +35,17 @@ Here is the basic html structure to embed a pdf file:
 ```html
 <!DOCTYPE html>
 <html>
-<head>
-  <title>PDF Preview</title>
-</head>
-<body>
-  <embed src="path/to/your/document.pdf" type="application/pdf" width="800" height="600"/>
-</body>
+  <head>
+    <title>PDF Preview</title>
+  </head>
+  <body>
+    <embed
+      src="path/to/your/document.pdf"
+      type="application/pdf"
+      width="800"
+      height="600"
+    />
+  </body>
 </html>
 ```
 

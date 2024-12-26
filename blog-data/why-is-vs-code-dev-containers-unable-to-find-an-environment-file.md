@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-vs-code-dev-containers-unable-to-find-an-environment-file"
 ---
 
-Alright, let’s unpack this. The issue of VS Code dev containers failing to locate an environment file is one that I’ve encountered more times than I’d care to admit, usually when dealing with complex project setups or when jumping between different environments. There isn't a single, universal culprit, but rather a constellation of potential problems that, when combined, can throw a wrench into your development workflow. We’re going to go beyond the typical troubleshooting steps and dive into the mechanics of how dev containers and their environment loading process actually work.
+, let’s unpack this. The issue of VS Code dev containers failing to locate an environment file is one that I’ve encountered more times than I’d care to admit, usually when dealing with complex project setups or when jumping between different environments. There isn't a single, universal culprit, but rather a constellation of potential problems that, when combined, can throw a wrench into your development workflow. We’re going to go beyond the typical troubleshooting steps and dive into the mechanics of how dev containers and their environment loading process actually work.
 
 From my experience, the root cause often boils down to these key areas: incorrect file paths, misconfigurations within the `devcontainer.json` file, and sometimes, how the environment variables are handled inside the container itself. It's seldom a straightforward error message; instead, we’re typically presented with a container that starts, but without the necessary environment variables. Let’s break down each of these potential pitfalls.
 
@@ -23,11 +23,11 @@ And your `devcontainer.json` looks something like this:
 
 ```json
 {
-    "name": "My Project Dev Container",
-    "image": "mcr.microsoft.com/devcontainers/python:3.11",
-    "remoteEnv": {
-         "MY_ENV_VAR": "test value"
-    }
+  "name": "My Project Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  "remoteEnv": {
+    "MY_ENV_VAR": "test value"
+  }
 }
 ```
 
@@ -37,28 +37,27 @@ Let's consider another practical example. Assume your `.env` file contains sensi
 
 ```json
 {
-    "name": "My Project Dev Container",
-    "image": "mcr.microsoft.com/devcontainers/python:3.11",
-    "containerEnv": {
-         "ENV_FILE": "${containerWorkspaceFolder}/.devcontainer/.env"
-    },
-    "runArgs": [ "--env-file", "${containerEnv:ENV_FILE}" ]
+  "name": "My Project Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  "containerEnv": {
+    "ENV_FILE": "${containerWorkspaceFolder}/.devcontainer/.env"
+  },
+  "runArgs": ["--env-file", "${containerEnv:ENV_FILE}"]
 }
 ```
 
-Here, we define an environment variable `ENV_FILE` which dynamically locates our `.env` within the container's file system and then, using `runArgs`, pass the `--env-file` option to `docker run`. This instructs docker to load the variables. This addresses the path problem correctly by referencing the relative path within the container. *Note*, this requires docker version 20.10 or greater for `--env-file` support. If you're using an older docker, or if you wish to load the file directly through a different methodology, you’ll need to use an entrypoint or shell script. Let's move onto that scenario.
+Here, we define an environment variable `ENV_FILE` which dynamically locates our `.env` within the container's file system and then, using `runArgs`, pass the `--env-file` option to `docker run`. This instructs docker to load the variables. This addresses the path problem correctly by referencing the relative path within the container. _Note_, this requires docker version 20.10 or greater for `--env-file` support. If you're using an older docker, or if you wish to load the file directly through a different methodology, you’ll need to use an entrypoint or shell script. Let's move onto that scenario.
 
 Now, let's say you need more control and wish to load the env file through a script inside the container. In this case, it would usually be necessary to use an entrypoint script, usually a shell script, that runs on container startup. Here is how the `devcontainer.json` might look:
 
 ```json
 {
-    "name": "My Project Dev Container",
-    "image": "mcr.microsoft.com/devcontainers/python:3.11",
-    "mounts": [
-        "source=${localWorkspaceFolder}/.devcontainer/.env,target=/opt/devcontainer/env,type=bind"
-      ],
-    "postCreateCommand": "source /opt/devcontainer/env && python -m pip install -r requirements.txt"
-
+  "name": "My Project Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  "mounts": [
+    "source=${localWorkspaceFolder}/.devcontainer/.env,target=/opt/devcontainer/env,type=bind"
+  ],
+  "postCreateCommand": "source /opt/devcontainer/env && python -m pip install -r requirements.txt"
 }
 ```
 

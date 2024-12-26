@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-mock-a-private-class-method-call-within-an-rspec-request-spec"
 ---
 
-Okay, let’s tackle this. I remember a rather persistent situation back when I was developing a payment processing service—we had a heavily encapsulated class responsible for communicating with the bank's api, and the internal logic, especially around error handling, was entirely within private methods. Unit testing the core functionality was straightforward, but integrating it into the request spec proved... challenging. We needed to mock those private methods to test the api endpoints effectively. Let’s dive into how I ultimately managed to solve this, and how you can approach similar situations.
+, let’s tackle this. I remember a rather persistent situation back when I was developing a payment processing service—we had a heavily encapsulated class responsible for communicating with the bank's api, and the internal logic, especially around error handling, was entirely within private methods. Unit testing the core functionality was straightforward, but integrating it into the request spec proved... challenging. We needed to mock those private methods to test the api endpoints effectively. Let’s dive into how I ultimately managed to solve this, and how you can approach similar situations.
 
 The challenge stems from the very nature of private methods. They're intentionally hidden from external access, including the reach of standard mocking techniques in ruby with RSpec. You can't directly stub or mock them using `allow(instance).to receive(:private_method)` because, as the name suggests, they’re private. Trying this throws a `NoMethodError`. The solution, therefore, requires a bit of introspection and a thoughtful approach to avoid compromising encapsulation more than is absolutely necessary.
 
@@ -168,10 +168,10 @@ In this case, we have greater flexibility in how the mocked method interacts, al
 
 **Important Considerations**
 
-*   **Overuse:** Don't fall into the trap of overusing `send` for every private method. If you find yourself doing this often, it is a strong indication that refactoring might be needed to expose the functionality through public methods or to introduce a more testable design.
-*   **Maintenance:** Tests that rely on `send` can be brittle, especially if private method names change. This can lead to hidden failures. A well written test suite should not fail only because of internal changes. If possible, tests should focus on public interfaces.
-*   **Documentation:** When using `send` for mocking, include comments in your tests explaining *why* this approach is being used to help your team understand the rationale and constraints. This makes maintenance easier.
-*   **Alternative approaches:** Before using `send`, always explore dependency injection, strategy patterns, or extracting functionality to helper classes, to reduce the need to mock private methods.
+- **Overuse:** Don't fall into the trap of overusing `send` for every private method. If you find yourself doing this often, it is a strong indication that refactoring might be needed to expose the functionality through public methods or to introduce a more testable design.
+- **Maintenance:** Tests that rely on `send` can be brittle, especially if private method names change. This can lead to hidden failures. A well written test suite should not fail only because of internal changes. If possible, tests should focus on public interfaces.
+- **Documentation:** When using `send` for mocking, include comments in your tests explaining _why_ this approach is being used to help your team understand the rationale and constraints. This makes maintenance easier.
+- **Alternative approaches:** Before using `send`, always explore dependency injection, strategy patterns, or extracting functionality to helper classes, to reduce the need to mock private methods.
 
 **Further Resources**
 

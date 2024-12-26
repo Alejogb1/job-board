@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "two-way-repeated-measures-anova-in-r"
 ---
 
-Okay so you're asking about two-way repeated measures ANOVA in R right been there done that a few times let me tell you. It's not exactly a walk in the park when you first get into it. I remember my undergrad days wrestling with this stuff it felt like the stats gods were throwing spaghetti code at me. You need the right packages and to structure your data correctly or you'll be staring at error messages for hours. I swear it's happened to the best of us.
+you're asking about two-way repeated measures ANOVA in R right been there done that a few times let me tell you. It's not exactly a walk in the park when you first get into it. I remember my undergrad days wrestling with this stuff it felt like the stats gods were throwing spaghetti code at me. You need the right packages and to structure your data correctly or you'll be staring at error messages for hours. I swear it's happened to the best of us.
 
 Let's break this down into something digestible. First off why two-way repeated measures ANOVA not a regular one way? Well you've got two factors influencing your dependent variable and the measurements are taken on the same subjects or units multiple times think of a medical trial where the same patients receive different treatments at different time points. It's about figuring out how much of the variability comes from each factor their interaction and the within-subject changes. It's a pretty useful tool when you need to account for individual variation in your research data.
 
@@ -31,6 +31,7 @@ data <- data.frame(
 
 print(head(data))
 ```
+
 Here id is the subject identifier condition is your first factor time is your second factor and score is your dependent variable. This data represents a balanced design which simplifies the analysis. I am not going to cover unbalanced designs because I do not want to open that can of worms right now.
 
 Now for the actual ANOVA the `anova_test` function is your best friend. You will specify your model the between and within subjects factors and your dependent variable.
@@ -46,6 +47,7 @@ res.anova <- data %>%
 print(res.anova)
 
 ```
+
 What this will output is a table with results the F statistics degrees of freedom and p values. This will allow you to understand the significance of your factors and their interaction. Do not only look at the p value there are many resources about effect size and post hoc analysis if necessary.
 
 Here's a little quirk I discovered back in my early days I was using some other packages and I always struggled with the output tables. They were never clean and I never understood what the heck they were telling me. This is why I always recommend `rstatix`. It cleans up the output and it makes everything more understandable which is very important if you have to present this somewhere in a paper or at a meeting. It even gives you partial eta squared as effect size which is pretty useful.
@@ -55,6 +57,7 @@ Now about that interaction effect. That is the most interesting part. You have t
 So what do you do if you find a significant interaction? My advice is to visualize your data especially the means for all condition and time combinations that is your best bet to understand what is really going on. Then you can explore simple effects which is a form of post-hoc test.
 
 Here is a small example to produce the plot.
+
 ```R
 # Plotting the means
 library(ggplot2)
@@ -71,9 +74,11 @@ data %>%
 
 
 ```
+
 This plot will show you what the means are and how they vary across the time points. If your interaction is significant then you should see that the lines are not parallel.
 
 Now if your interaction is significant you need to dive into post hoc test. `emmeans` package is great for that:
+
 ```R
 # Post-hoc tests (if interaction is significant)
 
@@ -84,6 +89,7 @@ model <- lm(score ~ condition*time + Error(id/(condition*time)), data = data)
 emm_model <- emmeans(model, ~ condition | time)
 pairs(emm_model) # compare between conditions within each timepoint
 ```
+
 This lets you compare the conditions at each time point to test what is going on and if they are significantly different from each other at each specific time point.
 
 Regarding resources for this type of analysis I highly recommend you get your hands on Andy Field’s “Discovering Statistics using R”. That’s my go-to book on everything statistics and R. Also you might want to check “Linear Mixed Models: A Practical Guide Using Statistical Software” by Brady West. It dives deep into mixed models which is what you are actually doing in this case it will help you understand this process a lot better. Don't just rely on package documentation or stackoverflow answers read books to understand the underlying theory. You should also look up some good papers on the design you are considering. There are a number of classic experimental design books such as "Design and Analysis of Experiments" by Douglas Montgomery.

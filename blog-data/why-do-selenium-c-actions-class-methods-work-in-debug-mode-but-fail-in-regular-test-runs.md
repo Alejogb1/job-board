@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-selenium-c-actions-class-methods-work-in-debug-mode-but-fail-in-regular-test-runs"
 ---
 
-Alright, let's tackle this one. It's a classic head-scratcher, and I’ve definitely spent more late nights than I’d like to remember chasing down similar behavior. The frustration when Selenium actions work flawlessly step-by-step in debug mode, but then fail miserably when you run the tests normally, is something I've certainly experienced. Fundamentally, this discrepancy arises from subtle differences in the timing and execution context between the two modes, impacting how Selenium interacts with the browser. It’s almost always down to synchronization issues, subtle race conditions, or variations in how the WebDriver interacts with the browser.
+, let's tackle this one. It's a classic head-scratcher, and I’ve definitely spent more late nights than I’d like to remember chasing down similar behavior. The frustration when Selenium actions work flawlessly step-by-step in debug mode, but then fail miserably when you run the tests normally, is something I've certainly experienced. Fundamentally, this discrepancy arises from subtle differences in the timing and execution context between the two modes, impacting how Selenium interacts with the browser. It’s almost always down to synchronization issues, subtle race conditions, or variations in how the WebDriver interacts with the browser.
 
 I recall a particularly troublesome project involving a complex drag-and-drop interface. In debug mode, I could step through the `Actions` sequence perfectly – the element would be located, clicked, dragged, and dropped without any hitches. But as soon as I ran the suite without debugging, it would sporadically fail, throwing an exception related to the target element not being interactable or not found. It took me some time to nail down the root cause, and I’ll share the key insights that ultimately solved it, and which are generally applicable to this kind of issue.
 
@@ -12,7 +12,7 @@ The core issue usually boils down to timing and implicit waits. Debug mode intro
 
 Let’s drill down into some specific reasons and corresponding solutions, illustrated with examples. The `Actions` class in Selenium C# is fundamentally a sequence of commands passed to the WebDriver. It builds up an action chain that is ultimately executed. The problem isn't generally with the `Actions` class itself but with the context within which it's used.
 
-Firstly, **element visibility**: A common issue is that the element you're trying to interact with via `Actions` might be in the DOM but not actually *visible* or *interactable*. This might be due to animations, page loading events that haven't completed, or asynchronous requests altering the page layout. In debug mode, the pause gives these things the needed time, whereas a normal test run doesn’t.
+Firstly, **element visibility**: A common issue is that the element you're trying to interact with via `Actions` might be in the DOM but not actually _visible_ or _interactable_. This might be due to animations, page loading events that haven't completed, or asynchronous requests altering the page layout. In debug mode, the pause gives these things the needed time, whereas a normal test run doesn’t.
 
 Here's an example of what the problematic code might resemble and a better approach:
 

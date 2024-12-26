@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-are-pytorch-cnn-matrices-of-shape-128x29040-and-2048x50-incompatible-for-multiplication"
 ---
 
-Alright, let's tackle this. It’s a situation I’ve bumped into more than once, particularly back when I was heavily involved in optimizing convolutional neural network architectures for some image processing projects. In essence, the incompatibility you're seeing with matrices of shapes (128x29040) and (2048x50) arises directly from the fundamental rules of matrix multiplication. It's not a deficiency in PyTorch, rather a reflection of the mathematical definition of matrix operations.
+, let's tackle this. It’s a situation I’ve bumped into more than once, particularly back when I was heavily involved in optimizing convolutional neural network architectures for some image processing projects. In essence, the incompatibility you're seeing with matrices of shapes (128x29040) and (2048x50) arises directly from the fundamental rules of matrix multiplication. It's not a deficiency in PyTorch, rather a reflection of the mathematical definition of matrix operations.
 
-At its core, for two matrices to be compatible for multiplication, the number of columns in the first matrix *must* equal the number of rows in the second matrix. This constraint ensures that the dot products, which form the basis of matrix multiplication, can be properly calculated. You can think of it this way: matrix multiplication involves taking the dot product of each row in the first matrix with each column in the second matrix, element-wise, to produce a resulting matrix. If the lengths of those rows and columns don’t match, it’s like trying to fit a square peg into a round hole; the calculation simply breaks down.
+At its core, for two matrices to be compatible for multiplication, the number of columns in the first matrix _must_ equal the number of rows in the second matrix. This constraint ensures that the dot products, which form the basis of matrix multiplication, can be properly calculated. You can think of it this way: matrix multiplication involves taking the dot product of each row in the first matrix with each column in the second matrix, element-wise, to produce a resulting matrix. If the lengths of those rows and columns don’t match, it’s like trying to fit a square peg into a round hole; the calculation simply breaks down.
 
 In your scenario, the first matrix has dimensions of 128 rows and 29040 columns, while the second matrix has 2048 rows and 50 columns. The column count of the first matrix (29040) clearly doesn't match the row count of the second matrix (2048), and therefore, these two matrices are not conformable for matrix multiplication. This discrepancy is why a straightforward PyTorch tensor multiplication, such as through `torch.matmul` or the `@` operator, will result in an error. It’s a good thing it does; trying to force this multiplication would produce garbage.
 
@@ -35,11 +35,12 @@ try:
 except RuntimeError as e:
     print(f"Error during multiplication: {e}")
 ```
+
 This code snippet demonstrates the typical runtime error you'll encounter when trying to multiply matrices with incompatible dimensions. PyTorch rightly throws a `RuntimeError`, explicitly indicating the dimension mismatch. This is essential error handling; you want the program to tell you when the mathematics are unsound.
 
 **Example 2: Reshaping to Enable Multiplication (Hypothetical)**
 
-To show how it could be done, we might *hypothetically* consider a scenario where we could reshape the first tensor to conform. *This is for illustrative purposes and does not mean that this reshaping would make logical sense in the context of your original task. In a real-world scenario, the reshaping would need to be based on the intended operations.* Let’s reshape `matrix_a` so that its number of columns aligns with the number of rows in `matrix_b`. Let’s imagine `matrix_a` *can* be reshaped to have 2048 columns, let's make the rows whatever allows. So the total number of elements needs to match. It’ll require a bit of mental arithmetic first:
+To show how it could be done, we might _hypothetically_ consider a scenario where we could reshape the first tensor to conform. _This is for illustrative purposes and does not mean that this reshaping would make logical sense in the context of your original task. In a real-world scenario, the reshaping would need to be based on the intended operations._ Let’s reshape `matrix_a` so that its number of columns aligns with the number of rows in `matrix_b`. Let’s imagine `matrix_a` _can_ be reshaped to have 2048 columns, let's make the rows whatever allows. So the total number of elements needs to match. It’ll require a bit of mental arithmetic first:
 
 ```python
 import torch
@@ -94,7 +95,8 @@ except RuntimeError as e:
     print(f"Error during multiplication: {e}")
 
 ```
-In this example, we've transposed matrix_a using the `.T` operator which gives the correct (29040x128) shape for matrix multiplication. However, this does not make the original multiplication `matrix_a @ matrix_b` work. The key point here is that even with transposition, `matrix_a @ matrix_b` *remains* invalid. Transposition can often help with matching dimensions, but one must be careful about the semantic implications of the transposition.
+
+In this example, we've transposed matrix_a using the `.T` operator which gives the correct (29040x128) shape for matrix multiplication. However, this does not make the original multiplication `matrix_a @ matrix_b` work. The key point here is that even with transposition, `matrix_a @ matrix_b` _remains_ invalid. Transposition can often help with matching dimensions, but one must be careful about the semantic implications of the transposition.
 
 **Why is this important?**
 

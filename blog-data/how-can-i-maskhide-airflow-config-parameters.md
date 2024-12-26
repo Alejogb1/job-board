@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-maskhide-airflow-config-parameters"
 ---
 
-Okay, let's tackle this. I've definitely been down this road before, particularly when scaling airflow deployments across various teams with varying degrees of access. Exposing configuration parameters directly, especially things like database connection strings or api keys, is a definite non-starter for any production environment. It's a security headache waiting to happen. Let's break down some reliable strategies, focusing on both the 'how' and the 'why'.
+, let's tackle this. I've definitely been down this road before, particularly when scaling airflow deployments across various teams with varying degrees of access. Exposing configuration parameters directly, especially things like database connection strings or api keys, is a definite non-starter for any production environment. It's a security headache waiting to happen. Let's break down some reliable strategies, focusing on both the 'how' and the 'why'.
 
 First, it's crucial to understand that airflow's configuration, by default, isn't inherently secure. It relies on a configuration file, typically `airflow.cfg`, and environment variables, all of which can be vulnerable if not handled carefully. The goal, therefore, is to decouple the actual values from these accessible locations and introduce an abstraction layer.
 
@@ -63,7 +63,7 @@ class AwsSecretsManagerHook(BaseHook):
         config = {}
         if conn.extra_dejson.get("region_name"):
             config['region_name'] = conn.extra_dejson.get("region_name")
-        
+
         if conn.extra_dejson.get("aws_access_key_id"):
             config["aws_access_key_id"] = conn.extra_dejson.get("aws_access_key_id")
             config["aws_secret_access_key"] = conn.extra_dejson.get("aws_secret_access_key")
@@ -104,9 +104,9 @@ with DAG(
     )
 ```
 
-Here, the `AwsSecretsManagerHook` abstracts the interaction with AWS Secrets Manager. You'd store a json object as secret such as `{"username": "your_username", "password": "your_password"}` under the secret name `my-database-credentials-secret` in aws. The DAG then retrieves it by name and extracts the necessary values, leaving no trace of the actual credentials within the airflow environment itself. Crucially, the hook will use the provided AWS connection within airflow which should include your aws credentials. *You will also need to ensure that the service account used by airflow has permissions to access the specified secrets in AWS secrets manager*.
+Here, the `AwsSecretsManagerHook` abstracts the interaction with AWS Secrets Manager. You'd store a json object as secret such as `{"username": "your_username", "password": "your_password"}` under the secret name `my-database-credentials-secret` in aws. The DAG then retrieves it by name and extracts the necessary values, leaving no trace of the actual credentials within the airflow environment itself. Crucially, the hook will use the provided AWS connection within airflow which should include your aws credentials. _You will also need to ensure that the service account used by airflow has permissions to access the specified secrets in AWS secrets manager_.
 
-Finally, I'd like to touch on the use of encrypted connections and environment variables as well, since they form part of a good 'defense in depth' strategy. Even when secrets are retrieved from a secrets manager, ensure that all connections, especially database ones, are encrypted using TLS/SSL where possible. This protects data in transit. In regards to environment variables, utilize them solely to configure secrets manager access - *not to store actual secrets*. For example, you might store an AWS region or secret arn in env variables - but never the sensitive values.
+Finally, I'd like to touch on the use of encrypted connections and environment variables as well, since they form part of a good 'defense in depth' strategy. Even when secrets are retrieved from a secrets manager, ensure that all connections, especially database ones, are encrypted using TLS/SSL where possible. This protects data in transit. In regards to environment variables, utilize them solely to configure secrets manager access - _not to store actual secrets_. For example, you might store an AWS region or secret arn in env variables - but never the sensitive values.
 
 For further reading, I would recommend researching the following: Hashicorp's documentation on Vault and its integration with Airflow; AWS documentation for Secrets Manager and the python boto3 library; and, more generally, the OWASP recommendations on secrets management. Also, the Apache Airflow documentation itself is invaluable for understanding its built-in features, as mentioned above.
 

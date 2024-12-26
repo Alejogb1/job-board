@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-validation-accuracy-lower-than-model-accuracy"
 ---
 
-Okay, let’s tackle this. It’s a persistent issue that I’ve seen plague countless machine learning projects, and frankly, it’s something you need to understand thoroughly to build truly robust systems. I remember back on a large-scale fraud detection project a few years ago, we initially saw this discrepancy and it threw us for a loop. The model, judged solely on its training data, appeared fantastic, but when we rolled it out to even simulated real-world data, performance tanked. It's a stark reminder that training accuracy alone is a treacherous metric. So, why is this a common observation? The short answer: overfitting and the inherent differences between training and validation datasets, but let’s delve deeper.
+, let’s tackle this. It’s a persistent issue that I’ve seen plague countless machine learning projects, and frankly, it’s something you need to understand thoroughly to build truly robust systems. I remember back on a large-scale fraud detection project a few years ago, we initially saw this discrepancy and it threw us for a loop. The model, judged solely on its training data, appeared fantastic, but when we rolled it out to even simulated real-world data, performance tanked. It's a stark reminder that training accuracy alone is a treacherous metric. So, why is this a common observation? The short answer: overfitting and the inherent differences between training and validation datasets, but let’s delve deeper.
 
 The first, and arguably most prominent reason, is overfitting. You can think of a model, particularly complex ones like deep neural networks, as incredibly powerful pattern-recognition machines. During training, they attempt to learn the underlying relationships in the data, but sometimes they end up memorizing the training data. Instead of learning the generalizable patterns, the model conforms to the particular noise and idiosyncrasies of the training set. This leads to incredibly high accuracy on the data it has seen (the training set) but terrible performance on unseen data (the validation set). The model basically becomes an echo chamber. The consequence is that you have a model that’s fantastic at reciting its training notes, but awful in a pop quiz scenario.
 
@@ -77,6 +77,7 @@ val_acc = accuracy_score(y_val, y_val_pred)
 print(f"Training accuracy (imbalanced): {train_acc:.3f}")
 print(f"Validation accuracy (imbalanced): {val_acc:.3f}")
 ```
+
 With this second example, we can see how a dataset that is not balanced (the vast majority of samples belong to one class) can result in an apparently high accuracy, but not being an effective model because it fails to generalize in the less represented class.
 
 ```python
@@ -111,6 +112,7 @@ val_acc = accuracy_score(y_val, y_val_pred)
 print(f"Training accuracy (wrong split): {train_acc:.3f}")
 print(f"Validation accuracy (wrong split): {val_acc:.3f}")
 ```
+
 This final example illustrates that not carefully selecting the training and validation data split, can lead to inaccurate accuracy assessments. In this specific case, the data is highly time-dependent and splitting by months creates a situation where the model is trained in one time period and validated in a distinct one.
 
 These examples highlight different reasons why validation accuracy can be lower. To further your understanding, I would highly recommend reading "Pattern Recognition and Machine Learning" by Christopher Bishop and “Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow” by Aurélien Géron. These will give you a solid theoretical and practical foundation in machine learning and particularly how to avoid these pitfalls.

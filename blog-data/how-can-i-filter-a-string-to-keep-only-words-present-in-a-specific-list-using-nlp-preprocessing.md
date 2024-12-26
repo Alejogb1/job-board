@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-filter-a-string-to-keep-only-words-present-in-a-specific-list-using-nlp-preprocessing"
 ---
 
-Alright, let's tackle this. I remember working on a particularly challenging text analysis project a few years back for a client in the financial sector. They needed to sift through thousands of news articles to identify only those relevant to their specific investment strategy. One of their core requirements was the ability to filter text, retaining only sentences containing keywords from their predefined investment vocabulary. That experience really cemented my understanding of the nuances of this particular task.
+, let's tackle this. I remember working on a particularly challenging text analysis project a few years back for a client in the financial sector. They needed to sift through thousands of news articles to identify only those relevant to their specific investment strategy. One of their core requirements was the ability to filter text, retaining only sentences containing keywords from their predefined investment vocabulary. That experience really cemented my understanding of the nuances of this particular task.
 
 So, when you ask how to filter a string to keep only words present in a specific list using natural language processing preprocessing, you're essentially talking about implementing a controlled vocabulary filter after the initial text cleaning stage. The core concept revolves around tokenization followed by filtering. Tokenization breaks the input string into individual words (or sometimes phrases), and filtering discards tokens that aren't in your allowed list, which is also often called a lexicon or vocabulary. It’s not just about identifying words; it’s about efficiency and ensuring you're comparing apples to apples after standardization. Let's break down the process, looking at it from a practical standpoint using three different code examples, all demonstrating slightly different approaches.
 
@@ -45,7 +45,7 @@ print(filtered_text)
 # Output: apple bananas orange fruit
 ```
 
-In this first example, the `filter_string_simple` function leverages `nltk` (Natural Language Toolkit) for both tokenization and stopword removal (though stopwords can be omitted if desired). It converts the input string to lowercase and then tokenizes it using `word_tokenize`. We filter out words that aren't present in the vocabulary *and* words from the stopword list, making the process a bit cleaner. Finally, it joins the filtered tokens back into a string. Notice the use of list comprehension – it’s both concise and efficient. I consider this example to be the ‘baseline’.
+In this first example, the `filter_string_simple` function leverages `nltk` (Natural Language Toolkit) for both tokenization and stopword removal (though stopwords can be omitted if desired). It converts the input string to lowercase and then tokenizes it using `word_tokenize`. We filter out words that aren't present in the vocabulary _and_ words from the stopword list, making the process a bit cleaner. Finally, it joins the filtered tokens back into a string. Notice the use of list comprehension – it’s both concise and efficient. I consider this example to be the ‘baseline’.
 
 **Example 2: Filtering with Lemmatization and Stemming**
 
@@ -86,7 +86,8 @@ filtered_text_lemmatized = filter_string_lemmatized(text_input_lemmatized, my_vo
 print(filtered_text_lemmatized)
 # Output: run walk exercising
 ```
-Here, we add the `WordNetLemmatizer`.  Before filtering against the vocabulary, we now lemmatize all the tokens. This means that ‘running’ will be reduced to ‘run’, ‘walks’ to ‘walk’, and ‘exercising’ to ‘exercise’, enabling matches even if words aren’t in their base form initially. While stemming could be a valid alternative here (or even used in tandem), lemmatization tends to give better results, particularly when preserving the contextual meaning of a word is essential. This enhanced matching approach is valuable for more complex vocabulary matching.
+
+Here, we add the `WordNetLemmatizer`. Before filtering against the vocabulary, we now lemmatize all the tokens. This means that ‘running’ will be reduced to ‘run’, ‘walks’ to ‘walk’, and ‘exercising’ to ‘exercise’, enabling matches even if words aren’t in their base form initially. While stemming could be a valid alternative here (or even used in tandem), lemmatization tends to give better results, particularly when preserving the contextual meaning of a word is essential. This enhanced matching approach is valuable for more complex vocabulary matching.
 
 **Example 3: Filtering with SpaCy and custom stopword lists**
 
@@ -127,6 +128,7 @@ filtered_text_spacy = filter_string_spacy(text_input_spacy, my_vocabulary_spacy,
 print(filtered_text_spacy)
 # Output: stock market prices invest
 ```
+
 Here, SpaCy’s processing pipeline is used to tokenize the text into `Doc` objects. We also integrate a custom stopword list as an optional parameter, allowing you to easily remove task-specific terms in addition to standard stopwords. This flexibility is one of SpaCy's strengths. Note how the logic for extracting text from the tokens within the `Doc` object is used. This is one of the core differences between `NLTK` and `SpaCy`, and is crucial to remember when working with either library. SpaCy also comes preloaded with many features. For example, the lemma is immediately available via `token.lemma_`, or stopword information with `token.is_stop`. Choosing `token.text` is intentional because we are matching to the exact text found in our vocabulary list.
 
 **Resource Recommendations:**

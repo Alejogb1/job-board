@@ -4,14 +4,14 @@ date: "2024-12-23"
 id: "why-is-ipykernel-throwing-a-typeerror-object-nonetype-cant-be-used-in-await-expression"
 ---
 
-Okay, let's unpack this `TypeError: object NoneType can't be used in 'await' expression`. I've certainly stumbled upon this specific error a few times in my journey, often during those late nights when I was pushing Jupyter notebooks to their limits. It's a frustrating one because, at first glance, the traceback might not immediately pinpoint the root cause. The issue stems from the asynchronous nature of `ipykernel` and how it interacts with coroutines, or asynchronous functions, within the Jupyter environment.
+, let's unpack this `TypeError: object NoneType can't be used in 'await' expression`. I've certainly stumbled upon this specific error a few times in my journey, often during those late nights when I was pushing Jupyter notebooks to their limits. It's a frustrating one because, at first glance, the traceback might not immediately pinpoint the root cause. The issue stems from the asynchronous nature of `ipykernel` and how it interacts with coroutines, or asynchronous functions, within the Jupyter environment.
 
 The core problem is that somewhere in your code, you're attempting to use `await` on something that evaluates to `None`. The `await` keyword, crucial for managing asynchronous operations, is explicitly designed to work with awaitables, which are generally coroutines, tasks, or futures. `None` is, quite obviously, not one of these.
 
 Let’s delve a little deeper into why this happens. In an asynchronous context, when a function that’s expected to return an awaitable actually returns `None`, typically it’s an indication that:
 
 1.  **The asynchronous operation failed or didn't execute correctly:** Perhaps an API call errored out, a database query returned no results, or a file operation wasn't successful, and the resulting code path led to a function returning `None` without explicitly handling it in a way that would provide a valid awaitable.
-2.  **The function intended to perform asynchronous work wasn't declared as an `async` function:** This is a classic pitfall. If you define a function that internally contains `await` but haven't marked it with the `async` keyword, it will simply return a coroutine object, and not an actual *awaitable*. If that’s not handled correctly, you'll end up using `await` on a `None`, resulting in this very error.
+2.  **The function intended to perform asynchronous work wasn't declared as an `async` function:** This is a classic pitfall. If you define a function that internally contains `await` but haven't marked it with the `async` keyword, it will simply return a coroutine object, and not an actual _awaitable_. If that’s not handled correctly, you'll end up using `await` on a `None`, resulting in this very error.
 3.  **A library interaction isn't properly configured for asynchronous execution:** Especially when using third-party libraries within asynchronous functions, the library itself might not be designed for async programming. Calling it incorrectly can result in a non-awaitable being returned, or it might return nothing, or `None`.
 
 I recall specifically debugging this during a project involving real-time sensor data processing. We had a pipeline where data was fetched asynchronously from multiple sensors, preprocessed, and then written to a database. There was a moment where one sensor intermittently returned `None` due to a connection hiccup. Instead of having proper exception handling in the `async` function that processed each sensor's data, it was simply returning the `None` value. Then, the orchestration layer that was using `await` on the returned result would inevitably break with this `TypeError`.
@@ -62,6 +62,7 @@ try:
 except Exception as e:
     print(f"Caught exception: {e}")
 ```
+
 By simply adding `async` to the `fetch_data` declaration, the function becomes an awaitable.
 
 **Example 2: Unhandled Error Resulting in `None` Return**
@@ -121,6 +122,7 @@ try:
 except Exception as e:
     print(f"Caught exception: {e}")
 ```
+
 By including error handling with a `try`-`except` block, we can gracefully handle the case where `get_external_data` fails without passing a `None` to the `await`. This illustrates how careful exception handling is vital for preventing the `TypeError` in asynchronous code.
 
 **Example 3: Non-async-compatible library interaction**
@@ -185,6 +187,7 @@ try:
 except Exception as e:
     print(f"Caught exception: {e}")
 ```
+
 By utilizing `loop.run_in_executor`, the blocking operation is offloaded to another thread or process (depending on the executor you supply), allowing the event loop to remain responsive. The `run_in_executor` method returns an awaitable, preventing the TypeError. Note, I'm using the default `None` executor here, which uses a `ThreadPoolExecutor`, it is important to use the correct executor for the context of your application.
 
 To further enhance your understanding, I highly recommend delving into "Concurrency with Modern Python" by Matthew Fowler and "Programming Concurrency on the JVM" by Venkat Subramaniam. These resources dive deep into asynchronous patterns and the subtleties of multithreaded and concurrent programming that are helpful in understanding the underlying causes of issues like this one. Additionally, the official Python documentation on asyncio provides a thorough grounding in the asynchronous programming model in Python itself. These readings will certainly provide a stronger foundation and better equip you to troubleshoot such issues as the one you describe.

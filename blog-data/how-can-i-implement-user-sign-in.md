@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-implement-user-sign-in"
 ---
 
-Alright, let's talk about user sign-in, a topic I’ve handled countless times across various platforms. It’s deceptively simple on the surface, but the devil, as always, is in the details. I recall a project years ago, building a social platform, where we initially underestimated the complexities, especially around handling edge cases and security. We quickly learned that a robust sign-in implementation is fundamental to everything else we did.
+, let's talk about user sign-in, a topic I’ve handled countless times across various platforms. It’s deceptively simple on the surface, but the devil, as always, is in the details. I recall a project years ago, building a social platform, where we initially underestimated the complexities, especially around handling edge cases and security. We quickly learned that a robust sign-in implementation is fundamental to everything else we did.
 
 At its core, user sign-in is about verifying identity; establishing that the user is indeed who they claim to be. There are several core components to any robust implementation that I'd like to delve into. First, you need a mechanism for users to identify themselves, typically through email address, a username, or, increasingly common now, a phone number. Secondly, there has to be a means to prove they own that identity, typically via password or other forms of authentication. Finally, there needs to be a secure way of storing credentials and managing sessions.
 
-Let’s break down the practical considerations, starting with password storage. This isn't something to be taken lightly. Never, and I mean *never*, store passwords in plain text or using reversible encryption. Hashing is the standard way to handle this, using a one-way function that transforms the password into an irreversible string. I often advocate for using bcrypt or argon2 for this due to their robust resistance to attacks. These algorithms employ salting, a crucial technique which adds a random string to each password before hashing, preventing attackers from using pre-computed rainbow tables.
+Let’s break down the practical considerations, starting with password storage. This isn't something to be taken lightly. Never, and I mean _never_, store passwords in plain text or using reversible encryption. Hashing is the standard way to handle this, using a one-way function that transforms the password into an irreversible string. I often advocate for using bcrypt or argon2 for this due to their robust resistance to attacks. These algorithms employ salting, a crucial technique which adds a random string to each password before hashing, preventing attackers from using pre-computed rainbow tables.
 
 Now for actual coding examples. Here's a Python snippet using the `bcrypt` library that I commonly use:
 
@@ -96,47 +96,43 @@ Here is one more code example, this time using a very simple javascript example 
 
 ```javascript
 function login(username, password) {
-    //This part would usually be done via API call and would check your database
-    if(username === "testuser" && password === "password") {
-        // Generate a basic random token for simplicity's sake. In real life, use JWT
-        const token = Math.random().toString(36).substring(2);
-        localStorage.setItem('authToken', token);
-        return true; //Return login success
-    }
-    return false //Return login failure
+  //This part would usually be done via API call and would check your database
+  if (username === "testuser" && password === "password") {
+    // Generate a basic random token for simplicity's sake. In real life, use JWT
+    const token = Math.random().toString(36).substring(2);
+    localStorage.setItem("authToken", token);
+    return true; //Return login success
+  }
+  return false; //Return login failure
 }
 
 function isLoggedIn() {
-    return localStorage.getItem('authToken') !== null;
+  return localStorage.getItem("authToken") !== null;
 }
 
 function logout() {
-    localStorage.removeItem('authToken');
+  localStorage.removeItem("authToken");
 }
 
 // Simple usage
 const loginSuccess = login("testuser", "password");
-if (loginSuccess){
+if (loginSuccess) {
   console.log("Logged in");
 }
 
-if(isLoggedIn()) {
-    console.log("User is currently logged in");
+if (isLoggedIn()) {
+  console.log("User is currently logged in");
+} else {
+  console.log("User is logged out");
 }
-else {
-     console.log("User is logged out");
-}
-
 
 logout();
 
-if(isLoggedIn()) {
-    console.log("User is currently logged in");
+if (isLoggedIn()) {
+  console.log("User is currently logged in");
+} else {
+  console.log("User is logged out");
 }
-else {
-     console.log("User is logged out");
-}
-
 ```
 
 Regarding resources, I highly recommend diving into "Web Security: A White Hat Hacker's Handbook" by Dafydd Stuttard and Marcus Pinto for a deep understanding of web security concepts. For more detail on authentication protocols, take a look at RFC 6749 (OAuth 2.0) and RFC 7519 (JWT). Also, the OWASP (Open Web Application Security Project) website provides invaluable resources and guidelines for best practices in web application security, specifically with reference to authentication and authorization. Finally, the NIST guidelines on password management will also be very helpful in planning a secure sign in process. These resources provide comprehensive knowledge that you can use in building secure systems.

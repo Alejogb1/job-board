@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-hide-usage-links-in-riders-ide-for-properties-and-methods"
 ---
 
-Okay, let's tackle this. It's a specific annoyance, isn't it? Those "usage" links, while helpful in some contexts, can quickly clutter the visual space, especially when you're working on very frequently accessed properties or methods. I remember once, a few years back, on a large .net project involving complex business logic and numerous interdependencies, the constant stream of usage indicators was actually hindering more than helping. I found myself spending precious mental cycles filtering them out rather than focusing on the code itself. After some rather deep configuration dives and a few chats with the JetBrains support team (they’re pretty sharp, by the way), I arrived at a decent solution.
+, let's tackle this. It's a specific annoyance, isn't it? Those "usage" links, while helpful in some contexts, can quickly clutter the visual space, especially when you're working on very frequently accessed properties or methods. I remember once, a few years back, on a large .net project involving complex business logic and numerous interdependencies, the constant stream of usage indicators was actually hindering more than helping. I found myself spending precious mental cycles filtering them out rather than focusing on the code itself. After some rather deep configuration dives and a few chats with the JetBrains support team (they’re pretty sharp, by the way), I arrived at a decent solution.
 
 Now, it’s not about completely removing the functionality, as that would throw out the baby with the bathwater. Instead, we're aiming for a selective approach to manage when and how these usages are displayed. The key is understanding the fine-grained control that Rider offers. It's not a straightforward checkbox option, but rather a combination of settings that you need to manipulate.
 
@@ -12,7 +12,7 @@ The primary mechanism we’ll utilize is the “Code Vision” feature. Code vis
 
 Let's start with property usage links. I've found three effective ways of dealing with them. Firstly, and perhaps the simplest, is to globally disable the "usages" indicator for members (which includes properties) through the settings. You can navigate to `File > Settings (or Rider > Preferences on macOS) > Editor > Inlay Hints > C# > Code Vision`. Here, you'll find a section labeled “Usages” and a checkbox next to “Members.” Unchecking this will, globally, remove the number of usages from properties and methods. Note that this applies to members within the class itself. This is a very impactful change if you simply don't need it on that level.
 
-However, the nuclear option of disabling them for all members is not always ideal; sometimes you *do* need them, just not on, say, those ubiquitous getter/setters. For that finer level of control, consider utilizing code analysis rules in conjunction with severity settings. This allows you to suppress the display of these usage links on a case-by-case basis, based on the code structure. We achieve this by creating a custom suppression that essentially tells Rider to not show the usage of specific property types or specific named properties. This approach is significantly more nuanced.
+However, the nuclear option of disabling them for all members is not always ideal; sometimes you _do_ need them, just not on, say, those ubiquitous getter/setters. For that finer level of control, consider utilizing code analysis rules in conjunction with severity settings. This allows you to suppress the display of these usage links on a case-by-case basis, based on the code structure. We achieve this by creating a custom suppression that essentially tells Rider to not show the usage of specific property types or specific named properties. This approach is significantly more nuanced.
 
 Finally, for a dynamic approach, you can create your own custom annotations and code inspections, though this involves a more in-depth understanding of Rider’s API. I'll walk through the first two more in detail.
 
@@ -58,7 +58,7 @@ In the example above, I'll show you how to suppress usage links for the `Id` pro
 8.  Then, change its severity to "Do not show."
 9.  Click "Apply" or "OK".
 
-Now, usage links will *not* show for the `Id` property, while usages on `Name` are still shown. Notice that the functionality of the property and the usage in the method remain completely unaffected; only the visualization of the usages is modified.
+Now, usage links will _not_ show for the `Id` property, while usages on `Name` are still shown. Notice that the functionality of the property and the usage in the method remain completely unaffected; only the visualization of the usages is modified.
 
 **Example 3: Custom Code Annotation (Advanced)**
 
@@ -66,6 +66,6 @@ This approach is considerably more involved and requires you to work with Rider'
 
 To delve further into this, I'd recommend reading JetBrains' official documentation on Rider's plugin API. Specifically, study how to create custom annotations, inspections, and settings pages. Also, "ReSharper Plugin Development" by Matt Ellis, if you are using Resharper rather than Rider as the backend, is a great resource. Another authoritative text for custom code analysis is "Code Analysis: The Static Analysis Toolkit" by O'Callahan.
 
-In my experience, the second method, leveraging the suppression rules, provides the best balance of control and ease of implementation for the majority of cases. It gives you the ability to selectively hide usage links where they are disruptive, while retaining them in locations where they offer genuine value. It's always about finding that sweet spot where the tools work *for* you, not against you.
+In my experience, the second method, leveraging the suppression rules, provides the best balance of control and ease of implementation for the majority of cases. It gives you the ability to selectively hide usage links where they are disruptive, while retaining them in locations where they offer genuine value. It's always about finding that sweet spot where the tools work _for_ you, not against you.
 
 This way, I was able to clean up my editor view significantly and reduce the mental load. Remember, the goal of any tool is to enhance your productivity; when it becomes a distraction, it's time to reconfigure it. These strategies should hopefully offer you the granularity needed to manage those "usage" links effectively.

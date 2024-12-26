@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-are-both-stylesheetlinktag-and-stylesheetpacktag-necessary-for-bootstrap-installation"
 ---
 
-Okay, let's unpack this. It’s a question that often trips up newcomers to the Rails asset pipeline and webpack integration, and I can certainly see why. I recall dealing with a particularly thorny front-end setup issue a couple of years back where the subtle interplay of these two tags came back to haunt me. The short answer is that they serve fundamentally different purposes, each addressing different mechanisms for including CSS within your application, especially when incorporating a complex framework like Bootstrap. Understanding this distinction is crucial for effective asset management.
+, let's unpack this. It’s a question that often trips up newcomers to the Rails asset pipeline and webpack integration, and I can certainly see why. I recall dealing with a particularly thorny front-end setup issue a couple of years back where the subtle interplay of these two tags came back to haunt me. The short answer is that they serve fundamentally different purposes, each addressing different mechanisms for including CSS within your application, especially when incorporating a complex framework like Bootstrap. Understanding this distinction is crucial for effective asset management.
 
 The core difference lies in how these tags handle your stylesheets: `stylesheet_link_tag` is the traditional way rails handles CSS, and it works through the asset pipeline. This pipeline is all about taking static files in your `app/assets` directory and compiling them, minifying them, and generally making them ready for production. When you see `stylesheet_link_tag 'application'`, rails is essentially looking for a file – typically `application.css` or `application.scss` within that directory structure. This file then often imports other stylesheet files using `@import` statements or is where you directly include your css. The output is a single, or sometimes multiple, css files that the browser can then load.
 
-On the other hand, `stylesheet_pack_tag` is introduced when you incorporate webpacker into your rails project. Webpacker, typically used when you need more advanced features like javascript dependency management, module bundling, and support for frameworks like React, Vue, or Angular, can also handle styling through a process called bundling. Webpacker operates outside the traditional asset pipeline, meaning files processed by webpack are placed in the `public/packs` directory. The critical aspect here is the concept of *packs*.
+On the other hand, `stylesheet_pack_tag` is introduced when you incorporate webpacker into your rails project. Webpacker, typically used when you need more advanced features like javascript dependency management, module bundling, and support for frameworks like React, Vue, or Angular, can also handle styling through a process called bundling. Webpacker operates outside the traditional asset pipeline, meaning files processed by webpack are placed in the `public/packs` directory. The critical aspect here is the concept of _packs_.
 
 Essentially, a 'pack' is a specific entry point that webpack uses to bundle all its dependencies together. When you use `stylesheet_pack_tag 'application'`, webpacker is locating a specific pack named `application` (usually located under `app/javascript/packs`). This pack likely includes all of the javascript files and related stylesheets that are relevant to your front-end components, often including the main styling for bootstrap.
 
@@ -43,8 +43,8 @@ Your entry point located at `app/javascript/packs/application.js` might include:
 
 ```javascript
 // app/javascript/packs/application.js
-import 'bootstrap';
-import '../stylesheets/application.scss';
+import "bootstrap";
+import "../stylesheets/application.scss";
 ```
 
 And a stylesheet at `app/javascript/stylesheets/application.scss`:
@@ -53,7 +53,6 @@ And a stylesheet at `app/javascript/stylesheets/application.scss`:
 // app/javascript/stylesheets/application.scss
 @import "bootstrap/scss/bootstrap";
 @import "./custom_styles";
-
 ```
 
 and a separate scss file also located in `app/javascript/stylesheets/custom_styles.scss`:
@@ -75,7 +74,7 @@ In the `app/javascript/packs/application.js`
 
 ```javascript
 // app/javascript/packs/application.js
-import 'bootstrap';
+import "bootstrap";
 ```
 
 And a separate css file for any styles not managed through webpack at `app/assets/stylesheets/custom_styles.scss`:
@@ -83,11 +82,11 @@ And a separate css file for any styles not managed through webpack at `app/asset
 ```scss
 // app/assets/stylesheets/custom_styles.scss
 body {
-    background-color: #f0f0f0;
+  background-color: #f0f0f0;
 }
 
 .my-special-container {
-    background-color: #ff0;
+  background-color: #ff0;
 }
 ```
 

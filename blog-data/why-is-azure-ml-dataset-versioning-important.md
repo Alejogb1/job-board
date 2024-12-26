@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-azure-ml-dataset-versioning-important"
 ---
 
-Okay, let’s talk dataset versioning in Azure machine learning; something I've definitely learned the hard way over several projects. It's not always the first thing people think about when starting with ml, but it quickly becomes vital as projects mature. I recall one particularly chaotic project where we were constantly battling data drift issues, and much of that could have been mitigated with a solid versioning strategy in place from the get-go.
+, let’s talk dataset versioning in Azure machine learning; something I've definitely learned the hard way over several projects. It's not always the first thing people think about when starting with ml, but it quickly becomes vital as projects mature. I recall one particularly chaotic project where we were constantly battling data drift issues, and much of that could have been mitigated with a solid versioning strategy in place from the get-go.
 
 So, to get to the crux of it, dataset versioning in azure ml, or frankly anywhere in the ml lifecycle, is crucial for a number of interrelated reasons, and fundamentally it boils down to reproducibility, traceability, and efficient collaboration.
 
@@ -44,7 +44,7 @@ ml_client.data.create_or_update(my_data)
 
 ```
 
-In this first snippet, I'm using the Azure ML SDK to register a dataset based on an existing blob storage location. Here, it’s important to understand that this registers metadata information *about* your data; it isn't moving the data. The crucial aspect is that this creates the first version of the dataset that azure ml will understand. After this call, you would see this dataset in your workspace. Note that the path needs to be updated with the details of your specific storage account and the location of the initial data.
+In this first snippet, I'm using the Azure ML SDK to register a dataset based on an existing blob storage location. Here, it’s important to understand that this registers metadata information _about_ your data; it isn't moving the data. The crucial aspect is that this creates the first version of the dataset that azure ml will understand. After this call, you would see this dataset in your workspace. Note that the path needs to be updated with the details of your specific storage account and the location of the initial data.
 
 Now, let's suppose the data has evolved and we have a new, updated set of data in a different blob location. Let's register it as a new version:
 
@@ -78,7 +78,7 @@ ml_client.data.create_or_update(new_data)
 
 ```
 
-In this snippet, we're using the same name ("my_initial_dataset") but registering a new version by specifying `version="2"`. And importantly, the ‘path’ points to a *different* location in blob storage, which reflects our updated data. If we skip the ‘version’ parameter, azure will automatically increment the version number. The key takeaway here is that, while the data 'name' remains consistent, the path and the version clearly differentiate the different data sets. The Azure ML interface will display both versions under the same "dataset name" allowing us to select the one required for our ML training experiment.
+In this snippet, we're using the same name ("my_initial_dataset") but registering a new version by specifying `version="2"`. And importantly, the ‘path’ points to a _different_ location in blob storage, which reflects our updated data. If we skip the ‘version’ parameter, azure will automatically increment the version number. The key takeaway here is that, while the data 'name' remains consistent, the path and the version clearly differentiate the different data sets. The Azure ML interface will display both versions under the same "dataset name" allowing us to select the one required for our ML training experiment.
 
 Finally, let's consider a situation where we’re now training a model, and we need to refer back to a specific dataset version:
 

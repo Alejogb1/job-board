@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-cnn-pruning-be-implemented-when-weight-pruning-requires-prior-weight-removal"
 ---
 
-Alright, let's tackle this. It's a common stumbling block when initially diving into convolutional neural network (cnn) pruning, particularly the weight-based methods. I've personally grappled with this precise issue back when I was optimizing a real-time object detection system for an embedded device – the computational constraints were… aggressive, shall we say. The challenge, as you’ve framed it, arises because pruning, by its very nature, involves removing connections (weights) from a network. If a pruning algorithm requires an *already pruned* network as input to perform weight removal effectively, it seems like a chicken-and-egg scenario. But it's more of an iterative process than a single, monolithic step.
+, let's tackle this. It's a common stumbling block when initially diving into convolutional neural network (cnn) pruning, particularly the weight-based methods. I've personally grappled with this precise issue back when I was optimizing a real-time object detection system for an embedded device – the computational constraints were… aggressive, shall we say. The challenge, as you’ve framed it, arises because pruning, by its very nature, involves removing connections (weights) from a network. If a pruning algorithm requires an _already pruned_ network as input to perform weight removal effectively, it seems like a chicken-and-egg scenario. But it's more of an iterative process than a single, monolithic step.
 
-The fundamental misunderstanding here is often thinking about pruning as a single action. Instead, it's best understood as a sequence of operations, a feedback loop if you will, particularly when dealing with weight-based approaches. The process isn’t 'remove weights, *then* prune,' but rather 'assess the network, remove *some* weights based on assessment, reassess the network, remove *more* weights, and so on' until a desired level of sparsity is achieved or performance degrades unacceptably. The 'prior weight removal' you mention, thus, is actually occurring sequentially. Let's break down how this typically unfolds and how it can be managed effectively, along with examples.
+The fundamental misunderstanding here is often thinking about pruning as a single action. Instead, it's best understood as a sequence of operations, a feedback loop if you will, particularly when dealing with weight-based approaches. The process isn’t 'remove weights, _then_ prune,' but rather 'assess the network, remove _some_ weights based on assessment, reassess the network, remove _more_ weights, and so on' until a desired level of sparsity is achieved or performance degrades unacceptably. The 'prior weight removal' you mention, thus, is actually occurring sequentially. Let's break down how this typically unfolds and how it can be managed effectively, along with examples.
 
 **The Iterative Nature of Weight Pruning**
 
@@ -40,7 +40,7 @@ class MagnitudePruner:
               abs_weight = torch.abs(weight)
               num_weights = weight.numel()
               num_prune = int(num_weights * self.prune_rate)
-              
+
               if num_prune > 0:
                   threshold = torch.kthvalue(abs_weight.view(-1), num_prune).values.item()
                   mask = abs_weight > threshold
@@ -88,7 +88,7 @@ for i in range(10): #10 training epochs
 pruner.prune(model)
 ```
 
-Here, we instantiate a `MagnitudePruner` and apply it to a sample model. Critically, we apply it *again* after simulating a brief training cycle (the dummy data is for illustration purposes; you'd use real data in a practical scenario). This second application will prune based on the current state of the model, which already has the results of the first pruning included.
+Here, we instantiate a `MagnitudePruner` and apply it to a sample model. Critically, we apply it _again_ after simulating a brief training cycle (the dummy data is for illustration purposes; you'd use real data in a practical scenario). This second application will prune based on the current state of the model, which already has the results of the first pruning included.
 
 **Example 3: Verification**
 
@@ -111,11 +111,11 @@ This simple helper function demonstrates how to count the zero weights, which is
 
 **Important Considerations & Further Reading**
 
-*   **Global vs. Local Pruning:**  The examples above use layer-wise pruning. You can consider global pruning, where weights are chosen from the entire network based on their importance scores relative to each other.
-*   **Pruning Criteria:** The magnitude criterion is simple, but there are other more sophisticated methods. *Optimal Brain Damage* (LeCun et al., 1990) is a classic paper proposing a second-order approximation to estimate the impact of removing weights, and *Deep Compression: Compressing Deep Neural Networks with Pruning, Trained Quantization and Huffman Coding* (Han et al., 2015) is another impactful paper with related techniques.
-*   **Fine-tuning Strategies:** The amount of fine-tuning after pruning, and the learning rates used, are essential to achieving an acceptable tradeoff between sparsity and accuracy. See *Rethinking the Value of Network Pruning* (Frankle and Carbin, 2019) for insights on training practices for pruned networks.
-*   **Framework Support:** Most frameworks, like PyTorch, TensorFlow, and others, offer support for applying masks and controlling which weights are updated during backpropagation. Explore their documentation for efficient implementation.
+- **Global vs. Local Pruning:** The examples above use layer-wise pruning. You can consider global pruning, where weights are chosen from the entire network based on their importance scores relative to each other.
+- **Pruning Criteria:** The magnitude criterion is simple, but there are other more sophisticated methods. _Optimal Brain Damage_ (LeCun et al., 1990) is a classic paper proposing a second-order approximation to estimate the impact of removing weights, and _Deep Compression: Compressing Deep Neural Networks with Pruning, Trained Quantization and Huffman Coding_ (Han et al., 2015) is another impactful paper with related techniques.
+- **Fine-tuning Strategies:** The amount of fine-tuning after pruning, and the learning rates used, are essential to achieving an acceptable tradeoff between sparsity and accuracy. See _Rethinking the Value of Network Pruning_ (Frankle and Carbin, 2019) for insights on training practices for pruned networks.
+- **Framework Support:** Most frameworks, like PyTorch, TensorFlow, and others, offer support for applying masks and controlling which weights are updated during backpropagation. Explore their documentation for efficient implementation.
 
 **In Conclusion**
 
-Pruning isn't a one-shot deal. It’s a nuanced, iterative process. The misconception about needing prior pruning is resolved by understanding that each round of pruning assesses the *current* state of the model, building upon the sparsity achieved in previous steps. By adopting this iterative perspective and carefully considering your pruning criterion and finetuning strategy, you can leverage pruning to achieve impressive reductions in model size and computational cost, just as I learned those years ago during that embedded system project.
+Pruning isn't a one-shot deal. It’s a nuanced, iterative process. The misconception about needing prior pruning is resolved by understanding that each round of pruning assesses the _current_ state of the model, building upon the sparsity achieved in previous steps. By adopting this iterative perspective and carefully considering your pruning criterion and finetuning strategy, you can leverage pruning to achieve impressive reductions in model size and computational cost, just as I learned those years ago during that embedded system project.

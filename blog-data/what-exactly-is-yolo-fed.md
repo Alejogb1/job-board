@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-exactly-is-yolo-fed"
 ---
 
-Okay, let's talk about what actually goes into the maw of a YOLO model, because it’s not as straightforward as just tossing in some images and hoping for bounding boxes. I've spent a fair amount of time tweaking these things over the years, particularly in embedded vision projects where resources were incredibly constrained, and the data pipeline ended up being just as critical as the model itself. There’s definitely more to it than meets the eye.
+, let's talk about what actually goes into the maw of a YOLO model, because it’s not as straightforward as just tossing in some images and hoping for bounding boxes. I've spent a fair amount of time tweaking these things over the years, particularly in embedded vision projects where resources were incredibly constrained, and the data pipeline ended up being just as critical as the model itself. There’s definitely more to it than meets the eye.
 
 Fundamentally, YOLO (You Only Look Once) expects a specific input format, which is why its real-world application requires careful preprocessing. This input, primarily, is a tensor of a fixed size. While the specific size can vary depending on the version and implementation of YOLO (v3, v4, v5, etc.), the general concept remains consistent: a multi-dimensional array representing an image. Crucially, the image needs to be preprocessed before becoming this tensor, going beyond the initial raw pixel data.
 
@@ -39,12 +39,12 @@ def preprocess_image_padding(image_path, target_size):
     ratio = min(target_width / img_width, target_height / img_height)
     new_width = int(img_width * ratio)
     new_height = int(img_height * ratio)
-    
+
     img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
-    
+
     pad_width = (target_width - new_width) // 2
     pad_height = (target_height - new_height) // 2
-    
+
     padded_img = Image.new('RGB', (target_width, target_height), (128, 128, 128)) # Grey padding
     padded_img.paste(img, (pad_width, pad_height))
 
@@ -63,9 +63,11 @@ preprocessed_tensor = preprocess_image_padding(image_path, target_size)
 print(f"Preprocessed tensor shape: {preprocessed_tensor.shape}")
 
 ```
+
 This first example demonstrates how to resize and pad an image to maintain the aspect ratio. The gray padding ensures the background remains neutral.
 
 Next, consider a scenario where we normalize the input by subtracting the mean and dividing by standard deviation across the entire batch. This requires slightly more complex code.
+
 ```python
 import numpy as np
 from PIL import Image
@@ -132,9 +134,9 @@ def preprocess_image_batch(image_dir, target_size, batch_size, mean, std):
     """
 
     image_names = [filename for filename in os.listdir(image_dir) if filename.lower().endswith(('.jpg', '.jpeg', '.png'))]
-    
+
     preprocessed_images = []
-    
+
     for i in range(min(batch_size, len(image_names))):
         image_path = os.path.join(image_dir, image_names[i])
         img = Image.open(image_path).convert('RGB')
@@ -143,16 +145,16 @@ def preprocess_image_batch(image_dir, target_size, batch_size, mean, std):
         # Convert to NumPy array
         img_np = np.array(img).astype(np.float32) / 255.0 # initial scaling to 0-1
         img_np = np.transpose(img_np, (2, 0, 1))  # CHW format
-        
+
         # Normalize with provided mean and standard deviation
         for c in range(3):
           img_np[c, :, :] = (img_np[c, :, :] - mean[c]) / std[c]
 
         preprocessed_images.append(img_np)
-        
+
     # Stack the images into one tensor
     batch_tensor = np.stack(preprocessed_images, axis=0)
-    
+
     return batch_tensor
 
 # Example usage:

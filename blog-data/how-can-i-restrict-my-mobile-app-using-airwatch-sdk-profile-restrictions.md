@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-restrict-my-mobile-app-using-airwatch-sdk-profile-restrictions"
 ---
 
-Alright, let's tackle this. I've spent a fair amount of time navigating the intricacies of mobile device management, particularly with VMware Workspace ONE (formerly AirWatch). Restricting application behavior via SDK profiles is a fairly common requirement in enterprise deployments, and there’s a specific process I've honed over several projects. I recall one particularly complex deployment for a large healthcare provider where we had to secure patient data across hundreds of devices, and the need for precise control became quite apparent. So, let me walk you through how I approach this, keeping it focused on practical implementation.
+, let's tackle this. I've spent a fair amount of time navigating the intricacies of mobile device management, particularly with VMware Workspace ONE (formerly AirWatch). Restricting application behavior via SDK profiles is a fairly common requirement in enterprise deployments, and there’s a specific process I've honed over several projects. I recall one particularly complex deployment for a large healthcare provider where we had to secure patient data across hundreds of devices, and the need for precise control became quite apparent. So, let me walk you through how I approach this, keeping it focused on practical implementation.
 
 Essentially, we're talking about leveraging the AirWatch SDK profile capabilities to fine-tune application behavior, often beyond what’s configurable through the standard OS. The SDK provides a layer that allows you to exert control over functions like data leakage prevention, copy/paste restrictions, and even network access, within the context of a managed application. The goal is to provide enhanced security and compliance without hindering the application's core functionality.
 
@@ -80,7 +80,7 @@ Just as in the iOS example, we initialize and stop the `AirWatchSDK` singleton, 
 
 **Part 2: SDK Profile Configuration**
 
-Once your application is SDK-integrated, you can create and deploy SDK profiles within Workspace ONE. In the console, you'll find the *Profiles* section, typically under *Devices*, then *Profiles & Resources*. Here, you can craft a custom SDK profile. This profile is where we define all the rules and restrictions.
+Once your application is SDK-integrated, you can create and deploy SDK profiles within Workspace ONE. In the console, you'll find the _Profiles_ section, typically under _Devices_, then _Profiles & Resources_. Here, you can craft a custom SDK profile. This profile is where we define all the rules and restrictions.
 
 Let's illustrate with an example of restricting data exchange between managed and unmanaged apps via the pasteboard. Here's a conceptual representation of what you configure in the console’s SDK profile section:
 
@@ -112,9 +112,9 @@ import AWSDK
 
 func checkRestrictionSettings() {
     let settings = AWController.shared().settings
-        
+
     let clipboardSettings = settings?.dataLossPrevention?.clipboard
-        
+
     print("Paste to Managed Enabled: \(clipboardSettings?.allowPasteToManagedApps ?? false)")
     print("Copy to Unmanaged Disabled: \(clipboardSettings?.allowCopyToUnmanagedApps ?? false)")
 
@@ -136,7 +136,7 @@ In this Swift example, we demonstrate how one might extract the policy configura
 2.  **Testing:** It is critical to thoroughly test your application in a real-world environment, not just within emulators. Ensure that all restrictions function as intended and do not impede legitimate workflows. I have witnessed far too many rushed deployments crash and burn because of insufficient testing.
 3.  **User Experience:** While security is paramount, excessive restrictions can hamper user experience. Find a balance that safeguards sensitive data without rendering your application unusable. Consider using conditional policies to apply different restrictions based on device context (e.g., location).
 4.  **Documentation:** Always consult the official VMware Workspace ONE documentation for the latest APIs and profile options as these details change regularly. The “Workspace ONE SDK for iOS” or “Workspace ONE SDK for Android” manuals are your primary resource and should be reviewed thoroughly before and during implementation.
-5. **Feature Specific Configuration:** The examples provided demonstrate the general SDK setup. However, many specific SDK features, such as those related to authentication, data encryption, tunnel configurations, etc., require their own individual configurations, which again, must align with the policies setup on Workspace ONE.
+5.  **Feature Specific Configuration:** The examples provided demonstrate the general SDK setup. However, many specific SDK features, such as those related to authentication, data encryption, tunnel configurations, etc., require their own individual configurations, which again, must align with the policies setup on Workspace ONE.
 
 In my experience, these profiles are essential for securing enterprise apps effectively. It’s a bit more effort upfront but results in a much more secure and compliant application. If you want to dive deeper, consider looking into the works of Mike Spadafore on enterprise mobility, as his books often cover complex deployments with MDM systems. I also recommend keeping abreast of VMware's own documentation and white papers for best practices.
 

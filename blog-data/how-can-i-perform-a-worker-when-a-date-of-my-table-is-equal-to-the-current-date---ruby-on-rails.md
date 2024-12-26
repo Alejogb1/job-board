@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-i-perform-a-worker-when-a-date-of-my-table-is-equal-to-the-current-date---ruby-on-rails"
 ---
 
-alright, so you're looking to trigger some sort of background job or process when a date field in your rails table matches the current date. i've definitely been down this road before, and it's pretty common, actually. it's all about scheduling and getting the timing precise. let me walk you through how i typically approach this.
+, so you're looking to trigger some sort of background job or process when a date field in your rails table matches the current date. i've definitely been down this road before, and it's pretty common, actually. it's all about scheduling and getting the timing precise. let me walk you through how i typically approach this.
 
 first off, the core problem is essentially comparing dates. rails gives you a lot of useful tools, and the `date` data type in postgres (or whatever database you're using) is particularly helpful. it avoids many of the timezone headaches you might have with `datetime`. i actually had an issue once where i was using datetime and forgot the timezone conversion part, my jobs were running a full day late, not a fun debugging session. lesson learned: when you just need a date, just use a date.
 
@@ -42,11 +42,11 @@ namespace :process_dates do
 end
 ```
 
-*   `namespace :process_dates`: just gives a namespace to the rake task.
-*   `task :process_today => :environment`: this is the actual task definition, ensuring you're in a rails environment.
-*   `today = Date.today`: this grabs the current date.
-*   `MyModel.where(date_field: today).find_each`: this efficiently queries your database for records with a date that matches today, and iterates over each one.
-*   `MyWorker.perform_later(record.id)`: this queues a background job, assuming you're using something like sidekiq or resque, and it's a good practice to pass only the record id.
+- `namespace :process_dates`: just gives a namespace to the rake task.
+- `task :process_today => :environment`: this is the actual task definition, ensuring you're in a rails environment.
+- `today = Date.today`: this grabs the current date.
+- `MyModel.where(date_field: today).find_each`: this efficiently queries your database for records with a date that matches today, and iterates over each one.
+- `MyWorker.perform_later(record.id)`: this queues a background job, assuming you're using something like sidekiq or resque, and it's a good practice to pass only the record id.
 
 **3. schedule with whenever:** now you need to configure whenever, to schedule the rake task in the `config/schedule.rb` file. if the file doesn't exist, run `wheneverize .` inside your project root to create it.
 
@@ -77,22 +77,22 @@ class MyWorker
 end
 ```
 
-*   `include Sidekiq::Worker`: makes this a sidekiq worker. you'll need sidekiq setup and running. if you prefer you can use other gems like `delayed_job`.
-*   `sidekiq_options retry: false`: this will prevent retries in case the job fails. you should customize based on your case.
-*   `perform(record_id)`: this is the method that does all the processing. remember, it's best practice to load the record using `id`.
+- `include Sidekiq::Worker`: makes this a sidekiq worker. you'll need sidekiq setup and running. if you prefer you can use other gems like `delayed_job`.
+- `sidekiq_options retry: false`: this will prevent retries in case the job fails. you should customize based on your case.
+- `perform(record_id)`: this is the method that does all the processing. remember, it's best practice to load the record using `id`.
 
 now, some general thoughts:
 
-*   **error handling:** you'll need to think about error handling in the `MyWorker`. what should happen if, say, you can't find the record? what about if it fails to update? it depends on the requirements of your application.
-*   **large tables:** if you have a massive table, `find_each` is crucial because it loads the records in batches avoiding memory issues. avoid loading all records in the memory at once.
-*   **timezone awareness:** dates can be tricky with timezones, remember to keep consistency, and ensure that your database and your rails app are configured to deal with it correctly.
-*   **performance:**  database indexing the `date_field` will improve performance.
-*   **testing**: writing unit tests for the worker is essential, and it might be a good idea to write integration tests for the rake task using a test database with sample data and test your worker logic too.
+- **error handling:** you'll need to think about error handling in the `MyWorker`. what should happen if, say, you can't find the record? what about if it fails to update? it depends on the requirements of your application.
+- **large tables:** if you have a massive table, `find_each` is crucial because it loads the records in batches avoiding memory issues. avoid loading all records in the memory at once.
+- **timezone awareness:** dates can be tricky with timezones, remember to keep consistency, and ensure that your database and your rails app are configured to deal with it correctly.
+- **performance:** database indexing the `date_field` will improve performance.
+- **testing**: writing unit tests for the worker is essential, and it might be a good idea to write integration tests for the rake task using a test database with sample data and test your worker logic too.
 
 as for resources, i'd point you towards a couple of things i've found useful over the years:
 
-*   **"rails anti-patterns" by nathaniel talbott:** this book (yes, a book!) touches upon many common pitfalls in rails development and is worth a read. it covers a lot of the general things i'm talking about here, like avoiding loading everything into memory at once.
-*   **"postgresql documentation"**: the official postgres documentation provides the details on how to use sql to manipulate dates, and it is a must for any database engineer, you can search for things like "date functions" and "date types".
+- **"rails anti-patterns" by nathaniel talbott:** this book (yes, a book!) touches upon many common pitfalls in rails development and is worth a read. it covers a lot of the general things i'm talking about here, like avoiding loading everything into memory at once.
+- **"postgresql documentation"**: the official postgres documentation provides the details on how to use sql to manipulate dates, and it is a must for any database engineer, you can search for things like "date functions" and "date types".
 
 and remember, debugging is basically just an exercise of patience and caffeine. i once spent an entire day chasing down a timezone issue that turned out to be a misconfigured server, that one hurt. (it was like trying to find a missing sock in a laundry full of... other socks).
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-convert-a-pretrained-slowfastr50-model-to-torchscript"
 ---
 
-Okay, let's tackle this. The task of converting a pre-trained `slowfast_r50` model to Torchscript can sometimes feel like navigating a maze, especially with the subtleties of video models and their complex input requirements. From my past experiences, I recall a particular project where we needed to deploy a similar model to edge devices, and the journey was… enlightening. I learned quite a bit about the intricacies involved. So, let's break down the process step-by-step.
+, let's tackle this. The task of converting a pre-trained `slowfast_r50` model to Torchscript can sometimes feel like navigating a maze, especially with the subtleties of video models and their complex input requirements. From my past experiences, I recall a particular project where we needed to deploy a similar model to edge devices, and the journey was… enlightening. I learned quite a bit about the intricacies involved. So, let's break down the process step-by-step.
 
 The primary objective of converting a model to Torchscript is to create a serialized, platform-independent representation that can be executed outside of the Python environment, often leading to significant performance gains, particularly on platforms like mobile or embedded systems. This requires a careful approach, especially with models that have dynamic aspects, such as those involving variable sequence lengths in video data.
 
@@ -91,9 +91,9 @@ The key here is that we are using `@script` and not `torch.jit.trace`. Trace ass
 
 **Recommended Resources**
 
-*   **PyTorch Documentation on Torchscript:** The official PyTorch documentation is your first port of call. Look for sections on `torch.jit.script` and `torch.jit.trace`, understand their use cases, and review the best practices. A strong grasp on tracing vs scripting is vital.
-*   **"Deep Learning with PyTorch" by Eli Stevens, Luca Antiga, and Thomas Viehmann:** This book is an excellent resource for understanding PyTorch's internals, including its scripting and tracing mechanisms. The chapters related to model deployment will provide the underlying knowledge.
-*  **"Mastering PyTorch" by Ashish Kumar:** This book offers detailed tutorials and advanced tips related to optimizing models for inference and deployment. It can be a good resource for deepening your understanding of how to script a model for production use.
-*  **Research Papers on Slowfast Networks:** Reading the original papers describing the SlowFast architecture will give deep insight into how the temporal aspects of the video data are processed. Having this level of understanding will help ensure that your script matches the model's expectations.
+- **PyTorch Documentation on Torchscript:** The official PyTorch documentation is your first port of call. Look for sections on `torch.jit.script` and `torch.jit.trace`, understand their use cases, and review the best practices. A strong grasp on tracing vs scripting is vital.
+- **"Deep Learning with PyTorch" by Eli Stevens, Luca Antiga, and Thomas Viehmann:** This book is an excellent resource for understanding PyTorch's internals, including its scripting and tracing mechanisms. The chapters related to model deployment will provide the underlying knowledge.
+- **"Mastering PyTorch" by Ashish Kumar:** This book offers detailed tutorials and advanced tips related to optimizing models for inference and deployment. It can be a good resource for deepening your understanding of how to script a model for production use.
+- **Research Papers on Slowfast Networks:** Reading the original papers describing the SlowFast architecture will give deep insight into how the temporal aspects of the video data are processed. Having this level of understanding will help ensure that your script matches the model's expectations.
 
 Converting complex models to Torchscript requires understanding the underlying mechanism of both the model and the Torchscript framework. With the approach I've outlined, and an understanding of the nuances, you should be able to script a `slowfast_r50` model effectively for deployment. Always test thoroughly on the target platform to ensure optimal performance and correctness of the results. Remember, the more intimately you understand these systems, the more reliably you can tackle complex engineering challenges.

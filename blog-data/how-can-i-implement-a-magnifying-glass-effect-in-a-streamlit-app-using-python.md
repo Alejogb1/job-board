@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-implement-a-magnifying-glass-effect-in-a-streamlit-app-using-python"
 ---
 
-Alright, let's talk magnifying glasses in Streamlit. I remember back on a project—it was a geographic data visualization tool, funnily enough—we needed precisely that: a way for users to inspect high-resolution map segments without cluttering the main view. It’s a deceptively complex effect if you consider all the moving parts. Rather than a simplistic zoom, a true magnifying glass needs to follow the cursor, show a magnified region, and update smoothly. We’re essentially working with interactive, dynamic masking and transformation here.
+, let's talk magnifying glasses in Streamlit. I remember back on a project—it was a geographic data visualization tool, funnily enough—we needed precisely that: a way for users to inspect high-resolution map segments without cluttering the main view. It’s a deceptively complex effect if you consider all the moving parts. Rather than a simplistic zoom, a true magnifying glass needs to follow the cursor, show a magnified region, and update smoothly. We’re essentially working with interactive, dynamic masking and transformation here.
 
 The core principle revolves around combining a few key elements: the original image (or, in our streamlit context, an image rendered from something), an overlay that acts as the ‘glass’ and dynamically updates its content based on cursor position, and some clever manipulation of coordinates to get the magnified region correctly displayed.
 
@@ -220,6 +220,7 @@ if __name__ == '__main__':
     st.subheader('Square Magnifying Glass')
     create_shaped_magnifying_glass(image_path, zoom_factor=3, shape='square', glass_size = 200)
 ```
+
 This version introduces the 'shape' and 'glass_size' parameters which allows us to switch between circular and square magnified areas. We also pass the size of the magnified area to the html, to be used in sizing the canvas and adjusting the positioning of the canvas over the image, which is important if you have rectangular magnifying glass regions.
 
 Now, for a more advanced scenario, consider if you wanted to handle multiple zoom levels and also the edge cases where the mouse goes off the image. This is where the javascript gets a little trickier to manage. This should be more illustrative.
@@ -345,8 +346,9 @@ This version incorporates mouse wheel input, allowing the user to cycle between 
 Implementing such an effect is, as you can see, a non-trivial endeavor that requires delving into both front-end (javascript) and back-end (Python) concerns, specifically how they relate to streamlit components. There are no 'magical' shortcuts to achieving this effect beyond careful manipulation of the canvas element and the events surrounding it.
 
 For further study, I'd recommend looking into the following:
-*   **"HTML5 Canvas"** by Steve Fulton and Jeff Fulton, for a solid foundation on canvas manipulation.
-*   **"Eloquent JavaScript"** by Marijn Haverbeke for a deeper dive into JavaScript event handling and DOM manipulation.
-*   The **"Streamlit Components documentation"** for understanding how custom HTML and JavaScript integrate within Streamlit applications.
+
+- **"HTML5 Canvas"** by Steve Fulton and Jeff Fulton, for a solid foundation on canvas manipulation.
+- **"Eloquent JavaScript"** by Marijn Haverbeke for a deeper dive into JavaScript event handling and DOM manipulation.
+- The **"Streamlit Components documentation"** for understanding how custom HTML and JavaScript integrate within Streamlit applications.
 
 Remember that these examples are starting points. Optimizing performance, especially for large images or high zoom factors, might necessitate more complex caching or rendering techniques. This can get significantly more advanced depending on the specific demands of your project.

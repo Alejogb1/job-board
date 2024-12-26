@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-google-cloud-functions-trigger-google-composer-airflow-dags"
 ---
 
-Okay, let's tackle this. I’ve seen this particular challenge come up quite a few times in my career, and it's a common need when you start stitching together serverless functions and orchestrating workflows. The interaction between Google Cloud Functions and Composer (which essentially is managed Apache Airflow) is a classic example of combining event-driven architectures with scheduled task management. It's not a straightforward integration, but a few well-established patterns make it quite manageable.
+, let's tackle this. I’ve seen this particular challenge come up quite a few times in my career, and it's a common need when you start stitching together serverless functions and orchestrating workflows. The interaction between Google Cloud Functions and Composer (which essentially is managed Apache Airflow) is a classic example of combining event-driven architectures with scheduled task management. It's not a straightforward integration, but a few well-established patterns make it quite manageable.
 
 The key challenge, as i’ve found, is that Cloud Functions are designed to react to events, while Airflow DAGs are typically triggered on a schedule or through manual intervention. Thus, you need a bridge between the asynchronous and the scheduled worlds. One approach which tends to be the most effective is to use Cloud Functions to programmatically trigger a DAG run using the Airflow API exposed by Cloud Composer. This is my preferred way to go because it offers fine-grained control and avoids less efficient polling solutions.
 
@@ -44,19 +44,19 @@ def trigger_dag(request):
 
     username, password = get_composer_api_credentials(project_id, secret_name)
     airflow_url = f"https://{composer_environment}.{composer_region}.composer.cloud.google/api/v1/dags/{dag_id}/dagRuns"
-    
-    
+
+
     try:
-      
+
         id_token = google.oauth2.id_token.fetch_id_token(request=google.auth.transport.requests.Request(),
                                                             target_audience = airflow_url)
-        
+
         headers = {
           "Authorization": f"Bearer {id_token}",
           "Content-Type": "application/json"
         }
-        
-        
+
+
         response = requests.post(airflow_url, headers=headers, json={})
         response.raise_for_status() # Raise error on HTTP issues
         return f"DAG '{dag_id}' triggered successfully. Response: {response.text}", 200
@@ -90,7 +90,7 @@ def publish_pubsub_message(request):
         # Assuming request contains data to be passed to the DAG
         request_json = request.get_json()
         message_data = str(request_json).encode("utf-8")
-        
+
         publish_future = publisher.publish(topic_path, data=message_data)
         publish_future.result()  # Blocks until message is published
         return f"Message published to {topic_name} successfully.", 200
@@ -98,9 +98,11 @@ def publish_pubsub_message(request):
         return f"Error publishing message: {e}", 500
 
 ```
+
 This Cloud Function is simpler; it just publishes a message with data as a JSON string to a specific pub/sub topic.
 
 Now let’s have a look at the relevant portion of the Airflow DAG:
+
 ```python
 # Airflow DAG (Python) to subscribe to Pub/Sub messages
 from airflow import DAG
@@ -122,7 +124,7 @@ with DAG(
     catchup=False,
     tags=['pubsub'],
 ) as dag:
-    
+
     pull_pubsub_sensor = PubSubPullSensor(
         task_id='pull_pubsub_message',
         project_id="your-project-id", # Replace with your project ID
@@ -135,11 +137,12 @@ with DAG(
         python_callable=process_pubsub_message,
         provide_context = True
     )
-    
+
     pull_pubsub_sensor >> process_message_task
 
 ```
-This DAG waits for messages to arrive on a specific subscription. When a message appears it’s passed to the *process_pubsub_message* Python function for further processing. The specific data from the message is now within the scope of your DAG and can be used to parameterize downstream tasks. This is very handy when the content of the message is important.
+
+This DAG waits for messages to arrive on a specific subscription. When a message appears it’s passed to the _process_pubsub_message_ Python function for further processing. The specific data from the message is now within the scope of your DAG and can be used to parameterize downstream tasks. This is very handy when the content of the message is important.
 
 A final less common approach would involve using a cloud scheduler trigger, where you would have your cloud scheduler trigger a cloud function, which in turn triggers a DAG. This can be useful if you need to execute a DAG at set intervals not supported by Airflow's own scheduler. The Cloud Function is similar to the first code block, and the cloud scheduler will execute it according to its scheduled configuration.
 

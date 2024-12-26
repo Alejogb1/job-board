@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-do-i-use-the-weka-neural-network-node-data-to-reconstruct-the-equation"
 ---
 
-alright, so you're looking to pull the equation out of a weka neural network model, right? i've been there, man. it's not always a straightforward process, and honestly, weka doesn't just hand it to you on a silver platter. it's more like a "here's the trained network, good luck figuring out the weights and biases" situation. been dealing with this kind of stuff since i was a kid, messing with those old pascal compilers and getting my hands dirty with neural nets way before they were cool. i remember trying to reconstruct the inner workings of a perceptron i built way back in the day, it was an exercise in patience, let me tell ya.
+, so you're looking to pull the equation out of a weka neural network model, right? i've been there, man. it's not always a straightforward process, and honestly, weka doesn't just hand it to you on a silver platter. it's more like a "here's the trained network, good luck figuring out the weights and biases" situation. been dealing with this kind of stuff since i was a kid, messing with those old pascal compilers and getting my hands dirty with neural nets way before they were cool. i remember trying to reconstruct the inner workings of a perceptron i built way back in the day, it was an exercise in patience, let me tell ya.
 
 the weka neural network implementation, the multilayer perceptron specifically, uses a feedforward architecture, meaning the data flows in one direction. you've got input neurons, hidden layers, and output neurons, all connected by weighted edges. to get the equation, you need to extract these weights and biases and then represent the computation in a mathematical form. weka hides this behind a high-level api, so it takes some work.
 
@@ -113,6 +113,7 @@ if __name__ == "__main__":
     output = calculate_network_output(model_path, input_data)
     print("calculated output:", output)
 ```
+
 this python example is a bit more complicated but shows how to go about it, you need to import `javabridge` and `numpy`, start the jvm, load the model via `SerializationHelper`, loop through layers, get weights and biases, perform a dot product to calculate the weighted sum, and apply the activation function (sigmoid in this case). the `jvm.start` and `jvm.stop` are necessary to initialize the weka java libraries using `javabridge` from python. this might be the hardest part, as it may not work in first try, but stick to it, it works. you can see that there's a need for adapting the code according to your network configuration (activation function and number of layers).
 
 this is a more complete version of the previous pseudocode.

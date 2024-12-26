@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-gradients-computed-as-none-in-pytorch"
 ---
 
-Okay, let's tackle this. I've seen this issue crop up more times than I care to remember, usually in the wee hours of the morning when debugging seemingly straightforward models. The scenario is always the same: you're expecting backpropagation to populate your tensor gradients, but instead, you find them stubbornly `None`. It's frustrating, to say the least, but the reasons are usually quite logical once you understand the underlying mechanisms of PyTorch's computational graph and autograd engine.
+, let's tackle this. I've seen this issue crop up more times than I care to remember, usually in the wee hours of the morning when debugging seemingly straightforward models. The scenario is always the same: you're expecting backpropagation to populate your tensor gradients, but instead, you find them stubbornly `None`. It's frustrating, to say the least, but the reasons are usually quite logical once you understand the underlying mechanisms of PyTorch's computational graph and autograd engine.
 
 The primary reason gradients show up as `None` isn't necessarily a bug; it's often a consequence of how PyTorch tracks operations for gradient computation. Autograd, the heart of PyTorch's automatic differentiation, works by constructing a dynamic computational graph. It only keeps track of operations that involve tensors with the `requires_grad=True` attribute. If this flag isn't set or the involved tensors are not participating in any gradient-calculating operation, gradients won’t be calculated, leading to them being `None`.
 
@@ -46,7 +46,7 @@ print(x.grad) # Output: tensor([2., 2., 2.])
 print(y.grad) # Output: None (because we did not compute gradients for the intermediate variables)
 ```
 
-By setting `requires_grad=True` when defining `x`, PyTorch now knows to track the operations and compute the gradients during backpropagation. Note that gradients are computed for all tensors that require gradients *and* which have been used in computations that produce the output on which `.backward()` is called. `y`’s gradient isn't filled as the user did not specify that we should compute it.
+By setting `requires_grad=True` when defining `x`, PyTorch now knows to track the operations and compute the gradients during backpropagation. Note that gradients are computed for all tensors that require gradients _and_ which have been used in computations that produce the output on which `.backward()` is called. `y`’s gradient isn't filled as the user did not specify that we should compute it.
 
 **Scenario 2: Operations that don't propagate gradients**
 
@@ -62,6 +62,7 @@ z.backward()
 print(x.grad) # Output: tensor([[1., 0.], [1., 0.]])
 print(y.grad) # Output: None
 ```
+
 `y` is a slice of `x`, which does require gradients; however, slicing does not directly accumulate gradients onto intermediate tensors. The computation of gradients for `x` was successful, but not directly for `y`, because it did not have an explicit computation that accumulated its gradients.
 
 **Scenario 3: In-place operations**
@@ -95,8 +96,9 @@ z.backward()
 
 print(x.grad) # Output: tensor([2., 2., 2.])
 ```
+
 By replacing the in-place `+=` with `y = y + 1` a new tensor is created, which doesn’t affect the graph or disrupt the connections required for backpropagation, thus allowing the gradient to be computed.
 
-For deeper exploration of PyTorch’s autograd, I recommend diving into the official PyTorch documentation. It’s detailed and provides a solid foundation. For a more theoretical understanding of automatic differentiation and computational graphs, the book "Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville provides a really good basis. Specifically, the chapter on backpropagation and computational graphs are of relevance here. Furthermore, exploring papers related to automatic differentiation and deep learning frameworks, such as those found in journals like the *Journal of Machine Learning Research (JMLR)* or *Neural Computation* can provide some really helpful insights.
+For deeper exploration of PyTorch’s autograd, I recommend diving into the official PyTorch documentation. It’s detailed and provides a solid foundation. For a more theoretical understanding of automatic differentiation and computational graphs, the book "Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville provides a really good basis. Specifically, the chapter on backpropagation and computational graphs are of relevance here. Furthermore, exploring papers related to automatic differentiation and deep learning frameworks, such as those found in journals like the _Journal of Machine Learning Research (JMLR)_ or _Neural Computation_ can provide some really helpful insights.
 
 In summary, finding `None` gradients usually boils down to whether `requires_grad=True` is set correctly, whether the operations used are gradient-propagating, and if in-place operations are being used. By carefully understanding the computational graph construction by PyTorch and tracking the usage of the tensor with respect to gradients, these issues can be avoided. I've definitely been bitten by these issues several times, and meticulous attention to these details can often save hours of debugging.

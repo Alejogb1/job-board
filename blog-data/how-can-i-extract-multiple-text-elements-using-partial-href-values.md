@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-multiple-text-elements-using-partial-href-values"
 ---
 
-Okay, let's tackle this. I recall a particularly gnarly project back in 2018, a scraping endeavor for a legacy e-commerce site – you wouldn't believe the markup they were using – where we faced precisely this issue. Extracting multiple text elements based on partial `href` values is a common scraping hurdle, and it demands a blend of precise selection and robust error handling. Fundamentally, we’re talking about situations where the anchor tags don't have unique, easily predictable `href` attributes, and we need to leverage substring matching to target our desired content. It's more intricate than just simple `querySelector` usage.
+, let's tackle this. I recall a particularly gnarly project back in 2018, a scraping endeavor for a legacy e-commerce site – you wouldn't believe the markup they were using – where we faced precisely this issue. Extracting multiple text elements based on partial `href` values is a common scraping hurdle, and it demands a blend of precise selection and robust error handling. Fundamentally, we’re talking about situations where the anchor tags don't have unique, easily predictable `href` attributes, and we need to leverage substring matching to target our desired content. It's more intricate than just simple `querySelector` usage.
 
 The core problem stems from the structure of many websites. Rather than having perfect, predictable `href` patterns, we often encounter links like `/product/detail/12345`, `/product/detail/67890`, etc. If you only want product names from a subset of these pages, perhaps where the identifier begins with `1` or `2`, you can't simply target by full `href`. So, partial matching becomes essential.
 
@@ -18,9 +18,10 @@ Here, we'll use `querySelectorAll` combined with `startsWith` string operation t
 
 ```javascript
 function extractTextByPartialHref(partialHref, parentElement = document) {
-  const elements = Array.from(parentElement.querySelectorAll('a')); // Convert NodeList to Array
-  return elements.filter(el => el.href.startsWith(partialHref))
-                 .map(el => el.textContent.trim());
+  const elements = Array.from(parentElement.querySelectorAll("a")); // Convert NodeList to Array
+  return elements
+    .filter((el) => el.href.startsWith(partialHref))
+    .map((el) => el.textContent.trim());
 }
 
 //Example Usage:
@@ -47,12 +48,11 @@ Here’s how you might tackle more complex `href` patterns using regular express
 
 ```javascript
 function extractTextByRegexHref(regexPattern, parentElement = document) {
-  const elements = Array.from(parentElement.querySelectorAll('a'));
+  const elements = Array.from(parentElement.querySelectorAll("a"));
   const regex = new RegExp(regexPattern);
-    return elements
-           .filter(el => regex.test(el.href))
-           .map(el => el.textContent.trim());
-
+  return elements
+    .filter((el) => regex.test(el.href))
+    .map((el) => el.textContent.trim());
 }
 
 //Example Usage:

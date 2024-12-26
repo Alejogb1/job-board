@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-vader-scores-be-effectively-calculated-for-extended-texts"
 ---
 
-Okay, let's talk about handling VADER scores with longer text inputs, something I've definitely bumped up against in a few projects. It’s not as straightforward as plugging in a few sentences and calling it a day, so we need to consider some nuances. Simply treating a lengthy document as one monolithic block for VADER analysis often leads to a diluted and, frankly, inaccurate representation of the overall sentiment. The inherent averaging in VADER can smooth out subtle shifts in emotional tone that might be critical for your task. Imagine analyzing a book review; a positive start followed by a critique later will likely yield a mediocre overall score if you process the entire review as a single input.
+, let's talk about handling VADER scores with longer text inputs, something I've definitely bumped up against in a few projects. It’s not as straightforward as plugging in a few sentences and calling it a day, so we need to consider some nuances. Simply treating a lengthy document as one monolithic block for VADER analysis often leads to a diluted and, frankly, inaccurate representation of the overall sentiment. The inherent averaging in VADER can smooth out subtle shifts in emotional tone that might be critical for your task. Imagine analyzing a book review; a positive start followed by a critique later will likely yield a mediocre overall score if you process the entire review as a single input.
 
 First, let's acknowledge the strengths of VADER: it’s designed for sentiment analysis specifically focused on social media text and short-form content. It's relatively quick, doesn't require training on large datasets (which is great for rapid prototyping), and it handles negation, punctuation, and emoticons reasonably well. However, when stretched to longer text, its effectiveness diminishes due to these same design choices.
 
@@ -159,17 +159,17 @@ def analyze_text_weighted_avg(text, chunk_size=200):
 
     if not chunk_scores:
         return 0.0, []  # Handle empty chunk case
-    
+
     chunk_scores_arr = np.array(chunk_scores)
     std_dev = np.std(chunk_scores_arr)
 
     if std_dev == 0:
       return np.mean(chunk_scores_arr), chunk_scores # If there's no variance
-    
+
     weights = np.abs(chunk_scores_arr - np.mean(chunk_scores_arr)) / std_dev
-    
+
     weighted_average = np.sum(chunk_scores_arr * weights) / np.sum(weights)
-    
+
     return weighted_average, chunk_scores
 
 
@@ -180,7 +180,7 @@ print("Overall Weighted Sentiment Score:", overall_score)
 print("Chunk Scores:", chunk_scores)
 ```
 
-In the third example, we still use the fixed size chunks as in the second example. This time, however, instead of taking an average, we weigh the scores based on their standard deviation from the mean.  This is done to emphasize the sentiments that deviate more from the average.
+In the third example, we still use the fixed size chunks as in the second example. This time, however, instead of taking an average, we weigh the scores based on their standard deviation from the mean. This is done to emphasize the sentiments that deviate more from the average.
 
 In practice, you'll want to experiment with chunk sizes and weighting techniques to determine the optimal approach for your specific data. The key takeaway is that breaking down long text and understanding its emotional evolution can offer much deeper insights than a simple, one-shot VADER analysis.
 

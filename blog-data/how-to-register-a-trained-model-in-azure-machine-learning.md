@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-register-a-trained-model-in-azure-machine-learning"
 ---
 
-Okay, let's unpack model registration in Azure Machine Learning. I’ve dealt with this numerous times, especially during the transition from development environments to production deployments. It's often a critical step that, if not executed correctly, can lead to deployment headaches down the line. Forget the notion of just "copying" files; Azure Machine Learning's model registry is a formal and versioned approach to model management.
+, let's unpack model registration in Azure Machine Learning. I’ve dealt with this numerous times, especially during the transition from development environments to production deployments. It's often a critical step that, if not executed correctly, can lead to deployment headaches down the line. Forget the notion of just "copying" files; Azure Machine Learning's model registry is a formal and versioned approach to model management.
 
 Fundamentally, registering a trained model involves persisting not just the model file itself—be it a `.pkl` for a scikit-learn model, a `.h5` for Keras, or a custom format—but also accompanying metadata. This metadata is crucial; it encompasses information such as the training environment, model metrics, descriptions, and tags. Think of it as a comprehensive manifest that allows you to track model lineages, audit past performance, and, most importantly, reliably deploy the correct version of your model.
 
@@ -50,6 +50,7 @@ registered_model = ml_client.models.create_or_update(model_asset)
 
 print(f"Model registered successfully. Name: {registered_model.name}, Version: {registered_model.version}")
 ```
+
 Key here is the `MLClient` from the azureml-sdk library and the use of the `Model` entity. We provide the path to the persisted model file (`.pkl` in this instance). The `type` is "custom_model" indicating that it's not a pre-built model, though pre-built models have specific registration mechanisms. The rest is metadata – a name, description, version, and tags. Remember, the name needs to be unique within the workspace. Later updates to the same model would use a new version number. I also included a basic file check to improve the example's robustness.
 
 **Example 2: Registering a TensorFlow/Keras Model**
@@ -94,6 +95,7 @@ registered_model = ml_client.models.create_or_update(model_asset)
 
 print(f"Model registered successfully. Name: {registered_model.name}, Version: {registered_model.version}")
 ```
+
 Here, the key difference is that we load the saved Keras model directory. The `tf.keras.models.load_model` function is designed to retrieve this structure. The rest of the registration process, using `MLClient` and the `Model` entity, remains similar. It is essential that the path we are pointing to contains a valid SavedModel format. The 'type' field can still remain "custom_model" here, as we are loading a specific model structure from a folder.
 
 **Example 3: Registering a Model with a Custom Inference Script**
@@ -145,8 +147,8 @@ In this scenario, the crucial point is that the `path` points to a directory con
 
 To further enrich your understanding, I'd highly recommend delving into these resources:
 
-*   **"Machine Learning Engineering" by Andriy Burkov:** This book provides an excellent overview of best practices in machine learning, including model management and deployment. While it doesn’t specifically target Azure Machine Learning, the concepts around versioning and metadata are universally applicable.
-*   **Azure Machine Learning documentation:** Microsoft’s official documentation for Azure Machine Learning is comprehensive and constantly updated. It includes detailed explanations of the python SDK and CLI for model management as well as deployment. Specific sections on the model registry and Model entity are vital.
-*   **The 'DevOps for AI' series on Microsoft Learn:** These modules provide a practical overview of how to integrate machine learning workflows into a DevOps pipeline. They cover both theory and practical steps for model registration.
+- **"Machine Learning Engineering" by Andriy Burkov:** This book provides an excellent overview of best practices in machine learning, including model management and deployment. While it doesn’t specifically target Azure Machine Learning, the concepts around versioning and metadata are universally applicable.
+- **Azure Machine Learning documentation:** Microsoft’s official documentation for Azure Machine Learning is comprehensive and constantly updated. It includes detailed explanations of the python SDK and CLI for model management as well as deployment. Specific sections on the model registry and Model entity are vital.
+- **The 'DevOps for AI' series on Microsoft Learn:** These modules provide a practical overview of how to integrate machine learning workflows into a DevOps pipeline. They cover both theory and practical steps for model registration.
 
 Keep in mind, registration is not a one-off task; it's an integral part of the model lifecycle. You'll be iteratively training, validating, and registering models as you refine your algorithms. Taking the time to properly understand these principles and integrating them into your workflow will save you significant effort in the long run. I hope these examples provide a practical start to understanding model registration within Azure Machine Learning.

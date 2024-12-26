@@ -4,9 +4,9 @@ date: "2024-12-12"
 id: "qu-impacto-tiene-la-colaboracin-interdisciplinaria-en-el-desarrollo-de-plataformas-inclusivas-como-zelmira"
 ---
 
-okay so let's talk about how different types of expertise working together really shapes building inclusive platforms like zelmira it's not just about one discipline doing its thing in isolation no way that's how you get platforms that miss the mark badly i mean think about it if it's all engineers it'll be technically sound maybe but probably clunky and not really considering the user experience the needs of people with disabilities or the actual goals of inclusivity that kind of tunnel vision leads to a lot of usability problems and it's frankly unfair
+let's talk about how different types of expertise working together really shapes building inclusive platforms like zelmira it's not just about one discipline doing its thing in isolation no way that's how you get platforms that miss the mark badly i mean think about it if it's all engineers it'll be technically sound maybe but probably clunky and not really considering the user experience the needs of people with disabilities or the actual goals of inclusivity that kind of tunnel vision leads to a lot of usability problems and it's frankly unfair
 
-it's like trying to build a house with only a hammer you can maybe get a basic structure but it's not gonna be livable or functional and it's definitely not going to be nice to look at or pleasant to be in so the first big piece of the puzzle is the design aspect user experience designers they're the ones who can translate the needs of people with various disabilities into actual platform features it's about more than just following accessibility guidelines it's about having an intuitive layout a clear visual hierarchy and consistent navigation so that everyone can use the platform easily and comfortably they're not just making it accessible they're making it *usable* for everyone which are two related but different things you know one without the other doesn't work well
+it's like trying to build a house with only a hammer you can maybe get a basic structure but it's not gonna be livable or functional and it's definitely not going to be nice to look at or pleasant to be in so the first big piece of the puzzle is the design aspect user experience designers they're the ones who can translate the needs of people with various disabilities into actual platform features it's about more than just following accessibility guidelines it's about having an intuitive layout a clear visual hierarchy and consistent navigation so that everyone can use the platform easily and comfortably they're not just making it accessible they're making it _usable_ for everyone which are two related but different things you know one without the other doesn't work well
 
 then you need the engineers they're the ones actually implementing these designs but it's not about just blindly coding what the designers give them they need to understand the 'why' behind the decisions and they need to be able to bring their own understanding of the tech to the table to maybe suggest alternative more efficient or more scalable implementations that still uphold those accessibility and usability principles it's a back and forth constantly refining the platform
 
@@ -17,6 +17,7 @@ here comes the domain experts whatever area zelmira is focusing on if it’s edu
 and legal and ethical considerations are big too if we’re dealing with sensitive data that’s where lawyers or ethical experts come in they will help navigate the landscape of privacy laws data security and responsible technology development they will tell you how to ensure user data is being handled responsibly and ethically it’s about building trust and being transparent about how the platform works and making sure everyone knows their rights and also prevent bias in the development of algorithms or ai based features if you use them you know bias can come from the data you use or how you train a model they are the ones making sure that this tech doesn't unintentionally harm the people that it is trying to help
 
 so how does this all play out in real code well you might see something like this for example in a user interface component we are not going to just focus on the looks of the component but we also keep in mind accessibility
+
 ```javascript
 // Example UI component for a list with accessibility in mind
 function AccessibleList({ items }) {
@@ -33,9 +34,11 @@ function AccessibleList({ items }) {
   );
 }
 ```
+
 in the snippet above you see that the code is not just rendering the list it is also providing aria attributes to ensure that the user agent and the screenreader interpret the list structure so that those with accessibility needs have an easier time navigating the content
 
 or think of data handling here’s a simple example of filtering data but with accessibility context in mind
+
 ```python
 def filter_data(data, query, user_preferences):
     filtered_data = []
@@ -55,9 +58,11 @@ def filter_data(data, query, user_preferences):
                 filtered_data.append(item)
     return filtered_data
 ```
+
 in this snippet you have some filtering logic but it is also considering the user preferences on contrast and font size these are not common filtering requirements in most platforms but this is just an example of how to think about it and keep in mind these concerns at the coding level, it is not just an aesthetic thing.
 
 let's look at an example where we need to avoid some biases in an algorithm if we are using machine learning
+
 ```python
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -82,6 +87,7 @@ def train_model(features, labels, sensitive_attribute):
         print(f'accuracy for group {value}: {group_accuracy}')
     return model
 ```
+
 in this snippet you can see that when we are splitting the data we are using stratify this means that the training set and the test set have similar distributions when we check for model performance we also check the perfomance per each sensitive attribute to be sure that one subgroup doesn't benefit from the model more than another this is a very basic way of reducing bias but you can get the idea these concepts need to be in mind when coding not as something an independent team does later but in each line of code, it needs to be at the foundation level
 
 so yeah interdisciplinarity it's not just a buzzword it's a necessity for building truly inclusive platforms and it goes way deeper than just different people in the same room it's about genuine collaboration a shared understanding of the goals and the challenges it's about constant communication iteration and making the needs of all users a central part of the development process and not an afterthought this approach makes it more work more effort more conversations more back and forth but it's worth it in the end for the platform to be actually what it means to be and not some empty promise of inclusivity

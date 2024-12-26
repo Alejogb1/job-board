@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-routes-be-discriminated-using-regular-expressions"
 ---
 
-Alright, let's delve into route discrimination using regular expressions. I've spent a fair amount of time in the trenches with this particular challenge, especially when building complex api gateways and microservices back in my days at 'Synthetica Solutions'—we had a sprawling infrastructure that demanded precise route handling. It’s not just about matching strings; it's about crafting patterns that elegantly handle the chaos of real-world url structures.
+, let's delve into route discrimination using regular expressions. I've spent a fair amount of time in the trenches with this particular challenge, especially when building complex api gateways and microservices back in my days at 'Synthetica Solutions'—we had a sprawling infrastructure that demanded precise route handling. It’s not just about matching strings; it's about crafting patterns that elegantly handle the chaos of real-world url structures.
 
 The fundamental idea behind using regular expressions (regex) for route discrimination is to leverage their power to define patterns that can flexibly match, extract, and ultimately, route requests based on specific characteristics of the incoming url. Instead of relying on strict string comparisons, regex allows us to be more adaptive, handling scenarios with variable path segments, query parameters, and other dynamic components.
 
@@ -39,11 +39,12 @@ route_handler("/products/123/details") # Output: (None), Returns false
 ```
 
 In this example, the regex `r"^/products/(\d+)$"` is what handles the route pattern.
-*   `^`: Anchors the pattern to the beginning of the string.
-*   `/products/`: Matches the literal string `/products/`.
-*   `(\d+)`: Matches one or more digits (`\d+`) and captures them into group 1 (the parentheses create the capture group).
-*   `$`: Anchors the pattern to the end of the string.
-If the path provided to `route_handler` matches this pattern, we extract the product id using `match.group(1)`, which fetches the value of the first capture group defined in the regex. This example illustrates not just matching the route, but extracting an important part of it.
+
+- `^`: Anchors the pattern to the beginning of the string.
+- `/products/`: Matches the literal string `/products/`.
+- `(\d+)`: Matches one or more digits (`\d+`) and captures them into group 1 (the parentheses create the capture group).
+- `$`: Anchors the pattern to the end of the string.
+  If the path provided to `route_handler` matches this pattern, we extract the product id using `match.group(1)`, which fetches the value of the first capture group defined in the regex. This example illustrates not just matching the route, but extracting an important part of it.
 
 **Scenario 2: Handling Optional Path Segments**
 
@@ -75,11 +76,12 @@ article_route_handler("/articles/technology/2023/something_else") # Output: None
 ```
 
 In this scenario, our regex `r"^/articles(?:/([^/]+))?(?:/(\d{4}))?$"` can be explained as follows:
-*   `/articles`: The literal starting part.
-*   `(?:/([^/]+))?`: A non-capturing group `(?:...)` making the next parts optional (due to `?`). The group contains:
-    *   `/`: a forward slash.
-    *   `([^/]+)`: a capturing group of one or more characters that aren’t forward slashes. This is for category like 'technology'.
-*   `(?:/(\d{4}))?`: Another non-capturing, optional group, similar to the previous one, for the year, matching 4 digits `(\d{4})`.
+
+- `/articles`: The literal starting part.
+- `(?:/([^/]+))?`: A non-capturing group `(?:...)` making the next parts optional (due to `?`). The group contains:
+  - `/`: a forward slash.
+  - `([^/]+)`: a capturing group of one or more characters that aren’t forward slashes. This is for category like 'technology'.
+- `(?:/(\d{4}))?`: Another non-capturing, optional group, similar to the previous one, for the year, matching 4 digits `(\d{4})`.
 
 This allows us to cleanly handle all these path variations with a single regex. The `?` makes both the category and year segments optional.
 
@@ -113,12 +115,13 @@ report_route_handler("/reports/sales.txt") # Output: (None). Returns false
 ```
 
 In the regex `r"^/reports(?:/(\w+))?(?:/([a-zA-Z_]+)\.(json|csv))$`:
-*   `/reports`: Matches the starting string
-*   `(?:/(\w+))?`: Optional identifier that’s one or more word characters, `\w+`, captured in group 1.
-*   `(?:/([a-zA-Z_]+)\.(json|csv))`:
-     *   Matches the forward slash.
-     *   Matches a mandatory report type using `([a-zA-Z_]+)`, captured in group 2.
-    *   Then, `\.` matches the literal dot, and finally, `(json|csv)` matches and captures the file format.
+
+- `/reports`: Matches the starting string
+- `(?:/(\w+))?`: Optional identifier that’s one or more word characters, `\w+`, captured in group 1.
+- `(?:/([a-zA-Z_]+)\.(json|csv))`:
+  - Matches the forward slash.
+  - Matches a mandatory report type using `([a-zA-Z_]+)`, captured in group 2.
+  - Then, `\.` matches the literal dot, and finally, `(json|csv)` matches and captures the file format.
 
 This flexible pattern allows the route handler to distinguish requests with or without identifiers, handle different report types, and handle varied file formats.
 

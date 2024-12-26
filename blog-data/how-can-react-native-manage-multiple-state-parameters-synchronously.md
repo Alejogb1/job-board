@@ -4,19 +4,19 @@ date: "2024-12-23"
 id: "how-can-react-native-manage-multiple-state-parameters-synchronously"
 ---
 
-Okay, let’s tackle this one. It's a common stumbling block, especially when you're transitioning from simpler state management patterns. I’ve certainly had my fair share of debugging sessions chasing down asynchronous updates that messed with UI consistency. Synchronous state updates in React Native, or really, synchronous changes across multiple state variables in any React-based system, aren't natively guaranteed by `setState` due to React's batching mechanism. Let me explain how we usually address this, based on what I've seen work reliably across various projects.
+, let’s tackle this one. It's a common stumbling block, especially when you're transitioning from simpler state management patterns. I’ve certainly had my fair share of debugging sessions chasing down asynchronous updates that messed with UI consistency. Synchronous state updates in React Native, or really, synchronous changes across multiple state variables in any React-based system, aren't natively guaranteed by `setState` due to React's batching mechanism. Let me explain how we usually address this, based on what I've seen work reliably across various projects.
 
 Essentially, the challenge stems from React’s optimization: it batches multiple `setState` calls together into a single re-render cycle. While this drastically improves performance, it introduces a temporal issue. If you have multiple state variables that need to update in tandem, individually using `setState` can lead to inconsistent intermediate states. Think of it like a complex dance; you don’t want the partners moving out of sync even for a brief moment.
 
 The most reliable approach to ensure synchronous updates involves a combination of techniques. The core idea revolves around leveraging the power of functional updates and potentially employing a custom reducer when things become complex. We need a way to ensure all state updates are derived from the same, consistent, initial state, thereby preventing discrepancies that appear between updates.
 
-Let’s delve into the specifics. The standard approach for multiple *related* updates involves using functional updates within a single `setState` call. This ensures that each state parameter is updated based on the *immediately preceding* state, not some potentially stale value cached during the render cycle. We don’t rely on the previous state passed directly, as it might be an earlier version if multiple updates are queued.
+Let’s delve into the specifics. The standard approach for multiple _related_ updates involves using functional updates within a single `setState` call. This ensures that each state parameter is updated based on the _immediately preceding_ state, not some potentially stale value cached during the render cycle. We don’t rely on the previous state passed directly, as it might be an earlier version if multiple updates are queued.
 
 Here's the most basic form of this approach, often sufficient for simpler scenarios:
 
 ```javascript
-import React, { useState } from 'react';
-import { View, Text, Button } from 'react-native';
+import React, { useState } from "react";
+import { View, Text, Button } from "react-native";
 
 const MyComponent = () => {
   const [count, setCount] = useState(0);
@@ -27,11 +27,10 @@ const MyComponent = () => {
     setIsActive((prevActive) => !prevActive);
   };
 
-
   return (
     <View>
       <Text>Count: {count}</Text>
-      <Text>Active: {isActive ? 'Yes' : 'No'}</Text>
+      <Text>Active: {isActive ? "Yes" : "No"}</Text>
       <Button title="Update" onPress={handleUpdate} />
     </View>
   );
@@ -45,50 +44,54 @@ Notice the functional form of `setCount` and `setIsActive`, where the update is 
 Now, if our state transitions become more interdependent, or if we need more elaborate logic for state changes, we can move towards a reducer pattern. This is essentially mirroring what the `useReducer` hook does, but in this case, we'll manage a single state object instead of multiple independent variables. This is highly effective for enforcing complex state logic but adds a touch more complexity. Let me show you a variant of this using `useState`.
 
 ```javascript
-import React, { useState } from 'react';
-import { View, Text, Button } from 'react-native';
+import React, { useState } from "react";
+import { View, Text, Button } from "react-native";
 
 const MyComponent = () => {
-    const initialState = {
-      count: 0,
-      isActive: false,
-      mode: 'normal',
-    };
+  const initialState = {
+    count: 0,
+    isActive: false,
+    mode: "normal",
+  };
 
-    const reducer = (state, action) => {
-        switch(action.type){
-            case 'increment':
-                return {...state, count: state.count + 1, mode: 'active'};
-            case 'toggleActive':
-                return {...state, isActive: !state.isActive};
-            case 'reset':
-              return initialState;
-            default:
-                return state;
-        }
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case "increment":
+        return { ...state, count: state.count + 1, mode: "active" };
+      case "toggleActive":
+        return { ...state, isActive: !state.isActive };
+      case "reset":
+        return initialState;
+      default:
+        return state;
     }
+  };
 
   const [state, setState] = useState(initialState);
 
   const dispatch = (action) => {
-     setState(prevState => reducer(prevState, action));
+    setState((prevState) => reducer(prevState, action));
   };
 
   return (
     <View>
       <Text>Count: {state.count}</Text>
-      <Text>Active: {state.isActive ? 'Yes' : 'No'}</Text>
-        <Text>Mode: {state.mode}</Text>
-      <Button title="Increment and Activate" onPress={() => dispatch({type: 'increment'})} />
-      <Button title="Toggle Active" onPress={() => dispatch({type: 'toggleActive'})} />
-      <Button title = "Reset" onPress = {() => dispatch({type: 'reset'})}/>
+      <Text>Active: {state.isActive ? "Yes" : "No"}</Text>
+      <Text>Mode: {state.mode}</Text>
+      <Button
+        title="Increment and Activate"
+        onPress={() => dispatch({ type: "increment" })}
+      />
+      <Button
+        title="Toggle Active"
+        onPress={() => dispatch({ type: "toggleActive" })}
+      />
+      <Button title="Reset" onPress={() => dispatch({ type: "reset" })} />
     </View>
   );
 };
 
-
 export default MyComponent;
-
 ```
 
 Here, the `reducer` function encapsulates all our update logic based on different actions, and we update the entire state in a single transaction. This ensures no intermediate inconsistent states. While slightly more verbose, it offers better control over complex state relationships, ensuring consistency and makes debugging the state updates simpler.

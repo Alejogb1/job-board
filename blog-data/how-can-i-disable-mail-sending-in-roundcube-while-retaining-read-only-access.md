@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-disable-mail-sending-in-roundcube-while-retaining-read-only-access"
 ---
 
-Okay, let's dive into this. I’ve actually tackled this specific configuration with Roundcube more than once, usually in scenarios where we were decommissioning a mail server but wanted to preserve access to historical emails. The goal, as I understand it, is to prevent users from sending new mail, effectively rendering the client read-only, while still allowing them to browse their existing mailboxes. It's a delicate balance, and there are a few ways to approach it, each with its own nuances.
+, let's dive into this. I’ve actually tackled this specific configuration with Roundcube more than once, usually in scenarios where we were decommissioning a mail server but wanted to preserve access to historical emails. The goal, as I understand it, is to prevent users from sending new mail, effectively rendering the client read-only, while still allowing them to browse their existing mailboxes. It's a delicate balance, and there are a few ways to approach it, each with its own nuances.
 
 The most straightforward method, and the one I've found most reliable, involves manipulating the Roundcube configuration directly. Roundcube uses PHP, and its functionality is largely governed by settings in its main configuration file, `config/config.inc.php`. This file contains various parameters, and thankfully, there are specific options related to mail sending that can be disabled. We'll leverage those.
 
@@ -57,7 +57,7 @@ This hypothetical `no_send` plugin, once placed in the Roundcube plugins directo
 
 Finally, a different method, and one that’s less ideal but worth mentioning, involves manipulating permissions within the underlying mail server itself. This can be done through the server's configuration files (e.g., for postfix or dovecot). For instance, you can disable SMTP authentication or restrict relaying for the specific user or user groups. I would caution against doing this, as it affects more than just Roundcube, and could impact other clients as well, which can result in unexpected consequences if not handled with great care. Further, it complicates maintenance significantly.
 
-The code below shows a conceptual postfix configuration change, just to illustrate the point, although I would not recommend this as the primary method for disabling sending within Roundcube itself. It's more of a server-side restriction. It's provided *only* to highlight the option exists on the mailserver itself, and not as a proposed solution for the Roundcube problem at hand.
+The code below shows a conceptual postfix configuration change, just to illustrate the point, although I would not recommend this as the primary method for disabling sending within Roundcube itself. It's more of a server-side restriction. It's provided _only_ to highlight the option exists on the mailserver itself, and not as a proposed solution for the Roundcube problem at hand.
 
 ```
 # /etc/postfix/main.cf

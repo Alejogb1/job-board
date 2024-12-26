@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-do-i-backfill-airflow-20-dags-from-the-command-line"
 ---
 
-Alright, let's talk about backfilling airflow 2.0 dags from the command line. I've definitely been in this situation more times than I care to count, and it’s one of those tasks that seems straightforward on the surface, but can quickly become a bit… involved if you don't fully understand the nuances. Let’s tackle this from the ground up, pulling from actual project experiences where getting it *just so* was critical.
+, let's talk about backfilling airflow 2.0 dags from the command line. I've definitely been in this situation more times than I care to count, and it’s one of those tasks that seems straightforward on the surface, but can quickly become a bit… involved if you don't fully understand the nuances. Let’s tackle this from the ground up, pulling from actual project experiences where getting it _just so_ was critical.
 
-First off, the core command you’ll be using is `airflow dags backfill`. This command, however, has a few options that significantly affect how your backfill behaves. So, just blindly firing it off will likely not yield the intended results. The first thing to understand is the importance of the date range. You’re not just telling airflow *to run* the dag; you're telling it *for what periods* it should be running.
+First off, the core command you’ll be using is `airflow dags backfill`. This command, however, has a few options that significantly affect how your backfill behaves. So, just blindly firing it off will likely not yield the intended results. The first thing to understand is the importance of the date range. You’re not just telling airflow _to run_ the dag; you're telling it _for what periods_ it should be running.
 
 The typical syntax looks like this: `airflow dags backfill <dag_id> -s <start_date> -e <end_date>`.
 
-The `-s` flag designates the start date for your backfill, and `-e` designates the end date. It's worth emphasizing that these dates refer to the logical execution date, not when the tasks actually *start* running. The logical date is what your DAG uses internally to figure out if a task should be scheduled. It's critical to understand this distinction, as it affects your backfill and the data your DAG processes.
+The `-s` flag designates the start date for your backfill, and `-e` designates the end date. It's worth emphasizing that these dates refer to the logical execution date, not when the tasks actually _start_ running. The logical date is what your DAG uses internally to figure out if a task should be scheduled. It's critical to understand this distinction, as it affects your backfill and the data your DAG processes.
 
 Now, let's consider a few practical examples I've encountered. I’ll frame these as specific use-cases because that's where the real learning tends to happen:
 
@@ -32,7 +32,7 @@ Another time, we had an issue with an API endpoint that returned bad data for a 
 airflow dags backfill api_ingestion_dag -s 2024-03-10 -e 2024-03-12 -t api_ingestion_task
 ```
 
-In this example, `-t api_ingestion_task` instructs airflow to backfill *only* the specified task within that date range. Without `-t`, the full DAG would execute again. Notice the flexibility that gives; you're not forced to re-process the entire dag, saving time and resources.
+In this example, `-t api_ingestion_task` instructs airflow to backfill _only_ the specified task within that date range. Without `-t`, the full DAG would execute again. Notice the flexibility that gives; you're not forced to re-process the entire dag, saving time and resources.
 
 **Example 3: Triggering a specific run manually**
 

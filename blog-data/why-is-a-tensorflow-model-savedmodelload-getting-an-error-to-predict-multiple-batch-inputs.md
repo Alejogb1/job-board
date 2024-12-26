@@ -6,9 +6,9 @@ id: "why-is-a-tensorflow-model-savedmodelload-getting-an-error-to-predict-multip
 
 so, you're running into a classic tensorflow savedmodel loading issue when dealing with batched inputs, eh? i’ve been there, spent more than a few late nights staring at error messages that felt like they were personally mocking me. it's frustrating, i get it. let’s break down what's probably happening and how to fix it, drawing from my own painful journey with this exact problem.
 
-the crux of the issue lies in how tensorflow handles signatures in savedmodels, specifically when it comes to input tensor shapes. when you save a model, tensorflow captures the input shapes it encountered during training. this includes the batch dimension, or rather, *the lack of a fixed batch dimension* in the common case. if your training data has no fixed batch size - and most of the time it shouldn’t - tensorflow infers this and saves the model with an unspecified batch dimension, represented as `none` in the input signature.
+the crux of the issue lies in how tensorflow handles signatures in savedmodels, specifically when it comes to input tensor shapes. when you save a model, tensorflow captures the input shapes it encountered during training. this includes the batch dimension, or rather, _the lack of a fixed batch dimension_ in the common case. if your training data has no fixed batch size - and most of the time it shouldn’t - tensorflow infers this and saves the model with an unspecified batch dimension, represented as `none` in the input signature.
 
-now, when you go to load this savedmodel and try to predict with a batch, say of 32, you might think "okay, it'll just handle it". and tensorflow *should* handle it. but there’s a catch. sometimes, tensorflow gets a little too rigid and expects that unspecified batch dimension to remain unspecified for the prediction call. it assumes that the first dimension is indeed that batch and it is defined with a known value. this behavior sometimes is counterintuitive. and this is usually where the error you're encountering kicks in.
+now, when you go to load this savedmodel and try to predict with a batch, say of 32, you might think ", it'll just handle it". and tensorflow _should_ handle it. but there’s a catch. sometimes, tensorflow gets a little too rigid and expects that unspecified batch dimension to remain unspecified for the prediction call. it assumes that the first dimension is indeed that batch and it is defined with a known value. this behavior sometimes is counterintuitive. and this is usually where the error you're encountering kicks in.
 
 tensorflow's error messages aren't always the most transparent; they might suggest shape mismatches, which can send you on a wild goose chase. usually the real issue isn't a hard shape mismatch in the data, it’s the saved model's interpretation of the batch dimension. for example, if you trained with a batch dimension of `none` and then try to feed in a batch of 32 it works but if you try the model with a batch of 100 then it may not predict and trigger an error even with the same shapes.
 
@@ -20,7 +20,7 @@ to solve this, i had to explicitly tell tensorflow about the expected batch size
 
 **solution 1: re-specify the input signature**
 
-one way is to re-specify the input signature when loading the model. this is akin to saying, "hey tensorflow, i *know* the batch dimension, it's this, don't get confused". you can do this by explicitly defining the `input_signature` when loading, setting the batch dimension to the expected size using `tf.TensorSpec`.
+one way is to re-specify the input signature when loading the model. this is akin to saying, "hey tensorflow, i _know_ the batch dimension, it's this, don't get confused". you can do this by explicitly defining the `input_signature` when loading, setting the batch dimension to the expected size using `tf.TensorSpec`.
 
 ```python
 import tensorflow as tf
@@ -51,6 +51,7 @@ infer = loaded_model.signatures['serving_default']
 prediction = infer(tf.constant(dummy_input))
 print(prediction)
 ```
+
 note, i'm assuming you've saved your model with a ‘serving_default’ signature. if not, you'll need to adjust that accordingly. the key is to explicitly define `input_signature` with a `tf.TensorSpec` which sets up the correct input tensor spec, allowing the batch size to be whatever you want when predicting. if you use other signatures you should replace ‘serving_default’ with your signature.
 
 **solution 2: using a concrete function**
@@ -81,6 +82,7 @@ concrete_function = infer.get_concrete_function(tf.TensorSpec(shape=(batch_size,
 predictions = concrete_function(tf.constant(dummy_input))
 print(predictions)
 ```
+
 here, we grab the concrete function and explicitly define the input shape with the desired batch size using `tf.TensorSpec`. this creates a specific execution graph. we create a concrete function by using `infer.get_concrete_function` and defining the `tf.TensorSpec` with the desired fixed batch size `(batch_size, 128)`.
 
 **solution 3: using tf.function for a more controlled execution graph**
@@ -115,12 +117,13 @@ def predict(x):
 predictions = predict(tf.constant(dummy_input))
 print(predictions)
 ```
+
 in this snippet, we are wrapping the `infer` function inside another function named `predict` that is decorated with `tf.function`, passing an input tensor specification, meaning the function is not going to generate new graphs on each call. this method gives you more control over how tensorflow optimizes the graph.
 
 a final note, sometimes tensorflow saved models can behave in surprising ways. this is something that i learned after a lot of debugging sessions that could have been avoided. so don't feel bad if this kind of error happens to you or if you find it not intuitive. i had some other issues with model compatibility, when tensorflow versions do not match. these compatibility issues are very hard to debug and it is recommended to create a new environment with the desired versions instead of troubleshooting it to save time.
 
-a recommended resource that i found useful is the *tensorflow developer documentation* at tensorflow's official website. specifically, search for sections on 'saving and loading models' and 'concrete functions'. also, there are some excellent books on tensorflow such as *hands-on machine learning with scikit-learn, keras & tensorflow* by aurélien géron that might give you a broader view of tensorflow model management. it is often better to check the documentation directly and keep up to date on the latest version, this is a tip from a friend that now works at google.
+a recommended resource that i found useful is the _tensorflow developer documentation_ at tensorflow's official website. specifically, search for sections on 'saving and loading models' and 'concrete functions'. also, there are some excellent books on tensorflow such as _hands-on machine learning with scikit-learn, keras & tensorflow_ by aurélien géron that might give you a broader view of tensorflow model management. it is often better to check the documentation directly and keep up to date on the latest version, this is a tip from a friend that now works at google.
 
-oh, and one more thing, what do you call a neural network that always predicts correctly? … a good network! *ba dum tss*
+oh, and one more thing, what do you call a neural network that always predicts correctly? … a good network! _ba dum tss_
 
 i hope that helps you fix your model issues, good luck and let me know how it goes!

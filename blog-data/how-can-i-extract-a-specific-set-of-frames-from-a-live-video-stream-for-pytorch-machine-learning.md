@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-a-specific-set-of-frames-from-a-live-video-stream-for-pytorch-machine-learning"
 ---
 
-Alright, let’s tackle frame extraction from a live video stream for PyTorch, something I’ve dealt with quite a bit over the years. It’s less straightforward than processing static videos, for sure, but entirely manageable with the right approach. The key here lies in efficiently accessing the video feed, decoding frames, and then selecting the specific ones you need for your PyTorch workflow. We're not just talking about pulling *any* frame; we need a method that is both precise and doesn’t become a performance bottleneck.
+, let’s tackle frame extraction from a live video stream for PyTorch, something I’ve dealt with quite a bit over the years. It’s less straightforward than processing static videos, for sure, but entirely manageable with the right approach. The key here lies in efficiently accessing the video feed, decoding frames, and then selecting the specific ones you need for your PyTorch workflow. We're not just talking about pulling _any_ frame; we need a method that is both precise and doesn’t become a performance bottleneck.
 
 The initial challenge revolves around choosing the correct library for interfacing with the video stream. While OpenCV is a common and often suitable choice, ffmpeg is also worth mentioning for its versatility and compatibility with various codecs. My past experience suggests starting with OpenCV for its ease of use and Pythonic nature, but being open to ffmpeg for more complex codec-related needs. I've seen firsthand situations where OpenCV stumbles on certain encoding types, pushing me to ffmpeg for better control, especially when dealing with hardware acceleration.
 

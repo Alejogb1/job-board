@@ -4,9 +4,9 @@ date: "2024-12-15"
 id: "how-to-do-a-cross-regularization-between-two-neural-networks"
 ---
 
-alright, so you're looking at cross-regularization between two neural networks. that's a pretty interesting space, and i've spent a fair amount of time down that rabbit hole myself. let's break it down from my personal experience and some of the things i’ve learned, along with some actionable code snippets and resource pointers to help.
+, so you're looking at cross-regularization between two neural networks. that's a pretty interesting space, and i've spent a fair amount of time down that rabbit hole myself. let's break it down from my personal experience and some of the things i’ve learned, along with some actionable code snippets and resource pointers to help.
 
-first off, why would you even *want* to cross-regularize networks? in my past, i ran into this problem when i was dealing with multi-modal data. imagine you have one network, net_a, looking at images, and another, net_b, looking at text descriptions of the same scenes. both are trying to learn similar underlying representations but from different inputs. without any kind of cross-talk, these models will often learn very different features that might not be as generalizable as we'd like. i found this painfully true when deploying a system that was meant to work with data that didn’t exactly match its original training distribution; the model on the image data performed reasonably well, but the text model was a dumpster fire because it had only been exposed to very specific captioning styles.
+first off, why would you even _want_ to cross-regularize networks? in my past, i ran into this problem when i was dealing with multi-modal data. imagine you have one network, net_a, looking at images, and another, net_b, looking at text descriptions of the same scenes. both are trying to learn similar underlying representations but from different inputs. without any kind of cross-talk, these models will often learn very different features that might not be as generalizable as we'd like. i found this painfully true when deploying a system that was meant to work with data that didn’t exactly match its original training distribution; the model on the image data performed reasonably well, but the text model was a dumpster fire because it had only been exposed to very specific captioning styles.
 
 cross-regularization attempts to overcome this by encouraging the two models to learn similar representations. the general idea is you want to make sure that the output spaces of the two models are somewhat aligned or agree, even when they come from distinct data modalities. for example, we want the embedding or feature space of net_a (images) to be somewhat similar to the embedding space of net_b (text) after learning. how do we do this? here are a few methods i have personally used and found to work well.
 
@@ -14,7 +14,7 @@ cross-regularization attempts to overcome this by encouraging the two models to 
 
 the first method i tried involved forcing the output spaces of the two networks to be close, often done by minimizing a distance metric between them. this typically happens in the latent space or embedding space and is done via a loss function. the goal is to encourage models to produce similar outputs for corresponding or semantically linked data points.
 
-let’s go with the scenario where you have *n* data points, with each point having a representation in both domains (for instance an image and a corresponding text caption) as well as the outputs of both networks. we pass each data point through both models and capture the embedding from a layer close to the end of each model. let’s call these outputs e_a and e_b for the outputs of net_a and net_b, respectively. the loss function could be the euclidean distance between e_a and e_b:
+let’s go with the scenario where you have _n_ data points, with each point having a representation in both domains (for instance an image and a corresponding text caption) as well as the outputs of both networks. we pass each data point through both models and capture the embedding from a layer close to the end of each model. let’s call these outputs e_a and e_b for the outputs of net_a and net_b, respectively. the loss function could be the euclidean distance between e_a and e_b:
 
 ```python
 import torch
@@ -57,7 +57,7 @@ in the above snippet, i'm using the euclidean distance as an example of an error
 
 **method 2: adversarial regularization**
 
-another approach i've explored is using an adversarial setup. here, we introduce a discriminator network, let’s call it *net_d*, which tries to classify whether an embedding has come from net_a or net_b. the networks net_a and net_b try to learn representations that can fool the discriminator, pushing them to produce similar outputs. let’s take a look at a code snippet of this idea:
+another approach i've explored is using an adversarial setup. here, we introduce a discriminator network, let’s call it _net_d_, which tries to classify whether an embedding has come from net_a or net_b. the networks net_a and net_b try to learn representations that can fool the discriminator, pushing them to produce similar outputs. let’s take a look at a code snippet of this idea:
 
 ```python
 import torch
@@ -174,7 +174,7 @@ loss_a.backward()
 optimizer_a.step()
 ```
 
-here, we're training network *b* to produce similar embeddings as network *a* on the same data, meaning that we are basically transferring the knowledge of model *a* to model *b*, where model *a* is considered the teacher model and model *b* is the student model. this method has the advantage that the student model might improve in its original task by having the knowledge of the teacher.
+here, we're training network _b_ to produce similar embeddings as network _a_ on the same data, meaning that we are basically transferring the knowledge of model _a_ to model _b_, where model _a_ is considered the teacher model and model _b_ is the student model. this method has the advantage that the student model might improve in its original task by having the knowledge of the teacher.
 
 **a note on implementation**
 
@@ -182,6 +182,6 @@ the tricky part usually is not implementing the above ideas but rather finding t
 
 **some useful resources i wish i had at the time**
 
-for a deeper understanding of these concepts, and if you like the theoretical underpinning of it all, i would recommend looking at *learning representations by back-propagating errors by david e. rumelhart* as it lays the foundations of backpropagation and neural networks themselves. also *generative adversarial nets by ian j. goodfellow* is essential reading to understanding adversarial training. lastly, *distilling the knowledge in a neural network by geoffrey hinton* is the paper to read when it comes to knowledge distillation. all these papers will give you more insight into why these methods work.
+for a deeper understanding of these concepts, and if you like the theoretical underpinning of it all, i would recommend looking at _learning representations by back-propagating errors by david e. rumelhart_ as it lays the foundations of backpropagation and neural networks themselves. also _generative adversarial nets by ian j. goodfellow_ is essential reading to understanding adversarial training. lastly, _distilling the knowledge in a neural network by geoffrey hinton_ is the paper to read when it comes to knowledge distillation. all these papers will give you more insight into why these methods work.
 
 so, there you have it, a few ways to do cross-regularization based on my experience and some of the common methods out there. now go try some and get your networks talking to each other. oh, by the way, what do you call a neural network that's always in a bad mood? a perceptron-al annoyance.

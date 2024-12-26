@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "are-bertmodel-weights-randomly-initialized"
 ---
 
-Okay, let's unpack this. The question of whether `BertModel` weights are randomly initialized is nuanced, and the short answer is: it depends on how you're using it and what you mean by 'random'. Let me explain based on my experience dealing with Transformer architectures over the years, starting from when they were practically novel and debugging pre-training was a daily ritual.
+, let's unpack this. The question of whether `BertModel` weights are randomly initialized is nuanced, and the short answer is: it depends on how you're using it and what you mean by 'random'. Let me explain based on my experience dealing with Transformer architectures over the years, starting from when they were practically novel and debugging pre-training was a daily ritual.
 
-It's critical to understand the two main phases for a model like `BertModel`: pre-training and fine-tuning. When you're working with a pre-trained `BertModel`, the weights are *not* randomly initialized. They've been meticulously learned on massive text corpora during the pre-training phase—think hundreds of gigabytes of text, carefully curated to help the model learn complex linguistic relationships. In this scenario, you load those pre-trained weights. It's a common practice in the transfer learning approach.
+It's critical to understand the two main phases for a model like `BertModel`: pre-training and fine-tuning. When you're working with a pre-trained `BertModel`, the weights are _not_ randomly initialized. They've been meticulously learned on massive text corpora during the pre-training phase—think hundreds of gigabytes of text, carefully curated to help the model learn complex linguistic relationships. In this scenario, you load those pre-trained weights. It's a common practice in the transfer learning approach.
 
-However, if you're starting a training process from scratch—meaning you're not loading pre-existing weights from a checkpoint—the *initialization* of the model's weights would indeed involve some form of randomization. This random initialization is crucial for the optimization process to begin effectively, as having every weight start at the same value would mean that all neurons learn the same thing and no learning will occur. Specifically, Bert uses what’s known as a truncated normal distribution initialization.
+However, if you're starting a training process from scratch—meaning you're not loading pre-existing weights from a checkpoint—the _initialization_ of the model's weights would indeed involve some form of randomization. This random initialization is crucial for the optimization process to begin effectively, as having every weight start at the same value would mean that all neurons learn the same thing and no learning will occur. Specifically, Bert uses what’s known as a truncated normal distribution initialization.
 
 In practice, the popular libraries like Hugging Face’s Transformers make it very easy to perform both loading pre-trained weights and initializing a new model from scratch. You almost never deal directly with the underlying random number generators, but it’s worth understanding what's going on. I've encountered issues in production before that were a direct result of not realizing whether I was loading pre-trained weights correctly or actually training a model from a random initialization. It resulted in unpredictable performance and lots of troubleshooting. This was after a colleague made the mistake of thinking his fine-tuning step was not yielding better results, when in reality his model had never even been loaded with the initial weights. A quick check on the logs revealed the mistake, showing that the pre-trained weights hadn’t been passed to the `BertModel`.
 
@@ -52,6 +52,7 @@ outputs = model(**inputs)
 
 print(outputs.last_hidden_state.shape)
 ```
+
 Here, we directly create a model from a `BertConfig`. We're not loading pre-existing weights. These parameters are initialized using a truncated normal distribution, which is the default setup for transformers within the `transformers` library. The key difference is we are using the `BertModel(config)` construct instead of `BertModel.from_pretrained()`. If you inspect the values of the weights of this model you will see random values instead of the weights learned from a large corpus. The output will also be of shape `[1, 6, 768]` , the same as before, but the values inside this tensor will be different.
 
 **Example 3: Initializing Random Weights, and specifying initialization**
@@ -84,7 +85,8 @@ inputs = tokenizer("This is an example.", return_tensors="pt")
 outputs = model(**inputs)
 print(outputs.last_hidden_state.shape)
 ```
-In this case, we're demonstrating how you might manually handle weight initialization if you have very specific needs. We still create the model using `BertModel(config)`, but *then* apply a function (`initialize_weights`) using `model.apply` to modify the initialization of the linear layers. This snippet also shows how the library exposes direct access to the weights of layers, for when you need finer-grained control. In the example we are using `xavier_normal_` initialization, but you could choose any other initialization scheme in Pytorch or TensorFlow. The output shape is the same here `[1, 6, 768]`.
+
+In this case, we're demonstrating how you might manually handle weight initialization if you have very specific needs. We still create the model using `BertModel(config)`, but _then_ apply a function (`initialize_weights`) using `model.apply` to modify the initialization of the linear layers. This snippet also shows how the library exposes direct access to the weights of layers, for when you need finer-grained control. In the example we are using `xavier_normal_` initialization, but you could choose any other initialization scheme in Pytorch or TensorFlow. The output shape is the same here `[1, 6, 768]`.
 
 So, to address the core question: are `BertModel` weights randomly initialized? Only if you construct the model without loading pre-trained weights. In typical fine-tuning scenarios, you are loading weights already optimized for the task of language understanding during pre-training. The library provides an easy way to do this using the `from_pretrained` class method. Understanding this difference is fundamental, as the pre-trained weights are the cornerstone of the powerful performance these models can exhibit.
 

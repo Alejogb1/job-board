@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-run-functions-after-usestate-and-use-the-updated-state"
 ---
 
-Alright, let's tackle this. I've seen this particular hurdle countless times in react projects – the timing dance between `useState` and wanting to immediately utilize that updated state. It's a common point of confusion, and getting it nailed down is absolutely key for smooth, predictable behavior. Let me walk you through it based on a few situations I’ve encountered personally, and hopefully, it'll clear up any ambiguity you might have.
+, let's tackle this. I've seen this particular hurdle countless times in react projects – the timing dance between `useState` and wanting to immediately utilize that updated state. It's a common point of confusion, and getting it nailed down is absolutely key for smooth, predictable behavior. Let me walk you through it based on a few situations I’ve encountered personally, and hopefully, it'll clear up any ambiguity you might have.
 
 The core issue stems from the asynchronous nature of state updates in React. When you call a state setter function from `useState`, like `setState(newValue)`, React doesn't instantly change the state and immediately re-render the component. Instead, it schedules this update. This scheduling enables React to batch multiple updates, optimizing performance and preventing unnecessary re-renders. The result is that if you try to access the state immediately after calling its setter, you’ll still get the previous value. We need to use a different mechanism to ensure code executes after the state has actually updated and the component re-rendered.
 
@@ -15,10 +15,10 @@ To handle this, we leverage React's `useEffect` hook, which is perfect for manag
 Here's how you could structure your code:
 
 ```jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 function DataDisplay() {
-  const [filter, setFilter] = useState('all');
+  const [filter, setFilter] = useState("all");
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ function DataDisplay() {
       try {
         const response = await fetch(`/api/data?filter=${filter}`);
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
         const result = await response.json();
         setData(result);
@@ -45,12 +45,12 @@ function DataDisplay() {
   return (
     <div>
       <div>
-        <button onClick={() => handleFilterChange('all')}>All</button>
-        <button onClick={() => handleFilterChange('active')}>Active</button>
-        <button onClick={() => handleFilterChange('inactive')}>Inactive</button>
+        <button onClick={() => handleFilterChange("all")}>All</button>
+        <button onClick={() => handleFilterChange("active")}>Active</button>
+        <button onClick={() => handleFilterChange("inactive")}>Inactive</button>
       </div>
       <ul>
-        {data.map(item => (
+        {data.map((item) => (
           <li key={item.id}>{item.name}</li>
         ))}
       </ul>
@@ -68,16 +68,16 @@ Another common scenario I’ve faced frequently, was handling derived state. Som
 Here’s how we can use `useMemo`:
 
 ```jsx
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo } from "react";
 
 function FilteredList({ items }) {
-  const [filterText, setFilterText] = useState('');
+  const [filterText, setFilterText] = useState("");
 
   const filteredItems = useMemo(() => {
-      if (!filterText) return items;
-    return items.filter(item =>
-        item.name.toLowerCase().includes(filterText.toLowerCase())
-      );
+    if (!filterText) return items;
+    return items.filter((item) =>
+      item.name.toLowerCase().includes(filterText.toLowerCase())
+    );
   }, [items, filterText]); // dependencies: items and filterText
 
   return (
@@ -89,7 +89,7 @@ function FilteredList({ items }) {
         onChange={(e) => setFilterText(e.target.value)}
       />
       <ul>
-        {filteredItems.map(item => (
+        {filteredItems.map((item) => (
           <li key={item.id}>{item.name}</li>
         ))}
       </ul>
@@ -107,26 +107,26 @@ Finally, there are situations where you might be dealing with more complex state
 Consider this contrived example:
 
 ```jsx
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 function Counter() {
-    const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
-    const increment = () => {
-        setCount(prevCount => prevCount + 1);
-        setCount(prevCount => prevCount + 1);
-        setCount(prevCount => {
-          console.log(`Count is now: ${prevCount + 1}`); // Correctly logs the final count.
-          return prevCount + 1;
-        });
-    };
+  const increment = () => {
+    setCount((prevCount) => prevCount + 1);
+    setCount((prevCount) => prevCount + 1);
+    setCount((prevCount) => {
+      console.log(`Count is now: ${prevCount + 1}`); // Correctly logs the final count.
+      return prevCount + 1;
+    });
+  };
 
-    return (
-      <div>
-        <p>Count: {count}</p>
-        <button onClick={increment}>Increment</button>
-      </div>
-    );
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={increment}>Increment</button>
+    </div>
+  );
 }
 
 export default Counter;

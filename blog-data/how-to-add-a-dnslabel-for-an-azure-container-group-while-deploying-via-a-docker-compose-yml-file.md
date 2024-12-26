@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-add-a-dnslabel-for-an-azure-container-group-while-deploying-via-a-docker-compose-yml-file"
 ---
 
-alright, so you're trying to get a dns label sorted out for your azure container groups when deploying with docker compose, yeah? i've been there, trust me. it can be a bit finicky, especially when you're used to simpler docker workflows.
+, so you're trying to get a dns label sorted out for your azure container groups when deploying with docker compose, yeah? i've been there, trust me. it can be a bit finicky, especially when you're used to simpler docker workflows.
 
 let's break it down. first off, the issue here isn't strictly docker-compose itself. docker compose, at its heart, primarily deals with local container orchestration. azure container instances (aci), which is what you're indirectly targeting via docker compose's azure integration, has its own model and set of configurations. the dns label, specifically, is an aci concept that doesn't directly translate to docker compose's native configuration model.
 
@@ -33,7 +33,7 @@ let's dissect this a bit. the `x-azure-aci` block is where the magic happens. we
 
 a critical thing to note: the dns label must be unique within the azure region. otherwise, you’ll get an error during deployment.
 
-also, make sure that the `ports` setting is configured properly; the ports listed here are the ports the container *exposes*, and that aci will map for external access. i once spent a good hour pulling my hair out because i had not configured this and my app was working but was unreachable. it’s these little things, eh?
+also, make sure that the `ports` setting is configured properly; the ports listed here are the ports the container _exposes_, and that aci will map for external access. i once spent a good hour pulling my hair out because i had not configured this and my app was working but was unreachable. it’s these little things, eh?
 
 now, this was the first way i approached the solution but there is also a second approach, instead of using the property `ipAddress` you can set the `dnsNameLabel` directly as a root property inside the `x-azure-aci` as follows:
 
@@ -62,6 +62,7 @@ services:
     x-azure-aci:
       dnsNameLabel: ${DNS_NAME_LABEL}
 ```
+
 and then from the shell you can start your application as `DNS_NAME_LABEL=my-app-dns-label docker compose up --profile azure`. using environment variables in this way adds flexibility to your application deployment process. and in my opinion, good engineering practice should incorporate these type of approaches.
 
 a good resource for understanding the finer details of azure resource manager templates would be "azure resource manager templates: master the art of declarative cloud deployments" by riccardo boaglio and sergio bonacina. although it won't focus specifically on docker compose, the understanding of arm templates will help you to understand the underlying mechanisms of what happens with azure deployments. it will really give you a deeper understanding on why and how this setup works.

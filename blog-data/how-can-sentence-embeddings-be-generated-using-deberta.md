@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-sentence-embeddings-be-generated-using-deberta"
 ---
 
-Okay, let’s talk DeBERTa and sentence embeddings. I recall a particularly challenging project a few years back, involving a large corpus of customer feedback needing detailed semantic analysis. Naive word-based methods were falling short, and it became apparent that we needed to capture the full context of each sentence. That's where we really dove into models like DeBERTa for sentence embeddings. It's not a straightforward "plug-and-play" operation, though. There’s some nuance to achieving optimal results, so let’s break it down step-by-step.
+, let’s talk DeBERTa and sentence embeddings. I recall a particularly challenging project a few years back, involving a large corpus of customer feedback needing detailed semantic analysis. Naive word-based methods were falling short, and it became apparent that we needed to capture the full context of each sentence. That's where we really dove into models like DeBERTa for sentence embeddings. It's not a straightforward "plug-and-play" operation, though. There’s some nuance to achieving optimal results, so let’s break it down step-by-step.
 
-Fundamentally, DeBERTa (Decoding-enhanced BERT with disentangled attention) builds upon the transformer architecture, offering improvements over models like BERT, particularly in handling relationships between words. Its disentangled attention mechanism allows the model to learn separate representations for content and position, which is crucial for effective sentence representation. The core idea is this: instead of just focusing on word tokens in isolation, we want a single vector that encodes the overall meaning of an entire sentence. To achieve this, we don't directly get embeddings *from* DeBERTa as easily as you might from simpler models. We are more likely to encode the text input and then use specific output layers.
+Fundamentally, DeBERTa (Decoding-enhanced BERT with disentangled attention) builds upon the transformer architecture, offering improvements over models like BERT, particularly in handling relationships between words. Its disentangled attention mechanism allows the model to learn separate representations for content and position, which is crucial for effective sentence representation. The core idea is this: instead of just focusing on word tokens in isolation, we want a single vector that encodes the overall meaning of an entire sentence. To achieve this, we don't directly get embeddings _from_ DeBERTa as easily as you might from simpler models. We are more likely to encode the text input and then use specific output layers.
 
 The standard procedure involves feeding the input sentence through the model, typically obtaining the representation of a special token – usually the `[CLS]` token – from the final hidden layer. This representation, while carrying some sentence-level information, might not be optimized for downstream tasks like sentence similarity or semantic search. Therefore, it often requires additional layers or adjustments to refine it into a usable sentence embedding. Fine-tuning for sentence-level tasks further enhances the quality of embeddings.
 
@@ -58,10 +58,10 @@ def generate_mean_pooling_embedding(sentence, model_name="microsoft/deberta-v3-b
     inputs = tokenizer(sentence, return_tensors="pt", padding=True, truncation=True)
     with torch.no_grad():
         outputs = model(**inputs)
-    
+
     token_embeddings = outputs.last_hidden_state
     attention_mask = inputs['attention_mask']
-    
+
     # Mask padding tokens
     input_mask_expanded = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()
     sum_embeddings = torch.sum(token_embeddings * input_mask_expanded, 1)
@@ -69,7 +69,7 @@ def generate_mean_pooling_embedding(sentence, model_name="microsoft/deberta-v3-b
     sum_mask = input_mask_expanded.sum(1)
     sum_mask = torch.clamp(sum_mask, min=1e-9)
     mean_pooled_embedding = sum_embeddings / sum_mask
-    
+
     return mean_pooled_embedding.squeeze().numpy()
 
 sentence_3 = "This is a longer sentence that has more words."
@@ -175,7 +175,7 @@ def generate_fine_tuned_embedding(sentence, model_path="./deberta_fine_tuned_mod
         outputs = model(**inputs)
   token_embeddings = outputs.last_hidden_state
   attention_mask = inputs['attention_mask']
-    
+
   # Mask padding tokens
   input_mask_expanded = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()
   sum_embeddings = torch.sum(token_embeddings * input_mask_expanded, 1)

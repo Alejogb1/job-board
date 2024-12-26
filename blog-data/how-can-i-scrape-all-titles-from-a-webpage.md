@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-scrape-all-titles-from-a-webpage"
 ---
 
-Okay, let’s tackle this. I’ve seen this scenario play out many times, and it's often the first hurdle many face when starting with web scraping. It seems straightforward, but there are nuances that can trip you up. The goal here is to efficiently extract all title elements from a webpage, and I'll walk you through the process with some code examples and pointers.
+, let’s tackle this. I’ve seen this scenario play out many times, and it's often the first hurdle many face when starting with web scraping. It seems straightforward, but there are nuances that can trip you up. The goal here is to efficiently extract all title elements from a webpage, and I'll walk you through the process with some code examples and pointers.
 
 First, we need to understand what a title element is in the context of HTML. It's the `<title>` tag that usually resides within the `<head>` section of an html document. But, webpages sometimes have more complex structures, including dynamically generated content via javascript, which we'll also touch upon. Just grabbing the first `<title>` we find won't always work if you're dealing with a more dynamic site.
 
@@ -121,17 +121,17 @@ This example fetches the webpage content and parses it using `html.fromstring()`
 
 **Important Considerations:**
 
-*   **Website Terms of Service:** Always check a website's `robots.txt` file and terms of service before scraping. Respect their rules.
-*   **Rate Limiting:** Implement delays between requests to avoid overloading servers. You can use the python `time` module to add sleeps.
-*   **User Agents:** Spoof user agent headers in your requests to avoid being blocked. Use libraries like `fake-useragent`.
-*   **Error Handling:** Implement robust error handling to deal with network issues or malformed html.
-*   **Data Storage:** Think about how you'll store extracted data (e.g., CSV, database).
+- **Website Terms of Service:** Always check a website's `robots.txt` file and terms of service before scraping. Respect their rules.
+- **Rate Limiting:** Implement delays between requests to avoid overloading servers. You can use the python `time` module to add sleeps.
+- **User Agents:** Spoof user agent headers in your requests to avoid being blocked. Use libraries like `fake-useragent`.
+- **Error Handling:** Implement robust error handling to deal with network issues or malformed html.
+- **Data Storage:** Think about how you'll store extracted data (e.g., CSV, database).
 
 **Resources for further study:**
 
-*   **"Web Scraping with Python"** by Ryan Mitchell: This book provides an in-depth look at the subject and is an excellent starting point. It will go into additional topics such as writing crawlers, and working with ajax sites, among other things.
-*   **The Beautiful Soup Documentation:** The official documentation is exceptionally well-written and serves as a good reference.
-*   **The Selenium Documentation:** A comprehensive resource that covers all aspects of browser automation.
-*   **The lxml Documentation:** The definitive guide to using lxml for XML and HTML processing.
+- **"Web Scraping with Python"** by Ryan Mitchell: This book provides an in-depth look at the subject and is an excellent starting point. It will go into additional topics such as writing crawlers, and working with ajax sites, among other things.
+- **The Beautiful Soup Documentation:** The official documentation is exceptionally well-written and serves as a good reference.
+- **The Selenium Documentation:** A comprehensive resource that covers all aspects of browser automation.
+- **The lxml Documentation:** The definitive guide to using lxml for XML and HTML processing.
 
 Web scraping is a powerful tool when used responsibly. Remember to always be ethical and mindful of the websites you interact with. I hope this detailed breakdown helps! Let me know if you have more questions.

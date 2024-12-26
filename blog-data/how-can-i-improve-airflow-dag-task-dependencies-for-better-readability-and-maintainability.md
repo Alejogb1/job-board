@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-improve-airflow-dag-task-dependencies-for-better-readability-and-maintainability"
 ---
 
-Alright, let’s tackle this. I've seen my share of tangled Airflow DAGs, and improving task dependencies is critical for scaling and long-term sanity. It’s not just about making the DAG *look* prettier; it’s about creating a system that’s robust, easy to debug, and allows for confident changes down the line. Think of it as preventative medicine for future headaches.
+, let’s tackle this. I've seen my share of tangled Airflow DAGs, and improving task dependencies is critical for scaling and long-term sanity. It’s not just about making the DAG _look_ prettier; it’s about creating a system that’s robust, easy to debug, and allows for confident changes down the line. Think of it as preventative medicine for future headaches.
 
 Early in my career, I worked on a data pipeline project where the DAG initially looked like a Jackson Pollock painting of dependencies—a mess of arrows going everywhere. Debugging was a nightmare, and adding new tasks felt like defusing a bomb. We quickly realized we needed a more structured approach. What I’ve found works well can be broken down into a few key areas: simplifying your dependency logic using more than just direct `set_downstream` calls, utilizing task groups, and leveraging abstraction patterns where possible.
 

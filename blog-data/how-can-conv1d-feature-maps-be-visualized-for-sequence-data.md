@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-conv1d-feature-maps-be-visualized-for-sequence-data"
 ---
 
-Okay, let's tackle this one. It's something I actually grappled with quite a bit back when I was working on a genomic sequence analysis project. Visualizing Conv1D feature maps, especially for sequence data, presents some unique challenges compared to, say, image data with Conv2D layers. You're essentially dealing with abstract representations of temporal relationships within a sequence, and making those tangible isn’t always straightforward. So, how do we actually peer into what these Conv1D filters are “seeing”?
+, let's tackle this one. It's something I actually grappled with quite a bit back when I was working on a genomic sequence analysis project. Visualizing Conv1D feature maps, especially for sequence data, presents some unique challenges compared to, say, image data with Conv2D layers. You're essentially dealing with abstract representations of temporal relationships within a sequence, and making those tangible isn’t always straightforward. So, how do we actually peer into what these Conv1D filters are “seeing”?
 
 The core challenge lies in the fact that a Conv1D layer operates on one-dimensional input, typically an embedding of a sequence. The output feature maps aren't inherently visual in the way that a 2D image output would be. Think of it: instead of a grid of pixel activations, we have a sequence of activation values. What we aim for is a way to translate these sequences back into a human-understandable format. There are a few common, and useful, techniques that can help achieve this, which I've found very practical over the years.
 
@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
 This code extracts the output of a specified Conv1D layer and plots the activations. Note that, in practical applications, you often need to experiment with layer selection because not all layers exhibit readily interpretable features. Shallow layers usually capture simpler, local features, while deeper layers capture more complex, abstract relationships. I’ve seen this quite clearly; earlier layers in a protein sequence model, for instance, might show activation patterns that correspond to specific amino acid motifs, while later layers may capture entire secondary structures.
 
-Another method is to examine the filter kernels directly. While they are not feature maps *per se*, the filter weights show what the model *thinks* a pattern looks like, even if that's a raw numerical representation. You can visualize the filter weights as a line plot or even as a heatmap if you’re stacking multiple filters. For sequence data, they are often more abstract than what you'd see in, say, a Conv2D filter. This approach can sometimes give insights into what patterns a specific filter is sensitive to. For example, if you're dealing with nucleotide sequences, a filter kernel might show higher weight values for the positions corresponding to certain base combinations. This direct inspection of the weights requires a bit more domain knowledge to interpret effectively, but it is a very helpful tool.
+Another method is to examine the filter kernels directly. While they are not feature maps _per se_, the filter weights show what the model _thinks_ a pattern looks like, even if that's a raw numerical representation. You can visualize the filter weights as a line plot or even as a heatmap if you’re stacking multiple filters. For sequence data, they are often more abstract than what you'd see in, say, a Conv2D filter. This approach can sometimes give insights into what patterns a specific filter is sensitive to. For example, if you're dealing with nucleotide sequences, a filter kernel might show higher weight values for the positions corresponding to certain base combinations. This direct inspection of the weights requires a bit more domain knowledge to interpret effectively, but it is a very helpful tool.
 
 Here's a small Python snippet for visualizing the kernels:
 
@@ -95,9 +95,10 @@ if __name__ == '__main__':
     visualize_conv1d_kernels(model, 'conv1d')
 ```
 
-Finally, another technique that is particularly useful when the input has a strong semantic meaning is the concept of *activation maximization*. Here, you aim to find the input sequence that *maximally* activates a specific feature map. This method uses gradient ascent to optimize the input, starting from a random sequence, to increase the activation of a chosen feature map within the Conv1D layer. The resulting input sequence, although not necessarily real data, provides some understanding of the pattern the filter is sensitive to. This process typically requires careful regularization to avoid generating nonsensical inputs.
+Finally, another technique that is particularly useful when the input has a strong semantic meaning is the concept of _activation maximization_. Here, you aim to find the input sequence that _maximally_ activates a specific feature map. This method uses gradient ascent to optimize the input, starting from a random sequence, to increase the activation of a chosen feature map within the Conv1D layer. The resulting input sequence, although not necessarily real data, provides some understanding of the pattern the filter is sensitive to. This process typically requires careful regularization to avoid generating nonsensical inputs.
 
 Here is the core of that:
+
 ```python
 import tensorflow as tf
 import numpy as np

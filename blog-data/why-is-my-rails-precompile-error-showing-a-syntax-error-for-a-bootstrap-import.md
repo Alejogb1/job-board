@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-rails-precompile-error-showing-a-syntax-error-for-a-bootstrap-import"
 ---
 
-Okay, let’s unpack this. I've seen this particular brand of headache more times than I care to remember. A syntax error during a rails asset precompile, specifically pointing to a bootstrap import – it’s a classic, and typically, the surface symptom isn’t the actual problem. When that happens, it’s time to look deeper than the immediate error message. Usually, it's not an issue within the bootstrap library itself, but rather something in the way it's being incorporated into the asset pipeline, or a clash with how your Rails project is set up.
+, let’s unpack this. I've seen this particular brand of headache more times than I care to remember. A syntax error during a rails asset precompile, specifically pointing to a bootstrap import – it’s a classic, and typically, the surface symptom isn’t the actual problem. When that happens, it’s time to look deeper than the immediate error message. Usually, it's not an issue within the bootstrap library itself, but rather something in the way it's being incorporated into the asset pipeline, or a clash with how your Rails project is set up.
 
 Let's start with the most probable culprit: the asset pipeline and its various quirks. You're likely using `sprockets`, which is the default asset pipeline in Rails. The precompile step is essentially taking all your css, javascript, and other assets and smashing them into a minimized, production-ready format. This process relies heavily on file extensions and the directives you use within them. So, if the precompiler is barfing on what it believes to be incorrect syntax within your bootstrap import, it’s probably not seeing the import the way you're expecting it to.
 
@@ -28,7 +28,7 @@ The proper way to import it when using `bootstrap-sass` would involve changing t
 
 Make sure you are using `scss` as file extension as this is the most common choice within the rails community. Then within this specific file it will process the import correctly.
 
-Another thing I've seen happen multiple times is when the import is technically correct, but the sass file that contains it is not actually included in the asset precompile process. This might sound unlikely, but consider the case where you've made the import, say, within a partial or layout file that *isn't* explicitly linked to your main stylesheets. `sprockets` only includes files that are explicitly or implicitly part of the compile process, usually linked via the `application.css` manifest. Remember that Rails compiles all assets inside `app/assets` directory only if the asset is referenced somewhere inside `app/assets/config/manifest.js` and in the `application.css/js`.
+Another thing I've seen happen multiple times is when the import is technically correct, but the sass file that contains it is not actually included in the asset precompile process. This might sound unlikely, but consider the case where you've made the import, say, within a partial or layout file that _isn't_ explicitly linked to your main stylesheets. `sprockets` only includes files that are explicitly or implicitly part of the compile process, usually linked via the `application.css` manifest. Remember that Rails compiles all assets inside `app/assets` directory only if the asset is referenced somewhere inside `app/assets/config/manifest.js` and in the `application.css/js`.
 
 Let's illustrate that with an example of a `application.scss` file.
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-gorm-does-not-autogenerate-a-model-id"
 ---
 
-alright, so you're asking why gorm, that go orm, doesn't just automatically create an id field for your models, kinda like some other orms do. i get where you're coming from, it feels like it should just happen, doesn't it? been there, spent hours banging my head against the wall trying to get things to just *work*.
+, so you're asking why gorm, that go orm, doesn't just automatically create an id field for your models, kinda like some other orms do. i get where you're coming from, it feels like it should just happen, doesn't it? been there, spent hours banging my head against the wall trying to get things to just _work_.
 
 let me give you a bit of my history with this particular gorm quirk. back in the day, probably around 2017, i was working on a small service that tracked user activity for a forum, a sort of very basic user analytics tool. i jumped right into gorm, thinking, "this'll be easy, orm, no need to write raw sql." i defined my models, things like `user`, `post`, `comment` and i naively expected gorm to automagically figure out that every model needs a unique id. well, it didn't. and of course the first time i tried to create an entry i got an error that made zero sense at the time. i spent a couple of hours in the gorm docs and even the gorm github issues, mostly lost. i felt like i was missing some fundamental piece of the puzzle, that i was doing something very basic wrong.
 
@@ -37,7 +37,7 @@ func main() {
 	}
 
 	db.AutoMigrate(&User{})
-    
+
     user := User{Name: "john doe", Email: "john.doe@email.com", Age: 27}
     db.Create(&user)
 
@@ -123,7 +123,7 @@ func main() {
 	}
 
 	db.AutoMigrate(&BlogPost{})
-    
+
     blogPost := BlogPost{ID: generateRandomID() ,Title: "my first post", Content: "lorem ipsum dolor sit amet."}
     db.Create(&blogPost)
 

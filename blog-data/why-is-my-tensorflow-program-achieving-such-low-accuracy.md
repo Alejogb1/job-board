@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-tensorflow-program-achieving-such-low-accuracy"
 ---
 
-Okay, let’s talk about accuracy issues in TensorFlow. I've been down this rabbit hole more times than I'd care to count, and it's rarely a straightforward fix. From my experience, debugging low accuracy can often feel like a multi-faceted problem, and pinpointing the exact cause takes careful analysis. So, rather than give you a simple answer, let’s break it down.
+, let’s talk about accuracy issues in TensorFlow. I've been down this rabbit hole more times than I'd care to count, and it's rarely a straightforward fix. From my experience, debugging low accuracy can often feel like a multi-faceted problem, and pinpointing the exact cause takes careful analysis. So, rather than give you a simple answer, let’s break it down.
 
 First, it's crucial to understand that "low accuracy" is a relative term. What's considered low for one task might be acceptable for another. Therefore, the initial step is to contextualize your specific problem: what kind of data are you working with, what type of model are you using (is it a convolutional neural network, recurrent neural network, or something else), and what is your expected benchmark? This context will help us determine if the accuracy is genuinely problematic or if your expectations might need adjustment.
 
@@ -113,9 +113,9 @@ model = tf.keras.models.Sequential([
 
 For further reading on these topics, I would suggest starting with the following:
 
-*   **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book offers a comprehensive overview of all aspects of deep learning and is a must-read for anyone working in the field.
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This provides a practical approach to machine learning with a strong focus on TensorFlow and Keras, complete with hands-on examples.
-*   **The original papers introducing various optimization algorithms,** such as "Adam: A Method for Stochastic Optimization" by Kingma and Ba (2014). These provide the theoretical background and detailed information about how these algorithms work.
-* **"Pattern Recognition and Machine Learning" by Christopher M. Bishop:** A rigorous and mathematical treatment of machine learning concepts, very useful for understanding the underlying theory.
+- **"Deep Learning" by Ian Goodfellow, Yoshua Bengio, and Aaron Courville:** This book offers a comprehensive overview of all aspects of deep learning and is a must-read for anyone working in the field.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** This provides a practical approach to machine learning with a strong focus on TensorFlow and Keras, complete with hands-on examples.
+- **The original papers introducing various optimization algorithms,** such as "Adam: A Method for Stochastic Optimization" by Kingma and Ba (2014). These provide the theoretical background and detailed information about how these algorithms work.
+- **"Pattern Recognition and Machine Learning" by Christopher M. Bishop:** A rigorous and mathematical treatment of machine learning concepts, very useful for understanding the underlying theory.
 
 Diagnosing and resolving low accuracy in TensorFlow is an iterative process that requires a good understanding of both the problem domain and the model. Don't be discouraged if your first attempts don't yield perfect results. Keep experimenting, carefully analyzing the performance of your model at each step, and gradually refine your approach. It’s not about finding the one magic parameter, but about building a solid understanding of how the different pieces interact with each other.

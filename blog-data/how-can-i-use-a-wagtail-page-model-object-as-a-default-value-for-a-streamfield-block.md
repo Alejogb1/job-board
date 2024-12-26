@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-a-wagtail-page-model-object-as-a-default-value-for-a-streamfield-block"
 ---
 
-Alright, let’s tackle this interesting challenge. I’ve definitely run into this scenario before, and it's not as straightforward as one might hope, particularly when you’re aiming for that seamless user experience with Wagtail. The goal, as I understand it, is to use a pre-existing Wagtail page, perhaps a ‘contact page’ or an ‘about us’ page, as a default option within a streamfield block. This means that when a user creates a new page that utilizes this streamfield, this specific Wagtail page should pre-populate a chosen block. We can definitely achieve this, and let’s dive into how.
+, let’s tackle this interesting challenge. I’ve definitely run into this scenario before, and it's not as straightforward as one might hope, particularly when you’re aiming for that seamless user experience with Wagtail. The goal, as I understand it, is to use a pre-existing Wagtail page, perhaps a ‘contact page’ or an ‘about us’ page, as a default option within a streamfield block. This means that when a user creates a new page that utilizes this streamfield, this specific Wagtail page should pre-populate a chosen block. We can definitely achieve this, and let’s dive into how.
 
 The core issue here stems from the fact that Streamfield blocks are data structures, and they don't inherently understand the concept of ‘live’ page objects. They store data, not references to other models directly. Thus, attempting to directly insert a page object as a default won’t work as expected; it will generally result in an error, or something equally ineffective. We need to use the page’s id or a similar identifier and then make sure that during rendering we convert this into the actual page object. Let me give you some practical examples, based on different approaches I’ve used in past projects, highlighting the pros and cons of each.
 
@@ -56,10 +56,10 @@ Then, in your `blocks/related_page_block.html` template, you would use:
 
 ```html
 {% if default_page %}
-    <h2> <a href="{{ default_page.url }}">{{ default_page.title }}</a> </h2>
-    <p>{{ default_page.specific.introduction|truncatewords:50 }}</p>
+<h2><a href="{{ default_page.url }}">{{ default_page.title }}</a></h2>
+<p>{{ default_page.specific.introduction|truncatewords:50 }}</p>
 {% else %}
-    <p>No page selected.</p>
+<p>No page selected.</p>
 {% endif %}
 ```
 
@@ -89,7 +89,7 @@ class RelatedPageBlock(blocks.StructBlock):
         except Page.DoesNotExist:
             context['default_page'] = None
         return context
-    
+
     class Meta:
         template = 'blocks/related_page_block.html'
         icon = 'site'
@@ -119,6 +119,7 @@ class HomePage(Page):
             if default_page:
               self.content = [('related_page', {'default_page_id': default_page.pk})]
 ```
+
 In this version, a key addition is in the `HomePage` class's init method. I'm setting the default value of the streamfield upon a new instance creation, grabbing a default page (in this case simply the first page in the database). Here, I am also passing a value within a dictionary using `default_page_id`. This dictionary will be directly inserted within your `StreamField` block. Additionally, the way we render it remains the same as our first example, fetching the page in the `get_context` method.
 
 **Approach 3: Utilizing a `PageChooserBlock`**

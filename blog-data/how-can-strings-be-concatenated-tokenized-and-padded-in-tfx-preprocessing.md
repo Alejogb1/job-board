@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-strings-be-concatenated-tokenized-and-padded-in-tfx-preprocessing"
 ---
 
-Okay, let's unpack this. It's a surprisingly nuanced area, actually, especially when you're trying to squeeze every bit of performance out of your tfx pipelines. I've spent more hours than I'd care to count fiddling with these exact steps during various natural language processing projects. Let’s get down to brass tacks, shall we?
+, let's unpack this. It's a surprisingly nuanced area, actually, especially when you're trying to squeeze every bit of performance out of your tfx pipelines. I've spent more hours than I'd care to count fiddling with these exact steps during various natural language processing projects. Let’s get down to brass tacks, shall we?
 
 We're essentially talking about preparing text data for model consumption within a tensorflow extended (tfx) pipeline, focusing specifically on concatenation, tokenization, and padding. Each of these is a critical step, and each has its own quirks and best practices within the tfx ecosystem. Tfx, as many of you know, is fantastic, but getting these preprocessing steps correct and efficient is vital for robust model performance.
 
@@ -87,10 +87,10 @@ In this example, `tf.keras.preprocessing.sequence.pad_sequences` ensures that al
 
 Key considerations throughout these steps include:
 
-*   **Efficiency:** Ensure that your operations are vectorised within tf to leverage the benefits of tensors.
-*   **Reproducibility:** The vocabulary should be generated on the training data and applied consistently to new data.
-*   **Flexibility:** The pipeline should be designed to accommodate different tokenizer types and maximum sequence lengths.
-*   **Parameter Tuning:** Parameters such as maximum length, vocabulary size and separator, will likely require hyperparameter tuning depending on your model.
+- **Efficiency:** Ensure that your operations are vectorised within tf to leverage the benefits of tensors.
+- **Reproducibility:** The vocabulary should be generated on the training data and applied consistently to new data.
+- **Flexibility:** The pipeline should be designed to accommodate different tokenizer types and maximum sequence lengths.
+- **Parameter Tuning:** Parameters such as maximum length, vocabulary size and separator, will likely require hyperparameter tuning depending on your model.
 
 For further reading, I recommend exploring the official TensorFlow documentation for `tf.strings`, `tf.keras.layers.TextVectorization`, and `tf.keras.preprocessing.sequence`, which go into more depth about options and parameters. For a deeper understanding of tokenization techniques, look into the "Neural Network Methods in Natural Language Processing" book by Yoav Goldberg. It's a hefty read, but it covers tokenization concepts thoroughly. Also the `tensorflow/text` library’s documentation provides specifics on different subword tokenization methods.
 

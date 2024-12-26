@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-do-i-filter-the-solution-explorer-view-in-rider"
 ---
 
-Alright, let's tackle this. Filtering the solution explorer in Rider, as I've found in past projects, can really streamline your workflow, especially when dealing with large, sprawling solutions. It's a feature I've come to appreciate deeply over the years, particularly during that rather cumbersome enterprise application project where navigating the sheer volume of files was a constant struggle. Initially, I found myself relying heavily on manual scrolling, which, as you can imagine, quickly becomes tedious. The solution, however, is quite elegant and leverages Rider's robust filtering capabilities.
+, let's tackle this. Filtering the solution explorer in Rider, as I've found in past projects, can really streamline your workflow, especially when dealing with large, sprawling solutions. It's a feature I've come to appreciate deeply over the years, particularly during that rather cumbersome enterprise application project where navigating the sheer volume of files was a constant struggle. Initially, I found myself relying heavily on manual scrolling, which, as you can imagine, quickly becomes tedious. The solution, however, is quite elegant and leverages Rider's robust filtering capabilities.
 
 Essentially, Rider provides several avenues to accomplish this, and I often combine them for maximum efficiency. The most basic way is to simply begin typing in the search bar located at the top of the solution explorer window. This acts as a live filter; as you type, Rider will dynamically display only the nodes – projects, folders, and files – that match the entered text within their names. The matching algorithm is reasonably intelligent, considering partial matches and not strictly demanding an exact string. For instance, typing 'api' might show you 'MyWebApiProject,' 'ApiControllers,' and 'DataTransferObjects/ApiModels.' This immediate feedback is incredibly helpful.
 
-But simple name filtering is often inadequate. We need more granular control. That's where pattern-based filters come into play. You can use wildcards like '*' and '?' to define more complex patterns. For example, '*test*' will display anything containing "test" in its name, while 'Config*.*' would only show files beginning with 'Config' and having any extension. I found that using the wildcard asterisk is particularly useful when dealing with multiple similar named projects that also reside in similar locations within the project structure. The question mark '?' matches a single character. So, 'MyFile?.cs' matches 'MyFile1.cs', 'MyFileA.cs', etc. but not 'MyFile12.cs' or 'MyFile.cs'.
+But simple name filtering is often inadequate. We need more granular control. That's where pattern-based filters come into play. You can use wildcards like '*' and '?' to define more complex patterns. For example, '*test*' will display anything containing "test" in its name, while 'Config*.\*' would only show files beginning with 'Config' and having any extension. I found that using the wildcard asterisk is particularly useful when dealing with multiple similar named projects that also reside in similar locations within the project structure. The question mark '?' matches a single character. So, 'MyFile?.cs' matches 'MyFile1.cs', 'MyFileA.cs', etc. but not 'MyFile12.cs' or 'MyFile.cs'.
 
 The second, more advanced method involves using the "Filter" dropdown menu in the solution explorer's toolbar. Here, you’ll find several pre-configured filters like "Problems," which highlights files containing errors or warnings, and "Opened Files," which displays only the currently active files. There’s also a "Modified Files" filter to quickly jump to files you have changed since the last commit. These are fantastic for focusing your attention, and they’re customizable, which is something I really appreciate.
 
@@ -76,14 +76,14 @@ Now suppose I want to examine all files related to configuration within the proj
     "DefaultConnection": "Server=.;Database=MyDb;Trusted_Connection=True;"
   },
   "AppSettings": {
-      "ApplicationName": "MyApp"
+    "ApplicationName": "MyApp"
   }
 }
 ```
 
 **Example 3: Custom Filtering based on file type and folder location using "Edit Filter..." option**
 
-Let's imagine I'm interested in inspecting only files with the extension '.cs' that reside within the `DataTransferObjects` folder (assuming it exists somewhere within the solution structure.)  I would use the "Edit Filter..." option and configure a filter with these conditions: 1) File extension equals '.cs'. 2) Folder path contains 'DataTransferObjects'. Upon applying the custom filter, only `SharedModel.cs` would be displayed, irrespective of which project the file is found in, and everything else would be hidden within the solution explorer view.
+Let's imagine I'm interested in inspecting only files with the extension '.cs' that reside within the `DataTransferObjects` folder (assuming it exists somewhere within the solution structure.) I would use the "Edit Filter..." option and configure a filter with these conditions: 1) File extension equals '.cs'. 2) Folder path contains 'DataTransferObjects'. Upon applying the custom filter, only `SharedModel.cs` would be displayed, irrespective of which project the file is found in, and everything else would be hidden within the solution explorer view.
 
 ```csharp
 // Shared/DataTransferObjects/SharedModel.cs (Shown with filter: File extension is .cs and Folder path contains 'DataTransferObjects')

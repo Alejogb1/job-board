@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-rspec-describe-a-rake-task-namespace"
 ---
 
-Alright, let's tackle this. Describing rake task namespaces with rspec is something I've had to deal with quite a bit, particularly when project complexity starts to climb. It's not immediately obvious how to approach it, but once you grasp the principles, it becomes a powerful way to ensure your build process remains robust and well-defined.
+, let's tackle this. Describing rake task namespaces with rspec is something I've had to deal with quite a bit, particularly when project complexity starts to climb. It's not immediately obvious how to approach it, but once you grasp the principles, it becomes a powerful way to ensure your build process remains robust and well-defined.
 
-The challenge stems from the fact that RSpec's primary focus is testing Ruby code—classes, methods, modules—not arbitrary command-line task execution as typically provided by Rake. We're not directly testing the *output* of the rake tasks here, but rather validating the very *structure* of the tasks defined, specifically within a namespace. You don't want rogue tasks popping up under the wrong namespace; that can quickly descend into chaos.
+The challenge stems from the fact that RSpec's primary focus is testing Ruby code—classes, methods, modules—not arbitrary command-line task execution as typically provided by Rake. We're not directly testing the _output_ of the rake tasks here, but rather validating the very _structure_ of the tasks defined, specifically within a namespace. You don't want rogue tasks popping up under the wrong namespace; that can quickly descend into chaos.
 
 In essence, what we aim to verify is that tasks are correctly organized within their designated namespaces. We’re checking the task registry of Rake, rather than running the tasks themselves. This requires some strategic thinking about how we interact with Rake's internal task management.
 
@@ -70,7 +70,7 @@ end
 
 In this first example, we first load the `Rakefile`. The `before(:all)` block does that just once, avoiding loading the `Rakefile` for every single test, improving performance when dealing with more substantial rake setups. Then, we grab the `tasks` registry via `Rake.application.tasks`. We can then search for a specific task by its full name, `db:migrate` or `db:seed`, utilizing rspec's `be_truthy` expectation which checks if the find function resulted in a non-nil, non-false value. This pattern is foundational for validating the existence of tasks within namespaces.
 
-Let’s expand on this. What if we wanted to check that a task *does not* exist in a specific namespace or, conversely, ensure there isn’t a stray task outside of any namespace? Consider this modification to the Rakefile for demonstration purposes:
+Let’s expand on this. What if we wanted to check that a task _does not_ exist in a specific namespace or, conversely, ensure there isn’t a stray task outside of any namespace? Consider this modification to the Rakefile for demonstration purposes:
 
 ```ruby
 namespace :db do

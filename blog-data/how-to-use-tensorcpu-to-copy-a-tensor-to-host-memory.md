@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-to-use-tensorcpu-to-copy-a-tensor-to-host-memory"
 ---
 
-Okay, let's delve into the nuances of transferring tensors to host memory using `.cpu()`. I've tackled this problem countless times, especially back when I was working on that distributed training pipeline for the large language model – a real beast, that one. Managing tensor memory efficiently was crucial.
+, let's delve into the nuances of transferring tensors to host memory using `.cpu()`. I've tackled this problem countless times, especially back when I was working on that distributed training pipeline for the large language model – a real beast, that one. Managing tensor memory efficiently was crucial.
 
 So, `Tensor.cpu()` in PyTorch, or the equivalent in other deep learning frameworks, isn't just a magic invocation. It's a precise instruction to relocate a tensor’s underlying data from its current location—typically a gpu—to the system's ram, also known as host memory. Think of it as moving a file from a fast flash drive (the gpu) to your computer's main hard drive (system ram). This process is essential for operations that can't be performed efficiently on the gpu, such as: examining tensor values with numpy, performing calculations using standard cpu-bound libraries, or saving tensors to disk in a format that’s not gpu-compatible.
 
 The reason for this move is primarily about hardware architecture. Gpus are optimized for parallel computations and have high memory bandwidth, but the operations that can be executed on them are often limited. The host cpu, on the other hand, offers greater flexibility and is required for many tasks, hence the need to copy the tensors.
 
-Now, let's clarify the implications of `.cpu()`. Crucially, it creates a *copy* of the tensor. It doesn’t simply change the location of the original tensor. This is vital for avoiding data corruption issues, especially when you’re dealing with multithreading or distributed processes accessing the same tensors. After calling `.cpu()`, you'll have two distinct tensors; one residing in gpu memory (if it was there originally), and the other in host memory. Modifications to one won't affect the other.
+Now, let's clarify the implications of `.cpu()`. Crucially, it creates a _copy_ of the tensor. It doesn’t simply change the location of the original tensor. This is vital for avoiding data corruption issues, especially when you’re dealing with multithreading or distributed processes accessing the same tensors. After calling `.cpu()`, you'll have two distinct tensors; one residing in gpu memory (if it was there originally), and the other in host memory. Modifications to one won't affect the other.
 
 Let's take a look at some practical examples. First, consider a scenario where you've performed some computations on a gpu, and you need to analyze the results using numpy.
 

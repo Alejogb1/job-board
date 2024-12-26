@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-can-i-gridsearch-light-gbm-on-time-series-data"
 ---
 
-Alright, let’s tackle this. Gridding hyperparameters for LightGBM on time series data is definitely a challenge that requires a somewhat nuanced approach compared to typical classification or regression tasks. Over the years, I've seen plenty of folks, myself included initially, fall into traps that lead to suboptimal models. The core issue, as you're probably sensing, is the temporal dependence inherent in time series. Blindly splitting data without considering the time axis will almost certainly lead to overly optimistic performance metrics during cross-validation. I've personally experienced this in a past project predicting retail sales where a carelessly created gridsearch gave me wonderful results on paper, but promptly failed in a production environment, serving as a harsh lesson in avoiding temporal leakage.
+, let’s tackle this. Gridding hyperparameters for LightGBM on time series data is definitely a challenge that requires a somewhat nuanced approach compared to typical classification or regression tasks. Over the years, I've seen plenty of folks, myself included initially, fall into traps that lead to suboptimal models. The core issue, as you're probably sensing, is the temporal dependence inherent in time series. Blindly splitting data without considering the time axis will almost certainly lead to overly optimistic performance metrics during cross-validation. I've personally experienced this in a past project predicting retail sales where a carelessly created gridsearch gave me wonderful results on paper, but promptly failed in a production environment, serving as a harsh lesson in avoiding temporal leakage.
 
-So, what's the proper way to gridsearch LightGBM (or any model for that matter) with time series data? The short answer is to use a time-aware cross-validation technique. Instead of random splits, we need to split the data sequentially, preserving the temporal order. Think of it as creating validation sets that are always *in the future* relative to the training sets. This simulates the real-world scenario where you're forecasting forward, not evaluating on data from the past.
+So, what's the proper way to gridsearch LightGBM (or any model for that matter) with time series data? The short answer is to use a time-aware cross-validation technique. Instead of random splits, we need to split the data sequentially, preserving the temporal order. Think of it as creating validation sets that are always _in the future_ relative to the training sets. This simulates the real-world scenario where you're forecasting forward, not evaluating on data from the past.
 
 There are several cross-validation strategies suitable for time series, but a fairly common and robust one is a rolling window approach. We'll build this into the grid search. The core idea behind rolling window is that we select a fixed size window to be the training set and a following window to be the validation set, and then repeat this process by moving each window forward to cover the entire time series data.
 
 Here's a breakdown of how to structure that for lightgbm, using python's `scikit-learn` and `lightgbm` packages:
 
-**1.  Time-Aware Splitting Function:**
+**1. Time-Aware Splitting Function:**
 
 First, we need a function that generates the indices for our time-aware training/validation splits. Here’s a basic implementation I've used before, using the rolling window approach:
 
@@ -41,7 +41,7 @@ def time_based_cross_validation(data_len, window_size, step_size):
 
 This function `time_based_cross_validation` is a generator function, producing tuples with train and validation indices based on the given time series length, window size and step size. This function produces sequential training and validation sets, meaning the validation window is always after the training window. Using a step-size equal to the window size creates non-overlapping folds.
 
-**2.  Grid Search Implementation:**
+**2. Grid Search Implementation:**
 
 Next, we'll incorporate this into a grid search using LightGBM:
 
@@ -203,18 +203,18 @@ We add `eval_set=[(X_val, y_val)]`, `eval_metric='mse'`, and `callbacks=[lgb.ear
 
 **A few final thoughts**:
 
-*   **Parameter Space:**  The hyperparameter grid you select will significantly impact performance. Start with a relatively coarse grid and then refine it around the best-performing regions. Consider adding regularization parameters like `lambda_l1` and `lambda_l2`.
-*   **Feature Engineering:** Don't underestimate the importance of good features. Lagged variables, rolling statistics, and other time-aware feature transformations can greatly boost model accuracy.
-*   **Time Series Specific Metrics**: consider using time series specific error metrics like mean absolute scaled error (MASE) instead of mean squared error if it suits your time series application.
+- **Parameter Space:** The hyperparameter grid you select will significantly impact performance. Start with a relatively coarse grid and then refine it around the best-performing regions. Consider adding regularization parameters like `lambda_l1` and `lambda_l2`.
+- **Feature Engineering:** Don't underestimate the importance of good features. Lagged variables, rolling statistics, and other time-aware feature transformations can greatly boost model accuracy.
+- **Time Series Specific Metrics**: consider using time series specific error metrics like mean absolute scaled error (MASE) instead of mean squared error if it suits your time series application.
 
 **Resource Recommendations**:
 
 For further depth, I highly recommend the following materials:
 
-*   **"Forecasting: Principles and Practice" by Rob J Hyndman and George Athanasopoulos:** An excellent, practical guide to time series forecasting. It covers a broad range of models and validation techniques.
+- **"Forecasting: Principles and Practice" by Rob J Hyndman and George Athanasopoulos:** An excellent, practical guide to time series forecasting. It covers a broad range of models and validation techniques.
 
-*   **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** While not exclusively about time series, this book has a great chapter on time series, cross validation, and model tuning techniques, and is an indispensable resource for anyone working with machine learning models in Python.
+- **"Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow" by Aurélien Géron:** While not exclusively about time series, this book has a great chapter on time series, cross validation, and model tuning techniques, and is an indispensable resource for anyone working with machine learning models in Python.
 
-*   **LightGBM Documentation:** Always refer to the official LightGBM documentation for the most up-to-date information on parameters and usage. This also gives important insights into the model internals.
+- **LightGBM Documentation:** Always refer to the official LightGBM documentation for the most up-to-date information on parameters and usage. This also gives important insights into the model internals.
 
 This approach should steer you clear of common pitfalls and provide a robust framework for optimizing your LightGBM models on time series data. Remember that this is an iterative process. Don't be afraid to experiment and adapt these techniques to the specific nuances of your dataset.

@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "is-it-possible-to-increase-containerd-log-limit-beyond-16k"
 ---
 
-Alright, let's talk about container logs and their limits, specifically within the context of containerd. I remember a project back in '21 where we were dealing with a very verbose application – a real chatterbox, if you will. It was spitting out complex debug information, and we quickly hit that 16k log line limit with containerd. It wasn't pretty, and figuring out the best way around it was, shall we say, *instructive*.
+, let's talk about container logs and their limits, specifically within the context of containerd. I remember a project back in '21 where we were dealing with a very verbose application – a real chatterbox, if you will. It was spitting out complex debug information, and we quickly hit that 16k log line limit with containerd. It wasn't pretty, and figuring out the best way around it was, shall we say, _instructive_.
 
 So, the short answer is yes, it is absolutely possible to increase the log limit beyond 16k in containerd, but it's not a simple configuration knob you can just twist. This isn't about some magical runtime parameter; it's about understanding how containerd handles logging and then implementing a solution that matches your needs.
 
-First, let's clarify why there’s a limit. The 16k limit isn’t some arbitrary restriction set by a grumpy maintainer. It's a *read buffer* size. By default, containerd uses a pipe to capture container standard output and standard error. That pipe has an associated buffer, and when that buffer fills up, data is discarded, leading to truncated log lines if your container outputs more than that within a single 'read' cycle. The issue is not about the total log size, but rather about the size of individual log lines and how quickly your container writes to these streams.
+First, let's clarify why there’s a limit. The 16k limit isn’t some arbitrary restriction set by a grumpy maintainer. It's a _read buffer_ size. By default, containerd uses a pipe to capture container standard output and standard error. That pipe has an associated buffer, and when that buffer fills up, data is discarded, leading to truncated log lines if your container outputs more than that within a single 'read' cycle. The issue is not about the total log size, but rather about the size of individual log lines and how quickly your container writes to these streams.
 
 Now, increasing this 'default' buffer directly within containerd isn't a straightforward option. It's not exposed through config files or command-line parameters. The fundamental design is based around efficient, low-overhead streaming. Trying to arbitrarily make the buffer huge has performance implications, particularly if you have thousands of containers. So, we need a different approach.
 
@@ -21,13 +21,13 @@ These are well-established, powerful log collectors that are commonly used in co
 ```yaml
 # fluentd.conf - Highly simplified configuration
 <source>
-  @type forward
-  port 24224
-  bind 0.0.0.0
+@type forward
+port 24224
+bind 0.0.0.0
 </source>
 
 <match docker.**>
-  @type stdout
+@type stdout
 </match>
 ```
 
@@ -86,6 +86,7 @@ ExecStart=/usr/bin/ctr run --rm --log-driver=journald -t  myimage mycontainer
 # so some form of piping or using an OCI Hook is needed.
 Restart=always
 ```
+
 The important part here is that the output from the container isn't being directly handled by containerd, but it's being captured and written via systemd's journald, which can handle arbitrarily long log lines and persistent storage.
 
 **Option 3: Custom Log Forwarder with a FIFO Pipe**
@@ -134,9 +135,9 @@ Each of these solutions demonstrates a strategy for handling logs outside of con
 
 For further exploration, I would recommend:
 
-*   **"Docker in Action" by Jeff Nickoloff and Stephen Kuenzli** - While focused on Docker, it covers container logging concepts relevant to all container runtimes.
-*   **"Operating System Concepts" by Abraham Silberschatz, Peter Baer Galvin, and Greg Gagne** - This provides a fundamental understanding of pipes, system calls, and process management that underlie the issues discussed.
-*   **The Fluentd documentation** for detailed configuration and usage information (fluentd.org).
-*   **The journald documentation** from systemd (freedesktop.org)
+- **"Docker in Action" by Jeff Nickoloff and Stephen Kuenzli** - While focused on Docker, it covers container logging concepts relevant to all container runtimes.
+- **"Operating System Concepts" by Abraham Silberschatz, Peter Baer Galvin, and Greg Gagne** - This provides a fundamental understanding of pipes, system calls, and process management that underlie the issues discussed.
+- **The Fluentd documentation** for detailed configuration and usage information (fluentd.org).
+- **The journald documentation** from systemd (freedesktop.org)
 
 Dealing with logging can be tricky, but with the right tools and understanding, you can manage even the most verbose applications without hitting those frustrating limits. Hope this provides some clarity.

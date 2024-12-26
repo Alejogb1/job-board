@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ant-proxy-configuration-setup"
 ---
 
-Okay so you're wrestling with `ant` proxy settings right Been there man I've spent way too many late nights debugging build processes that just refuse to connect to the internet because of some stupid proxy issue Lets talk this out I've seen a thing or two about this so I got you
+you're wrestling with `ant` proxy settings right Been there man I've spent way too many late nights debugging build processes that just refuse to connect to the internet because of some stupid proxy issue Lets talk this out I've seen a thing or two about this so I got you
 
 First off understand that `ant`'s proxy handling is not always the most intuitive It relies on Java's underlying networking capabilities so what you're effectively doing is configuring how the JVM that runs `ant` handles network requests through your proxy server
 
@@ -31,7 +31,8 @@ Here's a snippet you might see in a typical `build.xml`:
 </project>
 
 ```
-Okay so let's walk through this Each `<property>` tag defines a system property name with a corresponding value In this case `http.proxyHost` and `http.proxyPort` specify the proxy for http connections `https.proxyHost` and `https.proxyPort` handle https connections
+
+let's walk through this Each `<property>` tag defines a system property name with a corresponding value In this case `http.proxyHost` and `http.proxyPort` specify the proxy for http connections `https.proxyHost` and `https.proxyPort` handle https connections
 
 Now that `http.nonProxyHosts` line this is key It's a pipe-separated list of hosts that should bypass the proxy For example this set of configurations the example shows local connections and addresses of the internal network These connections will not be sent through the proxy server
 
@@ -49,9 +50,9 @@ export no_proxy="localhost,127.0.0.1,*.yourinternaldomain.com"
 
 Once these are exported as an environment variables then `ant` will pick up these setting because they map directly to Java system properties under the hood. There are a few reasons to prefer this approach:
 
-*   **Global Configuration:** You only configure it once and it applies to all processes launched from the shell where the variables are defined
-*   **No Build File Modification:** Keeps your build files cleaner and focused on the project's build steps instead of system specific settings
-*   **Easier to Change:** If the proxy changes you only change it in one place your environment.
+- **Global Configuration:** You only configure it once and it applies to all processes launched from the shell where the variables are defined
+- **No Build File Modification:** Keeps your build files cleaner and focused on the project's build steps instead of system specific settings
+- **Easier to Change:** If the proxy changes you only change it in one place your environment.
 
 **Method 3 Using a Properties File**
 
@@ -60,6 +61,7 @@ Now let's say you don't like either of those options Maybe you want to share con
 For this you can do something like this:
 
 First create a file called `proxy.properties` that looks like this:
+
 ```properties
 http.proxyHost=your.proxy.host.com
 http.proxyPort=8080
@@ -79,17 +81,18 @@ And your `build.xml` file would then have this code:
     </target>
 </project>
 ```
+
 Pretty easy right? All you do is use the `<property file="proxy.properties"/>` tag to load the properties from that external file This allows for a flexible approach where you can maintain these values separately from your build script
 
 **Debugging Common Issues**
 
-Alright so you've tried all that and still things aren't working I feel your pain Here are some common pitfalls to watch out for:
+so you've tried all that and still things aren't working I feel your pain Here are some common pitfalls to watch out for:
 
-*   **Typos:** Double check hostnames port numbers property names especially under pressure you might make simple mistakes check that carefully. I once spent an hour tracking down a typo in `http.prxyHost` it was ridiculous
-*   **Protocol Mismatches:** `http.proxyHost` for http connections and `https.proxyHost` for https connection are not interchangeable make sure you are using the right proxy for the protocol being used
-*   **No proxy setting:** For an organization to be very transparent I would say that it would be better to have default proxy settings for all the internal network so that the organization can get visibility of all the network traffic as long as you have the consent of your developers and respect their privacy and data
-*   **Authentication Required:** Some proxy servers require authentication In those cases you will need additional properties like `http.proxyUser` and `http.proxyPassword` or their `https` equivalents these should be avoided at all cost if possible they are a security hole so avoid it. This is never a good idea at all unless necessary. There are better ways to handle authentication that is more secure but its too advanced for this conversation
-*   **Firewall Issues:** Sometimes it isn't the proxy itself but a firewall blocking connections from your build machine Make sure your firewall allows outbound traffic to your proxy
+- **Typos:** Double check hostnames port numbers property names especially under pressure you might make simple mistakes check that carefully. I once spent an hour tracking down a typo in `http.prxyHost` it was ridiculous
+- **Protocol Mismatches:** `http.proxyHost` for http connections and `https.proxyHost` for https connection are not interchangeable make sure you are using the right proxy for the protocol being used
+- **No proxy setting:** For an organization to be very transparent I would say that it would be better to have default proxy settings for all the internal network so that the organization can get visibility of all the network traffic as long as you have the consent of your developers and respect their privacy and data
+- **Authentication Required:** Some proxy servers require authentication In those cases you will need additional properties like `http.proxyUser` and `http.proxyPassword` or their `https` equivalents these should be avoided at all cost if possible they are a security hole so avoid it. This is never a good idea at all unless necessary. There are better ways to handle authentication that is more secure but its too advanced for this conversation
+- **Firewall Issues:** Sometimes it isn't the proxy itself but a firewall blocking connections from your build machine Make sure your firewall allows outbound traffic to your proxy
 
 **Further Reading**
 

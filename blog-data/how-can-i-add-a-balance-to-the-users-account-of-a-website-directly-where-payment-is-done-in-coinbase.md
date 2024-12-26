@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-a-balance-to-the-users-account-of-a-website-directly-where-payment-is-done-in-coinbase"
 ---
 
-Okay, let's tackle this head-on. The challenge of directly manipulating a user's account balance on your website following a Coinbase payment is certainly one I've encountered—more than once, if I'm being honest. It's not merely about moving numbers; it's about the intricate dance between your system, Coinbase's platform, and ensuring both data integrity and user confidence. I’ve personally seen this go wrong in multiple different ways. Let's unpack what's needed here.
+, let's tackle this head-on. The challenge of directly manipulating a user's account balance on your website following a Coinbase payment is certainly one I've encountered—more than once, if I'm being honest. It's not merely about moving numbers; it's about the intricate dance between your system, Coinbase's platform, and ensuring both data integrity and user confidence. I’ve personally seen this go wrong in multiple different ways. Let's unpack what's needed here.
 
 The core of it revolves around a few key areas: secure communication with the Coinbase API, transaction verification, and atomic updates to the user's balance in your database. We can’t just assume that a payment came through—we need robust validation. I remember a rather heated incident during a weekend deployment where we shortcut this part of the process. It involved, let’s say, a few erroneous account balances that we subsequently had to correct manually. From that point forward, robust verification and atomic updates became our mantra.
 
@@ -39,7 +39,7 @@ else:
     print("Transaction verification failed!")
 ```
 
-Now, once we’ve established that a transaction is indeed complete, we face the crucial step of updating the user's balance. We need to do this in a way that’s reliable, avoiding any potential data corruption or race conditions. This is where database transactions come into play. Atomic updates are essential here: the balance update *and* any associated records must succeed or fail as a unit. This is why databases have transaction mechanisms.
+Now, once we’ve established that a transaction is indeed complete, we face the crucial step of updating the user's balance. We need to do this in a way that’s reliable, avoiding any potential data corruption or race conditions. This is where database transactions come into play. Atomic updates are essential here: the balance update _and_ any associated records must succeed or fail as a unit. This is why databases have transaction mechanisms.
 
 The following example assumes a relational database and uses a fictional database API. Most real-world ORMs such as SQLAlchemy or Django ORM have analogous methods.
 
@@ -79,7 +79,7 @@ else:
 
 Note the `with_for_update()` in the SQL query, this prevents other processes from updating the same user record at the same time, solving the potential for race conditions. Additionally, the `rollback()` ensures that if any part of the transaction fails, none of the changes are applied to the database.
 
-Finally, let's integrate the Coinbase transaction check and the database update into a single workflow. The following example shows the whole flow. Note that this is a *basic* example and production-level systems will likely involve more robust exception handling, logging, and potentially message queues for asynchronous processing:
+Finally, let's integrate the Coinbase transaction check and the database update into a single workflow. The following example shows the whole flow. Note that this is a _basic_ example and production-level systems will likely involve more robust exception handling, logging, and potentially message queues for asynchronous processing:
 
 ```python
 # Assumes previously defined functions verify_coinbase_transaction and update_user_balance are available

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-configure-i18n-pt-br-on-a-ruby-on-rails-app-when-getting-an-error"
 ---
 
-alright, so you’re hitting a wall with i18n in your rails app, specifically with pt-br, and getting some errors. been there, many times. it’s like a rite of passage for every rails dev, especially when you start dealing with languages beyond english. let’s break down what’s likely happening and how to fix it.
+, so you’re hitting a wall with i18n in your rails app, specifically with pt-br, and getting some errors. been there, many times. it’s like a rite of passage for every rails dev, especially when you start dealing with languages beyond english. let’s break down what’s likely happening and how to fix it.
 
 first off, i’ve been doing rails for a while, almost a decade now. i remember one project, it was a complex e-commerce platform, and we were expanding into brazil. i figured, "ah, i18n, i’ve seen it before." famous last words. we ended up spending a whole week chasing down encoding issues and missing translation keys. it wasn’t pretty. so trust me, i feel your pain.
 
@@ -99,11 +99,11 @@ I18n.t('hello')
 
 now the tricky part, the errors. if you’re still getting errors, they are likely related to a couple of common issues.
 
-*   **missing translations:** if a key is not found, rails will throw an error. make sure that the key exists on both `en.yml` and `pt-br.yml` (or for your other locales). you might get the dreaded `"translation missing: pt-BR.your.missing.key"` error. this is a reminder to look at your locale files. i once had a similar error and spent about an hour on it because of a small typo i did. so pay attention to the details!
+- **missing translations:** if a key is not found, rails will throw an error. make sure that the key exists on both `en.yml` and `pt-br.yml` (or for your other locales). you might get the dreaded `"translation missing: pt-BR.your.missing.key"` error. this is a reminder to look at your locale files. i once had a similar error and spent about an hour on it because of a small typo i did. so pay attention to the details!
 
-*   **encoding issues:** this is a sneaky one. sometimes, if your `yml` files aren’t saved with utf-8 encoding, you can get weird character errors or translation errors. make sure your editor saves the `yml` files with utf-8 encoding. this one once took me 2 days to solve! i was going mad.
+- **encoding issues:** this is a sneaky one. sometimes, if your `yml` files aren’t saved with utf-8 encoding, you can get weird character errors or translation errors. make sure your editor saves the `yml` files with utf-8 encoding. this one once took me 2 days to solve! i was going mad.
 
-*   **locale setup:** make sure your application is correctly detecting the locale. if you aren't setting the locale on your url's (such as `localhost:3000/pt-br/users`), you should be setting the locale based on headers, or a subdomain. there are some gems that help with that but that's outside of the scope of this answer.
+- **locale setup:** make sure your application is correctly detecting the locale. if you aren't setting the locale on your url's (such as `localhost:3000/pt-br/users`), you should be setting the locale based on headers, or a subdomain. there are some gems that help with that but that's outside of the scope of this answer.
 
 i've also learned a lot from reading some books about this. i would recommend "Agile Web Development with Rails 7" by sam ruby, david bryant copeland and david thomas, it has a section that will clarify how i18n works in rails and some other tips to configure it better. you can also get a deep dive into internationalization by reading "internationalization with ruby on rails" from ben strauss, the book has some advanced topics and explanations about all the stuff in rails i18n that i find really interesting.
 

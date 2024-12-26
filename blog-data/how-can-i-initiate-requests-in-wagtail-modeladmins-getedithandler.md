@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "how-can-i-initiate-requests-in-wagtail-modeladmins-getedithandler"
 ---
 
-Alright, let's tackle initiating requests within Wagtail's `ModelAdmin` `get_edit_handler`. This is something I've had to navigate myself several times, and it's surprisingly nuanced. While Wagtail provides a robust interface for content management, injecting custom request logic directly into the edit handler requires understanding the underlying mechanics. It's not immediately obvious, and relying on global state or directly manipulating the request object outside its intended lifecycle can lead to headaches.
+, let's tackle initiating requests within Wagtail's `ModelAdmin` `get_edit_handler`. This is something I've had to navigate myself several times, and it's surprisingly nuanced. While Wagtail provides a robust interface for content management, injecting custom request logic directly into the edit handler requires understanding the underlying mechanics. It's not immediately obvious, and relying on global state or directly manipulating the request object outside its intended lifecycle can lead to headaches.
 
-The `get_edit_handler` method in Wagtail’s `ModelAdmin` context is primarily responsible for constructing the form editing interface. It’s not designed to directly handle http requests as would happen in a conventional view. Instead, it deals with generating the appropriate panels for your model's fields. However, the question isn’t *whether* we can do this, but *how* to do it correctly, and without resorting to antipatterns.
+The `get_edit_handler` method in Wagtail’s `ModelAdmin` context is primarily responsible for constructing the form editing interface. It’s not designed to directly handle http requests as would happen in a conventional view. Instead, it deals with generating the appropriate panels for your model's fields. However, the question isn’t _whether_ we can do this, but _how_ to do it correctly, and without resorting to antipatterns.
 
 My typical approach hinges on leveraging signals and custom form fields or panels. The core problem revolves around this: `get_edit_handler` executes during the form construction phase. It doesn't have direct access to the `request` object as you'd normally find in a Django view. Therefore, any attempt to use `request` parameters or user context directly will fail. We need to defer our request handling to a phase where the `request` is accessible. Signals, specifically the `pre_save` signal, provide us with an excellent spot.
 
@@ -64,7 +64,7 @@ def populate_calculated_value(sender, instance, **kwargs):
             if user_settings:
               instance.calculated_value = user_settings
 
-    
+
 class MyCustomModelAdmin(ModelAdmin):
     model = MyCustomModel
     menu_label = "Custom Models"
@@ -90,7 +90,7 @@ class MyCustomModelAdmin(ModelAdmin):
 
 In this first example, we introduce a custom panel that interacts with the form and fetches the user data. We also introduce a signal handler to ensure values are still updated even if the form is not submitted directly.
 
-The second snippet illustrates how to handle this scenario with a custom form field. While the custom panel in the first example is good, it assumes you are okay with not having a traditional input field. Sometimes you need to control data submission. Here, we introduce a custom field:
+The second snippet illustrates how to handle this scenario with a custom form field. While the custom panel in the first example is good, it assumes you are with not having a traditional input field. Sometimes you need to control data submission. Here, we introduce a custom field:
 
 ```python
 from django import forms
@@ -181,7 +181,7 @@ class MyCustomModelAdmin(ModelAdmin):
 
 In this scenario, the form itself contains the necessary logic. This is useful if you need to handle data input. Notice that the `calculated_value` is effectively readonly for the user. The `pre_save` signal still handles the case when the form may be submitted without changes.
 
-Let’s consider a final, more sophisticated use case, where the calculated value depends not only on the user but also on the *existing* data of the model instance we're editing. This time we'll introduce a more complex data flow.
+Let’s consider a final, more sophisticated use case, where the calculated value depends not only on the user but also on the _existing_ data of the model instance we're editing. This time we'll introduce a more complex data flow.
 
 ```python
 from django import forms
@@ -281,10 +281,10 @@ This final example refines the custom form field, taking into account the model 
 
 For further exploration, I would recommend the following:
 
-*   **"Two Scoops of Django"** by Daniel Roy Greenfeld and Audrey Roy Greenfeld. This book is a gold standard for advanced Django patterns, and while it doesn't specifically target Wagtail, its sections on signals and forms are invaluable.
+- **"Two Scoops of Django"** by Daniel Roy Greenfeld and Audrey Roy Greenfeld. This book is a gold standard for advanced Django patterns, and while it doesn't specifically target Wagtail, its sections on signals and forms are invaluable.
 
-*   The official **Django documentation** on forms, signals, and middleware. The Wagtail documentation is also crucial, particularly concerning `ModelAdmin` and form handling.
+- The official **Django documentation** on forms, signals, and middleware. The Wagtail documentation is also crucial, particularly concerning `ModelAdmin` and form handling.
 
-*   Consider examining examples of real-world Wagtail projects on GitHub to see how experienced developers handle similar problems. While specifics vary, the patterns remain consistent.
+- Consider examining examples of real-world Wagtail projects on GitHub to see how experienced developers handle similar problems. While specifics vary, the patterns remain consistent.
 
 In conclusion, while initiating requests in `get_edit_handler` is not a direct action, by using signals, custom form fields, and custom panels strategically we can effectively integrate request-based logic into the editing experience without creating problematic code. These techniques allow us to build sophisticated content management tools while still maintaining clean, understandable code.

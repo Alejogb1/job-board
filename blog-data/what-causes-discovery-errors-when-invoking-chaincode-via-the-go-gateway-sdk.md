@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-discovery-errors-when-invoking-chaincode-via-the-go-gateway-sdk"
 ---
 
-Alright, let's unpack this one. I've seen this particular issue rear its head a few times over the years, usually when teams are transitioning to more complex Hyperledger Fabric setups, and it often stems from a few recurring themes. Discovery errors, specifically when using the Go Gateway SDK, are usually related to a disconnect between what the SDK expects and what the Fabric network is actually providing. It’s not usually a coding error, per se, but rather a configuration or understanding gap.
+, let's unpack this one. I've seen this particular issue rear its head a few times over the years, usually when teams are transitioning to more complex Hyperledger Fabric setups, and it often stems from a few recurring themes. Discovery errors, specifically when using the Go Gateway SDK, are usually related to a disconnect between what the SDK expects and what the Fabric network is actually providing. It’s not usually a coding error, per se, but rather a configuration or understanding gap.
 
 One of the most prevalent reasons revolves around **incorrect peer endpoint configuration.** The Gateway SDK relies on discovery to understand where peers are located within the network, which in turn is used to direct transaction proposals. If the peer endpoint information, specifically the address and port, is wrong in the connection profile or client configuration provided to the SDK, it will struggle to establish communication. Think of it like trying to call a phone number with a digit missing; it just won’t connect. I vividly recall an incident where a team had inadvertently used internal peer IPs in their connection profile, and these IPs were not resolvable by the client machine outside of the Fabric network’s internal subnet. That led to consistent discovery failures until we ironed out that discrepancy. Always double-check the hostnames/IPs and ports in your connection profiles.
 
@@ -60,7 +60,8 @@ func main() {
 }
 
 ```
-*In this first example, we are loading a "connection.yaml" file. If this file contains incorrect peer addresses or ports, it's going to lead to discovery issues. A typical symptom will be errors in the 'gateway.Connect' stage or later when the gateway attempts to submit a transaction. The solution isn't in the code itself, but by updating 'connection.yaml' to accurately reflect the network settings. Be sure to use proper hostnames that are resolvable by the client machine, as well as ensuring the port numbers are correct.
+
+\*In this first example, we are loading a "connection.yaml" file. If this file contains incorrect peer addresses or ports, it's going to lead to discovery issues. A typical symptom will be errors in the 'gateway.Connect' stage or later when the gateway attempts to submit a transaction. The solution isn't in the code itself, but by updating 'connection.yaml' to accurately reflect the network settings. Be sure to use proper hostnames that are resolvable by the client machine, as well as ensuring the port numbers are correct.
 
 **Example 2: Mismatched Organization or Channel**
 
@@ -110,7 +111,8 @@ func main() {
 
 }
 ```
-*In this second snippet, the connection profile is assumed to be correct in `config_correct.yaml`, but when connecting to the gateway, we've used `gateway.WithChannel("incorrectChannel")` This will generate an error as the client is trying to work on a channel that is not configured for the chaincode or where the user identity might not have the required access. Similarly, providing an identity that does not belong to the organization on the channel can also cause problems. The solution is to ensure both the channel specified in `gateway.WithChannel` matches where the chaincode is deployed and ensure the identity is associated with the correct organization, which is also related to the channel configuration and access controls.
+
+\*In this second snippet, the connection profile is assumed to be correct in `config_correct.yaml`, but when connecting to the gateway, we've used `gateway.WithChannel("incorrectChannel")` This will generate an error as the client is trying to work on a channel that is not configured for the chaincode or where the user identity might not have the required access. Similarly, providing an identity that does not belong to the organization on the channel can also cause problems. The solution is to ensure both the channel specified in `gateway.WithChannel` matches where the chaincode is deployed and ensure the identity is associated with the correct organization, which is also related to the channel configuration and access controls.
 
 **Example 3: Illustrating a Connection Timeout**
 
@@ -162,7 +164,8 @@ func main() {
 }
 
 ```
-*In this third example, I’ve introduced a simulated network delay to showcase what it might look like to experience a connection timeout due to firewall rules or network connectivity. Here, `time.Sleep(10 * time.Second)` pauses the execution, simulating a communication delay with the peer. You will likely see timeouts or errors related to an inability to connect to the peers. This illustrates the need for a stable and reliable network path between the client application using the Gateway SDK and the Fabric peers. Debugging such errors often involves inspecting firewall rules and reviewing network configurations.
+
+_In this third example, I’ve introduced a simulated network delay to showcase what it might look like to experience a connection timeout due to firewall rules or network connectivity. Here, `time.Sleep(10 _ time.Second)` pauses the execution, simulating a communication delay with the peer. You will likely see timeouts or errors related to an inability to connect to the peers. This illustrates the need for a stable and reliable network path between the client application using the Gateway SDK and the Fabric peers. Debugging such errors often involves inspecting firewall rules and reviewing network configurations.
 
 For a deeper understanding of the concepts discussed, I strongly recommend referring to the Hyperledger Fabric documentation, particularly the sections covering discovery service and connection profiles. The "Programming Hyperledger Fabric" book by Matt Zandstra offers detailed explanations of these concepts and will be helpful. Also, diving into the source code of the `fabric-sdk-go` repository is an excellent way to see how the discovery process is implemented under the hood.
 

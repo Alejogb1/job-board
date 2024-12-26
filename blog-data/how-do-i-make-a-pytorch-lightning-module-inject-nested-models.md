@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-make-a-pytorch-lightning-module-inject-nested-models"
 ---
 
-Alright, let's delve into the topic of injecting nested models into a PyTorch Lightning module. It's a situation I've encountered more than a few times in my past projects, particularly when dealing with complex architectures involving, say, different encoders and decoders or multi-modal learning scenarios where each modality needed its own sub-network. It’s certainly not a case that's covered directly in the typical tutorials.
+, let's delve into the topic of injecting nested models into a PyTorch Lightning module. It's a situation I've encountered more than a few times in my past projects, particularly when dealing with complex architectures involving, say, different encoders and decoders or multi-modal learning scenarios where each modality needed its own sub-network. It’s certainly not a case that's covered directly in the typical tutorials.
 
 From my experience, the core challenge isn't just about constructing the nested structure but ensuring that the entire setup integrates smoothly within the lightning module’s lifecycle, handling things like automatic optimization, data parallelization, and checkpointing without any glitches. You'll find that naive approaches can quickly lead to headaches, particularly around proper parameter registration and gradient tracking.
 
@@ -84,7 +84,7 @@ class TransformerEncoder(nn.Module): # Example, not a full transformer
    def __init__(self, input_size, hidden_size):
       super().__init__()
       self.linear = nn.Linear(input_size, hidden_size)
-   
+
    def forward(self,x):
       return self.linear(x)
 
@@ -188,9 +188,9 @@ The primary strategy here is straightforward: encapsulate your nested modules as
 
 For further understanding and more advanced techniques, I recommend looking into the following resources:
 
-*   **The PyTorch Documentation:** Specifically, the sections on `nn.Module` and how it tracks parameters. Pay attention to the `named_parameters()` method.
-*   **The PyTorch Lightning Documentation:** Focus on the sections covering customization of the training loop, optimizers, and callbacks. You’ll find details on how Lightning uses `nn.Module` to handle model components and optimization.
-*   **“Deep Learning with PyTorch” by Eli Stevens, Luca Antiga, and Thomas Viehmann:** This is an excellent book that provides a detailed look into the core concepts of PyTorch, including `nn.Module` design and best practices which provide the foundation for understanding how modules are treated in PyTorch Lighting.
-*   **The original Transformer paper "Attention is All You Need" by Vaswani et al.:** Although not directly about nested models, it does offer a complex architecture composed of multiple sub-modules that is a good practical example of nesting. This can help give more practical context on when and how to use such designs.
+- **The PyTorch Documentation:** Specifically, the sections on `nn.Module` and how it tracks parameters. Pay attention to the `named_parameters()` method.
+- **The PyTorch Lightning Documentation:** Focus on the sections covering customization of the training loop, optimizers, and callbacks. You’ll find details on how Lightning uses `nn.Module` to handle model components and optimization.
+- **“Deep Learning with PyTorch” by Eli Stevens, Luca Antiga, and Thomas Viehmann:** This is an excellent book that provides a detailed look into the core concepts of PyTorch, including `nn.Module` design and best practices which provide the foundation for understanding how modules are treated in PyTorch Lighting.
+- **The original Transformer paper "Attention is All You Need" by Vaswani et al.:** Although not directly about nested models, it does offer a complex architecture composed of multiple sub-modules that is a good practical example of nesting. This can help give more practical context on when and how to use such designs.
 
 In essence, dealing with nested models within PyTorch Lightning isn't about complex hacks or workarounds; it's about understanding the core abstractions of the framework and structuring your models according to PyTorch's standard practices. Focus on this, and you'll find that integrating nested models into your Lightning pipelines is rather smooth.

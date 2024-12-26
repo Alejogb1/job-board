@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-purpose-of-x-airflow-common-in-an-airflow-docker-compose-file"
 ---
 
-Alright, let's tackle the role of `x-airflow-common` in an Airflow Docker Compose setup. I've seen my share of tangled configurations, and this little snippet, while seemingly minor, plays a crucial part in keeping things sane, especially in complex deployments. Let's get down to the nuts and bolts.
+, let's tackle the role of `x-airflow-common` in an Airflow Docker Compose setup. I've seen my share of tangled configurations, and this little snippet, while seemingly minor, plays a crucial part in keeping things sane, especially in complex deployments. Let's get down to the nuts and bolts.
 
 `x-airflow-common` isn't a standard docker compose directive; rather, it's a user-defined section, typically used within a `docker-compose.yml` file to define reusable configuration pieces. Think of it as a kind of template or a "mixin" for different services within your compose file. Its purpose is strictly to reduce redundancy and improve maintainability, not for any core Docker functionality itself. In a nutshell, it's about avoiding the dreaded copy-paste approach when setting up multiple Airflow components like the scheduler, webserver, and worker.
 
@@ -12,7 +12,7 @@ I recall a project a few years back, where we initially had each Airflow service
 
 So, instead of repeating configurations across each of those services, you define them once under `x-airflow-common`, and then reference them in the specific service definitions using YAML anchors and aliases. This practice dramatically reduces verbosity and promotes a consistent configuration. Now let's illustrate how this might look in practice.
 
-Consider this simplified `docker-compose.yml` example *without* `x-airflow-common`:
+Consider this simplified `docker-compose.yml` example _without_ `x-airflow-common`:
 
 ```yaml
 version: "3.7"
@@ -60,14 +60,14 @@ Here’s how we can refactor this using `x-airflow-common`:
 ```yaml
 version: "3.7"
 x-airflow-common: &airflow-common
-    image: apache/airflow:2.7.3
-    restart: always
-    environment:
-      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
-      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql://airflow:airflow@postgres/airflow
-    volumes:
-      - ./dags:/opt/airflow/dags
-      - ./logs:/opt/airflow/logs
+  image: apache/airflow:2.7.3
+  restart: always
+  environment:
+    - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+    - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql://airflow:airflow@postgres/airflow
+  volumes:
+    - ./dags:/opt/airflow/dags
+    - ./logs:/opt/airflow/logs
 services:
   scheduler:
     <<: *airflow-common
@@ -98,14 +98,14 @@ Let’s explore a slightly more complex example where we also introduce a custom
 ```yaml
 version: "3.7"
 x-airflow-common: &airflow-common
-    image: apache/airflow:2.7.3
-    restart: always
-    environment:
-      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
-      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql://airflow:airflow@postgres/airflow
-    volumes:
-      - ./dags:/opt/airflow/dags
-      - ./logs:/opt/airflow/logs
+  image: apache/airflow:2.7.3
+  restart: always
+  environment:
+    - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+    - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql://airflow:airflow@postgres/airflow
+  volumes:
+    - ./dags:/opt/airflow/dags
+    - ./logs:/opt/airflow/logs
 services:
   scheduler:
     <<: *airflow-common

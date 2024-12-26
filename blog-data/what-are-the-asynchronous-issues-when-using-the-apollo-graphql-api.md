@@ -4,17 +4,17 @@ date: "2024-12-23"
 id: "what-are-the-asynchronous-issues-when-using-the-apollo-graphql-api"
 ---
 
-Okay, let's tackle this. I recall a project back in my early days where we were transitioning from a monolithic REST architecture to a microservices setup using GraphQL with Apollo. That's where I really got intimate with the nuances of asynchrony. It wasn't a simple "plug-and-play" situation, and we definitely encountered some head-scratching moments.
+, let's tackle this. I recall a project back in my early days where we were transitioning from a monolithic REST architecture to a microservices setup using GraphQL with Apollo. That's where I really got intimate with the nuances of asynchrony. It wasn't a simple "plug-and-play" situation, and we definitely encountered some head-scratching moments.
 
-The core challenge with Apollo, particularly when dealing with network requests and state management, boils down to understanding and properly handling asynchronous operations. GraphQL itself is synchronous in its declaration – you define your schema, queries, mutations—but the *execution* of these operations frequently involves network calls, which are inherently asynchronous. Apollo, as a client library, manages these asynchronous requests but it's the developer’s responsibility to deal with the potential pitfalls that emerge.
+The core challenge with Apollo, particularly when dealing with network requests and state management, boils down to understanding and properly handling asynchronous operations. GraphQL itself is synchronous in its declaration – you define your schema, queries, mutations—but the _execution_ of these operations frequently involves network calls, which are inherently asynchronous. Apollo, as a client library, manages these asynchronous requests but it's the developer’s responsibility to deal with the potential pitfalls that emerge.
 
 One of the first issues that trips up many developers is the **race condition in component rendering**. Imagine you have a component that fetches data using a GraphQL query on mount. Apollo's `useQuery` hook, while convenient, triggers an asynchronous network request. The component might initially render with empty data, then re-render when the data arrives. However, if you’re not careful, especially with derived states or side effects relying on this data, you could run into unpredictable behavior. This can manifest as flashes of empty content, UI elements appearing out of sync, or, worse, errors caused by trying to access data that hasn't yet been loaded.
 
 To illustrate, let’s consider a simple React component:
 
 ```javascript
-import React from 'react';
-import { useQuery, gql } from '@apollo/client';
+import React from "react";
+import { useQuery, gql } from "@apollo/client";
 
 const GET_USER = gql`
   query GetUser($id: ID!) {
@@ -26,14 +26,18 @@ const GET_USER = gql`
 `;
 
 function UserProfile({ userId }) {
-  const { loading, error, data } = useQuery(GET_USER, { variables: { id: userId } });
+  const { loading, error, data } = useQuery(GET_USER, {
+    variables: { id: userId },
+  });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
   // A risky pattern: accessing potentially undefined fields
   // before data has arrived
-  const formattedName = data.user.name ? data.user.name.toUpperCase() : 'No Name';
+  const formattedName = data.user.name
+    ? data.user.name.toUpperCase()
+    : "No Name";
 
   return (
     <div>
@@ -53,8 +57,8 @@ Another significant issue stems from **optimistic updates and caching**. Apollo,
 Here is an example showing how to handle optimistic updates:
 
 ```javascript
-import React from 'react';
-import { useMutation, gql } from '@apollo/client';
+import React from "react";
+import { useMutation, gql } from "@apollo/client";
 
 const ADD_ITEM = gql`
   mutation AddItem($name: String!) {
@@ -68,37 +72,36 @@ const ADD_ITEM = gql`
 function ItemList({ items, setItems }) {
   const [addItem, { loading, error }] = useMutation(ADD_ITEM, {
     onCompleted(data) {
-      setItems(prevItems => [...prevItems, data.addItem])
+      setItems((prevItems) => [...prevItems, data.addItem]);
     },
-    onError(error){
-      console.error("Mutation error:", error)
+    onError(error) {
+      console.error("Mutation error:", error);
       // Handle the error
     },
     optimisticResponse: {
-        __typename: 'Mutation',
-          addItem: {
-              __typename: 'Item',
-              id: 'optimistic-id',
-              name: "New Item (Optimistic)",
-        }
+      __typename: "Mutation",
+      addItem: {
+        __typename: "Item",
+        id: "optimistic-id",
+        name: "New Item (Optimistic)",
+      },
     },
-      update(cache, {data}){
-        //Update the cache after mutation successful
-        console.log("Cache updated after mutation.")
-      }
+    update(cache, { data }) {
+      //Update the cache after mutation successful
+      console.log("Cache updated after mutation.");
+    },
   });
 
-    const handleAddItem = () => {
-        addItem({variables: {name: 'New Item'}})
-    }
+  const handleAddItem = () => {
+    addItem({ variables: { name: "New Item" } });
+  };
 
-
-  if(loading) return <p>Loading...</p>
-    if(error) return <p>Error: {error.message}</p>
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div>
-        <button onClick={handleAddItem}>Add Item</button>
+      <button onClick={handleAddItem}>Add Item</button>
       <ul>
         {items.map((item) => (
           <li key={item.id}>{item.name}</li>
@@ -118,17 +121,17 @@ Finally, **dealing with concurrent mutations** is also crucial. When multiple mu
 Here's an example of using `refetchQueries` to synchronize the client state:
 
 ```javascript
-import React from 'react';
-import { useMutation, gql } from '@apollo/client';
+import React from "react";
+import { useMutation, gql } from "@apollo/client";
 
 const DELETE_ITEM = gql`
-    mutation DeleteItem($id: ID!) {
+  mutation DeleteItem($id: ID!) {
     deleteItem(id: $id)
   }
 `;
 
 const GET_ITEMS = gql`
-    query GetItems {
+  query GetItems {
     items {
       id
       name
@@ -136,36 +139,35 @@ const GET_ITEMS = gql`
   }
 `;
 
-
 function ItemList({ items, setItems }) {
   const [deleteItem, { loading, error }] = useMutation(DELETE_ITEM, {
-    onCompleted(data){
-       console.log("Deleted item:", data)
+    onCompleted(data) {
+      console.log("Deleted item:", data);
     },
-    refetchQueries: [{ query: GET_ITEMS}] // Refetch after delete to ensure update
+    refetchQueries: [{ query: GET_ITEMS }], // Refetch after delete to ensure update
   });
 
-
   const handleDelete = (id) => {
-    deleteItem({ variables: { id }});
+    deleteItem({ variables: { id } });
   };
 
-  if(loading) return <p>Loading...</p>;
-    if(error) return <p>Error: {error.message}</p>;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div>
       <ul>
         {items.map((item) => (
           <li key={item.id}>
-            {item.name} <button onClick={() => handleDelete(item.id)}>Delete</button>
+            {item.name}{" "}
+            <button onClick={() => handleDelete(item.id)}>Delete</button>
           </li>
         ))}
       </ul>
     </div>
   );
 }
-export default ItemList
+export default ItemList;
 ```
 
 By using `refetchQueries`, we are ensuring that the client re-fetches the entire list of items after deleting one to avoid inconsistencies. This helps to keep the client in sync with the server even when operations occur concurrently.

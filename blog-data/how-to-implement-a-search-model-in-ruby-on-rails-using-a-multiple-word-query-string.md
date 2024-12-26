@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-implement-a-search-model-in-ruby-on-rails-using-a-multiple-word-query-string"
 ---
 
-Alright, let’s talk about crafting a robust search model in rails, particularly when dealing with multi-word query strings. This is something I've tackled quite a few times, from the early days of rails 2.x all the way through current iterations. It’s more intricate than just slapping `LIKE %query%` in a sql query, especially when you’re aiming for performance and relevance.
+, let’s talk about crafting a robust search model in rails, particularly when dealing with multi-word query strings. This is something I've tackled quite a few times, from the early days of rails 2.x all the way through current iterations. It’s more intricate than just slapping `LIKE %query%` in a sql query, especially when you’re aiming for performance and relevance.
 
 The core challenge lies in effectively translating a user's multi-word query into actionable database searches. A naive approach, like splitting the query by spaces and doing a `OR` operation on every word, usually leads to poor performance and often delivers irrelevant results. A much better approach revolves around understanding your data, indexing it correctly, and crafting targeted queries.
 
@@ -94,6 +94,7 @@ class Product < ApplicationRecord
   }
 end
 ```
+
 Here `plainto_tsquery` generates a query that is more suitable for simple input, and the `:*` at the end allows it to match prefixes.
 
 You'd use it just as before: `Product.search("sne").all`

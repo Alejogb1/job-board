@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-the-docker-add-command-extracting-the-targz-file"
 ---
 
-Okay, let's talk about `docker add` and those pesky tar.gz archives. It's a common stumble, and I've definitely spent my share of late nights debugging similar issues. Specifically, why the `add` instruction seems to just… ignore the fact that it's dealing with a compressed archive. Let's dissect this, as there's more to it than meets the eye.
+, let's talk about `docker add` and those pesky tar.gz archives. It's a common stumble, and I've definitely spent my share of late nights debugging similar issues. Specifically, why the `add` instruction seems to just… ignore the fact that it's dealing with a compressed archive. Let's dissect this, as there's more to it than meets the eye.
 
 The core issue revolves around the way `docker add` interprets the source and destination paths, and the implicit assumption that often clashes with user expectations regarding extraction. The `add` instruction is not automatically smart enough to detect compressed archives and expand them; that's the crux of the problem. When you simply specify a .tar.gz as the source, Docker treats it as a single file and moves it, as is, into the container at the destination path. It doesn't initiate an extraction process unless explicitly instructed. This is not necessarily a limitation, but a design choice focused on clarity and predictability. If you intended it to be simply added as a regular file, that's what it does.
 
@@ -39,11 +39,12 @@ workdir /app
 copy my_archive.tar.gz .
 run mkdir extracted && tar -xzf my_archive.tar.gz -C extracted && rm my_archive.tar.gz
 ```
+
 In this snippet, a directory called `extracted` is created, and the tarball is extracted inside that directory using the `-C` option for `tar`, which specifies the target directory. This offers fine-grained control over where the files are placed.
 
 Now, while we use `tar` here, other archive formats like zip would need specific commands, for example `unzip`. The general principle, however, remains the same: explicitly calling the extraction tool within the container's build environment.
 
-Furthermore, it's worth noting that the `add` instruction also has a very powerful and often overlooked capability: downloading files directly from URLs. If you were to specify a url, and not a local path, `docker add` would attempt to download the remote content and then, if the remote file is a known compressed archive, would proceed to uncompress and copy the content. For example, `add https://example.com/my_archive.tar.gz /app/` *would* properly extract, if the server returns the appropriate content-type header. However, we should be cautious relying on such implicit behaviour and be explicit about all our expectations, to avoid unexpected issues.
+Furthermore, it's worth noting that the `add` instruction also has a very powerful and often overlooked capability: downloading files directly from URLs. If you were to specify a url, and not a local path, `docker add` would attempt to download the remote content and then, if the remote file is a known compressed archive, would proceed to uncompress and copy the content. For example, `add https://example.com/my_archive.tar.gz /app/` _would_ properly extract, if the server returns the appropriate content-type header. However, we should be cautious relying on such implicit behaviour and be explicit about all our expectations, to avoid unexpected issues.
 
 For a comprehensive understanding of `docker add`, `docker copy`, and overall Docker best practices, I highly recommend referencing “Docker Deep Dive” by Nigel Poulton. This book dives deep into the architecture and intricacies of Docker, explaining why these behaviors are intentional and not just random quirks. For understanding the nuances of the tar command itself, the coreutils documentation provided by GNU is invaluable. You can access it through `man tar` on any Linux system, and it is available online too, to read. These are fundamental resources that I have consistently used throughout my career. Another crucial reference when dealing with any build process, is the official docker documentation, which provides detailed explanations about each instruction.
 

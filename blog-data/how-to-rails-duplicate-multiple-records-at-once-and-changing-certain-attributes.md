@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-rails-duplicate-multiple-records-at-once-and-changing-certain-attributes"
 ---
 
-alright, so you're looking to duplicate records in rails, and tweak some fields while you're at it, right? yeah, been there, done that, got the t-shirt. it's one of those things that seems straightforward at first glance, but then you’re down in the weeds trying to make it efficient, especially when you're dealing with a pile of records. let me share how i've tackled this in the past, and some patterns that've saved my bacon.
+, so you're looking to duplicate records in rails, and tweak some fields while you're at it, right? yeah, been there, done that, got the t-shirt. it's one of those things that seems straightforward at first glance, but then you’re down in the weeds trying to make it efficient, especially when you're dealing with a pile of records. let me share how i've tackled this in the past, and some patterns that've saved my bacon.
 
 first off, the naive approach. iterating and creating new records one by one. it works. but it's slow, and if you have relations, it becomes a real pain point real quick. i remember one time at an old gig, working on an inventory management system. we had this feature where users could 'copy' a product with all its settings, but just tweak the name and sku. doing that record by record? felt like using a typewriter to write a novel. i learned my lesson. that lesson was databases are a lot better at manipulating data than loops are. and for this reason, i almost always start with an sql insert.
 
@@ -17,7 +17,7 @@ def duplicate_records(model_class, ids, changes)
   sql_fragment = changes.map do |key, value|
       "#{key} = '#{value}'"
     end.join(', ')
-  
+
   quoted_table_name = ActiveRecord::Base.connection.quote_table_name(model_class.table_name)
   quoted_ids = ids.map { |id| ActiveRecord::Base.connection.quote(id) }.join(",")
 
@@ -27,7 +27,7 @@ def duplicate_records(model_class, ids, changes)
     where id in (#{quoted_ids})
   SQL
   ActiveRecord::Base.connection.execute(sql)
-    
+
   update_sql = <<~SQL
     update #{quoted_table_name} set #{sql_fragment}
       where id in (select max(id) from #{quoted_table_name} group by created_at having count(*) > 1)
@@ -97,7 +97,7 @@ begin
 		where table_name = source_table;
     select array_agg(column_name) into target_columns from information_schema.columns
 		where table_name = destination_table;
-		
+
     if array_length(source_columns, 1) != array_length(target_columns,1) then
       raise exception 'The number of columns does not match';
     end if;
@@ -108,7 +108,7 @@ begin
   end if;
 
   sql := format('insert into %I (%s) select %s from %I', destination_table, target_columns, source_columns, source_table);
-  
+
   if where_clause is not null then
     sql := sql || ' where ' || where_clause;
   end if;

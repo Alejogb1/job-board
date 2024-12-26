@@ -4,15 +4,15 @@ date: "2024-12-13"
 id: "p4-submit-without-description"
 ---
 
-Alright so p4 submit without description right Been there done that got the t-shirt and probably a few sleepless nights to go with it This is a classic Perforce problem a real head scratcher for the uninitiated and honestly even for the veteran sometimes Let me tell you about my first rodeo with this one back in oh maybe 2012 working on a ridiculously large game engine project We were using Perforce like it was going out of style which it kinda was back then but thats another story And of course we hit this exact issue people were submitting changes without descriptions just a bunch of changelists with numbers and no context Absolute chaos It was like trying to decipher hieroglyphics after a power surge
+so p4 submit without description right Been there done that got the t-shirt and probably a few sleepless nights to go with it This is a classic Perforce problem a real head scratcher for the uninitiated and honestly even for the veteran sometimes Let me tell you about my first rodeo with this one back in oh maybe 2012 working on a ridiculously large game engine project We were using Perforce like it was going out of style which it kinda was back then but thats another story And of course we hit this exact issue people were submitting changes without descriptions just a bunch of changelists with numbers and no context Absolute chaos It was like trying to decipher hieroglyphics after a power surge
 
-So the problem is that p4 submit doesnt *force* a description It's like a suggestion box that's never actually read You can totally submit a changelist with a blank description and the system just shrugs and says "okay sure" This is a recipe for disaster in any team bigger than like two people It makes code reviews impossible finding bugs is a nightmare and trying to trace the history of a change is like navigating a maze blindfolded
+So the problem is that p4 submit doesnt _force_ a description It's like a suggestion box that's never actually read You can totally submit a changelist with a blank description and the system just shrugs and says " sure" This is a recipe for disaster in any team bigger than like two people It makes code reviews impossible finding bugs is a nightmare and trying to trace the history of a change is like navigating a maze blindfolded
 
 The root cause usually comes down to a few things either the developers are lazy in a hurry or just not aware of the importance of a good description Or sometimes its because the p4 client is set up poorly and doesnt nudge them in the right direction Which happened way too often with me
 
 First things first lets look at the simple way to see the problem you just run `p4 changes -l` and you will see a whole bunch of changes without a description or with the infamous `default` description you probably know it from the nightmares of your job This is usually a first sign something is seriously wrong
 
-The basic solution is to make it so that developers *have* to enter a description before submitting Their submit will just fail if they dont It is achievable using Perforce's triggers functionality Triggers are server-side scripts that are executed at different points in the perforce workflow think of it like git hooks on the server level So when a user tries to submit a changelist the trigger gets executed and we can check the changelist description and reject it if it is empty or has a default value.
+The basic solution is to make it so that developers _have_ to enter a description before submitting Their submit will just fail if they dont It is achievable using Perforce's triggers functionality Triggers are server-side scripts that are executed at different points in the perforce workflow think of it like git hooks on the server level So when a user tries to submit a changelist the trigger gets executed and we can check the changelist description and reject it if it is empty or has a default value.
 
 Lets dive into some code shall we I'll show you a couple of ways to do this The first one is with a simple bash script and then I’ll show you another approach with a python script
 
@@ -35,6 +35,7 @@ fi
 
 exit 0
 ```
+
 This script is relatively basic but it gets the job done. Save this to a file called for example `check_description.sh` You will need to make it executable with `chmod +x check_description.sh` and you will then need to configure a Perforce trigger to use it. This command will do the trick for most cases:
 
 ```
@@ -46,7 +47,7 @@ Now after that every single submission will trigger this check and will prevent 
 
 **Python Script Example**
 
-Okay now for something a little more flexible a Python script We can do a lot more complex checks if we need them in the future We could filter different default descriptions or check for a minimum characters in the description It is way more flexible than shell scripts for complex issues
+now for something a little more flexible a Python script We can do a lot more complex checks if we need them in the future We could filter different default descriptions or check for a minimum characters in the description It is way more flexible than shell scripts for complex issues
 
 ```python
 #!/usr/bin/env python3
@@ -96,7 +97,7 @@ Another thing I’ve seen before is that some teams use templates for their comm
 
 **Making it User-Friendly**
 
-Okay beyond triggers its also very useful to make the p4 user experience friendlier. P4V the Perforce Visual Client, has a feature to customize the submit dialog This can be used to show a warning if the description is blank or even pre-fill it with some boiler-plate stuff It’s a good idea to set up client side warnings, because they are far more efficient than server-side rejections. It is better to prevent the problem before it reaches the server.
+beyond triggers its also very useful to make the p4 user experience friendlier. P4V the Perforce Visual Client, has a feature to customize the submit dialog This can be used to show a warning if the description is blank or even pre-fill it with some boiler-plate stuff It’s a good idea to set up client side warnings, because they are far more efficient than server-side rejections. It is better to prevent the problem before it reaches the server.
 
 Another thing that I would advise is to have a good documentation for p4 this might seem basic but you will be surprised by how little developers know of their versioning system most people just go on the surface level of their system and rarely dive deep into the configurations and tools they have. If your team knows all the features they will be more efficient and more effective. A good introduction to Perforce is the O'Reilly book on "Version Control with Perforce" it’s a classic for a reason. Also make sure to go through the official Perforce documentation which is really good
 

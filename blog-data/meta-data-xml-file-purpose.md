@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "meta-data-xml-file-purpose"
 ---
 
-Okay so you're asking about metadata XML files their purpose right I've been wrestling with those things for what feels like forever I mean back in the day when I was a fresh grad working at some startup we literally lived and breathed XML it was the wild west of data interchange let me tell you
+you're asking about metadata XML files their purpose right I've been wrestling with those things for what feels like forever I mean back in the day when I was a fresh grad working at some startup we literally lived and breathed XML it was the wild west of data interchange let me tell you
 
-Look at it this way at its core a metadata XML file is just a structured way to describe *other* data It's not the data itself it's the data *about* the data Like imagine you have a massive pile of photos right Each photo is data But what about the date the photo was taken the location where it was taken who's in the photo that's all *metadata* And XML is a way to organize that information so a machine can understand it
+Look at it this way at its core a metadata XML file is just a structured way to describe _other_ data It's not the data itself it's the data _about_ the data Like imagine you have a massive pile of photos right Each photo is data But what about the date the photo was taken the location where it was taken who's in the photo that's all _metadata_ And XML is a way to organize that information so a machine can understand it
 
 Think of it like this its a key value storage that uses tags to define and describe the data instead of a key value index with a string
 
@@ -94,7 +94,7 @@ Also there are a lot of papers on the XML standard itself you could search ACM o
 
 Now the real use of XML is basically an evolution of what we did before we had JSON which is its a way to describe data that can be read by a computer and by a human This is still a valid use case specially when you need structured data and a more robust approach than just writing a simple text file
 
-Look I'm not here to tell you that XML is the best solution for *everything* but its a really powerful tool when you need structured data with metadata and you want to define schemas and be able to enforce them I just want to give you my two cents of a real user that used it extensively for years it is a tool that is definitely worthy of learning
+Look I'm not here to tell you that XML is the best solution for _everything_ but its a really powerful tool when you need structured data with metadata and you want to define schemas and be able to enforce them I just want to give you my two cents of a real user that used it extensively for years it is a tool that is definitely worthy of learning
 
 So yeah metadata XML files they are kind of like the unsung heroes of data handling they might not be as flashy as some new technologies but they still do a lot of heavy lifting behind the scenes.
 

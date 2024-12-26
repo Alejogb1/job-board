@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-trigger-airflow-dags-programmatically"
 ---
 
-Alright, let's tackle this. Programmatically triggering Airflow DAGs is a common requirement, and over the years I've bumped into more than a few scenarios where relying solely on the scheduler isn’t quite enough. I remember a particularly tricky project where we needed to kick off a complex ETL pipeline based on real-time events coming from an external system. The scheduler alone couldn't handle that level of dynamism, necessitating a programmatic approach. There’s a spectrum of ways to achieve this, each with its own advantages and trade-offs. Let’s break it down.
+, let's tackle this. Programmatically triggering Airflow DAGs is a common requirement, and over the years I've bumped into more than a few scenarios where relying solely on the scheduler isn’t quite enough. I remember a particularly tricky project where we needed to kick off a complex ETL pipeline based on real-time events coming from an external system. The scheduler alone couldn't handle that level of dynamism, necessitating a programmatic approach. There’s a spectrum of ways to achieve this, each with its own advantages and trade-offs. Let’s break it down.
 
 The core concept revolves around the Airflow REST API. Airflow exposes various endpoints that allow us to interact with it programmatically, and one such endpoint is specifically designed to trigger DAG runs. This is the primary method for remote execution. We typically achieve this through scripting languages like Python, using libraries that can handle HTTP requests. Python's `requests` library is a solid workhorse here, but I have also used other alternatives depending on the specific system involved.
 
@@ -103,7 +103,7 @@ if __name__ == '__main__':
 
 This script defines a Celery task, `trigger_dag_celery`, that uses the same logic as our first example. However, instead of executing the DAG trigger directly, it submits the request to the Celery queue, which will then execute asynchronously. This method adds decoupling, improving resilience, and scalability, especially in environments with fluctuating loads. The beauty of celery or similar systems is that you don't need to be in the same script, this could be a completely different system entirely just sending data and triggering via the broker.
 
-Finally, another approach involves using Airflow’s `trigger_dag` operator *within* an existing DAG. This creates a chain of DAGs, where one DAG can trigger another upon successful completion or based on specific conditions. It allows the orchestration logic to be encapsulated within your Airflow environment. For example, a daily process DAG might finish its process and then trigger a reporting DAG for the day.
+Finally, another approach involves using Airflow’s `trigger_dag` operator _within_ an existing DAG. This creates a chain of DAGs, where one DAG can trigger another upon successful completion or based on specific conditions. It allows the orchestration logic to be encapsulated within your Airflow environment. For example, a daily process DAG might finish its process and then trigger a reporting DAG for the day.
 
 ```python
 from airflow import DAG

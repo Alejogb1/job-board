@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "float-sparql-filter-query-usage"
 ---
 
-Okay so you're asking about using `FILTER` with `float` values in SPARQL queries yeah I've been down that rabbit hole more times than I care to admit. It's one of those things that seems simple on the surface but can lead to some head scratching real quick if you're not careful let me break it down from my experience having wrestled with this a bunch of times
+you're asking about using `FILTER` with `float` values in SPARQL queries yeah I've been down that rabbit hole more times than I care to admit. It's one of those things that seems simple on the surface but can lead to some head scratching real quick if you're not careful let me break it down from my experience having wrestled with this a bunch of times
 
 Right off the bat the most basic thing is you're dealing with floats so you need to think about precision and how SPARQL treats number literals and comparisons. They aren't always what you might expect if you are coming from pure programming background.
 
@@ -62,7 +62,7 @@ WHERE {
 }
 ```
 
-Again this *might* work and probably it will work but its a gamble as there are floating point representation problems that you might encounter and it will not solve edge cases. This is especially true if you are working with data from different sources where small variations in representation can affect the outcomes.
+Again this _might_ work and probably it will work but its a gamble as there are floating point representation problems that you might encounter and it will not solve edge cases. This is especially true if you are working with data from different sources where small variations in representation can affect the outcomes.
 
 Here is the good solution the one you should be using if you really want to avoid headaches
 

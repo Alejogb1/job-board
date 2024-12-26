@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-set-custom-trigger-rules-in-airflow"
 ---
 
-Alright, let's tackle this. Custom trigger rules in airflow, it's a topic I’ve spent a fair amount of time with, especially back during my stint at 'DataStreams Inc'. We needed precise control over dag executions to avoid cascading failures and resource bottlenecks. What you're essentially aiming for is to move beyond the standard 'all_success' or 'all_failed' conditions. Thankfully, airflow offers several ways to achieve this granular level of control. It's not just about boolean operators anymore; you can implement quite sophisticated logic.
+, let's tackle this. Custom trigger rules in airflow, it's a topic I’ve spent a fair amount of time with, especially back during my stint at 'DataStreams Inc'. We needed precise control over dag executions to avoid cascading failures and resource bottlenecks. What you're essentially aiming for is to move beyond the standard 'all_success' or 'all_failed' conditions. Thankfully, airflow offers several ways to achieve this granular level of control. It's not just about boolean operators anymore; you can implement quite sophisticated logic.
 
 First off, it’s crucial to understand the underlying mechanics. Airflow, at its core, uses the `trigger_rule` parameter within its task definition. This parameter dictates when a task should move from a 'scheduled' state to 'running'. The standard options, like `all_success`, `all_failed`, `all_done`, `one_success`, `one_failed`, and `none_failed`, are fine for straightforward pipelines, but they quickly become insufficient for intricate workflow needs. You will see these in most introductory documentation and tutorials, but that’s rarely enough for complex production setups.
 
@@ -119,7 +119,7 @@ Here, we’re using a `ShortCircuitOperator` to evaluate the response from `fetc
 
 **Scenario 2: Implementing a Timeout Mechanism Based on Downstream Tasks**
 
-Another challenge we faced involved running data validation checks only if a specific downstream process completed within a specified time. Sometimes these processes would stall, and we needed a way to gracefully handle these situations. While airflow provides timeouts for individual operators it is harder to trigger a failure condition based on the *duration* of several tasks. The key again is the `ShortCircuitOperator`, which when used with downstream dependency allows for flexible logic:
+Another challenge we faced involved running data validation checks only if a specific downstream process completed within a specified time. Sometimes these processes would stall, and we needed a way to gracefully handle these situations. While airflow provides timeouts for individual operators it is harder to trigger a failure condition based on the _duration_ of several tasks. The key again is the `ShortCircuitOperator`, which when used with downstream dependency allows for flexible logic:
 
 ```python
 from airflow import DAG
@@ -178,7 +178,7 @@ In this setup, `simulate_long_task` represents a task that might stall. We have 
 
 **Scenario 3: Combining Multiple Upstream Statuses**
 
-Sometimes, we needed complex scenarios like only executing a task if *at least* two of three upstream tasks succeeded, but not all of them. This becomes important when dealing with situations like data aggregation from different sources. Some sources might occasionally fail, and a complete failure is undesirable. The `depends_on_past`, `wait_for_downstream`, along with the `ShortCircuitOperator` provides a robust way to accomplish this:
+Sometimes, we needed complex scenarios like only executing a task if _at least_ two of three upstream tasks succeeded, but not all of them. This becomes important when dealing with situations like data aggregation from different sources. Some sources might occasionally fail, and a complete failure is undesirable. The `depends_on_past`, `wait_for_downstream`, along with the `ShortCircuitOperator` provides a robust way to accomplish this:
 
 ```python
 from airflow import DAG
@@ -255,7 +255,7 @@ with DAG(
     check_statuses >> aggregate_data_task
 ```
 
-Here, we retrieve the boolean outcomes from the `data_source_` tasks using `xcom_pull`. The logic in `check_upstream_statuses` counts the successful upstream tasks. Then, only if *at least two* of the three tasks succeeded will the execution continue.
+Here, we retrieve the boolean outcomes from the `data_source_` tasks using `xcom_pull`. The logic in `check_upstream_statuses` counts the successful upstream tasks. Then, only if _at least two_ of the three tasks succeeded will the execution continue.
 
 **Recommendations**
 

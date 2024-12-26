@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-pass-python-script-arguments-to-az-ml-run-submit-script"
 ---
 
-Okay, let's get into this. I recall a project a few years back where we were heavily leveraging Azure Machine Learning for model training, and the need to parameterize those training scripts was absolutely crucial. We had different datasets, hyperparameters, and even model architectures we wanted to experiment with. Hardcoding these into the scripts was a non-starter; we needed a robust way to pass arguments. The `az ml run submit-script` command, while powerful, can feel a little opaque if you're not familiar with the nuances of its argument handling. Here’s how I've approached this, and how you can too.
+, let's get into this. I recall a project a few years back where we were heavily leveraging Azure Machine Learning for model training, and the need to parameterize those training scripts was absolutely crucial. We had different datasets, hyperparameters, and even model architectures we wanted to experiment with. Hardcoding these into the scripts was a non-starter; we needed a robust way to pass arguments. The `az ml run submit-script` command, while powerful, can feel a little opaque if you're not familiar with the nuances of its argument handling. Here’s how I've approached this, and how you can too.
 
 The primary mechanism for passing arguments to your Python script when using `az ml run submit-script` revolves around the `--script-params` parameter. This parameter expects a space-separated string of arguments, which are then interpreted by your Python script as if they were supplied via the command line during local execution. Let’s break down why this works and how to use it effectively.
 

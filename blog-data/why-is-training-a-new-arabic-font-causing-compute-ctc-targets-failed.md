@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-training-a-new-arabic-font-causing-compute-ctc-targets-failed"
 ---
 
-Okay, let's unpack this "compute ctc targets failed" error you're seeing when training an Arabic font. I’ve been down this particular rabbit hole before, back when I was working on an optical character recognition project for a historical archive. It wasn't Arabic initially, but the issues we faced then were functionally identical to what you’re experiencing now, and the solutions we landed on are broadly applicable. This error, typically generated during the training of a connectionist temporal classification (ctc) model, arises primarily from a mismatch between the transcriptions provided for training and the underlying structure the ctc algorithm expects. It’s not usually the font itself that's the root problem, but rather how the characters and sequences are being interpreted in the context of ctc.
+, let's unpack this "compute ctc targets failed" error you're seeing when training an Arabic font. I’ve been down this particular rabbit hole before, back when I was working on an optical character recognition project for a historical archive. It wasn't Arabic initially, but the issues we faced then were functionally identical to what you’re experiencing now, and the solutions we landed on are broadly applicable. This error, typically generated during the training of a connectionist temporal classification (ctc) model, arises primarily from a mismatch between the transcriptions provided for training and the underlying structure the ctc algorithm expects. It’s not usually the font itself that's the root problem, but rather how the characters and sequences are being interpreted in the context of ctc.
 
 Essentially, ctc requires a sequence of output labels and their corresponding temporal alignment with the input data. When training a text-based model, the 'labels' generally correspond to the individual characters (or graphemes) in the transcriptions. However, Arabic script introduces a unique set of challenges due to its complex morphology. Characters in Arabic can have different shapes depending on their position in a word (initial, medial, final, and isolated), which are known as positional forms, and then there are ligatures where two or more graphemes combine into one. If the transcription is treating these contextual forms as separate, distinct characters while the training process expects a canonicalized version, you’ll often see a “compute ctc targets failed” error. Likewise, if the input sequence doesn’t have an appropriate match in the reference transcription you provided for ctc targets, the problem will surface as well.
 
@@ -16,7 +16,7 @@ Let's break down some specific scenarios that I've personally encountered and ho
 
 Imagine the word "بسم" ("bism", in the name of God) written in Arabic. In its positional form, each letter has a different visual shape than the isolated form. Let's consider the initial 'ب' (baa), medial 'س' (seen), and final 'م' (meem). If your training data treats the visual forms as separate labels (e.g., `b_initial`, `s_medial`, `m_final`), but the ctc algorithm is expecting canonical forms ( `b`, `s`, `m`) you have a clear misalignment. This is where many beginners encounter problems.
 
-* **Solution:** We need to normalize all positional forms in the transcriptions to their canonical representations before feeding them into the ctc training process.
+- **Solution:** We need to normalize all positional forms in the transcriptions to their canonical representations before feeding them into the ctc training process.
 
 ```python
 import arabic_reshaper
@@ -41,13 +41,14 @@ print(f"Original transcript: {transcript}")
 print(f"Canonical transcript: {canonical_transcript}") #outputs بسم
 
 ```
+
 This snippet uses the `arabic-reshaper` library, a really handy tool for handling Arabic script transformations. This code will reduce the positional forms into base characters. You can install the library via pip using `pip install arabic-reshaper`. It's important to consider that you might need additional adjustments like removing diacritics, depending on your specific project and the source data. You'll find libraries for that easily with a simple search. Also note, that the last line ensures the canonical symbols are returned and prevents other characters to potentially get inserted
 
 **Scenario 2: Ligature Handling**
 
 Arabic often uses ligatures, where two or more characters are combined into a single glyph. For example, the ligature "لا" (lam-alif). If your transcription system treats "لا" as two separate characters (`l` and `a`), whereas the ctc model sees it as a single output token, we are looking at another source of error.
 
-* **Solution:** The training transcript and the training vocabulary should handle ligatures consistently as either unique tokens, or split them consistently into base characters based on your vocabulary.
+- **Solution:** The training transcript and the training vocabulary should handle ligatures consistently as either unique tokens, or split them consistently into base characters based on your vocabulary.
 
 ```python
 import arabic_reshaper
@@ -81,7 +82,7 @@ In this snippet, we’ve extended the previous normalization, and added a condit
 
 Occasionally, the error does not stem from script specificities, but rather from misaligned or missing transcriptions for your training dataset. Suppose that your model expects an input image to correspond to the given transcript, but some images are missing the corresponding transcripts or there are inconsistencies between the transcriptions and the length of the sequence or expected tokens in the target.
 
-* **Solution:**  Double-check your data pipeline, paying close attention to the alignment of input data and its associated transcriptions. Ensure that the transcribed text fully matches what is visible in the image or audio.
+- **Solution:** Double-check your data pipeline, paying close attention to the alignment of input data and its associated transcriptions. Ensure that the transcribed text fully matches what is visible in the image or audio.
 
 ```python
 def validate_transcripts(data):

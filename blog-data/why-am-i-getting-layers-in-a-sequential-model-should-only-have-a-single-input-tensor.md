@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-layers-in-a-sequential-model-should-only-have-a-single-input-tensor"
 ---
 
-Alright, let's tackle this particular issue—the dreaded "layers in a sequential model should only have a single input tensor" error. I’ve certainly seen my fair share of that one over the years, particularly back when I was working on a project involving complex, multi-modal data back in the early days of my foray into deep learning, specifically with Keras. It's a common stumbling block, but it points to a fundamental misunderstanding of how `Sequential` models are structured within frameworks like TensorFlow (with Keras API).
+, let's tackle this particular issue—the dreaded "layers in a sequential model should only have a single input tensor" error. I’ve certainly seen my fair share of that one over the years, particularly back when I was working on a project involving complex, multi-modal data back in the early days of my foray into deep learning, specifically with Keras. It's a common stumbling block, but it points to a fundamental misunderstanding of how `Sequential` models are structured within frameworks like TensorFlow (with Keras API).
 
 The core problem lies in the nature of the `Sequential` model itself. This model is designed to handle a linear stack of layers, where the output of each layer is directly fed as the single input to the next layer. Think of it like a processing assembly line, where each station only accepts one product at a time. The error, therefore, occurs when a layer expects multiple inputs but the `Sequential` model only provides a single input coming from the preceding layer. This can manifest in different ways, but most frequently, it's either due to attempting to use a layer that expects multiple inputs within the Sequential model, or attempting to pass in data that does not conform to the single expected input shape.
 
@@ -12,7 +12,7 @@ Let’s break this down with some illustrative examples and address typical miss
 
 **Example 1: The `Concatenate` Layer Problem**
 
-Consider a case where, mistakenly or not, you're trying to use a `Concatenate` layer inside a `Sequential` model. The `Concatenate` layer explicitly takes a *list* of tensors as input, and not a single one. This is a classic cause for the error.
+Consider a case where, mistakenly or not, you're trying to use a `Concatenate` layer inside a `Sequential` model. The `Concatenate` layer explicitly takes a _list_ of tensors as input, and not a single one. This is a classic cause for the error.
 
 ```python
 import tensorflow as tf
@@ -72,7 +72,7 @@ try:
         Flatten(),
         Dense(10, activation='relu')
     ])
-    
+
     # Incorrect data shape, missing a dimension
     incorrect_data = np.random.rand(1, 8, 8) # Example of a batch size of 1, 8x8, but NO channel dimension
     model.predict(incorrect_data)
@@ -80,7 +80,7 @@ except Exception as e:
     print(f"Error Encountered: {e}")
 ```
 
-The model defines the input as shape `(8,8,1)`, expecting channel dimension, but it will fail when we feed a tensor with dimensions `(1,8,8)` . While this won't directly trigger the "single input tensor" error when the model is *defined*, it will cause an error during prediction because the data does not match the model input shape. Note that the input shape is used *only* to build the computational graph, not to *check* each passed batch.
+The model defines the input as shape `(8,8,1)`, expecting channel dimension, but it will fail when we feed a tensor with dimensions `(1,8,8)` . While this won't directly trigger the "single input tensor" error when the model is _defined_, it will cause an error during prediction because the data does not match the model input shape. Note that the input shape is used _only_ to build the computational graph, not to _check_ each passed batch.
 
 **The Fix:** Pass the data with the correct shape, including the channel dimension. This often means ensuring your data processing pipeline reshapes data correctly.
 
@@ -94,7 +94,7 @@ model = tf.keras.Sequential([
     Flatten(),
     Dense(10, activation='relu')
 ])
-    
+
 correct_data = np.random.rand(1, 8, 8, 1) # Correct data shape
 model.predict(correct_data) # Now it should work
 print("Data passed with the correct shape.")

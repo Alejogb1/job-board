@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "with-github-actions-why-is-an-image-pulled-even-if-a-step-is-skipped"
 ---
 
-alright, so you're seeing github actions pull images even when a step that uses that image is skipped. i've definitely banged my head against this one before, it's a sneaky behavior of how github actions deals with containers and step execution. let me unpack this from my perspective, having spent more late nights than i care to remember debugging these things.
+, so you're seeing github actions pull images even when a step that uses that image is skipped. i've definitely banged my head against this one before, it's a sneaky behavior of how github actions deals with containers and step execution. let me unpack this from my perspective, having spent more late nights than i care to remember debugging these things.
 
 first off, let's understand that github actions runs your workflow on virtual machines, essentially ephemeral compute instances. each job within a workflow gets its own clean vm. the runner, which is the software that actually executes your workflow definition, handles the setup and teardown, including container image management.
 

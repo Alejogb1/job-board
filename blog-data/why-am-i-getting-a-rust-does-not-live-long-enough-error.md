@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-rust-does-not-live-long-enough-error"
 ---
 
-Alright, let’s tackle this one. I’ve seen the "does not live long enough" error in Rust countless times, usually followed by a collective groan from the team. It's a hallmark of the borrow checker doing its job, sometimes a bit too zealously. The issue, at its core, stems from Rust's meticulous memory management system. It wants to ensure that references never dangle, meaning they always point to valid data for as long as the reference itself exists. When you see that particular error, it essentially means the borrow checker has detected a situation where a reference outlives the data it’s pointing to.
+, let’s tackle this one. I’ve seen the "does not live long enough" error in Rust countless times, usually followed by a collective groan from the team. It's a hallmark of the borrow checker doing its job, sometimes a bit too zealously. The issue, at its core, stems from Rust's meticulous memory management system. It wants to ensure that references never dangle, meaning they always point to valid data for as long as the reference itself exists. When you see that particular error, it essentially means the borrow checker has detected a situation where a reference outlives the data it’s pointing to.
 
 Think of it like this: you've been given a map to a specific location, but before you get there, the location itself is gone – demolished, moved, or simply ceased to exist. Rust absolutely refuses to let that happen. The error message itself, while sometimes cryptic, is trying to alert you to this potential dangling reference situation. Let's break down why this occurs, and how to address it, with concrete examples based on things I've encountered over the years.
 

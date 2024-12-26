@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-isnt-the-javascript-function-calling-correctly-when-used-with-a-forms-onclick-attribute"
 ---
 
-Alright, let’s tackle this. I’ve certainly seen this issue rear its head more than once over the years – that frustrating moment when your javascript function seems to ignore your form’s onclick attribute like a teenager ignoring their curfew. It usually boils down to a few common culprits, and I’ve spent enough time debugging these scenarios to have a decent understanding of what’s typically going on under the hood. Let’s dive in.
+, let’s tackle this. I’ve certainly seen this issue rear its head more than once over the years – that frustrating moment when your javascript function seems to ignore your form’s onclick attribute like a teenager ignoring their curfew. It usually boils down to a few common culprits, and I’ve spent enough time debugging these scenarios to have a decent understanding of what’s typically going on under the hood. Let’s dive in.
 
-The crux of the issue usually isn't that the onclick event itself *isn't* firing; it’s more about *how* and *when* the javascript is being executed, and specifically, the scope within which the function is being called. The html onclick attribute doesn't operate in the same way as attaching an event listener in javascript. This can be confusing since both *seem* to achieve the same thing, but the contexts are fundamentally different.
+The crux of the issue usually isn't that the onclick event itself _isn't_ firing; it’s more about _how_ and _when_ the javascript is being executed, and specifically, the scope within which the function is being called. The html onclick attribute doesn't operate in the same way as attaching an event listener in javascript. This can be confusing since both _seem_ to achieve the same thing, but the contexts are fundamentally different.
 
 When you use `onclick="myFunction()"` directly in an html tag, that function name, `myFunction`, is essentially being evaluated in the global scope. And that, my friends, is where problems often start. If your javascript function resides within another function’s scope, or within a module, or even within a class definition, the html won’t be able to directly access it through that simple attribute declaration.
 
@@ -24,17 +24,17 @@ This code illustrates a common mistake where the function `validateForm` is not 
 
 ```html
 <form id="myForm">
-    <input type="text" id="name" />
-    <button type="button" onclick="validateForm()">Submit</button>
+  <input type="text" id="name" />
+  <button type="button" onclick="validateForm()">Submit</button>
 </form>
 
 <script>
-(function() {
-  function validateForm() {
-    console.log("Validating the form.");
-    // ... form validation logic ...
-  }
-})();
+  (function () {
+    function validateForm() {
+      console.log("Validating the form.");
+      // ... form validation logic ...
+    }
+  })();
 </script>
 ```
 
@@ -46,17 +46,17 @@ Here’s the corrected code snippet to the same problem, demonstrating the prope
 
 ```html
 <form id="myForm">
-    <input type="text" id="name" />
-    <button type="button" id="submitButton">Submit</button>
+  <input type="text" id="name" />
+  <button type="button" id="submitButton">Submit</button>
 </form>
 
 <script>
-function validateForm() {
+  function validateForm() {
     console.log("Validating the form.");
     // ... form validation logic ...
   }
-const submitButton = document.getElementById('submitButton');
-submitButton.addEventListener('click', validateForm);
+  const submitButton = document.getElementById("submitButton");
+  submitButton.addEventListener("click", validateForm);
 </script>
 ```
 
@@ -68,26 +68,26 @@ This example covers how to access form elements using event listeners and `this`
 
 ```html
 <form id="myForm">
-    <input type="text" id="name" />
-    <button type="button" id="submitButton">Submit</button>
+  <input type="text" id="name" />
+  <button type="button" id="submitButton">Submit</button>
 </form>
 <script>
-function validateForm(event) {
-  event.preventDefault(); // Prevent the form from submitting
+  function validateForm(event) {
+    event.preventDefault(); // Prevent the form from submitting
 
-  const form = event.target.form;
-  const nameInput = form.querySelector('#name');
-  console.log('Name:', nameInput.value);
+    const form = event.target.form;
+    const nameInput = form.querySelector("#name");
+    console.log("Name:", nameInput.value);
 
-  // ... form validation logic ...
-}
+    // ... form validation logic ...
+  }
 
-const submitButton = document.getElementById('submitButton');
-submitButton.addEventListener('click', validateForm);
+  const submitButton = document.getElementById("submitButton");
+  submitButton.addEventListener("click", validateForm);
 </script>
 ```
 
-Notice, here I’m passing `event` to the handler, using it to access the form via `event.target.form`, and then using `querySelector` to grab specific elements within the form. Using `event.preventDefault()` keeps the form from submitting while we handle it with javascript. `this` isn't necessarily required to access the form element in this case, but it *would* refer to the element triggering the event, namely the button. However, to directly access the form elements, we navigate using `event.target.form` rather than `this`. Using `event.target` more directly ties our javascript to the event itself, which can be more reliable in complex scenarios.
+Notice, here I’m passing `event` to the handler, using it to access the form via `event.target.form`, and then using `querySelector` to grab specific elements within the form. Using `event.preventDefault()` keeps the form from submitting while we handle it with javascript. `this` isn't necessarily required to access the form element in this case, but it _would_ refer to the element triggering the event, namely the button. However, to directly access the form elements, we navigate using `event.target.form` rather than `this`. Using `event.target` more directly ties our javascript to the event itself, which can be more reliable in complex scenarios.
 
 **Recommendation:**
 
@@ -95,8 +95,8 @@ As you can see, the best approach is generally to avoid using the html `onclick`
 
 For further study, I’d recommend a deep dive into the following resources:
 
-*   **"Eloquent Javascript" by Marijn Haverbeke:** This book provides a thorough understanding of javascript scope, closures, and event handling which will be foundational knowledge for tackling issues like this. It is comprehensive and a great investment of your time.
-*   **The Mozilla Developer Network (MDN) Javascript Documentation:** This online resource provides a great overview on event listeners and event handling generally. It’s an incredibly helpful resource, always reliable, and frequently updated. Pay particular attention to how event propagation, event bubbling and capturing work which might help when dealing with nested forms.
-*  **"You Don't Know JS" series by Kyle Simpson:** This set of books provides very in depth technical knowledge on many Javascript topics including scope, `this` and async behavior. Though not strictly necessary to solve this particular issue, it will provide a deeper understanding of Javascript.
+- **"Eloquent Javascript" by Marijn Haverbeke:** This book provides a thorough understanding of javascript scope, closures, and event handling which will be foundational knowledge for tackling issues like this. It is comprehensive and a great investment of your time.
+- **The Mozilla Developer Network (MDN) Javascript Documentation:** This online resource provides a great overview on event listeners and event handling generally. It’s an incredibly helpful resource, always reliable, and frequently updated. Pay particular attention to how event propagation, event bubbling and capturing work which might help when dealing with nested forms.
+- **"You Don't Know JS" series by Kyle Simpson:** This set of books provides very in depth technical knowledge on many Javascript topics including scope, `this` and async behavior. Though not strictly necessary to solve this particular issue, it will provide a deeper understanding of Javascript.
 
 Hopefully, this has provided a clear perspective on why the onclick attribute might not be behaving as expected. The key takeaway is that managing scope, understanding how events propagate, and leveraging javascript’s event listeners are crucial for robust and maintainable code.

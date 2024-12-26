@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-am-i-getting-savonsoapfault-on-request-with-savon-ruby-gem"
 ---
 
-Okay, let's tackle this. Savon::SOAPFault errors… ah, yes, I remember a particularly thorny case back when I was working on integrating a legacy enterprise system with our newer platform. Those errors can feel incredibly vague initially, but they usually boil down to a handful of common issues. I've seen it enough times to have a decent handle on debugging them.
+, let's tackle this. Savon::SOAPFault errors… ah, yes, I remember a particularly thorny case back when I was working on integrating a legacy enterprise system with our newer platform. Those errors can feel incredibly vague initially, but they usually boil down to a handful of common issues. I've seen it enough times to have a decent handle on debugging them.
 
-The `Savon::SOAPFault` exception in Ruby’s Savon gem fundamentally means the SOAP server you're communicating with has explicitly rejected your request. It’s not a network problem per se, but a problem with the *contents* of your SOAP envelope as understood by the server. Let's dissect the most probable causes and how I've approached them in the past.
+The `Savon::SOAPFault` exception in Ruby’s Savon gem fundamentally means the SOAP server you're communicating with has explicitly rejected your request. It’s not a network problem per se, but a problem with the _contents_ of your SOAP envelope as understood by the server. Let's dissect the most probable causes and how I've approached them in the past.
 
 First, the most frequent culprit is incorrect soap envelope construction. This means that the XML structure you are sending, which includes the SOAP header and body, doesn't match what the service is expecting. Even small deviations can cause the server to reject the message. When dealing with complex web service definitions (WSDLs), there can be subtle nuances in expected namespaces, attribute order, and data types.
 
@@ -54,7 +54,7 @@ begin
     username = 'myusername'
     password = 'mypassword'
     auth_token = "Basic " + Base64.encode64("#{username}:#{password}").strip
-    
+
   response = client.call(:get_customer_data) do
     header "Authorization" => auth_token,
          "Content-Type" => 'text/xml; charset=UTF-8'

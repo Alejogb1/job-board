@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-choose-tfx-if-i-have-airflow-orchestration"
 ---
 
-Okay, let's talk about choosing tensorflow extended (tfx) when you're already comfortable with airflow. This isn't about tossing out one for the other wholesale, but understanding where each shines and how they can sometimes complement each other, or even why you might choose one over the other. From my experience architecting machine learning pipelines for a variety of projects, including a particularly challenging one involving real-time fraud detection, I've seen firsthand when tfx provides that extra edge you simply can’t readily achieve with just airflow.
+, let's talk about choosing tensorflow extended (tfx) when you're already comfortable with airflow. This isn't about tossing out one for the other wholesale, but understanding where each shines and how they can sometimes complement each other, or even why you might choose one over the other. From my experience architecting machine learning pipelines for a variety of projects, including a particularly challenging one involving real-time fraud detection, I've seen firsthand when tfx provides that extra edge you simply can’t readily achieve with just airflow.
 
 The crux of the matter isn't simply orchestration, though airflow excels at that. It's about the end-to-end lifecycle of a machine learning model – from raw data ingestion all the way through to deployment and continuous monitoring. Airflow is a fantastic general-purpose workflow engine; it’s excellent at scheduling tasks, managing dependencies, and providing a clear view of your data pipelines. But it lacks the opinionated, model-centric approach that tfx was designed around.
 
@@ -89,6 +89,7 @@ def create_trainer(schema_channel: Channel[Schema], training_data_channel, train
   )
   return trainer
 ```
+
 While this is just a snippet to demonstrate how a trainer component interacts, it highlights how tfx abstracts many complexities involved with training a model.
 
 **2. Built-in Metadata Tracking:**
@@ -96,6 +97,7 @@ While this is just a snippet to demonstrate how a trainer component interacts, i
 TFX deeply integrates with ml metadata (mlmd), providing a robust lineage tracking system for your pipelines. This is crucial for reproducibility, debugging, and auditing models. Every artifact (data, schema, model) produced by a tfx pipeline is recorded with metadata, showing how they are derived, their parameters, and their impact on subsequent steps. While airflow has XCom for communicating metadata, it doesn’t provide the same dedicated, ML-focused tracking capability as mlmd. This functionality was a real savior when we had to audit model versions in the fraud detection system; we could trace back exactly what data and feature engineering led to each model.
 
 Here’s a brief example illustrating how tfx uses metadata:
+
 ```python
 from tfx import v1 as tfx
 from tfx.dsl.components.base import ExecutorSpec, InputSpec, OutputSpec, Component
@@ -130,6 +132,7 @@ class MyCustomComponent(Component):
 # my_custom_component = MyCustomComponent(examples=some_channel, schema=some_schema)
 # the above creation and execution of the component will automatically generate records in MLMD
 ```
+
 This is a highly simplified component, but it demonstrates how TFX's metadata tracking is integrated into its components. When the component executes, the generated model is tracked with metadata, allowing detailed understanding of the entire process. Airflow, lacking this level of integration, would require extra development to build comparable functionality.
 
 **3. Standardized Pipeline Design and Reusability:**

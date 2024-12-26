@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-bert-large-uncased-in-huggingface-for-long-text-classification"
 ---
 
-Okay, let's tackle this. I've definitely been in the trenches with large language models and long text myself, and it’s a problem that pops up quite frequently. The crux of it is that `bert-large-uncased`, like most transformer models, has a fixed input length. If you feed it text exceeding that limit, usually around 512 tokens for BERT, it just truncates, discarding vital context. So, let’s discuss how we work around that limitation effectively for classification tasks.
+, let's tackle this. I've definitely been in the trenches with large language models and long text myself, and it’s a problem that pops up quite frequently. The crux of it is that `bert-large-uncased`, like most transformer models, has a fixed input length. If you feed it text exceeding that limit, usually around 512 tokens for BERT, it just truncates, discarding vital context. So, let’s discuss how we work around that limitation effectively for classification tasks.
 
 When I first encountered this issue, it was with a substantial corpus of legal documents. Naively attempting to feed them directly into BERT resulted in… well, let’s just say the performance was far from ideal. I had to rethink the approach, and that's where strategies like chunking, and sliding windows came into play.
 
@@ -90,6 +90,7 @@ combined_embedding = np.mean(np.array(window_embeddings), axis=0) # Can be somet
 
 print("Combined embedding shape:", combined_embedding.shape)
 ```
+
 Here, the `stride` variable introduces an overlap between the text windows, and we combine window embeddings, similar to what was shown in the first code snippet. It is important to note that you can choose different aggregations. For tasks with strong dependencies between subsequent chunks, this tends to give better classification outcomes. This improved the performance in many past projects.
 
 Finally, there's also a strategy based on **hierarchical document embeddings**. In this strategy, you might use something like the sentence-transformer approach to generate sentence embeddings first, then group these into paragraph representations and ultimately document embeddings. This strategy is more complex to implement but could preserve fine-grained semantic structure for extremely long text.
@@ -115,6 +116,7 @@ combined_embedding = np.mean(sentence_embeddings, axis=0) # you can do more comp
 print("Sentence embedding shape:", sentence_embeddings.shape)
 print("Combined embedding shape:", combined_embedding.shape)
 ```
+
 This shows you how you can easily generate sentence embeddings and then perform some form of aggregation. This would form a base layer for further hierarchal encoding.
 
 Choosing the correct method depends highly on the problem and data. Remember that these are not mutually exclusive, and you could potentially combine different strategies based on the data's structure. For example, you might use hierarchical embeddings for very large documents and sliding windows within each sub-document or section.

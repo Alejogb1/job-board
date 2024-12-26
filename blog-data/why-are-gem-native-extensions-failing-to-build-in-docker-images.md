@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-are-gem-native-extensions-failing-to-build-in-docker-images"
 ---
 
-Okay, let's tackle this one. I've seen my share of gem native extension build failures within Docker, and it can definitely feel like chasing ghosts if you don't understand the underlying causes. It’s a particularly annoying issue because the build often works perfectly on your local machine, but falls apart in the container. It's almost never a random occurrence. There are usually specific and logical reasons why this happens, primarily stemming from discrepancies in the environment, dependencies, and build processes.
+, let's tackle this one. I've seen my share of gem native extension build failures within Docker, and it can definitely feel like chasing ghosts if you don't understand the underlying causes. It’s a particularly annoying issue because the build often works perfectly on your local machine, but falls apart in the container. It's almost never a random occurrence. There are usually specific and logical reasons why this happens, primarily stemming from discrepancies in the environment, dependencies, and build processes.
 
 When I first encountered this problem a few years back, while setting up a continuous integration pipeline for a rather complex rails application, I nearly pulled my hair out. The application relied heavily on image processing libraries, many of which had native extensions compiled from C. Locally, development was smooth sailing. But in the dockerized CI/CD environment, these gems kept failing during the `bundle install` phase. After much troubleshooting, it became clear that the Docker environment wasn’t as close to my development setup as I’d initially thought.
 
@@ -16,7 +16,7 @@ Native extensions require specific system-level tools to compile, like `make`, `
 
 **2. Incompatible Architecture or Operating System:**
 
-Another common culprit is building on an architecture different from the target deployment environment. If you develop on an x86_64 machine but deploy on an ARM64 server (or vice-versa), pre-built native extensions will likely be incompatible. The same problem occurs with minor version differences of underlying libraries (for example, different version of `libc`). If you compile the extensions *within* the Docker build process on the correct target system, this mismatch is avoided. However, pre-built binaries from gems are tied to the environment they were compiled in. This is why it is crucial to build native extensions *inside* the final docker image, and not use pre-built binaries.
+Another common culprit is building on an architecture different from the target deployment environment. If you develop on an x86_64 machine but deploy on an ARM64 server (or vice-versa), pre-built native extensions will likely be incompatible. The same problem occurs with minor version differences of underlying libraries (for example, different version of `libc`). If you compile the extensions _within_ the Docker build process on the correct target system, this mismatch is avoided. However, pre-built binaries from gems are tied to the environment they were compiled in. This is why it is crucial to build native extensions _inside_ the final docker image, and not use pre-built binaries.
 
 **3. Incorrect or Incomplete System Libraries:**
 
@@ -72,7 +72,7 @@ platforms :x86_64_linux do
 end
 ```
 
-This example shows how to configure `nokogiri` and `pg` for all platforms, but then ensures `pg` has its native extensions built under `x86_64-linux` conditions. This forces Bundler to build the `pg` gem if the platform during build is different to this. The build of native gems should be done on the *target* environment and not on the development host.
+This example shows how to configure `nokogiri` and `pg` for all platforms, but then ensures `pg` has its native extensions built under `x86_64-linux` conditions. This forces Bundler to build the `pg` gem if the platform during build is different to this. The build of native gems should be done on the _target_ environment and not on the development host.
 
 **Example 3: Using a Multi-Stage Build for Smaller Images**
 
@@ -106,7 +106,7 @@ COPY . .
 CMD ["rails", "server", "-b", "0.0.0.0"]
 ```
 
-This multi-stage build first creates a builder stage (`builder`), where the gems including native extensions are built and installed, followed by a final image that only copies the built gems and necessary runtime dependencies. This allows you to maintain a smaller final image while ensuring build tools are present when needed. I have included an additional runtime dependency (`libpq5`) to illustrate that the dependencies used at *build* time may differ from those at *run* time. It’s best to investigate which dependencies are required for your application for both build and run phases.
+This multi-stage build first creates a builder stage (`builder`), where the gems including native extensions are built and installed, followed by a final image that only copies the built gems and necessary runtime dependencies. This allows you to maintain a smaller final image while ensuring build tools are present when needed. I have included an additional runtime dependency (`libpq5`) to illustrate that the dependencies used at _build_ time may differ from those at _run_ time. It’s best to investigate which dependencies are required for your application for both build and run phases.
 
 **Resources for Deeper Understanding**
 

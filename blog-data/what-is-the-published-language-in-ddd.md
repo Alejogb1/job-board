@@ -4,19 +4,19 @@ date: "2024-12-15"
 id: "what-is-the-published-language-in-ddd"
 ---
 
-alright, so the question is about the "published language" in domain-driven design (ddd). i've spent a good chunk of my career elbow-deep in ddd projects, and this concept, the published language, it's absolutely fundamental. it's not about some specific programming language like python or java, instead it’s about the structured, shared vocabulary the team uses to communicate about the domain. it's the language we use in discussions, in code, in documentation, and in user stories. basically, it's how we talk and think about the problem at hand.
+, so the question is about the "published language" in domain-driven design (ddd). i've spent a good chunk of my career elbow-deep in ddd projects, and this concept, the published language, it's absolutely fundamental. it's not about some specific programming language like python or java, instead it’s about the structured, shared vocabulary the team uses to communicate about the domain. it's the language we use in discussions, in code, in documentation, and in user stories. basically, it's how we talk and think about the problem at hand.
 
 think of it like this: we're not just writing code, we are actually encoding our understanding of a specific problem space, and that understanding must be unified in the way we use language. if one person calls a user 'customer' and another calls it 'client', we have a problem. inconsistencies creep in, bugs appear, and we end up wasting time untangling stuff that shouldn't even be tangled in the first place.
 
 now, from my experience on several projects, the published language is never just given to you. it's a discovery process. on one occasion i recall working for a bank on their payment system, we initially started using very generic terms like ‘transaction’ for everything. it turned out we had several types of transactions each with very different behavior, like internal transfers, credit card payments, and direct debits, etc. we ended up needing a much more specific terminology, including things like 'credit_transfer', 'card_payment' and 'direct_debit'. that was a real eye opener and it also slowed down the project due to the miscommunication. so the lesson i learned from this project, is that building a published language is not a one-time thing, it is a gradual iterative process that keeps evolving as the team's understanding of the domain deepens.
 
-so, let’s be concrete. there isn't a formal specification for *how* to create a published language, it is more of a practice. however, there are very specific things we try to achieve with it. we want a language that is:
+so, let’s be concrete. there isn't a formal specification for _how_ to create a published language, it is more of a practice. however, there are very specific things we try to achieve with it. we want a language that is:
 
-*   **ubiquitous:** everyone on the team, from the developers to the product owner, uses the same terms. no exceptions.
-*   **precise:** each term has a very specific meaning and no room for ambiguity. we should be able to point to our domain model and see a one-to-one mapping with our language.
-*   **consistent:** terms are used the same way across different parts of the system. if a customer is defined as an object with certain attributes in one part of the code, it is the same in all parts of the code.
-*   **expressive:** it captures the richness and nuance of the domain. it should feel natural to use when discussing the domain, not some stilted set of terms.
-*  **simple:** easy to use and understand, but simple doesn't mean generic. It is specific, yet easy to understand by anyone in the team, even the new joiners.
+- **ubiquitous:** everyone on the team, from the developers to the product owner, uses the same terms. no exceptions.
+- **precise:** each term has a very specific meaning and no room for ambiguity. we should be able to point to our domain model and see a one-to-one mapping with our language.
+- **consistent:** terms are used the same way across different parts of the system. if a customer is defined as an object with certain attributes in one part of the code, it is the same in all parts of the code.
+- **expressive:** it captures the richness and nuance of the domain. it should feel natural to use when discussing the domain, not some stilted set of terms.
+- **simple:** easy to use and understand, but simple doesn't mean generic. It is specific, yet easy to understand by anyone in the team, even the new joiners.
 
 let me give you an example of how the published language might look in code. imagine an e-commerce domain. here's a simple python snippet using some core concepts:
 
@@ -110,9 +110,9 @@ in short, the published language is the shared vocabulary that allows us to effe
 
 if you want to really go deep into this topic, there are a few resources that i can highly recommend:
 
-*   **"domain-driven design: tackling complexity in the heart of software" by eric evans:** this is the bible of ddd. it covers the concept of the published language, or ubiquitous language as eric evans calls it, extensively. i keep going back to this book time and time again. it's a difficult book, i will be honest, but worth the effort.
-*   **"implementing domain-driven design" by vaughn vernon:** this book provides a more practical guide on how to apply ddd principles, including the importance of the published language. it's a great companion to eric evans' book.
-*   **various articles on domain-driven design:** there are a lot of good articles and blog posts that discuss aspects of ddd, including the published language, usually in a more concise format. i often use these to refresh the concepts and to get different perspectives on the topic. and last but not least, remember that the practice of ddd is not a sprint it is a marathon.
+- **"domain-driven design: tackling complexity in the heart of software" by eric evans:** this is the bible of ddd. it covers the concept of the published language, or ubiquitous language as eric evans calls it, extensively. i keep going back to this book time and time again. it's a difficult book, i will be honest, but worth the effort.
+- **"implementing domain-driven design" by vaughn vernon:** this book provides a more practical guide on how to apply ddd principles, including the importance of the published language. it's a great companion to eric evans' book.
+- **various articles on domain-driven design:** there are a lot of good articles and blog posts that discuss aspects of ddd, including the published language, usually in a more concise format. i often use these to refresh the concepts and to get different perspectives on the topic. and last but not least, remember that the practice of ddd is not a sprint it is a marathon.
 
 one last bit of advice i can give is to always iterate on your published language. it’s like a good wine it matures with time. as your domain understanding improves so should the published language. don't expect to get it perfect the first time. it's a continuous feedback cycle. and with that, i think i have covered most of what i wanted to say, except for the joke, i guess it was that last bit of advice, i mean, who expected a good wine analogy? i certainly didn't.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-build-a-federated-system-with-sparknl-and-csv-datasets"
 ---
 
-Okay, let's tackle this. Federated systems using Spark and CSV datasets, it's a combination I’ve definitely navigated before, and it presents its own set of interesting challenges, mostly revolving around data access and consistency. I remember a project a few years back where we had geographically dispersed user data across various departments, all stored in csv files—a common scenario, I suspect. We needed to build a unified view of user behavior without centralizing the data due to organizational constraints. It was certainly an exercise in understanding how Spark can function in a distributed, non-homogenous environment.
+, let's tackle this. Federated systems using Spark and CSV datasets, it's a combination I’ve definitely navigated before, and it presents its own set of interesting challenges, mostly revolving around data access and consistency. I remember a project a few years back where we had geographically dispersed user data across various departments, all stored in csv files—a common scenario, I suspect. We needed to build a unified view of user behavior without centralizing the data due to organizational constraints. It was certainly an exercise in understanding how Spark can function in a distributed, non-homogenous environment.
 
 The fundamental hurdle here isn't necessarily the distributed computing aspect—Spark is excellent at that. It's the federated nature of the data itself. We’re not dealing with one massive dataset conveniently available on a shared file system. Instead, we've got these CSV files living in different locations, possibly with varying schemas, and differing access controls, which means a typical single Spark context against a unified storage isn't going to cut it. Spark, in its vanilla configuration, assumes data locality. This is where more sophisticated data access patterns become critical.
 
@@ -12,9 +12,9 @@ My approach generally revolves around using Spark's capabilities to treat each d
 
 Let me break this down with some example code. Imagine three distinct data locations. Let's represent them conceptually as follows:
 
-* **Location A:** `'/path/to/data_location_a/users.csv'`
-* **Location B:** `'/mnt/remote_location/data_b/users_info.csv'`
-* **Location C:** `'/s3/data_bucket/location_c/user_profiles.csv'`
+- **Location A:** `'/path/to/data_location_a/users.csv'`
+- **Location B:** `'/mnt/remote_location/data_b/users_info.csv'`
+- **Location C:** `'/s3/data_bucket/location_c/user_profiles.csv'`
 
 Each of these potentially has a different schema as well, so that is something we have to account for.
 
@@ -72,6 +72,7 @@ data_sources = {
 spark = SparkSession.builder.appName("FederatedData").getOrCreate()
 
 ```
+
 This foundational step lets us prepare for the next stage: reading data. Notice that we explicitly avoid `inferSchema` and define each schema ahead of time. `inferSchema` is convenient, but in a federated system, it can lead to inconsistencies if source data has variations.
 
 **Code Snippet 2: Reading and Processing Individual Data Sources**
@@ -103,6 +104,7 @@ for name, df in dataframes.items():
 
 
 ```
+
 Here, we iteratively load from each location using its specific configurations. Adding a `source` column is something I've found invaluable; it allows us to track the data's origin even after it's been processed. The try-except helps gracefully handle issues related to some data sources not being available. Column renaming here is crucial. If there is common data across data sources, you need a standardized naming convention and you need to manage it up front.
 
 **Code Snippet 3: Joining or Combining the Results**

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "convertto-securestring-key-not-valid-state"
 ---
 
-Okay so I've seen this rodeo before plenty of times "convertto-securestring key not valid state" yeah that old chestnut hits close to home let me tell you this isn't some obscure corner case its a right of passage for anyone playing with powershell and encrypted strings its like the initiation ritual they forgot to put in the official documentation
+I've seen this rodeo before plenty of times "convertto-securestring key not valid state" yeah that old chestnut hits close to home let me tell you this isn't some obscure corner case its a right of passage for anyone playing with powershell and encrypted strings its like the initiation ritual they forgot to put in the official documentation
 
 This thing pops up when you are trying to convert something to a secure string using a key that's well not in a state where its happy I mean secure strings aren't just some text with a fancy hat they rely on cryptographic APIs under the hood and that key is a crucial player its like the bouncer at a very exclusive encrypted club and if that bouncer isn't feeling it you're not getting in
 
@@ -32,6 +32,7 @@ $secureString = ConvertTo-SecureString $plaintext -AsPlainText -Force
 # Try to use the secure string
 $secureString
 ```
+
 What is happening here is that sometimes the context under which you create the secure string and under which you use can be different even under the same user for example using a scheduled task or a different service instance and therefore resulting in the key not being valid for this new context
 
 **Scenario 2 Inter-machine or cross user credential problems**

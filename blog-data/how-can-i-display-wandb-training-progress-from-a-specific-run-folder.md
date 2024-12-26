@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-display-wandb-training-progress-from-a-specific-run-folder"
 ---
 
-Alright, let's tackle this one. I've been down this road a few times, particularly when working on large-scale distributed training jobs that require very granular monitoring. The issue of effectively displaying wandb training progress from a specific run folder isn't just about seeing metrics; it's about building a workflow that's resilient, repeatable, and, frankly, sane.
+, let's tackle this one. I've been down this road a few times, particularly when working on large-scale distributed training jobs that require very granular monitoring. The issue of effectively displaying wandb training progress from a specific run folder isn't just about seeing metrics; it's about building a workflow that's resilient, repeatable, and, frankly, sane.
 
-The core problem is this: wandb's primary interface, the web UI, is designed around the concept of *active* runs—those that are actively sending data. When a training run is complete, or perhaps a container crashed, and you're left with the remnants of a run folder, directly displaying that information in a live manner, as you would a live, running experiment, isn't readily available. We need to leverage wandb's api and, depending on our needs, other libraries to extract, parse, and visualize that historical data.
+The core problem is this: wandb's primary interface, the web UI, is designed around the concept of _active_ runs—those that are actively sending data. When a training run is complete, or perhaps a container crashed, and you're left with the remnants of a run folder, directly displaying that information in a live manner, as you would a live, running experiment, isn't readily available. We need to leverage wandb's api and, depending on our needs, other libraries to extract, parse, and visualize that historical data.
 
 My initial thought always goes to the `wandb.Api()`. It’s your primary tool for programmatically accessing everything within your wandb project. This isn't about some roundabout hack; this is the intended route for such tasks. The key is to understand that even though the data is no longer "live," it's still stored as historical run data associated with your project.
 
@@ -112,6 +112,7 @@ if __name__ == '__main__':
     metric = "accuracy"
     fetch_and_plot_history(project, run_identifier, metric) # plots accuracy data
 ```
+
 This improved code now visualizes the training metrics and allows you to quickly visualize specific metrics. Be mindful to adjust the `metric_to_plot` argument to represent metrics that your model actually logs. You can plot multiple metrics by calling the method multiple times with different metrics as shown.
 
 Now, you may encounter situations where your data is not directly in a column but has nested data, as wandb sometimes structures it. To handle this, we’ll delve a little deeper into how we can extract such information. Let’s take an example where you logged the value of 'some_metric' inside a dictionary called 'batch_metrics', along with its epoch. Here’s how we could retrieve and display that:
@@ -176,6 +177,6 @@ if __name__ == '__main__':
 
 This revised snippet now iterates through the `history_df`, looks for the nested 'batch_metrics' key, safely checks its type, and then attempts to extract the `some_metric` field along with its associated epoch. If it fails, the error is handled gracefully, logging an informative message, and continuing with the next row. You can then adapt this method to extract other nested keys as necessary.
 
-For further understanding and deeper dives into these concepts, I’d strongly recommend consulting *“Effective Python: 90 Specific Ways to Write Better Python”* by Brett Slatkin for practical techniques around python development, and the official wandb documentation, specifically the section on the api. Furthermore, diving into the pandas documentation is crucial to take full advantage of its capabilities in data manipulation. You may also find academic research papers on distributed training systems in the field of machine learning useful in understanding the broader context of training at scale.
+For further understanding and deeper dives into these concepts, I’d strongly recommend consulting _“Effective Python: 90 Specific Ways to Write Better Python”_ by Brett Slatkin for practical techniques around python development, and the official wandb documentation, specifically the section on the api. Furthermore, diving into the pandas documentation is crucial to take full advantage of its capabilities in data manipulation. You may also find academic research papers on distributed training systems in the field of machine learning useful in understanding the broader context of training at scale.
 
 In my experience, mastering these programmatic methods for retrieving and displaying wandb training data is essential. It moves you beyond relying purely on the interactive UI and gives you far greater control and flexibility when dealing with historical or offline analysis. It's not just about displaying data—it’s about building robust and reusable workflows that streamline your entire research process.

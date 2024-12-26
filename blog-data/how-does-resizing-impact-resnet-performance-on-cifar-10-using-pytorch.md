@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-resizing-impact-resnet-performance-on-cifar-10-using-pytorch"
 ---
 
-Alright, let's tackle this one. I recall a particularly tricky project back in '18 where we were fine-tuning a ResNet for a custom image classification task, and we ran into *exactly* this issue with resizing. It's not as straightforward as simply scaling images up or down. There’s a delicate interplay between input resolution, receptive field, and the inherent structure of convolutional networks, especially the skip connections of ResNets. When we resize, we’re essentially altering the information density and the spatial relationships the network has learned. This directly impacts performance, sometimes in surprisingly non-linear ways.
+, let's tackle this one. I recall a particularly tricky project back in '18 where we were fine-tuning a ResNet for a custom image classification task, and we ran into _exactly_ this issue with resizing. It's not as straightforward as simply scaling images up or down. There’s a delicate interplay between input resolution, receptive field, and the inherent structure of convolutional networks, especially the skip connections of ResNets. When we resize, we’re essentially altering the information density and the spatial relationships the network has learned. This directly impacts performance, sometimes in surprisingly non-linear ways.
 
 Let's break down why. Firstly, consider the convolutional layers themselves. They are designed to extract features at specific scales. Reducing an input image’s size dramatically compresses these feature scales, making the filters less effective. Imagine a filter designed to detect, say, a circular object of a certain size; if you shrink the image, that circle becomes much smaller, potentially to the point where the filter doesn't recognize it anymore. Conversely, significantly enlarging the image can lead to a loss of fine-grained details that are crucial for distinguishing certain classes.
 
@@ -98,7 +98,7 @@ model_upscaled = train_and_evaluate(model_upscaled, trainloader_upscaled, testlo
 
 This code showcases training two ResNet models: one on the original 32x32 CIFAR-10 images and the other on upscaled 64x64 images. After running this, you will generally see that the upscaled images can achieve a better accuracy than original images. The specific improvement however varies on the specific hyperparameters and number of epochs, it is advised to increase epochs to observe the difference.
 
-Now, while *upscaling* can provide a richer input, sometimes you need more robust data augmentation strategies. Using a technique called 'random resizing and cropping' during training gives the network a better chance at learning scale invariance.
+Now, while _upscaling_ can provide a richer input, sometimes you need more robust data augmentation strategies. Using a technique called 'random resizing and cropping' during training gives the network a better chance at learning scale invariance.
 
 Here’s how it would look in PyTorch:
 

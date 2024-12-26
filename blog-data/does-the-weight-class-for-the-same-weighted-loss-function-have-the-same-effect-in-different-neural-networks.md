@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "does-the-weight-class-for-the-same-weighted-loss-function-have-the-same-effect-in-different-neural-networks"
 ---
 
-alright, let's talk about weighted loss and its impact across different neural network architectures. this is a question i've definitely tripped over a few times, and i've learned a thing or two through some good old trial and error.
+, let's talk about weighted loss and its impact across different neural network architectures. this is a question i've definitely tripped over a few times, and i've learned a thing or two through some good old trial and error.
 
 the short answer is: no, the same weight class within the same weighted loss function doesn’t necessarily have the exact same effect across different neural networks. there are nuances and it's not a universal knob that behaves identically regardless of where you place it. the behavior of these weights is deeply coupled to the architecture itself, the data you feed into them, and of course the optimization process.
 

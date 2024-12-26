@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "r-times-new-roman-font-settings"
 ---
 
-Okay so r times new roman font settings right yeah I've been down that rabbit hole a few times let me tell you it's a classic formatting struggle everyone bumps into sooner or later.
+r times new roman font settings right yeah I've been down that rabbit hole a few times let me tell you it's a classic formatting struggle everyone bumps into sooner or later.
 
 Let's get real here Times New Roman is like the default font of documents it's everywhere and for some reason things can get messy when you try to tweak it especially with software that doesn't handle font specifications gracefully. I remember this one project I worked on years ago maybe around 2015 or 2016 I was dealing with this report generation system we were building in house. It had to churn out hundreds of reports a day and the client wanted everything in Times New Roman which you know fair enough.
 
@@ -20,7 +20,7 @@ First things first make sure you're correctly specifying the font family. This l
 
 ```css
 body {
-    font-family: "Times New Roman", Times, serif;
+  font-family: "Times New Roman", Times, serif;
 }
 ```
 
@@ -31,7 +31,7 @@ Also you wanna make sure you aren't overriding it later down in your stylesheet 
 
 ```css
 .special-text {
-    font-family: Arial, sans-serif; /* oops this overrides the default setting */
+  font-family: Arial, sans-serif; /* oops this overrides the default setting */
 }
 ```
 
@@ -39,9 +39,9 @@ Also a point of contention that I had back in 2015 was line-height so make sure 
 
 ```css
 p {
-   font-family: "Times New Roman", Times, serif;
-   font-size: 16px; /* Define your font-size */
-   line-height: 1.5; /* Example of specific line height */
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px; /* Define your font-size */
+  line-height: 1.5; /* Example of specific line height */
 }
 ```
 
@@ -56,18 +56,21 @@ You should use a font service or self host your font files. When I was dealing w
 But if you're using a service like Google Fonts then make sure you link to the font correctly in your HTML. This goes in the `<head>` of your document:
 
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Times+New+Roman&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Times+New+Roman&display=swap"
+  rel="stylesheet"
+/>
 ```
 
 That `display=swap` attribute is useful it helps avoid flash of unstyled text but make sure you read up on it so you know all the implications before setting this in all the fonts in your website. Then you do what you would do in the previous part in your css specify that the font is Times New Roman.
 
 ```css
 body {
-    font-family: 'Times New Roman', serif;
+  font-family: "Times New Roman", serif;
 }
 ```
 
-Also font weights and styles can change the overall look so specify if your font will be **bold** or *italic* that makes a difference.
+Also font weights and styles can change the overall look so specify if your font will be **bold** or _italic_ that makes a difference.
 
 **3 Document Generation issues**
 

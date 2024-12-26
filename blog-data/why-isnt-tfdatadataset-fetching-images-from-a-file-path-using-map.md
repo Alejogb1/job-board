@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-isnt-tfdatadataset-fetching-images-from-a-file-path-using-map"
 ---
 
-Alright, let’s talk about `tf.data.Dataset` and why you might be banging your head against a wall when trying to load images directly from file paths using the `map` function. I've been there, staring at the screen, thinking I've correctly configured my data pipeline only to be greeted by the cold, hard reality of errors. Let’s unpack it.
+, let’s talk about `tf.data.Dataset` and why you might be banging your head against a wall when trying to load images directly from file paths using the `map` function. I've been there, staring at the screen, thinking I've correctly configured my data pipeline only to be greeted by the cold, hard reality of errors. Let’s unpack it.
 
-The core issue isn't that `tf.data.Dataset` *can’t* work with file paths, it's that its `map` function isn’t inherently designed for file i/o operations at that level, especially when working with images, which are usually binary data that require specific decoding. This is a common misunderstanding. The `map` function is primarily designed for *in-memory* transformations of data elements. It excels at tasks like numerical manipulations, reshaping tensors, or one-hot encoding. When you pass a file path to `map`, it's treated as any other string—it doesn’t magically know to read an image from that path.
+The core issue isn't that `tf.data.Dataset` _can’t_ work with file paths, it's that its `map` function isn’t inherently designed for file i/o operations at that level, especially when working with images, which are usually binary data that require specific decoding. This is a common misunderstanding. The `map` function is primarily designed for _in-memory_ transformations of data elements. It excels at tasks like numerical manipulations, reshaping tensors, or one-hot encoding. When you pass a file path to `map`, it's treated as any other string—it doesn’t magically know to read an image from that path.
 
 Let's break down what typically goes wrong and how to fix it. When you try something like this:
 
@@ -27,7 +27,7 @@ for image in dataset.take(1):
     print(image.shape)
 ```
 
-You'll often run into an error, because `tf.io.read_file` and `tf.image.decode_jpeg` are operations that need to be executed within TensorFlow’s graph. They are tensorflow operations, and that's fine. The problem arises because of *how* `tf.data.Dataset` handles its `map` operations under the hood and with eager mode. When not in eager mode, `tf.data.Dataset` constructs a computational graph. It does not execute the mapping operation *eagerly*, like a standard python function. Therefore, when you create the map like above the `file_path` argument of the `load_image` function is a tensor placeholder, not a string filepath, and the functions `tf.io.read_file` and `tf.image.decode_jpeg` don’t know how to handle it.
+You'll often run into an error, because `tf.io.read_file` and `tf.image.decode_jpeg` are operations that need to be executed within TensorFlow’s graph. They are tensorflow operations, and that's fine. The problem arises because of _how_ `tf.data.Dataset` handles its `map` operations under the hood and with eager mode. When not in eager mode, `tf.data.Dataset` constructs a computational graph. It does not execute the mapping operation _eagerly_, like a standard python function. Therefore, when you create the map like above the `file_path` argument of the `load_image` function is a tensor placeholder, not a string filepath, and the functions `tf.io.read_file` and `tf.image.decode_jpeg` don’t know how to handle it.
 
 To resolve this, you need to use the tools TensorFlow provides for file i/o inside the dataset pipeline. Instead of directly mapping on the string path with the load function, we need to read file contents within the tensorflow graph.
 
@@ -115,7 +115,7 @@ for image, label in dataset.take(1):
     print("Label:", label)
 ```
 
-Here, the key change is in the `create_labeled_dataset` function. We’re passing a *tuple* of file paths and labels to `from_tensor_slices`. The `map` function of the dataset then takes two arguments, the file path and the label, and returns the preprocessed image and the label. This illustrates how you can manage and map multiple inputs.
+Here, the key change is in the `create_labeled_dataset` function. We’re passing a _tuple_ of file paths and labels to `from_tensor_slices`. The `map` function of the dataset then takes two arguments, the file path and the label, and returns the preprocessed image and the label. This illustrates how you can manage and map multiple inputs.
 
 However, for datasets that are not small, the loading times might be too slow if all the data loading is done on CPU. TensorFlow also provides several functions to load images from various sources, such as `tf.keras.utils.image_dataset_from_directory`. The function is highly optimised and loads images quickly and more efficiently than using manual methods with `tf.io.read_file` inside a `map` call. Here is the final code snippet using this function, which automatically labels images from directories:
 

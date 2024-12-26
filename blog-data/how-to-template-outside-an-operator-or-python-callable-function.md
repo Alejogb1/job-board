@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-template-outside-an-operator-or-python-callable-function"
 ---
 
-alright, so you're asking about templating outside the usual suspects in python, specifically not within a function or a class method, that's a pretty interesting problem, and i've definitely been there, many times. it's not something that comes up in beginner tutorials, that's for sure.
+, so you're asking about templating outside the usual suspects in python, specifically not within a function or a class method, that's a pretty interesting problem, and i've definitely been there, many times. it's not something that comes up in beginner tutorials, that's for sure.
 
 the classic case of templating, the one everyone learns first, involves using f-strings or `.format()` inside function definitions. it’s straightforward, variables come in, string goes out. but when you want to template something globally, outside the scope of any callable, things get less obvious, and the standard tools don’t quite cut it. it’s like trying to use a screwdriver to hammer a nail. it can be done, but not efficiently.
 

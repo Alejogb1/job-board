@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-modify-the-number-of-classes-in-a-detectron2-dataset"
 ---
 
-Alright, let's tackle this. I remember a particularly challenging project involving aerial imagery analysis a few years back. We were dealing with a heavily imbalanced dataset, and part of the solution involved strategically reducing the number of object classes our Detectron2 model needed to learn. It's not a straightforward 'change one setting' kind of situation, but rather a series of data manipulation and configuration tweaks that can significantly impact your model's performance.
+, let's tackle this. I remember a particularly challenging project involving aerial imagery analysis a few years back. We were dealing with a heavily imbalanced dataset, and part of the solution involved strategically reducing the number of object classes our Detectron2 model needed to learn. It's not a straightforward 'change one setting' kind of situation, but rather a series of data manipulation and configuration tweaks that can significantly impact your model's performance.
 
 The core issue revolves around how Detectron2 (and other object detection frameworks) map your dataset’s annotations to the classes the model is actually trained on. Your annotations probably include multiple classes, and, often enough, you might need to focus only on a subset of those, or even combine some. Detectron2 heavily relies on the annotations, and we must properly prepare them before feeding them to the training process. Here's the breakdown of how I typically approach this, along with the practical considerations I've learned over time:
 
@@ -29,7 +29,7 @@ def filter_annotations(annotations_file, target_classes):
             filtered_annotations.append(ann)
 
     filtered_images = [img for img in data['images'] if any(ann['image_id'] == img['id'] for ann in filtered_annotations)]
-    
+
     filtered_data = {
         'images': filtered_images,
         'annotations': filtered_annotations,
@@ -72,7 +72,7 @@ def remap_annotations(annotations_file, remap_dict):
             seen_categories.add(category_id)
             original_category = next(cat for cat in data['categories'] if cat['id'] == (list(remap_dict.keys()) + [category_id])[0])
             remaped_categories.append({"id":category_id, "name":original_category['name']})
-    
+
     filtered_images = [img for img in data['images'] if any(ann['image_id'] == img['id'] for ann in remaped_annotations)]
 
     remapped_data = {
@@ -107,7 +107,7 @@ from detectron2.data.datasets import register_coco_instances
 def update_metadata(dataset_name, metadata_catalog_name, num_classes, class_names):
     # Register a new dataset with the modified annotations
     register_coco_instances(dataset_name, {}, 'remapped_annotations.json', './')
-    
+
     # Update the MetadataCatalog with your desired parameters
     metadata = MetadataCatalog.get(dataset_name)
     metadata.num_classes = num_classes
@@ -117,7 +117,7 @@ def update_metadata(dataset_name, metadata_catalog_name, num_classes, class_name
 if __name__ == '__main__':
     # Example usage after preparing the remapped_annotations
     update_metadata('my_modified_dataset', 'my_modified_metadata', 2, ['class1','class2'])
-    
+
     cfg = get_cfg()
     cfg.DATASETS.TRAIN = ('my_modified_dataset',)
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = 2
@@ -128,10 +128,10 @@ In this last example, we first register the new dataset using the modified JSON 
 
 **Important Considerations and Resources:**
 
-*   **Consistency:** Double-check that your `thing_classes` list in the metadata catalog matches the actual classes you are training on. Inconsistencies here can lead to subtle but problematic issues during training and evaluation.
-*   **Dataset Balancing:** If you remove or combine classes, be aware that the class distribution might become more or less balanced. You might need to introduce data augmentation or sampling techniques to mitigate this.
-*   **Reproducibility:** Always save the modified annotations separately from the original ones. This ensures your original dataset isn’t altered and simplifies reproducibility.
-*   **Evaluation:** Remember to also modify your evaluation metrics if you are reducing the number of classes. Your confusion matrix, for example, will now have a reduced number of entries.
+- **Consistency:** Double-check that your `thing_classes` list in the metadata catalog matches the actual classes you are training on. Inconsistencies here can lead to subtle but problematic issues during training and evaluation.
+- **Dataset Balancing:** If you remove or combine classes, be aware that the class distribution might become more or less balanced. You might need to introduce data augmentation or sampling techniques to mitigate this.
+- **Reproducibility:** Always save the modified annotations separately from the original ones. This ensures your original dataset isn’t altered and simplifies reproducibility.
+- **Evaluation:** Remember to also modify your evaluation metrics if you are reducing the number of classes. Your confusion matrix, for example, will now have a reduced number of entries.
 
 For deeper understanding, I strongly recommend reviewing the official Detectron2 documentation on datasets and metadata, specifically the `DatasetCatalog` and `MetadataCatalog` classes. Additionally, the original COCO dataset documentation can provide more context on the structure and fields involved in image annotation. A deep dive into the papers that introduced COCO and Detectron (R. Girshick et al) is extremely valuable for establishing fundamental knowledge.
 

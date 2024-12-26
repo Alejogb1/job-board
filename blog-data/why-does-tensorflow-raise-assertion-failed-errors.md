@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-tensorflow-raise-assertion-failed-errors"
 ---
 
-Okay, let’s unpack those “assertion failed” errors you're encountering in TensorFlow. It's not uncommon, and it often points towards a fundamental mismatch between what the framework expects and what’s actually happening in your computational graph. I've personally debugged my fair share of these over the years, sometimes spending hours tracing through seemingly innocuous code.
+, let’s unpack those “assertion failed” errors you're encountering in TensorFlow. It's not uncommon, and it often points towards a fundamental mismatch between what the framework expects and what’s actually happening in your computational graph. I've personally debugged my fair share of these over the years, sometimes spending hours tracing through seemingly innocuous code.
 
 The root cause usually lies within the internal checks TensorFlow performs to ensure data integrity and algorithmic correctness. These assertions, essentially sanity checks, are sprinkled throughout the framework's C++ codebase (and some Python wrappers), designed to catch errors early before they propagate into something truly catastrophic. When one fails, it’s TensorFlow's way of saying, "Hold on, something isn’t adding up." This isn't necessarily a bug in TensorFlow itself but rather a mismatch in your setup or the way data is flowing. Think of it as an advanced type checker actively monitoring your computation.
 
@@ -28,9 +28,10 @@ except tf.errors.InvalidArgumentError as e:
     print(f"Caught an exception: {e}")
 
 ```
-In this example, `a` is a 2x2 matrix and `b` is a vector with 3 elements.  Matrix multiplication requires the inner dimensions to align which is not the case here. Running this triggers a `InvalidArgumentError`, which is a direct manifestation of a failed assertion within TensorFlow's lower-level C++ engine. You’ll see a message about incompatible shapes, which is exactly what we are looking for.
 
-Next, let's talk about data type inconsistencies. TensorFlow, much like strongly typed languages, mandates that operations occur between tensors of compatible types. Attempting to add an integer to a float without explicit casting, for instance, can trip internal assertions.  While TensorFlow can sometimes handle implicit casting, it’s not always advisable and can lead to unanticipated behavior.
+In this example, `a` is a 2x2 matrix and `b` is a vector with 3 elements. Matrix multiplication requires the inner dimensions to align which is not the case here. Running this triggers a `InvalidArgumentError`, which is a direct manifestation of a failed assertion within TensorFlow's lower-level C++ engine. You’ll see a message about incompatible shapes, which is exactly what we are looking for.
+
+Next, let's talk about data type inconsistencies. TensorFlow, much like strongly typed languages, mandates that operations occur between tensors of compatible types. Attempting to add an integer to a float without explicit casting, for instance, can trip internal assertions. While TensorFlow can sometimes handle implicit casting, it’s not always advisable and can lead to unanticipated behavior.
 
 Here's a code snippet demonstrating this:
 
@@ -48,6 +49,7 @@ except tf.errors.InvalidArgumentError as e:
     print(f"Caught an exception: {e}")
 
 ```
+
 While the addition in this case might work depending on the TensorFlow version and the available hardware, in many scenarios it would trigger an assertion failure before even getting to the computation if the implicit casting is not handled automatically, or if the output data type cannot be reliably derived. It's best to explicitly cast using methods like `tf.cast(a, tf.float32)` to avoid these issues. In this case, the error might surface if TensorFlow decides to validate the data types strictly.
 
 Finally, consider the less obvious cases related to resources and session management. TensorFlow allocates resources (memory, GPU handles, etc.) when creating tensors and operations. Improperly handling these resources, particularly in the context of sessions, can trigger assertion failures. For instance, trying to evaluate a tensor after the TensorFlow session has been closed can lead to a cascade of internal errors, often manifesting as a failed assertion.
@@ -69,6 +71,7 @@ except tf.errors.InvalidArgumentError as e:
   print(f"Caught an exception: {e}")
 
 ```
+
 Here, attempting to use the tensor `a` in session `sess2` where it was not originally created will result in an `InvalidArgumentError`. This is because tensorflow is tracking which tensors belong to each session. Attempting to execute a tensor within a new, unrelated session that doesn't know about this tensor will raise this error. It is an indirect assertion-related issue.
 
 To mitigate these errors, several practices have helped me over time. First, **validate shapes and data types proactively**. Before performing operations, use functions like `tf.shape()` and `tensor.dtype` to inspect the shapes and data types of your tensors, ensuring that they align with your expectations. Employ explicit casting via `tf.cast` when needed. Another strategy I employ is using TensorFlow's `tf.debugging.assert_*` family of operations which allows to write checks directly in your graph which will trigger a `tf.errors.InvalidArgumentError` when an assertion fails.

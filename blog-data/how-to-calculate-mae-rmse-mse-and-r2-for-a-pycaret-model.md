@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-calculate-mae-rmse-mse-and-r2-for-a-pycaret-model"
 ---
 
-Alright, let's tackle this. From my experience, evaluating model performance isn't just about hitting the 'fit' button and calling it a day. Understanding the nuances of different error metrics is crucial, especially when dealing with predictive models. You mentioned wanting to know how to calculate mean absolute error (mae), root mean squared error (rmse), mean squared error (mse), and r-squared (r²) specifically within the pycaret framework. I've seen this need surface quite a few times in production environments, so let me break it down, showing you some code snippets that should clarify the process, rather than relying just on pycaret's built-in functions which, while convenient, often hide the underlying mechanics.
+, let's tackle this. From my experience, evaluating model performance isn't just about hitting the 'fit' button and calling it a day. Understanding the nuances of different error metrics is crucial, especially when dealing with predictive models. You mentioned wanting to know how to calculate mean absolute error (mae), root mean squared error (rmse), mean squared error (mse), and r-squared (r²) specifically within the pycaret framework. I've seen this need surface quite a few times in production environments, so let me break it down, showing you some code snippets that should clarify the process, rather than relying just on pycaret's built-in functions which, while convenient, often hide the underlying mechanics.
 
 Before diving into code, let's establish what each metric represents. **Mean squared error (mse)** gives us the average of the squares of the errors (the differences between predicted and actual values). It penalizes larger errors more heavily due to the squaring operation. **Root mean squared error (rmse)** is simply the square root of the mse, putting the error on the same scale as the target variable, which makes it easier to interpret. **Mean absolute error (mae)** provides the average magnitude of the errors, without considering their direction, making it robust to outliers. Finally, **r-squared (r²)** measures the proportion of the variance in the dependent variable that is predictable from the independent variables. It essentially tells us how well the model fits the data, but keep in mind its limitations when comparing models across differing datasets.
 
@@ -64,6 +64,7 @@ print(f"Custom RMSE: {rmse:.4f}")
 print(f"Custom MAE: {mae:.4f}")
 print(f"Custom R²: {r2:.4f}")
 ```
+
 This gives you complete control and the ability to investigate the computation step by step if needed.
 
 Furthermore, you could compare these calculated values against those provided by sklearn’s metrics library, as an additional level of validation:
@@ -83,6 +84,6 @@ print(f"Sklearn R²: {sklearn_r2:.4f}")
 
 In this snippet, I'm leveraging `mean_squared_error`, `mean_absolute_error`, and `r2_score` from scikit-learn. As you can see, the custom and sklearn values should be consistent, reinforcing the correct implementation of the error metrics.
 
-Now, regarding resources, I highly recommend diving into *“The Elements of Statistical Learning”* by Hastie, Tibshirani, and Friedman. It offers a rigorous theoretical grounding on these concepts, among many others. Also, *“Pattern Recognition and Machine Learning”* by Christopher Bishop is an excellent companion for understanding the statistical foundations of these metrics. For a more practical perspective, and not specific to pycaret, “*Applied Predictive Modeling*” by Kuhn and Johnson presents a comprehensive approach to model evaluation that goes beyond just these metrics.
+Now, regarding resources, I highly recommend diving into _“The Elements of Statistical Learning”_ by Hastie, Tibshirani, and Friedman. It offers a rigorous theoretical grounding on these concepts, among many others. Also, _“Pattern Recognition and Machine Learning”_ by Christopher Bishop is an excellent companion for understanding the statistical foundations of these metrics. For a more practical perspective, and not specific to pycaret, “_Applied Predictive Modeling_” by Kuhn and Johnson presents a comprehensive approach to model evaluation that goes beyond just these metrics.
 
 Understanding these metrics and how to calculate them, not just through high-level functions, gives you a powerful tool for debugging and improving the performance of your models. I find that having a grasp on both the theoretical and practical aspects allows me to navigate complex scenarios with more confidence. As you build more complex systems, you'll find it's not just about the libraries, but truly understanding what’s happening under the hood.

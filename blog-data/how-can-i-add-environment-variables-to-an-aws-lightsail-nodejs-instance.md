@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-add-environment-variables-to-an-aws-lightsail-nodejs-instance"
 ---
 
-Alright, let's tackle this. I've been down this road plenty of times, wrestling with environment variables on various cloud platforms, Lightsail included. It’s a common stumbling block, and getting it sorted correctly is crucial for secure and maintainable deployments. The challenge isn't the concept itself – environment variables are fairly straightforward – but how different systems manage them. In Lightsail’s case, there isn't a dedicated, GUI-based configuration panel for this, so we need to dive a little deeper, focusing on the instance's operating system itself.
+, let's tackle this. I've been down this road plenty of times, wrestling with environment variables on various cloud platforms, Lightsail included. It’s a common stumbling block, and getting it sorted correctly is crucial for secure and maintainable deployments. The challenge isn't the concept itself – environment variables are fairly straightforward – but how different systems manage them. In Lightsail’s case, there isn't a dedicated, GUI-based configuration panel for this, so we need to dive a little deeper, focusing on the instance's operating system itself.
 
 My approach typically involves a three-pronged strategy: first, setting them directly within the instance’s environment, then employing a `.env` file for easier management, and finally, showcasing a method using systemd for persistent variables when the application is managed as a system service. Let's break these down one by one, using Node.js as our focal point.
 
@@ -16,7 +16,7 @@ This is the most basic method and ideal for quick testing or temporary settings.
 export API_KEY="your_secret_api_key_here"
 ```
 
-After running this, that `API_KEY` variable would be accessible within the shell’s scope and any processes started within *that specific shell instance*. This is key. If you open a new terminal, or if the instance restarts, the variable would be lost. This is a volatile approach but is useful for quick debugging or temporary changes.
+After running this, that `API_KEY` variable would be accessible within the shell’s scope and any processes started within _that specific shell instance_. This is key. If you open a new terminal, or if the instance restarts, the variable would be lost. This is a volatile approach but is useful for quick debugging or temporary changes.
 
 To retrieve this in your Node.js code, you’d use `process.env`:
 
@@ -25,9 +25,9 @@ To retrieve this in your Node.js code, you’d use `process.env`:
 const apiKey = process.env.API_KEY;
 
 if (apiKey) {
-    console.log(`API Key found: ${apiKey}`);
+  console.log(`API Key found: ${apiKey}`);
 } else {
-    console.log('API Key not set.');
+  console.log("API Key not set.");
 }
 ```
 
@@ -51,12 +51,12 @@ DATABASE_URL="your_database_connection_string"
 NODE_ENV="production"
 ```
 
-In your main Node.js application file (e.g., `index.js` or `app.js`), load these variables at the very top using `dotenv`. It’s vital to do this *before* you try to access any environment variables within your application.
+In your main Node.js application file (e.g., `index.js` or `app.js`), load these variables at the very top using `dotenv`. It’s vital to do this _before_ you try to access any environment variables within your application.
 
 ```javascript
 // Example Node.js Code snippet using dotenv
 
-require('dotenv').config();
+require("dotenv").config();
 
 const apiKey = process.env.API_KEY;
 const databaseUrl = process.env.DATABASE_URL;

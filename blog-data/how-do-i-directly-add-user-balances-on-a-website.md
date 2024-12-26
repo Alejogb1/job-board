@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-do-i-directly-add-user-balances-on-a-website"
 ---
 
-Alright, let's dive into this. Adding user balances directly, while seemingly straightforward, often requires careful consideration to avoid potential issues. I've seen my share of implementations go sideways, usually due to a lack of understanding about the underlying mechanics or insufficient attention to security. Let me walk you through how I've tackled this in past projects, and offer some code examples to illustrate the principles involved.
+, let's dive into this. Adding user balances directly, while seemingly straightforward, often requires careful consideration to avoid potential issues. I've seen my share of implementations go sideways, usually due to a lack of understanding about the underlying mechanics or insufficient attention to security. Let me walk you through how I've tackled this in past projects, and offer some code examples to illustrate the principles involved.
 
-First, let’s dispel the notion that a simple `user.balance += amount` operation is sufficient. While this *might* appear to work at first glance, it's fraught with problems. Race conditions are a major concern. If two requests try to modify the same user's balance concurrently, you could end up with incorrect final amounts. Imagine two concurrent transactions adding $10 each to a starting balance of $100. Without proper locking mechanisms, you could end up with the balance reading $110 instead of the expected $120.
+First, let’s dispel the notion that a simple `user.balance += amount` operation is sufficient. While this _might_ appear to work at first glance, it's fraught with problems. Race conditions are a major concern. If two requests try to modify the same user's balance concurrently, you could end up with incorrect final amounts. Imagine two concurrent transactions adding $10 each to a starting balance of $100. Without proper locking mechanisms, you could end up with the balance reading $110 instead of the expected $120.
 
-Secondly, auditability is paramount. Simply modifying the balance directly leaves no trace of *why* the change occurred. For financial applications (or anything involving user assets), you *must* keep a detailed record of each transaction, including timestamps, the user involved, and the reason for the adjustment.
+Secondly, auditability is paramount. Simply modifying the balance directly leaves no trace of _why_ the change occurred. For financial applications (or anything involving user assets), you _must_ keep a detailed record of each transaction, including timestamps, the user involved, and the reason for the adjustment.
 
 So, how do we do this properly? Well, the core idea revolves around the concept of atomic updates and a transaction ledger. We avoid direct manipulation of the balance in the database. Instead, we create ledger entries – individual records for each balance modification – and then derive the user’s current balance by summing all those entries. Let's break this down with some code snippets using Python and a hypothetical database:
 
@@ -92,7 +92,7 @@ def create_transaction_with_locking(user_id, amount, transaction_type, reason=No
         # Get a write lock on transactions related to user_id.
         # This prevents concurrent writes to this user's transactions.
         session.execute(text("SELECT 1 FROM transactions WHERE user_id = :user_id FOR UPDATE"), {"user_id":user_id})
-        
+
         transaction = Transaction(user_id=user_id, amount=amount, transaction_type=transaction_type, reason=reason)
         session.add(transaction)
         session.commit()
@@ -110,10 +110,10 @@ In this example, we are using `session.execute(text("SELECT 1 FROM transactions 
 
 **Further Considerations:**
 
-*   **Database Choice:** While SQLite was sufficient for my examples here, you’ll want a more robust database in a production setting. PostgreSQL and MySQL are common choices, offering good performance, reliability, and locking mechanisms. Look into how they handle locking in detail (MVCC for Postgres is particularly important to understand).
-*   **Transaction Isolation Levels:** Understand the isolation levels your database offers. They directly impact how concurrent transactions interact and the level of consistency you can expect. Read up on 'read committed,' 'repeatable read,' and 'serializable' isolation levels (as defined in the ANSI SQL standard) to grasp their implications.
-*   **Message Queues:** For high-throughput systems where transaction processing takes time, consider using message queues such as RabbitMQ or Kafka to decouple transaction requests from the actual processing of those requests. This improves responsiveness and system robustness under heavy loads.
-*   **Security:** Implement robust security practices, such as input validation, authentication, and authorization, to prevent malicious manipulation of user balances.
+- **Database Choice:** While SQLite was sufficient for my examples here, you’ll want a more robust database in a production setting. PostgreSQL and MySQL are common choices, offering good performance, reliability, and locking mechanisms. Look into how they handle locking in detail (MVCC for Postgres is particularly important to understand).
+- **Transaction Isolation Levels:** Understand the isolation levels your database offers. They directly impact how concurrent transactions interact and the level of consistency you can expect. Read up on 'read committed,' 'repeatable read,' and 'serializable' isolation levels (as defined in the ANSI SQL standard) to grasp their implications.
+- **Message Queues:** For high-throughput systems where transaction processing takes time, consider using message queues such as RabbitMQ or Kafka to decouple transaction requests from the actual processing of those requests. This improves responsiveness and system robustness under heavy loads.
+- **Security:** Implement robust security practices, such as input validation, authentication, and authorization, to prevent malicious manipulation of user balances.
 
 **Recommendations for Further Reading:**
 

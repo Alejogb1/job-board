@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-a-docker-container-encountering-a-connection-reset-by-peer-error-errno-104-when-calling-an-external-api"
 ---
 
-Alright, let's talk about the infamous `errno 104`, or connection reset by peer, specifically within the context of a Docker container trying to reach an external API. I’ve seen this scenario crop up more times than I’d like to recall, each time with its own unique flavour, but the underlying causes tend to fall into a few common categories. This isn’t a simple "try this" kind of fix, but a journey into understanding network layers, timeouts, and sometimes, just plain old configuration mishaps.
+, let's talk about the infamous `errno 104`, or connection reset by peer, specifically within the context of a Docker container trying to reach an external API. I’ve seen this scenario crop up more times than I’d like to recall, each time with its own unique flavour, but the underlying causes tend to fall into a few common categories. This isn’t a simple "try this" kind of fix, but a journey into understanding network layers, timeouts, and sometimes, just plain old configuration mishaps.
 
 From my experience, this error generally signals that the connection between your Docker container and the external API was abruptly terminated by the other side, not by your container itself. Think of it like this: your container politely sends a request, and the external API's server suddenly closes the connection without a proper goodbye. The “peer” in the error refers to the other end of the connection - that remote server. And a ‘reset’ means the connection was forcefully closed, hence the ‘connection reset’.
 
@@ -14,31 +14,31 @@ The root causes are typically distributed across the network stack and the appli
 
 Often, the problem isn't within your container, but rather at the level of the wider internet, the network where the external API lives, or at various intermediary network points.
 
-*   **Firewalls or Network Address Translation (NAT):** A firewall between your Docker host and the external API might be aggressively dropping connections, either because it's seeing something it doesn't like (possibly your container's IP address) or due to overly restrictive rules. Or, if you're using NAT, an overly aggressive or improperly configured NAT device might be causing issues with connection tracking. For example, one time, we had an issue where the egress rules on a corporate network firewall were dropping connections if they were idle for more than a few minutes – this was a tricky one to trace back to.
+- **Firewalls or Network Address Translation (NAT):** A firewall between your Docker host and the external API might be aggressively dropping connections, either because it's seeing something it doesn't like (possibly your container's IP address) or due to overly restrictive rules. Or, if you're using NAT, an overly aggressive or improperly configured NAT device might be causing issues with connection tracking. For example, one time, we had an issue where the egress rules on a corporate network firewall were dropping connections if they were idle for more than a few minutes – this was a tricky one to trace back to.
 
-*   **External API Server Issues:** Sometimes, the external API's server itself may be experiencing intermittent problems. The server might be overloaded, experiencing network issues on their end, or it might be explicitly closing connections for various internal reasons related to rate-limiting, security, or internal failures. You will have to use server logs on the API side for these type of situations.
+- **External API Server Issues:** Sometimes, the external API's server itself may be experiencing intermittent problems. The server might be overloaded, experiencing network issues on their end, or it might be explicitly closing connections for various internal reasons related to rate-limiting, security, or internal failures. You will have to use server logs on the API side for these type of situations.
 
-*   **Temporary Network Outages:** There could be fleeting network outages between your Docker host and the external API. These can be very hard to debug because they are often sporadic. I once spent a day chasing what seemed like an application bug, only to find out that it was brief fiber cut in another region causing intermittent connectivity problems.
+- **Temporary Network Outages:** There could be fleeting network outages between your Docker host and the external API. These can be very hard to debug because they are often sporadic. I once spent a day chasing what seemed like an application bug, only to find out that it was brief fiber cut in another region causing intermittent connectivity problems.
 
 **2. Docker Container Configuration Issues:**
 
 Sometimes the root of the issue does lie with how your Docker container is set up or configured.
 
-*   **Networking Configuration:** The networking configuration for your container might not be correct. For example, if you use a custom network, and it has not been correctly configured for outbound traffic to the internet. This can manifest as the packets going to a dead end or even not leaving your host machine.
+- **Networking Configuration:** The networking configuration for your container might not be correct. For example, if you use a custom network, and it has not been correctly configured for outbound traffic to the internet. This can manifest as the packets going to a dead end or even not leaving your host machine.
 
-*   **Resource Limitations:** If the Docker container lacks sufficient resources (e.g., memory or CPU), it may fail to manage connections effectively, potentially causing these types of resets. It was rare, but I once experienced this on a poorly spec’d container on an over-committed host. Monitoring resource usage inside the container is critical in situations like this.
+- **Resource Limitations:** If the Docker container lacks sufficient resources (e.g., memory or CPU), it may fail to manage connections effectively, potentially causing these types of resets. It was rare, but I once experienced this on a poorly spec’d container on an over-committed host. Monitoring resource usage inside the container is critical in situations like this.
 
-*   **Incorrect DNS:** In very rare situations, the Docker container might have outdated DNS configuration, resolving to an incorrect server address. The API might be running a new server with a new IP and the container has not been updated to point to the new IP.
+- **Incorrect DNS:** In very rare situations, the Docker container might have outdated DNS configuration, resolving to an incorrect server address. The API might be running a new server with a new IP and the container has not been updated to point to the new IP.
 
 **3. Application Code Within the Container:**
 
 The application running inside the container can also cause the problem.
 
-*   **Timeout Issues:** The application might have aggressive timeout settings that are triggered when connecting to the external API. A short timeout could cause a connection reset if the external API takes slightly longer to respond than anticipated.
+- **Timeout Issues:** The application might have aggressive timeout settings that are triggered when connecting to the external API. A short timeout could cause a connection reset if the external API takes slightly longer to respond than anticipated.
 
-*   **Resource Leaks:** Poorly managed connection handling in the application can also cause issues, by prematurely closing connections, or having too many connections open at the same time, leading to exhaustion of available resources.
+- **Resource Leaks:** Poorly managed connection handling in the application can also cause issues, by prematurely closing connections, or having too many connections open at the same time, leading to exhaustion of available resources.
 
-*   **Keep-Alive Issues:** If the external API has keep-alive enabled, but the application does not manage keep-alive correctly, connection reset errors might happen.
+- **Keep-Alive Issues:** If the external API has keep-alive enabled, but the application does not manage keep-alive correctly, connection reset errors might happen.
 
 Let’s illustrate these points with some practical code examples. Note that these are illustrative, simplified, and assume usage of a python runtime, but the underlying concepts apply to most programming languages.
 
@@ -116,9 +116,9 @@ If `ping` or `curl` fail, it indicates fundamental networking issues. If the pin
 
 **Recommendations:**
 
-*   **"TCP/IP Illustrated, Volume 1: The Protocols" by W. Richard Stevens:** An indispensable resource to truly understand TCP/IP networking, including connection reset.
-*   **"Effective TCP/IP Programming" by Jon C. Snader:** Provides practical guidance on network programming, especially for writing robust and reliable network applications.
-*   **Docker Documentation:** Ensure you thoroughly understand Docker’s networking modes, especially if you are using a custom network for your containers.
-*   **Application Logging and Monitoring:** Implement detailed logging for your containerized applications and set up monitoring for your containers' resource usage and network traffic. Tools like Prometheus and Grafana, coupled with detailed application logs, are indispensable.
+- **"TCP/IP Illustrated, Volume 1: The Protocols" by W. Richard Stevens:** An indispensable resource to truly understand TCP/IP networking, including connection reset.
+- **"Effective TCP/IP Programming" by Jon C. Snader:** Provides practical guidance on network programming, especially for writing robust and reliable network applications.
+- **Docker Documentation:** Ensure you thoroughly understand Docker’s networking modes, especially if you are using a custom network for your containers.
+- **Application Logging and Monitoring:** Implement detailed logging for your containerized applications and set up monitoring for your containers' resource usage and network traffic. Tools like Prometheus and Grafana, coupled with detailed application logs, are indispensable.
 
 In closing, `errno 104` is rarely simple. It requires a systematic approach. Start by eliminating networking issues outside your container. Then look at the container's configuration. Finally, review application code inside the container. With careful examination, you can usually pinpoint the problem and prevent it from reoccurring. Good luck.

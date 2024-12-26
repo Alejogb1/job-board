@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-are-classes-called-and-objects-initialized"
 ---
 
-Alright, let’s delve into this. It's a fundamental question, yet the mechanics are quite nuanced. I've certainly spent more than my fair share of hours debugging initialization errors, and over time, I've come to appreciate the elegant, though sometimes unforgiving, logic at play.
+, let’s delve into this. It's a fundamental question, yet the mechanics are quite nuanced. I've certainly spent more than my fair share of hours debugging initialization errors, and over time, I've come to appreciate the elegant, though sometimes unforgiving, logic at play.
 
 When we talk about calling classes and initializing objects, we're really discussing the lifecycle of an object in object-oriented programming. We have to be clear that a class is a blueprint, a template, for creating objects. It's not an object itself. The process involves, firstly, calling the class constructor and secondly, properly initializing the attributes, the state, of the object instance.
 
@@ -75,34 +75,34 @@ JavaScript, with its prototypical inheritance, is slightly more nuanced when it 
 
 ```javascript
 class Circle {
-    constructor(radius) {
-      this.radius = radius;
-      this.area = 0;
-      this.calculateArea(); //Initialize area at creation
-    }
-
-    calculateArea(){
-       this.area = Math.PI * this.radius * this.radius;
-    }
-
-    displayDetails(){
-        console.log(`Radius: ${this.radius}, Area: ${this.area}`)
-    }
+  constructor(radius) {
+    this.radius = radius;
+    this.area = 0;
+    this.calculateArea(); //Initialize area at creation
   }
 
-  let myCircle = new Circle(5);
-  myCircle.displayDetails();
+  calculateArea() {
+    this.area = Math.PI * this.radius * this.radius;
+  }
+
+  displayDetails() {
+    console.log(`Radius: ${this.radius}, Area: ${this.area}`);
+  }
+}
+
+let myCircle = new Circle(5);
+myCircle.displayDetails();
 ```
 
 In this instance, using the `new` keyword, the `Circle` class is called, and the `constructor` is executed. Notice that the initialization of the `area` is not done directly in the constructor parameters, instead a helper method `calculateArea` is called directly within the constructor to perform more complex initialization logic. This is an important technique for complex objects that need initialization beyond setting simple attributes, as well as demonstrating how the constructor can utilize other methods to fully initialize the object.
 
 Key takeaways from these examples are:
 
-*   **The `new` Keyword:** In many languages, `new` is the explicit operator that triggers the allocation of memory and the execution of the constructor. Languages like Python, although lacking the keyword, implicitly trigger constructor execution when using the class name like `Book("title", "author", 123)`.
+- **The `new` Keyword:** In many languages, `new` is the explicit operator that triggers the allocation of memory and the execution of the constructor. Languages like Python, although lacking the keyword, implicitly trigger constructor execution when using the class name like `Book("title", "author", 123)`.
 
-*   **Constructor's Role:** The constructor is the entry point for initializing an object's state. It accepts input parameters and uses them to set initial attribute values and can also be used to call other methods for more complex initialization processes.
+- **Constructor's Role:** The constructor is the entry point for initializing an object's state. It accepts input parameters and uses them to set initial attribute values and can also be used to call other methods for more complex initialization processes.
 
-*   **Default States:** Initializing attributes with default values is common practice. It prevents objects from having uninitialized or unpredictable states from the outset.
+- **Default States:** Initializing attributes with default values is common practice. It prevents objects from having uninitialized or unpredictable states from the outset.
 
 When errors occur related to object creation, one must first inspect the constructor, ensuring the correct arguments are being passed, that no required arguments are missing, and that all attributes are properly set, keeping an eye on the types of the passed in arguments. Debuggers are also invaluable tools for stepping through constructor code, watching attribute values, and identifying where errors occur. I've lost count of the times that stepping through the initialization has pinpointed an issue faster than poring over pages of code.
 

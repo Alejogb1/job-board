@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-reference-binaries-from-packages-in-a-custom-toolchain-definition-using-bazel"
 ---
 
-Okay, let's tackle this one. It’s a challenge I've faced numerous times, particularly when integrating legacy systems into a bazel-based build environment. Referencing binaries from packages within a custom toolchain is a surprisingly common pain point, and the solutions, while powerful, often aren't immediately obvious. Let me walk you through my experiences and what I've found works consistently.
+, let's tackle this one. It’s a challenge I've faced numerous times, particularly when integrating legacy systems into a bazel-based build environment. Referencing binaries from packages within a custom toolchain is a surprisingly common pain point, and the solutions, while powerful, often aren't immediately obvious. Let me walk you through my experiences and what I've found works consistently.
 
 The core problem lies in how bazel isolates build actions. Toolchains need access to external tools, but these tools are often themselves built by bazel, residing within its hermetically sealed execution environment. Directly referencing them via absolute paths will fail – the paths won't exist in the sandbox during the action’s execution. The solution involves employing bazel's mechanism for declaring dependencies between toolchain definitions and the artifacts they consume. Specifically, we're going to focus on using `ctx.executable`, and strategically defined `providers`.
 

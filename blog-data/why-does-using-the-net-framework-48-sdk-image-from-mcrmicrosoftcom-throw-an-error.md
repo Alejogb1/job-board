@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-using-the-net-framework-48-sdk-image-from-mcrmicrosoftcom-throw-an-error"
 ---
 
-Alright, let's tackle this. It's a situation I've personally encountered enough times to have a few insights, and it usually revolves around the subtle complexities of containerized .net framework applications. The specific error you're seeing when using the .net framework 4.8 sdk image from `mcr.microsoft.com` often stems from a mismatch between what the image *expects* and the actual execution environment it finds itself in, or misconfigurations that might initially appear unrelated.
+, let's tackle this. It's a situation I've personally encountered enough times to have a few insights, and it usually revolves around the subtle complexities of containerized .net framework applications. The specific error you're seeing when using the .net framework 4.8 sdk image from `mcr.microsoft.com` often stems from a mismatch between what the image _expects_ and the actual execution environment it finds itself in, or misconfigurations that might initially appear unrelated.
 
 Let’s frame this from my perspective after having spent a good part of a development cycle troubleshooting similar containerization issues for an older project. We'll move through a few areas, focusing on the core reasons, and then I'll illustrate some common scenarios with code.
 
@@ -64,7 +64,7 @@ RUN powershell.exe Install-WindowsFeature -name Web-Server -IncludeManagementToo
 CMD ["MyService.exe"]
 ```
 
-Here I've added the line to install the web server role, and that will often solve the issue. The important take away is to understand *exactly* what components your specific application requires, not just assuming they are enabled.
+Here I've added the line to install the web server role, and that will often solve the issue. The important take away is to understand _exactly_ what components your specific application requires, not just assuming they are enabled.
 
 **Example 3: Incorrect Pathing**
 
@@ -79,8 +79,8 @@ In your development environment, the path is valid, but within the container, th
 
 As for resources, I'd strongly recommend diving into the following:
 
-*   **"Programming Windows" by Charles Petzold:** This book provides a comprehensive view of the windows api, which is critical for understanding the dependencies of .net framework applications and for helping you diagnose what libraries your application is depending on.
-*   **Microsoft's official .net documentation:** Specifically the sections on containerization for older framework applications. While .net core is the priority now, the documents often provide valuable insights about configuring windows containers. Look up details on creating custom windows server images.
-*   **The official docker documentation for windows containers:** This is critical as understanding how docker containers operate on Windows and their limitations can often illuminate why you may be seeing issues. Understanding networking, storage and other aspects of the container execution environment can help to resolve these more complex issues.
+- **"Programming Windows" by Charles Petzold:** This book provides a comprehensive view of the windows api, which is critical for understanding the dependencies of .net framework applications and for helping you diagnose what libraries your application is depending on.
+- **Microsoft's official .net documentation:** Specifically the sections on containerization for older framework applications. While .net core is the priority now, the documents often provide valuable insights about configuring windows containers. Look up details on creating custom windows server images.
+- **The official docker documentation for windows containers:** This is critical as understanding how docker containers operate on Windows and their limitations can often illuminate why you may be seeing issues. Understanding networking, storage and other aspects of the container execution environment can help to resolve these more complex issues.
 
 The errors you're encountering are, in my experience, very common when working with legacy .net framework applications in docker. Careful attention to os version compatibility, explicit enabling of windows features, and mindful handling of path and configuration issues are usually the keys to resolving the difficulties you are encountering. Troubleshooting containerized applications is often an exercise in piecing together a variety of errors and subtle differences, so don't get discouraged, and carefully try to understand the error you are seeing as specifically as you can.

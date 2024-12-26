@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-use-viewcomponent-inside-stimulus-controller"
 ---
 
-Okay, let's tackle this. It's a situation I've encountered more than a few times, and it’s a surprisingly nuanced problem when you dive into the specifics. Integrating `view_component` directly within a Stimulus controller isn't the typical use case, but it absolutely has its merits when you need dynamic and reusable UI elements. You’ll often find yourself in scenarios where static html templates controlled by Stimulus become too verbose, or when logic separation warrants moving rendering responsibilities to the server-side.
+, let's tackle this. It's a situation I've encountered more than a few times, and it’s a surprisingly nuanced problem when you dive into the specifics. Integrating `view_component` directly within a Stimulus controller isn't the typical use case, but it absolutely has its merits when you need dynamic and reusable UI elements. You’ll often find yourself in scenarios where static html templates controlled by Stimulus become too verbose, or when logic separation warrants moving rendering responsibilities to the server-side.
 
 The crux of the issue is that `view_component` generates server-rendered html, while Stimulus operates entirely in the client-side. Therefore, we can’t just instantiate a `view_component` directly from within a stimulus controller. Instead, we need to bridge the gap, and the usual approach involves fetching the rendered component from the server and then manipulating the dom using the stimulus controller. I’ve seen this become complicated in projects where data fetching isn't handled cleanly and rendering logic gets mixed into the controllers. It's a maintenance nightmare waiting to happen.
 
@@ -56,16 +56,16 @@ Finally, the Stimulus controller:
 
 ```javascript
 // app/javascript/controllers/user_card_controller.js
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = [ "cardContainer" ]
+  static targets = ["cardContainer"];
 
   refreshCard() {
     const userId = this.element.dataset.userId; // Assuming the user id is on the element
     fetch(`/users/${userId}/card`)
-      .then(response => response.text())
-      .then(html => {
+      .then((response) => response.text())
+      .then((html) => {
         this.cardContainerTarget.innerHTML = html;
       });
   }
@@ -76,14 +76,14 @@ and the HTML with Stimulus bindings:
 
 ```html
 <div data-controller="user-card" data-user-id="123">
-    <div data-user-card-target="cardContainer">
-       <%= render UserCardComponent.new(user: User.find(123)) %>
-    </div>
+  <div data-user-card-target="cardContainer">
+    <%= render UserCardComponent.new(user: User.find(123)) %>
+  </div>
   <button data-action="user-card#refreshCard">Refresh Card</button>
 </div>
 ```
 
-In this scenario, when the button is clicked, `refreshCard()` in the `user_card_controller.js` makes a request to the server at `users/123/card` for a new version of the `UserCardComponent`, and replaces the inner html of the  `cardContainerTarget` element with this rendered component.
+In this scenario, when the button is clicked, `refreshCard()` in the `user_card_controller.js` makes a request to the server at `users/123/card` for a new version of the `UserCardComponent`, and replaces the inner html of the `cardContainerTarget` element with this rendered component.
 
 **Example 2: Component Updates with Data Payloads**
 
@@ -127,21 +127,23 @@ And the Stimulus controller to send the request with a data payload:
 
 ```javascript
 // app/javascript/controllers/user_card_controller.js
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = [ "cardContainer" ]
+  static targets = ["cardContainer"];
 
   updateEmail() {
     const userId = this.element.dataset.userId;
-    const newEmail = "updated.email@example.com" // For testing, ideally this comes from a form or input.
+    const newEmail = "updated.email@example.com"; // For testing, ideally this comes from a form or input.
 
-    fetch(`/users/${userId}/card?email_override=${encodeURIComponent(newEmail)}`)
-      .then(response => response.text())
-      .then(html => {
+    fetch(
+      `/users/${userId}/card?email_override=${encodeURIComponent(newEmail)}`
+    )
+      .then((response) => response.text())
+      .then((html) => {
         this.cardContainerTarget.innerHTML = html;
       });
-    }
+  }
 }
 ```
 
@@ -149,9 +151,9 @@ and the HTML:
 
 ```html
 <div data-controller="user-card" data-user-id="123">
-    <div data-user-card-target="cardContainer">
-        <%= render UserCardComponent.new(user: User.find(123)) %>
-    </div>
+  <div data-user-card-target="cardContainer">
+    <%= render UserCardComponent.new(user: User.find(123)) %>
+  </div>
   <button data-action="user-card#updateEmail">Update Email</button>
 </div>
 ```
@@ -205,30 +207,32 @@ Stimulus controller:
 
 ```javascript
 // app/javascript/controllers/conditional_controller.js
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = [ "container" ]
+  static targets = ["container"];
 
   changeComponent() {
-      const condition = this.element.dataset.condition === 'true' ? 'false' : 'true';
-       fetch(`/conditional/show?condition=${condition}`)
-      .then(response => response.text())
-      .then(html => {
+    const condition =
+      this.element.dataset.condition === "true" ? "false" : "true";
+    fetch(`/conditional/show?condition=${condition}`)
+      .then((response) => response.text())
+      .then((html) => {
         this.containerTarget.innerHTML = html;
-        this.element.dataset.condition = condition
+        this.element.dataset.condition = condition;
       });
   }
 }
 ```
 
 and the HTML with Stimulus bindings:
+
 ```html
 <div data-controller="conditional" data-condition="true">
-    <div data-conditional-target="container">
-        <%= render ConditionalComponent.new(condition: true) %>
-    </div>
-    <button data-action="conditional#changeComponent">Change</button>
+  <div data-conditional-target="container">
+    <%= render ConditionalComponent.new(condition: true) %>
+  </div>
+  <button data-action="conditional#changeComponent">Change</button>
 </div>
 ```
 
@@ -236,6 +240,6 @@ When the button is pressed the `changeComponent` function toggles the condition 
 
 In each of these examples, we use `fetch` to obtain the pre-rendered html from the server based on different parameters. This strategy isolates server-side rendering with `view_component` from client-side manipulation using Stimulus, making the code easier to reason about and to maintain.
 
-For deeper learning on these techniques, I'd highly recommend reading *Rails 7 in Action* by Matt Swanson and *Programming Phoenix LiveView* by Bruce Tate, Sophie DeBenedetto, and Chris McCord. They'll provide a foundational and advanced understanding of the principles behind server-side rendering and managing dynamic user interfaces. Additionally, looking at the official documentation for both `view_component` and Stimulus will clarify the intricacies of each tool individually.
+For deeper learning on these techniques, I'd highly recommend reading _Rails 7 in Action_ by Matt Swanson and _Programming Phoenix LiveView_ by Bruce Tate, Sophie DeBenedetto, and Chris McCord. They'll provide a foundational and advanced understanding of the principles behind server-side rendering and managing dynamic user interfaces. Additionally, looking at the official documentation for both `view_component` and Stimulus will clarify the intricacies of each tool individually.
 
 Remember, the key to success with these approaches is to meticulously separate concerns. Let view components handle rendering, and let Stimulus controllers handle user interactions and dom updates. This makes for more sustainable and scalable applications over time.

@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-am-i-getting-an-error-400-bad-request-for-a-post-request-to-the-mlflow-api"
 ---
 
-Okay, let's delve into this. It's a frustrating situation, encountering a 400 bad request when posting to the mlflow api, especially after you've triple-checked your request. I've certainly been down that road a few times over the years. The '400 bad request' is essentially the server's way of saying, "I didn't understand what you sent." It isn't always the most informative message, but it does point to an issue within the structure or content of your request. We need to investigate the common culprits.
+, let's delve into this. It's a frustrating situation, encountering a 400 bad request when posting to the mlflow api, especially after you've triple-checked your request. I've certainly been down that road a few times over the years. The '400 bad request' is essentially the server's way of saying, "I didn't understand what you sent." It isn't always the most informative message, but it does point to an issue within the structure or content of your request. We need to investigate the common culprits.
 
 Fundamentally, a 400 response on a POST to mlflow usually boils down to one of three primary issues: incorrect request headers, malformed json payload, or missing/invalid data parameters as defined by the mlflow api endpoint you are hitting. We can systematically address each of these.
 
-First, let's look at request headers. The `content-type` header is absolutely critical for POST requests, specifically when you are sending a JSON payload. This tells the server *how* to interpret the data you've sent. If this header is missing or incorrectly set, the server won't be able to parse the body of your post, which often leads to a 400. Mlflow usually expects `application/json`. I recall a project I worked on last year where a junior dev was accidentally setting the content type to `text/plain`, and we spent a good half hour tracking down that mistake. It’s a classic, and a reminder that even the seemingly simplest details matter.
+First, let's look at request headers. The `content-type` header is absolutely critical for POST requests, specifically when you are sending a JSON payload. This tells the server _how_ to interpret the data you've sent. If this header is missing or incorrectly set, the server won't be able to parse the body of your post, which often leads to a 400. Mlflow usually expects `application/json`. I recall a project I worked on last year where a junior dev was accidentally setting the content type to `text/plain`, and we spent a good half hour tracking down that mistake. It’s a classic, and a reminder that even the seemingly simplest details matter.
 
 Second, the JSON payload needs to be precisely structured as the api expects. A minor syntax error, a missing or misplaced field, or an incorrect data type will lead to the same error. Mlflow has specific schemas for each of its API endpoints, which you must adhere to rigidly. For example, if you're logging metrics with `/api/2.0/mlflow/runs/log-metric`, the json must contain parameters like `run_uuid`, `key`, `value`, and optionally `timestamp`. A single misplaced comma or missing quotation mark will break the parsing, and the server will simply reject the request with a 400 status. This often happens when manually constructing a request payload rather than using the mlflow python client. It is a good practice to use a tool that can perform a json schema validation, or use the mlflow python client which has the correct data structure defined programmatically.
 
@@ -49,9 +49,11 @@ except Exception as e:
 
 
 ```
+
 In this example, the first attempt would likely result in a 400, since we did not provide a `Content-Type` header. The second attempt shows how you need to include the header to specify the content as `application/json`, so the server knows how to parse the request body.
 
 **Example 2: Malformed JSON Payload**
+
 ```python
 import requests
 import json
@@ -87,6 +89,7 @@ except Exception as e:
 Here, the first `requests.post` will very likely return a 400 because while we have the header set, the request body is a string with incorrect json syntax, the keys need to be enclosed in double quotes. The second request uses `json.dumps` correctly to serialize the python dictionary to json, which the server will then be able to correctly interpret.
 
 **Example 3: Invalid Data Parameters (Incorrect Run UUID)**
+
 ```python
 import requests
 import json
@@ -124,6 +127,7 @@ except Exception as e:
     print(f"An error occurred: {e}")
 
 ```
+
 In the final example, I have included a placeholder for a valid run id (`correct_run_uuid`). You'll need to replace this with a real run_uuid from your mlflow tracking server. The first post will return a 400 because the value of `run_uuid` is not a valid run uuid, although the request is formatted correctly. The second request will succeed because it contains a valid uuid.
 
 These examples should illustrate some of the common problems you might encounter when trying to send post requests to the mlflow API.

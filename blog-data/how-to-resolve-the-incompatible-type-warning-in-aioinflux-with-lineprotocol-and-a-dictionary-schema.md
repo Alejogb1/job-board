@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resolve-the-incompatible-type-warning-in-aioinflux-with-lineprotocol-and-a-dictionary-schema"
 ---
 
-Okay, let's tackle this. Having navigated the complexities of asynchronous data pipelines for years, I've definitely stumbled across the "incompatible type" warning when using `aioinflux` with line protocol and dictionary schemas – it's a surprisingly common pain point. The crux of the issue usually lies in how `aioinflux` expects data when using the line protocol, versus what you might inadvertently feed it when using a dictionary-based schema. Essentially, there's a mismatch in the expected data structure. When `aioinflux` constructs the line protocol, it has a set assumption about how dictionary keys and values should map into the line protocol’s format (i.e., `measurement,tag_key=tag_value field_key=field_value timestamp`). If that structure isn't precise, you'll see those type warnings.
+, let's tackle this. Having navigated the complexities of asynchronous data pipelines for years, I've definitely stumbled across the "incompatible type" warning when using `aioinflux` with line protocol and dictionary schemas – it's a surprisingly common pain point. The crux of the issue usually lies in how `aioinflux` expects data when using the line protocol, versus what you might inadvertently feed it when using a dictionary-based schema. Essentially, there's a mismatch in the expected data structure. When `aioinflux` constructs the line protocol, it has a set assumption about how dictionary keys and values should map into the line protocol’s format (i.e., `measurement,tag_key=tag_value field_key=field_value timestamp`). If that structure isn't precise, you'll see those type warnings.
 
 The core problem isn't necessarily a bug; it's a misunderstanding of how `aioinflux` serializes the dictionary into line protocol. Typically, if you were manually forming the line protocol, you’d build strings like `measurement,tag1=value1 field1=10 1678886400000000000` for example. The library strives to automate this, but there's some degree of implicit casting and schema enforcement that happens during the translation from your python dictionary to this string format. This can become an issue if your input dictionary schema does not directly conform to the expected types or structure by the `aioinflux` library.
 
@@ -56,7 +56,7 @@ from datetime import datetime
 
 async def main_scenario_2():
     client = InfluxDBClient(host='localhost', port=8086, database='mydatabase')
-    
+
     timestamp_datetime = datetime.utcnow()
     timestamp_seconds = int(timestamp_datetime.timestamp())
 
@@ -138,8 +138,8 @@ To avoid these issues, consider the following:
 
 To deepen your understanding, I suggest exploring the following resources:
 
-*   **InfluxDB Documentation:** The official InfluxDB documentation is the ultimate authority on the InfluxDB line protocol and data model. Pay particular attention to the sections covering data types and timestamps.
-*   **"Designing Data-Intensive Applications" by Martin Kleppmann:** Though not specifically about InfluxDB, this book provides a fantastic foundation for understanding data models, time series databases, and overall system architecture.
-*   **Python's `asyncio` Documentation:** A solid understanding of Python's asynchronous programming model is essential when working with `aioinflux`. Thoroughly review the `asyncio` documentation.
+- **InfluxDB Documentation:** The official InfluxDB documentation is the ultimate authority on the InfluxDB line protocol and data model. Pay particular attention to the sections covering data types and timestamps.
+- **"Designing Data-Intensive Applications" by Martin Kleppmann:** Though not specifically about InfluxDB, this book provides a fantastic foundation for understanding data models, time series databases, and overall system architecture.
+- **Python's `asyncio` Documentation:** A solid understanding of Python's asynchronous programming model is essential when working with `aioinflux`. Thoroughly review the `asyncio` documentation.
 
 In my experience, consistently adhering to type conventions and understanding how `aioinflux` and InfluxDB interpret data are the best ways to prevent and resolve these "incompatible type" warnings. It’s often more about making sure you have a correct and consistent data pipeline than about complex configurations in the library itself. These scenarios and practices have worked well for me over numerous projects. The key is being meticulous and understanding what’s actually going into your database.

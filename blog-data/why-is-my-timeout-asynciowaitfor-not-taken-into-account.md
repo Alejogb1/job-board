@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-my-timeout-asynciowaitfor-not-taken-into-account"
 ---
 
-alright, let's break down why your `asyncio.wait_for` might be ignoring your timeout. i've bumped into this gremlin more times than i care to remember, and it usually boils down to a few common gotchas. basically, `asyncio.wait_for` wraps an awaitable, like a coroutine, with a time limit. if that awaitable doesn't finish within the specified timeout, it's supposed to raise an `asyncio.timeoutError` . but things can get tricky when the awaitable itself doesn't play by the rules of cooperatively yielding control to the event loop.
+, let's break down why your `asyncio.wait_for` might be ignoring your timeout. i've bumped into this gremlin more times than i care to remember, and it usually boils down to a few common gotchas. basically, `asyncio.wait_for` wraps an awaitable, like a coroutine, with a time limit. if that awaitable doesn't finish within the specified timeout, it's supposed to raise an `asyncio.timeoutError` . but things can get tricky when the awaitable itself doesn't play by the rules of cooperatively yielding control to the event loop.
 
 the first thing to think about is that asyncio is cooperative, meaning tasks must voluntarily give up control to let other tasks run. if your awaitable is stuck in a cpu-bound loop or a blocking i/o operation, it won't yield to the event loop, and thus `wait_for` won't get a chance to trigger its timeout. the event loop is basically the referee, and if your task is doing a stubborn one-person show, the referee can't call timeout.
 
@@ -90,6 +90,7 @@ async def main():
 if __name__ == "__main__":
     asyncio.run(main())
 ```
+
 here, if we set a timeout bigger than 0.5, it raises a value error, and it does not get canceled by the `timeout`.
 
 so how do you troubleshoot these? well, the key is to examine your awaitables, step by step, i use print statements as a very last resort. a proper debugger will help. you should make sure all blocking or cpu-bound sections are implemented using async alternatives, such as aiohttp, aioredis, or using a thread pool for cpu-bound operations. if you are using a custom awaitable or iterator you must verify they are properly yielding to the event loop. if that's not possible, then you might have to run that portion using a thread pool using the `asyncio.to_thread` or `concurrent.futures` modules, to avoid blocking the loop. it’s like bringing a translator to a meeting so that everyone can understand each other, the event loop can't communicate with a task that does not yield.

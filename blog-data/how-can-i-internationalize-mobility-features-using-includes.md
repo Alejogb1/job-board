@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-internationalize-mobility-features-using-includes"
 ---
 
-Alright, let's tackle internationalizing mobility features using includes, or more specifically, how to manage locale-specific strings within the context of mobile application development, leveraging code modularity effectively. It’s something I’ve spent a good chunk of time optimizing across various mobile projects, and there are definitely nuances to consider beyond just slapping `.lproj` files in your directory.
+, let's tackle internationalizing mobility features using includes, or more specifically, how to manage locale-specific strings within the context of mobile application development, leveraging code modularity effectively. It’s something I’ve spent a good chunk of time optimizing across various mobile projects, and there are definitely nuances to consider beyond just slapping `.lproj` files in your directory.
 
 The fundamental idea behind using includes, or in our context, modular localization files, is to separate your translatable strings from your application's core logic. This separation enables a clearer structure, simplifies localization updates, and prevents spaghetti code related to language support. In my experience, this is absolutely critical as applications grow; otherwise, maintaining multiple languages becomes a logistical nightmare. The method I often advocate involves storing locale-specific strings in separate files, and your code can then load these files based on the user's current locale. This method promotes code maintainability and makes it substantially easier for a larger team to collaborate, particularly when you have dedicated translators.
 
@@ -13,6 +13,7 @@ Let’s break down how this works, step by step, by using concrete examples that
 **Example 1: Simple Key-Value Pair Includes**
 
 Imagine you have a file structure like so:
+
 ```
 localization/
   en.json
@@ -22,27 +23,27 @@ localization/
 
 Each of these files contains JSON objects, structured as key-value pairs:
 
-*   `en.json`:
-    ```json
-    {
-      "greeting": "Hello",
-      "welcomeMessage": "Welcome to our application!"
-    }
-    ```
-*   `es.json`:
-    ```json
-    {
-      "greeting": "Hola",
-      "welcomeMessage": "¡Bienvenido a nuestra aplicación!"
-    }
-    ```
-*   `fr.json`:
-    ```json
-    {
-      "greeting": "Bonjour",
-      "welcomeMessage": "Bienvenue sur notre application !"
-    }
-    ```
+- `en.json`:
+  ```json
+  {
+    "greeting": "Hello",
+    "welcomeMessage": "Welcome to our application!"
+  }
+  ```
+- `es.json`:
+  ```json
+  {
+    "greeting": "Hola",
+    "welcomeMessage": "¡Bienvenido a nuestra aplicación!"
+  }
+  ```
+- `fr.json`:
+  ```json
+  {
+    "greeting": "Bonjour",
+    "welcomeMessage": "Bienvenue sur notre application !"
+  }
+  ```
 
 Your application logic would then read the appropriate file, based on the selected language and use these to render the application user interface.
 Here’s a simplified, language-agnostic example demonstrating how you might load these includes in a pseudo-code style using a hypothetical load function `load_json`:
@@ -67,29 +68,31 @@ This example is deliberately simple to demonstrate the concept. In a real applic
 
 In more complex applications, you often need to include placeholders within your strings to insert dynamic values. Consider these files:
 
-*   `en.json`:
-    ```json
-    {
-       "userStatus": "User {username} has {status} the application.",
-      "pointsEarned": "You earned {points} points!"
-    }
-    ```
+- `en.json`:
 
-*   `es.json`:
-    ```json
-   {
-     "userStatus": "El usuario {username} ha {status} la aplicación.",
-     "pointsEarned": "¡Has ganado {points} puntos!"
-    }
-    ```
+  ```json
+  {
+    "userStatus": "User {username} has {status} the application.",
+    "pointsEarned": "You earned {points} points!"
+  }
+  ```
 
-*   `fr.json`:
-    ```json
-    {
-      "userStatus": "L'utilisateur {username} a {status} l'application.",
-      "pointsEarned": "Vous avez gagné {points} points !"
-    }
-    ```
+- `es.json`:
+
+  ```json
+  {
+    "userStatus": "El usuario {username} ha {status} la aplicación.",
+    "pointsEarned": "¡Has ganado {points} puntos!"
+  }
+  ```
+
+- `fr.json`:
+  ```json
+  {
+    "userStatus": "L'utilisateur {username} a {status} l'application.",
+    "pointsEarned": "Vous avez gagné {points} points !"
+  }
+  ```
 
 Here, we need a function that not only retrieves the base string, but also allows for replacements based on parameters. Here's an example of how that can be done:
 
@@ -122,33 +125,33 @@ Pluralization rules vary dramatically across languages. Consider this: In Englis
 
 To correctly handle plurals, we can incorporate special format indicators within our JSON files:
 
-*   `en.json`:
-    ```json
-    {
-      "itemCount": {
-        "one": "You have {count} item.",
-        "other": "You have {count} items."
-       }
+- `en.json`:
+  ```json
+  {
+    "itemCount": {
+      "one": "You have {count} item.",
+      "other": "You have {count} items."
     }
-    ```
-*   `es.json`:
-    ```json
-    {
-     "itemCount": {
-       "one": "Tienes {count} elemento.",
-       "other": "Tienes {count} elementos."
-       }
+  }
+  ```
+- `es.json`:
+  ```json
+  {
+    "itemCount": {
+      "one": "Tienes {count} elemento.",
+      "other": "Tienes {count} elementos."
     }
-    ```
-*   `fr.json`:
-    ```json
-    {
-       "itemCount": {
-            "one": "Vous avez {count} élément.",
-            "other": "Vous avez {count} éléments."
-        }
+  }
+  ```
+- `fr.json`:
+  ```json
+  {
+    "itemCount": {
+      "one": "Vous avez {count} élément.",
+      "other": "Vous avez {count} éléments."
     }
-    ```
+  }
+  ```
 
 Here's how you might implement plural handling logic in your code, taking advantage of the structure within our JSON:
 

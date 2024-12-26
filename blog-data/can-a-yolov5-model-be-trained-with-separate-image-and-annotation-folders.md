@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "can-a-yolov5-model-be-trained-with-separate-image-and-annotation-folders"
 ---
 
-Alright, let's tackle this one. I've certainly run into this exact scenario multiple times, usually when inheriting projects with… let's say, *less-than-ideal* data organization. So, the short answer is yes, a yolov5 model *can* absolutely be trained with separate image and annotation folders. It's quite common in fact. However, it's crucial to understand how yolov5, or any object detection framework for that matter, expects its data and how to guide it if you deviate from a standard setup.
+, let's tackle this one. I've certainly run into this exact scenario multiple times, usually when inheriting projects with… let's say, _less-than-ideal_ data organization. So, the short answer is yes, a yolov5 model _can_ absolutely be trained with separate image and annotation folders. It's quite common in fact. However, it's crucial to understand how yolov5, or any object detection framework for that matter, expects its data and how to guide it if you deviate from a standard setup.
 
-The core issue here isn’t whether you *can* have them separate; it's about creating a proper mapping that the yolov5 training script understands. The model doesn't care where the images and annotations physically reside; it cares that the annotation file corresponding to a specific image can be found quickly and easily. The default yolov5 configuration often assumes that the image and annotation share the same base filename (e.g., 'image1.jpg' and 'image1.txt'). If you have them in separate folders, you have to explicitly specify the relationship between them.
+The core issue here isn’t whether you _can_ have them separate; it's about creating a proper mapping that the yolov5 training script understands. The model doesn't care where the images and annotations physically reside; it cares that the annotation file corresponding to a specific image can be found quickly and easily. The default yolov5 configuration often assumes that the image and annotation share the same base filename (e.g., 'image1.jpg' and 'image1.txt'). If you have them in separate folders, you have to explicitly specify the relationship between them.
 
 Let's dive into how you would typically achieve this. yolov5, at its heart, relies on data loaders that read from file paths. These paths are specified in configuration files, data.yaml, which, among other things, defines the location of your training and validation sets. When you've got your images and annotations separated, you're essentially modifying the paths given to the dataloader.
 
-Now, practically, there are a few ways I've tackled this in the past. The most common involves adjusting the *data.yaml* file and ensuring the image and label paths correctly point to their respective folders. Let’s illustrate this with a basic example first. Imagine your folder structure is as follows:
+Now, practically, there are a few ways I've tackled this in the past. The most common involves adjusting the _data.yaml_ file and ensuring the image and label paths correctly point to their respective folders. Let’s illustrate this with a basic example first. Imagine your folder structure is as follows:
 
 ```
 data/
@@ -38,10 +38,10 @@ Your `data.yaml` would then need to define the paths accordingly, such as:
 train: data/images/train
 val: data/images/val
 
-nc: 80  # number of classes. adjust to your needs
+nc: 80 # number of classes. adjust to your needs
 
 # Classes
-names: ['class1', 'class2', ..., 'classn'] # your class names
+names: ["class1", "class2", ..., "classn"] # your class names
 
 # Define the path where labels are located; here, the script looks for .txt files with the same base name in the specified folder, corresponding to each image.
 path: data # parent path, where the train/val subfolders are found
@@ -50,25 +50,25 @@ path: data # parent path, where the train/val subfolders are found
 label_path: labels # this is not a standard yolov5 parameter and hence will not work.
 ```
 
-**This will NOT work,** as the label_path parameter is not a standard yolov5 argument. It's an illustration of how you *might* think it should work based on other frameworks or intuition. You should *not* add this parameter, as it will be ignored. The correct approach utilizes the path value together with the image file name and matching annotation file name.
+**This will NOT work,** as the label_path parameter is not a standard yolov5 argument. It's an illustration of how you _might_ think it should work based on other frameworks or intuition. You should _not_ add this parameter, as it will be ignored. The correct approach utilizes the path value together with the image file name and matching annotation file name.
 
-Let's take a step further. The critical point is that yolov5 expects label files with names that match the corresponding image, but within the label folder. Internally, during the data loading process, the framework scans images in the specified train and validation image paths. For each image file, it then *expects* an annotation file with the same base name, *within the sibling folder*. The name *must* match. If it can't find the annotation file, it will print an error during training. This is a very common issue to encounter.
+Let's take a step further. The critical point is that yolov5 expects label files with names that match the corresponding image, but within the label folder. Internally, during the data loading process, the framework scans images in the specified train and validation image paths. For each image file, it then _expects_ an annotation file with the same base name, _within the sibling folder_. The name _must_ match. If it can't find the annotation file, it will print an error during training. This is a very common issue to encounter.
 
-Here is an updated and correct *data.yaml* file:
+Here is an updated and correct _data.yaml_ file:
 
 ```yaml
 train: data/images/train
 val: data/images/val
 nc: 80
-names: ['class1', 'class2', ..., 'classn']
+names: ["class1", "class2", ..., "classn"]
 path: data # parent path, where the train/val subfolders are found
 ```
 
-The critical part here is *how* yolov5 finds annotations and how to make sure you arrange your directory so this works. It looks within the given `path` parent folder for a *sibling* folder named `labels` when loading annotations.
+The critical part here is _how_ yolov5 finds annotations and how to make sure you arrange your directory so this works. It looks within the given `path` parent folder for a _sibling_ folder named `labels` when loading annotations.
 
 Now, for a more complex setup where the annotations aren't directly mirroring the image structure, you can pre-process these files and create lists containing the complete paths to images and annotations. These lists can then be used to generate a text file with paths, which then the yolov5 data loader parses. I've frequently employed this technique when needing to dynamically filter out specific annotation files.
 
-Let's say you have a different structure with images in `images/all` and annotations in `labels/` which do *not* mirror each other directly. Instead, you have a file named `train.txt`, containing full paths to training images. The annotations have *different* names. In this case, you’d need a bit of code. Here’s a Python snippet that I've adapted from my own projects, which will generate an intermediate file used for training.
+Let's say you have a different structure with images in `images/all` and annotations in `labels/` which do _not_ mirror each other directly. Instead, you have a file named `train.txt`, containing full paths to training images. The annotations have _different_ names. In this case, you’d need a bit of code. Here’s a Python snippet that I've adapted from my own projects, which will generate an intermediate file used for training.
 
 ```python
 import os
@@ -98,13 +98,15 @@ create_train_file(image_dir, label_dir, output_file)
 ```
 
 Now, modify the `data.yaml` file accordingly:
+
 ```yaml
 train: train.txt
-val:  # leave empty for now, assuming training only
+val: # leave empty for now, assuming training only
 nc: 80
-names: ['class1', 'class2', ..., 'classn']
+names: ["class1", "class2", ..., "classn"]
 path: .
 ```
+
 Note that `path` must be `.` as paths in `train.txt` are already absolute/complete.
 
 **Important considerations:** yolov5 expects the annotation files to be in the YOLO format, typically a text file where each line contains class id, and normalized bounding box coordinates (center_x, center_y, width, height).
@@ -161,6 +163,6 @@ for batch in dataloader:
 
 This final example demonstrates the flexibility of the framework. When you need specific data preparation beyond basic file mapping, extending the dataloader offers a strong solution.
 
-For more thorough understanding, I’d recommend diving into “Deep Learning with PyTorch” by Eli Stevens, Luca Antiga, and Thomas Viehmann; it provides a good foundation for understanding PyTorch data loaders and how to extend them for your specific use cases. Furthermore, the official yolov5 documentation hosted on their GitHub repository contains all the details of the *data.yaml* file and other configurable parameters. Finally, for those interested in the theoretical underpinnings of object detection algorithms in general, “Computer Vision: Algorithms and Applications” by Richard Szeliski is a must-read.
+For more thorough understanding, I’d recommend diving into “Deep Learning with PyTorch” by Eli Stevens, Luca Antiga, and Thomas Viehmann; it provides a good foundation for understanding PyTorch data loaders and how to extend them for your specific use cases. Furthermore, the official yolov5 documentation hosted on their GitHub repository contains all the details of the _data.yaml_ file and other configurable parameters. Finally, for those interested in the theoretical underpinnings of object detection algorithms in general, “Computer Vision: Algorithms and Applications” by Richard Szeliski is a must-read.
 
-To recap, yes, you can train your yolov5 model with separate image and annotation folders, and there are several ways to achieve it. Choose the method that best suits your data structure. Remember to pay attention to the exact expected file naming convention and carefully configure your *data.yaml* file to map between them. With these techniques, your model should train as expected.
+To recap, yes, you can train your yolov5 model with separate image and annotation folders, and there are several ways to achieve it. Choose the method that best suits your data structure. Remember to pay attention to the exact expected file naming convention and carefully configure your _data.yaml_ file to map between them. With these techniques, your model should train as expected.

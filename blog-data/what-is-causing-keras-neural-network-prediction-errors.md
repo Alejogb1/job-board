@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-causing-keras-neural-network-prediction-errors"
 ---
 
-Okay, let’s unpack this. I’ve definitely seen my share of baffling Keras prediction errors throughout the years. It's rarely a single smoking gun but usually a combination of factors interacting in subtle ways. I've spent countless hours debugging these issues, and it's led me to develop a fairly systematic approach, which I’m happy to share.
+, let’s unpack this. I’ve definitely seen my share of baffling Keras prediction errors throughout the years. It's rarely a single smoking gun but usually a combination of factors interacting in subtle ways. I've spent countless hours debugging these issues, and it's led me to develop a fairly systematic approach, which I’m happy to share.
 
 First and foremost, it's important to understand that "prediction errors" is a broad category. We're talking about the discrepancy between the predicted output of your neural network and the true, or expected, value. This can stem from issues during training, during data preparation, or even inherent limitations in the model's architecture itself.
 
@@ -72,7 +72,7 @@ print("Prediction:", prediction)
 
 This is a very basic illustration, but it showcases how the model is trained and makes a prediction. In practice, careful validation strategies are vital for diagnosing issues with the model's performance. Use techniques like k-fold cross-validation to get a more accurate estimation of the model’s true predictive power.
 
-Beyond code, it's often beneficial to check the literature for specific advice related to the problem domain. For instance, *Deep Learning* by Ian Goodfellow, Yoshua Bengio, and Aaron Courville provides a comprehensive treatment of theoretical aspects of neural networks. Similarly, *Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow* by Aurélien Géron offers a pragmatic perspective, highlighting common pitfalls and practical solutions. Papers related to specific tasks, such as those found on websites like arXiv, can also contain valuable domain specific information that aids in understanding prediction errors.
+Beyond code, it's often beneficial to check the literature for specific advice related to the problem domain. For instance, _Deep Learning_ by Ian Goodfellow, Yoshua Bengio, and Aaron Courville provides a comprehensive treatment of theoretical aspects of neural networks. Similarly, _Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow_ by Aurélien Géron offers a pragmatic perspective, highlighting common pitfalls and practical solutions. Papers related to specific tasks, such as those found on websites like arXiv, can also contain valuable domain specific information that aids in understanding prediction errors.
 
 Furthermore, debugging prediction errors isn’t just about identifying issues, but also about having a robust system for evaluating model performance through metrics. Choosing the right evaluation metrics that are relevant to your objective, such as precision, recall, f1-score, or the area under the ROC curve (AUC), is vital for an accurate assessment. In my experience, using a single metric without consideration of its limitations can lead to erroneous conclusions about model performance.
 
@@ -119,6 +119,7 @@ predictions = model.predict(X_test).flatten()
 print("Sample predictions:", predictions[:5])
 
 ```
+
 This shows a simple time-series forecasting setup. In such models, shuffling should always be avoided when splitting the data.
 
 In short, debugging prediction errors with Keras involves a methodical approach, considering data quality, model complexity, and hyper-parameter tuning. Always prioritize understanding the fundamental principles of the model and the data you are working with. Thorough diagnostics, proper data handling, and careful selection of evaluation metrics are key to resolving these issues. And when you hit a wall, diving into authoritative resources can often point you towards the next step.

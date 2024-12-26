@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-install-tinytds-on-windows-10"
 ---
 
-Alright, let's tackle this. Installing `tiny_tds` on Windows 10, while it should be straightforward, can sometimes throw a few curveballs, particularly if the underlying dependencies aren't playing nice. I've personally spent a fair share of late nights debugging similar issues on client projects, so I've got some experience navigating these specific hurdles. The core problem usually boils down to the interaction between Ruby, its development environment, and the FreeTDS library, which `tiny_tds` relies on. Let's break down the process and common pitfalls.
+, let's tackle this. Installing `tiny_tds` on Windows 10, while it should be straightforward, can sometimes throw a few curveballs, particularly if the underlying dependencies aren't playing nice. I've personally spent a fair share of late nights debugging similar issues on client projects, so I've got some experience navigating these specific hurdles. The core problem usually boils down to the interaction between Ruby, its development environment, and the FreeTDS library, which `tiny_tds` relies on. Let's break down the process and common pitfalls.
 
 First, remember that `tiny_tds` is a gem, a Ruby library specifically designed for interacting with Microsoft SQL Server databases. Therefore, you will naturally need a functional Ruby installation on your Windows machine. I'd advise against using the default Ruby installation that may sometimes ship with various tools or third-party applications. Instead, I strongly recommend using a proper Ruby version manager, such as `rbenv` or `rvm`. These allow for managing multiple Ruby versions without causing conflicts and simplify dependency management. For Windows, I've found `rubyinstaller2` (available at rubyinstaller.org) to be a consistent and user-friendly method, which integrates well with development tooling. Using a version manager helps isolating project dependencies and avoids version conflicts across different projects. Think of it as keeping your toolbox organized: specific tools for specific tasks, reducing unexpected interactions.
 
@@ -26,7 +26,7 @@ set CPATH=%FREETDS_HOME%\include
 gem install tiny_tds
 ```
 
-These commands can be run from your command prompt, PowerShell or your terminal emulator of preference.  The first two lines create the `FREETDS_HOME` environment variable, and add the appropriate FreeTDS folders to the system `PATH` and `CPATH` variables, then finally the `gem install` command attempts to download and install the gem. Note that the paths should match where you've actually put the library and the associated headers. Sometimes, depending on how ruby was installed, and where the libraries are placed, the gem install step might need to be run in admin mode.
+These commands can be run from your command prompt, PowerShell or your terminal emulator of preference. The first two lines create the `FREETDS_HOME` environment variable, and add the appropriate FreeTDS folders to the system `PATH` and `CPATH` variables, then finally the `gem install` command attempts to download and install the gem. Note that the paths should match where you've actually put the library and the associated headers. Sometimes, depending on how ruby was installed, and where the libraries are placed, the gem install step might need to be run in admin mode.
 
 **Step 2: Verification and Troubleshooting (A Specific Problem Encountered in the Past)**
 

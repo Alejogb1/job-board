@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-interpret-precision-recall-and-f1-score-in-a-custom-spacy-tagger"
 ---
 
-Okay, let’s get into this. Instead of jumping straight into formulas, let’s consider the practical implications first, something that's been baked into my brain from a few past projects. Specifically, I remember one involved a highly specific named entity recognition task for legal documents. We needed to identify particular clauses and document types with extremely high accuracy, where misclassifying a “contract amendment” as just “contract” could have serious consequences. This isn’t a playground; this is about ensuring the robustness of models we deploy.
+, let’s get into this. Instead of jumping straight into formulas, let’s consider the practical implications first, something that's been baked into my brain from a few past projects. Specifically, I remember one involved a highly specific named entity recognition task for legal documents. We needed to identify particular clauses and document types with extremely high accuracy, where misclassifying a “contract amendment” as just “contract” could have serious consequences. This isn’t a playground; this is about ensuring the robustness of models we deploy.
 
 Now, regarding precision, recall, and the F1-score, these are foundational metrics used to evaluate the performance of classification models, including the custom spaCy tagger you're working with. They are particularly important when you're not just looking at overall accuracy (which can be misleading, especially with imbalanced datasets). Each metric provides a unique lens on the model’s performance, and understanding them separately is vital to improving your model.
 
@@ -12,7 +12,7 @@ Let's unpack each one.
 
 **Precision**:
 
-Precision answers the question: of all the entities the model *said* were a certain type, how many actually *were* that type? It measures the proportion of true positives out of all predicted positives. Formally, it’s calculated as:
+Precision answers the question: of all the entities the model _said_ were a certain type, how many actually _were_ that type? It measures the proportion of true positives out of all predicted positives. Formally, it’s calculated as:
 
 `Precision = True Positives / (True Positives + False Positives)`
 
@@ -20,11 +20,11 @@ In my experience, precision becomes extremely critical when false positives have
 
 **Recall**:
 
-Recall focuses on: of all the entities that *actually* were of a certain type, how many did the model correctly identify? It measures the proportion of true positives out of all the actual positives. The formula is:
+Recall focuses on: of all the entities that _actually_ were of a certain type, how many did the model correctly identify? It measures the proportion of true positives out of all the actual positives. The formula is:
 
 `Recall = True Positives / (True Positives + False Negatives)`
 
-Recall is paramount when it’s more costly to *miss* an entity than to misclassify others. Back to the legal documents, a false negative (missing an actual contract amendment) would be far worse than misclassifying something as a contract amendment that wasn’t. A high recall indicates that our model is good at identifying the majority of the actual occurrences of a particular entity.
+Recall is paramount when it’s more costly to _miss_ an entity than to misclassify others. Back to the legal documents, a false negative (missing an actual contract amendment) would be far worse than misclassifying something as a contract amendment that wasn’t. A high recall indicates that our model is good at identifying the majority of the actual occurrences of a particular entity.
 
 **F1-Score**:
 
@@ -123,21 +123,21 @@ def evaluate_spacy_tagger(nlp, test_data):
         gold_entities = gold_labels.get('entities', [])
         for start, end, label in gold_entities:
             true_labels_doc.append((start, end, label))
-        
+
         for token in doc:
             if token.ent_type_:
                 predicted_labels_doc.append((token.idx, token.idx + len(token), token.ent_type_ ))
-        
+
         true_labels.extend(true_labels_doc)
         predicted_labels.extend(predicted_labels_doc)
-        
+
     labels = set([label for _, _, label in true_labels])
 
     metrics = defaultdict(dict)
     for label in labels:
         true_l = [1 if (start,end, l) ==  (start_true, end_true,l_true) else 0 for start_true, end_true, l_true in true_labels for start, end, l in predicted_labels if start_true == start and end_true ==end]
         predicted_l = [1 if (start,end, l) ==  (start_pred, end_pred,l_pred) else 0 for start_pred, end_pred, l_pred in predicted_labels for start, end, l in true_labels if start_pred == start and end_pred ==end]
-       
+
         if true_l and predicted_l:
            precision, recall, f1 = calculate_metrics(true_l, predicted_l, 1)
            metrics[label]["precision"] = precision
@@ -147,7 +147,7 @@ def evaluate_spacy_tagger(nlp, test_data):
            metrics[label]["precision"] = 0.0
            metrics[label]["recall"] = 0.0
            metrics[label]["f1"] = 0.0
-        
+
     return metrics
 
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-use-omniauth-with-steam-in-rails-7"
 ---
 
-Alright, let's tackle this. I remember a project back in '21 where we integrated Steam authentication; that was…educational, to say the least. Omniauth, while powerful, can sometimes feel like it's pushing back when you're trying to get third-party auth working smoothly, especially with a platform like Steam that has its own nuances. Getting it going in Rails 7 is pretty straightforward, though, if you break it down. Let's walk through it.
+, let's tackle this. I remember a project back in '21 where we integrated Steam authentication; that was…educational, to say the least. Omniauth, while powerful, can sometimes feel like it's pushing back when you're trying to get third-party auth working smoothly, especially with a platform like Steam that has its own nuances. Getting it going in Rails 7 is pretty straightforward, though, if you break it down. Let's walk through it.
 
 The primary challenge often isn’t the gem itself, but configuring it correctly to handle Steam's particular quirks. Steam uses a variation of OpenID, and while Omniauth provides an abstraction, understanding what's happening under the hood is essential.
 
@@ -80,14 +80,14 @@ end
 
 Here's a breakdown:
 
-*   **`create` action**: This is the entry point after the Steam authentication redirect. The `request.env['omniauth.auth']` hash contains all the data returned by Omniauth, including the user's unique identifier, nickname and possibly profile information. We log it for inspection.
-*   **User Creation**: We attempt to locate a user by their unique Steam ID. If no such user exists, we create a new user. This is a common pattern for user creation via external authentication systems.
-*   **Session Management**: If the user was found or created, we establish a session by setting the `user_id` in the session hash.
-*   **Redirection:** We handle success cases, redirecting the user back to a landing page with a success notice.
-*   **Error Handling**: We have a `rescue` block for general errors during authentication and log these for further investigation. This helps to quickly identify problems during implementation.
+- **`create` action**: This is the entry point after the Steam authentication redirect. The `request.env['omniauth.auth']` hash contains all the data returned by Omniauth, including the user's unique identifier, nickname and possibly profile information. We log it for inspection.
+- **User Creation**: We attempt to locate a user by their unique Steam ID. If no such user exists, we create a new user. This is a common pattern for user creation via external authentication systems.
+- **Session Management**: If the user was found or created, we establish a session by setting the `user_id` in the session hash.
+- **Redirection:** We handle success cases, redirecting the user back to a landing page with a success notice.
+- **Error Handling**: We have a `rescue` block for general errors during authentication and log these for further investigation. This helps to quickly identify problems during implementation.
 
-*   **`failure` action**: This action is triggered if Steam rejects the authentication attempt. In a more sophisticated application, you’d likely want more granular error handling.
-*  **`destroy` action**: This clears the session, effectively logging the user out.
+- **`failure` action**: This action is triggered if Steam rejects the authentication attempt. In a more sophisticated application, you’d likely want more granular error handling.
+- **`destroy` action**: This clears the session, effectively logging the user out.
 
 For the `User` model (in `app/models/user.rb`), a minimal version could look like this:
 
@@ -96,6 +96,7 @@ class User < ApplicationRecord
     validates :steam_uid, presence: true, uniqueness: true
 end
 ```
+
 This is the most basic version, where we enforce presence and uniqueness for the `steam_uid`. You can add other required fields as needed based on the requirements.
 
 Finally, to add a link that starts the login, in your view files (for example, `app/views/home/index.html.erb`), put this:

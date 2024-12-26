@@ -4,15 +4,15 @@ date: "2024-12-23"
 id: "how-can-i-query-another-model-within-a-rails-model-function"
 ---
 
-Alright, let's tackle this. I've seen this come up quite a bit over the years, and while it might seem straightforward, there are nuances to handling queries across different models from within a model function in Rails that you’ll want to get a firm grip on. Specifically, you're asking how to query one model from inside a function defined within another model. This isn't necessarily bad practice, but the *how* and *why* are essential to get *right*.
+, let's tackle this. I've seen this come up quite a bit over the years, and while it might seem straightforward, there are nuances to handling queries across different models from within a model function in Rails that you’ll want to get a firm grip on. Specifically, you're asking how to query one model from inside a function defined within another model. This isn't necessarily bad practice, but the _how_ and _why_ are essential to get _right_.
 
 The general idea is that your model code, like any other code in your application, can invoke methods that interact with your database. And within a model, you might need to access data that’s represented by a different model. However, this can quickly become unwieldy if not managed properly. We want our models to remain focused on their primary responsibilities, while still allowing them to access related data. I've personally seen applications where this pattern is abused, creating spaghetti code that’s a nightmare to maintain. My old team even spent weeks refactoring a system that had this kind of inter-model query proliferation.
 
-Let’s clarify how to do this effectively. The basic pattern usually involves using Active Record's querying interface, but the key is deciding *where* and *how* these queries are executed. We must also avoid making the first model overly reliant on the implementation details of the second.
+Let’s clarify how to do this effectively. The basic pattern usually involves using Active Record's querying interface, but the key is deciding _where_ and _how_ these queries are executed. We must also avoid making the first model overly reliant on the implementation details of the second.
 
 Essentially, you can perform queries on another model in a model function just as you would in a controller or service object, but the context makes all the difference.
 
-Consider this scenario: I'm working on an e-commerce platform. We have `Order` and `Customer` models. Let's assume a need to determine if a customer has placed a significant order amount, based on the number of items ordered, *within* an `Order` instance method.
+Consider this scenario: I'm working on an e-commerce platform. We have `Order` and `Customer` models. Let's assume a need to determine if a customer has placed a significant order amount, based on the number of items ordered, _within_ an `Order` instance method.
 
 Here's the first example of how you might initially implement this:
 
@@ -75,7 +75,7 @@ class Order < ApplicationRecord
 end
 ```
 
-Here we’ve improved the design. Now the `Order` model simply checks if the customer is significant, leaving the details on *what* constitutes a significant customer to that specific model. The logic relating to determining total item counts is now located within the `Customer` model.
+Here we’ve improved the design. Now the `Order` model simply checks if the customer is significant, leaving the details on _what_ constitutes a significant customer to that specific model. The logic relating to determining total item counts is now located within the `Customer` model.
 
 Finally, you might encounter situations where accessing associated records from another model directly within a loop in the first model leads to performance issues, most specifically the dreaded N+1 query problem. This is a well-known issue. I’ve personally spent considerable time debugging queries and seeing them perform horribly. When you have thousands of rows, it can grind your application to a halt.
 

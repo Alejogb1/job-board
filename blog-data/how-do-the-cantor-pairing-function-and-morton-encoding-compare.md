@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-the-cantor-pairing-function-and-morton-encoding-compare"
 ---
 
-Okay, let's delve into the fascinating intersection of the Cantor pairing function and Morton encoding, two techniques I've encountered quite a bit in my years working on spatial data structures and algorithms. These methods, while both serving the purpose of mapping multi-dimensional data into a single dimension, approach the problem from very different angles, each with its own trade-offs. My experiences have shown that understanding these nuances is crucial for choosing the best approach in various scenarios.
+, let's delve into the fascinating intersection of the Cantor pairing function and Morton encoding, two techniques I've encountered quite a bit in my years working on spatial data structures and algorithms. These methods, while both serving the purpose of mapping multi-dimensional data into a single dimension, approach the problem from very different angles, each with its own trade-offs. My experiences have shown that understanding these nuances is crucial for choosing the best approach in various scenarios.
 
 Let's start with the Cantor pairing function. If I recall correctly, my initial brush with this method was when I was working on a system for indexing user activity on a virtual map. We needed a way to uniquely identify a user's location at a given time, given its x and y coordinates on the map grid, as well as a timestamp. The Cantor pairing function offered an elegant, albeit somewhat less spatially-aware solution. The basic premise, as originally developed by Georg Cantor, is to map two natural numbers, `k1` and `k2`, to a unique natural number, `k`. It's defined as:
 

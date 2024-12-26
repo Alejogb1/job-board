@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-a-ruby-on-rails-7-destroy-action-displaying-an-alert"
 ---
 
-Alright, let's tackle this. I’ve spent more nights than I care to remember debugging seemingly straightforward Rails actions, and the “missing alert on destroy” scenario is a classic. It's a frustration that many run into, especially when moving between different parts of the front-end and back-end framework. The core problem usually isn't Rails itself, but rather a mismatch in how we expect JavaScript interactions to behave following a server-side action, particularly within the context of the turbo framework introduced in Rails 7, which is likely causing you this issue.
+, let's tackle this. I’ve spent more nights than I care to remember debugging seemingly straightforward Rails actions, and the “missing alert on destroy” scenario is a classic. It's a frustration that many run into, especially when moving between different parts of the front-end and back-end framework. The core problem usually isn't Rails itself, but rather a mismatch in how we expect JavaScript interactions to behave following a server-side action, particularly within the context of the turbo framework introduced in Rails 7, which is likely causing you this issue.
 
 The fundamental issue revolves around how Turbo handles form submissions and responses. Prior to Turbo, a typical destroy action would involve a full page refresh, during which we could easily pop up a JavaScript alert upon successful deletion. With Turbo, that refresh isn’t happening in the traditional sense. Instead, Turbo intercepts the form submission, makes an asynchronous request to the server, and then uses the server's response to update parts of the page. This means any JavaScript expecting to immediately fire after a form submit, that is tied to a full-page refresh is simply not going to be executed as it was written before Turbo.
 
@@ -12,20 +12,22 @@ I've seen this many times, and it often stems from an incorrect understanding of
 
 ```javascript
 // legacy approach: not turbo aware
-document.addEventListener('DOMContentLoaded', function() {
-  const deleteForms = document.querySelectorAll('form[data-turbo-method="delete"]');
-  deleteForms.forEach(form => {
-      form.addEventListener('submit', function(event){
-          alert('Item Deleted!');
-          // ... other page manipulation
-      });
+document.addEventListener("DOMContentLoaded", function () {
+  const deleteForms = document.querySelectorAll(
+    'form[data-turbo-method="delete"]'
+  );
+  deleteForms.forEach((form) => {
+    form.addEventListener("submit", function (event) {
+      alert("Item Deleted!");
+      // ... other page manipulation
     });
+  });
 });
 ```
 
 This code worked great back before Turbo, but will no longer be triggered upon form submission with Turbo. The form submission doesn’t cause a page refresh. Turbo sends the delete request to the server in the background and then updates only parts of the page via frames, streams, and the like.
 
-The crucial point is that the page is not fully reloaded. We need to listen for the server response to the *turbo stream* event to update the UI after the delete action. This generally involves the server responding with turbo stream actions, commonly `remove` and potentially an update using a `replace` action. The client-side JavaScript would then listen for these turbo-stream responses being processed on the DOM. We also need to handle the edge case of non-turbo requests. For those we will rely on the traditional rails redirect, and include our alert within the view.
+The crucial point is that the page is not fully reloaded. We need to listen for the server response to the _turbo stream_ event to update the UI after the delete action. This generally involves the server responding with turbo stream actions, commonly `remove` and potentially an update using a `replace` action. The client-side JavaScript would then listen for these turbo-stream responses being processed on the DOM. We also need to handle the edge case of non-turbo requests. For those we will rely on the traditional rails redirect, and include our alert within the view.
 
 Let's examine a corrected approach, which will address this with our rails back end returning a turbo stream and our front end listening for the turbo:stream-render event:
 
@@ -56,26 +58,25 @@ end
 ```javascript
 // app/javascript/application.js
 
-import * as Turbo from "@hotwired/turbo"
+import * as Turbo from "@hotwired/turbo";
 
-document.addEventListener("turbo:stream-render", function(event) {
-  if(event.detail.render == null) {
-    console.log("no render")
-      return
+document.addEventListener("turbo:stream-render", function (event) {
+  if (event.detail.render == null) {
+    console.log("no render");
+    return;
   }
 
   const target = event.detail.render.target;
-  if(target && target.includes('item_')) { // Filter based on the target or another identifier in your turbo stream
+  if (target && target.includes("item_")) {
+    // Filter based on the target or another identifier in your turbo stream
     alert("Item deleted successfully!");
   }
 
-    const response = event.detail.response;
+  const response = event.detail.response;
   if (response && response.redirected) {
-    alert("Item deleted successfully!")
+    alert("Item deleted successfully!");
   }
-
 });
-
 ```
 
 **View:**
@@ -96,7 +97,7 @@ In this adjusted example:
 
 1.  **The controller:** When the destroy action is called, we respond in two formats. The `turbo_stream` format uses the `turbo_stream.remove` method to identify the element by its dom ID, which is automatically generated by rails following the naming conventions `model_id`. It also allows for an `html` format response that will redirect the user and handle the non-turbo version of this request.
 2.  **The javascript:** We register a listener to the `turbo:stream-render` event. This event will be triggered when turbo-streams are processed on the client side. We are then checking that there is a render target to ensure that we are dealing with a turbo stream event and not a traditional page refresh. We then look for the `item_` pattern, which is used to target our particular element being removed from the dom. If so, we fire an alert. Additionally, we look to see if a redirect was performed which indicates a non-turbo request, for those we fire a normal alert.
-3. **View:** The view is standard rails, it’s worth noting that the `id` tags for each item should match the turbo stream targets.
+3.  **View:** The view is standard rails, it’s worth noting that the `id` tags for each item should match the turbo stream targets.
 
 This approach ensures that the alert is triggered in response to the turbo stream action, creating a smoother and more modern user experience.
 

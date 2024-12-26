@@ -4,9 +4,9 @@ date: "2024-12-16"
 id: "why-am-i-having-issues-with-plaid-quickstart-in-java"
 ---
 
-Okay, let's tackle this Plaid quickstart issue you're experiencing with Java. It’s not uncommon to run into snags when integrating with third-party APIs, and Plaid, while generally well-documented, has its nuances. I've personally debugged similar headaches multiple times, so let's try to break this down into manageable pieces based on what I've seen.
+, let's tackle this Plaid quickstart issue you're experiencing with Java. It’s not uncommon to run into snags when integrating with third-party APIs, and Plaid, while generally well-documented, has its nuances. I've personally debugged similar headaches multiple times, so let's try to break this down into manageable pieces based on what I've seen.
 
-Often, the issues fall into a few broad categories: authentication, environment configuration, and request formatting. Now, I can't definitively know *your* exact problem without seeing your code, but I can provide a robust breakdown and practical examples that usually pinpoint the trouble spots.
+Often, the issues fall into a few broad categories: authentication, environment configuration, and request formatting. Now, I can't definitively know _your_ exact problem without seeing your code, but I can provide a robust breakdown and practical examples that usually pinpoint the trouble spots.
 
 First, let's consider authentication. Plaid uses API keys and secrets, which need to be handled carefully. Ensure you're setting the `PLAID_CLIENT_ID` and `PLAID_SECRET` environment variables or directly assigning them in your code. This is a prime area for errors because a typo here will cause the server to throw back an error that might not seem immediately related to credentials. One very common issue I've seen is using the test credentials in a production environment or vice-versa, which results in very confusing failures.
 

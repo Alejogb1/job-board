@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "how-to-add-a-span-as-an-entity-in-a-spacy-doc-python"
 ---
 
-Alright, let's dive into this. I remember tackling a particularly thorny NLP project a few years back, involving a large corpus of legal documents. We needed to identify very specific contractual clauses—things like 'liability limitation' or 'force majeure'—which weren’t always neatly identifiable by simple token matching. We found ourselves needing more control over how spaCy parsed and represented these phrases; we needed, essentially, to create custom entities spanning multiple tokens. That's exactly what we're discussing here: adding a span as an entity in a spaCy `doc`.
+, let's dive into this. I remember tackling a particularly thorny NLP project a few years back, involving a large corpus of legal documents. We needed to identify very specific contractual clauses—things like 'liability limitation' or 'force majeure'—which weren’t always neatly identifiable by simple token matching. We found ourselves needing more control over how spaCy parsed and represented these phrases; we needed, essentially, to create custom entities spanning multiple tokens. That's exactly what we're discussing here: adding a span as an entity in a spaCy `doc`.
 
 The core issue is that spaCy's default entity recognition usually relies on models trained on specific datasets. These models are fantastic, but they might not perfectly capture every domain-specific entity we're interested in. Sometimes, we need to manually define an entity that consists of a sequence of tokens. SpaCy, thankfully, provides us the mechanisms to do just that. Let's break it down.
 
-First, it’s crucial to understand that a spaCy `doc` object is essentially a sequence of `token` objects. When we talk about a 'span', we're referring to a contiguous subsequence of those tokens. These spans can then be tagged as entities. We don't directly 'add' an entity *to* the document, we 'add' a span *and mark it as an entity*. This crucial distinction clarifies the mechanics.
+First, it’s crucial to understand that a spaCy `doc` object is essentially a sequence of `token` objects. When we talk about a 'span', we're referring to a contiguous subsequence of those tokens. These spans can then be tagged as entities. We don't directly 'add' an entity _to_ the document, we 'add' a span _and mark it as an entity_. This crucial distinction clarifies the mechanics.
 
 The primary method to achieve this is via the `doc.set_ents` method, which lets us directly modify the document’s entities. However, to construct a span that represents our target entity, we first have to construct it. We usually do this by explicitly defining the start and end indices of the tokens that constitute the span. This isn’t as complex as it sounds.
 
@@ -37,7 +37,7 @@ for ent in doc.ents:
   print(ent.text, ent.label_)
 ```
 
-Executing this snippet will print “quick brown fox ANIMAL_PHRASE”. Notice, importantly, that `end_index` is *exclusive*. That’s a common point of confusion. We are specifying the index of the token that immediately follows the end of our desired span. This ensures we accurately capture the sequence of tokens. Also, `doc.set_ents` expects a *list* of `Span` objects, even when we only add one.
+Executing this snippet will print “quick brown fox ANIMAL_PHRASE”. Notice, importantly, that `end_index` is _exclusive_. That’s a common point of confusion. We are specifying the index of the token that immediately follows the end of our desired span. This ensures we accurately capture the sequence of tokens. Also, `doc.set_ents` expects a _list_ of `Span` objects, even when we only add one.
 
 Now let’s consider a slightly more involved case. Often, the tokens for our desired span aren't fixed, but derived from some sort of pattern matching or lookup within the text. Imagine we need to identify currency amounts in the form "$100", "$1000.50", or "€500.20". We’d need to find those patterns first.
 
@@ -97,7 +97,7 @@ for text in texts:
 
 In this example, I’m using `text.lower()` to normalize my search string and ensuring I can identify the location even if it’s case-variant. This approach helps in creating robust rules that handle slight data inconsistencies.
 
-A point worth noting is that when setting custom entities, it's advisable to set them after you've performed any preprocessing or tokenization tasks that might shift token boundaries. It is also important to note that if the character indices we calculate based on the *string*, do not perfectly align with the start and end of the corresponding tokens after processing the string in spaCy, your custom span may end up not aligning to what you had in mind.
+A point worth noting is that when setting custom entities, it's advisable to set them after you've performed any preprocessing or tokenization tasks that might shift token boundaries. It is also important to note that if the character indices we calculate based on the _string_, do not perfectly align with the start and end of the corresponding tokens after processing the string in spaCy, your custom span may end up not aligning to what you had in mind.
 
 To deepen your understanding, I recommend looking into spaCy's documentation—it's wonderfully detailed and provides numerous examples. Specifically, read the sections on the `Doc` object, `Span` object, and the entity ruler (though the ruler might be overkill for what you're tackling). For a more theoretical background in information extraction, consider the book "Speech and Language Processing" by Jurafsky and Martin. While broad, it provides essential context. Another resource worth exploring is the "Handbook of Natural Language Processing" by Indurkhya and Damerau; this is a more applied resource that gives good insight into a range of NLP topics, including information extraction.
 

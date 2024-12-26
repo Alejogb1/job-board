@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "im-trying-to-finetune-a-bank-bot"
 ---
 
-alright, so you're looking to finetune a bank-bot, right? i've been there, done that, got the t-shirt—and probably a few sleepless nights along the way. these bots, especially in finance, are tricky little beasts. you can’t just throw data at them and expect magic; it takes planning, testing, and more testing. the kind of testing that makes you want to question your career choices, but hey, we all get there.
+, so you're looking to finetune a bank-bot, right? i've been there, done that, got the t-shirt—and probably a few sleepless nights along the way. these bots, especially in finance, are tricky little beasts. you can’t just throw data at them and expect magic; it takes planning, testing, and more testing. the kind of testing that makes you want to question your career choices, but hey, we all get there.
 
 let's talk about what that actually entails. when we say "finetuning," we’re usually talking about taking a pre-trained language model—something like a large transformer model—and adjusting its parameters to better understand and respond to the nuances of your specific domain. in this case, financial jargon, transaction types, security protocols, all that good stuff. it’s not about teaching the model to be a bank, it's about making it speak the bank's language fluently.
 
@@ -12,11 +12,11 @@ my first time with something like this was, lets say, a "learning experience". i
 
 so, where do we start with your bank-bot? first, it's about the data. you can't finetune a model on bad data and expect anything worthwhile. it’s a ‘garbage in, garbage out’ situation. you're going to need a substantial dataset of banking-related conversations. this should ideally include:
 
-*   customer inquiries about account balances
-*   transaction history requests
-*   queries about fees and charges
-*   responses to common fraud and security questions
-*   interactions related to transfers, payments, and so on
+- customer inquiries about account balances
+- transaction history requests
+- queries about fees and charges
+- responses to common fraud and security questions
+- interactions related to transfers, payments, and so on
 
 the more diverse the data, the better the model will generalize. i’d suggest having conversations that cover not just standard questions but also edge cases. it’s a good idea to introduce some examples with typos and weird user phrasings to make it robust. the bot has to deal with real people. sometimes i think they try to sabotage technology on purpose.
 
@@ -32,14 +32,13 @@ here's an example of how you might format some training data in json, which is q
     "input": "i need to transfer $100 to john doe",
     "output": "please confirm the account number and security code for this transaction."
   },
-   {
+  {
     "input": "what are the fees for a wire transfer",
     "output": "the fee for a wire transfer is $25."
-  }
-  ,
+  },
   {
-      "input": "whats the best saving option",
-      "output": "we have a couple saving options that you could consider, can i provide you with their specifics?"
+    "input": "whats the best saving option",
+    "output": "we have a couple saving options that you could consider, can i provide you with their specifics?"
   }
 ]
 ```
@@ -136,8 +135,8 @@ i remember one time, after tweaking a model for what felt like an eternity, i th
 
 a couple of other notes that you may find interesting and perhaps even useful are:
 
-*   **handling out-of-scope queries:** what happens when a user asks the bot something it doesn't understand? you should have a strategy, usually returning a polite message and directing them to a human agent. you need to define a threshold and when the model is not confident enough it should hand it over.
-*   **security considerations:** banking data is very sensitive. ensure you have good security practices in your data handling, model storage, and deployment. do you really need to store all the historical data? are you encrypting everything properly? all very relevant things to consider.
+- **handling out-of-scope queries:** what happens when a user asks the bot something it doesn't understand? you should have a strategy, usually returning a polite message and directing them to a human agent. you need to define a threshold and when the model is not confident enough it should hand it over.
+- **security considerations:** banking data is very sensitive. ensure you have good security practices in your data handling, model storage, and deployment. do you really need to store all the historical data? are you encrypting everything properly? all very relevant things to consider.
 
 resources wise, i'd recommend checking out the "attention is all you need" paper for a good understanding of transformers. it's a good read even if you're already using them and there are tons of tutorials and explainers for it. also, if you want a more theoretical and detailed understanding of the models, "deep learning" by goodfellow is a fantastic resource. for practical usage, huggingface’s documentation is excellent and is probably where you’ll spend most of your time after you have understood the fundamental concepts behind the models.
 

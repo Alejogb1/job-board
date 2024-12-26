@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-problem-with-my-rinkeby-faucet-on-the-testnet"
 ---
 
-Okay, let's talk about Rinkeby faucets. It’s a classic issue, and one I’ve definitely spent a few late nights troubleshooting back in my early days with Ethereum development. Specifically regarding Rinkeby, or rather *used to be Rinkeby*, I remember dealing with it extensively. It’s not so much a 'problem' with your faucet directly, as it is an issue stemming from the broader testnet landscape and the evolution of Ethereum itself.
+, let's talk about Rinkeby faucets. It’s a classic issue, and one I’ve definitely spent a few late nights troubleshooting back in my early days with Ethereum development. Specifically regarding Rinkeby, or rather _used to be Rinkeby_, I remember dealing with it extensively. It’s not so much a 'problem' with your faucet directly, as it is an issue stemming from the broader testnet landscape and the evolution of Ethereum itself.
 
 The core of the problem is this: Rinkeby, along with other proof-of-authority testnets, like Kovan and Ropsten, are now deprecated. They’ve been officially sunset in favor of proof-of-stake testnets such as Goerli and Sepolia. What you're likely experiencing isn't a failure in your personal setup or some specific coding blunder, but rather the consequence of relying on a network that’s no longer being maintained. This is particularly frustrating when you’ve worked with them previously and everything seemed to be working correctly.
 
@@ -35,41 +35,43 @@ contract SimpleFaucet {
 }
 ```
 
-*   **Explanation:** This basic contract, `SimpleFaucet`, has an owner and a request limit set to 1 ether (though the actual transfer in the `requestFunds` function is fixed to 0.1 ether in this simple case for demonstration). The `requestFunds` function checks if the faucet has enough funds, and if the user isn't sending ether to the contract. If successful, it sends 0.1 ether to the caller using a raw call.
+- **Explanation:** This basic contract, `SimpleFaucet`, has an owner and a request limit set to 1 ether (though the actual transfer in the `requestFunds` function is fixed to 0.1 ether in this simple case for demonstration). The `requestFunds` function checks if the faucet has enough funds, and if the user isn't sending ether to the contract. If successful, it sends 0.1 ether to the caller using a raw call.
 
 Now, how you would interact with this contract, say in JavaScript, might look like this:
 
 ```javascript
-const Web3 = require('web3');
-const web3 = new Web3('YOUR_PROVIDER_URL_HERE'); // Example: using http://localhost:8545
+const Web3 = require("web3");
+const web3 = new Web3("YOUR_PROVIDER_URL_HERE"); // Example: using http://localhost:8545
 
-const abi = [ /* Simplified ABI of SimpleFaucet Contract */
+const abi = [
+  /* Simplified ABI of SimpleFaucet Contract */
   {
-    "inputs": [],
-    "name": "requestFunds",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
+    inputs: [],
+    name: "requestFunds",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
   },
 ];
-const contractAddress = 'YOUR_CONTRACT_ADDRESS_HERE'; // Address on the active testnet
+const contractAddress = "YOUR_CONTRACT_ADDRESS_HERE"; // Address on the active testnet
 const contract = new web3.eth.Contract(abi, contractAddress);
 
 async function callFaucet() {
   try {
     const accounts = await web3.eth.getAccounts();
-    const tx = await contract.methods.requestFunds().send({ from: accounts[0], value: '0' });
-    console.log('Transaction Hash:', tx.transactionHash);
+    const tx = await contract.methods
+      .requestFunds()
+      .send({ from: accounts[0], value: "0" });
+    console.log("Transaction Hash:", tx.transactionHash);
   } catch (error) {
-    console.error('Error calling faucet:', error);
+    console.error("Error calling faucet:", error);
   }
 }
 
 callFaucet();
-
 ```
 
-*   **Explanation:** This snippet sets up a Web3 instance and connects to an Ethereum provider. It then defines the ABI of the contract. The `callFaucet` function uses `contract.methods.requestFunds().send` to send a transaction to the contract to get funds.
+- **Explanation:** This snippet sets up a Web3 instance and connects to an Ethereum provider. It then defines the ABI of the contract. The `callFaucet` function uses `contract.methods.requestFunds().send` to send a transaction to the contract to get funds.
 
 And finally, you might also see it implemented via a command-line interface, such as using a node script:
 
@@ -107,7 +109,7 @@ getFunds();
 EOF
 ```
 
-*   **Explanation:** This bash script uses `node` to execute javascript code that connects to a web3 instance, sets up the `contract`, gets the available accounts using `web3.eth.getAccounts`, and then calls the contract `requestFunds` method.
+- **Explanation:** This bash script uses `node` to execute javascript code that connects to a web3 instance, sets up the `contract`, gets the available accounts using `web3.eth.getAccounts`, and then calls the contract `requestFunds` method.
 
 These snippets demonstrate different ways you can interact with a smart contract. However, even if your code looks similar to this, the underlying issue is still with the now-deprecated Rinkeby testnet itself rather than the mechanics of your faucet interaction code. This is why any Rinkeby faucet isn't working now - the infrastructure it depends on is no longer maintained.
 

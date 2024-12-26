@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "relevel-only-works-with-unordered-factors"
 ---
 
-Alright so you're asking about `relevel` and its interaction with factors specifically the "unordered" bit right I've been there man I've banged my head against that wall more times than I care to admit Let's break this down no fluff just the raw data
+so you're asking about `relevel` and its interaction with factors specifically the "unordered" bit right I've been there man I've banged my head against that wall more times than I care to admit Let's break this down no fluff just the raw data
 
-So yeah `relevel` in R it's a function that seems simple enough on the surface but it can get you tripped up real fast especially if you're dealing with factors that aren't what you expect Like the question kinda points out it's got a thing for unordered factors You know those categorical variables that don't have a natural sequence like colors or maybe different types of operating systems Now the key here is that `relevel` is all about changing the *base level* or reference level of a factor This is crucial when you're doing statistical modeling like regressions because the first level gets used as the baseline against which all other levels are compared
+So yeah `relevel` in R it's a function that seems simple enough on the surface but it can get you tripped up real fast especially if you're dealing with factors that aren't what you expect Like the question kinda points out it's got a thing for unordered factors You know those categorical variables that don't have a natural sequence like colors or maybe different types of operating systems Now the key here is that `relevel` is all about changing the _base level_ or reference level of a factor This is crucial when you're doing statistical modeling like regressions because the first level gets used as the baseline against which all other levels are compared
 
 Let me tell you a story way back when I was just starting out I was working on a project predicting customer churn using some survey data I had a factor variable called `subscription_type` which had levels like 'basic' 'standard' and 'premium' I thought hey let's make 'standard' the base level for the model so I used `relevel` like this
 
@@ -43,7 +43,7 @@ is.ordered(my_factor) # should return FALSE
 my_factor <- relevel(my_factor, ref = "B") # Now we can do this safely
 ```
 
-Here is the actual truth though it really isn't about whether the variable was *explicitly declared* as an *ordered* factor the issue arises from what the underlying meaning of the variable is to the model like if you have "low" "medium" "high" there is a sense of ordering that the model uses regardless of if you used factor with ordered=TRUE or not It's all about the *semantics* of your variable really not just the data structure itself
+Here is the actual truth though it really isn't about whether the variable was _explicitly declared_ as an _ordered_ factor the issue arises from what the underlying meaning of the variable is to the model like if you have "low" "medium" "high" there is a sense of ordering that the model uses regardless of if you used factor with ordered=TRUE or not It's all about the _semantics_ of your variable really not just the data structure itself
 
 And that reminds me once I was trying to debug an issue I spent the whole afternoon on it until one of my coworkers pointed out I had switched the X and Y axes on my plot I really think I should have had another cup of coffee but it is what it is
 

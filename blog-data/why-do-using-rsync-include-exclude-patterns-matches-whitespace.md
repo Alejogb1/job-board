@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-do-using-rsync-include-exclude-patterns-matches-whitespace"
 ---
 
-alright, so you're hitting that classic rsync gotcha with include and exclude patterns matching whitespace, yeah? i've been there, stared into the abyss of my terminal, wondering why rsync was suddenly deciding that space was a filename. trust me, it's a common head scratcher. let me break down what's happening and how i've learned to work around it over the years.
+, so you're hitting that classic rsync gotcha with include and exclude patterns matching whitespace, yeah? i've been there, stared into the abyss of my terminal, wondering why rsync was suddenly deciding that space was a filename. trust me, it's a common head scratcher. let me break down what's happening and how i've learned to work around it over the years.
 
 the core issue boils down to how rsync interprets its patterns. when you supply an include or exclude pattern, it's not treated as a literal string. instead, rsync uses something called a globbing mechanism (which is a form of pattern matching) and that's where things can get a bit... surprising. whitespace, including spaces, tabs, and newlines, is just another character in this context.
 
@@ -25,7 +25,7 @@ and you wanted to exclude the file "file b.txt" but include the other ones. so y
 rsync -avz --exclude="file b.txt" my_folder/ destination_folder/
 ```
 
-you'd *think* this would work, wouldn't you? only, rsync will go ahead and exclude any file that has a "file", a "b" and a ".txt" anywhere in their paths, not only the one with that name. the reason is that a space is seen as just another ordinary character. this is unexpected for many beginners, but it's an artifact of the globbing mechanism at play. so the rsync command just interpreted “file b.txt” as a pattern that can match file"some letter"b"other letters".txt". this also means it would exclude the file "another file.txt" and you get a result that's not what you expected.
+you'd _think_ this would work, wouldn't you? only, rsync will go ahead and exclude any file that has a "file", a "b" and a ".txt" anywhere in their paths, not only the one with that name. the reason is that a space is seen as just another ordinary character. this is unexpected for many beginners, but it's an artifact of the globbing mechanism at play. so the rsync command just interpreted “file b.txt” as a pattern that can match file"some letter"b"other letters".txt". this also means it would exclude the file "another file.txt" and you get a result that's not what you expected.
 
 i remember back in my early days, i had a similar problem backing up a website. i was trying to exclude a particular logs directory (it had spaces in the directory name), which ended up with tons of files and directories i never wanted excluded gone because i did not understand this issue. it wasn't a fun debugging session trying to restore a website from a backup that was incomplete. i learned my lesson the hard way, let me tell you.
 
@@ -50,6 +50,7 @@ for single quotes:
 ```bash
 rsync -avz --exclude='file b.txt' my_folder/ destination_folder/
 ```
+
 for double quotes:
 
 ```bash
@@ -60,7 +61,7 @@ both single and double quotes work similarly, but single quotes are generally pr
 
 **solution 3: using more specific patterns**
 
-sometimes a better approach is not just to escape, quote, or deal with whitespace, but to create more specific patterns. for instance, if you want to exclude *only* files named "file b.txt" directly inside `my_folder`, you could use the following pattern:
+sometimes a better approach is not just to escape, quote, or deal with whitespace, but to create more specific patterns. for instance, if you want to exclude _only_ files named "file b.txt" directly inside `my_folder`, you could use the following pattern:
 
 ```bash
 rsync -avz --exclude="/file b.txt" my_folder/ destination_folder/
@@ -80,6 +81,7 @@ my_folder/
 └── subfolder/
     └── logs 2023-10-29.txt
 ```
+
 and you want to exclude logs from October 26, but include the other logs. here you have a mix of both, a pattern and a whitespace, you could use the following, even though other approaches like regex would be better:
 
 ```bash

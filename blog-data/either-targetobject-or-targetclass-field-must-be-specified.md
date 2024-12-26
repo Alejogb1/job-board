@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "either-targetobject-or-targetclass-field-must-be-specified"
 ---
 
-Alright so you've hit the "either `targetobject` or `targetclass` field must be specified" error I know that pain well let me tell you
+so you've hit the "either `targetobject` or `targetclass` field must be specified" error I know that pain well let me tell you
 
 I've been wrestling with this kind of thing for ages and let me break it down for you it’s a common pitfall especially when you're juggling object oriented programming or configuration systems that deal with dynamic instantiation or processing of objects basically the system is screaming at you because it doesn’t know what you want to target or create
 
@@ -99,9 +99,10 @@ new_object = process_and_create_object(targetclass=YetAnotherClass, initial_numb
 new_object.print_number() #output number=500
 
 ```
+
 In the code above you have the same function doing either of the operations based on your input This function checks for the parameters if you pass the target object it updates a property if you pass the target class then it creates a new instance
 
-Now you're probably asking ok that's the how now what about the why here's the crucial part if you're facing this in a library or framework look closely at the documentation of the related functions often the API will clearly specify when to use `targetobject` or `targetclass`  for instance some systems use targetobject if you already have an instance that needs configuring or tweaking and they use targetclass if you need to dynamically create new instances.
+Now you're probably asking ok that's the how now what about the why here's the crucial part if you're facing this in a library or framework look closely at the documentation of the related functions often the API will clearly specify when to use `targetobject` or `targetclass` for instance some systems use targetobject if you already have an instance that needs configuring or tweaking and they use targetclass if you need to dynamically create new instances.
 
 You know one of the most common causes for this problem in my own experience has been when you’re dealing with reflection or dependency injection in java using spring for example sometimes the framework can be a little bit confusing in where to pass those parameters but once you have a good grasp of it its not that hard
 
@@ -111,4 +112,4 @@ And here's a little joke for you I don't like object oriented programming becaus
 
 To sum up when you see "either `targetobject` or `targetclass` field must be specified" it's not a bug it’s a feature it's the framework being explicit it needs either an instance to work on or a class to create an instance from so your best course of action is to check the library documentation look at the usage examples see the patterns and use the right parameter for the right job debugging it’s not a sprint it's a marathon you should be persistent and focused and you will solve it
 
-Alright I hope that helps Let me know if you have more questions and I can dive more into it happy coding
+I hope that helps Let me know if you have more questions and I can dive more into it happy coding

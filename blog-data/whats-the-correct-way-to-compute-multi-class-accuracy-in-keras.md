@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "whats-the-correct-way-to-compute-multi-class-accuracy-in-keras"
 ---
 
-Alright, let's talk multi-class accuracy in Keras. It might seem straightforward at first glance, but there are nuances that can trip you up if you’re not careful. I’ve personally debugged enough model training sessions to know how crucial it is to get this metric right, especially when we're dealing with more than just binary classifications.
+, let's talk multi-class accuracy in Keras. It might seem straightforward at first glance, but there are nuances that can trip you up if you’re not careful. I’ve personally debugged enough model training sessions to know how crucial it is to get this metric right, especially when we're dealing with more than just binary classifications.
 
 First off, understand that “accuracy” in this context refers to the percentage of predictions that exactly match the true labels. In the multi-class setting, this means every single prediction must align perfectly with the corresponding one-hot encoded true label. It’s not about being ‘close’, it’s about hitting the bullseye. Keras, thankfully, provides built-in tools to handle this effectively, but you need to configure them correctly based on your model's output and the format of your true labels. The most common stumbling block arises when you have your true labels in one form, like integer labels, and your model's output in another, say, probabilities or logits.
 
@@ -80,6 +80,7 @@ keras_accuracy_logits = metric_logits.result().numpy()
 print(f"Keras CategoricalAccuracy (logits - incorrect use): {keras_accuracy_logits}")
 
 ```
+
 This second snippet emphasizes the correct use of `SparseCategoricalAccuracy` with logits, and shows what happens when logits are used incorrectly with `CategoricalAccuracy`. The results differ significantly, underscoring the critical importance of matching the metric and input types. You must correctly use `CategoricalAccuracy` only when you have one-hot encoded labels and probability outputs, not logits.
 
 Finally, let’s illustrate a case with a model built using keras and incorporating the metric when the model is compiled.

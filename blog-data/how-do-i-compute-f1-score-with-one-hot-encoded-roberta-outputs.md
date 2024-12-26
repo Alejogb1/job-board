@@ -4,13 +4,13 @@ date: "2024-12-16"
 id: "how-do-i-compute-f1-score-with-one-hot-encoded-roberta-outputs"
 ---
 
-Let's tackle this. One-hot encoding the outputs of a Roberta model, particularly when evaluating performance, can introduce some interesting nuances when calculating the F1 score. I’ve certainly been down this road before, wrestling (okay, perhaps 'tackling') similar scenarios on past NLP projects involving multi-class classification where interpreting model output correctly was critical.
+Let's tackle this. One-hot encoding the outputs of a Roberta model, particularly when evaluating performance, can introduce some interesting nuances when calculating the F1 score. I’ve certainly been down this road before, wrestling (, perhaps 'tackling') similar scenarios on past NLP projects involving multi-class classification where interpreting model output correctly was critical.
 
 The core issue stems from the fact that the output of a Roberta model (or any transformer-based model, for that matter) is typically a probability distribution over classes. One-hot encoding transforms this probability distribution into a discrete prediction, essentially assigning a single class label to each instance. This is where the subtleties arise when calculating the F1 score. Recall that the F1 score is the harmonic mean of precision and recall, and both precision and recall are inherently tied to the concept of true positives, false positives, and false negatives, which in turn depends on proper categorical comparisons.
 
-My team and I faced this during a particularly sticky project aimed at classifying customer support tickets into multiple pre-defined categories. Our initial approach involved simply taking the *argmax* of the output logits (the raw scores before softmax) and treating that as our predicted label, one-hot encoding both the predictions and true labels accordingly. While this worked to some extent, a crucial error we were making was in neglecting the probabilistic nature of Roberta’s output before making our class prediction. We needed to calculate the F1 correctly within the confines of a multi-class output.
+My team and I faced this during a particularly sticky project aimed at classifying customer support tickets into multiple pre-defined categories. Our initial approach involved simply taking the _argmax_ of the output logits (the raw scores before softmax) and treating that as our predicted label, one-hot encoding both the predictions and true labels accordingly. While this worked to some extent, a crucial error we were making was in neglecting the probabilistic nature of Roberta’s output before making our class prediction. We needed to calculate the F1 correctly within the confines of a multi-class output.
 
-The typical approach involves the following steps. First, you transform the raw model outputs into probabilities using a softmax activation function. Second, for each instance (say a sentence or a document being classified) you take the *argmax* of these probabilities to determine the predicted class for that instance, thereby turning them into categorical values. Lastly, you use these predicted classes, alongside your actual true classes (also typically one-hot encoded) to determine the various F1 scores, usually, this involves reporting micro, macro, and weighted F1 scores.
+The typical approach involves the following steps. First, you transform the raw model outputs into probabilities using a softmax activation function. Second, for each instance (say a sentence or a document being classified) you take the _argmax_ of these probabilities to determine the predicted class for that instance, thereby turning them into categorical values. Lastly, you use these predicted classes, alongside your actual true classes (also typically one-hot encoded) to determine the various F1 scores, usually, this involves reporting micro, macro, and weighted F1 scores.
 
 To illustrate this with code, here are a few python examples using `numpy` and `scikit-learn`, which I found invaluable when working on those projects.
 
@@ -52,7 +52,7 @@ Here, the `calculate_f1_basic` function takes one-hot encoded true labels and th
 
 **Example 2: Handling No Predicted Positives Cases**
 
-A problem I encountered was scenarios when the model didn’t predict *any* instances of certain classes, leading to a zero division error when calculating recall or precision for these classes independently. The solution is not simply avoiding errors but to make sure these cases contribute as expected when calculating micro, macro, or weighted scores.
+A problem I encountered was scenarios when the model didn’t predict _any_ instances of certain classes, leading to a zero division error when calculating recall or precision for these classes independently. The solution is not simply avoiding errors but to make sure these cases contribute as expected when calculating micro, macro, or weighted scores.
 
 ```python
 import numpy as np

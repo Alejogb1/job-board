@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-construct-a-struct-with-a-nested-mapping"
 ---
 
-Okay, let's tackle this. I remember dealing with a rather complex configuration system a few years back, where the requirement was precisely this: managing data structures that contained nested mappings. It wasn't straightforward, especially when considering performance and type safety. The core issue revolves around efficiently representing and accessing hierarchical data, and that’s what we’ll explore today.
+, let's tackle this. I remember dealing with a rather complex configuration system a few years back, where the requirement was precisely this: managing data structures that contained nested mappings. It wasn't straightforward, especially when considering performance and type safety. The core issue revolves around efficiently representing and accessing hierarchical data, and that’s what we’ll explore today.
 
-The challenge, at its heart, isn't about whether you *can* create a struct with a nested mapping – most modern languages provide the tools for that. Instead, the pertinent question is *how* to do so in a way that's maintainable, type-safe, and performs well for your specific use case. Think of a system that manages user preferences. We might want to group those preferences by category, then sub-categorize them further. In the abstract, this translates to mapping string identifiers to another mapping, and so on.
+The challenge, at its heart, isn't about whether you _can_ create a struct with a nested mapping – most modern languages provide the tools for that. Instead, the pertinent question is _how_ to do so in a way that's maintainable, type-safe, and performs well for your specific use case. Think of a system that manages user preferences. We might want to group those preferences by category, then sub-categorize them further. In the abstract, this translates to mapping string identifiers to another mapping, and so on.
 
 Here's a breakdown of the common patterns and approaches I've found effective, along with illustrative code examples.
 
@@ -196,8 +196,8 @@ Each of the methods presented has trade-offs. While simple nested maps offer qui
 
 For a deeper dive, I would recommend exploring the following resources:
 
-*   **"Effective C++" by Scott Meyers**: This provides a good overview of idiomatic C++ practices, including the usage of templates and structs.
-*   **"Modern C++ Design" by Andrei Alexandrescu:** This explores advanced template programming techniques, which can be relevant for complex data structures.
-*   **The documentation for standard template libraries (STL) in your chosen programming language**: understanding `std::unordered_map`, for example, is crucial for building efficient nested structures.
+- **"Effective C++" by Scott Meyers**: This provides a good overview of idiomatic C++ practices, including the usage of templates and structs.
+- **"Modern C++ Design" by Andrei Alexandrescu:** This explores advanced template programming techniques, which can be relevant for complex data structures.
+- **The documentation for standard template libraries (STL) in your chosen programming language**: understanding `std::unordered_map`, for example, is crucial for building efficient nested structures.
 
 When implementing nested mappings, remember to consider your specific needs in terms of performance requirements, type safety, and maintainability. Start with a simple implementation and only introduce complexity (templates, etc.) when the needs of your project justify it. This approach ensures you build a solution that's both efficient and understandable, avoiding premature optimization that can make the system too hard to maintain.

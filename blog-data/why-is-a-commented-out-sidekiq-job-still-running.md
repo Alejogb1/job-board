@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-is-a-commented-out-sidekiq-job-still-running"
 ---
 
-Alright, let's unpack this curious situation. I’ve seen this happen more times than I care to recall, and it's usually a head-scratcher for those new to background processing with systems like Sidekiq. It’s not some gremlin in the code, more likely a subtle misunderstanding of how these systems actually function. When you comment out a Sidekiq job definition, or even delete it entirely, and find it's *still* executing, there’s usually a logical reason, and it all boils down to how Sidekiq manages its queues and processes jobs.
+, let's unpack this curious situation. I’ve seen this happen more times than I care to recall, and it's usually a head-scratcher for those new to background processing with systems like Sidekiq. It’s not some gremlin in the code, more likely a subtle misunderstanding of how these systems actually function. When you comment out a Sidekiq job definition, or even delete it entirely, and find it's _still_ executing, there’s usually a logical reason, and it all boils down to how Sidekiq manages its queues and processes jobs.
 
-The core of the issue isn’t that your commented-out code is somehow magically running—that's not how code works. Instead, what’s happening is that Sidekiq had already *enqueued* those jobs before you made your changes. Think of it like putting a letter in a physical mailbox; removing the letter's contents from the original draft doesn't magically retract the letter once it's already inside. Sidekiq operates similarly; once a job is pushed into the queue, it persists until it's either successfully processed or explicitly discarded. The commenting or deletion of the code that defines how a *new* job is created only impacts *future* job enqueueing, not the jobs that already exist and await processing.
+The core of the issue isn’t that your commented-out code is somehow magically running—that's not how code works. Instead, what’s happening is that Sidekiq had already _enqueued_ those jobs before you made your changes. Think of it like putting a letter in a physical mailbox; removing the letter's contents from the original draft doesn't magically retract the letter once it's already inside. Sidekiq operates similarly; once a job is pushed into the queue, it persists until it's either successfully processed or explicitly discarded. The commenting or deletion of the code that defines how a _new_ job is created only impacts _future_ job enqueueing, not the jobs that already exist and await processing.
 
 To understand this better, let's consider a simplified scenario. We have a background processing module that occasionally gets some maintenance. Let's say we initially have a `ProcessDataWorker`, and then decide we want to put it on hold by commenting it out from our main service, but those processes still continue running.
 
@@ -25,6 +25,7 @@ class ProcessDataWorker
   end
 end
 ```
+
 And in your main application logic, at some point, you might have something like this that enqueues the job:
 
 ```ruby
@@ -42,6 +43,7 @@ So, before any changes are introduced into the system, we queued five of these `
 #    ProcessDataWorker.perform_async(i)
 #  end
 ```
+
 Even after we comment these lines out, the jobs that were previously queued are still in Sidekiq’s queue, ready to be picked up. They are unaware that we’ve commented the code responsible for enqueuing them. The sidekiq process will still pick them up. Here's what you might see if you look at the Sidekiq UI or logs:
 
 ```text
@@ -56,7 +58,7 @@ Even after we comment these lines out, the jobs that were previously queued are 
 
 The jobs don't know that their "parent" has been commented. They are just waiting in the queue to be processed. This can also happen if the job file itself has been removed or renamed. The workers that have already been enqueued know only their name and arguments.
 
-Okay, let's go a little further and consider a slightly more complex scenario, one that involves not just commenting out the enqueuing of jobs, but actually modifying the job worker class itself. Let's imagine that we rename our worker class for some kind of refactor. We start with:
+, let's go a little further and consider a slightly more complex scenario, one that involves not just commenting out the enqueuing of jobs, but actually modifying the job worker class itself. Let's imagine that we rename our worker class for some kind of refactor. We start with:
 
 ```ruby
 # process_data_worker.rb (original)
@@ -92,6 +94,7 @@ class RefactoredDataWorker
   end
 end
 ```
+
 We also need to change the enqueue, since the name has changed:
 
 ```ruby
@@ -112,6 +115,7 @@ Processing now with context: refactor_after, Data: 4
 Processing now with context: refactor_after, Data: 5
 Processing now with context: refactor_after, Data: 6
 ```
+
 Notice that the old jobs (1-3) are still running with the original worker's code despite us changing the code on the `RefactoredDataWorker` class. The parameters are different, and they execute with their previously stored name and parameters from when they were enqueued. In essence, Sidekiq doesn't just blindly pick up code from the file system; it stores the job's class name and arguments when it's enqueued, and it uses that stored information when it actually executes the job.
 
 To truly stop a running job, you need to actively manage your Sidekiq queues. You can use the Sidekiq web UI, or programmatically, to either delete the pending jobs, move them to a dead set, or otherwise stop them. This would involve using Sidekiq’s API to purge or manipulate the contents of the queues. Simply commenting out the code doesn't accomplish this because these are actions done prior to the processing and will not affect those actions that have already taken place.

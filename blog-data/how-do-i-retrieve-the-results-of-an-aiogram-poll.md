@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-do-i-retrieve-the-results-of-an-aiogram-poll"
 ---
 
-Okay, let's tackle this. Retrieving poll results in aiogram can sometimes feel a bit less straightforward than it initially appears, especially if you've spent time mostly handling standard message updates. I remember back in 2021, during an internal project where we were building a custom feedback bot using telegram, I ran into a similar situation; we wanted to use polls for collecting quick sentiment scores and then analyze the data. This experience made me become quite familiar with the nuances of poll updates.
+, let's tackle this. Retrieving poll results in aiogram can sometimes feel a bit less straightforward than it initially appears, especially if you've spent time mostly handling standard message updates. I remember back in 2021, during an internal project where we were building a custom feedback bot using telegram, I ran into a similar situation; we wanted to use polls for collecting quick sentiment scores and then analyze the data. This experience made me become quite familiar with the nuances of poll updates.
 
 The challenge isn't necessarily in receiving the initial poll creation update, that’s fairly straightforward, but rather in extracting the finalized results, particularly when the poll closes. Telegram, and consequently aiogram, treats active poll states and final poll results as distinct update types. To retrieve results reliably, you need to correctly identify and parse the `PollAnswer` and `Poll` updates.
 
-Firstly, let's break down the mechanics. When a user casts a vote in an active poll, aiogram dispatches a `types.PollAnswer` update. This update contains information about *which* user voted and *what* options they selected. However, this update alone doesn't give you the aggregated, finalized result of the poll; it just gives you the individual responses. For the final results, you need to look for a `types.Poll` update containing `is_closed=True`. This update is usually sent when the poll is explicitly closed, either by the creator or when the timeout is reached.
+Firstly, let's break down the mechanics. When a user casts a vote in an active poll, aiogram dispatches a `types.PollAnswer` update. This update contains information about _which_ user voted and _what_ options they selected. However, this update alone doesn't give you the aggregated, finalized result of the poll; it just gives you the individual responses. For the final results, you need to look for a `types.Poll` update containing `is_closed=True`. This update is usually sent when the poll is explicitly closed, either by the creator or when the timeout is reached.
 
 So, how do you orchestrate this? You typically need to implement two separate handlers: one to capture individual poll answers (`PollAnswer` update) and another to receive the finalized poll data (`Poll` update). The trick is to maintain some state, usually via a database or in-memory data structure (suitable for simple bots or testing), linking poll IDs to your custom logic.
 
@@ -43,6 +43,7 @@ async def handle_poll_answer(poll_answer: types.PollAnswer):
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
 ```
+
 This snippet demonstrates how to set up the necessary infrastructure. The `poll_answer_handler` is a decorator that tells aiogram to route all `types.PollAnswer` updates to the `handle_poll_answer` function. We collect the user's selection in a dictionary called `poll_responses`.
 
 The above is useful for capturing individual votes, but it does not yet provide the closed, final poll data. Here’s the second piece, showcasing how to get the `types.Poll` update with the final results.
@@ -81,9 +82,10 @@ if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
 
 ```
+
 Here, we are using `dp.poll_handler(filters.PollClosed())`. This makes sure the handler is called only when a poll update arrives and it’s marked as closed. The function `handle_closed_poll` extracts the final poll information, including the question text, the total voters, and voter counts per option. I'm structuring it into a Python dictionary for easy access.
 
-Now, let’s combine these snippets into a full example. This version will store *both* individual responses and the final poll information, giving you a more complete view of the poll data.
+Now, let’s combine these snippets into a full example. This version will store _both_ individual responses and the final poll information, giving you a more complete view of the poll data.
 
 ```python
 from aiogram import Bot, Dispatcher, types
@@ -127,7 +129,7 @@ async def handle_closed_poll(poll: types.Poll):
                 'text': option.text,
                 'voter_count': option.voter_count
             })
-        
+
         print(f"Poll {poll_id} final results: {poll_results[poll_id]}")
         if poll_id in poll_responses:
             print(f"Poll {poll_id} user responses: {poll_responses[poll_id]}")

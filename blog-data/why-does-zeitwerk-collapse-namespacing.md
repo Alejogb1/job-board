@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-zeitwerk-collapse-namespacing"
 ---
 
-Alright, let's tackle this one. It's something I've definitely encountered and, frankly, spent more than a few late nights debugging. Zeitwerk’s tendency to “collapse” namespacing, as you put it, isn't some capricious behavior; it's a direct consequence of its autoloading strategy, which operates under a specific set of assumptions about your directory structure and naming conventions. The problem arises not from a flaw in Zeitwerk itself but from mismatches between these assumptions and the actual organization of your codebase.
+, let's tackle this one. It's something I've definitely encountered and, frankly, spent more than a few late nights debugging. Zeitwerk’s tendency to “collapse” namespacing, as you put it, isn't some capricious behavior; it's a direct consequence of its autoloading strategy, which operates under a specific set of assumptions about your directory structure and naming conventions. The problem arises not from a flaw in Zeitwerk itself but from mismatches between these assumptions and the actual organization of your codebase.
 
 I recall working on a large Rails application a few years back. We had a deeply nested `lib` directory, something like `lib/etl/processors/data_normalization/string_helpers.rb`. We initially attempted to represent this namespace directly in our code using modules, which felt natural. However, we’d see occasional, seemingly random `NameError` exceptions when trying to reference classes defined within these modules. It looked for all the world like the module wasn’t loaded, even though it was there, seemingly in plain sight, in the `lib` directory, just like it was supposed to be. After quite a bit of investigation, we figured out what was happening – and what often happens with Zeitwerk.
 
@@ -104,10 +104,11 @@ module StringHelpers
   end
 end
 ```
+
 This snippet will require a deeper understanding of Zeitwerk, and explicitly tells it to only look for files in that specific directory and assign that namespace to the classes. The `ignore` statements make sure the standard loading convention is skipped for the other files under `lib/etl/`.
 
 Now, when I say, “explicitly tells it” that needs to be done very carefully. If you’re not careful with how you set these up, you might find that Zeitwerk is still attempting to load them following its own conventions.
 
-To really grasp all of this, I'd strongly recommend looking at the excellent documentation for Zeitwerk directly. It's available as part of the Ruby on Rails framework documentation, and it includes a lot more detail and examples. In addition to that, the "Understanding Ruby's Object Model" section from *Programming Ruby 1.9 & 2.0: The Pragmatic Programmers’ Guide* by Dave Thomas is an absolute must-read. That section explains the mechanisms underlying Ruby’s constant lookup and namespacing. Another helpful paper to review is “Autoloading with Ruby on Rails”, which provides a more in-depth analysis of different autoloading implementations and specifically explains the motivations behind using Zeitwerk in Rails.
+To really grasp all of this, I'd strongly recommend looking at the excellent documentation for Zeitwerk directly. It's available as part of the Ruby on Rails framework documentation, and it includes a lot more detail and examples. In addition to that, the "Understanding Ruby's Object Model" section from _Programming Ruby 1.9 & 2.0: The Pragmatic Programmers’ Guide_ by Dave Thomas is an absolute must-read. That section explains the mechanisms underlying Ruby’s constant lookup and namespacing. Another helpful paper to review is “Autoloading with Ruby on Rails”, which provides a more in-depth analysis of different autoloading implementations and specifically explains the motivations behind using Zeitwerk in Rails.
 
 In summary, Zeitwerk doesn’t inherently collapse namespaces. Rather, it enforces a strict convention between file structure and namespace that might seem like a collapse if your code doesn’t follow it. Understanding this mapping and carefully aligning your directory structure with the code is crucial for preventing these autoloader-related issues. Explicitly overriding the loading conventions should be done with care and only when necessary.

@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "python-2-7-statsmodels-result-conf-int"
 ---
 
-Alright so you're wrestling with `statsmodels` confidence intervals in Python 2.7 eh Been there done that let me tell you that's a trip down memory lane
+so you're wrestling with `statsmodels` confidence intervals in Python 2.7 eh Been there done that let me tell you that's a trip down memory lane
 
 First off yeah Python 2.7 its a bit of a legacy situation nowadays most folks have moved on to Python 3x but hey sometimes you're stuck with what you got Believe me I've been there had to maintain a legacy system running 2.7 for a company once ugh it was a whole project in itself
 
 So `statsmodels` its a great package I used it extensively back then for various statistical modeling tasks regression analysis time series forecasting that kind of thing And yeah those confidence intervals they are a crucial part of interpreting your model results They tell you the range within which your estimated parameters are likely to fall giving you an idea of the precision of your estimates
 
-Now you're asking about `conf_int()` specifically I think you're missing the big picture slightly which is that `conf_int()` is a method *after* a regression model is fit you do a model fit first then do a conf int so I'll lay this down:
+Now you're asking about `conf_int()` specifically I think you're missing the big picture slightly which is that `conf_int()` is a method _after_ a regression model is fit you do a model fit first then do a conf int so I'll lay this down:
 
 ```python
 import statsmodels.api as sm
@@ -100,9 +100,9 @@ One thing I always struggled with back in the day when I was using these package
 
 Now for some resources outside the docs check out these books:
 
-*   "An Introduction to Statistical Learning" by Gareth James Daniela Witten Trevor Hastie and Robert Tibshirani - That book it's gold its a great way to get your statistical thinking up to par and get the big picture about what you are doing when you are doing a regression and getting the confidence intervals of your parameters that's a good place to start
-*   "Applied Regression Analysis and Generalized Linear Models" by John Fox - this one will get your hands dirty with some GLMs that book is awesome it has a lot of technical detail about linear models and you need that if you want to get a real sense of the confidence intervals
-*   "Time Series Analysis" by James D Hamilton - I think you'll need that too if you are doing time series analysis with statsmodels if you are not doing it then it is not as essential but its still cool
+- "An Introduction to Statistical Learning" by Gareth James Daniela Witten Trevor Hastie and Robert Tibshirani - That book it's gold its a great way to get your statistical thinking up to par and get the big picture about what you are doing when you are doing a regression and getting the confidence intervals of your parameters that's a good place to start
+- "Applied Regression Analysis and Generalized Linear Models" by John Fox - this one will get your hands dirty with some GLMs that book is awesome it has a lot of technical detail about linear models and you need that if you want to get a real sense of the confidence intervals
+- "Time Series Analysis" by James D Hamilton - I think you'll need that too if you are doing time series analysis with statsmodels if you are not doing it then it is not as essential but its still cool
 
 And now that I’m thinking about it I've got one joke for you Why don’t scientists trust atoms? Because they make up everything! Sorry I had to drop a little humor there because that's what the `p_values` would want us to do
 

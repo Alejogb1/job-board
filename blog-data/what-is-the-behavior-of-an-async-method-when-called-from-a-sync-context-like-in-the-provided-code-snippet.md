@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-behavior-of-an-async-method-when-called-from-a-sync-context-like-in-the-provided-code-snippet"
 ---
 
-Alright, let's dissect the complexities involved when an asynchronous method finds itself invoked from within a synchronous context. I've encountered this particular scenario countless times, typically in legacy code bases or during rapid prototyping, and it invariably leads to some head-scratching moments if you aren’t prepared for it. It's crucial to understand that the 'async' keyword in c# doesn't magically transform execution into a parallel universe. Rather, it sets up a state machine for managing the asynchronous operation's progress.
+, let's dissect the complexities involved when an asynchronous method finds itself invoked from within a synchronous context. I've encountered this particular scenario countless times, typically in legacy code bases or during rapid prototyping, and it invariably leads to some head-scratching moments if you aren’t prepared for it. It's crucial to understand that the 'async' keyword in c# doesn't magically transform execution into a parallel universe. Rather, it sets up a state machine for managing the asynchronous operation's progress.
 
 The core issue is that an `async` method, by definition, aims to operate non-blockingly, usually involving an `await` that yields control to the caller while waiting for an operation to complete. Conversely, a synchronous context expects to execute linearly and blocks while waiting for a method to return. When you try to bridge these two paradigms, the asynchronous method's intended behavior is somewhat suppressed by the synchronous environment, leading to potential issues like deadlocks or unexpected performance characteristics.
 
@@ -49,7 +49,7 @@ public class AsyncCaller
 }
 ```
 
-In this example, the `SyncCallToAsync` method uses `GetAwaiter().GetResult()` to synchronously block and wait on the async `AsyncOperation` method. Note, while `AsyncOperation` is technically async, it doesn’t *behave* asynchronously when called this way. This is because `GetResult` will block until the Task completes. Observe that the thread id will remain constant throughout the execution of this operation, showing the thread is not released and is therefore blocking.
+In this example, the `SyncCallToAsync` method uses `GetAwaiter().GetResult()` to synchronously block and wait on the async `AsyncOperation` method. Note, while `AsyncOperation` is technically async, it doesn’t _behave_ asynchronously when called this way. This is because `GetResult` will block until the Task completes. Observe that the thread id will remain constant throughout the execution of this operation, showing the thread is not released and is therefore blocking.
 
 **Example 2: Potential Deadlock Scenario with SynchronizationContext**
 
@@ -119,6 +119,7 @@ public class AsyncCallerNoDeadlock
     }
 }
 ```
+
 By using `.ConfigureAwait(false)`, we tell the asynchronous method to not capture the calling context after `await`. This means the continuation after the `await` can run on any available thread, thus preventing the potential deadlock we could have seen in the prior example. Though we use `GetAwaiter().GetResult()`, we are not blocking the caller's thread and any other threads could be used to complete the work of the continuation once the `Task.Delay` operation is complete. If this was the context of a UI or web request, the use of `.ConfigureAwait(false)` would allow those contexts to remain available to handle further requests while the awaited Task continues on a different thread. The thread ID in the output demonstrates a change of context because the continuations can execute on a different thread in this example.
 
 So, what’s the takeaway here? Avoid calling async methods synchronously whenever possible. It's a common pitfall and can lead to performance bottlenecks and even deadlocks. If you’re stuck with synchronous code calling async operations, try to make the synchronous method async using the `async` keyword and return a `Task`. If you are blocked on doing that, carefully consider using `ConfigureAwait(false)` in the asynchronous method to avoid deadlocks and improve throughput in highly concurrent situations.

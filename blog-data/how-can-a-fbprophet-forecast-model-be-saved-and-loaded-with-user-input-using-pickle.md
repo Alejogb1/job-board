@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-a-fbprophet-forecast-model-be-saved-and-loaded-with-user-input-using-pickle"
 ---
 
-Okay, let's tackle this one. I remember a particularly thorny project back in '19, where we were deploying a demand forecasting system. We heavily relied on fbprophet, and the need for a robust save/load mechanism, especially with dynamic user input, became immediately clear. The naive approach, just pickling the fitted model, quickly revealed its limitations when we started incorporating user-driven changes to the forecast horizon or seasonality.
+, let's tackle this one. I remember a particularly thorny project back in '19, where we were deploying a demand forecasting system. We heavily relied on fbprophet, and the need for a robust save/load mechanism, especially with dynamic user input, became immediately clear. The naive approach, just pickling the fitted model, quickly revealed its limitations when we started incorporating user-driven changes to the forecast horizon or seasonality.
 
-The crux of the matter is this: while `pickle` can serialize and deserialize Python objects, including fbprophet models, the model itself is often not the *only* thing we need to persist. Context, especially regarding the user-defined forecast parameters, becomes just as important. Simply re-loading a pickled model and forecasting can lead to unexpected results if the user has made changes to the desired forecast period or included holidays since the model was saved.
+The crux of the matter is this: while `pickle` can serialize and deserialize Python objects, including fbprophet models, the model itself is often not the _only_ thing we need to persist. Context, especially regarding the user-defined forecast parameters, becomes just as important. Simply re-loading a pickled model and forecasting can lead to unexpected results if the user has made changes to the desired forecast period or included holidays since the model was saved.
 
-Here's how I've approached this problem successfully, keeping things reproducible and adaptable to user-defined forecast parameters. I generally avoid pickling the Prophet object directly. Instead, I focus on saving the *necessary data* and the *model's fitted parameters*. Then, when re-loading, we reconstruct a new Prophet object with the saved data and model settings before generating the forecast.
+Here's how I've approached this problem successfully, keeping things reproducible and adaptable to user-defined forecast parameters. I generally avoid pickling the Prophet object directly. Instead, I focus on saving the _necessary data_ and the _model's fitted parameters_. Then, when re-loading, we reconstruct a new Prophet object with the saved data and model settings before generating the forecast.
 
 Firstly, I structure the data to be persisted as a dictionary. This dictionary will contain a few key elements: the historical data (the 'ds' and 'y' columns), the fitted model parameters (the 'params' attribute of the Prophet model), and any user-configurable forecast parameters, like the forecast horizon ('periods'), whether we need to include historical holidays, or custom seasonality settings. Here's a code example showing how I’d typically prepare this dictionary before saving:
 
@@ -77,10 +77,10 @@ def load_and_forecast(filepath, new_forecast_horizon=None, new_holidays=None, ov
 
     # Recreate prophet object using previous model settings
     model = Prophet(**model_args)
-    
-    # Set the fitted params into model 
+
+    # Set the fitted params into model
     model.params = loaded_data['model_params']
-    
+
     # Load the parameters for forecasting.
     forecast_params = loaded_data['forecast_params']
 
@@ -166,7 +166,7 @@ with open("model_and_params_custom.pkl", "wb") as f:
     pickle.dump(data_prepared_custom, f)
 ```
 
-In this refined example, we've added the custom seasonalities to the data to be persisted.  It now has a `seasonalities` key that captures names of custom seasonality settings.  The `load_and_forecast` function now needs to be adjusted to reflect this new parameter.
+In this refined example, we've added the custom seasonalities to the data to be persisted. It now has a `seasonalities` key that captures names of custom seasonality settings. The `load_and_forecast` function now needs to be adjusted to reflect this new parameter.
 
 ```python
 def load_and_forecast_custom_seasonality(filepath, new_forecast_horizon=None, new_holidays=None, override_history=False):
@@ -197,7 +197,7 @@ def load_and_forecast_custom_seasonality(filepath, new_forecast_horizon=None, ne
       periods = new_forecast_horizon
     else:
         periods = forecast_params['periods']
-    
+
     holidays = new_holidays if new_holidays is not None else forecast_params.get('holidays')
 
     if override_history:
@@ -217,6 +217,6 @@ print(forecast_loaded_custom[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].head())
 
 This extended `load_and_forecast_custom_seasonality` function handles the custom seasonality by re-applying the custom seasonality parameters. This makes sure the model structure is fully restored, not just the parameters.
 
-For further reading, I strongly recommend reviewing the fbprophet documentation carefully.  Also, reading papers like *Forecasting at Scale* by Sean J. Taylor and Benjamin Letham would be beneficial. It's also a good practice to consult resources like "Python Machine Learning" by Sebastian Raschka for foundational knowledge about machine learning models. Further understanding of serialization best practices can be gleaned from "Effective Python" by Brett Slatkin which, while not specifically about time series models, goes into the crucial considerations for ensuring code is both reliable and understandable, and should be consulted alongside the Python documentation for the `pickle` library itself.
+For further reading, I strongly recommend reviewing the fbprophet documentation carefully. Also, reading papers like _Forecasting at Scale_ by Sean J. Taylor and Benjamin Letham would be beneficial. It's also a good practice to consult resources like "Python Machine Learning" by Sebastian Raschka for foundational knowledge about machine learning models. Further understanding of serialization best practices can be gleaned from "Effective Python" by Brett Slatkin which, while not specifically about time series models, goes into the crucial considerations for ensuring code is both reliable and understandable, and should be consulted alongside the Python documentation for the `pickle` library itself.
 
 This strategy – saving model parameters and related data rather than the full Prophet object – has proven to be much more robust in real-world settings where user interaction with forecast parameters is critical. It addresses the core issue of persistent states and ensures accurate and consistent forecast generation across sessions.

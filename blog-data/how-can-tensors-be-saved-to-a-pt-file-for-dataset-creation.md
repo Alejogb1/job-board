@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-tensors-be-saved-to-a-pt-file-for-dataset-creation"
 ---
 
-Okay, let's tackle this. From my experience building custom machine learning datasets, managing tensor serialization for `.pt` files is a frequent task, and there are nuances that are important to consider for both performance and maintainability. It's more than just a simple save; you need to think about how the data will be loaded later, any preprocessing that might be needed at the time of saving, and potential future compatibility issues.
+, let's tackle this. From my experience building custom machine learning datasets, managing tensor serialization for `.pt` files is a frequent task, and there are nuances that are important to consider for both performance and maintainability. It's more than just a simple save; you need to think about how the data will be loaded later, any preprocessing that might be needed at the time of saving, and potential future compatibility issues.
 
 The `.pt` extension generally implies that we’re working within the PyTorch ecosystem, and what's happening under the hood is the serialization of data using the `torch.save()` function. This function isn't exclusive to tensors, it can save any Python object, but for datasets, tensors are definitely the primary ingredient. Think of it as packaging a data structure for later use. Now, let's break down how this typically works and some key points I've learned over the years.
 
@@ -97,13 +97,13 @@ This approach illustrates how the loading process itself can be part of a data l
 
 Key things to remember:
 
-*   **Version Compatibility:** Be mindful of PyTorch version compatibility. When saving, you might be saving data that is difficult to load with a different version. Try to use stable versions if the tensors should be shared or used long term.
+- **Version Compatibility:** Be mindful of PyTorch version compatibility. When saving, you might be saving data that is difficult to load with a different version. Try to use stable versions if the tensors should be shared or used long term.
 
-*   **Data Preprocessing:** Preprocessing can also be included as part of a Dataset class, and applied on the fly each time data is loaded instead of pre-processing before saving, which reduces storage requirements. Consider the tradeoff between saving preprocessed data to `.pt` files and doing pre-processing on load time. If your processing is extensive, pre-processing at save time might save resources during training.
+- **Data Preprocessing:** Preprocessing can also be included as part of a Dataset class, and applied on the fly each time data is loaded instead of pre-processing before saving, which reduces storage requirements. Consider the tradeoff between saving preprocessed data to `.pt` files and doing pre-processing on load time. If your processing is extensive, pre-processing at save time might save resources during training.
 
-*   **File Size:** If you have very large datasets, you can compress the files before saving using a library like `gzip`. However, compression/decompression could add overhead to your loading, so benchmark before deployment.
+- **File Size:** If you have very large datasets, you can compress the files before saving using a library like `gzip`. However, compression/decompression could add overhead to your loading, so benchmark before deployment.
 
-*   **Error Handling:** Proper error handling when loading is important. Sometimes the file might be corrupted, or the structure might have changed since the file was created.
+- **Error Handling:** Proper error handling when loading is important. Sometimes the file might be corrupted, or the structure might have changed since the file was created.
 
 For further understanding, I strongly recommend reviewing the official PyTorch documentation on `torch.save` and `torch.load`. In addition, “Deep Learning with PyTorch” by Eli Stevens, Luca Antiga, and Thomas Viehmann goes into a good amount of depth about creating data loaders. Also, the research paper "ImageNet Classification with Deep Convolutional Neural Networks" (Krizhevsky et al., 2012) even though its old, is the foundational work that created modern datasets, and has very good descriptions on the challenges that arise when handling big data. These are excellent resources to go deeper into these concepts and practical implementations.
 

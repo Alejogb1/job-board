@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-an-hdfs-path-not-valid-when-using-a-sparksubmitoperator-with-airflow"
 ---
 
-alright, let's unpack this hdfs path problem with airflow and sparksubmitoperator. i've seen this one a few times, and it's usually down to how airflow handles paths versus how spark interprets them, especially when there's a cluster involved.
+, let's unpack this hdfs path problem with airflow and sparksubmitoperator. i've seen this one a few times, and it's usually down to how airflow handles paths versus how spark interprets them, especially when there's a cluster involved.
 
 the core issue is that the sparksubmitoperator, when you give it a path, doesn't always translate it directly to the spark context’s expected path format. it’s not necessarily the operator itself that's broken; it’s more about how the paths are interpreted in the distributed execution environment. spark, when it runs across a cluster, needs very specific path specifications, like fully qualified uris. sometimes the paths airflow hands over to spark aren't quite what spark expects, especially regarding hdfs.
 

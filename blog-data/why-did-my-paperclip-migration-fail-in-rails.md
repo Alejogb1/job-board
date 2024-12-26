@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-did-my-paperclip-migration-fail-in-rails"
 ---
 
-Alright, let's tackle this paperclip migration mishap. Been there, done that, got the t-shirt, and probably debugged it for several hours past midnight. It's a classic scenario in the rails world, where an seemingly innocent file upload feature turns into a database schema headache. The failure usually boils down to a few common culprits, and I've definitely tripped over them myself more than once.
+, let's tackle this paperclip migration mishap. Been there, done that, got the t-shirt, and probably debugged it for several hours past midnight. It's a classic scenario in the rails world, where an seemingly innocent file upload feature turns into a database schema headache. The failure usually boils down to a few common culprits, and I've definitely tripped over them myself more than once.
 
 First off, let's clarify that paperclip, while a convenient gem, fundamentally relies on database columns to store metadata about your file uploads, like file names, content types, and file sizes. These columns get created and updated by migrations. When your migration fails, it's almost always one of these related database operations going sideways. Now, I’ve seen three primary reasons for such failures in my projects, and I’ll try to explain each with some practical context.
 
@@ -56,6 +56,7 @@ end
 ```
 
 and you make the initial migration something like this:
+
 ```ruby
 class AddAvatarToUsers < ActiveRecord::Migration[7.0]
   def change
@@ -76,6 +77,7 @@ class User < ApplicationRecord
   validates_attachment_file_name :avatar, matches: [/png\z/, /jpe?g\z/, /pdf\z/]
 end
 ```
+
 This new configuration now allows specific types of file uploads. The content_type validation ensures only the valid content types are allowed. The file_name validation ensures that files with a matching extension are also allowed which is a good secondary verification to perform on your uploaded files.
 
 Finally, the third common problem area arises when you try to rename or remove columns that paperclip expects to be there. Paperclip expects consistency in column names based on what you've configured in your model. If you decide to refactor your database and rename `image_file_name` to `original_filename`, paperclip will throw an error. It’s specifically looking for a column that’s named with the expected pattern: `attachment_name_file_name`. Renaming is a common operation during refactoring, and is best handled by an additional data migration. Let’s take a look at how to do that.

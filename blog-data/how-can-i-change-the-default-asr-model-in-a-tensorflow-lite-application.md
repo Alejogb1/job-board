@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-change-the-default-asr-model-in-a-tensorflow-lite-application"
 ---
 
-Alright, let’s talk about swapping out that default automatic speech recognition (asr) model in a tensorflow lite application. It’s not a completely trivial task, and I've certainly gone down a few rabbit holes with it in past projects. For instance, I remember this one time, working on a prototype for a voice-controlled industrial robot arm, where the default model just couldn't handle the noisy environment and the specific vocabulary we needed. We had to build a custom model trained on relevant audio data, and then figure out the integration within our tensorflow lite based application. It wasn't plug-and-play, but it was definitely worth the effort.
+, let’s talk about swapping out that default automatic speech recognition (asr) model in a tensorflow lite application. It’s not a completely trivial task, and I've certainly gone down a few rabbit holes with it in past projects. For instance, I remember this one time, working on a prototype for a voice-controlled industrial robot arm, where the default model just couldn't handle the noisy environment and the specific vocabulary we needed. We had to build a custom model trained on relevant audio data, and then figure out the integration within our tensorflow lite based application. It wasn't plug-and-play, but it was definitely worth the effort.
 
-The core concept here involves understanding that the tensorflow lite model is fundamentally a *separate* component, an artifact produced by a model training process, and your application simply *loads and uses* it. So, changing the default model means providing the application with a different model file (.tflite usually) and potentially adjusting the code to match its specific input and output requirements.
+The core concept here involves understanding that the tensorflow lite model is fundamentally a _separate_ component, an artifact produced by a model training process, and your application simply _loads and uses_ it. So, changing the default model means providing the application with a different model file (.tflite usually) and potentially adjusting the code to match its specific input and output requirements.
 
 To begin, let's establish the general workflow:
 

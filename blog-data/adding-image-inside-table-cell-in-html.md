@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "adding-image-inside-table-cell-in-html"
 ---
 
-Okay so you wanna jam an image into a table cell in HTML right been there done that got the t-shirt let me tell you its simpler than you might think but of course there are quirks i mean its the web after all isn't it always a bit of a rodeo
+you wanna jam an image into a table cell in HTML right been there done that got the t-shirt let me tell you its simpler than you might think but of course there are quirks i mean its the web after all isn't it always a bit of a rodeo
 
 First things first the core of it is straight up HTML we're talking using the `<img>` tag inside a `<td>` tag thats it its like nesting dolls but much less confusing
 
@@ -12,7 +12,7 @@ First things first the core of it is straight up HTML we're talking using the `<
 <table>
   <tr>
     <td>Some text content</td>
-    <td><img src="your_image.jpg" alt="Description of the image"></td>
+    <td><img src="your_image.jpg" alt="Description of the image" /></td>
   </tr>
 </table>
 ```
@@ -29,7 +29,14 @@ One basic thing you can try is using the `width` and `height` attributes directl
 <table>
   <tr>
     <td>More text content here</td>
-    <td><img src="another_image.png" alt="Another image description" width="100" height="75"></td>
+    <td>
+      <img
+        src="another_image.png"
+        alt="Another image description"
+        width="100"
+        height="75"
+      />
+    </td>
   </tr>
 </table>
 ```
@@ -53,7 +60,9 @@ Personally i tend to lean towards using css for this because well it's css bread
     <table>
       <tr>
         <td>Some text beside the image</td>
-        <td><img src="yet_another_image.gif" alt="Yet another description"></td>
+        <td>
+          <img src="yet_another_image.gif" alt="Yet another description" />
+        </td>
       </tr>
     </table>
   </body>

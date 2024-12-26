@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "initialization-of-internal-failed-without-raising-an-exception-systemerror"
 ---
 
-Okay so you're hitting that infamous `_internal` initialization failure right Been there seen that got the t-shirt and probably a few grey hairs to show for it Let's unpack this thing because it's less "spooky ghost in the machine" and more "oopsie daisy I missed a crucial step" trust me on this one
+you're hitting that infamous `_internal` initialization failure right Been there seen that got the t-shirt and probably a few grey hairs to show for it Let's unpack this thing because it's less "spooky ghost in the machine" and more "oopsie daisy I missed a crucial step" trust me on this one
 
 First off that `SystemError` not being raised is a classic sign we're dealing with a low level Python thing This usually happens when the C level parts of Python that manage things like object allocation or module loading encounter an issue but the error handling at the C layer either doesn't map perfectly to Python's exception system or there is no clean way to communicate the problem up the stack This lack of exception is the real pain since you don’t have a Python traceback to pinpoint the exact issue it just quietly dies or leads to weird behavior later on that is way harder to diagnose This is where debugging gets the most interesting and fun
 
@@ -14,7 +14,7 @@ Scenario 1: Extension Modules Gone Wrong
 
 So imagine you're using some fancy C extension module Maybe it's for image processing number crunching or some other performance heavy task If that C code is poorly written or uses incompatible versions of libraries on your system the initialization process can fail at the C level and not produce a proper Python exception I remember one project years ago where we were integrating a geospatial library written in C++ on Linux it worked like a charm on my local machine but when we tried to deploy it on the production server we got the silent failure The library needed a very specific version of the GDAL libraries and our build process wasn't handling that dependency properly we were essentially relying on luck that the right GDAL version was present and in the right path this was a rookie mistake I was on vacation at the time but my team had to spend an entire week to fix this very problem
 
-Another time we had an issue with custom memory allocation in a C extension module we were doing some low-level optimization and we were allocating and freeing memory using custom calls instead of Python’s memory system it would work for a few hours but sometimes out of the blue it would not work and we had the _internal problem without exceptions it was caused by a race condition in the custom allocator it was only in one very specific hardware that we found this problem the fix was simple I had to use Python’s memory system
+Another time we had an issue with custom memory allocation in a C extension module we were doing some low-level optimization and we were allocating and freeing memory using custom calls instead of Python’s memory system it would work for a few hours but sometimes out of the blue it would not work and we had the \_internal problem without exceptions it was caused by a race condition in the custom allocator it was only in one very specific hardware that we found this problem the fix was simple I had to use Python’s memory system
 
 Here is how a simple C extension might look like that fails because of incompatibility between the OS and the library
 
@@ -28,7 +28,7 @@ int my_c_function() {
     //and it does not produce a proper message that Python can understand
     if(third_party_init() != 0){
         //We failed during init so we will exit
-       return 1; 
+       return 1;
     }
     return 0;
 }
@@ -59,7 +59,8 @@ PyMODINIT_FUNC PyInit_mymodule(void)
     return PyModule_Create(&mymodule);
 }
 ```
-This piece of C code could fail and if it does not propagate the exception to python you will get an _internal failure without a proper exception message
+
+This piece of C code could fail and if it does not propagate the exception to python you will get an \_internal failure without a proper exception message
 
 Scenario 2: Python Installation Mess
 
@@ -105,7 +106,7 @@ print("All threads have finished")
 
 This particular piece of code might work but if you remove the sleep or you have a race condition it can fail because the logging system will fail to initialize correctly in a concurrent context
 
-Okay so how do we debug this thing?
+how do we debug this thing?
 
 First you have to go to the basics Verify your environment variables especially `PYTHONPATH` and `LD_LIBRARY_PATH` to check for conflicting paths Make sure your C extensions are compiled against the correct Python version and have no library conflicts that will save you a lot of headaches Make sure that the libraries are present in your system that you are trying to use specially if they are not Python libs
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "silhouette-r-calculation-tutorial"
 ---
 
-Alright so you're asking about silhouette score calculation I get it Been there done that countless times it's a staple in unsupervised learning and clustering evaluation
+so you're asking about silhouette score calculation I get it Been there done that countless times it's a staple in unsupervised learning and clustering evaluation
 
 First off let's break down why we even care about silhouette scores This isn't just some random metric someone threw at us it's actually a pretty intuitive way to gauge how well your data points are clustered Put simply it tells you how similar an object is to its own cluster compared to other clusters A high score means the data point is well-clustered while a low or negative score suggests it might be in the wrong spot or that your clusters are not well-separated
 
@@ -18,8 +18,8 @@ s(i) = (b(i) - a(i)) / max(a(i), b(i))
 
 Where:
 
-*   `a(i)` is the average distance between data point 'i' and all other data points in the same cluster
-*   `b(i)` is the minimum average distance between data point 'i' and all data points in each of the other clusters
+- `a(i)` is the average distance between data point 'i' and all other data points in the same cluster
+- `b(i)` is the minimum average distance between data point 'i' and all data points in each of the other clusters
 
 Let me tell you I had this exact problem about four years ago I was working on a customer segmentation project for an e-commerce platform and things weren't going as planned My initial clustering produced... well let’s just say it wasn't pretty The silhouette scores were hovering around zero which basically means the clusters were overlapping or random
 
@@ -35,20 +35,20 @@ from sklearn.metrics import silhouette_score
 def calculate_silhouette_for_point(data_point_index, data, cluster_labels):
     # Get the cluster label for the data point
     cluster_label = cluster_labels[data_point_index]
-    
+
     # Find the indices of data points in the same cluster
     same_cluster_indices = np.where(cluster_labels == cluster_label)[0]
-    
+
     # Calculate average intra-cluster distance
     if len(same_cluster_indices) > 1:
         same_cluster_distances = pairwise_distances(data[data_point_index].reshape(1, -1), data[same_cluster_indices])
         a_i = np.sum(same_cluster_distances)/(len(same_cluster_indices)-1)
     else:
-        a_i = 0  
-        
+        a_i = 0
+
     # Find all other cluster labels
     other_cluster_labels = np.unique(cluster_labels[cluster_labels != cluster_label])
-    
+
     # Check if other clusters exist
     if len(other_cluster_labels) > 0 :
         b_i_values = []
@@ -56,18 +56,18 @@ def calculate_silhouette_for_point(data_point_index, data, cluster_labels):
             other_cluster_indices = np.where(cluster_labels == other_label)[0]
             other_cluster_distances = pairwise_distances(data[data_point_index].reshape(1,-1), data[other_cluster_indices])
             b_i_values.append(np.sum(other_cluster_distances)/len(other_cluster_indices))
-        
+
         b_i = min(b_i_values)
     else:
         b_i = 0
-        
+
     # Handle the case when both a(i) and b(i) are zero
     if a_i == 0 and b_i == 0:
         return 0
-    
+
     # Calculate silhouette score
     s_i = (b_i - a_i) / max(a_i, b_i) if max(a_i, b_i) != 0 else 0
-    
+
     return s_i
 
 def calculate_silhouette_scores(data, cluster_labels):
@@ -86,7 +86,7 @@ if __name__ == '__main__':
     average_silhouette_custom = np.mean(silhouette_scores_custom)
     print("Custom Silhouette Scores for each data point:", silhouette_scores_custom)
     print("Custom Average Silhouette Score:", average_silhouette_custom)
-    
+
     # Calculate silhouette scores using sklearn
     average_silhouette_sklearn = silhouette_score(data, cluster_labels)
     print("Sklearn Average Silhouette Score:", average_silhouette_sklearn)
@@ -101,7 +101,7 @@ Here's a breakdown:
 2.  **`calculate_silhouette_scores` Function:** calculates the silhouette score for all data points and returns all scores
 
 3.  **Main Block:** Creates some dummy data and cluster labels to showcase the function implementation
-   as well as showcase the usage of sklearn silhouette_score to show the final value similarity.
+    as well as showcase the usage of sklearn silhouette_score to show the final value similarity.
 
 The main result of this code is the print of the average and each point silhouette scores.
 
@@ -109,9 +109,9 @@ A final point before we proceed, make sure you properly compute the distances. E
 
 Another important consideration the range of your silhouette scores the range is [-1, 1]:
 
-*   **Close to 1**: The point is well clustered
-*   **Around 0**: The point is near or between clusters
-*   **Close to -1**: The point is probably assigned to the wrong cluster
+- **Close to 1**: The point is well clustered
+- **Around 0**: The point is near or between clusters
+- **Close to -1**: The point is probably assigned to the wrong cluster
 
 A good clustering model should have high average silhouette score values.
 
@@ -157,13 +157,13 @@ for i in range(n_clusters):
     ith_cluster_silhouette_values.sort()
     size_cluster_i = ith_cluster_silhouette_values.shape[0]
     y_upper = y_lower + size_cluster_i
-    
+
     color = plt.cm.nipy_spectral(float(i) / n_clusters)
     ax1.fill_betweenx(np.arange(y_lower, y_upper), 0, ith_cluster_silhouette_values,
     facecolor=color, edgecolor=color, alpha=0.7)
     ax1.text(-0.05, y_lower + 0.5 * size_cluster_i, str(i))
     y_lower = y_upper + 10
-    
+
 ax1.set_title("Silhouette plot")
 ax1.set_xlabel("Silhouette coefficient values")
 ax1.set_ylabel("Cluster label")
@@ -203,8 +203,8 @@ def calculate_and_plot_silhouette(X, n_clusters, random_state=42):
     # Calculate silhouette score
     avg_silhouette_score = silhouette_score(X_scaled, cluster_labels)
     print(f"Average Silhouette Score: {avg_silhouette_score:.3f}")
-    
-    
+
+
     # Create scatter plot of the data with clusters
     plt.figure(figsize=(8, 6))
     plt.scatter(X[:, 0], X[:, 1], c=cluster_labels, cmap='viridis', marker='o', edgecolors='black')
@@ -223,16 +223,16 @@ if __name__ == '__main__':
     n_clusters = 4
     random_state = 42
     X, y = make_blobs(n_samples=n_samples, n_features=n_features, centers=n_clusters, cluster_std=1.2, random_state=random_state)
-    
+
     # Add some variation to one of the features for testing the need for scaling
     X[:,1] = X[:,1] * 100
 
     # Calculate and plot using silhouette metric
     calculate_and_plot_silhouette(X, n_clusters, random_state=random_state)
-    
-    
+
+
     # Testing different number of clusters to see how different silhoutte scores impact the results
-    
+
     calculate_and_plot_silhouette(X, 2, random_state=random_state)
     calculate_and_plot_silhouette(X, 3, random_state=random_state)
     calculate_and_plot_silhouette(X, 5, random_state=random_state)

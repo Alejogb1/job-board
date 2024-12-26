@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-a-nlp-spacy-custom-rule-based-matching"
 ---
 
-alright, let's talk about custom rule-based matching with spacy. it's something i've spent a fair amount of time on, and it's definitely a powerful tool once you get the hang of it. i've had my fair share of head-scratching moments with this, so hopefully my experience can save you some time.
+, let's talk about custom rule-based matching with spacy. it's something i've spent a fair amount of time on, and it's definitely a powerful tool once you get the hang of it. i've had my fair share of head-scratching moments with this, so hopefully my experience can save you some time.
 
 i remember a project back in my early days where i was trying to extract specific financial terms from news articles. i was initially using a very naive keyword approach, basically searching for words like "profit", "loss", "revenue", etc. that was a disaster. i was getting so many false positives, catching things like "loss of signal" or "profit sharing" where it was not referring to the company's profit or loss statements. i was chasing my tail, and it got clear i needed something more intelligent and context aware, this is when i discovered spacy rule-based matching.
 

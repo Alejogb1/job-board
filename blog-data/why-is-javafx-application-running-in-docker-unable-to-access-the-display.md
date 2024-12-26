@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-javafx-application-running-in-docker-unable-to-access-the-display"
 ---
 
-Okay, let's tackle this. I've encountered this particular headache a few times over the years, usually during late nights spent debugging containerized desktop applications. The issue, at its core, boils down to how graphical interfaces interact with the underlying operating system, especially when that system is itself virtualized within a Docker container. Simply put, JavaFX, like other gui frameworks, requires a connection to an X server (or a similar display server) to render its graphical elements, and that connection is typically established through an environment variable called `DISPLAY`. Docker containers, by default, are isolated and do not inherit host system's X server access. Hence the problem.
+, let's tackle this. I've encountered this particular headache a few times over the years, usually during late nights spent debugging containerized desktop applications. The issue, at its core, boils down to how graphical interfaces interact with the underlying operating system, especially when that system is itself virtualized within a Docker container. Simply put, JavaFX, like other gui frameworks, requires a connection to an X server (or a similar display server) to render its graphical elements, and that connection is typically established through an environment variable called `DISPLAY`. Docker containers, by default, are isolated and do not inherit host system's X server access. Hence the problem.
 
 Specifically, the `DISPLAY` environment variable, when correctly configured, points to the X server on your host machine (or another machine). The X server essentially acts as a gateway for drawing to your screen; the JavaFX application sends drawing instructions to this X server, which then renders the application's ui. When a java application inside a docker container tries to utilize javaFX, it inherently looks for this `DISPLAY` variable, and unless properly configured, it won't find an accessible X server, resulting in a runtime error or a silent failure. The container operates in its isolated environment, not knowing how or where to access the graphics display of the underlying host.
 
@@ -30,10 +30,10 @@ xhost -local:docker #disable docker access to display (optional)
 
 In this command:
 
-*   `-e DISPLAY=$DISPLAY`: Passes the host’s `DISPLAY` environment variable to the container.
-*   `-v /tmp/.X11-unix:/tmp/.X11-unix`: Mounts the host’s X11 socket into the container.
-*   `-v $HOME/.Xauthority:/home/user/.Xauthority`: Mounts the host’s `.Xauthority` file, which is vital for authentication. This is the key to making the display access work in many cases. If your container runs as root or a different user, change this appropriately. If you run as root, you might mount the `/root/.Xauthority` file. You can usually find the correct authority file by checking `$XAUTHORITY`.
-*   `--user $(id -u):$(id -g)`: Makes sure the container process runs with the same user id as the host, preventing permission issues when accessing the X server.
+- `-e DISPLAY=$DISPLAY`: Passes the host’s `DISPLAY` environment variable to the container.
+- `-v /tmp/.X11-unix:/tmp/.X11-unix`: Mounts the host’s X11 socket into the container.
+- `-v $HOME/.Xauthority:/home/user/.Xauthority`: Mounts the host’s `.Xauthority` file, which is vital for authentication. This is the key to making the display access work in many cases. If your container runs as root or a different user, change this appropriately. If you run as root, you might mount the `/root/.Xauthority` file. You can usually find the correct authority file by checking `$XAUTHORITY`.
+- `--user $(id -u):$(id -g)`: Makes sure the container process runs with the same user id as the host, preventing permission issues when accessing the X server.
 
 This approach often works out of the box and is quite portable if you're running in a similar linux environments. However, this method isn't particularly secure. The `xhost +local:docker` command temporarily grants access to the x server to the `docker` user, which is not ideal. Using `xhost -local:docker` disables it after the application closes, but the vulnerability is there while running. This is why X forwarding over ssh is generally preferred when you need more secure access for the container.
 

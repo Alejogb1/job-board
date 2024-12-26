@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-yarn-start-be-used-to-run-a-rails-server"
 ---
 
-Okay, let's unpack this. The short answer is: not directly, and certainly not in the way you'd typically use `yarn start` with a frontend framework like React or Vue. But there's a bit more nuance to it than just a flat 'no'. I've personally encountered situations where teams tried (and failed spectacularly) to shoehorn `yarn start` into their Rails workflows, so I can speak from a place of, shall we say, hard-won experience.
+, let's unpack this. The short answer is: not directly, and certainly not in the way you'd typically use `yarn start` with a frontend framework like React or Vue. But there's a bit more nuance to it than just a flat 'no'. I've personally encountered situations where teams tried (and failed spectacularly) to shoehorn `yarn start` into their Rails workflows, so I can speak from a place of, shall we say, hard-won experience.
 
 The core issue stems from the fundamental differences in what `yarn` and `rails` are designed to do. `yarn` is primarily a package manager for javascript, focusing on installing, managing, and scripting tasks related to node.js applications. Its `start` command, by convention, usually invokes a development server for a single-page application (spa), often using something like webpack-dev-server or vite. Rails, on the other hand, is a full-stack web framework, built using Ruby, and it has its own robust ecosystem for managing development servers.
 
@@ -30,12 +30,13 @@ Here’s how your `package.json` might look:
     "@babel/preset-react": "^7.23.3",
     "esbuild": "^0.19.11"
   },
-    "scripts": {
-        "build": "esbuild app/javascript/*.* --bundle --outdir=app/assets/builds",
-        "watch": "esbuild app/javascript/*.* --bundle --outdir=app/assets/builds --watch"
-    }
+  "scripts": {
+    "build": "esbuild app/javascript/*.* --bundle --outdir=app/assets/builds",
+    "watch": "esbuild app/javascript/*.* --bundle --outdir=app/assets/builds --watch"
+  }
 }
 ```
+
 And the relevant section of `config/initializers/assets.rb` would include:
 
 ```ruby
@@ -60,15 +61,16 @@ namespace :javascript do
 end
 
 ```
+
 Then you could run `rake javascript:build` or `rake javascript:watch` to compile your assets from rails.
 
-Finally, suppose we *did* want to have some form of "start" script to automate the process of launching both our rails server *and* our javascript compilation. We could do something like this in our `package.json`:
+Finally, suppose we _did_ want to have some form of "start" script to automate the process of launching both our rails server _and_ our javascript compilation. We could do something like this in our `package.json`:
 
 ```json
 {
   "name": "my-rails-app",
   "version": "1.0.0",
-   "dependencies": {
+  "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -77,10 +79,10 @@ Finally, suppose we *did* want to have some form of "start" script to automate t
     "esbuild": "^0.19.11"
   },
   "scripts": {
-        "build": "esbuild app/javascript/*.* --bundle --outdir=app/assets/builds",
-        "watch": "esbuild app/javascript/*.* --bundle --outdir=app/assets/builds --watch",
-         "start": "concurrently \"bin/rails server\" \"yarn watch\""
-     }
+    "build": "esbuild app/javascript/*.* --bundle --outdir=app/assets/builds",
+    "watch": "esbuild app/javascript/*.* --bundle --outdir=app/assets/builds --watch",
+    "start": "concurrently \"bin/rails server\" \"yarn watch\""
+  }
 }
 ```
 
@@ -88,8 +90,8 @@ Here, we're using the `concurrently` package (which you’d need to install with
 
 In practice, the actual "start" script I've seen vary. Some include commands to clear caches, start specific services, or even run automated tests. This is where flexibility becomes important, and the `scripts` section of `package.json` is indeed very powerful.
 
-However, it's critical to keep the separation of concerns clear. The `yarn start` command in these more elaborate examples is not *replacing* `bin/rails server`, but rather *augmenting* it. It's coordinating related tasks within our development environment, not attempting to replicate the core functions of the Rails server.
+However, it's critical to keep the separation of concerns clear. The `yarn start` command in these more elaborate examples is not _replacing_ `bin/rails server`, but rather _augmenting_ it. It's coordinating related tasks within our development environment, not attempting to replicate the core functions of the Rails server.
 
 For a deeper understanding of the Rails asset pipeline, I'd strongly recommend reading the "Rails Asset Pipeline" guide from the official Ruby on Rails documentation itself. It’s comprehensive and will give you a solid understanding of how rails manages and compiles assets. In terms of understanding node.js package management, a thorough read-through of the yarn documentation is essential. For a general understanding of frontend build tools I would advise looking into the documentation of webpack, vite, or esbuild directly depending on what you are using in your project. Understanding the underlying mechanics allows you to work more efficiently and debug issues effectively.
 
-In summary, while you *can* configure your `package.json` to run `rails server` under a `start` script, it’s generally not best practice, and misses the full suite of the rails server processes. `yarn` should be viewed as a tool for handling your JavaScript dependencies, and related tooling like bundling assets, not for managing a Ruby-based webserver. Use `yarn` to manage your frontend needs and the Rails CLI for backend and application related tasks. Using the `start` script as a coordinator for development processes is fine, but ensure the separation of responsibility and function remains clear.
+In summary, while you _can_ configure your `package.json` to run `rails server` under a `start` script, it’s generally not best practice, and misses the full suite of the rails server processes. `yarn` should be viewed as a tool for handling your JavaScript dependencies, and related tooling like bundling assets, not for managing a Ruby-based webserver. Use `yarn` to manage your frontend needs and the Rails CLI for backend and application related tasks. Using the `start` script as a coordinator for development processes is fine, but ensure the separation of responsibility and function remains clear.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-tensorflow-keras-model-giving-nan-nan-as-output"
 ---
 
-Okay, let's tackle this `[nan nan]` output issue. It’s a common headache, and something I’ve debugged more times than I care to count, honestly. While the exact cause can vary, it usually points to a few core issues within your TensorFlow/Keras model’s training process, rather than some mystical flaw. From my experience, it mostly boils down to numeric instability and problems during gradient calculations.
+, let's tackle this `[nan nan]` output issue. It’s a common headache, and something I’ve debugged more times than I care to count, honestly. While the exact cause can vary, it usually points to a few core issues within your TensorFlow/Keras model’s training process, rather than some mystical flaw. From my experience, it mostly boils down to numeric instability and problems during gradient calculations.
 
 First, let’s be clear on what `nan` actually represents: 'not a number.' In the context of machine learning, especially deep learning, it signifies that an arithmetic operation has produced an undefined result, usually due to problems like division by zero or taking the logarithm of a non-positive number. When this starts propagating through your network’s layers, you end up with `nan` in your output.
 
@@ -14,7 +14,7 @@ So, where do these `nan`s come from specifically? It often boils down to a few k
 
 2.  **Zero Divisions or Logarithms of Zero:** This is a common source, particularly in custom loss functions or activation layers. When certain operations within the calculation lead to division by a very small value close to zero (which can effectively be treated as zero by floating-point math), you get a `nan` result. Similarly, taking the log of zero or a negative number will produce `nan`. This isn't always obvious, sometimes you might have small values within an output of a preceding layer, which, after some math, might result in this issue.
 
-3. **Unstable Activation Functions or Loss Functions:** Some activation functions, if not carefully applied, can lead to gradients that become large or very small, eventually causing numerical problems. A similar issue arises with certain loss functions when the predictions drift away from the target. The use of activation functions or loss functions that might produce `nan` values within some range is something you have to carefully consider as well.
+3.  **Unstable Activation Functions or Loss Functions:** Some activation functions, if not carefully applied, can lead to gradients that become large or very small, eventually causing numerical problems. A similar issue arises with certain loss functions when the predictions drift away from the target. The use of activation functions or loss functions that might produce `nan` values within some range is something you have to carefully consider as well.
 
 Let’s look at a few code examples to illustrate and fix these issues. Let's start with an example of exploding gradients. Suppose I had a situation where my network was using a relatively high learning rate and it was a very deep neural network:
 
@@ -128,21 +128,21 @@ In this fixed example, I'm now clamping the prediction `y_pred` so that it's nev
 
 **Practical recommendations:**
 
-*   **Start with Stable Defaults:** When building models, stick with well-established and stable activation functions like ReLU, Sigmoid, or Tanh, especially during the initial prototyping phase. Avoid exotic or custom ones until you are very confident about their stability with your specific data. Make sure you understand well how these functions behave. If you encounter situations where these don't perform well, explore alternatives such as `elu` or `swish`, but always keep in mind how they behave.
+- **Start with Stable Defaults:** When building models, stick with well-established and stable activation functions like ReLU, Sigmoid, or Tanh, especially during the initial prototyping phase. Avoid exotic or custom ones until you are very confident about their stability with your specific data. Make sure you understand well how these functions behave. If you encounter situations where these don't perform well, explore alternatives such as `elu` or `swish`, but always keep in mind how they behave.
 
-*   **Initialize Weights Carefully:** Proper weight initialization can drastically reduce exploding gradients. Use Xavier or He initialization (available in Keras) or understand the behavior of different initializers, especially when dealing with different activation functions. Initializations matter to ensure faster learning, and a good initialization can keep your gradients in check from the beginning.
+- **Initialize Weights Carefully:** Proper weight initialization can drastically reduce exploding gradients. Use Xavier or He initialization (available in Keras) or understand the behavior of different initializers, especially when dealing with different activation functions. Initializations matter to ensure faster learning, and a good initialization can keep your gradients in check from the beginning.
 
-*   **Use Learning Rate Schedulers:** Dynamic learning rate adjustments can help prevent oscillations and also prevent the network from taking overly large steps. Keras’ learning rate schedulers provide many options that you can experiment with. Look at the `tf.keras.optimizers.schedules` submodule in TensorFlow for these options.
+- **Use Learning Rate Schedulers:** Dynamic learning rate adjustments can help prevent oscillations and also prevent the network from taking overly large steps. Keras’ learning rate schedulers provide many options that you can experiment with. Look at the `tf.keras.optimizers.schedules` submodule in TensorFlow for these options.
 
-*   **Gradient Clipping:** As shown in the example, gradient clipping can keep gradients from becoming too large, helping numerical stability. This is particularly useful when using recurrent neural networks (RNNs) or Transformers.
+- **Gradient Clipping:** As shown in the example, gradient clipping can keep gradients from becoming too large, helping numerical stability. This is particularly useful when using recurrent neural networks (RNNs) or Transformers.
 
-*   **Verify your data:** One of the first things you should do when getting `nan` is to verify your data. Ensure that it does not contain any `nan` or infinite values.
+- **Verify your data:** One of the first things you should do when getting `nan` is to verify your data. Ensure that it does not contain any `nan` or infinite values.
 
-*   **Debugging:** The `tf.debugging.enable_check_numerics()` is an extremely useful tool. Enable it at the beginning of your script and Tensorflow will throw an error whenever it encounters `nan` or `inf` during the forward or backward pass, allowing you to pinpoint the location of the problem.
+- **Debugging:** The `tf.debugging.enable_check_numerics()` is an extremely useful tool. Enable it at the beginning of your script and Tensorflow will throw an error whenever it encounters `nan` or `inf` during the forward or backward pass, allowing you to pinpoint the location of the problem.
 
-*   **Loss function analysis:** Look very carefully at your loss function implementation, and verify its behavior. Test it out with different inputs and ensure that it will not produce `nan`.
+- **Loss function analysis:** Look very carefully at your loss function implementation, and verify its behavior. Test it out with different inputs and ensure that it will not produce `nan`.
 
-*   **Batch size**: Try changing the batch size, often this issue is more present in some batch sizes versus others.
+- **Batch size**: Try changing the batch size, often this issue is more present in some batch sizes versus others.
 
 **Further Reading:**
 

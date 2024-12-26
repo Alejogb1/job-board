@@ -4,17 +4,17 @@ date: "2024-12-23"
 id: "why-does-gem-install-idn-ruby-fail-on-arm64"
 ---
 
-Alright, let's tackle this. I've seen this exact situation pop up more than once, particularly when we started migrating more infrastructure to arm64-based systems a few years back. The `gem install idn-ruby` failure on arm64 is a nuanced problem, and it doesn't usually stem from a single, easily identifiable culprit. It's usually a confluence of factors related to native extensions and the specific way those extensions are compiled.
+, let's tackle this. I've seen this exact situation pop up more than once, particularly when we started migrating more infrastructure to arm64-based systems a few years back. The `gem install idn-ruby` failure on arm64 is a nuanced problem, and it doesn't usually stem from a single, easily identifiable culprit. It's usually a confluence of factors related to native extensions and the specific way those extensions are compiled.
 
 Essentially, `idn-ruby` depends on `libidn`, a C library that provides support for internationalized domain names (idns). This means that the `idn-ruby` gem isn’t pure ruby; it requires compiling native code during its installation. When you're on an architecture like x86_64, the pre-compiled gems available on rubygems.org are typically built to work without issue. But with arm64, we often find that those pre-built binaries aren't available, or if they are, they’re incompatible. So, the gem installer falls back to trying to compile the native extension on the fly.
 
 The core problem arises when the compiler chain on your arm64 system isn't set up correctly to build the `libidn` bindings for the ruby gem. This could manifest in a few common ways:
 
-1.  **Missing Development Headers:** The `libidn` library itself might be installed on your system, but the *development headers* needed to compile programs against it (usually `.h` files) might be missing. This is crucial because the ruby gem’s build process needs these to generate the correct interface bindings.
+1.  **Missing Development Headers:** The `libidn` library itself might be installed on your system, but the _development headers_ needed to compile programs against it (usually `.h` files) might be missing. This is crucial because the ruby gem’s build process needs these to generate the correct interface bindings.
 
 2.  **Incompatible Compiler/Toolchain:** The compiler chain (usually `gcc` or `clang`) might not be configured to build arm64 binaries properly. This could be due to the system’s default compiler version, a missing tool in the chain, or even a misconfigured environment variable for finding cross-compilation tools.
 
-3.  **Pre-compiled binary mismatch:** As mentioned, sometimes a pre-compiled binary *is* available for arm64 but is built against a version of `libidn` that's not present on the machine where you're trying to install the gem. When there's an ABI incompatibility (Application Binary Interface) it often leads to a silent crash or seemingly random installation failure, often surfacing as an obscure load error at runtime.
+3.  **Pre-compiled binary mismatch:** As mentioned, sometimes a pre-compiled binary _is_ available for arm64 but is built against a version of `libidn` that's not present on the machine where you're trying to install the gem. When there's an ABI incompatibility (Application Binary Interface) it often leads to a silent crash or seemingly random installation failure, often surfacing as an obscure load error at runtime.
 
 Let's break this down with a few scenarios and some practical ways to diagnose this.
 

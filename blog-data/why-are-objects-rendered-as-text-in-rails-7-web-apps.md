@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-objects-rendered-as-text-in-rails-7-web-apps"
 ---
 
-Okay, let's unpack this. I’ve seen this particular quirk crop up more often than one might expect, especially during early development or when transitioning to a newer rails version like 7. The issue of objects being rendered as text in rails views usually boils down to how ruby implicitly handles object conversions within the rendering process. This isn't some kind of mystical behavior; it's a fairly straightforward consequence of how rails interprets and renders data.
+, let's unpack this. I’ve seen this particular quirk crop up more often than one might expect, especially during early development or when transitioning to a newer rails version like 7. The issue of objects being rendered as text in rails views usually boils down to how ruby implicitly handles object conversions within the rendering process. This isn't some kind of mystical behavior; it's a fairly straightforward consequence of how rails interprets and renders data.
 
 Essentially, when rails encounters an object within your view that isn't explicitly a string or another type directly renderable by the view context (like a number, boolean, etc.), it relies on ruby's implicit `to_s` method. Every object in ruby inherits this method, and by default, it typically returns a string representation of the object's class and object id, which you'll see as something like "#<MyClass:0x000000010a2b3c>". This is what’s being displayed in your browser – not because rails is intentionally displaying objects this way, but because ruby is implicitly converting those objects to strings using their default `to_s` representation, which is, well, not particularly user-friendly.
 
@@ -37,6 +37,7 @@ end
   <p>Product: <%= @product %></p>
 </div>
 ```
+
 If you run this example, you won't see "Product: Awesome Widget", or "Product: 29.99" in your view. Instead, you’d likely get "Product: #<Product:0x000000012a3b4c>". This is ruby's default `to_s` at work. It hasn't done anything unexpected; it simply rendered the string representation of your product object.
 
 To resolve this, you need to explicitly format and extract the specific information you want to render from your object. Here’s one way to do it:
@@ -48,6 +49,7 @@ To resolve this, you need to explicitly format and extract the specific informat
   <p>Price: <%= @product.price %></p>
 </div>
 ```
+
 In this second snippet, we're accessing the attributes `name` and `price` of the `@product` object, which returns strings and numbers, respectively, that the view rendering engine can then render without issue.
 
 But let's say you have complex model interactions or a more complex display requirement. A better approach in many cases is to define a custom `to_s` method or dedicated presenter/view model classes within your model, which encapsulates all the specific display logic:

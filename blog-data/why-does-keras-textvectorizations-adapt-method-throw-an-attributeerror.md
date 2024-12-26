@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-keras-textvectorizations-adapt-method-throw-an-attributeerror"
 ---
 
-Alright, let’s talk about that pesky `AttributeError` you're seeing with Keras' `TextVectorization` adapt method. It's a situation I've encountered more times than I care to recall, often when migrating codebases or working with less-than-perfect data. Trust me, it’s not unique and usually boils down to some fundamental data type mismatches or unexpected input structures. So, instead of scratching our heads, let's dive in.
+, let’s talk about that pesky `AttributeError` you're seeing with Keras' `TextVectorization` adapt method. It's a situation I've encountered more times than I care to recall, often when migrating codebases or working with less-than-perfect data. Trust me, it’s not unique and usually boils down to some fundamental data type mismatches or unexpected input structures. So, instead of scratching our heads, let's dive in.
 
 Essentially, the `adapt` method for `TextVectorization` is designed to learn the vocabulary and any other relevant parameters from your text data. These parameters, think of them as the model's dictionary, include the frequency-based vocabulary, tf-idf weighting parameters if you choose to apply those, and so forth. The method expects specific formats for input – it’s not a black box that magically handles everything you throw at it.
 
@@ -38,7 +38,7 @@ print("Adapt successful after extracting the list.")
 
 The fix, as shown above, is to isolate the actual text data column and convert it into a list using `to_list()` or a similar method to create the required format for `TextVectorization`. If you have data coming from different sources ensure your input to `adapt` is a list of strings or a Tensorflow Dataset object that produces strings.
 
-The second frequent cause revolves around inconsistent or unexpected data types *within* what should be text. Imagine your data has accidental numerical or non-string values mixed in—perhaps some corrupted records or placeholders. This can easily break Keras' assumptions that it’s dealing with a pure stream of textual content. `TextVectorization` expects strings or Unicode representations of text. Trying to feed it integers, floats, or other objects directly as text can trigger an `AttributeError` during the adapt step.
+The second frequent cause revolves around inconsistent or unexpected data types _within_ what should be text. Imagine your data has accidental numerical or non-string values mixed in—perhaps some corrupted records or placeholders. This can easily break Keras' assumptions that it’s dealing with a pure stream of textual content. `TextVectorization` expects strings or Unicode representations of text. Trying to feed it integers, floats, or other objects directly as text can trigger an `AttributeError` during the adapt step.
 
 Here’s how you might see this in action:
 
@@ -67,7 +67,7 @@ print("Adapt successful after filtering and conversion.")
 
 This second code example illustrates the problem. The key to resolution here is ensuring all data elements presented to `adapt` are either strings or can be reliably converted into strings before adaptation. Using list comprehension and explicit type checking or conversion as shown above is often the most effective way of achieving this. I recommend ensuring that every element in your text input is, at the very least, coercible to a string.
 
-The third scenario I’ve regularly encountered is less data-focused and more about how you've structured your vectorizer and adaptation phases. Specifically, if you use the `TextVectorization` layer *inside* a Keras model and attempt to adapt it *after* the model has been compiled or initialized, it can sometimes lead to an unexpected `AttributeError`. Keras, particularly versions prior to Tensorflow 2.6, weren’t always forgiving about this kind of dynamic behavior after setup. The `adapt` call is designed to be performed on the layer itself before it becomes tied to a specific model or data flow within a graph.
+The third scenario I’ve regularly encountered is less data-focused and more about how you've structured your vectorizer and adaptation phases. Specifically, if you use the `TextVectorization` layer _inside_ a Keras model and attempt to adapt it _after_ the model has been compiled or initialized, it can sometimes lead to an unexpected `AttributeError`. Keras, particularly versions prior to Tensorflow 2.6, weren’t always forgiving about this kind of dynamic behavior after setup. The `adapt` call is designed to be performed on the layer itself before it becomes tied to a specific model or data flow within a graph.
 
 Here’s a simplified demonstration of the third scenario:
 
@@ -102,7 +102,7 @@ vectorizer.adapt(texts_train)
 print("Adaptation done. The model should not throw AttributeError.")
 ```
 
-In this particular situation, the solution is usually to adapt your `TextVectorization` layer *before* it’s embedded in your model or computational graph. This ensures the vocabulary is fixed when the model is assembled and stops unexpected dynamics that might be the source of the `AttributeError`. Essentially, consider `adapt` a pre-processing step, not a step of model-training once the model has been instantiated.
+In this particular situation, the solution is usually to adapt your `TextVectorization` layer _before_ it’s embedded in your model or computational graph. This ensures the vocabulary is fixed when the model is assembled and stops unexpected dynamics that might be the source of the `AttributeError`. Essentially, consider `adapt` a pre-processing step, not a step of model-training once the model has been instantiated.
 
 Now, regarding resources, I strongly recommend referring to the official TensorFlow documentation. It's the most reliable source for specifics. For a deeper understanding of text processing, “Speech and Language Processing” by Jurafsky and Martin is a highly recommended academic resource. Also, the original Word2Vec papers by Mikolov et al. and the work on transformers by Vaswani et al. offer insights into the mechanisms and theory behind modern text vectorization methods which are helpful contextually, although they do not directly address Keras specific issues.
 

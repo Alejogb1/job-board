@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-write-to-elasticsearch-using-an-alias-from-kubernetes"
 ---
 
-Alright, let's tackle this. I've definitely been in the trenches with this one before, and it's more nuanced than it might initially seem. Setting up writes to Elasticsearch via an alias from within a Kubernetes environment involves a few key layers of consideration, and ignoring even one can lead to headaches down the road. It’s less about a singular solution and more about a strategy that layers several best practices.
+, let's tackle this. I've definitely been in the trenches with this one before, and it's more nuanced than it might initially seem. Setting up writes to Elasticsearch via an alias from within a Kubernetes environment involves a few key layers of consideration, and ignoring even one can lead to headaches down the road. It’s less about a singular solution and more about a strategy that layers several best practices.
 
 First, let's talk about the 'why' before the 'how'. An alias in Elasticsearch is essentially a pointer, a logical name that maps to one or more physical indices. This is incredibly powerful for several reasons. It provides a level of abstraction, allowing you to seamlessly switch between indices for maintenance (like index rotation) without causing downtime for your application, which always feels like a victory on a Friday afternoon. Additionally, it can simplify index management, allowing you to group different indices under a common name for query and write purposes.
 
@@ -33,10 +33,10 @@ You'd typically use Elasticsearch’s `_aliases` endpoint with a put request to 
 
 ```json
 {
-    "actions": [
-        { "remove": { "index": "log-index-v1", "alias": "log-alias" } },
-        { "add": { "index": "log-index-v2", "alias": "log-alias" } }
-    ]
+  "actions": [
+    { "remove": { "index": "log-index-v1", "alias": "log-alias" } },
+    { "add": { "index": "log-index-v2", "alias": "log-alias" } }
+  ]
 }
 ```
 
@@ -72,33 +72,37 @@ except Exception as e:
   print(f"Error indexing document: {e}")
 
 ```
+
 Here, you'll observe the critical part: the `index` parameter in the `es.index()` method uses `"log-alias"` and not the explicit index name.
 
 **b) Javascript using the `@elastic/elasticsearch` client:**
 
 ```javascript
-const { Client } = require('@elastic/elasticsearch');
+const { Client } = require("@elastic/elasticsearch");
 
-const client = new Client({ node: 'http://elasticsearch-svc.your-namespace.svc.cluster.local:9200' });
+const client = new Client({
+  node: "http://elasticsearch-svc.your-namespace.svc.cluster.local:9200",
+});
 
 async function writeLog() {
   try {
     const response = await client.index({
-      index: 'log-alias',
+      index: "log-alias",
       document: {
-        timestamp: '2024-08-10T12:00:00Z',
-        message: 'Example log entry',
-        level: 'INFO',
+        timestamp: "2024-08-10T12:00:00Z",
+        message: "Example log entry",
+        level: "INFO",
       },
     });
     console.log(response);
   } catch (err) {
-    console.error('Error indexing document:', err);
+    console.error("Error indexing document:", err);
   }
 }
 
 writeLog();
 ```
+
 Similar to the Python example, the important part here is the index parameter set to `'log-alias'` during indexing.
 
 **c) Java using the `elasticsearch` java client:**
@@ -152,8 +156,8 @@ In practice, several things must be considered. Always ensure the service accoun
 
 For deeper dives into these topics, I’d recommend:
 
-*   **"Elasticsearch: The Definitive Guide"** by Clinton Gormley and Zachary Tong. This book provides a thorough understanding of Elasticsearch internals and best practices.
-*   The official Elasticsearch documentation. The sections on Index management, aliases, and client libraries are excellent resources.
-*   **"Kubernetes in Action"** by Marko Lukša. This is great for understanding Kubernetes networking concepts and service discovery, which are vital for this task.
+- **"Elasticsearch: The Definitive Guide"** by Clinton Gormley and Zachary Tong. This book provides a thorough understanding of Elasticsearch internals and best practices.
+- The official Elasticsearch documentation. The sections on Index management, aliases, and client libraries are excellent resources.
+- **"Kubernetes in Action"** by Marko Lukša. This is great for understanding Kubernetes networking concepts and service discovery, which are vital for this task.
 
 The key is consistency and proper configuration throughout the entire stack, from your application code to the Elasticsearch setup and Kubernetes deployment. Using aliases correctly gives you the flexibility you need to manage your indices effectively while maintaining stability in your applications. It's a powerful technique, and mastering it will prove beneficial in the long run.

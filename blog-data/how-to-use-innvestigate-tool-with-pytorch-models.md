@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-innvestigate-tool-with-pytorch-models"
 ---
 
-alright, so you're looking to use innvestigate with pytorch models, right? i've been down this road before, and it can get a little messy at first, especially if you're used to, say, tensorflow-based explainability tools. i’ll share what i learned, hopefully it saves you some head-scratching.
+, so you're looking to use innvestigate with pytorch models, right? i've been down this road before, and it can get a little messy at first, especially if you're used to, say, tensorflow-based explainability tools. i’ll share what i learned, hopefully it saves you some head-scratching.
 
 first things first, innvestigate isn't directly plug-and-play with pytorch like it is with some other frameworks. you'll need to do a little translation work. it's not a huge deal but it is a hurdle to get over. in my early days, i remember trying to simply toss a pytorch model into innvestigate and got a bunch of errors i didn’t understand. after a whole afternoon of reading, i realized i had to essentially bridge the gap using a custom layer and some forward hook magic. not that magic is a thing... more like, very specific coding.
 
@@ -72,21 +72,21 @@ here's how i normally approach it:
       return analysis
     ```
 
-    here, `method` can be anything innvestigate supports, like gradient, input * gradient, or more complex methods like deep taylor or layer-wise relevance propagation (lrp). i had to read [montavon, g., lapuschkin, s., binder, a., samek, w., & müller, k. r. (2017). explaining non-linear classification decisions with deep taylor decomposition. *pattern recognition*, *65*, 211–222.](https://link.springer.com/article/10.1007/s10032-023-01361-2) multiple times before understanding the core concept of lrp, and i can tell you, it was not simple.
+    here, `method` can be anything innvestigate supports, like gradient, input * gradient, or more complex methods like deep taylor or layer-wise relevance propagation (lrp). i had to read [montavon, g., lapuschkin, s., binder, a., samek, w., & müller, k. r. (2017). explaining non-linear classification decisions with deep taylor decomposition. *pattern recognition*, *65\*, 211–222.](https://link.springer.com/article/10.1007/s10032-023-01361-2) multiple times before understanding the core concept of lrp, and i can tell you, it was not simple.
 
     the `layer_name` is used to pass to specific layer activations, but if you pass `None` innvestigate will automatically use the correct layers.
 
 **resources and general thoughts:**
 
-*   **innvestigate documentation:** definitely read it. the core ideas are well explained, but sometimes the practical part can be a little fuzzy if you haven’t used the tool before.
-*   **understanding the analysis methods:** before trying a method, make sure you have a good understanding of what that method is doing and its limitations. for example, saliency maps highlight regions that, if changed, would significantly affect the output of the model, but they don’t necessarily show the logic of the model's decision. methods like lrp, try to go a little deeper and attribute the output to specific parts of the input, through its layers, but they also have specific restrictions and conditions. i found the book “explainable ai: interpreting, explaining and visualizing deep learning” edited by christoph molnar helpful, is a pretty decent deep dive into a bunch of different methods and techniques.
-*   **experimentation is key:** there’s no single “best” method, it depends on your model and what you are trying to understand. don’t be afraid to try different things.
-*   **debugging:** pay close attention to your shapes and data types. the mismatches in dimensions were the source of a lot of my problems when i started with these tools.
+- **innvestigate documentation:** definitely read it. the core ideas are well explained, but sometimes the practical part can be a little fuzzy if you haven’t used the tool before.
+- **understanding the analysis methods:** before trying a method, make sure you have a good understanding of what that method is doing and its limitations. for example, saliency maps highlight regions that, if changed, would significantly affect the output of the model, but they don’t necessarily show the logic of the model's decision. methods like lrp, try to go a little deeper and attribute the output to specific parts of the input, through its layers, but they also have specific restrictions and conditions. i found the book “explainable ai: interpreting, explaining and visualizing deep learning” edited by christoph molnar helpful, is a pretty decent deep dive into a bunch of different methods and techniques.
+- **experimentation is key:** there’s no single “best” method, it depends on your model and what you are trying to understand. don’t be afraid to try different things.
+- **debugging:** pay close attention to your shapes and data types. the mismatches in dimensions were the source of a lot of my problems when i started with these tools.
 
 **common pitfalls:**
 
-*   **forgetting to call `eval()`:** you have to remember to put your model into evaluation mode using `.eval()` before trying to get the analysis. it's a common mistake and it changes the behavior of dropout layers or batch norms, it might lead to wrong interpretations.
-*   **mismatched data types:** always make sure your pytorch tensors are converted to numpy arrays before passing them to innvestigate. this is a big one.
-*   **not understanding your model structure:** if you are using a complicated model structure you need to make sure that your `LayerWiseModel` class is correctly extracting all the activations. you should explore your model’s layers very carefully.
+- **forgetting to call `eval()`:** you have to remember to put your model into evaluation mode using `.eval()` before trying to get the analysis. it's a common mistake and it changes the behavior of dropout layers or batch norms, it might lead to wrong interpretations.
+- **mismatched data types:** always make sure your pytorch tensors are converted to numpy arrays before passing them to innvestigate. this is a big one.
+- **not understanding your model structure:** if you are using a complicated model structure you need to make sure that your `LayerWiseModel` class is correctly extracting all the activations. you should explore your model’s layers very carefully.
 
 to wrap it up, using innvestigate with pytorch takes a few extra steps, but it's totally doable. the key is to understand the intermediate steps in the code, particularly creating the layer-wise representation and input data format. don't rush it, take your time and make sure to test each step of the process. i hope this gets you started, it took me some time and research to learn all of this stuff. it isn't as straight forward as the examples on their documentation, but it should work for simple cases like these. good luck!

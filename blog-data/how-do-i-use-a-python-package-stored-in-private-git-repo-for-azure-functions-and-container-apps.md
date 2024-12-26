@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-a-python-package-stored-in-private-git-repo-for-azure-functions-and-container-apps"
 ---
 
-Okay, let's tackle this one. I've actually spent a decent chunk of my career navigating this exact scenario – the joys of private dependencies and serverless deployments. Specifically, I recall a project a few years back where we had some very sensitive data processing logic that absolutely had to stay out of public repos, and getting that to play nice with our Azure Functions and Container Apps was... an experience. It's not inherently complex, but it does require a specific, methodical approach.
+, let's tackle this one. I've actually spent a decent chunk of my career navigating this exact scenario – the joys of private dependencies and serverless deployments. Specifically, I recall a project a few years back where we had some very sensitive data processing logic that absolutely had to stay out of public repos, and getting that to play nice with our Azure Functions and Container Apps was... an experience. It's not inherently complex, but it does require a specific, methodical approach.
 
 The core challenge here is that, by default, Azure Functions and Container Apps don't have direct access to private Git repositories. You’re essentially dealing with an environment that’s designed for public consumption, and you're trying to introduce something that isn’t. There are a few established routes to get around this. We'll focus on the most common and generally recommended methods, breaking down the technical specifics and providing illustrative examples along the way.
 
@@ -25,6 +25,7 @@ First, you will want to construct the pip install statement that includes authen
 
 git+https://{username}:{pat}@myorg.visualstudio.com/MyProject/_git/MyPrivateRepo@main#egg=myprivatepackage
 ```
+
 In this example replace `{username}` with a valid username, and `{pat}` with a personal access token that has the correct permissions to read the repository.
 
 Then you want to configure the deployment script for your Azure function to install the packages from this requirements.txt, while using the authenticated pip install. The following python code would be run in the build script of your Azure function or container app.
@@ -50,9 +51,9 @@ This code segment reads the requirements.txt and runs the pip install command. Y
 
 **Important Notes:**
 
-*   **Security:** Directly embedding credentials in your `requirements.txt` is generally *not* recommended for production, and this is why i used personal access tokens and not passwords. We will see a more secure approach with managed identities, but this is an easy way to quickly test your process.
-*   **Git Authentication**: Git authentication can vary significantly, particularly with Azure DevOps, which benefits from using PAT tokens. For other providers like GitHub or Bitbucket, your authentication strategy may slightly change, such as using username/password. Ensure you’re using a PAT if available.
-*   **Dependency Management:** Pinning package versions in your `requirements.txt` file is highly recommended for predictable builds. This helps avoid unexpected breaking changes as dependencies evolve.
+- **Security:** Directly embedding credentials in your `requirements.txt` is generally _not_ recommended for production, and this is why i used personal access tokens and not passwords. We will see a more secure approach with managed identities, but this is an easy way to quickly test your process.
+- **Git Authentication**: Git authentication can vary significantly, particularly with Azure DevOps, which benefits from using PAT tokens. For other providers like GitHub or Bitbucket, your authentication strategy may slightly change, such as using username/password. Ensure you’re using a PAT if available.
+- **Dependency Management:** Pinning package versions in your `requirements.txt` file is highly recommended for predictable builds. This helps avoid unexpected breaking changes as dependencies evolve.
 
 **Approach 2: Managed Identities**
 
@@ -119,16 +120,16 @@ In this code, we use the azure cli to retrieve a token that is then used to auth
 
 **Important Notes:**
 
-*   **Principle of Least Privilege:** Always grant the managed identity only the necessary permissions to access the repository, following the principle of least privilege. This prevents unauthorized access to other resources.
-*   **Complexity:** Configuring managed identities can involve more steps than using environment variables, but the improved security is worth it for production environments.
-*   **Monitoring:** Ensure proper monitoring of failed deployments when employing these methods to quickly identify potential authentication problems. Check your deployment logs for debugging information.
-*   **Azure CLI:** The az cli is necessary for managed identities with Azure DevOps, but equivalent options exist for github or bitbucket.
+- **Principle of Least Privilege:** Always grant the managed identity only the necessary permissions to access the repository, following the principle of least privilege. This prevents unauthorized access to other resources.
+- **Complexity:** Configuring managed identities can involve more steps than using environment variables, but the improved security is worth it for production environments.
+- **Monitoring:** Ensure proper monitoring of failed deployments when employing these methods to quickly identify potential authentication problems. Check your deployment logs for debugging information.
+- **Azure CLI:** The az cli is necessary for managed identities with Azure DevOps, but equivalent options exist for github or bitbucket.
 
 **Recommendations and Resources**
 
-*   **_Effective Python_ by Brett Slatkin:** This is essential reading for best practices around python, especially when considering deployment and maintainability. This is a comprehensive guide covering many aspects including virtual environments and package management which is critical for serverless deployments.
-*   **Microsoft’s official Azure documentation:** The Azure documentation is the canonical resource for working with Azure Functions and Container Apps. Specifically pay attention to sections related to identity management and deployments.
-*   **_Continuous Delivery_ by Jez Humble and David Farley:** Understanding the principles of continuous delivery is critical for building reliable deployment processes. This book provides many key concepts that should be considered when designing your pipeline.
+- **_Effective Python_ by Brett Slatkin:** This is essential reading for best practices around python, especially when considering deployment and maintainability. This is a comprehensive guide covering many aspects including virtual environments and package management which is critical for serverless deployments.
+- **Microsoft’s official Azure documentation:** The Azure documentation is the canonical resource for working with Azure Functions and Container Apps. Specifically pay attention to sections related to identity management and deployments.
+- **_Continuous Delivery_ by Jez Humble and David Farley:** Understanding the principles of continuous delivery is critical for building reliable deployment processes. This book provides many key concepts that should be considered when designing your pipeline.
 
 **A Few Closing Thoughts**
 

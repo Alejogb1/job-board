@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-do-i-use-bert-large-uncased-in-hugginface-for-long-text-classification"
 ---
 
-Alright, let’s tackle this. I’ve spent quite a bit of time dealing with long text classification using transformer models, and bert-large-uncased presents some specific challenges, especially when you start exceeding those typical input length limitations. It’s not simply about throwing a longer text at the model and hoping for the best. There are practical considerations that we need to address systematically.
+, let’s tackle this. I’ve spent quite a bit of time dealing with long text classification using transformer models, and bert-large-uncased presents some specific challenges, especially when you start exceeding those typical input length limitations. It’s not simply about throwing a longer text at the model and hoping for the best. There are practical considerations that we need to address systematically.
 
 The core issue stems from bert's architecture. The original bert-large-uncased model, as trained, handles sequences with a maximum length of 512 tokens. Exceed this limit, and you'll encounter errors. The naive approach of truncating is usually a bad idea, as vital context might be discarded, severely impacting classification accuracy. Think of it as throwing away the second half of a detective novel – you might miss key clues. Over the years, I've seen countless projects that suffer because of simple truncation, and it always leads to suboptimal results.
 
 So, how do we navigate this? The general principle involves strategically chunking the long text into smaller, manageable segments, feeding those into the bert model, and then aggregating the results. There isn't one single 'correct' way, but rather, we choose a strategy that aligns with the structure of our data and the specific goals of our classification task. We’ll discuss three methods that I’ve found particularly effective, focusing on practical implementation rather than theoretical derivations.
 
-First, let's discuss the *sliding window approach*. This method involves creating overlapping segments of the text. Each segment becomes its own input to the bert model, and from each we get an output classification. We then combine the outputs through averaging or voting. This method ensures we retain context across segments. I have frequently used this approach in scenarios where the overall context of the document is paramount, for example, classifying medical reports or legal documents.
+First, let's discuss the _sliding window approach_. This method involves creating overlapping segments of the text. Each segment becomes its own input to the bert model, and from each we get an output classification. We then combine the outputs through averaging or voting. This method ensures we retain context across segments. I have frequently used this approach in scenarios where the overall context of the document is paramount, for example, classifying medical reports or legal documents.
 
 Here's a conceptual Python code snippet using Hugging Face's `transformers` library:
 
@@ -48,9 +48,9 @@ predicted_class = sliding_window_classify(long_text, tokenizer, model)
 print(f"Predicted Class: {predicted_class}")
 ```
 
-The key thing to note in the code is that we manually create the segments, taking special care to include the `[CLS]` and `[SEP]` tokens at the beginning and end of each segment *after* splitting. This is essential to how bert understands sequences. The averaging of logits allows us to combine the segmented results into an overall classification. This approach can be compute-intensive depending on the length and number of the text samples and the chosen window and stride parameters.
+The key thing to note in the code is that we manually create the segments, taking special care to include the `[CLS]` and `[SEP]` tokens at the beginning and end of each segment _after_ splitting. This is essential to how bert understands sequences. The averaging of logits allows us to combine the segmented results into an overall classification. This approach can be compute-intensive depending on the length and number of the text samples and the chosen window and stride parameters.
 
-Second, we have a *hierarchical approach*. This is particularly useful when your text has an inherent hierarchical structure, such as chapters in a book or sections within an article. Instead of looking at the document as a single block of text, we process each section independently, and then use a higher-level model, possibly another transformer or a classical classifier like an svm, to make a final prediction. For instance, in legal text analysis, I often treated individual paragraphs as independent units, classified them, and then aggregated these classifications.
+Second, we have a _hierarchical approach_. This is particularly useful when your text has an inherent hierarchical structure, such as chapters in a book or sections within an article. Instead of looking at the document as a single block of text, we process each section independently, and then use a higher-level model, possibly another transformer or a classical classifier like an svm, to make a final prediction. For instance, in legal text analysis, I often treated individual paragraphs as independent units, classified them, and then aggregated these classifications.
 
 Here's an illustrative example, assuming a simplified structure:
 
@@ -104,7 +104,7 @@ print(f"Predicted Class: {predicted_class}")
 
 Notice that here, I use a very simple support vector machine for demonstration purposes. A practical application would likely require a more advanced classifier and significant training data for both sections and documents.
 
-Finally, the *chunking with summarization approach* involves breaking down long documents into chunks, summarizing each chunk using techniques like extractive summarization (selecting existing text from the original chunk) or abstractive summarization (generating new text), and then feeding the summaries to the bert model. This aims to capture key information while reducing input size. While I’ve used this method on several projects, it needs careful consideration as summarization is an information-lossy operation.
+Finally, the _chunking with summarization approach_ involves breaking down long documents into chunks, summarizing each chunk using techniques like extractive summarization (selecting existing text from the original chunk) or abstractive summarization (generating new text), and then feeding the summaries to the bert model. This aims to capture key information while reducing input size. While I’ve used this method on several projects, it needs careful consideration as summarization is an information-lossy operation.
 
 Here's a basic illustration:
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-a-cypress-cucumber-test-fail-to-recognize-custom-chai-assertions-causing-a-build-error"
 ---
 
-Okay, let's tackle this one. It’s a classic gotcha that’s tripped up many a seasoned developer, myself included. I remember a particularly grueling project a few years back where we were heavily invested in Cypress with cucumber, and this exact issue nearly derailed our entire test suite. The root of the problem, and what's causing your build error, lies in how Cypress handles assertion extensions and the way cucumber integrates within that ecosystem. It's not a straightforward "Cypress versus cucumber" conflict, but rather a nuance in how their lifecycles interact and how Chai, the underlying assertion library, is used.
+, let's tackle this one. It’s a classic gotcha that’s tripped up many a seasoned developer, myself included. I remember a particularly grueling project a few years back where we were heavily invested in Cypress with cucumber, and this exact issue nearly derailed our entire test suite. The root of the problem, and what's causing your build error, lies in how Cypress handles assertion extensions and the way cucumber integrates within that ecosystem. It's not a straightforward "Cypress versus cucumber" conflict, but rather a nuance in how their lifecycles interact and how Chai, the underlying assertion library, is used.
 
 The core problem centers around timing and scope. Cypress, by default, utilizes a single instance of Chai throughout the test run. When you register a custom Chai assertion, you're typically doing this within a Cypress support file or similar initialization scope, ensuring that the assertion is available to all Cypress tests. However, when cucumber enters the mix, the execution context can become less straightforward, and it’s quite possible that these custom assertions get loaded, or rather, fail to be properly initialized, within the context where cucumber steps are executed. This is the primary reason why you're seeing the "property 'yourCustomAssertion' of undefined" or a similar error message during your build, signifying that the assertion simply isn't available to the steps when the test code executes.
 
@@ -13,11 +13,10 @@ Let's break this down with a few scenarios to make it more concrete. First, cons
 ```javascript
 // cypress/support/commands.js
 
-chai.Assertion.addMethod('isVisibleAndContains', function(text) {
-    new chai.Assertion(this._obj).to.be.visible;
-    new chai.Assertion(this._obj).to.contain(text);
+chai.Assertion.addMethod("isVisibleAndContains", function (text) {
+  new chai.Assertion(this._obj).to.be.visible;
+  new chai.Assertion(this._obj).to.contain(text);
 });
-
 ```
 
 In a typical Cypress spec file (without cucumber), this custom assertion would work flawlessly:
@@ -25,13 +24,12 @@ In a typical Cypress spec file (without cucumber), this custom assertion would w
 ```javascript
 // cypress/e2e/example.cy.js
 
-describe('Basic test', () => {
-  it('should test element visibility and content', () => {
-    cy.visit('/some/page');
-    cy.get('#element-id').should('isVisibleAndContains', 'Expected text');
+describe("Basic test", () => {
+  it("should test element visibility and content", () => {
+    cy.visit("/some/page");
+    cy.get("#element-id").should("isVisibleAndContains", "Expected text");
   });
 });
-
 ```
 
 Here, `isVisibleAndContains` is accessible because it is loaded within the Cypress test lifecycle. Now, the problem materializes when we try to utilize it in a cucumber scenario within a step definition file:
@@ -39,10 +37,10 @@ Here, `isVisibleAndContains` is accessible because it is loaded within the Cypre
 ```javascript
 // cypress/e2e/features/step_definitions/my_steps.js
 
-import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor';
+import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 
-Then('I should see element with text {string}', (text) => {
-  cy.get('#element-id').should('isVisibleAndContains', text); // This is likely to fail
+Then("I should see element with text {string}", (text) => {
+  cy.get("#element-id").should("isVisibleAndContains", text); // This is likely to fail
 });
 ```
 
@@ -57,12 +55,12 @@ While somewhat of a workaround, you can explicitly require the `commands.js` fil
 ```javascript
 // cypress/e2e/features/step_definitions/my_steps.js
 
-import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor';
+import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 
-require('../../../support/commands') // Added this line
+require("../../../support/commands"); // Added this line
 
-Then('I should see element with text {string}', (text) => {
-  cy.get('#element-id').should('isVisibleAndContains', text);
+Then("I should see element with text {string}", (text) => {
+  cy.get("#element-id").should("isVisibleAndContains", text);
 });
 ```
 
@@ -73,20 +71,23 @@ A more robust approach that avoids multiple executions of the support file is to
 ```javascript
 // cypress/e2e/features/step_definitions/my_steps.js
 
-import { Given, When, Then, Before } from '@badeball/cypress-cucumber-preprocessor';
+import {
+  Given,
+  When,
+  Then,
+  Before,
+} from "@badeball/cypress-cucumber-preprocessor";
 
 Before(() => {
-    chai.Assertion.addMethod('isVisibleAndContains', function(text) {
-        new chai.Assertion(this._obj).to.be.visible;
-        new chai.Assertion(this._obj).to.contain(text);
-    });
+  chai.Assertion.addMethod("isVisibleAndContains", function (text) {
+    new chai.Assertion(this._obj).to.be.visible;
+    new chai.Assertion(this._obj).to.contain(text);
+  });
 });
 
-
-Then('I should see element with text {string}', (text) => {
-  cy.get('#element-id').should('isVisibleAndContains', text);
+Then("I should see element with text {string}", (text) => {
+  cy.get("#element-id").should("isVisibleAndContains", text);
 });
-
 ```
 
 **3. Centralized Assertion Definition:**
@@ -96,35 +97,35 @@ For larger projects, where custom assertions might be reused in multiple step de
 ```javascript
 // cypress/support/assertions.js
 
-chai.Assertion.addMethod('isVisibleAndContains', function(text) {
-    new chai.Assertion(this._obj).to.be.visible;
-    new chai.Assertion(this._obj).to.contain(text);
+chai.Assertion.addMethod("isVisibleAndContains", function (text) {
+  new chai.Assertion(this._obj).to.be.visible;
+  new chai.Assertion(this._obj).to.contain(text);
 });
-
 ```
 
 Then, within your Cypress support and cucumber step definition files:
 
 ```javascript
 // cypress/support/commands.js
-import './assertions';
+import "./assertions";
 ```
 
 ```javascript
 // cypress/e2e/features/step_definitions/my_steps.js
-import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor';
-import '../../../support/assertions';
+import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
+import "../../../support/assertions";
 
-Then('I should see element with text {string}', (text) => {
-  cy.get('#element-id').should('isVisibleAndContains', text);
+Then("I should see element with text {string}", (text) => {
+  cy.get("#element-id").should("isVisibleAndContains", text);
 });
 ```
 
 In my experience, option 3 is generally the most manageable and avoids common pitfalls. You’ll want to choose the method that best suits your project's complexity. Also, remember that the timing can also be affected by other plugins if those are installed. A thorough understanding of plugin dependencies and lifecycles can help you identify other underlying issues.
 
 For further reading, I highly recommend diving deep into the official Cypress documentation, especially the sections on 'custom commands and assertions' as well as exploring the internals of the `cypress-cucumber-preprocessor` library, understanding how it hooks into Cypress lifecycle events. In particular the following resources are invaluable:
- *  Cypress documentation: specifically about custom commands and assertions.
- *  Chai documentation to understand its API and method extension mechanics.
- *  The source code of the `cypress-cucumber-preprocessor` to grasp how it integrates into Cypress execution lifecycle.
+
+- Cypress documentation: specifically about custom commands and assertions.
+- Chai documentation to understand its API and method extension mechanics.
+- The source code of the `cypress-cucumber-preprocessor` to grasp how it integrates into Cypress execution lifecycle.
 
 Ultimately, this situation isn't a flaw in either Cypress or cucumber but rather a subtle interaction detail. By understanding the underlying mechanics, you can avoid the frustration and build robust, maintainable tests. It takes a bit of digging, but getting it right early on will save you considerable time down the line.

@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "why-is-seeding-mandatory-for-stateless-random-flipping-in-tensorflow"
 ---
 
-Alright, let’s unpack why seeding is so crucial when dealing with stateless random operations in tensorflow, particularly for something like flipping states. It's a concept that trips up a lot of folks early on, and frankly, even experienced developers can sometimes overlook the subtleties involved. I've certainly been there. Let me recount a particularly frustrating debugging session involving a generative model that produced wildly inconsistent results between runs—all because of a lack of attention to seeding in a core data augmentation pipeline.
+, let’s unpack why seeding is so crucial when dealing with stateless random operations in tensorflow, particularly for something like flipping states. It's a concept that trips up a lot of folks early on, and frankly, even experienced developers can sometimes overlook the subtleties involved. I've certainly been there. Let me recount a particularly frustrating debugging session involving a generative model that produced wildly inconsistent results between runs—all because of a lack of attention to seeding in a core data augmentation pipeline.
 
-The crux of the matter lies in the very definition of “stateless” in the context of tensorflow. Stateless operations, like `tf.random.stateless_uniform`, `tf.random.stateless_normal`, or in our specific case, a hypothetical stateless random flipping operation, do not maintain an internal state that evolves from one invocation to the next. Instead, each time they are called, they generate a pseudorandom number (or tensor of numbers) based solely on the *seed* you provide. If you don't supply a seed, tensorflow will generate one based on some unpredictable sources like system time. This makes the output not reproducible since, with every run the random number generated will be different.
+The crux of the matter lies in the very definition of “stateless” in the context of tensorflow. Stateless operations, like `tf.random.stateless_uniform`, `tf.random.stateless_normal`, or in our specific case, a hypothetical stateless random flipping operation, do not maintain an internal state that evolves from one invocation to the next. Instead, each time they are called, they generate a pseudorandom number (or tensor of numbers) based solely on the _seed_ you provide. If you don't supply a seed, tensorflow will generate one based on some unpredictable sources like system time. This makes the output not reproducible since, with every run the random number generated will be different.
 
-This might seem like an implementation detail, but it has significant ramifications. Imagine you’re creating a data augmentation pipeline where one step involves randomly flipping images left-to-right. If you use a *stateless* approach without proper seeding, the flipping decisions become effectively *random*, not just *pseudorandom*. Each time your model is trained, the augmentation occurs in a completely unpredictable manner. This leads to two key problems. First, your training results won’t be reproducible; subtle variations in data augmentation will lead to different weights, making it difficult to replicate results or debug. Second, the model training will not converge properly; the randomness introduced at random in each epoch will prevent any form of convergence from happening, making it harder to even produce any decent results from our neural network. The model could end up learning more about these random variations than about the underlying patterns in your data. This is because, without a fixed seed, each training run represents a fundamentally different "random" data distribution for the network to learn.
+This might seem like an implementation detail, but it has significant ramifications. Imagine you’re creating a data augmentation pipeline where one step involves randomly flipping images left-to-right. If you use a _stateless_ approach without proper seeding, the flipping decisions become effectively _random_, not just _pseudorandom_. Each time your model is trained, the augmentation occurs in a completely unpredictable manner. This leads to two key problems. First, your training results won’t be reproducible; subtle variations in data augmentation will lead to different weights, making it difficult to replicate results or debug. Second, the model training will not converge properly; the randomness introduced at random in each epoch will prevent any form of convergence from happening, making it harder to even produce any decent results from our neural network. The model could end up learning more about these random variations than about the underlying patterns in your data. This is because, without a fixed seed, each training run represents a fundamentally different "random" data distribution for the network to learn.
 
 On the other hand, with seeding, you have control. If you provide the same seed for a stateless random operation, tensorflow guarantees that the sequence of pseudorandom numbers produced is exactly the same across different runs, as long as your system and tensorflow versions are the same. This is not a property of stateful random number generators. When we call a method that generates random numbers, such as `tf.random.uniform`, the internal state of the random number generator will change. If we call this method with the same seed on different executions, we won't necessarily produce the same sequence of numbers. This is why stateless methods are favored.
 
@@ -22,11 +22,11 @@ import tensorflow as tf
 def stateless_random_flip(image, seed):
     """
     Statelessly flips an image with a probability of 0.5.
-    
+
     Args:
         image (tf.Tensor): Input image.
         seed (tf.Tensor): Seed.
-    
+
     Returns:
         tf.Tensor: Flipped image or the original image.
     """
@@ -57,11 +57,11 @@ import tensorflow as tf
 def stateless_random_flip(image, seed):
     """
     Statelessly flips an image with a probability of 0.5.
-    
+
     Args:
         image (tf.Tensor): Input image.
         seed (tf.Tensor): Seed.
-    
+
     Returns:
         tf.Tensor: Flipped image or the original image.
     """
@@ -83,7 +83,7 @@ for i in range(2):
 
 ```
 
-In this version, we're passing a fixed seed. Now, each execution of the loop will yield the *same* result; the image will be flipped or it won’t, but the behavior is *consistent*. If you run the code, it will print the same result repeatedly. This consistency ensures that with every run, the network experiences the same random alterations in the data, removing one source of variance and making the results reproducible.
+In this version, we're passing a fixed seed. Now, each execution of the loop will yield the _same_ result; the image will be flipped or it won’t, but the behavior is _consistent_. If you run the code, it will print the same result repeatedly. This consistency ensures that with every run, the network experiences the same random alterations in the data, removing one source of variance and making the results reproducible.
 
 **Example 3: Using Counter to create a Seed**
 
@@ -93,11 +93,11 @@ import tensorflow as tf
 def stateless_random_flip(image, seed):
     """
     Statelessly flips an image with a probability of 0.5.
-    
+
     Args:
         image (tf.Tensor): Input image.
         seed (tf.Tensor): Seed.
-    
+
     Returns:
         tf.Tensor: Flipped image or the original image.
     """

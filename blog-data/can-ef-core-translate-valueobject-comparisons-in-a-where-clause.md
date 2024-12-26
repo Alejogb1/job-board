@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "can-ef-core-translate-valueobject-comparisons-in-a-where-clause"
 ---
 
-Okay, let's unpack the complexities surrounding value object comparisons within Entity Framework Core, specifically when used in a `where` clause. It’s a topic I've had to navigate extensively in my own projects, and it definitely has some nuances that aren't always immediately obvious. I'm going to approach this from the perspective of someone who’s been in the trenches with EF Core for a good while, so bear with me as I lay out the practicalities and workarounds I've discovered.
+, let's unpack the complexities surrounding value object comparisons within Entity Framework Core, specifically when used in a `where` clause. It’s a topic I've had to navigate extensively in my own projects, and it definitely has some nuances that aren't always immediately obvious. I'm going to approach this from the perspective of someone who’s been in the trenches with EF Core for a good while, so bear with me as I lay out the practicalities and workarounds I've discovered.
 
-The short answer to the question, "Can EF Core translate value object comparisons in a `where` clause?" is: it depends. And that "depends" is heavily weighted on *how* your value object is structured and how you are attempting to perform the comparison. Direct comparisons using the equality operator (`==`) on your value object class in a `where` clause, without proper configuration, won’t typically work out of the box. EF Core struggles to translate this to an equivalent SQL query. This is because it lacks the explicit instruction on how to compare the *internal state* of your value object.
+The short answer to the question, "Can EF Core translate value object comparisons in a `where` clause?" is: it depends. And that "depends" is heavily weighted on _how_ your value object is structured and how you are attempting to perform the comparison. Direct comparisons using the equality operator (`==`) on your value object class in a `where` clause, without proper configuration, won’t typically work out of the box. EF Core struggles to translate this to an equivalent SQL query. This is because it lacks the explicit instruction on how to compare the _internal state_ of your value object.
 
 My experience has been that without specific guidance, EF Core usually treats value objects as complex, non-primitive types it cannot directly compare against. It doesn’t automatically understand that two `Address` objects are considered equal if their `Street`, `City`, and `ZipCode` properties are equal, for example. This leads to exceptions or queries that load entire result sets into memory to perform these comparisons client-side, which is obviously undesirable from a performance perspective.
 
@@ -71,7 +71,7 @@ public void TestOwnedEntity()
 }
 ```
 
-In this example, EF Core correctly translates the property comparisons on `u.HomeAddress.Street`, `u.HomeAddress.City` and `u.HomeAddress.ZipCode` into SQL. You are *not* directly comparing `u.HomeAddress` to `targetAddress` as objects, rather using the properties. The underlying relational model now includes nested columns for the `HomeAddress` properties in the user's table, and EF Core knows how to target them in queries.
+In this example, EF Core correctly translates the property comparisons on `u.HomeAddress.Street`, `u.HomeAddress.City` and `u.HomeAddress.ZipCode` into SQL. You are _not_ directly comparing `u.HomeAddress` to `targetAddress` as objects, rather using the properties. The underlying relational model now includes nested columns for the `HomeAddress` properties in the user's table, and EF Core knows how to target them in queries.
 
 **Scenario 2: Explicit Property Mapping and Comparers**
 
@@ -228,4 +228,4 @@ For deeper dives into these topics, I would strongly recommend exploring the fol
 3.  **"Patterns of Enterprise Application Architecture" by Martin Fowler:** Specifically, the discussions on value objects and data mapping patterns within this book, offer valuable conceptual background that enhances practical EF core usage.
 4.  **Specific blog posts and articles by prominent EF Core contributors:** There’s a wealth of great content out there, specifically search for material on 'value object mapping' and 'custom value comparers' within EF Core.
 
-In closing, while it may seem like an uphill battle at first, remember that EF Core does provide the tools required to make value objects work well, even inside of `where` clauses, with a little setup and explicit guidance. The key is to understand that you’re not directly comparing the object but its internal data, and you need to tell EF Core *how* to access and compare that data. It’s a nuanced area but one that becomes manageable with some understanding and patience.
+In closing, while it may seem like an uphill battle at first, remember that EF Core does provide the tools required to make value objects work well, even inside of `where` clauses, with a little setup and explicit guidance. The key is to understand that you’re not directly comparing the object but its internal data, and you need to tell EF Core _how_ to access and compare that data. It’s a nuanced area but one that becomes manageable with some understanding and patience.

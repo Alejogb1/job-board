@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-implement-batch-training-in-python"
 ---
 
-Okay, let’s talk batch training. I've spent a fair amount of time optimizing training loops over the years, and dealing with the intricacies of large datasets. So, I'll share what I've learned about implementing batch training in Python, focusing on clarity and practicality rather than getting bogged down in theoretical minutiae.
+, let’s talk batch training. I've spent a fair amount of time optimizing training loops over the years, and dealing with the intricacies of large datasets. So, I'll share what I've learned about implementing batch training in Python, focusing on clarity and practicality rather than getting bogged down in theoretical minutiae.
 
 Batch training, fundamentally, is about processing data in manageable chunks rather than all at once. This isn't just a matter of convenience; it's often a necessity for memory management, and it can also influence the convergence and stability of your model training. Without it, you might find your system choking on out-of-memory errors or struggling with the noise of very large datasets when using stochastic optimization techniques. I remember specifically having to completely overhaul a system that was trying to learn on a single huge matrix back in '14 - it was an enlightening experience, albeit frustrating at the time.
 
-The core idea is to partition your dataset into *batches*. Each batch is a smaller subset of your complete training data. You then perform an update to your model parameters using the gradient calculated from each batch. Think of it like preparing a meal; you don't cook all the ingredients at once, you prepare things in stages - batches are your cooking stages here. This method allows us to efficiently utilize hardware resources and also leverage gradient descent algorithms more effectively.
+The core idea is to partition your dataset into _batches_. Each batch is a smaller subset of your complete training data. You then perform an update to your model parameters using the gradient calculated from each batch. Think of it like preparing a meal; you don't cook all the ingredients at once, you prepare things in stages - batches are your cooking stages here. This method allows us to efficiently utilize hardware resources and also leverage gradient descent algorithms more effectively.
 
 Let's dive into some code examples. We'll use numpy here as it's very common for numerical tasks and helps keep things relatively straightforward. In most real-world scenarios you'd be using a framework like pytorch or tensorflow, but the principle remains the same.
 
@@ -138,10 +138,10 @@ The `SimpleDataLoader` class simulates a common dataloader. The key features it 
 
 Beyond the code examples, several crucial considerations exist:
 
-* **Shuffling:** It's crucial to shuffle the data before each epoch to avoid learning patterns related to data ordering, not genuine features. This ensures your model doesn’t just memorize the sequence of samples.
-* **Batch Size:** The batch size is a hyperparameter. Too small, and you might experience noisy gradient updates and slower convergence. Too large, and you might run out of memory or get stuck in suboptimal local minima. Finding a suitable batch size usually requires experimentation. This is a very crucial aspect that impacts training in a very direct way; spend some time fine tuning this to your data.
-* **Data Loading:** Efficient data loading is essential for optimal training performance. Frameworks like TensorFlow and PyTorch offer optimized `DataLoaders` (or similar constructs) that handle parallel data loading and pre-processing steps. This makes a huge difference, especially when you're dealing with larger datasets.
-* **Distributed Training:** When working with very large datasets and complex models, batch training is often paired with distributed training, distributing the computational load across multiple GPUs or machines. This requires additional tooling but allows training on datasets previously impossible.
+- **Shuffling:** It's crucial to shuffle the data before each epoch to avoid learning patterns related to data ordering, not genuine features. This ensures your model doesn’t just memorize the sequence of samples.
+- **Batch Size:** The batch size is a hyperparameter. Too small, and you might experience noisy gradient updates and slower convergence. Too large, and you might run out of memory or get stuck in suboptimal local minima. Finding a suitable batch size usually requires experimentation. This is a very crucial aspect that impacts training in a very direct way; spend some time fine tuning this to your data.
+- **Data Loading:** Efficient data loading is essential for optimal training performance. Frameworks like TensorFlow and PyTorch offer optimized `DataLoaders` (or similar constructs) that handle parallel data loading and pre-processing steps. This makes a huge difference, especially when you're dealing with larger datasets.
+- **Distributed Training:** When working with very large datasets and complex models, batch training is often paired with distributed training, distributing the computational load across multiple GPUs or machines. This requires additional tooling but allows training on datasets previously impossible.
 
 For further study, I would recommend these resources:
 

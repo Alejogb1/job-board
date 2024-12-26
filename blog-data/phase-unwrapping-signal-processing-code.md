@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "phase-unwrapping-signal-processing-code"
 ---
 
-Okay so phase unwrapping right Been there done that got the t-shirt more like several stained with late-night caffeine and debugging tears let's dive in
+phase unwrapping right Been there done that got the t-shirt more like several stained with late-night caffeine and debugging tears let's dive in
 
 So you're dealing with phase unwrapping probably some signal processing thing I'm guessing from the question title maybe radar maybe interferometry maybe even just some weird audio analysis who knows doesn't really matter the pain is universal
 
@@ -12,7 +12,7 @@ The core problem as you probably already know is that your measured phase is typ
 
 I've had some epic battles with this honestly In one particularly memorable project back in my university days we were working with synthetic aperture radar SAR data this was before the current deep learning explosion by the way and boy did that unwrapping kick our butts We had this beautiful set of interferograms all wrapped nice and neat like pretty little wrapped presents except inside was chaos we could not extract the real information about ground deformation or whatever it was supposed to be and the project nearly went bust I think I survived on ramen for at least a week and had to grow a beard to deal with the stress the code looked like spaghetti after 3 days I am embarrassed even now thinking about it but thats how you learn right
 
-The first thing to remember is that the phase unwrapping is an *ill-posed problem* what does that mean it means there are multiple solutions that could fit the observed data so you need more information or reasonable assumptions about the smoothness of the phase usually the assumption is that the real phase doesn't make gigantic jumps from one sample to the next that is the heart of many unwrapping algorithms
+The first thing to remember is that the phase unwrapping is an _ill-posed problem_ what does that mean it means there are multiple solutions that could fit the observed data so you need more information or reasonable assumptions about the smoothness of the phase usually the assumption is that the real phase doesn't make gigantic jumps from one sample to the next that is the heart of many unwrapping algorithms
 
 The simplest approach or the one people try first always is path following unwrapping this is the basic method you go point by point from an initial point and add or subtract multiples of 2 pi to get a continuous phase basically you compare the difference in phase between current and previous and if the change is greater than pi or negative pi add or subtract 2pi appropriately. The problem with this is that path following is very sensitive to noise and the unwrapping result depends on the path taken it can get into some horrible states if your data has too many jumps or inconsistencies but it is a good start to see if your problem is so simple that a very basic approach will work it is very fast to implement and also good for understanding the concept if you have never seen phase unwrapping before
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "verilog-generate-for-loop-usage"
 ---
 
-Okay so you're asking about `generate` for loops in Verilog right Been there done that countless times Let's break it down I've seen my share of headaches with this feature so I'm gonna give you the real deal no fluff
+you're asking about `generate` for loops in Verilog right Been there done that countless times Let's break it down I've seen my share of headaches with this feature so I'm gonna give you the real deal no fluff
 
 First things first `generate` for loops are your go-to when you need to instantiate multiple instances of the same module or create repeated logic structures that vary slightly These loops are evaluated at compile time not during simulation or actual hardware runtime This is a critical distinction a lot of newcomers miss Think of it like a preprocessor directive in C but more powerful
 
@@ -58,7 +58,7 @@ module ripple_carry_adder (
 endmodule
 ```
 
-Notice a few things I've used a `wire` array for the carry signals `carry[0]` is the initial `cin` from outside and then inside the loop I connect `cout` of each full adder to `cin` of the next that’s how you build a ripple carry adder This also shows how you can reuse the looped `genvar` to address parts of the arrays like `a[i]` `b[i]` and `sum[i]` This `genvar` i is how it allows you to create 16 unique instances of full\_adder module
+Notice a few things I've used a `wire` array for the carry signals `carry[0]` is the initial `cin` from outside and then inside the loop I connect `cout` of each full adder to `cin` of the next that’s how you build a ripple carry adder This also shows how you can reuse the looped `genvar` to address parts of the arrays like `a[i]` `b[i]` and `sum[i]` This `genvar` i is how it allows you to create 16 unique instances of full_adder module
 
 I've seen engineers who try to use normal signals inside the `generate` for loops and wonder why the compiler screams at them that is because signals are runtime data holders `genvar` are like variables within the build tool they only exist during the build itself to generate stuff That is an important distinction
 
@@ -140,7 +140,7 @@ module memory #(parameter SIZE = 1024, parameter WORD_WIDTH = 8)
   localparam ADDR_WIDTH = $clog2(SIZE);
   reg [WORD_WIDTH-1:0] memory_data [0:SIZE-1];
   assign data_out = memory_data[addr_in];
-    
+
   generate
    if (write_enable) begin
        always @(posedge clk or posedge reset) begin
@@ -155,7 +155,7 @@ module memory #(parameter SIZE = 1024, parameter WORD_WIDTH = 8)
 endmodule
 ```
 
-Okay jokes aside let's make one thing clear you need to use `localparam` to calculate the address width of the memory because you cant use parameters in array definitions only constants You also can't generate an always block which is why I have a `generate if` statement to create the write logic This creates an array of `SIZE` number of register elements where each register is `WORD_WIDTH` wide
+jokes aside let's make one thing clear you need to use `localparam` to calculate the address width of the memory because you cant use parameters in array definitions only constants You also can't generate an always block which is why I have a `generate if` statement to create the write logic This creates an array of `SIZE` number of register elements where each register is `WORD_WIDTH` wide
 
 When using `generate` blocks, you need to be mindful of scope especially with name collisions I always try to use the `loop_name` after the `begin` statement because it helps greatly when debugging Also its not the most efficient way to build memory you can instead use a RAM module provided by the FPGA vendor in that case the `generate` statements are not needed
 

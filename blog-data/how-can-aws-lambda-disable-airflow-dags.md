@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-aws-lambda-disable-airflow-dags"
 ---
 
-Alright, let's talk about this. I remember back when I was architecting a pretty sprawling data pipeline a few years ago, we ran into this very challenge – needing to programmatically manage airflow dags from within an aws lambda function. It's a situation that, while not immediately obvious, crops up more frequently than you might think once you start intertwining serverless and orchestration.
+, let's talk about this. I remember back when I was architecting a pretty sprawling data pipeline a few years ago, we ran into this very challenge – needing to programmatically manage airflow dags from within an aws lambda function. It's a situation that, while not immediately obvious, crops up more frequently than you might think once you start intertwining serverless and orchestration.
 
 The core issue here is that aws lambda is, by its nature, an event-driven compute service, while airflow is a centralized workflow orchestration platform. They don't directly speak the same language, meaning lambda can't directly interact with airflow’s internal api to disable dags. We need to bridge that communication gap, and that’s where the magic happens.
 

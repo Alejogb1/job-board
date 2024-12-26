@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "alter-stage-snowflake-command-usage"
 ---
 
-Alright so you're asking about `ALTER STAGE` in Snowflake right Been there wrestled that beast plenty of times Let's break it down from a "I've seen it all" perspective and get you squared away
+so you're asking about `ALTER STAGE` in Snowflake right Been there wrestled that beast plenty of times Let's break it down from a "I've seen it all" perspective and get you squared away
 
 First off `ALTER STAGE` it's not exactly rocket science but its definitely a spot where things can get messy if you're not careful I remember back in my early Snowflake days I had this whole data ingestion pipeline built everything looking slick until one day it just decides to blow up Turns out the stage definition was subtly different from what the load commands were expecting Spent a solid 3 hours debugging that one yeah good times
 
@@ -14,7 +14,7 @@ What can you actually alter well a whole bunch of things You've got stuff like t
 
 Now here are a couple of examples to really make this concrete
 
-First say we've got an existing external stage named `my_s3_stage` currently configured to point to a development bucket and your team just spun up a production bucket Okay time for an `ALTER STAGE`
+First say we've got an existing external stage named `my_s3_stage` currently configured to point to a development bucket and your team just spun up a production bucket time for an `ALTER STAGE`
 
 ```sql
 ALTER STAGE my_s3_stage
@@ -52,7 +52,8 @@ So to sum it all up `ALTER STAGE` isn’t a scary command It’s just got some d
 One final bit of advice before I sign off If you ever encounter any weird error messages check the permissions check the urls check the credentials then try to check the logs if you have access to them that should usually solve 95 percent of your issues
 
 Now I'm gonna get back to actually working with data rather than talking about it Good luck out there and may your pipelines be stable and your data be clean
-Oh yeah last thing why did the database break up with the SQL query because they had too many joins *ba dum tss* ok that was bad I will show myself out
+Oh yeah last thing why did the database break up with the SQL query because they had too many joins _ba dum tss_ ok that was bad I will show myself out
+
 ```sql
 ALTER STAGE my_gcs_stage
 SET URL = 'gcs://my-gcs-bucket/data/'

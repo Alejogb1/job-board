@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-supervised-neural-networks-learn"
 ---
 
-Okay, let’s tackle this one. It's a fundamental question, and I've seen enough variations of it over the years to understand where the confusion often lies. Supervised learning, in the context of neural networks, is at its core about minimizing error. Specifically, it's about adjusting the network's internal parameters — weights and biases — to map input data to desired output data as accurately as possible. The process is iterative and involves something akin to guided trial and error, but with a sophisticated mathematical framework underpinning everything.
+, let’s tackle this one. It's a fundamental question, and I've seen enough variations of it over the years to understand where the confusion often lies. Supervised learning, in the context of neural networks, is at its core about minimizing error. Specifically, it's about adjusting the network's internal parameters — weights and biases — to map input data to desired output data as accurately as possible. The process is iterative and involves something akin to guided trial and error, but with a sophisticated mathematical framework underpinning everything.
 
 I remember working on a project back in the mid-2010s where we were building a system to classify handwritten digits. We had a huge dataset, which was great, but also a testament to the importance of data preprocessing before diving into the modeling phase. That's a separate discussion, however. The neural network, a relatively simple feedforward model at the time, started from a place of near randomness in its predictions. Essentially, it was just guessing. The magic happened as we fed it training data.
 
@@ -12,7 +12,7 @@ So, how does it work in detail? Let’s break down the key concepts. First, you 
 
 This initial incorrect output is the genesis of the learning process. We compare the network's prediction to the actual target label (the "ground truth") using a loss function, often something like mean squared error or categorical cross-entropy. The loss function quantifies how wrong the network is. The goal of training is to minimize this loss. It’s the value we’re trying to drive down toward zero, indicating that the network's predictions are increasingly accurate.
 
-The core of learning, the crucial step, is backward propagation or backpropagation. This algorithm uses the chain rule of calculus to compute the gradient of the loss function with respect to every weight and bias in the network. Put simply, it calculates how much each parameter contributes to the error. The gradient indicates the direction of steepest ascent, so we move the parameters in the *opposite* direction to minimize the loss. This is achieved using an optimization algorithm like stochastic gradient descent (sgd) or its more advanced variants like adam.
+The core of learning, the crucial step, is backward propagation or backpropagation. This algorithm uses the chain rule of calculus to compute the gradient of the loss function with respect to every weight and bias in the network. Put simply, it calculates how much each parameter contributes to the error. The gradient indicates the direction of steepest ascent, so we move the parameters in the _opposite_ direction to minimize the loss. This is achieved using an optimization algorithm like stochastic gradient descent (sgd) or its more advanced variants like adam.
 
 The learning rate, a hyperparameter, determines how big of a step we take down the loss landscape. Too large of a learning rate can cause the optimization to overshoot the minimum. Too small, and learning is agonizingly slow. It's a bit of an art to find the sweet spot for optimal training. This process of forward propagation, error calculation, backpropagation, and parameter update is iterated over many epochs – that is, many passes through the training dataset – until the network achieves acceptable accuracy on a separate validation set. We monitor this validation performance closely to avoid overfitting, which is where the network memorizes the training data rather than generalizing to new, unseen data.
 
@@ -58,6 +58,7 @@ for epoch in range(epochs):
 
 print(f"Learned weight: {w}, Learned bias: {b}")
 ```
+
 This first example illustrates the learning process with just one neuron and a linear relationship. It’s a simplification but shows the core concepts. We initialize a weight and bias, then iteratively calculate the loss (mean squared error) and the gradients and update these parameters with a basic gradient descent. The loss decreases during training until the model converges to a linear fit of the data.
 
 **Example 2: Simple Neural Network with One Hidden Layer**

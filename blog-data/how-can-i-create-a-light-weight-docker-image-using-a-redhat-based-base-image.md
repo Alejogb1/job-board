@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-light-weight-docker-image-using-a-redhat-based-base-image"
 ---
 
-Okay, let’s tackle this. I’ve spent a considerable amount of time optimizing container images, particularly those derived from red hat distributions, and let me tell you, it’s a topic where a bit of strategic thought really pays off. The goal, of course, is a small, secure, and performant image, and the journey to that ideal can be more involved than one might initially expect. I'm going to walk you through it based on experience, not theory, focusing on techniques that have consistently delivered results for me.
+, let’s tackle this. I’ve spent a considerable amount of time optimizing container images, particularly those derived from red hat distributions, and let me tell you, it’s a topic where a bit of strategic thought really pays off. The goal, of course, is a small, secure, and performant image, and the journey to that ideal can be more involved than one might initially expect. I'm going to walk you through it based on experience, not theory, focusing on techniques that have consistently delivered results for me.
 
 The common pitfalls we encounter when building from a red hat base are usually around unnecessary bloat – think bundled utilities, development tools, and accumulated package caches. These add significant overhead to the image size, and hence, increase distribution time and resource usage. My early projects had images easily clocking in at multi-gigabyte sizes, a painful learning curve, and it really emphasized the necessity for a disciplined approach to layer creation.
 
@@ -38,7 +38,7 @@ EXPOSE 8080
 CMD ["python", "app.py"]
 ```
 
-In this example, the first stage, named `builder`, leverages a larger python base image to install requirements and build artifacts. Critically, this stage doesn't end up in the final image. The second stage starts with a slimmed-down `ubi-minimal` image and *only* copies over the necessary files (application code, dependencies, and necessary environment). This avoids bloating the final layer with build tools and libraries you don't need at runtime. The `--no-cache-dir` in the pip install command helps keep the temporary data from polluting your intermediate build layer.
+In this example, the first stage, named `builder`, leverages a larger python base image to install requirements and build artifacts. Critically, this stage doesn't end up in the final image. The second stage starts with a slimmed-down `ubi-minimal` image and _only_ copies over the necessary files (application code, dependencies, and necessary environment). This avoids bloating the final layer with build tools and libraries you don't need at runtime. The `--no-cache-dir` in the pip install command helps keep the temporary data from polluting your intermediate build layer.
 
 Next, let's look at package management. When installing packages with `yum`, always use the `--setopt=tsflags=nodocs` and `--setopt=clean_requirements_on_remove=1` flags. The `nodocs` option prevents the unnecessary installation of documentation files, and the `clean_requirements_on_remove` ensures that redundant dependencies are removed, further reducing the size footprint. You can also use the `yum clean all` instruction at the end of a package install step to clear cached data. Here’s an example illustrating this point:
 
@@ -71,6 +71,7 @@ RUN ls -la
 
 CMD ["python", "app.py"]
 ```
+
 In this example, we are selecting only specific files/folders that are needed for the application. As you can see, we avoid a blind copy of the entire project by using `COPY <source> <destination>` instructions per file or directory. The `ls -la` command gives a very simple sanity check of the final image contents (this should be removed once happy with the image).
 
 Let's talk resources. For a deep dive on best practices in container image building, you should consult “Docker in Action” by Jeff Nickoloff, a comprehensive guide that covers not only image building but also advanced topics on orchestration. “Programming Kubernetes” by Michael Hausenblas and Stefan Schimanski gives a strong background in container runtime environments and should provide additional context around containerized applications. The official docker documentation is, of course, a valuable resource. Red Hat's documentation on ubi images is also essential, as it contains specific guidelines for using their base images, which is particularly useful for red hat based images. Also, reviewing the official documentation on the specific version of red hat you are using for any further specific optimizations would also be beneficial.

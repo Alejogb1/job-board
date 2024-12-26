@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-search-through-gpt-3s-training-data"
 ---
 
-Alright, so, you're asking about how to search through the training data of gpt-3. That's a pretty common question, and also a very tricky one. I've been around the block with large language models and their quirks for quite a while now, and believe me, i have spent many days banging my head against walls trying to figure out similar things, so i can tell you this is not simple.
+, so, you're asking about how to search through the training data of gpt-3. That's a pretty common question, and also a very tricky one. I've been around the block with large language models and their quirks for quite a while now, and believe me, i have spent many days banging my head against walls trying to figure out similar things, so i can tell you this is not simple.
 
 First things first, let's be completely clear: you cannot directly search gpt-3’s training data. that data is proprietary and, frankly, astronomically massive. it’s not something anyone gets access to, not even most folks working at openai. it’s kept heavily guarded for good reasons, mostly about intellectual property and preventing misuse. so, forget about some kind of magic query language to explore the terabytes of text it was trained on. that's a dead end.
 

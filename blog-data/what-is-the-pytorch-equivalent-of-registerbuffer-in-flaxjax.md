@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-is-the-pytorch-equivalent-of-registerbuffer-in-flaxjax"
 ---
 
-Alright, let's talk about how PyTorch handles state that shouldn't be trained, a concept elegantly managed by `register_buffer` in Flax. I've bumped into this quite a bit, particularly back when I was building a complex neural ODE model, where maintaining a fixed time grid for numerical integration was crucial, but obviously, not something we wanted gradients flowing through.
+, let's talk about how PyTorch handles state that shouldn't be trained, a concept elegantly managed by `register_buffer` in Flax. I've bumped into this quite a bit, particularly back when I was building a complex neural ODE model, where maintaining a fixed time grid for numerical integration was crucial, but obviously, not something we wanted gradients flowing through.
 
 The key thing to understand is that, unlike Flax which explicitly separates parameters and buffers, PyTorch uses a more unified approach within its module structure. In PyTorch, the notion of ‘buffers’ is encompassed within what we’d generally call ‘parameters’ but controlled via the `register_buffer` method. Specifically, when you use `register_buffer`, you’re adding a tensor to the module’s state, much like you’d add a learnable parameter using `torch.nn.Parameter`. However, the critical difference is that `register_buffer` specifically tells PyTorch's optimization machinery (like Adam, SGD, etc.) to not update this tensor's values when backward passes occur.
 
@@ -85,6 +85,7 @@ output = model(input_data)
 
 print("Fixed sequence length:", model.sequence_length)
 ```
+
 Here, we use `register_buffer` to fix the expected sequence length in an RNN module, ensuring all sequences are handled similarly. The code also demonstrates a realistic scenario where the buffer is used for masking and padding. Again, the value of `sequence_length` is not touched by gradient descent, which is exactly what we need.
 
 Finally, consider this example where a buffer stores the initial states for an LSTM, avoiding having to create those repeatedly during inference:

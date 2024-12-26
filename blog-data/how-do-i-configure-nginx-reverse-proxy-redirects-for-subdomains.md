@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-configure-nginx-reverse-proxy-redirects-for-subdomains"
 ---
 
-Okay, let’s tackle this. I've spent more than a few late nights wrestling with Nginx configurations, particularly those involving reverse proxy setups for subdomains. It's a common scenario, and there are a few nuanced ways to approach it, so let’s dive in. The core concept is directing traffic arriving at specific subdomains to the appropriate backend services, which might be running on different ports or even different servers entirely.
+, let’s tackle this. I've spent more than a few late nights wrestling with Nginx configurations, particularly those involving reverse proxy setups for subdomains. It's a common scenario, and there are a few nuanced ways to approach it, so let’s dive in. The core concept is directing traffic arriving at specific subdomains to the appropriate backend services, which might be running on different ports or even different servers entirely.
 
 Essentially, what we're doing is crafting Nginx server blocks that listen on specific hostnames (our subdomains) and then using the `proxy_pass` directive to route those requests to their intended destinations. This involves a combination of correctly matching the incoming `Host` header and then forwarding the request with the correct information. It’s not inherently complex, but precision is paramount; a small typo can lead to some head-scratching debugging sessions.
 
@@ -82,7 +82,7 @@ server {
 
 Here, anything coming in for `static.example.com` will be forwarded to the service listening on port 9000, but requests for `static.example.com/images/*` will specifically be routed to the server listening on port 9001. The order in which the `location` blocks appear is important; Nginx processes location directives in the order they're declared, so the more specific path `/images/` is evaluated before the general `/`.
 
-Finally, let's consider an instance where we have different subdomains with different backends on a *different* machine altogether. This is very common in distributed systems.
+Finally, let's consider an instance where we have different subdomains with different backends on a _different_ machine altogether. This is very common in distributed systems.
 
 ```nginx
 server {

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-best-approach-for-text-classification-using-spacy"
 ---
 
-Alright, let’s talk about text classification with spaCy. It’s a topic I've spent quite a bit of time with, having tackled various classification challenges in the past, ranging from sentiment analysis of customer reviews to categorizing technical documentation. While spaCy doesn't natively provide ready-to-use classification models like some other libraries, it’s a powerful tool for the crucial steps *before* classification and offers great flexibility in how you integrate external models. I wouldn't point to one "best" approach, as it really depends on the specifics of your data and task, but here’s a breakdown of what I’ve found most effective, along with some code to illustrate.
+, let’s talk about text classification with spaCy. It’s a topic I've spent quite a bit of time with, having tackled various classification challenges in the past, ranging from sentiment analysis of customer reviews to categorizing technical documentation. While spaCy doesn't natively provide ready-to-use classification models like some other libraries, it’s a powerful tool for the crucial steps _before_ classification and offers great flexibility in how you integrate external models. I wouldn't point to one "best" approach, as it really depends on the specifics of your data and task, but here’s a breakdown of what I’ve found most effective, along with some code to illustrate.
 
 My first encounter with this was a project where I was tasked with classifying incoming support tickets. We had a deluge of text data, some well-structured, some not so much. The initial attempt using naive bayes and bag-of-words yielded… well, let's say it wasn’t very impressive. That's when I started to lean heavily into the pre-processing capabilities of spaCy and the power of transformer models for downstream classification.
 
@@ -43,7 +43,7 @@ In this snippet, `preprocess_text` leverages spaCy to tokenize, lemmatize, lower
 
 After pre-processing, you need to convert the text into numerical representations that machine learning models can work with. There are several ways to approach this.
 
-*   **Bag-of-Words (BoW) or TF-IDF:** These are simple methods that represent documents as vectors based on word frequencies. You can use `sklearn.feature_extraction.text` to achieve this. SpaCy provides the raw tokens necessary for these methods after preprocessing.
+- **Bag-of-Words (BoW) or TF-IDF:** These are simple methods that represent documents as vectors based on word frequencies. You can use `sklearn.feature_extraction.text` to achieve this. SpaCy provides the raw tokens necessary for these methods after preprocessing.
 
 ```python
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -87,7 +87,7 @@ print(f"Model Accuracy: {accuracy}")
 
 This snippet takes the preprocessed text data, vectorizes it with TF-IDF, and then trains a logistic regression classifier. Keep in mind that the data is very limited and model performance will vary depending on the specific training and test set.
 
-*   **Word Embeddings:** This is where spaCy’s medium and large models really shine. They come pre-trained with word vectors, which encode semantic relationships between words. This means words with similar meanings will have similar vectors. You can access these vectors via `doc.vector`.
+- **Word Embeddings:** This is where spaCy’s medium and large models really shine. They come pre-trained with word vectors, which encode semantic relationships between words. This means words with similar meanings will have similar vectors. You can access these vectors via `doc.vector`.
 
 ```python
 import numpy as np

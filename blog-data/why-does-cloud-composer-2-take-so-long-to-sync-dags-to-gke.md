@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-cloud-composer-2-take-so-long-to-sync-dags-to-gke"
 ---
 
-Okay, let's tackle this one. I've definitely seen my share of slow dag syncs with Cloud Composer 2, and it can be a real pain point. It’s not always a single root cause, but a confluence of factors that can contribute to those frustratingly long wait times. Let me walk you through the typical culprits, drawing from my experiences managing several large-scale data pipelines.
+, let's tackle this one. I've definitely seen my share of slow dag syncs with Cloud Composer 2, and it can be a real pain point. It’s not always a single root cause, but a confluence of factors that can contribute to those frustratingly long wait times. Let me walk you through the typical culprits, drawing from my experiences managing several large-scale data pipelines.
 
 First, it's important to understand that "syncing" in Composer 2 isn't a simple file copy operation. When you upload a dag, that code needs to be packaged, validated, and then distributed within the Composer environment, which runs on Google Kubernetes Engine (GKE). This process, while robust, involves several steps, each with its own potential bottlenecks.
 
@@ -69,6 +69,7 @@ default_args = {
 with DAG('dag_two', default_args=default_args, schedule_interval=None) as dag:
     t2 = BashOperator(task_id='task_2', bash_command='echo "another task"')
 ```
+
 This modular approach speeds up dag processing and reduces the load on the scheduler.
 
 **Example 2: Managing `requirements.txt`**
@@ -92,6 +93,7 @@ pandas==1.5.3
 requests==2.28.1
 numpy==1.23.5
 ```
+
 Only include libraries you absolutely need and specify specific versions. Consider using a virtual environment to test out your requirements before deploying to Composer. Remember that every unnecessary dependency increases build time and image size.
 
 **Example 3: Adjusting GKE resources**

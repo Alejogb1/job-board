@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-didnt-the-intellij-idea-backend-ide-start-remotely"
 ---
 
-Okay, let's tackle this. It's a frustration I've seen, and even experienced firsthand, a few too many times—that remote IntelliJ backend stubbornly refusing to launch. There's a multitude of potential causes, and figuring out the specific culprit often requires a bit of systematic troubleshooting. I remember one project in particular, back in my days working on a distributed Java system, where we wrestled (sorry, *encountered*) this very issue constantly. We’d try to spin up a remote IntelliJ instance for debugging, only to stare at a perpetually spinning wheel. It wasn't a fun time.
+, let's tackle this. It's a frustration I've seen, and even experienced firsthand, a few too many times—that remote IntelliJ backend stubbornly refusing to launch. There's a multitude of potential causes, and figuring out the specific culprit often requires a bit of systematic troubleshooting. I remember one project in particular, back in my days working on a distributed Java system, where we wrestled (sorry, _encountered_) this very issue constantly. We’d try to spin up a remote IntelliJ instance for debugging, only to stare at a perpetually spinning wheel. It wasn't a fun time.
 
 The underlying reason why your IntelliJ IDEA backend might not start remotely can usually be traced back to a few key areas. We're dealing with a communication process that spans machines, networks, and operating systems, so there are multiple potential points of failure. Let’s break down the common culprits and how to approach them.
 
@@ -97,8 +97,8 @@ Run this script on the server side. Check that the required java version matches
 
 In summary, the issue of a failing IntelliJ backend startup involves a thorough examination of network configurations, security setup, versioning, and system resources. For deeper understanding I recommend the following:
 
-*   **"TCP/IP Illustrated, Volume 1: The Protocols" by W. Richard Stevens**: This is essential for understanding the core networking concepts involved. It will help you grasp what goes on “under the hood” when your local IntelliJ tries to talk to a remote one.
-*   **"Java Concurrency in Practice" by Brian Goetz et al**: Although this is focused on concurrency, the discussions about JVM internals and resource management can be helpful in understanding possible server-side limitations.
-*   **Your operating system's official documentation on firewalls**: For example, look into `iptables` on Linux or the Windows Firewall for Windows servers.
+- **"TCP/IP Illustrated, Volume 1: The Protocols" by W. Richard Stevens**: This is essential for understanding the core networking concepts involved. It will help you grasp what goes on “under the hood” when your local IntelliJ tries to talk to a remote one.
+- **"Java Concurrency in Practice" by Brian Goetz et al**: Although this is focused on concurrency, the discussions about JVM internals and resource management can be helpful in understanding possible server-side limitations.
+- **Your operating system's official documentation on firewalls**: For example, look into `iptables` on Linux or the Windows Firewall for Windows servers.
 
 Debugging remote server problems can be challenging, but by systematically tackling potential problems, you'll get closer to pinpointing the exact reason behind a failed remote IntelliJ backend startup. It's seldom just one thing, but often a combination of smaller factors.

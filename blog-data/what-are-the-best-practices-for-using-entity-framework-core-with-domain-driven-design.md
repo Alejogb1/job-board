@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "what-are-the-best-practices-for-using-entity-framework-core-with-domain-driven-design"
 ---
 
-Okay, let's tackle this. I’ve seen my share of developers, myself included initially, stumble when trying to marry the elegance of domain-driven design (ddd) with the practicality of entity framework core (ef core). It's a powerful combination, but it requires careful consideration to avoid common pitfalls. I recall a particularly frustrating project a few years back where we tried to shoehorn our entire domain model into ef core entities directly. Let's just say the performance suffered, and the maintenance became a nightmare. That experience really drove home the need for clear separation and well-defined boundaries.
+, let's tackle this. I’ve seen my share of developers, myself included initially, stumble when trying to marry the elegance of domain-driven design (ddd) with the practicality of entity framework core (ef core). It's a powerful combination, but it requires careful consideration to avoid common pitfalls. I recall a particularly frustrating project a few years back where we tried to shoehorn our entire domain model into ef core entities directly. Let's just say the performance suffered, and the maintenance became a nightmare. That experience really drove home the need for clear separation and well-defined boundaries.
 
-At its core, the challenge lies in the fact that ddd focuses on modeling the *business* domain, whereas ef core is an *infrastructure* concern, specifically around data persistence. Therefore, best practices center around preventing persistence concerns from leaking into your domain model. Here are the key areas where I've found a solid approach to be indispensable:
+At its core, the challenge lies in the fact that ddd focuses on modeling the _business_ domain, whereas ef core is an _infrastructure_ concern, specifically around data persistence. Therefore, best practices center around preventing persistence concerns from leaking into your domain model. Here are the key areas where I've found a solid approach to be indispensable:
 
 **1. Domain Model Isolation:** This is paramount. Your domain model should be completely ignorant of ef core, or any other persistence mechanism. It should be composed of plain c# objects (poco), domain entities, value objects, domain services, and aggregates. These should represent your business logic and rules, not database tables. The domain model should not have any attributes or methods that are directly related to ef core (such as navigation properties for database relationships).
 
-The first mistake I often see is direct association of ef core's attributes within domain entities. Here's a contrasting example showing 'what *not* to do' and 'a better approach':
+The first mistake I often see is direct association of ef core's attributes within domain entities. Here's a contrasting example showing 'what _not_ to do' and 'a better approach':
 
 ```csharp
 // Incorrect - Domain entity directly influenced by EF Core
@@ -70,7 +70,7 @@ public record OrderDate(DateTime Value);
 
 Notice how the 'Correct' example doesn't expose database ids directly but uses value objects like `OrderId` and `ProductId`. Also it uses IReadOnlyCollection to prevent modification from external classes which enforces better domain control. The domain model is focused solely on business logic, completely decoupled from the underlying data storage. The 'Incorrect' example directly maps to how a database table might look, directly leaking persistence concerns.
 
-**2. Persistence Ignorance with Repository Pattern:** To bridge the gap between your domain and ef core, implement the repository pattern. Repositories should expose an interface defined within your *domain* layer and the implementation lives within your *infrastructure* layer (where ef core is used). This allows the application layer to interact with data through the abstraction defined by the interface, without knowing about the specifics of data access.
+**2. Persistence Ignorance with Repository Pattern:** To bridge the gap between your domain and ef core, implement the repository pattern. Repositories should expose an interface defined within your _domain_ layer and the implementation lives within your _infrastructure_ layer (where ef core is used). This allows the application layer to interact with data through the abstraction defined by the interface, without knowing about the specifics of data access.
 
 This snippet shows what an interface for an order repository would look like in the domain layer and its implementation using ef core in the infrastructure layer.
 
@@ -237,9 +237,9 @@ This example shows the mapping in both directions. Notice how domain value objec
 
 For a deeper dive, I strongly recommend exploring the following resources:
 
-*   **"Domain-Driven Design: Tackling Complexity in the Heart of Software" by Eric Evans:** This is the foundational text on ddd and a must-read for anyone implementing ddd principles.
-*   **"Implementing Domain-Driven Design" by Vaughn Vernon:** A practical guide that expands upon Evans' concepts and includes code examples to understand the practical implementations of DDD.
-*   **"Patterns of Enterprise Application Architecture" by Martin Fowler:** Offers valuable insight into various architectural patterns, including the repository pattern, which plays a crucial role in achieving separation of concerns.
-*  **Microsoft Documentation on Entity Framework Core:** Keep up to date with changes to EF Core, as knowing the ins and outs of its functionality is essential.
+- **"Domain-Driven Design: Tackling Complexity in the Heart of Software" by Eric Evans:** This is the foundational text on ddd and a must-read for anyone implementing ddd principles.
+- **"Implementing Domain-Driven Design" by Vaughn Vernon:** A practical guide that expands upon Evans' concepts and includes code examples to understand the practical implementations of DDD.
+- **"Patterns of Enterprise Application Architecture" by Martin Fowler:** Offers valuable insight into various architectural patterns, including the repository pattern, which plays a crucial role in achieving separation of concerns.
+- **Microsoft Documentation on Entity Framework Core:** Keep up to date with changes to EF Core, as knowing the ins and outs of its functionality is essential.
 
 By adhering to these practices – particularly the strict separation of concerns, use of the repository pattern, and careful mapping – you can create robust, maintainable applications that leverage the strengths of both ddd and ef core, just as I have learnt to do from my experiences. These principles have served me well in numerous projects, and I hope they prove useful for you too. Remember that the goal is to make your domain model reflect your business, not your database.

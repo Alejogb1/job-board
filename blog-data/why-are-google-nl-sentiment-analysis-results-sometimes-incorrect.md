@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-are-google-nl-sentiment-analysis-results-sometimes-incorrect"
 ---
 
-Alright, let's unpack this sentiment analysis issue. I've seen firsthand, more times than I care to remember, how even the most robust natural language processing models can misinterpret sentiment. It's not a reflection of the tech being 'bad'; rather, it's a demonstration of the complex nature of human language. Google's Natural Language API, while incredibly powerful, is still dealing with inherently ambiguous data.
+, let's unpack this sentiment analysis issue. I've seen firsthand, more times than I care to remember, how even the most robust natural language processing models can misinterpret sentiment. It's not a reflection of the tech being 'bad'; rather, it's a demonstration of the complex nature of human language. Google's Natural Language API, while incredibly powerful, is still dealing with inherently ambiguous data.
 
-The core of the problem lies in several areas: context, nuance, and the limitations of training data. Sentiment analysis is not simply about identifying positive or negative words. It’s about understanding *how* those words are used *within* a given statement and *in relation* to the broader text or even the user's intent. I recall a particularly frustrating case while working on a client's social media monitoring system. We'd plugged into the google nlp api, and it was routinely misclassifying sarcasm, which, as we know, is frequently employed online. The phrase “oh, that’s *just* fantastic” might be flagged as highly positive by a superficial analyzer, yet is clearly negative when spoken sarcastically. This is where contextual awareness becomes critical.
+The core of the problem lies in several areas: context, nuance, and the limitations of training data. Sentiment analysis is not simply about identifying positive or negative words. It’s about understanding _how_ those words are used _within_ a given statement and _in relation_ to the broader text or even the user's intent. I recall a particularly frustrating case while working on a client's social media monitoring system. We'd plugged into the google nlp api, and it was routinely misclassifying sarcasm, which, as we know, is frequently employed online. The phrase “oh, that’s _just_ fantastic” might be flagged as highly positive by a superficial analyzer, yet is clearly negative when spoken sarcastically. This is where contextual awareness becomes critical.
 
 The way I approach these kinds of issues is through a multi-pronged strategy. Firstly, and most crucially, is the pre-processing of the input text. Garbage in, garbage out, as the saying goes. This involves cleaning the data – handling encoding issues, removing irrelevant symbols, and sometimes, applying basic stemming or lemmatization to normalize words. For instance, the words "running" and "ran" carry the same root meaning. Sometimes it's worthwhile to reduce them to "run" which might help with model performance. Second, I always delve deeper into what a model's specific limitations are, which can include limitations in the training datasets. No model is perfect, and understanding that limitations is key to working around them. Finally, I typically use a combination of approaches that might include custom models to address very specific, very context-sensitive scenarios.
 
@@ -27,15 +27,15 @@ nltk.download('punkt', quiet=True) # download if you don't have it
 def analyze_sentiment_with_negation(text):
     analyzer = SentimentIntensityAnalyzer()
     tokens = word_tokenize(text.lower())
-    
+
     negated = False
     modified_tokens = []
-    
+
     for token in reversed(tokens):  # Go backwards because negation works forward
         if token in ["not", "n't"]:
             negated = True
             continue
-        
+
         if negated:
             modified_tokens.insert(0, f"not_{token}") # use prefix to treat the word differently
             negated = False
@@ -57,7 +57,7 @@ This code uses the VADER lexicon from NLTK to handle basic sentiment analysis. W
 
 **Example 2: Dealing with Sarcasm (and Irony)**
 
-Sarcasm is extremely difficult for algorithms to detect, especially without contextual cues or tonal information that is typically found in human communication. Text alone often cannot capture the intonation or body language that signals sarcasm. However, some textual patterns are often associated with sarcasm – such as the use of intensifiers in unexpected ways or expressions that overtly contradict the underlying message. Here's an example of something that *attempts* to account for sarcasm:
+Sarcasm is extremely difficult for algorithms to detect, especially without contextual cues or tonal information that is typically found in human communication. Text alone often cannot capture the intonation or body language that signals sarcasm. However, some textual patterns are often associated with sarcasm – such as the use of intensifiers in unexpected ways or expressions that overtly contradict the underlying message. Here's an example of something that _attempts_ to account for sarcasm:
 
 ```python
 from nltk.sentiment import SentimentIntensityAnalyzer
@@ -66,11 +66,11 @@ import re
 def analyze_sentiment_with_sarcasm_check(text):
     analyzer = SentimentIntensityAnalyzer()
     scores = analyzer.polarity_scores(text)
-    
+
     # Basic sarcasm detection rules (can be extended based on observed patterns)
     sarcasm_indicators = [r'\b(just|only)\b.*(fantastic|amazing|perfect)',
                          r'(oh|well|gee),.*(good|great|wonderful)\b']
-    
+
     for pattern in sarcasm_indicators:
         if re.search(pattern, text, re.IGNORECASE):
             scores['compound'] = -scores['compound'] # invert sentiment for sarcastic text
@@ -100,9 +100,9 @@ from nltk.tokenize import word_tokenize
 def analyze_sentiment_with_context(text, context_keywords):
     analyzer = SentimentIntensityAnalyzer()
     scores = analyzer.polarity_scores(text)
-    
+
     tokens = word_tokenize(text.lower())
-    
+
     if 'interesting' in tokens:
       context_score = 0
       for word in tokens:
@@ -115,7 +115,7 @@ def analyze_sentiment_with_context(text, context_keywords):
         scores['compound'] = abs(scores['compound'])
       elif context_score < 0 :
         scores['compound'] = -abs(scores['compound'])
-    
+
     return scores
 
 context_data = {'positive' : ['delicious', 'good', 'amazing', 'tasty'],
@@ -126,6 +126,7 @@ text6 = "The food was interesting, it was bad."
 print(f"Sentiment of '{text5}': {analyze_sentiment_with_context(text5, context_data)}")
 print(f"Sentiment of '{text6}': {analyze_sentiment_with_context(text6, context_data)}")
 ```
+
 In this snippet, we look for the word 'interesting' and if found, we look at the surrounding words. If there are more positive context words nearby we assign a positive sentiment, otherwise we assign a negative one. As with all things, this is not perfect but demonstrates the technique.
 
 These are simplified examples, but they illustrate that there are a variety of ways to account for shortcomings in sentiment analysis. It isn't just about throwing data at an API and hoping for the best. You have to be tactical.

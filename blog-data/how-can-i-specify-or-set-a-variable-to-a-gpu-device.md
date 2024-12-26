@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-specify-or-set-a-variable-to-a-gpu-device"
 ---
 
-Alright, let's talk about pinning variables to the GPU – it’s a topic I've had to address quite a few times across different projects, particularly when working with large-scale machine learning models. This isn’t simply about allocating memory; it’s also about ensuring that data resides where it needs to be for optimal computation speed. From my experience, moving data back and forth between the CPU and GPU can quickly become a significant performance bottleneck if not handled carefully.
+, let's talk about pinning variables to the GPU – it’s a topic I've had to address quite a few times across different projects, particularly when working with large-scale machine learning models. This isn’t simply about allocating memory; it’s also about ensuring that data resides where it needs to be for optimal computation speed. From my experience, moving data back and forth between the CPU and GPU can quickly become a significant performance bottleneck if not handled carefully.
 
 The core concept revolves around explicitly managing the memory space where your data resides. By default, many numerical computing libraries, like numpy, will create data arrays in main system memory (RAM), handled by the CPU. However, GPUs possess their own, dedicated memory, and operations performed there are orders of magnitude faster than comparable CPU operations, especially for highly parallel tasks like matrix multiplication. To leverage this, you need to move your variables explicitly to the GPU device.
 

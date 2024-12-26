@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-to-resolve-the-type-error-for-msgsender-and-address-0-in-a-function-call"
 ---
 
-Alright, let's talk about that classic headache: dealing with `msg.sender` and address(0) issues in smart contracts. It's a scenario I've bumped into more times than I care to remember, and it usually signals something crucial isn't quite aligned in your contract's logic or testing setup. I recall a particularly frustrating instance back in 2018, working on a proof-of-stake system. We had a complex delegate voting mechanism, and a subtle oversight regarding `msg.sender` in a few edge cases led to some unexpected, shall we say, *unpleasant* outcomes.
+, let's talk about that classic headache: dealing with `msg.sender` and address(0) issues in smart contracts. It's a scenario I've bumped into more times than I care to remember, and it usually signals something crucial isn't quite aligned in your contract's logic or testing setup. I recall a particularly frustrating instance back in 2018, working on a proof-of-stake system. We had a complex delegate voting mechanism, and a subtle oversight regarding `msg.sender` in a few edge cases led to some unexpected, shall we say, _unpleasant_ outcomes.
 
-The core of the problem, when you see a type error related to `msg.sender` and address(0), usually boils down to a fundamental misunderstanding of how `msg.sender` is populated and what address(0) actually represents in the context of the Ethereum Virtual Machine (EVM). `msg.sender` provides the address of the account or contract that initiated the current transaction. This is critical for access control and authorization within a smart contract. When you see a situation where `msg.sender` results in address(0) being passed, it often means the function call isn't originating from an external address but from within the contract itself, or it's being called in an environment or context where there is no sender associated with the call. That *no sender* condition typically happens during contract construction, internal calls, or in test environments that do not mock the transaction originator.
+The core of the problem, when you see a type error related to `msg.sender` and address(0), usually boils down to a fundamental misunderstanding of how `msg.sender` is populated and what address(0) actually represents in the context of the Ethereum Virtual Machine (EVM). `msg.sender` provides the address of the account or contract that initiated the current transaction. This is critical for access control and authorization within a smart contract. When you see a situation where `msg.sender` results in address(0) being passed, it often means the function call isn't originating from an external address but from within the contract itself, or it's being called in an environment or context where there is no sender associated with the call. That _no sender_ condition typically happens during contract construction, internal calls, or in test environments that do not mock the transaction originator.
 
-Now, it's essential to recognize that address(0) is *not* a valid external account. It's a special address—often referred to as the zero address or the null address—used to signify the absence of a sender. Treating address(0) like a regular account address will inevitably lead to errors.
+Now, it's essential to recognize that address(0) is _not_ a valid external account. It's a special address—often referred to as the zero address or the null address—used to signify the absence of a sender. Treating address(0) like a regular account address will inevitably lead to errors.
 
 To illustrate the issues, let’s explore three specific scenarios and how to address them:
 
@@ -46,11 +46,12 @@ contract ExampleContract {
 
 }
 ```
-Here we replaced `msg.sender` with `tx.origin` which will use the deployer's address. *Note that you should fully understand the difference between msg.sender and tx.origin before making this change.*
+
+Here we replaced `msg.sender` with `tx.origin` which will use the deployer's address. _Note that you should fully understand the difference between msg.sender and tx.origin before making this change._
 
 **Scenario 2: Internal Function Calls**
 
-Another frequent culprit is calling a function that depends on `msg.sender` from *within* another function inside your contract. Remember, `msg.sender` is only populated when an *external* account or contract directly calls a function of your contract. Internal calls do not alter the `msg.sender`; it remains the sender of the initial external call. This can create problems if you expect an internal call to have the calling contract as the sender.
+Another frequent culprit is calling a function that depends on `msg.sender` from _within_ another function inside your contract. Remember, `msg.sender` is only populated when an _external_ account or contract directly calls a function of your contract. Internal calls do not alter the `msg.sender`; it remains the sender of the initial external call. This can create problems if you expect an internal call to have the calling contract as the sender.
 
 ```solidity
 pragma solidity ^0.8.0;
@@ -98,13 +99,17 @@ For example, if you had the following test:
 // Assume a testing framework like Truffle
 const ExampleContract = artifacts.require("ExampleContract");
 
-contract("ExampleContract", accounts => {
-    it("should update last sender", async () => {
-        const instance = await ExampleContract.deployed();
-        await instance.externalCall();
-        const lastSender = await instance.lastSender();
-        assert.notEqual(lastSender, "0x0000000000000000000000000000000000000000", "Last sender should not be the zero address."); // Fails if sender not set
-    });
+contract("ExampleContract", (accounts) => {
+  it("should update last sender", async () => {
+    const instance = await ExampleContract.deployed();
+    await instance.externalCall();
+    const lastSender = await instance.lastSender();
+    assert.notEqual(
+      lastSender,
+      "0x0000000000000000000000000000000000000000",
+      "Last sender should not be the zero address."
+    ); // Fails if sender not set
+  });
 });
 ```
 
@@ -114,14 +119,22 @@ This test will fail if we use the original code from scenario 2, because the `ms
 // Assume a testing framework like Truffle
 const ExampleContract = artifacts.require("ExampleContract");
 
-contract("ExampleContract", accounts => {
-    it("should update last sender", async () => {
-        const instance = await ExampleContract.deployed();
-        await instance.externalCall({from: accounts[1]});
-        const lastSender = await instance.lastSender();
-        assert.notEqual(lastSender, "0x0000000000000000000000000000000000000000", "Last sender should not be the zero address."); // This will pass
-        assert.equal(lastSender, accounts[1], "Last sender should be the test account used in the tx")
-    });
+contract("ExampleContract", (accounts) => {
+  it("should update last sender", async () => {
+    const instance = await ExampleContract.deployed();
+    await instance.externalCall({ from: accounts[1] });
+    const lastSender = await instance.lastSender();
+    assert.notEqual(
+      lastSender,
+      "0x0000000000000000000000000000000000000000",
+      "Last sender should not be the zero address."
+    ); // This will pass
+    assert.equal(
+      lastSender,
+      accounts[1],
+      "Last sender should be the test account used in the tx"
+    );
+  });
 });
 ```
 
@@ -133,8 +146,8 @@ In conclusion, the core issue with `msg.sender` and address(0) is not a type err
 
 To deepen your understanding of this and similar EVM intricacies, I strongly suggest exploring a few authoritative sources:
 
-*   **"Mastering Ethereum" by Andreas Antonopoulos and Gavin Wood:** This book provides a comprehensive overview of Ethereum concepts, including transaction mechanics and the EVM.
-*   **The Solidity documentation:** The official documentation often provides crucial information regarding `msg.sender` and other EVM variables, with detailed explanations of when and how each is populated.
-*   **The Yellow Paper:** The formal specification of the EVM might seem daunting, but if you really want to dive deep into how it works, this is the most comprehensive source of information.
+- **"Mastering Ethereum" by Andreas Antonopoulos and Gavin Wood:** This book provides a comprehensive overview of Ethereum concepts, including transaction mechanics and the EVM.
+- **The Solidity documentation:** The official documentation often provides crucial information regarding `msg.sender` and other EVM variables, with detailed explanations of when and how each is populated.
+- **The Yellow Paper:** The formal specification of the EVM might seem daunting, but if you really want to dive deep into how it works, this is the most comprehensive source of information.
 
 These resources can further solidify your grasp of the underlying mechanisms and help you avoid similar problems in the future. Dealing with `msg.sender` and address(0) requires a clear understanding of transaction context, and a methodical approach in both coding and testing, and after a few instances of running into these types of problems, they become more familiar and easier to debug.

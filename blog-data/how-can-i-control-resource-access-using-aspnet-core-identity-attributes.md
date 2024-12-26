@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-control-resource-access-using-aspnet-core-identity-attributes"
 ---
 
-Alright, let's tackle this. I've spent my fair share of time knee-deep in ASP.NET Core Identity, and attribute-based authorization is a feature I've leaned on quite heavily for controlling resource access. The beauty of this approach lies in its declarativeness; you specify *what* kind of access is required directly on your controllers and actions, making your intent clear and keeping things maintainable. It's a vast improvement over, say, relying solely on procedural checks buried within methods.
+, let's tackle this. I've spent my fair share of time knee-deep in ASP.NET Core Identity, and attribute-based authorization is a feature I've leaned on quite heavily for controlling resource access. The beauty of this approach lies in its declarativeness; you specify _what_ kind of access is required directly on your controllers and actions, making your intent clear and keeping things maintainable. It's a vast improvement over, say, relying solely on procedural checks buried within methods.
 
-To begin, understand that attribute-based authorization in ASP.NET Core is built upon the concept of *policies*. These policies act as named bundles of authorization requirements, which might include roles, claims, or custom requirements. Then, these policies are applied using the `[Authorize]` attribute.
+To begin, understand that attribute-based authorization in ASP.NET Core is built upon the concept of _policies_. These policies act as named bundles of authorization requirements, which might include roles, claims, or custom requirements. Then, these policies are applied using the `[Authorize]` attribute.
 
 When I first started with this, many years ago, I was working on a large e-commerce platform with quite complex permission needs. We had customers, vendors, administrators, and even specific roles for customer service. Relying on simple role-based authorization quickly became cumbersome. We needed more granularity. That's where crafting specific authorization policies became vital.
 
@@ -48,7 +48,7 @@ namespace MyWebApp.Controllers
 }
 ```
 
-In this code, `[Authorize(Roles = "Administrator")]` ensures that only users with the "Administrator" role can access the `AdminController`'s `Index` action. The  `[Authorize(Roles = "Manager,Administrator")]` ensures that only users with the "Manager" or "Administrator" role can access the `UserManagement` action. Similarly, the customer controller allows only "Customer" role access to the `MyOrders` view. This is a very direct application of `Authorize` with built-in role functionality. ASP.NET Core handles the user's authentication and role retrieval behind the scenes.
+In this code, `[Authorize(Roles = "Administrator")]` ensures that only users with the "Administrator" role can access the `AdminController`'s `Index` action. The `[Authorize(Roles = "Manager,Administrator")]` ensures that only users with the "Manager" or "Administrator" role can access the `UserManagement` action. Similarly, the customer controller allows only "Customer" role access to the `MyOrders` view. This is a very direct application of `Authorize` with built-in role functionality. ASP.NET Core handles the user's authentication and role retrieval behind the scenes.
 
 **Example 2: Policy-Based Authorization with Claims**
 
@@ -73,11 +73,11 @@ public class Startup
         {
             options.AddPolicy("PremiumSubscription", policy =>
                 policy.RequireClaim("SubscriptionLevel", "Premium", "Enterprise"));
-                
+
             options.AddPolicy("EnterpriseSubscription", policy=>
                policy.RequireClaim("SubscriptionLevel", "Enterprise"));
         });
-        
+
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -91,7 +91,7 @@ public class Startup
             app.UseExceptionHandler("/Home/Error");
             app.UseHsts();
         }
-            
+
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseRouting();
@@ -137,6 +137,7 @@ namespace MyWebApp.Controllers
     }
 }
 ```
+
 The key here is `[Authorize(Policy = "PremiumSubscription")]`. This applies the policy we just defined, meaning that only users with the correct claim values can access the `PremiumFeature` action. The `EnterpriseFeature` action is protected using the policy `EnterpriseSubscription`, therefore, only user with 'Enterprise' subscription level will have access.
 
 This approach is far more flexible than roles alone; you can build authorization logic based on all sorts of custom user properties and then encapsulate it neatly within policies. It provides clarity and makes maintaining authorization checks significantly easier as your application grows.
@@ -145,7 +146,7 @@ This approach is far more flexible than roles alone; you can build authorization
 
 For the most intricate scenarios, you'll need to write custom authorization handlers. Let's consider a situation where resource access depends on user permissions stored in a database. This requires custom logic beyond claims or roles.
 
-First, you'll need a *requirement* class:
+First, you'll need a _requirement_ class:
 
 ```csharp
 using Microsoft.AspNetCore.Authorization;
@@ -162,9 +163,10 @@ public class ResourcePermissionRequirement : IAuthorizationRequirement
     }
 }
 ```
+
 This `ResourcePermissionRequirement` holds the resource and permission needed.
 
-Next, you implement a *handler* that performs the actual access check:
+Next, you implement a _handler_ that performs the actual access check:
 
 ```csharp
 using Microsoft.AspNetCore.Authorization;
@@ -208,6 +210,7 @@ public class ResourcePermissionHandler : AuthorizationHandler<ResourcePermission
 This custom handler fetches the user's permissions from a hypothetical repository, `IUserRepository`, and then compares the required permission to those the user has.
 
 Finally, you need to register the handler and set the policy:
+
 ```csharp
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -241,7 +244,7 @@ public class Startup
             app.UseExceptionHandler("/Home/Error");
             app.UseHsts();
         }
-            
+
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseRouting();
@@ -276,6 +279,7 @@ namespace MyWebApp.Controllers
 }
 
 ```
+
 This advanced approach makes authorization extremely flexible and specific to your application’s needs.
 
 **Further Learning**

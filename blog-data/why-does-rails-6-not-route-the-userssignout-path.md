@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-does-rails-6-not-route-the-userssignout-path"
 ---
 
-Alright, let’s dive into this. I've seen this specific routing quirk trip up quite a few developers, and it's a great example of how framework defaults, while typically helpful, can occasionally lead us down a rabbit hole. The issue with Rails 6 seemingly ignoring `/users/sign_out` is not that it’s *not* routing, but rather how it's interpreting that request in the context of Devise, the authentication engine that’s usually behind such paths.
+, let’s dive into this. I've seen this specific routing quirk trip up quite a few developers, and it's a great example of how framework defaults, while typically helpful, can occasionally lead us down a rabbit hole. The issue with Rails 6 seemingly ignoring `/users/sign_out` is not that it’s _not_ routing, but rather how it's interpreting that request in the context of Devise, the authentication engine that’s usually behind such paths.
 
 My personal experience traces back to a large project I worked on several years ago. We were migrating a very large Rails 4 application to Rails 6, and the upgrade process had its share of gotchas, including this exact routing problem with sign out. We expected `/users/sign_out` to behave like it did before, but it just wasn’t working. Debugging showed that the route wasn't actually missing, but Devise was intervening to handle the sign-out process. The problem wasn't that Rails 6 didn't understand the path, but that Devise had pre-emptively intercepted it, and that the route as it was conceived wasn’t the one it was looking for.
 
-Fundamentally, the issue isn’t that Rails 6 *cannot* route `/users/sign_out`. It *can*, and it *does*. The problem lies in Devise’s default behavior. Devise, when configured to operate on a given resource (like `User`), generates a collection of routes including those associated with user registration, sign in and sign out. By default, Devise generates its sign-out route as a `DELETE` request to `/users/sign_out`. This default is important because HTTP verbs are crucial for RESTful routing, and `DELETE` verbs are semantically used for destroying a resource. Logging out is, in effect, terminating a user session and, hence, it fits that semantic model.
+Fundamentally, the issue isn’t that Rails 6 _cannot_ route `/users/sign_out`. It _can_, and it _does_. The problem lies in Devise’s default behavior. Devise, when configured to operate on a given resource (like `User`), generates a collection of routes including those associated with user registration, sign in and sign out. By default, Devise generates its sign-out route as a `DELETE` request to `/users/sign_out`. This default is important because HTTP verbs are crucial for RESTful routing, and `DELETE` verbs are semantically used for destroying a resource. Logging out is, in effect, terminating a user session and, hence, it fits that semantic model.
 
 When you send a `GET` request to `/users/sign_out`, Rails' routing engine, even before Devise gets involved, is not going to find a matching route. Devise's router only has a route configured for the `DELETE` verb for this path.
 
@@ -39,7 +39,7 @@ Here’s a quick example using a standard Rails form, where the link to sign out
 
 This will generate a form that sends a `DELETE` request to the correct path.
 
-Alternatively, if for some reason, you're absolutely locked into using a `GET` request for a sign-out functionality, you *can* configure Devise to support it, but you really shouldn't as it goes against standard conventions and makes the behavior of the system less understandable for other developers. You need to modify how the routes are generated for Devise by specifying which HTTP verb they should use. Here’s how you might do it:
+Alternatively, if for some reason, you're absolutely locked into using a `GET` request for a sign-out functionality, you _can_ configure Devise to support it, but you really shouldn't as it goes against standard conventions and makes the behavior of the system less understandable for other developers. You need to modify how the routes are generated for Devise by specifying which HTTP verb they should use. Here’s how you might do it:
 
 ```ruby
 Rails.application.routes.draw do

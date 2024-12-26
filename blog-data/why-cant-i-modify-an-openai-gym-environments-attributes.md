@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "why-cant-i-modify-an-openai-gym-environments-attributes"
 ---
 
-Alright, let’s tackle this. From personal experience, I've seen quite a few folks stumble over this exact issue, and it usually boils down to a fundamental misunderstanding of how OpenAI Gym environments are structured, specifically their design for safety and reproducibility in reinforcement learning experiments.
+, let’s tackle this. From personal experience, I've seen quite a few folks stumble over this exact issue, and it usually boils down to a fundamental misunderstanding of how OpenAI Gym environments are structured, specifically their design for safety and reproducibility in reinforcement learning experiments.
 
-The short answer is: you're encountering this problem because gym environments are designed to be *immutable* from the outside once they are instantiated. You shouldn't be directly altering their internal attributes. It's not a bug, but rather a feature built to ensure reliable simulation of the environment state across different runs. Think of it as a safety net, preventing unintended modifications from altering the environment's intended behavior.
+The short answer is: you're encountering this problem because gym environments are designed to be _immutable_ from the outside once they are instantiated. You shouldn't be directly altering their internal attributes. It's not a bug, but rather a feature built to ensure reliable simulation of the environment state across different runs. Think of it as a safety net, preventing unintended modifications from altering the environment's intended behavior.
 
 Now, let’s break that down into more specific technical details.
 
@@ -16,9 +16,9 @@ This principle of reproducibility is crucial for reinforcement learning. We’re
 
 So why not just allow modifications? Well, consider a scenario where you inadvertently change a crucial attribute, such as the reward function during the course of your learning experiment. You'd effectively be training an agent in a moving target, introducing inconsistencies and invalidating the results. It would also make debugging an absolute nightmare. Imagine trying to isolate the source of a problem when the environment itself has undergone undocumented transformations mid-experiment. This is precisely the kind of headache that the immutability design of Gym seeks to prevent.
 
-Now, let’s look at how to work *with* the Gym structure rather than against it. You have several viable alternatives to achieve what you likely desire, and these techniques align more appropriately with the intent behind Gym’s design.
+Now, let’s look at how to work _with_ the Gym structure rather than against it. You have several viable alternatives to achieve what you likely desire, and these techniques align more appropriately with the intent behind Gym’s design.
 
-Firstly, you can *extend* or *wrap* a given Gym environment. This allows you to customize its behavior without directly modifying its core attributes. This is my go-to solution in most situations where I need to change things up. This is where you create a new class that inherits from the base environment and overwrites only the methods you need. You can either overwrite methods like `step`, `reset`, or `render` or add your own logic around them.
+Firstly, you can _extend_ or _wrap_ a given Gym environment. This allows you to customize its behavior without directly modifying its core attributes. This is my go-to solution in most situations where I need to change things up. This is where you create a new class that inherits from the base environment and overwrites only the methods you need. You can either overwrite methods like `step`, `reset`, or `render` or add your own logic around them.
 
 Here's an example illustrating that, using a basic environment:
 
@@ -112,6 +112,7 @@ state_2, reward_2, terminated_2, truncated_2, info_2 = env.step(action)
 print("State after one step: ", state_1)
 print("State after another step:", state_2)
 ```
+
 This last example demonstrates how we are not directly modifying the environment properties, but instead, through the use of seeds, we modify its behaviour. As the initial states will be different due to different seeds, you can affect the environment properties without making any direct modifications.
 
 In summary, Gym environments are not designed to be modified on the fly. This is a conscious decision to support reproducibility and stability in reinforcement learning experiments. Trying to change the attributes directly will not work and goes against the intended structure. Instead, use the available tools of wrapper classes, custom classes or environment seeding. These alternatives will provide all the customizability and behaviour modification required in most situations, while respecting the design principles of gym environments.

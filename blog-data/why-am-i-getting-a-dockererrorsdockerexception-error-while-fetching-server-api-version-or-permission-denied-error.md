@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-a-dockererrorsdockerexception-error-while-fetching-server-api-version-or-permission-denied-error"
 ---
 
-alright, so you're hitting that fun `docker.errors.DockerException: Error while fetching server API version` or `Permission denied` error with docker, it's a classic. i’ve been there, trust me, more times than i care to count. it usually means docker itself isn't playing nice with how you’re trying to access it, and there's a few likely culprits. i’ll break down what i’ve seen cause this, and what i usually do to fix it, based on my own trials and tribulations, mostly from the early 2010s when docker was just getting its legs.
+, so you're hitting that fun `docker.errors.DockerException: Error while fetching server API version` or `Permission denied` error with docker, it's a classic. i’ve been there, trust me, more times than i care to count. it usually means docker itself isn't playing nice with how you’re trying to access it, and there's a few likely culprits. i’ll break down what i’ve seen cause this, and what i usually do to fix it, based on my own trials and tribulations, mostly from the early 2010s when docker was just getting its legs.
 
 first up, the “can’t talk to the docker daemon” scenario. this usually throws the `Error while fetching server API version` message. it basically means the docker client (the command line tool or whatever python library you are using) can't connect to the docker daemon (the background process that actually runs containers). think of it like trying to make a phone call, but the phone lines are down. now, this can happen for a few reasons.
 
@@ -13,12 +13,15 @@ one reason which i got hit with back in 2014 when i was playing with containers 
 ```bash
 sudo systemctl status docker
 ```
+
 or if you are on mac or windows using docker desktop:
+
 ```bash
 docker version
 ```
 
- if it's not active, you'll likely see a ‘inactive’ or similar message. if that’s the case, starting it is straightforward, again on linux:
+if it's not active, you'll likely see a ‘inactive’ or similar message. if that’s the case, starting it is straightforward, again on linux:
+
 ```bash
 sudo systemctl start docker
 ```
@@ -28,32 +31,41 @@ if you're on a mac or windows machine, restarting the docker desktop app usually
 another common reason for this error is that you might be trying to connect using the wrong method. docker typically communicates via a unix socket. normally this socket lives in `/var/run/docker.sock`. sometimes the docker client doesn't know where to find it or might be configured incorrectly. you might have the `DOCKER_HOST` environment variable set to something incorrect, especially if you have been doing some funky setup or switching from local to remote docker environments or some such.
 
 you can check if the environment variable is set by doing:
+
 ```bash
 echo $DOCKER_HOST
 ```
 
 if it’s set to anything other than nothing, try unsetting it or setting it to the default unix socket connection:
+
 ```bash
 unset DOCKER_HOST
 ```
 
 or if you are using docker context instead:
+
 ```bash
 docker context use default
 ```
+
 which should make your commands interact with your local docker installation.
 
 now, let's move onto the `Permission denied` error. this one screams user permissions. specifically, your user might not have the access rights it needs to interact with docker. the docker daemon runs as root and uses that socket to talk to clients. to avoid having to use sudo all the time (and honestly, who wants to type `sudo` every single time they try to run docker) you can add your user to the `docker` group.
 
 this is how i fixed this issue when i was messing around with a debian virtual machine during my studies. if you are on linux and don’t have the docker group you have to create it:
+
 ```bash
 sudo groupadd docker
 ```
+
 and then you have to add your user to that group:
+
 ```bash
 sudo usermod -aG docker $USER
 ```
+
 then you need to refresh your group information, the easiest way to do that is by logging out and back in or restarting your terminal, and check that you are part of the docker group by:
+
 ```bash
 groups
 ```

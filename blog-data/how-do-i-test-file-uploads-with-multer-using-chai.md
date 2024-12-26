@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-test-file-uploads-with-multer-using-chai"
 ---
 
-Alright, let's tackle file upload testing with multer and chai. It's a common scenario, and I've certainly spent my share of late nights figuring out the nuances. It isn't immediately intuitive, but it's manageable with the right approach. I'll walk you through what I've learned over several projects.
+, let's tackle file upload testing with multer and chai. It's a common scenario, and I've certainly spent my share of late nights figuring out the nuances. It isn't immediately intuitive, but it's manageable with the right approach. I'll walk you through what I've learned over several projects.
 
 Testing file uploads, especially when multer is involved, goes beyond simply asserting a 200 status code. We need to confirm that the file has indeed been uploaded, that multer has processed it correctly (e.g., stored it in the correct location or populated the req.file object as expected), and that any subsequent logic handles the uploaded file as designed. The crux of the matter lies in simulating a file upload within our test environment and then verifying multer's response.
 
@@ -18,25 +18,28 @@ Here is the first code snippet which will establish the scenario. Imagine we hav
 
 ```javascript
 // server.js
-const express = require('express');
-const multer = require('multer');
-const path = require('path');
+const express = require("express");
+const multer = require("multer");
+const path = require("path");
 
 const app = express();
-const upload = multer({ dest: path.join(__dirname, 'uploads') }); // or an in-memory storage for testing, but using a file system simplifies debug
+const upload = multer({ dest: path.join(__dirname, "uploads") }); // or an in-memory storage for testing, but using a file system simplifies debug
 
-app.post('/upload', upload.single('avatar'), (req, res) => {
-    if (req.file) {
-        return res.status(200).json({ message: 'File uploaded successfully', filename: req.file.filename});
-    }
-    return res.status(400).json({ message: 'No file uploaded' });
+app.post("/upload", upload.single("avatar"), (req, res) => {
+  if (req.file) {
+    return res
+      .status(200)
+      .json({
+        message: "File uploaded successfully",
+        filename: req.file.filename,
+      });
+  }
+  return res.status(400).json({ message: "No file uploaded" });
 });
-
 
 app.listen(3000, () => {
-    console.log("Server started")
+  console.log("Server started");
 });
-
 
 module.exports = app; // make it available for testing
 ```
@@ -45,40 +48,47 @@ Now, here is a corresponding test file using mocha, chai, and supertest.
 
 ```javascript
 // test/upload.test.js
-const request = require('supertest');
-const chai = require('chai');
-const path = require('path');
-const fs = require('fs');
-const app = require('../server'); // the server file created earlier
+const request = require("supertest");
+const chai = require("chai");
+const path = require("path");
+const fs = require("fs");
+const app = require("../server"); // the server file created earlier
 
 const expect = chai.expect;
 
-describe('File Uploads', () => {
-    it('should upload a file successfully', async () => {
-        const filePath = path.join(__dirname, 'test.txt'); // a sample text file
-        fs.writeFileSync(filePath, 'test content');
+describe("File Uploads", () => {
+  it("should upload a file successfully", async () => {
+    const filePath = path.join(__dirname, "test.txt"); // a sample text file
+    fs.writeFileSync(filePath, "test content");
 
-        const response = await request(app)
-            .post('/upload')
-            .attach('avatar', filePath);
+    const response = await request(app)
+      .post("/upload")
+      .attach("avatar", filePath);
 
-        expect(response.status).to.equal(200);
-        expect(response.body).to.have.property('message').that.equals('File uploaded successfully');
-        expect(response.body).to.have.property('filename').that.is.a('string');
+    expect(response.status).to.equal(200);
+    expect(response.body)
+      .to.have.property("message")
+      .that.equals("File uploaded successfully");
+    expect(response.body).to.have.property("filename").that.is.a("string");
 
+    // cleanup, delete the uploaded file
+    const uploadPath = path.join(
+      __dirname,
+      "..",
+      "uploads",
+      response.body.filename
+    );
+    fs.unlinkSync(uploadPath);
+    fs.unlinkSync(filePath);
+  });
 
-        // cleanup, delete the uploaded file
-        const uploadPath = path.join(__dirname, '..', 'uploads', response.body.filename)
-        fs.unlinkSync(uploadPath)
-        fs.unlinkSync(filePath)
-    });
-
-
-     it('should handle no file uploaded', async () => {
-        const response = await request(app).post('/upload');
-        expect(response.status).to.equal(400);
-        expect(response.body).to.have.property('message').that.equals('No file uploaded');
-     });
+  it("should handle no file uploaded", async () => {
+    const response = await request(app).post("/upload");
+    expect(response.status).to.equal(400);
+    expect(response.body)
+      .to.have.property("message")
+      .that.equals("No file uploaded");
+  });
 });
 ```
 
@@ -88,22 +98,27 @@ Now, let's delve into a more complex scenario. Imagine multer is configured with
 
 ```javascript
 // server.js (modified)
-const express = require('express');
-const multer = require('multer');
-const path = require('path');
+const express = require("express");
+const multer = require("multer");
+const path = require("path");
 
 const app = express();
-const upload = multer({ dest: path.join(__dirname, 'uploads') });
+const upload = multer({ dest: path.join(__dirname, "uploads") });
 
-app.post('/uploads', upload.array('images', 3), (req, res) => {
-    if (req.files && req.files.length > 0 ) {
-      return res.status(200).json({ message: 'Files uploaded successfully', files: req.files.map(file => file.filename)});
-    }
-    return res.status(400).json({ message: 'No files uploaded' });
+app.post("/uploads", upload.array("images", 3), (req, res) => {
+  if (req.files && req.files.length > 0) {
+    return res
+      .status(200)
+      .json({
+        message: "Files uploaded successfully",
+        files: req.files.map((file) => file.filename),
+      });
+  }
+  return res.status(400).json({ message: "No files uploaded" });
 });
 
 app.listen(3000, () => {
-   console.log("Server started");
+  console.log("Server started");
 });
 
 module.exports = app;
@@ -113,89 +128,93 @@ Now let's adapt the test:
 
 ```javascript
 // test/upload.test.js (modified)
-const request = require('supertest');
-const chai = require('chai');
-const path = require('path');
-const fs = require('fs');
-const app = require('../server');
+const request = require("supertest");
+const chai = require("chai");
+const path = require("path");
+const fs = require("fs");
+const app = require("../server");
 
 const expect = chai.expect;
 
-describe('Multiple File Uploads', () => {
-    it('should upload multiple files successfully', async () => {
-        const filePaths = [
-            path.join(__dirname, 'test1.txt'),
-            path.join(__dirname, 'test2.txt'),
-            path.join(__dirname, 'test3.txt'),
-        ];
+describe("Multiple File Uploads", () => {
+  it("should upload multiple files successfully", async () => {
+    const filePaths = [
+      path.join(__dirname, "test1.txt"),
+      path.join(__dirname, "test2.txt"),
+      path.join(__dirname, "test3.txt"),
+    ];
 
-        filePaths.forEach(filePath => fs.writeFileSync(filePath, 'test content'));
+    filePaths.forEach((filePath) => fs.writeFileSync(filePath, "test content"));
 
+    const response = await request(app)
+      .post("/uploads")
+      .attach("images", filePaths[0])
+      .attach("images", filePaths[1])
+      .attach("images", filePaths[2]);
 
-        const response = await request(app)
-            .post('/uploads')
-            .attach('images', filePaths[0])
-            .attach('images', filePaths[1])
-            .attach('images', filePaths[2]);
+    expect(response.status).to.equal(200);
+    expect(response.body)
+      .to.have.property("message")
+      .that.equals("Files uploaded successfully");
+    expect(response.body)
+      .to.have.property("files")
+      .that.is.an("array")
+      .with.lengthOf(3);
 
+    const uploadedFiles = response.body.files;
 
-        expect(response.status).to.equal(200);
-        expect(response.body).to.have.property('message').that.equals('Files uploaded successfully');
-        expect(response.body).to.have.property('files').that.is.an('array').with.lengthOf(3);
+    // Cleanup
+    uploadedFiles.forEach((filename) => {
+      const uploadPath = path.join(__dirname, "..", "uploads", filename);
+      fs.unlinkSync(uploadPath);
+    });
+    filePaths.forEach((filePath) => fs.unlinkSync(filePath));
+  });
 
-        const uploadedFiles = response.body.files;
+  it("should handle fewer than the max number of files", async () => {
+    const filePaths = [
+      path.join(__dirname, "test1.txt"),
+      path.join(__dirname, "test2.txt"),
+    ];
+    filePaths.forEach((filePath) => fs.writeFileSync(filePath, "test content"));
 
-        // Cleanup
-       uploadedFiles.forEach(filename => {
-            const uploadPath = path.join(__dirname, '..', 'uploads', filename);
-            fs.unlinkSync(uploadPath);
-         });
-      filePaths.forEach(filePath => fs.unlinkSync(filePath));
+    const response = await request(app)
+      .post("/uploads")
+      .attach("images", filePaths[0])
+      .attach("images", filePaths[1]);
 
+    expect(response.status).to.equal(200);
+    expect(response.body)
+      .to.have.property("message")
+      .that.equals("Files uploaded successfully");
+    expect(response.body)
+      .to.have.property("files")
+      .that.is.an("array")
+      .with.lengthOf(2);
+
+    const uploadedFiles = response.body.files;
+
+    // Cleanup
+    uploadedFiles.forEach((filename) => {
+      const uploadPath = path.join(__dirname, "..", "uploads", filename);
+      fs.unlinkSync(uploadPath);
     });
 
+    filePaths.forEach((filePath) => fs.unlinkSync(filePath));
+  });
 
-    it('should handle fewer than the max number of files', async () => {
-
-          const filePaths = [
-            path.join(__dirname, 'test1.txt'),
-            path.join(__dirname, 'test2.txt'),
-        ];
-          filePaths.forEach(filePath => fs.writeFileSync(filePath, 'test content'));
-
-
-       const response = await request(app)
-            .post('/uploads')
-            .attach('images', filePaths[0])
-            .attach('images', filePaths[1]);
-
-         expect(response.status).to.equal(200);
-        expect(response.body).to.have.property('message').that.equals('Files uploaded successfully');
-        expect(response.body).to.have.property('files').that.is.an('array').with.lengthOf(2);
-
-         const uploadedFiles = response.body.files;
-
-        // Cleanup
-       uploadedFiles.forEach(filename => {
-            const uploadPath = path.join(__dirname, '..', 'uploads', filename);
-            fs.unlinkSync(uploadPath);
-         });
-
-     filePaths.forEach(filePath => fs.unlinkSync(filePath));
-
-    });
-
-    it('should handle no file uploaded', async () => {
-       const response = await request(app).post('/uploads');
-       expect(response.status).to.equal(400);
-       expect(response.body).to.have.property('message').that.equals('No files uploaded');
-
-    });
+  it("should handle no file uploaded", async () => {
+    const response = await request(app).post("/uploads");
+    expect(response.status).to.equal(400);
+    expect(response.body)
+      .to.have.property("message")
+      .that.equals("No files uploaded");
+  });
 });
 ```
 
 This test case verifies that three files have been uploaded, that the response is a 200, and that the file names are returned in the response. Similarly, a second test verifies when a fewer number of files are uploaded.
 
-For deeper understanding and mastery of file uploads, I would suggest referring to these resources: *“Node.js Design Patterns”* by Mario Casciaro and Luciano Mammino; this will help you understand how to build robust applications in node, and covers best practices surrounding file uploads. Another great resource would be the *Express.js documentation*, as this covers the core framework that multer interacts with, this is essential knowledge. Lastly, thoroughly studying the *Multer documentation* on npm, will give you a better insight into its configuration and usage.
+For deeper understanding and mastery of file uploads, I would suggest referring to these resources: _“Node.js Design Patterns”_ by Mario Casciaro and Luciano Mammino; this will help you understand how to build robust applications in node, and covers best practices surrounding file uploads. Another great resource would be the _Express.js documentation_, as this covers the core framework that multer interacts with, this is essential knowledge. Lastly, thoroughly studying the _Multer documentation_ on npm, will give you a better insight into its configuration and usage.
 
 Testing file uploads with multer and chai may initially seem complex, but with a clear testing methodology and appropriate tooling, it becomes quite manageable. What we want is to replicate a typical file upload scenario and then make specific assertions. Building out a set of tests, will help you to make robust applications and greatly reduce bugs. Remember that we're not just testing the status code, but also the proper functionality and data that multer provides to our applications. Good luck!

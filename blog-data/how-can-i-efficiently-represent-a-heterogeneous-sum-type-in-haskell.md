@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-efficiently-represent-a-heterogeneous-sum-type-in-haskell"
 ---
 
-Okay, let's tackle heterogeneous sum types in Haskell. I've definitely been down this road a few times, especially back when we were building that large-scale data ingestion pipeline; dealing with varying data structures required some creative thinking beyond the usual `Either` or `Maybe`.
+, let's tackle heterogeneous sum types in Haskell. I've definitely been down this road a few times, especially back when we were building that large-scale data ingestion pipeline; dealing with varying data structures required some creative thinking beyond the usual `Either` or `Maybe`.
 
-The challenge with heterogeneous sum types is that Haskell's type system, while incredibly powerful, encourages uniformity within a data type definition. A typical algebraic data type, or ADT, enforces that all constructors return a value of the same type. That is, when you define something like `data MySum = A Int | B String | C Bool`, you have a type `MySum` that can encapsulate values of different *types*, but the return type of each constructor – `A`, `B`, and `C` – is always `MySum`. The heterogeneity exists at the *value* level, not the *type* level of the constructors themselves.
+The challenge with heterogeneous sum types is that Haskell's type system, while incredibly powerful, encourages uniformity within a data type definition. A typical algebraic data type, or ADT, enforces that all constructors return a value of the same type. That is, when you define something like `data MySum = A Int | B String | C Bool`, you have a type `MySum` that can encapsulate values of different _types_, but the return type of each constructor – `A`, `B`, and `C` – is always `MySum`. The heterogeneity exists at the _value_ level, not the _type_ level of the constructors themselves.
 
 What you're likely facing is needing a sum type where the 'summed' types aren’t all concrete types known at compile time, or where the operations you need to perform on the contained value are highly dependent on the specific encapsulated type. This is often the case when integrating with external systems that return varying data formats.
 
@@ -44,11 +44,11 @@ main = do
   putStrLn $ printAny (AnyPrintable True)
 ```
 
-Here, `Printable` acts as our interface, and `AnyPrintable` is our heterogeneous sum type. The crucial part is `forall a. Printable a => AnyPrintable a`. This says, “`AnyPrintable` can contain *any* type `a` as long as it implements `Printable`”. We then use the existential quantifier (`forall`) to hide the concrete type `a`. When we deconstruct `AnyPrintable`, we can only work with the underlying value using the functions provided by the `Printable` type class, preserving type safety. This is quite powerful when you have a common set of operations on various types.
+Here, `Printable` acts as our interface, and `AnyPrintable` is our heterogeneous sum type. The crucial part is `forall a. Printable a => AnyPrintable a`. This says, “`AnyPrintable` can contain _any_ type `a` as long as it implements `Printable`”. We then use the existential quantifier (`forall`) to hide the concrete type `a`. When we deconstruct `AnyPrintable`, we can only work with the underlying value using the functions provided by the `Printable` type class, preserving type safety. This is quite powerful when you have a common set of operations on various types.
 
 **2. Using `Data.Typeable` and Type Casting**
 
-If you require dynamic type checking and potentially different operations based on the *concrete* type held within your heterogeneous sum, `Data.Typeable` offers an alternative. It lets you tag any type with runtime type information, which allows you to perform type casts at runtime. This is less type-safe in a compile-time sense than the type-class approach but is quite useful when you need to determine the precise type at runtime.
+If you require dynamic type checking and potentially different operations based on the _concrete_ type held within your heterogeneous sum, `Data.Typeable` offers an alternative. It lets you tag any type with runtime type information, which allows you to perform type casts at runtime. This is less type-safe in a compile-time sense than the type-class approach but is quite useful when you need to determine the precise type at runtime.
 
 Here’s a practical example of how to use it:
 
@@ -91,7 +91,7 @@ This approach entails defining a data type that acts as a "tag" which then maps 
 data DataType = IntData | StringData | BoolData | UnknownData
 
 data DataValue = DataValue DataType (String)  -- Store as String, do conversion when needed
-  
+
 -- Functions for handling different operations based on the DataType tag.
 handleValue :: DataValue -> String
 handleValue (DataValue IntData str)    = "Integer value: " ++ str
@@ -118,7 +118,7 @@ main = do
   putStrLn $ handleValue (DataValue UnknownData "unknown")
 ```
 
-This version uses a `String` to store the raw data, and the tag `DataType` determines how to *interpret* and handle it. This approach lends itself well to situations where the underlying types are not known statically or can come from a serialized format.
+This version uses a `String` to store the raw data, and the tag `DataType` determines how to _interpret_ and handle it. This approach lends itself well to situations where the underlying types are not known statically or can come from a serialized format.
 
 **Recommendations for Further Reading**
 

@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "why-are-wagtail--django---animated-gifs-not-working-with-many-frames-in-the-gif"
 ---
 
-alright, so you've got this issue with wagtail and django, specifically animated gifs not playing nicely when they have lots of frames. i've been there, trust me. it's one of those things that seems straightforward at first, but quickly becomes a rabbit hole. i can tell you from past experience it's not always wagtail or django's fault per se, it's often about how browsers handle large animated gifs and how image processing libraries try to make them smaller.
+, so you've got this issue with wagtail and django, specifically animated gifs not playing nicely when they have lots of frames. i've been there, trust me. it's one of those things that seems straightforward at first, but quickly becomes a rabbit hole. i can tell you from past experience it's not always wagtail or django's fault per se, it's often about how browsers handle large animated gifs and how image processing libraries try to make them smaller.
 
 from what i've seen, the core of the problem usually boils down to a combination of factors. first, image processing. when you upload an image, wagtail, or rather django, typically uses a library like pillow under the hood. pillow tries to be smart, and in the context of animated gifs, this ‘smartness’ can cause problems. pillow might try to optimize the gif, which might mean dropping frames, reducing the color palette, or doing other things that result in a shorter, less-detailed animation. for smaller gifs this works great but when you start dealing with gifs with many frames or higher resolutions, it's not good.
 
-second, browser memory limits. animated gifs are just sequences of image frames. for high-frame-count gifs, the browser needs to load all of those frames into memory. if a gif is long or high-resolution, this can be very memory intensive. browsers have limits, and exceeding those limits can lead to the gif not rendering correctly, freezing, or just not animating at all. they might simply give up rendering because of the sheer load or even crash the browser tab. 
+second, browser memory limits. animated gifs are just sequences of image frames. for high-frame-count gifs, the browser needs to load all of those frames into memory. if a gif is long or high-resolution, this can be very memory intensive. browsers have limits, and exceeding those limits can lead to the gif not rendering correctly, freezing, or just not animating at all. they might simply give up rendering because of the sheer load or even crash the browser tab.
 
 finally, there’s caching. browsers often cache images aggressively to improve loading times. if the image processing on your server changes how the gif is rendered, the browser might not pick up those changes if it is using a cached version. this can happen for example when you update the file and the server serves the old version from cache. that is why i usually always recommend setting proper caching headers to avoid these situations.
 
@@ -33,7 +33,7 @@ class Command(BaseCommand):
             print(f"format: {img.format}")
             print(f"mode: {img.mode}")
             print(f"size: {img.size}")
-            
+
             if hasattr(img, 'n_frames'):
                 print(f"number of frames: {img.n_frames}")
 
@@ -64,11 +64,11 @@ class CustomImage(WagtailImage):
             # open the image using pillow
             img = Image.open(self.file)
             if img.format == 'GIF':
-               
+
                 output_buffer = io.BytesIO()
                 img.save(output_buffer, format='GIF', save_all=True, optimize=False, loop=0)
                 output_buffer.seek(0)
-                
+
                 self.file = ContentFile(output_buffer.read(), name=self.file.name)
 
         super().save(*args, **kwargs)

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "la-load-address-mips"
 ---
 
-Okay so you're asking about load addresses in MIPS specifically right Yeah I've been there done that got the T-shirt and probably a few compiler errors to go with it Let's break this down
+you're asking about load addresses in MIPS specifically right Yeah I've been there done that got the T-shirt and probably a few compiler errors to go with it Let's break this down
 
 First off `la` in MIPS assembly is the load address pseudo-instruction It's basically a convenient way for us to get the memory address of something into a register MIPS itself is a RISC architecture which means it tries to keep things simple and that simplicity can sometimes feel a little… verbose Let me just say MIPS was probably designed by engineers who love parentheses a little too much Anyway `la` isn't a single instruction it's a shortcut a macro if you will The assembler will convert it into a sequence of actual MIPS instructions
 
@@ -58,6 +58,7 @@ main:
     li $v0 10        ; System call for exiting program
     syscall
 ```
+
 Here we have array we use `la` to store the starting address of the array into register `$t0` Then we access elements by using offsets from the base address. I remember during another project I tried to optimize by avoiding the `lw` instruction by doing some pointer arithmetic manually and it worked but that was another rabbit hole to debug for a good hour when a simple `lw` was the correct and less headache inducing solution
 
 Example 3 Function address loading
@@ -77,6 +78,7 @@ myfunc:
   syscall
   jr $ra
 ```
+
 Here `la` allows us to store the address of a function into a register and then use the `jalr` instruction to jump to that location This can be useful when you want to have a table of function pointers a common thing to see in operating systems where they do system call dispatch I almost went mad when I was doing my first OS kernel project
 
 A common pitfall especially if you are coming from high level programming is thinking that the label itself holds the data its just a memory address marker So remember we need `lw` (load word) or `lb` (load byte) to read the value from the memory location stored at the register that we just loaded via `la`
@@ -91,4 +93,4 @@ So yeah that's `la` for you I hope this helps a little and remember to always te
 
 And one last thing remember to always comment your code or you'll be asking yourself why you did certain things 2 weeks later and trust me you won't remember unless you have comments. In fact I once wrote a really complex recursive MIPS assembly function and I did not comment it at all because "I knew it by heart" well I was wrong it took me 3 days to understand it again because I had forgotten why certain registers were used that way and I thought I was very very smart back then but I guess I was not.
 
-Oh and before I forget: Why did the MIPS programmer quit his job? Because he didn't get enough *address space* ha ha you are not laughing I guess low level humour is not for everyone anyway that's it really hope this helps and let me know if there is any other specific MIPS question that you have I'm always around or lurking somewhere around
+Oh and before I forget: Why did the MIPS programmer quit his job? Because he didn't get enough _address space_ ha ha you are not laughing I guess low level humour is not for everyone anyway that's it really hope this helps and let me know if there is any other specific MIPS question that you have I'm always around or lurking somewhere around

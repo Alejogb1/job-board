@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "system-drawing-common-is-not-supported-on-this-platform-on-windows-vs2019"
 ---
 
-Okay so you're hitting that "System Drawing Common not supported" wall on Windows using VS2019 right Been there totally understand the pain First off you are right System Drawing Common is a notorious pain point it has a complicated history especially between different .NET versions and operating system compatibility Before diving into the fixes lets just clarify a couple of things
+you're hitting that "System Drawing Common not supported" wall on Windows using VS2019 right Been there totally understand the pain First off you are right System Drawing Common is a notorious pain point it has a complicated history especially between different .NET versions and operating system compatibility Before diving into the fixes lets just clarify a couple of things
 
 I've seen this problem crop up more times than I care to admit Back in the early .NET Core days we were all migrating our projects some of them depended heavily on older WinForms stuff especially legacy image processing routines and guess what System Drawing Common was the first stumbling block
 
@@ -26,6 +26,7 @@ dotnet add package System.Drawing.Common
 ```
 
 Or in Visual Studio
+
 1. Go to your project's Solution Explorer
 2. Right-click on your project
 3. Select Manage NuGet Packages
@@ -41,10 +42,12 @@ Here is the part where we check that your target framework and compatibility are
 Sometimes the problem isn't that you didn't install the NuGet package but that the target framework is wrong or you are trying to run a project targeting .NET Framework in a newer .NET Core context You can solve this as follows :
 
 1. **Check your project's target framework:** In your project file (`.csproj`) make sure you're targeting the correct framework that supports the library. This can be done by editing your .csproj file, which is the default file for .NET projects and contains project settings
+
 ```xml
 <TargetFramework>net6.0</TargetFramework>  <!-- Example for .NET 6 change to the correct version in your case -->
 ```
- or use VS interface for the same in project settings or in the properties
+
+or use VS interface for the same in project settings or in the properties
 
 2. **Ensure compatibility:** Even with the NuGet package there might be minor differences across platforms make sure to test on different OSes and to use if required the OS-specific code if needed
 
@@ -83,6 +86,7 @@ public class ImageOperations
 // Usage
 // ImageOperations.ResizeAndSaveImage("input.jpg", "output.png", 200, 150);
 ```
+
 In this example we use the SKBitmap to load and resize the image from disk and save the result back after converting it to SKImage.
 
 Remember to add the SkiaSharp NuGet package using the same method we used for System.Drawing.Common
@@ -124,9 +128,9 @@ public class ImageOperations
 
 Here are some good resources to better understand this issue and its history and the alternatives for the .NET platform:
 
-*   **"Pro .NET 5" by Andrew Troelsen:** This book has an entire section about cross-platform development in .NET and how the old legacy components are handled and why are being replaced with other libraries or approaches.
-*   **Microsoft's Official .NET Documentation:** Always consult the official docs because they have all the information about cross platform development and best practices with the newer versions of .NET
-*   **SkiaSharp and ImageSharp documentation:** Check the official docs and tutorials. Both libraries have comprehensive documentation and community support.
+- **"Pro .NET 5" by Andrew Troelsen:** This book has an entire section about cross-platform development in .NET and how the old legacy components are handled and why are being replaced with other libraries or approaches.
+- **Microsoft's Official .NET Documentation:** Always consult the official docs because they have all the information about cross platform development and best practices with the newer versions of .NET
+- **SkiaSharp and ImageSharp documentation:** Check the official docs and tutorials. Both libraries have comprehensive documentation and community support.
 
 So to summarize your issue you need to make sure the NuGet package is installed target framework matches the supported version and that is compatible with your operating systems and if you need cross-platform support then you really should consider an alternative library such as SkiaSharp or ImageSharp. This is the path for better architecture and less headaches in the long run.
 

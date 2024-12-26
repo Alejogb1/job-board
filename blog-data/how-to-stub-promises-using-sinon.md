@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-stub-promises-using-sinon"
 ---
 
-Alright, let's tackle stubbing promises with Sinon. This is a topic I've spent a good amount of time with, having debugged quite a few flaky test suites back in my days working on a complex microservices architecture, where proper mocking and stubbing were absolutely paramount. A lot of our interactions were asynchronous, relying heavily on promises, and getting the stubs *just so* was critical. Let's dive into how to do this effectively, keeping things practical and focused on real-world scenarios.
+, let's tackle stubbing promises with Sinon. This is a topic I've spent a good amount of time with, having debugged quite a few flaky test suites back in my days working on a complex microservices architecture, where proper mocking and stubbing were absolutely paramount. A lot of our interactions were asynchronous, relying heavily on promises, and getting the stubs _just so_ was critical. Let's dive into how to do this effectively, keeping things practical and focused on real-world scenarios.
 
 The fundamental idea behind stubbing promises is to replace an actual asynchronous function, which returns a promise, with a controllable substitute. This substitute allows us to dictate how that promise resolves or rejects, giving us granular control over the asynchronous behavior in our tests. Sinon, thankfully, provides robust tools for accomplishing this.
 
@@ -14,13 +14,13 @@ Let's consider a simple example where you have a function, let's call it `fetchU
 
 ```javascript
 function fetchUserData(userId) {
-    // Imagine this makes an actual HTTP call, but let's
-    // simulate a successful response for now
-    return new Promise(resolve => {
-        setTimeout(() => {
-           resolve({ id: userId, name: 'Test User' });
-        }, 100);
-    });
+  // Imagine this makes an actual HTTP call, but let's
+  // simulate a successful response for now
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ id: userId, name: "Test User" });
+    }, 100);
+  });
 }
 ```
 
@@ -29,26 +29,26 @@ Now, let’s say we have a testing scenario where we want to examine a component
 Here’s an example of stubbing this function to resolve with a predefined value:
 
 ```javascript
-const sinon = require('sinon');
+const sinon = require("sinon");
 
 // We'll assume fetchUserData is available
 // from some module, say, 'api-client.js',
 // so we import it here for demonstration.
 const apiClient = { fetchUserData };
 
-describe('Component using fetchUserData', () => {
-   it('should handle successful user fetch', async () => {
-        const userId = '123';
-        const stub = sinon.stub(apiClient, 'fetchUserData');
+describe("Component using fetchUserData", () => {
+  it("should handle successful user fetch", async () => {
+    const userId = "123";
+    const stub = sinon.stub(apiClient, "fetchUserData");
 
-        stub.resolves({ id: userId, name: 'Stubbed User' }); // Stub resolves
+    stub.resolves({ id: userId, name: "Stubbed User" }); // Stub resolves
 
-        const result = await apiClient.fetchUserData(userId);
+    const result = await apiClient.fetchUserData(userId);
 
-        expect(result).to.deep.equal({ id: userId, name: 'Stubbed User' });
-        expect(stub).to.have.been.calledWith(userId); // Verify that it was called as intended
-        stub.restore(); // Important to clean up stubs after usage
-    });
+    expect(result).to.deep.equal({ id: userId, name: "Stubbed User" });
+    expect(stub).to.have.been.calledWith(userId); // Verify that it was called as intended
+    stub.restore(); // Important to clean up stubs after usage
+  });
 });
 ```
 
@@ -57,32 +57,30 @@ In this first code block, we’re using `sinon.stub` to replace the original `fe
 But what about when you need to simulate a failure? That’s equally critical. Here's a demonstration on how to handle rejected promises with stubbing:
 
 ```javascript
-const sinon = require('sinon');
+const sinon = require("sinon");
 
 const apiClient = { fetchUserData };
 
+describe("Component using fetchUserData", () => {
+  it("should handle errors during user fetch", async () => {
+    const userId = "123";
+    const stub = sinon.stub(apiClient, "fetchUserData");
+    const errorMessage = "Failed to fetch user";
 
-describe('Component using fetchUserData', () => {
-    it('should handle errors during user fetch', async () => {
-         const userId = '123';
-         const stub = sinon.stub(apiClient, 'fetchUserData');
-         const errorMessage = 'Failed to fetch user';
+    stub.rejects(new Error(errorMessage)); // Stub rejects with an Error
 
-         stub.rejects(new Error(errorMessage)); // Stub rejects with an Error
+    let caughtError;
+    try {
+      await apiClient.fetchUserData(userId);
+    } catch (e) {
+      caughtError = e;
+    }
 
-         let caughtError;
-         try {
-            await apiClient.fetchUserData(userId);
-         } catch(e) {
-           caughtError = e;
-         }
-
-
-         expect(caughtError).to.be.an('error');
-         expect(caughtError.message).to.equal(errorMessage);
-         expect(stub).to.have.been.calledWith(userId);
-         stub.restore();
-     });
+    expect(caughtError).to.be.an("error");
+    expect(caughtError.message).to.equal(errorMessage);
+    expect(stub).to.have.been.calledWith(userId);
+    stub.restore();
+  });
 });
 ```
 
@@ -91,39 +89,40 @@ In this second code example, instead of `resolves()`, we use `rejects(new Error(
 Sometimes, you might encounter scenarios where the promise resolution needs to be dynamic. For instance, you might want to make the resolve or reject behavior dependent on the input arguments passed to the function. Here's how to achieve that:
 
 ```javascript
-const sinon = require('sinon');
+const sinon = require("sinon");
 const apiClient = { fetchUserData };
 
+describe("Component using fetchUserData", () => {
+  it("should handle fetch based on input params", async () => {
+    const stub = sinon.stub(apiClient, "fetchUserData");
 
-describe('Component using fetchUserData', () => {
- it('should handle fetch based on input params', async () => {
-      const stub = sinon.stub(apiClient, 'fetchUserData');
-
-      stub.callsFake((userId) => { // Stub with callsFake and dynamic resolving
-          if (userId === 'validUser') {
-              return Promise.resolve({ id: userId, name: 'Valid User' });
-          } else {
-              return Promise.reject(new Error('Invalid user id'));
-          }
-      });
-
-      let validResult = await apiClient.fetchUserData('validUser');
-      expect(validResult).to.deep.equal({ id: 'validUser', name: 'Valid User' });
-
-      let caughtError;
-      try {
-           await apiClient.fetchUserData('invalidUser');
-      } catch(e) {
-        caughtError = e;
+    stub.callsFake((userId) => {
+      // Stub with callsFake and dynamic resolving
+      if (userId === "validUser") {
+        return Promise.resolve({ id: userId, name: "Valid User" });
+      } else {
+        return Promise.reject(new Error("Invalid user id"));
       }
-      expect(caughtError).to.be.an('error');
-      expect(caughtError.message).to.equal('Invalid user id');
-
-      expect(stub).to.have.been.calledTwice;
-      stub.restore();
     });
+
+    let validResult = await apiClient.fetchUserData("validUser");
+    expect(validResult).to.deep.equal({ id: "validUser", name: "Valid User" });
+
+    let caughtError;
+    try {
+      await apiClient.fetchUserData("invalidUser");
+    } catch (e) {
+      caughtError = e;
+    }
+    expect(caughtError).to.be.an("error");
+    expect(caughtError.message).to.equal("Invalid user id");
+
+    expect(stub).to.have.been.calledTwice;
+    stub.restore();
+  });
 });
 ```
+
 Here, `callsFake` allows us to define a function that will be executed every time the stub is called. This function receives the arguments passed to the stub and we can then decide the resolution or rejection based on these arguments. This introduces the concept of conditional or dynamic stubbing of promises, greatly increasing the testability of complex flows.
 
 When working with Sinon stubs, it’s important to remember that you are not altering the original function in any permanent way. The `stub.restore()` ensures that any changes you make are temporary and are confined within the scope of the test suite. Failing to do this can lead to test pollution where changes persist beyond what was intended.

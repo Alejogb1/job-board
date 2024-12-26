@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-a-shared-azure-disk-be-mounted-within-an-azure-kubernetes-cluster-to-multiple-windows-pods"
 ---
 
-Alright, let's tackle this. It's a scenario I've seen crop up quite a few times, usually when dealing with legacy applications that haven't quite embraced the stateless container paradigm fully. Mounting a shared Azure disk to multiple Windows pods within an Azure Kubernetes Service (AKS) cluster requires a bit more finesse than the standard volume claim for a single pod, but it's definitely achievable. I’ll walk you through it based on some of my experiences, including a particularly stubborn legacy reporting system we had to containerize a few years back.
+, let's tackle this. It's a scenario I've seen crop up quite a few times, usually when dealing with legacy applications that haven't quite embraced the stateless container paradigm fully. Mounting a shared Azure disk to multiple Windows pods within an Azure Kubernetes Service (AKS) cluster requires a bit more finesse than the standard volume claim for a single pod, but it's definitely achievable. I’ll walk you through it based on some of my experiences, including a particularly stubborn legacy reporting system we had to containerize a few years back.
 
 The core challenge here revolves around the fundamental nature of persistent volumes and how Kubernetes handles them. Standard persistent volume claims are designed for exclusive access, preventing data corruption that could arise from concurrent writes. With a shared disk, we're deliberately breaking that exclusivity, and therefore, we need to understand the underlying mechanisms and the nuances of how Azure disks are handled by Kubernetes. This isn't something you should go into blindly; proper planning and understanding are crucial to avoid data inconsistencies.
 
-First, let’s acknowledge that Azure Disks, in their vanilla configuration, are not designed for simultaneous mounting by multiple VMs/pods within Kubernetes. If you tried it directly, Kubernetes would throw errors. However, Azure *does* offer a feature called *shared disks* that allow multiple virtual machines (and therefore, pods in our context) to access a single managed disk. This is primarily achieved using SCSI Persistent Reservations. It is this feature we'll leverage.
+First, let’s acknowledge that Azure Disks, in their vanilla configuration, are not designed for simultaneous mounting by multiple VMs/pods within Kubernetes. If you tried it directly, Kubernetes would throw errors. However, Azure _does_ offer a feature called _shared disks_ that allow multiple virtual machines (and therefore, pods in our context) to access a single managed disk. This is primarily achieved using SCSI Persistent Reservations. It is this feature we'll leverage.
 
 Now, the practical steps involve a few critical stages. First, you must create an azure managed disk with the `maxShares` setting greater than 1. That tells azure it should be prepared for shared access. Next we define an azure storage class and use that storage class to define a persistent volume and persistent volume claim. Finally, we'll ensure our pods are set to mount using the shared access mode. Here's a step by step approach to making that happen:
 
@@ -55,7 +55,7 @@ spec:
     readOnly: false
     volumeHandle: "/subscriptions/<your-subscription-id>/resourceGroups/<your-resource-group>/providers/Microsoft.Compute/disks/<your-disk-name>"
     volumeAttributes:
-        fsType: ntfs
+      fsType: ntfs
 ```
 
 In this PV, crucial elements are `storageClassName: azure-shared-disk` linking the PV to the storage class, the `accessModes: [ReadWriteMany]` for shared access, and the `volumeHandle` which must be set with the fully qualified azure resource id for the disk being mounted. Note that `readOnly` is set to `false`, and `fsType` is set to `ntfs`. We need the filesystem to be `ntfs` since we are mounting this to a windows node.
@@ -104,11 +104,11 @@ spec:
       nodeSelector:
         "kubernetes.io/os": windows
       containers:
-      - name: windows-container
-        image: mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019
-        volumeMounts:
-        - name: shared-volume
-          mountPath: "d:\\shared-data" # Mount path inside windows pod
+        - name: windows-container
+          image: mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019
+          volumeMounts:
+            - name: shared-volume
+              mountPath: "d:\\shared-data" # Mount path inside windows pod
       volumes:
         - name: shared-volume
           persistentVolumeClaim:
@@ -119,11 +119,11 @@ In this deployment manifest, the `volumeMounts` section dictates where the volum
 
 **Important Considerations:**
 
-*   **Data Consistency:** When multiple applications write to the same location, be aware of potential data corruption. Implement proper locking mechanisms within your application to avoid overwriting data. It's absolutely crucial to have your application built to handle concurrent access. If your application was not developed with this in mind, it may not work. In my experience, this is one of the biggest challenges and often requires more work than initially anticipated.
-*   **Performance:** Be mindful that sharing the disk increases I/O demand on a single disk. Performance will often become a bottleneck if the underlying storage is not adequate for the workload. Monitor I/O and consider scaling up the underlying disk size or choosing a higher tier sku if needed.
-*   **Monitoring:** Set up monitoring to observe disk I/O, performance, and any potential issues.
-*   **Disk Size:** Consider the storage requirements, and ensure the initial size is large enough to handle the workload. With the current versions of the Azure disk csi driver, volume expansion is supported.
-*   **Quorum:** When running multiple windows nodes, there is a possible risk for node failure and a resulting quorum loss that results in the disk being unmounted. It's imperative that you plan for this eventuality and create a strategy for your application to handle such failures.
+- **Data Consistency:** When multiple applications write to the same location, be aware of potential data corruption. Implement proper locking mechanisms within your application to avoid overwriting data. It's absolutely crucial to have your application built to handle concurrent access. If your application was not developed with this in mind, it may not work. In my experience, this is one of the biggest challenges and often requires more work than initially anticipated.
+- **Performance:** Be mindful that sharing the disk increases I/O demand on a single disk. Performance will often become a bottleneck if the underlying storage is not adequate for the workload. Monitor I/O and consider scaling up the underlying disk size or choosing a higher tier sku if needed.
+- **Monitoring:** Set up monitoring to observe disk I/O, performance, and any potential issues.
+- **Disk Size:** Consider the storage requirements, and ensure the initial size is large enough to handle the workload. With the current versions of the Azure disk csi driver, volume expansion is supported.
+- **Quorum:** When running multiple windows nodes, there is a possible risk for node failure and a resulting quorum loss that results in the disk being unmounted. It's imperative that you plan for this eventuality and create a strategy for your application to handle such failures.
 
 For deep dives into this, I’d recommend referencing the official Azure documentation for managed disks and the kubernetes documentation on persistent volumes. Specifically, the Azure documentation on shared disks, found under the "Azure Managed Disks" section, will provide detail around usage and implementation. For Kubernetes, the key resources are the sections on Persistent Volumes and Storage Classes. The Kubernetes CSI documentation will also help illuminate the drivers themselves. A good book on Kubernetes concepts will also help you better understand the underlying mechanisms being used to implement this scenario. I've found that O'Reilly's "Kubernetes in Action" offers a good foundation in Kubernetes architecture for most use cases.
 

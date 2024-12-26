@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-access-image-inspection-properties-in-an-azure-container-registry"
 ---
 
-Alright, let's tackle this. It's a question that, believe it or not, I've spent a fair bit of time on in previous projects. Back when we were shifting our microservices to a more containerized setup, the need to programmatically inspect image properties within our Azure Container Registry (acr) became pretty crucial for things like security scanning and automated compliance checks. So, let me share what I've learned over time.
+, let's tackle this. It's a question that, believe it or not, I've spent a fair bit of time on in previous projects. Back when we were shifting our microservices to a more containerized setup, the need to programmatically inspect image properties within our Azure Container Registry (acr) became pretty crucial for things like security scanning and automated compliance checks. So, let me share what I've learned over time.
 
 Accessing image inspection properties in an acr isn't a single, straightforward operation. It involves interacting with the acr apis, primarily through the Azure CLI, but also through other available tools and libraries depending on your needs. At its core, what you're retrieving is a set of metadata associated with each image, things like its creation time, operating system, size, and crucially, any discovered vulnerabilities or security findings (if you've configured vulnerability scanning, that is).
 
@@ -36,9 +36,9 @@ The `--output json` parameter is particularly useful because it gives you the re
     "timestamp": "2024-07-26T10:00:00Z"
   },
   {
-     "digest": "sha256:0987654321fedcba...",
-     "name": "v1.0",
-     "timestamp": "2024-07-25T14:30:00Z"
+    "digest": "sha256:0987654321fedcba...",
+    "name": "v1.0",
+    "timestamp": "2024-07-25T14:30:00Z"
   }
 ]
 ```
@@ -111,9 +111,9 @@ In summary, accessing image properties in acr offers multiple avenues. The Azure
 
 For further exploration into these methods and the underlying technologies, I highly recommend delving into:
 
-*   **Docker Image Specification:** Understand the structure of a docker image manifest, available in the official Docker documentation, which will be critical for parsing results.
-*   **Azure Container Registry Documentation:** The official Microsoft documentation is invaluable. Specifically, focus on the rest api references and the Azure CLI documentation for acr.
-*   **Azure SDK for Python/Dotnet Documentation:** Depending on your language preference, the SDK's api documentation provides detailed information on each function and object.
-*   **The Open Container Initiative (oci) specifications:** For deep dives into the underlying container image specifications and standards, particularly if you find yourself working with low-level tooling.
+- **Docker Image Specification:** Understand the structure of a docker image manifest, available in the official Docker documentation, which will be critical for parsing results.
+- **Azure Container Registry Documentation:** The official Microsoft documentation is invaluable. Specifically, focus on the rest api references and the Azure CLI documentation for acr.
+- **Azure SDK for Python/Dotnet Documentation:** Depending on your language preference, the SDK's api documentation provides detailed information on each function and object.
+- **The Open Container Initiative (oci) specifications:** For deep dives into the underlying container image specifications and standards, particularly if you find yourself working with low-level tooling.
 
 Hope this helps clarify things. Let me know if you have more questions.

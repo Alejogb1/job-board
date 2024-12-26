@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-wont-an-nfs-volume-mount-on-airflow-workers-in-kubernetes"
 ---
 
-Okay, let's dive into this. I've spent more hours than I care to remember troubleshooting NFS mounting issues in Kubernetes, specifically with Airflow workers. It’s a situation that seems straightforward on the surface, but the devils, as they often do, reside in the details. From my experience, a failed NFS mount on Airflow workers within a Kubernetes environment typically stems from a combination of networking configurations, permission challenges, and sometimes, a misunderstanding of how Kubernetes manages persistent volumes. Let's break it down systematically.
+, let's dive into this. I've spent more hours than I care to remember troubleshooting NFS mounting issues in Kubernetes, specifically with Airflow workers. It’s a situation that seems straightforward on the surface, but the devils, as they often do, reside in the details. From my experience, a failed NFS mount on Airflow workers within a Kubernetes environment typically stems from a combination of networking configurations, permission challenges, and sometimes, a misunderstanding of how Kubernetes manages persistent volumes. Let's break it down systematically.
 
 First, let’s address the networking aspect. Kubernetes workers, by default, are isolated within their network namespace. This isolation, while providing security benefits, also means that the pods might not have direct visibility to the NFS server if it's running on a different network segment or is not directly routable. I recall one particularly frustrating incident where the NFS server was hosted on-prem, and the Kubernetes cluster was running in a managed cloud environment. The firewall rules on the on-prem side were not configured to allow traffic from the pod’s IP range, leading to consistent “connection refused” errors. The solution involved meticulous review and adjustment of those rules to enable communication. In these cases, always double-check that the necessary routes and firewall rules are established for communication. Network policies in Kubernetes can also inadvertently block traffic. If you're using them, inspect their rules carefully. The `kubectl describe pod <pod_name>` command provides valuable information here, specifically looking at the events section to pinpoint network-related failures.
 
@@ -19,21 +19,20 @@ metadata:
   name: airflow-worker-example
 spec:
   containers:
-  - name: worker
-    image: apache/airflow:latest
-    volumeMounts:
-    - name: shared-data
-      mountPath: /opt/airflow/dags # example mount point
+    - name: worker
+      image: apache/airflow:latest
+      volumeMounts:
+        - name: shared-data
+          mountPath: /opt/airflow/dags # example mount point
   volumes:
-  - name: shared-data
-    nfs:
-      server: <nfs_server_ip>
-      path: /mnt/shared
+    - name: shared-data
+      nfs:
+        server: <nfs_server_ip>
+        path: /mnt/shared
   securityContext:
     runAsUser: 1000
     runAsGroup: 1000
     fsGroup: 1000
-
 ```
 
 Here, the `securityContext` ensures the container processes execute with the specified UID and GID. The `fsGroup` option ensures that when the volume is mounted, it's done with the correct permissions. This is critical if you plan to write data back to the NFS volume. I recommend reading up on Kubernetes securityContexts and its granular control over pod permissions in the official Kubernetes documentation.
@@ -75,6 +74,7 @@ spec:
     matchLabels:
       pvname: nfs-pv-example
 ```
+
 In this example, the PVC attempts to claim the matching persistent volume based on the labels. If you find that the PVC stays in a `Pending` state, check the events section of the PVC via `kubectl describe pvc <pvc_name>`. This will show any errors or misconfigurations preventing binding. A detailed understanding of how Kubernetes volumes work can be obtained from "Kubernetes in Action" by Marko Luksa, an excellent resource for in-depth knowledge.
 
 Finally, one last point which sometimes catches people out: if the NFS server has a custom export configuration (e.g., specific IP addresses allowed) or uses Kerberos, you'll need to ensure that these configurations are reflected in the network policies and the client's configuration (often this is implicit through the kubernetes network but sometimes needs attention). Also ensure that the necessary NFS client packages are installed within the worker image. Usually, distributions include `nfs-common`, but it is worth checking.

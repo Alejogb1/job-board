@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-properly-update-parent-and-child-objects-in-ruby"
 ---
 
-Alright, let’s tackle this. I’ve certainly seen my fair share of tangled object relationships, particularly when it comes to updates in Ruby. It’s not uncommon to find yourself in a situation where a simple update cascades into a series of unintended side effects if not handled carefully. Let me walk you through some practical approaches I've found effective, drawing on experiences from projects past, and provide concrete examples to illustrate these concepts.
+, let’s tackle this. I’ve certainly seen my fair share of tangled object relationships, particularly when it comes to updates in Ruby. It’s not uncommon to find yourself in a situation where a simple update cascades into a series of unintended side effects if not handled carefully. Let me walk you through some practical approaches I've found effective, drawing on experiences from projects past, and provide concrete examples to illustrate these concepts.
 
 The core issue, as I see it, boils down to maintaining data integrity across related objects. When dealing with parent-child relationships – think of something like a `Customer` and their associated `Order` objects – updating one shouldn't inadvertently corrupt the other or lead to data inconsistency. In my experience, improper handling often manifests as stale or out-of-sync data, which ultimately leads to unexpected behavior and hard-to-track bugs.
 
@@ -108,8 +108,8 @@ Here, we introduce the `after_save` callback. Whenever an order is saved (either
 
 For a more comprehensive understanding of these concepts, I highly recommend:
 
-*   **"Agile Web Development with Rails 7"** by Sam Ruby, David Thomas, and David Heinemeier Hansson. This book offers a solid foundation in how Rails and ActiveRecord work, which is crucial for understanding object relationships. Pay close attention to the sections on model associations, callbacks, and database interactions.
-*   **"Refactoring: Improving the Design of Existing Code"** by Martin Fowler. While not Ruby-specific, this classic book teaches you how to structure your code to be more maintainable and testable. It has extensive advice on dealing with code complexity which is crucial when managing object relations.
-*   **The official Ruby on Rails documentation**. The ActiveRecord documentation is invaluable, especially the sections on associations, querying, and callbacks. It is important to have a deep understanding of these topics, as it will allow you to write maintainable, optimized, and bug-free code.
+- **"Agile Web Development with Rails 7"** by Sam Ruby, David Thomas, and David Heinemeier Hansson. This book offers a solid foundation in how Rails and ActiveRecord work, which is crucial for understanding object relationships. Pay close attention to the sections on model associations, callbacks, and database interactions.
+- **"Refactoring: Improving the Design of Existing Code"** by Martin Fowler. While not Ruby-specific, this classic book teaches you how to structure your code to be more maintainable and testable. It has extensive advice on dealing with code complexity which is crucial when managing object relations.
+- **The official Ruby on Rails documentation**. The ActiveRecord documentation is invaluable, especially the sections on associations, querying, and callbacks. It is important to have a deep understanding of these topics, as it will allow you to write maintainable, optimized, and bug-free code.
 
 In conclusion, updating parent and child objects effectively in Ruby requires conscious effort and a structured approach. The key is to understand how ActiveRecord handles relationships, utilize tools such as `reload`, `update_all` and callbacks effectively, and be aware of potential pitfalls like caching issues. By being deliberate about how data flows between objects and utilizing these strategies, you can build robust, maintainable applications. It's about more than just getting the code working – it's about making it clear, efficient, and predictable, which is crucial for any long-term project.

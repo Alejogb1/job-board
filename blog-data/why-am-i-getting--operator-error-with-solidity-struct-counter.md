@@ -4,13 +4,13 @@ date: "2024-12-16"
 id: "why-am-i-getting--operator-error-with-solidity-struct-counter"
 ---
 
-Okay, let's unpack this "<= operator error with Solidity struct Counter" situation. I’ve seen this particular problem pop up more times than I care to remember across different projects, and it usually boils down to a misunderstanding of how Solidity handles struct comparisons, combined with some inherent limitations of its type system. The core issue, and it's one we've all bumped into at some point, is that Solidity doesn't automatically define comparison operators like <= (less than or equal to) for custom structs.
+, let's unpack this "<= operator error with Solidity struct Counter" situation. I’ve seen this particular problem pop up more times than I care to remember across different projects, and it usually boils down to a misunderstanding of how Solidity handles struct comparisons, combined with some inherent limitations of its type system. The core issue, and it's one we've all bumped into at some point, is that Solidity doesn't automatically define comparison operators like <= (less than or equal to) for custom structs.
 
 Imagine I was working on a decentralized application for managing inventory. We had a `Product` struct with various fields like `id`, `name`, and importantly, `stockLevel`, an unsigned integer representing units in stock. We wanted to implement a simple function that checks if the stock level of one product was less than or equal to another. This sounds trivial, but the compiler throws that error. Let's look at the why.
 
 Solidity, as a statically typed language, expects clearly defined ways to handle comparisons. When you try to use the `<=` operator on a struct, the compiler doesn't inherently know how to compare two structs. Does it compare them field by field? If so, what order? Does it check the equality of each field? Is there a particular field which it should use? These are all valid questions. The compiler avoids making assumptions and defaults to rejecting the comparison.
 
-The fix isn't some black magic, but rather, we need to tell Solidity explicitly *how* to perform the comparison. There are several ways we can approach this, and the 'best' option often depends on the specific needs of your smart contract. Often, the most straightforward approach involves writing a custom function that handles the comparison.
+The fix isn't some black magic, but rather, we need to tell Solidity explicitly _how_ to perform the comparison. There are several ways we can approach this, and the 'best' option often depends on the specific needs of your smart contract. Often, the most straightforward approach involves writing a custom function that handles the comparison.
 
 Let's take a look at some example scenarios.
 

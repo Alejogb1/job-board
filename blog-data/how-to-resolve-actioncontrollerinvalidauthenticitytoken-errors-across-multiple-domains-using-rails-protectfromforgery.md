@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resolve-actioncontrollerinvalidauthenticitytoken-errors-across-multiple-domains-using-rails-protectfromforgery"
 ---
 
-Alright, let's tackle this. I've certainly seen my share of `ActionController::InvalidAuthenticityToken` errors, especially when dealing with cross-domain interactions. It’s a common pitfall, and understanding how to approach it correctly is crucial for any Rails-based application handling requests from different origins. The issue, at its core, stems from Rails' built-in CSRF (Cross-Site Request Forgery) protection, implemented via `protect_from_forgery`. This mechanism is fantastic for guarding against malicious requests originating from other sites, but it can become a stumbling block when legitimate cross-domain requests are involved.
+, let's tackle this. I've certainly seen my share of `ActionController::InvalidAuthenticityToken` errors, especially when dealing with cross-domain interactions. It’s a common pitfall, and understanding how to approach it correctly is crucial for any Rails-based application handling requests from different origins. The issue, at its core, stems from Rails' built-in CSRF (Cross-Site Request Forgery) protection, implemented via `protect_from_forgery`. This mechanism is fantastic for guarding against malicious requests originating from other sites, but it can become a stumbling block when legitimate cross-domain requests are involved.
 
 The fundamental problem is that the authenticity token embedded in forms (or via headers for non-form submissions) is typically domain-specific. If a request arrives from a domain that doesn’t match the server's origin, the token is deemed invalid, and you get that dreaded `ActionController::InvalidAuthenticityToken` error. Now, there are multiple ways to handle this, and the 'best' one really depends on the specific context of your application. I remember a particularly tricky situation a few years back when we were integrating a payment gateway that hosted its form on a different subdomain. It took some careful deliberation to get it working smoothly, and that’s what I want to share here – not just the theoretical concepts, but the practical steps I've found effective.
 
@@ -14,7 +14,7 @@ When working with multiple domains, the core issue is that the session, and ther
 
 **Option 1: `skip_before_action` (Use with Extreme Caution)**
 
-The most straightforward, yet *least* recommended, approach is to bypass the forgery protection entirely for specific controller actions. I've had to use this as a temporary measure during development, but it’s something I actively avoid in production.
+The most straightforward, yet _least_ recommended, approach is to bypass the forgery protection entirely for specific controller actions. I've had to use this as a temporary measure during development, but it’s something I actively avoid in production.
 
 ```ruby
 class PaymentsController < ApplicationController
@@ -26,7 +26,7 @@ class PaymentsController < ApplicationController
 end
 ```
 
-This `skip_before_action` effectively disables the CSRF check for the `create_payment` action. While it might solve your immediate issue, it also leaves you wide open to potential CSRF vulnerabilities on that specific action. Think of this as removing the lock from one particular door of your house – it's quicker to get through, but certainly not the safest. *Always* exhaust other options before using this one. I usually reserve this only for isolated api endpoints used by systems with other authentication means.
+This `skip_before_action` effectively disables the CSRF check for the `create_payment` action. While it might solve your immediate issue, it also leaves you wide open to potential CSRF vulnerabilities on that specific action. Think of this as removing the lock from one particular door of your house – it's quicker to get through, but certainly not the safest. _Always_ exhaust other options before using this one. I usually reserve this only for isolated api endpoints used by systems with other authentication means.
 
 **Option 2: `protect_from_forgery with null_session` with `Access-Control-Allow-Origin`**
 
@@ -58,7 +58,7 @@ end
 
 ```
 
-This is still a method that requires caution. `null_session` *does not* disable CSRF protection, but rather sets the session to null which means each request will not have access to a session cookie, *and* will also not generate a new one. In this mode of operation, you must send the CSRF token as part of your request, usually within a request header, with the corresponding `Access-Control-Allow-Origin` and other headers configured for your application. The header we'll be most concerned with is `X-CSRF-Token`. This will be the most appropriate in a system that functions more as an API server, and for non-browser clients. Ensure you also handle `OPTIONS` preflight requests as above.
+This is still a method that requires caution. `null_session` _does not_ disable CSRF protection, but rather sets the session to null which means each request will not have access to a session cookie, _and_ will also not generate a new one. In this mode of operation, you must send the CSRF token as part of your request, usually within a request header, with the corresponding `Access-Control-Allow-Origin` and other headers configured for your application. The header we'll be most concerned with is `X-CSRF-Token`. This will be the most appropriate in a system that functions more as an API server, and for non-browser clients. Ensure you also handle `OPTIONS` preflight requests as above.
 
 **Option 3: Token Sharing (More Complex but Secure)**
 
@@ -80,6 +80,7 @@ function makeRequest() {
   });
 }
 ```
+
 ```ruby
 # Domain 2: Rails application that needs to receive the request from domain1.com
 class Api::MyController < ApplicationController
@@ -113,10 +114,10 @@ In this approach, the client retrieves the csrf token from the originating page,
 
 **Important Considerations:**
 
-*   **Security:** *Never* completely disable CSRF protection unless you have a very strong understanding of the implications and alternative security measures in place.
-*   **Domain Scope:** Be incredibly specific with your `Access-Control-Allow-Origin` settings. Never use `*` in production unless you really, really know what you are doing. If the header is set to `*`, it will allow *any* domain. Always be specific, whether through a whitelist of domains or a more complex method.
-*   **Token Storage:** Be cautious when passing CSRF tokens as query parameters as they could be logged. Using headers is generally preferable.
-*   **Documentation:** Ensure your api documentation or client applications clearly delineate which methods are being used, how tokens are exchanged, and the general lifecycle of the token.
-*   **Further Reading:** I recommend "The Tangled Web" by Michal Zalewski for a deep understanding of web security principles. Also, the OWASP (Open Web Application Security Project) website is an excellent resource for staying updated with best practices.
+- **Security:** _Never_ completely disable CSRF protection unless you have a very strong understanding of the implications and alternative security measures in place.
+- **Domain Scope:** Be incredibly specific with your `Access-Control-Allow-Origin` settings. Never use `*` in production unless you really, really know what you are doing. If the header is set to `*`, it will allow _any_ domain. Always be specific, whether through a whitelist of domains or a more complex method.
+- **Token Storage:** Be cautious when passing CSRF tokens as query parameters as they could be logged. Using headers is generally preferable.
+- **Documentation:** Ensure your api documentation or client applications clearly delineate which methods are being used, how tokens are exchanged, and the general lifecycle of the token.
+- **Further Reading:** I recommend "The Tangled Web" by Michal Zalewski for a deep understanding of web security principles. Also, the OWASP (Open Web Application Security Project) website is an excellent resource for staying updated with best practices.
 
 In my experience, option 3 (token sharing) offers the most robustness and security for complex cross-domain situations, when paired with a proper cors implementation; it requires a bit more setup, but the effort is generally worth it for the added safety and control. Remember, understanding the nuances of how `protect_from_forgery` interacts with different domains is crucial to securing your Rails applications. Don't take shortcuts when it comes to security. Carefully examine your specific needs and choose the method that best balances security with your application's requirements.

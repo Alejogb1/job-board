@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-i-give-a-competencequality-level-of-a-string-in-nlp-with-python"
 ---
 
-alright, let's tackle this string competence thing. i've bumped into this a few times, and it's never as straightforward as one might hope. it's less about a single, definitive score and more about a combination of metrics. what constitutes "competence" or "quality" for a string really depends on what you're trying to achieve. are we talking about grammar? complexity? sentiment? factuality? all of the above?
+, let's tackle this string competence thing. i've bumped into this a few times, and it's never as straightforward as one might hope. it's less about a single, definitive score and more about a combination of metrics. what constitutes "competence" or "quality" for a string really depends on what you're trying to achieve. are we talking about grammar? complexity? sentiment? factuality? all of the above?
 
 i remember this one project i did back in my university days. we were building a chatbot, and we needed a way to filter out nonsensical user input. a simple length check wasn't enough; users could still type gibberish that was lengthy. we initially tried a purely rule-based approach which quickly became a spaghetti mess of edge cases. so, i had to learn to move away from the "if this than that" and adopt more flexible methods.
 
@@ -135,12 +135,12 @@ after you have a few of these measures, what you want to do is to combine them. 
 
 **important considerations**
 
-*   **task-specific definitions:** before you even start coding, you need a solid idea of what "competent" means for *your* specific task. for example, a well-written technical document will be different from a piece of poetry or a casual social media post.
-*   **data preprocessing:** make sure your text preprocessing is done correctly (e.g. lowercasing, punctuation removal, stemming etc). this can impact all of your measures.
-*   **context matters:** for long strings, remember that global quality does not always mean local quality. a sentence within a paragraph can be fine on its own, but in the context of the entire text, its meaning can be problematic.
+- **task-specific definitions:** before you even start coding, you need a solid idea of what "competent" means for _your_ specific task. for example, a well-written technical document will be different from a piece of poetry or a casual social media post.
+- **data preprocessing:** make sure your text preprocessing is done correctly (e.g. lowercasing, punctuation removal, stemming etc). this can impact all of your measures.
+- **context matters:** for long strings, remember that global quality does not always mean local quality. a sentence within a paragraph can be fine on its own, but in the context of the entire text, its meaning can be problematic.
 
 **and finally a resource recommendation**
 
-if you are new to nlp i would say that one book that has been quite useful for me during the years is *speech and language processing* by daniel jurafsky and james h. martin. it is a thick and heavy book with almost 1000 pages, so be prepared to spend a few months, if not years on it.
+if you are new to nlp i would say that one book that has been quite useful for me during the years is _speech and language processing_ by daniel jurafsky and james h. martin. it is a thick and heavy book with almost 1000 pages, so be prepared to spend a few months, if not years on it.
 
 this issue is a moving target. language models are getting better all the time and the measures are constantly evolving. what worked for me last year might not be as effective now, so it is important to keep updating your arsenal. i've seen some interesting stuff on the application of transformers to text quality analysis, so perhaps that's the direction to explore more. good luck out there, and may your code compile on the first try (just kidding... or am i?).

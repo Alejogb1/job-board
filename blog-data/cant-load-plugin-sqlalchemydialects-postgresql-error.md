@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cant-load-plugin-sqlalchemydialects-postgresql-error"
 ---
 
-Okay I've seen this before plenty of times this 'can't load sqlalchemy dialects postgresql' thing it's a classic really It usually boils down to a few basic issues and I can break it down for you without the fluff
+I've seen this before plenty of times this 'can't load sqlalchemy dialects postgresql' thing it's a classic really It usually boils down to a few basic issues and I can break it down for you without the fluff
 
 So I remember the first time I ran into this oh boy It was back in my early days I was working on this data pipeline project with a bunch of sensor data flowing in it was supposed to be super clean and fast but of course it wasn't I was using sqlalchemy as the ORM because well its sqlalchemy and we were using a postgres database of course It seemed easy enough in theory just connect and start querying but nope I got this error a wall of text that pretty much said 'can't find the postgresql dialect' I spent a good 2 hours scratching my head before I realized the problem which by the way was really dumb when I think about it now
 
@@ -100,9 +100,9 @@ That single slash `/` after the postgresql is enough to make the connection fail
 
 To help you find the right way I recommend this kind of resources
 
-*   The official SQLAlchemy documentation It's your bible when you're messing with sqlalchemy and it has a lot of examples for each particular problem you might have I would recommend going directly to the Dialects section of it to search for postgresql specifically.
-*   The psycopg2 documentation is also very helpful for understanding the connection errors and different connection parameters you might find yourself into.
-*   Real Python has a lot of free step-by-step tutorials on sqlalchemy and postgresql that will help you better grasp concepts you might be new to.
+- The official SQLAlchemy documentation It's your bible when you're messing with sqlalchemy and it has a lot of examples for each particular problem you might have I would recommend going directly to the Dialects section of it to search for postgresql specifically.
+- The psycopg2 documentation is also very helpful for understanding the connection errors and different connection parameters you might find yourself into.
+- Real Python has a lot of free step-by-step tutorials on sqlalchemy and postgresql that will help you better grasp concepts you might be new to.
 
 And just as a final piece of advice always use the most recent version of both sqlalchemy and psycopg2 they usually iron out a lot of bugs and errors that come up.
 

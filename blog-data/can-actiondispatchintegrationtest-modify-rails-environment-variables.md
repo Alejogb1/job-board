@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-actiondispatchintegrationtest-modify-rails-environment-variables"
 ---
 
-Alright, let's tackle this. I've certainly been down this rabbit hole before, particularly during a rather complex integration testing suite for a microservices project a few years back. The short answer is yes, `ActionDispatch::IntegrationTest` can absolutely modify Rails environment variables, but it's a process that needs careful handling, and it's vital to understand the nuances involved. It's not about straightforward mutation; rather, it’s about managing the environment in a way that your tests operate as expected and don't leak changes to other test runs.
+, let's tackle this. I've certainly been down this rabbit hole before, particularly during a rather complex integration testing suite for a microservices project a few years back. The short answer is yes, `ActionDispatch::IntegrationTest` can absolutely modify Rails environment variables, but it's a process that needs careful handling, and it's vital to understand the nuances involved. It's not about straightforward mutation; rather, it’s about managing the environment in a way that your tests operate as expected and don't leak changes to other test runs.
 
 When we talk about "modifying" environment variables in the context of `ActionDispatch::IntegrationTest`, we're generally aiming to override values typically loaded from `.env` files, or system environment settings, for the duration of the specific test. You wouldn't actually modify the original system environment of the machine running the test. What we're doing is influencing what Rails sees when it loads configurations for an individual test. Think of it more like providing temporary local overrides within the testing environment.
 
@@ -52,7 +52,7 @@ class AnotherControllerTest < ActionDispatch::IntegrationTest
 end
 ```
 
-Here, the modification happens in the `setup` block. This is very useful when you want the same environment settings applied across multiple test methods within a single test class. Rails executes the `setup` block *before* each individual `test` case. Notice that the `DATABASE_URL` is modified in setup; both tests will run with this specific modified variable. As soon as the test class is finished, the change is discarded and does not persist. This helps ensure a consistent environment for all tests within this class without duplicating the `ENV` modification in every test.
+Here, the modification happens in the `setup` block. This is very useful when you want the same environment settings applied across multiple test methods within a single test class. Rails executes the `setup` block _before_ each individual `test` case. Notice that the `DATABASE_URL` is modified in setup; both tests will run with this specific modified variable. As soon as the test class is finished, the change is discarded and does not persist. This helps ensure a consistent environment for all tests within this class without duplicating the `ENV` modification in every test.
 
 **Snippet 3: Resetting modified environment variables**
 
@@ -82,7 +82,8 @@ class YetAnotherControllerTest < ActionDispatch::IntegrationTest
 end
 
 ```
-In this example, the approach we used to deal with the modification to the `ENV` is to both store the original value in the `setup` method and then restore it in the `teardown` method. This can be useful to avoid impacting the overall environment and avoid unintended consequences on other test classes or suites. The `teardown` method runs *after* each test in the class. It is particularly helpful if you need a specific variable to be only set during that test and ensure it reverts to its original state after the test completes.
+
+In this example, the approach we used to deal with the modification to the `ENV` is to both store the original value in the `setup` method and then restore it in the `teardown` method. This can be useful to avoid impacting the overall environment and avoid unintended consequences on other test classes or suites. The `teardown` method runs _after_ each test in the class. It is particularly helpful if you need a specific variable to be only set during that test and ensure it reverts to its original state after the test completes.
 
 Now, it is also crucial to be aware that simply modifying environment variables via `ENV` might not be enough for certain situations. Some parts of Rails or third-party libraries might read environment variables only once during initialization and might not pick up changes during the test execution. In these cases, you may need to configure the application or library directly using other methods, such as using the `Rails.application.config` object or using a specific testing configuration block within the application's initialization logic.
 

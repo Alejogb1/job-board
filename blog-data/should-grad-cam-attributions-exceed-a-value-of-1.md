@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "should-grad-cam-attributions-exceed-a-value-of-1"
 ---
 
-Alright, let's tackle this. From my own experience, specifically during a project a few years back involving anomaly detection in medical imaging, I came across the very question of whether Grad-CAM attributions can, and should, exceed 1. It's a valid concern, and the answer is nuanced, so let's unpack it.
+, let's tackle this. From my own experience, specifically during a project a few years back involving anomaly detection in medical imaging, I came across the very question of whether Grad-CAM attributions can, and should, exceed 1. It's a valid concern, and the answer is nuanced, so let's unpack it.
 
 Grad-CAM, or Gradient-weighted Class Activation Mapping, is a technique to visualize which parts of an input image are most important for a convolutional neural network’s decision-making process. The crux of it lies in computing the gradient of the target class’s score with respect to the feature maps of the last convolutional layer, and then using these gradients to weight the activation maps. The result is a heatmap which, in theory, indicates areas of high influence. However, that heatmap can, and often does, have values outside the [0, 1] range, and here's why that isn't necessarily a problem.
 
-First, let’s get clear about what those attributions actually *are*. They're not probabilities. They are *weighted* gradient values, and gradients themselves aren't constrained to any particular range. These gradients are aggregated and typically normalized to have positive and negative contributions, hence exceeding 1 or going below 0 isn't illogical. The absolute value of the attribution tells us the intensity, and the sign indicates if it's a positive or negative factor that contributes toward the classification.
+First, let’s get clear about what those attributions actually _are_. They're not probabilities. They are _weighted_ gradient values, and gradients themselves aren't constrained to any particular range. These gradients are aggregated and typically normalized to have positive and negative contributions, hence exceeding 1 or going below 0 isn't illogical. The absolute value of the attribution tells us the intensity, and the sign indicates if it's a positive or negative factor that contributes toward the classification.
 
 When thinking about values exceeding 1, think of them as amplified influences. They mean that certain areas in the input contributed disproportionately strongly towards the model's decision. If a single area in the feature map had a very high gradient influence, and the weighted sum is dominated by it, this value can be much larger than 1. There's no hard theoretical limit dictating a maximum of 1 for these values. For instance, let's say the network is highly sensitive to a specific pixel pattern in the image. The gradients corresponding to this pattern would likely be substantial, yielding a high attribution value.
 
@@ -41,7 +41,7 @@ def grad_cam(model, input_image, target_class, layer_name):
       feature_maps.append(output)
     def save_grad(module, grad_in, grad_out):
       grads.append(grad_out[0])
-    
+
     target_layer = None
     for name, module in model.named_modules():
         if name == layer_name:
@@ -64,7 +64,7 @@ def grad_cam(model, input_image, target_class, layer_name):
     for i in range(feature_maps.shape[1]):
         feature_maps[:,i] *= pooled_grads[i]
     heatmap = torch.mean(feature_maps,axis=1).squeeze().detach().numpy()
-    
+
     #Optional rescaling to 0-1 for visualization
     #heatmap = (heatmap - np.min(heatmap)) / (np.max(heatmap) - np.min(heatmap))
     return heatmap
@@ -75,10 +75,10 @@ if __name__ == "__main__":
     model.eval()
     # Load an image (replace path with the path to your image)
     image = Image.open("cat.jpg")
-    
+
     #Example usage
     heatmap = grad_cam(model,image, target_class=281, layer_name='layer4')
-    
+
     #Visualize heatmap
     plt.imshow(heatmap, cmap='jet')
     plt.show()
@@ -105,7 +105,7 @@ def generate_high_attribution_heatmap(size, max_value = 5):
             dist = np.sqrt((x - center_x)**2 + (y- center_y)**2)
             if dist < radius:
                heatmap[x,y]= max_value
-    
+
     return heatmap
 
 if __name__ =="__main__":
@@ -131,7 +131,7 @@ def normalize_heatmap(heatmap):
     max_val = np.max(heatmap)
     if max_val == min_val:
         return np.zeros_like(heatmap)
-    
+
     normalized_heatmap = (heatmap - min_val) / (max_val - min_val)
     return normalized_heatmap
 
@@ -140,9 +140,9 @@ if __name__ == "__main__":
     heatmap = np.array([[-0.5, 0.2, 1.5],
                        [0.8, 2.0, 0.1],
                        [-1.0, 0.5, 3.0]])
-    
+
     norm_heatmap = normalize_heatmap(heatmap)
-    
+
     plt.subplot(1,2,1)
     plt.imshow(heatmap,cmap='jet')
     plt.title("Original Heatmap")
@@ -152,12 +152,13 @@ if __name__ == "__main__":
     plt.title("Normalized Heatmap")
     plt.colorbar()
     plt.show()
-    
+
     print(f"Original Max Value: {np.max(heatmap):.2f}")
     print(f"Normalized Max Value: {np.max(norm_heatmap):.2f}")
 ```
+
 As you can see from this example, the values are scaled down, to the range from 0 to 1 for easier visualization. However, that doesn't change the fact the original Grad-CAM output may have values greater than 1.
 
-In summary, the fact that Grad-CAM attributions exceed 1 isn't a cause for alarm. It's an artifact of the underlying gradient-based approach. In practice, rather than enforcing a [0, 1] range, I would focus on the *relative* strength of the attributions to determine what aspects of the input the model deemed important. Normalization and rescaling are often employed to facilitate visual analysis.
+In summary, the fact that Grad-CAM attributions exceed 1 isn't a cause for alarm. It's an artifact of the underlying gradient-based approach. In practice, rather than enforcing a [0, 1] range, I would focus on the _relative_ strength of the attributions to determine what aspects of the input the model deemed important. Normalization and rescaling are often employed to facilitate visual analysis.
 
 For further reading, I recommend delving into papers like the original Grad-CAM paper, "Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization" (Selvaraju et al., 2017). A thorough understanding of convolutional neural networks and their gradients is also helpful; for this, consider "Deep Learning" by Goodfellow, Bengio, and Courville. Additionally, research into techniques beyond Grad-CAM like Integrated Gradients (Sundararajan et al., 2017) and LIME (Ribeiro et al., 2016) could give you more perspectives.

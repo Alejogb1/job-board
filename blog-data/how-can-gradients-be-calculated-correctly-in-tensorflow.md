@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-gradients-be-calculated-correctly-in-tensorflow"
 ---
 
-Okay, let's unpack the often tricky topic of gradient calculation in TensorFlow. It's an area where subtle errors can easily creep in, leading to models that fail to converge or, worse, converge to suboptimal solutions. My journey with TensorFlow started way back, and I distinctly remember a project involving a complex recurrent neural network where the gradients were persistently exploding, resulting in NaN values and a completely useless model. That experience, along with many subsequent debugging sessions, ingrained in me the need for meticulous understanding and implementation of gradient calculations.
+, let's unpack the often tricky topic of gradient calculation in TensorFlow. It's an area where subtle errors can easily creep in, leading to models that fail to converge or, worse, converge to suboptimal solutions. My journey with TensorFlow started way back, and I distinctly remember a project involving a complex recurrent neural network where the gradients were persistently exploding, resulting in NaN values and a completely useless model. That experience, along with many subsequent debugging sessions, ingrained in me the need for meticulous understanding and implementation of gradient calculations.
 
 Essentially, TensorFlow computes gradients using automatic differentiation. This process, at its core, involves tracking every operation performed during the forward pass of a computation graph. It then, in the backward pass, applies the chain rule of calculus to propagate gradients back through the graph, calculating the gradient of the output with respect to each of the input variables. It’s a remarkably powerful system, but it’s also one that requires careful attention to detail to ensure accuracy.
 
@@ -34,7 +34,8 @@ grad_x = tape.gradient(y, x)
 print(f"Value of x: {x.numpy()}")
 print(f"Gradient of y with respect to x: {grad_x.numpy()}")
 ```
-In this code, we create a `tf.Variable` *x*, which can be updated via gradient descent. Inside the `tf.GradientTape` context, we compute y, a function of *x*. Then, the `tape.gradient()` method gives us the gradient of *y* with respect to *x*.
+
+In this code, we create a `tf.Variable` _x_, which can be updated via gradient descent. Inside the `tf.GradientTape` context, we compute y, a function of _x_. Then, the `tape.gradient()` method gives us the gradient of _y_ with respect to _x_.
 
 Here's an example of an issue that can arise, specifically in regards to modifying the variable outside of the tape, leading to incorrect gradient calculation.
 
@@ -56,6 +57,7 @@ grad_x = tape.gradient(z, x)
 print(f"Value of x: {x.numpy()}")
 print(f"Gradient of z with respect to x: {grad_x}")
 ```
+
 Here we did not operate on x inside of the gradient tape, we operated on y instead which is dependent on x, but not directly being called within the tape, causing an error that results in none for the gradient. To correctly include this, we would need to re-evaluate this within the tape.
 
 Another example involves more complex operations. Consider a function involving a simple matrix multiplication and summation.
@@ -82,6 +84,7 @@ print("Gradients with respect to W:\n", gradients[0].numpy())
 print("Gradients with respect to b:\n", gradients[1].numpy())
 
 ```
+
 In this snippet, we compute the gradients of the `loss` function with respect to `W` and `b` using the tape. This demonstrates how gradients are computed for matrices using `tf.matmul` and `tf.reduce_sum`.
 
 To further deepen your understanding, I highly recommend delving into the following: “Deep Learning” by Ian Goodfellow, Yoshua Bengio, and Aaron Courville. This book gives a solid theoretical foundation on backpropagation and gradient descent. Additionally, consider exploring “Neural Networks and Deep Learning” by Michael Nielsen, which offers an approachable yet insightful perspective on the mathematics behind neural networks and gradient calculation. For a more practical, hands-on understanding, the official TensorFlow documentation itself is an invaluable resource; exploring the "Autodiff" section is a must.

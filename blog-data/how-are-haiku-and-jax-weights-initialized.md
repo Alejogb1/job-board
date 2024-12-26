@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-are-haiku-and-jax-weights-initialized"
 ---
 
-Alright, let's talk about how Haiku and Jax handle weight initialization. It's a topic I’ve spent quite a bit of time navigating, especially back during a project where we were pushing the limits of model complexity with very specific convergence goals. The nuanced decisions around initialization can, and often do, drastically impact training performance. You can easily spend hours chasing down vanishing gradients or plateauing losses if your initialization strategy is not well-considered. So, let’s break this down.
+, let's talk about how Haiku and Jax handle weight initialization. It's a topic I’ve spent quite a bit of time navigating, especially back during a project where we were pushing the limits of model complexity with very specific convergence goals. The nuanced decisions around initialization can, and often do, drastically impact training performance. You can easily spend hours chasing down vanishing gradients or plateauing losses if your initialization strategy is not well-considered. So, let’s break this down.
 
-First, it's important to note that neither Haiku nor Jax *intrinsically* define initialization strategies. Rather, Jax provides the fundamental building blocks for defining them via its `jax.random` module and transformation capabilities, while Haiku leverages these tools to offer convenient abstractions. You’re not relying on some magic function; it's explicit, deterministic, and flexible. This means that weight initialization is primarily controlled by function transforms and explicit definition. Unlike some libraries which bake in a set of default options, this approach provides immense control.
+First, it's important to note that neither Haiku nor Jax _intrinsically_ define initialization strategies. Rather, Jax provides the fundamental building blocks for defining them via its `jax.random` module and transformation capabilities, while Haiku leverages these tools to offer convenient abstractions. You’re not relying on some magic function; it's explicit, deterministic, and flexible. This means that weight initialization is primarily controlled by function transforms and explicit definition. Unlike some libraries which bake in a set of default options, this approach provides immense control.
 
-To start, let’s delve into the mechanics of generating random numbers. Jax uses a functional approach to randomness. This means that every time you want a random number, you have to pass a `jax.random.PRNGKey`. These keys are essentially seeds, but they are advanced differently than traditional random number generators. Instead of in-place modifications, each `jax.random` function returns a *new* key alongside the random values. This ensures referential transparency and makes your models purely functional. It is quite a subtle shift from standard programming paradigms, and it took me a few iterations to wrap my head around it, particularly when debugging multi-device setups.
+To start, let’s delve into the mechanics of generating random numbers. Jax uses a functional approach to randomness. This means that every time you want a random number, you have to pass a `jax.random.PRNGKey`. These keys are essentially seeds, but they are advanced differently than traditional random number generators. Instead of in-place modifications, each `jax.random` function returns a _new_ key alongside the random values. This ensures referential transparency and makes your models purely functional. It is quite a subtle shift from standard programming paradigms, and it took me a few iterations to wrap my head around it, particularly when debugging multi-device setups.
 
-Now, let’s translate that to Haiku. Haiku relies on a `hk.Module` architecture where you'll typically define your layers. When you create a layer, such as a `hk.Linear`, `hk.Conv2D`, etc., these modules don't hold their weights. Weights are created and stored in a "params" dictionary that is returned by the model's initialization function. Inside the `__init__` method of a `hk.Module`, we use `self.get_parameter` to tell Haiku that a certain parameter must exist. These parameters are not *immediately* initialized; rather, they are *declared*. This might feel a bit delayed compared to other systems, but this approach grants Haiku its unique modularity. Initialization happens only when you call `hk.transform` and then the `init` function of the resulting transformation. The result is a tuple consisting of parameters and an optional state for trainable and non-trainable variables.
+Now, let’s translate that to Haiku. Haiku relies on a `hk.Module` architecture where you'll typically define your layers. When you create a layer, such as a `hk.Linear`, `hk.Conv2D`, etc., these modules don't hold their weights. Weights are created and stored in a "params" dictionary that is returned by the model's initialization function. Inside the `__init__` method of a `hk.Module`, we use `self.get_parameter` to tell Haiku that a certain parameter must exist. These parameters are not _immediately_ initialized; rather, they are _declared_. This might feel a bit delayed compared to other systems, but this approach grants Haiku its unique modularity. Initialization happens only when you call `hk.transform` and then the `init` function of the resulting transformation. The result is a tuple consisting of parameters and an optional state for trainable and non-trainable variables.
 
 The actual initialization process is user-defined and it typically comes down to providing an initialization function to `hk.get_parameter` or similar methods which under the hood use `jax.random` functions. For example, when creating a linear layer, I might specify an orthogonal initialization strategy for the kernel and a zeros initialization for the bias.
 
@@ -27,10 +27,10 @@ def my_linear(input_dim, output_dim, init_scale=1.0):
 
     w = hk.get_parameter("w", [input_dim, output_dim], init=init_func)
     b = hk.get_parameter("b", [output_dim], init=jnp.zeros)
-    
+
     def forward(x):
         return jnp.dot(x, w) + b
-    
+
     return forward
 
 def net_fn(x):
@@ -135,7 +135,7 @@ print(output.shape)
 
 ```
 
-This example uses a Kaiming initialization, with the gain term being passed into the init function. The key difference here, as opposed to Xavier, is that it scales the variance by *only* the input connections, not both input and output connections.
+This example uses a Kaiming initialization, with the gain term being passed into the init function. The key difference here, as opposed to Xavier, is that it scales the variance by _only_ the input connections, not both input and output connections.
 
 In summary, the beauty of Haiku and Jax lies in their explicit approach to initialization. You have complete control using basic random generators along with the knowledge of what you would like in the initialization scheme. This encourages deeper understanding, and avoids any hidden behavior. You can implement virtually any initialization scheme by understanding the mechanics behind it and applying them using the fundamental functions of `jax.random`.
 

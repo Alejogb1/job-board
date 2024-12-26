@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-an-azure-machine-learning-studio--getting-an-error-in-the-consumption-of-an-endpoint"
 ---
 
-alright, let's break down this azure ml studio endpoint consumption error. i've definitely been in this exact spot more times than i care to remember, so i can hopefully offer some pointers based on what i've seen go wrong before. when you're hitting an error consuming an endpoint, there's usually a handful of culprits. it's seldom just one thing, but rather a combination of factors. let's walk through the usual suspects.
+, let's break down this azure ml studio endpoint consumption error. i've definitely been in this exact spot more times than i care to remember, so i can hopefully offer some pointers based on what i've seen go wrong before. when you're hitting an error consuming an endpoint, there's usually a handful of culprits. it's seldom just one thing, but rather a combination of factors. let's walk through the usual suspects.
 
 first up, let's talk data schema mismatches. this one is extremely common, and it's where my troubles often started. the model you trained in azure ml studio has a very specific idea about the data it expects. it's like handing someone a wrench when they asked for a screwdriver – it's not going to work. the endpoint is equally picky. when you send data for inference, it has to line up perfectly with the model's expectations. this includes not just the presence of columns but also their datatypes. so if your model expects an integer column but the consuming code sends it as a string, you're going to get an error.
 

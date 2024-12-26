@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-add-images-as-inlineshapes-in-c"
 ---
 
-Alright, let's delve into embedding images as inline shapes within a Microsoft Word document using C#. It’s something I’ve frequently addressed in past projects involving dynamic report generation, so I’m quite familiar with the nuances involved. The key thing to understand is that we're not just inserting a raw image, we’re embedding it as a specific object—an `InlineShape` in the Word object model—which offers finer control over its placement and behavior within the document’s text flow.
+, let's delve into embedding images as inline shapes within a Microsoft Word document using C#. It’s something I’ve frequently addressed in past projects involving dynamic report generation, so I’m quite familiar with the nuances involved. The key thing to understand is that we're not just inserting a raw image, we’re embedding it as a specific object—an `InlineShape` in the Word object model—which offers finer control over its placement and behavior within the document’s text flow.
 
 The standard way to approach this typically involves the Microsoft.Office.Interop.Word library, which exposes the COM interfaces needed to manipulate Word documents programmatically. Let's jump straight into the nuts and bolts of how it's done, step by step.
 

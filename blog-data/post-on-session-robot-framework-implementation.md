@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "post-on-session-robot-framework-implementation"
 ---
 
-Alright so you're wrestling with session management in Robot Framework right been there done that got the t-shirt and several battle scars to prove it This isn't your typical hello world scenario we're talking about persistent state communication between different parts of your test suite and that's where things can get hairy faster than a cat stuck in a yarn ball Let's break it down like we're debugging a particularly stubborn piece of code
+so you're wrestling with session management in Robot Framework right been there done that got the t-shirt and several battle scars to prove it This isn't your typical hello world scenario we're talking about persistent state communication between different parts of your test suite and that's where things can get hairy faster than a cat stuck in a yarn ball Let's break it down like we're debugging a particularly stubborn piece of code
 
 I've been using Robot Framework since it was practically a newborn baby and trust me session management especially when you are working with different APIs or trying to simulate a multi-user scenario it can become a real head scratcher especially if you're used to simple linear scripts Remember back in the day when we were using just keywords and global variables everything felt like a single threaded application running sequentially a simple script a simple life then we needed to keep state between different parts of our tests boom sessions enter stage left we're talking about a shift from linear to a more dynamic approach it's a bit like trying to manage a network of independent actors all needing to know a bit of the current world's state
 
@@ -177,4 +177,5 @@ Test Redis Session
     Delete RedisSession session123
 
 ```
+
 These examples will give you a solid base to work with I strongly recommend you not to implement your own session management from scratch as in real life scenarios you will face a lot of challenges and race conditions and you will end up with a lot of technical debt I suggest you do more research about the subject like the paper "Distributed Transactions" from the 1980s and read about different implementation of sessions in the web technologies world or look up books like "Designing Data-Intensive Applications" by Martin Kleppmann to dive deep into the subject to see which way suits better your project I hope this helps you tackle your session management woes Happy testing and remember there’s always a better way to do it keep learning and exploring and don’t be afraid to refactor when needed

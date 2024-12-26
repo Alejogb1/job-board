@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-a-loss-function-to-an-intermediate-layer-in-keras-while-excluding-the-final-layer"
 ---
 
-Alright, let's unpack this one. I remember facing a similar challenge a few years back when experimenting with a multi-modal network for anomaly detection. The standard keras api, while incredibly versatile, doesn’t directly support applying a loss function to an arbitrary intermediate layer while excluding the final layer. You're going to need to get a little more hands-on with the functional api of keras to pull this off. Essentially, we'll treat the model as a computational graph where we explicitly define the output of each layer and compute our losses directly.
+, let's unpack this one. I remember facing a similar challenge a few years back when experimenting with a multi-modal network for anomaly detection. The standard keras api, while incredibly versatile, doesn’t directly support applying a loss function to an arbitrary intermediate layer while excluding the final layer. You're going to need to get a little more hands-on with the functional api of keras to pull this off. Essentially, we'll treat the model as a computational graph where we explicitly define the output of each layer and compute our losses directly.
 
 The core problem is that traditional keras model training implicitly calculates the loss only on the final output. To modify this, we need to define an intermediate "loss output" and then combine it with our regular loss. This means, instead of relying on the keras `model.compile()` and `model.fit()` methods entirely, we’ll get a bit more granular.
 
@@ -75,7 +75,7 @@ for epoch in range(num_epochs):
     print(f"Epoch {epoch+1}, Total Loss: {total_loss_epoch/len(dataset):.4f}, Main Loss:{main_loss_epoch/len(dataset):.4f} Intermediate Loss:{interm_loss_epoch/len(dataset):.4f}")
 ```
 
-In this snippet, the `build_model` function now returns a model with *two* outputs: the intermediate layer’s output (named `intermediate_layer`) and the final prediction. We're then defining our `intermediate_loss_function`, in this instance, we are using mean squared error, but you can define one suited to your requirements.
+In this snippet, the `build_model` function now returns a model with _two_ outputs: the intermediate layer’s output (named `intermediate_layer`) and the final prediction. We're then defining our `intermediate_loss_function`, in this instance, we are using mean squared error, but you can define one suited to your requirements.
 
 The crucial part is the `train_step` function. Here, we utilize `tf.GradientTape` to track the operations for gradient computation. We calculate both the regular loss from the final output and the intermediate loss from the target layer output, combine them with a weighting factor (0.1 in this example) and then apply the optimizer. You can choose different weighting schemes for the losses to get desired behaviour.
 
@@ -159,7 +159,7 @@ for epoch in range(num_epochs):
     print(f"Epoch {epoch+1}, Total Loss: {total_loss_epoch/len(dataset):.4f}, Main Loss: {main_loss_epoch/len(dataset):.4f}, Interm Loss 1: {interm_loss1_epoch/len(dataset):.4f}, Interm Loss 2:{interm_loss2_epoch/len(dataset):.4f}, Interm Loss 3:{interm_loss3_epoch/len(dataset):.4f}")
 ```
 
-This example shows that the functional api allows us to extract outputs from any number of intermediate layers and apply loss functions as we see fit. This approach requires more manual coding, but offers unparalleled flexibility for complex network architectures, such as in this branched scenario where we add custom losses to each branch before concatenating them. Notice how the training step now computes the main loss *and* three distinct intermediate losses, which are combined in a weighted fashion before backpropagation.
+This example shows that the functional api allows us to extract outputs from any number of intermediate layers and apply loss functions as we see fit. This approach requires more manual coding, but offers unparalleled flexibility for complex network architectures, such as in this branched scenario where we add custom losses to each branch before concatenating them. Notice how the training step now computes the main loss _and_ three distinct intermediate losses, which are combined in a weighted fashion before backpropagation.
 
 Finally, let’s go one step further and consider a case where you want to conditionally apply the intermediate loss. Sometimes you might not want the influence of the intermediate layer loss at the beginning of training. We can achieve this using a flag.
 

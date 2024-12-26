@@ -4,9 +4,9 @@ date: "2024-12-12"
 id: "what-are-the-updates-and-capabilities-of-project-astra-including-multilinguality-and-session-memory"
 ---
 
-okay so project astra right it's kinda wild where they're going with this whole thing it feels like a leap not just an upgrade you know like from my pov as someone who messes with code all day it's not just about adding more features its about changing how we even interact with devices and information entirely
+project astra right it's kinda wild where they're going with this whole thing it feels like a leap not just an upgrade you know like from my pov as someone who messes with code all day it's not just about adding more features its about changing how we even interact with devices and information entirely
 
-forget those clunky interfaces we've been stuck with astra's core idea seems to be all about natural interaction think like having a conversation not issuing commands yeah okay okay that's a common trope in tech demos but the underlying tech is where things get interesting
+forget those clunky interfaces we've been stuck with astra's core idea seems to be all about natural interaction think like having a conversation not issuing commands yeah that's a common trope in tech demos but the underlying tech is where things get interesting
 
 first up multilinguality they're not just adding basic translation support they want astra to actually understand and process language nuances across different cultures and dialects and not in that robotic google translate way i mean it needs to grasp context idioms and even the way we use sarcasm which is like a monumental feat in nlp you'd need like serious transformer models on steroids to pull that off
 
@@ -71,6 +71,7 @@ print(recent_history)
 # output is [{'user': 'user1', 'message': 'I need to cook something today', 'timestamp': datetime.datetime(...)}, {'user': 'user1', 'message': "what's available locally?", 'timestamp': datetime.datetime(...) }]
 
 ```
+
 This whole concept of session memory is going to dramatically change the way we interact with ai assistants we're moving beyond stateless interactions to a persistent relationship and that's pretty wild from a technical perspective think about the sheer amount of data processing and memory management needed to keep track of that kind of interaction history it's not just storing text it needs to understand relationships inferences implicit and explicit associations
 
 now astra isnt just confined to one kind of device and that's a big deal it's designed to work across platforms from your phone to your computer to even your smart home it's about having a continuous and unified experience no matter where you are or what device you are using this is going to require some serious cross platform api integration and a unified architecture it means astra needs to be adaptable and portable
@@ -106,10 +107,11 @@ mobile_platform.send_message("hello mobile")
 desktop_platform.send_message("hello desktop")
 #output will be "Sending message through mobile interface:hello mobile" and "Sending message through desktop interface:hello desktop"
 ```
+
 see again its an abstraction but the point is this has to be modular and able to adapt to all kind of systems
 
 now if you wanna dive deeper on the technical stuff you're better off looking at research papers on transformer networks for nlp stuff like the original 'attention is all you need' paper by vaswani et al is always a good starting point to understand the underlying neural network technology and for the whole multilinguality piece look for research on zero-shot cross-lingual transfer its going to be very important in achieving what astra is aiming for.
 
- for session management and building conversational agents try reading something like "conversational ai the science behind the magic" by mikael biller or even just a good text book on natural language understanding. i think a deep understanding of these core concepts is key to understanding what project astra is actually trying to accomplish rather than just looking at the surface level marketing.
+for session management and building conversational agents try reading something like "conversational ai the science behind the magic" by mikael biller or even just a good text book on natural language understanding. i think a deep understanding of these core concepts is key to understanding what project astra is actually trying to accomplish rather than just looking at the surface level marketing.
 
 so yeah that's my take on project astra its a complex interconnected system that if done right will fundamentally transform the way we interact with technology but obviously there's a lot of heavy lifting and some serious engineering challenges to tackle if they want this thing to work well and also in an ethical and transparent manner.

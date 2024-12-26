@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-rails-console-inputoutput-appear-corrupted-in-a-docker-container"
 ---
 
-Okay, let's tackle this one. I remember debugging something similar back when we were migrating a legacy Rails app to a containerized environment; it’s surprisingly common, actually. The issue stems from a mismatch, really, in how terminal input/output (i/o) is handled between the container and your host environment. It’s not a “corruption” in the sense that data is being altered, but rather a misinterpretation of control sequences and the underlying terminal settings.
+, let's tackle this one. I remember debugging something similar back when we were migrating a legacy Rails app to a containerized environment; it’s surprisingly common, actually. The issue stems from a mismatch, really, in how terminal input/output (i/o) is handled between the container and your host environment. It’s not a “corruption” in the sense that data is being altered, but rather a misinterpretation of control sequences and the underlying terminal settings.
 
 Here’s the breakdown, as i’ve seen it pan out time and time again:
 

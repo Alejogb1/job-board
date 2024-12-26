@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-create-xml-using-nokogiri-in-ruby-on-rails"
 ---
 
-Alright, let’s tackle generating xml with Nokogiri in a rails environment. This is a subject I've definitely spent some time on, particularly back when we were building our data interchange layer at *Veridian Systems* – a project that involved a lot of inter-system communication, and naturally, xml played a significant role. I learned quite a bit about the nuances of xml generation then, and I’m happy to share some of that insight.
+, let’s tackle generating xml with Nokogiri in a rails environment. This is a subject I've definitely spent some time on, particularly back when we were building our data interchange layer at _Veridian Systems_ – a project that involved a lot of inter-system communication, and naturally, xml played a significant role. I learned quite a bit about the nuances of xml generation then, and I’m happy to share some of that insight.
 
 Fundamentally, Nokogiri provides a robust and flexible way to construct xml documents programmatically in Ruby. You’re not just limited to string concatenation, which can become a maintenance headache quite quickly. Instead, you interact with a document object model, enabling you to manipulate nodes, attributes, and namespaces with precision. I’d strongly advise anyone working with xml in ruby to become comfortable with nokogiri's api, it's a tool well worth mastering.
 
@@ -111,7 +111,7 @@ end
 puts builder.to_xml
 ```
 
-Here, `xmlns:ns1` defines a namespace associated with the prefix `ns1`. Then, elements within that namespace use the syntax `xml['ns1'].element` to correctly associate with that namespace.  The non-prefixed `another_element` is part of the default namespace. Handling namespaces appropriately is fundamental when integrating with systems that rely on xml definitions. The output for this will be:
+Here, `xmlns:ns1` defines a namespace associated with the prefix `ns1`. Then, elements within that namespace use the syntax `xml['ns1'].element` to correctly associate with that namespace. The non-prefixed `another_element` is part of the default namespace. Handling namespaces appropriately is fundamental when integrating with systems that rely on xml definitions. The output for this will be:
 
 ```xml
 <?xml version="1.0"?>

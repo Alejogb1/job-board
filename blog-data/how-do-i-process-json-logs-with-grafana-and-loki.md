@@ -8,14 +8,19 @@ Let’s dive straight in. Processing json logs with Grafana and Loki, it's somet
 
 My first encounter with this particular challenge was while managing a microservices architecture where each service spat out logs in its own flavor of json. It was chaos, to say the least. We weren't utilizing structured logging practices then, which made the switch to Loki slightly bumpy initially. Thankfully, after a few iterations, we developed a robust methodology that's served me well since.
 
-The fundamental issue is that Loki primarily indexes log lines based on labels, not the content within each line. To efficiently search, filter, and visualize your json data, you need to tell Loki *how* to interpret the json and turn specific values into labels or extract them into usable fields. This is primarily achieved through the `json` logfmt parser in Loki, which is incredibly powerful once you get the hang of it.
+The fundamental issue is that Loki primarily indexes log lines based on labels, not the content within each line. To efficiently search, filter, and visualize your json data, you need to tell Loki _how_ to interpret the json and turn specific values into labels or extract them into usable fields. This is primarily achieved through the `json` logfmt parser in Loki, which is incredibly powerful once you get the hang of it.
 
 The key lies in configuring the promtail agent, which is responsible for shipping logs to Loki. Within your promtail configuration, you define the pipeline that describes how each log source should be processed. Let's look at the main parts you'll be using: the `json` stage and the `labels` stage to apply extracted labels, and `template` for dynamic label creation.
 
 Consider a simplified scenario. Assume we're dealing with logs that look something like this:
 
 ```json
-{"timestamp": "2024-01-20T10:00:00Z", "level": "INFO", "message": "User login successful", "user_id": 12345}
+{
+  "timestamp": "2024-01-20T10:00:00Z",
+  "level": "INFO",
+  "message": "User login successful",
+  "user_id": 12345
+}
 ```
 
 Here’s a basic promtail configuration snippet showcasing how to extract `level` as a label:
@@ -44,8 +49,14 @@ Now, you can query Loki using logql to filter by this label in Grafana. For inst
 This is fairly basic, however. What if, for instance, you have varying types of logs within the same file, or you need more elaborate transformations? Let’s elevate it with a second example:
 
 ```json
-{"type":"auth", "timestamp": "2024-01-20T10:00:00Z", "user": {"id": 12345, "username": "test_user"}, "event": "login_success"}
+{
+  "type": "auth",
+  "timestamp": "2024-01-20T10:00:00Z",
+  "user": { "id": 12345, "username": "test_user" },
+  "event": "login_success"
+}
 ```
+
 ```yaml
 scrape_configs:
   - job_name: complex_json_logs
@@ -62,24 +73,29 @@ scrape_configs:
             user_id: user.id
             username: user.username
       - labels:
-         event_type:
-         user_id:
+          event_type:
+          user_id:
       - template:
           source: username
           template: "{{ . | truncate 10 }}"
           target: short_username
       - labels:
-         short_username:
+          short_username:
 ```
 
 Here, we are extracting the `type` field and the nested fields `user.id` and `user.username`. The dot notation inside the `json` expressions handles nested structures elegantly. The first `labels` stage converts `event_type` and `user_id` into Loki labels directly. Then, we use a `template` stage. Here I’m demonstrating a practical real-world use case: we truncate the username field to its first 10 characters because lengthy usernames will result in high cardinality labels (which slow down Loki and aren’t practical). Then we extract this truncated version of username to the label `short_username`.
 
-This underscores a critical point: choosing which fields to convert into labels requires careful consideration. Labels are indexed by Loki and significantly affect performance. High-cardinality labels (those with many unique values) should be avoided whenever feasible. In this case, we decided that user id is okay for labels but username is not, so we truncate it. It's about making intelligent tradeoffs.
+This underscores a critical point: choosing which fields to convert into labels requires careful consideration. Labels are indexed by Loki and significantly affect performance. High-cardinality labels (those with many unique values) should be avoided whenever feasible. In this case, we decided that user id is for labels but username is not, so we truncate it. It's about making intelligent tradeoffs.
 
 Finally, let’s look at how you can use the `json` stage combined with `match` stages to filter based on log properties. This example also demonstrates how to keep original JSON as is, in the log lines that goes to Loki, while extracting and processing some JSON properties for labels.
 
 ```json
-{"type":"db", "timestamp": "2024-01-20T10:00:00Z", "query": "SELECT * FROM users WHERE id=123", "duration": 0.05}
+{
+  "type": "db",
+  "timestamp": "2024-01-20T10:00:00Z",
+  "query": "SELECT * FROM users WHERE id=123",
+  "duration": 0.05
+}
 ```
 
 ```yaml
@@ -97,8 +113,8 @@ scrape_configs:
           stages:
             - json:
                 expressions:
-                    query: query
-                    duration: duration
+                  query: query
+                  duration: duration
             - labels:
                 duration:
       - match:
@@ -106,8 +122,8 @@ scrape_configs:
           stages:
             - json:
                 expressions:
-                    query: query
-                    duration: duration
+                  query: query
+                  duration: duration
             - template:
                 source: query
                 template: "{{ . | regexReplaceAll `WHERE id=[0-9]+` `WHERE id=XXX` }}"

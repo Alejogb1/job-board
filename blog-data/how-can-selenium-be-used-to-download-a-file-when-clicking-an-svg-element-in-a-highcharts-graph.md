@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-selenium-be-used-to-download-a-file-when-clicking-an-svg-element-in-a-highcharts-graph"
 ---
 
-Okay, let's tackle this one. I've definitely been down that road before, specifically during a project where we were automating dashboard data extraction from a platform heavily reliant on Highcharts. The usual `click()` method on a Selenium `WebElement` just doesn't cut it when interacting with SVG elements, and especially when a download event is initiated in response to said click. It’s not as straightforward as clicking a regular button. SVG elements in Highcharts, while visually interactive, don't always trigger typical DOM events that Selenium readily intercepts. The challenge lies in the fact that download mechanisms are often implemented via Javascript, with the click event triggering the download rather than the element directly participating in the download. Here’s how we usually approach this.
+, let's tackle this one. I've definitely been down that road before, specifically during a project where we were automating dashboard data extraction from a platform heavily reliant on Highcharts. The usual `click()` method on a Selenium `WebElement` just doesn't cut it when interacting with SVG elements, and especially when a download event is initiated in response to said click. It’s not as straightforward as clicking a regular button. SVG elements in Highcharts, while visually interactive, don't always trigger typical DOM events that Selenium readily intercepts. The challenge lies in the fact that download mechanisms are often implemented via Javascript, with the click event triggering the download rather than the element directly participating in the download. Here’s how we usually approach this.
 
 The fundamental issue here is that SVG elements are drawn dynamically, and while they are rendered on the page, their interaction mechanism is often more nuanced. Selenium needs a way to translate our intent—clicking the SVG to trigger a download—into actions that the browser interprets. Moreover, the file download itself isn't a direct part of the DOM manipulation but rather a response that is typically handled by the browser separately.
 
@@ -20,15 +20,20 @@ This is the simplest case, where the click on the SVG triggers a traditional hyp
 
 ```html
 <div id="highcharts-container">
-    <svg>
-        <!-- Highcharts SVG Elements -->
-        <g class="highcharts-exporting-group">
-            <g class="highcharts-button">
-                <text class="highcharts-button-text">Export</text>
-            </g>
-        </g>
-    </svg>
-    <a id="export-link" style="display:none;" download="data.csv" href="/path/to/data.csv"></a>
+  <svg>
+    <!-- Highcharts SVG Elements -->
+    <g class="highcharts-exporting-group">
+      <g class="highcharts-button">
+        <text class="highcharts-button-text">Export</text>
+      </g>
+    </g>
+  </svg>
+  <a
+    id="export-link"
+    style="display:none;"
+    download="data.csv"
+    href="/path/to/data.csv"
+  ></a>
 </div>
 ```
 
@@ -65,7 +70,7 @@ if __name__ == '__main__':
     # Replace with your chromedriver path and download directory
     driver_path = "/path/to/your/chromedriver"
     download_directory = os.path.abspath(os.path.join(os.getcwd(), "downloads"))
-    
+
     options = webdriver.ChromeOptions()
     options.add_experimental_option('prefs', {
         "download.default_directory": download_directory,
@@ -73,7 +78,7 @@ if __name__ == '__main__':
         "download.directory_upgrade": True,
         "safebrowsing.enabled": True
     })
-    
+
     driver = webdriver.Chrome(executable_path=driver_path, options=options)
     # Load the webpage containing the chart.
     driver.get("your_webpage_url_here")
@@ -89,13 +94,15 @@ If the download is triggered by a JavaScript function call instead, we can emplo
 
 ```html
 <div id="highcharts-container">
-    <svg>
-      <g class="highcharts-exporting-group">
-            <g class="highcharts-button">
-                <text onclick="downloadData('csv')" class="highcharts-button-text">Export</text>
-            </g>
+  <svg>
+    <g class="highcharts-exporting-group">
+      <g class="highcharts-button">
+        <text onclick="downloadData('csv')" class="highcharts-button-text">
+          Export
+        </text>
       </g>
-    </svg>
+    </g>
+  </svg>
 </div>
 ```
 
@@ -113,7 +120,7 @@ def download_file_via_js_call(driver, download_path):
     svg_element = WebDriverWait(driver, 10).until(
         ec.element_to_be_clickable((By.CSS_SELECTOR, ".highcharts-button text"))
     )
-    
+
     driver.execute_script("arguments[0].click();", svg_element)
 
     # The file download handling logic would be similar to previous example
@@ -123,7 +130,7 @@ if __name__ == '__main__':
     # Replace with your chromedriver path and download directory
     driver_path = "/path/to/your/chromedriver"
     download_directory = os.path.abspath(os.path.join(os.getcwd(), "downloads"))
-    
+
     options = webdriver.ChromeOptions()
     options.add_experimental_option('prefs', {
         "download.default_directory": download_directory,
@@ -131,7 +138,7 @@ if __name__ == '__main__':
         "download.directory_upgrade": True,
         "safebrowsing.enabled": True
     })
-    
+
     driver = webdriver.Chrome(executable_path=driver_path, options=options)
     # Load the webpage containing the chart.
     driver.get("your_webpage_url_here")
@@ -146,15 +153,15 @@ Here, we locate the SVG and, instead of a normal click, we use `execute_script()
 Sometimes, the download is more complex and does not directly use `href` based link. In such cases, we need to use event listeners. In this case, we can use the browser's network capture to check if the download request is made and wait until the file is downloaded. This is generally an advanced method.
 
 ```html
-    <div id="highcharts-container">
-        <svg>
-          <g class="highcharts-exporting-group">
-                <g class="highcharts-button">
-                    <text  class="highcharts-button-text">Export</text>
-                </g>
-          </g>
-        </svg>
-    </div>
+<div id="highcharts-container">
+  <svg>
+    <g class="highcharts-exporting-group">
+      <g class="highcharts-button">
+        <text class="highcharts-button-text">Export</text>
+      </g>
+    </g>
+  </svg>
+</div>
 ```
 
 Here is how you would handle it with Selenium.
@@ -172,7 +179,7 @@ def download_file_via_network(driver, download_path):
     svg_element = WebDriverWait(driver, 10).until(
         ec.element_to_be_clickable((By.CSS_SELECTOR, ".highcharts-button text"))
     )
-    
+
     #click the SVG element
     svg_element.click()
 
@@ -186,7 +193,7 @@ if __name__ == '__main__':
     # Replace with your chromedriver path and download directory
     driver_path = "/path/to/your/chromedriver"
     download_directory = os.path.abspath(os.path.join(os.getcwd(), "downloads"))
-    
+
     options = webdriver.ChromeOptions()
     options.add_experimental_option('prefs', {
         "download.default_directory": download_directory,
@@ -194,7 +201,7 @@ if __name__ == '__main__':
         "download.directory_upgrade": True,
         "safebrowsing.enabled": True
     })
-    
+
     driver = webdriver.Chrome(executable_path=driver_path, options=options)
     # Load the webpage containing the chart.
     driver.get("your_webpage_url_here")

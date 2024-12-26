@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-match-a-decoders-input-to-a-pre-trained-resnet18-encoder"
 ---
 
-Alright, let's tackle this. I remember a particularly knotty project from a few years back—medical image segmentation, as a matter of fact—where we faced this exact challenge: connecting a custom decoder to a ResNet18 encoder. The devil, as they often say, is in the details. It's not simply a matter of slapping them together and hoping for the best; a careful consideration of feature map sizes and data flow is crucial for a successful integration. I'll walk you through how I approach this, along with some real code examples.
+, let's tackle this. I remember a particularly knotty project from a few years back—medical image segmentation, as a matter of fact—where we faced this exact challenge: connecting a custom decoder to a ResNet18 encoder. The devil, as they often say, is in the details. It's not simply a matter of slapping them together and hoping for the best; a careful consideration of feature map sizes and data flow is crucial for a successful integration. I'll walk you through how I approach this, along with some real code examples.
 
 The core issue arises from the structural differences between encoders and decoders, especially when the encoder is a pre-trained network like ResNet18, which is primarily designed for classification tasks. Its convolutional layers reduce spatial dimensions, making the task of mapping this output to a decoder that requires upsampled, high-resolution feature maps somewhat complex. The fundamental problem then, is resolving this spatial mismatch.
 
@@ -40,6 +40,7 @@ class ResNet18Encoder(nn.Module):
       return x1, x2, x3, x4, x5, x6
 
 ```
+
 This `ResNet18Encoder` class isolates specific layers of ResNet18, returning their outputs as a tuple. These outputs then become the input for the decoder. Notice the `pretrained=True` argument which loads a version pre-trained on the ImageNet dataset. This pre-training is a massive advantage.
 
 Let’s consider a very basic example of a decoder that takes the encoder outputs above:
@@ -66,7 +67,7 @@ class BasicDecoder(nn.Module):
 
 In `BasicDecoder`, we have implemented a few transpose convolutions to upsample and concatenate with a skip-connected feature map from the encoder. The size of the input and number of layers are reduced here for simplicity, but the general idea is there. You will notice `in_channels_list` passed in to the constructor. This represents the number of channels in the feature map of the encoder at different stages. Specifically, for Resnet18 (for an input of 224 x 224 and with standard pooling) this would be `[64, 64, 64, 128, 256, 512]`. This needs to be manually implemented by you for whatever encoder and network sizes you use.
 
-The critical part here is ensuring that you are *concatenating* the upsampled features with the corresponding encoder features of matching spatial dimensions along the channel dimension. We are not summing or subtracting, but rather concatenating. This allows the decoder to leverage information from different stages of encoding, which is crucial for detailed reconstructions.
+The critical part here is ensuring that you are _concatenating_ the upsampled features with the corresponding encoder features of matching spatial dimensions along the channel dimension. We are not summing or subtracting, but rather concatenating. This allows the decoder to leverage information from different stages of encoding, which is crucial for detailed reconstructions.
 
 Now, to tie it together, let's look at a basic combined network:
 
@@ -84,6 +85,7 @@ class ResNetUNet(nn.Module):
     out = self.decoder(x1, x2, x3, x4, x5, x6)
     return out
 ```
+
 Here, the `ResNetUNet` class brings the encoder and decoder together. The encoder output is passed directly to the decoder, completing the end-to-end connection.
 
 Important note: The example decoder here is extremely simplified for clarity. In a real-world scenario, your decoder might include more complex convolutional layers, batch normalization, ReLU activation functions, and other operations. Also, be aware that sometimes bilinear upsampling is preferable to transpose convolutions. The choice there depends on the specific task. I’ve also skipped over other crucial aspects, such as careful dimension management to avoid errors in PyTorch. You must be meticulous in ensuring your dimensions are correct for each layer and step.

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-to-handle-new-lines-within-csv-cells-in-rails"
 ---
 
-Alright, let's talk about CSVs and those pesky newline characters hiding inside cells. I've seen this issue crop up more times than I care to remember, typically during data migrations or when dealing with external data sources. Handling newlines within csv cells in Rails—or any system, for that matter—requires a solid understanding of how CSV formats work and the tools at your disposal. It's not about magic, it’s about meticulous parsing and encoding, so let’s dive in.
+, let's talk about CSVs and those pesky newline characters hiding inside cells. I've seen this issue crop up more times than I care to remember, typically during data migrations or when dealing with external data sources. Handling newlines within csv cells in Rails—or any system, for that matter—requires a solid understanding of how CSV formats work and the tools at your disposal. It's not about magic, it’s about meticulous parsing and encoding, so let’s dive in.
 
-The core challenge stems from the fact that a standard CSV (Comma Separated Values) uses newlines to demarcate rows. When a cell contains a newline character itself, it breaks the basic CSV structure, leading to parsing errors. Think about it: you’re trying to use the very delimiter that defines rows *within* a row. Confusing for a parser, to say the least. Most naive parsers will incorrectly interpret this cell newline as the start of a new row, thus splitting your data and leading to chaos.
+The core challenge stems from the fact that a standard CSV (Comma Separated Values) uses newlines to demarcate rows. When a cell contains a newline character itself, it breaks the basic CSV structure, leading to parsing errors. Think about it: you’re trying to use the very delimiter that defines rows _within_ a row. Confusing for a parser, to say the least. Most naive parsers will incorrectly interpret this cell newline as the start of a new row, thus splitting your data and leading to chaos.
 
 The most common approach to avoid this is to use text qualifiers (often double quotes, `"`). A CSV parser that adheres to a more robust standard (like the RFC 4180 standard, which I’d highly recommend reading for a deeper understanding) will recognize these qualifiers. Anything within double quotes is treated as a single cell, ignoring any commas or newlines contained within.
 
@@ -45,7 +45,7 @@ read_csv_with_newlines(filename)
 # ID: 1, Name: John Doe, Description: This is a description.
 # It has multiple lines.
 # ID: 2, Name: Jane Smith, Description: Another short description.
-# ID: 3, Name: Peter Pan, Description: Description with quotes "like this" and 
+# ID: 3, Name: Peter Pan, Description: Description with quotes "like this" and
 # new lines
 ```
 
@@ -86,6 +86,7 @@ process_large_csv(filename)
 #  ...
 
 ```
+
 Here we utilize `smarter_csv`. The crucial part is the `chunk_size` option, allowing me to process the CSV file in batches, minimizing memory usage. Also `remove_empty_values: false` prevents the gem from filtering empty values which I might need. `smarter_csv` handles newlines and quoted fields, similar to the standard library, but I found it more flexible for larger and complex files. When using `smarter_csv`, notice that it normalizes headers to symbols that have no white space, which means we access the fields as `row[:id]`, rather than `row['id']`.
 
 Finally, let’s consider a slightly trickier situation. Sometimes I have had to deal with data where the CSV isn’t strictly formatted, and there are escaped newlines, like '\n', that are not interpreted as line breaks by the CSV parser. It is not optimal, but I've dealt with it. In that situation we could use Ruby’s powerful string manipulation capabilities to pre-process the data to turn those escaped newlines into real newlines, and then run the parse.
@@ -120,7 +121,7 @@ process_csv_with_escaped_newlines(filename)
 # Output from running the example
 
 # ID: 1, Name: Alice, Description: This is a description
-# with escaped 
+# with escaped
 # new lines.
 # ID: 2, Name: Bob, Description: Another description.
 ```

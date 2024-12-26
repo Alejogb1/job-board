@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-i-get-volume-mount-database-data-volume-not-configured-errors-in-podman"
 ---
 
-Alright, let's unpack that frustrating "volume mount database-data-volume not configured" error you're seeing with podman. It's a classic symptom of a mismatch between how you're instructing podman to handle volumes and what it's actually finding. I've personally spent more hours than I care to recall troubleshooting similar issues back in my early days with containerization, particularly when transitioning from docker. It's almost always a configuration problem at the intersection of your container definition and the host system's filesystem. This error doesn't mean that Podman is inherently flawed, rather it points to a specific area we need to examine more closely: named volumes.
+, let's unpack that frustrating "volume mount database-data-volume not configured" error you're seeing with podman. It's a classic symptom of a mismatch between how you're instructing podman to handle volumes and what it's actually finding. I've personally spent more hours than I care to recall troubleshooting similar issues back in my early days with containerization, particularly when transitioning from docker. It's almost always a configuration problem at the intersection of your container definition and the host system's filesystem. This error doesn't mean that Podman is inherently flawed, rather it points to a specific area we need to examine more closely: named volumes.
 
 Essentially, when you see that error, podman is telling you: "Hey, I'm being asked to mount a named volume called 'database-data-volume', but I don't have a record of that volume existing." Podman, like docker, uses volumes to persist data independently of the container's lifecycle. This is critical because when a container is removed, any data within it is lost unless it's attached to an external volume. These volumes can be either _bind mounts_ (direct mapping to a directory on the host) or _named volumes_ (managed by podman itself). This specific error indicates you are trying to use a _named_ volume that hasn't been created prior to the container launch, or possibly it's been misspelled in your configuration file or command.
 
@@ -52,7 +52,7 @@ In this bash script, we dynamically check if a volume exists and create it only 
 Now, let’s explore a more complex scenario using `podman-compose`, which can be more prone to this issue if you haven't paid close attention to your `yaml` structure. Imagine a `docker-compose.yml` file that looks something like this:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   db:
     image: postgres:13
@@ -75,7 +75,7 @@ services:
 If you try to run this directly using `podman-compose up`, and that 'database-data-volume' does not exist, podman will give you that error we're trying to address. The compose file specifies a named volume for the database, but it does not instruct podman to explicitly create it. The fix? Within the compose file, add a `volumes:` section at the top level, which will instruct podman to manage these named volumes:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   db:
     image: postgres:13

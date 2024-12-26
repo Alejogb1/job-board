@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-docker-based-lockable-setup-failing"
 ---
 
-Okay, let's tackle this. I’ve seen this scenario play out a few times, and it usually boils down to a handful of common culprits when you’ve got a docker-based setup that's supposed to be lockable but is stubbornly refusing to play ball. It’s not always obvious at first glance, and sometimes it feels like you're chasing ghosts in the machine. I've spent a fair share of late nights debugging similar issues, so let's break down why these lockable docker setups tend to stumble, focusing on practical realities I've encountered.
+, let's tackle this. I’ve seen this scenario play out a few times, and it usually boils down to a handful of common culprits when you’ve got a docker-based setup that's supposed to be lockable but is stubbornly refusing to play ball. It’s not always obvious at first glance, and sometimes it feels like you're chasing ghosts in the machine. I've spent a fair share of late nights debugging similar issues, so let's break down why these lockable docker setups tend to stumble, focusing on practical realities I've encountered.
 
 The core concept of a "lockable" docker setup, as I understand it, implies some mechanism to ensure exclusive access to a resource or set of operations within your containerized environment. This often means preventing concurrent execution or ensuring atomic updates, especially when dealing with shared resources like databases or file systems. If your locking is failing, the root cause typically falls into a few categories: misconfigured locking primitives, inappropriate lock scoping, or simply overlooking some key details about how containers interact within a broader orchestration context.
 
@@ -104,6 +104,7 @@ def update_db_atomic():
 if __name__ == '__main__':
     update_db_atomic()
 ```
+
 Here, we encapsulate the full operation within a database transaction. Note: we are using `BEGIN EXCLUSIVE`, which instructs sqlite to lock the database for exclusive access for this process. While this solves the isolation issue in the immediate example, it does have limitations and different database systems provide a range of options for handling concurrent access.
 
 Finally, orchestration layer considerations are crucial, often overlooked. Docker containers might be running on different nodes in a cluster managed by Kubernetes or similar. If your locking mechanism is only local to a single container or node, it won't work reliably across the cluster. In the past, I've seen setups fail spectacularly because they assumed shared memory between containers was globally accessible, even though those containers were on different machines managed by k8s. Distributed locking, via something like Redis or Zookeeper, becomes essential in such scenarios. I recommend delving into papers on distributed consensus algorithms, like Paxos or Raft, to understand the theoretical foundations and practical implications when it comes to distributed locking systems. "Designing Data-Intensive Applications" by Martin Kleppmann provides a good overview of these concepts. Additionally, "Distributed Systems: Concepts and Design" by George Coulouris et al. offers deeper theoretical insights.

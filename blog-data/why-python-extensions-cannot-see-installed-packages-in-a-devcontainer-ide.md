@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-python-extensions-cannot-see-installed-packages-in-a-devcontainer-ide"
 ---
 
-alright, let's talk about python extensions in devcontainers and that annoying "package-not-found" error. i've been down this road more times than i care to remember, and it's usually a combination of a few very specific things.
+, let's talk about python extensions in devcontainers and that annoying "package-not-found" error. i've been down this road more times than i care to remember, and it's usually a combination of a few very specific things.
 
 first off, let's be clear, when we're using a devcontainer, we're essentially running our code and tools inside a docker container. this container is a mini-isolated system, so the python environment within that container is completely separate from the one on our host machine. this is a good thing, isolation helps avoid conflicts. however, it's also where the trouble can start.
 
@@ -26,11 +26,10 @@ in vscode, you might have a `.vscode/settings.json` file, or you need to go to s
 
 ```json
 {
-    "python.pythonPath": "/usr/local/bin/python3",
-    // assuming that's the path inside the container, yours will differ
-    "python.analysis.autoImportCompletions": true,
-    "python.analysis.typeCheckingMode": "basic",
-
+  "python.pythonPath": "/usr/local/bin/python3",
+  // assuming that's the path inside the container, yours will differ
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.typeCheckingMode": "basic"
 }
 ```
 
@@ -46,24 +45,20 @@ here’s an example of a minimal `devcontainer.json` setup:
 
 ```json
 {
-	"name": "my-python-devcontainer",
-	"image": "mcr.microsoft.com/devcontainers/python:3.11-bullseye",
-	"features": {
-        "ghcr.io/devcontainers/features/python": {
-          "version": "3.11",
-          "pipx": "true"
-        }
-	},
-	"customizations": {
-		"vscode": {
-			"extensions": [
-                "ms-python.python",
-				"ms-python.vscode-pylance"
-			]
-		}
-	},
-	"postCreateCommand": "pip install -r requirements.txt"
-
+  "name": "my-python-devcontainer",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11-bullseye",
+  "features": {
+    "ghcr.io/devcontainers/features/python": {
+      "version": "3.11",
+      "pipx": "true"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python", "ms-python.vscode-pylance"]
+    }
+  },
+  "postCreateCommand": "pip install -r requirements.txt"
 }
 ```
 
@@ -87,13 +82,12 @@ here is another example of a `settings.json` file using a venv:
 
 ```json
 {
-    "python.pythonPath": "/workspace/my-project/venv/bin/python3",
-    // assuming that's the path to the venv python interpreter inside the container
-    "python.analysis.autoImportCompletions": true,
-    "python.analysis.typeCheckingMode": "basic",
-    "python.venvPath": "/workspace/my-project"
+  "python.pythonPath": "/workspace/my-project/venv/bin/python3",
+  // assuming that's the path to the venv python interpreter inside the container
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.typeCheckingMode": "basic",
+  "python.venvPath": "/workspace/my-project"
 }
-
 ```
 
 the important thing here is the `python.pythonPath` pointing to the interpreter inside the venv and the `python.venvPath` pointing to the folder where the venv is located. all that must be inside the container's filesystem.

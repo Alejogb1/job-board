@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "regular-expression-string-length-problem"
 ---
 
-Okay so you've got a regex string length issue right been there done that bought the t-shirt and probably wrote the library myself at some point seriously
+you've got a regex string length issue right been there done that bought the t-shirt and probably wrote the library myself at some point seriously
 
 Let's break this down because this is actually a classic and you are definitely not alone I've spent countless hours debugging regexes that just wouldn't behave especially when length constraints get involved It's like the regex engine is taunting you sometimes
 
@@ -48,15 +48,15 @@ Here's one example of what that could look like
 
 Let's break it down a bit
 
-*   `^` and `$` this you already know it makes sure it’s a full match
-*   `(?=.*[a-z])` this is a positive lookahead assertion it asserts that there is at least one lowercase character
-*   `(?=.*[A-Z])` another positive lookahead it makes sure you have at least one uppercase letter
-*   `(?=.*\d)` one more lookahead this time it makes sure you have one digit
-*   `[a-zA-Z0-9]{8,12}` finally the character set and the length quantifier matching alphanumeric characters between 8 and 12 characters
+- `^` and `$` this you already know it makes sure it’s a full match
+- `(?=.*[a-z])` this is a positive lookahead assertion it asserts that there is at least one lowercase character
+- `(?=.*[A-Z])` another positive lookahead it makes sure you have at least one uppercase letter
+- `(?=.*\d)` one more lookahead this time it makes sure you have one digit
+- `[a-zA-Z0-9]{8,12}` finally the character set and the length quantifier matching alphanumeric characters between 8 and 12 characters
 
 So it looks more complicated and it actually is a bit but I swear to you it's not rocket science it’s just regex you have just to read it slowly and try to understand the parts that are there
 
-Now a common trap that I see a lot of beginners fall into and I will be sincere that I have also fallen for at least once in my career is forgetting the anchors `^` and `$` You have to understand that without them the regex can match *any* substring inside the bigger string not necessarily the full string
+Now a common trap that I see a lot of beginners fall into and I will be sincere that I have also fallen for at least once in my career is forgetting the anchors `^` and `$` You have to understand that without them the regex can match _any_ substring inside the bigger string not necessarily the full string
 
 It's like asking for a sandwich and being given a single crumb it's technically a sandwich but not really what you wanted
 

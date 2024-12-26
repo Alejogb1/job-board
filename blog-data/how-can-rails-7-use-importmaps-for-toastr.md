@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-rails-7-use-importmaps-for-toastr"
 ---
 
-Alright, let's talk about getting toastr integrated into a Rails 7 application using importmaps. This isn't a theoretical exercise for me; I remember wrestling (oops, almost said it!) with this exact issue back when I was migrating a large legacy app over to the new asset pipeline in Rails 7. The shift from Webpacker was… well, let's just say it presented some interesting challenges. Importmaps, at first glance, seem straightforward, but the devil is often in the details, especially when you're dealing with third-party libraries. The main aim here isn't just to get toastr working, but also to understand the underlying mechanism of how importmaps operate.
+, let's talk about getting toastr integrated into a Rails 7 application using importmaps. This isn't a theoretical exercise for me; I remember wrestling (oops, almost said it!) with this exact issue back when I was migrating a large legacy app over to the new asset pipeline in Rails 7. The shift from Webpacker was… well, let's just say it presented some interesting challenges. Importmaps, at first glance, seem straightforward, but the devil is often in the details, especially when you're dealing with third-party libraries. The main aim here isn't just to get toastr working, but also to understand the underlying mechanism of how importmaps operate.
 
 The core idea behind importmaps is that we’re essentially declaring a mapping between module specifiers (what we use in our javascript import statements) and the actual locations of the javascript files. This eliminates the need for a traditional bundling process during development. Instead, the browser directly fetches the javascript files based on these mappings. This greatly simplifies the setup and reduces build times.
 
@@ -26,19 +26,19 @@ pin "toastr", to: "https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/to
 
 Here's what this section is doing:
 
-*   `pin "jquery" ...`: This line defines the mapping for jquery, pointing directly to a CDN hosted copy. The `preload: true` attribute hints that it's beneficial to load it early for performance.
-*   `pin "toastr" ...`: This does the same for the toastr library, locating its minified javascript file on a CDN.
+- `pin "jquery" ...`: This line defines the mapping for jquery, pointing directly to a CDN hosted copy. The `preload: true` attribute hints that it's beneficial to load it early for performance.
+- `pin "toastr" ...`: This does the same for the toastr library, locating its minified javascript file on a CDN.
 
 This configuration tells the browser, "whenever you see `import 'jquery'` or `import 'toastr'`, go to these specific URLs and fetch the JavaScript." Keep in mind that the browser relies on these exact module specifier names.
 
 Now, in your javascript (likely in `app/javascript/application.js` or a related file):
 
 ```javascript
-import 'jquery';
-import 'toastr';
+import "jquery";
+import "toastr";
 
-document.addEventListener('DOMContentLoaded', function() {
-  toastr.success('Hello, toastr!');
+document.addEventListener("DOMContentLoaded", function () {
+  toastr.success("Hello, toastr!");
 });
 ```
 
@@ -60,11 +60,11 @@ pin "toastr", to: "vendor/javascript/toastr.min.js"
 And the javascript import statements in the javascript file (`app/javascript/application.js` or related file) remain the same:
 
 ```javascript
-import 'jquery';
-import 'toastr';
+import "jquery";
+import "toastr";
 
-document.addEventListener('DOMContentLoaded', function() {
-  toastr.success('Hello, toastr!');
+document.addEventListener("DOMContentLoaded", function () {
+  toastr.success("Hello, toastr!");
 });
 ```
 
@@ -73,7 +73,10 @@ The change is that we have pointed to a local file system rather than a CDN. Thi
 Now, let’s think about the css. This is not handled by importmaps, as these focus on javascript files. The toastr css can be included via a stylesheet tag in the layout or via a css file added to the `app/assets/stylesheets` directory, and that is beyond the scope of importmaps. However, it is a key thing to make note of. If you use the local files, you would download the css and save it to the stylesheet directory. If you use the CDN, then you would include the stylesheet in the layout as below:
 
 ```html
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
+  rel="stylesheet"
+/>
 ```
 
 In my experience, a common pitfall is overlooking these dependency declarations in `importmap.rb`. I’ve seen a lot of developers, myself included at the beginning, wonder why their imports aren’t working, only to find out that the modules weren't properly mapped in the importmap configuration. Another common problem is forgetting to include the css file, leading to functionality without styling.
@@ -82,8 +85,8 @@ The key takeaway here is that importmaps aren't meant to be a replacement for bu
 
 For further detailed learning, I would strongly recommend diving into these resources:
 
-*   **The official Rails guides on importmaps**: These are updated regularly, are authoritative and provide excellent clarity on best practices.
-*   **"JavaScript for impatient programmers" by Dr. Axel Rauschmayer**: This is an incredibly comprehensive text on all things JavaScript, and it gives a far deeper understanding of the module system than I could describe here.
-*   **The HTML standard**: specifically section on importmaps. This can be useful if you want a full understanding of the inner workings of the feature.
+- **The official Rails guides on importmaps**: These are updated regularly, are authoritative and provide excellent clarity on best practices.
+- **"JavaScript for impatient programmers" by Dr. Axel Rauschmayer**: This is an incredibly comprehensive text on all things JavaScript, and it gives a far deeper understanding of the module system than I could describe here.
+- **The HTML standard**: specifically section on importmaps. This can be useful if you want a full understanding of the inner workings of the feature.
 
 The importmap approach can simplify your development setup significantly and, based on my past experiences, offers a more direct approach to dependency management than traditional bundlers, if your project is suitable. Just remember to keep your mappings accurate, your css included, and be aware of the need for bundling during production. It can be a game-changer for development velocity. And that, in a nutshell, is how you can use importmaps with toastr in Rails 7.

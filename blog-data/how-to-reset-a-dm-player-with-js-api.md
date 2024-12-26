@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-reset-a-dm-player-with-js-api"
 ---
 
-alright, so you're looking to reset a digital media player using javascript, right? i've been there, done that. it's one of those things that sounds simple on paper but can turn into a real head-scratcher when you're actually coding it. especially if you're dealing with different player implementations or libraries. i remember this one project back in the day, must have been 2012, working on a streaming platform for, get this, a library. yes, old school books but online audio books. we used a custom built player based on some very old version of flash. the nightmares... it was a challenge getting even basic controls to work reliably, never mind resetting the whole thing programmatically.
+, so you're looking to reset a digital media player using javascript, right? i've been there, done that. it's one of those things that sounds simple on paper but can turn into a real head-scratcher when you're actually coding it. especially if you're dealing with different player implementations or libraries. i remember this one project back in the day, must have been 2012, working on a streaming platform for, get this, a library. yes, old school books but online audio books. we used a custom built player based on some very old version of flash. the nightmares... it was a challenge getting even basic controls to work reliably, never mind resetting the whole thing programmatically.
 
 anyway, let's cut to the chase. the core issue with resetting a media player using javascript revolves around how the player's api exposes controls and its internal state. typically, a reset means you need to stop the playback, seek to the beginning and potentially clear any buffered data or previous playlist items. you can't always just flip a switch; you have to be methodical about how you approach it.
 
@@ -13,7 +13,7 @@ first off, the specific code varies quite a bit depending on the player you're u
 let's start with the absolute basics, resetting an html5 `<video>` tag. this is probably the most common scenario out there:
 
 ```javascript
-const videoPlayer = document.getElementById('yourVideoId'); // replace with your video element's id
+const videoPlayer = document.getElementById("yourVideoId"); // replace with your video element's id
 if (videoPlayer) {
   videoPlayer.pause();
   videoPlayer.currentTime = 0;
@@ -27,8 +27,8 @@ this snippet first gets a reference to the video element by its id. you need to 
 a more complex situation involves managing playlists or multiple sources, where you have to make sure that you are handling the reset on a more elaborate setting. now, let’s say you use a playlist and need to reset back to the beginning of the playlist. this involves a bit more handling logic:
 
 ```javascript
-const videoPlayer = document.getElementById('yourVideoId');
-let playlist = ['video1.mp4', 'video2.mp4', 'video3.mp4'];
+const videoPlayer = document.getElementById("yourVideoId");
+let playlist = ["video1.mp4", "video2.mp4", "video3.mp4"];
 let currentTrackIndex = 0;
 
 function loadTrack(index) {
@@ -53,13 +53,14 @@ in this example, the `loadTrack` is loading a new `src` in the player based on t
 now, for third party libraries things tend to be slightly different. they usually offer their own apis for this. for instance videojs a common library, gives you its own method that makes things simpler for you:
 
 ```javascript
-const videoPlayer = videojs('yourVideoId'); // use videojs function call to get the reference
+const videoPlayer = videojs("yourVideoId"); // use videojs function call to get the reference
 if (videoPlayer) {
   videoPlayer.pause();
   videoPlayer.currentTime(0);
   videoPlayer.load();
 }
 ```
+
 here we used videojs api which gives you similar methods to the html5 ones, and of course you could use other videojs api methods based on your needs. videojs api provides more advanced settings and logic for more advanced workflows.
 note that this code might differ a little for older versions of this library, so you should check the documentation of the version you are working with.
 also other libraries like plyr follow the same principle, you will have to load its javascript api, and the use its own methods for this.

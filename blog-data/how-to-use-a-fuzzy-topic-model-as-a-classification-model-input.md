@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "how-to-use-a-fuzzy-topic-model-as-a-classification-model-input"
 ---
 
-alright, so you're looking at using fuzzy topic models as input for a classification task, right? been there, done that. i remember back in my early days working on a social media sentiment project. we had this massive dataset of tweets, and the usual bag-of-words approach wasn't cutting it. the signal was just too noisy, words were used in so many different contexts it felt like trying to read tea leaves. that's when i stumbled upon topic modeling, specifically fuzzy models. they offer a smoother, more nuanced representation than hard assignments.
+, so you're looking at using fuzzy topic models as input for a classification task, right? been there, done that. i remember back in my early days working on a social media sentiment project. we had this massive dataset of tweets, and the usual bag-of-words approach wasn't cutting it. the signal was just too noisy, words were used in so many different contexts it felt like trying to read tea leaves. that's when i stumbled upon topic modeling, specifically fuzzy models. they offer a smoother, more nuanced representation than hard assignments.
 
 the core idea is this: instead of assigning each document to a single topic, a fuzzy model tells you the degree to which a document belongs to multiple topics. this fuzzy membership is what you can then feed into your classification model. instead of a matrix where rows are documents and columns are words, you end up with a matrix where rows are documents and columns are topics, and values are the document-topic memberships, generally normalized to a 0-1 range.
 
 it's really a game changer for certain types of data. think about complex text where a single piece of writing can touch on multiple themes. a hard assignment will lose all that subtlety. the fuzzy memberships let the classifier see the document in its multi-thematic space. it becomes a richer input that is easier to interpret, generally.
 
-the challenge, however, is in how you implement this. it isn't as straightforward as just plugging in numbers. you will need to first train your topic model, get your document-topic membership matrix, and *then* feed it to the classifier.
+the challenge, however, is in how you implement this. it isn't as straightforward as just plugging in numbers. you will need to first train your topic model, get your document-topic membership matrix, and _then_ feed it to the classifier.
 
 let's go through a concrete, example with code. i'll use python since that's my usual tool. we will be utilizing a fuzzy variant of lda that was implemented by some folks from a paper i read in a past life.
 

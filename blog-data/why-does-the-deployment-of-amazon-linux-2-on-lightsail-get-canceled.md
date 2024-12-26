@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-deployment-of-amazon-linux-2-on-lightsail-get-canceled"
 ---
 
-Alright, let's tackle this deployment conundrum. From experience, I've seen Lightsail deployments on Amazon Linux 2 fail for a variety of reasons, some subtle, others glaringly obvious. It's rarely a single issue; more often, a confluence of factors is at play. Let me walk you through the common culprits and some solutions that have worked for me.
+, let's tackle this deployment conundrum. From experience, I've seen Lightsail deployments on Amazon Linux 2 fail for a variety of reasons, some subtle, others glaringly obvious. It's rarely a single issue; more often, a confluence of factors is at play. Let me walk you through the common culprits and some solutions that have worked for me.
 
 First off, let's be clear: Lightsail, while convenient, isn't as flexible as EC2. It operates within a predefined set of constraints, and misalignments with these can derail a deployment. One of the most prevalent reasons I’ve encountered revolves around insufficient instance resources. You might think you've selected an instance size that's plenty, but consider what's happening during the initial setup. The system is pulling down updates, installing packages (sometimes a lot), and potentially performing other resource-intensive tasks. If your chosen instance doesn’t have enough memory (RAM) or CPU power, the deployment process can get stuck, and ultimately time out, leading to cancellation. The underlying processes can become unresponsive, and Lightsail's monitoring mechanisms might interpret this as a failed or stalled deployment, triggering a rollback. I once tried deploying a fairly intricate web app on a micro instance—a painful lesson in resource misallocation.
 
@@ -14,7 +14,7 @@ Beyond resources and network issues, startup scripts can also be a major source 
 
 So, what can you do to troubleshoot these problems? First, meticulously check your resource allocation. If the instance size you selected isn’t sufficient, move up a tier. This is a simpler fix than dealing with intricate script issues. Second, try to observe the deployment process as much as possible. Although direct console access during the setup phase is limited, the Lightsail interface often provides some hints, and logs might become available shortly after the initial setup phase. Monitor resource utilization of any instance you’re working with in Lightsail, using the built-in monitoring tools.
 
-Finally, validate the initialization scripts. While you might not have direct access to run these scripts on the deployed instance *before* it is completely deployed, you can try a few tricks. One involves creating a throwaway Lightsail instance, manually provisioning it, and testing your scripts on *that* instance, ensuring they behave as expected. This approach helped me pinpoint issues within startup scripts and resolve them effectively before attempting a new Lightsail deployment.
+Finally, validate the initialization scripts. While you might not have direct access to run these scripts on the deployed instance _before_ it is completely deployed, you can try a few tricks. One involves creating a throwaway Lightsail instance, manually provisioning it, and testing your scripts on _that_ instance, ensuring they behave as expected. This approach helped me pinpoint issues within startup scripts and resolve them effectively before attempting a new Lightsail deployment.
 
 Let's look at some code examples now, to better illustrate common issues:
 
@@ -77,7 +77,7 @@ echo "Service Started!"
 
 ```
 
-This script, failing to verify `systemctl start` success, often results in the deployment stalling because 'my\_service' may have failed due to missing dependencies.
+This script, failing to verify `systemctl start` success, often results in the deployment stalling because 'my_service' may have failed due to missing dependencies.
 
 To deepen your understanding, I recommend exploring resources like "Linux System Programming" by Robert Love for insights into low-level system behaviors. Furthermore, "Understanding the Linux Kernel" by Daniel P. Bovet and Marco Cesati, provides deeper knowledge on Linux internals, which can be useful in diagnosing complex resource or dependency problems. Lastly, Amazon’s own documentation on Lightsail offers very specific guidance on supported instance types, networking settings and any constraints to the environment. While not always exhaustive, this documentation forms a solid foundation.
 

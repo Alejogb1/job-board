@@ -10,7 +10,7 @@ so, you're seeing a fully connected layer in pytorch and it's showing zero param
 
 first, let's get the basics straight. a fully connected layer, often called a dense layer, is all about connections. every single neuron in the layer is connected to every single neuron in the layer before it. each of those connections has a weight, and the neurons have biases, those are your parameters. those weights and biases are what get tweaked during training. pytorch uses them to learn.
 
-now, here’s the kicker, a fully connected layer doesn’t magically create these weights and biases just because you define it as fully connected in code. it doesn't mean it has zero parameters. it simply means that those parameters haven’t been *initialized* yet. the layer is there, ready and waiting, but it doesn't have any actual numbers to work with, initially.
+now, here’s the kicker, a fully connected layer doesn’t magically create these weights and biases just because you define it as fully connected in code. it doesn't mean it has zero parameters. it simply means that those parameters haven’t been _initialized_ yet. the layer is there, ready and waiting, but it doesn't have any actual numbers to work with, initially.
 
 what happens usually is that these parameters get created once you, in a sense, "push" some data through the layer for the first time, or when you explicitly declare its shape. that’s because pytorch has to figure out the size of the weight matrix and bias vector based on the size of the input to that layer. if you don't give the layer any input then, well, it doesn't know what size to make those weight and bias parameters. it's a bit like trying to make a suit without knowing the wearer’s size.
 
@@ -31,7 +31,7 @@ fc_layer = nn.Linear(in_features=5, out_features=10)
 print(f'number of parameters: {sum(p.numel() for p in fc_layer.parameters())}')
 ```
 
-if you run this, you'll see that the number of parameters is zero. why? because, as i said, we haven't given it an input yet. this is very common. the layer is just waiting. it knows the `in_features` and the `out_features` which define *how* parameters will be formed, but they are not formed until you use the layer.
+if you run this, you'll see that the number of parameters is zero. why? because, as i said, we haven't given it an input yet. this is very common. the layer is just waiting. it knows the `in_features` and the `out_features` which define _how_ parameters will be formed, but they are not formed until you use the layer.
 
 example 2: input, parameters appear
 
@@ -53,7 +53,7 @@ print(f'number of parameters: {sum(p.numel() for p in fc_layer.parameters())}')
 
 ```
 
-here’s what happens: when you pass a `dummy_input` through the `fc_layer`, pytorch goes "ah, okay, the input size is 5 and output size is 10, that means my weight matrix should be 5x10 and biases should be size of 10". it creates those weights and biases and bam, we now have parameters, and this time, we don't get zero.
+here’s what happens: when you pass a `dummy_input` through the `fc_layer`, pytorch goes "ah, , the input size is 5 and output size is 10, that means my weight matrix should be 5x10 and biases should be size of 10". it creates those weights and biases and bam, we now have parameters, and this time, we don't get zero.
 
 example 3: explicitly defining the shapes at the start.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-two-airflow-servers-be-integrated"
 ---
 
-Okay, let’s tackle this. It's a scenario I’ve encountered firsthand more times than I’d care to count, usually in contexts where scaling out or ensuring high availability became critical. The short answer, of course, is yes, two Airflow servers can be integrated. But it's not as straightforward as just plugging them into the same network. The process involves understanding the underlying architecture of Airflow and choosing the appropriate strategy to achieve a cohesive, functional system. Instead of envisioning two entirely separate, competing instances, you're more accurately building a distributed Airflow setup.
+, let’s tackle this. It's a scenario I’ve encountered firsthand more times than I’d care to count, usually in contexts where scaling out or ensuring high availability became critical. The short answer, of course, is yes, two Airflow servers can be integrated. But it's not as straightforward as just plugging them into the same network. The process involves understanding the underlying architecture of Airflow and choosing the appropriate strategy to achieve a cohesive, functional system. Instead of envisioning two entirely separate, competing instances, you're more accurately building a distributed Airflow setup.
 
 My experience with this stems back to a large-scale data migration project several years ago. We initially started with a single Airflow instance, which quickly became a bottleneck. We were processing huge volumes of data daily, and the single scheduler, even with ample resources, was frequently overwhelmed. This prompted a deep dive into distributing the workload, and that’s when we implemented our multi-server Airflow cluster. It wasn't perfect initially, but we learned valuable lessons that I can share.
 
@@ -27,7 +27,7 @@ Let me illustrate these concepts with some configuration examples. Note that the
 sql_alchemy_conn = postgresql://airflow_user:airflow_password@database_host:5432/airflow_db
 ```
 
-This setting, residing within your `airflow.cfg` file on *both* Airflow servers, instructs them to use the same PostgreSQL database for storing their metadata. Obviously, you need to replace the placeholders with your specific database credentials. It's a simple configuration change, but one that is central to ensuring both instances are synchronized. Remember that the underlying database needs to be robust and configured for high availability as well. It’s a single point of failure if not handled correctly.
+This setting, residing within your `airflow.cfg` file on _both_ Airflow servers, instructs them to use the same PostgreSQL database for storing their metadata. Obviously, you need to replace the placeholders with your specific database credentials. It's a simple configuration change, but one that is central to ensuring both instances are synchronized. Remember that the underlying database needs to be robust and configured for high availability as well. It’s a single point of failure if not handled correctly.
 
 **Example 2: Using CeleryExecutor:**
 

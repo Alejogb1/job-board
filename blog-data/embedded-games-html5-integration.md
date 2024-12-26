@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "embedded-games-html5-integration"
 ---
 
-Okay I get it embedded games HTML5 integration yeah I've wrestled with that beast a few times let me tell you it's not always a walk in the park especially when you're dealing with legacy systems or quirky embedded environments Been there done that got the scars to prove it
+I get it embedded games HTML5 integration yeah I've wrestled with that beast a few times let me tell you it's not always a walk in the park especially when you're dealing with legacy systems or quirky embedded environments Been there done that got the scars to prove it
 
 So you're looking at shoehorning HTML5 games into some kind of embedded context right like a digital signage player or a specialized industrial controller maybe a smart fridge who knows The challenges are usually the same though resource constraints compatibility headaches and debugging nightmares are part of the package when you work with embeddeds
 
@@ -14,7 +14,7 @@ The first thing you need to worry about is performance embedded systems often co
 
 I tried that once with some particle effects I thought it was cool and smooth during testing on my machine then it turned out the target machine barely even displayed the loading screen And it died a sad death That day I learned an important lesson keep it simple keep it lean and test on the actual hardware as much as possible
 
-Now regarding the integration its not a copy paste exercise you will have a few key considerations First how is the game going to be rendered On many embedded systems you wont be able to use a full blown web browser You might have to use a WebView component which is basically a lightweight browser engine or even a custom implementation if the embedded device is old as f**k
+Now regarding the integration its not a copy paste exercise you will have a few key considerations First how is the game going to be rendered On many embedded systems you wont be able to use a full blown web browser You might have to use a WebView component which is basically a lightweight browser engine or even a custom implementation if the embedded device is old as f\*\*k
 
 Then you need to handle communication between the game and the embedded system This can range from simple Javascript calls to a native API to more complex solutions involving sockets or other forms of communication This integration part is always a pain I have spent days just trying to debug how the webView on an embedded board is communicating the touch events to the application
 
@@ -23,33 +23,35 @@ Here is a simple example of embedding an html5 canvas for rendering:
 ```html
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Simple Canvas Example</title>
     <style>
-        body { margin: 0; overflow: hidden; }
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <canvas id="gameCanvas"></canvas>
     <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
+      const canvas = document.getElementById("gameCanvas");
+      const ctx = canvas.getContext("2d");
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
 
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = 'blue';
-            ctx.fillRect(50, 50, 100, 100);
-            requestAnimationFrame(draw);
-        }
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "blue";
+        ctx.fillRect(50, 50, 100, 100);
+        requestAnimationFrame(draw);
+      }
 
-        draw();
+      draw();
     </script>
-</body>
+  </body>
 </html>
-
 ```
 
 This shows a basic HTML structure with a canvas element for drawing and a simple javascript to draw a blue square and it is not dependent of any external library. When you render in a webview or an embedded browser try to keep it as lean as possible
@@ -62,15 +64,15 @@ Here is an example of calling an event from the javascript and handling it from 
 
 ```javascript
 function sendMessageToEmbedded(message) {
-    if (window.external && window.external.sendMessage) {
-        window.external.sendMessage(message);
-    } else {
-        console.warn("No embedded interface found. Message not sent.", message);
-    }
+  if (window.external && window.external.sendMessage) {
+    window.external.sendMessage(message);
+  } else {
+    console.warn("No embedded interface found. Message not sent.", message);
+  }
 }
 
 //Example function call:
-sendMessageToEmbedded({ action: 'updateScore', score: 100 });
+sendMessageToEmbedded({ action: "updateScore", score: 100 });
 ```
 
 In this case the game is trying to send a message to the embedded environment using the window.external interface. In some environments you might use a javascript bridge or something similar or another custom API. But the idea is pretty much this one You need to communicate with the embedded application

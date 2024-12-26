@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-a-404-response-from-a-rails-controller-action"
 ---
 
-alright, so you're hitting a 404 from your rails controller action, that’s a classic head-scratcher. been there, done that, got the t-shirt, and probably a few gray hairs from debugging similar situations. let’s break this down because a 404 typically points to a pretty straightforward set of potential culprits. i’ve spent more time than i care to recall staring at server logs, so let me share some of the things i've learned the hard way.
+, so you're hitting a 404 from your rails controller action, that’s a classic head-scratcher. been there, done that, got the t-shirt, and probably a few gray hairs from debugging similar situations. let’s break this down because a 404 typically points to a pretty straightforward set of potential culprits. i’ve spent more time than i care to recall staring at server logs, so let me share some of the things i've learned the hard way.
 
 first off, 404 means "not found." it's the server’s polite way of saying "i looked, and i just can't find what you're asking for." this doesn't necessarily mean your code is broken; it might just mean the path the request is taking is not what you expect.
 

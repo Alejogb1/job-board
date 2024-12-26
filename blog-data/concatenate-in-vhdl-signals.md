@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "concatenate-in-vhdl-signals"
 ---
 
-Alright so you're asking about concatenating signals in VHDL right Been there done that got the t-shirt And a few gray hairs from debugging those pesky signal assignments trust me I've seen it all the good the bad and the downright weird when it comes to VHDL concatenation
+so you're asking about concatenating signals in VHDL right Been there done that got the t-shirt And a few gray hairs from debugging those pesky signal assignments trust me I've seen it all the good the bad and the downright weird when it comes to VHDL concatenation
 
 First things first let's talk about why you'd even want to do this concatenating signals is fundamental for building larger data structures from smaller ones imagine you have say a 4 bit bus and a 2 bit bus and you want to treat them as a single 6 bit bus for some reason that's where concatenation comes in handy it's like assembling lego blocks into a bigger more complex structure that's kind of the basic principle
 
@@ -14,7 +14,7 @@ The syntax is pretty straightforward you just use the & operator between the sig
 
 Let’s move on to actual code examples because everyone knows that's the real meat of the deal
 
-Example 1 lets keep it simple just two std\_logic\_vector signals I've been burned before by not declaring the types properly so let's be explicit about the std\_logic\_vector usage
+Example 1 lets keep it simple just two std_logic_vector signals I've been burned before by not declaring the types properly so let's be explicit about the std_logic_vector usage
 
 ```vhdl
 library ieee;

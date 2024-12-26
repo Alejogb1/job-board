@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-plot-about-machine-learning-variable-importance"
 ---
 
-alright, so you’re looking to visualize feature importance from a machine learning model, i get that. it's a common need when you're trying to understand *why* your model is making the decisions it is. i've been there, staring at a bunch of numbers and thinking, "there *has* to be a better way to see this".
+, so you’re looking to visualize feature importance from a machine learning model, i get that. it's a common need when you're trying to understand _why_ your model is making the decisions it is. i've been there, staring at a bunch of numbers and thinking, "there _has_ to be a better way to see this".
 
 over the years, i've wrestled (oh i tried, i have to say) with different approaches. back in my early days, i remember working on a fraud detection project. we had this gigantic dataset with like a hundred different features. the model was working reasonably well but nobody on my team understood what was driving its predictions. the feature importance output? just a giant text dump. we spent hours manually trying to sort and find patterns. i almost went cross-eyed. that was a lesson in the necessity of visualization tools, definitely a bad time.
 

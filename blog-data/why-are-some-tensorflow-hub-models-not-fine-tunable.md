@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-some-tensorflow-hub-models-not-fine-tunable"
 ---
 
-Alright, let's tackle this one. The question of why certain TensorFlow Hub models resist fine-tuning is a recurring one, and it usually stems from a combination of factors embedded within their architectural design and the way they were initially trained. It's something I've bumped into a few times over the years, especially back when we were experimenting with transfer learning for a series of custom image recognition projects. We had one particularly stubborn ResNet variant from Hub that absolutely refused to budge, no matter what hyperparameter tuning voodoo we threw at it. After some serious inspection and experimentation, the patterns became quite clear.
+, let's tackle this one. The question of why certain TensorFlow Hub models resist fine-tuning is a recurring one, and it usually stems from a combination of factors embedded within their architectural design and the way they were initially trained. It's something I've bumped into a few times over the years, especially back when we were experimenting with transfer learning for a series of custom image recognition projects. We had one particularly stubborn ResNet variant from Hub that absolutely refused to budge, no matter what hyperparameter tuning voodoo we threw at it. After some serious inspection and experimentation, the patterns became quite clear.
 
 The core reason isn't some sort of deliberate lock-down but rather the pre-training regimen coupled with the model's architecture. Essentially, a lot of models, especially older ones on Hub, are published with their parameters frozen intentionally. These models have often been trained on massive datasets, like ImageNet, and the pre-training process has resulted in parameters optimized for a specific task – in this case, classification of general images. Fine-tuning essentially means altering these already trained parameters to better fit a new, more specific task, which usually involves training on a smaller, more targeted dataset.
 
@@ -67,9 +67,9 @@ for p in model.trainable_variables:
   print(f"Trainable layer parameters: {p.name}")
 ```
 
-In this example, the feature extraction part of the model ( `mobilenet_v2/feature_vector/4`) is not fine-tunable. We build on top of it using a `Dense` classification layer. Setting the layer's `trainable` parameter to `True` will only affect *our* new `Dense` layer, not the pre-trained feature extractor which was loaded with `trainable=False`. This way, we are only fine-tuning the classification aspect of the model, leveraging the pre-trained feature extraction capabilities without disrupting them.
+In this example, the feature extraction part of the model ( `mobilenet_v2/feature_vector/4`) is not fine-tunable. We build on top of it using a `Dense` classification layer. Setting the layer's `trainable` parameter to `True` will only affect _our_ new `Dense` layer, not the pre-trained feature extractor which was loaded with `trainable=False`. This way, we are only fine-tuning the classification aspect of the model, leveraging the pre-trained feature extraction capabilities without disrupting them.
 
-Finally, here’s a snippet where we *can* make certain layers trainable by inspecting the underlying model architecture and selectively targeting specific layers. This is the closest we get to achieving actual fine-tuning on older models which were intended to be mostly used as feature extractors.
+Finally, here’s a snippet where we _can_ make certain layers trainable by inspecting the underlying model architecture and selectively targeting specific layers. This is the closest we get to achieving actual fine-tuning on older models which were intended to be mostly used as feature extractors.
 
 ```python
 import tensorflow as tf

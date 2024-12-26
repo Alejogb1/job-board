@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-voip-push-notifications-failing-in-production-and-development"
 ---
 
-Okay, let's unpack this VoIP push notification conundrum. I've seen this issue rear its ugly head in various incarnations across several projects, and it’s rarely ever straightforward. The common refrain of "it works on my machine" often masks a complex interplay of network configurations, device quirks, and misconfigured server-side settings. So, let’s explore why these notifications, seemingly simple, become such a headache.
+, let's unpack this VoIP push notification conundrum. I've seen this issue rear its ugly head in various incarnations across several projects, and it’s rarely ever straightforward. The common refrain of "it works on my machine" often masks a complex interplay of network configurations, device quirks, and misconfigured server-side settings. So, let’s explore why these notifications, seemingly simple, become such a headache.
 
 The core problem rarely lies within a single, obvious failure point. Instead, it's typically a convergence of factors, each subtly contributing to the overall system's fragility. In my experience, these factors often fall into a few key categories: issues with the push notification service itself, discrepancies in app configurations, and network environment variability.
 
@@ -56,7 +56,7 @@ In this swift code, we’re capturing the device token, converting it to a strin
 **Example 2: Constructing a Basic APNs Payload (Node.js)**
 
 ```javascript
-const apn = require('apn');
+const apn = require("apn");
 
 const options = {
   cert: "path/to/your/certificate.pem",
@@ -66,74 +66,77 @@ const options = {
 const apnProvider = new apn.Provider(options);
 
 function sendVoipPush(deviceToken, payloadData) {
-    const note = new apn.Notification();
+  const note = new apn.Notification();
 
   note.topic = "your.app.bundle.id.voip"; // Use voip topic for voip notifications
   note.payload = {
-      "aps": {
-          "alert": {
-            "title": "Incoming Call",
-            "body": "Someone is calling you."
-          },
-           "sound": "default",
-        "mutable-content": 1 //allows for mutability to enable richer notifications
+    aps: {
+      alert: {
+        title: "Incoming Call",
+        body: "Someone is calling you.",
       },
-       "custom": payloadData // Custom data
-    };
+      sound: "default",
+      "mutable-content": 1, //allows for mutability to enable richer notifications
+    },
+    custom: payloadData, // Custom data
+  };
 
-     apnProvider.send(note, deviceToken).then( result => {
-        console.log(`Notifications sent: ${result.sent.length}`);
-        console.log(`Notifications failed: ${result.failed.length}`);
-        if (result.failed.length > 0) {
-          console.log("Failed notifications errors:");
-          result.failed.forEach(failure => console.error(failure.error));
-        }
-    });
+  apnProvider.send(note, deviceToken).then((result) => {
+    console.log(`Notifications sent: ${result.sent.length}`);
+    console.log(`Notifications failed: ${result.failed.length}`);
+    if (result.failed.length > 0) {
+      console.log("Failed notifications errors:");
+      result.failed.forEach((failure) => console.error(failure.error));
+    }
+  });
 }
 
 const deviceToken = "your-device-token-here";
-const customData = { callerId: "123-456-7890"};
+const customData = { callerId: "123-456-7890" };
 sendVoipPush(deviceToken, customData);
-
 ```
+
 Here, the focus is on properly structuring the apns payload. Notice the specific `topic` for voip notifications. The presence of the `aps` dictionary with `alert`, `sound`, and `mutable-content` is vital. Custom data can also be included under a different key such as `custom`. Critically, the code also logs send successes and failures. Failure logging helps to debug certificate issues and identify common payload misconfigurations.
 
 **Example 3: Handling FCM Data Messages (Node.js)**
 
 ```javascript
-const admin = require('firebase-admin');
+const admin = require("firebase-admin");
 
 const serviceAccount = require("path/to/your/serviceAccountKey.json");
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
+  credential: admin.credential.cert(serviceAccount),
 });
 
 function sendFcmDataPush(deviceToken, payloadData) {
-    const message = {
-        token: deviceToken,
-        data: payloadData,
-        android: {
-           priority: 'high' // Required to wake device for time-sensitive notifications
-           },
-        apns: {
-            headers: {
-                'apns-priority': 10
-            }
-        }
-       };
-    admin.messaging().send(message)
+  const message = {
+    token: deviceToken,
+    data: payloadData,
+    android: {
+      priority: "high", // Required to wake device for time-sensitive notifications
+    },
+    apns: {
+      headers: {
+        "apns-priority": 10,
+      },
+    },
+  };
+  admin
+    .messaging()
+    .send(message)
     .then((response) => {
-        console.log('Successfully sent message:', response);
+      console.log("Successfully sent message:", response);
     })
     .catch((error) => {
-      console.log('Error sending message:', error);
+      console.log("Error sending message:", error);
     });
 }
-const deviceToken = 'your-device-token-here';
-const fcmData = {message: 'incoming call', callerId: '555-1212' }
-sendFcmDataPush(deviceToken, fcmData)
+const deviceToken = "your-device-token-here";
+const fcmData = { message: "incoming call", callerId: "555-1212" };
+sendFcmDataPush(deviceToken, fcmData);
 ```
+
 This code example illustrates the structure of an fcm data message, using the firebase admin sdk. Note the `data` payload and the required `priority` parameter for android to wake the device to process this type of notification. This illustrates the need for different configurations depending on the operating system. Error handling, much like the apns example, is essential for understanding where message delivery problems occur.
 
 For further study, i'd suggest exploring the following resources: for iOS push notifications, apple's official documentation on `user notifications framework` and `apple push notification service` are indispensable. For deeper understanding of voip specific functionality, read apple's documentation on `pushkit`. On the android side, Google's firebase documentation for both the `fcm http protocol` and the `firebase admin sdk` are great resources. "push notifications: from concept to production" by peter wright is also a good high-level overview for getting started. Finally, “high performance browser networking” by ilya grigorik is beneficial for understanding the underlying network issues which might be relevant to problems with notification delivery.

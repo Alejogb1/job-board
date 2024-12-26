@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-transfer-wbnb-from-contract-to-metamask"
 ---
 
-alright, so you're looking to move wrapped bnb (wbnb) from a smart contract to a metamask wallet. this is a pretty common task when interacting with decentralized applications, and it often trips people up the first time, so let's break it down.
+, so you're looking to move wrapped bnb (wbnb) from a smart contract to a metamask wallet. this is a pretty common task when interacting with decentralized applications, and it often trips people up the first time, so let's break it down.
 
 i've been there, trust me. early days of defi, i was moving tokens around like a drunken sailor on a trampoline. i once accidentally sent a bunch of eth to a contract address, thinking it was my own, classic rookie mistake. had to wait a few days for a dev to manually return it. it was a learning experience, to say the least. now, i’m pretty meticulous about these things.
 
@@ -19,79 +19,83 @@ to make it happen programmatically, let’s see the code. i'm going to show you 
 here's a basic javascript example using web3.js:
 
 ```javascript
-const Web3 = require('web3');
+const Web3 = require("web3");
 
 // your metamask private key (keep this secret!)
-const privateKey = 'YOUR_PRIVATE_KEY';
+const privateKey = "YOUR_PRIVATE_KEY";
 
 // your metamask address, where the wbnb will be sent
-const recipientAddress = 'YOUR_METAMASK_ADDRESS';
+const recipientAddress = "YOUR_METAMASK_ADDRESS";
 
 // the wbnb contract address
-const wbnbContractAddress = '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'; // this is the wbnb contract on bsc mainnet
+const wbnbContractAddress = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"; // this is the wbnb contract on bsc mainnet
 
 // the amount of wbnb you want to transfer, in wei, e.g. 1 wbnb = 10^18 wei
-const amountToTransfer = '1000000000000000000'; // represents 1 wbnb
+const amountToTransfer = "1000000000000000000"; // represents 1 wbnb
 
 // setting up web3 with your node url, replace with your own.
-const web3 = new Web3(new Web3.providers.HttpProvider('https://bsc-dataseed.binance.org'));
+const web3 = new Web3(
+  new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org")
+);
 
 // get the address associated with your private key
 const account = web3.eth.accounts.privateKeyToAccount(privateKey);
 
 // the wbnb abi (application binary interface) for the contract
 const wbnbAbi = [
-    {
-        "constant": false,
-        "inputs": [
-          {
-            "name": "_to",
-            "type": "address"
-          },
-          {
-            "name": "_value",
-            "type": "uint256"
-          }
-        ],
-        "name": "transfer",
-        "outputs": [
-          {
-            "name": "",
-            "type": "bool"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-      }
+  {
+    constant: false,
+    inputs: [
+      {
+        name: "_to",
+        type: "address",
+      },
+      {
+        name: "_value",
+        type: "uint256",
+      },
+    ],
+    name: "transfer",
+    outputs: [
+      {
+        name: "",
+        type: "bool",
+      },
+    ],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
 ];
 
 // getting an instance of the wbnb contract
 const wbnbContract = new web3.eth.Contract(wbnbAbi, wbnbContractAddress);
 
 async function transferWbnb() {
-    // creating the transaction
-    const tx = {
-        from: account.address,
-        to: wbnbContractAddress,
-        gas: 200000, // adjust this based on gas estimation
-        data: wbnbContract.methods.transfer(recipientAddress, amountToTransfer).encodeABI(),
-    };
+  // creating the transaction
+  const tx = {
+    from: account.address,
+    to: wbnbContractAddress,
+    gas: 200000, // adjust this based on gas estimation
+    data: wbnbContract.methods
+      .transfer(recipientAddress, amountToTransfer)
+      .encodeABI(),
+  };
 
-    // sign the transaction with your private key
-    const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
+  // sign the transaction with your private key
+  const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
 
-    // broadcast the transaction
-    const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+  // broadcast the transaction
+  const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
 
-    console.log('transaction hash:', receipt.transactionHash);
-    console.log('transaction complete.');
+  console.log("transaction hash:", receipt.transactionHash);
+  console.log("transaction complete.");
 }
 
 transferWbnb();
 ```
 
-*replace `YOUR_PRIVATE_KEY` and `YOUR_METAMASK_ADDRESS` with your actual values. keep your private key very secure*. the `amountToTransfer` is in wei, which is the smallest denomination. if you want to transfer 1 wbnb, then you would need to set the value to 1000000000000000000. if you are using a local node or testnet, make sure that the bsc node url is changed.
+_replace `YOUR_PRIVATE_KEY` and `YOUR_METAMASK_ADDRESS` with your actual values. keep your private key very secure_. the `amountToTransfer` is in wei, which is the smallest denomination. if you want to transfer 1 wbnb, then you would need to set the value to 1000000000000000000. if you are using a local node or testnet, make sure that the bsc node url is changed.
 
 this script uses the `transfer` function of the wbnb contract to move the tokens. it will take some gas (bnb) to perform the transaction. the amount of gas depends on the network, but usually the default gas limits work fine, and you can change the `gas: 200000` setting to something suitable. also, note that the wbnb abi provided in the example is a very minimal abi, in a production system, we would use the complete wbnb contract abi. i have provided the `transfer` function only for illustration.
 
@@ -101,25 +105,25 @@ now, let's say you want to do this with ethers.js, another very common library. 
 const { ethers } = require("ethers");
 
 // your metamask private key (keep this secret!)
-const privateKey = 'YOUR_PRIVATE_KEY';
+const privateKey = "YOUR_PRIVATE_KEY";
 
 // your metamask address
-const recipientAddress = 'YOUR_METAMASK_ADDRESS';
+const recipientAddress = "YOUR_METAMASK_ADDRESS";
 
 // the wbnb contract address
-const wbnbContractAddress = '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'; // wbnb contract on bsc
+const wbnbContractAddress = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"; // wbnb contract on bsc
 
 // the amount of wbnb to transfer, in wei
 const amountToTransfer = ethers.parseUnits("1", "ether"); // 1 wbnb
 
 // using bsc rpc
-const provider = new ethers.JsonRpcProvider('https://bsc-dataseed.binance.org');
+const provider = new ethers.JsonRpcProvider("https://bsc-dataseed.binance.org");
 
 const wallet = new ethers.Wallet(privateKey, provider);
 
 // abi of the transfer function
 const wbnbAbi = [
-  "function transfer(address _to, uint256 _value) public returns (bool)"
+  "function transfer(address _to, uint256 _value) public returns (bool)",
 ];
 
 // create contract
@@ -129,17 +133,16 @@ async function transferWbnb() {
   try {
     const tx = await wbnbContract.transfer(recipientAddress, amountToTransfer);
     await tx.wait();
-    console.log('transaction successful:', tx.hash);
-    console.log('transaction complete.');
+    console.log("transaction successful:", tx.hash);
+    console.log("transaction complete.");
   } catch (error) {
-    console.error('error sending transaction:', error);
+    console.error("error sending transaction:", error);
   }
 }
 transferWbnb();
-
 ```
 
-*replace `YOUR_PRIVATE_KEY` and `YOUR_METAMASK_ADDRESS` with your actual values. keep your private key very secure*. similar to web3.js, you need to provide a provider for the node and then set your wallet with your private key. then, you can call the `transfer` function on the contract instance. the `ethers.parseUnits` is used to format the amount of wbnb to be sent in the correct wei format.
+_replace `YOUR_PRIVATE_KEY` and `YOUR_METAMASK_ADDRESS` with your actual values. keep your private key very secure_. similar to web3.js, you need to provide a provider for the node and then set your wallet with your private key. then, you can call the `transfer` function on the contract instance. the `ethers.parseUnits` is used to format the amount of wbnb to be sent in the correct wei format.
 
 both of these code snippets require you to have node.js and npm installed, and you'll need to install web3.js or ethers.js via npm (`npm install web3` or `npm install ethers`). they can be adapted to use in a node environment.
 

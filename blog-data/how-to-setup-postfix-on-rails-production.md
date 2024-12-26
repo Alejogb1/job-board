@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-setup-postfix-on-rails-production"
 ---
 
-alright, so you're looking to get postfix working with your rails app in production. i've been there, done that, got the t-shirt, and probably a few scars along the way. setting up email on a production server is one of those things that seems straightforward until it isn't. let me walk you through what i've learned, and some gotchas to watch out for.
+, so you're looking to get postfix working with your rails app in production. i've been there, done that, got the t-shirt, and probably a few scars along the way. setting up email on a production server is one of those things that seems straightforward until it isn't. let me walk you through what i've learned, and some gotchas to watch out for.
 
 first off, why postfix? well, it's a solid, reliable mta (mail transfer agent). it's relatively simple to configure compared to some of the alternatives, and it's widely used so you'll find plenty of resources if you get stuck. now, we're talking about production, so we need to think about a few things: security, reliability, and of course, getting it to play nice with rails.
 

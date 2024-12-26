@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "multiple-items-matching-in-verilog-case-statement"
 ---
 
-Okay so you’re asking about multiple items matching in a Verilog case statement right classic problem I've been there done that bought the t-shirt and probably even the coffee mug
+you’re asking about multiple items matching in a Verilog case statement right classic problem I've been there done that bought the t-shirt and probably even the coffee mug
 
 Let me tell you it's one of those things that beginners stumble on all the time and even experienced folks sometimes get a little tripped up on because it’s not as straightforward as you might first think you’ve got a bunch of conditions and you want the same action for several of them but you're not entirely sure how to express that cleanly in Verilog
 
-Okay let's dive in to how this thing works and some of the nuances of the language
+let's dive in to how this thing works and some of the nuances of the language
 
 First things first what's the deal with a Verilog case statement
 
@@ -26,7 +26,7 @@ case (my_input)
 endcase
 ```
 
-Right this looks like it should work it looks like you are trying to set my_output to 1 for both case 1 and 2 and to 2 for both cases 3 and 4  But Verilog doesn't work quite like that it'll match the first case and execute it and then that’s it the execution will not continue down the list of the case items
+Right this looks like it should work it looks like you are trying to set my_output to 1 for both case 1 and 2 and to 2 for both cases 3 and 4 But Verilog doesn't work quite like that it'll match the first case and execute it and then that’s it the execution will not continue down the list of the case items
 
 Here's the catch Verilog case statements don't behave like a C or Java switch statement they execute at most a single case they aren't meant to go looking for multiple matching case values
 

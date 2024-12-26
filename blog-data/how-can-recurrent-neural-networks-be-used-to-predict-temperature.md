@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-recurrent-neural-networks-be-used-to-predict-temperature"
 ---
 
-Alright, let's talk about predicting temperature with recurrent neural networks (rnns). I've tackled this problem a few times over the years, mostly dealing with building out localized weather prediction systems for agricultural applications. The variability and time-series nature of temperature data make rnns a compelling choice, so let's explore the nuances.
+, let's talk about predicting temperature with recurrent neural networks (rnns). I've tackled this problem a few times over the years, mostly dealing with building out localized weather prediction systems for agricultural applications. The variability and time-series nature of temperature data make rnns a compelling choice, so let's explore the nuances.
 
 The core strength of rnns, as you're likely aware, is their ability to process sequential data. Unlike feedforward networks, which treat inputs as independent events, rnns maintain an internal state that acts as a memory of previous inputs. This memory is crucial for understanding the temporal dependencies inherent in temperature patterns. We don't just look at the current temperature, we consider the temperatures from the past few hours, days, or even weeks, to infer a trend and make an informed prediction. Essentially, we're training the network to understand the "context" within the time series.
 
@@ -72,6 +72,7 @@ print("Output shape:", y.shape)
 # model.fit(X,y, ...).  Remember to divide into train and validation sets first.
 
 ```
+
 This code demonstrates how to create sequences of data with a chosen `sequence_length` (the length of the history we will consider at any one time), which is very important to prepare data for rnn models. The result is a 3D array to feed into our lstm.
 
 And finally, here is an example of how you might train this model with random data, with the crucial step of scaling/normalizing:
@@ -120,5 +121,5 @@ This illustrates crucial data prep steps, which is a common point of failure for
 
 It's worth mentioning that the performance of these models is highly dependent on the quality and quantity of the training data, and careful parameter tuning. The architecture I've given above is a good starting point, but you’ll likely need to tweak parameters to get the best results for your specific situation.
 
-Regarding further reading, I'd highly recommend diving into *“Deep Learning”* by Goodfellow, Bengio, and Courville. It's a comprehensive resource on the theory and practical aspects of neural networks. Also, for practical applications, reading through the tensorflow documentation on rnns will provide a strong foundation. Papers such as "Long Short-Term Memory" by Hochreiter and Schmidhuber are seminal in understanding the workings of lstms. You should also explore work on time series analysis using traditional statistical methods such as arima and state space modeling – even if you prefer rnn approaches, understanding these methods is a crucial part of becoming a well-rounded professional.
+Regarding further reading, I'd highly recommend diving into _“Deep Learning”_ by Goodfellow, Bengio, and Courville. It's a comprehensive resource on the theory and practical aspects of neural networks. Also, for practical applications, reading through the tensorflow documentation on rnns will provide a strong foundation. Papers such as "Long Short-Term Memory" by Hochreiter and Schmidhuber are seminal in understanding the workings of lstms. You should also explore work on time series analysis using traditional statistical methods such as arima and state space modeling – even if you prefer rnn approaches, understanding these methods is a crucial part of becoming a well-rounded professional.
 Good luck with your temperature predictions!

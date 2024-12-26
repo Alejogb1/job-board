@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-valueerror-after-changing-the-number-of-classes-in-keras"
 ---
 
-Okay, so encountering a `ValueError` after modifying the class count in a Keras model is a fairly common issue, and I've definitely spent some time debugging these in past projects. It usually boils down to a mismatch between the model's expected output shape and the actual output shape you're providing. Let's unpack this systematically, looking at the typical culprits and how to address them.
+, so encountering a `ValueError` after modifying the class count in a Keras model is a fairly common issue, and I've definitely spent some time debugging these in past projects. It usually boils down to a mismatch between the model's expected output shape and the actual output shape you're providing. Let's unpack this systematically, looking at the typical culprits and how to address them.
 
 First, remember that Keras models, especially those built for classification, are highly sensitive to the dimensions of the data they're processing, and the very last layer (usually a dense layer with softmax or sigmoid activation) directly corresponds to the number of classes in your problem. When you adjust the number of classes, you're essentially changing the fundamental architecture of that final layer and how it interacts with both your loss function and evaluation metrics. Here's the typical breakdown of the problem:
 
@@ -54,7 +54,7 @@ model_5.summary()
 
 ```
 
-**Key Point:** The number of units in that last dense layer must *always* correspond directly to the number of classes. Failing to do so is guaranteed to cause a `ValueError` during training. If your layer is a `Dense` layer followed by `softmax` activation, the number of units in the `Dense` layer must match the number of classes in your labels when they are one-hot encoded or when the loss is `sparse_categorical_crossentropy`.
+**Key Point:** The number of units in that last dense layer must _always_ correspond directly to the number of classes. Failing to do so is guaranteed to cause a `ValueError` during training. If your layer is a `Dense` layer followed by `softmax` activation, the number of units in the `Dense` layer must match the number of classes in your labels when they are one-hot encoded or when the loss is `sparse_categorical_crossentropy`.
 
 **Case 2: Incorrect Label Encoding**
 
@@ -115,11 +115,11 @@ new_model.summary()
 
 **General Tips and Recommendations**
 
-*   **Always verify model summary:** Before and after making changes, run `model.summary()` to double check layer shapes. It should quickly reveal misaligned dimensions.
-*   **Inspect your training data**: Make sure the shape of your labels (and training data) matches what your model is expecting, specifically regarding the final dimension for output classes.
-*   **Use `sparse_categorical_crossentropy` wisely**: If you're not using one-hot encoded labels, opt for `sparse_categorical_crossentropy` as your loss function. It implicitly handles integer-encoded labels. This can prevent encoding issues if you change your labels later.
-*   **Consult the Keras Documentation**: For detailed explanations of these functions and other related topics, the official Keras documentation is a great resource. Specifically, look into the sections related to `layers`, `losses`, and model loading. Pay extra attention to how each loss function interprets the shape of the target variables when your targets are multiclass.
-*   **Practical Deep Learning with Python** by Sudharsan Ravichandiran: This is a book with more details and examples on how to handle typical problems with Keras and TF, that you can consult for examples or more detail on how to work through issues with Keras model architectures.
-*   **Deep Learning with Python** by François Chollet, the creator of Keras, is another essential resource. The chapter on understanding neural networks covers the basics about shapes, tensors and how this plays a central part in defining the right architectures and getting the most out of them.
+- **Always verify model summary:** Before and after making changes, run `model.summary()` to double check layer shapes. It should quickly reveal misaligned dimensions.
+- **Inspect your training data**: Make sure the shape of your labels (and training data) matches what your model is expecting, specifically regarding the final dimension for output classes.
+- **Use `sparse_categorical_crossentropy` wisely**: If you're not using one-hot encoded labels, opt for `sparse_categorical_crossentropy` as your loss function. It implicitly handles integer-encoded labels. This can prevent encoding issues if you change your labels later.
+- **Consult the Keras Documentation**: For detailed explanations of these functions and other related topics, the official Keras documentation is a great resource. Specifically, look into the sections related to `layers`, `losses`, and model loading. Pay extra attention to how each loss function interprets the shape of the target variables when your targets are multiclass.
+- **Practical Deep Learning with Python** by Sudharsan Ravichandiran: This is a book with more details and examples on how to handle typical problems with Keras and TF, that you can consult for examples or more detail on how to work through issues with Keras model architectures.
+- **Deep Learning with Python** by François Chollet, the creator of Keras, is another essential resource. The chapter on understanding neural networks covers the basics about shapes, tensors and how this plays a central part in defining the right architectures and getting the most out of them.
 
 In my experience, it is usually a combination of these factors that causes a `ValueError`. By going through the steps of inspecting the layer definitions, label encoding, and how pre-trained weights are used, you can efficiently track down the source of the problem and correct the model architecture. Good luck, and hopefully, this gives you a good technical base for identifying and fixing your issue.

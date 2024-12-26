@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-load-a-related-model-in-rails-7"
 ---
 
-alright, let's talk about loading related models in rails 7. it's a bread-and-butter kind of thing, but can get a little hairy if you don't approach it with the right tools. i've definitely been there, staring at a slow page load thinking, "there *has* to be a better way." and, yeah, there is. so, here's how i've tackled this in projects over the years, and some techniques that have saved my bacon.
+, let's talk about loading related models in rails 7. it's a bread-and-butter kind of thing, but can get a little hairy if you don't approach it with the right tools. i've definitely been there, staring at a slow page load thinking, "there _has_ to be a better way." and, yeah, there is. so, here's how i've tackled this in projects over the years, and some techniques that have saved my bacon.
 
 first off, the core issue when loading related models is often the n+1 query problem. you query for a bunch of records, then for each of those records, you fire off another query to get the related data. this quickly spirals out of control when you have a decent sized data set. rails provides tools to avoid this, mostly centered around eager loading.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "sleep-node-javascript-usage"
 ---
 
-Okay so you wanna know about `sleep` in Nodejs right alright I've been down that rabbit hole more times than I care to admit let me give you the lowdown from someone who's actually wrestled with this not just read about it on some blog
+you wanna know about `sleep` in Nodejs right I've been down that rabbit hole more times than I care to admit let me give you the lowdown from someone who's actually wrestled with this not just read about it on some blog
 
 The thing is Nodejs by its very nature is asynchronous single-threaded magic right You've got this event loop that juggles everything and throwing a `sleep` in there is like putting a huge stop sign in the middle of a busy highway everything just grinds to a halt The reason why we dont find a function called sleep in the standard library is exactly this reason it's generally not a good idea to use traditional blocking sleep calls in node because the event loop stops spinning so your app literally freezes.
 
@@ -12,12 +12,12 @@ I remember one time when i was building this data processing pipeline for an old
 
 So the first thing to understand is that you don't usually `sleep` in Node. You should be looking at async operations and non-blocking approaches If you're trying to pause execution for a set amount of time you're most likely doing something wrong and there might be a better way to architect your process but hey I get it sometimes we just need a delay for some silly cases. The key thing is to avoid blocking the main thread at all costs
 
-Now if you absolutely *need* a delay for some edge case you're stuck with a few options all of which use javascripts asychronous nature
+Now if you absolutely _need_ a delay for some edge case you're stuck with a few options all of which use javascripts asychronous nature
 
 The first way is using `setTimeout` with a `Promise`. This is the most common and recommended way for simple delays. You wrap the `setTimeout` function call into a `Promise` then you `await` the promise so that execution of your function can wait on the result. It works because `setTimeout` is non-blocking it doesn't stop the event loop
 
 ```javascript
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function doSomethingDelayed() {
   console.log("Starting");
@@ -26,7 +26,6 @@ async function doSomethingDelayed() {
 }
 
 doSomethingDelayed();
-
 ```
 
 This snippet defines a `sleep` function that returns a promise that resolves after the given milliseconds which allows you to use it with async await The `doSomethingDelayed` function demonstrates the simple usage of this delay. This is how you generally implement a delay mechanism in your code it is clean and easy to reason about
@@ -36,24 +35,22 @@ Another approach that some people might use is the `process.nextTick` which is m
 ```javascript
 async function processNextTickDelay() {
   console.log("Starting next tick delay");
-  await new Promise(resolve => {
+  await new Promise((resolve) => {
     let counter = 0;
-    function defer(){
-        if(counter < 100000){
-            counter++;
-             process.nextTick(defer)
-        } else{
-            resolve();
-        }
+    function defer() {
+      if (counter < 100000) {
+        counter++;
+        process.nextTick(defer);
+      } else {
+        resolve();
+      }
     }
-    defer()
-
-  })
+    defer();
+  });
   console.log("Done next tick delay");
 }
 
 processNextTickDelay();
-
 ```
 
 This snippet demonstrates how `process.nextTick` can be used with a counter to create a delay. It is important to note that this is not a true sleep this is just a way to make the event loop execute many operations without using `setTimeout`. This is a trick that was used in the past to improve some performance in some very special cases and avoid the overhead of setTimeout.
@@ -62,20 +59,20 @@ And then there is `Atomics.wait` This is a lower level javascript operation that
 
 ```javascript
 async function atomicsWaitDelay() {
-    const sharedBuffer = new SharedArrayBuffer(Int32Array.BYTES_PER_ELEMENT);
-    const sharedArray = new Int32Array(sharedBuffer);
-    sharedArray[0] = 0;
+  const sharedBuffer = new SharedArrayBuffer(Int32Array.BYTES_PER_ELEMENT);
+  const sharedArray = new Int32Array(sharedBuffer);
+  sharedArray[0] = 0;
 
-    console.log("Starting atomics wait delay");
+  console.log("Starting atomics wait delay");
 
-    setTimeout(()=>{
-      Atomics.store(sharedArray, 0, 1)
-      Atomics.notify(sharedArray,0,1)
-    }, 2000)
+  setTimeout(() => {
+    Atomics.store(sharedArray, 0, 1);
+    Atomics.notify(sharedArray, 0, 1);
+  }, 2000);
 
-    Atomics.wait(sharedArray, 0, 0)
+  Atomics.wait(sharedArray, 0, 0);
 
-    console.log("Done atomics wait delay");
+  console.log("Done atomics wait delay");
 }
 atomicsWaitDelay();
 ```

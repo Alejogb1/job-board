@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "sonarcloud-long-lived-branches-pattern-not-reflecting-changes"
 ---
 
-Okay so you're having issues with SonarCloud not picking up changes on your long-lived branches right I've been there man believe me This is a classic source control and analysis sync headache and it bites deep if you don't get it sorted early On a project way back when I was neck deep in Java microservices a good 5 years ago we had this same exact issue Long-lived branches were just not getting updated analysis even though we were pushing code like crazy It was infuriating so I get the pain Let's dissect this and I'll try to give you the real meat and potatoes of what I've seen work not some fluffy marketing nonsense
+you're having issues with SonarCloud not picking up changes on your long-lived branches right I've been there man believe me This is a classic source control and analysis sync headache and it bites deep if you don't get it sorted early On a project way back when I was neck deep in Java microservices a good 5 years ago we had this same exact issue Long-lived branches were just not getting updated analysis even though we were pushing code like crazy It was infuriating so I get the pain Let's dissect this and I'll try to give you the real meat and potatoes of what I've seen work not some fluffy marketing nonsense
 
 First off let's make sure we understand the core concept SonarCloud is looking at your source code and comparing it against what it last saw on that particular branch It uses the commit history to track changes and identify what's new If it misses changes it usually means the analysis is not getting triggered correctly or is not correctly picking up the latest commits I've personally found this can have multiple culprits
 
@@ -63,6 +63,7 @@ sonar.host.url=https://sonarcloud.io
 sonar.login=your_sonar_token
 sonar.branch.pattern=^(main|master|release\/.*|develop|hotfix\/.*|feature\/.*)$
 ```
+
 Here we are explicitly setting branch patterns that SonarCloud should understand so when a commit happens in such a branch it will take the patterns and use that for its logic. Its always a good thing to define it once and not in many places it can be a source of confusion.
 
 If you are using a configuration file like that remember to commit it. You will be surprised at how many developers forget this simple fact and struggle to see the analysis working or having the same issue across development and CI/CD. I know it happened to me at least once or twice.
@@ -73,15 +74,15 @@ Now I have to be honest one time I was banging my head on the wall with this for
 
 If you're still running into issues even after checking all of that consider the following
 
-*   **Caching Issues:** Sometimes the scanner or CI runner may have a cached version of the Sonar scanner and not the latest one or some kind of cached data that is interfering with the analysis. Try to always use the latest version of the scanner.
+- **Caching Issues:** Sometimes the scanner or CI runner may have a cached version of the Sonar scanner and not the latest one or some kind of cached data that is interfering with the analysis. Try to always use the latest version of the scanner.
 
-*   **Git Submodules:** If you use Git submodules ensure those are fetched correctly during the build process SonarCloud also needs to analyze them if that's where your code lives in a submodule. Also if you are building them as part of your CI/CD you should also account for those in the CI/CD setup.
+- **Git Submodules:** If you use Git submodules ensure those are fetched correctly during the build process SonarCloud also needs to analyze them if that's where your code lives in a submodule. Also if you are building them as part of your CI/CD you should also account for those in the CI/CD setup.
 
-*   **Large Monorepos:** Large monorepos especially those with specific module structures need care to be taken to not re-analyze the same code twice If you have a mono-repo consider using sonar includes and excludes to avoid this type of situation You can also use a dedicated scanner per module to speed things up. This is only for very large codebases or very high scanning times.
+- **Large Monorepos:** Large monorepos especially those with specific module structures need care to be taken to not re-analyze the same code twice If you have a mono-repo consider using sonar includes and excludes to avoid this type of situation You can also use a dedicated scanner per module to speed things up. This is only for very large codebases or very high scanning times.
 
-*   **SonarCloud Webhooks:** Check your SonarCloud webhook settings and make sure that the repository is properly setup. If the hooks are not set up correctly you are missing some crucial data and that may create issues down the road.
+- **SonarCloud Webhooks:** Check your SonarCloud webhook settings and make sure that the repository is properly setup. If the hooks are not set up correctly you are missing some crucial data and that may create issues down the road.
 
-*   **SonarCloud Logs:** Check SonarCloud logs to find a reason or a cause for an error It's also useful to look for the scanner logs in your CI/CD logs if you have any issue with the scan itself.
+- **SonarCloud Logs:** Check SonarCloud logs to find a reason or a cause for an error It's also useful to look for the scanner logs in your CI/CD logs if you have any issue with the scan itself.
 
 **Recommended resources**
 

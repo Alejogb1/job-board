@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-access-laravel-logs-from-a-docker-containers-standard-output"
 ---
 
-Okay, let's tackle this. It's a scenario I’ve bumped into quite a few times over the years, especially when managing complex microservices environments. The challenge of getting Laravel logs from a docker container to the standard output, or stdout, is all about managing where your application *thinks* it’s writing logs versus where you want to capture them for observation and debugging. The default Laravel log setup, while straightforward, often isn't ideal for containerized deployments, because it's set to write to files within the container's file system, which adds complexity when you're trying to aggregate logs centrally.
+, let's tackle this. It's a scenario I’ve bumped into quite a few times over the years, especially when managing complex microservices environments. The challenge of getting Laravel logs from a docker container to the standard output, or stdout, is all about managing where your application _thinks_ it’s writing logs versus where you want to capture them for observation and debugging. The default Laravel log setup, while straightforward, often isn't ideal for containerized deployments, because it's set to write to files within the container's file system, which adds complexity when you're trying to aggregate logs centrally.
 
 Initially, most of us tend to just look at the files inside the container, maybe through docker exec. This is fine for quick checks, but as the system grows, it quickly becomes impractical. Monitoring and debugging requires logs from multiple containers to be easily accessible and aggregatable, often piped into systems like ELK or Splunk. That’s where redirecting Laravel’s logging to stdout comes in.
 
@@ -99,7 +99,7 @@ For those situations where you need even finer-grained control, or if you're dea
  ],
 ```
 
-In this adjusted configuration, we've kept our 'stdout' channel, but instead, we've introduced 'error_stdout', which directs only error level messages to stdout. The 'stack' channel now uses 'daily' for all messages, as before, *and* error_stdout. This way, all logs are still written to files, but error logs are additionally piped to stdout. To take advantage of this configuration, we now use LOG_CHANNEL=stack, rather than stdout.
+In this adjusted configuration, we've kept our 'stdout' channel, but instead, we've introduced 'error_stdout', which directs only error level messages to stdout. The 'stack' channel now uses 'daily' for all messages, as before, _and_ error_stdout. This way, all logs are still written to files, but error logs are additionally piped to stdout. To take advantage of this configuration, we now use LOG_CHANNEL=stack, rather than stdout.
 
 ```
 LOG_CHANNEL=stack

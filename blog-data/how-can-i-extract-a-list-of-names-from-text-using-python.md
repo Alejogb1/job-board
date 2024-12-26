@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-a-list-of-names-from-text-using-python"
 ---
 
-Okay, let's tackle this. I've certainly had my share of text processing challenges, particularly when needing to reliably extract names from unstructured data. It's not as straightforward as one might initially imagine, but with the right techniques, you can achieve reasonably high accuracy. I remember a project a few years back involving customer feedback analysis, where we had to pull out individual names to categorize sentiment accurately. That experience highlighted the nuances of this problem.
+, let's tackle this. I've certainly had my share of text processing challenges, particularly when needing to reliably extract names from unstructured data. It's not as straightforward as one might initially imagine, but with the right techniques, you can achieve reasonably high accuracy. I remember a project a few years back involving customer feedback analysis, where we had to pull out individual names to categorize sentiment accurately. That experience highlighted the nuances of this problem.
 
 The core challenge lies in the variability of human language. Names can appear in numerous contexts, often alongside other words that look deceptively similar. Simple string matching won't cut it; we need a more intelligent approach. We’ll focus on using Python with natural language processing (NLP) libraries to accomplish this. Specifically, we'll leverage the power of Named Entity Recognition (NER).
 
@@ -90,9 +90,9 @@ The best approach depends on the requirements of your project. For basic needs a
 
 To delve deeper into this subject, I suggest exploring these resources:
 
-*   **“Speech and Language Processing” by Daniel Jurafsky and James H. Martin:** This textbook provides a comprehensive overview of NLP, including in-depth coverage of techniques like NER. It’s considered the bible of the field.
-*   **SpaCy Documentation:** The official documentation is very well-written, with plenty of examples for NER and other tasks. It also details how to customize and train your own spaCy models.
-*   **Hugging Face Transformers Library Documentation:** This documentation is invaluable if you want to work with state-of-the-art transformer-based models and datasets for NER.
-*   **Papers on the CoNLL Shared Tasks:** These provide valuable information on NER challenges and evaluation methodologies. Specifically, research those related to named entity recognition.
+- **“Speech and Language Processing” by Daniel Jurafsky and James H. Martin:** This textbook provides a comprehensive overview of NLP, including in-depth coverage of techniques like NER. It’s considered the bible of the field.
+- **SpaCy Documentation:** The official documentation is very well-written, with plenty of examples for NER and other tasks. It also details how to customize and train your own spaCy models.
+- **Hugging Face Transformers Library Documentation:** This documentation is invaluable if you want to work with state-of-the-art transformer-based models and datasets for NER.
+- **Papers on the CoNLL Shared Tasks:** These provide valuable information on NER challenges and evaluation methodologies. Specifically, research those related to named entity recognition.
 
 In summary, extracting names from text requires a careful approach using techniques like NER. The choice of tools and methods should be based on your project's needs, with libraries such as SpaCy and Transformers offering more robust and accurate results than simpler tools like NLTK. Always remember to evaluate the performance of any NLP model critically using a representative test dataset. The examples and resources I've shared should offer you a solid foundation to tackle similar extraction tasks.

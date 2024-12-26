@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "are-rails-associations-automatically-generated"
 ---
 
-Okay, let's tackle this. The notion of "automatically generated" when we talk about Rails associations is, well, a bit nuanced. It's not magic; there's quite a bit going on under the hood, and understanding it deeply is key to avoiding future headaches. From my experience, particularly during the development of a large e-commerce platform a few years back (we were dealing with thousands of products, categories, and user interactions, so performance became paramount), knowing exactly how Rails handles associations was non-negotiable.
+, let's tackle this. The notion of "automatically generated" when we talk about Rails associations is, well, a bit nuanced. It's not magic; there's quite a bit going on under the hood, and understanding it deeply is key to avoiding future headaches. From my experience, particularly during the development of a large e-commerce platform a few years back (we were dealing with thousands of products, categories, and user interactions, so performance became paramount), knowing exactly how Rails handles associations was non-negotiable.
 
-The short answer is: Rails associations aren't automatically *generated* in the sense of, "poof, here are all your methods." Instead, they are declared, and based on that declaration, Rails dynamically constructs methods for you. We define the *relationship*, and Rails generates the necessary machinery (methods, queries, etc.) to enable that relationship. This is a powerful mechanism because it keeps our code concise and readable, but failing to grasp the details can lead to performance issues and unexpected behavior.
+The short answer is: Rails associations aren't automatically _generated_ in the sense of, "poof, here are all your methods." Instead, they are declared, and based on that declaration, Rails dynamically constructs methods for you. We define the _relationship_, and Rails generates the necessary machinery (methods, queries, etc.) to enable that relationship. This is a powerful mechanism because it keeps our code concise and readable, but failing to grasp the details can lead to performance issues and unexpected behavior.
 
 Let’s break this down further. The core concept is that when we declare an association – such as `has_many`, `belongs_to`, `has_one`, `has_many :through`, or `has_and_belongs_to_many` – in a Rails model, we’re essentially instructing ActiveRecord about how that model relates to others within our database schema. This instruction isn’t a passive thing; it actively defines methods on both sides of the association. These generated methods facilitate querying, creating, and updating related records. They act as an interface layer, abstracting away the low-level SQL operations, and providing a convenient way to work with related data.
 
@@ -36,6 +36,7 @@ post.save
 puts user.posts.count # incremented. new post is in that set
 
 ```
+
 In this basic `has_many` example, when `user.posts` is called, you're not simply accessing a pre-existing variable. Rails, at that point, generates the SQL query required to fetch all posts linked to that particular `user` by the `user_id` foreign key. Additionally, methods are created for adding posts, building posts etc.
 
 **Snippet 2: `belongs_to` association**
@@ -91,9 +92,9 @@ puts patient.doctors.first == doctor
 
 ```
 
-This example uses the `has_many :through` association. The important aspect is that `doctor.patients` and `patient.doctors` queries the associations *through* the `appointments` table. The methods on each model are created to navigate through that intermediary table. Rails is handling the complexity of joining multiple tables to enable easy relationship management.
+This example uses the `has_many :through` association. The important aspect is that `doctor.patients` and `patient.doctors` queries the associations _through_ the `appointments` table. The methods on each model are created to navigate through that intermediary table. Rails is handling the complexity of joining multiple tables to enable easy relationship management.
 
-These methods, though appearing like standard getters and setters, are much more intricate because they are dynamically generated. They contain logic to query the database based on the associated tables, manage foreign key relationships, and perform updates. This is what we mean when we say they are *not* automatically generated at a static code level, but constructed from association declarations.
+These methods, though appearing like standard getters and setters, are much more intricate because they are dynamically generated. They contain logic to query the database based on the associated tables, manage foreign key relationships, and perform updates. This is what we mean when we say they are _not_ automatically generated at a static code level, but constructed from association declarations.
 
 From my experiences, it is crucial to understand that while Rails provides this dynamic method generation to make our code simple, it is our responsibility to consider the performance implications. For example, accessing the association on every iteration inside of a loop will result in N+1 queries, which could significantly impact performance. The use of eager loading (`includes`, `preload`) becomes critical to avoid such issues in larger applications with complex object graphs.
 

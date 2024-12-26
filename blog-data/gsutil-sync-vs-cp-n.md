@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "gsutil-sync-vs-cp-n"
 ---
 
-Alright so gsutil sync versus gsutil cp -r I've been down this rabbit hole before believe me its a classic and it always sparks a good debate I've seen junior devs completely fumble this one on numerous occasions so lets get into it
+so gsutil sync versus gsutil cp -r I've been down this rabbit hole before believe me its a classic and it always sparks a good debate I've seen junior devs completely fumble this one on numerous occasions so lets get into it
 
-Ok first off lets ditch the hype and look at the actual nuts and bolts The basic problem you're facing is moving data from a source to a destination right we all do this everyday its like the bread and butter of any cloud based interaction the real kicker is *how* you do it
+Ok first off lets ditch the hype and look at the actual nuts and bolts The basic problem you're facing is moving data from a source to a destination right we all do this everyday its like the bread and butter of any cloud based interaction the real kicker is _how_ you do it
 
 `gsutil cp -r` is your classic recursive copy its dumb in a way it does exactly what it says its the brute force method copy everything from point A to point B It recursively goes down directory structures and copies all files and directories no magic no bells just pure unadulterated file copying Its like a dump truck just pouring files no questions asked you asked for a copy you get it all.
 

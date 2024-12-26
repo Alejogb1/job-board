@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-cliverdependencynotfound-occurring-in-production-rails-capybara-tests"
 ---
 
-Alright, let's talk about that pesky `Cliver::Dependency::NotFound` error you’re seeing in your production Rails Capybara tests. This isn't an uncommon issue, and I’ve certainly battled it myself on several occasions – notably during that migration of our legacy system to a containerized environment a few years back. It's frustrating because, locally, things usually work just fine, but as soon as you push to production, bam, it hits you with the dependency error. Let’s unpack why this happens, and more importantly, how to fix it.
+, let's talk about that pesky `Cliver::Dependency::NotFound` error you’re seeing in your production Rails Capybara tests. This isn't an uncommon issue, and I’ve certainly battled it myself on several occasions – notably during that migration of our legacy system to a containerized environment a few years back. It's frustrating because, locally, things usually work just fine, but as soon as you push to production, bam, it hits you with the dependency error. Let’s unpack why this happens, and more importantly, how to fix it.
 
 The core of the issue usually boils down to missing or incorrectly configured dependencies required by the `Cliver` gem, which Capybara sometimes uses for driver-specific functionality, particularly when you're dealing with headless browsers like Chrome or Firefox. Cliver’s job is to locate these binaries – like `chromedriver` or `geckodriver` – on the system. When it can't find them in the places it expects, it throws that very `NotFound` error. The problem isn’t always about the binaries themselves, sometimes it's about how and where those binaries are being looked for in different environments, which is where local dev differs from production server setups.
 
@@ -121,8 +121,8 @@ Here, we added a check for `CHROMEDRIVER_PATH` in the environment. If set, we in
 
 For further exploration of these topics, I recommend a few key resources:
 
-*   **"Selenium with Ruby" by Bhasin, Sumit** – A very practical book on setting up and configuring selenium drivers and specifically talks about managing browser and driver interactions across different platforms.
-*   **SeleniumHQ Documentation** - Specifically the documentation for setting up drivers with selenium, which is what `Cliver` is using under the hood.
-*   **Docker Official Documentation** - For general Docker configuration and best practices on how to build robust and maintainable container images, especially related to pathing and environment variables.
+- **"Selenium with Ruby" by Bhasin, Sumit** – A very practical book on setting up and configuring selenium drivers and specifically talks about managing browser and driver interactions across different platforms.
+- **SeleniumHQ Documentation** - Specifically the documentation for setting up drivers with selenium, which is what `Cliver` is using under the hood.
+- **Docker Official Documentation** - For general Docker configuration and best practices on how to build robust and maintainable container images, especially related to pathing and environment variables.
 
 In summary, `Cliver::Dependency::NotFound` in your production Rails Capybara tests primarily results from the Cliver gem being unable to locate required executable dependencies. The fixes involve ensuring correct path configurations, accurate placement of executables in Docker environments, and strict version alignment between your browser (e.g., Chrome) and its associated driver (`chromedriver`). When you see this error, don’t panic. Work methodically, checking the path, versions, and configurations I’ve detailed above, and you should be able to nail it down. Good luck.

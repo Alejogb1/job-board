@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-capistrano-deployment-errors-with-rails-7"
 ---
 
-Alright, let's talk about those pesky Capistrano deployment errors with Rails 7. It's a landscape I've navigated more than a few times, and I've definitely seen my share of head-scratching moments. They can stem from a multitude of sources, but often boil down to configuration mismatches, dependency conflicts, or subtle environment discrepancies. Let’s break down the common culprits and how to address them, drawing from my own experience tackling these issues in the field.
+, let's talk about those pesky Capistrano deployment errors with Rails 7. It's a landscape I've navigated more than a few times, and I've definitely seen my share of head-scratching moments. They can stem from a multitude of sources, but often boil down to configuration mismatches, dependency conflicts, or subtle environment discrepancies. Let’s break down the common culprits and how to address them, drawing from my own experience tackling these issues in the field.
 
 The shift to Rails 7 introduced changes, particularly around asset compilation and the use of import maps, which can throw a wrench into established Capistrano workflows if they aren't properly accounted for. For instance, I recall a project where the deployment consistently failed because the server was missing the specific javascript packages required by import maps. The local development environment was functioning flawlessly, but the production setup, relying on Capistrano's streamlined deployment processes, didn’t include those critical dependencies. We had overlooked that our `package.json` was correctly reflecting what our frontend depended upon, but that the actual dependency installation step in the deploy process was incorrectly configured. We resolved this by ensuring the correct `yarn install` command was being executed within our Capistrano configuration.
 
@@ -36,6 +36,7 @@ namespace :deploy do
   end
 end
 ```
+
 This configuration is insufficient for Rails 7 because it assumes that `assets:precompile` will handle all frontend dependency requirements, when in fact, import maps require a separate step to install packages. To correct this, you should execute `rails assets:precompile` after `yarn install`, so that the asset precompilation has access to all the required modules.
 
 ```ruby
@@ -58,7 +59,7 @@ namespace :deploy do
             end
          end
     end
-   
+
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       execute :touch, release_path.join('tmp/restart.txt')
@@ -79,7 +80,7 @@ set :linked_files, fetch(:linked_files, []).push('config/database.yml')
 #... other tasks
 ```
 
-While this initially links the `database.yml`, if it's not configured correctly on the server, it can still fail to connect to the database. The issue isn't just about *having* the file linked, but about its content. If, for example, it uses variables not present, or references a local development database, then your deployment will fail. Here's a better approach:
+While this initially links the `database.yml`, if it's not configured correctly on the server, it can still fail to connect to the database. The issue isn't just about _having_ the file linked, but about its content. If, for example, it uses variables not present, or references a local development database, then your deployment will fail. Here's a better approach:
 
 ```ruby
 # config/deploy.rb (Improved approach)
@@ -142,7 +143,7 @@ namespace :deploy do
         end
       end
   end
-  
+
   task :restart do
        on roles(:app), in: :sequence, wait: 5 do
          execute :touch, release_path.join('tmp/restart.txt')

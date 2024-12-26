@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "what-is-the-proper-return-type-result-for-a-rust-trait-method"
 ---
 
-Alright, let's tackle this. I’ve seen a fair share of confusion around return types in Rust traits, especially when error handling enters the picture, so I understand why this question comes up frequently. It's not always immediately obvious what the best approach is. The 'proper' return type, particularly when dealing with potentially fallible operations inside a trait method, often boils down to `Result<T, E>`, but it's the specifics within that construct that demand careful consideration.
+, let's tackle this. I’ve seen a fair share of confusion around return types in Rust traits, especially when error handling enters the picture, so I understand why this question comes up frequently. It's not always immediately obvious what the best approach is. The 'proper' return type, particularly when dealing with potentially fallible operations inside a trait method, often boils down to `Result<T, E>`, but it's the specifics within that construct that demand careful consideration.
 
-Having spent a few years knee-deep in Rust projects, I recall a particularly challenging situation while working on a distributed data pipeline. We had several different data source implementations, each adhering to a common trait for fetching data. Initially, we’d just used simple returns, assuming operations would always succeed, which, of course, led to rather spectacular runtime failures. The lesson learned then was: `Result<T, E>` is frequently, and perhaps *usually*, the most appropriate return type for a trait method that can potentially fail.
+Having spent a few years knee-deep in Rust projects, I recall a particularly challenging situation while working on a distributed data pipeline. We had several different data source implementations, each adhering to a common trait for fetching data. Initially, we’d just used simple returns, assuming operations would always succeed, which, of course, led to rather spectacular runtime failures. The lesson learned then was: `Result<T, E>` is frequently, and perhaps _usually_, the most appropriate return type for a trait method that can potentially fail.
 
 The fundamental issue stems from how Rust handles errors. It doesn’t use exceptions in the traditional sense. Instead, it advocates for explicit error handling through the `Result` enum. This enum has two variants: `Ok(T)`, which signifies a successful operation, holding the resulting value of type `T`, and `Err(E)`, which indicates an error, holding the error value of type `E`. Therefore, if your trait method can encounter failures – and most real-world methods can – you want to return a `Result` to signal that possibility to the caller.
 
@@ -16,7 +16,7 @@ Let me illustrate with examples, drawing on those past experiences.
 
 **Example 1: A basic data fetching trait**
 
-Imagine a simple data fetching trait. Let’s say we have various data sources: files, network endpoints, databases, etc. A basic starting point, *before* considering error handling, might look like this:
+Imagine a simple data fetching trait. Let’s say we have various data sources: files, network endpoints, databases, etc. A basic starting point, _before_ considering error handling, might look like this:
 
 ```rust
 trait DataSource {
@@ -24,7 +24,7 @@ trait DataSource {
 }
 ```
 
-This is fundamentally flawed. The `fetch_data` method assumes data retrieval *always* succeeds. In reality, network errors, file system issues, and other problems can easily occur. Instead, a `Result` return type is essential:
+This is fundamentally flawed. The `fetch_data` method assumes data retrieval _always_ succeeds. In reality, network errors, file system issues, and other problems can easily occur. Instead, a `Result` return type is essential:
 
 ```rust
 trait DataSource {
@@ -71,7 +71,8 @@ impl DataSource for FileSource {
 }
 
 ```
-Here, I've introduced a custom `DataError` enum.  We use `thiserror` crate, which greatly simplifies defining the display functionality for error variants. Now, when a file source tries to read a file, any `std::io::Error` will be converted to `DataError::Io`.  Likewise, we have specific variants for network errors and data not found. This gives the caller precise information about *why* the `fetch_data` failed. The caller can then perform error handling based on which error was returned, which we didn’t have when returning just a `String`.
+
+Here, I've introduced a custom `DataError` enum. We use `thiserror` crate, which greatly simplifies defining the display functionality for error variants. Now, when a file source tries to read a file, any `std::io::Error` will be converted to `DataError::Io`. Likewise, we have specific variants for network errors and data not found. This gives the caller precise information about _why_ the `fetch_data` failed. The caller can then perform error handling based on which error was returned, which we didn’t have when returning just a `String`.
 
 **Example 3: Using a Trait Object for Dynamic Dispatch**
 
@@ -131,8 +132,8 @@ fn main() {
 }
 ```
 
-Here, the trait `DataSource` now includes `Send + Sync` bounds so that `DynDataSource` can be safely accessed from different threads (in a real use-case). `NetworkSource` simulates a network operation which will intentionally fail for IDs divisible by 3. The `process_data` function uses a trait object, so it can call `fetch_data` on any type that implements `DataSource`.  The `main` function shows how both results (success and failure) can be handled. This approach provides flexibility and allows the use of different implementations of a trait behind an interface.
+Here, the trait `DataSource` now includes `Send + Sync` bounds so that `DynDataSource` can be safely accessed from different threads (in a real use-case). `NetworkSource` simulates a network operation which will intentionally fail for IDs divisible by 3. The `process_data` function uses a trait object, so it can call `fetch_data` on any type that implements `DataSource`. The `main` function shows how both results (success and failure) can be handled. This approach provides flexibility and allows the use of different implementations of a trait behind an interface.
 
-So, coming back to the initial question, there isn’t a *single* ‘proper’ return type, but `Result<T, E>` is usually the best approach for fallible operations within a trait method.  The choices for `T` and `E`, however, require careful consideration. `T` represents the successfully returned value, while `E` should be a well-defined error type, often a custom enum, to give the caller clear, actionable information about failures. This is a principle you'll frequently encounter in robust, production-level Rust code.
+So, coming back to the initial question, there isn’t a _single_ ‘proper’ return type, but `Result<T, E>` is usually the best approach for fallible operations within a trait method. The choices for `T` and `E`, however, require careful consideration. `T` represents the successfully returned value, while `E` should be a well-defined error type, often a custom enum, to give the caller clear, actionable information about failures. This is a principle you'll frequently encounter in robust, production-level Rust code.
 
 For deeper dives into error handling and trait design, I’d suggest starting with the "The Rust Programming Language" book, particularly the chapters on error handling. For more advanced error handling patterns, consider looking into the `thiserror` and `anyhow` crates, along with related blog posts by seasoned Rustaceans on their application in real-world projects. These resources, combined with practice, should equip you to write solid, reliable Rust code.

@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-dynamic-authorization-be-implemented-simply-in-aspnet-core-31-identity-for-both-mvc-and-apis"
 ---
 
-Okay, let’s unpack dynamic authorization in ASP.NET Core 3.1 Identity, specifically for both MVC applications and APIs. It’s a challenge I faced firsthand back in my time on the ‘Project Chimera’ team, when we moved from a static role-based system to something more granular and contextual. We definitely needed a solution that didn't drown us in configuration files or constant deployments.
+, let’s unpack dynamic authorization in ASP.NET Core 3.1 Identity, specifically for both MVC applications and APIs. It’s a challenge I faced firsthand back in my time on the ‘Project Chimera’ team, when we moved from a static role-based system to something more granular and contextual. We definitely needed a solution that didn't drown us in configuration files or constant deployments.
 
-Fundamentally, dynamic authorization pivots from a predefined, role-based model to one that uses contextual information at runtime. Rather than just asking “is this user an admin?”, we might ask “can this user modify *this specific document* at *this particular time*, based on their permissions and the state of the application?”. That's the shift in thinking.
+Fundamentally, dynamic authorization pivots from a predefined, role-based model to one that uses contextual information at runtime. Rather than just asking “is this user an admin?”, we might ask “can this user modify _this specific document_ at _this particular time_, based on their permissions and the state of the application?”. That's the shift in thinking.
 
 The core concept relies on the `IAuthorizationPolicyProvider` and `IAuthorizationHandler` interfaces within ASP.NET Core’s authorization framework. The standard policy provider primarily looks for policy attributes on controllers or actions. We'll bypass that default mechanism and create something that interrogates context at runtime.
 

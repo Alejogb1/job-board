@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-data-preparation-deepar-gluonts"
 ---
 
-alright, let’s talk about prepping data for deepar in gluonts. it's a crucial step, and i've definitely spent my fair share of late nights debugging data issues that cropped up when i thought i was done. the thing about time series, is that the format has to be spot on or you'll get nowhere.
+, let’s talk about prepping data for deepar in gluonts. it's a crucial step, and i've definitely spent my fair share of late nights debugging data issues that cropped up when i thought i was done. the thing about time series, is that the format has to be spot on or you'll get nowhere.
 
 so, first off, gluonts expects your data in a very particular format, which is basically a list of dictionaries. each dictionary represents a single time series. and within that dictionary, you'll find at least two keys: `target`, which is your actual time series values, and `start`, which is the starting timestamp. that’s the bare minimum. if you have additional features, these will be included too.
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-do-you-make-block-diagrams-with-node-inside-nodes-in-mermaid"
 ---
 
-alright, so you're diving into nested node structures with mermaid, right? i’ve been there, felt that pain. it's not always obvious how to get that visual hierarchy exactly the way you want it. mermaid is fantastic for quick diagrams, but those compound shapes do need a bit of extra attention.
+, so you're diving into nested node structures with mermaid, right? i’ve been there, felt that pain. it's not always obvious how to get that visual hierarchy exactly the way you want it. mermaid is fantastic for quick diagrams, but those compound shapes do need a bit of extra attention.
 
 i remember back in my early days trying to document a complex microservice architecture. i had this massive graph of dependencies and data flows. i initially tried just throwing everything into a single mermaid diagram. disaster. it was a tangled mess, nodes overlapping, labels clashing, absolutely unreadable. that's when i first ran into the need for nested structures within mermaid. trying to show that a particular subsystem was composed of other smaller microservices all within the larger context was just impossible without this nesting. it was a humbling experience to realize the limit of my initial simple approach. after some long days, and even longer nights i figured it out. the trick lies in a combination of subgraphs and careful node placement. let's break it down a bit.
 
@@ -17,9 +17,9 @@ graph LR
     end
 ```
 
-this simple snippet will generate a diagram with a box labeled "outer\_container" containing two nodes, "a" and "b", linked with a flow arrow. now this is where it gets interesting you can nest `subgraph` declarations to get those deeper layers. it's like building with blocks you add a block into another and then another.
+this simple snippet will generate a diagram with a box labeled "outer_container" containing two nodes, "a" and "b", linked with a flow arrow. now this is where it gets interesting you can nest `subgraph` declarations to get those deeper layers. it's like building with blocks you add a block into another and then another.
 
-so let's say you have an even more detailed subsystem inside outer\_container. you can add another subgraph within the first one:
+so let's say you have an even more detailed subsystem inside outer_container. you can add another subgraph within the first one:
 
 ```mermaid
 graph LR
@@ -59,7 +59,7 @@ a good strategy that i have found effective is to first draw it on paper, mappin
 
 now, regarding resources, i wouldn't point you to specific websites. those tend to get outdated fast. instead i will share some literature that i have used to expand my knowledge in this area and maybe you can use them too:
 
-*   "visualizing data" by ben fry, offers principles for creating clear effective visualizations, including understanding hierarchies and relationships, which helps a lot with how to plan your mermaid graphs. it really helped me when planning the microservice architecture diagrams, it showed me how to represent hierarchies clearly, even before thinking about any diagram syntax.
-*   the classic "the visual display of quantitative information" by edward tufte, while not directly about mermaid or software architecture diagrams, it stresses the importance of presenting information in a simple and clean manner. this book also taught me how to avoid what he calls "chartjunk", which refers to any unnecessary visual element that can clutter the diagram and make it harder to understand. i constantly remember this when creating diagrams, and keeps them focused on the important parts.
+- "visualizing data" by ben fry, offers principles for creating clear effective visualizations, including understanding hierarchies and relationships, which helps a lot with how to plan your mermaid graphs. it really helped me when planning the microservice architecture diagrams, it showed me how to represent hierarchies clearly, even before thinking about any diagram syntax.
+- the classic "the visual display of quantitative information" by edward tufte, while not directly about mermaid or software architecture diagrams, it stresses the importance of presenting information in a simple and clean manner. this book also taught me how to avoid what he calls "chartjunk", which refers to any unnecessary visual element that can clutter the diagram and make it harder to understand. i constantly remember this when creating diagrams, and keeps them focused on the important parts.
 
 the key takeaway here is that with careful use of subgraphs and thoughtful node placement, mermaid can handle surprisingly complex diagrams, even when you want to show a node inside another node. the key thing is practice and breaking down your diagramming needs into smaller, manageable parts, and always think, is my diagram doing what i intended? is it simple? clear? are the message easy to understand? if yes, then you are on the right track. oh by the way, why did the mermaid developer broke up? because they had too many dependencies, ha. just kidding.

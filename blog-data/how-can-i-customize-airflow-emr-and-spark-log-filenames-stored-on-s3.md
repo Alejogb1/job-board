@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-customize-airflow-emr-and-spark-log-filenames-stored-on-s3"
 ---
 
-Alright, let's talk about customizing log filenames when orchestrating pipelines with Airflow, EMR, and Spark, specifically when those logs are destined for S3. I've dealt with this quite a bit, particularly in projects where maintaining a logical and searchable log structure became critical for debugging and monitoring. It’s not always a straightforward configuration, but with a proper understanding of how these tools interact, it's certainly achievable.
+, let's talk about customizing log filenames when orchestrating pipelines with Airflow, EMR, and Spark, specifically when those logs are destined for S3. I've dealt with this quite a bit, particularly in projects where maintaining a logical and searchable log structure became critical for debugging and monitoring. It’s not always a straightforward configuration, but with a proper understanding of how these tools interact, it's certainly achievable.
 
 The core challenge arises from the default naming conventions each service employs. Airflow, by default, generates log filenames based on the task id, dag id, and execution date. EMR, when launching Spark applications, primarily uses the application id and container id. When everything’s piped to S3 without modifications, you often end up with a chaotic, deeply nested directory structure that is difficult to navigate. The trick is to intercept these default naming schemes and introduce our customized logic. This often means dipping into the configuration parameters of each tool and, at times, leveraging environment variables and scripting.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-metadata-missing-from-postmark-responses-in-my-rails-app"
 ---
 
-Okay, let's unpack this. It's not uncommon to encounter situations where expected metadata, particularly when dealing with transactional email services like Postmark, doesn't materialize in your application. I've seen this exact issue crop up in a few projects, most notably in a large-scale e-commerce platform where accurate tracking of email delivery was paramount. We were initially baffled as the Postmark API calls appeared correct, but the webhook responses were stubbornly lacking the custom headers we'd sent.
+, let's unpack this. It's not uncommon to encounter situations where expected metadata, particularly when dealing with transactional email services like Postmark, doesn't materialize in your application. I've seen this exact issue crop up in a few projects, most notably in a large-scale e-commerce platform where accurate tracking of email delivery was paramount. We were initially baffled as the Postmark API calls appeared correct, but the webhook responses were stubbornly lacking the custom headers we'd sent.
 
 The core of the problem usually boils down to how you're actually configuring and sending the metadata, as well as how Postmark is configured to handle that metadata. Let's break this down into key areas. First, we need to ensure the metadata is formatted correctly. Second, we have to verify we're actually including it in the send request. And finally, we need to examine Postmark’s webhook settings to confirm that it's set up to actually forward those headers.
 

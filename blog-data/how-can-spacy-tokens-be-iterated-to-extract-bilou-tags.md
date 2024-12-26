@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-spacy-tokens-be-iterated-to-extract-bilou-tags"
 ---
 
-Okay, let's tackle this. It's a problem I've seen crop up a few times, particularly when dealing with custom named entity recognition models that rely on BILOU tagging. I remember one project, oh, it must have been back in 2019, where we were dealing with extracting very specific clinical entities from unstructured medical reports – a real challenge, and perfectly suited for BILOU. The core issue, as you're likely experiencing, is that spaCy's `token` object doesn't inherently expose BILOU tags; you need to derive them based on entity spans. So, how do we iterate through those tokens and get those tags efficiently?
+, let's tackle this. It's a problem I've seen crop up a few times, particularly when dealing with custom named entity recognition models that rely on BILOU tagging. I remember one project, oh, it must have been back in 2019, where we were dealing with extracting very specific clinical entities from unstructured medical reports – a real challenge, and perfectly suited for BILOU. The core issue, as you're likely experiencing, is that spaCy's `token` object doesn't inherently expose BILOU tags; you need to derive them based on entity spans. So, how do we iterate through those tokens and get those tags efficiently?
 
 The trick is to leverage spaCy's powerful concept of "spans." A span is basically a slice of tokens within a `doc` that corresponds to a named entity. The BILOU tag, in case you need a reminder, stands for: Beginning, Inside, Last, and Unit. 'B' marks the beginning of an entity, 'I' marks tokens within an entity, 'L' marks the end, and 'U' designates a single-token entity. 'O' means outside any entity. Therefore, we essentially need to compare the token's position against the entity spans' boundaries.
 
@@ -70,9 +70,10 @@ tokens, tags = get_bilou_tags_optimized(text)
 print(f"Tokens: {tokens}")
 print(f"BILOU Tags: {tags}")
 ```
-Here, we've incorporated the `enumerate` function. This eliminates the need to manually keep track of index using the integer range method as seen in the previous example. More importantly, note that this version is more optimized as it does not use list indexing as frequently. However, in both examples, we are still looping over *all* tokens multiple times (once for each entity span), which isn't ideal for extremely long documents or large datasets.
 
-For our third example, let’s create a version with better efficiency by streamlining the iteration, avoiding multiple comparisons with range checks. This approach iterates over *tokens* only once, which significantly speeds up the process, especially with long text.
+Here, we've incorporated the `enumerate` function. This eliminates the need to manually keep track of index using the integer range method as seen in the previous example. More importantly, note that this version is more optimized as it does not use list indexing as frequently. However, in both examples, we are still looping over _all_ tokens multiple times (once for each entity span), which isn't ideal for extremely long documents or large datasets.
+
+For our third example, let’s create a version with better efficiency by streamlining the iteration, avoiding multiple comparisons with range checks. This approach iterates over _tokens_ only once, which significantly speeds up the process, especially with long text.
 
 ```python
 import spacy

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "is-there-a-way-to-find-out-a-pytorch-cnn-models-required-input-depth-num-of-channels"
 ---
 
-alright, let's talk about figuring out the input channel depth of a pytorch cnn model. it's a pretty common head-scratcher, and i've definitely been there more times than i care to remember. i recall this one project back in my early days - a medical image analysis thing, it involved classifying brain scans, and we were using some pretrained model i grabbed online, the documentation was…well, not exactly stellar. spent an entire afternoon trying to feed it grayscale images, only to get these cryptic errors about dimension mismatches. live and learn, i guess.
+, let's talk about figuring out the input channel depth of a pytorch cnn model. it's a pretty common head-scratcher, and i've definitely been there more times than i care to remember. i recall this one project back in my early days - a medical image analysis thing, it involved classifying brain scans, and we were using some pretrained model i grabbed online, the documentation was…well, not exactly stellar. spent an entire afternoon trying to feed it grayscale images, only to get these cryptic errors about dimension mismatches. live and learn, i guess.
 
 so, first things first, there isn't a single function that’ll just spit out the input depth directly. instead, you've got to poke around a little. the core idea is that the input shape is usually defined by the first layer of the convolutional neural network. we need to look at that first layer to see what it expects.
 

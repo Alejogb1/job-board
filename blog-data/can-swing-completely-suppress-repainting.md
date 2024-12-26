@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "can-swing-completely-suppress-repainting"
 ---
 
-Okay, let's unpack this. The question of completely suppressing repainting in Swing is one that, in my experience, often surfaces when developers are grappling with performance issues or trying to achieve very specific visual effects. It's a question with a nuanced answer, not a simple yes or no. I've certainly had my share of late nights trying to optimize various custom swing components over the years, and the intricacies of repainting were often at the heart of the matter.
+, let's unpack this. The question of completely suppressing repainting in Swing is one that, in my experience, often surfaces when developers are grappling with performance issues or trying to achieve very specific visual effects. It's a question with a nuanced answer, not a simple yes or no. I've certainly had my share of late nights trying to optimize various custom swing components over the years, and the intricacies of repainting were often at the heart of the matter.
 
-The fundamental issue here lies in Swing's architecture. Swing's drawing mechanisms, as you likely know, are primarily driven by an event dispatch thread (edt). Repaints, ultimately, are requests to the EDT to render parts of or entire components. The system typically determines what needs repainting based on a combination of factors: changes to component properties, user interactions, window resizing, and explicit calls to `repaint()`. Consequently, a "complete" suppression of repainting – in the sense of eliminating *all* rendering – is usually not possible or even desirable for components that are supposed to display or update content. The challenge, then, is less about outright suppression and more about controlled and efficient repainting.
+The fundamental issue here lies in Swing's architecture. Swing's drawing mechanisms, as you likely know, are primarily driven by an event dispatch thread (edt). Repaints, ultimately, are requests to the EDT to render parts of or entire components. The system typically determines what needs repainting based on a combination of factors: changes to component properties, user interactions, window resizing, and explicit calls to `repaint()`. Consequently, a "complete" suppression of repainting – in the sense of eliminating _all_ rendering – is usually not possible or even desirable for components that are supposed to display or update content. The challenge, then, is less about outright suppression and more about controlled and efficient repainting.
 
-Now, let’s address what one can meaningfully achieve. It is possible, through specific techniques, to *minimize* or defer repaints or to control the circumstances under which a repaint occurs, giving the *illusion* of complete suppression. For example, we can use double buffering to avoid flickering, control the areas that are repainted, or strategically manipulate when `repaint()` gets called. These methods can dramatically improve the user's perception of performance even if repaints themselves aren’t entirely eliminated at the system level.
+Now, let’s address what one can meaningfully achieve. It is possible, through specific techniques, to _minimize_ or defer repaints or to control the circumstances under which a repaint occurs, giving the _illusion_ of complete suppression. For example, we can use double buffering to avoid flickering, control the areas that are repainted, or strategically manipulate when `repaint()` gets called. These methods can dramatically improve the user's perception of performance even if repaints themselves aren’t entirely eliminated at the system level.
 
 Here's a breakdown of how one would typically approach this, alongside some code examples:
 
@@ -52,9 +52,9 @@ public class BufferedPanel extends JPanel {
 }
 ```
 
-In this example, the component always paints to a `BufferedImage` (our buffer) and then renders the buffer to the actual component. This gives the perception of a single, smooth update rather than multiple flickering draws. We're not *suppressing* a repaint, but we're making the visual output appear as one distinct update and thus reduce the flicker.
+In this example, the component always paints to a `BufferedImage` (our buffer) and then renders the buffer to the actual component. This gives the perception of a single, smooth update rather than multiple flickering draws. We're not _suppressing_ a repaint, but we're making the visual output appear as one distinct update and thus reduce the flicker.
 
-**2.  Controlling Repaint Areas:**
+**2. Controlling Repaint Areas:**
 
 Instead of blindly calling `repaint()` on a whole component, which can be expensive, we can focus on just repainting the specific areas that need updating. This is especially useful for complex visuals with many discrete elements.
 
@@ -109,7 +109,7 @@ public class SelectiveRepaint extends JPanel {
 }
 ```
 
-Here, instead of calling `repaint()`, we calculate a "damage rectangle" that encloses both the old and new position of a moving rectangle.  We then use `repaint(damageRect)` to trigger a repaint only for the necessary area, rather than the whole panel. Again, we are not *suppressing* repainting, just *limiting* it to only the necessary region.
+Here, instead of calling `repaint()`, we calculate a "damage rectangle" that encloses both the old and new position of a moving rectangle. We then use `repaint(damageRect)` to trigger a repaint only for the necessary area, rather than the whole panel. Again, we are not _suppressing_ repainting, just _limiting_ it to only the necessary region.
 
 **3. Deferring Repaints:**
 
@@ -164,6 +164,6 @@ In this example, data is being updated continuously. However, the component only
 
 **In conclusion,**
 
-While you can’t completely eliminate repainting in Swing in the absolute sense, you can and should control *when* and *how much* repainting occurs. These techniques, used judiciously, allow you to build performant Swing applications.
+While you can’t completely eliminate repainting in Swing in the absolute sense, you can and should control _when_ and _how much_ repainting occurs. These techniques, used judiciously, allow you to build performant Swing applications.
 
 For further reading, I highly recommend exploring books such as "Filthy Rich Clients" by Chet Haase and Romain Guy, which details how Swing handles drawing mechanisms. Also, the official Java documentation for `javax.swing.JComponent` and related classes in the AWT package is crucial for a deeper understanding of this area. Understanding how Swing manages its rendering pipeline is fundamental to tackling the challenges of performance optimization in complex graphical UIs. I would also encourage diving into any research papers dealing with specific drawing algorithms that address specific kinds of drawing optimization. You might find some useful ones that can be adapted to the needs of your Swing application. Remember, controlling, not suppressing, is the key to optimal rendering in Swing.

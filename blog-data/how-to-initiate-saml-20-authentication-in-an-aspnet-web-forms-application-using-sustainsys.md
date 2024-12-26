@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-initiate-saml-20-authentication-in-an-aspnet-web-forms-application-using-sustainsys"
 ---
 
-Alright, let's tackle this one. I've spent a fair amount of time dealing with federated authentication, specifically SAML 2.0, and the intricacies of hooking it up in various .net environments. It's not always a walk in the park, particularly in older Web Forms apps where things can get a little… bespoke. We'll focus on doing this using the sustainsys library, as it's my go-to for saml in .net. It's robust and handles a lot of the heavy lifting. Let’s break down the process, covering the key steps, and then I'll walk through a few code snippets.
+, let's tackle this one. I've spent a fair amount of time dealing with federated authentication, specifically SAML 2.0, and the intricacies of hooking it up in various .net environments. It's not always a walk in the park, particularly in older Web Forms apps where things can get a little… bespoke. We'll focus on doing this using the sustainsys library, as it's my go-to for saml in .net. It's robust and handles a lot of the heavy lifting. Let’s break down the process, covering the key steps, and then I'll walk through a few code snippets.
 
 Essentially, initiating a saml 2.0 authentication flow with sustainsys involves a couple of fundamental actions: redirecting the user to the identity provider (idp), and then subsequently handling the assertion response when they are sent back. The whole process starts with the user clicking 'login' or accessing a protected resource, at which point your application, acting as the service provider (sp), needs to send an authentication request to the idp. Sustainsys simplifies this by providing a clear api for doing just that.
 
@@ -33,7 +33,7 @@ public partial class Login : System.Web.UI.Page
                 ReturnUrl = Request.Url.ToString(),
                 ForceAuthn = true // Example: force the user to reauthenticate on every login
             };
-            
+
             try
             {
                var response = Saml2Service.Authenticate(options);
@@ -44,7 +44,7 @@ public partial class Login : System.Web.UI.Page
                 } else {
                    throw new Exception("Saml2Service did not return a redirect");
                 }
-               
+
             }
             catch (Exception ex)
             {
@@ -84,14 +84,14 @@ public class AssertionConsumerServiceController : Saml2Controller
               var samlIdentity = result.Principal as ClaimsPrincipal;
               if (samlIdentity != null)
                {
-                  
+
                    var nameIdentifier = samlIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value; // Example retrieval of a Name Identifier
                    var name = samlIdentity.FindFirst(ClaimTypes.Name)?.Value; // Example retrieval of a name
 
-                   // Store in session, or ticket, as appropriate for your specific app. 
+                   // Store in session, or ticket, as appropriate for your specific app.
                    HttpContext.Current.Session["saml_name_identifier"] = nameIdentifier;
                    HttpContext.Current.Session["saml_name"] = name;
-                   
+
                    var returnUrl = Saml2Service.GetReturnUrl(this.Request);
                    if(!string.IsNullOrWhiteSpace(returnUrl)){
                         return Redirect(returnUrl);

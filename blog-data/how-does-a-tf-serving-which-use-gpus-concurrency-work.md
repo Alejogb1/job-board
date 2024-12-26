@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "how-does-a-tf-serving-which-use-gpus-concurrency-work"
 ---
 
-alright, so you're asking about how tf-serving handles concurrency when gpus are in the mix. it's a good question and it gets to the heart of how these systems perform well under load. i've spent a good chunk of my career elbow-deep in this kind of infrastructure, so let me break it down from my experience.
+, so you're asking about how tf-serving handles concurrency when gpus are in the mix. it's a good question and it gets to the heart of how these systems perform well under load. i've spent a good chunk of my career elbow-deep in this kind of infrastructure, so let me break it down from my experience.
 
 first off, tf-serving by itself is built around a request/response model. think of it as a fancy http server that, instead of serving web pages, serves machine learning model predictions. when a request comes in, it needs to get processed and sent back quickly. now, this becomes tricky when you add gpus into the equation. gpus aren't just magical speed boosters; they have their own quirks and limitations, especially when multiple requests want to use them at once.
 
-the core idea is that tf-serving uses concurrency primitives to manage how requests are executed on the gpu. it doesn't just let them all pile up and fight for gpu resources; it uses a scheduler to manage queues of requests. let's say we have a simple model that calculates the square of an input. the request comes in, it goes to the queue. the scheduler will pick requests from the queue and dispatch them to the gpu. this part is important: you can't just throw multiple requests at the gpu at the same time. the gpu works most efficiently when it's processing a batch of data. 
+the core idea is that tf-serving uses concurrency primitives to manage how requests are executed on the gpu. it doesn't just let them all pile up and fight for gpu resources; it uses a scheduler to manage queues of requests. let's say we have a simple model that calculates the square of an input. the request comes in, it goes to the queue. the scheduler will pick requests from the queue and dispatch them to the gpu. this part is important: you can't just throw multiple requests at the gpu at the same time. the gpu works most efficiently when it's processing a batch of data.
 
 tf-serving internally orchestrates this batching process. when there is enough waiting requests in the queue it will create a batch of inputs and process them all in one shot on the gpu. then, it distributes the outputs of this batch to the respective awaiting requests. so, this whole process happens mostly under the hood, but you can tweak some settings. let me show you some examples.
 
@@ -79,7 +79,7 @@ class RequestHandler:
               else:
                  self.is_processing = False
                  continue # Wait until we have enough to make a batch
-          
+
           if self.is_processing:
             outputs = self.model.predict(inputs, self.gpu_device) # process batch on the gpu
             for i,(_, callback) in enumerate(batch):
@@ -145,23 +145,24 @@ the last snippet focuses on the configuration parameters for tf-serving model co
         "model_platform": "tensorflow",
         "version_policy": {
           "latest": {
-             "num_versions": 1
+            "num_versions": 1
           }
         },
         "gpu_config": {
-            "per_process_gpu_memory_fraction": 0.8,
-            "allow_growth": true
-          },
+          "per_process_gpu_memory_fraction": 0.8,
+          "allow_growth": true
+        },
         "batching_config": {
           "max_batch_size": 32,
           "batch_timeout_micros": 10000,
           "num_batch_threads": 4
-          }
+        }
       }
     }
   ]
 }
 ```
+
 the configuration file here defines `gpu_config` section, and the `batching_config`, the settings shown here are important to control concurrency using gpus. `per_process_gpu_memory_fraction` limits the fraction of gpu memory available for the model. `allow_growth` determines if the gpu memory is allocated dynamically instead of taking all the resources at the beginning. `max_batch_size` limits the maximum size of batch, `batch_timeout_micros` defines the maximum time to wait before a batch is processed and `num_batch_threads` indicates the amount of batch processing threads, if set to 0 or not defined the model will use default values.
 
 now, these configs are important, but keep in mind the actual performance depends on many other factors, the size of the model, model complexity, gpu memory, number of cores and other settings of the system and infrastructure, like how many instances of the model are serving. i once spent a whole week just trying to get the batch sizes and thread counts just right for a model i was working on. it was like trying to fit a square peg in a round hole, but eventually, i got it working beautifully.

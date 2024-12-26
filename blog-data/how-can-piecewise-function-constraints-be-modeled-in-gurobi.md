@@ -4,26 +4,26 @@ date: "2024-12-23"
 id: "how-can-piecewise-function-constraints-be-modeled-in-gurobi"
 ---
 
-Okay, let's tackle piecewise functions in Gurobi. This isn't always straightforward, and I've certainly had my share of headaches dealing with them, particularly when performance is critical. It’s a situation that often comes up when you're modeling non-linear phenomena within a linear or mixed-integer programming framework. I recall once, back in my quant days, when we were trying to model the price impact of trades in a highly fragmented market – the non-linearities were a significant challenge.
+, let's tackle piecewise functions in Gurobi. This isn't always straightforward, and I've certainly had my share of headaches dealing with them, particularly when performance is critical. It’s a situation that often comes up when you're modeling non-linear phenomena within a linear or mixed-integer programming framework. I recall once, back in my quant days, when we were trying to model the price impact of trades in a highly fragmented market – the non-linearities were a significant challenge.
 
 The key to handling piecewise functions in Gurobi, or indeed any similar optimization solver, lies in transforming the discontinuous or non-linear function into a set of linear constraints. This often involves introducing auxiliary variables and constraints to properly represent the different segments or "pieces" of your function. There are a few common approaches depending on the function's characteristics, but they all revolve around this linearization technique. We'll go through a few of the more prevalent methods and look at some concrete examples.
 
-First, let's consider a simple continuous piecewise linear function. Imagine you have a function *f(x)* that behaves differently over two intervals. For example:
+First, let's consider a simple continuous piecewise linear function. Imagine you have a function _f(x)_ that behaves differently over two intervals. For example:
 
-*   *f(x) = 2x* for *x ≤ 5*
-*   *f(x) = x + 5* for *x > 5*
+- _f(x) = 2x_ for _x ≤ 5_
+- _f(x) = x + 5_ for _x > 5_
 
-To model this in Gurobi, we introduce a new variable, let’s call it *y*, that will represent *f(x)*, and additional binary variables that indicate which interval we are in. Here's the approach:
+To model this in Gurobi, we introduce a new variable, let’s call it _y_, that will represent _f(x)_, and additional binary variables that indicate which interval we are in. Here's the approach:
 
-1.  **Introduce binary variables:** We'll use a binary variable *z* to determine which segment is active. *z = 0* indicates the first interval (*x ≤ 5*), and *z = 1* indicates the second interval (*x > 5*).
+1.  **Introduce binary variables:** We'll use a binary variable _z_ to determine which segment is active. _z = 0_ indicates the first interval (_x ≤ 5_), and _z = 1_ indicates the second interval (_x > 5_).
 
-2.  **Constraint construction:** We need to link *x*, *y*, and *z* through a set of linear constraints that force the right behavior. We will introduce *lower_bound*, *upper_bound*, *lower_y* and *upper_y* that are based on the breakpoints, and are used to make the constraints tighter.
-    *   *x ≤ 5 + M(1 - z)* . M is some large number (Big-M). This ensures x is limited by the bound when *z=0*. When *z=1* this constraint is effectively inactive.
-    *   *x ≥ lower_bound - Mz* . This forces x to be greater or equal to a lower bound. When *z=0* this is an active constraint and when *z=1* this constraint is inactive.
-    *   *y ≥ lower_y + 2x - 2 * lower_bound - M(1 - z)* This ensures that when *z=0*, then y is equal to the first piece (2x). When *z=1* then this constraint is inactive.
-    *   *y ≥ lower_y + (x - lower_bound) + 2 * lower_bound  - Mz*  When *z=1* we ensure that y is forced to be at least equal to *x+5*.
-    *   *y ≤ upper_y + 2x - 2 * lower_bound + M(1 - z)* When *z=0* this forces y to be at most *2x*. When *z=1* it is inactive.
-     *   *y ≤ upper_y + (x- lower_bound) + 2 * lower_bound + Mz*  When *z=1* it forces y to be at most *x+5*.
+2.  **Constraint construction:** We need to link _x_, _y_, and _z_ through a set of linear constraints that force the right behavior. We will introduce _lower_bound_, _upper_bound_, _lower_y_ and _upper_y_ that are based on the breakpoints, and are used to make the constraints tighter.
+    - _x ≤ 5 + M(1 - z)_ . M is some large number (Big-M). This ensures x is limited by the bound when _z=0_. When _z=1_ this constraint is effectively inactive.
+    - _x ≥ lower_bound - Mz_ . This forces x to be greater or equal to a lower bound. When _z=0_ this is an active constraint and when _z=1_ this constraint is inactive.
+    - _y ≥ lower_y + 2x - 2 _ lower_bound - M(1 - z)* This ensures that when *z=0*, then y is equal to the first piece (2x). When *z=1\* then this constraint is inactive.
+    - _y ≥ lower_y + (x - lower_bound) + 2 _ lower_bound - Mz* When *z=1* we ensure that y is forced to be at least equal to *x+5\*.
+    - _y ≤ upper_y + 2x - 2 _ lower_bound + M(1 - z)* When *z=0* this forces y to be at most *2x*. When *z=1\* it is inactive.
+    - _y ≤ upper_y + (x- lower_bound) + 2 _ lower_bound + Mz* When *z=1* it forces y to be at most *x+5\*.
 
 Here is Python code using `gurobipy` that demonstrates this approach:
 
@@ -71,24 +71,25 @@ def model_piecewise_function_continuous():
 if __name__ == '__main__':
      model = model_piecewise_function_continuous()
 ```
+
 This approach works well for continuous piecewise linear functions where we can transition smoothly between segments at the breakpoints.
 
 Now, let's consider a discontinuous case. Suppose we have:
 
-*   *f(x) = 10*  for *x < 3*
-*   *f(x) = 20* for *x ≥ 3*
+- _f(x) = 10_ for _x < 3_
+- _f(x) = 20_ for _x ≥ 3_
 
-Here, we're not just dealing with a change in slope, but a jump in the function's value. This calls for a slight modification in how we use our binary variable. Again we will introduce *y* as the function representation and *z* as the binary variable that determines whether we are above or below *x=3*. Here's the approach:
+Here, we're not just dealing with a change in slope, but a jump in the function's value. This calls for a slight modification in how we use our binary variable. Again we will introduce _y_ as the function representation and _z_ as the binary variable that determines whether we are above or below _x=3_. Here's the approach:
 
-1. **Binary Variables**: Same as before, *z=0* for *x<3* and *z=1* for *x>=3*.
+1. **Binary Variables**: Same as before, _z=0_ for _x<3_ and _z=1_ for _x>=3_.
 
 2. **Constraints**: We must force y to take one of the two values:
-    *   *x < 3 + Mz*  This constraint makes sure that x is below 3 if z is 0.
-    *   *x >= 3 - M(1-z)* This constraint makes sure x is above 3 if z is 1.
-    *   *y >= 10 - Mz*  This forces y to be at least 10 if z=0.
-    *   *y <= 10 + Mz* This forces y to be at most 10 if z=0.
-    *   *y >= 20 - M(1-z)* This forces y to be at least 20 if z=1.
-    *   *y <= 20 + M(1-z)* This forces y to be at most 20 if z=1.
+   - _x < 3 + Mz_ This constraint makes sure that x is below 3 if z is 0.
+   - _x >= 3 - M(1-z)_ This constraint makes sure x is above 3 if z is 1.
+   - _y >= 10 - Mz_ This forces y to be at least 10 if z=0.
+   - _y <= 10 + Mz_ This forces y to be at most 10 if z=0.
+   - _y >= 20 - M(1-z)_ This forces y to be at least 20 if z=1.
+   - _y <= 20 + M(1-z)_ This forces y to be at most 20 if z=1.
 
 Here's the Gurobi code:
 
@@ -133,27 +134,29 @@ if __name__ == '__main__':
 ```
 
 Finally, for more complex situations, such as arbitrary piecewise linear functions with more breakpoints, a more general approach is needed. For a piecewise function with n breakpoints, we use n+1 binary variables. Consider this piecewise function as an example.
-*  f(x) = x + 1 when x is between 0 and 1
-*  f(x) = 2x when x is between 1 and 2
-*  f(x) = 3 when x is between 2 and 3
 
-We will introduce *y* as usual as the function representation. We will use binary variables *z_1*, *z_2*, and *z_3*, to show which segment is active. If the variable *x* is in segment i, then *z_i=1*, otherwise it is *0*. We also need a constraint to force only one *z_i* to be 1 at all times. Then the constraints will be:
+- f(x) = x + 1 when x is between 0 and 1
+- f(x) = 2x when x is between 1 and 2
+- f(x) = 3 when x is between 2 and 3
 
-1.  **Binary variables:** *z_1*, *z_2*, *z_3*, to indicate the active segment.
+We will introduce _y_ as usual as the function representation. We will use binary variables _z_1_, _z_2_, and _z_3_, to show which segment is active. If the variable _x_ is in segment i, then _z_i=1_, otherwise it is _0_. We also need a constraint to force only one _z_i_ to be 1 at all times. Then the constraints will be:
+
+1.  **Binary variables:** _z_1_, _z_2_, _z_3_, to indicate the active segment.
 2.  **Constraints**
-   *   Sum of all *z_i* is 1: we can only be in one segment.
-   *   *0 <= x - 0*
-   *   *x - 0 <= 1 + M(1 - z_1)*
-   *   *1 <= x - 0 + M(1 - z_2)*
-   *   *x-0 <= 2 + M(1 - z_2)*
-   *   *2 <= x -0 + M(1-z_3)*
-   *   *x - 0 <= 3 + M(1-z_3)*
-    *  *y >= (x - 0) + 1 - M(1-z_1)*
-    *  *y <= (x - 0) + 1 + M(1-z_1)*
-    *  *y >= 2*(x-0) - M(1-z_2)*
-    *  *y <= 2*(x-0) + M(1-z_2)*
-    *  *y >= 3 - M(1-z_3)*
-    *   *y <= 3 + M(1-z_3)*
+
+- Sum of all _z_i_ is 1: we can only be in one segment.
+- _0 <= x - 0_
+- _x - 0 <= 1 + M(1 - z_1)_
+- _1 <= x - 0 + M(1 - z_2)_
+- _x-0 <= 2 + M(1 - z_2)_
+- _2 <= x -0 + M(1-z_3)_
+- _x - 0 <= 3 + M(1-z_3)_
+- _y >= (x - 0) + 1 - M(1-z_1)_
+- _y <= (x - 0) + 1 + M(1-z_1)_
+- _y >= 2_(x-0) - M(1-z_2)\*
+- _y <= 2_(x-0) + M(1-z_2)\*
+- _y >= 3 - M(1-z_3)_
+- _y <= 3 + M(1-z_3)_
 
 Here is the corresponding Gurobi code:
 

@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-should-dag-schedule-intervals-be-defined"
 ---
 
-Alright, let’s unpack this. You're asking about a fundamental aspect of workflow orchestration: how to define schedule intervals for Directed Acyclic Graphs, or DAGs. I’ve spent a significant portion of my career knee-deep in building and maintaining complex data pipelines, and the way you handle scheduling—or mismanage it—can drastically affect your system's robustness and efficiency. Trust me, I’ve seen workflows grind to a halt because of poorly defined schedules. So, let’s get into the nitty-gritty.
+, let’s unpack this. You're asking about a fundamental aspect of workflow orchestration: how to define schedule intervals for Directed Acyclic Graphs, or DAGs. I’ve spent a significant portion of my career knee-deep in building and maintaining complex data pipelines, and the way you handle scheduling—or mismanage it—can drastically affect your system's robustness and efficiency. Trust me, I’ve seen workflows grind to a halt because of poorly defined schedules. So, let’s get into the nitty-gritty.
 
-The crucial part is understanding that schedule intervals determine *when* your DAG will run, and this goes beyond simply setting a cron string. It involves the interplay of several factors: the logical timeframe your DAG processes, the actual execution time, the desired frequency of updates, and the system resources available. It’s a balance, not a one-size-fits-all situation.
+The crucial part is understanding that schedule intervals determine _when_ your DAG will run, and this goes beyond simply setting a cron string. It involves the interplay of several factors: the logical timeframe your DAG processes, the actual execution time, the desired frequency of updates, and the system resources available. It’s a balance, not a one-size-fits-all situation.
 
-Firstly, we need to distinguish between logical time and physical execution time. Often, a DAG processes data associated with a specific period—let’s say, hourly batches of log data. This is the *logical* time it's working with. But the *physical* execution can happen later, influenced by dependencies and resource availability. This distinction is crucial when defining intervals. A misaligned approach can cause gaps or overlaps, leading to data inconsistencies or processing inefficiencies.
+Firstly, we need to distinguish between logical time and physical execution time. Often, a DAG processes data associated with a specific period—let’s say, hourly batches of log data. This is the _logical_ time it's working with. But the _physical_ execution can happen later, influenced by dependencies and resource availability. This distinction is crucial when defining intervals. A misaligned approach can cause gaps or overlaps, leading to data inconsistencies or processing inefficiencies.
 
-Here's where things get interesting. We typically use cron expressions or similar mechanisms to define the actual triggers, but these are merely representations of when the scheduler *attempts* to run the DAG. The interval you specify should ideally reflect the processing time and the data window your DAG operates within. For instance, a DAG that process hourly log data shouldn’t have a simple hourly trigger. It's more correct to use an hourly trigger that processes the *previous hour’s* log data. Let me illustrate with some examples.
+Here's where things get interesting. We typically use cron expressions or similar mechanisms to define the actual triggers, but these are merely representations of when the scheduler _attempts_ to run the DAG. The interval you specify should ideally reflect the processing time and the data window your DAG operates within. For instance, a DAG that process hourly log data shouldn’t have a simple hourly trigger. It's more correct to use an hourly trigger that processes the _previous hour’s_ log data. Let me illustrate with some examples.
 
 **Example 1: Basic Hourly Processing with Offset**
 
@@ -39,7 +39,7 @@ with DAG(
 
 ```
 
-In this example, we're using `timedelta(hours=1)` as the schedule, meaning it attempts to run every hour. `start_date` anchors the start of the schedule, and setting `catchup=False` prevents old runs from happening when you enable the DAG. `logical_date` represents the time the DAG logically *should* be processing data for. If we had needed a bit of delay, we’d typically modify the processing logic or configure a sensor to wait for a certain period. This is the most straightforward case, perfect for processes that can tolerate some latency.
+In this example, we're using `timedelta(hours=1)` as the schedule, meaning it attempts to run every hour. `start_date` anchors the start of the schedule, and setting `catchup=False` prevents old runs from happening when you enable the DAG. `logical_date` represents the time the DAG logically _should_ be processing data for. If we had needed a bit of delay, we’d typically modify the processing logic or configure a sensor to wait for a certain period. This is the most straightforward case, perfect for processes that can tolerate some latency.
 
 **Example 2: Daily Processing with End-of-Day Aggregation**
 
@@ -67,7 +67,7 @@ with DAG(
     )
 ```
 
-Here, `schedule='0 0 * * *'` denotes a daily schedule at midnight UTC. Importantly, again, the logical date is the *previous* day. The DAG doesn’t process data for the current day; instead, it processes what happened previously, at the close of the previous day. This ensures all data from the entire day is considered.
+Here, `schedule='0 0 * * *'` denotes a daily schedule at midnight UTC. Importantly, again, the logical date is the _previous_ day. The DAG doesn’t process data for the current day; instead, it processes what happened previously, at the close of the previous day. This ensures all data from the entire day is considered.
 
 **Example 3: Dynamic Data-Driven Scheduling (Illustrative)**
 

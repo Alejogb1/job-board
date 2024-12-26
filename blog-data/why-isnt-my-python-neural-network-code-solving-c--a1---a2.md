@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-my-python-neural-network-code-solving-c--a1---a2"
 ---
 
-Alright, let’s unpack this. You’re finding that your neural network, designed to learn the simple operation `c = a1 - a2`, isn't converging. This is a common stumbling block, and it often stems from a few fundamental issues rather than a single, glaring error. I’ve personally spent more hours debugging seemingly trivial subtraction networks than I’d care to recall, and it usually boils down to one of these root causes: inappropriate network architecture, inadequate training data, or unsuitable hyperparameter choices. Let’s go through each, shall we?
+, let’s unpack this. You’re finding that your neural network, designed to learn the simple operation `c = a1 - a2`, isn't converging. This is a common stumbling block, and it often stems from a few fundamental issues rather than a single, glaring error. I’ve personally spent more hours debugging seemingly trivial subtraction networks than I’d care to recall, and it usually boils down to one of these root causes: inappropriate network architecture, inadequate training data, or unsuitable hyperparameter choices. Let’s go through each, shall we?
 
 First, consider the network’s architecture itself. When learning simple arithmetic, an overly complex network can actually hinder performance. A simple single-layer network, often called a linear model, might be the most effective starting point. Think of it this way: you’re trying to fit a linear equation, and sometimes a linear approach really is the best option. The complexity of the network isn’t necessarily an indication of its potential for success.
 
@@ -95,6 +95,7 @@ predictions = model(test_inputs)
 print("Predictions:", predictions)
 print("Expected:", test_a1 - test_a2)
 ```
+
 This example utilizes PyTorch to implement the same model. It's crucial to pay attention to how inputs are handled with `torch.cat`. Notice the use of `nn.Linear(2, 1)` as the single layer, and Stochastic Gradient Descent (`SGD`) as the optimizer to provide a contrast to the previous example.
 
 **Snippet 3: Numpy implementation of a Simple Linear Model**
@@ -148,6 +149,6 @@ print("Expected:", test_a1 - test_a2)
 
 This final example takes it a level deeper, showing you how a basic linear model operates under the hood, using just numpy. The gradient update is performed manually which showcases what is actually going on at the lowest level when training a model. It’s a good way to really understand the basic mechanics.
 
-For additional study on this, I'd recommend *Deep Learning* by Ian Goodfellow, Yoshua Bengio, and Aaron Courville for an in-depth exploration of neural networks. Additionally, look at papers from the JMLR (Journal of Machine Learning Research), they often have valuable analysis of even the most simple algorithms, like linear models. For a more practical, hands-on approach, explore the online courses offered by fast.ai, they’re excellent for solidifying your understanding.
+For additional study on this, I'd recommend _Deep Learning_ by Ian Goodfellow, Yoshua Bengio, and Aaron Courville for an in-depth exploration of neural networks. Additionally, look at papers from the JMLR (Journal of Machine Learning Research), they often have valuable analysis of even the most simple algorithms, like linear models. For a more practical, hands-on approach, explore the online courses offered by fast.ai, they’re excellent for solidifying your understanding.
 
 The key to solving this seemingly simple problem lies in meticulous attention to detail, especially concerning data representation, network architecture, and hyperparameter tuning. By carefully evaluating these areas, I am confident that you'll be able to construct a network that reliably solves `c = a1 - a2`. Let me know if you have any more questions; I’m happy to help refine your code further.

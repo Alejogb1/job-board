@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-my-pytorch-logistic-regression-model-predict-the-same-label-regardless-of-input"
 ---
 
-Okay, let's tackle this. I've seen this particular issue with logistic regression models in pytorch quite a few times over the years, and it's almost always down to a handful of common pitfalls. You're getting consistent, unchanging predictions, which points to the model essentially ignoring the input features. It’s not learning, which means the output is always defaulting to some bias. Let's break down what's probably happening, and I’ll share some code examples from things I've actually had to debug.
+, let's tackle this. I've seen this particular issue with logistic regression models in pytorch quite a few times over the years, and it's almost always down to a handful of common pitfalls. You're getting consistent, unchanging predictions, which points to the model essentially ignoring the input features. It’s not learning, which means the output is always defaulting to some bias. Let's break down what's probably happening, and I’ll share some code examples from things I've actually had to debug.
 
 First off, we can’t assume the model is inherently faulty. PyTorch’s core functionality for logistic regression is robust, so we should focus our investigation elsewhere. The root cause usually lies within one of three broad categories: data issues, poor initialization or optimization parameters, or a severely flawed model structure. Let's go through each of them in detail, because one of these is definitely the culprit for this consistent output.
 
@@ -97,6 +97,7 @@ with torch.no_grad():
   acc = accuracy_score(y_test, predictions)
   print(f"Test accuracy with scaled data: {acc}")
 ```
+
 This example highlights what can happen with badly scaled data. As you will notice the model with non-scaled data will barely move and the predictions will be practically uniform. The model with scaled data will converge to something useful.
 
 **Example 2: Learning Rate Issues**
@@ -183,6 +184,7 @@ with torch.no_grad():
     acc = accuracy_score(y_test, predictions)
     print(f"Test accuracy with mid lr: {acc}")
 ```
+
 This second example illustrates the impact of learning rates and how it can make the model unable to learn or learn incredibly slowly.
 
 **Example 3: Insufficient Training Data**

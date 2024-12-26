@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-double-click-an-element-using-selenium"
 ---
 
-Okay, let’s tackle this one. Double-clicking elements with Selenium, while seemingly straightforward, sometimes throws up unexpected quirks depending on the browser, the underlying application, and even the presence of overlapping elements. I've spent considerable time troubleshooting these kinds of interactions, and it’s worth covering the nuances. Let me break down the process and illustrate with some concrete examples, including potential pitfalls.
+, let’s tackle this one. Double-clicking elements with Selenium, while seemingly straightforward, sometimes throws up unexpected quirks depending on the browser, the underlying application, and even the presence of overlapping elements. I've spent considerable time troubleshooting these kinds of interactions, and it’s worth covering the nuances. Let me break down the process and illustrate with some concrete examples, including potential pitfalls.
 
 Fundamentally, you interact with elements using actions provided by Selenium's `ActionChains` class. This class allows for the composition of more intricate interactions beyond simple clicks. For double-clicks, it's essentially a sequence of two clicks in quick succession.
 
@@ -39,7 +39,7 @@ if __name__ == '__main__':
 
 In this first snippet, the `double_click_element` function takes a webdriver instance and a locator tuple (like `(By.ID, "some_id")`) as input. It waits for the element to be present, using `WebDriverWait`, before performing the double click operation via `ActionChains`. The `perform()` method actually executes the constructed sequence of actions.
 
-The use of `WebDriverWait` is *critical* here. Just because an element appears to be visually present doesn’t mean it's fully rendered and interactive on the underlying Document Object Model (DOM). Waiting for the element to be interactable reduces the chance of element-not-found or `ElementClickInterceptedException` issues that I've seen frequently while automating UI tests.
+The use of `WebDriverWait` is _critical_ here. Just because an element appears to be visually present doesn’t mean it's fully rendered and interactive on the underlying Document Object Model (DOM). Waiting for the element to be interactable reduces the chance of element-not-found or `ElementClickInterceptedException` issues that I've seen frequently while automating UI tests.
 
 Moving onto a more nuanced scenario: suppose you're working with a table, and a double-click on a specific cell triggers some kind of inline editing. The previous example might be sufficient, but if the table is dynamically loaded or the cell is within a nested structure, things can get more complicated. Sometimes, the browser needs a small pause between actions. A bit of experimentation, based on the behavior of the application, may be required to refine the execution timing.
 
@@ -95,8 +95,8 @@ def double_click_element_with_overlay(driver, locator):
 
 if __name__ == '__main__':
     driver = webdriver.Chrome()
-    driver.get("data:text/html;charset=utf-8," + 
-               "<html><body style='position:relative;'>" + 
+    driver.get("data:text/html;charset=utf-8," +
+               "<html><body style='position:relative;'>" +
                "<div id='target' style='width:100px; height:100px; background-color:blue;'></div>" +
                "<div id='overlay' style='position:absolute; top:20px; left:20px; width:60px; height:60px; background-color:rgba(255,0,0,0.5)'></div>" +
                "</body></html>")

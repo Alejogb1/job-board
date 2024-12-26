@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-output-constraints-affect-optimization-strategies"
 ---
 
-Alright, let’s talk about optimization and how those pesky output constraints can really throw a wrench into the works. It’s a topic I’ve bumped up against more times than I care to recall, often in scenarios where the initial, unconstrained optimization seemed beautifully elegant, only to crumble under the weight of real-world limitations.
+, let’s talk about optimization and how those pesky output constraints can really throw a wrench into the works. It’s a topic I’ve bumped up against more times than I care to recall, often in scenarios where the initial, unconstrained optimization seemed beautifully elegant, only to crumble under the weight of real-world limitations.
 
-The core issue here is that optimization, at its most basic, strives to find the absolute best solution for a given objective function, usually a minimum or maximum of some quantity. When we introduce output constraints, we're essentially saying, "yes, find the best, *but* it has to adhere to these specific rules concerning the result." This dramatically changes the optimization landscape. It’s not just about reaching an extreme point; now, you're often navigating a constrained space where the ‘best’ might be on the boundary of feasibility, not necessarily in the unconstrained, mathematical ideal.
+The core issue here is that optimization, at its most basic, strives to find the absolute best solution for a given objective function, usually a minimum or maximum of some quantity. When we introduce output constraints, we're essentially saying, "yes, find the best, _but_ it has to adhere to these specific rules concerning the result." This dramatically changes the optimization landscape. It’s not just about reaching an extreme point; now, you're often navigating a constrained space where the ‘best’ might be on the boundary of feasibility, not necessarily in the unconstrained, mathematical ideal.
 
 In my experience, constraints can come in many forms. They might be explicit limits on a particular output parameter — a maximum allowable power consumption, a minimum required signal-to-noise ratio, or a range for a calculated statistic. Other times, they're implicit, arising from physical or system limitations, such as a maximum memory allocation, a limit on available bandwidth, or a hardware restriction on certain operations. These implicit constraints are frequently the source of debugging nightmares.
 
@@ -114,7 +114,8 @@ print(f"Optimal y: {res.x[1]:.2f}")
 print(f"Min value: {res.fun:.2f}")
 
 ```
-In this example, we penalize the result with a penalty term which increases when `x+y` exceeds 10.  This pushes the optimizer to find a solution where the constraint is (approximately) satisfied. The results from this are less precise than explicit constraint handling methods, but it allows you to adapt to a greater variety of constraints more easily.
+
+In this example, we penalize the result with a penalty term which increases when `x+y` exceeds 10. This pushes the optimizer to find a solution where the constraint is (approximately) satisfied. The results from this are less precise than explicit constraint handling methods, but it allows you to adapt to a greater variety of constraints more easily.
 
 These examples, though simplified, illustrate the core idea. Output constraints force us to think beyond the pure, unconstrained mathematical ideal and embrace more sophisticated optimization strategies.
 

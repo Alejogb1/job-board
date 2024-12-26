@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-dnns-time-series-prediction-shape-differ-from-the-trained-labels-in-a-windowed-dataset"
 ---
 
-Okay, let’s unpack this one. I've seen this exact scenario play out more times than I care to count, usually during the iterative stages of model refinement. The issue of a deep neural network (dnn) producing time series predictions that, while close-ish, don’t quite mirror the trained labels, especially when using a windowed dataset, is a nuanced problem with several potential causes. It's rarely a single culprit, but rather an interplay of factors, and understanding each is key to getting those predictions to align properly.
+, let’s unpack this one. I've seen this exact scenario play out more times than I care to count, usually during the iterative stages of model refinement. The issue of a deep neural network (dnn) producing time series predictions that, while close-ish, don’t quite mirror the trained labels, especially when using a windowed dataset, is a nuanced problem with several potential causes. It's rarely a single culprit, but rather an interplay of factors, and understanding each is key to getting those predictions to align properly.
 
 The core concept at play here is that your model is learning to approximate an underlying function from the training data. However, it does this within the confines of its architecture, the training process, and importantly, the way the data is presented via the windowing process. So when things diverge, it's worth revisiting each of these aspects.
 

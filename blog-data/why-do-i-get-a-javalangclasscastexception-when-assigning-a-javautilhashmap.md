@@ -21,19 +21,19 @@ public class LegacyCodeExample {
         rawMap.put("key2", "string value");
 
         //Somewhere down the line...
-        Integer value = (Integer) rawMap.get("key1");  // This seems okay... at first.
+        Integer value = (Integer) rawMap.get("key1");  // This seems ... at first.
         String anotherValue = (String) rawMap.get("key2"); // And so does this...
-       
+
         Map anotherRawMap = new HashMap();
         anotherRawMap.put(1, 1);
         anotherRawMap.put("str", "stringval");
-       
-       
+
+
         // And now...
        Integer integerValue = (Integer) anotherRawMap.get("str"); // Boom! ClassCastException.
 
        System.out.println(value + " " + anotherValue );
-       
+
     }
 }
 ```
@@ -51,16 +51,16 @@ public class GenericsExample {
         Map<String, Integer> typedMap = new HashMap<>();
         typedMap.put("key1", 10);
         //typedMap.put("key2", "string value"); // This will not compile, enforcing type safety
-        
-        Integer value = typedMap.get("key1"); // Safe. 
+
+        Integer value = typedMap.get("key1"); // Safe.
         System.out.println(value);
-      
+
        Map<Integer,Integer> typedIntegerMap = new HashMap<>();
        typedIntegerMap.put(1,1);
       // typedIntegerMap.put("str","stringval");  This will not compile, enforcing type safety
       Integer intValue = typedIntegerMap.get(1); // safe
       System.out.println(intValue);
-      
+
      }
 }
 ```
@@ -75,34 +75,34 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SerializationExample {
-  
+
     public static void main(String[] args) {
-       
+
        String filename = "data.ser";
-       
+
        try {
             Map<String, Integer> originalMap = new HashMap<>();
             originalMap.put("key1", 10);
-            
+
              //Serialize and save.
              FileOutputStream fileOut = new FileOutputStream(filename);
              ObjectOutputStream out = new ObjectOutputStream(fileOut);
              out.writeObject(originalMap);
              out.close();
              fileOut.close();
-             
+
              //Deserialize the object into a new variable.
              FileInputStream fileIn = new FileInputStream(filename);
              ObjectInputStream in = new ObjectInputStream(fileIn);
-            
+
              Map deserializedMap = (Map) in.readObject();   // Deserializing into a raw type!
              in.close();
              fileIn.close();
-            
+
            // Try to access
            Integer value = (Integer) deserializedMap.get("key1"); // Crash! ClassCastException.
            System.out.println(value);
-       
+
          } catch(IOException i) {
              i.printStackTrace();
          }
@@ -125,34 +125,34 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CorrectSerializationExample {
-  
+
     public static void main(String[] args) {
-       
+
        String filename = "data.ser";
-       
+
        try {
             Map<String, Integer> originalMap = new HashMap<>();
             originalMap.put("key1", 10);
-            
+
              //Serialize and save.
              FileOutputStream fileOut = new FileOutputStream(filename);
              ObjectOutputStream out = new ObjectOutputStream(fileOut);
              out.writeObject(originalMap);
              out.close();
              fileOut.close();
-             
+
              //Deserialize the object into a new variable, with correct generic types
              FileInputStream fileIn = new FileInputStream(filename);
              ObjectInputStream in = new ObjectInputStream(fileIn);
-            
+
              Map<String,Integer> deserializedMap = (Map<String,Integer>) in.readObject();  // Correctly cast
              in.close();
              fileIn.close();
-            
+
            // Try to access
            Integer value = deserializedMap.get("key1"); // Correct now.
            System.out.println(value);
-       
+
          } catch(IOException i) {
              i.printStackTrace();
          }
@@ -167,4 +167,4 @@ public class CorrectSerializationExample {
 
 In the improved version, when deserializing, I explicitly cast `in.readObject()` to `Map<String, Integer>`, making sure we are working with the correct type when we access the map later. This prevents the dreaded `ClassCastException`.
 
-In essence, `java.lang.ClassCastException` when handling `HashMap` is nearly always a result of: improper use of raw types where you bypass type checks at compile time, incorrect or missing generic specifications, or mismatches during serialization and deserialization. Always pay close attention to the declared types of your `HashMap` instances, particularly when working with legacy code or during object serialization and deserialization. A good understanding of generics and how type erasure impacts runtime behavior is vital to prevent these errors. I’d strongly recommend reading *Effective Java* by Joshua Bloch, especially the sections on generics and serialization, for an in-depth treatment of these topics. Furthermore, exploring resources such as "Java Generics and Collections" by Maurice Naftalin and Philip Wadler will provide solid insights into the practical applications and limitations of generics.
+In essence, `java.lang.ClassCastException` when handling `HashMap` is nearly always a result of: improper use of raw types where you bypass type checks at compile time, incorrect or missing generic specifications, or mismatches during serialization and deserialization. Always pay close attention to the declared types of your `HashMap` instances, particularly when working with legacy code or during object serialization and deserialization. A good understanding of generics and how type erasure impacts runtime behavior is vital to prevent these errors. I’d strongly recommend reading _Effective Java_ by Joshua Bloch, especially the sections on generics and serialization, for an in-depth treatment of these topics. Furthermore, exploring resources such as "Java Generics and Collections" by Maurice Naftalin and Philip Wadler will provide solid insights into the practical applications and limitations of generics.

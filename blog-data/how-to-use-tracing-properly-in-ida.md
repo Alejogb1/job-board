@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-use-tracing-properly-in-ida"
 ---
 
-Okay so you wanna dive into IDA tracing right Been there done that got the t-shirt and probably a few dozen hair-pulling sessions to go with it Tracing in IDA is powerful but man it can be a rabbit hole if you don't know what you're doing I've spent my fair share of evenings staring at disassembled code scratching my head wondering why a register jumped to some random address so let's try to break this down a bit
+you wanna dive into IDA tracing right Been there done that got the t-shirt and probably a few dozen hair-pulling sessions to go with it Tracing in IDA is powerful but man it can be a rabbit hole if you don't know what you're doing I've spent my fair share of evenings staring at disassembled code scratching my head wondering why a register jumped to some random address so let's try to break this down a bit
 
 First things first let's talk about what we're actually trying to achieve when we trace Execution tracing helps you follow the flow of execution of a program instruction by instruction Register values memory accesses conditional jumps all of this data paints a clear picture of what's happening under the hood Think of it as stepping through a debugging session but with a much more detailed and granular view This is invaluable for reverse engineering malware figuring out how a piece of software actually works or debugging tricky code paths that are hard to catch with standard breakpoints
 
@@ -72,16 +72,16 @@ To trace this follow the same process step into step over but pay close attentio
 Ok I know what you are thinking tracing is very powerful but doing it step by step manually is just impractical Well I have good news IDA also allows you to record a trace that you can later review this feature records all the register memory changes in a file that you can then use to review the execution flow after the fact
 Here are some things to remember before recording a trace:
 
-*   **Know what you need to trace:** Don't trace the whole program unless you really have to. That results in huge files that are cumbersome to navigate.
-*   **Set breakpoints intelligently:** Instead of just recording everything set a breakpoint in the area of interest and only start recording there.
-*   **File size considerations:** Long traces can generate very large files and can consume a lot of memory make sure you have enough resources.
-*   **Use the trace overview window:** IDA has a built-in trace view that shows you the execution flow graphically It is very useful to review the execution trace after you have completed it
+- **Know what you need to trace:** Don't trace the whole program unless you really have to. That results in huge files that are cumbersome to navigate.
+- **Set breakpoints intelligently:** Instead of just recording everything set a breakpoint in the area of interest and only start recording there.
+- **File size considerations:** Long traces can generate very large files and can consume a lot of memory make sure you have enough resources.
+- **Use the trace overview window:** IDA has a built-in trace view that shows you the execution flow graphically It is very useful to review the execution trace after you have completed it
 
 Now briefly I wanted to touch on the debugger API as I mentioned before IDA's debugger API provides even more advanced tracing options It allows you to write scripts that can automate tracing tasks filter out specific events or even perform custom analysis based on the trace data For example you could write a script that automatically dumps memory regions that are modified during execution or tracks the execution flow of specific code sections To get started with debugger scripts you need to dive into IDAPython which is Python API for IDA and for the love of code please read the documentation and examples it will pay off big time
 
 Now you might be thinking I can trace now but what is the right way to trace a problem I have and what makes a good trace well that depends on your problem but I always say start with a hypothesis about what is happening if you are reverse engineering a piece of malware for example start with what you think is the main function the main logic of the malware and trace that section of code if you are debugging a crash then start with the area of the crash and traceback that part of the execution for example also trace function calls and see where execution jumps and where the function returns pay attention to the conditional jumps and what determines those conditions pay attention to the registers because those often indicate the type of data being processed or returned from a function for example if a pointer to a string is passed to a function often that pointer is stored in a register like esi or edi and if you have a long running program with many functions that can be executed in many different paths be very specific about what you want to trace and where you set the breakpoints
 
-Okay now for some recommended resources to go deeper into the topic I will start by recommending “The IDA Pro Book” by Chris Eagle that is the bible for IDA and it has detailed explanations about debugging and tracing and also check out “Practical Reverse Engineering” by Bruce Dang this book has many real world examples about tracing and debugging with IDA also check out the official IDA documentation the IDA Help section is surprisingly useful and you can search a specific topic like “tracing” in it
+now for some recommended resources to go deeper into the topic I will start by recommending “The IDA Pro Book” by Chris Eagle that is the bible for IDA and it has detailed explanations about debugging and tracing and also check out “Practical Reverse Engineering” by Bruce Dang this book has many real world examples about tracing and debugging with IDA also check out the official IDA documentation the IDA Help section is surprisingly useful and you can search a specific topic like “tracing” in it
 
 Now for a joke: Why did the assembly programmer quit his job? Because he didn't get arrays.
 

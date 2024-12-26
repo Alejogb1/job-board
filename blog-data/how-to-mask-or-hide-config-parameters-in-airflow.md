@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-mask-or-hide-config-parameters-in-airflow"
 ---
 
-Alright, let's talk about securing configuration parameters in Apache Airflow. I've seen this trip up many a team, and it’s certainly something I’ve grappled with extensively over the years. It’s crucial to keep sensitive data like database credentials, api keys, or other secrets out of plain sight in your dags and airflow configurations. Letting these sit around unencrypted is practically an invitation for trouble.
+, let's talk about securing configuration parameters in Apache Airflow. I've seen this trip up many a team, and it’s certainly something I’ve grappled with extensively over the years. It’s crucial to keep sensitive data like database credentials, api keys, or other secrets out of plain sight in your dags and airflow configurations. Letting these sit around unencrypted is practically an invitation for trouble.
 
 One of the most fundamental steps, and perhaps where many initially stumble, is realizing that merely avoiding hardcoding values in the DAG file itself is only part of the battle. Simply loading from a config file or environment variable isn't sufficient protection. Those values still exist in an accessible format on the filesystem or within your environment, which is not ideal, especially if you're dealing with a multi-user setup.
 
@@ -14,7 +14,7 @@ So, what are some viable techniques? Let's dive into some detailed strategies, a
 
 **1. Using Airflow Connections:**
 
-This is generally considered the best practice within the Airflow ecosystem. Airflow connections are not inherently a masking technique, but rather a way to securely store sensitive information *external* to your DAGs. You can configure connections via the airflow UI, command-line, or the API. Importantly, airflow stores these connections encrypted in its metadata database.
+This is generally considered the best practice within the Airflow ecosystem. Airflow connections are not inherently a masking technique, but rather a way to securely store sensitive information _external_ to your DAGs. You can configure connections via the airflow UI, command-line, or the API. Importantly, airflow stores these connections encrypted in its metadata database.
 
 The key here is using the airflow connection id in your dags instead of directly using credentials. Consider a database connection:
 
@@ -99,11 +99,12 @@ with DAG(
         python_callable=fetch_vault_secret,
     )
 ```
-In this example, `my_secret/my_key` represents the path in your Vault where you have stored your specific secret. The backend's `get_secret` method will securely retrieve it at runtime. Notice how we are *not* exposing the sensitive value in this DAG file. Important to note that `os.environ.get("VAULT_ADDR")` and `os.environ.get("VAULT_TOKEN")` should be present only in the execution environment. Ensure your vault access is done over a secure TLS connection.
+
+In this example, `my_secret/my_key` represents the path in your Vault where you have stored your specific secret. The backend's `get_secret` method will securely retrieve it at runtime. Notice how we are _not_ exposing the sensitive value in this DAG file. Important to note that `os.environ.get("VAULT_ADDR")` and `os.environ.get("VAULT_TOKEN")` should be present only in the execution environment. Ensure your vault access is done over a secure TLS connection.
 
 **3. Utilizing Environment Variables Carefully:**
 
-While relying solely on environment variables isn't sufficient, they can be used strategically *in conjunction with other methods*. For instance, instead of storing the actual credentials in environment variables, you can use them to store *references* to secrets, or parameters that are *less sensitive* but could benefit from configuration outside of code files. A typical use case is storing backend addresses.
+While relying solely on environment variables isn't sufficient, they can be used strategically _in conjunction with other methods_. For instance, instead of storing the actual credentials in environment variables, you can use them to store _references_ to secrets, or parameters that are _less sensitive_ but could benefit from configuration outside of code files. A typical use case is storing backend addresses.
 Here’s how environment variables would help with the previous example
 
 ```python
@@ -140,23 +141,24 @@ with DAG(
         python_callable=fetch_vault_secret,
     )
 ```
-Notice, `os.environ.get("VAULT_ADDR")` and `os.environ.get("VAULT_TOKEN")` are *not* the actual secrets, they are the vault address and token which are still considered sensitive, but may need to be changed between various environments. This technique allows for greater environmental flexibility, while still keeping core secrets within a vault.
+
+Notice, `os.environ.get("VAULT_ADDR")` and `os.environ.get("VAULT_TOKEN")` are _not_ the actual secrets, they are the vault address and token which are still considered sensitive, but may need to be changed between various environments. This technique allows for greater environmental flexibility, while still keeping core secrets within a vault.
 
 **Important Considerations:**
 
-*   **Least Privilege:** Always adhere to the principle of least privilege. Grant only the necessary permissions to your services and users. Do not give read access to Vault path or Airflow connections to every user.
-*   **Auditing:** Make sure to have thorough audit logs and monitoring setup for your secrets management platform. Be able to trace access and modification of sensitive data.
-*   **Rotation:** Regularly rotate your secrets. This prevents a compromised secret from staying valid indefinitely.
-*   **Secure Storage:** Even your secrets backend should be stored securely. Follow best practices for infrastructure security.
-*   **Avoid direct access:** Try to avoid using python `os` module in your dags as much as possible to fetch environment variables. Always use connections or secrets backends to fetch sensitive information.
-*   **Code Review:** Code reviews are an invaluable tool to catch insecure practices. Enforce reviews before deploying code with sensitive parameters.
+- **Least Privilege:** Always adhere to the principle of least privilege. Grant only the necessary permissions to your services and users. Do not give read access to Vault path or Airflow connections to every user.
+- **Auditing:** Make sure to have thorough audit logs and monitoring setup for your secrets management platform. Be able to trace access and modification of sensitive data.
+- **Rotation:** Regularly rotate your secrets. This prevents a compromised secret from staying valid indefinitely.
+- **Secure Storage:** Even your secrets backend should be stored securely. Follow best practices for infrastructure security.
+- **Avoid direct access:** Try to avoid using python `os` module in your dags as much as possible to fetch environment variables. Always use connections or secrets backends to fetch sensitive information.
+- **Code Review:** Code reviews are an invaluable tool to catch insecure practices. Enforce reviews before deploying code with sensitive parameters.
 
 **Recommendations:**
 
 To further deepen your understanding, I recommend reading the following:
 
-*   **"Secrets Management" chapter from the "Kubernetes in Action, 2nd Edition" book by Marko Lukša:** Provides a thorough understanding of secure secrets handling in Kubernetes and other cloud-native environments, which translates well to managing secrets in any distributed application, including Airflow.
-*   **HashiCorp Vault Documentation:** Go through the official documentation of HashiCorp Vault for in depth practical knowledge, as this is a very popular option for Secrets management.
-*   **Airflow Documentation:** Review the official Airflow documentation for up to date information about supported backend integrations and features.
+- **"Secrets Management" chapter from the "Kubernetes in Action, 2nd Edition" book by Marko Lukša:** Provides a thorough understanding of secure secrets handling in Kubernetes and other cloud-native environments, which translates well to managing secrets in any distributed application, including Airflow.
+- **HashiCorp Vault Documentation:** Go through the official documentation of HashiCorp Vault for in depth practical knowledge, as this is a very popular option for Secrets management.
+- **Airflow Documentation:** Review the official Airflow documentation for up to date information about supported backend integrations and features.
 
 Securing secrets in Airflow is a multi-faceted problem, requiring a combination of the above strategies. Remember, security is not a one-time task but a continuous process. By implementing these approaches carefully, you can significantly reduce your risk and enhance the overall robustness of your data pipeline.

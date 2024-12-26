@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "what-is-the-most-efficient-sorting-container-and-algorithm-in-c-for-datasets-of-millions-of-lines"
 ---
 
-Alright, let's tackle this. It’s a question I've actually grappled with firsthand, specifically back when I was optimizing data ingestion for a large-scale analytics platform. We were routinely dealing with files that had tens of millions of lines, and the initial sorting implementation was… let’s just say ‘less than ideal.’ Performance was suffering, and it was impacting downstream processes quite significantly. So, the efficiency of sorting containers and algorithms was definitely top of mind.
+, let's tackle this. It’s a question I've actually grappled with firsthand, specifically back when I was optimizing data ingestion for a large-scale analytics platform. We were routinely dealing with files that had tens of millions of lines, and the initial sorting implementation was… let’s just say ‘less than ideal.’ Performance was suffering, and it was impacting downstream processes quite significantly. So, the efficiency of sorting containers and algorithms was definitely top of mind.
 
-The quick answer, of course, is that there isn’t one single ‘most efficient’ solution that works universally. The best choice depends heavily on the characteristics of your dataset, primarily its size, distribution, and whether or not the data fits into memory. And in our specific case back then, we had to contend with the fact that data did *not* always fit within the available ram.
+The quick answer, of course, is that there isn’t one single ‘most efficient’ solution that works universally. The best choice depends heavily on the characteristics of your dataset, primarily its size, distribution, and whether or not the data fits into memory. And in our specific case back then, we had to contend with the fact that data did _not_ always fit within the available ram.
 
 When we’re talking millions of lines, we’re moving out of the comfort zone of simple `std::vector` sorting with `std::sort`. While `std::sort`, often implemented as a quicksort or an introsort (a hybrid algorithm), performs reasonably well, it’s an in-place algorithm. This means it modifies the original data structure directly, and needs the entire dataset to fit in memory. This is simply not feasible for very large datasets. When memory becomes a bottleneck, disk-based sorting methods must be considered.
 
@@ -19,13 +19,13 @@ We will look at this from a single machine scope for the most part.
 
 **2. The Algorithm and its Implications:**
 
-* **In-Memory Sorting:** For datasets that do comfortably fit within memory, and depending on data distribution, `std::sort`, is usually a good start. It has an average time complexity of *O(n log n)*, which is quite good. However, consider the nature of your data; if you have a large number of identical keys, other algorithms like Counting sort might be worth examining (but only useful when keys are integers and their range is relatively small)
+- **In-Memory Sorting:** For datasets that do comfortably fit within memory, and depending on data distribution, `std::sort`, is usually a good start. It has an average time complexity of _O(n log n)_, which is quite good. However, consider the nature of your data; if you have a large number of identical keys, other algorithms like Counting sort might be worth examining (but only useful when keys are integers and their range is relatively small)
 
-* **External Sorting:** When data exceeds available memory, you must use external sorting methods. Merge sort is particularly popular here, as it’s stable and lends itself well to a divide-and-conquer strategy. A typical external merge sort uses a multi-way merge. This involves:
+- **External Sorting:** When data exceeds available memory, you must use external sorting methods. Merge sort is particularly popular here, as it’s stable and lends itself well to a divide-and-conquer strategy. A typical external merge sort uses a multi-way merge. This involves:
 
-   1. **Breaking the data into chunks:** Each chunk fits within available memory.
-   2. **Sorting each chunk:** Using in-memory sort (e.g., std::sort).
-   3. **Merging sorted chunks:** Reading from sorted chunks, and write to output using multiple input buffers and one output buffer.
+  1.  **Breaking the data into chunks:** Each chunk fits within available memory.
+  2.  **Sorting each chunk:** Using in-memory sort (e.g., std::sort).
+  3.  **Merging sorted chunks:** Reading from sorted chunks, and write to output using multiple input buffers and one output buffer.
 
 **3. Code Examples and Practical Considerations:**
 
@@ -62,7 +62,7 @@ int main() {
 
 This code shows the typical in-memory sorting approach with `std::sort`. On my machine, for 10 million integers it completes in a few seconds. However, if I increase `dataSize`, we'll see a massive performance degradation as the memory footprint becomes an issue. More importantly, beyond a certain size, this will lead to an application crash.
 
-Now, let’s look at a simplified example of an *external* merge sort. This version is a very basic implementation that assumes data is in files, and is for illustrative purposes. A complete version would involve managing multiple temporary files and might be complex, so I’m keeping it simple:
+Now, let’s look at a simplified example of an _external_ merge sort. This version is a very basic implementation that assumes data is in files, and is for illustrative purposes. A complete version would involve managing multiple temporary files and might be complex, so I’m keeping it simple:
 
 ```cpp
 #include <iostream>
@@ -162,6 +162,7 @@ int main() {
     return 0;
 }
 ```
+
 This example demonstrates the basic concept of splitting the input file into chunks, sorting these individually, and then merging them. This is a greatly simplified implementation and lacks proper handling of large number of chunks, but it conveys the principle. In a real-world application, you'd need much more sophisticated strategies to make this work efficiently and manage multiple passes.
 
 And, as a last small illustration, let us examine multi-threading to make std::sort work faster. As mentioned earlier, std::sort performs quite well. The limiting factor in its performance is that, by default, it does not use multiple cores of the CPU. In a simple application this is quite easy to achieve.

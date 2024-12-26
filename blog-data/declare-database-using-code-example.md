@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "declare-database-using-code-example"
 ---
 
-Okay so like you wanna declare a database using code right been there done that many times So lets get this straight it's not about just waving your hands and poof a database appears We're talking actual code here not some magic trick
+like you wanna declare a database using code right been there done that many times So lets get this straight it's not about just waving your hands and poof a database appears We're talking actual code here not some magic trick
 
 First off what kind of database are we talking about This changes everything You could be dealing with a relational database like PostgreSQL MySQL or something more document oriented like MongoDB or even a graph database like Neo4j And there are in-memory databases too like Redis for super fast operations So the code and the way you interact will differ greatly depending on what you wanna do
 
@@ -54,11 +54,11 @@ create_new_user("stack_overflow_user", "test@email.com")
 print("user created")
 ```
 
-So basically what this does it defines the connection parameters to your database using SQLAlchemy’s create\_engine function and creates an engine object That's like the main gateway to your database It also defines what your table is gonna look like using a declarative base and a model class called User In this case we have a table called users which has three columns id username and email And yeah we create a session and the create\_new\_user just adds an user to the db easy peasy right
+So basically what this does it defines the connection parameters to your database using SQLAlchemy’s create_engine function and creates an engine object That's like the main gateway to your database It also defines what your table is gonna look like using a declarative base and a model class called User In this case we have a table called users which has three columns id username and email And yeah we create a session and the create_new_user just adds an user to the db easy peasy right
 
 This snippet sets up your database using code and in a way that you could scale it up later to use in a real application
 
-Now remember that DATABASE\_URL thing You gotta adjust that to match your database credentials You’ll need to create a database first using your database management system tools like pgAdmin for Postgres or MySQL Workbench for MySQL This script assumes you have a database already you know what I mean
+Now remember that DATABASE_URL thing You gotta adjust that to match your database credentials You’ll need to create a database first using your database management system tools like pgAdmin for Postgres or MySQL Workbench for MySQL This script assumes you have a database already you know what I mean
 
 Now lets dive into a more complex structure like NoSQL databases specifically MongoDB because that's what I am pretty familiar with So you don't need to deal with tables and rows you have collections and documents instead Its more flexible but it can make things harder if you're not used to it
 
@@ -142,4 +142,4 @@ And if you are into graph databases "Graph Databases" by Ian Robinson is a must 
 
 So yeah its not just a matter of copy pasting code but understanding the code behind what you're trying to achieve database design and architecture it is not for the faint of heart but if you do it right you can achieve scalable and robust systems and databases It is quite a deep rabbit hole but once you learn the basics it becomes a whole lot easier its like riding a bike… a very complicated high tech bike with a lot of gears and some rockets attached but still a bike you know what I mean?
 
-Okay I am out have fun coding those databases
+I am out have fun coding those databases

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-several-dependency-errors-causing-in-azure-automl-while-running-a-model"
 ---
 
-alright, let's tackle this dependency mess you're experiencing with azure automl. i've been down this rabbit hole more times than i care to count, and believe me, it's rarely a straightforward fix. it's like trying to assemble a complex lego set where half the pieces are from a different kit and the instructions are written in hieroglyphs.
+, let's tackle this dependency mess you're experiencing with azure automl. i've been down this rabbit hole more times than i care to count, and believe me, it's rarely a straightforward fix. it's like trying to assemble a complex lego set where half the pieces are from a different kit and the instructions are written in hieroglyphs.
 
 first things first, dependency errors in automl, especially on azure, usually boil down to a few common culprits. it's almost never a problem with your code specifically, assuming you’re feeding the pipeline compatible data in the first place. most of the time, it's the environment configuration. that's what i've learned from my experience. i remember back when i was working on a project predicting customer churn for a telco, we were pulling our hair out for days. we would get those error messages, a wall of red text and not a clue where it went wrong. our pipeline was perfect, at least that’s what we thought, our code, data wrangling was all on point. in the end it was because the automl environment was using some old version of `scikit-learn` that didn't play nice with the custom transformers we were using.
 
@@ -12,21 +12,21 @@ so, let's break down what's likely going on and how to approach it, speaking fro
 
 **common dependency error causes and troubleshooting:**
 
-* **package version conflicts:** this is the most frequent offender. azure automl uses a curated environment with specific package versions. if your custom code (that is not part of the default environment) relies on a different version of a package (say, pandas, numpy, scikit-learn, or even something less common), you're going to run into issues. it’s very common to have different versions in your local system vs the managed cloud environment.
+- **package version conflicts:** this is the most frequent offender. azure automl uses a curated environment with specific package versions. if your custom code (that is not part of the default environment) relies on a different version of a package (say, pandas, numpy, scikit-learn, or even something less common), you're going to run into issues. it’s very common to have different versions in your local system vs the managed cloud environment.
 
-   * **how to check:** azure portal can be a bit cryptic when it comes to error details. look closely at the error logs—i mean *really* closely. sometimes it tells you which package is causing the trouble. if it's not clear, consider the libraries you are using in your pipeline. start by looking at the ones that interact with datasets, modeling, or pre-processing. compare those against automl’s default package list. finding the documentation with specific versions can be a challenge. usually you can find a detailed json or yml in the official documentation.
+  - **how to check:** azure portal can be a bit cryptic when it comes to error details. look closely at the error logs—i mean _really_ closely. sometimes it tells you which package is causing the trouble. if it's not clear, consider the libraries you are using in your pipeline. start by looking at the ones that interact with datasets, modeling, or pre-processing. compare those against automl’s default package list. finding the documentation with specific versions can be a challenge. usually you can find a detailed json or yml in the official documentation.
 
-* **missing packages:** it could happen that your code utilizes a library that's not included by default in the automl environment. or maybe, even if a certain package is present, you are using a functionality that is not available for that specific package version. it's happened to me more than once.
+- **missing packages:** it could happen that your code utilizes a library that's not included by default in the automl environment. or maybe, even if a certain package is present, you are using a functionality that is not available for that specific package version. it's happened to me more than once.
 
-   * **how to check:** if you are using a library that's not commonly used (like a text processing library for nlp, or special data manipulation library) make sure that they are included in your yaml specifications of the automl job. look at the logs of your job, and they normally will indicate which are the packages that are missing.
+  - **how to check:** if you are using a library that's not commonly used (like a text processing library for nlp, or special data manipulation library) make sure that they are included in your yaml specifications of the automl job. look at the logs of your job, and they normally will indicate which are the packages that are missing.
 
-* **environment settings:** azure automl offers options to specify custom dependencies via `conda` or `pip`. there are instances where these specifications are incorrect, not fully comprehensive or conflicting.
+- **environment settings:** azure automl offers options to specify custom dependencies via `conda` or `pip`. there are instances where these specifications are incorrect, not fully comprehensive or conflicting.
 
-   * **how to check:** verify that the yaml or json file that defines your environment is correct. that all packages are properly declared.
+  - **how to check:** verify that the yaml or json file that defines your environment is correct. that all packages are properly declared.
 
-* **custom code issues:** occasionally the problems can come from your custom code itself. for instance, you might be importing a library in a way that is not compatible with the way it is installed in the cloud. that’s rare but it happens.
+- **custom code issues:** occasionally the problems can come from your custom code itself. for instance, you might be importing a library in a way that is not compatible with the way it is installed in the cloud. that’s rare but it happens.
 
-   * **how to check:** check the traceback in the error message, often it will tell you in which file is the source of the error.
+  - **how to check:** check the traceback in the error message, often it will tell you in which file is the source of the error.
 
 **how to fix it**
 
@@ -52,14 +52,14 @@ the general approach is always the same: first isolate the problem, then define 
    ```yaml
    name: automl_custom_env
    channels:
-    - conda-forge
-    - defaults
+     - conda-forge
+     - defaults
    dependencies:
-    - python=3.8
-    - pandas=1.1.5
-    - numpy=1.19.2
-    - scikit-learn=0.23.2
-    - your_custom_lib=1.2.0
+     - python=3.8
+     - pandas=1.1.5
+     - numpy=1.19.2
+     - scikit-learn=0.23.2
+     - your_custom_lib=1.2.0
    ```
 
    for example, in this case, i've explicitly set the versions of `pandas`, `numpy`, and `scikit-learn` to known compatible versions. and included also a hypothetical library called `your_custom_lib` version `1.2.0`. you should replace with your custom library name and version.
@@ -114,11 +114,11 @@ the general approach is always the same: first isolate the problem, then define 
 
 instead of just throwing links at you, which can be overwhelming, i highly recommend the following (book like) resources:
 
-*   **the scikit-learn documentation:** it's really extensive and explains a lot about the library’s design, how to work with different modules and its dependencies. pay special attention to the version you are using and what features are compatible with that specific version. scikit-learn changes quite often.
+- **the scikit-learn documentation:** it's really extensive and explains a lot about the library’s design, how to work with different modules and its dependencies. pay special attention to the version you are using and what features are compatible with that specific version. scikit-learn changes quite often.
 
-*   **official azure ml documentation:** i know this seems like a very general advice, but azure's documentation is not a single webpage or link but an array of structured resources. learn to search within the specific automl section. the documentation often contains hints about common errors and how to solve them, particularly about environment setups.
+- **official azure ml documentation:** i know this seems like a very general advice, but azure's documentation is not a single webpage or link but an array of structured resources. learn to search within the specific automl section. the documentation often contains hints about common errors and how to solve them, particularly about environment setups.
 
-*   **the official conda documentation:** it's worth it to fully understand how conda environments work, particularly when dealing with package management and dependency issues.
+- **the official conda documentation:** it's worth it to fully understand how conda environments work, particularly when dealing with package management and dependency issues.
 
 **final thoughts**
 

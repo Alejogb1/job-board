@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-resolve-hotwiredstimulus-loading-issues-during-a-rails-7-heroku-deployment"
 ---
 
-Okay, let’s talk about `@hotwired/stimulus-loading` and the quirks it sometimes throws during a rails 7 heroku deployment. I’ve definitely been down that rabbit hole before – more times than i’d care to recall. From my experience, it usually boils down to a few common culprits, and getting to the bottom of it isn't always as straightforward as it seems.
+, let’s talk about `@hotwired/stimulus-loading` and the quirks it sometimes throws during a rails 7 heroku deployment. I’ve definitely been down that rabbit hole before – more times than i’d care to recall. From my experience, it usually boils down to a few common culprits, and getting to the bottom of it isn't always as straightforward as it seems.
 
 The first thing to understand is that `@hotwired/stimulus-loading` isn't some magical, detached entity. It’s a crucial piece of the hotwired ecosystem, managing how stimulus controllers are loaded and made available within your rails application. The issues typically surface during deployments, particularly on heroku, because local environments often gloss over some of the underlying asset pipeline subtleties that heroku’s production environment brings to the forefront.
 
@@ -14,7 +14,7 @@ Let me share a concrete example. Suppose you've got a simple stimulus controller
 
 ```javascript
 // app/javascript/controllers/hello_controller.js
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   static targets = ["output"];
@@ -54,21 +54,21 @@ Another tricky situation happens when you're working with turbo and cached pages
 
 ```javascript
 // app/javascript/controllers/hello_controller.js
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   static targets = ["output"];
 
   connect() {
+    this.updateOutput();
+
+    document.addEventListener("turbo:load", () => {
       this.updateOutput();
+    });
 
-      document.addEventListener("turbo:load", () => {
-          this.updateOutput();
-      });
-
-      document.addEventListener("turbo:render", () => {
-        this.updateOutput();
-      });
+    document.addEventListener("turbo:render", () => {
+      this.updateOutput();
+    });
   }
 
   updateOutput() {
@@ -82,9 +82,10 @@ In this modified controller, the `connect` method is extended to add listeners f
 Finally, it’s helpful to make use of `rails assets:precompile` locally. This emulates the asset compilation process on heroku and often helps uncover issues early on. Run `RAILS_ENV=production rails assets:precompile`, then inspect your public/assets folder to make sure your compiled javascript files are present and contain the expected content. If the files are missing or not up to date, it's an indication of an incorrect webpacker configuration or an issue with your build pipeline.
 
 In summary, resolving `@hotwired/stimulus-loading` issues on heroku boils down to ensuring:
+
 1. Your webpacker config is production-ready, specifically `compile: true` is set
 2. The paths for your javascript files, particularly controller location, are correct in your `webpacker.yml`
 3. You’re handling turbo caching by listening to the appropriate turbo events within your controllers
 4. Your precompilation succeeds both locally and on heroku as part of the deployment process.
 
-For a deeper dive, I would recommend delving into the official documentation for webpacker (rails/webpacker gem), and also reading the chapter on asset pipeline from the *Agile Web Development with Rails* book to understand the concepts related to asset compilation. Additionally, understanding the lifecycle of stimulus controllers as detailed in the official stimulus documentation will certainly be valuable. These will provide a strong foundation in understanding these concepts and debugging issues related to hotwired frameworks in real-world deployment settings.
+For a deeper dive, I would recommend delving into the official documentation for webpacker (rails/webpacker gem), and also reading the chapter on asset pipeline from the _Agile Web Development with Rails_ book to understand the concepts related to asset compilation. Additionally, understanding the lifecycle of stimulus controllers as detailed in the official stimulus documentation will certainly be valuable. These will provide a strong foundation in understanding these concepts and debugging issues related to hotwired frameworks in real-world deployment settings.

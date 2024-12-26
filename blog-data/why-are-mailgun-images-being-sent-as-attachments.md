@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-mailgun-images-being-sent-as-attachments"
 ---
 
-Alright, let's talk about why Mailgun might be treating your embedded images as attachments—it's a classic issue, and one I've debugged more times than I'd care to count, often in high-pressure situations where timely communication was paramount. It's rarely a Mailgun problem *per se*, but rather how the email itself is constructed, specifically the message formatting and the way image resources are referenced. It boils down to the message's mime type, the way you reference the images, and sometimes subtle issues with the email content.
+, let's talk about why Mailgun might be treating your embedded images as attachments—it's a classic issue, and one I've debugged more times than I'd care to count, often in high-pressure situations where timely communication was paramount. It's rarely a Mailgun problem _per se_, but rather how the email itself is constructed, specifically the message formatting and the way image resources are referenced. It boils down to the message's mime type, the way you reference the images, and sometimes subtle issues with the email content.
 
 The fundamental problem lies in how email clients interpret content, which hinges significantly on the `Content-Type` headers and the way multipart messages are structured. We're used to seeing HTML emails with embedded images displaying perfectly in our inboxes, but that magic is meticulously choreographed behind the scenes. When these messages aren't crafted properly, that "inline" image gets bumped to an attachment.
 
@@ -12,9 +12,9 @@ In my experience, particularly with legacy systems transitioning to more modern 
 
 Let’s break these down into more detail, using scenarios I've personally encountered.
 
-First, the most common culprit is not declaring the email content as `multipart/related` or `multipart/mixed` when you have both text/html content and embedded images. If you send a HTML email and reference an image within the HTML using a tag like `<img src="my_image.jpg">`, while simultaneously sending the image itself as an attachment, *and* the email's mime type isn't `multipart/related` (for inline images) or `multipart/mixed` (for both inline and attachments), the email client will likely treat the image as *just* another attachment. It's lacking context on how to interpret the relationship of the image with the surrounding HTML.
+First, the most common culprit is not declaring the email content as `multipart/related` or `multipart/mixed` when you have both text/html content and embedded images. If you send a HTML email and reference an image within the HTML using a tag like `<img src="my_image.jpg">`, while simultaneously sending the image itself as an attachment, _and_ the email's mime type isn't `multipart/related` (for inline images) or `multipart/mixed` (for both inline and attachments), the email client will likely treat the image as _just_ another attachment. It's lacking context on how to interpret the relationship of the image with the surrounding HTML.
 
-Let’s illustrate this with a simplified example. Imagine a basic setup sending an email with a simple HTML body and a referenced image. This first snippet demonstrates *what not to do*, where the incorrect header will likely result in the image being attached.
+Let’s illustrate this with a simplified example. Imagine a basic setup sending an email with a simple HTML body and a referenced image. This first snippet demonstrates _what not to do_, where the incorrect header will likely result in the image being attached.
 
 ```python
 import smtplib
@@ -62,7 +62,7 @@ except Exception as e:
     print(f"Error sending email: {e}")
 ```
 
-In this first snippet, the email's mime type defaults to `multipart/mixed` by the addition of attachments via `msg.attach`, however, while we've attached the image, it's not *linked* as inline image with the HTML content explicitly via the `cid` protocol. The `img src` tag does not know the context of this attached image.
+In this first snippet, the email's mime type defaults to `multipart/mixed` by the addition of attachments via `msg.attach`, however, while we've attached the image, it's not _linked_ as inline image with the HTML content explicitly via the `cid` protocol. The `img src` tag does not know the context of this attached image.
 
 Now, let's look at a proper approach. This involves using `multipart/related` and the Content-ID, along with using `cid:` as the source for the image:
 
@@ -116,6 +116,7 @@ except Exception as e:
     print(f"Error sending email: {e}")
 
 ```
+
 In this version, the critical change is the use of `multipart/related` and the `<img src="cid:image1">` tag, paired with a header added to the image part of the multipart with the same content id `<image1>`. This is what tells the email client to understand the relationship between the image and its HTML context. This is how a image can be embedded instead of added as an attachment.
 
 Finally, sometimes you do indeed want an attachment alongside inline images. In those cases, the email's mime type should be `multipart/mixed`, and we need to include both inline and attachments.
@@ -182,7 +183,7 @@ except Exception as e:
     print(f"Error sending email: {e}")
 ```
 
-Here we nest a `multipart/related` structure to encapsulate the inline images, then the entire structure is added to a  `multipart/mixed` message, allowing for both inline images and a true attachment.
+Here we nest a `multipart/related` structure to encapsulate the inline images, then the entire structure is added to a `multipart/mixed` message, allowing for both inline images and a true attachment.
 
 To deepen your understanding, I'd recommend diving into "Email Security: How to Keep Your Messages Safe" by Bruce Schneier (although it doesn't focus specifically on mime types, it's a crucial read to understand the larger context of email security and message structure). For a more direct and detailed look at mime types, consider checking out RFC 2045, RFC 2046, and RFC 2047—these are the foundational documents that define the standards for email formatting. The Python `email` package documentation is also crucial for understanding how these structures are implemented. Also, while not an academic reference, exploring the examples and best practices on the Mailgun developer pages, while often more pragmatic than rigorous, is helpful for understanding issues from a real world sending perspective.
 

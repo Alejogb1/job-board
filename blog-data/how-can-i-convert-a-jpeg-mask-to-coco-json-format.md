@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-convert-a-jpeg-mask-to-coco-json-format"
 ---
 
-Alright, let's tackle this. I've definitely been down this road before, several times actually, usually in projects involving image segmentation or object detection annotation pipelines. Converting a jpeg mask to coco json isn't inherently complex, but it requires a good understanding of both the jpeg mask format (often a single-channel grayscale image representing the mask) and the coco json structure, especially the segmentation data format. We need to move from pixels to polygons or RLE encoded masks. I'll walk through the process, focusing on the technical details and giving you a few code examples to illustrate.
+, let's tackle this. I've definitely been down this road before, several times actually, usually in projects involving image segmentation or object detection annotation pipelines. Converting a jpeg mask to coco json isn't inherently complex, but it requires a good understanding of both the jpeg mask format (often a single-channel grayscale image representing the mask) and the coco json structure, especially the segmentation data format. We need to move from pixels to polygons or RLE encoded masks. I'll walk through the process, focusing on the technical details and giving you a few code examples to illustrate.
 
 First, let’s establish the core challenge. Jpeg masks, typically, are pixel-based representations. Each pixel has a grayscale value (often 0 for background, and a value, possibly 255 or 1, for the object). Coco json, on the other hand, uses either polygons or run-length encoding (RLE) to represent the segmentation. Polygons are sequences of x, y coordinates that define the outline of the object, while RLE provides a compressed representation of the mask using run lengths. The conversion involves figuring out how to extract either the polygon or RLE representation from the pixel data.
 
@@ -57,10 +57,10 @@ def mask_to_coco_polygon(mask_path, image_id, category_id):
         "iscrowd": 0,  # set iscrowd to 0 unless you are dealing with crowd annotations.
         "area": cv2.contourArea(contours[0]) # Assuming only single contour is present and area is important
     }
-    
+
     # You can also include a bounding box which I'm skipping here
     # For bounding box calculation check the opencv documentation
-    
+
     return annotation
 
 #example
@@ -69,7 +69,7 @@ if __name__ == '__main__':
     dummy_mask = np.zeros((100,100),dtype = np.uint8)
     cv2.circle(dummy_mask,(50,50),40,255,-1)
     cv2.imwrite("dummy_mask.jpg",dummy_mask)
-    
+
     annotation_data = mask_to_coco_polygon("dummy_mask.jpg", image_id=1, category_id=1)
 
     if annotation_data:
@@ -104,13 +104,13 @@ def mask_to_coco_rle(mask_path, image_id, category_id):
      return None
 
   _, thresh = cv2.threshold(mask, 127, 255, cv2.THRESH_BINARY) # Adjust threshold if needed
-  
+
   fortran_mask = np.asfortranarray(thresh)
   rle = maskUtils.encode(fortran_mask)
 
   if not rle:
       return None
-  
+
   annotation = {
       "image_id": image_id,
       "category_id": category_id,
@@ -118,7 +118,7 @@ def mask_to_coco_rle(mask_path, image_id, category_id):
       "iscrowd": 0, #set to 0 if not a crowed annotation
       "area": int(maskUtils.area(rle)), # calculate the mask area directly from rle
     }
-  
+
   # You can also include a bounding box which I'm skipping here
 
   return annotation
@@ -130,7 +130,7 @@ if __name__ == '__main__':
   dummy_mask = np.zeros((100,100),dtype = np.uint8)
   cv2.circle(dummy_mask,(50,50),40,255,-1)
   cv2.imwrite("dummy_mask.jpg",dummy_mask)
-    
+
   annotation_data = mask_to_coco_rle("dummy_mask.jpg", image_id=1, category_id=1)
   if annotation_data:
        print(json.dumps(annotation_data, indent=2))

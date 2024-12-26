@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-i-deploy-an-onnx-model-from-synapse-notebook-to-a-dedicated-sql-pool"
 ---
 
-Okay, let's tackle this. Deploying an ONNX model from a Synapse notebook directly to a dedicated SQL pool – that’s a question I’ve encountered a few times in my work, especially when trying to bridge the gap between machine learning workflows and traditional data warehousing. The short answer is: you won't be deploying the *model itself* directly into the SQL pool. Instead, the typical pattern involves using the model for inference in a separate environment and then storing the results within the SQL pool. Let me elaborate and provide some practical examples based on projects I've worked on.
+, let's tackle this. Deploying an ONNX model from a Synapse notebook directly to a dedicated SQL pool – that’s a question I’ve encountered a few times in my work, especially when trying to bridge the gap between machine learning workflows and traditional data warehousing. The short answer is: you won't be deploying the _model itself_ directly into the SQL pool. Instead, the typical pattern involves using the model for inference in a separate environment and then storing the results within the SQL pool. Let me elaborate and provide some practical examples based on projects I've worked on.
 
 The dedicated SQL pool, in essence, is optimized for relational data storage and querying. It’s not designed to execute complex numerical computations like model scoring. Thus, the challenge becomes how to leverage the model’s predictive power and integrate its output into your SQL data. The ONNX format, which stands for Open Neural Network Exchange, primarily facilitates model exchange across different frameworks. It does not inherently provide a mechanism for in-database execution.
 
@@ -134,11 +134,11 @@ Another pattern that I've found useful involves using Azure Functions as an inte
 
 **Key Considerations:**
 
-*   **Model Performance and Scalability:** The choice of where to perform the inference depends heavily on the complexity of the model and the amount of data being processed. Azure ML and Spark Pools offer scalability advantages.
-*   **Data Types and Casting:** Ensure data types are consistent between the input data for your model, the predictions, and the data types in your SQL table. Improper data type handling can lead to errors.
-*   **Data Transformation:** You might need to preprocess your data before feeding it to the ONNX model and post-process predictions before storing them in SQL.
-*   **Error Handling:** Robust error handling during API calls, model inference and database interactions is vital. Log errors effectively for easier debugging.
-*   **Security:** Use appropriate authentication and authorization methods when accessing APIs or databases.
+- **Model Performance and Scalability:** The choice of where to perform the inference depends heavily on the complexity of the model and the amount of data being processed. Azure ML and Spark Pools offer scalability advantages.
+- **Data Types and Casting:** Ensure data types are consistent between the input data for your model, the predictions, and the data types in your SQL table. Improper data type handling can lead to errors.
+- **Data Transformation:** You might need to preprocess your data before feeding it to the ONNX model and post-process predictions before storing them in SQL.
+- **Error Handling:** Robust error handling during API calls, model inference and database interactions is vital. Log errors effectively for easier debugging.
+- **Security:** Use appropriate authentication and authorization methods when accessing APIs or databases.
 
 **Recommended Resources:**
 

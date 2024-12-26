@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-do-i-retrieve-the-uniqueid-of-a-deleted-message-in-mailkits-onmessageexpunged-event"
 ---
 
-Okay, let's unpack this. The challenge of grabbing the `UniqueId` of a deleted message during MailKit's `OnMessageExpunged` event is indeed a tricky spot, and one I've bumped into a few times myself, typically when building more sophisticated email synchronization features. The key is understanding the behavior of the IMAP protocol, and how MailKit layers on top of it.
+, let's unpack this. The challenge of grabbing the `UniqueId` of a deleted message during MailKit's `OnMessageExpunged` event is indeed a tricky spot, and one I've bumped into a few times myself, typically when building more sophisticated email synchronization features. The key is understanding the behavior of the IMAP protocol, and how MailKit layers on top of it.
 
-The `OnMessageExpunged` event fires *after* the server has removed the message. That's the crucial detail. By the time that event triggers, the server no longer has a record of that message's `UniqueId` associated with its message sequence number or the mailbox's contents. The `UniqueId` is, by definition, unique and tied to the message's lifetime on the server, and once the server removes it, that identity is gone. That's why directly querying the message by its sequence number within the `OnMessageExpunged` event is futile: it simply doesn't exist anymore.
+The `OnMessageExpunged` event fires _after_ the server has removed the message. That's the crucial detail. By the time that event triggers, the server no longer has a record of that message's `UniqueId` associated with its message sequence number or the mailbox's contents. The `UniqueId` is, by definition, unique and tied to the message's lifetime on the server, and once the server removes it, that identity is gone. That's why directly querying the message by its sequence number within the `OnMessageExpunged` event is futile: it simply doesn't exist anymore.
 
-Instead of chasing the deleted `UniqueId` within the `OnMessageExpunged` event itself, which is a dead end, the correct approach involves proactively caching the `UniqueId`s of messages we’re interested in *before* they are expunged, and then using that cache to find the corresponding `UniqueId` when an expunge event arrives. This requires some extra planning, but it’s the only reliable way to do it. Think of it like having a pre-emptive ledger of all message `UniqueId`s.
+Instead of chasing the deleted `UniqueId` within the `OnMessageExpunged` event itself, which is a dead end, the correct approach involves proactively caching the `UniqueId`s of messages we’re interested in _before_ they are expunged, and then using that cache to find the corresponding `UniqueId` when an expunge event arrives. This requires some extra planning, but it’s the only reliable way to do it. Think of it like having a pre-emptive ledger of all message `UniqueId`s.
 
 Here's how I usually tackle this, broken down into steps and some example code:
 
@@ -63,6 +63,7 @@ public class MailboxSync
 
 }
 ```
+
 **Explanation:**
 Here we are setting up an `ImapClient`, then connecting and fetching messages. We iterate over each fetched message and store the associated sequence number along with the `UniqueId` in our `_messageCache`. Then, we register for the `OnMessageExpunged` event. Finally, in the `OnMessageExpunged` handler, we retrieve the uniqueId from the cache, or log if we cannot find it.
 
@@ -112,7 +113,7 @@ The `FetchNewMessages` method fetches the last 10 messages in the inbox. It then
 
 2.  **Concurrency:** If multiple threads or asynchronous operations might interact with the cache, protect it using appropriate synchronization mechanisms (e.g., locks or concurrent collections). Otherwise, your cache will be prone to race conditions and data corruption.
 
-3.  **IMAP Protocol Knowledge:** A good understanding of IMAP is paramount for this. For a deep dive, RFC 3501 is the core document. For a more approachable introduction, consider the book *IMAP: Email Explained*, it offers a good breakdown of concepts. A deeper understanding will assist you in designing your email synchronization solution for a variety of edge cases.
+3.  **IMAP Protocol Knowledge:** A good understanding of IMAP is paramount for this. For a deep dive, RFC 3501 is the core document. For a more approachable introduction, consider the book _IMAP: Email Explained_, it offers a good breakdown of concepts. A deeper understanding will assist you in designing your email synchronization solution for a variety of edge cases.
 
 4.  **Error Handling:** The above code snippets are simplified for illustration purposes. In practice, you must add comprehensive error handling to deal with network issues, invalid responses, or other unexpected problems.
 

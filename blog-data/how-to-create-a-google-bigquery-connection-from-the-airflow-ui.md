@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-to-create-a-google-bigquery-connection-from-the-airflow-ui"
 ---
 
-Alright, let's dive into establishing a Google BigQuery connection via the Airflow UI. I've tackled this exact challenge a few times in past projects, notably when we were migrating legacy data pipelines from on-premises infrastructure to a cloud-based setup. The intricacies can sometimes feel a bit layered, but it's manageable with a solid understanding of the underlying components.
+, let's dive into establishing a Google BigQuery connection via the Airflow UI. I've tackled this exact challenge a few times in past projects, notably when we were migrating legacy data pipelines from on-premises infrastructure to a cloud-based setup. The intricacies can sometimes feel a bit layered, but it's manageable with a solid understanding of the underlying components.
 
 Initially, you might think it's just about dropping in credentials, but there’s more to it than that, especially when considering best practices for security and maintainability. Essentially, the process boils down to configuring an Airflow connection that specifies how to authenticate with Google Cloud Platform (GCP) and access BigQuery. The approach hinges on leveraging Airflow’s connection management and typically relies on service account keys for authentication, though other methods are possible, like workload identity federation, which is worth exploring in more secure environments.
 
 First off, before even touching the Airflow UI, you'll need a service account in GCP with the correct permissions to interact with BigQuery. This is crucial. Avoid using personal accounts or giving the service account overly broad permissions; stick to the principle of least privilege. Specifically, the service account should have roles such as `roles/bigquery.dataEditor` or `roles/bigquery.jobUser`, depending on the specific tasks your workflows will perform in BigQuery. I usually prefer `roles/bigquery.jobUser` for most job submissions and then grant more specific roles on an as-needed basis. This separation enhances security and troubleshooting down the line.
 
-Once the service account is set up and has the requisite permissions, you need to generate a JSON key file for it. This is the critical piece for authentication. *Do not* commit this key file directly to your version control system. Instead, store it securely, for instance, using Airflow’s secrets management backend (like HashiCorp Vault or GCP Secret Manager), and then configure the Airflow connection to access it from there.
+Once the service account is set up and has the requisite permissions, you need to generate a JSON key file for it. This is the critical piece for authentication. _Do not_ commit this key file directly to your version control system. Instead, store it securely, for instance, using Airflow’s secrets management backend (like HashiCorp Vault or GCP Secret Manager), and then configure the Airflow connection to access it from there.
 
 Now, regarding creating the connection via the Airflow UI, the workflow goes something like this: navigate to the ‘Admin’ section, then ‘Connections’. Click on ‘Create’ and select ‘Google Cloud Platform’ as the connection type. Here is where the specifics come in. You’ll need to provide the following:
 
@@ -27,22 +27,23 @@ The "extra" section is a crucial aspect that often gets overlooked. It allows yo
   "use_application_default_credentials": false
 }
 ```
+
 Note, you should set `use_application_default_credentials` to false. Also, notice the key is stored as a secret on gcp secret manager using it's path instead of storing the raw json. Alternatively, if you opt to store the entire key directly in the Airflow connections you might do this.
 
 ```json
 {
   "keyfile_dict": {
-  	  "type": "service_account",
-  	  "project_id": "your-project-id",
-  	  "private_key_id": "your-private-key-id",
-  	  "private_key": "-----BEGIN PRIVATE KEY-----\nYOUR_PRIVATE_KEY\n-----END PRIVATE KEY-----\n",
-  	  "client_email": "your-service-account-email",
-  	  "client_id": "your-service-account-client-id",
-  	  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  	  "token_uri": "https://oauth2.googleapis.com/token",
-  	  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  	  "client_x509_cert_url": "your-service-account-certificate-url"
-    }
+    "type": "service_account",
+    "project_id": "your-project-id",
+    "private_key_id": "your-private-key-id",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nYOUR_PRIVATE_KEY\n-----END PRIVATE KEY-----\n",
+    "client_email": "your-service-account-email",
+    "client_id": "your-service-account-client-id",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "your-service-account-certificate-url"
+  }
 }
 ```
 
@@ -52,26 +53,27 @@ Thirdly, if you're implementing workload identity federation (WIF), the configur
 
 ```json
 {
-    "use_application_default_credentials": true,
-    "impersonation_chain": [
-      "projects/your-project/serviceAccounts/your-service-account-email@your-project.iam.gserviceaccount.com"
-    ],
-      "credentials": {
-        "type": "external_account",
-        "audience": "//iam.googleapis.com/projects/your-project/locations/global/workloadIdentityPools/your-pool-id/providers/your-provider-id",
-        "subject_token_type": "urn:ietf:params:oauth:token-type:jwt",
-        "token_url": "https://sts.googleapis.com/v1/token",
-        "service_account_impersonation": {
-        	"target_principal": "projects/your-project/serviceAccounts/your-service-account-email@your-project.iam.gserviceaccount.com"
-       },
-       "workload_identity_pool_id": "your-pool-id",
-       "provider_id": "your-provider-id",
-       "credential_source": {
-          "file": "/var/run/secrets/kubernetes.io/serviceaccount/token"
-       }
-   }
+  "use_application_default_credentials": true,
+  "impersonation_chain": [
+    "projects/your-project/serviceAccounts/your-service-account-email@your-project.iam.gserviceaccount.com"
+  ],
+  "credentials": {
+    "type": "external_account",
+    "audience": "//iam.googleapis.com/projects/your-project/locations/global/workloadIdentityPools/your-pool-id/providers/your-provider-id",
+    "subject_token_type": "urn:ietf:params:oauth:token-type:jwt",
+    "token_url": "https://sts.googleapis.com/v1/token",
+    "service_account_impersonation": {
+      "target_principal": "projects/your-project/serviceAccounts/your-service-account-email@your-project.iam.gserviceaccount.com"
+    },
+    "workload_identity_pool_id": "your-pool-id",
+    "provider_id": "your-provider-id",
+    "credential_source": {
+      "file": "/var/run/secrets/kubernetes.io/serviceaccount/token"
+    }
+  }
 }
 ```
+
 This will allow your Airflow pod to make use of the workload identity federation token on the pod.
 
 After setting up the connection, it's crucial to test it. You can do this within the Airflow UI by selecting the connection and pressing "Test". This verifies that Airflow can successfully authenticate with GCP using the provided details. This step can save you hours of debugging later down the road. If the connection test fails, carefully double-check the service account permissions, the key file, and the 'extra' configurations. Errors in any of these will typically cause authentication failures.

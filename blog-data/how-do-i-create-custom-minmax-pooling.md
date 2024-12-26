@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-create-custom-minmax-pooling"
 ---
 
-Alright, let’s talk custom min-max pooling. It’s a topic I’ve bumped into more than a few times, especially back when I was tinkering with some unconventional CNN architectures for, let’s call it ‘non-standard’ signal analysis. The standard pooling operations, max and average, often fell short of capturing the nuances I needed, which led me to experiment with custom alternatives. Now, creating min-max pooling isn't about some esoteric algorithm, but about carefully crafting a combination of max and min operations to extract specific feature patterns. Let's dive into how we can achieve this practically.
+, let’s talk custom min-max pooling. It’s a topic I’ve bumped into more than a few times, especially back when I was tinkering with some unconventional CNN architectures for, let’s call it ‘non-standard’ signal analysis. The standard pooling operations, max and average, often fell short of capturing the nuances I needed, which led me to experiment with custom alternatives. Now, creating min-max pooling isn't about some esoteric algorithm, but about carefully crafting a combination of max and min operations to extract specific feature patterns. Let's dive into how we can achieve this practically.
 
 The core idea behind min-max pooling is to selectively apply both min and max pooling within the same neighborhood, potentially with different configurations or weights. The rationale? Max pooling excels at highlighting the most prominent features, while min pooling can detect the opposite, like dark spots in images or signal troughs. Combining these operations provides a richer feature map than using either in isolation, particularly for data with bimodal or more complex distributions.
 

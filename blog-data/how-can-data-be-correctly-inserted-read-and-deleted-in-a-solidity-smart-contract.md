@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-data-be-correctly-inserted-read-and-deleted-in-a-solidity-smart-contract"
 ---
 
-Okay, let’s tackle this. It's a fundamental question, and getting it wrong in a smart contract can lead to catastrophic results. I've personally witnessed the fallout from poorly managed data operations in a few projects – it's never a pretty sight, and it often involves a fair bit of debugging and rollback headaches. Let's break down the insertion, reading, and deletion of data within Solidity smart contracts, avoiding the common pitfalls.
+, let’s tackle this. It's a fundamental question, and getting it wrong in a smart contract can lead to catastrophic results. I've personally witnessed the fallout from poorly managed data operations in a few projects – it's never a pretty sight, and it often involves a fair bit of debugging and rollback headaches. Let's break down the insertion, reading, and deletion of data within Solidity smart contracts, avoiding the common pitfalls.
 
 Essentially, you're dealing with storage, which is persistent between function calls and transactions within a contract. Solidity provides various data types that influence how data is stored and accessed. Let's consider some common scenarios and how best to manage them.
 
@@ -109,13 +109,13 @@ In `inactivateUser`, we're not actually deleting the user record; rather, we're 
 
 **Important Considerations**
 
-*   **Gas Costs:** Be mindful that each operation consumes gas. Updating storage has greater gas cost than reading from it, and deleting a mapping entry using the storage value costs more than clearing it. Optimize your data structures and operations for efficiency. For example, avoid excessively large structs stored within mappings, as they can be quite costly.
+- **Gas Costs:** Be mindful that each operation consumes gas. Updating storage has greater gas cost than reading from it, and deleting a mapping entry using the storage value costs more than clearing it. Optimize your data structures and operations for efficiency. For example, avoid excessively large structs stored within mappings, as they can be quite costly.
 
-*   **Immutability:** Once a smart contract is deployed, the contract code itself and, importantly, the storage are immutable. You cannot dynamically remove state variables, so plan carefully during the design phase. This means that deleting means setting variables to their default value rather than truly removing them. This might seem restrictive to programmers used to traditional databases, but it's a crucial aspect of smart contract immutability.
+- **Immutability:** Once a smart contract is deployed, the contract code itself and, importantly, the storage are immutable. You cannot dynamically remove state variables, so plan carefully during the design phase. This means that deleting means setting variables to their default value rather than truly removing them. This might seem restrictive to programmers used to traditional databases, but it's a crucial aspect of smart contract immutability.
 
-*   **Security:** Access control is vital. Ensure that only authorized users or contracts can modify the data. In my projects, I've often used the `onlyOwner` or `onlyAdmin` modifiers to restrict critical functions to certain roles.
+- **Security:** Access control is vital. Ensure that only authorized users or contracts can modify the data. In my projects, I've often used the `onlyOwner` or `onlyAdmin` modifiers to restrict critical functions to certain roles.
 
-*   **Storage Structure:** Proper use of mappings and structs can greatly impact the efficiency of the data retrieval. It is often beneficial to group related information into a single struct, and this will optimize gas costs. I've found that neglecting planning the correct data structures at the start is a very common error that causes headaches later on.
+- **Storage Structure:** Proper use of mappings and structs can greatly impact the efficiency of the data retrieval. It is often beneficial to group related information into a single struct, and this will optimize gas costs. I've found that neglecting planning the correct data structures at the start is a very common error that causes headaches later on.
 
 **Recommendations**
 

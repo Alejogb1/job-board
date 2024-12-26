@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-nested-resources-be-accessed-without-pre-populating-the-parent-resource-using-a-form-helper"
 ---
 
-Okay, let's talk nested resources and how to navigate them gracefully, particularly when form helpers might nudge you towards pre-population you'd rather avoid. I recall a particularly tricky project a few years back involving a complex system of users, teams, and project tasks, all nested quite deeply. We ran into this exact problem and it took some careful planning to get it working smoothly.
+, let's talk nested resources and how to navigate them gracefully, particularly when form helpers might nudge you towards pre-population you'd rather avoid. I recall a particularly tricky project a few years back involving a complex system of users, teams, and project tasks, all nested quite deeply. We ran into this exact problem and it took some careful planning to get it working smoothly.
 
-The typical approach with many form helpers, especially in web frameworks, often encourages building forms that assume you're either creating a *new* nested resource *within* an existing parent or editing an existing one. This typically manifests by requiring you to first retrieve the parent, then use that parent to generate the form, pre-filling parts of the form’s logic for the nested resource. This works well in many situations but becomes cumbersome, and occasionally inefficient, when you don’t want that parent object loaded just to present the form for a new nested resource. Instead, we need to think about structuring our application to access the child resource without the need to have a fully materialized parent object readily available for the purpose of rendering a form, or for simple reads.
+The typical approach with many form helpers, especially in web frameworks, often encourages building forms that assume you're either creating a _new_ nested resource _within_ an existing parent or editing an existing one. This typically manifests by requiring you to first retrieve the parent, then use that parent to generate the form, pre-filling parts of the form’s logic for the nested resource. This works well in many situations but becomes cumbersome, and occasionally inefficient, when you don’t want that parent object loaded just to present the form for a new nested resource. Instead, we need to think about structuring our application to access the child resource without the need to have a fully materialized parent object readily available for the purpose of rendering a form, or for simple reads.
 
-The core concept here is to understand that the parent resource's id is primarily for context, not a requirement for *form* generation itself for *new* children. We can use the parent's id in the routing to establish context, but it should primarily influence how we *save* the new nested resource. The trick lies in isolating form rendering from entity state.
+The core concept here is to understand that the parent resource's id is primarily for context, not a requirement for _form_ generation itself for _new_ children. We can use the parent's id in the routing to establish context, but it should primarily influence how we _save_ the new nested resource. The trick lies in isolating form rendering from entity state.
 
 **Example 1: Handling New Child Creation with a Minimal Parent Reference (Web Application)**
 
@@ -100,7 +100,7 @@ print(f"POST Response status: {post_response.status}")
 print(f"POST Response body: {post_response.body}")
 ```
 
-In this example, the key thing to note is that `render_new_project_form` function does *not* load the `Team` object. It simply accepts the `team_id`, uses it in the URL context, and sends a form. The `handle_create_new_project` uses the `team_id` which is still available from the url. This means we can avoid premature parent loads while providing necessary contextual information.
+In this example, the key thing to note is that `render_new_project_form` function does _not_ load the `Team` object. It simply accepts the `team_id`, uses it in the URL context, and sends a form. The `handle_create_new_project` uses the `team_id` which is still available from the url. This means we can avoid premature parent loads while providing necessary contextual information.
 
 **Example 2: Direct Resource Access Using Identifiers (API)**
 

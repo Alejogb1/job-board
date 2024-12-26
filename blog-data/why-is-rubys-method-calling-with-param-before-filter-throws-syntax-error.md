@@ -4,11 +4,11 @@ date: "2024-12-16"
 id: "why-is-rubys-method-calling-with-param-before-filter-throws-syntax-error"
 ---
 
-Alright, let's tackle this. I've encountered this particular snag several times, and it usually stems from a fundamental misunderstanding of Ruby's parsing rules, specifically around method definition and invocation, particularly concerning parameter names shadowing method names. I’ve spent more than a few late nights debugging this exact scenario, and while initially frustrating, it became a great lesson in appreciating Ruby's subtleties.
+, let's tackle this. I've encountered this particular snag several times, and it usually stems from a fundamental misunderstanding of Ruby's parsing rules, specifically around method definition and invocation, particularly concerning parameter names shadowing method names. I’ve spent more than a few late nights debugging this exact scenario, and while initially frustrating, it became a great lesson in appreciating Ruby's subtleties.
 
 The core issue arises when you attempt to define a method where one of the parameters shares a name with a built-in Ruby method, particularly before filters in frameworks like Rails, or any context where specific methods are expected to execute in a predictable order. The Ruby interpreter gets confused, treating the parameter as an attempt to call a method rather than receive input data, and consequently throws a syntax error. This isn't a flaw in Ruby itself, but rather a limitation— or perhaps, a carefully considered aspect— of its syntax and evaluation process.
 
-Let’s break down the mechanics. Ruby, when it encounters a method definition, parses it step-by-step. If a parameter name collides with a method or keyword that it expects to see at that point in the parsing, it generates the error. The important distinction is that it’s not merely about *having* a method with that name, but about the parser’s *expectation* of encountering a method call in that context. Typically, before filters like 'before_action' or similar constructs expect a method name (symbol or string) or a proc, not a parameter being defined during method definition. This creates the conflict.
+Let’s break down the mechanics. Ruby, when it encounters a method definition, parses it step-by-step. If a parameter name collides with a method or keyword that it expects to see at that point in the parsing, it generates the error. The important distinction is that it’s not merely about _having_ a method with that name, but about the parser’s _expectation_ of encountering a method call in that context. Typically, before filters like 'before_action' or similar constructs expect a method name (symbol or string) or a proc, not a parameter being defined during method definition. This creates the conflict.
 
 Here's an example, and I'll try and keep it as close to a realistic, albeit fictional, past experience of mine as possible, for clarity. I recall working on a microservice for managing user preferences, and we had a controller set up like this (simplified for demonstration):
 
@@ -87,7 +87,7 @@ def another_method(message) # No error
 end
 ```
 
-This pattern repeats itself; parameter names should be specific, descriptive and non-conflicting. It’s not a question of whether 'user' *can* be a parameter name; it’s about whether Ruby *expects* to see 'user' as a parameter at the specific point in the code where a parsing error occurs due to name conflict.
+This pattern repeats itself; parameter names should be specific, descriptive and non-conflicting. It’s not a question of whether 'user' _can_ be a parameter name; it’s about whether Ruby _expects_ to see 'user' as a parameter at the specific point in the code where a parsing error occurs due to name conflict.
 
 To dive deeper into these parsing rules and Ruby's evaluation process, I highly recommend looking at “The Ruby Programming Language” by David Flanagan and Yukihiro Matsumoto. It provides a comprehensive overview of Ruby internals and syntax rules. Another valuable resource is “Understanding Computation: From Simple Machines to Impossible Programs” by Tom Stuart, which, while not solely focused on Ruby, gives a brilliant perspective on how parsing works conceptually. Finally, researching topics on lexing and parsing theory, as well as exploring Ruby's own source code (available on GitHub) will also prove invaluable for anyone seeking a comprehensive understanding of this subject.
 

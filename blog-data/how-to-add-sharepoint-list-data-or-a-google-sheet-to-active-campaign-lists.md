@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-add-sharepoint-list-data-or-a-google-sheet-to-active-campaign-lists"
 ---
 
-alright, so you’re looking at getting data from sharepoint lists or google sheets into active campaign lists, that’s a common challenge. i've been there, many times actually. feels like a rite of passage for any marketing automation setup, doesn’t it? integrating data sources like these into active campaign can get a bit fiddly, but it's not insurmountable. let's break it down.
+, so you’re looking at getting data from sharepoint lists or google sheets into active campaign lists, that’s a common challenge. i've been there, many times actually. feels like a rite of passage for any marketing automation setup, doesn’t it? integrating data sources like these into active campaign can get a bit fiddly, but it's not insurmountable. let's break it down.
 
 first things first, direct integration via active campaign’s ui is usually not going to cut it for sharepoint or google sheets. there isn't a straightforward “import directly from sharepoint” or “pull from google sheet” button. what we're looking at is more of a programmatic approach, where we need to extract the data, transform it to fit active campaign's structure, and then push it in. this will involve writing some code or using middleware. i’ve tried a few tools over the years, from dedicated integration platforms to custom scripts, and i'll tell you my experiences as we go along.
 
@@ -21,14 +21,14 @@ def get_sharepoint_list_data(site_url, list_name, client_id, client_secret, tena
 
     auth_url = f"https://login.microsoftonline.com/{tenant_id}/oauth2/token"
     resource = "https://{site_url}".format(site_url=site_url)
-    
+
     auth_data = {
         'grant_type': 'client_credentials',
         'client_id': client_id,
         'client_secret': client_secret,
         'resource': resource
     }
-    
+
     auth_response = requests.post(auth_url, data=auth_data)
     auth_response.raise_for_status() # check if request was successful
     auth_token = auth_response.json()['access_token']
@@ -42,7 +42,7 @@ def get_sharepoint_list_data(site_url, list_name, client_id, client_secret, tena
 
     list_response = requests.get(list_url, headers=headers)
     list_response.raise_for_status() #check if request was successful
-    
+
     return list_response.json()['d']['results']
 
 # example usage
@@ -56,7 +56,8 @@ data = get_sharepoint_list_data(site_url, list_name, client_id, client_secret, t
 print(json.dumps(data, indent=4))
 
 ```
-*important: never embed your secrets directly in the code, i’m showing a simplified version for this context. use environment variables or a secure vault*.
+
+_important: never embed your secrets directly in the code, i’m showing a simplified version for this context. use environment variables or a secure vault_.
 
 this python snippet uses the requests library to make api calls to sharepoint. you’ll need to register an application in azure active directory to get the client id and client secret. the response comes back as a json, which you can then parse. the actual structure of that json depends on how your list columns are structured, so you’ll have to adjust your code accordingly. now, once you've got the data, you need to massage it to fit active campaign. active campaign expects data in specific formats, usually a json structure like: `[{'email':'email@email.com','first_name':'john', 'last_name':'doe'}]`. so a little bit of transformation is required, and then pushing to active campaign’s api endpoints. if you’re feeling brave you could even try to send it in chunks to not hit the active campaign limits, that's what i had to do on my last project, it involved some headache but it worked.
 
@@ -79,14 +80,14 @@ def get_google_sheet_data(spreadsheet_id, range_name, credentials_file):
     sheet = service.spreadsheets()
     result = sheet.values().get(spreadsheetId=spreadsheet_id, range=range_name).execute()
     values = result.get('values', [])
-    
+
     keys = values[0]
-    
+
     sheet_data = []
     for row in values[1:]:
       row_data = dict(zip(keys,row))
       sheet_data.append(row_data)
-      
+
     return sheet_data
 
 # example usage
@@ -142,20 +143,20 @@ you'll need to replace the placeholders with your active campaign api url and ap
 
 before i let you go on with your coding, there's a few considerations i've had over the years that i'd like to share:
 
-*   **rate limits:** active campaign, sharepoint, and google sheets, all have api rate limits. be mindful of these to avoid getting your requests throttled or blocked. implement proper error handling and retry mechanisms if necessary.
-*   **error handling:** be sure to include error checking in all aspects of your code. catching bad authentication, wrong schema, or invalid data before it reaches your api, will save time debugging.
-*   **data types and fields**: make sure the fields you pull from sharepoint/google sheets match the active campaign fields data types. this will save you headaches when importing the data.
-*   **security:** never expose your api keys or credentials in your code, use environment variables or secure vaults.
-*   **data volume**: if you are processing a lot of data, consider batching your operations when you update in active campaign. sending thousands of requests at once might not be the most optimal route.
-*   **data integrity**: data hygiene is essential. make sure to have a proper process to remove/update contacts that unsubscribed in active campaign. having bad data is worse than having no data.
+- **rate limits:** active campaign, sharepoint, and google sheets, all have api rate limits. be mindful of these to avoid getting your requests throttled or blocked. implement proper error handling and retry mechanisms if necessary.
+- **error handling:** be sure to include error checking in all aspects of your code. catching bad authentication, wrong schema, or invalid data before it reaches your api, will save time debugging.
+- **data types and fields**: make sure the fields you pull from sharepoint/google sheets match the active campaign fields data types. this will save you headaches when importing the data.
+- **security:** never expose your api keys or credentials in your code, use environment variables or secure vaults.
+- **data volume**: if you are processing a lot of data, consider batching your operations when you update in active campaign. sending thousands of requests at once might not be the most optimal route.
+- **data integrity**: data hygiene is essential. make sure to have a proper process to remove/update contacts that unsubscribed in active campaign. having bad data is worse than having no data.
 
 **resources:**
 
 as for additional learning resources: i’d recommend taking a look at these, as they helped me understand better some nuances:
 
-*   for a general understanding of apis i recommend: “restful web services” by leonard richardson and sam ruby, it’s not focused on any specific technology but it covers a lot of the fundamentals.
-*   the official microsoft graph api documentation for sharepoint: the documentation will be your constant companion on your sharepoint journey. they have specific samples for sharepoint lists in most languages.
-*   the google sheets api documentation: is also well structured and easy to understand. their quickstarts are especially useful to get up and running.
-*   active campaign's api documentation: is another great resource that you can use to check the specifics about the format needed for the requests.
+- for a general understanding of apis i recommend: “restful web services” by leonard richardson and sam ruby, it’s not focused on any specific technology but it covers a lot of the fundamentals.
+- the official microsoft graph api documentation for sharepoint: the documentation will be your constant companion on your sharepoint journey. they have specific samples for sharepoint lists in most languages.
+- the google sheets api documentation: is also well structured and easy to understand. their quickstarts are especially useful to get up and running.
+- active campaign's api documentation: is another great resource that you can use to check the specifics about the format needed for the requests.
 
 that is basically it. remember this is all code; i’m not a fan of the term “code magic”, it’s just code, and debugging, and learning to make the best choices for your situation. hope that helps.

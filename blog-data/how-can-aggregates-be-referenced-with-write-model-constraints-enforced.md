@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-aggregates-be-referenced-with-write-model-constraints-enforced"
 ---
 
-Okay, let's tackle this. Referencing aggregates while ensuring write model constraints are strictly enforced is a challenge I've bumped into quite a few times, especially back in my days working on that sprawling e-commerce platform. It’s a fundamental aspect of domain-driven design (ddd) and maintaining data integrity. It's less about finding a silver bullet and more about choosing the right tool for the job within the context of your specific application. There's no single, universally applicable answer, but rather a set of patterns and techniques that, when combined thoughtfully, can yield a robust solution.
+, let's tackle this. Referencing aggregates while ensuring write model constraints are strictly enforced is a challenge I've bumped into quite a few times, especially back in my days working on that sprawling e-commerce platform. It’s a fundamental aspect of domain-driven design (ddd) and maintaining data integrity. It's less about finding a silver bullet and more about choosing the right tool for the job within the context of your specific application. There's no single, universally applicable answer, but rather a set of patterns and techniques that, when combined thoughtfully, can yield a robust solution.
 
 My experience has shown that the core problem usually boils down to maintaining consistency when modifying related aggregates. In a purely relational database world, you might be inclined to reach for foreign keys, cascades, and maybe some clever triggers. But when working with ddd, especially in a microservices environment where aggregates are often self-contained transactional units, these tools can become more of a liability than an asset. They can lead to unintended coupling, making changes across different areas of the application significantly harder.
 
@@ -40,7 +40,7 @@ class CustomerRepository:
 class Storage:
     def __init__(self, store):
        self.store = store
-    
+
     def check_customer_exists(self, customer_id):
        return customer_id in self.store # assumes self.store is a dictionary or equivalent for simplicity
 
@@ -94,10 +94,10 @@ class CustomerRepository: # same as in previous example
 class Storage: # same as in previous example
     def __init__(self, store):
        self.store = store
-    
+
     def check_customer_exists(self, customer_id):
        return customer_id in self.store
-    
+
     def get_customer_credit(self, customer_id):
         if customer_id in self.store:
            return self.store[customer_id]['credit']
@@ -220,6 +220,7 @@ storage.store["order3"] = order3
 order_service.handle_order_placed(event_queue.pop()) # will be cancelled due to invalid customer
 
 ```
+
 This example showcases asynchronous validation. The order is first placed. It then publishes an event, which the order service listens to and performs credit checks and cancels order if needed. This pattern can provide the flexibility you need for different consistency needs and is ideal in systems where microservices do not have a central datastore.
 
 **Recommended Resources**

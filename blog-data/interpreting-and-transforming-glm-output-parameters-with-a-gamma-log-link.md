@@ -4,15 +4,15 @@ date: "2024-12-13"
 id: "interpreting-and-transforming-glm-output-parameters-with-a-gamma-log-link"
 ---
 
-Alright so you're wrestling with gamma GLMs and that whole log-link thing right I get it it's not exactly a walk in the park been there done that probably more times than I care to admit Let me break down how I usually approach this kinda thing and maybe give you some insights from my own slightly traumatizing experiences with this beast
+so you're wrestling with gamma GLMs and that whole log-link thing right I get it it's not exactly a walk in the park been there done that probably more times than I care to admit Let me break down how I usually approach this kinda thing and maybe give you some insights from my own slightly traumatizing experiences with this beast
 
 So first off the core problem is that your GLM spits out coefficients on a transformed scale its not the original data's scale its the scale of the link function and when youre using a gamma distribution with a log link its even less direct its like trying to decipher a secret code written in math and statistics
 
 Gamma distributions are cool for modeling positive skewed data stuff like durations or costs or anything that can only be positive because it avoids negative numbers which is a big plus log link on the other hand squashes the expected value before doing linear math this makes sure that the expected values stay positive
 
-Okay picture this you run your glm and you get a coefficient like lets say 0.5 for a predictor it doesn't mean that for every one unit increase in the predictor your gamma distributed variable directly increases by 0.5 That's not how this works and it is something I missed early in my career a lot resulting in a lot of head scratching and a fair amount of bad model conclusions its important to say it out loud
+picture this you run your glm and you get a coefficient like lets say 0.5 for a predictor it doesn't mean that for every one unit increase in the predictor your gamma distributed variable directly increases by 0.5 That's not how this works and it is something I missed early in my career a lot resulting in a lot of head scratching and a fair amount of bad model conclusions its important to say it out loud
 
-What that coefficient actually represents is the change in the *log* of the expected value of your gamma variable When I first encountered this I remember spending a whole day thinking I was doing something wrong with my code and I remember calling my boss then and the guy said in a very calm voice just go back to the basics maybe your basic math and then he turned off the mic leaving me there with my confusion I mean this can happen to the best of us. So a positive coefficient means your expected value of your original gamma variable increases with the predictor increase because of the log's property but in a non-linear way. A negative coefficient will result in a decrease.
+What that coefficient actually represents is the change in the _log_ of the expected value of your gamma variable When I first encountered this I remember spending a whole day thinking I was doing something wrong with my code and I remember calling my boss then and the guy said in a very calm voice just go back to the basics maybe your basic math and then he turned off the mic leaving me there with my confusion I mean this can happen to the best of us. So a positive coefficient means your expected value of your original gamma variable increases with the predictor increase because of the log's property but in a non-linear way. A negative coefficient will result in a decrease.
 
 Here is where the transformation stuff comes in to transform the output back to what we are interested in
 
@@ -122,6 +122,7 @@ print("Predictions:\n", predictions)
 
 #This example should print the predictions for multiple cases
 ```
+
 This predict function is not too fancy and its made for small use cases but it is very helpful for me and I use it frequently but if you need something more robust maybe the predict function in the library can help you too.
 
 Now remember that the log link is not the only link you can use with gamma distributed data but its often a good choice because it makes calculations simpler and it keeps things in the positive realm. There are other links like inverse links which I had the misfortune of struggling with in a past project that involved insurance risk modeling I spent a couple of weeks trying to wrap my head around its inverse behavior it felt like I was trying to solve a Rubik's cube in my sleep.

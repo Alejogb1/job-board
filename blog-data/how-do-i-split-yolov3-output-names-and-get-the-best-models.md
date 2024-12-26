@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-split-yolov3-output-names-and-get-the-best-models"
 ---
 
-Okay, let's tackle this. I've been elbow-deep in object detection pipelines for years, and wrestling with YOLO output formatting is something I've definitely spent some quality time with. The 'output names' you're likely referring to are the layer names that give you the predictions. Understanding them is key, and the 'best models' part is equally crucial, but let’s break it down systematically.
+, let's tackle this. I've been elbow-deep in object detection pipelines for years, and wrestling with YOLO output formatting is something I've definitely spent some quality time with. The 'output names' you're likely referring to are the layer names that give you the predictions. Understanding them is key, and the 'best models' part is equally crucial, but let’s break it down systematically.
 
 First, let’s address the issue of parsing those output layer names. YOLOv3, as you probably know, employs a multi-scale prediction approach. This leads to a set of output layers, each responsible for detecting objects at a different scale. The names of these layers are usually structured to indicate their specific scale and often include information about the anchor boxes used. A common naming convention often follows something like this: 'yolo_layer_0', 'yolo_layer_1', and 'yolo_layer_2'. Or perhaps you might see something a bit more detailed, like 'conv2d_81/BiasAdd:0', 'conv2d_93/BiasAdd:0', 'conv2d_105/BiasAdd:0'. The specific naming format can vary depending on the framework used to define and train the model (e.g., darknet, tensorflow, pytorch).
 
@@ -143,8 +143,8 @@ Now, addressing the second part of your question, “getting the best models”.
 **Resources:**
 For more in-depth understanding of object detection models, I'd recommend reviewing these resources:
 
-*   **"Deep Learning with Python" by François Chollet:** This book provides a good introduction to deep learning with a practical focus on Keras and can be beneficial for working with TensorFlow-based models.
-*   **"Computer Vision: Algorithms and Applications" by Richard Szeliski:** A comprehensive and authoritative text, covering various aspects of computer vision, including object detection techniques.
-*   **Research papers:** Search for the original papers of YOLOv3, EfficientDet, and DETR on arXiv for the most up-to-date technical details on model architectures and training procedures. The initial YOLO papers by Joseph Redmon are a great place to start.
+- **"Deep Learning with Python" by François Chollet:** This book provides a good introduction to deep learning with a practical focus on Keras and can be beneficial for working with TensorFlow-based models.
+- **"Computer Vision: Algorithms and Applications" by Richard Szeliski:** A comprehensive and authoritative text, covering various aspects of computer vision, including object detection techniques.
+- **Research papers:** Search for the original papers of YOLOv3, EfficientDet, and DETR on arXiv for the most up-to-date technical details on model architectures and training procedures. The initial YOLO papers by Joseph Redmon are a great place to start.
 
 By extracting the correct layers from your model and ensuring you follow the outlined best practices, you will be able to use the most effective model for your needs. Let me know if you have other questions.

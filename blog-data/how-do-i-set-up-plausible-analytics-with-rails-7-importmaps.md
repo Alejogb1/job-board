@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-set-up-plausible-analytics-with-rails-7-importmaps"
 ---
 
-Okay, let's tackle this. Integrating Plausible Analytics with a Rails 7 application using Importmaps, it's a setup I've navigated before, and frankly, it's not as straightforward as just dropping a script tag into your layout, due to how Importmaps manage dependencies. I remember struggling with this on a project a couple of years back when we were migrating from Webpacker, and the key is understanding how Importmaps handle external libraries and how to hook into that pipeline. Let's break it down.
+, let's tackle this. Integrating Plausible Analytics with a Rails 7 application using Importmaps, it's a setup I've navigated before, and frankly, it's not as straightforward as just dropping a script tag into your layout, due to how Importmaps manage dependencies. I remember struggling with this on a project a couple of years back when we were migrating from Webpacker, and the key is understanding how Importmaps handle external libraries and how to hook into that pipeline. Let's break it down.
 
 The core challenge lies in the fact that Importmaps don't directly process JavaScript files; they simply map module specifiers to their corresponding locations. Unlike Webpacker, which bundles all your assets together, Importmaps rely on the browser's native module loading capabilities. This means Plausible's script, which you typically include via a `<script>` tag, needs to be handled differently.
 
@@ -27,33 +27,33 @@ Now, with that defined, we can actually utilize this module in our `app/javascri
 ```javascript
 // app/javascript/application.js
 
-import * as Turbo from "@hotwired/turbo"
-import { Application } from "@hotwired/stimulus"
-import { definitionsFromContext } from "@hotwired/stimulus-webpack-helpers"
-import "plausible"
+import * as Turbo from "@hotwired/turbo";
+import { Application } from "@hotwired/stimulus";
+import { definitionsFromContext } from "@hotwired/stimulus-webpack-helpers";
+import "plausible";
 
 // Check if the Plausible script has loaded successfully before proceeding
 document.addEventListener("DOMContentLoaded", () => {
-    // check the global `plausible` var before attempting to access it
-    if (typeof plausible !== "undefined") {
-        // It's always good practice to check if an element exists on the page before trying to interact with it
-        // You might not want to send analytics on every page in a typical application.
-        if (document.querySelector("[data-plausible-domain]")) {
-            // The domain will be passed by a view
-            const domain = document.querySelector("[data-plausible-domain]").dataset.plausibleDomain;
-            plausible('pageview', {
-              props: {
-                domain: domain
-              }
-            });
-        }
+  // check the global `plausible` var before attempting to access it
+  if (typeof plausible !== "undefined") {
+    // It's always good practice to check if an element exists on the page before trying to interact with it
+    // You might not want to send analytics on every page in a typical application.
+    if (document.querySelector("[data-plausible-domain]")) {
+      // The domain will be passed by a view
+      const domain = document.querySelector("[data-plausible-domain]").dataset
+        .plausibleDomain;
+      plausible("pageview", {
+        props: {
+          domain: domain,
+        },
+      });
     }
+  }
 });
 
-window.Stimulus = Application.start()
-const context = require.context("./controllers", true, /\.js$/)
-Stimulus.load(definitionsFromContext(context))
-
+window.Stimulus = Application.start();
+const context = require.context("./controllers", true, /\.js$/);
+Stimulus.load(definitionsFromContext(context));
 ```
 
 In this example, we import the 'plausible' module, which, due to our `importmap.rb` configuration, triggers the loading of the script from Plausible's CDN. The key improvement here is wrapping the plausible call in a document.addEventListener to ensure that the script, as well as the document are fully loaded. Additionally, the conditional on typeof `plausible` ensures we don’t get errors if the script fails to load for some reason. Finally, the check for an element with the `data-plausible-domain` attribute allows you to trigger analytics selectively depending on your application’s requirements.
@@ -63,21 +63,21 @@ Now, let's expand on a more advanced usage scenario, such as tracking a custom e
 ```javascript
 // app/javascript/controllers/click_tracker_controller.js
 
-import { Controller } from "@hotwired/stimulus"
-import "plausible"
+import { Controller } from "@hotwired/stimulus";
+import "plausible";
 
 export default class extends Controller {
-    connect() {
-      this.element.addEventListener('click', this.trackClick.bind(this))
-    }
+  connect() {
+    this.element.addEventListener("click", this.trackClick.bind(this));
+  }
 
-    trackClick() {
-      if (typeof plausible !== "undefined") {
-        // Data attribute `data-event-name` would be used in the view
-          const eventName = this.element.dataset.eventName
-          plausible(eventName);
-      }
+  trackClick() {
+    if (typeof plausible !== "undefined") {
+      // Data attribute `data-event-name` would be used in the view
+      const eventName = this.element.dataset.eventName;
+      plausible(eventName);
     }
+  }
 }
 ```
 

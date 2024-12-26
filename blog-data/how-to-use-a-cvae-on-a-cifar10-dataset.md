@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-a-cvae-on-a-cifar10-dataset"
 ---
 
-alright, so you’re looking to get a conditional variational autoencoder, a cvae, up and running on the cifar10 dataset. i’ve messed around with this kind of setup before, it's a fairly common challenge when you want more control over the generative process, not just random samples. basically, you want to guide the image generation based on the class labels, so we're not just spitting out random-looking "things". been there, done that, multiple times in fact. let me walk you through what i’ve found works well.
+, so you’re looking to get a conditional variational autoencoder, a cvae, up and running on the cifar10 dataset. i’ve messed around with this kind of setup before, it's a fairly common challenge when you want more control over the generative process, not just random samples. basically, you want to guide the image generation based on the class labels, so we're not just spitting out random-looking "things". been there, done that, multiple times in fact. let me walk you through what i’ve found works well.
 
 the core idea here is that we’re going to modify the standard vae architecture to include label information. the standard vae encodes input data, in this case images, into a latent space, then decodes that latent representation back to the image. the cvae, however, conditions both the encoder and decoder on the class label. this means the latent representation also has class information encoded within it. this gives you the power to sample from the latent space conditioned by a given class, so you get control over the output images being generated.
 
@@ -45,7 +45,7 @@ for images, labels in train_data.take(1):
 
 this function takes care of loading the dataset, normalizing pixel values to between 0 and 1, converting the labels to one-hot vectors and creating a batched dataset, ready for consumption by the model. notice the `take(1)` in the print part of the snippet i added to inspect the tensors that we will be feeding to our network. the output of this print shows the shape of the image tensors, a batch of 32 images with 32x32 pixel shape and 3 channels (rgb) and the label tensors which are a batch of 32 one-hot encoded vectors each with 10 entries since we have 10 classes in cifar10 dataset.
 
-next is the actual cvae architecture. we will define encoder and decoder models that integrate the label information. the encoder takes in the concatenated image and label vector, squashes this down to a lower-dimensional latent space, and produces the mean and the standard deviation of the latent distribution. the decoder then receives a sample from this latent space *and* the label vector, using both to generate an image. a simple network with convolutional and dense layers does the trick, as long as you take care about dimensionality matching and non-linearities.
+next is the actual cvae architecture. we will define encoder and decoder models that integrate the label information. the encoder takes in the concatenated image and label vector, squashes this down to a lower-dimensional latent space, and produces the mean and the standard deviation of the latent distribution. the decoder then receives a sample from this latent space _and_ the label vector, using both to generate an image. a simple network with convolutional and dense layers does the trick, as long as you take care about dimensionality matching and non-linearities.
 
 here's a basic cvae implementation with tensorflow:
 

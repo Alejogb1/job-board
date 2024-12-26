@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-display-rails-flash-messages-after-an-ajax-success"
 ---
 
-Alright, let's talk about those sometimes tricky flash messages after an ajax success in Rails. I remember battling this particular issue quite a few years ago while working on a large e-commerce platform, where dynamic page updates were critical for user experience. Getting those success or error notifications to show reliably after an ajax call became surprisingly complex. The core of the challenge lies in the fact that ajax requests operate outside the standard Rails page rendering cycle, and that means our standard flash message setup needs a little tweaking.
+, let's talk about those sometimes tricky flash messages after an ajax success in Rails. I remember battling this particular issue quite a few years ago while working on a large e-commerce platform, where dynamic page updates were critical for user experience. Getting those success or error notifications to show reliably after an ajax call became surprisingly complex. The core of the challenge lies in the fact that ajax requests operate outside the standard Rails page rendering cycle, and that means our standard flash message setup needs a little tweaking.
 
 Let’s break it down. Flash messages in Rails, by default, live within the scope of a server-rendered page. When we submit a form or navigate through links, Rails sets the flash in the session, and it gets displayed on the next full page load. With ajax, we’re bypassing that whole cycle of a standard page refresh, so the flash messages, normally residing within that traditional render context, simply don't get rendered. What we get back in our javascript success handler, after all, is often just a JSON object or some other data payload—not the rendered html including the flashed message.
 
@@ -47,38 +47,48 @@ Now, let's look at the client-side Javascript to actually consume and render the
 
 ```javascript
 // app/assets/javascripts/product_updates.js
-$(document).on('submit', '#edit_product_form', function(e) {
-    e.preventDefault();
+$(document).on("submit", "#edit_product_form", function (e) {
+  e.preventDefault();
 
-    var form = $(this);
-    var formData = form.serialize();
-    var formAction = form.attr('action');
+  var form = $(this);
+  var formData = form.serialize();
+  var formAction = form.attr("action");
 
-    $.ajax({
-        url: formAction,
-        type: 'PUT',
-        data: formData,
-        dataType: 'json',
-        success: function(data) {
-          if(data.message) {
-              displayFlashMessage(data.message, data.message_type);
-          }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-          let errorData = jqXHR.responseJSON;
-           if (errorData && errorData.message) {
-              displayFlashMessage(errorData.message, errorData.message_type || "error");
-            } else {
-                displayFlashMessage("An unknown error occurred. " + errorThrown, "error");
-           }
-        }
-    });
+  $.ajax({
+    url: formAction,
+    type: "PUT",
+    data: formData,
+    dataType: "json",
+    success: function (data) {
+      if (data.message) {
+        displayFlashMessage(data.message, data.message_type);
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      let errorData = jqXHR.responseJSON;
+      if (errorData && errorData.message) {
+        displayFlashMessage(
+          errorData.message,
+          errorData.message_type || "error"
+        );
+      } else {
+        displayFlashMessage(
+          "An unknown error occurred. " + errorThrown,
+          "error"
+        );
+      }
+    },
+  });
 });
 
 function displayFlashMessage(message, type) {
-    var alertDiv = $('<div class="alert" role="alert">').addClass('alert-' + type).text(message);
-    $('#flash-messages').append(alertDiv); // Attach to the appropriate place.
-    setTimeout(function() { alertDiv.remove(); }, 3000); // Automatically close the alert after 3 seconds.
+  var alertDiv = $('<div class="alert" role="alert">')
+    .addClass("alert-" + type)
+    .text(message);
+  $("#flash-messages").append(alertDiv); // Attach to the appropriate place.
+  setTimeout(function () {
+    alertDiv.remove();
+  }, 3000); // Automatically close the alert after 3 seconds.
 }
 ```
 
@@ -94,48 +104,56 @@ In modern web development, you might be using a front-end framework like React. 
 
 ```javascript
 // React Component (simplified)
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 const ProductForm = () => {
-  const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState('');
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
 
     try {
-      const response = await axios.put(`/products/${formData.get('id')}`, formData);
+      const response = await axios.put(
+        `/products/${formData.get("id")}`,
+        formData
+      );
       setMessage(response.data.message);
       setMessageType(response.data.message_type);
-        setTimeout(() => {
-            setMessage('');
-            setMessageType('');
-        }, 3000)
+      setTimeout(() => {
+        setMessage("");
+        setMessageType("");
+      }, 3000);
     } catch (error) {
-        if(error.response && error.response.data && error.response.data.message) {
-           setMessage(error.response.data.message);
-            setMessageType(error.response.data.message_type || 'error');
-            setTimeout(() => {
-                setMessage('');
-                setMessageType('');
-            }, 3000)
-        }else {
-            setMessage("An unknown error occurred");
-            setMessageType('error');
-           setTimeout(() => {
-                setMessage('');
-                setMessageType('');
-            }, 3000)
-        }
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        setMessage(error.response.data.message);
+        setMessageType(error.response.data.message_type || "error");
+        setTimeout(() => {
+          setMessage("");
+          setMessageType("");
+        }, 3000);
+      } else {
+        setMessage("An unknown error occurred");
+        setMessageType("error");
+        setTimeout(() => {
+          setMessage("");
+          setMessageType("");
+        }, 3000);
+      }
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-       <input type="hidden" name="id" value="123" />
-      <label>Name</label><input type="text" name="name" defaultValue="Test Product" />
+      <input type="hidden" name="id" value="123" />
+      <label>Name</label>
+      <input type="text" name="name" defaultValue="Test Product" />
       <button type="submit">Update Product</button>
       {message && (
         <div className={`alert alert-${messageType}`} role="alert">

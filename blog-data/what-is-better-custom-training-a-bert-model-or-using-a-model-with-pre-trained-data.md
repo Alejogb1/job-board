@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-better-custom-training-a-bert-model-or-using-a-model-with-pre-trained-data"
 ---
 
-Alright, let's talk about the perennial question of custom-training versus leveraging pre-trained language models, particularly in the context of BERT. I've spent a fair bit of time on both sides of that fence, and the answer, as is often the case in our field, isn’t a straightforward 'one is always better.' Instead, it's highly dependent on the specific problem you're tackling, your available resources, and the level of performance you need to achieve.
+, let's talk about the perennial question of custom-training versus leveraging pre-trained language models, particularly in the context of BERT. I've spent a fair bit of time on both sides of that fence, and the answer, as is often the case in our field, isn’t a straightforward 'one is always better.' Instead, it's highly dependent on the specific problem you're tackling, your available resources, and the level of performance you need to achieve.
 
 Now, before we get into the specifics, let's quickly define our terms. BERT, or Bidirectional Encoder Representations from Transformers, is a powerful language model architecture. Pre-trained BERT models, usually offered by large tech companies or research groups, have been trained on massive text datasets. This means they’ve absorbed a broad understanding of language, including syntax, semantics, and even some general world knowledge. Custom training, on the other hand, involves taking either the pre-trained BERT model as a starting point or creating your own model architecture, and then further training it on a dataset specific to your task.
 
@@ -94,9 +94,11 @@ for epoch in range(5): # more epochs are typically used when fully fine-tuning.
 
 # Example usage is similar to the prior example but will result in better performance with specialized data.
 ```
+
 Here, while we're still utilizing the pre-trained BERT model, we are training the entire model, not just the classification layers, thus creating an outcome that is specific to our data domain. While this approach will be slower than the previous one, we can expect better performance.
 
 **Example 3: Training a BERT Model from Scratch (Highly Uncommon)**
+
 ```python
 import torch
 from transformers import BertConfig, BertForSequenceClassification, BertTokenizer
@@ -152,8 +154,9 @@ for epoch in range(num_epochs):
 
 # Example usage is similar to the prior examples
 ```
+
 Here, we have a complete from-scratch approach where the model is learning everything (including word embeddings) from our dataset, and we have also created our tokenizer and vocabulary. This is the most expensive approach, and it is rarely necessary or advisable.
 
-As for resources for learning more, I recommend the original BERT paper, "*BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding*," which you can find on arXiv. For a deeper practical understanding of using transformers, I recommend “*Natural Language Processing with Transformers*” by Lewis Tunstall, Leandro von Werra, and Thomas Wolf. It provides a clear, detailed guide using libraries such as `transformers`, and it walks you through the implementation and fine-tuning process for many NLP tasks. Also, for understanding the nuances of model tuning, consider looking into “*Deep Learning*” by Ian Goodfellow, Yoshua Bengio, and Aaron Courville; it’s a comprehensive resource that covers the core algorithms and techniques.
+As for resources for learning more, I recommend the original BERT paper, "_BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding_," which you can find on arXiv. For a deeper practical understanding of using transformers, I recommend “_Natural Language Processing with Transformers_” by Lewis Tunstall, Leandro von Werra, and Thomas Wolf. It provides a clear, detailed guide using libraries such as `transformers`, and it walks you through the implementation and fine-tuning process for many NLP tasks. Also, for understanding the nuances of model tuning, consider looking into “_Deep Learning_” by Ian Goodfellow, Yoshua Bengio, and Aaron Courville; it’s a comprehensive resource that covers the core algorithms and techniques.
 
 In conclusion, the "better" choice depends heavily on your project's specific requirements. If you need a quick solution with limited resources and the task is relatively general, pre-trained models can be a great starting point. If you're dealing with a specialized domain, and you have access to sufficient high quality training data and resources, then fine-tuning a pre-trained model is likely to yield significantly better results. It's worth noting that in some very rare instances, training a new model from scratch, after a great deal of thought, could be the most effective solution, but this should be considered with extreme caution and only after a thorough evaluation. Understanding these trade-offs and having a clear view of what you want to achieve is essential for making an informed decision.

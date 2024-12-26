@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-vs-code-remote-container-extension-showing-an-empty-folder-on-fedora-silverblue"
 ---
 
-Okay, let's tackle this particular head-scratcher. It's happened to me before, actually, back when I was setting up a development environment for a rather intricate distributed system on a Fedora Silverblue box. The issue of an empty folder when using the VS Code remote container extension is definitely not a fun one, especially given the promises of reproducibility that Silverblue and containers are meant to provide. It's almost like a glitch in the matrix, so let’s break down what’s likely going on and how we can resolve it.
+, let's tackle this particular head-scratcher. It's happened to me before, actually, back when I was setting up a development environment for a rather intricate distributed system on a Fedora Silverblue box. The issue of an empty folder when using the VS Code remote container extension is definitely not a fun one, especially given the promises of reproducibility that Silverblue and containers are meant to provide. It's almost like a glitch in the matrix, so let’s break down what’s likely going on and how we can resolve it.
 
 Essentially, the problem stems from how VS Code's remote container extension and Fedora Silverblue interact, specifically with regards to file system mounts and permissions within the container. Silverblue, being an immutable operating system, differs fundamentally from traditional Linux distributions. This immutability is great for system stability but introduces some interesting caveats regarding how containers access your host system's files.
 
@@ -16,26 +16,26 @@ Here’s a dive into a few ways we can fix this, accompanied by some working cod
 
 **Solution 1: Specifying the Correct Mount Point**
 
-Often the container does see *some* files, but not *your* files. This usually points to the mount directory being wrong. We need to ensure the container mounts the correct folder from the host. To illustrate this, let's assume your project is in `~/dev/myproject`. In your `.devcontainer/devcontainer.json` file, ensure you're setting the `workspaceFolder` and `mounts` correctly. A common mistake is to assume that `workspaceFolder` is set to the correct host file path. It is an *internal* path, but also needs to correspond to the mount configuration. The snippet below shows how the mount path should explicitly be set to the actual full path of the folder on the host, and we make sure that `workspaceFolder` inside the container is set correctly, too:
+Often the container does see _some_ files, but not _your_ files. This usually points to the mount directory being wrong. We need to ensure the container mounts the correct folder from the host. To illustrate this, let's assume your project is in `~/dev/myproject`. In your `.devcontainer/devcontainer.json` file, ensure you're setting the `workspaceFolder` and `mounts` correctly. A common mistake is to assume that `workspaceFolder` is set to the correct host file path. It is an _internal_ path, but also needs to correspond to the mount configuration. The snippet below shows how the mount path should explicitly be set to the actual full path of the folder on the host, and we make sure that `workspaceFolder` inside the container is set correctly, too:
 
 ```json
 {
-    "name": "My Dev Container",
-    "build": {
-        "dockerfile": "Dockerfile"
-    },
-    "workspaceFolder": "/workspace",
-    "mounts": [
-        "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
-    ],
-    "remoteUser": "vscode"
+  "name": "My Dev Container",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "workspaceFolder": "/workspace",
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+  ],
+  "remoteUser": "vscode"
 }
 ```
 
 In the above configuration:
 
-*   `workspaceFolder`: defines the directory within the container where our project is mounted.
-*   `mounts`: specifies which host directory to map to what path within the container. The important part here is `source=${localWorkspaceFolder}`. This tells VS Code to mount the local folder the user has opened in VS Code and map it to `/workspace` in the container. `type=bind` ensures that the changes are instantly visible, and `consistency=cached` helps with performance. Notice that I do not assume the user's home path, but let VS Code use its own variables to refer to the local folder. This is much better than hardcoding.
+- `workspaceFolder`: defines the directory within the container where our project is mounted.
+- `mounts`: specifies which host directory to map to what path within the container. The important part here is `source=${localWorkspaceFolder}`. This tells VS Code to mount the local folder the user has opened in VS Code and map it to `/workspace` in the container. `type=bind` ensures that the changes are instantly visible, and `consistency=cached` helps with performance. Notice that I do not assume the user's home path, but let VS Code use its own variables to refer to the local folder. This is much better than hardcoding.
 
 **Solution 2: Handling Permissions**
 
@@ -45,17 +45,14 @@ Sometimes, it is not about the location of your mount point, but rather about ac
 {
   "name": "My Dev Container with user",
   "build": {
-      "dockerfile": "Dockerfile"
+    "dockerfile": "Dockerfile"
   },
   "workspaceFolder": "/workspace",
-    "mounts": [
-      "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
-    ],
-    "runArgs": [
-        "--user",
-        "${localEnv:USER}"
-    ],
-    "remoteUser": "vscode"
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+  ],
+  "runArgs": ["--user", "${localEnv:USER}"],
+  "remoteUser": "vscode"
 }
 ```
 
@@ -74,7 +71,7 @@ Once you have `podman` installed, make sure that the VS Code setting "Dev > Cont
 
 ```json
 {
-"dev.containers.dockerPath": "/usr/bin/podman"
+  "dev.containers.dockerPath": "/usr/bin/podman"
 }
 ```
 

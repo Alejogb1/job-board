@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-vae-encoded-features-be-used-for-unsupervised-anomaly-detection"
 ---
 
-Okay, let's dive into this. Thinking back to my time at that fintech startup, we had a real need for robust anomaly detection, specifically within user transaction data. We were drowning in high-dimensionality time-series data, and labeling the anomalous ones just wasn't scalable. This led us down the path of leveraging variational autoencoders (vaes) for an unsupervised solution, and I can tell you it was quite the journey.
+, let's dive into this. Thinking back to my time at that fintech startup, we had a real need for robust anomaly detection, specifically within user transaction data. We were drowning in high-dimensionality time-series data, and labeling the anomalous ones just wasn't scalable. This led us down the path of leveraging variational autoencoders (vaes) for an unsupervised solution, and I can tell you it was quite the journey.
 
 The core idea behind using vaes for unsupervised anomaly detection hinges on their ability to learn a compressed, latent representation of the input data distribution. Essentially, a vae consists of an encoder network that maps the input data (let’s call it 'x') to a lower-dimensional latent space (represented by 'z'), and a decoder network that attempts to reconstruct the input from this latent representation. This process forces the vae to learn a compact encoding that captures the essential features of the typical, “normal” data.
 
@@ -230,6 +230,7 @@ latent_anomalies = x_anomalous[latent_variance_scores > threshold_latent]
 
 print(f"Number of anomalies detected by latent space variance: {len(latent_anomalies)}")
 ```
+
 This approach captures the uncertainty that the vae has when it encodes a particular input.
 
 For a deeper understanding of vaes, I highly recommend reading "Auto-Encoding Variational Bayes" by Kingma and Welling; that's a foundational paper. For more on anomaly detection in general, "Outlier Analysis" by Charu Aggarwal is a very comprehensive reference. And if you need to tackle time-series, "Deep Learning for Time Series Forecasting" by Jason Brownlee is a good practical resource that also discusses vae-based methods. These sources will provide the rigorous theoretical background and practical insights you need to implement this kind of approach.

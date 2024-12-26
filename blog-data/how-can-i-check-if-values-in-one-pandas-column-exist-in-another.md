@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-check-if-values-in-one-pandas-column-exist-in-another"
 ---
 
-Okay, let's tackle this. I've bumped into this exact scenario countless times in data wrangling, particularly when cleaning and validating datasets extracted from varied sources. It's a common need: determining the presence of elements from one column within another in a pandas dataframe. There are several efficient ways to achieve this, and the optimal approach often depends on the size of your data and what exactly you intend to do with the results.
+, let's tackle this. I've bumped into this exact scenario countless times in data wrangling, particularly when cleaning and validating datasets extracted from varied sources. It's a common need: determining the presence of elements from one column within another in a pandas dataframe. There are several efficient ways to achieve this, and the optimal approach often depends on the size of your data and what exactly you intend to do with the results.
 
 When I started out, I tended to use slower, iterative approaches, which, as you can imagine, became untenable with larger datasets. My epiphany came when I realized that pandas, and more broadly, numpy, provided vectorized operations that could accomplish the same task orders of magnitude faster. So, let's walk through the different methodologies I've employed, from the simplest to the most optimized.
 
-First, the fundamental question is about *membership*. Do the values from one column appear *at all* in another column, and what should I get in return? Usually, you're after a boolean result per row, indicating presence or absence. Let’s look at three key approaches: `isin()`, set-based comparisons, and applying custom functions. Each has its own place in a data processing workflow.
+First, the fundamental question is about _membership_. Do the values from one column appear _at all_ in another column, and what should I get in return? Usually, you're after a boolean result per row, indicating presence or absence. Let’s look at three key approaches: `isin()`, set-based comparisons, and applying custom functions. Each has its own place in a data processing workflow.
 
 **Method 1: The `isin()` Method**
 
@@ -28,6 +28,7 @@ df['exists_in_b'] = df['col_a'].isin(df['col_b'])
 
 print(df)
 ```
+
 This script creates a simple dataframe and then adds a new column, 'exists_in_b', which contains boolean values indicating whether the corresponding value from `col_a` is found within `col_b`. Under the hood, `isin()` leverages numpy's fast element-wise comparisons. This is your go-to when both the "search space" and the "lookup" series are of reasonably sized and when the order of search or lookup does not matter to your problem definition. For example you wouldn’t use isin to find the exact sequence of values from col_a in col_b where the sequence of values has a meaning. In that case you may want to look at techniques using string concatenation and regular expressions.
 
 **Method 2: Set-based Comparisons for Unique Membership**
@@ -51,7 +52,8 @@ df['exists_in_b_set'] = df['col_a'].apply(lambda x: x in set_b)
 print(df)
 
 ```
-In this example, we create a set from the `col_b` values. Then, using an `apply()` function, which in this case iterates through the rows, check if each value from `col_a` is in the created set.  Note that the apply is still much less performant than isin due to the fact that the underlying functionality of the set membership operation `x in set_b` is executed for each row instead of performing vectorized computations using numpy libraries. However, if you have a large dataset where the uniqueness of the values in `col_b` and the performance of set membership is your primary concern, this method offers a performance advantage in very specific scenarios. Keep in mind that if `col_b` contains too many elements, building the set might become more expensive than the `isin` operation.
+
+In this example, we create a set from the `col_b` values. Then, using an `apply()` function, which in this case iterates through the rows, check if each value from `col_a` is in the created set. Note that the apply is still much less performant than isin due to the fact that the underlying functionality of the set membership operation `x in set_b` is executed for each row instead of performing vectorized computations using numpy libraries. However, if you have a large dataset where the uniqueness of the values in `col_b` and the performance of set membership is your primary concern, this method offers a performance advantage in very specific scenarios. Keep in mind that if `col_b` contains too many elements, building the set might become more expensive than the `isin` operation.
 
 **Method 3: Custom Function with `apply()` (Use Judiciously)**
 

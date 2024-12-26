@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-carrierwave-upload-files-to-both-aws-s3-and-google-cloud-storage-concurrently"
 ---
 
-Okay, let's unpack this. I’ve certainly encountered scenarios requiring multi-cloud file storage, and the challenge with CarrierWave, when aiming for simultaneous uploads to both AWS S3 and Google Cloud Storage (GCS), isn't exactly straightforward but it's certainly manageable. It's less about inherent limitations in CarrierWave and more about how you configure and orchestrate the process. In short, CarrierWave itself isn’t built for *concurrent* writes to multiple cloud providers using its standard interfaces. However, with a bit of creative configuration and careful use of callbacks, you can achieve the desired outcome without resorting to complex hacks.
+, let's unpack this. I’ve certainly encountered scenarios requiring multi-cloud file storage, and the challenge with CarrierWave, when aiming for simultaneous uploads to both AWS S3 and Google Cloud Storage (GCS), isn't exactly straightforward but it's certainly manageable. It's less about inherent limitations in CarrierWave and more about how you configure and orchestrate the process. In short, CarrierWave itself isn’t built for _concurrent_ writes to multiple cloud providers using its standard interfaces. However, with a bit of creative configuration and careful use of callbacks, you can achieve the desired outcome without resorting to complex hacks.
 
 My experience with this stems from a project a few years back where we had a hybrid infrastructure, partly on AWS and partly on Google Cloud, and we needed all user-uploaded files mirrored across both platforms for redundancy and application specific needs. We explored the native capabilities of several file upload libraries before ultimately crafting our own solution around CarrierWave’s flexible nature.
 
@@ -54,9 +54,9 @@ end
 class MyModel < ApplicationRecord
   mount_uploader :my_file, MyUploader
   after_store :upload_to_gcs
-  
+
   private
-  
+
   def upload_to_gcs
       GcsUploader.new(my_file.file).store!
   end
@@ -147,11 +147,11 @@ end
 
 In this updated `MyModel`, I’ve included basic error handling. In production, you’d likely add more sophisticated features, such as:
 
-*   **Retry Logic:** Implement retries using a background processing queue (like Sidekiq or Resque) in case the GCS upload fails the first time.
-*   **Status Tracking:** Keep track of successful and failed uploads in a database column to monitor upload progress.
-*   **Resource Management:** Be mindful of memory usage. Avoid loading the entire file into memory if it is very large; instead use streaming techniques for the GCS upload.
+- **Retry Logic:** Implement retries using a background processing queue (like Sidekiq or Resque) in case the GCS upload fails the first time.
+- **Status Tracking:** Keep track of successful and failed uploads in a database column to monitor upload progress.
+- **Resource Management:** Be mindful of memory usage. Avoid loading the entire file into memory if it is very large; instead use streaming techniques for the GCS upload.
 
-This pattern, using CarrierWave’s callbacks to trigger a second upload, works well. It's a relatively straightforward way to achieve multi-cloud redundancy without overly complicating your application's logic. Keep in mind that while it *appears* concurrent from a user experience, it is sequential from the perspective of your server: S3 upload first, then a GCS upload. True concurrency (if that is really critical) might require a different approach, like passing the file upload directly to a queue that triggers parallel workers; however, that is not within the scope of this CarrierWave-centric discussion.
+This pattern, using CarrierWave’s callbacks to trigger a second upload, works well. It's a relatively straightforward way to achieve multi-cloud redundancy without overly complicating your application's logic. Keep in mind that while it _appears_ concurrent from a user experience, it is sequential from the perspective of your server: S3 upload first, then a GCS upload. True concurrency (if that is really critical) might require a different approach, like passing the file upload directly to a queue that triggers parallel workers; however, that is not within the scope of this CarrierWave-centric discussion.
 
 For deeper insights into CarrierWave's internals and best practices, I would recommend reading the official CarrierWave documentation and exploring the source code of the fog adapter to better understand how storage is handled. Also, delve into papers related to resilient distributed systems, such as Google's papers on Spanner and Colossus, to further inform your strategy for high-availability storage.
 

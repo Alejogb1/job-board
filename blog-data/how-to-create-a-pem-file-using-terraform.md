@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-to-create-a-pem-file-using-terraform"
 ---
 
-Okay, let’s address crafting PEM files within the terraform ecosystem. It's something I've dealt with quite a bit, especially when deploying infrastructure that relies on certificate authentication. It’s more common than you might think, particularly when you're setting up things like mutual tls (mtls), vpn gateways, or even specific service configurations that require signed certificates. While terraform doesn’t directly generate certificates, it’s often our tool of choice to manage the final deployment, including the creation of the necessary pem files that encapsulate keys and certs.
+, let’s address crafting PEM files within the terraform ecosystem. It's something I've dealt with quite a bit, especially when deploying infrastructure that relies on certificate authentication. It’s more common than you might think, particularly when you're setting up things like mutual tls (mtls), vpn gateways, or even specific service configurations that require signed certificates. While terraform doesn’t directly generate certificates, it’s often our tool of choice to manage the final deployment, including the creation of the necessary pem files that encapsulate keys and certs.
 
-The core issue revolves around the fact that pem files are essentially text-based containers holding encoded data—usually in base64—of private keys and certificates. Terraform excels at managing infrastructure as code, which in this instance includes the ability to create files with arbitrary content. Therefore, our approach isn't about terraform *generating* the cryptographic material, but rather about managing and deploying it. You’ll typically have either pre-generated keys and certificates or use another mechanism, like vault or a dedicated certificate authority, to provide the content.
+The core issue revolves around the fact that pem files are essentially text-based containers holding encoded data—usually in base64—of private keys and certificates. Terraform excels at managing infrastructure as code, which in this instance includes the ability to create files with arbitrary content. Therefore, our approach isn't about terraform _generating_ the cryptographic material, but rather about managing and deploying it. You’ll typically have either pre-generated keys and certificates or use another mechanism, like vault or a dedicated certificate authority, to provide the content.
 
 Essentially, you're often dealing with variables in your terraform configuration. These variables will hold the base64 encoded content, which we then use to construct the pem file.
 
@@ -34,7 +34,7 @@ EOF
 }
 ```
 
-Here, `local_file` is a resource provided by the terraform `local` provider. It’s excellent for managing local files, particularly during development.  The `content` attribute uses a here-document (<<EOF...EOF) to form the complete pem file structure, inserting the decoded variable using the `base64decode()` function. Setting `file_permission` is crucial for security, ensuring that the key is readable only by the user running the terraform process. This would typically be root or a dedicated service account, depending on your deployment strategy. I have personally seen production outages caused by overly permissive key files; it's an area to pay close attention to.
+Here, `local_file` is a resource provided by the terraform `local` provider. It’s excellent for managing local files, particularly during development. The `content` attribute uses a here-document (<<EOF...EOF) to form the complete pem file structure, inserting the decoded variable using the `base64decode()` function. Setting `file_permission` is crucial for security, ensuring that the key is readable only by the user running the terraform process. This would typically be root or a dedicated service account, depending on your deployment strategy. I have personally seen production outages caused by overly permissive key files; it's an area to pay close attention to.
 
 **Example 2: Certificate PEM File Creation**
 
@@ -99,8 +99,9 @@ Second, consider how the content is generated and maintained. If you have a cert
 Lastly, when generating certificates, the process needs to be well-understood and secure. I’ve seen teams unknowingly generate certificates with weak keys, misconfigured extensions, or improperly managed certificate lifetimes. Ensure you adhere to best practices for certificate and key management.
 
 To further your knowledge on this, I recommend:
-*   **"Cryptography Engineering: Design Principles and Practical Applications" by Niels Ferguson, Bruce Schneier, and Tadayoshi Kohno**: An excellent book for understanding the underlying principles of cryptography and secure key management.
-*   **The official terraform documentation on the ‘local’ provider and variable management**: The terraform documentation always remains a valuable, up-to-date resource for specifics regarding its features.
-*   **RFC 7468: Textual Encodings of PKIX, PKCS, and CMS Structures**:  For precise understanding of the pem encoding format.
+
+- **"Cryptography Engineering: Design Principles and Practical Applications" by Niels Ferguson, Bruce Schneier, and Tadayoshi Kohno**: An excellent book for understanding the underlying principles of cryptography and secure key management.
+- **The official terraform documentation on the ‘local’ provider and variable management**: The terraform documentation always remains a valuable, up-to-date resource for specifics regarding its features.
+- **RFC 7468: Textual Encodings of PKIX, PKCS, and CMS Structures**: For precise understanding of the pem encoding format.
 
 In summary, creating pem files with terraform isn’t about generating cryptographic material, it's about orchestrating and deploying it securely, efficiently, and following best practices. These examples provide a foundation; the key to success lies in implementing it within a comprehensive security framework and adapting the techniques to your specific needs.

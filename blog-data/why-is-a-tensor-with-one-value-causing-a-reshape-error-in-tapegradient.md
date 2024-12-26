@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "why-is-a-tensor-with-one-value-causing-a-reshape-error-in-tapegradient"
 ---
 
-Alright, let’s tackle this tensor reshape issue. It's a scenario I've bumped into countless times, usually when dealing with the intricacies of automatic differentiation frameworks like TensorFlow’s `tape.gradient`. The error itself, typically a dimension mismatch, seems straightforward at first glance. But the root cause can be a bit more nuanced than just a simple data shape problem, especially when you're only dealing with what appears to be a scalar tensor (a tensor with just one value).
+, let’s tackle this tensor reshape issue. It's a scenario I've bumped into countless times, usually when dealing with the intricacies of automatic differentiation frameworks like TensorFlow’s `tape.gradient`. The error itself, typically a dimension mismatch, seems straightforward at first glance. But the root cause can be a bit more nuanced than just a simple data shape problem, especially when you're only dealing with what appears to be a scalar tensor (a tensor with just one value).
 
 The primary reason this error occurs in the context of `tape.gradient` with a single-value tensor isn’t necessarily about the single value itself, but about how that single value interacts with the gradient calculation, specifically its rank or shape compared to the 'variables' or inputs that you're differentiating against. You see, the `tape.gradient` function returns the partial derivatives of a given target with respect to some inputs. This return must have a matching rank (number of dimensions) to the input in order for operations on those gradients to proceed correctly.
 
 Consider this scenario: I remember working on a custom loss function for a convolutional neural network (CNN) a while back. I was trying to calculate the loss based on the average pixel value difference, ultimately boiling down to a single value after averaging across the batch. When I tried to get the gradients with respect to the CNN's weights using `tape.gradient`, I hit this wall. The problem wasn't that I couldn't calculate a gradient for a single number, but that the calculated gradient, intended to be used to update all of the convolutional filter weights, came back as a single scalar. It was as if the framework tried to use this lone number to update an entire weight tensor. The shape mismatch resulted in the error.
 
-This often crops up because even though the value you are getting gradients from is a single number, TensorFlow or PyTorch internally, for example, treat this scalar as a 0-dimensional tensor, having no axis. This means it's just a value. Now, if the variables you're taking the gradient with respect to *have* dimensions (as is the case with the weight matrices in a neural network, which are typically 2D), there's a clear mismatch. The framework needs to return a gradient with the same shape as the variable, not a scalar representing the overall loss derivative.
+This often crops up because even though the value you are getting gradients from is a single number, TensorFlow or PyTorch internally, for example, treat this scalar as a 0-dimensional tensor, having no axis. This means it's just a value. Now, if the variables you're taking the gradient with respect to _have_ dimensions (as is the case with the weight matrices in a neural network, which are typically 2D), there's a clear mismatch. The framework needs to return a gradient with the same shape as the variable, not a scalar representing the overall loss derivative.
 
 To illustrate this, let's look at a simple example using TensorFlow. In the following, we are attempting to find the derivative of a scalar with respect to a vector:
 
@@ -36,6 +36,7 @@ with tf.GradientTape() as tape:
 gradients = tape.gradient(z, x)
 print(gradients) #this outputs [0.5, 0.5], a vector
 ```
+
 Notice how even though we divided the result, `tape.gradient` returns a tensor of the same shape as `x`. The error does not occur when differentiating the reduced result with respect to `x`. This is because internally `tape.gradient` uses the chain rule, and it must preserve dimensional consistency.
 
 Now, here’s where things often go wrong, using a constant variable to show the behavior:

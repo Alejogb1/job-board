@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "bootstrap-tabs-inside-owl-carousel"
 ---
 
-Okay I see the problem bootstrap tabs inside owl carousel yep been there done that let me tell you it's not as straightforward as it seems trust me
+I see the problem bootstrap tabs inside owl carousel yep been there done that let me tell you it's not as straightforward as it seems trust me
 
 So you want those sweet looking bootstrap tabs behaving nicely inside an owl carousel right sounds easy enough on paper but no the world isn't that kind to us is it
 
@@ -22,20 +22,21 @@ Here’s what I usually do to tackle this problem a mix of brute force and fines
 
 **1. The Carousel Initialization**
 
-You want to make sure the carousel is initialized *after* the tabs are fully rendered and after all of their content has had time to display correctly avoid initializing it at document.ready event use window.load
+You want to make sure the carousel is initialized _after_ the tabs are fully rendered and after all of their content has had time to display correctly avoid initializing it at document.ready event use window.load
 
 ```javascript
-$(window).on('load', function() {
-  $('.owl-carousel').owlCarousel({
-   items: 1,
-   loop: true, // Or whatever your config
-   onInitialized : function(){
-       // This one is important you may add further logic here
-      $(".owl-item.active .nav-link.active").trigger('shown.bs.tab');
-   }
+$(window).on("load", function () {
+  $(".owl-carousel").owlCarousel({
+    items: 1,
+    loop: true, // Or whatever your config
+    onInitialized: function () {
+      // This one is important you may add further logic here
+      $(".owl-item.active .nav-link.active").trigger("shown.bs.tab");
+    },
   });
 });
 ```
+
 See the trick is to trigger the tab when the carousel is initialized specifically on the active slide it ensures the first active tab is actually active and has its content visible
 
 **2. Correct Tab Switching**
@@ -43,11 +44,11 @@ See the trick is to trigger the tab when the carousel is initialized specificall
 Now the important part is to update the carousel size and position whenever the tab is changed because the carousel is not looking at the new content of the tab that just appeared it is still thinking the content of the previous tab is still there and is trying to calculate the width height of it which is no longer displayed because you changed the tab
 
 ```javascript
-$('.nav-link').on('shown.bs.tab', function(e) {
-   var carousel = $(this).closest('.owl-carousel').data('owl.carousel');
-   if (carousel){
-       carousel.update();
-   }
+$(".nav-link").on("shown.bs.tab", function (e) {
+  var carousel = $(this).closest(".owl-carousel").data("owl.carousel");
+  if (carousel) {
+    carousel.update();
+  }
 });
 ```
 
@@ -61,24 +62,41 @@ If you're adding tabs dynamically you need to make sure to update the carousel a
 // Example of dynamically adding a tab
 
 function addTab(tabTitle, tabContent) {
-    var tabId = 'tab-' + Date.now(); // Example of a unique id
-    var newTab = '<li class="nav-item"><a class="nav-link" id="' + tabId + '-tab" data-toggle="tab" href="#' + tabId + '" role="tab" aria-controls="' + tabId + '" aria-selected="false">' + tabTitle + '</a></li>';
-    var newContent = '<div class="tab-pane fade" id="' + tabId + '" role="tabpanel" aria-labelledby="' + tabId + '-tab">' + tabContent + '</div>';
-    $('.nav-tabs').append(newTab);
-    $('.tab-content').append(newContent);
-      var carousel = $('.owl-carousel').data('owl.carousel');
-    // You can try a setTimeout 0 here but it will not be reliable and may need further tweaking
-     //  setTimeout(function(){
-        if (carousel){
-           carousel.update();
-         }
-        $('#' + tabId + '-tab').trigger('shown.bs.tab'); // trigger the display of the newly added tab
-     // },0);
+  var tabId = "tab-" + Date.now(); // Example of a unique id
+  var newTab =
+    '<li class="nav-item"><a class="nav-link" id="' +
+    tabId +
+    '-tab" data-toggle="tab" href="#' +
+    tabId +
+    '" role="tab" aria-controls="' +
+    tabId +
+    '" aria-selected="false">' +
+    tabTitle +
+    "</a></li>";
+  var newContent =
+    '<div class="tab-pane fade" id="' +
+    tabId +
+    '" role="tabpanel" aria-labelledby="' +
+    tabId +
+    '-tab">' +
+    tabContent +
+    "</div>";
+  $(".nav-tabs").append(newTab);
+  $(".tab-content").append(newContent);
+  var carousel = $(".owl-carousel").data("owl.carousel");
+  // You can try a setTimeout 0 here but it will not be reliable and may need further tweaking
+  //  setTimeout(function(){
+  if (carousel) {
+    carousel.update();
+  }
+  $("#" + tabId + "-tab").trigger("shown.bs.tab"); // trigger the display of the newly added tab
+  // },0);
 }
 // Example usage
 addTab("New Tab 1", "Some new content for tab 1");
 addTab("New Tab 2", "Some new content for tab 2");
 ```
+
 Note here the setTimeout 0 is not reliable as it does not really tell you if the dom has been updated properly a better strategy is to use a Promise to ensure the content rendering or to check if elements you are expecting to exist in the tab content before calling the carousel update function it also depends on how you are dynamically creating the tabs
 
 Also one important thing is to watch out for infinite loops if your tabs are dynamically created and you try to update the carousel inside a tab render event I was in that loop for days I swear it was like inception of the carousel updates and tabs updates the browser was about to self destruct I think it had a mental breakdown

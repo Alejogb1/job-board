@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-undo-exclude-from-coverage-results"
 ---
 
-alright, so you're in a spot where you've accidentally marked something to be excluded from coverage results, and now you need it back in the mix. i get it, been there, done that a bunch of times. it’s one of those things that seems simple enough in theory but can lead to a little head scratching when you're knee deep in a project.
+, so you're in a spot where you've accidentally marked something to be excluded from coverage results, and now you need it back in the mix. i get it, been there, done that a bunch of times. it’s one of those things that seems simple enough in theory but can lead to a little head scratching when you're knee deep in a project.
 
 let me walk you through it, and share some of the lessons i learned the hard way. i've spent more years than i care to count staring at code coverage reports, and i’ve definitely made my fair share of marking mistakes. it’s a common slip up, especially when you're in a hurry to get things running or you’re experimenting with new areas of the codebase.
 

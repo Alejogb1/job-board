@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-poor-model-fit-in-a-keras-r-dnn"
 ---
 
-Alright, let's tackle this. I've certainly been down this road a few times, debugging seemingly intractable model fit issues in Keras R DNN implementations. It's rarely a single culprit, but rather a confluence of factors that can derail the training process. So, drawing from past skirmishes, let's break down the common causes of poor model fit, specifically focusing on deep neural networks built within the Keras framework using R.
+, let's tackle this. I've certainly been down this road a few times, debugging seemingly intractable model fit issues in Keras R DNN implementations. It's rarely a single culprit, but rather a confluence of factors that can derail the training process. So, drawing from past skirmishes, let's break down the common causes of poor model fit, specifically focusing on deep neural networks built within the Keras framework using R.
 
 First off, when we say "poor model fit," we usually mean that the model either struggles to learn the patterns in the training data (underfitting), or it memorizes the training data but fails to generalize to unseen data (overfitting). Let's address those, as their causes are somewhat distinct.
 
@@ -18,7 +18,7 @@ Underfitting generally arises when the model lacks the capacity to capture the u
 
 3.  **Inappropriate Feature Engineering:** The features given to the network might not be representative of the information required to perform well on the task. Think of this as feeding noise rather than signal. The features may lack discriminatory power or be scaled inappropriately. In a prior project focused on natural language processing, I realized that using unigrams alone wasn't cutting it. Incorporating bigrams and TF-IDF improved feature representation considerably. The model won’t extract knowledge from what you do not give to it.
 
-4. **Regularization Overkill:** While regularization techniques like dropout and L1/L2 penalties are essential for preventing overfitting, their excessive use can sometimes impede learning, leading to underfitting. It's a balancing act; we need to find the sweet spot where the model can learn without memorizing the training data, but also without being overly restricted.
+4.  **Regularization Overkill:** While regularization techniques like dropout and L1/L2 penalties are essential for preventing overfitting, their excessive use can sometimes impede learning, leading to underfitting. It's a balancing act; we need to find the sweet spot where the model can learn without memorizing the training data, but also without being overly restricted.
 
 **Overfitting:**
 

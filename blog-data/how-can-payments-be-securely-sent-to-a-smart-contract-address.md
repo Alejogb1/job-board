@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-payments-be-securely-sent-to-a-smart-contract-address"
 ---
 
-Alright, let's talk about securely sending payments to smart contracts. It's a critical aspect of decentralized applications, and having solid practices in this area is non-negotiable. Over the years, I've seen a fair share of exploits stemming from poorly handled payment interactions, so let me walk you through the essentials.
+, let's talk about securely sending payments to smart contracts. It's a critical aspect of decentralized applications, and having solid practices in this area is non-negotiable. Over the years, I've seen a fair share of exploits stemming from poorly handled payment interactions, so let me walk you through the essentials.
 
-The core challenge isn't just getting funds *to* the contract; it's doing so in a way that minimizes the risk of loss, either through coding errors or malicious actors. We need to think beyond simply sending a transaction. We have to consider the entire lifecycle, from the user initiating payment to the contract correctly processing it.
+The core challenge isn't just getting funds _to_ the contract; it's doing so in a way that minimizes the risk of loss, either through coding errors or malicious actors. We need to think beyond simply sending a transaction. We have to consider the entire lifecycle, from the user initiating payment to the contract correctly processing it.
 
 Typically, when a user sends a payment to a smart contract, they’re essentially invoking a function within that contract that is designated to receive funds. This function is usually marked as payable. It's not just about the ‘value’ being transferred, but the associated function execution. We’re essentially bundling funds with a request to the contract. The most common attack vectors center around improperly configured or exploitable payable functions.
 
@@ -37,7 +37,7 @@ contract SimplePayment {
        require(msg.value == expectedPayment, "Incorrect amount sent.");
        balance += msg.value;
     }
-    
+
     function withdraw(uint256 amount) public {
        require(msg.sender == owner, "Only the owner can withdraw");
        require(balance >= amount, "Insufficient funds.");
@@ -50,6 +50,7 @@ contract SimplePayment {
    }
 }
 ```
+
 In this first example, the `deposit` function checks whether the incoming `msg.value` (the amount of ether sent with the transaction) exactly matches `expectedPayment`. This simple precaution can prevent unintended or incorrect payment amounts from being credited. Furthermore, ownership is strictly limited, making it safer. This is very basic, but it is important to understand the core components of a payable function before adding more complex logic.
 
 **Example 2: Adding a Reentrancy Guard (Mutex):**
@@ -71,7 +72,7 @@ contract SecurePayment {
     function deposit() public payable nonReentrant {
        balance += msg.value;
       //perform post payment actions here, for example emitting an event
-       
+
     }
 
      function withdraw(uint256 amount) public nonReentrant {

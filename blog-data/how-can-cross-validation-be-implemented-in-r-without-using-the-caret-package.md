@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-cross-validation-be-implemented-in-r-without-using-the-caret-package"
 ---
 
-Alright, let's tackle cross-validation in R without relying on `caret`. It's a fundamental technique, and knowing how to implement it from scratch is invaluable, regardless of which abstraction layers you usually work with. I've been through this process numerous times, particularly back in my early days when project constraints sometimes precluded using specific packages, or when I simply needed a deeper understanding of the underlying mechanisms. It's not rocket science, but it requires careful attention to detail.
+, let's tackle cross-validation in R without relying on `caret`. It's a fundamental technique, and knowing how to implement it from scratch is invaluable, regardless of which abstraction layers you usually work with. I've been through this process numerous times, particularly back in my early days when project constraints sometimes precluded using specific packages, or when I simply needed a deeper understanding of the underlying mechanisms. It's not rocket science, but it requires careful attention to detail.
 
 We're essentially trying to build a process that accurately estimates the performance of a model on unseen data. The core idea of cross-validation involves partitioning your dataset into multiple subsets; a model is trained on some subsets and evaluated on the remaining subset, and we then repeat this procedure multiple times while cycling the used data partitions. This helps average out variations in model performance that might arise from the specific choice of training data. Let's dive in.
 

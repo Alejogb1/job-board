@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "linear-programming-gpu-optimization"
 ---
 
-Okay so you're asking about linear programming and optimizing it with GPUs yeah I've been there done that probably got the t-shirt somewhere in my messy closet This isn't exactly a walk in the park but it's definitely doable and can give you massive speedups if you're dealing with large problems Lets break it down like we're debugging some legacy code
+you're asking about linear programming and optimizing it with GPUs yeah I've been there done that probably got the t-shirt somewhere in my messy closet This isn't exactly a walk in the park but it's definitely doable and can give you massive speedups if you're dealing with large problems Lets break it down like we're debugging some legacy code
 
 First off Linear Programming LP it's not some trendy AI thing its been around for ages You got your objective function you wanna maximize or minimize subject to some linear constraints You usually start with something like the Simplex algorithm or Interior Point methods all the classic optimization stuff But when the size of your problem starts creeping up these algorithms hit a wall They were not built to harness the parallel processing power of GPUs
 
@@ -16,7 +16,7 @@ The problem was that our LP model which involved thousands of variables and cons
 
 So how do you go about this GPU optimization thing? Well its not like you just slap a GPU on your code and everything magically works You usually end up using a library that is designed for this like a CUDA or OpenCL based one These libraries use the GPUs parallel architecture to accelerate linear algebra computations
 
-Here's a basic example using something like a hypothetical CUDA accelerated LP solver lets call it *cuLPsolver* since it is fictional and we will use some made up functions:
+Here's a basic example using something like a hypothetical CUDA accelerated LP solver lets call it _cuLPsolver_ since it is fictional and we will use some made up functions:
 
 ```cpp
 #include <iostream>
@@ -63,7 +63,7 @@ int main() {
 }
 ```
 
-This is just a very simplified example of what a GPU accelerated LP solver *might* look like In reality you'd likely be using a more robust and specialized library The actual implementation within the `culpsolver` class would involve sending the problem data to the GPU device performing the computations on the device and then returning the solution to the CPU this process involves copying memory between the CPU and the GPU that is usually done behind the scenes by the library itself
+This is just a very simplified example of what a GPU accelerated LP solver _might_ look like In reality you'd likely be using a more robust and specialized library The actual implementation within the `culpsolver` class would involve sending the problem data to the GPU device performing the computations on the device and then returning the solution to the CPU this process involves copying memory between the CPU and the GPU that is usually done behind the scenes by the library itself
 
 Here's another snippet this time using Python with a hypothetical `cupy_lp` library built on top of CuPy a GPU powered NumPy:
 
@@ -178,6 +178,7 @@ int main() {
     return 0;
 }
 ```
+
 This last example shows more how to code on CUDA this is more low level compared to the previous examples
 
 Instead of linking to some online forum I'd suggest looking into textbooks like "Numerical Optimization" by Jorge Nocedal and Stephen J Wright or "Convex Optimization" by Stephen Boyd they go into the mathematical foundations of these algorithms in more depth As for GPU programming NVIDIA's CUDA programming guide is an essential read along with documentation of any specific linear algebra library that your going to use. These resources will give you the theoretical and practical knowledge you need instead of relying on some random StackOverflow post that is not going to be reliable

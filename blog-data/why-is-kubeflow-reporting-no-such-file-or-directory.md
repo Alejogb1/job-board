@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-is-kubeflow-reporting-no-such-file-or-directory"
 ---
 
-Okay, let’s unpack this "no such file or directory" error within Kubeflow. I’ve seen this particular gremlin pop up more times than I care to count across different environments, and it usually boils down to a few core issues, each with its own set of troubleshooting steps. It’s rarely a straightforward filesystem problem, despite the literal message. It's more nuanced, involving the interplay between containers, volumes, and the broader Kubeflow orchestration.
+, let’s unpack this "no such file or directory" error within Kubeflow. I’ve seen this particular gremlin pop up more times than I care to count across different environments, and it usually boils down to a few core issues, each with its own set of troubleshooting steps. It’s rarely a straightforward filesystem problem, despite the literal message. It's more nuanced, involving the interplay between containers, volumes, and the broader Kubeflow orchestration.
 
 Firstly, it’s essential to understand that when Kubeflow reports "no such file or directory," the error isn’t necessarily happening on the host machine where the Kubeflow components reside. It's almost certainly happening inside a containerized process managed by Kubeflow. This changes the investigative landscape considerably. We need to think about which container is triggering the error, and what path it’s trying to access.
 
-My experience has taught me that this issue frequently stems from incorrect or missing volume mounts. In one past project, for example, we had a complex workflow where different pipeline steps required access to shared datasets. One of the steps kept reporting the dreaded "no such file or directory." It wasn’t that the file *didn't exist*; it was simply not accessible within the container's filesystem. After some detailed inspection of the kubernetes pod specifications and the kubeflow pipeline definitions, we realized the volume mount configuration for that particular step was misconfigured. The volume containing the dataset was either not declared correctly or the mount path inside the container was wrong. This mismatch is a classic pitfall.
+My experience has taught me that this issue frequently stems from incorrect or missing volume mounts. In one past project, for example, we had a complex workflow where different pipeline steps required access to shared datasets. One of the steps kept reporting the dreaded "no such file or directory." It wasn’t that the file _didn't exist_; it was simply not accessible within the container's filesystem. After some detailed inspection of the kubernetes pod specifications and the kubeflow pipeline definitions, we realized the volume mount configuration for that particular step was misconfigured. The volume containing the dataset was either not declared correctly or the mount path inside the container was wrong. This mismatch is a classic pitfall.
 
 Another common culprit, particularly when you're dealing with custom containers, involves the container image itself. If the container image hasn't been built correctly, or if the required files haven’t been included during the image build process, then predictably the application inside the container won't be able to locate those files at runtime. For example, if you’re using a dockerfile, there could be an issue with the `COPY` or `ADD` commands within it or the `WORKDIR` directive is set such that the application expect the files to be relative to that working directory and those files may not exists. This often happens in development when trying to run pipelines based on docker images that were built without necessary data files or dependencies.
 
@@ -29,21 +29,21 @@ metadata:
 spec:
   entrypoint: pipeline
   templates:
-  - name: pipeline
-    steps:
-    - - name: process-data
-        template: process-data-step
-  - name: process-data-step
-    container:
-      image: my-custom-data-processor
-      command: ["python", "/app/process.py"]
-      volumeMounts:
-        - name: my-data-volume
-          mountPath: /data  # Incorrect mount path
+    - name: pipeline
+      steps:
+        - - name: process-data
+            template: process-data-step
+    - name: process-data-step
+      container:
+        image: my-custom-data-processor
+        command: ["python", "/app/process.py"]
+        volumeMounts:
+          - name: my-data-volume
+            mountPath: /data # Incorrect mount path
   volumes:
-  - name: my-data-volume
-    persistentVolumeClaim:
-      claimName: my-data-pvc
+    - name: my-data-volume
+      persistentVolumeClaim:
+        claimName: my-data-pvc
 ```
 
 Here the code inside the container `/app/process.py` expects the file `/data/input.csv`, but if `my-data-pvc` actually contains a structure where the files are located in `data` inside of a directory such as `my_data_files` the mount path should rather be `/data/my_data_files`. This would cause the error "no such file or directory" to be raised when the python script try to open the file.
@@ -89,24 +89,24 @@ metadata:
 spec:
   entrypoint: pipeline
   templates:
-  - name: pipeline
-    steps:
-    - - name: process-data
-        template: process-data-step
-  - name: process-data-step
-    container:
-      image: my-custom-data-processor
-      command: ["python", "/app/process.py"]
-      env:
-      - name: DATA_DIR
-        value: "/data"
-      volumeMounts:
-        - name: my-data-volume
-          mountPath: /data
+    - name: pipeline
+      steps:
+        - - name: process-data
+            template: process-data-step
+    - name: process-data-step
+      container:
+        image: my-custom-data-processor
+        command: ["python", "/app/process.py"]
+        env:
+          - name: DATA_DIR
+            value: "/data"
+        volumeMounts:
+          - name: my-data-volume
+            mountPath: /data
   volumes:
-  - name: my-data-volume
-    persistentVolumeClaim:
-      claimName: my-data-pvc
+    - name: my-data-volume
+      persistentVolumeClaim:
+        claimName: my-data-pvc
 ```
 
 Here, we are explicitly setting the `DATA_DIR` environment variable to `/data`, which should match our file system setup.

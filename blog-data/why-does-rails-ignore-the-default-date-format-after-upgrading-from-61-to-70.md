@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "why-does-rails-ignore-the-default-date-format-after-upgrading-from-61-to-70"
 ---
 
-Okay, let’s dive in. It's a common head-scratcher when seemingly straightforward configurations decide to take a detour after a major framework upgrade. I've definitely been down this path myself, specifically back when we migrated a large e-commerce platform from Rails 6.1 to 7.0. The issue with the default date format being ignored post-upgrade often boils down to a confluence of factors relating to how Rails handles configurations and i18n, and subtle changes introduced in version 7.0. It’s not that the configurations *don’t work*, but rather, they interact differently than before. Let's unpack the specifics.
+, let’s dive in. It's a common head-scratcher when seemingly straightforward configurations decide to take a detour after a major framework upgrade. I've definitely been down this path myself, specifically back when we migrated a large e-commerce platform from Rails 6.1 to 7.0. The issue with the default date format being ignored post-upgrade often boils down to a confluence of factors relating to how Rails handles configurations and i18n, and subtle changes introduced in version 7.0. It’s not that the configurations _don’t work_, but rather, they interact differently than before. Let's unpack the specifics.
 
 The core issue stems from Rails 7.0’s refined handling of the `config.time_zone` and, more importantly, the default date and time formats. In older versions, specifying a default date format in `config/application.rb` or similar configuration files might appear to be honored consistently across the application. However, Rails 7.0 leverages the i18n (internationalization) framework much more aggressively for date and time formatting. This is a move toward true localization, but it can catch you off guard if you're expecting the previous behavior.
 
-In essence, when you specify a default date format via `config.active_support.default_date_format` or `config.active_support.default_time_format`, those settings now serve as *defaults*. If an i18n locale defines a different format, that locale's setting will take precedence. Now this is extremely beneficial if you have a multilingual application, it ensures consistency for each locale but it can be problematic if you don't utilize i18n extensively. Essentially Rails prefers the i18n format, if one is provided. Previously Rails was more flexible, or to some people, less stringent, in it's adherence to i18n for default date formatting.
+In essence, when you specify a default date format via `config.active_support.default_date_format` or `config.active_support.default_time_format`, those settings now serve as _defaults_. If an i18n locale defines a different format, that locale's setting will take precedence. Now this is extremely beneficial if you have a multilingual application, it ensures consistency for each locale but it can be problematic if you don't utilize i18n extensively. Essentially Rails prefers the i18n format, if one is provided. Previously Rails was more flexible, or to some people, less stringent, in it's adherence to i18n for default date formatting.
 
 This change has several implications, namely that a date display might look fine on a developers machine, and appear broken on a QA's or customer's machine, depending on their locale.
 
@@ -31,10 +31,13 @@ end
 ```
 
 And then, assuming you displayed a date in a view using:
+
 ```ruby
 <%= Date.today %>
 ```
+
 or
+
 ```ruby
 <%= Time.now %>
 ```
@@ -74,7 +77,7 @@ Time::DATE_FORMATS[:default] = '%Y-%m-%d %H:%M:%S'
 
 By setting the `Date::DATE_FORMATS[:default]` and `Time::DATE_FORMATS[:default]` configurations, you bypass locale-specific formatting defaults and enforce a global behaviour. This configuration is placed in a file in `config/initializers`. This ensures this code runs on application start, making it globally available to the entire Rails application. This is the correct way to manage it in Rails 7.0 and above if you require the same behaviour as prior to Rails 7.0.
 
-These examples should illustrate the core shift in behaviour. The i18n framework is more assertive, not necessarily *broken*. The default settings in your configuration files are, by design, now more explicitly treated as fallbacks.
+These examples should illustrate the core shift in behaviour. The i18n framework is more assertive, not necessarily _broken_. The default settings in your configuration files are, by design, now more explicitly treated as fallbacks.
 
 **How to Troubleshoot and Fix This:**
 

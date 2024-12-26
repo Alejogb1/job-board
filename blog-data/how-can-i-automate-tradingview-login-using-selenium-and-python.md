@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-automate-tradingview-login-using-selenium-and-python"
 ---
 
-Okay, let's tackle this. I've certainly been down that road before; back in my quant trading days, automating access to platforms like TradingView was crucial for data acquisition and strategy backtesting. The challenge with automating TradingView login via Selenium and Python isn't particularly complex, but there are a few nuances that can trip up the unwary. The core problem lies in carefully identifying the correct html elements and handling potential dynamic changes in the website's structure.
+, let's tackle this. I've certainly been down that road before; back in my quant trading days, automating access to platforms like TradingView was crucial for data acquisition and strategy backtesting. The challenge with automating TradingView login via Selenium and Python isn't particularly complex, but there are a few nuances that can trip up the unwary. The core problem lies in carefully identifying the correct html elements and handling potential dynamic changes in the website's structure.
 
 At its heart, the process involves these steps: first, you'll need to initialize your selenium webdriver, usually a Chrome or Firefox instance, set up your implicit or explicit waits, then locate the input fields for username/email and password. After that, you'll need to send the necessary keys to fill them, click the login button, and ensure the site redirects you to the desired logged-in state. This seems straightforward enough, but reality often introduces hurdles. Let’s dive into what can go awry and how to solve them, then follow up with code examples that showcase these steps.
 
@@ -40,7 +40,7 @@ def tradingview_login(username, password):
         username_field.send_keys(username)
         password_field.send_keys(password)
         login_button.click()
-        
+
         # Wait for redirection and check if login was successful
         WebDriverWait(driver, 15).until(
           ec.url_contains('chart') # or another expected url after successful login
@@ -103,11 +103,11 @@ def tradingview_login_advanced(username, password):
         login_button = WebDriverWait(driver, 10).until(
             ec.element_to_be_clickable((By.XPATH, '//button[@type="submit"]'))
         )
-        
+
         username_field.send_keys(username)
         password_field.send_keys(password)
         login_button.click()
-       
+
         WebDriverWait(driver, 15).until(
             ec.url_contains('chart') # or another expected url after successful login
         )
@@ -145,7 +145,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.options import Options
 
 def tradingview_login_google(username, password):
-  
+
     chrome_options = Options()
     chrome_options.add_argument("--disable-extensions")
     chrome_options.add_argument("--disable-infobars")
@@ -166,18 +166,18 @@ def tradingview_login_google(username, password):
 
         # Switch to the Google Login Window (assuming it is a new tab/window)
         WebDriverWait(driver, 10).until(ec.number_of_windows_to_be(2))
-        
+
         main_window = driver.current_window_handle
         for window_handle in driver.window_handles:
             if window_handle != main_window:
               driver.switch_to.window(window_handle)
               break
-            
+
         google_username_field = WebDriverWait(driver, 10).until(
             ec.presence_of_element_located((By.ID, 'identifierId'))
         )
         google_username_field.send_keys(username)
-        
+
         google_next_button = WebDriverWait(driver, 10).until(
             ec.element_to_be_clickable((By.XPATH, '//span[text()="Next"]'))
         )
@@ -188,7 +188,7 @@ def tradingview_login_google(username, password):
         )
 
         google_password_field.send_keys(password)
-        
+
         google_signin_button = WebDriverWait(driver, 10).until(
             ec.element_to_be_clickable((By.XPATH, '//span[text()="Next"]'))
         )

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-c-code-for-processing-a-grayscale-image-using-three-channels-produce-identical-confidence-values-to-numpys-python-implementation"
 ---
 
-Alright, let's tackle this. I’ve seen this exact scenario play out more than once, actually. Specifically, I recall working on a computer vision project a few years back where we were porting a heavily NumPy-based image processing pipeline into a C++ backend for performance reasons. The discrepancy in confidence values, even after seemingly straightforward porting, was… let's say, frustrating. The root of the issue often boils down to subtle differences in data handling and floating-point arithmetic that aren’t immediately obvious.
+, let's tackle this. I’ve seen this exact scenario play out more than once, actually. Specifically, I recall working on a computer vision project a few years back where we were porting a heavily NumPy-based image processing pipeline into a C++ backend for performance reasons. The discrepancy in confidence values, even after seemingly straightforward porting, was… let's say, frustrating. The root of the issue often boils down to subtle differences in data handling and floating-point arithmetic that aren’t immediately obvious.
 
 First, let's clarify the problem: we have a grayscale image that we're treating as a three-channel entity in both the C++ and NumPy implementations. This is common in situations where the input format for, say, a neural network expects RGB or a similar multi-channel structure, even though the content is grayscale. The goal is to ensure both environments produce precisely the same confidence scores or processed pixel values following any given operation.
 
@@ -60,7 +60,7 @@ std::vector<std::vector<std::vector<double>>> cpp_process_image_bad(const std::v
 
 int main() {
   std::vector<std::vector<unsigned char>> image = {{100, 150, 200}, {50, 100, 150}};
-    
+
   auto cpp_result = cpp_process_image_bad(image);
 
   std::cout << "C++ Result (bad):\n";
@@ -77,6 +77,7 @@ int main() {
   return 0;
 }
 ```
+
 This first C++ snippet, while functionally equivalent on the surface, uses a vector of vectors which isn't always as efficient as a single contiguous memory allocation. It does use double precision floats as NumPy does. It would work for smaller image sizes, but it is not ideal for performance and may have issues when working with larger image sizes.
 
 Here is a better C++ implementation that uses a contiguous memory allocation similar to how NumPy stores its arrays:
@@ -98,7 +99,7 @@ std::vector<double> cpp_process_image(const std::vector<std::vector<unsigned cha
             {
                 result[(i * cols * 3) + (j * 3) + k] = static_cast<double>(image[i][j]) / 2.0 + 0.1;
             }
-         
+
         }
     }
     return result;
@@ -106,7 +107,7 @@ std::vector<double> cpp_process_image(const std::vector<std::vector<unsigned cha
 
 int main() {
   std::vector<std::vector<unsigned char>> image = {{100, 150, 200}, {50, 100, 150}};
-    
+
   auto cpp_result = cpp_process_image(image);
 
   std::cout << "C++ Result:\n";
@@ -123,12 +124,13 @@ int main() {
         }
       std::cout << std::endl;
     }
-    
+
   return 0;
 }
 ```
+
 This version uses a single `std::vector<double>` and calculates indices manually to access data in a similar row-major fashion to NumPy. Critically, the data type and operations are now consistent with the NumPy implementation, using doubles for both. This should now produce identical values, however, there is still a small issue, it uses `unsigned char` as the underlying data type, which may also cause differences in some instances. If the grayscale image is stored using a different type (e.g., `float`), then this will need to be updated as well.
 
 To truly achieve identical results, a best practice is to ensure you perform all operations using equivalent floating-point types (i.e., using `double` or `float` consistently) and the memory layout is consistent between implementations, using row major ordering. The above implementations have been designed to do this, and if there are still discrepancies, the root is likely within more intricate portions of the code base, and often worth revisiting any custom implementations of math functions or other numerical processing steps. Additionally, it may be beneficial to introduce automated testing or verification steps to check for differences between the two implementations at various stages.
 
-For deeper understanding of numerical computation, I recommend *Numerical Recipes* by Press et al.; it’s a comprehensive resource on numerical algorithms and can greatly clarify floating-point intricacies. For understanding efficient memory access and data layout in C++, *Effective C++* by Scott Meyers is an excellent resource, along with the corresponding *Modern Effective C++* by Scott Meyers, which covers the modern standards. For details on NumPy's internal structures and memory layout, reviewing the official NumPy documentation, particularly on array memory layout and data types is essential. Also, a strong understanding of the IEEE 754 standard for floating-point representation is critical. Understanding these resources, with careful attention to detail when porting the code, will almost always resolve the issue.
+For deeper understanding of numerical computation, I recommend _Numerical Recipes_ by Press et al.; it’s a comprehensive resource on numerical algorithms and can greatly clarify floating-point intricacies. For understanding efficient memory access and data layout in C++, _Effective C++_ by Scott Meyers is an excellent resource, along with the corresponding _Modern Effective C++_ by Scott Meyers, which covers the modern standards. For details on NumPy's internal structures and memory layout, reviewing the official NumPy documentation, particularly on array memory layout and data types is essential. Also, a strong understanding of the IEEE 754 standard for floating-point representation is critical. Understanding these resources, with careful attention to detail when porting the code, will almost always resolve the issue.

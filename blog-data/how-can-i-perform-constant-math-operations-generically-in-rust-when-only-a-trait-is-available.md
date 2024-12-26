@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-perform-constant-math-operations-generically-in-rust-when-only-a-trait-is-available"
 ---
 
-Alright, let's tackle this. I've certainly been down this road before, and it's a common enough challenge in Rust when you're trying to build something reusable across a variety of number types. The scenario you've described, performing constant math operations generically based on a trait, actually highlights several key aspects of Rust's type system and its commitment to performance.
+, let's tackle this. I've certainly been down this road before, and it's a common enough challenge in Rust when you're trying to build something reusable across a variety of number types. The scenario you've described, performing constant math operations generically based on a trait, actually highlights several key aspects of Rust's type system and its commitment to performance.
 
-The core issue here stems from the fact that traits describe *behavior*, not concrete types. You might have a trait `Numeric` that defines methods like `add`, `sub`, etc., and various concrete types like `i32`, `f64`, and even custom numeric types implement that trait. But the compiler needs to know exactly what operations to perform *at compile time*. This is crucial for optimization, and that’s where the challenge arises. The trait itself doesn't tell the compiler how to perform `+` or `-` on generic types at compile time. It merely specifies what can be performed.
+The core issue here stems from the fact that traits describe _behavior_, not concrete types. You might have a trait `Numeric` that defines methods like `add`, `sub`, etc., and various concrete types like `i32`, `f64`, and even custom numeric types implement that trait. But the compiler needs to know exactly what operations to perform _at compile time_. This is crucial for optimization, and that’s where the challenge arises. The trait itself doesn't tell the compiler how to perform `+` or `-` on generic types at compile time. It merely specifies what can be performed.
 
 Let's break this down with a bit of fictional history. I remember a project back in my early days where I was building a simulation engine. We needed to represent many different kinds of physical quantities using different data types (integers for discreet objects, floats for continuous motion). I quickly realized that performing constant math on them in a generic way, without resorting to runtime dispatch, was crucial for performance. This led me to the solutions I'll explain.
 
@@ -32,7 +32,7 @@ fn main() {
 
 ```
 
-This works fine for values you know at runtime. But, what about the constant? Suppose we *always* want to add `1`, but we need to do it generically. Well, this is where the limitations of generics become apparent because `1` is a specific value of a *concrete* type. The compiler can't just *guess* which type's `1` to use for the `Add` operation. This attempt won't compile unless the value is also a parameter.
+This works fine for values you know at runtime. But, what about the constant? Suppose we _always_ want to add `1`, but we need to do it generically. Well, this is where the limitations of generics become apparent because `1` is a specific value of a _concrete_ type. The compiler can't just _guess_ which type's `1` to use for the `Add` operation. This attempt won't compile unless the value is also a parameter.
 
 To solve this, we need to leverage the fact that Rust allows us to define trait bounds where the output type is the same as the input type. Also, we can use `From<u8>` to allow our generic function to construct the constant `1`.
 
@@ -133,16 +133,17 @@ fn main() {
 }
 
 ```
+
 In this example we have created a `Numeric` trait with associated functions that return static constants which are known at compile time. This will enable us to add `one` or subtract `one` to generic types which implement the `Numeric` trait.
 
 Now, these techniques may look a little more complex than they would in a language with runtime dynamic dispatch but that is the point, Rust is designed to be performant.
 
 For further study, I’d suggest exploring the following:
 
-*   **"The Rust Programming Language"**: The official book. Specifically, the chapters on traits and generics are crucial.
-*   **"Programming Rust" by Jim Blandy, Jason Orendorff, and Leonora F. S. Tindall**: Another excellent resource, going into more detail on ownership, lifetimes, and generics.
-*   **The `std::ops` module documentation**: This will provide a comprehensive overview of the traits used for mathematical operations.
-*   **Research papers on parametric polymorphism**: While not Rust-specific, these papers will provide you with the theoretical basis for how type systems, like Rust's, achieve genericity in a statically typed manner.
+- **"The Rust Programming Language"**: The official book. Specifically, the chapters on traits and generics are crucial.
+- **"Programming Rust" by Jim Blandy, Jason Orendorff, and Leonora F. S. Tindall**: Another excellent resource, going into more detail on ownership, lifetimes, and generics.
+- **The `std::ops` module documentation**: This will provide a comprehensive overview of the traits used for mathematical operations.
+- **Research papers on parametric polymorphism**: While not Rust-specific, these papers will provide you with the theoretical basis for how type systems, like Rust's, achieve genericity in a statically typed manner.
 
 These resources provide an in-depth understanding of how Rust’s type system and trait mechanism work.
 

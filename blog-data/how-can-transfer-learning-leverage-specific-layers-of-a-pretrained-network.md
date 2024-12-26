@@ -4,13 +4,13 @@ date: "2024-12-23"
 id: "how-can-transfer-learning-leverage-specific-layers-of-a-pretrained-network"
 ---
 
-Okay, let's delve into the nuanced territory of transfer learning and how we can strategically exploit specific layers of pretrained networks. It's something I’ve dealt with extensively over the years, and it's rarely a one-size-fits-all solution. More often than not, successful transfer learning relies on a careful, almost surgical approach to selecting and adapting network components.
+, let's delve into the nuanced territory of transfer learning and how we can strategically exploit specific layers of pretrained networks. It's something I’ve dealt with extensively over the years, and it's rarely a one-size-fits-all solution. More often than not, successful transfer learning relies on a careful, almost surgical approach to selecting and adapting network components.
 
-The core idea behind transfer learning, as many of you are familiar with, is reusing knowledge acquired from one task (the source task) for another, often related, task (the target task). Pretrained networks, especially those trained on large datasets like ImageNet, possess a remarkably rich hierarchy of features, from low-level edges and corners to high-level semantic representations of objects and scenes. The trick, then, isn't just *using* these pretrained models; it's about strategically identifying *which* layers to transfer and *how* to adapt them for our target problem.
+The core idea behind transfer learning, as many of you are familiar with, is reusing knowledge acquired from one task (the source task) for another, often related, task (the target task). Pretrained networks, especially those trained on large datasets like ImageNet, possess a remarkably rich hierarchy of features, from low-level edges and corners to high-level semantic representations of objects and scenes. The trick, then, isn't just _using_ these pretrained models; it's about strategically identifying _which_ layers to transfer and _how_ to adapt them for our target problem.
 
 Initially, the naive approach might be to simply use the entire pretrained model as a feature extractor, tacking on a new classification layer or regression head. This is fine for a quick baseline, but it rarely unlocks the full potential. Why? Because not all layers are created equal. Early layers in convolutional neural networks, for instance, tend to learn generic features, things like basic textures, colors, and edges, which are quite universal across different datasets. Deeper layers, on the other hand, become more specialized, capturing complex patterns specific to the source task.
 
-So, when faced with a new task, especially if it differs significantly from the one the model was pretrained on, fine-tuning all layers can actually *hurt* performance. Overfitting to the new data can undo the valuable knowledge encoded in the earlier layers. This is where selectively freezing and fine-tuning layers comes into play. I've seen projects go sideways because folks hadn't grasped this basic principle.
+So, when faced with a new task, especially if it differs significantly from the one the model was pretrained on, fine-tuning all layers can actually _hurt_ performance. Overfitting to the new data can undo the valuable knowledge encoded in the earlier layers. This is where selectively freezing and fine-tuning layers comes into play. I've seen projects go sideways because folks hadn't grasped this basic principle.
 
 Here’s the strategy I typically follow, broken down into a few key points:
 
@@ -96,7 +96,7 @@ optimizer = optim.Adam(filter(lambda p: p.requires_grad, resnet.parameters()), l
 # Training loop
 ```
 
-Here, the medical images are very different from natural images. Therefore, freezing *most* of the network, including the deeper convolutional layers, makes sense. We’re only tuning the classification head. This leverages the generic feature representations learnt in the earlier layers but doesn’t attempt to fit the early layers to completely different kinds of inputs. We also use a small learning rate when training the final linear layer.
+Here, the medical images are very different from natural images. Therefore, freezing _most_ of the network, including the deeper convolutional layers, makes sense. We’re only tuning the classification head. This leverages the generic feature representations learnt in the earlier layers but doesn’t attempt to fit the early layers to completely different kinds of inputs. We also use a small learning rate when training the final linear layer.
 
 **Example 3: Fine-tuning with Gradually Unfreezing Layers (Pseudo-code)**
 
@@ -129,6 +129,7 @@ for epoch in range(num_epochs_3):
   # Training loop
 
 ```
+
 This shows how to gradually unfreeze the network starting from the last layers to the earlier layers while using smaller learning rates. This method allows the network to slowly adapt to the new task.
 
 These examples illustrate a typical workflow. For more detail, I'd recommend looking into some of the groundbreaking papers by Yosinski et al. on transferring learned representations, specifically their work "How transferable are features in deep neural networks?". Also, I found the chapters on transfer learning in Ian Goodfellow's "Deep Learning" textbook very informative. Finally, for practical implementations, reviewing the official PyTorch documentation on model modification and parameter freezing is quite helpful.

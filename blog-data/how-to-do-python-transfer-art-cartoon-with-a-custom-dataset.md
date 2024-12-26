@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-python-transfer-art-cartoon-with-a-custom-dataset"
 ---
 
-alright, so you're aiming to create this python-powered art transfer thing, specifically cartoon-style, using your own dataset. that's a cool project. i've spent more than a few late nights wrestling with similar image manipulation stuff, so let me share my take on it, and some of the potholes i’ve stumbled into so you can avoid them.
+, so you're aiming to create this python-powered art transfer thing, specifically cartoon-style, using your own dataset. that's a cool project. i've spent more than a few late nights wrestling with similar image manipulation stuff, so let me share my take on it, and some of the potholes i’ve stumbled into so you can avoid them.
 
 first, breaking down the challenge. we’re essentially talking about style transfer here. there are a bunch of approaches for that, but for cartoon-ish outcomes, and with a custom dataset, we need to focus on techniques that can learn and adapt well from your specific data. generic pre-trained models might give generic results. we want that unique flair.
 
@@ -67,9 +67,9 @@ once you have a cnn you can build a style transfer network as follows: take your
 
 you’ll need to create a loss function, that will tell the network how well is doing. here’s where the ‘art’ (pun intended) of deep learning meets. i suggest that you explore using a combination of these losses:
 
-*   **content loss:** this makes sure that the structure of the input image is preserved in the generated output. we compare the feature maps from intermediate layers of the cnn between the input image and the generated output. we basically compare how similar the learned features are between both images.
-*   **style loss:** this ensures that the resulting image has the same stylistic characteristics as your cartoon training set. we compare the gram matrices (statistical relations between features) of both the generated image and your cartoon images. this forces the model to learn the style.
-*   **total variation loss:** this helps to reduce noise and artifacts in the output. it acts as a regularizer, smoothing out small unnecessary details in your picture.
+- **content loss:** this makes sure that the structure of the input image is preserved in the generated output. we compare the feature maps from intermediate layers of the cnn between the input image and the generated output. we basically compare how similar the learned features are between both images.
+- **style loss:** this ensures that the resulting image has the same stylistic characteristics as your cartoon training set. we compare the gram matrices (statistical relations between features) of both the generated image and your cartoon images. this forces the model to learn the style.
+- **total variation loss:** this helps to reduce noise and artifacts in the output. it acts as a regularizer, smoothing out small unnecessary details in your picture.
 
 and you need an optimiser, that helps the network learn. i've found that using adam works well in these cases. here is the relevant snippet code:
 
@@ -158,10 +158,10 @@ during training, keep track of the losses and evaluate them on a validation set,
 
 there’s a lot to this, and it can be quite a deep dive, but some texts that i found particularly useful, when i was starting out and still find useful are:
 
-*   "image style transfer using convolutional neural networks" by gatys et al. this is where it all started. a good read if you want to know the specifics of style transfer and the theory behind it.
-*   "deep learning with python" by francois chollet. a good general resource, but with particular focus on deep learning and neural networks.
-*   the pytorch official documentation. especially the tutorials section. this helped me a ton when i was trying to get a handle on the basics.
+- "image style transfer using convolutional neural networks" by gatys et al. this is where it all started. a good read if you want to know the specifics of style transfer and the theory behind it.
+- "deep learning with python" by francois chollet. a good general resource, but with particular focus on deep learning and neural networks.
+- the pytorch official documentation. especially the tutorials section. this helped me a ton when i was trying to get a handle on the basics.
 
-one last thing: when you present the results to other people be ready for all sort of opinions about the quality of the generated results. it is like trying to make your own food. some people will like it, some will not, and some will just be jerks about it. don't let it discourage you. the most important thing is that *you* like it.
+one last thing: when you present the results to other people be ready for all sort of opinions about the quality of the generated results. it is like trying to make your own food. some people will like it, some will not, and some will just be jerks about it. don't let it discourage you. the most important thing is that _you_ like it.
 
 i know this was a long answer, but there's a fair bit of detail to this. hope it helps you make your python based cartoon-inator. let me know if you have any more specific questions.

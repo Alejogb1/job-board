@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-unable-to-open-a-docx-file-sent-through-microsoft-graph-sdk-java"
 ---
 
-Alright, let's break down why you might be encountering issues opening a docx file received via the Microsoft Graph SDK for Java. I've certainly tripped over this specific scenario a few times in my years, and the devil, as they say, is often in the details. The problem isn't usually with the graph api itself, but rather in how the data is being handled and interpreted on the java side.
+, let's break down why you might be encountering issues opening a docx file received via the Microsoft Graph SDK for Java. I've certainly tripped over this specific scenario a few times in my years, and the devil, as they say, is often in the details. The problem isn't usually with the graph api itself, but rather in how the data is being handled and interpreted on the java side.
 
 First off, it’s crucial to understand what you’re actually receiving from the Graph API when requesting file content. You're not getting a raw file stream in the traditional sense. The Graph API often returns file contents as a byte array, which needs to be correctly processed into a usable file format. Let's say you're calling the `/me/drive/items/{item-id}/content` endpoint. The response's body doesn't automatically materialize into a `docx` file. Instead, it’s a stream of bytes you must handle appropriately. This step, the transformation from bytes to file, is where most of the common problems arise. This particular transformation demands careful attention to input/output streams, potentially alongside some error handling.
 
@@ -69,7 +69,7 @@ public class GraphFileDownloader {
 }
 ```
 
-In this example, instead of directly trying to read a generic input stream, I am leveraging the okhttp library's features for the lower-level request execution and response body handling which provides better handling of bytes.  This method also performs essential checks for a successful response code and verifies the response body isn't null, preventing common exceptions. Further, i am using the `Okio` library to perform I/O operations for byte handling, which gives you a lot of flexibility and guarantees that stream processing will be effective.
+In this example, instead of directly trying to read a generic input stream, I am leveraging the okhttp library's features for the lower-level request execution and response body handling which provides better handling of bytes. This method also performs essential checks for a successful response code and verifies the response body isn't null, preventing common exceptions. Further, i am using the `Okio` library to perform I/O operations for byte handling, which gives you a lot of flexibility and guarantees that stream processing will be effective.
 
 Another common issue comes when handling large files. Loading entire byte arrays into memory can be problematic. In such cases, one must use streaming techniques to process the data incrementally. You can adapt the previous snippet by writing to disk directly as the response body stream comes in. Consider this improved example, which incorporates streaming and the use of try-with-resources for safer IO handling:
 

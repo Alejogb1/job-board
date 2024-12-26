@@ -4,13 +4,13 @@ date: "2024-12-16"
 id: "how-can-i-use-user-methods-in-a-pipeline"
 ---
 
-Okay, let's tackle this. A question about integrating user methods into a pipeline, I've certainly been down that road more than once, and it’s always a good exercise in understanding flexibility and control in data processing. It’s not simply about slapping any old function in the middle; it's about doing it in a way that’s robust, maintainable, and ideally, reusable.
+, let's tackle this. A question about integrating user methods into a pipeline, I've certainly been down that road more than once, and it’s always a good exercise in understanding flexibility and control in data processing. It’s not simply about slapping any old function in the middle; it's about doing it in a way that’s robust, maintainable, and ideally, reusable.
 
 The core issue is this: pipelines, whether in data science, machine learning, or ETL (extract, transform, load) processes, are fundamentally about a sequence of operations. These operations are often, and should be, as generic and modular as possible. But there are times when you need to inject domain-specific logic – precisely where user-defined methods come into play. Think of it as customizing a factory assembly line with a tool of your own making.
 
 My experience, for instance, with a large-scale data ETL pipeline for a financial trading platform years back highlights this quite well. We had stock prices, trading volumes, various other market data pouring in. Much of the processing was standard – cleaning missing values, converting units, reformatting dates, and so forth. However, specific financial analysis required formulas and checks only known by our team's domain experts. These weren’t operations that could be easily abstracted away into a generic library function. We didn’t want to make the core pipeline code bloated with domain-specific logic, nor did we want to repeat the same formulas in multiple places. The solution, of course, was integrating user methods strategically into the pipeline.
 
-Let’s dissect *how* that was done, and *how* you can do it effectively. There are a few key considerations. First, your user method must be compatible with the data structure of the pipeline stages that come before and after it. Second, the user method should be well-defined in terms of inputs, outputs, and potential error conditions, for predictability. And finally, the method should ideally be designed to integrate smoothly without introducing excessive overhead.
+Let’s dissect _how_ that was done, and _how_ you can do it effectively. There are a few key considerations. First, your user method must be compatible with the data structure of the pipeline stages that come before and after it. Second, the user method should be well-defined in terms of inputs, outputs, and potential error conditions, for predictability. And finally, the method should ideally be designed to integrate smoothly without introducing excessive overhead.
 
 One approach involves treating the user method as a ‘transform’ in the pipeline. This usually requires the user method to accept the output of the preceding stage as its input, and output a modified data structure that the subsequent stage can then use.
 
@@ -83,6 +83,7 @@ df['first_word'] = df['text'].apply(text_processor.process)
 
 print(df)
 ```
+
 In this second example, we have encapsulated our text preprocessing logic within a `TextPreprocessor` class, making it reusable in different parts of the pipeline, or even across multiple pipelines.
 
 Finally, let's consider a scenario that isn't row-wise, but may involve applying a user-defined method that requires more than one column to arrive at an output. Here we'll take two columns with numerical data and run it through a user-defined calculation.
@@ -109,6 +110,7 @@ df['result'] = df.apply(lambda row: custom_calculator(row, factor), axis=1)
 print(df)
 
 ```
+
 Here we have a user-defined function, `custom_calculator`, which takes the DataFrame row and a `factor` (defined outside of the user method) as its inputs, and computes a new column `result`. This emphasizes the importance of carefully considering the inputs and outputs of user methods so that they can be correctly integrated within the data flow of the overall pipeline. The `lambda` function here allows us to pass the additional `factor` variable into the user method.
 
 These examples illustrate different ways user methods can be inserted into a pipeline. What's crucial is to keep a few things in mind. Error handling within these methods must be robust - you'll want to think through the edge cases and either handle errors gracefully or raise exceptions that the pipeline’s overall error handling mechanism can manage. And finally, consider the performance implications. User methods, while incredibly flexible, might not always be the most optimized in terms of computational speed. If needed, profiling the pipeline and user method can reveal potential bottlenecks that can be improved upon.

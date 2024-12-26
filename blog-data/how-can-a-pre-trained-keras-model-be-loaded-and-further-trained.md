@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-a-pre-trained-keras-model-be-loaded-and-further-trained"
 ---
 
-Okay, let's tackle this. I recall a project a few years back, working with a rather large image classification model that had been pre-trained on ImageNet. We needed to adapt it for a very specific, niche domain, and the standard 'transfer learning' approach seemed insufficient—we needed to continue training the entire network, not just the final layers. That's where understanding the nuances of loading and further training a pre-trained Keras model became crucial.
+, let's tackle this. I recall a project a few years back, working with a rather large image classification model that had been pre-trained on ImageNet. We needed to adapt it for a very specific, niche domain, and the standard 'transfer learning' approach seemed insufficient—we needed to continue training the entire network, not just the final layers. That's where understanding the nuances of loading and further training a pre-trained Keras model became crucial.
 
 The key is understanding that when we talk about “loading” a pre-trained model, we're generally referring to loading its architecture and the weights of its trained layers, not necessarily all aspects of the training configuration itself. Keras offers straightforward mechanisms for this, but certain nuances must be carefully managed to achieve successful further training. This isn’t a simple “point and click” process; it often requires careful consideration of various parameters and training strategies.
 
-Firstly, let’s discuss the mechanics of loading. Keras models can be saved in several formats—primarily the *HDF5* format (.h5) or the TensorFlow SavedModel format. The way you load the model will depend on this saved format. Once loaded, you essentially have a functional Keras model object. Now, you might think that this is ready for further training, but that's where several important considerations come in.
+Firstly, let’s discuss the mechanics of loading. Keras models can be saved in several formats—primarily the _HDF5_ format (.h5) or the TensorFlow SavedModel format. The way you load the model will depend on this saved format. Once loaded, you essentially have a functional Keras model object. Now, you might think that this is ready for further training, but that's where several important considerations come in.
 
 Let's dive into the code. Here's a very basic example of loading a pre-trained model from an HDF5 file:
 

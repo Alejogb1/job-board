@@ -4,9 +4,9 @@ date: "2024-12-23"
 id: "how-can-i-extract-a-numimages-1280-array-from-a-keras-mobilenetv2-model-with-globalaveragepooling"
 ---
 
-Alright, let's tackle this. I’ve certainly been down this road before, trying to get intermediate outputs from a network, and extracting features specifically after a `GlobalAveragePooling2D` layer can feel a little tricky at first. You're essentially looking to bypass the final classification layers and snag the feature representation just before the model's decision-making stage. It’s a very common scenario when you want to use pre-trained models for transfer learning or feature extraction. So, let’s unpack this systematically.
+, let's tackle this. I’ve certainly been down this road before, trying to get intermediate outputs from a network, and extracting features specifically after a `GlobalAveragePooling2D` layer can feel a little tricky at first. You're essentially looking to bypass the final classification layers and snag the feature representation just before the model's decision-making stage. It’s a very common scenario when you want to use pre-trained models for transfer learning or feature extraction. So, let’s unpack this systematically.
 
-The key idea here is that we're not interested in the model's output probabilities; we want the activations from the layer *before* the classification head. In the case of MobileNetv2 with `GlobalAveragePooling2D`, this means we want the tensor coming out of the global average pooling operation. This tensor, typically a (batch_size, 1280) shape, encapsulates the learned features of the input images. The 1280 here is specific to MobileNetv2 and represents the number of channels (or filters) after the convolutional layers and the subsequent pooling operation.
+The key idea here is that we're not interested in the model's output probabilities; we want the activations from the layer _before_ the classification head. In the case of MobileNetv2 with `GlobalAveragePooling2D`, this means we want the tensor coming out of the global average pooling operation. This tensor, typically a (batch_size, 1280) shape, encapsulates the learned features of the input images. The 1280 here is specific to MobileNetv2 and represents the number of channels (or filters) after the convolutional layers and the subsequent pooling operation.
 
 Let's explore how you can accomplish this with a few approaches, each with varying degrees of flexibility:
 
@@ -73,7 +73,7 @@ This is functionally equivalent to the previous method but separates the extract
 
 **Method 3: Feature extraction during a model fit**
 
-Now, you might think, "Okay, these are good, but what if I need these features as part of the training process, not just inference?". Let’s tackle that scenario. Rather than predicting after the training, we can create an additional output in the training model that returns both the prediction and the features from the intermediate layer:
+Now, you might think, ", these are good, but what if I need these features as part of the training process, not just inference?". Let’s tackle that scenario. Rather than predicting after the training, we can create an additional output in the training model that returns both the prediction and the features from the intermediate layer:
 
 ```python
 import tensorflow as tf
@@ -115,16 +115,16 @@ In this instance:
 1.  We construct our base MobileNetv2 model, again without the top layers.
 2.  We explicitly create a new output dense layer which will act as the new classification layer for the model.
 3.  Then, within the new model, we define two outputs, first the prediction, and second the output of `global_average_pooling2d`.
-4. We then proceed to train the model as normal. Note that when fitting, we provide zeros for the second output as there is no loss function defined. We also receive this tensor as part of the models predictions.
+4.  We then proceed to train the model as normal. Note that when fitting, we provide zeros for the second output as there is no loss function defined. We also receive this tensor as part of the models predictions.
 
 **Further Learning**
 
 To deepen your understanding of these concepts, I'd highly recommend diving into the following resources:
 
-*   **"Deep Learning with Python" by François Chollet:** This book is a comprehensive guide to using Keras and covers intermediate layer extraction quite effectively. It provides a solid foundational understanding of model manipulation in keras.
+- **"Deep Learning with Python" by François Chollet:** This book is a comprehensive guide to using Keras and covers intermediate layer extraction quite effectively. It provides a solid foundational understanding of model manipulation in keras.
 
-*   **The official Keras documentation:** The keras API is well documented. Specifically, you should look into the `Model` class, layer outputs, and layer retrieval methods. Exploring this will enhance your understanding significantly.
+- **The official Keras documentation:** The keras API is well documented. Specifically, you should look into the `Model` class, layer outputs, and layer retrieval methods. Exploring this will enhance your understanding significantly.
 
-*   **Research papers on Transfer Learning:** If your goal is transfer learning you should have a good grasp of it. Papers like "How transferable are features in deep neural networks" can be useful in understanding the concepts of feature extraction and transfer learning.
+- **Research papers on Transfer Learning:** If your goal is transfer learning you should have a good grasp of it. Papers like "How transferable are features in deep neural networks" can be useful in understanding the concepts of feature extraction and transfer learning.
 
-In conclusion, extracting that (num\_images, 1280) tensor from MobileNetv2 after the global average pooling isn’t difficult, it’s about understanding the structure of your model and how to properly redefine it (or re-purpose the output) to get the specific information you need. Each of the presented methods has advantages depending on your exact scenario, however, Method 1 is generally the most approachable. This approach should work well for you.
+In conclusion, extracting that (num_images, 1280) tensor from MobileNetv2 after the global average pooling isn’t difficult, it’s about understanding the structure of your model and how to properly redefine it (or re-purpose the output) to get the specific information you need. Each of the presented methods has advantages depending on your exact scenario, however, Method 1 is generally the most approachable. This approach should work well for you.

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "code-check-in-code-review-process"
 ---
 
-Alright so code check in code review process right I've been down that rabbit hole more times than I care to remember Let me break it down for you from my perspective someone who's seen it all or at least a good chunk of it in the trenches
+so code check in code review process right I've been down that rabbit hole more times than I care to remember Let me break it down for you from my perspective someone who's seen it all or at least a good chunk of it in the trenches
 
 First thing's first code review isn't just some formality to tick off on a checklist It's a crucial part of the software development lifecycle that keeps things from turning into a total dumpster fire I'm talking from experience here I remember this one project back in 2010 yeah it was that long ago where we just pushed code straight to main without any reviews at all The result was pure chaos Bugs were everywhere the codebase was a tangled mess it was like trying to untangle a ball of yarn that a cat played with for a week We ended up spending more time fixing things than building new features It was a mess I tell you a total mess that I do not ever want to experience ever again that's a lesson learned the hard way
 
@@ -31,6 +31,7 @@ def calculate_area(length, width):
 This is an example that happens way too often someone just saying it is bad or not good without any context this means that you will just waste time back and forth with the person that did the code it is a waste of time of the whole team and it shows that this reviewer is not even paying attention to the code
 
 A more productive approach would be like this:
+
 ```python
 #Example of a good code review
 #Reviewer:"Nice work on calculating the area although I think it should handle invalid values like negative ones or non number values how about we add some handling for that"
@@ -41,9 +42,11 @@ def calculate_area(length, width):
          raise ValueError("Length and width cannot be negative")
     return length * width
 ```
+
 In this example reviewer is providing specific feedback that is actionable by the developer this way we actually have an outcome from the review that will improve the code base. Also the reviewer is not only saying that it is wrong but also explaining how the code should handle the incorrect cases
 
 One more example let's say we are dealing with databases
+
 ```python
 # Example of bad code without proper sanitization
 def get_user_by_id(user_id):
@@ -52,6 +55,7 @@ def get_user_by_id(user_id):
     result=cursor.fetchone()
     return result
 ```
+
 This is a huge no no This code is very vulnerable to SQL injection attacks what if a malicious user passes an id that contains SQL code? The database would be compromised it's a recipe for disaster. We always need to sanitize the inputs we take from the user
 
 Here is how you should be doing this :
@@ -64,6 +68,7 @@ def get_user_by_id(user_id):
     result= cursor.fetchone()
     return result
 ```
+
 Here you can see we're using parameterization to prevent SQL injection this approach keeps your code safe and also makes it more readable.
 
 Now regarding resources if you want to go deep into this topic there are few books that I recommend. "Code Complete" by Steve McConnell is a classic that covers just about everything in software development including code reviews. It's a bit old but still very relevant. "Refactoring" by Martin Fowler is a must read if you want to learn how to improve your code quality. And if you're interested in the actual coding standards and stuff you should check out the official documents for each language or framework. For example the PEP8 for python if you use python that is or Google's Java style guide if that's your cup of tea. Or the coding standards for C++. Its best to always stick to the standards that are already existing to not cause even more inconsistencies.

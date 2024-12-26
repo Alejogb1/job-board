@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-csrf-verification-fail-after-deploying-django-with-nginx-and-waitress"
 ---
 
-Alright, let's tackle this. It's a familiar scenario, really. I've certainly seen this particular headache pop up more times than I care to count in the past, especially after transitioning from development servers to more robust production setups. The issue of csrf verification failing after deploying a Django application using nginx and waitress often boils down to a misunderstanding of how these components interact, specifically concerning cookie handling and request origins. It's rarely a fault in the core Django csrf implementation itself, but rather a configuration mismatch or oversight in the deployment pipeline.
+, let's tackle this. It's a familiar scenario, really. I've certainly seen this particular headache pop up more times than I care to count in the past, especially after transitioning from development servers to more robust production setups. The issue of csrf verification failing after deploying a Django application using nginx and waitress often boils down to a misunderstanding of how these components interact, specifically concerning cookie handling and request origins. It's rarely a fault in the core Django csrf implementation itself, but rather a configuration mismatch or oversight in the deployment pipeline.
 
 Let's break it down from the ground up, and I'll share some specifics based on similar scenarios I've encountered. Initially, when you're working with Django's built-in development server, which typically runs on a specific address (like `127.0.0.1:8000`) and doesn't involve proxies or complex server setups, CSRF verification works smoothly. Django's CSRF protection primarily relies on a secret token, which is embedded in the HTML form (or included in request headers for AJAX calls) and stored as a cookie on the client's browser.
 
@@ -25,7 +25,9 @@ Let's say your domain name is `www.example.com`. Here's how to correct it:
 
 ALLOWED_HOSTS = ['www.example.com', 'example.com']
 ```
+
 This configuration explicitly tells Django that requests from these domains are considered valid. If nginx is also handling other virtual hosts for subdomains, make sure these are also present in `ALLOWED_HOSTS`. For example, if you also have `api.example.com`, you would have it as follows:
+
 ```python
 ALLOWED_HOSTS = ['www.example.com', 'example.com', 'api.example.com']
 ```
@@ -57,6 +59,7 @@ server {
     }
 }
 ```
+
 The `proxy_set_header X-Forwarded-Proto $scheme;` is key here, as it passes the protocol to the downstream application. This will signal to Django, specifically when using the `SECURE_PROXY_SSL_HEADER` configuration, that this request is to be treated as an SSL request, so it issues cookies with the https protocol instead of http.
 
 **Scenario 3: Incorrect Cookie settings:**

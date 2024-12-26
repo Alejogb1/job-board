@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-files-be-read-from-vertex-ai-and-google-cloud-storage"
 ---
 
-Alright, let’s talk about pulling data from Google Cloud Storage (GCS) into Vertex AI. I've seen this scenario play out a bunch of times, often with teams just getting started with mlops or scaling up their existing workflows. It’s not always straightforward, and the nuances can catch you out if you're not paying attention. We’ll look at the core concepts, and then I'll demonstrate with a few snippets in Python using Google's SDK.
+, let’s talk about pulling data from Google Cloud Storage (GCS) into Vertex AI. I've seen this scenario play out a bunch of times, often with teams just getting started with mlops or scaling up their existing workflows. It’s not always straightforward, and the nuances can catch you out if you're not paying attention. We’ll look at the core concepts, and then I'll demonstrate with a few snippets in Python using Google's SDK.
 
 Essentially, there are two primary avenues for accessing files: using the GCS API directly, or relying on Vertex AI's built-in capabilities, which in many cases abstract away some of the boilerplate. The former approach grants finer control but requires more explicit coding, while the latter simplifies common workflows for training or batch prediction. Choosing between the two largely depends on your specific requirements and comfort level.
 
@@ -139,6 +139,7 @@ if __name__ == '__main__':
     batch_prediction_vertex(project_id, location, model_name, input_uri, output_uri)
 
 ```
+
 Here, the `batch_predict` method accepts GCS input (`input_uri`) and output (`gcs_destination_prefix`) paths. Like the training case, Vertex handles the details of reading the input data from GCS, forwarding them to your deployed model and writing the inference results to the specified output bucket. I've dealt with very large datasets here, and careful partitioning of the input data can greatly impact the time it takes for batch prediction to complete.
 
 For further study and a deeper understanding, I recommend reviewing the official google cloud documentation for both ‘google-cloud-storage’ and the ‘vertex ai’ SDK. Also, "Designing Data-Intensive Applications" by Martin Kleppmann is excellent for broader considerations related to data storage and processing systems, although not specifically tied to Google Cloud. Similarly, "Machine Learning Engineering" by Andriy Burkov touches upon some of the practicalities that are helpful in understanding system architectures within MLOps and data management at scale. Lastly, reviewing the papers on distributed file systems like GFS or Colossus (google's latest file system) can give you a more fundamental understanding of the underlaying tech used by GCP.

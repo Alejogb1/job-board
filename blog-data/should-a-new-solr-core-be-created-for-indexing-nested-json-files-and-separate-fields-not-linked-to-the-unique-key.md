@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "should-a-new-solr-core-be-created-for-indexing-nested-json-files-and-separate-fields-not-linked-to-the-unique-key"
 ---
 
-Okay, let's delve into this. I've encountered similar architectural decisions multiple times, most memorably while working on a large-scale document management system for a financial institution. We were grappling with deeply nested JSON structures representing complex transaction data, which sounds akin to what you're dealing with. The crux of your question—whether to create a new Solr core for indexing nested json files and separate fields not linked to the unique key—isn't a simple yes or no; it depends heavily on specific needs and expected use cases.
+, let's delve into this. I've encountered similar architectural decisions multiple times, most memorably while working on a large-scale document management system for a financial institution. We were grappling with deeply nested JSON structures representing complex transaction data, which sounds akin to what you're dealing with. The crux of your question—whether to create a new Solr core for indexing nested json files and separate fields not linked to the unique key—isn't a simple yes or no; it depends heavily on specific needs and expected use cases.
 
 My immediate inclination isn't automatically towards a new core, simply because core proliferation often introduces management overhead. Think about backup procedures, schema evolution, and query optimization across multiple cores – all of this adds to complexity. However, a single core isn't always the optimal choice either. Let's examine both sides before we reach a considered answer.
 
@@ -62,22 +62,24 @@ Here, I’m assuming you configure `order_items` as a `json` type and then use a
 <field name="order_items_text" type="text_en" indexed="true" stored="false" multiValued="true"/>
 
 ```
+
 In this scenario, the `order_items` is stored as a `string` and then copied to `order_items_text`, for the text search. I am using a multi-valued text field as a simplified example. You would then have to do some processing at the data ingest level to convert your `order_items` json into a string of text that can be added to the `order_items_text` field.
 
 **Scenario 3: Multiple cores**
 
-*   **Core 1 (orders):** `id`, `customer_id`, `order_date`.
-*   **Core 2 (order_items):** `order_id` (reference to the order), `item_id`, `item_name`, `item_price`, etc.
-*   **Core 3 (locations):** `location_id`, `location_name`, `location_description`.
+- **Core 1 (orders):** `id`, `customer_id`, `order_date`.
+- **Core 2 (order_items):** `order_id` (reference to the order), `item_id`, `item_name`, `item_price`, etc.
+- **Core 3 (locations):** `location_id`, `location_name`, `location_description`.
 
 Here, each core is specifically structured and would need an associated schema. You'd use joins or cross-core queries to retrieve aggregated information. This method also involves a more complex update and data synchronization.
 
 Considering these examples, I would typically avoid creating a separate core unless:
+
 1. The nested json structure is very deep and the schema changes often.
 2. The separate fields, like 'store_location', are not commonly used in core queries, or are used under very different circumstances than the `order` data.
 3. The primary dataset (order details) and secondary datasets (items, locations) grow significantly, causing query performance issues.
 4. You anticipate different indexing strategies or different update rates for the different data sets.
 
-For more in-depth understanding, you could check *Solr in Action* by Matt Weber and Peter Lubbers. It provides comprehensive coverage of Solr's features and best practices. *Lucene in Action, Second Edition* by Erik Hatcher and Otis Gospodnetic is a helpful resource if you want to get more into the lower-level search engine workings. If you anticipate using graph-like queries, exploring the work done at the Apache TinkerPop project, while not directly Solr, can be helpful in shaping ideas.
+For more in-depth understanding, you could check _Solr in Action_ by Matt Weber and Peter Lubbers. It provides comprehensive coverage of Solr's features and best practices. _Lucene in Action, Second Edition_ by Erik Hatcher and Otis Gospodnetic is a helpful resource if you want to get more into the lower-level search engine workings. If you anticipate using graph-like queries, exploring the work done at the Apache TinkerPop project, while not directly Solr, can be helpful in shaping ideas.
 
 In conclusion, while a separate core might seem appealing to solve immediate problems, always consider the long-term implications and try to keep the overall system complexity at a minimum by adopting a single core as your default position. Carefully analyze your query patterns and data volume. If you can reasonably accommodate your data within a single core using approaches like dynamic fields, flattening, or carefully constructed `copyField` statements, it's usually the less disruptive path. You want to avoid introducing unnecessary complexity, and the addition of a new core should be a decision based on robust evidence and necessity.

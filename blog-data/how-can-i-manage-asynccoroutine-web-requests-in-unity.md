@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-manage-asynccoroutine-web-requests-in-unity"
 ---
 
-Okay, let’s tackle this. I’ve spent a fair amount of time navigating the nuances of asynchronous operations in Unity, particularly when it comes to web requests. It’s a common challenge, and honestly, it’s one that tripped me up quite a few times in the early days, especially when dealing with mobile projects. The core problem revolves around Unity's main thread limitations. Blocking the main thread with synchronous web calls results in dropped frames, freezes, and generally a terrible user experience. So, employing asynchronous methods is not just advisable, it's practically mandatory for any real-world game or application involving network activity.
+, let’s tackle this. I’ve spent a fair amount of time navigating the nuances of asynchronous operations in Unity, particularly when it comes to web requests. It’s a common challenge, and honestly, it’s one that tripped me up quite a few times in the early days, especially when dealing with mobile projects. The core problem revolves around Unity's main thread limitations. Blocking the main thread with synchronous web calls results in dropped frames, freezes, and generally a terrible user experience. So, employing asynchronous methods is not just advisable, it's practically mandatory for any real-world game or application involving network activity.
 
 The solution space essentially breaks down into a few key approaches, all of them involving leveraging coroutines or async/await, with a preference for the latter given its cleaner syntax and improved error handling in modern C#. I’ve personally found async/await to be far more maintainable, particularly in larger codebases, and it fits well with the structured nature of Unity development.
 
@@ -55,7 +55,7 @@ In this example, the `GetDataCoroutine` function is a coroutine. It uses `UnityW
 
 **Moving to Async/Await**
 
-Async/await is generally a more modern approach, providing greater flexibility and cleaner code organization. To implement this, you must mark your functions with the `async` keyword and return a `Task` (or `Task<T>` if you are returning a value). Awaiting an async operation will effectively pause the execution until that operation finishes without blocking the main thread, a similar mechanism to coroutines but using language features directly instead of Unity’s engine tools.  The `async void` methods are generally discouraged except for event handlers. You must start the task on the Unity main thread using `Task.Run` and schedule a return to main thread using `UnityMainThreadDispatcher.Instance.Enqueue` method. In my experience, UnityAsync is a good framework to handle async calls.
+Async/await is generally a more modern approach, providing greater flexibility and cleaner code organization. To implement this, you must mark your functions with the `async` keyword and return a `Task` (or `Task<T>` if you are returning a value). Awaiting an async operation will effectively pause the execution until that operation finishes without blocking the main thread, a similar mechanism to coroutines but using language features directly instead of Unity’s engine tools. The `async void` methods are generally discouraged except for event handlers. You must start the task on the Unity main thread using `Task.Run` and schedule a return to main thread using `UnityMainThreadDispatcher.Instance.Enqueue` method. In my experience, UnityAsync is a good framework to handle async calls.
 
 Here is an example of an async implementation using UnityWebRequest:
 
@@ -105,7 +105,8 @@ public class AsyncWebRequest : MonoBehaviour
     }
 }
 ```
-This example is fairly similar to the coroutine version, but it’s using async/await. Notice the `async Task<string>` return type, `await webRequest.SendWebRequest().AsAsyncOperation()` and the error handling using try/catch.  This snippet benefits from being more readable and maintainable than nested coroutines. `AsAsyncOperation` is a UnityAsync extension method to use Unity's `AsyncOperation` with async/await pattern.  You will need to install UnityAsync using the package manager from git `https://github.com/JohannesDeml/UnityAsync.git`. This significantly improves readability and makes error handling a lot cleaner.
+
+This example is fairly similar to the coroutine version, but it’s using async/await. Notice the `async Task<string>` return type, `await webRequest.SendWebRequest().AsAsyncOperation()` and the error handling using try/catch. This snippet benefits from being more readable and maintainable than nested coroutines. `AsAsyncOperation` is a UnityAsync extension method to use Unity's `AsyncOperation` with async/await pattern. You will need to install UnityAsync using the package manager from git `https://github.com/JohannesDeml/UnityAsync.git`. This significantly improves readability and makes error handling a lot cleaner.
 
 **Example with JSON parsing**
 
@@ -181,15 +182,16 @@ public class User
     //... other properties
 }
 ```
+
 Here, I have added the `Newtonsoft.Json` library (installable from Package Manager as well) to handle the JSON parsing. The `FetchDataAsync` is the same, but I use `JsonConvert.DeserializeObject` to convert the json text to a list of objects of type `User`, which is a simple csharp class marked with `Serializable`. Remember to make your data structures match the json structure. This demonstrates a complete flow of fetching and processing json data using async/await, and using the data within the game.
 
 **Key Recommendations and Further Study**
 
-*   **Error Handling:** Always implement comprehensive error handling. Web requests can fail for many reasons (network issues, server problems, etc.). Catch these errors and handle them gracefully, providing feedback to the user.
-*   **Resource Management:** It is critical to use `using` statements to dispose of `UnityWebRequest` objects correctly. Failure to do so can cause leaks and unexpected behaviors.
-*   **Threading:** Be aware that you can’t directly modify Unity components outside the main thread. When working with async/await, the UnityMainThreadDispatcher package (also on the asset store or via GitHub) can help you switch back to the main thread to interact with the Unity engine. The `AsAsyncOperation()` mentioned earlier does this.
-*   **Resource:** For a deep dive into async/await, I highly recommend *C# in Depth* by Jon Skeet. It's a fantastic resource that covers the intricacies of the language. Also, explore Microsoft's official documentation on `async` and `await` for the most accurate details. For a more game-specific perspective, the Unity official documentation on coroutines and `UnityWebRequest` is an essential read.
-*   **Performance:** Consider caching responses when appropriate and be mindful of the number of concurrent requests you're making to avoid overwhelming the network or your game's performance.
-*   **API Design:** When designing your APIs, pay close attention to the structure of the responses to be efficient and easy to work with, which then simplifies the parsing you perform in your Unity projects.
+- **Error Handling:** Always implement comprehensive error handling. Web requests can fail for many reasons (network issues, server problems, etc.). Catch these errors and handle them gracefully, providing feedback to the user.
+- **Resource Management:** It is critical to use `using` statements to dispose of `UnityWebRequest` objects correctly. Failure to do so can cause leaks and unexpected behaviors.
+- **Threading:** Be aware that you can’t directly modify Unity components outside the main thread. When working with async/await, the UnityMainThreadDispatcher package (also on the asset store or via GitHub) can help you switch back to the main thread to interact with the Unity engine. The `AsAsyncOperation()` mentioned earlier does this.
+- **Resource:** For a deep dive into async/await, I highly recommend _C# in Depth_ by Jon Skeet. It's a fantastic resource that covers the intricacies of the language. Also, explore Microsoft's official documentation on `async` and `await` for the most accurate details. For a more game-specific perspective, the Unity official documentation on coroutines and `UnityWebRequest` is an essential read.
+- **Performance:** Consider caching responses when appropriate and be mindful of the number of concurrent requests you're making to avoid overwhelming the network or your game's performance.
+- **API Design:** When designing your APIs, pay close attention to the structure of the responses to be efficient and easy to work with, which then simplifies the parsing you perform in your Unity projects.
 
 By utilizing these techniques, you will be better equipped to deal with web requests in Unity effectively and efficiently, resulting in a much more robust and enjoyable experience for the player. The move to async/await, while slightly more involved initially, really pays off in the long run in terms of maintainability and readability of the codebase.

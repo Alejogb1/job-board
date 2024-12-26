@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-full-text-research-papers-be-extracted"
 ---
 
-Alright, let's talk about extracting full-text from research papers, a challenge I've tackled many times throughout my career. I've seen projects where we needed to build automated systems to ingest and process thousands of academic articles, and the lack of consistency in formatting and delivery methods was a recurring headache. It’s not just about copy-pasting text; we’re talking about intelligently identifying and extracting the relevant content from potentially chaotic documents.
+, let's talk about extracting full-text from research papers, a challenge I've tackled many times throughout my career. I've seen projects where we needed to build automated systems to ingest and process thousands of academic articles, and the lack of consistency in formatting and delivery methods was a recurring headache. It’s not just about copy-pasting text; we’re talking about intelligently identifying and extracting the relevant content from potentially chaotic documents.
 
 The core issue isn't simply about finding text, it's about structural understanding. A research paper, regardless of its specific field, tends to follow a certain logical structure: title, abstract, introduction, methodology, results, discussion, conclusion, references, and so on. Identifying these elements reliably is what makes the difference between a haphazard text dump and a structured data set.
 
@@ -15,6 +15,7 @@ First, document retrieval. This seems straightforward, but it’s often where pr
 Let’s assume, for now, we have a PDF. The next challenge becomes identifying specific sections within the document. While it would be wonderful if every research paper used consistent formatting, that’s just not the case. We need a more intelligent method than just a line-by-line dump. This is where some basic natural language processing (nlp) comes into play. I've often started by identifying headings using regular expressions, along with some post-processing. These regular expressions often need to be tailored to the type of papers you typically encounter. This can include keywords like "Abstract," "Introduction," and "Conclusion" or the use of bold or large fonts.
 
 Here's a basic Python snippet using `pdfminer.six` and regular expressions. It assumes that you've installed the necessary packages using pip: `pip install pdfminer.six`
+
 ```python
 from pdfminer.high_level import extract_text
 import re
@@ -54,8 +55,8 @@ This snippet is quite rudimentary, and in practice, you’ll find that it needs 
 
 Now, after extracting the raw text, there's often a lot of noise; for example, page numbers, headers, footers and non-textual elements are often extracted by `pdfminer.six`. A post-processing step is vital. It often involves things such as using techniques to clean-up text like:
 
-*   **Regular expression replacements:** to remove things like line breaks, page numbers, and some formatting artifacts.
-*   **Content filtering:** removing text blocks based on length or characteristics (like extremely short blocks that are often just headers).
+- **Regular expression replacements:** to remove things like line breaks, page numbers, and some formatting artifacts.
+- **Content filtering:** removing text blocks based on length or characteristics (like extremely short blocks that are often just headers).
 
 After identifying the key elements, we can construct the structured output. I usually favor JSON as it can easily be used to capture key-value pairs and can easily represent hierarchical information. If we needed something more complex we could also use something like xml.
 
@@ -112,7 +113,7 @@ def extract_from_image(image_path):
         img = Image.open(image_path)
     except FileNotFoundError:
         return None, "Image not found"
-    
+
     try:
         text = pytesseract.image_to_string(img)
     except Exception as e:

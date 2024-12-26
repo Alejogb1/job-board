@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "which-machine-learning-methods-predict-dna-sequences"
 ---
 
-Alright, let's dive into this. If memory serves, I first encountered the challenge of predicting dna sequences back during a project involving novel protein design, oh, must be close to a decade ago now. The sheer complexity of the human genome, let alone others, makes this a fascinating yet incredibly difficult problem. We're not dealing with simple linear patterns, but rather an intricate interplay of context, structure, and evolutionary forces. So, how do we even approach this with machine learning?
+, let's dive into this. If memory serves, I first encountered the challenge of predicting dna sequences back during a project involving novel protein design, oh, must be close to a decade ago now. The sheer complexity of the human genome, let alone others, makes this a fascinating yet incredibly difficult problem. We're not dealing with simple linear patterns, but rather an intricate interplay of context, structure, and evolutionary forces. So, how do we even approach this with machine learning?
 
 The short answer is, there isn’t one single method that’s the definitive solution. It’s more about selecting the appropriate tool based on the specific task at hand, such as predicting transcription factor binding sites, identifying coding regions, or understanding gene splicing mechanisms. Different facets of the dna sequence demand different approaches. Let’s unpack a few of the core strategies, illustrating them with examples that, while simplified, mirror techniques I’ve used in similar situations.
 
@@ -113,6 +113,7 @@ dataset = tokenize_and_prepare_data(texts, labels, tokenizer)
 model.fit(dataset.batch(4), epochs=3)
 
 ```
+
 This simplified example shows the integration with a pre-trained model for a classification task. Note that the full use of a transformer model like biobert will require substantial resources and careful data preparation.
 
 This is, of course, a high-level overview. In practice, we often also leverage ensemble methods, combining predictions from different models, and carefully consider the nature and size of the data we're working with. The field is constantly evolving, with new methods being developed, and a continuous refinement of existing ones.

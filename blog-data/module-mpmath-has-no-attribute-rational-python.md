@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "module-mpmath-has-no-attribute-rational-python"
 ---
 
-Okay so you're running into that old chestnut where `mpmath` is playing hard to get with its `rational` attribute right? Been there done that got the t-shirt and a few sleepless nights debugging it let me tell you
+you're running into that old chestnut where `mpmath` is playing hard to get with its `rational` attribute right? Been there done that got the t-shirt and a few sleepless nights debugging it let me tell you
 
 First off let's break it down real quick `mpmath` yeah that's the multi-precision floating-point library the one you reach for when regular floats just won't cut it because they're like trying to measure the galaxy with a ruler right
 
 Now about `rational` its usually in modules that deal with symbolic math or exact arithmetic stuff Think fractions not just decimal approximations So seeing that `mpmath` error is a clear sign you are trying to use that concept in the wrong library
 
-Let me spill a bit of my history with this type of situation I was working on a project a while back where I needed to calculate some high precision values that included dividing two huge numbers and storing the result not as an approximate floating number but as an exact fraction for further symbolic processing My initial thought as it should have been yours to use the `mpmath` library because the initial calculations required very high precision However I was dumbly trying to call that specific `rational` function which of course it was not there. I banged my head on the keyboard for a solid hour before realizing that `mpmath` is not meant for exact rational representation It's about arbitrary precision *floating-point* numbers not symbolic rational numbers That project ended up using `sympy` which has much better capabilities in that regard
+Let me spill a bit of my history with this type of situation I was working on a project a while back where I needed to calculate some high precision values that included dividing two huge numbers and storing the result not as an approximate floating number but as an exact fraction for further symbolic processing My initial thought as it should have been yours to use the `mpmath` library because the initial calculations required very high precision However I was dumbly trying to call that specific `rational` function which of course it was not there. I banged my head on the keyboard for a solid hour before realizing that `mpmath` is not meant for exact rational representation It's about arbitrary precision _floating-point_ numbers not symbolic rational numbers That project ended up using `sympy` which has much better capabilities in that regard
 
 So yeah `mpmath` doesn't have a `rational` attribute and it's not supposed to its focus is on numerical approximations with arbitrary precision not symbolic or exact representations
 

@@ -4,13 +4,13 @@ date: "2024-12-15"
 id: "in-rails-how-can-i-split-putpatch-requests-on-a-resource-to-different-actions"
 ---
 
-alright, so you're looking at how to route put/patch requests in rails to different controller actions, right? been there, done that, got the t-shirt – and several bug reports. it's a common enough need, especially when your api starts getting more nuanced.
+, so you're looking at how to route put/patch requests in rails to different controller actions, right? been there, done that, got the t-shirt – and several bug reports. it's a common enough need, especially when your api starts getting more nuanced.
 
 i remember way back when, i was working on this crud app for managing, i guess you could call them, "widgets." initially, it was straightforward: a put or patch to `/widgets/1` would just update the whole widget, everything all at once, a big messy blob of json being passed. but as the widget concept evolved, we needed to be able to update different aspects of it separately. one update for its basic info, another for its, let's say "advanced settings," and yet another for its "state." that meant we couldn't just rely on the standard rails restful routing for put and patch anymore. that's where i learned some hard lessons about resource routing customization, and thankfully some rails magic as well.
 
 the default rails routing, as you might already be aware, is pretty rigid when it comes to put/patch. it generally points any put or patch request to a single `update` action in your controller. but rails, being rails, gives us hooks to change that. the simplest method, and where i started, is adding custom routes.
 
-basically, instead of having rails auto-magically infer everything, you explicitly tell it "if you see this path with this verb, go to *this* action." here's how that looks in your `routes.rb` file:
+basically, instead of having rails auto-magically infer everything, you explicitly tell it "if you see this path with this verb, go to _this_ action." here's how that looks in your `routes.rb` file:
 
 ```ruby
 resources :widgets do
@@ -22,7 +22,7 @@ resources :widgets do
 end
 ```
 
-this setup here, it creates three different endpoints for you under `/widgets/1`: `/widgets/1/update_info`, `/widgets/1/update_settings`, and `/widgets/1/update_state`. all of them using either put or patch verbs. each of these now points to its own distinct action in the widgets controller. the `member` block tells rails that these routes pertain to a *specific* widget instance, not the whole collection.
+this setup here, it creates three different endpoints for you under `/widgets/1`: `/widgets/1/update_info`, `/widgets/1/update_settings`, and `/widgets/1/update_state`. all of them using either put or patch verbs. each of these now points to its own distinct action in the widgets controller. the `member` block tells rails that these routes pertain to a _specific_ widget instance, not the whole collection.
 
 inside the controller, you'd have corresponding action methods:
 
@@ -69,6 +69,7 @@ that's where i learned the power of custom routing constraints. constraints allo
   put '/widgets/:id', to: 'widgets#update', constraints: { content_type: /application\/vnd\.widget\.state\+json/ }
   resources :widgets
 ```
+
 here, we are intercepting the put and patch verbs to the `/widgets/:id` endpoint and based on the request header `content-type` we are routing to the `update` action with the different content type constraint. and we keep the default `resources :widgets` so it handles other requests such as `get /widgets` or `post /widgets` as the standard restful methods. the controller would now look like this:
 
 ```ruby
@@ -114,7 +115,9 @@ i've also used similar tactics with request headers other than content type to h
   put '/widgets/:id', to: 'widgets#update', constraints: lambda { |request| request.params['update_type'] == 'state' }
   resources :widgets
 ```
+
 and the controller:
+
 ```ruby
 class WidgetsController < ApplicationController
   def update
@@ -145,9 +148,10 @@ class WidgetsController < ApplicationController
   end
 end
 ```
+
 this last one uses the content of the request itself using lambda on the routing constraint. it works but i prefer the content type constraint, it just feels cleaner.
 
-remember the order in which these routes are defined in your `routes.rb` file matters, rails checks routes in the order they appear. so, if you define the generic `resources :widgets` *before* you define your custom constrained routes, rails will hit the generic route first and your custom routing will never fire.
+remember the order in which these routes are defined in your `routes.rb` file matters, rails checks routes in the order they appear. so, if you define the generic `resources :widgets` _before_ you define your custom constrained routes, rails will hit the generic route first and your custom routing will never fire.
 
 this was what i went through when i started splitting my put/patch requests for crud resource actions. and don't worry we have all been there trying to figure this out. the key is to be patient and break things down. you can get it working, and once you do it's a valuable tool to add to your api dev arsenal. also, i once had a system that worked like a charm, and then we added a new server, and poof, everything broke. i learned more about load balancers that day than i ever wanted to. yeah, it was a fun monday!
 

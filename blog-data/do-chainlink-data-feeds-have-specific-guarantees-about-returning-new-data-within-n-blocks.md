@@ -4,11 +4,11 @@ date: "2024-12-15"
 id: "do-chainlink-data-feeds-have-specific-guarantees-about-returning-new-data-within-n-blocks"
 ---
 
-alright, so you're asking about the latency guarantees of chainlink data feeds, specifically if there's a hard promise about new data showing up within a certain number of blocks. it’s a good question, and it's something i’ve spent a fair amount of time grappling with, particularly in the early days of trying to build reliable defi stuff. i can tell you first hand it's a critical aspect when dealing with time sensitive applications.
+, so you're asking about the latency guarantees of chainlink data feeds, specifically if there's a hard promise about new data showing up within a certain number of blocks. it’s a good question, and it's something i’ve spent a fair amount of time grappling with, particularly in the early days of trying to build reliable defi stuff. i can tell you first hand it's a critical aspect when dealing with time sensitive applications.
 
 let's break it down, and i'll give you some context from my own battles with this problem.
 
-first, there's no *absolute* guarantee that a chainlink data feed will update within a specific number of blocks. it's not like they have some kind of atomic clock that ticks in perfect sync with the blockchain's block production. the whole thing is probabilistic and relies on several moving parts. you need to understand that there's a distinction between a *target* update frequency, and the *actual* update frequency you observe.
+first, there's no _absolute_ guarantee that a chainlink data feed will update within a specific number of blocks. it's not like they have some kind of atomic clock that ticks in perfect sync with the blockchain's block production. the whole thing is probabilistic and relies on several moving parts. you need to understand that there's a distinction between a _target_ update frequency, and the _actual_ update frequency you observe.
 
 the target update is dictated by a couple of factors: the heartbeat or time based trigger, which is like a scheduled task for updates, and the deviation threshold. this deviation trigger is what kicks off an update when the current value drifts too far from the last reported value. these parameters vary by feed and are configurable by the feed owners and often are detailed on the chainlink website for specific contracts if they are public data feeds.
 
@@ -20,7 +20,7 @@ the time it takes for a change to show up depends on the speed of all of these s
 
 additionally, each chain has its own block time variability. for example, ethereum has a target of roughly 12 seconds but we can see variability of blocks being produced more or less on average. other chains might have different target times and variability. these block times make it hard to talk about guarantees in terms of block numbers, because an x number of blocks in one chain can be less time than x number of blocks in another.
 
-so, instead of thinking about block guarantees, it's more helpful to think about *expected* update times based on the feed's parameters and the network's normal operating conditions. that's where monitoring becomes critical, and that's what i had to learn the hard way when my first defi dApp failed after a rapid movement in price.
+so, instead of thinking about block guarantees, it's more helpful to think about _expected_ update times based on the feed's parameters and the network's normal operating conditions. that's where monitoring becomes critical, and that's what i had to learn the hard way when my first defi dApp failed after a rapid movement in price.
 
 to simulate and check these aspects i ended up doing something like this to check the last update of a specific data feed. i wrote a small script that fetches data at regular intervals and calculate the time difference between each update. i would also use that data to analyse the price deviation and compare it with the heartbeat time of the contract. i can see that on the chain link website too, but checking for myself made me more confident. here’s a simplified example with python:
 
@@ -65,7 +65,7 @@ if __name__ == "__main__":
 
 ```
 
-*note*: remember to replace `your_etherscan_api_key` with a real one and this script can be adapted to other blockchains api providers like block explorers. it is just a simple script to exemplify the process to monitor.
+_note_: remember to replace `your_etherscan_api_key` with a real one and this script can be adapted to other blockchains api providers like block explorers. it is just a simple script to exemplify the process to monitor.
 
 this script is simple, but it shows the principle. it's a good practice to build your own to understand exactly how data updates occur, and then you can write more complex code to react to any discrepancies.
 the key takeaway here is that you need to watch the data, you need to get familiarized with the contract interface and all the properties it expose. doing some code to monitor is beneficial in that way.
@@ -130,7 +130,7 @@ if __name__ == "__main__":
 
 ```
 
-*note*: replace `<your_infura_key>` with your actual infura key or any other rpc provider. make sure to consult chainlink website for the contracts abi.
+_note_: replace `<your_infura_key>` with your actual infura key or any other rpc provider. make sure to consult chainlink website for the contracts abi.
 
 this code lets you get the latest price data reported and the timestamp which is very helpful if you are building your own custom monitoring solutions.
 
@@ -192,7 +192,8 @@ if __name__ == "__main__":
         process_updates(updates)
 
 ```
-*note*: remember to replace `your_etherscan_api_key` with your real etherscan api key.
+
+_note_: remember to replace `your_etherscan_api_key` with your real etherscan api key.
 
 it is important to point out that you should be very careful when doing any time sensitive logic based on blockchain data. the blockchain has its own rhythm and relying on "real" time data can be dangerous.
 
